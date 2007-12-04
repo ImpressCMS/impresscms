@@ -174,6 +174,9 @@ $xoops =& new xos_kernel_Xoops2();
     // #################### Include text sanitizer ##################
     include_once XOOPS_ROOT_PATH."/class/module.textsanitizer.php";
 
+    // #################### Including debuging functions ##################
+	include_once(XOOPS_ROOT_PATH . "/include/debug_functions.php");
+
     // ################# Load Config Settings ##############
     $config_handler =& xoops_gethandler('config');
     $xoopsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
@@ -212,7 +215,7 @@ $xoops =& new xos_kernel_Xoops2();
     // #################### Include site-wide lang file ##################
     //$wide_lang = array('global', 'theme'); TODO: For what is this line?? the file language/theme.php does not exist.
 	$wide_lang = array('global');
-	
+
     // ################ Include page-specific lang file ################
     if ( !isset($xoopsOption['pagetype']) ) {
         $xoopsOption['pagetype'] = array();
