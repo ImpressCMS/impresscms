@@ -2,19 +2,21 @@
 XOOPS Changelog
 
 ========================
-Unreleased: Version 0.7 
+Unreleased: Version 0.7
 ========================
 
 - Added : New admin interface based on XOOPS EXM and improved. Thanks to XOOPS EXM!. (BitC3R0 / malanciault / young-pee)
 - Added : New function to show warnings. Also added a new css class for that. xoops_warning() (young-pee)
 - Added : 4 new System warnigns. 1 for Security and 3 for correct functionality of the system. (young-pee)
-- Improved: When the User registration is Off... all links to register.php are not shown.
-- Added: The users can change they personal theme to be display when they change they profile. (young-pee)
-- Added: In BlockAdmin now you can create new block areas. (rplima/young-pee)
-- Added: Added a new Database Driver (MySQLi). (young-pee)
-- Added: Added debugging functions included in the XOOPS boot process to allow easy output of debugging lines by core and modules developers (include/debug_functions.php) (malanciault)
+- Added : The users can change they personal theme to be display when they change they profile. (young-pee)
+- Added : In BlockAdmin now you can create new block areas. (rplima/young-pee)
+- Added : Added a new Database Driver (MySQLi). (young-pee)
+- Added : Added debugging functions included in the XOOPS boot process to allow easy output of debugging lines by core and modules developers (include/debug_functions.php) (malanciault)
+- Added : Addition of the XoopsEditors framework with default editor (malanciault)
 
-Working Changes: (Changes to be reverted or made definitive)
+- Improved: When the User registration is Off... all links to register.php are not shown.
+
+Working Changes : (Changes to be reverted or made definitive)
 
 - Commented a line in common.php ... someone can tell for what is this line? (young-pee)
 
