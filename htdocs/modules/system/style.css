@@ -11,7 +11,7 @@
 	 ... */
 
 /* General definitions */
-html, body {background-color : #EEEEEE; font-size: 11px; font-family: Verdana, Arial, Helvetica, sans-serif; margin: 0px; padding: 0px;}
+html, body {background-color : #EEEEEE; font-size: 12px; font-family: Verdana, Arial, Helvetica, sans-serif; margin: 0px; padding: 0px;}
 
 hr { height: 3px; width: 95%; text-align:center; border: 3px #E18A00 solid;}
 
