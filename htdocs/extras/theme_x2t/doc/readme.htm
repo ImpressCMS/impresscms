@@ -1,0 +1,222 @@
+<html>
+<head>
+<title>Info</title>
+<script language="JavaScript">
+if (document.layers)
+alert("This script works with Internet Explorer 4x only.\n\nSorry, Netscape-folks!")
+var now
+
+var second
+
+var timer
+var i_loop=0
+
+function initiate() {
+    firstObj.Scale(10,10,0)
+    secondObj.Scale(.01,.01,0)
+    enlarge()
+}
+
+function enlarge() {
+    if (i_loop<=100) {
+        firstObj.Rotate(0,0,-12)
+        firstObj.Scale(0.9,0.9,0)
+	    secondObj.Rotate(0,0,12)
+        secondObj.Scale(1.11,1.11,0)
+
+        timer=setTimeout("enlarge()",20)
+        i_loop++
+    }
+    else {
+        clearTimeout(timer)
+        i_loop=0
+        reduce()
+    }
+}
+
+function reduce() {
+    if (i_loop<=100) {
+        firstObj.Rotate(0,0,12)
+        firstObj.Scale(1.11,1.11,0)
+	    secondObj.Rotate(0,0,-12)
+        secondObj.Scale(0.9,0.9,0)
+        timer=setTimeout("reduce()",20)
+        i_loop++
+    }
+    else {
+        clearTimeout(timer)
+        i_loop=0
+        enlarge()
+    }
+}
+
+// - End of JavaScript - -->
+</script>
+<style type="text/css">
+<!--
+a {  text-decoration: none}
+-->
+</style>
+</head>
+<body bgcolor=000000 onLoad="if(document.all){initiate()}" link="#FFCC00" vlink="#FFCC00" alink="#FFFFCC">
+<DIV style="position:absolute;top:55px;left:563px; width: 56px; height: 200px">
+  <OBJECT ID="firstObj" STYLE="width:200px;height:200px" CLASSID="CLSID:369303C2-D7AC-11D0-89D5-00A0C90833E6">
+<PARAM NAME="Line0001" VALUE="SetLineColor(255,0,0)">
+<PARAM NAME="Line0002" VALUE="SetFillColor(255,0,0)">
+<PARAM NAME="Line0003" VALUE="SetLineStyle(0)">
+<PARAM NAME="Line0004" VALUE="Polygon(461,11,11,12,8,14,6,18,4,21,2,25,1,28,0,30,-1,31,-3,30,-4,30,-6,29,-8,28,-9,27,-11,26,-12,24,-13,21,-14,19,-14,18,-13,16,-13
+,14,-12,13,-11,11,-11,9,-12,7,-14,2,-19,-1,-21,-3,-22,-5,-21,-5,-19,-6,-17,-6,-13,-6,-9,-6,-6,-6,-4,-7,-3,-8,-2,-9,0,-10,2,-11,4
+,-11,7,-10,13,-10,18,-10,22,-10,26,-10,30,-9,33,-7,37,-4,40,-2,41,0,42,1,42,3,42,4,40,6,39,8,36,10,33,12,32,16,32,21,32
+,26,33,30,34,35,35,38,35,40,34,41,31,42,29,43,27,44,26,44,25,45,24,47,23,49,21,54,15,57,6,59,-4,59,-13,57,-22,53,-29,49,-33
+,44,-33,42,-33,39,-34,35,-35,31,-37,27,-39,23,-40,20,-42,18,-42,14,-44,12,-45,10,-47,8,-48,6,-50,4,-51,3,-53,2,-54,-1,-55,-4,-55,-7,-53
+,-11,-50,-14,-46,-17,-41,-19,-37,-21,-32,-22,-28,-25,-23,-28,-19,-32,-15,-36,-11,-39,-8,-41,-4,-42,-1,-42,6,-41,9,-39,15,-36,29,-34,40,-34,51,-32,59
+,-31,66,-29,71,-25,73,-19,73,-10,70,-5,68,1,67,9,67,18,67,27,66,37,65,47,64,57,62,65,58,73,53,79,46,84,37,87,25,87,11,85,-6
+,79,-26,78,-31,79,-34,80,-36,82,-37,85,-38,87,-39,88,-41,88,-44,86,-47,83,-50,80,-53,75,-56,71,-60,68,-64,65,-70,64,-77,63,-80,61,-81,58,-82
+,55,-82,51,-81,48,-81,44,-81,41,-81,37,-83,33,-84,29,-86,26,-87,23,-89,20,-90,17,-91,15,-92,12,-93,10,-93,7,-94,4,-94,1,-94,-2,-94,-5,-94
+,-9,-93,-12,-92,-15,-90,-18,-88,-21,-84,-24,-81,-27,-77,-31,-73,-34,-69,-37,-65,-40,-61,-44,-57,-48,-54,-51,-52,-55,-50,-60,-49,-64,-49,-67,-48,-69,-45,-69,-42
+,-69,-37,-68,-31,-68,-26,-68,-20,-70,-15,-75,-3,-78,7,-79,17,-79,25,-78,31,-77,36,-78,40,-80,42,-81,43,-82,43,-82,44,-82,46,-81,46,-79,47,-76,47
+,-75,48,-74,51,-74,54,-75,56,-77,58,-79,60,-82,60,-84,58,-86,56,-91,47,-95,41,-97,36,-98,30,-98,24,-94,17,-88,8,-78,-4,-75,-10,-75,-18,-76,-26
+,-77,-34,-79,-42,-78,-48,-75,-53,-69,-54,-65,-55,-61,-56,-57,-58,-54,-61,-51,-64,-48,-67,-46,-71,-43,-75,-41,-79,-38,-83,-36,-87,-34,-90,-31,-93,-28,-96,-26,-98
+,-23,-99,-19,-99,-14,-100,-9,-100,-5,-100,0,-100,5,-100,10,-100,16,-100,21,-99,26,-98,31,-97,37,-96,42,-95,47,-94,51,-92,56,-91,59,-90,62,-89,66,-88
+,69,-86,72,-85,74,-83,76,-80,77,-77,77,-70,79,-65,81,-61,83,-58,86,-55,88,-53,90,-50,91,-47,91,-41,89,-34,89,-27,90,-18,95,-2,97,12,98,25
+,97,36,94,45,90,53,85,60,79,65,72,70,64,73,56,75,47,77,38,77,29,77,20,76,11,75,6,74,1,73,-4,74,-8,74,-12,75,-16,75,-18,76
+,-21,77,-27,79,-32,78,-38,76,-42,72,-44,66,-46,59,-45,50,-43,39,-42,36,-43,33,-44,29,-45,25,-47,20,-48,15,-49,10,-49,4,-48,1,-46,-5,-43,-12
+,-40,-19,-36,-27,-33,-34,-30,-41,-29,-47,-28,-49,-27,-51,-25,-53,-23,-54,-21,-55,-19,-57,-16,-58,-14,-58,-11,-59,-8,-59,-6,-59,-3,-59,-1,-59,1,-59,3,-58
+,4,-57,5,-56,7,-54,8,-53,10,-51,12,-50,14,-49,17,-47,20,-46,23,-45,26,-45,30,-45,34,-46,38,-46,42,-46,45,-47,47,-47,52,-46,57,-40,62,-30
+,65,-18,67,-5,67,8,64,19,59,26,57,28,55,29,53,31,50,32,48,33,46,35,44,37,43,40,41,42,38,42,35,43,31,43,26,43,22,43,19,44
+,17,46,14,48,11,50,9,50,6,50,2,49,-1,48,-3,46,-5,44,-9,41,-12,37,-14,33,-15,28,-17,23,-18,18,-19,12,-20,6,-20,3,-19,0,-18,-2
+,-16,-5,-15,-7,-14,-9,-13,-12,-14,-15,-13,-19,-12,-23,-10,-27,-7,-30,-4,-32,0,-32,4,-30,10,-26,12,-24,15,-22,18,-21,21,-21,25,-20,28,-20,31,-19
+,33,-19,37,-16,37,-10,36,-4,36,0,35,2,34,3,32,4,30,5,28,6,25,7,23,8,22,11,20,13,18,15,17,16,15,16,13,15,12,14,11,12
+,11,11)">
+<PARAM NAME="Line0005" VALUE="Polygon(17,-69,75,-71,75,-73,75,-74,74,-76,72,-77,69,-76,66,-75,64,-72,64,-69,64,-67,64,-66,63,-65,64,-64,67,-65,71,-66,74,-69,75)">
+<PARAM NAME="Line0006" VALUE="Polygon(17,-64,88,-64,88,-65,87,-64,86,-64,85,-65,84,-65,82,-65,80,-64,80,-62,80,-60,81,-58,82,-57,84,-58,86,-60,87,-62,88,-64,88)">
+<PARAM NAME="Line0007" VALUE="Polygon(15,-50,100,-51,99,-52,99,-52,98,-52,97,-52,96,-52,96,-51,95,-50,95,-49,95,-49,96,-48,97,-48,97,-48,99,-50,100)">
+</OBJECT>
+</DIV>
+
+<DIV style="position:absolute;top:55px;left:563px; width: 179px; height: 200px">
+  <OBJECT ID="secondObj" STYLE="width:200px;height:200px" CLASSID="CLSID:369303C2-D7AC-11D0-89D5-00A0C90833E6" width="356" height="212">
+    <PARAM NAME="Line0001" VALUE="SetLineColor(255,255,0)">
+    <PARAM NAME="Line0002" VALUE="SetFillColor(255,255,0)">
+    <PARAM NAME="Line0003" VALUE="SetLineStyle(0)">
+    <PARAM NAME="Line0004" VALUE="Polygon(461,11,11,12,8,14,6,18,4,21,2,25,1,28,0,30,-1,31,-3,30,-4,30,-6,29,-8,28,-9,27,-11,26,-12,24,-13,21,-14,19,-14,18,-13,16,-13
+,14,-12,13,-11,11,-11,9,-12,7,-14,2,-19,-1,-21,-3,-22,-5,-21,-5,-19,-6,-17,-6,-13,-6,-9,-6,-6,-6,-4,-7,-3,-8,-2,-9,0,-10,2,-11,4
+,-11,7,-10,13,-10,18,-10,22,-10,26,-10,30,-9,33,-7,37,-4,40,-2,41,0,42,1,42,3,42,4,40,6,39,8,36,10,33,12,32,16,32,21,32
+,26,33,30,34,35,35,38,35,40,34,41,31,42,29,43,27,44,26,44,25,45,24,47,23,49,21,54,15,57,6,59,-4,59,-13,57,-22,53,-29,49,-33
+,44,-33,42,-33,39,-34,35,-35,31,-37,27,-39,23,-40,20,-42,18,-42,14,-44,12,-45,10,-47,8,-48,6,-50,4,-51,3,-53,2,-54,-1,-55,-4,-55,-7,-53
+,-11,-50,-14,-46,-17,-41,-19,-37,-21,-32,-22,-28,-25,-23,-28,-19,-32,-15,-36,-11,-39,-8,-41,-4,-42,-1,-42,6,-41,9,-39,15,-36,29,-34,40,-34,51,-32,59
+,-31,66,-29,71,-25,73,-19,73,-10,70,-5,68,1,67,9,67,18,67,27,66,37,65,47,64,57,62,65,58,73,53,79,46,84,37,87,25,87,11,85,-6
+,79,-26,78,-31,79,-34,80,-36,82,-37,85,-38,87,-39,88,-41,88,-44,86,-47,83,-50,80,-53,75,-56,71,-60,68,-64,65,-70,64,-77,63,-80,61,-81,58,-82
+,55,-82,51,-81,48,-81,44,-81,41,-81,37,-83,33,-84,29,-86,26,-87,23,-89,20,-90,17,-91,15,-92,12,-93,10,-93,7,-94,4,-94,1,-94,-2,-94,-5,-94
+,-9,-93,-12,-92,-15,-90,-18,-88,-21,-84,-24,-81,-27,-77,-31,-73,-34,-69,-37,-65,-40,-61,-44,-57,-48,-54,-51,-52,-55,-50,-60,-49,-64,-49,-67,-48,-69,-45,-69,-42
+,-69,-37,-68,-31,-68,-26,-68,-20,-70,-15,-75,-3,-78,7,-79,17,-79,25,-78,31,-77,36,-78,40,-80,42,-81,43,-82,43,-82,44,-82,46,-81,46,-79,47,-76,47
+,-75,48,-74,51,-74,54,-75,56,-77,58,-79,60,-82,60,-84,58,-86,56,-91,47,-95,41,-97,36,-98,30,-98,24,-94,17,-88,8,-78,-4,-75,-10,-75,-18,-76,-26
+,-77,-34,-79,-42,-78,-48,-75,-53,-69,-54,-65,-55,-61,-56,-57,-58,-54,-61,-51,-64,-48,-67,-46,-71,-43,-75,-41,-79,-38,-83,-36,-87,-34,-90,-31,-93,-28,-96,-26,-98
+,-23,-99,-19,-99,-14,-100,-9,-100,-5,-100,0,-100,5,-100,10,-100,16,-100,21,-99,26,-98,31,-97,37,-96,42,-95,47,-94,51,-92,56,-91,59,-90,62,-89,66,-88
+,69,-86,72,-85,74,-83,76,-80,77,-77,77,-70,79,-65,81,-61,83,-58,86,-55,88,-53,90,-50,91,-47,91,-41,89,-34,89,-27,90,-18,95,-2,97,12,98,25
+,97,36,94,45,90,53,85,60,79,65,72,70,64,73,56,75,47,77,38,77,29,77,20,76,11,75,6,74,1,73,-4,74,-8,74,-12,75,-16,75,-18,76
+,-21,77,-27,79,-32,78,-38,76,-42,72,-44,66,-46,59,-45,50,-43,39,-42,36,-43,33,-44,29,-45,25,-47,20,-48,15,-49,10,-49,4,-48,1,-46,-5,-43,-12
+,-40,-19,-36,-27,-33,-34,-30,-41,-29,-47,-28,-49,-27,-51,-25,-53,-23,-54,-21,-55,-19,-57,-16,-58,-14,-58,-11,-59,-8,-59,-6,-59,-3,-59,-1,-59,1,-59,3,-58
+,4,-57,5,-56,7,-54,8,-53,10,-51,12,-50,14,-49,17,-47,20,-46,23,-45,26,-45,30,-45,34,-46,38,-46,42,-46,45,-47,47,-47,52,-46,57,-40,62,-30
+,65,-18,67,-5,67,8,64,19,59,26,57,28,55,29,53,31,50,32,48,33,46,35,44,37,43,40,41,42,38,42,35,43,31,43,26,43,22,43,19,44
+,17,46,14,48,11,50,9,50,6,50,2,49,-1,48,-3,46,-5,44,-9,41,-12,37,-14,33,-15,28,-17,23,-18,18,-19,12,-20,6,-20,3,-19,0,-18,-2
+,-16,-5,-15,-7,-14,-9,-13,-12,-14,-15,-13,-19,-12,-23,-10,-27,-7,-30,-4,-32,0,-32,4,-30,10,-26,12,-24,15,-22,18,-21,21,-21,25,-20,28,-20,31,-19
+,33,-19,37,-16,37,-10,36,-4,36,0,35,2,34,3,32,4,30,5,28,6,25,7,23,8,22,11,20,13,18,15,17,16,15,16,13,15,12,14,11,12
+,11,11)">
+    <PARAM NAME="Line0005" VALUE="Polygon(17,-69,75,-71,75,-73,75,-74,74,-76,72,-77,69,-76,66,-75,64,-72,64,-69,64,-67,64,-66,63,-65,64,-64,67,-65,71,-66,74,-69,75)">
+    <PARAM NAME="Line0006" VALUE="Polygon(17,-64,88,-64,88,-65,87,-64,86,-64,85,-65,84,-65,82,-65,80,-64,80,-62,80,-60,81,-58,82,-57,84,-58,86,-60,87,-62,88,-64,88)">
+    <PARAM NAME="Line0007" VALUE="Polygon(15,-50,100,-51,99,-52,99,-52,98,-52,97,-52,96,-52,96,-51,95,-50,95,-49,95,-49,96,-48,97,-48,97,-48,99,-50,100)">
+  </OBJECT> </DIV>
+
+<DIV style="position:absolute;top:55px;left:553px;font-family:Verdana;font-size:8pt;color:444444;text-align:center;width:220px;letter-spacing:0.4em;line-height:170%;">
+  <p><span style="color:771111"><b><font color="#FFFFFF">XooPS</font></b></span><br />
+    <font color="#FFFFFF">eXtended object<br />
+    oriented<br />
+    Portal System</font></p>
+  <p><font color="#FFFFFF">...que más queres...</font></p>
+  </DIV>
+
+<table width="755" border="0" cellspacing="1" cellpadding="3" height="201" bgcolor="#CCCCCC">
+  <tr bgcolor="#CCCCCC">
+    <td colspan="2">
+      <div align="center"><font color="#333333" face="Tahoma" size="2"><b>X2 Theme for XooPS 2.0.x / Tema X2 para XooPS 2.0.x</b></font></div>
+    </td>
+  </tr>
+  <tr>
+    <td bgcolor="#333333" height="78" width="538"><font color="#CCCCCC" face="Tahoma" size="2">
+	<b>| Creators / Creadores </b>: w4z004 - Unfor<br />
+
+	<b>| E-mail / E-mail</b> : <a href="mailto:w4z004@hotmail.com">w4z004@hotmail.com</a><br />
+
+	<b>| This is a original work bassed in the ideas of </b>w4z004<br />
+	<b>| and the excelent and professional work of </b> Unfor<br />
+
+	<b>| Date / Fecha </b>: Feb. 2003<br />
+
+	<b>| Thanks to / Gracias a</b> : Chapi <b>for the graphic work colaboration </b><br />
+	<b>| </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Aitor <b>for the enhancements into the theme </b><br />
+	<b>| </b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ralf57 <b> for the hidde/unhidde idea </b><br />
+	<b>| </b><br />
+
+	<b>| INSTALL:  upload the x2t.tar.gz file with the theme manager</b><br />
+	<b>| </b><br />
+
+	<b>| NEWS TWO COLUMNS: later of installed the theme with the theme manager into</b><br />
+	<b>| the news need upload or copy and paste the files </b> news_index.html <b>and </b><br />
+	<b>| </b> news_item.html <b> that are into the EXTRAS dir to the respective places and obtain</b><br />
+	<b>| a news with 2 columns.</b><br />
+	<b>| </b><br />
+
+	<b>| LAYOUT: into the EXTRAS dir too have a</b> theme.html<b> file that if you replace into</b><br />
+	<b>| the theme skin with copy and paste obtain that the center-center blocks</b><br />
+	<b>| appear in the top (now are changed to the bottom).  </b><br />
+	<b>| </b><br />
+
+	<b>| CHANGELOG:</b><br />
+	<b>| 27/02 - Removed the login in the headerbar.</b><br />
+	<b>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Fixed the userinfo template</b><br />
+	<b>| </b><br />
+	<b>| 01/03 - Removed the skin changed to the new structure.</b><br />
+	<b>| </b><br />
+	<b>| 30/03 - Finished the notification templates, XHTML cleanup, </b><br />
+	<b>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and added scrolling to the top posters and new users blocks.</b><br />
+	<b>| </b><br />
+	<b>| 20/09 - Upgraded to xoops 2.0.4. </b><br />
+	<b>| </b><br />
+	<b>| 05/07/04 - Upgraded to xoops 2.0.6.</b><br />
+	<b>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Created the SmartFAQ module templates.</b><br />
+	<b>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Enhanced the CSS.</b><br />
+	<b>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Added the hidde/display effect for the notification system.</b><br />
+	<b>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Modified the main menu / user menu, and added graphics to this.</b><br />
+	<b>| </b><br />
+	<b>| 05/08/04 - Created the Liase module templates.</b><br />
+	<b>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Created the RSSfit module templates.</b><br />
+	<b>| </b><br />
+	<b>| 05/16/04 - Fixed the styleNN.css (thnx chapi).</b><br />
+	<b>|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Cleaned to be 100% html transitional 1.0.</b><br />
+
+
+	<b>| </b><br />
+</font></td>
+
+    <td bgcolor="#333333" height="78" rowspan="4" width="202">&nbsp;</td>
+  </tr>
+  <tr>
+    <td bgcolor="#333333" width="538"><font color="#CCCCCC" face="Tahoma" size="2"><b>|</b>
+      Dedicated to all Xoops users.<br />
+      <b>|</b> Dedicado a todos los usuarios de Xoops.</font></td>
+  </tr>
+  <tr>
+    <td bgcolor="#333333" width="538"><font color="#CCCCCC" face="Tahoma" size="2"><b>|
+      ENGLISH SUPPORT :</b><br />
+      <b>|</b>&gt; <a href="http://www.xoops.org">http://www.xoops.org</a>
+      </font></td>
+  </tr>
+  <tr>
+    <td bgcolor="#333333" width="538"><font color="#CCCCCC" face="Tahoma" size="2"><b>|
+      SOPORTE EN CASTELLANO :</b><br />
+      <b>|</b>&gt; <a href="http://www.esxoops.com">http://www.esxoops.com</a><br />
+  </tr>
+</table>
+</body>
+</html>

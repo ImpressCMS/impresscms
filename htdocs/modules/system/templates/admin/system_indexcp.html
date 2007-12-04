@@ -1,0 +1,34 @@
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="60%" class="CPindexOptions">
+	<div class="CPbigTitle" style="background-image: url(<{$xoops_imageurl}>modules/system/images/cp.png); "><{$lang_cp}></div><br />
+	<div class="CPmediumTitle"><{$system_options}></div><br />
+	<div class="cpicon">
+		<{foreach item=mod from=$sysmod}>
+			<a href="<{$mod.link}>" title="<{$mod.title}>"><img src="<{if $mod.image != ''}><{$mod.image}><{else}><{$xoops_url}>/modules/system/images/modules.png<{/if}>" alt="<{$mod.title}>" />
+			<span><{$mod.title}></span></a>
+		<{/foreach}>
+	</div>
+	</td>
+  <td width="20">&nbsp;</td>
+    <td width="48%" class="CPindexOptions">
+		<div class="CPbigTitle" style="background-image: url(<{$xoops_imageurl}>modules/system/images/modules.png)"><{$lang_insmodules}></div><br />
+		<div class="cpicon">
+			<{foreach item=mod from=$modules}>
+				<a href="<{$mod.link}>" title="<{$mod.title}>"><img src="<{if $mod.big != ''}><{$mod.big}><{else}><{$xoops_url}>/modules/system/images/modules.png<{/if}>" alt="<{$mod.title}>" />
+				<span><{$mod.title}></span></a>
+			<{/foreach}>
+		</div>
+		<!-- <div class="CPmediumTitle" style="clear: both;">
+			<br /><{$smarty.const._AD_RECOMMED}>
+		</div><br />
+		<div class="CPrssLinks">
+			<{foreach item=link from=$rss_links}>
+				<a href="<{$link.link}>" target="_blank"><{$link.title}></a>
+				<{$link.desc}><br /><br />
+			<{/foreach}>
+		</div>
+		 -->
+	</td>
+  </tr>
+</table>

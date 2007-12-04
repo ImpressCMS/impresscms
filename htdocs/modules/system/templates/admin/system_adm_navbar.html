@@ -1,0 +1,33 @@
+<div id="logoHead">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr><td align="left">
+<a href="<{$xoops_url}>" title="<{$xoops_sitename}>"><img src="<{$xoops_url}>/images/header-logo.png" alt="XOOPS"/></a>
+</td><td align="right">
+<!-- <a href="http://www.xoops.org" target="_blank" title="Powered by XOOPS"><img src="<{$xoops_url}>/images/poweredby.jpg" alt="XOOPS"/></a> -->
+</td></tr></table>
+</div>
+<div id="navbarCP">
+	<ul id="nav">
+		<{foreach item=item from=$navitems}>
+			<li><a href="<{$item.link}>"><img src="<{$xoops_url}>/modules/system/images/arrow1.gif" alt="arrow"/>&nbsp;<{$item.text}></a>
+				<ul>
+					<{foreach item=sub from=$item.menu}>
+						<li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$item.dir}>/<{$sub.link}><{/if}>"<{if $sub.small!=''}> style="background-image: url(<{if $item.dir=="system"}><{$xoops_url}>/modules/system/<{/if}><{$sub.small}>);"<{/if}>><{$sub.title}></a></li>
+					<{/foreach}>
+				</ul>
+			</li>
+		<{/foreach}>
+	</ul>
+</div>
+<{ if $modname != '' }>
+<div id="navOptionsCP">
+	<div class="modname">
+		<{$modname}>
+	</div>
+	<{if $moddir!='system' && $mod_options}><a href="<{$xoops_url}>/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=<{$modid}>" title="<{$lang_prefs}>"><img src="<{$xoops_url}>/modules/system/images/prefs.png" alt="<{$lang_preferences}>" /></a><{/if}>
+	<{foreach item=op from=$mod_options}>
+		<a href="<{$modpath}>/<{$op.link}>" title="<{$op.title}>"><img src="<{if $op.icon==''}><{$xoops_url}>/images/icon_options.png<{else}><{$modpath}>/<{$op.icon}><{/if}>" alt="<{$op.title}>" /></a>
+	<{/foreach}>
+
+</div>
+<{/if}>
