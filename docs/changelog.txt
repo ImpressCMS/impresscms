@@ -37,6 +37,9 @@ Unreleased: XOOPS 2.0.18
 - Fixed bug #1415777 : xml feed is not working when debug mode is activated (DuGris)
 - Fixed bug #1784816 : XoopsTree::getNicePathFromId Add separator only if necessary (dugris)
 - Fixed: Do not display the comment form if the option module "Allow anonymous post in comments?" is disabled (dugris)
+- Fixed: added pagetitles to user.php, register.php and search.ph
+- Fixed: added gijoe's fix for resource.db.php, removed extras folder that contained fix
+- Fixed: removed old themes - x2t, phpkaox, and extras/theme_x2t
 
 - Improved: themes, Cascading - add themes screenshot (kris_fr/DuGris)
 - Improved: Corrected a line hardcoded (young-pee)
