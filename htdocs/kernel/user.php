@@ -143,18 +143,19 @@ class XoopsUser extends XoopsObject
 		if ($userid > 0) {
 			$member_handler =& xoops_gethandler('member');
 			$user =& $member_handler->getUser($userid);
-         if (is_object($user)) {
-         	$ts =& MyTextSanitizer::getInstance();
-         	if ( $usereal ) {
-         		if(trim($user->getVar('name')) != '') {
-         			return $ts->htmlSpecialChars($user->getVar('name'));
-         		} else {
-         			return $ts->htmlSpecialChars($user->getVar('uname'));
-         		}
-         	} else {
-         		return $ts->htmlSpecialChars($user->getVar('uname'));
-         	}
-         }
+            if (is_object($user)) {
+                $ts =& MyTextSanitizer::getInstance();
+                if ( $usereal ) {
+                    $name = $user->getVar('name');
+             		if($name != '') {
+             			return $ts->htmlSpecialChars($name);
+             		} else {
+             			return $ts->htmlSpecialChars($user->getVar('uname'));
+             		}
+             	} else {
+             		return $ts->htmlSpecialChars($user->getVar('uname'));
+             	}
+            }
 		}
 		return $GLOBALS['xoopsConfig']['anonymous'];
     }

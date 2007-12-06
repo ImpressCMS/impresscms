@@ -293,7 +293,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         $sql = 'SELECT * FROM '.$this->db->prefix('config');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' '.$criteria->renderWhere();
-            $sql .= ' ORDER BY conf_order ASC, conf_id ASC';
+            $sql .= ' ORDER BY conf_order ASC';
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }

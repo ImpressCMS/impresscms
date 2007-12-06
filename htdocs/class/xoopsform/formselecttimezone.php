@@ -1,5 +1,5 @@
 <?php
-// $Id: formselecttimezone.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id: formselecttimezone.php 1151 2007-12-04 15:43:01Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -68,7 +68,7 @@ class XoopsFormSelectTimezone extends XoopsFormSelect
 	 * 							Legal values are "-12" to "12" with some ".5"s strewn in ;-)
 	 * @param	int		$size	Number of rows. "1" makes a drop-down-box.
 	 */
-	function XoopsFormSelectTimezone($caption, $name, $value=null, $size=1)
+	function XoopsFormSelectTimezone($caption, $name, $value = null, $size = 1)
 	{
 		$this->XoopsFormSelect($caption, $name, $value, $size);
 		$this->addOptionArray(XoopsLists::getTimeZoneList());

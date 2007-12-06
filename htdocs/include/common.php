@@ -207,34 +207,27 @@ $xoops =& new xos_kernel_Xoops2();
     // ################# Include version info file ##############
     include_once XOOPS_ROOT_PATH."/include/version.php";
 
-    // TODO: for older versions... will be DEPRECATED! How many time will we support it?
+    // for older versions...will be DEPRECATED!
     $xoopsConfig['xoops_url'] = XOOPS_URL;
     $xoopsConfig['root_path'] = XOOPS_ROOT_PATH."/";
 
 
     // #################### Include site-wide lang file ##################
-    //$wide_lang = array('global', 'theme'); TODO: For what is this line?? the file language/theme.php does not exist.
-	$wide_lang = array('global');
+    if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php") ) {
+        include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php";
+    } else {
+        include_once XOOPS_ROOT_PATH."/language/english/global.php";
+    }
 
     // ################ Include page-specific lang file ################
-    if ( !isset($xoopsOption['pagetype']) ) {
-        $xoopsOption['pagetype'] = array();
-    } elseif ( !is_array($xoopsOption['pagetype']) ) {
-        $xoopsOption['pagetype'] = array( $xoopsOption['pagetype']);
-    }
-    $xoopsOption['pagetype'] = array_merge($wide_lang, $xoopsOption['pagetype']);
-
-    foreach ($xoopsOption['pagetype'] as $pagetype) {
-        if ( false === strpos($pagetype, '.') ) {
-            if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/" . $pagetype . ".php") ) {
-                include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/" . $pagetype . ".php";
-            } else {
-                include_once XOOPS_ROOT_PATH."/language/english/" . $pagetype . ".php";
-            }
+    if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
+        if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php") ) {
+            include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php";
+        } else {
+            include_once XOOPS_ROOT_PATH."/language/english/".$xoopsOption['pagetype'].".php";
         }
     }
     $xoopsOption = array();
-    // ################ Include page-specific lang file ################
 
     if ( !defined("XOOPS_USE_MULTIBYTES") ) {
         define("XOOPS_USE_MULTIBYTES",0);

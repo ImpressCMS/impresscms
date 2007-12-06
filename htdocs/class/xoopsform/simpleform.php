@@ -1,5 +1,5 @@
 <?php
-// $Id: simpleform.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id: simpleform.php 1151 2007-12-04 15:43:01Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -64,7 +64,7 @@ class XoopsSimpleForm extends XoopsForm
 	 */
 	function render()
 	{
-		$ret = $this->getTitle()."\n<form name='".$this->getName()."' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."'".$this->getExtra().">\n";
+		$ret = $this->getTitle()."\n<form name='".$this->getName()."' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."' ".$this->getExtra().">\n";
 		foreach ( $this->getElements() as $ele ) {
 			if ( !$ele->isHidden() ) {
 				$ret .= "<b>".$ele->getCaption()."</b><br />".$ele->render()."<br />\n";

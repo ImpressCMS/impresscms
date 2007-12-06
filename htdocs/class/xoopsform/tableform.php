@@ -1,5 +1,5 @@
 <?php
-// $Id: tableform.php 506 2006-05-26 23:10:37Z skalpa $
+// $Id: tableform.php 1151 2007-12-04 15:43:01Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -66,7 +66,7 @@ class XoopsTableForm extends XoopsForm
 	 */
 	function render()
 	{
-		$ret = $this->getTitle()."\n<form name='".$this->getName()."' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."'".$this->getExtra().">\n<table border='0' width='100%'>\n";
+		$ret = $this->getTitle()."\n<form name='".$this->getName()."' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."' ".$this->getExtra().">\n<table border='0' width='100%'>\n";
 		$hidden = '';
 		foreach ( $this->getElements() as $ele ) {
 			if ( !$ele->isHidden() ) {

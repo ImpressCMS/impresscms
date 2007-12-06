@@ -182,6 +182,7 @@ class XoopsMultiMailer extends PHPMailer {
 		} else {
 			$this->SetLanguage( 'en', XOOPS_ROOT_PATH . "/class/mail/phpmailer/language/" );
 		}
+		$this->PluginDir = XOOPS_ROOT_PATH."/class/mail/phpmailer/";
 	}
 
 	/**
@@ -197,6 +198,84 @@ class XoopsMultiMailer extends PHPMailer {
 
         return $formatted;
     }
+
+    /**
+    * Sends mail via SMTP using PhpSMTP (Author:
+    * Chris Ryan).  Returns bool.  Returns false if there is a
+    * bad MAIL FROM, or DATA input.
+    * Rebuild Header if there is a bad RCPT
+    * @access protected
+    * @return bool
+    */
+    function SmtpSend($header, $body) {
+        include_once($this->PluginDir . "class.smtp.php");
+        $error = "";
+        $bad_rcpt = array();
+
+        if (!$this->SmtpConnect()) {
+            return false;
+        }            
+
+        $smtp_from = ($this->Sender == "") ? $this->From : $this->Sender;
+        if (!$this->smtp->Mail($smtp_from)) {
+            $error = $this->Lang("from_failed") . $smtp_from;
+            $this->SetError($error);
+            $this->smtp->Reset();
+            return false;
+        }
+        // Attempt to send attach all recipients
+        for ($i = 0; $i < count($this->to); $i++) {
+            if (!$this->smtp->Recipient($this->to[$i][0])) {
+                $bad_rcpt[] = $this->to[$i][0];
+                unset($this->to[$i]);
+            }
+        }
+        for ($i = 0; $i < count($this->cc); $i++) {
+            if (!$this->smtp->Recipient($this->cc[$i][0])) {
+                $bad_rcpt[] = $this->cc[$i][0];
+                unset($this->cc[$i]);
+            }
+        }
+        for ($i = 0; $i < count($this->bcc); $i++) {
+            if (!$this->smtp->Recipient($this->bcc[$i][0])) {
+                $bad_rcpt[] = $this->bcc[$i][0];
+                unset($this->bcc[$i]);
+            }
+        }
+
+        // Create error message
+        $count = count($bad_rcpt);
+        if ($count > 0) {
+            for ($i = 0; $i < $count; $i++) {
+                if ($i != 0) { 
+                    $error .= ", ";
+                }
+                $error .= $bad_rcpt[$i];
+            }
+            
+            //To rebuild a correct header, it should to rebuild a correct adress array
+            $this->to = array_values($this->to);
+            $this->cc = array_values($this->cc);
+            $this->bcc = array_values($this->bcc);
+            $header = $this->CreateHeader();
+            
+            $error = $this->Lang("recipients_failed") . $error;
+            $this->SetError($error);
+        }
+        if (!$this->smtp->Data($header . $body)) {
+            $this->SetError($this->Lang("data_not_accepted"));
+            $this->smtp->Reset();
+            return false;
+        }
+        if ($this->SMTPKeepAlive == true) {
+            $this->smtp->Reset();
+        } else {
+            $this->SmtpClose();
+        }
+
+        return true;
+    }
 }
+
 
 ?>
