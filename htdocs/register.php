@@ -161,6 +161,7 @@ case 'newuser':
 		include 'include/registerform.php';
 		$reg_form->display();
 	}
+	$xoopsTpl->assign('xoops_pagetitle', _US_USERREG);
 	include 'footer.php';
 	break;
 case 'finish':
@@ -258,6 +259,7 @@ case 'finish':
 		include 'include/registerform.php';
 		$reg_form->display();
 	}
+	$xoopsTpl->assign('xoops_pagetitle', _US_USERREG);
 	include 'footer.php';
 	break;
 case 'register':
@@ -265,6 +267,7 @@ default:
 	include 'header.php';
 	include 'include/registerform.php';
 	$reg_form->display();
+	$xoopsTpl->assign('xoops_pagetitle', _US_USERREG);
 	include 'footer.php';
 	break;
 }

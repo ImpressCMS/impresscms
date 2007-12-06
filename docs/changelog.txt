@@ -51,3 +51,4 @@ Unreleased: XOOPS 2.0.18
 - Fixed bug #1784816 : XoopsTree::getNicePathFromId Add separator only if necessary (dugris)
 - Fixed : Check if $_SERVER[$key] AND $_ENV[$key] exists before turning over the value (xoops_getenv) (dugris)
 - Change XOOPS_VERSION number
+- added pagetitles to user.php, register.php, search.php (skenow)

@@ -61,6 +61,7 @@ if ($op == 'main') {
 		if ($xoopsConfigUser['allow_register'] == 1) {
 			$xoopsTpl->assign('allow_registration', $xoopsConfigUser['allow_register']);
 		}
+        $xoopsTpl->assign('xoops_pagetitle', _LOGIN);
         include 'footer.php';
     } elseif ( !empty($_GET['xoops_redirect']) ) {
         header('Location: '.$_GET['xoops_redirect']);

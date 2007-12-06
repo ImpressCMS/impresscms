@@ -97,6 +97,7 @@ if ($action == 'search') {
     include XOOPS_ROOT_PATH.'/header.php';
     include 'include/searchform.php';
     $search_form->display();
+    $xoopsTpl->assign('xoops_pagetitle', _SEARCH);
     include XOOPS_ROOT_PATH.'/footer.php';
     exit();
 }
@@ -202,6 +203,7 @@ switch ($action) {
     }
     include "include/searchform.php";
     $search_form->display();
+    $xoopsTpl->assign('xoops_pagetitle', _SR_SEARCHRESULTS); 
     break;
     case "showall":
     case 'showallbyuser':
@@ -217,6 +219,7 @@ switch ($action) {
         if (is_array($next_results) && $next_count == 1) {
             $has_next = true;
         }
+        $xoopsTpl->assign('xoops_pagetitle', _SR_SEARCHRESULTS);
         echo "<h4>"._SR_SEARCHRESULTS."</h4>\n";
         if ($action == 'showall') {
             echo _SR_KEYWORDS.':';
