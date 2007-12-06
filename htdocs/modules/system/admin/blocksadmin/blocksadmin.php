@@ -35,11 +35,11 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 // check if the user is authorised
 if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
     include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
-    
+
     # Adding dynamic block area/position system - TheRpLima - 2007-10-21
     $oldzones = XoopsBlock::getBlockPositions(true);
     #
-    
+
     function list_blocks()
     {
         global $xoopsUser, $xoopsConfig;
@@ -48,14 +48,12 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         $selmod = isset($_GET['selmod']) ? intval($_GET['selmod']) : 0;
         $selvis = isset($_GET['selvis']) ? intval($_GET['selvis']) : 2;
         $selgrp = isset($_GET['selgrp']) ? intval($_GET['selgrp']) : XOOPS_GROUP_USERS;
-        
+
         # Adding dynamic block area/position system - TheRpLima - 2007-10-21
-        echo "<h4 style='float:right; text-align:left;'><a href='admin.php?fct=blocksadmin&op=adminpblocks'>"._AM_BPADMIN."</a></h4>";
+		echo "<h4 style='float:right; text-align:left;'><a href='admin.php?fct=blocksadmin&op=adminpblocks'>"._AM_BPADMIN."</a></h4>";
         #
-        
-        echo "
-        <h4 style='text-align:left;'>"._AM_BADMIN."</h4>";
-        echo '<form action="admin.php" method="get">';
+        echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/blocksadmin/images/blocksadmin_big.png)">'._AM_BADMIN.'</div><br />';
+        echo '<br /><form action="admin.php" method="get">';
         $form = "<select size=\"1\" name=\"selmod\" onchange=\"location='".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&amp;selvis=$selvis&amp;selgrp=$selgrp&amp;selmod='+this.options[this.selectedIndex].value\">";
         $module_handler =& xoops_gethandler('module');
         $criteria = new CriteriaCompo(new Criteria('hasmain', 1));
@@ -105,20 +103,20 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         echo '<option value="1" '.$selvis1.'>'._YES.'</option>';
         echo '<option value="2" '.$selvis2.'>'._ALL.'</option>';
         echo '</select> <input type="submit" value="'._GO.'" name="selsubmit" />';
-        echo '</form>';
+        echo '</form><br />';
         # Adding dynamic block area/position system - TheRpLima - 2007-10-21
         /*
         echo "<form action='admin.php' name='blockadmin' method='post'>
         <table width='100%' class='outer' cellpadding='4' cellspacing='1'>
         <tr valign='middle'><th width='20%'>"._AM_BLKDESC."</th><th>"._AM_TITLE."</th><th>"._AM_MODULE."</th><th align='center' nowrap='nowrap'>"._AM_SIDE."<br />"._LEFT."-"._CENTER."-"._RIGHT."</th><th align='center'>"._AM_WEIGHT."</th><th align='center'>"._AM_VISIBLE."</th><th align='right'>"._AM_ACTION."</th></tr>
-        ";        
+        ";
         */
         echo "<form action='admin.php' name='blockadmin' method='post'>
         <table width='100%' class='outer' cellpadding='4' cellspacing='1'>
         <tr valign='middle'><th width='20%'>"._AM_BLKDESC."</th><th>"._AM_TITLE."</th><th>"._AM_MODULE."</th><th align='center' nowrap='nowrap'>"._AM_SIDE."</th><th align='center'>"._AM_WEIGHT."</th><th align='center'>"._AM_VISIBLE."</th><th align='right'>"._AM_ACTION."</th></tr>
-        ";        
+        ";
         #
-        
+
         if ($selvis == 2) $selvis = null;
         if ($selgrp == 0) {
             // get blocks that are not assigned to any groups
@@ -131,13 +129,13 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         $module_list2 =& $module_handler->getList();
         // for custom blocks
         $module_list2[0] = '&nbsp;';
-        
+
         # Activate the block clone function - TheRpLima - 2007-10-21
         $block_configs = get_block_configs() ;
         #
-        
+
         foreach (array_keys($block_arr) as $i) {
-        	
+
         	# Adding dynamic block area/position system - TheRpLima - 2007-10-21
             /*
             $sel0 = $sel1 = $ssel0 = $ssel1 = $ssel2 = $ssel3 = $ssel4 = $ssel5 = $ssel6 = $ssel7 = "";
@@ -185,7 +183,7 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
                 		<input type='radio' name='side[$i]' value='".XOOPS_CENTERBLOCK_BOTTOM."'$ssel7 />
                     <input type='radio' name='side[$i]' value='".XOOPS_CENTERBLOCK_BOTTOMRIGHT."'$ssel6 />
                 	</div>
-                </td><td class='$class' align='center'><input type='text' name='weight[$i]' value='".$block_arr[$i]->getVar("weight")."' size='5' maxlength='5' /></td><td class='$class' align='center' nowrap><input type='radio' name='visible[$i]' value='1'$sel1>"._YES."&nbsp;<input type='radio' name='visible[$i]' value='0'$sel0>"._NO."</td><td class='$class' align='right'><a href='admin.php?fct=blocksadmin&amp;op=edit&amp;bid=".$block_arr[$i]->getVar("bid")."'>"._EDIT."</a>";            
+                </td><td class='$class' align='center'><input type='text' name='weight[$i]' value='".$block_arr[$i]->getVar("weight")."' size='5' maxlength='5' /></td><td class='$class' align='center' nowrap><input type='radio' name='visible[$i]' value='1'$sel1>"._YES."&nbsp;<input type='radio' name='visible[$i]' value='0'$sel0>"._NO."</td><td class='$class' align='right'><a href='admin.php?fct=blocksadmin&amp;op=edit&amp;bid=".$block_arr[$i]->getVar("bid")."'>"._EDIT."</a>";
             */
             $sel0 = $sel1 = "";
             if ( $block_arr[$i]->getVar("visible") == 1 ) {
@@ -205,15 +203,15 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
             	  $sel = ' selected="selected"';
             	else
             	  $sel = ''  ;
-            $tit = (defined($oldzones[$k]['title']))?constant($oldzones[$k]['title']):$oldzones[$k]['title'];	  
+            $tit = (defined($oldzones[$k]['title']))?constant($oldzones[$k]['title']):$oldzones[$k]['title'];
             	$selb .= '<option value="'.$k.'"'.$sel.'>'.$tit.'</option>';
             }
             $selb .= '</select>';
             $name = $block_arr[$i]->getVar("name");
             echo "<tr valign='top'><td class='$class'>".$name."</td><td class='$class'>".$title."</td><td class='$class'>".$module_list2[$block_arr[$i]->getVar('mid')]."</td><td class='$class' align='center' nowrap='nowrap'>";
             echo $selb."</td><td class='$class' align='center'><input type='text' name='weight[$i]' value='".$block_arr[$i]->getVar("weight")."' size='5' maxlength='5' /></td><td class='$class' align='center' nowrap><input type='radio' name='visible[$i]' value='1'$sel1>"._YES."&nbsp;<input type='radio' name='visible[$i]' value='0'$sel0>"._NO."</td><td class='$class' align='right'><a href='admin.php?fct=blocksadmin&amp;op=edit&amp;bid=".$block_arr[$i]->getVar("bid")."'>"._EDIT."</a>";
-            #            
-            
+            #
+
             # Activate the block clone function - TheRpLima - 2007-10-21
             #if ($block_arr[$i]->getVar('block_type') != 'S') {
             #    echo "&nbsp;<a href='admin.php?fct=blocksadmin&amp;op=delete&amp;bid=".$block_arr[$i]->getVar("bid")."'>"._DELETE."</a>";
@@ -223,7 +221,7 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
             }
 			echo "&nbsp;<a href='admin.php?fct=blocksadmin&amp;op=clone&amp;bid=".$block_arr[$i]->getVar("bid")."'>"._CLONE."</a>" ;
             #
-            
+
             echo "
             <input type='hidden' name='oldside[$i]' value='".$block_arr[$i]->getVar('side')."' />
             <input type='hidden' name='oldweight[$i]' value='".$block_arr[$i]->getVar('weight')."' />

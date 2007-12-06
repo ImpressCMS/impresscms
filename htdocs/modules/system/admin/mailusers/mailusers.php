@@ -35,7 +35,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
     $op = "form";
 	$limit = 100;
-	
+
     if (!empty($_POST['op']) && $_POST['op'] == "send") {
         $op =  $_POST['op'];
     }
@@ -43,6 +43,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     if ( !$GLOBALS['xoopsSecurity']->check() || $op == "form" ) {
         xoops_cp_header();
         //OpenTable();
+        echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/mailusers/images/mailusers_big.png)">'._MD_AM_MLUS.'</div><br />';
         if ($op != "form" && $error_msg = $GLOBALS['xoopsSecurity']->getErrors(true)) {
             echo "<div class='errorMsg'>{$error_msg}</div>";
         }
@@ -140,6 +141,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         }
         $added_count = count($added);
         xoops_cp_header();
+		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/mailusers/images/mailusers_big.png)">'._MD_AM_MLUS.'</div><br />';
         //OpenTable();
         if ( $added_count > 0 ) {
             $myts =& MyTextSanitizer::getInstance();

@@ -50,7 +50,8 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $confcats = $confcat_handler->getObjects();
         $catcount = count($confcats);
         xoops_cp_header();
-        echo '<h4 style="text-align:left">'._MD_AM_SITEPREF.'</h4><ul>';
+        echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/preferences/images/preferences_big.png)">'._MD_AM_SITEPREF.'</div><br />';
+        //echo '<h4 style="text-align:left">'._MD_AM_SITEPREF.'</h4><ul>';
         for ($i = 0; $i < $catcount; $i++) {
             echo '<li>'.constant($confcats[$i]->getVar('confcat_name')).' [<a href="admin.php?fct=preferences&amp;op=show&amp;confcat_id='.$confcats[$i]->getVar('confcat_id').'">'._EDIT.'</a>]</li>';
         }
@@ -218,7 +219,8 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $form->addElement(new XoopsFormHidden('op', 'save'));
         $form->addElement(new XoopsFormButton('', 'button', _GO, 'submit'));
         xoops_cp_header();
-        echo '<a href="admin.php?fct=preferences">'. _MD_AM_PREFMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.constant($confcat->getVar('confcat_name')).'<br /><br />';
+        echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/preferences/images/preferences_big.png)"><a href="admin.php?fct=preferences">'. _MD_AM_PREFMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.constant($confcat->getVar('confcat_name')).'<br /><br /></div><br />';
+        //echo '<a href="admin.php?fct=preferences">'. _MD_AM_PREFMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.constant($confcat->getVar('confcat_name')).'<br /><br />';
         $form->display();
         xoops_cp_footer();
         exit();
@@ -435,11 +437,11 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 unset($new_value);
             }
         }
-        
+
         if (!empty($use_mysession) && $xoopsConfig['use_mysession'] == 0 && $session_name != '') {
             setcookie($session_name, session_id(), time()+(60*intval($session_expire)), '/',  '', 0);
         }
-        
+
         // Clean cached files, may take long time
         // User reigister_shutdown_function to keep running after connection closes so that cleaning cached files can be finished
         // Cache management should be performed on a separate page

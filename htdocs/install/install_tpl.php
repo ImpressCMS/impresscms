@@ -6,8 +6,8 @@
   <style type="text/css" media="all"><!-- @import url(../xoops.css); --></style>
   <link rel="stylesheet" type="text/css" media="all" href="style.css" />
 </head>
-<body style="margin: 0; padding: 0;">
-<form action='index.php' method='post'>
+<body>
+<form action='index.php' method='post' style=''>
 <table width="778" align="center" cellpadding="0" cellspacing="0" background="img/bg_table.gif">
   <tr>
     <td width="150"><img src="img/hbar_left.gif" width="100%" height="23" alt="" /></td>

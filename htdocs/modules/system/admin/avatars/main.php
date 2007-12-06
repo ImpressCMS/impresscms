@@ -43,7 +43,8 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     }
     if ($op == 'list') {
         xoops_cp_header();
-        echo '<h4 style="text-align:left">'._MD_AVATARMAN.'</h4>';
+        echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/avatars/images/avatars_big.png)">'._MD_AVATARMAN.'</div><br />';
+        //echo '<h4 style="text-align:left">'._MD_AVATARMAN.'</h4>';
         $avt_handler =& xoops_gethandler('avatar');
         $savatar_count = $avt_handler->getCount(new Criteria('avatar_type', 'S'));
         $cavatar_count = $avt_handler->getCount(new Criteria('avatar_type', 'C'));
@@ -67,13 +68,14 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $avt_handler =& xoops_gethandler('avatar');
         xoops_cp_header();
         $type = (isset($_GET['type']) && $_GET['type'] == 'C') ? 'C' : 'S';
-        echo '<a href="admin.php?fct=avatars">'. _MD_AVATARMAN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;';
+        echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/avatars/images/avatars_big.png)"><a href="admin.php?fct=avatars">'. _MD_AVATARMAN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;';
+        //echo '<a href="admin.php?fct=avatars">'. _MD_AVATARMAN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;';
         if ($type == 'S') {
             echo _MD_SYSAVATARS;
         } else {
             echo _MD_CSTAVATARS;
         }
-        echo '<br /><br />';
+        echo '</div><br /><br /><br />';
         $criteria = new Criteria('avatar_type', $type);
         $avtcount = $avt_handler->getCount($criteria);
         $start = isset($_GET['start']) ? intval($_GET['start']) : 0;

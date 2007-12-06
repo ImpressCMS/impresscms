@@ -40,6 +40,7 @@ function BannersAdmin()
     global $xoopsConfig, $xoopsModule;
     $xoopsDB =& Database::getInstance();
     xoops_cp_header();
+    echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/banners/images/banners_big.png)">'._MD_AM_BANS.'</div><br />';
     // Banners List
     echo "<a name='top'></a>";
     echo "<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";

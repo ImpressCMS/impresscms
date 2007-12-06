@@ -36,8 +36,10 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 function xoops_module_list()
 {
     xoops_cp_header();
+    echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/modulesadmin/images/modulesadmin_big.png)">'._MD_AM_MODADMIN.'</div><br />';
     echo "
-    <h4 style='text-align:left'>"._MD_AM_MODADMIN."</h4>
+
+
     <form action='admin.php' method='post' name='moduleadmin' id='moduleadmin'>
     <table class='outer' width='100%' cellpadding='4' cellspacing='1'>
     <tr align='center'><th>"._MD_AM_MODULE."</th><th>"._MD_AM_VERSION."</th><th>"._MD_AM_LASTUP."</th><th>"._MD_AM_ACTIVE."</th><th>"._MD_AM_ORDER."<br /><small>"._MD_AM_ORDER0."</small></th><th>"._MD_AM_ACTION."</th></tr>

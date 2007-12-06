@@ -69,7 +69,8 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $tplset_handler =& xoops_gethandler('tplset');
         $tplsets =& $tplset_handler->getObjects();
         xoops_cp_header();
-        echo '<h4 style="text-align:left">'._MD_TPLMAIN.'</h4>';
+        echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/tplsets/images/tplsets_big.png)">'._MD_TPLMAIN.'</div><br />';
+        //echo '<h4 style="text-align:left">'._MD_TPLMAIN.'</h4>';
         $installed = array();
         $tpltpl_handler =& xoops_gethandler('tplfile');
         $installed_mods = $tpltpl_handler->getModuleTplCount('default');
@@ -141,7 +142,8 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $module_handler =& xoops_gethandler('module');
         $module =& $module_handler->getByDirname($moddir);
         $modname = $module->getVar('name');
-        echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$tplset.'<br /><br />';
+        echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/tplsets/images/tplsets_big.png)"><a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$tplset.'<br /><br /></div><br />';
+        //echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$tplset.'<br /><br />';
 
         echo '<h4>'.$modname.'</h4><form action="admin.php" method="post" enctype="multipart/form-data"><table width="100%" class="outer" cellspacing="1"><tr><th width="40%">'._MD_FILENAME.'</th><th>'._MD_LASTMOD.'</th>';
         if ($tplset != 'default') {
@@ -467,7 +469,8 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $form->addElement(new XoopsFormHidden('fct', 'tplsets'));
         $form->addElement(new XoopsFormButton('', 'tpl_button', _SUBMIT, 'submit'));
         xoops_cp_header();
-        echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_CLONETHEME.'<br /><br />';
+        echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/tplsets/images/tplsets_big.png)"><a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_CLONETHEME.'<br /><br /></div><br />';
+        //echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_CLONETHEME.'<br /><br />';
         $form->display();
         xoops_cp_footer();
         break;

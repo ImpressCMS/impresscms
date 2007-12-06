@@ -37,8 +37,9 @@ function RankForumAdmin()
 {
     $db =& Database::getInstance();
     xoops_cp_header();
-    echo "<h4 style='text-align:left;'>"._AM_RANKSSETTINGS."</h4>
-    <table width='100%' class='outer' cellpadding='4' cellspacing='1'>
+    echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/userrank/images/userrank_big.png)">'._AM_RANKSSETTINGS.'</div><br />';
+    //echo "<h4 style='text-align:left;'>"._AM_RANKSSETTINGS."</h4>;
+    echo "<table width='100%' class='outer' cellpadding='4' cellspacing='1'>
     <tr align='center'>
     <th align='left'>"._AM_TITLE."</th>
     <th>"._AM_MINPOST."</th>
@@ -92,7 +93,8 @@ function RankForumEdit($rank_id)
     $db =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
     xoops_cp_header();
-    echo '<a href="admin.php?fct=userrank">'. _AM_RANKSSETTINGS .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITRANK.'<br /><br />';
+    echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/userrank/images/userrank_big.png)"><a href="admin.php?fct=userrank">'. _AM_RANKSSETTINGS .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITRANK.'<br /><br /></div><br />';
+    //echo '<a href="admin.php?fct=userrank">'. _AM_RANKSSETTINGS .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITRANK.'<br /><br />';
     $result = $db->query("SELECT * FROM ".$db->prefix("ranks")." WHERE rank_id=".$rank_id);
     $rank = $db->fetchArray($result);
     $rank['rank_title'] = $myts->makeTboxData4Edit($rank['rank_title']);

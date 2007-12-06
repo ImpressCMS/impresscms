@@ -38,7 +38,8 @@ function SmilesAdmin()
     $url_smiles = XOOPS_UPLOAD_URL;
     $myts =& MyTextSanitizer::getInstance();
     xoops_cp_header();
-    echo "<h4 style='text-align:left;'>"._AM_SMILESCONTROL."</h4>";
+    echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/smilies/images/smilies_big.png)">'._AM_SMILESCONTROL.'</div><br />';
+    //echo "<h4 style='text-align:left;'>"._AM_SMILESCONTROL."</h4>";
 
     if ($getsmiles = $db->query("SELECT * FROM ".$db->prefix("smiles"))) {
         if (($numsmiles = $db->getRowsNum($getsmiles)) == "0") {
@@ -86,6 +87,7 @@ function SmilesAdmin()
     $smiles['smile_form'] = _AM_ADDSMILE;
     $smiles['op'] = 'SmilesAdd';
     $smiles['id'] = '';
+    echo "<br />";
     include XOOPS_ROOT_PATH.'/modules/system/admin/smilies/smileform.php';
     $smile_form->display();
     xoops_cp_footer();

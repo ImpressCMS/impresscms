@@ -43,6 +43,7 @@ function displayUsers()
     global $xoopsDB, $xoopsConfig, $xoopsModule;
     $userstart = isset($_GET['userstart']) ? intval($_GET['userstart']) : 0;
     xoops_cp_header();
+    echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
     $member_handler =& xoops_gethandler('member');
     $usercount = $member_handler->getUserCount();
     $nav = new XoopsPageNav($usercount, 200, $userstart, "userstart", "fct=users");
@@ -108,6 +109,7 @@ function modifyUser($user)
 {
     global $xoopsDB, $xoopsConfig, $xoopsModule;
     xoops_cp_header();
+    echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
     $member_handler =& xoops_gethandler('member');
     $user =& $member_handler->getUser($user);
     if (is_object($user)) {
@@ -177,6 +179,7 @@ function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $us
     $edituser =& $member_handler->getUser($uid);
     if ($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new Criteria('uname', $uname)) > 0) {
         xoops_cp_header();
+        echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
         echo 'User name '.$uname.' already exists';
         xoops_cp_footer();
     } else {

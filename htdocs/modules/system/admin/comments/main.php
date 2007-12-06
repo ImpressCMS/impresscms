@@ -111,8 +111,9 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $form .= '</select>&nbsp;<input type="hidden" name="fct" value="comments" /><input type="submit" value="'._GO.'" name="selsubmit" /></form>';
 
         xoops_cp_header();
-        echo '<h4 style="text-align:left">'._MD_AM_COMMMAN.'</h4>';
-        echo $form;
+        echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/comments/images/comments_big.png)">'._MD_AM_COMMMAN.'</div><br />';
+        //echo '<h4 style="text-align:left">'._MD_AM_COMMMAN.'</h4>';
+        echo $form."<br />";
         echo '<table width="100%" class="outer" cellspacing="1"><tr><th colspan="8">'._MD_AM_LISTCOMM.'</th></tr><tr align="center"><td class="head">&nbsp;</td><td class="head" align="left"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_title&amp;order='.$otherorder.'&amp;module='.$module.'&amp;status='.$status.'&amp;start='.$start.'&amp;limit='.$limit.'">'._CM_TITLE.'</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_created&amp;order='.$otherorder.'&amp;module='.$module.'&amp;status='.$status.'&amp;start='.$start.'&amp;limit='.$limit.'">'._CM_POSTED.'</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_uid&amp;order='.$otherorder.'&amp;module='.$module.'&amp;status='.$status.'&amp;start='.$start.'&amp;limit='.$limit.'">'._CM_POSTER.'</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_ip&amp;order='.$otherorder.'&amp;module='.$module.'&amp;status='.$status.'&amp;start='.$start.'&amp;limit='.$limit.'">IP</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_modid&amp;order='.$otherorder.'&amp;module='.$module.'&amp;status='.$status.'&amp;start='.$start.'&amp;limit='.$limit.'">'._MD_AM_MODULE.'</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_status&amp;order='.$otherorder.'&amp;module='.$module.'&amp;status='.$status.'&amp;start='.$start.'&amp;limit='.$limit.'">'._CM_STATUS.'</a></td><td class="head">&nbsp;</td></tr>';
         $class = 'even';
         foreach (array_keys($comments) as $i) {
@@ -127,7 +128,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             $icon = $comments[$i]->getVar('com_icon');
             $icon = empty( $icon ) ? '/images/icons/no_posticon.gif' : ( '/images/subject/' . htmlspecialchars( $icon, ENT_QUOTES ) );
             $icon = '<img src="' . XOOPS_URL . $icon  . '" alt="" />';
-            
+
             echo '<tr align="center"><td class="'.$class.'">'.$icon.'</td><td class="'.$class.'" align="left"><a href="admin.php?fct=comments&amp;op=jump&amp;com_id='.$i.'">'. $comments[$i]->getVar('com_title').'</a></td><td class="'.$class.'">'.formatTimestamp($comments[$i]->getVar('com_created'), 'm').'</td><td class="'.$class.'">'.$poster_uname.'</td><td class="'.$class.'">'.$comments[$i]->getVar('com_ip').'</td><td class="'.$class.'">'.$module_array[$comments[$i]->getVar('com_modid')].'</td><td class="'.$class.'">'.$status_array2[$comments[$i]->getVar('com_status')].'</td><td class="'.$class.'" align="right"><a href="admin/comments/comment_edit.php?com_id='.$i.'">'._EDIT.'</a> <a href="admin/comments/comment_delete.php?com_id='.$i.'">'._DELETE.'</a></td></tr>';
         }
         echo '</table>';

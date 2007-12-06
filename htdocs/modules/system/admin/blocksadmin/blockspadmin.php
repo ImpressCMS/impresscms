@@ -38,15 +38,15 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
 	if ($act == 'list'){
     xoops_cp_header();
 		listPblocks();
-    xoops_cp_footer();			
+    xoops_cp_footer();
 	}elseif ($act == 'edit'){
 	  $pbid = (isset($_GET['pbid']) && $_GET['pbid'] != '')?$_GET['pbid']:((isset($_POST['pbid']) && $_POST['pbid'] != '')?$_POST['pbid']:0);
     xoops_cp_header();
 	  edit_pblock($pbid);
-    xoops_cp_footer();		  
+    xoops_cp_footer();
 	}elseif ($act == 'delete'){
 	  $pbid = (isset($_GET['pbid']) && $_GET['pbid'] != '')?$_GET['pbid']:((isset($_POST['pbid']) && $_POST['pbid'] != '')?$_POST['pbid']:0);
-    xoops_cp_header();		
+    xoops_cp_header();
 	  xoops_confirm(array( 'pbid' => $pbid, 'act'=>'delete_ok'),'admin.php?fct=blocksadmin&op=adminpblocks', _AM_BPMSG3);
     xoops_cp_footer();
 	}elseif ($act == 'delete_ok'){
@@ -55,8 +55,8 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
 	}elseif ($act == 'save'){
 	  save_pblock($_POST);
 	}elseif ($act == 'edit_ok'){
-	  save_pblock($_POST,true);	  
-	}  
+	  save_pblock($_POST,true);
+	}
 } else {
     echo "Acess Denied";
 }
@@ -64,13 +64,12 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
 function listPblocks(){
 	include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
 	$oldzones = XoopsBlock::getBlockPositions(true);
-  echo "
-        <h4 style='float:right; text-align:left;'><a href='admin.php?fct=blocksadmin'>"._AM_BADMIN."</a></h4>";
-	echo "
-        <h4 style='text-align:left;'>"._AM_BPADMIN."</h4>";
-	
+  echo "<h4 style='float:right; text-align:left;'><a href='admin.php?fct=blocksadmin'>"._AM_BADMIN."</a></h4>";
+	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/blocksadmin/images/blocksadmin_big.png)">'._AM_BADMIN.'</div><br />';
+	//echo "<h4 style='text-align:left;'>"._AM_BPADMIN."</h4>";
+
 	echo '<p>'._AM_BPHELP.'</p><br /><br />';
-	
+
 	echo "<table width='100%' class='outer' cellpadding='4' cellspacing='1'>
         <tr valign='middle'><th>"._AM_BPCOD."</th><th>"._AM_BPNAME."</th><th>"._AM_TITLE."</th><th width='30%'>"._AM_BPDESC."</th><th align='right' width='12%'>"._AM_ACTION."</th></tr>
         ";
@@ -109,46 +108,46 @@ function listPblocks(){
 
 function edit_pblock($pbid){
 	include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
-	$oldzones = XoopsBlock::getBlockPositions(true);	
+	$oldzones = XoopsBlock::getBlockPositions(true);
 
 	echo '<a href="admin.php?fct=blocksadmin&op=adminpblocks">'. _AM_BPADMIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITPBLOCK.'<br /><br />';
 
 	$pblock = array(
   	'form_title' => _AM_EDITPBLOCK,
 	  'pbid' => $pbid,
-	  'pname' => $oldzones[$pbid]['pname'],	  
+	  'pname' => $oldzones[$pbid]['pname'],
 	  'title' => $oldzones[$pbid]['title'],
 	  'description' => $oldzones[$pbid]['description'],
 	  'act' => 'edit_ok'
-	  );	
-	
+	  );
+
 	include XOOPS_ROOT_PATH.'/modules/system/admin/blocksadmin/pblockform.php';
-  $form->display();	
+  $form->display();
 }
 
 function save_pblock($dados,$edit=false){
 	$db =& Database::getInstance();
-	
+
 	if (!$edit)
 	  $sql = 'INSERT INTO '.$db->prefix('block_positions').' (pname,title,description,block_default,block_type) VALUES ("'.$dados['pname'].'","'.$dados['title'].'","'.$dados['description'].'","0","L")';
-	else 
+	else
 	  $sql = 'UPDATE '.$db->prefix('block_positions').' SET pname="'.$dados['pname'].'", title="'.$dados['title'].'", description="'.$dados['description'].'", block_default="0", block_type="L" WHERE id='.$dados['pbid'];
-	
+
 	if ($db->queryF($sql))
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG1);
-	else 
-	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG2);	  
+	else
+	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG2);
 }
 
 function del_pblock($pbid){
 	$db =& Database::getInstance();
-	
+
 	$sql = 'DELETE FROM '.$db->prefix('block_positions').' WHERE id='.$pbid;
-	
+
 	if ($db->queryF($sql))
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG1);
-	else 
-	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG2);	
+	else
+	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG2);
 }
 
 ?>
