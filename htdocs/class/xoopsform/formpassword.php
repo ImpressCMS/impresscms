@@ -1,5 +1,5 @@
 <?php
-// $Id: formpassword.php 1151 2007-12-04 15:43:01Z phppp $
+// $Id: formpassword.php 2 2005-11-02 18:23:29Z skalpa $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -82,7 +82,7 @@ class XoopsFormPassword extends XoopsFormElement {
 	 * @param	int		$value		Initial value of the field. 
 	 * 								<b>Warning:</b> this is readable in cleartext in the page's source!
 	 */
-	function XoopsFormPassword($caption, $name, $size, $maxlength, $value = ""){
+	function XoopsFormPassword($caption, $name, $size, $maxlength, $value=""){
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_size = intval($size);
@@ -104,18 +104,17 @@ class XoopsFormPassword extends XoopsFormElement {
 	 * 
 	 * @return	int
 	 */
-	function getMaxlength() {
+	function getMaxlength(){
 		return $this->_maxlength;
 	}
 
 	/**
-	 * Get the "value" attribute
+	 * Get the initial value
 	 * 
-	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
+	function getValue(){
+		return $this->_value;
 	}
 
 	/**
@@ -123,7 +122,7 @@ class XoopsFormPassword extends XoopsFormElement {
 	 * 
 	 * @patam	$value	string
 	 */
-	function setValue($value) {
+	function setValue($value){
 		$this->_value = $value;
 	}
 
@@ -132,9 +131,8 @@ class XoopsFormPassword extends XoopsFormElement {
 	 * 
 	 * @return	string	HTML
 	 */
-	function render() {
-    	$ele_name = $this->getName();
-		return "<input type='password' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".$this->getValue()."' ".$this->getExtra()." />";
+	function render(){
+		return "<input type='password' name='".$this->getName()."' id='".$this->getName()."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".$this->getValue()."'".$this->getExtra()." />";
 	}
 }
 ?>

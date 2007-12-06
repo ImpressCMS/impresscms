@@ -1,5 +1,5 @@
 <?php
-// $Id: formtextdateselect.php 1151 2007-12-04 15:43:01Z phppp $
+// $Id: formtextdateselect.php 506 2006-05-26 23:10:37Z skalpa $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -60,11 +60,9 @@ class XoopsFormTextDateSelect extends XoopsFormText
 
 	function render()
 	{
-    	$ele_name = $this->getName();
-		$ele_value = $this->getValue(false);
-		$jstime = formatTimestamp( $ele_value, 'F j Y, H:i:s' );
+		$jstime = formatTimestamp( $this->getValue(), 'F j Y, H:i:s' );
 		include_once XOOPS_ROOT_PATH.'/include/calendarjs.php';
-		return "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $ele_value)."' ".$this->getExtra()." /><input type='reset' value=' ... ' onclick='return showCalendar(\"".$ele_name."\");'>";
+		return "<input type='text' name='".$this->getName()."' id='".$this->getName()."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $this->getValue())."'".$this->getExtra()." /><input type='reset' value=' ... ' onclick='return showCalendar(\"".$this->getName()."\");'>";
 	}
 }
 ?>

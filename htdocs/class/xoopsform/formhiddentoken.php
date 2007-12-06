@@ -1,5 +1,5 @@
 <?php
-// $Id: formhiddentoken.php 1148 2007-12-04 14:57:24Z phppp $ //  ------------------------------------------------------------------------ //
+// $Id: formhiddentoken.php 1048 2007-09-10 08:01:47Z dugris $ //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
 //                       <http://www.xoops.org/>                             //
@@ -49,7 +49,7 @@ class XoopsFormHiddenToken extends XoopsFormHidden {
      * @param   string  $name   "name" attribute
      */
     function XoopsFormHiddenToken($name = 'XOOPS_TOKEN', $timeout = 0){
-        $this->XoopsFormHidden($name . '_REQUEST', $GLOBALS['xoopsSecurity']->createToken($timeout, $name));
+        $this->XoopsFormHidden($name . '_REQUEST', $GLOBALS['xoopsSecurity']->createToken($name, $timeout));
     }
 }
 ?>

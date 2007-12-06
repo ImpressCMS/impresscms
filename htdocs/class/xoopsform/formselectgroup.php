@@ -1,5 +1,5 @@
 <?php
-// $Id: formselectgroup.php 1151 2007-12-04 15:43:01Z phppp $
+// $Id: formselectgroup.php 2 2005-11-02 18:23:29Z skalpa $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -65,7 +65,7 @@ class XoopsFormSelectGroup extends XoopsFormSelect
 	 * @param	int		$size	        Number or rows. "1" makes a drop-down-list.
      * @param	bool    $multiple       Allow multiple selections?
 	 */
-	function XoopsFormSelectGroup($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
+	function XoopsFormSelectGroup($caption, $name, $include_anon=false, $value=null, $size=1, $multiple=false)
 	{
 	    $this->XoopsFormSelect($caption, $name, $value, $size, $multiple);
 		$member_handler =& xoops_gethandler('member');

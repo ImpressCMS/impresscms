@@ -1,5 +1,5 @@
 <?php
-// $Id: formlabel.php 1151 2007-12-04 15:43:01Z phppp $
+// $Id: formlabel.php 1029 2007-09-09 03:49:25Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -62,20 +62,19 @@ class XoopsFormLabel extends XoopsFormElement {
 	 * @param	string	$caption	Caption
 	 * @param	string	$value		Text
 	 */
-	function XoopsFormLabel($caption = "", $value = "", $name = ""){
+	function XoopsFormLabel($caption="", $value="", $name=""){
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_value = $value;
 	}
 
 	/**
-	 * Get the "value" attribute
+	 * Get the text
 	 * 
-	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
+	function getValue(){
+		return $this->_value;
 	}
 
 	/**
@@ -83,7 +82,7 @@ class XoopsFormLabel extends XoopsFormElement {
 	 * 
 	 * @return	string
 	 */
-	function render() {
+	function render(){
 		return $this->getValue();
 	}
 }

@@ -93,13 +93,6 @@ class MyTextSanitizer
 	 */
 	function getSmileys()
 	{
-		if (count($this->smileys) == 0) {
-			if ($getsmiles = $GLOBALS["xoopsDB"]->query("SELECT * FROM ".$GLOBALS["xoopsDB"]->prefix("smiles").' WHERE display=1')) {
-				while ($smiles = $GLOBALS["xoopsDB"]->fetchArray($getsmiles)) {
-					array_push($this->smileys, $smiles);
-				}
-			}
-		}
 		return $this->smileys;
 	}
 
@@ -112,8 +105,19 @@ class MyTextSanitizer
      */
     function smiley($message)
 	{
-		foreach ($this->smileys as $smile) {
-			$message = str_replace($smile['code'], '<img src="'.XOOPS_UPLOAD_URL.'/'.htmlspecialchars($smile['smile_url']).'" alt="" />', $message);
+		$db =& Database::getInstance();
+		if (count($this->smileys) == 0) {
+			if ($getsmiles = $db->query("SELECT * FROM ".$db->prefix("smiles"))){
+				while ($smiles = $db->fetchArray($getsmiles)) {
+					$message = str_replace($smiles['code'], '<img src="'.XOOPS_UPLOAD_URL.'/'.htmlspecialchars($smiles['smile_url']).'" alt="" />', $message);
+					array_push($this->smileys, $smiles);
+				}
+			}
+		}
+		elseif (is_array($this->smileys)) {
+			foreach ($this->smileys as $smile) {
+				$message = str_replace($smile['code'], '<img src="'.XOOPS_UPLOAD_URL.'/'.htmlspecialchars($smile['smile_url']).'" alt="" />', $message);
+			}
 		}
 		return $message;
 	}

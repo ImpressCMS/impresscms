@@ -1,5 +1,5 @@
 <?php
-// $Id: formcheckbox.php 1151 2007-12-04 15:43:01Z phppp $
+// $Id: formcheckbox.php 1029 2007-09-09 03:49:25Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -64,43 +64,28 @@ class XoopsFormCheckBox extends XoopsFormElement {
 	var $_value = array();
 
 	/**
-     * HTML to seperate the elements
-	 * @var	string  
-	 * @access  private
-	 */
-	var $_delimeter;
-
-	/**
 	 * Constructor
 	 *
      * @param	string  $caption
      * @param	string  $name
      * @param	mixed   $value  Either one value as a string or an array of them.
 	 */
-	function XoopsFormCheckBox($caption, $name, $value = null, $delimeter = "&nbsp;"){
+	function XoopsFormCheckBox($caption, $name, $value = null, $delimeter = ""){
 		$this->setCaption($caption);
 		$this->setName($name);
 		if (isset($value)) {
 			$this->setValue($value);
 		}
-		$this->_delimeter = $delimeter;
+		$this->delimeter = $delimeter;
 	}
 
 	/**
 	 * Get the "value"
 	 *
-	 * @param	bool    $encode To sanitizer the text?
      * @return	array
 	 */
-	function getValue($encode = false) {
-    	if (!$encode) {
-        	return $this->_value;
-    	}
-    	$value = array();
-    	foreach ($this->_value as $val) {
-		    $value[] = $val ? htmlspecialchars($val, ENT_QUOTES) : $val;
-    	}
-    	return $value;
+	function getValue(){
+		return $this->_value;
 	}
 
 	/**
@@ -108,7 +93,7 @@ class XoopsFormCheckBox extends XoopsFormElement {
 	 *
      * @param	array
 	 */
-	function setValue($value) {
+	function setValue($value){
 		$this->_value = array();
 		if (is_array($value)) {
 			foreach ($value as $v) {
@@ -125,7 +110,7 @@ class XoopsFormCheckBox extends XoopsFormElement {
      * @param	string  $value
      * @param	string  $name
 	 */
-	function addOption($value, $name = "") {
+	function addOption($value, $name=""){
 		if ($name != "") {
 			$this->_options[$value] = $name;
 		} else {
@@ -138,9 +123,9 @@ class XoopsFormCheckBox extends XoopsFormElement {
 	 *
      * @param	array   $options    Associative array of value->name pairs
 	 */
-	function addOptionArray($options) {
+	function addOptionArray($options){
 		if ( is_array($options) ) {
-			foreach ( $options as $k => $v ) {
+			foreach ( $options as $k=>$v ) {
 				$this->addOption($k, $v);
 			}
 		}
@@ -149,28 +134,10 @@ class XoopsFormCheckBox extends XoopsFormElement {
 	/**
 	 * Get an array with all the options
 	 *
-	 * @param	bool    $encode To sanitizer the text?
      * @return	array   Associative array of value->name pairs
 	 */
-	function getOptions($encode = false) {
-    	if (!$encode) {
-        	return $this->_options;
-    	}
-    	$value = array();
-    	foreach ($this->_options as $val => $name) {
-		    $value[htmlspecialchars($val, ENT_QUOTES)] = htmlspecialchars($name, ENT_QUOTES);
-    	}
-    	return $value;
-	}
-
-	/**
-	 * Get the delimiter of this group
-	 * 
-	 * @param	bool    $encode To sanitizer the text?
-     * @return	string  The delimiter
-	 */
-	function getDelimeter($encode = false) {
-		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
+	function getOptions(){
+		return $this->_options;
 	}
 
 	/**
@@ -178,23 +145,18 @@ class XoopsFormCheckBox extends XoopsFormElement {
 	 *
      * @return	string
 	 */
-	function render() {
+	function render(){
 		$ret = "";
-		$ele_name = $this->getName();
-		$ele_value = $this->getValue();
-		$ele_options = $this->getOptions();
-		$ele_extra = $this->getExtra();
-		$ele_delimeter = $this->getDelimeter();
-		if ( count($ele_options) > 1 && substr($ele_name, -2, 2) != "[]" ) {
-			$ele_name = $ele_name."[]";
-			$this->setName($ele_name);
+		if ( count($this->getOptions()) > 1 && substr($this->getName(), -2, 2) != "[]" ) {
+			$newname = $this->getName()."[]";
+			$this->setName($newname);
 		}
-		foreach ( $ele_options as $value => $name ) {
-			$ret .= "<input type='checkbox' name='".$ele_name."' value='".$value."'";
-			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
+		foreach ( $this->getOptions() as $value => $name ) {
+			$ret .= "<input type='checkbox' name='".$this->getName()."' value='".$value."'";
+			if (count($this->getValue()) > 0 && in_array($value, $this->getValue())) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= " ".$ele_extra." />".$name.$ele_delimeter."\n";
+			$ret .= $this->getExtra()." />".$name.$this->delimeter."\n";
 		}
 		return $ret;
 	}

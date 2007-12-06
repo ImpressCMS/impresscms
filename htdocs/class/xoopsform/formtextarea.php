@@ -1,5 +1,5 @@
 <?php
-// $Id: formtextarea.php 1151 2007-12-04 15:43:01Z phppp $
+// $Id: formtextarea.php 2 2005-11-02 18:23:29Z skalpa $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -80,7 +80,7 @@ class XoopsFormTextArea extends XoopsFormElement {
      * @param	int     $rows       number of rows
      * @param	int     $cols       number of columns   
 	 */
-	function XoopsFormTextArea($caption, $name, $value = "", $rows = 5, $cols = 50) {
+	function XoopsFormTextArea($caption, $name, $value="", $rows=5, $cols=50){
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_rows = intval($rows);
@@ -93,7 +93,7 @@ class XoopsFormTextArea extends XoopsFormElement {
 	 * 
      * @return	int
 	 */
-	function getRows() {
+	function getRows(){
 		return $this->_rows;
 	}
 
@@ -102,18 +102,17 @@ class XoopsFormTextArea extends XoopsFormElement {
 	 * 
      * @return	int
 	 */
-	function getCols() {
+	function getCols(){
 		return $this->_cols;
 	}
 
 	/**
 	 * Get initial content
 	 * 
-	 * @param	bool    $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compat
      * @return	string
 	 */
-	function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value) : $this->_value;
+	function getValue(){
+		return $this->_value;
 	}
 
 	/**
@@ -131,7 +130,7 @@ class XoopsFormTextArea extends XoopsFormElement {
      * @return	sting HTML
 	 */
 	function render(){
-		return "<textarea name='".$this->getName()."' id='".$this->getName()."' rows='".$this->getRows()."' cols='".$this->getCols()."' ".$this->getExtra().">".$this->getValue()."</textarea>";
+		return "<textarea name='".$this->getName()."' id='".$this->getName()."' rows='".$this->getRows()."' cols='".$this->getCols()."'".$this->getExtra().">".$this->getValue()."</textarea>";
 	}
 }
 ?>

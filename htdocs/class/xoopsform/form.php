@@ -1,5 +1,5 @@
 <?php
-// $Id: form.php 1151 2007-12-04 15:43:01Z phppp $
+// $Id: form.php 1029 2007-09-09 03:49:25Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -28,7 +28,7 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-// public abstract
+// public abstruct
 /**
  * 
  * 
@@ -36,8 +36,7 @@
  * @subpackage  form
  * 
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @author	    Taiwen Jiang    <phppp@users.sourceforge.net>
- * @copyright	copyright (c) 2000-2007 XOOPS.org
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 
 
@@ -45,8 +44,7 @@
  * Abstract base class for forms
  * 
  * @author	Kazumi Ono	<onokazu@xoops.org>
- * @author  Taiwen Jiang    <phppp@users.sourceforge.net>
- * @copyright	copyright (c) 2000-2007 XOOPS.org
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
  * 
  * @package     kernel
  * @subpackage  form
@@ -87,9 +85,9 @@ class XoopsForm {
 
 	/**
      * extra information for the <form> tag
-	 * @var array  
+	 * @var string  
 	 */
-	var $_extra = array();
+	var $_extra;
 
 	/**
      * required elements
@@ -108,7 +106,7 @@ class XoopsForm {
      * @param   string  $method "method" attribute for the <form> tag
      * @param   bool    $addtoken whether to add a security token to the form
 	 */
-	function XoopsForm($title, $name, $action, $method = "post", $addtoken = false) {
+	function XoopsForm($title, $name, $action, $method="post", $addtoken=false){
 		$this->_title = $title;
 		$this->_name = $name;
 		$this->_action = $action;
@@ -121,33 +119,28 @@ class XoopsForm {
 	/**
 	 * return the title of the form
      * 
-	 * @param	bool    $encode To sanitizer the text?
      * @return	string
 	 */
-	function getTitle($encode = false) {
-		return $encode ? htmlspecialchars($this->_title, ENT_QUOTES) : $this->_title;
+	function getTitle(){
+		return $this->_title;
 	}
 
 	/**
 	 * get the "name" attribute for the <form> tag
      * 
-     * Deprecated, to be refactored
-     *
-	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getName($encode = true) {
-		return $encode ? htmlspecialchars($this->_name, ENT_QUOTES) : $this->_name;
+	function getName(){
+		return $this->_name;
 	}
 
 	/**
 	 * get the "action" attribute for the <form> tag
 	 * 
-	 * @param	bool    $encode To sanitizer the text?
      * @return	string
 	 */
-	function getAction($encode = true) {
-		return $encode ? htmlspecialchars($this->_action, ENT_QUOTES) : $this->_action;
+	function getAction(){
+		return $this->_action;
 	}
 
 	/**
@@ -156,7 +149,7 @@ class XoopsForm {
      * @return	string
 	 */
 	function getMethod(){
-		return ( strtolower($this->_method) == "get" ) ? "GET" : "POST";
+		return $this->_method;
 	}
 
 	/**
@@ -165,7 +158,7 @@ class XoopsForm {
      * @param	object  &$formElement    reference to a {@link XoopsFormElement}
      * @param	bool    $required       is this a "required" element?
 	 */
-	function addElement(&$formElement, $required = false) {
+	function addElement(&$formElement, $required = false){
         if ( is_string( $formElement ) ) {
             $this->_elements[] = $formElement;
         } elseif ( is_subclass_of($formElement, 'xoopsformelement') ) {
@@ -191,7 +184,7 @@ class XoopsForm {
 	 * @param	bool	get elements recursively?
      * @return	array   array of {@link XoopsFormElement}s
 	 */
-	function &getElements($recurse = false) {
+	function &getElements($recurse = false){
 		if (!$recurse) {
 			return $this->_elements;
 		} else {
@@ -220,7 +213,8 @@ class XoopsForm {
 	 * 
      * @return	array   array of form element names
 	 */
-	function getElementNames() {
+	function getElementNames()
+	{
 		$ret = array();
 		$elements =& $this->getElements(true);
 		$count = count($elements);
@@ -236,15 +230,15 @@ class XoopsForm {
 	 * @param  string  $name	"name" attribute assigned to a {@link XoopsFormElement}
      * @return object  reference to a {@link XoopsFormElement}, false if not found
 	 */
-	function &getElementByName($name) {
+	function &getElementByName($name){
 		$elements = $this->getElements(true);
 		$count = count($elements);
 		for ($i = 0; $i < $count; $i++) {
-			if ($name == $elements[$i]->getName(false)) {
+			if ($name == $elements[$i]->getName()) {
 				return $elements[$i];
 			}
 		}
-		$elt = null;
+		$elt = false;
 		return $elt;
 	}
 
@@ -272,7 +266,7 @@ class XoopsForm {
 			$elements =& $this->getElements(true);
 			$count = count($elements);
 			for ($i = 0; $i < $count; $i++) {
-				$name = $elements[$i]->getName(false);
+				$name = $elements[$i]->getName();
 				if ($name && isset($values[$name]) && method_exists($elements[$i], 'setValue')) {
 					$elements[$i]->setValue($values[$name]);
 				}
@@ -284,13 +278,12 @@ class XoopsForm {
 	 * Gets the "value" attribute of a form element
 	 * 
 	 * @param	string 	$name	the "name" attribute of a form element
-	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string 	the "value" attribute assigned to a form element, null if not set
 	 */
-	function getElementValue($name, $encode = false) {
+	function getElementValue($name){
 		$ele =& $this->getElementByName($name);
 		if (is_object($ele) && method_exists($ele, 'getValue')) {
-			return $ele->getValue($encode);
+			return $ele->getValue($value);
 		}
 		return;
 	}
@@ -298,18 +291,17 @@ class XoopsForm {
 	/**
 	 * gets the "value" attribute of all form elements
 	 * 
-	 * @param	bool    $encode To sanitizer the text?
 	 * @return	array 	array of name/value pairs assigned to form elements
 	 */
-	function getElementValues($encode = false) {
+	function getElementValues(){
 		// will not use getElementByName() for performance..
 		$elements =& $this->getElements(true);
 		$count = count($elements);
 		$values = array();
 		for ($i = 0; $i < $count; $i++) {
-			$name = $elements[$i]->getName(false);
+			$name = $elements[$i]->getName();
 			if ($name && method_exists($elements[$i], 'getValue')) {
-				$values[$name] =& $elements[$i]->getValue($encode);
+				$values[$name] =& $elements[$i]->getValue();
 			}
 		}
 		return $values;
@@ -320,10 +312,8 @@ class XoopsForm {
 	 *
 	 * @param	string  $extra  extra attributes for the <form> tag
 	 */
-	function setExtra($extra) {
-    	if (!empty($extra)) {
-    		$this->_extra[] = $extra;
-		}
+	function setExtra($extra){
+		$this->_extra = " ".$extra;
 	}
 
 	/**
@@ -331,8 +321,11 @@ class XoopsForm {
 	 *
 	 * @return	string
 	 */
-	function &getExtra() {
-		$extra = empty($this->_extra) ? null : implode(" ", $this->_extra);
+	function &getExtra(){
+		if (isset($this->_extra)) {
+			return $this->_extra;
+		}
+		$extra = null;
 		return $extra;
 	}
 
@@ -341,7 +334,7 @@ class XoopsForm {
 	 *
 	 * @param	object  &$formElement    reference to a {@link XoopsFormElement}
 	 */
-	function setRequired(&$formElement) {
+	function setRequired(&$formElement){
 		$this->_required[] =& $formElement;
 	}
 
@@ -350,7 +343,7 @@ class XoopsForm {
 	 * 
      * @return	array   array of {@link XoopsFormElement}s 
 	 */
-	function &getRequired() {
+	function &getRequired(){
 		return $this->_required;
 	}
 
@@ -362,7 +355,7 @@ class XoopsForm {
 	 * @param	string  $extra  extra information for the break
 	 * @abstract
 	 */
-	function insertBreak($extra = null) {
+	function insertBreak($extra = null){
 	}
 
 	/**
@@ -372,13 +365,13 @@ class XoopsForm {
 	 *
 	 * @abstract
 	 */
-	function render() {
+	function render(){
 	}
 
 	/**
 	 * displays rendered form
 	 */
-	function display() {
+	function display(){
 		echo $this->render();
 	}
 
@@ -409,6 +402,7 @@ class XoopsForm {
 		if ( $withtags ) {
 			$js .= "\n<!-- Start Form Validation JavaScript //-->\n<script type='text/javascript'>\n<!--//\n";
 		}
+		$myts =& MyTextSanitizer::getInstance();
 		$formname = $this->getName();
 		$js .= "function xoopsFormValidate_{$formname}() { myform = window.document.{$formname}; ";
 		$elements = $this->getElements( true );
@@ -423,36 +417,33 @@ class XoopsForm {
 		}
 		return $js;
 	}
-	
 	/**
 	 * assign to smarty form template instead of displaying directly
 	 *
 	 * @param	object  &$tpl    reference to a {@link Smarty} object
 	 * @see     Smarty
 	 */
-	function assign(&$tpl) {
+	function assign(&$tpl){
 		$i = -1;
 		$elements = array();
 		foreach ( $this->getElements() as $ele ) {
 			++$i;
-			if (is_string( $ele )) {
+			if(is_string( $ele )) {
 				$elements[$i]['body']	= $ele;
 				continue;
 			}
-			$ele_name = $ele->getName();
-			$ele_description = $ele->getDescription();
-		    $n = $ele_name ? $ele_name : $i;
-			$elements[$n]['name']       = $ele_name;
+		    $n = ($ele->getName() != "") ? $ele->getName() : $i;
+			$elements[$n]['name']       = $ele->getName();
 			$elements[$n]['caption']    = $ele->getCaption();
 			$elements[$n]['body']       = $ele->render();
 			$elements[$n]['hidden']     = $ele->isHidden();
 			$elements[$n]['required']   = $ele->isRequired();
-			if ($ele_description != '') {
-			    $elements[$n]['description']  = $ele_description;
+			if ($ele->getDescription() != '') {
+			    $elements[$n]['description']  = $ele->getDescription();
 			}
 		}
 		$js = $this->renderValidationJS();
-		$tpl->assign($this->getName(), array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(),  'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_'.$this->getName().'();" '.$this->getExtra(), 'javascript' => $js, 'elements' => $elements));
+		$tpl->assign($this->getName(), array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(),  'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_'.$this->getName().'();"'.$this->getExtra(), 'javascript' => $js, 'elements' => $elements));
 	}
 }
 ?>
