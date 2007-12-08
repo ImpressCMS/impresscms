@@ -181,6 +181,12 @@ $xoops =& new xos_kernel_Xoops2();
     $config_handler =& xoops_gethandler('config');
     $xoopsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
 
+    // #################### Easiest ML by Gijoe #################
+	$im_multilanguageConfig =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
+	if ($im_multilanguageConfig['ml_enable']) {
+		require XOOPS_ROOT_PATH.'/include/im_multilanguage.php' ;
+	}
+
     // Disable gzip compression if PHP is run under CLI mode
     // To be refactored
     if (empty($_SERVER['SERVER_NAME']) || substr(PHP_SAPI, 0, 3) == 'cli') {

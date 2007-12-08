@@ -246,4 +246,15 @@ define("_MD_AM_RANKW","Rank image max width (pixel)");
 define("_MD_AM_RANKH","Rank image max height (pixel)");
 define("_MD_AM_RANKMAX","Rank image max filesize (byte)");
 
+// ImpressCMS 0.5
+define("_MD_AM_MULTILANGUAGE","Multilanguage settings");
+define("_MD_AM_ML_ENABLE","Enable Multilanguage");
+define("_MD_AM_ML_ENABLEDSC","Set to Yes in order to enable multilanguage throughout the site.");
+define("_MD_AM_ML_TAGS","Multilanguage tags");
+define("_MD_AM_ML_TAGSDSC","Enter the tags to be used on this site, separated by a comma. For example, this would be used to define the tages to be used for english and french : en,fr");
+define("_MD_AM_ML_NAMES","Language names");
+define("_MD_AM_ML_NAMESDSC","Enter the names of the language to use, separated by a comma");
+define("_MD_AM_ML_CAPTIONS","Language captions");
+define("_MD_AM_ML_NAMESDSC","Enter the captions you would like to use for these languages");
+
 ?>

@@ -13,6 +13,9 @@ Unreleased: Version 0.1
 - Added : Added a new Database Driver (MySQLi). (young-pee)
 - Added : Added debugging functions included in the XOOPS boot process to allow easy output of debugging lines by core and modules developers (include/debug_functions.php) (malanciault)
 - Added : Addition of the XoopsEditors framework with default editor (malanciault)
+- Added : Integration of the Easiest Multilanguage originally created by GIJOE (malanciault)
+- Added : Configuration options to turn on or off and configure the Multilanguage on the site (malanciault)
+- Added : Integrating some flags image to be used by the multilanguage feature
 
 - Improved: When the User registration is Off... all links to register.php are not shown.
 
