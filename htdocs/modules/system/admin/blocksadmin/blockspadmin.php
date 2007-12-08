@@ -135,8 +135,10 @@ function save_pblock($dados,$edit=false){
 
 	if ($db->queryF($sql))
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG1);
+	  exit();
 	else
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG2);
+	  exit();
 }
 
 function del_pblock($pbid){
@@ -146,8 +148,10 @@ function del_pblock($pbid){
 
 	if ($db->queryF($sql))
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG1);
+	  exit();
 	else
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG2);
+	  exit();
 }
 
 ?>

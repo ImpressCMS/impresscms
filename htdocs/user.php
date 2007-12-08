@@ -65,8 +65,10 @@ if ($op == 'main') {
         include 'footer.php';
     } elseif ( !empty($_GET['xoops_redirect']) ) {
         header('Location: '.$_GET['xoops_redirect']);
+		exit();
     } else {
         header('Location: '.XOOPS_URL.'/userinfo.php?uid='.$xoopsUser->getVar('uid'));
+		exit();
     }
     exit();
 }
@@ -104,9 +106,11 @@ if ($op == 'actv') {
     }
     if ($thisuser->getVar('actkey') != $actkey) {
         redirect_header('index.php',5,_US_ACTKEYNOT);
+		exit();
     } else {
         if ($thisuser->getVar('level') > 0 ) {
             redirect_header( 'user.php', 5, _US_ACONTACT, false );
+			exit();
         } else {
             if (false != $member_handler->activateUser($thisuser)) {
                 $config_handler =& xoops_gethandler('config');
@@ -132,9 +136,11 @@ if ($op == 'actv') {
                     include 'footer.php';
                 } else {
                     redirect_header( 'user.php', 5, _US_ACTLOGIN, false );
+					exit();
                 }
             } else {
                 redirect_header('index.php',5,'Activation failed!');
+				exit();
             }
         }
     }
@@ -167,8 +173,10 @@ if ($op == 'delete') {
                 $online_handler->destroy($del_uid);
                 xoops_notification_deletebyuser($del_uid);
                 redirect_header('index.php', 5, _US_BEENDELED);
+				exit();
             }
             redirect_header('index.php',5,_US_NOPERMISS);
+			exit();
         }
         exit();
     }

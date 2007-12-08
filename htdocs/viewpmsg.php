@@ -31,6 +31,7 @@ include_once "mainfile.php";
 if (!is_object($xoopsUser)) {
     $errormessage = _PM_SORRY."<br />"._PM_PLZREG."";
     redirect_header("user.php",2,$errormessage);
+	exit();
 } else {
     $pm_handler =& xoops_gethandler('privmessage');
     if (isset($_POST['delete_messages']) && isset($_POST['msg_id'])) {

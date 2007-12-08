@@ -269,6 +269,7 @@ function clickbanner($bid)
                 list($clickurl) = $xoopsDB->fetchRow($bresult);
                 $xoopsDB->queryF("update ".$xoopsDB->prefix("banner")." set clicks=clicks+1 where bid=$bid");
                 header ('Location: '.$clickurl);
+				exit();
             }
         }
     }

@@ -68,4 +68,5 @@ if ($module->getVar('hasadmin')) {
 $backlink = ($backlink)?$backlink:XOOPS_URL.'/admin.php';
 
 redirect_header($backlink, 2, implode("<br />", $msg));
+exit();
 ?>

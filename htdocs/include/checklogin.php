@@ -105,10 +105,13 @@ if (false != $user) {
     $notification_handler->doLoginMaintenance($user->getVar('uid'));
 
     redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);
+	exit();
 }elseif(empty($_POST['xoops_redirect'])){
 	redirect_header(XOOPS_URL.'/user.php', 5, $xoopsAuth->getHtmlErrors());
+	exit();
 }else{
 	redirect_header(XOOPS_URL.'/user.php?xoops_redirect='.urlencode(trim($_POST['xoops_redirect'])), 5, $xoopsAuth->getHtmlErrors(), false);
+	exit();
 }
 exit();
 

@@ -60,6 +60,7 @@ case 'cancel':
 
     // FIXME: does this always go back to correct location??
     redirect_header ('index.php');
+	exit();
     break;
 
 case 'list':
@@ -177,6 +178,7 @@ case 'delete_ok':
 
     if (empty($_POST['del_not'])) {
         redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
+		exit();
     }
     include XOOPS_ROOT_PATH.'/header.php';
     $hidden_vars = array('uid'=>$uid, 'delete_ok'=>1, 'del_not'=>$_POST['del_not']);
@@ -194,9 +196,11 @@ case 'delete_ok':
 case 'delete':
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('notifications.php', 2, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		exit();
     }
     if (empty($_POST['del_not'])) {
         redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
+		exit();
     }
     $notification_handler =& xoops_gethandler('notification');
     foreach ($_POST['del_not'] as $n_array) {
@@ -208,6 +212,7 @@ case 'delete':
         }
     }
     redirect_header('notifications.php', 2, _NOT_DELETESUCCESS);
+	exit();
     break;
 default:
     break;

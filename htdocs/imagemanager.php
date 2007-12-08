@@ -251,6 +251,7 @@ if ($op == 'doupload') {
         exit();
     }
     header('location: imagemanager.php?cat_id='.$imgcat_id.'&target='.$target);
+	exit();
 }
 
 ?>

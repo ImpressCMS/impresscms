@@ -127,7 +127,10 @@ class XoopsAuthProvisionning {
         		$member_handler->addUserToGroup($groupid, $newuser->getVar('uid'));
         	$newuser->unsetNew();
         	return $newuser;
-        } else redirect_header(XOOPS_URL.'/user.php', 5, $newuser->getHtmlErrors());         
+        } else {
+			redirect_header(XOOPS_URL.'/user.php', 5, $newuser->getHtmlErrors());
+			exit(); 
+		}        
     	return $ret;	
 	}
 	
@@ -148,7 +151,10 @@ class XoopsAuthProvisionning {
         }
 		if ($member_handler->insertUser($xoopsUser)) {
         	return $xoopsUser;
-        } else redirect_header(XOOPS_URL.'/user.php', 5, $xoopsUser->getHtmlErrors());         
+        } else {
+			redirect_header(XOOPS_URL.'/user.php', 5, $xoopsUser->getHtmlErrors());
+			exit();
+		}         
     	return $ret;
 	}
 

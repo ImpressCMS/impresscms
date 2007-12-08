@@ -604,6 +604,7 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
             $db->query($sql);
         }
         redirect_header('admin.php?fct=blocksadmin&amp;t='.time(),1,_AM_DBUPDATED);
+		exit();
     }
     function get_block_configs()
     {

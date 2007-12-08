@@ -134,9 +134,11 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $tplset = trim($_GET['tplset']);
         if ($tplset == '') {
             redirect_header('admin.php?fct=tplsets',1);
+			exit();
         }
         if ($moddir == '') {
             redirect_header('admin.php?fct=tplsets',1);
+			exit();
         }
         xoops_cp_header();
         $module_handler =& xoops_gethandler('module');
@@ -277,6 +279,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case 'edittpl':
         if ($id <= 0) {
             redirect_header('admin.php?fct=tplsets', 1);
+			exit();
         }
         $tpltpl_handler =& xoops_gethandler('tplfile');
         $tplfile =& $tpltpl_handler->get($id, true);
@@ -300,6 +303,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case 'edittpl_go':
         if ($id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $tpltpl_handler =& xoops_gethandler('tplfile');
         $tplfile =& $tpltpl_handler->get($id, true);
@@ -331,10 +335,13 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         if (count($err) == 0) {
             if (!empty($moddir)) {
                 redirect_header('admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$tplfile->getVar('tpl_id'), 2, _MD_AM_DBUPDATED);
+				exit();
             } elseif (isset($redirect)) {
                 redirect_header('admin.php?fct=tplsets&amp;tplset='.$tplfile->getVar('tpl_tplset').'&amp;op='.trim($redirect), 2, _MD_AM_DBUPDATED);
+				exit();
             } else {
                 redirect_header('admin.php?fct=tplsets', 2, _MD_AM_DBUPDATED);
+				exit();
             }
         }
         xoops_cp_header();
@@ -350,6 +357,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case 'deletetpl_go':
         if ($id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $tpltpl_handler =& xoops_gethandler('tplfile');
         $tplfile =& $tpltpl_handler->get($id);
@@ -376,6 +384,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         }
         if (count($err) == 0) {
             redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tplfile->getVar('tpl_module').'&amp;tplset='.urlencode($tplfile->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
+			exit();
         }
         xoops_cp_header();
         xoops_error($err);
@@ -390,6 +399,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case 'delete_go':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $msgs = array();
         if ($tplset != 'default' && $tplset != $xoopsConfig['template_set']) {
@@ -477,6 +487,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case 'clone_go':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $msgs = array();
         $tplset = trim($tplset);
@@ -830,6 +841,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case 'uploadtpl_go':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $tpltpl_handler =& xoops_gethandler('tplfile');
         $tpl =& $tpltpl_handler->get($tpl_id);
@@ -866,6 +878,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 exit();
             }
             redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tpl->getVar('tpl_module').'&amp;tplset='.urlencode($tpl->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
+			exit();
         }
         break;
     // upload new file
@@ -892,6 +905,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case 'uploadtpl2_go':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         include_once XOOPS_ROOT_PATH.'/class/uploader.php';
         $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
@@ -934,6 +948,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             exit();
         }
         redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$moddir.'&amp;tplset='.urlencode($tplset), 2, _MD_AM_DBUPDATED);
+		exit();
         break;
     case 'download':
         if (isset($tplset)) {
@@ -1005,6 +1020,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case 'generatetpl_go':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $tpltpl_handler =& xoops_gethandler('tplfile');
         $tplfile =& $tpltpl_handler->find('default', $type, null, $moddir, $file, true);
@@ -1027,6 +1043,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         }
         if (!isset($err)) {
             redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$newtpl->getVar('tpl_module').'&amp;tplset='.urlencode($newtpl->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
+			exit();
         }
         xoops_cp_header();
         xoops_error($err);
@@ -1041,6 +1058,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case 'generatemod_go':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $tpltpl_handler =& xoops_gethandler('tplfile');
         xoops_cp_header();
@@ -1098,6 +1116,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case 'uploadtar_go':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         include_once XOOPS_ROOT_PATH.'/class/uploader.php';
         $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('application/x-gzip', 'application/gzip', 'application/gzip-compressed', 'application/x-gzip-compressed', 'application/x-tar', 'application/x-tar-compressed', 'application/octet-stream'), 1000000);
@@ -1217,6 +1236,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case 'previewtpl':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         require_once XOOPS_ROOT_PATH.'/class/template.php';
         $myts =& MyTextsanitizer::getInstance();
@@ -1284,6 +1304,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case 'update':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         include_once XOOPS_ROOT_PATH.'/class/uploader.php';
         $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('text/html', 'application/x-cdf'), 200000);
@@ -1357,6 +1378,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case 'importtpl_go':
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $tpltpl_handler =& xoops_gethandler('tplfile');
         $tplfile = '';
@@ -1401,6 +1423,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             exit();
         }
         redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tplfile->getVar('tpl_module').'&amp;tplset='.urlencode($tplfile->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
+		exit();
         break;
     default:
         break;

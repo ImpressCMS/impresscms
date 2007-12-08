@@ -63,5 +63,6 @@ if (count($image) > 0) {
 } else {
 	header('Content-type: image/gif');
 	readfile(XOOPS_UPLOAD_PATH.'/blank.gif');
+	exit();
 }
 ?>

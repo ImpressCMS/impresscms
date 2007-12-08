@@ -72,16 +72,19 @@ case "RankForumDelGo":
     $rank_id = isset($_POST['rank_id']) ? intval($_POST['rank_id']) : 0;
     if ($rank_id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=userrank", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		exit();
     }
     $db =& Database::getInstance();
     $sql = sprintf("DELETE FROM %s WHERE rank_id = %u", $db->prefix("ranks"), $rank_id);
     $db->query($sql);
     redirect_header("admin.php?fct=userrank&amp;op=ForumAdmin",1,_AM_DBUPDATED);
+	exit();
     break;
 
 case "RankForumAdd":
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=userrank", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		exit();
     }
     $db =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
@@ -110,6 +113,7 @@ case "RankForumAdd":
         xoops_cp_footer();
     } else {
         redirect_header("admin.php?fct=userrank&amp;op=RankForumAdmin",3,_AM_DBUPDATED);
+		exit();
     }
     break;
 
@@ -117,6 +121,7 @@ case "RankForumSave":
     $rank_id = isset($_POST['rank_id']) ? intval($_POST['rank_id']) : 0;
     if ($rank_id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=userrank", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		exit();
     }
     $db =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
@@ -154,6 +159,7 @@ case "RankForumSave":
             }
         }
         redirect_header("admin.php?fct=userrank&amp;op=RankForumAdmin",1,_AM_DBUPDATED);
+		exit();
     }
     break;
 

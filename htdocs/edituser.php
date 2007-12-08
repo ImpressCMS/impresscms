@@ -144,6 +144,7 @@ if ($op == 'saveuser') {
             include XOOPS_ROOT_PATH.'/footer.php';
         } else {
             redirect_header('userinfo.php?uid='.$uid, 1, _US_PROFUPDATED);
+			exit();
         }
         exit();
     }
@@ -334,6 +335,7 @@ if ($op == 'avatarupload') {
                     $xoopsDB->query($sql);
                     $avt_handler->addUser($avatar->getVar('avatar_id'), $xoopsUser->getVar('uid'));
                     redirect_header('userinfo.php?t='.time().'&amp;uid='.$xoopsUser->getVar('uid'),0, _US_PROFUPDATED);
+					exit();
                 }
             }
         }
@@ -397,5 +399,6 @@ if ($op == 'avatarchoose') {
         }
     }
     redirect_header('userinfo.php?uid='.$uid, 0, _US_PROFUPDATED);
+	exit();
 }
 ?>

@@ -68,6 +68,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $confcat =& $confcat_handler->get($confcat_id);
         if (!is_object($confcat)) {
             redirect_header('admin.php?fct=preferences', 1);
+			exit();
         }
         include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
         include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
@@ -237,6 +238,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $count = count($config);
         if ($count < 1) {
             redirect_header('admin.php?fct=preferences', 1);
+			exit();
         }
         include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
         $form = new XoopsThemeForm(_MD_AM_MODCONFIG, 'pref_form', 'admin.php?fct=preferences', 'post', true);
@@ -347,6 +349,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     if ($op == 'save') {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header("admin.php?fct=preferences", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         require_once(XOOPS_ROOT_PATH.'/class/template.php');
         $xoopsTpl = new XoopsTpl();
@@ -454,12 +457,15 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             register_shutdown_function( 'xoops_module_write_admin_menu', xoops_module_get_admin_menu() );
         } else {
 	        $redirect = XOOPS_URL . "/admin.php";
+			exit();
         }
 
         if (isset($redirect) && $redirect != '') {
             redirect_header($redirect, 2, _MD_AM_DBUPDATED);
+			exit();
         } else {
             redirect_header("admin.php?fct=preferences",2,_MD_AM_DBUPDATED);
+			exit();
         }
     }
 }

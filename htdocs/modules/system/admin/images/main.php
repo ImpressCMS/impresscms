@@ -104,11 +104,13 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $imgcat_id = intval($imgcat_id);
         if ($imgcat_id <= 0) {
             redirect_header('admin.php?fct=images',1);
+			exit();
         }
         $imgcat_handler = xoops_gethandler('imagecategory');
         $imagecategory =& $imgcat_handler->get($imgcat_id);
         if (!is_object($imagecategory)) {
             redirect_header('admin.php?fct=images',1);
+			exit();
         }
         $image_handler = xoops_gethandler('image');
         xoops_cp_header();
@@ -158,6 +160,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     if ($op == 'save') {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $count = count($image_id);
         if ($count > 0) {
@@ -188,16 +191,19 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             }
         }
         redirect_header('admin.php?fct=images',2,_MD_AM_DBUPDATED);
+		exit();
     }
 
     if ($op == 'addfile') {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $imgcat_handler =& xoops_gethandler('imagecategory');
         $imagecategory =& $imgcat_handler->get(intval($imgcat_id));
         if (!is_object($imagecategory)) {
             redirect_header('admin.php?fct=images',1);
+			exit();
         }
         include_once XOOPS_ROOT_PATH.'/class/uploader.php';
         $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png', 'image/bmp'), $imagecategory->getVar('imgcat_maxsize'), $imagecategory->getVar('imgcat_maxwidth'), $imagecategory->getVar('imgcat_maxheight'));
@@ -242,11 +248,13 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             exit();
         }
         redirect_header('admin.php?fct=images',2,_MD_AM_DBUPDATED);
+		exit();
     }
 
     if ($op == 'addcat') {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $imgcat_handler =& xoops_gethandler('imagecategory');
         $imagecategory =& $imgcat_handler->create();
@@ -295,16 +303,19 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             unset($imagecategoryperm);
         }
         redirect_header('admin.php?fct=images',2,_MD_AM_DBUPDATED);
+		exit();
     }
 
     if ($op == 'editcat') {
         if ($imgcat_id <= 0) {
             redirect_header('admin.php?fct=images',1);
+			exit();
         }
         $imgcat_handler = xoops_gethandler('imagecategory');
         $imagecategory =& $imgcat_handler->get($imgcat_id);
         if (!is_object($imagecategory)) {
             redirect_header('admin.php?fct=images',1);
+			exit();
         }
         include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
         $imagecategoryperm_handler =& xoops_gethandler('groupperm');
@@ -333,11 +344,13 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     if ($op == 'updatecat') {
         if (!$GLOBALS['xoopsSecurity']->check() || $imgcat_id <= 0) {
             redirect_header('admin.php?fct=images',1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $imgcat_handler = xoops_gethandler('imagecategory');
         $imagecategory =& $imgcat_handler->get($imgcat_id);
         if (!is_object($imagecategory)) {
             redirect_header('admin.php?fct=images',1);
+			exit();
         }
         $imagecategory->setVar('imgcat_name', $imgcat_name);
         $imgcat_display = empty($imgcat_display) ? 0 : 1;
@@ -387,6 +400,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             unset($imagecategoryperm);
         }
         redirect_header('admin.php?fct=images',2,_MD_AM_DBUPDATED);
+		exit();
     }
 
     if ($op == 'delfile') {
@@ -399,15 +413,18 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     if ($op == 'delfileok') {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $image_id = intval($image_id);
         if ($image_id <= 0) {
             redirect_header('admin.php?fct=images',1);
+			exit();
         }
         $image_handler =& xoops_gethandler('image');
         $image =& $image_handler->get($image_id);
         if (!is_object($image)) {
             redirect_header('admin.php?fct=images',1);
+			exit();
         }
         if (!$image_handler->delete($image)) {
             xoops_cp_header();
@@ -417,6 +434,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         }
         @unlink(XOOPS_UPLOAD_PATH.'/'.$image->getVar('image_name'));
         redirect_header('admin.php?fct=images',2,_MD_AM_DBUPDATED);
+		exit();
     }
 
     if ($op == 'delcat') {
@@ -429,15 +447,18 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     if ($op == 'delcatok') {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			exit();
         }
         $imgcat_id = intval($imgcat_id);
         if ($imgcat_id <= 0) {
             redirect_header('admin.php?fct=images',1);
+			exit();
         }
         $imgcat_handler = xoops_gethandler('imagecategory');
         $imagecategory =& $imgcat_handler->get($imgcat_id);
         if (!is_object($imagecategory)) {
             redirect_header('admin.php?fct=images',1);
+			exit();
         }
         if ($imagecategory->getVar('imgcat_type') != 'C') {
             xoops_cp_header();
@@ -467,6 +488,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             exit();
         }
         redirect_header('admin.php?fct=images',2,_MD_AM_DBUPDATED);
+		exit();
     }
 }
 ?>
