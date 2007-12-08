@@ -1,0 +1,11 @@
+/**
+* $Id: notfound.css,v 1.2 2007/08/08 12:10:29 marcan Exp $
+* Module: NotFound
+* Author: The SmartFactory <www.smartfactory.ca>
+* Licence: GNU
+*/
+
+#notfound_title {padding-top: 5px; padding-bottom: 5px; font-size: 20px; font-weight: bold;}
+#notfound_text {padding-top: 5px; padding-bottom: 5px; text-align: left;}
+#notfound_searchform{padding-top: 5px; line-height: 5px; padding-bottom: 0px;}
+#notfound li{color: black; padding-top: 5px; padding-bottom: 5px;}

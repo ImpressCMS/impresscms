@@ -1,0 +1,17 @@
+<div style="display: none;"><{$ref_smartfactory}></div>
+<div id="notfound">
+	<h1><{$smarty.const._NOTFOUND_404_TITLE}></h1>
+	<div id="notfound_text"><{$not_found_text}></div>
+	
+	<ul>
+		<li><{$smarty.const._NOTFOUND_SEARCH_OUR_SITE}><br />
+		<form id="notfound_searchform" style="vertical-align: middle;" action="<{$xoops_url}>/search.php" method="get">
+		  <input name="query" size="14" style="vertical-align: middle;" type="text">
+		  <input name="action" value="results" type="hidden"> 
+		  <input src="<{$xoops_url}>/images/search2.gif" style="vertical-align: middle;" alt="<{$smarty.const._NOTFOUND_SEARCH}>" onclick="this.form.submit()" type="image">
+		  &nbsp;&nbsp;<a href="<{$xoops_url}>/search.php"><{$smarty.const._NOTFOUND_ADVANCED_SEARCH}></a>
+		</form></li>
+		<li><{$smarty.const._NOTFOUND_START_AGAIN}></li>
+		<li><{$not_found_contact}></li>
+	</ul>
+</div>
