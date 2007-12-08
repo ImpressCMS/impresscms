@@ -29,12 +29,12 @@ h6 {font-size: .8em;}
 
 /* Start Center Column */
 /* WARNING - THIS HAS BEEN CHANGED - TRASH - NOT USED ANYMORE}*/
-#xo-page { padding: 5px 0 0 0; margin: 0 10px;} 
+#xo-page { padding: 5px 0 0 0; margin: 0 10px;}
 
 #xo-canvas.leftcolumn-layout #xo-page, #xo-canvas.threecolumns-layout #xo-page {margin-left: 190px;}
 #xo-canvas.rightcolumn-layout #xo-page, #xo-canvas.threecolumns-layout #xo-page {  margin-right: 190px;}
-#xo-canvas-bottom, #xo-canvas-footer {}		
-			
+#xo-canvas-bottom, #xo-canvas-footer {}
+
 #xo-page th {background-color: #639ACE; color: #fff; vertical-align: middle;}
 #xo-topcenterblocks, #xo-bottomcenterblocks {}
 #xo-topcenterblocks .xo-blocktitle h3, #xo-bottomcenterblocks .xo-blocktitle h3{ margin: 5px; padding-left: 10px; background-color: inherit; color: #639ACE; font-weight: bold; border-bottom: 1px solid #ddd;}
@@ -50,7 +50,7 @@ h6 {font-size: .8em;}
 
 #xo-page .xo-block {	margin: 5px; border: 1px solid #ddd;}
 
-.xo-content {text-align: justify; padding-top: 10px;	padding-bottom: 10px; clear:both;} 
+.xo-content {text-align: justify; padding-top: 10px;	padding-bottom: 10px; clear:both;}
 /* End Center Column */
 
 /* Start Right Column */
@@ -146,3 +146,8 @@ th { background-color:#639ACE !important;}
 .comDateCaption {font-weight: bold; font-style: normal; font-size: .8em}
 .signature { font-size:.8em; font-style:italic;}
 
+hr .clear {
+border:0px solid #FEFEFE;
+background-color:#FEFEFE
+height:1px;
+}
