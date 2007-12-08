@@ -65,7 +65,7 @@ function listPblocks(){
 	include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
 	$oldzones = XoopsBlock::getBlockPositions(true);
   echo "<h4 style='float:right; text-align:left;'><a href='admin.php?fct=blocksadmin'>"._AM_BADMIN."</a></h4>";
-	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/blocksadmin/images/blocksadmin_big.png)">'._AM_BADMIN.'</div><br />';
+	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/blocksadmin/images/blocksadmin_big.png)">'._AM_BPADMIN.'</div><br />';
 	//echo "<h4 style='text-align:left;'>"._AM_BPADMIN."</h4>";
 
 	echo '<p>'._AM_BPHELP.'</p><br /><br />';
