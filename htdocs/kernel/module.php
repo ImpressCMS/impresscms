@@ -169,7 +169,7 @@ class XoopsModule extends XoopsObject
 
     /**
      * Get the admin menu for the module
-     *
+     * 
      * @return	string
      */
     function &getAdminMenu()
@@ -352,26 +352,26 @@ class XoopsModuleHandler extends XoopsObjectHandler
      */
     function &getByDirname($dirname)
     {
-        static $_cachedModule_mid;
-        static $_cachedModule_dirname;
-		if (!empty($_cachedModule_dirname[$dirname])) {
-			return $_cachedModule_dirname[$dirname];
-		} else {
-			$module = false;
-        	$sql = "SELECT * FROM ".$this->db->prefix('modules')." WHERE dirname = '".trim($dirname)."'";
-        	if (!$result = $this->db->query($sql)) {
-            	return $module;
-        	}
-        	$numrows = $this->db->getRowsNum($result);
-        	if ($numrows == 1) {
-            	$module = new XoopsModule();
-            	$myrow = $this->db->fetchArray($result);
-            	$module->assignVars($myrow);
-				$_cachedModule_dirname[$dirname] =& $module;
-				$_cachedModule_mid[$module->getVar('mid')] =& $module;
-        	}
-        	return $module;
-		}
+    	static $_cachedModule_mid;
+    	static $_cachedModule_dirname;
+    	if (!empty($_cachedModule_dirname[$dirname]) && $_cachedModule_dirname[$dirname]->dirname()==$dirname){
+    		return $_cachedModule_dirname[$dirname];
+    	} else {
+    		$module = false;
+    		$sql = "SELECT * FROM ".$this->db->prefix('modules')." WHERE dirname = '".trim($dirname)."'";
+    		if (!$result = $this->db->query($sql)) {
+    			return $module;
+    		}
+    		$numrows = $this->db->getRowsNum($result);
+    		if ($numrows == 1) {
+    			$module = new XoopsModule();
+    			$myrow = $this->db->fetchArray($result);
+    			$module->assignVars($myrow);
+    			$_cachedModule_dirname[$dirname] =& $module;
+    			$_cachedModule_mid[$module->getVar('mid')] =& $module;
+    		}
+    		return $module;
+    	}
     }
 
     /**
@@ -382,10 +382,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
      **/
     function insert(&$module)
     {
-        /**
-        * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-        */
-        if (!is_a($module, 'xoopsmodule')) {
+        if (strtolower(get_class($module)) != 'xoopsmodule') {
             return false;
         }
         if (!$module->isDirty()) {
@@ -430,7 +427,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
         /**
         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
         */
-        if (!is_a($module, 'xoopsmodule')) {
+        if (strtolower(get_class($module)) != 'xoopsmodule') {
             return false;
         }
         $sql = sprintf("DELETE FROM %s WHERE mid = %u", $this->db->prefix('modules'), $module->getVar('mid'));
