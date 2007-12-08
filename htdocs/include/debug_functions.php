@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-function xoops_debug_display($msg, $exit=false)
+function im_debug($msg, $exit=false)
 {
 	echo "<div style='padding: 5px; color: red; font-weight: bold'>debug :: $msg</div>";
 	if ($exit) {
@@ -33,15 +33,15 @@ function xoops_debug_display($msg, $exit=false)
 	}
 }
 
-function xoops_debug_dump($text)
+function im_debug_vardump($text)
 {
 	if (class_exists('MyTextSanitizer')) {
 		$myts = MyTextSanitizer::getInstance();
-		xoops_debug_display($myts->displayTarea(var_export($text, true)));
+		im_debug($myts->displayTarea(var_export($text, true)));
 	} else {
 		$text = var_export($text, true);
 		$text = preg_replace("/(\015\012)|(\015)|(\012)/","<br />",$text);
-		xoops_debug_display($text);
+		im_debug($text);
 	}
 }
 ?>
