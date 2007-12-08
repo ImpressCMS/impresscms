@@ -15,7 +15,7 @@ Unreleased: Version 0.1
 - Added : Addition of the XoopsEditors framework with default editor (malanciault)
 - Added : Integration of the Easiest Multilanguage originally created by GIJOE (malanciault)
 - Added : Configuration options to turn on or off and configure the Multilanguage on the site (malanciault)
-- Added : Integrating some flags image to be used by the multilanguage feature
+- Added : Integrating some flags image to be used by the multilanguage feature (malanicault)
 
 - Improved: When the User registration is Off... all links to register.php are not shown.
 
