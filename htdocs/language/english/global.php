@@ -211,8 +211,5 @@ define('_SWITCH_TO','Switch to');
 define('_SYSTEM','System');
 define("_SELECT_LANGUAGE", "Language:");
 
-define("_COPY_XOOPS", "XOOPS &copy; 2001-2006 <a href='http://www.xoops.org/' target='_blank'>The XOOPS Project</a>");
-
-define("_POWERED_BY", 'Powered by <a href="http://www.xoops.org">XOOPS</a> based on <a href="http://www.xoops.org">' . XOOPS_VERSION . '</a>' );
 define('_AD_NEWS','News');
 ?>
