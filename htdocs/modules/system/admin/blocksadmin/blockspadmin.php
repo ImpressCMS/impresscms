@@ -133,12 +133,13 @@ function save_pblock($dados,$edit=false){
 	else
 	  $sql = 'UPDATE '.$db->prefix('block_positions').' SET pname="'.$dados['pname'].'", title="'.$dados['title'].'", description="'.$dados['description'].'", block_default="0", block_type="L" WHERE id='.$dados['pbid'];
 
-	if ($db->queryF($sql))
+	if ($db->queryF($sql)){
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG1);
 	  exit();
-	else
+	}else{
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG2);
 	  exit();
+	}  
 }
 
 function del_pblock($pbid){
@@ -146,12 +147,13 @@ function del_pblock($pbid){
 
 	$sql = 'DELETE FROM '.$db->prefix('block_positions').' WHERE id='.$pbid;
 
-	if ($db->queryF($sql))
+	if ($db->queryF($sql)){
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG1);
 	  exit();
-	else
+	}else{
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG2);
 	  exit();
+	}  
 }
 
 ?>
