@@ -1,5 +1,5 @@
 <?php
-// $Id: formradioyn.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id: formradioyn.php 1151 2007-12-04 15:43:01Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -66,7 +66,7 @@ class XoopsFormRadioYN extends XoopsFormRadio
 	 * @param	string	$yes		String for "Yes"
 	 * @param	string	$no			String for "No"
 	 */
-	function XoopsFormRadioYN($caption, $name, $value=null, $yes=_YES, $no=_NO)
+	function XoopsFormRadioYN($caption, $name, $value = null, $yes = _YES, $no = _NO)
 	{
 		$this->XoopsFormRadio($caption, $name, $value);
 		$this->addOption(1, $yes);

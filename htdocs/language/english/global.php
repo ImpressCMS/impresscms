@@ -202,7 +202,7 @@ define('_LANGCODE', 'en');
 
 // change 0 to 1 if this language is a multi-bytes language
 define("XOOPS_USE_MULTIBYTES", "0");
-// XMEX
+
 define('_MODULES','Modules');
 define('_AD_XOOPSTHEMES','XOOPS Themes');
 define('_AD_INTERESTSITES','Options');

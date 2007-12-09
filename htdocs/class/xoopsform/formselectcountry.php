@@ -1,5 +1,5 @@
 <?php
-// $Id: formselectcountry.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id: formselectcountry.php 1151 2007-12-04 15:43:01Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -69,7 +69,7 @@ class XoopsFormSelectCountry extends XoopsFormSelect
      *                              Legal are all 2-letter country codes (in capitals).
 	 * @param	int		$size	    Number or rows. "1" makes a drop-down-list
 	 */
-	function XoopsFormSelectCountry($caption, $name, $value=null, $size=1)
+	function XoopsFormSelectCountry($caption, $name, $value = null, $size = 1)
 	{
 		$this->XoopsFormSelect($caption, $name, $value, $size);
 		$this->addOptionArray(XoopsLists::getCountryList());

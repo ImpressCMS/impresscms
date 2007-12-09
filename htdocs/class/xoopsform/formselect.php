@@ -1,5 +1,5 @@
 <?php
-// $Id: formselect.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id: formselect.php 1162 2007-12-08 06:58:50Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -87,7 +87,7 @@ class XoopsFormSelect extends XoopsFormElement {
 	 * @param	int		$size	    Number or rows. "1" makes a drop-down-list
      * @param	bool    $multiple   Allow multiple selections?
 	 */
-	function XoopsFormSelect($caption, $name, $value=null, $size=1, $multiple=false){
+	function XoopsFormSelect($caption, $name, $value = null, $size = 1, $multiple = false){
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_multiple = $multiple;
@@ -102,7 +102,7 @@ class XoopsFormSelect extends XoopsFormElement {
 	 * 
      * @return	bool
 	 */
-	function isMultiple(){
+	function isMultiple() {
 		return $this->_multiple;
 	}
 
@@ -111,17 +111,25 @@ class XoopsFormSelect extends XoopsFormElement {
 	 * 
      * @return	int
 	 */
-	function getSize(){
+	function getSize() {
 		return $this->_size;
 	}
 
 	/**
 	 * Get an array of pre-selected values
-	 * 
+	 *
+	 * @param	bool    $encode To sanitizer the text?
      * @return	array
 	 */
-	function getValue(){
-		return $this->_value;
+	function getValue($encode = false) {
+    	if (!$encode) {
+        	return $this->_value;
+    	}
+    	$value = array();
+    	foreach ($this->_value as $val) {
+		    $value[] = $val ? htmlspecialchars($val, ENT_QUOTES) : $val;
+    	}
+    	return $value;
 	}
 
 	/**
@@ -129,7 +137,7 @@ class XoopsFormSelect extends XoopsFormElement {
 	 * 
      * @param	$value	mixed
 	 */
-	function setValue($value){
+	function setValue($value) {
 		if (is_array($value)) {
 			foreach ($value as $v) {
 				$this->_value[] = $v;
@@ -145,7 +153,7 @@ class XoopsFormSelect extends XoopsFormElement {
 	 * @param	string  $value  "value" attribute
      * @param	string  $name   "name" attribute
 	 */
-	function addOption($value, $name=""){
+	function addOption($value, $name = ""){
 		if ( $name != "" ) {
 			$this->_options[$value] = $name;
 		} else {
@@ -158,7 +166,7 @@ class XoopsFormSelect extends XoopsFormElement {
 	 * 
      * @param	array   $options    Associative array of value->name pairs
 	 */
-	function addOptionArray($options){
+	function addOptionArray($options) {
 		if ( is_array($options) ) {
 			foreach ( $options as $k=>$v ) {
 				$this->addOption($k, $v);
@@ -167,12 +175,22 @@ class XoopsFormSelect extends XoopsFormElement {
 	}
 
 	/**
-	 * Get all options
-	 * 
+	 * Get an array with all the options
+	 *
+	 * Note: both name and value should be sanitized. However for backward compatibility, only value is sanitized for now.
+	 *
+	 * @param	int     $encode     To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
      * @return	array   Associative array of value->name pairs
 	 */
-	function getOptions(){
-		return $this->_options;
+	function getOptions($encode = false) {
+    	if (!$encode) {
+        	return $this->_options;
+    	}
+    	$value = array();
+    	foreach ($this->_options as $val => $name) {
+		    $value[ $encode ? htmlspecialchars($val, ENT_QUOTES) : $val ] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
+    	}
+    	return $value;
 	}
 
 	/**
@@ -180,16 +198,19 @@ class XoopsFormSelect extends XoopsFormElement {
 	 * 
      * @return	string  HTML
 	 */
-	function render(){
-		$ret = "<select  size='".$this->getSize()."'".$this->getExtra()."";
+	function render() {
+		$ele_name = $this->getName();
+		$ele_value = $this->getValue();
+		$ele_options = $this->getOptions();
+		$ret = "<select size='".$this->getSize()."'".$this->getExtra();
 		if ($this->isMultiple() != false) {
-			$ret .= " name='".$this->getName()."[]' id='".$this->getName()."[]' multiple='multiple'>\n";
+			$ret .= " name='".$ele_name."[]' id='".$ele_name."[]' multiple='multiple'>\n";
 		} else {
-			$ret .= " name='".$this->getName()."' id='".$this->getName()."'>\n";
+			$ret .= " name='".$ele_name."' id='".$ele_name."'>\n";
 		}
-		foreach ( $this->getOptions() as $value => $name ) {
-			$ret .= "<option value='".htmlspecialchars($value, ENT_QUOTES)."'";
-			if (count($this->getValue()) > 0 && in_array($value, $this->getValue())) {
+		foreach ( $ele_options as $value => $name ) {
+	        $ret .= "<option value='".htmlspecialchars($value, ENT_QUOTES)."'";
+			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 					$ret .= " selected='selected'";
 			}
 			$ret .= ">".$name."</option>\n";

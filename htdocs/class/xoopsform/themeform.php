@@ -1,5 +1,5 @@
 <?php
-// $Id: themeform.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id: themeform.php 1158 2007-12-08 06:24:20Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -66,7 +66,8 @@ class XoopsThemeForm extends XoopsForm
 	 */
 	function insertBreak($extra = '', $class= '')
 	{
-    	$class = ($class != '') ? " class='$class'" : '';
+    	$class = ($class != '') ? " class='".htmlspecialchars($class, ENT_QUOTES)."'" : '';
+    	$extra = ($extra != '') ? htmlspecialchars($extra, ENT_QUOTES) : '';
      	//Fix for $extra tag not showing
 		if ($extra) {
 			$extra = "<tr><td colspan='2' $class>$extra</td></tr>";
@@ -84,8 +85,9 @@ class XoopsThemeForm extends XoopsForm
 	 */
 	function render()
 	{
+    	$ele_name = $this->getName();
 		$ret = "
-			<form name='".$this->getName()."' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$this->getName()."();'".$this->getExtra().">
+			<form name='".$ele_name."' id='".$ele_name."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$ele_name."();'".$this->getExtra().">
 			<table width='100%' class='outer' cellspacing='1'>
 			<tr><th colspan='2'>".$this->getTitle()."</th></tr>
 		";

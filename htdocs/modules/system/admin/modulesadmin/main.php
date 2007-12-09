@@ -250,15 +250,18 @@ if ($op == 'update') {
 }
 
 if ($op == 'update_ok') {
-    $dirname = trim($dirname);
+	$dirname = trim($dirname);
     $module_handler =& xoops_gethandler('module');
     $module =& $module_handler->getByDirname($dirname);
     // Save current version for use in the update function
     $prev_version = $module->getVar('version');
+   // var_dump($module);
     include_once XOOPS_ROOT_PATH.'/class/template.php';
+    echo $module->getVar('mid');
     xoops_template_clear_module_cache($module->getVar('mid'));
     // we dont want to change the module name set by admin
     $temp_name = $module->getVar('name');
+    echo $module->getVar('name');
     $module->loadInfoAsVar($dirname);
     $module->setVar('name', $temp_name);
     xoops_cp_header();
@@ -331,32 +334,33 @@ if ($op == 'update_ok') {
         $blocks = $module->getInfo('blocks');
         $msgs[] = 'Rebuilding blocks...';
         if ($blocks != false) {
+            $count = count($blocks);
             $showfuncs = array();
             $funcfiles = array();
-				foreach ($blocks as $i => $block) {
-                if (isset($block['show_func']) && $block['show_func'] != '' && isset($block['file']) && $block['file'] != '') {
-                    $editfunc = isset($block['edit_func']) ? $block['edit_func'] : '';
-                    $showfuncs[] = $block['show_func'];
-                    $funcfiles[] = $block['file'];
+            for ( $i = 1; $i <= $count; $i++ ) {
+                if (isset($blocks[$i]['show_func']) && $blocks[$i]['show_func'] != '' && isset($blocks[$i]['file']) && $blocks[$i]['file'] != '') {
+                    $editfunc = isset($blocks[$i]['edit_func']) ? $blocks[$i]['edit_func'] : '';
+                    $showfuncs[] = $blocks[$i]['show_func'];
+                    $funcfiles[] = $blocks[$i]['file'];
                     $template = '';
-                    if ((isset($block['template']) && trim($block['template']) != '')) {
-                        $content =& xoops_module_gettemplate($dirname, $block['template'], true);
+                    if ((isset($blocks[$i]['template']) && trim($blocks[$i]['template']) != '')) {
+                        $content =& xoops_module_gettemplate($dirname, $blocks[$i]['template'], true);
                     }
                     if (!$content) {
                         $content = '';
                     } else {
-                        $template = $block['template'];
+                        $template = $blocks[$i]['template'];
                     }
                     $options = '';
-                    if (!empty($block['options'])) {
-                        $options = $block['options'];
+                    if (!empty($blocks[$i]['options'])) {
+                        $options = $blocks[$i]['options'];
                     }
-                    $sql = "SELECT bid, name FROM ".$xoopsDB->prefix('newblocks')." WHERE mid=".$module->getVar('mid')." AND func_num=".$i." AND show_func='".addslashes($block['show_func'])."' AND func_file='".addslashes($block['file'])."'";
+                    $sql = "SELECT bid, name FROM ".$xoopsDB->prefix('newblocks')." WHERE mid=".$module->getVar('mid')." AND func_num=".$i." AND show_func='".addslashes($blocks[$i]['show_func'])."' AND func_file='".addslashes($blocks[$i]['file'])."'";
                     $fresult = $xoopsDB->query($sql);
                     $fcount = 0;
                     while ($fblock = $xoopsDB->fetchArray($fresult)) {
                         $fcount++;
-                        $sql = "UPDATE ".$xoopsDB->prefix("newblocks")." SET name='".addslashes($block['name'])."', edit_func='".addslashes($editfunc)."', content='', template='".$template."', last_modified=".time()." WHERE bid=".$fblock['bid'];
+                        $sql = "UPDATE ".$xoopsDB->prefix("newblocks")." SET name='".addslashes($blocks[$i]['name'])."', edit_func='".addslashes($editfunc)."', content='', template='".$template."', last_modified=".time()." WHERE bid=".$fblock['bid'];
                         $result = $xoopsDB->query($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;ERROR: Could not update '.$fblock['name'];
@@ -369,25 +373,25 @@ if ($op == 'update_ok') {
                                     $tplfile_new->setVar('tpl_module', $dirname);
                                     $tplfile_new->setVar('tpl_refid', $fblock['bid']);
                                     $tplfile_new->setVar('tpl_tplset', 'default');
-                                    $tplfile_new->setVar('tpl_file', $block['template'], true);
+                                    $tplfile_new->setVar('tpl_file', $blocks[$i]['template'], true);
                                     $tplfile_new->setVar('tpl_type', 'block');
                                 }
                                 else {
                                     $tplfile_new = $tplfile[0];
                                 }
                                 $tplfile_new->setVar('tpl_source', $content, true);
-                                $tplfile_new->setVar('tpl_desc', $block['description'], true);
+                                $tplfile_new->setVar('tpl_desc', $blocks[$i]['description'], true);
                                 $tplfile_new->setVar('tpl_lastmodified', time());
                                 $tplfile_new->setVar('tpl_lastimported', 0);
                                 if (!$tplfile_handler->insert($tplfile_new)) {
-                                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not update template <b>'.$block['template'].'</b>.</span>';
+                                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not update template <b>'.$blocks[$i]['template'].'</b>.</span>';
                                 } else {
-                                    $msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> updated.';
+                                    $msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> updated.';
                                     if ($xoopsConfig['template_set'] == 'default') {
                                         if (!xoops_template_touch($tplfile_new->getVar('tpl_id'))) {
-                                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not recompile template <b>'.$block['template'].'</b>.</span>';
+                                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not recompile template <b>'.$blocks[$i]['template'].'</b>.</span>';
                                         } else {
-                                            $msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> recompiled.';
+                                            $msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> recompiled.';
                                         }
                                     }
 
@@ -397,20 +401,16 @@ if ($op == 'update_ok') {
                     }
                     if ($fcount == 0) {
                         $newbid = $xoopsDB->genId($xoopsDB->prefix('newblocks').'_bid_seq');
-                        $block_name = addslashes($block['name']);
-                        $sql = "INSERT INTO ".$xoopsDB->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES (".$newbid.", ".$module->getVar('mid').", ".$i.",'".addslashes($options)."','".$block_name."', '".$block_name."', '', 0, 0, 0, 'M', 1, '".addslashes($dirname)."', '".addslashes($block['file'])."', '".addslashes($block['show_func'])."', '".addslashes($editfunc)."', '".$template."', ".time().")";
+                        $block_name = addslashes($blocks[$i]['name']);
+                        $sql = "INSERT INTO ".$xoopsDB->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES (".$newbid.", ".$module->getVar('mid').", ".$i.",'".addslashes($options)."','".$block_name."', '".$block_name."', '', 0, 0, 0, 'M', 1, '".addslashes($dirname)."', '".addslashes($blocks[$i]['file'])."', '".addslashes($blocks[$i]['show_func'])."', '".addslashes($editfunc)."', '".$template."', ".time().")";
                         $result = $xoopsDB->query($sql);
                         if (!$result) {
-                            $msgs[] = '&nbsp;&nbsp;ERROR: Could not create '.$block['name'];echo $sql;
+                            $msgs[] = '&nbsp;&nbsp;ERROR: Could not create '.$blocks[$i]['name'];echo $sql;
                         } else {
                             if (empty($newbid)) {
                                 $newbid = $xoopsDB->getInsertId();
                             }
-                            if ($module->getInfo('hasMain')) {
-                                $groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
-                            } else {
-                                $groups = array(XOOPS_GROUP_ADMIN);
-                            }
+                            $groups =& $xoopsUser->getGroups();
                             $gperm_handler =& xoops_gethandler('groupperm');
                             foreach ($groups as $mygroup) {
                                 $bperm =& $gperm_handler->create();
@@ -431,26 +431,26 @@ if ($op == 'update_ok') {
                                 $tplfile->setVar('tpl_refid', $newbid);
                                 $tplfile->setVar('tpl_source', $content, true);
                                 $tplfile->setVar('tpl_tplset', 'default');
-                                $tplfile->setVar('tpl_file', $block['template'], true);
+                                $tplfile->setVar('tpl_file', $blocks[$i]['template'], true);
                                 $tplfile->setVar('tpl_type', 'block');
                                 $tplfile->setVar('tpl_lastimported', 0);
                                 $tplfile->setVar('tpl_lastmodified', time());
-                                $tplfile->setVar('tpl_desc', $block['description'], true);
+                                $tplfile->setVar('tpl_desc', $blocks[$i]['description'], true);
                                 if (!$tplfile_handler->insert($tplfile)) {
-                                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert template <b>'.$block['template'].'</b> to the database.</span>';
+                                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert template <b>'.$blocks[$i]['template'].'</b> to the database.</span>';
                                 } else {
                                     $newid = $tplfile->getVar('tpl_id');
-                                    $msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> added to the database.';
+                                    $msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> added to the database.';
                                     if ($xoopsConfig['template_set'] == 'default') {
                                         if (!xoops_template_touch($newid)) {
-                                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Template <b>'.$block['template'].'</b> recompile failed.</span>';
+                                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Template <b>'.$blocks[$i]['template'].'</b> recompile failed.</span>';
                                         } else {
-                                            $msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> recompiled.';
+                                            $msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> recompiled.';
                                         }
                                     }
                                 }
                             }
-                            $msgs[] = '&nbsp;&nbsp;Block <b>'.$block['name'].'</b> created. Block ID: <b>'.$newbid.'</b>';
+                            $msgs[] = '&nbsp;&nbsp;Block <b>'.$blocks[$i]['name'].'</b> created. Block ID: <b>'.$newbid.'</b>';
                             $sql = 'INSERT INTO '.$xoopsDB->prefix('block_module_link').' (block_id, module_id) VALUES ('.$newbid.', -1)';
                             $xoopsDB->query($sql);
                         }

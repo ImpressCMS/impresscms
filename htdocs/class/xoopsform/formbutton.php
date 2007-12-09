@@ -1,5 +1,5 @@
 <?php
-// $Id: formbutton.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id: formbutton.php 1158 2007-12-08 06:24:20Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -74,7 +74,7 @@ class XoopsFormButton extends XoopsFormElement {
      * @param	string  $type       Type of the button.
      * This could be either "button", "submit", or "reset"
 	 */
-	function XoopsFormButton($caption, $name, $value="", $type="button"){
+	function XoopsFormButton($caption, $name, $value = "", $type = "button") {
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_type = $type;
@@ -84,10 +84,11 @@ class XoopsFormButton extends XoopsFormElement {
 	/**
 	 * Get the initial value
 	 *
+	 * @param	bool    $encode To sanitizer the text?
      * @return	string
 	 */
-	function getValue(){
-		return $this->_value;
+	function getValue($encode = false) {
+		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
 	}
 
 	/**
@@ -95,7 +96,7 @@ class XoopsFormButton extends XoopsFormElement {
 	 *
      * @return	string
 	 */
-	function setValue($value){
+	function setValue($value) {
 		$this->_value = $value;
 	}
 
@@ -104,8 +105,8 @@ class XoopsFormButton extends XoopsFormElement {
 	 *
      * @return	string
 	 */
-	function getType(){
-		return $this->_type;
+	function getType() {
+		return in_array( strtolower($this->_type), array("button", "submit", "reset") ) ? $this->_type : "button";
 	}
 
 	/**

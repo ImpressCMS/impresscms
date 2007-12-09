@@ -13,6 +13,8 @@
 /* General definitions */
 html, body {background-color : #EEEEEE; font-size: 12px; font-family: Verdana, Arial, Helvetica, sans-serif; margin: 0px; padding: 0px;}
 
+img { border: 0;}
+
 hr { height: 3px; width: 95%; text-align:center; border: 3px #E18A00 solid;}
 
 /* lists */
@@ -49,17 +51,8 @@ a:hover { background-color: transparent; color: #ff9966; font-weight: bold; text
 .errorMsg a    { background-color: transparent; color: #D12F19; }
 .confirmMsg a   { background-color: transparent; color: #817134; }
 .successMsg a  { background-color: transparent; color: #529214; }
-
-/* ===== content module ===== */
-.content { text-align: justify; padding: 0 15px 0px 15px;}
-
-.xoopsCenter { text-align:center;}
-
-.bg1 { background-color: #E6E6E6; color:inherit;}
-.bg2 { background-color: #2F5376; color:inherit;}
-.bg3 { background-color: #2F5376; color: #fff;}
-.bg4 { background-color: #ECECEC; color:inherit;}
-.bg5 { background-color: #ECECEC; color:inherit;}
+/*.errorMsg { background-color: #FF3737; padding: 10px; color:#fff; font-size:1em; font-weight: bold; text-align: center; border-top: 1px solid #DDDDFF; border-left: 1px solid #DDDDFF; border-right: 1px solid #aaa; border-bottom: 1px solid #aaa;}
+.confirmMsg { background-color : #DDFFDF; color: #136C99; font-size:1em; text-align:center; font-weight : bold; border-top: 1px solid #DDDDFF; border-left: 1px solid #DDDDFF; border-right: 1px solid #aaa; border-bottom: 1px solid #aaa;}*/
 
 /* ===== General small ===== */
 .fontSmall { font-size : .7em;}
@@ -72,6 +65,16 @@ textarea { width: 430px; font-size: .8em; font-family: verdana, arial, helvetica
 input.formTextBox { background: #fff; color:inherit; font-size: .8em; font-family: verdana, arial, helvetica, sans-serif;border: #000 1px solid; }
 select { font-size: .8em; font-family: verdana, arial, helvetica, sans-serif; border: #000 1px solid;}
 
+/* ===== content module ===== */
+.content { text-align: justify; padding: 0 15px 0px 15px;}
+
+.xoopsCenter { text-align:center;}
+
+.bg1 { background-color: #E6E6E6; color:inherit;}
+.bg2 { background-color: #2F5376; color:inherit;}
+.bg3 { background-color: #2F5376; color: #fff;}
+.bg4 { background-color: #ECECEC; color:inherit;}
+.bg5 { background-color: #ECECEC; color:inherit;}
 
 /* ===== tables ===== */
 caption {font-style: italic; font-weight: bold;}

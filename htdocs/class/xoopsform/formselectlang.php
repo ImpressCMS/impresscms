@@ -1,5 +1,5 @@
 <?php
-// $Id: formselectlang.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id: formselectlang.php 1151 2007-12-04 15:43:01Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -67,7 +67,7 @@ class XoopsFormSelectLang extends XoopsFormSelect
 	 * 							Legal is any name of a XOOPS_ROOT_PATH."/language/" subdirectory.
 	 * @param	int		$size	Number of rows. "1" makes a drop-down-list.
 	 */
-	function XoopsFormSelectLang($caption, $name, $value=null, $size=1)
+	function XoopsFormSelectLang($caption, $name, $value = null, $size = 1)
 	{
 		$this->XoopsFormSelect($caption, $name, $value, $size);
 		$this->addOptionArray(XoopsLists::getLangList());

@@ -1,5 +1,5 @@
 <?php
-// $Id: formfile.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id: formfile.php 1158 2007-12-08 06:24:20Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -65,7 +65,7 @@ class XoopsFormFile extends XoopsFormElement {
 	 * @param	string	$name			"name" attribute
 	 * @param	int		$maxfilesize	Maximum size for an uploaded file
 	 */
-	function XoopsFormFile($caption, $name, $maxfilesize){
+	function XoopsFormFile($caption, $name, $maxfilesize) {
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_maxFileSize = intval($maxfilesize);
@@ -76,7 +76,7 @@ class XoopsFormFile extends XoopsFormElement {
 	 * 
 	 * @return	int
 	 */
-	function getMaxFileSize(){
+	function getMaxFileSize() {
 		return $this->_maxFileSize;
 	}
 
@@ -85,8 +85,9 @@ class XoopsFormFile extends XoopsFormElement {
 	 * 
 	 * @return	string	HTML
 	 */
-	function render(){
-		return "<input type='hidden' name='MAX_FILE_SIZE' value='".$this->getMaxFileSize()."' /><input type='file' name='".$this->getName()."' id='".$this->getName()."'".$this->getExtra()." /><input type='hidden' name='xoops_upload_file[]' id='xoops_upload_file[]' value='".$this->getName()."' />";
+	function render() {
+    	$ele_name = $this->getName();
+		return "<input type='hidden' name='MAX_FILE_SIZE' value='".$this->getMaxFileSize()."' /><input type='file' name='".$ele_name."' id='".$ele_name."'".$this->getExtra()." /><input type='hidden' name='xoops_upload_file[]' id='xoops_upload_file[]' value='".$ele_name."' />";
 	}
 }
 ?>

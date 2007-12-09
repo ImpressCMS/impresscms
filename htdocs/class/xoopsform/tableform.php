@@ -1,5 +1,5 @@
 <?php
-// $Id: tableform.php 506 2006-05-26 23:10:37Z skalpa $
+// $Id: tableform.php 1158 2007-12-08 06:24:20Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -71,8 +71,8 @@ class XoopsTableForm extends XoopsForm
 		foreach ( $this->getElements() as $ele ) {
 			if ( !$ele->isHidden() ) {
 				$ret .= "<tr valign='top' align='left'><td>".$ele->getCaption();
-				if ($ele->getDescription() != '') {
-					$ret .= '<br /><br /><span style="font-weight: normal;">'.$ele->getDescription().'</span>';
+				if ($ele_desc = $ele->getDescription()) {
+					$ret .= '<br /><br /><span style="font-weight: normal;">'.$ele_desc.'</span>';
 				}
 				$ret .= "</td><td>".$ele->render()."</td></tr>";
 			} else {

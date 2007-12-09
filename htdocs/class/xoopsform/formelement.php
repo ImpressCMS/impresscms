@@ -1,5 +1,5 @@
 <?php
-// $Id: formelement.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id: formelement.php 1158 2007-12-08 06:24:20Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -38,7 +38,8 @@ if (!defined('XOOPS_ROOT_PATH')) {
  * @subpackage  form
  * 
  * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @author      Taiwen Jiang    <phppp@users.sourceforge.net>
+ * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
 
 
@@ -46,7 +47,8 @@ if (!defined('XOOPS_ROOT_PATH')) {
  * Abstract base class for form elements
  * 
  * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @author  Taiwen Jiang    <phppp@users.sourceforge.net>
+ * @copyright	copyright (c) 2000-2007 XOOPS.org
  * 
  * @package     kernel
  * @subpackage  form
@@ -87,10 +89,10 @@ class XoopsFormElement {
 	var $_accesskey = '';
 
 	/**
-	 * HTML class for this element
-	 * @var	string
+	 * HTML classes for this element
+	 * @var	array
 	 */
-	var $_class = '';
+	var $_class = array();
 
 	/**
 	 * hidden?
@@ -100,9 +102,9 @@ class XoopsFormElement {
 
 	/**
 	 * extra attributes to go in the tag
-	 * @var	string
+	 * @var	array
 	 */
-	var $_extra = "";
+	var $_extra = array();
 
 	/**
 	 * required field?
@@ -151,9 +153,9 @@ class XoopsFormElement {
 	 * @param	bool    encode?
 	 * @return	string  "name" attribute
 	 */
-	function getName($encode=true) {
+	function getName($encode = true) {
 		if (false != $encode) {
-			return str_replace("&amp;", "&", str_replace("'","&#039;",htmlspecialchars($this->_name)));
+			return str_replace("&amp;", "&", htmlspecialchars($this->_name, ENT_QUOTES));
 		}
 		return $this->_name;
 	}
@@ -183,9 +185,9 @@ class XoopsFormElement {
 	function getAccessString( $str ) {
 		$access = $this->getAccessKey();
 		if ( !empty($access) && ( false !== ($pos = strpos($str, $access)) ) ) {
-			return substr($str, 0, $pos) . '<span style="text-decoration:underline">' . substr($str, $pos, 1) . '</span>' . substr($str, $pos+1);
+			return htmlspecialchars(substr($str, 0, $pos), ENT_QUOTES) . '<span style="text-decoration:underline">' . htmlspecialchars(substr($str, $pos, 1), ENT_QUOTES) . '</span>' . htmlspecialchars(substr($str, $pos+1), ENT_QUOTES);
 		}
-		return $str;
+		return htmlspecialchars($str, ENT_QUOTES);
 	}
 
 	/**
@@ -195,10 +197,8 @@ class XoopsFormElement {
 	 */
 	function setClass($class) {
 		$class = trim($class);
-		if ( empty($class) ) {
-			$this->_class = '';
-		} else {
-			$this->_class .= (empty($this->_class) ? '' : ' ') . $class;
+		if ( !empty($class) ) {
+            $this->_class[] = $class;
 		}
 	}
 	/**
@@ -207,7 +207,12 @@ class XoopsFormElement {
 	 * @return 	string  "class" attribute value
 	 */
 	function getClass() {
-		return $this->_class;
+    	if( empty($this->_class) ) return '';
+    	$class = array();
+    	foreach ($this->_class as $class) {
+        	$class[] = htmlspecialchars($class, ENT_QUOTES);
+    	}
+		return implode(" ", $class);
 	}
 
 	/**
@@ -222,10 +227,11 @@ class XoopsFormElement {
 	/**
 	 * get the caption for the element
 	 *
+	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getCaption() {
-		return $this->_caption;
+	function getCaption($encode = false) {
+		return $encode ? htmlspecialchars($this->_caption, ENT_QUOTES) : $this->_caption;
 	}
 
 	/**
@@ -240,10 +246,11 @@ class XoopsFormElement {
 	/**
 	 * get the element's description
 	 *
+	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getDescription() {
-		return $this->_description;
+	function getDescription($encode = false) {
+		return $encode ? htmlspecialchars($this->_description, ENT_QUOTES) : $this->_description;
 	}
 
 	/**
@@ -280,13 +287,13 @@ class XoopsFormElement {
 	 *
 	 * @param	string  $extra
 	 * @param   string  $replace If true, passed string will replace current content otherwise it will be appended to it
-	 * @return	string New content of the extra string
+	 * @return	array   New content of the extra string
 	 */
-	function setExtra($extra, $replace = false){
+	function setExtra($extra, $replace = false) {
 		if ( $replace) {
-			$this->_extra = " " . trim($extra);
+			$this->_extra = array( trim($extra) );
 		} else {
-			$this->_extra .= " " . trim($extra);
+			$this->_extra[] = trim($extra);
 		}
 		return $this->_extra;
 	}
@@ -294,12 +301,18 @@ class XoopsFormElement {
 	/**
 	 * Get the extra attributes for the element
 	 *
+	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getExtra(){
-		if (isset($this->_extra)) {
-			return $this->_extra;
-		}
+	function getExtra($encode = false) {
+    	if (!$encode) {
+        	return implode(' ', $this->_extra);
+    	}
+    	$value = array();
+    	foreach ($this->_extra as $val) {
+		    $value[] = str_replace('>', '&gt;', str_replace('<', '&lt;', $val));
+    	}
+    	return empty($value) ? "" : " ".implode(' ', $value);
 	}
 
 	/**
@@ -314,7 +327,7 @@ class XoopsFormElement {
 		// generate validation code if required 
 		} elseif ($this->isRequired()) {
 			$eltname    = $this->getName();
-			$eltcaption = trim( $this->getCaption() );
+			$eltcaption = $this->getCaption();
 			$eltmsg = empty($eltcaption) ? sprintf( _FORM_ENTER, $eltname ) : sprintf( _FORM_ENTER, $eltcaption );
 			$eltmsg = str_replace('"', '\"', stripslashes( $eltmsg ) );
 			return "if ( myform.{$eltname}.value == \"\" ) { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";

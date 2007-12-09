@@ -1,5 +1,5 @@
 <?php
-// $Id: formradio.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id: formradio.php 1162 2007-12-08 06:58:50Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -63,7 +63,14 @@ class XoopsFormRadio extends XoopsFormElement {
 	 * @var	string	
 	 * @access	private
 	 */
-	var $_value;
+	var $_value = null;
+
+	/**
+     * HTML to seperate the elements
+	 * @var	string  
+	 * @access  private
+	 */
+	var $_delimeter;
 
 	/**
 	 * Constructor
@@ -78,16 +85,17 @@ class XoopsFormRadio extends XoopsFormElement {
 		if (isset($value)) {
 			$this->setValue($value);
 		}
-		$this->delimeter = $delimeter;
+		$this->_delimeter = $delimeter;
 	}
 
 	/**
-	 * Get the pre-selected value
+	 * Get the "value" attribute
 	 * 
+	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getValue(){
-		return $this->_value;
+	function getValue($encode = false) {
+		return ( $encode && $this->_value !== null ) ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
 	}
 
 	/**
@@ -105,7 +113,7 @@ class XoopsFormRadio extends XoopsFormElement {
 	 * @param	string	$value	"value" attribute - This gets submitted as form-data.
 	 * @param	string	$name	"name" attribute - This is displayed. If empty, we use the "value" instead.
 	 */
-	function addOption($value, $name=""){
+	function addOption($value, $name = "") {
 		if ( $name != "" ) {
 			$this->_options[$value] = $name;
 		} else {
@@ -120,19 +128,37 @@ class XoopsFormRadio extends XoopsFormElement {
 	 */
 	function addOptionArray($options){
 		if ( is_array($options) ) {
-			foreach ( $options as $k=>$v ) {
+			foreach ( $options as $k => $v ) {
 				$this->addOption($k, $v);
 			}
 		}
 	}
 
 	/**
-	 * Gets the options
-	 * 
-	 * @return	array	Associative array of value->name pairs.
+	 * Get an array with all the options
+	 *
+	 * @param	int     $encode     To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
+     * @return	array   Associative array of value->name pairs
 	 */
-	function getOptions(){
-		return $this->_options;
+	function getOptions($encode = false) {
+    	if (!$encode) {
+        	return $this->_options;
+    	}
+    	$value = array();
+    	foreach ($this->_options as $val => $name) {
+		    $value[ $encode ? htmlspecialchars($val, ENT_QUOTES) : $val ] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
+    	}
+    	return $value;
+	}
+
+	/**
+	 * Get the delimiter of this group
+	 * 
+	 * @param	bool    $encode To sanitizer the text?
+     * @return	string  The delimiter
+	 */
+	function getDelimeter($encode = false) {
+		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
 	}
 
 	/**
@@ -140,15 +166,19 @@ class XoopsFormRadio extends XoopsFormElement {
 	 * 
 	 * @return	string	HTML
 	 */
-	function render(){
+	function render() {
 		$ret = "";
-		foreach ( $this->getOptions() as $value => $name ) {
-			$ret .= "<input type='radio' name='".$this->getName()."' id='".$this->getName()."' value='".$value."'";
-			$selected = $this->getValue();
-			if ( isset($selected) && ($value == $selected) ) {
+		$ele_name = $this->getName();
+		$ele_value = $this->getValue();
+		$ele_options = $this->getOptions();
+		$ele_extra = $this->getExtra();
+		$ele_delimeter = $this->getDelimeter();
+		foreach ( $ele_options as $value => $name ) {
+			$ret .= "<input type='radio' name='".$ele_name."' value='".htmlspecialchars($value, ENT_QUOTES)."'";
+			if ( $value === $ele_value ) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= $this->getExtra()." />".$name.$this->delimeter."\n";
+			$ret .= $ele_extra." />".$name.$ele_delimeter."\n";
 		}
 		return $ret;
 	}

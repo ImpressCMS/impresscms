@@ -1,5 +1,5 @@
 <?php
-// $Id: xoopssecurity.php 1050 2007-09-10 20:21:42Z dugris $
+// $Id: xoopssecurity.php 1153 2007-12-05 13:37:51Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -50,24 +50,25 @@ class XoopsSecurity {
     /**
     * Check if there is a valid token in $_REQUEST[$name . '_REQUEST'] - can be expanded for more wide use, later (Mith)
     *
-    * @param string $name session name
     * @param bool   $clearIfValid whether to clear the token after validation
+    * @param string $token token to validate
+    * @param string $name session name
     *
     * @return bool
     */
-    function check($name = 'XOOPS_TOKEN', $clearIfValid = true) {
-        return $this->validateToken($name, $clearIfValid);
+    function check($clearIfValid = true, $token = false, $name = 'XOOPS_TOKEN') {
+        return $this->validateToken($token, $clearIfValid, $name);
     }
 
     /**
     * Create a token in the user's session
     *
-    * @param string $name session name
     * @param int $timeout time in seconds the token should be valid
+    * @param string $name session name
     *
     * @return string token value
     */
-    function createToken($name = 'XOOPS_TOKEN', $timeout = 0)
+    function createToken($timeout = 0, $name = 'XOOPS_TOKEN')
     {
         $this->garbageCollection($name);
         if ($timeout == 0) {
@@ -86,15 +87,16 @@ class XoopsSecurity {
     /**
     * Check if a token is valid. If no token is specified, $_REQUEST[$name . '_REQUEST'] is checked
     *
-    * @param string $name session name to validate
+    * @param string $token token to validate
     * @param bool   $clearIfValid whether to clear the token value if valid
+    * @param string $name session name to validate
     *
     * @return bool
     **/
-    function validateToken($name = 'XOOPS_TOKEN', $clearIfValid = true)
+    function validateToken($token = false, $clearIfValid = true, $name = 'XOOPS_TOKEN')
     {
         global $xoopsLogger;
-        $token = isset($_REQUEST[$name . '_REQUEST']) ? $_REQUEST[$name . '_REQUEST'] : '';
+        $token = ($token !== false) ? $token : ( isset($_REQUEST[$name . '_REQUEST']) ? $_REQUEST[$name . '_REQUEST'] : '' );
         if (empty($token) || empty($_SESSION[$name . '_SESSION'])) {
             $xoopsLogger->addExtra('Token Validation', 'No valid token found in request/session');
             return false;
@@ -110,8 +112,7 @@ class XoopsSecurity {
                     }
                     $xoopsLogger->addExtra('Token Validation', 'Valid token found');
                     $validFound = true;
-                }
-                else {
+                } else {
                     $str = 'Valid token expired';
                     $this->setErrors($str);
                     $xoopsLogger->addExtra('Token Validation', $str);
@@ -166,7 +167,7 @@ class XoopsSecurity {
     *
     * @return bool
     **/
-    function checkReferer($docheck=1)
+    function checkReferer($docheck = 1)
     {
         $ref = xoops_getenv('HTTP_REFERER');
         if ($docheck == 0) {

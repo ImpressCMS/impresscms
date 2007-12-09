@@ -1,5 +1,5 @@
 <?php
-// $Id: formselectmatchoption.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id: formselectmatchoption.php 1151 2007-12-04 15:43:01Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -64,7 +64,7 @@ class XoopsFormSelectMatchOption extends XoopsFormSelect
 	 * 							{@link XOOPS_MATCH_EQUAL}, and {@link XOOPS_MATCH_CONTAIN}
 	 * @param	int		$size	Number of rows. "1" makes a drop-down-list
 	 */
-	function XoopsFormSelectMatchOption($caption, $name, $value=null, $size=1)
+	function XoopsFormSelectMatchOption($caption, $name, $value = null, $size = 1)
 	{
 		$this->XoopsFormSelect($caption, $name, $value, $size, false);
 		$this->addOption(XOOPS_MATCH_START, _STARTSWITH);

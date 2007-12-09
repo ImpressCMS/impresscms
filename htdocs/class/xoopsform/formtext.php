@@ -1,5 +1,5 @@
 <?php
-// $Id: formtext.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id: formtext.php 1158 2007-12-08 06:24:20Z phppp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -80,7 +80,7 @@ class XoopsFormText extends XoopsFormElement {
 	 * @param	int		$maxlength	Maximum length of text
      * @param	string  $value      Initial text
 	 */
-	function XoopsFormText($caption, $name, $size, $maxlength, $value=""){
+	function XoopsFormText($caption, $name, $size, $maxlength, $value = ""){
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_size = intval($size);
@@ -93,7 +93,7 @@ class XoopsFormText extends XoopsFormElement {
 	 * 
      * @return	int
 	 */
-	function getSize(){
+	function getSize() {
 		return $this->_size;
 	}
 
@@ -102,17 +102,18 @@ class XoopsFormText extends XoopsFormElement {
 	 * 
      * @return	int
 	 */
-	function getMaxlength(){
+	function getMaxlength() {
 		return $this->_maxlength;
 	}
 
 	/**
-	 * Get initial text value
+	 * Get initial content
 	 * 
-     * @return  string
+	 * @param	bool    $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compat
+     * @return	string
 	 */
-	function getValue(){
-		return $this->_value;
+	function getValue($encode = false) {
+		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
 	}
 
 	/**
@@ -120,7 +121,7 @@ class XoopsFormText extends XoopsFormElement {
 	 * 
      * @param	$value  string
 	 */
-	function setValue($value){
+	function setValue($value) {
 		$this->_value = $value;
 	}
 
@@ -129,7 +130,7 @@ class XoopsFormText extends XoopsFormElement {
 	 * 
      * @return	string  HTML
 	 */
-	function render(){
+	function render() {
 		return "<input type='text' name='".$this->getName()."' id='".$this->getName()."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".$this->getValue()."'".$this->getExtra()." />";
 	}
 }
