@@ -20,6 +20,8 @@ Unreleased: Version 0.1
 
 - Improved: When the User registration is Off... all links to register.php are not shown.
 
+- Fixed: system templates corrected for validation, added title attributes to links and filled alt attributes for images (skenow|kris_fr)
+
 Working Changes : (Changes to be reverted or made definitive)
 
 - Commented a line in common.php ... someone can tell for what is this line? (young-pee)

@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />
 <meta http-equiv="content-language" content="<{$xoops_langcode}>" />
-<title><{$xoops_sitename}> <{$lang_imgmanager}></title>
+<title><{$lang_imgmanager}> <{$xoops_sitename}></title>
 <{$image_form.javascript}>
 <style type="text/css" media="all">
 body {margin: 0;}
@@ -26,16 +26,16 @@ div#footer {text-align:right; padding: 5px;}
 <body onload="window.resizeTo(<{$xsize}>, <{$ysize}>);">
   <table id="header" cellspacing="0">
     <tr>
-      <td><a href="<{$xoops_url}>/"><img src="<{$xoops_url}>/images/logo.gif" width="150" height="80" alt="" /></a></td><td> </td>
+      <td><img src="<{$xoops_url}>/images/logo.gif" width="150px" height="80px" alt="<{$xoops_sitename}>" /></td>
     </tr>
     <tr>
-      <td id="headerbar" colspan="2"> </td>
+      <td id="headerbar" ></td>
     </tr>
   </table>
 
   <table cellspacing="0" id="imagenav">
     <tr>
-      <td align="left"><a href="<{$xoops_url}>/imagemanager.php?target=<{$target}>&amp;cat_id=<{$show_cat}>"><{$lang_imgmanager}></a></td>
+      <td align="left"><a href="<{$xoops_url}>/imagemanager.php?target=<{$target}>&cat_id=<{$show_cat}>" title="<{$lang_imgmanager}>"><{$lang_imgmanager}></a></td>
     </tr>
   </table>
 

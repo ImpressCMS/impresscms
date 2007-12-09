@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />
 <meta http-equiv="content-language" content="<{$xoops_langcode}>" />
-<title><{$sitename}> <{$lang_imgmanager}></title>
+<title><{$lang_imgmanager}> <{$sitename}></title>
 <script type="text/javascript">
 <!--//
 function appendCode(addCode) {
@@ -45,10 +45,10 @@ div#footer {text-align:right; padding: 5px;}
 <body onload="window.resizeTo(<{$xsize}>, <{$ysize}>);">
   <table id="header" cellspacing="0">
     <tr>
-      <td><a href="<{$xoops_url}>/"><img src="<{$xoops_url}>/images/logo.gif" width="150" height="80" alt="" /></a></td><td> </td>
+      <td><img src="<{$xoops_url}>/images/logo.gif" width="150px" height="80px" alt="<{$sitename}>" /></td>
     </tr>
     <tr>
-      <td id="headerbar" colspan="2"> </td>
+      <td id="headerbar"></td>
     </tr>
   </table>
 
@@ -60,7 +60,7 @@ div#footer {text-align:right; padding: 5px;}
         </td>
 
         <{if $show_cat > 0}>
-        <td align="right"><a href="<{$xoops_url}>/imagemanager.php?target=<{$target}>&op=upload&imgcat_id=<{$show_cat}>"><{$lang_addimage}></a></td>
+        <td align="right"><a href="<{$xoops_url}>/imagemanager.php?target=<{$target}>&op=upload&imgcat_id=<{$show_cat}>" title="<{$lang_addimage}>"><{$lang_addimage}></a></td>
         <{/if}>
 
       </tr>
@@ -80,7 +80,7 @@ div#footer {text-align:right; padding: 5px;}
     <{section name=i loop=$images}>
     <tr align="center">
       <td><input type="hidden" name="image_id[]" value="<{$images[i].id}>" /><{$images[i].nicename}></td>
-      <td><img src="<{$images[i].src}>" alt="" /></td>
+      <td><img src="<{$images[i].src}>" alt="<{$images[i].nicename}>" /></td>
       <td><{$images[i].mimetype}></td>
       <td><a href="#" onclick="javascript:appendCode('<{$images[i].lxcode}>');"><img src="<{$xoops_url}>/images/alignleft.gif" alt="Left" /></a> <a href="#" onclick="javascript:appendCode('<{$images[i].xcode}>');"><img src="<{$xoops_url}>/images/aligncenter.gif" alt="Center" /></a> <a href="#" onclick="javascript:appendCode('<{$images[i].rxcode}>');"><img src="<{$xoops_url}>/images/alignright.gif" alt="Right" /></a></td>
     </tr>

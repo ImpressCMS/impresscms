@@ -28,16 +28,17 @@
   <tr align="center">
     <td><input type="button" value="<{$lang_editprofile}>" onclick="location='<{$xoops_url}>/modules/system/admin.php?fct=users&uid=<{$user_uid}>&op=modifyUser'" />
     <input type="button" value="<{$lang_deleteaccount}>" onclick="location='<{$xoops_url}>/modules/system/admin.php?fct=users&op=delUser&uid=<{$user_uid}>'" />
+    </td>
   </tr>
 </table>
 
 <br /><br />
 <{/if}>
 
-<table width="100%" border="0" cellspacing="5">
+<table width="100%" border="0" cellspacing="5px">
   <tr valign="top">
     <td width="50%">
-      <table class="outer" cellpadding="4" cellspacing="1" width="100%">
+      <table class="outer" cellpadding="4px" cellspacing="1px" width="100%">
         <tr>
           <th colspan="2" align="center"><{$lang_allaboutuser}></th>
         </tr>
@@ -96,7 +97,7 @@
       </table>
     </td>
     <td width="50%">
-      <table class="outer" cellpadding="4" cellspacing="1" width="100%">
+      <table class="outer" cellpadding="4px" cellspacing="1px" width="100%">
         <tr valign="top">
           <th colspan="2" align="center"><{$lang_statistics}></th>
         </tr>
@@ -118,7 +119,7 @@
         </tr>
       </table>
       <br />
-      <table class="outer" cellpadding="4" cellspacing="1" width="100%">
+      <table class="outer" cellpadding="4px" cellspacing="1px" width="100%">
         <tr valign="top">
           <th colspan="2" align="center"><{$lang_signature}></th>
         </tr>
@@ -133,13 +134,12 @@
 <!-- start module search results loop -->
 <{foreach item=module from=$modules}>
 
-<p>
 <h4><{$module.name}></h4>
-
+<p>
   <!-- start results item loop -->
   <{foreach item=result from=$module.results}>
 
-  <img src="<{$result.image}>" alt="<{$module.name}>" /><b><a href="<{$result.link}>"><{$result.title}></a></b><br /><small>(<{$result.time}>)</small><br />
+  <img src="<{$result.image}>" alt="<{$module.name}>" /><b><a href="<{$result.link}>" title="<{$result.title}>"><{$result.title}></a></b><br /><small>(<{$result.time}>)</small><br />
 
   <{/foreach}>
   <!-- end results item loop -->

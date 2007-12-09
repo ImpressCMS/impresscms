@@ -1,5 +1,5 @@
 <ul>
   <{foreach item=module from=$block.modules}>
-  <li><a href="<{$module.adminlink}>"><{$module.lang_linkname}></a>: <{$module.pendingnum}></li>
+  <li><a href="<{$module.adminlink}>" title="<{$module.pendingnum}> <{$module.lang_linkname}>"><{$module.lang_linkname}></a>: <{$module.pendingnum}></li>
   <{/foreach}>
 </ul>
