@@ -19,6 +19,7 @@ Unreleased: Version 0.1
 - Added : Handling 404 and 500 pages automatically on the site (malanciault)
 
 - Changed : The new default theme is now css100_morpho (malanciault)
+- Changed : The icons of /class/xoopseditor/dhtmlext/images/*.* (sato-san)
 
 - Removed : The 'Default' theme has been removed (malanciault)
 
