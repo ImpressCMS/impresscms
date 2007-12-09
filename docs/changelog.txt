@@ -18,6 +18,10 @@ Unreleased: Version 0.1
 - Added : Integrating some flags image to be used by the multilanguage feature (malanicault)
 - Added : Handling 404 and 500 pages automatically on the site (malanciault)
 
+- Changed : The new default theme is now css100_morpho (malanciault)
+
+- Removed : The 'Default' theme has been removed (malanciault)
+
 - Improved: When the User registration is Off... all links to register.php are not shown.
 
 - Fixed: system templates corrected for validation, added title attributes to links and filled alt attributes for images (skenow|kris_fr)
