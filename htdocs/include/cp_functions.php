@@ -93,9 +93,12 @@ window.onload=startList;
 	 * Loading current options of the module.
 	 */
 	if ($xoopsModule){
+		$i = 0;
 		$module_admin_menu = $xoopsModule->getAdminMenu();
 		for ($i=count($module_admin_menu)-1;$i>=0;$i=$i-1) {
-			$reversed_module_admin_menu[] = $module_admin_menu[$i];
+			if(isset($module_admin_menu[$i])) {
+				$reversed_module_admin_menu[] = $module_admin_menu[$i];
+			}
 		}
 		foreach ($reversed_module_admin_menu as $k){
 			$tpl->append('mod_options', array('title'=>$k['title'], 'link'=>$k['link'], 'icon'=>(isset($k['icon']) && $k['icon']!='' ? $k['icon'] : '')));
