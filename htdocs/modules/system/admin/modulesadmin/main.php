@@ -257,11 +257,9 @@ if ($op == 'update_ok') {
     $prev_version = $module->getVar('version');
    // var_dump($module);
     include_once XOOPS_ROOT_PATH.'/class/template.php';
-    echo $module->getVar('mid');
     xoops_template_clear_module_cache($module->getVar('mid'));
     // we dont want to change the module name set by admin
     $temp_name = $module->getVar('name');
-    echo $module->getVar('name');
     $module->loadInfoAsVar($dirname);
     $module->setVar('name', $temp_name);
     xoops_cp_header();
