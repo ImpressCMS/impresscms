@@ -48,6 +48,7 @@ INSERT INTO configcategory VALUES (4, '_MD_AM_CENSOR', 0);
 INSERT INTO configcategory VALUES (5, '_MD_AM_SEARCH', 0);
 INSERT INTO configcategory VALUES (6, '_MD_AM_MAILER', 0);
 INSERT INTO configcategory VALUES (7, '_MD_AM_AUTHENTICATION', 0);
+INSERT INTO configcategory VALUES (8, '_MD_AM_MULTILANGUAGE', 0);
 
 #
 # Dumping data for table `configoption`
