@@ -21,7 +21,7 @@ h6 {font-size: .8em;}
 /* End Header */
 
 /* Start Left Column */
-#xo-canvas-leftcolumn {float:left; position: absolute; width: 175px; left: 0; top: 100px; }
+#xo-canvas-leftcolumn {float:left; width: 175px; left: 0; top: 100px; }
 #xo-canvas-leftcolumn th {background-color: #639ACE; color: #fff; vertical-align: middle;}
 #xo-canvas-leftcolumn .xo-blocktitle h3 {margin: 0 0 5px 0; padding: 3px; background-color: #ddd; color: #639ACE; font-weight: bold; text-align:center;}
 #xo-canvas-leftcolumn .xo-blockcontent {padding: 3px;line-height: 1.2em;}
