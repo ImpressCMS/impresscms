@@ -199,7 +199,7 @@ function xoops_cp_footer()
 {
 	global $xoopsConfig, $xoopsLogger;
 	echo"</div><br /></div>";
-	echo "<div class='CPfoot'>Powered by&nbsp;".XOOPS_VERSION." &copy; 2001-".date("Y")." <a href='http://www.xoops.org/' target='_blank'>ImpressCMS</a></div>
+	echo "<div class='CPfoot'>Powered by&nbsp;".XOOPS_VERSION." &copy; 2007-".date("Y")." <a href='http://www.xoops.org/' target='_blank'>ImpressCMS</a></div>
         </body>
       </html>
     ";
