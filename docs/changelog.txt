@@ -31,6 +31,7 @@ Working Changes : (Changes to be reverted or made definitive)
 
 - Commented a line in common.php ... someone can tell for what is this line? (young-pee)
 - Security Audit: making sure that header & redirect_header are followed with exit(); (protection from telnet vulnerability aswell as other instances where the page is viewed with a system that does not understand the 'header' function, it would skip the redirection page and continue displaying the rest of page. (Vaughan)
+- Security Audit: making sure that sql query values are all encapsulated in single quotes, helps prevent SQLi. Added intval to values in sql queries that should only be an integer value. (Vaughan)
 
 ========================
 Unreleased: XOOPS 2.0.18
