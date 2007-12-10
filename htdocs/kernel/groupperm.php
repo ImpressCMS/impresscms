@@ -111,7 +111,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
       $id = intval($id);
       $perm = false;
     	if ($id > 0) {
-            $sql = sprintf("SELECT * FROM %s WHERE gperm_id = %u", $this->db->prefix('group_permission'), $id);
+            $sql = sprintf("SELECT * FROM %s WHERE gperm_id = ''%u''", $this->db->prefix('group_permission'), $id);
             if ( !$result = $this->db->query($sql) ) {
                 return $perm;
             }
@@ -150,9 +150,9 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         }
         if ($perm->isNew()) {
             $gperm_id = $this->db->genId('group_permission_gperm_id_seq');
-            $sql = sprintf("INSERT INTO %s (gperm_id, gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (%u, %u, %u, %u, %s)", $this->db->prefix('group_permission'), $gperm_id, $gperm_groupid, $gperm_itemid, $gperm_modid, $this->db->quoteString($gperm_name));
+            $sql = sprintf("INSERT INTO %s (gperm_id, gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ('%u', '%u', '%u', '%u', %s)", $this->db->prefix('group_permission'), intval($gperm_id), intval($gperm_groupid), intval($gperm_itemid), intval($gperm_modid), $this->db->quoteString($gperm_name));
         } else {
-            $sql = sprintf("UPDATE %s SET gperm_groupid = %u, gperm_itemid = %u, gperm_modid = %u WHERE gperm_id = %u", $this->db->prefix('group_permission'), $gperm_groupid, $gperm_itemid, $gperm_modid, $gperm_id);
+            $sql = sprintf("UPDATE %s SET gperm_groupid = '%u', gperm_itemid = '%u', gperm_modid = '%u' WHERE gperm_id = '%u'", $this->db->prefix('group_permission'), intval($gperm_groupid), intval($gperm_itemid), intval($gperm_modid), intval($gperm_id));
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -179,7 +179,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
         if (!is_a($perm, 'xoopsgroupperm')) {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE gperm_id = %u", $this->db->prefix('group_permission'), $perm->getVar('gperm_id'));
+        $sql = sprintf("DELETE FROM %s WHERE gperm_id = '%u'", $this->db->prefix('group_permission'), intval($perm->getVar('gperm_id')));
         if (!$result = $this->db->query($sql)) {
             return false;
         }

@@ -56,7 +56,7 @@ function BannersAdmin()
     $result = $xoopsDB->query("SELECT bid, cid, imptotal, impmade, clicks, date FROM ".$xoopsDB->prefix("banner")." ORDER BY bid");
     $myts =& MyTextSanitizer::getInstance();
     while(list($bid, $cid, $imptotal, $impmade, $clicks, $date) = $xoopsDB->fetchRow($result)) {
-        $result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid=$cid");
+        $result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='".intval($cid)."'");
         list($cid, $name) = $xoopsDB->fetchRow($result2);
         $name = $myts->makeTboxData4Show($name);
         if ( $impmade == 0 ) {
@@ -96,7 +96,7 @@ function BannersAdmin()
     <tr>";
     $result = $xoopsDB->query("SELECT bid, cid, impressions, clicks, datestart, dateend FROM ".$xoopsDB->prefix("bannerfinish")." ORDER BY bid");
     while(list($bid, $cid, $impressions, $clicks, $datestart, $dateend) = $xoopsDB->fetchRow($result)) {
-        $result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid=$cid");
+        $result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='".intval($cid)."'");
         list($cid, $name) = $xoopsDB->fetchRow($result2);
         $name = $myts->makeTboxData4Show($name);
         $percent = substr(100 * $clicks / $impressions, 0, 5);
@@ -129,7 +129,7 @@ function BannersAdmin()
         $name = htmlspecialchars($name,ENT_QUOTES);
         $contact = htmlspecialchars($contact,ENT_QUOTES);
         $email = htmlspecialchars($email,ENT_QUOTES);
-        $result2 = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("banner")." WHERE cid=$cid");
+        $result2 = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("banner")." WHERE cid='".intval($cid)."'");
         list($numrows) = $xoopsDB->fetchRow($result2);
         echo "
         <td align='center'>$cid</td>
@@ -204,7 +204,7 @@ function BannerDelete($bid)
     $xoopsDB =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
     xoops_cp_header();
-    $result=$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." where bid=$bid");
+    $result=$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." where bid='".intval($bid)."'");
     list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result);
     $imageurl = htmlspecialchars($imageurl, ENT_QUOTES);
     $clickurl = htmlspecialchars($clickurl, ENT_QUOTES);
@@ -225,7 +225,7 @@ function BannerDelete($bid)
         }
     }
     echo "<a href='$clickurl'>$clickurl</a><br /><br /><table width='100%' border='0'><tr align='center'><td align='center'>"._AM_BANNERID."</td><td align='center'>"._AM_IMPRESION."</td><td align='center'>"._AM_IMPLEFT."</td><td align='center'>"._AM_CLICKS."</td><td align='center'>"._AM_NCLICKS."</td><td align='center'>"._AM_CLINAME."</td></tr><tr align='center'>";
-    $result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid=$cid");
+    $result2 = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='".intval($cid)."'");
     list($cid, $name) = $xoopsDB->fetchRow($result2);
     $name = $myts->makeTboxData4Show($name);
     $percent = substr(100 * $clicks / $impmade, 0, 5);
@@ -254,7 +254,7 @@ function BannerEdit($bid)
     xoops_cp_header();
     $xoopsDB =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
-    $result=$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." where bid=".$bid);
+    $result=$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." where bid='".intval($bid)."'");
     list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result);
     echo"<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
     echo"<h4>"._AM_EDITBNR."</h4>";
@@ -275,7 +275,7 @@ function BannerEdit($bid)
     echo "<form action='admin.php' method='post'>
     "._AM_CLINAMET."
     <select name='cid'>\n";
-    $result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." where cid=$cid");
+    $result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." where cid='".intval($cid)."'");
     list($cid, $name) = $xoopsDB->fetchRow($result);
     $name = $myts->makeTboxData4Show($name);
     echo "<option value='$cid' selected='selected'>$name</option>";
@@ -325,12 +325,12 @@ function BannerClientDelete($cid)
     $xoopsDB =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
     xoops_cp_header();
-    $result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid=$cid");
+    $result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='".intval($cid)."'");
     list($cid, $name) = $xoopsDB->fetchRow($result);
     $name = $myts->makeTboxData4Show($name);
     echo "<table width='100%' border='0' cellspacing='1' class='outer'><tr><td class=\"odd\">";
     echo "<h4>"._AM_DELEADC."</h4>".sprintf(_AM_SUREDELCLI,$name)."<br /><br />";
-    $result2 = $xoopsDB->query("SELECT imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." WHERE cid=$cid");
+    $result2 = $xoopsDB->query("SELECT imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." WHERE cid='".intval($cid)."'");
     $numrows = $xoopsDB->getRowsNum($result2);
     if ( $numrows == 0 ) {
         echo ""._AM_NOBNRRUN."<br /><br />";
@@ -371,7 +371,7 @@ function BannerClientEdit($cid)
     $xoopsDB =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
     xoops_cp_header();
-    $result = $xoopsDB->query("SELECT name, contact, email, login, passwd, extrainfo FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid=$cid");
+    $result = $xoopsDB->query("SELECT name, contact, email, login, passwd, extrainfo FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='".intval($cid)."'");
     list($name, $contact, $email, $login, $passwd, $extrainfo) = $xoopsDB->fetchRow($result);
     $name = $myts->makeTboxData4Edit($name);
     $contact = $myts->makeTboxData4Edit($contact);

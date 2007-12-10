@@ -95,7 +95,7 @@ function RankForumEdit($rank_id)
     xoops_cp_header();
     echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/userrank/images/userrank_big.png)"><a href="admin.php?fct=userrank">'. _AM_RANKSSETTINGS .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITRANK.'<br /><br /></div><br />';
     //echo '<a href="admin.php?fct=userrank">'. _AM_RANKSSETTINGS .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITRANK.'<br /><br />';
-    $result = $db->query("SELECT * FROM ".$db->prefix("ranks")." WHERE rank_id=".$rank_id);
+    $result = $db->query("SELECT * FROM ".$db->prefix("ranks")." WHERE rank_id='".intval($rank_id)."'");
     $rank = $db->fetchArray($result);
     $rank['rank_title'] = $myts->makeTboxData4Edit($rank['rank_title']);
     $rank['rank_image'] = $myts->makeTboxData4Edit($rank['rank_image']);

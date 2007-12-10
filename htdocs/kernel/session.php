@@ -147,10 +147,10 @@ class XoopsSessionHandler
     function write($sess_id, $sess_data)
 	{
 		$sess_id = $this->db->quoteString($sess_id);
-		$sql = sprintf('UPDATE %s SET sess_updated = %u, sess_data = %s WHERE sess_id = %s', $this->db->prefix('session'), time(), $this->db->quoteString($sess_data), $sess_id);
+		$sql = sprintf("UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s", $this->db->prefix('session'), time(), $this->db->quoteString($sess_data), $sess_id);
 		$this->db->queryF($sql);
 		if (!$this->db->getAffectedRows()) {
-			$sql = sprintf('INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data) VALUES (%s, %u, %s, %s)', $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($_SERVER['REMOTE_ADDR']), $this->db->quoteString($sess_data));
+			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data) VALUES (%s, '%u', %s, %s)", $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($_SERVER['REMOTE_ADDR']), $this->db->quoteString($sess_data));
 			return $this->db->queryF($sql);
         }
 		return true;
@@ -185,7 +185,7 @@ class XoopsSessionHandler
 	    }
 	    
         $mintime = time() - intval($expire);
-		$sql = sprintf('DELETE FROM %s WHERE sess_updated < %u', $this->db->prefix('session'), $mintime);
+		$sql = sprintf("DELETE FROM %s WHERE sess_updated < '%u'", $this->db->prefix('session'), $mintime);
         return $this->db->queryF($sql);
     }
     

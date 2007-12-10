@@ -107,7 +107,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
         $confoption = false;
     	$id = intval($id);
         if ($id > 0) {
-            $sql = 'SELECT * FROM '.$this->db->prefix('configoption').' WHERE confop_id='.$id;
+            $sql = "SELECT * FROM ".$this->db->prefix('configoption')." WHERE confop_id='".$id."'";
             if (!$result = $this->db->query($sql)) {
                 return $confoption;
             }
@@ -145,9 +145,9 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
         }
         if ($confoption->isNew()) {
             $confop_id = $this->db->genId('configoption_confop_id_seq');
-            $sql = sprintf("INSERT INTO %s (confop_id, confop_name, confop_value, conf_id) VALUES (%u, %s, %s, %u)", $this->db->prefix('configoption'), $confop_id, $this->db->quoteString($confop_name), $this->db->quoteString($confop_value), $conf_id);
+            $sql = sprintf("INSERT INTO %s (confop_id, confop_name, confop_value, conf_id) VALUES ('%u', %s, %s, '%u')", $this->db->prefix('configoption'), intval($confop_id), $this->db->quoteString($confop_name), $this->db->quoteString($confop_value), intval($conf_id));
         } else {
-            $sql = sprintf("UPDATE %s SET confop_name = %s, confop_value = %s WHERE confop_id = %u", $this->db->prefix('configoption'), $this->db->quoteString($confop_name), $this->db->quoteString($confop_value), $confop_id);
+            $sql = sprintf("UPDATE %s SET confop_name = %s, confop_value = %s WHERE confop_id = '%u'", $this->db->prefix('configoption'), $this->db->quoteString($confop_name), $this->db->quoteString($confop_value), intval($confop_id));
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -173,7 +173,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
         if (!is_a($confoption, 'xoopsconfigoption')) {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE confop_id = %u", $this->db->prefix('configoption'), $confoption->getVar('confop_id'));
+        $sql = sprintf("DELETE FROM %s WHERE confop_id = '%u'", $this->db->prefix('configoption'), intval($confoption->getVar('confop_id')));
         if (!$result = $this->db->query($sql)) {
             return false;
         }

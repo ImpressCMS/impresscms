@@ -178,7 +178,7 @@ function b_system_waiting_show()
     $module_handler =& xoops_gethandler('module');
     $block = array();
     if ($module_handler->getCount(new Criteria('dirname', 'news'))) {
-        $result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("stories")." WHERE published=0");
+        $result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("stories")." WHERE published='0'");
         if ( $result ) {
             $block['modules'][0]['adminlink'] = XOOPS_URL."/modules/news/admin/index.php?op=newarticle";
             list($block['modules'][0]['pendingnum']) = $xoopsDB->fetchRow($result);
@@ -186,7 +186,7 @@ function b_system_waiting_show()
         }
     }
     if ($module_handler->getCount(new Criteria('dirname', 'mylinks'))) {
-        $result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("mylinks_links")." WHERE status=0");
+        $result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("mylinks_links")." WHERE status='0'");
         if ( $result ) {
             $block['modules'][1]['adminlink'] = XOOPS_URL."/modules/mylinks/admin/index.php?op=listNewLinks";
             list($block['modules'][1]['pendingnum']) = $xoopsDB->fetchRow($result);
@@ -206,7 +206,7 @@ function b_system_waiting_show()
         }
     }
     if ($module_handler->getCount(new Criteria('dirname', 'mydownloads'))) {
-        $result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("mydownloads_downloads")." WHERE status=0");
+        $result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("mydownloads_downloads")." WHERE status='0'");
         if ( $result ) {
             $block['modules'][4]['adminlink'] = XOOPS_URL."/modules/mydownloads/admin/index.php?op=listNewDownloads";
             list($block['modules'][4]['pendingnum']) = $xoopsDB->fetchRow($result);
@@ -225,7 +225,7 @@ function b_system_waiting_show()
             $block['modules'][6]['lang_linkname'] = _MB_SYSTEM_MFLS;
         }
     }
-        $result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("xoopscomments")." WHERE com_status=1");
+        $result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("xoopscomments")." WHERE com_status='1'");
         if ( $result ) {
             $block['modules'][7]['adminlink'] = XOOPS_URL."/modules/system/admin.php?module=0&amp;status=1&amp;fct=comments";
             list($block['modules'][7]['pendingnum']) = $xoopsDB->fetchRow($result);

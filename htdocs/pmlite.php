@@ -53,7 +53,7 @@ if ($xoopsUser) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             $security_error = true;
         }
-        $res = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("users")." WHERE uid=".intval($_POST['to_userid'])."");
+        $res = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("users")." WHERE uid='".intval($_POST['to_userid'])."'");
         list($count) = $xoopsDB->fetchRow($res);
         if ($count != 1) {
             echo "<br /><br /><div><h4>"._PM_USERNOEXIST."<br />";

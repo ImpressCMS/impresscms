@@ -71,7 +71,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
       $id = intval($id);
       $imgset = false;
     	if ($id > 0) {
-            $sql = 'SELECT * FROM '.$this->db->prefix('imgset').' WHERE imgset_id='.$id;
+            $sql = "SELECT * FROM ".$this->db->prefix('imgset')." WHERE imgset_id='".$id."'";
             if (!$result = $this->db->query($sql)) {
                 return $imgset;
             }
@@ -104,9 +104,9 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         }
         if ($imgset->isNew()) {
             $imgset_id = $this->db->genId('imgset_imgset_id_seq');
-            $sql = sprintf("INSERT INTO %s (imgset_id, imgset_name, imgset_refid) VALUES (%u, %s, %u)", $this->db->prefix('imgset'), $imgset_id, $this->db->quoteString($imgset_name), $imgset_refid);
+            $sql = sprintf("INSERT INTO %s (imgset_id, imgset_name, imgset_refid) VALUES ('%u', %s, '%u')", $this->db->prefix('imgset'), intval($imgset_id), $this->db->quoteString($imgset_name), intval($imgset_refid));
         } else {
-            $sql = sprintf("UPDATE %s SET imgset_name = %s, imgset_refid = %u WHERE imgset_id = %u", $this->db->prefix('imgset'), $this->db->quoteString($imgset_name), $imgset_refid, $imgset_id);
+            $sql = sprintf("UPDATE %s SET imgset_name = %s, imgset_refid = '%u' WHERE imgset_id = '%u'", $this->db->prefix('imgset'), $this->db->quoteString($imgset_name), intval($imgset_refid), intval($imgset_id));
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -127,11 +127,11 @@ class XoopsImagesetHandler extends XoopsObjectHandler
             return false;
         }
 
-        $sql = sprintf("DELETE FROM %s WHERE imgset_id = %u", $this->db->prefix('imgset'), $imgset->getVar('imgset_id'));
+        $sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset'), intval($imgset->getVar('imgset_id')));
         if (!$result = $this->db->query($sql)) {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE imgset_id = %u", $this->db->prefix('imgset_tplset_link'), $imgset->getVar('imgset_id'));
+        $sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u'", $this->db->prefix('imgset_tplset_link'), intval($imgset->getVar('imgset_id')));
         $this->db->query($sql);
         return true;
     }
@@ -173,7 +173,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         if (!$this->unlinkThemeset($imgset_id, $tplset_name)) {
             return false;
         }
-        $sql = sprintf("INSERT INTO %s (imgset_id, tplset_name) VALUES (%u, %s)", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
+        $sql = sprintf("INSERT INTO %s (imgset_id, tplset_name) VALUES ('%u', %s)", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
         $result = $this->db->query($sql);
         if (!$result) {
             return false;
@@ -188,7 +188,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         if ($imgset_id <= 0 || $tplset_name == '') {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE imgset_id = %u AND tplset_name = %s", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
+        $sql = sprintf("DELETE FROM %s WHERE imgset_id = '%u' AND tplset_name = %s", $this->db->prefix('imgset_tplset_link'), $imgset_id, $this->db->quoteString($tplset_name));
         $result = $this->db->query($sql);
         if (!$result) {
             return false;

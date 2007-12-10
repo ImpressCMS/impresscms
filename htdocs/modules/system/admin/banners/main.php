@@ -62,7 +62,7 @@ case "BannersAdd":
     $db =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
     $newid = $db->genId($db->prefix("banner")."_bid_seq");
-    $sql = sprintf("INSERT INTO %s (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlbanner, htmlcode) VALUES (%d, %d, %d, 1, 0, %s, %s, %d, %d, %s)", $db->prefix("banner"), intval($newid), $cid, $imptotal, $db->quoteString($myts->stripSlashesGPC($imageurl)), $db->quoteString($myts->stripSlashesGPC($clickurl)), time(), $htmlbanner, $db->quoteString($myts->stripSlashesGPC($htmlcode)));
+    $sql = sprintf("INSERT INTO %s (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlbanner, htmlcode) VALUES ('%d', '%d', '%d', '1', '0', %s, %s, '%d', '%d', %s)", $db->prefix("banner"), intval($newid), $cid, $imptotal, $db->quoteString($myts->stripSlashesGPC($imageurl)), $db->quoteString($myts->stripSlashesGPC($clickurl)), time(), $htmlbanner, $db->quoteString($myts->stripSlashesGPC($htmlcode)));
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
     exit();
@@ -82,7 +82,7 @@ case "BannerAddClient":
     $db =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
     $newid = $db->genId($xoopsDB->prefix("bannerclient")."_cid_seq");
-    $sql = sprintf("INSERT INTO %s (cid, name, contact, email, login, passwd, extrainfo) VALUES (%d, %s, %s, %s, %s, %s, %s)", $db->prefix("bannerclient"), intval($newid), $db->quoteString($myts->stripSlashesGPC($name)), $db->quoteString($myts->stripSlashesGPC($contact)), $db->quoteString($myts->stripSlashesGPC($email)), $db->quoteString($myts->stripSlashesGPC($login)), $db->quoteString($myts->stripSlashesGPC($passwd)), $db->quoteString($myts->stripSlashesGPC($extrainfo)));
+    $sql = sprintf("INSERT INTO %s (cid, name, contact, email, login, passwd, extrainfo) VALUES ('%d', %s, %s, %s, %s, %s, %s)", $db->prefix("bannerclient"), intval($newid), $db->quoteString($myts->stripSlashesGPC($name)), $db->quoteString($myts->stripSlashesGPC($contact)), $db->quoteString($myts->stripSlashesGPC($email)), $db->quoteString($myts->stripSlashesGPC($login)), $db->quoteString($myts->stripSlashesGPC($passwd)), $db->quoteString($myts->stripSlashesGPC($extrainfo)));
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
     exit();
@@ -149,7 +149,7 @@ case "BannerChange":
     $htmlcode = isset($_POST['htmlcode']) ? trim($_POST['htmlcode']) : '';
     $db =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
-    $sql = sprintf("UPDATE %s SET cid = %d, imptotal = %d, imageurl = %s, clickurl = %s, htmlbanner = %d, htmlcode = %s WHERE bid = %d", $db->prefix("banner"), $cid, $imptotal + $impadded, $db->quoteString($myts->stripSlashesGPC($imageurl)), $db->quoteString($myts->stripSlashesGPC($clickurl)), $htmlbanner, $db->quoteString($myts->stripSlashesGPC($htmlcode)), $bid);
+    $sql = sprintf("UPDATE %s SET cid = '%d', imptotal = '%d', imageurl = %s, clickurl = %s, htmlbanner = '%d', htmlcode = %s WHERE bid = '%d'", $db->prefix("banner"), $cid, $imptotal + $impadded, $db->quoteString($myts->stripSlashesGPC($imageurl)), $db->quoteString($myts->stripSlashesGPC($clickurl)), $htmlbanner, $db->quoteString($myts->stripSlashesGPC($htmlcode)), $bid);
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
 	exit();
@@ -169,9 +169,9 @@ case "BannerClientDelete2":
         redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		exit();
     }
-    $sql = sprintf("DELETE FROM %s WHERE cid = %u", $db->prefix("banner"), $cid);
+    $sql = sprintf("DELETE FROM %s WHERE cid = '%u'", $db->prefix("banner"), $cid);
     $db->query($sql);
-    $sql = sprintf("DELETE FROM %s WHERE cid = %u", $db->prefix("bannerclient"), $cid);
+    $sql = sprintf("DELETE FROM %s WHERE cid = '%u'", $db->prefix("bannerclient"), $cid);
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
 	exit();
@@ -199,7 +199,7 @@ case "BannerClientChange":
     $db =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
     $sql = sprintf(
-    	"UPDATE %s SET name = %s, contact = %s, email = %s, login = %s, passwd = %s, extrainfo = %s WHERE cid = %d",
+    	"UPDATE %s SET name = %s, contact = %s, email = %s, login = %s, passwd = %s, extrainfo = %s WHERE cid = '%d'",
     	$db->prefix("bannerclient"),
     	$db->quoteString( $myts->stripSlashesGPC($name) ),
     	$db->quoteString( $myts->stripSlashesGPC($contact) ),

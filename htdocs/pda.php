@@ -34,7 +34,7 @@ echo "<html><head><title>". htmlspecialchars($xoopsConfig['sitename'])."</title>
       </head>
       <body>";
 
-$sql = "SELECT storyid, title FROM ".$xoopsDB->prefix("stories")." WHERE published>0 AND published<".time()." ORDER BY published DESC";
+$sql = "SELECT storyid, title FROM ".$xoopsDB->prefix("stories")." WHERE published>'0' AND published<'".time()."' ORDER BY published DESC";
 
 $result = $xoopsDB->query($sql,10,0);
 

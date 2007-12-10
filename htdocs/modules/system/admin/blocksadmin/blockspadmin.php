@@ -129,9 +129,9 @@ function save_pblock($dados,$edit=false){
 	$db =& Database::getInstance();
 
 	if (!$edit)
-	  $sql = 'INSERT INTO '.$db->prefix('block_positions').' (pname,title,description,block_default,block_type) VALUES ("'.$dados['pname'].'","'.$dados['title'].'","'.$dados['description'].'","0","L")';
+	  $sql = "INSERT INTO ".$db->prefix('block_positions')." (pname,title,description,block_default,block_type) VALUES ('".$dados['pname']."','".$dados['title']."','".$dados['description']."','0','L')";
 	else
-	  $sql = 'UPDATE '.$db->prefix('block_positions').' SET pname="'.$dados['pname'].'", title="'.$dados['title'].'", description="'.$dados['description'].'", block_default="0", block_type="L" WHERE id='.$dados['pbid'];
+	  $sql = "UPDATE ".$db->prefix('block_positions')." SET pname='".$dados['pname']."', title='".$dados['title']."', description='".$dados['description']."', block_default='0', block_type='L' WHERE id='".intval($dados['pbid'])."'";
 
 	if ($db->queryF($sql)){
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG1);
@@ -145,7 +145,7 @@ function save_pblock($dados,$edit=false){
 function del_pblock($pbid){
 	$db =& Database::getInstance();
 
-	$sql = 'DELETE FROM '.$db->prefix('block_positions').' WHERE id='.$pbid;
+	$sql = "DELETE FROM ".$db->prefix('block_positions')." WHERE id='".intval($pbid)."'";
 
 	if ($db->queryF($sql)){
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG1);

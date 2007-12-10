@@ -353,12 +353,12 @@ if ($op == 'update_ok') {
                     if (!empty($blocks[$i]['options'])) {
                         $options = $blocks[$i]['options'];
                     }
-                    $sql = "SELECT bid, name FROM ".$xoopsDB->prefix('newblocks')." WHERE mid=".$module->getVar('mid')." AND func_num=".$i." AND show_func='".addslashes($blocks[$i]['show_func'])."' AND func_file='".addslashes($blocks[$i]['file'])."'";
+                    $sql = "SELECT bid, name FROM ".$xoopsDB->prefix('newblocks')." WHERE mid='".intval($module->getVar('mid'))."' AND func_num='".intval($i)."' AND show_func='".addslashes($blocks[$i]['show_func'])."' AND func_file='".addslashes($blocks[$i]['file'])."'";
                     $fresult = $xoopsDB->query($sql);
                     $fcount = 0;
                     while ($fblock = $xoopsDB->fetchArray($fresult)) {
                         $fcount++;
-                        $sql = "UPDATE ".$xoopsDB->prefix("newblocks")." SET name='".addslashes($blocks[$i]['name'])."', edit_func='".addslashes($editfunc)."', content='', template='".$template."', last_modified=".time()." WHERE bid=".$fblock['bid'];
+                        $sql = "UPDATE ".$xoopsDB->prefix("newblocks")." SET name='".addslashes($blocks[$i]['name'])."', edit_func='".addslashes($editfunc)."', content='', template='".$template."', last_modified=".time()." WHERE bid='".intval($fblock['bid'])."'";
                         $result = $xoopsDB->query($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;ERROR: Could not update '.$fblock['name'];
@@ -400,7 +400,7 @@ if ($op == 'update_ok') {
                     if ($fcount == 0) {
                         $newbid = $xoopsDB->genId($xoopsDB->prefix('newblocks').'_bid_seq');
                         $block_name = addslashes($blocks[$i]['name']);
-                        $sql = "INSERT INTO ".$xoopsDB->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES (".$newbid.", ".$module->getVar('mid').", ".$i.",'".addslashes($options)."','".$block_name."', '".$block_name."', '', 0, 0, 0, 'M', 1, '".addslashes($dirname)."', '".addslashes($blocks[$i]['file'])."', '".addslashes($blocks[$i]['show_func'])."', '".addslashes($editfunc)."', '".$template."', ".time().")";
+                        $sql = "INSERT INTO ".$xoopsDB->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES ('".intval($newbid)."', '".intval($module->getVar('mid'))."', '".intval($i)."','".addslashes($options)."','".$block_name."', '".$block_name."', '', '0', '0', '0', 'M', '1', '".addslashes($dirname)."', '".addslashes($blocks[$i]['file'])."', '".addslashes($blocks[$i]['show_func'])."', '".addslashes($editfunc)."', '".$template."', '".time()."')";
                         $result = $xoopsDB->query($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;ERROR: Could not create '.$blocks[$i]['name'];echo $sql;
@@ -449,7 +449,7 @@ if ($op == 'update_ok') {
                                 }
                             }
                             $msgs[] = '&nbsp;&nbsp;Block <b>'.$blocks[$i]['name'].'</b> created. Block ID: <b>'.$newbid.'</b>';
-                            $sql = 'INSERT INTO '.$xoopsDB->prefix('block_module_link').' (block_id, module_id) VALUES ('.$newbid.', -1)';
+                            $sql = "INSERT INTO ".$xoopsDB->prefix('block_module_link')." (block_id, module_id) VALUES ('".$newbid."', '-1')";
                             $xoopsDB->query($sql);
                         }
                     }
@@ -458,7 +458,7 @@ if ($op == 'update_ok') {
             $block_arr = XoopsBlock::getByModule($module->getVar('mid'));
             foreach ($block_arr as $block) {
                 if (!in_array($block->getVar('show_func'), $showfuncs) || !in_array($block->getVar('func_file'), $funcfiles)) {
-                    $sql = sprintf("DELETE FROM %s WHERE bid = %u", $xoopsDB->prefix('newblocks'), $block->getVar('bid'));
+                    $sql = sprintf("DELETE FROM %s WHERE bid = '%u'", $xoopsDB->prefix('newblocks'), intval($block->getVar('bid')));
                     if(!$xoopsDB->query($sql)) {
                         $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block <b>'.$block->getVar('name').'</b>. Block ID: <b>'.$block->getVar('bid').'</b></span>';
                     } else {

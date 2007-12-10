@@ -229,7 +229,7 @@ case "synchronize":
     synchronize($id, $type);
     break;
 case "reactivate":
-    $result=$xoopsDB->query("UPDATE ".$xoopsDB->prefix("users")." SET level=1 WHERE uid=".$uid);
+    $result=$xoopsDB->query("UPDATE ".$xoopsDB->prefix("users")." SET level='1' WHERE uid='".intval($uid)."'");
     if(!$result){
         exit();
     }

@@ -340,14 +340,14 @@ function xoops_getbanner()
         if ($xoopsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {
             // EMPTY
         } else {
-            $db->queryF(sprintf("UPDATE %s SET impmade = impmade+1 WHERE bid = %u", $db->prefix("banner"), $bid));
+            $db->queryF(sprintf("UPDATE %s SET impmade = impmade+1 WHERE bid = '%u'", $db->prefix("banner"), intval($bid)));
         }
         /* Check if this impression is the last one and print the banner */
         if ( $imptotal == $impmade ) {
             $newid = $db->genId($db->prefix("bannerfinish")."_bid_seq");
-            $sql = sprintf("INSERT INTO %s (bid, cid, impressions, clicks, datestart, dateend) VALUES (%u, %u, %u, %u, %u, %u)", $db->prefix("bannerfinish"), $newid, $cid, $impmade, $clicks, $date, time());
+            $sql = sprintf("INSERT INTO %s (bid, cid, impressions, clicks, datestart, dateend) VALUES ('%u', '%u', '%u', '%u', '%u', '%u')", $db->prefix("bannerfinish"), intval($newid), intval($cid), intval($impmade), intval($clicks), intval($date), time());
             $db->queryF($sql);
-            $db->queryF(sprintf("DELETE FROM %s WHERE bid = %u", $db->prefix("banner"), $bid));
+            $db->queryF(sprintf("DELETE FROM %s WHERE bid = '%u'", $db->prefix("banner"), intval($bid)));
         }
         if ($htmlbanner){
             $bannerobject = $htmlcode;
@@ -584,9 +584,9 @@ function xoops_getrank($rank_id =0, $posts = 0)
     $rank_id = intval($rank_id);
     $posts = intval($posts);
     if ($rank_id != 0) {
-        $sql = "SELECT rank_title AS title, rank_image AS image FROM ".$db->prefix('ranks')." WHERE rank_id = ".$rank_id;
+        $sql = "SELECT rank_title AS title, rank_image AS image FROM ".$db->prefix('ranks')." WHERE rank_id = '".$rank_id."'";
     } else {
-        $sql = "SELECT rank_title AS title, rank_image AS image FROM ".$db->prefix('ranks')." WHERE rank_min <= ".$posts." AND rank_max >= ".$posts." AND rank_special = 0";
+        $sql = "SELECT rank_title AS title, rank_image AS image FROM ".$db->prefix('ranks')." WHERE rank_min <= '".$posts."' AND rank_max >= '".$posts."' AND rank_special = '0'";
     }
     $rank = $db->fetchArray($db->query($sql));
     $rank['title'] = $myts->makeTboxData4Show($rank['title']);

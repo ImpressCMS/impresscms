@@ -76,7 +76,7 @@ class XoopsRankHandler extends XoopsObjectHandler
     function &get($id = 0)
     {
     	$object =& $this->create(false);
-        $sql = "SELECT * FROM " . $this->db->prefix('ranks') . " WHERE rank_id = " . $this->db->quoteString($id);
+        $sql = "SELECT * FROM " . $this->db->prefix('ranks') . " WHERE rank_id = '" . $this->db->quoteString($id)."'";
         if (!$result = $this->db->query($sql)) {
 	        $ret = null;
             return $ret;
@@ -157,17 +157,17 @@ class XoUserHandler extends XoopsObjectHandler
 	    }
 	    $groups = array_filter($groups);
 	    if (empty($groups)) {
-	        $sql = 	'	SELECT COUNT(DISTINCT u.uid) FROM '.$this->db->prefix('users'). ' AS u'.
-	        		'	WHERE 1=1';
+	        $sql = 	"	SELECT COUNT(DISTINCT u.uid) FROM ".$this->db->prefix('users'). " AS u".
+	        		"	WHERE 1='1'";
 	    } else {
-	        $sql = 	'	SELECT COUNT(DISTINCT u.uid) FROM '.$this->db->prefix('users'). ' AS u'.
-	        		'	LEFT JOIN '.$this->db->prefix('groups_users_link'). ' AS g ON g.uid = u.uid'.
-	        		'	WHERE g.groupid IN ('.implode(', ', array_map('intval', $groups)).')';
+	        $sql = 	"	SELECT COUNT(DISTINCT u.uid) FROM ".$this->db->prefix('users'). " AS u".
+	        		"	LEFT JOIN ".$this->db->prefix('groups_users_link'). " AS g ON g.uid = u.uid".
+	        		"	WHERE g.groupid IN (".implode(', ', array_map('intval', $groups)).")";
         }
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
 	        // Use the direct renderer, assuming no `uid` in criteria
             if ($render = $criteria->render()) {
-            	$sql .= ' AND '.$render;
+            	$sql .= " AND ".$render;
         	}
         }
         $result = $this->db->query($sql);
@@ -183,17 +183,17 @@ class XoUserHandler extends XoopsObjectHandler
 	    $limit = null;
 	    $start = null;
 	    if (empty($groups)) {
-	        $sql = 	'	SELECT u.* FROM '.$this->db->prefix('users'). ' AS u'.
-	        		'	WHERE 1=1';
+	        $sql = 	"	SELECT u.* FROM ".$this->db->prefix('users'). " AS u".
+	        		"	WHERE 1='1'";
 	    } else {
 	    
-	        $sql = 	'	SELECT u.* FROM '.$this->db->prefix('users'). ' AS u'.
-	        		'	LEFT JOIN '.$this->db->prefix('groups_users_link'). ' AS g ON g.uid = u.uid'.
-	        		'	WHERE g.groupid IN ('.implode(', ', array_map('intval', $groups)).')';
+	        $sql = 	"	SELECT u.* FROM ".$this->db->prefix('users'). " AS u".
+	        		"	LEFT JOIN ".$this->db->prefix('groups_users_link'). " AS g ON g.uid = u.uid".
+	        		"	WHERE g.groupid IN (".implode(', ', array_map('intval', $groups)).")";
         }
         if (isset($criteria) && is_subclass_of($criteria, "criteriaelement")) {
             if ($render = $criteria->render()) {
-            	$sql .= ' AND '.$render;
+            	$sql .= " AND ".$render;
         	}
             if ($sort = $criteria->getSort()) {
                 $sql .= " ORDER BY ".$sort." ".$criteria->getOrder();

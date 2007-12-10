@@ -437,7 +437,7 @@ class XoopsMemberHandler{
 	    $sql[] = "	SELECT DISTINCT {$select} ".
 	    		"	FROM " . $this->_uHandler->db->prefix("users") . " AS u".
 	    		"		LEFT JOIN ". $this->_mHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid".
-	    		"	WHERE 1 = 1";
+	    		"	WHERE 1 = '1'";
 	    if (!empty($groups)) {
 		    $sql[] = "m.groupid IN (".implode(", ", $groups).")";
 	    }
@@ -488,7 +488,7 @@ class XoopsMemberHandler{
 	    $sql[] = "	SELECT COUNT(DISTINCT u.uid) ".
 	    		"	FROM " . $this->_uHandler->db->prefix("users") . " AS u".
 	    		"		LEFT JOIN ". $this->_mHandler->db->prefix("groups_users_link") . " AS m ON m.uid = u.uid".
-	    		"	WHERE 1 = 1";
+	    		"	WHERE 1 = '1'";
 	    if (!empty($groups)) {
 		    $sql[] = "m.groupid IN (".implode(", ", $groups).")";
 	    }

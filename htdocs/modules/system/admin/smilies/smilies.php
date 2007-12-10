@@ -99,7 +99,7 @@ function SmilesEdit($id)
     $myts =& MyTextSanitizer::getInstance();
     xoops_cp_header();
     echo '<a href="admin.php?fct=smilies">'._AM_SMILESCONTROL .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITSMILE.'<br /><br />';
-    if ($getsmiles = $db->query("SELECT * FROM ".$db->prefix("smiles")." WHERE id = $id")) {
+    if ($getsmiles = $db->query("SELECT * FROM ".$db->prefix("smiles")." WHERE id = '".intval($id)."'")) {
         $numsmiles = $db->getRowsNum($getsmiles);
         if ( $numsmiles == 0 ) {
             //EMPTY

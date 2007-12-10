@@ -64,7 +64,7 @@ if (empty($getuser)) {
         }
 
         // Next step: add the new password to the database
-        $sql = sprintf("UPDATE %s SET pass = '%s' WHERE uid = %u", $xoopsDB->prefix("users"), md5($newpass), $getuser[0]->getVar('uid'));
+        $sql = sprintf("UPDATE %s SET pass = '%s' WHERE uid = '%u'", $xoopsDB->prefix("users"), md5($newpass), intval($getuser[0]->getVar('uid')));
         if ( !$xoopsDB->queryF($sql) ) {
             include "header.php";
             echo _US_MAILPWDNG;

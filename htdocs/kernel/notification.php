@@ -200,7 +200,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         $notification = false;
     	$id = intval($id);
         if ($id > 0) {
-            $sql = 'SELECT * FROM '.$this->db->prefix('xoopsnotifications').' WHERE not_id='.$id;
+            $sql = "SELECT * FROM ".$this->db->prefix('xoopsnotifications')." WHERE not_id='".$id."'";
             if (!$result = $this->db->query($sql)) {
                 return $notification;
             }
@@ -240,9 +240,9 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         }
         if ($notification->isNew()) {
             $not_id = $this->db->genId('xoopsnotifications_not_id_seq');
-	    $sql = sprintf("INSERT INTO %s (not_id, not_modid, not_itemid, not_category, not_uid, not_event, not_mode) VALUES (%u, %u, %u, %s, %u, %s, %u)", $this->db->prefix('xoopsnotifications'), $not_id, $not_modid, $not_itemid, $this->db->quoteString($not_category), $not_uid, $this->db->quoteString($not_event), $not_mode);
+	    $sql = sprintf("INSERT INTO %s (not_id, not_modid, not_itemid, not_category, not_uid, not_event, not_mode) VALUES ('%u', '%u', '%u', %s, '%u', %s, '%u')", $this->db->prefix('xoopsnotifications'), intval($not_id), intval($not_modid), intval($not_itemid), $this->db->quoteString($not_category), intval($not_uid), $this->db->quoteString($not_event), intval($not_mode));
         } else {
-	    $sql = sprintf("UPDATE %s SET not_modid = %u, not_itemid = %u, not_category = %s, not_uid = %u, not_event = %s, not_mode = %u WHERE not_id = %u", $this->db->prefix('xoopsnotifications'), $not_modid, $not_itemid, $this->db->quoteString($not_category), $not_uid, $this->db->quoteString($not_event), $not_mode, $not_id);
+	    $sql = sprintf("UPDATE %s SET not_modid = '%u', not_itemid = '%u', not_category = %s, not_uid = '%u', not_event = %s, not_mode = '%u' WHERE not_id = '%u'", $this->db->prefix('xoopsnotifications'), intval($not_modid), intval($not_itemid), $this->db->quoteString($not_category), intval($not_uid), $this->db->quoteString($not_event), intval($not_mode), intval($not_id));
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -270,7 +270,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             return false;
         }
 
-        $sql = sprintf("DELETE FROM %s WHERE not_id = %u", $this->db->prefix('xoopsnotifications'), $notification->getVar('not_id'));
+        $sql = sprintf("DELETE FROM %s WHERE not_id = '%u'", $this->db->prefix('xoopsnotifications'), intval($notification->getVar('not_id')));
         if (!$result = $this->db->query($sql)) {
             return false;
         }

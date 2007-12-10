@@ -288,13 +288,13 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         }
         $db =& Database::getInstance();
         foreach ($bmodule as $bmid) {
-            $sql = 'INSERT INTO '.$db->prefix('block_module_link').' (block_id, module_id) VALUES ('.$newid.', '.intval($bmid).')';
+            $sql = "INSERT INTO ".$db->prefix('block_module_link')." (block_id, module_id) VALUES ('".intval($newid)."', '".intval($bmid)."')";
             $db->query($sql);
         }
 		$groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
         $count = count($groups);
         for ($i = 0; $i < $count; $i++) {
-            $sql = "INSERT INTO ".$db->prefix('group_permission')." (gperm_groupid, gperm_itemid, gperm_name, gperm_modid) VALUES (".$groups[$i].", ".$newid.", 'block_read', 1)";
+            $sql = "INSERT INTO ".$db->prefix('group_permission')." (gperm_groupid, gperm_itemid, gperm_name, gperm_modid) VALUES ('".$groups[$i]."', '".intval($newid)."', 'block_read', '1')";
             $db->query($sql);
         }
         redirect_header('admin.php?fct=blocksadmin&amp;t='.time(),1,_AM_DBUPDATED);
@@ -305,7 +305,7 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
     {
         $myblock = new XoopsBlock($bid);
         $db =& Database::getInstance();
-        $sql = 'SELECT module_id FROM '.$db->prefix('block_module_link').' WHERE block_id='.intval($bid);
+        $sql = "SELECT module_id FROM ".$db->prefix('block_module_link')." WHERE block_id='".intval($bid)."'";
         $result = $db->query($sql);
         $modules = array();
         while ($row = $db->fetchArray($result)) {
@@ -370,10 +370,10 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         $msg = _AM_DBUPDATED;
         if ($myblock->store() != false) {
             $db =& Database::getInstance();
-            $sql = sprintf("DELETE FROM %s WHERE block_id = %u", $db->prefix('block_module_link'), $bid);
+            $sql = sprintf("DELETE FROM %s WHERE block_id = '%u'", $db->prefix('block_module_link'), intval($bid));
             $db->query($sql);
             foreach ($bmodule as $bmid) {
-                $sql = sprintf("INSERT INTO %s (block_id, module_id) VALUES (%u, %d)", $db->prefix('block_module_link'), $bid, intval($bmid));
+                $sql = sprintf("INSERT INTO %s (block_id, module_id) VALUES ('%u', '%d')", $db->prefix('block_module_link'), intval($bid), intval($bmid));
                 $db->query($sql);
             }
             include_once XOOPS_ROOT_PATH.'/class/template.php';
@@ -474,7 +474,7 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         xoops_cp_header();
         $myblock = new XoopsBlock($bid);
         $db =& Database::getInstance();
-        $sql = 'SELECT module_id FROM '.$db->prefix('block_module_link').' WHERE block_id='.intval($bid);
+        $sql = "SELECT module_id FROM ".$db->prefix('block_module_link')." WHERE block_id='".intval($bid)."'";
         $result = $db->query($sql);
         $modules = array();
         while ($row = $db->fetchArray($result)) {
@@ -594,13 +594,13 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         } */
         $db =& Database::getInstance();
         foreach ($bmodule as $bmid) {
-            $sql = 'INSERT INTO '.$db->prefix('block_module_link').' (block_id, module_id) VALUES ('.$newid.', '.$bmid.')';
+            $sql = "INSERT INTO ".$db->prefix('block_module_link')." (block_id, module_id) VALUES ('".intval($newid)."', '".intval($bmid)."')";
             $db->query($sql);
         }
         $groups =& $xoopsUser->getGroups();
         $count = count($groups);
         for ($i = 0; $i < $count; $i++) {
-            $sql = "INSERT INTO ".$db->prefix('group_permission')." (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES (".$groups[$i].", ".$newid.", 1, 'block_read')";
+            $sql = "INSERT INTO ".$db->prefix('group_permission')." (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ('".$groups[$i]."', '".intval($newid)."', '1', 'block_read')";
             $db->query($sql);
         }
         redirect_header('admin.php?fct=blocksadmin&amp;t='.time(),1,_AM_DBUPDATED);

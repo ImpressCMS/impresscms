@@ -72,7 +72,7 @@ class XoopsComments extends XoopsObject
 	function load($id)
 	{
 		$id = intval($id);
-		$sql = "SELECT * FROM ".$this->ctable." WHERE comment_id=".$id."";
+		$sql = "SELECT * FROM ".$this->ctable." WHERE comment_id='".$id."'";
 		$arr = $this->db->fetchArray($this->db->query($sql));
 		$this->assignVars($arr);
 	}
@@ -89,9 +89,9 @@ class XoopsComments extends XoopsObject
 		if ( empty($comment_id ) ) {
 			$isnew = true;
 			$comment_id = $this->db->genId($this->ctable."_comment_id_seq");
-			$sql = sprintf("INSERT INTO %s (comment_id, pid, item_id, date, user_id, ip, subject, comment, nohtml, nosmiley, noxcode, icon) VALUES (%u, %u, %u, %u, %u, '%s', '%s', '%s', %u, %u, %u, '%s')", $this->ctable, $comment_id, $pid, $item_id, time(), $user_id, $ip, $subject, $comment, $nohtml, $nosmiley, $noxcode, $icon);
+			$sql = sprintf("INSERT INTO %s (comment_id, pid, item_id, date, user_id, ip, subject, comment, nohtml, nosmiley, noxcode, icon) VALUES ('%u', '%u', '%u', '%u', '%u', '%s', '%s', '%s', '%u', '%u', '%u', '%s')", $this->ctable, intval($comment_id), intval($pid), intval($item_id), time(), intval($user_id), $ip, $subject, $comment, intval($nohtml), intval($nosmiley), intval($noxcode), $icon);
 		} else {
-			$sql = sprintf("UPDATE %s SET subject = '%s', comment = '%s', nohtml = %u, nosmiley = %u, noxcode = %u, icon = '%s'  WHERE comment_id = %u", $this->ctable, $subject, $comment, $nohtml, $nosmiley, $noxcode, $icon, $comment_id);
+			$sql = sprintf("UPDATE %s SET subject = '%s', comment = '%s', nohtml = '%u', nosmiley = '%u', noxcode = '%u', icon = '%s'  WHERE comment_id = '%u'", $this->ctable, $subject, $comment, intval($nohtml), intval($nosmiley), intval($noxcode), $icon, intval($comment_id));
 		}
 		if ( !$result = $this->db->query($sql) ) {
 			//echo $sql;
@@ -101,7 +101,7 @@ class XoopsComments extends XoopsObject
 			$comment_id = $this->db->getInsertId();
 		}
 		if ( $isnew != false ) {
-			$sql = sprintf("UPDATE %s SET posts = posts+1 WHERE uid = %u", $this->db->prefix("users"), $user_id);
+			$sql = sprintf("UPDATE %s SET posts = posts+1 WHERE uid = '%u'", $this->db->prefix("users"), intval($user_id));
 			if (!$result = $this->db->query($sql)) {
 				echo "Could not update user posts.";
 			}
@@ -111,11 +111,11 @@ class XoopsComments extends XoopsObject
 
 	function delete()
 	{
-		$sql = sprintf("DELETE FROM %s WHERE comment_id = %u", $this->ctable, $this->getVar('comment_id'));
+		$sql = sprintf("DELETE FROM %s WHERE comment_id = '%u'", $this->ctable, intval($this->getVar('comment_id')));
 		if ( !$result = $this->db->query($sql) ) {
 			return false;
 		}
-		$sql = sprintf("UPDATE %s SET posts = posts-1 WHERE uid = %u", $this->db->prefix("users"), $this->getVar("user_id"));
+		$sql = sprintf("UPDATE %s SET posts = posts-1 WHERE uid = '%u'", $this->db->prefix("users"), intval($this->getVar("user_id")));
 		if ( !$result = $this->db->query($sql) ) {
 			echo "Could not update user posts.";
 		}
@@ -124,11 +124,11 @@ class XoopsComments extends XoopsObject
 		$size = count($arr);
 		if ( $size > 0 ) {
 			for ( $i = 0; $i < $size; $i++ ) {
-				$sql = sprintf("DELETE FROM %s WHERE comment_bid = %u", $this->ctable, $arr[$i]['comment_id']);
+				$sql = sprintf("DELETE FROM %s WHERE comment_bid = '%u'", $this->ctable, $arr[$i]['comment_id']);
 				if ( !$result = $this->db->query($sql) ) {
 					echo "Could not delete comment.";
 				}
-				$sql = sprintf("UPDATE %s SET posts = posts-1 WHERE uid = %u", $this->db->prefix("users"), $arr[$i]['user_id']);
+				$sql = sprintf("UPDATE %s SET posts = posts-1 WHERE uid = '%u'", $this->db->prefix("users"), $arr[$i]['user_id']);
 				if ( !$result = $this->db->query($sql) ) {
 					echo "Could not update user posts.";
 				}

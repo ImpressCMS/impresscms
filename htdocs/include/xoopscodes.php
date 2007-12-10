@@ -84,7 +84,7 @@ function xoopsSmilies($textarea_id)
 	$smiles =& $myts->getSmileys();
 	if (empty($smileys)) {
 		$db =& Database::getInstance();
-		if ($result = $db->query('SELECT * FROM '.$db->prefix('smiles').' WHERE display=1')) {
+		if ($result = $db->query("SELECT * FROM ".$db->prefix('smiles')." WHERE display='1'")) {
 			while ($smiles = $db->fetchArray($result)) {
 			//hack smilies move for the smilies !!
 				echo "<img src='".XOOPS_UPLOAD_URL."/".htmlspecialchars($smiles['smile_url'])."' border='0' onmouseover='style.cursor=\"hand\"' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles['code']." \");' />";

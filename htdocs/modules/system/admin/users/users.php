@@ -276,7 +276,7 @@ function synchronize($id, $type)
                 }
             }
         }
-        $sql = "UPDATE ".$xoopsDB->prefix("users")." SET posts = $total_posts WHERE uid = $id";
+        $sql = "UPDATE ".$xoopsDB->prefix("users")." SET posts = '".intval($total_posts)."' WHERE uid = '".intval($id)."'";
         if ( !$result = $xoopsDB->query($sql) ) {
             exit(sprintf(_AM_CNUUSER %s ,$id));
         }

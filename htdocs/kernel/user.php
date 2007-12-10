@@ -491,7 +491,7 @@ class XoopsUserHandler extends XoopsObjectHandler
       $id = intval($id);
       $user = false;
     	if ($id > 0) {
-            $sql = 'SELECT * FROM '.$this->db->prefix('users').' WHERE uid='.$id;
+            $sql = "SELECT * FROM ".$this->db->prefix('users')." WHERE uid='".$id."'";
             if (!$result = $this->db->query($sql)) {
                 return $user;
             }
@@ -532,9 +532,11 @@ class XoopsUserHandler extends XoopsObjectHandler
         // Added two fields, notify_method, notify_mode
         if ($user->isNew()) {
             $uid = $this->db->genId($this->db->prefix('users').'_uid_seq');
-            $sql = sprintf("INSERT INTO %s (uid, uname, name, email, url, user_avatar, user_regdate, user_icq, user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts, attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method, notify_mode, user_occ, bio, user_intrest, user_mailok) VALUES (%u, %s, %s, %s, %s, %s, %u, %s, %s, %s, %u, %s, %s, %s, %s, %s, %u, %u, %u, %u, %s, %.2f, %u, %s, %u, %u, %u, %s, %s, %s, %u)", $this->db->prefix('users'), $uid, $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), time(), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), $user_viewemail, $this->db->quoteString($actkey), $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), $this->db->quoteString($pass), $posts, $attachsig, $rank, $level, $this->db->quoteString($theme), $timezone_offset, 0, $this->db->quoteString($umode), $uorder, $notify_method, $notify_mode, $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), $user_mailok);
+            $sql = sprintf("INSERT INTO %s (uid, uname, name, email, url, user_avatar, user_regdate, user_icq, user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts, attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method, notify_mode, user_occ, bio, user_intrest, user_mailok) VALUES ('%u', %s, %s, %s, %s, %s, '%u', %s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %.2f, '%u', %s, '%u', '%u', '%u', %s, %s, %s, '%u')", $this->db->prefix('users'), intval($uid), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), time(), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), intval($user_viewemail), $this->db->quoteString($actkey), $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), 
+			$this->db->quoteString($pass), intval($posts), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $timezone_offset, 0, $this->db->quoteString($umode), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok));
         } else {
-            $sql = sprintf("UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s, user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = %u, user_aim = %s, user_yim = %s, user_msnm = %s, posts = %d,  pass = %s, attachsig = %u, rank = %u, level= %u, theme = %s, timezone_offset = %.2f, umode = %s, last_login = %u, uorder = %u, notify_method = %u, notify_mode = %u, user_occ = %s, bio = %s, user_intrest = %s, user_mailok = %u WHERE uid = %u", $this->db->prefix('users'), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), $user_viewemail, $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), $posts, $this->db->quoteString($pass), $attachsig, $rank, $level, $this->db->quoteString($theme), $timezone_offset, $this->db->quoteString($umode), $last_login, $uorder, $notify_method, $notify_mode, $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), $user_mailok, $uid);
+            $sql = sprintf("UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s, user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s, user_yim = %s, user_msnm = %s, posts = %d,  pass = %s, attachsig = '%u', rank = '%u', level= '%u', theme = %s, timezone_offset = %.2f, umode = %s, last_login = '%u', uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s, user_intrest = %s, user_mailok = '%u' WHERE uid = %u", $this->db->prefix('users'), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), $user_viewemail, $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), intval($posts), $this->db->quoteString($pass), intval($attachsig), intval($rank), 
+			intval($level), $this->db->quoteString($theme), $timezone_offset, $this->db->quoteString($umode), intval($last_login), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), intval($uid));
         }
         if (false != $force) {
             $result = $this->db->queryF($sql);
@@ -566,7 +568,7 @@ class XoopsUserHandler extends XoopsObjectHandler
         if (!is_a($user, 'xoopsuser')) {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE uid = %u", $this->db->prefix("users"), $user->getVar('uid'));
+        $sql = sprintf("DELETE FROM %s WHERE uid = '%u'", $this->db->prefix("users"), intval($user->getVar('uid')));
         if (false != $force) {
             $result = $this->db->queryF($sql);
         } else {
@@ -589,11 +591,11 @@ class XoopsUserHandler extends XoopsObjectHandler
     {
         $ret = array();
         $limit = $start = 0;
-        $sql = 'SELECT * FROM '.$this->db->prefix('users');
+        $sql = "SELECT * FROM ".$this->db->prefix('users');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' '.$criteria->renderWhere();
+            $sql .= " ".$criteria->renderWhere();
             if ($criteria->getSort() != '') {
-                $sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
+                $sql .= " ORDER BY ".$criteria->getSort()." ".$criteria->getOrder();
             }
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
@@ -643,9 +645,9 @@ class XoopsUserHandler extends XoopsObjectHandler
      */
     function deleteAll($criteria = null)
     {
-        $sql = 'DELETE FROM '.$this->db->prefix('users');
+        $sql = "DELETE FROM ".$this->db->prefix('users');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' '.$criteria->renderWhere();
+            $sql .= " ".$criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
             return false;

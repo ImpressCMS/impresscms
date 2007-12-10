@@ -94,7 +94,7 @@ class MyTextSanitizer
 	function getSmileys()
 	{
 		if (count($this->smileys) == 0) {
-			if ($getsmiles = $GLOBALS["xoopsDB"]->query("SELECT * FROM ".$GLOBALS["xoopsDB"]->prefix("smiles").' WHERE display=1')) {
+			if ($getsmiles = $GLOBALS["xoopsDB"]->query("SELECT * FROM ".$GLOBALS["xoopsDB"]->prefix("smiles")." WHERE display='1'")) {
 				while ($smiles = $GLOBALS["xoopsDB"]->fetchArray($getsmiles)) {
 					array_push($this->smileys, $smiles);
 				}

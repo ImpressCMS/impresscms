@@ -56,7 +56,7 @@ case "SmilesUpdate":
         }
         $smile_display = empty($_POST['smile_display'][$i]) ? 0 : 1;
         if (isset($_POST['old_display'][$i]) && $_POST['old_display'][$i] != $smile_display[$i]) {
-            $db->query('UPDATE '.$db->prefix('smiles').' SET display='.$smile_display.' WHERE id ='.$smile_id);
+            $db->query("UPDATE ".$db->prefix('smiles')." SET display='".$smile_display."' WHERE id ='".$smile_id."'");
         }
     }
     redirect_header('admin.php?fct=smilies',2,_AM_DBUPDATED);
@@ -82,7 +82,7 @@ case "SmilesAdd":
             $smile_desc = $myts->stripSlashesGPC($_POST['smile_desc']);
             $smile_display = intval($_POST['smile_display']) > 0 ? 1 : 0;
             $newid = $db->genId($db->prefix('smilies')."_id_seq");
-            $sql = sprintf("INSERT INTO %s (id, code, smile_url, emotion, display) VALUES (%d, %s, %s, %s, %d)", $db->prefix('smiles'), $newid, $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
+            $sql = sprintf("INSERT INTO %s (id, code, smile_url, emotion, display) VALUES ('%d', %s, %s, %s, '%d')", $db->prefix('smiles'), intval($newid), $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display);
             if (!$db->query($sql)) {
                 $err = 'Failed storing smiley data into the database';
             }
@@ -127,7 +127,7 @@ case "SmilesSave":
                 $err = $uploader->getErrors();
             } else {
                 $smile_url = $uploader->getSavedFileName();
-                if (!$db->query(sprintf("UPDATE %s SET code = %s, smile_url = %s, emotion = %s, display = %d WHERE id = %d", $db->prefix('smiles'), $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display, $id))) {
+                if (!$db->query(sprintf("UPDATE %s SET code = %s, smile_url = %s, emotion = %s, display = %d WHERE id = '%d'", $db->prefix('smiles'), $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display, $id))) {
                     $err = 'Failed storing smiley data into the database';
                 } else {
                     $oldsmile_path = str_replace("\\", "/", realpath(XOOPS_UPLOAD_PATH.'/'.trim($_POST['old_smile'])));
@@ -140,7 +140,7 @@ case "SmilesSave":
             $err = $uploader->getErrors();
         }
     } else {
-        $sql = sprintf("UPDATE %s SET code = %s, emotion = %s, display = %d WHERE id = %d", $db->prefix('smiles'), $db->quoteString($smile_code), $db->quoteString($smile_desc), $smile_display, $id);
+        $sql = sprintf("UPDATE %s SET code = %s, emotion = %s, display = '%d' WHERE id = '%d'", $db->prefix('smiles'), $db->quoteString($smile_code), $db->quoteString($smile_desc), $smile_display, $id);
         if (!$db->query($sql)) {
             $err = 'Failed storing smiley data into the database';
         }
@@ -172,7 +172,7 @@ case "SmilesDelOk":
 		exit();
     }
     $db =& Database::getInstance();
-    $sql = sprintf("DELETE FROM %s WHERE id = %u", $db->prefix('smiles'), $id);
+    $sql = sprintf("DELETE FROM %s WHERE id = '%u'", $db->prefix('smiles'), $id);
     $db->query($sql);
     redirect_header("admin.php?fct=smilies&amp;op=SmilesAdmin",2,_AM_DBUPDATED);
 	exit();

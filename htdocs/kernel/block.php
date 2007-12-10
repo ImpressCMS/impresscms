@@ -212,7 +212,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
         $block = false;
     	$id = intval($id);
         if ($id > 0) {
-            $sql = 'SELECT * FROM '.$this->db->prefix('newblocks').' WHERE bid='.$id;
+            $sql = "SELECT * FROM ".$this->db->prefix('newblocks')." WHERE bid='".$id."'";
             if ( $result = $this->db->query($sql) ) {
 	            $numrows = $this->db->getRowsNum($result);
 	            if ($numrows == 1) {
@@ -249,9 +249,9 @@ class XoopsBlockHandler extends XoopsObjectHandler
         }
         if ($block->isNew()) {
             $bid = $this->db->genId('newblocks_bid_seq');
-            $sql = sprintf("INSERT INTO %s (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES (%u, %u, %u, '%s', '%s', '%s', '%s', %u, %u, %u, '%s', '%s', %u, '%s', '%s', '%s', '%s', '%s', %u, %u)", $this->db->prefix('newblocks'), $bid, $mid, $func_num, $options, $name, $title, $content, $side, $weight, $visible, $block_type, $c_type, 1, $dirname, $func_file, $show_func, $edit_func, $template, $bcachetime, time());
+            $sql = sprintf("INSERT INTO %s (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('%u', '%u', '%u', '%s', '%s', '%s', '%s', '%u', '%u', '%u', '%s', '%s', '%u', '%s', '%s', '%s', '%s', '%s', '%u', '%u')", $this->db->prefix('newblocks'), intval($bid), intval($mid), intval($func_num), $options, $name, $title, $content, intval($side), intval($weight), intval($visible), $block_type, $c_type, 1, $dirname, $func_file, $show_func, $edit_func, $template, intval($bcachetime), time());
         } else {
-            $sql = sprintf("UPDATE %s SET func_num = %u, options = '%s', name = '%s', title = '%s', content = '%s', side = %u, weight = %u, visible = %u, c_type = '%s', isactive = %u, func_file = '%s', show_func = '%s', edit_func = '%s', template = '%s', bcachetime = %u, last_modified = %u WHERE bid = %u", $this->db->prefix('newblocks'), $func_num, $options, $name, $title, $content, $side, $weight, $visible, $c_type, $isactive, $func_file, $show_func, $edit_func, $template, $bcachetime, time(), $bid);
+            $sql = sprintf("UPDATE %s SET func_num = '%u', options = '%s', name = '%s', title = '%s', content = '%s', side = '%u', weight = '%u', visible = '%u', c_type = '%s', isactive = '%u', func_file = '%s', show_func = '%s', edit_func = '%s', template = '%s', bcachetime = '%u', last_modified = '%u' WHERE bid = '%u'", $this->db->prefix('newblocks'), intval($func_num), $options, $name, $title, $content, intval($side), intval($weight), intval($visible), $c_type, intval($isactive), $func_file, $show_func, $edit_func, $template, intval($bcachetime), time(), intval($bid));
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -277,12 +277,12 @@ class XoopsBlockHandler extends XoopsObjectHandler
         if (!is_a($block, 'xoopsblock')) {
             return false;
         }
-        $id = $block->getVar('bid');
-        $sql = sprintf("DELETE FROM %s WHERE bid = %u", $this->db->prefix('newblocks'), $id);
+        $id = intval($block->getVar('bid'));
+        $sql = sprintf("DELETE FROM %s WHERE bid = '%u'", $this->db->prefix('newblocks'), $id);
         if (!$result = $this->db->query($sql)) {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE block_id = %u", $this->db->prefix('block_module_link'), $id);
+        $sql = sprintf("DELETE FROM %s WHERE block_id = '%u'", $this->db->prefix('block_module_link'), $id);
         $this->db->query($sql);
         return true;
     }

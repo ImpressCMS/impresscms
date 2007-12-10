@@ -87,9 +87,9 @@ class XoopsTplfileHandler extends XoopsObjectHandler
     	$id = intval($id);
         if ($id > 0) {
             if (!$getsource) {
-                $sql = 'SELECT * FROM '.$this->db->prefix('tplfile').' WHERE tpl_id='.$id;
+                $sql = "SELECT * FROM ".$this->db->prefix('tplfile')." WHERE tpl_id='".$id."'";
             } else {
-                $sql = 'SELECT f.*, s.tpl_source FROM '.$this->db->prefix('tplfile').' f LEFT JOIN '.$this->db->prefix('tplsource').' s  ON s.tpl_id=f.tpl_id WHERE f.tpl_id='.$id;
+                $sql = "SELECT f.*, s.tpl_source FROM ".$this->db->prefix('tplfile')." f LEFT JOIN ".$this->db->prefix('tplsource')." s  ON s.tpl_id=f.tpl_id WHERE f.tpl_id='".$id."'";
             }
             if (!$result = $this->db->query($sql)) {
                 return $tplfile;
@@ -113,7 +113,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         }
 
         if (!$tplfile->getVar('tpl_source')) {
-            $sql = 'SELECT tpl_source FROM '.$this->db->prefix('tplsource').' WHERE tpl_id='.$tplfile->getVar('tpl_id');
+            $sql = "SELECT tpl_source FROM ".$this->db->prefix('tplsource')." WHERE tpl_id='".$tplfile->getVar('tpl_id')."'";
             if (!$result = $this->db->query($sql)) {
                 return false;
             }
@@ -142,7 +142,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         }
         if ($tplfile->isNew()) {
             $tpl_id = $this->db->genId('tpltpl_file_id_seq');
-            $sql = sprintf("INSERT INTO %s (tpl_id, tpl_module, tpl_refid, tpl_tplset, tpl_file, tpl_desc, tpl_lastmodified, tpl_lastimported, tpl_type) VALUES (%u, %s, %u, %s, %s, %s, %u, %u, %s)", $this->db->prefix('tplfile'), $tpl_id, $this->db->quoteString($tpl_module), $tpl_refid, $this->db->quoteString($tpl_tplset), $this->db->quoteString($tpl_file), $this->db->quoteString($tpl_desc), $tpl_lastmodified, $tpl_lastimported, $this->db->quoteString($tpl_type));
+            $sql = sprintf("INSERT INTO %s (tpl_id, tpl_module, tpl_refid, tpl_tplset, tpl_file, tpl_desc, tpl_lastmodified, tpl_lastimported, tpl_type) VALUES ('%u', %s, '%u', %s, %s, %s, '%u', '%u', %s)", $this->db->prefix('tplfile'), intval($tpl_id), $this->db->quoteString($tpl_module), intval($tpl_refid), $this->db->quoteString($tpl_tplset), $this->db->quoteString($tpl_file), $this->db->quoteString($tpl_desc), intval($tpl_lastmodified), intval($tpl_lastimported), $this->db->quoteString($tpl_type));
             if (!$result = $this->db->query($sql)) {
                 return false;
             }
@@ -150,20 +150,20 @@ class XoopsTplfileHandler extends XoopsObjectHandler
                 $tpl_id = $this->db->getInsertId();
             }
             if (isset($tpl_source) && $tpl_source != '') {
-                $sql = sprintf("INSERT INTO %s (tpl_id, tpl_source) VALUES (%u, %s)", $this->db->prefix('tplsource'), $tpl_id, $this->db->quoteString($tpl_source));
+                $sql = sprintf("INSERT INTO %s (tpl_id, tpl_source) VALUES ('%u', %s)", $this->db->prefix('tplsource'), intval($tpl_id), $this->db->quoteString($tpl_source));
                 if (!$result = $this->db->query($sql)) {
-                    $this->db->query(sprintf("DELETE FROM %s WHERE tpl_id = %u", $this->db->prefix('tplfile'), $tpl_id));
+                    $this->db->query(sprintf("DELETE FROM %s WHERE tpl_id = '%u'", $this->db->prefix('tplfile'), intval($tpl_id)));
                     return false;
                 }
             }
 			$tplfile->assignVar('tpl_id', $tpl_id);
         } else {
-            $sql = sprintf("UPDATE %s SET tpl_tplset = %s, tpl_file = %s, tpl_desc = %s, tpl_lastimported = %u, tpl_lastmodified = %u WHERE tpl_id = %u", $this->db->prefix('tplfile'), $this->db->quoteString($tpl_tplset), $this->db->quoteString($tpl_file), $this->db->quoteString($tpl_desc), $tpl_lastimported, $tpl_lastmodified, $tpl_id);
+            $sql = sprintf("UPDATE %s SET tpl_tplset = %s, tpl_file = %s, tpl_desc = %s, tpl_lastimported = '%u', tpl_lastmodified = '%u' WHERE tpl_id = '%u'", $this->db->prefix('tplfile'), $this->db->quoteString($tpl_tplset), $this->db->quoteString($tpl_file), $this->db->quoteString($tpl_desc), intval($tpl_lastimported), intval($tpl_lastmodified), intval($tpl_id));
             if (!$result = $this->db->query($sql)) {
                 return false;
             }
             if (isset($tpl_source) && $tpl_source != '') {
-                $sql = sprintf("UPDATE %s SET tpl_source = %s WHERE tpl_id = %u", $this->db->prefix('tplsource'), $this->db->quoteString($tpl_source), $tpl_id);
+                $sql = sprintf("UPDATE %s SET tpl_source = %s WHERE tpl_id = '%u'", $this->db->prefix('tplsource'), $this->db->quoteString($tpl_source), intval($tpl_id));
                 if (!$result = $this->db->query($sql)) {
                     return false;
                 }
@@ -190,12 +190,12 @@ class XoopsTplfileHandler extends XoopsObjectHandler
             ${$k} = $v;
         }
         if (!$tplfile->isNew()) {
-            $sql = sprintf("UPDATE %s SET tpl_tplset = %s, tpl_file = %s, tpl_desc = %s, tpl_lastimported = %u, tpl_lastmodified = %u WHERE tpl_id = %u", $this->db->prefix('tplfile'), $this->db->quoteString($tpl_tplset), $this->db->quoteString($tpl_file), $this->db->quoteString($tpl_desc), $tpl_lastimported, $tpl_lastmodified, $tpl_id);
+            $sql = sprintf("UPDATE %s SET tpl_tplset = %s, tpl_file = %s, tpl_desc = %s, tpl_lastimported = '%u', tpl_lastmodified = '%u' WHERE tpl_id = '%u'", $this->db->prefix('tplfile'), $this->db->quoteString($tpl_tplset), $this->db->quoteString($tpl_file), $this->db->quoteString($tpl_desc), intval($tpl_lastimported), intval($tpl_lastmodified), intval($tpl_id));
             if (!$result = $this->db->queryF($sql)) {
                 return false;
             }
             if (isset($tpl_source) && $tpl_source != '') {
-                $sql = sprintf("UPDATE %s SET tpl_source = %s WHERE tpl_id = %u", $this->db->prefix('tplsource'), $this->db->quoteString($tpl_source), $tpl_id);
+                $sql = sprintf("UPDATE %s SET tpl_source = %s WHERE tpl_id = '%u'", $this->db->prefix('tplsource'), $this->db->quoteString($tpl_source), intval($tpl_id));
                 if (!$result = $this->db->queryF($sql)) {
                     return false;
                 }
@@ -214,12 +214,12 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         if (!is_a($tplfile, 'xoopstplfile')) {
             return false;
         }
-        $id = $tplfile->getVar('tpl_id');
-        $sql = sprintf("DELETE FROM %s WHERE tpl_id = %u", $this->db->prefix('tplfile'), $id);
+        $id = intval($tplfile->getVar('tpl_id'));
+        $sql = sprintf("DELETE FROM %s WHERE tpl_id = '%u'", $this->db->prefix('tplfile'), $id);
         if (!$result = $this->db->query($sql)) {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE tpl_id = %u", $this->db->prefix('tplsource'), $id);
+        $sql = sprintf("DELETE FROM %s WHERE tpl_id = '%u'", $this->db->prefix('tplsource'), $id);
         $this->db->query($sql);
         return true;
     }
@@ -229,12 +229,12 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         $ret = array();
         $limit = $start = 0;
         if ($getsource) {
-            $sql = 'SELECT f.*, s.tpl_source FROM '.$this->db->prefix('tplfile').' f LEFT JOIN '.$this->db->prefix('tplsource').' s ON s.tpl_id=f.tpl_id';
+            $sql = "SELECT f.*, s.tpl_source FROM ".$this->db->prefix('tplfile')." f LEFT JOIN ".$this->db->prefix('tplsource')." s ON s.tpl_id=f.tpl_id";
         } else {
-            $sql = 'SELECT * FROM '.$this->db->prefix('tplfile');
+            $sql = "SELECT * FROM ".$this->db->prefix('tplfile');
         }
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' '.$criteria->renderWhere().' ORDER BY tpl_refid';
+            $sql .= " ".$criteria->renderWhere()." ORDER BY tpl_refid";
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }

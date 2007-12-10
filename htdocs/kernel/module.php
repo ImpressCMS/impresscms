@@ -325,7 +325,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
 			if (!empty($_cachedModule_mid[$id])) {
 				return $_cachedModule_mid[$id];
 			} else {
-  	        	$sql = 'SELECT * FROM '.$this->db->prefix('modules').' WHERE mid = '.$id;
+  	        	$sql = "SELECT * FROM ".$this->db->prefix('modules')." WHERE mid = '".$id."'";
   	        	if (!$result = $this->db->query($sql)) {
   	            	return $module;
   	        	}
@@ -396,9 +396,9 @@ class XoopsModuleHandler extends XoopsObjectHandler
         }
         if ($module->isNew()) {
             $mid = $this->db->genId('modules_mid_seq');
-            $sql = sprintf("INSERT INTO %s (mid, name, version, last_update, weight, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES (%u, %s, %u, %u, %u, %u, %s, %u, %u, %u, %u, %u, %u)", $this->db->prefix('modules'), $mid, $this->db->quoteString($name), $version, time(), $weight, 1, $this->db->quoteString($dirname), $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification);
+            $sql = sprintf("INSERT INTO %s (mid, name, version, last_update, weight, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES ('%u', %s, '%u', '%u', '%u', '%u', %s, '%u', '%u', '%u', '%u', '%u', '%u')", $this->db->prefix('modules'), intval($mid), $this->db->quoteString($name), intval($version), time(), intval($weight), 1, $this->db->quoteString($dirname), intval($hasmain), intval($hasadmin), intval($hassearch), intval($hasconfig), intval($hascomments), intval($hasnotification));
         } else {
-            $sql = sprintf("UPDATE %s SET name = %s, dirname = %s, version = %u, last_update = %u, weight = %u, isactive = %u, hasmain = %u, hasadmin = %u, hassearch = %u, hasconfig = %u, hascomments = %u, hasnotification = %u WHERE mid = %u", $this->db->prefix('modules'), $this->db->quoteString($name), $this->db->quoteString($dirname), $version, time(), $weight, $isactive, $hasmain, $hasadmin, $hassearch, $hasconfig, $hascomments, $hasnotification, $mid);
+            $sql = sprintf("UPDATE %s SET name = %s, dirname = %s, version = '%u', last_update = '%u', weight = '%u', isactive = '%u', hasmain = '%u', hasadmin = '%u', hassearch = '%u', hasconfig = '%u', hascomments = '%u', hasnotification = '%u' WHERE mid = '%u'", $this->db->prefix('modules'), $this->db->quoteString($name), $this->db->quoteString($dirname), intval($version), time(), intval($weight), intval($isactive), intval($hasmain), intval($hasadmin), intval($hassearch), intval($hasconfig), intval($hascomments), intval($hasnotification), intval($mid));
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -430,18 +430,18 @@ class XoopsModuleHandler extends XoopsObjectHandler
         if (strtolower(get_class($module)) != 'xoopsmodule') {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE mid = %u", $this->db->prefix('modules'), $module->getVar('mid'));
+        $sql = sprintf("DELETE FROM %s WHERE mid = '%u'", $this->db->prefix('modules'), intval($module->getVar('mid')));
         if ( !$result = $this->db->query($sql) ) {
             return false;
         }
 		// delete admin permissions assigned for this module
-		$sql = sprintf("DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = %u", $this->db->prefix('group_permission'), $module->getVar('mid'));
+		$sql = sprintf("DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'", $this->db->prefix('group_permission'), intval($module->getVar('mid')));
 		$this->db->query($sql);
 		// delete read permissions assigned for this module
-		$sql = sprintf("DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = %u", $this->db->prefix('group_permission'), $module->getVar('mid'));
+		$sql = sprintf("DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'", $this->db->prefix('group_permission'), intval($module->getVar('mid')));
 		$this->db->query($sql);
 
-        $sql = sprintf("SELECT block_id FROM %s WHERE module_id = %u", $this->db->prefix('block_module_link'), $module->getVar('mid'));
+        $sql = sprintf("SELECT block_id FROM %s WHERE module_id = '%u'", $this->db->prefix('block_module_link'), intval($module->getVar('mid')));
         if ($result = $this->db->query($sql)) {
         	$block_id_arr = array();
             while ($myrow = $this->db->fetchArray($result))
@@ -452,17 +452,17 @@ class XoopsModuleHandler extends XoopsObjectHandler
 		// loop through block_id_arr
         if (isset($block_id_arr)) {
     		foreach ($block_id_arr as $i) {
-                $sql = sprintf("SELECT block_id FROM %s WHERE module_id != %u AND block_id = %u", $this->db->prefix('block_module_link'), $module->getVar('mid'), $i);
+                $sql = sprintf("SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'", $this->db->prefix('block_module_link'), intval($module->getVar('mid')), intval($i));
 	        	if ($result2 = $this->db->query($sql)) {
                     if (0 < $this->db->getRowsNum($result2)) {
 					// this block has other entries, so delete the entry for this module
-                        $sql = sprintf("DELETE FROM %s WHERE (module_id = %u) AND (block_id = %u)", $this->db->prefix('block_module_link'), $module->getVar('mid'), $i);
+                        $sql = sprintf("DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')", $this->db->prefix('block_module_link'), intval($module->getVar('mid')), intval($i));
                         $this->db->query($sql);
                     } else {
 					// this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
-        				$sql = sprintf("UPDATE %s SET visible = 0 WHERE bid = %u", $this->db->prefix('newblocks'), $i);
+        				$sql = sprintf("UPDATE %s SET visible = '0' WHERE bid = '%u'", $this->db->prefix('newblocks'), intval($i));
         				$this->db->query($sql);
-        				$sql = sprintf("UPDATE %s SET module_id = -1 WHERE module_id = %u", $this->db->prefix('block_module_link'), $module->getVar('mid'));
+        				$sql = sprintf("UPDATE %s SET module_id = '-1' WHERE module_id = '%u'", $this->db->prefix('block_module_link'), intval($module->getVar('mid')));
         				$this->db->query($sql);
                     }
 				}
@@ -489,10 +489,10 @@ class XoopsModuleHandler extends XoopsObjectHandler
     {
         $ret = array();
         $limit = $start = 0;
-        $sql = 'SELECT * FROM '.$this->db->prefix('modules');
+        $sql = "SELECT * FROM ".$this->db->prefix('modules');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' '.$criteria->renderWhere();
-            $sql .= ' ORDER BY weight '.$criteria->getOrder().', mid ASC';
+            $sql .= " ".$criteria->renderWhere();
+            $sql .= " ORDER BY weight ".$criteria->getOrder().", mid ASC";
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
@@ -521,9 +521,9 @@ class XoopsModuleHandler extends XoopsObjectHandler
      **/
     function getCount($criteria = null)
     {
-        $sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('modules');
+        $sql = "SELECT COUNT(*) FROM ".$this->db->prefix('modules');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' '.$criteria->renderWhere();
+            $sql .= " ".$criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
             return 0;
