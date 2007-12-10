@@ -191,17 +191,17 @@ $xoops =& new xos_kernel_Xoops2();
     	$easiestml_langpaths = XoopsLists::getLangList();
     	//$easiestml_langpaths = explode( ',' , $xoopsMlConfig['easiestml_langspath'] ) ;
     	$langs = array_combine($easiestml_langs,$easiestml_langpaths);
-    	if (isset( $_GET['easiestml_lang'] ) && isset($_COOKIE['easiestml_lang'])){
-    		if (in_array($_GET['easiestml_lang'],$easiestml_langs)){
-    			$xoopsConfig['language'] = $langs[$_GET['easiestml_lang']];
+    	if (isset( $_GET['lang'] ) && isset($_COOKIE['lang'])){
+    		if (in_array($_GET['lang'],$easiestml_langs)){
+    			$xoopsConfig['language'] = $langs[$_GET['lang']];
     		}
-    	}elseif(isset($_COOKIE['easiestml_lang'])){
-    		if (in_array($_COOKIE['easiestml_lang'],$easiestml_langs)){
-    			$xoopsConfig['language'] = $langs[$_COOKIE['easiestml_lang']];
+    	}elseif(isset($_COOKIE['lang'])){
+    		if (in_array($_COOKIE['lang'],$easiestml_langs)){
+    			$xoopsConfig['language'] = $langs[$_COOKIE['lang']];
     		}
-    	}elseif(isset($_GET['easiestml_lang'])){
-    		if (in_array($_GET['easiestml_lang'],$easiestml_langs)){
-    			$xoopsConfig['language'] = $langs[$_GET['easiestml_lang']];
+    	}elseif(isset($_GET['lang'])){
+    		if (in_array($_GET['lang'],$easiestml_langs)){
+    			$xoopsConfig['language'] = $langs[$_GET['lang']];
     		}
     	}
 	}
