@@ -185,6 +185,25 @@ $xoops =& new xos_kernel_Xoops2();
 	$im_multilanguageConfig =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
 	if ($im_multilanguageConfig['ml_enable']) {
 		require XOOPS_ROOT_PATH.'/include/im_multilanguage.php' ;
+    	$easiestml_langs = explode( ',' , $im_multilanguageConfig['ml_tags'] ) ;
+    	include_once(XOOPS_ROOT_PATH . '/class/xoopslists.php');
+
+    	$easiestml_langpaths = XoopsLists::getLangList();
+    	//$easiestml_langpaths = explode( ',' , $xoopsMlConfig['easiestml_langspath'] ) ;
+    	$langs = array_combine($easiestml_langs,$easiestml_langpaths);
+    	if (isset( $_GET['easiestml_lang'] ) && isset($_COOKIE['easiestml_lang'])){
+    		if (in_array($_GET['easiestml_lang'],$easiestml_langs)){
+    			$xoopsConfig['language'] = $langs[$_GET['easiestml_lang']];
+    		}
+    	}elseif(isset($_COOKIE['easiestml_lang'])){
+    		if (in_array($_COOKIE['easiestml_lang'],$easiestml_langs)){
+    			$xoopsConfig['language'] = $langs[$_COOKIE['easiestml_lang']];
+    		}
+    	}elseif(isset($_GET['easiestml_lang'])){
+    		if (in_array($_GET['easiestml_lang'],$easiestml_langs)){
+    			$xoopsConfig['language'] = $langs[$_GET['easiestml_lang']];
+    		}
+    	}
 	}
 
     // Disable gzip compression if PHP is run under CLI mode

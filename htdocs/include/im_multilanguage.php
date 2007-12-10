@@ -51,7 +51,7 @@ define('EASIESTML_DEFAULT_LANG',0);
 if( ! defined( 'XOOPS_ROOT_PATH' ) || ! defined( 'XOOPS_URL' ) ) die( "You should patch just after define('XOOPS_URL', ... ) in mainfile.php" ) ;
 
 // Target check
-if( ! preg_match( '?'.preg_quote(XOOPS_ROOT_PATH,'?').'(/modules/[^\/]+/admin/|/common/|/modules/system/|/admin\.php)?' , $_SERVER['SCRIPT_FILENAME'] ) ) {
+if( ! preg_match( '?'.preg_quote(XOOPS_ROOT_PATH,'?').'(/common/)?' , $_SERVER['SCRIPT_FILENAME'] ) ) {
 
 	// get cookie path
 	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , XOOPS_URL ) ;
