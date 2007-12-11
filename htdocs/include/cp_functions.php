@@ -170,7 +170,7 @@ window.onload=startList;
 			$rtn['link'] = XOOPS_URL . '/modules/'. $m->dirname() . '/' . $info['adminindex'];
 			$rtn['title'] = $m->name();
 			$rtn['absolute'] = 1;
-			if (isset($info['iconsmall']) && $info['iconsmall']!='' ) $rtn['small'] = XOOPS_URL . '/modules/' . $m->dirname() . '/' . $info['iconsmall'];
+			if (isset($info['iconsmall']) && $info['iconsmall']!='' ) $rtn['small'] =  $info['iconsmall'];
 		}
 		$menu[] = $rtn;
 	}
