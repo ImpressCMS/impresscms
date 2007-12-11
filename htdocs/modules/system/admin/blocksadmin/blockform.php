@@ -48,7 +48,7 @@ $side_select->addOptionArray($arr);
 
 $form->addElement($side_select);
 $form->addElement(new XoopsFormText(_AM_WEIGHT, "bweight", 2, 5, $block['weight']));
-$form->addElement(new XoopsFormRadioYN(_AM_VISIBLE, 'bvisible', $block['visible']));
+$form->addElement(new XoopsFormRadioYN(_AM_VISIBLE, 'bvisible', intval($block['visible'])));
 $mod_select = new XoopsFormSelect(_AM_VISIBLEIN, "bmodule", $block['modules'], 5, true);
 $module_handler =& xoops_gethandler('module');
 $criteria = new CriteriaCompo(new Criteria('hasmain', 1));
