@@ -136,7 +136,6 @@ switch ($op){
 		}
 
 		$tpl->assign('lang_cp', _CPHOME);
-		$tpl->assign('system_options', _AD_SYSOPTIONS);
 		$tpl->assign('lang_insmodules', _AD_INSTALLEDMODULES);
 
 		/*$tpl->assign('lang_banners', _AD_BANNERS);
