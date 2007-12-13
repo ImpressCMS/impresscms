@@ -309,14 +309,87 @@ $xoops =& new xos_kernel_Xoops2();
 	    unset( $_SESSION['xoopsUserId'] );
     }
 
+	// autologin hack GIJ
+	if(empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isset($_COOKIE['autologin_pass'])) {
+
+		// autologin V2 GIJ
+		if( ! empty( $_POST ) ) {
+			$_SESSION['AUTOLOGIN_POST'] = $_POST ;
+			$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'] ;
+			redirect_header( XOOPS_URL . '/session_confirm.php' , 0 , '&nbsp;' ) ;
+		} else if( ! empty( $_SERVER['QUERY_STRING'] ) && substr( $_SERVER['SCRIPT_NAME'] , -19 ) != 'session_confirm.php') {
+			$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'] ;
+			redirect_header( XOOPS_URL . '/session_confirm.php' , 0 , '&nbsp;' ) ;
+		}
+		// end of autologin V2
+
+		// redirect to XOOPS_URL/ when query string exists (anti-CSRF) V1 code
+		/* if( ! empty( $_SERVER['QUERY_STRING'] ) ) {
+			redirect_header( XOOPS_URL . '/' , 0 , 'Now, logging in automatically' ) ;
+			exit ;
+		}*/
+
+		$myts =& MyTextSanitizer::getInstance();
+		$uname = $myts->stripSlashesGPC($_COOKIE['autologin_uname']);
+		$pass = $myts->stripSlashesGPC($_COOKIE['autologin_pass']);
+		if( empty( $uname ) || is_numeric( $pass ) ) $user = false ;
+		else {
+			// V3
+			$uname4sql = addslashes( $uname ) ;
+			$criteria = new CriteriaCompo(new Criteria('uname', $uname4sql ));
+			$user_handler =& xoops_gethandler('user');
+			$users =& $user_handler->getObjects($criteria, false);
+			if( empty( $users ) || count( $users ) != 1 ) $user = false ;
+			else {
+				// V3.1 begin
+				$user = $users[0] ;
+				$old_limit = time() - ( defined('XOOPS_AUTOLOGIN_LIFETIME') ? XOOPS_AUTOLOGIN_LIFETIME : 604800 ) ; // 1 week default
+				list( $old_Ynj , $old_encpass ) = explode( ':' , $pass ) ;
+				if( strtotime( $old_Ynj ) < $old_limit || md5( $user->getVar('pass') . XOOPS_DB_PASS . XOOPS_DB_PREFIX . $old_Ynj ) != $old_encpass ) $user = false ;
+				// V3.1 end
+			}
+			unset( $users ) ;
+		}
+		$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , XOOPS_URL ) ;
+		if( $xoops_cookie_path == XOOPS_URL ) $xoops_cookie_path = '/' ;
+		if (false != $user && $user->getVar('level') > 0) {
+			// update time of last login
+			$user->setVar('last_login', time());
+			if (!$member_handler->insertUser($user, true)) {
+			}
+			//$_SESSION = array();
+			$_SESSION['xoopsUserId'] = $user->getVar('uid');
+			$_SESSION['xoopsUserGroups'] = $user->getGroups();
+			// begin newly added in 2004-11-30
+			$user_theme = $user->getVar('theme');
+			if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
+				$_SESSION['xoopsUserTheme'] = $user_theme;
+			}
+			// end newly added in 2004-11-30
+			// update autologin cookies
+			$expire = time() + ( defined('XOOPS_AUTOLOGIN_LIFETIME') ? XOOPS_AUTOLOGIN_LIFETIME : 604800 ) ; // 1 week default
+			setcookie('autologin_uname', $uname, $expire, $xoops_cookie_path, '', 0);
+			// V3.1
+			$Ynj = date( 'Y-n-j' ) ;
+			setcookie('autologin_pass', $Ynj . ':' . md5( $user->getVar('pass') . XOOPS_DB_PASS . XOOPS_DB_PREFIX . $Ynj ) , $expire, $xoops_cookie_path, '', 0);
+		} else {
+			setcookie('autologin_uname', '', time() - 3600, $xoops_cookie_path, '', 0);
+			setcookie('autologin_pass', '', time() - 3600, $xoops_cookie_path, '', 0);
+		}
+	}
+	// end of autologin hack GIJ
+
     if (!empty($_SESSION['xoopsUserId'])) {
         $xoopsUser =& $member_handler->getUser($_SESSION['xoopsUserId']);
         if (!is_object($xoopsUser)) {
             $xoopsUser = '';
+		    // Regenrate a new session id and destroy old session
+		    session_regenerate_id(true);
             $_SESSION = array();
-            session_destroy();
         } else {
-            $GLOBALS["sess_handler"]->update_cookie();
+            if ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {
+                setcookie($xoopsConfig['session_name'], session_id(), time()+(60*$xoopsConfig['session_expire']), '/',  '', 0);
+            }
             $xoopsUser->setGroups($_SESSION['xoopsUserGroups']);
             $xoopsUserIsAdmin = $xoopsUser->isAdmin();
         }

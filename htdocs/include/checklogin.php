@@ -45,7 +45,24 @@ $myts =& MyTextsanitizer::getInstance();
 include_once XOOPS_ROOT_PATH.'/class/auth/authfactory.php';
 include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
 $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
-$user = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlashes($pass));
+//$user = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlashes($pass));
+// uname&email hack GIJ
+$uname4sql = addslashes( $myts->stripSlashesGPC($uname) ) ;
+$pass4sql = addslashes( $myts->stripSlashesGPC($pass) ) ;
+if( strstr( $uname , '@' ) ) {
+	// check by email if uname includes '@'
+	$criteria = new CriteriaCompo(new Criteria('email', $uname4sql ));
+	$criteria->add(new Criteria('pass', md5( $pass4sql )));
+	$user_handler =& xoops_gethandler('user');
+	$users =& $user_handler->getObjects($criteria, false);
+	if( empty( $users ) || count( $users ) != 1 ) $user = false ;
+	else $user = $users[0] ;
+	unset( $users ) ;
+}
+if( empty( $user ) || ! is_object( $user ) ) {
+	$user =& $member_handler->loginUser($uname4sql,$pass4sql);
+}
+// end of uname&email hack GIJ
 
 if (false != $user) {
     if (0 == $user->getVar('level')) {
@@ -69,10 +86,13 @@ if (false != $user) {
     if (!$member_handler->insertUser($user)) {
     }
     // Regenrate a new session id and destroy old session
-    $GLOBALS["sess_handler"]->regenerate_id(true);
+    session_regenerate_id(true);
     $_SESSION = array();
     $_SESSION['xoopsUserId'] = $user->getVar('uid');
     $_SESSION['xoopsUserGroups'] = $user->getGroups();
+    if ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {
+        setcookie($xoopsConfig['session_name'], session_id(), time()+(60 * $xoopsConfig['session_expire']), '/',  '', 0);
+    }
     $user_theme = $user->getVar('theme');
     if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
         $_SESSION['xoopsUserTheme'] = $user_theme;
@@ -98,6 +118,17 @@ if (false != $user) {
     } else {
         $url = XOOPS_URL.'/index.php';
     }
+
+	// autologin hack V3.1 GIJ (set cookie)
+	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , XOOPS_URL ) ;
+	if( $xoops_cookie_path == XOOPS_URL ) $xoops_cookie_path = '/' ;
+	if (!empty($_POST['rememberme'])) {
+		$expire = time() + ( defined('XOOPS_AUTOLOGIN_LIFETIME') ? XOOPS_AUTOLOGIN_LIFETIME : 604800 ) ; // 1 week default
+		setcookie('autologin_uname', $user->getVar('uname'), $expire, $xoops_cookie_path, '', 0);
+		$Ynj = date( 'Y-n-j' ) ;
+		setcookie('autologin_pass', $Ynj . ':' . md5( $user->getVar('pass') . XOOPS_DB_PASS . XOOPS_DB_PREFIX . $Ynj ) , $expire, $xoops_cookie_path, '', 0);
+	}
+	// end of autologin hack V3.1 GIJ
 
     // RMV-NOTIFY
     // Perform some maintenance of notification records

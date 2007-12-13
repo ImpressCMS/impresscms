@@ -17,6 +17,7 @@ Unreleased: Version 0.1
 - Added : Configuration options to turn on or off and configure the Multilanguage on the site (malanciault)
 - Added : Integrating some flags image to be used by the multilanguage feature (malanicault)
 - Added : Handling 404 and 500 pages automatically on the site (malanciault)
+- Added : Addition of Gijoe Remember me hack (malanciault)
 
 - Changed : The new default theme is now css100_morpho (malanciault)
 - Changed : The icons of /class/xoopseditor/dhtmlext/images/*.* (sato-san)
