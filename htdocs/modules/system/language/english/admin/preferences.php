@@ -255,6 +255,6 @@ define("_MD_AM_ML_TAGSDSC","Enter the tags to be used on this site, separated by
 define("_MD_AM_ML_NAMES","Language names");
 define("_MD_AM_ML_NAMESDSC","Enter the names of the language to use, separated by a comma");
 define("_MD_AM_ML_CAPTIONS","Language captions");
-define("_MD_AM_ML_NAMESDSC","Enter the captions you would like to use for these languages");
+define("_MD_AM_ML_CAPTIONSDSC","Enter the captions you would like to use for these languages");
 
 ?>
