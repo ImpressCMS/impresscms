@@ -54,7 +54,7 @@ class setting_manager {
         }else{
             $this->database = 'mysql';
             $this->dbhost = 'localhost';
-            $this->prefix = 'xoops';
+            
             $this->db_pconnect = 0;
 
             $this->root_path = str_replace("\\","/",getcwd()); // "
@@ -74,6 +74,8 @@ class setting_manager {
             }
             $protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
             $this->xoops_url = (!empty($filepath)) ? $protocol.$_SERVER['HTTP_HOST']."/".$filepath : $protocol.$_SERVER['HTTP_HOST'];
+            
+            $this->prefix = $this->generatePrefix();
         }
     }
 
@@ -278,7 +280,10 @@ class setting_manager {
  		}
         return $dirlist;
     }
+    
+    function generatePrefix() {
+        include_once $this->root_path."/include/functions.php";
+        return xoops_makepass(5);
+    }
 }
-
-
 ?>
