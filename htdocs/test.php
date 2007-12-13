@@ -3,7 +3,7 @@
  *  $Id$
  *  ---------------------------------------------------------------------------
  *
- *  Project: ImpressCMS <http://www.impresscms.org/>
+ *  Project : ImpressCMS <http://www.impresscms.org/>
  *
  *  ImpressCMS is derived from XOOPS 2.0.17.1  <http://www.xoops.org/> Copyright (c) 2000-2007 XOOPS.org
  *  Subsequent changes and additions: Copyright (c) 2007 ImpressCMS
