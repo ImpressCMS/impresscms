@@ -444,5 +444,4 @@ $xoops =& new xos_kernel_Xoops2();
     }
     $xoopsLogger->stopTime( 'XOOPS Boot' );
     $xoopsLogger->startTime( 'Module init' );
-
 ?>
