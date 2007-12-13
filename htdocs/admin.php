@@ -45,7 +45,7 @@ if ( $xoopsUser ) {
 function showRSS($op=1){
 	switch ($op) {
 		case 1:
-			$rssurl = 'http://www.xoops.org/backend.php';
+			$rssurl = 'http://impresscms.org/modules/smartsection/backend.php';
 			$rssfile = XOOPS_CACHE_PATH.'/adminnews.xml';
 			break;
 	}

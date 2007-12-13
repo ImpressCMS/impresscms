@@ -182,9 +182,9 @@ window.onload=startList;
 	$menu = array();
 
 	$menu[$i]['link'] = XOOPS_URL."/admin.php?rssnews=1";
-	$menu[$i]['title'] = "XOOPS.org";
+	$menu[$i]['title'] = "ImpressCMS.org";
 	$menu[$i]['absolute'] = 1;
-	$menu[$i]['small'] = XOOPS_URL.'/images/xoops.png';
+	$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i++;
 
 
