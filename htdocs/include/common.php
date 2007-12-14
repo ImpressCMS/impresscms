@@ -192,8 +192,7 @@ $xoops =& new xos_kernel_Xoops2();
     	include_once(XOOPS_ROOT_PATH . '/class/xoopslists.php');
 
     	$easiestml_langpaths = XoopsLists::getLangList();
-    	//$easiestml_langpaths = explode( ',' , $xoopsMlConfig['easiestml_langspath'] ) ;
-    	$langs = array_combine($easiestml_langs,$easiestml_langpaths);
+    	$langs = array_combine($easiestml_langs,explode( ',' , $im_multilanguageConfig['ml_names'] ));
     	if (isset( $_GET['lang'] ) && isset($_COOKIE['lang'])){
     		if (in_array($_GET['lang'],$easiestml_langs)){
     			$xoopsConfig['language'] = $langs[$_GET['lang']];
