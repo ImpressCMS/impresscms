@@ -22,6 +22,7 @@ define('_MI_SYSTEM_BNAME11', "Recent Comments");
 // RMV-NOTIFY
 define('_MI_SYSTEM_BNAME12', "Notification Options");
 define('_MI_SYSTEM_BNAME13', "Themes");
+define('_MI_SYSTEM_BNAME14', "Language Selection");
 
 // Names of admin menu items
 define("_MI_SYSTEM_ADMENU1","Banners");

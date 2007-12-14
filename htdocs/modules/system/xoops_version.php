@@ -166,6 +166,12 @@ $modversion['blocks'][12]['options'] = "0|80";
 $modversion['blocks'][12]['edit_func'] = "b_system_themes_edit";
 $modversion['blocks'][12]['template'] = 'system_block_themes.html';
 
+$modversion['blocks'][13]['file'] = "system_blocks.php";
+$modversion['blocks'][13]['name'] = _MI_SYSTEM_BNAME14;
+$modversion['blocks'][13]['description'] = "Displays image links to change the site language";
+$modversion['blocks'][13]['show_func'] = "b_system_multilanguage_show";
+$modversion['blocks'][13]['template'] = 'system_block_multilanguage.html';
+
 // Menu
 $modversion['hasMain'] = 0;
 ?>

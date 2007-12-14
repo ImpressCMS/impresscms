@@ -429,6 +429,14 @@ function b_system_notification_show()
     return $block;
 }
 
+function b_system_multilanguage_show()
+{
+    $block = array();
+    $block['ml_tag'] = '[mlimg]';
+    
+    return $block;
+}
+
 function b_system_comments_edit($options)
 {
     $inputtag = "<input type='text' name='options[]' value='".intval($options[0])."' />";
