@@ -497,7 +497,7 @@ class XoopsBlock extends XoopsObject
                     $sql .= " AND m.module_id='0'";
                 }
             }
-            $sql .= " AND b.bid IN ('".implode(',', $blockids)."')";
+            $sql .= " AND b.bid IN (".implode(',', $blockids).")";
             $sql .= " ORDER BY ".$orderby;
             $result = $db->query($sql);
             while ( $myrow = $db->fetchArray($result) ) {
