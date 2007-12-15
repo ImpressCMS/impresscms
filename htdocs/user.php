@@ -54,6 +54,7 @@ if ($op == 'main') {
         $xoopsTpl->assign('lang_noproblem', _US_NOPROBLEM);
         $xoopsTpl->assign('lang_youremail', _US_YOUREMAIL);
         $xoopsTpl->assign('lang_sendpassword', _US_SENDPASSWORD);
+        $xoopsTpl->assign('lang_rememberme', _US_REMEMBERME);
         $xoopsTpl->assign('mailpasswd_token', $GLOBALS['xoopsSecurity']->createToken());
         $config_handler =& xoops_gethandler('config');
 		$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
@@ -61,6 +62,11 @@ if ($op == 'main') {
 		if ($xoopsConfigUser['allow_register'] == 1) {
 			$xoopsTpl->assign('allow_registration', $xoopsConfigUser['allow_register']);
 		}
+
+		if ($xoopsConfigUser['remember_me'] == 1) {
+			$xoopsTpl->assign('rememberme', $xoopsConfigUser['remember_me']);
+		}
+
         $xoopsTpl->assign('xoops_pagetitle', _LOGIN);
         include 'footer.php';
     } elseif ( !empty($_GET['xoops_redirect']) ) {

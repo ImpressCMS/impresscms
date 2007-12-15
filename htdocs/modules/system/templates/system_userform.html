@@ -3,7 +3,9 @@
   <form action="user.php" method="post">
     <{$lang_username}> <input type="text" name="uname" size="26" maxlength="25" value="<{$usercookie}>" /><br />
     <{$lang_password}> <input type="password" name="pass" size="21" maxlength="32" /><br />
-    <input type="checkbox" name="rememberme" value="On" />remember me<br /><{* rewrite it according to your language *}><{* autologin hack GIJ *}>
+    <{if $rememberme }>
+    <input type="checkbox" name="rememberme" value="On" /><{$lang_rememberme}><br />
+    <{/if}>
     <input type="hidden" name="op" value="login" />
     <input type="hidden" name="xoops_redirect" value="<{$redirect_page}>" />
     <input type="submit" value="<{$lang_login}>" />

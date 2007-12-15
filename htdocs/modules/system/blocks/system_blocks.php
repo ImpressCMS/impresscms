@@ -94,7 +94,7 @@ function b_system_login_show()
         $block['lang_login'] = _LOGIN;
         $block['lang_lostpass'] = _MB_SYSTEM_LPASS;
         $block['lang_registernow'] = _MB_SYSTEM_RNOW;
-        //$block['lang_rememberme'] = _MB_SYSTEM_REMEMBERME;
+        $block['lang_rememberme'] = _MB_SYSTEM_REMEMBERME;
         if ($xoopsConfig['use_ssl'] == 1 && $xoopsConfig['sslloginlink'] != '') {
             $block['sslloginlink'] = "<a href=\"javascript:openWithSelfMain('".$xoopsConfig['sslloginlink']."', 'ssllogin', 300, 200);\">"._MB_SYSTEM_SECURE."</a>";
         }
@@ -105,6 +105,11 @@ function b_system_login_show()
 		if ($xoopsConfigUser['allow_register'] == 1) {
 			$block['registration'] = $xoopsConfigUser['allow_register'];
 		}
+
+		if ($xoopsConfigUser['remember_me'] == 1) {
+			$block['rememberme'] = $xoopsConfigUser['remember_me'];
+		}
+
         return $block;
     }
     return false;
@@ -433,7 +438,7 @@ function b_system_multilanguage_show()
 {
     $block = array();
     $block['ml_tag'] = '[mlimg]';
-    
+
     return $block;
 }
 

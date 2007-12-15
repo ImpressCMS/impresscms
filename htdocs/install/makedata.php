@@ -196,6 +196,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $dbm->insert('config', " VALUES (27, 0, 2, 'avatar_width', '_MD_AM_AVATARW', '80', '_MD_AM_AVATARWDSC', 'textbox', 'int', 16)");
     $dbm->insert('config', " VALUES (28, 0, 2, 'avatar_height', '_MD_AM_AVATARH', '80', '_MD_AM_AVATARHDSC', 'textbox', 'int', 18)");
     $dbm->insert('config', " VALUES (29, 0, 2, 'avatar_maxsize', '_MD_AM_AVATARMAX', '35000', '_MD_AM_AVATARMAXDSC', 'textbox', 'int', 20)");
+    $dbm->insert('config', " VALUES (15, 0, 2, 'remember_me', '_MD_AM_REMEMBERME', '0', '_MD_AM_REMEMBERMEDSC', 'yesno', 'int', 30)");
     $dbm->insert('config', " VALUES (30, 0, 1, 'adminmail', '_MD_AM_ADMINML', '".addslashes($adminmail)."', '_MD_AM_ADMINMLDSC', 'textbox', 'text', 3)");
     $dbm->insert('config', " VALUES (31, 0, 2, 'self_delete', '_MD_AM_SELFDELETE', '0', '_MD_AM_SELFDELETEDSC', 'yesno', 'int', 22)");
     $dbm->insert('config', " VALUES (32, 0, 1, 'com_mode', '_MD_AM_COMMODE', 'nest', '_MD_AM_COMMODEDSC', 'select', 'text', 34)");
@@ -272,7 +273,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES (97, 0, 8,'ml_enable', '_MD_AM_ML_ENABLE', '0', '_MD_AM_ML_ENABLE_DESC', 'yesno', 'int', 0)");
 	$dbm->insert('config', " VALUES (98, 0, 8,'ml_tags', '_MD_AM_ML_TAGS', 'en,fr', '_MD_AM_ML_TAGS_DESC', 'textbox', 'text', 5)");
 	$dbm->insert('config', " VALUES (99, 0, 8,'ml_names', '_MD_AM_ML_NAMES', 'english,french', '_MD_AM_ML_NAMES_DESC', 'textbox', 'text', 10)");
-	$dbm->insert('config', " VALUES (100, 0, 8,'ml_captions', '_MD_AM_ML_CAPTIONS', 'English,Français', '_MD_AM_ML_CAPTIONS_DESC', 'textbox', 'text', 15)");
+	$dbm->insert('config', " VALUES (100, 0, 8,'ml_captions', '_MD_AM_ML_CAPTIONS', 'English,Franï¿½ais', '_MD_AM_ML_CAPTIONS_DESC', 'textbox', 'text', 15)");
 
 
     return $groups;

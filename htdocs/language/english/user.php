@@ -20,6 +20,8 @@ define('_US_NOPERMISS','Sorry, you dont have the permission to perform this acti
 define('_US_SURETODEL','Are you sure you want to delete your account?');
 define('_US_REMOVEINFO','This will remove all your info from our database.');
 define('_US_BEENDELED','Your account has been deleted.');
+define('_US_REMEMBERME', 'Remember me');
+
 //
 
 //%%%%%%		File Name register.php 		%%%%%
