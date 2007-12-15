@@ -371,7 +371,7 @@ class XoopsBlock extends XoopsObject
         $db =& Database::getInstance();
         $ret = array();
         $where_query = " WHERE isactive='".intval($isactive)."'";
-        
+
         # Adding dynamic block area/position system - TheRpLima - 2007-10-21
         /*
         if ( isset($side) ) {
@@ -401,9 +401,9 @@ class XoopsBlock extends XoopsObject
                 $side = "side='".intval($side)."'";
             }
             $where_query .= " AND '".intval($side)."'";
-        }        
+        }
         #
-        
+
         if ( isset($visible) ) {
             $where_query .= " AND visible='".intval($visible)."'";
         }
@@ -465,7 +465,8 @@ class XoopsBlock extends XoopsObject
         $ret = array();
         $sql = "SELECT DISTINCT gperm_itemid FROM ".$db->prefix('group_permission')." WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
         if ( is_array($groupid) ) {
-            $sql .= " AND gperm_groupid IN ('".implode(',', intval($groupid))."')";
+        	//TODO: Add intval verification... maybe making a manual implode with a foreach.
+        	$sql .= " AND gperm_groupid IN ('".implode(',', $groupid)."')";
         } else {
             if (intval($groupid) > 0) {
                 $sql .= " AND gperm_groupid='".intval($groupid)."'";
@@ -580,13 +581,13 @@ class XoopsBlock extends XoopsObject
         list($count) = $db->fetchRow($result);
         return $count;
     }
-    
+
     # Adding dynamic block area/position system - TheRpLima - 2007-10-21
     function getBlockPositions($full=false){
     	$db =& Database::getInstance();
-    	
+
     	$ret = array();
-    	
+
     	$sql = 'SELECT * FROM '.$db->prefix('block_positions').' ORDER BY id ASC';
     	$result = $db->query($sql);
     	while ($row = $db->fetchArray($result)) {
@@ -600,7 +601,7 @@ class XoopsBlock extends XoopsObject
     			$ret[$row['id']]['block_type'] = $row['block_type'];
     		}
     	}
-    	
+
     	return $ret;
     }
     #
