@@ -111,7 +111,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
       $id = intval($id);
       $perm = false;
     	if ($id > 0) {
-            $sql = sprintf("SELECT * FROM %s WHERE gperm_id = ''%u''", $this->db->prefix('group_permission'), $id);
+            $sql = sprintf("SELECT * FROM %s WHERE gperm_id = '%u'", $this->db->prefix('group_permission'), $id);
             if ( !$result = $this->db->query($sql) ) {
                 return $perm;
             }

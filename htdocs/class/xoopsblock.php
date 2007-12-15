@@ -92,14 +92,14 @@ class XoopsBlock extends XoopsObject
         }
         if ( empty($bid) ) {
             $bid = $this->db->genId($this->db->prefix("newblocks")."_bid_seq");
-            $sql = sprintf("INSERT INTO %s (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('%u', '%u', '%u', %s, %s, %s, %s, '%u', '%u', '%u', %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u')", $this->db->prefix('newblocks'), $bid, $mid, $func_num, $this->db->quoteString($options), $this->db->quoteString($name), $this->db->quoteString($title), $this->db->quoteString($content), $side, $weight, $visible, $this->db->quoteString($block_type), $this->db->quoteString($c_type), 1, $this->db->quoteString($dirname), $this->db->quoteString($func_file), $this->db->quoteString($show_func), $this->db->quoteString($edit_func), $this->db->quoteString($template), $bcachetime, time());
+            $sql = sprintf("INSERT INTO %s (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('%u', '%u', '%u', %s, %s, %s, %s, '%u', '%u', '%u', %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u')", $this->db->prefix('newblocks'), intval($bid), intval($mid), intval($func_num), $this->db->quoteString($options), $this->db->quoteString($name), $this->db->quoteString($title), $this->db->quoteString($content), intval($side), intval($weight), intval($visible), $this->db->quoteString($block_type), $this->db->quoteString($c_type), 1, $this->db->quoteString($dirname), $this->db->quoteString($func_file), $this->db->quoteString($show_func), $this->db->quoteString($edit_func), $this->db->quoteString($template), intval($bcachetime), time());
         } else {
-            $sql = "UPDATE ".$this->db->prefix("newblocks")." SET options=".$this->db->quoteString($options);
+            $sql = "UPDATE ".$this->db->prefix("newblocks")." SET options='".$this->db->quoteString($options)."'";
             // a custom block needs its own name
             if ( $block_type == "C" ) {
-                $sql .= ", name=".$this->db->quoteString($name);
+                $sql .= ", name='".$this->db->quoteString($name)."'";
             }
-            $sql .= ", isactive=".$isactive.", title=".$this->db->quoteString($title).", content=".$this->db->quoteString($content).", side=".$side.", weight=".$weight.", visible=".$visible.", c_type=".$this->db->quoteString($c_type).", template=".$this->db->quoteString($template).", bcachetime=".$bcachetime.", last_modified=".time()." WHERE bid=".$bid;
+            $sql .= ", isactive='".intval($isactive)."', title='".$this->db->quoteString($title)."', content='".$this->db->quoteString($content)."', side='".intval($side)."', weight='".intval($weight)."', visible='".intval($visible)."', c_type='".$this->db->quoteString($c_type)."', template='".$this->db->quoteString($template)."', bcachetime='".intval($bcachetime)."', last_modified='".time()."' WHERE bid='".intval($bid)."'";
         }
         if ( !$this->db->query($sql) ) {
             $this->setErrors("Could not save block data into database");
@@ -113,13 +113,13 @@ class XoopsBlock extends XoopsObject
 
     function delete()
     {
-        $sql = sprintf("DELETE FROM %s WHERE bid = '%u'", $this->db->prefix('newblocks'), $this->getVar('bid'));
+        $sql = sprintf("DELETE FROM %s WHERE bid = '%u'", $this->db->prefix('newblocks'), intval($this->getVar('bid')));
         if ( !$this->db->query($sql) ) {
             return false;
         }
-        $sql = sprintf("DELETE FROM %s WHERE gperm_name = 'block_read' AND gperm_itemid = '%u' AND gperm_modid = '1'", $this->db->prefix('group_permission'), $this->getVar('bid'));
+        $sql = sprintf("DELETE FROM %s WHERE gperm_name = 'block_read' AND gperm_itemid = '%u' AND gperm_modid = '1'", $this->db->prefix('group_permission'), intval($this->getVar('bid')));
         $this->db->query($sql);
-        $sql = sprintf("DELETE FROM %s WHERE block_id = '%u'", $this->db->prefix('block_module_link'), $this->getVar('bid'));
+        $sql = sprintf("DELETE FROM %s WHERE block_id = '%u'", $this->db->prefix('block_module_link'), intval($this->getVar('bid')));
         $this->db->query($sql);
         return true;
     }
@@ -302,18 +302,18 @@ class XoopsBlock extends XoopsObject
         }
         $sql .= "FROM ".$db->prefix("newblocks")." b LEFT JOIN ".$db->prefix("group_permission")." l ON l.gperm_itemid=b.bid WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
         if ( is_array($groupid) ) {
-            $sql .= " AND (l.gperm_groupid='".$groupid[0]."'";
+            $sql .= " AND (l.gperm_groupid='".intval($groupid[0])."'";
             $size = count($groupid);
             if ( $size  > 1 ) {
                 for ( $i = 1; $i < $size; $i++ ) {
-                    $sql .= " OR l.gperm_groupid='".$groupid[$i]."'";
+                    $sql .= " OR l.gperm_groupid='".intval($groupid[$i])."'";
                 }
             }
             $sql .= ")";
         } else {
-            $sql .= " AND l.gperm_groupid='".$groupid."'";
+            $sql .= " AND l.gperm_groupid='".intval($groupid)."'";
         }
-        $sql .= " AND b.isactive='".$isactive."'";
+        $sql .= " AND b.isactive='".intval($isactive)."'";
         # Adding dynamic block area/position system - TheRpLima - 2007-10-21
         /*
         if ( isset($side) ) {
@@ -336,18 +336,18 @@ class XoopsBlock extends XoopsObject
             	$s1 = "SELECT id FROM ".$db->prefix('block_positions')." WHERE block_type='".$tp."' ORDER BY id ASC";
             	$res = $db->query($s1);
             	while ( $myrow = $db->fetchArray($res) ) {
-                $side .= "side=".$myrow['id']." OR ";
+                $side .= "side='".intval($myrow['id'])."' OR ";
             	}
-            	$side = "(".substr($side,0,strlen($side)-4).")";
+            	$side = "('".substr($side,0,strlen($side)-4)."')";
             } else {
-                $side = "side=".$side;
+                $side = "side='".intval($side)."'";
             }
-            $where_query .= " AND ".$side;
+            $where_query .= " AND '".intval($side)."'";
         }
         #
 
         if ( isset($visible) ) {
-            $sql .= " AND b.visible='".$visible."'";
+            $sql .= " AND b.visible='".intval($visible)."'";
         }
         $sql .= " ORDER BY $orderby";
         $result = $db->query($sql);
@@ -370,7 +370,7 @@ class XoopsBlock extends XoopsObject
     {
         $db =& Database::getInstance();
         $ret = array();
-        $where_query = " WHERE isactive='".$isactive."'";
+        $where_query = " WHERE isactive='".intval($isactive)."'";
         
         # Adding dynamic block area/position system - TheRpLima - 2007-10-21
         /*
@@ -394,18 +394,18 @@ class XoopsBlock extends XoopsObject
             	$s1 = "SELECT id FROM ".$db->prefix('block_positions')." WHERE block_type='".$tp."' ORDER BY id ASC";
             	$res = $db->query($s1);
             	while ( $myrow = $db->fetchArray($res) ) {
-                $side .= "side=".$myrow['id']." OR ";
+                $side .= "side='".intval($myrow['id'])."' OR ";
             	}
-            	$side = "(".substr($side,0,strlen($side)-4).")";
+            	$side = "('".substr($side,0,strlen($side)-4)."')";
             } else {
-                $side = "side=".$side;
+                $side = "side='".intval($side)."'";
             }
-            $where_query .= " AND ".$side;
+            $where_query .= " AND '".intval($side)."'";
         }        
         #
         
         if ( isset($visible) ) {
-            $where_query .= " AND visible='".$visible."'";
+            $where_query .= " AND visible='".intval($visible)."'";
         }
         $where_query .= " ORDER BY $orderby";
         switch ($rettype) {
@@ -442,7 +442,7 @@ class XoopsBlock extends XoopsObject
     	$moduleid = intval($moduleid);
         $db =& Database::getInstance();
         if ( $asobject == true ) {
-            $sql = $sql = "SELECT * FROM ".$db->prefix('newblocks')." WHERE mid='".$moduleid."'";
+            $sql = "SELECT * FROM ".$db->prefix('newblocks')." WHERE mid='".$moduleid."'";
         } else {
             $sql = "SELECT bid FROM ".$db->prefix('newblocks')." WHERE mid='".$moduleid."'";
         }
@@ -465,7 +465,7 @@ class XoopsBlock extends XoopsObject
         $ret = array();
         $sql = "SELECT DISTINCT gperm_itemid FROM ".$db->prefix('group_permission')." WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
         if ( is_array($groupid) ) {
-            $sql .= " AND gperm_groupid IN (".implode(',', $groupid).")";
+            $sql .= " AND gperm_groupid IN ('".implode(',', intval($groupid))."')";
         } else {
             if (intval($groupid) > 0) {
                 $sql .= " AND gperm_groupid='".intval($groupid)."'";
@@ -496,7 +496,7 @@ class XoopsBlock extends XoopsObject
                     $sql .= " AND m.module_id='0'";
                 }
             }
-            $sql .= " AND b.bid IN (".implode(',', $blockids).")";
+            $sql .= " AND b.bid IN ('".implode(',', $blockids)."')";
             $sql .= " ORDER BY ".$orderby;
             $result = $db->query($sql);
             while ( $myrow = $db->fetchArray($result) ) {
@@ -535,7 +535,7 @@ class XoopsBlock extends XoopsObject
             }
             $module_id = intval($module_id);
             if (!empty($module_id)) {
-                $sql .= " AND m.module_id IN ('0','".$module_id."'";
+                $sql .= " AND m.module_id IN ('0','".intval($module_id)."'";
                 if ($toponlyblock) {
                     $sql .= ",'-1'";
                 }
