@@ -1,105 +1,64 @@
-/* reset css selectors */
-* { margin: 0; padding: 0; border: 0; outline: none; text-decoration: none;font-family: sans-serif; font-size: 1em; font-weight: normal; font-style: normal;}
-
-img {	border:0;}
-acronym, abbr, dfn { cursor: 	help;}
-q, cite, em, dfn, strong { font-style:italic;}
-strong, dfn {font-weight: 		bold;}
-del { text-decoration: 			line-through;}
-address { font-style: normal; letter-spacing: .1em;}
-
-/*======== styles pour mettre des blocs "flottants" par exemple des images ======== */
-.floatleft {
-	float: 							left;
-	margin-top: 					1em;
-	margin-right : 				1em;
-	padding-left: 					4px;
-	border: 							0;
-}
-.floatright {
-	float: 							right;
-	margin-bottom: 				1em;
-	margin-left: 					1em;
-	padding: 						2px;
-	border: 							0;
+table {
+    width:      100%;
 }
 
-/*========  Alignment class ======== */
-.txtleft   { text-align: 			left; }
-.txtright  { text-align: 			right; }
-.txtcenter { text-align: 			center;	}
-.txtjustify { text-align:			justify; }
-.alignmiddle { vertical-align: 	middle;}
-.aligntop { vertical-align: 		top;}
-.alignbottom { vertical-align: 	bottom;}
+img {
+    border:     0;
+}
 
-.positop {margin-top:0;padding-top:0;}
-.posibottom {margin-bottom:0;padding-bottom:0;}
+acronym, abbr, dfn {
+    cursor:     help;
+}
 
-/*========  Width class ======== */
-.width100 { width: 				100%;}
-.width98 {width:					98%;}
-.width95 {width:					95%;}
-.width90 {width:					90%;}
-.width85 {width:					85%;}
-.width80 {width:					80%;}
-.width75 { width: 				75%;}
-.width66 { width: 				66%;}
-.width50 { width: 				50%;}
-.width33 { width: 				33%;}
-.width25 { width: 				25%;}
-.width20 { width: 				20%;}
-.width10 { width: 				10%;}
-.width5 {width:					5%;}
-.width1 {width:					1%;}
+#xoopsHiddenText {
+    visibility:         hidden;
+    color:              #000000;
+    font-weight:        normal;
+    font-style:         normal;
+    text-decoration:    none;
+}
 
-/* ========= Font class ========== */
-.extrasmall { font-size: 		.7em;}
-.small {	font-size: 				.9em;}
-.normal { font-size: 			1em;}
-.big { font-size: 				1.2em;}
-.maxi { font-size: 				1.5em;}
+.pagneutral {
+    font-size:          10px;
+    width:              16px;
+    height:             19px;
+    text-align:         center;
+    background-image:   url(./images/pagneutral.gif);
+}
 
-.bold { font-weight: 			bold;}
-.italic {font-style: 			italic;}
+.pagact {
+    font-size:          10px;
+    width:              16px;
+    height:             19px;
+    text-align:         center;
+    background-image:   url(./images/pagact.gif);
+}
 
-.red {background-color: inherit; color: #ff0000;}
-.blue {background-color: inherit; color: #0000ff;}
-.black {background-color: inherit;	color:#000;}
-.white {background-color: inherit;	color:#fff;}
-.yellow {background-color: inherit; color: #ffff00;}
-.orange { background-color: inherit; color: #ffa500;}
-.green {	background-color: inherit; color: #32CD32;}
-.silver { background-color: inherit; color: #c0c0c0;}
-
-/*========  Show class ======== */
-.clear{ clear:both; height:0; font-size:0; line-height:0; }
-.clearleft{ clear:left; height:0; font-size:0; line-height:0; }
-.clearright{ clear:right; height:0; font-size:0; line-height:0; }
-.block { display: 				block; }
-.hide  { display: 				none; }
-.spacer { padding: 				0 0 3px 0;}
-.nowrap {display:					nowrap;}
+.paginact {
+    font-size:          10px;
+    width:              16px;
+    height:             19px;
+    text-align:         center;
+    background-image:   url(./images/paginact.gif);
+}
 
 
-/* xoops dhtml editor : don't remove */
-#xoopsHiddenText {visibility: hidden; color: #000000; font-weight: normal; font-style: normal; text-decoration: none;}
 
 /* For required elements in XOOPS form, can be overwritten in theme styles */
 .xoops-form-element-caption .caption-marker {
-	display: 						none;
+    display:            none;
 }
 
 .xoops-form-element-caption-required .caption-marker {
-	background-color: 			inherit;
-	padding-left: 					2px;
-	color: 							#ff0000;
+	background-color:   inherit;
+	padding-left: 	    2px;
+	color: 			    #ff0000;
 }
 
 .xoops-form-element-help {
-	font-size:						.9em;
-	padding-top:					5px;
-	font-weight:					normal;
+	font-size:		    .9em;
+    padding-top:        5px;
+    font-weight:        normal;
 }
 
 /* class XoopsPageNav::renderImageNav */
