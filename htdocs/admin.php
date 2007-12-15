@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.php,v 1.2 2007/08/25 14:37:40 marcan Exp $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
