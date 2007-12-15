@@ -94,12 +94,12 @@ class XoopsBlock extends XoopsObject
             $bid = $this->db->genId($this->db->prefix("newblocks")."_bid_seq");
             $sql = sprintf("INSERT INTO %s (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('%u', '%u', '%u', %s, %s, %s, %s, '%u', '%u', '%u', %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u')", $this->db->prefix('newblocks'), intval($bid), intval($mid), intval($func_num), $this->db->quoteString($options), $this->db->quoteString($name), $this->db->quoteString($title), $this->db->quoteString($content), intval($side), intval($weight), intval($visible), $this->db->quoteString($block_type), $this->db->quoteString($c_type), 1, $this->db->quoteString($dirname), $this->db->quoteString($func_file), $this->db->quoteString($show_func), $this->db->quoteString($edit_func), $this->db->quoteString($template), intval($bcachetime), time());
         } else {
-            $sql = "UPDATE ".$this->db->prefix("newblocks")." SET options='".$this->db->quoteString($options)."'";
+            $sql = "UPDATE ".$this->db->prefix("newblocks")." SET options=".$this->db->quoteString($options);
             // a custom block needs its own name
             if ( $block_type == "C" ) {
-                $sql .= ", name='".$this->db->quoteString($name)."'";
+                $sql .= ", name=".$this->db->quoteString($name);
             }
-            $sql .= ", isactive='".intval($isactive)."', title='".$this->db->quoteString($title)."', content='".$this->db->quoteString($content)."', side='".intval($side)."', weight='".intval($weight)."', visible='".intval($visible)."', c_type='".$this->db->quoteString($c_type)."', template='".$this->db->quoteString($template)."', bcachetime='".intval($bcachetime)."', last_modified='".time()."' WHERE bid='".intval($bid)."'";
+            $sql .= ", isactive='".intval($isactive)."', title=".$this->db->quoteString($title).", content=".$this->db->quoteString($content).", side='".intval($side)."', weight='".intval($weight)."', visible='".intval($visible)."', c_type=".$this->db->quoteString($c_type).", template=".$this->db->quoteString($template).", bcachetime='".intval($bcachetime)."', last_modified='".time()."' WHERE bid='".intval($bid)."'";
         }
         if ( !$this->db->query($sql) ) {
             $this->setErrors("Could not save block data into database");
