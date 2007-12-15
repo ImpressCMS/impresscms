@@ -45,6 +45,10 @@ acronym, abbr, dfn {
 
 
 /* For required elements in XOOPS form, can be overwritten in theme styles */
+form td.head {
+    width: 30%;
+}
+
 .xoops-form-element-caption .caption-marker {
     display:            none;
 }
