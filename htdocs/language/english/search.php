@@ -18,6 +18,6 @@ define("_SR_TYPE","Type");
 define("_SR_SEARCHIN","Search in");
 define('_SR_KEYTOOSHORT', 'Keywords must be at least <b>%s</b> characters long');
 define('_SR_KEYIGNORE', 'Keywords shorter than <b>%s</b> characters will be ignored');
-define('_SR_SEARCHRULE', 'Seach Rule');
-define('_SR_IGNOREDWORDS', 'The following words are shorter than allowed minmum length (%u chars) and were not included in your search:');
+define('_SR_SEARCHRULE', 'Search Rule');
+define('_SR_IGNOREDWORDS', 'The following words are shorter than allowed minimum length (%u chars) and were not included in your search:');
 ?>

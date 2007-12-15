@@ -57,7 +57,7 @@ define("_MA_USER_HASAVATAR", "Has avatar");
 define("_MA_USER_MODE_SIMPLE", "Simple mode");
 define("_MA_USER_MODE_ADVANCED", "Advanced mode");
 define("_MA_USER_MODE_QUERY", "Query mode");
-define("_MA_USER_QUERY", "Quey");
+define("_MA_USER_QUERY", "Query");
 
 define("_MA_USER_SEARCHAGAIN", "Search again");
 define("_MA_USER_NOUSERSELECTED", "No user selected");
