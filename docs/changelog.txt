@@ -25,6 +25,7 @@ Unreleased: Version 0.1
 - Changed : The new default theme is now css100_morpho (malanciault)
 - Changed : The icons of /class/xoopseditor/dhtmlext/images/*.* (sato-san)
 - Changed : Theme changes; Link to impressCMS, poweredby.gif (sato-san)
+- Changed : resource.db.php - changed for version by GiJoe (Andrew Vincent)
 
 - Removed : The 'Default' theme has been removed (malanciault)
 
