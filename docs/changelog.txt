@@ -19,21 +19,42 @@ Unreleased: Version 0.1
 - Added : Integrating some flags image to be used by the multilanguage feature (malanicault)
 - Added : Handling 404 and 500 pages automatically on the site (malanciault)
 - Added : Addition of Gijoe Remember me hack (malanciault)
+- Added : A system block to allow users to select their language (real_therplima)
+- Added : Creating a random DB prefix in instalation process like mentioned in feature request item #1848819 (real_therplima)
 
 - Changed : The new default theme is now css100_morpho (malanciault)
 - Changed : The icons of /class/xoopseditor/dhtmlext/images/*.* (sato-san)
+- Changed : Theme changes; Link to impressCMS, poweredby.gif (sato-san)
 
 - Removed : The 'Default' theme has been removed (malanciault)
 
-- Improved: When the User registration is Off... all links to register.php are not shown.
+- Improved : When the User registration is Off... all links to register.php are not shown.
+- Improved : The 'remember me' feature now can be enable and disabled (young-pee)
+- Improved : Changing the Config options container from 60% to 50% #1849876 (malanciault)
 
 - Fixed: system templates corrected for validation, added title attributes to links and filled alt attributes for images (skenow|kris_fr)
+- Fixed #1851559 : Corrected a bug where it was unable to set block permissions in group settings (young-pee)
+- Fixed #1851555 : Corrected a bug in the install script (young-pee)
+- Fixed #1851361 : Changing the user block position to another position generated an error (young-pee)
+- Fixed #1851442 : There was a PHP parser error in the modules admin (young-pee)
+- Fixed #1851077 : Some texts were hardcoded in the login block and the user.php file (young-pee)
+- Fixed #1851404 : Changed the xoopsblock.php file; the query for asking wich blocks are active was wrong formed; fixed deleting two ' from the query (young-pee)
+- Fixed #1850759 : Fixing the left column of forms to a 30% width (malanciault)
+- Fixed #1851361 : Block display disabled at a fresh install (young-pee)
+- Fixed #1850054 : Notice: Use of undefined constant _US_SELECT_THEME in file /edituser.php (real_therplima)
+- Fixed #1848916 : Removing the System Options title in Control Panel home (malanciault)
+- Fixed #1848663 : _MD_AM_ML_NAMESDSC already defined (malanciault)
+- Fixed #1849080 : RSS link to backend.php in theme.html (real_therplima)
+- Fixed #1848177 : Icon small in /include/cp_functions.php (young-pee)
+- Fixed #1848178 : Space between header and content removed (real_therplima)
+- Fixed #1847782 : Block y/n not selected by default (real_therplima)
+
 
 Working Changes : (Changes to be reverted or made definitive)
 
 - Commented a line in common.php ... someone can tell for what is this line? (young-pee)
-- Security Audit: making sure that header & redirect_header are followed with exit(); (protection from telnet vulnerability aswell as other instances where the page is viewed with a system that does not understand the 'header' function, it would skip the redirection page and continue displaying the rest of page. (Vaughan)
-- Security Audit: making sure that sql query values are all encapsulated in single quotes, helps prevent SQLi. Added intval to values in sql queries that should only be an integer value. (Vaughan)
+- Security Audit : making sure that header & redirect_header are followed with exit(); (protection from telnet vulnerability aswell as other instances where the page is viewed with a system that does not understand the 'header' function, it would skip the redirection page and continue displaying the rest of page. (Vaughan)
+- Security Audit : making sure that sql query values are all encapsulated in single quotes, helps prevent SQLi. Added intval to values in sql queries that should only be an integer value. (Vaughan)
 
 ========================
 Unreleased: XOOPS 2.0.18
