@@ -408,7 +408,6 @@ class XoopsBlock extends XoopsObject
             $where_query .= " AND visible='".intval($visible)."'";
         }
         $where_query .= " ORDER BY $orderby";
-        echo $where_query."<br />";
         switch ($rettype) {
         case "object":
             $sql = "SELECT * FROM ".$db->prefix("newblocks")."".$where_query;
