@@ -257,7 +257,7 @@ define("_MD_AM_ML_NAMESDSC","Enter the names of the language to use, separated b
 define("_MD_AM_ML_CAPTIONS","Language captions");
 define("_MD_AM_ML_CAPTIONSDSC","Enter the captions you would like to use for these languages");
 
-define("_MD_AM_REMEMBER_ME","Enable the 'Remember Me' feature in the login.");
-define("_MD_AM_REMEMBER_ME_DESC","The 'Remember Me' feature is not totally secure, use it under your own risk.");
+define("_MD_AM_REMEMBERME","Enable the 'Remember Me' feature in the login.");
+define("_MD_AM_REMEMBERMEDSC","The 'Remember Me' feature is not totally secure, use it under your own risk.");
 
 ?>
