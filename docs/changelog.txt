@@ -5,6 +5,7 @@ XOOPS Changelog
 Unreleased: Version 0.1
 ========================
 
+- Added : Ability to set & define your sites Privacy Policy from admin/preferences/user settings. (vaughan)
 - Added : New admin interface based on XOOPS EXM and improved. Thanks to XOOPS EXM!. (BitC3R0 / malanciault / young-pee)
 - Added : New function to show warnings. Also added a new css class for that. xoops_warning() (young-pee)
 - Added : 4 new System warnigns. 1 for Security and 3 for correct functionality of the system. (young-pee)
