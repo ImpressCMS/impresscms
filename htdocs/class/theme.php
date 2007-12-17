@@ -203,6 +203,13 @@ class xos_opal_Theme {
 	    } else {
 	        $this->template->assign( array( 'xoops_isuser' => false, 'xoops_isadmin' => false ) );
 	    }
+		if ($xoopsConfig[] == 1)
+		{
+			$this->template->assign( array(
+				'priv_enable' => true,
+				'priv_policy' => htmlspecialchars($xoopsConfig['priv_policy'], ENT_QUOTES),
+			) );
+		}
 		// Meta tags
 	    $config_handler =& xoops_gethandler('config');
 	    $criteria = new CriteriaCompo(new Criteria('conf_modid', 0));
