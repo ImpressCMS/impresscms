@@ -10,6 +10,9 @@
         <{/foreach}>
       <{/foreach}>
       <!-- end module menu loop -->
+	  <{if $block.priv_enabled == true}>
+		  <a class="menuMain<{if $xoops_dirname=='system'}> actlink<{/if}>" href="<{$xoops_url}>/privpolicy.php" title="<{$block.lang_privpolicy}>"><{$block.lang_privpolicy}></a>
+	  <{/if}>
     </td>
   </tr>
 </table>

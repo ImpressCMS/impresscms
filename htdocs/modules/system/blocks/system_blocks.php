@@ -117,9 +117,17 @@ function b_system_login_show()
 
 function b_system_main_show()
 {
+    $config_handler =& xoops_gethandler('config');
+	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+
     global $xoopsUser,$xoopsModule;
     $block = array();
     $block['lang_home'] = _MB_SYSTEM_HOME;
+	if ($xoopsConfigUser['priv_dpolicy'] == 1)
+	{
+		$block['priv_enabled'] = true;
+		$block['lang_privpolicy'] = _MB_SYSTEM_PRIVPOLICY;
+	}
     $block['lang_close'] = _CLOSE;
     $module_handler =& xoops_gethandler('module');
     $criteria = new CriteriaCompo(new Criteria('hasmain', 1));

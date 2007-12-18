@@ -80,6 +80,8 @@ $modversion['templates'][14]['file'] = 'system_notification_select.html';
 $modversion['templates'][14]['description'] = '';
 $modversion['templates'][15]['file'] = 'system_block_dummy.html';
 $modversion['templates'][15]['description'] = 'Dummy template for custom blocks or blocks without templates';
+$modversion['templates'][16]['file'] = 'system_privpolicy.html';
+$modversion['templates'][16]['description'] = 'Template for displaying site Privacy Policy';
 
 // Blocks
 $modversion['blocks'][1]['file'] = "system_blocks.php";
