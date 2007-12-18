@@ -235,3 +235,8 @@ div.CPfoot{
 	padding: 10px 0 0 50px;
 	border-bottom: 3px solid #000000;
 }
+#nav-change-language {
+	float: right;
+	padding-top: 5px;
+	padding-right: 5px;
+}
