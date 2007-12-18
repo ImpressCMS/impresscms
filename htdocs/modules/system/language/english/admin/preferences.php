@@ -260,4 +260,9 @@ define("_MD_AM_ML_CAPTIONSDSC","Enter the captions you would like to use for the
 define("_MD_AM_REMEMBERME","Enable the 'Remember Me' feature in the login.");
 define("_MD_AM_REMEMBERMEDSC","The 'Remember Me' feature is not totally secure, use it under your own risk.");
 
+define("_MD_AM_PRIVDPOLICY","Enable the sites 'Privacy Policy'.");
+define("_MD_AM_PRIVDPOLICYDSC","The 'Privacy Policy' should be tailored to your site & active whenever you are allowing registrations to your site.");
+define("_MD_AM_PRIVPOLICY","Enter your site 'Privacy Policy'.");
+define("_MD_AM_PRIVPOLICYDSC","");
+
 ?>
