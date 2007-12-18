@@ -130,16 +130,6 @@ window.onload=startList;
 	$menu[$i]['small'] = XOOPS_URL."/modules/system/images/home.png";
 	$i++;
 
-	foreach($languages as $language) {
-		if ($xoopsConfig['language'] != $language) {
-			$language_name = isset($xoops_language_tags[$language]) ? $xoops_language_tags[$language]->caption() : $language;
-			$menu[$i]['title'] = _SWITCH_TO . '&nbsp;' . $language_name;
-			$menu[$i]['link'] = XOOPS_URL . '/admin.php?sel_lang=' . $language;
-			$menu[$i]['absolute'] = 1;
-			$i++;
-		}
-	}
-
 	$menu[$i]['link'] = XOOPS_URL."/user.php?op=logout";
 	$menu[$i]['title'] = _LOGOUT;
 	$menu[$i]['absolute'] = 1;
