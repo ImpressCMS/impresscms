@@ -203,7 +203,7 @@ class xos_opal_Theme {
 	    } else {
 	        $this->template->assign( array( 'xoops_isuser' => false, 'xoops_isadmin' => false ) );
 	    }
-		if ($xoopsConfig['priv_enable'] == 1)
+		if ($xoopsConfig['priv_dpolicy'] == 1)
 		{
 			$this->template->assign( array(
 				'priv_enable' => true,
