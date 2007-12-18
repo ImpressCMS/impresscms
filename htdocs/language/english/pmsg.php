@@ -41,4 +41,7 @@ define("_PM_REPLY", "Reply");
 define("_PM_PLZREG","Please register first to send private messages!");
 
 define("_PM_ONLINE", "Online");
+
+// impresscms 0.5
+define("_PM_MESSAGEPOSTED_EMAILSUBJ","[%s] Private Message Notification");
 ?>

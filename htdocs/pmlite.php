@@ -73,6 +73,28 @@ if ($xoopsUser) {
                 echo $pm->getHtmlErrors();
                 echo "<br /><a href='javascript:history.go(-1)'>"._PM_GOBACK."</a>";
             } else {
+				// Send a Private Message email notification
+				$userHandler =& xoops_gethandler('user');
+				$toUser =& $userHandler->get($_POST['to_userid']);
+				// Only send email notif if notification method is mail
+				if ($toUser->notify_method() == 2) {
+					$xoopsMailer =& getMailer();
+					$xoopsMailer->useMail();
+					$xoopsMailer->setToEmails($toUser->email());
+					$xoopsMailer->setFromEmail($xoopsUser->email());
+					$xoopsMailer->setTemplate('new_pm.tpl');
+					$xoopsMailer->assign('X_SITENAME', $xoopsConfig['sitename']);
+					$xoopsMailer->assign('X_SITEURL', XOOPS_URL."/");
+					$xoopsMailer->assign('X_ADMINMAIL', $xoopsConfig['adminmail']);
+					$xoopsMailer->assign('X_UNAME', $toUser->uname());
+					$xoopsMailer->assign('X_FROMUNAME', $xoopsUser->uname());
+					$xoopsMailer->assign('X_SUBJECT', $myts->stripSlashesGPC($_POST['subject']));
+					$xoopsMailer->assign('X_MESSAGE', $myts->stripSlashesGPC($_POST['message']));
+					$xoopsMailer->assign('X_ITEM_URL', XOOPS_URL . "/viewpmsg.php");
+					$xoopsMailer->setFromName($xoopsUser->uname());
+					$xoopsMailer->setSubject(sprintf(_PM_MESSAGEPOSTED_EMAILSUBJ, $xoopsConfig['sitename']));
+					$xoopsMailer->send();
+				}
                 echo "<br /><br /><div style='text-align:center;'><h4>"._PM_MESSAGEPOSTED."</h4><br /><a href=\"javascript:window.opener.location='".XOOPS_URL."/viewpmsg.php';window.close();\">"._PM_CLICKHERE."</a><br /><br /><a href=\"javascript:window.close();\">"._PM_ORCLOSEWINDOW."</a></div>";
             }
         }
