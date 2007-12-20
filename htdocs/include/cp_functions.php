@@ -37,11 +37,7 @@ $tpl->assign('xoops_sitename',$xoopsConfig['sitename']);
 function xoops_cp_header($ret = 0)
 {
     global $xoopsConfig, $xoopsModule, $xoopsUser, $tpl, $im_multilanguageConfig;
-	if ($xoopsConfig['gzip_compression'] == 1) {
-		ob_start("ob_gzhandler");
-	} else {
-		ob_start();
-	}
+
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset='._CHARSET);
 		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
