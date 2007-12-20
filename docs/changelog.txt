@@ -16,7 +16,7 @@ Unreleased: Version 0.5
 - Added : Integration of the Easiest Multilanguage originally created by GIJOE (malanciault)
 - Added : Configuration options to turn on or off and configure the Multilanguage on the site (malanciault)
 - Added : Integrating some flags image to be used by the multilanguage feature (malanicault)
-- Added : Handling 404 and 500 pages automatically on the site (malanciault)
+- Added : Handling HTTP errors automatically on the site. (malanciault/young-pee)
 - Added : Addition of Gijoe Remember me hack (malanciault)
 - Added : A system block to allow users to select their language (real_therplima)
 - Added : Creating a random DB prefix in instalation process like mentioned in feature request item #1848819 (real_therplima)
@@ -31,8 +31,14 @@ Unreleased: Version 0.5
 - Improved : When the User registration is Off... all links to register.php are not shown.
 - Improved : The 'remember me' feature now can be enable and disabled (young-pee)
 - Improved : Changing the Config options container from 60% to 50% #1849876 (malanciault)
+- Improved : Auth Class Folder Organization. (young-pee)
+- Improved : Database Class Folder Organization. (Needed for include more drivers) (young-pee)
 
-- Fixed: system templates corrected for validation, added title attributes to links and filled alt attributes for images (skenow|kris_fr)
+- Fixed #1851636 : Corrected error in profile administration in the admin side. (young-pee)
+- Fixed:#1852655 : Gzip warning in admin side. (young-pee)
+- Fixed #1854527 : Corrected error updating user profile. (young-pee)
+- Fixed: Corrected a hardcoded route to the smarty classes. (young-pee)
+- Fixed: system templates corrected for validation, added title attributes to links and filled alt attributes for images. (skenow|kris_fr)
 - Fixed #1851559 : Corrected a bug where it was unable to set block permissions in group settings (young-pee)
 - Fixed #1851555 : Corrected a bug in the install script (young-pee)
 - Fixed #1851361 : Changing the user block position to another position generated an error (young-pee)
@@ -52,7 +58,6 @@ Unreleased: Version 0.5
 
 Working Changes : (Changes to be reverted or made definitive)
 
-- Commented a line in common.php ... someone can tell for what is this line? (young-pee)
 - Security Audit : making sure that header & redirect_header are followed with exit(); (protection from telnet vulnerability aswell as other instances where the page is viewed with a system that does not understand the 'header' function, it would skip the redirection page and continue displaying the rest of page. (Vaughan)
 - Security Audit : making sure that sql query values are all encapsulated in single quotes, helps prevent SQLi. Added intval to values in sql queries that should only be an integer value. (Vaughan)
 
