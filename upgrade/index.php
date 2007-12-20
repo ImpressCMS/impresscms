@@ -100,7 +100,7 @@ if ( !$xoopsUser || !$xoopsUser->isAdmin() ) {
 			array_unshift( $_SESSION['xoops_upgrade'], $next );
 			echo '<a id="link-next" href="index.php?action=next">' . _RELOAD . '</a>';
 		} else {
-			$text = empty( $_SESSION['xoops_upgrade'] ) ? _FINISH : sprintf( _APPLY_NEXT, each( $_SESSION['xoops_upgrade'] ) );
+			$text = empty( $_SESSION['xoops_upgrade'] ) ? _FINISH : sprintf( _APPLY_NEXT, $_SESSION['xoops_upgrade'][0] );
 			echo '<a id="link-next" href="index.php?action=next">' . $text . '</a>';
 		}
 	}
