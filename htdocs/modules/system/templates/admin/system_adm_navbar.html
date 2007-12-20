@@ -18,7 +18,9 @@
 			</li>
 		<{/foreach}>
 	</ul>
-	<span id="nav-change-language">[mlimg]</span>
+	<{if $ml_is_enabled}>
+		<span id="nav-change-language">[mlimg]</span>
+	<{/if}>
 </div>
 <{ if $modname != '' }>
 <div id="navOptionsCP">

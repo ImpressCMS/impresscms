@@ -36,7 +36,7 @@ $tpl->assign('xoops_sitename',$xoopsConfig['sitename']);
 
 function xoops_cp_header($ret = 0)
 {
-    global $xoopsConfig, $xoopsModule, $xoopsUser, $tpl;
+    global $xoopsConfig, $xoopsModule, $xoopsUser, $tpl, $im_multilanguageConfig;
 	if ($xoopsConfig['gzip_compression'] == 1) {
 		ob_start("ob_gzhandler");
 	} else {
@@ -112,10 +112,6 @@ window.onload=startList;
 	 * Loading navigation bar
 	 */
 
-	include_once(XOOPS_ROOT_PATH."/class/xoopslists.php");
-	$languages = XoopsLists::getLangList();
-	global $xoops_language_tags;
-
 	$i = 0;
 
 	$menu[$i]['link'] = XOOPS_URL."/admin.php";
@@ -181,6 +177,8 @@ window.onload=startList;
 	$tpl->append('navitems', array('link'=>"#",'text'=>_AD_NEWS, 'menu'=>$menu));
 
 	$tpl->assign('lang_prefs', _XMEX_PREFS);
+	$tpl->assign('ml_is_enabled', $im_multilanguageConfig['ml_enable']);
+
 
 	echo $tpl->fetch(XOOPS_ROOT_PATH.'/modules/system/templates/admin/system_adm_navbar.html');
 	echo "<div id='containBodyCP'><br /><div id='bodyCP'>";
