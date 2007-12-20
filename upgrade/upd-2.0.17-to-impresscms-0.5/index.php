@@ -8,6 +8,7 @@ class upgrade_impcms05 {
 		$this->apply_alter_tables();
 		$this->apply_conf_configcategory();
 		$this->apply_conf_config();
+		$this->apply_ml_config();
 		$this->blocks_engine_upgrade();
 		return ($this->apply_new_blocks());
 	}
@@ -17,7 +18,7 @@ class upgrade_impcms05 {
 	}
 	function apply_new_blocks() {
 		$db = $GLOBALS['xoopsDB'];
-		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '', 'Language Selection', 'Language Selection', '', 1, 0, 1, 'S', 'H', 1, 'system', 'system_blocks.php', 'b_system_multilanguage_show', '', 'system_block_multilanguage.html', 0, " . time() . ")");
+		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '', 'Language Selection', 'Language Selection', '', 1, 0, 0, 'S', 'H', 1, 'system', 'system_blocks.php', 'b_system_multilanguage_show', '', 'system_block_multilanguage.html', 0, " . time() . ")");
 		$new_block_id = $db->getInsertId();
 		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
 		$this->query(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_multilanguage.html', 'Displays image links to change the site language', " . time() . ", " . time() . ", 'block');");
@@ -143,6 +144,24 @@ class upgrade_impcms05 {
 		}
 		return true;
 	}
+	function apply_ml_config() {
+		$db = $GLOBALS['xoopsDB'];
+		// Insert config values
+		$table = $db->prefix('config');
+		$data = array (
+			'ml_enable' => "'_MD_AM_ML_ENABLE', '0', '_MD_AM_ML_ENABLE_DESC', 'yesno', 'int', 0",
+			'ml_tags' => "'_MD_AM_ML_TAGS', 'en,fr', '_MD_AM_ML_TAGS_DESC', 'textbox', 'text', 5",
+			'ml_names' => "'_MD_AM_ML_NAMES', 'english,french', '_MD_AM_ML_NAMES_DESC', 'textbox', 'text', 10",
+			'ml_captions' => "'_MD_AM_ML_CAPTIONS', 'English,Francais', '_MD_AM_ML_CAPTIONS_DESC', 'textbox', 'text', 15",
+			);
+		reset($data);
+		foreach ($data as $name => $values) {
+			if (!getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=8 AND `conf_name`='$name'")) {
+				$this->query("INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " .				"VALUES ( 0,2,'$name',$values)");
+			}
+		}
+		return true;
+	}
 	function apply_conf_config() {
 		$db = $GLOBALS['xoopsDB'];
 		// Insert config values
@@ -151,10 +170,6 @@ class upgrade_impcms05 {
 			'rank_width' => "'_MD_AM_RANKW', '120', '_MD_AM_RANKWDSC', 'textbox', 'int', 21",
 			'rank_height' => "'_MD_AM_RANKH', '120', '_MD_AM_RANKHDSC', 'textbox', 'int', 21",
 			'rank_maxsize' => "'_MD_AM_RANKMAX', '35000', '_MD_AM_RANKMAXDSC', 'textbox', 'int', 21",
-			'ml_enable' => "'_MD_AM_ML_ENABLE', '0', '_MD_AM_ML_ENABLE_DESC', 'yesno', 'int', 0",
-			'ml_tags' => "'_MD_AM_ML_TAGS', 'en,fr', '_MD_AM_ML_TAGS_DESC', 'textbox', 'text', 5",
-			'ml_names' => "'_MD_AM_ML_NAMES', 'english,french', '_MD_AM_ML_NAMES_DESC', 'textbox', 'text', 10",
-			'ml_captions' => "'_MD_AM_ML_CAPTIONS', 'English,Francais', '_MD_AM_ML_CAPTIONS_DESC', 'textbox', 'text', 15",
 			'remember_me' => "'_MD_AM_REMEMBERME', '0', '_MD_AM_REMEMBERMEDSC', 'yesno', 'int', 30",
 			'priv_dpolicy' => "'_MD_AM_PRIVDPOLICY', 1, '_MD_AM_PRIVDPOLICYDSC', 'yesno', 'int', 30",
 			'priv_policy' => "'_MD_AM_PRIVPOLICY', '" . addslashes(_UPGRADE_PRIVPOLICY
