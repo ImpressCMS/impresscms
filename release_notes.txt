@@ -1,20 +1,15 @@
+ImpressCMS 0.5 release notes
+==================================
 
-XOOPS 2.0.17.1 release notes
-------------------------------------------------------------------------------
+The ImpressCMS community is very pleased to announce its very first release : ImpressCMS 0.5.
 
-The XOOPS development team is pleased to announce the release of XOOPS 2.0.17.1.
+The first releases of ImpressCMS is based on the XOOPS 2.0.17 core + some additions made in the XOOPS 2.0.18 development branch and, as such, will retain compatibility with existing modules and themes. The goal is to provide an on-going, stable environment for information and support for XOOPS and its users. It just will not be the XOOPS of XOOPS.org.
 
-This is merely a bugfix release. Some main changes include:
-- Bugfix for login problems with some IE browsers caused by session_regenerate_id on some PHP versions;
-- Improvement on uploader mimetype check
-
-Users who still suffer from login problem after implementing the patch are suggested to turn on custom session in system preferences, or set "enableRegenerateId" to FALSE in /kernel/session.php line #78.
-
-Read the full changelog for details.
+Please see the full changelog for details in docs/changelog.txt
 
 
 System requirements
------------------------------------
+==================================
 
 PHP
     Any PHP version >= 4.3 (PHP 4.2.x may work but is not officially supported)
@@ -24,15 +19,15 @@ Web server
     Any server supporting the required PHP version (Apache highly recommended)
 
 
-Downloading XOOPS
------------------------------------
+Downloading ImpressCMS
+==================================
 
-Your can get this release package from the sourceforge.net file repository.
-Both .zip and .tgz archives are provided.
+This release can be downloaded from the ImpressCMS SourceForge project page :
+https://sourceforge.net/project/showfiles.php?group_id=205633
 
 
-Installing XOOPS
------------------------------------
+Installing ImpressCMS
+==================================
 
    1. Copy the content of the htdocs/ folder where it can be accessed by your server
    2. Ensure mainfile.php, cache, templates_c and uploads are writable by the webserver
@@ -40,60 +35,44 @@ Installing XOOPS
 
 
 Upgrading from a previous version
------------------------------------
+==================================
 
-Upgrading from XOOPS 2.0.17 (easy way)
-   1. Get the update package from the sourceforge file repository
-   2. Overwrite your existing files with the new ones
-
-Upgrading from XOOPS 2.0.14/2.0.15/2.0.16/2.0.17 (using the full package)
-   1. Move the "upgrade" folder inside the "htdocs" folder (it's been kept out as it's not needed for full installs)
-   2. Delete htdocs/mainfile.php, htdocs/install/, htdocs/cache/, htdocs/extras/, htdocs/template_c/, htdocs/themes/ and htdocs/uploads/
-   3. Upload the content of the htdocs folder over your existing files
-   4. Access <your.site.url>/upgrade/ with a browser, and follow the instructions
-   5. Follow the instructions to update your database
-   6. Delete the upgrade folder
-
-Upgrading from any XOOPS ranging from 2.0.7 to 2.0.13.2 (using the full package):
-   1. Move the "upgrade" folder inside the "htdocs" folder (it's been kept out as it's not needed for full installs)
-   2. Delete htdocs/mainfile.php, htdocs/install/, htdocs/cache/, htdocs/template_c/, htdocs/themes/ and htdocs/uploads/
-   3. Upload the content of the htdocs folder over your existing files
-   4. Delete the following folders and files from your server (they belong to an old version):
-          * class/smarty/core
-          * class/smarty/plugins/resource.db.php
-   5. Empty the templates_c folder (except index.html)
-   6. Ensure the server can write to mainfile.php
-   7. Access <your.site.url>/upgrade/ with a browser, and follow the instructions
-   8. Write-protect mainfile.php again
-   9. Delete the upgrade folder
-  10. Update the "system" module from the modules administration interface
-
+Upgrading from XOOPS 2.0.17/2.0.17.1/2.0.18
+   1. Download the XOOPS-to-ImpressCMS package from our download page
+   2. Upload the content of the htdocs folder over your existing files
+   3. Access <your.site.url>/upgrade/ with a browser, and follow the instructions
+   4. Follow the instructions to update your database
+   5. Delete the upgrade folder
 
 Files integrity check
------------------------------------
+==================================
 
-The full XOOPS package is released with a script able to check if all the system files were correctly uploaded to the server. To use it, follow these instructions:
+The ImpressCMS package is released with a script able to check if all the system files were correctly uploaded to the server. To use it, follow these instructions:
 
-   1. Upload the xoops_md5.php and xoops.md5 files located in the XOOPS package root to your XOOPS server folder (putting them next to mainfile.php).
-   2. Execute xoops_md5.php with your browser
+   1. Upload the impresscms_md5.php and impresscms.md5 files located in the ImpressCMS package root to your ImpressCMS server folder (putting them next to mainfile.php).
+   2. Execute impresscms_md5.php with your browser
    3. If necessary, re-upload the missing or corrupted system files
-   4. Remove xoops_md5.php and xoops.md5 from your server
+   4. Remove impresscms_md5.php and xoops.md5 from your server
 
 
 Revealing the blank page backtrace log
------------------------------------
+==================================
 
-XOOPS displays a basic error page when a fatal error preventing it to run is encountered. To help you diagnose the cause of the error, this page contains additional messages that are hidden by default. To reveal them, use your browser "select all" function (for most browsers, you can use "Ctrl+A").
+ImpressCMS displays a basic error page when a fatal error preventing it to run is encountered. To help you diagnose the cause of the error, this page contains additional messages that are hidden by default. To reveal them, use your browser "select all" function (for most browsers, you can use "Ctrl+A").
 
 
-Incompatibility with some modules
----------------------------------
+Modules, themes and languages
+==================================
 
-Beginning with XOOPS 2.0.14, a change in the core template methods resulted in some incompatibilities with some modules that do not have their templates under (dirname)/templates/ as many XOOPS modules do. Please read extras/readme.txt for workaround instructions.
-
-Modules
------------------------------------
-
-The packages do not contain any module apart from the system one. You are invited to browse the XOOPS modules repository to get some. Note: as a new repository is being built, the current repository is not up-to-date, PLEASE VISIT DEVELOPERS' WEBSITES TO MAKE SURE YOU ARE USING PROPER VERSION OF MODULES.
+The packages do not contain any module apart from the system one. You are invited to browse the ImpressCMS Addons web site at http://addons.impresscms.org to get all the modules, themes and languages you need.
 
 We also highly recommend the installation of the Protector module which will bring additional protection and logging capabilities to your site.
+
+==================================
+The ImpressCMS Community
+
+The Home: http://www.impresscms.org
+The Community: http://community.impresscms.org
+The Addons: http://addons.impresscms.org
+The Wiki: http://wiki.impresscms.org
+The Blog : http://blog.impresscms.org
