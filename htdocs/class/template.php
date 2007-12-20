@@ -62,8 +62,8 @@ class XoopsTpl extends Smarty {
 		$this->_compile_id = $this->compile_id;
 		$this->compile_check = ( $xoopsConfig['theme_fromfile'] == 1 );
 		$this->plugins_dir = array(
-			SMARTY_PATH . 'xoops_plugins',
-			SMARTY_PATH . 'plugins',
+			SMARTY_DIR . 'xoops_plugins',
+			SMARTY_DIR . 'plugins',
 		);
 		if ( $xoopsConfig['debug_mode'] ) {
 			$this->debugging_ctrl = 'URL';
