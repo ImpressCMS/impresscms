@@ -8,8 +8,6 @@ body {
 	font:		10pt Lucida Grande, tahoma, osaka,taipei,verdana, arial, helvetica, sans-serif;
 	color:		#000000;
 	background:	#c6c7c9;
-	border-left:	15px solid #000;
-	border-right:	15px solid #000;
 }
 
 #xo-banner {
@@ -30,13 +28,13 @@ body {
 }
 
 
-a		{	
+a		{
     text-decoration: none;
 	color: #666666;font-weight: bold;
 	background-color: transparent;
 }
 
-a:hover		{	
+a:hover		{
     text-decoration: none;
     	color: #ff9966;
     	font-weight: bold;
@@ -48,11 +46,12 @@ h1 {
 	margin-top:		.25em;
 	margin-bottom:	.5em;
 	border-bottom:	1px solid #ccc;
-	padding-left:	.25em;
+	padding-left:	0;
 	font-size:		200%;
 	font-weight:	bold;
 	color:			#666F7D;
 }
+
 
 img		{	border:0;			}
 
@@ -60,13 +59,12 @@ label {
 	display:		block;
 	padding:		0px;
 }
-
 .xo-formfield {
 	margin-bottom:	.2em;
 }
 .xo-formbuttons {
 	padding-top:	.5em;
-	padding-left:	1em;
+	padding-left:	0px;
 }
 
 .xo-formfield.required label:after {
@@ -90,7 +88,10 @@ input[type=text], input[type=password], textarea {
 
 #link-next {
 	display:		block;
-	text-align:		center;
+	text-align:		left;
 	margin-top:		2em;
-	
+
+}
+li {
+	margin-left: 30px;
 }

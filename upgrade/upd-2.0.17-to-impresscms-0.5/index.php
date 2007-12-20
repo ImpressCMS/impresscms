@@ -13,23 +13,25 @@ class upgrade_impcms05 {
 	}
 	function apply_conf_configcategory() {
 		$db = $GLOBALS['xoopsDB'];
-		return $db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('','_MD_AM_MULTILANGUAGE')");
+		return $this->query(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('','_MD_AM_MULTILANGUAGE')");
 	}
 	function apply_new_blocks() {
 		$db = $GLOBALS['xoopsDB'];
-		$db->queryF(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '', 'Language Selection', 'Language Selection', '', 1, 0, 1, 'S', 'H', 1, 'system', 'system_blocks.php', 'b_system_multilanguage_show', '', 'system_block_multilanguage.html', 0, " . time() . ")");
+		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '', 'Language Selection', 'Language Selection', '', 1, 0, 1, 'S', 'H', 1, 'system', 'system_blocks.php', 'b_system_multilanguage_show', '', 'system_block_multilanguage.html', 0, " . time() . ")");
 		$new_block_id = $db->getInsertId();
-		$db->queryF(" UPDATE " . $db->prefix("newblocks") . " SET func_name = " . $new_block_id . " WHERE bid=" . $new_block_id);
-		$db->queryF(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_multilanguage.html', 'Displays image links to change the site language', " . time() . ", " . time() . ", 'block');");
+		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
+		$this->query(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_multilanguage.html', 'Displays image links to change the site language', " . time() . ", " . time() . ", 'block');");
 		$new_tplfile_id = $db->getInsertId();
-		$db->queryF(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ', "<div align="center">\n	<{$block.ml_tag}>\n</div>");');
-		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+		$new_tpl_source = '<div align="center">\n	<{$block.ml_tag}>\n</div>';
+		$this->query(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
+		$this->query(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
 		return true;
 	}
 	function blocks_engine_upgrade() {
+		echo '<h2>Updating blocks engine </h2>';
 		if (!$this->table_exists('block_positions')) {
 			$xoopsDB = $GLOBALS['xoopsDB'];
 			$query = "CREATE TABLE `" . $xoopsDB->prefix('block_positions') . "` (
@@ -41,74 +43,53 @@ class upgrade_impcms05 {
 				  block_type varchar(1) NOT NULL default 'L',
 				  PRIMARY KEY  (`id`)
 				  ) TYPE=MyISAM;";
-			if ($xoopsDB->queryF($query)) {
-				echo 'Table block_positions successfully created.<br />';
-				$pos = array ();
-				$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (1,'canvas_left','_AM_SBLEFT',NULL,1,'L');";
-				$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (2,'canvas_right','_AM_SBRIGHT',NULL,1,'L');";
-				$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (3,'page_topleft','_AM_CBLEFT',NULL,1,'C');";
-				$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (4,'page_topcenter','_AM_CBCENTER',NULL,1,'C');";
-				$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (5,'page_topright','_AM_CBRIGHT',NULL,1,'C');";
-				$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (6,'page_bottomleft','_AM_CBBOTTOMLEFT',NULL,1,'C');";
-				$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (7,'page_bottomcenter','_AM_CBBOTTOM',NULL,1,'C');";
-				$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (8,'page_bottomright','_AM_CBBOTTOMRIGHT',NULL,1,'C');";
-				foreach ($pos as $p) {
-					if (!$xoopsDB->queryF($p)) {
-						echo 'Failed adding new block area<br />';
-						break;
-					}
+			$this->query($query);
+			$pos = array ();
+			$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (1,'canvas_left','_AM_SBLEFT',NULL,1,'L');";
+			$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (2,'canvas_right','_AM_SBRIGHT',NULL,1,'L');";
+			$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (3,'page_topleft','_AM_CBLEFT',NULL,1,'C');";
+			$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (4,'page_topcenter','_AM_CBCENTER',NULL,1,'C');";
+			$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (5,'page_topright','_AM_CBRIGHT',NULL,1,'C');";
+			$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (6,'page_bottomleft','_AM_CBBOTTOMLEFT',NULL,1,'C');";
+			$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (7,'page_bottomcenter','_AM_CBBOTTOM',NULL,1,'C');";
+			$pos[] = "INSERT INTO `" . $xoopsDB->prefix('block_positions') . "` VALUES (8,'page_bottomright','_AM_CBBOTTOMRIGHT',NULL,1,'C');";
+			foreach ($pos as $p) {
+				$this->query($p);
+			}
+			$curr_block_schema = array ();
+			$curr_block_schema["XOOPS_SIDEBLOCK_LEFT"] = 0;
+			$curr_block_schema["XOOPS_SIDEBLOCK_RIGHT"] = 1;
+			$curr_block_schema["XOOPS_SIDEBLOCK_BOTH"] = 2;
+			$curr_block_schema["XOOPS_CENTERBLOCK_LEFT"] = 3;
+			$curr_block_schema["XOOPS_CENTERBLOCK_RIGHT"] = 4;
+			$curr_block_schema["XOOPS_CENTERBLOCK_CENTER"] = 5;
+			$curr_block_schema["XOOPS_CENTERBLOCK_ALL"] = 6;
+			$curr_block_schema["XOOPS_CENTERBLOCK_BOTTOMLEFT"] = 7;
+			$curr_block_schema["XOOPS_CENTERBLOCK_BOTTOMRIGHT"] = 8;
+			$curr_block_schema["XOOPS_CENTERBLOCK_BOTTOM"] = 9;
+			$curr_block_schema_id = array ();
+
+			foreach ($curr_block_schema as $k => $v) {
+				$sql = 'SELECT bid FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE side = "' . $v . '"';
+				echo "<li>" . $sql . "</li>";
+				$result = $xoopsDB->query($sql);
+				$curr_block_schema_id[$k] = array ();
+				while (list ($bid) = $xoopsDB->fetchRow($result)) {
+					$curr_block_schema_id[$k][] = $bid;
 				}
-				echo 'Block Areas successfully inserted on table.<br />';
-				echo 'Getting current blocks schema';
-				$curr_block_schema = array ();
-				$curr_block_schema["XOOPS_SIDEBLOCK_LEFT"] = 0;
-				$curr_block_schema["XOOPS_SIDEBLOCK_RIGHT"] = 1;
-				$curr_block_schema["XOOPS_SIDEBLOCK_BOTH"] = 2;
-				$curr_block_schema["XOOPS_CENTERBLOCK_LEFT"] = 3;
-				$curr_block_schema["XOOPS_CENTERBLOCK_RIGHT"] = 4;
-				$curr_block_schema["XOOPS_CENTERBLOCK_CENTER"] = 5;
-				$curr_block_schema["XOOPS_CENTERBLOCK_ALL"] = 6;
-				$curr_block_schema["XOOPS_CENTERBLOCK_BOTTOMLEFT"] = 7;
-				$curr_block_schema["XOOPS_CENTERBLOCK_BOTTOMRIGHT"] = 8;
-				$curr_block_schema["XOOPS_CENTERBLOCK_BOTTOM"] = 9;
-				$curr_block_schema_id = array ();
-				foreach ($curr_block_schema as $k => $v) {
-					$sql = 'SELECT bid FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE side = "' . $v . '"';
-					$result = $xoopsDB->query($sql);
-					$curr_block_schema_id[$k] = array ();
-					while (list ($bid) = $xoopsDB->fetchRow($result)) {
-						$curr_block_schema_id[$k][] = $bid;
-					}
+			}
+			echo '<h2>Relating old blocks schema with the new and updating data.</h2>';
+			$err = 0;
+			foreach ($curr_block_schema_id as $k => $v) {
+				echo '<li>Position constant: ' . $k . '</li>';
+				foreach ($v as $bid) {
+					echo '<li>bid = ' . $bid . ' - old side = ' . $curr_block_schema[$k] . ' - new side = ' . constant($k) . '</li>';
+					$sql = 'UPDATE ' . $xoopsDB->prefix('newblocks') . ' SET side = "' . constant($k) . '" WHERE bid = ' . $bid;
+					$this->query($sql);
 				}
-				echo ' - OK<br /><br />';
-				echo 'Relating old schema with the new and updating data.<br />';
-				$err = 0;
-				foreach ($curr_block_schema_id as $k => $v) {
-					echo 'Position constant: ' . $k . '<br />';
-					foreach ($v as $bid) {
-						echo 'bid = ' . $bid . ' - old side = ' . $curr_block_schema[$k] . ' - new side = ' . constant($k);
-						$sql = 'UPDATE ' . $xoopsDB->prefix('newblocks') . ' SET side = "' . constant($k) . '" WHERE bid = ' . $bid;
-						if ($xoopsDB->queryF($sql)) {
-							echo ' - OK<br />';
-						} else {
-							echo ' - <span style="color:#0000FF;">Failed - Change the value manually.</span><br />';
-							$err++;
-						}
-					}
-					echo '<br />';
-				}
-				if ($err > 0) {
-					$msg = 'Upgrade finish but some block are not updated. Please update this blocks manually.';
-					return false;
-				} else {
-					$msg = 'Upgrade finish successfully.';
-					return true;
-				}
-			} else {
-				$msg = 'Failed creating the table block_positions';
-				return false;
 			}
 		}
+		return true;
 	}
 	/**
 	 * Verify that a mysql table exists
@@ -140,10 +121,10 @@ class upgrade_impcms05 {
 		return (bool) ($value);
 	}
 	function query($sql) {
-		echo $sql . "<br />";
+		echo "<li>" . $sql . "</li>";
 		$db = $GLOBALS['xoopsDB'];
 		if (!($ret = $db->queryF($sql))) {
-			echo $db->error();
+			echo "<li style='font-weight: bold; color: red;'>" . $db->error() . "</li>";
 		}
 	}
 	function apply_alter_tables() {

@@ -24,11 +24,11 @@ class upgrade_2018 {
 		return false;
 	}
 
-	function query( $sql ) {
-		echo $sql . "<br />";
+	function query($sql) {
+		echo "<li>" . $sql . "</li>";
 		$db = $GLOBALS['xoopsDB'];
-		if ( ! ( $ret = $db->queryF( $sql ) ) ) {
-			echo $db->error();
+		if (!($ret = $db->queryF($sql))) {
+			echo "<li style='font-weight: bold; color: red;'>" . $db->error() . "</li>";
 		}
 	}
 
@@ -37,7 +37,7 @@ class upgrade_2018 {
 		$this->fields = array(
             			"config" => array(
             			                "conf_title" => "varchar(255) NOT NULL default ''",
-            			                "conf_desc"  => "varchar(255) NOT NULL default ''" 
+            			                "conf_desc"  => "varchar(255) NOT NULL default ''"
             			                ),
             			"configcategory" => array( "confcat_name"  => "varchar(255) NOT NULL default ''" ),
             			);
