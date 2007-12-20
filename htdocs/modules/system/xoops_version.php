@@ -82,6 +82,8 @@ $modversion['templates'][15]['file'] = 'system_block_dummy.html';
 $modversion['templates'][15]['description'] = 'Dummy template for custom blocks or blocks without templates';
 $modversion['templates'][16]['file'] = 'system_privpolicy.html';
 $modversion['templates'][16]['description'] = 'Template for displaying site Privacy Policy';
+$modversion['templates'][17]['file'] = 'system_error.html';
+$modversion['templates'][17]['description'] = 'Template for handling HTTP errors';
 
 // Blocks
 $modversion['blocks'][1]['file'] = "system_blocks.php";

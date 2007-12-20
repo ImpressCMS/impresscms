@@ -114,20 +114,6 @@ $xoops =& new xos_kernel_Xoops2();
     $xoopsLogger->startTime();
     $xoopsLogger->startTime( 'XOOPS Boot' );
 
-
-    # Adding dynamic block area/position system - TheRpLima - 2007-10-21
-    /*
-    define("XOOPS_SIDEBLOCK_LEFT",0);
-    define("XOOPS_SIDEBLOCK_RIGHT",1);
-    define("XOOPS_SIDEBLOCK_BOTH",2);
-    define("XOOPS_CENTERBLOCK_LEFT",3);
-    define("XOOPS_CENTERBLOCK_RIGHT",4);
-    define("XOOPS_CENTERBLOCK_CENTER",5);
-    define("XOOPS_CENTERBLOCK_ALL",6);
-    define("XOOPS_CENTERBLOCK_BOTTOMLEFT",7);
-    define("XOOPS_CENTERBLOCK_BOTTOMRIGHT",8);
-    define("XOOPS_CENTERBLOCK_BOTTOM",9);
-    */
     define("XOOPS_SIDEBLOCK_LEFT",1);
     define("XOOPS_SIDEBLOCK_RIGHT",2);
     define("XOOPS_SIDEBLOCK_BOTH",-2);
@@ -138,7 +124,6 @@ $xoops =& new xos_kernel_Xoops2();
     define("XOOPS_CENTERBLOCK_BOTTOMLEFT",6);
     define("XOOPS_CENTERBLOCK_BOTTOMRIGHT",8);
     define("XOOPS_CENTERBLOCK_BOTTOM",7);
-    #
 
     define("XOOPS_BLOCK_INVISIBLE",0);
     define("XOOPS_BLOCK_VISIBLE",1);
@@ -146,13 +131,17 @@ $xoops =& new xos_kernel_Xoops2();
     define("XOOPS_MATCH_END",1);
     define("XOOPS_MATCH_EQUAL",2);
     define("XOOPS_MATCH_CONTAIN",3);
-    define("SMARTY_DIR", XOOPS_ROOT_PATH."/class/smarty/");
+
+    define("XOOPS_INCLUDE_PATH", XOOPS_ROOT_PATH."/include");
+    define("XOOPS_INCLUDE_URL", XOOPS_ROOT_PATH."/include");
     define("XOOPS_CACHE_PATH", XOOPS_ROOT_PATH."/cache");
     define("XOOPS_UPLOAD_PATH", XOOPS_ROOT_PATH."/uploads");
     define("XOOPS_THEME_PATH", XOOPS_ROOT_PATH."/themes");
     define("XOOPS_COMPILE_PATH", XOOPS_ROOT_PATH."/templates_c");
     define("XOOPS_THEME_URL", XOOPS_URL."/themes");
     define("XOOPS_UPLOAD_URL", XOOPS_URL."/uploads");
+
+	define("SMARTY_DIR", XOOPS_ROOT_PATH."/class/smarty/");
 
     if (!defined('XOOPS_XMLRPC')) {
         define('XOOPS_DB_CHKREF', 1);

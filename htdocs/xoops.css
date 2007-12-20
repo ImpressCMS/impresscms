@@ -206,3 +206,8 @@ div.cpicon span.unor{
 	text-decoration: underline;
 	color: #CC0000;
 }
+
+#http_error_title {padding-top: 5px; padding-bottom: 5px; font-size: 20px; font-weight: bold;}
+#http_error_text {padding-top: 5px; padding-bottom: 5px; text-align: left;}
+#http_error_searchform{padding-top: 5px; line-height: 5px; padding-bottom: 0px;}
+#http_error li{color: black; padding-top: 5px; padding-bottom: 5px;}

@@ -32,43 +32,42 @@
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2005 XOOPS.org
  */
-class XoopsAuthFactory
-{
+class AuthFactory{
 
 	/**
 	 * Get a reference to the only instance of authentication class
-     * 
-     * if the class has not been instantiated yet, this will also take 
+     *
+     * if the class has not been instantiated yet, this will also take
      * care of that
-	 * 
+	 *
      * @static
      * @return      object  Reference to the only instance of authentication class
 	 */
 	function &getAuthConnection($uname)
 	{
-		static $auth_instance;		
+		static $auth_instance;
 		if (!isset($auth_instance)) {
-			$config_handler =& xoops_gethandler('config');    
-    		$authConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);    		
+			$config_handler =& xoops_gethandler('config');
+    		$authConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
 			require_once XOOPS_ROOT_PATH.'/class/auth/auth.php';
 			if (empty($authConfig['auth_method'])) { // If there is a config error, we use xoops
 				$xoops_auth_method = 'xoops';
 			} else {
 			    $xoops_auth_method = $authConfig['auth_method'];
 			}
-			// Verify if uname allow to bypass LDAP auth 
-			if (in_array($uname, $authConfig['ldap_users_bypass'])) $xoops_auth_method = 'xoops';
-			$file = XOOPS_ROOT_PATH . '/class/auth/auth_' . $xoops_auth_method . '.php';			
+			// Verify if uname allow to bypass LDAP auth
+			if (in_array($uname, $authConfig['ldap_users_bypass'])) $xoops_auth_method = 'db';
+			$file = XOOPS_ROOT_PATH . '/class/auth/drivers/' . $xoops_auth_method . '/auth.php';
 			require_once $file;
-			$class = 'XoopsAuth' . ucfirst($xoops_auth_method);
+			$class = 'Auth' . ucfirst($xoops_auth_method);
 			switch ($xoops_auth_method) {
-				case 'xoops' :
+				case 'db' :
 					$dao =& $GLOBALS['xoopsDB'];
 					break;
-				case 'ldap'  : 
+				case 'ldap'  :
 					$dao = null;
 					break;
-				case 'ads'  : 
+				case 'ads'  :
 					$dao = null;
 					break;
 
@@ -77,7 +76,6 @@ class XoopsAuthFactory
 		}
 		return $auth_instance;
 	}
-
 }
 
 ?>
