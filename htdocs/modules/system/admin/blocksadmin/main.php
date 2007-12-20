@@ -200,7 +200,9 @@ if ($op == 'clone') {
 }
 
 if ($op == 'clone_ok') {
-    //clone_block_ok($bid, $bside, $bweight, $bvisible, $bcachetime, $bmodule, $options);
+    $bcachetime = isset($bcachetime) ? intval($bcachetime) : 0;
+    $options = isset($options) ? $options : array();
+    $bcontent = isset($bcontent) ? $bcontent : '';
     clone_block_ok($bid,$bside,$bweight,$bvisible,$btitle,$bcontent,$bcachetime,$bmodule,$options);
 }
 #
