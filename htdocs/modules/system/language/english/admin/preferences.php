@@ -208,6 +208,8 @@ define("_MD_AM_LDAP_MANAGER_PASS", "Password of the LDAP manager");
 define("_MD_AM_LDAP_MANAGER_PASS_DESC", "The password of the user allow to make search");
 define("_MD_AM_LDAP_VERSION", "LDAP Version protocol");
 define("_MD_AM_LDAP_VERSION_DESC", "The LDAP Version protocol : 2 or 3");
+define("_MD_AM_LDAP_USERS_BYPASS", " Xoops User(s) bypass LDAP Authentication");
+define("_MD_AM_LDAP_USERS_BYPASS_DESC", "Xoops User(s) allow to bypass the LDAP login. Login directly in XOOPS<br>Separate each loginname with a |");
 
 define("_MD_AM_LDAP_USETLS", " Use TLS connection");
 define("_MD_AM_LDAP_USETLS_DESC", "Use a TLS (Transport Layer Security) connection. TLS use standard 389 port number<BR>" .
