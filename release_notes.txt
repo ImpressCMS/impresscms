@@ -34,15 +34,13 @@ Installing ImpressCMS
    3. Access the folder where you installed the htdocs/ files using your web browser to launch the installation wizard
 
 
-Upgrading from a previous version
+Upgrading from XOOPS 2.0.14/2.0.15/2.0.16/2.0.17.*
 ==================================
 
-Upgrading from XOOPS 2.0.17/2.0.17.1/2.0.18
    1. Download the XOOPS-to-ImpressCMS package from our download page
    2. Upload the content of the htdocs folder over your existing files
    3. Access <your.site.url>/upgrade/ with a browser, and follow the instructions
-   4. Follow the instructions to update your database
-   5. Delete the upgrade folder
+   4. Delete the upgrade folder
 
 Files integrity check
 ==================================
