@@ -109,7 +109,7 @@ if ( count($ranklist) > 0 ) {
 }
 $pwd_text = new XoopsFormPassword(_AM_PASSWORD, "password", 10, 32);
 $pwd_text2 = new XoopsFormPassword(_AM_RETYPEPD, "pass2", 10, 32);
-$mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', $mailok_value);
+$mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', intval($mailok_value));
 
 // Groups administration addition XOOPS 2.0.9: Mith
 global $xoopsUser;
