@@ -1,0 +1,95 @@
+Upgrade from 2017 to 2018
+==========================
+
+- in 2017, xoops_config, conf_title is a varchar(30)
+- in 2018, xoops_config, conf_title is a varchar(255)
+==> This change is not present in the upgrade script from 2017 to 2018 so I added it
+
+- in 2017, xoops_configcategory, confcat_name is a varchar(25)
+- in 2018, xoops_configcategory, confcat_name is a varchar(255)
+==> This change is not present in the upgrade script from 2017 to 2018 so I added it
+
+Upgrade from 2018 to ImpressCMS 0.5
+===================================
+
+- In ImpressCMS, blocks_module_link, there is a new record :
+
+INSERT INTO `39lennar37_block_module_link` VALUES (13, 0);
+
+
+==> Ok added in the upgrade
+
+- In Impress, we have a new table :
+
+-- 
+-- Table structure for table `39lennar37_block_positions`
+-- 
+
+CREATE TABLE `39lennar37_block_positions` (
+  `id` int(11) NOT NULL auto_increment,
+  `pname` varchar(30) collate latin1_general_ci default '',
+  `title` varchar(90) collate latin1_general_ci NOT NULL default '',
+  `description` text collate latin1_general_ci,
+  `block_default` int(1) NOT NULL default '0',
+  `block_type` varchar(1) collate latin1_general_ci NOT NULL default 'L',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci AUTO_INCREMENT=9 ;
+
+-- 
+-- Dumping data for table `39lennar37_block_positions`
+-- 
+
+INSERT INTO `39lennar37_block_positions` VALUES (1, 'canvas_left', '_AM_SBLEFT', NULL, 1, 'L');
+INSERT INTO `39lennar37_block_positions` VALUES (2, 'canvas_right', '_AM_SBRIGHT', NULL, 1, 'L');
+INSERT INTO `39lennar37_block_positions` VALUES (3, 'page_topleft', '_AM_CBLEFT', NULL, 1, 'C');
+INSERT INTO `39lennar37_block_positions` VALUES (4, 'page_topcenter', '_AM_CBCENTER', NULL, 1, 'C');
+INSERT INTO `39lennar37_block_positions` VALUES (5, 'page_topright', '_AM_CBRIGHT', NULL, 1, 'C');
+INSERT INTO `39lennar37_block_positions` VALUES (6, 'page_bottomleft', '_AM_CBBOTTOMLEFT', NULL, 1, 'C');
+INSERT INTO `39lennar37_block_positions` VALUES (7, 'page_bottomcenter', '_AM_CBBOTTOM', NULL, 1, 'C');
+INSERT INTO `39lennar37_block_positions` VALUES (8, 'page_bottomright', '_AM_CBBOTTOMRIGHT', NULL, 1, 'C');
+
+==> Therplima script added in the ugrade
+
+- In Impress, table config, AUTO InCREMENT is set to 101 instead of 94 because we added new configs :
+
+INSERT INTO `39lennar37_config` VALUES (94, 0, 2, 'rank_width', '_MD_AM_RANKW', '120', '_MD_AM_RANKWDSC', 'textbox', 'int', 21);
+INSERT INTO `39lennar37_config` VALUES (95, 0, 2, 'rank_height', '_MD_AM_RANKH', '120', '_MD_AM_RANKHDSC', 'textbox', 'int', 21);
+INSERT INTO `39lennar37_config` VALUES (96, 0, 2, 'rank_maxsize', '_MD_AM_RANKMAX', '35000', '_MD_AM_RANKMAXDSC', 'textbox', 'int', 21);
+INSERT INTO `39lennar37_config` VALUES (97, 0, 8, 'ml_enable', '_MD_AM_ML_ENABLE', '1', '_MD_AM_ML_ENABLE_DESC', 'yesno', 'int', 0);
+INSERT INTO `39lennar37_config` VALUES (98, 0, 8, 'ml_tags', '_MD_AM_ML_TAGS', 'en,fr', '_MD_AM_ML_TAGS_DESC', 'textbox', 'text', 5);
+INSERT INTO `39lennar37_config` VALUES (99, 0, 8, 'ml_names', '_MD_AM_ML_NAMES', 'english,french', '_MD_AM_ML_NAMES_DESC', 'textbox', 'text', 10);
+INSERT INTO `39lennar37_config` VALUES (100, 0, 8, 'ml_captions', '_MD_AM_ML_CAPTIONS', 'English,Fran&ccedil;ais', '_MD_AM_ML_CAPTIONS_DESC', 'textbox', 'text', 15);
+
+==> Ok added in the upgrade
+
+- In Impress, in table configcategory, new record :
+
+INSERT INTO `39lennar37_configcategory` VALUES (8, '_MD_AM_MULTILANGUAGE', 0);
+
+==> Ok added in the upgrade
+
+- In Impress, in table group_permission, 3 new records :
+
+INSERT INTO `39lennar37_group_permission` VALUES (56, 1, 13, 1, 'block_read');
+INSERT INTO `39lennar37_group_permission` VALUES (57, 2, 13, 1, 'block_read');
+INSERT INTO `39lennar37_group_permission` VALUES (58, 3, 13, 1, 'block_read');
+
+==> Ok added in the upgrade
+
+- In Impress, table newblocks, 1 new record :
+
+INSERT INTO `39lennar37_newblocks` VALUES (13, 1, 13, '', 'Language Selection', 'Language Selection', '', 1, 0, 1, 'S', 'H', 1, 'system', 'system_blocks.php', 'b_system_multilanguage_show', '', 'system_block_multilanguage.html', 0, 1197772260);
+
+==> Ok added in the upgrade
+
+- In Imppress, table tplfile, AUTOINCEMENT is 29 instead of 28 because of a new record :
+
+INSERT INTO `39lennar37_tplfile` VALUES (28, 13, 'system', 'default', 'system_block_multilanguage.html', 'Displays image links to change the site language', 1197728100, 1197728100, 'block');
+
+==> Ok added in the upgrade
+
+- In Impress, table tpsource, 1 new record :
+
+INSERT INTO `39lennar37_tplsource` VALUES (28, '<div align="center">\n	<{$block.ml_tag}>\n</div>');
+
+==> Ok added in the upgrade

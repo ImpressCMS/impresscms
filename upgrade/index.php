@@ -29,7 +29,7 @@
 error_reporting( E_ALL );
 
 if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
-	die( 'Bad installation: please add this folder to the XOOPS install you want to upgrade');
+	die( 'Bad installation: please add this folder to the ImpressCMS install you want to upgrade');
 }
 /*
  * gets list of name of directories inside a directory
@@ -83,7 +83,7 @@ ob_start();
 
 global $xoopsUser;
 if ( !$xoopsUser || !$xoopsUser->isAdmin() ) {
-	include_once "login.php";	
+	include_once "login.php";
 } else {
 	$op = @$_REQUEST['action'];
 	if ( empty( $_SESSION['xoops_upgrade'] ) ) {

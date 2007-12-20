@@ -7,7 +7,7 @@
 		<input type="hidden" name="xoops_redirect" value="<?php echo $_SERVER['PHP_SELF']; ?>" />
 		<div class="xo-formfield required">
 			<label><?php echo _USERNAME; ?></label>
-			<input type="text" name="uname" size="26" maxlength="25" value="" />
+			<input type="text" name="uname" size="21" maxlength="25" value="" />
 		</div>
 		<div class="xo-formfield required">
 			<label><?php echo _PASSWORD; ?></label>
