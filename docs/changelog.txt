@@ -26,6 +26,12 @@ Unreleased: Version 0.5
 - Changed : Theme changes; Link to impressCMS, poweredby.gif (sato-san)
 - Changed : Theme image; logo.png with impressCMS-Logo (sato-san)
 - Changed : resource.db.php - changed for version by GiJoe (Andrew Vincent)
+- Changed : Picture/Icon for impressCMS: icon_big.png (sato-san)
+- Changed : Picture/Icon for impressCMS: icon_small.png (sato-san)
+- Changed : Picture/Icon for impressCMS: logo.gif (sato-san)
+- Changed : Picture/Icon for impressCMS: poweredby.gif (sato-san)
+- Changed : Picture/Icon for impressCMS: poweredby.jpg (sato-san)
+- Changed : Picture/Icon for impressCMS: s_poweredby.gif (sato-san)
 
 - Removed : The 'Default' theme has been removed (malanciault)
 
