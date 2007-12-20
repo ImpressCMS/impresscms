@@ -215,7 +215,7 @@ if ($op == 'editprofile') {
     $pwd_tray = new XoopsFormElementTray(_US_PASSWORD.'<br />'._US_TYPEPASSTWICE);
     $pwd_tray->addElement($pwd_text);
     $pwd_tray->addElement($pwd_text2);
-    $mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', $xoopsUser->getVar('user_mailok'));
+    $mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', intval($xoopsUser->getVar('user_mailok')));
     $uid_hidden = new XoopsFormHidden('uid', $xoopsUser->getVar('uid'));
     $op_hidden = new XoopsFormHidden('op', 'saveuser');
     $submit_button = new XoopsFormButton('', 'submit', _US_SAVECHANGES, 'submit');
