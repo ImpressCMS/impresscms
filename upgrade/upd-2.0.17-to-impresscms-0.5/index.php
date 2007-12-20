@@ -157,7 +157,7 @@ class upgrade_impcms05 {
 		reset($data);
 		foreach ($data as $name => $values) {
 			if (!getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=8 AND `conf_name`='$name'")) {
-				$this->query("INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " .				"VALUES ( 0,2,'$name',$values)");
+				$this->query("INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES ( 0,8,'$name',$values)");
 			}
 		}
 		return true;
@@ -177,7 +177,7 @@ class upgrade_impcms05 {
 		reset($data);
 		foreach ($data as $name => $values) {
 			if (!getDbValue($db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=2 AND `conf_name`='$name'")) {
-				$this->query("INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " .				"VALUES ( 0,2,'$name',$values)");
+				$this->query("INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) VALUES ( 0,2,'$name',$values)");
 			}
 		}
 		return true;
