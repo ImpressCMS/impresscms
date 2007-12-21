@@ -29,19 +29,19 @@
  * @subpackage  auth
  * @description	Authentification provisionning class. This class is responsible to
  * provide synchronisation method to Xoops User Database
- *
+ * 
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class AuthProvisionning {
+class XoopsAuthProvisionning {
 
 	var $_auth_instance;
-
+	
 	function &getInstance(&$auth_instance)
 	{
-		static $provis_instance;
+		static $provis_instance;				
 		if (!isset($provis_instance)) {
-			$provis_instance = new AuthProvisionning($auth_instance);
+			$provis_instance = new XoopsAuthProvisionning($auth_instance);
 		}
 		return $provis_instance;
 	}
@@ -49,9 +49,9 @@ class AuthProvisionning {
     /**
 	 * Authentication Service constructor
 	 */
-    function AuthProvisionning (&$auth_instance) {
-        $this->_auth_instance = &$auth_instance;
-        $config_handler =& xoops_gethandler('config');
+    function XoopsAuthProvisionning (&$auth_instance) {
+        $this->_auth_instance = &$auth_instance;        
+        $config_handler =& xoops_gethandler('config');    
         $config =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
         foreach ($config as $key => $val) {
             $this->$key = $val;
@@ -60,36 +60,36 @@ class AuthProvisionning {
         $this->default_TZ = $config_gen['default_TZ'];
         $this->theme_set = $config_gen['theme_set'];
         $this->com_mode = $config_gen['com_mode'];
-        $this->com_order = $config_gen['com_order'];
+        $this->com_order = $config_gen['com_order'];        
     }
 
     /**
-	 *  Return a Xoops User Object
+	 *  Return a Xoops User Object 
 	 *
 	 * @return XoopsUser or false
-	 */
+	 */	
 	function getXoopsUser($uname) {
 		$member_handler =& xoops_gethandler('member');
 		$criteria = new Criteria('uname', $uname);
 		$getuser = $member_handler->getUsers($criteria);
 		if (count($getuser) == 1)
 			return $getuser[0];
-		else return false;
+		else return false;		
 	}
-
+	
     /**
-	 *  Launch the synchronisation process
+	 *  Launch the synchronisation process 
 	 *
 	 * @return bool
-	 */
+	 */		
 	function sync($datas, $uname, $pwd = null) {
-		$xoopsUser = $this->getXoopsUser($uname);
+		$xoopsUser = $this->getXoopsUser($uname);		
 		if (!$xoopsUser) { // Xoops User Database not exists
-			if ($this->ldap_provisionning) {
+			if ($this->ldap_provisionning) { 
 				$xoopsUser = $this->add($datas, $uname, $pwd);
 			} else $this->_auth_instance->setErrors(0, sprintf(_AUTH_LDAP_XOOPS_USER_NOTFOUND, $uname));
 		} else { // Xoops User Database exists
-			if ($this->ldap_provisionning && $this->ldap_provisionning_upd) {
+			if ($this->ldap_provisionning && $this->ldap_provisionning_upd) { 
 				$xoopsUser = $this->change($xoopsUser, $datas, $uname, $pwd);
 			}
 		}
@@ -100,7 +100,7 @@ class AuthProvisionning {
 	 *  Add a new user to the system
 	 *
 	 * @return bool
-	 */
+	 */		
 	function add($datas, $uname, $pwd = null) {
 		$ret = false;
 		$member_handler =& xoops_gethandler('member');
@@ -121,7 +121,7 @@ class AuthProvisionning {
 			$fields = explode('=', trim($mapping));
 			if ($fields[0] && $fields[1])
 				$newuser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
-        }
+        }        
         if ($member_handler->insertUser($newuser)) {
         	foreach ($this->ldap_provisionning_group as $groupid)
         		$member_handler->addUserToGroup($groupid, $newuser->getVar('uid'));
@@ -129,17 +129,17 @@ class AuthProvisionning {
         	return $newuser;
         } else {
 			redirect_header(XOOPS_URL.'/user.php', 5, $newuser->getHtmlErrors());
-			exit();
-		}
-    	return $ret;
+			exit(); 
+		}        
+    	return $ret;	
 	}
-
+	
     /**
 	 *  Modify user information
 	 *
 	 * @return bool
-	 */
-	function change(&$xoopsUser, $datas, $uname, $pwd = null) {
+	 */		
+	function change(&$xoopsUser, $datas, $uname, $pwd = null) {	
 		$ret = false;
 		$member_handler =& xoops_gethandler('member');
 		$xoopsUser->setVar('pass', md5(stripslashes($pwd)));
@@ -154,7 +154,7 @@ class AuthProvisionning {
         } else {
 			redirect_header(XOOPS_URL.'/user.php', 5, $xoopsUser->getHtmlErrors());
 			exit();
-		}
+		}         
     	return $ret;
 	}
 
@@ -162,7 +162,7 @@ class AuthProvisionning {
 	 *  Modify a user
 	 *
 	 * @return bool
-	 */
+	 */		
 	function delete() {
 	}
 
@@ -170,7 +170,7 @@ class AuthProvisionning {
 	 *  Suspend a user
 	 *
 	 * @return bool
-	 */
+	 */		
 	function suspend() {
 	}
 
@@ -178,7 +178,7 @@ class AuthProvisionning {
 	 *  Restore a user
 	 *
 	 * @return bool
-	 */
+	 */		
 	function restore() {
 	}
 
@@ -186,11 +186,11 @@ class AuthProvisionning {
 	 *  Add a new user to the system
 	 *
 	 * @return bool
-	 */
+	 */		
 	function resetpwd() {
 	}
-
-
-}
-
+	
+    
+} // end class
+ 
 ?>
