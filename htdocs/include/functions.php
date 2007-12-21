@@ -50,7 +50,7 @@ function xoops_header($closehead=true)
     <meta name="rating" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_rating']).'" />
     <meta name="author" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_author']).'" />
     <meta name="copyright" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_copyright']).'" />
-    <meta name="generator" content="XOOPS" />
+    <meta name="generator" content="ImpressCMS" />
     <title>'.htmlspecialchars($xoopsConfig['sitename']).'</title>
     <script type="text/javascript" src="'.XOOPS_URL.'/include/xoops.js"></script>
     ';
