@@ -25,10 +25,12 @@ class upgrade_impcms05 {
 	}
 	function apply_conf_configcategory() {
 		$db = $GLOBALS['xoopsDB'];
+		if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_MULTILANGUAGE"') != 0){return true;}
 		return $this->query(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('','_MD_AM_MULTILANGUAGE')");
 	}
 	function apply_new_blocks() {
 		$db = $GLOBALS['xoopsDB'];
+		if (getDbValue($db,'newblocks','bid',' show_func="b_system_multilanguage_show"') != 0){return true;}
 		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '', 'Language Selection', 'Language Selection', '', 1, 0, 0, 'S', 'H', 1, 'system', 'system_blocks.php', 'b_system_multilanguage_show', '', 'system_block_multilanguage.html', 0, " . time() . ")");
 		$new_block_id = $db->getInsertId();
 		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
