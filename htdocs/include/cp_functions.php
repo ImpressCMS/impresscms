@@ -181,7 +181,7 @@ window.onload=startList;
 	$i++;
 
 
-	$tpl->append('navitems', array('link'=>"#",'text'=>_AD_NEWS, 'menu'=>$menu));
+	$tpl->append('navitems', array('link'=>"#",'text'=>_IMPRESSCMS_NEWS, 'menu'=>$menu));
 
 	$tpl->assign('lang_prefs', _IMPRESSCMS_PREFS);
 	$tpl->assign('ml_is_enabled', $im_multilanguageConfig['ml_enable']);
