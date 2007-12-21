@@ -67,12 +67,14 @@ function xoops_module_list()
             echo '<img src="'.XOOPS_URL.'/modules/'.$module->getVar('dirname').'/'.$module->getInfo('image').'" alt="'.$module->getVar('name', 'E').'" border="0" /><br /><input type="text" name="newname['.$module->getVar('mid').']" value="'.$module->getVar('name', 'E').'" maxlength="150" size="20" />';
         }
         echo '<input type="hidden" name="oldname['.$module->getVar('mid').']" value="' .$module->getVar('name').'" /></td>';
+        /*
         if ( $module->modinfo['version'] != round($module->getVar('version') / 100, 2) ){
         	echo "<td align='center'>".$module->modinfo['version']." != ".round($module->getVar('version') / 100, 2)."</td><td align='center'>".formatTimestamp($module->getVar('last_update'),'m')."<br />";
         }else{
         	echo "<td align='center'>".round($module->getVar('version') / 100, 2)."</td><td align='center'>".formatTimestamp($module->getVar('last_update'),'m')."<br />";
         }
-
+        */ 
+        echo "<td align='center'>".round($module->getVar('version') / 100, 2)."</td><td align='center'>".formatTimestamp($module->getVar('last_update'),'m')."<br />";
         if ($module->getVar('dirname') != 'system' && $module->getVar('isactive') == 1) {
             echo '</td><td><input type="checkbox" name="newstatus['.$module->getVar('mid').']" value="1" checked="checked" /><input type="hidden" name="oldstatus['.$module->getVar('mid').']" value="1" />';
             $extra = '<a href="'.XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module='.$module->getVar('dirname').'"><img src="'.XOOPS_URL.'/modules/system/images/update.png" alt="'._MD_AM_UPDATE.'" /></a>';
