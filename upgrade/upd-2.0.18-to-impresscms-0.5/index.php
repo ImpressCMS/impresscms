@@ -10,7 +10,18 @@ class upgrade_impcms05 {
 		$this->apply_conf_config();
 		$this->apply_ml_config();
 		$this->blocks_engine_upgrade();
-		return ($this->apply_new_blocks());
+		$this->apply_new_blocks();
+		return ($this->cleaning_templates_c);
+	}
+	function cleaning_templates_c() {
+		$dir = opendir(XOOPS_ROOT_PATH."/templates_c/");
+		while($file = readdir($dir)){
+		 if(is_file(XOOPS_ROOT_PATH."/templates_c/".$file) && $file != 'index.html' && $file != '.svn') {
+		  unlink(XOOPS_ROOT_PATH."/templates_c/".$file);
+		 }
+		}
+		closedir($dir);
+		return true;
 	}
 	function apply_conf_configcategory() {
 		$db = $GLOBALS['xoopsDB'];
