@@ -32,7 +32,7 @@
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2005 XOOPS.org
  */
-class XoopsAuthFactory{
+class AuthFactory{
 
 	/**
 	 * Get a reference to the only instance of authentication class
