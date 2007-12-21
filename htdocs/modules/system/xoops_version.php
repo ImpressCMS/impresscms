@@ -40,7 +40,7 @@ $modversion['official'] = 1;
 $modversion['image'] = "images/system_slogo.png";
 $modversion['dirname'] = "system";
 $modversion['iconsmall'] = "images/icon_small.png";
-$modversion['iconbig'] = "images/icon_big.png";
+$modversion['iconbig'] = "images/cp.png";
 
 // Admin things
 $modversion['hasAdmin'] = 1;
