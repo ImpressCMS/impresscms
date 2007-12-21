@@ -243,7 +243,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	// RMV-NOTIFY... Need to specify which user is sender of notification PM
 	$dbm->insert('config', " VALUES (73,0,6,'fromuid','_MD_AM_MAILFROMUID','1','_MD_AM_MAILFROMUIDDESC','user','int',3)");
 
-	$dbm->insert('config', " VALUES (74,0,7,'auth_method','_MD_AM_AUTHMETHOD','db','_MD_AM_AUTHMETHODDESC','select','text',1)");
+	$dbm->insert('config', " VALUES (74,0,7,'auth_method','_MD_AM_AUTHMETHOD','xoops','_MD_AM_AUTHMETHODDESC','select','text',1)");
 	$dbm->insert('config', " VALUES (75,0,7,'ldap_port','_MD_AM_LDAP_PORT','389','_MD_AM_LDAP_PORT','textbox','int',2)");
 	$dbm->insert('config', " VALUES (76,0,7,'ldap_server','_MD_AM_LDAP_SERVER','your directory server','_MD_AM_LDAP_SERVER_DESC','textbox','text',3)");
 	$dbm->insert('config', " VALUES (77,0,7,'ldap_base_dn','_MD_AM_LDAP_BASE_DN','dc=xoops,dc=org','_MD_AM_LDAP_BASE_DN_DESC','textbox','text',4)");
