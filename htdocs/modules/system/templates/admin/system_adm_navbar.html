@@ -9,6 +9,7 @@
 <div id="navbarCP">
 	<ul id="nav">
 		<{foreach item=item from=$navitems}>
+		    <{if $item.dir != 'system'}>
 			<li><a href="<{$item.link}>"><img src="<{$xoops_url}>/modules/system/images/arrow1.gif" alt="arrow"/>&nbsp;<{$item.text}></a>
 				<ul>
 					<{foreach item=sub from=$item.menu}>
@@ -16,6 +17,17 @@
 					<{/foreach}>
 				</ul>
 			</li>
+			<{else}>
+			  <{if $systemadm}>
+			    <li><a href="<{$item.link}>"><img src="<{$xoops_url}>/modules/system/images/arrow1.gif" alt="arrow"/>&nbsp;<{$item.text}></a>
+				  <ul>
+					<{foreach item=sub from=$item.menu}>
+						<li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$item.dir}>/<{$sub.link}><{/if}>"<{if $sub.small!=''}> style="background-image: url(<{if $item.dir=="system"}><{$xoops_url}>/modules/system/<{/if}><{$sub.small}>);"<{/if}>><{$sub.title}></a></li>
+					<{/foreach}>
+				  </ul>
+			    </li>
+			  <{/if}>
+			<{/if}>
 		<{/foreach}>
 	</ul>
 	<{if $ml_is_enabled}>

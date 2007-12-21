@@ -154,21 +154,26 @@ switch ($op){
 		$tpl->assign('lang_comments', _AD_COMMENTS);
 */
 		// Loading all the installed Modules
-
+        $systemadm = false;
 		foreach ($mods as $mod){
-			$rtn = array();
 			$moduleperm_handler =& xoops_gethandler('groupperm');
 			$sadmin = $moduleperm_handler->checkRight('module_admin', $mod->mid(), $xoopsUser->getGroups());
 			if ($sadmin){
+				$rtn = array();
 				$info =& $mod->getInfo();
 				$rtn['link'] = XOOPS_URL . '/modules/'. $mod->dirname() . '/' . $info['adminindex'];
 				$rtn['title'] = $mod->name();
 				$rtn['absolute'] = 1;
 				if (isset($info['iconbig'])) $rtn['big'] = XOOPS_URL . '/modules/' . $mod->dirname() . '/' . $info['iconbig'];
+				$tpl->append('modules', $rtn);
+				if ($mod->dirname() == 'system'){
+					$systemadm = true;
+				}
 			}
-			$tpl->append('modules', $rtn);
+			
 		}
-
+        $tpl->assign('systemadm', $systemadm);
+        
 		// Loading of System Configuration Links
 		$groups = $xoopsUser->getGroups();
 		$all_ok = false;

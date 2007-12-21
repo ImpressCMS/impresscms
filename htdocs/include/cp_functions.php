@@ -133,7 +133,14 @@ window.onload=startList;
 	$mod =& $module_handler->getByDirname('system');
 	$moduleperm_handler =& xoops_gethandler('groupperm');
     $sadmin = $moduleperm_handler->checkRight('module_admin', $mod->mid(), $xoopsUser->getGroups());
-	$tpl->append('navitems', array('link'=>XOOPS_URL.'/modules/system/admin.php', 'text'=>_SYSTEM, 'dir'=>'system', 'menu'=>$mod->getAdminMenu()));
+    $menu = array();
+    foreach ($mod->getAdminMenu() as $lkn){
+    	$sadmin = $moduleperm_handler->checkRight('system_admin', $lkn['id'], $xoopsUser->getGroups());
+    	if ($sadmin){
+    		$menu[] = $lkn;
+    	}
+    }
+	$tpl->append('navitems', array('link'=>XOOPS_URL.'/modules/system/admin.php', 'text'=>_SYSTEM, 'dir'=>'system', 'menu'=>$menu));
 
 	$module_handler =& xoops_gethandler('module');
 	$criteria = new CriteriaCompo();
@@ -143,20 +150,24 @@ window.onload=startList;
 	$mods = $module_handler->getObjects($criteria);
 
 	$menu = array();
+	$systemadm = false;
 	foreach ($mods as $m){
-		$rtn = array();
 		$moduleperm_handler =& xoops_gethandler('groupperm');
 		$sadmin = $moduleperm_handler->checkRight('module_admin', $m->mid(), $xoopsUser->getGroups());
+		$rtn = array();
 		if ($sadmin){
 			$info =& $m->getInfo();
 			$rtn['link'] = XOOPS_URL . '/modules/'. $m->dirname() . '/' . $info['adminindex'];
 			$rtn['title'] = $m->name();
 			$rtn['absolute'] = 1;
 			if (isset($info['iconsmall']) && $info['iconsmall']!='' ) $rtn['small'] =  $info['iconsmall'];
+			$menu[] = $rtn;
+			if ($m->dirname() == 'system'){
+				$systemadm = true;
+			}
 		}
-		$menu[] = $rtn;
 	}
-
+    $tpl->assign('systemadm', $systemadm);
 	$tpl->append('navitems', array('link'=>XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin', 'text'=>_MODULES, 'dir'=>$m->dirname(), 'menu'=>$menu));
 
 	$i=0;

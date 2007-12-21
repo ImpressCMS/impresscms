@@ -1,5 +1,6 @@
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
+    <{if $systemadm}>
     <td width="50%" class="CPindexOptions">
 	<div class="CPbigTitle" style="background-image: url(<{$xoops_imageurl}>modules/system/images/cp.png); "><{$lang_cp}></div><br />
 	<div class="cpicon">
@@ -9,8 +10,11 @@
 		<{/foreach}>
 	</div>
 	</td>
-  <td>&nbsp;</td>
+    <td>&nbsp;</td>
     <td width="48%" class="CPindexOptions">
+    <{else}>
+    <td width="100%" class="CPindexOptions">
+    <{/if}>
 		<div class="CPbigTitle" style="background-image: url(<{$xoops_imageurl}>modules/system/images/modules.png)"><{$lang_insmodules}></div><br />
 		<div class="cpicon">
 			<{foreach item=mod from=$modules}>
