@@ -252,7 +252,8 @@ LABEL
 }
 #help_button
 {
-    FLOAT: right
+    FLOAT: right;
+    CURSOR: pointer
 }
 .xoform-help
 {
