@@ -32,7 +32,6 @@ include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
 // If not a user, redirect
 if (!is_object($xoopsUser)) {
     redirect_header('index.php',3,_US_NOEDITRIGHT);
-    exit();
 }
 
 // initialize $op variable
@@ -51,7 +50,6 @@ $myts =& MyTextSanitizer::getInstance();
 if ($op == 'saveuser') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('index.php',3,_US_NOEDITRIGHT."<br />".implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-        exit;
     }
     $uid = 0;
     if (!empty($_POST['uid'])) {
@@ -59,7 +57,6 @@ if ($op == 'saveuser') {
     }
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid) {
         redirect_header('index.php',3,_US_NOEDITRIGHT);
-        exit();
     }
     $errors = array();
     $myts =& MyTextSanitizer::getInstance();
@@ -144,7 +141,6 @@ if ($op == 'saveuser') {
             include XOOPS_ROOT_PATH.'/footer.php';
         } else {
             redirect_header('userinfo.php?uid='.$uid, 1, _US_PROFUPDATED);
-			exit();
         }
         exit();
     }
@@ -290,7 +286,6 @@ if ($op == 'avatarform') {
 if ($op == 'avatarupload') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('index.php',3,_US_NOEDITRIGHT."<br />".implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-        exit;
     }
     $xoops_upload_file = array();
     $uid = 0;
@@ -302,7 +297,6 @@ if ($op == 'avatarupload') {
     }
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid ) {
         redirect_header('index.php',3,_US_NOEDITRIGHT);
-        exit();
     }
     if ($xoopsConfigUser['avatar_allow_upload'] == 1 && $xoopsUser->getVar('posts') >= $xoopsConfigUser['avatar_minposts']) {
         include_once XOOPS_ROOT_PATH.'/class/uploader.php';
@@ -335,7 +329,6 @@ if ($op == 'avatarupload') {
                     $xoopsDB->query($sql);
                     $avt_handler->addUser($avatar->getVar('avatar_id'), $xoopsUser->getVar('uid'));
                     redirect_header('userinfo.php?t='.time().'&amp;uid='.$xoopsUser->getVar('uid'),0, _US_PROFUPDATED);
-					exit();
                 }
             }
         }
@@ -348,7 +341,6 @@ if ($op == 'avatarupload') {
 if ($op == 'avatarchoose') {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('index.php',3,_US_NOEDITRIGHT."<br />".implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-        exit;
     }
     $uid = 0;
     if (!empty($_POST['uid'])) {
@@ -356,7 +348,6 @@ if ($op == 'avatarchoose') {
     }
     if (empty($uid) || $xoopsUser->getVar('uid') != $uid ) {
         redirect_header('index.php', 3, _US_NOEDITRIGHT);
-        exit();
     }
     $user_avatar = '';
     $avt_handler =& xoops_gethandler('avatar');
@@ -399,6 +390,5 @@ if ($op == 'avatarchoose') {
         }
     }
     redirect_header('userinfo.php?uid='.$uid, 0, _US_PROFUPDATED);
-	exit();
 }
 ?>

@@ -37,7 +37,6 @@ $uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
 $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
 if ($uname == '' || $pass == '') {
     redirect_header(XOOPS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
-    exit();
 }
 $member_handler =& xoops_gethandler('member');
 $myts =& MyTextsanitizer::getInstance();
@@ -67,7 +66,6 @@ if( empty( $user ) || ! is_object( $user ) ) {
 if (false != $user) {
     if (0 == $user->getVar('level')) {
         redirect_header(XOOPS_URL.'/index.php', 5, _US_NOACTTPADM);
-        exit();
     }
     if ($xoopsConfig['closesite'] == 1) {
         $allowed = false;
@@ -79,7 +77,6 @@ if (false != $user) {
         }
         if (!$allowed) {
             redirect_header(XOOPS_URL.'/index.php', 1, _NOPERM);
-            exit();
         }
     }
     $user->setVar('last_login', time());
@@ -136,13 +133,10 @@ if (false != $user) {
     $notification_handler->doLoginMaintenance($user->getVar('uid'));
 
     redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);
-	exit();
 }elseif(empty($_POST['xoops_redirect'])){
 	redirect_header(XOOPS_URL.'/user.php', 5, $xoopsAuth->getHtmlErrors());
-	exit();
 }else{
 	redirect_header(XOOPS_URL.'/user.php?xoops_redirect='.urlencode(trim($_POST['xoops_redirect'])), 5, $xoopsAuth->getHtmlErrors(), false);
-	exit();
 }
 exit();
 

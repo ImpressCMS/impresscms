@@ -105,7 +105,6 @@ if ($op == 'logout') {
     }
     $message = _US_LOGGEDOUT.'<br />'._US_THANKYOUFORVISIT;
     redirect_header('index.php', 1, $message);
-    exit();
 }
 
 if ($op == 'actv') {
@@ -122,11 +121,9 @@ if ($op == 'actv') {
     }
     if ($thisuser->getVar('actkey') != $actkey) {
         redirect_header('index.php',5,_US_ACTKEYNOT);
-		exit();
     } else {
         if ($thisuser->getVar('level') > 0 ) {
             redirect_header( 'user.php', 5, _US_ACONTACT, false );
-			exit();
         } else {
             if (false != $member_handler->activateUser($thisuser)) {
                 $config_handler =& xoops_gethandler('config');
@@ -152,11 +149,9 @@ if ($op == 'actv') {
                     include 'footer.php';
                 } else {
                     redirect_header( 'user.php', 5, _US_ACTLOGIN, false );
-					exit();
                 }
             } else {
                 redirect_header('index.php',5,'Activation failed!');
-				exit();
             }
         }
     }
@@ -168,13 +163,11 @@ if ($op == 'delete') {
     $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     if (!$xoopsUser || $xoopsConfigUser['self_delete'] != 1) {
         redirect_header('index.php',5,_US_NOPERMISS);
-        exit();
     } else {
         $groups = $xoopsUser->getGroups();
         if (in_array(XOOPS_GROUP_ADMIN, $groups)){
             // users in the webmasters group may not be deleted
             redirect_header('user.php', 5, _US_ADMINNO);
-            exit();
         }
         $ok = !isset($_POST['ok']) ? 0 : intval($_POST['ok']);
         if ($ok != 1) {
@@ -189,10 +182,8 @@ if ($op == 'delete') {
                 $online_handler->destroy($del_uid);
                 xoops_notification_deletebyuser($del_uid);
                 redirect_header('index.php', 5, _US_BEENDELED);
-				exit();
             }
             redirect_header('index.php',5,_US_NOPERMISS);
-			exit();
         }
         exit();
     }

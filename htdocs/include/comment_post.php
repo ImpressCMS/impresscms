@@ -183,7 +183,6 @@ case "post":
         }
         if (false != $accesserror) {
             redirect_header($redirect_page.'='.$com_itemid.'&amp;com_id='.$com_id.'&amp;com_mode='.$com_mode.'&amp;com_order='.$com_order, 1, _NOPERM);
-            exit();
         }
     } else {
         $comment = $comment_handler->create();
@@ -230,7 +229,6 @@ case "post":
             $uid = 0;
             if ($xoopsModuleConfig['com_anonpost'] != 1) {
                 redirect_header($redirect_page.'='.$com_itemid.'&amp;com_id='.$com_id.'&amp;com_mode='.$com_mode.'&amp;com_order='.$com_order, 1, _NOPERM);
-                exit();
             }
         }
         if ($uid == 0) {
@@ -382,11 +380,9 @@ case "post":
             // if the comment is active, redirect to posted comment
             if ($comment->getVar('com_status') == XOOPS_COMMENT_ACTIVE) {
                 redirect_header($redirect_page.'='.$com_itemid.'&amp;com_id='.$newcid.'&amp;com_rootid='.$com_rootid.'&amp;com_mode='.$com_mode.'&amp;com_order='.$com_order.'#comment'.$newcid, 2, _CM_THANKSPOST);
-				exit();
             } else {
                 // not active, so redirect to top comment page
                 redirect_header($redirect_page.'='.$com_itemid.'&amp;com_mode='.$com_mode.'&amp;com_order='.$com_order.'#comment'.$newcid, 2, _CM_THANKSPOST);
-				exit();
             }
         }
     } else {
@@ -401,7 +397,6 @@ case "post":
     break;
 default:
 	redirect_header(XOOPS_URL.'/',3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-	exit();
 	break;
 }
 ?>

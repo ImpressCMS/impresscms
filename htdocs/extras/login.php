@@ -44,7 +44,6 @@ if ($op == 'dologin') {
     if (is_object($user)) {
 		if (0 == $user->getVar('level')) {
 			redirect_header(XOOPS_URL.'/index.php', 5, _US_NOACTTPADM);
-			exit();
 		}
 		if ($xoopsConfig['closesite'] == 1) {
 			$allowed = false;
@@ -56,7 +55,6 @@ if ($op == 'dologin') {
 			}
 			if (!$allowed) {
 				redirect_header(XOOPS_URL.'/index.php', 1, _NOPERM);
-				exit();
 			}
 		}
 		$user->setVar('last_login', time());

@@ -34,7 +34,6 @@ include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
 $uid = intval($_GET['uid']);
 if ($uid <= 0) {
     redirect_header('index.php', 3, _US_SELECTNG);
-    exit();
 }
 
 $gperm_handler = & xoops_gethandler( 'groupperm' );
@@ -65,7 +64,6 @@ if (is_object($xoopsUser)) {
         $thisUser =& $member_handler->getUser($uid);
         if (!is_object($thisUser) || !$thisUser->isActive() ) {
             redirect_header("index.php",3,_US_SELECTNG);
-            exit();
         }
         $xoopsOption['template_main'] = 'system_userinfo.html';
         include XOOPS_ROOT_PATH.'/header.php';
@@ -76,7 +74,6 @@ if (is_object($xoopsUser)) {
     $thisUser =& $member_handler->getUser($uid);
     if (!is_object($thisUser) || !$thisUser->isActive()) {
         redirect_header("index.php",3,_US_SELECTNG);
-        exit();
     }
     $xoopsOption['template_main'] = 'system_userinfo.html';
     include(XOOPS_ROOT_PATH.'/header.php');

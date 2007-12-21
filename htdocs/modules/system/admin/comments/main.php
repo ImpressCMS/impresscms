@@ -156,7 +156,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             }
         }
         redirect_header('admin.php?fct=comments', 1);
-		exit();
         break;
 
     default:

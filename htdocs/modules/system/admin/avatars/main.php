@@ -116,7 +116,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     if ($op == 'save') {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=avatars', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-            exit();
         }
         $count = count($avatar_id);
         if ($count > 0) {
@@ -150,13 +149,11 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             }
         }
         redirect_header('admin.php?fct=avatars',2,_MD_AM_DBUPDATED);
-		exit();
     }
 
     if ($op == 'addfile') {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=avatars', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-            exit();
         }
         include_once XOOPS_ROOT_PATH.'/class/uploader.php';
         $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), 500000);
@@ -193,7 +190,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             exit();
         }
         redirect_header('admin.php?fct=avatars',2,_MD_AM_DBUPDATED);
-		exit();
     }
 
     if ($op == 'delfile') {
@@ -207,18 +203,15 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     if ($op == 'delfileok') {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php?fct=avatars',1, 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-			exit();
         }
         $avatar_id = intval($avatar_id);
         if ($avatar_id <= 0) {
             redirect_header('admin.php?fct=avatars',1);
-			exit();
         }
         $avt_handler = xoops_gethandler('avatar');
         $avatar =& $avt_handler->get($avatar_id);
         if (!is_object($avatar)) {
             redirect_header('admin.php?fct=avatars',1);
-			exit();
         }
         if (!$avt_handler->delete($avatar)) {
             xoops_cp_header();
@@ -234,7 +227,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             $xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET user_avatar='blank.gif' WHERE user_avatar='".$file."'");
         }
         redirect_header('admin.php?fct=avatars',2,_MD_AM_DBUPDATED);
-		exit();
     }
 }
 ?>

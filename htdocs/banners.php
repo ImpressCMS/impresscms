@@ -62,7 +62,6 @@ function bannerstats()
     global $xoopsDB, $xoopsConfig, $xoopsLogger;
     if ($_SESSION['banner_login'] == "" || $_SESSION['banner_pass'] == "") {
         redirect_header("banners.php",2);
-        exit();
     }
     $result = $xoopsDB->query(sprintf("SELECT cid, name, passwd FROM %s WHERE login=%s", $xoopsDB->prefix("bannerclient"), $xoopsDB->quoteString($_SESSION['banner_login'])));
     list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
@@ -177,7 +176,6 @@ function bannerstats()
             include "footer.php";
         } else {
             redirect_header("banners.php",2);
-            exit();
         }
 }
 
@@ -196,7 +194,6 @@ function EmailStats($cid, $bid)
             if ($_SESSION['banner_pass'] == $passwd) {
                 if ($email == "") {
                     redirect_header("banners.php", 3, sprintf( _BANNERS_MAIL_ERROR, $name) );
-                    exit();
                 } else {
                     if ($result = $xoopsDB->query("select bid, imptotal, impmade, clicks, imageurl, clickurl, date from ".$xoopsDB->prefix("banner")." where bid='".$bid."' and cid='".$cid."'")) {
                         list($bid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date) = $xoopsDB->fetchRow($result);
@@ -223,14 +220,12 @@ function EmailStats($cid, $bid)
                         $xoopsMailer->setBody($message);
                         $xoopsMailer->send();
                         redirect_header("banners.php?op=Ok", 3, _BANNERS_MAIL_OK);
-                        exit();
                     }
                 }
             }
         }
     }
     redirect_header("banners.php",2);
-    exit();
 }
 
 /*********************************************/
@@ -250,13 +245,11 @@ function change_banner_url_by_client($cid, $bid, $url)
                 $sql = sprintf("update %s set clickurl=%s where bid='%u' AND cid='%u'", $xoopsDB->prefix("banner"), $xoopsDB->quoteString($url), $bid, $cid);
                 if ($xoopsDB->query($sql)) {
                     redirect_header("banners.php?op=Ok", 3, "URL has been changed.");
-                    exit();
                 }
             }
         }
     }
     redirect_header("banners.php",2);
-    exit();
 }
 
 function clickbanner($bid)
@@ -294,7 +287,6 @@ case "Ok":
     if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
         if ( !$GLOBALS['xoopsSecurity']->check("BANNER_LOGIN") ) {
             redirect_header("banners.php", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-            exit();
         }
 
         $_SESSION['banner_login'] = $myts->stripslashesGPC(trim($_POST['login']));
@@ -305,7 +297,6 @@ case "Ok":
 case _BANNERS_CHANGE:
     if (!$GLOBALS['xoopsSecurity']->check("BANNER_EDIT")) {
         redirect_header("banners.php", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-        exit();
     }
     $bid = $cid = 0;
     if (!empty($_POST['url'])) {

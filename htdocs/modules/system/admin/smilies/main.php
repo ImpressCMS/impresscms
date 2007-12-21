@@ -45,7 +45,6 @@ switch($op) {
 case "SmilesUpdate":
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     $count = (!empty($_POST['smile_id']) && is_array($_POST['smile_id'])) ? count($_POST['smile_id']) : 0;
     $db =& Database::getInstance();
@@ -60,13 +59,11 @@ case "SmilesUpdate":
         }
     }
     redirect_header('admin.php?fct=smilies',2,_AM_DBUPDATED);
-	exit();
     break;
 
 case "SmilesAdd":
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     $db =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
@@ -92,7 +89,6 @@ case "SmilesAdd":
     }
     if (!isset($err)) {
         redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin',2,_AM_DBUPDATED);
-		exit();
     } else {
         xoops_cp_header();
         xoops_error($err);
@@ -111,7 +107,6 @@ case "SmilesSave":
     $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
     if ($id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     $myts =& MyTextSanitizer::getInstance();
     $smile_code = $myts->stripSlashesGPC($_POST['smile_code']);
@@ -147,7 +142,6 @@ case "SmilesSave":
     }
     if (!isset($err)) {
         redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin',2,_AM_DBUPDATED);
-		exit();
     } else {
         xoops_cp_header();
         xoops_error($err);
@@ -169,13 +163,11 @@ case "SmilesDelOk":
     $id = isset($_POST['id']) ? intval($_POST['id']) : 0;
     if ($id <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
         redirect_header('admin.php?fct=smilies', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     $db =& Database::getInstance();
     $sql = sprintf("DELETE FROM %s WHERE id = '%u'", $db->prefix('smiles'), $id);
     $db->query($sql);
     redirect_header("admin.php?fct=smilies&amp;op=SmilesAdmin",2,_AM_DBUPDATED);
-	exit();
     break;
 
 case "SmilesAdmin":

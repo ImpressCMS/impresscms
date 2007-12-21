@@ -462,7 +462,6 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 }
 else {
     redirect_header('admin.php?fct=findusers', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-	exit();
 }
 //CloseTable();
 xoops_cp_footer();

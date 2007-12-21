@@ -99,10 +99,8 @@ if (false != $accesserror) {
 	$ref = xoops_getenv('HTTP_REFERER');
 	if ($ref != '') {
 		redirect_header($ref, 2, _NOPERM);
-		exit();
 	} else {
 		redirect_header($redirect_page.'?'.$comment_config['itemName'].'='.intval($com_itemid), 2, _NOPERM);
-		exit();
 	}
 	exit();
 }
@@ -199,7 +197,6 @@ case 'delete_one':
 		exit();
 	}
 	redirect_header($redirect_page.'='.$com_itemid.'&amp;com_order='.$com_order.'&amp;com_mode='.$com_mode, 1, _CM_COMDELETED);
-	exit();
 	break;
 
 case 'delete_all':

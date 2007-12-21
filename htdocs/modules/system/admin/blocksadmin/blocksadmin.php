@@ -298,7 +298,6 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
             $db->query($sql);
         }
         redirect_header('admin.php?fct=blocksadmin&amp;t='.time(),1,_AM_DBUPDATED);
-        exit();
     }
 
     function edit_block($bid)
@@ -396,7 +395,6 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
             $msg = 'Failed update of block. ID:'.$bid;
         }
         redirect_header('admin.php?fct=blocksadmin&amp;t='.time(),1,$msg);
-        exit();
     }
 
     function delete_block($bid)
@@ -414,7 +412,6 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
             if (1 >= $count = XoopsBlock::countSimilarBlocks($myblock->getVar('mid'), $myblock->getVar('func_num'), $myblock->getVar('show_func'))) {
                 $message = _AM_MODULECANT;
                 redirect_header('admin.php?fct=blocksadmin',4,$message);
-                exit();
             }
         }
         xoops_confirm(array('fct' => 'blocksadmin', 'op' => 'delete_ok', 'bid' => $myblock->getVar('bid')), 'admin.php', sprintf(_AM_RUSUREDEL,$myblock->getVar('title')));
@@ -432,7 +429,6 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
             }
         }
         redirect_header('admin.php?fct=blocksadmin&amp;t='.time(),1,_AM_DBUPDATED);
-        exit();
     }
 
     function order_block($bid, $weight, $visible, $side)
@@ -604,7 +600,6 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
             $db->query($sql);
         }
         redirect_header('admin.php?fct=blocksadmin&amp;t='.time(),1,_AM_DBUPDATED);
-		exit();
     }
     function get_block_configs()
     {

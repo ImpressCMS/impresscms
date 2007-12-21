@@ -61,7 +61,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case "update":
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-			exit();
         }
         $system_catids = empty($system_catids) ? array() : $system_catids;
         $admin_mids = empty($admin_mids) ? array() : $admin_mids;
@@ -131,13 +130,11 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 $gperm_handler->insert($blockperm);
             }
             redirect_header("admin.php?fct=groups&amp;op=adminMain",1,_AM_DBUPDATED);
-			exit();
         }
         break;
     case "add":
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-			exit();
         }
         if (!$name) {
             xoops_cp_header();
@@ -200,7 +197,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 $gperm_handler->insert($blockperm);
             }
             redirect_header("admin.php?fct=groups&amp;op=adminMain",1,_AM_DBUPDATED);
-			exit();
         }
         break;
     case "del":
@@ -211,7 +207,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     case "delConf":
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-			exit();
         }
         if (intval($g_id) > 0 && !in_array($g_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
             $member_handler =& xoops_gethandler('member');
@@ -221,12 +216,10 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             $gperm_handler->deleteByGroup($g_id);
         }
         redirect_header("admin.php?fct=groups&amp;op=adminMain",1,_AM_DBUPDATED);
-		exit();
         break;
     case "addUser":
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-			exit();
         }
         $member_handler =& xoops_gethandler('member');
         $size = count($uids);
@@ -234,12 +227,10 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             $member_handler->addUserToGroup($groupid, $uids[$i]);
         }
         redirect_header("admin.php?fct=groups&amp;op=modify&amp;g_id=".$groupid."",0,_AM_DBUPDATED);
-		exit();
         break;
     case "delUser":
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-			exit();
         }
         if (intval($groupid) > 0) {
             $member_handler =& xoops_gethandler('member');
@@ -252,7 +243,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 $member_handler->removeUsersFromGroup($groupid, $uids);
             }
             redirect_header('admin.php?fct=groups&amp;op=modify&amp;g_id='.$groupid.'&amp;memstart='.$memstart,0,_AM_DBUPDATED);
-			exit();
         }
         break;
     case "display":

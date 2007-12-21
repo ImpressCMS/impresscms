@@ -35,7 +35,6 @@ $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
 if (empty($xoopsConfigUser['allow_register'])) {
 	redirect_header('index.php', 6, _US_NOREGISTER);
-	exit();
 }
 
 function userCheck($uname, $email, $pass, $vpass)
@@ -204,7 +203,6 @@ case 'finish':
 		}
 		if ($xoopsConfigUser['activation_type'] == 1) {
 			redirect_header('index.php', 4, _US_ACTLOGIN);
-			exit();
 		}
 		if ($xoopsConfigUser['activation_type'] == 0) {
 			$xoopsMailer =& getMailer();

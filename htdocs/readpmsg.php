@@ -30,7 +30,6 @@ include_once "mainfile.php";
 
 if ( !is_object($xoopsUser) ) {
     redirect_header("user.php",0);
-    exit();
 } else {
     $pm_handler =& xoops_gethandler('privmessage');
     if ( !empty($_POST['delete']) ) {
@@ -43,7 +42,6 @@ if ( !is_object($xoopsUser) ) {
             exit();
         } else {
             redirect_header("viewpmsg.php",1,_PM_DELETED);
-            exit();
         }
     }
     $start = !empty($_GET['start']) ? intval($_GET['start']) : 0;

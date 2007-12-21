@@ -46,7 +46,6 @@ case "BannersAdmin":
 case "BannersAdd":
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     $name = isset($_POST['name']) ? trim($_POST['name']) : '';
     $cid = isset($_POST['cid']) ? intval($_POST['cid']) : 0;
@@ -57,7 +56,6 @@ case "BannersAdd":
     $htmlcode = isset($_POST['htmlcode']) ? trim($_POST['htmlcode']) : '';
     if ($cid <= 0) {
         redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top");
-		exit();
     }
     $db =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
@@ -65,13 +63,11 @@ case "BannersAdd":
     $sql = sprintf("INSERT INTO %s (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlbanner, htmlcode) VALUES ('%d', '%d', '%d', '1', '0', %s, %s, '%d', '%d', %s)", $db->prefix("banner"), intval($newid), $cid, $imptotal, $db->quoteString($myts->stripSlashesGPC($imageurl)), $db->quoteString($myts->stripSlashesGPC($clickurl)), time(), $htmlbanner, $db->quoteString($myts->stripSlashesGPC($htmlcode)));
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
-    exit();
     break;
 
 case "BannerAddClient":
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     $name = isset($_POST['name']) ? trim($_POST['name']) : '';
     $contact = isset($_POST['contact']) ? trim($_POST['contact']) : '';
@@ -85,7 +81,6 @@ case "BannerAddClient":
     $sql = sprintf("INSERT INTO %s (cid, name, contact, email, login, passwd, extrainfo) VALUES ('%d', %s, %s, %s, %s, %s, %s)", $db->prefix("bannerclient"), intval($newid), $db->quoteString($myts->stripSlashesGPC($name)), $db->quoteString($myts->stripSlashesGPC($contact)), $db->quoteString($myts->stripSlashesGPC($email)), $db->quoteString($myts->stripSlashesGPC($login)), $db->quoteString($myts->stripSlashesGPC($passwd)), $db->quoteString($myts->stripSlashesGPC($extrainfo)));
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
-    exit();
     break;
 
 case "BannerFinishDelete":
@@ -98,13 +93,11 @@ case "BannerFinishDelete2":
     $bid = isset($_POST['bid']) ? intval($_POST['bid']) : 0;
     if ($bid <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     $db =& Database::getInstance();
     $sql = sprintf("DELETE FROM %s WHERE bid = %u", $db->prefix("bannerfinish"), $bid);
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
-    exit();
     break;
 
 case "BannerDelete":
@@ -118,13 +111,11 @@ case "BannerDelete2":
     $bid = isset($_POST['bid']) ? intval($_POST['bid']) : 0;
     if ($bid <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     $db =& Database::getInstance();
     $sql = sprintf("DELETE FROM %s WHERE bid = %u", $db->prefix("banner"), $bid);
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
-	exit();
     break;
 
 case "BannerEdit":
@@ -139,7 +130,6 @@ case "BannerChange":
     $cid = isset($_POST['cid']) ? intval($_POST['cid']) : 0;
     if (($cid <= 0 || $bid <= 0) | !$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     $imageurl = isset($_POST['imageurl']) ? trim($_POST['imageurl']) : '';
     $clickurl = isset($_POST['clickurl']) ? trim($_POST['clickurl']) : '';
@@ -152,7 +142,6 @@ case "BannerChange":
     $sql = sprintf("UPDATE %s SET cid = '%d', imptotal = '%d', imageurl = %s, clickurl = %s, htmlbanner = '%d', htmlcode = %s WHERE bid = '%d'", $db->prefix("banner"), $cid, $imptotal + $impadded, $db->quoteString($myts->stripSlashesGPC($imageurl)), $db->quoteString($myts->stripSlashesGPC($clickurl)), $htmlbanner, $db->quoteString($myts->stripSlashesGPC($htmlcode)), $bid);
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
-	exit();
     break;
 
 case "BannerClientDelete":
@@ -167,14 +156,12 @@ case "BannerClientDelete2":
     $db =& Database::getInstance();
     if ($cid <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     $sql = sprintf("DELETE FROM %s WHERE cid = '%u'", $db->prefix("banner"), $cid);
     $db->query($sql);
     $sql = sprintf("DELETE FROM %s WHERE cid = '%u'", $db->prefix("bannerclient"), $cid);
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
-	exit();
     break;
 
 case "BannerClientEdit":
@@ -188,7 +175,6 @@ case "BannerClientChange":
     $cid = isset($_POST['cid']) ? intval($_POST['cid']) : 0;
     if ($cid <= 0 | !$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     $name = isset($_POST['name']) ? trim($_POST['name']) : '';
     $contact = isset($_POST['contact']) ? trim($_POST['contact']) : '';
@@ -211,7 +197,6 @@ case "BannerClientChange":
     );
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
-	exit();
     break;
 
 default:

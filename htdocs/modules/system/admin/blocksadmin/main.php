@@ -55,7 +55,6 @@ if ( isset($_GET['op']) ) {
 if (isset($previewblock)) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=blocksadmin", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-        exit();
     }
     xoops_cp_header();
     include_once XOOPS_ROOT_PATH.'/class/template.php';
@@ -130,20 +129,17 @@ if ( $op == "list" ) {
 if ( $op == "order" ) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=blocksadmin", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-        exit();
     }
     foreach (array_keys($bid) as $i) {
         if ( $oldweight[$i] != $weight[$i] || $oldvisible[$i] != $visible[$i] || $oldside[$i] != $side[$i] )
         order_block($bid[$i], $weight[$i], $visible[$i], $side[$i]);
     }
     redirect_header("admin.php?fct=blocksadmin",1,_AM_DBUPDATED);
-    exit();
 }
 
 if ( $op == "save" ) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=blocksadmin", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-        exit();
     }
     save_block($bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bmodule, $bcachetime);
     exit();
@@ -152,7 +148,6 @@ if ( $op == "save" ) {
 if ( $op == "update" ) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=blocksadmin", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-        exit();
     }
     $bcachetime = isset($bcachetime) ? intval($bcachetime) : 0;
     $options = isset($options) ? $options : array();
@@ -165,7 +160,6 @@ if ( $op == "update" ) {
 if ( $op == "delete_ok" ) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=blocksadmin", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-        exit();
     }
     delete_block_ok($bid);
     exit();

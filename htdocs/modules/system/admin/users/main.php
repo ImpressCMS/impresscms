@@ -53,7 +53,6 @@ case "modifyUser":
 case "updateUser":
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=users", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     // RMV-NOTIFY
     $user_avatar = $theme = null;
@@ -96,7 +95,6 @@ case "delete_many":
 case "delete_many_ok":
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=users", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     $count = count($memberslist_id);
     $output = "";
@@ -123,7 +121,6 @@ case "delete_many_ok":
 case "delUserConf":
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=users", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     $member_handler =& xoops_gethandler('member');
     $user =& $member_handler->getUser($del_uid);
@@ -142,13 +139,11 @@ case "delUserConf":
         // RMV-NOTIFY
         xoops_notification_deletebyuser($del_uid);
         redirect_header("admin.php?fct=users",1,_AM_DBUPDATED);
-		exit();
     }
     break;
 case "addUser":
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=users", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     if (!$username || !$email || !$password) {
         $adduser_errormsg = _AM_YMCACF;
@@ -212,7 +207,6 @@ case "addUser":
 					$adduser_errormsg = sprintf(_AM_CNRNU2, implode(", ", $group_names));
 				} else {
                     redirect_header("admin.php?fct=users",1,_AM_DBUPDATED);
-                    exit();
                 }
             }
         }
@@ -224,7 +218,6 @@ case "addUser":
 case "synchronize":
     if (!$GLOBALS['xoopsSecurity']->check()) {
         redirect_header("admin.php?fct=users", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
     }
     synchronize($id, $type);
     break;
@@ -234,7 +227,6 @@ case "reactivate":
         exit();
     }
     redirect_header("admin.php?fct=users&amp;op=modifyUser&amp;uid=".$uid,1,_AM_DBUPDATED);
-	exit();
     break;
 case "mod_users":
 default:

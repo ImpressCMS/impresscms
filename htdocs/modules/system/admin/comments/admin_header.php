@@ -34,11 +34,9 @@ if (is_object($xoopsUser)) {
 		$sysperm_handler =& xoops_gethandler('groupperm');
 		if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $xoopsUser->getGroups())) {
 			redirect_header(XOOPS_URL.'/', 3, _NOPERM);;
-			exit();
 		}
 	}
 } else {
 	redirect_header(XOOPS_URL.'/', 3, _NOPERM);
-	exit();
 }
 ?>

@@ -35,7 +35,6 @@ if (!defined('XOOPS_ROOT_PATH')) {
 include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
 if ( ('system' != $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $xoopsModuleConfig['com_rule']) || (!is_object($xoopsUser) && !$xoopsModuleConfig['com_anonpost']) || !is_object($xoopsModule) ) {
 	redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
-	exit();
 }
 
 include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/comment.php';

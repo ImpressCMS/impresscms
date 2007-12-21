@@ -243,7 +243,6 @@ function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $us
                 }
             }
             redirect_header("admin.php?fct=users",1,_AM_DBUPDATED);
-			exit();
         }
     }
     exit();
@@ -295,6 +294,5 @@ function synchronize($id, $type)
         break;
     }
     redirect_header("admin.php?fct=users&amp;op=modifyUser&amp;uid=".$id,1,_AM_DBUPDATED);
-    exit();
 }
 ?>

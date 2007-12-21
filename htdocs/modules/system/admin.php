@@ -53,12 +53,10 @@ if (is_object($xoopsUser)) {
 	$xoopsModule =& XoopsModule::getByDirname("system");
 	if ( !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
 		redirect_header(XOOPS_URL."/",3,_NOPERM);
-		exit();
 	}
 	$admintest=1;
 } else {
 	redirect_header(XOOPS_URL."/",3,_NOPERM);
-	exit();
 }
 
 // include system category definitions

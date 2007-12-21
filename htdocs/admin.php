@@ -35,11 +35,9 @@ include XOOPS_ROOT_PATH."/include/cp_functions.php";
 if ( $xoopsUser ) {
 	if ( !$xoopsUser->isAdmin(-1) ) {
 		redirect_header("index.php",2,_AD_NORIGHT);
-		exit();
 	}
 } else {
 	redirect_header("index.php",2,_AD_NORIGHT);
-	exit();
 }
 
 function showRSS($op=1){

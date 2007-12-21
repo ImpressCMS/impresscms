@@ -16,11 +16,9 @@ if ( $xoopsUser ) {
     
     if ( !$moduleperm_handler->checkRight( 'module_admin', $xoopsModule->getVar( 'mid' ), $xoopsUser->getGroups() ) ) {
         redirect_header( XOOPS_URL . "/user.php", 1, _NOPERM );
-        exit();
     } 
 } else {
     redirect_header( XOOPS_URL . "/user.php", 1, _NOPERM );
-    exit();
 }
 
 // set config values for this module

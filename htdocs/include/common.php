@@ -406,13 +406,11 @@ $xoops =& new xos_kernel_Xoops2();
         if ($xoopsUser) {
             if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
                 redirect_header(XOOPS_URL."/user.php",1,_NOPERM, false);
-                exit();
             }
             $xoopsUserIsAdmin = $xoopsUser->isAdmin($xoopsModule->getVar('mid'));
         } else {
             if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), XOOPS_GROUP_ANONYMOUS)) {
                 redirect_header(XOOPS_URL."/user.php",1,_NOPERM);
-                exit();
             }
         }
         if ( file_exists(XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/language/".$xoopsConfig['language']."/main.php") ) {

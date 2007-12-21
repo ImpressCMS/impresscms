@@ -31,7 +31,6 @@ include_once "mainfile.php";
 if (!is_object($xoopsUser)) {
     $errormessage = _PM_SORRY."<br />"._PM_PLZREG."";
     redirect_header("user.php",2,$errormessage);
-	exit();
 } else {
     $pm_handler =& xoops_gethandler('privmessage');
     if (isset($_POST['delete_messages']) && isset($_POST['msg_id'])) {
@@ -49,7 +48,6 @@ if (!is_object($xoopsUser)) {
             unset($pm);
         }
         redirect_header("viewpmsg.php",1,_PM_DELETED);
-        exit();
     }
     include XOOPS_ROOT_PATH.'/header.php';
 	$criteria = new Criteria('to_userid', $xoopsUser->getVar('uid'));

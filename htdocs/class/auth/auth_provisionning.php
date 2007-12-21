@@ -129,7 +129,6 @@ class XoopsAuthProvisionning {
         	return $newuser;
         } else {
 			redirect_header(XOOPS_URL.'/user.php', 5, $newuser->getHtmlErrors());
-			exit(); 
 		}        
     	return $ret;	
 	}
@@ -153,7 +152,6 @@ class XoopsAuthProvisionning {
         	return $xoopsUser;
         } else {
 			redirect_header(XOOPS_URL.'/user.php', 5, $xoopsUser->getHtmlErrors());
-			exit();
 		}         
     	return $ret;
 	}
