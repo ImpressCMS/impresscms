@@ -1,0 +1,144 @@
+ImpressCMS Language ChangeLog
+=============================
+
+This is the changelog documenting the changes in the language constant for every release of ImpressCMS.
+
+Legend :
+  +  a constant was added orm in some case, a whole new file was added
+  +- a constant was modified
+  -  a constant was remove OR a whole file was removed
+
+ImpressCMS 0.5 (changes from XOOPS 2.0.17)
+=========================================
+
+language/english/mail_template/
+------------------------------
+
++  new_pm.tpl
+
+language/english/admin.php
+--------------------------
+
++  define('_AD_SYSOPTIONS','System Options');
++  define('_AD_INSTALLEDMODULES','Installed Modules');
+
+language/english/auth.php
+--------------------------
+
++- define('_AUTH_LDAP_XOOPS_USER_NOTFOUND',"Sorry no corresponding user information has been found in the ImpressCMS database for connection: %s <br>Please verify your user datas or set on the automatic provisionning");
+
++  language/english/banners.php
+--------------------------
+
++  language/english/banners.php
+--------------------------
+
+language/english/findusers.php
+--------------------------
+
++- define("_MA_USER_QUERY", "Query");
++  define("_MA_USER_SENDMAIL","Send Email");
+
+
+language/english/global.php
+--------------------------
+
++  define('_MODULES','Modules');
++  define('_IMPRESSCMS_PREFS','Preferences');
++  define('_SYSTEM','System');
++  define('_IMPRESSCMS_NEWS','News');
+
+language/english/pmsg.php
+--------------------------
+
++  define("_PM_MESSAGEPOSTED_EMAILSUBJ","[%s] Private Message Notification");
+
++  language/english/privpolicy.php
+--------------------------
+
+language/english/search.php
+--------------------------
+
++- define('_SR_SEARCHRULE', 'Search Rule');
+
+language/english/timezone.php
+--------------------------
+
++- define("_TZ_GMTP55", "(GMT+5:30) Mumbai, Kolkata, Chennai, New Delhi");
+
+language/english/user.php
+--------------------------
+
++  define('_US_REMEMBERME', 'Remember me');
++  define('_US_SELECT_THEME', 'Default Theme');
+
+modules/system/language/english/admin/blocksadmin.php
+--------------------------
+
++  define('_AM_BPADMIN',"Blocks Positions Administration");
++  define('_AM_BPCOD',"ID");
++  define('_AM_BPNAME',"Name of Position");
++  define('_AM_BPDESC',"Description of Position");
++  define('_AM_ADDPBLOCK',"Add new Block Position");
++  define('_AM_EDITPBLOCK',"Edit Block Position");
++  define('_AM_PBNAME_DESC',"Name of Block Position, it is with this name that will have to be created the Loop in the theme for the exhibition of blocks.<br/>Use a name with small_caption letters, without spaces and special characters.");
++  define('_AM_BPMSG1',"Successfully carried through operation!");
++  define('_AM_BPMSG2',"Problems had occurred to carry through them the operations.");
++  define('_AM_BPMSG3',"It is certain that it desires to exclude this block position?<br /><b>Warning:</b> This operation cannot be insult!");
++  define('_AM_BPHELP','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.');
+
+modules/system/language/english/admin/groups.php
+--------------------------
+
++  define("_AM_SBLEFT","Side Block - Left");
++  define("_AM_SBRIGHT","Side Block - Right");
++  define("_AM_CBLEFT","Center Block - Left");
++  define("_AM_CBRIGHT","Center Block - Right");
++  define("_AM_CBCENTER","Center Block - Center");
++  define("_AM_CBBOTTOMLEFT","Center Block - Bottom left");
++  define("_AM_CBBOTTOMRIGHT","Center Block - Bottom right");
++  define("_AM_CBBOTTOM","Center Block - Bottom");
+
+modules/system/language/english/admin/preferences.php
+--------------------------
+
++  define("_MD_AM_LDAP_USERS_BYPASS", " Xoops User(s) bypass LDAP Authentication");
++  define("_MD_AM_LDAP_USERS_BYPASS_DESC", "Xoops User(s) allow to bypass the LDAP login. Login directly in XOOPS<br>Separate each loginname with a |");
++- define("_MD_AM_LDAP_LOGINLDAP_ATTR_D","When Login name use in the DN option is set to yes, must correspond to the login name impressCMS");
++- define("_MD_AM_LDAP_LOGINNAME_ASDN_D", "The impressCMS login name is used in the LDAP DN (eg : uid=<loginname>,dc=impresscms,dc=org)<br>The entry is directly read in the LDAP Server without search");
++  define("_MD_AM_RANKW","Rank image max width (pixel)");
++  define("_MD_AM_RANKH","Rank image max height (pixel)");
++  define("_MD_AM_RANKMAX","Rank image max filesize (byte)");
++  define("_MD_AM_MULTILANGUAGE","Multilanguage settings");
++  define("_MD_AM_ML_ENABLE","Enable Multilanguage");
++  define("_MD_AM_ML_ENABLEDSC","Set to Yes in order to enable multilanguage throughout the site.");
++  define("_MD_AM_ML_TAGS","Multilanguage tags");
++  define("_MD_AM_ML_TAGSDSC","Enter the tags to be used on this site, separated by a comma. For example, this would be used to define the tages to be used for english and french : en,fr");
++  define("_MD_AM_ML_NAMES","Language names");
++  define("_MD_AM_ML_NAMESDSC","Enter the names of the language to use, separated by a comma");
++  define("_MD_AM_ML_CAPTIONS","Language captions");
++  define("_MD_AM_ML_CAPTIONSDSC","Enter the captions you would like to use for these languages");
++  define("_MD_AM_REMEMBERME","Enable the 'Remember Me' feature in the login.");
++  define("_MD_AM_REMEMBERMEDSC","The 'Remember Me' feature is not totally secure, use it under your own risk.");
++  define("_MD_AM_PRIVDPOLICY","Enable the sites 'Privacy Policy'.");
++  define("_MD_AM_PRIVDPOLICYDSC","The 'Privacy Policy' should be tailored to your site & active whenever you are allowing registrations to your site.");
++  define("_MD_AM_PRIVPOLICY","Enter your site 'Privacy Policy'.");
++  define("_MD_AM_PRIVPOLICYDSC","");
+
+modules/system/language/english/admin/userrank.php
+--------------------------
+
++  define("_AM_RANKW","Max width %s pixels");
++  define("_AM_RANKH","Max height %s pixels");
++  define("_AM_RANKMAX","Max filesize %s bytes");
+
+modules/system/language/english/blocks.php
+--------------------------
+
++- define('_MB_SYSTEM_REMEMBERME', 'Remember me');
++  define("_MB_SYSTEM_PRIVPOLICY", "Privacy Policy");
+
+modules/system/language/english/modinfo.php
+--------------------------
+
++  define('_MI_SYSTEM_BNAME14', "Language Selection");
