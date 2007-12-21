@@ -68,7 +68,12 @@ function listPblocks(){
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/blocksadmin/images/blocksadmin_big.png)">'._AM_BPADMIN.'</div><br />';
 	//echo "<h4 style='text-align:left;'>"._AM_BPADMIN."</h4>";
 
-	echo '<p>'._AM_BPHELP.'</p><br /><br />';
+	echo '<p>'._AM_BPHELP;
+	echo '<div style="border: 1px dashed #AABBCC; padding:10px; width:86%;">
+<{foreach from=$xoBlocks.<b>name_of_position</b> item=block}><br /><{include file="<b>path_to_theme_folder/file_to_show_blocks</b>"}><br /><{/foreach}>
+</div>
+';
+	echo '</p><br /><br />';
 
 	echo "<table width='100%' class='outer' cellpadding='4' cellspacing='1'>
         <tr valign='middle'><th>"._AM_BPCOD."</th><th>"._AM_BPNAME."</th><th>"._AM_TITLE."</th><th width='30%'>"._AM_BPDESC."</th><th align='right' width='12%'>"._AM_ACTION."</th></tr>
@@ -137,7 +142,7 @@ function save_pblock($dados,$edit=false){
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG1);
 	}else{
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG2);
-	}  
+	}
 }
 
 function del_pblock($pbid){
@@ -149,7 +154,7 @@ function del_pblock($pbid){
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG1);
 	}else{
 	  redirect_header('admin.php?fct=blocksadmin&op=adminpblocks',1,_AM_BPMSG2);
-	}  
+	}
 }
 
 ?>
