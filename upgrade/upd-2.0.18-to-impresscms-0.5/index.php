@@ -11,7 +11,7 @@ class upgrade_impcms05 {
 		$this->apply_ml_config();
 		$this->blocks_engine_upgrade();
 		$this->apply_new_blocks();
-		return ($this->cleaning_templates_c);
+		return ($this->cleaning_templates_c());
 	}
 	function cleaning_templates_c() {
 		$dir = opendir(XOOPS_ROOT_PATH."/templates_c/");
