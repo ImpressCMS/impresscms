@@ -120,11 +120,10 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
         if ($fp = fopen('../modules/system/templates/blocks/'.$newblock['template'], 'r')) {
             if (in_array($newblock['template'], array('system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html'))) {
                 $visible = 1;
-                $canvaspos = 1;
             } else {
                 $visible = 0;
-                $canvaspos = 0;
             }
+            $canvaspos = 1;
             $options = !isset($newblock['options']) ? '' : trim($newblock['options']);
             $edit_func = !isset($newblock['edit_func']) ? '' : trim($newblock['edit_func']);
             //$newbid = $dbm->insert('newblocks', " VALUES (0, 1, ".$func_num.", '".addslashes($options)."', '".addslashes($newblock['name'])."', '".addslashes($newblock['name'])."', '', ".$canvaspos.", 0, ".$visible.", 'S', 'H', 1, 'system', '".addslashes($newblock['file'])."', '".addslashes($newblock['show_func'])."', '".addslashes($edit_func)."', '".addslashes($newblock['template'])."', 0, ".$time.")");
