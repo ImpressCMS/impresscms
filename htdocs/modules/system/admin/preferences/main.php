@@ -368,7 +368,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                         $xoopsConfig['language'] = ${$config->getVar('conf_name')};
                         $lang_updated = true;
                     }
-
                     // if default theme has been changed
                     if (!$theme_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') == 'theme_set') {
                         $member_handler =& xoops_gethandler('member');
@@ -457,7 +456,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             register_shutdown_function( 'xoops_module_write_admin_menu', xoops_module_get_admin_menu() );
         } else {
 	        $redirect = XOOPS_URL . "/admin.php";
-			exit();
         }
 
         if (isset($redirect) && $redirect != '') {
