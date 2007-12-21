@@ -382,11 +382,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true)
             $url = XOOPS_URL;
         }
     }
-    if (defined('XOOPS_CPFUNC_LOADED')) {
-        $theme = 'default';
-    } else {
-        $theme = $xoopsConfig['theme_set'];
-    }
+    $theme = $xoopsConfig['theme_set'];
 
     require_once XOOPS_ROOT_PATH . '/class/template.php';
     require_once XOOPS_ROOT_PATH . '/class/theme.php';
