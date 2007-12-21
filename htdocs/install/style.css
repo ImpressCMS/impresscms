@@ -1,67 +1,457 @@
-* html {margin:	0;	padding:	0;}
-* html body { height: 100%;}
-
-body		{
-	font-family : tahoma, osaka, taipei, verdana, arial, helvetica, sans-serif;
-	color: #000000;
-	font-size: 12px;
-	margin: 0 auto;
-	padding: 0;
-	width:778px;
+BODY
+{
+    BORDER-RIGHT: #000000 1px solid;
+    PADDING-RIGHT: 0px;
+    PADDING-LEFT: 0px;
+    MIN-HEIGHT: 100%;
+    BACKGROUND: url(img/background.png) #fcfcfc repeat-x 0px 85px;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    FONT: 10pt tahoma, osaka,taipei,verdana, arial, helvetica, sans-serif;
+    BORDER-LEFT: #000000 1px solid;
+    COLOR: #000;
+    PADDING-TOP: 0px
+}
+* HTML BODY
+{
+    HEIGHT: 100%
+}
+#xo-banner
+{
+    BACKGROUND: url(img/banner_bg.png) repeat-x left top;
+    BORDER-BOTTOM: green 5px solid;
+    HEIGHT: 80px
+}
+#xo-content
+{
+    PADDING-RIGHT: 3em;
+    PADDING-LEFT: 3em;
+    PADDING-BOTTOM: 2em;
+    PADDING-TOP: 2em;
+    TEXT-ALIGN: center
+}
+#wizard
+{
+    BORDER-TOP: #e3e3e3 1px solid;
+    BACKGROUND-COLOR: #f0f0f0;
+    TEXT-ALIGN: left
+}
+#pageslist
+{
+    BORDER-RIGHT: #e4e4e4 1px solid;
+    BORDER-TOP: #e4e4e4 1px solid;
+	BORDER-LEFT: #e4e4e4 1px solid;
+    PADDING-LEFT: 0.5em;
+	PADDING-RIGHT: 0.8em;
+	PADDING-TOP: 0.5em;
+	PADDING-BOTTOM: 0.5em;
+    BORDER-BOTTOM: #e4e4e4 1px solid;
+    BACKGROUND: url(img/ffffff-25.png);
+    FLOAT: left;
+	MARGIN: 0px;
+    WIDTH: 13em;
+    LIST-STYLE-TYPE: none
+}
+.page
+{
+    BORDER-RIGHT: #eeeeee 3px solid;
+    PADDING-RIGHT: 0.5em;
+    BORDER-TOP: #eeeeee 3px solid;
+    PADDING-LEFT: 0.5em;
+    MIN-HEIGHT: 350px;
+    BACKGROUND: url(img/ffffff-75.png);
+    PADDING-BOTTOM: 0.5em;
+    MARGIN-LEFT: 14.5em;
+    BORDER-LEFT: #eeeeee 3px solid;
+    PADDING-TOP: 0.5em;
+    BORDER-BOTTOM: #eeeeee 3px solid;
+    -moz-border-top-colors: #d0d0d0 #e8e8e8 #f4f4f4;
+    -moz-border-right-colors: #d0d0d0 #e8e8e8 #f4f4f4;
+    -moz-border-bottom-colors: #d0d0d0 #e8e8e8 #f4f4f4;
+    -moz-border-left-colors: #d0d0d0 #e8e8e8 #f4f4f4
+}
+* HTML .page
+{
+    HEIGHT: 350px
+}
+H1
+{
+    FONT-SIZE: 150%;
+    MARGIN: 0px;
+    COLOR: #fff;
+    FONT-FAMILY: Lucida Grande, Trebuchet MS, sans-serif;
+    BACKGROUND-COLOR: #ffb500
+}
+H1:unknown
+{
+    DISPLAY: block;
+    BACKGROUND: url(img/title-tr.png) no-repeat right top;
+    MARGIN-BOTTOM: -4px;
+    LINE-HEIGHT: 0;
+    HEIGHT: 9px;
+    content: url(img/title-tl.png)
+}
+H1:unknown
+{
+    MARGIN-TOP: -2px;
+    DISPLAY: block;
+    BACKGROUND: url(img/title-br.png) no-repeat right top;
+    LINE-HEIGHT: 0;
+    HEIGHT: 13px;
+    content: url(img/title-bl.png)
+}
+#title
+{
+    PADDING-LEFT: 1em
+}
+#pageslist LI
+{
+    PADDING-LEFT: 15px;
+    BACKGROUND: url(img/yes.png) no-repeat left center;
+    PADDING-BOTTOM: 2px;
+    PADDING-TOP: 1px
+}
+#pageslist LI.current
+{
+    BACKGROUND-IMAGE: url(img/yes-current.png)
+}
+#pageslist LI.disabled
+{
+    BACKGROUND-IMAGE: url(img/yes-disabled.png)
+}
+#buttons
+{
+    CLEAR: both;
+    PADDING-RIGHT: 0.5em;
+    PADDING-LEFT: 0.5em;
+    PADDING-BOTTOM: 0.5em;
+    PADDING-TOP: 0.5em;
+    TEXT-ALIGN: right
 }
 
-a {
-	text-decoration: none;
-	color: #666666;font-weight: bold;
-	background-color: transparent;
+FORM
+{
+    MARGIN: 0px
 }
-
-a:hover		{
-    text-decoration: none;
-    	color: #ff9966;
-    	font-weight: bold;
-    	background-color: transparent;
+H1
+{
+    FONT-FAMILY: Lucida Grande, Trebuchet MS, sans-serif
 }
-
-td		{
-    font-family : tahoma, osaka, taipei, verdana, arial, helvetica, sans-serif;
-	color: #000000;
-	font-size: 12px;
-	border-top-width : 1px;
-	border-right-width : 1px;
-	border-bottom-width : 1px;
-	border-left-width : 1px;
+H2
+{
+    FONT-FAMILY: Lucida Grande, Trebuchet MS, sans-serif
 }
-
-img		{	border:0;			}
-div		{	text-align: center;		}
-.bg1        {        background-color: #f7f7f7; color: #000000;       }
-.bg2        {        background-color: #000000; color: #ffffff;       }
-.bg3        {        background-color: #2f5376; color: #f9b743;       }
-.bg4        {        background-color: #f5f5f5; color: #000000;       }
-.bg5        {        background-color: #f5f5f5; color: #000000;       }
-.fg1        {        color: #f9b743;                                  }
-.fg2        {        color: #000000;                                  }
-
-input		{
-    border-right: #000000 1px solid;
-	border-top: #000000 1px solid;
-	font: 8pt verdana, arial, helvetica;
-	border-left: #000000 1px solid;
-	color: #000000;
-	border-bottom: #000000 1px solid;
-	background-color: #f7f7f7
+H2
+{
+    MARGIN-TOP: 0px;
+    PADDING-LEFT: 0.5em;
+    BORDER-BOTTOM: #cccccc 1px solid;
+    TEXT-ALIGN: left
 }
-
-select {
-    border-right: #000 1px solid;
-    border-top: #000 1px solid;
-    background-color: #f7f7f7;
-    font: 8pt verdana, arial, helvetica;
-    border-left: #000 1px solid;
-    color: #000;
-    border-bottom: #000 1px solid;
+H3
+{
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 110%;
+    MARGIN: 1em 0.5em 0.5em
 }
-table {
-    border : 0;
+P
+{
+    MARGIN: 0.5em
+}
+A
+{
+    FONT-WEIGHT: bold;
+    COLOR: #666666;
+    BACKGROUND-COLOR: transparent;
+    TEXT-DECORATION: none
+}
+A:hover
+{
+    FONT-WEIGHT: bold;
+    COLOR: #ff9966;
+    BACKGROUND-COLOR: transparent;
+    TEXT-DECORATION: none
+}
+SELECT
+{
+    BORDER: 0px;
+    BACKGROUND: #fcfcfc;
+    FONT: 8pt verdana, arial, helvetica;
+    COLOR: #000000;
+}
+TABLE
+{
+    MARGIN-BOTTOM: 1em;
+    WIDTH: 99%;
+    BORDER-COLLAPSE: collapse;
+    border-spacing: 0px
+}
+CAPTION
+{
+    PADDING-RIGHT: 0.25em;
+    PADDING-LEFT: 0.25em;
+    BACKGROUND: url(img/table-caption-grey.png) repeat-x;
+    PADDING-BOTTOM: 2px;
+    COLOR: #000;
+    PADDING-TOP: 2px
+}
+TABLE THEAD TH
+{
+    BACKGROUND: #f4f4f4
+}
+TD
+{
+    BORDER-RIGHT: #efefef 1px solid;
+    PADDING-RIGHT: 0.25em;
+    BORDER-TOP: #efefef 1px solid;
+    PADDING-LEFT: 0.25em;
+    BACKGROUND: #fcfcfc;
+    PADDING-BOTTOM: 2px;
+    BORDER-LEFT: #efefef 1px solid;
+    PADDING-TOP: 2px;
+    BORDER-BOTTOM: #efefef 1px solid
+}
+TH
+{
+    BORDER-RIGHT: #efefef 1px solid;
+    PADDING-RIGHT: 0.25em;
+    BORDER-TOP: #efefef 1px solid;
+    PADDING-LEFT: 0.25em;
+    BACKGROUND: #fcfcfc;
+    PADDING-BOTTOM: 2px;
+    BORDER-LEFT: #efefef 1px solid;
+    PADDING-TOP: 2px;
+    BORDER-BOTTOM: #efefef 1px solid
+}
+FIELDSET
+{
+    BORDER-RIGHT: transparent 0px;
+    PADDING-RIGHT: 1em;
+    BORDER-TOP: #e8e8e8 1px solid;
+    PADDING-LEFT: 1em;
+    MARGIN-BOTTOM: 1em;
+    PADDING-BOTTOM: 0.5em;
+    BORDER-LEFT: transparent 0px;
+    PADDING-TOP: 0.5em;
+    BORDER-BOTTOM: transparent 0px
+}
+LEGEND
+{
+    PADDING-RIGHT: 1em;
+    DISPLAY: block;
+    PADDING-LEFT: 1em;
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 100%;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    PADDING-TOP: 0px
+}
+LABEL
+{
+    DISPLAY: block
+}
+#help_button
+{
+    FLOAT: right
+}
+.xoform-help
+{
+    PADDING-RIGHT: 0px;
+    DISPLAY: none;
+    PADDING-LEFT: 0px;
+    FONT-SIZE: 85%;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0px;
+    PADDING-TOP: 0px
+}
+BODY.show-help .xoform-help
+{
+    DISPLAY: block
+}
+INPUT[type=text]
+{
+    BORDER-RIGHT: #aaa 1px solid;
+    PADDING-RIGHT: 0.25em;
+    MIN-WIDTH: 60%;
+    PADDING-LEFT: 0.25em;
+    BACKGROUND: url(img/form-input.png) #fff no-repeat left top;
+    PADDING-BOTTOM: 1px;
+    MARGIN: 0.25em 0px;
+    PADDING-TOP: 1px;
+    BORDER-BOTTOM: #aaa 1px solid
+}
+INPUT[type=password]
+{
+    BORDER-RIGHT: #aaa 1px solid;
+    PADDING-RIGHT: 0.25em;
+    MIN-WIDTH: 60%;
+    PADDING-LEFT: 0.25em;
+    BACKGROUND: url(img/form-input.png) #fff no-repeat left top;
+    PADDING-BOTTOM: 1px;
+    MARGIN: 0.25em 0px;
+    PADDING-TOP: 1px;
+    BORDER-BOTTOM: #aaa 1px solid
+}
+INPUT
+{
+}
+SELECT
+{
+    WIDTH: 15em;
+	HEIGHT:11em;
+	FONT-SIZE:130%;
+}
+BUTTON
+{
+    PADDING-RIGHT: 0.5em;
+    PADDING-LEFT: 0.5em;
+    PADDING-BOTTOM: 2px;
+    PADDING-TOP: 2px;
+    BACKGROUND-IMAGE: url(img/table-caption-grey.png);
+    BACKGROUND-POSITION: bottom;
+    BACKGROUND-REPEAT: repeat-x;
+    COLOR: green;
+    FONT-WEIGHT: bold;
+    CURSOR: pointer;
+    BORDER: outset 1px #ccc;
+}
+.page#langselect
+{
+    TEXT-ALIGN: center
+}
+.page#dbsettings SELECT
+{
+	WIDTH: 7em;
+	HEIGHT:3.5em;
+	FONT-SIZE:100%;
+	MARGIN-LEFT:40%;
+}
+.error
+{
+    FONT-WEIGHT: bold;
+    COLOR: #f33
+}
+.footerbar
+{
+	MARGIN-TOP: 5px;
+}
+.warning
+{
+    COLOR: #c80
+}
+.success
+{
+    COLOR: #090
+}
+.x2-note
+{
+    BORDER: #eee 1px solid;
+    PADDING-RIGHT: 0.5em;
+    PADDING-LEFT: 0.5em;
+    BACKGROUND: #f8f8f8;
+    PADDING-BOTTOM: 0.5em;
+    MARGIN: 1em 4em;
+    PADDING-TOP: 0.5em;
+    TEXT-ALIGN: center
+}
+.error
+{
+    BACKGROUND-POSITION: right 2px;
+    BACKGROUND-IMAGE: url(img/warning.png);
+    BACKGROUND-REPEAT: no-repeat
+}
+UL.diags
+{
+	PADDING-RIGHT: 1em;
+    PADDING-LEFT: 1em;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0.5em 0px 0px 2em;
+    PADDING-TOP: 0px;
+    LIST-STYLE-TYPE: none;
+}
+UL.log
+{
+    PADDING-RIGHT: 1em;
+    PADDING-LEFT: 1em;
+    PADDING-BOTTOM: 0px;
+    MARGIN: 0.5em 0px 0px 2em;
+    PADDING-TOP: 0px;
+    LIST-STYLE-TYPE: none
+}
+UL.diags LI
+{
+    PADDING-LEFT: 20px;
+    BACKGROUND: no-repeat left center;
+    COLOR: #333
+}
+UL.log LI
+{
+    PADDING-LEFT: 20px;
+    BACKGROUND: no-repeat left center;
+    COLOR: #333
+}
+UL.diags LI.success
+{
+    BACKGROUND-IMAGE: url(img/yes.png)
+}
+UL.log LI.success
+{
+    BACKGROUND-IMAGE: url(img/yes.png)
+}
+UL.diags LI.failure
+{
+    FONT-WEIGHT: bold;
+    BACKGROUND-IMAGE: url(img/no.png);
+    COLOR: #f66
+}
+UL.log LI.failure
+{
+    FONT-WEIGHT: bold;
+    BACKGROUND-IMAGE: url(img/no.png);
+    COLOR: #f66
+}
+HTML > BODY .tagsoup1
+{
+    DISPLAY: block;
+    BACKGROUND: url(img/shadow.png) no-repeat right bottom;
+    MARGIN: 12px -12px -12px 12px;
+    POSITION: relative
+}
+HTML > BODY .tagsoup1:unknown
+{
+    DISPLAY: block;
+    BACKGROUND: none transparent scroll repeat 0% 0%;
+    WIDTH: 12px;
+    HEIGHT: 12px;
+    content: " "
+}
+HTML > BODY .tagsoup1:unknown
+{
+    DISPLAY: block;
+    BACKGROUND: none transparent scroll repeat 0% 0%;
+    WIDTH: 12px;
+    HEIGHT: 12px;
+    content: " "
+}
+HTML > BODY .tagsoup1:unknown
+{
+    BACKGROUND-POSITION: right top;
+    RIGHT: 0px;
+    MARGIN: -12px 0px 0px auto;
+    POSITION: absolute;
+    TOP: 0px
+}
+HTML > BODY .tagsoup1:unknown
+{
+    BACKGROUND-POSITION: left bottom;
+    MARGIN: -12px 0px 0px -12px
+}
+HTML > BODY .tagsoup1 .tagsoup2
+{
+    DISPLAY: block;
+    LEFT: -12px;
+    MARGIN: 0px;
+    OVERFLOW: hidden;
+    POSITION: relative;
+    TOP: -12px
 }

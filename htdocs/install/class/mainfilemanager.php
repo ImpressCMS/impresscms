@@ -69,19 +69,28 @@ class mainfile_manager {
 
         foreach($this->rewrite as $key => $val){
             if(is_int($val) &&
-             preg_match("/(define\()([\"'])(".$key.")\\2,\s*([0-9]+)\s*\)/",$content)){
-
-                $content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([0-9]+)\s*\)/"
-                , "define('".$key."', ".$val.")"
-                , $content);
-                $this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
+	            preg_match("/(define\()([\"'])(".$key.")\\2,\s*([0-9]+)\s*\)/",$content)){
+				if ($key == 'PROTECTOR1' || $key == 'PROTECTOR2') {
+	            	$content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([0-9]+)\s*\)/", $val, $content);
+	                $this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
+	                continue;
+				}
+	            $content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([0-9]+)\s*\)/"
+	            , "define('".$key."', ".$val.")"
+	            , $content);
+	            $this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
             }
-            elseif(preg_match("/(define\()([\"'])(".$key.")\\2,\s*([\"'])(.*?)\\4\s*\)/",$content)){
+            elseif (preg_match("/(define\()([\"'])(".$key.")\\2,\s*([\"'])(.*?)\\4\s*\)/",$content)) {
+                if ($key == 'PROTECTOR1' || $key == 'PROTECTOR2'){
+					$content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([\"'])(.*?)\\4\s*\)/", $val, $content);
+					$this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
+					ontinue;
+                }
                 $content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([\"'])(.*?)\\4\s*\)/"
                 , "define('".$key."', '". str_replace( '$', '\$', addslashes( $val ) ) ."')"
                 , $content);
                 $this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
-            }else{
+            } else {
                 $this->error = true;
                 $this->report .= _NGIMG.sprintf(_INSTALL_L122, "<b>$val</b>")."<br />\n";
             }

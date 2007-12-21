@@ -32,7 +32,7 @@ include_once XOOPS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/sqlutili
 * database manager for XOOPS installer
 *
 * @author Haruki Setoyama  <haruki@planewave.org>
-* @version $Id: dbmanager.php 506 2006-05-26 23:10:37Z skalpa $
+* @version $Id: dbmanager.php 592 2006-06-30 02:33:23Z skalpa $
 * @access public
 **/
 class db_manager {
@@ -50,17 +50,17 @@ class db_manager {
     function isConnectable(){
         return ($this->db->connect(false) != false) ? true : false;
     }
-
+    
     function dbExists(){
         return ($this->db->connect() != false) ? true : false;
     }
-
+    
     function createDB()
     {
         $this->db->connect(false);
-
+    
         $result = $this->db->query("CREATE DATABASE ".XOOPS_DB_NAME);
-
+    
         return ($result != false) ? true : false;
     }
 
@@ -131,50 +131,42 @@ class db_manager {
         return true;
     }
 
-    function report(){
-        $content = "<table align='center'><tr><td align='left'>\n";
-        if (isset($this->s_tables['create'])) {
-            foreach($this->s_tables['create'] as $key => $val){
-                $content .= _OKIMG.sprintf(_INSTALL_L45, "<b>$key</b>")."<br />\n";
-            }
-        }
-        if (isset($this->s_tables['insert'])) {
-            foreach($this->s_tables['insert'] as $key => $val){
-                $content .= _OKIMG.sprintf(_INSTALL_L119, $val, "<b>$key</b>")."<br />\n";
-            }
-        }
-		if (isset($this->s_tables['alter'])) {
-            foreach($this->s_tables['alter'] as $key => $val){
-                $content .= _OKIMG.sprintf(_INSTALL_L133, "<b>$key</b>")."<br />\n";
-            }
-        }
-		if (isset($this->s_tables['drop'])) {
-            foreach($this->s_tables['drop'] as $key => $val){
-                $content .= _OKIMG.sprintf(_INSTALL_L163, "<b>$key</b>")."<br />\n";
-            }
-        }
-        $content .= "<br />\n";
-        if (isset($this->f_tables['create'])) {
-            foreach($this->f_tables['create'] as $key => $val){
-                $content .= _NGIMG.sprintf(_INSTALL_L118, "<b>$key</b>")."<br />\n";
-            }
-        }
-        if (isset($this->f_tables['insert'])) {
-            foreach($this->f_tables['insert'] as $key => $val){
-                $content .= _NGIMG.sprintf(_INSTALL_L120, $val, "<b>$key</b>")."<br />\n";
-            }
-        }
-		if (isset($this->f_tables['alter'])) {
-            foreach($this->f_tables['alter'] as $key => $val){
-                $content .= _NGIMG.sprintf(_INSTALL_L134, "<b>$key</b>")."<br />\n";
-            }
-        }
-		if (isset($this->f_tables['drop'])) {
-            foreach($this->f_tables['drop'] as $key => $val){
-                $content .= _NGIMG.sprintf(_INSTALL_L164, "<b>$key</b>")."<br />\n";
-            }
-        }
-        $content .= "</td></tr></table>\n";
+    var $successStrings = array(
+    	'create'	=> TABLE_CREATED,
+    	'insert'	=> ROWS_INSERTED,
+    	'alter'		=> TABLE_ALTERED,
+    	'drop'		=> TABLE_DROPPED,
+    );
+    var $failureStrings = array(
+    	'create'	=> TABLE_NOT_CREATED,
+    	'insert'	=> ROWS_FAILED,
+    	'alter'		=> TABLE_NOT_ALTERED,
+    	'drop'		=> TABLE_NOT_DROPPED,
+    );
+
+    
+    function report() {
+    	$commands = array( 'create', 'insert', 'alter', 'drop' );
+    	$content = '<ul class="log">';
+    	foreach ( $commands as $cmd ) {
+    		if ( !@empty( $this->s_tables[$cmd] ) ) {
+	    		foreach ( $this->s_tables[$cmd] as $key => $val ) {
+	    			$content .= '<li class="success">';
+	    			$content .= ($cmd!='insert') ? sprintf( $this->successStrings[$cmd], $key ) : sprintf( $this->successStrings[$cmd], $val, $key );
+	    			$content .= "</li>\n";
+	    		}
+    		}
+    	}
+    	foreach ( $commands as $cmd ) {
+    		if ( !@empty( $this->f_tables[$cmd] ) ) {
+	    		foreach ( $this->f_tables[$cmd] as $key => $val ) {
+	    			$content .= '<li class="failure">';
+	    			$content .= ($cmd!='insert') ? sprintf( $this->failureStrings[$cmd], $key ) : sprintf( $this->failureStrings[$cmd], $val, $key );
+	    			$content .= "</li>\n";
+	    		}
+    		}
+    	}
+    	$content .= '</ul>';
         return $content;
     }
 
@@ -236,7 +228,7 @@ class db_manager {
 		$ret = false;
 		if ($table != '') {
             $this->db->connect();
-			$sql = 'SELECT * FROM '.$this->db->prefix($table);
+			$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix($table);
 			$ret = (false != $this->db->query($sql)) ? true : false;
 		}
 		return $ret;

@@ -1,11 +1,9 @@
 <?php
-// $Id: finish.php 1083 2007-10-16 16:42:51Z phppp $
+// $Id: finish.php 602 2006-07-01 15:50:47Z skalpa $
 $content .=
-"<u><b>Your site</b></u>
-<p>Click <a href='../index.php'>HERE</a> to see the home page of your site.</p>
-<u><b>Way to use</b></u>
-<p>Visit <a href='http://xoops.wiki.sourceforge.net/XoopsDocs' target='_blank'>XOOPS Project Documents</a></p>
-<u><b>Support</b></u>
-<p>Visit <a href='http://xoops.sourceforge.net/' target='_blank'>The XOOPS Project</a></p>
+"<h3>Your site</h3>
+<p>You can now access the <a href='../index.php'>home page of your site</a>.</p>
+<h3>Support</h3>
+<p>Visit <a href='http://www.impresscms.org/' target='_blank'>ImpressCMS.org</a></p>
 ";
 ?>

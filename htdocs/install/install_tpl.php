@@ -1,97 +1,89 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php
+	defined( 'XOOPS_INSTALL' ) or die();
+
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title>XOOPS Custom Installation</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=<?php echo _INSTALL_CHARSET ?>" />
-  <style type="text/css" media="all"><!-- @import url(../xoops.css); --></style>
-  <link rel="stylesheet" type="text/css" media="all" href="style.css" />
+	<title>
+		<?php echo XOOPS_INSTALL_WIZARD; ?>
+		(<?php echo ($wizard->currentPage+1) . '/' . count($wizard->pages); ?>)
+	</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo _INSTALL_CHARSET ?>" />
+	<link rel="stylesheet" type="text/css" media="all" href="style.css" />
+	<script type="text/javascript" src="prototype.js"></script>
+	<script type="text/javascript">
+	function showHideHelp( butt ) {
+		butt.className = ( butt.className == 'on' ) ? 'off': 'on';
+		document.body.className = ( butt.className == 'on' ) ? 'show-help': '';
+	}
+	</script>	
 </head>
 <body>
-<form action='index.php' method='post' style=''>
-<table width="778" align="center" cellpadding="0" cellspacing="0" background="img/bg_table.gif">
-  <tr>
-    <td width="150"><img src="img/hbar_left.gif" width="100%" height="23" alt="" /></td>
-    <td width="478" background="img/hbar_middle.gif">&nbsp;</td>
-    <td width="150"><img src="img/hbar_right.gif" width="100%" height="23" alt="" /></td>
-  </tr>
-  <tr>
-    <td width="150"><a href="index.php"><img src="img/logo.gif" width="150" height="80" alt="" /></a></td>
-    <td width="478" background="img/bg_darkblue.gif">&nbsp;</td>
-    <td width="150"><img src="img/xoops2.gif" width="100%" height="80" /></td>
-  </tr>
-  <tr>
-    <td width="150"><img src="img/hbar_left.gif" width="100%" height="23" alt="" /></td>
-    <td width="478" background="img/hbar_middle.gif">&nbsp;</td>
-    <td width="150"><img src="img/hbar_right.gif" width="100%" height="23" alt="" /></td>
-  </tr>
-</table>
-
-<table width="778" align="center" cellspacing="0" cellpadding="0" background="img/bg_table.gif">
-  <tr>
-    <td width='5%'>&nbsp;</td>
-    <td colspan="3"><?php if(!empty($title)) echo '<h4 style="margin-top: 10px; margin-bottom: 5px; padding: 10px;">'.$title.'</h4>'; echo '<div style="padding: 10px;">'.$content.'</div>'; ?></td>
-    <td width='5%'>&nbsp;</td>
-  </tr>
-  <tr>
-    <td width='5%'>&nbsp;</td>
-    <td width='35%' align='left'><?php echo b_back($b_back); ?></td>
-    <td width='20%' align='center'><?php echo b_reload($b_reload); ?></td>
-    <td width='35%' align='right'><?php echo b_next($b_next); ?></td>
-    <td width='5%'>&nbsp;</td>
-  </tr>
-  <tr>
-    <td colspan="5">&nbsp;</td>
-  </tr>
-</table>
-
-<table width="778" cellspacing="0" cellpadding="0" align="center" background="img/bg_table.gif">
-  <tr>
-    <td width="150"><img src="img/hbar_left.gif" width="100%" height="23" alt="" /></td>
-    <td width="478" background="img/hbar_middle.gif">&nbsp;</td>
-    <td width="150"><img src="img/hbar_installer_right.gif" width="100%" height="23" alt="" /></td>
-  </tr>
-</table>
-</form>
+<div id="xo-banner"><img src="img/icmslogo.jpg" alt="ImpressCMS" /></div>
+<div id="xo-content">
+	<div class="tagsoup1">
+	<div class="tagsoup2">
+		<div id="wizard">
+		<form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post'>
+			<h1>
+				<span id="title"><?php echo XOOPS_INSTALL_WIZARD."&nbsp;-&nbsp;".INSTALL_STEP; ?>&nbsp;<?php echo ($wizard->currentPage+1) . INSTALL_OUTOF . count($wizard->pages); ?></span>
+			</h1>
+			<ul id="pageslist" class="x2-navigation">
+			<?php foreach ( $wizard->pages as $k => $page ) {
+				$class = '';
+				if ( $k == $wizard->currentPage )	$class = ' class="current"';
+				elseif ( $k > $wizard->currentPage )	$class = ' class="disabled"';
+				if ( empty( $class ) ) {
+					$li = '<a href="' . $wizard->pageURI($page) . '">' . $wizard->pagesNames[$k] . '</a>';
+				} else {
+					$li = $wizard->pagesNames[$k];
+				}
+				echo "<li$class>$li</li>\n";
+			} ?>
+			</ul>
+			<div class="page" id="<?php echo $wizard->currentPageName; ?>">
+				<?php if ( $pageHasHelp ) { ?>
+					<img id="help_button" src="img/help.png" alt="help" title="<?php echo SHOW_HIDE_HELP; ?>" class="off" onclick="showHideHelp(this)" />
+				<?php } ?>
+				<h2><?php echo htmlspecialchars( $wizard->pagesTitles[ $wizard->currentPage ] ); ?></h2>
+				<?php echo $content; ?>		
+			</div>
+			<div id="buttons">
+				<?php if ( $wizard->currentPage != 0 ) { ?>
+				<button type="button" onclick="history.back()">
+					<?php echo BUTTON_PREVIOUS; ?>
+				</button>
+				<?php } ?>
+				<?php if ( $wizard->pages[$wizard->currentPage] == $wizard->secondlastpage) { ?>
+					<?php if ( @$pageHasForm) { ?>
+					<button type="submit">
+					<?php } else { ?>
+					<button type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'">
+					<?php } ?>
+					<?php if ( $_POST['mod'] != 1 ) { ?>
+						<?php echo BUTTON_NEXT; ?>
+					<?php } else { ?>
+						<?php echo BUTTON_FINISH; ?>
+					<?php } ?>
+					</button>
+				<?php } else if ( $wizard->pages[$wizard->currentPage] != $wizard->lastpage) { ?>
+					<?php if ( @$pageHasForm) { ?>
+					<button type="submit">
+					<?php } else { ?>
+					<button type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'">
+					<?php } ?>
+					<?php echo BUTTON_NEXT; ?>
+					</button>
+				<?php } ?>
+			</div>		
+		</form>		
+		</div>
+		
+	</div>
+	</div>
+	<div class="footerbar">
+		<?php $currentyear = date('Y',time()); if ($currentyear>2007) { echo sprintf( INSTALL_COPYRIGHT, '&nbsp;-&nbsp;'.$currentyear ); } else {echo sprintf( INSTALL_COPYRIGHT, ''); } ?>
+	</div>
+</div>
 </body>
 </html>
-<?php
-function b_back($option = null)
-{
-    if(!isset($option) || !is_array($option)) return '';
-    $content = '';
-    if(isset($option[0]) && $option[0] != ''){
-        $content .= "<input type='button' value='"
-            ._INSTALL_L42."' onclick=\"location='index.php?op="
-            .htmlspecialchars($option[0])."'\" /> ";
-    }else{
-        $content .= "<input type='button' value='"
-            ._INSTALL_L42."' onclick=\"javascript:history.back();\" /> ";
-    }
-    if(isset($option[1]) && $option[1] != ''){
-        $content .= "<span style='font-size:85%;'><< "
-                .htmlspecialchars($option[1])."</span> ";
-    }
-    return $content;
-}
-
-function b_reload($option=''){
-    if(empty($option)) return '';
-	if (!defined('_INSTALL_L200')) {
-		define('_INSTALL_L200', 'Reload');
-	}
-    return  "<input type='button' value='"._INSTALL_L200."' onclick=\"location.reload();\" /> ";
-}
-
-function b_next($option=null){
-    if(!isset($option) || !is_array($option)) return '';
-    $content = '';
-    if(isset($option[1]) && $option[1] != ''){
-        $content .= "<span style='font-size:85%;'>"
-                .htmlspecialchars($option[1])." >></span>";
-    }
-    $content .= "<input type='hidden' name='op' value='"
-                .htmlspecialchars($option[0])."' />\n";
-    $content .= "<input type='submit' name='submit' value='"._INSTALL_L47."' />\n";
-    return $content;
-}
-?>
