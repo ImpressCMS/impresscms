@@ -13,7 +13,7 @@
 # Dumping data for table `bannerclient`
 #
 
-INSERT INTO bannerclient VALUES (0, 'XOOPS', 'XOOPS Dev Team', 'webmaster@xoops.org', '', '', '');
+INSERT INTO bannerclient VALUES (0, 'ImpressCMS', 'ImpressCMS Dev Team', 'info@impresscms.org', '', '', '');
 
 #
 # Dumping data for table `bannerfinish`
