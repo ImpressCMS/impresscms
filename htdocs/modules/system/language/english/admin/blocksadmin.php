@@ -18,7 +18,6 @@ define('_AM_BPMSG1',"Successfully carried through operation!");
 define('_AM_BPMSG2',"Problems had occurred to carry through them the operations.");
 define('_AM_BPMSG3',"It is certain that it desires to exclude this block position?<br /><b>Warning:</b> This operation cannot be insult!");
 define('_AM_BPHELP','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.');
-#
 
 define("_AM_ADDBLOCK","Add a new block");
 define("_AM_LISTBLOCK","List all blocks");

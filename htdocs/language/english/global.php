@@ -204,12 +204,7 @@ define('_LANGCODE', 'en');
 define("XOOPS_USE_MULTIBYTES", "0");
 
 define('_MODULES','Modules');
-define('_AD_XOOPSTHEMES','XOOPS Themes');
-define('_AD_INTERESTSITES','Options');
-define('_XMEX_PREFS','Preferences');
-define('_SWITCH_TO','Switch to');
+define('_IMPRESSCMS_PREFS','Preferences');
 define('_SYSTEM','System');
-define("_SELECT_LANGUAGE", "Language:");
-
-define('_AD_NEWS','News');
+define('_IMPRESSCMS_NEWS','News');
 ?>

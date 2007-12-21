@@ -183,7 +183,7 @@ window.onload=startList;
 
 	$tpl->append('navitems', array('link'=>"#",'text'=>_AD_NEWS, 'menu'=>$menu));
 
-	$tpl->assign('lang_prefs', _XMEX_PREFS);
+	$tpl->assign('lang_prefs', _IMPRESSCMS_PREFS);
 	$tpl->assign('ml_is_enabled', $im_multilanguageConfig['ml_enable']);
 
 

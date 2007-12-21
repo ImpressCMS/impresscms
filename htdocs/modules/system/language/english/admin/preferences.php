@@ -248,7 +248,6 @@ define("_MD_AM_RANKW","Rank image max width (pixel)");
 define("_MD_AM_RANKH","Rank image max height (pixel)");
 define("_MD_AM_RANKMAX","Rank image max filesize (byte)");
 
-// ImpressCMS 0.5
 define("_MD_AM_MULTILANGUAGE","Multilanguage settings");
 define("_MD_AM_ML_ENABLE","Enable Multilanguage");
 define("_MD_AM_ML_ENABLEDSC","Set to Yes in order to enable multilanguage throughout the site.");
