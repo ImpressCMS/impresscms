@@ -32,11 +32,11 @@ if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
 /**
- * 
- * 
+ *
+ *
  * @package     kernel
  * @subpackage  form
- * 
+ *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
@@ -47,12 +47,12 @@ include_once XOOPS_ROOT_PATH."/class/xoopsform/form.php";
 
 /**
  * Form that will output as a theme-enabled HTML table
- * 
+ *
  * Also adds JavaScript to validate required fields
- * 
+ *
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * 
+ *
  * @package     kernel
  * @subpackage  form
  */
@@ -60,7 +60,7 @@ class XoopsThemeForm extends XoopsForm
 {
 	/**
 	 * Insert an empty row in the table to serve as a seperator.
-	 * 
+	 *
      * @param	string  $extra  HTML to be displayed in the empty row.
 	 * @param	string	$class	CSS class name for <td> tag
 	 */
@@ -77,10 +77,10 @@ class XoopsThemeForm extends XoopsForm
 			$this->addElement($extra);
 		}
 	}
-	
+
 	/**
 	 * create HTML to output the form as a theme-enabled table with validation.
-     * 
+     *
 	 * @return	string
 	 */
 	function render()
@@ -88,6 +88,7 @@ class XoopsThemeForm extends XoopsForm
     	$ele_name = $this->getName();
 		$ret = "
 			<form name='".$ele_name."' id='".$ele_name."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$ele_name."();'".$this->getExtra().">
+			<div class='xo-theme-form'>
 			<table width='100%' class='outer' cellspacing='1'>
 			<tr><th colspan='2'>".$this->getTitle()."</th></tr>
 		";
@@ -99,7 +100,7 @@ class XoopsThemeForm extends XoopsForm
 			} elseif ( !$ele->isHidden() ) {
 				$ret .= "<tr valign='top' align='left'><td class='head'>";
 				if ( ($caption = $ele->getCaption()) != '' ) {
-				    $ret .= 
+				    $ret .=
 				        "<div class='xoops-form-element-caption" . ($ele->isRequired() ? "-required" : "" ) . "'>".
 				        "<span class='caption-text'>{$caption}</span>".
 				        "<span class='caption-marker'>*</span>".
@@ -113,7 +114,7 @@ class XoopsThemeForm extends XoopsForm
 				$hidden .= $ele->render();
 			}
 		}
-		$ret .= "</table>\n$hidden\n</form>\n";
+		$ret .= "</table>\n$hidden\n</div>\n</form>\n";
 		$ret .= $this->renderValidationJS( true );
 		return $ret;
 	}
