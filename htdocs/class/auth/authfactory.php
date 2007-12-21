@@ -52,7 +52,7 @@ class XoopsAuthFactory
     		$authConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);    		
 			require_once XOOPS_ROOT_PATH.'/class/auth/auth.php';
 			if (empty($authConfig['auth_method'])) { // If there is a config error, we use xoops
-				$xoops_auth_method = 'db';
+				$xoops_auth_method = 'xoops';
 			} else {
 			    $xoops_auth_method = $authConfig['auth_method'];
 			}
