@@ -104,7 +104,7 @@ class XoopsAuthProvisionning {
 	function add($datas, $uname, $pwd = null) {
 		$ret = false;
 		$member_handler =& xoops_gethandler('member');
-        // Create XOOPS Database User
+        // Create ImpressCMS Database User
 		$newuser = $member_handler->createUser();
         $newuser->setVar('uname', $uname);
         $newuser->setVar('pass', md5(stripslashes($pwd)));

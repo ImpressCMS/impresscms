@@ -37,7 +37,7 @@ define('_MD_CHOOSEFILE', 'Choose file to upload');
 define('_MD_UPWILLREPLACE', 'Uploading this file will overwrite the data in database!');
 define('_MD_UPLOADTAR', 'Upload a template set');
 define('_MD_CHOOSETAR', 'Choose a template set package to upload');
-define('_MD_ONLYTAR', 'Must be a tar.gz/.tar file with a valid XOOPS template set structure');
+define('_MD_ONLYTAR', 'Must be a tar.gz/.tar file with a valid ImpressCMS template set structure');
 define('_MD_NTHEMENAME', 'New template set name');
 define('_MD_ENTERTH', 'Enter a template set name for this package. Leave it blank for automatic detection.');
 define('_MD_TITLE','Title');

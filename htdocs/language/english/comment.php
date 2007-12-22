@@ -5,7 +5,7 @@ define('_CM_MESSAGE','Message');
 define('_CM_DOSMILEY','Enable Smiley Icons');
 define('_CM_DOHTML','Enable HTML Tags');
 define('_CM_DOAUTOWRAP','Auto wrap lines');
-define('_CM_DOXCODE','Enable XOOPS Codes');
+define('_CM_DOXCODE','Enable iCMS Codes');
 define('_CM_REFRESH','Refresh');
 define('_CM_PENDING','Pending');
 define('_CM_HIDDEN','Hidden');

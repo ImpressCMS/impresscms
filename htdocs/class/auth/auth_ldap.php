@@ -171,7 +171,7 @@ var $cp1252_map = array (
 
 
     /**
-	 *  Load user from XOOPS Database
+	 *  Load user from ImpressCMS Database
 	 * 
 	 * @return XoopsUser object
 	 */	        

@@ -96,7 +96,7 @@ define('_MD_AM_BADIPS', 'Enter IP addresses that should be banned from the site.
 define('_MD_AM_BADIPSDSC', '^aaa.bbb.ccc will disallow visitors with an IP that starts with aaa.bbb.ccc<br />aaa.bbb.ccc$ will disallow visitors with an IP that ends with aaa.bbb.ccc<br />aaa.bbb.ccc will disallow visitors with an IP that contains aaa.bbb.ccc');
 define('_MD_AM_PREFMAIN', 'Preferences Main');
 define('_MD_AM_METAKEY', 'Meta Keywords');
-define('_MD_AM_METAKEYDSC', 'The keywords meta tag is a series of keywords that represents the content of your site. Type in keywords with each separated by a comma or a space in between. (Ex. XOOPS, PHP, mySQL, portal system)');
+define('_MD_AM_METAKEYDSC', 'The keywords meta tag is a series of keywords that represents the content of your site. Type in keywords with each separated by a comma or a space in between. (Ex. ImpressCMS, PHP, mySQL, portal system)');
 define('_MD_AM_METARATING', 'Meta Rating');
 define('_MD_AM_METARATINGDSC', 'The rating meta tag defines your site age and content rating');
 define('_MD_AM_METAOGEN', 'General');
@@ -181,7 +181,7 @@ define("_MD_AM_THEMEOKDSC","Choose themes that users can select as the default t
 
 
 // Xoops Authentication constants
-define("_MD_AM_AUTH_CONFOPTION_XOOPS", "XOOPS Database");
+define("_MD_AM_AUTH_CONFOPTION_XOOPS", "ImpressCMS Database");
 define("_MD_AM_AUTH_CONFOPTION_LDAP", "Standard LDAP Directory");
 define("_MD_AM_AUTH_CONFOPTION_AD", "Microsoft Active Directory &copy");
 define("_MD_AM_AUTHENTICATION", "Authentication Options");
@@ -208,8 +208,8 @@ define("_MD_AM_LDAP_MANAGER_PASS", "Password of the LDAP manager");
 define("_MD_AM_LDAP_MANAGER_PASS_DESC", "The password of the user allow to make search");
 define("_MD_AM_LDAP_VERSION", "LDAP Version protocol");
 define("_MD_AM_LDAP_VERSION_DESC", "The LDAP Version protocol : 2 or 3");
-define("_MD_AM_LDAP_USERS_BYPASS", " Xoops User(s) bypass LDAP Authentication");
-define("_MD_AM_LDAP_USERS_BYPASS_DESC", "Xoops User(s) allow to bypass the LDAP login. Login directly in XOOPS<br>Separate each loginname with a |");
+define("_MD_AM_LDAP_USERS_BYPASS", " ImpressCMS User(s) bypass LDAP Authentication");
+define("_MD_AM_LDAP_USERS_BYPASS_DESC", "ImpressCMS User(s) allow to bypass the LDAP login. Login directly in ImpresssCMS<br>Separate each loginname with a |");
 
 define("_MD_AM_LDAP_USETLS", " Use TLS connection");
 define("_MD_AM_LDAP_USETLS_DESC", "Use a TLS (Transport Layer Security) connection. TLS use standard 389 port number<BR>" .
@@ -228,21 +228,21 @@ define("_MD_AM_LDAP_FILTER_PERSON_DESC", "Special LDAP Filter to find user. @@lo
 define("_MD_AM_LDAP_DOMAIN_NAME", "The domain name");
 define("_MD_AM_LDAP_DOMAIN_NAME_DESC", "Windows domain name. for ADS and NT Server only");
 
-define("_MD_AM_LDAP_PROVIS", "Automatic xoops account provisionning");
-define("_MD_AM_LDAP_PROVIS_DESC", "Create xoops user database if not exists");
+define("_MD_AM_LDAP_PROVIS", "Automatic ImpressCMS account provisionning");
+define("_MD_AM_LDAP_PROVIS_DESC", "Create ImpressCMS user database if not exists");
 
 define("_MD_AM_LDAP_PROVIS_GROUP", "Default affect group");
 define("_MD_AM_LDAP_PROVIS_GROUP_DSC", "The new user is assign to these groups");
 
-define("_MD_AM_LDAP_FIELD_MAPPING_ATTR", "Xoops-Auth server fields mapping");
-define("_MD_AM_LDAP_FIELD_MAPPING_DESC", "Describe here the mapping between the Xoops database field and the LDAP Authentication system field." .
-		"<br><br>Format [Xoops Database field]=[Auth system LDAP attribute]" .
+define("_MD_AM_LDAP_FIELD_MAPPING_ATTR", "ImpressCMS-Auth server fields mapping");
+define("_MD_AM_LDAP_FIELD_MAPPING_DESC", "Describe here the mapping between the ImpressCMS database field and the LDAP Authentication system field." .
+		"<br><br>Format [ImpressCMS Database field]=[Auth system LDAP attribute]" .
 		"<br>for example : email=mail" .
 		"<br>Separate each with a |" .
 		"<br><br>!! For advanced users !!");
 
-define("_MD_AM_LDAP_PROVIS_UPD", "Maintain xoops account provisionning");
-define("_MD_AM_LDAP_PROVIS_UPD_DESC", "The Xoops User account is always synchronized with the Authentication Server");
+define("_MD_AM_LDAP_PROVIS_UPD", "Maintain ImpressCMS account provisioning");
+define("_MD_AM_LDAP_PROVIS_UPD_DESC", "The ImpressCMS User account is always synchronized with the Authentication Server");
 
 define("_MD_AM_RANKW","Rank image max width (pixel)");
 define("_MD_AM_RANKH","Rank image max height (pixel)");
