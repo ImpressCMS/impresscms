@@ -19,7 +19,7 @@
 	</script>
 </head>
 <body>
-<div id="xo-banner"><img src="img/icmslogo.jpg" alt="ImpressCMS" /></div>
+<div id="xo-banner"><img src="img/header-logo.png" alt="ImpressCMS" /></div>
 <div id="xo-content">
 	<div class="tagsoup1">
 	<div class="tagsoup2">
