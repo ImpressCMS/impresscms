@@ -144,7 +144,7 @@ define( "ERR_READ_MAINFILE", "Could not open mainfile.php for reading" );
 define("_INSTALL_SELECT_MODS_INTRO", "In the selection box on the left side, please select the modules that
 you wish to install on this site.
 All the installed modules are accessible by the admin group and the registered users.
-In case you would like to give visitors to the site (unregistered users or users who are not logged in) access to one or more of the 
+In case you would like to give visitors to the site (unregistered users or users who are not logged in) access to one or more of the
 installed modules please select these modules in the selection box on the right.");
 
 define("_INSTALL_SELECT_MODULES", 'Select modules to be installed');

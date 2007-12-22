@@ -186,6 +186,13 @@ TABLE
     BORDER-COLLAPSE: collapse;
     border-spacing: 0px
 }
+TABLE.modules
+{
+	BORDER:0px;
+	MARGIN-LEFT:auto;
+	MARGIN-RIGHT:auto;
+	width:600px;
+}
 CAPTION
 {
     PADDING-RIGHT: 0.25em;
