@@ -60,7 +60,7 @@ define( "DATA_INSERTION_TITLE", "Saving your settings to the database" );
 define( "WELCOME", "Welcome" );
 define( "WELCOME_TITLE", "Installation of ImpressCMS completed" );		// L0
 define( "MODULES_INSTALL", "Install modules" );
-define( "MODULES_INSTALL_TITLE", "Installation of modules." );
+define( "MODULES_INSTALL_TITLE", "Installation of modules " );
 
 // Settings (labels and help text)
 define( "XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path" ); // L55
