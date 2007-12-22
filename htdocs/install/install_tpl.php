@@ -16,7 +16,7 @@
 		butt.className = ( butt.className == 'on' ) ? 'off': 'on';
 		document.body.className = ( butt.className == 'on' ) ? 'show-help': '';
 	}
-	</script>	
+	</script>
 </head>
 <body>
 <div id="xo-banner"><img src="img/icmslogo.jpg" alt="ImpressCMS" /></div>
@@ -46,12 +46,17 @@
 					<img id="help_button" src="img/help.png" alt="help" title="<?php echo SHOW_HIDE_HELP; ?>" class="off" onclick="showHideHelp(this)" />
 				<?php } ?>
 				<h2><?php echo htmlspecialchars( $wizard->pagesTitles[ $wizard->currentPage ] ); ?></h2>
-				<?php echo $content; ?>		
+				<?php echo $content; ?>
 			</div>
 			<div id="buttons">
-				<?php if ( $wizard->currentPage != 0 ) { ?>
+				<?php if ( $wizard->currentPage != 0  && ( $wizard->currentPage != 10 )) { ?>
 				<button type="button" onclick="history.back()">
 					<?php echo BUTTON_PREVIOUS; ?>
+				</button>
+				<?php } ?>
+				<?php if ( $wizard->currentPage == 10 ) { ?>
+				<button type="button" onclick="location.href='../index.php'">
+					<?php echo BUTTON_SHOW_SITE; ?>
 				</button>
 				<?php } ?>
 				<?php if ( $wizard->pages[$wizard->currentPage] == $wizard->secondlastpage) { ?>
@@ -75,10 +80,10 @@
 					<?php echo BUTTON_NEXT; ?>
 					</button>
 				<?php } ?>
-			</div>		
-		</form>		
+			</div>
+		</form>
 		</div>
-		
+
 	</div>
 	</div>
 	<div class="footerbar">

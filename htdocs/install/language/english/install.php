@@ -96,12 +96,15 @@ define( "ADMIN_CONFIRMPASS_LABEL", "Confirm password" ); // L74
 define( "BUTTON_PREVIOUS", "Previous" ); // L42
 define( "BUTTON_NEXT", "Next" ); // L47
 define( "BUTTON_FINISH", "Finish" );
+define( "BUTTON_REFRESH", "Refresh" );
+define( "BUTTON_SHOW_SITE", "Show my site" );
 
 // Messages
 define( "XOOPS_FOUND", "%s found" );
 define( "CHECKING_PERMISSIONS", "Checking file and directory permissions..." ); // L82
 define( "IS_NOT_WRITABLE", "%s is NOT writable." ); // L83
 define( "IS_WRITABLE", "%s is writable." ); // L84
+define( "ALL_PERM_OK", "All Permissions are correct." ); // L84
 
 define( "READY_CREATE_TABLES", "No ImpressCMS tables were detected.<br />The installer is now ready to create the ImpressCMS system tables.<br />Press <em>next</em> to proceed." );
 define( "XOOPS_TABLES_FOUND", "The ImpressCMS system tables already exists in your database.<br />Press <em>next</em> to go to the next step." ); // L131

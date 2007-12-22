@@ -293,9 +293,10 @@ function updTrustPath( val ) {
 			echo '<li class="failure">' . sprintf( IS_NOT_WRITABLE, $path ) . '</li>';
 		}
 	} ?>
+	<button type="button" onclick="location.reload();" /> <?php echo BUTTON_REFRESH; ?></button>
 	</ul>
 	<?php
-} ?>
+}else { echo '<div id="rootperms" class="x2-note">'.CHECKING_PERMISSIONS .'<br /><ul class="diags"><li class="success">'.ALL_PERM_OK.'</li></ul></div>';} ?>
 </fieldset>
 
 <fieldset>
