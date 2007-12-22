@@ -70,7 +70,7 @@ h6 {font-size: .8em;}
 
 /* lists */
 #xo-canvas-content ul {	margin: 2px; padding: 2px;	list-style: decimal inside; text-align: left;}
-#xo-canvas-content li {	margin-left: 2px;	background-color: inherit;	color: #639ACE; line-height: 1.4em;	list-style:	square inside;}
+#xo-canvas-content li {	margin-left: 2px;	background-color: inherit;	line-height: 1.4em;	list-style:	square inside;}
 
 /* forms */
 input {font-size: 1em;}
