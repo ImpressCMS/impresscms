@@ -19,7 +19,7 @@ BODY
 #xo-banner
 {
     BACKGROUND: url(img/banner_bg.png) repeat-x left top;
-    BORDER-BOTTOM: green 5px solid;
+    BORDER-BOTTOM: #ffb500 5px solid;
     HEIGHT: 80px
 }
 #xo-content
