@@ -16,7 +16,7 @@ define('_AM_EDITPBLOCK',"Edit Block Position");
 define('_AM_PBNAME_DESC',"Name of Block Position, it is with this name that will have to be created the Loop in the theme for the exhibition of blocks.<br/>Use a name with small_caption letters, without spaces and special characters.");
 define('_AM_BPMSG1',"Successfully carried through operation!");
 define('_AM_BPMSG2',"Problems had occurred to carry through them the operations.");
-define('_AM_BPMSG3',"It is certain that it desires to exclude this block position?<br /><b>Warning:</b> This operation cannot be insult!");
+define('_AM_BPMSG3',"Are you sure you wish to deleted this block position ?");
 define('_AM_BPHELP','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.');
 
 define("_AM_ADDBLOCK","Add a new block");
