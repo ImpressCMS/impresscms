@@ -151,3 +151,8 @@ border:0px solid #FEFEFE;
 background-color:#FEFEFE;
 height:1px;
 }
+
+.privacy_policy {
+	border: 0px;
+	width: auto;
+}
