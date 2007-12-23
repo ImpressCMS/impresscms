@@ -30,9 +30,6 @@ language/english/auth.php
 +  language/english/banners.php
 --------------------------
 
-+  language/english/banners.php
---------------------------
-
 language/english/findusers.php
 --------------------------
 
