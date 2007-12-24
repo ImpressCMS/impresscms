@@ -4,7 +4,7 @@
  *
  * @license GNU
  * @author marcan <marcan@smartfactory.ca>
- * @version $Id: smartdbupdater.php,v 1.2 2007/10/26 11:50:47 marcan Exp $
+ * @version		$Id: page_pathsettings.php 345 2007-12-24 16:17:22Z malanciault $
  * @link http://impresscms.org ImpressCMS
  */
 
