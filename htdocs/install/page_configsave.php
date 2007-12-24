@@ -92,7 +92,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
 			if ($dbinfo_in_trust_path) {
 				// add the line in mainfile to include the sdata file
-				$include_line = "include_once(XOOPS_TRUST_PATH . '/sdata.php');";
+				$include_line = "include_once(XOOPS_TRUST_PATH . '/" . $sdata_file_name . "');";
 				$content = str_replace('// sdata#--#', $include_line, $content);
 			} else {
 				$content = str_replace('// sdata#--#', '', $content);
