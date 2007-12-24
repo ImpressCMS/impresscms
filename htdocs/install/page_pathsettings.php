@@ -25,16 +25,16 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 	$pageHasHelp = true;
 
 
-	
+
 class PathStuffController {
 	var $xoopsRootPath = '';
 	var $xoopsTrustPath = '';
 	var $xoopsUrl = '';
-	
+
 	var $validRootPath = false;
 	var $validTrustPath = false;
 	var $validUrl = false;
-	
+
 	var $permErrors = array();
 
 	function PathStuffController() {
@@ -53,7 +53,7 @@ class PathStuffController {
 			$this->xoopsUrl = $_SESSION['settings']['URL'];
 		} else {
 			$path = $GLOBALS['wizard']->baseLocation();
-			$this->xoopsUrl = substr( $path, 0, strrpos( $path, '/' ) );	
+			$this->xoopsUrl = substr( $path, 0, strrpos( $path, '/' ) );
 		}
 	}
 
@@ -71,7 +71,7 @@ class PathStuffController {
 			}
 		}
 	}
-	
+
 	function readRequest() {
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$request = $_POST;
@@ -105,7 +105,7 @@ class PathStuffController {
 			}
 		}
 	}
-	
+
 	function validate() {
 		if( $this->checkRootPath() ) {
 			$this->checkPermissions();
@@ -116,7 +116,7 @@ class PathStuffController {
 		$this->validUrl = !empty($this->xoopsUrl);
 		return ( $this->validRootPath && $this->validTrustPath && $this->validUrl && empty( $this->permErrors ) );
 	}
-	
+
 	/**
 	 * Check if the specified folder is a valid "XOOPS_ROOT_PATH" value
 	 * @return bool
@@ -130,7 +130,7 @@ class PathStuffController {
 	   	}
 		return $this->validRootPath = false;
 	}
-		
+
 	/**
 	 * Check if the specified folder is a valid "XOOPS_ROOT_PATH" value
 	 * @return bool
@@ -153,7 +153,7 @@ class PathStuffController {
 		}
 		return true;
 	}
-	
+
 	function checkTrustPathPermissions() {
 		$errors = array();
 		$errors['trustpath'] = $this->makeWritable( "$this->xoopsTrustPath" );
@@ -163,8 +163,8 @@ class PathStuffController {
 		}
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Write-enable the specified file/folder
 	 * @param string $path
@@ -276,7 +276,7 @@ function updTrustPath( val ) {
 }
 </script>
 <fieldset>
-	<legend>Physical paths</legend>
+	<legend><?php echo _INSTALL_PHYSICAL_PATH; ?></legend>
 	<label for="rootpath"><?php echo XOOPS_ROOT_PATH_LABEL; ?></label>
 	<div class="xoform-help"><?php echo htmlspecialchars(XOOPS_ROOT_PATH_HELP); ?></div>
 	<input type="text" name="ROOT_PATH" id="rootpath" value="<?php echo $ctrl->xoopsRootPath; ?>"

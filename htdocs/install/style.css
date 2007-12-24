@@ -174,7 +174,7 @@ A:hover
 }
 SELECT
 {
-    BORDER: 0px;
+    BORDER: 1px solid #D0D0D0;
     BACKGROUND: #fcfcfc;
     FONT: 8pt verdana, arial, helvetica;
     COLOR: #000000;
@@ -246,7 +246,7 @@ LEGEND
 {
     PADDING-RIGHT: 1em;
     DISPLAY: block;
-    PADDING-LEFT: 1em;
+    PADDING-LEFT: 0px;
     FONT-WEIGHT: bold;
     FONT-SIZE: 100%;
     PADDING-BOTTOM: 0px;

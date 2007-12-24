@@ -64,8 +64,8 @@ define( "MODULES_INSTALL_TITLE", "Installation of modules " );
 
 // Settings (labels and help text)
 define( "XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path" ); // L55
-define( "XOOPS_ROOT_PATH_HELP", "Physical path of the ImpressCMS documents folder" ); // L59
-define( "_INSTALL_TRUST_PATH_HELP", "Physical path of the ImpressCMS trust path (outside of web root)" ); // L59
+define( "XOOPS_ROOT_PATH_HELP", "This is the physical path of the ImpressCMS documents folder, the very web root of your ImpressCMS application" ); // L59
+define( "_INSTALL_TRUST_PATH_HELP", "This is the physical location of your ImpressCMS trust path. The trust path is a folder where ImpressCMS and its modules will store some sensible code and information for more security. It is recommended that this folder be outside of the web root, making it not accessible by a browser. If the folder does not exist, ImpressCMS will try and create it. If this is not possible, you will need to create it." ); // L59
 
 define( "XOOPS_URL_LABEL", "Website location (URL)" ); // L56
 define( "XOOPS_URL_HELP", "Main URL that will be used to access your ImpressCMS installation" ); // L58
@@ -161,7 +161,7 @@ define("_INSTALL_NO_PLUS_MOD", "No modules were selected for installation. Pleas
 define("_INSTALL_INSTALLING", "Installing %s module");
 
 define("_INSTALL_TRUST_PATH", "Trust path");
-define("_INSTALL_TRUST_PATH_LABEL", "Location of the trust path (must be outside web root)");
+define("_INSTALL_TRUST_PATH_LABEL", "ImpressCMS physical trust path");
 define("_INSTALL_WEB_LOCATIONS", "Web locations");
 define("_INSTALL_WEB_LOCATIONS_LABEL", "Web locations");
 
@@ -170,4 +170,6 @@ define("_INSTALL_ERR_NO_TRUST_PATH_FOUND", "Trust path was not found.");
 
 define("_INSTALL_COULD_NOT_INSERT", "The wizard was unable to install module %s the database.");
 define("_INSTALL_CHARSET","ISO-8859-1");
+
+define("_INSTALL_PHYSICAL_PATH","Physical path");
 ?>
