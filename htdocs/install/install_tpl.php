@@ -43,7 +43,7 @@
 			</ul>
 			<div class="page" id="<?php echo $wizard->currentPageName; ?>">
 				<?php if ( $pageHasHelp ) { ?>
-					<button type="button" id="help_button" onclick="showHideHelp(this)"> <img id="help_button" src="img/help.png" alt="help" title="<?php echo SHOW_HIDE_HELP; ?>" class="off" /><?php echo SHOW_HIDE_HELP; ?></button>
+					<button type="button" id="help_button" onclick="showHideHelp(this)"> <?php echo SHOW_HIDE_HELP; ?></button>
 				<?php } ?>
 				<h2><?php echo htmlspecialchars( $wizard->pagesTitles[ $wizard->currentPage ] ); ?></h2>
 				<?php echo $content; ?>
