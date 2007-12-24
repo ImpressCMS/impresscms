@@ -799,10 +799,10 @@ function icms_mkdir($target) {
 	if (file_exists($target) && !is_dir($target)) {
 		return false;
 	}
-	if (smart_admin_mkdir(substr($target, 0, strrpos($target, '/')))) {
+	if (icms_mkdir(substr($target, 0, strrpos($target, '/')))) {
 		if (!file_exists($target)) {
 			$res = mkdir($target, 0777); // crawl back up & create dir tree
-			smart_admin_chmod($target);
+			icms_chmod($target);
 			return $res;
 		}
 	}
