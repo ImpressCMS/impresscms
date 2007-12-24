@@ -244,14 +244,12 @@ FIELDSET
 }
 LEGEND
 {
-    PADDING-RIGHT: 1em;
+    PADDING-RIGHT: .5em;
     DISPLAY: block;
-    PADDING-LEFT: 0px;
+    PADDING-LEFT: .5em;
     FONT-WEIGHT: bold;
-    FONT-SIZE: 100%;
-    PADDING-BOTTOM: 0px;
+    FONT-SIZE: 105%;
     MARGIN: 0px;
-    PADDING-TOP: 0px
 }
 LABEL
 {
@@ -264,13 +262,12 @@ LABEL
 }
 .xoform-help
 {
-    PADDING-RIGHT: 0px;
     DISPLAY: none;
-    PADDING-LEFT: 0px;
-    FONT-SIZE: 85%;
-    PADDING-BOTTOM: 0px;
-    MARGIN: 0px;
-    PADDING-TOP: 0px
+    BORDER: #eee 1px solid;
+    BORDER-LEFT: #e2e2e2 3px solid;
+    PADDING:0px;
+    BACKGROUND: #fff8dc;
+    MARGIN: .5em;
 }
 BODY.show-help .xoform-help
 {
