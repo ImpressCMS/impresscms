@@ -626,4 +626,3 @@ install/language/english/welcome.php
 -</p>
 -"
 +';
-
