@@ -14,7 +14,7 @@
  * @param string $msg text to be outputed as a debug line
  * @param bool $exit if TRUE the script will end
  */
-function im_debug($msg, $exit=false)
+function icms_debug($msg, $exit=false)
 {
 	echo "<div style='padding: 5px; color: red; font-weight: bold'>debug :: $msg</div>";
 	if ($exit) {
@@ -27,15 +27,15 @@ function im_debug($msg, $exit=false)
  *
  * @param string $var variable which will be dumped
  */
-function im_debug_vardump($var)
+function icms_debug_vardump($var)
 {
 	if (class_exists('MyTextSanitizer')) {
 		$myts = MyTextSanitizer::getInstance();
-		im_debug($myts->displayTarea(var_export($var, true)));
+		icms_debug($myts->displayTarea(var_export($var, true)));
 	} else {
 		$var = var_export($var, true);
 		$var = preg_replace("/(\015\012)|(\015)|(\012)/","<br />",$var);
-		im_debug($var);
+		icms_debug($var);
 	}
 }
 ?>
