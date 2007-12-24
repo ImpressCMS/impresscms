@@ -3,7 +3,7 @@ ImpressCMS 0.5 release notes
 
 The ImpressCMS community is very pleased to announce its very first release : ImpressCMS 0.5.
 
-The first releases of ImpressCMS is based on the XOOPS 2.0.17 core + some additions made in the XOOPS 2.0.18 development branch and, as such, will retain compatibility with existing modules and themes. The goal is to provide an on-going, stable environment for information and support for XOOPS and its users. It just will not be the XOOPS of XOOPS.org.
+The first releases of ImpressCMS is based on the XOOPS 2.0.17 core + some additions made in the XOOPS 2.0.18 development branch and, as such, will retain compatibility with existing modules and themes. The goal is to provide an on-going, stable environment for information and support for XOOPS and its users.
 
 Please see the full changelog for details in docs/changelog.txt
 
@@ -25,6 +25,19 @@ Downloading ImpressCMS
 This release can be downloaded from the ImpressCMS SourceForge project page :
 https://sourceforge.net/project/showfiles.php?group_id=205633
 
+
+Checking out ImpressCMS from the SVN
+==================================
+
+You can easily get ImpressCMS using SVN. The current release can be found at:
+
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/tags/impresscms_0.5/
+
+If you feel like getting the latest "edge" version, you can checkout the core trunk at :
+
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/trunk/
+
+The ImpressCMS trunk is always the latest as-stable-as-possible development code. It is of course not to be used on production sites.
 
 Installing ImpressCMS
 ==================================
@@ -66,11 +79,29 @@ The packages do not contain any module apart from the system one. You are invite
 
 We also highly recommend the installation of the Protector module which will bring additional protection and logging capabilities to your site.
 
+Where to find more information ?
+==================================
+
+The ImpressCMS Network
+----------------------
+Sourceforge Project: http://www.sourceforge.net/projects/impresscms
+Home of ImpressCMS: http://www.impresscms.org
+Community support: http://community.impresscms.org
+Addons, modules, themes and languages: http://addons.impresscms.org
+Community driven documentation: http://wiki.impresscms.org
+ImpressCMS Blogs: http://blog.impresscms.org
+ImpressCMS IRC Channel: #impresscms on freenode.net or simply : http://community.impresscms.org/chat/
+
+ImpressCMS Related Sites
+------------------------
+Ohloh project: http://www.ohloh.net/projects/10042?p=ImpressCMS
+Facebook group: http://www.facebook.com/group.php?gid=7395938599
+LinkedIn group: http://www.linkedin.com/e/gis/45459/3A9B02585174
+Delicious: http://del.icio.us/impresscms
+Flickr: http://www.flickr.com/photos/impresscms/
+YouTube: http://www.youtube.com/impresscms
+ImpressCMS Toolbar: http://impresscms.ourtoolbar.com/
+
 ==================================
 The ImpressCMS Community
-
-The Home: http://www.impresscms.org
-The Community: http://community.impresscms.org
-The Addons: http://addons.impresscms.org
-The Wiki: http://wiki.impresscms.org
-The Blog : http://blog.impresscms.org
+http://www.impresscms.org
