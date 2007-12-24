@@ -23,6 +23,9 @@ Unreleased: Version 0.5
 - Added : Configuration options to turn on or off and configure the Multilanguage on the site (malanciault)
 - Added : Integrating some flags image to be used by the multilanguage feature (malanicault)
 - Added : A system block to allow users to select their language (real_therplima)
+- Added : icms_copyr function to copy a folder an its content (malanciault)
+- Added : icms_mkdir function to create a folder (malanciault)
+- Added : icms_chmod function to chmode a file or folder (malanciault)
 
 - Changed : The icons of /class/xoopseditor/dhtmlext/images/*.* (sato-san)
 - Changed : Theme changes; Link to impressCMS, poweredby.gif (sato-san)

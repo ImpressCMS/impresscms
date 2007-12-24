@@ -745,4 +745,79 @@ function xoops_trim($text)
     }
     return trim($text);
 }
+
+
+/**
+* Copy a file, or a folder and its contents
+*
+* @author	Aidan Lister <aidan@php.net>
+* @param	string	$source    The source
+* @param	string  $dest      The destination
+* @return   bool    Returns true on success, false on failure
+*/
+function icms_copyr($source, $dest) {
+	// Simple copy for a file
+	if (is_file($source)) {
+		return copy($source, $dest);
+	}
+	// Make destination directory
+	if (!is_dir($dest)) {
+		mkdir($dest);
+	}
+	// Loop through the folder
+	$dir = dir($source);
+	while (false !== $entry = $dir->read()) {
+		// Skip pointers
+		if ($entry == '.' || $entry == '..') {
+			continue;
+		}
+		// Deep copy directories
+		if (is_dir("$source/$entry") && ($dest !== "$source/$entry")) {
+			copyr("$source/$entry", "$dest/$entry");
+		} else {
+			copy("$source/$entry", "$dest/$entry");
+		}
+	}
+	// Clean up
+	$dir->close();
+	return true;
+}
+/**
+* Create a folder
+*
+* @author	Newbb2 developpement team
+* @param	string	$target    folder being created
+* @return   bool    Returns true on success, false on failure
+*/
+function icms_mkdir($target) {
+	// http://www.php.net/manual/en/function.mkdir.php
+	// saint at corenova.com
+	// bart at cdasites dot com
+	if (is_dir($target) || empty ($target)) {
+		return true; // best case check first
+	}
+	if (file_exists($target) && !is_dir($target)) {
+		return false;
+	}
+	if (smart_admin_mkdir(substr($target, 0, strrpos($target, '/')))) {
+		if (!file_exists($target)) {
+			$res = mkdir($target, 0777); // crawl back up & create dir tree
+			smart_admin_chmod($target);
+			return $res;
+		}
+	}
+	$res = is_dir($target);
+	return $res;
+}
+/**
+* Change the permission of a file or folder
+*
+* @author	Newbb2 developpement team
+* @param	string	$target  target file or folder
+* @param	int		$mode    permission
+* @return   bool    Returns true on success, false on failure
+*/
+function icms_chmod($target, $mode = 0777) {
+	return @ chmod($target, $mode);
+}
 ?>
