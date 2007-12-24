@@ -32,12 +32,14 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	// Physical path to your main XOOPS directory WITHOUT trailing slash
 	// Example: define('XOOPS_ROOT_PATH', '/path/to/xoops/directory');
 	define('XOOPS_ROOT_PATH', '');
-	
+
 	// XOOPS Security Physical Path
 	// Physical path to your security XOOPS directory WITHOUT trailing slash.
 	// Ideally off your server WEB folder
 	// Example: define('XOOPS_TRUST_PATH', '/path/to/trust/directory');
 	define('XOOPS_TRUST_PATH', '');
+
+	// sdata#--#
 
 	// XOOPS Virtual Path (URL)
 	// Virtual path to your main XOOPS directory WITHOUT trailing slash

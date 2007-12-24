@@ -24,6 +24,9 @@ $xoopsOption['nocommon'] = true;
 define('XOOPS_INSTALL', 1);
 
 @include_once '../mainfile.php';
+// including a few functions
+require_once 'include/functions.php';
+include_once '../include/debug_functions.php';
 
 error_reporting( E_ALL );
 
@@ -35,7 +38,7 @@ class XoopsInstallWizard {
 	var $lastpage;
 	var $secondlastpage;
 	var $language = 'english';
-	
+
 	function xoInit() {
 		if ( !$this->checkAccess() ) {
 			return false;
@@ -57,7 +60,7 @@ class XoopsInstallWizard {
 		$this->pagesNames	= array(
 			LANGUAGE_SELECTION, INTRODUCTION, CONFIGURATION_CHECK,
 			PATHS_SETTINGS, DATABASE_CONFIG, CONFIG_SAVE,
-			TABLES_CREATION, INITIAL_SETTINGS, 
+			TABLES_CREATION, INITIAL_SETTINGS,
 			DATA_INSERTION, MODULES_INSTALL, WELCOME
 		);
 		$this->pagesTitles	= array(
@@ -66,14 +69,14 @@ class XoopsInstallWizard {
 			TABLES_CREATION_TITLE, INITIAL_SETTINGS_TITLE,
 			DATA_INSERTION_TITLE, MODULES_INSTALL_TITLE, WELCOME_TITLE
 		);
-		
+
 		$this->setPage(0);
 		// Prevent client caching
 		header( "Cache-Control: no-store, no-cache, must-revalidate", false );
 		header( "Pragma: no-cache" );
 		return true;
 	}
-	
+
 	function checkAccess() {
 		if ( INSTALL_USER != '' && INSTALL_PASSWORD != '' ) {
 		    if (!isset($_SERVER['PHP_AUTH_USER']) ) {
@@ -95,7 +98,7 @@ class XoopsInstallWizard {
 		}
 		return true;
 	}
-	
+
 	function loadLangFile( $file ) {
 		if ( file_exists( "./language/$this->language/$file.php" ) ) {
 			include_once "./language/$this->language/$file.php";
@@ -103,8 +106,8 @@ class XoopsInstallWizard {
 			include_once "./language/english/$file.php";
 		}
 	}
-	
-	
+
+
 	function initLanguage( $language ) {
 		//echo $language;
 		if ( !file_exists( "./language/$language/install.php" ) ) {
@@ -126,7 +129,7 @@ class XoopsInstallWizard {
 		}
 		return $this->currentPage;
 	}
-	
+
 	function baseLocation() {
 		$proto	= ( @$_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
 		$host	= $_SERVER['HTTP_HOST'];
@@ -134,7 +137,7 @@ class XoopsInstallWizard {
 		return "$proto://$host$base";
 	}
 
-	function pageURI( $page ) {	
+	function pageURI( $page ) {
 		if ( !(int)$page{0} ) {
 			if ( $page{0} == '+' ) {
 				$page = $this->currentPage + substr( $page, 1 );
@@ -155,7 +158,7 @@ class XoopsInstallWizard {
 		//header( "Status: $status $message" );
 		header( "Location: $location" );
 	}
-	
+
 
 }
 
@@ -169,7 +172,7 @@ if ( ini_get( 'magic_quotes_gpc' ) ) {
 $pageHasHelp = false;
 $pageHasForm = false;
 
-   
+
 $wizard =& new XoopsInstallWizard();
 if ( !$wizard->xoInit() ) {
 	exit();

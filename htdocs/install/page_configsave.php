@@ -23,9 +23,58 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 	$pageHasHelp = false;
 
 	$vars =& $_SESSION['settings'];
-	
+
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$error = '';
+	// let's try and put the db info in the trust path
+	if ( !copy( $vars['ROOT_PATH'] . '/sdata.dist.php', $vars['TRUST_PATH'] . '/sdata.php' ) ) {
+		// we were not able to create the sdata file in trust path so we will use the old method
+		$error = true;
+	} else {
+		clearstatcache();
+		if ( ! $file = fopen( $vars['TRUST_PATH'] . '/sdata.php', "r" ) ) {
+			$error = ERR_READ_SDATA;
+        } else {
+        	$content = fread( $file, filesize( $vars['ROOT_PATH'] . '/mainfile.php' ) );
+        	fclose($file);
+
+			$sdata_rewrite = array();
+			$sdata_rewrite['DB_HOST'] = $vars['DB_HOST'];
+			$sdata_rewrite['DB_USER'] = $vars['DB_USER'];
+			$sdata_rewrite['DB_PASS'] = $vars['DB_PASS'];
+			$sdata_rewrite['DB_NAME'] = $vars['DB_NAME'];
+
+			foreach( $sdata_rewrite as $key => $val ) {
+				if( preg_match( "/(define\()([\"'])(SDATA_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content ) ) {
+					$val = addslashes( $val );
+					$content = preg_replace( "/(define\()([\"'])(SDATA_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/",
+						"define( 'SDATA_$key', '$val' )", $content );
+				} else {
+					//$this->error = true;
+					//$this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<b>$val</b>")."<br />\n";
+				}
+			}
+	        if ( !$file = fopen( $vars['TRUST_PATH'] . '/sdata.php', "w" ) ) {
+	        	$error = ERR_WRITE_SDATA;
+	        } else {
+		        if ( fwrite( $file, $content ) == -1 ) {
+					$error = ERR_WRITE_SDATA;
+	        	}
+				fclose($file);
+	        }
+        }
+	}
+	if (!$error) {
+		// then we were able to save the db info into the trust path
+		$dbinfo_in_trust_path = true;
+		$vars['DB_HOST'] = 'SDATA_DB_HOST';
+		$vars['DB_USER'] = 'SDATA_DB_USER';
+		$vars['DB_PASS'] = 'SDATA_DB_PASS';
+		$vars['DB_NAME'] = 'SDATA_DB_NAME';
+	} else {
+		$dbinfo_in_trust_path = false;
+	}
+
 	if ( !copy( $vars['ROOT_PATH'] . '/mainfile.dist.php', $vars['ROOT_PATH'] . '/mainfile.php' ) ) {
 		$error = ERR_COPY_MAINFILE;
 	} else {
@@ -39,10 +88,24 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
         	$content = fread( $file, filesize( $vars['ROOT_PATH'] . '/mainfile.php' ) );
         	fclose($file);
 
+			if ($dbinfo_in_trust_path) {
+				// add the line in mainfile to include the sdata file
+				$include_line = "include_once(XOOPS_TRUST_PATH . '/sdata.php');";
+				$content = str_replace('// sdata#--#', $include_line, $content);
+			} else {
+				$content = str_replace('// sdata#--#', '', $content);
+			}
+
 			foreach( $rewrite as $key => $val ) {
 				if ( is_int($val) && preg_match("/(define\()([\"'])(XOOPS_$key)\\2,\s*([0-9]+)\s*\)/", $content ) ) {
 					$content = preg_replace( "/(define\()([\"'])(XOOPS_$key)\\2,\s*([0-9]+)\s*\)/",
 						"define( 'XOOPS_$key', $val )", $content );
+				} elseif($dbinfo_in_trust_path && isset($sdata_rewrite[$key])) {
+					if( preg_match( "/(define\()([\"'])(XOOPS_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content ) ) {
+						$val = addslashes( $val );
+						$content = preg_replace( "/(define\()([\"'])(XOOPS_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/",
+							"define( 'XOOPS_$key', $val )", $content );
+					}
 				} elseif( preg_match( "/(define\()([\"'])(XOOPS_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content ) ) {
 					$val = addslashes( $val );
 					$content = preg_replace( "/(define\()([\"'])(XOOPS_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/",

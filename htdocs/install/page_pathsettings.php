@@ -138,6 +138,14 @@ class PathStuffController {
 	function checkTrustPath() {
 	   	if ( is_dir( $this->xoopsTrustPath ) && is_readable( $this->xoopsTrustPath ) ) {
 			return $this->validTrustPath = true;
+	   	} else {
+	   		// trust path was not found, let's try and create it
+	   		if (!empty($this->xoopsTrustPath)) {
+				icms_install_mkdir($this->xoopsTrustPath);
+					if ( is_dir( $this->xoopsTrustPath ) && is_readable( $this->xoopsTrustPath ) ) {
+						return $this->validTrustPath = true;
+					}
+	   		}
 	   	}
 		return $this->validTrustPath = false;
 	}

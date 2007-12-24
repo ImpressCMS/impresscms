@@ -140,6 +140,10 @@ define( "ERR_COPY_MAINFILE", "Could not copy the distribution file to mainfile.p
 define( "ERR_WRITE_MAINFILE", "Could not write into mainfile.php. Please check the file permission and try again.");
 define( "ERR_READ_MAINFILE", "Could not open mainfile.php for reading" );
 
+define( "ERR_WRITE_SDATA", "Could not write into sdata.php. Please check the file permission and try again.");
+define( "ERR_READ_SDATA", "Could not open sdata.php for reading" );
+
+
 //
 define("_INSTALL_SELECT_MODS_INTRO", "In the selection box on the left side, please select the modules that
 you wish to install on this site.

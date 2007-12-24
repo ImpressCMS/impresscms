@@ -11,6 +11,8 @@ Unreleased: Version 0.5
 - Added : Added a new Database Driver (MySQLi). (young-pee)
 - Added : New feature to add/edit/delete blocks positions. (rplima/young-pee)
 - Added : New installer (skalpa/wtravel)
+- Added : Configuration of XOOPS_TRUST_PATH in intall wizard (malanciault)
+- Added : Saving the database information in a file inside trust_path if possible (malanciault)
 - Added : Upgrade script from XOOPS 2.0.18 (m0nty/malanciault)
 - Added : Handling HTTP errors automatically on the site. (malanciault/young-pee)
 - Added : Creating a random DB prefix in instalation process like mentioned in feature request item #1848819 (real_therplima)
