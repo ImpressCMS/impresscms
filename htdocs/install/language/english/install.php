@@ -37,7 +37,7 @@ define( "FAILED", "Failed" );
 define( "XOOPS_INSTALL_WIZARD", "ImpressCMS installation wizard" );
 define( "INSTALL_STEP", "Step" );
 define( "INSTALL_OUTOF", " out of " );
-define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007%s <a href=\"http://www.impresscms.org\">ImpressCMS</a>" );
+define( "INSTALL_COPYRIGHT", "Copyright &copy; 2008%s <a href=\"http://www.impresscms.org\">ImpressCMS</a>" );
 
 define( "LANGUAGE_SELECTION", "Language selection" );
 define( "LANGUAGE_SELECTION_TITLE", "Choose your language");		// L128
