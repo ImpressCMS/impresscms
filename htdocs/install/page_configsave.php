@@ -27,12 +27,14 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$error = '';
 	// let's try and put the db info in the trust path
-	if ( !copy( $vars['ROOT_PATH'] . '/sdata.dist.php', $vars['TRUST_PATH'] . '/sdata.php' ) ) {
+	$sdata_file_name = md5($vars['ROOT_PATH'] . time()) . '.php';
+
+	if ( !copy( $vars['ROOT_PATH'] . '/sdata.dist.php', $vars['TRUST_PATH'] . '/' . $sdata_file_name ) ) {
 		// we were not able to create the sdata file in trust path so we will use the old method
 		$error = true;
 	} else {
 		clearstatcache();
-		if ( ! $file = fopen( $vars['TRUST_PATH'] . '/sdata.php', "r" ) ) {
+		if ( ! $file = fopen( $vars['TRUST_PATH'] . '/' . $sdata_file_name, "r" ) ) {
 			$error = ERR_READ_SDATA;
         } else {
         	$content = fread( $file, filesize( $vars['ROOT_PATH'] . '/mainfile.php' ) );
@@ -54,7 +56,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 					//$this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<b>$val</b>")."<br />\n";
 				}
 			}
-	        if ( !$file = fopen( $vars['TRUST_PATH'] . '/sdata.php', "w" ) ) {
+	        if ( !$file = fopen( $vars['TRUST_PATH'] . '/' . $sdata_file_name, "w" ) ) {
 	        	$error = ERR_WRITE_SDATA;
 	        } else {
 		        if ( fwrite( $file, $content ) == -1 ) {
