@@ -83,7 +83,7 @@ Where to find more information ?
 ==================================
 
 The ImpressCMS Network
-----------------------
+------------------------
 Sourceforge Project: http://www.sourceforge.net/projects/impresscms
 Home of ImpressCMS: http://www.impresscms.org
 Community support: http://community.impresscms.org
@@ -91,6 +91,13 @@ Addons, modules, themes and languages: http://addons.impresscms.org
 Community driven documentation: http://wiki.impresscms.org
 ImpressCMS Blogs: http://blog.impresscms.org
 ImpressCMS IRC Channel: #impresscms on freenode.net or simply : http://community.impresscms.org/chat/
+
+ImpressCMS Mailing Lists
+------------------------
+
+A few mailing lists are available for everyone to stay informed development information, bug trckaing, feature requests, etc...
+
+Simply go here to subscribe to the desired mailing lists: http://sourceforge.net/mail/?group_id=205633
 
 ImpressCMS Related Sites
 ------------------------
