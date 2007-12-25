@@ -1,81 +1,77 @@
 <?php
 // $Id: upgrade.php 558 2006-06-20 06:35:23Z skalpa $
-//Traducción para ImpressCMS 0.5 por debianus
 
-define( "_XOOPS_UPGRADE", "Actualización del sistema ImpressCMS" );
-define( "_CHECKING_APPLIED", "Comprobando las actualizaciones aplicadas:" );
-define( "_SET_FILES_WRITABLE", "Debe asignar permisos de escritura a los siguientes archivos antes de proceder:" );
-define( "_NO_NEED_UPGRADE", "La actualización no es necesaria. Por favor, elimine este directorio del servidor" );
-define( "_NEED_UPGRADE", "La actualización es necesaria" );
-define( "_PROCEED_UPGRADE", "Proceder con la actualizadión" );
-define( "_PERFORMING_UPGRADE", "Ejecutando actualización %s" );
+define( "_XOOPS_UPGRADE", "ImpressCMS Upgrade" );
+define( "_CHECKING_APPLIED", "Checking applied upgrades:" );
+define( "_SET_FILES_WRITABLE", "Make the following files writable before proceeding:" );
+define( "_NO_NEED_UPGRADE", "No upgrade necessary. Please remove this folder from your server" );
+define( "_NEED_UPGRADE", "Upgrade needed" );
+define( "_PROCEED_UPGRADE", "Proceed to upgrade" );
+define( "_PERFORMING_UPGRADE", "Performing %s upgrade" );
 
-define( "_USER_LOGIN", "Inicio de sesión como usuario" );
+define( "_USER_LOGIN", "User login" );
 
-define( "_MANUAL_INSTRUCTIONS", "Instrucciones de actualización: manual" );
+define( "_MANUAL_INSTRUCTIONS", "Manual installation instructions" );
 
 // %s is filename
-define( "_FAILED_PATCH", "Falló el parche %s" );
-define( "_APPLY_NEXT", "Aplicar próxima actualización (%s)" );
-define( "_COPY_RED_LINES", "Copiar las líneas rojas siguientes a %s" );
+define( "_FAILED_PATCH", "Failed to patch %s" );
+define( "_APPLY_NEXT", "Apply next upgrade (%s)" );
+define( "_COPY_RED_LINES", "Copy the following red lines to %s" );
 
-define( "_FINISH", "Finalizado" );
-define( "_RELOAD", "Recargar" );
+define( "_FINISH", "Finish" );
+define( "_RELOAD", "Reload" );
 
-define('_UPGRADE_CHARSET', _CHARSET); 
+define('_UPGRADE_CHARSET', _CHARSET);
 
-define("_UPGRADE_PRIVPOLICY", "<p>Es necesario que establezca la política de privacidad de su sitio web y que la publique en el mismo en el caso de admitir el registro de nuevos usuarios. Probablemente en su país exista legislación sobre la materia que debe conocer y cumplir. Por ejemplo, en España hay que tener en cuenta lo dispuesto en la Ley Orgánica 15/1999, de 13 de Diciembre, de Protección de Datos de carácter personal (en adelante LOPD) y el Real Decreto 994/1999, de 11 de Junio, que aprueba el Reglamento de medidas de seguridad de los ficheros automatizados que contengan datos de carácter personal (en adelante Reglamento 994/1999). 
+define("_UPGRADE_PRIVPOLICY", "<p>This privacy policy sets out how [website name] uses and protects any information that you give [website name] when you use this website. [website name] is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement. [website name] may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes.
 </p><p>
-También debe tener en cuenta que los requisitos de la política de privacidad pueden ser distintos según cual sea la información exigida a los visitantes para registrarse o la que estos pueden introducir al hacer uso del sitio; piense por ejemplo en el caso de que una web realice algún tipo de transacción económica proporcionándose datos bancarios, o que recoga información médica o política. Normalmente las legislaciones son mucho más estrictas con relación al tratamiento de este tipo de datos de carácter personal.
-</p><p>
-A continuación presentamos un ejemplo de política de privacidad general para un sitio que no gestiona información cuya seguridad deba ser atendida con medidas especiales. Por favor, ajuste el texto según tus necesidades o introduce uno nuevo. Para ello, en el panel de control del sitio vaya a 'Preferencias' y dentro de éstas a la'Configuración del usuario'; haga clic en 'Editar' y al final de la página que se mostrará tiene la opción de activar la política de privacidad y fijar el texto de la misma.
-</p><p>
-<h2>Información general</h2>
-</p><p>
-La política de privacidad que se describe a continuación sólo es aplicable al presente sitio web (puedes poner su nombre), entendiendo como tal todas las páginas y subpáginas incluidas en el dominio (nombre de tu dominio). Declinamos cualquier responsabilidad sobre las diferentes políticas de privacidad y protección de datos de carácter personal que puedan contener los sitios web a los cuales pueda accederse a través de los hipervínculos ubicados en este sitio y no gestionados directamente por nosotros. La presente política de privacidad está vigente en este sitio desde el día.
-</p><p>
-Ponemos en conocimiento de los usuarios de este sitio web que la presente declaración refleja la política en materia de protección de datos del mismo. Esta política se ha configurado respetando escrupulosamente la normativa vigente en materia de protección de datos personales, esto es, entre otras, la regulada en la Ley Orgánica 15/1999, de 13 de Diciembre, de Protección de Datos de carácter personal (en adelante LOPD) y el Real Decreto 994/1999, de 11 de Junio, que aprueba el Reglamento de medidas de seguridad de los ficheros automatizados que contengan datos de carácter personal (en adelante Reglamento 994/1999).
+This policy is effective from [date].
 </p>
-<h2>Recogida de datos de carácter personal.</h2>
+<h2>What we collect</h2>
 <p>
-No recopilamos datos de carácter personal sin el consentimiento de los usuarios. En caso de que decidas registrarte como usuario en este sitio los únicos datos que solicitaremos con carácter obligatorio son:
-</p>
-<p>
+We may collect the following information:
 <ul>
-<li>Nombre de usuario, pudiendo elegir el que prefieras. No tiene porqué ser tu nombre y apellidos y el nombre social de las personas físicas</li>
-<li>Una dirección de correo electrónico. Es necesaria para activar tu cuenta de usuario y para enviarte una nueva contraseña en caso de haber olvidado la que elegiste o tengas otro problema.</li>
-<li>Una contraseña de usuario para acceder al sitio; es de tu libre elección, salvo en cuanto a su extensión.</li></ul>
-</p><p>
-Nota: caso de tener un sitio web que almacene un información personal, como puede ser un sitio de soporte técnico, de gestión del personal de una empresa, una intranet etc, quizás deberías añadir algo como:
-</p><p>
-Dichos datos proporcionados voluntariamente por el usuario podrán ser incorporados a un fichero automatizado, registrado ante la Agencia Española de Protección de Datos, bajo la titularidad de (dueño de la web). En consecuencia, el usuario que voluntariamente nos proporcione sus datos personales acepta expresamente el tratamiento de los mismos, con la exclusiva finalidad de gestionar su condición de usuario registrado de los servicios que prestamos. En cualquier caso, los datos recogidos serán tratados siempre respetando la normativa vigente en materia de protección de datos de carácter personal.
+<li>name and job title</li>
+<li>contact information including email address</li>
+<li>demographic information such as postcode, preferences and interests</li>
+<li>other information relevant to customer surveys and/or offers</li></ul>
 </p>
-<h2>Medidas de seguridad.</h2> 
+<h2>What we do with the information we gather</h2>
 <p>
-Los datos personales comunicados por el usuario pueden ser almacenados en bases de datos automatizadas o no, cuya titularidad nos corresponde en exclusiva, asumiendo nosotros todas las medidas de índole técnica, organizativa y de seguridad que garantizan la confidencialidad, integridad y calidad de la información contenida en las mismas de acuerdo con lo establecido en la LOPD y en el Reglamento 994/1999.
-</p><p>
-La comunicación con los usuarios no utiliza un canal seguro y los datos transmitidos no son cifrados, por lo que se solicita a los usuarios que se abstengan de enviar aquellos datos personales que merezcan la consideración de datos especialmente protegidos en los términos del artículo 7 de la LOPD, ya que las medidas de seguridad aplicables a un canal no seguro lo hacen desaconsejable.
+We require this information to understand your needs and provide you with a better service, and in particular for the following reasons:
+<ul>
+<li>Internal record keeping.</li>
+<li>We may use the information to improve our products and services.</li>
+<li>We may periodically send promotional email about new products, special offers or other information which we think you may find interesting using the email address which you have provided.</li>
+<li>From time to time, we may also use your information to contact you for market research purposes. We may contact you by email.</li>
+<li>We may use the information to customise the website according to your interests.</li></ul>
 </p>
-<h2>Finalidad del tratamiento de los datos</h2>
+<h2>Security</h2>
 <p>
-Los datos de carácter personal que sean comunicados voluntariamente por el usuario se destinarán únicamente a la finalidad concreta de gestionar su condición de tal y serán tratados con la más absoluta confidencialidad, destinándose únicamente a aquellas finalidades para las que fueron recabados y de las que expresamente se informa al usuario en el momento de su recogida por medio de la presente Política de Privacidad.
+We are committed to ensuring that your information is secure. In order to prevent unauthorised access or disclosure we have put in place suitable physical, electronic and managerial procedures to safeguard and secure the information we collect online.
 </p>
-<h2>Cesión de datos</h2>
+<h2>How we use cookies</h2>
 <p>
-Los datos de carácter personal recogidos a través de este sitio no serán objeto de cesión a ninguna otra persona física o jurídica, salvo que dicha cesión se encuentre amparada por la LOPD tanto en cuanto a los destinatarios de la misma como en cuanto a su objeto.
+A cookie is a small file which asks permission to be placed on your computer's hard drive. Once you agree, the file is added and the cookie helps analyse web traffic or lets you know when you visit a particular site. Cookies allow web applications to respond to you as an individual. The web application can tailor its operations to your needs, likes and dislikes by gathering and remembering information about your preferences.
 </p><p>
-Si tu sitio web tiene carácter comercial, puedes añadir algo como:
+We use traffic log cookies to identify which pages are being used & for authenticating you as a registered member. This helps us analyse data about web page traffic and improve our website in order to tailor it to customer needs. We only use this information for statistical analysis purposes and then the data is removed from the system. Overall, cookies help us provide you with a better website, by enabling us to monitor which pages you find useful and which you do not. A cookie in no way gives us access to your computer or any information about you, other than the data you choose to share with us.
 </p><p>
-El usuario que voluntariamente nos comunique sus datos a través de este sitio consiente expresamente la utilización de los mismos para el envío de información comercial por vía electrónica de los productos y servicios comercializados por nosotros, en estricto cumplimiento de lo dispuesto en la legislación vigente en materia de Servicios de la Sociedad de la Información en lo que a comunicaciones comerciales se refiere, salvo que manifieste su oposición.
-<p>
-<h2>Calidad de los datos: derechos de acceso, oposición, rectificación y cancelación.</h2>
-<p>
-Nos comprometemos a mantener actualizados en todo momento los datos personales que voluntariamente nos hayan proporcionado los usuarios de este sitio, de manera que respondan verazmente a la identidad y características personales de dichos usuarios. Por ello, cualquier usuario puede en cualquier momento ejercer el derecho a acceder, rectificar y, en su caso, cancelar sus datos de carácter personal suministrados mediante comunicación dirigida al correo de este sitio.
+You can choose to accept or decline cookies. Most web browsers automatically accept cookies, but you can usually modify your browser setting to decline cookies if you prefer. This may prevent you from taking full advantage of the website including registration and logging in.
 </p>
-<h2>Sobre cómo usamos 'cookies'</h2>
+<h2>Links to other websites</h2>
 <p>
-Se denominan así a unos pequeños archivos con respecto a los cuales se te pregunta (según la configuración que hayas elegido en tu navegador) si aceptas que sean almacenados en tu disco duro. Si estás de acuerdo, el archivo ayuda a analizar el tráfico web y conocer cuando visitas nuestro sitio. También son útiles para almacenar información acerca de tus preferencias al visitar nuestro sitio.
+Our website may contain links to enable you to visit other websites of interest easily. However, once you have used these links to leave our site, you should note that we do not have any control over that other website. Therefore, we cannot be responsible for the protection and privacy of any information which you provide whilst visiting such sites and such sites are not governed by this privacy statement. You should exercise caution and look at the privacy statement applicable to the website in question.
+</p>
+<h2>Controlling your personal information</h2>
+<p>
+You may choose to restrict the collection or use of your personal information in the following ways:
+<ul>
+<li>whenever you are asked to fill in a form on the website, look for the box that you can click to indicate that you do not want the information to be used by anybody for direct marketing purposes</li>
+<li>if you have previously agreed to us using your personal information for direct marketing purposes, you may change your mind at any time by writing to or emailing us at [email address]</li></ul>
 </p><p>
-Puedes elegir aceptar o rechazar 'cookies'. Muchos navegadores automáticamente los aceptan, pero normalmente puedes modificar la configuración del que uses para rechazarlos como regla general; sin embargo, esto puede impedir el registro y la entrada en un sitio web.
+We will not sell, distribute or lease your personal information to third parties unless we have your permission or are required by law to do so. We may use your personal information to send you promotional information about third parties which we think you may find interesting if you tell us that you wish this to happen. You may request details of personal information which we hold about you under the Data Protection Act 1998. A small fee will be payable. If you would like a copy of the information held on you please write to [address].
+</p><p>
+If you believe that any information we are holding on you is incorrect or incomplete, please write to or email us as soon as possible, at the above address. We will promptly correct any information found to be incorrect.
 </p>");
+
 ?>
