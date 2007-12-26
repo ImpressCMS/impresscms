@@ -169,13 +169,13 @@ class XoopsFormRadio extends XoopsFormElement {
 	function render() {
 		$ret = "";
 		$ele_name = $this->getName();
-		$ele_value = $this->getValue();
+		$ele_value = intval($this->getValue());
 		$ele_options = $this->getOptions();
 		$ele_extra = $this->getExtra();
 		$ele_delimeter = $this->getDelimeter();
 		foreach ( $ele_options as $value => $name ) {
 			$ret .= "<input type='radio' name='".$ele_name."' value='".htmlspecialchars($value, ENT_QUOTES)."'";
-			if ( $value == $ele_value ) {
+			if ( $value === $ele_value ) {
 				$ret .= " checked='checked'";
 			}
 			$ret .= $ele_extra." />".$name.$ele_delimeter."\n";
