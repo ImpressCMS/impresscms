@@ -139,7 +139,7 @@ div#navbarCP ul li ul a{
 	font-weight: normal;
 	background: url(images/item.png) no-repeat left;
 	padding-left: 20px;
-	*padding-left: 4px;
+	margin: 0;
 	font-size:11px;
 	/*border:1px solid #000000;*/
 	border: 1px solid #FFFFFF;
@@ -153,7 +153,8 @@ div#navbarCP ul li ul a:hover{
 div#navbarCP ul li ul li{
 	width: 150px;
 	margin: 0;
-	*width: auto;
+	*width: 150px;
+	*margin-left:-10px;
 }
 div#navbarCP ul li > ul {
 	top: auto;
@@ -163,6 +164,17 @@ div#navbarCP ul li:hover ul, div#navbarCP li.over ul{ display: block; }
 div#navbarCP ul li ul li{
 	float: none;
 }
+div#navbarCP ul li ul li ul{
+	margin-left:150px;
+	margin-top:-25px;
+}
+div#navbarCP ul li ul li ul li{
+	display:none;
+}
+div#navbarCP ul li ul li:hover ul li {
+	display:block;
+}
+
 div#bodyCP{
 	width: 95%;
 	margin: 0 auto;

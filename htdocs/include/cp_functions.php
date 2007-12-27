@@ -156,17 +156,81 @@ window.onload=startList;
 		$sadmin = $moduleperm_handler->checkRight('module_admin', $m->mid(), $xoopsUser->getGroups());
 		$rtn = array();
 		if ($sadmin){
-			$info =& $m->getInfo();
-			$rtn['link'] = XOOPS_URL . '/modules/'. $m->dirname() . '/' . $info['adminindex'];
-			$rtn['title'] = $m->name();
-			$rtn['absolute'] = 1;
-			if (isset($info['iconsmall']) && $info['iconsmall']!='' ) $rtn['small'] =  $info['iconsmall'];
+			if(is_object($xoopsModule) && $xoopsModule->mid() == $m->mid()) {
+				$inf =& $xoopsModule->getInfo();
+				$rtn['link'] = XOOPS_URL . '/modules/'. $xoopsModule->dirname() . '/' . (isset($inf['adminindex'])?$inf['adminindex']:'');
+				$rtn['title'] = $xoopsModule->name();
+				$rtn['dir'] = $xoopsModule->dirname();
+				$rtn['absolute'] = 1;
+				$module_admin_menu = $xoopsModule->getAdminMenu();
+				if (is_array($module_admin_menu) && count($module_admin_menu) > 0){
+					$rtn['hassubs'] = 1;
+					$rtn['subs'] = array();
+					if (is_array($xoopsModule->adminmenu)){
+						foreach ($xoopsModule->adminmenu as $item){
+							$item['link'] = XOOPS_URL . '/modules/'. $xoopsModule->dirname() . '/'.$item['link'];
+							$rtn['subs'][] = $item;
+						}
+					}
+				}else{
+					$rtn['hassubs'] = 0;
+					unset($rtn['subs']);
+				}
+				$hasconfig = $xoopsModule->getVar('hasconfig');
+				$hascomments = $xoopsModule->getVar('hascomments');
+				if ((isset($hasconfig) && $hasconfig == 1) || (isset($hascomments) && $hascomments == 1)){
+					$rtn['hassubs'] = 1;
+					if (!isset($rtn['subs'])){$rtn['subs'] = array();}
+					$subs = array('title'=>_PREFERENCES,'link'=>XOOPS_URL.'/modules/system/admin.php?fct=preferences&op=showmod&mod='.$xoopsModule->mid());
+					$rtn['subs'][] = $subs;
+				}else{
+					$rtn['hassubs'] = 0;
+					unset($rtn['subs']);
+				}
+				if (isset($inf['iconsmall']) && $inf['iconsmall']!='' ) $rtn['small'] =  $inf['iconsmall'];
+			}else{
+				$m->loadInfoAsVar($m->dirname(),false);
+				$inf =& $m->getInfo();
+				$rtn['link'] = XOOPS_URL . '/modules/'. $m->dirname() . '/' . (isset($inf['adminindex'])?$inf['adminindex']:'');
+				$rtn['title'] = $m->name();
+				$rtn['dir'] = $m->dirname();
+				$rtn['absolute'] = 1;
+				$hasconfig = $m->getVar('hasconfig');
+				$hascomments = $m->getVar('hascomments');
+				if (isset($inf['adminmenu']) && count($inf['adminmenu']) > 0){
+					$m->loadAdminMenu();
+					$rtn['hassubs'] = 1;
+					$rtn['subs'] = array();
+					if (is_array($m->adminmenu) && count($m->adminmenu) > 0 && $m->dirname() != 'system'){
+						foreach ($m->adminmenu as $item){
+							$item['link'] = XOOPS_URL . '/modules/'. $m->dirname() . '/'.(isset($item['link'])?$item['link']:'');
+							$rtn['subs'][] = $item;
+						}
+					}
+				}else{
+					$rtn['hassubs'] = 0;
+					unset($rtn['subs']);
+				}
+				if ((isset($hasconfig) && $hasconfig == 1) || (isset($hascomments) && $hascomments == 1)){
+					$rtn['hassubs'] = 1;
+					if (!isset($rtn['subs'])){$rtn['subs'] = array();}
+					$subs = array('title'=>_PREFERENCES,'link'=>XOOPS_URL.'/modules/system/admin.php?fct=preferences&op=showmod&mod='.$m->mid());
+					$rtn['subs'][] = $subs;
+				}else{
+					$rtn['hassubs'] = 0;
+					unset($rtn['subs']);
+				}
+				if (isset($inf['iconsmall']) && $inf['iconsmall']!='' ) $rtn['small'] =  $inf['iconsmall'];
+			}
 			$menu[] = $rtn;
 			if ($m->dirname() == 'system'){
 				$systemadm = true;
 			}
 		}
 	}
+	//echo '<PRE>';
+	//print_r($menu);
+	//echo '</PRE>';
     $tpl->assign('systemadm', $systemadm);
 	$tpl->append('navitems', array('link'=>XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin', 'text'=>_MODULES, 'dir'=>$m->dirname(), 'menu'=>$menu));
 
