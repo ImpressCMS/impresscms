@@ -159,7 +159,7 @@ switch ($op){
 			if ($sadmin){
 				$rtn = array();
 				$info =& $mod->getInfo();
-				$rtn['link'] = XOOPS_URL . '/modules/'. $mod->dirname() . '/' . $info['adminindex'];
+				$rtn['link'] = XOOPS_URL . '/modules/'. $mod->dirname() . '/' . (isset($info['adminindex'])?$info['adminindex']:'');
 				$rtn['title'] = $mod->name();
 				$rtn['absolute'] = 1;
 				if (isset($info['iconbig'])) $rtn['big'] = XOOPS_URL . '/modules/' . $mod->dirname() . '/' . $info['iconbig'];
