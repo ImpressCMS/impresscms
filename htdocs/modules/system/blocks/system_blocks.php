@@ -402,7 +402,11 @@ function b_system_notification_show()
 {
     global $xoopsConfig, $xoopsUser, $xoopsModule;
     include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
-    include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/notification.php';
+    if ( file_exists( XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/notification.php" ) ) {
+		include XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/notification.php";
+	} else {
+		include XOOPS_ROOT_PATH."/language/english/notification.php";
+	}
     // Notification must be enabled, and user must be logged in
     if (empty($xoopsUser) || !notificationEnabled('block')) {
         return false; // do not display block
