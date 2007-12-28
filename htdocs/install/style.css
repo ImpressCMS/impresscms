@@ -275,7 +275,6 @@ BODY.show-help .xoform-help
 }
 INPUT[type=text]
 {
-    BORDER-RIGHT: #aaa 1px solid;
     PADDING-RIGHT: 0.25em;
     MIN-WIDTH: 60%;
     PADDING-LEFT: 0.25em;
@@ -283,11 +282,10 @@ INPUT[type=text]
     PADDING-BOTTOM: 1px;
     MARGIN: 0.25em 0px;
     PADDING-TOP: 1px;
-    BORDER-BOTTOM: #aaa 1px solid
+    BORDER: 1px solid #D0D0D0;
 }
 INPUT[type=password]
 {
-    BORDER-RIGHT: #aaa 1px solid;
     PADDING-RIGHT: 0.25em;
     MIN-WIDTH: 60%;
     PADDING-LEFT: 0.25em;
@@ -295,7 +293,7 @@ INPUT[type=password]
     PADDING-BOTTOM: 1px;
     MARGIN: 0.25em 0px;
     PADDING-TOP: 1px;
-    BORDER-BOTTOM: #aaa 1px solid
+    BORDER: 1px solid #D0D0D0;
 }
 INPUT
 {
