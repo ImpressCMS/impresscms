@@ -23,7 +23,7 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 	$pageHasHelp = true;
 
 	$vars =& $_SESSION['settings'];
-	
+
 // Load config values from mainfile.php constants if 1st invocation, or reload has been asked
 if ( !isset( $vars['DB_HOST'] ) || false !== @strpos( $_SERVER['HTTP_CACHE_CONTROL'], 'max-age=0' ) ) {
 	$keys = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_NAME', 'DB_PREFIX', 'DB_PCONNECT' );
@@ -40,7 +40,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$vars[$name] = $_POST[$name];
 	}
 	$vars['DB_PCONNECT'] = @$_POST['DB_PCONNECT'] ? 1 : 0;
-	
+
 	// Check if the given settings are correct
 	$error = '';
 	if ( ! ( $link = @mysql_connect( $vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true ) ) ) {
@@ -97,7 +97,7 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
 	echo "<input type='$type' name='$name' id='$name' value='$value' />";
 }
 
-	
+
     ob_start();
 ?>
 <?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
@@ -107,7 +107,7 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
 		<?php echo 'Database:'; ?>
 		<select size="2" name="DB_TYPE">
 			<option value="mysql" selected="selected">mysql</option>
-			<option value="mysqli">mysqli</option>
+			<!-- <option value="mysqli">mysqli</option> //-->
 		</select>
 	</label>
 	<?php echo xoFormField( 'DB_HOST',	$vars['DB_HOST'],		DB_HOST_LABEL, DB_HOST_HELP ); ?>
