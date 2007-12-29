@@ -322,7 +322,7 @@ function updTrustPath( val ) {
 <?php if ( !$ctrl->validTrustPath && $ctrl->xoopsTrustPath != '') { ?>
 	<div id="trustperms" class="x2-note">
 	<p><?php echo TRUST_PATH_COULD_NOT_BE_CREATED . '</p>'; ?>
-	<button type="button" onclick="location.reload();" /> <?php echo BUTTON_REFRESH; ?></button>
+	<button type="submit" /> <?php echo BUTTON_REFRESH; ?></button>
 	<?php
 }?>
 
