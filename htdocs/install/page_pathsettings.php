@@ -48,6 +48,8 @@ class PathStuffController {
 		}
 		if ( isset( $_SESSION['settings']['TRUST_PATH'] ) ) {
 			$this->xoopsTrustPath = $_SESSION['settings']['TRUST_PATH'];
+		} else {
+			$this->xoopsTrustPath = substr( $this->xoopsRootPath, 0, strrpos( $this->xoopsRootPath, '/' ) ) . '/trust_path' . substr( md5( time() ), 0, 5);
 		}
 		if ( isset( $_SESSION['settings']['URL'] ) ) {
 			$this->xoopsUrl = $_SESSION['settings']['URL'];
