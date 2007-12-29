@@ -8,7 +8,7 @@
 * @copyright    The ImpressCMS project http://www.impresscms.org/
 * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
 * @package		installer
-* @since        0.5
+* @since        1.0
 * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
 * @version		$Id$
 */

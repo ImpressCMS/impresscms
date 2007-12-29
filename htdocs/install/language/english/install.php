@@ -5,7 +5,7 @@
 * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
 * @author       Skalpa Keo <skalpa@xoops.org>
 * @author       Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
-* @since        0.5
+* @since        1.0
 * @version		$Id: install.php 607 2006-07-03 00:23:48Z skalpa $
 * @package 		installer
 */

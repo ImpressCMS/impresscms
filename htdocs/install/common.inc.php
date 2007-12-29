@@ -51,7 +51,7 @@ class XoopsInstallWizard {
 		// Setup pages
 
 		/**
-		 * For ImpressCMS 0.5, we will remove the install modules step
+		 * For ImpressCMS 1.0, we will remove the install modules step
 		 * This is the original code, commenting out
 		 */
 		/*

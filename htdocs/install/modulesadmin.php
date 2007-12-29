@@ -37,7 +37,7 @@
 * @copyright    The ImpressCMS project http://www.impresscms.org/
 * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
 * @package		installer
-* @since        0.5
+* @since        1.0
 * @author		Kazumi Ono (AKA onokazu)
 * @author		RpLima
 * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
@@ -48,7 +48,7 @@ function xoops_module_install($dirname)
 {
     global $xoopsUser, $xoopsConfig;
     $dirname = trim($dirname);
-    $db =& Database::getInstance();    
+    $db =& Database::getInstance();
     $reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
     $module_handler =& xoops_gethandler('module');
     if ($module_handler->getCount(new Criteria('dirname', $dirname)) == 0) {
