@@ -141,10 +141,13 @@ class PathStuffController {
 	   	} else {
 	   		// trust path was not found, let's try and create it
 	   		if (!empty($this->xoopsTrustPath)) {
-				icms_install_mkdir($this->xoopsTrustPath);
+				if (@icms_install_mkdir($this->xoopsTrustPath)) {
 					if ( is_dir( $this->xoopsTrustPath ) && is_readable( $this->xoopsTrustPath ) ) {
 						return $this->validTrustPath = true;
 					}
+				} else {
+					return $this->validTrustPath = false;
+				}
 	   		}
 	   	}
 		return $this->validTrustPath = false;
@@ -280,7 +283,7 @@ function updTrustPath( val ) {
 		'trustpathimg', '<?php echo $_SERVER['PHP_SELF']; ?>',
 		{ method:'get',parameters:'action=checktrustpath&path='+val }
 	);
-	$('rootperms').style.display='none';
+	$('trustperms').style.display='none';
 }
 </script>
 <fieldset>
@@ -314,6 +317,15 @@ function updTrustPath( val ) {
 	<input type="text" name="TRUST_PATH" id="trustpath" value="<?php echo $ctrl->xoopsTrustPath; ?>"
 		onchange="updTrustPath(this.value)" />
 	<span id="trustpathimg"><?php echo genTrustPathCheckHtml( $ctrl->validTrustPath ); ?></span>
+<?php if ( !$ctrl->validTrustPath && $ctrl->xoopsTrustPath != '') { ?>
+	<div id="trustperms" class="x2-note">
+	<p><?php echo TRUST_PATH_COULD_NOT_BE_CREATED . '</p>'; ?>
+	<button type="button" onclick="location.reload();" /> <?php echo BUTTON_REFRESH; ?></button>
+	<?php
+}?>
+
+
+
 </fieldset>
 
 <fieldset>

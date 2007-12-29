@@ -176,4 +176,7 @@ define("_INSTALL_COULD_NOT_INSERT", "The wizard was unable to install module %s 
 define("_INSTALL_CHARSET","ISO-8859-1");
 
 define("_INSTALL_PHYSICAL_PATH","Physical path");
+
+define("TRUST_PATH_COULD_NOT_BE_CREATED","Since the trust path was not found, the installation wizard tried to create it. Unfortunatly, it was not able to do so. Please create a folder on your server that will become the trust path and make this folder writable by the server. Hit the refresh button once this is done.");
+
 ?>
