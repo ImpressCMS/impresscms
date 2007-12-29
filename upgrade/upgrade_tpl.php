@@ -10,7 +10,7 @@
 </head>
 <body>
 <div id="xo-banner">
-	<img src="img/logo.png" alt="XOOPS" />
+	<img src="img/logo.png" alt="ImpressCMS" />
 </div>
 <div id="xo-content">
 	<h1><?php echo _XOOPS_UPGRADE; ?></h1>
