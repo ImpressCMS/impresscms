@@ -313,7 +313,7 @@ BUTTON
     BACKGROUND-IMAGE: url(img/table-caption-grey.png);
     BACKGROUND-POSITION: bottom;
     BACKGROUND-REPEAT: repeat-x;
-    COLOR: green;
+    COLOR: #444;
     FONT-WEIGHT: bold;
     CURSOR: pointer;
     BORDER: outset 1px #ccc;
