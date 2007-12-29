@@ -1,0 +1,1 @@
+login.php is a script that displays a login screen in a popupbox when SSL is enabled in the preferences. You should use this script only when your server supports SSL. Place login.php file under your SSL directory.
