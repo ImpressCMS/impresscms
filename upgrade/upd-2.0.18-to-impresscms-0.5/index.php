@@ -16,7 +16,7 @@ class upgrade_impcms05 {
 	function cleaning_templates_c() {
 		$dir = opendir(XOOPS_ROOT_PATH."/templates_c/");
 		while($file = readdir($dir)){
-		 if(is_file(XOOPS_ROOT_PATH."/templates_c/".$file) && $file != 'index.html' && $file != '.svn') {
+		 if(is_file(XOOPS_ROOT_PATH."/templates_c/".$file) && $file != 'index.html') {
 		  unlink(XOOPS_ROOT_PATH."/templates_c/".$file);
 		 }
 		}
