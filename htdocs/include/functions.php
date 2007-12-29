@@ -820,4 +820,17 @@ function icms_mkdir($target) {
 function icms_chmod($target, $mode = 0777) {
 	return @ chmod($target, $mode);
 }
+
+/**
+ * php 4 compat for array_combine
+ */
+if (!function_exists('array_combine')) {
+	function array_combine($arr1,$arr2) {
+	   $out = array();
+	   foreach($arr1 as $key1 => $value1)    {
+	    $out[$value1] = $arr2[$key1];
+	   }
+	   return $out;
+	}
+}
 ?>
