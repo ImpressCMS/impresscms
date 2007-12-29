@@ -80,7 +80,7 @@ if ( @empty( $vars['DB_HOST'] ) ) {
 		'DB_USER'		=> '',
 		'DB_PASS'		=> '',
 		'DB_NAME'		=> '',
-		'DB_PREFIX'		=> 'x' . substr( md5( time() ), 0, 3 ),
+		'DB_PREFIX'		=> 'x' . substr( md5( time() ), 0, 5 ),
 		'DB_PCONNECT'	=> 0,
 	) );
 }
