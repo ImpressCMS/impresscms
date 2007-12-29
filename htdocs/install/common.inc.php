@@ -24,6 +24,7 @@ $xoopsOption['nocommon'] = true;
 define('XOOPS_INSTALL', 1);
 
 @include_once '../mainfile.php';
+include_once '../include/version.php';
 // including a few functions
 require_once 'include/functions.php';
 include_once '../include/debug_functions.php';

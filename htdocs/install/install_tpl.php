@@ -5,7 +5,7 @@
 <html>
 <head>
 	<title>
-		<?php echo XOOPS_INSTALL_WIZARD; ?>
+		<?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION); ?>
 		(<?php echo ($wizard->currentPage+1) . '/' . count($wizard->pages); ?>)
 	</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo _INSTALL_CHARSET ?>" />
@@ -26,7 +26,7 @@
 		<div id="wizard">
 		<form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post'>
 			<h1>
-				<span id="title"><?php echo XOOPS_INSTALL_WIZARD."&nbsp;-&nbsp;".INSTALL_STEP; ?>&nbsp;<?php echo ($wizard->currentPage+1) . INSTALL_OUTOF . count($wizard->pages); ?></span>
+				<span id="title"><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION)."&nbsp;-&nbsp;".INSTALL_STEP; ?>&nbsp;<?php echo ($wizard->currentPage+1) . INSTALL_OUTOF . count($wizard->pages); ?></span>
 			</h1>
 			<ul id="pageslist" class="x2-navigation">
 			<?php foreach ( $wizard->pages as $k => $page ) {

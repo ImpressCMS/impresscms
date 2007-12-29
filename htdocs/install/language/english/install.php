@@ -34,7 +34,7 @@ define( "FAILED", "Failed" );
 
 
 // Titles (main and pages)
-define( "XOOPS_INSTALL_WIZARD", "ImpressCMS installation wizard" );
+define( "XOOPS_INSTALL_WIZARD", " %s installation wizard" );
 define( "INSTALL_STEP", "Step" );
 define( "INSTALL_OUTOF", " out of " );
 define( "INSTALL_COPYRIGHT", "Copyright &copy; 2008%s <a href=\"http://www.impresscms.org\">ImpressCMS</a>" );
