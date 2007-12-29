@@ -52,7 +52,7 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 		if ( function_exists('debug_backtrace') ) {
 			$xoopsScriptPath = debug_backtrace();
 			if ( !count($xoopsScriptPath) ) {
-			 	die("XOOPS path check: this file cannot be requested directly");
+			 	die("ImpressCMS path check: this file cannot be requested directly");
 			}
 			$xoopsScriptPath = $xoopsScriptPath[0]['file'];
 		} else {
@@ -63,7 +63,7 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 			$xoopsScriptPath = str_replace( strpos( $xoopsScriptPath, '\\\\', 2 ) ? '\\\\' : DIRECTORY_SEPARATOR, '/', $xoopsScriptPath);
 		}
 		if ( strcasecmp( substr($xoopsScriptPath, 0, strlen(XOOPS_ROOT_PATH)), str_replace( DIRECTORY_SEPARATOR, '/', XOOPS_ROOT_PATH)) ) {
-		 	exit("XOOPS path check: Script is not inside XOOPS_ROOT_PATH and cannot run.");
+		 	exit("ImpressCMS path check: Script is not inside XOOPS_ROOT_PATH and cannot run.");
 		}
 	}
 
