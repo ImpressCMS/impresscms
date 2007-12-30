@@ -200,44 +200,23 @@ class upgrade_impcms05 {
 	
 	function apply_templates(){
 		$db = $GLOBALS['xoopsDB'];
-		if (getDbValue($db,'tplfile','tpl_id',' tpl_file="system_error.html"') != 0){return true;}
-		$this->query(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', 1, 'system', 'default', 'system_error.html', 'Template for handling HTTP errors', ".time().", 0, 'module')");
-		$new_tplfile_id = $db->getInsertId();
-		$new_tpl_source = '<div id="notfound">
-	<h1><{$lang_error_title}></h1>
-	<div id="http_error_text"><{$lang_error_desc}></div>
-	<br />
-	<ul>
-		<li><{$lang_search_our_site}><br />
-			<form id="http_error_searchform" style="vertical-align: middle;" action="<{$xoops_url}>/search.php" method="get">
-				<input name="query" size="14" style="vertical-align: middle;" type="text" />
-				<input name="action" value="results" type="hidden" />
-				<input src="<{$xoops_url}>/images/search2.gif" style="vertical-align: middle;" alt="<{$lang_search}>" onclick="this.form.submit()" type="image" />
-				&nbsp;&nbsp;<a href="<{$xoops_url}>/search.php"><{$lang_advanced_search}></a>
-			</form>
-		</li>
-		<li><{$lang_start_again}></li>
-		<li><{$lang_found_contact}></li>
-	</ul>
-</div>';
-		$this->query(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
-		
-		if (getDbValue($db,'tplfile','tpl_id',' tpl_file="system_privpolicy.html"') != 0){return true;}
-		$this->query(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', 1, 'system', 'default', 'system_privpolicy.html', 'Template for displaying site Privacy Policy', ".time().", 0, 'module')");
-		$new_tplfile_id = $db->getInsertId();
-		$new_tpl_source = '<{if $priv_enable !== true}>
-	<div>Privacy Policy is not enabled</div>
-<{/if}>	
-
-<{if $priv_enable == true && $priv_poltype == \'page\'}>
-
-	<div class="privacy_policy">
-		<div align="center"><h1><{$xoops_sitename}>: <{$lang_privacy_policy}></h1></div>
-		<p><{$priv_policy}></p>
-	</div>
-<{/if}>';
-		$this->query(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
-		
+		$table = $db->prefix('tplfile');
+		$table1 = $db->prefix('tplsource');
+		$tpl_files = array(
+			'system_error.html'=>'Template for handling HTTP errors',
+			'system_privpolicy.html'=>'Template for displaying site Privacy Policy'
+		);
+		foreach ($tpl_files as $tpl_file=>$desc) {
+			if (!getDbValue($db,'tplfile','tpl_id',' tpl_file="'.$tpl_file.'"')) {
+				if ($fp = fopen('../modules/system/templates/'.$tpl_file, 'r')) {
+					$new_tpl_source = fread($fp, filesize('../modules/system/templates/'.$tpl_file));
+					fclose($fp);
+					$this->query(" INSERT INTO " . $table . " VALUES ('', 1, 'system', 'default', '".$tpl_file."', '".$desc."', ".time().", 0, 'module')");
+					$new_tplfile_id = $db->getInsertId();
+					$this->query(" INSERT INTO " . $table1 . " VALUES (" . $new_tplfile_id . ", '" . addslashes($new_tpl_source) . "');");
+				}
+			}
+		}
 		return true;
 	}
 }
