@@ -271,14 +271,15 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $dbm->insert('config', " VALUES (95, 0, 2, 'rank_height', '_MD_AM_RANKH', '120', '_MD_AM_RANKHDSC', 'textbox', 'int', 21)");
     $dbm->insert('config', " VALUES (96, 0, 2, 'rank_maxsize', '_MD_AM_RANKMAX', '35000', '_MD_AM_RANKMAXDSC', 'textbox', 'int', 21)");
 
-	$dbm->insert('config', " VALUES (97, 0, 8,'ml_enable', '_MD_AM_ML_ENABLE', '0', '_MD_AM_ML_ENABLE_DESC', 'yesno', 'int', 0)");
-	$dbm->insert('config', " VALUES (98, 0, 8,'ml_tags', '_MD_AM_ML_TAGS', 'en,fr', '_MD_AM_ML_TAGS_DESC', 'textbox', 'text', 5)");
-	$dbm->insert('config', " VALUES (99, 0, 8,'ml_names', '_MD_AM_ML_NAMES', 'english,french', '_MD_AM_ML_NAMES_DESC', 'textbox', 'text', 10)");
-	$dbm->insert('config', " VALUES (100, 0, 8,'ml_captions', '_MD_AM_ML_CAPTIONS', 'English,Francais', '_MD_AM_ML_CAPTIONS_DESC', 'textbox', 'text', 15)");
+	$dbm->insert('config', " VALUES (97, 0, 8,'ml_enable', '_MD_AM_ML_ENABLE', '0', '_MD_AM_ML_ENABLEDEC', 'yesno', 'int', 0)");
+	$dbm->insert('config', " VALUES (98, 0, 8,'ml_tags', '_MD_AM_ML_TAGS', 'en,fr', '_MD_AM_ML_TAGSDSC', 'textbox', 'text', 5)");
+	$dbm->insert('config', " VALUES (99, 0, 8,'ml_names', '_MD_AM_ML_NAMES', 'english,french', '_MD_AM_ML_NAMESDSC', 'textbox', 'text', 10)");
+	$dbm->insert('config', " VALUES (100, 0, 8,'ml_captions', '_MD_AM_ML_CAPTIONS', 'English,Francais', '_MD_AM_ML_CAPTIONSDSC', 'textbox', 'text', 15)");
+	$dbm->insert('config', " VALUES (101, 0, 8,'ml_charset', '_MD_AM_ML_CHARSET', 'UTF-8,ISO-8859-15', '_MD_AM_ML_CHARSETDSC', 'textbox', 'text', 16)");
 
-	$dbm->insert('config', " VALUES (101, 0, 2, 'remember_me', '_MD_AM_REMEMBERME', '0', '_MD_AM_REMEMBERMEDSC', 'yesno', 'int', 30)");
-    $dbm->insert('config', " VALUES (102, 0, 2, 'priv_dpolicy', '_MD_AM_PRIVDPOLICY', 0, '_MD_AM_PRIVDPOLICYDSC', 'yesno', 'int', 33)");
-    $dbm->insert('config', " VALUES (103, 0, 2, 'priv_policy', '_MD_AM_PRIVPOLICY', '".addslashes(_INSTALL_PRIVPOLICY)."', '_MD_AM_PRIVPOLICYDSC', 'textarea', 'text', 34)");
+	$dbm->insert('config', " VALUES (102, 0, 2, 'remember_me', '_MD_AM_REMEMBERME', '0', '_MD_AM_REMEMBERMEDSC', 'yesno', 'int', 30)");
+    $dbm->insert('config', " VALUES (103, 0, 2, 'priv_dpolicy', '_MD_AM_PRIVDPOLICY', 0, '_MD_AM_PRIVDPOLICYDSC', 'yesno', 'int', 33)");
+    $dbm->insert('config', " VALUES (104, 0, 2, 'priv_policy', '_MD_AM_PRIVPOLICY', '".addslashes(_INSTALL_PRIVPOLICY)."', '_MD_AM_PRIVPOLICYDSC', 'textarea', 'text', 34)");
 
     return $gruops;
 }

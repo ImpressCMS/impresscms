@@ -69,6 +69,7 @@ Unreleased: Version 0.5
 - Fixed #1848177 : Icon small in /include/cp_functions.php (young-pee)
 - Fixed #1848178 : Space between header and content removed (real_therplima)
 - Fixed #1847782 : Block y/n not selected by default (real_therplima)
+- Fixed #1858648 : Improve multilanguage config options (real_therplima)
 
 
 Working Changes : (Changes to be reverted or made definitive)

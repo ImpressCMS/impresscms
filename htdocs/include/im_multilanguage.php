@@ -28,7 +28,7 @@ define('EASIESTML_ACCEPT_CHARSET_REGEXES',',/shift_jis/i');
 define('EASIESTML_ACCEPT_LANGUAGE_REGEXES','/^en/,/^ja/');
 
 // charset in Content-Type separated with comma (only for fastestcache)
-define('EASIESTML_CHARSETS','ISO-8859-1,EUC-JP');
+define('EASIESTML_CHARSETS',$im_multilanguageConfig['ml_charset']);
 
 // tag name for language image  (default [mlimg]. don't include specialchars)
 define('EASIESTML_IMAGETAG','mlimg');

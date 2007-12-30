@@ -163,10 +163,11 @@ class upgrade_impcms05 {
 		// Insert config values
 		$table = $db->prefix('config');
 		$data = array (
-			'ml_enable' => "'_MD_AM_ML_ENABLE', '0', '_MD_AM_ML_ENABLE_DESC', 'yesno', 'int', 0",
-			'ml_tags' => "'_MD_AM_ML_TAGS', 'en,fr', '_MD_AM_ML_TAGS_DESC', 'textbox', 'text', 5",
-			'ml_names' => "'_MD_AM_ML_NAMES', 'english,french', '_MD_AM_ML_NAMES_DESC', 'textbox', 'text', 10",
-			'ml_captions' => "'_MD_AM_ML_CAPTIONS', 'English,Francais', '_MD_AM_ML_CAPTIONS_DESC', 'textbox', 'text', 15",
+			'ml_enable' => "'_MD_AM_ML_ENABLE', '0', '_MD_AM_ML_ENABLEDSC', 'yesno', 'int', 0",
+			'ml_tags' => "'_MD_AM_ML_TAGS', 'en,fr', '_MD_AM_ML_TAGSDSC', 'textbox', 'text', 5",
+			'ml_names' => "'_MD_AM_ML_NAMES', 'english,french', '_MD_AM_ML_NAMESDSC', 'textbox', 'text', 10",
+			'ml_captions' => "'_MD_AM_ML_CAPTIONS', 'English,Francais', '_MD_AM_ML_CAPTIONSDSC', 'textbox', 'text', 15",
+			'ml_charset' => "'_MD_AM_ML_CHARSET', 'UTF-8,ISO-8859-15', '_MD_AM_ML_CHARSETDSC', 'textbox', 'text', 16",
 			);
 		reset($data);
 		foreach ($data as $name => $values) {
