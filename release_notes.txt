@@ -95,7 +95,7 @@ ImpressCMS IRC Channel: #impresscms on freenode.net or simply : http://community
 ImpressCMS Mailing Lists
 ------------------------
 
-A few mailing lists are available for everyone to stay informed development information, bug trckaing, feature requests, etc...
+A few mailing lists are available for everyone to stay informed development information, bug tracking, feature requests, etc...
 
 Simply go here to subscribe to the desired mailing lists: http://sourceforge.net/mail/?group_id=205633
 
