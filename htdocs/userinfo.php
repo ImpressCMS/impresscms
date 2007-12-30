@@ -173,7 +173,7 @@ foreach ($mids as $mid) {
             } else {
                 $results[$i]['image'] = 'images/icons/posticon2.gif';
             }
-            
+
             if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                 $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
             }
@@ -191,5 +191,8 @@ foreach ($mids as $mid) {
     unset($module);
   }
 }
+
+$xoopsTpl->assign('xoops_pagetitle', sprintf(_US_ALLABOUT,$thisUser->getVar('uname')));
+
 include XOOPS_ROOT_PATH.'/footer.php';
 ?>
