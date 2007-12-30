@@ -29,7 +29,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	// let's try and put the db info in the trust path
 	$sdata_file_name = md5($vars['ROOT_PATH'] . time()) . '.php';
 
-	if ( !copy( $vars['ROOT_PATH'] . '/sdata.dist.php', $vars['TRUST_PATH'] . '/' . $sdata_file_name ) ) {
+	if ( !copy( $vars['ROOT_PATH'] . '/install/templates/sdata.dist.php', $vars['TRUST_PATH'] . '/' . $sdata_file_name ) ) {
 		// we were not able to create the sdata file in trust path so we will use the old method
 		$error = true;
 	} else {
@@ -77,7 +77,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$dbinfo_in_trust_path = false;
 	}
 
-	if ( !copy( $vars['ROOT_PATH'] . '/mainfile.dist.php', $vars['ROOT_PATH'] . '/mainfile.php' ) ) {
+	if ( !copy( $vars['ROOT_PATH'] . '/install/templates/mainfile.dist.php', $vars['ROOT_PATH'] . '/mainfile.php' ) ) {
 		$error = ERR_COPY_MAINFILE;
 	} else {
 		clearstatcache();
