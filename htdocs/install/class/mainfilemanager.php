@@ -34,14 +34,13 @@
 class mainfile_manager {
 
     var $path = '../mainfile.php';
-    var $distfile = '../mainfile.dist.php';
+    var $distfile = './templates/mainfile.dist.php';
     var $rewrite = array();
 
     var $report = '';
     var $error = false;
 
     function mainfile_manager(){
-        //
     }
 
     function setRewrite($def, $val){
