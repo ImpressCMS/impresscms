@@ -7,7 +7,7 @@ define("_INSTALL_REGUSERSD","Registered Users Group");
 define("_INSTALL_ANONUSERS","Anonymous Users");
 define("_INSTALL_ANONUSERSD","Anonymous Users Group");
 
-define("_INSTALL_L165","The site is currently closed for maintainance. Please come back later.");
+define("_INSTALL_L165","The site is currently closed for maintenance. Please come back later.");
 
 
 define("_INSTALL_ANON","Anonymous");
