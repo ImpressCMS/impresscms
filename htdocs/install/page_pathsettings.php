@@ -140,20 +140,20 @@ class PathStuffController {
 	function checkTrustPath() {
 	   	if ( is_dir( $this->xoopsTrustPath ) && is_readable( $this->xoopsTrustPath ) ) {
 			return $this->validTrustPath = true;
-	   	} else {
-	   		// trust path was not found, let's try and create it
-	   		if (!empty($this->xoopsTrustPath)) {
-				if (@icms_install_mkdir($this->xoopsTrustPath)) {
-					if ( is_dir( $this->xoopsTrustPath ) && is_readable( $this->xoopsTrustPath ) ) {
-						return $this->validTrustPath = true;
-					}
-				} else {
-					return $this->validTrustPath = false;
-				}
-	   		}
 	   	}
 		return $this->validTrustPath = false;
 	}
+
+	function createTrustPath() {
+		if (@icms_install_mkdir($this->xoopsTrustPath)) {
+			if ( is_dir( $this->xoopsTrustPath ) && is_readable( $this->xoopsTrustPath ) ) {
+				$_SESSION['settings']['TRUST_PATH'] = $this->xoopsTrustPath;
+				return $this->validTrustPath = true;
+			}
+		}
+		return $this->validTrustPath = false;
+	}
+
 	function checkPermissions() {
 		$paths = array( 'mainfile.php', 'uploads', 'templates_c', 'cache' );
 		$errors = array();
@@ -252,6 +252,17 @@ function genTrustPathCheckHtml( $valid ) {
 	}
 }
 
+function genCreateTrustPathHtml($valid) {
+	if (!$valid) {
+		?>
+		<p><?php echo TRUST_PATH_NEED_CREATED_MANUALLY . '</p>'; ?>
+		<button type="button" onclick="createTrustPath(this.form.elements.trustpath.value);"><?php echo BUTTON_REFRESH; ?></button>
+		<?
+	} else {
+		?>
+		<p><?php echo TRUST_PATH_SUCCESSFULLY_CREATED . '</p>';
+	}
+}
 
 $ctrl = new PathStuffController();
 
@@ -263,6 +274,11 @@ if ( $_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'checkrootpath' 
 if ( $_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'checktrustpath' ) {
 	$ctrl->xoopsTrustPath = $_GET['path'];
 	echo genTrustPathCheckHtml( $ctrl->checkTrustPath() );
+	exit();
+}
+if ( $_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'createtrustpath' ) {
+	$ctrl->xoopsTrustPath = $_GET['path'];
+	echo genCreateTrustPathHtml( $ctrl->createTrustPath() );
 	exit();
 }
 $ctrl->execute();
@@ -285,7 +301,12 @@ function updTrustPath( val ) {
 		'trustpathimg', '<?php echo $_SERVER['PHP_SELF']; ?>',
 		{ method:'get',parameters:'action=checktrustpath&path='+val }
 	);
-	$('trustperms').style.display='none';
+}
+function createTrustPath(val) {
+	new Ajax.Updater(
+		'trustperms', '<?php echo $_SERVER['PHP_SELF']; ?>',
+		{ method:'get',parameters:'action=createtrustpath&path='+val }
+	);
 }
 </script>
 <fieldset>
@@ -321,12 +342,10 @@ function updTrustPath( val ) {
 	<span id="trustpathimg"><?php echo genTrustPathCheckHtml( $ctrl->validTrustPath ); ?></span>
 <?php if ( !$ctrl->validTrustPath && $ctrl->xoopsTrustPath != '') { ?>
 	<div id="trustperms" class="x2-note">
-	<p><?php echo TRUST_PATH_COULD_NOT_BE_CREATED . '</p>'; ?>
-	<button type="submit" /> <?php echo BUTTON_REFRESH; ?></button>
+	<p><?php echo TRUST_PATH_VALIDATE . '</p>'; ?>
+	<button type="button" onclick="createTrustPath(this.form.elements.trustpath.value); updTrustPath(this.form.elements.trustpath.value);"><?php echo BUTTON_CREATE_TUST_PATH; ?></button>
 	<?php
 }?>
-
-
 
 </fieldset>
 

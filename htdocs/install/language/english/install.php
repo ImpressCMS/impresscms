@@ -177,6 +177,9 @@ define("_INSTALL_CHARSET","ISO-8859-1");
 
 define("_INSTALL_PHYSICAL_PATH","Physical path");
 
-define("TRUST_PATH_COULD_NOT_BE_CREATED","Since the trust path was not found, the installation wizard tried to create it. Unfortunatly, it was not able to do so. Please create a folder on your server that will become the trust path and make this folder writable by the server. Hit the refresh button once this is done.");
+define("TRUST_PATH_VALIDATE","A suggested name for the Trust path has been created above for you. If you wish to use an alternative name, please replace the above location with your choice of name.<br /><br />When done, please click on the Create Trust Path button.");
+define("TRUST_PATH_NEED_CREATED_MANUALLY","It was not possible to create the trust path. Please create it manually and click on the following Refresh button.");
+define("BUTTON_CREATE_TUST_PATH","Create Trust Path");
+define("TRUST_PATH_SUCCESSFULLY_CREATED", "The trust path was successfully created.");
 
 ?>
