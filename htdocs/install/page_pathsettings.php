@@ -49,7 +49,13 @@ class PathStuffController {
 		if ( isset( $_SESSION['settings']['TRUST_PATH'] ) ) {
 			$this->xoopsTrustPath = $_SESSION['settings']['TRUST_PATH'];
 		} else {
-			$this->xoopsTrustPath = substr( $this->xoopsRootPath, 0, strrpos( $this->xoopsRootPath, '/' ) ) . '/trust_path' . substr( md5( time() ), 0, 5);
+			$web_root = dirname( $this->xoopsRootPath );
+			$arr = explode('/',$web_root);
+			$web_root = '';
+			for ($i = 0; $i < count($arr)-1; $i++){
+			    $web_root .= $arr[$i].'/';
+			}
+			$this->xoopsTrustPath = $web_root . 'trust_path' . substr( md5( time() ), 0, 5);
 		}
 		if ( isset( $_SESSION['settings']['URL'] ) ) {
 			$this->xoopsUrl = $_SESSION['settings']['URL'];
