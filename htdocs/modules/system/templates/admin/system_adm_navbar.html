@@ -13,7 +13,7 @@
 			<li><a href="<{$item.link}>"><img src="<{$xoops_url}>/modules/system/images/arrow1.gif" alt="arrow"/>&nbsp;<{$item.text}></a>
 				<ul>
 					<{foreach item=sub from=$item.menu}>
-						<li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>"<{if $sub.small!=''}> style="background-image: url(<{if $sub.dir=="system"}><{$xoops_url}>/modules/system/<{/if}><{$sub.small}>);"<{/if}>><{$sub.title}></a>
+						<li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>"style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{else}><{$xoops_url}>/modules/system/images/modulesitem.png<{/if}>);"><{$sub.title}></a>
 						<{if $sub.hassubs}>
 						<ul>
 						<{foreach item=subitem from=$sub.subs}>

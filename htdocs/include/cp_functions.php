@@ -187,7 +187,7 @@ window.onload=startList;
 					$rtn['hassubs'] = 0;
 					unset($rtn['subs']);
 				}
-				if (isset($inf['iconsmall']) && $inf['iconsmall']!='' ) $rtn['small'] =  $inf['iconsmall'];
+				if (isset($inf['iconsmall']) && $inf['iconsmall']!='' ) $rtn['small'] =  XOOPS_URL.'/modules/'.$m->dirname().'/'.$inf['iconsmall'];
 			}else{
 				$m->loadInfoAsVar($m->dirname(),false);
 				$inf =& $m->getInfo();
@@ -220,7 +220,7 @@ window.onload=startList;
 					$rtn['hassubs'] = 0;
 					unset($rtn['subs']);
 				}
-				if (isset($inf['iconsmall']) && $inf['iconsmall']!='' ) $rtn['small'] =  $inf['iconsmall'];
+				if (isset($inf['iconsmall']) && $inf['iconsmall']!='' ) $rtn['small'] =  XOOPS_URL.'/modules/'.$m->dirname().'/'.$inf['iconsmall'];
 			}
 			$menu[] = $rtn;
 			if ($m->dirname() == 'system'){
@@ -228,9 +228,6 @@ window.onload=startList;
 			}
 		}
 	}
-	//echo '<PRE>';
-	//print_r($menu);
-	//echo '</PRE>';
     $tpl->assign('systemadm', $systemadm);
 	$tpl->append('navitems', array('link'=>XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin', 'text'=>_MODULES, 'dir'=>$m->dirname(), 'menu'=>$menu));
 
