@@ -1,7 +1,7 @@
 ImpressCMS ChangeLog
 
 ========================
-Unreleased: Version 0.5
+Unreleased: Version 1.0 Beta
 ========================
 
 - Added : New admin interface based on XOOPS EXM and improved. Thanks to XOOPS EXM!. (BitC3R0 / malanciault / young-pee)
