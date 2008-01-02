@@ -1,7 +1,7 @@
-ImpressCMS 1.0 release notes
+ImpressCMS 1.0 Beta release notes
 ==================================
 
-The ImpressCMS community is very pleased to announce its very first release : ImpressCMS 1.0.
+The ImpressCMS Project is pleased to announce its very first release : ImpressCMS 1.0 Beta.
 
 The first releases of ImpressCMS is based on the XOOPS 2.0.17 core + some additions made in the XOOPS 2.0.18 development branch and, as such, will retain compatibility with existing modules and themes. The goal is to provide an on-going, stable environment for information and support for XOOPS and its users.
 
@@ -37,33 +37,34 @@ If you feel like getting the latest "edge" version, you can checkout the core tr
 
 https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/trunk/
 
-The ImpressCMS trunk is always the latest as-stable-as-possible development code. It is of course not to be used on production sites.
+The ImpressCMS trunk is always the latest as-stable-as-possible development code. It is, of course, not to be used on production sites.
 
 Installing ImpressCMS
 ==================================
 
    1. Copy the content of the htdocs/ folder where it can be accessed by your server
    2. Ensure mainfile.php, cache, templates_c and uploads are writable by the webserver
-   3. Access the folder where you installed the htdocs/ files using your web browser to launch the installation wizard
+   3. Using your web browser, access <your.site.url>/folder, "folder" being where you uploaded the htdocs/ files to launch the installation wizard
 
 
-Upgrading from XOOPS 2.0.14/2.0.15/2.0.16/2.0.17.*
+Upgrading from XOOPS 2.0.14/2.0.15/2.0.16/2.0.17.*/2.0.18.*
 ==================================
 
    1. Download the XOOPS-to-ImpressCMS package from our download page
    2. Upload the content of the htdocs folder over your existing files
-   3. Access <your.site.url>/upgrade/ with a browser, and follow the instructions
-   4. Delete the upgrade folder
+   3. Change the permission of mainfile.php so it is writable by the server
+   4. Access <your.site.url>/upgrade/ with a browser, and follow the instructions
+   5. Delete the upgrade folder
 
 Files integrity check
 ==================================
 
 The ImpressCMS package is released with a script able to check if all the system files were correctly uploaded to the server. To use it, follow these instructions:
 
-   1. Upload the impresscms_md5.php and impresscms.md5 files located in the ImpressCMS package root to your ImpressCMS server folder (putting them next to mainfile.php).
+   1. Upload the impresscms_md5.php and impresscms.md5 files located in the root of the ImpressCMS package to your ImpressCMS server folder (putting them next to mainfile.php).
    2. Execute impresscms_md5.php with your browser
    3. If necessary, re-upload the missing or corrupted system files
-   4. Remove impresscms_md5.php and xoops.md5 from your server
+   4. Remove impresscms_md5.php and impresscms.md5 from your server
 
 
 Revealing the blank page backtrace log
@@ -78,6 +79,7 @@ Modules, themes and languages
 The packages do not contain any module apart from the system one. You are invited to browse the ImpressCMS Addons web site at http://addons.impresscms.org to get all the modules, themes and languages you need.
 
 We also highly recommend the installation of the Protector module which will bring additional protection and logging capabilities to your site.
+
 
 Where to find more information ?
 ==================================
@@ -95,7 +97,7 @@ ImpressCMS IRC Channel: #impresscms on freenode.net or simply : http://community
 ImpressCMS Mailing Lists
 ------------------------
 
-A few mailing lists are available for everyone to stay informed development information, bug tracking, feature requests, etc...
+A few mailing lists are available for everyone to stay informed regarding development information, bug tracking, feature requests, etc...
 
 Simply go here to subscribe to the desired mailing lists: http://sourceforge.net/mail/?group_id=205633
 
@@ -110,5 +112,5 @@ YouTube: http://www.youtube.com/impresscms
 ImpressCMS Toolbar: http://impresscms.ourtoolbar.com/
 
 ==================================
-The ImpressCMS Community
+The ImpressCMS Project
 http://www.impresscms.org
