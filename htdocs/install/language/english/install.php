@@ -80,7 +80,7 @@ define( "DB_USER_HELP",  "Name of the user account that will be used to connect 
 define( "DB_PASS_LABEL", "Password" );	// L52
 define( "DB_PASS_HELP",  "Password of your database user account"); // L68
 define( "DB_NAME_LABEL", "Database name" );	// L29
-define( "DB_NAME_HELP",  "The name of database on the host. The installer will attempt to create the database if not exist"); // L64
+define( "DB_NAME_HELP",  "The name of database on the host. The installer will attempt to create a database if one does not exist"); // L64
 define( "DB_PREFIX_LABEL", "Table prefix" );	// L30
 define( "DB_PREFIX_HELP",  "This prefix will be added to all new tables created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L63
 define( "DB_PCONNECT_LABEL", "Use persistent connection" );	// L54
