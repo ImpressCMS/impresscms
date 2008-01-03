@@ -170,10 +170,10 @@ div.cpicon{
 }
 div.cpicon a {
 	display: block; float: left;
-	height: 80px !important;
-	height: 80px;
-	width: 70px !important;
-	width: 70px;
+	height: 75px !important;
+	height: 75px;
+	width: 75px !important;
+	width: 75px;
 	vertical-align: middle;
 	text-decoration : none;
 	border: 1px solid #CCCCCC;
@@ -181,10 +181,7 @@ div.cpicon a {
 	margin: 3px;
 	color: #666666;
 }
-div.cpicon a img {
-    width: 34px;
-    height: 34px;
-}
+
 div.cpicon a:hover{
 	background-color: #FFF6C1;
 	border: 1px solid #FF9900;
@@ -192,11 +189,12 @@ div.cpicon a:hover{
 }
 
 
-div.cpicon img { margin-top: 8px; margin-bottom: 8px; }
+div.cpicon img { margin-top: 4px; margin-bottom: 4px; width: 32px; height: 32px;}
 div.cpicon span {
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: bold;
 	display: block;
+	overflow: hidden;
 }
 div.cpicon span.uno{
 	font-size: 11px;
