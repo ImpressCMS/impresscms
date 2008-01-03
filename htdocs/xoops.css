@@ -170,10 +170,10 @@ div.cpicon{
 }
 div.cpicon a {
 	display: block; float: left;
-	height: 75px !important;
-	height: 75px;
-	width: 75px !important;
-	width: 75px;
+	height: 85px !important;
+	height: 85px;
+	width: 85px !important;
+	width: 85px;
 	vertical-align: middle;
 	text-decoration : none;
 	border: 1px solid #CCCCCC;
