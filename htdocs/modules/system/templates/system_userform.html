@@ -1,28 +1,31 @@
+<div>
+<div style="float: left; width: 45% ">
 <fieldset style="padding: 10px;">
   <legend style="font-weight: bold;"><{$lang_login}></legend>
   <form action="user.php" method="post">
-    <{$lang_username}> <input type="text" name="uname" size="26" maxlength="25" value="<{$usercookie}>" /><br />
-    <{$lang_password}> <input type="password" name="pass" size="21" maxlength="32" /><br />
-    <{if $rememberme }>
-    <input type="checkbox" name="rememberme" value="On" /><{$lang_rememberme}><br />
-    <{/if}>
+    <{$lang_username}><input type="text" name="uname" size="21" maxlength="25" value="<{$usercookie}>" /><br />
+    <br>
+    <{$lang_password}><input type="password" name="pass" size="21" maxlength="32" /><br />
+    <{if $rememberme }>    <input type="checkbox" name="rememberme" value="On" /><{$lang_rememberme}><br />    <{/if}>
     <input type="hidden" name="op" value="login" />
     <input type="hidden" name="xoops_redirect" value="<{$redirect_page}>" />
+    <br />
     <input type="submit" value="<{$lang_login}>" />
   </form>
-  <a name="lost"></a>
-  <{if $allow_registration }>
-  <div><{$lang_notregister}><br /></div>
-<{/if}>
-
+  <a name="lost"></a>  <{if $allow_registration }>  <div style="text-align: right;"><{$lang_notregister}><br /></div><{/if}>
+</div>
+<div style="float: right; width: 50% ">
 </fieldset>
-
-<br />
-
 <fieldset style="padding: 10px;">
   <legend style="font-weight: bold;"><{$lang_lostpassword}></legend>
-  <div><br /><{$lang_noproblem}></div>
+  <div>
+  <br /><{$lang_noproblem}></div>
   <form action="lostpass.php" method="post">
-    <{$lang_youremail}> <input type="text" name="email" size="26" maxlength="60" />&nbsp;&nbsp;<input type="hidden" name="op" value="mailpasswd" /><input type="hidden" name="t" value="<{$mailpasswd_token}>" /><input type="submit" value="<{$lang_sendpassword}>" />
+    <{$lang_youremail}> <input type="text" name="email" size="26" maxlength="60" />&nbsp;&nbsp;<input type="hidden" name="op" value="mailpasswd" /><input type="hidden" name="t" value="<{$mailpasswd_token}>" />
+    <br />
+    <br />
+     <input type="submit" value="<{$lang_sendpassword}>" />
   </form>
 </fieldset>
+</div>
+</div>

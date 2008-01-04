@@ -3,7 +3,7 @@ body { color: #000; background-color: #eae0b7; margin: 0; padding: 0; font-famil
 #xo-canvas{ width:100%;background-color: white; }
 #xo-canvas-content {	/*position: relative;*/	}
 
-div.warper {width: 90%; margin-right: auto; margin-left: auto;}
+div.warper {width: 90%; margin-right: auto; margin-left: auto;border-top: 2px solid #DDDDFF;border-left: 2px solid #DDDDFF;border-right: 2px solid #DDDDFF}
 
 a {color: #666; text-decoration: none; font-weight: bold; background-color: transparent;}
 a:hover {color: #8e8e8e; background-color:inherit;}
