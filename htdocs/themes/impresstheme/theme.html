@@ -24,8 +24,9 @@
 <!-- Module Header -->
 <{$xoops_module_header}>
 </head>
+<br />
 <body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
-<{if $xoBlocks.canvas_left and $xoBlocks.canvas_right}><{assign var=columns_layout value='threecolumns-layout'}>
+<div class="warper"><{if $xoBlocks.canvas_left and $xoBlocks.canvas_right}><{assign var=columns_layout value='threecolumns-layout'}>
 <{elseif $xoBlocks.canvas_left}><{assign var=columns_layout value='leftcolumn-layout'}>
 <{elseif $xoBlocks.canvas_right}><{assign var=columns_layout value='rightcolumn-layout'}>
 <{/if}>
@@ -43,7 +44,9 @@
 	<!-- Start Left Column -->
 	<{if $xoBlocks.canvas_left}>
 	<div id="xo-canvas-leftcolumn">
-	<{foreach item=block from=$xoBlocks.canvas_left}><{includeq file="$theme_name/theme_blockleft.html"}><{/foreach}>
+	<{foreach item=block from=$xoBlocks.canvas_left}><{includeq file="$theme_name/theme_blockleft.html"}>
+	<br />
+	<{/foreach}>
 	<!-- more content here for example -->
 	</div>
 	<{/if}><!-- End Left Column -->	
@@ -51,7 +54,9 @@
 	<!-- Start Right Column -->
 	<{if $xoBlocks.canvas_right}>
 	<div id="xo-canvas-rightcolumn">
-	<{foreach item=block from=$xoBlocks.canvas_right}><{includeq file="$theme_name/theme_blockright.html"}><{/foreach}>
+	<{foreach item=block from=$xoBlocks.canvas_right}><{includeq file="$theme_name/theme_blockright.html"}>
+	<br />
+	<{/foreach}>
 	<!-- more content here for example -->
 	</div>
      <{/if}><!-- End Right Column -->
@@ -112,5 +117,5 @@
 <!-- end Footer -->
 <!-- more content here for example -->
 </div> <!-- end xo-canvas -->
-</body>
+</div></body>
 </html>
