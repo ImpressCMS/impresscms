@@ -574,7 +574,7 @@ CREATE TABLE users (
   user_occ varchar(100) NOT NULL default '',
   bio tinytext NOT NULL,
   user_intrest varchar(150) NOT NULL default '',
-  user_mailok tinyint(1) unsigned NOT NULL default '0',
+  user_mailok tinyint(1) unsigned NOT NULL default '1',
   PRIMARY KEY  (uid),
   KEY uname (uname),
   KEY email (email),
