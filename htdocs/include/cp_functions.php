@@ -137,6 +137,7 @@ window.onload=startList;
     foreach ($mod->getAdminMenu() as $lkn){
     	$sadmin = $moduleperm_handler->checkRight('system_admin', $lkn['id'], $xoopsUser->getGroups());
     	if ($sadmin){
+    		$lkn['dir'] = 'system';
     		$menu[] = $lkn;
     	}
     }
