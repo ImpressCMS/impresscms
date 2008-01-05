@@ -55,9 +55,6 @@ function xoops_module_list()
             $class = 'odd';
         }
         $module->getInfo();
-        if ( $module->modinfo['version'] != round($module->getVar('version') / 100, 2) ){
-        	$class = $class.'Error';
-        }
         $count++;
         echo "<tr class='$class' align='center' valign='middle'>\n";
         echo "<td valign='bottom'>";
