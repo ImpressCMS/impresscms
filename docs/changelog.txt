@@ -4,6 +4,7 @@ ImpressCMS ChangeLog
 Unreleased: Version 1.0 Beta
 ========================
 
+- Added : linkexternal.js to header, allows devs & designers to utilise 'rel="external" or rel="nofollow" in <A > tags as a replacement for target="_blank". (Vaughan)
 - Added : New admin interface based on XOOPS EXM and improved. Thanks to XOOPS EXM!. (BitC3R0 / malanciault / young-pee)
 - Added : Addition of the XoopsEditors framework with default editor (malanciault)
 - Added : Integration of the Easiest Multilanguage originally created by GIJOE (malanciault)
@@ -13,7 +14,7 @@ Unreleased: Version 1.0 Beta
 - Added : New installer (skalpa/wtravel)
 - Added : Configuration of XOOPS_TRUST_PATH in intall wizard (malanciault)
 - Added : Saving the database information in a file inside trust_path if possible (malanciault)
-- Added : Upgrade script from XOOPS 2.0.18 (m0nty/malanciault)
+- Added : Upgrade script from XOOPS 2.0.18 (Vaughan/malanciault)
 - Added : Handling HTTP errors automatically on the site. (malanciault/young-pee)
 - Added : Creating a random DB prefix in instalation process like mentioned in feature request item #1848819 (real_therplima)
 - Added : New default theme : ImpressTheme (malanciault)
@@ -81,7 +82,7 @@ Unreleased: Version 1.0 Beta
 
 Working Changes : (Changes to be reverted or made definitive)
 
-- Security Audit : making sure that header & redirect_header are followed with exit(); (protection from telnet vulnerability aswell as other instances where the page is viewed with a system that does not understand the 'header' function, it would skip the redirection page and continue displaying the rest of page. (Vaughan)
+- Security Audit : making sure that php header(location: ) redirects are followed with exit(); (protection from telnet vulnerability aswell as other instances where the page is viewed with a system that does not understand the 'header' function, it would skip the redirection page and continue displaying the rest of page. (Vaughan)
 - Security Audit : making sure that sql query values are all encapsulated in single quotes, helps prevent SQLi. Added intval to values in sql queries that should only be an integer value. (Vaughan)
 
 ======================================
