@@ -66,8 +66,7 @@ class XoopsThemeForm extends XoopsForm
 	 */
 	function insertBreak($extra = '', $class= '')
 	{
-    	$class = ($class != '') ? " class='".htmlspecialchars($class, ENT_QUOTES)."'" : '';
-    	$extra = ($extra != '') ? htmlspecialchars($extra, ENT_QUOTES) : '';
+    	$class = ($class != '') ? " class='$class'" : '';
      	//Fix for $extra tag not showing
 		if ($extra) {
 			$extra = "<tr><td colspan='2' $class>$extra</td></tr>";
