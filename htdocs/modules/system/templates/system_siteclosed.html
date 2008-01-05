@@ -8,8 +8,8 @@
 <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/xoops.css" />
 
 </head>
-<br />
 <body>
+<br />
 <div class="warper">
 <{if $xoBlocks.canvas_left and $xoBlocks.canvas_right}><{assign var=columns_layout value='threecolumns-layout'}>
 <{elseif $xoBlocks.canvas_left}><{assign var=columns_layout value='leftcolumn-layout'}>
@@ -20,8 +20,8 @@
     <div id="xo-header">
 	    <div id="xo-headerlogo"><a href="<{xoAppUrl /}>" title=""><img src="<{xoImgUrl img/logo.png}>" alt="<{$xoops_sitename}>" /></a></div>
 	    <div id="xo-headerbanner"><{$xoops_banner}></div>
-		<div id="xo-globalnav">&nbsp;</div>
-    </div>  <!-- End header -->
+    </div>  
+  <!-- End header -->
   
 <!-- Start Main Content Area -->
 <div id="xo-canvas-content">
@@ -30,32 +30,30 @@
 <div style="width: 85%;background-color: #f7e6bd; color: #222222; text-align: center; border-top: 1px solid #DDDDFF; border-left: 1px solid #DDDDFF; border-right: 1px solid #DDDDFF; border-bottom: 1px solid #DDDDFF; font-weight: bold; padding: 10px;"><{$lang_siteclosemsg}>
 </div>
 <br />
-</center>
   <br />
   <br />
-<center>
     <div style="width: 270px;border:1px solid #DDDDFF">
  <div style="background-color: #f3ac03;font-weight: bold;font-size: 1.2em; color: white;height: 24px"><{$lang_login}></div>
     <br />
    <form action="<{$xoops_url}>/user.php" method="post">
    <{$lang_username}><input type="text" name="uname" size="21" maxlength="25" value="" /><br />
-    <div></div>
+    <div>
     <{$lang_password}><input type="password" name="pass" size="21" maxlength="32" /><br />
         	<input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>" />
         	<input type="hidden" name="xoops_login" value="1" />
         <br />
         	<input type="submit" value="<{$lang_login}>" />
+</div> 
   </form>
 <br />
 </div>
 </center>
-<!-- Start footer -->
+</div><!-- Start footer -->
 <br class="clear" />
 <div id="xo-footer">
-<a href="http://www.impresscms.org/" title=""><img src="<{xoImgUrl img/poweredby.gif}>" alt="impressCMS" /></a>
+<a href="http://www.impresscms.org/" title=""><img src="<{xoImgUrl img/poweredby.gif}>" alt="ImpressCMS" /></a>
 </div>
 <!-- end Footer -->
-</div>
-</div>
+</div></div>
   </body>
 </html>
