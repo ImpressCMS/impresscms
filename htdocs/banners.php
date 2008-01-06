@@ -285,7 +285,7 @@ case "click":
     break;
 case "Ok":
     if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-        if ( !$GLOBALS['xoopsSecurity']->check("BANNER_LOGIN") ) {
+        if ( !$GLOBALS['xoopsSecurity']->check(true,false,"BANNER_LOGIN") ) {
             redirect_header("banners.php", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
         }
 
@@ -295,7 +295,7 @@ case "Ok":
     bannerstats();
     break;
 case _BANNERS_CHANGE:
-    if (!$GLOBALS['xoopsSecurity']->check("BANNER_EDIT")) {
+    if (!$GLOBALS['xoopsSecurity']->check(true,false,"BANNER_EDIT")) {
         redirect_header("banners.php", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
     }
     $bid = $cid = 0;

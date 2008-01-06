@@ -78,6 +78,7 @@ Unreleased: Version 1.0 Beta
 - Fixed #1855709 : Problems on block positions after fresh install (real_therplima)
 - Fixed #1855498 : Modules admin doesn't reflect permissions (real_therplima)
 - Fixed #1850242 : White page after changing language (real_therplima)
+- Fixed #1863125 : no login possible through banners.php (real_therplima)
 
 
 Working Changes : (Changes to be reverted or made definitive)
