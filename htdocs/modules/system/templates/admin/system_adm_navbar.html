@@ -24,6 +24,13 @@
                      <{if $sub.small!=''}><{$sub.small}><{/if}>
                    <{/if}>
                  );"><{$sub.title}></a>
+		      <{if $item.id == 'modules' && $sub.hassubs}>
+		        <ul>
+		          <{foreach item=subitem from=$sub.subs}>
+		            <li><a href="<{$subitem.link}>"><{$subitem.title}></a></li>
+		          <{/foreach}>  
+		        </ul>
+		      <{/if}>
 		    </li>
 		  <{/foreach}>
 		</ul>
