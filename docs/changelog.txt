@@ -81,6 +81,7 @@ Unreleased: Version 1.0 Beta
 - Fixed #1850242 : White page after changing language (real_therplima)
 - Fixed #1863125 : no login possible through banners.php (real_therplima)
 - Fixed #1863110 : Change the order of the remember me field on user settings (real_therplima)
+- Fixed #1861592 : Step 2 out of 10 confusing chmod & spelling (real_therplima)
 
 
 Working Changes : (Changes to be reverted or made definitive)
