@@ -48,6 +48,7 @@ Unreleased: Version 1.0 Beta
 - Improved : Changing the Config options container from 60% to 50% #1849876 (malanciault)
 - Improved : Auth Class Folder Organization. (young-pee)
 - Improved : Database Class Folder Organization. (Needed for include more drivers) (young-pee)
+- Improved : Improve the Modules dropdown menu including subitems of modules that have it (real_therplima)
 
 - Fixed #1854703 : mainfile.php was filled #213  (sato-san)
 - Fixed #1851636 : Corrected error in profile administration in the admin side. (young-pee)
@@ -79,6 +80,7 @@ Unreleased: Version 1.0 Beta
 - Fixed #1855498 : Modules admin doesn't reflect permissions (real_therplima)
 - Fixed #1850242 : White page after changing language (real_therplima)
 - Fixed #1863125 : no login possible through banners.php (real_therplima)
+- Fixed #1863110 : Change the order of the remember me field on user settings (real_therplima)
 
 
 Working Changes : (Changes to be reverted or made definitive)
