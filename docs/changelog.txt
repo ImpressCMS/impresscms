@@ -40,6 +40,7 @@ Unreleased: Version 1.0 Beta
 - Changed : Picture/Icon for impressCMS: poweredby.gif (sato-san)
 - Changed : Picture/Icon for impressCMS: poweredby.jpg (sato-san)
 - Changed : Picture/Icon for impressCMS: s_poweredby.gif (sato-san)
+- Changed : The official smilies had been changed by newones. Thanks BaNaNa-BOi [http://banana-boi.deviantart.com] for the design. (davidl2 / young-pee)
 
 - Removed : The 'Default' theme has been removed (malanciault)
 
