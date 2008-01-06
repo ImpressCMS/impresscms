@@ -1,0 +1,81 @@
+<html>
+	<head>
+		<title>XOOPS To ImpressCMS Upgrade Guide</title>
+		<meta name="keywords" content="ImpressCMS docs" />
+		<meta name="description" content="ImpressCMS" />
+		<style>
+			P, TD, LI, INPUT, BODY, SELECT, TEXTAREA { font-family: Verdana; font-size: 13px; line-height: 1.3 }
+    		.error { color: #CC3333; font-weight: bold; }
+    		UL { margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px; }
+    		OL { margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px; }
+    		.indent { margin-left: 40px; }
+    		FORM { margin: 0px; padding: 0px; }
+    
+    		H1, H2, H3, H4, H5 { margin: 0px; padding: 0px; }
+    
+    		.additions { color: #008800; }
+    		.deletions { color: #880000; }
+    
+			.header { padding: 10px; padding-top: 0px }
+    		.page { background-color: #FFFFFF; padding: 10px; border: 1px inset;}
+			.footer { background-color: #DDDDDD; padding: 5px 10px; border: 1px inset; border-top: none; border-top: 1px solid #CCCCCC }
+			.code { background: #FFFFFF; border: solid #888888 2px; font-family: "Courier New"; color: black; font-size: 10pt; width: 100%; height: 400px; overflow: scroll; padding: 3px; }
+
+    		.revisioninfo { color: #AAAAAA; padding-bottom: 20px; }
+	
+			.copyright { font-size: 11px; color: #AAAAAA; text-align: right; }
+			.copyright A { color: #AAAAAA; }
+		</style>
+	</head>
+
+	<body bgcolor="#F8F8F8" text="#000000">
+
+		<div class="page">
+			<h3>Upgrading To ImpressCMS from XOOPS</h3>
+			<hr noshade size="1" />
+			<br />
+			<h4>Upgrading from XOOPS 2.0.17/2018 (easy way):</h4>
+			<br />
+			<ul>
+				<li>1. Get the update package from the sourceforge file repository.</li>
+				<li>2. Overwrite your existing files with the new ones.</li>
+				<li>3. Ensure the server can write to mainfile.php</li>
+				<li>4. Access <your.site.url>/upgrade/ with a browser.</li>
+				<li>5. Follow the instructions to update your database.</li>
+				<li>6. Write-protect mainfile.php again.</li>
+				<li>7. Delete the upgrade folder.</li>
+			</ul>
+			<br />
+			<h4>Upgrading from XOOPS 2.0.14/2.0.15/2.0.16/2.0.17/2.0.18 (using the full package):</h4>
+			<br />
+			<ul>
+				<li>1. Move the "upgrade" folder inside the "htdocs" folder (it's been kept out as it's not needed for full installs).</li>
+				<li>2. Delete htdocs/mainfile.php, htdocs/install/, htdocs/cache/, htdocs/template_c/ from the mpressCMS1.x package that you just downloaded (not from your server).</li>
+				<li>3. Upload the content of the htdocs folder over your existing files.</li>
+				<li>4. Ensure the server can write to mainfile.php</li>
+				<li>5. Access <your.site.url>/upgrade/ with a browser.</li>
+				<li>6. Follow the instructions to update your database.</li>
+				<li>7. Write-protect mainfile.php again.</li>
+				<li>8. Delete the upgrade folder.</li>
+			</ul>
+			<br />
+			<h4>Upgrading from any XOOPS ranging from 2.0.7 to 2.0.13.2 (using the full package):</h4>
+			<br />
+			<ul>
+				<li>1. Move the "upgrade" folder inside the "htdocs" folder (it's been kept out as it's not needed for full installs).</li>
+				<li>2. Delete htdocs/mainfile.php, htdocs/install/, htdocs/cache/, htdocs/template_c/ from the mpressCMS1.x package that you just downloaded (not from your server).</li>
+				<li>3. Upload the content of the htdocs folder over your existing files.</li>
+				<li>4. Delete the following folders and files from your server (they belong to an old version): <ul>
+																													<li>class/smarty/core</li>
+																													<li>class/smarty/plugins/resource.db.php</li>
+																												</ul></li>
+				<li>5. Empty the templates_c folder (except index.html).</li>
+				<li>6. Ensure the server can write to mainfile.php</li>
+				<li>7. Access <your.site.url>/upgrade/ with a browser, and follow the instructions.</li>
+				<li>8. Write-protect mainfile.php again.</li>
+				<li>9. Delete the upgrade folder.</li>
+				<li>10. Update the "system" module from the modules administration interface.</li>
+			</ul>
+		</div>
+	</body>
+</html>	
