@@ -54,10 +54,13 @@ if ( $action == "showpopups" ) {
             <table width="100%" class="outer">
             <tr><th colspan="3">'._MSC_SMILIES.'</th></tr>
             <tr class="head"><td>'._MSC_CODE.'</td><td>'._MSC_EMOTION.'</td><td>'._IMAGE.'</td></tr>';
-            if ($getsmiles = $xoopsDB->query("SELECT * FROM ".$xoopsDB->prefix("smiles"))) {
+            $myts =& MyTextsanitizer::getInstance();
+            $smiles = $myts->getSmileys();
+            $count = count($smiles);
+            if ($count > 0) {
                 $rcolor = 'even';
-                while ( $smile = $xoopsDB->fetchArray($getsmiles) ) {
-                    echo "<tr class='$rcolor'><td>".$smile['code']."</td><td>".$smile['emotion']."</td><td><img onmouseover='style.cursor=\"hand\"' onclick='doSmilie(\" ".$smile['code']." \");' src='".XOOPS_UPLOAD_URL."/".$smile['smile_url']."' alt='' /></td></tr>";
+                for ($i = 0; $i < $count; $i++) {
+                    echo "<tr class='$rcolor'><td>".$smiles[$i]['code']."</td><td>".$smiles[$i]['emotion']."</td><td><img onmouseover='style.cursor=\"hand\"' onclick='doSmilie(\" ".$smiles[$i]['code']." \");' src='".XOOPS_UPLOAD_URL."/".$smiles[$i]['smile_url']."' alt='' /></td></tr>";
                     $rcolor = ($rcolor == 'even') ? 'odd' : 'even';
                 }
             } else {
