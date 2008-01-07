@@ -185,7 +185,7 @@ class upgrade_impcms05 {
 			'rank_width' => "'_MD_AM_RANKW', '120', '_MD_AM_RANKWDSC', 'textbox', 'int', 21",
 			'rank_height' => "'_MD_AM_RANKH', '120', '_MD_AM_RANKHDSC', 'textbox', 'int', 21",
 			'rank_maxsize' => "'_MD_AM_RANKMAX', '35000', '_MD_AM_RANKMAXDSC', 'textbox', 'int', 21",
-			'remember_me' => "'_MD_AM_REMEMBERME', '0', '_MD_AM_REMEMBERMEDSC', 'yesno', 'int', 30",
+			'remember_me' => "'_MD_AM_REMEMBERME', '0', '_MD_AM_REMEMBERMEDSC', 'yesno', 'int', 29",
 			'priv_dpolicy' => "'_MD_AM_PRIVDPOLICY', 1, '_MD_AM_PRIVDPOLICYDSC', 'yesno', 'int', 31",
 			'priv_policy' => "'_MD_AM_PRIVPOLICY', '" . addslashes(_UPGRADE_PRIVPOLICY
 		) . "', '_MD_AM_PRIVPOLICYDSC', 'textarea', 'text', 32");
