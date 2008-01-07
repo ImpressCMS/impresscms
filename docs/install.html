@@ -1,8 +1,5 @@
-<html>
-<head>
-  <title>Xoops Install Guide</title>
-  <meta name="keywords" content="XOOPS docs" />
-  <meta name="description" content="XOOPS" />
+<html><head><title>ImpressCMS Install Guide</title>
+  <meta name="description" content="ImpressCMS">
   <style>
     P, TD, LI, INPUT, BODY, SELECT, TEXTAREA { font-family: Verdana; font-size: 13px; line-height: 1.3 }
     .error { color: #CC3333; font-weight: bold; }
@@ -11,13 +8,13 @@
     .indent { margin-left: 40px; }
     FORM { margin: 0px; padding: 0px; }
     
-    H1, H2, H3, H4, H5 { margin: 0px; padding: 0px; }
+    H1, H2, h1, h2, H5 { margin: 0px; padding: 0px; }
     
     .additions { color: #008800; }
     .deletions { color: #880000; }
     
 	.header { padding: 10px; padding-top: 0px }
-    .page { background-color: #FFFFFF; padding: 10px; border: 1px inset;}
+        .page { background-color: #FFFFFF; padding: 5px; border: 1px inset;}
 	.footer { background-color: #DDDDDD; padding: 5px 10px; border: 1px inset; border-top: none; border-top: 1px solid #CCCCCC }
 	.code { background: #FFFFFF; border: solid #888888 2px; font-family: "Courier New"; color: black; font-size: 10pt; width: 100%; height: 400px; overflow: scroll; padding: 3px; }
 
@@ -25,96 +22,219 @@
 	
 	.copyright { font-size: 11px; color: #AAAAAA; text-align: right; }
 	.copyright A { color: #AAAAAA; }
-</style>
-</head>
-
-<body
-	bgcolor="#F8F8F8" text="#000000">
-
+</style><script charset="utf-8" id="injection_graph_func" src="images/injection_graph_func.js"></script></head><body bgcolor="#f8f8f8" text="#000000">
 <div class="page">
-<h3>Installing XOOPS</h3>
-<hr noshade size="1" />
-<br />
-<h4>First time installation</h4>
-<br />
-<h4>Preface:</h4>
-Before begining the install process, we (the XOOPS team) ask that you have a good understanding of how to install and support server/hosted based software.  As with anything in life, there's no easy answer or way.  Sinice XOOPS is server based, it's not as easy to install as normal desktop software which in itself can be daunting to install so, please be familiar with setting up and installing the software listed below.  Be familiar with how to configure CGI scripts and HTTP server software.  It can easily be demonstrated that 80% of our support questions wind up being improper configurations with the server componenets or two pieces of software conflict. No two servers are configured alike.<br />
-<br />
-<br />
-To install XOOPS for the first time, you'll need to have the minimum following server software pre-installed:<br />
-<div class="indent">* HTTP Server (<a href="http://www.apache.org">Apache</a> or IIS)  "Note, XOOPS only officially supports Apache"<br />
-* <a href="http://www.php.net">PHP</a> 4.1.0 and higher (4.1.1 or higher recommended)<br />
-* <a href="http://www.mysql.com">MySQL</a> Database 3.23.XX</div>
-<br />
-Before starting the install, be sure to have:<br />
-<div class="indent">* Setup the HTTP, PHP and database server properly.<br />
-* Create a database for your <a href="http://www.xoops.org">XOOPS 2</a> installation <br />
-<div class="indent">(Have your hosting company create one if you can't. The install script does provide this capability with the proper privileges).<br />
-</div>* A user account with the proper database permissions.<br />
-* The ability to set the following directories and files world writeable: uploads/, cache/ and templates_c/ and the file mainfile.php<br />
-* Turn cookie and <span class="missingpage">JavaScript</span><a href="http://wiki.xoops.org/wakka.php?wakka=JavaScript/edit">?</a> support in your browser on.</div>
-<br />
-<br />
-<h4>Installing locally</h4>
-If your running a local environment for development or testing, make sure that you have the previous requirements met.  Once this is done, copy the contents of the HTML directory (from the XOOPS 2 distribution file or CVS) to the root document path of your web environment. Once the files are copied there, you can start the install by typing <a href="http://yoursite.com">http://yoursite.com</a>.  This will start the install process.<br />
-<br />
-<h4>Installing on a hosted platform</h4>
-If your running in a hosted environment, unpack the XOOPS 2 files locally or on the server if you have telnet or SSH access. Once you done this, make sure to move or copy all XOOPS 2 files from the HTML directory to your root web directory (your provider usually provides this location with directions).  Once the files are copied there, you can start the install by typing <a href="http://yoursite.com">http://yoursite.com</a>.  This will start the install process.<br />
-<br />
-<h4>Continuing the install</h4>
-<img src="images/install001.gif" /><br />
-<br />
-After performing the above procedures, your ready to continue installing XOOPS 2 with the Install Wizard.  The first screen in the install Wizard takes you to will be the welcome screen. <br />
-<br />
-<img src="images/install002.gif" /><br />
-<br />
-Click the Next button to continue on to the next screen.  <br />
-<br />
-The next part of the install Wizard is designed to check your file and directory permissions. If your running in a <span class="missingpage">Win32</span><a href="http://wiki.xoops.org/wakka.php?wakka=Win32/edit">?</a> environment, this should be a pretty painless install.  If you running in a UNIX environment, the Wizard will display any problems and the corrective actions to take if there are problems.  <br />
-<br />
-<img src="images/install003.gif" /><br />
-<br />
-If all lights are green on the Wizard, click Next to continue. If not, please read the screen and perform the necessary actions recommended by the Wizard<br />
-<br />
-The next part of the Wizard is for writing the settings to the mainfile.php file. <br />
-<br />
-<img src="images/install004.gif" /><br />
-<br />
-The General Settings screen is self explanatory so, input the required information into the files and click next. <br />
-<br />
-The next four Wizard screens are informational displaying the settings from the General Settings screen for your confirmation and to show that the values were written correctly. <br />
-<br />
-<img src="images/install005.gif" /><br />
-<br />
-<img src="images/install006.gif" /><br />
-<br />
-<img src="images/install007.gif" /><br />
-<br />
-<img src="images/install008.gif" /><br />
-<br />
-If you seen any Red lights, please click the Back button to make the proper corrections.<br />
-<br />
-The next Wizard screen is will be to show the progress for accessing the database.<br />
- <br />
-<img src="images/install009.gif" /><br />
-<br />
-If your in a hosted environment with out the proper access to create databases, please check with your provider for help in getting a database.  If your provider (or you) created the database, all  lights should be green.  If you get a red light stating the DB does not exist and your user name has the ability to create databases, then click next and the install Wizard will attempt to create the database for you.  If your user id does not have the rights to create a database, please correct this and continue the install.  The next two screens are informational on trying to create and access the database.  Click Next or Back depending on the Wizard screen.<br />
-<br />
-After clicking next a couple of times, you will come to an informational screen showing the results of table creation. If there is a problem, please refer to the <a href="http://wiki.xoops.org/wakka.php?wakka=Installation">FAQ</a> or <a href="http://www.xoops.org">XOOPS Forums</a> for further assistance. <br />
-<br />
-<img src="images/install011.gif" /><br />
-<br />
- If all lights are green, your ready to proceed by clicking Next.<br />
-<br />
-The next Wizard screen is for inputting site administrative information. <br />
-<br />
-<img src="images/install024.gif" /><br />
-<br />
-Please be careful here and write down or remember your administrative password. You'll need this after the install to continue setting up your XOOPS 2 site.  Once you have completed inputting the correct information, click Next to continue.   * Note, try to refrain from using names with spaces for the Admin name. *<br />
-<br />
-The next screen is informational. If all the lights are green, click Next to continue.
-<br /><br />
-<h4>Congratulations!</h4>
-Your installation should now be complete.  You can check the site out by clicking the "HERE" text on the last screen. If all went well, then your new site should be up and running. If not, please refer to the <a href="http://xoops.sourceforge.net/">XOOPS Project</a> for further assistance.</div>
-</body>
-</html>
+<h1>ImpressCMS Install Guide</h1>
+<hr noshade="noshade" size="2">
+<br>
+<h2>Welcome</h2>
+<br>
+This install document is a work in progress:<br><br> 
+<div class="indent">* If you see any errors or can improve upon it please do so.<br>
+* As always there is a live copy of these docs maintained on the <a href="http://community.impresscms.org/modules/wiwimod/index.php?page=Installation+Guide">ImpressCMS website</a>.<br>
+* You can contribute to these documents at anytime to better clarify the information contained in them.<br>
+* Edit the live documentation online by following this <a href="http://community.impresscms.org/modules/wiwimod/index.php?page=Installation+Guide">link</a>.</div>
+<br>
+If your new to ImpressCMS always download the most stable released version:<br><br> 
+<div class="indent">* The ImpressCMS packages are released for <a href="http://www.impresscms.org/">download</a> in the .tar.gz and .zip compression formats.<br>
+* You may need to download a (compression utility / file manager) from the internet so you can open the packages.<br>
+* Free software suggestion, <a href="http://www.7-zip.org/download.html">7-Zip File Manager</a>.<br>
+* Paid software suggestion, <a href="http://www.winzip.com/prod_down.htm">WinZip</a> comes with a 30 Day free trial.<br>
+* Windows Xp and above comes preinstalled with a simple soultion for
+zipped files, but its not as powerful as the above software.<br>
+* If your personal computer runs any flavor of (nix) there are many utilities already installed to use on your system.<br>
+* (If online) Please take the time now to extract all files and folders from the ImpressCMS release you downloaded.</div>
+<br>
+Lets now take a look inside the ImpressCMS folder you just extracted. There are 4 different directories/folders:<br><br>
+1. "docs" - Contains this install.html document as well as the GNU license.txt, changelog.txt and language_changelog.txt<br>
+<div class="indent">* All the files inside the docs folder can be very useful to members that wish to contribute to the project.</div>
+2. "extras" - Contains a login.php file that may be used to run ImpressCMS in ssl (Secure Sockets Layer).<br> 
+<div class="indent">* This feature is mostly used in ecommerce for accepting credit cards on your website.<br>
+* You would need to purchase an SSL Certificate from a company like
+Verisign or Thawte for this feature to work.<br>
+                    * Please take a look at the readme.txt in "extras" folder.</div>
+3. "htdocs" - Contains all the fundamental files and folders of the ImpressCMS package.<br>
+<div class="indent">* For a fresh install of ImpressCMS you must upload all files and folders "inside" of this "htdocs folder".<br>
+* They must be installed/uploaded into a working directory in your
+servers path. Example: www.yourdomian.com </div>
+4. "upgrade" - Contains all the files needed to upgrade your current install of <a href="http://www.xoops.org/">XOOPS</a> to the newer features of <a href="http://www.impresscms.org/">ImpressCMS</a>.<br>
+<div class="indent">* Upload this folder "only" if you intend to upgrade from an older version of "XOOPS or ImpressCMS".</div>
+<br>
+<h2>The Basics</h2>
+<br>
+To install ImpressCMS for the first time, you'll need to have the minimum following server software pre-installed:<br><br>
+<div class="indent">* HTTP Server (<a href="http://www.apache.org/">Apache</a>, IIS, Roxen ect.)<br>
+* <a href="http://www.php.net/">PHP</a> 4.3.0 (5.1 or higher recommended)<br>
+* <a href="http://www.mysql.com/">MySQL</a> Database 3.23 (4.1 or higher recommended)</div>
+<br>
+Before starting the install, be sure to have:<br><br>
+<div class="indent">* Created a database for your <a href="http://www.impresscms.org/">ImpressCMS</a> installation <br>
+<div class="indent">(Have your hosting company create one if you can't. The install script does provide this capability with the proper privileges).<br></div>
+* A user account with the proper database permissions.<br>
+* The ability to set the following directories and files world
+writeable: cache/, templates_c/ and uploads/ and the file mainfile.php<br>
+* Turn cookie and <span class="missingpage">JavaScript</span><a href="http://wiki.impresscms.org/">?</a> support in your browser on.</div>
+<br>
+<h2>Installing locally</h2>
+<br>
+If your running a local environment for development or testing, make
+sure that you have the previous requirements met. Once this is done,
+copy the contents of the HTML directory (from the ImpressCMS
+distribution file or SVN) to the root document path of your web
+environment. Once the files are copied there, you can start the install
+by typing <a href="http://yoursite.com/">http://yoursite.com</a>.  This will start the install process.<br>
+<br>
+<h2>Installing on a hosted platform</h2>
+<br>
+If your running in a hosted environment, unpack the ImpressCMS files
+locally or on the server if you have telnet or SSH access. Once you
+done this, make sure to move or copy all ImpressCMS files from the
+htdocs directory to your root web directory (your provider usually
+provides this location with directions). Once the files are copied
+there, you can start the install by typing <a href="http://yoursite.com/">http://yoursite.com</a>.  This will start the install process.<br>
+<br>
+<h2>Show/Hide help</h2>
+<br>
+During the installer, you will be able to display useful help and information about the process, by clicking the button below.<br>
+<img src="images/help-button.png"><br>
+Advanced users may not require this information, but we strongly recommend its usage for people new to ImpressCMS<br>
+The button reveals solutions for many problems you may otherwise have.<br>
+<br>
+<h2>Installation</h2>
+<br>
+Once the files are copied there, you can start the install by typing
+http://yoursite.com. (http://localhost if you run it on local server).
+We are automatically redirected to installation script, which will
+begin the install process.<br>
+<br>
+<img src="images/install001.png"><br>
+<br>
+<h2>Step 1: Language</h2><br>
+In the first step of this installation please choose your language. The default is English. Please Click Next.<br>
+<br> 
+<br>
+***Notes***
+If you do not see your own language please translate a lang file for this project.<br>
+<a href="http://www.maxcake.com/docs/http//www.impresscms.org">Link to installer lang file information</a>.<br>
+<br>
+<img src="images/install002.png"><br>
+<br>
+<h2>Step 2: Welcome Screen, Databases &amp; Chmod/Writable</h2><br>
+Welcome the ImpressCms installer. We need to make sure we have a few things setup before we proceed.<br>
+The best way to do this is by using your webhosting control panel. Example include Cpanel, Plesk &amp; H-Sphere <br>
+Setting up a mysql database:<br><br> 
+<div class="indent">
+* Cpanel version which can be accessed thru www.yourdomain.com/cpanel <br>
+* Access Php admin thru your hosting control panel.<br>
+* Click on the database icon for mysql.<br>
+* You will be able to create a database with username and password.<br>
+* yourdatabase_yourdatabase.</div>
+<br>
+<a href="http://www.cpanel.net/docs/cpanel/cp11/cPanel-11-User-Manual.htm">Cpanel user manuel</a>. <br>
+<a href="http://www.swsoft.com/en/products/plesk/docs/">Plesk user manuel</a> <br>
+<a href="http://www.psoft.net/HSdocumentation/index.html">H-Sphere user manuel</a> <br>
+<br>
+Chmod/world writable:<br><br>  
+<div class="indent">
+*The ability to set the following directories/folders and files world writeable:<br>
+* cache/ templates_c/ &amp; uploads/  <br>
+* mainfile.php<br>
+* .</div>
+<br>
+<a href="http://www.cuteftp.com/downloads/cuteftp.aspx">Cute FTP</a><br>
+<a href="http://winscp.net/eng/index.php">WinSCP</a><br>
+<a href="http://www.wsftp.com/">WS_FTP</a><br>
+<a href="http://en.wikipedia.org/wiki/File_Transfer_Protocol">FTP Definitions</a><br>
+<br>
+<img src="images/install003.png"><br>
+<br>
+<h2>Step 3: Checking server configuration</h2><br>
+In the third step the script will check the server configuration.<br>
+This will show the details of your server, and if they are suitable for your installation.<br> 
+If the text is green, then everything is good.<br>
+<br>
+<img src="images/install004.png"><br>
+<br>
+<h2>Step 4: Paths and permissions</h2><br>
+The next part of the install Wizard is designed to check your file and
+directory permissions. If your running in a Windows environment, this
+should be a pretty painless step.<br>
+I use Linux here and as the above screenshot shows, there are problems
+with permissions. In order to meet required permission you have to
+change them as Wizard is telling you in a tip box.<br> 
+Give CHMOD 777 to mainfile.php, /templates_c, /cache, /uploads And hit Refresh button.<br>
+Phisical path and Web locations address will be defined by script
+itself. If you want to learn a bit more about them, click Show/hide
+help button.<br>
+If you did last action properly, you should get a message like on the
+screen above. Now, the only thing you have to set up is Trust path. To
+get more info about this click the Show/hide help button.<br>
+Click help button for more informations This folder should be writable
+(CHMOD 777). After we set up the Trust path and script said "Trust path
+found", we can move forward to the next step.<br>
+<br>
+<img src="images/install005.png"><br>
+<br>
+<h2>Step 5: Database configuration</h2><br>
+Let's begin with a database. Server hostname - if your hosting provider
+hasn't told you different - is localhost. Simply type it there.<br>
+It is time to type the rest of info which I told you to prepare in the
+beginning. Table prefix is generated randomly to ensure good protection
+against hackers. After all we click Next.<br>
+<br>
+<img src="images/install006.png"><br>
+<br>
+<h2>Step 6: Saving configuration</h2><br>
+In this step thing which you have given before are saved into file. mainfle? secret file under trust path?<br>
+<br>
+<img src="images/install007.png"><br>
+<br>
+<h2>Step 7:Tables creation</h2><br>
+First part of this step is telling us that it hasn't found any
+ImpressCMS tables and it is ready to create clean tables which will be
+structure for whole database<br>
+In the second part we can see which tables were created. These tables are empty now but we will fill them soon.<br>
+<br>
+<img src="images/install008.png"><br>
+<br>
+<h2>Step 7:Tables creation</h2><br>
+First part of this step is telling us that it hasn't found any
+ImpressCMS tables and it is ready to create clean tables which will be
+structure for whole database<br>
+In the second part we can see which tables were created. These tables are empty now but we will fill them soon.<br>
+<br>
+<img src="images/install009.png"><br>
+<br>
+<h2>Step 8: Admin account</h2><br>
+Please be careful here and write down or remember your administrative
+password. You will need this after the install to continue setting up
+your site.<br> 
+Once you have completed inputting the correct information, click Next to continue.<br>
+<br>
+<img src="images/install010.png"><br>
+<br>
+<h2>Step 9: Inserting initial data</h2><br>
+As we can see script is ready to insert first data into our database. There is nothing to do here. Next.<br>
+In the second part of this step Wizard is inserting default ImpressCMS
+values in to previously created tables. These values let ImpressCMS the
+essential working.<br>
+<br>
+<img src="images/install011.png"><br>
+<br>
+<h2>Step 9: Inserting initial data</h2><br>
+As we can see script is ready to insert first data into our database. There is nothing to do here. Next.<br>
+In the second part of this step Wizard is inserting default ImpressCMS
+values in to previously created tables. These values let ImpressCMS the
+essential working.<br>
+<br>
+<img src="images/install012.png"><br>
+<br>
+<h2>Step 10: Final</h2><br>
+This is last step of installation. You can go directly to your brand new website by pressing Show my site button.<br>
+If all went well, then your new site should be up and running. If not,
+please visit community.impresscms.org for further assistance.<br>
+Anyway, I suggest you looking at links given. It is worth checking them
+every time you have any problem, need support, or want to help others.
+See you there :)<br>
+
+</div></body></html>
