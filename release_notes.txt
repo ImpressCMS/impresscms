@@ -29,9 +29,13 @@ https://sourceforge.net/project/showfiles.php?group_id=205633
 Checking out ImpressCMS from the SVN
 ==================================
 
-You can easily get ImpressCMS using SVN. The current release can be found at:
+You can easily get ImpressCMS using SVN.
 
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/tags/impresscms_1.0/
+The full package can be found at:
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0/full/
+
+The upgrade package can be found at :
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0/xoops-to-impresscms/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 
@@ -46,6 +50,7 @@ Installing ImpressCMS
    2. Ensure mainfile.php, cache, templates_c and uploads are writable by the webserver
    3. Using your web browser, access <your.site.url>/folder, "folder" being where you uploaded the htdocs/ files to launch the installation wizard
 
+For a complete installation documentation, please refer to /docs/install.html in the ImpressCMS package.
 
 Upgrading from XOOPS 2.0.14/2.0.15/2.0.16/2.0.17.*/2.0.18.*
 ==================================
