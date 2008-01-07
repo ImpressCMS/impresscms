@@ -25,7 +25,7 @@ class upgrade_2018 {
 	}
 
 	function query($sql) {
-		echo "<li>" . $sql . "</li>";
+		//echo "<li>" . $sql . "</li>";
 		$db = $GLOBALS['xoopsDB'];
 		if (!($ret = $db->queryF($sql))) {
 			echo "<li style='font-weight: bold; color: red;'>" . $db->error() . "</li>";

@@ -136,7 +136,7 @@ class upgrade_impcms05 {
 		return (bool) ($value);
 	}
 	function query($sql) {
-		echo "<li>" . $sql . "</li>";
+		//echo "<li>" . $sql . "</li>";
 		$db = $GLOBALS['xoopsDB'];
 		if (!($ret = $db->queryF($sql))) {
 			echo "<li style='font-weight: bold; color: red;'>" . $db->error() . "</li>";
@@ -197,7 +197,7 @@ class upgrade_impcms05 {
 		}
 		return true;
 	}
-	
+
 	function apply_templates(){
 		$db = $GLOBALS['xoopsDB'];
 		$table = $db->prefix('tplfile');
