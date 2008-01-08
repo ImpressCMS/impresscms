@@ -16,6 +16,8 @@
 */
 
 require_once 'common.inc.php';
+
+
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
 	$wizard->setPage( 'start' );
@@ -23,7 +25,6 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
     $content = "";
     include "./language/$wizard->language/welcome.php";
-    
-    include 'install_tpl.php';
 
+    include 'install_tpl.php';
 ?>

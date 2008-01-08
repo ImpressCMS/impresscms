@@ -45,7 +45,7 @@
 				<?php if ( $pageHasHelp ) { ?>
 					<button type="button" id="help_button" onclick="showHideHelp(this)"> <?php echo SHOW_HIDE_HELP; ?></button>
 				<?php } ?>
-				<h2><?php echo htmlspecialchars( $wizard->pagesTitles[ $wizard->currentPage ] ); ?></h2>
+				<h2><?php echo $wizard->pagesTitles[ $wizard->currentPage ]; ?></h2>
 				<?php echo $content; ?>
 			</div>
 			<div id="buttons">
