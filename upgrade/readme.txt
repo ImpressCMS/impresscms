@@ -12,7 +12,8 @@ Upgrading from XOOPS 2.0.17/2.0.18 (easy way):
 4. Access <your.site.url>/upgrade/ with a browser. 
 5. Follow the instructions to update your database. 
 6. Write-protect mainfile.php again. 
-7. Delete the upgrade folder. 
+7. Delete the upgrade folder.
+8. Enter the Admin area & then flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox), this will ensure that the new admin interface will display properly. 
 
 --------------------------------------------------------------------------------
 
@@ -29,5 +30,5 @@ Upgrading from any XOOPS ranging from 2.0.7 to 2.0.16 (using the full package):
 7. Ensure the server can write to mainfile.php 
 8. Access <your.site.url>/upgrade/ with a browser, and follow the instructions. 
 9. Write-protect mainfile.php again. 
-10. Delete the upgrade folder. 
-11. Update the "system" module from the modules administration interface.
+10. Delete the upgrade folder.
+11. Enter the Admin area & then flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox), this will ensure that the new admin interface will display properly. 12. Update the "system" module from the modules administration interface.
