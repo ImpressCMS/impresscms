@@ -169,7 +169,7 @@ class XoopsFormRadio extends XoopsFormElement {
 	function render() {
 		$ret = "";
 		$ele_name = $this->getName();
-		$ele_value = intval($this->getValue());
+		$ele_value = $this->getValue();
 		$ele_options = $this->getOptions();
 		$ele_extra = $this->getExtra();
 		$ele_delimeter = $this->getDelimeter();
