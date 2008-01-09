@@ -43,7 +43,7 @@ if ( $xoopsUser ) {
 function showRSS($op=1){
 	switch ($op) {
 		case 1:
-			$rssurl = 'http://impresscms.org/modules/smartsection/backend.php';
+			$rssurl = 'http://www.impresscms.org/modules/smartsection/backend.php';
 			$rssfile = XOOPS_CACHE_PATH.'/adminnews.xml';
 			break;
 	}
@@ -168,10 +168,10 @@ switch ($op){
 					$systemadm = true;
 				}
 			}
-			
+
 		}
         $tpl->assign('systemadm', $systemadm);
-        
+
 		// Loading of System Configuration Links
 		$groups = $xoopsUser->getGroups();
 		$all_ok = false;
