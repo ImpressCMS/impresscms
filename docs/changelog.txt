@@ -1,8 +1,8 @@
 ImpressCMS ChangeLog
 
-========================
-Unreleased: Version 1.0 Beta
-========================
+=============================================
+2008-01-08 : ImpressCMS 1.0 "Janus" Beta Beta
+=============================================
 
 - Added : linkexternal.js to header, allows devs & designers to utilise 'rel="external" or rel="nofollow" in <A > tags as a replacement for target="_blank". (Vaughan)
 - Added : New admin interface based on XOOPS EXM and improved. Thanks to XOOPS EXM!. (BitC3R0 / malanciault / young-pee)
@@ -17,7 +17,8 @@ Unreleased: Version 1.0 Beta
 - Added : Upgrade script from XOOPS 2.0.18 (Vaughan/malanciault)
 - Added : Handling HTTP errors automatically on the site. (malanciault/young-pee)
 - Added : Creating a random DB prefix in instalation process like mentioned in feature request item #1848819 (real_therplima)
-- Added : New default theme : ImpressTheme (malanciault)
+- Added : New default theme : impresstheme created by aphex and snow (malanciault)
+- Added : Another theme : impresstheme_light created by nekro (malanciault)
 - Added : Ability to set & define your sites Privacy Policy from admin/preferences/user settings. (vaughan)
 - Added : New function to show warnings. Also added a new css class for that. xoops_warning() (young-pee)
 - Added : 4 new System warnings. 1 for Security and 3 for correct functionality of the system. (young-pee)
