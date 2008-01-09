@@ -24,6 +24,7 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 	$pageHasForm = false;
 
     $content = "";
+
     include "./language/$wizard->language/welcome.php";
 
     include 'install_tpl.php';

@@ -23,7 +23,7 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 	$pageHasHelp = false;
 
 	$vars =& $_SESSION['siteconfig'];
-	
+
 	$error =& $_SESSION['error'];
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
@@ -32,7 +32,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$vars['adminpass'] = $_POST['adminpass'];
 	$vars['adminpass2'] = $_POST['adminpass2'];
 	$error = '';
-	
+
     if (!preg_match( "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $vars['adminmail'] ) ) {
     	$error = ERR_INVALID_EMAIL;
     } elseif ( @empty( $vars['adminname'] ) || @empty( $vars['adminpass'] ) || @empty( $vars['adminmail'] ) ) {
@@ -54,13 +54,13 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 <?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
 <fieldset>
 	<legend><?php echo LEGEND_ADMIN_ACCOUNT; ?></legend>
-	<label for="adminname"><?php echo htmlspecialchars( ADMIN_LOGIN_LABEL ); ?></label>
+	<label for="adminname"><?php echo ADMIN_LOGIN_LABEL; ?></label>
 	<input type="text" name="adminname" id="adminname" value="<?php echo htmlspecialchars( $vars['adminname'], ENT_QUOTES ); ?>" />
-	<label for="adminmail"><?php echo htmlspecialchars( ADMIN_EMAIL_LABEL ); ?></label>
+	<label for="adminmail"><?php echo ADMIN_EMAIL_LABEL; ?></label>
 	<input type="text" name="adminmail" id="adminmail" value="<?php echo htmlspecialchars( $vars['adminmail'], ENT_QUOTES ); ?>" />
-	<label for="adminpass"><?php echo htmlspecialchars( ADMIN_PASS_LABEL ); ?></label>
+	<label for="adminpass"><?php echo ADMIN_PASS_LABEL; ?></label>
 	<input type="password" name="adminpass" id="adminpass" value="" />
-	<label for="adminpass2"><?php echo htmlspecialchars( ADMIN_CONFIRMPASS_LABEL ); ?></label>
+	<label for="adminpass2"><?php echo ADMIN_CONFIRMPASS_LABEL; ?></label>
 	<input type="password" name="adminpass2" id="adminpass2" value="" />
 </fieldset>
 <?php

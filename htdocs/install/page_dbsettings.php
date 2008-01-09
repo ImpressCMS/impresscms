@@ -87,7 +87,6 @@ if ( @empty( $vars['DB_HOST'] ) ) {
 
 
 function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
-	$label = htmlspecialchars( $label );
 	$name = htmlspecialchars( $name, ENT_QUOTES );
 	$value = htmlspecialchars( $value, ENT_QUOTES );
 	echo "<label for='$name'>$label</label>\n";
@@ -114,8 +113,8 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
 	<?php echo xoFormField( 'DB_USER',	$vars['DB_USER'],		DB_USER_LABEL, DB_USER_HELP ); ?>
 	<?php echo xoFormField( 'DB_PASS',	$vars['DB_PASS'],		DB_PASS_LABEL, DB_PASS_HELP, 'password' ); ?>
 
-	<label style="text-align:center" title="<?php echo htmlspecialchars( DB_PCONNECT_HELP, ENT_QUOTES ); ?>">
-		<?php echo htmlspecialchars( DB_PCONNECT_LABEL ); ?>
+	<label style="text-align:center" title="<?php echo DB_PCONNECT_HELP; ?>">
+		<?php echo DB_PCONNECT_LABEL; ?>
 		<input class="checkbox" type="checkbox" name="DB_PCONNECT" value="1" />
 	</label>
 </fieldset>

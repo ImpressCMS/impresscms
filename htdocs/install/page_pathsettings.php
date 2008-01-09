@@ -244,17 +244,17 @@ class PathStuffController {
 
 function genRootCheckHtml( $valid ) {
 	if ( $valid ) {
-		return '<img src="img/yes.png" alt="Success" />' . htmlspecialchars( sprintf( XOOPS_FOUND, XOOPS_VERSION ) );
+		return '<img src="img/yes.png" alt="Success" />' .  sprintf( XOOPS_FOUND, XOOPS_VERSION);
 	}  else {
-		return '<img src="img/no.png" alt="Error" /><br />' . htmlspecialchars( ERR_NO_XOOPS_FOUND );
+		return '<img src="img/no.png" alt="Error" /><br />' .ERR_NO_XOOPS_FOUND;
 	}
 }
 
 function genTrustPathCheckHtml( $valid ) {
 	if ( $valid ) {
-		return '<img src="img/yes.png" alt="Success" />' . htmlspecialchars( _INSTALL_TRUST_PATH_FOUND );
+		return '<img src="img/yes.png" alt="Success" />' . _INSTALL_TRUST_PATH_FOUND;
 	}  else {
-		return '<img src="img/no.png" alt="Error" /><br />' . htmlspecialchars( _INSTALL_ERR_NO_TRUST_PATH_FOUND );
+		return '<img src="img/no.png" alt="Error" /><br />' . _INSTALL_ERR_NO_TRUST_PATH_FOUND;
 	}
 }
 
@@ -318,7 +318,7 @@ function createTrustPath(val) {
 <fieldset>
 	<legend><?php echo _INSTALL_PHYSICAL_PATH; ?></legend>
 	<label for="rootpath"><?php echo XOOPS_ROOT_PATH_LABEL; ?></label>
-	<div class="xoform-help"><?php echo htmlspecialchars(XOOPS_ROOT_PATH_HELP); ?></div>
+	<div class="xoform-help"><?php echo XOOPS_ROOT_PATH_HELP; ?></div>
 	<input type="text" name="ROOT_PATH" id="rootpath" value="<?php echo $ctrl->xoopsRootPath; ?>"
 		onchange="updRootPath(this.value)" />
 	<span id="rootpathimg"><?php echo genRootCheckHtml( $ctrl->validRootPath ); ?></span>
@@ -342,7 +342,7 @@ function createTrustPath(val) {
 <fieldset>
 	<legend><?php echo _INSTALL_TRUST_PATH; ?></legend>
 	<label for="trustpath"><?php echo _INSTALL_TRUST_PATH_LABEL; ?></label>
-	<div class="xoform-help"><?php echo htmlspecialchars(_INSTALL_TRUST_PATH_HELP); ?></div>
+	<div class="xoform-help"><?php echo _INSTALL_TRUST_PATH_HELP; ?></div>
 	<input type="text" name="TRUST_PATH" id="trustpath" value="<?php echo $ctrl->xoopsTrustPath; ?>"
 		onchange="updTrustPath(this.value)" />
 	<span id="trustpathimg"><?php echo genTrustPathCheckHtml( $ctrl->validTrustPath ); ?></span>
@@ -358,7 +358,7 @@ function createTrustPath(val) {
 <fieldset>
 	<legend><?php echo _INSTALL_WEB_LOCATIONS; ?></legend>
 	<label for="url"><?php echo _INSTALL_WEB_LOCATIONS_LABEL; ?></label>
-	<div class="xoform-help"><?php echo htmlspecialchars(XOOPS_URL_HELP); ?></div>
+	<div class="xoform-help"><?php echo XOOPS_URL_HELP; ?></div>
 	<input type="text" name="URL" id="url" value="<?php echo $ctrl->xoopsUrl; ?>" />
 </fieldset>
 
