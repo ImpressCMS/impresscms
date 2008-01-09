@@ -187,25 +187,25 @@ class XoopsTree
 	}
 
 	//generates nicely formatted linked path from the root id to a given id
-	function getNicePathFromId($sel_id, $title, $funcURL, $path="")
-	{
-      $path = !empty($path) ? $path . "&nbsp;:&nbsp;" : $path;
-		$sel_id = intval($sel_id);
-		$sql = "SELECT ".$this->pid.", ".$title." FROM ".$this->table." WHERE ".$this->id."='".$sel_id."'";
-		$result = $this->db->query($sql);
-		if ( $this->db->getRowsNum($result) == 0 ) {
-			return $path;
-		}
-		list($parentid,$name) = $this->db->fetchRow($result);
-		$myts =& MyTextSanitizer::getInstance();
-		$name = $myts->makeTboxData4Show($name);
-		$path = "<a href='".$funcURL."&amp;".$this->id."=".$sel_id."'>".$name."</a>".$path."";
-		if ( $parentid == 0 ) {
-			return $path;
-		}
-		$path = $this->getNicePathFromId($parentid, $title, $funcURL, $path);
-		return $path;
-	}
+    function getNicePathFromId($sel_id, $title, $funcURL, $path="")
+    {
+      $path = !empty($path) ? $path : $path;
+        $sel_id = intval($sel_id);
+        $sql = "SELECT ".$this->pid.", ".$title." FROM ".$this->table." WHERE ".$this->id."='".$sel_id."'";
+        $result = $this->db->query($sql);
+        if ( $this->db->getRowsNum($result) == 0 ) {
+            return $path;
+        }
+        list($parentid,$name) = $this->db->fetchRow($result);
+        $myts =& MyTextSanitizer::getInstance();
+        $name = $myts->makeTboxData4Show($name);
+        $path = "<a href='".$funcURL."&".$this->id."=".$sel_id."'>".$name."</a>&nbsp;:&nbsp;".$path."";
+        if ( $parentid == 0 ) {
+            return $path;
+        }
+        $path = $this->getNicePathFromId($parentid, $title, $funcURL, $path);
+        return $path;
+    }
 
 	//generates id path from the root id to a given id
 	// the path is delimetered with "/"

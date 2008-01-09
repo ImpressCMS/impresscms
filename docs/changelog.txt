@@ -1,8 +1,14 @@
 ImpressCMS ChangeLog
 
 =============================================
-2008-01-08 : ImpressCMS 1.0 "Janus" Beta Beta
+Unreleased : ImpressCMS 1.0 "Janus" RC
 =============================================
+
+- Fixed : #1867922 No nice path from getNicePathFromId (MacDonald/malanciault)
+
+========================================
+2008-01-08 : ImpressCMS 1.0 "Janus" Beta
+========================================
 
 - Added : linkexternal.js to header, allows devs & designers to utilise 'rel="external" or rel="nofollow" in <A > tags as a replacement for target="_blank". (Vaughan)
 - Added : New admin interface based on XOOPS EXM and improved. Thanks to XOOPS EXM!. (BitC3R0 / malanciault / young-pee)
