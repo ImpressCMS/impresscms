@@ -1,7 +1,7 @@
-ImpressCMS 1.0 Beta release notes
+ImpressCMS 1.0 "Janus" Beta release notes
 ==================================
 
-The ImpressCMS Project is pleased to announce its very first release : ImpressCMS 1.0 Beta.
+The ImpressCMS Project is pleased to announce its very first release : ImpressCMS 1.0 "Janus" Beta.
 
 The first releases of ImpressCMS is based on the XOOPS 2.0.17 core + some additions made in the XOOPS 2.0.18 development branch and, as such, will retain compatibility with existing modules and themes. The goal is to provide an on-going, stable environment for information and support for XOOPS and its users.
 
@@ -60,16 +60,6 @@ Upgrading from XOOPS 2.0.14/2.0.15/2.0.16/2.0.17.*/2.0.18.*
    3. Change the permission of mainfile.php so it is writable by the server
    4. Access <your.site.url>/upgrade/ with a browser, and follow the instructions
    5. Delete the upgrade folder
-
-Files integrity check
-==================================
-
-The ImpressCMS package is released with a script able to check if all the system files were correctly uploaded to the server. To use it, follow these instructions:
-
-   1. Upload the impresscms_md5.php and impresscms.md5 files located in the root of the ImpressCMS package to your ImpressCMS server folder (putting them next to mainfile.php).
-   2. Execute impresscms_md5.php with your browser
-   3. If necessary, re-upload the missing or corrupted system files
-   4. Remove impresscms_md5.php and impresscms.md5 from your server
 
 
 Revealing the blank page backtrace log
