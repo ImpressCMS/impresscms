@@ -56,14 +56,14 @@ h6 {font-size: .8em;}
 /* End Center Column */
 
 /* Start Right Column */
-#xo-canvas-rightcolumn {float:right; width: 175px; top: 121px; right: 10; margin-right: 5px;}
+#xo-canvas-rightcolumn {float:right; width: 175px; top: 121px; right: 10px; margin-right: 5px;}
 #xo-canvas-rightcolumn th { background-color: #d4dde7; color: #fff; vertical-align: middle;}
 #xo-canvas-rightcolumn .xo-blocktitle h3 {margin: 0 0 0 0;font-size: 1.12em; border: 1px solid #ccc; padding: 2px; background: url( ../img/bg-lr-titles.gif ); background-color: #FFB500; color: #4e4e4e; font-weight: bold; text-align:center;}
 #xo-canvas-rightcolumn .xo-blockcontent {line-height: 1.2em;line-height: 120%;}
 /* End Right Column */
 
 /* Start Footer */
-#xo-footer {width: 100%; margin-left: auto; margin-right: auto; margin-bottom: 10px; text-align:center; background-image: url(../img/hbar.gif); clear:both;position: relative; bottom;}
+#xo-footer {width: 100%; margin-left: auto; margin-right: auto; margin-bottom: 10px; text-align:center; background-image: url(../img/hbar.gif); clear:both;position: relative; bottom: 0;}
 /* End Footer */
 
 /* mode debug */
