@@ -57,12 +57,9 @@ function xoops_cp_header($ret = 0)
 	<link rel="icon" type="image/png" href="'.XOOPS_URL.'/favicon.ico" />
 	';
 	echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/xoops.css" />';
-        echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/modules/system/style.css" />';
-        //include_once XOOPS_CACHE_PATH.'/adminmenu.php';
+    echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/modules/system/style.css" />';
 
-
-        //$logo = file_exists(XOOPS_THEME_URL."/".getTheme()."/images/logo.gif") ? XOOPS_THEME_URL."/".getTheme()."/images/logo.gif" : XOOPS_URL."/images/logo.gif";
-        echo "<script type=\"text/javascript\"><!--//--><![CDATA[//><!--
+    echo "<script type=\"text/javascript\"><!--//--><![CDATA[//><!--
 startList = function() {
 	if (document.all&&document.getElementById) {
 		navRoot = document.getElementById(\"nav\");
@@ -84,170 +81,109 @@ window.onload=startList;
 //--><!]]></script>
 	</head>
         <body>" ;
-
 	/**
-	 * Loading current options of the module.
+	 * Loading admin dropdown menus
+	 */
+	if (!file_exists(XOOPS_CACHE_PATH.'/adminmenu.php')) {
+		xoops_confirm(array('op' => 2), XOOPS_URL.'/admin.php', _AD_PRESSGEN);
+		exit();
+	}
+    $file = file_get_contents(XOOPS_CACHE_PATH."/adminmenu.php");
+    $admin_menu = eval('return '.$file.';');
+
+    $moduleperm_handler =& xoops_gethandler('groupperm');
+    $module_handler =& xoops_gethandler('module');
+    foreach ($admin_menu as $k=>$navitem){
+    	if ($navitem['id'] == 'modules'){ //Getting array of allowed modules to use in admin home
+    		$perm_itens = array();
+            foreach ($navitem['menu'] as $item){
+            	$module = $module_handler->getByDirname($item['dir']);
+            	$admin_perm = $moduleperm_handler->checkRight('module_admin', $module->mid(), $xoopsUser->getGroups());
+            	if ($admin_perm){
+            		if ($item['dir'] != 'system'){
+            			$perm_itens[] = $item;
+            		}
+            	}
+            }
+            $navitem['menu'] = $mods = $perm_itens;
+    	} //end
+    	if ($navitem['id'] == 'opsystem'){
+    		$groups = $xoopsUser->getGroups();
+    		$all_ok = false;
+    		if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
+    			$sysperm_handler =& xoops_gethandler('groupperm');
+    			$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
+    		} else {
+    			$all_ok = true;
+    		}
+    		$perm_itens = array();
+    		asort($navitem['menu']);
+    		foreach ($navitem['menu'] as $item){
+    			if (false != $all_ok || in_array($item['id'], $ok_syscats)) {
+    				$perm_itens[] = $item;
+    			}
+    		}
+    		$navitem['menu'] = $sysprefs = $perm_itens; //Getting array of allowed system prefs
+    	}
+    	$tpl->append('navitems', $navitem);
+    }
+    
+    if (count($sysprefs) > 0){
+    	$tpl->assign('systemadm', 1);
+    }else{
+    	$tpl->assign('systemadm', 0);
+    }
+    if (count($mods) > 0){
+    	$tpl->assign('modulesadm', 1);
+    }else{
+    	$tpl->assign('modulesadm', 0);
+    }
+    
+	/**
+	 * Loading options of the current module.
 	 */
 	if ($xoopsModule){
-		$i = 0;
-		$module_admin_menu = $xoopsModule->getAdminMenu();
-		for ($i=count($module_admin_menu)-1;$i>=0;$i=$i-1) {
-			if(isset($module_admin_menu[$i])) {
-				$reversed_module_admin_menu[] = $module_admin_menu[$i];
+		if ($xoopsModule->dirname() == 'system'){
+			if (isset($sysprefs) && count($sysprefs) > 0){
+				for ($i=count($sysprefs)-1;$i>=0;$i=$i-1) {
+					if(isset($sysprefs[$i])) {
+						$reversed_sysprefs[] = $sysprefs[$i];
+					}
+				}
+				foreach ($reversed_sysprefs as $k){
+					$tpl->append('mod_options', array('title'=>$k['title'], 'link'=>$k['link'], 'icon'=>(isset($k['icon']) && $k['icon']!='' ? $k['icon'] : '')));
+				}
+			}
+		}else{
+			foreach ($mods as $mod) {
+				if ($mod['dir'] == $xoopsModule->dirname()){
+					$m = $mod; //Getting info of the current module
+					break;
+				}
+			}
+			if (isset($m['subs']) && count($m['subs']) > 0){
+				for ($i=count($m['subs'])-1;$i>=0;$i=$i-1) {
+					if(isset($m['subs'][$i])) {
+						$reversed_module_admin_menu[] = $m['subs'][$i];
+					}
+				}
+				foreach ($reversed_module_admin_menu as $k){
+					$tpl->append('mod_options', array('title'=>$k['title'], 'link'=>$k['link'], 'icon'=>(isset($k['icon']) && $k['icon']!='' ? $k['icon'] : '')));
+				}
 			}
 		}
-		foreach ($reversed_module_admin_menu as $k){
-			$tpl->append('mod_options', array('title'=>$k['title'], 'link'=>$k['link'], 'icon'=>(isset($k['icon']) && $k['icon']!='' ? $k['icon'] : '')));
-		}
-		$tpl->assign('modpath', XOOPS_URL . '/modules/' . $xoopsModule->dirname());
+		$tpl->assign('modpath', XOOPS_URL.'/modules/'.$xoopsModule->dirname());
 		$tpl->assign('modname', $xoopsModule->name());
 		$tpl->assign('modid', $xoopsModule->mid());
 		$tpl->assign('moddir', $xoopsModule->dirname());
+		$tpl->assign('lang_prefs', _PREFERENCES);
 	}
-	/**
-	 * Loading navigation bar
-	 */
-
-	$i = 0;
-
-	$menu[$i]['link'] = XOOPS_URL."/admin.php";
-	$menu[$i]['title'] = _CPHOME;
-	$menu[$i]['absolute'] = 1;
-	$menu[$i]['small'] = XOOPS_URL."/modules/system/images/mini_cp.png";
-	$i++;
-
-	$menu[$i]['link'] = XOOPS_URL;
-	$menu[$i]['title'] = _YOURHOME;
-	$menu[$i]['absolute'] = 1;
-	$menu[$i]['small'] = XOOPS_URL."/modules/system/images/home.png";
-	$i++;
-
-	$menu[$i]['link'] = XOOPS_URL."/user.php?op=logout";
-	$menu[$i]['title'] = _LOGOUT;
-	$menu[$i]['absolute'] = 1;
-	$menu[$i]['small'] = XOOPS_URL.'/images/logout.png';
-
-	$tpl->append('navitems', array('id'=>'cphome','link'=>'#','text'=>_CPHOME, 'menu'=>$menu));
-
-	$module_handler = xoops_gethandler('module');
-	$mod =& $module_handler->getByDirname('system');
-	$moduleperm_handler =& xoops_gethandler('groupperm');
-    $sadmin = $moduleperm_handler->checkRight('module_admin', $mod->mid(), $xoopsUser->getGroups());
-    $menu = array();
-    foreach ($mod->getAdminMenu() as $lkn){
-    	$sadmin = $moduleperm_handler->checkRight('system_admin', $lkn['id'], $xoopsUser->getGroups());
-    	if ($sadmin){
-    		$lkn['dir'] = 'system';
-    		$menu[] = $lkn;
-    	}
-    }
-	$tpl->append('navitems', array('id'=>'opsystem','link'=>XOOPS_URL.'/modules/system/admin.php', 'text'=>_SYSTEM, 'dir'=>'system', 'menu'=>$menu));
-
-	$module_handler =& xoops_gethandler('module');
-	$criteria = new CriteriaCompo();
-	$criteria->add(new Criteria('hasadmin', 1));
-	$criteria->add(new Criteria('isactive', 1));
-	$criteria->setSort('mid');
-	$mods = $module_handler->getObjects($criteria);
-
-	$menu = array();
-	$systemadm = false;
-	foreach ($mods as $m){
-		$moduleperm_handler =& xoops_gethandler('groupperm');
-		$sadmin = $moduleperm_handler->checkRight('module_admin', $m->mid(), $xoopsUser->getGroups());
-		$rtn = array();
-		if ($sadmin){
-			if(is_object($xoopsModule) && $xoopsModule->mid() == $m->mid()) {
-				$inf =& $xoopsModule->getInfo();
-				$rtn['link'] = XOOPS_URL . '/modules/'. $xoopsModule->dirname() . '/' . (isset($inf['adminindex'])?$inf['adminindex']:'');
-				$rtn['title'] = $xoopsModule->name();
-				$rtn['dir'] = $xoopsModule->dirname();
-				$rtn['absolute'] = 1;
-				$module_admin_menu = $xoopsModule->getAdminMenu();
-				if (is_array($module_admin_menu) && count($module_admin_menu) > 0){
-					$rtn['hassubs'] = 1;
-					$rtn['subs'] = array();
-					if (is_array($xoopsModule->adminmenu)){
-						foreach ($xoopsModule->adminmenu as $item){
-							$item['link'] = XOOPS_URL . '/modules/'. $xoopsModule->dirname() . '/'.$item['link'];
-							$rtn['subs'][] = $item;
-						}
-					}
-				}else{
-					$rtn['hassubs'] = 0;
-					unset($rtn['subs']);
-				}
-				$hasconfig = $xoopsModule->getVar('hasconfig');
-				$hascomments = $xoopsModule->getVar('hascomments');
-				if ((isset($hasconfig) && $hasconfig == 1) || (isset($hascomments) && $hascomments == 1)){
-					$rtn['hassubs'] = 1;
-					if (!isset($rtn['subs'])){$rtn['subs'] = array();}
-					$subs = array('title'=>_PREFERENCES,'link'=>XOOPS_URL.'/modules/system/admin.php?fct=preferences&op=showmod&mod='.$xoopsModule->mid());
-					$rtn['subs'][] = $subs;
-				}else{
-					$rtn['hassubs'] = 0;
-					unset($rtn['subs']);
-				}
-				if (isset($inf['iconsmall']) && $inf['iconsmall']!='' ) $rtn['small'] =  XOOPS_URL.'/modules/'.$m->dirname().'/'.$inf['iconsmall'];
-			}else{
-				$m->loadInfoAsVar($m->dirname(),false);
-				$inf =& $m->getInfo();
-				$rtn['link'] = XOOPS_URL . '/modules/'. $m->dirname() . '/' . (isset($inf['adminindex'])?$inf['adminindex']:'');
-				$rtn['title'] = $m->name();
-				$rtn['dir'] = $m->dirname();
-				$rtn['absolute'] = 1;
-				$hasconfig = $m->getVar('hasconfig');
-				$hascomments = $m->getVar('hascomments');
-				if (isset($inf['adminmenu']) && count($inf['adminmenu']) > 0){
-					$m->loadAdminMenu();
-					$rtn['hassubs'] = 1;
-					$rtn['subs'] = array();
-					if (is_array($m->adminmenu) && count($m->adminmenu) > 0 && $m->dirname() != 'system'){
-						foreach ($m->adminmenu as $item){
-							$item['link'] = XOOPS_URL . '/modules/'. $m->dirname() . '/'.(isset($item['link'])?$item['link']:'');
-							$rtn['subs'][] = $item;
-						}
-					}
-				}else{
-					$rtn['hassubs'] = 0;
-					unset($rtn['subs']);
-				}
-				if ((isset($hasconfig) && $hasconfig == 1) || (isset($hascomments) && $hascomments == 1)){
-					$rtn['hassubs'] = 1;
-					if (!isset($rtn['subs'])){$rtn['subs'] = array();}
-					$subs = array('title'=>_PREFERENCES,'link'=>XOOPS_URL.'/modules/system/admin.php?fct=preferences&op=showmod&mod='.$m->mid());
-					$rtn['subs'][] = $subs;
-				}else{
-					$rtn['hassubs'] = 0;
-					unset($rtn['subs']);
-				}
-				if (isset($inf['iconsmall']) && $inf['iconsmall']!='' ) $rtn['small'] =  XOOPS_URL.'/modules/'.$m->dirname().'/'.$inf['iconsmall'];
-			}
-			$menu[] = $rtn;
-			if ($m->dirname() == 'system'){
-				$systemadm = true;
-			}
-		}
-	}
-    $tpl->assign('systemadm', $systemadm);
-	$tpl->append('navitems', array('id'=>'modules','link'=>XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin', 'text'=>_MODULES, 'dir'=>$m->dirname(), 'menu'=>$menu));
-
-	$i=0;
-
-	$menu = array();
-
-	$menu[$i]['link'] = XOOPS_URL."/admin.php?rssnews=1";
-	$menu[$i]['title'] = "ImpressCMS.org";
-	$menu[$i]['absolute'] = 1;
-	$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
-	$i++;
-
-
-	$tpl->append('navitems', array('id'=>'news','link'=>"#",'text'=>_IMPRESSCMS_NEWS, 'menu'=>$menu));
-
+    
+    /**
+     * Send to template some ml infos
+     */
 	$tpl->assign('lang_prefs', _IMPRESSCMS_PREFS);
 	$tpl->assign('ml_is_enabled', $im_multilanguageConfig['ml_enable']);
-
 
 	echo $tpl->fetch(XOOPS_ROOT_PATH.'/modules/system/templates/admin/system_adm_navbar.html');
 	echo "<div id='containBodyCP'><br /><div id='bodyCP'>";
@@ -303,22 +239,209 @@ function xoopsfwrite()
     return true;
 }
 
-function xoops_module_get_admin_menu()
-{
-    // En blanco, se mantiene por compatibilidad
+/**
+ * Creates a multidimensional array with items of the dropdown menus of the admin panel.
+ * This array will be saved, by the function xoops_module_write_admin_menu, in a cache file 
+ * to preserve resources of the server and to maintain compatibility with some modules Xoops.
+ * 
+ * @author TheRplima
+ * 
+ * @return array (content of admin panel dropdown menus)
+ */
+function impresscms_get_adminmenu(){
+	global $xoopsUser;
+	
+	$admin_menu = array();
+	$modules_menu = array();
+	$systemadm = false;
+	$cont = 0;
+	
+	#########################################################################
+	# Control Panel Home menu
+	#########################################################################
+    $i = 0;
+	$menu[$i]['link'] = XOOPS_URL."/admin.php";
+	$menu[$i]['title'] = _CPHOME;
+	$menu[$i]['absolute'] = 1;
+	$menu[$i]['small'] = XOOPS_URL."/modules/system/images/mini_cp.png";
+	$i++;
+
+	$menu[$i]['link'] = XOOPS_URL;
+	$menu[$i]['title'] = _YOURHOME;
+	$menu[$i]['absolute'] = 1;
+	$menu[$i]['small'] = XOOPS_URL."/modules/system/images/home.png";
+	$i++;
+
+	$menu[$i]['link'] = XOOPS_URL."/user.php?op=logout";
+	$menu[$i]['title'] = _LOGOUT;
+	$menu[$i]['absolute'] = 1;
+	$menu[$i]['small'] = XOOPS_URL.'/images/logout.png';
+	
+	$admin_menu[$cont]['id']   = 'cphome';
+    $admin_menu[$cont]['text'] = _CPHOME;
+    $admin_menu[$cont]['link'] = '#';
+    $admin_menu[$cont]['menu'] = $menu;
+	$cont++;
+	#########################################################################
+	# end
+	#########################################################################
+	
+	#########################################################################
+	# System Preferences menu
+	#########################################################################
+	$module_handler = xoops_gethandler('module');
+	$mod =& $module_handler->getByDirname('system');
+    $menu = array();
+    foreach ($mod->getAdminMenu() as $lkn){
+    	$lkn['dir'] = 'system';
+    	$menu[] = $lkn;
+    }
+	
+	$admin_menu[$cont]['id']   = 'opsystem';
+    $admin_menu[$cont]['text'] = _SYSTEM;
+    $admin_menu[$cont]['link'] = XOOPS_URL.'/modules/system/admin.php';
+    $admin_menu[$cont]['menu'] = $menu;
+	$cont++;
+	#########################################################################
+	# end
+	#########################################################################
+	
+	#########################################################################
+	# Modules menu
+	#########################################################################
+    $module_handler =& xoops_gethandler('module');
+	$criteria = new CriteriaCompo();
+	$criteria->add(new Criteria('hasadmin', 1));
+	$criteria->add(new Criteria('isactive', 1));
+	$criteria->setSort('mid');
+	$modules = $module_handler->getObjects($criteria);
+	foreach ($modules as $module){
+		$rtn = array();
+		$inf =& $module->getInfo();
+		$rtn['link'] = XOOPS_URL.'/modules/'.$module->dirname().'/' .(isset($inf['adminindex'])?$inf['adminindex']:'');
+		$rtn['title'] = $module->name();
+		$rtn['dir'] = $module->dirname();
+		if (isset($inf['iconsmall']) && $inf['iconsmall'] !=''){
+			$rtn['small'] =  XOOPS_URL.'/modules/'.$module->dirname().'/'.$inf['iconsmall'];
+		}
+		if (isset($inf['iconbig']) && $inf['iconbig'] !=''){
+			$rtn['iconbig'] =  XOOPS_URL.'/modules/'.$module->dirname().'/'.$inf['iconbig'];
+		}
+		$rtn['absolute'] = 1;
+		$module->loadAdminMenu();
+		if (is_array($module->adminmenu) && count($module->adminmenu) > 0){
+			$rtn['hassubs'] = 1;
+			$rtn['subs'] = array();
+			foreach ($module->adminmenu as $item){
+				$item['link'] = XOOPS_URL.'/modules/'.$module->dirname().'/'.$item['link'];
+				$rtn['subs'][] = $item;
+			}
+		}else{
+			$rtn['hassubs'] = 0;
+			unset($rtn['subs']);
+		}
+		$hasconfig = $module->getVar('hasconfig');
+		$hascomments = $module->getVar('hascomments');
+		if ((isset($hasconfig) && $hasconfig == 1) || (isset($hascomments) && $hascomments == 1)){
+			$rtn['hassubs'] = 1;
+			if (!isset($rtn['subs'])){$rtn['subs'] = array();}
+			$subs = array('title'=>_PREFERENCES,'link'=>XOOPS_URL.'/modules/system/admin.php?fct=preferences&op=showmod&mod='.$module->mid());
+			$rtn['subs'][] = $subs;
+		}else{
+			$rtn['hassubs'] = 0;
+			unset($rtn['subs']);
+		}
+		if ($module->dirname() == 'system'){
+			$systemadm = true;
+		}
+		$modules_menu[] = $rtn;
+	}
+
+    $admin_menu[$cont]['id']   = 'modules';
+    $admin_menu[$cont]['text'] = _MODULES;
+    $admin_menu[$cont]['link'] = XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin';
+    $admin_menu[$cont]['menu'] = $modules_menu;
+	$cont++;
+	#########################################################################
+	# end
+	#########################################################################
+	
+	#########################################################################
+	# ImpressCMS News Feed menu
+	#########################################################################
+	$i=0;
+	$menu = array();
+	$menu[$i]['link'] = XOOPS_URL."/admin.php?rssnews=1";
+	$menu[$i]['title'] = "ImpressCMS.org";
+	$menu[$i]['absolute'] = 1;
+	$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	$i++;
+	
+	$admin_menu[$cont]['id']   = 'news';
+    $admin_menu[$cont]['text'] = _IMPRESSCMS_NEWS;
+    $admin_menu[$cont]['link'] = '#';
+    $admin_menu[$cont]['menu'] = $menu;
+	$cont++;
+	#########################################################################
+	# end
+	#########################################################################
+
+	return $admin_menu;
+}
+
+/**
+ * Function maintained only for compatibility
+ * 
+ * @todo Search all places that this function is called
+ *       and rename it to impresscms_get_adminmenu.  
+ *       After this function can be removed.
+ * 
+ */
+function xoops_module_get_admin_menu(){
+	return impresscms_get_adminmenu();
 }
 
 function xoops_module_write_admin_menu($content)
-{
+{   
     if (!xoopsfwrite()) {
         return false;
     }
+	
     $filename = XOOPS_CACHE_PATH.'/adminmenu.php';
     if ( !$file = fopen($filename, "w") ) {
         echo 'failed open file';
         return false;
     }
-    if ( fwrite($file, $content) == -1 ) {
+    if ( fwrite($file, var_export($content,true)) == -1 ) {
+        echo 'failed write file';
+        return false;
+    }
+    fclose($file);
+
+	// write index.html file in cache folder
+	// file is delete after clear_cache (smarty)
+    xoops_write_index_file( XOOPS_CACHE_PATH );
+    return true;
+}
+
+function xoops_write_index_file( $path = '') {
+    if ( empty($path) ) {
+        return false;
+    }
+    if (!xoopsfwrite()) {
+        return false;
+    }
+
+    $path = substr($path, -1) == "/" ? substr($path, 0, -1) : $path;
+    $filename = $path . '/index.html';
+    if ( file_exists($filename) ) {
+        return true;
+    }
+    if ( !$file = fopen($filename, "w") ) {
+        echo 'failed open file';
+        return false;
+    }
+    if ( fwrite($file, "<script>history.go(-1);</script>") == -1 ) {
         echo 'failed write file';
         return false;
     }

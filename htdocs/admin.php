@@ -28,16 +28,133 @@
 $xoopsOption['pagetype'] = "admin";
 include "mainfile.php";
 include XOOPS_ROOT_PATH."/include/cp_functions.php";
+
 /*********************************************************/
 /* Admin Authentication                                  */
 /*********************************************************/
-
 if ( $xoopsUser ) {
 	if ( !$xoopsUser->isAdmin(-1) ) {
 		redirect_header("index.php",2,_AD_NORIGHT);
 	}
 } else {
 	redirect_header("index.php",2,_AD_NORIGHT);
+}
+/*********************************************************/
+/* end					                                 */
+/*********************************************************/
+
+$op = isset($_GET['rssnews']) ? $_GET['rssnews'] : 0;
+if ( !empty($_GET['op']) ) {
+	$op = $_GET['op'];
+}
+
+if ( !empty($_POST['op']) ) {
+	$op = $_POST['op'];
+}
+
+if (!file_exists(XOOPS_CACHE_PATH.'/adminmenu.php') && $op != 2) {
+	xoops_header();
+	xoops_confirm(array('op' => 2), 'admin.php', _AD_PRESSGEN);
+	xoops_footer();
+	exit();
+}
+
+switch ($op){
+	case 1:
+		xoops_cp_header();
+		showRSS(1);
+		break;
+	case 2:
+		xoops_module_write_admin_menu(impresscms_get_adminmenu());
+		redirect_header('admin.php', 1, _AD_LOGINADMIN);
+		break;
+	default:
+		$mods = xoops_cp_header(1);
+		
+		// ###### Output warn messages for security  ######
+		if (is_dir(XOOPS_ROOT_PATH."/install/" )) {
+			xoops_error(sprintf(_WARNINSTALL2,XOOPS_ROOT_PATH.'/install/'));
+			echo '<br />';
+		}
+		if ( is_writable(XOOPS_ROOT_PATH."/mainfile.php" ) ) {
+			xoops_error(sprintf(_WARNINWRITEABLE,XOOPS_ROOT_PATH.'/mainfile.php'));
+			echo '<br />';
+		}
+		if (is_dir(XOOPS_ROOT_PATH."/upgrade/" )) {
+			xoops_error(sprintf(_WARNINSTALL2,XOOPS_ROOT_PATH.'/upgrade/'));
+			echo '<br />';
+		}
+		// ###### Output warn messages for correct functionality  ######
+		if ( !is_writable( XOOPS_CACHE_PATH ) ) {
+			xoops_warning(sprintf(_WARNINNOTWRITEABLE,XOOPS_CACHE_PATH));
+			echo '<br />';
+		}
+		if ( !is_writable( XOOPS_UPLOAD_PATH ) ) {
+			xoops_warning(sprintf(_WARNINNOTWRITEABLE,XOOPS_UPLOAD_PATH));
+			echo '<br />';
+		}
+		if ( !is_writable( XOOPS_COMPILE_PATH ) ) {
+			xoops_warning(sprintf(_WARNINNOTWRITEABLE,XOOPS_COMPILE_PATH));
+			echo '<br />';
+		}
+
+		$tpl->assign('lang_cp', _CPHOME);
+		$tpl->assign('lang_insmodules', _AD_INSTALLEDMODULES);
+
+		// Loading allowed Modules
+		$tpl->assign('modules', $mods);
+		if (count($mods) > 0){
+			$tpl->assign('modulesadm', 1);
+		}else{
+			$tpl->assign('modulesadm', 0);
+		}
+
+		// Loading System Configuration Links
+		$groups = $xoopsUser->getGroups();
+		$all_ok = false;
+		if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
+			$sysperm_handler =& xoops_gethandler('groupperm');
+			$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
+		} else {
+			$all_ok = true;
+		}
+
+		require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
+		require_once XOOPS_ROOT_PATH."/modules/system/constants.php";
+
+		$admin_dir = XOOPS_ROOT_PATH."/modules/system/admin";
+		$dirlist = XoopsLists::getDirListAsArray($admin_dir);
+
+		if (file_exists(XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin.php")) {
+			include XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin.php";
+		} elseif (file_exists(XOOPS_ROOT_PATH."/modules/system/language/english/admin.php")) {
+			include XOOPS_ROOT_PATH."/modules/system/language/english/admin.php";
+		}
+
+		$cont = 0;
+		asort($dirlist);
+		foreach($dirlist as $file){
+			include $admin_dir.'/'.$file.'/xoops_version.php';
+
+			if ($modversion['hasAdmin']) {
+				$category = isset($modversion['category']) ? intval($modversion['category']) : 0;
+				if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
+					$sysmod = array( "title" => $modversion['name'] , "link" => XOOPS_URL."/modules/system/admin.php?fct=".$file , "image" => XOOPS_URL."/modules/system/admin/$file/images/".$file."_big.png");
+					$tpl->append( 'sysmod' , $sysmod  );
+					$cont++;
+				}
+			}
+			unset($modversion);
+		}
+		if ($cont > 0){
+			$tpl->assign('systemadm', 1);
+		}else{
+			$tpl->assign('systemadm', 0);
+		}
+
+    	echo $tpl->fetch(XOOPS_ROOT_PATH.'/modules/system/templates/admin/system_indexcp.html');
+
+		break;
 }
 
 function showRSS($op=1){
@@ -92,169 +209,6 @@ function showRSS($op=1){
 			echo $rss2parser->getErrors();
 		}
 	}
-}
-
-/**
- * XOOPS News
- */
-$op = isset($_GET['rssnews']) ? $_GET['rssnews'] : 0;
-
-switch ($op){
-	case 1:
-		xoops_cp_header();
-		showRSS(1);
-		break;
-	default:
-		$mods = xoops_cp_header(1);
-		// ###### Output warn messages for security  ######
-		if (is_dir(XOOPS_ROOT_PATH."/install/" )) {
-			xoops_error(sprintf(_WARNINSTALL2,XOOPS_ROOT_PATH.'/install/'));
-			echo '<br />';
-		}
-		if ( is_writable(XOOPS_ROOT_PATH."/mainfile.php" ) ) {
-			xoops_error(sprintf(_WARNINWRITEABLE,XOOPS_ROOT_PATH.'/mainfile.php'));
-			echo '<br />';
-		}
-		if (is_dir(XOOPS_ROOT_PATH."/upgrade/" )) {
-			xoops_error(sprintf(_WARNINSTALL2,XOOPS_ROOT_PATH.'/upgrade/'));
-			echo '<br />';
-		}
-		// ###### Output warn messages for correct functionality  ######
-		if ( !is_writable( XOOPS_CACHE_PATH ) ) {
-			xoops_warning(sprintf(_WARNINNOTWRITEABLE,XOOPS_CACHE_PATH));
-			echo '<br />';
-		}
-		if ( !is_writable( XOOPS_UPLOAD_PATH ) ) {
-			xoops_warning(sprintf(_WARNINNOTWRITEABLE,XOOPS_UPLOAD_PATH));
-			echo '<br />';
-		}
-		if ( !is_writable( XOOPS_COMPILE_PATH ) ) {
-			xoops_warning(sprintf(_WARNINNOTWRITEABLE,XOOPS_COMPILE_PATH));
-			echo '<br />';
-		}
-
-		$tpl->assign('lang_cp', _CPHOME);
-		$tpl->assign('lang_insmodules', _AD_INSTALLEDMODULES);
-
-		/*$tpl->assign('lang_banners', _AD_BANNERS);
-		$tpl->assign('lang_blocks', _AD_BLOCKS);
-		$tpl->assign('lang_groups', _AD_GROUPS);
-		$tpl->assign('lang_images', _AD_IMAGES);
-		$tpl->assign('lang_modules', _MODULES);
-		$tpl->assign('lang_preferences', _AD_PREFERENCES);
-		$tpl->assign('lang_smilies', _AD_SMILIES);
-		$tpl->assign('lang_ranks', _AD_RANK);
-		$tpl->assign('lang_edituser', _AD_EDITUSER);
-		$tpl->assign('lang_finduser', _AD_FINDUSER);
-		$tpl->assign('lang_mailuser', _AD_MAILUSER);
-		$tpl->assign('lang_avatars', _AD_AVATARS);
-		$tpl->assign('lang_tpls', _AD_TPLSETS);
-		$tpl->assign('lang_comments', _AD_COMMENTS);
-*/
-		// Loading all the installed Modules
-        $systemadm = false;
-		foreach ($mods as $mod){
-			$moduleperm_handler =& xoops_gethandler('groupperm');
-			$sadmin = $moduleperm_handler->checkRight('module_admin', $mod->mid(), $xoopsUser->getGroups());
-			if ($sadmin){
-				$rtn = array();
-				$info =& $mod->getInfo();
-				$rtn['link'] = XOOPS_URL . '/modules/'. $mod->dirname() . '/' . (isset($info['adminindex'])?$info['adminindex']:'');
-				$rtn['title'] = $mod->name();
-				$rtn['absolute'] = 1;
-				if (isset($info['iconbig'])) $rtn['big'] = XOOPS_URL . '/modules/' . $mod->dirname() . '/' . $info['iconbig'];
-				$tpl->append('modules', $rtn);
-				if ($mod->dirname() == 'system'){
-					$systemadm = true;
-				}
-			}
-
-		}
-        $tpl->assign('systemadm', $systemadm);
-
-		// Loading of System Configuration Links
-		$groups = $xoopsUser->getGroups();
-		$all_ok = false;
-		if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
-			$sysperm_handler =& xoops_gethandler('groupperm');
-			$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
-		} else {
-			$all_ok = true;
-		}
-
-		require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
-		require_once XOOPS_ROOT_PATH."/modules/system/constants.php";
-
-		$admin_dir = XOOPS_ROOT_PATH."/modules/system/admin";
-		$dirlist = XoopsLists::getDirListAsArray($admin_dir);
-
-		if (file_exists(XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin.php")) {
-			include XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin.php";
-		} elseif (file_exists(XOOPS_ROOT_PATH."/modules/system/language/english/admin.php")) {
-			include XOOPS_ROOT_PATH."/modules/system/language/english/admin.php";
-		}
-
-		foreach($dirlist as $file){
-			include $admin_dir.'/'.$file.'/xoops_version.php';
-
-			if ($modversion['hasAdmin']) {
-				$category = isset($modversion['category']) ? intval($modversion['category']) : 0;
-				if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
-					$sysmod = array( "title" => $modversion['name'] , "link" => XOOPS_URL."/modules/system/admin.php?fct=".$file , "image" => XOOPS_URL."/modules/system/admin/$file/images/".$file."_big.png");
-					$tpl->append( 'sysmod' , $sysmod  );
-				}
-			}
-			unset($modversion);
-		}
-
-
-		/**
-		 * Recommended Links
-		 * TODO: Not really needed to be in the admin. It is goin to be deleted if all core team agree.
-		 */
-		/*// Commented... was generating errors.
-		//$rssurl = "";
-		//$rssfile = XOOPS_CACHE_PATH.'/blabla_recommended_links.xml';
-
-		$rssdata = '';
-		if (!file_exists($rssfile) || filemtime($rssfile) < time() - 86400) {
-			require_once XOOPS_ROOT_PATH.'/class/snoopy.php';
-            $snoopy = new Snoopy;
-            if ($snoopy->fetch($rssurl)) {
-                $rssdata = $snoopy->results;
-                if (false !== $fp = fopen($rssfile, 'w')) {
-                    fwrite($fp, $rssdata);
-                }
-                fclose($fp);
-            }
-		} else {
-			if (false !== $fp = fopen($rssfile, 'r')) {
-				while (!feof ($fp)) {
-					$rssdata .= fgets($fp, 4096);
-				}
-				fclose($fp);
-			}
-		}
-		if ($rssdata != '') {
-			include_once XOOPS_ROOT_PATH.'/class/xml/rss/xmlrss2parser.php';
-			$rss2parser = new XoopsXmlRss2Parser($rssdata);
-			if (false != $rss2parser->parse()) {
-				echo '<table class="outer" width="100%">';
-				$items =& $rss2parser->getItems();
-				$count = count($items);
-				$myts =& MyTextSanitizer::getInstance();
-				for ($i = 0; $i < $count; $i++) {
-					$tpl->append('rss_links', array('link'=>htmlspecialchars($items[$i]['link']),'title'=>htmlspecialchars($items[$i]['title']),
-							'desc'=>utf8_decode($items[$i]['description'])));
-				}
-			} else {
-				echo $rss2parser->getErrors();
-			}
-		}
-		*/
-		echo $tpl->fetch(XOOPS_ROOT_PATH.'/modules/system/templates/admin/system_indexcp.html');
-
-		break;
 }
 
 xoops_cp_footer();

@@ -9,32 +9,33 @@
 <div id="navbarCP">
   <ul id="nav">
     <{foreach item=item from=$navitems}>
-	  <li><a href="<{$item.link}>"><img src="<{$xoops_url}>/modules/system/images/arrow1.gif" alt="arrow"/>&nbsp;<{$item.text}></a>
-	    <ul>
-		  <{foreach item=sub from=$item.menu}>
-		    <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" 
-                 style="background-image: url(
-                   <{if $item.id == 'cphome'}>
-                     <{if $sub.small!=''}><{$sub.small}><{else}><{$xoops_url}>/modules/system/images/imagesarrow1.gif<{/if}>
-                   <{elseif $item.id == 'opsystem'}>
-                     <{if $sub.small!=''}><{$xoops_url}>/modules/system/<{$sub.small}><{/if}>
-                   <{elseif $item.id == 'modules'}>
-                     <{if $sub.small!=''}><{$sub.small}><{else}><{$xoops_url}>/modules/system/images/modulesitem.png<{/if}>
-                   <{elseif $item.id == 'news'}>
-                     <{if $sub.small!=''}><{$sub.small}><{/if}>
-                   <{/if}>
-                 );"><{$sub.title}></a>
-		      <{if $item.id == 'modules' && $sub.hassubs}>
-		        <ul>
-		          <{foreach item=subitem from=$sub.subs}>
-		            <li><a href="<{$subitem.link}>"><{$subitem.title}></a></li>
-		          <{/foreach}>  
-		        </ul>
-		      <{/if}>
-		    </li>
-		  <{/foreach}>
-		</ul>
-	  </li>
+      <{if $systemadm || $item.id != 'opsystem'}>
+        <{if $modulesadm || $item.id != 'modules'}>
+	      <li><a href="<{$item.link}>"><img src="<{$xoops_url}>/modules/system/images/arrow1.gif" alt="arrow"/>&nbsp;<{$item.text}></a>
+	        <ul>
+		      <{foreach item=sub from=$item.menu}>
+                <{if $item.id == 'cphome'}>
+		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{else}><{$xoops_url}>/modules/system/images/imagesarrow1.gif<{/if}>);"><{$sub.title}></a></li>
+                <{elseif $item.id == 'opsystem'}>
+		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$xoops_url}>/modules/system/<{$sub.small}><{/if}>);"><{$sub.title}></a></li>
+                <{elseif $item.id == 'modules'}>
+		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{else}><{$xoops_url}>/modules/system/images/modulesitem.png<{/if}>);"><{$sub.title}></a>
+    		      <{if $sub.hassubs}>
+	    	        <ul>
+		              <{foreach item=subitem from=$sub.subs}>
+		                <li><a href="<{$subitem.link}>"><{$subitem.title}></a></li>
+		              <{/foreach}>  
+		            </ul>
+		          <{/if}>
+		          </li>
+                <{elseif $item.id == 'news'}>
+    		      <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{/if}>);"><{$sub.title}></a></li>
+                <{/if}>
+		      <{/foreach}>
+		    </ul>
+	      </li>
+	    <{/if}>
+	  <{/if}>
     <{/foreach}>
   </ul>
   <{if $ml_is_enabled}>
@@ -42,14 +43,18 @@
   <{/if}>
 </div>
 <{ if $modname != '' }>
-<div id="navOptionsCP">
+  <div id="navOptionsCP">
 	<div class="modname">
-		<{$modname}>
+	  <{$modname}>
 	</div>
-	<{if $moddir!='system' && $mod_options}><a href="<{$xoops_url}>/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=<{$modid}>" title="<{$lang_prefs}>"><img src="<{$xoops_url}>/modules/system/images/prefs.png" alt="<{$lang_preferences}>" /></a><{/if}>
 	<{foreach item=op from=$mod_options}>
-		<a href="<{$modpath}>/<{$op.link}>" title="<{$op.title}>"><img src="<{if $op.icon==''}><{$xoops_url}>/images/icon_options.png<{else}><{$modpath}>/<{$op.icon}><{/if}>" alt="<{$op.title}>" /></a>
+	  <a href="<{$op.link}>" title="<{$op.title}>">
+        <{if $op.title == $lang_prefs && $moddir!='system'}>
+          <img src="<{$xoops_url}>/modules/system/images/prefs.png" alt="<{$lang_preferences}>" />
+        <{else}>  
+          <img src="<{if $op.icon==''}><{$xoops_url}>/images/icon_options.png<{else}><{$modpath}>/<{$op.icon}><{/if}>" alt="<{$op.title}>" />
+        <{/if}>
+      </a>
 	<{/foreach}>
-
-</div>
+  </div>
 <{/if}>
