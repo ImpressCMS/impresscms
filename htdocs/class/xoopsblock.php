@@ -172,7 +172,7 @@ class XoopsBlock extends XoopsObject
         global $xoopsConfig, $xoopsOption;
         $block = array();
         // M for module block, S for system block C for Custom
-        if ( $this->getVar("block_type") != "C" ) {
+        if ( !$this->isCustom() ) {
             // get block display function
             $show_func = $this->getVar('show_func');
             if ( !$show_func ) {
@@ -238,7 +238,7 @@ class XoopsBlock extends XoopsObject
 
     function isCustom()
     {
-        if ( $this->getVar("block_type") == "C" ) {
+        if ( $this->getVar("block_type") == "C" || $this->getVar("block_type") == "E" ) {
             return true;
         }
         return false;
@@ -251,7 +251,7 @@ class XoopsBlock extends XoopsObject
     function getOptions()
     {
         global $xoopsConfig;
-        if ( $this->getVar("block_type") != "C" ) {
+        if ( !$this->isCustom() ) {
             $edit_func = $this->getVar('edit_func');
             if ( !$edit_func ) {
                 return false;
@@ -465,8 +465,8 @@ class XoopsBlock extends XoopsObject
         $ret = array();
         $sql = "SELECT DISTINCT gperm_itemid FROM ".$db->prefix('group_permission')." WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
         if ( is_array($groupid) ) {
-            $gid = array_map(create_function('$a', '$r = "\'" . intval($a) . "\'"; return($r);'), $groupid);
-            $sql .= " AND gperm_groupid IN (".implode(',', $gid).")";
+        	//TODO: Add intval verification... maybe making a manual implode with a foreach.
+        	$sql .= " AND gperm_groupid IN ('".implode(',', $groupid)."')";
         } else {
             if (intval($groupid) > 0) {
                 $sql .= " AND gperm_groupid='".intval($groupid)."'";
