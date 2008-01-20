@@ -465,8 +465,8 @@ class XoopsBlock extends XoopsObject
         $ret = array();
         $sql = "SELECT DISTINCT gperm_itemid FROM ".$db->prefix('group_permission')." WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
         if ( is_array($groupid) ) {
-        	//TODO: Add intval verification... maybe making a manual implode with a foreach.
-        	$sql .= " AND gperm_groupid IN ('".implode(',', $groupid)."')";
+            $gid = array_map(create_function('$a', '$r = "\'" . intval($a) . "\'"; return($r);'), $groupid);
+            $sql .= " AND gperm_groupid IN (".implode(',', $gid).")";
         } else {
             if (intval($groupid) > 0) {
                 $sql .= " AND gperm_groupid='".intval($groupid)."'";
