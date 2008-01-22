@@ -1,7 +1,7 @@
 <?php
-// This script displays a login screen in a popupbox when SSL is enabled in the preferences. You should use this script only when your server supports SSL. Place this file under your SSL directory
+// Este script exibe uma tela de login quando popupbox SSL está ativado nas suas preferências. Você deve usar esse script apenas quando o servidor suportar o uso de SSL. Coloque este arquivo sob seu diretório de SSL
 
-// path to your xoops main directory
+//caminho para o seu diretório principal do  xoops
 $path = '/path/to/xoops/directory';
 
 include $path.'/mainfile.php';
