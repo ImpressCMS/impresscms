@@ -30,13 +30,17 @@ define('XOOPS_CPFUNC_LOADED', 1);
  * Creamos la variable para uso de Smarty
  */
 include_once XOOPS_ROOT_PATH.'/class/template.php';
-$tpl = new XoopsTpl();
-$tpl->assign('xoops_url',XOOPS_URL);
-$tpl->assign('xoops_sitename',$xoopsConfig['sitename']);
+
+global $icmsAdminTpl;
+
+$icmsAdminTpl = new XoopsTpl();
+
+$icmsAdminTpl->assign('xoops_url',XOOPS_URL);
+$icmsAdminTpl->assign('xoops_sitename',$xoopsConfig['sitename']);
 
 function xoops_cp_header($ret = 0)
 {
-    global $xoopsConfig, $xoopsModule, $xoopsUser, $tpl, $im_multilanguageConfig;
+    global $xoopsConfig, $xoopsModule, $xoopsUser, $icmsAdminTpl, $im_multilanguageConfig;
 
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset='._CHARSET);
@@ -125,20 +129,20 @@ window.onload=startList;
     		}
     		$navitem['menu'] = $sysprefs = $perm_itens; //Getting array of allowed system prefs
     	}
-    	$tpl->append('navitems', $navitem);
+    	$icmsAdminTpl->append('navitems', $navitem);
     }
-    
+
     if (count($sysprefs) > 0){
-    	$tpl->assign('systemadm', 1);
+    	$icmsAdminTpl->assign('systemadm', 1);
     }else{
-    	$tpl->assign('systemadm', 0);
+    	$icmsAdminTpl->assign('systemadm', 0);
     }
     if (count($mods) > 0){
-    	$tpl->assign('modulesadm', 1);
+    	$icmsAdminTpl->assign('modulesadm', 1);
     }else{
-    	$tpl->assign('modulesadm', 0);
+    	$icmsAdminTpl->assign('modulesadm', 0);
     }
-    
+
 	/**
 	 * Loading options of the current module.
 	 */
@@ -151,7 +155,7 @@ window.onload=startList;
 					}
 				}
 				foreach ($reversed_sysprefs as $k){
-					$tpl->append('mod_options', array('title'=>$k['title'], 'link'=>$k['link'], 'icon'=>(isset($k['icon']) && $k['icon']!='' ? $k['icon'] : '')));
+					$icmsAdminTpl->append('mod_options', array('title'=>$k['title'], 'link'=>$k['link'], 'icon'=>(isset($k['icon']) && $k['icon']!='' ? $k['icon'] : '')));
 				}
 			}
 		}else{
@@ -168,24 +172,24 @@ window.onload=startList;
 					}
 				}
 				foreach ($reversed_module_admin_menu as $k){
-					$tpl->append('mod_options', array('title'=>$k['title'], 'link'=>$k['link'], 'icon'=>(isset($k['icon']) && $k['icon']!='' ? $k['icon'] : '')));
+					$icmsAdminTpl->append('mod_options', array('title'=>$k['title'], 'link'=>$k['link'], 'icon'=>(isset($k['icon']) && $k['icon']!='' ? $k['icon'] : '')));
 				}
 			}
 		}
-		$tpl->assign('modpath', XOOPS_URL.'/modules/'.$xoopsModule->dirname());
-		$tpl->assign('modname', $xoopsModule->name());
-		$tpl->assign('modid', $xoopsModule->mid());
-		$tpl->assign('moddir', $xoopsModule->dirname());
-		$tpl->assign('lang_prefs', _PREFERENCES);
+		$icmsAdminTpl->assign('modpath', XOOPS_URL.'/modules/'.$xoopsModule->dirname());
+		$icmsAdminTpl->assign('modname', $xoopsModule->name());
+		$icmsAdminTpl->assign('modid', $xoopsModule->mid());
+		$icmsAdminTpl->assign('moddir', $xoopsModule->dirname());
+		$icmsAdminTpl->assign('lang_prefs', _PREFERENCES);
 	}
-    
+
     /**
      * Send to template some ml infos
      */
-	$tpl->assign('lang_prefs', _IMPRESSCMS_PREFS);
-	$tpl->assign('ml_is_enabled', $im_multilanguageConfig['ml_enable']);
+	$icmsAdminTpl->assign('lang_prefs', _IMPRESSCMS_PREFS);
+	$icmsAdminTpl->assign('ml_is_enabled', $im_multilanguageConfig['ml_enable']);
 
-	echo $tpl->fetch(XOOPS_ROOT_PATH.'/modules/system/templates/admin/system_adm_navbar.html');
+	echo $icmsAdminTpl->fetch(XOOPS_ROOT_PATH.'/modules/system/templates/admin/system_adm_navbar.html');
 	echo "<div id='containBodyCP'><br /><div id='bodyCP'>";
 
 	if ($ret) return $mods;
@@ -241,21 +245,21 @@ function xoopsfwrite()
 
 /**
  * Creates a multidimensional array with items of the dropdown menus of the admin panel.
- * This array will be saved, by the function xoops_module_write_admin_menu, in a cache file 
+ * This array will be saved, by the function xoops_module_write_admin_menu, in a cache file
  * to preserve resources of the server and to maintain compatibility with some modules Xoops.
- * 
+ *
  * @author TheRplima
- * 
+ *
  * @return array (content of admin panel dropdown menus)
  */
 function impresscms_get_adminmenu(){
 	global $xoopsUser;
-	
+
 	$admin_menu = array();
 	$modules_menu = array();
 	$systemadm = false;
 	$cont = 0;
-	
+
 	#########################################################################
 	# Control Panel Home menu
 	#########################################################################
@@ -276,7 +280,7 @@ function impresscms_get_adminmenu(){
 	$menu[$i]['title'] = _LOGOUT;
 	$menu[$i]['absolute'] = 1;
 	$menu[$i]['small'] = XOOPS_URL.'/images/logout.png';
-	
+
 	$admin_menu[$cont]['id']   = 'cphome';
     $admin_menu[$cont]['text'] = _CPHOME;
     $admin_menu[$cont]['link'] = '#';
@@ -285,7 +289,7 @@ function impresscms_get_adminmenu(){
 	#########################################################################
 	# end
 	#########################################################################
-	
+
 	#########################################################################
 	# System Preferences menu
 	#########################################################################
@@ -296,7 +300,7 @@ function impresscms_get_adminmenu(){
     	$lkn['dir'] = 'system';
     	$menu[] = $lkn;
     }
-	
+
 	$admin_menu[$cont]['id']   = 'opsystem';
     $admin_menu[$cont]['text'] = _SYSTEM;
     $admin_menu[$cont]['link'] = XOOPS_URL.'/modules/system/admin.php';
@@ -305,7 +309,7 @@ function impresscms_get_adminmenu(){
 	#########################################################################
 	# end
 	#########################################################################
-	
+
 	#########################################################################
 	# Modules menu
 	#########################################################################
@@ -365,7 +369,7 @@ function impresscms_get_adminmenu(){
 	#########################################################################
 	# end
 	#########################################################################
-	
+
 	#########################################################################
 	# ImpressCMS News Feed menu
 	#########################################################################
@@ -376,7 +380,7 @@ function impresscms_get_adminmenu(){
 	$menu[$i]['absolute'] = 1;
 	$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i++;
-	
+
 	$admin_menu[$cont]['id']   = 'news';
     $admin_menu[$cont]['text'] = _IMPRESSCMS_NEWS;
     $admin_menu[$cont]['link'] = '#';
@@ -391,22 +395,22 @@ function impresscms_get_adminmenu(){
 
 /**
  * Function maintained only for compatibility
- * 
+ *
  * @todo Search all places that this function is called
- *       and rename it to impresscms_get_adminmenu.  
+ *       and rename it to impresscms_get_adminmenu.
  *       After this function can be removed.
- * 
+ *
  */
 function xoops_module_get_admin_menu(){
 	return impresscms_get_adminmenu();
 }
 
 function xoops_module_write_admin_menu($content)
-{   
+{
     if (!xoopsfwrite()) {
         return false;
     }
-	
+
     $filename = XOOPS_CACHE_PATH.'/adminmenu.php';
     if ( !$file = fopen($filename, "w") ) {
         echo 'failed open file';
