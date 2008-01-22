@@ -6,6 +6,8 @@ Unreleased : ImpressCMS 1.0 "Janus" Beta 2
 
 - Fixed : #1870346 System blocks not visible to added group (skenow/dave_l)
 - Fixed : #1867922 No nice path from getNicePathFromId (MacDonald/malanciault)
+- Fixed : #1876797: the $tpl XoopsTpl object used in htdocs/cp_functions.php and htdocs/admin.php had a too generic name which was creating conflict (with AltSys for example). The variable name was renamed for $icsmAdminTpl (malanciault)
+
 
 ========================================
 2008-01-08 : ImpressCMS 1.0 "Janus" Beta
