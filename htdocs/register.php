@@ -33,7 +33,7 @@ $myts =& MyTextSanitizer::getInstance();
 $config_handler =& xoops_gethandler('config');
 $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
-if (empty($xoopsConfigUser['allow_register'])) {
+if ($xoopsConfigUser['allow_register'] == 0 && $xoopsConfigUser['activation_type'] != 3) {
 	redirect_header('index.php', 6, _US_NOREGISTER);
 }
 
@@ -123,6 +123,7 @@ $timezone_offset = isset($_POST['timezone_offset']) ? intval($_POST['timezone_of
 $user_viewemail = (isset($_POST['user_viewemail']) && intval($_POST['user_viewemail'])) ? 1 : 0;
 $user_mailok = (isset($_POST['user_mailok']) && intval($_POST['user_mailok'])) ? 1 : 0;
 $agree_disc = (isset($_POST['agree_disc']) && intval($_POST['agree_disc'])) ? 1 : 0;
+$actkey = isset($_POST['actkey']) ? trim($myts->stripSlashesGPC($_POST['actkey'])) : '';
 switch ( $op ) {
 case 'newuser':
 	include 'header.php';
@@ -154,6 +155,7 @@ case 'newuser':
 		<input type='hidden' name='pass' value='".$myts->htmlSpecialChars($pass)."' />
 		<input type='hidden' name='vpass' value='".$myts->htmlSpecialChars($vpass)."' />
 		<input type='hidden' name='user_mailok' value='".$user_mailok."' />
+		<input type='hidden' name='actkey' value='".$myts->htmlSpecialChars($actkey)."' />
 		<br /><br /><input type='hidden' name='op' value='finish' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='". _US_FINISH ."' /></form>";
 	} else {
 		echo "<span style='color:#ff0000;'>$stop</span>";
@@ -179,15 +181,16 @@ case 'finish':
 			$newuser->setVar('url', formatURL($url), true);
 		}
 		$newuser->setVar('user_avatar','blank.gif', true);
-		$actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
-		$newuser->setVar('actkey', $actkey, true);
+		include_once 'include/checkinvite.php';
+		$valid_actkey = check_invite_code($actkey);
+		$newuser->setVar('actkey', $valid_actkey ? $actkey : substr(md5(uniqid(mt_rand(), 1)), 0, 8), true);
 		$newuser->setVar('pass', md5($pass), true);
 		$newuser->setVar('timezone_offset', $timezone_offset, true);
 		$newuser->setVar('user_regdate', time(), true);
 		$newuser->setVar('uorder',$xoopsConfig['com_order'], true);
 		$newuser->setVar('umode',$xoopsConfig['com_mode'], true);
 		$newuser->setVar('user_mailok',$user_mailok, true);
-		if ($xoopsConfigUser['activation_type'] == 1) {
+		if ($valid_actkey || $xoopsConfigUser['activation_type'] == 1) {
 			$newuser->setVar('level', 1, true);
 		}
 		if (!$member_handler->insertUser($newuser)) {
@@ -201,7 +204,23 @@ case 'finish':
 			include 'footer.php';
 			exit();
 		}
-		if ($xoopsConfigUser['activation_type'] == 1) {
+		// notify always
+		if ($xoopsConfigUser['new_user_notify'] == 1 && !empty($xoopsConfigUser['new_user_notify_group'])) {
+			$xoopsMailer =& getMailer();
+			$xoopsMailer->useMail();
+			$member_handler =& xoops_gethandler('member');
+			$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
+			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
+			$xoopsMailer->setFromName($xoopsConfig['sitename']);
+			$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT,$xoopsConfig['sitename']));
+			$xoopsMailer->setBody(sprintf(_US_HASJUSTREG, $uname));
+			$xoopsMailer->send();
+		}
+		// update invite_code (if any)
+		if ($valid_actkey) {
+			update_invite_code($actkey, $newid);
+		}
+		if ($xoopsConfigUser['activation_type'] == 1 || $xoopsConfigUser['activation_type'] == 3) {
 			redirect_header('index.php', 4, _US_ACTLOGIN);
 		}
 		if ($xoopsConfigUser['activation_type'] == 0) {
@@ -241,17 +260,6 @@ case 'finish':
 				echo _US_YOURREGISTERED2;
 			}
 		}
-		if ($xoopsConfigUser['new_user_notify'] == 1 && !empty($xoopsConfigUser['new_user_notify_group'])) {
-			$xoopsMailer =& getMailer();
-			$xoopsMailer->useMail();
-			$member_handler =& xoops_gethandler('member');
-			$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
-			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT,$xoopsConfig['sitename']));
-			$xoopsMailer->setBody(sprintf(_US_HASJUSTREG, $uname));
-			$xoopsMailer->send();
-		}
 	} else {
 		echo "<span style='color:#ff0000; font-weight:bold;'>$stop</span>";
 		include 'include/registerform.php';
@@ -262,6 +270,12 @@ case 'finish':
 	break;
 case 'register':
 default:
+	$invite_code = $_GET['code'];
+	if ($xoopsConfigUser['activation_type'] == 3 || !empty($invite_code)) {
+		include 'include/checkinvite.php';
+		load_invite_code($invite_code);
+	}
+	// invite is ok, show register form
 	include 'header.php';
 	include 'include/registerform.php';
 	$reg_form->display();

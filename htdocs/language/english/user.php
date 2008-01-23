@@ -69,6 +69,17 @@ define('_US_ENTERPWD','ERROR: You must provide a password.');
 define('_US_SORRYNOTFOUND','Sorry, no corresponding user info was found.');
 
 
+define('_US_USERINVITE', 'Membership invitation');
+define('_US_INVITENONE','ERROR: Registration is by invitation only.');
+define('_US_INVITEINVALID','ERROR: Incorrect invitation code.');
+define('_US_INVITEEXPIRED','ERROR: Invitation code is already used or expired.');
+
+define('_US_INVITEBYMEMBER','Only an existing member can invite new members; please request an invitation email from some registered member.');
+define('_US_INVITEMAILERR','We were unable to send the mail with registration link to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
+define('_US_INVITEDBERR','We were unable to process your registration request due to an internal error. We are sorry for the inconvenience, please try again and if problem persists, do send the webmaster an email notifying him/her of the situation. <br />');
+define('_US_INVITESENT','An email containing registration link has been sent to the email account you provided. Please follow the instructions in the mail to register your account. This could take few minutes so please be patient.');
+// %s is your site name
+define('_US_INVITEREGLINK','Registration invitation from %s');
 
 
 // %s is your site name

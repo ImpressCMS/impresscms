@@ -581,3 +581,21 @@ CREATE TABLE users (
   KEY uiduname (uid,uname),
   KEY unamepass (uname,pass)
 ) TYPE=MyISAM;
+
+#
+# Table structure for table `invites`
+#
+
+CREATE TABLE invites (
+  invite_id mediumint(8) unsigned NOT NULL auto_increment,
+  from_id mediumint(8) unsigned NOT NULL DEFAULT 0,
+  invite_to varchar(255) NOT NULL DEFAULT '',
+  invite_code varchar(8) NOT NULL DEFAULT '',
+  invite_date int(10) unsigned NOT NULL default '0',
+  view_date int(10) unsigned NOT NULL default '0',
+  register_id mediumint(8) unsigned NOT NULL DEFAULT 0,
+  extra_info text NOT NULL DEFAULT '',
+  PRIMARY KEY (invite_id),
+  KEY invite_code (invite_code),
+  KEY register_id (register_id)
+) TYPE=MyISAM;

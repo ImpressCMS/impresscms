@@ -88,6 +88,7 @@ INSERT INTO configoption VALUES (28,'_MD_AM_AUTH_CONFOPTION_XOOPS', 'xoops', 74)
 INSERT INTO configoption VALUES (29,'_MD_AM_AUTH_CONFOPTION_LDAP', 'ldap', 74);
 INSERT INTO configoption VALUES (30,'_MD_AM_AUTH_CONFOPTION_AD', 'ads', 74);
 
+INSERT INTO configoption VALUES (31, '_MD_AM_REGINVITE', '3', 21);
 
 #
 # Dumping data for table `image`
