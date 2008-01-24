@@ -50,7 +50,7 @@ h6 {font-size: .8em;}
 #xo-toprightblocks .xo-blocktitle h3, #xo-bottomrightblocks .xo-blocktitle h3 { margin: 5px; padding-left: 10px; background-color: inherit; color: #f3ac03; font-weight: bold; border-bottom: 1px solid #ddd;}
 #xo-toprightblocks .xo-blockcontent, #xo-bottomrightblocks .xo-blockcontent{ margin-bottom: 2px; padding: 5px 8px 8px 8px; text-align:justify; line-height: 1.2em;}
 
-#xo-page .xo-block {	margin: 5px; border: 1px solid #ddd;}
+#xo-page .xo-block {	margin: 5px; border: 1px solid #ddd;float: right; overflow: hidden}
 
 .xo-content {padding: 5px; overflow: hidden}
 /* End Center Column */
