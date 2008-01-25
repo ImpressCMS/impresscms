@@ -26,7 +26,7 @@
 </head>
 
 <body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
-<div class="warper"><{if $xoBlocks.canvas_left and $xoBlocks.canvas_right}><{assign var=columns_layout value='threecolumns-layout'}>
+<br /><div class="warper"><{if $xoBlocks.canvas_left and $xoBlocks.canvas_right}><{assign var=columns_layout value='threecolumns-layout'}>
 <{elseif $xoBlocks.canvas_left}><{assign var=columns_layout value='leftcolumn-layout'}>
 <{elseif $xoBlocks.canvas_right}><{assign var=columns_layout value='rightcolumn-layout'}>
 <{/if}>
@@ -59,11 +59,11 @@
 	<{/foreach}>
 	<!-- more content here for example -->
 	</div>
-     <{/if}><!-- End Right Column -->
-	 
+     <{/if}>
+<!-- End Right Column -->
+<!-- start xo-page -->
 	<div id="xo-page">
-	<!-- Start Center Column -->
-			<!-- Display center blocks if any -->
+		<!-- Display center blocks if any -->
 			<{if $xoBlocks.page_topleft or $xoBlocks.page_topcenter or $xoBlocks.page_topright}>
 			<div  id="xo-topblocks">
 					<div id="xo-topcenterblocks">
@@ -78,7 +78,7 @@
 					</div><!-- End xo-topblocks -->
 			<{/if}><!-- End display center blocks -->
 
-			<!-- more content here for example -->
+  			<!-- more content here for example -->
 			<{if $xoops_contents}>
 			<div class="xo-content"><{$xoops_contents}></div>
 			<br class="clear" />
@@ -104,8 +104,8 @@
 
 
 			<{/if}><!-- End center bottom blocks loop -->
-			<!-- more content here for example -->
-	</div> <!-- end xo-page -->
+			   	</div>
+<!-- end xo-page -->
 	
 </div> <!-- End xo-canvas-content -->
 
