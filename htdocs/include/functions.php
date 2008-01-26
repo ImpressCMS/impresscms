@@ -355,11 +355,9 @@ function xoops_getbanner()
             $bannerobject = '<div><a href="'.XOOPS_URL.'/banners.php?op=click&amp;bid='.$bid.'" target="_blank">';
             if (stristr($imageurl, '.swf')) {
                 $bannerobject = $bannerobject
-                    .'<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
+                    .'<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">'
                     .'<param name="movie" value="'.$imageurl.'"></param>'
                     .'<param name="quality" value="high"></param>'
-                    .'<embed src="'.$imageurl.'" quality="high" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="468" height="60">'
-                    .'</embed>'
                     .'</object>';
             } else {
                 $bannerobject = $bannerobject.'<img src="'.$imageurl.'" alt="" />';
