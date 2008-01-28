@@ -55,9 +55,9 @@ class PathStuffController {
 			for ($i = 0; $i < count($arr)-1; $i++){
 			    $web_root .= $arr[$i].'/';
 			}
-			
+
 			$docroot = resolveDocumentRoot();
-			
+
 			$this->xoopsTrustPath = $docroot . 'trust_path' . substr( md5( time() ), 0, 5);
 		}
 		if ( isset( $_SESSION['settings']['URL'] ) ) {
@@ -248,24 +248,24 @@ class PathStuffController {
 function resolveDocumentRoot() {
     $current_script = dirname($_SERVER['SCRIPT_NAME']);
     $current_path   = dirname($_SERVER['SCRIPT_FILENAME']);
-   
+
     /* work out how many folders we are away from document_root
        by working out how many folders deep we are from the url.
        this isn't fool proof */
     $adjust = explode("/", $current_script);
-    $adjust = count($adjust)-1;
-   
+    $adjust = count($adjust);
+
     /* move up the path with ../ */
     $traverse = str_repeat("../", $adjust);
     $adjusted_path = sprintf("%s/%s", $current_path, $traverse);
-       
+
     /* real path expands the ../'s to the correct folder names */
     $rootp = realpath($adjusted_path);
-    
+
     // a fix for Windows slashes
     $rootp = str_replace("\\","/",$rootp);
     $lastchar = substr($rootp,strlen($rootp)-1,1);
-    
+
     if ($lastchar != '/' && $lastchar != '\\' ){
         $rootp .= '/';
     }
