@@ -133,7 +133,7 @@ class PathStuffController {
 	 * @return bool
 	 */
 	function checkRootPath() {
-	   	if ( is_dir( $this->xoopsRootPath ) && is_readable( $this->xoopsRootPath ) ) {
+	   	if ( @is_dir( $this->xoopsRootPath ) && @is_readable( $this->xoopsRootPath ) ) {
 			@include_once "$this->xoopsRootPath/include/version.php";
 			if ( file_exists( "$this->xoopsRootPath/mainfile.php" ) && defined( 'XOOPS_VERSION' ) ) {
 				return $this->validRootPath = true;
@@ -147,7 +147,7 @@ class PathStuffController {
 	 * @return bool
 	 */
 	function checkTrustPath() {
-	   	if ( is_dir( $this->xoopsTrustPath ) && is_readable( $this->xoopsTrustPath ) ) {
+	   	if ( @is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath ) ) {
 			return $this->validTrustPath = true;
 	   	}
 		return $this->validTrustPath = false;
@@ -155,7 +155,7 @@ class PathStuffController {
 
 	function createTrustPath() {
 		if (@icms_install_mkdir($this->xoopsTrustPath)) {
-			if ( is_dir( $this->xoopsTrustPath ) && is_readable( $this->xoopsTrustPath ) ) {
+			if ( @is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath ) ) {
 				$_SESSION['settings']['TRUST_PATH'] = $this->xoopsTrustPath;
 				return $this->validTrustPath = true;
 			}
@@ -198,23 +198,23 @@ class PathStuffController {
 		if ( !file_exists( $path ) ) {
 			return false;
 		}
-		$perm = is_dir( $path ) ? 6 : 7;
-		if ( !is_writable($path) ) {
+		$perm = @is_dir( $path ) ? 6 : 7;
+		if ( @!is_writable($path) ) {
 			// First try using owner bit
 			@chmod( $path, octdec( '0' . $perm . '00' ) );
 			clearstatcache();
-			if ( !is_writable( $path ) && $group !== false ) {
+			if ( !@is_writable( $path ) && $group !== false ) {
 				// If group has been specified, try using the group bit
 				@chgrp( $path, $group );
 				@chmod( $path, octdec( '0' . $perm . $perm . '0' ) );
 			}
 			clearstatcache();
-			if ( !is_writable( $path ) ) {
+			if ( !@is_writable( $path ) ) {
 				@chmod( $path, octdec( '0' . $perm . $perm . $perm ) );
 			}
 		}
 		clearstatcache();
-		if ( is_writable( $path ) ) {
+		if ( @is_writable( $path ) ) {
 			$info = stat( $path );
 			//echo $path . ' : ' . sprintf( '%o', $info['mode'] ) . '....';
 			if ( $info['mode'] & 0002 ) {
