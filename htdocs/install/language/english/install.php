@@ -166,8 +166,8 @@ define("_INSTALL_INSTALLING", "Installing %s module");
 
 define("_INSTALL_TRUST_PATH", "Trust path");
 define("_INSTALL_TRUST_PATH_LABEL", "ImpressCMS physical trust path");
-define("_INSTALL_WEB_LOCATIONS", "Web locations");
-define("_INSTALL_WEB_LOCATIONS_LABEL", "Web locations");
+define("_INSTALL_WEB_LOCATIONS", "Web location");
+define("_INSTALL_WEB_LOCATIONS_LABEL", "Web location");
 
 define("_INSTALL_TRUST_PATH_FOUND", "Trust path found.");
 define("_INSTALL_ERR_NO_TRUST_PATH_FOUND", "Trust path was not found.");
