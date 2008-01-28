@@ -37,7 +37,6 @@
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
     exit("Access Denied");
 }
-
 $op = 'RankForumAdmin';
 
 if (isset($_GET['op'])) {
@@ -100,9 +99,9 @@ case "RankForumAdd":
     }
     $newid = $db->genId($db->prefix("ranks")."_rank_id_seq");
     if ($rank_special == 1) {
-        $sql = "INSERT INTO ".$db->prefix("ranks")." (rank_id, rank_title, rank_min, rank_max, rank_special, rank_image) VALUES ('".intval($newid)."', '".$db->quoteString($rank_title)."', '-1', '-1', '1', '".$db->quoteString($rank_image)."')";
+        $sql = "INSERT INTO ".$db->prefix("ranks")." (rank_id, rank_title, rank_min, rank_max, rank_special, rank_image) VALUES ('".intval($newid)."', ".$db->quoteString($rank_title).", '-1', '-1', '1', ".$db->quoteString($rank_image).")";
     } else {
-        $sql = "INSERT INTO ".$db->prefix("ranks")." (rank_id, rank_title, rank_min, rank_max, rank_special, rank_image) VALUES ('".intval($newid)."', '".$db->quoteString($rank_title)."', '".intval($_POST['rank_min'])."', '".intval($_POST['rank_max'])."' , '0', '".$db->quoteString($rank_image)."')";
+        $sql = "INSERT INTO ".$db->prefix("ranks")." (rank_id, rank_title, rank_min, rank_max, rank_special, rank_image) VALUES ('".intval($newid)."', ".$db->quoteString($rank_title).", '".intval($_POST['rank_min'])."', '".intval($_POST['rank_max'])."' , '0', ".$db->quoteString($rank_image).")";
     }
     if (!$db->query($sql)) {
         xoops_cp_header();
@@ -137,11 +136,12 @@ case "RankForumSave":
     if ($rank_special > 0) {
         $_POST['rank_min'] = $_POST['rank_max'] = -1;
     }
-    $sql = "UPDATE ".$db->prefix("ranks")." SET rank_title = '".$db->quoteString($rank_title)."', rank_min = '".intval($_POST['rank_min'])."', rank_max = '".intval($_POST['rank_max'])."', rank_special = '".$rank_special."'";
+	$sql = "UPDATE ".$db->prefix("ranks")." SET rank_title = ".$db->quoteString($rank_title).", rank_min = '".intval($_POST['rank_min'])."', rank_max = '".intval($_POST['rank_max'])."', rank_special = " . $db->quoteString($rank_special);
     if ($delete_old_image) {
-        $sql .= ", rank_image = '".$db->quoteString($rank_image)."'";
+        $sql .= ", rank_image = ".$db->quoteString($rank_image)."";
     }
     $sql .= " WHERE rank_id = '".$rank_id."'";
+
     if (!$db->query($sql)) {
         xoops_cp_header();
         xoops_error('Failed storing rank data into the database');
