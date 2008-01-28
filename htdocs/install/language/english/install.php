@@ -65,7 +65,7 @@ define( "MODULES_INSTALL_TITLE", "Installation of modules " );
 // Settings (labels and help text)
 define( "XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path" ); // L55
 define( "XOOPS_ROOT_PATH_HELP", "This is the physical path of the ImpressCMS documents folder, the very web root of your ImpressCMS application" ); // L59
-define( "_INSTALL_TRUST_PATH_HELP", "This is the physical location of your ImpressCMS trust path. The trust path is a folder where ImpressCMS and its modules will store some sensible code and information for more security. It is recommended that this folder be outside of the web root, making it not accessible by a browser. If the folder does not exist, ImpressCMS will try and create it. If this is not possible, you will need to create it." ); // L59
+define( "_INSTALL_TRUST_PATH_HELP", "This is the physical location of your ImpressCMS trust path. The trust path is a folder where ImpressCMS and its modules will store some sensible code and information for more security. It is recommended that this folder be outside of the web root, making it not accessible by a browser. If the folder does not exist, ImpressCMS will try and create it. If this is not possible, you will need to create it.<br /><br /><a target='_blank' href='http://wiki.impresscms.org/index.php?title=Trust_Path'>Click here</a> to learn more about the Trust path." ); // L59
 
 define( "XOOPS_URL_LABEL", "Website location (URL)" ); // L56
 define( "XOOPS_URL_HELP", "Main URL that will be used to access your ImpressCMS installation" ); // L58
