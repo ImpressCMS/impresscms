@@ -41,7 +41,7 @@ class PathStuffController {
 		if ( isset( $_SESSION['settings']['ROOT_PATH'] ) ) {
 			$this->xoopsRootPath = $_SESSION['settings']['ROOT_PATH'];
 		} else {
-			$path = str_replace( "\\", "/", realpath( '../' ) );
+			$path = str_replace( "\\", "/", @realpath( '../' ) );
 			if ( file_exists( "$path/mainfile.php" ) ) {
 				$this->xoopsRootPath = $path;
 			}
@@ -260,7 +260,7 @@ function resolveDocumentRoot() {
     $adjusted_path = sprintf("%s/%s", $current_path, $traverse);
 
     /* real path expands the ../'s to the correct folder names */
-    $rootp = realpath($adjusted_path);
+    $rootp = @realpath($adjusted_path);
 
     // a fix for Windows slashes
     $rootp = str_replace("\\","/",$rootp);
