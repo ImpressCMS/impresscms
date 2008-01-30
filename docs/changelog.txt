@@ -11,6 +11,7 @@ Unreleased : ImpressCMS 1.0 "Janus" Beta 2
 - Fixed : #1875382 error in xoops.css (display: inline-block) (MacDonald/malanciault)
 - Fixed : #1881367 Problems in the queries executed when editing User Ranks (malanciault/vaughan)
 - Fixed : Adding a few @ in install/page_pathsettings.php to prevent the display of some errors that would confuse users (rplima/malanciault)
+- Fixed : #1872191 Small display bug in user.php (incama/malanciault)
 
 
 ========================================
