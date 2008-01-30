@@ -1,7 +1,7 @@
 ImpressCMS ChangeLog
 
 ==========================================
-Unreleased : ImpressCMS 1.0 "Janus" Beta 2
+2008-02-01 : ImpressCMS 1.0 "Janus" Beta 2
 ==========================================
 
 - Fixed : w3c validation in impresstheme and impresstheme_light (sato-san)
