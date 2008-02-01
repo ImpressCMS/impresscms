@@ -36,6 +36,25 @@ if ( isset($_POST['op']) ) {
     $op = trim($_GET['op']);
 }
 
+    if ( !empty($_GET['xoops_redirect']) ) {
+        $redirect = trim($_GET['xoops_redirect']);
+        $isExternal = false;
+        if ($pos = strpos( $redirect, '://' )) {
+            $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
+            if ( strcasecmp(substr($redirect, $pos + 3, strlen($xoopsLocation)), $xoopsLocation) ) {
+                $isExternal = true;
+            }
+        }
+        if (!$isExternal) {
+            header('Location: ' . $redirect);
+            exit();
+        }
+    }
+    header('Location: '.XOOPS_URL.'/userinfo.php?uid='.$xoopsUser->getVar('uid'));
+    exit();
+
+
+
 if ($op == 'main') {
     if ( !$xoopsUser ) {
         $xoopsOption['template_main'] = 'system_userform.html';
@@ -46,7 +65,17 @@ if ($op == 'main') {
             $xoopsTpl->assign('usercookie', $_COOKIE[$xoopsConfig['usercookie']]);
         }
         if (isset($_GET['xoops_redirect'])) {
-            $xoopsTpl->assign('redirect_page', htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES));
+	        $redirect = trim($_GET['xoops_redirect']);
+	        $isExternal = false;
+	        if ($pos = strpos( $redirect, '://' )) {
+	            $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
+	            if ( strcasecmp(substr($redirect, $pos + 3, strlen($xoopsLocation)), $xoopsLocation) ) {
+	                $isExternal = true;
+	            }
+	        }
+        	if ($isExternal) {
+            	$xoopsTpl->assign('redirect_page', htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES));
+        	}
         }
         $xoopsTpl->assign('lang_password', _PASSWORD);
         $xoopsTpl->assign('lang_notregister', _US_NOTREGISTERED);
@@ -70,8 +99,18 @@ if ($op == 'main') {
         $xoopsTpl->assign('xoops_pagetitle', _LOGIN);
         include 'footer.php';
     } elseif ( !empty($_GET['xoops_redirect']) ) {
-        header('Location: '.$_GET['xoops_redirect']);
-		exit();
+        $redirect = trim($_GET['xoops_redirect']);
+        $isExternal = false;
+        if ($pos = strpos( $redirect, '://' )) {
+            $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
+            if ( strcasecmp(substr($redirect, $pos + 3, strlen($xoopsLocation)), $xoopsLocation) ) {
+                $isExternal = true;
+            }
+        }
+        if ($isExternal) {
+	        header('Location: '.$_GET['xoops_redirect']);
+			exit();
+        }
     } else {
         header('Location: '.XOOPS_URL.'/userinfo.php?uid='.$xoopsUser->getVar('uid'));
 		exit();
