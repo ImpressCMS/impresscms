@@ -51,12 +51,10 @@ if ($op == 'main') {
 	        if ($pos = strpos( $redirect, '://' )) {
 	            $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
 	            if ( strcasecmp(substr($redirect, $pos + 3, strlen($xoopsLocation)), $xoopsLocation) ) {
-	                $isExternal = true;
+	                $redirect = XOOPS_URL;
 	            }
 	        }
-        	if ($isExternal) {
-            	$xoopsTpl->assign('redirect_page', htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES));
-        	}
+        	$xoopsTpl->assign('redirect_page', htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES));
         }
         $xoopsTpl->assign('lang_password', _PASSWORD);
         $xoopsTpl->assign('lang_notregister', _US_NOTREGISTERED);
@@ -85,13 +83,11 @@ if ($op == 'main') {
         if ($pos = strpos( $redirect, '://' )) {
             $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
             if ( strcasecmp(substr($redirect, $pos + 3, strlen($xoopsLocation)), $xoopsLocation) ) {
-                $isExternal = true;
+                $redirect = XOOPS_URL;
             }
         }
-        if ($isExternal) {
-	        header('Location: '.$_GET['xoops_redirect']);
-			exit();
-        }
+        header('Location: ' . $redirect);
+		exit();
     } else {
         header('Location: '.XOOPS_URL.'/userinfo.php?uid='.$xoopsUser->getVar('uid'));
 		exit();
