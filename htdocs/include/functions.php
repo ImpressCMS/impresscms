@@ -384,9 +384,14 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
     }
     if ( !$allowExternalLink && $pos = strpos( $url, '://' ) ) {
         $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
-        if (strcasecmp(substr($url, $pos + 3, strlen($xoopsLocation)), $xoopsLocation)) {
+        if ( substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
+			$url = XOOPS_URL;
+	     }elseif(substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
+	        $url = XOOPS_URL;
+	     }
+       /* if (strcasecmp(substr($url, $pos + 3, strlen($xoopsLocation)), $xoopsLocation)) {
             $url = XOOPS_URL;
-        }
+        }*/
     }
     $theme = $xoopsConfig['theme_set'];
 

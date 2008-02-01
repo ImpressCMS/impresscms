@@ -115,6 +115,18 @@ if (false != $user) {
     } else {
         $url = XOOPS_URL.'/index.php';
     }
+	if ($pos = strpos( $url, '://' )) {
+		$xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
+	    if ( substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
+			$url = XOOPS_URL;
+	     }elseif(substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
+	        $url = XOOPS_URL;
+	     }
+	     if( substr($url, 0, strlen(XOOPS_URL)*2) ==  XOOPS_URL.XOOPS_URL){
+	     	$url = substr($url, strlen(XOOPS_URL));
+
+	     }
+	}
 
 	// autologin hack V3.1 GIJ (set cookie)
 	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , XOOPS_URL ) ;
