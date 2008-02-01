@@ -374,11 +374,17 @@ function xoops_getbanner()
 /*
 * Function to redirect a user to certain pages
 */
-function redirect_header($url, $time = 3, $message = '', $addredirect = true)
+function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 {
-    global $xoopsConfig, $xoopsRequestUri, $xoopsLogger, $xoopsUserIsAdmin;
+    global $xoopsConfig, $xoopsLogger, $xoopsUserIsAdmin;
     if ( preg_match( "/[\\0-\\31]|about:|script:/i", $url) ) {
         if (!preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url) ) {
+            $url = XOOPS_URL;
+        }
+    }
+    if ( !$allowExternalLink && $pos = strpos( $url, '://' ) ) {
+        $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
+        if (strcasecmp(substr($url, $pos + 3, strlen($xoopsLocation)), $xoopsLocation)) {
             $url = XOOPS_URL;
         }
     }
@@ -411,11 +417,11 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true)
     } else {
         $xoopsTpl->assign('time', intval($time));
     }
-    if ($xoopsRequestUri && $addredirect && strstr($url, 'user.php')) {
+    if (!empty($_SERVER['REQUEST_URI']) && $addredirect && strstr($url, 'user.php')) {
         if (!strstr($url, '?')) {
-            $url .= '?xoops_redirect='.urlencode($xoopsRequestUri);
+            $url .= '?xoops_redirect='.urlencode($_SERVER['REQUEST_URI']);
         } else {
-            $url .= '&amp;xoops_redirect='.urlencode($xoopsRequestUri);
+            $url .= '&amp;xoops_redirect='.urlencode($_SERVER['REQUEST_URI']);
         }
     }
     if (defined('SID') && SID && (! isset($_COOKIE[session_name()]) || ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset($_COOKIE[$xoopsConfig['session_name']])))) {
