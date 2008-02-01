@@ -54,7 +54,7 @@ if ($op == 'main') {
 	                $redirect = XOOPS_URL;
 	            }
 	        }
-        	$xoopsTpl->assign('redirect_page', htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES));
+        	$xoopsTpl->assign('redirect_page', $redirect);
         }
         $xoopsTpl->assign('lang_password', _PASSWORD);
         $xoopsTpl->assign('lang_notregister', _US_NOTREGISTERED);
@@ -82,6 +82,7 @@ if ($op == 'main') {
         $isExternal = false;
         if ($pos = strpos( $redirect, '://' )) {
             $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
+
             if ( strcasecmp(substr($redirect, $pos + 3, strlen($xoopsLocation)), $xoopsLocation) ) {
                 $redirect = XOOPS_URL;
             }
