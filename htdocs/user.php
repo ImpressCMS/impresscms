@@ -50,9 +50,11 @@ if ($op == 'main') {
 	        $isExternal = false;
 	        if ($pos = strpos( $redirect, '://' )) {
 	            $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
-	            if ( strcasecmp(substr($redirect, $pos + 3, strlen($xoopsLocation)), $xoopsLocation) ) {
-	                $redirect = XOOPS_URL;
-	            }
+	             if ( substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
+					$redirect = XOOPS_URL;
+		         }elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
+		            $redirect = XOOPS_URL;
+		         }
 	        }
         	$xoopsTpl->assign('redirect_page', $redirect);
         }
@@ -82,10 +84,11 @@ if ($op == 'main') {
         $isExternal = false;
         if ($pos = strpos( $redirect, '://' )) {
             $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
-
-            if ( strcasecmp(substr($redirect, $pos + 3, strlen($xoopsLocation)), $xoopsLocation) ) {
-                $redirect = XOOPS_URL;
-            }
+             if ( substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
+	              $redirect = XOOPS_URL;
+	         }elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
+	              $redirect = XOOPS_URL;
+	         }
         }
         header('Location: ' . $redirect);
 		exit();
