@@ -63,7 +63,7 @@ function load_invite_code($code) {
 	}
 	// update view time
 	$sql = sprintf('UPDATE '.$xoopsDB->prefix('invites').' SET view_date = %d WHERE invite_code = %s AND register_id = 0', time(), $xoopsDB->quoteString(addslashes($code)));
-	$result = $xoopsDB->query($sql);
+	$result = $xoopsDB->queryF($sql);
 }
 
 function check_invite_code($code) {

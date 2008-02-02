@@ -69,7 +69,7 @@ define("_MD_AM_ALLOWIMAGE","Allow users to display image files in posts?");
 define("_MD_AM_USERACTV","Requires activation by user (recommended)");
 define("_MD_AM_AUTOACTV","Activate automatically");
 define("_MD_AM_ADMINACTV","Activation by administrators");
-define("_MD_AM_REGINVITE","Register by invitation");
+define("_MD_AM_REGINVITE","Registration by invitation");
 define("_MD_AM_ACTVTYPE","Select activation type of newly registered users");
 define("_MD_AM_ACTVGROUP","Select group to which activation mail will be sent");
 define("_MD_AM_ACTVGROUPDSC","Valid only when 'Activation by administrators' is selected");
