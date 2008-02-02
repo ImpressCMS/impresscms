@@ -29,13 +29,11 @@ https://sourceforge.net/project/showfiles.php?group_id=205633
 Checking out ImpressCMS from the SVN
 ==================================
 
-You can easily get ImpressCMS using SVN.
+You can easily get ImpressCMS using SVN. Instructions about this can be found here:
+http://wiki.impresscms.org/index.php?title=Install_and_update_using_SVN
 
-The full package can be found at:
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0/full/
-
-The upgrade package can be found at :
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0/xoops-to-impresscms/
+The path for this release is the following:
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0_beta2/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 
