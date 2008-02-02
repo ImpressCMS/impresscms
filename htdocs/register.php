@@ -190,6 +190,7 @@ case 'finish':
 		$newuser->setVar('uorder',$xoopsConfig['com_order'], true);
 		$newuser->setVar('umode',$xoopsConfig['com_mode'], true);
 		$newuser->setVar('user_mailok',$user_mailok, true);
+		$newuser->setVar('notify_method', 2);
 		if ($valid_actkey || $xoopsConfigUser['activation_type'] == 1) {
 			$newuser->setVar('level', 1, true);
 		}
