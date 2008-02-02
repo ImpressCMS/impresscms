@@ -13,7 +13,7 @@ ImpressCMS ChangeLog
 - Fixed : Adding a few @ in install/page_pathsettings.php to prevent the display of some errors that would confuse users (rplima/malanciault)
 - Fixed : #1872191 Small display bug in user.php (incama/malanciault)
 - Fixed : Local file inclusion (DSecRG/malanciault)
-- Fixed : URL Redirection Phishing (DSecRG/phppp/malanciault)
+- Fixed : URL Redirection Phishing (DSecRG/malanciault/fx2024)
 
 ========================================
 2008-01-08 : ImpressCMS 1.0 "Janus" Beta
