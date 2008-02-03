@@ -8,8 +8,22 @@ Legend :
   +- a constant was modified
   -  a constant was remove OR a whole file was removed
 
-ImpressCMS 0.5 (changes from XOOPS 2.0.17)
+
+
+
+
+
+
+ImpressCMS 1.0 (changes from XOOPS 2.0.17)
 =========================================
+
+
+
+modules/system/languages/english/admin/preferences.php
+------------------------------------------------------
+
++ _MD_AM_REGINVITE (line 72)
+
 
 language/english/mail_template/
 ------------------------------
