@@ -6,6 +6,7 @@ Unreleased : ImpressCMS 1.0 "Janus" RC
 
 - Added : New feature "registration by invitation" (sudhacker)
 
+- Fixed : #1890412: cache folder is not cleared after update. it now shouldn't remove any .htaccess or php.ini files (for php cgi users) either. (vaughan / skenow)
 - Fixed : #1890400 Can't register new user. (seems to be a mysql version compatibility issue) (vaughan)
 - Fixed : w3c validation (sato-san)
 - Fixed : #1870346 System blocks not visible to added group (skenow/dave_l)
