@@ -22,8 +22,15 @@ Web server
 Downloading ImpressCMS
 ==================================
 
-This release can be downloaded from the ImpressCMS SourceForge project page :
-https://sourceforge.net/project/showfiles.php?group_id=205633
+This release can be downloaded here : http://www.impresscms.org/download/
+
+
+Using wget command to download the package
+==================================
+
+This release can be downloaded directly on your server using the WGET command (providing yuo have SSH access to your server). To download it, simnply use this code:
+
+wget http://www.impresscms.org/download/
 
 
 Checking out ImpressCMS from the SVN
