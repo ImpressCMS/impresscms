@@ -24,7 +24,7 @@ class upgrade_impcms05 {
 			$dd = opendir($d);
 			while($file = readdir($dd))
 			{
-		 		if(is_file($d.$file) && ($file != 'index.html' || $file != 'php.ini' || $file != '.htaccess'))
+		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'))
 				{
 		  			unlink($d.$file);
 				}
