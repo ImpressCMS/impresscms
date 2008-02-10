@@ -6,6 +6,7 @@ Unreleased : ImpressCMS 1.0 "Janus" RC
 
 - Added : New feature "registration by invitation" (sudhacker)
 
+- Fixed : #1890400 Can't register new user. (seems to be a mysql version compatibility issue) (vaughan)
 - Fixed : w3c validation (sato-san)
 - Fixed : #1870346 System blocks not visible to added group (skenow/dave_l)
 - Fixed : #1867922 No nice path from getNicePathFromId (MacDonald/malanciault)
