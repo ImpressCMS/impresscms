@@ -28,13 +28,18 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-
+/**
+ * Banner administration functions
+ * 
+ * Functions to allow adminstrators to add, edit, delete banners and clients
+ * @package banners
+ */     
 if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
     exit("Access Denied");
 } else {
-/*********************************************************/
-/* Banners Administration Functions                      */
-/*********************************************************/
+/**
+/* Banners Administration Functions                      
+*/
 function BannersAdmin()
 {
     global $xoopsConfig, $xoopsModule;
@@ -197,7 +202,11 @@ function BannersAdmin()
     xoops_cp_footer();
 }
 
-
+/**
+ * Deletes a banner
+ * 
+ * @param int $bid banner id
+ */    
 function BannerDelete($bid)
 {
     global $xoopsConfig, $xoopsModule;
@@ -214,11 +223,9 @@ function BannerDelete($bid)
         echo $myts->displayTarea($htmlcode,1);
     }else{
         if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
-            echo "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/ swflash.cab#version=6,0,40,0\" width=\"468\" height=\"60\">";
+            echo "<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">";
             echo "<param name=movie value=\"$imageurl\">";
             echo "<param name=quality value=high>";
-            echo "<embed src=\"$imageurl\" quality=high pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\"  type=\"application/x-shockwave-flash\" width=\"468\" height=\"60\">";
-            echo "</embed>";
             echo "</object>";
         } else {
             echo "<img src='$imageurl' alt='' />";
@@ -246,7 +253,10 @@ function BannerDelete($bid)
     echo"</td></tr></table>";
     xoops_cp_footer();
 }
-
+/**
+ * Edit the banner
+ * @param int $bid banner id
+ */   
 function BannerEdit($bid)
 {
     global $xoopsConfig, $xoopsModule;
@@ -262,11 +272,9 @@ function BannerEdit($bid)
         echo $myts->displayTarea($htmlcode, 1, 0, 0, 0, 0);
     }else{
         if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
-            echo "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/ swflash.cab#version=6,0,40,0\" width=\"468\" height=\"60\">";
+            echo "<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">";
             echo "<param name=movie value=\"$imageurl\">";
             echo "<param name=quality value=high>";
-            echo "<embed src=\"$imageurl\" quality=high pluginspage=\"http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash\"  type=\"application/x-shockwave-flash\" width=\"468\" height=\"60\">";
-            echo "</embed>";
             echo "</object>";
         } else {
             echo "<img src='$imageurl' alt='' />";
@@ -318,7 +326,10 @@ function BannerEdit($bid)
     echo"</td></tr></table>";
     xoops_cp_footer();
 }
-
+/**
+ * Deletes a client
+ * @param int $cid client id
+ */  
 function BannerClientDelete($cid)
 {
     global $xoopsConfig, $xoopsModule;
@@ -347,12 +358,10 @@ function BannerClientDelete($cid)
             $bannerobject = '<div><a href="'.$clickurl.'" target="_blank">';
             if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
                 $bannerobject = $bannerobject
-                        .'<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0" width="468" height="60">'
-                        .'<param name="movie" value="'.$imageurl.'"></param>'
-                        .'<param name="quality" value="high"></param>'
-                        .'<embed src="'.$imageurl.'" quality="high" pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" width="468" height="60">'
-                        .'</embed>'
-                        .'</object>';
+                echo "<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">";
+                echo "<param name=movie value=\"$imageurl\">";
+                echo "<param name=quality value=high>";
+                echo "</object>";
             } else {
                 $bannerobject = $bannerobject.'<img src="'.$imageurl.'" alt="" />';
             }
@@ -364,7 +373,10 @@ function BannerClientDelete($cid)
     echo "</td></tr></table>";
     xoops_cp_footer();
 }
-
+/**
+ * Edits a client's information
+ * @param int $cid client id
+ */  
 function BannerClientEdit($cid)
 {
     global $xoopsConfig, $xoopsModule;

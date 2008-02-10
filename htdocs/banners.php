@@ -25,14 +25,24 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
+/**
+* Allows banner clients to login and manage their banners
+* 
+* Clients can view the statistics for their banners, send the statistics to their
+* email address, or change the target url for the banner
+*
+* @package banners
+*/
+ 
 $xoopsOption['pagetype'] = "banners";
 
 include "mainfile.php";
 
-/********************************************/
-/* Function to let your client login to see */
-/* the stats                                */
-/********************************************/
+/**
+* Function to let your client login to see 
+* the stats          
+*               
+*/
 function clientlogin()
 {
     global $xoopsDB, $xoopsLogger, $xoopsConfig;
@@ -53,10 +63,10 @@ function clientlogin()
     include "footer.php";
 }
 
-/*********************************************/
-/* Function to display the banners stats for */
-/* each client                               */
-/*********************************************/
+/**
+* Function to display the banners stats for 
+* each client                               
+*/
 function bannerstats()
 {
     global $xoopsDB, $xoopsConfig, $xoopsLogger;
@@ -120,11 +130,9 @@ function bannerstats()
                     echo $myts->displayTarea($htmlcode);
                 }else{
                     if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
-                        echo "<object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" codebase=\"http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0\" width=\"468\" height=\"60\">";
+                        echo "<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">";
                         echo "<param name=movie value=\"$imageurl\" />";
                         echo "<param name=quality value='high' />";
-                        echo "<embed src=\"$imageurl\" quality='high' pluginspage=\"http://www.macromedia.com/go/getflashplayer\" type=\"application/x-shockwave-flash\" width=\"468\" height=\"60\">";
-                        echo "</embed>";
                         echo "</object>";
                     } else {
                         echo "<img src='$imageurl' alt='' />";
@@ -144,7 +152,7 @@ function bannerstats()
                 }
             }
 
-            /* Finnished Banners */
+            /* Finished Banners */
             echo "<br />";
             if($result = $xoopsDB->query("select bid, impressions, clicks, datestart, dateend from ".$xoopsDB->prefix("bannerfinish")." where cid='".intval($cid)."'")){
                 echo "<h4 class='content_title'>" . sprintf(_BANNERS_FINISHED, $name) . "</h4><hr />
@@ -179,10 +187,13 @@ function bannerstats()
         }
 }
 
-/*********************************************/
-/* Function to let the client E-mail his     */
-/* banner Stats                              */
-/*********************************************/
+/**
+* Function to let the client E-mail his     
+* banner Stats      
+* 
+* @param int $cid client id
+* @param int $bid banner id                       
+*/
 function EmailStats($cid, $bid)
 {
     global $xoopsDB, $xoopsConfig;
@@ -228,10 +239,14 @@ function EmailStats($cid, $bid)
     redirect_header("banners.php",2);
 }
 
-/*********************************************/
-/* Function to let the client to change the  */
-/* url for his banner                        */
-/*********************************************/
+/**
+* Function to let the client to change the  
+* url for his banner     
+* 
+* @param int $cid client id
+* @param int $bid banner id
+* @param str $url new target url for the banner                   
+*/
 function change_banner_url_by_client($cid, $bid, $url)
 {
     global $xoopsDB;
@@ -251,7 +266,11 @@ function change_banner_url_by_client($cid, $bid, $url)
     }
     redirect_header("banners.php",2);
 }
-
+/**
+ * Updates the click counter for a banner
+ * 
+ * @param int $bid banner id
+ */   
 function clickbanner($bid)
 {
     global $xoopsDB;
