@@ -1,5 +1,12 @@
 ImpressCMS ChangeLog
 
+======================================
+2008-02-07 : ImpressCMS 1.0 "Janus" RC
+======================================
+
+- Fixed : #1890400 Can't register new user. (seems to be a mysql version compatibility issue) (vaughan)
+
+
 ==========================================
 2008-02-01 : ImpressCMS 1.0 "Janus" Beta 2
 ==========================================
