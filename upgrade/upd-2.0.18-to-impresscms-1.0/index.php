@@ -12,17 +12,26 @@ class upgrade_impcms05 {
 		$this->blocks_engine_upgrade();
 		$this->apply_new_blocks();
 		$this->apply_templates();
-		return ($this->cleaning_templates_c());
+		return ($this->cleaning_write_folders());
 	}
-	function cleaning_templates_c() {
-		$dir = opendir(XOOPS_ROOT_PATH."/templates_c/");
-		while($file = readdir($dir)){
-		 if(is_file(XOOPS_ROOT_PATH."/templates_c/".$file) && $file != 'index.html') {
-		  unlink(XOOPS_ROOT_PATH."/templates_c/".$file);
-		 }
+	function cleaning_write_folders() {
+		$dir = array();
+		$dir['templates_c'] = XOOPS_ROOT_PATH."/templates_c/";
+		$dir['cache'] = XOOPS_ROOT_PATH."/cache/";
+
+		foreach ($dir as $d)
+		{
+			$dd = opendir($d);
+			while($file = readdir($dd))
+			{
+		 		if(is_file($d.$file) && $file != 'index.html')
+				{
+		  			unlink($d.$file);
+				}
+			}
+			closedir($dd);
 		}
-		closedir($dir);
-		return true;
+			return true;
 	}
 	function apply_conf_configcategory() {
 		$db = $GLOBALS['xoopsDB'];
@@ -110,7 +119,7 @@ class upgrade_impcms05 {
 	 * Verify that a mysql table exists
 	 *
 	 * @package News
-	 * @author Hervé Thouzard (www.herve-thouzard.com)
+	 * @author Hervï¿½ Thouzard (www.herve-thouzard.com)
 	 * @copyright (c) The Xoops Project - www.xoops.org
 	*/
 	function table_exists($tablename) {
