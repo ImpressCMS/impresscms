@@ -1,7 +1,7 @@
-ImpressCMS 1.0 "Janus" Beta 2 release notes
+ImpressCMS 1.0 "Janus" RC release notes
 ==================================
 
-The ImpressCMS Project is pleased to announce a new release: ImpressCMS 1.0 "Janus" Beta 2.
+The ImpressCMS Project is pleased to announce a new release: ImpressCMS 1.0 "Janus" RC.
 
 ImpressCMS 1.0 is based on the XOOPS 2.0.17 core + some additions made in the XOOPS 2.0.18 development branch and, as such, will retain compatibility with existing modules and themes. The goal is to provide an on-going, stable environment for information and support for XOOPS and its users.
 
@@ -33,7 +33,7 @@ You can easily get ImpressCMS using SVN. Instructions about this can be found he
 http://wiki.impresscms.org/index.php?title=Install_and_update_using_SVN
 
 The path for this release is the following:
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0_beta2/
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0_rc/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 
