@@ -22,10 +22,10 @@ Web server
 Downloading ImpressCMS
 ==================================
 
-This release can be downloaded here : http://www.impresscms.org/download/
+This release can be downloaded here : http://sourceforge.net/project/showfiles.php?group_id=205633&package_id=245707
 
 
-Using wget command to download the package
+Using wget command to download the .tar.gz full package
 ==================================
 
 This release can be downloaded directly on your server using the WGET command (providing yuo have SSH access to your server). To download it, simnply use this code:
