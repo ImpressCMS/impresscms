@@ -1,4 +1,17 @@
 <?php
+/**
+ * Configuration file of the MySQL Database Connector.
+ *
+ * @package database
+ * @subpackage mysql
+ * @since ImpressCMS 1.0
+ * @version $Id: $
+ *
+ * @author Gustavo Pilla <nekro@impresscms.org>
+ * @copyright Copyright (c) 2008, ImpressCMS <http://www.impresscms.org>
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ */
+
 $classversion['name'] = "MySQL Database Driver";
 $classversion['version'] = 1.00;
 $classversion['description'] = "XOOPS MySQL Database Driver";

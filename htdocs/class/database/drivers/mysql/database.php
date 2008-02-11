@@ -32,11 +32,14 @@ if (!defined("XOOPS_ROOT_PATH")) {
     die("XOOPS root path not defined");
 }
 /**
- * @package     kernel
- * @subpackage  database
+ * @package    database
+ * @subpackage  mysql
+ * @version $Id: $
+ * @since XOOPS
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
 /**
@@ -49,11 +52,13 @@ include_once XOOPS_ROOT_PATH."/class/database/database.php";
  *
  * @abstract
  *
+ * @package     database
+ * @subpackage  mysql
+ * @since XOOPS
+ *
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright   copyright (c) 2000-2003 XOOPS.org
- *
- * @package     kernel
- * @subpackage  database
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 class XoopsMySQLDatabase extends XoopsDatabase
 {
@@ -330,12 +335,13 @@ class XoopsMySQLDatabase extends XoopsDatabase
 /**
  * Safe Connection to a MySQL database.
  *
+ * @package     database
+ * @subpackage  mysql
+ * @since XOOPS
  *
- * @author Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright (c) 2000-2003 XOOPS.org
- *
- * @package kernel
- * @subpackage database
+ * @author      Kazumi Ono  <onokazu@xoops.org>
+ * @copyright   copyright (c) 2000-2003 XOOPS.org
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
 {
@@ -361,12 +367,13 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
  * This class allows only SELECT queries to be performed through its
  * {@link query()} method for security reasons.
  *
+ * @package     database
+ * @subpackage  mysql
+ * @since XOOPS
  *
- * @author Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright (c) 2000-2003 XOOPS.org
- *
- * @package kernel
- * @subpackage database
+ * @author      Kazumi Ono  <onokazu@xoops.org>
+ * @copyright   copyright (c) 2000-2003 XOOPS.org
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
 {

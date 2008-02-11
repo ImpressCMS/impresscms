@@ -1,22 +1,25 @@
 <?php
-// $Id: sqlutility.php 2 2005-11-02 18:23:29Z skalpa $
-// sqlutility.php - defines utility class for MySQL database
 /**
- * @package     kernel
- * @subpackage  database
+ * @package database
+ * @subpackage  mysql
+ * @since XOOPS
+ * @version $Id: $
  *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @author      Kazumi Ono  <onokazu@xoops.org>
+ * @copyright   copyright (c) 2000-2003 XOOPS.org
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 
 /**
- * provide some utility methods for databases
+ * Provide some utility methods for databases
  *
- * @author Kazumi Ono <onokazu@xoops.org>
- * @copyright copyright (c) 2000-2003 XOOPS.org
+ * @package     database
+ * @subpackage  mysql
+ * @since XOOPS
  *
- * @package kernel
- * @subpackage  database
+ * @author      Kazumi Ono  <onokazu@xoops.org>
+ * @copyright   copyright (c) 2000-2003 XOOPS.org
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
 class SqlUtility
 {
