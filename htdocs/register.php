@@ -150,7 +150,7 @@ case 'newuser':
 		<input type='hidden' name='uname' value='".$myts->htmlSpecialChars($uname)."' />
 		<input type='hidden' name='email' value='".$myts->htmlSpecialChars($email)."' />";
 		echo "<input type='hidden' name='user_viewemail' value='".$user_viewemail."' />
-		<input type='hidden' name='timezone_offset' value='".(float)$timezone_offset."' />
+		<input type='hidden' name='timezone_offset' value='".$timezone_offset."' />
 		<input type='hidden' name='url' value='".$myts->htmlSpecialChars($url)."' />
 		<input type='hidden' name='pass' value='".$myts->htmlSpecialChars($pass)."' />
 		<input type='hidden' name='vpass' value='".$myts->htmlSpecialChars($vpass)."' />
