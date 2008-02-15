@@ -33,7 +33,7 @@ if ( !defined("XOOPS_FOOTER_INCLUDED") ) {
 	$xoopsLogger->stopTime( 'Module display' );
 	if ($xoopsOption['theme_use_smarty'] == 0) {
 		// the old way
-		$footer = htmlspecialchars( $xoopsConfigMetaFooter['footer'] ) . '<br /><div style="text-align:center">Powered by XOOPS &copy; <a href="http://xoops.sourceforge.net/" target="_blank">The XOOPS Project</a></div>';
+		$footer = htmlspecialchars( $xoopsConfigMetaFooter['footer'] ) . "<br /><div style='text-align:center'>Powered by&nbsp;".XOOPS_VERSION." &copy; 2007-".date("Y")." <a href='http://www.impresscms.org/' target='_blank'>ImpressCMS</a></div>";
 		if (isset($xoopsOption['template_main'])) {
 			$xoopsTpl->xoops_setCaching(0);
 			$xoopsTpl->display('db:'.$xoopsOption['template_main']);
@@ -46,7 +46,7 @@ if ( !defined("XOOPS_FOOTER_INCLUDED") ) {
 	} else {
 		// RMV-NOTIFY
 		include_once XOOPS_ROOT_PATH . '/include/notification_select.php';
-		
+
 		if (!headers_sent()) {
 			header('Content-Type:text/html; charset='._CHARSET);
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
