@@ -67,7 +67,7 @@ if ($xoopsConfig['theme_set'] != 'default' && file_exists(XOOPS_THEME_PATH.'/'.$
 
 	$xoTheme->addScript( '/include/xoops.js', array( 'type' => 'text/javascript' ) );
 	$xoTheme->addScript( '/include/linkexternal.js', array( 'type' => 'text/javascript' ) );
-	
+
     // Weird, but need extra <script> tags for 2.0.x themes
     //$xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.XOOPS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
 	//$xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.XOOPS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');
@@ -104,10 +104,11 @@ if ($xoopsConfig['theme_set'] != 'default' && file_exists(XOOPS_THEME_PATH.'/'.$
         ob_start();
     }
 
-$xoopsLogger->stopTime( 'XOOPS output init' );
-$xoopsLogger->startTime( 'Module display' );
+	// assigning the selected language as a smarty var
+	$xoopsTpl->assign('icmsLang', $xoopsConfig['language']);
 
-
+	$xoopsLogger->stopTime( 'XOOPS output init' );
+	$xoopsLogger->startTime( 'Module display' );
 }
 
 ?>
