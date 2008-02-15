@@ -65,6 +65,9 @@ if ($xoopsConfig['theme_set'] != 'default' && file_exists(XOOPS_THEME_PATH.'/'.$
     ) );
     $xoopsTpl =& $xoTheme->template;
 
+    // triggering event "startOutputInit" of third party integration
+	global $icmsLibrariesHandler;
+	$icmsLibrariesHandler->triggerEvent('startOutputInit');
 	$xoTheme->addScript( '/include/xoops.js', array( 'type' => 'text/javascript' ) );
 	$xoTheme->addScript( '/include/linkexternal.js', array( 'type' => 'text/javascript' ) );
 	

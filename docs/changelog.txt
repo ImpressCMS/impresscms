@@ -1,5 +1,12 @@
 ImpressCMS ChangeLog
 
+==================================
+Unreleased : ImpressCMS 1.10 Alpha
+==================================
+
+- Added : IcmsLibrariesHandler - New feature allowing easy inclusion of third party libraries without hacking any core file (malanciault/davidl2)
+- Added : Including Scriptaculous library
+
 =============================================
 Unreleased : ImpressCMS 1.0 "Janus" RC
 =============================================

@@ -281,6 +281,10 @@ class MyTextSanitizer
 	 **/
 	function &displayTarea( $text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
 	{
+		// triggering event "beforeDisplayTarea" of third party integration
+		global $icmsLibrariesHandler;
+		$icmsLibrariesHandler->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
+
 		if ($html != 1) {
 			// html not allowed
 			$text = $this->htmlSpecialChars($text);

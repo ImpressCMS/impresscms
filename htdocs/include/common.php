@@ -173,6 +173,20 @@ $xoops =& new xos_kernel_Xoops2();
     $config_handler =& xoops_gethandler('config');
     $xoopsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
 
+// ################# Creation of the IcmsLibrariesHandler ##############
+
+// This needs to be removed and put in mainfile later
+/**
+ * The definition of the library path needs to be in mainfile
+ * But for the purpose of proof of concept, let's defined it here
+ */
+// ImpressCMS Third Party Libraries folder
+define( 'ICMS_LIBRARIES_ROOT_PATH', XOOPS_ROOT_PATH . '/libraries' );
+define( 'ICMS_LIBRARIES_URL', XOOPS_URL . '/libraries' );
+// This needs to be removed and put in mainfile later
+
+include_once(XOOPS_ROOT_PATH . '/class/icmslibrarieshandler.php');
+$icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
     // #################### Easiest ML by Gijoe #################
 	$im_multilanguageConfig =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
 	if ($im_multilanguageConfig['ml_enable']) {
@@ -426,6 +440,9 @@ $xoops =& new xos_kernel_Xoops2();
     } elseif($xoopsUser) {
         $xoopsUserIsAdmin = $xoopsUser->isAdmin(1);
     }
+// triggering event "finishCoreBoot" of third party integration
+global $icmsLibrariesHandler;
+$icmsLibrariesHandler->triggerEvent('finishCoreBoot');
     $xoopsLogger->stopTime( 'XOOPS Boot' );
     $xoopsLogger->startTime( 'Module init' );
 ?>
