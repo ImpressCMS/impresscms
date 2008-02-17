@@ -175,9 +175,8 @@ $xoops =& new xos_kernel_Xoops2();
 
 // ################# Creation of the IcmsLibrariesHandler ##############
 
-// This needs to be removed and put in mainfile later
 /**
- * The definition of the library path needs to be in mainfile
+ * @todo The definition of the library path needs to be in mainfile
  * But for the purpose of proof of concept, let's defined it here
  */
 // ImpressCMS Third Party Libraries folder
