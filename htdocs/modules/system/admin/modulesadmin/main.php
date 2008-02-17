@@ -114,11 +114,11 @@ if ( $op == "confirm" ) {
             echo $weight[$mid];
         }
         echo "
-        <input type='hidden' name='module[]' value='".$mid."' />
+        <input type='hidden' name='module[]' value='".intval($mid)."' />
         <input type='hidden' name='oldname[".$mid."]' value='".htmlspecialchars($oldname[$mid], ENT_QUOTES)."' />
         <input type='hidden' name='newname[".$mid."]' value='".htmlspecialchars($newname[$mid], ENT_QUOTES)."' />
-        <input type='hidden' name='oldstatus[".$mid."]' value='".$oldstatus[$mid]."' />
-        <input type='hidden' name='newstatus[".$mid."]' value='".$newstatus[$mid]."' />
+        <input type='hidden' name='oldstatus[".$mid."]' value='".intval($oldstatus[$mid])."' />
+        <input type='hidden' name='newstatus[".$mid."]' value='".intval($newstatus[$mid])."' />
         <input type='hidden' name='oldweight[".$mid."]' value='".intval($oldweight[$mid])."' />
         <input type='hidden' name='weight[".$mid."]' value='".intval($weight[$mid])."' />
         </td></tr>";
@@ -369,7 +369,7 @@ if ($op == 'update_ok') {
                                 if (count($tplfile) == 0) {
                                     $tplfile_new =& $tplfile_handler->create();
                                     $tplfile_new->setVar('tpl_module', $dirname);
-                                    $tplfile_new->setVar('tpl_refid', $fblock['bid']);
+                                    $tplfile_new->setVar('tpl_refid', intval($fblock['bid']));
                                     $tplfile_new->setVar('tpl_tplset', 'default');
                                     $tplfile_new->setVar('tpl_file', $blocks[$i]['template'], true);
                                     $tplfile_new->setVar('tpl_type', 'block');
@@ -412,8 +412,8 @@ if ($op == 'update_ok') {
                             $gperm_handler =& xoops_gethandler('groupperm');
                             foreach ($groups as $mygroup) {
                                 $bperm =& $gperm_handler->create();
-                                $bperm->setVar('gperm_groupid', $mygroup);
-                                $bperm->setVar('gperm_itemid', $newbid);
+                                $bperm->setVar('gperm_groupid', intval($mygroup));
+                                $bperm->setVar('gperm_itemid', intval($newbid));
                                 $bperm->setVar('gperm_name', 'block_read');
                                 $bperm->setVar('gperm_modid', 1);
                                 if (!$gperm_handler->insert($bperm)) {
@@ -426,7 +426,7 @@ if ($op == 'update_ok') {
                             if ($template != '') {
                                 $tplfile =& $tplfile_handler->create();
                                 $tplfile->setVar('tpl_module', $dirname);
-                                $tplfile->setVar('tpl_refid', $newbid);
+                                $tplfile->setVar('tpl_refid', intval($newbid));
                                 $tplfile->setVar('tpl_source', $content, true);
                                 $tplfile->setVar('tpl_tplset', 'default');
                                 $tplfile->setVar('tpl_file', $blocks[$i]['template'], true);
@@ -449,7 +449,7 @@ if ($op == 'update_ok') {
                                 }
                             }
                             $msgs[] = '&nbsp;&nbsp;Block <b>'.$blocks[$i]['name'].'</b> created. Block ID: <b>'.$newbid.'</b>';
-                            $sql = "INSERT INTO ".$xoopsDB->prefix('block_module_link')." (block_id, module_id) VALUES ('".$newbid."', '-1')";
+                            $sql = "INSERT INTO ".$xoopsDB->prefix('block_module_link')." (block_id, module_id) VALUES ('".intval($newbid)."', '-1')";
                             $xoopsDB->query($sql);
                         }
                     }
@@ -562,7 +562,7 @@ if ($op == 'update_ok') {
                 // only insert ones that have been deleted previously with success
                 if (!in_array($config['name'], $config_delng)) {
                     $confobj =& $config_handler->createConfig();
-                    $confobj->setVar('conf_modid', $newmid);
+                    $confobj->setVar('conf_modid', intval($newmid));
                     $confobj->setVar('conf_catid', 0);
                     $confobj->setVar('conf_name', $config['name']);
                     $confobj->setVar('conf_title', $config['title'], true);
