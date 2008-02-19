@@ -590,7 +590,22 @@ function xoops_getrank($rank_id =0, $posts = 0)
 
 
 /**
-* Returns the portion of string specified by the start and length parameters. If $trimmarker is supplied, it is appended to the return string. This function works fine with multi-byte characters if mb_* functions exist on the server.
+ * Function maintained only for compatibility
+ *
+ * @todo Search all places that this function is called
+ *       and rename it to icms_substr.
+ *       After this function can be removed.
+ *
+ */
+function xoops_substr($str, $start, $length, $trimmarker = '...')
+{
+	return icms_substr($str, $start, $length, $trimmarker);
+}
+
+/**
+* Returns the portion of string specified by the start and length parameters. 
+* If $trimmarker is supplied, it is appended to the return string. 
+* This function works fine with multi-byte characters if mb_* functions exist on the server.
 *
 * @param    string    $str
 * @param    int       $start
@@ -599,32 +614,62 @@ function xoops_getrank($rank_id =0, $posts = 0)
 *
 * @return   string
 */
-function xoops_substr($str, $start, $length, $trimmarker = '...')
+function icms_substr($str, $start, $length, $trimmarker = '...')
 {
-    if ( !XOOPS_USE_MULTIBYTES ) {
-        return ( strlen($str) - $start <= $length ) ? substr( $str, $start, $length ) : substr( $str, $start, $length - strlen($trimmarker) ) . $trimmarker;
-    }
-    if (function_exists('mb_internal_encoding') && @mb_internal_encoding(_CHARSET)) {
-        $str2 = mb_strcut( $str , $start , $length - strlen( $trimmarker ) );
-        return $str2 . ( mb_strlen($str)!=mb_strlen($str2) ? $trimmarker : '' );
-    }
-    // phppp patch
-    $DEP_CHAR=127;
-    $pos_st=0;
-    $action = false;
-    for ( $pos_i = 0; $pos_i < strlen($str); $pos_i++ ) {
-        if ( ord( substr( $str, $pos_i, 1) ) > 127 ) {
-            $pos_i++;
-        }
-        if ($pos_i<=$start) {
-            $pos_st=$pos_i;
-        }
-        if ($pos_i>=$pos_st+$length) {
-            $action = true;
-            break;
-        }
-    }
-    return ($action) ? substr( $str, $pos_st, $pos_i - $pos_st - strlen($trimmarker) ) . $trimmarker : $str;
+	$config_handler =& xoops_gethandler('config');
+	$im_multilanguageConfig =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
+    
+	if ($im_multilanguageConfig['ml_enable']) {
+		$tags = explode(',',$im_multilanguageConfig['ml_tags']);
+		$strs = array();
+		$hasML = false;
+		foreach ($tags as $tag){
+			if (preg_match("/\[".$tag."](.*)\[\/".$tag."\]/sU",$str,$matches)){
+				if (count($matches) > 0){
+					$hasML = true;
+					$strs[] = $matches[1];
+				}
+			}
+		}
+	}
+	
+	if (!$hasML){
+        $strs = array($str);
+	}
+	
+	for ($i = 0; $i <= count($strs)-1; $i++){
+		if ( !XOOPS_USE_MULTIBYTES ) {
+			$strs[$i] = ( strlen($strs[$i]) - $start <= $length ) ? substr( $strs[$i], $start, $length ) : substr( $strs[$i], $start, $length - strlen($trimmarker) ) . $trimmarker;
+		}
+
+		if (function_exists('mb_internal_encoding') && @mb_internal_encoding(_CHARSET)) {
+			$str2 = mb_strcut( $strs[$i] , $start , $length - strlen( $trimmarker ) );
+			$strs[$i] = $str2 . ( mb_strlen($strs[$i])!=mb_strlen($str2) ? $trimmarker : '' );
+		}
+
+		// phppp patch
+		$DEP_CHAR=127;
+		$pos_st=0;
+		$action = false;
+		for ( $pos_i = 0; $pos_i < strlen($strs[$i]); $pos_i++ ) {
+			if ( ord( substr( $strs[$i], $pos_i, 1) ) > 127 ) {
+				$pos_i++;
+			}
+			if ($pos_i<=$start) {
+				$pos_st=$pos_i;
+			}
+			if ($pos_i>=$pos_st+$length) {
+				$action = true;
+				break;
+			}
+		}
+		$strs[$i] = ($action) ? substr( $strs[$i], $pos_st, $pos_i - $pos_st - strlen($trimmarker) ) . $trimmarker : $strs[$i];
+
+		$strs[$i] = ($hasML)?'['.$tags[$i].']'.$strs[$i].'[/'.$tags[$i].']':$strs[$i];
+	}
+	$str = implode('',$strs);
+
+	return $str;
 }
 
 // RMV-NOTIFY
