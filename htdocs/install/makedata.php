@@ -281,6 +281,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $dbm->insert('config', " VALUES (103, 0, 2, 'priv_dpolicy', '_MD_AM_PRIVDPOLICY', 0, '_MD_AM_PRIVDPOLICYDSC', 'yesno', 'int', 33)");
     $dbm->insert('config', " VALUES (104, 0, 2, 'priv_policy', '_MD_AM_PRIVPOLICY', '".addslashes(_INSTALL_PRIVPOLICY)."', '_MD_AM_PRIVPOLICYDSC', 'textarea', 'text', 34)");
 
+	$dbm->insert('config', " VALUES (105, 0, 2, 'ml_autoselect_enabled', '_MD_AM_ML_AUTOSELECT_ENABLED', '0', '_MD_AM_ML_AUTOSELECT_ENABLED_DESC', 'yesno', 'text', 2)");
+
     return $gruops;
 }
 

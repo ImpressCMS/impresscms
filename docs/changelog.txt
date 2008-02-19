@@ -1,4 +1,9 @@
 ImpressCMS ChangeLog
+=============================================
+Unreleased : ImpressCMS 1.1 "???"
+=============================================
+
+- Added: Autoselection of system language depeding the browser language configuration (if multilanguage enabled). (young-pee)
 
 ==================================
 Unreleased : ImpressCMS 1.10 Alpha

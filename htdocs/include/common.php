@@ -195,6 +195,14 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
 
     	$easiestml_langpaths = XoopsLists::getLangList();
     	$langs = array_combine($easiestml_langs,explode( ',' , $im_multilanguageConfig['ml_names'] ));
+
+    	if( $im_multilanguageConfig['ml_autoselect_enabled']  && isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $_SERVER['HTTP_ACCEPT_LANGUAGE'] != "" ){
+			$autolang = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2);
+			if (in_array($autolang,$easiestml_langs)){
+    			$xoopsConfig['language'] = $langs[$autolang];
+    		}
+    	}
+
     	if (isset( $_GET['lang'] ) && isset($_COOKIE['lang'])){
     		if (in_array($_GET['lang'],$easiestml_langs)){
     			$xoopsConfig['language'] = $langs[$_GET['lang']];
