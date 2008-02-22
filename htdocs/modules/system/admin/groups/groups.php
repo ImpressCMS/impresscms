@@ -62,6 +62,8 @@ function displayGroups()
     $s_cat_value = '';
     $a_mod_value = array();
     $r_mod_value = array();
+	$ed_mod_value = array();
+    $debug_mod_value = array();
     $r_block_value = array();
     $op_value = "add";
     $submit_value = _AM_CREATENEWADG;
@@ -97,7 +99,8 @@ function modifyGroup($g_id)
     $moduleperm_handler =& xoops_gethandler('groupperm');
     $a_mod_value =& $moduleperm_handler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
     $r_mod_value =& $moduleperm_handler->getItemIds('module_read', $thisgroup->getVar('groupid'));
-
+	$ed_mod_value =& $moduleperm_handler->getItemIds('use_wysiwygeditor', $thisgroup->getVar('groupid'));
+	$debug_mod_value =& $moduleperm_handler->getItemIds('enable_debug', $thisgroup->getVar('groupid'));
     $gperm_handler =& xoops_gethandler('groupperm');
     $r_block_value =& $gperm_handler->getItemIds('block_read', $g_id);
     $op_value = "update";

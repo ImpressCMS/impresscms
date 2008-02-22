@@ -65,6 +65,8 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $system_catids = empty($system_catids) ? array() : $system_catids;
         $admin_mids = empty($admin_mids) ? array() : $admin_mids;
         $read_mids = empty($read_mids) ? array() : $read_mids;
+        $useeditor_mids = empty($useeditor_mids) ? array() : $useeditor_mids;
+        $enabledebug_mids = empty($enabledebug_mids) ? array() : $enabledebug_mids;
         $read_bids = empty($read_bids) ? array() : $read_bids;
         $member_handler =& xoops_gethandler('member');
         $group =& $member_handler->getGroup($g_id);
@@ -90,6 +92,10 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             $criteria2 = new CriteriaCompo(new Criteria('gperm_name', 'system_admin'));
             $criteria2->add(new Criteria('gperm_name', 'module_admin'), 'OR');
             $criteria2->add(new Criteria('gperm_name', 'module_read'), 'OR');
+            if ($g_id != 1 && $g_id != 3){
+                $criteria2->add(new Criteria('gperm_name', 'use_wysiwygeditor'), 'OR');
+            }
+			$criteria2->add(new Criteria('gperm_name', 'enable_debug'), 'OR');
             $criteria2->add(new Criteria('gperm_name', 'block_read'), 'OR');
             $criteria->add($criteria2);
             $gperm_handler->deleteAll($criteria);
@@ -121,6 +127,24 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 $modperm->setVar('gperm_modid', 1);
                 $gperm_handler->insert($modperm);
             }
+            if ($g_id != 1 && $g_id != 3){
+            	foreach ($useeditor_mids as $ed_mid) {
+            		$modperm =& $gperm_handler->create();
+            		$modperm->setVar('gperm_groupid', $groupid);
+            		$modperm->setVar('gperm_itemid', $ed_mid);
+            		$modperm->setVar('gperm_name', 'use_wysiwygeditor');
+            		$modperm->setVar('gperm_modid', 1);
+            		$gperm_handler->insert($modperm);
+            	}
+            }
+			foreach ($enabledebug_mids as $ed_mid) {
+				$modperm =& $gperm_handler->create();
+				$modperm->setVar('gperm_groupid', $groupid);
+				$modperm->setVar('gperm_itemid', $ed_mid);
+				$modperm->setVar('gperm_name', 'enable_debug');
+				$modperm->setVar('gperm_modid', 1);
+				$gperm_handler->insert($modperm);
+			}
             foreach ($read_bids as $r_bid) {
                 $blockperm =& $gperm_handler->create();
                 $blockperm->setVar('gperm_groupid', $groupid);
@@ -145,6 +169,8 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $system_catids = empty($system_catids) ? array() : $system_catids;
         $admin_mids = empty($admin_mids) ? array() : $admin_mids;
         $read_mids = empty($read_mids) ? array() : $read_mids;
+        $useeditor_mids = empty($useeditor_mids) ? array() : $useeditor_mids;
+        $enabledebug_mids = empty($enabledebug_mids) ? array() : $enabledebug_mids;
         $read_bids = empty($read_bids) ? array() : $read_bids;
         $member_handler =& xoops_gethandler('member');
         $group =& $member_handler->createGroup();
@@ -188,6 +214,22 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 $modperm->setVar('gperm_modid', 1);
                 $gperm_handler->insert($modperm);
             }
+            foreach ($useeditor_mids as $ed_mid) {
+                $modperm =& $gperm_handler->create();
+                $modperm->setVar('gperm_groupid', $groupid);
+                $modperm->setVar('gperm_itemid', $ed_mid);
+                $modperm->setVar('gperm_name', 'use_wysiwygeditor');
+                $modperm->setVar('gperm_modid', 1);
+                $gperm_handler->insert($modperm);
+            }
+            foreach ($enabledebug_mids as $ed_mid) {
+				$modperm =& $gperm_handler->create();
+				$modperm->setVar('gperm_groupid', $groupid);
+				$modperm->setVar('gperm_itemid', $ed_mid);
+				$modperm->setVar('gperm_name', 'enable_debug');
+				$modperm->setVar('gperm_modid', 1);
+				$gperm_handler->insert($modperm);
+			}
             foreach ($read_bids as $r_bid) {
                 $blockperm =& $gperm_handler->create();
                 $blockperm->setVar('gperm_groupid', $groupid);

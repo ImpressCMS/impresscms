@@ -63,6 +63,14 @@ $criteria = new CriteriaCompo(new Criteria('hasmain', 1));
 $criteria->add(new Criteria('isactive', 1));
 $r_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
+$ed_mod_checkbox = new XoopsFormCheckBox(_AM_EDPERM, "useeditor_mids[]", $ed_mod_value);
+$criteria = new CriteriaCompo(new Criteria('isactive', 1));
+$ed_mod_checkbox->addOptionArray($module_handler->getList($criteria));
+
+$debug_mod_checkbox = new XoopsFormCheckBox(_AM_DEBUG_PERM, "enabledebug_mids[]", $debug_mod_value);
+$criteria = new CriteriaCompo(new Criteria('isactive', 1));
+$debug_mod_checkbox->addOptionArray($module_handler->getList($criteria));
+
 # Adding dynamic block area/position system - TheRpLima - 2007-10-21
 /*
 $r_lblock_checkbox = new XoopsFormCheckBox('<b>'._LEFT.'</b><br />', "read_bids[]", $r_block_value);
@@ -111,7 +119,7 @@ foreach ($posarr as $k=>$v){
 $r_block_tray = new XoopsFormElementTray(_AM_BLOCKRIGHTS, "<br /><br />");
 foreach ($block_checkbox as $k=>$v){
   $r_block_tray->addElement($block_checkbox[$k]);
-}  
+}
 #
 
 $op_hidden = new XoopsFormHidden("op", $op_value);
@@ -123,6 +131,12 @@ $form->addElement($desc_text);
 $form->addElement($s_cat_checkbox);
 $form->addElement($a_mod_checkbox);
 $form->addElement($r_mod_checkbox);
+if (!isset($g_id) || ($g_id != 1 && $g_id != 3)){
+    $form->addElement($ed_mod_checkbox);
+}
+if( !isset($g_id) || $g_id != 1 ){
+	$form->addElement($debug_mod_checkbox);
+}
 $form->addElement($r_block_tray);
 $form->addElement($op_hidden);
 $form->addElement($fct_hidden);

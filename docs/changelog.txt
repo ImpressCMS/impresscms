@@ -4,16 +4,17 @@ ImpressCMS ChangeLog
 Unreleased : ImpressCMS 1.1 "???" Alpha
 =============================================
 
+- Added : Feature to select rights for diferent groups and modules for the debug. (young-pee)
 - Added : IcmsLibrariesHandler - New feature allowing easy inclusion of third party libraries without hacking any core file (malanciault/davidl2)
 - Added : Including Scriptaculous library
-- Added feature to select the editor in the preferences.
-- Added the XOOPS_EDITOR_PATH and XOOPS_EDITOR_URL consntans
-- Added the /editors folder
-- Added the tinymce
-- Added function to select in which modules the groups can use the editor
-- Added: Autoselection of system language depeding the browser language configuration (if multilanguage enabled). (young-pee)
+- Added : Feature to select the editor in the preferences. (young-pee)
+- Added : The XOOPS_EDITOR_PATH and XOOPS_EDITOR_URL consntans (young-pee)
+- Added : The /editors folder (young-pee)
+- Added : The tinymce (young-pee)
+- Added : Feature to select in which modules the groups can use the editor (the_rplima)
+- Added : Autoselection of system language depeding the browser language configuration (if multilanguage enabled). (young-pee)
 
-- Improved the pm form to use the selected editor
+- Improved : The pm form to use the selected editor (the_rplima)
 
 =============================================
 Unreleased : ImpressCMS 1.0 "Janus" RC

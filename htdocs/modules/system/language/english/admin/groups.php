@@ -45,4 +45,7 @@ define("_AM_CBBOTTOMLEFT","Center Block - Bottom left");
 define("_AM_CBBOTTOMRIGHT","Center Block - Bottom right");
 define("_AM_CBBOTTOM","Center Block - Bottom");
 #
+
+define("_AM_EDPERM","Can use the WYSIWYG editor in the following modules");
+define("_AM_DEBUG_PERM","The Debug Mode is enabled for the next modules");
 ?>
