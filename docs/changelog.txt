@@ -4,6 +4,7 @@ ImpressCMS ChangeLog
 Unreleased : ImpressCMS 1.1 "???" Alpha
 =============================================
 
+- Added : The configuration to enable or disable the userinfo.php view by annonymous users. (young-pee)
 - Added : Feature to select rights for diferent groups and modules for the debug. (young-pee)
 - Added : IcmsLibrariesHandler - New feature allowing easy inclusion of third party libraries without hacking any core file (malanciault/davidl2)
 - Added : Including Scriptaculous library

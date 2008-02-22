@@ -27,9 +27,16 @@
 
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
+
 include_once XOOPS_ROOT_PATH.'/class/module.textsanitizer.php';
 
 include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
+
+$config_handler =& xoops_gethandler('config');
+$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+if( !$xoopsConfigUser['allow_anon_view_prof'] && !is_object($xoopsUser) ){
+	redirect_header('index.php', 3, _NOPERM);
+}
 
 $uid = intval($_GET['uid']);
 if ($uid <= 0) {
@@ -43,8 +50,6 @@ $isAdmin = $gperm_handler->checkRight( 'system_admin', XOOPS_SYSTEM_USER, $group
 
 if (is_object($xoopsUser)) {
     if ($uid == $xoopsUser->getVar('uid')) {
-        $config_handler =& xoops_gethandler('config');
-        $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         $xoopsOption['template_main'] = 'system_userinfo.html';
         include XOOPS_ROOT_PATH.'/header.php';
         $xoopsTpl->assign('user_ownpage', true);

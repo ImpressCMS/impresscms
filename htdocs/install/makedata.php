@@ -285,6 +285,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	
 	$dbm->insert('config', " VALUES (106, 0, 1, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'default', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', 14)");
 	$dbm->insert('config', " VALUES (107, 0, 1, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', '".addslashes(serialize(array('default')))."', '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', 14)");
+	$dbm->insert('config', " VALUES (108, 0, 2, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '0', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', 50)");
 
     return $gruops;
 }

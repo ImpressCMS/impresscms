@@ -15,8 +15,8 @@ modules/system/language/english/admin/preferences.php
 --------------------------
 
 define("_MD_AM_ML_AUTOSELECT_ENABLED","Language Autoselection");
-define("_MD_AM_ML_AUTOSELECT_ENABLED_DESC","Make the system autoselect 
-the language of the site depending the web browser language configuration.");
+define("_MD_AM_ML_AUTOSELECT_ENABLED_DESC","Make the system autoselect the language of the site depending the web browser language configuration.");
+define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow annonymous users to users profiles");
 
 modules/system/languages/english/admin/groups.php
 -------------------------------------------------
