@@ -34,7 +34,7 @@ include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
 
 $config_handler =& xoops_gethandler('config');
 $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-if( !$xoopsConfigUser['allow_anon_view_prof'] && !is_object($xoopsUser) ){
+if( !$xoopsConfigUser['allow_annon_view_prof'] && !is_object($xoopsUser) ){
 	redirect_header('index.php', 3, _NOPERM);
 }
 
