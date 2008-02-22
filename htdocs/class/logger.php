@@ -68,6 +68,15 @@ class XoopsLogger {
     		$this->renderingEnabled = true;
 		}
     }
+    /**
+     * Disable logger output rendering.
+     */
+    function disableRendering() {
+		if ( $this->renderingEnabled ) {
+    		$this->renderingEnabled = false;
+		}
+    }
+
 	/**
 	 * Returns the current microtime in seconds.
 	 * @return float
@@ -168,8 +177,14 @@ class XoopsLogger {
 	 * Output buffering callback inserting logger dump in page output
 	 */
 	function render( $output ) {
-		global $xoopsUser;
-		if ( !$this->activated || !$xoopsUser || !$xoopsUser->isAdmin() ) {
+		global $xoopsUser,$xoopsModule;
+
+	    $groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+		$moduleid = (isset($xoopsModule) && is_object($xoopsModule)) ? $xoopsModule->mid() : 1;
+
+		$gperm_handler =& xoops_gethandler('groupperm');
+
+		if ( !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups) ) {
 			return $output;
 		}
 		$this->renderingEnabled = $this->activated = false;
