@@ -281,7 +281,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $dbm->insert('config', " VALUES (103, 0, 2, 'priv_dpolicy', '_MD_AM_PRIVDPOLICY', 0, '_MD_AM_PRIVDPOLICYDSC', 'yesno', 'int', 33)");
     $dbm->insert('config', " VALUES (104, 0, 2, 'priv_policy', '_MD_AM_PRIVPOLICY', '".addslashes(_INSTALL_PRIVPOLICY)."', '_MD_AM_PRIVPOLICYDSC', 'textarea', 'text', 34)");
 
-	$dbm->insert('config', " VALUES (105, 0, 2, 'ml_autoselect_enabled', '_MD_AM_ML_AUTOSELECT_ENABLED', '0', '_MD_AM_ML_AUTOSELECT_ENABLED_DESC', 'yesno', 'text', 2)");
+	$dbm->insert('config', " VALUES (105, 0, 8, 'ml_autoselect_enabled', '_MD_AM_ML_AUTOSELECT_ENABLED', '0', '_MD_AM_ML_AUTOSELECT_ENABLED_DESC', 'yesno', 'text', 2)");
 	
 	$dbm->insert('config', " VALUES (106, 0, 1, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'default', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', 14)");
 	$dbm->insert('config', " VALUES (107, 0, 1, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', '".addslashes(serialize(array('default')))."', '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', 14)");

@@ -275,5 +275,7 @@ define("_MD_AM_EDITOR_DEFAULT_DESC","Select the default Editor for all the site.
 define("_MD_AM_EDITOR_ENABLED_LIST","Enabled Editors");
 define("_MD_AM_EDITOR_ENABLED_LIST_DESC","Select the selectable editors by the modules (If the module has a configuration to select the editor.)");
 
-define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow annonymous users to users profiles");
+define("_MD_AM_ML_AUTOSELECT_ENABLED","Autoselect the language depeding the browser configuration");
+
+define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow annonymous users to see user profiles.");
 ?>
