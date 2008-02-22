@@ -132,14 +132,18 @@ $xoops =& new xos_kernel_Xoops2();
     define("XOOPS_MATCH_EQUAL",2);
     define("XOOPS_MATCH_CONTAIN",3);
 
-    define("XOOPS_INCLUDE_PATH", XOOPS_ROOT_PATH."/include");
+define("XOOPS_INCLUDE_PATH", XOOPS_ROOT_PATH."/include");
     define("XOOPS_INCLUDE_URL", XOOPS_ROOT_PATH."/include");
-    define("XOOPS_CACHE_PATH", XOOPS_ROOT_PATH."/cache");
     define("XOOPS_UPLOAD_PATH", XOOPS_ROOT_PATH."/uploads");
-    define("XOOPS_THEME_PATH", XOOPS_ROOT_PATH."/themes");
-    define("XOOPS_COMPILE_PATH", XOOPS_ROOT_PATH."/templates_c");
-    define("XOOPS_THEME_URL", XOOPS_URL."/themes");
     define("XOOPS_UPLOAD_URL", XOOPS_URL."/uploads");
+    define("XOOPS_THEME_PATH", XOOPS_ROOT_PATH."/themes");
+    define("XOOPS_THEME_URL", XOOPS_URL."/themes");
+    define("XOOPS_COMPILE_PATH", XOOPS_ROOT_PATH."/templates_c");
+    define("XOOPS_CACHE_PATH", XOOPS_ROOT_PATH."/cache");
+
+	// TODO: Change the name of the constant.
+	define("XOOPS_EDITOR_PATH", XOOPS_ROOT_PATH."/editors");
+	define("XOOPS_EDITOR_URL", XOOPS_URL."/editors");
 
 	define("SMARTY_DIR", XOOPS_ROOT_PATH."/class/smarty/");
 

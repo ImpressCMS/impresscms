@@ -13,9 +13,13 @@ ImpressCMS 1.1 (changes from ImpressCMS 1.0)
 
 modules/system/language/english/admin/preferences.php
 --------------------------
-
 define("_MD_AM_ML_AUTOSELECT_ENABLED","Language Autoselection");
-define("_MD_AM_ML_AUTOSELECT_ENABLED_DESC","Make the system autoselect the language of the site depending the web browser language configuration.");
+define("_MD_AM_ML_AUTOSELECT_ENABLED_DESC","Make the system autoselect 
+the language of the site depending the web browser language configuration.");
+
+modules/system/languages/english/admin/groups.php
+-------------------------------------------------
++ define("_AM_EDPERM","Can use the WYSIWYG editor in the following modules");
 
 ImpressCMS 0.5 (changes from XOOPS 2.0.17)
 =========================================

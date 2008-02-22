@@ -86,10 +86,11 @@ if (!is_object($xoopsUser)) {
         echo "<td valign='middle' align='center' width='20%'>".formatTimestamp($pm_arr[$i]->getVar("msg_time"))."</td></tr>";
     }
 
+  
     if ( $display == 1 ) {
-        echo "<tr class='foot' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send=1\",\"pmlite\",450,380);' value='"._PM_SEND."' />&nbsp;<input type='submit' class='formButton' name='delete_messages' value='"._PM_DELETE."' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr></form>";
+        echo "<tr class='foot' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send=1\",\"pmlite\",670,480);' value='"._PM_SEND."' />&nbsp;<input type='submit' class='formButton' name='delete_messages' value='"._PM_DELETE."' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr></form>";
     } else {
-        echo "<tr class='bg2' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send=1\",\"pmlite\",450,380);' value='"._PM_SEND."' /></td></tr></form>";
+        echo "<tr class='bg2' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send=1\",\"pmlite\",670,480);' value='"._PM_SEND."' /></td></tr></form>";
     }
     echo "</table>";
     include "footer.php";

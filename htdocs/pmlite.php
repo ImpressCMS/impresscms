@@ -99,7 +99,7 @@ if ($xoopsUser) {
             }
         }
     } elseif ($reply == 1 || $send == 1 || $send2 == 1) {
-        include_once XOOPS_ROOT_PATH."/include/xoopscodes.php";
+        include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
         if ($reply == 1) {
             $pm_handler =& xoops_gethandler('privmessage');
             $pm =& $pm_handler->get($msg_id);
@@ -143,8 +143,8 @@ if ($xoopsUser) {
         echo "</tr>";
         echo "<tr valign='top'><td class='head' width='25%'>"._PM_MESSAGEC."</td>";
         echo "<td class='even'>";
-        xoopsCodeTarea("message",37,8);
-        xoopsSmilies("message");
+		$textarea = new XoopsFormDhtmlTextArea(_PM_MESSAGEC, 'message', $message);
+		echo $textarea->render();
         echo "</td>";
         echo "</tr>";
         echo "<tr><td class='head'>&nbsp;</td><td class='even'>

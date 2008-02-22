@@ -131,6 +131,18 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 // old theme value is used to determine whether to update cache or not. kind of dirty way
                 $form->addElement(new XoopsFormHidden('_old_theme', $config[$i]->getConfValueForOutput()));
                 break;
+            case 'editor':
+            case 'editor_multi':
+                $ele = ($config[$i]->getVar('conf_formtype') != 'editor_multi') ? new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput()) : new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput(), 5, true);
+				$ele->addOption("default");
+				require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
+				$dirlist = XoopsLists::getEditorsList();
+
+                if (!empty($dirlist)) {
+                    asort($dirlist);
+                    $ele->addOptionArray($dirlist);
+                }
+                break;
             case 'tplset':
                 $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
                 $tplset_handler =& xoops_gethandler('tplset');

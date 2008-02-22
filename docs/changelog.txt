@@ -1,16 +1,19 @@
 ImpressCMS ChangeLog
-=============================================
-Unreleased : ImpressCMS 1.1 "???"
-=============================================
 
-- Added: Autoselection of system language depeding the browser language configuration (if multilanguage enabled). (young-pee)
-
-==================================
-Unreleased : ImpressCMS 1.10 Alpha
-==================================
+=============================================
+Unreleased : ImpressCMS 1.1 "???" Alpha
+=============================================
 
 - Added : IcmsLibrariesHandler - New feature allowing easy inclusion of third party libraries without hacking any core file (malanciault/davidl2)
 - Added : Including Scriptaculous library
+- Added feature to select the editor in the preferences.
+- Added the XOOPS_EDITOR_PATH and XOOPS_EDITOR_URL consntans
+- Added the /editors folder
+- Added the tinymce
+- Added function to select in which modules the groups can use the editor
+- Added: Autoselection of system language depeding the browser language configuration (if multilanguage enabled). (young-pee)
+
+- Improved the pm form to use the selected editor
 
 =============================================
 Unreleased : ImpressCMS 1.0 "Janus" RC

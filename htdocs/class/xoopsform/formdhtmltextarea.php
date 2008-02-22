@@ -94,6 +94,16 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	{
 		$this->XoopsFormTextArea($caption, $name, $value, $rows, $cols);
 		$this->_hiddenText = $hiddentext;
+		global $xoopsConfig, $xoopsUser,$xoopsModule;
+
+		$groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+		$moduleid = (is_object($xoopsModule)) ? $xoopsModule->mid() : 1;
+		
+		$gperm_handler =& xoops_gethandler('groupperm');
+		if( file_exists( XOOPS_EDITOR_PATH."/".$xoopsConfig['editor_default']."/xoops_version.php" ) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups)){
+			include(XOOPS_EDITOR_PATH."/".$xoopsConfig['editor_default']."/xoops_version.php");
+			$this->htmlEditor = array( $editorversion['class'], XOOPS_EDITOR_PATH."/".$editorversion['dirname']."/".$editorversion['file'] );
+		}
 		
 		if ( !empty( $this->htmlEditor ) ) {
 			$options['name'] = $this->_name;
@@ -103,7 +113,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 				$this->htmlEditor = XOS::create( $this->htmlEditor[0] );
 			} else {
 				list( $class, $path ) = $this->htmlEditor;
-				include_once XOOPS_ROOT_PATH . $path;
+				include_once $path;
 				if ( class_exists( $class ) ) {
 					$this->htmlEditor = new $class( $options );
 				} else {
