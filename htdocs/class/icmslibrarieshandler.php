@@ -14,7 +14,7 @@ include_once(XOOPS_ROOT_PATH . '/class/xoopslists.php');
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package		libraries
 * @since		1.1
-* @author		marcan <marcan@impresscms.or>
+* @author		marcan <marcan@impresscms.org>
 * @version		$Id$
 */
 class IcmsLibrariesHandler {

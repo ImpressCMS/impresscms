@@ -24,7 +24,7 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-// Author: Jochen Büînagel (job@buennagel.com)                               //
+// Author: Jochen Bï¿½ï¿½nagel (job@buennagel.com)                               //
 // URL:  http://www.xoops.org												 //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
@@ -37,7 +37,7 @@ if (!defined("XOOPS_ROOT_PATH")) {
  * 
  * @filesource 
  *
- * @author		Jochen Büînagel	<jb@buennagel.com>
+ * @author		Jochen Bï¿½ï¿½nagel	<jb@buennagel.com>
  * @copyright	copyright (c) 2000-2003 The XOOPS Project (http://www.xoops.org)
  *
  * @version		$Revision: 1083 $ - $Date: 2007-10-16 12:42:51 -0400 (mar., 16 oct. 2007) $
@@ -46,7 +46,7 @@ if (!defined("XOOPS_ROOT_PATH")) {
 /**
  * load the base class
  */
-require_once(XOOPS_ROOT_PATH.'/class/mail/phpmailer/class.phpmailer.php');
+require_once(ICMS_LIBRARIES_PATH.'/phpmailer/class.phpmailer.php');
 
 /**
  * Mailer Class.
@@ -180,9 +180,9 @@ class XoopsMultiMailer extends PHPMailer {
 			include( XOOPS_ROOT_PATH . "/language/{$xoopsConfig['language']}/phpmailer.php" );
 			$this->language = $PHPMAILER_LANG;
 		} else {
-			$this->SetLanguage( 'en', XOOPS_ROOT_PATH . "/class/mail/phpmailer/language/" );
+			$this->SetLanguage( 'en', ICMS_LIBRARIES_PATH . "/phpmailer/language/" );
 		}
-		$this->PluginDir = XOOPS_ROOT_PATH."/class/mail/phpmailer/";
+		$this->PluginDir = ICMS_LIBRARIES_PATH."/phpmailer/";
 	}
 
 	/**
