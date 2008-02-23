@@ -30,7 +30,7 @@ class IcmsLibrariesHandler {
      * @return	void
 	 */
 	function IcmsLibrariesHandler() {
-		$librariesArray = XoopsLists::getDirListAsArray(ICMS_LIBRARIES_ROOT_PATH);
+		$librariesArray = XoopsLists::getDirListAsArray(ICMS_LIBRARIES_PATH);
 		foreach ($librariesArray as $library) {
 			$library_boot_file = $this->getLibraryBootFilePath($library);
 			if (file_exists($library_boot_file)) {
