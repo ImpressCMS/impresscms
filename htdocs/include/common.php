@@ -132,7 +132,7 @@ $xoops =& new xos_kernel_Xoops2();
     define("XOOPS_MATCH_EQUAL",2);
     define("XOOPS_MATCH_CONTAIN",3);
 
-define("XOOPS_INCLUDE_PATH", XOOPS_ROOT_PATH."/include");
+	define("XOOPS_INCLUDE_PATH", XOOPS_ROOT_PATH."/include");
     define("XOOPS_INCLUDE_URL", XOOPS_ROOT_PATH."/include");
     define("XOOPS_UPLOAD_PATH", XOOPS_ROOT_PATH."/uploads");
     define("XOOPS_UPLOAD_URL", XOOPS_URL."/uploads");
@@ -144,9 +144,17 @@ define("XOOPS_INCLUDE_PATH", XOOPS_ROOT_PATH."/include");
 	// TODO: Change the name of the constant.
 	define("XOOPS_EDITOR_PATH", XOOPS_ROOT_PATH."/editors");
 	define("XOOPS_EDITOR_URL", XOOPS_URL."/editors");
-
-	define("SMARTY_DIR", XOOPS_ROOT_PATH."/class/smarty/");
-
+	
+	/**
+	 * @todo The definition of the library path needs to be in mainfile
+	 * But for the purpose of proof of concept, let's defined it here
+	 */
+	// ImpressCMS Third Party Libraries folder
+	define( 'ICMS_LIBRARIES_PATH', XOOPS_ROOT_PATH . '/libraries' );
+	define( 'ICMS_LIBRARIES_URL', XOOPS_URL . '/libraries' );
+	
+	define("SMARTY_DIR", ICMS_LIBRARIES_PATH."/smarty/");
+	
     if (!defined('XOOPS_XMLRPC')) {
         define('XOOPS_DB_CHKREF', 1);
     } else {
@@ -179,13 +187,6 @@ define("XOOPS_INCLUDE_PATH", XOOPS_ROOT_PATH."/include");
 
 // ################# Creation of the IcmsLibrariesHandler ##############
 
-/**
- * @todo The definition of the library path needs to be in mainfile
- * But for the purpose of proof of concept, let's defined it here
- */
-// ImpressCMS Third Party Libraries folder
-define( 'ICMS_LIBRARIES_ROOT_PATH', XOOPS_ROOT_PATH . '/libraries' );
-define( 'ICMS_LIBRARIES_URL', XOOPS_URL . '/libraries' );
 // This needs to be removed and put in mainfile later
 
 include_once(XOOPS_ROOT_PATH . '/class/icmslibrarieshandler.php');
@@ -451,9 +452,9 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
     } elseif($xoopsUser) {
         $xoopsUserIsAdmin = $xoopsUser->isAdmin(1);
     }
-// triggering event "finishCoreBoot" of third party integration
-global $icmsLibrariesHandler;
-$icmsLibrariesHandler->triggerEvent('finishCoreBoot');
+	// triggering event "finishCoreBoot" of third party integration
+	global $icmsLibrariesHandler;
+	$icmsLibrariesHandler->triggerEvent('finishCoreBoot');
     $xoopsLogger->stopTime( 'XOOPS Boot' );
     $xoopsLogger->startTime( 'Module init' );
 ?>
