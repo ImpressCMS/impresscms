@@ -1,0 +1,128 @@
+@import url(layout.css);
+@import url(blocks.css);
+@import url(content.css);
+
+
+/* ------ General styles ------ */
+
+html, body {
+	color: #000;
+	background: #eae0b7;
+	margin: 0;
+	padding: 0;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+}
+
+#xo-canvas {
+	border-top: 2px solid #DDDDFF;
+	border-left: 2px solid #DDDDFF;
+	border-right: 2px solid #DDDDFF;
+	background: #FFF;
+}
+
+table {
+	width: 100%;
+}
+
+table td {
+	padding: 0;
+	border-width: 0;
+	vertical-align: top;
+}
+
+img {
+	border: 0;
+}
+
+a {
+	color: #666;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+a:hover {
+	color: #8e8e8e;
+}
+
+h1 {font-size: 1.4em; }
+h2 {font-size: 1.2em;}
+h3 {font-size: 1em;}
+h4 {font-size: 1em;}
+h5 {font-size: .9em;}
+h6 {font-size: .8em;}
+
+/* ------ Header rules ------ */
+
+#xo-header {
+	clear: both;
+	height: 80px;
+	position: relative;
+	background: url(img/bghead.png) repeat-x;
+}
+
+#xo-headerlogo {
+	float: left;
+}
+
+#xo-headerbanner {
+	position:relative;
+	top:10px;
+	right:20px;
+	float: right;
+}
+
+/* ------ Header top menu navigation rules ------ */
+
+#xo-globalnav {
+	border-bottom: 1px solid #ddd;
+	background-image: url(img/hbar.gif);
+	clear: both;
+	height: 20px;
+}
+
+/* ---------- Column left/right rules ---------- */
+
+#xo-canvas-rightcolumn {}
+#xo-canvas-rightcolumn a {}
+#xo-canvas-rightcolumn a:hover {}
+
+#xo-canvas-leftcolumn {}
+#xo-canvas-leftcolumn a {}
+#xo-canvas-leftcolumn a:hover {}
+
+/* ------ Main content ------ */
+
+#xo-canvas-content {	
+	line-height: 1.3em;
+}
+
+#xo-page {
+	padding: 0 .5em;
+}
+
+/* ---------- Module display rules ---------- */
+
+#xo-content {
+	padding: 15px 1%;
+}
+
+/* ---------- Footer rules ---------- */
+
+#xo-footer {
+	text-align:			center;
+	font-size:			90%;
+	color:				#666;
+	margin:				0px;
+	background-image: url(img/hbar.gif);
+}
+
+#xo-footer a {
+	color:				#333;
+}
+
+/* ----------  mode debug  ---------- */
+
+#xo-logger-output {
+	font-size:			80%;
+}
