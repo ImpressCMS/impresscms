@@ -9,12 +9,12 @@
 * @package		libraries
 * @since		1.1
 * @author		marcan <marcan@impresscms.or>
-* @version		$Id$
+* @version		$Id: icms.library.scriptaculous.php 897 2008-02-15 19:53:31Z malanciault $
 */
 
-function icmsLibraryScriptaculous_beforeFooter() {
+function icmsLibraryPrototype_beforeFooter() {
 	global $xoTheme;
-	$xoTheme->addScript(ICMS_LIBRARIES_URL . '/scriptaculous/src/scriptaculous.js');
+	$xoTheme->addScript(ICMS_LIBRARIES_URL . '/prototype/prototype.js');
 }
 
 ?>
