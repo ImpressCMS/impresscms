@@ -223,7 +223,7 @@ function BannerDelete($bid)
         echo $myts->displayTarea($htmlcode,1);
     }else{
         if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
-            echo "<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">";
+            echo '<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">';
             echo "<param name=movie value=\"$imageurl\">";
             echo "<param name=quality value=high>";
             echo "</object>";
@@ -272,7 +272,7 @@ function BannerEdit($bid)
         echo $myts->displayTarea($htmlcode, 1, 0, 0, 0, 0);
     }else{
         if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
-            echo "<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">";
+            echo '<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">';
             echo "<param name=movie value=\"$imageurl\">";
             echo "<param name=quality value=high>";
             echo "</object>";
@@ -357,8 +357,8 @@ function BannerClientDelete($cid)
         } else {
             $bannerobject = '<div><a href="'.$clickurl.'" target="_blank">';
             if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
-                $bannerobject = $bannerobject
-                echo "<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">";
+                $bannerobject = $bannerobject;
+                echo '<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">';
                 echo "<param name=movie value=\"$imageurl\">";
                 echo "<param name=quality value=high>";
                 echo "</object>";
