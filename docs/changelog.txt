@@ -5,6 +5,7 @@ ImpressCMS ChangeLog
 =========================================
 
 - Added : New smarty variable now available, <{$icmsLang}> representing the selected language. For example, if French is the current language selected by the user, then the value of this variable will be "french". (malanciault/davidl2)
+- Fixed: Revision 955: Display issues with impresstheme. (Snow)
 - Fixed : #1891588: Timezone offset empty (compatibility issue with versions of PHP aswell as operating system when using floats. (changed to an integer value instead). (vaughan / jegelstaff)
 - Fixed : #1892430: Typo in language/english/user.php (malanciault/jegelstaff)
 
