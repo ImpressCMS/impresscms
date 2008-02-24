@@ -631,6 +631,8 @@ function icms_substr($str, $start, $length, $trimmarker = '...')
 				}
 			}
 		}
+	}else{
+		$hasML = false;
 	}
 	
 	if (!$hasML){
