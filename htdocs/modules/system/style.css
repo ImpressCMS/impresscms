@@ -11,9 +11,82 @@
 	 ... */
 
 /* General definitions */
-html, body {background-color : #EEEEEE; font-size: 12px; font-family: Verdana, Arial, Helvetica, sans-serif; margin: 0px; padding: 0px;}
+html, body {background-color : #FFF; font-size: 12px; font-family: Verdana, Arial, Helvetica, sans-serif; margin: 0px; padding: 0px;
+BACKGROUND: url(images/background.png) #fcfcfc repeat-x 0px 85px;
+}
 
 img { border: 0;}
+
+FIELDSET
+{
+    BORDER-RIGHT: transparent 0px;
+    PADDING-RIGHT: 1em;
+    BORDER-TOP: #e8e8e8 1px solid;
+    PADDING-LEFT: 1em;
+    MARGIN-BOTTOM: 1em;
+    PADDING-BOTTOM: 0.5em;
+    BORDER-LEFT: transparent 0px;
+    PADDING-TOP: 0.5em;
+    BORDER-BOTTOM: transparent 0px
+}
+LEGEND
+{
+    PADDING-RIGHT: .5em;
+    DISPLAY: block;
+    PADDING-LEFT: .5em;
+    FONT-WEIGHT: bold;
+    FONT-SIZE: 105%;
+    MARGIN: 0px;
+}
+LABEL
+{
+    DISPLAY: block
+}
+
+INPUT[type=text]
+{
+    PADDING-RIGHT: 0.25em;
+    MIN-WIDTH: 60%;
+    PADDING-LEFT: 0.25em;
+    BACKGROUND: url(images/form-input.png) #fff no-repeat left top;
+    PADDING-BOTTOM: 1px;
+    MARGIN: 0.25em 0px;
+    PADDING-TOP: 1px;
+    BORDER: 1px solid #D0D0D0;
+}
+INPUT[type=password]
+{
+    PADDING-RIGHT: 0.25em;
+    MIN-WIDTH: 60%;
+    PADDING-LEFT: 0.25em;
+    BACKGROUND: url(images/form-input.png) #fff no-repeat left top;
+    PADDING-BOTTOM: 1px;
+    MARGIN: 0.25em 0px;
+    PADDING-TOP: 1px;
+    BORDER: 1px solid #D0D0D0;
+}
+INPUT
+{
+}
+
+SELECT
+{
+ 	
+}
+BUTTON, INPUT[type=submit] , INPUT[type=clear] , INPUT[type=button] 
+{
+    PADDING-RIGHT: 0.5em;
+    PADDING-LEFT: 0.5em;
+    PADDING-BOTTOM: 2px;
+    PADDING-TOP: 2px;
+    BACKGROUND-IMAGE: url(images/table-caption-grey.png);
+    BACKGROUND-POSITION: bottom;
+    BACKGROUND-REPEAT: repeat-x;
+    COLOR: #444;
+    FONT-WEIGHT: bold;
+    CURSOR: pointer;
+    BORDER: outset 1px #ccc;
+}
 
 hr { height: 3px; width: 95%; text-align:center; border: 3px #E18A00 solid;}
 
@@ -108,17 +181,13 @@ div#logoHead{
 	padding: 0;
 	text-align: left;
 	background: url(images/header-bg.png) repeat-x;
-	/*border-bottom: 3px solid #9ACD32;*/
+	border-bottom: 4px solid #ffb500;
 }
 div#navbarCP{
-	/*background: #F1F1FC;*/
-	background: url(images/navbar-bg_dark.png) repeat-x;
-	/*padding: 4px;*/
-	/*border-top: 1px solid #FFFFFF;
-	border-bottom: 1px solid #CCCCCC;*/
+	background: url(images/bg-lr-titles.gif);
 	font-weight: normal;
 	font-family: Arial, Helvetica, sans-serif;
-	height: 35px;
+	height: 25px;
 }
 div#navbarCP ul{
 	list-style: none;
@@ -127,8 +196,8 @@ div#navbarCP ul{
 	/*border: 1;*/
 }
 div#navbarCP ul li{ list-style: none; padding: 0; float: left; margin: 0; margin-left: 3px; position: relative; }
-div#navbarCP ul li a{ padding: 4px;	display: block;	color: #FFFFFF;	font-weight: normal; font-size:14px; padding-right:20px;}
-div#navbarCP ul li a:hover{	border-color: #ADD8E6; color: #99CCFF; text-decoration: none; }
+div#navbarCP ul li a{ padding: 4px;	display: block;	color: #4d4d4d;	font-weight: normal; font-size:14px; padding-right:20px;}
+div#navbarCP ul li a:hover{	border-color: #ADD8E6; color: #000; text-decoration: none; }
 div#navbarCP ul li ul{
 	display: none;
 	position: absolute;
@@ -190,8 +259,6 @@ div#bodyCP{
 div#containBodyCP{
 	padding: 0;
 	margin: 0;
-	border-top: 1px solid #FFFFFF;
-	border-bottom: 1px solid #CCCCCC;
 }
 div#navOptionsCP{
 	padding: 0px 5px 0px 5px;
@@ -232,14 +299,14 @@ div#navOptionsCP .modname{
 	padding-left: 18px;
 }
 div.CPfoot{
-	padding: 4px;
-	background-color: #EEEEEE;
-	border-bottom: 1px solid #CCCCCC;
-	border-top: 1px solid #FFFFFF;
 	text-align: center;
 	font-size: 10px;
 	font-weight: bold;
 	color: #666666;
+	background: url(images/bg-lr-titles.gif);
+	height: 15px;
+	border-top: 1px solid #ddd;
+	border-bottom: 1px solid #ddd;
 }
 
 .CPbigTitle{
