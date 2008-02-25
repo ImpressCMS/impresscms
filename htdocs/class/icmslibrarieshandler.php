@@ -84,7 +84,7 @@ class IcmsLibrariesHandler {
      *
      */
 	function getLibraryBootFilePath($library) {
-		$ret = ICMS_LIBRARIES_ROOT_PATH . '/' . $library . '/icms.library.' . $library . '.php';
+		$ret = ICMS_LIBRARIES_PATH . '/' . $library . '/icms.library.' . $library . '.php';
 		return $ret;
 	}
 
