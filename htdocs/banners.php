@@ -36,7 +36,7 @@
  
 $xoopsOption['pagetype'] = "banners";
 
-include "mainfile.php";
+include 'mainfile.php';
 
 /**
 * Function to let your client login to see 
@@ -46,7 +46,7 @@ include "mainfile.php";
 function clientlogin()
 {
     global $xoopsDB, $xoopsLogger, $xoopsConfig;
-    include("header.php");
+    include 'header.php';
     echo "<div id='login_window'>
           <h2 class='content_title'>"._BANNERS_LOGIN_TITLE."</h2>
           <form method='post' action='banners.php' class='login_form'>
@@ -60,7 +60,7 @@ function clientlogin()
           <div class='login_info'>"._BANNERS_LOGIN_INFO."</div>".
           $GLOBALS['xoopsSecurity']->getTokenHTML("BANNER_LOGIN")."
           </form></div>";
-    include "footer.php";
+    include 'footer.php';
 }
 
 /**
@@ -76,7 +76,7 @@ function bannerstats()
     $result = $xoopsDB->query(sprintf("SELECT cid, name, passwd FROM %s WHERE login=%s", $xoopsDB->prefix("bannerclient"), $xoopsDB->quoteString($_SESSION['banner_login'])));
     list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
         if ( $_SESSION['banner_pass'] == $passwd ) {
-            include "header.php";
+            include 'header.php';
 
             echo "<div id='bannerstats'>
                   <h4 class='content_title'>".sprintf( _BANNERS_TITLE , $name )."</h4><hr />
@@ -130,12 +130,12 @@ function bannerstats()
                     echo $myts->displayTarea($htmlcode);
                 }else{
                     if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
-                        echo "<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">";
-                        echo "<param name=movie value=\"$imageurl\" />";
-                        echo "<param name=quality value='high' />";
-                        echo "</object>";
+                        echo '<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">';
+                        echo '<param name=movie value="'.$imageurl.'" />';
+                        echo '<param name="quality" value="high" />';
+                        echo '</object>';
                     } else {
-                        echo "<img src='$imageurl' alt='' />";
+                        echo '<img src="'.$imageurl.'" alt="" />';
                     }
                 }
                 echo "<br /><strong>" . _BANNERS_ID . $bid . "</strong><br />" .
@@ -181,7 +181,7 @@ function bannerstats()
                 }
                 echo "</table></div>";
             }
-            include "footer.php";
+            include 'footer.php';
         } else {
             redirect_header("banners.php",2);
         }
@@ -295,14 +295,14 @@ if (!empty($_POST['op'])) {
 }
 $myts =& MyTextSanitizer::getInstance();
 switch ( $op ) {
-case "click":
+case 'click':
     $bid = 0;
     if (!empty($_GET['bid'])) {
         $bid = intval($_GET['bid']);
     }
     clickbanner($bid);
     break;
-case "Ok":
+case 'Ok':
     if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
         if ( !$GLOBALS['xoopsSecurity']->check(true,false,"BANNER_LOGIN") ) {
             redirect_header("banners.php", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -329,7 +329,7 @@ case _BANNERS_CHANGE:
     }
     change_banner_url_by_client($cid, $bid, $url);
     break;
-case "EmailStats":
+case 'EmailStats':
     $bid = $cid = 0;
     if (!empty($_GET['bid'])) {
         $bid = intval($_GET['bid']);
@@ -339,7 +339,7 @@ case "EmailStats":
     }
     EmailStats($cid, $bid);
     break;
-case "login":
+case 'login':
 default:
     clientlogin();
     break;
