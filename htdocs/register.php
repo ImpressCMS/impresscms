@@ -24,7 +24,13 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-
+/**
+ *  Registration process for new users
+ *  Gathers required information and validates the new user
+ *  @package users
+ *  @subpackage registration
+ */
+      
 $xoopsOption['pagetype'] = 'user';
 
 include 'mainfile.php';
@@ -36,7 +42,20 @@ $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 if ($xoopsConfigUser['allow_register'] == 0 && $xoopsConfigUser['activation_type'] != 3) {
 	redirect_header('index.php', 6, _US_NOREGISTER);
 }
-
+/**
+ *  Validates username, email address and password entries during registration
+ *  Username is validated for uniqueness and length, password is validated for length and strictness,
+ *  email is validated as a proper email address pattern  
+ *  
+ *  @package users
+ *  @subpackage registration
+ *     
+ *  @param string $uname Username entered by the user
+ *  @param string $email Email address entered by the user   
+ *  @param string $pass Password entered by the user
+ *  @param string $vpass Password verification entered by the user
+ *  @return string of errors encountered while validating the user information, will be blank if successful 
+ */     
 function userCheck($uname, $email, $pass, $vpass)
 {
 	global $xoopsConfigUser;
@@ -119,7 +138,7 @@ $email = isset($_POST['email']) ? trim($myts->stripSlashesGPC($_POST['email'])) 
 $url = isset($_POST['url']) ? trim($myts->stripSlashesGPC($_POST['url'])) : '';
 $pass = isset($_POST['pass']) ? $myts->stripSlashesGPC($_POST['pass']) : '';
 $vpass = isset($_POST['vpass']) ? $myts->stripSlashesGPC($_POST['vpass']) : '';
-$timezone_offset = isset($_POST['timezone_offset']) ? intval($_POST['timezone_offset']) : $xoopsConfig['default_TZ'];
+$timezone_offset = isset($_POST['timezone_offset']) ? floatval($_POST['timezone_offset']) : $xoopsConfig['default_TZ'];
 $user_viewemail = (isset($_POST['user_viewemail']) && intval($_POST['user_viewemail'])) ? 1 : 0;
 $user_mailok = (isset($_POST['user_mailok']) && intval($_POST['user_mailok'])) ? 1 : 0;
 $agree_disc = (isset($_POST['agree_disc']) && intval($_POST['agree_disc'])) ? 1 : 0;
