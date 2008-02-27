@@ -192,16 +192,16 @@ function showRSS($op=1){
 			$count = count($items);
 			$myts =& MyTextSanitizer::getInstance();
 			for ($i = 0; $i < $count; $i++) {
-				echo '<tr class="head"><td><a href="'.htmlspecialchars($items[$i]['link']).'" target="_blank">';
+				echo '<tr class="head"><td><a href="'.htmlspecialchars($items[$i]['link']).'" rel="external">';
 				echo htmlspecialchars($items[$i]['title']).'</a> ('.htmlspecialchars($items[$i]['pubdate']).')</td></tr>';
 				if ($items[$i]['description'] != "") {
 					echo '<tr><td class="odd">'.utf8_decode($items[$i]['description']);
 					if ($items[$i]['guid'] != "") {
-						echo '&nbsp;&nbsp;<a href="'.htmlspecialchars($items[$i]['guid']).'" target="_blank">'._MORE.'</a>';
+						echo '&nbsp;&nbsp;<a href="'.htmlspecialchars($items[$i]['guid']).'" rel="external">'._MORE.'</a>';
 					}
 					echo '</td></tr>';
 				} elseif ($items[$i]['guid'] != "") {
-					echo '<tr><td class="even" valign="top"></td><td colspan="2" class="odd"><a href="'.htmlspecialchars($items[$i]['guid']).'" target="_blank">'._MORE.'</a></td></tr>';
+					echo '<tr><td class="even" valign="top"></td><td colspan="2" class="odd"><a href="'.htmlspecialchars($items[$i]['guid']).'" rel="external">'._MORE.'</a></td></tr>';
 				}
 			}
 			echo '</table>';

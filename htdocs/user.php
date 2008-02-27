@@ -73,7 +73,7 @@ if ($op == 'main') {
         header('Location: '.$_GET['xoops_redirect']);
 		exit();
     } else {
-        header('Location: '.XOOPS_URL.'/userinfo.php?uid='.$xoopsUser->getVar('uid'));
+        header('Location: '.XOOPS_URL.'/userinfo.php?uid='.intval($xoopsUser->getVar('uid')));
 		exit();
     }
     exit();
@@ -175,7 +175,7 @@ if ($op == 'delete') {
             xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL.'<br/>'._US_REMOVEINFO);
             include 'footer.php';
         } else {
-            $del_uid = $xoopsUser->getVar("uid");
+            $del_uid = intval($xoopsUser->getVar("uid"));
             $member_handler =& xoops_gethandler('member');
             if (false != $member_handler->deleteUser($xoopsUser)) {
                 $online_handler =& xoops_gethandler('online');

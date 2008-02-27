@@ -50,16 +50,16 @@ if (!is_object($xoopsUser)) {
         redirect_header("viewpmsg.php",1,_PM_DELETED);
     }
     include XOOPS_ROOT_PATH.'/header.php';
-	$criteria = new Criteria('to_userid', $xoopsUser->getVar('uid'));
+	$criteria = new Criteria('to_userid', intval($xoopsUser->getVar('uid')));
 	$criteria->setOrder('DESC');
 	$pm_arr =& $pm_handler->getObjects($criteria);
-    echo "<h4 style='text-align:center;'>". _PM_PRIVATEMESSAGE ."</h4><br /><a href='userinfo.php?uid=". $xoopsUser->getVar("uid")."'>". _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;". _PM_INBOX ."<br /><br /><table border='0' cellspacing='1' cellpadding='4' width='100%' class='outer'>\n";
+    echo "<h4 style='text-align:center;'>". _PM_PRIVATEMESSAGE ."</h4><br /><a href='userinfo.php?uid=". intval($xoopsUser->getVar("uid"))."'>". _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;". _PM_INBOX ."<br /><br /><table border='0' cellspacing='1' cellpadding='4' width='100%' class='outer'>\n";
     echo "<form name='prvmsg' method='post' action='viewpmsg.php'>";
     echo "<tr align='center' valign='middle'><th><input name='allbox' id='allbox' onclick='xoopsCheckAll(\"prvmsg\", \"allbox\");' type='checkbox' value='Check All' /></th><th><img src='images/download.gif' alt='' border='0' /></th><th>&nbsp;</th><th>". _PM_FROM ."</th><th>". _PM_SUBJECT ."</th><th align='center'>". _PM_DATE ."</th></tr>\n";
     $total_messages = count($pm_arr);
     if ( $total_messages == 0 ) {
         echo "<tr><td class='even' colspan='6' align='center'>"._PM_YOUDONTHAVE."</td></tr> ";
-        $display= 0;
+        $display = 0;
     } else {
 
         $display = 1;
@@ -77,12 +77,12 @@ if (!is_object($xoopsUser)) {
         echo "<td valign='middle' width='10%'>";
         // no need to show deleted users
         if ($postername) {
-            echo "<a href='userinfo.php?uid=".$pm_arr[$i]->getVar("from_userid")."'>".$postername."</a>";
+            echo "<a href='userinfo.php?uid=".intval($pm_arr[$i]->getVar("from_userid"))."'>".$postername."</a>";
         } else {
             echo $xoopsConfig['anonymous'];
         }
         echo "</td>\n";
-		echo "<td valign='middle'><a href='readpmsg.php?start=".($total_messages-$i-1),"&amp;total_messages=$total_messages'>".$pm_arr[$i]->getVar("subject")."</a></td>";
+		echo "<td valign='middle'><a href='readpmsg.php?start=".intval(($total_messages-$i-1)),"&amp;total_messages=".intval($total_messages)."'>".$pm_arr[$i]->getVar("subject")."</a></td>";
         echo "<td valign='middle' align='center' width='20%'>".formatTimestamp($pm_arr[$i]->getVar("msg_time"))."</td></tr>";
     }
 

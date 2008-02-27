@@ -49,7 +49,7 @@ $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOU
 $isAdmin = $gperm_handler->checkRight( 'system_admin', XOOPS_SYSTEM_USER, $groups);         // isadmin is true if user has 'edit users' admin rights
 
 if (is_object($xoopsUser)) {
-    if ($uid == $xoopsUser->getVar('uid')) {
+    if ($uid == intval($xoopsUser->getVar('uid'))) {
         $xoopsOption['template_main'] = 'system_userinfo.html';
         include XOOPS_ROOT_PATH.'/header.php';
         $xoopsTpl->assign('user_ownpage', true);
@@ -88,7 +88,7 @@ $myts =& MyTextSanitizer::getInstance();
 if ( is_object($xoopsUser) && $isAdmin ) {
     $xoopsTpl->assign('lang_editprofile', _US_EDITPROFILE);
     $xoopsTpl->assign('lang_deleteaccount', _US_DELACCOUNT);
-    $xoopsTpl->assign('user_uid', $thisUser->getVar('uid'));
+    $xoopsTpl->assign('user_uid', intval($thisUser->getVar('uid')));
 }
 $xoopsTpl->assign('lang_allaboutuser', sprintf(_US_ALLABOUT,$thisUser->getVar('uname')));
 $xoopsTpl->assign('lang_avatar', _US_AVATAR);
@@ -96,7 +96,7 @@ $xoopsTpl->assign('user_avatarurl', XOOPS_UPLOAD_URL.'/'.$thisUser->getVar('user
 $xoopsTpl->assign('lang_realname', _US_REALNAME);
 $xoopsTpl->assign('user_realname', $thisUser->getVar('name'));
 $xoopsTpl->assign('lang_website', _US_WEBSITE);
-$xoopsTpl->assign('user_websiteurl', '<a href="'.$thisUser->getVar('url', 'E').'" target="_blank">'.$thisUser->getVar('url').'</a>');
+$xoopsTpl->assign('user_websiteurl', '<a href="'.$thisUser->getVar('url', 'E').'" rel="external">'.$thisUser->getVar('url').'</a>');
 $xoopsTpl->assign('lang_email', _US_EMAIL);
 $xoopsTpl->assign('lang_privmsg', _US_PM);
 $xoopsTpl->assign('lang_icq', _US_ICQ);
@@ -146,7 +146,7 @@ if ($thisUser->getVar('user_viewemail') == 1) {
     }
 }
 if (is_object($xoopsUser)) {
-    $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".$thisUser->getVar('uid')."', 'pmlite', 450, 380);\"><img src=\"".XOOPS_URL."/images/icons/pm.gif\" alt=\"".sprintf(_SENDPMTO,$thisUser->getVar('uname'))."\" /></a>");
+    $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".intval($thisUser->getVar('uid'))."', 'pmlite', 450, 380);\"><img src=\"".XOOPS_URL."/images/icons/pm.gif\" alt=\"".sprintf(_SENDPMTO,$thisUser->getVar('uname'))."\" /></a>");
 } else {
     $xoopsTpl->assign('user_pmlink', '');
 }
@@ -169,7 +169,7 @@ $mids =& array_keys($module_handler->getList($criteria));
 foreach ($mids as $mid) {
   if ( $gperm_handler->checkRight('module_read', $mid, $groups)) {
     $module =& $module_handler->get($mid);
-    $results =& $module->search('', '', 5, 0, $thisUser->getVar('uid'));
+    $results =& $module->search('', '', 5, 0, intval($thisUser->getVar('uid')));
     $count = count($results);
     if (is_array($results) && $count > 0) {
         for ($i = 0; $i < $count; $i++) {
@@ -187,7 +187,7 @@ foreach ($mids as $mid) {
             $results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
         }
         if ($count == 5) {
-            $showall_link = '<a href="search.php?action=showallbyuser&amp;mid='.$mid.'&amp;uid='.$thisUser->getVar('uid').'">'._US_SHOWALL.'</a>';
+            $showall_link = '<a href="search.php?action=showallbyuser&amp;mid='.intval($mid).'&amp;uid='.intval($thisUser->getVar('uid')).'">'._US_SHOWALL.'</a>';
         } else {
             $showall_link = '';
         }

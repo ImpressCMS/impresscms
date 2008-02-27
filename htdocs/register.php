@@ -218,7 +218,7 @@ case 'finish':
 			include 'footer.php';
 			exit();
 		}
-		$newid = $newuser->getVar('uid');
+		$newid = intval($newuser->getVar('uid'));
 		if (!$member_handler->addUserToGroup(XOOPS_GROUP_USERS, $newid)) {
 			echo _US_REGISTERNG;
 			include 'footer.php';

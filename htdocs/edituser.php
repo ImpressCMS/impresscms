@@ -150,7 +150,7 @@ if ($op == 'saveuser') {
 if ($op == 'editprofile') {
     include_once XOOPS_ROOT_PATH.'/header.php';
     include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
-    echo '<a href="userinfo.php?uid='.$xoopsUser->getVar('uid').'">'. _US_PROFILE .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _US_EDITPROFILE .'<br /><br />';
+    echo '<a href="userinfo.php?uid='.intval($xoopsUser->getVar('uid')).'">'. _US_PROFILE .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _US_EDITPROFILE .'<br /><br />';
     $form = new XoopsThemeForm(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
     $uname_label = new XoopsFormLabel(_US_NICKNAME, $xoopsUser->getVar('uname'));
     $form->addElement($uname_label);
@@ -249,7 +249,7 @@ if ($op == 'editprofile') {
 
 if ($op == 'avatarform') {
     include XOOPS_ROOT_PATH.'/header.php';
-    echo '<a href="userinfo.php?uid='.$xoopsUser->getVar('uid').'">'. _US_PROFILE .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _US_UPLOADMYAVATAR .'<br /><br />';
+    echo '<a href="userinfo.php?uid='.intval($xoopsUser->getVar('uid')).'">'. _US_PROFILE .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _US_UPLOADMYAVATAR .'<br /><br />';
     $oldavatar = $xoopsUser->getVar('user_avatar');
     if (!empty($oldavatar) && $oldavatar != 'blank.gif') {
         echo '<div style="text-align:center;"><h4 style="color:#ff0000; font-weight:bold;">'._US_OLDDELETED.'</h4>';
@@ -263,7 +263,7 @@ if ($op == 'avatarform') {
         $form->addElement(new XoopsFormLabel(_US_MAXIMGSZ, $xoopsConfigUser['avatar_maxsize']));
         $form->addElement(new XoopsFormFile(_US_SELFILE, 'avatarfile', $xoopsConfigUser['avatar_maxsize']), true);
         $form->addElement(new XoopsFormHidden('op', 'avatarupload'));
-        $form->addElement(new XoopsFormHidden('uid', $xoopsUser->getVar('uid')));
+        $form->addElement(new XoopsFormHidden('uid', intval($xoopsUser->getVar('uid'))));
         $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
             $form->display();
     }
@@ -276,7 +276,7 @@ if ($op == 'avatarform') {
     $avatar_tray->addElement($avatar_select);
     $avatar_tray->addElement(new XoopsFormLabel('', "<img src='".XOOPS_UPLOAD_URL."/".$xoopsUser->getVar("user_avatar", "E")."' name='avatar' id='avatar' alt='' /> <a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">"._LIST."</a>"));
     $form2->addElement($avatar_tray);
-    $form2->addElement(new XoopsFormHidden('uid', $xoopsUser->getVar('uid')));
+    $form2->addElement(new XoopsFormHidden('uid', intval($xoopsUser->getVar('uid'))));
     $form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
     $form2->addElement(new XoopsFormButton('', 'submit2', _SUBMIT, 'submit'));
     $form2->display();
@@ -327,8 +327,8 @@ if ($op == 'avatarupload') {
                     }
                     $sql = sprintf("UPDATE %s SET user_avatar = %s WHERE uid = '%u'", $xoopsDB->prefix('users'), $xoopsDB->quoteString($uploader->getSavedFileName()), intval($xoopsUser->getVar('uid')));
                     $xoopsDB->query($sql);
-                    $avt_handler->addUser($avatar->getVar('avatar_id'), $xoopsUser->getVar('uid'));
-                    redirect_header('userinfo.php?t='.time().'&amp;uid='.$xoopsUser->getVar('uid'),0, _US_PROFUPDATED);
+                    $avt_handler->addUser($avatar->getVar('avatar_id'), intval($xoopsUser->getVar('uid')));
+                    redirect_header('userinfo.php?t='.time().'&amp;uid='.intval($xoopsUser->getVar('uid')),0, _US_PROFUPDATED);
                 }
             }
         }
