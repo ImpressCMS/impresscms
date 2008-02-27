@@ -12,9 +12,14 @@
 * @version		$Id: icms.library.scriptaculous.php 897 2008-02-15 19:53:31Z malanciault $
 */
 
-function icmsLibraryPrototype_beforeFooter() {
+function icmsLibraryPrototype_StartOutputInit() {
 	global $xoTheme;
 	$xoTheme->addScript(ICMS_LIBRARIES_URL . '/prototype/prototype.js');
 }
 
+function icmsLibraryPrototype_AdminHeader() {
+	$ret  = '<script type="text/javascript" src="'.ICMS_LIBRARIES_URL.'/prototype/prototype.js"></script>';
+	
+	echo $ret;
+}
 ?>

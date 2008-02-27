@@ -12,9 +12,14 @@
 * @version		$Id$
 */
 
-function icmsLibraryScriptaculous_beforeFooter() {
+function icmsLibraryScriptaculous_StartOutputInit() {
 	global $xoTheme;
 	$xoTheme->addScript(ICMS_LIBRARIES_URL . '/scriptaculous/src/scriptaculous.js');
 }
 
+function icmsLibraryScriptaculous_AdminHeader() {
+	$ret  = '<script type="text/javascript" src="'.ICMS_LIBRARIES_URL.'/scriptaculous/src/scriptaculous.js"></script>';
+	
+	echo $ret;
+}
 ?>
