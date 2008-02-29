@@ -79,6 +79,8 @@ h6 {font-size: .8em;}
 	background-image: url(img/hbar.gif);
 	clear: both;
 	height: 20px;
+	padding-left: 11px;
+	
 }
 
 /* ---------- Column left/right rules ---------- */
