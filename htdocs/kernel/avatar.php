@@ -33,14 +33,11 @@ if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
 
-
-
-
-
 /**
  * Avatar handler class.
  * This class is sets up the initial Avatar variables
  * @package kernel
+ * @subpackage avatars 
  */
 class XoopsAvatar extends XoopsObject
 {
@@ -49,7 +46,6 @@ class XoopsAvatar extends XoopsObject
      * @var integer 
      */
     var $_userCount;
-
 
     /**
      * Constructor sets up initial variables
@@ -67,12 +63,9 @@ class XoopsAvatar extends XoopsObject
         $this->initVar('avatar_type', XOBJ_DTYPE_OTHER, 0, false);
     }
 
-
-
-
     /**
      * Sets _userCount variable
-     * @param integer $_userCount _userCount
+     * @param integer $value _userCount
      */
     function setUserCount($value)
     {
@@ -89,12 +82,6 @@ class XoopsAvatar extends XoopsObject
     }
 }
 
-
-
-
-
-
-
 /**
 * XOOPS avatar handler class.
 * This class is responsible for providing data access mechanisms to the data source
@@ -105,8 +92,6 @@ class XoopsAvatar extends XoopsObject
 */
 class XoopsAvatarHandler extends XoopsObjectHandler
 {
-
-
 
     /**
      * Creates Avatar Handler instance
@@ -121,8 +106,6 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         }
         return $avatar;
     }
-
-
 
     /**
      * Gets Avatar from DataBase and if the ID is found it returns
@@ -148,10 +131,6 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         }
         return $avatar;
     }
-
-
-
-
 
     /**
      * Inserts Avatar into DataBase
@@ -192,12 +171,6 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         return true;
     }
 
-
-
-
-
-
-
     /**
      * Deletes Avatar from DataBase
      *
@@ -213,7 +186,6 @@ class XoopsAvatarHandler extends XoopsObjectHandler
             return false;
         }
 
-
         $id = intval($avatar->getVar('avatar_id'));
         $sql = sprintf("DELETE FROM %s WHERE avatar_id = '%u'", $this->db->prefix('avatar'), $id);
         if (!$result = $this->db->query($sql)) {
@@ -223,11 +195,6 @@ class XoopsAvatarHandler extends XoopsObjectHandler
     		$result = $this->db->query($sql);
         return true;
     }
-
-
-
-
-
 
     /**
      * Gets Avatar objects from DataBase
@@ -265,8 +232,6 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         return $ret;
     }
 
-
-
     /**
      * Gets number of Avatars that match the criteria
      *
@@ -285,10 +250,6 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         list($count) = $this->db->fetchRow($result);
         return $count;
     }
-
-
-
-
 
     /**
      * Adds Avatar to a user
@@ -311,10 +272,6 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         }
         return true;
     }
-
-
-
-
 
     /**
      * Gets all users that have the Avatar ID
@@ -341,10 +298,6 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         }
         return $ret;
     }
-
-
-
-
 
     /**
      * Gets list of avatars that have a specific avatar type
