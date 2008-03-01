@@ -394,6 +394,10 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
         }*/
     }
     $theme = $xoopsConfig['theme_set'];
+    // if the user selected a theme in the theme block, let's use this theme
+	if (isset($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {
+		$theme = $_SESSION['xoopsUserTheme'];
+	} 
 
     require_once XOOPS_ROOT_PATH . '/class/template.php';
     require_once XOOPS_ROOT_PATH . '/class/theme.php';

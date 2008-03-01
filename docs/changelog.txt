@@ -5,6 +5,7 @@ ImpressCMS ChangeLog
 =========================================
 
 - Improved : Small css fix in the impresstheme theme (McDonald/Snow/malanciault)
+- Fixed : #1905281 Redirect function not using the user selected theme (malanciault)
 
 =========================================
 2008-02-24 : ImpressCMS 1.0 "Janus" RC 2
