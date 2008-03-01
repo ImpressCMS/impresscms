@@ -126,7 +126,10 @@ function easiestml( $s )
 	}
 
 	// escape brackets inside of <input type="text" value="...">
-//	$s = preg_replace_callback( '/(\<input)(?=.*type\=[\'\"]?text[\'\"]?)([^>]*)(\>)/isU' , 'easiestml_escape_bracket' , $s ) ;
+	// $s = preg_replace_callback( '/(\<input)(?=.*type\=[\'\"]?text[\'\"]?)([^>]*)(\>)/isU' , 'easiestml_escape_bracket' , $s ) ;
+
+	// Fix for bug #1905485 in tracker
+	$s = preg_replace_callback( '/(\<input\b(?![^\>]*\btype=([\'"]?)(submit|image))[^\>]*\>)/isU' , 'easiestml_escape_bracket_input' , $s ) ;
 	$s = preg_replace_callback( '/(\<input)([^>]*)(\>)/isU' , 'easiestml_escape_bracket_textbox' , $s ) ;
 
 	// escape brackets inside of <textarea></textarea>
@@ -197,5 +200,10 @@ function easiestml_escape_bracket_textarea( $matches )
 function easiestml_check_nevercross( $matches )
 {
 	return preg_match( EASIESTML_NEVERCROSSREGEX , $matches[0] ) ? $matches[0] : '' ;
+}
+// Fix for bug #1905485 in tracker
+function easiestml_escape_bracket_input( $matches )
+{
+	return str_replace('[','&#91;',$matches[1]) ;
 }
 ?>
