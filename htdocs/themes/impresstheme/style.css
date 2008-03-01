@@ -113,6 +113,23 @@ h6 {font-size: .8em;}
 	padding: 15px 1%;
 }
 
+/* ---------- Redirect ------------ */
+#xo-redirect {
+	margin-top: 40px;
+	margin-left: auto;
+	margin-right: auto; 
+	width: 85%;
+	background-color: #f7e6bd; 
+	color: #222222; 
+	text-align: center; 
+	border-top: 1px solid #DDDDFF; 
+	border-left: 1px solid #DDDDFF; 
+	border-right: 1px solid #DDDDFF; 
+	border-bottom: 1px solid #DDDDFF; 
+	font-weight: bold; 
+	padding: 10px;	
+	text-align: center;
+}
 /* ---------- Footer rules ---------- */
 
 #xo-footer {
