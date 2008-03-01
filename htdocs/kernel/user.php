@@ -36,6 +36,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
  * @author Kazumi Ono <onokazu@xoops.org>
  * @copyright copyright (c) 2000-2003 XOOPS.org
  * @package kernel
+ * @subpackage users 
  */
 class XoopsUser extends XoopsObject
 {

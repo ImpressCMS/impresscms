@@ -24,13 +24,18 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-
-$xoopsOption['pagetype'] = "user";
-include "mainfile.php";
+/**
+ * Form and process for sending a new password to a user
+ * @package kernel 
+ * @subpackage users
+ */
+   
+$xoopsOption['pagetype'] = 'user';
+include 'mainfile.php';
 $email = isset($_GET['email']) ? trim($_GET['email']) : '';
 $email = isset($_POST['email']) ? trim($_POST['email']) : $email;
 if ($email == '') {
-    redirect_header("user.php",2,_US_SORRYNOTFOUND);
+    redirect_header('user.php',2,_US_SORRYNOTFOUND);
 }
 
 $myts =& MyTextSanitizer::getInstance();
@@ -39,7 +44,7 @@ $getuser =& $member_handler->getUsers(new Criteria('email', $myts->addSlashes($e
 
 if (empty($getuser)) {
     $msg = _US_SORRYNOTFOUND;
-    redirect_header("user.php",2,$msg);
+    redirect_header('user.php',2,$msg);
 } else {
     $code = isset($_GET['code']) ? trim($_GET['code']) : '';
     $areyou = substr($getuser[0]->getVar("pass"), 0, 5);
@@ -64,9 +69,9 @@ if (empty($getuser)) {
         // Next step: add the new password to the database
         $sql = sprintf("UPDATE %s SET pass = '%s' WHERE uid = '%u'", $xoopsDB->prefix("users"), md5($newpass), intval($getuser[0]->getVar('uid')));
         if ( !$xoopsDB->queryF($sql) ) {
-            include "header.php";
+            include 'header.php';
             echo _US_MAILPWDNG;
-            include "footer.php";
+            include 'footer.php';
             exit();
         }
         redirect_header("user.php", 3, sprintf(_US_PWDMAILED,$getuser[0]->getVar("uname")), false);
@@ -84,14 +89,14 @@ if (empty($getuser)) {
         $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
         $xoopsMailer->setFromName($xoopsConfig['sitename']);
         $xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ,$xoopsConfig['sitename']));
-        include "header.php";
+        include 'header.php';
         if ( !$xoopsMailer->send() ) {
             echo $xoopsMailer->getErrors();
         }
-        echo "<h4>";
-        printf(_US_CONFMAIL,$getuser[0]->getVar("uname"));
-        echo "</h4>";
-        include "footer.php";
+        echo '<h4>';
+        printf(_US_CONFMAIL,$getuser[0]->getVar('uname'));
+        echo '</h4>';
+        include 'footer.php';
     }
 }
 ?>

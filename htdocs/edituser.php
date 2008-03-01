@@ -24,7 +24,12 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-
+/**
+ * Generates form and validation for editing users
+ * @package kernel 
+ * @subpackage users
+ */
+    
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
@@ -197,7 +202,7 @@ if ($op == 'editprofile') {
 	}
     // RMV-NOTIFY
     // TODO: add this to admin user-edit functions...
-    include_once XOOPS_ROOT_PATH . "/language/" . $xoopsConfig['language'] . '/notification.php';
+    include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/notification.php';
     include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
     $notify_method_select = new XoopsFormSelect(_NOT_NOTIFYMETHOD, 'notify_method', $xoopsUser->getVar('notify_method'));
     $notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE, XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM, XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL));

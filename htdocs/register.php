@@ -27,8 +27,8 @@
 /**
  *  Registration process for new users
  *  Gathers required information and validates the new user
- *  @package users
- *  @subpackage registration
+ *  @package kernel
+ *  @subpackage users
  */
       
 $xoopsOption['pagetype'] = 'user';
@@ -47,9 +47,6 @@ if ($xoopsConfigUser['allow_register'] == 0 && $xoopsConfigUser['activation_type
  *  Username is validated for uniqueness and length, password is validated for length and strictness,
  *  email is validated as a proper email address pattern  
  *  
- *  @package users
- *  @subpackage registration
- *     
  *  @param string $uname Username entered by the user
  *  @param string $email Email address entered by the user   
  *  @param string $pass Password entered by the user

@@ -24,7 +24,11 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
-
+/**
+ * Login page for users, will redirect to userinfo.php if the user is logged in
+ * @package kernel 
+ * @subpackage users 
+ */ 
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 
