@@ -24,29 +24,21 @@
   
 <!-- Start Main Content Area -->
 <div id="xo-canvas-content">
-<center>
-<br />
-<div style="width: 85%;background-color: #f7e6bd; color: #222222; text-align: center; border-top: 1px solid #DDDDFF; border-left: 1px solid #DDDDFF; border-right: 1px solid #DDDDFF; border-bottom: 1px solid #DDDDFF; font-weight: bold; padding: 10px;"><{$lang_siteclosemsg}>
-</div>
-<br />
-  <br />
-  <br />
-    <div style="width: 270px;border:1px solid #DDDDFF">
- <div style="background-color: #f3ac03;font-weight: bold;font-size: 1.2em; color: white;height: 24px"><{$lang_login}></div>
-    <br />
-   <form action="<{$xoops_url}>/user.php" method="post">
-   <{$lang_username}><input type="text" name="uname" size="21" maxlength="25" value="" /><br />
-    <div>
-    <{$lang_password}><input type="password" name="pass" size="21" maxlength="32" /><br />
-        	<input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>" />
-        	<input type="hidden" name="xoops_login" value="1" />
-        <br />
-        	<input type="submit" value="<{$lang_login}>" />
-</div> 
- </form>
-<br />
-</div>
-</center>
+<div id="xo-redirect"><{$lang_siteclosemsg}></div>
+ <div id="xo-siteclose-login">
+	<h2><{$lang_login}></h2>
+		<div>
+			<form action="<{$xoops_url}>/user.php" method="post">
+	   		<span class="left"><{$lang_username}></span>
+	   		<span class="right"><input type="text" name="uname" size="21" maxlength="25" value="" /></span>
+		    <span class="left"><{$lang_password}></span>
+		    <span class="right"><input type="password" name="pass" size="21" maxlength="32" /></span>
+		    <input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>" />
+		    <input type="hidden" name="xoops_login" value="1" />
+		    <div class="button"><input type="submit" value="<{$lang_login}>" /></div>
+	 		</form>
+	 	</div>
+	</div>
 </div><!-- Start footer -->
 <br class="clear" />
 <div id="xo-footer">

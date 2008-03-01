@@ -130,6 +130,45 @@ h6 {font-size: .8em;}
 	padding: 10px;	
 	text-align: center;
 }
+/* ---------- Site close ------------ */
+#xo-siteclose-login {
+	width: 270px;
+	margin-left: auto;
+	margin-right: auto; 	
+	border:1px solid #DDDDFF;	
+	margin-top: 40px;
+}
+#xo-siteclose-login h2 {
+	background-color: #f3ac03;
+	font-weight: bold;
+	font-size: 1em; 
+	color: white;
+	padding: 2px;	
+	margin-top: 0px;
+	margin-bottom: 0px;
+	text-align: center;	
+}
+#xo-siteclose-login form {
+	padding: 0px;
+	margin: 0px;	
+}
+#xo-siteclose-login div{
+	padding: 6px;
+}
+#xo-siteclose-login span.left {
+	float: left;
+	padding-bottom: 3px;
+}
+#xo-siteclose-login span.right {
+	float: right;
+	padding-right: px;
+	padding-bottom: 3px;
+}
+#xo-siteclose-login div.button {
+	text-align: right;
+	clear: both;	
+	padding-right: 0px;
+}
 /* ---------- Footer rules ---------- */
 
 #xo-footer {
