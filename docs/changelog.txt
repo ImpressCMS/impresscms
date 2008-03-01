@@ -4,12 +4,13 @@ ImpressCMS ChangeLog
 2008-03-02 : ImpressCMS 1.0 "Janus" Final
 =========================================
 
-- Improved : Small css fix in the impresstheme theme (McDonald/Snow/malanciault)
 - Improved : Improved system_redirect template in impresstheme theme (malanciault/Underdogg/davidl2)
 - Improved : Improved system_siteclose template in impresstheme theme (malanciault/Underdogg/davidl2)
 - Fixed : #1905281 Redirect function not using the user selected theme (malanciault)
+- Added : Addition of the global navigationlink in impresstheme theme (mcdonald/skenow/malanciault)
 - Added : Addition of the danish flag (anderssk)
 - Added : Addition of the persian flag (malanciault)
+- Added : definitions for ul and li in impresstheme (McDonald/snow/malanciault)
 
 =========================================
 2008-02-24 : ImpressCMS 1.0 "Janus" RC 2
