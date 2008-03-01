@@ -6,7 +6,7 @@
 *
 * @author  Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
 * @copyright copyright (c) 2000-2004 XOOPS.org
-* @package Kernel
+* @package kernel
 */
 
 class IcmsPersistableObjectHandler extends XoopsObjectHandler {
