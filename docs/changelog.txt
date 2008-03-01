@@ -1,6 +1,12 @@
 ImpressCMS ChangeLog
 
 =========================================
+2008-03-02 : ImpressCMS 1.0 "Janus" Final
+=========================================
+
+- Improved : Small css fix in the impresstheme theme (McDonald/Snow/malanciault)
+
+=========================================
 2008-02-24 : ImpressCMS 1.0 "Janus" RC 2
 =========================================
 
