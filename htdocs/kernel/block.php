@@ -51,7 +51,6 @@ class XoopsBlock extends XoopsObject
 
     /**
      * constructor
-	 *
      * @param mixed $id
      **/
     function XoopsBlock($id = null)
@@ -92,17 +91,23 @@ class XoopsBlock extends XoopsObject
         }
     }
 
+
+
+
+
+
     /**
      * return the content of the block for output
-	 *
-	 * @param string $format
-	 * @param string $c_type type of content<br>
-	 * Legal value for the type of content<br>
-	 * <ul><li>H : custom HTML block
-	 * <li>P : custom PHP block
-	 * <li>S : use text sanitizater (smilies enabled)
-	 * <li>T : use text sanitizater (smilies disabled)</ul>
-	 * @return string content for output
+     * @param string $format
+     * @param string $c_type type of content<br>
+     * Legal value for the type of content<br>
+     * <ul>
+     * <li>H : custom HTML block
+     * <li>P : custom PHP block
+     * <li>S : use text TextSanitizer (smilies enabled)
+     * <li>T : use text TextSanitizer (smilies disabled)
+     * </ul>
+     * @return string content for output
      **/
     function getContent($format = 'S', $c_type = 'T')
     {
@@ -135,10 +140,16 @@ class XoopsBlock extends XoopsObject
         }
     }
 
+
+
+
+
+
+
     /**
      * (HTML-) form for setting the options of the block
-	 *
-	 * @return string HTML for the form, FALSE if not defined for this block
+     *
+     * @return string|false $edit_form is HTML for the form, FALSE if no options defined for this block
      **/
     function getOptions()
     {
@@ -170,6 +181,13 @@ class XoopsBlock extends XoopsObject
 }
 
 
+
+
+
+
+
+
+
 /**
  * XOOPS block handler class. (Singelton)
  *
@@ -180,16 +198,16 @@ class XoopsBlock extends XoopsObject
  * @copyright copyright (c) 2000 XOOPS.org
  * @package kernel
  * @subpackage block
-*/
+ */
 class XoopsBlockHandler extends XoopsObjectHandler
 {
 
     /**
      * create a new block
      *
-	 * @see XoopsBlock
-	 * @param bool $isNew is the new block new??
-	 * @return object XoopsBlock reference to the new block
+  	 * @see XoopsBlock
+  	 * @param bool $isNew is the new block new??
+  	 * @return object XoopsBlock reference to the new block
      **/
     function &create($isNew = true)
     {
@@ -200,12 +218,17 @@ class XoopsBlockHandler extends XoopsObjectHandler
         return $block;
     }
 
+
+
+
+
+
     /**
      * retrieve a specific {@link XoopsBlock}
      *
-	 * @see XoopsBlock
-	 * @param int $id bid of the block to retrieve
-	 * @return object XoopsBlock reference to the block
+  	 * @see XoopsBlock
+  	 * @param integer $id BlockID (bid) of the block to retrieve
+  	 * @return object XoopsBlock reference to the block
      **/
     function &get($id)
     {
@@ -224,11 +247,16 @@ class XoopsBlockHandler extends XoopsObjectHandler
         return $block;
     }
 
+
+
+
+
+
     /**
-     * write a new block into the database
+     * Insert a new block into the database
      *
-	 * @param object XoopsBlock $block reference to the block to insert
-	 * @return bool TRUE if succesful
+  	 * @param object XoopsBlock $block reference to the block to insert
+  	 * @return bool TRUE if succesful
      **/
     function insert(&$block)
     {
@@ -259,15 +287,20 @@ class XoopsBlockHandler extends XoopsObjectHandler
         if (empty($bid)) {
             $bid = $this->db->getInsertId();
         }
-		$block->assignVar('bid', $bid);
+    		$block->assignVar('bid', $bid);
         return true;
     }
+
+
+
+
+
 
     /**
      * delete a block from the database
      *
-	 * @param object XoopsBlock $block reference to the block to delete
-	 * @return bool TRUE if succesful
+  	 * @param object XoopsBlock $block reference to the block to delete
+  	 * @return bool TRUE if succesful
      **/
     function delete(&$block)
     {
@@ -287,11 +320,16 @@ class XoopsBlockHandler extends XoopsObjectHandler
         return true;
     }
 
+
+
+
+
+
     /**
      * retrieve array of {@link XoopsBlock}s meeting certain conditions
-	 * @param object $criteria {@link CriteriaElement} with conditions for the blocks
-	 * @param bool $id_as_key should the blocks' bid be the key for the returned array?
-	 * @return array {@link XoopsBlock}s matching the conditions
+  	 * @param object $criteria {@link CriteriaElement} with conditions for the blocks
+  	 * @param bool $id_as_key should the blocks' bid be the key for the returned array?
+  	 * @return array {@link XoopsBlock}s matching the conditions
      **/
     function getObjects($criteria = null, $id_as_key = false)
     {
@@ -320,11 +358,16 @@ class XoopsBlockHandler extends XoopsObjectHandler
         return $ret;
     }
 
+
+
+
+
+
     /**
      * get a list of blocks matchich certain conditions
-	 *
-	 * @param string $criteria conditions to match
-	 * @return array array of blocks matching the conditions
+  	 *
+  	 * @param string $criteria conditions to match
+  	 * @return array array of blocks matching the conditions
      **/
     function getList($criteria = null)
     {

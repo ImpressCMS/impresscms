@@ -86,8 +86,8 @@ class XoopsAvatar extends XoopsObject
 * XOOPS avatar handler class.
 * This class is responsible for providing data access mechanisms to the data source
 * of XOOPS avatar class objects.
-*
-*
+* @package kernel
+* @subpackage avatar
 * @author  Kazumi Ono <onokazu@xoops.org>
 */
 class XoopsAvatarHandler extends XoopsObjectHandler
