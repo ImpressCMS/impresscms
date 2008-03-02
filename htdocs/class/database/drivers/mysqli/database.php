@@ -1,17 +1,20 @@
 <?php
+/**
+ * MySQLi Database Driver file.
+ * 
+ * @package database
+ * @subpackage mysqli
+ * @version $Id$
+ * @since ImpressCMS 1.0
+ * @author Gustavo Pilla <nekro@impresscms.org>
+ * @copyright The ImpressCMS Project http://www.impresscms.org/
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ */
+
 if (!defined("XOOPS_ROOT_PATH")) {
     die("XOOPS root path not defined");
 }
-/**
- * @package     database
- * @subpackage  mysqli
- * @version $Id $
- * @since ImpressCMS 1.0
- *
- * @author	    Gustavo Pilla <nekro@impresscms.org>
- * @copyright	copyright (c) 2008, ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- */
+
 
 /**
  * base class
@@ -19,7 +22,7 @@ if (!defined("XOOPS_ROOT_PATH")) {
 include_once XOOPS_ROOT_PATH."/class/database/database.php";
 
 /**
- * Connection to a MySQL database
+ * Database Object for a MySQL database.
  *
  * @abstract
  *
