@@ -30,16 +30,17 @@
 // ------------------------------------------------------------------------- //
 
 $modversion['name'] = _MD_AM_VRSN;
-$modversion['type'] = "";
-$modversion['version'] = "XOOPS RC4";
-$modversion['description'] = "XOOPS Version";
-$modversion['author'] = "";
-$modversion['credits'] = "The XOOPS Project";
+$modversion['version'] = "1.0";
+$modversion['description'] = "ImpressCMS Version";
+$modversion['author'] = "marcan (marcan@impresscms.org)";
+$modversion['credits'] = "The ImpressCMS Project";
 $modversion['help'] = "";
 $modversion['license'] = "GPL see LICENSE";
 $modversion['official'] = 1;
-$modversion['image'] = "s_poweredby.gif";
+$modversion['image'] = "version.gif";
 
-$modversion['hasAdmin'] = 0;
-$modversion['adminpath'] = "";
+$modversion['hasAdmin'] = 1;
+$modversion['adminpath'] = "admin.php?fct=version";
+
+$modversion['category'] = XOOPS_SYSTEM_USER;
 ?>

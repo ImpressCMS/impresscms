@@ -16,7 +16,7 @@ define('_MD_AM_RANK','User Ranks');
 define('_MD_AM_USER','Edit Users');
 define('_MD_AM_FINDUSER', 'Find Users');
 define('_MD_AM_PREF','Preferences');
-define('_MD_AM_VRSN','Version');
+define('_MD_AM_VRSN','Version Checker');
 define('_MD_AM_MLUS', 'Mail Users');
 define('_MD_AM_IMAGES', 'Image Manager');
 define('_MD_AM_AVATARS', 'Avatars');

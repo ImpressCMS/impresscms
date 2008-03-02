@@ -1,4 +1,5 @@
 <?php
 // $Id: version.php 1042 2007-09-09 16:55:33Z dugris $
-define("XOOPS_VERSION",'ImpressCMS 1.0 "Janus" Final');
+define("XOOPS_VERSION",'ImpressCMS 1.0 "Janus" RC 2');
+define("ICMS_BUILD",4);
 ?>

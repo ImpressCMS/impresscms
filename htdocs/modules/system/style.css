@@ -42,14 +42,15 @@ a:hover { background-color: transparent; color: #ff9966; font-weight: bold; text
 .xoopsQuote a:hover, div.xoopsQuote a:active { background-color: transparent; color: #1778cb;}
 
 /* ===== Redirect messages ===== */
-.errorMsg,.confirmMsg, .resultMsg , .warningMsg { padding: .8em; text-align:center; margin-bottom: 1em; border: 2px solid #ddd;}
-.errorMsg { background-color: #FBE3E4; color: #D12F19; border-color: #FBC2C4; }
+.errorMsg,.confirmMsg, .resultMsg , .warningMsg, .successMsg { padding: .8em; text-align:center; margin-bottom: 1em; border: 2px solid #ddd;}
 .errorMsg { background-color: #FBE3E4; color: #D12F19; border-color: #FBC2C4; }
 .confirmMsg { background-color: #FFF6BF; color: #817134; border-color: #FFD324; }
 .warningMsg { background-color: #99CCFF; color: #000099; border-color: #0099FF; }
 .resultMsg { background-color: #E6EFC2; color: #529214; border-color: #C6D880; }
 .errorMsg a { background-color: transparent; color: #D12F19; }
 .confirmMsg a { background-color: transparent; color: #817134; }
+.errorMsg { background-color: #FBE3E4; color: #D12F19; border-color: #FBC2C4; }
+.successMsg { background-color: #9FFF8F; color: #143F22; border-color: #2F5F3F; }
 .successMsg a { background-color: transparent; color: #529214; }
 
 /* ===== General small ===== */

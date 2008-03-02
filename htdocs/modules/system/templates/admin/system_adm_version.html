@@ -1,0 +1,15 @@
+<div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/banners/images/banners_big.png)"><{$smarty.const._AM_VERSION_TITLE}></div><br />
+
+<p><b>Your ImpressCMS Install:</b> <{$your_version}></p>
+<p><b>Latest ImpressCMS Final Release:</b> <{$latest_version}></p>
+
+<{if $update_available}>
+	<div class="errorMsg">
+		<b><{$smarty.const._AM_VERSION_UPDATE_NEEDED}></b><br />
+		<br />
+		<{$smarty.const._AM_VERSION_MOREINFO}><br /><a href="<{$latest_url}>"><{$latest_version}></a>
+		
+	</div>
+<{else}>
+	<div class="successMsg"><b><{$smarty.const._AM_VERSION_NO_UPDATE}></b></div>
+<{/if}>
