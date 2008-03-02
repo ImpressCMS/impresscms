@@ -150,7 +150,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
     }
 
     /**
-     * Write a comment to database
+     * Insert a comment to database
      *
      * @param   object  &$comment
      *
@@ -176,10 +176,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
         if ($comment->isNew()) {
             $com_id = $this->db->genId('xoopscomments_com_id_seq');
             $sql = sprintf("INSERT INTO %s (com_id, com_pid, com_modid, com_icon, com_title, com_text, com_created, com_modified, com_uid, com_ip, com_sig, com_itemid, com_rootid, com_status, com_exparams, dohtml, dosmiley, doxcode, doimage, dobr) VALUES ('%u', '%u', '%u', %s, %s, %s, '%u', '%u', '%u', %s, '%u', '%u', '%u', '%u', %s, '%u', '%u', '%u', '%u', '%u')", $this->db->prefix('xoopscomments'), intval($com_id), intval($com_pid), intval($com_modid), $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), intval($com_created), intval($com_modified), intval($com_uid), $this->db->quoteString($com_ip), intval($com_sig), intval($com_itemid), intval($com_rootid), intval($com_status), $this->db->quoteString($com_exparams), 
-			intval($dohtml), intval($dosmiley), intval($doxcode), intval($doimage), intval($dobr));
+      			intval($dohtml), intval($dosmiley), intval($doxcode), intval($doimage), intval($dobr));
         } else {
             $sql = sprintf("UPDATE %s SET com_pid = '%u', com_icon = %s, com_title = %s, com_text = %s, com_created = '%u', com_modified = '%u', com_uid = '%u', com_ip = %s, com_sig = '%u', com_itemid = '%u', com_rootid = '%u', com_status = '%u', com_exparams = %s, dohtml = '%u', dosmiley = '%u', doxcode = '%u', doimage = '%u', dobr = '%u' WHERE com_id = '%u'", $this->db->prefix('xoopscomments'), intval($com_pid), $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), intval($com_created), intval($com_modified), intval($com_uid), $this->db->quoteString($com_ip), intval($com_sig), intval($com_itemid), intval($com_rootid), intval($com_status), $this->db->quoteString($com_exparams), 
-			intval($dohtml), intval($dosmiley), intval($doxcode), intval($doimage), intval($dobr), intval($com_id));
+      			intval($dohtml), intval($dosmiley), intval($doxcode), intval($doimage), intval($dobr), intval($com_id));
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -190,6 +190,12 @@ class XoopsCommentHandler extends XoopsObjectHandler
         $comment->assignVar('com_id', $com_id);
         return true;
     }
+
+
+
+
+
+
 
     /**
      * Delete a {@link XoopsComment} from the database
@@ -212,6 +218,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
         }
         return true;
     }
+
+
+
+
 
     /**
      * Get some {@link XoopsComment}s
@@ -250,6 +260,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
         return $ret;
     }
 
+
+
+
+
     /**
      * Count Comments
      *
@@ -270,6 +284,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
         return $count;
     }
 
+
+
+
+
     /**
      * Delete multiple comments
      *
@@ -289,6 +307,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
         return true;
     }
 
+
+
+
+
    /**
      * Get a list of comments
      *
@@ -305,6 +327,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
         }
         return $ret;
     }
+
+
+
+
 
     /**
      * Retrieves comments for an item
@@ -335,6 +361,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
         return $this->getObjects($criteria);
     }
 
+
+
+
+
     /**
      * Gets total number of comments for an item
      *
@@ -353,6 +383,8 @@ class XoopsCommentHandler extends XoopsObjectHandler
         }
         return $this->getCount($criteria);
     }
+
+
 
 
     /**
@@ -377,6 +409,9 @@ class XoopsCommentHandler extends XoopsObjectHandler
         return $this->getObjects($criteria);
     }
 
+
+
+
     /**
      * Retrieve a whole thread
      *
@@ -396,6 +431,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
         return $this->getObjects($criteria);
     }
 
+
+
+
+
     /**
      * Update
      *
@@ -412,6 +451,9 @@ class XoopsCommentHandler extends XoopsObjectHandler
         return $this->insert($comment);
     }
 
+
+
+
     /**
      * Delete all comments for one whole module
      *
@@ -422,6 +464,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
     {
         return $this->deleteAll(new Criteria('com_modid', intval($module_id)));
     }
+
+
+
+
 
     /**
      * Change a value in multiple comments
