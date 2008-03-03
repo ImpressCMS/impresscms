@@ -1,20 +1,32 @@
+<style type="text/css">
+div .errorMsg a {text-decoration: underline;}
+div .errorMsg a:hover {color: #000;}
+</style>
+
 <div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/version/images/version_big.png)"><{$smarty.const._AM_VERSION_TITLE}></div><br />
 
-<p><b>Your ImpressCMS Install:</b> <{$your_version}></p>
-<p><b>Latest ImpressCMS Final Release:</b> <{$latest_version}></p>
+<div class="head" style="padding: 2px;">
+<b>Your ImpressCMS Version:</b> <{$your_version}>
+</div>
+<div class="head" style="padding: 2px;">
+<b>Latest ImpressCMS Version:</b> <{$latest_version}>
+</div>
 
 <{if $update_available}>
-	<div class="errorMsg">
-		<b><{$smarty.const._AM_VERSION_UPDATE_NEEDED}></b><br />
-		<br />
-		<{$smarty.const._AM_VERSION_MOREINFO}><br />
-		<h1><a href="<{$latest_url}>" target="_blank"><{$latest_version}></a></h1>
-		<{if $not_a_final_comment}>
-			<div><b><{$smarty.const._AM_VERSION_WARNING}></b>: <{$smarty.const._AM_VERSION_WARNING_NOT_A_FINAL}></div>
-		<{/if}>
-	</div>
-	<h1><{$latest_version}> <{$smarty.const._AM_VERSION_CHANGELOG}></h1>
-	<p><pre><{$latest_changelog}></pre></p>
+    <div class="even">
+    <div class="errorMsg">
+        <b><{$smarty.const._AM_VERSION_UPDATE_NEEDED}></b><br />
+        <br />
+        <{$smarty.const._AM_VERSION_MOREINFO}><br />
+        <h1><a href="<{$latest_url}>" target="_blank"><{$latest_version}></a></h1>
+    </div>
+    </div>
+    <div class="odd">
+    <h1><{$latest_version}> <{$smarty.const._AM_VERSION_CHANGELOG}></h1>
+    <p><pre><{$latest_changelog}></pre></p>
+    </div>
 <{else}>
-	<div class="successMsg"><b><{$smarty.const._AM_VERSION_NO_UPDATE}></b></div>
+    <div class="even">
+    <div class="successMsg"><b><{$smarty.const._AM_VERSION_NO_UPDATE}></b></div>
+    </div>
 <{/if}>

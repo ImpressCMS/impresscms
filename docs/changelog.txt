@@ -6,6 +6,7 @@ ImpressCMS ChangeLog
 
 - Improved : Improved system_redirect template in impresstheme theme (malanciault/Underdogg/davidl2)
 - Improved : Improved system_siteclose template in impresstheme theme (malanciault/Underdogg/davidl2)
+- Improved : Improved system_adm_version template (MrTheme)
 - Fixed : #1905281 Redirect function not using the user selected theme (malanciault)
 - Added : Addition of the global navigationlink in impresstheme theme (mcdonald/skenow/malanciault)
 - Added : Addition of the danish flag (anderssk)
