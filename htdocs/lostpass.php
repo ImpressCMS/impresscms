@@ -29,7 +29,9 @@
  * @package kernel 
  * @subpackage users
  */
-   
+/**
+ *
+ */    
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 $email = isset($_GET['email']) ? trim($_GET['email']) : '';

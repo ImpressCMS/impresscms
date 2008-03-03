@@ -29,8 +29,10 @@
  * @package kernel 
  * @subpackage users
  */
-    
 $xoopsOption['pagetype'] = 'user';
+/**
+ *
+ */ 
 include 'mainfile.php';
 include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
 
