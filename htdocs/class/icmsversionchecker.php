@@ -67,7 +67,13 @@ class IcmsVersionChecker {
 	 * URL of the latest release
 	 * @var $latest_url string
 	 */
-	var $latest_url;		
+	var $latest_url;
+
+	/*
+	 * Changelog of the latest release
+	 * @var $latest_changelog string
+	 */
+	var $latest_changelog;		
 	
 	/**
 	 * Constructor
@@ -136,6 +142,7 @@ class IcmsVersionChecker {
 		
 				$latest_item = $items[0];
 				$this->latest_version_name = $latest_item['title'];
+				$this->latest_changelog = $latest_item['description'];
 				$this->latest_build = $latest_item['guid'];
 				
 				if ($this->latest_build > ICMS_VERSION_BUILD) {

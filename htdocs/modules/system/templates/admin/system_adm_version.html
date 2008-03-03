@@ -7,9 +7,11 @@
 	<div class="errorMsg">
 		<b><{$smarty.const._AM_VERSION_UPDATE_NEEDED}></b><br />
 		<br />
-		<{$smarty.const._AM_VERSION_MOREINFO}><br /><a href="<{$latest_url}>"><{$latest_version}></a>
-		
+		<{$smarty.const._AM_VERSION_MOREINFO}><br />
+		<h1><a href="<{$latest_url}>" target="_blank"><{$latest_version}></a></h1>
 	</div>
+	<h1><{$latest_version}> <{$smarty.const._AM_VERSION_CHANGELOG}></h1>
+	<p><pre><{$latest_changelog}></pre></p>
 <{else}>
 	<div class="successMsg"><b><{$smarty.const._AM_VERSION_NO_UPDATE}></b></div>
 <{/if}>

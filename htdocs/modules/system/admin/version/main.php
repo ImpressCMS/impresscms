@@ -21,6 +21,7 @@ $icmsVersionChecker = IcmsVersionChecker::getInstance();
 
 if ($icmsVersionChecker->check()) {
 	$icmsAdminTpl->assign('update_available', true);
+	$icmsAdminTpl->assign('latest_changelog', $icmsVersionChecker->latest_changelog);
 }
 $icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name);
 $icmsAdminTpl->assign('your_version', $icmsVersionChecker->installed_version_name);

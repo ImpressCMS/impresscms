@@ -8,4 +8,5 @@ define("_AM_VERSION_UPDATE_NEEDED", 'There is a new version of ImpressCMS ! The 
 define("_AM_VERSION_MOREINFO", 'Click on the following link to get more information on the latest release: ');
 
 define("_AM_VERSION_CHECK_RSSDATA_EMPTY", 'No information was available to check for an updated release.');
+define("_AM_VERSION_CHANGELOG", 'Changelog');
 ?>
