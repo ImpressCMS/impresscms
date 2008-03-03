@@ -64,6 +64,18 @@ class IcmsVersionChecker {
 	var $latest_build;	
 	
 	/*
+	 * Status of the latest build
+	 * 
+ 	 * 1  = Alpha
+ 	 * 2  = Beta
+ 	 * 3  = RC
+ 	 * 10 = Final 
+	 * 
+	 * @var $latest_status integer
+	 */
+	var $latest_status;	
+
+	/*
 	 * URL of the latest release
 	 * @var $latest_url string
 	 */
@@ -83,6 +95,7 @@ class IcmsVersionChecker {
      */
 	function IcmsVersionChecker() {
 		$this->installed_version_name = ICMS_VERSION_NAME;
+		
 		$this->cache_version_xml = XOOPS_CACHE_PATH . $this->cache_version_xml;
 	}
 	
@@ -143,9 +156,11 @@ class IcmsVersionChecker {
 				$latest_item = $items[0];
 				$this->latest_version_name = $latest_item['title'];
 				$this->latest_changelog = $latest_item['description'];
-				$this->latest_build = $latest_item['guid'];
+				$build_info = explode('|', $latest_item['guid']);
+				$this->latest_build = $build_info[0];
+				$this->latest_status = $build_info[1];
 				
-				if ($this->latest_build > ICMS_VERSION_BUILD) {
+				if ($this->latest_build > ICMS_VERSION_BUILD && $this->latest_status >= ICMS_VERSION_STATUS) {
 					$this->latest_url = $latest_item['link'];
 					$ret = true;		
 				}

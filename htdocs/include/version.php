@@ -13,7 +13,7 @@
 // For backward compatibility with XOOPS
 define("XOOPS_VERSION",' ImpressCMS 1.0 "Janus" RC 2');
 
-define("ICMS_VERSION_NAME",' ImpressCMS 1.0 "Janus" RC 2');
+define("ICMS_VERSION_NAME",' ImpressCMS 1.0 "Janus" Final');
 
 /*
  * Version Status
