@@ -207,4 +207,11 @@ define('_MODULES','Modules');
 define('_IMPRESSCMS_PREFS','Preferences');
 define('_SYSTEM','System');
 define('_IMPRESSCMS_NEWS','News');
+define('_ABOUT','About');
+define('_IMPRESSCMS_HOME','Home');
+define('_IMPRESSCMS_COMMUNITY','Community');
+define('_IMPRESSCMS_ADDONS','Addons');
+define('_IMPRESSCMS_WIKI','Wiki');
+define('_IMPRESSCMS_BLOG','Blog');
+define('_IMPRESSCMS_DONATE','Donate!');
 ?>
