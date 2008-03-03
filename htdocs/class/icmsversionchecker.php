@@ -160,9 +160,10 @@ class IcmsVersionChecker {
 				$this->latest_build = $build_info[0];
 				$this->latest_status = $build_info[1];
 				
-				if ($this->latest_build > ICMS_VERSION_BUILD && $this->latest_status >= ICMS_VERSION_STATUS) {
+				if ($this->latest_build > ICMS_VERSION_BUILD) {
+					// There is an update available
 					$this->latest_url = $latest_item['link'];
-					$ret = true;		
+					$ret = true;
 				}
 				
 			} else {

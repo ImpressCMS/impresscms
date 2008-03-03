@@ -23,7 +23,7 @@ define("ICMS_VERSION_NAME",' ImpressCMS 1.0 "Janus" Final');
  * 10 = Final
  */
 
-define("ICMS_VERSION_STATUS", 3);
+define("ICMS_VERSION_STATUS", 10);
 
 /*
  * Build number
