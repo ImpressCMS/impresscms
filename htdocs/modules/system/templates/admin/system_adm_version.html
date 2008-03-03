@@ -19,6 +19,10 @@ div .errorMsg a:hover {color: #000;}
         <br />
         <{$smarty.const._AM_VERSION_MOREINFO}><br />
         <h1><a href="<{$latest_url}>" target="_blank"><{$latest_version}></a></h1>
+	<{if $not_a_final_comment}> 	 
+		<div>
+			<b><{$smarty.const._AM_VERSION_WARNING}></b>: <{$smarty.const._AM_VERSION_WARNING_NOT_A_FINAL}></div> 	 
+	<{/if}>
     </div>
     </div>
     <div class="odd">
