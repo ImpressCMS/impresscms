@@ -7,5 +7,5 @@ define("_AM_VERSION_NO_UPDATE", 'You are running the latest version of ImpressCM
 define("_AM_VERSION_UPDATE_NEEDED", 'There is a new version of ImpressCMS ! The ImpressCMS Project strongly recommends always using the latest release.');
 define("_AM_VERSION_MOREINFO", 'Click on the following link to get more information on the latest release: ');
 
-
+define("_AM_VERSION_CHECK_RSSDATA_EMPTY", 'No information was available to check for an updated release.');
 ?>
