@@ -8,8 +8,6 @@
 <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/xoops.css" />
 </head>
 <body>
-<br />
-<div class="warper">
 <{if $xoBlocks.canvas_left and $xoBlocks.canvas_right}><{assign var=columns_layout value='threecolumns-layout'}>
 <{elseif $xoBlocks.canvas_left}><{assign var=columns_layout value='leftcolumn-layout'}>
 <{elseif $xoBlocks.canvas_right}><{assign var=columns_layout value='rightcolumn-layout'}>
@@ -40,11 +38,10 @@
 	 	</div>
 	</div>
 </div><!-- Start footer -->
-<br class="clear" />
 <div id="xo-footer">
 <a href="http://www.impresscms.org/" title=""><img src="<{xoImgUrl img/poweredby.gif}>" alt="ImpressCMS" /></a>
 </div>
 <!-- end Footer -->
-</div></div>
+</div>
   </body>
 </html>

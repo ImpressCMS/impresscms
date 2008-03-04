@@ -9,9 +9,7 @@
 <link rel="stylesheet" type="text/css" media="all" href="<{$xoops_url}>/xoops.css" />
 
 </head>
-<br />
  <body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
-<div class="warper">
 <{if $xoBlocks.canvas_left and $xoBlocks.canvas_right}><{assign var=columns_layout value='threecolumns-layout'}>
 <{elseif $xoBlocks.canvas_left}><{assign var=columns_layout value='leftcolumn-layout'}>
 <{elseif $xoBlocks.canvas_right}><{assign var=columns_layout value='rightcolumn-layout'}>
@@ -21,7 +19,7 @@
     <div id="xo-header">
 	    <div id="xo-headerlogo"><a href="<{xoAppUrl /}>" title=""><img src="<{xoImgUrl img/logo.png}>" alt="<{$xoops_sitename}>" /></a></div>
 	    <div id="xo-headerbanner"><{$xoops_banner}></div>
-		<div id="xo-globalnav">&nbsp;</div>
+		<div id="xo-globalnav"></div>
     </div>  <!-- End header -->
   
 <!-- Start Main Content Area -->
@@ -33,12 +31,10 @@
 <{if $xoops_logdump != ''}><div><{$xoops_logdump}></div><{/if}>
 </div>
 <!-- Start footer -->
-<br class="clear" />
 <div id="xo-footer">
 <a href="http://www.impresscms.org/" title=""><img src="<{xoImgUrl img/poweredby.gif}>" alt="impressCMS" /></a>
 </div>
 <!-- end Footer -->
-</div>
 </div>
 </body>
 </html>

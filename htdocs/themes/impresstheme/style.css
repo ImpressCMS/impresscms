@@ -83,6 +83,27 @@ h6 {font-size: .8em;}
 	
 }
 
+#xo-globalnav ul {
+	list-style-type: none;
+	margin: 0px;
+	padding: 2px 0 0 0;
+}
+
+#xo-globalnav li {
+	display: inline;
+}
+
+#xo-globalnav li a {
+	float: left;
+	text-decoration: none;
+	text-align: center;
+	display: block;
+	padding-right: 20px;
+}
+
+#xo-globalnav li a:hover {
+}
+
 /* ---------- Column left/right rules ---------- */
 
 #xo-canvas-rightcolumn {}
@@ -115,20 +136,17 @@ h6 {font-size: .8em;}
 
 /* ---------- Redirect ------------ */
 #xo-redirect {
-	margin-top: 40px;
+	margin: 40px 0;
 	margin-left: auto;
-	margin-right: auto; 
+	margin-right: auto;
 	width: 85%;
-	background-color: #f7e6bd; 
-	color: #222222; 
-	text-align: center; 
-	border-top: 1px solid #DDDDFF; 
-	border-left: 1px solid #DDDDFF; 
-	border-right: 1px solid #DDDDFF; 
-	border-bottom: 1px solid #DDDDFF; 
-	font-weight: bold; 
-	padding: 10px;	
+	background-color: #f7e6bd;
+	color: #222;
 	text-align: center;
+	font-weight: bold;
+	padding: 10px;
+	text-align: center;
+	border: 2px solid #DDDDFF;
 }
 /* ---------- Site close ------------ */
 #xo-siteclose-login {
