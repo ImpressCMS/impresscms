@@ -214,4 +214,5 @@ define('_IMPRESSCMS_ADDONS','Addons');
 define('_IMPRESSCMS_WIKI','Wiki');
 define('_IMPRESSCMS_BLOG','Blog');
 define('_IMPRESSCMS_DONATE','Donate!');
+define('_RECREATE_ADMINMENU_FILE', 'This is your first time to enter the administration section. Press the button below to proceed.');
 ?>

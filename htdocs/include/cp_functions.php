@@ -89,7 +89,7 @@ window.onload=startList;
 	 * Loading admin dropdown menus
 	 */
 	if (!file_exists(XOOPS_CACHE_PATH.'/adminmenu.php')) {
-		xoops_confirm(array('op' => 2), XOOPS_URL.'/admin.php', _AD_PRESSGEN);
+		xoops_confirm(array('op' => 2), XOOPS_URL.'/admin.php', _RECREATE_ADMINMENU_FILE);
 		exit();
 	}
     $file = file_get_contents(XOOPS_CACHE_PATH."/adminmenu.php");
