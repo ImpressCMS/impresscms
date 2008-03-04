@@ -53,6 +53,9 @@ a:hover { background-color: transparent; color: #ff9966; font-weight: bold; text
 .successMsg { background-color: #9FFF8F; color: #143F22; border-color: #2F5F3F; }
 .successMsg a { background-color: transparent; color: #529214; }
 
+div .errorMsg a {text-decoration: underline;}
+div .errorMsg a:hover {color: #000;}
+
 /* ===== General small ===== */
 .fontSmall { font-size : .7em;}
 a.fontSmall { background-color: transparent; color: #006699;}
