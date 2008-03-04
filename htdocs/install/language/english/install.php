@@ -181,4 +181,8 @@ define("TRUST_PATH_VALIDATE","A suggested name for the Trust path has been creat
 define("TRUST_PATH_NEED_CREATED_MANUALLY","It was not possible to create the trust path. Please create it manually and click on the following Refresh button.");
 define("BUTTON_CREATE_TUST_PATH","Create Trust Path");
 define("TRUST_PATH_SUCCESSFULLY_CREATED", "The trust path was successfully created.");
+
+// welcome custom blocks
+define("WELCOME_WEBMASTER","Welcome Webmaster !");
+define("WELCOME_ANONYMOUS","Welcome on an ImpressCMS powered website !");
 ?>
