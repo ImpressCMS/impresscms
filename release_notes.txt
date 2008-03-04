@@ -57,6 +57,21 @@ Installing ImpressCMS
 
 For a complete installation documentation, please refer to /docs/install.html in the ImpressCMS package.
 
+Upgrading from a previous version of ImpressCMS
+==================================
+
+If you are upgrading from a previous version of ImpressCMS (1.0 Beta or RC), please follow these instructions:
+
+1. Get the full package from the sourceforge file repository.
+2. Delete htdocs/mainfile.php from the exracted file
+3. Overwrite your existing files with the new ones 
+4. On your server, delete the file cache/adminmenu.php
+5. Access <your.site.url> and login with a webmaster account
+6. Access <your.site.url>/admin.php 
+7. You will see a message saying you are entering the admin area for the first time, click on the Submit button. 
+8. Flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox).
+9. Enojoy !
+
 Upgrading from XOOPS
 ==================================
 
@@ -73,6 +88,7 @@ Upgrading from XOOPS 2.0.17/2.0.18 (easy way):
 6. Write-protect mainfile.php again.
 7. Delete the upgrade folder.
 8. Enter the Admin area & then flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox), this will ensure that the new admin interface will display properly.
+9. Enjoy !
 
 --------------------------------------------------------------------------------
 
@@ -91,6 +107,7 @@ Upgrading from any XOOPS ranging from 2.0.7 to 2.0.16 (using the full package):
 9. Write-protect mainfile.php again.
 10. Delete the upgrade folder.
 11. Enter the Admin area & then flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox), this will ensure that the new admin interface will display properly. 12. Update the "system" module from the modules administration interface.
+12. Enjoy !
 
 
 Revealing the blank page backtrace log
