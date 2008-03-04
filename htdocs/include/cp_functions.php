@@ -379,43 +379,43 @@ function impresscms_get_adminmenu(){
 	$menu[$i]['link'] = 'http://www.impresscms.org';
 	$menu[$i]['title'] = _IMPRESSCMS_HOME;
 	$menu[$i]['absolute'] = 1;
-	$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i++;
 
 	$menu[$i]['link'] = 'http://community.impresscms.org';
 	$menu[$i]['title'] = _IMPRESSCMS_COMMUNITY;
 	$menu[$i]['absolute'] = 1;
-	$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i++;
 
 	$menu[$i]['link'] = 'http://addons.impresscms.org';
 	$menu[$i]['title'] = _IMPRESSCMS_ADDONS;
 	$menu[$i]['absolute'] = 1;
-	$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i++;
 	
 	$menu[$i]['link'] = 'http://wiki.impresscms.org';
 	$menu[$i]['title'] = _IMPRESSCMS_WIKI;
 	$menu[$i]['absolute'] = 1;
-	$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i++;
 
 	$menu[$i]['link'] = 'http://blog.impresscms.org';
 	$menu[$i]['title'] = _IMPRESSCMS_BLOG;
 	$menu[$i]['absolute'] = 1;
-	$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i++;
 
 	$menu[$i]['link'] = 'http://www.impresscms.org/donations/';
 	$menu[$i]['title'] = _IMPRESSCMS_DONATE;
 	$menu[$i]['absolute'] = 1;
-	$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i++;
 	
 	$menu[$i]['link'] = XOOPS_URL."/admin.php?rssnews=1";
 	$menu[$i]['title'] = _IMPRESSCMS_NEWS;
 	$menu[$i]['absolute'] = 1;
-	$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i++;
 
 	$admin_menu[$cont]['id']   = 'news';
