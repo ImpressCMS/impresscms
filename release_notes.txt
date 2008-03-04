@@ -70,7 +70,7 @@ If you are upgrading from a previous version of ImpressCMS (1.0 Beta or RC), ple
 6. Access <your.site.url>/admin.php 
 7. You will see a message saying you are entering the admin area for the first time, click on the Submit button. 
 8. Flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox).
-9. Enojoy !
+9. Enjoy !
 
 Upgrading from XOOPS
 ==================================
