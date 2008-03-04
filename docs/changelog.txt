@@ -1,7 +1,7 @@
 ImpressCMS ChangeLog
 
 =========================================
-2008-03-02 : ImpressCMS 1.0 "Janus" RC 3
+2008-03-04 : ImpressCMS 1.0 "Janus" RC 3
 =========================================
 
 - Improved : Improved system_redirect template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
