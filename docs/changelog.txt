@@ -16,6 +16,7 @@ ImpressCMS ChangeLog
 - Added : New module added in admin: ImpressCMS Version Checker (malanciault/nekro/MrTheme/davidl2)
 - Added : A new Welcome custom block is now added by the install wizard to welcome the "not-yet-loged" user on the new site (malanciault/MrTheme/davidl2)
 - Added : A new Welcome custom block is now added by the install wizard to welcome the webmaster when loged in and to remind him some useful links to start his new ImpressCMS website (malanciault/MrTheme/davidl2)
+- Added : #1904910 A small anchor "new" in System Admin > Blocks so it becomes possible to link to modules/system/admin.php?fct=blocksadmin#new and get the user at the begining of the new block form (malanciault/drummond2) 
 
 =========================================
 2008-02-24 : ImpressCMS 1.0 "Janus" RC 2

@@ -242,6 +242,7 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
 
         $block = array('form_title' => _AM_ADDBLOCK, 'side' => 0, 'weight' => 0, 'visible' => 1, 'title' => '', 'content' => '', 'modules' => array(-1), 'is_custom' => true, 'ctype' => 'H', 'cachetime' => 0, 'op' => 'save', 'edit_form' => false);
         include XOOPS_ROOT_PATH.'/modules/system/admin/blocksadmin/blockform.php';
+        echo '<a name="new"></a>';
         $form->display();
     }
 
