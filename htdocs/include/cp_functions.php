@@ -129,9 +129,10 @@ window.onload=startList;
     		}
     		$navitem['menu'] = $sysprefs = $perm_itens; //Getting array of allowed system prefs
     	}
+    	
     	$icmsAdminTpl->append('navitems', $navitem);
     }
-
+//icms_debug_vardump($sysprefs);
     if (count($sysprefs) > 0){
     	$icmsAdminTpl->assign('systemadm', 1);
     }else{
@@ -406,6 +407,12 @@ function impresscms_get_adminmenu(){
 	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i++;
 
+	$menu[$i]['link'] = 'http://sourceforge.net/projects/impresscms/';
+	$menu[$i]['title'] = _IMPRESSCMS_SOURCEFORGE;
+	$menu[$i]['absolute'] = 1;
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	$i++;
+	
 	$menu[$i]['link'] = 'http://www.impresscms.org/donations/';
 	$menu[$i]['title'] = _IMPRESSCMS_DONATE;
 	$menu[$i]['absolute'] = 1;
