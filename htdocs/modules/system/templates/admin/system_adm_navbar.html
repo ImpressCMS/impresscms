@@ -17,7 +17,15 @@
                 <{if $item.id == 'cphome'}>
 		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{else}><{$xoops_url}>/modules/system/images/imagesarrow1.gif<{/if}>);"><{$sub.title}></a></li>
                 <{elseif $item.id == 'opsystem'}>
-		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$xoops_url}>/modules/system/<{$sub.small}><{/if}>);"><{$sub.title}></a></li>
+		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$xoops_url}>/modules/system/<{$sub.small}><{/if}>);"><{$sub.title}></a>
+    		      <{if $sub.hassubs}>
+	    	        <ul>
+		              <{foreach item=subitem from=$sub.subs}>
+		                <li><a href="<{$subitem.link}>"><{$subitem.title}></a></li>
+		              <{/foreach}>  
+		            </ul>
+		          <{/if}>
+		          </li>
                 <{elseif $item.id == 'modules'}>
 		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{else}><{$xoops_url}>/modules/system/images/modulesitem.png<{/if}>);"><{$sub.title}></a>
     		      <{if $sub.hassubs}>

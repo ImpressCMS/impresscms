@@ -59,6 +59,19 @@ $adminmenu[5]['link'] = "admin.php?fct=preferences";
 $adminmenu[5]['icon'] = "admin/preferences/images/preferences.png";
 $adminmenu[5]['small'] = "admin/preferences/images/preferences_small.png";
 $adminmenu[5]['id'] = XOOPS_SYSTEM_PREF;
+//Getting categories of preferences to include in dropdownmenu
+include_once(XOOPS_ROOT_PATH."/modules/system/language/english/admin/preferences.php");
+$confcat_handler = xoops_gethandler('configcategory');
+$confcats = $confcat_handler->getObjects();
+$catcount = count($confcats);
+if ($catcount > 0){
+	$adminmenu[5]['hassubs'] = 1;
+	for ($i = 0; $i < $catcount; $i++) {
+		$subs[$i]['title'] = constant($confcats[$i]->getVar('confcat_name'));
+		$subs[$i]['link'] = 'admin.php?fct=preferences&amp;op=show&amp;confcat_id='.$confcats[$i]->getVar('confcat_id');
+	}
+	$adminmenu[5]['subs'] = $subs;
+}
 $adminmenu[6]['title'] = _MI_SYSTEM_ADMENU7;
 $adminmenu[6]['link'] = "admin.php?fct=smilies";
 $adminmenu[6]['icon'] = "admin/smilies/images/smilies.png";
