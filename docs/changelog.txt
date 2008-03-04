@@ -4,10 +4,10 @@ ImpressCMS ChangeLog
 2008-03-02 : ImpressCMS 1.0 "Janus" RC 3
 =========================================
 
-- Improved : Improved system_redirect template in impresstheme theme (malanciault/Underdogg/davidl2)
-- Improved : Improved system_siteclose template in impresstheme theme (malanciault/Underdogg/davidl2)
-- Improved : Improved system_adm_version template (MrTheme)
+- Improved : Improved system_redirect template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
+- Improved : Improved system_siteclose template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
 - Fixed : #1905281 Redirect function not using the user selected theme (malanciault)
+- Fixed : the ImpressCMS logo used on impresstheme as well as in the admin section have been updated (nekro/MrTheme)
 - Added : Addition of the global navigationlink in impresstheme theme (mcdonald/skenow/malanciault)
 - Added : Addition of the danish flag (anderssk)
 - Added : Addition of the persian flag (malanciault)
@@ -30,7 +30,7 @@ ImpressCMS ChangeLog
 2008-02-10 : ImpressCMS 1.0 "Janus" RC
 ======================================
 
-- Fixed : #1890400 Can't register new user. (seems to be a mysql version compatibility issue) (vaughan)
+- Fixed : #1890400 Can't register new user (mysql version compatibility issue) (vaughan)
 
 ==========================================
 2008-02-01 : ImpressCMS 1.0 "Janus" Beta 2
