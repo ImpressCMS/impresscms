@@ -152,7 +152,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     if ($fp = fopen($welcome_webmaster_filename, 'r')) {
     	$tplsource = fread($fp, filesize('language/' . $language . '/welcome_webmaster.tpl'));
     	fclose($fp);
-		$newbid = $dbm->insert('newblocks', " VALUES (0, 1, 0, '', 'Custom Block (Auto Format + smilies)', '" . addslashes(WELCOME_WEBMASTERS) . "', '" . addslashes($tplsource) . "', 4, 0, 1, 'C', 'S', 1, '', '', '', '', '', 0, ".$time.")");
+		$newbid = $dbm->insert('newblocks', " VALUES (0, 1, 0, '', 'Custom Block (Auto Format + smilies)', '" . addslashes(WELCOME_WEBMASTER) . "', '" . addslashes($tplsource) . "', 4, 0, 1, 'C', 'S', 1, '', '', '', '', '', 0, ".$time.")");
 		$dbm->insert("group_permission", " VALUES (0, ".$gruops['XOOPS_GROUP_ADMIN'].", ".$newbid.", 1, 'block_read')");
     }
 	// adding welcome custom block visible for anonymous
