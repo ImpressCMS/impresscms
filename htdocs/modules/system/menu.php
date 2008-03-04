@@ -60,7 +60,8 @@ $adminmenu[5]['icon'] = "admin/preferences/images/preferences.png";
 $adminmenu[5]['small'] = "admin/preferences/images/preferences_small.png";
 $adminmenu[5]['id'] = XOOPS_SYSTEM_PREF;
 //Getting categories of preferences to include in dropdownmenu
-include_once(XOOPS_ROOT_PATH."/modules/system/language/english/admin/preferences.php");
+global $xoopsConfig;
+include_once(XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin/preferences.php");
 $confcat_handler = xoops_gethandler('configcategory');
 $confcats = $confcat_handler->getObjects();
 $catcount = count($confcats);
