@@ -6,6 +6,7 @@ ImpressCMS ChangeLog
 
 - Improved : Improved system_redirect template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
 - Improved : Improved system_siteclose template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
+- Improved : Upgrade script has been improved to also clean the cache folder (malanciault/rplima) 
 - Fixed : #1905281 Redirect function not using the user selected theme (malanciault)
 - Fixed : the ImpressCMS logo used on impresstheme as well as in the admin section have been updated (nekro/MrTheme)
 - Added : Addition of the global navigationlink in impresstheme theme (mcdonald/skenow/malanciault)

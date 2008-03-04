@@ -22,6 +22,15 @@ class upgrade_impcms05 {
 		 }
 		}
 		closedir($dir);
+		
+		//also emptying cahce folder
+		$dir = opendir(XOOPS_ROOT_PATH."/cache/");
+		while($file = readdir($dir)){
+		 if(is_file(XOOPS_ROOT_PATH."/cache/".$file) && $file != 'index.html') {
+		  unlink(XOOPS_ROOT_PATH."/cache/".$file);
+		 }
+		}
+		closedir($dir);		
 		return true;
 	}
 	function apply_conf_configcategory() {
