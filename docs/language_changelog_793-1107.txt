@@ -1,0 +1,49 @@
+ImpressCMS Language ChangeLog
+=============================
+
+This is the changelog documenting the changes in the language constant for every release of ImpressCMS between revision 793 and 1107.
+
+
+htdocs/language/english/global.php
+===================================================================
+
++define('_ABOUT','About');
++define('_IMPRESSCMS_HOME','Home');
++define('_IMPRESSCMS_COMMUNITY','Community');
++define('_IMPRESSCMS_ADDONS','Addons');
++define('_IMPRESSCMS_WIKI','Wiki');
++define('_IMPRESSCMS_BLOG','Blog');
++define('_IMPRESSCMS_DONATE','Donate!');
++define('_RECREATE_ADMINMENU_FILE', 'This is your first time to enter the administration section. Press the button below to proceed.');
+ ?>
+
+htdocs/language/english/user.php
+===================================================================
+ 
+-define('_US_YOURREGISTERED','You are now registered. An email containing an user activation key has been sent to the email account you provided. Please follow the instructions in the mail to activate your account. ');
++define('_US_YOURREGISTERED','You are now registered. An email containing a user activation key has been sent to the email account you provided. Please follow the instructions in the mail to activate your account. ');
+ 
+htdocs/language/english/admin.php
+===================================================================
+
+-define('_AD_PRESSGEN', 'This is your first time to enter the administration section. Press the button below to proceed.');
+ 
+
+htdocs/modules/system/language/english/admin/version.php
+===================================================================
+
++define("_AM_VERSION_TITLE", 'ImpressCMS Version Checker');
++define("_AM_VERSION_NO_UPDATE", 'You are running the latest version of ImpressCMS !');
++define("_AM_VERSION_UPDATE_NEEDED", 'There is a new version of ImpressCMS ! The ImpressCMS Project strongly recommends always using the latest release.');
++define("_AM_VERSION_MOREINFO", 'Click on the following link to get more information on the latest release: ');
+ 
++define("_AM_VERSION_CHECK_RSSDATA_EMPTY", 'No information was available to check for an updated release.');
++define("_AM_VERSION_CHANGELOG", 'Changelog');
++define("_AM_VERSION_WARNING", 'Warning');
++define("_AM_VERSION_WARNING_NOT_A_FINAL", 'Please note that you are currently running a "Final" version of ImpressCMS and the proposed updated release is not a "Final" release. All releases other then "Final" should not be used on a production environment. If your install of ImpressCMS is running on a production environment, we recommend you wait for a final release. More info can be found: <a href="http://wiki.impresscms.org/index.php?title=Final_release">here</a>.');
+
+htdocs/modules/system/language/english/admin.php
+===================================================================
+-define('_MD_AM_VRSN','Version');
++define('_MD_AM_VRSN','Version Checker');
+
