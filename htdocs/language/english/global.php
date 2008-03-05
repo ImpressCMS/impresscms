@@ -207,4 +207,6 @@ define('_MODULES','Modules');
 define('_IMPRESSCMS_PREFS','Preferences');
 define('_SYSTEM','System');
 define('_IMPRESSCMS_NEWS','News');
+/** The default separator used in XoopsTree::getNicePathFromId between the elements */
+define('_BRDCRMB_SEP','&nbsp;:&nbsp;')
 ?>

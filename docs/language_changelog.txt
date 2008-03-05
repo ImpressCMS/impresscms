@@ -61,6 +61,7 @@ language/english/global.php
 +  define('_IMPRESSCMS_PREFS','Preferences');
 +  define('_SYSTEM','System');
 +  define('_IMPRESSCMS_NEWS','News');
++  define('_BRDCRMB_SEP','&nbsp;:&nbsp;')
 
 language/english/pmsg.php
 --------------------------
