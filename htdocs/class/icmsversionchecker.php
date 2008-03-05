@@ -96,7 +96,7 @@ class IcmsVersionChecker {
 	function IcmsVersionChecker() {
 		$this->installed_version_name = ICMS_VERSION_NAME;
 		
-		$this->cache_version_xml = XOOPS_CACHE_PATH . $this->cache_version_xml;
+		$this->cache_version_xml = XOOPS_CACHE_PATH . '/' . $this->cache_version_xml;
 	}
 	
 	/**
