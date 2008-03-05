@@ -7,22 +7,22 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : Prototype Library (Updated to the last version , and removed old prototype files from other places like install and scriptaculous library). (nekro)
 - Added : Projax Library to integrate better Scriptaculous in php. (nekro)
 - Added : The configuration to enable or disable the userinfo.php view by annonymous users. (nekro)
-- Added : Feature to select rights for diferent groups and modules for the debug. (nekro)
+- Added : Feature to select rights for different groups and modules for the debug. (nekro)
 - Added : IcmsLibrariesHandler - New feature allowing easy inclusion of third party libraries without hacking any core file (malanciault/davidl2)
 - Added : Including Scriptaculous library
 - Added : Feature to select the editor in the preferences. (nekro)
-- Added : The XOOPS_EDITOR_PATH and XOOPS_EDITOR_URL consntans. (nekro)
+- Added : The XOOPS_EDITOR_PATH and XOOPS_EDITOR_URL constants. (nekro)
 - Added : The /editors folder. (nekro)
 - Added : The TinyMCE editor. (nekro)
 - Added : Feature to select in which modules the groups can use the editor. (the_rplima)
-- Added : Autoselection of system language depeding the browser language configuration. (if multilanguage enabled). (nekro)
+- Added : Autoselection of system language depending the browser language configuration. (if multilanguage enabled). (nekro)
 
 - Improved : The pm form to use the selected editor. (the_rplima)
-
+- Improved : XoopsTree::getNicePathFromId has new parameter, allowing specification of the separator between links (skenow)
 - Changed : Moved the Smarty library from /class to /libraries. (nekro)
 - Changed : Moved the PHPmailer library from /class to /libraries. (nekro)
 
-- Fixed #1899685 : Parse error: banners.pjp on line 226 (kurak_bu/nekro) 
+- Fixed #1899685 : Parse error: banners.php on line 226 (kurak_bu/nekro) 
 
 =============================================
 Unreleased : ImpressCMS 1.0 "Janus" RC
