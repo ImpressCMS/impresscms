@@ -99,4 +99,10 @@ $adminmenu[13]['link'] = "admin.php?fct=comments";
 $adminmenu[13]['icon'] = "admin/comments/images/comments.png";
 $adminmenu[13]['small'] = "admin/comments/images/comments_small.png";
 $adminmenu[13]['id'] = XOOPS_SYSTEM_COMMENT;
+$adminmenu[14]['title'] = _MI_SYSTEM_ADMENU17;
+$adminmenu[14]['link'] = "admin.php?fct=version";
+$adminmenu[14]['icon'] = "admin/version/images/version.png";
+$adminmenu[14]['small'] = "admin/version/images/version_small.png";
+$adminmenu[14]['id'] = XOOPS_SYSTEM_VERSION;
+
 ?>

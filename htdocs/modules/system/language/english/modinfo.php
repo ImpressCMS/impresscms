@@ -39,4 +39,6 @@ define("_MI_SYSTEM_ADMENU13", "Images");
 define("_MI_SYSTEM_ADMENU14", "Avatars");
 define("_MI_SYSTEM_ADMENU15", "Templates");
 define("_MI_SYSTEM_ADMENU16", "Comments");
+// Version Added 
+define("_MI_SYSTEM_ADMENU17", "Version");
 ?>
