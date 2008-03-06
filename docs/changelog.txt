@@ -1,5 +1,8 @@
 ImpressCMS ChangeLog
 
+
+- Improved : admin_version template (sato-san/davidl2)
+
 =========================================
 2008-03-04 : ImpressCMS 1.0 "Janus" RC 3
 =========================================

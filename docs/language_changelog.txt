@@ -7,16 +7,16 @@ Legend :
   +  a constant was added orm in some case, a whole new file was added
   +- a constant was modified
   -  a constant was remove OR a whole file was removed
-
-
-
-
-
-
-
 ImpressCMS 1.0 (changes from XOOPS 2.0.17)
 =========================================
 
+
+
+modules/system/language/english/admin/version.php
+-------------------------------------------------
+
++ define("_AM_VERSION_YOUR_VERSION", 'Your ImpressCMS Version:');
++ define("_AM_VERSION_LATEST_VERSION", 'Latest ImpressCMS Version:');
 
 
 modules/system/languages/english/admin/preferences.php
