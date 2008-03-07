@@ -26,7 +26,6 @@ if ($xoopsConfigUser['priv_dpolicy'] !== 1)
 $xoopsOption['template_main'] = 'system_privpolicy.html';
 include XOOPS_ROOT_PATH.'/header.php';
 
-$xoopsTpl->assign('priv_enable', true);
 $xoopsTpl->assign('priv_poltype', 'page');
 $xoopsTpl->assign('priv_policy', $xoopsConfigUser['priv_policy']);
 $xoopsTpl->assign('lang_privacy_policy', _PRV_PRIVACY_POLICY);
