@@ -46,7 +46,7 @@ if ($op == 'main') {
             $xoopsTpl->assign('usercookie', $_COOKIE[$xoopsConfig['usercookie']]);
         }
         if (isset($_GET['xoops_redirect'])) {
-	        $redirect = trim($_GET['xoops_redirect']);
+	        $redirect = htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES);
 	        $isExternal = false;
 	        if ($pos = strpos( $redirect, '://' )) {
 	            $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
@@ -80,7 +80,7 @@ if ($op == 'main') {
         $xoopsTpl->assign('xoops_pagetitle', _LOGIN);
         include 'footer.php';
     } elseif ( !empty($_GET['xoops_redirect']) ) {
-        $redirect = trim($_GET['xoops_redirect']);
+        $redirect = htmlspecialchars(trim($_GET['xoops_redirect']));
         $isExternal = false;
         if ($pos = strpos( $redirect, '://' )) {
             $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
@@ -93,7 +93,7 @@ if ($op == 'main') {
         header('Location: ' . $redirect);
 		exit();
     } else {
-        header('Location: '.XOOPS_URL.'/userinfo.php?uid='.$xoopsUser->getVar('uid'));
+        header('Location: '.XOOPS_URL.'/userinfo.php?uid='.intval($xoopsUser->getVar('uid')));
 		exit();
     }
     exit();
