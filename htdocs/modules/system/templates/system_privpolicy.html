@@ -1,8 +1,4 @@
-<{if $priv_enable !== true}>
-	<div>Privacy Policy is not enabled</div>
-<{/if}>	
-
-<{if $priv_enable == true && $priv_poltype == 'page'}>
+<{if $priv_poltype == 'page'}>
 
 	<div class="privacy_policy">
 		<div align="center"><h1><{$xoops_sitename}>: <{$lang_privacy_policy}></h1></div>
