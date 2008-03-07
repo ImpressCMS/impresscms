@@ -102,13 +102,12 @@ Upgrading from any XOOPS ranging from 2.0.7 to 2.0.16 (using the full package):
 5. Delete the following folders and files from your server (they belong to an old version):
    - class/smarty/core
    - class/smarty/plugins/resource.db.php
-6. Empty the templates_c folder (except index.html).
-7. Ensure the server can write to mainfile.php
-8. Access <your.site.url>/upgrade/ with a browser, and follow the instructions.
-9. Write-protect mainfile.php again.
-10. Delete the upgrade folder.
-11. Enter the Admin area & then flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox), this will ensure that the new admin interface will display properly. 12. Update the "system" module from the modules administration interface.
-12. Enjoy !
+6. Ensure the server can write to mainfile.php
+7. Access <your.site.url>/upgrade/ with a browser, and follow the instructions.
+8. Write-protect mainfile.php again.
+9. Delete the upgrade folder.
+10. Enter the Admin area & then flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox), this will ensure that the new admin interface will display properly. 12. Update the "system" module from the modules administration interface.
+11. Enjoy !
 
 
 Revealing the blank page backtrace log
