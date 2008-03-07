@@ -12,6 +12,7 @@ ImpressCMS ChangeLog
 - Improved : Upgrade script has been improved to also clean the cache folder (malanciault/rplima) 
 - Fixed : #1905281 Redirect function not using the user selected theme (malanciault)
 - Fixed : the ImpressCMS logo used on impresstheme as well as in the admin section have been updated (nekro/MrTheme)
+- Added : htmlspecialchars to $_GET['xoops_redirect'] parameter in user.php to prevent XSS. (vaughan/skenow)
 - Added : Addition of the global navigationlink in impresstheme theme (mcdonald/skenow/malanciault)
 - Added : Addition of the danish flag (anderssk)
 - Added : Addition of the persian flag (malanciault)
