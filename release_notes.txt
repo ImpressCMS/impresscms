@@ -64,13 +64,14 @@ If you are upgrading from a previous version of ImpressCMS (1.0 Beta or RC), ple
 
 1. Get the full package from the sourceforge file repository.
 2. Delete htdocs/mainfile.php from the exracted file
-3. Overwrite your existing files with the new ones 
-4. On your server, delete the file cache/adminmenu.php
-5. Access <your.site.url> and login with a webmaster account
-6. Access <your.site.url>/admin.php 
-7. You will see a message saying you are entering the admin area for the first time, click on the Submit button. 
-8. Flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox).
-9. Enjoy !
+3. Delete htdocs/install folder from the extracted file
+4. Overwrite your existing files with the new ones 
+5. On your server, delete the file cache/adminmenu.php
+6. Access <your.site.url> and login with a webmaster account
+7. Access <your.site.url>/admin.php 
+8. You will see a message saying you are entering the admin area for the first time, click on the Submit button. 
+9. Flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox).
+10. Enjoy !
 
 Upgrading from XOOPS
 ==================================
