@@ -24,7 +24,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
  * reminiscence of XOOPS. It needs tp be moved elsewhere in 1.1
  */
 if (isset($_GET['mid'])) {
-	include_once XOOPS_ROOT_PATH . '/modules/system/admin/versioN/module_info.php';
+	include_once XOOPS_ROOT_PATH . '/modules/system/admin/version/module_info.php';
 	exit;
 }
 
