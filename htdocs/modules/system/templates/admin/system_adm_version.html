@@ -9,23 +9,29 @@
 
 <{if $update_available}>
     <div class="even">
-    <div class="errorMsg">
-        <b><{$smarty.const._AM_VERSION_UPDATE_NEEDED}></b><br />
-        <br />
-        <{$smarty.const._AM_VERSION_MOREINFO}><br />
-        <h1><a href="<{$latest_url}>" target="_blank"><{$latest_version}></a></h1>
-	<{if $not_a_final_comment}> 	 
-		<div>
-			<b><{$smarty.const._AM_VERSION_WARNING}></b>: <{$smarty.const._AM_VERSION_WARNING_NOT_A_FINAL}></div> 	 
-	<{/if}>
+	    <div class="errorMsg">
+	        <b><{$smarty.const._AM_VERSION_UPDATE_NEEDED}></b><br />
+	        <br />
+	        <{$smarty.const._AM_VERSION_MOREINFO}><br />
+	        <h1><a href="<{$latest_url}>" target="_blank"><{$latest_version}></a></h1>
+		<{if $not_a_final_comment}> 	 
+			<div><b><{$smarty.const._AM_VERSION_WARNING}></b>: <{$smarty.const._AM_VERSION_WARNING_NOT_A_FINAL}></div> 	 
+		<{/if}>
+	    </div>
     </div>
-    </div>
+
     <div class="odd">
-    <h1><{$latest_version}> <{$smarty.const._AM_VERSION_CHANGELOG}></h1>
-    <p><pre><{$latest_changelog}></pre></p>
+	    <h1><{$latest_version}> <{$smarty.const._AM_VERSION_CHANGELOG}></h1>
+   		<p><pre><{$latest_changelog}></pre></p>
     </div>
 <{else}>
-    <div class="even">
-    <div class="successMsg"><b><{$smarty.const._AM_VERSION_NO_UPDATE}></b></div>
+	<div class="even">
+		<{if $errors}>
+			<div class="errorMsg">
+				<{$errors}>
+			</div>
+		<{else}>    
+        	<div class="successMsg"><b><{$smarty.const._AM_VERSION_NO_UPDATE}></b></div>
+        <{/if}>
     </div>
 <{/if}>

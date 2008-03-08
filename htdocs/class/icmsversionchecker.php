@@ -125,6 +125,8 @@ class IcmsVersionChecker {
      */	
 	function check() {
 	
+		$ret = false;
+		
 		$rssdata = '';
 		
 		//$time_before_cache_again = 86400;

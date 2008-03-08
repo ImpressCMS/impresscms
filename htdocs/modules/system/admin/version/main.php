@@ -20,6 +20,7 @@ require_once XOOPS_ROOT_PATH.'/class/icmsversionchecker.php';
 $icmsVersionChecker = IcmsVersionChecker::getInstance();
 
 if ($icmsVersionChecker->check()) {
+	icms_debug(1);
 	$icmsAdminTpl->assign('update_available', true);
 	$icmsAdminTpl->assign('latest_changelog', $icmsVersionChecker->latest_changelog);
 	
@@ -28,6 +29,12 @@ if ($icmsVersionChecker->check()) {
 		$icmsAdminTpl->assign('not_a_final_comment', true);
 	}
 	
+}
+else {
+	$checkerErrors = $icmsVersionChecker->getErrors(true);
+	if ($checkerErrors) {
+		$icmsAdminTpl->assign('errors', $checkerErrors);
+	}
 }
 $icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name);
 $icmsAdminTpl->assign('your_version', $icmsVersionChecker->installed_version_name);
