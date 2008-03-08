@@ -16,6 +16,21 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     exit("Access Denied");
 }
 
+/*
+ * If an mid is defined in the GET params then this file is called by clicking on a module Info button in
+ * System Admin > Modules, so we need to display the module information pop up
+ * 
+ * @todo this has nothing to do in the version checker system module, but it is there as a 
+ * reminiscence of XOOPS. It needs tp be moved elsewhere in 1.1
+ */
+if (isset($_GET['mid'])) {
+	include_once XOOPS_ROOT_PATH . '/modules/system/admin/versioN/module_info.php';
+	exit;
+}
+
+/**
+ * Now here is the version checker :-)
+ */
 require_once XOOPS_ROOT_PATH.'/class/icmsversionchecker.php';
 $icmsVersionChecker = IcmsVersionChecker::getInstance();
 
