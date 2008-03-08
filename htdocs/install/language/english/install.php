@@ -184,5 +184,5 @@ define("TRUST_PATH_SUCCESSFULLY_CREATED", "The trust path was successfully creat
 
 // welcome custom blocks
 define("WELCOME_WEBMASTER","Welcome Webmaster !");
-define("WELCOME_ANONYMOUS","Welcome on an ImpressCMS powered website !");
+define("WELCOME_ANONYMOUS","Welcome to an ImpressCMS powered website !");
 ?>
