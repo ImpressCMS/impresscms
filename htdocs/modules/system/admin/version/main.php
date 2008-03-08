@@ -20,7 +20,6 @@ require_once XOOPS_ROOT_PATH.'/class/icmsversionchecker.php';
 $icmsVersionChecker = IcmsVersionChecker::getInstance();
 
 if ($icmsVersionChecker->check()) {
-	icms_debug(1);
 	$icmsAdminTpl->assign('update_available', true);
 	$icmsAdminTpl->assign('latest_changelog', $icmsVersionChecker->latest_changelog);
 	
