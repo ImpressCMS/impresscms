@@ -4,7 +4,13 @@ ImpressCMS ChangeLog
 2008-03-08 : ImpressCMS 1.0 "Janus" Final
 =========================================
 
+- Improved : Updating the VersionChecker to handle situation where the impresscms_xml feed cann not be read (firewall, no internet access, etc...) (malanciault)
+- Improved : In the VersionChecker, changed errors to an array and provided a the language constant as the error message - the version checker now reports correctly when it cannot find a valid version_xml (skenow) 
 - Improved : admin_version template (sato-san/davidl2)
+- Improved : Syntax/grammar check in install wizard (andrewvincent/xoops-magazine)
+- Improved : Syntax/grammar check in preferences (andrewvincent)
+- Improved : Changing the links in About ImpressCMS admin menu for the links to open in new window (malanciaut)
+- Fixed : Fixing the version checker to reinstate the code about module info popup (malanciault)
 - Added : htmlspecialchars to $_GET['xoops_redirect'] parameter in user.php to prevent XSS. (vaughan/skenow)
 
 =========================================
