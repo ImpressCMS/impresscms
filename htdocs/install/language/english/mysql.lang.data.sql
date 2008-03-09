@@ -5,7 +5,7 @@
 INSERT INTO ranks VALUES (1, 'Just popping in', 0, 20, 0, 'rank3e632f95e81ca.gif');
 INSERT INTO ranks VALUES (2, 'Not too shy to talk', 21, 40, 0, 'rank3dbf8e94a6f72.gif');
 INSERT INTO ranks VALUES (3, 'Quite a regular', 41, 70, 0, 'rank3dbf8e9e7d88d.gif');
-INSERT INTO ranks VALUES (4, 'Just can\'t stay away', 71, 150, 0, 'rank3dbf8ea81e642.gif');
+INSERT INTO ranks VALUES (4, 'Just can not stay away', 71, 150, 0, 'rank3dbf8ea81e642.gif');
 INSERT INTO ranks VALUES (5, 'Home away from home', 151, 10000, 0, 'rank3dbf8eb1a72e7.gif');
 INSERT INTO ranks VALUES (6, 'Moderator', 0, 0, 1, 'rank3dbf8edf15093.gif');
 INSERT INTO ranks VALUES (7, 'Webmaster', 0, 0, 1, 'rank3dbf8ee8681cd.gif');
