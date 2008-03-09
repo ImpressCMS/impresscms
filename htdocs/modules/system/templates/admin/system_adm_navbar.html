@@ -29,7 +29,7 @@
 		          <{/if}>
 		          </li>
                 <{elseif $item.id == 'news'}>
-    		      <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{/if}>);"><{$sub.title}></a></li>
+    		      <li><a target="_blank" href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{/if}>);"><{$sub.title}></a></li>
                 <{/if}>
 		      <{/foreach}>
 		    </ul>
