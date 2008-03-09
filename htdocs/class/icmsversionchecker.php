@@ -169,11 +169,12 @@ class IcmsVersionChecker {
 				}
 				
 			} else {
-				$this->errors = $rss2parser->getErrors();
+        $this->errors[] = _AM_VERSION_CHECK_RSSDATA_EMPTY;//$rss2parser->getErrors();
 				$ret = false;
 			}
 		} else {
 			$this->errors[] = _AM_VERSION_CHECK_RSSDATA_EMPTY;
+			$ret = false;
 		}
 		return $ret;
 	}
