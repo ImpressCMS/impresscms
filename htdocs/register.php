@@ -202,7 +202,10 @@ case 'finish':
 		include_once 'include/checkinvite.php';
 		$valid_actkey = check_invite_code($actkey);
 		$newuser->setVar('actkey', $valid_actkey ? $actkey : substr(md5(uniqid(mt_rand(), 1)), 0, 8), true);
-		$newuser->setVar('pass', md5($pass), true);
+		$salt = icms_createSalt();
+		$newuser->setVar('salt', $salt, true);
+		$pass = icms_encryptPass($pass, $salt);
+		$newuser->setVar('pass', $pass, true);
 		$newuser->setVar('timezone_offset', $timezone_offset, true);
 		$newuser->setVar('user_regdate', time(), true);
 		$newuser->setVar('uorder',$xoopsConfig['com_order'], true);
