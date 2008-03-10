@@ -1,7 +1,7 @@
 ImpressCMS ChangeLog
 
 =========================================
-2008-03-08 : ImpressCMS 1.0 "Janus" Final
+2008-03-10 : ImpressCMS 1.0 "Janus" Final
 =========================================
 
 - Improved : Updating the VersionChecker to handle situation where the impresscms_xml feed cann not be read (firewall, no internet access, etc...) (malanciault)

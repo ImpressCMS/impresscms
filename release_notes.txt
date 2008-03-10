@@ -40,7 +40,7 @@ You can easily get ImpressCMS using SVN. Instructions about this can be found he
 http://wiki.impresscms.org/index.php?title=Install_and_update_using_SVN
 
 The path for this release is the following:
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0_rc3/
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0_final/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 
