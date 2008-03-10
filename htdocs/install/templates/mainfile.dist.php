@@ -73,7 +73,7 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 
 	// Table Prefix
 	// This prefix will be added to all new tables created to avoid name conflict in the database. If you are unsure, just use the default 'xoops'.
-	define('XOOPS_DB_PREFIX', 'icms');
+	define('XOOPS_DB_PREFIX', 'xoops');
 
 	// Database Hostname
 	// Hostname of the database server. If you are unsure, 'localhost' works in most cases.
@@ -90,10 +90,6 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	// Database Name
 	// The name of database on the host. The installer will attempt to create the database if not exist
 	define('XOOPS_DB_NAME', '');
-
-	// Main Password Salt Key
-	// The unique key used in the password algorhythm. Do NOT change this key once your site is Live, changing this key will render all passwords invalid & prevent users logging in.
-	define('XOOPS_DB_SALT', '');
 
 	// Use persistent connection? (Yes=1 No=0)
 	// Default is 'Yes'. Choose 'Yes' if you are unsure.

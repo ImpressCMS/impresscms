@@ -58,7 +58,7 @@ case "updateUser":
     $user_avatar = $theme = null;
 	if ( !isset( $attachsig ) ) $attachsig = null;
 	if ( !isset( $user_viewemail ) ) $user_viewemail = null;
-    updateUser($uid, $username, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $salt, $groups);
+    updateUser($uid, $username, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $groups);
     break;
 case "delUser":
     xoops_cp_header();
@@ -71,10 +71,10 @@ case "delete_many":
     xoops_cp_header();
     $count = count($memberslist_id);
     if ( $count > 0 ) {
-        $list = "<a href='".XOOPS_URL."/userinfo.php?uid=".$memberslist_id[0]."' rel='external'>".$memberslist_uname[$memberslist_id[0]]."</a>";
+        $list = "<a href='".XOOPS_URL."/userinfo.php?uid=".$memberslist_id[0]."' target='_blank'>".$memberslist_uname[$memberslist_id[0]]."</a>";
         $hidden = "<input type='hidden' name='memberslist_id[]' value='".$memberslist_id[0]."' />\n";
         for ( $i = 1; $i < $count; $i++ ) {
-            $list .= ", <a href='".XOOPS_URL."/userinfo.php?uid=".$memberslist_id[$i]."' rel='external'>".$memberslist_uname[$memberslist_id[$i]]."</a>";
+            $list .= ", <a href='".XOOPS_URL."/userinfo.php?uid=".$memberslist_id[$i]."' target='_blank'>".$memberslist_uname[$memberslist_id[$i]]."</a>";
             $hidden .= "<input type='hidden' name='memberslist_id[]' value='".$memberslist_id[$i]."' />\n";
         }
         echo "<div><h4>".sprintf(_AM_AYSYWTDU," ".$list." ")."</h4>";
@@ -179,10 +179,7 @@ case "addUser":
                     xoops_cp_footer();
                     exit();
                 }
-		$salt = icms_createSalt();
-		$newuser->setVar("salt", $salt);
-		$password = icms_encryptPass($password, $salt);
-                $newuser->setVar("pass", $password);
+                $newuser->setVar("pass", md5($password));
             }
             $newuser->setVar("timezone_offset", $timezone_offset);
             $newuser->setVar("uorder", $uorder);

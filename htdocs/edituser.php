@@ -116,12 +116,8 @@ if ($op == 'saveuser') {
         $edituser->setVar('user_aim', $_POST['user_aim']);
         $edituser->setVar('user_yim', $_POST['user_yim']);
         $edituser->setVar('user_msnm', $_POST['user_msnm']);
-        if ($password != '')
-        {
-		$salt = icms_createSalt();
-		$edituser->setVar('salt', $salt, true);
-		$password = icms_encryptPass($password, $salt); 
-            	$edituser->setVar('pass', $password, true);
+        if ($password != '') {
+            $edituser->setVar('pass', md5($password), true);
         }
         $attachsig = !empty($_POST['attachsig']) ? 1 : 0;
         $edituser->setVar('attachsig', $attachsig);
