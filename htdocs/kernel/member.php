@@ -325,8 +325,10 @@ class XoopsMemberHandler{
      */
     function &loginUser($uname, $pwd)
     {
+	$salt = icms_getUserSaltFromUname($uname);
+	$pwd = icms_encryptPass($pwd, $salt);
         $criteria = new CriteriaCompo(new Criteria('uname', $uname));
-        $criteria->add(new Criteria('pass', md5($pwd)));
+        $criteria->add(new Criteria('pass', $pwd));
         $user = $this->_uHandler->getObjects($criteria, false);
         if (!$user || count($user) != 1) {
         	$user = false;
@@ -335,13 +337,14 @@ class XoopsMemberHandler{
         return $user[0];
     }
 
+// --------------- Deprecated --------------- //
     /**
      * logs in a user with an nd5 encrypted password
      *
      * @param string $uname username
      * @param string $md5pwd password encrypted with md5
      * @return object XoopsUser reference to the logged in user. FALSE if failed to log in
-     */
+     
     function &loginUserMd5($uname, $md5pwd)
     {
         $criteria = new CriteriaCompo(new Criteria('uname', $uname));
@@ -353,6 +356,8 @@ class XoopsMemberHandler{
         }
         return $user[0];
     }
+	*/
+// ----------------------------- //
 
     /**
      * count users matching certain conditions

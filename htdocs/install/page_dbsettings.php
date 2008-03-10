@@ -31,11 +31,12 @@ if ( !isset( $vars['DB_HOST'] ) || false !== @strpos( $_SERVER['HTTP_CACHE_CONTR
 		$vars[ $k ] = defined( "XOOPS_$k" ) ? constant( "XOOPS_$k" ) : '';
 	}
 	$vars['DB_PASS'] = '';
+	$vars['DB_SALT'] = '';
 }
 
 // Set default values
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-	$params = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_NAME', 'DB_PREFIX' );
+	$params = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_NAME', 'DB_SALT', 'DB_PREFIX' );
 	foreach ( $params as $name ) {
 		$vars[$name] = $_POST[$name];
 	}
@@ -47,6 +48,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$error = ERR_NO_DBCONNECTION;
 	} elseif ( ! @mysql_select_db( $vars['DB_NAME'], $link ) ) {
 		$error = ERR_NO_DATABASE;
+	} elseif ( @empty( $vars['DB_SALT'] ) ) {
+		$error = ERR_REQUIRED;
 	}
 	if ( empty( $error ) ) {
 		$wizard->redirectToPage( '+1' );
@@ -80,6 +83,7 @@ if ( @empty( $vars['DB_HOST'] ) ) {
 		'DB_USER'		=> '',
 		'DB_PASS'		=> '',
 		'DB_NAME'		=> '',
+		'DB_SALT'		=> icms_createSalt(),
 		'DB_PREFIX'		=> 'x' . substr( md5( time() ), 0, 5 ),
 		'DB_PCONNECT'	=> 0,
 	) );
@@ -121,6 +125,7 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
 <fieldset>
 	<legend><?php echo LEGEND_DATABASE; ?></legend>
 	<?php echo xoFormField( 'DB_NAME',		$vars['DB_NAME'],		DB_NAME_LABEL,	 DB_NAME_HELP ); ?>
+	<?php echo xoFormField( 'DB_SALT',		$vars['DB_SALT'],		DB_SALT_LABEL,	 DB_SALT_HELP ); ?>
 	<?php echo xoFormField( 'DB_PREFIX',	$vars['DB_PREFIX'],		DB_PREFIX_LABEL, DB_PREFIX_HELP ); ?>
 </fieldset>
 <?php

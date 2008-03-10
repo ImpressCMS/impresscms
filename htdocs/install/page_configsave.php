@@ -45,6 +45,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$sdata_rewrite['DB_USER'] = $vars['DB_USER'];
 			$sdata_rewrite['DB_PASS'] = $vars['DB_PASS'];
 			$sdata_rewrite['DB_NAME'] = $vars['DB_NAME'];
+			$sdata_rewrite['DB_SALT'] = $vars['DB_SALT'];
 
 			foreach( $sdata_rewrite as $key => $val ) {
 				if( preg_match( "/(define\()([\"'])(SDATA_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content ) ) {
@@ -73,6 +74,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$vars['DB_USER'] = 'SDATA_DB_USER';
 		$vars['DB_PASS'] = 'SDATA_DB_PASS';
 		$vars['DB_NAME'] = 'SDATA_DB_NAME';
+		$vars['DB_SALT'] = 'SDATA_DB_SALT';
 	} else {
 		$dbinfo_in_trust_path = false;
 	}

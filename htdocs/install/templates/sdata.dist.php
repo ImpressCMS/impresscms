@@ -47,4 +47,8 @@ define('SDATA_DB_PASS', '');
 // The name of database on the host. The installer will attempt to create the database if not exist
 define('SDATA_DB_NAME', '');
 
+// Main Password Salt Key
+// The unique key used in the password algorhythm. Do NOT change this key once your site is Live, changing this key will render all passwords invalid & prevent users logging in.
+define('SDATA_DB_SALT', '');
+
 ?>

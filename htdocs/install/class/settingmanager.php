@@ -39,6 +39,7 @@ class setting_manager {
     var $dbuname;
     var $dbpass;
     var $dbname;
+    var $dbsalt;
     var $prefix;
     var $db_pconnect;
     var $root_path;
@@ -76,6 +77,7 @@ class setting_manager {
             $this->xoops_url = (!empty($filepath)) ? $protocol.$_SERVER['HTTP_HOST']."/".$filepath : $protocol.$_SERVER['HTTP_HOST'];
             
             $this->prefix = $this->generatePrefix();
+	    $this->dbsalt = $this->createSalt();
         }
     }
 
@@ -90,6 +92,8 @@ class setting_manager {
             $this->dbpass = $this->sanitizer->stripSlashesGPC($_POST['dbpass']);
         if(isset($_POST['dbname']))
             $this->dbname = $this->sanitizer->stripSlashesGPC($_POST['dbname']);
+        if(isset($_POST['dbsalt']))
+            $this->dbsalt = $this->sanitizer->stripSlashesGPC($_POST['dbsalt']);
         if(isset($_POST['prefix']))
             $this->prefix = $this->sanitizer->stripSlashesGPC($_POST['prefix']);
         if(isset($_POST['db_pconnect']))
@@ -111,6 +115,8 @@ class setting_manager {
             $this->dbpass = XOOPS_DB_PASS;
         if(defined('XOOPS_DB_NAME'))
             $this->dbname = XOOPS_DB_NAME;
+        if(defined('XOOPS_DB_SALT'))
+            $this->dbsalt = XOOPS_DB_SALT;
         if(defined('XOOPS_DB_PREFIX'))
             $this->prefix = XOOPS_DB_PREFIX;
         if(defined('XOOPS_DB_PCONNECT'))
@@ -130,6 +136,9 @@ class setting_manager {
         }
         if ( empty($this->dbname) ) {
             $error[] = sprintf(_INSTALL_L57, _INSTALL_L29);
+        }
+        if ( empty($this->dbsalt) ) {
+            $error[] = sprintf(_INSTALL_L57, _INSTALL_L99);
         }
         if ( empty($this->prefix) ) {
             $error[] = sprintf(_INSTALL_L57, _INSTALL_L30);
@@ -177,6 +186,7 @@ class setting_manager {
         $ret .= $this->editform_sub(_INSTALL_L28, _INSTALL_L65, 'dbuname', $this->sanitizer->htmlSpecialChars($this->dbuname));
         $ret .= $this->editform_sub(_INSTALL_L52, _INSTALL_L68, 'dbpass', $this->sanitizer->htmlSpecialChars($this->dbpass));
         $ret .= $this->editform_sub(_INSTALL_L29, _INSTALL_L64, 'dbname', $this->sanitizer->htmlSpecialChars($this->dbname));
+        $ret .= $this->editform_sub(_INSTALL_L99, _INSTALL_L98, 'dbsalt', $this->sanitizer->htmlSpecialChars($this->dbsalt));
         $ret .= $this->editform_sub(_INSTALL_L30, _INSTALL_L63, 'prefix', $this->sanitizer->htmlSpecialChars($this->prefix));
 
         $ret .= "<tr valign='top' align='left'>
@@ -238,6 +248,10 @@ class setting_manager {
                         <td class='bg1'>".$this->sanitizer->htmlSpecialChars($this->dbname)."</td>
                     </tr>
                     <tr>
+                        <td class='bg3'><b>"._INSTALL_L99."</b></td>
+                        <td class='bg1'>".$this->sanitizer->htmlSpecialChars($this->dbsalt)."</td>
+                    </tr>
+                    <tr>
                         <td class='bg3'><b>"._INSTALL_L30."</b></td>
                         <td class='bg1'>".$this->sanitizer->htmlSpecialChars($this->prefix)."</td>
                     </tr>
@@ -260,6 +274,7 @@ class setting_manager {
             <input type='hidden' name='dbuname' value='".$this->sanitizer->htmlSpecialChars($this->dbuname)."' />
             <input type='hidden' name='dbpass' value='".$this->sanitizer->htmlSpecialChars($this->dbpass)."' />
             <input type='hidden' name='dbname' value='".$this->sanitizer->htmlSpecialChars($this->dbname)."' />
+            <input type='hidden' name='dbsalt' value='".$this->sanitizer->htmlSpecialChars($this->dbsalt)."' />
             <input type='hidden' name='prefix' value='".$this->sanitizer->htmlSpecialChars($this->prefix)."' />
             <input type='hidden' name='db_pconnect' value='".intval($this->db_pconnect)."' />
             <input type='hidden' name='root_path' value='".$this->sanitizer->htmlSpecialChars($this->root_path)."' />
@@ -284,6 +299,10 @@ class setting_manager {
     function generatePrefix() {
         include_once $this->root_path."/include/functions.php";
         return xoops_makepass(5);
+    }
+    function createSalt() {
+        include_once $this->root_path."/include/functions.php";
+        return icms_createSalt(64);
     }
 }
 ?>

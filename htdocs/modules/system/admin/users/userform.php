@@ -107,9 +107,10 @@ if ( count($ranklist) > 0 ) {
 } else {
     $rank_select->addOption(0, _AM_NSRID);
 }
-$pwd_text = new XoopsFormPassword(_AM_PASSWORD, "password", 10, 32);
-$pwd_text2 = new XoopsFormPassword(_AM_RETYPEPD, "pass2", 10, 32);
+$pwd_text = new XoopsFormPassword(_AM_PASSWORD, 'password', 10, 72);
+$pwd_text2 = new XoopsFormPassword(_AM_RETYPEPD, 'pass2', 10, 72);
 $mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', intval($mailok_value));
+$salt = new XoopsFormHidden('salt', $salt);
 
 // Groups administration addition XOOPS 2.0.9: Mith
 global $xoopsUser;
@@ -167,7 +168,7 @@ foreach ($group_select as $group) {
     $form->addElement($group);
     unset($group);
 }
-
+$form->addElement($salt);
 $form->addElement($fct_hidden);
 $form->addElement($op_hidden);
 $form->addElement($submit_button);

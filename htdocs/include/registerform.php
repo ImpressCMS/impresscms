@@ -90,6 +90,7 @@ if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'
 	$disc_tray->addElement($agree_chk, true);
 	$reg_form->addElement($disc_tray);
 }
+$reg_form->addElement(new XoopsFormHidden("salt", $salt));
 $reg_form->addElement(new XoopsFormHidden("actkey", $myts->htmlSpecialChars($actkey)));
 $reg_form->addElement(new XoopsFormHidden("op", "newuser"));
 $reg_form->addElement(new XoopsFormButton("", "submit", _US_SUBMIT, "submit"));

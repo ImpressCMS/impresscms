@@ -51,7 +51,7 @@ $pass4sql = addslashes( $myts->stripSlashesGPC($pass) ) ;
 if( strstr( $uname , '@' ) ) {
 	// check by email if uname includes '@'
 	$criteria = new CriteriaCompo(new Criteria('email', $uname4sql ));
-	$criteria->add(new Criteria('pass', md5( $pass4sql )));
+	$criteria->add(new Criteria('pass', $pass4sql));
 	$user_handler =& xoops_gethandler('user');
 	$users =& $user_handler->getObjects($criteria, false);
 	if( empty( $users ) || count( $users ) != 1 ) $user = false ;

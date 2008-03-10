@@ -44,7 +44,7 @@ function make_groups(&$dbm){
     return $gruops;
 }
 
-function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $gruops){
+function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $salt, $gruops){
 
     //$xoopsDB =& Database::getInstance();
     //$dbm = new db_manager;
@@ -147,11 +147,14 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 
     // data for table 'users'
 
-    $temp = md5($adminpass);
+    	$salt = icms_createSalt();
+	$mainSalt = XOOPS_DB_SALT;
+	$temp = icms_encryptPass($adminpass, $salt, $mainSalt);
+//	$temp = md5($adminpass);
     $regdate = time();
     //$dbadminname= addslashes($adminname);
 	// RMV-NOTIFY (updated for extra columns in user table)
-    $dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'impresstheme','0.0',".time().",'thread',0,1,0,'','','',0)");
+    $dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'impresstheme','0.0',".time().",'thread',0,1,0,'','','',0,'".$salt."')");
 
 
     // data for table 'block_module_link'
@@ -206,8 +209,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $dbm->insert('config', " VALUES (35, 0, 2, 'bad_emails', '_MD_AM_BADEMAILS', '".addslashes(serialize(array('impresscms.org$')))."', '_MD_AM_BADEMAILSDSC', 'textarea', 'array', 26)");
     $dbm->insert('config', " VALUES (36, 0, 2, 'maxuname', '_MD_AM_MAXUNAME', '10', '_MD_AM_MAXUNAMEDSC', 'textbox', 'int', 3)");
     $dbm->insert('config', " VALUES (37, 0, 1, 'bad_ips', '_MD_AM_BADIPS', '".addslashes(serialize(array('127.0.0.1')))."', '_MD_AM_BADIPSDSC', 'textarea', 'array', 42)");
-    $dbm->insert('config', " VALUES (38, 0, 3, 'meta_keywords', '_MD_AM_METAKEY', 'community management system, CMS, content management, social networking, community, blog, support, modules, add-ons, themes', '_MD_AM_METAKEYDSC', 'textarea', 'text', 0)");
-	$dbm->insert('config', " VALUES (39, 0, 3, 'footer', '_MD_AM_FOOTER', 'Powered by ImpressCMS &copy; 2007-" . date('Y', time()) . " <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>', '_MD_AM_FOOTERDSC', 'textarea', 'text', 20)");
+    $dbm->insert('config', " VALUES (38, 0, 3, 'meta_keywords', '_MD_AM_METAKEY', 'community management system, CMS, content management, social networking, community, blog, support, modules, add-ons, themes', '_MD_AM_METAKEYDSC', 'textarea', 'text', 0)");$dbm->insert('config', " VALUES (39, 0, 3, 'footer', '_MD_AM_FOOTER', 'Powered by ImpressCMS &copy; 2007-" . date('Y', time()) . " <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>', '_MD_AM_FOOTERDSC', 'textarea', 'text', 20)");
+    $dbm->insert('config', " VALUES (39, 0, 3, 'footer', '_MD_AM_FOOTER', 'Powered by ImpressCMS &copy; 2007-" . date('Y', time()) . " <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>', '_MD_AM_FOOTERDSC', 'textarea', 'text', 20)");
     $dbm->insert('config', " VALUES (40, 0, 4, 'censor_enable', '_MD_AM_DOCENSOR', '0', '_MD_AM_DOCENSORDSC', 'yesno', 'int', 0)");
     $dbm->insert('config', " VALUES (41, 0, 4, 'censor_words', '_MD_AM_CENSORWRD', '".addslashes(serialize(array('fuck', 'shit', 'cunt', 'wanker', 'bastard')))."', '_MD_AM_CENSORWRDDSC', 'textarea', 'array', 1)");
     $dbm->insert('config', " VALUES (42, 0, 4, 'censor_replace', '_MD_AM_CENSORRPLC', '#OOPS#', '_MD_AM_CENSORRPLCDSC', 'textbox', 'text', 2)");
@@ -280,17 +283,18 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES (102, 0, 2, 'remember_me', '_MD_AM_REMEMBERME', '0', '_MD_AM_REMEMBERMEDSC', 'yesno', 'int', 29)");
     $dbm->insert('config', " VALUES (103, 0, 2, 'priv_dpolicy', '_MD_AM_PRIVDPOLICY', 0, '_MD_AM_PRIVDPOLICYDSC', 'yesno', 'int', 33)");
     $dbm->insert('config', " VALUES (104, 0, 2, 'priv_policy', '_MD_AM_PRIVPOLICY', '".addslashes(_INSTALL_PRIVPOLICY)."', '_MD_AM_PRIVPOLICYDSC', 'textarea', 'text', 34)");
+    $dbm->insert('config', " VALUES (105, 0, 2, 'use_sha256', '_MD_AM_USESHA256', 1, '_MD_AM_USESHA256DSC', 'yesno', 'int',35)");
 
 
- 	$dbm->insert('config', " VALUES (105, 0, 8, 'ml_autoselect_enabled', '_MD_AM_ML_AUTOSELECT_ENABLED', '0', '_MD_AM_ML_AUTOSELECT_ENABLED_DESC', 'yesno', 'text', 2)");
+ 	$dbm->insert('config', " VALUES (106, 0, 8, 'ml_autoselect_enabled', '_MD_AM_ML_AUTOSELECT_ENABLED', '0', '_MD_AM_ML_AUTOSELECT_ENABLED_DESC', 'yesno', 'text', 2)");
 
-	$dbm->insert('config', " VALUES (106, 0, 1, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'default', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', 14)");
-	$dbm->insert('config', " VALUES (107, 0, 1, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', '".addslashes(serialize(array('default')))."', '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', 14)");
-	$dbm->insert('config', " VALUES (108, 0, 2, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '0', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', 50)");
+	$dbm->insert('config', " VALUES (107, 0, 1, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'default', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', 14)");
+	$dbm->insert('config', " VALUES (108, 0, 1, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', '".addslashes(serialize(array('default')))."', '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', 14)");
+	$dbm->insert('config', " VALUES (109, 0, 2, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '0', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', 50)");
 
-	$dbm->insert('config', " VALUES (109, 0, 5, 'search_user_date', '_MD_AM_SEARCH_USERDATE', '1', '_MD_AM_SEARCH_USERDATE', 'yesno', 'int', 2)");
-    $dbm->insert('config', " VALUES (110, 0, 5, 'search_no_res_mod', '_MD_AM_SEARCH_NO_RES_MOD', '1', '_MD_AM_SEARCH_NO_RES_MODDSC', 'yesno', 'int', 3)");
-    $dbm->insert('config', " VALUES (111, 0, 5, 'search_per_page', '_MD_AM_SEARCH_PER_PAGE', '20', '_MD_AM_SEARCH_PER_PAGEDSC', 'textbox', 'int', 4)");
+	$dbm->insert('config', " VALUES (110, 0, 5, 'search_user_date', '_MD_AM_SEARCH_USERDATE', '1', '_MD_AM_SEARCH_USERDATE', 'yesno', 'int', 2)");
+    $dbm->insert('config', " VALUES (111, 0, 5, 'search_no_res_mod', '_MD_AM_SEARCH_NO_RES_MOD', '1', '_MD_AM_SEARCH_NO_RES_MODDSC', 'yesno', 'int', 3)");
+    $dbm->insert('config', " VALUES (112, 0, 5, 'search_per_page', '_MD_AM_SEARCH_PER_PAGE', '20', '_MD_AM_SEARCH_PER_PAGEDSC', 'textbox', 'int', 4)");
 
     return $gruops;
 }
