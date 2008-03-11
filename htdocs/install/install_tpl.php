@@ -10,7 +10,7 @@
 	</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo _INSTALL_CHARSET ?>" />
 	<link rel="stylesheet" type="text/css" media="all" href="style.css" />
-	<script type="text/javascript" src="/libraries/prototype/prototype.js"></script>
+	<script type="text/javascript" src="../libraries/prototype/prototype.js"></script>
 	<script type="text/javascript">
 	function showHideHelp( butt ) {
 		butt.className = ( butt.className == 'on' ) ? 'off': 'on';
