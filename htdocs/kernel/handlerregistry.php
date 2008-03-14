@@ -30,6 +30,15 @@
 // ------------------------------------------------------------------------- //
 
 /**
+ *
+ *
+ * @package     kernel
+ *
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
+
+/**
  * A registry for holding references to {@link XoopsObjectHandler} classes
  * 
  * @package     kernel
@@ -37,7 +46,6 @@
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-
 class XoopsHandlerRegistry
 {
     /**
@@ -48,16 +56,16 @@ class XoopsHandlerRegistry
      */
     var $_handlers = array();
 
-	/**
-	 * get a reference to the only instance of this class
+  	/**
+  	 * get a reference to the only instance of this class
      * 
      * if the class has not been instantiated yet, this will also take 
      * care of that
-	 * 
+  	 * 
      * @static
      * @staticvar   object  The only instance of this class
      * @return      object  Reference to the only instance of this class
-	 */
+  	 */
     function &instance()
     {
         static $instance;
@@ -143,4 +151,5 @@ class XoopsHandlerRegistry
     }
 
 }
+
 ?>

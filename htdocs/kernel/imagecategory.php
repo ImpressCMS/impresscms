@@ -33,34 +33,75 @@ if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
 
+/**
+ *
+ *
+ * @package     kernel
+ *
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
+
+/**
+ * An image category
+ *
+ * These categories are managed through a {@link XoopsImagecategoryHandler} object
+ *
+ * @package     kernel
+ *
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
 class XoopsImagecategory extends XoopsObject
 {
-	var $_imageCount;
+  	var $_imageCount;
+  
+  
+    /**
+     * Constructor
+     *
+     */
+  	function XoopsImagecategory()
+  	{
+  		$this->XoopsObject();
+  		$this->initVar('imgcat_id', XOBJ_DTYPE_INT, null, false);
+  		$this->initVar('imgcat_name', XOBJ_DTYPE_TXTBOX, null, true, 100);
+  		$this->initVar('imgcat_display', XOBJ_DTYPE_INT, 1, false);
+  		$this->initVar('imgcat_weight', XOBJ_DTYPE_INT, 0, false);
+  		$this->initVar('imgcat_maxsize', XOBJ_DTYPE_INT, 0, false);
+  		$this->initVar('imgcat_maxwidth', XOBJ_DTYPE_INT, 0, false);
+  		$this->initVar('imgcat_maxheight', XOBJ_DTYPE_INT, 0, false);
+  		$this->initVar('imgcat_type', XOBJ_DTYPE_OTHER, null, false);
+  		$this->initVar('imgcat_storetype', XOBJ_DTYPE_OTHER, null, false);
+  	}
 
-	function XoopsImagecategory()
-	{
-		$this->XoopsObject();
-		$this->initVar('imgcat_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('imgcat_name', XOBJ_DTYPE_TXTBOX, null, true, 100);
-		$this->initVar('imgcat_display', XOBJ_DTYPE_INT, 1, false);
-		$this->initVar('imgcat_weight', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('imgcat_maxsize', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('imgcat_maxwidth', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('imgcat_maxheight', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('imgcat_type', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('imgcat_storetype', XOBJ_DTYPE_OTHER, null, false);
-	}
 
-	function setImageCount($value)
-	{
-		$this->_imageCount = intval($value);
-	}
 
-	function getImageCount()
-	{
-		return $this->_imageCount;
-	}
+    /**
+     * Set Image count to a value
+     * @param	int $value Value
+     */
+  	function setImageCount($value)
+  	{
+  		$this->_imageCount = intval($value);
+  	}
+
+
+
+    /**
+     * Gets Image count
+     * @return	int _imageCount number of images
+     */
+  	function getImageCount()
+  	{
+  		return $this->_imageCount;
+  	}
 }
+
+
+
+
+
 
 /**
 * XOOPS image caetgory handler class.
@@ -70,10 +111,15 @@ class XoopsImagecategory extends XoopsObject
 *
 * @author  Kazumi Ono <onokazu@xoops.org>
 */
-
 class XoopsImagecategoryHandler extends XoopsObjectHandler
 {
 
+    /**
+     * Creates a new image category
+     *
+  	 * @param bool $isNew is the new image category new??
+  	 * @return object $imgcat {@link XoopsImagecategory} reference to the new image category
+     **/
     function &create($isNew = true)
     {
         $imgcat = new XoopsImagecategory();
@@ -83,6 +129,15 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         return $imgcat;
     }
 
+
+
+    /**
+     * retrieve a specific {@link XoopsImagecategory}
+     *
+  	 * @see XoopsImagecategory
+  	 * @param integer $id imgcatID (imgcat_id) of the image category
+  	 * @return object XoopsImagecategory reference to the block
+     **/
     function &get($id)
     {
       $id = intval($id);
@@ -101,6 +156,13 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         return $imgcat;
     }
 
+
+    /**
+     * Insert a new {@link XoopsImagecategory} into the database
+     *
+  	 * @param object XoopsImagecategory $imgcat reference to the image category to insert
+  	 * @return bool TRUE if succesful
+     **/
     function insert(&$imgcat)
     {
         /**
@@ -135,6 +197,13 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         return true;
     }
 
+
+    /**
+     * delete an {@link XoopsImagecategory} from the database
+     *
+  	 * @param object XoopsImagecategory $imgcat reference to the block to delete
+  	 * @return bool TRUE if succesful
+     **/
     function delete(&$imgcat)
     {
         /**
@@ -151,6 +220,13 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         return true;
     }
 
+
+    /**
+     * retrieve array of {@link XoopsImagecategory}s meeting certain conditions
+  	 * @param object $criteria {@link CriteriaElement} with conditions for the image categories
+  	 * @param bool $id_as_key should the image category' imgcat_id be the key for the returned array?
+  	 * @return array {@link XoopsImagecategory}s matching the conditions
+     **/
     function getObjects($criteria = null, $id_as_key = false)
     {
         $ret = array();
@@ -162,7 +238,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
-		$sql .= ' ORDER BY imgcat_weight, imgcat_id ASC';
+    		$sql .= ' ORDER BY imgcat_weight, imgcat_id ASC';
         $result = $this->db->query($sql, $limit, $start);
         if (!$result) {
             return $ret;
@@ -181,6 +257,12 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     }
 
 
+    /**
+     * get number of {@link XoopsImagecategory}s matching certain conditions
+  	 *
+  	 * @param string $criteria conditions to match
+  	 * @return int number of {@link XoopsImagecategory}s matching the conditions
+     **/
     function getCount($criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('imagecategory').' i LEFT JOIN '.$this->db->prefix('group_permission')." l ON l.gperm_itemid=i.imgcat_id WHERE (l.gperm_name = 'imgcat_read' OR l.gperm_name = 'imgcat_write')";
@@ -195,6 +277,13 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         return $count;
     }
 
+
+    /**
+     * get a list of image category {@link XoopsImagecategory}s matching certain conditions
+  	 *
+  	 * @param string $criteria conditions to match
+  	 * @return array array of {@link XoopsImagecategory}s matching the conditions
+     **/
     function getList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null)
     {
         $criteria = new CriteriaCompo();

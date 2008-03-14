@@ -367,26 +367,26 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @return  array   array of item IDs
      */
-	function getItemIds($gperm_name, $gperm_groupid, $gperm_modid = 1)
-	{
-		$ret = array();
-		$criteria = new CriteriaCompo(new Criteria('gperm_name', $gperm_name));
-		$criteria->add(new Criteria('gperm_modid', intval($gperm_modid)));
-		if (is_array($gperm_groupid)) {
-            $criteria2 = new CriteriaCompo();
-            foreach ($gperm_groupid as $gid) {
-                $criteria2->add(new Criteria('gperm_groupid', $gid), 'OR');
-            }
-            $criteria->add($criteria2);
-		} else {
-			$criteria->add(new Criteria('gperm_groupid', intval($gperm_groupid)));
-		}
-		$perms = $this->getObjects($criteria, true);
-		foreach (array_keys($perms) as $i) {
-			$ret[] = $perms[$i]->getVar('gperm_itemid');
-		}
-		return array_unique($ret);
-	}
+  	function getItemIds($gperm_name, $gperm_groupid, $gperm_modid = 1)
+  	{
+  		$ret = array();
+  		$criteria = new CriteriaCompo(new Criteria('gperm_name', $gperm_name));
+  		$criteria->add(new Criteria('gperm_modid', intval($gperm_modid)));
+  		if (is_array($gperm_groupid)) {
+              $criteria2 = new CriteriaCompo();
+              foreach ($gperm_groupid as $gid) {
+                  $criteria2->add(new Criteria('gperm_groupid', $gid), 'OR');
+              }
+              $criteria->add($criteria2);
+  		} else {
+  			$criteria->add(new Criteria('gperm_groupid', intval($gperm_groupid)));
+  		}
+  		$perms = $this->getObjects($criteria, true);
+  		foreach (array_keys($perms) as $i) {
+  			$ret[] = $perms[$i]->getVar('gperm_itemid');
+  		}
+  		return array_unique($ret);
+  	}
 
     /**
      * Get all group IDs assigned a specific permission for a particular item
@@ -397,17 +397,19 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      *
      * @return  array   array of group IDs
      */
-	function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1)
-	{
-		$ret = array();
-		$criteria = new CriteriaCompo(new Criteria('gperm_name', $gperm_name));
-		$criteria->add(new Criteria('gperm_itemid', intval($gperm_itemid)));
-		$criteria->add(new Criteria('gperm_modid', intval($gperm_modid)));
-		$perms = $this->getObjects($criteria, true);
-		foreach (array_keys($perms) as $i) {
-			$ret[] = $perms[$i]->getVar('gperm_groupid');
-		}
-		return $ret;
-	}
+  	function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1)
+  	{
+  		$ret = array();
+  		$criteria = new CriteriaCompo(new Criteria('gperm_name', $gperm_name));
+  		$criteria->add(new Criteria('gperm_itemid', intval($gperm_itemid)));
+  		$criteria->add(new Criteria('gperm_modid', intval($gperm_modid)));
+  		$perms = $this->getObjects($criteria, true);
+  		foreach (array_keys($perms) as $i) {
+  			$ret[] = $perms[$i]->getVar('gperm_groupid');
+  		}
+  		return $ret;
+  	}
 }
+
+
 ?>

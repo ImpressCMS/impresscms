@@ -364,7 +364,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
 
 
     /**
-     * get a list of blocks matchich certain conditions
+     * get a list of blocks matching certain conditions
   	 *
   	 * @param string $criteria conditions to match
   	 * @return array array of blocks matching the conditions

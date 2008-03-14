@@ -33,6 +33,16 @@ if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
 
+
+/**
+ *
+ *
+ * @package     kernel
+ *
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
+
 /**
  * An Image
  *
@@ -59,6 +69,8 @@ class XoopsImage extends XoopsObject
 		$this->initVar('imgcat_id', XOBJ_DTYPE_INT, 0, false);
 	}
 }
+
+
 
 /**
  * XOOPS image handler class.
@@ -278,4 +290,6 @@ class XoopsImageHandler extends XoopsObjectHandler
         return $ret;
     }
 }
+
+
 ?>

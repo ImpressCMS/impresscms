@@ -1,5 +1,14 @@
 <?php
 /**
+ *
+ *
+ * @package     kernel
+ *
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
+
+/**
 * Persistable Object Handler class.
 * This class is responsible for providing data access mechanisms to the data source
 * of derived class objects.
@@ -8,7 +17,6 @@
 * @copyright copyright (c) 2000-2004 XOOPS.org
 * @package kernel
 */
-
 class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 
     /**#@+
@@ -203,7 +211,6 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
     }
 
     /**
-
      * count objects matching a condition
      *
      * @param object $criteria {@link CriteriaElement} to match
@@ -282,7 +289,6 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
      * @param bool $checkObject check if the object is dirty and clean the attributes
      * @return bool FALSE if failed, TRUE if already present and unchanged or successful
      */
-
     function insert(&$obj, $force = false, $checkObject = true)
     {
         if ($checkObject != false) {
@@ -404,7 +410,6 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
      * @param object $criteria {@link CriteriaElement} with conditions to meet
      * @return bool
      */
-
     function deleteAll($criteria = null)
     {
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
@@ -418,4 +423,6 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
         }
         return false;
     }
-}?>
+}
+
+?>
