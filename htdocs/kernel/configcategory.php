@@ -67,6 +67,10 @@ class XoopsConfigCategory extends XoopsObject
 }
 
 
+
+
+
+
 /**
  * XOOPS configuration category handler class.
  *
@@ -98,12 +102,15 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
         return $confcat;
     }
 
+
+
+
     /**
      * Retrieve a {@link XoopsConfigCategory}
      *
-     * @param	int $id ID
+     * @param	int $id ConfigCategoryID to get
      *
-     * @return	object  {@link XoopsConfigCategory}, FALSE on fail
+     * @return	object|false  {@link XoopsConfigCategory}, FALSE on fail
      */
     function &get($id) {
         $confcat = false;
@@ -122,8 +129,11 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
         return $confcat;
     }
 
+
+
+
     /**
-     * Store a {@link XoopsConfigCategory}
+     * Insert a {@link XoopsConfigCategory} into the DataBase
      *
      * @param	object   &$confcat  {@link XoopsConfigCategory}
      *
@@ -162,6 +172,10 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
         return $confcat_id;
     }
 
+
+
+
+
     /**
      * Delelete a {@link XoopsConfigCategory}
      *
@@ -184,6 +198,9 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
         }
         return true;
     }
+
+
+
 
     /**
      * Get some {@link XoopsConfigCategory}s

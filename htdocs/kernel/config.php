@@ -347,4 +347,6 @@ class XoopsConfigHandler
   		}
     }
 }
+
+
 ?>

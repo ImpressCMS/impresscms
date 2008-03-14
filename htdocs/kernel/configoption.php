@@ -65,6 +65,10 @@ class XoopsConfigOption extends XoopsObject
     }
 }
 
+
+
+
+
 /**
  * XOOPS configuration option handler class.
  * This class is responsible for providing data access mechanisms to the data source
@@ -95,6 +99,9 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
         return $confoption;
     }
 
+
+
+
     /**
      * Get an option from the database
      *
@@ -119,6 +126,9 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
         }
         return $confoption;
     }
+
+
+
 
     /**
      * Insert a new option in the database

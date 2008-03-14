@@ -365,7 +365,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      * @param	int/array $gperm_groupid    A group ID or an array of group IDs
      * @param	int       $gperm_modid      ID of a module
      *
-     * @return  array     array of item IDs
+     * @return  array   array of item IDs
      */
 	function getItemIds($gperm_name, $gperm_groupid, $gperm_modid = 1)
 	{
