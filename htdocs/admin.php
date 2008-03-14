@@ -52,7 +52,7 @@ if ( !empty($_POST['op']) ) {
 	$op = $_POST['op'];
 }
 
-if (!file_exists(XOOPS_CACHE_PATH.'/adminmenu.php') && $op != 2) {
+if (!file_exists(XOOPS_CACHE_PATH.'/adminmenu_'.$xoopsConfig['language'].'.php') && $op != 2) {
 	xoops_header();
 	xoops_confirm(array('op' => 2), 'admin.php', _AD_PRESSGEN);
 	xoops_footer();

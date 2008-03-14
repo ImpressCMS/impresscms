@@ -87,11 +87,11 @@ window.onload=startList;
 	/**
 	 * Loading admin dropdown menus
 	 */
-	if (!file_exists(XOOPS_CACHE_PATH.'/adminmenu.php')) {
+	if (!file_exists(XOOPS_CACHE_PATH.'/adminmenu_'.$xoopsConfig['language'].'.php')) {
 		xoops_confirm(array('op' => 2), XOOPS_URL.'/admin.php', _AD_PRESSGEN);
 		exit();
 	}
-    $file = file_get_contents(XOOPS_CACHE_PATH."/adminmenu.php");
+    $file = file_get_contents(XOOPS_CACHE_PATH."/adminmenu_".$xoopsConfig['language'].".php");
     $admin_menu = eval('return '.$file.';');
 
     $moduleperm_handler =& xoops_gethandler('groupperm');
@@ -406,11 +406,12 @@ function xoops_module_get_admin_menu(){
 
 function xoops_module_write_admin_menu($content)
 {   
-    if (!xoopsfwrite()) {
+    global $xoopsConfig;
+	if (!xoopsfwrite()) {
         return false;
     }
 	
-    $filename = XOOPS_CACHE_PATH.'/adminmenu.php';
+    $filename = XOOPS_CACHE_PATH.'/adminmenu_'.$xoopsConfig['language'].'.php';
     if ( !$file = fopen($filename, "w") ) {
         echo 'failed open file';
         return false;
