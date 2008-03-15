@@ -87,7 +87,7 @@ acronym, abbr, dfn {
 	color:							inherit;
 }
 .login_form  .credentials label {
-	display:							inline-block;
+	display:						block;
 	width:							33%;
 	margin:							1px;
 }

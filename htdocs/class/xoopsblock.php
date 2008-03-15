@@ -421,7 +421,7 @@ class XoopsBlock extends XoopsObject
             $result = $db->query($sql);
             while ( $myrow = $db->fetchArray($result) ) {
                 $block = new XoopsBlock($myrow);
-                $name = ($block->getVar("block_type") != "C") ? $block->getVar("name") : $block->getVar("title");
+                $name = $block->getVar("title");
                 $ret[$block->getVar("bid")] = $name;
             }
             break;

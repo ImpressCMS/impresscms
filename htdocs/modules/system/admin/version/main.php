@@ -1,106 +1,60 @@
 <?php
-// $Id: main.php 2 2005-11-02 18:23:29Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+* ImpressCMS Version Checker
+*
+* This page checks if the ImpressCMS install runs the latest released version
+*
+* @copyright	The ImpressCMS Project http://www.impresscms.org/
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		1.0
+* @author		malanciault <marcan@impresscms.org)
+* @version		$Id: error.php 429 2008-01-02 22:21:41Z malanciault $
+*/
 
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->getVar('mid')) || !isset($_GET['mid'])) {
+if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin() ) {
     exit("Access Denied");
 }
 
-if (intval($_GET['mid'])) {
-    $module_handler =& xoops_gethandler('module');
-    $versioninfo =& $module_handler->get(intval($_GET['mid']));
-} else {
-    $mid = str_replace('..', '', trim($_GET['mid']));
-    if (file_exists(XOOPS_ROOT_PATH.'/modules/'.$mid.'/xoops_version.php')) {
-        $module_handler =& xoops_gethandler('module');
-        $versioninfo =& $module_handler->create();
-        $versioninfo->loadInfo($mid);
-    }
-}
-if (!isset($versioninfo) || !is_object($versioninfo)) {
-    exit();
-}
-
-//$css = getCss($theme);
-echo "<html>\n<head>\n";
-echo "<meta http-equiv=\"Content-Type\" content=\"text/html; charset="._CHARSET."\"></meta>\n";
-echo "<title>".htmlspecialchars($xoopsConfig['sitename'])."</title>\n";
-
-?>
-<script type="text/javascript">
-<!--//
-scrollID=0;
-vPos=0;
-
-function onWard() {
-   vPos+=2;
-   window.scroll(0,vPos);
-   vPos%=1000;
-   scrollID=setTimeout("onWard()",30);
-   }
-function stop(){
-   clearTimeout(scrollID);
-}
-//-->
-</script>
-<?php
 /*
-if($css){
-    echo "<link rel=\"stylesheet\" href=\"".$css."\" type=\"text/css\">\n\n";
-}
-*/
-echo "</head>\n";
-echo "<body onLoad=\"if(window.scroll)onWard()\" onmouseover=\"stop()\" onmouseout=\"if(window.scroll)onWard()\">\n";
-echo "<div><table width=\"100%\"><tr><td align=\"center\"><br /><br /><br /><br /><br />";
-if ($modimage = $versioninfo->getInfo('image')) {
-    $modimage_path = '/modules/'.$versioninfo->getInfo('dirname').'/'.$modimage;
-    $modimage_realpath = str_replace("\\", "/", realpath(XOOPS_ROOT_PATH.$modimage_path));
-    if (0 === strpos($modimage_realpath, XOOPS_ROOT_PATH) && is_file($modimage_realpath)) {
-        echo "<img src='".XOOPS_URL.$modimage_path."' border='0' /><br />";
-    }
-}
-if ($modname = $versioninfo->getInfo('name')) {
-    echo "<big><b>".htmlspecialchars($modname)."</b></big>";
+ * If an mid is defined in the GET params then this file is called by clicking on a module Info button in
+ * System Admin > Modules, so we need to display the module information pop up
+ * 
+ * @todo this has nothing to do in the version checker system module, but it is there as a 
+ * reminiscence of XOOPS. It needs tp be moved elsewhere in 1.1
+ */
+if (isset($_GET['mid'])) {
+	include_once XOOPS_ROOT_PATH . '/modules/system/admin/version/module_info.php';
+	exit;
 }
 
-$modinfo = array('Version', 'Description', 'Author', 'Credits', 'License');
-foreach ($modinfo as $info) {
-    if ($info_output = $versioninfo->getInfo(strtolower($info))) {
-        echo "<br /><br /><u>$info</u><br />";
-        echo htmlspecialchars($info_output);
-    }
+/**
+ * Now here is the version checker :-)
+ */
+require_once XOOPS_ROOT_PATH.'/class/icmsversionchecker.php';
+$icmsVersionChecker = IcmsVersionChecker::getInstance();
+
+if ($icmsVersionChecker->check()) {
+	$icmsAdminTpl->assign('update_available', true);
+	$icmsAdminTpl->assign('latest_changelog', $icmsVersionChecker->latest_changelog);
+	
+	if (ICMS_VERSION_STATUS == 10 && $icmsVersionChecker->latest_status < 10) {
+		// I'm runing a final release so make sure to notify the user that the update is not a final
+		$icmsAdminTpl->assign('not_a_final_comment', true);
+	}
+	
 }
-echo "<br /><br /><br /><br /><br />";
-echo "<br /><br /><br /><br /><br />";
-echo "<a href=\"javascript:window.close();\">Close</a>";
-echo "<br /><br /><br /><br /><br /><br />";
-echo "</td></tr></table></div>";
-echo "</body></html>";
+else {
+	$checkerErrors = $icmsVersionChecker->getErrors(true);
+	if ($checkerErrors) {
+		$icmsAdminTpl->assign('errors', $checkerErrors);
+	}
+}
+$icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name);
+$icmsAdminTpl->assign('your_version', $icmsVersionChecker->installed_version_name);
+$icmsAdminTpl->assign('latest_url', $icmsVersionChecker->latest_url);	
+
+xoops_cp_header();
+$icmsAdminTpl->display(XOOPS_ROOT_PATH.'/modules/system/templates/admin/system_adm_version.html');
+xoops_cp_footer();
 ?>

@@ -1,11 +1,11 @@
-ImpressCMS 1.0 "Janus" Beta release notes
+ImpressCMS 1.0 "Janus" Final release notes
 ==================================
 
-The ImpressCMS Project is pleased to announce its very first release : ImpressCMS 1.0 "Janus" Beta.
+The ImpressCMS Project is very proud to announce its first stable release: ImpressCMS 1.0 "Janus" Final. This release is ready for production web sites !
 
-The first releases of ImpressCMS is based on the XOOPS 2.0.17 core + some additions made in the XOOPS 2.0.18 development branch and, as such, will retain compatibility with existing modules and themes. The goal is to provide an on-going, stable environment for information and support for XOOPS and its users.
+ImpressCMS 1.0 is based on the XOOPS 2.0.17 core + some additions made in the XOOPS 2.0.18 development branch and, as such, will retain compatibility with existing modules and themes. The goal is to provide an on-going, stable environment for information and support for XOOPS and its users.
 
-Please see the full changelog for details in docs/changelog.txt
+Please see the full changelog for details in docs/changelog.txt.
 
 
 System requirements
@@ -22,20 +22,25 @@ Web server
 Downloading ImpressCMS
 ==================================
 
-This release can be downloaded from the ImpressCMS SourceForge project page :
-https://sourceforge.net/project/showfiles.php?group_id=205633
+This release can be downloaded here : http://sourceforge.net/project/showfiles.php?group_id=205633&package_id=245707
+
+
+Using wget command to download the .tar.gz full package
+==================================
+
+This release can be downloaded directly on your server using the WGET command (providing you have SSH access to your server). To download it, simply use this code:
+
+wget http://www.impresscms.org/download/
 
 
 Checking out ImpressCMS from the SVN
 ==================================
 
-You can easily get ImpressCMS using SVN.
+You can easily get ImpressCMS using SVN. Instructions about this can be found here:
+http://wiki.impresscms.org/index.php?title=Install_and_update_using_SVN
 
-The full package can be found at:
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0/full/
-
-The upgrade package can be found at :
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0/xoops-to-impresscms/
+The path for this release is the following:
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0_final/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 
@@ -52,22 +57,39 @@ Installing ImpressCMS
 
 For a complete installation documentation, please refer to /docs/install.html in the ImpressCMS package.
 
-Upgrading from XOOPS 
+Upgrading from a previous version of ImpressCMS
 ==================================
 
-See below the procedures to migrate your XOOPS site for the newest version of ImpressCMS. 
+If you are upgrading from a previous version of ImpressCMS (1.0 Beta or RC), please follow these instructions:
+
+1. Get the full package from the sourceforge file repository.
+2. Delete htdocs/mainfile.php from the exracted file
+3. Delete htdocs/install folder from the extracted file
+4. Overwrite your existing files with the new ones 
+5. On your server, delete the file cache/adminmenu.php
+6. Access <your.site.url> and login with a webmaster account
+7. Access <your.site.url>/admin.php 
+8. You will see a message saying you are entering the admin area for the first time, click on the Submit button. 
+9. Flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox).
+10. Enjoy !
+
+Upgrading from XOOPS
+==================================
+
+See below the procedures to migrate your XOOPS site for the newest version of ImpressCMS.
 We strongly recommend that you follow all the steps faithfully for your site is updated with security.
 
 Upgrading from XOOPS 2.0.17/2.0.18 (easy way):
 
-1. Get the update package from the sourceforge file repository. 
-2. Overwrite your existing files with the new ones. 
-3. Ensure the server can write to mainfile.php 
-4. Access <your.site.url>/upgrade/ with a browser. 
-5. Follow the instructions to update your database. 
-6. Write-protect mainfile.php again. 
+1. Get the update package from the sourceforge file repository.
+2. Overwrite your existing files with the new ones.
+3. Ensure the server can write to mainfile.php
+4. Access <your.site.url>/upgrade/ with a browser.
+5. Follow the instructions to update your database.
+6. Write-protect mainfile.php again.
 7. Delete the upgrade folder.
-8. Enter the Admin area & then flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox), this will ensure that the new admin interface will display properly. 
+8. Enter the Admin area & then flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox), this will ensure that the new admin interface will display properly.
+9. Enjoy !
 
 --------------------------------------------------------------------------------
 
@@ -75,17 +97,17 @@ Upgrading from any XOOPS ranging from 2.0.7 to 2.0.16 (using the full package):
 
 1. Get the full ImpressCMS package from the sourceforge file repository.
 2. Move the "upgrade" folder inside the "htdocs" folder (it's been kept out as it's not needed for full installs).
-3. Delete htdocs/mainfile.php, htdocs/install/, htdocs/cache/, htdocs/template_c/ from the ImpressCMS1.x package that you just downloaded (not from your server). 
-4. Upload the content of the local htdocs folder over your existing files. 
-5. Delete the following folders and files from your server (they belong to an old version): 
-   - class/smarty/core 
-   - class/smarty/plugins/resource.db.php 
-6. Empty the templates_c folder (except index.html). 
-7. Ensure the server can write to mainfile.php 
-8. Access <your.site.url>/upgrade/ with a browser, and follow the instructions. 
-9. Write-protect mainfile.php again. 
-10. Delete the upgrade folder.
-11. Enter the Admin area & then flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox), this will ensure that the new admin interface will display properly. 12. Update the "system" module from the modules administration interface.
+3. Delete htdocs/mainfile.php, htdocs/install/, htdocs/cache/, htdocs/template_c/ from the ImpressCMS1.x package that you just downloaded (not from your server).
+4. Upload the content of the local htdocs folder over your existing files.
+5. Delete the following folders and files from your server (they belong to an old version):
+   - class/smarty/core
+   - class/smarty/plugins/resource.db.php
+6. Ensure the server can write to mainfile.php
+7. Access <your.site.url>/upgrade/ with a browser, and follow the instructions.
+8. Write-protect mainfile.php again.
+9. Delete the upgrade folder.
+10. Enter the Admin area & then flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox), this will ensure that the new admin interface will display properly. 12. Update the "system" module from the modules administration interface.
+11. Enjoy !
 
 
 Revealing the blank page backtrace log
@@ -126,10 +148,12 @@ ImpressCMS Related Sites
 ------------------------
 Ohloh project: http://www.ohloh.net/projects/10042?p=ImpressCMS
 Facebook group: http://www.facebook.com/group.php?gid=7395938599
+Facebook fans page: http://www.facebook.com/pages/The-ImpressCMS-Project/22332836800
 LinkedIn group: http://www.linkedin.com/e/gis/45459/3A9B02585174
-Delicious: http://del.icio.us/impresscms
-Flickr: http://www.flickr.com/photos/impresscms/
+Delicious: http://del.icio.us/tags/impresscms
+Flickr: http://www.flickr.com/photos/tags/impresscms/
 YouTube: http://www.youtube.com/impresscms
+LastFM Group: http://www.last.fm/group/ImpressCMS
 ImpressCMS Toolbar: http://impresscms.ourtoolbar.com/
 
 ==================================

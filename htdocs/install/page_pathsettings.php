@@ -41,7 +41,7 @@ class PathStuffController {
 		if ( isset( $_SESSION['settings']['ROOT_PATH'] ) ) {
 			$this->xoopsRootPath = $_SESSION['settings']['ROOT_PATH'];
 		} else {
-			$path = str_replace( "\\", "/", realpath( '../' ) );
+			$path = str_replace( "\\", "/", @realpath( '../' ) );
 			if ( file_exists( "$path/mainfile.php" ) ) {
 				$this->xoopsRootPath = $path;
 			}
@@ -55,7 +55,10 @@ class PathStuffController {
 			for ($i = 0; $i < count($arr)-1; $i++){
 			    $web_root .= $arr[$i].'/';
 			}
-			$this->xoopsTrustPath = $web_root . 'trust_path' . substr( md5( time() ), 0, 5);
+
+			$docroot = resolveDocumentRoot();
+
+			$this->xoopsTrustPath = $docroot . 'trust_path' . substr( md5( time() ), 0, 5);
 		}
 		if ( isset( $_SESSION['settings']['URL'] ) ) {
 			$this->xoopsUrl = $_SESSION['settings']['URL'];
@@ -130,7 +133,7 @@ class PathStuffController {
 	 * @return bool
 	 */
 	function checkRootPath() {
-	   	if ( is_dir( $this->xoopsRootPath ) && is_readable( $this->xoopsRootPath ) ) {
+	   	if ( @is_dir( $this->xoopsRootPath ) && @is_readable( $this->xoopsRootPath ) ) {
 			@include_once "$this->xoopsRootPath/include/version.php";
 			if ( file_exists( "$this->xoopsRootPath/mainfile.php" ) && defined( 'XOOPS_VERSION' ) ) {
 				return $this->validRootPath = true;
@@ -144,7 +147,7 @@ class PathStuffController {
 	 * @return bool
 	 */
 	function checkTrustPath() {
-	   	if ( is_dir( $this->xoopsTrustPath ) && is_readable( $this->xoopsTrustPath ) ) {
+	   	if ( @is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath ) ) {
 			return $this->validTrustPath = true;
 	   	}
 		return $this->validTrustPath = false;
@@ -152,7 +155,7 @@ class PathStuffController {
 
 	function createTrustPath() {
 		if (@icms_install_mkdir($this->xoopsTrustPath)) {
-			if ( is_dir( $this->xoopsTrustPath ) && is_readable( $this->xoopsTrustPath ) ) {
+			if ( @is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath ) ) {
 				$_SESSION['settings']['TRUST_PATH'] = $this->xoopsTrustPath;
 				return $this->validTrustPath = true;
 			}
@@ -195,23 +198,23 @@ class PathStuffController {
 		if ( !file_exists( $path ) ) {
 			return false;
 		}
-		$perm = is_dir( $path ) ? 6 : 7;
-		if ( !is_writable($path) ) {
+		$perm = @is_dir( $path ) ? 6 : 7;
+		if ( @!is_writable($path) ) {
 			// First try using owner bit
 			@chmod( $path, octdec( '0' . $perm . '00' ) );
 			clearstatcache();
-			if ( !is_writable( $path ) && $group !== false ) {
+			if ( !@is_writable( $path ) && $group !== false ) {
 				// If group has been specified, try using the group bit
 				@chgrp( $path, $group );
 				@chmod( $path, octdec( '0' . $perm . $perm . '0' ) );
 			}
 			clearstatcache();
-			if ( !is_writable( $path ) ) {
+			if ( !@is_writable( $path ) ) {
 				@chmod( $path, octdec( '0' . $perm . $perm . $perm ) );
 			}
 		}
 		clearstatcache();
-		if ( is_writable( $path ) ) {
+		if ( @is_writable( $path ) ) {
 			$info = stat( $path );
 			//echo $path . ' : ' . sprintf( '%o', $info['mode'] ) . '....';
 			if ( $info['mode'] & 0002 ) {
@@ -240,6 +243,34 @@ class PathStuffController {
 		}
 		return false;
 	}
+}
+
+function resolveDocumentRoot() {
+    $current_script = dirname($_SERVER['SCRIPT_NAME']);
+    $current_path   = dirname($_SERVER['SCRIPT_FILENAME']);
+
+    /* work out how many folders we are away from document_root
+       by working out how many folders deep we are from the url.
+       this isn't fool proof */
+    $adjust = explode("/", $current_script);
+    $adjust = count($adjust);
+
+    /* move up the path with ../ */
+    $traverse = str_repeat("../", $adjust);
+    $adjusted_path = sprintf("%s/%s", $current_path, $traverse);
+
+    /* real path expands the ../'s to the correct folder names */
+    $rootp = @realpath($adjusted_path);
+
+    // a fix for Windows slashes
+    $rootp = str_replace("\\","/",$rootp);
+    $lastchar = substr($rootp,strlen($rootp)-1,1);
+
+    if ($lastchar != '/' && $lastchar != '\\' ){
+        $rootp .= '/';
+    }
+
+    return $rootp;
 }
 
 function genRootCheckHtml( $valid ) {

@@ -144,9 +144,30 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
             $dbm->insert("group_permission", " VALUES (0, ".$gruops['XOOPS_GROUP_ANONYMOUS'].", ".$newbid.", 1, 'block_read')");
         }
     }
+	// adding welcome custom block visible for webmasters
+    $welcome_webmaster_filename = 'language/' . $language . '/welcome_webmaster.tpl';
+    if (!file_exists($welcome_webmaster_filename)) {
+    	$welcome_webmaster_filename = 'language/english/welcome_webmaster.tpl';
+    }
+    if ($fp = fopen($welcome_webmaster_filename, 'r')) {
+    	$tplsource = fread($fp, filesize('language/' . $language . '/welcome_webmaster.tpl'));
+    	fclose($fp);
+		$newbid = $dbm->insert('newblocks', " VALUES (0, 1, 0, '', 'Custom Block (Auto Format + smilies)', '" . addslashes(WELCOME_WEBMASTER) . "', '" . addslashes($tplsource) . "', 4, 0, 1, 'C', 'S', 1, '', '', '', '', '', 0, ".$time.")");
+		$dbm->insert("group_permission", " VALUES (0, ".$gruops['XOOPS_GROUP_ADMIN'].", ".$newbid.", 1, 'block_read')");
+    }
+	// adding welcome custom block visible for anonymous
+    $welcome_anonymous_filename = 'language/' . $language . '/welcome_anonymous.tpl';
+    if (!file_exists($welcome_anonymous_filename)) {
+    	$welcome_anonymous_filename = 'language/english/welcome_anonymous.tpl';
+    }
+    if ($fp = fopen($welcome_anonymous_filename, 'r')) {
+    	$tplsource = fread($fp, filesize('language/' . $language . '/welcome_anonymous.tpl'));
+    	fclose($fp);
+		$newbid = $dbm->insert('newblocks', " VALUES (0, 1, 0, '', 'Custom Block (Auto Format + smilies)', '" . addslashes(WELCOME_ANONYMOUS) . "', '" . addslashes($tplsource) . "', 4, 0, 1, 'C', 'S', 1, '', '', '', '', '', 0, ".$time.")");
+		$dbm->insert("group_permission", " VALUES (0, ".$gruops['XOOPS_GROUP_ANONYMOUS'].", ".$newbid.", 1, 'block_read')");
+    }
 
     // data for table 'users'
-
     $temp = md5($adminpass);
     $regdate = time();
     //$dbadminname= addslashes($adminname);
@@ -241,7 +262,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES (69,0,6,'from','_MD_AM_MAILFROM','','_MD_AM_MAILFROMDESC','textbox','text', 1)");
 	$dbm->insert('config', " VALUES (70,0,6,'fromname','_MD_AM_MAILFROMNAME','','_MD_AM_MAILFROMNAMEDESC','textbox','text',2)");
 	$dbm->insert('config', " VALUES (71, 0, 1, 'sslloginlink', '_MD_AM_SSLLINK', 'https://', '_MD_AM_SSLLINKDSC', 'textbox', 'text', 33)");
-  	$dbm->insert('config', " VALUES (72, 0, 1, 'theme_set_allowed', '_MD_AM_THEMEOK', '".serialize(array('default'))."', '_MD_AM_THEMEOKDSC', 'theme_multi', 'array', 13)");
+  	$dbm->insert('config', " VALUES (72, 0, 1, 'theme_set_allowed', '_MD_AM_THEMEOK', '".serialize(array('impresstheme'))."', '_MD_AM_THEMEOKDSC', 'theme_multi', 'array', 13)");
 	// RMV-NOTIFY... Need to specify which user is sender of notification PM
 	$dbm->insert('config', " VALUES (73,0,6,'fromuid','_MD_AM_MAILFROMUID','1','_MD_AM_MAILFROMUIDDESC','user','int',3)");
 

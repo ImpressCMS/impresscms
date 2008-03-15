@@ -54,7 +54,7 @@ if ( !empty($_POST['op']) ) {
 
 if (!file_exists(XOOPS_CACHE_PATH.'/adminmenu_'.$xoopsConfig['language'].'.php') && $op != 2) {
 	xoops_header();
-	xoops_confirm(array('op' => 2), 'admin.php', _AD_PRESSGEN);
+	xoops_confirm(array('op' => 2), 'admin.php', _RECREATE_ADMINMENU_FILE);
 	xoops_footer();
 	exit();
 }
@@ -70,7 +70,7 @@ switch ($op){
 		break;
 	default:
 		$mods = xoops_cp_header(1);
-		
+
 		// ###### Output warn messages for security  ######
 		if (is_dir(XOOPS_ROOT_PATH."/install/" )) {
 			xoops_error(sprintf(_WARNINSTALL2,XOOPS_ROOT_PATH.'/install/'));
@@ -98,15 +98,15 @@ switch ($op){
 			echo '<br />';
 		}
 
-		$tpl->assign('lang_cp', _CPHOME);
-		$tpl->assign('lang_insmodules', _AD_INSTALLEDMODULES);
+		$icmsAdminTpl->assign('lang_cp', _CPHOME);
+		$icmsAdminTpl->assign('lang_insmodules', _AD_INSTALLEDMODULES);
 
 		// Loading allowed Modules
-		$tpl->assign('modules', $mods);
+		$icmsAdminTpl->assign('modules', $mods);
 		if (count($mods) > 0){
-			$tpl->assign('modulesadm', 1);
+			$icmsAdminTpl->assign('modulesadm', 1);
 		}else{
-			$tpl->assign('modulesadm', 0);
+			$icmsAdminTpl->assign('modulesadm', 0);
 		}
 
 		// Loading System Configuration Links
@@ -140,19 +140,19 @@ switch ($op){
 				$category = isset($modversion['category']) ? intval($modversion['category']) : 0;
 				if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
 					$sysmod = array( "title" => $modversion['name'] , "link" => XOOPS_URL."/modules/system/admin.php?fct=".$file , "image" => XOOPS_URL."/modules/system/admin/$file/images/".$file."_big.png");
-					$tpl->append( 'sysmod' , $sysmod  );
+					$icmsAdminTpl->append( 'sysmod' , $sysmod  );
 					$cont++;
 				}
 			}
 			unset($modversion);
 		}
 		if ($cont > 0){
-			$tpl->assign('systemadm', 1);
+			$icmsAdminTpl->assign('systemadm', 1);
 		}else{
-			$tpl->assign('systemadm', 0);
+			$icmsAdminTpl->assign('systemadm', 0);
 		}
 
-    	echo $tpl->fetch(XOOPS_ROOT_PATH.'/modules/system/templates/admin/system_indexcp.html');
+    	echo $icmsAdminTpl->fetch(XOOPS_ROOT_PATH.'/modules/system/templates/admin/system_indexcp.html');
 
 		break;
 }

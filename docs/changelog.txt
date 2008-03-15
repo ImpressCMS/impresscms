@@ -26,42 +26,92 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 
 - Fixed #1899685 : Parse error: banners.php on line 226 (kurak_bu/nekro) 
 
-=============================================
-Unreleased : ImpressCMS 1.0 "Janus" RC
-=============================================
 
-- Added : New feature "registration by invitation" (sudhacker)
+=========================================
+2008-03-10 : ImpressCMS 1.0 "Janus" Final
+=========================================
 
-- Fixed : #1890412: cache folder is not cleared after update. it now shouldn't remove any .htaccess or php.ini files (for php cgi users) either. (vaughan / skenow)
-- Fixed : #1891588: Timezone offset empty (compatibility issue with versions of PHP aswell as operating system when using floats. (changed to an integer value instead). (vaughan / jegelstaff)
-- Fixed : #1890400 Can't register new user. (seems to be a mysql version compatibility issue) (vaughan)
-- Fixed : w3c validation (sato-san)
+- Improved : Updating the VersionChecker to handle situation where the impresscms_xml feed cann not be read (firewall, no internet access, etc...) (malanciault)
+- Improved : In the VersionChecker, changed errors to an array and provided a the language constant as the error message - the version checker now reports correctly when it cannot find a valid version_xml (skenow) 
+- Improved : admin_version template (sato-san/davidl2)
+- Improved : Syntax/grammar check in install wizard (andrewvincent/xoops-magazine)
+- Improved : Syntax/grammar check in preferences (andrewvincent)
+- Improved : Changing the links in About ImpressCMS admin menu for the links to open in new window (malanciaut)
+- Fixed : Fixing the version checker to reinstate the code about module info popup (malanciault)
+- Added : htmlspecialchars to $_GET['xoops_redirect'] parameter in user.php to prevent XSS. (vaughan/skenow)
+
+=========================================
+2008-03-04 : ImpressCMS 1.0 "Janus" RC 3
+=========================================
+
+- Improved : Improved system_redirect template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
+- Improved : Improved system_siteclose template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
+- Improved : Upgrade script has been improved to also clean the cache folder (malanciault/rplima) 
+- Fixed : #1905281 Redirect function not using the user selected theme (malanciault)
+- Fixed : the ImpressCMS logo used on impresstheme as well as in the admin section have been updated (nekro/MrTheme)
+- Added : Addition of the global navigationlink in impresstheme theme (mcdonald/skenow/malanciault)
+- Added : Addition of the danish flag (anderssk)
+- Added : Addition of the persian flag (malanciault)
+- Added : definitions for ul and li in impresstheme (McDonald/snow/malanciault)
+- Added : New module added in admin: ImpressCMS Version Checker (malanciault/nekro/MrTheme/davidl2)
+- Added : A new Welcome custom block is now added by the install wizard to welcome the "not-yet-loged" user on the new site (malanciault/MrTheme/davidl2)
+- Added : A new Welcome custom block is now added by the install wizard to welcome the webmaster when loged in and to remind him some useful links to start his new ImpressCMS website (malanciault/MrTheme/davidl2)
+- Added : #1904910 A small anchor "new" in System Admin > Blocks so it becomes possible to link to modules/system/admin.php?fct=blocksadmin#new and get the user at the begining of the new block form (malanciault/drummond2) 
+
+=========================================
+2008-02-24 : ImpressCMS 1.0 "Janus" RC 2
+=========================================
+
+- Added : New smarty variable now available, <{$icmsLang}> representing the selected language. For example, if French is the current language selected by the user, then the value of this variable will be "french". (malanciault/davidl2)
+- Fixed : Revision 955: Display issues with impresstheme. (Snow)
+- Fixed : #1891588: Timezone offset empty (compatibility issue with versions of PHP aswell as operating system when using floats. (changed to an integer value instead). (vaughan</jegelstaff)
+- Fixed : #1892430: Typo in language/english/user.php (malanciault/jegelstaff)
+
+
+======================================
+2008-02-10 : ImpressCMS 1.0 "Janus" RC
+======================================
+
+- Fixed : #1890400 Can't register new user (mysql version compatibility issue) (vaughan)
+
+==========================================
+2008-02-01 : ImpressCMS 1.0 "Janus" Beta 2
+==========================================
+
+- Fixed : w3c validation in impresstheme and impresstheme_light (sato-san)
 - Fixed : #1870346 System blocks not visible to added group (skenow/dave_l)
 - Fixed : #1867922 No nice path from getNicePathFromId (MacDonald/malanciault)
+- Fixed : #1876797 the $tpl XoopsTpl object used in htdocs/cp_functions.php and htdocs/admin.php had a too generic name which was creating conflict (with AltSys for example). The variable name was renamed for $icsmAdminTpl (malanciault)
+- Fixed : #1875382 error in xoops.css (display: inline-block) (MacDonald/malanciault)
+- Fixed : #1881367 Problems in the queries executed when editing User Ranks (malanciault/vaughan)
+- Fixed : Adding a few @ in install/page_pathsettings.php to prevent the display of some errors that would confuse users (rplima/malanciault)
+- Fixed : #1872191 Small display bug in user.php (incama/malanciault)
+- Fixed : Local file inclusion (DSecRG/malanciault)
+- Fixed : URL Redirection Phishing (DSecRG/malanciault/fx2024)
 
 ========================================
 2008-01-08 : ImpressCMS 1.0 "Janus" Beta
 ========================================
 
 - Added : linkexternal.js to header, allows devs & designers to utilise 'rel="external" or rel="nofollow" in <A > tags as a replacement for target="_blank". (Vaughan)
-- Added : New admin interface based on XOOPS EXM and improved. Thanks to XOOPS EXM!. (BitC3R0 / malanciault / nekro)
+- Added : New admin interface based on XOOPS EXM and improved. Thanks to XOOPS EXM!. (BitC3R0 / malanciault / young-pee)
 - Added : Addition of the XoopsEditors framework with default editor (malanciault)
 - Added : Integration of the Easiest Multilanguage originally created by GIJOE (malanciault)
 - Added : Addition of Gijoe Remember me hack (malanciault)
-- Added : Added a new Database Driver (MySQLi). (nekro)
-- Added : New feature to add/edit/delete blocks positions. (rplima/nekro)
+- Added : Added a new Database Driver (MySQLi). (young-pee)
+- Added : New feature to add/edit/delete blocks positions. (rplima/young-pee)
 - Added : New installer (skalpa/wtravel)
 - Added : Configuration of XOOPS_TRUST_PATH in intall wizard (malanciault)
 - Added : Saving the database information in a file inside trust_path if possible (malanciault)
 - Added : Upgrade script from XOOPS 2.0.18 (Vaughan/malanciault)
-- Added : Handling HTTP errors automatically on the site. (malanciault/nekro)
+- Added : Handling HTTP errors automatically on the site. (malanciault/young-pee)
 - Added : Creating a random DB prefix in instalation process like mentioned in feature request item #1848819 (real_therplima)
 - Added : New default theme : impresstheme created by aphex and snow (malanciault)
 - Added : Another theme : impresstheme_light created by nekro (malanciault)
 - Added : Ability to set & define your sites Privacy Policy from admin/preferences/user settings. (vaughan)
-- Added : New function to show warnings. Also added a new css class for that. xoops_warning() (nekro)
-- Added : 4 new System warnings. 1 for Security and 3 for correct functionality of the system. (nekro)
-- Added : The users can change they personal theme to be display when they change they profile. (nekro)
+- Added : New function to show warnings. Also added a new css class for that. xoops_warning() (young-pee)
+- Added : 4 new System warnings. 1 for Security and 3 for correct functionality of the system. (young-pee)
+- Added : The users can change they personal theme to be display when they change they profile. (young-pee)
 - Added : Added debugging functions included in the XOOPS boot process to allow easy output of debugging lines by core and modules developers (include/debug_functions.php) (malanciault)
 - Added : Configuration options to turn on or off and configure the Multilanguage on the site (malanciault)
 - Added : Integrating some flags image to be used by the multilanguage feature (malanicault)
@@ -82,40 +132,40 @@ Unreleased : ImpressCMS 1.0 "Janus" RC
 - Changed : Picture/Icon for impressCMS: poweredby.gif (sato-san)
 - Changed : Picture/Icon for impressCMS: poweredby.jpg (sato-san)
 - Changed : Picture/Icon for impressCMS: s_poweredby.gif (sato-san)
-- Changed : The official smilies had been changed by new ones. Thanks BaNaNa-BOi [http://banana-boi.deviantart.com] for the design. (davidl2 / nekro)
+- Changed : The official smilies had been changed by new ones. Thanks BaNaNa-BOi [http://banana-boi.deviantart.com] for the design. (davidl2 / young-pee)
 
 - Removed : The 'Default' theme has been removed (malanciault)
 - Removed : backend.php (dependent on news module)
 - Removed : phpkaox and x2t themes
 
 - Improved : When the User registration is Off... all links to register.php are not shown.
-- Improved : The 'remember me' feature now can be enable and disabled (nekro)
+- Improved : The 'remember me' feature now can be enable and disabled (young-pee)
 - Improved : Changing the Config options container from 60% to 50% #1849876 (malanciault)
-- Improved : Auth Class Folder Organization. (nekro)
-- Improved : Database Class Folder Organization. (Needed for include more drivers) (nekro)
+- Improved : Auth Class Folder Organization. (young-pee)
+- Improved : Database Class Folder Organization. (Needed for include more drivers) (young-pee)
 - Improved : Improve the Modules dropdown menu including subitems of modules that have it (real_therplima)
 - Improved : templates in system module for xHTML validation
 - Improved : Banner and some ImpressCMS logos are change. Thanks drummond
 
 - Fixed #1854703 : mainfile.php was filled #213  (sato-san)
-- Fixed #1851636 : Corrected error in profile administration in the admin side. (nekro)
-- Fixed #1852655 : Gzip warning in admin side. (nekro)
-- Fixed #1854527 : Corrected error updating user profile. (nekro)
-- Fixed Corrected a hardcoded route to the smarty classes. (nekro)
+- Fixed #1851636 : Corrected error in profile administration in the admin side. (young-pee)
+- Fixed #1852655 : Gzip warning in admin side. (young-pee)
+- Fixed #1854527 : Corrected error updating user profile. (young-pee)
+- Fixed Corrected a hardcoded route to the smarty classes. (young-pee)
 - Fixed system templates corrected for validation, added title attributes to links and filled alt attributes for images. (skenow|kris_fr)
-- Fixed #1851559 : Corrected a bug where it was unable to set block permissions in group settings (nekro)
-- Fixed #1851555 : Corrected a bug in the install script (nekro)
-- Fixed #1851361 : Changing the user block position to another position generated an error (nekro)
-- Fixed #1851442 : There was a PHP parser error in the modules admin (nekro)
-- Fixed #1851077 : Some texts were hardcoded in the login block and the user.php file (nekro)
-- Fixed #1851404 : Changed the xoopsblock.php file; the query for asking wich blocks are active was wrong formed; fixed deleting two ' from the query (nekro)
+- Fixed #1851559 : Corrected a bug where it was unable to set block permissions in group settings (young-pee)
+- Fixed #1851555 : Corrected a bug in the install script (young-pee)
+- Fixed #1851361 : Changing the user block position to another position generated an error (young-pee)
+- Fixed #1851442 : There was a PHP parser error in the modules admin (young-pee)
+- Fixed #1851077 : Some texts were hardcoded in the login block and the user.php file (young-pee)
+- Fixed #1851404 : Changed the xoopsblock.php file; the query for asking wich blocks are active was wrong formed; fixed deleting two ' from the query (young-pee)
 - Fixed #1850759 : Fixing the left column of forms to a 30% width (malanciault)
-- Fixed #1851361 : Block display disabled at a fresh install (nekro)
+- Fixed #1851361 : Block display disabled at a fresh install (young-pee)
 - Fixed #1850054 : Notice: Use of undefined constant _US_SELECT_THEME in file /edituser.php (real_therplima)
 - Fixed #1848916 : Removing the System Options title in Control Panel home (malanciault)
 - Fixed #1848663 : _MD_AM_ML_NAMESDSC already defined (malanciault)
 - Fixed #1849080 : RSS link to backend.php in theme.html (real_therplima)
-- Fixed #1848177 : Icon small in /include/cp_functions.php (nekro)
+- Fixed #1848177 : Icon small in /include/cp_functions.php (young-pee)
 - Fixed #1848178 : Space between header and content removed (real_therplima)
 - Fixed #1847782 : Block y/n not selected by default (real_therplima)
 - Fixed #1858648 : Improve multilanguage config options (real_therplima)
@@ -143,14 +193,14 @@ Changes from : XOOPS 2.0.18 dev branch
 
 - Fixed : _MA_USER_SENDMAIL not defined (Garrath/dugris)
 - Fixed : $modversion constant language truncated (zoullou/dugris)
-- Fixed : City renamed (nekro)
+- Fixed : City renamed (young-pee)
 - Fixed : Grp memberships lost when usr w. no Group perm edits usr act (jegelstaff/dugris)
 - Fixed : mistake on RpcDateTimeHandle (Garrath/dugris)
 - Fixed : Do not display the comment form if the option module "Allow anonymous post in comments?" is disabled (dugris)
 - Fixed : Check modules permissions before displaying "Recent comments blocks" (herve/dugris)
 - Fixed : Adding new parameters (width, height, max file size) for uploading ranks (dugris)
 - Fixed : cannot herit methods from kernel's class (Garrath/dugris)
-- Fixed : Corrected a line hardcoded (nekro)
+- Fixed : Corrected a line hardcoded (young-pee)
 - Fixed : Making sure params used in queries are properly sanitized with intval() when they are integer (herve/malanciault)
 - Fixed : In XoopsUser::getUnameFromId, if usereal, then making sure the real name is not just an empty space (herve/malanciault)
 - Fixed : XoopsTree::getNicePathFromId Add separator only if necessary (dugris)

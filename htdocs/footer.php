@@ -35,7 +35,8 @@ if ( !defined("XOOPS_FOOTER_INCLUDED") ) {
 	$xoopsLogger->stopTime( 'Module display' );
 	if ($xoopsOption['theme_use_smarty'] == 0) {
 		// the old way
-		$footer = htmlspecialchars( $xoopsConfigMetaFooter['footer'] ) . '<br /><div style="text-align:center">Powered by ImpressCMS &copy; <a href="http://www.impresscms.org/" rel="external">The ImpressCMS Project</a></div>';
+		$footer = htmlspecialchars( $xoopsConfigMetaFooter['footer'] ) . '<br /><div style="text-align:center">Powered by&nbsp;'.XOOPS_VERSION.' &copy; 2007-'.date('Y').' <a href="http://www.impresscms.org/" target="_blank">ImpressCMS</a></div>';
+
 		if (isset($xoopsOption['template_main'])) {
 			$xoopsTpl->xoops_setCaching(0);
 			$xoopsTpl->display('db:'.$xoopsOption['template_main']);

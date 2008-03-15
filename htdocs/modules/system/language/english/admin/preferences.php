@@ -222,7 +222,7 @@ define("_MD_AM_LDAP_LOGINNAME_ASDN", "Login name use in the DN");
 define("_MD_AM_LDAP_LOGINNAME_ASDN_D", "The ImpressCMS login name is used in the LDAP DN (eg : uid=<loginname>,dc=impresscms,dc=org)<br>The entry is directly read in the LDAP Server without search");
 
 define("_MD_AM_LDAP_FILTER_PERSON", "The search filter LDAP query to find user");
-define("_MD_AM_LDAP_FILTER_PERSON_DESC", "Special LDAP Filter to find user. @@loginname@@ is replace by the users's login name<br> MUST BE BLANK IF YOU DON'T KNOW WHAT YOU DO' !" .
+define("_MD_AM_LDAP_FILTER_PERSON_DESC", "Special LDAP Filter to find user. @@loginname@@ is replaced by the users's login name<br> MUST BE BLANK IF YOU DON'T KNOW WHAT YOU DO' !" .
 		"<br>Ex : (&(objectclass=person)(samaccountname=@@loginname@@)) for AD" .
 		"<br>Ex : (&(objectclass=inetOrgPerson)(uid=@@loginname@@)) for LDAP");
 
@@ -233,7 +233,7 @@ define("_MD_AM_LDAP_PROVIS", "Automatic ImpressCMS account provisionning");
 define("_MD_AM_LDAP_PROVIS_DESC", "Create ImpressCMS user database if not exists");
 
 define("_MD_AM_LDAP_PROVIS_GROUP", "Default affect group");
-define("_MD_AM_LDAP_PROVIS_GROUP_DSC", "The new user is assign to these groups");
+define("_MD_AM_LDAP_PROVIS_GROUP_DSC", "The new user is assigned to these groups");
 
 define("_MD_AM_LDAP_FIELD_MAPPING_ATTR", "ImpressCMS-Auth server fields mapping");
 define("_MD_AM_LDAP_FIELD_MAPPING_DESC", "Describe here the mapping between the ImpressCMS database field and the LDAP Authentication system field." .
