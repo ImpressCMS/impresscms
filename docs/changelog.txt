@@ -23,6 +23,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 
 - Changed : Moved the Smarty library from /class to /libraries. (nekro)
 - Changed : Moved the PHPmailer library from /class to /libraries. (nekro)
+- Changed : Textarea is now widely. Better to create blocks and editing of templates. (sato-san)
 
 - Fixed #1899685 : Parse error: banners.php on line 226 (kurak_bu/nekro) 
 
