@@ -25,6 +25,8 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+
+
 /**
  * @package     kernel
  * @subpackage  auth
@@ -34,24 +36,26 @@
  */
 class XoopsAuth {
 
-	var	$_dao;
+  	var	$_dao;
+  
+  	var	$_errors;
 
-	var	$_errors;
-	/**
-	 * Authentication Service constructor
-	 */
-	function XoopsAuth (&$dao){
-		$this->_dao = $dao;
-	}
 
-	/**
-	 * @abstract need to be write in the dervied class
-	 */	
-	function authenticate() {
-		$authenticated = false;
-				
-		return $authenticated;
-	}		
+  	/**
+  	 * Authentication Service constructor
+  	 */
+  	function XoopsAuth (&$dao){
+  		$this->_dao = $dao;
+  	}
+  
+  	/**
+  	 * @abstract need to be write in the dervied class
+  	 */	
+  	function authenticate() {
+  		$authenticated = false;
+  				
+  		return $authenticated;
+  	}		
 	
     /**
      * add an error 
@@ -78,7 +82,7 @@ class XoopsAuth {
     /**
      * return the errors for this object as html
      * 
-     * @return string html listing the errors
+     * @return string $ret html listing the errors
      * @access public
      */
     function getHtmlErrors()

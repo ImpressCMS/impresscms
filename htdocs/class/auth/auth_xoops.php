@@ -25,6 +25,8 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+
+
 /**
  * @package     kernel
  * @subpackage  auth
@@ -35,30 +37,32 @@
 class XoopsAuthXoops extends XoopsAuth {
 
 
-	/**
-	 * Authentication Service constructor
-	 */
-	function XoopsAuthXoops (&$dao) {
-		$this->_dao = $dao;
-		$this->auth_method = 'xoops';
-	}
+  	/**
+  	 * Authentication Service constructor
+     * constructor
+     * @param object $dao reference to dao object
+  	 */
+  	function XoopsAuthXoops (&$dao) {
+  		$this->_dao = $dao;
+  		$this->auth_method = 'xoops';
+  	}
 
-	/**
-	 *  Authenticate user
-	 *
-	 * @param string $uname
-	 * @param string $pwd
-	 *
-	 * @return bool
-	 */	
+  	/**
+  	 *  Authenticate user
+  	 *
+  	 * @param string $uname
+  	 * @param string $pwd
+  	 *
+  	 * @return object {@link XoopsUser}
+     */	
     function authenticate($uname, $pwd = null) {
-		$member_handler =& xoops_gethandler('member');
+    	$member_handler =& xoops_gethandler('member');
       	$user =& $member_handler->loginUser($uname, $pwd);
       	if ($user == false) {
       		$this->setErrors(1, _US_INCORRECTLOGIN);
       	}
       	return ($user);
-	}
+  	}
 
 }
 

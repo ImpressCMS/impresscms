@@ -25,6 +25,7 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+
 /**
  * @package     kernel
  * @subpackage  auth
@@ -35,49 +36,50 @@
 class XoopsAuthFactory
 {
 
-	/**
-	 * Get a reference to the only instance of authentication class
+  	/**
+  	 * Get a reference to the only instance of authentication class
      * 
      * if the class has not been instantiated yet, this will also take 
      * care of that
-	 * 
+     * @param string $uname Username to get Authentication class for
      * @static
      * @return      object  Reference to the only instance of authentication class
-	 */
-	function &getAuthConnection($uname)
-	{
-		static $auth_instance;		
-		if (!isset($auth_instance)) {
-			$config_handler =& xoops_gethandler('config');    
-    		$authConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);    		
-			require_once XOOPS_ROOT_PATH.'/class/auth/auth.php';
-			if (empty($authConfig['auth_method'])) { // If there is a config error, we use xoops
-				$xoops_auth_method = 'xoops';
-			} else {
-			    $xoops_auth_method = $authConfig['auth_method'];
-			}
-			// Verify if uname allow to bypass LDAP auth 
-			if (in_array($uname, $authConfig['ldap_users_bypass'])) $xoops_auth_method = 'xoops';
-			$file = XOOPS_ROOT_PATH . '/class/auth/auth_' . $xoops_auth_method . '.php';			
-			require_once $file;
-			$class = 'XoopsAuth' . ucfirst($xoops_auth_method);
-			switch ($xoops_auth_method) {
-				case 'xoops' :
-					$dao =& $GLOBALS['xoopsDB'];
-					break;
-				case 'ldap'  : 
-					$dao = null;
-					break;
-				case 'ads'  : 
-					$dao = null;
-					break;
+  	 */
+  	function &getAuthConnection($uname)
+  	{
+  		static $auth_instance;
+  		if (!isset($auth_instance)) {
+  			$config_handler =& xoops_gethandler('config');    
+      		$authConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);    		
+  			require_once XOOPS_ROOT_PATH.'/class/auth/auth.php';
+  			if (empty($authConfig['auth_method'])) { // If there is a config error, we use xoops
+  				$xoops_auth_method = 'xoops';
+  			} else {
+  			    $xoops_auth_method = $authConfig['auth_method'];
+  			}
+  			// Verify if uname allow to bypass LDAP auth 
+  			if (in_array($uname, $authConfig['ldap_users_bypass'])) $xoops_auth_method = 'xoops';
+  			$file = XOOPS_ROOT_PATH . '/class/auth/auth_' . $xoops_auth_method . '.php';			
+  			require_once $file;
+  			$class = 'XoopsAuth' . ucfirst($xoops_auth_method);
+  			switch ($xoops_auth_method) {
+  				case 'xoops' :
+  					$dao =& $GLOBALS['xoopsDB'];
+  					break;
+  				case 'ldap'  : 
+  					$dao = null;
+  					break;
+  				case 'ads'  : 
+  					$dao = null;
+  					break;
 
-			}
-			$auth_instance = new $class($dao);
-		}
-		return $auth_instance;
-	}
+  			}
+  			$auth_instance = new $class($dao);
+  		}
+  		return $auth_instance;
+  	}
 
 }
+
 
 ?>
