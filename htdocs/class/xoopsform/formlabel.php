@@ -31,6 +31,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
 /**
  * @package     kernel
  * @subpackage  form
@@ -50,7 +51,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
 class XoopsFormLabel extends XoopsFormElement {
 
 	/**
-     * Text
+   * Text
 	 * @var	string	
 	 * @access	private
 	 */
@@ -87,4 +88,5 @@ class XoopsFormLabel extends XoopsFormElement {
 		return $this->getValue();
 	}
 }
+
 ?>

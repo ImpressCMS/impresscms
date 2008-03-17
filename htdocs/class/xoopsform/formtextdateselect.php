@@ -31,6 +31,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
 /**
  * @package     kernel
  * @subpackage  form
@@ -52,12 +53,20 @@ if (!defined('XOOPS_ROOT_PATH')) {
 class XoopsFormTextDateSelect extends XoopsFormText
 {
 
+
+	/**
+	 * Constructor
+	 */
 	function XoopsFormTextDateSelect($caption, $name, $size = 15, $value= 0)
 	{
 		$value = !is_numeric($value) ? time() : intval($value);
 		$this->XoopsFormText($caption, $name, $size, 25, $value);
 	}
 
+
+	/**
+	 * Render the Date Select
+	 */
 	function render()
 	{
     	$ele_name = $this->getName();
@@ -67,4 +76,5 @@ class XoopsFormTextDateSelect extends XoopsFormText
 		return "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $ele_value)."'".$this->getExtra()." /><input type='reset' value=' ... ' onclick='return showCalendar(\"".$ele_name."\");'>";
 	}
 }
+
 ?>

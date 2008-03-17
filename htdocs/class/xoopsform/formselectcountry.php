@@ -31,6 +31,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
 /**
  * @package     kernel
  * @subpackage  form
@@ -66,7 +67,7 @@ class XoopsFormSelectCountry extends XoopsFormSelect
 	 * @param	string	$caption	Caption
 	 * @param	string	$name       "name" attribute
 	 * @param	mixed	$value	    Pre-selected value (or array of them).
-     *                              Legal are all 2-letter country codes (in capitals).
+   *                              Legal are all 2-letter country codes (in capitals).
 	 * @param	int		$size	    Number or rows. "1" makes a drop-down-list
 	 */
 	function XoopsFormSelectCountry($caption, $name, $value = null, $size = 1)
@@ -75,4 +76,5 @@ class XoopsFormSelectCountry extends XoopsFormSelect
 		$this->addOptionArray(XoopsLists::getCountryList());
 	}
 }
+
 ?>

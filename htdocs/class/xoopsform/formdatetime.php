@@ -31,6 +31,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
 /**
  * 
  * 
@@ -53,6 +54,9 @@ if (!defined('XOOPS_ROOT_PATH')) {
 class XoopsFormDateTime extends XoopsFormElementTray
 {
 
+	/**
+	 * Constructor
+	 */
 	function XoopsFormDateTime($caption, $name, $size = 15, $value=0)
 	{
 		$this->XoopsFormElementTray($caption, '&nbsp;');
@@ -73,4 +77,5 @@ class XoopsFormDateTime extends XoopsFormElementTray
 		$this->addElement($timeselect);
 	}
 }
+
 ?>

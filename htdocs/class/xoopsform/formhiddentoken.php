@@ -1,5 +1,6 @@
 <?php
-// $Id: formhiddentoken.php 1148 2007-12-04 14:57:24Z phppp $ //  ------------------------------------------------------------------------ //
+// $Id: formhiddentoken.php 1148 2007-12-04 14:57:24Z phppp $
+//  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
 //                       <http://www.xoops.org/>                             //
@@ -21,7 +22,8 @@
 //                                                                           //
 //  You should have received a copy of the GNU General Public License        //
 //  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA // //  ------------------------------------------------------------------------ //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA // 
+//  ------------------------------------------------------------------------ //
 // Author: Kazumi Ono (AKA onokazu)                                          //
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
@@ -29,6 +31,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
 /**
  *
  * @author      Kazumi Ono  <onokazu@xoops.org>
@@ -52,4 +55,5 @@ class XoopsFormHiddenToken extends XoopsFormHidden {
         $this->XoopsFormHidden($name . '_REQUEST', $GLOBALS['xoopsSecurity']->createToken($timeout, $name));
     }
 }
+
 ?>

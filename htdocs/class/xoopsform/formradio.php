@@ -31,6 +31,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
 /**
  * 
  * 
@@ -52,21 +53,21 @@ if (!defined('XOOPS_ROOT_PATH')) {
 class XoopsFormRadio extends XoopsFormElement {
 
 	/**
-     * Array of Options
+   * Array of Options
 	 * @var	array	
 	 * @access	private
 	 */
 	var $_options = array();
 
 	/**
-     * Pre-selected value
+   * Pre-selected value
 	 * @var	string	
 	 * @access	private
 	 */
 	var $_value = null;
 
 	/**
-     * HTML to seperate the elements
+   * HTML to seperate the elements
 	 * @var	string  
 	 * @access  private
 	 */
@@ -138,7 +139,7 @@ class XoopsFormRadio extends XoopsFormElement {
 	 * Get an array with all the options
 	 *
 	 * @param	int     $encode     To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
-     * @return	array   Associative array of value->name pairs
+   * @return	array   Associative array of value->name pairs
 	 */
 	function getOptions($encode = false) {
     	if (!$encode) {
@@ -155,7 +156,7 @@ class XoopsFormRadio extends XoopsFormElement {
 	 * Get the delimiter of this group
 	 * 
 	 * @param	bool    $encode To sanitizer the text?
-     * @return	string  The delimiter
+   * @return	string  The delimiter
 	 */
 	function getDelimeter($encode = false) {
 		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
@@ -183,4 +184,5 @@ class XoopsFormRadio extends XoopsFormElement {
 		return $ret;
 	}
 }
+
 ?>

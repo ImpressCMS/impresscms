@@ -75,8 +75,8 @@ class XoopsFormElementTray extends XoopsFormElement {
 	/**
 	 * constructor
 	 * 
-     * @param	string  $caption    Caption for the group.
-     * @param	string  $delimiter  HTML to separate the elements
+   * @param	string  $caption    Caption for the group.
+   * @param	string  $delimiter  HTML to separate the elements
 	 */
 	function XoopsFormElementTray($caption, $delimeter = "&nbsp;", $name = "") {
 	    $this->setName($name);
@@ -87,7 +87,7 @@ class XoopsFormElementTray extends XoopsFormElement {
 	/**
 	 * Is this element a container of other elements?
 	 * 
-     * @return	bool true
+   * @return	bool true
 	 */	
 	function isContainer()
 	{
@@ -106,7 +106,7 @@ class XoopsFormElementTray extends XoopsFormElement {
 	/**
 	 * Add an element to the group
 	 * 
-     * @param	object  &$element    {@link XoopsFormElement} to add
+   * @param	object  &$element    {@link XoopsFormElement} to add
 	 */
 	function addElement(&$formElement, $required = false) {
 		$this->_elements[] =& $formElement;
@@ -127,7 +127,7 @@ class XoopsFormElementTray extends XoopsFormElement {
 	/**
 	 * get an array of "required" form elements
 	 * 
-     * @return	array   array of {@link XoopsFormElement}s 
+   * @return	array   array of {@link XoopsFormElement}s 
 	 */
 	function &getRequired() {
 		return $this->_required;
@@ -137,7 +137,7 @@ class XoopsFormElementTray extends XoopsFormElement {
 	 * Get an array of the elements in this group
 	 * 
 	 * @param	bool	$recurse	get elements recursively?
-     * @return  array   Array of {@link XoopsFormElement} objects. 
+   * @return  array   Array of {@link XoopsFormElement} objects. 
 	 */
 	function &getElements($recurse = false) {
 		if (!$recurse) {
@@ -165,7 +165,7 @@ class XoopsFormElementTray extends XoopsFormElement {
 	 * Get the delimiter of this group
 	 * 
 	 * @param	bool    $encode To sanitizer the text?
-     * @return	string  The delimiter
+   * @return	string  The delimiter
 	 */
 	function getDelimeter($encode = false) {
 		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
@@ -174,7 +174,7 @@ class XoopsFormElementTray extends XoopsFormElement {
 	/**
 	 * prepare HTML to output this group
 	 * 
-     * @return	string  HTML output
+   * @return	string  HTML output
 	 */
 	function render() {
 		$count = 0;
@@ -194,4 +194,5 @@ class XoopsFormElementTray extends XoopsFormElement {
 		return $ret;
 	}
 }
+
 ?>

@@ -63,7 +63,7 @@ class XoopsFormSelectGroup extends XoopsFormSelect
 	 * @param	bool	$include_anon	Include group "anonymous"?
 	 * @param	mixed	$value	    	Pre-selected value (or array of them).
 	 * @param	int		$size	        Number or rows. "1" makes a drop-down-list.
-     * @param	bool    $multiple       Allow multiple selections?
+   * @param	bool    $multiple       Allow multiple selections?
 	 */
 	function XoopsFormSelectGroup($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
 	{

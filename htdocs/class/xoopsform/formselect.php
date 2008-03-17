@@ -31,6 +31,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
 /**
  * @package     kernel
  * @subpackage  form
@@ -51,14 +52,14 @@ if (!defined('XOOPS_ROOT_PATH')) {
 class XoopsFormSelect extends XoopsFormElement {
 
 	/**
-     * Options
+   * Options
 	 * @var array   
 	 * @access	private
 	 */
 	var $_options = array();
 
 	/**
-     * Allow multiple selections?
+   * Allow multiple selections?
 	 * @var	bool    
 	 * @access	private
 	 */
@@ -72,7 +73,7 @@ class XoopsFormSelect extends XoopsFormElement {
 	var $_size;
 
 	/**
-     * Pre-selcted values
+   * Pre-selcted values
 	 * @var	array   
 	 * @access	private
 	 */
@@ -85,7 +86,7 @@ class XoopsFormSelect extends XoopsFormElement {
 	 * @param	string	$name       "name" attribute
 	 * @param	mixed	$value	    Pre-selected value (or array of them).
 	 * @param	int		$size	    Number or rows. "1" makes a drop-down-list
-     * @param	bool    $multiple   Allow multiple selections?
+   * @param	bool    $multiple   Allow multiple selections?
 	 */
 	function XoopsFormSelect($caption, $name, $value = null, $size = 1, $multiple = false){
 		$this->setCaption($caption);
@@ -100,7 +101,7 @@ class XoopsFormSelect extends XoopsFormElement {
 	/**
 	 * Are multiple selections allowed?
 	 * 
-     * @return	bool
+   * @return	bool
 	 */
 	function isMultiple() {
 		return $this->_multiple;
@@ -109,17 +110,18 @@ class XoopsFormSelect extends XoopsFormElement {
 	/**
 	 * Get the size
 	 * 
-     * @return	int
+   * @return	int
 	 */
 	function getSize() {
 		return $this->_size;
 	}
 
+
 	/**
 	 * Get an array of pre-selected values
 	 *
 	 * @param	bool    $encode To sanitizer the text?
-     * @return	array
+   * @return	array
 	 */
 	function getValue($encode = false) {
     	if (!$encode) {
@@ -132,10 +134,12 @@ class XoopsFormSelect extends XoopsFormElement {
     	return $value;
 	}
 
+
+
 	/**
 	 * Set pre-selected values
 	 * 
-     * @param	$value	mixed
+   * @param	$value	mixed
 	 */
 	function setValue($value) {
 		if (is_array($value)) {
@@ -147,11 +151,13 @@ class XoopsFormSelect extends XoopsFormElement {
 		}
 	}
 
+
+
 	/**
 	 * Add an option
-     * 
+   * 
 	 * @param	string  $value  "value" attribute
-     * @param	string  $name   "name" attribute
+   * @param	string  $name   "name" attribute
 	 */
 	function addOption($value, $name = ""){
 		if ( $name != "" ) {
@@ -161,10 +167,11 @@ class XoopsFormSelect extends XoopsFormElement {
 		}
 	}
 
+
 	/**
 	 * Add multiple options
 	 * 
-     * @param	array   $options    Associative array of value->name pairs
+   * @param	array   $options    Associative array of value->name pairs
 	 */
 	function addOptionArray($options) {
 		if ( is_array($options) ) {
@@ -180,7 +187,7 @@ class XoopsFormSelect extends XoopsFormElement {
 	 * Note: both name and value should be sanitized. However for backward compatibility, only value is sanitized for now.
 	 *
 	 * @param	int     $encode     To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
-     * @return	array   Associative array of value->name pairs
+   * @return	array   Associative array of value->name pairs
 	 */
 	function getOptions($encode = false) {
     	if (!$encode) {
@@ -196,7 +203,7 @@ class XoopsFormSelect extends XoopsFormElement {
 	/**
 	 * Prepare HTML for output
 	 * 
-     * @return	string  HTML
+   * @return	string  HTML
 	 */
 	function render() {
 		$ele_name = $this->getName();
@@ -219,4 +226,5 @@ class XoopsFormSelect extends XoopsFormElement {
 		return $ret;
 	}
 }
+
 ?>

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * user select with page navigation
  *
- * limit: Only work with javascript enabled
+ * limit: Only works with javascript enabled
  *
  * @copyright	The XOOPS project http://www.xoops.org/
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -11,9 +12,29 @@
  * @version		$Id: formselectuser.php 1083 2007-10-16 16:42:51Z phppp $
  * @package		kernel
  */
+
 if (!defined('XOOPS_ROOT_PATH')) {
 	die('XOOPS root path not defined');
 }
+
+
+/**
+ * @package     kernel
+ * @subpackage  form
+ * 
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
+/**
+ * user select with page navigation
+ * 
+ * @package     kernel
+ * @subpackage  form
+ * 
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
+
 include_once XOOPS_ROOT_PATH.'/class/xoopsform/formelementtray.php';
 include_once XOOPS_ROOT_PATH.'/class/xoopsform/formselect.php';
 
@@ -28,7 +49,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
 	 *									For an item with massive members, such as "Registered Users", "$value" should be used to store selected temporary users only instead of all members of that item
 	 * @param	bool	$include_anon	Include user "anonymous"?
 	 * @param	int		$size	        Number or rows. "1" makes a drop-down-list.
-     * @param	bool    $multiple       Allow multiple selections?
+   * @param	bool    $multiple       Allow multiple selections?
 	 */
 	function XoopsFormSelectUser($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
 	{
@@ -37,8 +58,8 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         if ($include_anon) {
             $select_element->addOption(0, $GLOBALS['xoopsConfig']['anonymous']);
         }
-		$member_handler =& xoops_gethandler('member');
-		$user_count = $member_handler->getUserCount();
+    		$member_handler =& xoops_gethandler('member');
+    		$user_count = $member_handler->getUserCount();
         $value = is_array($value) ? $value : ( empty($value) ? array() : array($value) );
 	    if ($user_count > $limit && count($value) > 0) {
         	$criteria = new CriteriaCompo(new Criteria("uid", "(".implode(",", $value).")", "IN"));
@@ -48,7 +69,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
 	    }
         $criteria->setSort('uname');
         $criteria->setOrder('ASC');
-		$users = $member_handler->getUserList($criteria);
+    		$users = $member_handler->getUserList($criteria);
     	$select_element->addOptionArray($users);
     	if ($user_count <= $limit) {
     	    $this->XoopsFormElementTray($caption, "", $name);
@@ -101,4 +122,5 @@ class XoopsFormSelectUser extends XoopsFormElementTray
 	    $this->addElement($action_tray);
     }
 }
+
 ?>

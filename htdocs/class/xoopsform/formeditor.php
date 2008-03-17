@@ -54,12 +54,12 @@ class XoopsFormEditor extends XoopsFormTextArea
 	/**
 	 * Constructor
 	 *
-     * @param	string  $caption    Caption
-     * @param	string  $name       "name" attribute
-     * @param	string  $value      Initial text
-     * @param	array 	$configs     configures
-     * @param	bool  	$noHtml       use non-WYSIWYG eitor onfailure
-     * @param	string  $OnFailure editor to be used if current one failed
+   * @param	string  $caption    Caption
+   * @param	string  $name       "name" attribute
+   * @param	string  $value      Initial text
+   * @param	array 	$configs     configures
+   * @param	bool  	$noHtml       use non-WYSIWYG eitor onfailure
+   * @param	string  $OnFailure editor to be used if current one failed
 	 */
 	function XoopsFormEditor($caption, $name, $editor_configs = null, $noHtml=false, $OnFailure = "")
 	{
@@ -69,6 +69,11 @@ class XoopsFormEditor extends XoopsFormTextArea
 		$this->editor =& $editor_handler->get($name, $editor_configs, $noHtml, $OnFailure);
 	}
 
+
+
+	/**
+	 * Renders the editor
+	 */
 	function render()
 	{
 		return $this->editor->render();

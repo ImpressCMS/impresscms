@@ -31,6 +31,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
 /**
  * 
  * 
@@ -52,14 +53,14 @@ if (!defined('XOOPS_ROOT_PATH')) {
 class XoopsFormPassword extends XoopsFormElement {
 
 	/**
-     * Size of the field.
+   * Size of the field.
 	 * @var	int	
 	 * @access	private
 	 */
 	var $_size;
 
 	/**
-     * Maximum length of the text
+   * Maximum length of the text
 	 * @var	int	
 	 * @access	private
 	 */
@@ -137,4 +138,5 @@ class XoopsFormPassword extends XoopsFormElement {
 		return "<input type='password' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".$this->getValue()."'".$this->getExtra()." />";
 	}
 }
+
 ?>

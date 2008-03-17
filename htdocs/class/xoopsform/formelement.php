@@ -42,7 +42,6 @@ if (!defined('XOOPS_ROOT_PATH')) {
  * @copyright	copyright (c) 2000-2007 XOOPS.org
  */
 
-
 /**
  * Abstract base class for form elements
  * 
@@ -168,6 +167,7 @@ class XoopsFormElement {
 	function setAccessKey($key) {
 		$this->_accesskey = trim($key);
 	}
+
 	/**
 	 * get the "accesskey" attribute for the element
 	 *
@@ -176,6 +176,7 @@ class XoopsFormElement {
 	function getAccessKey() {
 		return $this->_accesskey;
 	}
+
 	/**
 	 * If the accesskey is found in the specified string, underlines it
 	 *
@@ -190,6 +191,7 @@ class XoopsFormElement {
 		return htmlspecialchars($str, ENT_QUOTES);
 	}
 
+
 	/**
 	 * set the "class" attribute for the element
 	 *
@@ -201,6 +203,7 @@ class XoopsFormElement {
             $this->_class[] = $class;
 		}
 	}
+
 	/**
 	 * get the "class" attribute for the element
 	 *

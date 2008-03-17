@@ -31,6 +31,8 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
+
 /**
  * 
  * 
@@ -60,7 +62,7 @@ class XoopsSimpleForm extends XoopsForm
 	/**
 	 * create HTML to output the form with minimal formatting
 	 * 
-     * @return	string
+   * @return	string
 	 */
 	function render()
 	{
@@ -76,4 +78,6 @@ class XoopsSimpleForm extends XoopsForm
 		return $ret;
 	}
 }
+
+
 ?>

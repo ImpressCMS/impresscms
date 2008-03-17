@@ -2,8 +2,8 @@
 /**
 * XoopsFormColorPicker component class file
 * 
-* This class provide a textfield with a color picker popup. This color picker
-* come from Tigra project (http://www.softcomplex.com/products/tigra_color_picker/).
+* This class provides a textfield with a color picker popup. This color picker
+* comes from Tigra project (http://www.softcomplex.com/products/tigra_color_picker/).
 *
 * @copyright	The Xoops project http://www.xoops.org/
 * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
@@ -20,13 +20,38 @@ if (!defined('XOOPS_ROOT_PATH')) {
 }
 
 
+
+/**
+ * @package     kernel
+ * @subpackage  form
+ *
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
+/**
+ * Color Picker
+ *
+ * @package     kernel
+ * @subpackage  form
+ *
+ * @author	Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
 class XoopsFormColorPicker extends XoopsFormText
 {
 
+	/**
+	 * Constructor
+	 */
 	function XoopsFormColorPicker($caption, $name, $value="#FFFFFF") {
 		$this->XoopsFormText($caption, $name, 9, 7, $value);
 	}
 
+
+	/**
+	 * Render the color picker
+   * @return  $string	rendered color picker (?)
+	 */
 	function render() {
 		if (isset($GLOBALS['xoTheme'])) {
 			$GLOBALS['xoTheme']->addScript('include/color-picker.js');

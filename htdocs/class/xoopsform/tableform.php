@@ -31,6 +31,8 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
+
 /**
  * 
  * 
@@ -62,7 +64,7 @@ class XoopsTableForm extends XoopsForm
 	/**
 	 * create HTML to output the form as a table
 	 * 
-     * @return	string
+   * @return	string
 	 */
 	function render()
 	{

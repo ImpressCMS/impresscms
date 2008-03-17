@@ -31,6 +31,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
 /**
  * @package     kernel
  * @subpackage  form
@@ -73,4 +74,5 @@ class XoopsFormRadioYN extends XoopsFormRadio
 		$this->addOption(0, $no);
 	}
 }
+
 ?>

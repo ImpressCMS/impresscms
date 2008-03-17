@@ -31,6 +31,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
 /**
  * @package     kernel
  * @subpackage  form
@@ -51,21 +52,21 @@ if (!defined('XOOPS_ROOT_PATH')) {
 class XoopsFormText extends XoopsFormElement {
 
 	/**
-     * Size
+   * Size
 	 * @var	int 
-     * @access	private
+   * @access	private
 	 */
 	var $_size;
 
 	/**
-     * Maximum length of the text
+   * Maximum length of the text
 	 * @var	int 
 	 * @access	private
 	 */
 	var $_maxlength;
 
 	/**
-     * Initial text
+   * Initial text
 	 * @var	string  
 	 * @access	private
 	 */
@@ -78,7 +79,7 @@ class XoopsFormText extends XoopsFormElement {
 	 * @param	string	$name       "name" attribute
 	 * @param	int		$size	    Size
 	 * @param	int		$maxlength	Maximum length of text
-     * @param	string  $value      Initial text
+   * @param	string  $value      Initial text
 	 */
 	function XoopsFormText($caption, $name, $size, $maxlength, $value = ""){
 		$this->setCaption($caption);
@@ -91,7 +92,7 @@ class XoopsFormText extends XoopsFormElement {
 	/**
 	 * Get size
 	 * 
-     * @return	int
+   * @return	int
 	 */
 	function getSize() {
 		return $this->_size;
@@ -100,7 +101,7 @@ class XoopsFormText extends XoopsFormElement {
 	/**
 	 * Get maximum text length
 	 * 
-     * @return	int
+   * @return	int
 	 */
 	function getMaxlength() {
 		return $this->_maxlength;
@@ -110,7 +111,7 @@ class XoopsFormText extends XoopsFormElement {
 	 * Get initial content
 	 * 
 	 * @param	bool    $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compat
-     * @return	string
+   * @return	string
 	 */
 	function getValue($encode = false) {
 		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
@@ -119,7 +120,7 @@ class XoopsFormText extends XoopsFormElement {
 	/**
 	 * Set initial text value
 	 * 
-     * @param	$value  string
+   * @param	$value  string
 	 */
 	function setValue($value) {
 		$this->_value = $value;
@@ -128,10 +129,11 @@ class XoopsFormText extends XoopsFormElement {
 	/**
 	 * Prepare HTML for output
 	 * 
-     * @return	string  HTML
+   * @return	string  HTML
 	 */
 	function render() {
 		return "<input type='text' name='".$this->getName()."' id='".$this->getName()."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".$this->getValue()."'".$this->getExtra()." />";
 	}
 }
+
 ?>

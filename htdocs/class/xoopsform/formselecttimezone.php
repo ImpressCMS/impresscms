@@ -31,6 +31,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
+
 /**
  * @package     kernel
  * @subpackage  form
@@ -74,4 +75,5 @@ class XoopsFormSelectTimezone extends XoopsFormSelect
 		$this->addOptionArray(XoopsLists::getTimeZoneList());
 	}
 }
+
 ?>

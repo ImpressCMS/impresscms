@@ -50,14 +50,14 @@ if (!defined('XOOPS_ROOT_PATH')) {
 class XoopsFormCheckBox extends XoopsFormElement {
 
 	/**
-     * Availlable options
+   * Availlable options
 	 * @var array
 	 * @access	private
 	 */
 	var $_options = array();
 
 	/**
-     * pre-selected values in array
+   * pre-selected values in array
 	 * @var	array
 	 * @access	private
 	 */
@@ -73,9 +73,9 @@ class XoopsFormCheckBox extends XoopsFormElement {
 	/**
 	 * Constructor
 	 *
-     * @param	string  $caption
-     * @param	string  $name
-     * @param	mixed   $value  Either one value as a string or an array of them.
+   * @param	string  $caption
+   * @param	string  $name
+   * @param	mixed   $value  Either one value as a string or an array of them.
 	 */
 	function XoopsFormCheckBox($caption, $name, $value = null, $delimeter = "&nbsp;"){
 		$this->setCaption($caption);
@@ -89,8 +89,8 @@ class XoopsFormCheckBox extends XoopsFormElement {
 	/**
 	 * Get the "value"
 	 *
-	 * @param	bool    $encode To sanitizer the text?
-     * @return	array
+	 * @param	bool    $encode   Would you like to sanitize the text?
+   * @return	array
 	 */
 	function getValue($encode = false) {
     	if (!$encode) {
@@ -106,7 +106,7 @@ class XoopsFormCheckBox extends XoopsFormElement {
 	/**
 	 * Set the "value"
 	 *
-     * @param	array
+   * @param	array
 	 */
 	function setValue($value) {
 		$this->_value = array();
@@ -122,8 +122,8 @@ class XoopsFormCheckBox extends XoopsFormElement {
 	/**
 	 * Add an option
 	 *
-     * @param	string  $value
-     * @param	string  $name
+   * @param	string  $value
+   * @param	string  $name
 	 */
 	function addOption($value, $name = "") {
 		if ($name != "") {
@@ -136,7 +136,7 @@ class XoopsFormCheckBox extends XoopsFormElement {
 	/**
 	 * Add multiple Options at once
 	 *
-     * @param	array   $options    Associative array of value->name pairs
+   * @param	array   $options    Associative array of value->name pairs
 	 */
 	function addOptionArray($options) {
 		if ( is_array($options) ) {
@@ -149,8 +149,8 @@ class XoopsFormCheckBox extends XoopsFormElement {
 	/**
 	 * Get an array with all the options
 	 *
-	 * @param	int     $encode     To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
-     * @return	array   Associative array of value->name pairs
+	 * @param	int     $encode     To sanitize the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
+   * @return	array   Associative array of value->name pairs
 	 */
 	function getOptions($encode = false) {
     	if (!$encode) {
@@ -167,7 +167,7 @@ class XoopsFormCheckBox extends XoopsFormElement {
 	 * Get the delimiter of this group
 	 * 
 	 * @param	bool    $encode To sanitizer the text?
-     * @return	string  The delimiter
+   * @return	string  The delimiter
 	 */
 	function getDelimeter($encode = false) {
 		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
@@ -176,7 +176,7 @@ class XoopsFormCheckBox extends XoopsFormElement {
 	/**
 	 * prepare HTML for output
 	 *
-     * @return	string
+   * @return	string
 	 */
 	function render() {
 		$ret = "";
