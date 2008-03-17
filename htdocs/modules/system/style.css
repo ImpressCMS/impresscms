@@ -139,7 +139,7 @@ input { background-color: #fff; color:inherit; border: #CCC 1px solid; font-size
 input:focus { background-color: #FFFFBB; border: #000 1px solid;}
 input:hover { border: #000 1px solid;}
 
-textarea { background-color: #fff; border: #CCC 1px solid; width: 430px; font-size: .8em; font-family: verdana, arial, helvetica, sans-serif; }
+textarea { background-color: #fff; border: #CCC 1px solid; width: 570px; font-size: .8em; font-family: verdana, arial, helvetica, sans-serif; }
 textarea:focus { background-color: #FFFFBB; border: #000 1px solid; }
 textarea:hover { border: #000 1px solid;}
 
