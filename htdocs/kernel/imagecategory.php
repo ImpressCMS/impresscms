@@ -55,8 +55,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
 class XoopsImagecategory extends XoopsObject
 {
   	var $_imageCount;
-  
-  
+
     /**
      * Constructor
      *
@@ -136,7 +135,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
      *
   	 * @see XoopsImagecategory
   	 * @param integer $id imgcatID (imgcat_id) of the image category
-  	 * @return object XoopsImagecategory reference to the block
+  	 * @return object XoopsImagecategory reference to the image category
      **/
     function &get($id)
     {
@@ -201,7 +200,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     /**
      * delete an {@link XoopsImagecategory} from the database
      *
-  	 * @param object XoopsImagecategory $imgcat reference to the block to delete
+  	 * @param object XoopsImagecategory $imgcat reference to the image category to delete
   	 * @return bool TRUE if succesful
      **/
     function delete(&$imgcat)
@@ -224,7 +223,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     /**
      * retrieve array of {@link XoopsImagecategory}s meeting certain conditions
   	 * @param object $criteria {@link CriteriaElement} with conditions for the image categories
-  	 * @param bool $id_as_key should the image category' imgcat_id be the key for the returned array?
+  	 * @param bool $id_as_key should the image category's imgcat_id be the key for the returned array?
   	 * @return array {@link XoopsImagecategory}s matching the conditions
      **/
     function getObjects($criteria = null, $id_as_key = false)
@@ -279,8 +278,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
 
 
     /**
-     * get a list of image category {@link XoopsImagecategory}s matching certain conditions
-  	 *
+     * get a list of {@link XoopsImagecategory}s matching certain conditions
   	 * @param string $criteria conditions to match
   	 * @return array array of {@link XoopsImagecategory}s matching the conditions
      **/

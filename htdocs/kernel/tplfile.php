@@ -31,34 +31,63 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
+
+/**
+ * @package kernel
+ * @copyright copyright &copy; 2000 XOOPS.org
+ */
+
+
+/**
+ * Base class for all templates
+ * 
+ * @author Kazumi Ono (AKA onokazu)
+ * @copyright copyright &copy; 2000 XOOPS.org
+ * @package kernel
+ **/
 class XoopsTplfile extends XoopsObject
 {
 
-	function XoopsTplfile()
-	{
-		$this->XoopsObject();
-		$this->initVar('tpl_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('tpl_refid', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('tpl_tplset', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('tpl_file', XOBJ_DTYPE_TXTBOX, null, true, 100);
-		$this->initVar('tpl_desc', XOBJ_DTYPE_TXTBOX, null, false, 100);
-		$this->initVar('tpl_lastmodified', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('tpl_lastimported', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('tpl_module', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('tpl_type', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('tpl_source', XOBJ_DTYPE_SOURCE, null, false);
-	}
+    /**
+    * constructor
+    */
+  	function XoopsTplfile()
+  	{
+  		$this->XoopsObject();
+  		$this->initVar('tpl_id', XOBJ_DTYPE_INT, null, false);
+  		$this->initVar('tpl_refid', XOBJ_DTYPE_INT, 0, false);
+  		$this->initVar('tpl_tplset', XOBJ_DTYPE_OTHER, null, false);
+  		$this->initVar('tpl_file', XOBJ_DTYPE_TXTBOX, null, true, 100);
+  		$this->initVar('tpl_desc', XOBJ_DTYPE_TXTBOX, null, false, 100);
+  		$this->initVar('tpl_lastmodified', XOBJ_DTYPE_INT, 0, false);
+  		$this->initVar('tpl_lastimported', XOBJ_DTYPE_INT, 0, false);
+  		$this->initVar('tpl_module', XOBJ_DTYPE_OTHER, null, false);
+  		$this->initVar('tpl_type', XOBJ_DTYPE_OTHER, null, false);
+  		$this->initVar('tpl_source', XOBJ_DTYPE_SOURCE, null, false);
+  	}
 
-	function getSource()
-	{
-		return $this->getVar('tpl_source');
-	}
 
-	function getLastModified()
-	{
-		return $this->getVar('tpl_lastmodified');
-	}
+    /**
+    * Gets Template Source
+    */
+  	function getSource()
+  	{
+  		return $this->getVar('tpl_source');
+  	}
+
+
+    /**
+    * Gets Last Modified timestamp
+    */
+  	function getLastModified()
+  	{
+  		return $this->getVar('tpl_lastmodified');
+  	}
 }
+
+
+
+
 
 /**
 * XOOPS template file handler class.
@@ -68,10 +97,16 @@ class XoopsTplfile extends XoopsObject
 *
 * @author  Kazumi Ono <onokazu@xoops.org>
 */
-
 class XoopsTplfileHandler extends XoopsObjectHandler
 {
 
+    /**
+     * create a new template instance
+     *
+  	 * @see XoopsTplfile
+  	 * @param bool $isNew is the new tempate new??
+  	 * @return object XoopsTplfile {@link XoopsTplfile} reference to the new template
+     **/
     function &create($isNew = true)
     {
         $tplfile = new XoopsTplfile();
@@ -81,10 +116,19 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         return $tplfile;
     }
 
+
+    /**
+     * gets a new template instance
+     *
+  	 * @see XoopsTplfile
+  	 * @param int $id ID of the template to get
+  	 * @param bool $getsource would you like to get the source?
+  	 * @return object XoopsTplfile {@link XoopsTplfile} reference to the new template
+     **/
     function &get($id, $getsource = false)
     {
         $tplfile = false;
-    	$id = intval($id);
+      	$id = intval($id);
         if ($id > 0) {
             if (!$getsource) {
                 $sql = "SELECT * FROM ".$this->db->prefix('tplfile')." WHERE tpl_id='".$id."'";
@@ -103,6 +147,15 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         return $tplfile;
     }
 
+
+
+    /**
+     * Loads Template source from DataBase
+     *
+  	 * @see XoopsTplfile
+  	 * @param object $tplfile {@link XoopsTplfile} object of the template file to load
+  	 * @return bool TRUE on success, FALSE if fail
+     **/
     function loadSource(&$tplfile)
     {
         /**
@@ -120,9 +173,20 @@ class XoopsTplfileHandler extends XoopsObjectHandler
             $myrow = $this->db->fetchArray($result);
             $tplfile->assignVar('tpl_source', $myrow['tpl_source']);
         }
-		return true;
+    		return true;
     }
 
+
+
+
+
+    /**
+     * Inserts Template into the DataBase
+     *
+  	 * @see XoopsTplfile
+  	 * @param object $tplfile {@link XoopsTplfile} object of the template file to load
+  	 * @return bool TRUE on success, FALSE if fail
+     **/
     function insert(&$tplfile)
     {
         /**
@@ -156,7 +220,7 @@ class XoopsTplfileHandler extends XoopsObjectHandler
                     return false;
                 }
             }
-			$tplfile->assignVar('tpl_id', $tpl_id);
+      			$tplfile->assignVar('tpl_id', $tpl_id);
         } else {
             $sql = sprintf("UPDATE %s SET tpl_tplset = %s, tpl_file = %s, tpl_desc = %s, tpl_lastimported = '%u', tpl_lastmodified = '%u' WHERE tpl_id = '%u'", $this->db->prefix('tplfile'), $this->db->quoteString($tpl_tplset), $this->db->quoteString($tpl_file), $this->db->quoteString($tpl_desc), intval($tpl_lastimported), intval($tpl_lastmodified), intval($tpl_id));
             if (!$result = $this->db->query($sql)) {
@@ -172,6 +236,14 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         return true;
     }
 
+
+
+
+    /**
+     * forces Template source into the DataBase
+  	 * @param object $tplfile {@link XoopsTplfile} object of the template file to load
+  	 * @return bool TRUE on success, FALSE if fail
+     **/
     function forceUpdate(&$tplfile)
     {
         /**
@@ -200,12 +272,21 @@ class XoopsTplfileHandler extends XoopsObjectHandler
                     return false;
                 }
             }
-			return true;
-        } else {
-			return false;
-		}
+    			return true;
+            } else {
+    			return false;
+    		}
     }
 
+
+
+
+
+    /**
+     * Deletes Template from the DataBase
+  	 * @param object $tplfile {@link XoopsTplfile} object of the template file to load
+  	 * @return bool TRUE on success, FALSE if fail
+     **/
     function delete(&$tplfile)
     {
         /**
@@ -224,6 +305,16 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         return true;
     }
 
+
+
+
+
+    /**
+     * retrieve array of {@link XoopsTplfile}s meeting certain conditions
+  	 * @param object $criteria {@link CriteriaElement} with conditions for the blocks
+  	 * @param bool $id_as_key should the tplfile's tpl_id be the key for the returned array?
+  	 * @return array {@link XoopsTplfile}s matching the conditions
+     **/
     function getObjects($criteria = null, $getsource = false, $id_as_key = false)
     {
         $ret = array();
@@ -255,6 +346,15 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         return $ret;
     }
 
+
+
+
+    /**
+     * Count some tplfiles
+     *
+     * @param   object  $criteria   {@link CriteriaElement}
+     * @return  int
+     **/
     function getCount($criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('tplfile');
@@ -268,6 +368,16 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         return $count;
     }
 
+
+
+
+
+    /**
+     * Count some tplfiles for a module
+     *
+     * @param   string  $tplset Template Set
+     * @return  array $ret containing number of templates in the tpl_set or empty array if fails
+     **/
     function getModuleTplCount($tplset)
     {
         $ret = array();
@@ -284,6 +394,20 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         return $ret;
     }
 
+
+
+
+    /**
+     * find tplfiles matching criteria
+     *
+     * @param   string  $tplset             template set
+     * @param   string  $type               template type
+     * @param   int     $refid              ref id
+     * @param   string  $module             module
+     * @param   string  $file               template file
+     * @param   bool    $getsource = false  get source or not
+     * @return  array $ret containing number of templates in the tpl_set or empty array if fails
+     **/
     function find($tplset = null, $type = null, $refid = null, $module = null, $file = null, $getsource = false)
     {
         $criteria = new CriteriaCompo();
@@ -313,6 +437,15 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         return $this->getObjects($criteria, $getsource, false);
     }
 
+
+
+    /**
+     * Does the template exist in the database in the template set
+     *
+     * @param   string  $tplname        template name
+     * @param   string  $tplset_name    template set name
+     * @return  bool true if exists, false if not
+     **/
     function templateExists($tplname, $tplset_name)
     {
         $criteria = new CriteriaCompo(new Criteria('tpl_file', trim($tplname)));
@@ -323,4 +456,6 @@ class XoopsTplfileHandler extends XoopsObjectHandler
         return false;
     }
 }
+
+
 ?>

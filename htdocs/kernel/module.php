@@ -34,6 +34,11 @@ if (!defined('XOOPS_ROOT_PATH')) {
 }
 
 /**
+ * @package kernel
+ * @copyright copyright &copy; 2000 XOOPS.org
+ */
+
+/**
  * A Module
  *
  * @package		kernel
@@ -93,15 +98,15 @@ class XoopsModule extends XoopsObject
         $hassearch = (isset($this->modinfo['hasSearch']) && $this->modinfo['hasSearch'] == 1) ? 1 : 0;
         $hasconfig = ((isset($this->modinfo['config']) && is_array($this->modinfo['config'])) || !empty($this->modinfo['hasComments'])) ? 1 : 0;
         $hascomments = (isset($this->modinfo['hasComments']) && $this->modinfo['hasComments'] == 1) ? 1 : 0;
-		// RMV-NOTIFY
-		$hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1) ? 1 : 0;
+    		// RMV-NOTIFY
+    		$hasnotification = (isset($this->modinfo['hasNotification']) && $this->modinfo['hasNotification'] == 1) ? 1 : 0;
         $this->setVar('hasmain', $hasmain);
         $this->setVar('hasadmin', $hasadmin);
         $this->setVar('hassearch', $hassearch);
         $this->setVar('hasconfig', $hasconfig);
         $this->setVar('hascomments', $hascomments);
-		// RMV-NOTIFY
-		$this->setVar('hasnotification', $hasnotification);
+    		// RMV-NOTIFY
+    		$this->setVar('hasnotification', $hasnotification);
     }
 
     /**
@@ -109,7 +114,7 @@ class XoopsModule extends XoopsObject
      *
      * @param   string  $name
      * @return  array|string	Array of module information.
-	 * 			If {@link $name} is set, returns a singel module information item as string.
+  	 * If {@link $name} is set, returns a single module information item as string.
      **/
     function &getInfo($name=null)
     {
@@ -129,7 +134,7 @@ class XoopsModule extends XoopsObject
     /**
      * Get a link to the modules main page
      *
-     * @return	string  FALSE on fail
+     * @return	string $ret or FALSE on fail
      */
     function mainLink()
     {
@@ -143,7 +148,7 @@ class XoopsModule extends XoopsObject
     /**
      * Get links to the subpages
      *
-     * @return	string
+     * @return	string $ret
      */
     function subLink()
     {
@@ -170,7 +175,7 @@ class XoopsModule extends XoopsObject
     /**
      * Get the admin menu for the module
      * 
-     * @return	string
+     * @return	string $this->adminmenu
      */
     function &getAdminMenu()
     {
@@ -183,8 +188,9 @@ class XoopsModule extends XoopsObject
     /**
      * Load the module info for this module
      *
-     * @param	string  $dirname    Module directory
-     * @param	bool    $verbose    Give an error on fail?
+     * @param   string  $dirname    Module directory
+     * @param   bool    $verbose    Give an error on fail?
+     * @return  bool   TRUE if success, FALSE if fail.
      */
     function loadInfo($dirname, $verbose = true)
     {
@@ -198,13 +204,13 @@ class XoopsModule extends XoopsObject
  	        include XOOPS_ROOT_PATH.'/modules/'.$dirname.'/xoops_version.php';
        	} else {
            	if (false != $verbose) {
-				echo "Module File for $dirname Not Found!";
-			}
+      				echo "Module File for $dirname Not Found!";
+      			}
            	return false;
        	}
-		$this->modinfo =& $modversion;
+    		$this->modinfo =& $modversion;
 
-		return true;
+    		return true;
     }
 
     /**
@@ -215,7 +221,7 @@ class XoopsModule extends XoopsObject
      * @param   integer $limit
      * @param   integer $offset
      * @param   integer $userid
-     * @return  mixed   Search result.
+     * @return  mixed   Search result or False if fail.
      **/
     function search($term = '', $andor = 'AND', $limit = 0, $offset = 0, $userid = 0)
     {
@@ -264,6 +270,7 @@ class XoopsModule extends XoopsObject
 }
 
 
+
 /**
  * XOOPS module handler class.
  *
@@ -277,27 +284,27 @@ class XoopsModule extends XoopsObject
  */
 class XoopsModuleHandler extends XoopsObjectHandler
 {
-	/**
-	 * holds an array of cached module references, indexed by module id
-	 *
-	 * @var    array
-	 * @access private
-	 */
-	var $_cachedModule_mid = array();
+  	/**
+  	 * holds an array of cached module references, indexed by module id
+  	 *
+  	 * @var    array
+  	 * @access private
+  	 */
+  	var $_cachedModule_mid = array();
 
-	/**
-	 * holds an array of cached module references, indexed by module dirname
-	 *
-	 * @var    array
-	 * @access private
-	 */
-	var $_cachedModule_dirname = array();
+  	/**
+  	 * holds an array of cached module references, indexed by module dirname
+  	 *
+  	 * @var    array
+  	 * @access private
+  	 */
+  	var $_cachedModule_dirname = array();
 
     /**
      * Create a new {@link XoopsModule} object
      *
      * @param   boolean     $isNew   Flag the new object as "new"
-     * @return  object
+     * @return  object      {@link XoopsModule} 
      **/
     function &create($isNew = true)
     {
@@ -311,44 +318,44 @@ class XoopsModuleHandler extends XoopsObjectHandler
     /**
      * Load a module from the database
      *
-     * @param	int     $id     ID of the module
+     * @param	  int     $id     ID of the module
      *
-     * @return	object  FALSE on fail
+     * @return	object  {@link XoopsModule} FALSE on fail
      */
     function &get($id)
     {
         static $_cachedModule_dirname;
         static $_cachedModule_mid;
         $id = intval($id);
-		$module = false;
+    		$module = false;
         if ($id > 0) {
-			if (!empty($_cachedModule_mid[$id])) {
-				return $_cachedModule_mid[$id];
-			} else {
-  	        	$sql = "SELECT * FROM ".$this->db->prefix('modules')." WHERE mid = '".$id."'";
-  	        	if (!$result = $this->db->query($sql)) {
-  	            	return $module;
-  	        	}
-  	        	$numrows = $this->db->getRowsNum($result);
-  	        	if ($numrows == 1) {
-  	            	$module = new XoopsModule();
-  	            	$myrow = $this->db->fetchArray($result);
-  	            	$module->assignVars($myrow);
-					$_cachedModule_mid[$id] =& $module;
-					$_cachedModule_dirname[$module->getVar('dirname')] =& $module;
-  	            	return $module;
-  	        	}
-        	}
-		}
+    			if (!empty($_cachedModule_mid[$id])) {
+    				return $_cachedModule_mid[$id];
+    			} else {
+            $sql = "SELECT * FROM ".$this->db->prefix('modules')." WHERE mid = '".$id."'";
+            if (!$result = $this->db->query($sql)) {
+              return $module;
+            }
+            $numrows = $this->db->getRowsNum($result);
+            if ($numrows == 1) {
+              $module = new XoopsModule();
+              $myrow = $this->db->fetchArray($result);
+              $module->assignVars($myrow);
+              $_cachedModule_mid[$id] =& $module;
+              $_cachedModule_dirname[$module->getVar('dirname')] =& $module;
+              return $module;
+            }
+          }
+    		}
         return $module;
     }
 
     /**
      * Load a module by its dirname
      *
-     * @param	string  $dirname
+     * @param	string    $dirname
      *
-     * @return	object  FALSE on fail
+     * @return	object  {@link XoopsModule} FALSE on fail
      */
     function &getByDirname($dirname)
     {
@@ -375,7 +382,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
     }
 
     /**
-     * Write a module to the database
+     * Inserts a module into the database
      *
      * @param   object  &$module reference to a {@link XoopsModule}
      * @return  bool
@@ -407,75 +414,80 @@ class XoopsModuleHandler extends XoopsObjectHandler
             $mid = $this->db->getInsertId();
         }
         $module->assignVar('mid', $mid);
-		if (!empty($this->_cachedModule_dirname[$dirname])) {
-			unset ($this->_cachedModule_dirname[$dirname]);
-		}
-		if (!empty($this->_cachedModule_mid[$mid])) {
-			unset ($this->_cachedModule_mid[$mid]);
-		}
+    		if (!empty($this->_cachedModule_dirname[$dirname])) {
+    			unset ($this->_cachedModule_dirname[$dirname]);
+    		}
+    		if (!empty($this->_cachedModule_mid[$mid])) {
+    			unset ($this->_cachedModule_mid[$mid]);
+    		}
         return true;
     }
 
     /**
      * Delete a module from the database
      *
-     * @param   object  &$module
+     * @param   object  &$module {@link XoopsModule}
      * @return  bool
      **/
     function delete(&$module)
     {
-        /**
-        * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-        */
-        if (strtolower(get_class($module)) != 'xoopsmodule') {
-            return false;
-        }
-        $sql = sprintf("DELETE FROM %s WHERE mid = '%u'", $this->db->prefix('modules'), intval($module->getVar('mid')));
-        if ( !$result = $this->db->query($sql) ) {
-            return false;
-        }
-		// delete admin permissions assigned for this module
-		$sql = sprintf("DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'", $this->db->prefix('group_permission'), intval($module->getVar('mid')));
-		$this->db->query($sql);
-		// delete read permissions assigned for this module
-		$sql = sprintf("DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'", $this->db->prefix('group_permission'), intval($module->getVar('mid')));
-		$this->db->query($sql);
+      /**
+      * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
+      */
+      if (strtolower(get_class($module)) != 'xoopsmodule') {
+        return false;
+      }
 
-        $sql = sprintf("SELECT block_id FROM %s WHERE module_id = '%u'", $this->db->prefix('block_module_link'), intval($module->getVar('mid')));
-        if ($result = $this->db->query($sql)) {
-        	$block_id_arr = array();
-            while ($myrow = $this->db->fetchArray($result))
-{
-				array_push($block_id_arr, $myrow['block_id']);
-            }
-        }
-		// loop through block_id_arr
-        if (isset($block_id_arr)) {
-    		foreach ($block_id_arr as $i) {
-                $sql = sprintf("SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'", $this->db->prefix('block_module_link'), intval($module->getVar('mid')), intval($i));
-	        	if ($result2 = $this->db->query($sql)) {
-                    if (0 < $this->db->getRowsNum($result2)) {
-					// this block has other entries, so delete the entry for this module
-                        $sql = sprintf("DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')", $this->db->prefix('block_module_link'), intval($module->getVar('mid')), intval($i));
-                        $this->db->query($sql);
-                    } else {
-					// this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
-        				$sql = sprintf("UPDATE %s SET visible = '0' WHERE bid = '%u'", $this->db->prefix('newblocks'), intval($i));
-        				$this->db->query($sql);
-        				$sql = sprintf("UPDATE %s SET module_id = '-1' WHERE module_id = '%u'", $this->db->prefix('block_module_link'), intval($module->getVar('mid')));
-        				$this->db->query($sql);
-                    }
-				}
-            }
-        }
+      $sql = sprintf("DELETE FROM %s WHERE mid = '%u'", $this->db->prefix('modules'), intval($module->getVar('mid')));
+      if ( !$result = $this->db->query($sql) ) {
+        return false;
+      }
 
-		if (!empty($this->_cachedModule_dirname[$module->getVar('dirname')])) {
-			unset ($this->_cachedModule_dirname[$module->getVar('dirname')]);
-		}
-		if (!empty($this->_cachedModule_mid[$module->getVar('mid')])) {
-			unset ($this->_cachedModule_mid[$module->getVar('mid')]);
-		}
-        return true;
+      // delete admin permissions assigned for this module
+      $sql = sprintf("DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'", $this->db->prefix('group_permission'), intval($module->getVar('mid')));
+      $this->db->query($sql);
+      // delete read permissions assigned for this module
+      $sql = sprintf("DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'", $this->db->prefix('group_permission'), intval($module->getVar('mid')));
+      $this->db->query($sql);
+
+
+      $sql = sprintf("SELECT block_id FROM %s WHERE module_id = '%u'", $this->db->prefix('block_module_link'), intval($module->getVar('mid')));
+      if ($result = $this->db->query($sql)) {
+        $block_id_arr = array();
+        while ($myrow = $this->db->fetchArray($result))
+        {
+          array_push($block_id_arr, $myrow['block_id']);
+        }
+      }
+
+      // loop through block_id_arr
+      if (isset($block_id_arr)) {
+        foreach ($block_id_arr as $i) {
+          $sql = sprintf("SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'", $this->db->prefix('block_module_link'), intval($module->getVar('mid')), intval($i));
+          if ($result2 = $this->db->query($sql)) {
+            if (0 < $this->db->getRowsNum($result2)) {
+              // this block has other entries, so delete the entry for this module
+              $sql = sprintf("DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')", $this->db->prefix('block_module_link'), intval($module->getVar('mid')), intval($i));
+              $this->db->query($sql);
+            } else {
+              // this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
+              $sql = sprintf("UPDATE %s SET visible = '0' WHERE bid = '%u'", $this->db->prefix('newblocks'), intval($i));
+              $this->db->query($sql);
+              $sql = sprintf("UPDATE %s SET module_id = '-1' WHERE module_id = '%u'", $this->db->prefix('block_module_link'), intval($module->getVar('mid')));
+              $this->db->query($sql);
+            }
+          }
+        }
+      }
+
+
+      if (!empty($this->_cachedModule_dirname[$module->getVar('dirname')])) {
+        unset ($this->_cachedModule_dirname[$module->getVar('dirname')]);
+      }
+        if (!empty($this->_cachedModule_mid[$module->getVar('mid')])) {
+        unset ($this->_cachedModule_mid[$module->getVar('mid')]);
+      }
+      return true;
     }
 
     /**
@@ -555,4 +567,6 @@ class XoopsModuleHandler extends XoopsObjectHandler
         return $ret;
     }
 }
+
+
 ?>

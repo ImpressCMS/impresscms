@@ -45,7 +45,6 @@ require_once XOOPS_ROOT_PATH.'/kernel/group.php';
 * @copyright copyright (c) 2000-2003 XOOPS.org
 * @package kernel
 */
-
 class XoopsMemberHandler{
 
     /**#@+
@@ -84,7 +83,7 @@ class XoopsMemberHandler{
     /**
      * create a new group
      *
-     * @return object XoopsGroup reference to the new group
+     * @return object XoopsGroup {@link XoopsGroup} reference to the new group
      */
     function &createGroup()
     {
@@ -95,7 +94,7 @@ class XoopsMemberHandler{
     /**
      * create a new user
      *
-     * @return object XoopsUser reference to the new user
+     * @return object XoopsUser {@link XoopsUser} reference to the new user
      */
     function &createUser()
     {
@@ -107,7 +106,7 @@ class XoopsMemberHandler{
      * retrieve a group
      *
      * @param int $id ID for the group
-     * @return object XoopsGroup reference to the group
+     * @return object XoopsGroup {@link XoopsGroup} reference to the group
      */
     function getGroup($id)
     {
@@ -118,7 +117,7 @@ class XoopsMemberHandler{
      * retrieve a user
      *
      * @param int $id ID for the user
-     * @return object XoopsUser reference to the user
+     * @return object XoopsUser {@link XoopsUser} reference to the user
      */
     function &getUser($id)
     {
@@ -131,7 +130,7 @@ class XoopsMemberHandler{
     /**
      * delete a group
      *
-     * @param object $group reference to the group to delete
+     * @param object $group {@link XoopsGroup} reference to the group to delete
      * @return bool FALSE if failed
      */
     function deleteGroup(&$group)
@@ -144,7 +143,7 @@ class XoopsMemberHandler{
     /**
      * delete a user
      *
-     * @param object $user reference to the user to delete
+     * @param object $user {@link XoopsUser} reference to the user to delete
      * @return bool FALSE if failed
      */
     function deleteUser(&$user)
@@ -157,7 +156,7 @@ class XoopsMemberHandler{
     /**
      * insert a group into the database
      *
-     * @param object $group reference to the group to insert
+     * @param object $group {@link XoopsGroup} reference to the group to insert
      * @return bool TRUE if already in database and unchanged
      * FALSE on failure
      */
@@ -169,7 +168,7 @@ class XoopsMemberHandler{
     /**
      * insert a user into the database
      *
-     * @param object $user reference to the user to insert
+     * @param object $user {@link XoopsUser} reference to the user to insert
      * @return bool TRUE if already in database and unchanged
      * FALSE on failure
      */
@@ -239,7 +238,7 @@ class XoopsMemberHandler{
      *
      * @param int $group_id ID of the group
      * @param int $user_id ID of the user
-     * @return object XoopsMembership
+     * @return object XoopsMembership {@link XoopsMembership} 
      */
     function addUserToGroup($group_id, $user_id)
     {
@@ -321,7 +320,7 @@ class XoopsMemberHandler{
      *
      * @param string $uname username as entered in the login form
      * @param string $pwd password entered in the login form
-     * @return object XoopsUser reference to the logged in user. FALSE if failed to log in
+     * @return object XoopsUser {@link XoopsUser} reference to the logged in user. FALSE if failed to log in
      */
     function &loginUser($uname, $pwd)
     {
@@ -340,7 +339,7 @@ class XoopsMemberHandler{
      *
      * @param string $uname username
      * @param string $md5pwd password encrypted with md5
-     * @return object XoopsUser reference to the logged in user. FALSE if failed to log in
+     * @return object XoopsUser {@link XoopsUser} reference to the logged in user. FALSE if failed to log in
      */
     function &loginUserMd5($uname, $md5pwd)
     {
@@ -379,7 +378,7 @@ class XoopsMemberHandler{
     /**
      * updates a single field in a users record
      *
-     * @param object $user reference to the {@link XoopsUser} object
+     * @param object $user {@link XoopsUser} reference to the {@link XoopsUser} object
      * @param string $fieldName name of the field to update
      * @param string $fieldValue updated value for the field
      * @return bool TRUE if success or unchanged, FALSE on failure
@@ -406,7 +405,7 @@ class XoopsMemberHandler{
     /**
      * activate a user
      *
-     * @param object $user reference to the {@link XoopsUser} object
+     * @param object $user {@link XoopsUser} reference to the object
      * @return bool successful?
      */
     function activateUser(&$user)

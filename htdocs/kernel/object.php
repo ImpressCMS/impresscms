@@ -52,7 +52,8 @@ define('XOBJ_DTYPE_LTIME', 11);
 /**#@-*/
 
 //include_once "xoopspluginloader.php";
-    
+
+
 /**
  * Base class for all objects in the Xoops kernel (and beyond) 
  * 
@@ -110,6 +111,10 @@ class XoopsObject
     */
     var $_filters = array();
 
+
+
+
+
     /**
     * constructor
     * 
@@ -119,6 +124,8 @@ class XoopsObject
     function XoopsObject()
     {
     }
+
+
 
     /**#@+
     * used for new/clone objects
@@ -139,6 +146,8 @@ class XoopsObject
     }
     /**#@-*/
 
+
+
     /**#@+
     * mark modified objects as dirty
     * 
@@ -158,6 +167,9 @@ class XoopsObject
         return $this->_isDirty;
     }
     /**#@-*/
+
+
+
 
     /**
     * initialize variables for the object
@@ -188,6 +200,8 @@ class XoopsObject
             $this->vars[$key]['value'] =& $value;
         }
     }
+
+
 
     /**
     * assign values to multiple variables in a batch
@@ -234,25 +248,25 @@ class XoopsObject
         }
     }
 
-	/**
-	* Assign values to multiple variables in a batch
-	*
-	* Meant for a CGI contenxt:
-	* - prefixed CGI args are considered save
-	* - avoids polluting of namespace with CGI args
-	*
-	* @access private
-	* @param array $var_arr associative array of values to assign
-	* @param string $pref prefix (only keys starting with the prefix will be set)
-	*/
-	function setFormVars($var_arr=null, $pref='xo_', $not_gpc=false) {
-		$len = strlen($pref);
-		foreach ($var_arr as $key => $value) {
-			if ($pref == substr($key,0,$len)) {
-				$this->setVar(substr($key,$len), $value, $not_gpc);
-			}
-		}
-	}
+  	/**
+  	* Assign values to multiple variables in a batch
+  	*
+  	* Meant for a CGI contenxt:
+  	* - prefixed CGI args are considered save
+  	* - avoids polluting of namespace with CGI args
+  	*
+  	* @access private
+  	* @param array $var_arr associative array of values to assign
+  	* @param string $pref prefix (only keys starting with the prefix will be set)
+  	*/
+  	function setFormVars($var_arr=null, $pref='xo_', $not_gpc=false) {
+  		$len = strlen($pref);
+  		foreach ($var_arr as $key => $value) {
+  			if ($pref == substr($key,0,$len)) {
+  				$this->setVar(substr($key,$len), $value, $not_gpc);
+  			}
+  		}
+  	}
 
 
     /**
@@ -265,15 +279,19 @@ class XoopsObject
     {
         return $this->vars;
     }
-	/**
-	* Returns the values of the specified variables
-	*
-	* @param mixed $keys An array containing the names of the keys to retrieve, or null to get all of them
-	* @param string $format Format to use (see getVar)
-	* @param int $maxDepth Maximum level of recursion to use if some vars are objects themselves
-	* @return array associative array of key->value pairs
-	*/
-	function getValues( $keys = null, $format = 's', $maxDepth = 1 ) {
+
+
+
+
+  	/**
+  	* Returns the values of the specified variables
+  	*
+  	* @param mixed $keys An array containing the names of the keys to retrieve, or null to get all of them
+  	* @param string $format Format to use (see getVar)
+  	* @param int $maxDepth Maximum level of recursion to use if some vars are objects themselves
+  	* @return array associative array of key->value pairs
+  	*/
+  	function getValues( $keys = null, $format = 's', $maxDepth = 1 ) {
     	if ( !isset( $keys ) ) {
     		$keys = array_keys( $this->vars );
     	}
@@ -291,6 +309,9 @@ class XoopsObject
     	}
     	return $vars;
     }
+
+
+
     /**
     * returns a specific variable for the object in a proper format
     * 
@@ -396,7 +417,7 @@ class XoopsObject
                 switch (strtolower($format)) {
                 case 's':
                 case 'show':
-					$selected = explode('|', $ret);
+          					$selected = explode('|', $ret);
                     $options = explode('|', $this->vars[$key]['options']);
                     $i = 1;
                     $ret = array();
@@ -421,6 +442,11 @@ class XoopsObject
         return $ret;
     }
 
+
+
+
+
+
     /**
      * clean values of all variables of the object for storage. 
      * also add slashes whereever needed
@@ -434,7 +460,7 @@ class XoopsObject
         $existing_errors = $this->getErrors();
         $this->_errors = array();
         foreach ($this->vars as $k => $v) {
-			$cleanv = $v['value'];
+    			$cleanv = $v['value'];
             if (!$v['changed']) {
             } else {
                 $cleanv = is_string($cleanv) ? trim($cleanv) : $cleanv;
@@ -519,10 +545,14 @@ class XoopsObject
 	        $this->_errors = array_merge($existing_errors, $this->_errors);
             return false;
         }
-	    $this->_errors = array_merge($existing_errors, $this->_errors);
+  	    $this->_errors = array_merge($existing_errors, $this->_errors);
         $this->unsetDirty();
         return true;
     }
+
+
+
+
 
     /**
      * dynamically register additional filter for the object
@@ -608,6 +638,10 @@ class XoopsObject
     }
 }
 
+
+
+
+
 /**
 * XOOPS object handler class.  
 * This class is an abstract class of handler classes that are responsible for providing
@@ -623,9 +657,9 @@ class XoopsObjectHandler
 
     /**
      * holds referenced to {@link XoopsDatabase} class object
-	 * 
-	 * @var object
-	 * @see XoopsDatabase
+  	 * 
+  	 * @var object
+  	 * @see XoopsDatabase
      * @access protected
      */
     var $db;
@@ -633,8 +667,8 @@ class XoopsObjectHandler
     // 
     /**
      * called from child classes only
-	 * 
-	 * @param object $db reference to the {@link XoopsDatabase} object
+  	 * 
+  	 * @param object $db reference to the {@link XoopsDatabase} object
      * @access protected
      */
     function XoopsObjectHandler(&$db)
@@ -654,7 +688,7 @@ class XoopsObjectHandler
     /**
      * gets a value object
      * 
-	 * @param int $int_id
+  	 * @param int $int_id
      * @abstract
      */
     function &get($int_id)
@@ -664,7 +698,7 @@ class XoopsObjectHandler
     /**
      * insert/update object
      * 
-	 * @param object $object
+  	 * @param object $object
      * @abstract
      */
     function insert(&$object)
@@ -672,9 +706,9 @@ class XoopsObjectHandler
     }
 
     /**
-     * delete obejct from database
+     * delete object from database
      * 
-	 * @param object $object
+  	 * @param object $object
      * @abstract
      */
     function delete(&$object)
@@ -682,4 +716,5 @@ class XoopsObjectHandler
     }
 
 }
+
 ?>

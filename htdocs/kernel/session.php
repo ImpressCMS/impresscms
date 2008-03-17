@@ -53,7 +53,10 @@ class XoopsSessionHandler
      * @access	private
      */
     var $db;
-    
+
+
+
+
     /**
      * Security checking level
      *
@@ -97,7 +100,7 @@ class XoopsSessionHandler
      * @return	bool
      */
     function open($save_path, $session_name)
-	{
+  	{
         return true;
     }
 
@@ -107,10 +110,12 @@ class XoopsSessionHandler
      * @return	bool
      */
     function close()
-	{
+  	{
 		$this->gc_force();
         return true;
     }
+
+
 
     /**
      * Read a session from the database
@@ -120,7 +125,7 @@ class XoopsSessionHandler
      * @return	array   Session data
      */
     function read($sess_id)
-	{
+  	{
         $sql = sprintf('SELECT sess_data, sess_ip FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
         if (false != $result = $this->db->query($sql)) {
             if (list($sess_data, $sess_ip) = $this->db->fetchRow($result)) {
@@ -137,7 +142,7 @@ class XoopsSessionHandler
     }
 
     /**
-     * Write a session to the database
+     * Inserts a session into the database
      * 
      * @param   string  $sess_id
      * @param   string  $sess_data
@@ -145,16 +150,20 @@ class XoopsSessionHandler
      * @return  bool    
      **/
     function write($sess_id, $sess_data)
-	{
-		$sess_id = $this->db->quoteString($sess_id);
-		$sql = sprintf("UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s", $this->db->prefix('session'), time(), $this->db->quoteString($sess_data), $sess_id);
-		$this->db->queryF($sql);
-		if (!$this->db->getAffectedRows()) {
-			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data) VALUES (%s, '%u', %s, %s)", $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($_SERVER['REMOTE_ADDR']), $this->db->quoteString($sess_data));
-			return $this->db->queryF($sql);
-        }
-		return true;
+  	{
+  		$sess_id = $this->db->quoteString($sess_id);
+  		$sql = sprintf("UPDATE %s SET sess_updated = '%u', sess_data = %s WHERE sess_id = %s", $this->db->prefix('session'), time(), $this->db->quoteString($sess_data), $sess_id);
+  		$this->db->queryF($sql);
+  		if (!$this->db->getAffectedRows()) {
+  			$sql = sprintf("INSERT INTO %s (sess_id, sess_updated, sess_ip, sess_data) VALUES (%s, '%u', %s, %s)", $this->db->prefix('session'), $sess_id, time(), $this->db->quoteString($_SERVER['REMOTE_ADDR']), $this->db->quoteString($sess_data));
+  			return $this->db->queryF($sql);
+      }
+  		return true;
     }
+
+
+
+
 
     /**
      * Destroy a session
@@ -165,7 +174,7 @@ class XoopsSessionHandler
      **/
     function destroy($sess_id)
     {
-		$sql = sprintf('DELETE FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
+    		$sql = sprintf('DELETE FROM %s WHERE sess_id = %s', $this->db->prefix('session'), $this->db->quoteString($sess_id));
         if ( !$result = $this->db->queryF($sql) ) {
             return false;
         }
@@ -176,19 +185,21 @@ class XoopsSessionHandler
      * Garbage Collector
      * 
      * @param   int $expire Time in seconds until a session expires
-	 * @return  bool
+  	 * @return  bool
      **/
     function gc($expire)
     {
 	    if (empty($expire)) {
 		    return true;
 	    }
-	    
-        $mintime = time() - intval($expire);
-		$sql = sprintf("DELETE FROM %s WHERE sess_updated < '%u'", $this->db->prefix('session'), $mintime);
-        return $this->db->queryF($sql);
+      $mintime = time() - intval($expire);
+  		$sql = sprintf("DELETE FROM %s WHERE sess_updated < '%u'", $this->db->prefix('session'), $mintime);
+      return $this->db->queryF($sql);
     }
-    
+
+
+
+
     /**
      * Force gc for situations where gc is registered but not executed
      **/
@@ -199,14 +210,18 @@ class XoopsSessionHandler
 	        $this->gc($expiration);
 	    }
     }
-    
+
+
+
+
+
     /**
      * Update the current session id with a newly generated one
      *
      * To be refactored 
      * 
      * @param   bool $delete_old_session
-	 * @return  bool
+  	 * @return  bool
      **/
     function regenerate_id($delete_old_session = false)
     {
@@ -253,7 +268,11 @@ class XoopsSessionHandler
         
         return $success;
     }
-    
+
+
+
+
+
     /**
      * Update cookie status for current session
      *
@@ -262,7 +281,7 @@ class XoopsSessionHandler
      * 
      * @param   string  $sess_id    session ID
      * @param   int     $expire     Time in seconds until a session expires
-	 * @return  bool
+  	 * @return  bool
      **/
     function update_cookie($sess_id = null, $expire = null)
     {
@@ -273,4 +292,6 @@ class XoopsSessionHandler
         setcookie($session_name, $session_id, $session_expire ? time() + $session_expire : 0, '/',  '', 0);
     }
 }
+
+
 ?>

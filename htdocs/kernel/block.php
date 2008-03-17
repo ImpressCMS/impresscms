@@ -207,7 +207,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
      *
   	 * @see XoopsBlock
   	 * @param bool $isNew is the new block new??
-  	 * @return object XoopsBlock reference to the new block
+  	 * @return object {@link XoopsBlock} reference to the new block
      **/
     function &create($isNew = true)
     {
@@ -228,7 +228,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
      *
   	 * @see XoopsBlock
   	 * @param integer $id BlockID (bid) of the block to retrieve
-  	 * @return object XoopsBlock reference to the block
+  	 * @return object {@link XoopsBlock} reference to the block
      **/
     function &get($id)
     {
@@ -255,7 +255,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
     /**
      * Insert a new block into the database
      *
-  	 * @param object XoopsBlock $block reference to the block to insert
+  	 * @param object {@link XoopsBlock} $block reference to the block to insert
   	 * @return bool TRUE if succesful
      **/
     function insert(&$block)
@@ -299,7 +299,7 @@ class XoopsBlockHandler extends XoopsObjectHandler
     /**
      * delete a block from the database
      *
-  	 * @param object XoopsBlock $block reference to the block to delete
+  	 * @param object {@link XoopsBlock} $block reference to the block to delete
   	 * @return bool TRUE if succesful
      **/
     function delete(&$block)

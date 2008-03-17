@@ -31,8 +31,16 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
+
 /**
- * {description}
+ * @package     kernel
+ * 
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
+
+/**
+ * A handler for Private Messages
  *
  * @package		kernel
  *
@@ -44,9 +52,9 @@ if (!defined('XOOPS_ROOT_PATH')) {
 class XoopsPrivmessage extends XoopsObject
 {
 
-/**
- * constructor
- **/
+    /**
+     * constructor
+     **/
     function XoopsPrivmessage()
     {
         $this->XoopsObject();
@@ -60,6 +68,8 @@ class XoopsPrivmessage extends XoopsObject
         $this->initVar('read_msg', XOBJ_DTYPE_INT, 0, false);
     }
 }
+
+
 
 /**
  * XOOPS private message handler class.
@@ -77,11 +87,14 @@ class XoopsPrivmessage extends XoopsObject
 class XoopsPrivmessageHandler extends XoopsObjectHandler
 {
 
-/**
- * Create a new {@link XoopsPrivmessage} object
- * @param 	bool 	$isNew 	Flag as "new"?
- * @return 	object
- **/
+
+
+
+    /**
+     * Create a new {@link XoopsPrivmessage} object
+     * @param 	bool 	$isNew 	Flag as "new"?
+     * @return 	object {@link XoopsPrivmessage} 
+     **/
     function &create($isNew = true)
     {
         $pm = new XoopsPrivmessage();
@@ -91,11 +104,11 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         return $pm;
     }
 
-/**
- * Load a {@link XoopsPrivmessage} object
- * @param 	int 	$id ID of the message
- * @return 	object
- **/
+    /**
+     * Load a {@link XoopsPrivmessage} object
+     * @param 	int 	$id ID of the message
+     * @return 	object {@link XoopsPrivmessage} 
+     **/
     function &get($id)
     {
         $pm = false;
@@ -114,13 +127,15 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         return $pm;
     }
 
-/**
- * Insert a message in the database
- *
- * @param 	object 	$pm		{@link XoopsPrivmessage} object
- * @param 	bool 	$force 	flag to force the query execution skip request method check, which might be required in some situations
- * @return 	bool
- **/
+
+
+    /**
+     * Insert a message in the database
+     *
+     * @param 	object 	$pm	{@link XoopsPrivmessage} object
+     * @param 	bool 	$force 	flag to force the query execution skip request method check, which might be required in some situations
+     * @return 	bool
+     **/
     function insert(&$pm, $force = false)
     {
         /**
@@ -146,21 +161,25 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             $sql = sprintf("UPDATE %s SET msg_image = %s, subject = %s, from_userid = '%u', to_userid = '%u', msg_text = %s, read_msg = '%u' WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), $this->db->quoteString($msg_image), $this->db->quoteString($subject), intval($from_userid), intval($to_userid), $this->db->quoteString($msg_text), intval($read_msg), intval($msg_id));
         }
         $queryFunc = empty($force)?"query":"queryF";
-		if (!$result = $this->db->{$queryFunc}($sql)) {
-			return false;
-		}
+    		if (!$result = $this->db->{$queryFunc}($sql)) {
+    			return false;
+    		}
         if (empty($msg_id)) {
             $msg_id = $this->db->getInsertId();
         }
-		$pm->assignVar('msg_id', $msg_id);
+    		$pm->assignVar('msg_id', $msg_id);
         return true;
     }
 
-/**
- * Delete from the database
- * @param 	object 	$pm 	{@link XoopsPrivmessage} object
- * @return 	bool
- **/
+
+
+
+
+    /**
+     * Delete from the database
+     * @param 	object 	$pm 	{@link XoopsPrivmessage} object
+     * @return 	bool
+     **/
     function delete(&$pm)
     {
         /**
@@ -176,12 +195,16 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         return true;
     }
 
-/**
- * Load messages from the database
- * @param 	object 	$criteria 	{@link CriteriaElement} object
- * @param 	bool 	$id_as_key 	use ID as key into the array?
- * @return 	array	Array of {@link XoopsPrivmessage} objects
- **/
+
+
+
+
+    /**
+     * Load messages from the database
+     * @param 	object 	$criteria 	{@link CriteriaElement} object
+     * @param 	bool 	$id_as_key 	use ID as key into the array?
+     * @return 	array	Array of {@link XoopsPrivmessage} objects
+     **/
     function getObjects($criteria = null, $id_as_key = false)
     {
         $ret = array();
@@ -211,11 +234,15 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         return $ret;
     }
 
-/**
- * Count message
- * @param 	object 	$criteria = null 	{@link CriteriaElement} object
- * @return 	int
- **/
+
+
+
+
+    /**
+     * Count message
+     * @param 	object 	$criteria = null 	{@link CriteriaElement} object
+     * @return 	int
+     **/
     function getCount($criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('priv_msgs');
@@ -229,11 +256,11 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         return $count;
     }
 
-/**
- * Mark a message as read
- * @param 	object 	$pm 	{@link XoopsPrivmessage} object
- * @return 	bool
- **/
+    /**
+     * Mark a message as read
+     * @param 	object 	$pm 	{@link XoopsPrivmessage} object
+     * @return 	bool
+     **/
     function setRead(&$pm)
     {
         /**
@@ -243,11 +270,13 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             return false;
         }
 
-		$sql = sprintf("UPDATE %s SET read_msg = '1' WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), intval($pm->getVar('msg_id')));
+    		$sql = sprintf("UPDATE %s SET read_msg = '1' WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), intval($pm->getVar('msg_id')));
         if (!$this->db->queryF($sql)) {
             return false;
         }
         return true;
     }
 }
+
+
 ?>

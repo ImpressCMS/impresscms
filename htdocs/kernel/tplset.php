@@ -31,19 +31,46 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
+
+
+/**
+ * @package kernel
+ * @copyright copyright &copy; 2000 XOOPS.org
+ */
+
+
+/**
+ * Base class for all templatesets
+ * 
+ * @author Kazumi Ono (AKA onokazu)
+ * @copyright copyright &copy; 2000 XOOPS.org
+ * @package kernel
+ **/
 class XoopsTplset extends XoopsObject
 {
 
-	function XoopsTplset()
-	{
-		$this->XoopsObject();
-		$this->initVar('tplset_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('tplset_name', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('tplset_desc', XOBJ_DTYPE_TXTBOX, null, false, 255);
-		$this->initVar('tplset_credits', XOBJ_DTYPE_TXTAREA, null, false);
-		$this->initVar('tplset_created', XOBJ_DTYPE_INT, 0, false);
-	}
+
+    /**
+    * constructor
+    */
+  	function XoopsTplset()
+  	{
+  		$this->XoopsObject();
+  		$this->initVar('tplset_id', XOBJ_DTYPE_INT, null, false);
+  		$this->initVar('tplset_name', XOBJ_DTYPE_OTHER, null, false);
+  		$this->initVar('tplset_desc', XOBJ_DTYPE_TXTBOX, null, false, 255);
+  		$this->initVar('tplset_credits', XOBJ_DTYPE_TXTAREA, null, false);
+  		$this->initVar('tplset_created', XOBJ_DTYPE_INT, 0, false);
+  	}
 }
+
+
+
+
+
+
+
+
 
 /**
 * XOOPS tplset handler class.
@@ -53,10 +80,18 @@ class XoopsTplset extends XoopsObject
 *
 * @author  Kazumi Ono <onokazu@xoops.org>
 */
-
 class XoopsTplsetHandler extends XoopsObjectHandler
 {
 
+
+
+    /**
+     * create a new templateset instance
+     *
+  	 * @see XoopsTplset
+  	 * @param bool $isNew is the new tempateset new??
+  	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
+     **/
     function &create($isNew = true)
     {
         $tplset = new XoopsTplset();
@@ -66,10 +101,19 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         return $tplset;
     }
 
+
+
+    /**
+     * Gets templateset from database by ID
+     *
+  	 * @see XoopsTplset
+  	 * @param int $id of the tempateset to get
+  	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
+     **/
     function &get($id)
     {
         $tplset = false;
-    	$id = intval($id);
+      	$id = intval($id);
         if ($id > 0) {
             $sql = "SELECT * FROM ".$this->db->prefix('tplset')." WHERE tplset_id='".$id."'";
             if (!$result = $this->db->query($sql)) {
@@ -84,6 +128,16 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         return $tplset;
     }
 
+
+
+
+    /**
+     * Gets templateset from database by Name
+     *
+  	 * @see XoopsTplset
+  	 * @param string $tplset_name of the tempateset to get
+  	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
+     **/
     function &getByName($tplset_name)
     {
         $tplset = false;
@@ -102,6 +156,15 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         return $tplset;
     }
 
+
+
+    /**
+     * Inserts templateset into the database
+     *
+  	 * @see XoopsTplset
+  	 * @param string $tplset_name of the tempateset to get
+  	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
+     **/
     function insert(&$tplset)
     {
         /**
@@ -131,10 +194,21 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         if (empty($tplset_id)) {
             $tplset_id = $this->db->getInsertId();
         }
-		$tplset->assignVar('tplset_id', $tplset_id);
+    		$tplset->assignVar('tplset_id', $tplset_id);
         return true;
     }
 
+
+
+
+
+    /**
+     * Deletes templateset from the database
+     *
+  	 * @see XoopsTplset
+  	 * @param object $tplset {@link XoopsTplset} reference to the object of the tempateset to delete
+  	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
+     **/
     function delete(&$tplset)
     {
         /**
@@ -153,6 +227,14 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         return true;
     }
 
+
+
+    /**
+     * retrieve array of {@link XoopsTplset}s meeting certain conditions
+  	 * @param object $criteria {@link CriteriaElement} with conditions for the blocks
+  	 * @param bool $id_as_key should the tplfile's tpl_id be the key for the returned array?
+  	 * @return array {@link XoopsTplset}s matching the conditions
+     **/
     function getObjects($criteria = null, $id_as_key = false)
     {
         $ret = array();
@@ -181,6 +263,14 @@ class XoopsTplsetHandler extends XoopsObjectHandler
     }
 
 
+
+
+    /**
+     * Count some tplfilesets
+     *
+     * @param   object  $criteria   {@link CriteriaElement}
+     * @return  int $count number of template filesets that match the criteria
+     **/
     function getCount($criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('tplset');
@@ -194,14 +284,18 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         return $count;
     }
 
+
+
     function getList($criteria = null)
-	{
+  	{
         $ret = array();
-		$tplsets = $this->getObjects($criteria, true);
-		foreach (array_keys($tplsets) as $i) {
+    		$tplsets = $this->getObjects($criteria, true);
+    		foreach (array_keys($tplsets) as $i) {
             $ret[$tplsets[$i]->getVar('tplset_name')] = $tplsets[$i]->getVar('tplset_name');
         }
-		return $ret;
-	}
+    		return $ret;
+  	}
 }
+
+
 ?>

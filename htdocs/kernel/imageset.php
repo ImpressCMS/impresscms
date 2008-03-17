@@ -33,17 +33,42 @@ if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
 
+
+/**
+ *
+ *
+ * @package     kernel
+ *
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
+
+/**
+ * An imageset
+ *
+ * These sets are managed through a {@link XoopsImagesetHandler} object
+ *
+ * @package     kernel
+ *
+ * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
 class XoopsImageset extends XoopsObject
 {
-
-	function XoopsImageset()
-	{
-		$this->XoopsObject();
-		$this->initVar('imgset_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('imgset_name', XOBJ_DTYPE_TXTBOX, null, true, 50);
-		$this->initVar('imgset_refid', XOBJ_DTYPE_INT, 0, false);
-	}
+    /**
+     * Constructor
+     *
+     */
+  	function XoopsImageset()
+  	{
+  		$this->XoopsObject();
+  		$this->initVar('imgset_id', XOBJ_DTYPE_INT, null, false);
+  		$this->initVar('imgset_name', XOBJ_DTYPE_TXTBOX, null, true, 50);
+  		$this->initVar('imgset_refid', XOBJ_DTYPE_INT, 0, false);
+  	}
 }
+
+
 
 /**
 * XOOPS imageset handler class.
@@ -53,10 +78,16 @@ class XoopsImageset extends XoopsObject
 *
 * @author  Kazumi Ono <onokazu@xoops.org>
 */
-
 class XoopsImagesetHandler extends XoopsObjectHandler
 {
 
+
+    /**
+     * Creates a new imageset
+     *
+  	 * @param bool $isNew is the new imageset new??
+  	 * @return object $imgset {@link XoopsImageset} reference to the new imageset
+     **/
     function &create($isNew = true)
     {
         $imgset = new XoopsImageset();
@@ -66,6 +97,14 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         return $imgset;
     }
 
+
+    /**
+     * retrieve a specific {@link XoopsImageset}
+     *
+  	 * @see XoopsImageset
+  	 * @param integer $id imgsetID (imgset_id) of the imageset
+  	 * @return object XoopsImageset reference to the image set
+     **/
     function &get($id)
     {
       $id = intval($id);
@@ -84,6 +123,13 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         return $imgset;
     }
 
+
+    /**
+     * Insert a new {@link XoopsImageset} into the database
+     *
+  	 * @param object XoopsImageset $imgset reference to the imageset to insert
+  	 * @return bool TRUE if succesful
+     **/
     function insert(&$imgset)
     {
         /**
@@ -114,10 +160,17 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         if (empty($imgset_id)) {
             $imgset_id = $this->db->getInsertId();
         }
-		$imgset->assignVar('imgset_id', $imgset_id);
+    		$imgset->assignVar('imgset_id', $imgset_id);
         return true;
     }
 
+
+    /**
+     * delete an {@link XoopsImageset} from the database
+     *
+  	 * @param object XoopsImageset $imgset reference to the imageset to delete
+  	 * @return bool TRUE if succesful
+     **/
     function delete(&$imgset)
     {
         /**
@@ -136,6 +189,13 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         return true;
     }
 
+
+    /**
+     * retrieve array of {@link XoopsImageset}s meeting certain conditions
+  	 * @param object $criteria {@link CriteriaElement} with conditions for the imagesets
+  	 * @param bool $id_as_key should the imageset's imgset_id be the key for the returned array?
+  	 * @return array {@link XoopsImageset}s matching the conditions
+     **/
     function getObjects($criteria = null, $id_as_key = false)
     {
         $ret = array();
@@ -163,6 +223,15 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         return $ret;
     }
 
+
+
+
+    /**
+     * Links a {@link XoopsImageset} to a themeset (tplset)
+  	 * @param int $imgset_id image set id to link
+  	 * @param int $tplset_name theme set to link
+  	 * @return bool TRUE if succesful FALSE if unsuccesful
+     **/
     function linkThemeset($imgset_id, $tplset_name)
     {
         $imgset_id = intval($imgset_id);
@@ -181,6 +250,15 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         return true;
     }
 
+
+
+    /**
+     * Unlinks a {@link XoopsImageset} from a themeset (tplset)
+     *
+  	 * @param int $imgset_id image set id to unlink
+  	 * @param int $tplset_name theme set to unlink
+  	 * @return bool TRUE if succesful FALSE if unsuccesful
+     **/
     function unlinkThemeset($imgset_id, $tplset_name)
     {
         $imgset_id = intval($imgset_id);
@@ -196,6 +274,14 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         return true;
     }
 
+
+    /**
+     * get a list of {@link XoopsImageset}s matching certain conditions
+  	 *
+  	 * @param int $refid conditions to match
+  	 * @param int $tplset conditions to match
+  	 * @return array array of {@link XoopsImageset}s matching the conditions
+     **/
     function getList($refid = null, $tplset = null)
     {
         $criteria = new CriteriaCompo();
@@ -213,4 +299,6 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         return $ret;
     }
 }
+
+
 ?>
