@@ -1,4 +1,4 @@
-<?
+<?php
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
@@ -20,7 +20,7 @@ include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 class IcmsLibrariesHandler {
 
 	/**
-	 * @var array $_librariesArray array containing a list of all available thirs partu libraries
+	 * @var array $_librariesArray array containing a list of all available third party libraries
 	 */
 	var $_librariesArray=array();
 

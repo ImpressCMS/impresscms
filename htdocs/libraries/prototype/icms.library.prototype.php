@@ -1,4 +1,4 @@
-<?
+<?php
 /**
 * Initiating file for the third party library Scriptaculous
 *
