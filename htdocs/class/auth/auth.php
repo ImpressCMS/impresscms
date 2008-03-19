@@ -49,7 +49,7 @@ class XoopsAuth {
   	}
   
   	/**
-  	 * @abstract need to be write in the dervied class
+  	 * @abstract need to be write in the derived class
   	 */	
   	function authenticate() {
   		$authenticated = false;

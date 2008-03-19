@@ -89,9 +89,6 @@ class XoopsFormTextArea extends XoopsFormElement {
 		$this->setValue($value);
 	}
 
-
-
-
 	/**
 	 * get number of rows
 	 * 
@@ -100,9 +97,6 @@ class XoopsFormTextArea extends XoopsFormElement {
 	function getRows() {
 		return $this->_rows;
 	}
-
-
-
 
 	/**
 	 * Get number of columns
@@ -113,21 +107,15 @@ class XoopsFormTextArea extends XoopsFormElement {
 		return $this->_cols;
 	}
 
-
-
-
 	/**
 	 * Get initial content
 	 * 
-	 * @param	bool    $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compat
+	 * @param	bool    $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compatibility
    * @return	string
 	 */
 	function getValue($encode = false) {
 		return $encode ? htmlspecialchars($this->_value) : $this->_value;
 	}
-
-
-
 
 	/**
 	 * Set initial content
@@ -138,17 +126,14 @@ class XoopsFormTextArea extends XoopsFormElement {
 		$this->_value = $value;
 	}
 
-
-
 	/**
 	 * prepare HTML for output
 	 * 
-   * @return	sting HTML
+   * @return string HTML
 	 */
 	function render(){
 		return "<textarea name='".$this->getName()."' id='".$this->getName()."' rows='".$this->getRows()."' cols='".$this->getCols()."'".$this->getExtra().">".$this->getValue()."</textarea>";
 	}
 }
-
 
 ?>

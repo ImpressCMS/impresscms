@@ -26,7 +26,6 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-
 /**
  * @package     kernel
  * @subpackage  auth
@@ -96,7 +95,6 @@ var $cp1252_map = array (
         }	
     }
 
-
 	function cp1252_to_utf8($str) {
 	        return  strtr(utf8_encode($str), $this->cp1252_map);
 	}
@@ -143,10 +141,6 @@ var $cp1252_map = array (
         return $authenticated;
     }
 
-
-
-
-
     /**
   	 *  Compose the user DN with the configuration.
   	 * 
@@ -174,7 +168,6 @@ var $cp1252_map = array (
 	    return $userDN;
     }
 
-
     /**
   	 *  Load user from ImpressCMS Database
   	 * 
@@ -190,10 +183,6 @@ var $cp1252_map = array (
       } 	
       return $filter;
     } 
-
-
-
-
 
     /**
      * Loads Xoops user
@@ -213,8 +202,6 @@ var $cp1252_map = array (
   		return $xoopsUser;
   	}
 
-    
 } // end class
-
 
 ?>

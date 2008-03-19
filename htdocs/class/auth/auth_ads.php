@@ -26,8 +26,6 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-
-
 /**
  * @package     kernel
  * @subpackage  auth
@@ -45,10 +43,6 @@ class XoopsAuthAds extends XoopsAuthLdap {
     function XoopsAuthAds (&$dao) {
   		parent::XoopsAuthLdap($dao);
     }
-
-
-
-
 
     /**
   	 *  Authenticate  user again LDAP directory (Bind)
@@ -96,10 +90,6 @@ class XoopsAuthAds extends XoopsAuthLdap {
         return $authenticated;
     }
 
-
-
-
-
     /**
   	 *  Return the UPN = userPrincipalName (Active Directory)
   	 *  userPrincipalName = guyt@CP.com    Often abbreviated to UPN, and 
@@ -115,6 +105,5 @@ class XoopsAuthAds extends XoopsAuthLdap {
     }
       
 } // end class
-
 
 ?>

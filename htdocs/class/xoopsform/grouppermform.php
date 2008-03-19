@@ -28,17 +28,6 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org///
 // Project: The XOOPS Project                                               //
 // -------------------------------------------------------------------------//
-if (!defined('XOOPS_ROOT_PATH')) {
-	die("XOOPS root path not defined");
-}
-
-
-require_once XOOPS_ROOT_PATH . '/class/xoopsform/formelement.php';
-require_once XOOPS_ROOT_PATH . '/class/xoopsform/formhidden.php';
-require_once XOOPS_ROOT_PATH . '/class/xoopsform/formbutton.php';
-require_once XOOPS_ROOT_PATH . '/class/xoopsform/formelementtray.php';
-require_once XOOPS_ROOT_PATH . '/class/xoopsform/form.php';
-
 /**
  * @package     kernel
  * @subpackage  form
@@ -46,6 +35,17 @@ require_once XOOPS_ROOT_PATH . '/class/xoopsform/form.php';
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
+ 
+if (!defined('XOOPS_ROOT_PATH')) {
+	die("XOOPS root path not defined");
+}
+
+require_once XOOPS_ROOT_PATH . '/class/xoopsform/formelement.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsform/formhidden.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsform/formbutton.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsform/formelementtray.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopsform/form.php';
+
 
 /**
  * Renders a form for setting module specific group permissions

@@ -53,7 +53,6 @@
  */
 class XoopsForm {
 
-
 	/**#@+
 	 * @access  private
 	 */
@@ -101,9 +100,6 @@ class XoopsForm {
 
     /**#@-*/
 
-
-
-
   	/**
   	 * constructor
   	 * 
@@ -123,11 +119,6 @@ class XoopsForm {
   		}
   	}
 
-
-
-
-
-
   	/**
   	 * return the title of the form
      * 
@@ -137,11 +128,6 @@ class XoopsForm {
   	function getTitle($encode = false) {
   		return $encode ? htmlspecialchars($this->_title, ENT_QUOTES) : $this->_title;
   	}
-
-
-
-
-
 
   	/**
   	 * get the "name" attribute for the <form> tag
@@ -156,10 +142,6 @@ class XoopsForm {
   		return $encode ? htmlspecialchars($this->_name, ENT_QUOTES) : $this->_name;
   	}
 
-
-
-
-
   	/**
   	 * get the "action" attribute for the <form> tag
   	 * 
@@ -170,9 +152,6 @@ class XoopsForm {
   		return $encode ? htmlspecialchars($this->_action, ENT_QUOTES) : $this->_action;
   	}
 
-
-
-
   	/**
   	 * get the "method" attribute for the <form> tag
   	 * 
@@ -181,8 +160,6 @@ class XoopsForm {
   	function getMethod(){
   		return ( strtolower($this->_method) == "get" ) ? "GET" : "POST";
   	}
-
-
 
   	/**
   	 * Add an element to the form
@@ -209,8 +186,6 @@ class XoopsForm {
   			}
   		}
   	}
-
-
 
   	/**
   	 * get an array of forms elements
@@ -242,9 +217,6 @@ class XoopsForm {
   		}
   	}
 
-
-
-
   	/**
   	 * get an array of "name" attributes of form elements
   	 * 
@@ -259,9 +231,6 @@ class XoopsForm {
   		}
   		return $ret;
   	}
-
-
-
 
   	/**
   	 * get a reference to a {@link XoopsFormElement} object by its "name"
@@ -280,9 +249,6 @@ class XoopsForm {
   		$elt = null;
   		return $elt;
   	}
-
-
-
 
   	/**
   	 * Sets the "value" attribute of a form element
@@ -372,7 +338,6 @@ class XoopsForm {
   		return $extra;
   	}
 
-
   	/**
   	 * make an element "required"
   	 *
@@ -402,10 +367,6 @@ class XoopsForm {
   	function insertBreak($extra = null) {
   	}
 
-
-
-
-
   	/**
   	 * returns renderered form
   	 *
@@ -416,15 +377,12 @@ class XoopsForm {
   	function render() {
   	}
 
-
-
   	/**
   	 * displays rendered form
   	 */
   	function display() {
   		echo $this->render();
   	}
-
 
   	/**
   	 * Renders the Javascript function needed for client-side for validation
@@ -467,10 +425,6 @@ class XoopsForm {
   		}
   		return $js;
   	}
-
-
-
-
 
   	/**
   	 * assign to smarty form template instead of displaying directly

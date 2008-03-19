@@ -26,7 +26,6 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-
 /**
  * @package     kernel
  * @subpackage  auth
@@ -35,7 +34,6 @@
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class XoopsAuthXoops extends XoopsAuth {
-
 
   	/**
   	 * Authentication Service constructor

@@ -25,7 +25,6 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 
-
 /**
  * @package     kernel
  * @subpackage  auth
@@ -38,8 +37,6 @@
 class XoopsAuthProvisionning {
 
   	var $_auth_instance;
-
-
 
     /**
      * Gets instance of {@link XoopsAuthProvisionning}
@@ -54,9 +51,6 @@ class XoopsAuthProvisionning {
   		}
   		return $provis_instance;
   	}
-
-
-
 
     /**
      * Authentication Service constructor
@@ -76,9 +70,6 @@ class XoopsAuthProvisionning {
         $this->com_order = $config_gen['com_order'];
     }
 
-
-
-
     /**
   	 * Return a Xoops User Object 
      * @param string $uname Username of the user
@@ -92,8 +83,6 @@ class XoopsAuthProvisionning {
   			return $getuser[0];
   		else return false;
   	}
-
-
 
     /**
   	 * Launch the synchronisation process 
@@ -115,12 +104,6 @@ class XoopsAuthProvisionning {
   		}
   		return $xoopsUser;
   	}
-
-
-
-
-
-
 
     /**
   	 * Adds a new user to the system
@@ -161,8 +144,6 @@ class XoopsAuthProvisionning {
       	return $ret;
   	}
 
-
-
     /**
   	 * Modify user information
      * @param object {@link XoopsUser} reference to Xoops User Object
@@ -188,9 +169,6 @@ class XoopsAuthProvisionning {
   		}         
       	return $ret;
   	}
-
-
-
 
     /**
   	 * Modify a user
@@ -224,10 +202,6 @@ class XoopsAuthProvisionning {
   	function resetpwd() {
   	}
 
-
-
 } // end class
-
-
 
 ?>
