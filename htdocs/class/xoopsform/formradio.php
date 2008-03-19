@@ -67,7 +67,7 @@ class XoopsFormRadio extends XoopsFormElement {
 	var $_value = null;
 
 	/**
-   * HTML to seperate the elements
+   * HTML to separate the elements
 	 * @var	string  
 	 * @access  private
 	 */
