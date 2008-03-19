@@ -35,16 +35,6 @@ if ($xoopsConfigSearch['enable_search'] != 1) {
     header('Location: '.XOOPS_URL.'/index.php');
     exit();
 }
-if ($xoopsConfigSearch['enable_deep_search'] == 1) {
-	$xoopsOption['template_main'] = 'system_search_deep.html';
-	$search_limiter = 0;	// Do not limit search results.
-} else {
-	$search_limiter = $xoopsConfigSearch['num_shallow_search'];	// Limit the number of search results based on user preference.
-}
-$xoopsOption['template_main'] = 'system_search.html';
-
-include XOOPS_ROOT_PATH.'/header.php';
-
 $action = "search";
 if (!empty($_GET['action'])) {
   $action = $_GET['action'];
@@ -80,37 +70,31 @@ if (!empty($_GET['start'])) {
   $start = intval($_POST['start']);
 }
 
-$xoopsTpl->assign("start", $start + 1);
 $queries = array();
 
-if ($action == "recoosults") {
+if ($action == "results") {
     if ($query == "") {
          redirect_header("search.php",1,_SR_PLZENTER);
-        exit();
     }
 } elseif ($action == "showall") {
     if ($query == "" || empty($mid)) {
         redirect_header("search.php",1,_SR_PLZENTER);
-        exit();
     }
 } elseif ($action == "showallbyuser") {
     if (empty($mid) || empty($uid)) {
         redirect_header("search.php",1,_SR_PLZENTER);
-        exit();
     }
 }
 
-global $xoopsUser;
 $groups = is_object($xoopsUser) ? $xoopsUser -> getGroups() : XOOPS_GROUP_ANONYMOUS;
 $gperm_handler = & xoops_gethandler( 'groupperm' );
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 
-$xoopsTpl->assign('basic_search', false);
 if ($action == 'search') {
-    // This area seems to handle the 'just display the advanced search page' part.
-   $search_form = include 'include/searchform.php';
-   $xoopsTpl->assign('search_form', $search_form);
-   $xoopsTpl->assign('basic_search', true);
+    include XOOPS_ROOT_PATH.'/header.php';
+    include 'include/searchform.php';
+    $search_form->display();
+    $xoopsTpl->assign('xoops_pagetitle', _SEARCH);
     include XOOPS_ROOT_PATH.'/footer.php';
     exit();
 }
@@ -118,7 +102,6 @@ if ($action == 'search') {
 if ( $andor != "OR" && $andor != "exact" && $andor != "AND" ) {
     $andor = "AND";
 }
-$xoopsTpl->assign("search_type", $andor);
 
 $myts =& MyTextSanitizer::getInstance();
 if ($action != 'showallbyuser') {
@@ -135,165 +118,176 @@ if ($action != 'showallbyuser') {
         }
         if (count($queries) == 0) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
-            exit();
         }
     } else {
         $query = trim($query);
         if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
             redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
-            exit();
         }
         $queries = array($myts->addSlashes($query));
     }
 }
-$xoopsTpl->assign("label_search_results", _SR_SEARCHRESULTS);
-
-// Keywords section.
-$xoopsTpl->assign("label_keywords", _SR_KEYWORDS . ':');
-$keywords = array();
-$ignored_keywords = array();
-foreach ($queries as $q) {
-	$keywords[] = htmlspecialchars(stripslashes($q));
-}
-if (!empty($ignored_queries)) {
-	 $xoopsTpl->assign("label_ignored_keywords", sprintf(_SR_IGNOREDWORDS, $xoopsConfigSearch['keyword_min']));
-    foreach ($ignored_queries as $q) {
-    	$ignored_keywords[] = htmlspecialchars(stripslashes($q));
-    }
-    $xoopsTpl->assign("ignored_keywords", $ignored_keywords);
-}
-$xoopsTpl->assign("searched_keywords", $keywords);
-
-$all_results = array();
-$all_results_counts = array();
 switch ($action) {
     case "results":
-    	$max_results_per_page = $xoopsConfigSearch['num_shallow_search'];
-	    $module_handler =& xoops_gethandler('module');
-	    $criteria = new CriteriaCompo(new Criteria('hassearch', 1));
-	    $criteria->add(new Criteria('isactive', 1));
-	    $criteria->add(new Criteria('mid', "(".implode(',', $available_modules).")", 'IN'));
-	    $modules =& $module_handler->getObjects($criteria, true);
-	    $mids = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : array();
-	    if (empty($mids) || !is_array($mids)) {
-	        unset($mids);
-	        $mids = array_keys($modules);
-	    }
-	
-	    foreach ($mids as $mid) {
-	        $mid = intval($mid);
-	        if ( in_array($mid, $available_modules) ) {
-	            $module =& $modules[$mid];
-	            $results =& $module->search($queries, $andor, $search_limiter, 0);
-	            $xoopsTpl->assign("showing", sprintf(_SR_SHOWING, 1, $max_results_per_page));
-	            $count = count($results);
-            	$all_results_counts[$module->getVar('name')] = $count;
-
-            	if (!is_array($results) || $count == 0) {
-            		$all_results[$module->getVar('name')] = array();
-	            } else {
-								(($count - $start) > $max_results_per_page)? $num_show_this_page = $max_results_per_page: $num_show_this_page = $count - $start;
-								for ($i = 0; $i < $num_show_this_page; $i++) {
-	                	  $results[$i]['processed_image_alt_text'] = $myts->makeTboxData4Show($module->getVar('name')) . ": ";
-	                    if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
-	                    	  $results[$i]['processed_image_url'] = "modules/" . $module->getVar('dirname') . "/" . $results[$i]['image'];
-	                    } else {
-	                    	  $results[$i]['processed_image_url'] = "images/icons/posticon2.gif";
-	                    }
-	                    if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-	                        $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
-	                    }
-	                    $results[$i]['processed_title'] = $myts->makeTboxData4Show($results[$i]['title']);
-	                    $results[$i]['uid'] = @intval($results[$i]['uid']);
-	                    if ( !empty($results[$i]['uid']) ) {
-	                        $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-	                        $results[$i]['processed_user_name'] = $uname;
-	                        $results[$i]['processed_user_url'] = XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid'];
-	                    }
-	                    $results[$i]['processed_time'] = !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
-	                }
-									if ($xoopsConfigSearch['enable_deep_search'] == 1) {
-										if ( $count > $max_results_per_page) {
-		                    $search_url = XOOPS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
-		                    $search_url .= "&mid=$mid&action=showall&andor=$andor";
-		                } else {
-		                	$search_url = "";
-		                }
-									} else {
-		                if ( $count >= $max_results_per_page ) {
-		                    $search_url = XOOPS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
-		                    $search_url .= "&mid=$mid&action=showall&andor=$andor";
-		                } else {
-		                	$search_url = "";
-		                }
-									}
-
-	            	$all_results[$module->getVar('name')] = array("search_more_title" => _SR_SHOWALLR, 
-	                                                            "search_more_url" => htmlspecialchars($search_url), 
-	                                                            "results" => array_slice($results, 0, $num_show_this_page));
-	            }
-	        }
-	        unset($results);
-	        unset($module);
-	    }
-	    break;
+    $module_handler =& xoops_gethandler('module');
+    $criteria = new CriteriaCompo(new Criteria('hassearch', 1));
+    $criteria->add(new Criteria('isactive', 1));
+    $criteria->add(new Criteria('mid', "(".implode(',', $available_modules).")", 'IN'));
+    $modules =& $module_handler->getObjects($criteria, true);
+    $mids = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : array();
+    if (empty($mids) || !is_array($mids)) {
+        unset($mids);
+        $mids = array_keys($modules);
+    }
+    include XOOPS_ROOT_PATH."/header.php";
+    echo "<h3>"._SR_SEARCHRESULTS."</h3>\n";
+    echo _SR_KEYWORDS.':';
+    if ($andor != 'exact') {
+        foreach ($queries as $q) {
+            echo ' <b>'.htmlspecialchars(stripslashes($q)).'</b>';
+        }
+        if (!empty($ignored_queries)) {
+            echo '<br />';
+            printf(_SR_IGNOREDWORDS, $xoopsConfigSearch['keyword_min']);
+            foreach ($ignored_queries as $q) {
+                echo ' <b>'.htmlspecialchars(stripslashes($q)).'</b>';
+            }
+        }
+    } else {
+        echo ' "<b>'.htmlspecialchars(stripslashes($queries[0])).'</b>"';
+    }
+    echo '<br />';
+    foreach ($mids as $mid) {
+        $mid = intval($mid);
+        if ( in_array($mid, $available_modules) ) {
+            $module =& $modules[$mid];
+            $results =& $module->search($queries, $andor, 5, 0);
+            echo "<h4>".$myts->makeTboxData4Show($module->getVar('name'))."</h4>";
+            $count = count($results);
+            if (!is_array($results) || $count == 0) {
+                echo "<p>"._SR_NOMATCH."</p>";
+            } else {
+                for ($i = 0; $i < $count; $i++) {
+                    if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
+                        echo "<img src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
+                    } else {
+                        echo "<img src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' width='26' height='26' />&nbsp;";
+                    }
+                    if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                        $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
+                    }
+                    echo "<b><a href='".$results[$i]['link']."'>".$myts->makeTboxData4Show($results[$i]['title'])."</a></b><br />\n";
+                    echo "<small>";
+                    $results[$i]['uid'] = @intval($results[$i]['uid']);
+                    if ( !empty($results[$i]['uid']) ) {
+                        $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
+                        echo "&nbsp;&nbsp;<a href='".XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
+                    }
+                    echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
+                    echo "</small><br />\n";
+                }
+                if ( $count >= 5 ) {
+                    $search_url = XOOPS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
+                    $search_url .= "&mid=$mid&action=showall&andor=$andor";
+                    echo '<br /><a href="'.htmlspecialchars($search_url).'">'._SR_SHOWALLR.'</a></p>';
+                }
+            }
+        }
+        unset($results);
+        unset($module);
+    }
+    include "include/searchform.php";
+    $search_form->display();
+    $xoopsTpl->assign('xoops_pagetitle', _SR_SEARCHRESULTS); 
+    break;
     case "showall":
     case 'showallbyuser':
-    	$max_results_per_page = $xoopsConfigSearch['num_module_search'];
-	    $module_handler =& xoops_gethandler('module');
-	    $module =& $module_handler->get($mid);
-	    $results =& $module->search($queries, $andor, 0, $start, $uid);
-      //$xoopsTpl->assign("showing", sprintf(_SR_SHOWING, $start + 1, $start + 20));
-	    $count = count($results);
-	    $all_results_counts[$module->getVar('name')] = $count;
-	    if (is_array($results) && $count > 0) {
-					(($count - $start) > $max_results_per_page)? $num_show_this_page = $max_results_per_page: $num_show_this_page = $count - $start;
-        	for ($i = 0; $i < $num_show_this_page; $i++) {
-            	  $results[$i]['processed_image_alt_text'] = $myts->makeTboxData4Show($module->getVar('name')) . ": ";
-                if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
-                	  $results[$i]['processed_image_url'] = "modules/" . $module->getVar('dirname') . "/" . $results[$i]['image'];
-                } else {
-                	  $results[$i]['processed_image_url'] = "images/icons/posticon2.gif";
+    include XOOPS_ROOT_PATH."/header.php";
+    $module_handler =& xoops_gethandler('module');
+    $module =& $module_handler->get($mid);
+    $results =& $module->search($queries, $andor, 20, $start, $uid);
+    $count = count($results);
+    if (is_array($results) && $count > 0) {
+        $next_results =& $module->search($queries, $andor, 1, $start + 20, $uid);
+        $next_count = count($next_results);
+        $has_next = false;
+        if (is_array($next_results) && $next_count == 1) {
+            $has_next = true;
+        }
+        $xoopsTpl->assign('xoops_pagetitle', _SR_SEARCHRESULTS);
+        echo "<h4>"._SR_SEARCHRESULTS."</h4>\n";
+        if ($action == 'showall') {
+            echo _SR_KEYWORDS.':';
+            if ($andor != 'exact') {
+                foreach ($queries as $q) {
+                    echo ' <b>'.htmlspecialchars(stripslashes($q)).'</b>';
                 }
-                if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-                    $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
-                }
-                $results[$i]['processed_title'] = $myts->makeTboxData4Show($results[$i]['title']);
-                $results[$i]['uid'] = @intval($results[$i]['uid']);
-                if ( !empty($results[$i]['uid']) ) {
-                    $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-                    $results[$i]['processed_user_name'] = $uname;
-                    $results[$i]['processed_user_url'] = XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid'];
-                }
-                $results[$i]['processed_time'] = !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
+            } else {
+                echo ' "<b>'.htmlspecialchars(stripslashes($queries[0])).'</b>"';
             }
-            
-						$search_url_prev = "";
-						$search_url_next = "";
-						
-						$search_url_base = "XOOPS_URL.'/search.php?";
-						$search_url_get_params = 'query=' . urlencode(stripslashes(implode(' ', $queries)));
-		        $search_url_get_params .= "&mid=$mid&action=$action&andor=$andor";
-		        if ($action=='showallbyuser') {
-		            $search_url_get_params .= "&uid=$uid";
-		        }
-						$search_url = $search_url_base . $search_url_get_params;
-						
-        include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-        $pagenav = new XoopsPageNav($count, $max_results_per_page, $start, "start", $search_url_get_params);
-        $all_results[$module->getVar('name')] = array("results" =>array_slice($results, 0, $num_show_this_page),
-                                                      "page_nav" => $pagenav->renderNav());
-	    } else {
-	        echo '<p>'._SR_NOMATCH.'</p>';
-	    }
-	    break;
+            echo '<br />';
+        }
+        //    printf(_SR_FOUND,$count);
+        //    echo "<br />";
+        printf(_SR_SHOWING, $start+1, $start + $count);
+        echo "<h5>".$myts->makeTboxData4Show($module->getVar('name'))."</h5>";
+        for ($i = 0; $i < $count; $i++) {
+            if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
+                echo "<img src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
+            } else {
+                echo "<img src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->name())."' width='26' height='26' />&nbsp;";
+            }
+            if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+                $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
+            }
+            echo "<b><a href='".$results[$i]['link']."'>".$myts->makeTboxData4Show($results[$i]['title'])."</a></b><br />\n";
+            echo "<small>";
+            $results[$i]['uid'] = @intval($results[$i]['uid']);
+            if ( !empty($results[$i]['uid']) ) {
+                $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
+                echo "&nbsp;&nbsp;<a href='".XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
+            }
+            echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
+            echo "</small><br />\n";
+        }
+        echo '
+        <table>
+          <tr>
+        ';
+        $search_url = XOOPS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
+        $search_url .= "&mid=$mid&action=$action&andor=$andor";
+        if ($action=='showallbyuser') {
+            $search_url .= "&uid=$uid";
+        }
+        if ( $start > 0 ) {
+            $prev = $start - 20;
+            echo '<td align="left">
+            ';
+            $search_url_prev = $search_url."&start=$prev";
+            echo '<a href="'.htmlspecialchars($search_url_prev).'">'._SR_PREVIOUS.'</a></td>
+            ';
+        }
+        echo '<td>&nbsp;&nbsp;</td>
+        ';
+        if (false != $has_next) {
+            $next = $start + 20;
+            $search_url_next = $search_url."&start=$next";
+            echo '<td align="right"><a href="'.htmlspecialchars($search_url_next).'">'._SR_NEXT.'</a></td>
+            ';
+        }
+        echo '
+          </tr>
+        </table>
+        <p>
+        ';
+    } else {
+        echo '<p>'._SR_NOMATCH.'</p>';
+    }
+    include "include/searchform.php";
+    $search_form->display();
+    echo '</p>
+    ';
+    break;
 }
-arsort($all_results_counts);
-$xoopsTpl->assign("module_sort_order", $all_results_counts);
-$xoopsTpl->assign("search_results", $all_results);
-
-$search_form = include 'include/searchform.php';
-$xoopsTpl->assign('search_form', $search_form);
-
 include XOOPS_ROOT_PATH."/footer.php";
 ?>
