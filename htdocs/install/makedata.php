@@ -301,10 +301,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES (102, 0, 2, 'remember_me', '_MD_AM_REMEMBERME', '0', '_MD_AM_REMEMBERMEDSC', 'yesno', 'int', 29)");
     $dbm->insert('config', " VALUES (103, 0, 2, 'priv_dpolicy', '_MD_AM_PRIVDPOLICY', 0, '_MD_AM_PRIVDPOLICYDSC', 'yesno', 'int', 33)");
     $dbm->insert('config', " VALUES (104, 0, 2, 'priv_policy', '_MD_AM_PRIVPOLICY', '".addslashes(_INSTALL_PRIVPOLICY)."', '_MD_AM_PRIVPOLICYDSC', 'textarea', 'text', 34)");
-	//Added by Lankford on 2007/8/15.
-	$dbm->insert('config', " VALUES (105, 0, 5, 'enable_deep_search', '_MD_AM_DODEEPSEARCH', '1', '_MD_AM_DODEEPSEARCHDSC', 'yesno', 'int', 0)");
-	$dbm->insert('config', " VALUES (106, 0, 5, 'num_shallow_search', '_MD_AM_NUMINITSRCHRSLTS', '5', '_MD_AM_NUMINITSRCHRSLTSDSC', 'textbox', 'int', 1)");
-	$dbm->insert('config', " VALUES (107, 0, 5, 'num_module_search', '_MD_AM_NUMMDLSRCHRESULTS', '20', '_MD_AM_NUMMDLSRCHRESULTSDSC', 'textbox', 'int', 2)");
 
     return $gruops;
 }

@@ -1,7 +1,5 @@
 ImpressCMS ChangeLog
 
-- Added : Improved search, (rlankford)
-
 =========================================
 2008-03-10 : ImpressCMS 1.0 "Janus" Final
 =========================================

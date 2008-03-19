@@ -84,8 +84,6 @@ $modversion['templates'][16]['file'] = 'system_privpolicy.html';
 $modversion['templates'][16]['description'] = 'Template for displaying site Privacy Policy';
 $modversion['templates'][17]['file'] = 'system_error.html';
 $modversion['templates'][17]['description'] = 'Template for handling HTTP errors';
-$modversion['templates'][18]['file'] = 'system_search.html';
-$modversion['templates'][18]['description'] = 'Smarty template for ImpressCMS search page.';
 
 // Blocks
 $modversion['blocks'][1]['file'] = "system_blocks.php";

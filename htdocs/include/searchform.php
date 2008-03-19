@@ -65,5 +65,4 @@ if ($xoopsConfigSearch['keyword_min'] > 0) {
 $search_form->addElement(new XoopsFormHidden("action", "results"));
 $search_form->addElement(new XoopsFormHiddenToken('id'));
 $search_form->addElement(new XoopsFormButton("", "submit", _SR_SEARCH, "submit"));
-return $search_form->render();	// Added by Lankford on 2007/7/26.
 ?>

@@ -128,13 +128,6 @@ define('_MD_AM_CENSORRPLCDSC', 'Censored words will be replaced with the charact
 
 define('_MD_AM_SEARCH', 'Search Options');
 define('_MD_AM_DOSEARCH', 'Enable global searches?');
-// Added by Lankford on 2007/8/15
-define('_MD_AM_DODEEPSEARCH', "Enable 'deep' searching?");
-define('_MD_AM_DODEEPSEARCHDSC', "Would you like your initial search results page to indicate how many hits were found in each module?  Note: turning this on can slow down the search process!");
-define('_MD_AM_NUMINITSRCHRSLTS', "Number of initial search results: (for 'shallow' searching)");
-define('_MD_AM_NUMINITSRCHRSLTSDSC', "'Shallow' searches are made quicker by limiting the results that are returned for each module on the initial search page.");
-define('_MD_AM_NUMMDLSRCHRESULTS', "Number of search results per page:");
-define('_MD_AM_NUMMDLSRCHRESULTSDSC', "This determines how many hits per page are shown after drilling down into a particular module's search results.");
 define('_MD_AM_DOSEARCHDSC', 'Allow searching for posts/items within your site.');
 define('_MD_AM_MINSEARCH', 'Minimum keyword length');
 define('_MD_AM_MINSEARCHDSC', 'Enter the minimum keyword length that users are required to enter to perform search');
