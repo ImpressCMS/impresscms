@@ -17,5 +17,6 @@ define('_AM_SMILEURL','Image URL:');
 define('_AM_SMILEEMOTION','Description:');
 define('_AM_ADD','Add');
 define('_AM_SAVE','Save');
-define('_AM_WAYSYWTDTS','WARNING: Are you sure you want to delete this Smile?');define('_AM_DISPLAYF', 'Display in form?');
+define('_AM_WAYSYWTDTS','WARNING: Are you sure you want to delete this Smile?');
+define('_AM_DISPLAYF', 'Display in form?');
 ?>
