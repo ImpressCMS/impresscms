@@ -132,6 +132,7 @@ if ($op == 'logout') {
     }
     $message = _US_LOGGEDOUT.'<br />'._US_THANKYOUFORVISIT;
     redirect_header('index.php', 1, $message);
+    exit();
 }
 
 if ($op == 'actv') {
@@ -190,11 +191,13 @@ if ($op == 'delete') {
     $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     if (!$xoopsUser || $xoopsConfigUser['self_delete'] != 1) {
         redirect_header('index.php',5,_US_NOPERMISS);
+        exit();
     } else {
         $groups = $xoopsUser->getGroups();
         if (in_array(XOOPS_GROUP_ADMIN, $groups)){
             // users in the webmasters group may not be deleted
             redirect_header('user.php', 5, _US_ADMINNO);
+            exit();
         }
         $ok = !isset($_POST['ok']) ? 0 : intval($_POST['ok']);
         if ($ok != 1) {

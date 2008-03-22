@@ -52,7 +52,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $imagecategorys =& $imgcat_handler->getObjects();
         xoops_cp_header();
         echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/images/images/images_big.png)">'._IMGMANAGER.'</div><br />';
-        //echo '<h4 style="text-align:left">'._IMGMANAGER.'</h4><ul>';
         $catcount = count($imagecategorys);
         $image_handler =& xoops_gethandler('image');
         for ($i = 0; $i < $catcount; $i++) {

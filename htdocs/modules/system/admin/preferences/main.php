@@ -51,7 +51,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $catcount = count($confcats);
         xoops_cp_header();
         echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/preferences/images/preferences_big.png)">'._MD_AM_SITEPREF.'</div><br />';
-        //echo '<h4 style="text-align:left">'._MD_AM_SITEPREF.'</h4><ul>';
         for ($i = 0; $i < $catcount; $i++) {
             echo '<li>'.constant($confcats[$i]->getVar('confcat_name')).' [<a href="admin.php?fct=preferences&amp;op=show&amp;confcat_id='.$confcats[$i]->getVar('confcat_id').'">'._EDIT.'</a>]</li>';
         }
@@ -87,7 +86,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                     // this is exceptional.. only when value type is arrayneed a smarter way for this
                     $ele = ($config[$i]->getVar('conf_value') != '') ? new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars(implode('|', $config[$i]->getConfValueForOutput())), 5, 50) : new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), '', 5, 50);
                 } else {
-                    $ele = new XoopsFormTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars($config[$i]->getConfValueForOutput()), 5, 50);
+                    $ele = new XoopsFormDhtmlTextArea($title, $config[$i]->getVar('conf_name'), $myts->htmlspecialchars($config[$i]->getConfValueForOutput()));
                 }
                 break;
             case 'select':
@@ -232,7 +231,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $form->addElement(new XoopsFormButton('', 'button', _GO, 'submit'));
         xoops_cp_header();
         echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/preferences/images/preferences_big.png)"><a href="admin.php?fct=preferences">'. _MD_AM_PREFMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.constant($confcat->getVar('confcat_name')).'<br /><br /></div><br />';
-        //echo '<a href="admin.php?fct=preferences">'. _MD_AM_PREFMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.constant($confcat->getVar('confcat_name')).'<br /><br />';
         $form->display();
         xoops_cp_footer();
         exit();

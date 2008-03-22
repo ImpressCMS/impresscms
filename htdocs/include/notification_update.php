@@ -56,6 +56,7 @@ if (!isset($_POST['not_submit'])) {
 
 if (!$GLOBALS['xoopsSecurity']->check()) {
     redirect_header($_POST['not_redirect'], 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+    exit();
 }
 
 // NOTE: in addition to the templates provided in the block and view
@@ -122,5 +123,6 @@ foreach (array_keys($redirect_args) as $arg) {
 }
 
 redirect_header ($_POST['not_redirect'].$argstring, 3, _NOT_UPDATEOK);
+exit();
 
 ?>

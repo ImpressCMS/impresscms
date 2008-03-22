@@ -39,9 +39,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 function displayGroups()
 {
     xoops_cp_header();
-    //OpenTable();
     echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/groups/images/groups_big.png)">'._AM_EDITADG.'</div><br />';
-    //echo "<h4 style='text-align:left'>"._AM_EDITADG."</h4>";
     $member_handler =& xoops_gethandler('member');
     $groups =& $member_handler->getGroups();
         echo "<table class='outer' width='40%' cellpadding='4' cellspacing='1'><tr><th colspan='2'>"._AM_EDITADG."</th></tr>";
@@ -89,9 +87,7 @@ function modifyGroup($g_id)
         $memstart = intval($_GET['memstart']);
     }
     xoops_cp_header();
-    //OpenTable();
     echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/groups/images/groups_big.png)"><a href="admin.php?fct=groups">'. _AM_GROUPSMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _AM_MODIFYADG.'</div><br />';
-    //echo '<a href="admin.php?fct=groups">'. _AM_GROUPSMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _AM_MODIFYADG.'<br /><br />';
     $member_handler =& xoops_gethandler('member');
     $thisgroup =& $member_handler->getGroup($g_id);
     $name_value = $thisgroup->getVar("name", "E");

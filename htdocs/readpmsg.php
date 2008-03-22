@@ -42,6 +42,7 @@ if ( !is_object($xoopsUser) ) {
             exit();
         } else {
             redirect_header("viewpmsg.php",1,_PM_DELETED);
+            exit();
         }
     }
     $start = !empty($_GET['start']) ? intval($_GET['start']) : 0;

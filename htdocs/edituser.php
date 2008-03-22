@@ -202,6 +202,11 @@ if ($op == 'editprofile') {
     foreach ( $xoopsConfig['theme_set_allowed'] as $theme ){
     	$selected_theme->addOption( $theme , $theme );
 	}
+	$selected_language = new XoopsFormSelect(_US_SELECT_THEME, 'language_selected' , $xoopsUser->language() );
+	include_once(XOOPS_ROOT_PATH."/class/xoopslists.php");
+	foreach ( XoopsLists::getLangList() as $language ){
+    	$selected_language->addOption( $language , $language );
+	}
     // RMV-NOTIFY
     // TODO: add this to admin user-edit functions...
     include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/notification.php';
@@ -234,6 +239,8 @@ if ($op == 'editprofile') {
     $form->addElement($sig_tray);
     if ( count( $xoopsConfig['theme_set_allowed'] ) > 1 )
    		$form->addElement($selected_theme);
+   	if ( $im_multilanguageConfig['ml_enable'] )
+   		$form->addElement($selected_language);
     $form->addElement($umode_select);
     $form->addElement($uorder_select);
     $form->addElement($notify_method_select);

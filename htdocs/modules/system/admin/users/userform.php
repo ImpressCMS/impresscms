@@ -111,6 +111,8 @@ $pwd_text = new XoopsFormPassword(_AM_PASSWORD, "password", 10, 32);
 $pwd_text2 = new XoopsFormPassword(_AM_RETYPEPD, "pass2", 10, 32);
 $mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', intval($mailok_value));
 
+$language = new XoopsFormSelectLang(_US_SELECT_LANG,'language', $language_value);
+
 // Groups administration addition XOOPS 2.0.9: Mith
 global $xoopsUser;
 $gperm_handler =& xoops_gethandler('groupperm');
@@ -162,6 +164,7 @@ if (!$form_isedit) {
     $form->addElement($pwd_text2);
 }
 $form->addElement($mailok_radio);
+$form->addElement($language);
 
 foreach ($group_select as $group) {
     $form->addElement($group);

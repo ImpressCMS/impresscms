@@ -63,6 +63,7 @@ case "BannersAdd":
     $sql = sprintf("INSERT INTO %s (bid, cid, imptotal, impmade, clicks, imageurl, clickurl, date, htmlbanner, htmlcode) VALUES ('%d', '%d', '%d', '1', '0', %s, %s, '%d', '%d', %s)", $db->prefix("banner"), intval($newid), $cid, $imptotal, $db->quoteString($myts->stripSlashesGPC($imageurl)), $db->quoteString($myts->stripSlashesGPC($clickurl)), time(), $htmlbanner, $db->quoteString($myts->stripSlashesGPC($htmlcode)));
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
+    exit();
     break;
 
 case "BannerAddClient":
@@ -81,6 +82,7 @@ case "BannerAddClient":
     $sql = sprintf("INSERT INTO %s (cid, name, contact, email, login, passwd, extrainfo) VALUES ('%d', %s, %s, %s, %s, %s, %s)", $db->prefix("bannerclient"), intval($newid), $db->quoteString($myts->stripSlashesGPC($name)), $db->quoteString($myts->stripSlashesGPC($contact)), $db->quoteString($myts->stripSlashesGPC($email)), $db->quoteString($myts->stripSlashesGPC($login)), $db->quoteString($myts->stripSlashesGPC($passwd)), $db->quoteString($myts->stripSlashesGPC($extrainfo)));
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
+    exit();
     break;
 
 case "BannerFinishDelete":
@@ -98,6 +100,7 @@ case "BannerFinishDelete2":
     $sql = sprintf("DELETE FROM %s WHERE bid = %u", $db->prefix("bannerfinish"), $bid);
     $db->query($sql);
     redirect_header("admin.php?fct=banners&amp;op=BannersAdmin#top",1,_AM_DBUPDATED);
+    exit();
     break;
 
 case "BannerDelete":

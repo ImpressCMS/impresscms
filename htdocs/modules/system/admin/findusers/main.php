@@ -145,7 +145,6 @@ if ( $op == "form" ) {
     }
     $form->addElement($submit_button);
     echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/findusers/images/findusers_big.png)">'._AM_FINDUS.'</div><br />';
-    //echo "<h4 style='text-align:left;'>"._AM_FINDUS."</h4>";
     echo "(".sprintf(_AM_ACTUS, "<span style='color:#ff0000;'>$acttotal</span>")." ".sprintf(_AM_INACTUS, "<span style='color:#ff0000;'>$inacttotal</span>").")<br /><br />";
     $form->display();
 }
@@ -353,7 +352,6 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
     $member_handler =& xoops_gethandler('member');
     $total = $member_handler->getUserCountByGroupLink($groups, $criteria);
     echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/findusers/images/findusers_big.png)">'._AM_FINDUS.'</div><br />';
-    //echo "<a href='admin.php?fct=findusers&amp;op=form'>". _AM_FINDUS ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;". _AM_RESULTS."<br /><br />";
     if ( $total == 0 ) {
         echo "<h4>"._AM_NOFOUND,"</h4>";
     } elseif ( $start < $total ) {

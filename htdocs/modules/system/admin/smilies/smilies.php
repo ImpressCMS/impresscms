@@ -39,7 +39,6 @@ function SmilesAdmin()
     $myts =& MyTextSanitizer::getInstance();
     xoops_cp_header();
     echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/smilies/images/smilies_big.png)">'._AM_SMILESCONTROL.'</div><br />';
-    //echo "<h4 style='text-align:left;'>"._AM_SMILESCONTROL."</h4>";
 
     if ($getsmiles = $db->query("SELECT * FROM ".$db->prefix("smiles"))) {
         if (($numsmiles = $db->getRowsNum($getsmiles)) == "0") {

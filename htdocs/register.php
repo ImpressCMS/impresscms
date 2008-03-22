@@ -241,6 +241,7 @@ case 'finish':
 		}
 		if ($xoopsConfigUser['activation_type'] == 1 || $xoopsConfigUser['activation_type'] == 3) {
 			redirect_header('index.php', 4, _US_ACTLOGIN);
+			exit();
 		}
 		if ($xoopsConfigUser['activation_type'] == 0) {
 			$xoopsMailer =& getMailer();

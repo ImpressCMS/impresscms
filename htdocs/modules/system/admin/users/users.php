@@ -100,6 +100,7 @@ function displayUsers()
     $op_value = "addUser";
     $form_title = _AM_ADDUSER;
     $form_isedit = false;
+    $language_value = $xoopsConfig['language'];
     $groups = array(XOOPS_GROUP_USERS);
     include XOOPS_ROOT_PATH."/modules/system/admin/users/userform.php";
         xoops_cp_footer();
@@ -147,6 +148,7 @@ function modifyUser($user)
         $mailok_value = $user->getVar('user_mailok', 'E');
         $op_value = "updateUser";
         $form_title = _AM_UPDATEUSER.": ".$user->getVar("uname");
+        $language_value = $user->getVar("language");
         $form_isedit = true;
         $groups = array_values($user->getGroups());
         include XOOPS_ROOT_PATH."/modules/system/admin/users/userform.php";
@@ -211,6 +213,7 @@ function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $us
         $edituser->setVar("user_occ", $user_occ);
         $edituser->setVar("user_intrest", $user_intrest);
         $edituser->setVar('user_mailok', $user_mailok);
+        $edituser->setVar('language', $language);
         if ($pass2 != "") {
             if ( $pass != $pass2 ) {
                 xoops_cp_header();
@@ -294,5 +297,6 @@ function synchronize($id, $type)
         break;
     }
     redirect_header("admin.php?fct=users&amp;op=modifyUser&amp;uid=".$id,1,_AM_DBUPDATED);
+    exit();
 }
 ?>

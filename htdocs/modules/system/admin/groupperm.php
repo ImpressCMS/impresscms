@@ -7,11 +7,13 @@ $modid = isset($_POST['modid']) ? intval($_POST['modid']) : 0;
 // we dont want system module permissions to be changed here
 if ($modid <= 1 || !is_object($xoopsUser) || !$xoopsUser->isAdmin($modid)) {
 	redirect_header(XOOPS_URL.'/index.php', 1, _NOPERM);
+	exit();
 }
 $module_handler =& xoops_gethandler('module');
 $module =& $module_handler->get($modid);
 if (!is_object($module) || !$module->getVar('isactive')) {
 	redirect_header(XOOPS_URL.'/admin.php', 1, _MODULENOEXIST);
+	exit();
 }
 
 $msg = array();

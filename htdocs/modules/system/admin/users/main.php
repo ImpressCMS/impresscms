@@ -58,7 +58,7 @@ case "updateUser":
     $user_avatar = $theme = null;
 	if ( !isset( $attachsig ) ) $attachsig = null;
 	if ( !isset( $user_viewemail ) ) $user_viewemail = null;
-    updateUser($uid, $username, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $groups);
+    updateUser($uid, $username, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $groups, $language);
     break;
 case "delUser":
     xoops_cp_header();
@@ -193,6 +193,7 @@ case "addUser":
             $newuser->setVar("user_occ", $user_occ);
             $newuser->setVar("user_intrest", $user_intrest);
             $newuser->setVar('user_mailok', $user_mailok);
+            $newuser->setVar('language', $language);
             if (!$member_handler->insertUser($newuser)) {
                 $adduser_errormsg = _AM_CNRNU;
             } else {

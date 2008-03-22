@@ -35,9 +35,11 @@ include XOOPS_ROOT_PATH."/include/cp_functions.php";
 if ( $xoopsUser ) {
 	if ( !$xoopsUser->isAdmin(-1) ) {
 		redirect_header("index.php",2,_AD_NORIGHT);
+		exit();
 	}
 } else {
 	redirect_header("index.php",2,_AD_NORIGHT);
+	exit();
 }
 /*********************************************************/
 /* end					                                 */
@@ -67,6 +69,7 @@ switch ($op){
 	case 2:
 		xoops_module_write_admin_menu(impresscms_get_adminmenu());
 		redirect_header('admin.php', 1, _AD_LOGINADMIN);
+		exit();
 		break;
 	default:
 		$mods = xoops_cp_header(1);
