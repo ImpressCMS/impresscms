@@ -42,11 +42,13 @@ $config_handler =& xoops_gethandler('config');
 $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 if( !$xoopsConfigUser['allow_annon_view_prof'] && !is_object($xoopsUser) ){
 	redirect_header('index.php', 3, _NOPERM);
+	exit();
 }
 
 $uid = intval($_GET['uid']);
 if ($uid <= 0) {
     redirect_header('index.php', 3, _US_SELECTNG);
+    exit();
 }
 
 $gperm_handler = & xoops_gethandler( 'groupperm' );
@@ -75,6 +77,7 @@ if (is_object($xoopsUser)) {
         $thisUser =& $member_handler->getUser($uid);
         if (!is_object($thisUser) || !$thisUser->isActive() ) {
             redirect_header("index.php",3,_US_SELECTNG);
+            exit();
         }
         $xoopsOption['template_main'] = 'system_userinfo.html';
         include XOOPS_ROOT_PATH.'/header.php';
@@ -85,6 +88,7 @@ if (is_object($xoopsUser)) {
     $thisUser =& $member_handler->getUser($uid);
     if (!is_object($thisUser) || !$thisUser->isActive()) {
         redirect_header("index.php",3,_US_SELECTNG);
+        exit();
     }
     $xoopsOption['template_main'] = 'system_userinfo.html';
     include(XOOPS_ROOT_PATH.'/header.php');
@@ -102,7 +106,11 @@ $xoopsTpl->assign('user_avatarurl', XOOPS_UPLOAD_URL.'/'.$thisUser->getVar('user
 $xoopsTpl->assign('lang_realname', _US_REALNAME);
 $xoopsTpl->assign('user_realname', $thisUser->getVar('name'));
 $xoopsTpl->assign('lang_website', _US_WEBSITE);
-$xoopsTpl->assign('user_websiteurl', '<a href="'.$thisUser->getVar('url', 'E').'" rel="external">'.$thisUser->getVar('url').'</a>');
+if ( $thisUser->getVar('url', 'E') == '') {
+	$xoopsTpl->assign('user_websiteurl', '');
+} else {
+	$xoopsTpl->assign('user_websiteurl', '<a href="'.$thisUser->getVar('url', 'E').'" target="_blank">'.$thisUser->getVar('url').'</a>');
+}
 $xoopsTpl->assign('lang_email', _US_EMAIL);
 $xoopsTpl->assign('lang_privmsg', _US_PM);
 $xoopsTpl->assign('lang_icq', _US_ICQ);

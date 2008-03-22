@@ -575,6 +575,7 @@ CREATE TABLE users (
   bio tinytext NOT NULL,
   user_intrest varchar(150) NOT NULL default '',
   user_mailok tinyint(1) unsigned NOT NULL default '1',
+  language varchar(100) NOT NULL default '',
   PRIMARY KEY  (uid),
   KEY uname (uname),
   KEY email (email),
