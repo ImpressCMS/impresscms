@@ -202,7 +202,7 @@ if ($op == 'editprofile') {
     foreach ( $xoopsConfig['theme_set_allowed'] as $theme ){
     	$selected_theme->addOption( $theme , $theme );
 	}
-	$selected_language = new XoopsFormSelect(_US_SELECT_THEME, 'language_selected' , $xoopsUser->language() );
+	$selected_language = new XoopsFormSelect(_US_SELECT_LANG, 'language_selected' , $xoopsUser->language() );
 	include_once(XOOPS_ROOT_PATH."/class/xoopslists.php");
 	foreach ( XoopsLists::getLangList() as $language ){
     	$selected_language->addOption( $language , $language );

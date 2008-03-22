@@ -144,6 +144,7 @@ define('_US_SELFILE','Select file');
 define('_US_OLDDELETED','Your old avatar will be deleted!');
 define('_US_CHOOSEAVT', 'Choose avatar from the available list');
 define('_US_SELECT_THEME', 'Default Theme');
+define('_US_SELECT_LANG', 'Default Language');
 
 define('_US_PRESSLOGIN', 'Press the button below to login');
 

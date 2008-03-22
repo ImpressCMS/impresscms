@@ -225,27 +225,6 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
     $xoopsConfig['root_path'] = XOOPS_ROOT_PATH."/";
 
 
-    // #################### Include site-wide lang file ##################
-    if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php") ) {
-        include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php";
-    } else {
-        include_once XOOPS_ROOT_PATH."/language/english/global.php";
-    }
-
-    // ################ Include page-specific lang file ################
-    if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
-        if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php") ) {
-            include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php";
-        } else {
-            include_once XOOPS_ROOT_PATH."/language/english/".$xoopsOption['pagetype'].".php";
-        }
-    }
-    $xoopsOption = array();
-
-    if ( !defined("XOOPS_USE_MULTIBYTES") ) {
-        define("XOOPS_USE_MULTIBYTES",0);
-    }
-
     /**#@+
      * Host abstraction layer
      */
@@ -365,7 +344,6 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
 	}
 	// end of autologin hack GIJ
 	
-	
     if (!empty($_SESSION['xoopsUserId'])) {
         $xoopsUser =& $member_handler->getUser($_SESSION['xoopsUserId']);
         if (!is_object($xoopsUser)) {
@@ -393,16 +371,22 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
 
     	$easiestml_langpaths = XoopsLists::getLangList();
     	$langs = array_combine($easiestml_langs,explode( ',' , $im_multilanguageConfig['ml_names'] ));
-
+			
     	if( $im_multilanguageConfig['ml_autoselect_enabled']  && isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $_SERVER['HTTP_ACCEPT_LANGUAGE'] != "" ){
 			$autolang = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2);
 			if (in_array($autolang,$easiestml_langs)){
     			$xoopsConfig['language'] = $langs[$autolang];
     		}
     	}
+    	echo "get:".$_GET['lang']."<br>";
+    	echo "cookie:".$_COOKIE['lang']."<br />";
+    	echo "config:".$xoopsConfig['language']."<br />";
     	if (isset( $_GET['lang'] ) && isset($_COOKIE['lang'])){
+    		echo "entro a cambiar";
     		if (in_array($_GET['lang'],$easiestml_langs)){
+    			echo "<br /> estoy en el array";
     			$xoopsConfig['language'] = $langs[$_GET['lang']];
+    			echo "<br > nuevo lenguage:".$xoopsConfig['language'];
     			if(isset( $_SESSION['xoopsUserLanguage'] )){
     				$_SESSION['xoopsUserLanguage'] = $langs[$_GET['lang']];
     			}
@@ -426,12 +410,30 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
     		if (in_array($_GET['lang'],$easiestml_langs)){
     			$xoopsConfig['language'] = $langs[$_GET['lang']];
     		}
-    	}elseif(isset( $_SESSION['xoopsUserLanguage'] )){
-    		if( in_array( $_SESSION['xoopsUserLanguage'] , $langs ) )
-    			$xoopsConfig['language'] = $_SESSION['xoopsUserLanguage'];			
     	}
 	}
+    
+	// #################### Include site-wide lang file ##################
+    if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php") ) {
+        include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php";
+    } else {
+        include_once XOOPS_ROOT_PATH."/language/english/global.php";
+    }
+
+    // ################ Include page-specific lang file ################
+    if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
+        if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php") ) {
+            include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php";
+        } else {
+            include_once XOOPS_ROOT_PATH."/language/english/".$xoopsOption['pagetype'].".php";
+        }
+    }
 	
+	$xoopsOption = array();
+
+    if ( !defined("XOOPS_USE_MULTIBYTES") ) {
+        define("XOOPS_USE_MULTIBYTES",0);
+    }
     
     if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $xoopsConfig['theme_set_allowed'])) {
         $xoopsConfig['theme_set'] = $_POST['xoops_theme_select'];
@@ -440,7 +442,7 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
         $xoopsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
         
     }
-
+    
     if ($xoopsConfig['closesite'] == 1) {
 	    include XOOPS_ROOT_PATH . "/include/site-closed.php";
     }
