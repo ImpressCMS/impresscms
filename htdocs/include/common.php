@@ -378,15 +378,9 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
     			$xoopsConfig['language'] = $langs[$autolang];
     		}
     	}
-    	echo "get:".$_GET['lang']."<br>";
-    	echo "cookie:".$_COOKIE['lang']."<br />";
-    	echo "config:".$xoopsConfig['language']."<br />";
     	if (isset( $_GET['lang'] ) && isset($_COOKIE['lang'])){
-    		echo "entro a cambiar";
     		if (in_array($_GET['lang'],$easiestml_langs)){
-    			echo "<br /> estoy en el array";
     			$xoopsConfig['language'] = $langs[$_GET['lang']];
-    			echo "<br > nuevo lenguage:".$xoopsConfig['language'];
     			if(isset( $_SESSION['xoopsUserLanguage'] )){
     				$_SESSION['xoopsUserLanguage'] = $langs[$_GET['lang']];
     			}
