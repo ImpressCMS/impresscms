@@ -190,6 +190,73 @@ class XoopsUser extends XoopsObject
 			$this->_groups =& $groupsArr;
 		}
 	}
+
+	/**
+	 * sends a welcome message to the user which account has just been activated
+	 *
+	 * return TRUE if success, FALSE if not
+	 */
+	function sendWelcomeMessage() {
+		global $xoopsConfig, $xoopsConfigUser;
+		
+		$myts =& MyTextSanitizer::getInstance();
+	
+		if (!$xoopsConfigUser['welcome_msg']) {
+			return true;
+		}
+		
+		$xoopsMailer =& getMailer();
+		
+		$xoopsMailer->useMail();
+		$xoopsMailer->setBody($xoopsConfigUser['welcome_msg_content']);
+		$xoopsMailer->assign('UNAME', $this->getVar('uname'));
+		$user_email = $this->getVar('email');
+		$xoopsMailer->assign('X_UEMAIL', $user_email);			
+      	$xoopsMailer->setToEmails($user_email);
+		$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
+		$xoopsMailer->setFromName($xoopsConfig['sitename']);
+		$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION, $myts->stripSlashesGPC($xoopsConfig['sitename'])));
+		if (!$xoopsMailer->send(true)) {
+			$this->setErrors(_US_WELCOMEMSGFAILED);
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	/**
+	 * sends a notification to admins to inform them that a new user registered
+	 * 
+	 * This method first checks in the preferences if we need to send a notification to admins upon new user
+	 * registration. If so, it sends the mail.
+	 *
+	 * return TRUE if success, FALSE if not
+	 */
+	function newUserNotifyAdmin() {
+		global $xoopsConfigUser, $xoopsConfig;
+		
+		if ($xoopsConfigUser['new_user_notify'] == 1 && !empty($xoopsConfigUser['new_user_notify_group'])) {
+			$member_handler = xoops_getHandler('member');
+			$xoopsMailer =& getMailer();
+			$xoopsMailer->useMail();
+			$xoopsMailer->setTemplate('newuser_notify.tpl');
+			$xoopsMailer->assign('UNAME', $this->getVar('uname'));
+			$xoopsMailer->assign('EMAIL', $this->getVar('email'));
+	      	$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
+			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
+			$xoopsMailer->setFromName($xoopsConfig['sitename']);
+			$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT,$xoopsConfig['sitename']));
+				if (!$xoopsMailer->send(true)) {
+				$this->setErrors(_US_NEWUSERNOTIFYADMINFAIL);
+				return false;
+			} else {
+				return true;
+			}
+		} else {
+			return true;
+		}
+	}
+	
     /**
      * get the groups that the user belongs to
   	 *

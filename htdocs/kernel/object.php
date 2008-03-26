@@ -49,6 +49,16 @@ define('XOBJ_DTYPE_SOURCE', 8);
 define('XOBJ_DTYPE_STIME', 9);
 define('XOBJ_DTYPE_MTIME', 10);
 define('XOBJ_DTYPE_LTIME', 11);
+
+define('XOBJ_DTYPE_SIMPLE_ARRAY', 101);
+define('XOBJ_DTYPE_CURRENCY', 200);
+define('XOBJ_DTYPE_FLOAT', 201);
+define('XOBJ_DTYPE_TIME_ONLY', 202);
+define('XOBJ_DTYPE_URLLINK', 203);
+define('XOBJ_DTYPE_FILE', 204);
+define('XOBJ_DTYPE_IMAGE', 205);
+define('XOBJ_DTYPE_FORM_SECTION', 210);
+define('XOBJ_DTYPE_FORM_SECTION_CLOSE', 211);
 /**#@-*/
 
 //include_once "xoopspluginloader.php";

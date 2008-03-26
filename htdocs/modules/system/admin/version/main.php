@@ -31,6 +31,7 @@ if (isset($_GET['mid'])) {
 /**
  * Now here is the version checker :-)
  */
+
 require_once XOOPS_ROOT_PATH.'/class/icmsversionchecker.php';
 $icmsVersionChecker = IcmsVersionChecker::getInstance();
 

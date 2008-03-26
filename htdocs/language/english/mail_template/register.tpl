@@ -1,6 +1,6 @@
 Hello {X_UNAME},
 
-Thanks for subscribing to {SITENAME}. As a registered member your can:
+Thanks for subscribing to {X_SITENAME}. As a registered member your can:
 - Send private messages among members
 - Participate in discussion boards
 - Get the latest news
@@ -9,13 +9,12 @@ Thanks for subscribing to {SITENAME}. As a registered member your can:
 
 The email address ({X_UEMAIL}) has been used to register an account.
 
-To become a member of {SITENAME}, please confirm your
+To become a member of {X_SITENAME}, please confirm your
 request by clicking on the link below:
 
 {X_UACTLINK}
 
 -----------
 Best Regards
-{SITENAME}
-({SITEURL}) 
-{ADMINMAIL}
+{X_SITENAME}
+{X_ADMINMAIL}

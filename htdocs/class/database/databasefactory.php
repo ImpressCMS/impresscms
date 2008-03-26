@@ -86,5 +86,18 @@ class XoopsDatabaseFactory{
 		return $database;
 	}
 
+	/**
+	 * Gets the databaseupdater object.
+	 *
+     * @return	object  @link IcmsDatabaseUpdater
+	 */
+	function getDatabaseUpdater()
+	{
+		$file = XOOPS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/databaseupdater.php';
+		require_once $file;
+		$class = 'Icms'.ucfirst(XOOPS_DB_TYPE).'Databaseupdater';
+		$databaseUpdater =& new $class();
+		return $databaseUpdater;
+	}
 }
 ?>

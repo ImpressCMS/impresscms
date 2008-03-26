@@ -253,6 +253,7 @@ if ($op == 'update_ok') {
 	$dirname = trim($dirname);
     $module_handler =& xoops_gethandler('module');
     $module =& $module_handler->getByDirname($dirname);
+    
     // Save current version for use in the update function
     $prev_version = $module->getVar('version');
     include_once XOOPS_ROOT_PATH.'/class/template.php';

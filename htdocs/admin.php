@@ -71,6 +71,61 @@ switch ($op){
 		redirect_header('admin.php', 1, _AD_LOGINADMIN);
 		exit();
 		break;
+	
+	/*
+	 * Hack 
+	 */
+	case 10:
+		$rssurl = 'http://www.impresscms.org/modules/smartsection/backend.php?categoryid=1';
+		$rssfile = XOOPS_CACHE_PATH.'/www_smartsection_category1.xml';
+		$caching_time = 1;
+		$items_to_display = 1;
+		
+		$rssdata = '';
+		if (!file_exists($rssfile) || filemtime($rssfile) < time() - $caching_time) {
+			require_once XOOPS_ROOT_PATH.'/class/snoopy.php';
+	        $snoopy = new Snoopy;
+	        if ($snoopy->fetch($rssurl)) {
+	            $rssdata = $snoopy->results;
+	            if (false !== $fp = fopen($rssfile, 'w')) {
+	                fwrite($fp, $rssdata);
+	            }
+	            fclose($fp);
+	        }
+		} else {
+			if (false !== $fp = fopen($rssfile, 'r')) {
+				while (!feof ($fp)) {
+					$rssdata .= fgets($fp, 4096);
+				}
+				fclose($fp);
+			}
+		}
+		if ($rssdata != '') {
+			include_once XOOPS_ROOT_PATH.'/class/xml/rss/xmlrss2parser.php';
+			$rss2parser = new XoopsXmlRss2Parser($rssdata);
+			if (false != $rss2parser->parse()) {
+				$items =& $rss2parser->getItems();
+				$count = count($items);
+				$myts =& MyTextSanitizer::getInstance();
+				for ($i = 0; $i < $items_to_display; $i++) {
+					?>					
+						<div>
+							<img style="vertical-align: middle;" src="<?=XOOPS_URL?>/modules/smartsection/images/icon/doc.png" alt="<?=$items[$i]['title']?>">&nbsp;<a href="<?=$items[$i]['guid']?>"><?=$items[$i]['title']?></a>
+						</div>
+						<div>
+							<img class="smartsection_item_image" src="<?=XOOPS_URL?>/uploads/smartsection/images/item/impresscms_news.gif" alt="<?=$items[$i]['title']?>" title="<?=$items[$i]['title']?>" align="right">
+							<?=$items[$i]['description']?>
+					    </div>
+						<div style="clear: both;"> </div>
+						<div style="font-size: 10px; text-align: right;"><a href="http://www.impresscms.org/modules/smartsection/category.php?categoryid=1">All ImpressCMS Project news...</a></div>
+					<?		
+				}
+			} else {
+				//echo $rss2parser->getErrors();
+			}
+		}	
+	break;
+	
 	default:
 		$mods = xoops_cp_header(1);
 

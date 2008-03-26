@@ -881,6 +881,19 @@ function icms_chmod($target, $mode = 0777) {
 	return @ chmod($target, $mode);
 }
 
+ /**
+ * Get the dirname of the current module 
+ *
+ * @return mixed dirname of the current module or false if no module loaded
+ */
+function icms_getCurrentModuleName() {
+	global $xoopsModule;
+	if (is_object($xoopsModule)) {
+		return $xoopsModule->getVar('dirname');
+	} else {
+		return false;
+	}
+}
 /**
  * php 4 compat for array_combine
  */

@@ -269,6 +269,10 @@ define("_MD_AM_PRIVDPOLICYDSC","The 'Privacy Policy' should be tailored to your 
 define("_MD_AM_PRIVPOLICY","Enter your site 'Privacy Policy'.");
 define("_MD_AM_PRIVPOLICYDSC","");
 
+define("_MD_AM_WELCOMEMSG","Send a welcome message to newly registered user");
+define("_MD_AM_WELCOMEMSGDSC","Send a welcome message to new user when their account gets activated. The content of this message can be configured in the following option.");
+define("_MD_AM_WELCOMEMSG_CONTENT","Content of the welcome message");
+define("_MD_AM_WELCOMEMSG_CONTENTDSC","You can edit the message that is sent to the new user. Note that you can use the following tags: <br /><br />- {UNAME} = username of the user<br />- {X_UEMAIL} = email of the user<br />- {X_ADMINMAIL} = admin email address<br />- {X_SITENAME} = name of the site<br />- {X_SITEURL} = URL of the site");
 
 define("_MD_AM_SEARCH_USERDATE","Show user and date in search results");
 define("_MD_AM_SEARCH_USERDATE","");

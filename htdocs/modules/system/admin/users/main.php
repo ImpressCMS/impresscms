@@ -207,6 +207,32 @@ case "addUser":
 					$group_names = $member_handler->getGroupList(new Criteria('groupid', "(".implode(", ", $groups_failed).")", 'IN'));
 					$adduser_errormsg = sprintf(_AM_CNRNU2, implode(", ", $group_names));
 				} else {
+					
+					/* Hack by marcan <INBOX>
+					 * Sending a confirmation email to the newly registered user
+					 */
+					
+					 /**
+					  * @todo this has been commented out for now as we need to add a check box on the
+					  * form to ask the admin if he wants to send the welcome message or not 
+					  */
+					/*
+					$myts =& MyTextSanitizer::getInstance();
+					$xoopsMailer =& getMailer();
+					$xoopsMailer->useMail();
+					$xoopsMailer->setTemplate('welcome.tpl');
+					$xoopsMailer->assign('UNAME', $uname);
+		  			$xoopsMailer->assign('PASSWORD', $vpass);
+					$xoopsMailer->assign('X_UEMAIL', $email);			
+		      		$xoopsMailer->setToEmails($email);
+					$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
+					$xoopsMailer->setFromName($xoopsConfig['sitename']);
+					$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION,$myts->stripSlashesGPC($xoopsConfig['sitename'])));
+					$xoopsMailer->send();
+					/* Hack by marcan <INBOX>
+					 * Sending a confirmation email to the newly registered user
+					 */			
+
                     redirect_header("admin.php?fct=users",1,_AM_DBUPDATED);
                 }
             }

@@ -1,36 +1,20 @@
 <?php
-// $Id: update.php 2 2005-11-02 18:23:29Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+* Automatic update of the system module
+*
+* @copyright	The ImpressCMS Project http://www.impresscms.org/
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		1.0
+* @author		malanciault <marcan@impresscms.org)
+* @version		$Id: error.php 429 2008-01-02 22:21:41Z malanciault $
+*/
 
-function xoops_module_system_update(&$module) {
-    if ($module->getVar('version') == 100) {
+function xoops_module_update_system(&$module) {
+    /**
+     * For compatibility upgrade...
+     */
+	if ($module->getVar('version') == 100) {
         $result = $xoopsDB->query("SELECT t1.tpl_id FROM ".$xoopsDB->prefix('tplfile')." t1, ".$xoopsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
 
         $tplids = array();
@@ -48,7 +32,54 @@ function xoops_module_system_update(&$module) {
             }
         }
     }
-    return true;
+
+    $icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
+    
+    ob_start();
+    
+    $dbVersion  = $module->getDBVersion();
+
+	echo "<code>" . _DATABASEUPDATER_UPDATE_UPDATING_DATABASE . "<br />";
+
+	// db migrate version = 1
+    $newDbVersion = 1;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	    	
+		// Now, first, let's increment the conf_order of user option starting at new_user_notify
+		$table = new IcmsDatabasetable('config');
+		$criteria = new CriteriaCompo();
+		$criteria->add(new Criteria('conf_order', 3, '>'));
+    	$table->addUpdateAll('conf_order', 'conf_order + 2', $criteria, true);
+	    $icmsDatabaseUpdater->updateTable($table);	
+	    unset($table);	
+	    
+	    // create 2 new user config options
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'welcome_msg', '_MD_AM_WELCOMEMSG', 0, '_MD_AM_WELCOMEMSGDSC', 'yesno', 'int', 4);
+
+	    // get the default content of the mail
+	    global $xoopsConfig;
+	    $default_msg_content_file = XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/mail_template/' . 'welcome.tpl';
+	    if (!file_exists($default_msg_content_file)) {
+	    	$default_msg_content_file = XOOPS_ROOT_PATH . '/language/english/mail_template/' . 'welcome.tpl';
+	    }
+	    $fp = fopen($default_msg_content_file, 'r');
+        if ($fp) {
+            $default_msg_content = fread($fp, filesize($default_msg_content_file));
+        }
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', $default_msg_content, '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textarea', 'text', 5);	   
+    }
+	echo "</code>";
+
+   $feedback = ob_get_clean();
+    if (method_exists($module, "setMessage")) {
+        $module->setMessage($feedback);
+    } else {
+        echo $feedback;
+    }
+    $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+    return true;    
 }
 
 ?>

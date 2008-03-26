@@ -176,6 +176,7 @@ if ($op == 'actv') {
                     }
                     include 'footer.php';
                 } else {
+                	$thisuser->sendWelcomeMessage();
                     redirect_header( 'user.php', 5, _US_ACTLOGIN, false );
                 }
             } else {

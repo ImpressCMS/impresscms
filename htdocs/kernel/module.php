@@ -77,8 +77,10 @@ class XoopsModule extends XoopsObject
         $this->initVar('hascomments', XOBJ_DTYPE_INT, 0, false);
 		// RMV-NOTIFY
 		$this->initVar('hasnotification', XOBJ_DTYPE_INT, 0, false);
+		
+		$this->initVar('dbversion', XOBJ_DTYPE_INT, 0, false);
     }
-
+    
     /**
      * Load module info
      *
@@ -131,6 +133,17 @@ class XoopsModule extends XoopsObject
         return $this->modinfo;
     }
 
+    /**
+     * Retreive the database version of this module
+     *
+     * @return int dbversion
+     **/
+    
+    function getDBVersion() {
+    	$ret = $this->getVar('dbversion');
+    	return $ret;	
+    }
+    
     /**
      * Get a link to the modules main page
      *
@@ -243,7 +256,7 @@ class XoopsModule extends XoopsObject
         }
         return false;
     }
-
+    
     /**#@+
      * For backward compatibility only!
      * @deprecated
@@ -398,22 +411,45 @@ class XoopsModuleHandler extends XoopsObjectHandler
         if (!$module->cleanVars()) {
             return false;
         }
+
+        /**
+         * Editing the insert and update methods
+         * this is temporaray as will soon be based on a persistableObjectHandler
+         */
+    	$fieldsToStoreInDB = array();
         foreach ($module->cleanVars as $k => $v) {
-            ${$k} = $v;
+            if ($module->vars[$k]['data_type'] == XOBJ_DTYPE_INT) {
+                $cleanvars[$k] = intval($v);
+            } elseif (is_array($v) ) {
+            	$cleanvars[ $k ] = $this->db->quoteString( implode( ',', $v ) );
+            } else {
+                $cleanvars[$k] = $this->db->quoteString($v);
+            }
+           	$fieldsToStoreInDB[$k] = $cleanvars[$k];
         }
+
         if ($module->isNew()) {
-            $mid = $this->db->genId('modules_mid_seq');
-            $sql = sprintf("INSERT INTO %s (mid, name, version, last_update, weight, isactive, dirname, hasmain, hasadmin, hassearch, hasconfig, hascomments, hasnotification) VALUES ('%u', %s, '%u', '%u', '%u', '%u', %s, '%u', '%u', '%u', '%u', '%u', '%u')", $this->db->prefix('modules'), intval($mid), $this->db->quoteString($name), intval($version), time(), intval($weight), 1, $this->db->quoteString($dirname), intval($hasmain), intval($hasadmin), intval($hassearch), intval($hasconfig), intval($hascomments), intval($hasnotification));
+			$sql = "INSERT INTO ".$this->db->prefix('modules')." (".implode(',', array_keys($fieldsToStoreInDB)).") VALUES (".implode(',', array_values($fieldsToStoreInDB)) .")";
         } else {
-            $sql = sprintf("UPDATE %s SET name = %s, dirname = %s, version = '%u', last_update = '%u', weight = '%u', isactive = '%u', hasmain = '%u', hasadmin = '%u', hassearch = '%u', hasconfig = '%u', hascomments = '%u', hasnotification = '%u' WHERE mid = '%u'", $this->db->prefix('modules'), $this->db->quoteString($name), $this->db->quoteString($dirname), intval($version), time(), intval($weight), intval($isactive), intval($hasmain), intval($hasadmin), intval($hassearch), intval($hasconfig), intval($hascomments), intval($hasnotification), intval($mid));
+            $sql = "UPDATE ".$this->db->prefix('modules')." SET";
+            foreach ($fieldsToStoreInDB as $key => $value) {
+                if (isset($notfirst) ) {
+                    $sql .= ",";
+                }
+                $sql .= " ".$key." = ".$value;
+                $notfirst = true;
+            }
+            $whereclause = 'mid'." = ".$module->getVar('mid');
+            $sql .= " WHERE ".$whereclause;
         }
+                
         if (!$result = $this->db->query($sql)) {
             return false;
         }
-        if (empty($mid)) {
-            $mid = $this->db->getInsertId();
+        if ($module->isNew()) {
+            $module->assignVar('mid', $this->db->getInsertId());
         }
-        $module->assignVar('mid', $mid);
+        
     		if (!empty($this->_cachedModule_dirname[$dirname])) {
     			unset ($this->_cachedModule_dirname[$dirname]);
     		}
