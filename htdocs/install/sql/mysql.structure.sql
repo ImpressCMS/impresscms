@@ -370,6 +370,7 @@ CREATE TABLE modules (
   hasconfig tinyint(1) unsigned NOT NULL default '0',
   hascomments tinyint(1) unsigned NOT NULL default '0',
   hasnotification tinyint(1) unsigned NOT NULL default '0',
+  dbversion int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (mid),
   KEY hasmain (hasmain),
   KEY hasadmin (hasadmin),
