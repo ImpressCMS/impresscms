@@ -11,6 +11,16 @@ Legend :
 ImpressCMS 1.1 (changes from ImpressCMS 1.0)
 =========================================
 
++ language/english/databaseupdater.php  (added)
+
+language/english/user.php
+--------------------------
+
++define('_US_YOURREGISTRATION', 'Your registration at %s');
++define('_US_NEWUSERREGAT', 'New registration at %s');
++define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
++define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
+
 modules/system/language/english/admin/preferences.php
 --------------------------
 
@@ -25,11 +35,17 @@ modules/system/languages/english/admin/groups.php
 + define("_AM_EDPERM","Can use the WYSIWYG editor in the following modules");
 + define("_AM_DEBUG_PERM","The Debug Mode is enabled for the next modules");
 
+language/english/mail_template/
+------------------------------
+
++ welcome.tpl
++ newuser_notify.tpl
++- register.tpl (modified to use {X_ADMINMAIL} and not {ADMINMAIL})
+
 ImpressCMS 1.0 (changes from XOOPS 2.0.17)
 =========================================
 
-language/english/mail_template/
-------------------------------
+
 
 +  new_pm.tpl
 
