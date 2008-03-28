@@ -69,7 +69,7 @@ if ($catcount > 0){
 	$adminmenu[5]['hassubs'] = 1;
 	for ($i = 0; $i < $catcount; $i++) {
 		$subs[$i]['title'] = constant($confcats[$i]->getVar('confcat_name'));
-		$subs[$i]['link'] = 'admin.php?fct=preferences&amp;op=show&amp;confcat_id='.$confcats[$i]->getVar('confcat_id');
+		$subs[$i]['link'] = XOOPS_URL.'/modules/system/admin.php?fct=preferences&amp;op=show&amp;confcat_id='.$confcats[$i]->getVar('confcat_id');
 	}
 	$adminmenu[5]['subs'] = $subs;
 }
