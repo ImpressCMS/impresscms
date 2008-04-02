@@ -26,6 +26,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Improved : The pm form to use the selected editor. (the_rplima)
 - Improved : XoopsTree::getNicePathFromId has new parameter, allowing specification of the separator between links (skenow)
 - Improved : System admin page markup (skenow)
+- Improved : Revamping the modules list in System Admin > Modules (mcdonald/the_rplima/davidl2/mrtheme)
 
 - Changed : Moved the Smarty library from /class to /libraries. (nekro)
 - Changed : Moved the PHPmailer library from /class to /libraries. (nekro)
