@@ -43,7 +43,7 @@ function xoops_module_list() {
     <tr align='center'>
     <th align='left'>" . _MD_AM_MODULE . "</th>
     <th>" . _MD_AM_VERSION . "</th>
-    <th>Status</th>
+    <th>" . _MD_AM_MODULESADMIN_STATUS . "</th>
     <th>" . _MD_AM_LASTUP . "</th>
     <th>" . _MD_AM_ACTIVE . "</th>
     <th>" . _MD_AM_ORDER . "<br /><small>" . _MD_AM_ORDER0 . "</small></th>
@@ -69,8 +69,8 @@ function xoops_module_list() {
                  <a href="' . XOOPS_URL . '/modules/' . $module -> getVar('dirname') . '/' . $module -> getInfo('adminindex') . '">
                  <img src="' . XOOPS_URL . '/modules/' . $module -> getVar('dirname') . '/' . $module -> getInfo('image') . '" alt="' . $module -> getVar('name', 'E') . '" border="0" /></a>&nbsp;</div>
                  <div style="float: left; padding-top: 2px;">
-                 <b>Module name: </b>' . $module -> getInfo('name').'<br />
-                 <b>Module title: </b><input type="text" name="newname[' . $module -> getVar('mid') . ']" value="' . $module -> getVar('name', 'E') . '" maxlength="150" size="30" /></div>';
+                 <b>' . _MD_AM_MODULESADMIN_MODULENAME . ': </b>' . $module -> getInfo('name').'<br />
+                 <b>' . _MD_AM_MODULESADMIN_MODULETITLE . ': </b><input type="text" name="newname[' . $module -> getVar('mid') . ']" value="' . $module -> getVar('name', 'E') . '" maxlength="150" size="30" /></div>';
         } else {
             echo '<div style="float:left; padding:2px;">
                  <img src="' . XOOPS_URL . '/modules/' . $module -> getVar('dirname') . '/' . $module -> getInfo('image') . '" alt="' . $module -> getVar('name', 'E') . '" border="0" />&nbsp;</div>
@@ -113,7 +113,7 @@ function xoops_module_list() {
         <td align='center'>" . $extra . "&nbsp;<a href='javascript:openWithSelfMain(\"" . XOOPS_URL . "/modules/system/admin.php?fct=version&amp;mid=" . $module -> getVar('mid') . "\",\"Info\",300,230);'>";
         echo '<img src="' . XOOPS_URL . '/modules/system/images/info.png" alt="444' . _INFO . '" title="' . _INFO . '" /></a><input type="hidden" name="module[]" value="' . $module -> getVar('mid') . '" /></a>';
         if ($module -> getInfo('support_site_url')) {
-        echo '&nbsp;<a href="'.$module -> getInfo('support_site_url') .'" target="_blank"><img src="' . XOOPS_URL . '/modules/system/images/support.png" alt="' . _MD_AM_MODULEADMIN_SUPPORT . '" title="' . _MD_AM_MODULEADMIN_SUPPORT . '"/></a>';
+        echo '&nbsp;<a href="'.$module -> getInfo('support_site_url') .'" target="_blank"><img src="' . XOOPS_URL . '/modules/system/images/support.png" alt="' . _MD_AM_MODULESADMIN_SUPPORT . '" title="' . _MD_AM_MODULESADMIN_SUPPORT . '"/></a>';
         }
         echo '</td>
         </tr>
