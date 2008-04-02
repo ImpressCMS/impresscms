@@ -47,7 +47,7 @@ function xoops_module_list() {
     <th>" . _MD_AM_LASTUP . "</th>
     <th>" . _MD_AM_ACTIVE . "</th>
     <th>" . _MD_AM_ORDER . "<br /><small>" . _MD_AM_ORDER0 . "</small></th>
-    <th width='100px'>" . _MD_AM_ACTION . "</th>
+    <th width='130px'>" . _MD_AM_ACTION . "</th>
     </tr>";
 
     $module_handler =& xoops_gethandler('module');
