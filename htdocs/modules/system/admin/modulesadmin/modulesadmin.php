@@ -94,13 +94,13 @@ function xoops_module_list() {
         echo "<td align='center'>" . formatTimestamp($module -> getVar('last_update'), 'm') . "<br />";
         if ($module -> getVar('dirname') != 'system' && $module -> getVar('isactive') == 1) {
             echo '</td><td align="center"><input type="checkbox" name="newstatus[' . $module->getVar('mid') . ']" value="1" checked="checked" /><input type="hidden" name="oldstatus[' . $module -> getVar('mid') . ']" value="1" />';
-            $extra = '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=' . $module -> getVar('dirname') . '"><img src="' . XOOPS_URL . '/modules/system/images/update.png" alt="' . _MD_AM_UPDATE . '" /></a>';
+            $extra = '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=' . $module -> getVar('dirname') . '"><img src="' . XOOPS_URL . '/modules/system/images/update.png" alt="' . _MD_AM_UPDATE . '" title="' . _MD_AM_UPDATE . '"/></a>';
         } elseif ($module -> getVar('dirname') != 'system') {
             echo '</td><td align="center"><input type="checkbox" name="newstatus[' . $module -> getVar('mid') . ']" value="1" /><input type="hidden" name="oldstatus[' . $module -> getVar('mid') . ']" value="0" />';
-            $extra = '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=' . $module -> getVar('dirname') . '"><img src="' . XOOPS_URL . '/modules/system/images/update.png" alt="' . _MD_AM_UPDATE . '" /></a>&nbsp;<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=uninstall&amp;module=' . $module -> getVar('dirname') . '"><img src="' . XOOPS_URL . '/modules/system/images/uninstall.png" alt="' . _MD_AM_UNINSTALL . '" /></a>';
+            $extra = '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=' . $module -> getVar('dirname') . '"><img src="' . XOOPS_URL . '/modules/system/images/update.png" alt="' . _MD_AM_UPDATE . '" title="' . _MD_AM_UPDATE . '"/></a>&nbsp;<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=uninstall&amp;module=' . $module -> getVar('dirname') . '"><img src="' . XOOPS_URL . '/modules/system/images/uninstall.png" alt="' . _MD_AM_UNINSTALL . '" /></a>';
         } else {
             echo '</td><td align="center"><input type="checkbox" name="newstatus[' . $module -> getVar('mid') . ']" value="1" checked="checked" /><input type="hidden" name="oldstatus[' . $module -> getVar('mid') . ']" value="1" />';
-            $extra = '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=' . $module -> getVar('dirname') . '"><img src="' . XOOPS_URL . '/modules/system/images/update.png" alt="' . _MD_AM_UPDATE . '" /></a>';
+            $extra = '<a href="' . XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=' . $module -> getVar('dirname') . '"><img src="' . XOOPS_URL . '/modules/system/images/update.png" alt="' . _MD_AM_UPDATE . '" title="' . _MD_AM_UPDATE . '"/></a>';
         }
         echo "</td><td align='center'>";
         if ($module->getVar('hasmain') == 1) {
@@ -111,9 +111,9 @@ function xoops_module_list() {
         echo "
         </td>
         <td align='center'>" . $extra . "&nbsp;<a href='javascript:openWithSelfMain(\"" . XOOPS_URL . "/modules/system/admin.php?fct=version&amp;mid=" . $module -> getVar('mid') . "\",\"Info\",300,230);'>";
-        echo '<img src="' . XOOPS_URL . '/modules/system/images/info.png" alt="' . _INFO . '" /></a><input type="hidden" name="module[]" value="' . $module -> getVar('mid') . '" /></a>';
+        echo '<img src="' . XOOPS_URL . '/modules/system/images/info.png" alt="444' . _INFO . '" title="' . _INFO . '" /></a><input type="hidden" name="module[]" value="' . $module -> getVar('mid') . '" /></a>';
         if ($module -> getInfo('support_site_url')) {
-        echo '&nbsp;<a href="'.$module -> getInfo('support_site_url') .'" target="_blank"><img src="' . XOOPS_URL . '/modules/system/images/support.png" alt="Support" /></a>';
+        echo '&nbsp;<a href="'.$module -> getInfo('support_site_url') .'" target="_blank"><img src="' . XOOPS_URL . '/modules/system/images/support.png" alt="' . _MD_AM_MODULEADMIN_SUPPORT . '" title="' . _MD_AM_MODULEADMIN_SUPPORT . '"/></a>';
         }
         echo '</td>
         </tr>
