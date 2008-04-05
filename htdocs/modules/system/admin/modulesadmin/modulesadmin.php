@@ -127,7 +127,7 @@ function xoops_module_list() {
          </form>
          <br />
          <table width='100%' border='0' class='outer' cellpadding='4' cellspacing='1'>
-         <tr align='center'><th>" . _MD_AM_MODULE . "</th><th>" . _MD_AM_VERSION . "</th><th>" . _MD_AM_ACTION . "</th></tr>
+         <tr align='center'><th>" . _MD_AM_MODULE . "</th><th>" . _MD_AM_VERSION . "</th><th>" . _MD_AM_MODULESADMIN_STATUS . "</th><th width='130px'>" . _MD_AM_ACTION . "</th></tr>
          ";
 	require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
 	$dirlist = XoopsLists::getModulesList();
@@ -146,14 +146,20 @@ function xoops_module_list() {
             } else {
                 $class = 'odd';
             }
-            echo '<tr class="'.$class.'" align="center" valign="middle">
-            <td align="center" valign="bottom"><img src="'.XOOPS_URL.'/modules/'.$module->getInfo('dirname').'/'.$module->getInfo('image').'" alt="'.htmlspecialchars($module->getInfo('name')).'" border="0" /></td>
-            <td align="center">'.round($module->getInfo('version'), 2).'</td>
-            <td>
-            <a href="'.XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=install&amp;module='.$module->getInfo('dirname').'"><img src="'.XOOPS_URL.'/modules/system/images/install.png" alt="'._MD_AM_INSTALL.'" /></a>';
-            echo "&nbsp;<a href='javascript:openWithSelfMain(\"".XOOPS_URL."/modules/system/admin.php?fct=version&amp;mid=".$module->getInfo('dirname')."\",\"Info\",300,230);'>";
-            echo '<img src="'.XOOPS_URL.'/modules/system/images/info.png" alt="'._INFO.'" /></a></td></tr>
-            ';
+			echo '<tr class="'.$class.'" align="center" valign="middle">
+	            <td align="center" valign="bottom">
+	            <div style="float: left; padding: 2px;"><img src="'.XOOPS_URL.'/modules/'.$module->getInfo('dirname').'/'.$module->getInfo('image').'" alt="'.htmlspecialchars($module->getInfo('name')).'" border="0" />&nbsp;</div>
+	            <div style="float: left; padding-top: 10px;"> <b>' . _MD_AM_MODULESADMIN_MODULENAME . ': </b>' . $module -> getInfo('name').'<br /> </div>
+                 </td>
+            <td align="center">'.round($module->getInfo('version'), 2).'</td>';
+            if ( $module->getInfo('status') ) {
+	            echo "<td align='center'>".$module->getInfo('status')."</td>";
+            } else {
+    	        echo "<td>&nbsp;</td>";
+            }
+            echo'<td><a href="'.XOOPS_URL.'/modules/system/admin.php?fct=modulesadmin&op=install&module='.$module->getInfo('dirname').'"><img src="'.XOOPS_URL.'/modules/system/images/install.png" alt="'._MD_AM_INSTALL.'" /></a>';
+            echo "&nbsp;<a href='javascript:openWithSelfMain(\"".XOOPS_URL."/modules/system/admin.php?fct=version&mid=".$module->getInfo('dirname')."\",\"Info\",300,230);'>";
+            echo '<img src="'.XOOPS_URL.'/modules/system/images/info.png" alt="'._INFO.'" /></a></td></tr>';
             unset($module);
             $count++;
         }
