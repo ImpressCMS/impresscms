@@ -255,6 +255,10 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'debug_mode', '_MD_AM_DEBUGMODE', '0', '_MD_AM_DEBUGMODEDSC', 'select', 'int', $p)");
+	$dbm->insert('configoption', " VALUES (1, '_MD_AM_DEBUGMODE0', 0, $i)");
+	$dbm->insert('configoption', " VALUES (2, '_MD_AM_DEBUGMODE1', 1, $i)");
+    	$dbm->insert('configoption', " VALUES (3, '_MD_AM_DEBUGMODE2', 2, $i)");
+    	$dbm->insert('configoption', " VALUES (4, '_MD_AM_DEBUGMODE3', 3, $i)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'banners', '_MD_AM_BANNERS', '1', '_MD_AM_BANNERSDSC', 'yesno', 'int', $p)");
@@ -282,9 +286,14 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'com_mode', '_MD_AM_COMMODE', 'nest', '_MD_AM_COMMODEDSC', 'select', 'text', $p)");
+    	$dbm->insert('configoption', " VALUES (5, '_NESTED', 'nest', $i)");
+    	$dbm->insert('configoption', " VALUES (6, '_FLAT', 'flat', $i)");
+    	$dbm->insert('configoption', " VALUES (7, '_THREADED', 'thread', $i)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'com_order', '_MD_AM_COMORDER', '0', '_MD_AM_COMORDERDSC', 'select', 'int', $p)");
+    	$dbm->insert('configoption', " VALUES (8, '_OLDESTFIRST', '0', $i)");
+    	$dbm->insert('configoption', " VALUES (9, '_NEWESTFIRST', '1', $i)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'enable_badips', '_MD_AM_DOBADIPS', '0', '_MD_AM_DOBADIPSDSC', 'yesno', 'int', $p)");
@@ -321,12 +330,19 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'activation_type', '_MD_AM_ACTVTYPE', '0', '_MD_AM_ACTVTYPEDSC', 'select', 'int', $p)");
+    	$dbm->insert('configoption', " VALUES (10, '_MD_AM_USERACTV', '0', $i)");
+    	$dbm->insert('configoption', " VALUES (11, '_MD_AM_AUTOACTV', '1', $i)");
+    	$dbm->insert('configoption', " VALUES (12, '_MD_AM_ADMINACTV', '2', $i)");
+    	$dbm->insert('configoption', " VALUES (13, '_MD_AM_REGINVITE', '3', $i)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'activation_group', '_MD_AM_ACTVGROUP', ".$gruops['XOOPS_GROUP_ADMIN'].", '_MD_AM_ACTVGROUPDSC', 'group', 'int', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'uname_test_level', '_MD_AM_UNAMELVL', '0', '_MD_AM_UNAMELVLDSC', 'select', 'int', $p)");
+    	$dbm->insert('configoption', " VALUES (14, '_MD_AM_STRICT', '0', $i)");
+    	$dbm->insert('configoption', " VALUES (15, '_MD_AM_MEDIUM', '1', $i)");
+    	$dbm->insert('configoption', " VALUES (16, '_MD_AM_LIGHT', '2', $i)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'avatar_allow_upload', '_MD_AM_AVATARALLOW', '0', '_MD_AM_AVATARALWDSC', 'yesno', 'int', $p)");
@@ -390,9 +406,17 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'meta_robots', '_MD_AM_METAROBOTS', 'index,follow', '_MD_AM_METAROBOTSDSC', 'select', 'text', $p)");
+    	$dbm->insert('configoption', " VALUES (17, '_MD_AM_INDEXFOLLOW', 'index,follow', $i)");
+    	$dbm->insert('configoption', " VALUES (18, '_MD_AM_NOINDEXFOLLOW', 'noindex,follow', $i)");
+    	$dbm->insert('configoption', " VALUES (19, '_MD_AM_INDEXNOFOLLOW', 'index,nofollow', $i)");
+    	$dbm->insert('configoption', " VALUES (20, '_MD_AM_NOINDEXNOFOLLOW', 'noindex,nofollow', $i)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'meta_rating', '_MD_AM_METARATING', 'general', '_MD_AM_METARATINGDSC', 'select', 'text', $p)");
+    	$dbm->insert('configoption', " VALUES (21, '_MD_AM_METAOGEN', 'general', $i)");
+    	$dbm->insert('configoption', " VALUES (22, '_MD_AM_METAO14YRS', '14 years', $i)");
+    	$dbm->insert('configoption', " VALUES (23, '_MD_AM_METAOREST', 'restricted', $i)");
+    	$dbm->insert('configoption', " VALUES (24, '_MD_AM_METAOMAT', 'mature', $i)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'meta_author', '_MD_AM_METAAUTHOR', 'ImpressCMS', '_MD_AM_METAAUTHORDSC', 'textbox', 'text', $p)");
@@ -448,6 +472,10 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'mailmethod','_MD_AM_MAILERMETHOD','mail','_MD_AM_MAILERMETHODDESC','select','text', $p)");
+    	$dbm->insert('configoption', " VALUES (25, 'PHP mail()','mail', $i)");
+    	$dbm->insert('configoption', " VALUES (26, 'sendmail','sendmail', $i)");
+    	$dbm->insert('configoption', " VALUES (27, 'SMTP','smtp', $i)");
+    	$dbm->insert('configoption', " VALUES (28, 'SMTPAuth','smtpauth', $i)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'smtphost','_MD_AM_SMTPHOST','a:1:{i:0;s:0:\"\";}', '_MD_AM_SMTPHOSTDESC','textarea','array', $p)");
@@ -466,6 +494,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	// Data for Config Category 7 (Authentication Settings)
 	$c=7; // sets config category id
 	$dbm->insert('config', " VALUES ($i,0,$c,'auth_method','_MD_AM_AUTHMETHOD','xoops','_MD_AM_AUTHMETHODDESC','select','text', $p)");
+    	$dbm->insert('configoption', " VALUES (29, '_MD_AM_AUTH_CONFOPTION_XOOPS', 'xoops', $i)");
+    	$dbm->insert('configoption', " VALUES (30, '_MD_AM_AUTH_CONFOPTION_LDAP', 'ldap', $i)");
+    	$dbm->insert('configoption', " VALUES (31, '_MD_AM_AUTH_CONFOPTION_AD', 'ads', $i)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'ldap_port','_MD_AM_LDAP_PORT','389','_MD_AM_LDAP_PORT','textbox','int', $p)");
