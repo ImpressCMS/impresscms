@@ -19,7 +19,15 @@ language/english/user.php
 +define('_US_YOURREGISTRATION', 'Your registration at %s');
 +define('_US_NEWUSERREGAT', 'New registration at %s');
 +define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
-+define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
++define('_US_NEWUSE
+
+modules/system/language/english/admin/modulesadmin.php
+--------------------------
+
++define('_MD_AM_MODULESADMIN_SUPPORT', 'Module Support Site');
++define('_MD_AM_MODULESADMIN_STATUS', 'Status');
++define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
++define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
 
 modules/system/language/english/admin/preferences.php
 --------------------------
