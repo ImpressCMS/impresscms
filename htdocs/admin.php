@@ -110,15 +110,15 @@ switch ($op){
 				for ($i = 0; $i < $items_to_display; $i++) {
 					?>					
 						<div>
-							<img style="vertical-align: middle;" src="<?=XOOPS_URL?>/modules/smartsection/images/icon/doc.png" alt="<?=$items[$i]['title']?>">&nbsp;<a href="<?=$items[$i]['guid']?>"><?=$items[$i]['title']?></a>
+							<img style="vertical-align: middle;" src="<?php XOOPS_URL?>/modules/smartsection/images/icon/doc.png" alt="<?php $items[$i]['title']?>">&nbsp;<a href="<?php $items[$i]['guid']?>"><?php $items[$i]['title']?></a>
 						</div>
 						<div>
-							<img class="smartsection_item_image" src="<?=XOOPS_URL?>/uploads/smartsection/images/item/impresscms_news.gif" alt="<?=$items[$i]['title']?>" title="<?=$items[$i]['title']?>" align="right">
-							<?=$items[$i]['description']?>
+							<img class="smartsection_item_image" src="<?php XOOPS_URL?>/uploads/smartsection/images/item/impresscms_news.gif" alt="<?php $items[$i]['title']?>" title="<?php $items[$i]['title']?>" align="right">
+							<?php $items[$i]['description']?>
 					    </div>
 						<div style="clear: both;"> </div>
 						<div style="font-size: 10px; text-align: right;"><a href="http://www.impresscms.org/modules/smartsection/category.php?categoryid=1">All ImpressCMS Project news...</a></div>
-					<?		
+					<?php		
 				}
 			} else {
 				//echo $rss2parser->getErrors();
