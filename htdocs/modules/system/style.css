@@ -210,6 +210,7 @@ div#navbarCP ul li ul{
 	background: #FFFFFF;
 	border: 1px solid #000000;
 	padding: 0;
+	z-index: 1;
 	/*margin: 0;*/
 }
 div#navbarCP ul li ul a{
