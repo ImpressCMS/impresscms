@@ -19,7 +19,7 @@ language/english/user.php
 +define('_US_YOURREGISTRATION', 'Your registration at %s');
 +define('_US_NEWUSERREGAT', 'New registration at %s');
 +define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
-+define('_US_NEWUSE
++define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
 
 modules/system/language/english/admin/modulesadmin.php
 --------------------------

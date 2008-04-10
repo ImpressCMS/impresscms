@@ -22,6 +22,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : New field in the XoopsModule object, dbversion, which will track the version of the tables related to a module (malanciault)
 - Added : Implementation of the onUpdate event for the System module to allow easy database upgrades performed automatically while updating the System module (malanciault)
 - Added : Upgrade script from ImpressCMS 1.0 to ImpressCMS 1.1 which only adds the dbversion field to the modules table; after this upgrade has been performed, all database upgrades will be done automatically when updating the System module (malanciault) 
+- Added : Addition of assigning language's css & Javascripts files to the template. (stranger)
 
 - Improved : The pm form to use the selected editor. (the_rplima)
 - Improved : XoopsTree::getNicePathFromId has new parameter, allowing specification of the separator between links (skenow)
