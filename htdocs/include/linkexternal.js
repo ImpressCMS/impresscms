@@ -1,12 +1,21 @@
+// External Links
+
+// @copyright	The ImpressCMS Project http://www.impresscms.org/
+// @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+// @package	core
+// @since	1.0
+// @author 	vaughan
+// @version	$Id: linkexternal.js 1000 2008-03-07 15:34:34Z m0nty_ $
+
 // This function enables the use of javascript to open new windows for link urls
 // in replace of target="_blank" etc due to xhtml validation not recognising target anymore.
 // typical values for rel in the <a href> tag are:
 // rel="external" - opens  destination link in external window
 // rel="nofollow" - instructs web crawlers & bots to not follow or score the destination link (SEO necessity)
 // rel="nofollow external" a combination of both the above.
-// example use: <a href="http://www.xoops.org" rel="nofollow external" />XOOPS CMS</a>
+// example use: <a href="http://www.impresscms.org" rel="nofollow external" />ImpressCMS</a>
 
-function xoopsExternalLinks() {  
+function icms_ExternalLinks() {  
 	if (!document.getElementsByTagName) return;  
 
 	var anchors = document.getElementsByTagName("a");  
@@ -23,4 +32,4 @@ function xoopsExternalLinks() {
 		}  
 	} 
 }
-window.onload = xoopsExternalLinks;
+window.onload = icms_ExternalLinks;
