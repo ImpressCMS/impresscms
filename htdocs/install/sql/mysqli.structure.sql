@@ -359,7 +359,7 @@ CREATE TABLE imgsetimg (
 CREATE TABLE modules (
   mid smallint(5) unsigned NOT NULL auto_increment,
   name varchar(150) NOT NULL default '',
-  version smallint(5) unsigned NOT NULL default '100',
+  version smallint(5) unsigned NOT NULL default '103',
   last_update int(10) unsigned NOT NULL default '0',
   weight smallint(3) unsigned NOT NULL default '0',
   isactive tinyint(1) unsigned NOT NULL default '0',
@@ -370,7 +370,7 @@ CREATE TABLE modules (
   hasconfig tinyint(1) unsigned NOT NULL default '0',
   hascomments tinyint(1) unsigned NOT NULL default '0',
   hasnotification tinyint(1) unsigned NOT NULL default '0',
-  dbversion int(11) unsigned NOT NULL default '0',
+  dbversion int(11) unsigned NOT NULL default '1',
   PRIMARY KEY  (mid),
   KEY hasmain (hasmain),
   KEY hasadmin (hasadmin),

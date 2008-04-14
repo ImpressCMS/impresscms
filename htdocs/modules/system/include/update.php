@@ -14,7 +14,8 @@ function xoops_module_update_system(&$module) {
     /**
      * For compatibility upgrade...
      */
-	if ($module->getVar('version') == 100) {
+     $moduleVersion  = $module->getVar('version');
+	if ($moduleVersion < 103) {
         $result = $xoopsDB->query("SELECT t1.tpl_id FROM ".$xoopsDB->prefix('tplfile')." t1, ".$xoopsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
 
         $tplids = array();
