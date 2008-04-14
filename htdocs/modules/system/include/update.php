@@ -7,7 +7,7 @@
 * @package		core
 * @since		1.0
 * @author		malanciault <marcan@impresscms.org)
-* @version		$Id: error.php 429 2008-01-02 22:21:41Z malanciault $
+* @version		$Id: update.php 429 2008-003-25 22:21:41Z malanciault $
 */
 
 function xoops_module_update_system(&$module) {
