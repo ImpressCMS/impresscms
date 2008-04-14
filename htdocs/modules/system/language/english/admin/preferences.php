@@ -275,7 +275,6 @@ define("_MD_AM_WELCOMEMSG_CONTENT","Content of the welcome message");
 define("_MD_AM_WELCOMEMSG_CONTENTDSC","You can edit the message that is sent to the new user. Note that you can use the following tags: <br /><br />- {UNAME} = username of the user<br />- {X_UEMAIL} = email of the user<br />- {X_ADMINMAIL} = admin email address<br />- {X_SITENAME} = name of the site<br />- {X_SITEURL} = URL of the site");
 
 define("_MD_AM_SEARCH_USERDATE","Show user and date in search results");
-define("_MD_AM_SEARCH_USERDATE","");
 define("_MD_AM_SEARCH_NO_RES_MOD","Show modules with no match in search results");
 define("_MD_AM_SEARCH_NO_RES_MODDSC","");
 define("_MD_AM_SEARCH_PER_PAGE","Item per page in search results");
