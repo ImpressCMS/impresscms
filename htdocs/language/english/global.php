@@ -197,7 +197,7 @@ Z - timezone offset in seconds (i.e. "-43200" to "43200")
 
 
 //%%%%%		LANGUAGE SPECIFIC SETTINGS   %%%%%
-define('_CHARSET', 'ISO-8859-1');
+define('_CHARSET', 'utf-8');
 define('_LANGCODE', 'en');
 
 // change 0 to 1 if this language is a multi-bytes language
