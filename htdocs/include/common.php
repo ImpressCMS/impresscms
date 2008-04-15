@@ -33,6 +33,13 @@ defined("XOOPS_MAINFILE_INCLUDED") or die();
 set_magic_quotes_runtime(0);
 
 /**
+ * Creating ICMS specific constants
+ */
+define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
+define('ICMS_URL', XOOPS_URL);
+define('ICMS_TRUST_PATH', XOOPS_URL);
+
+/**
  * Extremely reduced kernel class
  * This class should not really be defined in this file, but it wasn't worth including an entire
  * file for those two functions.
