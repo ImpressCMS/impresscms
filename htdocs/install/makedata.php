@@ -104,7 +104,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
-    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 103, ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 1)");
+    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 102, ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 1)");
 
     foreach ($modversion['templates'] as $tplfile) {
         if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
