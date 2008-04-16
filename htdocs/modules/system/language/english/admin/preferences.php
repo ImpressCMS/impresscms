@@ -280,6 +280,9 @@ define("_MD_AM_SEARCH_NO_RES_MODDSC","");
 define("_MD_AM_SEARCH_PER_PAGE","Item per page in search results");
 define("_MD_AM_SEARCH_PER_PAGEDSC","");
 
+define("_MD_AM_EXT_DATE","Do you want to use an extended/local date function?");
+define("_MD_AM_EXT_DATEDSC","Note: by activating this option, ImpressCMS will use an extended calendar script <b>ONLY</b> if you have this script running on your site.<br />Please visit <a href='http://wiki.impresscms.org/index.php?title=Extended_date_function'>extended date function</a> for more info.");
+
 define("_MD_AM_EDITOR_DEFAULT","Default Editor");
 define("_MD_AM_EDITOR_DEFAULT_DESC","Select the default Editor for all the site.");
 

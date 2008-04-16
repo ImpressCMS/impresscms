@@ -217,6 +217,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'default_TZ', '_MD_AM_DEFAULTTZ', '0', '_MD_AM_DEFAULTTZDSC', 'timezone', 'float', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_ext_date', '_MD_AM_EXT_DATE', '0', '_MD_AM_EXT_DATEDSC', 'yesno', 'int', $p)");
  	$i++;
 	$p++;
    	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_set', '_MD_AM_DTHEME', 'impresstheme', '_MD_AM_DTHEMEDSC', 'theme', 'other', $p)");

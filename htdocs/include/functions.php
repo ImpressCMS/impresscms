@@ -205,7 +205,14 @@ function formatTimestamp($time, $format="l", $timeoffset="")
         }
         break;
     }
-    return ucfirst(date($datestring, $usertimestamp));
+//Start addition including extended date function
+	if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/ext/ext_date_function.php") && $xoopsConfig['use_ext_date'] == 1 && $format != 'mysql' ){
+         include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/ext/ext_date_function.php";
+       return ucfirst(ext_date($datestring,$usertimestamp));
+	   } else {
+		return ucfirst(date($datestring,$usertimestamp));
+           }
+// End addition including extended date function
 }
 
 /*
