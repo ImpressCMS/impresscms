@@ -450,11 +450,11 @@ class XoopsModuleHandler extends XoopsObjectHandler
             $module->assignVar('mid', $this->db->getInsertId());
         }
         
-    		if (!empty($this->_cachedModule_dirname[$dirname])) {
-    			unset ($this->_cachedModule_dirname[$dirname]);
+    		if (!empty($this->_cachedModule_dirname[$module->getVar('dirname')])) {
+    			unset ($this->_cachedModule_dirname[$module->getVar('dirname')]);
     		}
-    		if (!empty($this->_cachedModule_mid[$mid])) {
-    			unset ($this->_cachedModule_mid[$mid]);
+    		if (!empty($this->_cachedModule_mid[$module->getVar('mid')])) {
+    			unset ($this->_cachedModule_mid[$module->getVar('mid')]);
     		}
         return true;
     }
