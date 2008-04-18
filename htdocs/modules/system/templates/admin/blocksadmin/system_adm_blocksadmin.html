@@ -1,0 +1,53 @@
+<div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/blocksadmin/images/blocksadmin_big.png)"><{$lang_badmin}></div><br />
+<div style="float:left;">
+  <form action="admin.php" method="get">
+  <{$lang_svisiblein}>:<{$selmod}> <{$lang_group}>:<{$selgrp}> <{$lang_visible}>:<{$selvis}> <input type='submit' name='submit' value='<{$lang_go}>' />
+  </form>
+</div>
+<form action='admin.php' name='blockadmin' method='post'>
+<div align="right" style="margin-bottom:5px;">
+  <input type="button" onclick="icms_showDiv('new','','hiddendiv'); return false;" value="<{$lang_addnew}>" />
+  <input type="button" onclick="window.location.href='admin.php?fct=blocksadmin&op=adminpblocks';" value="<{$lang_bpadmin}>" />
+</div>
+<table width="100%" cellpadding="4" cellspacing="1" border="0" class="outer">
+  <tr align='center' valign='middle'>
+    <th width='20%'><{$lang_name}></th>
+    <th><{$lang_title}></th>
+    <th><{$lang_module}></th>
+    <th><{$lang_side}></th>
+    <th><{$lang_weight}></th>
+    <th><{$lang_visible}></th>
+    <th><{$lang_action}></th>
+  </tr>
+  <{foreach item=block from=$blocks}>
+    <tr valign='middle'class="<{cycle values="even,odd"}>">
+      <td align="left" valign="middle"><{$block.name}></td>
+      <td align="left" valign="middle"><{$block.title}></td>
+      <td align="left" valign="middle"><{$block.module}></td>
+      <td align='center' valign="middle"><{$block.sidef}></td>
+      <td align='center' valign="middle"><{$block.weightf}></td>
+      <td align='center' valign="middle"><a href="admin.php?fct=blocksadmin&op=changestatus&bid=<{$block.bid}>&sts=<{$block.visible}>"><img src="images/<{$block.visible}>.png" title="<{$lang_changests}>" alt="<{$lang_changests}>" /></a></td>
+      <td align='center' valign="middle">
+        <a href="admin.php?fct=blocksadmin&op=clone&amp;bid=<{$block.bid}>"><img src="images/clone_big.png" title="<{$lang_clone}>" alt="<{$lang_clone}>" /></a>
+        <a href="admin.php?fct=blocksadmin&op=edit&amp;bid=<{$block.bid}>"><img src="images/edit_big.png" title="<{$lang_edit}>" alt="<{$lang_edit}>" /></a>
+        <{if $block.block_type != 'S' && $block.block_type != 'M'}>
+          <a href="admin.php?fct=blocksadmin&op=delete&bid=<{$block.bid}>"><img src="images/delete_big.png" title="<{$lang_delete}>" alt="<{$lang_delete}>" /></a>
+        <{else}>
+          <img src="images/delete_big_off.png" title="<{$lang_delete}>" alt="<{$lang_delete}>" />
+        <{/if}>
+        <input type='hidden' name='oldweight[<{$block.bid}>]' value='<{$block.weight}>' />
+        <input type='hidden' name='oldside[<{$block.bid}>]' value='<{$block.side}>' />
+        <input type='hidden' name='bid[<{$block.bid}>]' value='<{$block.bid}>' />
+      </td>
+    </tr>
+  <{/foreach}>
+</table>
+<div align="right" style="margin-top:5px;">
+  <input type='submit' name='submit' value='<{$lang_submit}>' />
+  <input type="button" onclick="icms_showDiv('new','','hiddendiv'); return false;" value="<{$lang_addnew}>" />
+  <input type="button" onclick="window.location.href='admin.php?fct=blocksadmin&op=adminpblocks';" value="<{$lang_bpadmin}>" />
+</div>
+</form>
+<br/>
+<a name="new"></a>
+<div id="new" class="hiddendiv" style="display:none;"><{$addform}></div>
