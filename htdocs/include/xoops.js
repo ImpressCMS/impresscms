@@ -18,7 +18,6 @@ function $() {
 }
 }
 
-	
 function xoopsGetElementById(id){
 	return $(id);
 }
@@ -420,6 +419,6 @@ function icms_showDiv(type,id,classname){
 		}
 	}
 	if (!id)id = '';
-	document.getElementById(type+id).style.display = 'block';
-	document.anchors.item(type+id).scrollIntoView();
+	changeDisplay(type+id);
+	document.anchors.item(type+id+'_anchor').scrollIntoView();
 }
