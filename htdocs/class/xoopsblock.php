@@ -101,7 +101,7 @@ class XoopsBlock extends XoopsObject
             }
             $sql .= ", isactive='".intval($isactive)."', title=".$this->db->quoteString($title).", content=".$this->db->quoteString($content).", side='".intval($side)."', weight='".intval($weight)."', visible='".intval($visible)."', c_type=".$this->db->quoteString($c_type).", template=".$this->db->quoteString($template).", bcachetime='".intval($bcachetime)."', last_modified='".time()."' WHERE bid='".intval($bid)."'";
         }
-        if ( !$this->db->query($sql) ) {
+        if ( !$this->db->queryF($sql) ) {
             $this->setErrors("Could not save block data into database");
             return false;
         }

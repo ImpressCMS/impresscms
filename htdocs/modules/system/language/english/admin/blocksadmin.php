@@ -65,7 +65,7 @@ define("_AM_RUSUREDEL","Are you sure you want to delete block <b>%s</b>?");
 define("_AM_NAME","Name");
 define("_AM_USEFULTAGS","Useful Tags:");
 define("_AM_BLOCKTAG1","%s will print %s");
-define('_AM_SVISIBLEIN', 'Show blocks visible in %s');
+define('_AM_SVISIBLEIN', 'Show blocks visible in');
 define('_AM_TOPPAGE', 'Top Page');
 define('_AM_VISIBLEIN', 'Visible in');
 define('_AM_ALLPAGES', 'All Pages');
@@ -81,4 +81,6 @@ define('_AM_EDITTPL', 'Edit Template');
 define('_AM_MODULE', 'Module');
 define('_AM_GROUP', 'Group');
 define('_AM_UNASSIGNED', 'Unassigned');
+
+define('_AM_CHANGESTS', 'Change the block visibility');
 ?>

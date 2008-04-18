@@ -412,7 +412,14 @@ function xoopsValidate(subjectId, textareaId, submitId, plzCompletePhrase, msgTo
 	}
 }
 
-
-
-
-
+function icms_showDiv(type,id,classname){
+	divs = document.getElementsByTagName('div');
+	for (i=0; i<divs.length;i++){
+		if (/classname/.test(divs[i].className)){
+			divs[i].style.display = 'none';
+		}
+	}
+	if (!id)id = '';
+	document.getElementById(type+id).style.display = 'block';
+	document.anchors.item(type+id).scrollIntoView();
+}
