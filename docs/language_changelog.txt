@@ -69,24 +69,55 @@ modules/system/language/english/admin/preferences.php
 
 
 modules/system/languages/english/admin/groups.php
--------------------------------------------------
+--------------------------
 
-+ define("_AM_EDPERM","Can use the WYSIWYG editor in the following modules");
-+ define("_AM_DEBUG_PERM","The Debug Mode is enabled for the next modules");
++  define("_AM_EDPERM","Can use the WYSIWYG editor in the following modules");
++  define("_AM_DEBUG_PERM","The Debug Mode is enabled for the next modules");
 
 language/english/mail_template/
-------------------------------
+--------------------------
 
 + welcome.tpl
 + newuser_notify.tpl
 +- register.tpl (modified to use {X_ADMINMAIL} and not {ADMINMAIL})
 
 install/language/english/install.php
-------------------------------------
+--------------------------
 
-+ define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
-+ define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L97
-+ define( "ADMIN_SALT_LABEL", "Password Salt Key" ); // L99
++  define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
++  define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L97
++  define( "ADMIN_SALT_LABEL", "Password Salt Key" ); // L99
+
+language/english/moduleabout.php
+--------------------------
+
++  define('_MODABOUT_DEVELOPER_CONTRIBUTOR', 'Contributor(s)');
++  define('_MODABOUT_DEVELOPER_CREDITS', 'Credits');
++  define('_MODABOUT_DEVELOPER_EMAIL', 'Email');
++  define('_MODABOUT_DEVELOPER_WEBSITE', 'Website');
++  define('_MODABOUT_GOTOMODULE', 'Go to module');
++  define('_MODABOUT_MODULE_BUG', 'Report a bug for this module');
++  define('_MODABOUT_MODULE_DEMO', 'Demo Site');
++  define('_MODABOUT_MODULE_DISCLAIMER', 'Disclaimer');
++  define('_MODABOUT_MODULE_FEATURE', 'Suggest a new feature for this module');
++  define('_MODABOUT_MODULE_INFO', 'Module Developpment Informations');
++  define('_MODABOUT_MODULE_RELEASE_DATE', 'Release date');
++  define('_MODABOUT_MODULE_STATUS', 'Status');
++  define('_MODABOUT_MODULE_SUBMIT_BUG', 'Submit a bug');
++  define('_MODABOUT_MODULE_SUBMIT_FEATURE', 'Request a feature');
++  define('_MODABOUT_MODULE_SUPPORT', 'Official support site');
++  define('_MODABOUT_UPDATE_MODULE', 'Update module');
++  define('_MODABOUT_VERSION_HISTORY', 'Version History');
++  define('_MODABOUT_WARNING_BETA', "This module comes as is, without any guarantees whatsoever. This module is BETA, meaning it is still under active development. This release is meant for <b>testing purposes only</b> and we <b>strongly</b> recommend that you do not use it on a live website or in a production environment.");
++  define('_MODABOUT_WARNING_FINAL', "This module comes as is, without any guarantees whatsoever. Although this module is not beta, it is still under active development. This release can be used in a live website or a production environment, but its use is under your own responsibility, which means the author is not responsible.");
++  define('_MODABOUT_WARNING_RC', "This module comes as is, without any guarantees whatsoever. This module is a Release Candidate and should not be used on a production web site. The module is still under active development and its use is under your own responsibility, which means the author is not responsible.");
++  define('_MODABOUT_BY', 'By');
++  define('_MODABOUT_PEOPLE_DEVELOPERS', 'Developers');
++  define('_MODABOUT_PEOPLE_TESTERS', 'Testers');
++  define('_MODABOUT_PEOPLE_DOCUMENTERS', 'Documenters');
++  define('_MODABOUT_PEOPLE_TRANSLATERS', 'Translators');
++  define('_MODABOUT_PEOPLE_OTHER', 'Other contributors');
++  define('_MODABOUT_AUTHOR_INFO', 'Contributors information');
 
 
 ImpressCMS 1.0 (changes from XOOPS 2.0.17)
@@ -612,7 +643,7 @@ install/language/english/install2.php
 +  This site system uses cookies to store information on your local computer. These cookies do not contain any of the information you have entered above, they serve only to improve your viewing pleasure. The email address is used only for confirming your registration details and password (and for sending new passwords should you forget your current one).
 
  By clicking Register below you agree to be bound by these conditions.");
-+  
++
 +    define("_INSTALL_PRIVPOLICY", "<p>This privacy policy sets out how [website name] uses and protects any information that you give [website name] when you use this website. [website name] is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement. [website name] may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes.
 +  </p><p>
 +  This policy is effective from [date].
@@ -1250,7 +1281,7 @@ install/language/english/install2.php
 +  This site system uses cookies to store information on your local computer. These cookies do not contain any of the information you have entered above, they serve only to improve your viewing pleasure. The email address is used only for confirming your registration details and password (and for sending new passwords should you forget your current one).
 
  By clicking Register below you agree to be bound by these conditions.");
-+  
++
 +    define("_INSTALL_PRIVPOLICY", "<p>This privacy policy sets out how [website name] uses and protects any information that you give [website name] when you use this website. [website name] is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement. [website name] may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes.
 +  </p><p>
 +  This policy is effective from [date].
