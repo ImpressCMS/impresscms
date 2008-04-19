@@ -52,6 +52,9 @@ include_once(XOOPS_ROOT_PATH . '/class/icmslibrarieshandler.php');
 $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
 // ################# Creation of the IcmsLibrariesHandler ##############
 
+// triggering event "startingCoreBoot" of third party integration
+$icmsLibrariesHandler->triggerEvent('startingCoreBoot');
+
 // ################# Creation of the ImpressCMS Kernel object ##############
 include_once(ICMS_ROOT_PATH . '/kernel/icmskernel.php');
 
@@ -422,8 +425,8 @@ if (file_exists('./xoops_version.php')) {
 	$xoopsUserIsAdmin = $xoopsUser->isAdmin(1);
 }
 // triggering event "finishCoreBoot" of third party integration
-global $icmsLibrariesHandler;
 $icmsLibrariesHandler->triggerEvent('finishCoreBoot');
+
 $xoopsLogger->stopTime( 'XOOPS Boot' );
 $xoopsLogger->startTime( 'Module init' );
 ?>
