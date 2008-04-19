@@ -64,6 +64,9 @@ modules/system/language/english/admin/preferences.php
 +  define("_MD_AM_EDITOR_DEFAULT_DESC","Select the default Editor for all the site.");
 +  define("_MD_AM_EDITOR_ENABLED_LIST","Enabled Editors");
 +  define("_MD_AM_EDITOR_ENABLED_LIST_DESC","Select the selectable editors by the modules (If the module has a configuration to select the editor.)");
++  define("_MD_AM_USE_SHA256","Use SHA256 Encryption for Passwords (Recommended)");
++  define("_MD_AM_USE_SHA256DSC","Select 'yes' for SHA256. Select 'no' for MD5 (not recommended).<br />Changing this will render all passwords invalid!");
+
 
 modules/system/languages/english/admin/groups.php
 -------------------------------------------------
@@ -77,6 +80,14 @@ language/english/mail_template/
 + welcome.tpl
 + newuser_notify.tpl
 +- register.tpl (modified to use {X_ADMINMAIL} and not {ADMINMAIL})
+
+install/language/english/install.php
+------------------------------------
+
++ define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
++ define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L97
++ define( "ADMIN_SALT_LABEL", "Password Salt Key" ); // L99
+
 
 ImpressCMS 1.0 (changes from XOOPS 2.0.17)
 =========================================

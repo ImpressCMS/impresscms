@@ -3,11 +3,12 @@ ImpressCMS ChangeLog
 =============================================
 Unreleased : ImpressCMS 1.1 "???" Alpha
 =============================================
-Added : icms_createSalt function to generate a unique random salt key. (vaughan)
+- Added : icms_createSalt function to generate a unique random salt key. (vaughan)
 - Added : icms_getUserSaltFromUname function to get the users unique salt key for logging in. (vaughan)
 - Added : icms_encryptPass function to add the salts & encrypt password using sha256 (vaughan)
 - Added : Unique Salt key to users table. (vaughan)
 - Added : Unique Salt key to mainfile/sdata trust path for use with Password encryption. (vaughan)
+- Added : enable sha256 choice in admin preferences user settings. default = yes sha256, no = md5 (basic). (vaughan)
 - Changed : Password encryption method from md5 to more secure SHA256 + 2 unique salt keys. (vaughan)
 - Added : Prototype Library (Updated to the last version , and removed old prototype files from other places like install and scriptaculous library). (nekro)
 - Added : Projax Library to integrate better Scriptaculous in php. (nekro)
