@@ -901,7 +901,32 @@ function icms_getCurrentModuleName() {
 		return false;
 	}
 }
+/**
+ * Load a module language file
+ * 
+ * If $module = core, file wil be loaded from XOOPS_ROOT_PATH/language/
+ *
+ * @param string $module dirname of the module
+ * @param string $file name of the file without ".php"
+ */
+function icms_loadLanguageFile($module, $file) {
+	global $xoopsConfig;
+	
+	if ($module == 'core') {
+		$languagePath = XOOPS_ROOT_PATH . '/language/';
+	} else {
+		$languagePath = XOOPS_ROOT_PATH . '/modules/' . $module . '/language/';
+	}
 
+	$filename = $languagePath . $xoopsConfig['language'] . '/' . $file . '.php';
+	if (!file_exists($filename)) {
+		$filename = $languagePath . 'english/' . $file . '.php';
+	}
+
+	if (file_exists($filename)) {
+		include_once($filename);
+	}
+}
 /**
  * php 4 compat for array_combine
  */
