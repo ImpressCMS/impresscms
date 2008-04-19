@@ -1,13 +1,13 @@
 <div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/blocksadmin/images/blocksadmin_big.png)"><{$lang_badmin}></div><br />
 <div style="float:left;">
   <form action="admin.php" method="get">
-  <{$lang_svisiblein}>:<{$selmod}> <{$lang_group}>:<{$selgrp}> <{$lang_visible}>:<{$selvis}> <input type='submit' name='submit' value='<{$lang_go}>' />
+  <{$selmod}> <{$lang_group}>:<{$selgrp}> <{$lang_visible}>:<{$selvis}> <input type='submit' name='submit' value='<{$lang_go}>' />
   </form>
 </div>
 <form action='admin.php' name='blockadmin' method='post'>
 <div align="right" style="margin-bottom:5px;">
   <input type="button" onclick="icms_showDiv('new','','hiddendiv'); return false;" value="<{$lang_addnew}>" />
-  <input type="button" onclick="window.location.href='admin.php?fct=blocksadmin&op=adminpblocks';" value="<{$lang_bpadmin}>" />
+  <input type="button" onclick="window.location.href='admin.php?fct=blockspadmin';" value="<{$lang_bpadmin}>" />
 </div>
 <table width="100%" cellpadding="4" cellspacing="1" border="0" class="outer">
   <tr align='center' valign='middle'>
@@ -45,9 +45,9 @@
 <div align="right" style="margin-top:5px;">
   <input type='submit' name='submit' value='<{$lang_submit}>' />
   <input type="button" onclick="icms_showDiv('new','','hiddendiv'); return false;" value="<{$lang_addnew}>" />
-  <input type="button" onclick="window.location.href='admin.php?fct=blocksadmin&op=adminpblocks';" value="<{$lang_bpadmin}>" />
+  <input type="button" onclick="window.location.href='admin.php?fct=blockspadmin';" value="<{$lang_bpadmin}>" />
 </div>
 </form>
 <br/>
 <a name="new_anchor"></a>
-<div id="new" class="hiddendiv" style="display:none;"><{$addform}></div>
+<div id="new" class="hiddendiv" style="display:<{$addformsts}>;"><{$addform}></div>
