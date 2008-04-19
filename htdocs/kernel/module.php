@@ -52,10 +52,19 @@ class XoopsModule extends XoopsObject
      * @var string
      */
     var $modinfo;
-    /**
-     * @var string
-     */
+	/**
+	 * AdminMenu of the module
+	 *
+	 * @var array
+	 */
     var $adminmenu;
+    
+    /**
+     * Header menu on admin of the module
+     *
+     * @var array
+     */
+    var $adminheadermenu;
 
     /**
      * Constructor
@@ -182,6 +191,9 @@ class XoopsModule extends XoopsObject
         if ($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists(XOOPS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/'.$this->getInfo('adminmenu'))) {
             include_once XOOPS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/'.$this->getInfo('adminmenu');
             $this->adminmenu =& $adminmenu;
+            if (isset($headermenu)) {
+            	$this->adminheadermenu =& $headermenu;
+            }
         }
     }
 
@@ -197,6 +209,19 @@ class XoopsModule extends XoopsObject
         }
         return $this->adminmenu;
     }
+    
+    /**
+     * Get the admin header menu for the module
+     * 
+     * @return	string $this->adminmenu
+     */
+    function &getAdminHeaderMenu()
+    {
+        if ( !isset($this->adminheadermenu) ) {
+            $this->loadAdminMenu();
+        }
+        return $this->adminheadermenu;
+    }    
 
     /**
      * Load the module info for this module
@@ -256,6 +281,34 @@ class XoopsModule extends XoopsObject
         }
         return false;
     }
+    
+	function displayAdminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1) {
+		
+		global $xoopsModule, $xoopsConfig;
+		include_once XOOPS_ROOT_PATH . '/class/template.php';
+
+		if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
+			include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php';
+		} else {
+			include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/modinfo.php';
+		}
+		if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/admin.php')) {
+			include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/admin.php';
+		} else {
+			include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/admin.php';
+		}
+		$tpl = & new XoopsTpl();
+		$tpl->assign(array (
+			'headermenu' => $this->getAdminHeaderMenu(),
+			'adminmenu' => $this->getAdminMenu(),
+			'current' => $currentoption,
+			'breadcrumb' => $breadcrumb,
+			'headermenucount' => count( $this->getAdminHeaderMenu()	), 
+			'submenus' => $submenus, 
+			'currentsub' => $currentsub, 
+			'submenuscount' => count($submenus)));
+		$tpl->display(XOOPS_ROOT_PATH . '/modules/system/templates/admin/system_adm_modulemenu.html');
+	}    
     
     /**#@+
      * For backward compatibility only!
