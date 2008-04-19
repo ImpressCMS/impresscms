@@ -53,7 +53,7 @@ $icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
 // ################# Creation of the IcmsLibrariesHandler ##############
 
 // triggering event "startingCoreBoot" of third party integration
-$icmsLibrariesHandler->triggerEvent('startingCoreBoot');
+$icmsLibrariesHandler->triggerEvent('startCoreBoot');
 
 // ################# Creation of the ImpressCMS Kernel object ##############
 include_once(ICMS_ROOT_PATH . '/kernel/icmskernel.php');
