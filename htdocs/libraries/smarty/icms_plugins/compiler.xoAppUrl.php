@@ -22,7 +22,7 @@
  * 
  * To ensure this can be as optimized as possible, it accepts 2 modes of operation:
  * 
- * <b>Static address generation</b>:<br>
+ * <b>Static address generation</b>:
  * This is the default mode and fastest mode. When used, the URL is generated during
  * the template compilation, and statically written in the compiled template file.
  * To use it, you just need to provide a location in a format XOOPS understands.
@@ -34,7 +34,7 @@
  * ([xoAppUrl mod_xoops_Identification#logout])
  * </code>
  * 
- * <b>Dynamic address generation</b>:<br>
+ * <b>Dynamic address generation</b>:
  * The is the slowest mode, and its use should be prevented unless necessary. Here,
  * the URL is generated dynamically each time the template is displayed, thus allowing
  * you to use the value of a template variable in the location string. To use it, you

@@ -32,7 +32,7 @@
 $modversion['name'] = _MD_AM_BANS;
 $modversion['version'] = "";
 $modversion['description'] = "Banners Administration";
-$modversion['author'] = "Francisco Burzi <br>( http://phpnuke.org/ )";
+$modversion['author'] = "Francisco Burzi <br />( http://phpnuke.org/ )";
 $modversion['credits'] = "The MPN SE Project";
 $modversion['help'] = "banners.html";
 $modversion['license'] = "GPL see LICENSE";

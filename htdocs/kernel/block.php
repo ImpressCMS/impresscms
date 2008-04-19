@@ -99,8 +99,8 @@ class XoopsBlock extends XoopsObject
     /**
      * return the content of the block for output
      * @param string $format
-     * @param string $c_type type of content<br>
-     * Legal value for the type of content<br>
+     * @param string $c_type type of content
+     * Legal value for the type of content
      * <ul>
      * <li>H : custom HTML block
      * <li>P : custom PHP block

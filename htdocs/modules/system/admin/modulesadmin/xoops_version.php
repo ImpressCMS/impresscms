@@ -32,7 +32,7 @@
 $modversion['name'] = _MD_AM_MDAD;
 $modversion['version'] = "";
 $modversion['description'] = "Modules Administration";
-$modversion['author'] = "Kazumi Ono<br>( http://www.mywebaddons.com/ )";
+$modversion['author'] = "Kazumi Ono<br />( http://www.mywebaddons.com/ )";
 $modversion['credits'] = "";
 $modversion['help'] = "modulesadmin.html";
 $modversion['license'] = "GPL see LICENSE";

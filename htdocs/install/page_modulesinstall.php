@@ -82,7 +82,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$content = _INSTALL_SELECT_MODS_INTRO;
 	$content .= '<br /><br /><table class="modules"><tr>';
 	$content .= '<td>';
-	$content .= _INSTALL_SELECT_MODULES.'<br>';
+	$content .= _INSTALL_SELECT_MODULES.'<br />';
 	$content .= '<select name="install_mods[]"  multiple>';
 	$langarr = getDirList("../modules/");
 	foreach ($langarr as $lang) {
@@ -95,7 +95,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	}
 	$content .= "</select></td>";
 	$content .= '<td>';
-	$content .= _INSTALL_SELECT_MODULES_ANON_VISIBLE.'<br>';
+	$content .= _INSTALL_SELECT_MODULES_ANON_VISIBLE.'<br />';
 	$content .= '<select name="anon_accessible_mods[]"  multiple>';
 	$langarr = getDirList("../modules/");
 	foreach ($langarr as $lang) {

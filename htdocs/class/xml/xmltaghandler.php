@@ -1,13 +1,13 @@
 <?php
 // $Id: xmltaghandler.php 2 2005-11-02 18:23:29Z skalpa $
 /*******************************************************************************
-    Location: <b>xml/XmlTagHandler</b><br>
-     <br>
-    XmlTagHandler<br>
-    <br>
-    Copyright &copy; 2001 eXtremePHP.  All rights reserved.<br>
-    <br>
-    @author Ken Egervari, Remi Michalski<br>
+    Location: <b>xml/XmlTagHandler</b>
+
+    XmlTagHandler
+
+    Copyright &copy; 2001 eXtremePHP.  All rights reserved.
+
+    @author Ken Egervari, Remi Michalski
 *******************************************************************************/
 
 class XmlTagHandler

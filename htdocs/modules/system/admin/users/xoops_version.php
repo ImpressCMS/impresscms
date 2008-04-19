@@ -32,7 +32,7 @@
 $modversion['name'] = _MD_AM_USER;
 $modversion['version'] = "";
 $modversion['description'] = "Users Administration";
-$modversion['author'] = "Francisco Burzi<br>( http://phpnuke.org/ )";
+$modversion['author'] = "Francisco Burzi<br />( http://phpnuke.org/ )";
 $modversion['credits'] = "Modified by Kazumi Ono<br>( http://www.mywebaddons.com/ )";
 $modversion['help'] = "users.html";
 $modversion['license'] = "GPL see LICENSE";

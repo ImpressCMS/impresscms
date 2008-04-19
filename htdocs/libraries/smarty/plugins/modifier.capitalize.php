@@ -9,8 +9,8 @@
 /**
  * Smarty capitalize modifier plugin
  *
- * Type:     modifier<br>
- * Name:     capitalize<br>
+ * Type:     modifier
+ * Name:     capitalize
  * Purpose:  capitalize words in the string
  * @link http://smarty.php.net/manual/en/language.modifiers.php#LANGUAGE.MODIFIER.CAPITALIZE
  *      capitalize (Smarty online manual)

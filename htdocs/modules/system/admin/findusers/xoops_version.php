@@ -32,7 +32,7 @@
 $modversion['name'] = _MD_AM_FINDUSER;
 $modversion['version'] = "";
 $modversion['description'] = "Find Users";
-$modversion['author'] = "Kazumi Ono<br>( http://www.myweb.ne.jp/ )";
+$modversion['author'] = "Kazumi Ono<br />( http://www.myweb.ne.jp/ )";
 $modversion['credits'] = "The XOOPS Project";
 $modversion['help'] = "findusers.html";
 $modversion['license'] = "GPL see LICENSE";

@@ -32,7 +32,7 @@
 $modversion['name'] = _MD_AM_MLUS;
 $modversion['version'] = "";
 $modversion['description'] = "Send message to users via Email and PM";
-$modversion['author'] = "Kazumi Ono<br>( http://www.myweb.ne.jp/ )";
+$modversion['author'] = "Kazumi Ono<br />( http://www.myweb.ne.jp/ )";
 $modversion['credits'] = "";
 $modversion['help'] = "mailusers.html";
 $modversion['license'] = "GPL see LICENSE";

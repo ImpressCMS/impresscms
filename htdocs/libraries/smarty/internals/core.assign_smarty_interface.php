@@ -8,8 +8,8 @@
 /**
  * Smarty assign_smarty_interface core plugin
  *
- * Type:     core<br>
- * Name:     assign_smarty_interface<br>
+ * Type:     core
+ * Name:     assign_smarty_interface
  * Purpose:  assign the $smarty interface variable
  * @param array Format: null
  * @param Smarty

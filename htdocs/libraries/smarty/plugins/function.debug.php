@@ -9,9 +9,9 @@
 /**
  * Smarty {debug} function plugin
  *
- * Type:     function<br>
- * Name:     debug<br>
- * Date:     July 1, 2002<br>
+ * Type:     function
+ * Name:     debug
+ * Date:     July 1, 2002
  * Purpose:  popup debug window
  * @link http://smarty.php.net/manual/en/language.function.debug.php {debug}
  *       (Smarty online manual)

@@ -1,15 +1,14 @@
 <?php
 // $Id: saxparser.php 2 2005-11-02 18:23:29Z skalpa $
 /*******************************************************************************
-    Location: <b>xml/SaxParser.class</b><br>
-     <br>
+    Location: <b>xml/SaxParser.class</b>
     Provides basic functionality to read and parse XML documents.  Subclasses
     must implement all the their custom handlers by using add* function methods.
     They may also use the handle*() methods to parse a specific XML begin and end
-    tags, but this is not recommended as it is more difficult.<br>
-    <br>
-    Copyright &copy; 2001 eXtremePHP.  All rights reserved.<br>
-    <br>
+    tags, but this is not recommended as it is more difficult.
+
+    Copyright &copy; 2001 eXtremePHP.  All rights reserved.
+
     @author Ken Egervari<br>
 *******************************************************************************/
 
@@ -182,8 +181,8 @@ class SaxParser
     ---------------------------------------------------------------------------*/
 
     /****************************************************************************
-        Adds a callback function to be called when a tag is encountered.<br>
-        Functions that are added must be of the form:<br>
+        Adds a callback function to be called when a tag is encountered.
+        Functions that are added must be of the form:
         <b>functionName( $attributes )</b>
         * @param $tagName string.  The name of the tag currently being parsed.
         * @param $functionName string.  The name of the function in XmlDocument's

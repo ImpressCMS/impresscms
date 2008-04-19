@@ -88,7 +88,7 @@ class XoopsAuth {
     function getHtmlErrors()
     {
     	global $xoopsConfig;
-        $ret = '<br>';
+        $ret = '<br />';
         if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 ) 
         {	       
 	        if (!empty($this->_errors)) {
