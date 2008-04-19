@@ -57,7 +57,7 @@ class MyTextSanitizer
 	* Constructor of this class
     *
 	* Gets allowed html tags from admin config settings
-	* should not be allowed since nl2br will be used
+	* <br> should not be allowed since nl2br will be used
 	* when storing data.
     *
     * @access	private
