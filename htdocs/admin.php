@@ -14,7 +14,7 @@
 * @package		core
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
-* @author		marcan <marcan@impresscms.org>
+* @author		modified by marcan <marcan@impresscms.org>
 * @version		$Id$
 */
 
