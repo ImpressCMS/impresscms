@@ -210,21 +210,21 @@ define("_MD_AM_LDAP_MANAGER_PASS_DESC", "The password of the user allow to make 
 define("_MD_AM_LDAP_VERSION", "LDAP Version protocol");
 define("_MD_AM_LDAP_VERSION_DESC", "The LDAP Version protocol : 2 or 3");
 define("_MD_AM_LDAP_USERS_BYPASS", " ImpressCMS User(s) bypass LDAP Authentication");
-define("_MD_AM_LDAP_USERS_BYPASS_DESC", "ImpressCMS User(s) allow to bypass the LDAP login. Login directly in ImpresssCMS<br>Separate each loginname with a |");
+define("_MD_AM_LDAP_USERS_BYPASS_DESC", "ImpressCMS User(s) allow to bypass the LDAP login. Login directly in ImpresssCMS<br />Separate each loginname with a |");
 
 define("_MD_AM_LDAP_USETLS", " Use TLS connection");
-define("_MD_AM_LDAP_USETLS_DESC", "Use a TLS (Transport Layer Security) connection. TLS use standard 389 port number<BR>" .
+define("_MD_AM_LDAP_USETLS_DESC", "Use a TLS (Transport Layer Security) connection. TLS use standard 389 port number<br />" .
 								  " and the LDAP version must be set to 3.");
 
 define("_MD_AM_LDAP_LOGINLDAP_ATTR","LDAP Attribute use to search the user");
 define("_MD_AM_LDAP_LOGINLDAP_ATTR_D","When Login name use in the DN option is set to yes, must correspond to the login name ImpressCMS");
 define("_MD_AM_LDAP_LOGINNAME_ASDN", "Login name use in the DN");
-define("_MD_AM_LDAP_LOGINNAME_ASDN_D", "The ImpressCMS login name is used in the LDAP DN (eg : uid=<loginname>,dc=impresscms,dc=org)<br>The entry is directly read in the LDAP Server without search");
+define("_MD_AM_LDAP_LOGINNAME_ASDN_D", "The ImpressCMS login name is used in the LDAP DN (eg : uid=<loginname>,dc=impresscms,dc=org)<br />The entry is directly read in the LDAP Server without search");
 
 define("_MD_AM_LDAP_FILTER_PERSON", "The search filter LDAP query to find user");
-define("_MD_AM_LDAP_FILTER_PERSON_DESC", "Special LDAP Filter to find user. @@loginname@@ is replaced by the users's login name<br> MUST BE BLANK IF YOU DON'T KNOW WHAT YOU DO' !" .
-		"<br>Ex : (&(objectclass=person)(samaccountname=@@loginname@@)) for AD" .
-		"<br>Ex : (&(objectclass=inetOrgPerson)(uid=@@loginname@@)) for LDAP");
+define("_MD_AM_LDAP_FILTER_PERSON_DESC", "Special LDAP Filter to find user. @@loginname@@ is replaced by the users's login name<br /> MUST BE BLANK IF YOU DON'T KNOW WHAT YOU DO' !" .
+		"<br />Ex : (&(objectclass=person)(samaccountname=@@loginname@@)) for AD" .
+		"<br />Ex : (&(objectclass=inetOrgPerson)(uid=@@loginname@@)) for LDAP");
 
 define("_MD_AM_LDAP_DOMAIN_NAME", "The domain name");
 define("_MD_AM_LDAP_DOMAIN_NAME_DESC", "Windows domain name. for ADS and NT Server only");
@@ -237,10 +237,10 @@ define("_MD_AM_LDAP_PROVIS_GROUP_DSC", "The new user is assigned to these groups
 
 define("_MD_AM_LDAP_FIELD_MAPPING_ATTR", "ImpressCMS-Auth server fields mapping");
 define("_MD_AM_LDAP_FIELD_MAPPING_DESC", "Describe here the mapping between the ImpressCMS database field and the LDAP Authentication system field." .
-		"<br><br>Format [ImpressCMS Database field]=[Auth system LDAP attribute]" .
-		"<br>for example : email=mail" .
-		"<br>Separate each with a |" .
-		"<br><br>!! For advanced users !!");
+		"<br /><br />Format [ImpressCMS Database field]=[Auth system LDAP attribute]" .
+		"<br />for example : email=mail" .
+		"<br />Separate each with a |" .
+		"<br /><br />!! For advanced users !!");
 
 define("_MD_AM_LDAP_PROVIS_UPD", "Maintain ImpressCMS account provisioning");
 define("_MD_AM_LDAP_PROVIS_UPD_DESC", "The ImpressCMS User account is always synchronized with the Authentication Server");
