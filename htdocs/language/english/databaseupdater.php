@@ -2,7 +2,6 @@
 
 /**
 * $Id$
-* Module: SmartContent
 * Author: The SmartFactory <www.smartfactory.ca>
 * Licence: GNU
 */
