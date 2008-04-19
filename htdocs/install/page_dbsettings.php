@@ -26,7 +26,7 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
 // Load config values from mainfile.php constants if 1st invocation, or reload has been asked
 if ( !isset( $vars['DB_HOST'] ) || false !== @strpos( $_SERVER['HTTP_CACHE_CONTROL'], 'max-age=0' ) ) {
-	$keys = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_NAME', 'DB_PREFIX', 'DB_PCONNECT' );
+	$keys = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_NAME', 'DB_PREFIX', 'DB_PCONNECT', 'DB_SALT' );
 	foreach ( $keys as $k ) {
 		$vars[ $k ] = defined( "XOOPS_$k" ) ? constant( "XOOPS_$k" ) : '';
 	}
@@ -35,7 +35,7 @@ if ( !isset( $vars['DB_HOST'] ) || false !== @strpos( $_SERVER['HTTP_CACHE_CONTR
 
 // Set default values
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-	$params = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_NAME', 'DB_PREFIX' );
+	$params = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_NAME', 'DB_PREFIX', 'DB_SALT' );
 	foreach ( $params as $name ) {
 		$vars[$name] = $_POST[$name];
 	}
@@ -82,18 +82,19 @@ if ( @empty( $vars['DB_HOST'] ) ) {
 		'DB_NAME'		=> '',
 		'DB_PREFIX'		=> 'x' . substr( md5( time() ), 0, 5 ),
 		'DB_PCONNECT'	=> 0,
+		'DB_SALT'	=> icms_createSalt(),
 	) );
 }
 
-
-function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
+function xoFormField( $name, $value, $label, $help = '', $maxlength, $type='text' ) {
 	$name = htmlspecialchars( $name, ENT_QUOTES );
 	$value = htmlspecialchars( $value, ENT_QUOTES );
+	$maxlength = intval($maxlength);
 	echo "<label for='$name'>$label</label>\n";
 	if ( $help ) {
 		echo '<div class="xoform-help">' . $help . "</div>\n";
 	}
-	echo "<input type='$type' name='$name' id='$name' value='$value' />";
+	echo "<input type='$type' name='$name' id='$name' maxlength='$maxlength' value='$value' />";
 }
 
 
@@ -109,9 +110,9 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
 			<!-- <option value="mysqli">mysqli</option> //-->
 		</select>
 	</label>
-	<?php echo xoFormField( 'DB_HOST',	$vars['DB_HOST'],		DB_HOST_LABEL, DB_HOST_HELP ); ?>
-	<?php echo xoFormField( 'DB_USER',	$vars['DB_USER'],		DB_USER_LABEL, DB_USER_HELP ); ?>
-	<?php echo xoFormField( 'DB_PASS',	$vars['DB_PASS'],		DB_PASS_LABEL, DB_PASS_HELP, 'password' ); ?>
+	<?php echo xoFormField( 'DB_HOST',	$vars['DB_HOST'],		DB_HOST_LABEL, DB_HOST_HELP, 255 ); ?>
+	<?php echo xoFormField( 'DB_USER',	$vars['DB_USER'],		DB_USER_LABEL, DB_USER_HELP, 255 ); ?>
+	<?php echo xoFormField( 'DB_PASS',	$vars['DB_PASS'],		DB_PASS_LABEL, DB_PASS_HELP, 255, 'password' ); ?>
 
 	<label style="text-align:center" title="<?php echo DB_PCONNECT_HELP; ?>">
 		<?php echo DB_PCONNECT_LABEL; ?>
@@ -120,8 +121,9 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
 </fieldset>
 <fieldset>
 	<legend><?php echo LEGEND_DATABASE; ?></legend>
-	<?php echo xoFormField( 'DB_NAME',		$vars['DB_NAME'],		DB_NAME_LABEL,	 DB_NAME_HELP ); ?>
-	<?php echo xoFormField( 'DB_PREFIX',	$vars['DB_PREFIX'],		DB_PREFIX_LABEL, DB_PREFIX_HELP ); ?>
+	<?php echo xoFormField( 'DB_NAME',		$vars['DB_NAME'],		DB_NAME_LABEL,	 DB_NAME_HELP, 255 ); ?>
+	<?php echo xoFormField( 'DB_PREFIX',	$vars['DB_PREFIX'],	DB_PREFIX_LABEL, DB_PREFIX_HELP, 10 ); ?>
+	<?php echo xoFormField( 'DB_SALT',		$vars['DB_SALT'],		DB_SALT_LABEL, DB_SALT_HELP, 255 ); ?>
 </fieldset>
 <?php
 	$content = ob_get_contents();

@@ -52,6 +52,8 @@ if (empty($getuser)) {
     $areyou = substr($getuser[0]->getVar("pass"), 0, 5);
     if ($code != '' && $areyou == $code) {
         $newpass = xoops_makepass();
+        $salt = icms_createSalt();
+        $pass = icms_encryptPass($newpass, $salt);
         $xoopsMailer =& getMailer();
         $xoopsMailer->useMail();
         $xoopsMailer->setTemplate("lostpass2.tpl");
@@ -69,7 +71,7 @@ if (empty($getuser)) {
         }
 
         // Next step: add the new password to the database
-        $sql = sprintf("UPDATE %s SET pass = '%s' WHERE uid = '%u'", $xoopsDB->prefix("users"), md5($newpass), intval($getuser[0]->getVar('uid')));
+        $sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s' WHERE uid = '%u'", $xoopsDB->prefix("users"), $pass, $salt, intval($getuser[0]->getVar('uid')));
         if ( !$xoopsDB->queryF($sql) ) {
             include 'header.php';
             echo _US_MAILPWDNG;

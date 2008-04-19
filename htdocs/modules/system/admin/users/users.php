@@ -101,6 +101,7 @@ function displayUsers()
     $form_title = _AM_ADDUSER;
     $form_isedit = false;
     $language_value = $xoopsConfig['language'];
+    $salt_value = '';
     $groups = array(XOOPS_GROUP_USERS);
     include XOOPS_ROOT_PATH."/modules/system/admin/users/userform.php";
         xoops_cp_footer();
@@ -149,6 +150,7 @@ function modifyUser($user)
         $op_value = "updateUser";
         $form_title = _AM_UPDATEUSER.": ".$user->getVar("uname");
         $language_value = $user->getVar("language");
+	$salt_value = $user->getVar('salt');
         $form_isedit = true;
         $groups = array_values($user->getGroups());
         include XOOPS_ROOT_PATH."/modules/system/admin/users/userform.php";
@@ -174,7 +176,7 @@ function modifyUser($user)
 }
 
 // RMV-NOTIFY
-function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $groups = array())
+function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $salt, $groups = array())
 {
     global $xoopsConfig, $xoopsDB, $xoopsModule;
     $member_handler =& xoops_gethandler('member');
@@ -222,7 +224,10 @@ function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $us
                 xoops_cp_footer();
                 exit();
             }
-            $edituser->setVar("pass", md5($pass));
+	    $salt = icms_createSalt();
+	    $edituser->setVar("salt", $salt);
+	    $pass = icms_encryptPass($pass, $salt);
+            $edituser->setVar("pass", $pass);
         }
         if (!$member_handler->insertUser($edituser)) {
             xoops_cp_header();

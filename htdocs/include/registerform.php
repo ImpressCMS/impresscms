@@ -70,8 +70,8 @@ $reg_form = new XoopsThemeForm(_US_USERREG, "userinfo", "register.php", "post", 
 $uname_size = $xoopsConfigUser['maxuname'] < 25 ? $xoopsConfigUser['maxuname'] : 25;
 $reg_form->addElement(new XoopsFormText(_US_NICKNAME, "uname", $uname_size, $uname_size, $myts->htmlSpecialChars($uname)), true);
 $reg_form->addElement($email_tray);
-$reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, "pass", 10, 32, $myts->htmlSpecialChars($pass)), true);
-$reg_form->addElement(new XoopsFormPassword(_US_VERIFYPASS, "vpass", 10, 32, $myts->htmlSpecialChars($vpass)), true);
+$reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, "pass", 10, 72, $myts->htmlSpecialChars($pass)), true);
+$reg_form->addElement(new XoopsFormPassword(_US_VERIFYPASS, "vpass", 10, 72, $myts->htmlSpecialChars($vpass)), true);
 $reg_form->addElement(new XoopsFormText(_US_WEBSITE, "url", 25, 255, $myts->htmlSpecialChars($url)));
 $tzselected = ($timezone_offset != "") ? $timezone_offset : $xoopsConfig['default_TZ'];
 $reg_form->addElement(new XoopsFormSelectTimezone(_US_TIMEZONE, "timezone_offset", $tzselected));
@@ -90,6 +90,7 @@ if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'
 	$disc_tray->addElement($agree_chk, true);
 	$reg_form->addElement($disc_tray);
 }
+$reg_form->addElement(new XoopsFormHidden("salt", $myts->htmlSpecialChars($salt)));
 $reg_form->addElement(new XoopsFormHidden("actkey", $myts->htmlSpecialChars($actkey)));
 $reg_form->addElement(new XoopsFormHidden("op", "newuser"));
 $reg_form->addElement(new XoopsFormButton("", "submit", _US_SUBMIT, "submit"));

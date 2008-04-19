@@ -47,4 +47,12 @@ define('SDATA_DB_PASS', '');
 // The name of database on the host. The installer will attempt to create the database if not exist
 define('SDATA_DB_NAME', '');
 
+// Table Prefix
+// This prefix will be added to all new tables created to avoid name conflict in the database. If you are unsure, just use the default 'icms'
+define('SDATA_DB_PREFIX', '');
+
+// Password Salt Key $mainSalt
+// This salt will be appended to passwords in the icms_encryptPass() function.
+// Do NOT change this once your site is Live, doing so will invalidate everyones Password.
+define('SDATA_DB_SALT', '');
 ?>

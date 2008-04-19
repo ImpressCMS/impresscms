@@ -77,4 +77,35 @@ function icms_install_mkdir($target) {
 */
 function icms_install_chmod($target, $mode = 0777) {
 	return @ chmod($target, $mode);
-}?>
+}
+
+// ----- New Password System
+function icms_createSalt($slength=64)
+{   
+	$salt= '';   
+	$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
+	$microtime = function_exists('microtime') ? microtime() : time();   
+    srand((double)$microtime * 1000000);   
+    for ($i=0; $i<=$slength; $i++)   
+		$salt.= substr($base, rand() % strlen($base), 1);   
+    return $salt;   
+}
+
+function icms_encryptPass($adminpass, $adminsalt, $mainSalt)
+{
+	if (!function_exists('hash'))
+    {
+		include_once './class/sha256.inc.php';
+				
+		$pass = SHA256::hash($adminsalt.md5($adminpass).$mainSalt);
+    }
+	else
+	{
+		$pass = hash('sha256', $adminsalt.md5($adminpass).$mainSalt);
+	}
+	unset($mainSalt);
+	return $pass;
+}
+
+// ----- End New Password System
+?>

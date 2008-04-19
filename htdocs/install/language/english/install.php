@@ -86,11 +86,15 @@ define( "DB_PREFIX_HELP",  "This prefix will be added to all new tables created 
 define( "DB_PCONNECT_LABEL", "Use persistent connection" );	// L54
 define( "DB_PCONNECT_HELP",  "Default is 'NO'. Choose 'NO' if you are unsure"); // L69
 
+define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
+define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L97
+
 define( "LEGEND_ADMIN_ACCOUNT", "Administrator account" );
 define( "ADMIN_LOGIN_LABEL", "Admin login" ); // L37
 define( "ADMIN_EMAIL_LABEL", "Admin e-mail" ); // L38
 define( "ADMIN_PASS_LABEL", "Admin password" ); // L39
 define( "ADMIN_CONFIRMPASS_LABEL", "Confirm password" ); // L74
+define( "ADMIN_SALT_LABEL", "Password Salt Key" ); // L99
 
 // Buttons
 define( "BUTTON_PREVIOUS", "Previous" ); // L42

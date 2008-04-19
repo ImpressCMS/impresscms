@@ -27,6 +27,7 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 	$error =& $_SESSION['error'];
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+	$vars['adminsalt'] = $_POST['adminsalt'];
 	$vars['adminname'] = $_POST['adminname'];
 	$vars['adminmail'] = $_POST['adminmail'];
 	$vars['adminpass'] = $_POST['adminpass'];
@@ -35,7 +36,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
     if (!preg_match( "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $vars['adminmail'] ) ) {
     	$error = ERR_INVALID_EMAIL;
-    } elseif ( @empty( $vars['adminname'] ) || @empty( $vars['adminpass'] ) || @empty( $vars['adminmail'] ) ) {
+    } elseif ( @empty( $vars['adminname'] ) || @empty( $vars['adminpass'] ) || @empty( $vars['adminmail']) || empty( $vars['adminsalt']) ) {
     	$error = ERR_REQUIRED;
 	} elseif ( $vars['adminpass'] != $vars['adminpass2'] ) {
     	$error = ERR_PASSWORD_MATCH;
@@ -52,16 +53,25 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     ob_start();
 ?>
 <?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
+<?php
+function createSalt() {
+	include_once './include/functions.php';
+	return icms_createSalt(64);
+}
+$adminsalt = createSalt();
+?>
 <fieldset>
 	<legend><?php echo LEGEND_ADMIN_ACCOUNT; ?></legend>
 	<label for="adminname"><?php echo ADMIN_LOGIN_LABEL; ?></label>
-	<input type="text" name="adminname" id="adminname" value="<?php echo htmlspecialchars( $vars['adminname'], ENT_QUOTES ); ?>" />
+	<input type="text" name="adminname" id="adminname" maxlength="10" value="<?php echo htmlspecialchars( $vars['adminname'], ENT_QUOTES ); ?>" />
 	<label for="adminmail"><?php echo ADMIN_EMAIL_LABEL; ?></label>
-	<input type="text" name="adminmail" id="adminmail" value="<?php echo htmlspecialchars( $vars['adminmail'], ENT_QUOTES ); ?>" />
+	<input type="text" name="adminmail" id="adminmail" maxlength="255" value="<?php echo htmlspecialchars( $vars['adminmail'], ENT_QUOTES ); ?>" />
 	<label for="adminpass"><?php echo ADMIN_PASS_LABEL; ?></label>
-	<input type="password" name="adminpass" id="adminpass" value="" />
+	<input type="password" name="adminpass" id="adminpass" maxlength="255" value="" />
 	<label for="adminpass2"><?php echo ADMIN_CONFIRMPASS_LABEL; ?></label>
-	<input type="password" name="adminpass2" id="adminpass2" value="" />
+	<input type="password" name="adminpass2" id="adminpass2" maxlength="255" value="" />
+	<label for="adminsalt"><?php echo ADMIN_SALT_LABEL; ?></label>
+	<input type="text" name="adminsalt" id="adminsalt" maxlength="255" value="<?php echo $adminsalt; ?>" />
 </fieldset>
 <?php
 	$content = ob_get_contents();

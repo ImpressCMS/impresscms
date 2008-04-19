@@ -117,7 +117,10 @@ if ($op == 'saveuser') {
         $edituser->setVar('user_yim', $_POST['user_yim']);
         $edituser->setVar('user_msnm', $_POST['user_msnm']);
         if ($password != '') {
-            $edituser->setVar('pass', md5($password), true);
+        		$salt = icms_createSalt();
+        		$edituser->setVar('salt', $salt, true);
+        		$pass = icms_encryptPass($password, $salt);
+            $edituser->setVar('pass', $pass, true);
         }
         $attachsig = !empty($_POST['attachsig']) ? 1 : 0;
         $edituser->setVar('attachsig', $attachsig);
@@ -218,13 +221,14 @@ if ($op == 'editprofile') {
     $bio_tarea = new XoopsFormTextArea(_US_EXTRAINFO, 'bio', $xoopsUser->getVar('bio', 'E'));
     $cookie_radio_value = empty($_COOKIE[$xoopsConfig['usercookie']]) ? 0 : 1;
     $cookie_radio = new XoopsFormRadioYN(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
-    $pwd_text = new XoopsFormPassword('', 'password', 10, 32);
-    $pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 32);
+    $pwd_text = new XoopsFormPassword('', 'password', 10, 72);
+    $pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 72);
     $pwd_tray = new XoopsFormElementTray(_US_PASSWORD.'<br />'._US_TYPEPASSTWICE);
     $pwd_tray->addElement($pwd_text);
     $pwd_tray->addElement($pwd_text2);
     $mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', intval($xoopsUser->getVar('user_mailok')));
-    $uid_hidden = new XoopsFormHidden('uid', $xoopsUser->getVar('uid'));
+    $salt_hidden = new XoopsFormHidden('salt', $xoopsUser->getVar('salt'));
+    $uid_hidden = new XoopsFormHidden('uid', intval($xoopsUser->getVar('uid')));
     $op_hidden = new XoopsFormHidden('op', 'saveuser');
     $submit_button = new XoopsFormButton('', 'submit', _US_SAVECHANGES, 'submit');
 
@@ -249,6 +253,7 @@ if ($op == 'editprofile') {
     $form->addElement($pwd_tray);
     $form->addElement($cookie_radio);
     $form->addElement($mailok_radio);
+    $form->addElement($salt_hidden);
     $form->addElement($uid_hidden);
     $form->addElement($op_hidden);
     $form->addElement($token_hidden);

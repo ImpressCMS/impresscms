@@ -44,7 +44,7 @@ function make_groups(&$dbm){
     return $gruops;
 }
 
-function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $gruops){
+function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $adminsalt, $gruops){
 
     //$xoopsDB =& Database::getInstance();
     //$dbm = new db_manager;
@@ -168,11 +168,12 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     }
 
     // data for table 'users'
-    $temp = md5($adminpass);
+    $mainSalt = XOOPS_DB_SALT;
+    $temp = icms_encryptPass($adminpass, $adminsalt, $mainSalt);
     $regdate = time();
     //$dbadminname= addslashes($adminname);
 	// RMV-NOTIFY (updated for extra columns in user table)
-    $dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'impresstheme','0.0',".time().",'thread',0,1,0,'','','',0,'')");
+    $dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'impresstheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."','".addslashes($adminsalt)."')");
 
 
     // data for table 'block_module_link'
@@ -429,6 +430,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '0', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_sha256', '_MD_AM_USE_SHA256', '1', '_MD_AM_USE_SHA256DSC', 'yesno', 'int', $p)");
 	$i++;
 	$p=0;
 

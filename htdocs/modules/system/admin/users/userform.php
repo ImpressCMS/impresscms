@@ -107,8 +107,8 @@ if ( count($ranklist) > 0 ) {
 } else {
     $rank_select->addOption(0, _AM_NSRID);
 }
-$pwd_text = new XoopsFormPassword(_AM_PASSWORD, "password", 10, 32);
-$pwd_text2 = new XoopsFormPassword(_AM_RETYPEPD, "pass2", 10, 32);
+$pwd_text = new XoopsFormPassword(_AM_PASSWORD, "password", 10, 255);
+$pwd_text2 = new XoopsFormPassword(_AM_RETYPEPD, "pass2", 10, 255);
 $mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', intval($mailok_value));
 
 $language = new XoopsFormSelectLang(_US_SELECT_LANG,'language', $language_value);
@@ -127,7 +127,7 @@ else {
         $group_select[] = new XoopsFormHidden('groups[' . $key . ']', $group);
     }
 }
-
+$salt_text = new XoopsFormHidden('salt', $salt_value);
 $fct_hidden = new XoopsFormHidden("fct", "users");
 $op_hidden = new XoopsFormHidden("op", $op_value);
 $submit_button = new XoopsFormButton("", "submit", _SUBMIT, "submit");
@@ -159,9 +159,13 @@ $form->addElement($rank_select);
 if (!$form_isedit) {
     $form->addElement($pwd_text, true);
     $form->addElement($pwd_text2, true);
+    $salt_hidden = new XoopsFormHidden('salt', $salt_value);
+    $form->addElement($salt_hidden, true);
 } else {
     $form->addElement($pwd_text);
     $form->addElement($pwd_text2);
+    $salt_hidden = new XoopsFormHidden('salt', $salt_value);
+    $form->addElement($salt_hidden);
 }
 $form->addElement($mailok_radio);
 $form->addElement($language);

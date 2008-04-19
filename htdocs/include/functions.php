@@ -914,4 +914,61 @@ if (!function_exists('array_combine')) {
 	   return $out;
 	}
 }
+
+// ----- New Password System
+function icms_createSalt($slength=64)
+{   
+	$salt= '';   
+	$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
+	$microtime = function_exists('microtime') ? microtime() : time();   
+    srand((double)$microtime * 1000000);   
+    for ($i=0; $i<=$slength; $i++)   
+		$salt.= substr($base, rand() % strlen($base), 1);   
+    return $salt;   
+}
+
+function icms_getUserSaltFromUname($uname = '')
+{
+	$db =& Database::getInstance();
+
+	if ($uname !== '')
+	{
+	    $sql = $db->query("SELECT uname, salt FROM ".$db->prefix('users')." WHERE uname = '".htmlspecialchars($uname, ENT_QUOTES)."'");
+		list($uname, $salt) = $db->fetchRow($sql);
+	}
+	else
+	{
+		trigger_error('ERROR: No User Selected', E_USER_ERROR);
+	}
+	return $salt;
+}
+
+function icms_encryptPass($pass, $salt)
+{
+	$config_handler =& xoops_gethandler('config');
+	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+	$mainSalt = XOOPS_DB_SALT;
+
+	if ($xoopsConfigUser['use_sha256'] == 1 || $xoopsConfigUser['use_sha256'] !== 0)
+	{
+		if (!function_exists('hash'))
+		{
+			include_once XOOPS_ROOT_PATH.'/class/sha256.inc.php';
+			$pass = SHA256::hash($salt.md5($pass).$mainSalt);
+		}
+		else
+		{
+			$pass = hash('sha256', $salt.md5($pass).$mainSalt);
+		}
+	}
+	else
+	{
+		$pass = md5($pass);
+	}
+	unset($mainSalt);
+	return $pass;
+}
+
+// ----- End New Password System
+
 ?>

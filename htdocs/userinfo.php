@@ -109,7 +109,7 @@ $xoopsTpl->assign('lang_website', _US_WEBSITE);
 if ( $thisUser->getVar('url', 'E') == '') {
 	$xoopsTpl->assign('user_websiteurl', '');
 } else {
-	$xoopsTpl->assign('user_websiteurl', '<a href="'.$thisUser->getVar('url', 'E').'" target="_blank">'.$thisUser->getVar('url').'</a>');
+	$xoopsTpl->assign('user_websiteurl', '<a href="'.$thisUser->getVar('url', 'E').'" rel="external">'.$thisUser->getVar('url').'</a>');
 }
 $xoopsTpl->assign('lang_email', _US_EMAIL);
 $xoopsTpl->assign('lang_privmsg', _US_PM);

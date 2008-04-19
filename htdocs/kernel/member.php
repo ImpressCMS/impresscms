@@ -324,8 +324,10 @@ class XoopsMemberHandler{
      */
     function &loginUser($uname, $pwd)
     {
+	$salt = icms_getUserSaltFromUname($uname);
+	$pwd = icms_encryptPass($pwd, $salt);
         $criteria = new CriteriaCompo(new Criteria('uname', $uname));
-        $criteria->add(new Criteria('pass', md5($pwd)));
+        $criteria->add(new Criteria('pass', $pwd));
         $user = $this->_uHandler->getObjects($criteria, false);
         if (!$user || count($user) != 1) {
         	$user = false;

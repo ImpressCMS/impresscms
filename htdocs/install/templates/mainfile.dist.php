@@ -72,8 +72,8 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	define('XOOPS_DB_TYPE', 'mysql');
 
 	// Table Prefix
-	// This prefix will be added to all new tables created to avoid name conflict in the database. If you are unsure, just use the default 'xoops'.
-	define('XOOPS_DB_PREFIX', 'xoops');
+	// This prefix will be added to all new tables created to avoid name conflict in the database. If you are unsure, just use the default 'icms'.
+	define('XOOPS_DB_PREFIX', 'icms');
 
 	// Database Hostname
 	// Hostname of the database server. If you are unsure, 'localhost' works in most cases.
@@ -91,6 +91,11 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	// The name of database on the host. The installer will attempt to create the database if not exist
 	define('XOOPS_DB_NAME', '');
 
+	// Password Salt Key $mainSalt
+	// This salt will be appended to passwords in the icms_encryptPass() function.
+	// Do NOT change this once your site is Live, doing so will invalidate everyones Password.
+	define('XOOPS_DB_SALT', '');
+	
 	// Use persistent connection? (Yes=1 No=0)
 	// Default is 'Yes'. Choose 'Yes' if you are unsure.
 	define('XOOPS_DB_PCONNECT', 0);

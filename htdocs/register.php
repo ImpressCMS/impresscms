@@ -142,6 +142,7 @@ $user_viewemail = (isset($_POST['user_viewemail']) && intval($_POST['user_viewem
 $user_mailok = (isset($_POST['user_mailok']) && intval($_POST['user_mailok'])) ? 1 : 0;
 $agree_disc = (isset($_POST['agree_disc']) && intval($_POST['agree_disc'])) ? 1 : 0;
 $actkey = isset($_POST['actkey']) ? trim($myts->stripSlashesGPC($_POST['actkey'])) : '';
+$salt = isset($_POST['salt']) ? trim($myts->stripSlashesGPC($_POST['salt'])) : '';
 switch ( $op ) {
 case 'newuser':
 	include 'header.php';
@@ -174,6 +175,7 @@ case 'newuser':
 		<input type='hidden' name='vpass' value='".$myts->htmlSpecialChars($vpass)."' />
 		<input type='hidden' name='user_mailok' value='".$user_mailok."' />
 		<input type='hidden' name='actkey' value='".$myts->htmlSpecialChars($actkey)."' />
+		<input type='hidden' name='salt' value='".$myts->htmlSpecialChars($salt)."' />
 		<br /><br /><input type='hidden' name='op' value='finish' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='". _US_FINISH ."' /></form>";
 	} else {
 		echo "<span style='color:#ff0000;'>$stop</span>";
@@ -202,7 +204,10 @@ case 'finish':
 		include_once 'include/checkinvite.php';
 		$valid_actkey = check_invite_code($actkey);
 		$newuser->setVar('actkey', $valid_actkey ? $actkey : substr(md5(uniqid(mt_rand(), 1)), 0, 8), true);
-		$newuser->setVar('pass', md5($pass), true);
+		$salt = icms_createSalt();
+		$newuser->setVar('salt', $salt, true);
+		$pass = icms_encryptPass($pass, $salt);
+		$newuser->setVar('pass', $pass, true);
 		$newuser->setVar('timezone_offset', $timezone_offset, true);
 		$newuser->setVar('user_regdate', time(), true);
 		$newuser->setVar('uorder',$xoopsConfig['com_order'], true);
