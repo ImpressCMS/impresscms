@@ -13,12 +13,14 @@
 if(!function_exists("xoopseditor_get_rootpath")){
 	function xoopseditor_get_rootpath()
 	{
-		static $rootpath;
+/*		static $rootpath;
 		if(isset($rootpath)) return $rootpath;
 		$current_path = __FILE__;
 		if ( DIRECTORY_SEPARATOR != "/" ) $current_path = str_replace( strpos( $current_path, "\\\\", 2 ) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path);
 		$rootpath = dirname($current_path);
-		return $rootpath;
+		icms_debug('editor path' . $rootpath);
+		return $rootpath;*/
+		return XOOPS_EDITOR_PATH;
 	}
 }
 
