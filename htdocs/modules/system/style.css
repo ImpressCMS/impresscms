@@ -168,6 +168,7 @@ th, thead { background-color:#4e4e4e; color:#eeeeee; border:1px solid #AAAAAA; p
 .even { background-color:#FFFFFF; color:inherit; border: 1px solid #CCCCCC; padding:2px; }
 .odd { background-color: #f1f4fb; color:inherit; border: 1px solid #CCCCCC; padding:2px; }
 .foot, tfoot { background-color: #eeeeee; color:inherit; border: 1px solid #4e4e4e; padding: 2px; font-weight: bold; }
+.outer {}
 
 tr.head td { background-color:#FFFFDD; border:1px solid #F3AC03; color:inherit; font-weight:bold; padding:2px;}
 tr.even td { background-color:#FFFFFF; color:inherit; border: 1px solid #CCCCCC; padding:2px; }

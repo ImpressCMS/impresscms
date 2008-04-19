@@ -44,6 +44,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Fixed #1899685 : Parse error: banners.php on line 226 (kurak_bu/nekro)
 - Fixed #1932374 : Changing the 100% width of table in xoops.css to make it 100% only for table.outer (malanciault/the_rplima)
 - Fixed : Removing a notice in debug when update the system module. (real_therplima)
+- Fixed : Addition of ".outer {}" was missed. (stranger)
 
 =========================================
 2008-03-10 : ImpressCMS 1.0 "Janus" Final
