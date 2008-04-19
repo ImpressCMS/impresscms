@@ -1,9 +1,9 @@
 <?php
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	die("XOOPS root path not defined");
 }
 
-include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
+include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 
 /**
 * IcmsLibrariesHandler
