@@ -199,6 +199,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 
 	// Data for Config Category 1 (System Preferences)
 	$c=1; // sets config category id
+	$p=0; // sets auto increment for config position (the order in which the option is displayed in the form)
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'sitename', '_MD_AM_SITENAME', 'ImpressCMS', '_MD_AM_SITENAMEDSC', 'textbox', 'text', $p)");
 	$i++;
 	$p++;
@@ -322,11 +323,11 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'module_cache', '_MD_AM_MODCACHE', '', '_MD_AM_MODCACHEDSC', 'module_cache', 'array', $p)");
-	$i++;
-	$p=0;
 
 	// Data for Config Category 2 (User Preferences)
 	$c=2; // sets config category id
+	$i++;
+	$p=0; // reset position increment to 0 for new category id
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'allow_register', '_MD_AM_ALLOWREG', 1, '_MD_AM_ALLOWREGDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
@@ -433,11 +434,11 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_sha256', '_MD_AM_USE_SHA256', '1', '_MD_AM_USE_SHA256DSC', 'yesno', 'int', $p)");
-	$i++;
-	$p=0;
 
 	// Data for Config Category 3 (Meta & Footer Preferences)
 	$c=3; // sets config category id
+	$i++;
+	$p=0; // reset position increment to 0 for new category id
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'meta_keywords', '_MD_AM_METAKEY', 'community management system, CMS, content management, social networking, community, blog, support, modules, add-ons, themes', '_MD_AM_METAKEYDSC', 'textarea', 'text', $p)");
 	$i++;
 	$p++;
@@ -477,11 +478,11 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'footer', '_MD_AM_FOOTER', 'Powered by ImpressCMS &copy; 2007-" . date('Y', time()) . " <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>', '_MD_AM_FOOTERDSC', 'textarea', 'text', $p)");
-	$i++;
-	$p=0;
 
 	// Data for Config Category 4 (Badword Preferences)
 	$c=4; // sets config category id
+	$i++;
+	$p=0; // reset position increment to 0 for new category id
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'censor_enable', '_MD_AM_DOCENSOR', '0', '_MD_AM_DOCENSORDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
@@ -489,11 +490,11 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'censor_replace', '_MD_AM_CENSORRPLC', '#OOPS#', '_MD_AM_CENSORRPLCDSC', 'textbox', 'text', $p)");
-	$i++;
-	$p=0;
 
 	// Data for Config Category 5 (Search Preferences)
 	$c=5; // sets config category id
+	$i++;
+	$p=0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'enable_search', '_MD_AM_DOSEARCH', '1', '_MD_AM_DOSEARCHDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
@@ -507,11 +508,11 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'search_per_page', '_MD_AM_SEARCH_PER_PAGE', '20', '_MD_AM_SEARCH_PER_PAGEDSC', 'textbox', 'int', $p)");
-	$i++;
-	$p=0;
 
 	// Data for Config Category 6 (Mail Settings)
 	$c=6; // sets config category id
+	$i++;
+	$p=0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES ($i,0,$c,'from','_MD_AM_MAILFROM','','_MD_AM_MAILFROMDESC','textbox','text', $p)");
 	$i++;
 	$p++;
@@ -545,11 +546,11 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'sendmailpath','_MD_AM_SENDMAILPATH','/usr/sbin/sendmail','_MD_AM_SENDMAILPATHDESC','textbox','text', $p)");
-	$i++;
-	$p=0;
 
 	// Data for Config Category 7 (Authentication Settings)
 	$c=7; // sets config category id
+	$i++;
+	$p=0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES ($i,0,$c,'auth_method','_MD_AM_AUTHMETHOD','xoops','_MD_AM_AUTHMETHODDESC','select','text', $p)");
 	// Insert data for Config Options in selection field. (must be placed before $i++)
     	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_AUTH_CONFOPTION_XOOPS', 'xoops', $i)");
@@ -616,11 +617,11 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'ldap_use_TLS','_MD_AM_LDAP_USETLS','0','_MD_AM_LDAP_USETLS_DESC','yesno','int', $p)");
-	$i++;
-	$p=0;
 
 	// Data for Config Category 8 (Multi Language Settings)
 	$c=8; // sets config category id
+	$i++;
+	$p=0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES ($i, 0, $c,'ml_enable', '_MD_AM_ML_ENABLE', '0', '_MD_AM_ML_ENABLEDEC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
