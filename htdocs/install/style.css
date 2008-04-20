@@ -324,10 +324,9 @@ BUTTON
 }
 .page#dbsettings SELECT
 {
-	WIDTH: 7em;
-	HEIGHT:3.5em;
+	WIDTH: 20em;
+	HEIGHT: 1.5em;
 	FONT-SIZE:100%;
-	MARGIN-LEFT:40%;
 }
 .error
 {

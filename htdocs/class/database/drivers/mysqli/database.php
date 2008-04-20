@@ -49,10 +49,15 @@ class XoopsMySQLiDatabase extends XoopsDatabase
 	 */
 	function connect($selectdb = true)
 	{
+		static $db_charset_set;
+		
+		$this->allowWebChanges = ( $_SERVER['REQUEST_METHOD'] != 'GET' );
+		
 		if ( !extension_loaded( 'mysql' ) ) {
 			trigger_error( 'notrace:mysql extension not loaded', E_USER_ERROR );
 			return false;
 		}
+
 		if (XOOPS_DB_PCONNECT == 1) {
 			//$this->conn = @mysql_pconnect(XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS);
 			$this->conn = new mysqli( XOOPS_DB_HOST, XOOPS_DB_USER, XOOPS_DB_PASS );
@@ -72,6 +77,12 @@ class XoopsMySQLiDatabase extends XoopsDatabase
 				return false;
 			}
 		}
+		
+		if (!isset($db_charset_set) && defined('XOOPS_DB_CHARSET') && XOOPS_DB_CHARSET) {
+			$this->queryF( "SET NAMES '" . XOOPS_DB_CHARSET . "'" );
+		}
+		$db_charset_set = 1;
+		
 		return true;
 	}
 
@@ -206,9 +217,20 @@ class XoopsMySQLiDatabase extends XoopsDatabase
      */
     function quoteString($str)
     {
-         $str = "'".str_replace('\\"', '"', addslashes($str))."'";
-         return $str;
+        return $this->quote($str);
+        $str = "'".str_replace('\\"', '"', addslashes($str))."'";
+        return $str;
     }
+    
+	/**
+	 * Quotes a string for use in a query.
+	 * 
+	 */
+	function quote( $string )
+	{
+        return "'" . mysql_real_escape_string( $string, $this->conn ) . "'";
+	}
+
 
     /**
      * perform a query on the database
@@ -374,14 +396,19 @@ class XoopsMySQLiDatabaseProxy extends XoopsMySQLiDatabase
      */
 	function query($sql, $limit=0, $start=0)
 	{
-	    $sql = ltrim($sql);
-		if (strtolower(substr($sql, 0, 6)) == 'select') {
-		//if (preg_match("/^SELECT.*/i", $sql)) {
-			return $this->queryF($sql, $limit, $start);
+		// Hack by marcan to track query count
+		global $smartfactory_query_count_activated, $smartfactory_query_count;
+		if (isset($smartfactory_query_count_activated) && $smartfactory_query_count_activated) {
+			$smartfactory_query_count++;
 		}
-		// TODO: Hardcoded language
-		$this->logger->addQuery($sql, 'Database update not allowed during processing of a GET request', 0);
-		return false;
+		// End of Hack by marcan to track query count
+	    $sql = ltrim($sql);
+		if ( !$this->allowWebChanges && strtolower( substr($sql, 0, 6) ) != 'select' )  {
+			trigger_error( 'Database updates are not allowed during processing of a GET request', E_USER_WARNING );
+			return false;
+		}
+    	
+		return $this->queryF($sql, $limit, $start);
 	}
 }
 ?>

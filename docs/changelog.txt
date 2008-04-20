@@ -3,13 +3,13 @@ ImpressCMS ChangeLog
 =============================================
 Unreleased : ImpressCMS 1.1 "???" Alpha
 =============================================
+- Added : Icms Uses UTF-8 encoding as default encoding.  (stranger)
 - Added : icms_createSalt function to generate a unique random salt key. (vaughan)
 - Added : icms_getUserSaltFromUname function to get the users unique salt key for logging in. (vaughan)
 - Added : icms_encryptPass function to add the salts & encrypt password using sha256 (vaughan)
 - Added : Unique Salt key to users table. (vaughan)
 - Added : Unique Salt key to mainfile/sdata trust path for use with Password encryption. (vaughan)
 - Added : enable sha256 choice in admin preferences user settings. default = yes sha256, no = md5 (basic). (vaughan)
-- Changed : Password encryption method from md5 to more secure SHA256 + 2 unique salt keys. (vaughan)
 - Added : Prototype Library (Updated to the last version , and removed old prototype files from other places like install and scriptaculous library). (nekro)
 - Added : Projax Library to integrate better Scriptaculous in php. (nekro)
 - Added : The configuration to enable or disable the userinfo.php view by annonymous users. (nekro)
@@ -30,16 +30,20 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : Upgrade script from ImpressCMS 1.0 to ImpressCMS 1.1 which only adds the dbversion field to the modules table; after this upgrade has been performed, all database upgrades will be done automatically when updating the System module (malanciault/stranger) 
 - Added : Addition of assigning language's css & Javascripts files to the template. (stranger)
 - Added : Addition of assigning/integrating a local date function in to the core, configurable through administration menu. (stranger)
+- Added : enable a local date function in admin preferences settings. default = no. (stranger)
 
 - Improved : The pm form to use the selected editor. (the_rplima)
 - Improved : XoopsTree::getNicePathFromId has new parameter, allowing specification of the separator between links (skenow)
 - Improved : System admin page markup (skenow)
 - Improved : Revamping the modules list in System Admin > Modules (mcdonald/the_rplima/davidl2/mrtheme)
 - Improved : Added templates support for the blocks admin area and some icons to improve the userfriendly (real_therplima)
+- Improved : Added possibility to change current encoding while upgrading. (stranger)
+- Improved : Libraries default encoding is now UTF-8. (stranger)
 
 - Changed : Moved the Smarty library from /class to /libraries. (nekro)
 - Changed : Moved the PHPmailer library from /class to /libraries. (nekro)
 - Changed : Textarea is now widely. Better to create blocks and editing of templates. (sato-san)
+- Changed : Password encryption method from md5 to more secure SHA256 + 2 unique salt keys. (vaughan)
 
 - Fixed #1899685 : Parse error: banners.php on line 226 (kurak_bu/nekro)
 - Fixed #1932374 : Changing the 100% width of table in xoops.css to make it 100% only for table.outer (malanciault/the_rplima)

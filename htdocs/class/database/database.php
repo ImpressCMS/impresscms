@@ -68,6 +68,12 @@ class XoopsDatabase
 		 * @var object XoopsLogger
 		 */
 		var $logger;
+		
+    	/**
+    	 * If statements that modify the database are selected
+    	 * @var boolean
+    	 */
+    	var $allowWebChanges = false;
 
 		/**
 		 * constructor
