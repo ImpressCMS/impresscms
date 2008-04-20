@@ -83,7 +83,7 @@ define( "DB_PASS_LABEL", "Password" );	// L52
 define( "DB_PASS_HELP",  "Password of your database user account"); // L68
 define( "DB_NAME_LABEL", "Database name" );	// L29
 define( "DB_NAME_HELP",  "The name of database on the host. The installer will attempt to create a database if one does not exist"); // L64
-define( "DB_CHARSET_LABEL", "Database character set, we <b>STRONGLY</b> recommend you to use '<b>UTF-8</b>' as default." );
+define( "DB_CHARSET_LABEL", "Database character set, we STRONGLY recommend you to use UTF-8 as default." );
 define( "DB_CHARSET_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.");
 define( "DB_COLLATION_LABEL", "Database collation" );
 define( "DB_COLLATION_HELP",  "A collation is a set of rules for comparing characters in a character set.");

@@ -273,11 +273,11 @@ function setFormFieldCollation(id, val) {
 </script>
 <fieldset>
 	<legend><?php echo LEGEND_DATABASE; ?></legend>
-	<?php echo xoFormField( 'DB_NAME',		$vars['DB_NAME'],		DB_NAME_LABEL,	 DB_NAME_HELP, 255 ); ?>
-	<?php echo xoFormField( 'DB_PREFIX',	$vars['DB_PREFIX'],		DB_PREFIX_LABEL, DB_PREFIX_HELP, 10 ); ?>
+	<?php echo xoFormField( 'DB_NAME',		$vars['DB_NAME'],		DB_NAME_LABEL, 255, DB_NAME_HELP ); ?>
+	<?php echo xoFormField( 'DB_PREFIX',	$vars['DB_PREFIX'],		DB_PREFIX_LABEL, 10, DB_PREFIX_HELP ); ?>
 	<?php /*echo xoFormField( 'DB_CHARSET',	$vars['DB_CHARSET'],	DB_CHARSET_LABEL, DB_CHARSET_HELP ); */?>
 	<?php /*echo xoFormField( 'DB_COLLATION',	$vars['DB_COLLATION'],	DB_COLLATION_LABEL, DB_COLLATION_HELP ); */?>
-	<?php echo xoFormField( 'DB_SALT',		$vars['DB_SALT'],		DB_SALT_LABEL, DB_SALT_HELP, 255 ); ?>
+	<?php echo xoFormField( 'DB_SALT',		$vars['DB_SALT'],		DB_SALT_LABEL, 255, DB_SALT_HELP ); ?>
 	<?php echo xoFormFieldCharset( 'DB_CHARSET',	$vars['DB_CHARSET'],	DB_CHARSET_LABEL, DB_CHARSET_HELP, $link ); ?>
 <!-- <br />		<select size="1" name="DB_CHARSET">
 			<option value="utf8" selected="selected">utf8</option>
