@@ -36,12 +36,10 @@ $icmsAdminTpl = new XoopsTpl();
 
 $icmsAdminTpl->assign('xoops_url',XOOPS_URL);
 $icmsAdminTpl->assign('xoops_sitename',$xoopsConfig['sitename']);
-include_once(XOOPS_ROOT_PATH . '/class/icmslibrarieshandler.php');
-$icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
 
 function xoops_cp_header($ret = 0)
 {
-    global $xoopsConfig, $xoopsModule, $xoopsUser, $icmsAdminTpl, $im_multilanguageConfig, $icmsLibrariesHandler;
+    global $xoopsConfig, $xoopsModule, $xoopsUser, $icmsAdminTpl, $im_multilanguageConfig, $icmsPreloadHandler;
 
 	if (!headers_sent()) {
 		header('Content-Type:text/html; charset='._CHARSET);
@@ -63,7 +61,9 @@ function xoops_cp_header($ret = 0)
 	';
 	echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/xoops.css" />';
     echo '<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/modules/system/style.css" />';
-    $icmsLibrariesHandler->triggerEvent('adminHeader');
+	// ################# Preload Trigger adminHeader ##############
+	$icmsPreloadHandler->triggerEvent('adminHeader');
+
     echo "<script type=\"text/javascript\"><!--//--><![CDATA[//><!--
 startList = function() {
 	if (document.all&&document.getElementById) {
@@ -84,8 +84,10 @@ startList = function() {
 window.onload=startList;
 
 //--><!]]></script>";
-    $icmsLibrariesHandler->triggerEvent('adminBeforeFooter');
-	echo "</head>
+	// ################# Preload Trigger adminBeforeFooter ##############
+	$icmsPreloadHandler->triggerEvent('adminBeforeFooter');
+    
+    echo "</head>
         <body>" ;
 	/**
 	 * Loading admin dropdown menus

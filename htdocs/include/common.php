@@ -38,22 +38,23 @@ set_magic_quotes_runtime(0);
 define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
 define('ICMS_URL', XOOPS_URL);
 define('ICMS_TRUST_PATH', XOOPS_TRUST_PATH);
+define('ICMS_PRELOAD_PATH', XOOPS_ROOT_PATH . '/preload');
 
-// ################# Creation of the IcmsLibrariesHandler ##############
+// ################# Creation of the IcmsPreloadHandler ##############
+include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
+global $icmsPreloadHandler;
+$icmsPreloadHandler = IcmsPreloadHandler::getInstance();
+
+// ################# Creation of the ImpressCMS Libraries ##############
 /**
  * @todo The definition of the library path needs to be in mainfile
- * But for the purpose of proof of concept, let's defined it here
  */
 // ImpressCMS Third Party Libraries folder
 define( 'ICMS_LIBRARIES_PATH', XOOPS_ROOT_PATH . '/libraries' );
 define( 'ICMS_LIBRARIES_URL', XOOPS_URL . '/libraries' );
 
-include_once(XOOPS_ROOT_PATH . '/class/icmslibrarieshandler.php');
-$icmsLibrariesHandler = IcmsLibrariesHandler::getInstance();
-// ################# Creation of the IcmsLibrariesHandler ##############
-
-// triggering event "startingCoreBoot" of third party integration
-$icmsLibrariesHandler->triggerEvent('startCoreBoot');
+// ################# Preload Trigger startCoreBoot ##############
+$icmsPreloadHandler->triggerEvent('startCoreBoot');
 
 // ################# Creation of the ImpressCMS Kernel object ##############
 include_once(ICMS_ROOT_PATH . '/kernel/icmskernel.php');
@@ -424,8 +425,8 @@ if (file_exists('./xoops_version.php')) {
 } elseif($xoopsUser) {
 	$xoopsUserIsAdmin = $xoopsUser->isAdmin(1);
 }
-// triggering event "finishCoreBoot" of third party integration
-$icmsLibrariesHandler->triggerEvent('finishCoreBoot');
+// ################# Preload Trigger finishCoreBoot ##############
+$icmsPreloadHandler->triggerEvent('finishCoreBoot');
 
 $xoopsLogger->stopTime( 'XOOPS Boot' );
 $xoopsLogger->startTime( 'Module init' );

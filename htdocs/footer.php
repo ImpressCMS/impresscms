@@ -30,8 +30,9 @@ if (!defined("XOOPS_ROOT_PATH")) {
 if ( !defined("XOOPS_FOOTER_INCLUDED") ) {
 	define("XOOPS_FOOTER_INCLUDED",1);
 
-	// triggering event "beforeFooter" of third party integration
-	$icmsLibrariesHandler->triggerEvent('beforeFooter');
+	// ################# Preload Trigger beforeFooter ##############
+	$icmsPreloadHandler->triggerEvent('beforeFooter');
+	
 	$xoopsLogger->stopTime( 'Module display' );
 	if ($xoopsOption['theme_use_smarty'] == 0) {
 		// the old way
