@@ -89,10 +89,13 @@ install/language/english/install.php
 +  define( "ADMIN_SALT_LABEL", "Password Salt Key" ); // L99
 +  define( "DATABASE_CONNECTION", "Database connection" );
 +  define( "DATABASE_CONNECTION_TITLE", "Database connection" );
-+  define( "DB_CHARSET_LABEL", "Database character set, we <b>STRONGLY</b> recommend you to use '<b>UTF-8</b>' as default." );
++  define( "DB_CHARSET_LABEL", "Database character set, we STRONGLY recommend you to use UTF-8 as default." );
 +  define( "DB_CHARSET_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.");
 +  define( "DB_COLLATION_LABEL", "Database collation" );
 +  define( "DB_COLLATION_HELP",  "A collation is a set of rules for comparing characters in a character set.");
++  define( "ERR_INVALID_DBCHARSET", "The charset '%s' is not supported." );
++  define( "ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported." );
++  define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database." );
 
 language/english/moduleabout.php
 --------------------------

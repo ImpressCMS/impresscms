@@ -154,7 +154,7 @@ define( "ERR_WRITE_SDATA", "Could not write into sdata.php. Please check the fil
 define( "ERR_READ_SDATA", "Could not open sdata.php for reading" );
 define( "ERR_INVALID_DBCHARSET", "The charset '%s' is not supported." );
 define( "ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported." );
-define( "ERR_CHARSET_NOT_SET", "Default character set is not set for XOOPS database." );
+define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database." );
 
 
 //

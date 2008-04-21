@@ -13,6 +13,7 @@
  * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
  * @author		Skalpa Keo <skalpa@xoops.org>
  * @author		Taiwen Jiang <phppp@users.sourceforge.net>
+ * @author		Sina Asghari <stranger@impresscms.ir>
  * @version		$Id$
  */
 
@@ -114,7 +115,6 @@ function xoFormFieldCollation( $name, $value, $label, $help = '', $link, $charse
 	$name = htmlspecialchars( $name, ENT_QUOTES );
 	$value = htmlspecialchars( $value, ENT_QUOTES );
 	
-	//$field = "<div id='$name'>\n";
 	$field = "<label for='$name'>$label</label>\n";
 	if ( $help ) {
 		$field .= '<div class="xoform-help">' . $help . "</div>\n";
@@ -135,14 +135,12 @@ function xoFormFieldCollation( $name, $value, $label, $help = '', $link, $charse
     }
 	$field .= $options;
 	$field .= "</select>";
-	//$field .= "</div>";
 	
 	return $field;
 }
 
 function xoFormBlockCollation( $name, $value, $label, $help = '', $link, $charset )
 {
-	//$block = '<div id="' . $name . '_div" style="display: ' . ($charset ? 'block' : 'none') . ';">';
 	$block = '<div id="' . $name . '_div">';
 	$block .= xoFormFieldCollation( $name, $value, $label, $help, $link, $charset );
 	$block .= '</div>';
@@ -151,7 +149,6 @@ function xoFormBlockCollation( $name, $value, $label, $help = '', $link, $charse
 }
 
 if ( $_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['charset']) && @$_GET['action'] == 'updateCollation' ) {
-    //echo '<script type="text/javascript"> $("DB_COLLATION_div").style.display = "' . ( empty($_GET['charset']) ? "none" : "block" ). '"</script>';
 	echo xoFormFieldCollation( 'DB_COLLATION',	$vars['DB_COLLATION'],	DB_COLLATION_LABEL, DB_COLLATION_HELP, $link, $_GET['charset'] );
 	exit();
 }
@@ -169,13 +166,14 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && !empty( $vars['DB_NAME'] ) ) {
 	$db_exist = true;
 	if ( empty($error) ) {
     	if ( ! @mysql_select_db( $vars['DB_NAME'], $link ) ) {
-    		// Database not here: try to create it
-    		$result = mysql_query( "CREATE DATABASE `" . $vars['DB_NAME'] . '`' );
-    		if ( !$result ) {
-    			$error = ERR_NO_DATABASE;
-            	$db_exist = false;
-    		}
+		// Database not here: try to create it
+		$result = mysql_query( "CREATE DATABASE `" . $vars['DB_NAME'] . '`' );
+		if ( !$result ) {
+			$error = ERR_NO_DATABASE;
+		} else {
+			$error = sprintf( DATABASE_CREATED, $vars['DB_NAME'] );
 		}
+	}
 		if ($db_exist && $vars['DB_CHARSET']) {
 		    $sql = "ALTER DATABASE `" . $vars['DB_NAME'] . "` DEFAULT CHARACTER SET " . mysql_real_escape_string($vars['DB_CHARSET']) .
 		            ( $vars['DB_COLLATION'] ? " COLLATE " . mysql_real_escape_string($vars['DB_COLLATION']) : "");
@@ -194,7 +192,7 @@ if ( @empty( $vars['DB_NAME'] ) ) {
 	// Fill with default values
 	$vars = array_merge( $vars, array(
 		'DB_NAME'		=> '',
-		'DB_CHARSET'	=> '',
+		'DB_CHARSET'	=> 'utf8',
 		'DB_COLLATION'	=> '',
 		'DB_PREFIX'		=> 'i' . substr( md5( time() ), 0, 8 ),
 		'DB_SALT'	=> icms_createSalt(),
@@ -275,13 +273,8 @@ function setFormFieldCollation(id, val) {
 	<legend><?php echo LEGEND_DATABASE; ?></legend>
 	<?php echo xoFormField( 'DB_NAME',		$vars['DB_NAME'],		DB_NAME_LABEL, 255, DB_NAME_HELP ); ?>
 	<?php echo xoFormField( 'DB_PREFIX',	$vars['DB_PREFIX'],		DB_PREFIX_LABEL, 10, DB_PREFIX_HELP ); ?>
-	<?php /*echo xoFormField( 'DB_CHARSET',	$vars['DB_CHARSET'],	DB_CHARSET_LABEL, DB_CHARSET_HELP ); */?>
-	<?php /*echo xoFormField( 'DB_COLLATION',	$vars['DB_COLLATION'],	DB_COLLATION_LABEL, DB_COLLATION_HELP ); */?>
 	<?php echo xoFormField( 'DB_SALT',		$vars['DB_SALT'],		DB_SALT_LABEL, 255, DB_SALT_HELP ); ?>
 	<?php echo xoFormFieldCharset( 'DB_CHARSET',	$vars['DB_CHARSET'],	DB_CHARSET_LABEL, DB_CHARSET_HELP, $link ); ?>
-<!-- <br />		<select size="1" name="DB_CHARSET">
-			<option value="utf8" selected="selected">utf8</option>
-		</select> -->
 	<?php echo xoFormBlockCollation( 'DB_COLLATION',	$vars['DB_COLLATION'],	DB_COLLATION_LABEL, DB_COLLATION_HELP, $link, $vars['DB_CHARSET'] ); ?>
 	</fieldset>
 <?php
