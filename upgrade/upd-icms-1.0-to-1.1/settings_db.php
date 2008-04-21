@@ -1,27 +1,19 @@
 <?php
-/*
- You may not change or alter any portion of this comment or credits
- of supporting developers from this source code or any supporting source code 
- which is considered copyrighted (c) material of the original comment or credit authors.
- 
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-*/
-
 /**
  * Database character set configuration page
  *
  * See the enclosed file license.txt for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
- * @copyright   The XOOPS project http://www.xoops.org/
- * @license     http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
- * @package     upgrader
- * @since       2.3.0
- * @author      Skalpa Keo <skalpa@xoops.org>
- * @author      Taiwen Jiang <phppp@users.sourceforge.net>
- * @version     $Id: page_pathsettings.php 1369 2008-03-04 02:53:55Z phppp $
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		installer
+ * @since		XOOPS
+ * @author		http://www.xoops.org/ The XOOPS Project
+ * @author		modified by Sina Asghari <stranger@impresscms.ir>
+ * @version		$Id: setting_db.php 1747 2008-04-20 19:42:15Z pesian_stranger $
  */
 
 if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
@@ -106,7 +98,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'db' ) {
 }
 
 if ( !isset( $vars['DB_CHARSET'] ) ) {
-    $vars['DB_CHARSET'] = '';
+	$vars = array_merge( $vars, array(
+		'DB_CHARSET'	=> 'utf8',
+	) );
 }
 
 
