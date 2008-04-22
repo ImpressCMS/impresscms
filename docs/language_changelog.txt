@@ -135,6 +135,15 @@ upgrade/language/english/upgrade.php
 + define( "DB_COLLATION_LABEL", "Database character set and collation" );
 + define( "DB_COLLATION_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.<br />We <b>STRONGLY</b> recommend you to use '<b>UTF-8</b>' as default.");
 
+install/language/english/install.php
+--------------------------
+
++-  define( "INSTALL_COPYRIGHT", "Copyright &copy; 2008%s <a href=\"http://www.impresscms.org\">The ImpressCMS Project</a>" );
+
+
+
+
+
 ImpressCMS 1.0 (changes from XOOPS 2.0.17)
 =========================================
 
