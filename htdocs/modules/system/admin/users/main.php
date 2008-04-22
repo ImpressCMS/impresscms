@@ -179,7 +179,6 @@ case "addUser":
                     xoops_cp_footer();
                     exit();
                 }
-		$salt = icms_createSalt();
                 $newuser->setVar("salt", $salt);
 		$password = icms_encryptPass($password, $salt);
                 $newuser->setVar("pass", $password);

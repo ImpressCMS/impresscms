@@ -127,7 +127,7 @@ else {
         $group_select[] = new XoopsFormHidden('groups[' . $key . ']', $group);
     }
 }
-$salt_text = new XoopsFormHidden('salt', $salt_value);
+$salt_hidden = new XoopsFormHidden('salt', icms_createSalt());
 $fct_hidden = new XoopsFormHidden("fct", "users");
 $op_hidden = new XoopsFormHidden("op", $op_value);
 $submit_button = new XoopsFormButton("", "submit", _SUBMIT, "submit");
@@ -159,12 +159,10 @@ $form->addElement($rank_select);
 if (!$form_isedit) {
     $form->addElement($pwd_text, true);
     $form->addElement($pwd_text2, true);
-    $salt_hidden = new XoopsFormHidden('salt', $salt_value);
     $form->addElement($salt_hidden, true);
 } else {
     $form->addElement($pwd_text);
     $form->addElement($pwd_text2);
-    $salt_hidden = new XoopsFormHidden('salt', $salt_value);
     $form->addElement($salt_hidden);
 }
 $form->addElement($mailok_radio);
