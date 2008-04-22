@@ -98,14 +98,26 @@ define("XOOPS_MATCH_END",1);
 define("XOOPS_MATCH_EQUAL",2);
 define("XOOPS_MATCH_CONTAIN",3);
 
-define("XOOPS_INCLUDE_PATH", XOOPS_ROOT_PATH."/include");
-define("XOOPS_INCLUDE_URL", XOOPS_ROOT_PATH."/include");
-define("XOOPS_UPLOAD_PATH", XOOPS_ROOT_PATH."/uploads");
-define("XOOPS_UPLOAD_URL", XOOPS_URL."/uploads");
-define("XOOPS_THEME_PATH", XOOPS_ROOT_PATH."/themes");
-define("XOOPS_THEME_URL", XOOPS_URL."/themes");
-define("XOOPS_COMPILE_PATH", XOOPS_ROOT_PATH."/templates_c");
-define("XOOPS_CACHE_PATH", XOOPS_ROOT_PATH."/cache");
+define("ICMS_INCLUDE_PATH", ICMS_ROOT_PATH."/include");
+define("ICMS_INCLUDE_URL", ICMS_ROOT_PATH."/include");
+define("ICMS_UPLOAD_PATH", ICMS_ROOT_PATH."/uploads");
+define("ICMS_UPLOAD_URL", ICMS_URL."/uploads");
+define("ICMS_THEME_PATH", ICMS_ROOT_PATH."/themes");
+define("ICMS_THEME_URL", ICMS_URL."/themes");
+define("ICMS_COMPILE_PATH", ICMS_ROOT_PATH."/templates_c");
+define("ICMS_CACHE_PATH", ICMS_ROOT_PATH."/cache");
+
+/**#@+
+ * Deprectaed: for backward compatibility
+ */
+define("XOOPS_INCLUDE_PATH", ICMS_INCLUDE_PATH);
+define("XOOPS_INCLUDE_URL", ICMS_INCLUDE_URL);
+define("XOOPS_UPLOAD_PATH", ICMS_UPLOAD_PATH);
+define("XOOPS_UPLOAD_URL", ICMS_UPLOAD_URL);
+define("XOOPS_THEME_PATH", ICMS_THEME_PATH);
+define("XOOPS_THEME_URL", ICMS_THEME_URL);
+define("XOOPS_COMPILE_PATH", ICMS_COMPILE_PATH);
+define("XOOPS_CACHE_PATH", CMS_CACHE_PATH);
 
 // TODO: Change the name of the constant.
 define("XOOPS_EDITOR_PATH", XOOPS_ROOT_PATH."/editors");
