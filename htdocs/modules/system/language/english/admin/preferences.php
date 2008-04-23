@@ -9,8 +9,9 @@ define("_MD_AM_SITENAME","Site name");
 define("_MD_AM_SLOGAN","Slogan for your site");
 define("_MD_AM_ADMINML","Admin mail address");
 define("_MD_AM_LANGUAGE","Default language");
-define("_MD_AM_STARTPAGE","Module for your start page");
+define("_MD_AM_STARTPAGE","Module or Page for your start page");
 define("_MD_AM_NONE","None");
+define("_MD_CONTENTMAN","Content Manager");
 define("_MD_AM_SERVERTZ","Server timezone");
 define("_MD_AM_DEFAULTTZ","Default timezone");
 define("_MD_AM_DTHEME","Default theme");
@@ -296,4 +297,16 @@ define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow anonymous users to see user 
 
 define("_MD_AM_USE_SHA256","Use SHA256 Encryption for Passwords (Recommended)");
 define("_MD_AM_USE_SHA256DSC","Select 'yes' for SHA256. Select 'no' for MD5 (not recommended).<br />Changing this will render all passwords invalid!");
+//Content Manager
+define("_MD_AM_CONTMANAGER","Content Manager");
+define("_MD_AM_DEFAULT_CONTPAGE","Default Page");
+define("_MD_AM_DEFAULT_CONTPAGEDSC","Select the default page to be displayed to the user in Content Manager. Leave blank to have Content Manager default to the most recently created page.");
+define("_MD_AM_CONT_SHOWNAV","Display navigation menu on user side?");
+define("_MD_AM_CONT_SHOWNAVDSC","Select yes to display the Content Manager navigation menu.");
+define("_MD_AM_CONT_SHOWSUBS","Display Related Pages?");
+define("_MD_AM_CONT_SHOWSUBSDSC","Select yes to display related pages links on Content Manager pages.");
+define("_MD_AM_CONT_SHOWPINFO","Show poster and published info?");
+define("_MD_AM_CONT_SHOWPINFODSC","Select yes to show in the page informations about the poster and publish of the page.");
+define("_MD_AM_CONT_ACTSEO","Use menu title instead the id in the url (improve seo)?");
+define("_MD_AM_CONT_ACTSEODSC","Select yes to the value of menu title instead of the id in the url of the page.");
 ?>

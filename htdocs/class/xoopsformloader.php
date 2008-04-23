@@ -34,5 +34,5 @@ include_once XOOPS_ROOT_PATH."/class/xoopsform/formdatetime.php";
 include_once XOOPS_ROOT_PATH."/class/xoopsform/formhiddentoken.php";
 //include_once XOOPS_ROOT_PATH."/class/xoopsform/grouppermform.php";
 include_once XOOPS_ROOT_PATH."/class/xoopsform/formcolorpicker.php";
-
+include_once XOOPS_ROOT_PATH."/class/xoopsform/formselecteditor.php";
 ?>

@@ -1,5 +1,5 @@
 <?php
-// $Id: blockform.php 755 2006-09-24 21:30:21Z phppp $
+// $Id: formselecteditor.php,v 1.1.2.4 2005/07/19 11:37:19 phppp Exp $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -24,25 +24,50 @@
 //  along with this program; if not, write to the Free Software              //
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
+// Author: Kazumi Ono (AKA onokazu)                                          //
+// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
+// Project: The XOOPS Project                                                //
+// ------------------------------------------------------------------------- //
+/**
+ * base class
+ */
 
-include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
-$form = new XoopsThemeForm($pblock['form_title'], 'pblockform', 'admin.php', "post", true);
+/**
+ * A select box with available editors
+ * 
+ * @package     kernel
+ * @subpackage  form
+ * 
+ * @author	    phppp (D.J.)
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
+class XoopsFormSelectEditor extends XoopsFormElementTray
+{	
+	/**
+	 * Constructor
+	 * 
+	 * @param	object	$form	the form calling the editor selection	
+	 * @param	string	$name	editor name
+	 * @param	string	$value	Pre-selected text value
+     * @param	bool	$noHtml  dohtml disabled
+	 */
+	function XoopsFormSelectEditor(&$form, $name="editor", $value=null, $noHtml=false)
+	{
+		$this->XoopsFormElementTray(_SELECT);
 
-$pname = new XoopsFormText(_AM_NAME, "pname", 30, 30, $pblock['pname']);
-$pname->setDescription(_AM_PBNAME_DESC);
-$form->addElement($pname);
-$form->addElement(new XoopsFormText(_AM_TITLE, 'title', 30, 90, $pblock['title']), false);
-$textarea = new XoopsFormTextArea(_AM_BPDESC, 'description', $pblock['description'], 5, 50);
-$form->addElement($textarea);
-
-if (isset($pblock['pbid'])) {
-    $form->addElement(new XoopsFormHidden('pbid', $pblock['pbid']));
+		$edtlist = XoopsLists::getEditorsList();
+		if (!empty($edtlist)) {
+			asort($edtlist);
+		}
+		$option_select = new XoopsFormSelect("", $name, $value);
+		$querys = preg_replace('/editor=(.*)&/','',$_SERVER['QUERY_STRING']);
+		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){
+				window.location = \'?editor=\'+this.options[this.selectedIndex].value+\'&'.$querys.'\';
+			}"';
+		$option_select->setExtra($extra);
+		$option_select->addOptionArray($edtlist);
+		
+		$this->addElement($option_select);
+	}
 }
-$form->addElement(new XoopsFormHidden('act', $pblock['act']));
-$form->addElement(new XoopsFormHidden('fct', 'blocksadmin'));
-$form->addElement(new XoopsFormHidden('op', 'adminpblocks'));
-$button_tray = new XoopsFormElementTray('', '&nbsp;');
-
-$button_tray->addElement(new XoopsFormButton('', 'submitblock', _SUBMIT, "submit"));
-$form->addElement($button_tray);
 ?>

@@ -109,8 +109,36 @@ if ( $andor != "OR" && $andor != "exact" && $andor != "AND" ) {
 $myts =& MyTextSanitizer::getInstance();
 if ($action != 'showallbyuser') {
     if ( $andor != "exact" ) {
-        $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length
-        $temp_queries = preg_split('/[\s,]+/', $query);
+        $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length  
+        
+        preg_match_all('/(?:").*?(?:")|(?:\').*?(?:\')/', $query,$compostas);
+        $res = $simpl = array();
+        foreach ($compostas[0] as $comp){
+        	$res[] = substr($comp,1,strlen($comp)-3);
+        }
+        $compostas = $res;
+        
+        $simples = preg_replace('/(?:").*?(?:")|(?:\').*?(?:\')/', '', $query);
+        $simples = preg_split('/[\s,]+/', $simples);
+        if (count($simples) > 0){
+        	foreach ($simples as $k=>$v){
+        		if ($v != "\\"){
+        			$simpl[] = $v;
+        		}
+        	}
+        	$simples = $simpl;
+        }        
+
+        if (count($compostas) > 0 && count($simples) > 0){
+          $temp_queries = array_merge($simples,$compostas);
+        }elseif (count($compostas) <= 0 && count($simples) > 0){
+        	$temp_queries = $simples;
+        }elseif (count($compostas) > 0 && count($simples) <= 0){
+        	$temp_queries = $compostas;
+        }else{
+        	$temp_queries = array();
+        }
+        
         foreach ($temp_queries as $q) {
             $q = trim($q);
             if (strlen($q) >= $xoopsConfigSearch['keyword_min']) {

@@ -84,8 +84,20 @@ $modversion['templates'][16]['file'] = 'system_privpolicy.html';
 $modversion['templates'][16]['description'] = 'Template for displaying site Privacy Policy';
 $modversion['templates'][17]['file'] = 'system_error.html';
 $modversion['templates'][17]['description'] = 'Template for handling HTTP errors';
-$modversion['templates'][18]['file'] = 'admin/blocksadmin/system_adm_blocksadmin.html';
-$modversion['templates'][18]['description'] = 'Template for the blocks admin';
+$modversion['templates'][18]['file'] = 'system_content.html';
+$modversion['templates'][18]['description'] = 'Template of content pages';
+$modversion['templates'][19]['file'] = 'blocks/system_block_contentmenu_structure.html';
+$modversion['templates'][19]['description'] = 'Template of content pages';
+$modversion['templates'][20]['file'] = 'admin/content/system_adm_contentmanager_index.html';
+$modversion['templates'][20]['description'] = 'Template of the admin of content manager';
+$modversion['templates'][21]['file'] = 'admin/blockspadmin/system_adm_blockspadmin.html';
+$modversion['templates'][21]['description'] = 'Template of the admin of block position admin';
+$modversion['templates'][22]['file'] = 'admin/pages/system_adm_pagemanager_index.html';
+$modversion['templates'][22]['description'] = 'Template of the admin of pages manager';
+$modversion['templates'][23]['file'] = 'admin/blocksadmin/system_adm_blocksadmin.html';
+$modversion['templates'][23]['description'] = 'Template for the blocks admin';
+$modversion['templates'][24]['file'] = 'admin/modulesadmin/system_adm_modulesadmin.html';
+$modversion['templates'][24]['description'] = 'Template for the modules admin';
 
 // Blocks
 $modversion['blocks'][1]['file'] = "system_blocks.php";
@@ -178,6 +190,35 @@ $modversion['blocks'][13]['description'] = "Displays image links to change the s
 $modversion['blocks'][13]['show_func'] = "b_system_multilanguage_show";
 $modversion['blocks'][13]['template'] = 'system_block_multilanguage.html';
 
+//Content Manager
+
+$modversion['blocks'][14]['file'] = "content_blocks.php";
+$modversion['blocks'][14]['name'] = _MI_SYSTEM_BNAME15;
+$modversion['blocks'][14]['description'] = "Show content page";
+$modversion['blocks'][14]['show_func'] = "b_content_show";
+$modversion['blocks'][14]['options'] = "1|1|1|1";
+$modversion['blocks'][14]['edit_func'] = "b_content_edit";
+$modversion['blocks'][14]['template'] = 'system_block_content.html';
+
+$modversion['blocks'][15]['file'] = "content_blocks.php";
+$modversion['blocks'][15]['name'] = _MI_SYSTEM_BNAME16;
+$modversion['blocks'][15]['description'] = "Menu of content pages and categories";
+$modversion['blocks'][15]['show_func'] = "b_content_menu_show";
+$modversion['blocks'][15]['options'] = "content_weight|ASC|1|#F2E2A0";
+$modversion['blocks'][15]['edit_func'] = "b_content_menu_edit";
+$modversion['blocks'][15]['template'] = 'system_block_contentmenu.html';
+
+$modversion['blocks'][16]['file'] = "content_blocks.php";
+$modversion['blocks'][16]['name'] = _MI_SYSTEM_BNAME17;
+$modversion['blocks'][16]['description'] = "Menu of content pages and categories";
+$modversion['blocks'][16]['show_func'] = "b_content_relmenu_show";
+$modversion['blocks'][16]['options'] = "content_weight|ASC|1";
+$modversion['blocks'][16]['edit_func'] = "b_content_relmenu_edit";
+$modversion['blocks'][16]['template'] = 'system_block_contentmenu.html';
+
 // Menu
 $modversion['hasMain'] = 0;
+$modversion['hasSearch'] = 1;
+$modversion['search']['file'] = "include/search.inc.php";
+$modversion['search']['func'] = "search_content";
 ?>

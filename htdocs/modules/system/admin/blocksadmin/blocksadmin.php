@@ -45,23 +45,17 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         global $xoopsUser, $xoopsConfig, $icmsAdminTpl, $oldzones;
         include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
         //OpenTable();
-        $selmod = isset($_GET['selmod']) ? intval($_GET['selmod']) : 0;
+        $selmod = isset($_GET['selmod']) ? $_GET['selmod'] : '0-1';
         $selvis = isset($_GET['selvis']) ? intval($_GET['selvis']) : 2;
         $selgrp = isset($_GET['selgrp']) ? intval($_GET['selgrp']) : XOOPS_GROUP_USERS;
+        $editor = (isset($_GET['editor']))?$_GET['editor']:null;
         
+        $form = "<select size=\"1\" name=\"selmod\" onchange=\"location='".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&amp;selvis=$selvis&amp;selgrp=$selgrp&amp;selmod='+this.options[this.selectedIndex].value\">";
         $module_handler =& xoops_gethandler('module');
-        $criteria = new CriteriaCompo(new Criteria('hasmain', 1));
-        $criteria->add(new Criteria('isactive', 1));
-        $module_list =& $module_handler->getList($criteria);
-        $toponlyblock = false;
-        $module_list[-1] = _AM_TOPPAGE;
-        $selmod = isset($_GET['selmod']) ? intval($_GET['selmod']) : -1;
-        ksort($module_list);
-        
-        $smod = new XoopsFormSelect(_AM_SVISIBLEIN, "selmod", $selmod);
-        $smod->addOptionArray($module_list);
-        $smod->setExtra('onchange="location=\''.XOOPS_URL.'/modules/system/admin.php?fct=blocksadmin&amp;selvis='.$selvis.'&amp;selgrp='.$selgrp.'&amp;selmod=\'+this.options[this.selectedIndex].value";');
-        $icmsAdminTpl->assign('selmod',$smod->render());
+        $page_handler =& xoops_gethandler('page');
+        $form .= $page_handler->getPageSelOptions($selmod);
+        $form .= '</select>&nbsp;<input type="hidden" name="fct" value="blocksadmin" />';
+        $icmsAdminTpl->assign('selmod',sprintf(_AM_SVISIBLEIN, $form));
         
         $member_handler =& xoops_gethandler('member');
         $group_list =& $member_handler->getGroupList();
@@ -113,7 +107,7 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         
         $icmsAdminTpl->assign('token',$GLOBALS['xoopsSecurity']->getTokenHTML());
         
-        $block = array('form_title' => _AM_ADDBLOCK, 'side' => 0, 'weight' => 0, 'visible' => 1, 'title' => '', 'content' => '', 'modules' => array(-1), 'is_custom' => true, 'ctype' => 'H', 'cachetime' => 0, 'op' => 'save', 'edit_form' => false);
+        $block = array('form_title' => _AM_ADDBLOCK, 'side' => 0, 'weight' => 0, 'visible' => 1, 'title' => '', 'content' => '', 'modules' => array('0-1'), 'is_custom' => true, 'ctype' => 'H', 'cachetime' => 0, 'op' => 'save', 'edit_form' => false);
         include XOOPS_ROOT_PATH.'/modules/system/admin/blocksadmin/blockform.php';
         $icmsAdminTpl->assign('addform',$form->render());
         
@@ -137,6 +131,8 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         $icmsAdminTpl->assign('lang_clone',_CLONE);
         $icmsAdminTpl->assign('lang_changests',_AM_CHANGESTS);
                 
+        $icmsAdminTpl->assign('addformsts',(!is_null($editor))?'block':'none');
+        
         return $icmsAdminTpl->fetch('db:admin/blocksadmin/system_adm_blocksadmin.html');
     }
 
@@ -183,7 +179,10 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         }
         $db =& Database::getInstance();
         foreach ($bmodule as $bmid) {
-            $sql = "INSERT INTO ".$db->prefix('block_module_link')." (block_id, module_id) VALUES ('".intval($newid)."', '".intval($bmid)."')";
+            $page = explode('-', $bmid);
+            $mid = $page[0];
+            $pageid = $page[1];
+            $sql = "INSERT INTO ".$db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($newid)."', '".intval($mid)."', '".intval($pageid)."')";
             $db->query($sql);
         }
 		$groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
@@ -200,11 +199,11 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
     {
         $myblock = new XoopsBlock($bid);
         $db =& Database::getInstance();
-        $sql = "SELECT module_id FROM ".$db->prefix('block_module_link')." WHERE block_id='".intval($bid)."'";
+        $sql = "SELECT module_id,page_id FROM ".$db->prefix('block_module_link')." WHERE block_id='".intval($bid)."'";
         $result = $db->query($sql);
         $modules = array();
         while ($row = $db->fetchArray($result)) {
-            $modules[] = intval($row['module_id']);
+            $modules[] = intval($row['module_id']).'-'.intval($row['page_id']);
         }
         $is_custom = ($myblock->getVar('block_type') == 'C' || $myblock->getVar('block_type') == 'E') ? true : false;
         $block = array('form_title' => _AM_EDITBLOCK, 'name' => $myblock->getVar('name'), 'side' => $myblock->getVar('side'), 'weight' => $myblock->getVar('weight'), 'visible' => $myblock->getVar('visible'), 'title' => $myblock->getVar('title', 'E'), 'content' => $myblock->getVar('content', 'E'), 'modules' => $modules, 'is_custom' => $is_custom, 'ctype' => $myblock->getVar('c_type'), 'cachetime' => $myblock->getVar('bcachetime'), 'op' => 'update', 'bid' => $myblock->getVar('bid'), 'edit_form' => $myblock->getOptions(), 'template' => $myblock->getVar('template'), 'options' => $myblock->getVar('options'));
@@ -268,8 +267,11 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
             $sql = sprintf("DELETE FROM %s WHERE block_id = '%u'", $db->prefix('block_module_link'), intval($bid));
             $db->query($sql);
             foreach ($bmodule as $bmid) {
-                $sql = sprintf("INSERT INTO %s (block_id, module_id) VALUES ('%u', '%d')", $db->prefix('block_module_link'), intval($bid), intval($bmid));
-                $db->query($sql);
+            	$page = explode('-', $bmid);
+            	$mid = $page[0];
+            	$pageid = $page[1];
+            	$sql = "INSERT INTO ".$db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($bid)."', '".intval($mid)."', '".intval($pageid)."')";
+            	$db->query($sql);
             }
             include_once XOOPS_ROOT_PATH.'/class/template.php';
             $xoopsTpl = new XoopsTpl();
@@ -355,11 +357,11 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         xoops_cp_header();
         $myblock = new XoopsBlock($bid);
         $db =& Database::getInstance();
-        $sql = "SELECT module_id FROM ".$db->prefix('block_module_link')." WHERE block_id='".intval($bid)."'";
+        $sql = "SELECT module_id,page_id FROM ".$db->prefix('block_module_link')." WHERE block_id='".intval($bid)."'";
         $result = $db->query($sql);
-        $modules = array();
+        $modules = $bcustomp = array();
         while ($row = $db->fetchArray($result)) {
-            $modules[] = intval($row['module_id']);
+            $modules[] = intval($row['module_id']).'-'.intval($row['page_id']);
         }
         $is_custom = ($myblock->getVar('block_type') == 'C' || $myblock->getVar('block_type') == 'E') ? true : false;
         $block = array('form_title' => _AM_CLONEBLOCK, 'name' => $myblock->getVar('name'), 'title' => 'clone_'.$myblock->getVar('title'), 'side' => $myblock->getVar('side'), 'weight' => $myblock->getVar('weight'), 'visible' => $myblock->getVar('visible'), 'content' => $myblock->getVar('content', 'N'), 'modules' => $modules, 'is_custom' => $is_custom, 'ctype' => $myblock->getVar('c_type'), 'cachetime' => $myblock->getVar('bcachetime'), 'op' => 'clone_ok', 'bid' => $myblock->getVar('bid'), 'edit_form' => $myblock->getOptions(), 'template' => $myblock->getVar('template'), 'options' => $myblock->getVar('options'));
@@ -407,7 +409,10 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
 
         $db =& Database::getInstance();
         foreach ($bmodule as $bmid) {
-            $sql = "INSERT INTO ".$db->prefix('block_module_link')." (block_id, module_id) VALUES ('".intval($newid)."', '".intval($bmid)."')";
+            $page = explode('-', $bmid);
+            $mid = $page[0];
+            $pageid = $page[1];
+            $sql = "INSERT INTO ".$db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($newid)."', '".intval($mid)."', '".intval($pageid)."')";
             $db->query($sql);
         }
         $groups =& $xoopsUser->getGroups();

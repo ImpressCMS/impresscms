@@ -458,8 +458,8 @@ class XoopsBlock extends XoopsObject
         return $ret;
     }
 
-    function getAllByGroupModule($groupid, $module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1)
-    {
+    function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1)
+    { 	
     	$isactive = intval($isactive);
         $db =& Database::getInstance();
         $ret = array();
@@ -477,26 +477,31 @@ class XoopsBlock extends XoopsObject
         while ( $myrow = $db->fetchArray($result) ) {
             $blockids[] = $myrow['gperm_itemid'];
         }
+          
         if (!empty($blockids)) {
             $sql = "SELECT b.* FROM ".$db->prefix('newblocks')." b, ".$db->prefix('block_module_link')." m WHERE m.block_id=b.bid";
             $sql .= " AND b.isactive='".$isactive."'";
             if (isset($visible)) {
                 $sql .= " AND b.visible='".intval($visible)."'";
             }
-            $module_id = intval($module_id);
-            if (!empty($module_id)) {
-                $sql .= " AND m.module_id IN ('0','".$module_id."'";
-                if ($toponlyblock) {
-                    $sql .= ",'-1'";
-                }
-                $sql .= ")";
-            } else {
-                if ($toponlyblock) {
-                    $sql .= " AND m.module_id IN ('0','-1')";
-                } else {
-                    $sql .= " AND m.module_id='0'";
-                }
+            
+            $arr = explode('-',$module_id);
+            $module_id = intval($arr[0]);
+            $page_id = intval($arr[1]);            
+            if ($module_id == 0){ //Entire Site
+            	if ($page_id == 0){ //All pages
+            		$sql .= " AND m.module_id='0' AND m.page_id=0";
+            	}elseif ($page_id == 1){ //Top Page
+            		$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='0' AND m.page_id=1))";
+            	}
+            }else{ //Specific Module (including system)
+            	if ($page_id == 0){ //All pages of this module
+            		$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=0))";
+            	}else{ //Specific Page of this module
+            		$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=$page_id))";
+            	}
             }
+            
             $sql .= " AND b.bid IN (".implode(',', $blockids).")";
             $sql .= " ORDER BY ".$orderby;
             $result = $db->query($sql);

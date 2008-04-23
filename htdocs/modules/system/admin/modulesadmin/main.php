@@ -34,6 +34,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 }
 include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
 include_once XOOPS_ROOT_PATH."/modules/system/admin/modulesadmin/modulesadmin.php";
+require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
 $op = "list";
 if ( isset($_POST) ) {
     foreach ( $_POST as $k => $v ) {
@@ -53,7 +54,9 @@ if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
 }
 
 if ( $op == "list" ) {
-    xoops_module_list();
+	xoops_cp_header();
+    echo xoops_module_list();
+    xoops_cp_footer();
     exit();
 }
 

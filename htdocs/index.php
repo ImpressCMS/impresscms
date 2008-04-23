@@ -36,7 +36,22 @@ include "mainfile.php";
 
 //check if start page is defined
 if ( isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoopsConfig['startpage'] != "--" ) {
-	header('Location: '.XOOPS_URL.'/modules/'.$xoopsConfig['startpage'].'/');
+	$arr = explode('-',$xoopsConfig['startpage']);
+	if (count($arr) > 1){
+		$page_handler =& xoops_gethandler('page');
+		$page = $page_handler->get($arr[1]);
+		if (is_object($page)){
+			$url = (substr($page->getVar('page_url'),0,7) == 'http://')?$page->getVar('page_url'):XOOPS_URL.'/'.$page->getVar('page_url');
+			header('Location: '.$url);
+		}else{
+			$xoopsConfig['startpage'] = '--';
+			$xoopsOption['show_cblock'] =1;
+			include "header.php";
+			include "footer.php";
+		}
+	}else{
+		header('Location: '.XOOPS_URL.'/modules/'.$xoopsConfig['startpage'].'/');
+	}
 	exit();
 } else {
 	$xoopsOption['show_cblock'] =1;

@@ -118,5 +118,19 @@ $adminmenu[14]['link'] = "admin.php?fct=version";
 $adminmenu[14]['icon'] = "admin/version/images/version.png";
 $adminmenu[14]['small'] = "admin/version/images/version_small.png";
 $adminmenu[14]['id'] = XOOPS_SYSTEM_VERSION;
-
+$adminmenu[15]['title'] = _MI_SYSTEM_ADMENU18;
+$adminmenu[15]['link'] = "admin.php?fct=content";
+$adminmenu[15]['icon'] = "admin/content/images/content.png";
+$adminmenu[15]['small'] = "admin/content/images/content_small.png";
+$adminmenu[15]['id'] = XOOPS_SYSTEM_CONTENT;
+$adminmenu[16]['title'] = _MI_SYSTEM_ADMENU19;
+$adminmenu[16]['link'] = "admin.php?fct=blockspadmin";
+$adminmenu[16]['icon'] = "admin/blockspadmin/images/blockspadmin.png";
+$adminmenu[16]['small'] = "admin/blockspadmin/images/blockspadmin_small.png";
+$adminmenu[16]['id'] = XOOPS_SYSTEM_BLOCKP;
+$adminmenu[17]['title'] = _MI_SYSTEM_ADMENU20;
+$adminmenu[17]['link'] = "admin.php?fct=pages";
+$adminmenu[17]['icon'] = "admin/pages/images/pages.png";
+$adminmenu[17]['small'] = "admin/pages/images/pages_small.png";
+$adminmenu[17]['id'] = XOOPS_SYSTEM_PAGES;
 ?>

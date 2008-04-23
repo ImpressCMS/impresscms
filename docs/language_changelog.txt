@@ -66,6 +66,20 @@ modules/system/language/english/admin/preferences.php
 +  define("_MD_AM_EDITOR_ENABLED_LIST_DESC","Select the selectable editors by the modules (If the module has a configuration to select the editor.)");
 +  define("_MD_AM_USE_SHA256","Use SHA256 Encryption for Passwords (Recommended)");
 +  define("_MD_AM_USE_SHA256DSC","Select 'yes' for SHA256. Select 'no' for MD5 (not recommended).<br />Changing this will render all passwords invalid!");
++- define("_MD_AM_STARTPAGE","Module or Page for your start page");
++  define("_MD_CONTENTMAN","Content Manager");
++  define("_MD_AM_CONTMANAGER","Content Manager");
++  define("_MD_AM_DEFAULT_CONTPAGE","Default Page");
++  define("_MD_AM_DEFAULT_CONTPAGEDSC","Select the default page to be displayed to the user in Content Manager. Leave blank to have Content Manager default to the most recently created page.");
++  define("_MD_AM_CONT_SHOWNAV","Display navigation menu on user side?");
++  define("_MD_AM_CONT_SHOWNAVDSC","Select yes to display the Content Manager navigation menu.");
++  define("_MD_AM_CONT_SHOWSUBS","Display Related Pages?");
++  define("_MD_AM_CONT_SHOWSUBSDSC","Select yes to display related pages links on Content Manager pages.");
++  define("_MD_AM_CONT_SHOWPINFO","Show poster and published info?");
++  define("_MD_AM_CONT_SHOWPINFODSC","Select yes to show in the page informations about the poster and publish of the page.");
++  define("_MD_AM_CONT_ACTSEO","Use menu title instead the id in the url (improve seo)?");
++  define("_MD_AM_CONT_ACTSEODSC","Select yes to the value of menu title instead of the id in the url of the page.");
+
 
 
 modules/system/languages/english/admin/groups.php
@@ -175,6 +189,8 @@ language/english/global.php
 +  define('_SYSTEM','System');
 +  define('_IMPRESSCMS_NEWS','News');
 +  define('_BRDCRMB_SEP','&nbsp;:&nbsp;')
++  define('_CT_NAV','Home');
++  define('_CT_RELATEDS','Related pages');
 
 language/english/pmsg.php
 --------------------------
@@ -278,11 +294,30 @@ modules/system/language/english/blocks.php
 
 +- define('_MB_SYSTEM_REMEMBERME', 'Remember me');
 +  define("_MB_SYSTEM_PRIVPOLICY", "Privacy Policy");
++  define("_MB_SYSTEM_SHOWSUBS", "Show sub-pages?");
++  define("_MB_SYSTEM_SHOWNAV", "Show navigation menu?");
++  define("_MB_SYSTEM_SHOWPINFO", "Show poster and published infos?");
++  define("_MB_SYSTEM_SORT", "Sort");
++  define("_MB_SYSTEM_ORDER", "Order");
++  define("_MB_SYSTEM_SELCOLOR", "Background color of the selected item: ");
++  define("_MB_SYSTEM_PAGE", "Page to show");
++  if (!defined('_CT_EDIT_CONTENT')){define('_CT_EDIT_CONTENT','Edit Content');}
++  if (!defined('_CT_DELETE_CONTENT')){define('_CT_DELETE_CONTENT','Delete Content');}
++  if (!defined('_CT_PUBLISHEDBY')){define('_CT_PUBLISHEDBY','Published by');}
++  if (!defined('_CT_ON')){define('_CT_ON','on');}
+
 
 modules/system/language/english/modinfo.php
 --------------------------
 
 +  define('_MI_SYSTEM_BNAME14', "Language Selection");
++  define('_MI_SYSTEM_BNAME15', "Content");
++  define('_MI_SYSTEM_BNAME16', "Content Menu");
++  define('_MI_SYSTEM_BNAME17', "Related Content");
++  define("_MI_SYSTEM_ADMENU18", "Content Manager");
++  define("_MI_SYSTEM_ADMENU19", "Block Positions");
++  define("_MI_SYSTEM_ADMENU20", "Links Manager");
+
 
 install/language/english/install.php
 --------------------------
@@ -772,6 +807,21 @@ install/language/english/welcome.php
 -  "
 +  ';
 
++ language/english/content.php
+-------------------------------------------------
+
+modules/system/language/english/admin.php
+-------------------------------------------------
++ define('_MD_AM_CONTENT', 'Content Manager');
++ define('_MD_AM_BKPOSAD','Block Positions');
++ define('_MD_AM_PAGES','Links Manager');
+
++ modules/system/language/english/admin/blockspadmin.php
+-------------------------------------------------
++ modules/system/language/english/admin/content.php
+-------------------------------------------------
++ modules/system/language/english/admin/pages.php
+-------------------------------------------------
 
 ImpressCMS 1.0 (changes from XOOPS 2.0.17)
 =========================================

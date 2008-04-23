@@ -26,7 +26,11 @@
 //  ------------------------------------------------------------------------ //
 
 include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
+
 $form = new XoopsThemeForm($block['form_title'], 'blockform', 'admin.php', "post", true);
+
+$form->addElement(new XoopsFormSelectEditor($form,"editor",$editor));
+
 if (isset($block['name'])) {
     $form->addElement(new XoopsFormLabel(_AM_NAME, $block['name']));
 }
@@ -49,19 +53,19 @@ $side_select->addOptionArray($arr);
 $form->addElement($side_select);
 $form->addElement(new XoopsFormText(_AM_WEIGHT, "bweight", 2, 5, $block['weight']));
 $form->addElement(new XoopsFormRadioYN(_AM_VISIBLE, 'bvisible', intval($block['visible'])));
-$mod_select = new XoopsFormSelect(_AM_VISIBLEIN, "bmodule", $block['modules'], 5, true);
-$module_handler =& xoops_gethandler('module');
-$criteria = new CriteriaCompo(new Criteria('hasmain', 1));
-$criteria->add(new Criteria('isactive', 1));
-$module_list =& $module_handler->getList($criteria);
-$module_list[-1] = _AM_TOPPAGE;
-$module_list[0] = _AM_ALLPAGES;
-ksort($module_list);
-$mod_select->addOptionArray($module_list);
-$form->addElement($mod_select);
+
+$page_handler =& xoops_gethandler('page');
+$visible_tray1 = new XoopsFormElementTray(_AM_VISIBLEIN,'');
+$visible_label = new XoopsFormLabel('','<select name="bmodule[]" id="bmodule[]" multiple="multiple" size="5">'.$page_handler->getPageSelOptions($block['modules']).'</select>');
+$visible_tray1->addElement($visible_label);
+$form->addElement($visible_tray1);
 $form->addElement(new XoopsFormText(_AM_TITLE, 'btitle', 50, 255, $block['title']), false);
 if ( $block['is_custom'] ) {
-    $textarea = new XoopsFormDhtmlTextArea(_AM_CONTENT, 'bcontent', $block['content'], 15, 70);
+	if (!is_null($editor)){
+		$textarea = new XoopsFormDhtmlTextArea(_AM_CONTENT, 'bcontent', $block['content'], 15, 70,"xoopsHiddenText",array('editor'=>$editor));
+	}else{
+		$textarea = new XoopsFormDhtmlTextArea(_AM_CONTENT, 'bcontent', $block['content'], 15, 70,"xoopsHiddenText",array('editor'=>$xoopsConfig['editor_default']));
+	}
     $textarea->setDescription('<span style="font-size:x-small;font-weight:bold;">'._AM_USEFULTAGS.'</span><br /><span style="font-size:x-small;font-weight:normal;">'.sprintf(_AM_BLOCKTAG1, '{X_SITEURL}', XOOPS_URL.'/').'</span>');
     $form->addElement($textarea, true);
     $ctype_select = new XoopsFormSelect(_AM_CTYPE, 'bctype', $block['ctype']);

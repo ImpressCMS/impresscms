@@ -1,0 +1,121 @@
+<script type="text/javascript">
+function IEHoverPseudo() {
+
+	var navItems = document.getElementById("primary-nav").getElementsByTagName("li");
+
+	for (var i=0; i<navItems.length; i++) {
+		if(navItems[i].className == "menuparent") {
+			navItems[i].onmouseover=function() { this.className += " over";}
+			navItems[i].onmouseout=function() { this.className = "menuparent"; }
+		}
+	}
+
+}
+if (window.onload){
+  var oldonload = window.onload;
+  window.onload=function(){
+    oldonload;
+    IEHoverPseudo();
+  }
+}else{
+  window.onload=function(){
+    IEHoverPseudo();
+  }
+}
+</script>
+<style type="text/css">
+ul#primary-nav,
+ul#primary-nav ul {
+	margin: 0;
+	padding: 0;
+	width: 100%; /* Width of Menu Items */
+	background: #fff; /* IE6 Bug */
+}
+
+ul#primary-nav li {
+	position: relative;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul#primary-nav li a {
+	display: block;
+	text-decoration: none;
+	padding: 3px;
+	width:auto;
+}
+
+/* Fix IE. Hide from IE Mac \*/
+* html ul#primary-nav li { float: left; height: 1%; }
+* html ul#primary-nav li a { height: 1%; }
+/* End */
+
+ul#primary-nav ul {
+	position: absolute;
+	display: none;
+	left: 99%;
+	top: 0;
+	z-index: 1;
+}
+
+ul#primary-nav li:hover ul ul,
+ul#primary-nav li:hover ul ul ul,
+ul#primary-nav li:hover ul ul ul ul,
+ul#primary-nav li:hover ul ul ul ul ul,
+ul#primary-nav li:hover ul ul ul ul ul ul,
+ul#primary-nav li:hover ul ul ul ul ul ul ul,
+ul#primary-nav li:hover ul ul ul ul ul ul ul ul,
+ul#primary-nav li:hover ul ul ul ul ul ul ul ul ul,
+ul#primary-nav li:hover ul ul ul ul ul ul ul ul ul ul,
+ul#primary-nav li:hover ul ul ul ul ul ul ul ul ul ul ul,
+ul#primary-nav li.over ul ul,
+ul#primary-nav li.over ul ul ul,
+ul#primary-nav li.over ul ul ul ul,
+ul#primary-nav li.over ul ul ul ul ul,
+ul#primary-nav li.over ul ul ul ul ul ul,
+ul#primary-nav li.over ul ul ul ul ul ul ul,
+ul#primary-nav li.over ul ul ul ul ul ul ul ul,
+ul#primary-nav li.over ul ul ul ul ul ul ul ul ul,
+ul#primary-nav li.over ul ul ul ul ul ul ul ul ul ul,
+ul#primary-nav li.over ul ul ul ul ul ul ul ul ul ul ul { display: none; }
+
+ul#primary-nav li:hover ul,
+ul#primary-nav li li:hover ul,
+ul#primary-nav li li li:hover ul,
+ul#primary-nav li li li li:hover ul,
+ul#primary-nav li li li li li:hover ul,
+ul#primary-nav li li li li li li:hover ul,
+ul#primary-nav li li li li li li li:hover ul,
+ul#primary-nav li li li li li li li li:hover ul,
+ul#primary-nav li li li li li li li li li:hover ul,
+ul#primary-nav li li li li li li li li li li:hover ul,
+ul#primary-nav li li li li li li li li li li li:hover ul,
+ul#primary-nav li.over ul,
+ul#primary-nav li li.over ul,
+ul#primary-nav li li li.over ul,
+ul#primary-nav li li li li.over ul,
+ul#primary-nav li li li li li.over ul,
+ul#primary-nav li li li li li li.over ul,
+ul#primary-nav li li li li li li li.over ul,
+ul#primary-nav li li li li li li li li.over ul,
+ul#primary-nav li li li li li li li li li.over ul,
+ul#primary-nav li li li li li li li li li li.over ul,
+ul#primary-nav li li li li li li li li li li li.over ul { display: block; } /* The magic */
+
+ul#primary-nav li.menuparent { background: transparent url(<{$xoops_url}>/images/arrow.gif) right center no-repeat; }
+
+ul#primary-nav li.menuparent:hover,
+ul#primary-nav li.over { background-color: <{$block.selcolor}>; }
+
+</style>
+<div id="mainmenu">
+  <ul id="primary-nav">
+    <{foreach from=$block.menu key=key item=menu}> 
+      <li<{if $block.showsubs && $menu.hassubs}> class="menuparent"<{/if}>>
+        <a class="menuMain" href="<{$xoops_url}>/content.php?page=<{$menu.menu}>"><{$menu.title}></a>
+        <{if $block.showsubs && $menu.hassubs}><{includeq file='db:blocks/system_block_contentmenu_structure.html' menus=$menu.subs}><{/if}> 
+      </li> 
+    <{/foreach}>
+  </ul>
+</div>

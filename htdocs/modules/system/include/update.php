@@ -77,6 +77,46 @@ function xoops_module_update_system(&$module) {
         }
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', $default_msg_content, '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textarea', 'text', 5);	   
     }
+    
+	// db migrate version = 2
+	// new content_manager by The_Rplima
+    $newDbVersion = 2;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	    	
+		// Create table icmspage
+		$table = new IcmsDatabasetable('icmspage');
+		if (!$table->exists()) {
+	    $table->setStructure("page_id mediumint(8) unsigned NOT NULL auto_increment,
+		  page_moduleid mediumint(8) unsigned NOT NULL default '1',
+		  page_title varchar(255) NOT NULL default '',
+		  page_url varchar(255) NOT NULL default '',
+		  page_status tinyint(1) unsigned NOT NULL default '1',
+		  PRIMARY KEY  (page_id)");
+		}
+	    if (!$icmsDatabaseUpdater->updateTable($table)) {
+	        /**
+	         * @todo trap the errors
+	         */
+	    }
+	    unset($table);
+
+ 		$table = new IcmsDatabasetable('block_module_link');
+ 		if (!$table->fieldExists('page_id')) {
+ 			$table->addNewField('page_id', "smallint(5) NOT NULL default '0'");
+ 		}
+	    if (!$icmsDatabaseUpdater->updateTable($table)) {
+	        /**
+	         * @todo trap the errors
+	         */
+	    }
+	    
+	    $icmsDatabaseUpdater->runQuery('UPDATE '.$table->name().' SET module_id=0, page_id=1 WHERE module_id=-1','Block Visibility Restructured Successfully', 'Failed in Restructure the Block Visibility');
+	    
+		unset($table);	    
+    }
+    
 	echo "</code>";
 
    $feedback = ob_get_clean();

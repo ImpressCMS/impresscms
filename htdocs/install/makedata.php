@@ -174,9 +174,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
         # Adding dynamic block area/position system - TheRpLima - 2007-10-21
     	#if ($myrow['side'] == 0) {
         if ($myrow['side'] == 1) {
-            $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0)");
+            $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0, 0)");
         } else {
-            $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", -1)");
+            $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0, 1)");
         }
     }
 
@@ -627,6 +627,21 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c,'ml_charset', '_MD_AM_ML_CHARSET', 'UTF-8,UTF-8', '_MD_AM_ML_CHARSETDSC', 'textbox', 'text', $p)");
+
+	// Data for Config Category 9 (Content Manager Settings)
+	$c=9; // sets config category id
+	$i++;
+	$p=0;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'default_page', '_MD_AM_DEFAULT_CONTPAGE', '0', '_MD_AM_DEFAULT_CONTPAGEDSC', 'select_pages', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'show_nav', '_MD_AM_CONT_SHOWNAV', '1', '_MD_AM_CONT_SHOWNAVDSC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'show_subs', '_MD_AM_CONT_SHOWSUBS', '1', '_MD_AM_CONT_SHOWSUBSDSC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'show_pinfo', '_MD_AM_CONT_SHOWPINFO', '1', '_MD_AM_CONT_SHOWPINFODSC', 'yesno', 'int', $p)");
 
     	return $gruops;
 }

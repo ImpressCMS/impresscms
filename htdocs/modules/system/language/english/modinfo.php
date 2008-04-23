@@ -24,6 +24,11 @@ define('_MI_SYSTEM_BNAME12', "Notification Options");
 define('_MI_SYSTEM_BNAME13', "Themes");
 define('_MI_SYSTEM_BNAME14', "Language Selection");
 
+//Content Manager
+define('_MI_SYSTEM_BNAME15', "Content");
+define('_MI_SYSTEM_BNAME16', "Content Menu");
+define('_MI_SYSTEM_BNAME17', "Related Content");
+
 // Names of admin menu items
 define("_MI_SYSTEM_ADMENU1","Banners");
 define("_MI_SYSTEM_ADMENU2","Blocks");
@@ -41,4 +46,7 @@ define("_MI_SYSTEM_ADMENU15", "Templates");
 define("_MI_SYSTEM_ADMENU16", "Comments");
 // Version Added 
 define("_MI_SYSTEM_ADMENU17", "Version");
+define("_MI_SYSTEM_ADMENU18", "Content Manager");
+define("_MI_SYSTEM_ADMENU19", "Block Positions");
+define("_MI_SYSTEM_ADMENU20", "Links Manager");
 ?>

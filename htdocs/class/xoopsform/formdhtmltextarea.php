@@ -101,9 +101,15 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		$groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 		$moduleid = (is_object($xoopsModule)) ? $xoopsModule->mid() : 1;
 		
+		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $xoopsConfig['editor_default']){
+			$editor_default = $options['editor'];
+		}else{
+			$editor_default = $xoopsConfig['editor_default'];
+		}
+		
 		$gperm_handler =& xoops_gethandler('groupperm');
-		if( file_exists( XOOPS_EDITOR_PATH."/".$xoopsConfig['editor_default']."/xoops_version.php" ) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups)){
-			include(XOOPS_EDITOR_PATH."/".$xoopsConfig['editor_default']."/xoops_version.php");
+		if( file_exists( XOOPS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups)){
+			include(XOOPS_EDITOR_PATH."/".$editor_default."/xoops_version.php");
 			$this->htmlEditor = array( $editorversion['class'], XOOPS_EDITOR_PATH."/".$editorversion['dirname']."/".$editorversion['file'] );
 		}
 		

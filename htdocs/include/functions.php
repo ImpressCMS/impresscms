@@ -984,4 +984,86 @@ function icms_encryptPass($pass, $salt)
 
 // ----- End New Password System
 
+/**
+ * Function to keeps the code clean while removing unwanted attributes and tags.
+ * This function was got from http://www.php.net/manual/en/function.strip-tags.php#81553
+ * 
+ * @var $sSource - string - text to remove the tags
+ * @var $aAllowedTags - array - tags that dont will be striped
+ * @var $aDisabledAttributes - array - attributes not allowed, will be removed from the text
+ * 
+ * return string
+ */
+function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>','<ul>','<li>'), $aDisabledAttributes = array('onabort', 'onblue', 'onchange', 'onclick', 'ondblclick', 'onerror', 'onfocus', 'onkeydown', 'onkeyup', 'onload', 'onmousedown', 'onmousemove', 'onmouseover', 'onmouseup', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload'))
+{
+	if (empty($aDisabledAttributes)) return strip_tags($sSource, implode('', $aAllowedTags));
+
+	return preg_replace('/<(.*?)>/ie', "'<' . preg_replace(array('/javascript:[^\"\']*/i', '/(" . implode('|', $aDisabledAttributes) . ")[ \\t\\n]*=[ \\t\\n]*[\"\'][^\"\']*[\"\']/i', '/\s+/'), array('', '', ' '), stripslashes('\\1')) . '>'", strip_tags($sSource, implode('', $aAllowedTags)));
+}
+
+/**
+ * Function to create a navigation menu in content pages.
+ * This function was based on the function that do the same in mastop publish module
+ * 
+ * @param integer $id
+ * @param string $separador
+ * @param string $style
+ * @return string
+ */
+function showNav($id = null, $separador = "/", $style="style='font-weight:bold'"){
+	$url = XOOPS_URL."/content.php";
+	if ($id == false) {
+		return false;
+	}else{
+		if ($id > 0) {
+			$content_handler =& xoops_gethandler('content');
+			$cont = $content_handler->get($id);
+			if ($cont->getVar('content_id') > 0) {
+				$seo = $content_handler->makeLink($cont);
+				$ret = "<a href='".$url."?page=".$seo."'>".$cont->getVar('content_title')."</a>";
+				if ($cont->getVar('content_supid') == 0) {
+					return "<a href='".XOOPS_URL."'>"._CT_NAV."</a> $separador ".$ret;
+				}elseif ($cont->getVar('content_supid') > 0){
+					$ret = showNav($cont->getVar('content_supid'), $separador)." $separador ". $ret;
+				}
+			}
+		}else{
+			return false;
+		}
+	}
+	return $ret;
+}
+
+function StopXSS($text){
+	if (!is_array($text)){
+		$text = preg_replace("/\(\)/si", "", $text);
+		$text = strip_tags($text);
+		$text = str_replace(array("'","\"",">","<","\\"), "", $text);
+	}else{
+		foreach ($text as $k=>$t){
+			$t = preg_replace("/\(\)/si", "", $t);
+			$t = strip_tags($t);
+			$t = str_replace(array("'","\"",">","<","\\"), "", $t);
+			$text[$k] = $t;
+		}
+	}
+	return $text;
+}
+
+function sanitizeContentCss($text){
+	if (preg_match_all('/(.*?)\{(.*?)\}/ie',$text,$css)){
+		$css = $css[0];
+		$perm = $not_perm = array();
+		foreach ($css as $k=>$v){
+			if (!preg_match('/^\#impress_content(.*?)/ie',$v)){
+				$css[$k] = '#impress_content '.icms_cleanTags(trim($v),array())."\r\n";
+			}else{
+				$css[$k] = icms_cleanTags(trim($v),array())."\r\n";
+			}
+		}
+		$text = implode($css);
+	}
+
+	return $text;
+}
 ?>

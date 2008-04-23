@@ -216,4 +216,8 @@ define('_IMPRESSCMS_BLOG','Blog');
 define('_IMPRESSCMS_DONATE','Donate!');
 define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
 define('_RECREATE_ADMINMENU_FILE', 'This is your first time to enter the administration section. Press the button below to proceed.');
+
+//Content Manager
+define('_CT_NAV','Home');
+define('_CT_RELATEDS','Related pages');
 ?>

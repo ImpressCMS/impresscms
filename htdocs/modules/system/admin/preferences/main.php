@@ -166,7 +166,14 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 $criteria->add(new Criteria('isactive', 1));
                 $moduleslist = $module_handler->getList($criteria, true);
                 $moduleslist['--'] = _MD_AM_NONE;
-                $ele->addOptionArray($moduleslist);
+                //Adding support to select custom links to be the start page
+                $page_handler =& xoops_gethandler('page');
+                $criteria = new CriteriaCompo(new Criteria('page_status', 1));
+                $criteria->add(new Criteria('page_url', '%*','NOT LIKE'));
+                $pagelist = $page_handler->getList($criteria);
+                $list = array_merge($moduleslist,$pagelist);
+                asort($list);
+                $ele->addOptionArray($list);
                 break;
             case 'group':
                 $ele = new XoopsFormSelectGroup($title, $config[$i]->getVar('conf_name'), false, $config[$i]->getConfValueForOutput(), 1, false);
@@ -214,6 +221,12 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             case 'hidden':
                 $myts =& MyTextSanitizer::getInstance();
                 $ele = new XoopsFormHidden( $config[$i]->getVar('conf_name'), $myts->htmlspecialchars( $config[$i]->getConfValueForOutput() ) );
+                break;
+            case 'select_pages':
+                $myts =& MyTextSanitizer::getInstance();
+                $content_handler =& xoops_gethandler('content');
+                $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
+                $ele->addOptionArray($content_handler->getContentList());
                 break;
             case 'textbox':
             default:
@@ -334,6 +347,12 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 $myts =& MyTextSanitizer::getInstance();
                 $ele = new XoopsFormHidden( $config[$i]->getVar('conf_name'), $myts->htmlspecialchars( $config[$i]->getConfValueForOutput() ) );
                 break;
+            case 'select_pages':
+                $myts =& MyTextSanitizer::getInstance();
+                $content_handler =& xoops_gethandler('content');
+                $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
+                $ele->addOptionArray($content_handler->getContentList());
+                break;
             case 'textbox':
             default:
                 $myts =& MyTextSanitizer::getInstance();
@@ -431,11 +450,19 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                         $groups =& $member_handler->getGroupList();
                         $moduleperm_handler =& xoops_gethandler('groupperm');
                         $module_handler =& xoops_gethandler('module');
-                        $module =& $module_handler->getByDirname($new_value);
-                        foreach ($groups as $groupid => $groupname) {
-                            if (!$moduleperm_handler->checkRight('module_read', $module->getVar('mid'), $groupid)) {
-                                $moduleperm_handler->addRight('module_read', $module->getVar('mid'), $groupid);
-                            }
+                        $arr = explode('-',$new_value);
+                        if (count($arr) > 1){
+                        	$mid = $arr[0];
+                        	$module =& $module_handler->get($mid);
+                        }else{
+                        	$module =& $module_handler->getByDirname($new_value);
+                        }
+                        if (is_object($module)){
+                        	foreach ($groups as $groupid => $groupname) {
+                        		if (!$moduleperm_handler->checkRight('module_read', $module->getVar('mid'), $groupid)) {
+                        			$moduleperm_handler->addRight('module_read', $module->getVar('mid'), $groupid);
+                        		}
+                        	}
                         }
                         $startmod_updated = true;
                     }

@@ -1,0 +1,72 @@
+<script type="text/javascript">
+function showDiv(type,id){
+	divs = document.getElementsByTagName('div');
+	for (i=0; i<divs.length;i++){
+		if (/opt_divs/.test(divs[i].className)){
+			divs[i].style.display = 'none';
+		}
+	}
+	if (!id)id = '';
+	document.getElementById(type+id).style.display = 'block';
+	document.anchors.item(type+id).scrollIntoView();
+}
+</script>
+<div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/content/images/content_big.png)"><{$lang_cont_manager}></div><br />
+<div style="margin-top:0; float: right; width:300px;" align="right">
+  <form action="admin.php?fct=content&op=list&content_supid=<{$content_supid}>" method="POST">
+    <input type="text" name="query" id="query" size="30" value="<{$query}>" />
+    <input type="submit" name="btn" value="<{$lang_search}>" />
+    <input type="submit" name="btn1" value="<{$lang_cancel}>" onclick="document.getElementById('query').value='';" />
+  </form>
+</div>
+<p style="margin-top:0;"><{$adminNav}></p>
+<br style="clear: right; line-height:1px;" />
+<form action="admin.php" method="post">
+  <table width="100%" cellspacing="1" cellpadding="0" class="outer">
+    <tr align="center">
+      <th width="5%"><{$lang_cont_id}></th>
+      <th align="left" width="25%"><{$lang_cont_title}></th>
+      <th align="left" width="20%"><{$lang_cont_menu}></th>
+      <th width="10%"><{$lang_cont_visibility}></th>
+      <th width="10%"><{$lang_cont_subs}></th>
+      <th width="10%"><{$lang_cont_weight}></th>
+      <th width="7%"><{$lang_cont_status}></th>
+      <th width="13%"><{$lang_cont_options}></th>
+    </tr>
+    <{if $pagecount > 0}>
+    <{foreach item=content key=key from=$contents}>
+      <tr class="<{cycle values="even,odd"}>" align="center">
+        <td><{$content.content_id}></td>
+        <td align="left"><{$content.content_title}></td>
+        <td align="left"><{$content.content_menu}></td>
+        <td><{$content.visibility}></td>
+        <td><{if $content.content_subs > 0}><a href="admin.php?fct=content&op=list&content_supid=<{$content.content_id}>"><{$content.content_subs}> <img src="images/viewsubs.gif" align="absmiddle" /></a><{else}>0<{/if}></td>
+        <td><input type="text" name="content_weight<{$content.content_id}>" value="<{$content.content_weight}>" size="3" maxlength="4" style="text-align:center;" /></td>
+        <td><a href="admin.php?fct=content&op=changestatus&content_id=<{$content.content_id}>"><img src="images/<{$content.content_status}>.png" title="<{$lang_cont_changests}>" alt="<{$lang_cont_changests}>" /></a></td>
+        <td>
+          <a href="<{$xoops_url}>/content.php?page=<{$content.viewlink}>" target="_blank"><img src="images/view_big.png" title="<{$lang_cont_prevcont}>" alt="<{$lang_cont_prevcont}>" /></a>
+      	  <a href="admin.php?fct=content&op=clonecontent&content_id=<{$content.content_id}>"><img src="images/clone_big.png" title="<{$lang_cont_clonecont}>" alt="<{$lang_cont_clonecont}>" /></a>
+      	  <a href="admin.php?fct=content&op=editcontent&content_id=<{$content.content_id}>"><img src="images/edit_big.png" title="<{$lang_cont_editcont}>" alt="<{$lang_cont_editcont}>" /></a>
+      	  <a href="admin.php?fct=content&op=delcontent&content_id=<{$content.content_id}>"><img src="images/delete_big.png" title="<{$lang_cont_delcont}>" alt="<{$lang_cont_delcont}>" /></a>
+        </td>
+      </tr>
+    <{/foreach}>
+    <{else}>
+      <tr><td class="head" colspan="8" align="center"><{$lang_notfound}></td></tr>
+    <{/if}>
+    <tr>
+      <td class="head" colspan="8" align="right">
+        <{$pag}>
+        <input type="hidden" name="content_supid" value="<{$content_supid}>" />
+        <input type="hidden" name="op" value="savelist" />
+        <input type="hidden" name="fct" value="content" />
+        <{$TokenHTML}>
+        <input type="submit" name="submit" value="<{$lang_submit}>" />
+        <input type="button" onclick="icms_showDiv('addcontform','','hiddendiv'); return false;" value="<{$lang_cont_addcont}>" />
+      </td>
+   </tr>
+  </table>
+</form>
+<br />
+<a name="addcontform_anchor">
+<div id="addcontform" class="hiddendiv" style="display:<{$addformsts}>;"><{$addcontform}></div>

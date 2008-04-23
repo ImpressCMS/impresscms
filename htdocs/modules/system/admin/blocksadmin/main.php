@@ -30,20 +30,20 @@
 // ------------------------------------------------------------------------- //
 
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
-	exit("Access Denied");
+    exit("Access Denied");
 }
 include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
 include XOOPS_ROOT_PATH."/modules/system/admin/blocksadmin/blocksadmin.php";
 
 $op = "list";
 if ( isset($_POST) ) {
-	foreach ( $_POST as $k => $v ) {
-		$$k = $v;
-	}
+    foreach ( $_POST as $k => $v ) {
+        $$k = $v;
+    }
 }
 
 if ( isset($_GET['op']) ) {
-	if ($_GET['op'] == "edit" || $_GET['op'] == "delete" || $_GET['op'] == "delete_ok" || $_GET['op'] == "clone" || $_GET['op'] == "adminpblocks" || $_GET['op'] == "changestatus") {
+	if ($_GET['op'] == "edit" || $_GET['op'] == "delete" || $_GET['op'] == "delete_ok" || $_GET['op'] == "clone" || $_GET['op'] == "changestatus") {
 		$op = $_GET['op'];
 		$bid = isset($_GET['bid']) ? intval($_GET['bid']) : 0;
 		$sts = isset($_GET['sts']) ? intval($_GET['sts']) : 0;
@@ -111,12 +111,6 @@ if (isset($previewblock)) {
 	exit();
 }
 
-# Adding dynamic block area/position system - TheRpLima - 2007-10-21
-if ($op == 'adminpblocks') {
-	include "blockspadmin.php";
-	exit;
-}
-
 if ( $op == "list" ) {
 	xoops_cp_header();
 	echo list_blocks();
@@ -153,39 +147,39 @@ if ( $op == "save" ) {
 }
 
 if ( $op == "update" ) {
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header("admin.php?fct=blocksadmin", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
-	}
-	$bcachetime = isset($bcachetime) ? intval($bcachetime) : 0;
-	$options = isset($options) ? $options : array();
-	$bcontent = isset($bcontent) ? $bcontent : '';
-	$bctype = isset($bctype) ? $bctype : '';
-	update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options);
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        redirect_header("admin.php?fct=blocksadmin", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        exit();
+    }
+    $bcachetime = isset($bcachetime) ? intval($bcachetime) : 0;
+    $options = isset($options) ? $options : array();
+    $bcontent = isset($bcontent) ? $bcontent : '';
+    $bctype = isset($bctype) ? $bctype : '';
+    update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options);
 }
 
 
 if ( $op == "delete_ok" ) {
-	if (!$GLOBALS['xoopsSecurity']->check()) {
-		redirect_header("admin.php?fct=blocksadmin", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		exit();
-	}
-	delete_block_ok($bid);
-	exit();
+    if (!$GLOBALS['xoopsSecurity']->check()) {
+        redirect_header("admin.php?fct=blocksadmin", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+        exit();
+    }
+    delete_block_ok($bid);
+    exit();
 }
 
 if ( $op == "delete" ) {
-	xoops_cp_header();
-	delete_block($bid);
-	xoops_cp_footer();
-	exit();
+    xoops_cp_header();
+    delete_block($bid);
+    xoops_cp_footer();
+    exit();
 }
 
 if ( $op == "edit" ) {
-	xoops_cp_header();
-	edit_block($bid);
-	xoops_cp_footer();
-	exit();
+    xoops_cp_header();
+    edit_block($bid);
+    xoops_cp_footer();
+    exit();
 }
 
 if ($op == 'clone') {
