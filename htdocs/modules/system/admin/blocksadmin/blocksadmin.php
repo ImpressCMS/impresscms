@@ -346,7 +346,6 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         }else{
         	$vis = 0;
         }
-        echo $vis;
         $myblock->setVar('visible', $vis);
         $myblock->store();
     }
