@@ -1,11 +1,11 @@
-<div>
+<div style="position: relative;height: 160px;">
 	<div style="float: left; width: 45% ">
 		<fieldset style="padding: 10px;">
 			<legend style="font-weight: bold;"><{$lang_login}></legend>
 			<form action="user.php" method="post">
 		    	<{$lang_username}><input type="text" name="uname" size="21" maxlength="25" value="<{$usercookie}>" />
 		    	<br />
-			    <br />
+			    <br>
 		    	<{$lang_password}><input type="password" name="pass" size="21" maxlength="32" /><br />
 			    <{if $rememberme }>    
 			    	<input type="checkbox" name="rememberme" value="On" /><{$lang_rememberme}><br />    
