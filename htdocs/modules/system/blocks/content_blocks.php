@@ -104,7 +104,7 @@ function b_content_show($options) {
     $member_handler =& xoops_gethandler('member');
     $autor =& $member_handler->getUser($impress_content->getVar('content_uid'));
     $block["show_pinfo"] = $options[3];
-    $block["content_tinfo"] = sprintf(_CT_PUBLISHEDBY.' <a href="'.XOOPS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%u reads)',$autor->getVar('uid'),$autor->getVar('uname'),date('d/m/Y',$impress_content->getVar('content_created')),$impress_content->getReads());
+    $block["content_tinfo"] = sprintf(_CT_PUBLISHEDBY.' <a href="'.XOOPS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%u reads)',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($impress_content->getVar('content_created'),"s",$date),$impress_content->getReads());
     $block["content_body"] = $myts->previewTarea($impress_content->getVar('content_body', "n"),1,1,1,1,0);
     $block["content_css"] = $impress_content->getVar('content_css');
     

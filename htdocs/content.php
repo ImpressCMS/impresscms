@@ -68,7 +68,7 @@ $xoopsTpl->assign("content_admlinks", $options);
 $member_handler =& xoops_gethandler('member');
 $autor =& $member_handler->getUser($impress_content->getVar('content_uid')); 
 $xoopsTpl->assign("show_pinfo",$im_contentConfig['show_pinfo']);
-$xoopsTpl->assign("content_tinfo", sprintf(_CT_PUBLISHEDBY.' <a href="'.XOOPS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%u reads)',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($impress_content->getVar('content_created'),$date,"m"),$impress_content->getReads()));
+$xoopsTpl->assign("content_tinfo", sprintf(_CT_PUBLISHEDBY.' <a href="'.XOOPS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%u reads)',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($impress_content->getVar('content_created'),"s",$date),$impress_content->getReads()));
 $xoopsTpl->assign("content_body", $myts->previewTarea($impress_content->getVar('content_body', "n"),1,1,1,1,0));
 $xoopsTpl->assign("content_css", sanitizeContentCss($impress_content->getVar('content_css')));
 
