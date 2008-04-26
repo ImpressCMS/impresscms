@@ -173,6 +173,19 @@ modules/system/languages/english/modinfo.php
 + define("_MI_SYSTEM_ADMENU19", "Block Positions");
 + define("_MI_SYSTEM_ADMENU20", "Links Manager");
 
+modules/system/languages/english/admin/blocksadmin.php
++ define('_AM_CHANGESTS', 'Change the block visibility');
+
++ modules/system/languages/english/admin/content_css_doc.html
+
++ modules/system/languages/english/admin/pages.php
+
++ modules/system/languages/english/admin/content.php
+
++ modules/system/languages/english/admin/blockspadmin.php
+
+
+
 
 
 ImpressCMS 1.0 (changes from XOOPS 2.0.17)
