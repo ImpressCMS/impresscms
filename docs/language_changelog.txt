@@ -149,7 +149,29 @@ upgrade/language/english/upgrade.php
 + define( "DB_COLLATION_LABEL", "Database character set and collation" );
 + define( "DB_COLLATION_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.<br />We <b>STRONGLY</b> recommend you to use '<b>UTF-8</b>' as default.");
 
+modules/system/languages/english/admin.php
++ define('_MD_AM_CONTENT', 'Content Manager');
++ define('_MD_AM_BKPOSAD','Block Positions');
++ define('_MD_AM_PAGES','Links Manager');
 
+modules/system/languages/english/blocks.php
++ define("_MB_SYSTEM_SHOWSUBS", "Show sub-pages?");
++ define("_MB_SYSTEM_SHOWNAV", "Show navigation menu?");
++ define("_MB_SYSTEM_SHOWPINFO", "Show poster and published infos?");
++ define("_MB_SYSTEM_SORT", "Sort");
++ define("_MB_SYSTEM_ORDER", "Order");
++ define("_MB_SYSTEM_SELCOLOR", "Background color of the selected item: ");
++ define("_MB_SYSTEM_PAGE", "Page to show");
++ if (!defined('_CT_EDIT_CONTENT')){define('_CT_EDIT_CONTENT','Content bearbeiten');}
++ if (!defined('_CT_DELETE_CONTENT')){define('_CT_DELETE_CONTENT','Content l&ouml;schen');}
++ if (!defined('_CT_PUBLISHEDBY')){define('_CT_PUBLISHEDBY','ver&ouml;ffentlicht von');}
++ if (!defined('_CT_ON')){define('_CT_ON','on');}
+
+modules/system/languages/english/modinfo.php
++ define("_MI_SYSTEM_ADMENU17", "Version");
++ define("_MI_SYSTEM_ADMENU18", "Content Manager");
++ define("_MI_SYSTEM_ADMENU19", "Block Positions");
++ define("_MI_SYSTEM_ADMENU20", "Links Manager");
 
 
 
