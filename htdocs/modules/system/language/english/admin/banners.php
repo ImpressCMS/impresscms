@@ -54,5 +54,4 @@ define("_AM_EXTINFO","Extra Info:");
 define("_AM_CHGCLI","Change Client");
 define("_AM_USEHTML","Use Html?");
 define("_AM_CODEHTML","Code Html:");
-
 ?>

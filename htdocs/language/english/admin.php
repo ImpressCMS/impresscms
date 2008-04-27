@@ -14,5 +14,4 @@ define('_AD_LOGINADMIN', 'Logging you in..');
 
 define('_AD_SYSOPTIONS','System Options');
 define('_AD_INSTALLEDMODULES','Installed Modules');
-
 ?>

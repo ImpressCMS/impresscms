@@ -35,5 +35,4 @@ define("_AM_SENTNUM", "%s - %s (total: %s users)");
 define("_AM_SENDNEXT", "Next");
 define("_AM_NOUSERMATCH", "No user matched");
 define("_AM_SENDCOMP", "Sending message completed.");
-
 ?>

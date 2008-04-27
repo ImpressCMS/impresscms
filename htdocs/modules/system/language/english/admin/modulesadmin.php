@@ -62,5 +62,4 @@ define('_MD_AM_MODULESADMIN_SUPPORT', 'Module Support Site');
 define('_MD_AM_MODULESADMIN_STATUS', 'Status');
 define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
 define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
-
 ?>

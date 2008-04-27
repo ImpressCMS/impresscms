@@ -154,5 +154,4 @@ define('_US_GROUPS', 'User\'s Groups');
 define('_US_YOURREGISTRATION', 'Your registration at %s');
 define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
 define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
-
 ?>
