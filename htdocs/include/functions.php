@@ -530,10 +530,19 @@ function &xoops_gethandler($name, $optional = false )
     if (!isset($handlers[$name])) {
         if ( file_exists( $hnd_file = ICMS_ROOT_PATH.'/kernel/'.$name.'.php' ) ) {
             require_once $hnd_file;
+        } else {
+	        if ( file_exists( $hnd_file = ICMS_ROOT_PATH.'/class/'.$name.'.php' ) ) {
+	            require_once $hnd_file;
+	        }
         }
         $class = 'Xoops'.ucfirst($name).'Handler';
         if (class_exists($class)) {
             $handlers[$name] =& new $class($GLOBALS['xoopsDB']);
+        } else {
+	        $class = 'Icms'.ucfirst($name).'Handler';
+	        if (class_exists($class)) {
+	            $handlers[$name] =& new $class($GLOBALS['xoopsDB']);     
+	        }   	
         }
     }
     if (!isset($handlers[$name]) && !$optional ) {
@@ -876,6 +885,102 @@ function icms_chmod($target, $mode = 0777) {
 	return @ chmod($target, $mode);
 }
 
+/**
+ * Get the XoopsModule object of a specified module
+ *
+ * @param string $moduleName dirname of the module
+ * @return object XoopsModule object of the specified module 
+ */
+function &icms_getModuleInfo($moduleName = false) {
+	static $icmsModules;
+	if (isset ($icmsModules[$moduleName])) {
+		$ret =& $icmsModules[$moduleName];
+		return $ret;
+	}
+	global $xoopsModule;
+	if (!$moduleName) {
+		if (isset ($xoopsModule) && is_object($xoopsModule)) {
+			$icmsModules[$xoopsModule->getVar('dirname')] = & $xoopsModule;
+			return $icmsModules[$xoopsModule->getVar('dirname')];
+		}
+	}
+	if (!isset ($icmsModules[$moduleName])) {
+		if (isset ($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $moduleName) {
+			$icmsModules[$moduleName] = & $xoopsModule;
+		} else {
+			$hModule = & xoops_gethandler('module');
+			if ($moduleName != 'icms') {
+				$icmsModules[$moduleName] = & $hModule->getByDirname($moduleName);
+
+			} else {
+				$icmsModules[$moduleName] = & $hModule->getByDirname('system');
+			}
+		}
+	}
+	return $icmsModules[$moduleName];
+}
+
+/**
+ * Get the config array of a specified module
+ *
+ * @param string $moduleName dirname of the module
+ * @return array of configs
+ */
+function &icms_getModuleConfig($moduleName = false) {
+	static $icmsConfigs;
+		if (isset ($icmsConfigs[$moduleName])) {
+		$ret = & $icmsConfigs[$moduleName];
+		return $ret;
+	}
+	global $xoopsModule, $xoopsModuleConfig;
+	if (!$moduleName) {
+		if (isset ($xoopsModule) && is_object($xoopsModule)) {
+			$icmsConfigs[$xoopsModule->getVar('dirname')] = & $xoopsModuleConfig;
+			return $icmsConfigs[$xoopsModule->getVar('dirname')];
+		}
+	}
+	// if we still did not found the xoopsModule, this is because there is none
+	if (!$moduleName) {
+		$ret = false;
+		return $ret;
+	}
+	if (isset ($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $moduleName) {
+		$icmsConfigs[$moduleName] = & $xoopsModuleConfig;
+	} else {
+		$module = & icms_getModuleInfo($moduleName);
+		if (!is_object($module)) {
+			$ret = false;
+			return $ret;
+		}
+		$hModConfig = & xoops_gethandler('config');
+		$icmsConfigs[$moduleName] = & $hModConfig->getConfigsByCat(0, $module->getVar('mid'));
+	}
+	return $icmsConfigs[$moduleName];
+}
+/**
+ * Get a specific module config value
+ *
+ * @param string $key
+ * @param string $moduleName
+ * @param mixed $default
+ * @return mixed
+ */
+function icms_getConfig($key, $moduleName = false, $default = 'default_is_undefined') {
+	if (!$moduleName) {
+		$moduleName = icms_getCurrentModuleName();
+	}
+	$configs = icms_getModuleConfig($moduleName);
+	if (isset ($configs[$key])) {
+		return $configs[$key];
+	} else {
+		if ($default === 'default_is_undefined') {
+			return null;
+		} else {
+			return $default;
+		}
+	}
+}
+
  /**
  * Get the dirname of the current module 
  *
@@ -914,6 +1019,142 @@ function icms_loadLanguageFile($module, $file) {
 	if (file_exists($filename)) {
 		include_once($filename);
 	}
+}
+/**
+ * @author pillepop2003 at yahoo dot de
+ *
+ * Use this snippet to extract any float out of a string. You can choose how a single dot is treated with the (bool) 'single_dot_as_decimal' directive.
+ * This function should be able to cover almost all floats that appear in an european environment.
+ */
+function icms_getfloat($str, $set=FALSE){
+	if(preg_match("/([0-9\.,-]+)/", $str, $match)) {
+		// Found number in $str, so set $str that number
+		$str = $match[0];
+		if(strstr($str, ',')){
+			// A comma exists, that makes it easy, cos we assume it separates the decimal part.
+			$str = str_replace('.', '', $str);    // Erase thousand seps
+			$str = str_replace(',', '.', $str);    // Convert , to . for floatval command
+			return floatval($str);
+		}else{
+			// No comma exists, so we have to decide, how a single dot shall be treated
+			if(preg_match("/^[0-9\-]*[\.]{1}[0-9-]+$/", $str) == TRUE && $set['single_dot_as_decimal'] == TRUE){
+				// Treat single dot as decimal separator
+
+				return floatval($str);
+			} else {//echo "str: ".$str; echo "ret: ".str_replace('.', '', $str); echo "<br/><br/> ";
+				 // Else, treat all dots as thousand seps
+				$str = str_replace('.', '', $str);    // Erase thousand seps
+				return floatval($str);
+			}
+		}
+	}else{
+		// No number found, return zero
+	    return 0;
+	}
+}
+
+function icms_currency($var, $currencyObj=false) {
+	$ret = icms_getfloat($var,  array('single_dot_as_decimal'=> TRUE));
+	$ret = round($ret, 2);
+	// make sur we have at least .00 in the $var
+	$decimal_section_original = strstr($ret, '.');
+	$decimal_section = $decimal_section_original;
+	if ($decimal_section) {
+		if (strlen($decimal_section) == 1) {
+			$decimal_section = '.00';
+	} elseif(strlen($decimal_section) == 2) {
+		$decimal_section = $decimal_section . '0';
+		}
+		$ret = str_replace($decimal_section_original, $decimal_section, $ret);
+	} else {
+		$ret = $ret . '.00';
+	}
+	if ($currencyObj) {
+		$ret = $ret . ' ' . $currencyObj->getCode();
+	}
+   	return $ret;
+}
+
+function icms_float($var) {
+	return icms_currency($var);
+}
+
+function icms_purifyText($text, $keyword = false)
+{
+	global $myts;
+	$text = str_replace('&nbsp;', ' ', $text);
+	$text = str_replace('<br />', ' ', $text);
+	$text = str_replace('<br/>', ' ', $text);
+	$text = str_replace('<br', ' ', $text);
+	$text = strip_tags($text);
+	$text = html_entity_decode($text);
+	$text = $myts->undoHtmlSpecialChars($text);
+	$text = str_replace(')', ' ', $text);
+	$text = str_replace('(', ' ', $text);
+	$text = str_replace(':', ' ', $text);
+	$text = str_replace('&euro', ' euro ', $text);
+	$text = str_replace('&hellip', '...', $text);
+	$text = str_replace('&rsquo', ' ', $text);
+	$text = str_replace('!', ' ', $text);
+	$text = str_replace('?', ' ', $text);
+	$text = str_replace('"', ' ', $text);
+	$text = str_replace('-', ' ', $text);
+	$text = str_replace('\n', ' ', $text);
+	$text = str_replace('&#8213;', ' ', $text);
+
+	if ($keyword){
+		$text = str_replace('.', ' ', $text);
+		$text = str_replace(',', ' ', $text);
+		$text = str_replace('\'', ' ', $text);
+	}
+	$text = str_replace(';', ' ', $text);
+
+	return $text;
+		
+}
+
+
+function icms_html2text($document)
+{
+	// PHP Manual:: function preg_replace
+	// $document should contain an HTML document.
+	// This will remove HTML tags, javascript sections
+	// and white space. It will also convert some
+	// common HTML entities to their text equivalent.
+	// Credits : newbb2
+	$search = array ("'<script[^>]*?>.*?</script>'si",  // Strip out javascript
+	"'<img.*?/>'si",       // Strip out img tags
+	"'<[\/\!]*?[^<>]*?>'si",          // Strip out HTML tags
+	"'([\r\n])[\s]+'",                // Strip out white space
+	"'&(quot|#34);'i",                // Replace HTML entities
+	"'&(amp|#38);'i",
+	"'&(lt|#60);'i",
+	"'&(gt|#62);'i",
+	"'&(nbsp|#160);'i",
+	"'&(iexcl|#161);'i",
+	"'&(cent|#162);'i",
+	"'&(pound|#163);'i",
+	"'&(copy|#169);'i",
+	"'&#(\d+);'e");                    // evaluate as php
+
+	$replace = array ("",
+	"",
+	"",
+	"\\1",
+	"\"",
+	"&",
+	"<",
+	">",
+	" ",
+	chr(161),
+	chr(162),
+	chr(163),
+	chr(169),
+	"chr(\\1)");
+
+	$text = preg_replace($search, $replace, $document);
+	return $text;
+		
 }
 /**
  * php 4 compat for array_combine
