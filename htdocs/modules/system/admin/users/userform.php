@@ -159,7 +159,7 @@ $form->addElement($rank_select);
 if (!$form_isedit) {
     $form->addElement($pwd_text, true);
     $form->addElement($pwd_text2, true);
-    $form->addElement($salt_hidden, true);
+    $form->addElement($salt_hidden);
 } else {
     $form->addElement($pwd_text);
     $form->addElement($pwd_text2);
