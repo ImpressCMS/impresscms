@@ -15,7 +15,8 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : Projax Library to integrate better Scriptaculous in php. (nekro)
 - Added : The configuration to enable or disable the userinfo.php view by annonymous users. (nekro)
 - Added : Feature to select rights for different groups and modules for the debug. (nekro)
-- Added : IcmsLibrariesHandler - New feature allowing easy inclusion of third party libraries without hacking any core file (malanciault/davidl2)
+- Added : ICMS_LIBRARY_PATH to hold different third party libraries of ImpressCMS (malanciault/davidl2)
+- Added : IcmsPreloadHandler allowing to easily preload nearly anything you want in ImpressCMS, before common, after common, before output, after output, etc... (malanciault)
 - Added : Including Scriptaculous library
 - Added : Feature to select the editor in the preferences. (nekro)
 - Added : The XOOPS_EDITOR_PATH and XOOPS_EDITOR_URL constants. (nekro)
