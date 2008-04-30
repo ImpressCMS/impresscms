@@ -115,7 +115,6 @@ class IcmsPersistableObject extends XoopsObject {
         	}
         }
 
-
         $this->vars[$key] = array_merge($this->vars[$key], array('multilingual' => $multilingual,
         'form_caption' => $form_caption,
         'form_dsc' => $form_dsc,
@@ -156,37 +155,37 @@ class IcmsPersistableObject extends XoopsObject {
     	switch ($varname) {
             case "dohtml":
             	$value = $default != 'notdefined' ? $default : true;
-                $this->initVar($varname, XOBJ_DTYPE_INT, $value, false, null, "", false, _CO_SOBJECT_DOHTML_FORM_CAPTION, '', false, true, $displayOnForm);
+                $this->initVar($varname, XOBJ_DTYPE_INT, $value, false, null, "", false, _CO_ICMS_DOHTML_FORM_CAPTION, '', false, true, $displayOnForm);
                 $this->setControl($varname, "yesno");
                 break;
 
             case "dobr":
             	$value = ($default === 'notdefined') ? true : $default;
-                $this->initVar($varname, XOBJ_DTYPE_INT,$value, false, null, "", false, _CO_SOBJECT_DOBR_FORM_CAPTION, '', false, true, $displayOnForm);
+                $this->initVar($varname, XOBJ_DTYPE_INT,$value, false, null, "", false, _CO_ICMS_DOBR_FORM_CAPTION, '', false, true, $displayOnForm);
                 $this->setControl($varname, "yesno");
                 break;
 
             case "doimage":
             	$value = $default != 'notdefined' ? $default : true;
-                $this->initVar($varname, XOBJ_DTYPE_INT,$value, false, null, "", false, _CO_SOBJECT_DOIMAGE_FORM_CAPTION, '', false, true, $displayOnForm);
+                $this->initVar($varname, XOBJ_DTYPE_INT,$value, false, null, "", false, _CO_ICMS_DOIMAGE_FORM_CAPTION, '', false, true, $displayOnForm);
                 $this->setControl($varname, "yesno");
                 break;
 
             case "dosmiley":
             	$value = $default != 'notdefined' ? $default : true;
-                $this->initVar($varname, XOBJ_DTYPE_INT,$value, false, null, "", false, _CO_SOBJECT_DOSMILEY_FORM_CAPTION, '', false, true, $displayOnForm);
+                $this->initVar($varname, XOBJ_DTYPE_INT,$value, false, null, "", false, _CO_ICMS_DOSMILEY_FORM_CAPTION, '', false, true, $displayOnForm);
                 $this->setControl($varname, "yesno");
                 break;
 
             case "doxcode":
             	$value = $default != 'notdefined' ? $default : true;
-                $this->initVar($varname, XOBJ_DTYPE_INT,$value, false, null, "", false, _CO_SOBJECT_DOXCODE_FORM_CAPTION, '', false, true, $displayOnForm);
+                $this->initVar($varname, XOBJ_DTYPE_INT,$value, false, null, "", false, _CO_ICMS_DOXCODE_FORM_CAPTION, '', false, true, $displayOnForm);
                 $this->setControl($varname, "yesno");
                 break;
 
             case "meta_keywords":
             	$value = $default != 'notdefined' ? $default : '';
-                $this->initVar($varname, XOBJ_DTYPE_TXTAREA, $value, false, null, '', false, _CO_SOBJECT_META_KEYWORDS, _CO_SOBJECT_META_KEYWORDS_DSC, false, true, $displayOnForm);
+                $this->initVar($varname, XOBJ_DTYPE_TXTAREA, $value, false, null, '', false, _CO_ICMS_META_KEYWORDS, _CO_ICMS_META_KEYWORDS_DSC, false, true, $displayOnForm);
         		$this->setControl('meta_keywords', array(
 										'name' => 'textarea',
                                         'form_editor'=>'textarea'
@@ -195,7 +194,7 @@ class IcmsPersistableObject extends XoopsObject {
 
             case "meta_description":
             	$value = $default != 'notdefined' ? $default : '';
-                $this->initVar($varname, XOBJ_DTYPE_TXTAREA, $value, false, null, '', false, _CO_SOBJECT_META_DESCRIPTION, _CO_SOBJECT_META_DESCRIPTION_DSC, false, true, $displayOnForm);
+                $this->initVar($varname, XOBJ_DTYPE_TXTAREA, $value, false, null, '', false, _CO_ICMS_META_DESCRIPTION, _CO_ICMS_META_DESCRIPTION_DSC, false, true, $displayOnForm);
         		$this->setControl('meta_description', array(
 										'name' => 'textarea',
                                         'form_editor'=>'textarea'
@@ -204,26 +203,26 @@ class IcmsPersistableObject extends XoopsObject {
 
             case "short_url":
             	$value = $default != 'notdefined' ? $default : '';
-                $this->initVar($varname, XOBJ_DTYPE_TXTBOX,$value, false, null, "", false, _CO_SOBJECT_SHORT_URL, _CO_SOBJECT_SHORT_URL_DSC, false, true, $displayOnForm);
+                $this->initVar($varname, XOBJ_DTYPE_TXTBOX,$value, false, null, "", false, _CO_ICMS_SHORT_URL, _CO_ICMS_SHORT_URL_DSC, false, true, $displayOnForm);
                 break;
 
             case "hierarchy_path":
             	$value = $default != 'notdefined' ? $default : '';
-                $this->initVar($varname, XOBJ_DTYPE_ARRAY, $value, false, null, "", false, _CO_SOBJECT_HIERARCHY_PATH, _CO_SOBJECT_HIERARCHY_PATH_DSC, false, true, $displayOnForm);
+                $this->initVar($varname, XOBJ_DTYPE_ARRAY, $value, false, null, "", false, _CO_ICMS_HIERARCHY_PATH, _CO_ICMS_HIERARCHY_PATH_DSC, false, true, $displayOnForm);
                 break;
 
             case "counter":
             	$value = $default != 'notdefined' ? $default : 0;
-                $this->initVar($varname, XOBJ_DTYPE_INT,$value, false, null, '', false, _CO_SOBJECT_COUNTER_FORM_CAPTION, '', false, true, $displayOnForm);
+                $this->initVar($varname, XOBJ_DTYPE_INT,$value, false, null, '', false, _CO_ICMS_COUNTER_FORM_CAPTION, '', false, true, $displayOnForm);
                 break;
 
             case "weight":
             	$value = $default != 'notdefined' ? $default : 0;
-                $this->initVar($varname, XOBJ_DTYPE_INT,$value, false, null, '', false, _CO_SOBJECT_WEIGHT_FORM_CAPTION, '', true, true, $displayOnForm);
+                $this->initVar($varname, XOBJ_DTYPE_INT,$value, false, null, '', false, _CO_ICMS_WEIGHT_FORM_CAPTION, '', true, true, $displayOnForm);
                 break;
             case "custom_css":
             	$value = $default != 'notdefined' ? $default : '';
-                $this->initVar($varname, XOBJ_DTYPE_TXTAREA, $value, false, null, '', false, _CO_SOBJECT_CUSTOM_CSS, _CO_SOBJECT_CUSTOM_CSS_DSC, false, true, $displayOnForm);
+                $this->initVar($varname, XOBJ_DTYPE_TXTAREA, $value, false, null, '', false, _CO_ICMS_CUSTOM_CSS, _CO_ICMS_CUSTOM_CSS_DSC, false, true, $displayOnForm);
         		$this->setControl('custom_css', array(
 									'name' => 'textarea',
 									'form_editor'=>'textarea',
@@ -344,10 +343,10 @@ class IcmsPersistableObject extends XoopsObject {
     *
     * @see IcmsPersistableObjectForm::IcmsPersistableObjectForm()
     */
-    function getForm($form_caption, $form_name, $form_action=false, $submit_button_caption = _CO_SOBJECT_SUBMIT, $cancel_js_action=false, $captcha=false)
+    function getForm($form_caption, $form_name, $form_action=false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action=false, $captcha=false)
     {
-        include_once SMARTOBJECT_ROOT_PATH . "class/form/smartobjectform.php";
-        $form = new SmartobjectForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
+        include_once ICMS_ROOT_PATH . "/class/icmsform/icmsform.php";
+        $form = new IcmsForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 
         return $form;
     }
