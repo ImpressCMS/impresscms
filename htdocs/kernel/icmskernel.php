@@ -15,7 +15,7 @@ class IcmsKernel {
 		$this->paths['www'] = array( ICMS_ROOT_PATH, ICMS_URL );
 		$this->paths['modules'] = array( ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules' );
 		$this->paths['themes'] = array( ICMS_ROOT_PATH . '/themes', ICMS_URL . '/themes' );
-		$this->_buildUrls();
+		$this->_buildRelevantUrls();
 	}
 	/**
 	 * Convert a XOOPS path to a physical one
@@ -62,7 +62,7 @@ class IcmsKernel {
 	/**
 	 * Build URLs for global use throughout the application
 	 */ 
-	function _buildUrls() {
+	function _buildRelevantUrls() {
 
 		if (!$this->urls) {
 			$http = ((strpos(XOOPS_URL, "https://")) === false) ? ("http://") : ("https://");
@@ -80,6 +80,14 @@ class IcmsKernel {
 			$this->urls['querystring'] = $querystring;
 			$this->urls['full_phpself'] = $http . $httphost . $phpself;
 			$this->urls['full'] = $currenturl;
+			
+			$previouspage = '';
+		    if ( array_key_exists( 'HTTP_REFERER', $_SERVER) && isset($_SERVER['HTTP_REFERER']) ) {
+		        $this->urls['previouspage'] = $_SERVER['HTTP_REFERER'];
+		    }
+		    if ( array_key_exists( $key, $_ENV) && isset($_ENV['HTTP_REFERER']) ) {
+		        $this->urls['previouspage'] = $_ENV['HTTP_REFERER'];
+		    }
 			//$this->urls['isHomePage'] = (XOOPS_URL . "/index.php") == ($http . $httphost . $phpself);
 		}
 		return $urls;
