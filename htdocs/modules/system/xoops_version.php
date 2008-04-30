@@ -136,6 +136,10 @@ $i++;
 $modversion['templates'][$i]['file'] = 'system_common_form.html';
 $modversion['templates'][$i]['description'] = 'Common form template';
 
+$i++;
+$modversion['templates'][$i]['file'] = 'system_persistabletable_display.html';
+$modversion['templates'][$i]['description'] = 'Template of the IcmsPersistableTable list view';
+
 // Blocks
 $i=0;
 
