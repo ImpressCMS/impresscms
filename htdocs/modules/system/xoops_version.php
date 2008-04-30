@@ -50,54 +50,103 @@ $modversion['adminmenu'] = "menu.php";
 $modversion['onUpdate'] = "include/update.php";
 
 // Templates
-$modversion['templates'][1]['file'] = 'system_imagemanager.html';
-$modversion['templates'][1]['description'] = '';
-$modversion['templates'][2]['file'] = 'system_imagemanager2.html';
-$modversion['templates'][2]['description'] = '';
-$modversion['templates'][3]['file'] = 'system_userinfo.html';
-$modversion['templates'][3]['description'] = '';
-$modversion['templates'][4]['file'] = 'system_userform.html';
-$modversion['templates'][4]['description'] = '';
-$modversion['templates'][5]['file'] = 'system_rss.html';
-$modversion['templates'][5]['description'] = '';
-$modversion['templates'][6]['file'] = 'system_redirect.html';
-$modversion['templates'][6]['description'] = '';
-$modversion['templates'][7]['file'] = 'system_comment.html';
-$modversion['templates'][7]['description'] = '';
-$modversion['templates'][8]['file'] = 'system_comments_flat.html';
-$modversion['templates'][8]['description'] = '';
-$modversion['templates'][9]['file'] = 'system_comments_thread.html';
-$modversion['templates'][9]['description'] = '';
-$modversion['templates'][10]['file'] = 'system_comments_nest.html';
-$modversion['templates'][10]['description'] = '';
-$modversion['templates'][11]['file'] = 'system_siteclosed.html';
-$modversion['templates'][11]['description'] = '';
-$modversion['templates'][12]['file'] = 'system_dummy.html';
-$modversion['templates'][12]['description'] = 'Dummy template file for holding non-template contents. This should not be edited.';
-$modversion['templates'][13]['file'] = 'system_notification_list.html';
-$modversion['templates'][13]['description'] = '';
-$modversion['templates'][14]['file'] = 'system_notification_select.html';
-$modversion['templates'][14]['description'] = '';
-$modversion['templates'][15]['file'] = 'system_block_dummy.html';
-$modversion['templates'][15]['description'] = 'Dummy template for custom blocks or blocks without templates';
-$modversion['templates'][16]['file'] = 'system_privpolicy.html';
-$modversion['templates'][16]['description'] = 'Template for displaying site Privacy Policy';
-$modversion['templates'][17]['file'] = 'system_error.html';
-$modversion['templates'][17]['description'] = 'Template for handling HTTP errors';
-$modversion['templates'][18]['file'] = 'system_content.html';
-$modversion['templates'][18]['description'] = 'Template of content pages';
-$modversion['templates'][19]['file'] = 'blocks/system_block_contentmenu_structure.html';
-$modversion['templates'][19]['description'] = 'Template of content pages';
-$modversion['templates'][20]['file'] = 'admin/content/system_adm_contentmanager_index.html';
-$modversion['templates'][20]['description'] = 'Template of the admin of content manager';
-$modversion['templates'][21]['file'] = 'admin/blockspadmin/system_adm_blockspadmin.html';
-$modversion['templates'][21]['description'] = 'Template of the admin of block position admin';
-$modversion['templates'][22]['file'] = 'admin/pages/system_adm_pagemanager_index.html';
-$modversion['templates'][22]['description'] = 'Template of the admin of pages manager';
-$modversion['templates'][23]['file'] = 'admin/blocksadmin/system_adm_blocksadmin.html';
-$modversion['templates'][23]['description'] = 'Template for the blocks admin';
-$modversion['templates'][24]['file'] = 'admin/modulesadmin/system_adm_modulesadmin.html';
-$modversion['templates'][24]['description'] = 'Template for the modules admin';
+$i=0;
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_imagemanager.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_imagemanager2.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_userinfo.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_userform.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_rss.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_redirect.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_comment.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_comments_flat.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_comments_thread.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_comments_nest.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_siteclosed.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_dummy.html';
+$modversion['templates'][$i]['description'] = 'Dummy template file for holding non-template contents. This should not be edited.';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_notification_list.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_notification_select.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_block_dummy.html';
+$modversion['templates'][$i]['description'] = 'Dummy template for custom blocks or blocks without templates';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_privpolicy.html';
+$modversion['templates'][$i]['description'] = 'Template for displaying site Privacy Policy';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_error.html';
+$modversion['templates'][$i]['description'] = 'Template for handling HTTP errors';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_content.html';
+$modversion['templates'][$i]['description'] = 'Template of content pages';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'blocks/system_block_contentmenu_structure.html';
+$modversion['templates'][$i]['description'] = 'Template of content pages';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/content/system_adm_contentmanager_index.html';
+$modversion['templates'][$i]['description'] = 'Template of the admin of content manager';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/blockspadmin/system_adm_blockspadmin.html';
+$modversion['templates'][$i]['description'] = 'Template of the admin of block position admin';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/pages/system_adm_pagemanager_index.html';
+$modversion['templates'][$i]['description'] = 'Template of the admin of pages manager';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/blocksadmin/system_adm_blocksadmin.html';
+$modversion['templates'][$i]['description'] = 'Template for the blocks admin';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/modulesadmin/system_adm_modulesadmin.html';
+$modversion['templates'][$i]['description'] = 'Template for the modules admin';
 
 // Blocks
 $modversion['blocks'][1]['file'] = "system_blocks.php";
