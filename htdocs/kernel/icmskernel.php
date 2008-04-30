@@ -9,10 +9,13 @@ class IcmsKernel {
 	var $paths = array(
 		'www' => array(), 'modules' => array(), 'themes' => array(),
 	);
+	var $urls=false;
+	
 	function IcmsKernel() {
 		$this->paths['www'] = array( ICMS_ROOT_PATH, ICMS_URL );
 		$this->paths['modules'] = array( ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules' );
 		$this->paths['themes'] = array( ICMS_ROOT_PATH . '/themes', ICMS_URL . '/themes' );
+		$this->_buildUrls();
 	}
 	/**
 	 * Convert a XOOPS path to a physical one
@@ -55,6 +58,33 @@ class IcmsKernel {
 		}
 		return $url;
 	}
+	
+	/**
+	 * Build URLs for global use throughout the application
+	 */ 
+	function _buildUrls() {
+
+		if (!$this->urls) {
+			$http = ((strpos(XOOPS_URL, "https://")) === false) ? ("http://") : ("https://");
+			$phpself = $_SERVER['PHP_SELF'];
+			$httphost = $_SERVER['HTTP_HOST'];
+			$querystring = $_SERVER['QUERY_STRING'];
+			if ($querystring != '') {
+				$querystring = '?' . $querystring;
+			}
+			$currenturl = $http . $httphost . $phpself . $querystring;
+			$this->urls = array ();
+			$this->urls['http'] = $http;
+			$this->urls['httphost'] = $httphost;
+			$this->urls['phpself'] = $phpself;
+			$this->urls['querystring'] = $querystring;
+			$this->urls['full_phpself'] = $http . $httphost . $phpself;
+			$this->urls['full'] = $currenturl;
+			//$this->urls['isHomePage'] = (XOOPS_URL . "/index.php") == ($http . $httphost . $phpself);
+		}
+		return $urls;
+	}
+	
 
 }
 ?>
