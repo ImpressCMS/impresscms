@@ -1257,6 +1257,37 @@ function icms_get_page_before_form() {
 }
 
 /**
+ * Store a cookie
+ *
+ * @param string $name name of the cookie
+ * @param string $value value of the cookie
+ * @param int $time duration of the cookie   
+ */
+function icms_setCookieVar($name, $value, $time = 0) {
+	if ($time == 0) {
+		$time = time() + 3600 * 24 * 365;
+	}
+	setcookie($name, $value, $time, '/');
+}
+
+/**
+ * Get a cookie value
+ *
+ * @param string $name name of the cookie
+ * @param string $default value to return if cookie not found
+ *
+ * @return string value of the cookie or default value   
+ */
+function icms_getCookieVar($name, $default = '') {
+	$name = str_replace('.', '_', $name);
+	if ((isset ($_COOKIE[$name])) && ($_COOKIE[$name] > '')) {
+		return $_COOKIE[$name];
+	} else {
+		return $default;
+	}
+}
+
+/**
  * Function to create a navigation menu in content pages.
  * This function was based on the function that do the same in mastop publish module
  * 
