@@ -1247,16 +1247,6 @@ function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>'
 }
 
 /**
- * Get the URL of the page before the form
- *
- * return string URL 
- */
-function icms_get_page_before_form() {
-	global $icms_previous_page;
-	return isset ($_POST['icms_page_before_form']) ? $_POST['icms_page_before_form'] : $icms_previous_page;
-}
-
-/**
  * Store a cookie
  *
  * @param string $name name of the cookie
@@ -1285,6 +1275,16 @@ function icms_getCookieVar($name, $default = '') {
 	} else {
 		return $default;
 	}
+}
+/**
+ * Get URL of the page before the form to be able to redirect their after the form has been posted
+ * 
+ * return string url before form
+ */
+function icms_get_page_before_form() {
+	global $impresscms;
+	
+	return isset ($_POST['icms_page_before_form']) ? $_POST['icms_page_before_form'] : $impresscms->urls['previouspage'];
 }
 
 /**
