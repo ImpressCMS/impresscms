@@ -106,12 +106,12 @@ define("ICMS_THEME_PATH", ICMS_ROOT_PATH."/themes");
 define("ICMS_THEME_URL", ICMS_URL."/themes");
 define("ICMS_COMPILE_PATH", ICMS_ROOT_PATH."/templates_c");
 define("ICMS_CACHE_PATH", ICMS_ROOT_PATH."/cache");
-define("ICMS_IMAGES", ICMS_ROOT_PATH."/images");
+define("ICMS_IMAGES_URL", ICMS_ROOT_PATH."/images");
 /**
  * @todo make this $icms_images_setname as an option in preferences...
  */ 
 $icms_images_setname = 'crystal';
-define("ICMS_IMAGES_SET", ICMS_IMAGES."/" . $icms_images_setname);
+define("ICMS_IMAGES_SET_URL", ICMS_IMAGES."/" . $icms_images_setname);
 
 /**#@+
  * Deprectaed: for backward compatibility
