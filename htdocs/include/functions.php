@@ -1001,8 +1001,9 @@ function icms_getCurrentModuleName() {
  *
  * @param string $module dirname of the module
  * @param string $file name of the file without ".php"
+ * @param bool $admin is this for a core admin side feature ?
  */
-function icms_loadLanguageFile($module, $file) {
+function icms_loadLanguageFile($module, $file, $admin=false) {
 	global $xoopsConfig;
 	
 	if ($module == 'core') {
@@ -1010,8 +1011,11 @@ function icms_loadLanguageFile($module, $file) {
 	} else {
 		$languagePath = ICMS_ROOT_PATH . '/modules/' . $module . '/language/';
 	}
+	
+	$extraPath = $admin ? 'admin/' : '';
 
-	$filename = $languagePath . $xoopsConfig['language'] . '/' . $file . '.php';
+	$filename = $languagePath . $xoopsConfig['language'] . '/' . $extraPath . $file . '.php';
+
 	if (!file_exists($filename)) {
 		$filename = $languagePath . 'english/' . $file . '.php';
 	}
@@ -1240,6 +1244,16 @@ function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>'
 	if (empty($aDisabledAttributes)) return strip_tags($sSource, implode('', $aAllowedTags));
 
 	return preg_replace('/<(.*?)>/ie', "'<' . preg_replace(array('/javascript:[^\"\']*/i', '/(" . implode('|', $aDisabledAttributes) . ")[ \\t\\n]*=[ \\t\\n]*[\"\'][^\"\']*[\"\']/i', '/\s+/'), array('', '', ' '), stripslashes('\\1')) . '>'", strip_tags($sSource, implode('', $aAllowedTags)));
+}
+
+/**
+ * Get the URL of the page before the form
+ *
+ * return string URL 
+ */
+function icms_get_page_before_form() {
+	global $icms_previous_page;
+	return isset ($_POST['icms_page_before_form']) ? $_POST['icms_page_before_form'] : $icms_previous_page;
 }
 
 /**
