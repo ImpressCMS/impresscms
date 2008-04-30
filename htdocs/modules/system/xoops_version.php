@@ -132,6 +132,10 @@ $i++;
 $modversion['templates'][$i]['file'] = 'admin/modulesadmin/system_adm_modulesadmin.html';
 $modversion['templates'][$i]['description'] = 'Template for the modules admin';
 
+$i++;
+$modversion['templates'][$i]['file'] = 'system_common_form.html';
+$modversion['templates'][$i]['description'] = 'Common form template';
+
 // Blocks
 $i=0;
 
