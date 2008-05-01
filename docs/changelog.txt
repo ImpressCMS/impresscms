@@ -53,7 +53,6 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Changed : Moved the PHPmailer library from /class to /libraries. (nekro)
 - Changed : Textarea is now widely. Better to create blocks and editing of templates. (sato-san)
 - Changed : Password encryption method from md5 to more secure SHA256 + 2 unique salt keys. (vaughan)
-- Changed : Password encryption method from md5 to more secure SHA256 + 2 unique salt keys. (vaughan)
 
 - Fixed : #1954811: User can set session expiration to zero (phppp/Alex_Grey/tomblack/kurak_bu)
 - Fixed : #1899685 : Parse error: banners.php on line 226 (kurak_bu/nekro)
