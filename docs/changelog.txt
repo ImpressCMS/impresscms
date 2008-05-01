@@ -29,7 +29,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : IcmsDatabaseUpdater object to easily perform database upgrade procedure (malanciault)
 - Added : New field in the XoopsModule object, dbversion, which will track the version of the tables related to a module (malanciault)
 - Added : Implementation of the onUpdate event for the System module to allow easy database upgrades performed automatically while updating the System module (malanciault)
-- Added : Upgrade script from ImpressCMS 1.0 to ImpressCMS 1.1 which only adds the dbversion field to the modules table; after this upgrade has been performed, all database upgrades will be done automatically when updating the System module (malanciault/stranger) 
+- Added : Upgrade script from ImpressCMS 1.0 to ImpressCMS 1.1 which only adds the dbversion field to the modules table; after this upgrade has been performed, all database upgrades will be done automatically when updating the System module (malanciault/stranger)
 - Added : Addition of assigning language's css & Javascripts files to the template. (stranger)
 - Added : Addition of assigning/integrating a local date function in to the core, configurable through administration menu. (stranger)
 - Added : New module added in admin: Content manager that allow create content pages out of the box. (real_therplima)
@@ -53,8 +53,9 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Changed : Textarea is now widely. Better to create blocks and editing of templates. (sato-san)
 - Changed : Password encryption method from md5 to more secure SHA256 + 2 unique salt keys. (vaughan)
 
+- Fixed #1954811: User can set session expiration to zero (phppp/Alex_Grey/tomblack/kurak_bu)
 - Fixed #1899685 : Parse error: banners.php on line 226 (kurak_bu/nekro)
-- Fixed #1932374 : Changing the 100% width of table in xoops.css to make it 100% only for table.outer (malanciault/real_therplima)  
+- Fixed #1932374 : Changing the 100% width of table in xoops.css to make it 100% only for table.outer (malanciault/real_therplima)
 - Fixed : Removing a notice in debug when update the system module. (real_therplima)
 - Fixed : Addition of ".outer {}" was missed. (stranger)
 
@@ -63,7 +64,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 =========================================
 
 - Improved : Updating the VersionChecker to handle situation where the impresscms_xml feed cann not be read (firewall, no internet access, etc...) (malanciault)
-- Improved : In the VersionChecker, changed errors to an array and provided a the language constant as the error message - the version checker now reports correctly when it cannot find a valid version_xml (skenow) 
+- Improved : In the VersionChecker, changed errors to an array and provided a the language constant as the error message - the version checker now reports correctly when it cannot find a valid version_xml (skenow)
 - Improved : admin_version template (sato-san/davidl2)
 - Improved : Syntax/grammar check in install wizard (andrewvincent/xoops-magazine)
 - Improved : Syntax/grammar check in preferences (andrewvincent)
@@ -77,7 +78,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 
 - Improved : Improved system_redirect template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
 - Improved : Improved system_siteclose template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
-- Improved : Upgrade script has been improved to also clean the cache folder (malanciault/real_therplima) 
+- Improved : Upgrade script has been improved to also clean the cache folder (malanciault/real_therplima)
 - Fixed : #1905281 Redirect function not using the user selected theme (malanciault)
 - Fixed : the ImpressCMS logo used on impresstheme as well as in the admin section have been updated (nekro/MrTheme)
 - Added : Addition of the global navigationlink in impresstheme theme (mcdonald/skenow/malanciault)
@@ -87,7 +88,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : New module added in admin: ImpressCMS Version Checker (malanciault/nekro/MrTheme/davidl2)
 - Added : A new Welcome custom block is now added by the install wizard to welcome the "not-yet-loged" user on the new site (malanciault/MrTheme/davidl2)
 - Added : A new Welcome custom block is now added by the install wizard to welcome the webmaster when loged in and to remind him some useful links to start his new ImpressCMS website (malanciault/MrTheme/davidl2)
-- Added : #1904910 A small anchor "new" in System Admin > Blocks so it becomes possible to link to modules/system/admin.php?fct=blocksadmin#new and get the user at the begining of the new block form (malanciault/drummond2) 
+- Added : #1904910 A small anchor "new" in System Admin > Blocks so it becomes possible to link to modules/system/admin.php?fct=blocksadmin#new and get the user at the begining of the new block form (malanciault/drummond2)
 
 =========================================
 2008-02-24 : ImpressCMS 1.0 "Janus" RC 2
