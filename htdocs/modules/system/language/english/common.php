@@ -11,7 +11,6 @@ if (!defined("XOOPS_ROOT_PATH")) {
  	die("XOOPS root path not defined");
 }
 
-define('_CO_ICMS_ALL', "All"); // deprecated
 define('_CO_ICMS_FILTER', "Filter");
 define('_CO_ICMS_NONE', "None");
 define('_CO_ICMS_SHOW_ONLY', 'Show only');
