@@ -63,7 +63,7 @@ global $impresscms, $xoops;
 $impresscms =& new IcmsKernel();
 $xoops =& $impresscms;
 // ################# Creation of the ImpressCMS Kernel object ##############
-
+	
 // Instantiate security object
 require_once XOOPS_ROOT_PATH."/class/xoopssecurity.php";
 global $xoopsSecurity;
@@ -106,12 +106,12 @@ define("ICMS_THEME_PATH", ICMS_ROOT_PATH."/themes");
 define("ICMS_THEME_URL", ICMS_URL."/themes");
 define("ICMS_COMPILE_PATH", ICMS_ROOT_PATH."/templates_c");
 define("ICMS_CACHE_PATH", ICMS_ROOT_PATH."/cache");
-define("ICMS_IMAGES_URL", ICMS_ROOT_PATH."/images");
+define("ICMS_IMAGES_URL", ICMS_URL."/images");
 /**
  * @todo make this $icms_images_setname as an option in preferences...
- */
+ */ 
 $icms_images_setname = 'crystal';
-define("ICMS_IMAGES_SET_URL", ICMS_IMAGES."/" . $icms_images_setname);
+define("ICMS_IMAGES_SET_URL", ICMS_IMAGES_URL."/" . $icms_images_setname);
 
 /**#@+
  * Deprectaed: for backward compatibility
@@ -128,9 +128,9 @@ define("XOOPS_CACHE_PATH", ICMS_CACHE_PATH);
 // TODO: Change the name of the constant.
 define("XOOPS_EDITOR_PATH", XOOPS_ROOT_PATH."/editors");
 define("XOOPS_EDITOR_URL", XOOPS_URL."/editors");
-
+		
 define("SMARTY_DIR", ICMS_LIBRARIES_PATH."/smarty/");
-
+	
 if (!defined('XOOPS_XMLRPC')) {
 	define('XOOPS_DB_CHKREF', 1);
 } else {
@@ -222,7 +222,7 @@ global $sess_handler;
 $sess_handler =& xoops_gethandler('session');
 if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
 	session_id($_POST[$xoopsConfig['sslpost_name']]);
-} elseif ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0) {
+} elseif ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {
 	if (isset($_COOKIE[$xoopsConfig['session_name']])) {
     	session_id($_COOKIE[$xoopsConfig['session_name']]);
 	}
@@ -297,7 +297,7 @@ if(empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isse
 				$_SESSION['xoopsUserTheme'] = $user_theme;
 			}
 			$_SESSION['xoopsUserLanguage'] = $user_language;
-
+			
 			// end newly added in 2004-11-30
 			// update autologin cookies
 			$expire = time() + ( defined('XOOPS_AUTOLOGIN_LIFETIME') ? XOOPS_AUTOLOGIN_LIFETIME : 604800 ) ; // 1 week default
@@ -311,7 +311,7 @@ if(empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isse
 		}
 	}
 	// end of autologin hack GIJ
-
+	
 if (!empty($_SESSION['xoopsUserId'])) {
 	$xoopsUser =& $member_handler->getUser($_SESSION['xoopsUserId']);
     if (!is_object($xoopsUser)) {
@@ -330,7 +330,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
 		}
 	}
 }
-
+    
 $im_multilanguageConfig =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
 if ($im_multilanguageConfig['ml_enable']) {
 require XOOPS_ROOT_PATH.'/include/im_multilanguage.php' ;
@@ -339,7 +339,7 @@ include_once(XOOPS_ROOT_PATH . '/class/xoopslists.php');
 
 $easiestml_langpaths = XoopsLists::getLangList();
 $langs = array_combine($easiestml_langs,explode( ',' , $im_multilanguageConfig['ml_names'] ));
-
+		
 if( $im_multilanguageConfig['ml_autoselect_enabled']  && isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $_SERVER['HTTP_ACCEPT_LANGUAGE'] != "" ){
 	$autolang = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2);
 	if (in_array($autolang,$easiestml_langs)){
@@ -359,7 +359,7 @@ if (isset( $_GET['lang'] ) && isset($_COOKIE['lang'])){
     		$xoopsConfig['language'] = $_SESSION['xoopsUserLanguage'];
 	}else{
     	if (in_array($_COOKIE['lang'],$easiestml_langs))
-    		$xoopsConfig['language'] = $langs[$_COOKIE['lang']];
+    		$xoopsConfig['language'] = $langs[$_COOKIE['lang']];	
     	}
     }elseif(isset($_COOKIE['lang'])){
     	if (in_array($_COOKIE['lang'],$easiestml_langs)){
@@ -374,7 +374,7 @@ if (isset( $_GET['lang'] ) && isset($_COOKIE['lang'])){
     	}
     }
 }
-
+    
 // #################### Include site-wide lang file ##################
 if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php") ) {
 	include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php";
@@ -390,20 +390,20 @@ if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype']
     	include_once XOOPS_ROOT_PATH."/language/english/".$xoopsOption['pagetype'].".php";
 	}
 }
-
+	
 $xoopsOption = array();
 
 if ( !defined("XOOPS_USE_MULTIBYTES") ) {
 	define("XOOPS_USE_MULTIBYTES",0);
 }
-
+    
 if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $xoopsConfig['theme_set_allowed'])) {
 	$xoopsConfig['theme_set'] = $_POST['xoops_theme_select'];
     $_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
 } elseif (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {
 	$xoopsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
 }
-
+    
 if ($xoopsConfig['closesite'] == 1) {
 	include XOOPS_ROOT_PATH . "/include/site-closed.php";
 }
