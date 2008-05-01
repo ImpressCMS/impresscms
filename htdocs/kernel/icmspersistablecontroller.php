@@ -158,7 +158,7 @@ class IcmsPersistableController {
 			return $icmsObj;
 		} else {
 			if ( !$storeResult ) {
-				redirect_header($impresscms->urls['previouspage'], 3, _CO_SOBJECT_SAVE_ERROR . $icmsObj->getHtmlErrors());
+				redirect_header($impresscms->urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
 			}
 
 			$redirect_page = $redirect_page ? $redirect_page : icms_get_page_before_form();
@@ -254,18 +254,18 @@ class IcmsPersistableController {
     	$icmsObj = $this->handler->get($objectid);
 
 		if ($icmsObj->isNew()) {
-			redirect_header("javascript:history.go(-1)", 3, _CO_SOBJECT_NOT_SELECTED);
+			redirect_header("javascript:history.go(-1)", 3, _CO_ICMS_NOT_SELECTED);
 			exit();
 		}
 
 		$confirm = (isset($_POST['confirm'])) ? $_POST['confirm'] : 0;
 		if ($confirm) {
 			if( !$this->handler->delete($icmsObj)) {
-				redirect_header($_POST['redirect_page'], 3, _CO_SOBJECT_DELETE_ERROR . $icmsObj->getHtmlErrors());
+				redirect_header($_POST['redirect_page'], 3, _CO_ICMS_DELETE_ERROR . $icmsObj->getHtmlErrors());
 				exit;
 			}
 
-			redirect_header($_POST['redirect_page'], 3, _CO_SOBJECT_DELETE_SUCCESS);
+			redirect_header($_POST['redirect_page'], 3, _CO_ICMS_DELETE_SUCCESS);
 			exit();
 		} else {
 			// no confirm: show deletion condition
@@ -273,10 +273,19 @@ class IcmsPersistableController {
 			xoops_cp_header();
 
 			if (!$confirm_msg) {
-				$confirm_msg = _CO_SOBJECT_DELETE_CONFIRM;
+				$confirm_msg = _CO_ICMS_DELETE_CONFIRM;
 			}
-
-			xoops_confirm(array('op' => $op, $this->handler->keyName => $icmsObj->getVar($this->handler->keyName), 'confirm' => 1, 'redirect_page' => $impresscm->urls['previouspage']), xoops_getenv('PHP_SELF'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_SOBJECT_DELETE);
+			
+			$hiddens = array(
+						'op' => $op, 
+						$this->handler->keyName => $icmsObj->getVar($this->handler->keyName), 
+						'confirm' => 1, 
+						'redirect_page' => $impresscms->urls['previouspage']
+					);
+			if ($this->handler->_moduleName == 'system') {
+				$hiddens['fct'] = isset($_GET['fct']) ? $_GET['fct'] : false; 
+			}
+			xoops_confirm($hiddens, xoops_getenv('PHP_SELF'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
 
 			xoops_cp_footer();
 
@@ -291,27 +300,27 @@ class IcmsPersistableController {
     	$icmsObj = $this->handler->get($objectid);
 
 		if ($icmsObj->isNew()) {
-			redirect_header("javascript:history.go(-1)", 3, _CO_SOBJECT_NOT_SELECTED);
+			redirect_header("javascript:history.go(-1)", 3, _CO_ICMS_NOT_SELECTED);
 			exit();
 		}
 
 		$confirm = (isset($_POST['confirm'])) ? $_POST['confirm'] : 0;
 		if ($confirm) {
 			if( !$this->handler->delete($icmsObj)) {
-				redirect_header($_POST['redirect_page'], 3, _CO_SOBJECT_DELETE_ERROR . $icmsObj->getHtmlErrors());
+				redirect_header($_POST['redirect_page'], 3, _CO_ICMS_DELETE_ERROR . $icmsObj->getHtmlErrors());
 				exit;
 			}
 
-			redirect_header($_POST['redirect_page'], 3, _CO_SOBJECT_DELETE_SUCCESS);
+			redirect_header($_POST['redirect_page'], 3, _CO_ICMS_DELETE_SUCCESS);
 			exit();
 		} else {
 			// no confirm: show deletion condition
 			if (!$confirm_msg) {
-				$confirm_msg = _CO_SOBJECT_DELETE_CONFIRM;
+				$confirm_msg = _CO_ICMS_DELETE_CONFIRM;
 			}
 
 			ob_start();
-			xoops_confirm(array('op' => $op, $this->handler->keyName => $icmsObj->getVar($this->handler->keyName), 'confirm' => 1, 'redirect_page' => $impresscms->urls['previouspage']), xoops_getenv('PHP_SELF'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_SOBJECT_DELETE);
+			xoops_confirm(array('op' => $op, $this->handler->keyName => $icmsObj->getVar($this->handler->keyName), 'confirm' => 1, 'redirect_page' => $impresscms->urls['previouspage']), xoops_getenv('PHP_SELF'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
 			$icms_delete_confirm = ob_get_clean();
 			$xoopsTpl->assign('icmspersistable_delete_confirm', $icmspersistable_delete_confirm);
 		}
@@ -331,7 +340,7 @@ class IcmsPersistableController {
 			return $ret;
 		}
 		elseif($withimage) {
-			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/viewmag.png' style='vertical-align: middle;' alt='" . _CO_SOBJECT_ADMIN_VIEW . "'  title='" . _CO_SOBJECT_ADMIN_VIEW . "'/></a>";
+			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/viewmag.png' style='vertical-align: middle;' alt='" . _CO_ICMS_ADMIN_VIEW . "'  title='" . _CO_ICMS_ADMIN_VIEW . "'/></a>";
 		}
 
     	return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
@@ -381,7 +390,7 @@ class IcmsPersistableController {
 			return $ret;
 		}
 		elseif($withimage) {
-			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/wizard.png' style='vertical-align: middle;' alt='" . _CO_SOBJECT_LANGUAGE_MODIFY . "'  title='" . _CO_SOBJECT_LANGUAGE_MODIFY . "'/></a>";
+			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/wizard.png' style='vertical-align: middle;' alt='" . _CO_ICMS_LANGUAGE_MODIFY . "'  title='" . _CO_ICMS_LANGUAGE_MODIFY . "'/></a>";
 		}
 
     	return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
@@ -389,13 +398,22 @@ class IcmsPersistableController {
 
     function getEditItemLink($icmsObj, $onlyUrl=false, $withimage=true, $userSide=false)
     {
-    	$admin_side = $userSide ? '' : 'admin/';
-    	$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?op=mod&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+		if ($this->handler->_moduleName != 'system') {
+			$admin_side = $userSide ? '' : 'admin/';
+			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?op=mod&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+		} else {
+			/**
+			 * @todo: to be implemented...
+			 */
+			//$admin_side = $userSide ? '' : 'admin/';
+			$admin_side = '';
+			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct=' . $this->handler->_itemname . "&op=mod&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+		}
 		if ($onlyUrl) {
 			return $ret;
 		}
 		elseif($withimage) {
-			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/edit.png' style='vertical-align: middle;' alt='" . _CO_SOBJECT_MODIFY . "'  title='" . _CO_SOBJECT_MODIFY . "'/></a>";
+			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/edit.png' style='vertical-align: middle;' alt='" . _CO_ICMS_MODIFY . "'  title='" . _CO_ICMS_MODIFY . "'/></a>";
 		}
 
     	return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
@@ -403,13 +421,22 @@ class IcmsPersistableController {
 
     function getDeleteItemLink($icmsObj, $onlyUrl=false, $withimage=true, $userSide=false)
     {
-    	$admin_side = $userSide ? '' : 'admin/';
-    	$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?op=del&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+    	if ($this->handler->_moduleName != 'system') {
+			$admin_side = $userSide ? '' : 'admin/';
+	    	$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?op=del&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+	    } else {
+			/**
+			 * @todo: to be implemented...
+			 */
+			//$admin_side = $userSide ? '' : 'admin/';
+			$admin_side = '';
+			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct=' . $this->handler->_itemname . "&op=del&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);	    	
+		}
 		if ($onlyUrl) {
 			return $ret;
 		}
 		elseif($withimage) {
-			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' style='vertical-align: middle;' alt='" . _CO_SOBJECT_DELETE . "'  title='" . _CO_SOBJECT_DELETE . "'/></a>";
+			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' style='vertical-align: middle;' alt='" . _CO_ICMS_DELETE . "'  title='" . _CO_ICMS_DELETE . "'/></a>";
 		}
 
     	return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
@@ -428,7 +455,7 @@ class IcmsPersistableController {
 		$icmsModule = icms_getModuleInfo($icmsObj->handler->_moduleName);
 		$link = $impresscms->urls['full']();
 		$mid = $icmsModule->getVar('mid');
-		$friendlink = "<a href=\"javascript:openWithSelfMain('".SMARTOBJECT_URL."sendlink.php?link=" . $link . "&amp;mid=" . $mid . "', ',',',',',','sendmessage', 674, 500);\"><img src=\"".SMARTOBJECT_IMAGES_ACTIONS_URL . "mail_send.png\"  alt=\"" . _CO_SOBJECT_EMAIL . "\" title=\"" . _CO_SOBJECT_EMAIL . "\" style=\"vertical-align: middle;\"/></a>";
+		$friendlink = "<a href=\"javascript:openWithSelfMain('".SMARTOBJECT_URL."sendlink.php?link=" . $link . "&amp;mid=" . $mid . "', ',',',',',','sendmessage', 674, 500);\"><img src=\"".SMARTOBJECT_IMAGES_ACTIONS_URL . "mail_send.png\"  alt=\"" . _CO_ICMS_EMAIL . "\" title=\"" . _CO_ICMS_EMAIL . "\" style=\"vertical-align: middle;\"/></a>";
 
 		$ret = '<span id="smartobject_print_button">' . $printlink . "&nbsp;</span>" . '<span id="smartobject_mail_button">' . $friendlink . '</span>';
 */
