@@ -140,6 +140,11 @@ $i++;
 $modversion['templates'][$i]['file'] = 'system_persistabletable_display.html';
 $modversion['templates'][$i]['description'] = 'Template of the IcmsPersistableTable list view';
 
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/customtag/system_adm_customtag.html';
+$modversion['templates'][$i]['description'] = 'Template of the Custom Tag admin';
+
+
 // Blocks
 $i=0;
 

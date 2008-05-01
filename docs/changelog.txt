@@ -10,7 +10,6 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : Unique Salt key to users table. (vaughan)
 - Added : Unique Salt key to mainfile/sdata trust path for use with Password encryption. (vaughan)
 - Added : enable sha256 choice in admin preferences user settings. default = yes sha256, no = md5 (basic). (vaughan)
-- Changed : Password encryption method from md5 to more secure SHA256 + 2 unique salt keys. (vaughan)
 - Added : Prototype Library (Updated to the last version , and removed old prototype files from other places like install and scriptaculous library). (nekro)
 - Added : Projax Library to integrate better Scriptaculous in php. (nekro)
 - Added : The configuration to enable or disable the userinfo.php view by annonymous users. (nekro)
@@ -36,6 +35,8 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : New module added in admin: Links manager that allow the admin create shortcuts to be used to show blocks and as start page of the site. (real_therplima)
 - Added : Addition of the editor select field in block form. Now you can select the editor you want to use into the allowed editors. (real_therplima)
 - Added : enable a local date function in admin preferences settings. default = no. (stranger)
+- Added : Implementation of the IcmsPersistableObject Framework allowing easy management of any kind of objects - Create, edit, delete, sort, filter, export, etc... (malanciault)
+- Added : Implementation of the Custom Tags features allowing to easily create tags, by language and by group, which will be automatically replaced at run time by their content (malanciault))
 
 - Improved : The pm form to use the selected editor. (real_therplima)
 - Improved : XoopsTree::getNicePathFromId has new parameter, allowing specification of the separator between links (skenow)
@@ -52,10 +53,11 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Changed : Moved the PHPmailer library from /class to /libraries. (nekro)
 - Changed : Textarea is now widely. Better to create blocks and editing of templates. (sato-san)
 - Changed : Password encryption method from md5 to more secure SHA256 + 2 unique salt keys. (vaughan)
+- Changed : Password encryption method from md5 to more secure SHA256 + 2 unique salt keys. (vaughan)
 
-- Fixed #1954811: User can set session expiration to zero (phppp/Alex_Grey/tomblack/kurak_bu)
-- Fixed #1899685 : Parse error: banners.php on line 226 (kurak_bu/nekro)
-- Fixed #1932374 : Changing the 100% width of table in xoops.css to make it 100% only for table.outer (malanciault/real_therplima)
+- Fixed : #1954811: User can set session expiration to zero (phppp/Alex_Grey/tomblack/kurak_bu)
+- Fixed : #1899685 : Parse error: banners.php on line 226 (kurak_bu/nekro)
+- Fixed : #1932374 : Changing the 100% width of table in xoops.css to make it 100% only for table.outer (malanciault/real_therplima)
 - Fixed : Removing a notice in debug when update the system module. (real_therplima)
 - Fixed : Addition of ".outer {}" was missed. (stranger)
 

@@ -29,6 +29,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 include_once(XOOPS_ROOT_PATH."/modules/system/constants.php");
+
 $adminmenu[0]['title'] = _MI_SYSTEM_ADMENU1;
 $adminmenu[0]['link'] = "admin.php?fct=banners";
 $adminmenu[0]['icon'] = "admin/banners/images/banners.png";
@@ -133,4 +134,11 @@ $adminmenu[17]['link'] = "admin.php?fct=pages";
 $adminmenu[17]['icon'] = "admin/pages/images/pages.png";
 $adminmenu[17]['small'] = "admin/pages/images/pages_small.png";
 $adminmenu[17]['id'] = XOOPS_SYSTEM_PAGES;
+
+$adminmenu[18]['title'] = _MI_SYSTEM_ADMENU21;
+$adminmenu[18]['link'] = "admin.php?fct=customtag";
+$adminmenu[18]['icon'] = "admin/customtag/images/customtag.png";
+$adminmenu[18]['small'] = "admin/customtag/images/customtag_small.png";
+$adminmenu[18]['id'] = XOOPS_SYSTEM_PAGES;
+
 ?>

@@ -117,6 +117,32 @@ function xoops_module_update_system(&$module) {
 		unset($table);	    
     }
     
+	// db migrate version = 3
+	// customtag feature added by marcan
+    $newDbVersion = 3;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	    	
+		// Create table system_customtag
+		$table = new IcmsDatabasetable('system_customtag');
+		if (!$table->exists()) {
+	    $table->setStructure("customtagid int(11) unsigned NOT NULL auto_increment,
+		  name varchar(255) NOT NULL default '',
+		  description text NOT NULL default '',
+		  content text NOT NULL default '',
+		  language varchar(100) NOT NULL default '',
+		  customtag_type tinyint(1) NOT NULL default 0,
+		  PRIMARY KEY (customtagid)");
+		}
+	    if (!$icmsDatabaseUpdater->updateTable($table)) {
+	        /**
+	         * @todo trap the errors
+	         */
+	    }
+	    unset($table);
+    }    
+    
 	echo "</code>";
 
    $feedback = ob_get_clean();

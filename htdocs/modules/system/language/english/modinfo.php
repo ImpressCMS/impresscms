@@ -49,4 +49,5 @@ define("_MI_SYSTEM_ADMENU17", "Version");
 define("_MI_SYSTEM_ADMENU18", "Content Manager");
 define("_MI_SYSTEM_ADMENU19", "Block Positions");
 define("_MI_SYSTEM_ADMENU20", "Links Manager");
+define("_MI_SYSTEM_ADMENU21", "Custom Tags");
 ?>
