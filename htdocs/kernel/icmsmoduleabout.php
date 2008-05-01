@@ -59,23 +59,22 @@ class IcmsModuleAbout
 		
 		$this->_aboutTitle = $aboutTitle;
 
-		$this->_lang_developer_contributor = _CO_SOBJECT_DEVELOPER_CONTRIBUTOR;
-		$this->_lang_developer_website = _CO_SOBJECT_DEVELOPER_WEBSITE;
-		$this->_lang_developer_email = _CO_SOBJECT_DEVELOPER_EMAIL;
-		$this->_lang_developer_credits = _CO_SOBJECT_DEVELOPER_CREDITS;
-		$this->_lang_module_info = _CO_SOBJECT_MODULE_INFO;
-		$this->_lang_module_status = _CO_SOBJECT_MODULE_STATUS;
-		$this->_lang_module_release_date =_CO_SOBJECT_MODULE_RELEASE_DATE ;
-		$this->_lang_module_demo = _CO_SOBJECT_MODULE_DEMO;
-		$this->_lang_module_support = _CO_SOBJECT_MODULE_SUPPORT;
-		$this->_lang_module_bug = _CO_SOBJECT_MODULE_BUG;
-		$this->_lang_module_submit_bug = _CO_SOBJECT_MODULE_SUBMIT_BUG;
-		$this->_lang_module_feature = _CO_SOBJECT_MODULE_FEATURE;
-		$this->_lang_module_submit_feature = _CO_SOBJECT_MODULE_SUBMIT_FEATURE;
-		$this->_lang_module_disclaimer = _CO_SOBJECT_MODULE_DISCLAIMER;
-		$this->_lang_author_word = _CO_SOBJECT_AUTHOR_WORD;
-		$this->_lang_version_history = _CO_SOBJECT_VERSION_HISTORY;
-
+		$this->_lang_developer_contributor = _MODABOUT_DEVELOPER_CONTRIBUTOR;
+		$this->_lang_developer_website = _MODABOUT_DEVELOPER_WEBSITE;
+		$this->_lang_developer_email = _MODABOUT_DEVELOPER_EMAIL;
+		$this->_lang_developer_credits = _MODABOUT_DEVELOPER_CREDITS;
+		$this->_lang_module_info = _MODABOUT_MODULE_INFO;
+		$this->_lang_module_status = _MODABOUT_MODULE_STATUS;
+		$this->_lang_module_release_date =_MODABOUT_MODULE_RELEASE_DATE ;
+		$this->_lang_module_demo = _MODABOUT_MODULE_DEMO;
+		$this->_lang_module_support = _CO_ICMS_MODULE_SUPPORT;
+		$this->_lang_module_bug = _MODABOUT_MODULE_BUG;
+		$this->_lang_module_submit_bug = _MODABOUT_MODULE_SUBMIT_BUG;
+		$this->_lang_module_feature = _MODABOUT_MODULE_FEATURE;
+		$this->_lang_module_submit_feature = _CO_ICMS_MODULE_SUBMIT_FEATURE;
+		$this->_lang_module_disclaimer = _MODABOUT_MODULE_DISCLAIMER;
+		$this->_lang_author_word = _MODABOUT_AUTHOR_WORD;
+		$this->_lang_version_history = _MODABOUT_VERSION_HISTORY;
 	}
 
 	/**
