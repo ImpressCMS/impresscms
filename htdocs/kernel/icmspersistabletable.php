@@ -349,8 +349,8 @@ class IcmsPersistableTable {
 					}
 				}
 
-				include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobjectcontroller.php";
-				$controller = new IcmsPersistableObjectController($this->_objectHandler);
+				include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
+				$controller = new IcmsPersistableController($this->_objectHandler);
 
 				if ((!is_array($this->_actions)) || in_array('edit', $this->_actions)) {
 					$actions[] = $controller->getEditItemLink($object, false, true, $this->_userSide);
