@@ -36,7 +36,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : Addition of the editor select field in block form. Now you can select the editor you want to use into the allowed editors. (real_therplima)
 - Added : enable a local date function in admin preferences settings. default = no. (stranger)
 - Added : Implementation of the IcmsPersistableObject Framework allowing easy management of any kind of objects - Create, edit, delete, sort, filter, export, etc... (malanciault)
-- Added : Implementation of the Custom Tags features allowing to easily create tags, by language and by group, which will be automatically replaced at run time by their content (malanciault))
+- Added : Implementation of the Custom Tags features allowing to easily create tags, by language and by group, which will be automatically replaced at run time by their content (malanciault)
 
 - Improved : The pm form to use the selected editor. (real_therplima)
 - Improved : XoopsTree::getNicePathFromId has new parameter, allowing specification of the separator between links (skenow)
