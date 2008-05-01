@@ -356,7 +356,7 @@ class IcmsDatabasetable {
 	 */
 	function createTable() {
 		$query = $this->getStructure();
-		$query = "CREATE TABLE `" . $this->name() . "` (" . $query . ") TYPE=MyISAM COMMENT='The SmartFactory <www.smartfactory.ca>'";
+		$query = "CREATE TABLE `" . $this->name() . "` (" . $query . ") TYPE=MyISAM";
 
 		if ($this->force) {
 			$ret = $this->_db->queryF($query);	
