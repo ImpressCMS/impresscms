@@ -571,7 +571,13 @@ function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = f
     }
     $name = (!isset($name)) ? $module_dir : trim($name);
     if (!isset($handlers[$module_dir][$name])) {
-        if ( file_exists( $hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php" ) ) {
+    	if ($module_dir != 'system') {
+			$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php";
+		} else {
+			$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/admin/{$name}/class/{$name}.php";
+		}
+
+        if ( file_exists($hnd_file) ) {
             include_once $hnd_file;
         }
         $class = ucfirst(strtolower($module_dir)).ucfirst($name).'Handler';
