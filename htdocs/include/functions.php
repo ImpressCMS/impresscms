@@ -1003,7 +1003,7 @@ function icms_getCurrentModuleName() {
 /**
  * Load a module language file
  * 
- * If $module = core, file wil be loaded from ICMS_ROOT_PATH/language/
+ * If $module = core, file will be loaded from ICMS_ROOT_PATH/language/
  *
  * @param string $module dirname of the module
  * @param string $file name of the file without ".php"
