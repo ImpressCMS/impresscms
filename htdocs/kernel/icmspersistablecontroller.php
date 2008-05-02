@@ -149,7 +149,7 @@ class IcmsPersistableController {
 
 		if ($storeResult) {
 			if ($this->handler->getPermissions()) {
-				$icmspermissions_handler = new IcmsPermissionHandler($this->handler);
+				$icmspermissions_handler = new IcmsPersistablePermissionHandler($this->handler);
 				$icmspermissions_handler->storeAllPermissionsForId($icmsObj->id());
 			}
 		}

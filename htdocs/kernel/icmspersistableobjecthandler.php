@@ -166,8 +166,6 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
     * @param string $description description of the control that will be displayed in the form
     */
     function addPermission($perm_name, $caption, $description=false) {
-    	include_once(ICMS_ROOT_PATH . '/kernel/icmspermission.php');
-
    		$this->permissionsArray[] = array(
    			'perm_name' => $perm_name,
    			'caption' => $caption,
@@ -176,7 +174,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
     }
 
     function setGrantedObjectsCriteria(&$criteria, $perm_name) {
-		$icmspermissions_handler = new IcmsPermissionHandler($this);
+		$icmspermissions_handler = new IcmsPersistablePermissionHandler($this);
 		$grantedItems = $icmspermissions_handler->getGrantedItems($perm_name);
 		if (count($grantedItems) > 0) {
 			$criteria->add(new Criteria($this->keyName, '(' . implode(', ', $grantedItems) . ')', 'IN'));

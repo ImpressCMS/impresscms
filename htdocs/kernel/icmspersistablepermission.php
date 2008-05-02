@@ -15,10 +15,10 @@ if (!defined("XOOPS_ROOT_PATH")) {
 	die("XOOPS root path not defined");
 }
 
-class IcmsPermissionHandler extends XoopsObjectHandler
+class IcmsPersistablePermissionHandler extends XoopsObjectHandler
 {
     var $handler;
-    function IcmsPermissionHandler($handler) {
+    function IcmsPersistablePermissionHandler($handler) {
         $this->handler=$handler;
     }
 
