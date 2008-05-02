@@ -14,11 +14,9 @@ if (!defined("XOOPS_ROOT_PATH")) {
     die("XOOPS root path not defined");
 }
 
-include_once XOOPS_ROOT_PATH . "/kernel/icmspersistableobjecthandler.php";
-
-include_once XOOPS_ROOT_PATH . "/modules/smartobject/include/common.php";
-
-include_once SMARTOBJECT_ROOT_PATH . "class/smartobjectcontroller.php";
+include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobjecthandler.php";
+include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
+include_once ICMS_ROOT_PATH . "/kernel/icmspersistablepermission.php";
 
 if (!defined('XOBJ_DTYPE_SIMPLE_ARRAY')) define('XOBJ_DTYPE_SIMPLE_ARRAY', 101);
 if (!defined('XOBJ_DTYPE_CURRENCY')) define('XOBJ_DTYPE_CURRENCY', 200);
@@ -71,7 +69,7 @@ class IcmsPersistableObject extends XoopsObject {
 	* @return boolean : TRUE if user has access, false if not
 	**/
 	function accessGranted($perm_name) {
-		$icmspermissions_handler = new IcmsPermissionHandler($this->handler);
+		$icmspermissions_handler = new IcmsPersistablePermissionHandler($this->handler);
 		return $icmspermissions_handler->accessGranted($perm_name, $this->id());
 	}
 	function addFormSection($section_name, $value=false, $hide=false) {
@@ -452,7 +450,7 @@ class IcmsPersistableObject extends XoopsObject {
 			return false;
 		}
 
-		$icmspermissions_handler = new IcmsPermissionHandler($this->handler);
+		$icmspermissions_handler = new IcmsPersistablePermissionHandler($this->handler);
 		$ret = $icmspermissions_handler->getGrantedGroups($group_perm, $this->id());
 
 		if (count($ret) == 0) {
