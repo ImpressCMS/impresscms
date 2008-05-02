@@ -39,12 +39,9 @@ function editcustomtag($showmenu = false, $customtagid = 0, $clone=false)
 		$icmsAdminTpl->display('db:admin/customtag/system_adm_customtag.html');		
 	}
 }
-
-$icms_customtag_handler = xoops_getmodulehandler('customtag');
-
-icms_loadLanguageFile('system', 'customtag', true);
 icms_loadLanguageFile('system', 'common');
 
+$icms_customtag_handler = xoops_getmodulehandler('customtag');
 
 $op = '';
 

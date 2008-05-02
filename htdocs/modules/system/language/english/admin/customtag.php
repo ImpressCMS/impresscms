@@ -24,6 +24,7 @@ define('_CO_ICMS_CUSTOMTAG_LANGUAGE', 'Language');
 define('_CO_ICMS_CUSTOMTAG_LANGUAGE_DSC', '');
 define('_CO_ICMS_CUSTOMTAG_TYPE', 'Type');
 define('_CO_ICMS_CUSTOMTAG_TYPE_DSC', '');
+
 define('_CO_ICMS_CUSTOMTAG_PERMISSION_VIEW', 'View permission');
 define('_CO_ICMS_CUSTOMTAG_PERMISSION_VIEW_DSC', 'Only the selected groups will be able to see the content of this tag');
 
