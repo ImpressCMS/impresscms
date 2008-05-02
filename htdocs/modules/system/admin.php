@@ -72,9 +72,9 @@ if ($admintest != 0) {
 	if (isset($fct) && $fct != '') {
 		if (file_exists(XOOPS_ROOT_PATH.'/modules/system/admin/'.$fct.'/xoops_version.php')) {
 			if (file_exists(XOOPS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin/'.$fct.'.php')) {
-				include XOOPS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin/'.$fct.'.php';
+				include_once XOOPS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin/'.$fct.'.php';
 			} elseif (file_exists(XOOPS_ROOT_PATH.'/modules/system/language/english/admin/'.$fct.'.php')) {
-				include XOOPS_ROOT_PATH.'/modules/system/language/english/admin/'.$fct.'.php';
+				include_once XOOPS_ROOT_PATH.'/modules/system/language/english/admin/'.$fct.'.php';
 			}
 			include XOOPS_ROOT_PATH.'/modules/system/admin/'.$fct.'/xoops_version.php';
 			$sysperm_handler =& xoops_gethandler('groupperm');
