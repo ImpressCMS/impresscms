@@ -526,6 +526,33 @@ class XoopsUser extends XoopsObject
     {
         return $this->getVar("salt");
     }
+    
+	/**
+     * Gravatar plugin for ImpressCMS
+     * @author TheRplima
+     * 
+     * @param string $rating
+     * @param integer $size (size in pixels of the image. Accept values between 1 to 80. Default 80)
+     * @param string $default (url of default avatar. Will be used if no gravatar are found)
+     * @param string $border (hexadecimal color)
+     * 
+     * @return string (gravatar or ImpressCMS avatar)
+    */
+	function gravatar($rating = false, $size = false, $default = false, $border = false, $overwrite = false) {
+		
+		if (!$overwrite && file_exists(XOOPS_UPLOAD_PATH.'/'.$this->getVar('user_avatar')) && $this->getVar('user_avatar') != 'blank.gif'){
+			return XOOPS_UPLOAD_URL.'/'.$this->getVar('user_avatar');
+		}
+		
+		$ret = "http://www.gravatar.com/avatar.php?gravatar_id=".md5(strtolower($this->getVar('email', 'E')));
+		if($rating && $rating != ''){$ret .= "&amp;rating=".$rating;}
+		if($size && $size != ''){$ret .="&amp;size=".$size;}
+		if($default && $default != ''){$ret .= "&amp;default=".urlencode($default);}
+		if($border && $border != ''){$ret .= "&amp;border=".$border;}
+		
+		return $ret;
+	}
+	
 }
 
 
