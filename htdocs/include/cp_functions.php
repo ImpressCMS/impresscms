@@ -124,12 +124,15 @@ window.onload=startList;
 			}
 			$perm_itens = array ( );
 			
-			foreach ( $navitem ['menu'] as $sortarray ) {
+			foreach ( $navitem ['menu'] as $k=>$sortarray ) {
 				$column [] = $sortarray ['title'];
+				if (isset ( $sortarray ['subs'] ) && count ( $sortarray ['subs'] ) > 0) {
+					asort($navitem ['menu'][$k]['subs']); //Sorting submenus of preferences
+				}
 			}
 			//sort arrays after loop
 			array_multisort ( $column, SORT_ASC, $navitem ['menu'] );
-
+			
 			foreach ( $navitem ['menu'] as $item ) {
 				if (false != $all_ok || in_array ( $item ['id'], $ok_syscats )) {
 					$perm_itens [] = $item;
