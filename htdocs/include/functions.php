@@ -56,6 +56,7 @@ function xoops_header($closehead=true)
 
 function xoops_footer()
 {
+	global $xoopsConfigMetaFooter;
    echo ''.htmlspecialchars($xoopsConfigMetaFooter['google_analytics']).'</body></html>';
     ob_end_flush();
 }
