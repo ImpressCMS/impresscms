@@ -1294,6 +1294,28 @@ function icms_get_page_before_form() {
 	return isset ($_POST['icms_page_before_form']) ? $_POST['icms_page_before_form'] : $impresscms->urls['previouspage'];
 }
 
+function icms_sanitizeCustomtags_callback($matches) {
+	global $icms_customtag_handler;
+	if (isset($icms_customtag_handler->objects[$matches[1]])){
+		$customObj = $icms_customtag_handler->objects[$matches[1]];
+		$ret = $customObj->renderWithPhp();
+		return $ret;
+	} else {
+		return '';
+	}
+}
+
+function icms_sanitizeCustomtags($text) {
+	$patterns = array ();
+	$replacements = array ();
+
+	global $icms_customtag_handler;
+		
+	$patterns[] = "/\[customtag](.*)\[\/customtag\]/sU";
+	$text = preg_replace_callback($patterns, 'icms_sanitizeCustomtags_callback', $text);
+	return $text;
+}
+
 /**
  * Function to create a navigation menu in content pages.
  * This function was based on the function that do the same in mastop publish module

@@ -96,6 +96,7 @@ switch ($op) {
 
 		$icmsAdminTpl->assign('icms_customtag_table', $objectTable->fetch());
 		
+		$icmsAdminTpl->assign('icms_custom_tag_explain', true);
 		$icmsAdminTpl->assign('icms_custom_tag_title', _CO_ICMS_CUSTOMTAGS_DSC);
 
 		$icmsAdminTpl->display(ICMS_ROOT_PATH . '/modules/system/templates/admin/customtag/system_adm_customtag.html');
