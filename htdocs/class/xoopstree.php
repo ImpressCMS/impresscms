@@ -238,7 +238,7 @@ class XoopsTree
    */    
     function getNicePathFromId($sel_id, $title, $funcURL, $path='', $separator=_BRDCRMB_SEP)
     {
-       	$path = !empty($path) ? "&nbsp;:&nbsp;" . $path : $path;
+        $path = !empty($path) ? $separator.$path : $path;
         $sel_id = intval($sel_id);
         $sql = 'SELECT '.$this->pid.', '.$title.' FROM '.$this->table.' WHERE '.$this->id.'="'.$sel_id.'"';
         $result = $this->db->query($sql);
@@ -248,7 +248,7 @@ class XoopsTree
         list($parentid,$name) = $this->db->fetchRow($result);
         $myts =& MyTextSanitizer::getInstance();
         $name = $myts->makeTboxData4Show($name);
-		$path = "<a href='".$funcURL."&".$this->id."=".$sel_id."'>".$name."</a>".$path."";
+        $path = '<a href="'.$funcURL.'&amp;'.$this->id.'='.$sel_id.'">'.$name.'</a>'.$path."";
         if ( $parentid == 0 ) {
             return $path;
         }
