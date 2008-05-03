@@ -85,7 +85,7 @@ if ( !is_object($xoopsUser) ) {
         echo $pm_arr[0]->getVar("msg_text") . "<br /><br /></td></tr><tr class='foot'><td width='20%' colspan='2' align='left'>";
         // we dont want to reply to a deleted user!
         if ( $poster != false ) {
-            echo "<a href='#' onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?reply=1&amp;msg_id=".$pm_arr[0]->getVar("msg_id")."\",\"pmlite\",450,380);'><img src='".XOOPS_URL."/images/icons/reply.gif' alt='"._PM_REPLY."' /></a>\n";
+            echo "<a href='#' onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?reply=1&amp;msg_id=".$pm_arr[0]->getVar("msg_id")."\",\"pmlite\",550,450);'><img src='".XOOPS_URL."/images/icons/reply.gif' alt='"._PM_REPLY."' /></a>\n";
         }
         echo "<input type='hidden' name='delete' value='1' />";
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();

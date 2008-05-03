@@ -10,7 +10,6 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : Unique Salt key to users table. (vaughan)
 - Added : Unique Salt key to mainfile/sdata trust path for use with Password encryption. (vaughan)
 - Added : enable sha256 choice in admin preferences user settings. default = yes sha256, no = md5 (basic). (vaughan)
-- Changed : Password encryption method from md5 to more secure SHA256 + 2 unique salt keys. (vaughan)
 - Added : Prototype Library (Updated to the last version , and removed old prototype files from other places like install and scriptaculous library). (nekro)
 - Added : Projax Library to integrate better Scriptaculous in php. (nekro)
 - Added : The configuration to enable or disable the userinfo.php view by annonymous users. (nekro)
@@ -64,6 +63,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Changed : Moved the PHPmailer library from /class to /libraries. (nekro)
 - Changed : Textarea is now widely. Better to create blocks and editing of templates. (sato-san)
 - Changed : Password encryption method from md5 to more secure SHA256 + 2 unique salt keys. (vaughan)
+- Changed : PM-Popup size bigger. (sato-san)
 
 - Fixed #1899685 : Parse error: banners.php on line 226 (kurak_bu/nekro)
 - Fixed #1932374 : Changing the 100% width of table in xoops.css to make it 100% only for table.outer (malanciault/real_therplima)  
