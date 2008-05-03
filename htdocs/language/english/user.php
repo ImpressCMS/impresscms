@@ -22,8 +22,6 @@ define('_US_REMOVEINFO','This will remove all your info from our database.');
 define('_US_BEENDELED','Your account has been deleted.');
 define('_US_REMEMBERME', 'Remember me');
 
-//
-
 //%%%%%%		File Name register.php 		%%%%%
 define('_US_USERREG','User Registration');
 define('_US_NICKNAME','Username');
@@ -154,4 +152,12 @@ define('_US_GROUPS', 'User\'s Groups');
 define('_US_YOURREGISTRATION', 'Your registration at %s');
 define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
 define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user registration failed.');
+define('_US_REGFORM_NOJAVASCRIPT', 'To log in at the site it\'s necessary that your browser has javascript enabled.');
+define('_US_REGFORM_WARNING', 'To register at the site you need to use a secure password. Try to create your password by using a mixture of letters (upper and lowercase), numbers and symbols. Try to create a password the more complex as possible although you can remember it.');
+define('_US_CHANGE_PASSWORD', 'Change Password?');
+
+/*
+define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled');
+define('_US_AUTORESIZE_ATV_DESC', 'Images larger than %u x %u will be automatically resized, keeping the aspect ratio, so that it is within the maximum pixels set. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.');
+*/
 ?>

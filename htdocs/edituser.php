@@ -30,9 +30,6 @@
  * @subpackage users
  */
 $xoopsOption['pagetype'] = 'user';
-/**
- *
- */ 
 include 'mainfile.php';
 include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
 
@@ -110,7 +107,13 @@ if ($op == 'saveuser') {
         $edituser->setVar('url', formatURL($_POST['url']));
         $edituser->setVar('user_icq', $_POST['user_icq']);
         $edituser->setVar('user_from', $_POST['user_from']);
-        $edituser->setVar('user_sig', xoops_substr($_POST['user_sig'], 0, 255));
+ 		if ($xoopsConfigUser['allwshow_sig'] == 1) {
+        if ($xoopsConfigUser['allow_htsig'] == 0) {
+		$signature = strip_tags($myts->xoopsCodeDecode($_POST['user_sig'], 1));
+        $edituser->setVar('user_sig', xoops_substr($signature, 0, 1000));
+        }elseif ($xoopsConfigUser['allwshow_sig'] == 1) {
+        $edituser->setVar('user_sig', xoops_substr($_POST['user_sig'], 0, 1000));
+        }}
         $user_viewemail = (!empty($_POST['user_viewemail'])) ? 1 : 0;
         $edituser->setVar('user_viewemail', $user_viewemail);
         $edituser->setVar('user_aim', $_POST['user_aim']);
@@ -189,14 +192,27 @@ if ($op == 'editprofile') {
     $location_text = new XoopsFormText(_US_LOCATION, 'user_from', 30, 100, $xoopsUser->getVar('user_from', 'E'));
     $occupation_text = new XoopsFormText(_US_OCCUPATION, 'user_occ', 30, 100, $xoopsUser->getVar('user_occ', 'E'));
     $interest_text = new XoopsFormText(_US_INTEREST, 'user_intrest', 30, 150, $xoopsUser->getVar('user_intrest', 'E'));
-    $sig_tray = new XoopsFormElementTray(_US_SIGNATURE, '<br />');
     include_once 'include/xoopscodes.php';
+ 		if ($xoopsConfigUser['allwshow_sig'] == 1) {
+        if ($xoopsConfigUser['allow_htsig'] == 0) {
+    $sig_tray = new XoopsFormElementTray(_US_SIGNATURE, '<br />');
+    $sig_tarea = new XoopsFormTextArea('', 'user_sig', $xoopsUser->getVar('user_sig', 'E'));
+    $sig_tray->addElement($sig_tarea);
+    $sig_cbox_value = $xoopsUser->getVar('attachsig') ? 1 : 0;
+    $sig_cbox = new XoopsFormCheckBox('', 'attachsig', $sig_cbox_value);
+    $sig_cbox->addOption(1, _US_SHOWSIG);
+    $sig_tray->addElement($sig_cbox);
+    }elseif ($xoopsConfigUser['allwshow_sig'] == 1) {
+    $sig_tray = new XoopsFormElementTray(_US_SIGNATURE, '<br />');
     $sig_tarea = new XoopsFormDhtmlTextArea('', 'user_sig', $xoopsUser->getVar('user_sig', 'E'));
     $sig_tray->addElement($sig_tarea);
     $sig_cbox_value = $xoopsUser->getVar('attachsig') ? 1 : 0;
     $sig_cbox = new XoopsFormCheckBox('', 'attachsig', $sig_cbox_value);
     $sig_cbox->addOption(1, _US_SHOWSIG);
     $sig_tray->addElement($sig_cbox);
+        }
+    }
+
     $umode_select = new XoopsFormSelect(_US_CDISPLAYMODE, 'umode', $xoopsUser->getVar('umode'));
     $umode_select->addOptionArray(array('nest'=>_NESTED, 'flat'=>_FLAT, 'thread'=>_THREADED));
     $uorder_select = new XoopsFormSelect(_US_CSORTORDER, 'uorder', $xoopsUser->getVar('uorder'));
@@ -221,7 +237,15 @@ if ($op == 'editprofile') {
     $bio_tarea = new XoopsFormTextArea(_US_EXTRAINFO, 'bio', $xoopsUser->getVar('bio', 'E'));
     $cookie_radio_value = empty($_COOKIE[$xoopsConfig['usercookie']]) ? 0 : 1;
     $cookie_radio = new XoopsFormRadioYN(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
-    $pwd_text = new XoopsFormPassword('', 'password', 10, 72);
+	$pwd_change_radio = new XoopsFormRadioYN(_US_CHANGE_PASSWORD, 'change_pass', 0, _YES, _NO);
+	$pwd_change_radio->setExtra('onchange="initQualityMeter(this.value);"');
+	$config_handler =& xoops_gethandler('config');
+	$passConfig =& $config_handler->getConfigsByCat(2);
+	if ($passConfig['pass_level'] <= 20){
+		$pwd_text = new XoopsFormPassword('', 'password', 10, 72);
+	}else{
+		include_once XOOPS_ROOT_PATH."/include/passwordquality.php";
+	}
     $pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 72);
     $pwd_tray = new XoopsFormElementTray(_US_PASSWORD.'<br />'._US_TYPEPASSTWICE);
     $pwd_tray->addElement($pwd_text);
@@ -250,6 +274,7 @@ if ($op == 'editprofile') {
     $form->addElement($notify_method_select);
     $form->addElement($notify_mode_select);
     $form->addElement($bio_tarea);
+    $form->addElement($pwd_change_radio);
     $form->addElement($pwd_tray);
     $form->addElement($cookie_radio);
     $form->addElement($mailok_radio);
@@ -278,6 +303,11 @@ if ($op == 'avatarform') {
         include_once 'class/xoopsformloader.php';
         $form = new XoopsThemeForm(_US_UPLOADMYAVATAR, 'uploadavatar', 'edituser.php', 'post', true);
         $form->setExtra('enctype="multipart/form-data"');
+/* the avatar resizer shall later be included
+        if ($xoopsConfigUser['avatar_auto_resize']){
+        	$form->addElement(new XoopsFormLabel(_US_AUTORESIZE_ATV, sprintf(_US_AUTORESIZE_ATV_DESC,$xoopsConfigUser['avatar_width'],$xoopsConfigUser['avatar_height'])));
+        }
+*/
         $form->addElement(new XoopsFormLabel(_US_MAXPIXEL, $xoopsConfigUser['avatar_width'].' x '.$xoopsConfigUser['avatar_height']));
         $form->addElement(new XoopsFormLabel(_US_MAXIMGSZ, $xoopsConfigUser['avatar_maxsize']));
         $form->addElement(new XoopsFormFile(_US_SELFILE, 'avatarfile', $xoopsConfigUser['avatar_maxsize']), true);

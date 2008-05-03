@@ -29,9 +29,6 @@
  * @package kernel 
  * @subpackage users 
  */ 
-/**
- *
- */  
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 

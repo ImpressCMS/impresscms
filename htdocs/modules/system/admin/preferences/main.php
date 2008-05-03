@@ -142,6 +142,16 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                     $ele->addOptionArray($dirlist);
                 }
                 break;
+            case 'select_font':
+            	$ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
+            	require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
+            	$dirlist = XoopsLists::getFileListAsArray(ICMS_ROOT_PATH."/libraries/captcha/fonts/");
+            	if (!empty($dirlist)) {
+            		asort($dirlist);
+            		$ele->addOptionArray($dirlist);
+            	}
+            	$form->addElement(new XoopsFormHidden('_old_theme', $config[$i]->getConfValueForOutput()));
+            	break;
             case 'tplset':
                 $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
                 $tplset_handler =& xoops_gethandler('tplset');

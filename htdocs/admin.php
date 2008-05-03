@@ -211,7 +211,9 @@ switch ($op){
 function showRSS($op=1){
 	switch ($op) {
 		case 1:
-			$rssurl = 'http://www.impresscms.org/modules/smartsection/backend.php';
+			$config_handler =& xoops_gethandler('config');
+			$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+			$rssurl = $xoopsConfigPersona['rss_local'];
 			$rssfile = XOOPS_CACHE_PATH.'/adminnews.xml';
 			break;
 	}

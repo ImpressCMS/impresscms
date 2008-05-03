@@ -3,7 +3,7 @@
 class upgrade_impcms06 {
 	
 	var $usedFiles = array ();
-    var $tasks = array('dbversion', 'db');
+    var $tasks = array('conf', 'dbversion', 'db');
 	var $updater;
 	
 	function __construct() {
@@ -68,7 +68,30 @@ class upgrade_impcms06 {
         
         return true;
     }
-        function check_dbversion()
+    function check_conf()
+    {
+		$table = new IcmsDatabasetable('modules');
+	    return $table->fieldExists('dbversion');
+            }
+
+ 	function apply_conf() {
+		$db = $GLOBALS['xoopsDB'];
+		if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_CONTMANAGER"') != 0){return true;}
+		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('9','_MD_AM_CONTMANAGER')");
+		if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_PERSON"') != 0){return true;}
+		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('10','_MD_AM_PERSON')");
+		if (getDbValue($db,'configoption','confop_id',' confop_name="_MD_AM_PASSLEVEL1"','confop_value','conf_id') != 0){return true;}
+		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " (confop_id,confop_name,confop_value,conf_id) VALUES ('','_MD_AM_PASSLEVEL1','20','38')");
+		if (getDbValue($db,'configoption','confop_id',' confop_name="_MD_AM_PASSLEVEL2"','confop_value','conf_id') != 0){return true;}
+		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " (confop_id,confop_name,confop_value,conf_id) VALUES ('','_MD_AM_PASSLEVEL2','40','38')");
+		if (getDbValue($db,'configoption','confop_id',' confop_name="_MD_AM_PASSLEVEL3"','confop_value','conf_id') != 0){return true;}
+		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " (confop_id,confop_name,confop_value,conf_id) VALUES ('','_MD_AM_PASSLEVEL3','60','38')");
+		if (getDbValue($db,'configoption','confop_id',' confop_name="_MD_AM_PASSLEVEL4"','confop_value','conf_id') != 0){return true;}
+		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " (confop_id,confop_name,confop_value,conf_id) VALUES ('','_MD_AM_PASSLEVEL4','80','38')");
+		if (getDbValue($db,'configoption','confop_id',' confop_name="_MD_AM_PASSLEVEL5"','confop_value','conf_id') != 0){return true;}
+		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " (confop_id,confop_name,confop_value,conf_id) VALUES ('','_MD_AM_PASSLEVEL5','95','38')");
+	}
+       function check_dbversion()
     {
 		$table = new IcmsDatabasetable('modules');
 	    return $table->fieldExists('dbversion');

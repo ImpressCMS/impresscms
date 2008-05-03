@@ -52,6 +52,7 @@ define('XOOPS_CONF_MAILER', 6);
 define('XOOPS_CONF_AUTH', 7);
 define('IM_CONF_MULILANGUAGE', 8);
 define('IM_CONF_CONTENT', 9);
+define('XOOPS_CONF_PERSONA', 10);
 /**#@-*/
 
 /**

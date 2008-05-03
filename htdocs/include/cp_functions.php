@@ -51,11 +51,12 @@ function xoops_cp_header($ret = 0) {
 	echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>";
 	echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" lang="' . _LANGCODE . '">
 	<head>
-	<meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" />
-	<meta http-equiv="content-language" content="' . _LANGCODE . '" />
-	<title>' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . ' Administration</title>
-	<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>' . '<link rel="shortcut icon" type="image/ico" href="' . XOOPS_URL . '/favicon.ico" />
-	<link rel="icon" type="image/png" href="' . XOOPS_URL . '/favicon.ico" />
+	<meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" />
+	<meta http-equiv="content-language" content="'._LANGCODE.'" />
+	<title>'._IMPRESSCMS_ADMIN.' '.htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES).'</title>
+	<script type="text/javascript" src="'.XOOPS_URL.'/include/xoops.js"></script>' .
+	'<link rel="shortcut icon" type="image/ico" href="'.XOOPS_URL.'/favicon.ico" />
+	<link rel="icon" type="image/png" href="'.XOOPS_URL.'/favicon.ico" />
 	';
 	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops.css" />';
 	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style.css" />';
@@ -209,8 +210,10 @@ window.onload=startList;
 
 function xoops_cp_footer() {
 	global $xoopsConfig, $xoopsLogger;
-	echo "</div><br /></div>";
-	echo "<div class='CPfoot'>Powered by&nbsp;" . XOOPS_VERSION . " &copy; 2007-" . date ( "Y" ) . " <a href='http://www.impresscms.org/' target='_blank'>ImpressCMS</a></div>
+	echo"</div><br /></div>";
+	$config_handler =& xoops_gethandler('config');
+	$xoopsConfiMetaFooter =& $config_handler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
+	echo "<div class='CPfoot'>".$xoopsConfiMetaFooter['footadm']."</small></div>".$xoopsConfiMetaFooter['google_analytics']."
         </body>
       </html>
     ";

@@ -216,8 +216,16 @@ define('_IMPRESSCMS_BLOG','Blog');
 define('_IMPRESSCMS_DONATE','Donate!');
 define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
 define('_RECREATE_ADMINMENU_FILE', 'This is your first time to enter the administration section. Press the button below to proceed.');
-
+define('_IMPRESSCMS_ADMIN','Administration of');
 //Content Manager
 define('_CT_NAV','Home');
 define('_CT_RELATEDS','Related pages');
+//Security image (captcha)
+define("_SECURITYIMAGE_CODE","Security code");
+define("_SECURITYIMAGE_GETCODE","Enter the security code");
+/*
+define("_SECURITYIMAGE_ERROR","Invalid security code");
+define("_SECURITYIMAGE_GDERROR","<b><font color='#CC0000'>Library GD not installed</font> : <a target='php' href='http://fr2.php.net/manual/fr/ref.image.php'>Manual PHP</a></b><br>");
+define("_SECURITYIMAGE_FONTERROR","<b><font color='#CC0000'>No true type fonts found</font>, verify your installation</b><br>");
+*/
 ?>

@@ -590,7 +590,7 @@ CREATE TABLE users (
   user_regdate int(10) unsigned NOT NULL default '0',
   user_icq varchar(15) NOT NULL default '',
   user_from varchar(100) NOT NULL default '',
-  user_sig tinytext NOT NULL,
+  user_sig text NOT NULL,
   user_viewemail tinyint(1) unsigned NOT NULL default '0',
   actkey varchar(8) NOT NULL default '',
   user_aim varchar(18) NOT NULL default '',

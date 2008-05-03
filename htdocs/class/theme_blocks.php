@@ -154,10 +154,24 @@ class xos_logos_PageBuilder {
 		return $cache_id;
 	}
 	
-	function buildBlock( $xobject, &$template ) {
-		// The lame type workaround will change
-		// bid is added temporarily as workaround for specific block manipulation
-		$block = array(
+function buildBlock( $xobject, &$template ) {
+        // The lame type workaround will change
+        // bid is added temporarily as workaround for specific block manipulation
+    global $xoopsUser, $xoopsConfigPersona;
+ if ($xoopsConfigPersona['editre_block'] == 1 ) {
+ 	        $block = array(
+            'id'        => $xobject->getVar( 'bid' ),
+            'module'    => $xobject->getVar( 'dirname' ),
+            'title'        => ($xoopsUser && $xoopsUser->isAdmin()) ? $xobject->getVar( 'title' ).
+                                                       "<a href=".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&op=edit&bid=".$xobject->getVar('bid')."> <img src=".XOOPS_URL."/images/icons/edit_block.gif"." title="._EDIT." alt="._EDIT."  /></a>".
+                                                       "<a href=".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&op=delete&bid=".$xobject->getVar('bid')."> <img src=".XOOPS_URL."/images/icons/delete_block.gif"." title="._DELETE." alt="._DELETE."  /> </a>" 
+                            : $xobject->getVar( 'title' ) ,            
+        //'name'        => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
+            'weight'    => $xobject->getVar( 'weight' ),
+            'lastmod'    => $xobject->getVar( 'last_modified' ),
+        );
+       }else{
+       	   		$block = array(
 			'id'	    => $xobject->getVar( 'bid' ),
 			'module'	=> $xobject->getVar( 'dirname' ),
 			'title'		=> $xobject->getVar( 'title' ),
@@ -165,7 +179,7 @@ class xos_logos_PageBuilder {
 			'weight'	=> $xobject->getVar( 'weight' ),
 			'lastmod'	=> $xobject->getVar( 'last_modified' ),
 		);
-
+	    }
 		//global $xoopsLogger;
 		
 		$xoopsLogger =& XoopsLogger::instance();

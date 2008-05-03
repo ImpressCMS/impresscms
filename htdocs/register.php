@@ -191,6 +191,23 @@ case 'finish':
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 	    $stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
 	}
+  if(@include_once XOOPS_ROOT_PATH."/libraries/captcha/captcha.php") {
+	include_once(XOOPS_ROOT_PATH ."/class/xoopsformloader.php");
+	if ($xoopsConfigUser['use_captcha'] == 1) {
+            $xoopsCaptcha = XoopsCaptcha::instance();
+            if(! $xoopsCaptcha->verify() ) {
+                   $stop = $xoopsCaptcha->getMessage();
+                    
+            }
+    }
+}
+
+	if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'] != '') {
+		if (empty($agree_disc)) {
+			$stop .= _US_UNEEDAGREE.'<br />';
+		}
+	}
+
 	if ( empty($stop) ) {
 		$member_handler =& xoops_gethandler('member');
 		$newuser =& $member_handler->createUser();

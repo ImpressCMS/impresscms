@@ -443,6 +443,15 @@ if (file_exists('./xoops_version.php')) {
 } elseif($xoopsUser) {
 	$xoopsUserIsAdmin = $xoopsUser->isAdmin(1);
 }
+    $config_handler =& xoops_gethandler('config');
+	$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+	if ($xoopsConfigPersona['multi_login']){
+		if( is_object( $xoopsUser ) ) {
+			$online_handler =& xoops_gethandler('online');
+			$online_handler->write($xoopsUser->uid(), $xoopsUser->uname(),
+			time(),0,$HTTP_SERVER_VARS['REMOTE_ADDR']);
+		}
+	}
 // ################# Preload Trigger finishCoreBoot ##############
 $icmsPreloadHandler->triggerEvent('finishCoreBoot');
 

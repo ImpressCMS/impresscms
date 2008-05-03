@@ -14,6 +14,7 @@
 <!-- Title and meta -->
 	<title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
 	<meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />	
+	<{$xoops_google_meta}>
 	<meta name="robots" content="<{$xoops_meta_robots}>" />
 	<meta name="keywords" content="<{$xoops_meta_keywords}>" />
 	<meta name="description" content="<{$xoops_meta_description}>" />
@@ -104,5 +105,6 @@
 		<a href="http://www.impresscms.org/" title=""><img src="<{xoImgUrl img/poweredby.gif}>" alt="ImpressCMS" /></a>
 	</div>
 </div>
+<{$xoops_google_analytics}>
 </body>
 </html>

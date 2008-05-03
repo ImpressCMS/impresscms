@@ -76,15 +76,14 @@ if ( !defined("XOOPS_FOOTER_INCLUDED") ) {
 				$xoTheme->contentTemplate = $xoopsOption['template_main'];
 			}
 		}
-				     	// Start rowdi addition: assign the language css&Javascripts file to the template, if required
+				     	// Start addition: assign the language css&Javascripts file to the template, if required
         if ( file_exists(XOOPS_ROOT_PATH."/language/".$GLOBALS['xoopsConfig']['language']."/css/"._LANGCODE.".css") ) {
             $xoTheme->addStylesheet( "/language/".$GLOBALS['xoopsConfig']['language']."/css/"._LANGCODE.".css", array( "media" => "screen" ) );
         }
         if ( file_exists(XOOPS_ROOT_PATH."/language/".$GLOBALS['xoopsConfig']['language']."/js/"._LANGCODE.".js") ) {
             $xoTheme->addScript( "/language/".$GLOBALS['xoopsConfig']['language']."/js/"._LANGCODE.".js", array( "type" => "text/javascript" ) );
         }
-        // End rowdi addition
-
+        // End addition
 		$xoTheme->render();
 	}
 	$xoopsLogger->stopTime();

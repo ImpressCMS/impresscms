@@ -69,6 +69,25 @@ if (false != $user) {
         redirect_header(XOOPS_URL.'/index.php', 5, _US_NOACTTPADM);
         exit();
     }
+    $config_handler =& xoops_gethandler('config');
+	$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+	if ($xoopsConfigPersona['multi_login']){
+		if( is_object( $user ) ) {
+			$online_handler =& xoops_gethandler('online');
+			$online_handler->gc(300);
+			$onlines =& $online_handler->getAll();
+			foreach( $onlines as $online ) {
+				if( $online['online_uid'] == $user->uid() ) {
+					$user = false;
+					redirect_header(XOOPS_URL.'/index.php',3,_US_MULTLOGIN);
+				}
+			}
+			if( is_object( $user ) ) {
+				$online_handler->write($user->uid(), $user->uname(),
+				time(),0,$HTTP_SERVER_VARS['REMOTE_ADDR']);
+			}
+		}
+	}
     if ($xoopsConfig['closesite'] == 1) {
         $allowed = false;
         foreach ($user->getGroups() as $group) {
@@ -92,6 +111,9 @@ if (false != $user) {
     $_SESSION['xoopsUserGroups'] = $user->getGroups();
     if ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {
         setcookie($xoopsConfig['session_name'], session_id(), time()+(60 * $xoopsConfig['session_expire']), '/',  '', 0);
+    }
+    $_SESSION['xoopsUserLastLogin'] = $user->getVar('last_login');
+    if (!$member_handler->updateUserByField($user, 'last_login', time())) {
     }
     $user_theme = $user->getVar('theme');
     if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
