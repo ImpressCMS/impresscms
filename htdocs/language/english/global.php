@@ -218,7 +218,7 @@ define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
 define('_RECREATE_ADMINMENU_FILE', 'This is your first time to enter the administration section. Press the button below to proceed.');
 define('_IMPRESSCMS_ADMIN','Administration of');
 /** The default separator used in XoopsTree::getNicePathFromId */
-define('_BRDDRMB_SEP','&nbsp;:&nbsp;')
+define('_BRDDRMB_SEP','&nbsp;:&nbsp;');
 //Content Manager
 define('_CT_NAV','Home');
 define('_CT_RELATEDS','Related pages');
