@@ -11,16 +11,14 @@
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author		modified by Sina Asghari <stranger@impresscms.ir>
- * @version		$Id:$
 */
  
-include "../../../../mainfile.php";
-
+include "../../../mainfile.php";
 error_reporting(0);
 $xoopsLogger->activated = false;
 
-if (empty($_SERVER['HTTP_REFERER']) || !preg_match("/^" . preg_quote(XOOPS_URL, '/') . "/", $_SERVER['HTTP_REFERER'])) { 
-    exit();
+if(empty($_SERVER['HTTP_REFERER']) || !preg_match("/^".preg_quote(XOOPS_URL, '/')."/", $_SERVER['HTTP_REFERER'])) { 
+	exit();
 }
 
 class XoopsCaptchaImageHandler {
