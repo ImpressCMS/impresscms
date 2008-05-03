@@ -102,8 +102,11 @@ if ( is_object($xoopsUser) && $isAdmin ) {
 }
 $xoopsTpl->assign('lang_allaboutuser', sprintf(_US_ALLABOUT,$thisUser->getVar('uname')));
 $xoopsTpl->assign('lang_avatar', _US_AVATAR);
-//$xoopsTpl->assign('user_avatarurl', XOOPS_UPLOAD_URL.'/'.$thisUser->getVar('user_avatar'));
+        if ($xoopsConfigUser['avatar_allow_gravatar'] == 1) {
 $xoopsTpl->assign('user_avatarurl', $thisUser->gravatar('G',$xoopsConfigUser['avatar_width']));
+		}else{
+$xoopsTpl->assign('user_avatarurl', XOOPS_UPLOAD_URL.'/'.$thisUser->getVar('user_avatar'));
+		}
 $xoopsTpl->assign('lang_realname', _US_REALNAME);
 $xoopsTpl->assign('user_realname', $thisUser->getVar('name'));
 $xoopsTpl->assign('lang_website', _US_WEBSITE);

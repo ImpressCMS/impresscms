@@ -374,6 +374,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'avatar_allow_upload', '_MD_AM_AVATARALLOW', '0', '_MD_AM_AVATARALWDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'avatar_allow_gravatar', '_MD_AM_GRAVATARALLOW', '1', '_MD_AM_GRAVATARALWDSC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'avatar_minposts', '_MD_AM_AVATARMP', '0', '_MD_AM_AVATARMPDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;

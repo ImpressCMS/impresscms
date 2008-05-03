@@ -309,4 +309,6 @@ define("_MD_AM_CONT_SHOWPINFO","Show poster and published info?");
 define("_MD_AM_CONT_SHOWPINFODSC","Select yes to show in the page informations about the poster and publish of the page.");
 define("_MD_AM_CONT_ACTSEO","Use menu title instead the id in the url (improve seo)?");
 define("_MD_AM_CONT_ACTSEODSC","Select yes to the value of menu title instead of the id in the url of the page.");
+define("_MD_AM_GRAVATARALLOW","Allow using GRAVATAR?");
+define("_MD_AM_GRAVATARALWDSC","By allowing this, user will be able to use their local avatar/gravatar linked to their email address.");
 ?>
