@@ -5,7 +5,7 @@
 */
 
 if (!defined("XOOPS_ROOT_PATH")) {
- 	die("XOOPS root path not defined");
+ 	die("ImpressCMS root path not defined");
 }
 
 define('_CO_ICMS_FILTER', "Filter");
@@ -64,7 +64,7 @@ define('_CO_ICMS_DOIMAGE_FORM_CAPTION', ' Enable images');
 define('_CO_ICMS_DOIMAGE_FORM_DCS', "");
 define('_CO_ICMS_DOSMILEY_FORM_CAPTION', ' Enable smiley icons');
 define('_CO_ICMS_DOSMILEY_FORM_DSC', "");
-define('_CO_ICMS_DOXCODE_FORM_CAPTION', ' Enable XOOPS codes');
+define('_CO_ICMS_DOXCODE_FORM_CAPTION', ' Enable ImpressCMS codes');
 define('_CO_ICMS_DOXCODE_FORM_DSC', "");
 define('_CO_ICMS_EDITING', 'Editing');
 define('_CO_ICMS_EMAIL', 'Send this link');
@@ -172,11 +172,11 @@ define('_CO_ICMS_BLOCKS_ADDTO_LAYOUT_OPTION1', "Horizontal 2 rows");
 define('_CO_ICMS_BLOCKS_ADDTO_LAYOUT_OPTION2', "Vertical with icons");
 define('_CO_ICMS_BLOCKS_ADDTO_LAYOUT_OPTION3', "Vertical no icon");
 define('_CO_ICMS_CURRENT_FILE', "Current file: ");
-define('_CO_ICMS_URL_FILE_DSC', "Alternatively, you can use an URL. If you select a file via 'Browse' button, URL will be ignored. You can use the tag {XOOPS_URL} to print ".XOOPS_URL);
+define('_CO_ICMS_URL_FILE_DSC', "Alternatively, you can use an URL. If you select a file via 'Browse' button, URL will be ignored. You can use the tag {ICMS_URL} to print ".ICMS_URL);
 define('_CO_ICMS_URL_FILE', "URL: ");
 define('_CO_ICMS_UPLOAD', "Select a file to upload: ");
 
-define('_CO_ICMS_CHANGE_FILE', "<hr/><b>Change File</b><br/>");
+define('_CO_ICMS_CHANGE_FILE', "<hr/><strong>Change File</strong><br/>");
 define('_CO_ICMS_CAPTION', "Caption: ");
 define('_CO_ICMS_URLLINK_URL', "URL: ");
 define('_CO_ICMS_DESC', "Description");
@@ -187,5 +187,4 @@ define('_CO_ICMS_URLLINK_BLANK', "new window");
 define('_CO_ICMS_ANY', "Any");
 define('_CO_ICMS_EDITOR', "Prefered text editor");
 define('_CO_ICMS_WITH_SELECTED', "With selected: ");
-
 ?>
