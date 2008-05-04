@@ -311,7 +311,7 @@ case 'finish':
 	break;
 case 'register':
 default:
-	$invite_code = $_GET['code'];
+	$invite_code = isset($_GET['code'])?$_GET['code']:null;
 	if ($xoopsConfigUser['activation_type'] == 3 || !empty($invite_code)) {
 		include 'include/checkinvite.php';
 		load_invite_code($invite_code);
