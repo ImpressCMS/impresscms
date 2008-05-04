@@ -46,6 +46,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : Addition for allowing webmaster to disable/enable signature of users on a site. (stranger)
 - Added : Addition for allowing webmaster to disable/enable of using html and external images on signatures of users of a site. (stranger/Hervet)
 - Added : Using GRAVATAR in Impresscms. (real_therplima/stranger)
+- Added : Built in RTL style for administration menu. (stranger)
 
 - Improved : The pm form to use the selected editor. (real_therplima)
 - Improved : XoopsTree::getNicePathFromId has new parameter, allowing specification of the separator between links (skenow)

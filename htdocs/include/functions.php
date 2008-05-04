@@ -32,7 +32,7 @@ function xoops_header($closehead=true)
     <head>
     <meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" />
     <meta http-equiv="content-language" content="'._LANGCODE.'" />
-    <meta name="verify-v1" content="'.htmlspecialchars($xoopsConfigMetaFooter['google_meta']).'" />
+    '.htmlspecialchars($xoopsConfigMetaFooter['google_meta']).'
     <meta name="robots" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_robots']).'" />
     <meta name="keywords" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_keywords']).'" />
     <meta name="description" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_desc']).'" />

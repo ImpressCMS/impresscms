@@ -57,8 +57,16 @@ function xoops_cp_header($ret = 0) {
 	<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>' . '<link rel="shortcut icon" type="image/ico" href="' . XOOPS_URL . '/favicon.ico" />
 	<link rel="icon" type="image/png" href="' . XOOPS_URL . '/favicon.ico" />
 	';
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops.css" />';
+		if (defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops_rtl.css" />';
+	   } else {
+echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops.css" />';
+           }
+		if (defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style_rtl.css" />';
+	   } else {
 	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style.css" />';
+           }
 	// ################# Preload Trigger adminHeader ##############
 	$icmsPreloadHandler->triggerEvent ( 'adminHeader' );
 	
