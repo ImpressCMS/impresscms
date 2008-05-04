@@ -60,7 +60,7 @@ class XoopsFormSelectEditor extends XoopsFormElementTray
 			asort($edtlist);
 		}
 		$option_select = new XoopsFormSelect("", $name, $value);
-		$querys = preg_replace('/editor=(.*)&/','',$_SERVER['QUERY_STRING']);
+		$querys = preg_replace('/editor=(.*?)&/','',$_SERVER['QUERY_STRING']);
 		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){
 				window.location = \'?editor=\'+this.options[this.selectedIndex].value+\'&'.$querys.'\';
 			}"';
