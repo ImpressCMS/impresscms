@@ -51,12 +51,11 @@ function xoops_cp_header($ret = 0) {
 	echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>";
 	echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="' . _LANGCODE . '" lang="' . _LANGCODE . '">
 	<head>
-	<meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" />
-	<meta http-equiv="content-language" content="'._LANGCODE.'" />
-	<title>'._IMPRESSCMS_ADMIN.' '.htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES).'</title>
-	<script type="text/javascript" src="'.XOOPS_URL.'/include/xoops.js"></script>' .
-	'<link rel="shortcut icon" type="image/ico" href="'.XOOPS_URL.'/favicon.ico" />
-	<link rel="icon" type="image/png" href="'.XOOPS_URL.'/favicon.ico" />
+	<meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" />
+	<meta http-equiv="content-language" content="' . _LANGCODE . '" />
+	<title>' . _IMPRESSCMS_ADMIN . ' ' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . '</title>
+	<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>' . '<link rel="shortcut icon" type="image/ico" href="' . XOOPS_URL . '/favicon.ico" />
+	<link rel="icon" type="image/png" href="' . XOOPS_URL . '/favicon.ico" />
 	';
 	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops.css" />';
 	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style.css" />';
@@ -125,15 +124,25 @@ window.onload=startList;
 			}
 			$perm_itens = array ( );
 			
-			foreach ( $navitem ['menu'] as $k=>$sortarray ) {
-				$column [] = $sortarray ['title'];
-				if (isset ( $sortarray ['subs'] ) && count ( $sortarray ['subs'] ) > 0) {
-					asort($navitem ['menu'][$k]['subs']); //Sorting submenus of preferences
+			/**
+			 * Allow easely change the order of system dropdown menu.
+			 * $adminmenuorder = 1; Alphabetically order;
+			 * $adminmenuorder = 0; Indice key order;
+			 * To change the order when using Indice key order just change the order of the array in the file modules/system/menu.php and after update the system module
+			 * 
+			 * @todo: Create a preference option to set this value and improve the way to change the order.
+			 */
+			$adminmenuorder = 1;
+			if ($adminmenuorder == 1) {
+				foreach ( $navitem ['menu'] as $k => $sortarray ) {
+					$column [] = $sortarray ['title'];
+					if (isset ( $sortarray ['subs'] ) && count ( $sortarray ['subs'] ) > 0) {
+						asort ( $navitem ['menu'] [$k] ['subs'] ); //Sorting submenus of preferences
+					}
 				}
+				//sort arrays after loop
+				array_multisort ( $column, SORT_ASC, $navitem ['menu'] );
 			}
-			//sort arrays after loop
-			array_multisort ( $column, SORT_ASC, $navitem ['menu'] );
-			
 			foreach ( $navitem ['menu'] as $item ) {
 				if (false != $all_ok || in_array ( $item ['id'], $ok_syscats )) {
 					$perm_itens [] = $item;
@@ -210,10 +219,10 @@ window.onload=startList;
 
 function xoops_cp_footer() {
 	global $xoopsConfig, $xoopsLogger;
-	echo"</div><br /></div>";
-	$config_handler =& xoops_gethandler('config');
-	$xoopsConfiMetaFooter =& $config_handler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
-	echo "<div class='CPfoot'>".$xoopsConfiMetaFooter['footadm']."</small></div>".$xoopsConfiMetaFooter['google_analytics']."
+	echo "</div><br /></div>";
+	$config_handler = & xoops_gethandler ( 'config' );
+	$xoopsConfiMetaFooter = & $config_handler->getConfigsByCat ( XOOPS_CONF_METAFOOTER );
+	echo "<div class='CPfoot'>" . $xoopsConfiMetaFooter ['footadm'] . "</small></div>" . $xoopsConfiMetaFooter ['google_analytics'] . "
         </body>
       </html>
     ";
