@@ -111,26 +111,6 @@ if ($xoopsConfig['theme_set'] != 'default' && file_exists(XOOPS_THEME_PATH.'/'.$
 
 	$xoopsLogger->stopTime( 'XOOPS output init' );
 	$xoopsLogger->startTime( 'Module display' );
-	if ($xoopsUser){
-		foreach($xoopsUser->vars as $key=>$value){
-			$user[$key] = $value;
-		}
-		foreach($user as $key=>$value){
-			foreach($user[$key] as $key1=>$value1){
-				if ($key1 == 'value'){
-					if ($key == 'last_login'){
-						$value1 = date('d/m/Y H:i:s',(isset($_SESSION['xoopsUserLastLogin']))?$_SESSION['xoopsUserLastLogin']:time());
-					}
-					$user[$key] = $value1;
-				}
-			}
-		}
-		$pm_handler =& xoops_gethandler('privmessage');
-		$criteria = new CriteriaCompo(new Criteria('read_msg', 0));
-		$criteria->add(new Criteria('to_userid', $xoopsUser->getVar('uid')));
-		$user['new_messages'] = $pm_handler->getCount($criteria);
 
-		$xoopsTpl->assign('user',$user);
-	}
 }
 ?>
