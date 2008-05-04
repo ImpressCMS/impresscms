@@ -266,7 +266,7 @@ function xoops_module_install($dirname) {
                                 $newbid = $db->getInsertId();
                             }
                             $msgs[] = '&nbsp;&nbsp;Block <b>'.$block['name'].'</b> added. Block ID: <b>'.$newbid.'</b>';
-                            $sql = 'INSERT INTO '.$db->prefix('block_module_link').' (block_id, module_id) VALUES ('.intval($newbid).', -1)';
+                            $sql = 'INSERT INTO '.$db->prefix('block_module_link').' (block_id, module_id,page_id) VALUES ('.intval($newbid).', 0,1)';
                             $db->query($sql);
                             if ($template != '') {
                                 $tplfile =& $tplfile_handler->create();
