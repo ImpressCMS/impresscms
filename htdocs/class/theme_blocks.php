@@ -161,7 +161,7 @@ function buildBlock( $xobject, &$template ) {
     if ($xoopsConfigPersona['editre_block'] == 1 ) {
  	    if ($xoopsUser && $xoopsUser->isAdmin()){
  		    $titlebtns = "<a href=".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&op=edit&bid=".$xobject->getVar('bid')."> <img src=".XOOPS_URL."/images/icons/edit_block.gif"." title="._EDIT." alt="._EDIT."  /></a>";
- 		    if ($xobject->getVar( 'dirname' ) != 'system'){
+ 		    if ($xobject->getVar( 'dirname' ) == ''){
  		        $titlebtns .= "<a href=".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&op=delete&bid=".$xobject->getVar('bid')."> <img src=".XOOPS_URL."/images/icons/delete_block.gif"." title="._DELETE." alt="._DELETE."  /> </a>";
  		    }
  	    }else{
