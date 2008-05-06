@@ -15,7 +15,9 @@
  * @author		modified by Sina Asghari <stranger@impresscms.ir>
  * @version		$Id$
  */
-
+/**
+ *
+ */ 
 require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )    exit();
 

@@ -12,8 +12,11 @@
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author		modified by stranger <www.impresscms.org>
-* @version		$Id: $
+* @version		$Id$
 */
+/**
+ *
+ */ 
 include_once './class/dbmanager.php';
 
 // RMV

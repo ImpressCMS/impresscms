@@ -14,7 +14,9 @@
 * @author		Skalpa Keo <skalpa@xoops.org>
 * @version		$Id$
 */
-
+/**
+ *
+ */ 
 require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 

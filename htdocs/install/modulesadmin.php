@@ -43,7 +43,9 @@
 * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
 * @version		$Id$
 */
-
+/**
+ *
+ */ 
 function xoops_module_install($dirname)
 {
     global $xoopsUser, $xoopsConfig;

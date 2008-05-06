@@ -15,7 +15,9 @@
  * @author		modified by Sina Asghari <stranger@impresscms.ir>
  * @version		$Id: page_dbconnection.php 1747 2008-04-20 19:42:14Z pesian_stranger $
  */
-
+/**
+ *
+ */ 
 require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )    exit();
 
