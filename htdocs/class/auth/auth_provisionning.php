@@ -26,11 +26,11 @@
 //  ------------------------------------------------------------------------ //
 
 /**
- * @package     kernel
- * @subpackage  auth
- * @description	Authentification provisionning class. This class is responsible to
+ * Authentification provisionning class. This class is responsible to
  * provide synchronisation method to Xoops User Database
  * 
+ * @package     kernel
+ * @subpackage  auth
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */

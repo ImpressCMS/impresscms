@@ -32,7 +32,7 @@ class IcmsPreloadCustomtag extends IcmsPreloadItem
 	 * $array[4] = $image
 	 * $array[5] = $br
 	 *
-	 * @$array array array containing parameters passed by MyTextSanitizer::displayTarea()
+	 * @param array array containing parameters passed by MyTextSanitizer::displayTarea()
 	 *
 	 * @return	void
 	 */	

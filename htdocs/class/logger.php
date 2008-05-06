@@ -200,7 +200,7 @@ class XoopsLogger {
 		}
 	}
     /**#@+
-     * @protected
+     * @access protected
      */
 	function dump( $mode = '' ) {
 		include XOOPS_ROOT_PATH . '/class/logger_render.php';

@@ -27,9 +27,10 @@
 //  ------------------------------------------------------------------------ //
 
 /**
+ * Authentification class for standard LDAP Server V2 or V3
+ *  
  * @package     kernel
  * @subpackage  auth
- * @description	Authentification class for standard LDAP Server V2 or V3
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */

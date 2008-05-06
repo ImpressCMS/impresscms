@@ -53,7 +53,7 @@ class IcmsMetagen
 	/**
  	* Return true if the string is length > 0
  	*
- 	* @credit psylove
+ 	* @author psylove
  	*
  	* @var string $string Chaine de caractère
 	 * @return boolean
@@ -66,7 +66,7 @@ class IcmsMetagen
 	/**
 	 * Create a title for the short_url field of an article
 	 *
-	 * @credit psylove
+	 * @author psylove
 	 *
 	 * @var string $title title of the article
 	 * @var string $withExt do we add an html extension or not

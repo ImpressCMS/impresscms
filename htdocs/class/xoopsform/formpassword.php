@@ -122,7 +122,7 @@ class XoopsFormPassword extends XoopsFormElement {
 	/**
 	 * Set the initial value
 	 * 
-	 * @patam	$value	string
+	 * @param	$value	string
 	 */
 	function setValue($value) {
 		$this->_value = $value;

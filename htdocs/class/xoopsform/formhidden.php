@@ -83,7 +83,7 @@ class XoopsFormHidden extends XoopsFormElement {
 	/**
 	 * Sets the "value" attribute
 	 * 
-	 * @patam  $value	string
+	 * @param  $value	string
 	 */
 	function setValue($value) {
 		$this->_value = $value;

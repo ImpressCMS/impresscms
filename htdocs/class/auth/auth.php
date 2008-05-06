@@ -28,9 +28,10 @@
 
 
 /**
+ * Authentification base class
+ *  
  * @package     kernel
  * @subpackage  auth
- * @description	Authentification base class
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */

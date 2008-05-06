@@ -27,9 +27,10 @@
 //  ------------------------------------------------------------------------ //
 
 /**
+ * Authentification class factory
+ *  
  * @package     kernel
  * @subpackage  auth
- * @description	Authentification class factory
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2005 XOOPS.org
  */

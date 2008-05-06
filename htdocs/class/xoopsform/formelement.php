@@ -321,7 +321,7 @@ class XoopsFormElement {
 	/**
 	 * Render custom javascript validation code
 	 *
-	 * @seealso XoopsForm::renderValidationJS
+	 * @see XoopsForm::renderValidationJS
 	*/
 	function renderValidationJS() {
     	// render custom validation code if any
