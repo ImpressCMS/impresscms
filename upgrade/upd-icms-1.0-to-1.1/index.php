@@ -80,16 +80,41 @@ class upgrade_impcms06 {
 		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('9','_MD_AM_CONTMANAGER')");
 		if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_PERSON"') != 0){return true;}
 		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('10','_MD_AM_PERSON')");
-		if (getDbValue($db,'configoption','confop_id',' confop_name="_MD_AM_PASSLEVEL1"','confop_value','conf_id') != 0){return true;}
-		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " (confop_id,confop_name,confop_value,conf_id) VALUES ('','_MD_AM_PASSLEVEL1','20','38')");
-		if (getDbValue($db,'configoption','confop_id',' confop_name="_MD_AM_PASSLEVEL2"','confop_value','conf_id') != 0){return true;}
-		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " (confop_id,confop_name,confop_value,conf_id) VALUES ('','_MD_AM_PASSLEVEL2','40','38')");
-		if (getDbValue($db,'configoption','confop_id',' confop_name="_MD_AM_PASSLEVEL3"','confop_value','conf_id') != 0){return true;}
-		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " (confop_id,confop_name,confop_value,conf_id) VALUES ('','_MD_AM_PASSLEVEL3','60','38')");
-		if (getDbValue($db,'configoption','confop_id',' confop_name="_MD_AM_PASSLEVEL4"','confop_value','conf_id') != 0){return true;}
-		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " (confop_id,confop_name,confop_value,conf_id) VALUES ('','_MD_AM_PASSLEVEL4','80','38')");
-		if (getDbValue($db,'configoption','confop_id',' confop_name="_MD_AM_PASSLEVEL5"','confop_value','conf_id') != 0){return true;}
-		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " (confop_id,confop_name,confop_value,conf_id) VALUES ('','_MD_AM_PASSLEVEL5','95','38')");
+        
+        $passwordmeter_installed = false;
+        $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'pass_level'";
+        if ( $result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
+            list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+            if ($count == 1) {
+                $passwordmeter_installed = true;
+            }
+        }
+        if (!$passwordmeter_installed) {
+            $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('config') . 
+                    " (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " .
+                    " VALUES " .
+                    " (NULL, 0, 2, 'pass_level', '_MD_AM_PASSLEVEL', '20', '_MD_AM_PASSLEVEL_DESC', 'select', 'int', 2)";
+
+            if (!$GLOBALS['xoopsDB']->queryF( $sql )) {
+                return false;
+            }
+            $config_id = $GLOBALS['xoopsDB']->getInsertId();
+            
+            $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('configoption') . 
+                    " (confop_id, confop_name, confop_value, conf_id)" .
+                    " VALUES" .
+                    " (NULL, '_MD_AM_PASSLEVEL1', '20', {$config_id})," .
+                    " (NULL, '_MD_AM_PASSLEVEL2', '40', {$config_id})," .
+                    " (NULL, '_MD_AM_PASSLEVEL3', '60', {$config_id})," .
+                    " (NULL, '_MD_AM_PASSLEVEL4', '80', {$config_id})";
+                    " (NULL, '_MD_AM_PASSLEVEL5', '95', {$config_id})";
+            if ( !$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
+                return false;
+            }
+        }
+        
+        return $result;
+
 	}
        function check_dbversion()
     {
