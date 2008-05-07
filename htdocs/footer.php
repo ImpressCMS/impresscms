@@ -77,11 +77,11 @@ if ( !defined("XOOPS_FOOTER_INCLUDED") ) {
 			}
 		}
 				     	// Start addition: assign the language css&Javascripts file to the template, if required
-        if ( file_exists(XOOPS_ROOT_PATH."/language/".$GLOBALS['xoopsConfig']['language']."/css/"._LANGCODE.".css") ) {
-            $xoTheme->addStylesheet( "/language/".$GLOBALS['xoopsConfig']['language']."/css/"._LANGCODE.".css", array( "media" => "screen" ) );
+        if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(XOOPS_ROOT_PATH."/xoops_rtl.css") ) {
+            $xoTheme->addStylesheet( "/xoops_rtl.css", array( "media" => "screen" ) );
         }
-        if ( file_exists(XOOPS_ROOT_PATH."/language/".$GLOBALS['xoopsConfig']['language']."/js/"._LANGCODE.".js") ) {
-            $xoTheme->addScript( "/language/".$GLOBALS['xoopsConfig']['language']."/js/"._LANGCODE.".js", array( "type" => "text/javascript" ) );
+        if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(XOOPS_ROOT_PATH."/include/xoops_rtl.js") ) {
+            $xoTheme->addScript( "/include/xoops_rtl.js", array( "type" => "text/javascript" ) );
         }
         // End addition
 		$xoTheme->render();
