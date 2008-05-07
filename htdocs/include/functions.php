@@ -196,7 +196,7 @@ function formatTimestamp($time, $format="l", $timeoffset="")
         break;
     }
 //Start addition including extended date function
-	if ( file_exists(ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/ext/ext_date_function.php") && $xoopsConfig['use_ext_date'] == 1 && $format != 'mysql' ){
+	if ( defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC && $format != 'mysql' && file_exists(ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/ext/ext_date_function.php") ){
          include_once ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/ext/ext_date_function.php";
        return ucfirst(ext_date($datestring,$usertimestamp));
 	   } else {
