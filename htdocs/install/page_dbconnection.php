@@ -17,7 +17,7 @@
  */
 /**
  *
- */ 
+ */
 require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )    exit();
 
@@ -26,7 +26,7 @@ if ( !defined( 'XOOPS_INSTALL' ) )    exit();
     $pageHasHelp = true;
 
     $vars =& $_SESSION['settings'];
-    
+
 // Load config values from mainfile.php constants if 1st invocation, or reload has been asked
 if ( !isset( $vars['DB_HOST'] ) || false !== @strpos( $_SERVER['HTTP_CACHE_CONTROL'], 'max-age=0' ) ) {
     $keys = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_PCONNECT' );
@@ -72,25 +72,25 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
     $label = htmlspecialchars( $label );
     $name = htmlspecialchars( $name, ENT_QUOTES );
     $value = htmlspecialchars( $value, ENT_QUOTES );
-    
+
     $field = "<label for='$name'>$label</label>\n";
     if ( $help ) {
         $field .= '<div class="xoform-help">' . $help . "</div>\n";
     }
     $field .= "<input type='$type' name='$name' id='$name' value='$value' />";
-    
+
     return $field;
 }
 
-    
+
     ob_start();
 ?>
 <?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
 <fieldset>
     <legend><?php echo LEGEND_CONNECTION; ?></legend>
     <label>
-        <?php echo 'Database:'; ?>
-		<select size="2" name="DB_TYPE">
+        <?php echo 'Database:'; ?><br />
+		<select size="2" name="DB_TYPE" class="db_select">
 			<option value="mysql" selected="selected">mysql</option>
 			<!-- <option value="mysqli">mysqli</option> //-->
 		</select>

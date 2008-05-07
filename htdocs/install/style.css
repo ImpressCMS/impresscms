@@ -304,6 +304,12 @@ SELECT
 	HEIGHT:11em;
 	FONT-SIZE:130%;
 }
+SELECT.db_select
+{
+    WIDTH: 10em;
+	HEIGHT:3em;
+	FONT-SIZE:100%;
+}
 BUTTON
 {
     PADDING-RIGHT: 0.5em;
