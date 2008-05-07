@@ -386,7 +386,7 @@ function contentform($id=null,$clone=false){
 		$title = '';
 		$menu = '';
 		$body = '';
-		$css = '';
+		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style.css');
 		$weight = 0;
 		$status = 1;
 		$visibility = 3;
@@ -419,7 +419,7 @@ function contentform($id=null,$clone=false){
 	}else{
 		$form->addElement(new XoopsFormDhtmlTextArea(_MD_CONTENT_BODY, 'content_body',$body,30,70,"xoopsHiddenText",array('editor'=>$xoopsConfig['editor_default'])),true);
 	}
-	$fcss = new XoopsFormTextArea(_MD_CONTENT_CSS, 'content_css',$css);
+	$fcss = new XoopsFormTextArea(_MD_CONTENT_CSS, 'content_css',$css,10);
 	$fcss->setDescription(sprintf(_MD_CONTENT_CSS_DESC,XOOPS_URL.'/modules/system/language/'.$xoopsConfig['language'].'/admin/content_css_doc.html'));
 	$form->addElement($fcss);
 	$form->addElement(new XoopsFormText(_MD_CONTENT_WEIGHT, 'content_weight', 3, 4, $weight));
