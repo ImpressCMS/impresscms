@@ -309,6 +309,9 @@ class MyTextSanitizer
 			$text = $this->nl2Br($text);
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
+		// ################# Preload Trigger afterDisplayTarea ##############
+		global $icmsPreloadHandler;
+		$icmsPreloadHandler->triggerEvent('afterDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));		
 		return $text;
 	}
 
