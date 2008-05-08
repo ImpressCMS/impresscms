@@ -39,7 +39,7 @@ function showDiv(type,id){
         <td><a href="admin.php?fct=pages&op=changestatus&page_id=<{$page.page_id}>"><img src="images/<{$page.page_status}>.png" title="<{$lang_page_changests}>" alt="<{$lang_page_changests}>" /></a></td>
         <td>
           <{if $page.page_vurl != '0'}>
-            <a href="<{$page.page_vurl}>" target="_blank"><img src="images/view_big.png" title="<{$lang_page_prevpage}>" alt="<{$lang_page_prevpage}>" /></a>
+            <a href="<{$page.page_vurl}>" rel="external"><img src="images/view_big.png" title="<{$lang_page_prevpage}>" alt="<{$lang_page_prevpage}>" /></a>
           <{else}>
             <img src="images/view_big_off.png" title="<{$lang_page_prevpage}>" alt="<{$lang_page_prevpage}>" />
           <{/if}>

@@ -31,5 +31,5 @@ define('_CO_ICMS_CUSTOMTAG_PERMISSION_VIEW_DSC', 'Only the selected groups will 
 define('_CO_ICMS_CUSTOMTAG_CLONE', 'Clone');
 
 define('_CO_ICMS_CUSTOMTAGS_EXPLAIN_TITLE', 'What are Custom Tags ?');
-define('_CO_ICMS_CUSTOMTAGS_EXPLAIN', 'Custom Tags are tags that you can defined and use anywhere on your ImpressCM site. You could see them as extended BBCodes, but multilingual, with goup permissions, supporting PHP,  and usable in all ImpressCMS text area as well as in all templates ! Complete documentation of this feature can be found here: <a target="_blank" href="http://wiki.impresscms.org/index.php?title=Custom_Tags">Custom Tags</a>.');
+define('_CO_ICMS_CUSTOMTAGS_EXPLAIN', 'Custom Tags are tags that you can defined and use anywhere on your ImpressCM site. You could see them as extended BBCodes, but multilingual, with goup permissions, supporting PHP,  and usable in all ImpressCMS text area as well as in all templates ! Complete documentation of this feature can be found here: <a rel="external" href="http://wiki.impresscms.org/index.php?title=Custom_Tags">Custom Tags</a>.');
 ?>

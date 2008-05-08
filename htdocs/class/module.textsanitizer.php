@@ -151,11 +151,11 @@ class MyTextSanitizer
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
 		$replacements[] = '<a href="'.XOOPS_URL.'/\\2">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
-		$replacements[] = '<a href="\\2" target="_blank">\\3</a>';
+		$replacements[] = '<a href="\\2" rel="external">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(ftp?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
-		$replacements[] = '<a href="\\2" target="_blank">\\3</a>';
+		$replacements[] = '<a href="\\2" rel="external">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)([^\"'<>]*)\\1](.*)\[\/url\]/sU";
-		$replacements[] = '<a href="http://\\2" target="_blank">\\3</a>';
+		$replacements[] = '<a href="http://\\2" rel="external">\\3</a>';
 		$patterns[] = "/\[color=(['\"]?)([a-zA-Z0-9]*)\\1](.*)\[\/color\]/sU";
 		$replacements[] = '<span style="color: #\\2;">\\3</span>';
 		$patterns[] = "/\[size=(['\"]?)([a-z0-9-]*)\\1](.*)\[\/size\]/sU";
@@ -179,10 +179,10 @@ class MyTextSanitizer
 		$patterns[] = "/\[img align=(['\"]?)(left|center|right)\\1 id=(['\"]?)([0-9]*)\\3]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
 		$patterns[] = "/\[img id=(['\"]?)([0-9]*)\\1]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
 		if ($allowimage != 1) {
-			$replacements[] = '<a href="\\3" target="_blank">\\3</a>';
-			$replacements[] = '<a href="\\1" target="_blank">\\1</a>';
-			$replacements[] = '<a href="'.XOOPS_URL.'/image.php?id=\\4" target="_blank">\\5</a>';
-			$replacements[] = '<a href="'.XOOPS_URL.'/image.php?id=\\2" target="_blank">\\3</a>';
+			$replacements[] = '<a href="\\3" rel="external">\\3</a>';
+			$replacements[] = '<a href="\\1" rel="external">\\1</a>';
+			$replacements[] = '<a href="'.XOOPS_URL.'/image.php?id=\\4" rel="external">\\5</a>';
+			$replacements[] = '<a href="'.XOOPS_URL.'/image.php?id=\\2" rel="external">\\3</a>';
 		} else {
 			$replacements[] = '<img src="\\3" align="\\2" alt="" />';
 			$replacements[] = '<img src="\\1" alt="" />';

@@ -349,7 +349,7 @@ function xoops_getbanner()
         if ($htmlbanner){
             $bannerobject = $htmlcode;
         }else{
-            $bannerobject = '<div><a href="'.ICMS_URL.'/banners.php?op=click&amp;bid='.$bid.'" target="_blank">';
+            $bannerobject = '<div><a href="'.ICMS_URL.'/banners.php?op=click&amp;bid='.$bid.'" rel="external">';
             if (stristr($imageurl, '.swf')) {
                 $bannerobject = $bannerobject
                     .'<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">'

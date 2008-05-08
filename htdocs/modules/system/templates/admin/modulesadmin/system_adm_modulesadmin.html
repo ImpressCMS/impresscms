@@ -56,7 +56,7 @@
       </td>
       <td align='center' valign="middle">
         <{if $module.support_site_url != '' &&  $module.isactive == '1'}>
-          <a href="<{$module.support_site_url}>" target="_blank"><img src="<{$xoops_url}>/modules/system/images/support.png" alt="<{$lang_support}>" title="<{$lang_support}>"/></a>
+          <a href="<{$module.support_site_url}>" rel="external"><img src="<{$xoops_url}>/modules/system/images/support.png" alt="<{$lang_support}>" title="<{$lang_support}>"/></a>
         <{/if}>
         <a href="<{$xoops_url}>/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=<{$module.dirname}>"><img src="<{$xoops_url}>/modules/system/images/update.png" alt="<{$lang_update}>" title="<{$lang_update}>"/></a>
         <{if $module.isactive != '1'}>

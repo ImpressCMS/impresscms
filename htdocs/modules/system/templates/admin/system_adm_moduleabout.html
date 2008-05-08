@@ -102,14 +102,14 @@
 	<{if $module_developer_website_url}>
 		<tr>
 			<td class='head' width = '150px'><{$smarty.const._MODABOUT_DEVELOPER_WEBSITE}></td>
-			<td class='even'><a href="<{$module_developer_website_url}>" target="_blank"><{$module_developer_website_name}></a></td>
+			<td class='even'><a href="<{$module_developer_website_url}>" rel="external"><{$module_developer_website_name}></a></td>
 		</tr>
 	<{/if}>
 
 	<{if $module_developer_email}>
 		<tr>
 			<td class='head' width = '150px'><{$smarty.const._MODABOUT_DEVELOPER_EMAIL}></td>
-			<td class='even'><a href="mailto:<{$module_developer_email}>" target="_blank"><{$module_developer_email}></a></td>
+			<td class='even'><a href="mailto:<{$module_developer_email}>" rel="external"><{$module_developer_email}></a></td>
 		</tr>
 	<{/if}>
 </table>
@@ -132,28 +132,28 @@
 	<{if $module_demo_site_name}>
 		<tr>
 			<td class='head' width = '200px'><{$smarty.const._MODABOUT_MODULE_DEMO}></td>
-			<td class='even'><a href="<{$module_developer_demo_site_url}>" target="_blank"><{$module_demo_site_name}></a></td>
+			<td class='even'><a href="<{$module_developer_demo_site_url}>" rel="external"><{$module_demo_site_name}></a></td>
 		</tr>
 	<{/if}>
 
 	<{if $module_support_site_name}>
 		<tr>
 			<td class='head' width = '200px'><{$smarty.const._MODABOUT_MODULE_SUPPORT}></td>
-			<td class='even'><a href="<{$module_developer_support_site_url}>" target="_blank"><{$module_support_site_name}></a></td>
+			<td class='even'><a href="<{$module_developer_support_site_url}>" rel="external"><{$module_support_site_name}></a></td>
 		</tr>
 	<{/if}>
 
 	<{if $module_submit_bug}>
 		<tr>
 			<td class='head' width = '200px'><{$smarty.const._MODABOUT_MODULE_BUG}></td>
-			<td class='even'><a href="<{$module_submit_bug}>" target="_blank"><{$smarty.const._CO_SOBJECT_MODULE_SUBMIT_BUG}></a></td>
+			<td class='even'><a href="<{$module_submit_bug}>" rel="external"><{$smarty.const._CO_SOBJECT_MODULE_SUBMIT_BUG}></a></td>
 		</tr>
 	<{/if}>
 
 	<{if $module_submit_feature}>
 		<tr>
 			<td class='head' width = '200px'><{$smarty.const._MODABOUT_MODULE_FEATURE}></td>
-			<td class='even'><a href="<{$module_submit_feature}>" target="_blank"><{$smarty.const._CO_SOBJECT_MODULE_SUBMIT_FEATURE}></a></td>
+			<td class='even'><a href="<{$module_submit_feature}>" rel="external"><{$smarty.const._CO_SOBJECT_MODULE_SUBMIT_FEATURE}></a></td>
 		</tr>
 	<{/if}>
 </table>

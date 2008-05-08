@@ -355,7 +355,7 @@ function BannerClientDelete($cid)
         if ($htmlbanner){
             $bannerobject = $myts->displayTarea($htmlcode,1);
         } else {
-            $bannerobject = '<div><a href="'.$clickurl.'" target="_blank">';
+            $bannerobject = '<div><a href="'.$clickurl.'" rel="external">';
             if(strtolower(substr($imageurl,strrpos($imageurl,".")))==".swf") {
                 $bannerobject = $bannerobject;
                 echo '<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">';

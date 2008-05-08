@@ -44,7 +44,7 @@ function showDiv(type,id){
         <td><input type="text" name="content_weight<{$content.content_id}>" value="<{$content.content_weight}>" size="3" maxlength="4" style="text-align:center;" /></td>
         <td><a href="admin.php?fct=content&op=changestatus&content_id=<{$content.content_id}>"><img src="images/<{$content.content_status}>.png" title="<{$lang_cont_changests}>" alt="<{$lang_cont_changests}>" /></a></td>
         <td>
-          <a href="<{$xoops_url}>/content.php?page=<{$content.viewlink}>" target="_blank"><img src="images/view_big.png" title="<{$lang_cont_prevcont}>" alt="<{$lang_cont_prevcont}>" /></a>
+          <a href="<{$xoops_url}>/content.php?page=<{$content.viewlink}>" rel="external"><img src="images/view_big.png" title="<{$lang_cont_prevcont}>" alt="<{$lang_cont_prevcont}>" /></a>
       	  <a href="admin.php?fct=content&op=clonecontent&content_id=<{$content.content_id}>"><img src="images/clone_big.png" title="<{$lang_cont_clonecont}>" alt="<{$lang_cont_clonecont}>" /></a>
       	  <a href="admin.php?fct=content&op=editcontent&content_id=<{$content.content_id}>"><img src="images/edit_big.png" title="<{$lang_cont_editcont}>" alt="<{$lang_cont_editcont}>" /></a>
       	  <a href="admin.php?fct=content&op=delcontent&content_id=<{$content.content_id}>"><img src="images/delete_big.png" title="<{$lang_cont_delcont}>" alt="<{$lang_cont_delcont}>" /></a>

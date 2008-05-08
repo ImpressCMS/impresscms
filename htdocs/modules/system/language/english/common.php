@@ -20,7 +20,7 @@ define('_CO_ICMS_AUTHOR_WORD', "The Author's Word");
 define('_CO_ICMS_BODY_DEFAULT', "Here is an interesting link I found on %s :%s");
 define('_CO_ICMS_CANCEL', 'Cancel');
 define('_CO_ICMS_CURRENCY_ISO4217', 'ISO 4217 Code');
-define('_CO_ICMS_CURRENCY_ISO4217_DSC', 'Official currency code. More info: <a href="http://en.wikipedia.org/wiki/ISO_4217" target="_blank">ISO 4217 on Wikipedia</a>');
+define('_CO_ICMS_CURRENCY_ISO4217_DSC', 'Official currency code. More info: <a href="http://en.wikipedia.org/wiki/ISO_4217" rel="external">ISO 4217 on Wikipedia</a>');
 define('_CO_ICMS_CURRENCY_NAME', 'Name');
 define('_CO_ICMS_CURRENCY_NAME_DSC', '');
 define('_CO_ICMS_CURRENCY_SYMBOL', 'Symbol');
