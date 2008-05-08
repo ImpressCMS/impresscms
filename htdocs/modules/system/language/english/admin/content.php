@@ -23,7 +23,7 @@ define('_MD_CONTENT_VISIBILITY_4','Don\'t show link');
 define('_MD_CONTENT_PARENT','Parent Page');
 define('_MD_CONTENT_AUTOR','Autor');
 define('_MD_CONTENT_CSS','Custom CSS');
-define('_MD_CONTENT_CSS_DESC','Recommended only for advanced users.<br />Click <a href="javascript:openWithSelfMain(\'%s\', \'content_help\', 400, 600);">here</a> to see the documentation.');
+define('_MD_CONTENT_CSS_DESC','Recommended only for advanced users.<br />Click <a href="javascript:openWithSelfMain(\'%s\', \'content_help\', 1000, 600);">here</a> to see the documentation.');
 
 define('_MD_ID','ID');
 define('_MD_TITLE','Title');
