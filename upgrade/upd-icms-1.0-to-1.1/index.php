@@ -106,7 +106,7 @@ class upgrade_impcms06 {
                     " (NULL, '_MD_AM_PASSLEVEL1', '20', {$config_id})," .
                     " (NULL, '_MD_AM_PASSLEVEL2', '40', {$config_id})," .
                     " (NULL, '_MD_AM_PASSLEVEL3', '60', {$config_id})," .
-                    " (NULL, '_MD_AM_PASSLEVEL4', '80', {$config_id})";
+                    " (NULL, '_MD_AM_PASSLEVEL4', '80', {$config_id})," .
                     " (NULL, '_MD_AM_PASSLEVEL5', '95', {$config_id})";
             if ( !$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
                 return false;
