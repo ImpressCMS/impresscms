@@ -67,6 +67,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Changed : Textarea is now widely. Better to create blocks and editing of templates. (sato-san)
 - Changed : Password encryption method from md5 to more secure SHA256 + 2 unique salt keys. (vaughan)
 - Changed : PM-Popup size bigger. (sato-san)
+- Changed : All instances of target="_blank" replaced with rel="external". (vaughan)
 
 - Fixed #1899685 : Parse error: banners.php on line 226 (kurak_bu/nekro)
 - Fixed #1932374 : Changing the 100% width of table in xoops.css to make it 100% only for table.outer (malanciault/real_therplima)  
