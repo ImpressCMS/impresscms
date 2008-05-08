@@ -11,16 +11,18 @@
     padding: 0;
     padding-bottom:2px;
     margin:0;
-    fonte-size: 18px;
+    font-size: 18px;
     float:right;
 }
+
 h1.content_title {
     padding: 0;
     padding-bottom:2px;
     margin:0;
-    fonte-size: 18px;
+    font-size: 18px;
     border-bottom: 1px solid #333333;
 }
+
 h2.content_title_info {
     height: 15px;
     padding: 2px;
@@ -39,14 +41,18 @@ h2.content_title_info {
 #content_subs {
    margin-top: 5px;
 }
+
 .content_subs_header {
     padding: 0;
     margin:0;
     font-size: 14px;
     font-weight: bold;
 }
+
 .content_subs_item {}
-h3.content_subs_item_title{}
+.content_subs_item even {}
+.content_subs_item odd {}
+h3.content_subs_item_title {}
 .content_subs_item_teaser{
     font-style:italic;
 }
