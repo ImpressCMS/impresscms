@@ -369,6 +369,9 @@ define("_MD_AM_MULTLOGINMSG","Multilogin redirection message:");
 define("_MD_AM_MULTLOGINMSG_DESC","Mensage that will be shown to the user that tries to login with an already in use login. <br><i>This option will only be applyable if the option above is selected.</i>");
 define("_MD_AM_GRAVATARALLOW","Allow using GRAVATAR?");
 define("_MD_AM_GRAVATARALWDSC","By allowing this, user will be able to use their local avatar/gravatar linked to their email address.");
+
+define("_MD_AM_SHOW_ICMSMENU","Show ImpressCMS Project drop down menu?");
+define("_MD_AM_SHOW_ICMSMENU_DESC","Select NO to not show the drop down menu and YES to show it.");
 /*
 define("_MD_AM_AUTORESIZE","Auto resize larger avatars?");
 define("_MD_AM_AUTORESIZE_DESC","If YES, if the avatar sent have the width or height greater than that set will be automatically resized (keeping the ratio of the image) and the upload will be allowed. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.");
