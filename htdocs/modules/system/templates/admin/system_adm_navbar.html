@@ -1,10 +1,27 @@
 <div id="logoHead">
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-<tr><td align="left">
-<a href="<{$xoops_url}>/index.php" title="<{$xoops_sitename}>"><img src="<{$xoops_url}>/images/header-logo.png" alt="ImpressCMS"/></a>
-</td><td align="right">
-&nbsp;
-</td></tr></table>
+	<span class="left">
+		<{if $adm_left_logo == ''}>&nbsp;<{else}>
+		    <{if  $adm_left_logo_url != ''}>
+			    <a href="<{$adm_left_logo_url}>" title="<{if $adm_left_logo_alt != ''}><{$adm_left_logo_alt}><{else}>ImpressCMS<{/if}>">
+			<{/if}>
+			<img src="<{$xoops_url}><{$adm_left_logo}>" alt="<{if $adm_left_logo_alt != ''}><{$adm_left_logo_alt}><{else}>ImpressCMS<{/if}>"/>
+		    <{if  $adm_left_logo_url != ''}>
+			    </a>
+			<{/if}>   
+		<{/if}>
+	</span>
+	<span class="right">
+		<{if $adm_right_logo == ''}>&nbsp;<{else}>
+		    <{if  $adm_right_logo_url != ''}>
+			    <a href="<{$adm_right_logo_url}>" title="<{if $adm_right_logo_alt != ''}><{$adm_right_logo_alt}><{else}>ImpressCMS<{/if}>">
+			<{/if}>
+			<img src="<{$xoops_url}><{$adm_right_logo}>" alt="<{if $adm_right_logo_alt != ''}><{$adm_right_logo_alt}><{else}>ImpressCMS<{/if}>"/>
+		    <{if  $adm_right_logo_url != ''}>
+			    </a>
+			<{/if}>   
+		<{/if}>
+	</span>
+	<div class="clear"></div>
 </div>
 <div id="navbarCP">
   <ul id="nav">
