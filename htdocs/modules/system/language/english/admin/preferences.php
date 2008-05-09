@@ -347,17 +347,17 @@ define("_MD_AM_RSSLOCAL_DESC","WEB Address where the rss is located to be shown 
 define("_MD_AM_FOOTADM","Admin Footer");
 define("_MD_AM_FOOTADM_DESC","Content to be shown at footer at the admin pages.");
 define("_MD_AM_EMAILTTF","Source font for email image");
-define("_MD_AM_EMAILTTF_DESC","Choose one of the Fonts from the list below to be used by the email image generator.<br />Note: This resource will only be applyable if the option <b><i>Protect Emails against SPAM?</i></b> is enabled.");
+define("_MD_AM_EMAILTTF_DESC","Choose one of the Fonts from the list below to be used by the email image generator.<br />Note: This resource will only apply if the option <b><i>Protect Emails against SPAM?</i></b> is enabled.");
 define("_MD_AM_EMAILLEN","Font Size");
 define("_MD_AM_EMAILLEN_DESC","Type in the number to show the text with this size.");
 define("_MD_AM_EMAILCOLOR","Font color for the email image");
-define("_MD_AM_EMAILCOLOR_DESC","Choose a color to show the email image.<br />Note: This resource will only be applyable if the option <b><i>Protect Emails against SPAM?</i></b> is enabled.");
+define("_MD_AM_EMAILCOLOR_DESC","Choose a color to show the email image.<br />Note: This resource will only apply if the option <b><i>Protect Emails against SPAM?</i></b> is enabled.");
 define("_MD_AM_EMAILSOMBRA","Shadow color for the email image");
 define("_MD_AM_EMAILSOMBRA_DESC","Choose a color for the shadow of the email image. <br />Leave it blank if you don't wish to use any shadows.<br />Note: This resource will only be applyable if the option <b><i>Protect Emails against SPAM?</i></b> is enabled.");
 define("_MD_AM_SOMBRAX","X offset for shadow");
-define("_MD_AM_SOMBRAX_DESC","Type in a value that will represent the horizontal offset of the email shadow email in pixels.<br />Note: This resource will only be applyable if the option <b><i>Shadow color for email image</i></b> is not blank.");
+define("_MD_AM_SOMBRAX_DESC","Type in a value that will represent the horizontal offset of the email shadow email in pixels.<br />Note: This resource will only apply if the option <b><i>Shadow color for email image</i></b> is not blank.");
 define("_MD_AM_SOMBRAY","Y offset for shadow");
-define("_MD_AM_SOMBRAY_DESC","Type in a value that will represent the vertical offset of the email shadow email in pixels.<br />Note: This resource will only be applyable if the option <b><i>Shadow color for email image</i></b> is not blank.");
+define("_MD_AM_SOMBRAY_DESC","Type in a value that will represent the vertical offset of the email shadow email in pixels.<br />Note: This resource will only apply if the option <b><i>Shadow color for email image</i></b> is not blank.");
 define("_MD_AM_EDITREMOVEBLOCK","Edit & Remove blocks from user side?");
 define("_MD_AM_EDITREMOVEBLOCKDSC","By enabling this option, you'll see two icons on block titles with a direct access to remove or edit your block.");
 
@@ -366,7 +366,7 @@ define("_MD_AM_EMAILPROTECTDSC","By selecting \"Yes\" all the emails that are pa
 define("_MD_AM_MULTLOGINPREVENT","Enable multilogin prohibition?");
 define("_MD_AM_MULTLOGINPREVENTDSC","With this option enabled, if a user is already logged in at the site he won't be able to log in twice until the current login is finished. This is useful to prevent that someone conects himself/herself at the site with the same username.");
 define("_MD_AM_MULTLOGINMSG","Multilogin redirection message:");
-define("_MD_AM_MULTLOGINMSG_DESC","Mensage that will be shown to the user that tries to login with an already in use login. <br><i>This option will only be applyable if the option above is selected.</i>");
+define("_MD_AM_MULTLOGINMSG_DESC","Message that will be shown to the user that tries to login with a login already in use . <br><i>This option will only apply if the option above is selected.</i>");
 define("_MD_AM_GRAVATARALLOW","Allow using GRAVATAR?");
 define("_MD_AM_GRAVATARALWDSC","By allowing this, user will be able to use their local avatar/gravatar linked to their email address.");
 
