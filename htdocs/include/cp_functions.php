@@ -218,6 +218,15 @@ window.onload=startList;
 	$icmsAdminTpl->assign ( 'lang_prefs', _IMPRESSCMS_PREFS );
 	$icmsAdminTpl->assign ( 'ml_is_enabled', $im_multilanguageConfig ['ml_enable'] );
 	
+	$config_handler = & xoops_gethandler ( 'config' );
+	$xoopsConfigPersona = & $config_handler->getConfigsByCat ( XOOPS_CONF_PERSONA );
+	$icmsAdminTpl->assign ( 'adm_left_logo', $xoopsConfigPersona['adm_left_logo'] );
+	$icmsAdminTpl->assign ( 'adm_left_logo_url', $xoopsConfigPersona['adm_left_logo_url'] );
+	$icmsAdminTpl->assign ( 'adm_left_logo_alt', $xoopsConfigPersona['adm_left_logo_alt'] );
+	$icmsAdminTpl->assign ( 'adm_right_logo', $xoopsConfigPersona['adm_right_logo'] );
+	$icmsAdminTpl->assign ( 'adm_right_logo_url', $xoopsConfigPersona['adm_right_logo_url'] );
+	$icmsAdminTpl->assign ( 'adm_right_logo_alt', $xoopsConfigPersona['adm_right_logo_alt'] );
+	
 	echo $icmsAdminTpl->fetch ( XOOPS_ROOT_PATH . '/modules/system/templates/admin/system_adm_navbar.html' );
 	echo "<div id='containBodyCP'><br /><div id='bodyCP'>";
 	
