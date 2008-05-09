@@ -238,6 +238,14 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 $ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
                 $ele->addOptionArray($content_handler->getContentList());
                 break;
+                ##############################################################################################
+                # Added by Fábio Egas in XTXM version
+                ##############################################################################################
+            case 'select_image':
+            	include_once XOOPS_ROOT_PATH."/class/xoopsform/formimage.php";
+            	$myts =& MyTextSanitizer::getInstance();
+            	$ele = new MastopFormSelectImage($title, $config[$i]->getVar('conf_name'),$config[$i]->getConfValueForOutput());
+            	break;
             case 'textbox':
             default:
                 $myts =& MyTextSanitizer::getInstance();
