@@ -188,6 +188,12 @@ div#logoHead{
 	background: url(images/header-bg.png) repeat-x;
 	border-bottom: 4px solid #ffb500;
 }
+div#logoHead span.left{
+	float: left;
+}
+div#logoHead span.right{
+	float: right;
+}
 div#navbarCP{
 	background: url(images/bg-lr-titles.gif);
 	font-weight: normal;
@@ -425,4 +431,8 @@ div.CPfoot{
 	border-right: 1px solid #000000;
 	float: left;
 	margin-bottom: 15px;
+}
+
+.clear {
+	clear: both;
 }
