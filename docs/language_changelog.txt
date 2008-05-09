@@ -7,12 +7,34 @@ Legend :
   +  a constant was added orm in some case, a whole new file was added
   +- a constant was modified
   -  a constant was remove OR a whole file was removed
+  #  Directory / Folders guide
 
 ImpressCMS 1.1 (changes from ImpressCMS 1.0)
 =========================================
 
+====================
+# Directory: install
+====================
+
+install/language/english/install.php
+------------------------------------
+
++  define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
++  define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L97
++  define( "ADMIN_SALT_LABEL", "Password Salt Key" ); // L99
++  define( "DATABASE_CONNECTION", "Database connection" );
++  define( "DATABASE_CONNECTION_TITLE", "Database connection" );
++  define( "DB_CHARSET_LABEL", "Database character set, we STRONGLY recommend you to use UTF-8 as default." );
++  define( "DB_CHARSET_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.");
++  define( "DB_COLLATION_LABEL", "Database collation" );
++  define( "DB_COLLATION_HELP",  "A collation is a set of rules for comparing characters in a character set.");
++  define( "ERR_INVALID_DBCHARSET", "The charset '%s' is not supported." );
++  define( "ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported." );
++  define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database." );
+
 install/language/english/install2.php
---------------------------
+-------------------------------------
+
 +  define("_WELCOME_MSG_CONTENT", "Welcome {UNAME},
 
 Your account has been successfully activated on {X_SITENAME}. As a member of our site, you will benefit from all the features reserved to registered members !
@@ -26,11 +48,92 @@ Yours truly,
 {X_SITENAME}
 {X_SITEURL}");
 
-+  language/english/databaseupdater.php  (added)
---------------------------
 
-language/english/user.php
---------------------------
+install/language/english/welcome.php
+------------------------------------
+
++- $content .=  (Changed for external links) rel="external"
+
+<p>
+	ImpressCMS is a Web publishing system written in PHP. It is an ideal tool for
+	developing small to large dynamic community websites, intra company portals, corporate portals, weblogs and much more.
+</p>
+<p>
+	ImpressCMS is released under the terms of the
+	<a href="http://www.gnu.org/copyleft/gpl.html" rel="external">GNU General Public License (GPL)</a>
+	and is free to use and modify.
+	It is free to redistribute as long as you abide by the distribution terms of the GPL.
+</p>
+<h3>Requirements</h3>
+<ul>
+	<li>WWW Server (<a href="http://www.apache.org/" rel="external">Apache</a>, IIS, Roxen, etc)</li>
+	<li><a href="http://www.php.net/" rel="external">PHP</a> 4.3.0 or higher (5.1 or higher recommended)</li>
+	<li><a href="http://www.mysql.com/" rel="external">MySQL</a> 3.23 or higher (4.1 or higher recommended)</li>
+</ul>
+<h3>Before you install</h3>
+<ul>
+	<li>Setup the web server, PHP and database server properly.</li>
+	<li>Prepare a database for ImpressCMS. This can be an existing database as well as a newly created one.</li>
+	<li>Prepare a user account and grant this user access to the database (all rights).</li>
+	<li>Make the directories of uploads/, cache/, templates_c/, writable (chmod 777 or 755 - depending on servers).</li>
+	<li>Make the file mainfile.php writable (chmod 666 depending on server).</li>
+	<li>In your internet browser settings turn on the allowance of cookies and JavaScript.</li>
+</ul>
+
+=====================
+# Directory: language
+=====================
+
++ language/english/captcha.php (added)
+--------------------------------------
+
++  language/english/databaseupdater.php  (added)
+------------------------------------------------
+
+language/english/global.php
+---------------------------
+
++  define('_CT_NAV','Home');
++  define('_CT_RELATEDS','Related pages');
++  define("_SECURITYIMAGE_CODE","Security code");
++  define("_SECURITYIMAGE_GETCODE","Enter the security code");
++- define('_CHARSET', 'utf-8');
++  define('_IMPRESSCMS_ADMIN','Administration of');
+
+language/english/moduleabout.php
+--------------------------------
+
++  define('_MODABOUT_DEVELOPER_CONTRIBUTOR', 'Contributor(s)');
++  define('_MODABOUT_DEVELOPER_CREDITS', 'Credits');
++  define('_MODABOUT_DEVELOPER_EMAIL', 'Email');
++  define('_MODABOUT_DEVELOPER_WEBSITE', 'Website');
++  define('_MODABOUT_GOTOMODULE', 'Go to module');
++  define('_MODABOUT_MODULE_BUG', 'Report a bug for this module');
++  define('_MODABOUT_MODULE_DEMO', 'Demo Site');
++  define('_MODABOUT_MODULE_DISCLAIMER', 'Disclaimer');
++  define('_MODABOUT_MODULE_FEATURE', 'Suggest a new feature for this module');
++  define('_MODABOUT_MODULE_INFO', 'Module Developpment Informations');
++  define('_MODABOUT_MODULE_RELEASE_DATE', 'Release date');
++  define('_MODABOUT_MODULE_STATUS', 'Status');
++  define('_MODABOUT_MODULE_SUBMIT_BUG', 'Submit a bug');
++  define('_MODABOUT_MODULE_SUBMIT_FEATURE', 'Request a feature');
++  define('_MODABOUT_MODULE_SUPPORT', 'Official support site');
++  define('_MODABOUT_UPDATE_MODULE', 'Update module');
++  define('_MODABOUT_VERSION_HISTORY', 'Version History');
++  define('_MODABOUT_WARNING_BETA', "This module comes as is, without any guarantees whatsoever. This module is BETA, meaning it is still under active development. This release is meant for <b>testing purposes only</b> and we <b>strongly</b> recommend that you do not use it on a live website or in a production environment.");
++  define('_MODABOUT_WARNING_FINAL', "This module comes as is, without any guarantees whatsoever. Although this module is not beta, it is still under active development. This release can be used in a live website or a production environment, but its use is under your own responsibility, which means the author is not responsible.");
++  define('_MODABOUT_WARNING_RC', "This module comes as is, without any guarantees whatsoever. This module is a Release Candidate and should not be used on a production web site. The module is still under active development and its use is under your own responsibility, which means the author is not responsible.");
++  define('_MODABOUT_BY', 'By');
++  define('_MODABOUT_PEOPLE_DEVELOPERS', 'Developers');
++  define('_MODABOUT_PEOPLE_TESTERS', 'Testers');
++  define('_MODABOUT_PEOPLE_DOCUMENTERS', 'Documenters');
++  define('_MODABOUT_PEOPLE_TRANSLATERS', 'Translators');
++  define('_MODABOUT_PEOPLE_OTHER', 'Other contributors');
++  define('_MODABOUT_AUTHOR_INFO', 'Contributors information');
+
+
++- language/english/user.php
+----------------------------
 
 +  define('_US_YOURREGISTRATION', 'Your registration at %s');
 +  define('_US_WELCOMEMSGFAILED', 'Error while sending the welcome email.');
@@ -39,8 +142,68 @@ language/english/user.php
 +  define('_US_REGFORM_WARNING', 'To register at the site you need to use a secure password. Try to create your password by using a mixture of letters (upper and lowercase), numbers and symbols. Try to create a password the more complex as possible although you can remember it.');
 +  define('_US_CHANGE_PASSWORD', 'Change Password?');
 
-modules/system/language/english/admin/modulesadmin.php
---------------------------
+
+============================================
+# Directory: language/english/mail_template/
+============================================
+
+
++ welcome.tpl
+-------------
+
++ newuser_notify.tpl
+--------------------
+
++- register.tpl (modified to use {X_ADMINMAIL} and not {ADMINMAIL})
+-------------------------------------------------------------------
+
+==============================
+# Directory: libraries (added)
+==============================
+
++  libraries/captcha/language/english.php
+-----------------------------------------
+
+=============================================
+# Directory: modules/system/language/english/
+=============================================
+
++- modules/system/languages/english/admin.php
+------------------------------------------
++  define('_MD_AM_CONTENT', 'Content Manager');
++  define('_MD_AM_BKPOSAD','Block Positions');
++  define('_MD_AM_PAGES','Links Manager');
+
++- modules/system/languages/english/blocks.php
+-------------------------------------------
+
++  define("_MB_SYSTEM_SHOWSUBS", "Show sub-pages?");
++  define("_MB_SYSTEM_SHOWNAV", "Show navigation menu?");
++  define("_MB_SYSTEM_SHOWPINFO", "Show poster and published infos?");
++  define("_MB_SYSTEM_SORT", "Sort");
++  define("_MB_SYSTEM_ORDER", "Order");
++  define("_MB_SYSTEM_SELCOLOR", "Background color of the selected item: ");
++  define("_MB_SYSTEM_PAGE", "Page to show");
++  if (!defined('_CT_EDIT_CONTENT')){define('_CT_EDIT_CONTENT','Content bearbeiten');}
++  if (!defined('_CT_DELETE_CONTENT')){define('_CT_DELETE_CONTENT','Content l&ouml;schen');}
++  if (!defined('_CT_PUBLISHEDBY')){define('_CT_PUBLISHEDBY','ver&ouml;ffentlicht von');}
++  if (!defined('_CT_ON')){define('_CT_ON','on');}
+
++- modules/system/languages/english/modinfo.php
+-----------------------------------------------
+
++  define("_MI_SYSTEM_ADMENU17", "Version");
++  define("_MI_SYSTEM_ADMENU18", "Content Manager");
++  define("_MI_SYSTEM_ADMENU19", "Block Positions");
++  define("_MI_SYSTEM_ADMENU20", "Links Manager");
+
+==================================================
+# Directory: modules/system/language/english/admin
+==================================================
+
+
++- modules/system/language/english/admin/modulesadmin.php
+---------------------------------------------------------
 
 +  define('_MD_AM_MODULESADMIN_SUPPORT', 'Module Support Site');
 +  define('_MD_AM_MODULESADMIN_STATUS', 'Status');
@@ -48,13 +211,11 @@ modules/system/language/english/admin/modulesadmin.php
 +  define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
 
 +  modules/system/language/english/admin/common.php
---------------------------
+---------------------------------------------------
 
-+  libraries/captcha/language/english.php
---------------------------
 
 modules/system/language/english/admin/preferences.php
---------------------------
+-----------------------------------------------------
 
 +  define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow annonymous users to users profiles");
 +  define("_MD_AM_ML_AUTOSELECT_ENABLED","Autoselect the language depeding the browser configuration");
@@ -131,8 +292,8 @@ modules/system/language/english/admin/preferences.php
 +  define("_MD_AM_GRAVATARALLOW","Allow using GRAVATAR?");
 +  define("_MD_AM_GRAVATARALWDSC","By allowing this, user will be able to use their local avatar/gravatar linked to their email address.");
 
-+-  define("_MD_AM_LLOGOADM","Admin Left Logo");
-+-  define("_MD_AM_LLOGOADM_DESC"," Select an image to use in the top left corner of the admin panel. <br /><b><i> To select or send an image create at least one image cateory under system --> images.</b></i> ");
++- define("_MD_AM_LLOGOADM","Admin Left Logo");
++- define("_MD_AM_LLOGOADM_DESC"," Select an image to use in the top left corner of the admin panel. <br /><b><i> To select or send an image create at least one image cateory under system --> images.</b></i> ");
 +  define("_MD_AM_LLOGOADM_URL","Admin Left Logo Link Url");
 +  define("_MD_AM_LLOGOADM_ALT","Admin Left Logo Link Title");
 +  define("_MD_AM_RLOGOADM","Admin Right Logo");
@@ -141,126 +302,45 @@ modules/system/language/english/admin/preferences.php
 +  define("_MD_AM_RLOGOADM_ALT","Admin Right Logo Link Title");
 
 modules/system/languages/english/admin/groups.php
---------------------------
-
+-------------------------------------------------
 +  define("_AM_EDPERM","Can use the WYSIWYG editor in the following modules");
 +  define("_AM_DEBUG_PERM","The Debug Mode is enabled for the next modules");
 
-language/english/mail_template/
---------------------------
 
-+ welcome.tpl
-+ newuser_notify.tpl
-+- register.tpl (modified to use {X_ADMINMAIL} and not {ADMINMAIL})
 
-install/language/english/install.php
---------------------------
++- modules/system/languages/english/admin/blocksadmin.php
+---------------------------------------------------------
++  define('_AM_CHANGESTS', 'Change the block visibility');
 
-+  define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
-+  define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L97
-+  define( "ADMIN_SALT_LABEL", "Password Salt Key" ); // L99
-+  define( "DATABASE_CONNECTION", "Database connection" );
-+  define( "DATABASE_CONNECTION_TITLE", "Database connection" );
-+  define( "DB_CHARSET_LABEL", "Database character set, we STRONGLY recommend you to use UTF-8 as default." );
-+  define( "DB_CHARSET_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.");
-+  define( "DB_COLLATION_LABEL", "Database collation" );
-+  define( "DB_COLLATION_HELP",  "A collation is a set of rules for comparing characters in a character set.");
-+  define( "ERR_INVALID_DBCHARSET", "The charset '%s' is not supported." );
-+  define( "ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported." );
-+  define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database." );
 
-language/english/moduleabout.php
---------------------------
++  modules/system/languages/english/admin/content_css_doc.html
+---------------------------------------------------------
 
-+  define('_MODABOUT_DEVELOPER_CONTRIBUTOR', 'Contributor(s)');
-+  define('_MODABOUT_DEVELOPER_CREDITS', 'Credits');
-+  define('_MODABOUT_DEVELOPER_EMAIL', 'Email');
-+  define('_MODABOUT_DEVELOPER_WEBSITE', 'Website');
-+  define('_MODABOUT_GOTOMODULE', 'Go to module');
-+  define('_MODABOUT_MODULE_BUG', 'Report a bug for this module');
-+  define('_MODABOUT_MODULE_DEMO', 'Demo Site');
-+  define('_MODABOUT_MODULE_DISCLAIMER', 'Disclaimer');
-+  define('_MODABOUT_MODULE_FEATURE', 'Suggest a new feature for this module');
-+  define('_MODABOUT_MODULE_INFO', 'Module Developpment Informations');
-+  define('_MODABOUT_MODULE_RELEASE_DATE', 'Release date');
-+  define('_MODABOUT_MODULE_STATUS', 'Status');
-+  define('_MODABOUT_MODULE_SUBMIT_BUG', 'Submit a bug');
-+  define('_MODABOUT_MODULE_SUBMIT_FEATURE', 'Request a feature');
-+  define('_MODABOUT_MODULE_SUPPORT', 'Official support site');
-+  define('_MODABOUT_UPDATE_MODULE', 'Update module');
-+  define('_MODABOUT_VERSION_HISTORY', 'Version History');
-+  define('_MODABOUT_WARNING_BETA', "This module comes as is, without any guarantees whatsoever. This module is BETA, meaning it is still under active development. This release is meant for <b>testing purposes only</b> and we <b>strongly</b> recommend that you do not use it on a live website or in a production environment.");
-+  define('_MODABOUT_WARNING_FINAL', "This module comes as is, without any guarantees whatsoever. Although this module is not beta, it is still under active development. This release can be used in a live website or a production environment, but its use is under your own responsibility, which means the author is not responsible.");
-+  define('_MODABOUT_WARNING_RC', "This module comes as is, without any guarantees whatsoever. This module is a Release Candidate and should not be used on a production web site. The module is still under active development and its use is under your own responsibility, which means the author is not responsible.");
-+  define('_MODABOUT_BY', 'By');
-+  define('_MODABOUT_PEOPLE_DEVELOPERS', 'Developers');
-+  define('_MODABOUT_PEOPLE_TESTERS', 'Testers');
-+  define('_MODABOUT_PEOPLE_DOCUMENTERS', 'Documenters');
-+  define('_MODABOUT_PEOPLE_TRANSLATERS', 'Translators');
-+  define('_MODABOUT_PEOPLE_OTHER', 'Other contributors');
-+  define('_MODABOUT_AUTHOR_INFO', 'Contributors information');
++  modules/system/languages/english/admin/pages.php
+---------------------------------------------------------
 
-upgrade/language/english/upgrade.php
---------------------------
++  modules/system/languages/english/admin/content.php
+---------------------------------------------------------
 
-+ define( "LEGEND_DATABASE", "Database Character Set" );
-+ define( "DB_COLLATION_LABEL", "Database character set and collation" );
-+ define( "DB_COLLATION_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.<br />We <b>STRONGLY</b> recommend you to use '<b>UTF-8</b>' as default.");
++  modules/system/languages/english/admin/blockspadmin.php
+---------------------------------------------------------
 
-language/english/global.php
---------------------------
+======================================
+# Directory: upgrade/language/english/
+======================================
 
-+  define('_CT_NAV','Home');
-+  define('_CT_RELATEDS','Related pages');
-+  define("_SECURITYIMAGE_CODE","Security code");
-+  define("_SECURITYIMAGE_GETCODE","Enter the security code");
-+- define('_CHARSET', 'utf-8');
-+  define('_IMPRESSCMS_ADMIN','Administration of');
++- upgrade/language/english/upgrade.php
+------------------------------------
 
-modules/system/languages/english/admin.php
---------------------------
-+ define('_MD_AM_CONTENT', 'Content Manager');
-+ define('_MD_AM_BKPOSAD','Block Positions');
-+ define('_MD_AM_PAGES','Links Manager');
-
-modules/system/languages/english/blocks.php
---------------------------
-+ define("_MB_SYSTEM_SHOWSUBS", "Show sub-pages?");
-+ define("_MB_SYSTEM_SHOWNAV", "Show navigation menu?");
-+ define("_MB_SYSTEM_SHOWPINFO", "Show poster and published infos?");
-+ define("_MB_SYSTEM_SORT", "Sort");
-+ define("_MB_SYSTEM_ORDER", "Order");
-+ define("_MB_SYSTEM_SELCOLOR", "Background color of the selected item: ");
-+ define("_MB_SYSTEM_PAGE", "Page to show");
-+ if (!defined('_CT_EDIT_CONTENT')){define('_CT_EDIT_CONTENT','Content bearbeiten');}
-+ if (!defined('_CT_DELETE_CONTENT')){define('_CT_DELETE_CONTENT','Content l&ouml;schen');}
-+ if (!defined('_CT_PUBLISHEDBY')){define('_CT_PUBLISHEDBY','ver&ouml;ffentlicht von');}
-+ if (!defined('_CT_ON')){define('_CT_ON','on');}
-
-modules/system/languages/english/modinfo.php
-+ define("_MI_SYSTEM_ADMENU17", "Version");
-+ define("_MI_SYSTEM_ADMENU18", "Content Manager");
-+ define("_MI_SYSTEM_ADMENU19", "Block Positions");
-+ define("_MI_SYSTEM_ADMENU20", "Links Manager");
-
-modules/system/languages/english/admin/blocksadmin.php
-+ define('_AM_CHANGESTS', 'Change the block visibility');
-
-+ modules/system/languages/english/admin/content_css_doc.html
-
-+ modules/system/languages/english/admin/pages.php
-
-+ modules/system/languages/english/admin/content.php
-
-+ modules/system/languages/english/admin/blockspadmin.php
-+ language/english/captcha.php
++  define( "LEGEND_DATABASE", "Database Character Set" );
++  define( "DB_COLLATION_LABEL", "Database character set and collation" );
++  define( "DB_COLLATION_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.<br />We <b>STRONGLY</b> recommend you to use '<b>UTF-8</b>' as default.");
 
 
 
-
-
+==========================================
 ImpressCMS 1.0 (changes from XOOPS 2.0.17)
-=========================================
+==========================================
 
 
 
@@ -278,17 +358,17 @@ language/english/auth.php
 +- define('_AUTH_LDAP_XOOPS_USER_NOTFOUND',"Sorry no corresponding user information has been found in the ImpressCMS database for connection: %s <br>Please verify your user datas or set on the automatic provisionning");
 
 +  language/english/banners.php
---------------------------
+-------------------------------
 
 language/english/findusers.php
---------------------------
+------------------------------
 
 +- define("_MA_USER_QUERY", "Query");
 +  define("_MA_USER_SENDMAIL","Send Email");
 
 
-language/english/global.php
---------------------------
++- language/english/global.php
+------------------------------
 
 +  define('_MODULES','Modules');
 +  define('_IMPRESSCMS_PREFS','Preferences');
@@ -302,15 +382,15 @@ language/english/pmsg.php
 +  define("_PM_MESSAGEPOSTED_EMAILSUBJ","[%s] Private Message Notification");
 
 +  language/english/privpolicy.php
---------------------------
+----------------------------------
 
 language/english/search.php
---------------------------
+---------------------------
 
 +- define('_SR_SEARCHRULE', 'Search Rule');
 
 language/english/timezone.php
---------------------------
+-----------------------------
 
 +- define("_TZ_GMTP55", "(GMT+5:30) Mumbai, Kolkata, Chennai, New Delhi");
 
