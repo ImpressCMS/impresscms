@@ -88,7 +88,7 @@ modules/system/language/english/admin/preferences.php
 +  define("_MD_AM_CONT_SHOWPINFODSC","Select yes to show in the page informations about the poster and publish of the page.");
 +  define("_MD_AM_CONT_ACTSEO","Use menu title instead the id in the url (improve seo)?");
 +  define("_MD_AM_CONT_ACTSEODSC","Select yes to the value of menu title instead of the id in the url of the page.");
-+  define('_MD_AM_USECAPTCHA', 'Do you want to use CAPTCHA on registration form?');+  
++  define('_MD_AM_USECAPTCHA', 'Do you want to use CAPTCHA on registration form?');+
 +  define('_MD_AM_USECAPTCHADSC', 'Select yes to CAPTCHA (anti-spam) up on registration form.');
 +  define('_MD_AM_USECAPTCHAFORM', 'Do you want to use CAPTCHA on comment forms?');
 +  define('_MD_AM_USECAPTCHAFORMDSC', 'Select yes to CAPTCHA (anti-spam) up on comments form, in order to avoid spamming.');
@@ -96,7 +96,7 @@ modules/system/language/english/admin/preferences.php
 +  define('_MD_AM_ALLWHTSIGDSC', 'If some attackers post an external image using [img], he can know IPs or User-Agents of users visited your site.<br />Allowing HTML can cause Script Insertion vulnerability if malicious user change his/her signature.');
 +  define('_MD_AM_ALLWSHOWSIG', 'Do you want to allow your users to use a signature on their profile/posts, in your site?');
 +  define('_MD_AM_ALLWSHOWSIGDSC', 'By enabling this option, users will be able to use a personal signature which will be added (on their own choice) after their posts.');
-+  define("_MD_AM_PERSON","Personalization");		
++  define("_MD_AM_PERSON","Personalization");
 +  define("_MD_AM_GOOGLE_ANA","Google Analytcs");
 +  define("_MD_AM_GOOGLE_ANA_DESC","Insert the script informed by Google Analytics for your site. If you don't use it, leave it blank.");
 +  define("_MD_AM_LOGOADM","Admin Logo");
@@ -121,7 +121,7 @@ modules/system/language/english/admin/preferences.php
 +  define("_MD_AM_SOMBRAY_DESC","Type in a value that will represent the vertical offset of the email shadow email in pixels.<br />Note: This resource will only be applyable if the option <b><i>Shadow color for email image</i></b> is not blank.");
 +  define("_MD_AM_EDITREMOVEBLOCK","Edit & Remove blocks from user side?");
 +  define("_MD_AM_EDITREMOVEBLOCKDSC","By enabling this option, you'll see two icons on block titles with a direct access to remove or edit your block.");
-+  
++
 +  define("_MD_AM_EMAILPROTECT","Protect Emails against SPAM?");
 +  define("_MD_AM_EMAILPROTECTDSC","By selecting \"Yes\" all the emails that are part of the site's content will be automatically converted in images to avoid SPAM");
 +  define("_MD_AM_MULTLOGINPREVENT","Enable multilogin prohibition?");
@@ -131,7 +131,14 @@ modules/system/language/english/admin/preferences.php
 +  define("_MD_AM_GRAVATARALLOW","Allow using GRAVATAR?");
 +  define("_MD_AM_GRAVATARALWDSC","By allowing this, user will be able to use their local avatar/gravatar linked to their email address.");
 
-
++-  define("_MD_AM_LLOGOADM","Admin Left Logo");
++-  define("_MD_AM_LLOGOADM_DESC"," Select an image to use in the top left corner of the admin panel. <br /><b><i> To select or send an image create at least one image cateory under system --> images.</b></i> ");
++  define("_MD_AM_LLOGOADM_URL","Admin Left Logo Link Url");
++  define("_MD_AM_LLOGOADM_ALT","Admin Left Logo Link Title");
++  define("_MD_AM_RLOGOADM","Admin Right Logo");
++  define("_MD_AM_RLOGOADM_DESC"," Select an image to use in the top right corner of the admin panel. <br /><b><i> To select or send an image create at least one image cateory under system --> images.</b></i> ");
++  define("_MD_AM_RLOGOADM_URL","Admin Right Logo Link Url");
++  define("_MD_AM_RLOGOADM_ALT","Admin Right Logo Link Title");
 
 modules/system/languages/english/admin/groups.php
 --------------------------
