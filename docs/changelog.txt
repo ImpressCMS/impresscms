@@ -36,7 +36,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : New module added in admin: Links manager that allow the admin create shortcuts to be used to show blocks and as start page of the site. (real_therplima)
 - Added : Addition of the editor select field in block form. Now you can select the editor you want to use into the allowed editors. (real_therplima)
 - Added : Enable a local date function in admin preferences settings. default = no. (stranger)
-- Added : Customized admin footer. (stranger/GibaPhp/Fbio Egas)
+- Added : Customized admin footer. (stranger/GibaPhp/Fabio Egas)
 - Added : Multilogin prohibition, this will check if somebody had previously logged in the site with your account. (stranger/real_therplima)
 - Added : Implementation of adding google analytics code (like smarty). (stranger)
 - Added : Implementation of adding google meta tag (like smarty). (stranger)
@@ -49,6 +49,9 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : Addition for allowing webmaster to disable/enable of using html and external images on signatures of users of a site. (stranger/Hervet)
 - Added : Using GRAVATAR in Impresscms. (real_therplima/stranger)
 - Added : Built in RTL style for administration menu. (stranger)
+- Added : Option in System Preference to Select the Admin Panel left Logo (real_therplima/marcan)
+- Added : Option in System Preference to Select the Admin Panel Right Logo (real_therplima/marcan)
+- Added : Option in System Preference to enable/disable the ImpressCMS Project drop down menu (real_therplima/marcan)
 
 - Improved : The pm form to use the selected editor. (real_therplima)
 - Improved : XoopsTree::getNicePathFromId has new parameter, allowing specification of the separator between links (skenow)
