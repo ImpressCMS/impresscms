@@ -163,6 +163,10 @@ class upgrade_impcms06 {
 			if (! $GLOBALS ['xoopsDB']->queryF ( $sql )) {
 				return false;
 			}
+			$sql = "INSERT INTO " . $GLOBALS ['xoopsDB']->prefix ( 'config' ) . " (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " . " VALUES " . " (NULL, 0, 10, 'show_impresscms_menu', '_MD_AM_SHOW_ICMSMENU', '1', '_MD_AM_SHOW_ICMSMENU_DESC', 'yesno', 'int', 18)";
+			if (! $GLOBALS ['xoopsDB']->queryF ( $sql )) {
+				return false;
+			}
 		}
         
         return $result;
