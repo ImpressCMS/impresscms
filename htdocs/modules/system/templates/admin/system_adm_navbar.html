@@ -26,7 +26,7 @@
 <div id="navbarCP">
   <ul id="nav">
     <{foreach item=item from=$navitems}>
-      <{if $systemadm || $item.id != 'opsystem'}>
+      <{if ($systemadm || $item.id != 'opsystem') && ($item.id != 'news' || $show_impresscms_menu)}>
         <{if $modulesadm || $item.id != 'modules'}>
 	      <li><a href="<{$item.link}>"><img src="<{$xoops_url}>/modules/system/images/arrow1.gif" alt="arrow"/>&nbsp;<{$item.text}></a>
 	        <ul>
@@ -53,7 +53,7 @@
 		            </ul>
 		          <{/if}>
 		          </li>
-                <{elseif $item.id == 'news'}>
+                <{elseif $item.id == 'news' && $show_impresscms_menu}>
     		      <li><a rel="external" href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{/if}>);"><{$sub.title}></a></li>
                 <{/if}>
 		      <{/foreach}>
