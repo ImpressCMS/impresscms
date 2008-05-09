@@ -112,17 +112,36 @@ function xoops_module_update_system(&$module) {
             $default_login_content = fread($fp, filesize($default_login_content_file));
         }
 	    // Adding new function of Personalization
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'rss_local', '_MD_AM_RSSLOCAL', 'http://www.impresscms.org/modules/smartsection/backend.php', '_MD_AM_RSSLOCAL_DESC', 'textbox', 'text', 1);
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'editre_block', '_MD_AM_EDITREMOVEBLOCK', '1', '_MD_AM_EDITREMOVEBLOCKDSC', 'yesno', 'int', 2);
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'multi_login', '_MD_AM_MULTLOGINPREVENT', '0', '_MD_AM_MULTLOGINPREVENTDSC', 'yesno', 'int', 3);
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'multi_login_msg', '_MD_AM_MULTLOGINMSG', $default_login_content, '_MD_AM_MULTLOGINMSG_DESC', 'textarea', 'text', 4);
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'email_protect', '_MD_AM_EMAILPROTECT', '0', '_MD_AM_EMAILPROTECTDSC', 'yesno', 'int', 5);
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'email_font', '_MD_AM_EMAILTTF', 'arial.ttf', '_MD_AM_EMAILTTF_DESC', 'select_font', 'text', 6);
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'email_font_len', '_MD_AM_EMAILLEN', '12', '_MD_AM_EMAILLEN_DESC', 'textbox', 'int', 7);
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'email_cor', '_MD_AM_EMAILCOLOR', '#000000', '_MD_AM_EMAILCOLOR_DESC', 'color', 'text', 8);
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'email_sombra', '_MD_AM_EMAILSOMBRA', '#cccccc', '_MD_AM_EMAILSOMBRA_DESC', 'color', 'text', 9);
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'sombra_x', '_MD_AM_SOMBRAX', '2', '_MD_AM_SOMBRAX_DESC', 'textbox', 'int', 10);
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'sombra_y', '_MD_AM_SOMBRAY', '2', '_MD_AM_SOMBRAY_DESC', 'textbox', 'int', 11);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', 1);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', 'http://www.impresscms.org', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', 2);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'adm_left_logo_alt', '_MD_AM_LLOGOADM_ALT', 'ImpressCMS', '_MD_AM_LLOGOADM_ALT_DESC', 'textbox', 'text', 3);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'adm_right_logo', '_MD_AM_RLOGOADM', '', '_MD_AM_RLOGOADM_DESC', 'select_image', 'text', 4);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'adm_right_logo_url', '_MD_AM_RLOGOADM_URL', '', '_MD_AM_RLOGOADM_URL_DESC', 'textbox', 'text', 5);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'adm_right_logo_alt', '_MD_AM_RLOGOADM_ALT', '', '_MD_AM_RLOGOADM_ALT_DESC', 'textbox', 'text', 6);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'rss_local', '_MD_AM_RSSLOCAL', 'http://www.impresscms.org/modules/smartsection/backend.php', '_MD_AM_RSSLOCAL_DESC', 'textbox', 'text', 7);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'editre_block', '_MD_AM_EDITREMOVEBLOCK', '1', '_MD_AM_EDITREMOVEBLOCKDSC', 'yesno', 'int', 8);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'multi_login', '_MD_AM_MULTLOGINPREVENT', '0', '_MD_AM_MULTLOGINPREVENTDSC', 'yesno', 'int', 9);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'multi_login_msg', '_MD_AM_MULTLOGINMSG', $default_login_content, '_MD_AM_MULTLOGINMSG_DESC', 'textarea', 'text', 10);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'email_protect', '_MD_AM_EMAILPROTECT', '0', '_MD_AM_EMAILPROTECTDSC', 'yesno', 'int', 11);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'email_font', '_MD_AM_EMAILTTF', 'arial.ttf', '_MD_AM_EMAILTTF_DESC', 'select_font', 'text', 12);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'email_font_len', '_MD_AM_EMAILLEN', '12', '_MD_AM_EMAILLEN_DESC', 'textbox', 'int', 13);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'email_cor', '_MD_AM_EMAILCOLOR', '#000000', '_MD_AM_EMAILCOLOR_DESC', 'color', 'text', 14);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'email_sombra', '_MD_AM_EMAILSOMBRA', '#cccccc', '_MD_AM_EMAILSOMBRA_DESC', 'color', 'text', 15);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'sombra_x', '_MD_AM_SOMBRAX', '2', '_MD_AM_SOMBRAX_DESC', 'textbox', 'int', 16);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'sombra_y', '_MD_AM_SOMBRAY', '2', '_MD_AM_SOMBRAY_DESC', 'textbox', 'int', 17);
+	    
+	    $table = new IcmsDatabasetable('imagecategory');
+	    $icmsDatabaseUpdater->runQuery('INSERT INTO '.$table->name().' (imgcat_id, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype) VALUES (NULL, "Logos", 350000, 350, 80, 1, 0, "C", "file")');
+	    unset($table);
+	    $result = $xoopsDB->query("SELECT imgcat_id FROM ".$xoopsDB->prefix('imagecategory')." WHERE imgcat_name = 'Logos'");
+	    list($categ_id) = $xoopsDB->fetchRow($result);
+	    $table = new IcmsDatabasetable('image');
+	    $icmsDatabaseUpdater->runQuery('INSERT INTO '.$table->name().' (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (1, "img482278e29e81c.png", "ImpressCMS", "image/png", '.time().', 1, 0, '.$categ_id.')');
+	    unset($table);
+	    $table = new IcmsDatabasetable('group_permission');
+	    $icmsDatabaseUpdater->runQuery('INSERT INTO '.$table->name().' VALUES(0,1,'.$categ_id.',1,"imgcat_write")');
+	    $icmsDatabaseUpdater->runQuery('INSERT INTO '.$table->name().' VALUES(0,1,'.$categ_id.',1,"imgcat_read")');
+	    unset($table);
     }
     
 	// db migrate version = 2
