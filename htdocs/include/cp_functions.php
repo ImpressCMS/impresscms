@@ -226,6 +226,7 @@ window.onload=startList;
 	$icmsAdminTpl->assign ( 'adm_right_logo', $xoopsConfigPersona['adm_right_logo'] );
 	$icmsAdminTpl->assign ( 'adm_right_logo_url', $xoopsConfigPersona['adm_right_logo_url'] );
 	$icmsAdminTpl->assign ( 'adm_right_logo_alt', $xoopsConfigPersona['adm_right_logo_alt'] );
+	$icmsAdminTpl->assign('show_impresscms_menu', $xoopsConfigPersona['show_impresscms_menu']);
 	
 	echo $icmsAdminTpl->fetch ( XOOPS_ROOT_PATH . '/modules/system/templates/admin/system_adm_navbar.html' );
 	echo "<div id='containBodyCP'><br /><div id='bodyCP'>";
