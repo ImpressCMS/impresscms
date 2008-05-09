@@ -106,12 +106,64 @@ class upgrade_impcms06 {
                     " (NULL, '_MD_AM_PASSLEVEL1', '20', {$config_id})," .
                     " (NULL, '_MD_AM_PASSLEVEL2', '40', {$config_id})," .
                     " (NULL, '_MD_AM_PASSLEVEL3', '60', {$config_id})," .
-                    " (NULL, '_MD_AM_PASSLEVEL4', '80', {$config_id})," .
+                    " (NULL, '_MD_AM_PASSLEVEL4', '80', {$config_id})";
                     " (NULL, '_MD_AM_PASSLEVEL5', '95', {$config_id})";
             if ( !$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
                 return false;
             }
         }
+        
+ 		$adminlogo_installed = false;
+		$sql = "SELECT COUNT(*) FROM `" . $GLOBALS ['xoopsDB']->prefix ( 'config' ) . "` WHERE `conf_name` = 'adm_left_logo'";
+		if ($result = $GLOBALS ['xoopsDB']->queryF ( $sql )) {
+			list ( $count ) = $GLOBALS ['xoopsDB']->fetchRow ( $result );
+			if ($count == 1) {
+				$adminlogo_installed = true;
+			}
+		}
+		if (! $adminlogo_installed) {
+		    $sql = "INSERT INTO " . $GLOBALS ['xoopsDB']->prefix ( 'config' ) . " (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " . " VALUES " . " (NULL, 0, 10, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', 0)";
+			if (! $GLOBALS ['xoopsDB']->queryF ( $sql )) {
+				return false;
+			}
+			$sql = "INSERT INTO " . $GLOBALS ['xoopsDB']->prefix ( 'config' ) . " (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " . " VALUES " . " (NULL, 0, 10, 'adm_left_logo', '_MD_AM_LLOGOADM_URL', 'http://www.impresscms.org', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', 1)";
+			if (! $GLOBALS ['xoopsDB']->queryF ( $sql )) {
+				return false;
+			}
+			$sql = "INSERT INTO " . $GLOBALS ['xoopsDB']->prefix ( 'config' ) . " (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " . " VALUES " . " (NULL, 0, 10, 'adm_left_logo', '_MD_AM_LLOGOADM_ALT', 'ImpressCMS', '_MD_AM_LLOGOADM_ALT_DESC', 'textbox', 'text', 2)";
+			if (! $GLOBALS ['xoopsDB']->queryF ( $sql )) {
+				return false;
+			}
+			$sql = "INSERT INTO " . $GLOBALS ['xoopsDB']->prefix ( 'config' ) . " (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " . " VALUES " . " (NULL, 0, 10, 'adm_right_logo', '_MD_AM_RLOGOADM', '', '_MD_AM_RLOGOADM_DESC', 'select_image', 'text', 3)";
+			if (! $GLOBALS ['xoopsDB']->queryF ( $sql )) {
+				return false;
+			}
+			$sql = "INSERT INTO " . $GLOBALS ['xoopsDB']->prefix ( 'config' ) . " (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " . " VALUES " . " (NULL, 0, 10, 'aadm_right_logo', '_MD_AM_RLOGOADM_URL', '', '_MD_AM_RLOGOADM_URL_DESC', 'textbox', 'text', 4)";
+			if (! $GLOBALS ['xoopsDB']->queryF ( $sql )) {
+				return false;
+			}
+			$sql = "INSERT INTO " . $GLOBALS ['xoopsDB']->prefix ( 'config' ) . " (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " . " VALUES " . " (NULL, 0, 10, 'adm_right_logo', '_MD_AM_RLOGOADM_ALT', '', '_MD_AM_RLOGOADM_ALT_DESC', 'textbox', 'text', 5)";
+			if (! $GLOBALS ['xoopsDB']->queryF ( $sql )) {
+				return false;
+			}
+			$sql = "INSERT INTO " . $GLOBALS ['xoopsDB']->prefix ( 'imagecategory' ) . " (imgcat_id, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype) VALUES (NULL, 'Logos', 350000, 350, 80, 1, 0, 'C', 'file')";
+			if (! $GLOBALS ['xoopsDB']->queryF ( $sql )) {
+				return false;
+			}
+			$categ_id = $GLOBALS ['xoopsDB']->getInsertId ();
+			$sql = "INSERT INTO " . $GLOBALS ['xoopsDB']->prefix ( 'group_permission' ) . " VALUES(0,1,".$categ_id.",1,'imgcat_write')";
+			if (! $GLOBALS ['xoopsDB']->queryF ( $sql )) {
+				return false;
+			}
+			$sql = "INSERT INTO " . $GLOBALS ['xoopsDB']->prefix ( 'group_permission' ) . " VALUES(0,1,".$categ_id.",1,'imgcat_read')";
+			if (! $GLOBALS ['xoopsDB']->queryF ( $sql )) {
+				return false;
+			}
+			$sql = "INSERT INTO " . $GLOBALS ['xoopsDB']->prefix ( 'image' ) . " (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (1, 'img482278e29e81c.png', 'ImpressCMS', 'image/png', ".time().", 1, 0, ".$categ_id.")";
+			if (! $GLOBALS ['xoopsDB']->queryF ( $sql )) {
+				return false;
+			}
+		}
         
         return $result;
 
