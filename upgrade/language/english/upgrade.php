@@ -5,6 +5,7 @@ define( "_XOOPS_UPGRADE", "ImpressCMS Upgrade" );
 define( "_CHECKING_APPLIED", "Checking applied upgrades:" );
 define( "_SET_FILES_WRITABLE", "Make the following files writable before proceeding:" );
 define( "_NO_NEED_UPGRADE", "No upgrade necessary. Please remove this folder from your server" );
+define( "_SYS_NEED_UPGRADE", "In order to Complete the upgrade proccess, please click here, and upgrade system module." );
 define( "_NEED_UPGRADE", "Upgrade needed" );
 define( "_PROCEED_UPGRADE", "Proceed to upgrade" );
 define( "_PERFORMING_UPGRADE", "Performing %s upgrade" );

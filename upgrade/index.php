@@ -102,6 +102,7 @@ if ( !$xoopsUser || !$xoopsUser->isAdmin() ) {
 		} else {
 			$text = empty( $_SESSION['xoops_upgrade'] ) ? _FINISH : sprintf( _APPLY_NEXT, $_SESSION['xoops_upgrade'][0] );
 			echo '<a id="link-next" href="index.php?action=next">' . $text . '</a>';
+			echo '<a id="link-next" href="'. XOOPS_URL .'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">' . _SYS_NEED_UPGRADE . '</a>';
 		}
 	}
 }

@@ -44,7 +44,7 @@
 </table>
 <?php
 	if ( !$needUpgrade ) {
-		echo '<div class="x2-note">' . _NO_NEED_UPGRADE . "</div>";
+		echo '<div class="x2-note">' . _NO_NEED_UPGRADE . '<br /><br /><a id="link-next" href="'. XOOPS_URL .'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">' . _SYS_NEED_UPGRADE . "</a></div>";
 		return;
 	} else {
 		if ( !empty( $files ) ) {
