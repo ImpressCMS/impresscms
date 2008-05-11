@@ -28,8 +28,8 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
-
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
+$gperm_handler =& xoops_gethandler('groupperm');
+if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) || ( isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], $xoopsUser->getGroups() ) )) {
     exit("Access Denied");
 } else {
     include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
@@ -97,6 +97,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             }
 			$criteria2->add(new Criteria('gperm_name', 'enable_debug'), 'OR');
             $criteria2->add(new Criteria('gperm_name', 'block_read'), 'OR');
+            $criteria2->add(new Criteria('gperm_name', 'group_manager'), 'OR');
             $criteria->add($criteria2);
             $gperm_handler->deleteAll($criteria);
             if (count($system_catids) > 0) {
@@ -145,6 +146,14 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 				$modperm->setVar('gperm_modid', 1);
 				$gperm_handler->insert($modperm);
 			}
+        	foreach ($groupmanager_gids as $gm_gid) {
+				$modperm =& $gperm_handler->create();
+				$modperm->setVar('gperm_groupid', $groupid);
+				$modperm->setVar('gperm_itemid', $gm_gid);
+				$modperm->setVar('gperm_name', 'group_manager');
+				$modperm->setVar('gperm_modid', 1);
+				$gperm_handler->insert($modperm);
+			}
             foreach ($read_bids as $r_bid) {
                 $blockperm =& $gperm_handler->create();
                 $blockperm->setVar('gperm_groupid', $groupid);
@@ -171,6 +180,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $read_mids = empty($read_mids) ? array() : $read_mids;
         $useeditor_mids = empty($useeditor_mids) ? array() : $useeditor_mids;
         $enabledebug_mids = empty($enabledebug_mids) ? array() : $enabledebug_mids;
+        $groupmanager_gids = empty($groupmanager_gids) ? array() : $groupmanager_gids;
         $read_bids = empty($read_bids) ? array() : $read_bids;
         $member_handler =& xoops_gethandler('member');
         $group =& $member_handler->createGroup();
@@ -227,6 +237,14 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 				$modperm->setVar('gperm_groupid', $groupid);
 				$modperm->setVar('gperm_itemid', $ed_mid);
 				$modperm->setVar('gperm_name', 'enable_debug');
+				$modperm->setVar('gperm_modid', 1);
+				$gperm_handler->insert($modperm);
+			}
+        	foreach ($groupmanager_gids as $gm_mid) {
+				$modperm =& $gperm_handler->create();
+				$modperm->setVar('gperm_groupid', $groupid);
+				$modperm->setVar('gperm_itemid', $gm_gid);
+				$modperm->setVar('gperm_name', 'group_manager');
 				$modperm->setVar('gperm_modid', 1);
 				$gperm_handler->insert($modperm);
 			}

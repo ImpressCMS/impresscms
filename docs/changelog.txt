@@ -4,6 +4,7 @@ ImpressCMS ChangeLog
 Unreleased : ImpressCMS 1.1 "???" Alpha
 =============================================
 
+- Added : New rights category in the group admin, now a group can admin some groups and other not... (nekro)
 - Added : icmsFeed for module developers (nachenko)
 - Added : Icms Uses UTF-8 encoding as default encoding.  (stranger)
 - Added : icms_createSalt function to generate a unique random salt key. (vaughan)
