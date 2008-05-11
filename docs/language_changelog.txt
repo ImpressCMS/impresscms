@@ -16,7 +16,7 @@ ImpressCMS 1.1 (changes from ImpressCMS 1.0)
 # Directory: install
 ====================
 
-install/languages/english/install.php
+install/language/english/install.php
 ------------------------------------
 
 +  define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
@@ -32,7 +32,7 @@ install/languages/english/install.php
 +  define( "ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported." );
 +  define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database." );
 
-install/languages/english/install2.php
+install/language/english/install2.php
 -------------------------------------
 
 +  define("_WELCOME_MSG_CONTENT", "Welcome {UNAME},
@@ -49,7 +49,7 @@ Yours truly,
 {X_SITEURL}");
 
 
-install/languages/english/welcome.php
+install/language/english/welcome.php
 ------------------------------------
 
 +- $content .=  (Changed for external links) rel="external"
@@ -172,10 +172,10 @@ newuser_notify.tpl
 -----------------------------------------
 
 =============================================
-# Directory: modules/system/languages/english/
+# Directory: modules/system/language/english/
 =============================================
 
-modules/system/languages/english/admin.php
+modules/system/language/english/admin.php
 ------------------------------------------
 
 +- define('_MD_AM_VRSN','Version Checker');
@@ -183,7 +183,7 @@ modules/system/languages/english/admin.php
 +  define('_MD_AM_BKPOSAD','Block Positions');
 +  define('_MD_AM_PAGES','Links Manager');
 
-modules/system/languages/english/blocks.php
+modules/system/language/english/blocks.php
 -------------------------------------------
 
 +  define("_MB_SYSTEM_SHOWSUBS", "Show sub-pages?");
@@ -198,7 +198,7 @@ modules/system/languages/english/blocks.php
 +  if (!defined('_CT_PUBLISHEDBY')){define('_CT_PUBLISHEDBY','ver&ouml;ffentlicht von');}
 +  if (!defined('_CT_ON')){define('_CT_ON','on');}
 
-modules/system/languages/english/modinfo.php
+modules/system/language/english/modinfo.php
 -----------------------------------------------
 
 +  define("_MI_SYSTEM_ADMENU17", "Version");
@@ -207,11 +207,11 @@ modules/system/languages/english/modinfo.php
 +  define("_MI_SYSTEM_ADMENU20", "Links Manager");
 
 ==================================================
-# Directory: modules/system/languages/english/admin
+# Directory: modules/system/language/english/admin
 ==================================================
 
 
-modules/system/languages/english/admin/modulesadmin.php
+modules/system/language/english/admin/modulesadmin.php
 ---------------------------------------------------------
 
 +  define('_MD_AM_MODULESADMIN_SUPPORT', 'Module Support Site');
@@ -219,11 +219,11 @@ modules/system/languages/english/admin/modulesadmin.php
 +  define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
 +  define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
 
-+  modules/system/languages/english/admin/common.php
++  modules/system/language/english/admin/common.php
 ---------------------------------------------------
 
 
-modules/system/languages/english/admin/preferences.php
+modules/system/language/english/admin/preferences.php
 -----------------------------------------------------
 
 +  define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow annonymous users to users profiles");
@@ -310,31 +310,31 @@ modules/system/languages/english/admin/preferences.php
 +  define("_MD_AM_SHOW_ICMSMENU","Show ImpressCMS Project drop down menu?");
 +  define("_MD_AM_SHOW_ICMSMENU_DESC","Select NO to not show the drop down menu and YES to show it.");
 
-modules/system/languages/english/admin/groups.php
+modules/system/language/english/admin/groups.php
 -------------------------------------------------
 +  define("_AM_EDPERM","Can use the WYSIWYG editor in the following modules");
 +  define("_AM_DEBUG_PERM","The Debug Mode is enabled for the next modules");
 +  define("_AM_GROUPMANAGER_PERM","Group Manager rights");
 
 
-modules/system/languages/english/admin/blocksadmin.php
+modules/system/language/english/admin/blocksadmin.php
 ---------------------------------------------------------
 +  define('_AM_CHANGESTS', 'Change the block visibility');
 
 
-+  modules/system/languages/english/admin/content_css_doc.html
++  modules/system/language/english/admin/content_css_doc.html
 ---------------------------------------------------------
 
-+  modules/system/languages/english/admin/pages.php
++  modules/system/language/english/admin/pages.php
 ---------------------------------------------------------
 
-+  modules/system/languages/english/admin/content.php
++  modules/system/language/english/admin/content.php
 ---------------------------------------------------------
 
-+  modules/system/languages/english/admin/blockspadmin.php
++  modules/system/language/english/admin/blockspadmin.php
 ---------------------------------------------------------
 
-+  modules/system/languages/english/admin/version.php
++  modules/system/language/english/admin/version.php
 ---------------------------------------------------------
 
 +define("_AM_VERSION_TITLE", 'ImpressCMS Version Checker');
@@ -349,10 +349,10 @@ modules/system/languages/english/admin/blocksadmin.php
 
 
 ======================================
-# Directory: upgrade/languages/english/
+# Directory: upgrade/language/english/
 ======================================
 
-+- upgrade/languages/english/upgrade.php
++- upgrade/language/english/upgrade.php
 ------------------------------------
 
 +  define( "LEGEND_DATABASE", "Database Character Set" );
@@ -435,7 +435,7 @@ language/english/user.php
 +  // %s is your site name
 +  define('_US_INVITEREGLINK','Registration invitation from %s');
 
-modules/system/languages/english/admin/blocksadmin.php
+modules/system/language/english/admin/blocksadmin.php
 --------------------------
 
 +  define('_AM_BPADMIN',"Blocks Positions Administration");
@@ -450,7 +450,7 @@ modules/system/languages/english/admin/blocksadmin.php
 +  define('_AM_BPMSG3',"It is certain that it desires to exclude this block position?<br /><b>Warning:</b> This operation cannot be insult!");
 +  define('_AM_BPHELP','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.');
 
-modules/system/languages/english/admin/groups.php
+modules/system/language/english/admin/groups.php
 --------------------------
 
 +  define("_AM_SBLEFT","Side Block - Left");
@@ -462,7 +462,7 @@ modules/system/languages/english/admin/groups.php
 +  define("_AM_CBBOTTOMRIGHT","Center Block - Bottom right");
 +  define("_AM_CBBOTTOM","Center Block - Bottom");
 
-modules/system/languages/english/admin/preferences.php
+modules/system/language/english/admin/preferences.php
 --------------------------
 
 +  define("_MD_AM_LDAP_USERS_BYPASS", " Xoops User(s) bypass LDAP Authentication");
@@ -491,14 +491,14 @@ modules/system/languages/english/admin/preferences.php
 +  define("_MD_AM_PRIVPOLICYDSC","");
 +  define("_MD_AM_REGINVITE","Register by invitation");
 
-modules/system/languages/english/admin/userrank.php
+modules/system/language/english/admin/userrank.php
 --------------------------
 
 +  define("_AM_RANKW","Max width %s pixels");
 +  define("_AM_RANKH","Max height %s pixels");
 +  define("_AM_RANKMAX","Max filesize %s bytes");
 
-modules/system/languages/english/blocks.php
+modules/system/language/english/blocks.php
 --------------------------
 
 +- define('_MB_SYSTEM_REMEMBERME', 'Remember me');
@@ -1044,7 +1044,7 @@ modules/system/language/english/admin/version.php
 +  define("_AM_VERSION_LATEST_VERSION", 'Latest ImpressCMS Version:');
 
 
-modules/system/languages/english/admin/preferences.php
+modules/system/language/english/admin/preferences.php
 ------------------------------------------------------
 
 +  _MD_AM_REGINVITE (line 72)
