@@ -84,7 +84,7 @@ install/languages/english/welcome.php
 # Directory: language
 =====================
 
-+  libraries/captcha/language/english/captcha.php (added)
++  libraries/captcha/language/english.php (added)
 --------------------------------------
 
 +  language/english/databaseupdater.php  (added)
