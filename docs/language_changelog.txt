@@ -4,9 +4,9 @@ ImpressCMS Language ChangeLog
 This is the changelog documenting the changes in the language constant for every release of ImpressCMS.
 
 Legend :
-  +  a constant was added orm in some case, a whole new file was added
+  +  a constant was added or in some case, a whole new file was added
   +- a constant was modified
-  -  a constant was remove OR a whole file was removed
+  -  a constant was removed OR a whole file was removed
   #  Directory / Folders guide
 
 ImpressCMS 1.1 (changes from ImpressCMS 1.0)
@@ -16,7 +16,7 @@ ImpressCMS 1.1 (changes from ImpressCMS 1.0)
 # Directory: install
 ====================
 
-install/language/english/install.php
+install/languages/english/install.php
 ------------------------------------
 
 +  define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
@@ -32,7 +32,7 @@ install/language/english/install.php
 +  define( "ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported." );
 +  define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database." );
 
-install/language/english/install2.php
+install/languages/english/install2.php
 -------------------------------------
 
 +  define("_WELCOME_MSG_CONTENT", "Welcome {UNAME},
@@ -49,7 +49,7 @@ Yours truly,
 {X_SITEURL}");
 
 
-install/language/english/welcome.php
+install/languages/english/welcome.php
 ------------------------------------
 
 +- $content .=  (Changed for external links) rel="external"
@@ -84,7 +84,7 @@ install/language/english/welcome.php
 # Directory: language
 =====================
 
-+ language/english/captcha.php (added)
++  language/english/captcha.php (added)
 --------------------------------------
 
 +  language/english/databaseupdater.php  (added)
@@ -99,6 +99,14 @@ language/english/global.php
 +  define("_SECURITYIMAGE_GETCODE","Enter the security code");
 +- define('_CHARSET', 'utf-8');
 +  define('_IMPRESSCMS_ADMIN','Administration of');
++  define('_ABOUT','About');
++  define('_IMPRESSCMS_HOME','Home');
++  define('_IMPRESSCMS_COMMUNITY','Community');
++  define('_IMPRESSCMS_ADDONS','Addons');
++  define('_IMPRESSCMS_WIKI','Wiki');
++  define('_IMPRESSCMS_BLOG','Blog');
++  define('_IMPRESSCMS_DONATE','Donate!');
++  define('_RECREATE_ADMINMENU_FILE', 'This is your first time to enter the administration section. Press the button below to proceed.');
 
 language/english/moduleabout.php
 --------------------------------
@@ -132,7 +140,7 @@ language/english/moduleabout.php
 +  define('_MODABOUT_AUTHOR_INFO', 'Contributors information');
 
 
-+- language/english/user.php
+language/english/user.php
 ----------------------------
 
 +  define('_US_YOURREGISTRATION', 'Your registration at %s');
@@ -147,15 +155,14 @@ language/english/moduleabout.php
 # Directory: language/english/mail_template/
 ============================================
 
-
 + welcome.tpl
 -------------
 
-+ newuser_notify.tpl
+newuser_notify.tpl
 --------------------
 
 +- register.tpl (modified to use {X_ADMINMAIL} and not {ADMINMAIL})
--------------------------------------------------------------------
+
 
 ==============================
 # Directory: libraries (added)
@@ -165,16 +172,18 @@ language/english/moduleabout.php
 -----------------------------------------
 
 =============================================
-# Directory: modules/system/language/english/
+# Directory: modules/system/languages/english/
 =============================================
 
-+- modules/system/languages/english/admin.php
+modules/system/languages/english/admin.php
 ------------------------------------------
+
++- define('_MD_AM_VRSN','Version Checker');
 +  define('_MD_AM_CONTENT', 'Content Manager');
 +  define('_MD_AM_BKPOSAD','Block Positions');
 +  define('_MD_AM_PAGES','Links Manager');
 
-+- modules/system/languages/english/blocks.php
+modules/system/languages/english/blocks.php
 -------------------------------------------
 
 +  define("_MB_SYSTEM_SHOWSUBS", "Show sub-pages?");
@@ -189,7 +198,7 @@ language/english/moduleabout.php
 +  if (!defined('_CT_PUBLISHEDBY')){define('_CT_PUBLISHEDBY','ver&ouml;ffentlicht von');}
 +  if (!defined('_CT_ON')){define('_CT_ON','on');}
 
-+- modules/system/languages/english/modinfo.php
+modules/system/languages/english/modinfo.php
 -----------------------------------------------
 
 +  define("_MI_SYSTEM_ADMENU17", "Version");
@@ -198,11 +207,11 @@ language/english/moduleabout.php
 +  define("_MI_SYSTEM_ADMENU20", "Links Manager");
 
 ==================================================
-# Directory: modules/system/language/english/admin
+# Directory: modules/system/languages/english/admin
 ==================================================
 
 
-+- modules/system/language/english/admin/modulesadmin.php
+modules/system/languages/english/admin/modulesadmin.php
 ---------------------------------------------------------
 
 +  define('_MD_AM_MODULESADMIN_SUPPORT', 'Module Support Site');
@@ -210,11 +219,11 @@ language/english/moduleabout.php
 +  define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
 +  define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
 
-+  modules/system/language/english/admin/common.php
++  modules/system/languages/english/admin/common.php
 ---------------------------------------------------
 
 
-modules/system/language/english/admin/preferences.php
+modules/system/languages/english/admin/preferences.php
 -----------------------------------------------------
 
 +  define("_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE","Allow annonymous users to users profiles");
@@ -288,7 +297,7 @@ modules/system/language/english/admin/preferences.php
 +  define("_MD_AM_SOMBRAY_DESC","Type in a value that will represent the vertical offset of the email shadow email in pixels.<br />Note: This resource will only be applyable if the option <b><i>Shadow color for email image</i></b> is not blank.");
 +  define("_MD_AM_EDITREMOVEBLOCK","Edit & Remove blocks from user side?");
 +  define("_MD_AM_EDITREMOVEBLOCKDSC","By enabling this option, you'll see two icons on block titles with a direct access to remove or edit your block.");
-+
+
 +  define("_MD_AM_EMAILPROTECT","Protect Emails against SPAM?");
 +  define("_MD_AM_EMAILPROTECTDSC","By selecting \"Yes\" all the emails that are part of the site's content will be automatically converted in images to avoid SPAM");
 +  define("_MD_AM_MULTLOGINPREVENT","Enable multilogin prohibition?");
@@ -308,7 +317,7 @@ modules/system/languages/english/admin/groups.php
 +  define("_AM_GROUPMANAGER_PERM","Group Manager rights");
 
 
-+- modules/system/languages/english/admin/blocksadmin.php
+modules/system/languages/english/admin/blocksadmin.php
 ---------------------------------------------------------
 +  define('_AM_CHANGESTS', 'Change the block visibility');
 
@@ -325,11 +334,25 @@ modules/system/languages/english/admin/groups.php
 +  modules/system/languages/english/admin/blockspadmin.php
 ---------------------------------------------------------
 
++  modules/system/languages/english/admin/version.php
+---------------------------------------------------------
+
++define("_AM_VERSION_TITLE", 'ImpressCMS Version Checker');
++define("_AM_VERSION_NO_UPDATE", 'You are running the latest version of ImpressCMS !');
++define("_AM_VERSION_UPDATE_NEEDED", 'There is a new version of ImpressCMS ! The ImpressCMS Project strongly recommends always using the latest release.');
++define("_AM_VERSION_MOREINFO", 'Click on the following link to get more information on the latest release: ');
+
++define("_AM_VERSION_CHECK_RSSDATA_EMPTY", 'No information was available to check for an updated release.');
++define("_AM_VERSION_CHANGELOG", 'Changelog');
++define("_AM_VERSION_WARNING", 'Warning');
++define("_AM_VERSION_WARNING_NOT_A_FINAL", 'Please note that you are currently running a "Final" version of ImpressCMS and the proposed updated release is not a "Final" release. All releases other then "Final" should not be used on a production environment. If your install of ImpressCMS is running on a production environment, we recommend you wait for a final release. More info can be found: <a href="http://wiki.impresscms.org/index.php?title=Final_release">here</a>.');
+
+
 ======================================
-# Directory: upgrade/language/english/
+# Directory: upgrade/languages/english/
 ======================================
 
-+- upgrade/language/english/upgrade.php
++- upgrade/languages/english/upgrade.php
 ------------------------------------
 
 +  define( "LEGEND_DATABASE", "Database Character Set" );
@@ -352,6 +375,7 @@ language/english/admin.php
 
 +  define('_AD_SYSOPTIONS','System Options');
 +  define('_AD_INSTALLEDMODULES','Installed Modules');
+-  define('_AD_PRESSGEN', 'This is your first time to enter the administration section. Press the button below to proceed.');
 
 language/english/auth.php
 --------------------------
@@ -361,7 +385,7 @@ language/english/auth.php
 +  language/english/banners.php
 -------------------------------
 
-language/english/findusers.php
++- language/english/findusers.php
 ------------------------------
 
 +- define("_MA_USER_QUERY", "Query");
@@ -411,7 +435,7 @@ language/english/user.php
 +  // %s is your site name
 +  define('_US_INVITEREGLINK','Registration invitation from %s');
 
-modules/system/language/english/admin/blocksadmin.php
+modules/system/languages/english/admin/blocksadmin.php
 --------------------------
 
 +  define('_AM_BPADMIN',"Blocks Positions Administration");
@@ -426,7 +450,7 @@ modules/system/language/english/admin/blocksadmin.php
 +  define('_AM_BPMSG3',"It is certain that it desires to exclude this block position?<br /><b>Warning:</b> This operation cannot be insult!");
 +  define('_AM_BPHELP','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.');
 
-modules/system/language/english/admin/groups.php
+modules/system/languages/english/admin/groups.php
 --------------------------
 
 +  define("_AM_SBLEFT","Side Block - Left");
@@ -438,7 +462,7 @@ modules/system/language/english/admin/groups.php
 +  define("_AM_CBBOTTOMRIGHT","Center Block - Bottom right");
 +  define("_AM_CBBOTTOM","Center Block - Bottom");
 
-modules/system/language/english/admin/preferences.php
+modules/system/languages/english/admin/preferences.php
 --------------------------
 
 +  define("_MD_AM_LDAP_USERS_BYPASS", " Xoops User(s) bypass LDAP Authentication");
@@ -467,14 +491,14 @@ modules/system/language/english/admin/preferences.php
 +  define("_MD_AM_PRIVPOLICYDSC","");
 +  define("_MD_AM_REGINVITE","Register by invitation");
 
-modules/system/language/english/admin/userrank.php
+modules/system/languages/english/admin/userrank.php
 --------------------------
 
 +  define("_AM_RANKW","Max width %s pixels");
 +  define("_AM_RANKH","Max height %s pixels");
 +  define("_AM_RANKMAX","Max filesize %s bytes");
 
-modules/system/language/english/blocks.php
+modules/system/languages/english/blocks.php
 --------------------------
 
 +- define('_MB_SYSTEM_REMEMBERME', 'Remember me');
