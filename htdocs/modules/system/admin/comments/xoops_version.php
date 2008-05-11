@@ -31,9 +31,9 @@
 
 $modversion['name'] = _MD_AM_COMMENTS;
 $modversion['version'] = "";
-$modversion['description'] = "XOOPS Site Comment Manager";
+$modversion['description'] = "ImpressCMS Site Comment Manager";
 $modversion['author'] = "";
-$modversion['credits'] = "The XOOPS Project";
+$modversion['credits'] = "The ImpressCMS Project";
 $modversion['help'] = "comments.html";
 $modversion['license'] = "GPL see LICENSE";
 $modversion['official'] = 1;

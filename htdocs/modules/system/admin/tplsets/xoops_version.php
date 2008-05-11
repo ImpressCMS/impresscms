@@ -31,9 +31,9 @@
 
 $modversion['name'] = _MD_AM_TPLSETS;
 $modversion['version'] = "";
-$modversion['description'] = "XOOPS Template Set Manager";
+$modversion['description'] = "ImpressCMS Template Set Manager";
 $modversion['author'] = "";
-$modversion['credits'] = "The XOOPS Project";
+$modversion['credits'] = "The ImpressCMS Project";
 $modversion['help'] = "tplsets.html";
 $modversion['license'] = "GPL see LICENSE";
 $modversion['official'] = 1;

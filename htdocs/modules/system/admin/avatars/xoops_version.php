@@ -31,9 +31,9 @@
 
 $modversion['name'] = _MD_AM_AVATARS;
 $modversion['version'] = "";
-$modversion['description'] = "XOOPS Site Avatar Manager";
+$modversion['description'] = "ImpressCMS Site Avatar Manager";
 $modversion['author'] = "";
-$modversion['credits'] = "The XOOPS Project";
+$modversion['credits'] = "The ImpressCMS Project";
 $modversion['help'] = "images.html";
 $modversion['license'] = "GPL see LICENSE";
 $modversion['official'] = 1;

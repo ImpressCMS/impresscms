@@ -31,9 +31,9 @@
 
 $modversion['name'] = _MD_AM_PREF;
 $modversion['version'] = "";
-$modversion['description'] = "XOOPS Site Preferences";
+$modversion['description'] = "ImpressCMS Site Preferences";
 $modversion['author'] = "";
-$modversion['credits'] = "The XOOPS Project";
+$modversion['credits'] = "The ImpressCMS Project";
 $modversion['help'] = "preferences.html";
 $modversion['license'] = "GPL see LICENSE";
 $modversion['official'] = 1;

@@ -31,9 +31,9 @@
 
 $modversion['name'] = _MD_AM_IMAGES;
 $modversion['version'] = "";
-$modversion['description'] = "XOOPS Image Manager";
+$modversion['description'] = "ImpressCMS Image Manager";
 $modversion['author'] = "";
-$modversion['credits'] = "The XOOPS Project";
+$modversion['credits'] = "The ImpressCMS Project";
 $modversion['help'] = "images.html";
 $modversion['license'] = "GPL see LICENSE";
 $modversion['official'] = 1;
