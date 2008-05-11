@@ -219,9 +219,6 @@ modules/system/language/english/admin/modulesadmin.php
 +  define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
 +  define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
 
-+  modules/system/language/english/admin/common.php
----------------------------------------------------
-
 
 modules/system/language/english/admin/preferences.php
 -----------------------------------------------------
