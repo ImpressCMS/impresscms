@@ -322,6 +322,19 @@ class MyTextSanitizer
 			// html not allowed
 			$text = $this->htmlSpecialChars($text);
 		}
+		else {
+			// html allowed - sanitize with html purifier
+			$config = HTMLPurifier_Config::createDefault();
+			$config->set('Cache', 'SerializerPath', ICMS_TRUST_PATH.'/cache/htmlpurifier/configs');
+			$config->set('Core', 'Encoding', _CHARSET);
+			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
+			$config->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype)
+
+			$this->purifier = new HTMLPurifier($config);
+
+			$text = $this->purify_recursive($text);
+		}
+
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
 		if ($smiley != 0) {
@@ -366,6 +379,19 @@ class MyTextSanitizer
 			// html not allowed
 			$text = $this->htmlSpecialChars($text);
 		}
+		else {
+			// html allowed - sanitize with html purifier
+			$config = HTMLPurifier_Config::createDefault();
+			$config->set('Cache', 'SerializerPath', ICMS_TRUST_PATH.'/cache/htmlpurifier/configs');
+			$config->set('Core', 'Encoding', _CHARSET);
+			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
+			$config->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype)
+
+			$this->purifier = new HTMLPurifier($config);
+
+			$text = $this->purify_recursive($text);
+		}
+
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
 		if ($smiley != 0) {
@@ -387,6 +413,15 @@ class MyTextSanitizer
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
 		return $text;
+	}
+
+	function purify_recursive( $data )
+	{
+		if( is_array( $data ) ) {
+			return array_map( array( $this , 'purify_recursive' ) , $data ) ;
+		} else {
+			return strlen( $data ) > 32 ? $this->purifier->purify( $data ) : $data ;
+		}
 	}
 
 	/**
