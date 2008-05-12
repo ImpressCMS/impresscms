@@ -373,7 +373,7 @@ define("_MD_AM_GRAVATARALWDSC","By allowing this, user will be able to use their
 define("_MD_AM_SHOW_ICMSMENU","Show ImpressCMS Project drop down menu?");
 define("_MD_AM_SHOW_ICMSMENU_DESC","Select NO to not show the drop down menu and YES to show it.");
 
-define("_MD_AM_SHORTURL"," Truncating url\'s?");
+define("_MD_AM_SHORTURL"," Truncating url's?");
 define("_MD_AM_SHORTURLDSC","By selecting \"Yes\" all url&links committed in your site will have a shorter length");
 define("_MD_AM_URLLEN","Max Length");
 define("_MD_AM_URLLEN_DESC","The maximum amount of characteres to be ignored for truncating, url\'s larger than this will be shorten.");
