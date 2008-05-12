@@ -376,11 +376,11 @@ define("_MD_AM_SHOW_ICMSMENU_DESC","Select NO to not show the drop down menu and
 define("_MD_AM_SHORTURL"," Truncating url's?");
 define("_MD_AM_SHORTURLDSC","By selecting \"Yes\" all url&links committed in your site will have a shorter length");
 define("_MD_AM_URLLEN","Max Length");
-define("_MD_AM_URLLEN_DESC","The maximum amount of characteres to be ignored for truncating, url\'s larger than this will be shorten.");
+define("_MD_AM_URLLEN_DESC","The maximum amount of characteres to be ignored for truncating, url's larger than this will be shorten.");
 define("_MD_AM_PRECHARS","Pre Characters");
-define("_MD_AM_PRECHARS_DESC","How many characteres do you want to be shown in begin of truncated url\'s.");
+define("_MD_AM_PRECHARS_DESC","How many characteres do you want to be shown in begin of truncated url's.");
 define("_MD_AM_LASTCHARS","Last Characters");
-define("_MD_AM_LASTCHARS_DESC","How many characteres do you want to be shown at the end of truncated url\'s.");
+define("_MD_AM_LASTCHARS_DESC","How many characteres do you want to be shown at the end of truncated url's.");
 /*
 define("_MD_AM_AUTORESIZE","Auto resize larger avatars?");
 define("_MD_AM_AUTORESIZE_DESC","If YES, if the avatar sent have the width or height greater than that set will be automatically resized (keeping the ratio of the image) and the upload will be allowed. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.");
