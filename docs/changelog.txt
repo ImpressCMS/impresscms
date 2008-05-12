@@ -61,6 +61,10 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : Option in System Preference to Select the Admin Panel Right Logo (real_therplima/marcan)
 - Added : Option in System Preference to enable/disable the ImpressCMS Project drop down menu (real_therplima/marcan)
 - Added : Option in System Preference to enable/disable shortcut icons for block editing on block titles (stranger)
+- Added : Option in System Preference to Truncate url's (stranger)
+- Added : Option in System Preference to Select truncated url's length (stranger)
+- Added : Option in System Preference to Select truncated url's pre characteres length (stranger)
+- Added : Option in System Preference to Select truncated url's last characteres length (stranger)
 
 - Improved : The pm form to use the selected editor. (real_therplima)
 - Improved : XoopsTree::getNicePathFromId has new parameter, allowing specification of the separator between links (skenow)

@@ -307,6 +307,15 @@ modules/system/language/english/admin/preferences.php
 +  define("_MD_AM_SHOW_ICMSMENU","Show ImpressCMS Project drop down menu?");
 +  define("_MD_AM_SHOW_ICMSMENU_DESC","Select NO to not show the drop down menu and YES to show it.");
 
++  define("_MD_AM_EMAILPROTECT"," Truncating url\'s?");
++  define("_MD_AM_EMAILPROTECTDSC","By selecting \"Yes\" all url&links committed in your site will have a shorter length");
++  define("_MD_AM_EMAILLEN","Max Length");
++  define("_MD_AM_EMAILLEN_DESC","The maximum amount of characteres to be ignored for truncating, url\'s larger than this will be shorten.");
++  define("_MD_AM_SOMBRAX","Pre Characters");
++  define("_MD_AM_SOMBRAX_DESC","How many characteres do you want to be shown in begin of truncated url\'s.");
++  define("_MD_AM_SOMBRAY","Last Characters");
++  define("_MD_AM_SOMBRAY_DESC","How many characteres do you want to be shown at the end of truncated url\'s.");
+
 modules/system/language/english/admin/groups.php
 -------------------------------------------------
 +  define("_AM_EDPERM","Can use the WYSIWYG editor in the following modules");
