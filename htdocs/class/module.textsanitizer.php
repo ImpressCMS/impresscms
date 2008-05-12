@@ -53,6 +53,11 @@ class MyTextSanitizer
 	 */
 	var $censorConf;
 
+	/**
+	 *
+	 */
+	var $protector;
+
 	/*
 	* Constructor of this class
     *
@@ -134,7 +139,7 @@ class MyTextSanitizer
 
 	$patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i");
 
-	$replacements = array("\\1<a href=\"\\2://\\3\" target=\"_blank\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\" target=\"_blank\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" target=\"_blank\">ftp.\\2.\\3</a>", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>");
+	$replacements = array("\\1<a href=\"\\2://\\3\" rel=\"external\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\" rel=\"external\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"external\">ftp.\\2.\\3</a>", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>");
 
 	$text = preg_replace($patterns, $replacements, $text);
 
@@ -332,7 +337,7 @@ class MyTextSanitizer
 
 			$this->purifier = new HTMLPurifier($config);
 
-			$text = $this->purify_recursive($text);
+			$text = $this->purifier->purify($text);
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
@@ -389,7 +394,7 @@ class MyTextSanitizer
 
 			$this->purifier = new HTMLPurifier($config);
 
-			$text = $this->purify_recursive($text);
+			$text = $this->purifier->purify($text);
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
@@ -413,15 +418,6 @@ class MyTextSanitizer
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
 		return $text;
-	}
-
-	function purify_recursive( $data )
-	{
-		if( is_array( $data ) ) {
-			return array_map( array( $this , 'purify_recursive' ) , $data ) ;
-		} else {
-			return strlen( $data ) > 32 ? $this->purifier->purify( $data ) : $data ;
-		}
 	}
 
 	/**
