@@ -65,6 +65,16 @@ class XoopsTpl extends Smarty {
 			SMARTY_DIR . 'icms_plugins',
 			SMARTY_DIR . 'plugins',
 		);
+		
+		// For backwars compatibility...
+		if(file_exists(ICMS_ROOT_PATH."/class/smarty/plugins")){
+			$this->plugins_dir[] = ICMS_ROOT_PATH.'/class/smarty/plugins';	
+		}
+		
+		if(file_exists(ICMS_ROOT_PATH."/class/smarty/xoops_plugins")){
+			$this->plugins_dir[] = ICMS_ROOT_PATH.'/class/smarty/xoops_plugins';	
+		}
+		
 		if ( $xoopsConfig['debug_mode'] ) {
 			$this->debugging_ctrl = 'URL';
 		    if ( $xoopsConfig['debug_mode'] == 3 ) {
