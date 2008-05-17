@@ -1,5 +1,5 @@
 <?php
-// $Id: comment_reply.php 1130 2007-10-24 10:16:06Z dugris $
+// $Id: common.php 1130 2007-10-24 10:16:06Z dugris $
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
