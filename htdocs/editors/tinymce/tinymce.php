@@ -169,7 +169,7 @@ class TinyMCE
 			$this->setting[$key] = $val;
 		}
 		
-		if(!is_dir(XOOPS_ROOT_PATH . $this->rootpath."/themes/".$this->setting["theme"]. '/docs/'.$this->setting["language"].'/')) {
+		if(!is_dir(XOOPS_ROOT_PATH . $this->rootpath."/themes/".$this->setting["theme"]. '/docs/'.$this->config["language"].'/')) {
 			$this->setting["docs_language"] = "en";
 		}
 		

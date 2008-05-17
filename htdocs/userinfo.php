@@ -1,29 +1,16 @@
 <?php
-// $Id: userinfo.php 1029 2007-09-09 03:49:25Z phppp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+/**
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
+*/
 /** Displays user profile
  * @package kernel
  * @subpackage users
@@ -34,9 +21,9 @@
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 
-include_once XOOPS_ROOT_PATH.'/class/module.textsanitizer.php';
+include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 
-include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
+include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 
 $config_handler =& xoops_gethandler('config');
 $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
@@ -59,7 +46,7 @@ $isAdmin = $gperm_handler->checkRight( 'system_admin', XOOPS_SYSTEM_USER, $group
 if (is_object($xoopsUser)) {
     if ($uid == intval($xoopsUser->getVar('uid'))) {
         $xoopsOption['template_main'] = 'system_userinfo.html';
-        include XOOPS_ROOT_PATH.'/header.php';
+        include ICMS_ROOT_PATH.'/header.php';
         $xoopsTpl->assign('user_ownpage', true);
         $xoopsTpl->assign('lang_editprofile', _US_EDITPROFILE);
         $xoopsTpl->assign('lang_avatar', _US_AVATAR);
@@ -80,7 +67,7 @@ if (is_object($xoopsUser)) {
             exit();
         }
         $xoopsOption['template_main'] = 'system_userinfo.html';
-        include XOOPS_ROOT_PATH.'/header.php';
+        include ICMS_ROOT_PATH.'/header.php';
         $xoopsTpl->assign('user_ownpage', false);
     }
 } else {
@@ -91,7 +78,7 @@ if (is_object($xoopsUser)) {
         exit();
     }
     $xoopsOption['template_main'] = 'system_userinfo.html';
-    include(XOOPS_ROOT_PATH.'/header.php');
+    include(ICMS_ROOT_PATH.'/header.php');
     $xoopsTpl->assign('user_ownpage', false);
 }
 $myts =& MyTextSanitizer::getInstance();
@@ -105,7 +92,7 @@ $xoopsTpl->assign('lang_avatar', _US_AVATAR);
         if ($xoopsConfigUser['avatar_allow_gravatar'] == 1) {
 $xoopsTpl->assign('user_avatarurl', $thisUser->gravatar('G',$xoopsConfigUser['avatar_width']));
 		}else{
-$xoopsTpl->assign('user_avatarurl', XOOPS_UPLOAD_URL.'/'.$thisUser->getVar('user_avatar'));
+$xoopsTpl->assign('user_avatarurl', ICMS_UPLOAD_URL.'/'.$thisUser->getVar('user_avatar'));
 		}
 $xoopsTpl->assign('lang_realname', _US_REALNAME);
 $xoopsTpl->assign('user_realname', $thisUser->getVar('name'));
@@ -166,13 +153,13 @@ if ($thisUser->getVar('user_viewemail') == 1) {
     }
 }
 if (is_object($xoopsUser)) {
-    $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".intval($thisUser->getVar('uid'))."', 'pmlite', 550, 450);\"><img src=\"".XOOPS_URL."/images/icons/pm.gif\" alt=\"".sprintf(_SENDPMTO,$thisUser->getVar('uname'))."\" /></a>");
+    $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('".ICMS_URL."/pmlite.php?send2=1&amp;to_userid=".intval($thisUser->getVar('uid'))."', 'pmlite', 550, 450);\"><img src=\"".ICMS_URL."/images/icons/pm.gif\" alt=\"".sprintf(_SENDPMTO,$thisUser->getVar('uname'))."\" /></a>");
 } else {
     $xoopsTpl->assign('user_pmlink', '');
 }
 $userrank =& $thisUser->rank();
 if ($userrank['image']) {
-    $xoopsTpl->assign('user_rankimage', '<img src="'.XOOPS_UPLOAD_URL.'/'.$userrank['image'].'" alt="" />');
+    $xoopsTpl->assign('user_rankimage', '<img src="'.ICMS_UPLOAD_URL.'/'.$userrank['image'].'" alt="" />');
 }
 $xoopsTpl->assign('user_ranktitle', $userrank['title']);
 $date = $thisUser->getVar("last_login");
@@ -219,5 +206,5 @@ foreach ($mids as $mid) {
 
 $xoopsTpl->assign('xoops_pagetitle', sprintf(_US_ALLABOUT,$thisUser->getVar('uname')));
 
-include XOOPS_ROOT_PATH.'/footer.php';
+include ICMS_ROOT_PATH.'/footer.php';
 ?>

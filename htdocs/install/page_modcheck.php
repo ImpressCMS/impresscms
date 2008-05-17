@@ -73,9 +73,9 @@ function xoDiagIfWritable( $path ) {
     <tr>
         <td><?php echo _PHP_VERSION; ?></td>
         <td><?php
-            if ( version_compare( phpversion(), '4.3.0', '>=') ) {
+            if ( version_compare( phpversion(), '5.2', '>=') ) {
             	echo xoDiag( 1, phpversion() );
-            } elseif ( version_compare( phpversion(), '4.2.1', '>=') ) {
+            } elseif ( version_compare( phpversion(), '5.1', '>=') ) {
             	echo xoDiag( 0, phpversion() );
             } else {
             	echo xoDiag( -1, phpversion() );

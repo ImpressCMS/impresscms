@@ -21,10 +21,10 @@ $e = isset( $_GET['e'] ) ? $_GET['e'] : 0;
 
 // If there is not any error defined... it redirects to the home page.
 if( $e == 0 )
-	header('Location: '.XOOPS_URL);
+	header('Location: '.ICMS_URL);
 
 $xoopsOption['template_main'] = 'system_error.html';
-require_once XOOPS_ROOT_PATH.'/header.php';
+require_once ICMS_ROOT_PATH.'/header.php';
 
 $siteName = $xoopsConfig['sitename'];
 $lang_error_no = sprintf(_ERR_NO, $e);
@@ -38,5 +38,5 @@ $xoopsTpl->assign('lang_advanced_search', _ERR_ADVANCED_SEARCH);
 $xoopsTpl->assign('lang_start_again', _ERR_START_AGAIN);
 $xoopsTpl->assign('lang_search_our_site', _ERR_SEARCH_OUR_SITE);
 
-require_once XOOPS_ROOT_PATH.'/footer.php';
+require_once ICMS_ROOT_PATH.'/footer.php';
 ?>

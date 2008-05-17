@@ -17,7 +17,7 @@
  */
 
 if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
-    die( 'Bad installation: please add this folder to the XOOPS install you want to upgrade');
+    die( 'Bad installation: please add this folder to the ImpressCMS install you want to upgrade');
 }
 
 $vars =& $_SESSION['settings'];

@@ -474,7 +474,43 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '0', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_sha256', '_MD_AM_USE_SHA256', '1', '_MD_AM_USE_SHA256DSC', 'yesno', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'enc_type', '_MD_AM_ENC_TYPE', '1', '_MD_AM_ENC_TYPEDSC', 'select', 'int', $p)");
+	// Insert data for Config Options in selection field. (must be placed before $i++)
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_MD5', '0', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_SHA256', '1', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_SHA384', '2', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_SHA512', '3', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_RIPEMD128', '4', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_RIPEMD160', '5', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_WHIRLPOOL', '6', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_HAVAL1284', '7', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_HAVAL1604', '8', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_HAVAL1924', '9', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_HAVAL2244', '10', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_HAVAL2564', '11', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_HAVAL1285', '12', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_HAVAL1605', '13', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_HAVAL1925', '14', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_HAVAL2245', '15', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_ENC_HAVAL2565', '16', $i)");
+	$ci++;
+	// ----------
 
 	// Data for Config Category 3 (Meta & Footer Preferences)
 	$c=3; // sets config category id
@@ -705,7 +741,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'show_pinfo', '_MD_AM_CONT_SHOWPINFO', '1', '_MD_AM_CONT_SHOWPINFODSC', 'yesno', 'int', $p)");
 
 
-	// Data for Config Category 10 (Personalization Settings)
+	// Data for Config Category 10 (Personalisation Settings)
 	$c=10; // sets config category id
 	$i++;
 	$p=0;

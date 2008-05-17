@@ -17,7 +17,7 @@ include "../../../mainfile.php";
 error_reporting(0);
 $xoopsLogger->activated = false;
 
-if(empty($_SERVER['HTTP_REFERER']) || !preg_match("/^".preg_quote(XOOPS_URL, '/')."/", $_SERVER['HTTP_REFERER'])) { 
+if(empty($_SERVER['HTTP_REFERER']) || !preg_match("/^".preg_quote(ICMS_URL, '/')."/", $_SERVER['HTTP_REFERER'])) { 
 	exit();
 }
 

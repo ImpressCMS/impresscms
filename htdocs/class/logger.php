@@ -107,6 +107,9 @@ class XoopsLogger {
      */
     function addQuery($sql, $error=null, $errno=null) {
         if ( $this->activated )		$this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno);
+        if (defined('ICMS_LOGGING_HOOK') and ICMS_LOGGING_HOOK != '') {
+           include ICMS_LOGGING_HOOK;
+        }
     }
     /**
      * Log display of a block

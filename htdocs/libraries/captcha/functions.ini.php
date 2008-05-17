@@ -17,7 +17,7 @@
 if (!defined("CAPTCHA_FUNCTIONS_INI")):
 define("CAPTCHA_FUNCTIONS_INI", true);
 
-define("CAPTCHA_ROOT_PATH", XOOPS_ROOT_PATH."/libraries/captcha");
+define("CAPTCHA_ROOT_PATH", ICMS_ROOT_PATH."/libraries/captcha");
 
 global $xoops;
 /**
@@ -52,7 +52,7 @@ function mod_loadFunctions($group = "", $dirname = "")
 	$dirname = !empty($dirname) ? $dirname : $GLOBALS["xoopsModule"]->getVar("dirname", "n");
 	$constant = strtoupper( "{$dirname}_functions" . ( ($group) ? "_{$group}" : "" ) . "_loaded" );
 	if (defined($constant)) return true;
-	$filename = XOOPS_ROOT_PATH."/modules/{$dirname}/include/functions.{$group}" . (empty($group) ? "" : "." ) . "php";
+	$filename = ICMS_ROOT_PATH."/modules/{$dirname}/include/functions.{$group}" . (empty($group) ? "" : "." ) . "php";
 	return include_once $filename;
 }
 

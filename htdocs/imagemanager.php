@@ -1,29 +1,17 @@
 <?php
-// $Id: imagemanager.php 506 2006-05-26 23:10:37Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+/**
+* All functions for image manager are going through here.
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
+*/
 
 include './mainfile.php';
 if (!isset($_REQUEST['target'])) {
@@ -43,7 +31,7 @@ if (!is_object($xoopsUser)) {
     $group =& $xoopsUser->getGroups();
 }
 if ($op == 'list') {
-    require_once XOOPS_ROOT_PATH.'/class/template.php';
+    require_once ICMS_ROOT_PATH.'/class/template.php';
     $xoopsTpl = new XoopsTpl();
     $xoopsTpl->assign('lang_imgmanager', _IMGMANAGER);
     $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
@@ -102,17 +90,17 @@ if ($op == 'list') {
                         $lcode = '[img align=left id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
                         $code = '[img id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
                         $rcode = '[img align=right id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
-                        $src = XOOPS_URL."/image.php?id=".$images[$i]->getVar('image_id');
+                        $src = ICMS_URL."/image.php?id=".$images[$i]->getVar('image_id');
                     } else {
-                        $lcode = '[img align=left]'.XOOPS_UPLOAD_URL.'/'.$images[$i]->getVar('image_name').'[/img]';
-                        $code = '[img]'.XOOPS_UPLOAD_URL.'/'.$images[$i]->getVar('image_name').'[/img]';
-                        $rcode = '[img align=right]'.XOOPS_UPLOAD_URL.'/'.$images[$i]->getVar('image_name').'[/img]';
-                        $src = XOOPS_UPLOAD_URL.'/'.$images[$i]->getVar('image_name');
+                        $lcode = '[img align=left]'.ICMS_UPLOAD_URL.'/'.$images[$i]->getVar('image_name').'[/img]';
+                        $code = '[img]'.ICMS_UPLOAD_URL.'/'.$images[$i]->getVar('image_name').'[/img]';
+                        $rcode = '[img align=right]'.ICMS_UPLOAD_URL.'/'.$images[$i]->getVar('image_name').'[/img]';
+                        $src = ICMS_UPLOAD_URL.'/'.$images[$i]->getVar('image_name');
                     }
                     $xoopsTpl->append('images', array('id' => $images[$i]->getVar('image_id'), 'nicename' => $images[$i]->getVar('image_nicename'), 'mimetype' => $images[$i]->getVar('image_mimetype'), 'src' => $src, 'lxcode' => $lcode, 'xcode' => $code, 'rxcode' => $rcode));
                 }
                 if ($total > 10) {
-                    include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+                    include_once ICMS_ROOT_PATH.'/class/pagenav.php';
                     $nav = new XoopsPageNav($total, 10, $start, 'start', 'target='.$target.'&amp;cat_id='.$catshow);
                     $xoopsTpl->assign('pagenav', $nav->renderNav());
                 }
@@ -155,13 +143,13 @@ if ($op == 'upload') {
         xoops_footer();
         exit();
     }
-    require_once XOOPS_ROOT_PATH.'/class/template.php';
+    require_once ICMS_ROOT_PATH.'/class/template.php';
     $xoopsTpl = new XoopsTpl();
     $xoopsTpl->assign('show_cat', $imgcat_id);
     $xoopsTpl->assign('lang_imgmanager', _IMGMANAGER);
     $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
     $xoopsTpl->assign('target', htmlspecialchars($_GET['target'], ENT_QUOTES));
-    include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+    include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
     $form = new XoopsThemeForm('', 'image_form', 'imagemanager.php', 'post', true);
     $form->setExtra('enctype="multipart/form-data"');
     $form->addElement(new XoopsFormText(_IMAGENAME, 'image_nicename', 20, 255), true);
@@ -185,7 +173,7 @@ if ($op == 'doupload') {
         $image_nicename = isset($_POST['image_nicename']) ? $_POST['image_nicename'] : '';
         $xoops_upload_file = isset($_POST['xoops_upload_file']) ? $_POST['xoops_upload_file'] : array();
         $imgcat_id = isset($_POST['imgcat_id']) ? intval($_POST['imgcat_id']) : 0;
-        include_once XOOPS_ROOT_PATH.'/class/uploader.php';
+        include_once ICMS_ROOT_PATH.'/class/uploader.php';
         $imgcat_handler =& xoops_gethandler('imagecategory');
         $imgcat =& $imgcat_handler->get($imgcat_id);
         $error = false;
@@ -213,7 +201,7 @@ if ($op == 'doupload') {
         xoops_footer();
         exit();
     }
-    $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
+    $uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), $imgcat->getVar('imgcat_maxsize'), $imgcat->getVar('imgcat_maxwidth'), $imgcat->getVar('imgcat_maxheight'));
     $uploader->setPrefix('img');
     if ($uploader->fetchMedia($xoops_upload_file[0])) {
         if (!$uploader->upload()) {

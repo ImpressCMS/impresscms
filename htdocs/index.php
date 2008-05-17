@@ -1,29 +1,17 @@
 <?php
-// $Id: index.php 2 2005-11-02 18:23:29Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+/**
+* Site index aka home page.
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
+*/
 /**
  * Catch new users and redirect them to the start page, if any
  * @copyright &copy; 2000 xoops.org
@@ -41,7 +29,7 @@ if ( isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoo
 		$page_handler =& xoops_gethandler('page');
 		$page = $page_handler->get($arr[1]);
 		if (is_object($page)){
-			$url = (substr($page->getVar('page_url'),0,7) == 'http://')?$page->getVar('page_url'):XOOPS_URL.'/'.$page->getVar('page_url');
+			$url = (substr($page->getVar('page_url'),0,7) == 'http://')?$page->getVar('page_url'):ICMS_URL.'/'.$page->getVar('page_url');
 			header('Location: '.$url);
 		}else{
 			$xoopsConfig['startpage'] = '--';
@@ -50,7 +38,7 @@ if ( isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoo
 			include "footer.php";
 		}
 	}else{
-		header('Location: '.XOOPS_URL.'/modules/'.$xoopsConfig['startpage'].'/');
+		header('Location: '.ICMS_URL.'/modules/'.$xoopsConfig['startpage'].'/');
 	}
 	exit();
 } else {

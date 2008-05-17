@@ -165,7 +165,7 @@ class MyTextSanitizer
 	return($text);
 		}else{
 		$patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i");
-		$replacements = array("\\1<a href=\"\\2://\\3\" target=\"_blank\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\" target=\"_blank\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" target=\"_blank\">ftp.\\2.\\3</a>", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>");
+		$replacements = array("\\1<a href=\"\\2://\\3\" rel=\"external\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\" rel=\"external\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"external\">ftp.\\2.\\3</a>", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>");
 		return preg_replace($patterns, $replacements, $text);
 		}
 			}
@@ -394,7 +394,14 @@ class MyTextSanitizer
 		else {
 			// html allowed - sanitize with html purifier
 			$config = HTMLPurifier_Config::createDefault();
-			$config->set('Cache', 'SerializerPath', ICMS_TRUST_PATH.'/cache/htmlpurifier/configs');
+			if(@is_dir(ICMS_TRUST_PATH.'/cache/htmlpurifier/configs'))
+			{
+				$config->set('Cache', 'SerializerPath', ICMS_TRUST_PATH.'/cache/htmlpurifier/configs');
+			}
+			else
+			{
+				$config->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
+			}
 			$config->set('Core', 'Encoding', _CHARSET);
 			$config->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
 			$config->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype)

@@ -48,7 +48,7 @@ class XoopsCaptchaText {
 	function render()
 	{
 		$form = $this->loadText()  . "&nbsp;&nbsp; <input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $this->config["num_chars"] . "' maxlength='" . $this->config["num_chars"] . "' value='' />";
-		$rule = constant("XOOPS_CAPTCHA_RULE_TEXT");
+		$rule = constant("ICMS_CAPTCHA_RULE_TEXT");
 		if(!empty($rule)) {
 			$form .= "&nbsp;&nbsp;<small>{$rule}</small>";
 		}

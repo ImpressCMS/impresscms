@@ -1,29 +1,16 @@
 <?php
-// $Id: search.php 506 2006-05-26 23:10:37Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+/**
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
+*/
 
 $xoopsOption['pagetype'] = "search";
 
@@ -32,7 +19,7 @@ $config_handler =& xoops_gethandler('config');
 $xoopsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
 if ($xoopsConfigSearch['enable_search'] != 1) {
-    header('Location: '.XOOPS_URL.'/index.php');
+    header('Location: '.ICMS_URL.'/index.php');
     exit();
 }
 $action = "search";
@@ -94,11 +81,11 @@ $gperm_handler = & xoops_gethandler( 'groupperm' );
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 
 if ($action == 'search') {
-    include XOOPS_ROOT_PATH.'/header.php';
+    include ICMS_ROOT_PATH.'/header.php';
     include 'include/searchform.php';
     $search_form->display();
     $xoopsTpl->assign('xoops_pagetitle', _SEARCH);
-    include XOOPS_ROOT_PATH.'/footer.php';
+    include ICMS_ROOT_PATH.'/footer.php';
     exit();
 }
 
@@ -172,7 +159,7 @@ switch ($action) {
         unset($mids);
         $mids = array_keys($modules);
     }
-    include XOOPS_ROOT_PATH."/header.php";
+    include ICMS_ROOT_PATH."/header.php";
     echo "<h3>"._SR_SEARCHRESULTS."</h3>\n";
     echo _SR_KEYWORDS.':';
     if ($andor != 'exact') {
@@ -218,7 +205,7 @@ switch ($action) {
 	                    $results[$i]['uid'] = @intval($results[$i]['uid']);
 	                    if ( !empty($results[$i]['uid']) ) {
 	                        $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-	                        echo "&nbsp;&nbsp;<a href='".XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
+	                        echo "&nbsp;&nbsp;<a href='".ICMS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
 	                    }
 	                    echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
 	                    echo "</small>";
@@ -226,7 +213,7 @@ switch ($action) {
 	                 echo "<br />\n";
                 }
                 if ( $count >= intval($xoopsConfigSearch['search_per_page']) ) {
-                    $search_url = XOOPS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
+                    $search_url = ICMS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
                     $search_url .= "&mid=$mid&action=showall&andor=$andor";
                     echo '<br /><a href="'.htmlspecialchars($search_url).'">'._SR_SHOWALLR.'</a></p>';
                 }
@@ -241,7 +228,7 @@ switch ($action) {
     break;
     case "showall":
     case 'showallbyuser':
-    include XOOPS_ROOT_PATH."/header.php";
+    include ICMS_ROOT_PATH."/header.php";
     $module_handler =& xoops_gethandler('module');
     $module =& $module_handler->get($mid);
     $results =& $module->search($queries, $andor, 20, $start, $uid);
@@ -285,7 +272,7 @@ switch ($action) {
 	            $results[$i]['uid'] = @intval($results[$i]['uid']);
 	            if ( !empty($results[$i]['uid']) ) {
 	                $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
-	                echo "&nbsp;&nbsp;<a href='".XOOPS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
+	                echo "&nbsp;&nbsp;<a href='".ICMS_URL."/userinfo.php?uid=".$results[$i]['uid']."'>".$uname."</a>\n";
 	            }
 	            echo !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
 	            echo "</small>";
@@ -296,7 +283,7 @@ switch ($action) {
         <table>
           <tr>
         ';
-        $search_url = XOOPS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
+        $search_url = ICMS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
         $search_url .= "&mid=$mid&action=$action&andor=$andor";
         if ($action=='showallbyuser') {
             $search_url .= "&uid=$uid";
@@ -331,5 +318,5 @@ switch ($action) {
     ';
     break;
 }
-include XOOPS_ROOT_PATH."/footer.php";
+include ICMS_ROOT_PATH."/footer.php";
 ?>

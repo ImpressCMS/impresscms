@@ -381,6 +381,11 @@ if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.
 } else {
 	include_once XOOPS_ROOT_PATH."/language/english/global.php";
 }
+if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/theme.php") ) {
+	include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/theme.php";
+} else {
+	include_once XOOPS_ROOT_PATH."/language/english/theme.php";
+}
 
 // ################ Include page-specific lang file ################
 if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {

@@ -134,6 +134,14 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	        }
         }
 	}
+	
+	// creating the required folders in trust_path
+	if (!icms_install_mkdir($vars['TRUST_PATH'] . '/cache/htmlpurifier/configs')) {
+		/**
+		 * @todo trap error
+		 */
+	}
+	
 	if ( empty( $error ) ) {
 		$wizard->redirectToPage( '+1' );
 		exit();

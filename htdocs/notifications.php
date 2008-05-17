@@ -1,29 +1,17 @@
 <?php
-// $Id: notifications.php 2 2005-11-02 18:23:29Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+/**
+* All functions for notification managements of system are going through here.
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
+*/
 
 $xoopsOption['pagetype'] = 'notification';
 include 'mainfile.php';
@@ -80,7 +68,7 @@ case 'list':
     // Generate the info for the template
 
     $module_handler =& xoops_gethandler('module');
-    include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
+    include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 
     $modules = array();
     $prev_modid = -1;
@@ -107,7 +95,7 @@ case 'list':
             $not_config = $module->getInfo('notification');
             $lookup_func = '';
             if (!empty($not_config['lookup_file'])) {
-                $lookup_file = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/' . $not_config['lookup_file'];
+                $lookup_file = ICMS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/' . $not_config['lookup_file'];
                 if (file_exists($lookup_file)) {
                     include_once $lookup_file;
                     if (!empty($not_config['lookup_func']) && function_exists($not_config['lookup_func'])) {
@@ -137,7 +125,7 @@ case 'list':
         $modules[$modid]['categories'][$category]['items'][$item]['notifications'][] = array ('id'=>$n->getVar('not_id'), 'module_id'=>$n->getVar('not_modid'), 'category'=>$n->getVar('not_category'), 'category_title'=>$category_info['title'], 'item_id'=>$n->getVar('not_itemid'), 'event'=>$n->getVar('not_event'), 'event_title'=>$event_info['title'], 'user_id'=>$n->getVar('not_uid'));
     }
     $xoopsOption['template_main'] = 'system_notification_list.html';
-    include XOOPS_ROOT_PATH.'/header.php';
+    include ICMS_ROOT_PATH.'/header.php';
     $xoopsTpl->assign ('modules', $modules);
     $user_info = array ('uid' => $xoopsUser->getVar('uid'));
     $xoopsTpl->assign ('user', $user_info);
@@ -153,7 +141,7 @@ case 'list':
     $xoopsTpl->assign ('lang_itemname', _NOT_ITEMNAME);
     $xoopsTpl->assign ('lang_activenotifications', _NOT_ACTIVENOTIFICATIONS);
     $xoopsTpl->assign ('notification_token', $GLOBALS['xoopsSecurity']->createToken());
-    include XOOPS_ROOT_PATH.'/footer.php';
+    include ICMS_ROOT_PATH.'/footer.php';
 
 // TODO: another display mode... instead of one notification per line,
 // show one line per item_id, with checkboxes for the available options...
@@ -178,11 +166,11 @@ case 'delete_ok':
     if (empty($_POST['del_not'])) {
         redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
     }
-    include XOOPS_ROOT_PATH.'/header.php';
+    include ICMS_ROOT_PATH.'/header.php';
     $hidden_vars = array('uid'=>$uid, 'delete_ok'=>1, 'del_not'=>$_POST['del_not']);
     print '<h4>'._NOT_DELETINGNOTIFICATIONS.'</h4>';
     xoops_confirm($hidden_vars, xoops_getenv('PHP_SELF'), _NOT_RUSUREDEL);
-    include XOOPS_ROOT_PATH.'/footer.php';
+    include ICMS_ROOT_PATH.'/footer.php';
 
 // FIXME: There is a problem here... in xoops_confirm it treats arrays as
 // optional radio arguments on the confirmation page... change this or

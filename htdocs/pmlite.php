@@ -1,29 +1,17 @@
 <?php
-// $Id: pmlite.php 1029 2007-09-09 03:49:25Z phppp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+/**
+* All functions for pm manager are going through here.
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
+*/
 
 $xoopsOption['pagetype'] = "pmsg";
 
@@ -84,22 +72,22 @@ if ($xoopsUser) {
 					$xoopsMailer->setFromEmail($xoopsUser->email());
 					$xoopsMailer->setTemplate('new_pm.tpl');
 					$xoopsMailer->assign('X_SITENAME', $xoopsConfig['sitename']);
-					$xoopsMailer->assign('X_SITEURL', XOOPS_URL."/");
+					$xoopsMailer->assign('X_SITEURL', ICMS_URL."/");
 					$xoopsMailer->assign('X_ADMINMAIL', $xoopsConfig['adminmail']);
 					$xoopsMailer->assign('X_UNAME', $toUser->uname());
 					$xoopsMailer->assign('X_FROMUNAME', $xoopsUser->uname());
 					$xoopsMailer->assign('X_SUBJECT', $myts->stripSlashesGPC($_POST['subject']));
 					$xoopsMailer->assign('X_MESSAGE', $myts->stripSlashesGPC($_POST['message']));
-					$xoopsMailer->assign('X_ITEM_URL', XOOPS_URL . "/viewpmsg.php");
+					$xoopsMailer->assign('X_ITEM_URL', ICMS_URL . "/viewpmsg.php");
 					$xoopsMailer->setFromName($xoopsUser->uname());
 					$xoopsMailer->setSubject(sprintf(_PM_MESSAGEPOSTED_EMAILSUBJ, $xoopsConfig['sitename']));
 					$xoopsMailer->send();
 				}
-                echo "<br /><br /><div style='text-align:center;'><h4>"._PM_MESSAGEPOSTED."</h4><br /><a href=\"javascript:window.opener.location='".XOOPS_URL."/viewpmsg.php';window.close();\">"._PM_CLICKHERE."</a><br /><br /><a href=\"javascript:window.close();\">"._PM_ORCLOSEWINDOW."</a></div>";
+                echo "<br /><br /><div style='text-align:center;'><h4>"._PM_MESSAGEPOSTED."</h4><br /><a href=\"javascript:window.opener.location='".ICMS_URL."/viewpmsg.php';window.close();\">"._PM_CLICKHERE."</a><br /><br /><a href=\"javascript:window.close();\">"._PM_ORCLOSEWINDOW."</a></div>";
             }
         }
     } elseif ($reply == 1 || $send == 1 || $send2 == 1) {
-        include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
+        include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
         if ($reply == 1) {
             $pm_handler =& xoops_gethandler('privmessage');
             $pm =& $pm_handler->get($msg_id);
@@ -121,10 +109,10 @@ if ($xoopsUser) {
             $to_username = XoopsUser::getUnameFromId($to_userid);
             echo "<td class='even'><input type='hidden' name='to_userid' value='".$to_userid."' />".$to_username."</td>";
         } else {
-            require_once XOOPS_ROOT_PATH."/class/xoopsform/formelement.php";
-            require_once XOOPS_ROOT_PATH."/class/xoopsform/formselect.php";
-            require_once XOOPS_ROOT_PATH."/class/xoopsform/formlabel.php";
-            require_once XOOPS_ROOT_PATH."/class/xoopsform/formselectuser.php";
+            require_once ICMS_ROOT_PATH."/class/xoopsform/formelement.php";
+            require_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
+            require_once ICMS_ROOT_PATH."/class/xoopsform/formlabel.php";
+            require_once ICMS_ROOT_PATH."/class/xoopsform/formselectuser.php";
             $user_sel = new XoopsFormSelectUser("", "to_userid");
             echo "<td class='even'>".$user_sel->render();
             echo "</td>";
@@ -156,7 +144,7 @@ if ($xoopsUser) {
         echo "</form>\n";
     }
 } else {
-    echo _PM_SORRY."<br /><br /><a href='".XOOPS_URL."/register.php'>"._PM_REGISTERNOW."</a>.";
+    echo _PM_SORRY."<br /><br /><a href='".ICMS_URL."/register.php'>"._PM_REGISTERNOW."</a>.";
 }
 
 xoops_footer();

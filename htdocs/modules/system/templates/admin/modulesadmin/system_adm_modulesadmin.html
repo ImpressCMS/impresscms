@@ -13,7 +13,7 @@
   <{foreach item=module from=$modules}>
     <tr valign='middle'class="<{cycle values="even,odd"}>">
       <td align="left" valign="middle">
-        <div style="float: left; padding: 2px;">
+        <div id="modlogo" style="padding: 2px;">
           <{if $module.hasadmin == 1 && $module.isactive == '1'}>
             <a href="<{$xoops_url}>/modules/<{$module.dirname}>/<{$module.adminindex}>">
               <img src="<{$xoops_url}>/modules/<{$module.dirname}>/<{$module.image}>" alt="<{$module.name}>" title="<{$module.name}>" border="0" />
@@ -22,7 +22,7 @@
             <img src="<{$xoops_url}>/modules/<{$module.dirname}>/<{$module.image}>" alt="<{$module.name}>" title="<{$module.name}>" border="0" />
           <{/if}>&nbsp;
         </div>
-        <div style="float: left; padding-top: 2px;">
+        <div id="modlogo" style="padding-top: 2px;">
           <b><{$lang_modulename}>: </b><{$module.name}><br />
           <b><{$lang_moduletitle}>: </b><input type="text" name="newname[<{$module.mid}>]" value="<{$module.name}>" maxlength="150" size="30" />
         </div>
@@ -87,8 +87,8 @@
   <{foreach item=module from=$avmodules}>
     <tr valign='middle'class="<{cycle values="even,odd"}>">
       <td>
-        <div style="float: left; padding: 2px;"><img src="<{$xoops_url}>/modules/<{$module.dirname}>/<{$module.image}>" alt="<{$module.name}>" alt="<{$module.name}>" border="0" />&nbsp;</div>
-	    <div style="float: left; padding-top: 10px;"> <b><{$lang_modulename}>: </b><{$module.name}><br /> </div>
+        <div id="modlogo" style="padding: 2px;"><img src="<{$xoops_url}>/modules/<{$module.dirname}>/<{$module.image}>" alt="<{$module.name}>" alt="<{$module.name}>" border="0" />&nbsp;</div>
+	    <div id="modlogo" style="padding-top: 10px;"> <b><{$lang_modulename}>: </b><{$module.name}><br /> </div>
       </td>
       <td align='center'><{$module.version}></td>
       <td align='center'><{$module.status}></td>

@@ -15,8 +15,8 @@
 
 $xoopsOption['pagetype'] = 'content';
 include 'mainfile.php';
-include_once XOOPS_ROOT_PATH.'/class/module.textsanitizer.php';
-include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
+include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
+include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 
 $im_contentConfig =& $config_handler->getConfigsByCat(IM_CONF_CONTENT);
 
@@ -59,16 +59,16 @@ if (!$viewperm){
 $myts =& MyTextSanitizer::getInstance();
 $xoopsOption['template_main'] = 'system_content.html';
 
-include XOOPS_ROOT_PATH.'/header.php';
+include ICMS_ROOT_PATH.'/header.php';
 $xoopsTpl->assign("content_title", $impress_content->getVar('content_title'));
 $xoopsTpl->assign("isAdmin", $adminperm);
-$options = '<a href="'.XOOPS_URL.'/modules/system/admin.php?fct=content&op=editcontent&content_id='.$impress_content->getVar('content_id').'"><img src="'.XOOPS_URL.'/modules/system/images/edit_big.png" title="'._CT_EDIT_CONTENT.'" alt="'._CT_EDIT_CONTENT.'" /></a>';
-$options .= '<a href="'.XOOPS_URL.'/modules/system/admin.php?fct=content&op=delcontent&content_id='.$impress_content->getVar('content_id').'"><img src="'.XOOPS_URL.'/modules/system/images/delete_big.png" title="'._CT_DELETE_CONTENT.'" alt="'._CT_DELETE_CONTENT.'" /></a>';
+$options = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&op=editcontent&content_id='.$impress_content->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/edit_big.png" title="'._CT_EDIT_CONTENT.'" alt="'._CT_EDIT_CONTENT.'" /></a>';
+$options .= '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&op=delcontent&content_id='.$impress_content->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/delete_big.png" title="'._CT_DELETE_CONTENT.'" alt="'._CT_DELETE_CONTENT.'" /></a>';
 $xoopsTpl->assign("content_admlinks", $options);
 $member_handler =& xoops_gethandler('member');
 $autor =& $member_handler->getUser($impress_content->getVar('content_uid')); 
 $xoopsTpl->assign("show_pinfo",$im_contentConfig['show_pinfo']);
-$xoopsTpl->assign("content_tinfo", sprintf(_CT_PUBLISHEDBY.' <a href="'.XOOPS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%u reads)',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($impress_content->getVar('content_created'),"s"),$impress_content->getReads()));
+$xoopsTpl->assign("content_tinfo", sprintf(_CT_PUBLISHEDBY.' <a href="'.ICMS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%u reads)',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($impress_content->getVar('content_created'),"s"),$impress_content->getReads()));
 $xoopsTpl->assign("content_body", $myts->previewTarea($impress_content->getVar('content_body', "n"),1,1,1,1,0));
 $xoopsTpl->assign("content_css", sanitizeContentCss($impress_content->getVar('content_css')));
 
@@ -87,7 +87,7 @@ if ($im_contentConfig['show_subs']){
 			$content_subs['titulo'] = $sub->getVar("content_title");
 			$content_subs['teaser'] = icms_substr(icms_cleanTags($sub->getVar("content_body",'n'),array()),0,300);
 			$seo = urlencode(str_replace(" ", "_",$sub->getVar('content_menu')));
-			$content_subs['link'] = XOOPS_URL.'/content.php?page='.$seo;
+			$content_subs['link'] = ICMS_URL.'/content.php?page='.$seo;
 			$xoopsTpl->append("content_subs", $content_subs);
 		}
 		$xoopsTpl->assign('showSubs', 1);
@@ -99,7 +99,7 @@ if ($im_contentConfig['show_subs']){
 $xoopsTpl->assign('showNav',$im_contentConfig['show_nav']);
 $xoopsTpl->assign('nav',showNav($content_id));
 $xoopsTpl->assign("xoops_pagetitle", $impress_content->getVar('content_title'));
-$xoopsTpl->assign("xoops_module_header", '<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="'.XOOPS_URL.'/modules/system/admin/content/style.css" />');
+$xoopsTpl->assign("xoops_module_header", '<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="'.ICMS_URL.'/modules/system/admin/content/style.css" />');
 
 if (!is_object($xoopsUser)){
 	$impress_content->setReads();
@@ -109,5 +109,5 @@ if (!is_object($xoopsUser)){
 	}
 }
 $content_handler->insert($impress_content);
-include XOOPS_ROOT_PATH.'/footer.php';
+include ICMS_ROOT_PATH.'/footer.php';
 ?>

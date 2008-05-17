@@ -217,7 +217,7 @@ font-family: Tahoma; direction: rtl;}
 div#navbarCP ul li ul a{
 	color: #666666;
 	font-weight: normal;
-	background: url(images/item.png) no-repeat right;
+	background: url(images/item_rtl.png) no-repeat right;
 	padding-right: 20px;
 	margin: 0;
 	font-size:11px;
@@ -300,7 +300,7 @@ font-family: Tahoma; direction: rtl;}
 font-family: Tahoma; direction: rtl;}
 .CPrssLinks a{
 	font-size: 12px;
-	background: url(images/item.png) no-repeat right;
+	background: url(images/item_rtl.png) no-repeat right;
 	padding: 2px;
 	display: block;
 	padding-right: 18px;
@@ -327,6 +327,9 @@ font-family: Tahoma; direction: rtl;}
 	padding: 10px 0 0 50px;
 	border-bottom: 3px solid #000000;
 font-family: Tahoma; direction: rtl;}
+#modlogo {
+	float: right;
+}
 #nav-change-language {
 	float: left;
 	padding-top: 5px;

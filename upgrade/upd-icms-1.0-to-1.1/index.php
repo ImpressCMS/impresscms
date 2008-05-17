@@ -168,6 +168,63 @@ class upgrade_impcms06 {
 				return false;
 			}
 		}
+
+		$pw_salt_installed = false;
+		$sql = "SELECT COUNT(*) FROM `" . $GLOBALS ['xoopsDB']->prefix ( 'config' ) . "` WHERE `conf_name` = 'enc_type'";
+		if ($result = $GLOBALS ['xoopsDB']->queryF ( $sql ))
+		{
+			list ( $count ) = $GLOBALS ['xoopsDB']->fetchRow ( $result );
+			if ($count == 1)
+			{
+				$pw_salt_installed = true;
+			}
+		}
+        	
+		if (!$pw_salt_installed)
+		{
+            		$sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('config') . 
+                    	" (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " .
+                    	" VALUES " .
+                    	" (NULL, 0, 2, 'enc_type', '_MD_AM_ENC_TYPE', '1', '_MD_AM_ENC_TYPEDSC', 'select', 'int', 50)";
+
+            		if (!$GLOBALS['xoopsDB']->queryF( $sql ))
+			{
+                		return false;
+            		}
+            		$config_id = $GLOBALS['xoopsDB']->getInsertId();
+            
+            		$sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('configoption') . 
+                    	" (confop_id, confop_name, confop_value, conf_id)" .
+                    	" VALUES" .
+                    	" (NULL, '_MD_AM_ENC_MD5', '0', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_SHA256', '1', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_SHA384', '2', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_SHA512', '3', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_RIPEMD128', '4', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_RIPEMD160', '5', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_WHIRLPOOL', '6', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL1284', '7', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL1604', '8', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL1924', '9', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL2244', '10', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL2564', '11', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL1285', '12', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL1605', '13', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL1925', '14', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL2245', '15', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL2565', '16', {$config_id})";
+            		if (!$result = $GLOBALS['xoopsDB']->queryF($sql))
+			{
+                		return false;
+            		}
+
+			$sql = "ALTER TABLE ".$GLOBALS['xoopsDB']->prefix('users')." ADD 'salt' VARCHAR(255)";
+			$sql = "ALTER TABLE ".$GLOBALS['xoopsDB']->prefix('users')." CHANGE pass pass VARCHAR(255)";
+            		if (!$result = $GLOBALS['xoopsDB']->queryF($sql))
+			{
+                		return false;
+            		}
+        	}
         
         return $result;
 

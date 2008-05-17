@@ -125,7 +125,7 @@ class XoopsCaptcha {
 			
 		// Kill too many attempts
 		}elseif(!empty($maxAttempts) && $_SESSION['XoopsCaptcha_attempt_'.$sessionName] > $maxAttempts) {
-			$this->message[] = XOOPS_CAPTCHA_TOOMANYATTEMPTS;
+			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 		
 		// Verify the code
 		}elseif(!empty($_SESSION['XoopsCaptcha_sessioncode'])){
@@ -138,7 +138,7 @@ class XoopsCaptcha {
 				// Increase the attempt records on failure
 				$_SESSION['XoopsCaptcha_attempt_'.$sessionName]++;
 				// Log the error message
-				$this->message[] = XOOPS_CAPTCHA_INVALID_CODE;
+				$this->message[] = ICMS_CAPTCHA_INVALID_CODE;
 				
 			}else{
 				// reset attempt records on success
@@ -153,7 +153,7 @@ class XoopsCaptcha {
 	
 	function getCaption()
 	{
-		return defined("XOOPS_CAPTCHA_CAPTION") ? constant("XOOPS_CAPTCHA_CAPTION") : "";
+		return defined("ICMS_CAPTCHA_CAPTION") ? constant("ICMS_CAPTCHA_CAPTION") : "";
 	}
 	
 	function getMessage()
@@ -204,7 +204,7 @@ class XoopsCaptcha {
 		
 		// Fail on too many attempts
 		if(!empty($maxAttempts) && @$_SESSION['XoopsCaptcha_attempt_'.$this->config["name"]] > $maxAttempts) {
-			$form = XOOPS_CAPTCHA_TOOMANYATTEMPTS;
+			$form = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 		// Load the form element
 		}else{
 			$form = $this->loadForm();

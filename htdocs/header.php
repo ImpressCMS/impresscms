@@ -1,32 +1,19 @@
 <?php
-// $Id: header.php 1029 2007-09-09 03:49:25Z phppp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-defined("XOOPS_ROOT_PATH") or die( 'XOOPS root path not defined' );
+/**
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
+*/
+defined("ICMS_ROOT_PATH") or die( 'XOOPS root path not defined' );
 
-include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
+include_once ICMS_ROOT_PATH.'/class/xoopsblock.php';
 
 //global $xoopsLogger;
 
@@ -36,17 +23,17 @@ $xoopsLogger->stopTime( 'Module init' );
 $xoopsLogger->startTime( 'XOOPS output init' );
 
 
-if ($xoopsConfig['theme_set'] != 'default' && file_exists(XOOPS_THEME_PATH.'/'.$xoopsConfig['theme_set'].'/theme.php')) {
-	require_once XOOPS_ROOT_PATH . '/include/xoops13_header.php';
+if ($xoopsConfig['theme_set'] != 'default' && file_exists(ICMS_THEME_PATH.'/'.$xoopsConfig['theme_set'].'/theme.php')) {
+	require_once ICMS_ROOT_PATH . '/include/xoops13_header.php';
 } else {
 	global $xoopsOption, $xoopsConfig, $xoopsModule;
 
     $xoopsOption['theme_use_smarty'] = 1;
 
     // include Smarty template engine and initialize it
-    require_once XOOPS_ROOT_PATH . '/class/template.php';
-    require_once XOOPS_ROOT_PATH . '/class/theme.php';
-    require_once XOOPS_ROOT_PATH . '/class/theme_blocks.php';
+    require_once ICMS_ROOT_PATH . '/class/template.php';
+    require_once ICMS_ROOT_PATH . '/class/theme.php';
+    require_once ICMS_ROOT_PATH . '/class/theme_blocks.php';
 
 	if ( @$xoopsOption['template_main'] ) {
 		if ( false === strpos( $xoopsOption['template_main'], ':' ) ) {
@@ -71,8 +58,8 @@ if ($xoopsConfig['theme_set'] != 'default' && file_exists(XOOPS_THEME_PATH.'/'.$
 	$xoTheme->addScript( '/include/linkexternal.js', array( 'type' => 'text/javascript' ) );
 
     // Weird, but need extra <script> tags for 2.0.x themes
-    //$xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.XOOPS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
-	//$xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.XOOPS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');
+    //$xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
+	//$xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');
 
 	if ( @is_object( $xoTheme->plugins['xos_logos_PageBuilder'] ) ) {
 		$aggreg =& $xoTheme->plugins['xos_logos_PageBuilder'];
@@ -100,7 +87,7 @@ if ($xoopsConfig['theme_set'] != 'default' && file_exists(XOOPS_THEME_PATH.'/'.$
 
     if ( !isset($xoopsOption['template_main']) && $xoopsModule ) {
         // new themes using Smarty does not have old functions that are required in old modules, so include them now
-        include XOOPS_ROOT_PATH.'/include/old_theme_functions.php';
+        include ICMS_ROOT_PATH.'/include/old_theme_functions.php';
         // need this also
         $xoopsTheme['thename'] = $xoopsConfig['theme_set'];
         ob_start();

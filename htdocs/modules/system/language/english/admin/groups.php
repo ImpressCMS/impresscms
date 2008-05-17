@@ -10,10 +10,10 @@ define("_AM_CREATENEWADG","Create New Group");
 define("_AM_NAME","Name");
 define("_AM_DESCRIPTION","Description");
 define("_AM_INDICATES","* indicates required fields");
-define("_AM_SYSTEMRIGHTS","System Admin rights");
-define("_AM_ACTIVERIGHTS","Module Admin rights");
+define("_AM_SYSTEMRIGHTS","Can administrate the following System features");
+define("_AM_ACTIVERIGHTS","Can administrate the following modules");
 define("_AM_IFADMIN","If admin right for a module is checked, access right for the module will always be enabled.");
-define("_AM_ACCESSRIGHTS","Module Access rights");
+define("_AM_ACCESSRIGHTS","Can access the following modules");
 define("_AM_UPDATEADG","Update Group");
 define("_AM_MODIFYADG","Modify Group");
 define("_AM_DELETEADG","Delete Group");
@@ -28,7 +28,7 @@ define("_AM_DELBUTTON","<--delete");
 define("_AM_UNEED2ENTER","You need to enter required info!");
 
 // Added in RC3
-define("_AM_BLOCKRIGHTS","Block Access Rights");
+define("_AM_BLOCKRIGHTS","Can see the following blocks");
 
 define('_AM_FINDU4GROUP', 'Find users for this group');
 define('_AM_GROUPSMAIN', 'Groups Main');
@@ -47,6 +47,6 @@ define("_AM_CBBOTTOM","Center Block - Bottom");
 #
 
 define("_AM_EDPERM","Can use the WYSIWYG editor in the following modules");
-define("_AM_DEBUG_PERM","The Debug Mode is enabled for the next modules");
-define("_AM_GROUPMANAGER_PERM","Group Manager rights");
+define("_AM_DEBUG_PERM","Can see the Debug Mode in the following modules");
+define("_AM_GROUPMANAGER_PERM","Can change permissions on these groups");
 ?>

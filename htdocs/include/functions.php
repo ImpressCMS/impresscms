@@ -1215,22 +1215,90 @@ function icms_encryptPass($pass, $salt)
 	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 	$mainSalt = XOOPS_DB_SALT;
 
-	if ($xoopsConfigUser['use_sha256'] == 1 || $xoopsConfigUser['use_sha256'] !== 0)
+	if (function_exists('hash'))
 	{
-		if (!function_exists('hash'))
+		if ($xoopsConfigUser['enc_type'] == 0)
+		{
+			$pass = hash('md5', md5($pass)); // no salt used for compatibility with external scripts such as ipb/phpbb etc.
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 1)
+		{
+			$pass = hash('sha256', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 2)
+		{
+			$pass = hash('sha384', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 3)
+		{
+			$pass = hash('sha512', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 4)
+		{
+			$pass = hash('ripemd128', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 5)
+		{
+			$pass = hash('ripemd160', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 6)
+		{
+			$pass = hash('whirlpool', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 7)
+		{
+			$pass = hash('haval128,4', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 8)
+		{
+			$pass = hash('haval160,4', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 9)
+		{
+			$pass = hash('haval192,4', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 10)
+		{
+			$pass = hash('haval224,4', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 11)
+		{
+			$pass = hash('haval256,4', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 12)
+		{
+			$pass = hash('haval128,5', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 13)
+		{
+			$pass = hash('haval160,5', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 14)
+		{
+			$pass = hash('haval192,5', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 15)
+		{
+			$pass = hash('haval224,5', $salt.md5($pass).$mainSalt);
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 16)
+		{
+			$pass = hash('haval256,5', $salt.md5($pass).$mainSalt);
+		}
+	}
+	elseif (!function_exists('hash'))
+	{
+		if ($xoopsConfigUser['enc_type'] == 0)
+		{
+			$pass = md5($pass); // no salt used for compatibility with external scripts such as ipb/phpbb etc. no idea why this was requested though, but not recommended to use.
+		}
+		elseif ($xoopsConfigUser['enc_type'] == 1 || $xoopsConfigUser['enc_type'] > 1)
 		{
 			include_once ICMS_ROOT_PATH.'/class/sha256.inc.php';
 			$pass = SHA256::hash($salt.md5($pass).$mainSalt);
 		}
-		else
-		{
-			$pass = hash('sha256', $salt.md5($pass).$mainSalt);
-		}
 	}
-	else
-	{
-		$pass = md5($pass);
-	}
+
 	unset($mainSalt);
 	return $pass;
 }

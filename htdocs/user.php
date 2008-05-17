@@ -1,29 +1,16 @@
 <?php
-// $Id: user.php 1083 2007-10-16 16:42:51Z phppp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+/**
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
+*/
 /**
  * Login page for users, will redirect to userinfo.php if the user is logged in
  * @package kernel 
@@ -53,11 +40,11 @@ if ($op == 'main') {
 	        $redirect = htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES);
 	        $isExternal = false;
 	        if ($pos = strpos( $redirect, '://' )) {
-	            $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
+	            $xoopsLocation = substr( ICMS_URL, strpos( ICMS_URL, '://' ) + 3 );
 	             if ( substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
-					$redirect = XOOPS_URL;
+					$redirect = ICMS_URL;
 		         }elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
-		            $redirect = XOOPS_URL;
+		            $redirect = ICMS_URL;
 		         }
 	        }
         	$xoopsTpl->assign('redirect_page', $redirect);
@@ -87,24 +74,24 @@ if ($op == 'main') {
         $redirect = htmlspecialchars(trim($_GET['xoops_redirect']));
         $isExternal = false;
         if ($pos = strpos( $redirect, '://' )) {
-            $xoopsLocation = substr( XOOPS_URL, strpos( XOOPS_URL, '://' ) + 3 );
+            $xoopsLocation = substr( ICMS_URL, strpos( ICMS_URL, '://' ) + 3 );
              if ( substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
-	              $redirect = XOOPS_URL;
+	              $redirect = ICMS_URL;
 	         }elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
-	              $redirect = XOOPS_URL;
+	              $redirect = ICMS_URL;
 	         }
         }
         header('Location: ' . $redirect);
 		exit();
     } else {
-        header('Location: '.XOOPS_URL.'/userinfo.php?uid='.intval($xoopsUser->getVar('uid')));
+        header('Location: '.ICMS_URL.'/userinfo.php?uid='.intval($xoopsUser->getVar('uid')));
 		exit();
     }
     exit();
 }
 
 if ($op == 'login') {
-    include_once XOOPS_ROOT_PATH.'/include/checklogin.php';
+    include_once ICMS_ROOT_PATH.'/include/checklogin.php';
     exit();
 }
 
@@ -117,8 +104,8 @@ if ($op == 'logout') {
         setcookie($xoopsConfig['session_name'], '', time()- 3600, '/',  '', 0);
     }
     // autologin hack GIJ (clear autologin cookies)
-    $xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , XOOPS_URL ) ;
-    if( $xoops_cookie_path == XOOPS_URL ) $xoops_cookie_path = '/' ;
+    $xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , ICMS_URL ) ;
+    if( $xoops_cookie_path == ICMS_URL ) $xoops_cookie_path = '/' ;
     setcookie('autologin_uname', '', time() - 3600, $xoops_cookie_path, '', 0);
     setcookie('autologin_pass', '', time() - 3600, $xoops_cookie_path, '', 0);
     // end of autologin hack GIJ
@@ -160,7 +147,7 @@ if ($op == 'actv') {
                     $xoopsMailer->setTemplate('activated.tpl');
                     $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
                     $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
-                    $xoopsMailer->assign('SITEURL', XOOPS_URL."/");
+                    $xoopsMailer->assign('SITEURL', ICMS_URL."/");
                     $xoopsMailer->setToUsers($thisuser);
                     $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
                     $xoopsMailer->setFromName($xoopsConfig['sitename']);

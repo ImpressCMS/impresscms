@@ -1,29 +1,17 @@
 <?php
-// $Id: lostpass.php 2 2005-11-02 18:23:29Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+/**
+* All functions for lost password generator are going through here.
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
+*/
 /**
  * Form and process for sending a new password to a user
  * @package kernel 
@@ -59,13 +47,13 @@ if (empty($getuser)) {
         $xoopsMailer->setTemplate("lostpass2.tpl");
         $xoopsMailer->assign("SITENAME", $xoopsConfig['sitename']);
         $xoopsMailer->assign("ADMINMAIL", $xoopsConfig['adminmail']);
-        $xoopsMailer->assign("SITEURL", XOOPS_URL."/");
+        $xoopsMailer->assign("SITEURL", ICMS_URL."/");
         $xoopsMailer->assign("IP", $_SERVER['REMOTE_ADDR']);
         $xoopsMailer->assign("NEWPWD", $newpass);
         $xoopsMailer->setToUsers($getuser[0]);
         $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
         $xoopsMailer->setFromName($xoopsConfig['sitename']);
-        $xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ,XOOPS_URL));
+        $xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ,ICMS_URL));
         if ( !$xoopsMailer->send() ) {
             echo $xoopsMailer->getErrors();
         }
@@ -86,9 +74,9 @@ if (empty($getuser)) {
         $xoopsMailer->setTemplate("lostpass1.tpl");
         $xoopsMailer->assign("SITENAME", $xoopsConfig['sitename']);
         $xoopsMailer->assign("ADMINMAIL", $xoopsConfig['adminmail']);
-        $xoopsMailer->assign("SITEURL", XOOPS_URL."/");
+        $xoopsMailer->assign("SITEURL", ICMS_URL."/");
         $xoopsMailer->assign("IP", $_SERVER['REMOTE_ADDR']);
-        $xoopsMailer->assign("NEWPWD_LINK", XOOPS_URL."/lostpass.php?email=".$email."&code=".$areyou);
+        $xoopsMailer->assign("NEWPWD_LINK", ICMS_URL."/lostpass.php?email=".$email."&code=".$areyou);
         $xoopsMailer->setToUsers($getuser[0]);
         $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
         $xoopsMailer->setFromName($xoopsConfig['sitename']);

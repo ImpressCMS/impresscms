@@ -9,13 +9,13 @@ $font = ICMS_ROOT_PATH.'/libraries/captcha/fonts/'.$xoopsConfigPersona['email_fo
 // If you use TTF fontLength = 8
 // If you don't you may put 7 :-)
 $fontSize = intval($xoopsConfigPersona['email_font_len']);
-$height = $fontSize*1.2+10; // height of image
+$height = $fontSize*1.2+14; // height of image
 $emailAddress = urldecode(base64_decode($HTTP_GET_VARS['p']));
 
 Header( "Content-type: image/png");
 
 $emailAddressLength = strlen($emailAddress);
-$width = $emailAddressLength * ($fontSize*0.7);
+$width = $emailAddressLength * ($fontSize*0.85);
 
 $image = imagecreate($width,$height);
 

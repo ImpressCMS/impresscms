@@ -8,7 +8,7 @@ define('_MODABOUT_MODULE_BUG', 'Report a bug for this module');
 define('_MODABOUT_MODULE_DEMO', 'Demo Site');
 define('_MODABOUT_MODULE_DISCLAIMER', 'Disclaimer');
 define('_MODABOUT_MODULE_FEATURE', 'Suggest a new feature for this module');
-define('_MODABOUT_MODULE_INFO', 'Module Developpment Informations');
+define('_MODABOUT_MODULE_INFO', 'Module Development Informations');
 define('_MODABOUT_MODULE_RELEASE_DATE', 'Release date');
 define('_MODABOUT_MODULE_STATUS', 'Status');
 define('_MODABOUT_MODULE_SUBMIT_BUG', 'Submit a bug');
