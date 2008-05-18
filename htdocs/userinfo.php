@@ -153,7 +153,7 @@ if ($thisUser->getVar('user_viewemail') == 1) {
     }
 }
 if (is_object($xoopsUser)) {
-    $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('".ICMS_URL."/pmlite.php?send2=1&amp;to_userid=".intval($thisUser->getVar('uid'))."', 'pmlite', 550, 450);\"><img src=\"".ICMS_URL."/images/icons/pm.gif\" alt=\"".sprintf(_SENDPMTO,$thisUser->getVar('uname'))."\" /></a>");
+    $xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('".ICMS_URL."/pmlite.php?send2=1&amp;to_userid=".intval($thisUser->getVar('uid'))."', 'pmlite', 800,680);\"><img src=\"".ICMS_URL."/images/icons/pm.gif\" alt=\"".sprintf(_SENDPMTO,$thisUser->getVar('uname'))."\" /></a>");
 } else {
     $xoopsTpl->assign('user_pmlink', '');
 }

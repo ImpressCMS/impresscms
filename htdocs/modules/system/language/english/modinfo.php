@@ -40,7 +40,7 @@ define("_MI_SYSTEM_ADMENU9","13 - User Ranks");
 define("_MI_SYSTEM_ADMENU10","15 - Edit User");
 define("_MI_SYSTEM_ADMENU11","16 - Mail Users");
 define("_MI_SYSTEM_ADMENU12", "14 - Find Users");
-define("_MI_SYSTEM_ADMENU13", "12 - Images");
+define("_MI_SYSTEM_ADMENU13", "12 - Images Manager");
 define("_MI_SYSTEM_ADMENU14", "11 - Avatars");
 define("_MI_SYSTEM_ADMENU15", "08 - Templates");
 define("_MI_SYSTEM_ADMENU16", "09 - Comments");

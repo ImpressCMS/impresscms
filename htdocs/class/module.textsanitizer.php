@@ -1,33 +1,17 @@
 <?php
-// $Id: module.textsanitizer.php 1151 2007-12-04 15:43:01Z phppp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (http://www.myweb.ne.jp/, http://jp.xoops.org/)        //
-//         Goghs Cheng (http://www.eqiao.com, http://www.devbeez.com/)       //
-// Project: The XOOPS Project (http://www.xoops.org/)                        //
-// ------------------------------------------------------------------------- //
+/**
+*All BB codes allowed in the site are generated through here.
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by stranger <stranger@impresscms.ir>
+* @version		$Id$
+*/
 
 /**
  * Class to "clean up" text for various uses
@@ -119,7 +103,7 @@ class MyTextSanitizer
 	{
 		$smileys = $this->getSmileys();
 		foreach ($smileys as $smile) {
-			$message = str_replace($smile['code'], '<img src="'.XOOPS_UPLOAD_URL.'/'.htmlspecialchars($smile['smile_url']).'" alt="" />', $message);
+			$message = str_replace($smile['code'], '<img src="'.ICMS_UPLOAD_URL.'/'.htmlspecialchars($smile['smile_url']).'" alt="" />', $message);
 		}
 		return $message;
 	}
@@ -185,9 +169,16 @@ class MyTextSanitizer
 		//$patterns[] = "/\[code](.*)\[\/code\]/esU";
 		//$replacements[] = "'<div class=\"xoopsCode\"><code><pre>'.wordwrap(MyTextSanitizer::htmlSpecialChars('\\1'), 100).'</pre></code></div>'";
 		// RMV: added new markup for intrasite url (allows easier site moves)
-		// TODO: automatically convert other URLs to this format if XOOPS_URL matches??
+		// TODO: automatically convert other URLs to this format if ICMS_URL matches??
+		$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
+		if($_SESSION['xoopsUserId']) {
+		$replacements[] = _HIDDENC.'<div class="xoopsQuote">\\1</div>';
+		}
+		else {
+		$replacements[] = _HIDDENC.'<div class="xoopsQuote">'._HIDDENTEXT.'</div>';
+		}
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
-		$replacements[] = '<a href="'.XOOPS_URL.'/\\2">\\3</a>';
+		$replacements[] = '<a href="'.ICMS_URL.'/\\2">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
 		$replacements[] = '<a href="\\2" rel="external">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(ftp?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
@@ -219,13 +210,13 @@ class MyTextSanitizer
 		if ($allowimage != 1) {
 			$replacements[] = '<a href="\\3" rel="external">\\3</a>';
 			$replacements[] = '<a href="\\1" rel="external">\\1</a>';
-			$replacements[] = '<a href="'.XOOPS_URL.'/image.php?id=\\4" rel="external">\\5</a>';
-			$replacements[] = '<a href="'.XOOPS_URL.'/image.php?id=\\2" rel="external">\\3</a>';
+			$replacements[] = '<a href="'.ICMS_URL.'/image.php?id=\\4" rel="external">\\5</a>';
+			$replacements[] = '<a href="'.ICMS_URL.'/image.php?id=\\2" rel="external">\\3</a>';
 		} else {
 			$replacements[] = '<img src="\\3" align="\\2" alt="" />';
 			$replacements[] = '<img src="\\1" alt="" />';
-			$replacements[] = '<img src="'.XOOPS_URL.'/image.php?id=\\4" align="\\2" alt="\\5" />';
-			$replacements[] = '<img src="'.XOOPS_URL.'/image.php?id=\\2" alt="\\3" />';
+			$replacements[] = '<img src="'.ICMS_URL.'/image.php?id=\\4" align="\\2" alt="\\5" />';
+			$replacements[] = '<img src="'.ICMS_URL.'/image.php?id=\\2" alt="\\3" />';
 		}
 		$patterns[] = "/\[quote]/sU";
 		$replacements[] = _QUOTEC.'<div class="xoopsQuote"><blockquote>';

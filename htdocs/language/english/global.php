@@ -90,6 +90,8 @@ define('_ALL', 'All');
 define('_TITLE', 'Title');
 define('_OPTIONS', 'Options');
 define('_QUOTE', 'Quote');
+define('_HIDDENC', 'Hidden Content:');
+define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registeration at ' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
 define('_LIST', 'List');
 define('_LOGIN','User Login');
 define('_USERNAME','Username: ');
@@ -120,6 +122,7 @@ define('_FAILFETCHIMG', 'Could not get uploaded file %s');
 define('_FAILSAVEIMG', 'Failed storing image %s into the database');
 define('_NOCACHE', 'No Cache');
 define('_CLONE', 'Clone');
+define('_INVISIBLE', 'Invisible');
 
 //%%%%%	File Name class/xoopsform/formmatchoption.php 	%%%%%
 define("_STARTSWITH", "Starts with");
@@ -144,6 +147,7 @@ define("_ERRORIMGPOS","ERROR! Enter the position of the image.");
 define("_ENTEREMAIL","Enter the email address you want to add.");
 define("_ENTERCODE","Enter the codes that you want to add.");
 define("_ENTERQUOTE","Enter the text that you want to be quoted.");
+define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
 define("_ENTERTEXTBOX","Please input text into the textbox.");
 define("_ALLOWEDCHAR","Allowed max chars length: ");
 define("_CURRCHAR","Current chars length: ");

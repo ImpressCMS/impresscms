@@ -107,6 +107,8 @@ define("ICMS_THEME_URL", ICMS_URL."/themes");
 define("ICMS_COMPILE_PATH", ICMS_ROOT_PATH."/templates_c");
 define("ICMS_CACHE_PATH", ICMS_ROOT_PATH."/cache");
 define("ICMS_IMAGES_URL", ICMS_URL."/images");
+define("ICMS_EDITOR_PATH", ICMS_ROOT_PATH."/editors");
+define("ICMS_EDITOR_URL", ICMS_URL."/editors");
 /**
  * @todo make this $icms_images_setname as an option in preferences...
  */ 
@@ -124,10 +126,9 @@ define("XOOPS_THEME_PATH", ICMS_THEME_PATH);
 define("XOOPS_THEME_URL", ICMS_THEME_URL);
 define("XOOPS_COMPILE_PATH", ICMS_COMPILE_PATH);
 define("XOOPS_CACHE_PATH", ICMS_CACHE_PATH);
+define("XOOPS_EDITOR_PATH", ICMS_EDITOR_PATH);
+define("XOOPS_EDITOR_URL", ICMS_EDITOR_URL);
 
-// TODO: Change the name of the constant.
-define("XOOPS_EDITOR_PATH", XOOPS_ROOT_PATH."/editors");
-define("XOOPS_EDITOR_URL", XOOPS_URL."/editors");
 		
 define("SMARTY_DIR", ICMS_LIBRARIES_PATH."/smarty/");
 	

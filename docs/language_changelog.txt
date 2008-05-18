@@ -114,6 +114,9 @@ language/english/global.php
 +  define("_IMPRESSCMS_Support","Support the project !");
 +  define("_ADM_USE_RTL","0");
 +  define("_EXT_DATE_FUNC","0");
++  define('_HIDDENC', 'Hidden Content:');
++  define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registeration at ' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
++  define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
 
 language/english/moduleabout.php
 --------------------------------

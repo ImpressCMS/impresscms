@@ -119,6 +119,13 @@ class XoopsMultiMailer extends PHPMailer {
 	var $Host		= "";
 
 	/**
+   * Sets connection prefix.
+   * Options are "", "ssl" or "tls"
+   * @var string
+   */
+  var $SMTPSecure = "";
+
+	/**
 	 * Does your SMTP host require SMTPAuth authentication?
 	 * @var 	boolean
 	 * @access	private
@@ -165,6 +172,7 @@ class XoopsMultiMailer extends PHPMailer {
 		if ($xoopsMailerConfig["mailmethod"] == "smtpauth") {
 		    $this->Mailer = "smtp";
 			$this->SMTPAuth = TRUE;
+            $this->SMTPSecure = "ssl";
 			// TODO: change value type of xoopsConfig "smtphost" from array to text
 			$this->Host = implode(';',$xoopsMailerConfig['smtphost']);
 			$this->Username = $xoopsMailerConfig['smtpuser'];

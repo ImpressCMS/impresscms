@@ -1,0 +1,264 @@
+New field in block_module_link table
+Addition of a page_id field in block_module_link to configure on which page each block should be displayed
+
+[added] `page_id` smallint(5) NOT NULL default '0'
+------
+
+New records in block_module_link
+Linking 3 new blocks to the System Module
+
+INSERT INTO `block_module_link` VALUES (16, 0, 0);
+INSERT INTO `block_module_link` VALUES (17, 0, 1);
+INSERT INTO `block_module_link` VALUES (18, 0, 1);
+------
+
+New records in config table
+New preferences
+
+[added] INSERT INTO `config` VALUES (127, 0, 10, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', 0);
+[added] INSERT INTO `config` VALUES (129, 0, 10, 'adm_left_logo_alt', '_MD_AM_LLOGOADM_ALT', 'ImpressCMS', '_MD_AM_LLOGOADM_ALT_DESC', 'textbox', 'text', 2);
+[added] INSERT INTO `config` VALUES (128, 0, 10, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', 'http://www.impresscms.org', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', 1);
+[added] INSERT INTO `config` VALUES (130, 0, 10, 'adm_right_logo', '_MD_AM_RLOGOADM', '', '_MD_AM_RLOGOADM_DESC', 'select_image', 'text', 3);
+[added] INSERT INTO `config` VALUES (132, 0, 10, 'adm_right_logo_alt', '_MD_AM_RLOGOADM_ALT', '', '_MD_AM_RLOGOADM_ALT_DESC', 'textbox', 'text', 5);
+[added] INSERT INTO `config` VALUES (131, 0, 10, 'adm_right_logo_url', '_MD_AM_RLOGOADM_URL', '', '_MD_AM_RLOGOADM_URL_DESC', 'textbox', 'text', 4);
+[added] INSERT INTO `config` VALUES (69, 0, 2, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '0', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', 33);
+[added] INSERT INTO `config` VALUES (46, 0, 2, 'allow_htsig', '_MD_AM_ALLWHTSIG', '1', '_MD_AM_ALLWHTSIGDSC', 'yesno', 'int', 10);
+[added] INSERT INTO `config` VALUES (45, 0, 2, 'allwshow_sig', '_MD_AM_ALLWSHOWSIG', '1', '_MD_AM_ALLWSHOWSIGDSC', 'yesno', 'int', 9);
+[added] INSERT INTO `config` VALUES (53, 0, 2, 'avatar_allow_gravatar', '_MD_AM_GRAVATARALLOW', '1', '_MD_AM_GRAVATARALWDSC', 'yesno', 'int', 17);
+[added] INSERT INTO `config` VALUES (123, 0, 9, 'default_page', '_MD_AM_DEFAULT_CONTPAGE', '0', '_MD_AM_DEFAULT_CONTPAGEDSC', 'select_pages', 'int', 0);
+[added] INSERT INTO `config` VALUES (13, 0, 1, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'default', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', 12);
+[added] INSERT INTO `config` VALUES (14, 0, 1, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', 'a:1:{i:0;s:7:"default";}', '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', 13);
+[added] INSERT INTO `config` VALUES (134, 0, 10, 'editre_block', '_MD_AM_EDITREMOVEBLOCK', '1', '_MD_AM_EDITREMOVEBLOCKDSC', 'yesno', 'int', 7);
+[added] INSERT INTO `config` VALUES (140, 0, 10, 'email_cor', '_MD_AM_EMAILCOLOR', '#000000', '_MD_AM_EMAILCOLOR_DESC', 'color', 'text', 13);
+[added] INSERT INTO `config` VALUES (138, 0, 10, 'email_font', '_MD_AM_EMAILTTF', 'arial.ttf', '_MD_AM_EMAILTTF_DESC', 'select_font', 'text', 11);
+[added] INSERT INTO `config` VALUES (139, 0, 10, 'email_font_len', '_MD_AM_EMAILLEN', '12', '_MD_AM_EMAILLEN_DESC', 'textbox', 'int', 12);
+[added] INSERT INTO `config` VALUES (137, 0, 10, 'email_protect', '_MD_AM_EMAILPROTECT', '0', '_MD_AM_EMAILPROTECTDSC', 'yesno', 'int', 10);
+[added] INSERT INTO `config` VALUES (141, 0, 10, 'email_sombra', '_MD_AM_EMAILSOMBRA', '#cccccc', '_MD_AM_EMAILSOMBRA_DESC', 'color', 'text', 14);
+[added] INSERT INTO `config` VALUES (70, 0, 2, 'enc_type', '_MD_AM_ENC_TYPE', '1', '_MD_AM_ENC_TYPEDSC', 'select', 'int', 34);
+[added] INSERT INTO `config` VALUES (80, 0, 3, 'footadm', '_MD_AM_FOOTADM', 'Powered by ImpressCMS &copy; 2007-2008 <a href="http://www.impresscms.org/" rel="external">The ImpressCMS Project</a>', '_MD_AM_FOOTADM_DESC', 'textarea', 'text', 9);
+[added] INSERT INTO `config` VALUES (79, 0, 3, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textarea', 'text', 8);
+[added] INSERT INTO `config` VALUES (77, 0, 3, 'google_meta', '_MD_AM_METAGOOGLE', '', '_MD_AM_METAGOOGLE_DESC', 'textbox', 'text', 6);
+[added] INSERT INTO `config` VALUES (147, 0, 10, 'last_chars_left', '_MD_AM_LASTCHARS', '10', '_MD_AM_LASTCHARS_DESC', 'textbox', 'int', 20);
+[added] INSERT INTO `config` VALUES (145, 0, 10, 'max_url_long', '_MD_AM_URLLEN', '50', '_MD_AM_URLLEN_DESC', 'textbox', 'int', 18);
+[added] INSERT INTO `config` VALUES (118, 0, 8, 'ml_autoselect_enabled', '_MD_AM_ML_AUTOSELECT_ENABLED', '0', '_MD_AM_ML_AUTOSELECT_ENABLED_DESC', 'yesno', 'int', 1);
+[added] INSERT INTO `config` VALUES (135, 0, 10, 'multi_login', '_MD_AM_MULTLOGINPREVENT', '0', '_MD_AM_MULTLOGINPREVENTDSC', 'yesno', 'int', 8);
+[added] INSERT INTO `config` VALUES (136, 0, 10, 'multi_login_msg', '_MD_AM_MULTLOGINMSG', 'It was not possible to login on the site!! <br />\r\n        <p align="left" style="color:red;">\r\n        Possible causes:<br />\r\n         - You are already logged in on the site.<br />\r\n         - Someone else logged in on the site using your username and password.<br />\r\n         - You left the site or close the browser window without clicking the logout button.<br />\r\n        </p>\r\n        Wait a few minutes and try again later. If the problems still persists contact the site administrator.', '_MD_AM_MULTLOGINMSG_DESC', 'textarea', 'text', 9);
+[added] INSERT INTO `config` VALUES (38, 0, 2, 'pass_level', '_MD_AM_PASSLEVEL', '20', '_MD_AM_PASSLEVEL_DESC', 'select', 'int', 2);
+[added] INSERT INTO `config` VALUES (146, 0, 10, 'pre_chars_left', '_MD_AM_PRECHARS', '35', '_MD_AM_PRECHARS_DESC', 'textbox', 'int', 19);
+[added] INSERT INTO `config` VALUES (133, 0, 10, 'rss_local', '_MD_AM_RSSLOCAL', 'http://www.impresscms.org/modules/smartsection/backend.php', '_MD_AM_RSSLOCAL_DESC', 'textbox', 'text', 6);
+[added] INSERT INTO `config` VALUES (87, 0, 5, 'search_no_res_mod', '_MD_AM_SEARCH_NO_RES_MOD', '1', '_MD_AM_SEARCH_NO_RES_MODDSC', 'yesno', 'int', 3);
+[added] INSERT INTO `config` VALUES (88, 0, 5, 'search_per_page', '_MD_AM_SEARCH_PER_PAGE', '20', '_MD_AM_SEARCH_PER_PAGEDSC', 'textbox', 'int', 4);
+[added] INSERT INTO `config` VALUES (86, 0, 5, 'search_user_date', '_MD_AM_SEARCH_USERDATE', '1', '_MD_AM_SEARCH_USERDATE', 'yesno', 'int', 2);
+[added] INSERT INTO `config` VALUES (144, 0, 10, 'shorten_url', '_MD_AM_SHORTURL', '0', '_MD_AM_SHORTURLDSC', 'yesno', 'int', 17);
+[added] INSERT INTO `config` VALUES (148, 0, 10, 'show_impresscms_menu', '_MD_AM_SHOW_ICMSMENU', '1', '_MD_AM_SHOW_ICMSMENU_DESC', 'yesno', 'int', 21);
+[added] INSERT INTO `config` VALUES (124, 0, 9, 'show_nav', '_MD_AM_CONT_SHOWNAV', '1', '_MD_AM_CONT_SHOWNAVDSC', 'yesno', 'int', 1);
+[added] INSERT INTO `config` VALUES (126, 0, 9, 'show_pinfo', '_MD_AM_CONT_SHOWPINFO', '1', '_MD_AM_CONT_SHOWPINFODSC', 'yesno', 'int', 3);
+[added] INSERT INTO `config` VALUES (125, 0, 9, 'show_subs', '_MD_AM_CONT_SHOWSUBS', '1', '_MD_AM_CONT_SHOWSUBSDSC', 'yesno', 'int', 2);
+[added] INSERT INTO `config` VALUES (142, 0, 10, 'sombra_x', '_MD_AM_SOMBRAX', '2', '_MD_AM_SOMBRAX_DESC', 'textbox', 'int', 15);
+[added] INSERT INTO `config` VALUES (143, 0, 10, 'sombra_y', '_MD_AM_SOMBRAY', '2', '_MD_AM_SOMBRAY_DESC', 'textbox', 'int', 16);
+[added] INSERT INTO `config` VALUES (41, 0, 2, 'use_captcha', '_MD_AM_USECAPTCHA', '1', '_MD_AM_USECAPTCHADSC', 'yesno', 'int', 5);
+[added] INSERT INTO `config` VALUES (32, 0, 1, 'use_captchaf', '_MD_AM_USECAPTCHAFORM', '1', '_MD_AM_USECAPTCHAFORMDSC', 'yesno', 'int', 31);
+[added] INSERT INTO `config` VALUES (8, 0, 1, 'use_ext_date', '_MD_AM_EXT_DATE', '0', '_MD_AM_EXT_DATEDSC', 'yesno', 'int', 7);
+[added] INSERT INTO `config` VALUES (42, 0, 2, 'welcome_msg', '_MD_AM_WELCOMEMSG', '0', '_MD_AM_WELCOMEMSGDSC', 'yesno', 'int', 6);
+[added] INSERT INTO `config` VALUES (43, 0, 2, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', 'Welcome {UNAME},\r\n\r\nYour account has been successfully activated on {X_SITENAME}. As a member of our site, you will benefit from all the features reserved to registered members !\r\n\r\nOnce again, welcome to our site. Visit us often !\r\n\r\nIf you did not registered to our site, please contact us at the following address {X_ADMINMAIL}, and we will fix the situation.\r\n\r\n-----------\r\nYours truly,\r\n{X_SITENAME}\r\n{X_SITEURL}', '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textarea', 'text', 7);
+------
+
+New records in configcategory table
+New categories of preferences
+
+[added] INSERT INTO `configcategory` VALUES (9, '_MD_AM_CONTMANAGER', 0);
+[added] INSERT INTO `configcategory` VALUES (10, '_MD_AM_PERSON', 0);
+------
+
+New records in configoption table
+Options for new preferences created
+
+[added] INSERT INTO `configoption` VALUES (29, '_MD_AM_ENC_HAVAL1284', '7', 70);
+[added] INSERT INTO `configoption` VALUES (34, '_MD_AM_ENC_HAVAL1285', '12', 70);
+[added] INSERT INTO `configoption` VALUES (30, '_MD_AM_ENC_HAVAL1604', '8', 70);
+[added] INSERT INTO `configoption` VALUES (35, '_MD_AM_ENC_HAVAL1605', '13', 70);
+[added] INSERT INTO `configoption` VALUES (31, '_MD_AM_ENC_HAVAL1924', '9', 70);
+[added] INSERT INTO `configoption` VALUES (36, '_MD_AM_ENC_HAVAL1925', '14', 70);
+[added] INSERT INTO `configoption` VALUES (32, '_MD_AM_ENC_HAVAL2244', '10', 70);
+[added] INSERT INTO `configoption` VALUES (37, '_MD_AM_ENC_HAVAL2245', '15', 70);
+[added] INSERT INTO `configoption` VALUES (33, '_MD_AM_ENC_HAVAL2564', '11', 70);
+[added] INSERT INTO `configoption` VALUES (38, '_MD_AM_ENC_HAVAL2565', '16', 70);
+[added] INSERT INTO `configoption` VALUES (22, '_MD_AM_ENC_MD5', '0', 70);
+[added] INSERT INTO `configoption` VALUES (26, '_MD_AM_ENC_RIPEMD128', '4', 70);
+[added] INSERT INTO `configoption` VALUES (27, '_MD_AM_ENC_RIPEMD160', '5', 70);
+[added] INSERT INTO `configoption` VALUES (23, '_MD_AM_ENC_SHA256', '1', 70);
+[added] INSERT INTO `configoption` VALUES (24, '_MD_AM_ENC_SHA384', '2', 70);
+[added] INSERT INTO `configoption` VALUES (25, '_MD_AM_ENC_SHA512', '3', 70);
+[added] INSERT INTO `configoption` VALUES (28, '_MD_AM_ENC_WHIRLPOOL', '6', 70);
+[added] INSERT INTO `configoption` VALUES (10, '_MD_AM_PASSLEVEL1', '20', 38);
+[added] INSERT INTO `configoption` VALUES (11, '_MD_AM_PASSLEVEL2', '40', 38);
+[added] INSERT INTO `configoption` VALUES (12, '_MD_AM_PASSLEVEL3', '60', 38);
+[added] INSERT INTO `configoption` VALUES (13, '_MD_AM_PASSLEVEL4', '80', 38);
+[added] INSERT INTO `configoption` VALUES (14, '_MD_AM_PASSLEVEL5', '95', 38);
+INSERT INTO `configoption` VALUES (18, '_MD_AM_REGINVITE', '3', 49);
+------
+
+New records in the group_permissions table
+New permissions caused by the creation of new blocks
+(order of the values in the following queries:   `gperm_id` , `gperm_groupid`, `gperm_itemid`, `gperm_modid`, `gperm_name`)
+
+INSERT INTO `i83106030_group_permission` VALUES (1, 'block_read', 1, 15);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'block_read', 1, 16);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'block_read', 1, 17);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'block_read', 2, 14);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'block_read', 2, 15);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'block_read', 2, 16);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'block_read', 3, 14);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'block_read', 3, 16);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'block_read', 3, 18);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'group_manager', 1, 1);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'group_manager', 1, 2);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'group_manager', 1, 3);
+[added] INSERT INTO `i83106030_group_permission` VALUES (1, 'imgcat_read', 1, 1);
+[added] INSERT INTO `i83106030_group_permission` VALUES (1, 'imgcat_write', 1, 1);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'system_admin', 1, 16);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'system_admin', 1, 17);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'system_admin', 1, 18);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'system_admin', 1, 19);
+INSERT INTO `i83106030_group_permission` VALUES (1, 'system_admin', 1, 20);
+------
+
+New table icmscontent
+Table to store the pages of the Content Manager
+
+CREATE TABLE `i83106030_icmscontent` (
+  `content_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `content_catid` mediumint(8) unsigned NOT NULL default '1',
+  `content_supid` mediumint(8) unsigned NOT NULL default '0',
+  `content_uid` mediumint(5) NOT NULL default '1',
+  `content_title` varchar(255) NOT NULL default '',
+  `content_menu` varchar(100) default NULL,
+  `content_body` text,
+  `content_css` text,
+  `content_visibility` int(10) NOT NULL default '3',
+  `content_created` int(10) NOT NULL default '0',
+  `content_updated` int(10) NOT NULL default '0',
+  `content_weight` smallint(5) unsigned NOT NULL default '0',
+  `content_reads` int(11) NOT NULL default '0',
+  `content_status` tinyint(1) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`content_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+------
+
+New table icmspage
+Table to store the definition of pages in the Links Manager
+
+[added] CREATE TABLE `i83106030_icmspage` (
+  `page_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `page_moduleid` mediumint(8) unsigned NOT NULL default '1',
+  `page_title` varchar(255) NOT NULL default '',
+  `page_url` varchar(255) NOT NULL default '',
+  `page_status` tinyint(1) unsigned NOT NULL default '1',
+  PRIMARY KEY  (`page_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+------
+
+New record in image table
+Logo of ImpressCMS in the image manager
+
+[added] INSERT INTO `i83106030_image` VALUES (1, 'img482278e29e81c.png', 'ImpressCMS', 'image/png', 1210937626, 1, 0, 1);
+------
+
+New record in imagecategory table
+Logos category in image manager
+
+[added] INSERT INTO `i83106030_imagecategory` VALUES (1, 'Logos', 350000, 350, 80, 1, 0, 'C', 'file');
+------
+ 
+New table invite
+Table to manage invites from the registration by invitation feature
+
+CREATE TABLE `i83106030_invites` (
+  `invite_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `from_id` mediumint(8) unsigned NOT NULL default '0',
+  `invite_to` varchar(255) NOT NULL default '',
+  `invite_code` varchar(8) NOT NULL default '',
+  `invite_date` int(10) unsigned NOT NULL default '0',
+  `view_date` int(10) unsigned NOT NULL default '0',
+  `register_id` mediumint(8) unsigned NOT NULL default '0',
+  `extra_info` text NOT NULL,
+  PRIMARY KEY  (`invite_id`),
+  KEY `invite_code` (`invite_code`),
+  KEY `register_id` (`register_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+------
+
+New field in modules table
+dbversion field to track module database version
+
+[added] `dbversion` int(11) unsigned NOT NULL default '1',
+------
+
+New records in newblocks table
+- Content block
+- Content menu block
+- Related Content block
+
+INSERT INTO `newblocks` VALUES (14, 1, 14, '1|1|1|1', 'Content', 'Content', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_show', 'b_content_edit', 'system_block_content.html', 0, 1210937626);
+INSERT INTO `newblocks` VALUES (15, 1, 15, 'content_weight|ASC|1|#F2E2A0', 'Content Menu', 'Content Menu', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_menu_show', 'b_content_menu_edit', 'system_block_contentmenu.html', 0, 1210937626);
+INSERT INTO `newblocks` VALUES (16, 1, 16, 'content_weight|ASC|1', 'Related Content', 'Related Content', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_relmenu_show', 'b_content_relmenu_edit', 'system_block_contentmenu.html', 0, 1210937626);
+------
+
+New table system_customtag
+Table to store custom tags information
+
+CREATE TABLE `i83106030_system_customtag` (
+  `customtagid` int(11) unsigned NOT NULL auto_increment,
+  `name` varchar(255) NOT NULL default '',
+  `description` text NOT NULL,
+  `content` text NOT NULL,
+  `language` varchar(100) NOT NULL default '',
+  `customtag_type` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`customtagid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+------<
+
+New records in tplfile table
+New templates added
+
+INSERT INTO `i83106030_tplfile` VALUES (18, 1, 'system', 'default', 'system_content.html', 'Template of content pages', 1210937626, 1210937626, 'module');
+INSERT INTO `i83106030_tplfile` VALUES (19, 1, 'system', 'default', 'blocks/system_block_contentmenu_structure.html', 'Template of content pages', 1210937626, 1210937626, 'module');
+INSERT INTO `i83106030_tplfile` VALUES (20, 1, 'system', 'default', 'admin/content/system_adm_contentmanager_index.html', 'Template of the admin of content manager', 1210937626, 1210937626, 'module');
+INSERT INTO `i83106030_tplfile` VALUES (21, 1, 'system', 'default', 'admin/blockspadmin/system_adm_blockspadmin.html', 'Template of the admin of block position admin', 1210937626, 1210937626, 'module');
+INSERT INTO `i83106030_tplfile` VALUES (22, 1, 'system', 'default', 'admin/pages/system_adm_pagemanager_index.html', 'Template of the admin of pages manager', 1210937626, 1210937626, 'module');
+INSERT INTO `i83106030_tplfile` VALUES (23, 1, 'system', 'default', 'admin/blocksadmin/system_adm_blocksadmin.html', 'Template for the blocks admin', 1210937626, 1210937626, 'module');
+INSERT INTO `i83106030_tplfile` VALUES (24, 1, 'system', 'default', 'admin/modulesadmin/system_adm_modulesadmin.html', 'Template for the modules admin', 1210937626, 1210937626, 'module');
+INSERT INTO `i83106030_tplfile` VALUES (25, 1, 'system', 'default', 'system_common_form.html', 'Common form template', 1210937626, 1210937626, 'module');
+INSERT INTO `i83106030_tplfile` VALUES (26, 1, 'system', 'default', 'system_persistabletable_display.html', 'Template of the IcmsPersistableTable list view', 1210937626, 1210937626, 'module');
+INSERT INTO `i83106030_tplfile` VALUES (27, 1, 'system', 'default', 'admin/customtag/system_adm_customtag.html', 'Template of the Custom Tag admin', 1210937626, 1210937626, 'module');
+INSERT INTO `i83106030_tplfile` VALUES (41, 14, 'system', 'default', 'system_block_content.html', 'Show content page', 1210937626, 1210937626, 'block');
+INSERT INTO `i83106030_tplfile` VALUES (42, 15, 'system', 'default', 'system_block_contentmenu.html', 'Menu of content pages and categories', 1210937626, 1210937626, 'block');
+INSERT INTO `i83106030_tplfile` VALUES (43, 16, 'system', 'default', 'system_block_contentmenu.html', 'Menu of content pages and categories', 1210937626, 1210937626, 'block');
+------
+
+New records and some other changes in tplsource table
+We don't need to document those the upgrade script will make sure we are reloading all the templates, hence taking care of additions and changes
+------
+
+Fields type changes in users table
+
+`uname` varchar(255) NOT NULL default '',
+`email` varchar(255) NOT NULL default '',
+`url` varchar(255) NOT NULL default '',
+[added] `pass` varchar(100) NOT NULL default '',
+
+------
+
+New field in users table
+
+`language` varchar(100) NOT NULL default '',
+[added] `salt` varchar(255) NOT NULL default '',
+------
+
+New key in users table
+
+KEY `unamepass` (`uname`(10),`pass`(10))
+------
+
+We also need to change the charset of the database to be UTF-8
+------

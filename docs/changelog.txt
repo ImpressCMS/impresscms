@@ -69,6 +69,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : Use of theme.php in language files for an easier use of smartys in themes instead of hardcoded texts. (stranger)
 - Added : RTL to install process. (stranger)
 - Added : Feature #1957019: added logging hook. (dave_l)
+- Added : Hide tag, content in this tag will be hidden for anonymous users. (stranger)
 
 - Improved : The pm form to use the selected editor. (real_therplima)
 - Improved : XoopsTree::getNicePathFromId has new parameter, allowing specification of the separator between links (skenow)

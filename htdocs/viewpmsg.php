@@ -76,9 +76,9 @@ if (!is_object($xoopsUser)) {
     }
 
     if ( $display == 1 ) {
-        echo "<tr class='foot' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send=1\",\"pmlite\",670,480);' value='"._PM_SEND."' />&nbsp;<input type='submit' class='formButton' name='delete_messages' value='"._PM_DELETE."' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr></table></form>";
+        echo "<tr class='foot' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send=1\",\"pmlite\",800,680);' value='"._PM_SEND."' />&nbsp;<input type='submit' class='formButton' name='delete_messages' value='"._PM_DELETE."' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr></table></form>";
     } else {
-        echo "<tr class='bg2' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send=1\",\"pmlite\",670,480);' value='"._PM_SEND."' /></td></tr></table></form>";
+        echo "<tr class='bg2' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send=1\",\"pmlite\",800,680);' value='"._PM_SEND."' /></td></tr></table></form>";
     }
     include "footer.php";
 }

@@ -160,9 +160,11 @@ function buildBlock( $xobject, &$template ) {
     global $xoopsUser, $xoopsConfigPersona;
     if ($xoopsConfigPersona['editre_block'] == 1 ) {
  	    if ($xoopsUser && $xoopsUser->isAdmin()){
- 		    $titlebtns = "<a href=".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&op=edit&bid=".$xobject->getVar('bid')."> <img src=".XOOPS_URL."/images/icons/edit_block.gif"." title="._EDIT." alt="._EDIT."  /></a>";
+ 		    $titlebtns1 = "<a href=".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&op=changestatus&bid=".$xobject->getVar('bid')."&sts=1> <img src=".XOOPS_URL."/modules/system/images/off.png"." title="._INVISIBLE." alt="._INVISIBLE."  /></a>";
+ 		    $titlebtns = "<a href=".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&op=clone&bid=".$xobject->getVar('bid')."> <img src=".XOOPS_URL."/modules/system/images/clone_med.png"." title="._CLONE." alt="._CLONE."  /></a>";
+ 		    $titlebtns2 = "<a href=".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&op=edit&bid=".$xobject->getVar('bid')."> <img src=".XOOPS_URL."/modules/system/images/edit_med.png"." title="._EDIT." alt="._EDIT."  /></a>";
  		    if ($xobject->getVar( 'dirname' ) == ''){
- 		        $titlebtns .= "<a href=".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&op=delete&bid=".$xobject->getVar('bid')."> <img src=".XOOPS_URL."/images/icons/delete_block.gif"." title="._DELETE." alt="._DELETE."  /> </a>";
+ 		        $titlebtns .= "<a href=".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&op=delete&bid=".$xobject->getVar('bid')."> <img src=".XOOPS_URL."/modules/system/images/delete_med.png"." title="._DELETE." alt="._DELETE."  /> </a>";
  		    }
  	    }else{
  	    	$titlebtns = '';
@@ -170,7 +172,7 @@ function buildBlock( $xobject, &$template ) {
  	        $block = array(
             'id'        => $xobject->getVar( 'bid' ),
             'module'    => $xobject->getVar( 'dirname' ),
-            'title'        =>  $xobject->getVar( 'title' ) . $titlebtns,         
+            'title'        =>  $xobject->getVar( 'title' ) . $titlebtns1 . $titlebtns . $titlebtns2,         
              //'name'        => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
             'weight'    => $xobject->getVar( 'weight' ),
             'lastmod'    => $xobject->getVar( 'last_modified' ),
