@@ -216,7 +216,7 @@ function showRSS($op=1){
 			$rssurl = $xoopsConfigPersona['rss_local'];
 			$rssfile = ICMS_CACHE_PATH.'/adminnews.xml';
 			break;
-	}
+	}/*
 	$rssdata = '';
 	if (!file_exists($rssfile) || filemtime($rssfile) < time() - 86400) {
 		require_once ICMS_ROOT_PATH.'/class/snoopy.php';
@@ -261,7 +261,83 @@ function showRSS($op=1){
 		} else {
 			echo $rss2parser->getErrors();
 		}
-	}
+	}*/
+	
+	
+	include_once(ICMS_ROOT_PATH . '/class/icmssimplerss.php');
+	
+	// Create a new instance of the SimplePie object
+	$feed = new IcmsSimpleRss($rssurl, 3600);
+
+	?>
+		<div id="sp_results">
+
+			<!-- As long as the feed has data to work with... -->
+			<?php if ($feed): ?>
+				<div class="chunk focus" align="center">
+
+					<!-- If the feed has a link back to the site that publishes it (which 99% of them do), link the feed's title to it. -->
+					<h3 class="header"><?php if ($feed->get_link()) echo '<a href="' . $feed->get_link() . '">'; echo $feed->get_title(); if ($feed->get_link()) echo '</a>'; ?></h3>
+
+					<!-- If the feed has a description, display it. -->
+					<?php echo $feed->get_description(); ?>
+
+				</div>
+
+				<!-- Let's begin looping through each individual news item in the feed. -->
+				<?php foreach($feed->get_items() as $item): ?>
+					<div class="chunk">
+
+						<?php
+						// Let's add a favicon for each item. If one doesn't exist, we'll use an alternate one.
+						if (!$favicon = $feed->get_favicon())
+						{
+							$favicon = './for_the_demo/favicons/alternate.png';
+						}
+						?>
+
+						<!-- If the item has a permalink back to the original post (which 99% of them do), link the item's title to it. -->
+						<h4><img src="<?php echo $favicon; ?>" alt="Favicon" class="favicon" /><?php if ($item->get_permalink()) echo '<a href="' . $item->get_permalink() . '">'; echo $item->get_title(); if ($item->get_permalink()) echo '</a>'; ?>&nbsp;<span class="footnote"><?php echo $item->get_date('j M Y, g:i a'); ?></span></h4>
+
+						<!-- Display the item's primary content. -->
+						<?php echo $item->get_content(); ?>
+
+						<?php
+						// Check for enclosures.  If an item has any, set the first one to the $enclosure variable.
+						if ($enclosure = $item->get_enclosure(0))
+						{
+							// Use the embed() method to embed the enclosure into the page inline.
+							echo '<div align="center">';
+							echo '<p>' . $enclosure->embed(array(
+								'audio' => './for_the_demo/place_audio.png',
+								'video' => './for_the_demo/place_video.png',
+								'mediaplayer' => './for_the_demo/mediaplayer.swf',
+								'alt' => '<img src="./for_the_demo/mini_podcast.png" class="download" border="0" title="Download the Podcast (' . $enclosure->get_extension() . '; ' . $enclosure->get_size() . ' MB)" />',
+								'altclass' => 'download'
+							)) . '</p>';
+							echo '<p class="footnote" align="center">(' . $enclosure->get_type();
+							if ($enclosure->get_size())
+							{
+								echo '; ' . $enclosure->get_size() . ' MB';								
+							}
+							echo ')</p>';
+							echo '</div>';
+						}
+						?>
+
+					</div>
+
+				<!-- Stop looping through each item once we've gone through all of them. -->
+				<?php endforeach; ?>
+
+			<!-- From here on, we're no longer using data from the feed. -->
+			<?php endif; ?>
+
+		</div>
+
+	</div>	
+	<?php
+
 }
 
 xoops_cp_footer();
