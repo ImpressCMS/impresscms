@@ -270,7 +270,7 @@ function showRSS($op=1){
 	$feed = new IcmsSimpleRss($rssurl, 3600);
 
 	?>
-		<div id="sp_results">
+		<div id="sp_results"> 
 
 			<!-- As long as the feed has data to work with... -->
 			<?php if ($feed): ?>
