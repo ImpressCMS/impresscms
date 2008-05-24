@@ -29,7 +29,7 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	// Example: define('XOOPS_TRUST_PATH', '/path/to/trust/directory');
 	define('XOOPS_TRUST_PATH', '');
 
-	// sdata#--#
+	include_once(XOOPS_TRUST_PATH . '/');
 
 	// XOOPS Virtual Path (URL)
 	// Virtual path to your main XOOPS directory WITHOUT trailing slash

@@ -183,3 +183,24 @@ div.cpicon span.unor{
 #http_error_text {padding-top: 5px; padding-bottom: 5px; text-align: left;}
 #http_error_searchform{padding-top: 5px; line-height: 5px; padding-bottom: 0px;}
 #http_error li{color: black; padding-top: 5px; padding-bottom: 5px;}
+
+.ed_block_box {
+	position:absolute;
+	display:none;
+	padding: 5px;
+	background: #FFF;
+	border: 2px solid #000;
+	text-align: left;
+	line-height: 180%;
+	font-size: 11px;
+	font-weight: normal;
+	color: #000;
+	width: 100px;
+}
+.ed_block_box img{
+    vertical-align: middle;
+}
+.ed_block_box a{
+	font-weight: normal;
+	color: #000;
+}

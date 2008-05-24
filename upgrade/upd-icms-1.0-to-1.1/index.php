@@ -36,38 +36,127 @@ class upgrade_impcms06 {
     }
     function check_db()
     {
-		$table = new IcmsDatabasetable('modules');
-	    return $table->fieldExists('dbversion');
+        $lines = file( XOOPS_ROOT_PATH . '/mainfile.php' );
+        foreach ( $lines as $line ) {
+            if( preg_match( '/(define\(\s*)([\'"])(XOOPS_DB_CHARSET)\\2,\s*([\'"])([^\'"]*?)\\4\s*\);/', $line ) ) {
+                return true;
 	}
-
+        }
+        return false;
+    }
+    
     function apply_db()
     {
         return $this->update_configs('db');
     }
 
-    function update_configs($task){
-	$db = $GLOBALS['xoopsDB'];
+    function update_configs($task)
+    {
         if (!$vars = $this->set_configs($task) ) {
             return false;
         }
-        if ($task == "db" && !empty($vars["XOOPS_DB_COLLATION"]) && $pos = strpos($vars["XOOPS_DB_COLLATION"], "_")) {
-            $vars["XOOPS_DB_CHARSET"] = substr($vars["XOOPS_DB_COLLATION"], 0, $pos);
-            
-		    $sql = "ALTER DATABASE `" . XOOPS_DB_NAME . "` DEFAULT CHARACTER SET " . $db->quote($vars['XOOPS_DB_CHARSET']) . " COLLATE " . $db->quote($vars['XOOPS_DB_COLLATION']);
-		    if ( !$db->queryF($sql) ) {
-    		    return false;
-		    }
-		    if ( !$result = $db->queryF("SHOW TABLES") ) {
-    		    return false;
-		    }
-		    while (list($table) = $db->fetchRow($result)) {
-    		    $db->queryF( "ALTER TABLE `{$table}` DEFAULT CHARACTER SET " . $db->quote($vars['XOOPS_DB_CHARSET']) . " COLLATE " . $db->quote($vars['XOOPS_DB_COLLATION']) );
-    		    $db->queryF( "ALTER TABLE `{$table}` CONVERT TO CHARACTER SET " . $db->quote($vars['XOOPS_DB_CHARSET']) . " COLLATE " . $db->quote($vars['XOOPS_DB_COLLATION']) );
-		    }
+        if ($task == "db" && !empty($vars["XOOPS_DB_COLLATION"])) {
+            if ($pos = strpos($vars["XOOPS_DB_COLLATION"], "_")) {
+                $vars["XOOPS_DB_CHARSET"] = substr($vars["XOOPS_DB_COLLATION"], 0, $pos);
+                $this->convert_db($vars["XOOPS_DB_CHARSET"], $vars["XOOPS_DB_COLLATION"]);
+            }
         }
         
-        return true;
+        return $this->write_mainfile($vars);
     }
+    
+    function convert_db($charset, $collation)
+    {
+	    $sql = "ALTER DATABASE `" . XOOPS_DB_NAME . "` DEFAULT CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation);
+	    if ( !$GLOBALS["xoopsDB"]->queryF($sql) ) {
+		    return false;
+	    }
+	    if ( !$result = $GLOBALS["xoopsDB"]->queryF("SHOW TABLES LIKE '" . XOOPS_DB_PREFIX . "\_%'") ) {
+		    return false;
+	    }
+	    $tables = array();
+	    while (list($table) = $GLOBALS["xoopsDB"]->fetchRow($result)) {
+    	    $tables[] = $table;
+		    //$GLOBALS["xoopsDB"]->queryF( "ALTER TABLE `{$table}` DEFAULT CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation) );
+		    //$GLOBALS["xoopsDB"]->queryF( "ALTER TABLE `{$table}` CONVERT TO CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation) );
+	    }
+	    $this->convert_table($tables, $charset, $collation);
+    }
+    
+    // Some code not ready to use
+    function convert_table($tables, $charset, $collation)
+    {
+    	// Initialize vars.
+    	$string_querys = array();
+    	$binary_querys = array();
+    	$gen_index_querys = array();
+    	$drop_index_querys = array();
+    	$tables_querys = array();
+    	$optimize_querys = array();
+    	$final_querys = array();
+    
+    	// Begin Converter Core
+    	if ( !empty($tables) ) {
+    		foreach ( (array) $tables as $table ) {
+    			// Analyze tables for string types columns and generate his binary and string correctness sql sentences.
+    			$resource = $GLOBALS["xoopsDB"]->queryF("DESCRIBE $table");
+    			while ( $result = $GLOBALS["xoopsDB"]->fetchArray($resource) ) {
+    				if ( preg_match('/(char)|(text)|(enum)|(set)/', $result['Type']) ) {
+    					// String Type SQL Sentence.
+    					$string_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . " CHARACTER SET $charset COLLATE $collation " . ( ( (!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0) ) ? "DEFAULT '". $result['Default'] ."' " : '' ) . ( 'YES' == $result['Null'] ? '' : 'NOT ' ) . 'NULL';
+    
+    					// Binary String Type SQL Sentence.
+    					if ( preg_match('/(enum)|(set)/', $result['Type']) ) {
+    						$binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' CHARACTER SET binary ' . ( ( (!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0) ) ? "DEFAULT '". $result['Default'] ."' " : '' ) . ( 'YES' == $result['Null'] ? '' : 'NOT ' ) . 'NULL';
+    					} else {
+    						$result['Type'] = preg_replace('/char/', 'binary', $result['Type']);
+    						$result['Type'] = preg_replace('/text/', 'blob', $result['Type']);
+    						$binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' ' . ( ( (!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0) ) ? "DEFAULT '". $result['Default'] ."' " : '' ) . ( 'YES' == $result['Null'] ? '' : 'NOT ' ) . 'NULL';
+    					}
+    				}
+    			}
+    
+    			// Analyze table indexs for any FULLTEXT-Type of index in the table.
+    			$fulltext_indexes = array();
+    			$resource = $GLOBALS["xoopsDB"]->queryF("SHOW INDEX FROM `$table`");
+    			while ( $result = $GLOBALS["xoopsDB"]->fetchArray($resource) ) {
+    				if ( preg_match('/FULLTEXT/', $result['Index_type']) )
+    					$fulltext_indexes[$result['Key_name']][$result['Column_name']] = 1;
+    			}
+    
+    			// Generate the SQL Sentence for drop and add every FULLTEXT index we found previously.
+    			if ( !empty($fulltext_indexes) ) {
+    				foreach ( (array) $fulltext_indexes as $key_name => $column ) {
+    					$drop_index_querys[] = "ALTER TABLE `$table` DROP INDEX `$key_name`";
+    					$tmp_gen_index_query = "ALTER TABLE `$table` ADD FULLTEXT `$key_name`(";
+    					$fields_names = array_keys($column);
+    					for ($i = 1; $i <= count($column); $i++)
+    						$tmp_gen_index_query .= $fields_names[$i - 1] . (($i == count($column)) ? '' : ', ');
+    					$gen_index_querys[] = $tmp_gen_index_query . ')';
+    				}
+    			}
+
+    			// Generate the SQL Sentence for change default table character set.
+    			$tables_querys[] = "ALTER TABLE `$table` DEFAULT CHARACTER SET $charset COLLATE $collation";
+
+    			// Generate the SQL Sentence for Optimize Table.
+    			$optimize_querys[] = "OPTIMIZE TABLE `$table`";
+    		}
+
+    	}
+    	// End Converter Core
+
+    	// Merge all SQL Sentences that we temporary store in arrays.
+    	$final_querys = array_merge( (array) $drop_index_querys, (array) $binary_querys, (array) $tables_querys, (array) $string_querys, (array) $gen_index_querys, (array) $optimize_querys );
+
+    	foreach ($final_querys as $sql) {
+        	$GLOBALS["xoopsDB"]->queryF($sql);
+    	}
+    	
+    	// Time to return.
+    	return $final_querys;
+    }
+
     function check_conf()
     {
 		$table = new IcmsDatabasetable('modules');
@@ -185,6 +274,54 @@ class upgrade_impcms06 {
     	$table->addNewField('dbversion', 'INT(11) DEFAULT 0');
     	return $this->updater->updateTable($table, true);
 	}
+    function write_mainfile($vars)
+    {
+        if (empty($vars)) {
+            return false;
+        }
+
+        $file = dirname(__FILE__) . '/mainfile.dist.php';
+
+        $lines = file($file);
+        foreach (array_keys($lines) as $ln) {
+            if ( preg_match("/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([0-9]+)\s*\)/", $lines[$ln], $matches ) ) {
+                $val = isset( $vars[$matches[3]] ) 
+                        ? strval( constant($matches[3]) ) 
+                        : ( defined($matches[3]) 
+                            ? strval( constant($matches[3]) ) 
+                            : "0"
+                          );
+                $lines[$ln] = preg_replace( "/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([0-9]+)\s*\)/", 
+                    "define( '" . $matches[3] . "', " . $val . " )", 
+                    $lines[$ln] );
+            } elseif( preg_match( "/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([\"'])([^\"']*?)\\4\s*\)/", $lines[$ln], $matches ) ) {
+                $val = isset( $vars[$matches[3]] )
+                        ? strval( $vars[$matches[3]] )
+                        : ( defined($matches[3])
+                            ? strval( constant($matches[3]) ) 
+                            : ""
+                          );
+                $lines[$ln] = preg_replace( "/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([\"'])(.*?)\\4\s*\)/",
+                    "define( '" . $matches[3] . "', '" . $val . "' )", 
+                    $lines[$ln] );
+            }
+        }
+        
+        $fp = fopen( XOOPS_ROOT_PATH . '/mainfile.php', 'wt' );
+        if ( !$fp ) {
+            echo ERR_COULD_NOT_WRITE_MAINFILE;
+            echo "<pre style='border: 1px solid black; width: 80%; overflow: auto;'><div style='color: #ff0000; font-weight: bold;'><div>" . implode("</div><div>", array_map("htmlspecialchars", $lines)) . "</div></div></pre>";
+            return false;
+        } else {
+            $newline = defined( PHP_EOL ) ? PHP_EOL : ( strpos( php_uname(), 'Windows') ? "\r\n" : "\n" );
+            $content = str_replace( array("\r\n", "\n"), $newline, implode('', $lines) );
+
+            fwrite( $fp,  $content );
+            fclose( $fp );
+            return true;
+        }
+    }
+
 
     function set_configs($task)
     {

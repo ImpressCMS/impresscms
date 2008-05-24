@@ -65,7 +65,7 @@ define("_AM_SAVECHANGES","Save Changes");
 define("_AM_EDITBLOCK","Edit a block");
 define("_AM_SYSTEMCANT","System blocks cannot be deleted!");
 define("_AM_MODULECANT","This block cannot be deleted directly! If you wish to disable this block, deactivate the module.");
-define("_AM_RUSUREDEL","Are you sure you want to delete block <b>%s</b>?");
+define("_AM_RUSUREDEL","Are you sure you want to delete block '%s'?");
 define("_AM_NAME","Name");
 define("_AM_USEFULTAGS","Useful Tags:");
 define("_AM_BLOCKTAG1","%s will print %s");

@@ -66,7 +66,7 @@ function setElementSize(id, size){
 
 function changeDisplay(id){
 	var elestyle = xoopsGetElementById(id).style;
-	if (elestyle.display == "") {
+	if (elestyle.display == "block") {
 		elestyle.display = "none";
 	} else {
 		elestyle.display = "block";

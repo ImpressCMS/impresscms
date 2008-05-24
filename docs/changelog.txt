@@ -1,7 +1,7 @@
 ImpressCMS ChangeLog
 
 =============================================
-Unreleased : ImpressCMS 1.1 "???" Alpha
+2008-05-22 : ImpressCMS 1.1 Alpha 1
 =============================================
 
 - Added : New permission category in System Admin > Groups to configure what groups can be configured by a specific group (nekro)
@@ -12,6 +12,7 @@ Unreleased : ImpressCMS 1.1 "???" Alpha
 - Added : icms_encryptPass function to add the salts & encrypt password using sha256 (vaughan)
 - Added : Unique Salt key to users table. (vaughan)
 - Added : Unique Salt key to mainfile/sdata trust path for use with Password encryption. (vaughan)
+- Added : HTML Purifier (vaughan)
 - Added : enable sha256 choice in admin preferences user settings. default = yes sha256, no = md5 (basic). (vaughan)
 - Added : Prototype Library (Updated to the last version , and removed old prototype files from other places like install and scriptaculous library). (nekro)
 - Added : Projax Library to integrate better Scriptaculous in php. (nekro)

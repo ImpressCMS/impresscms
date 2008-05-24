@@ -55,5 +55,6 @@ define("_MB_SYSTEM_PAGE", "Page to show");
 if (!defined('_CT_EDIT_CONTENT')){define('_CT_EDIT_CONTENT','Edit Content');}
 if (!defined('_CT_DELETE_CONTENT')){define('_CT_DELETE_CONTENT','Delete Content');}
 if (!defined('_CT_PUBLISHEDBY')){define('_CT_PUBLISHEDBY','Published by');}
+if (!defined('_CT_READS')){define('_CT_READS','reads');}
 if (!defined('_CT_ON')){define('_CT_ON','on');}
 ?>

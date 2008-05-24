@@ -22,7 +22,9 @@ class SystemCustomtag extends IcmsPersistableObject {
 	
 	var $content = false;
 	
-	function SystemCustomtag() {
+	function SystemCustomtag(&$handler) {
+    	$this->IcmsPersistableObject($handler);
+    	
 		$this->quickInitVar ( 'customtagid', XOBJ_DTYPE_INT, true );
 		$this->quickInitVar ( 'name', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_CUSTOMTAG_NAME, _CO_ICMS_CUSTOMTAG_NAME_DSC );
 		$this->quickInitVar ( 'description', XOBJ_DTYPE_TXTAREA, false, _CO_ICMS_CUSTOMTAG_DESCRIPTION, _CO_ICMS_CUSTOMTAG_DESCRIPTION_DSC );

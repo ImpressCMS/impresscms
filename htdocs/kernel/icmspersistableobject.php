@@ -89,10 +89,11 @@ class IcmsPersistableObject extends XoopsObject {
     * @param int $maxlength maximum length of this variable, for XOBJ_DTYPE_TXTBOX type only
     * @param string $options does this data have any select options?
     * @param bool $multilingual is this field needs to support multilingual features (NOT YET IMPLEMENTED...)
-    * @param string $form_caption caption of this variable in a {@link SmartobjectForm} and title of a column in a  {@link IcmsPersistableObjectTable}
-    * @param string $form_dsc description of this variable in a {@link SmartobjectForm}
+    * @param string $form_caption caption of this variable in a {@link IcmsForm} and title of a column in a  {@link IcmsPersistableObjectTable}
+    * @param string $form_dsc description of this variable in a {@link IcmsForm}
     * @param bool $sortby set to TRUE to make this field used to sort objects in IcmsPersistableObjectTable
     * @param bool $persistent set to FALSE if this field is not to be saved in the database
+    * @param bool $displayOnForm to be displayed on the form or not
     */
     function initVar($key, $data_type, $value = null, $required = false, $maxlength = null, $options = '', $multilingual=false, $form_caption='', $form_dsc='', $sortby=false, $persistent=true, $displayOnForm=true) {
         //url_ is reserved for files.
@@ -139,8 +140,8 @@ class IcmsPersistableObject extends XoopsObject {
     * @param string $key key of this field. This needs to be the name of the field in the related database table
     * @param int $data_type  set to one of XOBJ_DTYPE_XXX constants (set to XOBJ_DTYPE_OTHER if no data type ckecking nor text sanitizing is required)
     * @param bool $required set to TRUE if this variable needs to have a value set before storing the object in the table
-    * @param string $form_caption caption of this variable in a {@link SmartobjectForm} and title of a column in a  {@link IcmsPersistableObjectTable}
-    * @param string $form_dsc description of this variable in a {@link SmartobjectForm}
+    * @param string $form_caption caption of this variable in a {@link IcmsForm} and title of a column in a  {@link IcmsPersistableObjectTable}
+    * @param string $form_dsc description of this variable in a {@link IcmsForm}
     * @param mixed $value default value of this variable
     */
 	function quickInitVar($key, $data_type, $required=false, $form_caption='', $form_dsc='', $value = null) {

@@ -343,7 +343,7 @@ class xos_opal_Theme {
 						continue;
 					}
 					$patterns [] = '/' . $email . '/';
-					$replacements [] = '<img src="' . XOOPS_URL . '/include/protection.php?p=' . base64_encode ( urlencode ( $email ) ) . '">';
+					$replacements [] = "<img src='" . XOOPS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
 				}
 				$this->content = preg_replace ( $patterns, $replacements, $this->content );
 			}
@@ -838,7 +838,7 @@ class xos_opal_Theme {
 						continue;
 					}
 					$patterns [] = '/' . $email . '/';
-					$replacements [] = '<img src="' . XOOPS_URL . '/include/protection.php?p=' . base64_encode ( urlencode ( $email ) ) . '">';
+					$replacements [] = "<img src='" . XOOPS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
 				}
 				$this->content = preg_replace ( $patterns, $replacements, $this->content );
 			}

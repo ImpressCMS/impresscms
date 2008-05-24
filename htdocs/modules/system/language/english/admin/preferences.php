@@ -83,8 +83,8 @@ define('_MD_AM_DEBUGMODE2','Enable debug (popup mode)');
 define('_MD_AM_DEBUGMODE3','Smarty Templates Debug');
 define('_MD_AM_MINUNAME', 'Minimum length of username required');
 define('_MD_AM_MAXUNAME', 'Maximum length of username');
-define('_MD_AM_GENERAL', '01 - General Settings');
-define('_MD_AM_USERSETTINGS', '04 - User Settings');
+define('_MD_AM_GENERAL', 'General Settings');
+define('_MD_AM_USERSETTINGS', 'User Settings');
 define('_MD_AM_ALLWCHGMAIL', 'Allow users to change email address?');
 define('_MD_AM_ALLWCHGMAILDSC', '');
 define('_MD_AM_IPBAN', 'IP Banning');
@@ -117,10 +117,10 @@ define('_MD_AM_METACOPYR', 'Meta Copyright');
 define('_MD_AM_METACOPYRDSC', 'The copyright meta tag defines any copyright statements you wish to disclose about your web page documents.');
 define('_MD_AM_METADESC', 'Meta Description');
 define('_MD_AM_METADESCDSC', 'The description meta tag is a general description of what is contained in your web page');
-define('_MD_AM_METAFOOTER', '06 - Meta + Footer');
+define('_MD_AM_METAFOOTER', 'Meta + Footer');
 define('_MD_AM_FOOTER', 'Footer');
 define('_MD_AM_FOOTERDSC', 'Be sure to type links in full path starting from http://, otherwise the links will not work correctly in modules pages.');
-define('_MD_AM_CENSOR', '07 - Word Censoring');
+define('_MD_AM_CENSOR', 'Word Censoring');
 define('_MD_AM_DOCENSOR', 'Enable censoring of unwanted words?');
 define('_MD_AM_DOCENSORDSC', 'Words will be censored if this option is enabled. This option may be turned off for enhanced site speed.');
 define('_MD_AM_CENSORWRD', 'Words to censor');
@@ -128,7 +128,7 @@ define('_MD_AM_CENSORWRDDSC', 'Enter words that should be censored in user posts
 define('_MD_AM_CENSORRPLC', 'Bad words will be replaced with:');
 define('_MD_AM_CENSORRPLCDSC', 'Censored words will be replaced with the characters entered in this textbox');
 
-define('_MD_AM_SEARCH', '08 - Search Options');
+define('_MD_AM_SEARCH', 'Search Options');
 define('_MD_AM_DOSEARCH', 'Enable global searches?');
 define('_MD_AM_DOSEARCHDSC', 'Allow searching for posts/items within your site.');
 define('_MD_AM_MINSEARCH', 'Minimum keyword length');
@@ -157,7 +157,7 @@ define('_MD_AM_DTPLSET', 'Default template set');
 define('_MD_AM_SSLLINK', 'URL where SSL login page is located');
 
 // added for mailer
-define("_MD_AM_MAILER","05 - Mail Setup");
+define("_MD_AM_MAILER","Mail Setup");
 define("_MD_AM_MAILER_MAIL","");
 define("_MD_AM_MAILER_SENDMAIL","");
 define("_MD_AM_MAILER_","");
@@ -186,7 +186,7 @@ define("_MD_AM_THEMEOKDSC","Choose themes that users can select as the default t
 define("_MD_AM_AUTH_CONFOPTION_XOOPS", "ImpressCMS Database");
 define("_MD_AM_AUTH_CONFOPTION_LDAP", "Standard LDAP Directory");
 define("_MD_AM_AUTH_CONFOPTION_AD", "Microsoft Active Directory &copy");
-define("_MD_AM_AUTHENTICATION", "10 - Authentication");
+define("_MD_AM_AUTHENTICATION", "Authentication");
 define("_MD_AM_AUTHMETHOD", "Authentication Method");
 define("_MD_AM_AUTHMETHODDESC", "Which authentication method would you like to use for signing on users.");
 define("_MD_AM_LDAP_MAIL_ATTR", "LDAP - Mail Field Name");
@@ -260,7 +260,7 @@ define("_MD_AM_RANKW","Rank image max width (pixel)");
 define("_MD_AM_RANKH","Rank image max height (pixel)");
 define("_MD_AM_RANKMAX","Rank image max filesize (byte)");
 
-define("_MD_AM_MULTILANGUAGE","03 - Multilanguage");
+define("_MD_AM_MULTILANGUAGE","Multilanguage");
 define("_MD_AM_ML_ENABLE","Enable Multilanguage");
 define("_MD_AM_ML_ENABLEDSC","Set to Yes in order to enable multilanguage throughout the site.");
 define("_MD_AM_ML_TAGS","Multilanguage tags");
@@ -326,7 +326,7 @@ define("_MD_AM_ENC_HAVAL2245","HAVAL 224,5");
 define("_MD_AM_ENC_HAVAL2565","HAVAL 256,5");
 
 //Content Manager
-define("_MD_AM_CONTMANAGER","02 - Content Manager");
+define("_MD_AM_CONTMANAGER","Content Manager");
 define("_MD_AM_DEFAULT_CONTPAGE","Default Page");
 define("_MD_AM_DEFAULT_CONTPAGEDSC","Select the default page to be displayed to the user in Content Manager. Leave blank to have Content Manager default to the most recently created page.");
 define("_MD_AM_CONT_SHOWNAV","Display navigation menu on user side?");
@@ -347,7 +347,7 @@ define('_MD_AM_ALLWHTSIGDSC', 'If some attackers post an external image using [i
 define('_MD_AM_ALLWSHOWSIG', 'Do you want to allow your users to use a signature on their profile/posts, in your site?');
 define('_MD_AM_ALLWSHOWSIGDSC', 'By enabling this option, users will be able to use a personal signature which will be added (on their own choice) after their posts.');
 // < personalizações > fabio - Sat Apr 28 11:55:00 BRT 2007 11:55:00
-define("_MD_AM_PERSON","09 - Personalisation");		
+define("_MD_AM_PERSON","Personalisation");		
 define("_MD_AM_GOOGLE_ANA","Google Analytics");
 define("_MD_AM_GOOGLE_ANA_DESC","Insert the script informed by Google Analytics for your site. If you don't use it, leave it blank.");
 define("_MD_AM_LLOGOADM","Admin left logo");

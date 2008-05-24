@@ -141,10 +141,11 @@ window.onload=startList;
 			 * @todo: Create a preference option to set this value and improve the way to change the order.
 			 */
 			$adminmenuorder = 1;
+			$adminsubmenuorder = 1;
 			if ($adminmenuorder == 1) {
 				foreach ( $navitem ['menu'] as $k => $sortarray ) {
 					$column [] = $sortarray ['title'];
-					if (isset ( $sortarray ['subs'] ) && count ( $sortarray ['subs'] ) > 0) {
+					if (isset ( $sortarray ['subs'] ) && count ( $sortarray ['subs'] ) > 0 && $adminsubmenuorder) {
 						asort ( $navitem ['menu'] [$k] ['subs'] ); //Sorting submenus of preferences
 					}
 				}
