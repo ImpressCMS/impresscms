@@ -1,7 +1,7 @@
 <?php
 // $Id: blocksadmin.php 506 2006-05-26 23:10:37Z skalpa $
 //%%%%%%	Admin Module Name  Blocks 	%%%%%
-define("_AM_DBUPDATED",_MD_AM_DBUPDATED);
+define("_AM_DBUPDATED","Database Updated Successfully!");
 
 # Adding dynamic block area/position system - TheRpLima - 2007-10-21
 define('_AM_BPADMIN',"Block Positions Administration");

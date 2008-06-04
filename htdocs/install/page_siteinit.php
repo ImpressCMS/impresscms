@@ -72,8 +72,7 @@ $adminsalt = createSalt();
 	<input type="password" name="adminpass" id="adminpass" maxlength="255" value="" />
 	<label for="adminpass2"><?php echo ADMIN_CONFIRMPASS_LABEL; ?></label>
 	<input type="password" name="adminpass2" id="adminpass2" maxlength="255" value="" />
-	<label for="adminsalt"><?php echo ADMIN_SALT_LABEL; ?></label>
-	<input type="text" name="adminsalt" id="adminsalt" maxlength="255" value="<?php echo $adminsalt; ?>" />
+	<input type="hidden" name="adminsalt" id="adminsalt" maxlength="255" value="<?php echo $adminsalt; ?>" />
 </fieldset>
 <?php
 	$content = ob_get_contents();

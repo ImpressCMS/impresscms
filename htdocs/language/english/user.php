@@ -155,6 +155,8 @@ define('_US_NEWUSERNOTIFYADMINFAIL', 'Notification to admin about new user regis
 define('_US_REGFORM_NOJAVASCRIPT', 'To log in at the site it\'s necessary that your browser has javascript enabled.');
 define('_US_REGFORM_WARNING', 'To register at the site you need to use a secure password. Try to create your password by using a mixture of letters (upper and lowercase), numbers and symbols. Try to create a password the more complex as possible although you can remember it.');
 define('_US_CHANGE_PASSWORD', 'Change Password?');
+define('_US_POSTSNOTENOUGH','Sorry, at least you need to have <b>%s</b> posts, to be able to upload your avatar.');
+define('_US_UNCHOOSEAVT', 'Until you reach this amount you can choose avatar from the list below.');
 
 /*
 define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled');

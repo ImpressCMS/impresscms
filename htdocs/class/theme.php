@@ -328,29 +328,7 @@ class xos_opal_Theme {
 			$this->content .= ob_get_contents ();
 			ob_end_clean ();
 		}
-		##############################################################################################
-		# Code to protect email against spam. All email in the content of the site will be changed		
-		# by TheRplima
-		##############################################################################################
-		$config_handler = & xoops_gethandler ( 'config' );
-		$xoopsConfigPersona = & $config_handler->getConfigsByCat ( XOOPS_CONF_PERSONA );
-		if (($xoopsConfigPersona ['email_protect']) && (function_exists ( 'gd_info' ))) {
-			if (preg_match_all ( "/([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i", $this->content, $texto )) {
-				$patterns = array ( );
-				$replacements = array ( );
-				foreach ( $texto [0] as $email ) {
-					if (preg_match_all ( "/value=['\"]$email/i", $this->content, $texto1 ) ||  preg_match_all ( "/$email(.*?)<\/textarea>/i", $this->content, $texto1 )) { //Dont allow to change the email inside input or textarea form fields
-						continue;
-					}
-					$patterns [] = '/' . $email . '/';
-					$replacements [] = "<img src='" . XOOPS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
-				}
-				$this->content = preg_replace ( $patterns, $replacements, $this->content );
-			}
-		}
-		##############################################################################################
-		# Fim
-		##############################################################################################		
+
 		$this->template->assign_by_ref ( 'xoops_contents', $this->content );
 		
 		$header = empty ( $xoopsOption ['xoops_module_header'] ) ? $this->template->get_template_vars ( 'xoops_module_header' ) : $xoopsOption ['xoops_module_header'];
@@ -823,29 +801,7 @@ class xos_opal_Theme {
 			$this->content .= ob_get_contents ();
 			ob_end_clean ();
 		}
-		##############################################################################################
-		# Code to protect email against spam. All email in the content of the site will be changed		
-		# by TheRplima
-		##############################################################################################
-		$config_handler = & xoops_gethandler ( 'config' );
-		$xoopsConfigPersona = & $config_handler->getConfigsByCat ( XOOPS_CONF_PERSONA );
-		if (($xoopsConfigPersona ['email_protect']) && (function_exists ( 'gd_info' ))) {
-			if (preg_match_all ( "/([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i", $this->content, $texto )) {
-				$patterns = array ( );
-				$replacements = array ( );
-				foreach ( $texto [0] as $email ) {
-					if (preg_match_all ( "/value=['\"]$email/i", $this->content, $texto1 ) ||  preg_match_all ( "/$email(.*?)<\/textarea>/i", $this->content, $texto1 )) { //Dont allow to change the email inside input or textarea form fields
-						continue;
-					}
-					$patterns [] = '/' . $email . '/';
-					$replacements [] = "<img src='" . XOOPS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
-				}
-				$this->content = preg_replace ( $patterns, $replacements, $this->content );
-			}
-		}
-		##############################################################################################
-		# Fim
-		##############################################################################################		
+
 		$this->template->assign_by_ref ( 'xoops_contents', $this->content );
 		
 		$header = empty ( $xoopsOption ['xoops_module_header'] ) ? $this->template->get_template_vars ( 'xoops_module_header' ) : $xoopsOption ['xoops_module_header'];

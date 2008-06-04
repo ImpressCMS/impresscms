@@ -1,7 +1,7 @@
 <?php
 // $Id: userrank.php 1121 2007-10-23 01:17:53Z dugris $
 //%%%%%%	Admin Module Name  UserRank 	%%%%%
-define("_AM_DBUPDATED",_MD_AM_DBUPDATED);
+define("_AM_DBUPDATED","Database Updated Successfully!");
 define("_AM_RANKSSETTINGS","User Ranks Settings");
 define("_AM_TITLE","Title");
 define("_AM_MINPOST","Min. Posts");

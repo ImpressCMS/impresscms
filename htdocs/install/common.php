@@ -99,7 +99,7 @@ $xoops =& new xos_kernel_Xoops2();
     $xoopsLogger =& XoopsLogger::instance();
 	$xoopsErrorHandler =& $xoopsLogger;
     $xoopsLogger->startTime();
-    $xoopsLogger->startTime( 'XOOPS Boot' );
+    $xoopsLogger->startTime( 'ICMS Boot' );
     
     
     define("XOOPS_SIDEBLOCK_LEFT",0);
@@ -325,7 +325,7 @@ $xoops =& new xos_kernel_Xoops2();
     } elseif($xoopsUser) {
         $xoopsUserIsAdmin = $xoopsUser->isAdmin(1);
     }
-    $xoopsLogger->stopTime( 'XOOPS Boot' );
+    $xoopsLogger->stopTime( 'ICMS Boot' );
     $xoopsLogger->startTime( 'Module init' );
 
 ?>

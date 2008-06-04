@@ -31,8 +31,8 @@ if( eregi( "[#]?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})", $fg, $ret ) )
 	$green = hexdec( $ret[2] );
 	$blue = hexdec( $ret[3] );
 }
-if ($xoopsConfigPersona['email_sombra']!=""){
-	$fg = $xoopsConfigPersona['email_sombra'];
+if ($xoopsConfigPersona['email_shadow']!=""){
+	$fg = $xoopsConfigPersona['email_shadow'];
 	$sred = 100;
 	$sgreen = 100;
 	$sblue = 100;
@@ -42,7 +42,7 @@ if ($xoopsConfigPersona['email_sombra']!=""){
 		$sgreen = hexdec( $ret[2] );
 		$sblue = hexdec( $ret[3] );
 	}
-	$sombra = imagecolorallocate($image, $sred,$sgreen,$sblue);
+	$shadow = imagecolorallocate($image, $sred,$sgreen,$sblue);
 }
 $white = ImageColorAllocate($image,255,255,255);
 $frente = imagecolorallocate($image, $red,$green,$blue);
@@ -55,8 +55,8 @@ ImageFilledRectangle($image,0,0,$width,$height,$white);
 
 
 // Add the text using TTF
-if ($xoopsConfigPersona['email_sombra']!=""){
-	imagettftext($image, $fontSize, 0, intval($xoopsConfigPersona['sombra_y']), $height-intval($xoopsConfigPersona['sombra_x'])-10, $sombra , $font, $emailAddress);
+if ($xoopsConfigPersona['email_shadow']!=""){
+	imagettftext($image, $fontSize, 0, intval($xoopsConfigPersona['shadow_y']), $height-intval($xoopsConfigPersona['shadow_x'])-10, $shadow , $font, $emailAddress);
 }
 imagettftext($image, $fontSize, 0, 0, $height-10, $frente, $font, $emailAddress);
 

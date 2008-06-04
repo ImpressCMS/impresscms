@@ -1,11 +1,51 @@
 ImpressCMS ChangeLog
 
 =============================================
+Unreleased : ImpressCMS 1.1 Alpha 1
+=============================================
+
+- Added: New encryption methods, admin can now select from multiple PW encryptions, such as: SHA256, SHA384, SHA512, Whirlpool etc. (vaughan)
+- Added: New option in control panel for hidden contents. (stranger)
+- Added: New date cases for our ext_date_function. (stranger)
+
+- Improved : The size of pop-ups for TinyMCE. (sato-san)
+
+- Changed : Small change with the term "Personalization" instead of "Personalisation". (malanciault)
+- Changed : Encryption method in preferences to select field type instead of yesno. (vaughan)
+
+- Fixed : In the control panel, changing the top-left logo link to default to the home page of the site as discussed here http://lnk.in/5zvw . (stranger/malanciault))
+- Fixed : #1971839 - Undefined variable: key in \kernel\icmskernel.php on line 88. (trabis/malanciault)
+- Fixed : #1971844 - Undefined variable: urls in kernel\icmskernel.php on line 93. (trabis/malanciault)
+- Fixed : #1969064 - edit the blocks from frontend. (real_therplima)
+- Fixed : #1968351 - Personalisation preferences name in english. (stranger)
+- Fixed : #1968350 - Make the [hide] tag optional and turned off by default. (stranger)
+- Fixed : #1964821 - Sorting of "Site Preferences". (real_therplima)
+- Fixed : #1964817 - Hardcodevariable on "content_blocks.php". (stranger)
+- Fixed : #1964812 - e-mail protection and userinfo.php. (stranger)
+- Fixed : #1964440 - e-mail protection and content. (stranger)
+- Fixed : #1971202 - Hide Salt Key on step 9. (vaughan)
+- Fixed : Corrected language constant: "_BRDDRMB_SEP", changed to : "_BRDCRMB_SEP". (stranger/skenow)
+- Fixed : #1954781 - When editing a block: Undefined variable: editor. (real_therplima)
+- Fixed : #1968311 - No update name module. (real_therplima)
+- Fixed : #1964815 - e-mail protection and blocks. (real_therplima/stranger)
+- Fixed : #1964823 - Content Manager > Title to display in Smartcontent. (real_therplima)
+- Fixed : #1968362 - Defines duplicated in two files blocksadmin and blocspadim. (real_therplima)
+- Fixed : #1971246 - Turning on phpDebug and Check templates for modifications. (real_therplima)
+- Fixed : #1964824 - tinymce does not use a language file. (real_therplima)
+- Fixed : #1980853 - Backend > Personalisation > JavaScript Error. (real_therplima)
+- Fixed : #1980999 - 1st Update in Multilanguage (undefined _MD_AM_DBUPDATED). (stranger)
+- Fixed : #1982512 - Undefined message in file /pmlite.php line 134. (stranger)
+- Fixed : #1982601 - Signature length needs to be defined by users. (stranger)
+- Fixed : #1871202 - Avatar and Karma. (stranger)
+
+- Removed : All language files of phpmailer, except English, have been removed. (stranger)
+
+=============================================
 2008-05-22 : ImpressCMS 1.1 Alpha 1
 =============================================
 
-- Added : New permission category in System Admin > Groups to configure what groups can be configured by a specific group (nekro)
-- Added : IcmsFeed for module developers (nachenko)
+- Added : New permission category in System Admin > Groups to configure what groups can be configured by a specific group. (nekro)
+- Added : IcmsFeed for module developers. (nachenko)
 - Added : ImpressCMS now using UTF-8 encoding as default encoding.  (stranger)
 - Added : icms_createSalt function to generate a unique random salt key. (vaughan)
 - Added : icms_getUserSaltFromUname function to get the users unique salt key for logging in. (vaughan)
@@ -99,6 +139,7 @@ ImpressCMS ChangeLog
 - Fixed #1932374 : Changing the 100% width of table in xoops.css to make it 100% only for table.outer (malanciault/real_therplima)  
 - Fixed : Removing a notice in debug when update the system module. (real_therplima)
 - Fixed : Addition of ".outer {}" was missed. (stranger)
+- Fixed #1954782 : Undefined variable: date when viewing a content page. (real_therplima)
 
 =========================================
 2008-03-10 : ImpressCMS 1.0 "Janus" Final

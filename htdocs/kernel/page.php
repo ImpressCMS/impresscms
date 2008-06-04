@@ -221,7 +221,7 @@ class XoopsPageHandler extends XoopsObjectHandler
     		if (in_array($module->getVar('mid').'-0',$value)){
     			$sel = ' selected=selected';
     		}
-    		$mods .= '<option value="'.$module->getVar('mid').'-0"'.$sel.'>All Pages</option>';
+    		$mods .= '<option value="'.$module->getVar('mid').'-0"'.$sel.'>'._AM_ALLPAGES.'</option>';
     		foreach ($pages as $page){
     			$sel = '';
     			if (in_array($module->getVar('mid').'-'.$page->getVar('page_id'),$value)){
@@ -243,7 +243,7 @@ class XoopsPageHandler extends XoopsObjectHandler
     		if (in_array($module->getVar('mid').'-0',$value)){
     			$sel = ' selected=selected';
     		}
-    		$cont .= '<option value="'.$module->getVar('mid').'-0"'.$sel.'>All Pages</option>';
+    		$cont .= '<option value="'.$module->getVar('mid').'-0"'.$sel.'>'._AM_ALLPAGES.'</option>';
     		foreach ($pages as $page){
     			$sel = '';
     			if (in_array($module->getVar('mid').'-'.$page->getVar('page_id'),$value)){

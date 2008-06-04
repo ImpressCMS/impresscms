@@ -2,7 +2,7 @@
 /*~ class.phpmailer.php
 .---------------------------------------------------------------------------.
 |  Software: PHPMailer - PHP email class                                    |
-|   Version: 2.0.0 rc1                                                      |
+|   Version: 2.0.0 rc3                                                      |
 |   Contact: via sourceforge.net support pages (also www.codeworxtech.com)  |
 |      Info: http://phpmailer.sourceforge.net                               |
 |   Support: http://sourceforge.net/projects/phpmailer/                     |
@@ -41,64 +41,64 @@ class PHPMailer {
    * Email priority (1 = High, 3 = Normal, 5 = low).
    * @var int
    */
-  public $Priority          = 3;
+  var $Priority          = 3;
 
   /**
    * Sets the CharSet of the message.
    * @var string
    */
-  public $CharSet           = 'iso-8859-1';
+  var $CharSet           = 'utf-8';
 
   /**
    * Sets the Content-type of the message.
    * @var string
    */
-  public $ContentType       = 'text/plain';
+  var $ContentType        = 'text/plain';
 
   /**
    * Sets the Encoding of the message. Options for this are "8bit",
    * "7bit", "binary", "base64", and "quoted-printable".
    * @var string
    */
-  public $Encoding          = '8bit';
+  var $Encoding          = '8bit';
 
   /**
    * Holds the most recent mailer error message.
    * @var string
    */
-  public $ErrorInfo         = '';
+  var $ErrorInfo         = '';
 
   /**
    * Sets the From email address for the message.
    * @var string
    */
-  public $From              = 'root@localhost';
+  var $From              = 'root@localhost';
 
   /**
    * Sets the From name of the message.
    * @var string
    */
-  public $FromName          = 'Root User';
+  var $FromName          = 'Root User';
 
   /**
    * Sets the Sender email (Return-Path) of the message.  If not empty,
    * will be sent via -f to sendmail or as 'MAIL FROM' in smtp mode.
    * @var string
    */
-  public $Sender            = '';
+  var $Sender            = '';
 
   /**
    * Sets the Subject of the message.
    * @var string
    */
-  public $Subject           = '';
+  var $Subject           = '';
 
   /**
    * Sets the Body of the message.  This can be either an HTML or text body.
    * If HTML then run IsHTML(true).
    * @var string
    */
-  public $Body              = '';
+  var $Body              = '';
 
   /**
    * Sets the text-only body of the message.  This automatically sets the
@@ -107,45 +107,45 @@ class PHPMailer {
    * that can read HTML will view the normal Body.
    * @var string
    */
-  public $AltBody           = '';
+  var $AltBody           = '';
 
   /**
    * Sets word wrapping on the body of the message to a given number of
    * characters.
    * @var int
    */
-  public $WordWrap          = 0;
+  var $WordWrap          = 0;
 
   /**
    * Method to send mail: ("mail", "sendmail", or "smtp").
    * @var string
    */
-  public $Mailer            = 'mail';
+  var $Mailer            = 'mail';
 
   /**
    * Sets the path of the sendmail program.
    * @var string
    */
-  public $Sendmail          = '/usr/sbin/sendmail';
+  var $Sendmail          = '/usr/sbin/sendmail';
 
   /**
    * Path to PHPMailer plugins.  This is now only useful if the SMTP class
    * is in a different directory than the PHP include path.
    * @var string
    */
-  public $PluginDir         = '';
+  var $PluginDir         = '';
 
   /**
    * Holds PHPMailer version.
    * @var string
    */
-  public $Version           = "2.0.0 rc1";
+  var $Version           = "2.0.0 rc3";
 
   /**
    * Sets the email address that a reading confirmation will be sent.
    * @var string
    */
-  public $ConfirmReadingTo  = '';
+  var $ConfirmReadingTo  = '';
 
   /**
    * Sets the hostname to use in Message-Id and Received headers
@@ -153,7 +153,7 @@ class PHPMailer {
    * by SERVER_NAME is used or 'localhost.localdomain'.
    * @var string
    */
-  public $Hostname          = '';
+  var $Hostname          = '';
 
   /////////////////////////////////////////////////
   // PROPERTIES FOR SMTP
@@ -167,57 +167,57 @@ class PHPMailer {
    * Hosts will be tried in order.
    * @var string
    */
-  public $Host        = 'localhost';
+  var $Host        = 'localhost';
 
   /**
    * Sets the default SMTP server port.
    * @var int
    */
-  public $Port        = 25;
+  var $Port        = 25;
 
   /**
    * Sets the SMTP HELO of the message (Default is $Hostname).
    * @var string
    */
-  public $Helo        = '';
+  var $Helo        = '';
 
   /**
    * Sets connection prefix.
    * Options are "", "ssl" or "tls"
    * @var string
    */
-  public $SMTPSecure = "";
+  var $SMTPSecure = "";
 
   /**
    * Sets SMTP authentication. Utilizes the Username and Password variables.
    * @var bool
    */
-  public $SMTPAuth     = false;
+  var $SMTPAuth     = false;
 
   /**
    * Sets SMTP username.
    * @var string
    */
-  public $Username     = '';
+  var $Username     = '';
 
   /**
    * Sets SMTP password.
    * @var string
    */
-  public $Password     = '';
+  var $Password     = '';
 
   /**
    * Sets the SMTP server timeout in seconds. This function will not
    * work with the win32 version.
    * @var int
    */
-  public $Timeout      = 10;
+  var $Timeout      = 10;
 
   /**
    * Sets SMTP class debugging on or off.
    * @var bool
    */
-  public $SMTPDebug    = false;
+  var $SMTPDebug    = false;
 
   /**
    * Prevents the SMTP connection from being closed after each mail
@@ -225,31 +225,31 @@ class PHPMailer {
    * requires an explicit call to SmtpClose().
    * @var bool
    */
-  public $SMTPKeepAlive = false;
+  var $SMTPKeepAlive = false;
 
   /**
    * Provides the ability to have the TO field process individual
    * emails, instead of sending to entire TO addresses
    * @var bool
    */
-  public $SingleTo = false;
+  var $SingleTo = false;
 
   /////////////////////////////////////////////////
   // PROPERTIES, PRIVATE
   /////////////////////////////////////////////////
 
-  private $smtp            = NULL;
-  private $to              = array();
-  private $cc              = array();
-  private $bcc             = array();
-  private $ReplyTo         = array();
-  private $attachment      = array();
-  private $CustomHeader    = array();
-  private $message_type    = '';
-  private $boundary        = array();
-  private $language        = array();
-  private $error_count     = 0;
-  private $LE              = "\n";
+  var $smtp            = NULL;
+  var $to              = array();
+  var $cc              = array();
+  var $bcc             = array();
+  var $ReplyTo         = array();
+  var $attachment      = array();
+  var $CustomHeader    = array();
+  var $message_type    = '';
+  var $boundary        = array();
+  var $language        = array();
+  var $error_count     = 0;
+  var $LE              = "\n";
 
   /////////////////////////////////////////////////
   // METHODS, VARIABLES
@@ -346,7 +346,7 @@ class PHPMailer {
   }
 
   /**
-   * Adds a "Reply-to" address.
+   * Adds a "Reply-To" address.
    * @param string $address
    * @param string $name
    * @return void
@@ -826,7 +826,7 @@ class PHPMailer {
     }
 
     if(count($this->ReplyTo) > 0) {
-      $result .= $this->AddrAppend('Reply-to', $this->ReplyTo);
+      $result .= $this->AddrAppend('Reply-To', $this->ReplyTo);
     }
 
     /* mail() sets the subject itself */
@@ -1199,23 +1199,49 @@ class PHPMailer {
   }
 
   /**
-  * Encode string to quoted-printable.
-  * @access public
-  * @param string $string the text to encode
-  * @param integer $line_max Number of chars allowed on a line before wrapping
-  * @return string
-  */
-  public function EncodeQP($string, $line_max = 74) {
-    $fp = fopen('php://temp/', 'r+');
-    $string = preg_replace('/\r\n?/', $this->LE, $string); //Normalise line breaks
-    $params = array('line-length' => $line_max, 'line-break-chars' => $this->LE);
-    stream_filter_append($fp, 'convert.quoted-printable-encode', STREAM_FILTER_READ, $params);
-    fputs($fp, $string);
-    rewind($fp);
-    $out = stream_get_contents($fp);
-    $out = preg_replace('/^\./m', '=2E', $out); //Encode . if it is first char on a line
-    fclose($fp);
-    return $out;
+   * Encode string to quoted-printable.
+   * @access private
+   * @return string
+   */
+  function EncodeQP( $input = '', $line_max = 76, $space_conv = false ) {
+    $hex = array('0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F');
+    $lines = preg_split('/(?:\r\n|\r|\n)/', $input);
+    $eol = "\r\n";
+    $escape = '=';
+    $output = '';
+    while( list(, $line) = each($lines) ) {
+      $linlen = strlen($line);
+      $newline = '';
+      for($i = 0; $i < $linlen; $i++) {
+        $c = substr( $line, $i, 1 );
+        $dec = ord( $c );
+        if ( ( $i == 0 ) && ( $dec == 46 ) ) { // convert first point in the line into =2E
+          $c = '=2E';
+        }
+        if ( $dec == 32 ) {
+          if ( $i == ( $linlen - 1 ) ) { // convert space at eol only
+            $c = '=20';
+          } else if ( $space_conv ) {
+            $c = '=20';
+          }
+        } elseif ( ($dec == 61) || ($dec < 32 ) || ($dec > 126) ) { // always encode "\t", which is *not* required
+          $h2 = floor($dec/16);
+          $h1 = floor($dec%16);
+          $c = $escape.$hex[$h2].$hex[$h1];
+        }
+        if ( (strlen($newline) + strlen($c)) >= $line_max ) { // CRLF is not counted
+          $output .= $newline.$escape.$eol; //  soft line break; " =\r\n" is okay
+          $newline = '';
+          // check if newline first character will be point or not
+          if ( $dec == 46 ) {
+            $c = '=2E';
+          }
+        }
+        $newline .= $c;
+      } // end of for
+      $output .= $newline.$eol;
+    } // end of while
+    return trim($output);
   }
 
   /**
@@ -1400,7 +1426,7 @@ class PHPMailer {
    * @access private
    * @return void
    */
-  private function SetError($msg) {
+  function SetError($msg) {
     $this->error_count++;
     $this->ErrorInfo = $msg;
   }
@@ -1410,7 +1436,7 @@ class PHPMailer {
    * @access private
    * @return string
    */
-  private static function RFCDate() {
+  function RFCDate() {
     $tz = date('Z');
     $tzs = ($tz < 0) ? '-' : '+';
     $tz = abs($tz);
@@ -1421,17 +1447,42 @@ class PHPMailer {
   }
 
   /**
+   * Returns the appropriate server variable.  Should work with both
+   * PHP 4.1.0+ as well as older versions.  Returns an empty string
+   * if nothing is found.
+   * @access private
+   * @return mixed
+   */
+  function ServerVar($varName) {
+    global $HTTP_SERVER_VARS;
+    global $HTTP_ENV_VARS;
+
+    if(!isset($_SERVER)) {
+      $_SERVER = $HTTP_SERVER_VARS;
+      if(!isset($_SERVER['REMOTE_ADDR'])) {
+        $_SERVER = $HTTP_ENV_VARS; // must be Apache
+      }
+    }
+
+    if(isset($_SERVER[$varName])) {
+      return $_SERVER[$varName];
+    } else {
+      return '';
+    }
+  }
+
+  /**
    * Returns the server hostname or 'localhost.localdomain' if unknown.
    * @access private
    * @return string
    */
-  private function ServerHostname() {
-    if (!empty($this->Hostname)) {
+  function ServerHostname() {
+    if ($this->Hostname != '') {
       $result = $this->Hostname;
-    } elseif (isset($_SERVER['SERVER_NAME'])) {
-      $result = $_SERVER['SERVER_NAME'];
+    } elseif ($this->ServerVar('SERVER_NAME') != '') {
+      $result = $this->ServerVar('SERVER_NAME');
     } else {
-      $result = "localhost.localdomain";
+      $result = 'localhost.localdomain';
     }
 
     return $result;
@@ -1442,7 +1493,7 @@ class PHPMailer {
    * @access private
    * @return string
    */
-  private function Lang($key) {
+  function Lang($key) {
     if(count($this->language) < 1) {
       $this->SetLanguage('en'); // set the default language
     }
@@ -1467,7 +1518,7 @@ class PHPMailer {
    * @access private
    * @return string
    */
-  private function FixEOL($str) {
+  function FixEOL($str) {
     $str = str_replace("\r\n", "\n", $str);
     $str = str_replace("\r", "\n", $str);
     $str = str_replace("\n", $this->LE, $str);

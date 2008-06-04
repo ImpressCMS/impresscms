@@ -131,7 +131,22 @@ if ($xoopsUser) {
         echo "</tr>";
         echo "<tr valign='top'><td class='head' width='25%'>"._PM_MESSAGEC."</td>";
         echo "<td class='even'>";
+        if ($reply == 1) {
+            $pm_handler =& xoops_gethandler('privmessage');
+            $pm =& $pm_handler->get($msg_id);
+            if ($pm->getVar("to_userid") == intval($xoopsUser->getVar('uid'))) {
+                $pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
+                $message  = "[quote]\n";
+                $message .= sprintf(_PM_USERWROTE,$pm_uname);
+                $message .= "\n".$pm->getVar("msg_text", "E")."\n[/quote]";
+            } else {
+                unset($pm);
+                $reply = $send2 = 0;
+            }
 		$textarea = new XoopsFormDhtmlTextArea(_PM_MESSAGEC, 'message', $message);
+        }else{
+		$textarea = new XoopsFormDhtmlTextArea(_PM_MESSAGEC, 'message', '');
+}
 		echo $textarea->render();
         echo "</td>";
         echo "</tr>";

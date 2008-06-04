@@ -17,10 +17,11 @@ include_once ICMS_ROOT_PATH.'/class/xoopsblock.php';
 
 //global $xoopsLogger;
 
-if ( !isset( $xoopsLogger ) ) {		$xoopsLogger =& $GLOBALS['xoopsLogger'];	}
+if ( !isset( $xoopsLogger ) ) { $xoopsLogger =& $GLOBALS['xoopsLogger']; }
+if ( !isset( $icmsPreloadHandler ) ) { $icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];	}
 
 $xoopsLogger->stopTime( 'Module init' );
-$xoopsLogger->startTime( 'XOOPS output init' );
+$xoopsLogger->startTime( 'ICMS output init' );
 
 
 if ($xoopsConfig['theme_set'] != 'default' && file_exists(ICMS_THEME_PATH.'/'.$xoopsConfig['theme_set'].'/theme.php')) {
@@ -96,7 +97,7 @@ if ($xoopsConfig['theme_set'] != 'default' && file_exists(ICMS_THEME_PATH.'/'.$x
 	// assigning the selected language as a smarty var
 	$xoopsTpl->assign('icmsLang', $xoopsConfig['language']);
 
-	$xoopsLogger->stopTime( 'XOOPS output init' );
+	$xoopsLogger->stopTime( 'ICMS output init' );
 	$xoopsLogger->startTime( 'Module display' );
 
 }

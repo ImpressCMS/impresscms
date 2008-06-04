@@ -2,7 +2,7 @@
 // $Id: preferences.php 1121 2007-10-23 01:17:53Z dugris $
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 // dont change
-define("_AM_DBUPDATED",_MD_AM_DBUPDATED);
+define("_AM_DBUPDATED","Database Updated Successfully!");
 
 define("_MD_AM_SITEPREF","Site Preferences");
 define("_MD_AM_SITENAME","Site name");
@@ -347,7 +347,7 @@ define('_MD_AM_ALLWHTSIGDSC', 'If some attackers post an external image using [i
 define('_MD_AM_ALLWSHOWSIG', 'Do you want to allow your users to use a signature on their profile/posts, in your site?');
 define('_MD_AM_ALLWSHOWSIGDSC', 'By enabling this option, users will be able to use a personal signature which will be added (on their own choice) after their posts.');
 // < personalizações > fabio - Sat Apr 28 11:55:00 BRT 2007 11:55:00
-define("_MD_AM_PERSON","Personalisation");		
+define("_MD_AM_PERSON","Personalization");		
 define("_MD_AM_GOOGLE_ANA","Google Analytics");
 define("_MD_AM_GOOGLE_ANA_DESC","Insert the script informed by Google Analytics for your site. If you don't use it, leave it blank.");
 define("_MD_AM_LLOGOADM","Admin left logo");
@@ -370,12 +370,12 @@ define("_MD_AM_EMAILLEN","Font size used in email address protection");
 define("_MD_AM_EMAILLEN_DESC","<i>This option only applies if 'Protect email addresses against SPAM?' is set to Yes.</i>");
 define("_MD_AM_EMAILCOLOR","Font color used in email address protection");
 define("_MD_AM_EMAILCOLOR_DESC","<i>This option only applies if 'Protect email addresses against SPAM?' is set to Yes.</i>");
-define("_MD_AM_EMAILSOMBRA","Shadow color used in email address protection");
-define("_MD_AM_EMAILSOMBRA_DESC","Choose a color for the shadow of the email address protection.Leave it blank if you don't wish to use any.<br /><i>This option only applies if 'Protect email addresses against SPAM?' is set to Yes.</i>");
-define("_MD_AM_SOMBRAX","X offset of shadow used in email address protection");
-define("_MD_AM_SOMBRAX_DESC","Type in a value (in px)) that will represent the horizontal offset of the shadow in the email protection.<br /><i>This option only applies if 'Shadow color used in email address protection' is not empty.</i>");
-define("_MD_AM_SOMBRAY","Y offset for shadow used in email address protection");
-define("_MD_AM_SOMBRAY_DESC","Type in a value (in px) that will represent the vertical offset of the shadow in the email protection.<br /><i>This option only applies if 'Shadow color used in email address protection' is not empty.</i>");
+define("_MD_AM_EMAILSHADOW","Shadow color used in email address protection");
+define("_MD_AM_EMAILSHADOW_DESC","Choose a color for the shadow of the email address protection.Leave it blank if you don't wish to use any.<br /><i>This option only applies if 'Protect email addresses against SPAM?' is set to Yes.</i>");
+define("_MD_AM_SHADOWX","X offset of shadow used in email address protection");
+define("_MD_AM_SHADOWX_DESC","Type in a value (in px)) that will represent the horizontal offset of the shadow in the email protection.<br /><i>This option only applies if 'Shadow color used in email address protection' is not empty.</i>");
+define("_MD_AM_SHADOWY","Y offset for shadow used in email address protection");
+define("_MD_AM_SHADOWY_DESC","Type in a value (in px) that will represent the vertical offset of the shadow in the email protection.<br /><i>This option only applies if 'Shadow color used in email address protection' is not empty.</i>");
 define("_MD_AM_EDITREMOVEBLOCK","Edit and Remove blocks from user side?");
 define("_MD_AM_EDITREMOVEBLOCKDSC","By enabling this option, you'll see two icons on block titles with a direct access to remove or edit your block.");
 
@@ -399,6 +399,10 @@ define("_MD_AM_PRECHARS","Amount of starting characters");
 define("_MD_AM_PRECHARS_DESC","How many characters should be displayed at the begining of an URL ?<br /><i>This option only applies if 'Truncate long URLs ?' is set to Yes.</i>");
 define("_MD_AM_LASTCHARS","Amoungt of ending characters");
 define("_MD_AM_LASTCHARS_DESC","How many characters should be displayed at the end of an URL ?<br /><i>This option only applies if 'Truncate long URLs ?' is set to Yes.</i>");
+define("_MD_AM_HIDDENCONTENT","Use Hide content tag?");
+define("_MD_AM_HIDDENCONTENTDSC","Set this option to Yes if you want use a tag to hide some content of your site for Anonymous users.<br /> Anonymous users will need to register to be able to see that content.<br /><i>If you disable this option, all contents between this tag will show as usual</i>");
+define("_MD_AM_SIGMAXLENGTH","Maximum amount of characters in users signatures?");
+define("_MD_AM_SIGMAXLENGTHDSC","Here you can choose the length of your users signatures.<br /> any character longer than this amount will be ignored.<br /><i>Be careful, long signatures can often break the design...</i>");
 /*
 define("_MD_AM_AUTORESIZE","Auto resize larger avatars?");
 define("_MD_AM_AUTORESIZE_DESC","If YES, if the avatar sent have the width or height greater than that set will be automatically resized (keeping the ratio of the image) and the upload will be allowed. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.");

@@ -1,7 +1,7 @@
 <?php
 // $Id: groups.php 2 2005-11-02 18:23:29Z skalpa $
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
-define("_AM_DBUPDATED",_MD_AM_DBUPDATED);
+define("_AM_DBUPDATED","Database Updated Successfully!");
 
 define("_AM_EDITADG","Edit Groups");
 define("_AM_MODIFY","Modify");

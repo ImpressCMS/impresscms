@@ -85,12 +85,9 @@ class IcmsKernel {
 		    if ( array_key_exists( 'HTTP_REFERER', $_SERVER) && isset($_SERVER['HTTP_REFERER']) ) {
 		        $this->urls['previouspage'] = $_SERVER['HTTP_REFERER'];
 		    }
-		    if ( array_key_exists( $key, $_ENV) && isset($_ENV['HTTP_REFERER']) ) {
-		        $this->urls['previouspage'] = $_ENV['HTTP_REFERER'];
-		    }
 			//$this->urls['isHomePage'] = (XOOPS_URL . "/index.php") == ($http . $httphost . $phpself);
 		}
-		return $urls;
+		return $this->urls;
 	}
 	
 

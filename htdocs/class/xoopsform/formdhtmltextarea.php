@@ -134,7 +134,19 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		if ( $editor ) {
 			return $this->htmlEditor->render();
 		}
-		
+			$config_handler =& xoops_gethandler('config');
+			$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+        if ($xoopsConfigPersona['use_hidden'] == 1) {
+		$ele_name = $this->getName();
+		$ret = "<a name='moresmiley'></a>".
+		        "<img onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/url.gif' alt='url' onclick='xoopsCodeUrl(\"".$ele_name."\", \"".htmlspecialchars(_ENTERURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES)."\");' />&nbsp;".
+		        "<img onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/email.gif' alt='email' onclick='javascript:xoopsCodeEmail(\"".$ele_name."\", \"".htmlspecialchars(_ENTEREMAIL, ENT_QUOTES)."\");' />&nbsp;".
+		        "<img onclick='javascript:xoopsCodeImg(\"".$ele_name."\", \"".htmlspecialchars(_ENTERIMGURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES)."\", \"".htmlspecialchars(_IMGPOSRORL, ENT_QUOTES)."\", \"".htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/imgsrc.gif' alt='imgsrc' />&nbsp;".
+		        "<img onmouseover='style.cursor=\"hand\"' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/imagemanager.php?target=".$ele_name."\",\"imgmanager\",400,430);' src='".ICMS_URL."/images/image.gif' alt='image' />&nbsp;".
+		        "<img onclick='javascript:xoopsCodeHidden(\"".$ele_name."\", \"".htmlspecialchars(_ENTERHIDDEN, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/hide.gif' alt='hide' />&nbsp;".
+		        "<img src='".ICMS_URL."/images/code.gif' onmouseover='style.cursor=\"hand\"' alt='code' onclick='javascript:xoopsCodeCode(\"".$ele_name."\", \"".htmlspecialchars(_ENTERCODE, ENT_QUOTES)."\");' />&nbsp;".
+		        "<img onclick='javascript:xoopsCodeQuote(\"".$ele_name."\", \"".htmlspecialchars(_ENTERQUOTE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/quote.gif' alt='quote' /><br />\n";
+		}else{
 		$ele_name = $this->getName();
 		$ret = "<a name='moresmiley'></a>".
 		        "<img onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/url.gif' alt='url' onclick='xoopsCodeUrl(\"".$ele_name."\", \"".htmlspecialchars(_ENTERURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES)."\");' />&nbsp;".
@@ -142,9 +154,8 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		        "<img onclick='javascript:xoopsCodeImg(\"".$ele_name."\", \"".htmlspecialchars(_ENTERIMGURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES)."\", \"".htmlspecialchars(_IMGPOSRORL, ENT_QUOTES)."\", \"".htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/imgsrc.gif' alt='imgsrc' />&nbsp;".
 		        "<img onmouseover='style.cursor=\"hand\"' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/imagemanager.php?target=".$ele_name."\",\"imgmanager\",400,430);' src='".ICMS_URL."/images/image.gif' alt='image' />&nbsp;".
 		        "<img src='".ICMS_URL."/images/code.gif' onmouseover='style.cursor=\"hand\"' alt='code' onclick='javascript:xoopsCodeCode(\"".$ele_name."\", \"".htmlspecialchars(_ENTERCODE, ENT_QUOTES)."\");' />&nbsp;".
-		        "<img onclick='javascript:xoopsCodeQuote(\"".$ele_name."\", \"".htmlspecialchars(_ENTERQUOTE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/quote.gif' alt='hide' />&nbsp;".
-		        "<img onclick='javascript:xoopsCodeHidden(\"".$ele_name."\", \"".htmlspecialchars(_ENTERHIDDEN, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/hide.gif' alt='quote' /><br />\n";
-
+		        "<img onclick='javascript:xoopsCodeQuote(\"".$ele_name."\", \"".htmlspecialchars(_ENTERQUOTE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/quote.gif' alt='quote' /><br />\n";
+		}	
 		$sizearray = array("xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large");
 		$ret .= "<select id='".$ele_name."Size' onchange='setVisible(\"".$this->_hiddenText."\");setElementSize(\"".$this->_hiddenText."\",this.options[this.selectedIndex].value);'>\n";
 		$ret .= "<option value='SIZE'>"._SIZE."</option>\n";

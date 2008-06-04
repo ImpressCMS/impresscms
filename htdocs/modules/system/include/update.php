@@ -73,7 +73,7 @@ function xoops_module_update_system(&$module) {
     } else {
         echo $feedback;
     }
-    $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+ //   $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
     return true;    
 }
 

@@ -3,7 +3,7 @@
 class upgrade_impcms06 {
 	
 	var $usedFiles = array ();
-    var $tasks = array('conf', 'dbversion', 'db', 'rest_of_upgrade');
+    var $tasks = array('conf', 'db', 'rest_of_upgrade');
 	var $updater;
 	
 	function __construct() {
@@ -262,18 +262,6 @@ class upgrade_impcms06 {
         return $result;
 
 	}
-       function check_dbversion()
-    {
-		$table = new IcmsDatabasetable('modules');
-	    return $table->fieldExists('dbversion');
-            }
-
-    	function apply_dbversion() {
-    	// First let's create the dbversion field in the modules table
-    	$table = new IcmsDatabasetable('modules');
-    	$table->addNewField('dbversion', 'INT(11) DEFAULT 0');
-    	return $this->updater->updateTable($table, true);
-	}
     function write_mainfile($vars)
     {
         if (empty($vars)) {
@@ -340,7 +328,12 @@ class upgrade_impcms06 {
         return $ret;
         
     }
-    
+       function check_rest_of_upgrade()
+    {
+		$table = new IcmsDatabasetable('modules');
+	    return $table->fieldExists('dbversion');
+            }
+
     function apply_rest_of_upgrade() {
 		// Now, first, let's increment the conf_order of user option starting at new_user_notify
 		$table = new IcmsDatabasetable('config');
@@ -374,6 +367,7 @@ class upgrade_impcms06 {
 	    $this->updater->insertConfig(XOOPS_CONF_USER, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', $default_msg_content, '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textarea', 'text', 6);	   
 	    $this->updater->insertConfig(XOOPS_CONF_USER, 'allwshow_sig', '_MD_AM_ALLWSHOWSIG', 1, '_MD_AM_ALLWSHOWSIGDSC', 'yesno', 'int', 7);
 	    $this->updater->insertConfig(XOOPS_CONF_USER, 'allow_htsig', '_MD_AM_ALLWHTSIG', 1, '_MD_AM_ALLWHTSIGDSC', 'yesno', 'int', 8);
+	    $this->updater->insertConfig(XOOPS_CONF_USER, 'sig_max_length', '_MD_AM_SIGMAXLENGTH', '255', '_MD_AM_SIGMAXLENGTHDSC', 'textbox', 'int', 8);
 	    $this->updater->insertConfig(XOOPS_CONF_USER, 'avatar_allow_gravatar', '_MD_AM_GRAVATARALLOW', '1', '_MD_AM_GRAVATARALWDSC', 'yesno', 'int', 14);
 	    $this->updater->insertConfig(XOOPS_CONF_USER, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '1', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', 34);
 
@@ -404,9 +398,9 @@ class upgrade_impcms06 {
         if ($fp) {
             $default_login_content = fread($fp, filesize($default_login_content_file));
         }
-	    // Adding new function of Personalisation
+	    // Adding new function of Personalization
 	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', 1);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', 'http://www.impresscms.org', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', 2);
+	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', XOOPS_URL, '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', 2);
 	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'adm_left_logo_alt', '_MD_AM_LLOGOADM_ALT', 'ImpressCMS', '_MD_AM_LLOGOADM_ALT_DESC', 'textbox', 'text', 3);
 	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'adm_right_logo', '_MD_AM_RLOGOADM', '', '_MD_AM_RLOGOADM_DESC', 'select_image', 'text', 4);
 	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'adm_right_logo_url', '_MD_AM_RLOGOADM_URL', '', '_MD_AM_RLOGOADM_URL_DESC', 'textbox', 'text', 5);
@@ -419,14 +413,15 @@ class upgrade_impcms06 {
 	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'email_font', '_MD_AM_EMAILTTF', 'arial.ttf', '_MD_AM_EMAILTTF_DESC', 'select_font', 'text', 12);
 	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'email_font_len', '_MD_AM_EMAILLEN', '12', '_MD_AM_EMAILLEN_DESC', 'textbox', 'int', 13);
 	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'email_cor', '_MD_AM_EMAILCOLOR', '#000000', '_MD_AM_EMAILCOLOR_DESC', 'color', 'text', 14);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'email_sombra', '_MD_AM_EMAILSOMBRA', '#cccccc', '_MD_AM_EMAILSOMBRA_DESC', 'color', 'text', 15);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'sombra_x', '_MD_AM_SOMBRAX', '2', '_MD_AM_SOMBRAX_DESC', 'textbox', 'int', 16);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'sombra_y', '_MD_AM_SOMBRAY', '2', '_MD_AM_SOMBRAY_DESC', 'textbox', 'int', 17);
+	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'email_shadow', '_MD_AM_EMAILSHADOW', '#cccccc', '_MD_AM_EMAILSHADOW_DESC', 'color', 'text', 15);
+	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'shadow_x', '_MD_AM_SHADOWX', '2', '_MD_AM_SHADOWX_DESC', 'textbox', 'int', 16);
+	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'shadow_y', '_MD_AM_SHADOWY', '2', '_MD_AM_SHADOWY_DESC', 'textbox', 'int', 17);
 	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'shorten_url', '_MD_AM_SHORTURL', '0', '_MD_AM_SHORTURLDSC', 'yesno', 'int', 18);
 	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'max_url_long', '_MD_AM_URLLEN', '50', '_MD_AM_URLLEN_DESC', 'textbox', 'int', 19);
 	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'pre_chars_left', '_MD_AM_PRECHARS', '35', '_MD_AM_PRECHARS_DESC', 'textbox', 'int', 20);
 	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'last_chars_left', '_MD_AM_LASTCHARS', '10', '_MD_AM_LASTCHARS_DESC', 'textbox', 'int', 21);
 	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'show_impresscms_menu', '_MD_AM_SHOW_ICMSMENU', '1', '_MD_AM_SHOW_ICMSMENU_DESC', 'yesno', 'int', 22);
+	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', 23);
 	    
 	    $table = new IcmsDatabasetable('imagecategory');
 	    $this->updater->runQuery('INSERT INTO '.$table->name().' (imgcat_id, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype) VALUES (NULL, "Logos", 350000, 350, 80, 1, 0, "C", "file")','Successfully created Logos imagecategory','Problems when try to create Logos imagecategory');
@@ -477,11 +472,15 @@ class upgrade_impcms06 {
 		}
 	    $icmsDatabaseUpdater->updateTable($table);
 	    unset($table);
+    	$table = new IcmsDatabasetable('modules');
+    	$table->addNewField('dbversion', 'INT(11) DEFAULT 0');
+		$icmsDatabaseUpdater->updateTable($table);
 	    
 	    // Updating the system module dbversion field. This needs to be at the very end of the upgrade script
-		$icmsDatabaseUpdater->updateModuleDBVersion(5, 'system');
+		$icmsDatabaseUpdater->updateModuleDBVersion(1, 'system');
 		
 	}
+
 }
 
 $upg = new upgrade_impcms06();

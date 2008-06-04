@@ -1,18 +1,11 @@
 ChangeLog
 
-Version 2.1.0beta2 (Sun, Dec 02 2007)
+Version 2.0.0 (Sun, Dec 02 2007)
 * implemented updated EncodeQP (thanks to coolbru, aka Marcus Bointon)
 * finished all testing, all known bugs corrected, enhancements tested
-- note: will NOT work with PHP4.
-
-please note, this is BETA software
-** DO NOT USE THIS IN PRODUCTION OR LIVE PROJECTS
-INTENDED STRICTLY FOR TESTING
-
-Version 2.1.0beta1
-please note, this is BETA software
-** DO NOT USE THIS IN PRODUCTION OR LIVE PROJECTS
-INTENDED STRICTLY FOR TESTING
+- note: designed for PHP4, but will work with PHP5 (not compatible with
+  E_STRICT) ... full PHP5 version of PHPMailer released separately. 
+  PHP5 version will NOT work with PHP4.
 
 Version 2.0.0 rc2 (Fri, Nov 16 2007), interim release
 * implements new property to control VERP in class.smtp.php

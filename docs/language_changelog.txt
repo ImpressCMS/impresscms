@@ -85,7 +85,7 @@ install/language/english/welcome.php
 # Directory: language
 =====================
 
-+  libraries/captcha/language/english.php (added)
++  language/english/captcha.php (added)
 --------------------------------------
 
 +  language/english/databaseupdater.php  (added)
@@ -117,6 +117,7 @@ language/english/global.php
 +  define('_HIDDENC', 'Hidden Content:');
 +  define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registeration at ' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
 +  define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
++  define('_BRDCRMB_SEP','&nbsp;:&nbsp;')
 
 language/english/moduleabout.php
 --------------------------------
@@ -174,13 +175,6 @@ newuser_notify.tpl
 +- register.tpl (modified to use {X_ADMINMAIL} and not {ADMINMAIL})
 
 
-==============================
-# Directory: libraries (added)
-==============================
-
-+  libraries/captcha/language/english.php
------------------------------------------
-
 =============================================
 # Directory: modules/system/language/english/
 =============================================
@@ -206,6 +200,7 @@ modules/system/language/english/blocks.php
 +  if (!defined('_CT_EDIT_CONTENT')){define('_CT_EDIT_CONTENT','Edit Content');}
 +  if (!defined('_CT_DELETE_CONTENT')){define('_CT_DELETE_CONTENT','Delete Content');}
 +  if (!defined('_CT_PUBLISHEDBY')){define('_CT_PUBLISHEDBY','Published by');}
++  if (!defined('_CT_READS')){define('_CT_READS','reads');}
 +  if (!defined('_CT_ON')){define('_CT_ON','on');}
 
 modules/system/language/english/modinfo.php
@@ -293,7 +288,7 @@ modules/system/language/english/admin/preferences.php
 +  define('_MD_AM_ALLWHTSIGDSC', 'If some attackers post an external image using [img], he can know IPs or User-Agents of users visited your site.<br />Allowing HTML can cause Script Insertion vulnerability if malicious user change his/her signature.');
 +  define('_MD_AM_ALLWSHOWSIG', 'Do you want to allow your users to use a signature on their profile/posts, in your site?');
 +  define('_MD_AM_ALLWSHOWSIGDSC', 'By enabling this option, users will be able to use a personal signature which will be added (on their own choice) after their posts.');
-+  define("_MD_AM_PERSON","Personalisation");
++  define("_MD_AM_PERSON","Personalization");
 +  define("_MD_AM_GOOGLE_ANA","Google Analytics");
 +  define("_MD_AM_GOOGLE_ANA_DESC","Insert the script informed by Google Analytics for your site. If you don't use it, leave it blank.");
 +- define("_MD_AM_LLOGOADM","Admin Logo");
@@ -356,7 +351,20 @@ modules/system/language/english/admin/groups.php
 modules/system/language/english/admin/blocksadmin.php
 ---------------------------------------------------------
 +  define('_AM_CHANGESTS', 'Change the block visibility');
-
+-   define('_AM_BPCOD',"ID");
+-   define('_AM_BPNAME',"Name of Position");
+-   define('_AM_BPDESC',"Description of Position");
+-   define('_AM_ADDPBLOCK',"Add new Block Position");
+-   define('_AM_EDITPBLOCK',"Edit Block Position");
+-   define('_AM_PBNAME_DESC',"Name of Block Position, it is with this name that will have to be created the Loop in the theme for the exhibition of blocks.<br/>Use a name with small_caption letters, without spaces and special characters.");
+-   define('_AM_BPMSG1',"Successfully carried through operation!");
+-   define('_AM_BPMSG2',"Problems had occurred to carry through them the operations.");
+-   define('_AM_BPMSG3',"Are you sure you wish to deleted this block position ?");
+-   define('_AM_BPHELP','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.
+<div style="border: 1px dashed #AABBCC; padding:10px; width:86%;">
+<{foreach from=$xoBlocks.<b>name_of_position</b> item=block}><br /><{include file="<b>path_to_theme_folder/file_to_show_blocks</b>"}><br /><{/foreach}>
+</div>
+');
 
 +  modules/system/language/english/admin/content_css_doc.html
 ---------------------------------------------------------
@@ -366,6 +374,10 @@ modules/system/language/english/admin/blocksadmin.php
 
 +  modules/system/language/english/admin/content.php
 ---------------------------------------------------------
+
++-define('_MD_CONTENT_MENU','SEO ID');
++-define('_MD_CONTENT_MENU_DSC','Use a short phrase or word related to the content of the page. The content of this field will be used in place of the page ID to improve the indexing in search engines.');
+
 
 +  modules/system/language/english/admin/blockspadmin.php
 ---------------------------------------------------------
@@ -395,7 +407,6 @@ modules/system/language/english/admin/blocksadmin.php
 +  define( "DB_COLLATION_LABEL", "Database character set and collation" );
 +  define( "DB_COLLATION_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.<br />We <b>STRONGLY</b> recommend you to use '<b>UTF-8</b>' as default.");
 +  define( "_SYS_NEED_UPGRADE", "In order to Complete the upgrade proccess, please click here, and upgrade system module." );
-
 
 
 ==========================================
@@ -435,7 +446,6 @@ language/english/auth.php
 +  define('_IMPRESSCMS_PREFS','Preferences');
 +  define('_SYSTEM','System');
 +  define('_IMPRESSCMS_NEWS','News');
-+  define('_BRDCRMB_SEP','&nbsp;:&nbsp;')
 
 language/english/pmsg.php
 --------------------------

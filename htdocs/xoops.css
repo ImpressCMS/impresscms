@@ -196,6 +196,7 @@ div.cpicon span.unor{
 	font-weight: normal;
 	color: #000;
 	width: 100px;
+	z-index:100 !important;
 }
 .ed_block_box img{
     vertical-align: middle;

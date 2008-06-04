@@ -154,11 +154,17 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				case 'editor' :
 				case 'editor_multi' :
 					$ele = ($config [$i]->getVar ( 'conf_formtype' ) != 'editor_multi') ? new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () ) : new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
-					$ele->addOption ( "default" );
+					//$ele->addOption ( "default" );
 					require_once XOOPS_ROOT_PATH . "/class/xoopslists.php";
 					$dirlist = XoopsLists::getEditorsList ();
 					
 					if (! empty ( $dirlist )) {
+						if ($config [$i]->getVar ( 'conf_formtype' ) != 'editor_multi') {
+						    unset($dirlist['default']);
+						}else{
+							global $xoopsConfig;
+							unset($dirlist[$xoopsConfig['editor_default']]);
+						}
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
 					}

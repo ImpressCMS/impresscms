@@ -239,8 +239,6 @@ div#navbarCP ul li ul a:hover{
 div#navbarCP ul li ul li{
 	width: 150px;
 	margin: 0;
-	*width: 150px;
-	*margin-left:-10px;
 }
 div#navbarCP ul li > ul {
 	top: auto;

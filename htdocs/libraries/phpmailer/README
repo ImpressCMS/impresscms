@@ -2,12 +2,6 @@ PHPMailer
 Full Featured Email Transfer Class for PHP
 ==========================================
 
-Version 2.1.0beta1
-
-please note, this is BETA software
-** DO NOT USE THIS IN PRODUCTION OR LIVE PROJECTS
-INTENDED STRICTLY FOR TESTING
-
 ** NOTE:
 
 As of November 2007, PHPMailer has a new project team headed by industry

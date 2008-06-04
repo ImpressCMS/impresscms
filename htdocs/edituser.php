@@ -97,9 +97,9 @@ if ($op == 'saveuser') {
  		if ($xoopsConfigUser['allwshow_sig'] == 1) {
         if ($xoopsConfigUser['allow_htsig'] == 0) {
 		$signature = strip_tags($myts->xoopsCodeDecode($_POST['user_sig'], 1));
-        $edituser->setVar('user_sig', xoops_substr($signature, 0, 1000));
+        $edituser->setVar('user_sig', xoops_substr($signature, 0, intval($xoopsConfigUser['sig_max_length'])));
         }elseif ($xoopsConfigUser['allwshow_sig'] == 1) {
-        $edituser->setVar('user_sig', xoops_substr($_POST['user_sig'], 0, 1000));
+        $edituser->setVar('user_sig', xoops_substr($_POST['user_sig'], 0, intval($xoopsConfigUser['sig_max_length'])));
         }}
         $user_viewemail = (!empty($_POST['user_viewemail'])) ? 1 : 0;
         $edituser->setVar('user_viewemail', $user_viewemail);
@@ -302,7 +302,6 @@ if ($op == 'avatarform') {
         $form->addElement(new XoopsFormHidden('uid', intval($xoopsUser->getVar('uid'))));
         $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
             $form->display();
-    }
     $avatar_handler =& xoops_gethandler('avatar');
     $form2 = new XoopsThemeForm(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
     $avatar_select = new XoopsFormSelect('', 'user_avatar', $xoopsUser->getVar('user_avatar'));
@@ -317,7 +316,24 @@ if ($op == 'avatarform') {
     $form2->addElement(new XoopsFormButton('', 'submit2', _SUBMIT, 'submit'));
     $form2->display();
     include ICMS_ROOT_PATH.'/footer.php';
+    }elseif ($xoopsConfigUser['avatar_allow_upload'] == 1 && $xoopsUser->getVar('posts') < $xoopsConfigUser['avatar_minposts']) {
+    $avatar_handler =& xoops_gethandler('avatar');
+    $form2 = new XoopsThemeForm(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
+    $avatar_select = new XoopsFormSelect('', 'user_avatar', $xoopsUser->getVar('user_avatar'));
+    $avatar_select->addOptionArray($avatar_handler->getList('S'));
+    $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"".ICMS_URL."\")'");
+    $avatar_tray = new XoopsFormElementTray(_US_AVATAR, '&nbsp;');
+    $avatar_tray->addElement($avatar_select);
+    $avatar_tray->addElement(new XoopsFormLabel('', "<img src='".ICMS_UPLOAD_URL."/".$xoopsUser->getVar("user_avatar", "E")."' name='avatar' id='avatar' alt='' /> <a href=\"javascript:openWithSelfMain('".ICMS_URL."/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">"._LIST."</a>"));
+    $form2->addElement(new XoopsFormLabel(sprintf(_US_POSTSNOTENOUGH,$xoopsConfigUser['avatar_minposts']),_US_UNCHOOSEAVT));
+    $form2->addElement($avatar_tray);
+    $form2->addElement(new XoopsFormHidden('uid', intval($xoopsUser->getVar('uid'))));
+    $form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
+    $form2->addElement(new XoopsFormButton('', 'submit2', _SUBMIT, 'submit'));
+    $form2->display();
+    include ICMS_ROOT_PATH.'/footer.php';
 }
+    }
 
 if ($op == 'avatarupload') {
     if (!$GLOBALS['xoopsSecurity']->check()) {

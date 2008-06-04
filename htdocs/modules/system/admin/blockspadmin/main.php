@@ -66,8 +66,6 @@ function listPblocks(){
 	$icmsAdminTpl->assign('lang_bp_bpdelete',_DELETE);
 	$icmsAdminTpl->assign('lang_cont_addcont',_AM_ADDPBLOCK);
 
-	$code = '<{foreach from=$xoBlocks.<b>name_of_position</b> item=block}><br /><{include file="<b>path_to_theme_folder/file_to_show_blocks</b>"}><br /><{/foreach}>';
-	$icmsAdminTpl->assign('lang_bp_help_code',$code);
 
 	$oldzones = XoopsBlock::getBlockPositions(true);
 	foreach ($oldzones as $k=>$v){

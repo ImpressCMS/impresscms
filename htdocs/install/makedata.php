@@ -110,7 +110,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     $time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
-    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 102, ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 3)");
+    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 102, ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 1)");
 
     foreach ($modversion['templates'] as $tplfile) {
         if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
@@ -233,7 +233,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
    	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_set', '_MD_AM_DTHEME', 'impresstheme', '_MD_AM_DTHEMEDSC', 'theme', 'other', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_fromfile', '_MD_AM_THEMEFILE', '0', '_MD_AM_THEMEFILEDSC', 'yesno', 'int', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_fromfile', '_MD_AM_THEMEFILE', '1', '_MD_AM_THEMEFILEDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
   	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_set_allowed', '_MD_AM_THEMEOK', '".serialize(array('impresstheme'))."', '_MD_AM_THEMEOKDSC', 'theme_multi', 'array', $p)");
@@ -266,7 +266,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'session_expire', '_MD_AM_SESSEXPIRE', '15', '_MD_AM_SESSEXPIREDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'debug_mode', '_MD_AM_DEBUGMODE', '0', '_MD_AM_DEBUGMODEDSC', 'select', 'int', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'debug_mode', '_MD_AM_DEBUGMODE', '1', '_MD_AM_DEBUGMODEDSC', 'select', 'int', $p)");
 	// Insert data for Config Options in selection field. (must be placed before $i++)
 	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_DEBUGMODE0', 0, $i)");
 	$ci++;
@@ -380,6 +380,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'allow_htsig', '_MD_AM_ALLWHTSIG', '1', '_MD_AM_ALLWHTSIGDSC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'sig_max_length', '_MD_AM_SIGMAXLENGTH', '255', '_MD_AM_SIGMAXLENGTHDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'new_user_notify', '_MD_AM_NEWUNOTIFY', '1', '_MD_AM_NEWUNOTIFYDSC', 'yesno', 'int', $p)");
@@ -741,14 +744,14 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'show_pinfo', '_MD_AM_CONT_SHOWPINFO', '1', '_MD_AM_CONT_SHOWPINFODSC', 'yesno', 'int', $p)");
 
 
-	// Data for Config Category 10 (Personalisation Settings)
+	// Data for Config Category 10 (Personalization Settings)
 	$c=10; // sets config category id
 	$i++;
 	$p=0;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', 'http://www.impresscms.org', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '".XOOPS_URL."/index.php', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'adm_left_logo_alt', '_MD_AM_LLOGOADM_ALT', 'ImpressCMS', '_MD_AM_LLOGOADM_ALT_DESC', 'textbox', 'text', $p)");
@@ -787,13 +790,13 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'email_cor', '_MD_AM_EMAILCOLOR', '#000000', '_MD_AM_EMAILCOLOR_DESC', 'color', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'email_sombra', '_MD_AM_EMAILSOMBRA', '#cccccc', '_MD_AM_EMAILSOMBRA_DESC', 'color', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'email_shadow', '_MD_AM_EMAILSHADOW', '#cccccc', '_MD_AM_EMAILSHADOW_DESC', 'color', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'sombra_x', '_MD_AM_SOMBRAX', '2', '_MD_AM_SOMBRAX_DESC', 'textbox', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'shadow_x', '_MD_AM_SHADOWX', '2', '_MD_AM_SHADOWX_DESC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'sombra_y', '_MD_AM_SOMBRAY', '2', '_MD_AM_SOMBRAY_DESC', 'textbox', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'shadow_y', '_MD_AM_SHADOWY', '2', '_MD_AM_SHADOWY_DESC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'shorten_url', '_MD_AM_SHORTURL', '0', '_MD_AM_SHORTURLDSC', 'yesno', 'int', $p)");
@@ -809,6 +812,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'show_impresscms_menu', '_MD_AM_SHOW_ICMSMENU', '1', '_MD_AM_SHOW_ICMSMENU_DESC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', $p)");
 
     return $gruops;
 }
