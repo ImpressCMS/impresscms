@@ -28,6 +28,7 @@ define('_MI_SYSTEM_BNAME14', "Language Selection");
 define('_MI_SYSTEM_BNAME15', "Content");
 define('_MI_SYSTEM_BNAME16', "Content Menu");
 define('_MI_SYSTEM_BNAME17', "Related Content");
+define('_MI_SYSTEM_BNAME18', "Social Bookmark");
 
 // Names of admin menu items
 define("_MI_SYSTEM_ADMENU1","Banners");

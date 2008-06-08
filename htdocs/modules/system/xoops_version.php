@@ -251,6 +251,12 @@ $modversion['blocks'][$i]['description'] = "Displays image links to change the s
 $modversion['blocks'][$i]['show_func'] = "b_system_multilanguage_show";
 $modversion['blocks'][$i]['template'] = 'system_block_multilanguage.html';
 
+$i++;
+$modversion['blocks'][$i]['file'] = "social_bookmarks.php";
+$modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME18;
+$modversion['blocks'][$i]['description'] = "Shows most recent comments";
+$modversion['blocks'][$i]['show_func'] = "b_social_bookmarks";
+$modversion['blocks'][$i]['template'] = 'system_block_socialbookmark.html';
 //Content Manager
 
 $i++;
