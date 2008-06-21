@@ -28,43 +28,56 @@
 class MyTextSanitizer
 {
 	/**
-	 * @var	array
-	 */
+	* @var	array
+	*/
 	var $smileys = array();
-
 	/**
-	 *
-	 */
+	*
+	*/
 	var $censorConf;
-
-	/**
-	 * variable used by htmlpurifier
-	 */
-	var $purifier;
-
 	/*
 	* Constructor of this class
-    *
 	* Gets allowed html tags from admin config settings
 	* <br> should not be allowed since nl2br will be used
 	* when storing data.
-    *
-    * @access	private
-    *
-    * @todo Sofar, this does nuttin' ;-)
+    	*
+    	* @access	private
+    	*
+    	* @todo Sofar, this does nuttin' ;-)
 	*/
 	function MyTextSanitizer()
+    	{
+	}
+
+	function html_purifier($text, $config = '1')
 	{
+		include_once ICMS_ROOT_PATH.'/class/icms.htmlpurifier.php';
+		$html_purifier = &icms_HTMLPurifier::getPurifierInstance();
+
+		if($config = '1')
+		{
+			$text = $html_purifier->icms_html_purifier($text, $config);
+		}
+		elseif($config = '2')
+		{
+			$text = $html_purifier->displayHTMLarea($text, $config);
+		}
+		elseif($config = '3')
+		{
+			$text = $html_purifier->previewHTMLarea($text, $config);
+		}
+
+		return $text;
 	}
 
 	/**
-	 * Access the only instance of this class
-     *
-     * @return	object
-     *
-     * @static
-     * @staticvar   object
-	 */
+	* Access the only instance of this class
+     	*
+     	* @return	object
+     	*
+     	* @static
+     	* @staticvar   object
+	*/
 	function &getInstance()
 	{
 		static $instance;
@@ -289,7 +302,7 @@ class MyTextSanitizer
 	function htmlSpecialChars($text)
 	{
 		//return preg_replace("/&amp;/i", '&', htmlspecialchars($text, ENT_QUOTES));
-		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), htmlspecialchars($text, ENT_QUOTES));
+		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), @htmlspecialchars($text, ENT_QUOTES, _CHARSET));
 	}
 
 	/**
@@ -305,7 +318,7 @@ class MyTextSanitizer
 
 	function icms_htmlEntities($text)
 	{
-		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), htmlentities($text, ENT_QUOTES));
+		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), @htmlentities($text, ENT_QUOTES, _CHARSET));
 	}
 
 	/**
@@ -327,27 +340,11 @@ class MyTextSanitizer
 		
 		if ($html != 1) {
 			// html not allowed
-			$text = $this->icms_htmlEntities($text);
+			$text = $this->htmlSpecialChars($text);
 		}
-		else {
-			// sets default config settings for htmpurifier
-			// html allowed - sanitize with html purifier
-			$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
-			if(is_dir(ICMS_PURIFIER_CACHE))
-			{
-				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
-			}
-			else
-			{
-				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
-			}
-			$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET);
-			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
-			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype), cleans malicious code.
-
-			$this->purifier = new HTMLPurifier($icms_PurifyConfig);
-
-			$text = $this->purifier->purify($text);
+		else
+		{
+			$text = $this->html_purifier($text, $config = '2');
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
@@ -392,27 +389,10 @@ class MyTextSanitizer
 		$text = $this->stripSlashesGPC($text);
 		if ($html != 1) {
 			// html not allowed
-			$text = $this->icms_htmlEntities($text);
+			$text = $this->htmlSpecialChars($text);
 		}
 		else {
-			// sets default config settings for htmpurifier
-			// html allowed - sanitize with html purifier
-			$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
-			if(is_dir(ICMS_PURIFIER_CACHE))
-			{
-				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
-			}
-			else
-			{
-				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
-			}
-			$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET);
-			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional');
-			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium'); // takes code and turns deprecated tags into valid tags (depends on doctype), cleans malicious code.
-
-			$this->purifier = new HTMLPurifier($icms_PurifyConfig);
-
-			$text = $this->purifier->purify($text);
+			$text = $this->html_purifier($text, $config = '3');
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)

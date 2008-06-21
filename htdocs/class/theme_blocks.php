@@ -55,33 +55,40 @@ class xos_logos_PageBuilder {
 	function retrieveBlocks() {
 		global $xoops, $xoopsUser, $xoopsModule, $xoopsConfig;
 		
+		//Getting the start module and page configured in the admin panel
 		$startMod = ($xoopsConfig ['startpage'] == '--') ? 'system' : $xoopsConfig ['startpage']; //Getting the top page
-		
 
+		//Setting the full and relative url of the actual page
 		$fullurl = "http://" . $_SERVER ["SERVER_NAME"] . $_SERVER ["REQUEST_URI"];
 		$url = substr ( str_replace ( XOOPS_URL, '', $fullurl ), 1 );
 		
-		$arr = explode ( '-', $startMod );
-		if (count ( $arr ) > 1) {
-			$page_handler = & xoops_gethandler ( 'page' );
-			$page = $page_handler->get ( $arr [1] );
-			if (is_object ( $page )) {
-				$mid = $page->getVar ( 'page_moduleid' );
-				$module_handler = & xoops_gethandler ( 'module' );
-				$module = & $module_handler->get ( $mid );
-				$dirname = $module->getVar ( 'dirname' );
-				$purl = $page->getVar ( 'page_url' );
-				$isStart = ($purl == $url || $purl == $fullurl);
-			}
-		} else {
+		$page_handler = & xoops_gethandler ( 'page' );
+		$criteria = new CriteriaCompo ( new Criteria ( 'page_url', $fullurl ) );
+		$criteria->add(new Criteria ( 'page_url', $url ),'OR');
+		$pages = $page_handler->getCount ( $criteria );
+		
+		if ($pages > 0){ //We have a sym-link defined for this page
+			$pages = $page_handler->getObjects( $criteria );
+			$page = $pages[0];
+			$purl = $page->getVar ( 'page_url' );
+			$mid = $page->getVar('page_moduleid');
+			$pid = $page->getVar('page_id');
+			$module_handler = & xoops_gethandler ( 'module' );
+			$module = & $module_handler->get ( $mid );
+			$dirname = $module->getVar ( 'dirname' );
+			$isStart = ($startMod == $mid.'-'.$pid || $startMod == $dirname);
+		}else{ //Don't have a sym-link for this page
 			if (@is_object ( $xoopsModule )) {
 				list ( $mid, $dirname ) = array ($xoopsModule->getVar ( 'mid' ), $xoopsModule->getVar ( 'dirname' ) );
-				$isStart = (substr ( $_SERVER ['PHP_SELF'], - 9 ) == 'index.php' && $xoopsConfig ['startpage'] == $dirname);
+				$isStart = (substr ( $_SERVER ['PHP_SELF'], - 9 ) == 'index.php' && $startMod == $dirname);
 			} else {
 				list ( $mid, $dirname ) = array (1, 'system' );
 				$isStart = ! @empty ( $GLOBALS ['xoopsOption'] ['show_cblock'] );
 			}
+			$pid = 0;
 		}
+		
+
 		
 		if ($isStart) {
 			$modid = '0-1';
@@ -107,7 +114,6 @@ class xos_logos_PageBuilder {
 			}
 			$modid = $mid . '-' . $pid;
 		}
-		
 		$groups = @is_object ( $xoopsUser ) ? $xoopsUser->getGroups () : array (XOOPS_GROUP_ANONYMOUS );
 		
 		# Adding dynamic block area/position system - TheRpLima - 2007-10-21

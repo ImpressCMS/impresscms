@@ -32,6 +32,9 @@ install/language/english/install.php
 +  define( "ERR_INVALID_DBCOLLATION", "The collation '%s' is not supported." );
 +  define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS database." );
 +  define("_ADM_USE_RTL","0"); // turn this to 1 if your language is right to left
++  define("_DEF_LANG_TAGS",'en,fr'); //Add local translation
++  define("_DEF_LANG_NAMES",'english,french'); //Add local translation
++  define("_LOCAL_LANG_NAMES",'English,Français'); //Add local translation
 
 install/language/english/install2.php
 -------------------------------------

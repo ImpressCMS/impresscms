@@ -68,7 +68,7 @@ function getDbCollations($link, $charset)
 {
     static $collations = array();
     
-    if ( $result = mysql_query("SHOW COLLATION WHERE CHARSET = '" . mysql_real_escape_string($charset) . "'", $link) ) {
+    if ( $result = mysql_query("SHOW COLLATION LIKE '" . mysql_real_escape_string($charset) . "%'", $link) ) {
         while ( $row = mysql_fetch_assoc($result) ) {
             $collations[$charset][$row["Collation"]] = $row["Default"] ? 1 : 0;
         }

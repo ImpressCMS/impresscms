@@ -1,3 +1,22 @@
+3.1.000 (2008-06-11)
+	- setPDFVersion() was added to change the default PDF version (currently 1.7).
+	- setViewerPreferences() was added to control the way the document is to be presented on the screen or printed (see example 29).
+	- SetDisplayMode() signature was changed (new options were added).
+	- LinearGradient(), RadialGradient(), CoonsPatchMesh() functions were added to print various color gradients (see example 30).
+	- PieSector() function was added to render render pie charts (see example 31).
+	- ImageEps() was added to display EPS and AI images with limited support (see example 32).
+	- writeBarcode() function is now depracated, a new write1DBarcode() function was added. The barcode directory was removed and a new barcodes.php file was added.
+	- The new write1DBarcode() function support more barcodes and do not need the GD library (see example 027). All barcodes are directly written to PDF using graphic functions.
+	- HTML lists were improved and could be nested (you may now represent trees).
+	- AddFont() bug was fixed.
+	- _putfonts() bug was fixed.
+	- graphics functions were fixed.
+	- unicode_data.php file was updated (fixed).
+	- almohanad font was updated.
+	- example 18 was updated (Farsi and Arabic languages).
+	- source code cleanup.
+	- All examples were updated and new examples were added.
+	
 3.0.015 (2008-06-06)
 	- AddPage() function signature is changed to include page format.
 	- example 28 was added to show page format changes.

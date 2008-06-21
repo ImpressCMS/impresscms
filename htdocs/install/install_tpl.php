@@ -111,7 +111,7 @@ echo '<link rel="stylesheet" type="text/css" media="all" href="style.css" />';
 	</div>
 	</div>
 	<div class="footerbar">
-		<?php $currentyear = date('Y',time()); if ($currentyear>2007) { echo sprintf( INSTALL_COPYRIGHT, '&nbsp;-&nbsp;'.$currentyear ); } else {echo sprintf( INSTALL_COPYRIGHT, ''); } ?>
+		<?php echo INSTALL_COPYRIGHT; ?>
 	</div>
 </div>
 </body>

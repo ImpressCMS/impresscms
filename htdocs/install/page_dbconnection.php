@@ -99,9 +99,10 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
     <?php echo xoFormField( 'DB_USER',    $vars['DB_USER'],        DB_USER_LABEL, DB_USER_HELP ); ?>
 	<?php echo xoFormField( 'DB_PASS',	$vars['DB_PASS'],		DB_PASS_LABEL, DB_PASS_HELP, 'password' ); ?>
 
-    <label style="text-align:center" title="<?php echo htmlspecialchars( DB_PCONNECT_HELP, ENT_QUOTES ); ?>">
+    <label>
         <?php echo htmlspecialchars( DB_PCONNECT_LABEL ); ?>
         <input class="checkbox" type="checkbox" name="DB_PCONNECT" value="1" <?php echo $vars['DB_PCONNECT'] ? "'checked'" : ""; ?>/>
+        <div class="xoform-help"><?php echo htmlspecialchars( DB_PCONNECT_HELP ); ?></div>
     </label>
 </fieldset>
 <?php

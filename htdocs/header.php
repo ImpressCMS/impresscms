@@ -11,7 +11,7 @@
 * @author		modified by stranger <stranger@impresscms.ir>
 * @version		$Id$
 */
-defined("ICMS_ROOT_PATH") or die( 'XOOPS root path not defined' );
+defined("ICMS_ROOT_PATH") or die( 'ImpressCMS root path not defined' );
 
 include_once ICMS_ROOT_PATH.'/class/xoopsblock.php';
 

@@ -170,16 +170,17 @@ class XoopsMultiMailer extends PHPMailer {
 		$this->Sender = $this->From;
 
 		if ($xoopsMailerConfig["mailmethod"] == "smtpauth") {
-		    $this->Mailer = "smtp";
-			$this->SMTPAuth = TRUE;
-            $this->SMTPSecure = "ssl";
+		    	$this->Mailer = "smtp";
+			$this->SMTPAuth = true;
+            		$this->SMTPSecure = "ssl";
 			// TODO: change value type of xoopsConfig "smtphost" from array to text
 			$this->Host = implode(';',$xoopsMailerConfig['smtphost']);
 			$this->Username = $xoopsMailerConfig['smtpuser'];
 			$this->Password = $xoopsMailerConfig['smtppass'];
+			//$this->Port = 465;
 		} else {
 			$this->Mailer = $xoopsMailerConfig['mailmethod'];
-			$this->SMTPAuth = FALSE;
+			$this->SMTPAuth = false;
 			$this->Sendmail = $xoopsMailerConfig['sendmailpath'];
 			$this->Host = implode(';',$xoopsMailerConfig['smtphost']);
 		}

@@ -145,6 +145,9 @@ require_once XOOPS_ROOT_PATH.'/class/criteria.php';
 // #################### Include text sanitizer ##################
 include_once XOOPS_ROOT_PATH."/class/module.textsanitizer.php";
 
+// #################### Include html purifier ##################
+include_once XOOPS_ROOT_PATH."/class/icms.htmlpurifier.php";
+
 // #################### Including debuging functions ##################
 include_once(XOOPS_ROOT_PATH . "/include/debug_functions.php");
 

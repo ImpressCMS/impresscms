@@ -153,7 +153,6 @@ function pages_editpage($page_id) {
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header('admin.php?fct=pages', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
-
 	$page_handler =& xoops_gethandler('page');
 	$page = $page_handler->get($page_id);
 	if (!isset($_POST['page_moduleid']) || $_POST['page_moduleid'] == 0){
@@ -236,10 +235,10 @@ function pageform($id=null){
 	$module_handler =& xoops_gethandler('module');
 	$criteria = new CriteriaCompo(new Criteria('hasmain', 1));
 	$criteria->add(new Criteria('isactive', 1));
-	$moduleslist = $module_handler->getList($criteria, true);
+	$moduleslist = $module_handler->getList($criteria);
 	$module = $module_handler->get(1);
 	$list = array('0'=>'--------------------------',$module->getVar('mid')=>$module->getVar('name'));
-	$moduleslist = array_merge($list,$moduleslist);
+	$moduleslist = $list+$moduleslist;
 	$mid->addOptionArray($moduleslist);
 	$form->addElement($mid,true);
 	

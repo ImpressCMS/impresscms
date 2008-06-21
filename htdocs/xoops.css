@@ -205,3 +205,14 @@ div.cpicon span.unor{
 	font-weight: normal;
 	color: #000;
 }
+
+div#disclaimer{
+	background-color: #eee; 
+	border: #CCC 1px solid; 
+	padding: 2px; 
+	width: 98%; 
+	height: 8em; 
+	overflow: auto; 
+	font-size: 1em; 
+	font-family: verdana,arial, helvetica, sans-serif;
+}

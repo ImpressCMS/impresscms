@@ -239,4 +239,19 @@ define("_SECURITYIMAGE_ERROR","Invalid security code");
 define("_SECURITYIMAGE_GDERROR","<b><font color='#CC0000'>Library GD not installed</font> : <a target='php' href='http://fr2.php.net/manual/fr/ref.image.php'>Manual PHP</a></b><br>");
 define("_SECURITYIMAGE_FONTERROR","<b><font color='#CC0000'>No true type fonts found</font>, verify your installation</b><br>");
 */
+define("_QUERIES", "Queries");
+define("_BLOCKS", "Blocks");
+define("_EXTRA", "Extra");
+define("_TIMERS", "Timers");
+define("_CACHED", "Cached");
+define("_REGENERATES", "Regenerates every %s seconds");
+define("_TOTAL", "Total :");
+define("_ERR_NR", "Error number:");
+define("_ERR_MSG", "Error message:");
+define("_NOTICE", "Notice");
+define("_WARNING", "Warning");
+define("_STRICT", "Strict");
+define("_ERROR", "Error");
+define("_TOOKXLONG", " took %s seconds to load.");
+define("_BLOCK", "Block(s)");
 ?>

@@ -21,17 +21,9 @@ define(ICMSPRELOADHTMLPURIFIER_FINISHCOREBOOT, 10);
 class IcmsPreloadHTMLPurifier extends IcmsPreloadItem
 {
 	function eventStartCoreBoot() {
-		$filename = ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.path.php';
+		$filename = ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.standalone.php';
 		if (file_exists($filename)) {
 			require $filename;
-		}
-		$filename2 = ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.includes.php';
-		if (file_exists($filename2)) {
-			require $filename2;
-		}
-		$filename3 = ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.autoload.php';
-		if (file_exists($filename3)) {
-			require $filename3;
 		}
 	}
 	

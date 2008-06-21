@@ -1,7 +1,11 @@
 <style type="text/css">
-<!--	.bg3 a{color: #fff;} //-->
 	img {vertical-align: middle;}
 </style>
+<!--
+<style type="text/css">
+.bg3 a{color: #fff;} 
+</style>
+//-->
 <div id="<{$icms_id}>">
 
 <{if $icms_table_header}>
@@ -162,7 +166,7 @@
 <{/if}>
 
 <{if $icms_introButtons}>
-	<div style="padding-top:15px; paddig-bottom: 5px;">
+	<div style="padding-top:15px; padding-bottom: 5px;">
 		<form>
 			<{foreach from=$icms_introButtons item=introButton}>
 				<input type="button" name="<{$introButton.name}>" onclick="location='<{$introButton.location}>'" value="<{$introButton.value}>" />

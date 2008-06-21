@@ -164,6 +164,7 @@ function contmanager_index($content_supid,$start=0){
 }
 
 function contmanager_savelist($content_supid) {
+	$err = 0;
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header('admin.php?fct=content', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
@@ -180,10 +181,13 @@ function contmanager_savelist($content_supid) {
 		}
 		$content->setVar('content_updated',time());
 		if ( !$content_handler->insert($content) ) {
-			$msg = _MD_FAILEDIT;
-		} else {
-			$msg = _MD_AM_DBUPDATED;
+			$err++;
 		}
+	}
+	if ( $err > 0 ) {
+		$msg = _MD_FAILEDIT;
+	} else {
+		$msg = _MD_AM_DBUPDATED;
 	}
 	redirect_header('admin.php?fct=content&op=list&content_supid='.$content_supid, 2, $msg);
 }
@@ -382,6 +386,22 @@ function contentform($id=null,$clone=false){
 		$content_uid = $content->getVar('content_uid');
 		$grupos_ids = $gperm_handler->getGroupIds('content_read', $id);
 	}else{
+		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+		$ftitle = _MD_ADDCONTENT;
+		$title = '';
+		$menu = '';
+		$body = '';
+		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style_rtl.css');
+		$weight = 0;
+		$status = 1;
+		$visibility = 3;
+		global $content_supid;
+		$content_uid = $xoopsUser->getVar('uid');
+		$grupos_ids = $xoopsUser->getGroups();
+		if (!in_array(XOOPS_GROUP_ANONYMOUS, $grupos_ids)) {
+			array_push($grupos_ids, XOOPS_GROUP_ANONYMOUS);
+		}
+	   } else {
 		$ftitle = _MD_ADDCONTENT;
 		$title = '';
 		$menu = '';
@@ -396,6 +416,7 @@ function contentform($id=null,$clone=false){
 		if (!in_array(XOOPS_GROUP_ANONYMOUS, $grupos_ids)) {
 			array_push($grupos_ids, XOOPS_GROUP_ANONYMOUS);
 		}
+           }
 	}
 
 	$form = new XoopsThemeForm($ftitle, 'content_form', 'admin.php', "post", true);

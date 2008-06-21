@@ -62,7 +62,8 @@ function xoops_module_list() {
     	$mod = array();
     	$mod['mid'] = $module->getVar('mid');
     	$mod['dirname'] = $module->getVar('dirname');
-    	$mod['name'] = $module -> getVar('name');
+    	$mod['name'] = $module -> getInfo('name');
+    	$mod['title'] = $module -> getVar('name');
     	$mod['image'] = $module -> getInfo('image');
     	$mod['adminindex'] = $module->getInfo('adminindex');
     	$mod['hasadmin'] = $module->getVar('hasadmin');

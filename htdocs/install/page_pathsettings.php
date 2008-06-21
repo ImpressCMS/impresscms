@@ -166,7 +166,7 @@ class PathStuffController {
 	}
 
 	function checkPermissions() {
-		$paths = array( 'mainfile.php', 'uploads', 'templates_c', 'cache' );
+		$paths = array( 'mainfile.php', 'uploads', 'templates_c', 'cache', 'libraries/tcpdf/cache', '/libraries/htmlpurifier/HTMLPurifier/DefinitionCache/Serializer', '/libraries/htmlpurifier/HTMLPurifier/DefinitionCache/Serializer/HTML', '/libraries/htmlpurifier/HTMLPurifier/DefinitionCache/Serializer/CSS', '/libraries/htmlpurifier/HTMLPurifier/DefinitionCache/Serializer/Test', '/libraries/htmlpurifier/HTMLPurifier/DefinitionCache/Serializer/URI' );
 		$errors = array();
 		foreach ( $paths as $path ) {
 			$errors[$path] = $this->makeWritable( "$this->xoopsRootPath/$path" );

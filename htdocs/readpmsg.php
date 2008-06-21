@@ -14,6 +14,8 @@
 
 $xoopsOption['pagetype'] = "pmsg";
 include_once "mainfile.php";
+include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
+$myts =& MyTextSanitizer::getInstance();
 
 if ( !is_object($xoopsUser) ) {
     redirect_header("user.php",0);
@@ -69,7 +71,8 @@ if ( !is_object($xoopsUser) ) {
         }
         echo "</td><td><img src='images/subject/".$pm_arr[0]->getVar("msg_image", "E")."' alt='' />&nbsp;"._PM_SENTC."".formatTimestamp($pm_arr[0]->getVar("msg_time"));
         echo "<hr /><b>".$pm_arr[0]->getVar("subject")."</b><br /><br />\n";
-        echo $pm_arr[0]->getVar("msg_text") . "<br /><br /></td></tr><tr class='foot'><td width='20%' colspan='2' align='left'>";
+ $var = $pm_arr[0]->getVar('msg_text', 'N');
+       echo $myts->displayTarea( $var, 1, 1, 1 ) . "<br /><br /></td></tr><tr class='foot'><td width='20%' colspan='2' align='left'>";
         // we dont want to reply to a deleted user!
         if ( $poster != false ) {
             echo "<a href='#' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?reply=1&amp;msg_id=".$pm_arr[0]->getVar("msg_id")."\",\"pmlite\",800,680);'><img src='".ICMS_URL."/images/icons/reply.gif' alt='"._PM_REPLY."' /></a>\n";

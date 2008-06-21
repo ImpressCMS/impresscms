@@ -36,29 +36,32 @@ if ( $mode == 'popup' ) {
 }
 
 if ( empty( $mode ) ) {
-	$views = array( 'errors', 'queries', 'blocks', 'extra' );
 	$ret .= "\n<div id=\"xo-logger-output\">\n<div id='xo-logger-tabs'>\n";
-	$ret .= "<a href='javascript:xoSetLoggerView(\"\")'>All</a>\n";
-	foreach ( $views as $view ) {
-		$count = count( $this->$view );
-		$ret .= "<a href='javascript:xoSetLoggerView(\"$view\")'>$view ($count)</a>\n";
-	}
+	$ret .= "<a href='javascript:xoSetLoggerView(\"\")'>"._ALL."</a>\n";
+		$count = count( $this->errors );
+		$ret .= "<a href='javascript:xoSetLoggerView(\"errors\")'>"._ERRORS." ($count)</a>\n";
+		$count = count( $this->queries );
+		$ret .= "<a href='javascript:xoSetLoggerView(\"queries\")'>"._QUERIES." ($count)</a>\n";
+		$count = count( $this->blocks );
+		$ret .= "<a href='javascript:xoSetLoggerView(\"blocks\")'>"._BLOCKS." ($count)</a>\n";
+		$count = count( $this->extra );
+		$ret .= "<a href='javascript:xoSetLoggerView(\"extra\")'>"._EXTRA." ($count)</a>\n";
 	$count = count( $this->logstart );
-	$ret .= "<a href='javascript:xoSetLoggerView(\"timers\")'>timers ($count)</a>\n";
+	$ret .= "<a href='javascript:xoSetLoggerView(\"timers\")'>"._TIMERS." ($count)</a>\n";
 	$ret .= "</div>\n";
 }
 
 if ( empty($mode) || $mode == 'errors' ) {
 	$types = array(
-		E_USER_NOTICE => 'Notice',
-		E_USER_WARNING => 'Warning',
-		E_USER_ERROR => 'Error',
-		E_NOTICE => 'Notice',
-		E_WARNING => 'Warning',
-		E_STRICT => 'Strict',
+		E_USER_NOTICE => _NOTICE,
+		E_USER_WARNING => _WARNING,
+		E_USER_ERROR => _ERROR,
+		E_NOTICE => _NOTICE,
+		E_WARNING => _WARNING,
+		E_STRICT => _STRICT,
 	);
 	$class = 'even';
-	$ret .= '<table id="xo-logger-errors" class="outer"><tr><th>Errors</th></tr>';
+	$ret .= '<table id="xo-logger-errors" class="outer"><tr><th>'._ERRORS.'</th></tr>';
 	foreach ( $this->errors as $error ) {
 		$ret .= "\n<tr><td class='$class'>";
 		$ret .= isset( $types[ $error['errno'] ] ) ? $types[ $error['errno'] ] : 'Unknown';
@@ -71,29 +74,29 @@ if ( empty($mode) || $mode == 'errors' ) {
 
 if ( empty($mode) || $mode == 'queries' ) {
 	$class = 'even';
-	$ret .= '<table id="xo-logger-queries" class="outer"><tr><th>Queries</th></tr>';
+	$ret .= '<table id="xo-logger-queries" class="outer"><tr><th>'._QUERIES.'</th></tr>';
     foreach ($this->queries as $q) {
         if (isset($q['error'])) {
-            $ret .= '<tr class="'.$class.'"><td><span style="color:#ff0000;">'.htmlentities($q['sql']).'<br /><b>Error number:</b> '.$q['errno'].'<br /><b>Error message:</b> '.$q['error'].'</span></td></tr>';
+            $ret .= '<tr class="'.$class.'"><td><span style="color:#ff0000;">'.htmlentities($q['sql']).'<br /><b>'._ERR_NR.'</b> '.$q['errno'].'<br /><b>'._ERR_MSG.'</b> '.$q['error'].'</span></td></tr>';
         } else {
             $ret .= '<tr class="'.$class.'"><td>'.htmlentities($q['sql']).'</td></tr>';
         }
         $class = ($class == 'odd') ? 'even' : 'odd';
     }
-    $ret .= '<tr class="foot"><td>Total: <span style="color:#ff0000;">'.count($this->queries).'</span> queries</td></tr></table>';
+    $ret .= '<tr class="foot"><td>'._TOTAL.' <span style="color:#ff0000;">'.count($this->queries).'</span> '._QUERIES.'</td></tr></table>';
 }
 if ( empty($mode) || $mode == 'blocks' ) {
     $class = 'even';
-    $ret .= '<table id="xo-logger-blocks" class="outer"><tr><th colspan="2">Blocks</th></tr>';
+    $ret .= '<table id="xo-logger-blocks" class="outer"><tr><th colspan="2">'._BLOCKS.'</th></tr>';
     foreach ($this->blocks as $b) {
         if ($b['cached']) {
-            $ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($b['name']).':</b> Cached (regenerates every '.intval($b['cachetime']).' seconds)</td></tr>';
+            $ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($b['name']).':</b> '._CACHED.' : '.sprintf(_REGENERATES, intval($b['cachetime'])).'</td></tr>';
         } else {
-            $ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($b['name']).':</b> No Cache</td></tr>';
+            $ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($b['name']).':</b> '._NOCACHE.'</td></tr>';
         }
         $class = ($class == 'odd') ? 'even' : 'odd';
     }
-    $ret .= '<tr class="foot"><td>Total: <span style="color:#ff0000;">'.count($this->blocks).'</span> blocks</td></tr></table>';
+    $ret .= '<tr class="foot"><td>'._TOTAL.' <span style="color:#ff0000;">'.count($this->blocks).'</span> '._BLOCK.'</td></tr></table>';
 }
 if ( empty($mode) || $mode == 'extra' ) {
 	$this->addExtra( 'Included files', count ( get_included_files() ) . ' files' );
@@ -113,7 +116,7 @@ if ( empty($mode) || $mode == 'extra' ) {
 	}
 	
     $class = 'even';
-    $ret .= '<table id="xo-logger-extra" class="outer"><tr><th colspan="2">Extra</th></tr>';
+    $ret .= '<table id="xo-logger-extra" class="outer"><tr><th colspan="2">'._EXTRA.'</th></tr>';
     foreach ($this->extra as $ex) {
         $ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($ex['name']).':</b> '.htmlspecialchars($ex['msg']).'</td></tr>';
         $class = ($class == 'odd') ? 'even' : 'odd';
@@ -122,9 +125,9 @@ if ( empty($mode) || $mode == 'extra' ) {
 }
 if ( empty($mode) || $mode == 'timers' ) {
     $class = 'even';
-    $ret .= '<table id="xo-logger-timers" class="outer"><tr><th colspan="2">Timers</th></tr>';
+    $ret .= '<table id="xo-logger-timers" class="outer"><tr><th colspan="2">'._TIMERS.'</th></tr>';
     foreach ( $this->logstart as $k => $v ) {
-        $ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($k).'</b> took <span style="color:#ff0000;">' . sprintf( "%.03f", $this->dumpTime($k) ) . '</span> seconds to load.</td></tr>';
+        $ret .= '<tr><td class="'.$class.'"><b>'.htmlspecialchars($k).'</b> '.sprintf(_TOOKXLONG, '<span style="color:#ff0000;">' . sprintf( "%.03f", $this->dumpTime($k) ) . '</span>').'</td></tr>';
         $class = ($class == 'odd') ? 'even' : 'odd';
     }
     $ret .= '</table>';

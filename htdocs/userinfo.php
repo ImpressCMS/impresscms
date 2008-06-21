@@ -120,7 +120,7 @@ $xoopsTpl->assign('lang_interest', _US_INTEREST);
 $xoopsTpl->assign('user_interest', $thisUser->getVar('user_intrest'));
 $xoopsTpl->assign('lang_extrainfo', _US_EXTRAINFO);
 $var = $thisUser->getVar('bio', 'N');
-$xoopsTpl->assign('user_extrainfo', $myts->makeTareaData4Show( $var,0,1,1) );
+$xoopsTpl->assign('user_extrainfo', $myts->displayTarea( $var,0,1,1) );
 $xoopsTpl->assign('lang_statistics', _US_STATISTICS);
 $xoopsTpl->assign('lang_membersince', _US_MEMBERSINCE);
 $var = $thisUser->getVar('user_regdate');
@@ -137,7 +137,7 @@ $xoopsTpl->assign('lang_notregistered', _US_NOTREGISTERED);
             $xoopsTpl->assign('user_showsignature', true);
 $xoopsTpl->assign('lang_signature', _US_SIGNATURE);
 $var = $thisUser->getVar('user_sig', 'N');
-$xoopsTpl->assign('user_signature', $myts->makeTareaData4Show( $var, 0, 1, 1 ) );
+$xoopsTpl->assign('user_signature', $myts->displayTarea( $var, 1, 1, 1 ) );
         }
 
 if ($thisUser->getVar('user_viewemail') == 1) {

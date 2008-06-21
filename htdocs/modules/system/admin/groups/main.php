@@ -146,6 +146,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 				$modperm->setVar('gperm_modid', 1);
 				$gperm_handler->insert($modperm);
 			}
+			$groupmanager_gids = empty($groupmanager_gids) ? array() : $groupmanager_gids;
         	foreach ($groupmanager_gids as $gm_gid) {
 				$modperm =& $gperm_handler->create();
 				$modperm->setVar('gperm_groupid', $groupid);

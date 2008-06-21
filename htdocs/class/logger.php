@@ -89,14 +89,14 @@ class XoopsLogger {
      * Start a timer
      * @param   string  $name   name of the timer
      */
-    function startTime($name = 'XOOPS') {
+    function startTime($name = 'ICMS') {
         $this->logstart[$name] = $this->microtime();
     }
     /**
      * Stop a timer
      * @param   string  $name   name of the timer
      */
-    function stopTime($name = 'XOOPS') {
+    function stopTime($name = 'ICMS') {
         $this->logend[$name] = $this->microtime();
     }
     /**
@@ -215,7 +215,7 @@ class XoopsLogger {
      * @param   string  $name   name of the counter
      * @return  float   current execution time of the counter
      */
-    function dumpTime( $name = 'XOOPS' ) {
+    function dumpTime( $name = 'ICMS' ) {
         if ( !isset($this->logstart[$name]) ) {
             return 0;
         }

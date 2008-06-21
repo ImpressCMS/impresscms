@@ -141,6 +141,15 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		 * @todo trap error
 		 */
 	}
+	if (is_dir($vars['TRUST_PATH'] . '/cache/htmlpurifier/configs'))
+	{
+		if (!icms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/configs/HTML') && !icms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/configs/CSS') && !icms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/configs/URI') && !icms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/configs/Test'))
+		{
+			/**
+			 * @todo trap error
+			 */
+		}
+	}
 	
 	if ( empty( $error ) ) {
 		$wizard->redirectToPage( '+1' );

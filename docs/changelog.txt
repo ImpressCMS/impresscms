@@ -1,17 +1,44 @@
 ImpressCMS ChangeLog
 
 =============================================
-Unreleased : ImpressCMS 1.1 Alpha 1
+Unreleased : ImpressCMS 1.1 Alpha 2
 =============================================
 
+- Added: new icms.htmlpurifier.php class file, can now be called anytime in the same way as module.textsanitizer.php. (vaughan)
+- Added: new sanitizing functions in html purifier class. displayHTMLarea(), previewHTMLarea() & icms_escapeHTMLValue(). we can configure these in future. (vaughan)
 - Added: New encryption methods, admin can now select from multiple PW encryptions, such as: SHA256, SHA384, SHA512, Whirlpool etc. (vaughan)
 - Added: New option in control panel for hidden contents. (stranger)
 - Added: New date cases for our ext_date_function. (stranger)
+- Added: _CHARSET to function htmlSpecialChars() in module.textsanitizer, by default htmlspecialchars encodes/decodes using ISO unless charset is explicitly defined. (Vaughan/Stranger)
+- Added: New field type for Text Area. (stranger)
+- Added: New block for social bookmarking. (sato-san/stranger)
+- Added: New field type in installation proccess. (stranger)
+- Added: New function to improve converting to utf-8 (upgarde proccess). (stranger)
+- Added: New library for PDF. (stranger)
+- Added: New definitions to easier include the PDF library. (stranger)
+- Added: Task # 1914769 Including PHP class for generating PDF documents, in the core. (stranger)
+- Added: New Language constants for the logger. (stranger)
+- Added: New page to introduce ImpressCMS after a clean installation. (stranger)
+- Added: New custom internal page/link directed to our introduce page. (stranger)
+- Added: New start page for ImpressCMS (our custom page). (stranger)
+- Added: Social bookmark block to be shown as default. (stranger)
+- Added: Search block to be shown as default. (stranger)
+- Added: Themes block to be shown as default. (stranger)
+- Added: 3 new plugins for tinymce. Xoopsimagemanager, XoopsEmotions, XoopsCodeQuote (luciorota/real_therplima)
 
 - Improved : The size of pop-ups for TinyMCE. (sato-san)
+- Improved : Made a suffix for shorten date cases, for servers with O.S windows . (stranger)
+- Improved : Removing the logger out of array, now each part is running separately. (stranger)
+- Improved : Xoops_rtl.css has been reformed to let the logger be rtl. (stranger)
+- Improved : Updated PDF library to the latest version 3.1.000 (stranger)
+- Improved : All 3 theme set to be selectable. (stranger)
 
 - Changed : Small change with the term "Personalization" instead of "Personalisation". (malanciault)
 - Changed : Encryption method in preferences to select field type instead of yesno. (vaughan)
+- Changed : Replacing the string on the footer in the install process with date func. (stranger)
+- Changed : updated htmlpurifier library from 3.1.0 rc1 to 3.1.0 Final (vaughan)
+- Changed : undoHtmlSpecialChars() now uses php 5 function, htmlspecialchars_decode($var, ENT_NOQUOTES, _CHARSET)  (vaughan/stranger)
+- Changed : Logger terms like XOOPS have been changed to ICMS.  (vaughan/stranger)
 
 - Fixed : In the control panel, changing the top-left logo link to default to the home page of the site as discussed here http://lnk.in/5zvw . (stranger/malanciault))
 - Fixed : #1971839 - Undefined variable: key in \kernel\icmskernel.php on line 88. (trabis/malanciault)
@@ -37,8 +64,19 @@ Unreleased : ImpressCMS 1.1 Alpha 1
 - Fixed : #1982512 - Undefined message in file /pmlite.php line 134. (stranger)
 - Fixed : #1982601 - Signature length needs to be defined by users. (stranger)
 - Fixed : #1871202 - Avatar and Karma. (stranger)
-
-- Removed : All language files of phpmailer, except English, have been removed. (stranger)
+- Fixed : #1980591 - install/makedata.php is hardcode. (stranger)
+- Fixed : #1986411 - (html) text not showing in signature and pm. (stranger)
+- Fixed : #1986035 - html purifier causing (encoding) problems with utf-8 language. (stranger)
+- Fixed : #1972006 - Notice and warning on updating Anonymous Group permissions. (real_therplima)
+- Fixed : #1984932 - Undefined variable: msg in file... (real_therplima)
+- Fixed : #1983318 - Bug in disclaimer + Multilanguage (user side). (real_therplima)
+- Fixed : #1986750 - Footer problems in ie6. (real_therplima)
+- Fixed : All language files of phpmailer, except English, have been removed. (stranger)
+- Fixed : All "Thumbs.db" files have been removed. (stranger/davidl2)
+- Fixed : Colation is not working with mysql 4.1.22 but with mysql>5. (trabis/stranger)
+- Fixed : #1964826 - missing DB_PCONNECT_HELP on install. (stranger)
+- Fixed : #1991855 - The cache-folder of HTMLPurifier after installation. (stranger)
+- Fixed : #1990733 - "Link Manager" saved not the module. (real_therplima)
 
 =============================================
 2008-05-22 : ImpressCMS 1.1 Alpha 1
@@ -124,7 +162,7 @@ Unreleased : ImpressCMS 1.1 Alpha 1
 - Improved : Added possibility to change current encoding while upgrading. (stranger)
 - Improved : Libraries default encoding is now UTF-8. (stranger)
 - Improved : New smarty variables on themes for "google analytics code" and "google meta tag". (stranger)
-- Improved : Changing fiih link (after upgrading) to a new place for updating system module, right after upgrading is done. (stranger)
+- Improved : Changing finish link (after upgrading) to a new place for updating system module, right after upgrading is done. (stranger)
 - Improved : Improving the language constants of System Admin > Groups (malanciault)
 - Improved : Added theme_rtl.html to all themes. (stranger)
 - Improved : Admin templates to use their style from style files, to make icms more compatible with rtl languages. (stranger)

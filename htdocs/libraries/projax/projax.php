@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Projax
@@ -12,14 +13,15 @@
  * @since		Version 0.2
  * @filesource
  */
+if (class_exists('Projax'))
+{
+	include("classes/JavaScript.php");
+	include("classes/Prototype.php");
+	include("classes/Scriptaculous.php");
 
-include("classes/JavaScript.php");
-include("classes/Prototype.php");
-include("classes/Scriptaculous.php");
-
-// For $projax = new Projax();
-class Projax extends Scriptaculous{
+	// For $projax = new Projax();
+	class Projax extends Scriptaculous{
+	}
 }
-
 
 ?>

@@ -14,7 +14,7 @@ html, body {
 	font-size: 10pt;
 }
 
-#xo-canvas {
+#icms-canvas {
 	border-top: 2px solid #DDDDFF;
 	border-left: 2px solid #DDDDFF;
 	border-right: 2px solid #DDDDFF;
@@ -54,18 +54,18 @@ h6 {font-size: .8em;}
 
 /* ------ Header rules ------ */
 
-#xo-header {
+#icms-header {
 	clear: both;
 	height: 80px;
 	position: relative;
 	background: url(img/bghead.png) repeat-x;
 }
 
-#xo-headerlogo {
+#icms-headerlogo {
 	float: left;
 }
 
-#xo-headerbanner {
+#icms-headerbanner {
 	position:relative;
 	top:10px;
 	right:20px;
@@ -74,7 +74,7 @@ h6 {font-size: .8em;}
 
 /* ------ Header top menu navigation rules ------ */
 
-#xo-globalnav {
+#icms-globalnav {
 	border-bottom: 1px solid #ddd;
 	background-image: url(img/hbar.gif);
 	clear: both;
@@ -83,17 +83,17 @@ h6 {font-size: .8em;}
 	
 }
 
-#xo-globalnav ul {
+#icms-globalnav ul {
 	list-style-type: none;
 	margin: 0px;
 	padding: 2px 0 0 0;
 }
 
-#xo-globalnav li {
+#icms-globalnav li {
 	display: inline;
 }
 
-#xo-globalnav li a {
+#icms-globalnav li a {
 	float: left;
 	text-decoration: none;
 	text-align: center;
@@ -101,41 +101,41 @@ h6 {font-size: .8em;}
 	padding-right: 20px;
 }
 
-#xo-globalnav li a:hover {
+#icms-globalnav li a:hover {
 }
 
 /* ---------- Column left/right rules ---------- */
 
-#xo-canvas-rightcolumn {}
-#xo-canvas-rightcolumn a {}
-#xo-canvas-rightcolumn a:hover {}
+#icms-canvas-rightcolumn {}
+#icms-canvas-rightcolumn a {}
+#icms-canvas-rightcolumn a:hover {}
 
-#xo-canvas-leftcolumn {}
-#xo-canvas-leftcolumn a {}
-#xo-canvas-leftcolumn a:hover {}
+#icms-canvas-leftcolumn {}
+#icms-canvas-leftcolumn a {}
+#icms-canvas-leftcolumn a:hover {}
 
 /* ------ Main content ------ */
 
-#xo-canvas-content {	
+#icms-canvas-content {	
 	line-height: 1.3em;
 }
 
 /* lists */
-#xo-canvas-content ul {margin: 5px; padding: 2px; list-style: decimal inside; text-align: left;}
-#xo-canvas-content li {margin-left: 5px; color: #000; background-color: inherit; line-height: 1.4em; list-style: circle;}
+#icms-canvas-content ul {margin: 5px; padding: 2px; list-style: decimal inside; text-align: left;}
+#icms-canvas-content li {margin-left: 5px; color: #000; background-color: inherit; line-height: 1.4em; list-style: circle;}
 
-#xo-page {
+#icms-page {
 	padding: 0 .5em;
 }
 
 /* ---------- Module display rules ---------- */
 
-#xo-content {
+#icms-content {
 	padding: 15px 1%;
 }
 
 /* ---------- Redirect ------------ */
-#xo-redirect {
+#icms-redirect {
 	margin: 40px 0;
 	margin-left: auto;
 	margin-right: auto;
@@ -149,7 +149,7 @@ h6 {font-size: .8em;}
 	border: 2px solid #DDDDFF;
 }
 /* ---------- Site close ------------ */
-#xo-siteclose-login {
+#icms-siteclose-login {
 	width: 270px;
 	margin-left: auto;
 	margin-right: auto; 	
@@ -157,7 +157,7 @@ h6 {font-size: .8em;}
 	margin-top: 40px;
 	margin-bottom: 20px;
 }
-#xo-siteclose-login h2 {
+#icms-siteclose-login h2 {
 	background-color: #f3ac03;
 	font-weight: bold;
 	font-size: 1em; 
@@ -167,43 +167,46 @@ h6 {font-size: .8em;}
 	margin-bottom: 0px;
 	text-align: center;	
 }
-#xo-siteclose-login form {
+#icms-siteclose-login form {
 	padding: 0px;
 	margin: 0px;	
 }
-#xo-siteclose-login div{
+#icms-siteclose-login div{
 	padding: 6px;
 }
-#xo-siteclose-login span.left {
+#icms-siteclose-login span.left {
 	float: left;
 	padding-bottom: 3px;
 }
-#xo-siteclose-login span.right {
+#icms-siteclose-login span.right {
 	float: right;
 	padding-right: 3px;
 	padding-bottom: 3px;
 }
-#xo-siteclose-login div.button {
+#icms-siteclose-login div.button {
 	text-align: right;
 	clear: both;	
 	padding-right: 0px;
 }
 /* ---------- Footer rules ---------- */
 
-#xo-footer {
+#icms-footer {
 	text-align:			center;
 	font-size:			90%;
 	color:				#666;
 	margin:				0px;
 	background-image: url(img/hbar.gif);
+        background-repeat: repeat-x;
+	clear: both;
+	height: 20px;
 }
 
-#xo-footer a {
+#icms-footer a {
 	color:				#333;
 }
 
 /* ----------  mode debug  ---------- */
-
+/* This is also in xoops.css and this is generated in the logger class */
 #xo-logger-output {
 	font-size:			80%;
 }
