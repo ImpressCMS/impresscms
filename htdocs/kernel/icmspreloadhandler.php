@@ -28,7 +28,7 @@ class IcmsPreloadHandler {
 	 * @var array $_preloadEventsArray array containing a list of all events for all preload file, indexed by event name and sorted by order ox execution
 	 */
 	var $_preloadEventsArray=array();
-	
+
 	/**
 	 * Constructor
      *
@@ -37,11 +37,14 @@ class IcmsPreloadHandler {
 	function IcmsPreloadHandler() {
 		$preloadFilesArray = XoopsLists::getFileListAsArray(ICMS_PRELOAD_PATH);
 		foreach ($preloadFilesArray as $filename) {
-			$this->_preloadFilesArray[] = $filename;
-			$this->addPreloadEvents($filename);
+			// exclude index.html
+			if ($filename != 'index.html') {
+				$this->_preloadFilesArray[] = $filename;
+				$this->addPreloadEvents($filename);
+			}
 		}
 	}
-	
+
 	/**
 	 * Add the events defined in filename
 	 *
@@ -49,25 +52,25 @@ class IcmsPreloadHandler {
 	 */
 	function addPreloadEvents($filename) {
 		include_once ICMS_PRELOAD_PATH . "/$filename";
-		
+
 		$classname = $this->getClassName($filename);
 		$preloadItem = new $classname();
-		
+
 		$class_methods = get_class_methods($classname);
 		foreach($class_methods as $method) {
 			if (strpos($method, 'event') === 0) {
 				$preload_event = strtolower(str_replace('event', '', $method));
-				
+
 				$preload_event_array = array(
 											'object' => &$preloadItem,
 											'method' => $method
 										);
-				
+
 				$preload_event_weight_define_name = strtoupper($classname) . '_' . strtoupper($preload_event);
-				 
+
 				if (defined($preload_event_weight_define_name)) {
 					$preload_event_weight = constant($preload_event_weight_define_name);
-					$this->_preloadEventsArray[$preload_event][$preload_event_weight] = $preload_event_array;	 
+					$this->_preloadEventsArray[$preload_event][$preload_event_weight] = $preload_event_array;
 				} else {
 					$this->_preloadEventsArray[$preload_event][] = $preload_event_array;
 				}
@@ -95,7 +98,7 @@ class IcmsPreloadHandler {
 
 	/**
 	 * Triggers a specific event on all the libraries
-	 * 
+	 *
 	 * Here are the currently supported events:
 	 * - finishCoreBoot : this event is triggered at the end of the core booting process (end of include/common.php)
 	 * - adminHeader : this event is triggered when calling xoops_cp_header() and is used to output content in the head section of the admin side
@@ -126,7 +129,7 @@ class IcmsPreloadHandler {
      *
      */
 	function getClassName($filename) {
-		return 'IcmsPreload' . ucfirst(str_replace('.php', '', $filename)); 
+		return 'IcmsPreload' . ucfirst(str_replace('.php', '', $filename));
 	}
 
 }
@@ -149,6 +152,6 @@ class IcmsPreloadHandler {
 class IcmsPreloadItem {
 
 	function IcmsPreloadItem() {
-	}		
+	}
 }
 ?>

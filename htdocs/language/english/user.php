@@ -158,6 +158,28 @@ define('_US_CHANGE_PASSWORD', 'Change Password?');
 define('_US_POSTSNOTENOUGH','Sorry, at least you need to have <b>%s</b> posts, to be able to upload your avatar.');
 define('_US_UNCHOOSEAVT', 'Until you reach this amount you can choose avatar from the list below.');
 
+// openid
+define('_US_OPENID_NOPERM', 'No permission.');
+define('_US_OPENID_FORM_CAPTION', 'OpenID');
+define('_US_OPENID_FORM_DSC', '');
+define('_US_OPENID_EXISTING_USER', 'Existing user');
+define('_US_OPENID_EXISTING_USER_LOGIN_BELOW', 'If you are an existing user, login below with your username and password in order to associate your user account with this OpenID.');
+define('_US_OPENID_NOM_MEMBER', 'No account yet ?');
+define('_US_OPENID_NON_MEMBER_DSC', 'If you do not yet have an account on this site, please enter the username you would like to use and we will create an account for you, associated with this OpenID.');
+define('_US_OPENID_YOUR', 'Your OpenID');
+define('_US_OPENID_LINKED_AUTH_FAILED', 'The username and password you entered did not match a valid user. Please try again.');
+define('_US_OPENID_LINKED_AUTH_NOT_ACTIVATED', 'The user account which your are loging in with has not been activated. Please activate your account and then try again.');
+define('_US_OPENID_LINKED_AUTH_CANNOT_SAVE', 'Sorry, an error occured. It was not possible to update this user account with the authenticated OpenID.');
+define('_US_OPENID_NEW_USER_UNAME_TOO_SHORT', 'The username you have inputed is too short. Please try again.');
+define('_US_OPENID_NEW_USER_UNAME_EXISTS', 'The username your have inputed is already used. Please try again.');
+define('_US_OPENID_NEW_USER_CANNOT_INSERT', 'Sorry, an error occured. It was not possible to create the new user. Please try again.');
+define('_US_OPENID_NEW_USER_CANNOT_INSERT_INGROUP', 'Sorry, an error occured. It was not possible to add the new user in the proper groups. Please contact the administrator of the site.');
+define('_US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED', 'The newly created user has not been activated.');
+define('_US_OPENID_NEW_USER_CREATED', 'A new user was created with the username %s. Automatically logging you in...');
+define('_US_OPENID_LINKED_DONE', 'Your OpenID has been linked with the user %S. Logging you in...');
+define('_US_ALREADY_LOGED_IN', 'You already are logged in, we are sorry but, you can\'t register while you\'re logged in the site');
+define('_US_ALLOWVIEWEMAILOPENID','Allow other users to view my email address and my OpenID');
+
 /*
 define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled');
 define('_US_AUTORESIZE_ATV_DESC', 'Images larger than %u x %u will be automatically resized, keeping the aspect ratio, so that it is within the maximum pixels set. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.');

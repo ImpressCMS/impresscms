@@ -89,7 +89,7 @@ H1
     FONT-SIZE: 150%;
     MARGIN: 0px;
     COLOR: #fff;
-    FONT-FAMILY: Lucida Grande, Trebuchet MS, sans-serif;
+    FONT-FAMILY: Tahoma, Lucida Grande, Trebuchet MS, sans-serif;
     BACKGROUND-COLOR: #ffb500
 }
 H1:unknown
@@ -147,11 +147,11 @@ FORM
 }
 H1
 {
-    FONT-FAMILY: Lucida Grande, Trebuchet MS, sans-serif
+    FONT-FAMILY: Tahoma, Lucida Grande, Trebuchet MS, sans-serif
 }
 H2
 {
-    FONT-FAMILY: Lucida Grande, Trebuchet MS, sans-serif
+    FONT-FAMILY: Tahoma, Lucida Grande, Trebuchet MS, sans-serif
 }
 H2
 {
@@ -269,7 +269,7 @@ LABEL
 }
 #help_button
 {
-    FLOAT: right;
+    FLOAT: left;
     CURSOR: pointer;
 }
 .xoform-help
@@ -336,10 +336,10 @@ BUTTON
 }
 .page#dbsettings SELECT
 {
-	WIDTH: 7em;
-	HEIGHT:3.5em;
+	WIDTH: 20em;
+	HEIGHT: 1.5em;
 	FONT-SIZE:100%;
-	MARGIN-LEFT:40%;
+	direction:ltr;
 }
 .error
 {

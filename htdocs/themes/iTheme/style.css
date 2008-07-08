@@ -123,7 +123,6 @@ h6 {font-size: .8em;}
 
 #xo-canvas-content {	
 	line-height: 1.3em;
-
 }
 
 /* lists */
@@ -195,7 +194,6 @@ h6 {font-size: .8em;}
 	padding-right: 0px;
 }
 /* ---------- Footer rules ---------- */
-.spacer {margin: 5px auto;}
 #xo-footer {
 	padding-top: 10px;
 	text-align: center;
@@ -204,7 +202,6 @@ h6 {font-size: .8em;}
 	margin-top: 5px;
 	background: url(img/foot_bg.jpg) repeat-x;
 	background-color: #59b9e4;
-	width: 100%;
 }
 
 #xo-footer a {

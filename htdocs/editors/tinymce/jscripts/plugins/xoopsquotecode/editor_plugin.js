@@ -39,6 +39,16 @@
 				});
 			});
 
+			ed.addCommand('mceIcmshide', function() {
+				ed.windowManager.open({
+					file : url + '/icmshide.htm',
+					width : 460 + parseInt(ed.getLang('xoopsquotecode.delta_width', 0)),
+					height : 300 + parseInt(ed.getLang('xoopsquote.delta_height', 0)),
+					inline : 1
+				}, {
+					plugin_url : url
+				});
+			});
 			// Register buttons
 			ed.addButton('xoopsquote', {
 				title : 'xoopsquotecode.quote_desc',
@@ -51,6 +61,11 @@
 				cmd : 'mceXoopscode'
 				});
 		},
+			ed.addButton('icmshide', {
+				title : 'xoopsquotecode.hide_desc',
+				image : url + '/img/icmshide.gif',
+				cmd : 'mceIcmshide'
+				});
 
 		getInfo : function() {
 			return {

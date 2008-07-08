@@ -11,10 +11,10 @@ Name:
 	TCPDF
 
 Version:
-	3.1.000
+	4.0.001
 	
 Release date:
-	2008-06-11
+	2008-07-05
 
 Author:
 	Nicola Asuni 
@@ -29,7 +29,7 @@ Copyright (c) 2001-2008:
 	
 URLs:
 	http://www.tcpdf.org
-	http://tcpdf.sourceforge.net/
+	http://www.sourceforge.net/projects/tcpdf
 	
 Description:
 	TCPDF is a PHP class for generating PDF files on-the-fly without requiring external extensions.
@@ -40,11 +40,11 @@ Main Features:
 	* supports all ISO page formats;
 	* supports UTF-8 Unicode and Right-To-Left languages;
 	* supports document encryption;
-	* includes methods to publish some xhtml code;
-	* includes graphic and transformation methods;
+	* includes methods to publish some XHTML code;
+	* includes graphic (geometric) and transformation methods;
 	* includes bookmarks;
 	* includes Javascript and forms support;
-	* includes a method to print various barcode formats (requires GD library);
+	* includes a method to print various barcode formats;
 	* supports TrueTypeUnicode, TrueType, Type1 and encoding;
 	* supports custom page formats, margins and units of measure;
 	* includes methods for page header and footer management;
@@ -66,7 +66,7 @@ Installation (full instructions on http://www.tcpdf.org):
 Source Code Documentation:
 	doc/index.html
 	
-For Additional Documentation check:
+For Additional Documentation:
 	http://www.tcpdf.org
 
 License

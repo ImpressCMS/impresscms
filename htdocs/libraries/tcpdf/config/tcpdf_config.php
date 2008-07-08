@@ -31,7 +31,6 @@
 
 // First we need to include the mainfile.
 include_once '../../../mainfile.php';
-$myts =& MyTextSanitizer::getInstance();
 // If you define the constant K_TCPDF_EXTERNAL_CONFIG, the following settings will be ignored.
 if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	

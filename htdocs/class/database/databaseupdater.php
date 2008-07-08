@@ -860,20 +860,6 @@ class IcmsDatabaseupdater {
 
 	    ob_start();
 
-		$table = new IcmsDatabasetable($dirname . '_meta');
-	    if (!$table->exists()) {
-		    $table->setStructure("
-			  `metakey` varchar(50) NOT NULL default '',
-			  `metavalue` varchar(255) NOT NULL default '',
-			  PRIMARY KEY (`metakey`)");
-			$table->setData("'version',0");
-			if (!$this->updateTable($table)) {
-		        /**
-		         * @todo trap the errors
-		         */
-		    }
-	    }
-
 	    $dbVersion  = $module->getDbversion();
 
 	    $newDbVersion = constant(strtoupper($dirname . '_db_version')) ? constant(strtoupper($dirname . '_db_version')) : 0;

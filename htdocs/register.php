@@ -31,6 +31,9 @@ $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 if ($xoopsConfigUser['allow_register'] == 0 && $xoopsConfigUser['activation_type'] != 3) {
 	redirect_header('index.php', 6, _US_NOREGISTER);
 }
+if($_SESSION['xoopsUserId']){
+	redirect_header('index.php', 6, _US_ALREADY_LOGED_IN);
+}
 /**
  *  Validates username, email address and password entries during registration
  *  Username is validated for uniqueness and length, password is validated for length and strictness,

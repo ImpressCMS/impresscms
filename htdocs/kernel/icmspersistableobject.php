@@ -14,9 +14,14 @@ if (!defined("XOOPS_ROOT_PATH")) {
     die("XOOPS root path not defined");
 }
 
+icms_loadLanguageFile('system', 'common');
+
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobjecthandler.php";
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistablepermission.php";
+include_once ICMS_ROOT_PATH . "/kernel/icmspersistableregistry.php";
+
+
 
 if (!defined('XOBJ_DTYPE_SIMPLE_ARRAY')) define('XOBJ_DTYPE_SIMPLE_ARRAY', 101);
 if (!defined('XOBJ_DTYPE_CURRENCY')) define('XOBJ_DTYPE_CURRENCY', 200);
@@ -359,7 +364,7 @@ class IcmsPersistableObject extends XoopsObject {
             $ret[$key] = $value;
         }
         if ($this->handler->identifierName != "") {
-        	$controller = new IcmsPersistableObjectController($this->handler);
+        	$controller = new IcmsPersistableController($this->handler);
         	/**
 	    	 * Addition of some automatic value
 	    	 */
@@ -530,7 +535,7 @@ class IcmsPersistableObject extends XoopsObject {
      */
     function getAdminViewItemLink($onlyUrl=false)
     {
-    	$controller = new IcmsPersistableObjectController($this->handler);
+    	$controller = new IcmsPersistableController($this->handler);
     	return $controller->getAdminViewItemLink($this, $onlyUrl);
     }
 
@@ -542,25 +547,25 @@ class IcmsPersistableObject extends XoopsObject {
      */
     function getItemLink($onlyUrl=false)
     {
-    	$controller = new IcmsPersistableObjectController($this->handler);
+    	$controller = new IcmsPersistableController($this->handler);
     	return $controller->getItemLink($this, $onlyUrl);
     }
 
     function getEditItemLink($onlyUrl=false, $withimage=true, $userSide=false)
     {
-    	$controller = new IcmsPersistableObjectController($this->handler);
+    	$controller = new IcmsPersistableController($this->handler);
     	return $controller->getEditItemLink($this, $onlyUrl, $withimage, $userSide);
     }
 
     function getDeleteItemLink($onlyUrl=false, $withimage=false, $userSide=false)
     {
-    	$controller = new IcmsPersistableObjectController($this->handler);
+    	$controller = new IcmsPersistableController($this->handler);
     	return $controller->getDeleteItemLink($this, $onlyUrl, $withimage, $userSide);
     }
 
     function getPrintAndMailLink()
     {
-    	$controller = new IcmsPersistableObjectController($this->handler);
+    	$controller = new IcmsPersistableController($this->handler);
     	return $controller->getPrintAndMailLink($this);
     }
 

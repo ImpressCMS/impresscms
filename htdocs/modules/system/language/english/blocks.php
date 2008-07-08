@@ -57,4 +57,9 @@ if (!defined('_CT_DELETE_CONTENT')){define('_CT_DELETE_CONTENT','Delete Content'
 if (!defined('_CT_PUBLISHEDBY')){define('_CT_PUBLISHEDBY','Published by');}
 if (!defined('_CT_READS')){define('_CT_READS','reads');}
 if (!defined('_CT_ON')){define('_CT_ON','on');}
+
+// openid
+define("_MB_SYSTEM_OPENID_LOGIN", "Login with your OpenID");
+define("_MB_SYSTEM_OPENID_URL", "Your OpenID URL:");
+define("_MB_SYSTEM_OPENID_NORMAL_LOGIN", "Go back to normal login");
 ?>

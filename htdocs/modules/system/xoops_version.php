@@ -109,6 +109,10 @@ $modversion['templates'][$i]['file'] = 'system_content.html';
 $modversion['templates'][$i]['description'] = 'Template of content pages';
 
 $i++;
+$modversion['templates'][$i]['file'] = 'system_openid.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
 $modversion['templates'][$i]['file'] = 'blocks/system_block_contentmenu_structure.html';
 $modversion['templates'][$i]['description'] = 'Template of content pages';
 

@@ -13,7 +13,7 @@
 * @version		$Id$
 */
 
-set_magic_quotes_runtime(0);
+@set_magic_quotes_runtime(0);
 if (function_exists('mb_http_output')) {
 	mb_http_output('pass');
 }

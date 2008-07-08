@@ -40,23 +40,22 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
     # Adding dynamic block area/position system - TheRpLima - 2007-10-21
     $oldzones = XoopsBlock::getBlockPositions(true);
     #
-
+    $editor = (isset($_GET['editor']))?$_GET['editor']:null;
     function list_blocks(){
-        global $xoopsUser, $xoopsConfig, $icmsAdminTpl, $oldzones;
+        global $xoopsUser, $xoopsConfig, $icmsAdminTpl, $oldzones,$editor;
         include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
         //OpenTable();
         $selmod = isset($_GET['selmod']) ? $_GET['selmod'] : '0-1';
         $selvis = isset($_GET['selvis']) ? intval($_GET['selvis']) : 2;
         $selgrp = isset($_GET['selgrp']) ? intval($_GET['selgrp']) : XOOPS_GROUP_USERS;
-        $editor = (isset($_GET['editor']))?$_GET['editor']:null;
-        
+              
         $form = "<select size=\"1\" name=\"selmod\" onchange=\"location='".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&amp;selvis=$selvis&amp;selgrp=$selgrp&amp;selmod='+this.options[this.selectedIndex].value\">";
         $module_handler =& xoops_gethandler('module');
         $page_handler =& xoops_gethandler('page');
         $form .= $page_handler->getPageSelOptions($selmod);
         $form .= '</select>&nbsp;<input type="hidden" name="fct" value="blocksadmin" />';
         $icmsAdminTpl->assign('selmod',sprintf(_AM_SVISIBLEIN, $form));
-        
+
         $member_handler =& xoops_gethandler('member');
         $group_list =& $member_handler->getGroupList();
         $group_list[0] = '#'._AM_UNASSIGNED; // fix for displaying blocks unassigned to any group
@@ -132,7 +131,7 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         $icmsAdminTpl->assign('lang_changests',_AM_CHANGESTS);
                 
         $icmsAdminTpl->assign('addformsts',(!is_null($editor))?'block':'none');
-        
+
         return $icmsAdminTpl->fetch('db:admin/blocksadmin/system_adm_blocksadmin.html');
     }
 

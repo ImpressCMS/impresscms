@@ -7,19 +7,19 @@
     OL { margin-top: 0px; margin-bottom: 0px; padding-top: 0px; padding-bottom: 0px; }
     .indent { margin-left: 40px; }
     FORM { margin: 0px; padding: 0px; }
-    
+
     H1, H2, h1, h2, H5 { margin: 0px; padding: 0px; }
-    
+
     .additions { color: #008800; }
     .deletions { color: #880000; }
-    
+
 	.header { padding: 10px; padding-top: 0px }
         .page { background-color: #FFFFFF; padding: 5px; border: 1px inset;}
 	.footer { background-color: #DDDDDD; padding: 5px 10px; border: 1px inset; border-top: none; border-top: 1px solid #CCCCCC }
 	.code { background: #FFFFFF; border: solid #888888 2px; font-family: "Courier New"; color: black; font-size: 10pt; width: 100%; height: 400px; overflow: scroll; padding: 3px; }
 
     .revisioninfo { color: #AAAAAA; padding-bottom: 20px; }
-	
+
 	.copyright { font-size: 11px; color: #AAAAAA; text-align: right; }
 	.copyright A { color: #AAAAAA; }
 </style></head><body bgcolor="#f8f8f8" text="#000000">
@@ -29,14 +29,14 @@
 <br>
 <h2>Welcome</h2>
 <br>
-This install document is a work in progress:<br><br> 
+This install document is a work in progress:<br><br>
 <div class="indent">* If you see any errors or can improve upon it please do so.<br>
-    * As always there is a live copy of these docs maintained on the <a href="http://wiki.impresscms.org/index.php?title=Installation_Guide">ImpressCMS 
+    * As always there is a live copy of these docs maintained on the <a href="http://wiki.impresscms.org/index.php?title=Installation_Guide">ImpressCMS
     wiki</a>.<br>
 * You can contribute to these documents at anytime to better clarify the information contained in them.<br>
     * Edit the live documentation online by following this <a href="http://wiki.impresscms.org/index.php?title=Installation_Guide&action=edit">link</a>.</div>
 <br>
-If your new to ImpressCMS always download the most stable released version:<br><br> 
+If your new to ImpressCMS always download the most stable released version:<br><br>
 <div class="indent">* The ImpressCMS packages are released for <a href="http://www.impresscms.org/">download</a> in the .tar.gz and .zip compression formats.<br>
 * You may need to download a (compression utility / file manager) from the internet so you can open the packages.<br>
 * Free software suggestion, <a href="http://www.7-zip.org/download.html">7-Zip File Manager</a>.<br>
@@ -49,7 +49,7 @@ zipped files, but its not as powerful as the above software.<br>
 Lets now take a look inside the ImpressCMS folder you just extracted. There are 4 different directories/folders:<br><br>
 1. "docs" - Contains this install.html document as well as the GNU license.txt, changelog.txt and language_changelog.txt<br>
 <div class="indent">* All the files inside the docs folder can be very useful to members that wish to contribute to the project.</div>
-2. "extras" - Contains a login.php file that may be used to run ImpressCMS in ssl (Secure Sockets Layer).<br> 
+2. "extras" - Contains a login.php file that may be used to run ImpressCMS in ssl (Secure Sockets Layer).<br>
 <div class="indent">* This feature is mostly used in ecommerce for accepting credit cards on your website.<br>
 * You would need to purchase an SSL Certificate from a company like
 Verisign or Thawte for this feature to work.<br>
@@ -93,6 +93,10 @@ done this, make sure to move or copy all ImpressCMS files from the
 htdocs directory to your root web directory (your provider usually
 provides this location with directions). Once the files are copied
 there, you can start the install by typing <a href="http://yoursite.com/">http://yoursite.com</a>.  This will start the install process.<br>
+<br />
+<strong>Please Note: </strong> For additional security ImpressCMS uses a <a href="http://wiki.impresscms.org/index.php?title=Trust_Path">TrustPath</a> location. If you use a hosted platform, you may need to notify your hosting provider about creating this directory.<br />
+<br />
+This will be required during step four of Installation: "Paths and permissions"<br />
 <br>
 <h2>Show/Hide help</h2>
 <br>
@@ -112,18 +116,18 @@ begin the install process.<br>
 <br>
 <h2>Step 1: Language</h2><br>
 In the first step of this installation please choose your language. The default is English. Please Click Next.<br>
-<br> 
+<br>
 <br>
 ***Notes***
 If you do not see your own language please translate a lang file for this project.<br>
-<a href="http://community.impresscms.org/modules/wiwimod/index.php?page=Installation+Guide">Link to installer lang file information</a>.<br>
+<a href="http://wiki.impresscms.org/index.php?title=How_to_make_translations_in_ImpressCMS">Link to installer lang file information</a>.<br>
 <br>
 <img src="images/install002.png"><br>
 <br>
 <h2>Step 2: Welcome Screen, Databases &amp; Chmod/Writable</h2><br>
 Welcome the ImpressCms installer. We need to make sure we have a few things setup before we proceed.<br>
 The best way to do this is by using your webhosting control panel. Example include Cpanel, Plesk &amp; H-Sphere <br>
-Setting up a mysql database:<br><br> 
+Setting up a mysql database:<br><br>
 <div class="indent">
 * Cpanel version which can be accessed thru www.yourdomain.com/cpanel <br>
 * Access Php admin thru your hosting control panel.<br>
@@ -135,7 +139,7 @@ Setting up a mysql database:<br><br>
 <a href="http://www.swsoft.com/en/products/plesk/docs/">Plesk user manual</a> <br>
 <a href="http://www.psoft.net/HSdocumentation/index.html">H-Sphere user manual</a> <br>
 <br>
-Chmod/world writable:<br><br>  
+Chmod/world writable:<br><br>
 <div class="indent">
 *The ability to set the following directories/folders and files world writeable:<br>
 * cache/ templates_c/ &amp; uploads/  <br>
@@ -151,7 +155,7 @@ Chmod/world writable:<br><br>
 <br>
 <h2>Step 3: Checking server configuration</h2><br>
 In the third step the script will check the server configuration.<br>
-This will show the details of your server, and if they are suitable for your installation.<br> 
+This will show the details of your server, and if they are suitable for your installation.<br>
 If the text is green, then everything is good.<br>
 <br>
 <img src="images/install004.png"><br>
@@ -162,7 +166,7 @@ directory permissions. If your running in a Windows environment, this
 should be a pretty painless step.<br>
 I use Linux here and as the above screenshot shows, there are problems
 with permissions. In order to meet required permission you have to
-change them as Wizard is telling you in a tip box.<br> 
+change them as Wizard is telling you in a tip box.<br>
 Give CHMOD 777 to mainfile.php, /templates_c, /cache, /uploads And hit Refresh button.<br>
 Phisical path and Web locations address will be defined by script
 itself. If you want to learn a bit more about them, click Show/hide
@@ -186,7 +190,7 @@ against hackers. After all we click Next.<br>
 <img src="images/install006.png"><br>
 <br>
 <h2>Step 6: Saving configuration</h2><br>
-In this step thing which you have given before are saved into file. mainfle? secret file under trust path?<br>
+During this step, information which you have completed is saved into a secure file which is located in the trustpath location.<br>
 <br>
 <img src="images/install007.png"><br>
 <br>
@@ -209,7 +213,7 @@ In the second part we can see which tables were created. These tables are empty 
 <h2>Step 8: Admin account</h2><br>
 Please be careful here and write down or remember your administrative
 password. You will need this after the install to continue setting up
-your site.<br> 
+your site.<br>
 Once you have completed inputting the correct information, click Next to continue.<br>
 <br>
 <img src="images/install010.png"><br>

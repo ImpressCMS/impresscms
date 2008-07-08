@@ -216,4 +216,5 @@ define("_ADM_USE_RTL","0"); // turn this to 1 if your language is right to left
 define("_DEF_LANG_TAGS",'en,fr'); //Add local translation
 define("_DEF_LANG_NAMES",'english,french'); //Add local translation
 define("_LOCAL_LANG_NAMES",'English,Français'); //Add local translation
+define("_EXT_DATE_FUNC","0"); // change 0 to 1 if this language has an extended date function
 ?>

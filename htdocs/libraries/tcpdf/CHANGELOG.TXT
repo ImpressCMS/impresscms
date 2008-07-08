@@ -1,3 +1,29 @@
+4.0.001 (2008-07-05)
+	- Bug [2000861] was fixed.
+
+4.0.000 (2008-07-03)
+	- THIS IS A MAIN RELEASE THAT INCLUDES SEVERAL NEW FEATURES AND BUGFIXES
+	- Signature fo SetTextColor() and SetFillColor() functions was changed (parameter $storeprev was removed).
+	- HTML support was completely rewritten and improved (see example 6).
+	- Alignments parameters were fixed.
+	- Functions GetArrStringWidth() and GetStringWidth() now include font parameters.
+	- Fonts support was improved.
+	- All core fonts were replaced and moved to fonts/ directory.
+	- The following functions were added: getMargins(), getFontSize(), getFontSizePt().
+	- File config/tcpdf_config_old.php was renamed tcpdf_config_alt.php and updated.
+	- Multicell and WriteHTMLCell fill function was fixed.
+	- Several minor bugs were fixed.
+	- barcodes.php was updated.
+	- All examples were updated.
+	
+------------------------------------------------------------
+
+3.1.001 (2008-06-13)
+	- Bug [1992515] "K_PATH_FONTS default value wrong" was fixed.
+	- Vera font was removed, DejaVu font and Free fonts were updated.
+	- Image handling was improved.
+	- All examples were updated.
+	
 3.1.000 (2008-06-11)
 	- setPDFVersion() was added to change the default PDF version (currently 1.7).
 	- setViewerPreferences() was added to control the way the document is to be presented on the screen or printed (see example 29).

@@ -1,4 +1,5 @@
-<form style="margin-top: 0px;" action="<{$xoops_url}>/user.php" method="post">
+<div id="xoops_block_login_form">
+  <form style="margin-top: 0px;" action="<{$xoops_url}>/user.php" method="post">
     <{$block.lang_username}><br />
     <input type="text" name="uname" size="12" value="<{$block.unamevalue}>" maxlength="25" /><br />
     <{$block.lang_password}><br />
@@ -10,10 +11,26 @@
     <input type="hidden" name="op" value="login" />
     <input type="submit" value="<{$block.lang_login}>" /><br />
     <{$block.sslloginlink}>
-</form>
-<a href="<{$xoops_url}>/user.php#lost" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
+  </form>
+  <{if $block.auth_openid}>
+	  <div style="text-align: left;"><a href="#" onclick="xoopsGetElementById('openid-verify-form2').style.display = 'block'; xoopsGetElementById('xoops_block_login_form').style.display = 'none'; return false;"><{$smarty.const._MB_SYSTEM_OPENID_LOGIN}></a></div>
+  <{/if}>
+</div>
 
+<{if $block.auth_openid}>
+	<div id="openid-verify-form2" style="display: none;">
+	  <form method="get" action="<{$xoops_url}>/try_auth.php">
+	    <{$smarty.const._MB_SYSTEM_OPENID_URL}>
+	    <input type="hidden" name="action" value="verify" />
+	    <input type="text" class="openid_url" name="openid_identifier" size="12" value="" />
+	    <input type="submit" value="Login" />
+	  </form>
+	  <div style="text-align: left;"><a href="#" onclick="xoopsGetElementById('xoops_block_login_form').style.display = 'block'; xoopsGetElementById('openid-verify-form2').style.display = 'none'; return false;"><{$smarty.const._MB_SYSTEM_OPENID_NORMAL_LOGIN}></a></div>
+	</div>
+<{/if}>
+<br />
+<a href="<{$xoops_url}>/user.php#lost" title="<{$block.lang_lostpass}>"><{$block.lang_lostpass}></a>
 <{if $block.registration }>
-<br /><br />
+<br />
 <a href="<{$xoops_url}>/register.php" title="<{$block.lang_registernow}>"><{$block.lang_registernow}></a>
 <{/if}>

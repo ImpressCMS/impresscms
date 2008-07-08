@@ -3,9 +3,9 @@
 * Admin control panel entry page
 *
 * This page is responsible for
-* 	- displaying the home of the Control Panel
-* 	- checking for cache/adminmenu.php
-*   - displaying RSS feed of the ImpressCMS Project
+* - displaying the home of the Control Panel
+* - checking for cache/adminmenu.php
+* - displaying RSS feed of the ImpressCMS Project
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt
@@ -22,39 +22,36 @@ $xoopsOption['pagetype'] = "admin";
 include "mainfile.php";
 include ICMS_ROOT_PATH."/include/cp_functions.php";
 
-/*********************************************************/
-/* Admin Authentication                                  */
-/*********************************************************/
-if ( $xoopsUser ) {
-	if ( !$xoopsUser->isAdmin(-1) ) {
+// Admin Authentication
+if($xoopsUser)
+{
+	if(!$xoopsUser->isAdmin(-1))
+	{
 		redirect_header("index.php",2,_AD_NORIGHT);
 		exit();
 	}
-} else {
+}
+else
+{
 	redirect_header("index.php",2,_AD_NORIGHT);
 	exit();
 }
-/*********************************************************/
-/* end					                                 */
-/*********************************************************/
+// end Admin Authentication
 
 $op = isset($_GET['rssnews']) ? $_GET['rssnews'] : 0;
-if ( !empty($_GET['op']) ) {
-	$op = $_GET['op'];
-}
+if(!empty($_GET['op'])) {$op = $_GET['op'];}
+if(!empty($_POST['op'])) {$op = $_POST['op'];}
 
-if ( !empty($_POST['op']) ) {
-	$op = $_POST['op'];
-}
-
-if (!file_exists(ICMS_CACHE_PATH.'/adminmenu_'.$xoopsConfig['language'].'.php') && $op != 2) {
+if(!file_exists(ICMS_CACHE_PATH.'/adminmenu_'.$xoopsConfig['language'].'.php') && $op != 2)
+{
 	xoops_header();
 	xoops_confirm(array('op' => 2), 'admin.php', _RECREATE_ADMINMENU_FILE);
 	xoops_footer();
 	exit();
 }
 
-switch ($op){
+switch($op)
+{
 	case 1:
 		xoops_cp_header();
 		showRSS(1);
@@ -64,10 +61,6 @@ switch ($op){
 		redirect_header('admin.php', 1, _AD_LOGINADMIN);
 		exit();
 		break;
-	
-	/*
-	 * Hack 
-	 */
 	case 10:
 		$rssurl = 'http://www.impresscms.org/modules/smartsection/backend.php?categoryid=1';
 		$rssfile = ICMS_CACHE_PATH.'/www_smartsection_category1.xml';
@@ -75,32 +68,36 @@ switch ($op){
 		$items_to_display = 1;
 		
 		$rssdata = '';
-		if (!file_exists($rssfile) || filemtime($rssfile) < time() - $caching_time) {
+		if(!file_exists($rssfile) || filemtime($rssfile) < time() - $caching_time)
+		{
 			require_once ICMS_ROOT_PATH.'/class/snoopy.php';
-	        $snoopy = new Snoopy;
-	        if ($snoopy->fetch($rssurl)) {
-	            $rssdata = $snoopy->results;
-	            if (false !== $fp = fopen($rssfile, 'w')) {
-	                fwrite($fp, $rssdata);
-	            }
-	            fclose($fp);
-	        }
-		} else {
-			if (false !== $fp = fopen($rssfile, 'r')) {
-				while (!feof ($fp)) {
-					$rssdata .= fgets($fp, 4096);
-				}
+	        	$snoopy = new Snoopy;
+	        	if($snoopy->fetch($rssurl))
+			{
+	            		$rssdata = $snoopy->results;
+	            		if(false !== $fp = fopen($rssfile, 'w')) {fwrite($fp, $rssdata);}
+	            		fclose($fp);
+	        	}
+		}
+		else
+		{
+			if(false !== $fp = fopen($rssfile, 'r'))
+			{
+				while(!feof ($fp)) {$rssdata .= fgets($fp, 4096);}
 				fclose($fp);
 			}
 		}
-		if ($rssdata != '') {
+		if($rssdata != '')
+		{
 			include_once ICMS_ROOT_PATH.'/class/xml/rss/xmlrss2parser.php';
 			$rss2parser = new XoopsXmlRss2Parser($rssdata);
-			if (false != $rss2parser->parse()) {
+			if(false != $rss2parser->parse())
+			{
 				$items =& $rss2parser->getItems();
 				$count = count($items);
 				$myts =& MyTextSanitizer::getInstance();
-				for ($i = 0; $i < $items_to_display; $i++) {
+				for($i = 0; $i < $items_to_display; $i++)
+				{
 					?>					
 						<div>
 							<img style="vertical-align: middle;" src="<?php ICMS_URL?>/modules/smartsection/images/icon/doc.png" alt="<?php $items[$i]['title']?>">&nbsp;<a href="<?php $items[$i]['guid']?>"><?php $items[$i]['title']?></a>
@@ -113,7 +110,9 @@ switch ($op){
 						<div style="font-size: 10px; text-align: right;"><a href="http://www.impresscms.org/modules/smartsection/category.php?categoryid=1">All ImpressCMS Project news...</a></div>
 					<?php		
 				}
-			} else {
+			}
+			else
+			{
 				//echo $rss2parser->getErrors();
 			}
 		}	
@@ -123,28 +122,34 @@ switch ($op){
 		$mods = xoops_cp_header(1);
 
 		// ###### Output warn messages for security  ######
-		if (is_dir(ICMS_ROOT_PATH."/install/" )) {
+		if(is_dir(ICMS_ROOT_PATH."/install/"))
+		{
 			xoops_error(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/'));
 			echo '<br />';
 		}
-		if ( is_writable(ICMS_ROOT_PATH."/mainfile.php" ) ) {
+		if(is_writable(ICMS_ROOT_PATH."/mainfile.php"))
+		{
 			xoops_error(sprintf(_WARNINWRITEABLE,ICMS_ROOT_PATH.'/mainfile.php'));
 			echo '<br />';
 		}
-		if (is_dir(ICMS_ROOT_PATH."/upgrade/" )) {
+		if(is_dir(ICMS_ROOT_PATH."/upgrade/"))
+		{
 			xoops_error(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/upgrade/'));
 			echo '<br />';
 		}
 		// ###### Output warn messages for correct functionality  ######
-		if ( !is_writable( ICMS_CACHE_PATH ) ) {
+		if(!is_writable(ICMS_CACHE_PATH))
+		{
 			xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH));
 			echo '<br />';
 		}
-		if ( !is_writable( ICMS_UPLOAD_PATH ) ) {
+		if(!is_writable(ICMS_UPLOAD_PATH))
+		{
 			xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_UPLOAD_PATH));
 			echo '<br />';
 		}
-		if ( !is_writable( ICMS_COMPILE_PATH ) ) {
+		if(!is_writable(ICMS_COMPILE_PATH))
+		{
 			xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_COMPILE_PATH));
 			echo '<br />';
 		}
@@ -154,19 +159,25 @@ switch ($op){
 
 		// Loading allowed Modules
 		$icmsAdminTpl->assign('modules', $mods);
-		if (count($mods) > 0){
+		if(count($mods) > 0)
+		{
 			$icmsAdminTpl->assign('modulesadm', 1);
-		}else{
+		}
+		else
+		{
 			$icmsAdminTpl->assign('modulesadm', 0);
 		}
 
 		// Loading System Configuration Links
 		$groups = $xoopsUser->getGroups();
 		$all_ok = false;
-		if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
+		if(!in_array(XOOPS_GROUP_ADMIN, $groups))
+		{
 			$sysperm_handler =& xoops_gethandler('groupperm');
 			$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
-		} else {
+		}
+		else
+		{
 			$all_ok = true;
 		}
 
@@ -176,89 +187,110 @@ switch ($op){
 		$admin_dir = ICMS_ROOT_PATH."/modules/system/admin";
 		$dirlist = XoopsLists::getDirListAsArray($admin_dir);
 
-		if (file_exists(ICMS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin.php")) {
+		if(file_exists(ICMS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin.php"))
+		{
 			include ICMS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin.php";
-		} elseif (file_exists(ICMS_ROOT_PATH."/modules/system/language/english/admin.php")) {
+		}
+		elseif(file_exists(ICMS_ROOT_PATH."/modules/system/language/english/admin.php"))
+		{
 			include ICMS_ROOT_PATH."/modules/system/language/english/admin.php";
 		}
 
 		$cont = 0;
 		asort($dirlist);
-		foreach($dirlist as $file){
+		foreach($dirlist as $file)
+		{
 			include $admin_dir.'/'.$file.'/xoops_version.php';
-
-			if ($modversion['hasAdmin']) {
+			if($modversion['hasAdmin'])
+			{
 				$category = isset($modversion['category']) ? intval($modversion['category']) : 0;
-				if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
-					$sysmod = array( "title" => $modversion['name'] , "link" => ICMS_URL."/modules/system/admin.php?fct=".$file , "image" => ICMS_URL."/modules/system/admin/$file/images/".$file."_big.png");
-					$icmsAdminTpl->append( 'sysmod' , $sysmod  );
+				if(false != $all_ok || in_array($modversion['category'], $ok_syscats))
+				{
+					$sysmod = array( "title" => $modversion['name'], "link" => ICMS_URL."/modules/system/admin.php?fct=".$file, "image" => ICMS_URL."/modules/system/admin/$file/images/".$file."_big.png");
+					$icmsAdminTpl->append('sysmod', $sysmod);
 					$cont++;
 				}
 			}
 			unset($modversion);
 		}
-		if ($cont > 0){
+		if($cont > 0)
+		{
 			$icmsAdminTpl->assign('systemadm', 1);
-		}else{
+		}
+		else
+		{
 			$icmsAdminTpl->assign('systemadm', 0);
 		}
 
-    	echo $icmsAdminTpl->fetch(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_indexcp.html');
+    		echo $icmsAdminTpl->fetch(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_indexcp.html');
 
-		break;
+	break;
 }
 
-function showRSS($op=1){
-	switch ($op) {
+function showRSS($op=1)
+{
+	switch($op)
+	{
 		case 1:
 			$config_handler =& xoops_gethandler('config');
 			$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
 			$rssurl = $xoopsConfigPersona['rss_local'];
 			$rssfile = ICMS_CACHE_PATH.'/adminnews.xml';
-			break;
-	}/*
+		break;
+	}
+>>>>>>> .merge-right.r3537
 	$rssdata = '';
-	if (!file_exists($rssfile) || filemtime($rssfile) < time() - 86400) {
+	if(!file_exists($rssfile) || filemtime($rssfile) < time() - 86400)
+	{
 		require_once ICMS_ROOT_PATH.'/class/snoopy.php';
-        $snoopy = new Snoopy;
-        if ($snoopy->fetch($rssurl)) {
-            $rssdata = $snoopy->results;
-            if (false !== $fp = fopen($rssfile, 'w')) {
-                fwrite($fp, $rssdata);
-            }
-            fclose($fp);
-        }
-	} else {
-		if (false !== $fp = fopen($rssfile, 'r')) {
-			while (!feof ($fp)) {
-				$rssdata .= fgets($fp, 4096);
-			}
+        	$snoopy = new Snoopy;
+        	if($snoopy->fetch($rssurl))
+		{
+            		$rssdata = $snoopy->results;
+            		if(false !== $fp = fopen($rssfile, 'w')) {fwrite($fp, $rssdata);}
+            		fclose($fp);
+        	}
+	}
+	else
+	{
+		if(false !== $fp = fopen($rssfile, 'r'))
+		{
+			while(!feof ($fp)) {$rssdata .= fgets($fp, 4096);}
 			fclose($fp);
 		}
 	}
-	if ($rssdata != '') {
+	if($rssdata != '')
+	{
 		include_once ICMS_ROOT_PATH.'/class/xml/rss/xmlrss2parser.php';
 		$rss2parser = new XoopsXmlRss2Parser($rssdata);
-		if (false != $rss2parser->parse()) {
+		if(false != $rss2parser->parse())
+		{
 			echo '<table class="outer" width="100%">';
 			$items =& $rss2parser->getItems();
 			$count = count($items);
 			$myts =& MyTextSanitizer::getInstance();
-			for ($i = 0; $i < $count; $i++) {
+			for($i = 0; $i < $count; $i++)
+			{
 				echo '<tr class="head"><td><a href="'.htmlspecialchars($items[$i]['link']).'" rel="external">';
 				echo htmlspecialchars($items[$i]['title']).'</a> ('.htmlspecialchars($items[$i]['pubdate']).')</td></tr>';
-				if ($items[$i]['description'] != "") {
+				if($items[$i]['description'] != "")
+				{
 					echo '<tr><td class="odd">'.utf8_decode($items[$i]['description']);
-					if ($items[$i]['guid'] != "") {
+					if($items[$i]['guid'] != "")
+					{
 						echo '&nbsp;&nbsp;<a href="'.htmlspecialchars($items[$i]['guid']).'" rel="external">'._MORE.'</a>';
 					}
 					echo '</td></tr>';
-				} elseif ($items[$i]['guid'] != "") {
+				}
+				elseif($items[$i]['guid'] != "")
+				{
 					echo '<tr><td class="even" valign="top"></td><td colspan="2" class="odd"><a href="'.htmlspecialchars($items[$i]['guid']).'" rel="external">'._MORE.'</a></td></tr>';
 				}
 			}
 			echo '</table>';
-		} else {
+		}
+		else
+		{
 			echo $rss2parser->getErrors();
 		}
 	}*/
@@ -339,6 +371,5 @@ function showRSS($op=1){
 	<?php
 
 }
-
 xoops_cp_footer();
 ?>

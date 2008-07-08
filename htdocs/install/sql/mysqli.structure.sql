@@ -613,6 +613,7 @@ CREATE TABLE users (
   user_intrest varchar(150) NOT NULL default '',
   user_mailok tinyint(1) unsigned NOT NULL default '1',
   language varchar(100) NOT NULL default '',
+  openid varchar(255) NOT NULL default '',  
   salt varchar(255) NOT NULL default '',
   PRIMARY KEY  (uid),
   KEY uname (uname),

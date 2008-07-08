@@ -14,10 +14,10 @@
 */
 /**
  *
- */  
+ */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
-	set_magic_quotes_runtime(0);
+	@set_magic_quotes_runtime(0);
 
 /**
  * Extremely reduced kernel class
@@ -30,7 +30,7 @@ defined("XOOPS_MAINFILE_INCLUDED") or die();
 class xos_kernel_Xoops2 {
 	var $paths = array(
 		'www' => array(), 'modules' => array(), 'themes' => array(),
-	);	
+	);
 	function xos_kernel_Xoops2() {
 		$this->paths['www'] = array( XOOPS_ROOT_PATH, XOOPS_URL );
 		$this->paths['modules'] = array( XOOPS_ROOT_PATH . '/modules', XOOPS_URL . '/modules' );
@@ -78,9 +78,9 @@ class xos_kernel_Xoops2 {
 		return $url;
 	}
 
-	
-	
-	
+
+
+
 }
 global $xoops;
 $xoops =& new xos_kernel_Xoops2();
@@ -91,17 +91,17 @@ $xoops =& new xos_kernel_Xoops2();
     global $xoopsSecurity;
     //Check super globals
     $xoopsSecurity->checkSuperglobals();
-    
+
     // ############## Activate error handler / logger class ##############
     global $xoopsLogger, $xoopsErrorHandler;
-    
+
     include_once XOOPS_ROOT_PATH . '/class/logger.php';
     $xoopsLogger =& XoopsLogger::instance();
 	$xoopsErrorHandler =& $xoopsLogger;
     $xoopsLogger->startTime();
     $xoopsLogger->startTime( 'ICMS Boot' );
-    
-    
+
+
     define("XOOPS_SIDEBLOCK_LEFT",0);
     define("XOOPS_SIDEBLOCK_RIGHT",1);
     define("XOOPS_SIDEBLOCK_BOTH",2);
@@ -232,7 +232,7 @@ $xoops =& new xos_kernel_Xoops2();
         if (function_exists('session_cache_expire')) {
             session_cache_expire($xoopsConfig['session_expire']);
         }
-        @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);     
+        @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);
     }
     session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
     session_start();

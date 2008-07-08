@@ -247,7 +247,7 @@ define("_MD_AM_LDAP_PROVIS_UPD", "Maintain ImpressCMS account provisioning");
 define("_MD_AM_LDAP_PROVIS_UPD_DESC", "The ImpressCMS User account is always synchronized with the Authentication Server");
 
 //lang constants for secure password
-define("_MD_AM_PASSLEVEL","Minimum security level");		
+define("_MD_AM_PASSLEVEL","Minimum security level");
 define("_MD_AM_PASSLEVEL_DESC","Define which level of security you want for the user's password. It's recommeded not to set it too low or too strong, be reasonable.");
 define("_MD_AM_PASSLEVEL1","Off(Insecure)");
 define("_MD_AM_PASSLEVEL2","Weak");
@@ -347,7 +347,7 @@ define('_MD_AM_ALLWHTSIGDSC', 'If some attackers post an external image using [i
 define('_MD_AM_ALLWSHOWSIG', 'Do you want to allow your users to use a signature on their profile/posts, in your site?');
 define('_MD_AM_ALLWSHOWSIGDSC', 'By enabling this option, users will be able to use a personal signature which will be added (on their own choice) after their posts.');
 // < personalizações > fabio - Sat Apr 28 11:55:00 BRT 2007 11:55:00
-define("_MD_AM_PERSON","Personalization");		
+define("_MD_AM_PERSON","Personalization");
 define("_MD_AM_GOOGLE_ANA","Google Analytics");
 define("_MD_AM_GOOGLE_ANA_DESC","Insert the script informed by Google Analytics for your site. If you don't use it, leave it blank.");
 define("_MD_AM_LLOGOADM","Admin left logo");
@@ -407,4 +407,7 @@ define("_MD_AM_SIGMAXLENGTHDSC","Here you can choose the length of your users si
 define("_MD_AM_AUTORESIZE","Auto resize larger avatars?");
 define("_MD_AM_AUTORESIZE_DESC","If YES, if the avatar sent have the width or height greater than that set will be automatically resized (keeping the ratio of the image) and the upload will be allowed. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.");
 */
+define("_MD_AM_AUTHOPENID","Enable OpenID authentication");
+define("_MD_AM_AUTHOPENIDDSC","Select Yes to enable OpenID authentication. This will allow users to login on the site using their OpenID account. For complete information about the OpenID Integration in ImpressCMS, please visit <a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID'>our wiki</a>.");
+
 ?>

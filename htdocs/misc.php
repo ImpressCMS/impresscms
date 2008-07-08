@@ -42,7 +42,7 @@ if ( $action == "showpopups" ) {
             <tr><th colspan="3">'._MSC_SMILIES.'</th></tr>
             <tr class="head"><td>'._MSC_CODE.'</td><td>'._MSC_EMOTION.'</td><td>'._IMAGE.'</td></tr>';
             $myts =& MyTextsanitizer::getInstance();
-            $smiles = $myts->getSmileys();
+            $smiles = $myts->getSmileys(1);
             $count = count($smiles);
             if ($count > 0) {
                 $rcolor = 'even';

@@ -59,5 +59,14 @@ div#disclaimer{
 	height: 8em; 
 	overflow: auto; 
 	font-size: 1em; 
-	font-family: verdana,arial, helvetica, sans-serif;
+	font-family: tahoma,verdana,arial, helvetica, sans-serif;
+}
+.openid_url {
+	background-image: url(./images/openid-inputicon.gif);
+	background-repeat: no-repeat;
+	background-attachment: scroll;
+	background-color: #ffffff;
+	background-x-position: 0pt;
+	background-y-position: 50%;
+	padding-left: 18px;
 }

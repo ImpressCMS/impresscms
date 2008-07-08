@@ -35,7 +35,7 @@ class MyTextSanitizer
 	*
 	*/
 	var $censorConf;
-	/*
+	/**
 	* Constructor of this class
 	* Gets allowed html tags from admin config settings
 	* <br> should not be allowed since nl2br will be used
@@ -44,27 +44,27 @@ class MyTextSanitizer
     	* @access	private
     	*
     	* @todo Sofar, this does nuttin' ;-)
-	*/
+	**/
 	function MyTextSanitizer()
     	{
 	}
 
-	function html_purifier($text, $config = '1')
+	function html_purifier($text, $config = 'system-global')
 	{
 		include_once ICMS_ROOT_PATH.'/class/icms.htmlpurifier.php';
 		$html_purifier = &icms_HTMLPurifier::getPurifierInstance();
 
-		if($config = '1')
+		if($config = 'system-global')
 		{
-			$text = $html_purifier->icms_html_purifier($text, $config);
+			$text = $html_purifier->icms_html_purifier($text, 'system-global');
 		}
-		elseif($config = '2')
+		elseif($config = 'display')
 		{
-			$text = $html_purifier->displayHTMLarea($text, $config);
+			$text = $html_purifier->displayHTMLarea($text, 'display');
 		}
-		elseif($config = '3')
+		elseif($config = 'preview')
 		{
-			$text = $html_purifier->previewHTMLarea($text, $config);
+			$text = $html_purifier->previewHTMLarea($text, 'preview');
 		}
 
 		return $text;
@@ -81,22 +81,26 @@ class MyTextSanitizer
 	function &getInstance()
 	{
 		static $instance;
-		if (!isset($instance)) {
+		if(!isset($instance))
+		{
 			$instance = new MyTextSanitizer();
 		}
 		return $instance;
 	}
 
 	/**
-	 * Get the smileys
-     *
-     * @return	array
-	 */
-	function getSmileys()
+	* Get the smileys
+     	*
+     	* @return	array
+	*/
+	function getSmileys($all=0)
 	{
-		if (count($this->smileys) == 0) {
-			if ($getsmiles = $GLOBALS["xoopsDB"]->query("SELECT * FROM ".$GLOBALS["xoopsDB"]->prefix("smiles")." WHERE display='1'")) {
-				while ($smiles = $GLOBALS["xoopsDB"]->fetchArray($getsmiles)) {
+		if(count($this->smileys) == 0)
+		{
+			if($getsmiles = $GLOBALS["xoopsDB"]->query("SELECT * FROM ".$GLOBALS["xoopsDB"]->prefix("smiles").(!$all?" WHERE display='1'":'')))
+			{
+				while($smiles = $GLOBALS["xoopsDB"]->fetchArray($getsmiles))
+				{
 					array_push($this->smileys, $smiles);
 				}
 			}
@@ -104,76 +108,76 @@ class MyTextSanitizer
 		return $this->smileys;
 	}
 
-    /**
-     * Replace emoticons in the message with smiley images
-     *
-     * @param	string  $message
-     *
-     * @return	string
-     */
-    function smiley($message)
+    	/**
+     	* Replace emoticons in the message with smiley images
+     	*
+     	* @param	string  $message
+     	* @return	string
+     	*/
+    	function smiley($message)
 	{
 		$smileys = $this->getSmileys();
-		foreach ($smileys as $smile) {
+		foreach($smileys as $smile)
+		{
 			$message = str_replace($smile['code'], '<img src="'.ICMS_UPLOAD_URL.'/'.htmlspecialchars($smile['smile_url']).'" alt="" />', $message);
 		}
 		return $message;
 	}
 
 	/**
-	 * Make links in the text clickable
-	 *
-	 * @param   string  $text
-	 * @return  string
-	 **/
+	* Make links in the text clickable
+	*
+	* @param   string  $text
+	* @return  string
+	**/
 	function makeClickable(&$text)
 	{
-			$config_handler =& xoops_gethandler('config');
-			$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-        if ($xoopsConfigPersona['shorten_url'] == 1) {
-	$text = ' '.$text;
+		$config_handler =& xoops_gethandler('config');
+		$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+        	if($xoopsConfigPersona['shorten_url'] == 1)
+		{
+			$text = ' '.$text;
+			$patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i");
+			$replacements = array("\\1<a href=\"\\2://\\3\" rel=\"external\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\" rel=\"external\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"external\">ftp.\\2.\\3</a>", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>");
+			$text = preg_replace($patterns, $replacements, $text);
 
-	$patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i");
+			$links = explode('<a', $text);
+			$countlinks = count($links);
+   			for($i = 0; $i < $countlinks; $i++)
+			{
+				$link = $links[$i];
+				$link = (preg_match('#(.*)(href=")#is', $link)) ? '<a'.$link : $link;
+				$begin = strpos($link, '>') + 1;
+				$end = strpos($link, '<', $begin);
+				$length = $end - $begin;
+				$urlname = substr($link, $begin, $length);
 
-	$replacements = array("\\1<a href=\"\\2://\\3\" rel=\"external\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\" rel=\"external\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"external\">ftp.\\2.\\3</a>", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>");
-
-	$text = preg_replace($patterns, $replacements, $text);
-
-	$links = explode('<a', $text);
-	$countlinks = count($links);
-   for ($i = 0; $i < $countlinks; $i++)
-   {
-	$link = $links[$i];
-	$link = (preg_match('#(.*)(href=")#is', $link)) ? '<a' . $link : $link;
-	$begin = strpos($link, '>') + 1;
-	$end = strpos($link, '<', $begin);
-	$length = $end - $begin;
-	$urlname = substr($link, $begin, $length);
-
-	$maxlength = intval($xoopsConfigPersona['max_url_long']);
-	$cutlength = intval($xoopsConfigPersona['pre_chars_left']);
-	$endlength = -intval($xoopsConfigPersona['last_chars_left']);
-	$middleurl = " ... ";
-	$chunked = (strlen($urlname) > $maxlength && preg_match('#^(https://|http://|ftp://|www\.)#is', $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $urlname;
-	$text = str_replace('>' . $urlname . '<', '>' . $chunked . '<', $text); 
-   }
-	$text = substr($text, 1);
-	return($text);
-		}else{
-		$patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i");
-		$replacements = array("\\1<a href=\"\\2://\\3\" rel=\"external\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\" rel=\"external\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"external\">ftp.\\2.\\3</a>", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>");
-		return preg_replace($patterns, $replacements, $text);
+				$maxlength = intval($xoopsConfigPersona['max_url_long']);
+				$cutlength = intval($xoopsConfigPersona['pre_chars_left']);
+				$endlength = -intval($xoopsConfigPersona['last_chars_left']);
+				$middleurl = " ... ";
+				$chunked = (strlen($urlname) > $maxlength && preg_match('#^(https://|http://|ftp://|www\.)#is', $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $urlname;
+				$text = str_replace('>'.$urlname.'<', '>'.$chunked.'<', $text); 
+   			}
+			$text = substr($text, 1);
+			return($text);
 		}
-			}
+		else
+		{
+			$patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i");
+			$replacements = array("\\1<a href=\"\\2://\\3\" rel=\"external\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\" rel=\"external\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"external\">ftp.\\2.\\3</a>", "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>");
+			return preg_replace($patterns, $replacements, $text);
+		}
+	}
 
 	/**
-	 * Replace XoopsCodes with their equivalent HTML formatting
-	 *
-	 * @param   string  $text
-	 * @param   bool    $allowimage Allow images in the text?
-     *                              On FALSE, uses links to images.
-	 * @return  string
-	 **/
+	* Replace XoopsCodes with their equivalent HTML formatting
+	*
+	* @param   string  $text
+	* @param   bool    $allowimage Allow images in the text?
+     	*                  On FALSE, uses links to images.
+	* @return  string
+	**/
 	function &xoopsCodeDecode(&$text, $allowimage = 1)
 	{
 		$patterns = array();
@@ -182,19 +186,24 @@ class MyTextSanitizer
 		//$replacements[] = "'<div class=\"xoopsCode\"><code><pre>'.wordwrap(MyTextSanitizer::htmlSpecialChars('\\1'), 100).'</pre></code></div>'";
 		// RMV: added new markup for intrasite url (allows easier site moves)
 		// TODO: automatically convert other URLs to this format if ICMS_URL matches??
-			$config_handler =& xoops_gethandler('config');
-			$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-        if ($xoopsConfigPersona['use_hidden'] == 1) {
-        $patterns[] = "/\[hide](.*)\[\/hide\]/sU";
-		if($_SESSION['xoopsUserId']) {
-		$replacements[] = _HIDDENC.'<div class="xoopsQuote">\\1</div>';
+		$config_handler =& xoops_gethandler('config');
+		$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+        	if($xoopsConfigPersona['use_hidden'] == 1)
+		{
+        		$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
+			if($_SESSION['xoopsUserId'])
+			{
+				$replacements[] = _HIDDENC.'<div class="xoopsQuote">\\1</div>';
+			}
+			else
+			{
+				$replacements[] = _HIDDENC.'<div class="xoopsQuote">'._HIDDENTEXT.'</div>';
+			}
 		}
-		else {
-		$replacements[] = _HIDDENC.'<div class="xoopsQuote">'._HIDDENTEXT.'</div>';
-		}
-		}else{
-        $patterns[] = "/\[hide](.*)\[\/hide\]/sU";
-		$replacements[] = '\\1';
+		else
+		{
+        		$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
+			$replacements[] = '\\1';
 		}
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
 		$replacements[] = '<a href="'.ICMS_URL.'/\\2">\\3</a>';
@@ -220,18 +229,19 @@ class MyTextSanitizer
 		$replacements[] = '<u>\\1</u>';
 		$patterns[] = "/\[d](.*)\[\/d\]/sU";
 		$replacements[] = '<del>\\1</del>';
-		//$patterns[] = "/\[li](.*)\[\/li\]/sU";
-		//$replacements[] = '<li>\\1</li>';
 		$patterns[] = "/\[img align=(['\"]?)(left|center|right)\\1]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
 		$patterns[] = "/\[img]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
 		$patterns[] = "/\[img align=(['\"]?)(left|center|right)\\1 id=(['\"]?)([0-9]*)\\3]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
 		$patterns[] = "/\[img id=(['\"]?)([0-9]*)\\1]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
-		if ($allowimage != 1) {
+		if($allowimage != 1)
+		{
 			$replacements[] = '<a href="\\3" rel="external">\\3</a>';
 			$replacements[] = '<a href="\\1" rel="external">\\1</a>';
 			$replacements[] = '<a href="'.ICMS_URL.'/image.php?id=\\4" rel="external">\\5</a>';
 			$replacements[] = '<a href="'.ICMS_URL.'/image.php?id=\\2" rel="external">\\3</a>';
-		} else {
+		}
+		else
+		{
 			$replacements[] = '<img src="\\3" align="\\2" alt="" />';
 			$replacements[] = '<img src="\\1" alt="" />';
 			$replacements[] = '<img src="'.ICMS_URL.'/image.php?id=\\4" align="\\2" alt="\\5" />';
@@ -239,7 +249,6 @@ class MyTextSanitizer
 		}
 		$patterns[] = "/\[quote]/sU";
 		$replacements[] = _QUOTEC.'<div class="xoopsQuote"><blockquote>';
-		//$replacements[] = 'Quote: <div class="xoopsQuote"><blockquote>';
 		$patterns[] = "/\[\/quote]/sU";
 		$replacements[] = '</blockquote></div>';
 		$text = str_replace( "\x00", "", $text );
@@ -253,67 +262,65 @@ class MyTextSanitizer
 	}
 
 	/**
-	 * Convert linebreaks to <br /> tags
-     *
-     * @param	string  $text
-     *
-     * @return	string
-	 */
+	* Convert linebreaks to <br /> tags
+     	*
+     	* @param	string  $text
+     	* @return	string
+	*/
 	function nl2Br($text)
 	{
 		return preg_replace("/(\015\012)|(\015)|(\012)/","<br />",$text);
 	}
 
 	/**
-	 * Add slashes to the text if magic_quotes_gpc is turned off.
-	 *
-	 * @param   string  $text
-	 * @return  string
-	 **/
+	* Add slashes to the text if magic_quotes_gpc is turned off.
+	*
+	* @param   string  $text
+	* @return  string
+	**/
 	function addSlashes($text)
 	{
-		if (!get_magic_quotes_gpc()) {
+		if(!get_magic_quotes_gpc())
+		{
 			$text = addslashes($text);
 		}
 		return $text;
 	}
-	/*
+	/**
 	* if magic_quotes_gpc is on, stirip back slashes
-    *
-    * @param	string  $text
-    *
-    * @return	string
-	*/
+    	*
+    	* @param	string  $text
+    	* @return	string
+	**/
 	function stripSlashesGPC($text)
 	{
-		if (get_magic_quotes_gpc()) {
+		if(get_magic_quotes_gpc())
+		{
 			$text = stripslashes($text);
 		}
 		return $text;
 	}
 
-	/*
+	/**
 	*  for displaying data in html textbox forms
-    *
-    * @param	string  $text
-    *
-    * @return	string
-	*/
+    	*
+    	* @param	string  $text
+    	* @return	string
+	**/
 	function htmlSpecialChars($text)
 	{
-		//return preg_replace("/&amp;/i", '&', htmlspecialchars($text, ENT_QUOTES));
 		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), @htmlspecialchars($text, ENT_QUOTES, _CHARSET));
 	}
 
 	/**
-	 * Reverses {@link htmlSpecialChars()}
-	 *
-	 * @param   string  $text
-	 * @return  string
-	 **/
-	function undoHtmlSpecialChars( $text ) // not needed with PHP 5.1, use htmlspecialchars_decode() instead
+	* Reverses {@link htmlSpecialChars()}
+	*
+	* @param   string  $text
+	* @return  string
+	**/
+	function undoHtmlSpecialChars($text) // not needed with PHP 5.1, use htmlspecialchars_decode() instead
 	{
-		return preg_replace(array("/&gt;/i", "/&lt;/i", "/&quot;/i", "/&#039;/i", '/&amp;nbsp;/i'), array(">", "<", "\"", "'", "&nbsp;"), $text);
+		return htmlspecialchars_decode($text, ENT_NOQUOTES);
 	}
 
 	function icms_htmlEntities($text)
@@ -322,51 +329,53 @@ class MyTextSanitizer
 	}
 
 	/**
-	 * Filters textarea form data in DB for display
-	 *
-	 * @param   string  $text
-	 * @param   bool    $html   allow html?
-	 * @param   bool    $smiley allow smileys?
-	 * @param   bool    $xcode  allow xoopscode?
-	 * @param   bool    $image  allow inline images?
-	 * @param   bool    $br     convert linebreaks?
-	 * @return  string
-	 **/
-	function &displayTarea( $text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
+	* Filters textarea form data in DB for display
+	*
+	* @param   string  $text
+	* @param   bool    $html   allow html?
+	* @param   bool    $smiley allow smileys?
+	* @param   bool    $xcode  allow xoopscode?
+	* @param   bool    $image  allow inline images?
+	* @param   bool    $br     convert linebreaks?
+	* @return  string
+	**/
+	function &displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
 		global $icmsPreloadHandler;
 		$icmsPreloadHandler->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 		
-		if ($html != 1) {
-			// html not allowed
-			$text = $this->htmlSpecialChars($text);
-		}
-		else
+		if($html != 1)
 		{
-			$text = $this->html_purifier($text, $config = '2');
+			$text = $this->htmlSpecialChars($text);
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
-		if ($smiley != 0) {
-			// process smiley
+		if($smiley != 0)
+		{
 			$text = $this->smiley($text);
 		}
-		if ($xcode != 0) {
-			// decode xcode
-			if ($image != 0) {
-				// image allowed
+		if($xcode != 0)
+		{
+			if($image != 0)
+			{
 				$text = $this->xoopsCodeDecode($text);
-			} else {
-				// image not allowed
+			}
+			else
+			{
 				$text = $this->xoopsCodeDecode($text, 0);
 			}
 		}
-		if ($br != 0) {
+		if($br != 0)
+		{
 			$text = $this->nl2Br($text);
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
+		if($html != 0)
+		{
+			$text = $this->html_purifier($text, $config = 'display');
+		}
 		// ################# Preload Trigger afterDisplayTarea ##############
 		global $icmsPreloadHandler;
 		$icmsPreloadHandler->triggerEvent('afterDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));		
@@ -374,68 +383,75 @@ class MyTextSanitizer
 	}
 
 	/**
-	 * Filters textarea form data submitted for preview
-	 *
-	 * @param   string  $text
-	 * @param   bool    $html   allow html?
-	 * @param   bool    $smiley allow smileys?
-	 * @param   bool    $xcode  allow xoopscode?
-	 * @param   bool    $image  allow inline images?
-	 * @param   bool    $br     convert linebreaks?
-	 * @return  string
-	 **/
-	function &previewTarea( $text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
+	* Filters textarea form data submitted for preview
+	*
+	* @param   string  $text
+	* @param   bool    $html   allow html?
+	* @param   bool    $smiley allow smileys?
+	* @param   bool    $xcode  allow xoopscode?
+	* @param   bool    $image  allow inline images?
+	* @param   bool    $br     convert linebreaks?
+	* @return  string
+	**/
+	function &previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
 	{
 		$text = $this->stripSlashesGPC($text);
-		if ($html != 1) {
-			// html not allowed
+		if($html != 1)
+		{
 			$text = $this->htmlSpecialChars($text);
-		}
-		else {
-			$text = $this->html_purifier($text, $config = '3');
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
-		if ($smiley != 0) {
-			// process smiley
+		if($smiley != 0)
+		{
 			$text = $this->smiley($text);
 		}
-		if ($xcode != 0) {
-			// decode xcode
-			if ($image != 0) {
-				// image allowed
+		if($xcode != 0)
+		{
+			if($image != 0)
+			{
 				$text = $this->xoopsCodeDecode($text);
-			} else {
-				// image not allowed
+			}
+			else
+			{
 				$text = $this->xoopsCodeDecode($text, 0);
 			}
 		}
-		if ($br != 0) {
+		if($br != 0)
+		{
 			$text = $this->nl2Br($text);
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
+		if($html != 0)
+		{
+			$text = $this->html_purifier($text, $config = 'preview');
+		}
+			
 		return $text;
 	}
 
 	/**
-	 * Replaces banned words in a string with their replacements
-	 *
-	 * @param   string $text
-	 * @return  string
-     *
-     * @deprecated
-	 **/
+	* Replaces banned words in a string with their replacements
+	*
+	* @param   string $text
+	* @return  string
+	* @deprecated
+	**/
 	function &censorString(&$text)
 	{
-		if (!isset($this->censorConf)) {
+		if(!isset($this->censorConf))
+		{
 			$config_handler =& xoops_gethandler('config');
 			$this->censorConf =& $config_handler->getConfigsByCat(XOOPS_CONF_CENSOR);
 		}
-		if ($this->censorConf['censor_enable'] == 1) {
+		if($this->censorConf['censor_enable'] == 1)
+		{
 			$replacement = $this->censorConf['censor_replace'];
-			foreach ($this->censorConf['censor_words'] as $bad) {
-				if ( !empty($bad) ) {
+			foreach($this->censorConf['censor_words'] as $bad)
+			{
+				if(!empty($bad))
+				{
 	 				$bad = quotemeta($bad);
 					$patterns[] = "/(\s)".$bad."/siU";
 					$replacements[] = "\\1".$replacement;
@@ -452,12 +468,13 @@ class MyTextSanitizer
    		return $text;
 	}
 
-
 	/**#@+
-	 * Sanitizing of [code] tag
-	 */
-	function codePreConv($text, $xcode = 1) {
-		if($xcode != 0){
+	* Sanitizing of [code] tag
+	*/
+	function codePreConv($text, $xcode = 1)
+	{
+		if($xcode != 0)
+		{
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			$replacements = "'[code]'.base64_encode('$1').'[/code]'";
 			$text =  preg_replace($patterns, $replacements, $text);
@@ -465,59 +482,59 @@ class MyTextSanitizer
 		return $text;
 	}
 
-	function codeConv($text, $xcode = 1, $image = 1){
-		if($xcode != 0){
+	function codeConv($text, $xcode = 1, $image = 1)
+	{
+		if($xcode != 0)
+		{
 			$patterns = "/\[code](.*)\[\/code\]/esU";
-			if ($image != 0) {
-				// image allowed
+			if($image != 0)
+			{
 				$replacements = "'<div class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::codeSanitizer('$1').'</pre></code></div>'";
-				//$text =& $this->xoopsCodeDecode($text);
-			} else {
-				// image not allowed
-				$replacements = "'<div class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::codeSanitizer('$1', 0).'</pre></code></div>'";
-				//$text =& $this->xoopsCodeDecode($text, 0);
 			}
-			$text =  preg_replace($patterns, $replacements, $text);
+			else
+			{
+				$replacements = "'<div class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::codeSanitizer('$1', 0).'</pre></code></div>'";
+			}
+			$text = preg_replace($patterns, $replacements, $text);
 		}
 		return $text;
 	}
 
-	function codeSanitizer($str, $image = 1){
-		if($image != 0){
-			$str = $this->xoopsCodeDecode(
-				$this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str)))
-				);
-		}else{
-			$str = $this->xoopsCodeDecode(
-				$this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str))),0
-				);
+	function codeSanitizer($str, $image = 1)
+	{
+		if($image != 0)
+		{
+			$str = $this->xoopsCodeDecode($this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str))));
+		}
+		else
+		{
+			$str = $this->xoopsCodeDecode($this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str))),0);
 		}
 		return $str;
 	}
 
-
 	/**#@-*/
-
-
 ##################### Deprecated Methods ######################
 
 	/**#@+
-	 * @deprecated
-	 */
+	* @deprecated
+	*/
 	function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
 	{
-		if ( $allowhtml == 0 ) {
+		if($allowhtml == 0)
+		{
 			$text = $this->htmlSpecialChars($text);
-		} else {
-			//$config =& $GLOBALS['xoopsConfig'];
-			//$allowed = $config['allowed_html'];
-			//$text = strip_tags($text, $allowed);
+		}
+		else
+		{
 			$text = $this->makeClickable($text);
 		}
-		if ( $smiley == 1 ) {
+		if($smiley == 1)
+		{
 			$text = $this->smiley($text);
 		}
-		if ( $bbcode == 1 ) {
+		if($bbcode == 1)
+		{
 			$text = $this->xoopsCodeDecode($text);
 		}
 		$text = $this->nl2Br($text);
@@ -527,18 +544,20 @@ class MyTextSanitizer
 	function sanitizeForPreview($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
 	{
 		$text = $this->oopsStripSlashesGPC($text);
-		if ( $allowhtml == 0 ) {
+		if($allowhtml == 0)
+		{
 			$text = $this->htmlSpecialChars($text);
-		} else {
-			//$config =& $GLOBALS['xoopsConfig'];
-			//$allowed = $config['allowed_html'];
-			//$text = strip_tags($text, $allowed);
+		}
+		else
+		{
 			$text = $this->makeClickable($text);
 		}
-		if ( $smiley == 1 ) {
+		if($smiley == 1)
+		{
 			$text = $this->smiley($text);
 		}
-		if ( $bbcode == 1 ) {
+		if($bbcode == 1)
+		{
 			$text = $this->xoopsCodeDecode($text);
 		}
 		$text = $this->nl2Br($text);
@@ -547,7 +566,6 @@ class MyTextSanitizer
 
 	function makeTboxData4Save($text)
 	{
-		//$text = $this->undoHtmlSpecialChars($text);
 		return $this->addSlashes($text);
 	}
 
@@ -580,7 +598,7 @@ class MyTextSanitizer
 		return $this->addSlashes($text);
 	}
 
-	function &makeTareaData4Show(&$text, $html=1, $smiley=1, $xcode=1)
+	function &makeTareaData4Show(&$text, $html=0, $smiley=1, $xcode=1)
 	{
 		$text = $this->displayTarea($text, $html, $smiley, $xcode);
 		return $text;
@@ -591,7 +609,7 @@ class MyTextSanitizer
 		return $this->htmlSpecialChars($text);
 	}
 
-	function &makeTareaData4Preview(&$text, $html=1, $smiley=1, $xcode=1)
+	function &makeTareaData4Preview(&$text, $html=0, $smiley=1, $xcode=1)
 	{
 		$text = $this->previewTarea($text, $html, $smiley, $xcode);
 		return $text;
@@ -599,7 +617,6 @@ class MyTextSanitizer
 
 	function makeTareaData4PreviewInForm($text)
 	{
-		//if magic_quotes_gpc is on, do stipslashes
 		$text = $this->stripSlashesGPC($text);
 		return $this->htmlSpecialChars($text);
 	}
@@ -616,7 +633,8 @@ class MyTextSanitizer
 
 	function oopsStripSlashesRT($text)
 	{
-		if (get_magic_quotes_runtime()) {
+		if(get_magic_quotes_runtime())
+		{
 			$text = stripslashes($text);
 		}
 		return $text;
@@ -636,6 +654,6 @@ class MyTextSanitizer
 	{
 		return $this->nl2br($text);
 	}
-    /**#@-*/
+	/**#@-*/
 }
 ?>

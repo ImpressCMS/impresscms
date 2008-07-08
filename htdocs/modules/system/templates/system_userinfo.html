@@ -58,6 +58,12 @@
           <td class="head"><{$lang_email}></td>
           <td class="odd"><{$user_email}></td>
         </tr>
+    <{if $user_alwopenid == true}>
+        <tr valign="top">
+          <td class="head"><{$lang_openid}></td>
+          <td class="odd"><{$user_openid}></td>
+        </tr>
+    <{/if}>
 	<tr valign="top">
           <td class="head"><{$lang_privmsg}></td>
           <td class="even"><{$user_pmlink}></td>

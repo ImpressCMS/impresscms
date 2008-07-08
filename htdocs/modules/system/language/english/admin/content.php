@@ -11,7 +11,7 @@ define('_MD_PREVIEWCONTENT','Preview Content');
 define('_MD_CONTENT_PERMGROUPS','Groups that will be allowed to view this page.');
 define('_MD_CONTENT_TITLE','Title');
 define('_MD_CONTENT_MENU','SEO ID');
-define('_MD_CONTENT_MENU_DSC','Use a short phrase or word related to the content of the page. The content of this field will be used in place of the page ID to improve the indexing in search engines.');
+define('_MD_CONTENT_MENU_DSC','<font color=red>ATTENTION, do not use special characters:</font> "<font color=red>_</font>", "<font color=red>/</font>", "<font color=red>|</font>", "<font color=red>;</font>"<br />Use a short phrase or word related to the content of the page. The content of this field will be used in place of the page ID to improve the indexing in search engines.');
 define('_MD_CONTENT_BODY','Content Body');
 define('_MD_CONTENT_WEIGHT','Weight');
 define('_MD_CONTENT_DISPLAY','Active this page?');

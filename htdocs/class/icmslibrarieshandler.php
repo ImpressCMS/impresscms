@@ -66,12 +66,12 @@ class IcmsLibrariesHandler {
 	 * - adminHeader : this event is triggered when calling xoops_cp_header() and is used to output content in the head section of the admin side
 	 * - beforeFooter : this event is triggered when include/footer.php is called, at the begining of the file
 	 * - startOutputInit : this event is triggered when starting to output the content, in include/header.php after instantiation of $xoopsTpl
-     *
-     * @param $event string name of the event to trigger
-     * @param $array mixed container to pass any arguments to be used by the library
-     *
-     * @return	TRUE if successful, FALSE if not
-     */
+ 	 *
+ 	 * @param $event string name of the event to trigger 
+	 * @param $array mixed container to pass any arguments to be used by the library
+	 * 
+	 * @return	TRUE if successful, FALSE if not
+	 */
 	function triggerEvent($event, $array=false) {
 		foreach($this->_librariesArray as $library) {
 			$functionName = $this->getFunctionName($event, $library);
@@ -83,12 +83,12 @@ class IcmsLibrariesHandler {
 
 	/**
 	 * Construct the path of the boot file a specified library
-     *
-     * @param $library string name of the library
-     *
-     * @return	string path of the boot file of the specified library
-     *
-     */
+	 *
+	 * @param $library string name of the library
+	 *
+	 * @return	string path of the boot file of the specified library
+	 *
+	 */
 	function getLibraryBootFilePath($library) {
 		$ret = ICMS_LIBRARIES_PATH . '/' . $library . '/icms.library.' . $library . '.php';
 		return $ret;

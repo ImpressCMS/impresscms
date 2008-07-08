@@ -1056,6 +1056,36 @@ function icms_getCurrentModuleName() {
 		return false;
 	}
 }
+
+/**
+* Checks if a user is admin of $module
+*
+* @return boolean : true if user is admin
+*/
+function icms_userIsAdmin($module = false) {
+	global $xoopsUser;
+	static $icms_isAdmin;
+	if (!$module) {
+		global $xoopsModule;
+		$module = $xoopsModule->getVar('dirname');
+	}
+	if (isset ($icms_isAdmin[$module])) {
+		return $icms_isAdmin[$module];
+	}
+	if (!$xoopsUser) {
+		$icms_isAdmin[$module] = false;
+		return $icms_isAdmin[$module];
+	}
+	$icms_isAdmin[$module] = false;
+	$icmsModule = icms_getModuleInfo($module);
+	if (!is_object($icmsModule)) {
+		return false;
+	}
+	$module_id = $icmsModule->getVar('mid');
+	$icms_isAdmin[$module] = $xoopsUser->isAdmin($module_id);
+	return $icms_isAdmin[$module];
+}
+
 /**
  * Load a module language file
  * 
@@ -1237,23 +1267,23 @@ if (!function_exists('array_combine')) {
 
 // ----- New Password System
 function icms_createSalt($slength=64)
-{   
-	$salt= '';   
-	$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'; 
-	$microtime = function_exists('microtime') ? microtime() : time();   
-    srand((double)$microtime * 1000000);   
-    for ($i=0; $i<=$slength; $i++)   
-		$salt.= substr($base, rand() % strlen($base), 1);   
-    return $salt;   
+{
+	$salt= '';
+	$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	$microtime = function_exists('microtime') ? microtime() : time();
+    	srand((double)$microtime * 1000000);
+    	for($i=0; $i<=$slength; $i++)
+		$salt.= substr($base, rand() % strlen($base), 1);
+    	return $salt;
 }
 
 function icms_getUserSaltFromUname($uname = '')
 {
 	$db =& Database::getInstance();
 
-	if ($uname !== '')
+	if($uname !== '')
 	{
-	    $sql = $db->query("SELECT uname, salt FROM ".$db->prefix('users')." WHERE uname = '".htmlspecialchars($uname, ENT_QUOTES)."'");
+	    	$sql = $db->query("SELECT uname, salt FROM ".$db->prefix('users')." WHERE uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
 		list($uname, $salt) = $db->fetchRow($sql);
 	}
 	else
@@ -1263,100 +1293,90 @@ function icms_getUserSaltFromUname($uname = '')
 	return $salt;
 }
 
-function icms_encryptPass($pass, $salt)
+function icms_encryptPass($pass, $salt, $enc_type = 0)
 {
 	$config_handler =& xoops_gethandler('config');
 	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 	$mainSalt = XOOPS_DB_SALT;
 
-	if (function_exists('hash'))
+	if(function_exists('hash'))
 	{
-		if ($xoopsConfigUser['enc_type'] == 0)
+		if($xoopsConfigUser['enc_type'] == 0 || $enc_type == 0)
 		{
 			$pass = hash('md5', md5($pass)); // no salt used for compatibility with external scripts such as ipb/phpbb etc.
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 1)
+		elseif($xoopsConfigUser['enc_type'] == 1 || $enc_type == 1)
 		{
 			$pass = hash('sha256', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 2)
+		elseif($xoopsConfigUser['enc_type'] == 2 || $enc_type == 2)
 		{
 			$pass = hash('sha384', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 3)
+		elseif($xoopsConfigUser['enc_type'] == 3 || $enc_type == 3)
 		{
 			$pass = hash('sha512', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 4)
+		elseif($xoopsConfigUser['enc_type'] == 4 || $enc_type == 4)
 		{
 			$pass = hash('ripemd128', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 5)
+		elseif($xoopsConfigUser['enc_type'] == 5 || $enc_type == 5)
 		{
 			$pass = hash('ripemd160', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 6)
+		elseif($xoopsConfigUser['enc_type'] == 6 || $enc_type == 6)
 		{
 			$pass = hash('whirlpool', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 7)
+		elseif($xoopsConfigUser['enc_type'] == 7 || $enc_type == 7)
 		{
 			$pass = hash('haval128,4', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 8)
+		elseif($xoopsConfigUser['enc_type'] == 8 || $enc_type == 8)
 		{
 			$pass = hash('haval160,4', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 9)
+		elseif($xoopsConfigUser['enc_type'] == 9 || $enc_type == 9)
 		{
 			$pass = hash('haval192,4', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 10)
+		elseif($xoopsConfigUser['enc_type'] == 10 || $enc_type == 10)
 		{
 			$pass = hash('haval224,4', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 11)
+		elseif($xoopsConfigUser['enc_type'] == 11 || $enc_type == 11)
 		{
 			$pass = hash('haval256,4', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 12)
+		elseif($xoopsConfigUser['enc_type'] == 12 || $enc_type == 12)
 		{
 			$pass = hash('haval128,5', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 13)
+		elseif($xoopsConfigUser['enc_type'] == 13 || $enc_type == 13)
 		{
 			$pass = hash('haval160,5', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 14)
+		elseif($xoopsConfigUser['enc_type'] == 14 || $enc_type == 14)
 		{
 			$pass = hash('haval192,5', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 15)
+		elseif($xoopsConfigUser['enc_type'] == 15 || $enc_type == 15)
 		{
 			$pass = hash('haval224,5', $salt.md5($pass).$mainSalt);
 		}
-		elseif ($xoopsConfigUser['enc_type'] == 16)
+		elseif($xoopsConfigUser['enc_type'] == 16 || $enc_type == 16)
 		{
 			$pass = hash('haval256,5', $salt.md5($pass).$mainSalt);
 		}
 	}
-	elseif (!function_exists('hash'))
+	elseif(!function_exists('hash'))
 	{
-		if ($xoopsConfigUser['enc_type'] == 0)
-		{
-			$pass = md5($pass); // no salt used for compatibility with external scripts such as ipb/phpbb etc. no idea why this was requested though, but not recommended to use.
-		}
-		elseif ($xoopsConfigUser['enc_type'] == 1 || $xoopsConfigUser['enc_type'] > 1)
-		{
-			include_once ICMS_ROOT_PATH.'/class/sha256.inc.php';
-			$pass = SHA256::hash($salt.md5($pass).$mainSalt);
-		}
+		$pass = md5($pass); // no salt used for compatibility with external scripts such as ipb/phpbb etc. no idea why this was requested though, but not recommended to use.
 	}
-
 	unset($mainSalt);
 	return $pass;
 }
-
 // ----- End New Password System
 
 /**
@@ -1437,6 +1457,71 @@ function icms_sanitizeCustomtags($text) {
 	$patterns[] = "/\[customtag](.*)\[\/customtag\]/sU";
 	$text = preg_replace_callback($patterns, 'icms_sanitizeCustomtags_callback', $text);
 	return $text;
+}
+
+/**
+* Return a linked username or full name for a specific $userid
+*
+* @param integer $userid uid of the related user
+* @param bool $name true to return the fullname, false to use the username; if true and the user does not have fullname, username will be used instead
+* @param array $users array already containing XoopsUser objects in which case we will save a query
+* @param bool $withContact true if we want contact details to be added in the value returned (PM and email links)
+* @return string name of user with a link on his profile
+*/
+function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $withContact = false) {
+	if (!is_numeric($userid)) {
+		return $userid;
+	}
+	$userid = intval($userid);
+	if ($userid > 0) {
+			if ($users == array ()) {
+			//fetching users
+			$member_handler = & xoops_gethandler('member');
+			$user = & $member_handler->getUser($userid);
+		} else {
+			if (!isset ($users[$userid])) {
+				return $GLOBALS['xoopsConfig']['anonymous'];
+			}
+			$user = & $users[$userid];
+		}
+		if (is_object($user)) {
+			$ts = & MyTextSanitizer :: getInstance();
+			$username = $user->getVar('uname');
+			$fullname = '';
+			$fullname2 = $user->getVar('name');
+			if (($name) && !empty ($fullname2)) {
+				$fullname = $user->getVar('name');
+			}
+			if (!empty ($fullname)) {
+				$linkeduser = "$fullname [<a href='" . ICMS_URL . "/userinfo.php?uid=" . $userid . "'>" . $ts->htmlSpecialChars($username) . "</a>]";
+			} else {
+				$linkeduser = "<a href='" . ICMS_URL . "/userinfo.php?uid=" . $userid . "'>" . ucwords($ts->htmlSpecialChars($username)) . "</a>";
+			}
+			// add contact info : email + PM
+			if ($withContact) {
+				$linkeduser .= ' <a href="mailto:' . $user->getVar('email') . '"><img style="vertical-align: middle;" src="' . ICMS_URL . '/images/icons/email.gif' . '" alt="' . _US_SEND_MAIL . '" title="' . _US_SEND_MAIL . '"/></a>';
+				$js = "javascript:openWithSelfMain('" . ICMS_URL . '/pmlite.php?send2=1&to_userid=' . $userid . "', 'pmlite',450,370);";
+				$linkeduser .= ' <a href="' . $js . '"><img style="vertical-align: middle;" src="' . ICMS_URL . '/images/icons/pm.gif' . '" alt="' . _US_SEND_PM . '" title="' . _US_SEND_PM . '"/></a>';
+			}
+			return $linkeduser;
+		}
+	}
+	return $GLOBALS['xoopsConfig']['anonymous'];
+}
+
+/**
+ * Get an array of the table used in a module
+ * 
+ * @param string $moduleName name of the module
+ * @param $items array of items managed by the module
+ * @return array of tables used in the module
+ */
+function icms_getTablesArray($moduleName, $items) {
+	$ret = array();
+	foreach ($items as $item) {
+		$ret[] = $moduleName . '_' . $item;
+	}
+	return $ret;
 }
 
 /**
@@ -1609,4 +1694,114 @@ function icms_get_url_domain($url)
 	return $domain;
 }
 
+/**
+ * Function to wordwrap given text.
+ * 
+ * @param string $str 	The text to be wrapped.
+ * @param string $width The column width - text will be wrapped when longer than $width.
+ * @param string $break The line is broken using the optional break parameter.
+ *			can be '/n' or '<br />'
+ * @param string $cut 	If cut is set to TRUE, the string is always wrapped at the specified width.
+ *			So if you have a word that is larger than the given width, it is broken apart..
+ * @return string
+ */
+function icms_wordwrap($str, $width, $break = '/n', $cut = false)
+{
+	if(strtolower(_CHARSET) !== 'utf-8')
+	{
+		$str = wordwrap($str, $width, $break, $cut);
+		return $str;
+	}
+	else
+	{
+		$splitedArray = array();
+        	$lines = explode("\n", $str);
+        	foreach($lines as $line)
+		{
+            		$lineLength = strlen($line);
+            		if($lineLength > $width)
+			{
+                		$words = explode("\040", $line);
+                		$lineByWords = '';
+                		$addNewLine = true;
+                		foreach($words as $word)
+				{
+                    			$lineByWordsLength = strlen($lineByWords);
+                    			$tmpLine = $lineByWords.((strlen($lineByWords) !== 0) ? ' ' : '').$word;
+                    			$tmplineByWordsLength = strlen($tmpLine);
+                    			if($tmplineByWordsLength > $width && $lineByWordsLength <= $width && $lineByWordsLength !== 0)
+					{
+                        			$splitedArray[] = $lineByWords;
+                        			$lineByWords = '';
+                    			}
+
+                    			$newLineByWords = $lineByWords.((strlen($lineByWords) !== 0) ? ' ' : '').$word;
+                    			$newLineByWordsLength    = strlen($newLineByWords);
+                    			if($cut && $newLineByWordsLength > $width)
+					{
+                        			for($i = 0; $i < $newLineByWordsLength; $i = $i + $width)
+						{
+                            				$splitedArray[] = mb_substr($newLineByWords, $i, $width);
+                        			}
+                        			$addNewLine = false;
+                    			}
+					else
+					{
+                        			$lineByWords = $newLineByWords;
+                    			}
+                		}
+                		if($addNewLine)
+				{
+                    			$splitedArray[] = $lineByWords;
+                		}
+            		}
+			else
+			{
+                		$splitedArray[] = $line;
+            		}
+        	}
+        	return implode($break, $splitedArray);
+	}
+}
+
+/**
+* Function to reverse given text with utf-8 character sets
+*
+* credit for this function should goto lwc courtesy of php.net.
+* 
+* @param string $str		The text to be reversed.
+* @param string $reverse	true will reverse everything including numbers, false will reverse text only but numbers will be left intact.
+*				example: when true: impresscms 2008 > 8002 smcsserpmi, false: impresscms 2008 > 2008 smcsserpmi
+* @return string
+*/
+function icms_utf8_strrev($str, $reverse = false)
+{
+	preg_match_all('/./us', $str, $ar);
+	if($reverse)
+	{
+		return join('',array_reverse($ar[0]));
+	}
+	else
+	{
+		$temp = array();
+		foreach($ar[0] as $value)
+		{
+			if(is_numeric($value) && !empty($temp[0]) && is_numeric($temp[0]))
+			{
+				foreach ($temp as $key => $value2)
+				{
+					if(is_numeric($value2))
+					{
+						$pos = ($key + 1);
+					}
+					else {break;}
+					$temp2 = array_splice($temp, $pos);
+					$temp = array_merge($temp, array($value), $temp2);
+				}
+			}
+			else {array_unshift($temp, $value);}
+		}
+		return implode('', $temp);
+	}
+}
 ?>

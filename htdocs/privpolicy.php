@@ -26,13 +26,14 @@ if ($xoopsConfigUser['priv_dpolicy'] !== 1)
 $xoopsOption['template_main'] = 'system_privpolicy.html';
 include ICMS_ROOT_PATH.'/header.php';
 
+$purifier =& icms_HTMLPurifier::getPurifierInstance();
+
 $xoopsTpl->assign('priv_poltype', 'page');
 $priv = str_replace('{X_SITEURL}', XOOPS_URL.'/', $xoopsConfigUser['priv_policy']); 
-$priv = str_replace('{X_SITENAME}', $xoopsConfig ['sitename'], $priv); 
+$priv = str_replace('{X_SITENAME}', $xoopsConfig['sitename'], $priv);
+$priv = $purifier->displayHTMLarea($priv, 'display'); 
 $xoopsTpl->assign('priv_policy', $priv);
 $xoopsTpl->assign('lang_privacy_policy', _PRV_PRIVACY_POLICY);
-
-
 
 include ICMS_ROOT_PATH.'/footer.php';
 ?>
