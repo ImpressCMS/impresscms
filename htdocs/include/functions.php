@@ -1293,7 +1293,7 @@ function icms_getUserSaltFromUname($uname = '')
 	return $salt;
 }
 
-function icms_encryptPass($pass, $salt, $enc_type = 0)
+function icms_encryptPass($pass, $salt)
 {
 	$config_handler =& xoops_gethandler('config');
 	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
@@ -1301,71 +1301,71 @@ function icms_encryptPass($pass, $salt, $enc_type = 0)
 
 	if(function_exists('hash'))
 	{
-		if($xoopsConfigUser['enc_type'] == 0 || $enc_type == 0)
+		if($xoopsConfigUser['enc_type'] == 0)
 		{
 			$pass = hash('md5', md5($pass)); // no salt used for compatibility with external scripts such as ipb/phpbb etc.
 		}
-		elseif($xoopsConfigUser['enc_type'] == 1 || $enc_type == 1)
+		elseif($xoopsConfigUser['enc_type'] == 1)
 		{
 			$pass = hash('sha256', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 2 || $enc_type == 2)
+		elseif($xoopsConfigUser['enc_type'] == 2)
 		{
 			$pass = hash('sha384', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 3 || $enc_type == 3)
+		elseif($xoopsConfigUser['enc_type'] == 3)
 		{
 			$pass = hash('sha512', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 4 || $enc_type == 4)
+		elseif($xoopsConfigUser['enc_type'] == 4)
 		{
 			$pass = hash('ripemd128', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 5 || $enc_type == 5)
+		elseif($xoopsConfigUser['enc_type'] == 5)
 		{
 			$pass = hash('ripemd160', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 6 || $enc_type == 6)
+		elseif($xoopsConfigUser['enc_type'] == 6)
 		{
 			$pass = hash('whirlpool', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 7 || $enc_type == 7)
+		elseif($xoopsConfigUser['enc_type'] == 7)
 		{
 			$pass = hash('haval128,4', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 8 || $enc_type == 8)
+		elseif($xoopsConfigUser['enc_type'] == 8)
 		{
 			$pass = hash('haval160,4', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 9 || $enc_type == 9)
+		elseif($xoopsConfigUser['enc_type'] == 9)
 		{
 			$pass = hash('haval192,4', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 10 || $enc_type == 10)
+		elseif($xoopsConfigUser['enc_type'] == 10)
 		{
 			$pass = hash('haval224,4', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 11 || $enc_type == 11)
+		elseif($xoopsConfigUser['enc_type'] == 11)
 		{
 			$pass = hash('haval256,4', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 12 || $enc_type == 12)
+		elseif($xoopsConfigUser['enc_type'] == 12)
 		{
 			$pass = hash('haval128,5', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 13 || $enc_type == 13)
+		elseif($xoopsConfigUser['enc_type'] == 13)
 		{
 			$pass = hash('haval160,5', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 14 || $enc_type == 14)
+		elseif($xoopsConfigUser['enc_type'] == 14)
 		{
 			$pass = hash('haval192,5', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 15 || $enc_type == 15)
+		elseif($xoopsConfigUser['enc_type'] == 15)
 		{
 			$pass = hash('haval224,5', $salt.md5($pass).$mainSalt);
 		}
-		elseif($xoopsConfigUser['enc_type'] == 16 || $enc_type == 16)
+		elseif($xoopsConfigUser['enc_type'] == 16)
 		{
 			$pass = hash('haval256,5', $salt.md5($pass).$mainSalt);
 		}
