@@ -60,13 +60,13 @@
 				image : url + '/img/xoopscode.gif',
 				cmd : 'mceXoopscode'
 				});
-		},
+
 			ed.addButton('icmshide', {
 				title : 'xoopsquotecode.hide_desc',
 				image : url + '/img/icmshide.gif',
 				cmd : 'mceIcmshide'
 				});
-
+		},
 		getInfo : function() {
 			return {
 				longname : 'XoopsquoteCode',
