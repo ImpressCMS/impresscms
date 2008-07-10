@@ -3,12 +3,12 @@
 // updated to TinyMCE v3.0.1 / 2008-02-29 / by luciorota
 tinyMCEPopup.requireLangPack();
 
-var XoopsquoteDialog = {
+var IcmshideDialog = {
 	init : function()
 		{
 		var formObj = document.forms[0];
 		// Get the selected contents as text and place it in the input
-		formObj.ctext.value = tinyMCEPopup.editor.selection.getContent({format : 'text'});
+		formObj.htext.value = tinyMCEPopup.editor.selection.getContent({format : 'text'});
 		},
 	insert : function()
 		{
@@ -16,15 +16,15 @@ var XoopsquoteDialog = {
 		var formObj = document.forms[0];
 		if (window.opener)
 			{
-			var qtext = formObj.qtext.value;
-			qtext.replace(new RegExp("<",'g'), "&lt;");
-			qtext.replace(new RegExp(">",'g'), "&gt;");
+			var htext = formObj.htext.value;
+			htext.replace(new RegExp("<",'g'), "&lt;");
+			htext.replace(new RegExp(">",'g'), "&gt;");
 			var html = '<div class="xoopsQuote">';
-			html += qtext+'</div><br />';
+			html += htext+'</div><br />';
 			tinyMCEPopup.editor.execCommand('mceInsertContent', true, html);
 			tinyMCEPopup.close();
 			}
 		}
 };
 
-tinyMCEPopup.onInit.add(XoopsquoteDialog.init, XoopsquoteDialog);
+tinyMCEPopup.onInit.add(IcmshideDialog.init, IcmshideDialog);
