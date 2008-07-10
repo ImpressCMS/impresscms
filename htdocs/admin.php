@@ -238,7 +238,6 @@ function showRSS($op=1)
 			$rssfile = ICMS_CACHE_PATH.'/adminnews.xml';
 		break;
 	}
->>>>>>> .merge-right.r3537
 	$rssdata = '';
 	if(!file_exists($rssfile) || filemtime($rssfile) < time() - 86400)
 	{
@@ -293,7 +292,7 @@ function showRSS($op=1)
 		{
 			echo $rss2parser->getErrors();
 		}
-	}*/
+	}
 	
 	
 	include_once(ICMS_ROOT_PATH . '/class/icmssimplerss.php');
