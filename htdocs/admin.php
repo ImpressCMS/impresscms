@@ -61,7 +61,7 @@ switch($op)
 		redirect_header('javascript:history.go(-1)', 1, _AD_LOGINADMIN);
 		exit();
 		break;
-	case 10:
+/*	case 10:
 		$rssurl = 'http://www.impresscms.org/modules/smartsection/backend.php?categoryid=1';
 		$rssfile = ICMS_CACHE_PATH.'/www_smartsection_category1.xml';
 		$caching_time = 1;
@@ -116,7 +116,7 @@ switch($op)
 				//echo $rss2parser->getErrors();
 			}
 		}	
-	break;
+	break;*/
 	
 	default:
 		$mods = xoops_cp_header(1);
@@ -263,7 +263,7 @@ function showRSS($op=1)
 			fclose($fp);
 		}
 	}
-	if($rssdata != '')
+/*	if($rssdata != '')
 	{
 		include_once ICMS_ROOT_PATH.'/class/xml/rss/xmlrss2parser.php';
 		$rss2parser = new XoopsXmlRss2Parser($rssdata);
@@ -297,7 +297,7 @@ function showRSS($op=1)
 		{
 			echo $rss2parser->getErrors();
 		}
-	}
+	}*/
 	
 	
 	include_once(ICMS_ROOT_PATH . '/class/icmssimplerss.php');
@@ -333,7 +333,7 @@ function showRSS($op=1)
 						?>
 
 						<!-- If the item has a permalink back to the original post (which 99% of them do), link the item's title to it. -->
-						<h4><img src="<?php echo $favicon; ?>" alt="Favicon" class="favicon" /><?php if ($item->get_permalink()) echo '<a href="' . $item->get_permalink() . '">'; echo $item->get_title(); if ($item->get_permalink()) echo '</a>'; ?>&nbsp;<span class="footnote"><?php echo $item->get_date('j M Y, g:i a'); ?></span></h4>
+						<h4><img src="<?php echo $favicon; ?>" alt="Favicon" class="favicon" /><?php if ($item->get_permalink()) echo '<a href="' . $item->get_permalink() . '">'; echo $item->get_title(); if ($item->get_permalink()) echo '</a>'; ?></h4>
 
 						<!-- Display the item's primary content. -->
 						<?php echo $item->get_content(); ?>
