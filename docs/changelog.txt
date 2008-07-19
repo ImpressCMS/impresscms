@@ -1,5 +1,9 @@
 ImpressCMS ChangeLog
 
+== Impresscms 1.2==
+'''Added'''
+* Smarty xoPageNav function (Skalpa)
+
 == Impresscms 1.1==
 
 ===2008-07-02 : 1.1 Beta 1===
@@ -7,19 +11,28 @@ ImpressCMS ChangeLog
 '''Added'''
 * new plugin for tinymce. hiddencontent (luciorota/real_therplima/stranger)
 * Password meter op on installation. (stranger/real_therplima)
+* Upgrade script 1.0 --> 1.1beta. (stranger)
+* new field to let user select if they want to sho their openid. (stranger)
+* new warning to let users know about upgrading system module. (stranger)
+* Upgrade script XOOPS2.2.x --> ImpressCMS. (stranger/phppp)
 
 '''Improved'''
-* Updated TCPDF to version 4.0.001. (stranger)
+* Updated TCPDF to version 4.0.005. (stranger)
 * Formfield for OpenID, if OID is inactive users won't see it's fields. (stranger)
 
 '''Changed'''
+* after upgrade is done you'll get back to index to see if upgrade was successful. (stranger)
 
 '''Fixed'''
-* Culd not upload avatar. (real_therplima/stranger)
+* Could not upload avatar. (real_therplima/stranger)
 * Fixed the isssue of password meter for RTL languages. (stranger)
 * Fixed the isssues of installation for RTL languages. (stranger)
 * Issue with PDF generator. (stranger)
-- Added: Smarty xoPageNav function (Skalpa)
+
+* HTML Purifier is now properly using the trust path to create its cache data (Vaughan/malanciault)
+* The installer was not properly creating the password hash of the administrator (Vaughan/real_therplima/malanciault)
+* #1871202 (was not completely fixed) - Avatar and Karma (Fixed). (stranger)
+* Issue with new hash generator, when replacing new core files. (stranger)
 
 ===2008-07-02 : 1.1 Alpha 2===
 

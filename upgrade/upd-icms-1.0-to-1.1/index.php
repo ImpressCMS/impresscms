@@ -1,9 +1,23 @@
 <?php
+/**
+* Upgrade script of ImpressCMS 1.0 to 1.0
+*
+* @copyright   The XOOPS project http://www.xoops.org/
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		upgrader
+* @since		1.1
+* @author	   Sina Asghari <pesian_stranger@users.sourceforge.net>
+* @author      Taiwen Jiang <phppp@users.sourceforge.net>
+* @version		$Id$
+*/
 
 class upgrade_impcms06 {
 	
 	var $usedFiles = array ();
-    var $tasks = array('conf', 'db', 'rest_of_upgrade', 'new_blocks');
+    var $tasks = array('table1', 'table2', 'table3', 'table4', 'conf', 
+    'block1', 'block2', 'block3', 'block4', 
+    'dbversion', 'db');
 	var $updater;
 	
 	function __construct() {
@@ -32,9 +46,10 @@ class upgrade_impcms06 {
             if (!$res) return false;
             array_shift($_SESSION[__CLASS__]);
         }
-		return ($this->cleaning_write_folders());
+        return true;
     }
-    	function cleaning_write_folders() {
+
+	function cleaning_write_folders() {
 		$dir = array();
 		$dir['templates_c'] = XOOPS_ROOT_PATH."/templates_c/";
 		$dir['cache'] = XOOPS_ROOT_PATH."/cache/";
@@ -53,38 +68,380 @@ class upgrade_impcms06 {
 		}
 			return true;
 	}
-function check_new_blocks()
+
+    function check_table1()
     {
 		$table = new IcmsDatabasetable('modules');
 	    return $table->fieldExists('dbversion');
             }
-	function apply_new_blocks() {
+
+ 	function apply_table1() {
+		// Create table icmspage
+		$table = new IcmsDatabasetable('icmspage');
+		if (!$table->exists()) {
+			$table->setStructure("page_id mediumint(8) unsigned NOT NULL auto_increment,
+					  page_moduleid mediumint(8) unsigned NOT NULL default '1',
+					  page_title varchar(255) NOT NULL default '',
+					  page_url varchar(255) NOT NULL default '',
+					  page_status tinyint(1) unsigned NOT NULL default '1',
+					  PRIMARY KEY  (page_id)");
+    	return $this->updater->updateTable($table, true);
+		}
+		unset ($table);
+
+	}
+    function check_table2()
+    {
+		$table = new IcmsDatabasetable('modules');
+	    return $table->fieldExists('dbversion');
+            }
+
+ 	function apply_table2() {
+		// Create table icmscontent
+		$table = new IcmsDatabasetable('icmscontent');
+		if (!$table->exists()) {
+			$table->setStructure("`content_id` mediumint(8) unsigned NOT NULL auto_increment,
+  				`content_catid` mediumint(8) unsigned NOT NULL default '1',
+				  `content_supid` mediumint(8) unsigned NOT NULL default '0',
+				  `content_uid` mediumint(5) NOT NULL default '1',
+				  `content_title` varchar(255) NOT NULL default '',
+				  `content_menu` varchar(100) default NULL,
+				  `content_body` text,
+				  `content_css` text,
+				  `content_visibility` int(10) NOT NULL default '3',
+				  `content_created` int(10) NOT NULL default '0',
+				  `content_updated` int(10) NOT NULL default '0',
+				  `content_weight` smallint(5) unsigned NOT NULL default '0',
+				  `content_reads` int(11) NOT NULL default '0',
+				  `content_status` tinyint(1) unsigned NOT NULL default '0',
+				  PRIMARY KEY  (`content_id`)
+				");
+    	return $this->updater->updateTable($table, true);
+		}
+		unset ($table);
+	}
+    function check_table3()
+    {
+		$table = new IcmsDatabasetable('modules');
+	    return $table->fieldExists('dbversion');
+            }
+
+ 	function apply_table3() {
+		// Create table invites
+		$table = new IcmsDatabasetable('invites');
+		if (!$table->exists()) {
+			$table->setStructure("`invite_id` mediumint(8) unsigned NOT NULL auto_increment,
+						  `from_id` mediumint(8) unsigned NOT NULL default '0',
+						  `invite_to` varchar(255) NOT NULL default '',
+						  `invite_code` varchar(8) NOT NULL default '',
+						  `invite_date` int(10) unsigned NOT NULL default '0',
+						  `view_date` int(10) unsigned NOT NULL default '0',
+						  `register_id` mediumint(8) unsigned NOT NULL default '0',
+						  `extra_info` text NOT NULL,
+						  PRIMARY KEY  (`invite_id`),
+						  KEY `invite_code` (`invite_code`),
+						  KEY `register_id` (`register_id`)
+				");
+    	return $this->updater->updateTable($table, true);
+		}
+		unset ($table);
+
+	}
+    function check_table4()
+    {
+		$table = new IcmsDatabasetable('modules');
+	    return $table->fieldExists('dbversion');
+            }
+
+ 	function apply_table4() {
+		// Create table system_customtag
+		$table = new IcmsDatabasetable('system_customtag');
+		if (!$table->exists()) {
+			$table->setStructure("`customtagid` int(11) unsigned NOT NULL auto_increment,
+					  `name` varchar(255) NOT NULL default '',
+					  `description` text NOT NULL default '',
+					  `content` text NOT NULL default '',
+					  `language` varchar(100) NOT NULL default '',
+					  `customtag_type` tinyint(1) NOT NULL default 0,
+					  PRIMARY KEY (`customtagid`)");
+    	return $this->updater->updateTable($table, true);
+		}
+		unset ($table);
+	}
+
+    function check_block1()
+    {
 		$db = $GLOBALS['xoopsDB'];
-		if (getDbValue($db,'newblocks','bid',' show_func="b_social_bookmarks"') != 0){return true;}
-		$this->query(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '', 'Share this page!', 'Share this page!', '', 1, 0, 0, 'S', 'H', 1, 'system', 'social_bookmarks.php', 'b_social_bookmarks', '', 'system_block_socialbookmark.html', 0, " . time() . ")");
+		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_social_bookmarks"') != 0) {
+			return true;
+		}
+            }
+
+ 	function apply_block1() {
+		$db = $GLOBALS['xoopsDB'];
+		$db->queryF(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '', 'Share this page!', 'Share this page!', '', 1, 0, 0, 'S', 'H', 1, 'system', 'social_bookmarks.php', 'b_social_bookmarks', '', 'system_block_socialbookmark.html', 0, " . time() . ")");
 		$new_block_id = $db->getInsertId();
-		$this->query(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
-		$this->query(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_socialbookmark.html', 'Displays image links to bookmark pages in sharing websites', " . time() . ", " . time() . ", 'block');");
+		$db->queryF(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
+		$db->queryF(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_socialbookmark.html', 'Displays image links to bookmark pages in sharing websites', " . time() . ", " . time() . ", 'block');");
 		$new_tplfile_id = $db->getInsertId();
 		$new_tpl_source = '<table cellspacing="0" class="outer">\n  <tr>\n    <td class="odd">\n		<{$block.bookmark}>\n	</td>\n  </tr>\n</table>';
-		$this->query(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
-		$this->query(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
-		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
-		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
-		$this->query(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
 		return true;
 	}
-    function check_db()
+    function check_block2()
+    {
+		$db = $GLOBALS['xoopsDB'];
+		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_show"') != 0) {
+			return true;
+		}
+            }
+
+ 	function apply_block2() {
+		$db = $GLOBALS['xoopsDB'];
+		$db->queryF(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, '1|1|1|1', 'Content', 'Content', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_show', 'b_content_edits', 'system_block_content.html', 0, " . time() . ")");
+		$new_block_id = $db->getInsertId();
+		$db->queryF(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
+		$db->queryF(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_content.html', 'Show content page', " . time() . ", " . time() . ", 'block');");
+		$new_tplfile_id = $db->getInsertId();
+		$new_tpl_source = '<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/style.css" />\r\n<style type="text/css">\r\n  <{$content_css}>\r\n</style>\r\n<div id="impress_content">\r\n  <{if $block.showNav}>\r\n    <div id="nav"><{$block.nav}></div>\r\n  <{/if}>  \r\n  <div id="title">\r\n    <{if $block.isAdmin}><div class="title_admlinks"><{$block.content_admlinks}></div><{/if}>\r\n    <h1 class="title_body"><{$block.content_title}></h1>\r\n    <{if $block.show_pinfo}><h2 class="title_info"><{$block.content_tinfo}></h2><{/if}>\r\n  </div>\r\n  <div class="content">\r\n    <div class="content_body"><{$block.content_body}></div>\r\n  </div>\r\n  <{if $block.showSubs}>\r\n    <hr style="margin:20px;" />\r\n    <div id="subs">\r\n      <div class="title_subs"><{$block.subs_label}></div>\r\n      <{foreach item=sub from=$block.content_subs}>\r\n        <div style="margin:5px;" class="<{cycle values="even,odd"}>">\r\n          <h3 style="margin:0;"><a href="<{$sub.link}>"><{$sub.titulo}></a></h3>\r\n          <em><{$sub.teaser}></em>\r\n        </div>\r\n      <{/foreach}>\r\n    </div>\r\n  <{/if}>  \r\n</div>';
+		$db->queryF(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+		return true;
+	}
+    function check_block3()
+    {
+		$db = $GLOBALS['xoopsDB'];
+		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_menu_show"') != 0) {
+			return true;
+		}
+            }
+
+ 	function apply_block3() {
+		$db = $GLOBALS['xoopsDB'];
+		$db->queryF(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, 'content_weight|ASC|1|#F2E2A0', 'Content Menu', 'Content Menu', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_menu_show', 'b_content_menu_edit', 'system_block_contentmenu.html', 0, " . time() . ")");
+		$new_block_id = $db->getInsertId();
+		$db->queryF(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
+		$db->queryF(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_contentmenu.html', 'Menu of content pages and categories', " . time() . ", " . time() . ", 'block');");
+		$new_tplfile_id = $db->getInsertId();
+		$new_tpl_source = '<script src="<{$xoops_url}>/modules/system/admin/content/menu.js" type="text/javascript"></script>\r\n<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/menu.css" />\r\n<div id="mainmenu">\r\n  <ul id="primary-nav">\r\n    <{foreach from=$block.menu key=key item=menu}> \r\n      <li<{if $block.showsubs && $menu.hassubs}> class="menuparent"<{/if}>>\r\n        <a class="menuMain" href="<{$xoops_url}>/content.php?page=<{$menu.menu}>"><{$menu.title}></a>\r\n        <{if $block.showsubs && $menu.hassubs}><{includeq file="db:blocks/system_block_contentmenu_structure.html" menus=$menu.subs}><{/if}> \r\n      </li> \r\n    <{/foreach}>\r\n  </ul>\r\n</div>';
+		$db->queryF(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+		return true;
+	}
+    function check_block4()
+    {
+		$db = $GLOBALS['xoopsDB'];
+		if (getDbValue($db, 'newblocks', 'bid', ' show_func="b_content_relmenu_show"') != 0) {
+			return true;
+		}
+            }
+
+ 	function apply_block4() {
+		$db = $GLOBALS['xoopsDB'];
+		$db->queryF(" INSERT INTO " . $db->prefix("newblocks") . " VALUES ('', 1, 0, 'content_weight|ASC|1', 'Related Content', 'Related Content', '', 1, 0, 0, 'S', 'H', 1, 'system', 'content_blocks.php', 'b_content_relmenu_show', 'b_content_relmenu_edit', 'system_block_contentmenu.html', 0, " . time() . ")");
+		$new_block_id = $db->getInsertId();
+		$db->queryF(" UPDATE " . $db->prefix("newblocks") . " SET func_num = " . $new_block_id . " WHERE bid=" . $new_block_id);
+		$db->queryF(" INSERT INTO " . $db->prefix("tplfile") . " VALUES ('', " . $new_block_id . ", 'system', 'default', 'system_block_contentmenu.html', 'Menu of content pages and categories', " . time() . ", " . time() . ", 'block');");
+		$new_tplfile_id = $db->getInsertId();
+		$new_tpl_source = '<script src="<{$xoops_url}>/modules/system/admin/content/menu.js" type="text/javascript"></script>\r\n<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/menu.css" />\r\n<div id="mainmenu">\r\n  <ul id="primary-nav">\r\n    <{foreach from=$block.menu key=key item=menu}> \r\n      <li<{if $block.showsubs && $menu.hassubs}> class="menuparent"<{/if}>>\r\n        <a class="menuMain" href="<{$xoops_url}>/content.php?page=<{$menu.menu}>"><{$menu.title}></a>\r\n        <{if $block.showsubs && $menu.hassubs}><{includeq file="db:blocks/system_block_contentmenu_structure.html" menus=$menu.subs}><{/if}> \r\n      </li> \r\n    <{/foreach}>\r\n  </ul>\r\n</div>';
+		$db->queryF(" INSERT INTO " . $db->prefix("tplsource") . " VALUES (" . $new_tplfile_id . ", '" . $new_tpl_source . "');");
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0);");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 2, " . $new_block_id . ", 1, 'block_read');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+		return ($this->cleaning_write_folders());
+	}
+    function check_conf()
+    {
+		$table = new IcmsDatabasetable('modules');
+	    return $table->fieldExists('dbversion');
+            }
+
+ 	function apply_conf() {
+		$db = $GLOBALS['xoopsDB'];
+		if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_CONTMANAGER"') != 0){return true;}
+		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('9','_MD_AM_CONTMANAGER')");
+		if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_PERSON"') != 0){return true;}
+		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('10','_MD_AM_PERSON')");
+        
+        $passwordmeter_installed = false;
+        $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'pass_level'";
+        if ( $result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
+            list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+            if ($count == 1) {
+                $passwordmeter_installed = true;
+            }
+        }
+        if (!$passwordmeter_installed) {
+            $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('config') . 
+                    " (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " .
+                    " VALUES " .
+                    " (NULL, 0, 2, 'pass_level', '_MD_AM_PASSLEVEL', '20', '_MD_AM_PASSLEVEL_DESC', 'select', 'int', 2)";
+
+            if (!$GLOBALS['xoopsDB']->queryF( $sql )) {
+                return false;
+            }
+            $config_id = $GLOBALS['xoopsDB']->getInsertId();
+            
+            $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('configoption') . 
+                    " (confop_id, confop_name, confop_value, conf_id)" .
+                    " VALUES" .
+                    " (NULL, '_MD_AM_PASSLEVEL1', '20', {$config_id})," .
+                    " (NULL, '_MD_AM_PASSLEVEL2', '40', {$config_id})," .
+                    " (NULL, '_MD_AM_PASSLEVEL3', '60', {$config_id})," .
+                    " (NULL, '_MD_AM_PASSLEVEL4', '80', {$config_id})," .
+                    " (NULL, '_MD_AM_PASSLEVEL5', '95', {$config_id})";
+            if ( !$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
+                return false;
+            }
+        }
+        
+		$db = $GLOBALS['xoopsDB'];
+        	$sql = "INSERT INTO `" . $GLOBALS['xoopsDB']->prefix("configoption") . "` (confop_id, confop_name, confop_value, conf_id) VALUES (NULL, '_MD_AM_REGINVITE', '3', 21)";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " MODIFY pass VARCHAR(255)";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " MODIFY user_sig text NOT NULL";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD language varchar(100) NOT NULL default ''";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD openid varchar(255) NOT NULL default ''";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD salt varchar(255) NOT NULL default ''";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD user_viewoid tinyint(1) unsigned NOT NULL default '0'";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD pass_expired tinyint(1) NOT NULL default '1'";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD enc_type tinyint(2) NOT NULL default '1'";
+			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+				return false;
+			}
+			
+		$pw_salt_installed = false;
+		$sql = "SELECT COUNT(*) FROM `" . $GLOBALS ['xoopsDB']->prefix ( 'config' ) . "` WHERE `conf_name` = 'enc_type'";
+		if ($result = $GLOBALS ['xoopsDB']->queryF ( $sql ))
+		{
+			list ( $count ) = $GLOBALS ['xoopsDB']->fetchRow ( $result );
+			if ($count == 1)
+			{
+				$pw_salt_installed = true;
+			}
+		}
+        	
+		if (!$pw_salt_installed)
+		{
+            		$sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('config') . 
+                    	" (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " .
+                    	" VALUES " .
+                    	" (NULL, 0, 2, 'enc_type', '_MD_AM_ENC_TYPE', '0', '_MD_AM_ENC_TYPEDSC', 'select', 'int', 50)";
+
+            		if (!$GLOBALS['xoopsDB']->queryF( $sql ))
+			{
+                		return false;
+            		}
+            		$config_id = $GLOBALS['xoopsDB']->getInsertId();
+            
+            		$sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('configoption') . 
+                    	" (confop_id, confop_name, confop_value, conf_id)" .
+                    	" VALUES" .
+                    	" (NULL, '_MD_AM_ENC_MD5', '0', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_SHA256', '1', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_SHA384', '2', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_SHA512', '3', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_RIPEMD128', '4', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_RIPEMD160', '5', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_WHIRLPOOL', '6', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL1284', '7', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL1604', '8', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL1924', '9', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL2244', '10', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL2564', '11', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL1285', '12', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL1605', '13', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL1925', '14', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL2245', '15', {$config_id})," .
+                    	" (NULL, '_MD_AM_ENC_HAVAL2565', '16', {$config_id})";
+            		if (!$result = $GLOBALS['xoopsDB']->queryF($sql))
+			{
+                		return false;
+            		}
+            		if (!$result = $GLOBALS['xoopsDB']->queryF($sql))
+			{
+                		return false;
+            		}
+        	}
+        
+        return $result;
+
+	}
+
+       function check_dbversion()
+    {
+		$table = new IcmsDatabasetable('modules');
+	    return $table->fieldExists('dbversion');
+            }
+
+    	function apply_dbversion() {
+    	// First let's create the dbversion field in the modules table
+    	$table = new IcmsDatabasetable('modules');
+    	$table->addNewField('dbversion', 'INT(11) DEFAULT 0');
+    	return $this->updater->updateTable($table, true);
+	}
+		function check_db()
     {
         $lines = file( XOOPS_ROOT_PATH . '/mainfile.php' );
         foreach ( $lines as $line ) {
-            if( preg_match( '/(define\(\s*)([\'"])(XOOPS_DB_CHARSET)\\2,\s*([\'"])([^\'"]*?)\\4\s*\);/', $line ) ) {
+            if( preg_match( "/(define\(\s*)([\"'])(XOOPS_DB_CHARSET)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) ) {
                 return true;
-	}
+            }
         }
         return false;
-    }
-    
+            }
+
     function apply_db()
     {
         return $this->update_configs('db');
@@ -196,112 +553,6 @@ function check_new_blocks()
     	// Time to return.
     	return $final_querys;
     }
-
-    function check_conf()
-    {
-		$table = new IcmsDatabasetable('modules');
-	    return $table->fieldExists('dbversion');
-            }
-
- 	function apply_conf() {
-		$db = $GLOBALS['xoopsDB'];
-		if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_CONTMANAGER"') != 0){return true;}
-		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('9','_MD_AM_CONTMANAGER')");
-		if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_PERSON"') != 0){return true;}
-		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('10','_MD_AM_PERSON')");
-        
-        $passwordmeter_installed = false;
-        $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'pass_level'";
-        if ( $result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
-            list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
-            if ($count == 1) {
-                $passwordmeter_installed = true;
-            }
-        }
-        if (!$passwordmeter_installed) {
-            $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('config') . 
-                    " (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " .
-                    " VALUES " .
-                    " (NULL, 0, 2, 'pass_level', '_MD_AM_PASSLEVEL', '20', '_MD_AM_PASSLEVEL_DESC', 'select', 'int', 2)";
-
-            if (!$GLOBALS['xoopsDB']->queryF( $sql )) {
-                return false;
-            }
-            $config_id = $GLOBALS['xoopsDB']->getInsertId();
-            
-            $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('configoption') . 
-                    " (confop_id, confop_name, confop_value, conf_id)" .
-                    " VALUES" .
-                    " (NULL, '_MD_AM_PASSLEVEL1', '20', {$config_id})," .
-                    " (NULL, '_MD_AM_PASSLEVEL2', '40', {$config_id})," .
-                    " (NULL, '_MD_AM_PASSLEVEL3', '60', {$config_id})," .
-                    " (NULL, '_MD_AM_PASSLEVEL4', '80', {$config_id})";
-                    " (NULL, '_MD_AM_PASSLEVEL5', '95', {$config_id})";
-            if ( !$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
-                return false;
-            }
-        }
-        
-		$pw_salt_installed = false;
-		$sql = "SELECT COUNT(*) FROM `" . $GLOBALS ['xoopsDB']->prefix ( 'config' ) . "` WHERE `conf_name` = 'enc_type'";
-		if ($result = $GLOBALS ['xoopsDB']->queryF ( $sql ))
-		{
-			list ( $count ) = $GLOBALS ['xoopsDB']->fetchRow ( $result );
-			if ($count == 1)
-			{
-				$pw_salt_installed = true;
-			}
-		}
-        	
-		if (!$pw_salt_installed)
-		{
-            		$sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('config') . 
-                    	" (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " .
-                    	" VALUES " .
-                    	" (NULL, 0, 2, 'enc_type', '_MD_AM_ENC_TYPE', '0', '_MD_AM_ENC_TYPEDSC', 'select', 'int', 50)";
-
-            		if (!$GLOBALS['xoopsDB']->queryF( $sql ))
-			{
-                		return false;
-            		}
-            		$config_id = $GLOBALS['xoopsDB']->getInsertId();
-            
-            		$sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('configoption') . 
-                    	" (confop_id, confop_name, confop_value, conf_id)" .
-                    	" VALUES" .
-                    	" (NULL, '_MD_AM_ENC_MD5', '0', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_SHA256', '1', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_SHA384', '2', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_SHA512', '3', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_RIPEMD128', '4', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_RIPEMD160', '5', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_WHIRLPOOL', '6', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_HAVAL1284', '7', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_HAVAL1604', '8', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_HAVAL1924', '9', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_HAVAL2244', '10', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_HAVAL2564', '11', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_HAVAL1285', '12', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_HAVAL1605', '13', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_HAVAL1925', '14', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_HAVAL2245', '15', {$config_id})," .
-                    	" (NULL, '_MD_AM_ENC_HAVAL2565', '16', {$config_id})";
-            		if (!$result = $GLOBALS['xoopsDB']->queryF($sql))
-			{
-                		return false;
-            		}
-
-			$sql = "ALTER TABLE ".$GLOBALS['xoopsDB']->prefix('users')." ADD 'salt' VARCHAR(255)";
-			$sql = "ALTER TABLE ".$GLOBALS['xoopsDB']->prefix('users')." CHANGE pass pass VARCHAR(255)";
-            		if (!$result = $GLOBALS['xoopsDB']->queryF($sql))
-			{
-                		return false;
-            		}
-        	}
-        
-        return $result;
-
-	}
     function write_mainfile($vars)
     {
         if (empty($vars)) {
@@ -349,8 +600,6 @@ function check_new_blocks()
             return true;
         }
     }
-
-
     function set_configs($task)
     {
         $ret = array();
@@ -368,157 +617,6 @@ function check_new_blocks()
         return $ret;
         
     }
-       function check_rest_of_upgrade()
-    {
-		$table = new IcmsDatabasetable('modules');
-	    return $table->fieldExists('dbversion');
-            }
-
-    function apply_rest_of_upgrade() {
-		// Now, first, let's increment the conf_order of user option starting at new_user_notify
-		$table = new IcmsDatabasetable('config');
-		$criteria = new CriteriaCompo();
-		$criteria->add(new Criteria('conf_order', 3, '>'));
-    	$table->addUpdateAll('conf_order', 'conf_order + 2', $criteria, true);
-	    $this->updater->updateTable($table);	
-	    unset($table);	
-	    
-	    // create extended date function's config option
-	    $this->updater->insertConfig(XOOPS_CONF, 'use_ext_date', '_MD_AM_EXT_DATE', 0, '_MD_AM_EXT_DATEDSC', 'yesno', 'int', 11);
-	    // create editors config option
-	    $this->updater->insertConfig(XOOPS_CONF, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'default', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', 15);
-	    $this->updater->insertConfig(XOOPS_CONF, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', ".addslashes(serialize(array('default'))).", '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', 15);
-	    // create captcha options
-	    $this->updater->insertConfig(XOOPS_CONF, 'use_captchaf', '_MD_AM_USECAPTCHAFORM', 1, '_MD_AM_USECAPTCHAFORMDSC', 'yesno', 'int', 36);
-
-	    // create 4 new user config options
-	    $this->updater->insertConfig(XOOPS_CONF_USER, 'use_captcha', '_MD_AM_USECAPTCHA', 1, '_MD_AM_USECAPTCHADSC', 'yesno', 'int', 2);
-	    $this->updater->insertConfig(XOOPS_CONF_USER, 'welcome_msg', '_MD_AM_WELCOMEMSG', 0, '_MD_AM_WELCOMEMSGDSC', 'yesno', 'int', 3);
-	    // get the default content of the mail
-	    global $xoopsConfig;
-	    $default_msg_content_file = XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/mail_template/' . 'welcome.tpl';
-	    if (!file_exists($default_msg_content_file)) {
-	    	$default_msg_content_file = XOOPS_ROOT_PATH . '/language/english/mail_template/' . 'welcome.tpl';
-	    }
-	    $fp = fopen($default_msg_content_file, 'r');
-        if ($fp) {
-            $default_msg_content = fread($fp, filesize($default_msg_content_file));
-        }
-	    $this->updater->insertConfig(XOOPS_CONF_USER, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', $default_msg_content, '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textarea', 'text', 3);	   
-	    $this->updater->insertConfig(XOOPS_CONF_USER, 'allwshow_sig', '_MD_AM_ALLWSHOWSIG', 1, '_MD_AM_ALLWSHOWSIGDSC', 'yesno', 'int', 4);
-	    $this->updater->insertConfig(XOOPS_CONF_USER, 'allow_htsig', '_MD_AM_ALLWHTSIG', 1, '_MD_AM_ALLWHTSIGDSC', 'yesno', 'int', 4);
-	    $this->updater->insertConfig(XOOPS_CONF_USER, 'sig_max_length', '_MD_AM_SIGMAXLENGTH', '255', '_MD_AM_SIGMAXLENGTHDSC', 'textbox', 'int', 4);
-	    $this->updater->insertConfig(XOOPS_CONF_USER, 'avatar_allow_gravatar', '_MD_AM_GRAVATARALLOW', '1', '_MD_AM_GRAVATARALWDSC', 'yesno', 'int', 15);
-	    $this->updater->insertConfig(XOOPS_CONF_USER, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '1', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', 36);
-
-	    // Adding configurations of meta tag&footer
-	    $this->updater->insertConfig(XOOPS_CONF_METAFOOTER, 'google_meta', '_MD_AM_METAGOOGLE', '', '_MD_AM_METAGOOGLE_DESC', 'textbox', 'text', 9);
-	    $this->updater->insertConfig(XOOPS_CONF_METAFOOTER, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textsarea', 'text', 21);
-	    $this->updater->insertConfig(XOOPS_CONF_METAFOOTER, 'footadm', '_MD_AM_FOOTADM', 'Powered by ImpressCMS &copy; 2007-' . date("Y", time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>', '_MD_AM_FOOTADM_DESC', 'textarea', 'text', 22);
-
-	    // Adding configurations of search preferences
-	    $this->updater->insertConfig(XOOPS_CONF_SEARCH, 'search_user_date', '_MD_AM_SEARCH_USERDATE', '1', '_MD_AM_SEARCH_USERDATE', 'yesno', 'int', 2);
-	    $this->updater->insertConfig(XOOPS_CONF_SEARCH, 'search_no_res_mod', '_MD_AM_SEARCH_NO_RES_MOD', '1', '_MD_AM_SEARCH_NO_RES_MODDSC', 'yesno', 'int', 3);
-	    $this->updater->insertConfig(XOOPS_CONF_SEARCH, 'search_per_page', '_MD_AM_SEARCH_PER_PAGE', '20', '_MD_AM_SEARCH_PER_PAGEDSC', 'textbox', 'int', 4);
-
-		// Adding new cofigurations added for multi language
-	    $this->updater->insertConfig(IM_CONF_MULILANGUAGE, 'ml_autoselect_enabled', '_MD_AM_ML_AUTOSELECT_ENABLED', '0', '_MD_AM_ML_AUTOSELECT_ENABLED_DESC', 'yesno', 'int', 1);
-	    
-	    // Adding new function of content manager
-	    $this->updater->insertConfig(IM_CONF_CONTENT, 'default_page', '_MD_AM_DEFAULT_CONTPAGE', '0', '_MD_AM_DEFAULT_CONTPAGEDSC', 'select_pages', 'int', 1);
-	    $this->updater->insertConfig(IM_CONF_CONTENT, 'show_nav', '_MD_AM_CONT_SHOWNAV', '1', '_MD_AM_CONT_SHOWNAVDSC', 'yesno', 'int', 2);
-	    $this->updater->insertConfig(IM_CONF_CONTENT, 'show_subs', '_MD_AM_CONT_SHOWSUBS', '1', '_MD_AM_CONT_SHOWSUBSDSC', 'yesno', 'int', 3);
-	    $this->updater->insertConfig(IM_CONF_CONTENT, 'show_pinfo', '_MD_AM_CONT_SHOWPINFO', '1', '_MD_AM_CONT_SHOWPINFODSC', 'yesno', 'int', 4);
-	    global $xoopsConfig;
-	    $default_login_content_file = XOOPS_ROOT_PATH . '/upgrade/language/' . $xoopsConfig['language'] . '/' . 'login.tpl';
-	    if (!file_exists($default_login_content_file)) {
-	    	$default_login_content_file = XOOPS_ROOT_PATH . '/upgrade/language/english/' . 'login.tpl';
-	    }
-	    $fp = fopen($default_login_content_file, 'r');
-        if ($fp) {
-            $default_login_content = fread($fp, filesize($default_login_content_file));
-        }
-	    // Adding new function of Personalization
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', 1);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', XOOPS_URL, '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', 2);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'adm_left_logo_alt', '_MD_AM_LLOGOADM_ALT', 'ImpressCMS', '_MD_AM_LLOGOADM_ALT_DESC', 'textbox', 'text', 3);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'adm_right_logo', '_MD_AM_RLOGOADM', '', '_MD_AM_RLOGOADM_DESC', 'select_image', 'text', 4);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'adm_right_logo_url', '_MD_AM_RLOGOADM_URL', '', '_MD_AM_RLOGOADM_URL_DESC', 'textbox', 'text', 5);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'adm_right_logo_alt', '_MD_AM_RLOGOADM_ALT', '', '_MD_AM_RLOGOADM_ALT_DESC', 'textbox', 'text', 6);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'rss_local', '_MD_AM_RSSLOCAL', 'http://www.impresscms.org/modules/smartsection/backend.php', '_MD_AM_RSSLOCAL_DESC', 'textbox', 'text', 7);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'editre_block', '_MD_AM_EDITREMOVEBLOCK', '1', '_MD_AM_EDITREMOVEBLOCKDSC', 'yesno', 'int', 8);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'multi_login', '_MD_AM_MULTLOGINPREVENT', '0', '_MD_AM_MULTLOGINPREVENTDSC', 'yesno', 'int', 9);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'multi_login_msg', '_MD_AM_MULTLOGINMSG', $default_login_content, '_MD_AM_MULTLOGINMSG_DESC', 'textarea', 'text', 10);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'email_protect', '_MD_AM_EMAILPROTECT', '0', '_MD_AM_EMAILPROTECTDSC', 'yesno', 'int', 11);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'email_font', '_MD_AM_EMAILTTF', 'arial.ttf', '_MD_AM_EMAILTTF_DESC', 'select_font', 'text', 12);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'email_font_len', '_MD_AM_EMAILLEN', '12', '_MD_AM_EMAILLEN_DESC', 'textbox', 'int', 13);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'email_cor', '_MD_AM_EMAILCOLOR', '#000000', '_MD_AM_EMAILCOLOR_DESC', 'color', 'text', 14);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'email_shadow', '_MD_AM_EMAILSHADOW', '#cccccc', '_MD_AM_EMAILSHADOW_DESC', 'color', 'text', 15);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'shadow_x', '_MD_AM_SHADOWX', '2', '_MD_AM_SHADOWX_DESC', 'textbox', 'int', 16);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'shadow_y', '_MD_AM_SHADOWY', '2', '_MD_AM_SHADOWY_DESC', 'textbox', 'int', 17);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'shorten_url', '_MD_AM_SHORTURL', '0', '_MD_AM_SHORTURLDSC', 'yesno', 'int', 18);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'max_url_long', '_MD_AM_URLLEN', '50', '_MD_AM_URLLEN_DESC', 'textbox', 'int', 19);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'pre_chars_left', '_MD_AM_PRECHARS', '35', '_MD_AM_PRECHARS_DESC', 'textbox', 'int', 20);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'last_chars_left', '_MD_AM_LASTCHARS', '10', '_MD_AM_LASTCHARS_DESC', 'textbox', 'int', 21);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'show_impresscms_menu', '_MD_AM_SHOW_ICMSMENU', '1', '_MD_AM_SHOW_ICMSMENU_DESC', 'yesno', 'int', 22);
-	    $this->updater->insertConfig(XOOPS_CONF_PERSONA, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', 23);
-	    
-	    $table = new IcmsDatabasetable('imagecategory');
-	    $this->updater->runQuery('INSERT INTO '.$table->name().' (imgcat_id, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype) VALUES (NULL, "Logos", 350000, 350, 80, 1, 0, "C", "file")','Successfully created Logos imagecategory','Problems when try to create Logos imagecategory');
-	    unset($table);
-	    
-	    $result = $this->updater->_db->query("SELECT imgcat_id FROM ".$this->updater->_db->prefix('imagecategory')." WHERE imgcat_name = 'Logos'");
-	    list($categ_id) = $this->updater->_db->fetchRow($result);
-	    
-		$table = new IcmsDatabasetable('image');
-	    $this->updater->runQuery('INSERT INTO '.$table->name().' (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (1, "img482278e29e81c.png", "ImpressCMS", "image/png", '.time().', 1, 0, '.$categ_id.')','Successfully added default ImpressCMS admin logo','Problems when try to add ImpressCMS admin logo');
-	    unset($table);
-
-	    $table = new IcmsDatabasetable('group_permission');
-	    $this->updater->runQuery('INSERT INTO '.$table->name().' VALUES(0,1,'.$categ_id.',1,"imgcat_write")','','');
-	    $this->updater->runQuery('INSERT INTO '.$table->name().' VALUES(0,1,'.$categ_id.',1,"imgcat_read")','','');
-	    unset($table);
-	    
-		// Create table icmspage
-		$table = new IcmsDatabasetable('icmspage');
-		if (!$table->exists()) {
-	    $table->setStructure("page_id mediumint(8) unsigned NOT NULL auto_increment,
-		  page_moduleid mediumint(8) unsigned NOT NULL default '1',
-		  page_title varchar(255) NOT NULL default '',
-		  page_url varchar(255) NOT NULL default '',
-		  page_status tinyint(1) unsigned NOT NULL default '1',
-		  PRIMARY KEY  (page_id)");
-		}
-		unset($table);
-		
- 		$table = new IcmsDatabasetable('block_module_link');
-		$table->addNewField('page_id', "smallint(5) NOT NULL default '0'");
-		unset($table);
-		
-		// Block Visibility
-		$this->updater->runQuery('UPDATE '.$table->name().' SET module_id=0, page_id=1 WHERE module_id=-1','Block Visibility Restructured Successfully', 'Failed in Restructure the Block Visibility');
-
-		// Create table system_customtag
-		$table = new IcmsDatabasetable('system_customtag');
-		if (!$table->exists()) {
-	    $table->setStructure("customtagid int(11) unsigned NOT NULL auto_increment,
-		  name varchar(255) NOT NULL default '',
-		  description text NOT NULL default '',
-		  content text NOT NULL default '',
-		  language varchar(100) NOT NULL default '',
-		  customtag_type tinyint(1) NOT NULL default 0,
-		  PRIMARY KEY (customtagid)");
-		}
-	    unset($table);
-    	$table = new IcmsDatabasetable('modules');
-    	$table->addNewField('dbversion', 'INT(11) DEFAULT 0');
-		$icmsDatabaseUpdater->updateTable($table);
-	    
-	    // Updating the system module dbversion field. This needs to be at the very end of the upgrade script
-		$icmsDatabaseUpdater->updateModuleDBVersion(1, 'system');
-		
-	}
-
 }
 
 $upg = new upgrade_impcms06();

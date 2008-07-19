@@ -2,9 +2,9 @@
 //============================================================+
 // File name   : tcpdf.php
 // Begin       : 2002-08-03
-// Last Update : 2008-07-05
+// Last Update : 2008-07-11
 // Author      : Nicola Asuni - info@tecnick.com - http://www.tcpdf.org
-// Version     : 4.0.001
+// Version     : 4.0.005
 // License     : GNU LGPL (http://www.gnu.org/copyleft/lesser.html)
 // 	----------------------------------------------------------------------------
 //  Copyright (C) 2002-2008  Nicola Asuni - Tecnick.com S.r.l.
@@ -114,7 +114,7 @@
  * @copyright 2004-2008 Nicola Asuni - Tecnick.com S.r.l (www.tecnick.com) Via Della Pace, 11 - 09044 - Quartucciu (CA) - ITALY - www.tecnick.com - info@tecnick.com
  * @link http://www.tcpdf.org
  * @license http://www.gnu.org/copyleft/lesser.html LGPL
- * @version 4.0.001
+ * @version 4.0.005
  */
 
 /**
@@ -144,14 +144,14 @@ if (!class_exists('TCPDF')) {
 	/**
 	 * define default PDF document producer
 	 */ 
-	define('PDF_PRODUCER','TCPDF 4.0.001 (http://www.tcpdf.org)');
+	define('PDF_PRODUCER','TCPDF 4.0.005 (http://www.tcpdf.org)');
 	
 	/**
 	* This is a PHP class for generating PDF documents without requiring external extensions.<br>
 	* TCPDF project (http://www.tcpdf.org) has been originally derived in 2002 from the Public Domain FPDF class by Olivier Plathey (http://www.fpdf.org), but now is almost entirely rewritten.<br>
 	* @name TCPDF
 	* @package com.tecnick.tcpdf
-	* @version 4.0.001
+	* @version 4.0.005
 	* @author Nicola Asuni - info@tecnick.com
 	* @link http://www.tcpdf.org
 	* @license http://www.gnu.org/copyleft/lesser.html LGPL
@@ -1414,12 +1414,12 @@ if (!class_exists('TCPDF')) {
 		*/
 		public function SetMargins($left, $top, $right=-1) {
 			//Set left, top and right margins
-			$this->lMargin=$left;
-			$this->tMargin=$top;
-			if ($right==-1) {
-				$right=$left;
+			$this->lMargin = $left;
+			$this->tMargin = $top;
+			if ($right == -1) {
+				$right = $left;
 			}
-			$this->rMargin=$right;
+			$this->rMargin = $right;
 		}
 
 		/**
@@ -1797,11 +1797,11 @@ if (!class_exists('TCPDF')) {
 			}
 			//Set colors
 			$this->DrawColor = $dc;
-			if ($dc!='0 G') {
+			if ($dc != '0 G') {
 				$this->_out($dc);
 			}
 			$this->FillColor = $fc;
-			if ($fc!='0 g') {
+			if ($fc != '0 g') {
 				$this->_out($fc);
 			}
 			$this->TextColor = $tc;
@@ -2907,15 +2907,18 @@ if (!class_exists('TCPDF')) {
 			if (($this->lasth - $this->FontSize) < $this->LineWidth) {
 				$this->y += $this->LineWidth/2;
 			}
+			// add top padding
+			$this->y += $this->cMargin;
 			if ($ishtml) {
 				// Write HTML text
 				$this->writeHTML($txt, true, 0, $reseth, true, $align);
-				$this->y += $this->cMargin;
 				$nl = 1;
 			} else {
 				// Write text
 				$nl = $this->Write($this->lasth, $txt, '', 0, $align, true, $stretch, false);
 			}
+			// add bottom padding
+			$this->y += $this->cMargin;
 			// Add bottom space if needed
 			if (($this->lasth - $this->FontSize) < $this->LineWidth) {
 				$this->y += $this->LineWidth / 2;
@@ -3717,8 +3720,10 @@ if (!class_exists('TCPDF')) {
 				$dest = $dest ? 'D' : 'F';
 			}
 			$dest = strtoupper($dest);
-			$name = str_replace("+", "%20", urlencode($name));
-			$name = preg_replace('/[\r\n]+\s*/', '' , $name);
+			if ($dest != 'F') {
+				$name = str_replace("+", "%20", urlencode($name));
+				$name = preg_replace('/[\r\n]+\s*/', '' , $name);
+			}
 			switch($dest) {
 				case 'I': {
 					//Send to standard output
@@ -3732,9 +3737,8 @@ if (!class_exists('TCPDF')) {
 							$this->Error('Some data has already been output to browser, can\'t send PDF file');
 						}
 						// Disable caching
-						header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
-						header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-						header('Pragma: no-cache');
+						header('Cache-Control: private, must-revalidate');
+						header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');	
 						header('Content-Length: '.strlen($this->buffer));
 						header('Content-Disposition: inline; filename="'.basename($name).'";');
 					}
@@ -3750,10 +3754,8 @@ if (!class_exists('TCPDF')) {
 					if (headers_sent()) {
 						$this->Error('Some data has already been output to browser, can\'t send PDF file');
 					}
-					//header('Cache-Control: no-cache, no-store, max-age=0, must-revalidate');
 					header('Cache-Control: private, must-revalidate');
 					header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-					//header('Pragma: no-cache');
 					// always modified
 					header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
 					// force download dialog
@@ -8540,20 +8542,19 @@ if (!class_exists('TCPDF')) {
 			$startlinepos = strlen($this->pages[$this->page]);
 			$lalign = $align;
 			$plalign = $align;
-			if ($cell) {
-				$this->y += $this->cMargin;
-				if ($this->rtl) {
-					$this->x -= $this->cMargin;
-				} else {
-					$this->x += $this->cMargin;
-				}
-			}
 			if ($this->rtl) {
 				$w = $this->x - $this->lMargin;
 			} else {
 				$w = $this->w - $this->rMargin - $this->x;
 			}
 			$w -= (2 * $this->cMargin);
+			if ($cell) {
+				if ($this->rtl) {
+					$this->x -= $this->cMargin;
+				} else {
+					$this->x += $this->cMargin;
+				}
+			}
 			$this->listindent = $this->GetStringWidth("0000");
 			$this->listnum = 0;
 			if ((empty($this->lasth))OR ($reseth)) {
@@ -8618,7 +8619,7 @@ if (!class_exists('TCPDF')) {
 								$pend = "";
 							}
 							// calculate shifting amount
-							$mdiff = abs($w - $linew - $this->cMargin);
+							$mdiff = abs($w - $linew);
 							if ($plalign == "C") {
 								if ($this->rtl) {
 									$t_x = -($mdiff / 2);
@@ -8675,8 +8676,10 @@ if (!class_exists('TCPDF')) {
 							if (isset($dom[($dom[$trid]['parent'])]['attribute']['cellpadding'])) {
 								$currentcmargin = $this->pixelsToUnits($dom[($dom[$trid]['parent'])]['attribute']['cellpadding']);
 								$this->cMargin = $currentcmargin;
+							} else {
+								$currentcmargin = 0;
 							}
-							if ($dom[($dom[$trid]['parent'])]['attribute']['cellspacing']) {
+							if (isset($dom[($dom[$trid]['parent'])]['attribute']['cellspacing'])) {
 								$cellspacing = $this->pixelsToUnits($dom[($dom[$trid]['parent'])]['attribute']['cellspacing']);
 							} else {
 								$cellspacing = 0;
@@ -8785,9 +8788,7 @@ if (!class_exists('TCPDF')) {
 						$strrest = $this->addHtmlLink($this->HREF, $dom[$key]['value'], $wfill, true);
 					} else {
 						$ctmpmargin = $this->cMargin;
-						if (!$cell) {
-							$this->cMargin = 0;
-						}
+						$this->cMargin = 0;
 						// write only the first line and get the rest
 						$strrest = $this->Write($this->lasth, $dom[$key]['value'], '', $wfill, "", false, 0, true);
 						$this->cMargin = $ctmpmargin;
@@ -8831,7 +8832,7 @@ if (!class_exists('TCPDF')) {
 						$pend = "";
 					}
 					// calculate shifting amount
-					$mdiff = abs($w - $linew - $this->cMargin);
+					$mdiff = abs($w - $linew);
 					if ($plalign == "C") {
 						if ($this->rtl) {
 							$t_x = -($mdiff / 2);
@@ -9091,6 +9092,8 @@ if (!class_exists('TCPDF')) {
 					if ((isset($table_el['attribute']['border']) AND ($table_el['attribute']['border'] > 0)) 
 						OR (isset($table_el['style']['border']) AND ($table_el['style']['border'] > 0))) {
 							$border = 1;
+					} else {
+						$border = 0;
 					}
 					$this->y = $parent['starty'];
 					$restspace = $this->getPageHeight() - $this->y - $this->getBreakMargin();
@@ -9156,7 +9159,7 @@ if (!class_exists('TCPDF')) {
 							$this->intmrk[$this->page] += strlen($ccode."\n");						
 						}
 					}					
-					if ($table_el['attribute']['cellspacing']) {
+					if (isset($table_el['attribute']['cellspacing'])) {
 						$cellspacing = $this->pixelsToUnits($table_el['attribute']['cellspacing']);
 						$this->y += $cellspacing;
 					}				
@@ -9253,7 +9256,6 @@ if (!class_exists('TCPDF')) {
 			}
 			$this->tmprtl = false;
 		}
-		
 	} // END OF TCPDF CLASS
 
 	//Handle special IE contype request

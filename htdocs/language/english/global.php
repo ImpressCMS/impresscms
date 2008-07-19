@@ -254,4 +254,5 @@ define("_STRICT", "Strict");
 define("_ERROR", "Error");
 define("_TOOKXLONG", " took %s seconds to load.");
 define("_BLOCK", "Block(s)");
+define("_WARNINGUPDATESYSTEM","Congratulations, you have just successfully upgraded your site to the latest version of ImpressCMS!<br />Therefor to finish the upgrade process you'll need to click here and update your system module.<br />Click here to process the upgrade.");
 ?>

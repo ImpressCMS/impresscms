@@ -58,7 +58,7 @@ switch($op)
 		break;
 	case 2:
 		xoops_module_write_admin_menu(impresscms_get_adminmenu());
-		redirect_header('admin.php', 1, _AD_LOGINADMIN);
+		redirect_header('javascript:history.go(-1)', 1, _AD_LOGINADMIN);
 		exit();
 		break;
 	case 10:
@@ -125,6 +125,11 @@ switch($op)
 		if(is_dir(ICMS_ROOT_PATH."/install/"))
 		{
 			xoops_error(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/'));
+			echo '<br />';
+		}
+		$db = $GLOBALS['xoopsDB'];
+		if (getDbValue($db, 'modules', 'version', 'version="103"') == 0 AND getDbValue($db, 'modules', 'mid', 'mid="1"') == 1) {
+			xoops_error ('<a href="'. ICMS_URL .'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">'._WARNINGUPDATESYSTEM.'</a>');
 			echo '<br />';
 		}
 		if(is_writable(ICMS_ROOT_PATH."/mainfile.php"))

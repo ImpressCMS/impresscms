@@ -16,7 +16,7 @@
 */
 /**
  *
- */ 
+ */
 require_once 'common.inc.php';
 //require_once 'filter.php';
 
@@ -166,7 +166,7 @@ class PathStuffController {
 	}
 
 	function checkPermissions() {
-		$paths = array( 'mainfile.php', 'uploads', 'templates_c', 'cache', '/libraries/htmlpurifier/standalone/HTMLPurifier/DefinitionCache', '/libraries/htmlpurifier/standalone/HTMLPurifier/DefinitionCache/Serializer' );
+		$paths = array( 'mainfile.php', 'uploads', 'templates_c', 'cache' );
 		$errors = array();
 		foreach ( $paths as $path ) {
 			$errors[$path] = $this->makeWritable( "$this->xoopsRootPath/$path" );

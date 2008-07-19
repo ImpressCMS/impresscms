@@ -161,7 +161,7 @@ if ($thisUser->getVar('user_viewemail') == 1) {
     }
 }
     if ($icmsauthConfig['auth_openid'] == 1) {
-if ($thisUser->getVar('user_viewemail') == 1) {
+if ($thisUser->getVar('user_viewoid') == 1) {
     $xoopsTpl->assign('user_openid', $thisUser->getVar('openid', 'E'));
 } else {
     if (is_object($xoopsUser)) {

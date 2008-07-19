@@ -1,3 +1,16 @@
+4.0.005 (2008-07-11)
+	- Bug [2015715] "PHP Error/Warning" was fixed.
+
+4.0.004 (2008-07-09)
+	- HTML cell internal padding was fixed.
+
+4.0.003 (2008-07-08)
+	- Removed URL encoding when F option is selected on Output() function.
+	- fixed some minor bugs in html tables.
+
+4.0.002 (2008-07-07)
+	- Bug [2000861] was still unfixed and has been fixed.
+	
 4.0.001 (2008-07-05)
 	- Bug [2000861] was fixed.
 

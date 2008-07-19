@@ -274,7 +274,7 @@ class xos_opal_Theme {
 			$this->contentCacheId = $this->generateCacheId ( $dirname . '|' . $uri );
 			
 			if ($this->template->is_cached ( $template, $this->contentCacheId )) {
-				$xoopsLogger->addExtra ( $template, sprintf ( 'Cached (regenerates every %d seconds)', $this->contentCacheLifetime ) );
+				$xoopsLogger->addExtra ( $template, sprintf ( _REGENERATES, $this->contentCacheLifetime ) );
 				$this->render ( null, null, $template );
 				return true;
 			}
@@ -747,7 +747,7 @@ class xos_opal_Theme {
 			$this->contentCacheId = $this->generateCacheId ( $dirname . '|' . $uri );
 			
 			if ($this->template->is_cached ( $template, $this->contentCacheId )) {
-				$xoopsLogger->addExtra ( $template, sprintf ( 'Cached (regenerates every %d seconds)', $this->contentCacheLifetime ) );
+				$xoopsLogger->addExtra ( $template, sprintf ( _REGENERATES, $this->contentCacheLifetime ) );
 				$this->render ( null, null, $template );
 				return true;
 			}

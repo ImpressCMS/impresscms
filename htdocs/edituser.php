@@ -71,7 +71,7 @@ if($op == 'saveuser')
 	{
         	$password = $myts->stripSlashesGPC(trim($_POST['password']));
     	}
-    	if($password != '')
+    	if($password !== '' && $_POST['change_pass'] == 1)
 	{
         	if(strlen($password) < $xoopsConfigUser['minpass'])
 		{
@@ -120,12 +120,14 @@ if($op == 'saveuser')
         		}
 			else
 			{
-				$signature = $purifier->icms_html_purifier(stripslashes($_POST['user_sig']), 'system-global');
+				$signature = $myts->displayTarea($_POST['user_sig'], 1);
         			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($xoopsConfigUser['sig_max_length'])));
         		}
 		}
         	$user_viewemail = (!empty($_POST['user_viewemail'])) ? 1 : 0;
         	$edituser->setVar('user_viewemail', $user_viewemail);
+        	$user_viewoid = (!empty($_POST['user_viewoid'])) ? 1 : 0;
+        	$edituser->setVar('user_viewoid', $user_viewoid);
         	$edituser->setVar('user_aim', $_POST['user_aim']);
         	$edituser->setVar('user_yim', $_POST['user_yim']);
         	$edituser->setVar('user_msnm', $_POST['user_msnm']);
@@ -203,20 +205,22 @@ if($op == 'editprofile')
     	$email_cbox = new XoopsFormCheckBox('', 'user_viewemail', $email_cbox_value);
 		$config_handler =& xoops_gethandler('config');
    		$icmsauthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
-    	if ($icmsauthConfig['auth_openid'] == 1) {
-    	$email_cbox->addOption(1, _US_ALLOWVIEWEMAILOPENID);
-    	}else{
     	$email_cbox->addOption(1, _US_ALLOWVIEWEMAIL);
-    	}
     	$email_tray->addElement($email_cbox);
     	$form->addElement($email_tray);
-    /*
-     * @todo we need to add this in the preference
-     */
-    if ($icmsauthConfig['auth_openid'] == 1) {
-    	$openid_text = new XoopsFormText(_US_OPENID_FORM_CAPTION, 'openid', 30, 255, $xoopsUser->getVar('openid'));
-    	$openid_text->setDescription(_US_OPENID_FORM_DSC);
-    	$form->addElement($openid_text);
+
+		$config_handler =& xoops_gethandler('config');
+   		$icmsauthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+     	if ($icmsauthConfig['auth_openid'] == 1) {
+	   	$openid_tray = new XoopsFormElementTray(_US_OPENID_FORM_CAPTION, '<br />');
+        $openid_text = new XoopsFormText('', 'openid', 30, 255, $xoopsUser->getVar('openid'));
+    	$openid_tray->setDescription(_US_OPENID_FORM_DSC);
+    	$openid_tray->addElement($openid_text);
+    	$openid_cbox_value = $xoopsUser->user_viewoid() ? 1 : 0;
+    	$openid_cbox = new XoopsFormCheckBox('', 'user_viewoid', $openid_cbox_value);
+    	$openid_cbox->addOption(1, _US_ALLOWVIEWEMAILOPENID);
+    	$openid_tray->addElement($openid_cbox);
+    	$form->addElement($openid_tray);
 }
     	$url_text = new XoopsFormText(_US_WEBSITE, 'url', 30, 100, $xoopsUser->getVar('url', 'E'));
     	$form->addElement($url_text);

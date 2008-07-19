@@ -24,7 +24,8 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 	if($xoopsOption['theme_use_smarty'] == 0)
 	{
 		// the old way
-		$footer = htmlspecialchars($xoopsConfigMetaFooter['footer']).'<br /><div style="text-align:center">Powered by&nbsp;'.XOOPS_VERSION.' &copy; 2007-'.date('Y').' <a href="http://www.impresscms.org/" rel="external">ImpressCMS</a></div>';
+		$footer = htmlspecialchars($xoopsConfigMetaFooter['footer']).'<br /><div style="text-align:center">Powered by ImpressCMS &copy; 2007-'.date('Y').' <a href="http://www.impresscms.org/" rel="external">ImpressCMS</a></div>';
+		$google_analytics = htmlspecialchars($xoopsConfigMetaFooter['google_analytics']);
 
 		if(isset($xoopsOption['template_main']))
 		{
@@ -32,7 +33,7 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 			$xoopsTpl->display('db:'.$xoopsOption['template_main']);
 		}
 		if(!isset($xoopsOption['show_rblock'])) {$xoopsOption['show_rblock'] = 0;}
-		themefooter($xoopsOption['show_rblock'], $footer);
+		themefooter($xoopsOption['show_rblock'], $footer, $google_analytics);
 		xoops_footer();
 	}
 	else

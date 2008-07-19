@@ -178,7 +178,7 @@ define('_US_OPENID_NEW_USER_AUTH_NOT_ACTIVATED', 'The newly created user has not
 define('_US_OPENID_NEW_USER_CREATED', 'A new user was created with the username %s. Automatically logging you in...');
 define('_US_OPENID_LINKED_DONE', 'Your OpenID has been linked with the user %S. Logging you in...');
 define('_US_ALREADY_LOGED_IN', 'You already are logged in, we are sorry but, you can\'t register while you\'re logged in the site');
-define('_US_ALLOWVIEWEMAILOPENID','Allow other users to view my email address and my OpenID');
+define('_US_ALLOWVIEWEMAILOPENID','Allow other users to view my OpenID');
 
 /*
 define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled');
