@@ -240,7 +240,7 @@ function showRSS($op=1)
 			$config_handler =& xoops_gethandler('config');
 			$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
 			$rssurl = $xoopsConfigPersona['rss_local'];
-			$rssfile = ICMS_CACHE_PATH.'/adminnews.xml';
+			$rssfile = ICMS_CACHE_PATH.'/adminnews_'.$xoopsConfig['language'].'.xml';
 		break;
 	}
 	$rssdata = '';
