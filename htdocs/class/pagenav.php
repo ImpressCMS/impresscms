@@ -76,7 +76,15 @@ class XoopsPageNav
 	 * @return  string
 	 **/
 	function renderNav($offset = 4)
-	{
+	{	
+		$config_handler =& xoops_gethandler('config');
+		$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+		
+		if (isset($xoopsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php')){
+			$style = $xoopsConfigPersona['pagstyle'];
+		}else{
+			$style = 'default';
+		}
 		$ret = '';
 		if ( $this->total <= $this->perpage ) {
 			return $ret;
@@ -85,13 +93,15 @@ class XoopsPageNav
 		if ( $total_pages > 1 ) {
 			$prev = $this->current - $this->perpage;
 			if ( $prev >= 0 ) {
-				$ret .= '<a href="'.$this->url.$prev.'"><u>&laquo;</u></a> ';
+				$ret .= '<a href="'.$this->url.$prev.'">&#9668; '._PREV.'</a> ';
+			}else{
+				$ret .= '<span class="disabled"><b>&#9668; '._PREV.'</b></span> ';
 			}
 			$counter = 1;
 			$current_page = intval(floor(($this->current + $this->perpage) / $this->perpage));
 			while ( $counter <= $total_pages ) {
 				if ( $counter == $current_page ) {
-					$ret .= '<b>('.$counter.')</b> ';
+					$ret .= '<span class="current"><b>'.(($style == 'default')?'(':'').$counter.(($style == 'default')?')':'').'</b></span> ';
 				} elseif ( ($counter > $current_page-$offset && $counter < $current_page + $offset ) || $counter == 1 || $counter == $total_pages ) {
 					if ( $counter == $total_pages && $current_page < $total_pages - $offset ) {
 						$ret .= '... ';
@@ -105,10 +115,12 @@ class XoopsPageNav
 			}
 			$next = $this->current + $this->perpage;
 			if ( $this->total > $next ) {
-				$ret .= '<a href="'.$this->url.$next.'"><u>&raquo;</u></a> ';
+				$ret .= '<a href="'.$this->url.$next.'">'._NEXT.' &#9658;</a> ';
+			}else{
+				$ret .= '<span class="disabled"><b>'._NEXT.' &#9658;</b></span> ';
 			}
 		}
-		return $ret;
+		return '<div class="pagination '.$style.'">'.$ret.'</div>';
 	}
 
 	/**

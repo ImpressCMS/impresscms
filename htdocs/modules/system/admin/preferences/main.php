@@ -282,6 +282,18 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 					$myts = & MyTextSanitizer::getInstance ();
 					$ele = new MastopFormSelectImage ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 				break;
+				case 'select_paginati' :
+					if (file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php')){
+						include ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php';
+						$st =& $styles;
+						$arr = array();
+						foreach ($st as $style){
+							$arr[$style['fcss']] = $style['name'];
+						}
+						$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+						$ele->addOptionArray ( $arr );
+					}
+				break;
 				case 'textbox' :
 				default :
 					$myts = & MyTextSanitizer::getInstance ();

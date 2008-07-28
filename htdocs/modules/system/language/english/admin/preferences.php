@@ -410,4 +410,6 @@ define("_MD_AM_AUTORESIZE_DESC","If YES, if the avatar sent have the width or he
 define("_MD_AM_AUTHOPENID","Enable OpenID authentication");
 define("_MD_AM_AUTHOPENIDDSC","Select Yes to enable OpenID authentication. This will allow users to login on the site using their OpenID account. For complete information about the OpenID Integration in ImpressCMS, please visit <a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID'>our wiki</a>.");
 
+define('_MD_AM_PAGISTYLE','Paginations Style');
+define('_MD_AM_PAGISTYLE_DESC','Select the style of the paginations links.');
 ?>
