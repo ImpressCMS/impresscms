@@ -1,9 +1,9 @@
-ImpressCMS 1.0 "Janus" Final release notes
+ImpressCMS 1.0.1 "Janus" Final release notes
 ==================================
 
-The ImpressCMS Project is very proud to announce its first stable release: ImpressCMS 1.0 "Janus" Final. This release is ready for production web sites !
+The ImpressCMS Project is very proud to announce the release: ImpressCMS 1.0.1 "Janus" Final. This release is ready for production web sites !
 
-ImpressCMS 1.0 is based on the XOOPS 2.0.17 core + some additions made in the XOOPS 2.0.18 development branch and, as such, will retain compatibility with existing modules and themes. The goal is to provide an on-going, stable environment for information and support for XOOPS and its users.
+ImpressCMS 1.0.1 is based on the ImpressCMS 1.0 core (Which was based on XOOPS 2.0.17 core + some additions made in the XOOPS 2.0.18 development branch) and, as such, will retain compatibility with existing modules and themes. The goal is to provide an on-going, stable environment for information and support for XOOPS and its users.
 
 Please see the full changelog for details in docs/changelog.txt.
 
@@ -60,8 +60,17 @@ For a complete installation documentation, please refer to /docs/install.html in
 Upgrading from a previous version of ImpressCMS
 ==================================
 
-If you are upgrading from a previous version of ImpressCMS (1.0 Beta or RC), please follow these instructions:
+If you are upgrading from a previous version of ImpressCMS (1.0 Janus Final), please follow these instructions:
+--------------------------------------------------------------------------------------------------------------
+1. Get the full package from the sourceforge file repository.
+2. Copy the contents of '1.0_to_1.0.1_patched_files' htdocs folder to your ImpressCMS root folder (the folder containing mainfile.php),
+   be sure to overwrite existing files.
 
+   note: if you have hacked those files be sure to re-apply those hacks to the updated files beforehand.
+3. Enjoy!
+
+If you are upgrading from a previous version of ImpressCMS (1.0 Beta or RC), please follow these instructions:
+-------------------------------------------------------------------------------------------------------------
 1. Get the full package from the sourceforge file repository.
 2. Delete htdocs/mainfile.php from the exracted file
 3. Delete htdocs/install folder from the extracted file
