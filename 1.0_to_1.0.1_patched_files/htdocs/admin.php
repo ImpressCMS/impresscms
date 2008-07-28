@@ -43,14 +43,9 @@ if ( $xoopsUser ) {
 /* end					                                 */
 /*********************************************************/
 
-$op = isset($_GET['rssnews']) ? $_GET['rssnews'] : 0;
-if ( !empty($_GET['op']) ) {
-	$op = $_GET['op'];
-}
-
-if ( !empty($_POST['op']) ) {
-	$op = $_POST['op'];
-}
+$op = isset($_GET['rssnews']) ? intval($_GET['rssnews']) : 0;
+if(!empty($_GET['op'])) {$op = intval($_GET['op']);}
+if(!empty($_POST['op'])) {$op = intval($_POST['op']);}
 
 if (!file_exists(XOOPS_CACHE_PATH.'/adminmenu.php') && $op != 2) {
 	xoops_header();
