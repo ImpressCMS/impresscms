@@ -37,7 +37,7 @@ include_once XOOPS_ROOT_PATH."/modules/system/admin/modulesadmin/modulesadmin.ph
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
 if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
-if($op != 'list') {$module = $_GET['module'];}
+if(isset($_GET['op'])) {$module = $_GET['module'];}
 
 if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
     if (!$GLOBALS['xoopsSecurity']->check()) {
