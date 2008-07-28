@@ -1,7 +1,7 @@
 ImpressCMS ChangeLog
 
 =========================================
-2008-03-10 : ImpressCMS 1.0.1 "Janus" Final
+2008-07-28 : ImpressCMS 1.0.1 "Janus" Final
 =========================================
 
 * Fixed: security vulnerability in modules/admin.php (vaughan/rodrigo/wtravel)
