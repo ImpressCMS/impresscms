@@ -33,13 +33,9 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     exit("Access Denied");
 }
 include_once XOOPS_ROOT_PATH."/modules/system/admin/smilies/smilies.php";
-$op ='SmilesAdmin';
-
-if (!empty($_GET['op'])) {
-    $op = $_GET['op'];
-} elseif (!empty($_POST['op'])) {
-    $op = $_POST['op'];
-}
+if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
+if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'SmilesAdmin');
 
 switch($op) {
 case "SmilesUpdate":

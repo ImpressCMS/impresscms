@@ -34,18 +34,13 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 } else {
     include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
     include_once XOOPS_ROOT_PATH."/modules/system/admin/groups/groups.php";
-    $op = "display";
-    if ( isset($_POST) ) {
-        foreach ( $_POST as $k => $v ) {
-            $$k = $v;
-        }
-    }
-    if ( isset($_GET['op']) ) {
-        if ($_GET['op'] == "modify" || $_GET['op'] == "del") {
-            $op = $_GET['op'];
-            $g_id = $_GET['g_id'];
-        }
-    }
+	if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
+	if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'display');
+	if($op == 'modify' || $op == 'del')
+	{
+		$g_id = $_GET['g_id'];
+	}
 
     // from finduser section
     if ( !empty($memberslist_id) && is_array($memberslist_id) ) {

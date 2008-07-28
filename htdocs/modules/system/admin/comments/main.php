@@ -33,10 +33,9 @@
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->getVar('mid')) ) {
     exit("Access Denied");
 } else {
-    $op = 'list';
-    if (isset($_GET['op'])) {
-        $op = trim($_GET['op']);
-    }
+if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
+if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
     switch ($op) {
     case 'list':
         include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';

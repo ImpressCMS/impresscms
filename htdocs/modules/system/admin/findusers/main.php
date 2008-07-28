@@ -32,12 +32,9 @@
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
     exit("Access Denied");
 }
-$op = "form";
-
-if ( isset($_POST['op']) && $_POST['op'] == "submit" ) {
-    $op = "submit";
-}
-
+if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
+if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'form');
 xoops_cp_header();
 //OpenTable();
 

@@ -35,21 +35,12 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
 include XOOPS_ROOT_PATH."/modules/system/admin/blocksadmin/blocksadmin.php";
 
-$op = "list";
-if ( isset($_POST) ) {
-    foreach ( $_POST as $k => $v ) {
-        $$k = $v;
-    }
-}
-
-if ( isset($_GET['op']) ) {
-	# Adding dynamic block area/position system - TheRpLima - 2007-10-21
-    //if ($_GET['op'] == "edit" || $_GET['op'] == "delete" || $_GET['op'] == "delete_ok" || $_GET['op'] == "clone") {
-    if ($_GET['op'] == "edit" || $_GET['op'] == "delete" || $_GET['op'] == "delete_ok" || $_GET['op'] == "clone" || $_GET['op'] == "adminpblocks") {
-	#
-        $op = $_GET['op'];
-        $bid = isset($_GET['bid']) ? intval($_GET['bid']) : 0;
-    }
+if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
+if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
+if($op == 'edit' || $op == 'delete' || $op == 'delete_ok' || $op == 'clone' || $op == 'adminpblocks')
+{
+	$bid = isset($_GET['bid']) ? intval($_GET['bid']) : 0;
 }
 
 if (isset($previewblock)) {

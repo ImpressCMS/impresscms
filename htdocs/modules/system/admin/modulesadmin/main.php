@@ -34,17 +34,10 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 }
 include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
 include_once XOOPS_ROOT_PATH."/modules/system/admin/modulesadmin/modulesadmin.php";
-$op = "list";
-if ( isset($_POST) ) {
-    foreach ( $_POST as $k => $v ) {
-        ${$k} = $v;
-    }
-}
-
-if (isset($_GET['op'])) {
-    $op = $_GET['op'];
-    $module = $_GET['module'];
-}
+if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
+if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
+if(isset($_GET['op'])) {$module = $_GET['module'];}
 
 if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
     if (!$GLOBALS['xoopsSecurity']->check()) {

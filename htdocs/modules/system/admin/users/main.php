@@ -32,18 +32,13 @@
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
     exit("Access Denied");
 }
-$op = 'mod_users';
 include_once XOOPS_ROOT_PATH."/modules/system/admin/users/users.php";
-if (isset($_POST)) {
-    foreach ( $_POST as $k => $v ) {
-        ${$k} = $v;
-    }
-}
-if (isset($_GET['op'])) {
-    $op = trim($_GET['op']);
-    if (isset($_GET['uid'])) {
-        $uid = intval($_GET['uid']);
-    }
+if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
+if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'mod_users');
+if (isset($_GET['op']))
+{
+	if(isset($_GET['uid'])) {$uid = intval($_GET['uid']);}
 }
 switch ($op) {
 

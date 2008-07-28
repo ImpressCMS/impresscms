@@ -32,15 +32,9 @@
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
     exit("Access Denied");
 } else {
-    $op = 'list';
-    if (isset($_POST)) {
-        foreach ( $_POST as $k => $v ) {
-            ${$k} = $v;
-        }
-    }
-    if (isset($_GET['op'])) {
-        $op = trim($_GET['op']);
-    }
+if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
+if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
     if ($op == 'list') {
         xoops_cp_header();
         echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/avatars/images/avatars_big.png)">'._MD_AVATARMAN.'</div><br />';
