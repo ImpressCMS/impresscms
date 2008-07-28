@@ -35,40 +35,22 @@ if ($xoopsConfigSearch['enable_search'] != 1) {
     header('Location: '.XOOPS_URL.'/index.php');
     exit();
 }
-$action = "search";
-if (!empty($_GET['action'])) {
-  $action = $_GET['action'];
-} elseif (!empty($_POST['action'])) {
-  $action = $_POST['action'];
-}
-$query = "";
-if (!empty($_GET['query'])) {
-  $query = $_GET['query'];
-} elseif (!empty($_POST['query'])) {
-  $query = $_POST['query'];
-}
-$andor = "AND";
-if (!empty($_GET['andor'])) {
-  $andor = $_GET['andor'];
-} elseif (!empty($_POST['andor'])) {
-  $andor = $_POST['andor'];
-}
+$action = 'search';
+if(!empty($_GET['action'])) {$action = trim(StopXSS($_GET['action']));}
+elseif(!empty($_POST['action'])) {$action = trim(StopXSS($_POST['action']));}
+$query = '';
+if(!empty($_GET['query'])) {$query = StopXSS($_GET['query']);}
+elseif(!empty($_POST['query'])) {$query = StopXSS($_POST['query']);}
+$andor = 'AND';
+if(!empty($_GET['andor'])) {$andor = StopXSS($_GET['andor']);}
+elseif(!empty($_POST['andor'])) {$andor = StopXSS($_POST['andor']);}
 $mid = $uid = $start = 0;
-if ( !empty($_GET['mid']) ) {
-  $mid = intval($_GET['mid']);
-} elseif ( !empty($_POST['mid']) ) {
-  $mid = intval($_POST['mid']);
-}
-if (!empty($_GET['uid'])) {
-  $uid = intval($_GET['uid']);
-} elseif (!empty($_POST['uid'])) {
-  $uid = intval($_POST['uid']);
-}
-if (!empty($_GET['start'])) {
-  $start = intval($_GET['start']);
-} elseif (!empty($_POST['start'])) {
-  $start = intval($_POST['start']);
-}
+if(!empty($_GET['mid'])) {$mid = intval($_GET['mid']);}
+elseif(!empty($_POST['mid'])) {$mid = intval($_POST['mid']);}
+if(!empty($_GET['uid'])) {$uid = intval($_GET['uid']);}
+elseif(!empty($_POST['uid'])) {$uid = intval($_POST['uid']);}
+if(!empty($_GET['start'])) {$start = intval($_GET['start']);}
+elseif(!empty($_POST['start'])) {$start = intval($_POST['start']);}
 
 $queries = array();
 

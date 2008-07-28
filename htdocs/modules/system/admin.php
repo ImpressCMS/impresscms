@@ -29,16 +29,17 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 
-if (isset($_POST['fct'])) {
-	$fct = trim($_POST['fct']);
+include '../../mainfile.php';
+
+if(isset($_POST['fct']))
+{
+	$fct = trim(StopXSS($_POST['fct']));
 }
-if (isset($_GET['fct'])) {
-	$fct = trim($_GET['fct']);
+if(isset($_GET['fct']))
+{
+	$fct = trim(StopXSS($_GET['fct']));
 }
-if (isset($fct) && $fct == "users") {
-	$xoopsOption['pagetype'] = "user";
-}
-include "../../mainfile.php";
+
 include XOOPS_ROOT_PATH."/include/cp_functions.php";
 if ( file_exists(XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin.php") ) {
 	include XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin.php";
@@ -47,6 +48,11 @@ if ( file_exists(XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['langu
 }
 include_once XOOPS_ROOT_PATH."/class/xoopsmodule.php";
 
+// Check if function call does exist (security)
+require_once ICMS_ROOT_PATH.'/class/xoopslists.php';
+$admin_dir = ICMS_ROOT_PATH.'/modules/system/admin';
+$dirlist = XoopsLists::getDirListAsArray($admin_dir);
+if($fct && !in_array($fct,$dirlist)) {redirect_header(ICMS_URL.'/',3,_NOPERM);}
 $admintest = 0;
 
 if (is_object($xoopsUser)) {
@@ -116,9 +122,6 @@ if (false != $error) {
 	} else {
 		$all_ok = true;
 	}
-	require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
-	$admin_dir = XOOPS_ROOT_PATH."/modules/system/admin";
-	$dirlist = XoopsLists::getDirListAsArray($admin_dir);
 	$counter = 0;
 	$class = 'even';
 	foreach($dirlist as $file){

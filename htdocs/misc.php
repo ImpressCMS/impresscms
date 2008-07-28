@@ -27,10 +27,10 @@
 
 include "mainfile.php";
 include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/misc.php';
-$action = isset($_GET['action']) ? trim($_GET['action']) : '';
-$action = isset($_POST['action']) ? trim($_POST['action']) : $action;
-$type = isset($_GET['type']) ? trim($_GET['type']) : '';
-$type = isset($_POST['type']) ? trim($_POST['type']) : $type;
+$action = isset($_GET['action']) ? trim(StopXSS($_GET['action'])) : '';
+$action = isset($_POST['action']) ? trim(StopXSS($_POST['action'])) : $action;
+$type = isset($_GET['type']) ? trim(StopXSS($_GET['type'])) : '';
+$type = isset($_POST['type']) ? trim(StopXSS($_POST['type'])) : $type;
 
 if ( $action == "showpopups" ) {
     xoops_header(false);
@@ -105,7 +105,7 @@ if ( $action == "showpopups" ) {
         echo '</tr></table></form></div>';
         break;
     case "friend":
-        if ( !$GLOBALS['xoopsSecurity']->check() || !isset($_POST['op']) || $_POST['op'] == "sendform") {
+        if ( !$GLOBALS['xoopsSecurity']->check() || !isset($_POST['op']) || StopXSS($_POST['op']) == "sendform") {
             if ( $xoopsUser ) {
                 $yname = $xoopsUser->getVar("uname", 'e');
                 $ymail = $xoopsUser->getVar("email", 'e');
@@ -133,7 +133,7 @@ if ( $action == "showpopups" ) {
                 <tr><td class='head'>&nbsp;</td><td class='even'><input type='submit' value='"._SEND."' />&nbsp;<input value='"._CLOSE."' type='button' onclick='javascript:window.close();' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr>
                 </table></form>\n";
             $closebutton = 0;
-        } elseif ($_POST['op'] == "sendsite") {
+        } elseif (StopXSS($_POST['op']) == "sendsite") {
             $myts =& MyTextsanitizer::getInstance();
             if ( $xoopsUser ) {
                 $ymail = $xoopsUser->getVar("email");
