@@ -49,10 +49,10 @@ if ( file_exists(XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['langu
 include_once XOOPS_ROOT_PATH."/class/xoopsmodule.php";
 
 // Check if function call does exist (security)
-require_once ICMS_ROOT_PATH.'/class/xoopslists.php';
-$admin_dir = ICMS_ROOT_PATH.'/modules/system/admin';
+require_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
+$admin_dir = XOOPS_ROOT_PATH.'/modules/system/admin';
 $dirlist = XoopsLists::getDirListAsArray($admin_dir);
-if($fct && !in_array($fct,$dirlist)) {redirect_header(ICMS_URL.'/',3,_NOPERM);}
+if($fct && !in_array($fct,$dirlist)) {redirect_header(XOOPS_URL.'/',3,_NOPERM);}
 $admintest = 0;
 
 if (is_object($xoopsUser)) {
