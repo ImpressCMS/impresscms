@@ -848,4 +848,21 @@ if (!function_exists('array_combine')) {
 	   return $out;
 	}
 }
+
+function StopXSS($text){
+	if (!is_array($text)){
+		$text = preg_replace("/\(\)/si", "", $text);
+		$text = strip_tags($text);
+		$text = str_replace(array("'","\"",">","<","\\"), "", $text);
+	}else{
+		foreach ($text as $k=>$t){
+			$t = preg_replace("/\(\)/si", "", $t);
+			$t = strip_tags($t);
+			$t = str_replace(array("'","\"",">","<","\\"), "", $t);
+			$text[$k] = $t;
+		}
+	}
+	return $text;
+}
+
 ?>
