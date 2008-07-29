@@ -5,7 +5,7 @@ ImpressCMS ChangeLog
 =========================================
 
 - Fixed: security vulnerability in modules/admin.php (vaughan/rodrigo/wtravel)
-- Fixed: various potential vulnerabilities in edituser.php, misc.php, search.php & admin.php (vaughan)
+- Fixed: various potential vulnerabilities in a few files (vaughan/rodrigo/wtravel)
 - Fixed: typo in htaccess.txt for error documents in error 500. errpr.php should be error.php (Wizanda)
 
 =========================================
