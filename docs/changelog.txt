@@ -1,19 +1,19 @@
 ImpressCMS ChangeLog
 
 =========================================
-2008-07-28 : ImpressCMS 1.0.1 "Janus" Final
+2008-07-29 : ImpressCMS 1.0.1 "Janus" Final
 =========================================
 
-* Fixed: security vulnerability in modules/admin.php (vaughan/rodrigo/wtravel)
-* Fixed: various potential vulnerabilities in edituser.php, misc.php, search.php & admin.php (vaughan)
-* typo in htaccess.txt for error documents in error 500.. errpr.php should be error.php (Wizanda)
+- Fixed: security vulnerability in modules/admin.php (vaughan/rodrigo/wtravel)
+- Fixed: various potential vulnerabilities in edituser.php, misc.php, search.php & admin.php (vaughan)
+- Fixed: typo in htaccess.txt for error documents in error 500. errpr.php should be error.php (Wizanda)
 
 =========================================
 2008-03-10 : ImpressCMS 1.0 "Janus" Final
 =========================================
 
 - Improved : Updating the VersionChecker to handle situation where the impresscms_xml feed cann not be read (firewall, no internet access, etc...) (malanciault)
-- Improved : In the VersionChecker, changed errors to an array and provided a the language constant as the error message - the version checker now reports correctly when it cannot find a valid version_xml (skenow) 
+- Improved : In the VersionChecker, changed errors to an array and provided a the language constant as the error message - the version checker now reports correctly when it cannot find a valid version_xml (skenow)
 - Improved : admin_version template (sato-san/davidl2)
 - Improved : Syntax/grammar check in install wizard (andrewvincent/xoops-magazine)
 - Improved : Syntax/grammar check in preferences (andrewvincent)
@@ -27,7 +27,7 @@ ImpressCMS ChangeLog
 
 - Improved : Improved system_redirect template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
 - Improved : Improved system_siteclose template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
-- Improved : Upgrade script has been improved to also clean the cache folder (malanciault/rplima) 
+- Improved : Upgrade script has been improved to also clean the cache folder (malanciault/rplima)
 - Fixed : #1905281 Redirect function not using the user selected theme (malanciault)
 - Fixed : the ImpressCMS logo used on impresstheme as well as in the admin section have been updated (nekro/MrTheme)
 - Added : Addition of the global navigationlink in impresstheme theme (mcdonald/skenow/malanciault)
@@ -37,7 +37,7 @@ ImpressCMS ChangeLog
 - Added : New module added in admin: ImpressCMS Version Checker (malanciault/nekro/MrTheme/davidl2)
 - Added : A new Welcome custom block is now added by the install wizard to welcome the "not-yet-loged" user on the new site (malanciault/MrTheme/davidl2)
 - Added : A new Welcome custom block is now added by the install wizard to welcome the webmaster when loged in and to remind him some useful links to start his new ImpressCMS website (malanciault/MrTheme/davidl2)
-- Added : #1904910 A small anchor "new" in System Admin > Blocks so it becomes possible to link to modules/system/admin.php?fct=blocksadmin#new and get the user at the begining of the new block form (malanciault/drummond2) 
+- Added : #1904910 A small anchor "new" in System Admin > Blocks so it becomes possible to link to modules/system/admin.php?fct=blocksadmin#new and get the user at the begining of the new block form (malanciault/drummond2)
 
 =========================================
 2008-02-24 : ImpressCMS 1.0 "Janus" RC 2

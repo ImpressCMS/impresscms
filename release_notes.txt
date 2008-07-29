@@ -3,7 +3,7 @@ ImpressCMS 1.0.1 "Janus" Final release notes
 
 The ImpressCMS Project is very proud to announce the release: ImpressCMS 1.0.1 "Janus" Final. This release is ready for production web sites !
 
-ImpressCMS 1.0.1 is based on the ImpressCMS 1.0 core (Which was based on XOOPS 2.0.17 core + some additions made in the XOOPS 2.0.18 development branch) and, as such, will retain compatibility with existing modules and themes. The goal is to provide an on-going, stable environment for information and support for XOOPS and its users.
+ImpressCMS 1.0.1 is based on the ImpressCMS 1.0 core (Which was based on XOOPS 2.0.17 core + some additions made in the XOOPS 2.0.18 development branch) and, as such, will retain compatibility with existing XOOPS modules and themes. The goal is to provide an on-going, stable environment for information and support for XOOPS and its users.
 
 Please see the full changelog for details in docs/changelog.txt.
 
@@ -40,7 +40,7 @@ You can easily get ImpressCMS using SVN. Instructions about this can be found he
 http://wiki.impresscms.org/index.php?title=Install_and_update_using_SVN
 
 The path for this release is the following:
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0_final/
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.0.1_final/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 
@@ -62,8 +62,8 @@ Upgrading from a previous version of ImpressCMS
 
 If you are upgrading from a previous version of ImpressCMS (1.0 Janus Final), please follow these instructions:
 --------------------------------------------------------------------------------------------------------------
-1. Get the full package from the sourceforge file repository.
-2. Copy the contents of '1.0_to_1.0.1_patched_files' htdocs folder to your ImpressCMS root folder (the folder containing mainfile.php),
+1. Get the upgrade package from the sourceforge file repository.
+2. Copy the contents of the htdocs folder to your ImpressCMS root folder (the folder containing mainfile.php),
    be sure to overwrite existing files.
 
    note: if you have hacked those files be sure to re-apply those hacks to the updated files beforehand.
@@ -74,11 +74,11 @@ If you are upgrading from a previous version of ImpressCMS (1.0 Beta or RC), ple
 1. Get the full package from the sourceforge file repository.
 2. Delete htdocs/mainfile.php from the exracted file
 3. Delete htdocs/install folder from the extracted file
-4. Overwrite your existing files with the new ones 
+4. Overwrite your existing files with the new ones
 5. On your server, delete the file cache/adminmenu.php
 6. Access <your.site.url> and login with a webmaster account
-7. Access <your.site.url>/admin.php 
-8. You will see a message saying you are entering the admin area for the first time, click on the Submit button. 
+7. Access <your.site.url>/admin.php
+8. You will see a message saying you are entering the admin area for the first time, click on the Submit button.
 9. Flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox).
 10. Enjoy !
 
