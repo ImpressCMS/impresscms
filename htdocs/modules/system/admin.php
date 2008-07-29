@@ -31,14 +31,10 @@
 
 include '../../mainfile.php';
 
-if(isset($_POST['fct']))
-{
-	$fct = trim(StopXSS($_POST['fct']));
-}
-if(isset($_GET['fct']))
-{
-	$fct = trim(StopXSS($_GET['fct']));
-}
+if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
+if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+$fct = (isset($_GET['fct']))?trim(StopXSS($_GET['fct'])):((isset($_POST['fct']))?trim(StopXSS($_POST['fct'])):'');
+if(isset($fct) && $fct == 'users') {$xoopsOption['pagetype'] = 'user';}
 
 include XOOPS_ROOT_PATH."/include/cp_functions.php";
 if ( file_exists(XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin.php") ) {
