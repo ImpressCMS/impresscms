@@ -35,7 +35,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 	if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
 	if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
 	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
-    if ($op != 'list') {
+    if (isset($_GET['op'])) {
         $id = $moddir = $file = $type = $tplset = null;
         if (isset($_GET['id'])) {
             $id = intval($_GET['id']);
