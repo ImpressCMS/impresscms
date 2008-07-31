@@ -40,7 +40,7 @@ if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
 if($op == 'edit' || $op == 'delete' || $op == 'delete_ok' || $op == 'clone' || $op == 'adminpblocks')
 {
-	$bid = isset($_GET['bid']) ? intval($_GET['bid']) : 0;
+  $bid = (isset($_GET['bid']))?intval($_GET['bid']):((isset($_POST['bid']))?intval($_POST['bid']):0);
 }
 
 if (isset($previewblock)) {
