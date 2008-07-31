@@ -241,7 +241,7 @@ switch ($action) {
             $has_next = true;
         }
         $xoopsTpl->assign('xoops_pagetitle', _SR_SEARCHRESULTS);
-        echo "<h4>"._SR_SEARCHRESULTS."</h4>\n";
+        echo "<h4>"._SR_SEARCHRESULTS."</h4>";
         if ($action == 'showall') {
             echo _SR_KEYWORDS.':';
             if ($andor != 'exact') {
@@ -293,7 +293,7 @@ switch ($action) {
             echo '<td align="left">
             ';
             $search_url_prev = $search_url."&start=$prev";
-            echo '<a href="'.htmlspecialchars($search_url_prev).'">'._SR_PREVIOUS.'</a></td>
+            echo '<div class="pagination"><a href="'.htmlspecialchars($search_url_prev).'">&#9668; '._SR_PREVIOUS.'</a></div></td>
             ';
         }
         echo '<td>&nbsp;&nbsp;</td>
@@ -301,7 +301,7 @@ switch ($action) {
         if (false != $has_next) {
             $next = $start + 20;
             $search_url_next = $search_url."&start=$next";
-            echo '<td align="right"><a href="'.htmlspecialchars($search_url_next).'">'._SR_NEXT.'</a></td>
+            echo '<td align="right"><div class="pagination"><a href="'.htmlspecialchars($search_url_next).'">'._SR_NEXT.' &#9658;</a></div></td>
             ';
         }
         echo '
