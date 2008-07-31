@@ -89,7 +89,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         $tplset = false;
     	$tplset_name = trim($tplset_name);
         if ($tplset_name != '') {
-            $sql = "SELECT * FROM ".$this->db->prefix('tplset')." WHERE tplset_name='".$this->db->quoteString($tplset_name)."'";
+            echo $sql = "SELECT * FROM ".$this->db->prefix('tplset')." WHERE tplset_name=".$this->db->quoteString($tplset_name);
             if (!$result = $this->db->query($sql)) {
                 return $tplset;
             }
