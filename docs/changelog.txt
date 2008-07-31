@@ -1,5 +1,11 @@
 ImpressCMS ChangeLog
 
+===2008-08-01 : ImpressCMS 1.0.2 "Janus" RC===
+
+'''Fixed'''
+* A bug was preventing the deletion of any block (real_therplima/skenow/andrewvincent)
+* Deleting any template clone would delete the master set (real_therplima/skenow/sato-san)
+
 ===2008-07-29 : ImpressCMS 1.0.1 "Janus" Final===
 
 '''Fixed'''
