@@ -206,7 +206,7 @@ define("_MD_AM_MULTLOGINMSG_TXT",'It was not possible to login on the site!! <br
          - You left the site or close the browser window without clicking the logout button.<br />
         </p>
         Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
-define("_MD_AM_RSSLOCALLINK_DESC",'http://www.impresscms.org/modules/smartsection/backend.php'); //Link to the rrs of local support site
+define("_MD_AM_RSSLOCALLINK_DESC",'http://community.impresscms.org/modules/smartsection/backend.php'); //Link to the rrs of local support site
 define("_INSTALL_LOCAL_SITE",'http://www.impresscms.org/'); //Link to local support site
 define("_LOCAOL_STNAME",'ImpressCMS'); //Link to local support site
 define("_LOCAL_SLOCGAN",'Make a lasting impression'); //Link to local support site
