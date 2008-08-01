@@ -256,6 +256,9 @@ define("_TOOKXLONG", " took %s seconds to load.");
 define("_BLOCK", "Block(s)");
 define("_WARNINGUPDATESYSTEM","Congratulations, you have just successfully upgraded your site to the latest version of ImpressCMS!<br />Therefor to finish the upgrade process you'll need to click here and update your system module.<br />Click here to process the upgrade.");
 
+############# added since 1.2 #############
+
 define('_PREV','Prev');
 define('_NEXT','Next');
+define('_CALENDAR_TYPE','gregorian'); // this value is for the local java calendar used in this system, if you're not sure about this leave this value as it is!
 ?>

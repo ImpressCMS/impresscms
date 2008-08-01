@@ -29,6 +29,7 @@ define('_MI_SYSTEM_BNAME15', "Content");
 define('_MI_SYSTEM_BNAME16', "Content Menu");
 define('_MI_SYSTEM_BNAME17', "Related Content");
 define('_MI_SYSTEM_BNAME18', "Share this page!");
+define('_MI_SYSTEM_BNAME19', "Calendar");
 
 // Names of admin menu items
 define("_MI_SYSTEM_ADMENU1","Banners");

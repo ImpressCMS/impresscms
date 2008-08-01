@@ -290,6 +290,11 @@ $modversion['blocks'][$i]['options'] = "content_weight|ASC|1";
 $modversion['blocks'][$i]['edit_func'] = "b_content_relmenu_edit";
 $modversion['blocks'][$i]['template'] = 'system_block_contentmenu.html';
 
+$i++;
+$modversion['blocks'][$i]['file'] = "calendar.php";9;
+$modversion['blocks'][$i]['description'] = "Menu of sit calendar";
+$modversion['blocks'][$i]['show_func'] = "b_icms_calendar";
+$modversion['blocks'][$i]['template'] = 'system_block_icms_calendar.html';
 // Menu
 $modversion['hasMain'] = 0;
 $modversion['hasSearch'] = 1;
