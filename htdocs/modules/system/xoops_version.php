@@ -14,7 +14,7 @@
 */
 
 $modversion['name'] = _MI_SYSTEM_NAME;
-$modversion['version'] = 1.03;
+$modversion['version'] = 1.20;
 $modversion['description'] = _MI_SYSTEM_DESC;
 $modversion['author'] = "";
 $modversion['credits'] = "The ImpressCMS Project";
@@ -291,7 +291,8 @@ $modversion['blocks'][$i]['edit_func'] = "b_content_relmenu_edit";
 $modversion['blocks'][$i]['template'] = 'system_block_contentmenu.html';
 
 $i++;
-$modversion['blocks'][$i]['file'] = "calendar.php";9;
+$modversion['blocks'][$i]['file'] = "calendar.php";
+$modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME19;
 $modversion['blocks'][$i]['description'] = "Menu of sit calendar";
 $modversion['blocks'][$i]['show_func'] = "b_icms_calendar";
 $modversion['blocks'][$i]['template'] = 'system_block_icms_calendar.html';
