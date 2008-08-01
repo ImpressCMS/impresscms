@@ -15,9 +15,12 @@
 class upgrade_impcms06 {
 	
 	var $usedFiles = array ();
-    var $tasks = array('table1', 'table2', 'table3', 'table4', 'conf', 
+    var $tasks = array(
+    'table1', 'table2', 'table3', 'table4', 'conf', 
     'block1', 'block2', 'block3', 'block4', 
-    'dbversion', 'db');
+    'dbversion', 'db'
+    , 'salt'
+    );
 	var $updater;
 	
 	function __construct() {
@@ -307,11 +310,41 @@ class upgrade_impcms06 {
         }
         
 		$db = $GLOBALS['xoopsDB'];
-        	$sql = "INSERT INTO `" . $GLOBALS['xoopsDB']->prefix("configoption") . "` (confop_id, confop_name, confop_value, conf_id) VALUES (NULL, '_MD_AM_REGINVITE', '3', 21)";
-			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
-				return false;
-			}
+        $db->queryF("DELETE FROM `" . $db->prefix('configoption') . "` WHERE confop_name='_MD_AM_USERACTV'");
+        $db->queryF("DELETE FROM `" . $db->prefix('configoption') . "` WHERE confop_name='_MD_AM_AUTOACTV'");
+        $db->queryF("DELETE FROM `" . $db->prefix('configoption') . "` WHERE confop_name='_MD_AM_ADMINACTV'");
+        $db->queryF("DELETE FROM `" . $db->prefix('config') . "` WHERE conf_name = 'activation_type'");
+		// Now let's re-insert data
+        $registration_type = false;
+        $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'activation_type'";
+        if ( $result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
+            list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
+            if ($count == 1) {
+                $registration_type = true;
+            }
+        }
+        if (!$registration_type) {
+            $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('config') . 
+                    " (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " .
+                    " VALUES " .
+                    " (NULL, 0, 2, 'activation_type', '_MD_AM_ACTVTYPE', '0', '_MD_AM_ACTVTYPEDSC', 'select', 'int', 9)";
+
+            if (!$GLOBALS['xoopsDB']->queryF( $sql )) {
+                return false;
+            }
+            $config_id = $GLOBALS['xoopsDB']->getInsertId();
+            
+            $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('configoption') . 
+                    " (confop_id, confop_name, confop_value, conf_id)" .
+                    " VALUES" .
+                    " (NULL, '_MD_AM_USERACTV', '0', {$config_id})," .
+                    " (NULL, '_MD_AM_AUTOACTV', '1', {$config_id})," .
+                    " (NULL, '_MD_AM_ADMINACTV', '2', {$config_id})," .
+                    " (NULL, '_MD_AM_REGINVITE', '3', {$config_id})";
+            if ( !$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
+                return false;
+            }
+        }
 
 			$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " MODIFY pass VARCHAR(255)";
 			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
@@ -349,13 +382,13 @@ class upgrade_impcms06 {
 				return false;
 			}
 
-			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD pass_expired tinyint(1) NOT NULL default '1'";
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD pass_expired tinyint(1) NOT NULL default '0'";
 			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
 				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
 				return false;
 			}
 
-			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD enc_type tinyint(2) NOT NULL default '1'";
+			$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD enc_type tinyint(2) NOT NULL default '0'";
 			if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
 				icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
 				return false;
@@ -441,6 +474,21 @@ class upgrade_impcms06 {
         }
         return false;
             }
+		function check_salt()
+    {
+        $lines = file( XOOPS_ROOT_PATH . '/mainfile.php' );
+        foreach ( $lines as $line ) {
+            if( preg_match( "/(define\(\s*)([\"'])(XOOPS_DB_SALT)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) ) {
+                return true;
+            }
+        }
+        return false;
+            }
+
+    function apply_salt()
+    {
+        return $this->update_configs('salt');
+    }
 
     function apply_db()
     {

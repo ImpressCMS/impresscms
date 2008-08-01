@@ -11,19 +11,26 @@
 * @package		core
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
-* @author		modified by stranger <stranger@impresscms.ir>
+* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
 @set_magic_quotes_runtime(0);
 
+if (!defined('ICMS_ROOT_PATH')) {
+	define( 'ICMS_ROOT_PATH', XOOPS_ROOT_PATH );
+}
+if (!defined('ICMS_TRUST_PATH')) {
+	define( 'ICMS_TRUST_PATH', XOOPS_TRUST_PATH );
+}
+if (!defined('ICMS_URL')) {
+	define( 'ICMS_URL', XOOPS_URL );
+}
+
 /**
  * Creating ICMS specific constants
  */
-define('ICMS_ROOT_PATH', XOOPS_ROOT_PATH);
-define('ICMS_URL', XOOPS_URL);
-define('ICMS_TRUST_PATH', XOOPS_TRUST_PATH);
 define('ICMS_PRELOAD_PATH', XOOPS_ROOT_PATH . '/preload');
 define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH.'/cache/htmlpurifier');
 

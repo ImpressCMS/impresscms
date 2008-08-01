@@ -1,3 +1,47 @@
+4.0.012 (2008-07-24)
+	- Addpage(), Header() and Footer() functions were changed to simplify the implementation of external header/footer functions.
+	- The following functions were added: 
+			setHeader()
+			setFooter()
+			getImageRBX()
+			getImageRBY()
+			getCellHeightRatio()
+			getHeaderFont()
+			getFooterFont()
+			getRTL()
+			getBarcode()
+			getHeaderData()
+			getHeaderMargin()
+			getFooterMargin()
+	
+4.0.011 (2008-07-23)
+	- Font support was improved.
+	- The folder /fonts/utils contains new utilities and instructions for embedd font files.
+	- Documentation was updated.
+
+4.0.010 (2008-07-22)
+	- HTML tables were fixed to work across pages.
+	- Header() and Footer() functions were updated to preserve previous settings.
+	- example_035.php was added.
+
+4.0.009 (2008-07-21)
+	- UTF8StringToArray() function was fixed for non-unicode mode.
+
+4.0.008 (2008-07-21)
+	- Barcodes alignment was fixed (see example_027.php).
+	- unicode_data.php was updated.
+	- Arabic shaping for "Zero-Width Non-Joiner" character (U+200C) was fixed.
+
+4.0.007 (2008-07-18)
+	- str_split was replaced by preg_split for compatibility with PHP4 version.
+	- Clipping mode was added to all graphic functions by using parameter $style = "CNZ" or "CEO" (see example_034.php).
+
+4.0.006 (2008-07-16)
+	- HTML rowspan bug was fixed.
+	- Line style for MultiCell() was fixed.
+	- WriteHTML() function was improved.
+	- CODE128C barcode was fixed (barcodes.php).
+
 4.0.005 (2008-07-11)
 	- Bug [2015715] "PHP Error/Warning" was fixed.
 

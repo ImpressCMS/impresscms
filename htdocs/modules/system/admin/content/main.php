@@ -24,6 +24,8 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     $limit = (isset($_GET['limit']))?intval($_GET['limit']):((isset($_POST['limit']))?intval($_POST['limit']):15);
     $start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
     $editor = (isset($_GET['editor']))?$_GET['editor']:null;
+    $canceled = (isset($_GET['canceled']))?intval($_GET['canceled']):((isset($_POST['canceled']))?intval($_POST['canceled']):0);
+    
     switch ($op){
     	case 'list':
     		xoops_cp_header();
@@ -53,9 +55,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     		contmanager_clonecontent($content_id);
     		break;
     	case 'delcontent':
-    		xoops_cp_header();
-    		xoops_confirm(array('op' => 'delcontentok', 'content_id' => $content_id, 'fct' => 'content'), 'admin.php', _MD_RUDELCONTENT);
-    		xoops_cp_footer();
+    		contmanager_confirmdelcontent($content_id);
     		break;
     	case 'delcontentok':
     		contmanager_delcontent($content_id);
@@ -341,24 +341,90 @@ function contmanager_delcontent($content_id) {
 	redirect_header('admin.php?fct=content',2,_MD_AM_DBUPDATED);
 }
 
+function contmanager_confirmdelcontent($content_id){
+	global $canceled;
+	
+	if ($canceled){
+		header('Location: '.ICMS_URL.'/modules/system/admin.php?fct=content');
+	}
+	
+	$content_handler =& xoops_gethandler('content');
+	$content = $content_handler->get($content_id);
+	
+	$content_url = 'content.php?page='.$content_handler->makeLink($content);
+
+	$page_handler = xoops_gethandler('page');
+	$criteria = new CriteriaCompo(new Criteria('page_url', $content_url));
+	$criteria->add(new Criteria('page_url', ICMS_URL.'/'.$content_url),'OR');
+	$pages = $page_handler->getObjects($criteria);
+
+	if (count($pages) > 0){
+		$page = $pages[0];
+	}else{
+		$page = false;
+	}
+
+	$redir = base64_encode('admin.php?fct=content&op=delcontent&content_id='.$content_id);
+	
+	if (!$page || !is_object($page)){
+		xoops_cp_header();
+		xoops_confirm(array('op' => 'delcontentok', 'content_id' => $content_id, 'fct' => 'content'), 'admin.php', _MD_RUDELCONTENT);
+		xoops_cp_footer();
+	}else{
+		redirect_header('admin.php?fct=pages&op=delpage&page_id='.$page->getVar('page_id').'&redir='.$redir,5,_MD_DELLINKFIRST);
+	}
+}
+
 function contmanager_changestatus($content_id) {
+	global $canceled;
+	
+	if ($canceled){
+		header('Location: '.ICMS_URL.'/modules/system/admin.php?fct=content');
+	}
+	
 	$content_handler =& xoops_gethandler('content');
 	$content = $content_handler->get($content_id);
 	$content->setVar('content_status',!$content->getVar('content_status'));
 
-	if (!$content_handler->insert($content)){
-		$msg = _MD_FAILEDIT;
-	}else{
-		$msg = _MD_AM_DBUPDATED;
-	}
+	$content_url = 'content.php?page='.$content_handler->makeLink($content);
 
+	$page_handler = xoops_gethandler('page');
+	$criteria = new CriteriaCompo(new Criteria('page_url', $content_url));
+	$criteria->add(new Criteria('page_url', ICMS_URL.'/'.$content_url),'OR');
+	$pages = $page_handler->getObjects($criteria);
+
+	if (count($pages) > 0){
+		$page = $pages[0];
+	}else{
+		$page = false;
+	}
+	
 	$contentid_or_supid = 'content_id';
 	$contentid_or_supid_value = $content->getVar('content_id');
 	if ($content->getVar('content_supid') != 0) {
 		$contentid_or_supid = 'content_supid';
 		$contentid_or_supid_value = $content->getVar('content_supid');
 	}
-	redirect_header('admin.php?fct=content&op=list&'.$contentid_or_supid.'='.$contentid_or_supid_value,2,$msg);
+	
+	$redir = base64_encode('admin.php?fct=content&op=changestatus&content_id='.$content_id);
+
+	if ($page && is_object($page) && $page->getVar('page_status') == 1){
+		redirect_header('admin.php?fct=pages&op=changestatus&page_id='.$page->getVar('page_id').'&redir='.$redir,5,_MD_STSLINKFIRST);
+	}else{
+		if (!$content_handler->insert($content)){
+			$msg = _MD_FAILEDIT;
+		}else{
+			$msg = _MD_AM_DBUPDATED;
+		}
+
+		$contentid_or_supid = 'content_id';
+		$contentid_or_supid_value = $content->getVar('content_id');
+		if ($content->getVar('content_supid') != 0) {
+			$contentid_or_supid = 'content_supid';
+			$contentid_or_supid_value = $content->getVar('content_supid');
+		}
+		redirect_header('admin.php?fct=content&op=list&'.$contentid_or_supid.'='.$contentid_or_supid_value,2,$msg);
+	}
 }
 
 function contentform($id=null,$clone=false){

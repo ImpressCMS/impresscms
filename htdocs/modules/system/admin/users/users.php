@@ -75,6 +75,8 @@ function displayUsers()
     $name_value = "";
     $email_value = "";
     $email_cbox_value = 0;
+    $openid_value = '';
+    $openid_cbox_value = 0;
     $url_value = "";
 //  $avatar_value = "blank.gif";
 //  $theme_value = $xoopsConfig['default_theme'];
@@ -124,6 +126,8 @@ function modifyUser($user)
         $name_value = $user->getVar("name", "E");
         $email_value = $user->getVar("email", "E");
         $email_cbox_value = $user->getVar("user_viewemail") ? 1 : 0;
+		$openid_value = $user->getVar('openid', 'E');
+		$openid_cbox_value = $user->getVar('user_viewoid') ? 1 : 0;
         $url_value = $user->getVar("url", "E");
 //      $avatar_value = $user->getVar("user_avatar");
         $temp = $user->getVar("theme");
@@ -174,7 +178,7 @@ function modifyUser($user)
 }
 
 // RMV-NOTIFY
-function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $salt, $groups = array())
+function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $groups = array())
 {
     global $xoopsConfig, $xoopsDB, $xoopsModule;
     $member_handler =& xoops_gethandler('member');
@@ -188,6 +192,9 @@ function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $us
         $edituser->setVar("name", $name);
         $edituser->setVar("uname", $uname);
         $edituser->setVar("email", $email);
+        $edituser->setVar("openid", $openid);
+        $user_viewoid = (isset($user_viewoid) && $user_viewoid == 1) ? 1 : 0;
+        $edituser->setVar("user_viewoid", $user_viewoid);
 		$url = isset( $url ) ? formatURL( $url ) : '';
         $edituser->setVar( "url", $url );
     //  $edituser->setVar("user_avatar", $user_avatar);

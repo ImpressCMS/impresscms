@@ -77,6 +77,7 @@ input[type=text], input[type=password], textarea {
 	margin:				2px 0px;
 	padding-left:		.2em;
 	background-color:	#fff;
+    MIN-WIDTH: 60%;
 }
 
 .x2-note {

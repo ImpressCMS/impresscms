@@ -78,4 +78,6 @@ We will not sell, distribute or lease your personal information to third parties
 If you believe that any information we are holding on you is incorrect or incomplete, please write to or email us as soon as possible, at the above address. We will promptly correct any information found to be incorrect.
 </p>");
 define( "ERR_COULD_NOT_WRITE_MAINFILE", "Error writing content to mainfile.php, write the content into mainfile.php manually." );
+define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
+define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password.<BR />Do Not change this key once your site is live, doing so will render ALL passwords invalid. If you are unsure, just keep the default"); // L97
 ?>

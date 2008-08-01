@@ -38,4 +38,6 @@ define('_MD_CONTENT_NAVADM','Main');
 define('_MD_CONTENTCHANGESTS','Change the status of this page');
 
 define('_MD_NOTFOUND','No record found');
+define('_MD_DELLINKFIRST','This page is in use by the Links Manager.<br />You will be redirect to Links Manager to delete this link first and after you will be redirect back to delete this page.');
+define('_MD_STSLINKFIRST','This page is in use by the Links Manager.<br />You will be redirect to Links Manager to change the status of this link first and after you will be redirect back to change the status of this page.');
 ?>

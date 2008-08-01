@@ -88,7 +88,7 @@ var pass_level = "60";
     
 	<legend><?php echo LEGEND_ADMIN_ACCOUNT; ?></legend>
 	<label for="adminname"><?php echo ADMIN_LOGIN_LABEL; ?></label>
-	<input type="text" name="adminname" id="adminname" maxlength="10" value="<?php echo htmlspecialchars( $vars['adminname'], ENT_QUOTES ); ?>" />
+	<input type="text" name="adminname" id="adminname" maxlength="20" value="<?php echo htmlspecialchars( $vars['adminname'], ENT_QUOTES ); ?>" />
 	<label for="adminmail"><?php echo ADMIN_EMAIL_LABEL; ?></label>
 	<input type="text" name="adminmail" id="adminmail" maxlength="255" value="<?php echo htmlspecialchars( $vars['adminmail'], ENT_QUOTES ); ?>" />
 	<label for="adminpass"><?php echo ADMIN_PASS_LABEL; ?></label>

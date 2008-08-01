@@ -29,7 +29,6 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	// Example: define('XOOPS_TRUST_PATH', '/path/to/trust/directory');
 	define('XOOPS_TRUST_PATH', '');
 
-	// sdata#--#
 
 	// XOOPS Virtual Path (URL)
 	// Virtual path to your main XOOPS directory WITHOUT trailing slash
@@ -109,6 +108,12 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
         }
     }
 
+	define('ICMS_GROUP_ADMIN', XOOPS_GROUP_ADMIN);
+	define('ICMS_GROUP_USERS', XOOPS_GROUP_USERS);
+	define('ICMS_GROUP_ANONYMOUS', XOOPS_GROUP_ANONYMOUS);
+	define( 'ICMS_URL', XOOPS_URL );
+	define( 'ICMS_TRUST_PATH', XOOPS_TRUST_PATH );
+	define( 'ICMS_ROOT_PATH', XOOPS_ROOT_PATH );
 	if (!isset($xoopsOption['nocommon']) && XOOPS_ROOT_PATH != '') {
 		include XOOPS_ROOT_PATH."/include/common.php";
 	}

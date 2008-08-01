@@ -141,8 +141,8 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
 			$icms_PurifyConfig->set('HTML', 'Allowed', 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
-					del, dfn, div, dl, dt, em, i, img[src|alt|title|class], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
-					td, tfoot, th, thead, tr, tt, u, ul, var'); // sets allowed html tags that can be used.
+					del, dfn, div[align|style], dl, dt, em, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
+					td, tfoot, th, thead, tr, tt, u, ul, var, font'); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
@@ -181,9 +181,25 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
 
 			$icms_PurifyConfig->set('Attr', 'AllowedFrameTargets', '_blank, _parent, _self, _top');
-			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow');
+			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+		}
+		elseif($config = 'protector')
+		{
+			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'protector');
+			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
+			$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET); // sets purifier to use specified encoding. default = UTF-8
+			if(is_dir(ICMS_PURIFIER_CACHE))
+			{
+				$icms_PurifyConfig->set('Cache', 'DefinitionImpl', 'Serializer');
+				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
+			}
+			else
+			{
+				$icms_PurifyConfig->set('Cache', 'DefinitionImpl', 'Serializer');
+				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
+			}
 		}
 		elseif($config = 'display') // config id level for display HTMLArea
 		{
@@ -191,8 +207,8 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
 			$icms_PurifyConfig->set('HTML', 'Allowed', 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
-					del, dfn, div, dl, dt, em, i, img[src|alt|title|class], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
-					td, tfoot, th, thead, tr, tt, u, ul, var'); // sets allowed html tags that can be used.
+					del, dfn, div[align|style], dl, dt, em, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
+					td, tfoot, th, thead, tr, tt, u, ul, var, font'); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
@@ -231,7 +247,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
 
 			$icms_PurifyConfig->set('Attr', 'AllowedFrameTargets', '_blank, _parent, _self, _top');
-			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow');
+			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
 		}
@@ -241,9 +257,9 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
 			$icms_PurifyConfig->set('HTML', 'Allowed', 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
-					del, dfn, div, dl, dt, em, i, img[src|alt|title|class], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
-					td, tfoot, th, thead, tr, tt, u, ul, var'); // sets allowed html tags that can be used.
-			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'light');
+					del, dfn, div[align|style], dl, dt, em, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
+					td, tfoot, th, thead, tr, tt, u, ul, var, font'); // sets allowed html tags that can be used.
+			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'none');
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
@@ -281,7 +297,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
 
 			$icms_PurifyConfig->set('Attr', 'AllowedFrameTargets', '_blank, _parent, _self, _top');
-			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow');
+			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
 		}
@@ -289,10 +305,17 @@ class icms_HTMLPurifier
 
 		$this->purifier = new HTMLPurifier($icms_PurifyConfig);
 
-		$html = $this->purifier->purify($html);
+		if($config = 'protector') {$html = $this->icms_purify_recursive($html);}
+		else {$html = $this->purifier->purify($html);}
 
 		return $html;
 	
+	}
+
+	function icms_purify_recursive($data)
+	{
+		if(is_array($data)) {return array_map(array($this, 'icms_purify_recursive'), $data);}
+		else {return strlen($data) > 32 ? $this->purifier->purify($data) : $data;}
 	}
 
 	/**

@@ -4,7 +4,7 @@
 define('_MD_AM_DBUPDATED','Database Updated Successfully!');
 
 define('_MD_AM_CONFIG','System Configuration');
-
+define('_INVALID_ADMIN_FUNCTION', 'Invalid Admin Function');
 
 // Admin Module Names
 define('_MD_AM_ADGS','Groups');

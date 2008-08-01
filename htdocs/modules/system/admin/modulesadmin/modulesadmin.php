@@ -514,8 +514,32 @@ function xoops_module_uninstall($dirname) {
         return "<p>".sprintf(_MD_AM_FAILUNINS, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_SYSNO."</p>";
     } elseif ($module->getVar('dirname') == $xoopsConfig['startpage']) {
         return "<p>".sprintf(_MD_AM_FAILUNINS, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
-    } else {
+    } else {	
         $msgs = array();
+        
+    	$stararr = explode('-',$xoopsConfig['startpage']);
+    	if (count($stararr) > 0){
+    		if ($module->getVar('mid') == $stararr[0]){
+    			return "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
+    		}
+    	}
+
+    	$page_handler = xoops_gethandler('page');
+    	$criteria = new CriteriaCompo(new Criteria('page_moduleid', $module->getVar('mid')));
+    	$pages = $page_handler->getCount($criteria);
+
+    	if ($pages > 0){
+    		$pages = $page_handler->getObjects($criteria);
+    		$msgs[] = 'Deleting links fom Links Manager...';
+    		foreach ($pages as $page){
+    			if (!$page_handler->delete($page)) {
+    				$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete link '.$page->getVar('page_title').' from the database. Link ID: <b>'.$page->getVar('page_id').'</b></span>';
+    			} else {
+    				$msgs[] = '&nbsp;&nbsp;Link <b>'.$page->getVar('page_title').'</b> deleted from the database. Link ID: <b>'.$page->getVar('page_id').'</b>';
+    			}
+    		}
+    	}
+        
         if (!$module_handler->delete($module)) {
             $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete '.$module->getVar('name').'</span>';
         } else {
@@ -685,7 +709,25 @@ function xoops_module_deactivate($mid) {
     } elseif ($module->getVar('dirname') == $xoopsConfig['startpage']) {
         return "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
     } else {
-        if (!$module_handler->insert($module)) {
+    	$stararr = explode('-',$xoopsConfig['startpage']);
+    	if (count($stararr) > 0){
+    		if ($module->getVar('mid') == $stararr[0]){
+    			return "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
+    		}
+    	}
+
+    	$page_handler = xoops_gethandler('page');
+    	$criteria = new CriteriaCompo(new Criteria('page_moduleid', $module->getVar('mid')));
+    	$pages = $page_handler->getCount($criteria);
+
+    	if ($pages > 0){
+    		$pages = $page_handler->getObjects($criteria);
+    		foreach ($pages as $page){
+    			$page_handler->changestatus($page);
+    		}
+    	}
+    	
+    	if (!$module_handler->insert($module)) {
             $ret = "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />".$module->getHtmlErrors();
             return $ret."</p>";
         }

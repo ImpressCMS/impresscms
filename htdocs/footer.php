@@ -74,16 +74,6 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 				$xoTheme->contentTemplate = $xoopsOption['template_main'];
 			}
 		}
-				     	// Start addition: assign the language css&Javascripts file to the template, if required
-        	if(defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(ICMS_ROOT_PATH."/xoops_rtl.css"))
-		{
-            		$xoTheme->addStylesheet("/xoops_rtl.css", array("media" => "screen"));
-        	}
-        	if(defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(ICMS_ROOT_PATH."/include/xoops_rtl.js"))
-		{
-            		$xoTheme->addScript("/include/xoops_rtl.js", array("type" => "text/javascript"));
-        	}
-        	// End addition
 		$xoTheme->render();
 	}
 	$xoopsLogger->stopTime();

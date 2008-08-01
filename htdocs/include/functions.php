@@ -44,7 +44,7 @@ function xoops_header($closehead=true)
     <script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script>
     ';
     $themecss = getcss($xoopsConfig['theme_set']);
-    echo '<link rel="stylesheet" type="text/css" media="all" href="'.ICMS_URL.'/xoops.css" />';
+    echo '<link rel="stylesheet" type="text/css" media="all" href="'.ICMS_URL.'/icms.css" />';
     if ($themecss) {
         echo '<link rel="stylesheet" type="text/css" media="all" href="'.$themecss.'" />';
         //echo '<style type="text/css" media="all"><!-- @import url('.$themecss.'); --></style>';
@@ -1288,7 +1288,7 @@ function icms_getUserSaltFromUname($uname = '')
 	}
 	else
 	{
-		trigger_error('ERROR: No User Selected', E_USER_ERROR);
+		redirect_header('user.php',2,_US_SORRYNOTFOUND);
 	}
 	return $salt;
 }
@@ -1301,11 +1301,7 @@ function icms_encryptPass($pass, $salt)
 
 	if(function_exists('hash'))
 	{
-		$db = $GLOBALS['xoopsDB'];
-		if (getDbValue($db, 'config', 'conf_id', 'conf_name="enc_type"') == 0) {
-			$pass = md5($pass); // no salt used to let users using versions < icms 1.1 be able to login in the site.
-		}
-		elseif($xoopsConfigUser['enc_type'] == 0)
+		if($xoopsConfigUser['enc_type'] == 0)
 		{
 			$pass = md5($pass); // no salt used for compatibility with external scripts such as ipb/phpbb etc.
 		}

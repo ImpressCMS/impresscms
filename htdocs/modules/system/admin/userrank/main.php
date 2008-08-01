@@ -37,13 +37,9 @@
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
     exit("Access Denied");
 }
-$op = 'RankForumAdmin';
-
-if (isset($_GET['op'])) {
-    $op = $_GET['op'];
-} elseif (isset($_POST['op'])) {
-    $op = $_POST['op'];
-}
+if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
+if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'RankForumAdmin');
 
 $config_handler =& xoops_gethandler('config');
 $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);

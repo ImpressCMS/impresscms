@@ -52,7 +52,12 @@
 			foreach ( $files as $file ) echo "<li>$file</li>\n";
 			echo "</ul></div>";
 		} else {
+						if ( !is_writable(XOOPS_ROOT_PATH."/mainfile.php" ) ) {
+			echo '<div class="x2-note"><p>' . _NEED_UPGRADE . "</p>" . _SET_FILES_WRITABLE . "<br /><ul>";
+echo "<li>".XOOPS_ROOT_PATH."/mainfile.php</li>\n";
+			echo "</ul></div>";}else{
 			echo '<a id="link-next" href="index.php?action=next">' . _PROCEED_UPGRADE . '</a>';
 		}
 	}
+}
 ?>

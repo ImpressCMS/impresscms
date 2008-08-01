@@ -371,7 +371,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'minuname', '_MD_AM_MINUNAME', '3', '_MD_AM_MINUNAMEDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'maxuname', '_MD_AM_MAXUNAME', '10', '_MD_AM_MAXUNAMEDSC', 'textbox', 'int', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'maxuname', '_MD_AM_MAXUNAME', '20', '_MD_AM_MAXUNAMEDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_captcha', '_MD_AM_USECAPTCHA', 1, '_MD_AM_USECAPTCHADSC', 'yesno', 'int', $p)");

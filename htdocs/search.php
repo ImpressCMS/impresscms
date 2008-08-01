@@ -12,140 +12,106 @@
 * @version		$Id$
 */
 
-$xoopsOption['pagetype'] = "search";
+$xoopsOption['pagetype'] = 'search';
 
 include 'mainfile.php';
 $config_handler =& xoops_gethandler('config');
 $xoopsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
-if ($xoopsConfigSearch['enable_search'] != 1) {
-    header('Location: '.ICMS_URL.'/index.php');
-    exit();
+if($xoopsConfigSearch['enable_search'] != 1)
+{
+	header('Location: '.ICMS_URL.'/index.php');
+	exit();
 }
-$action = "search";
-if (!empty($_GET['action'])) {
-  $action = $_GET['action'];
-} elseif (!empty($_POST['action'])) {
-  $action = $_POST['action'];
-}
-$query = "";
-if (!empty($_GET['query'])) {
-  $query = $_GET['query'];
-} elseif (!empty($_POST['query'])) {
-  $query = $_POST['query'];
-}
-$andor = "AND";
-if (!empty($_GET['andor'])) {
-  $andor = $_GET['andor'];
-} elseif (!empty($_POST['andor'])) {
-  $andor = $_POST['andor'];
-}
+$action = 'search';
+if(!empty($_GET['action'])) {$action = trim(StopXSS($_GET['action']));}
+elseif(!empty($_POST['action'])) {$action = trim(StopXSS($_POST['action']));}
+$query = '';
+if(!empty($_GET['query'])) {$query = StopXSS($_GET['query']);}
+elseif(!empty($_POST['query'])) {$query = StopXSS($_POST['query']);}
+$andor = 'AND';
+if(!empty($_GET['andor'])) {$andor = StopXSS($_GET['andor']);}
+elseif(!empty($_POST['andor'])) {$andor = StopXSS($_POST['andor']);}
 $mid = $uid = $start = 0;
-if ( !empty($_GET['mid']) ) {
-  $mid = intval($_GET['mid']);
-} elseif ( !empty($_POST['mid']) ) {
-  $mid = intval($_POST['mid']);
-}
-if (!empty($_GET['uid'])) {
-  $uid = intval($_GET['uid']);
-} elseif (!empty($_POST['uid'])) {
-  $uid = intval($_POST['uid']);
-}
-if (!empty($_GET['start'])) {
-  $start = intval($_GET['start']);
-} elseif (!empty($_POST['start'])) {
-  $start = intval($_POST['start']);
-}
+if(!empty($_GET['mid'])) {$mid = intval($_GET['mid']);}
+elseif(!empty($_POST['mid'])) {$mid = intval($_POST['mid']);}
+if(!empty($_GET['uid'])) {$uid = intval($_GET['uid']);}
+elseif(!empty($_POST['uid'])) {$uid = intval($_POST['uid']);}
+if(!empty($_GET['start'])) {$start = intval($_GET['start']);}
+elseif(!empty($_POST['start'])) {$start = intval($_POST['start']);}
 
 $queries = array();
-
-if ($action == "results") {
-    if ($query == "") {
-         redirect_header("search.php",1,_SR_PLZENTER);
-        exit();
-    }
-} elseif ($action == "showall") {
-    if ($query == "" || empty($mid)) {
-        redirect_header("search.php",1,_SR_PLZENTER);
-        exit();
-    }
-} elseif ($action == "showallbyuser") {
-    if (empty($mid) || empty($uid)) {
-        redirect_header("search.php",1,_SR_PLZENTER);
-        exit();
-    }
+if($action == 'results')
+{
+	if($query == '') {redirect_header('search.php',1,_SR_PLZENTER);}
+}
+elseif($action == 'showall')
+{
+	if($query == '' || empty($mid)) {redirect_header('search.php',1,_SR_PLZENTER);}
+}
+elseif($action == 'showallbyuser')
+{
+	if(empty($mid) || empty($uid)) {redirect_header("search.php",1,_SR_PLZENTER);}
 }
 
 $groups = is_object($xoopsUser) ? $xoopsUser -> getGroups() : XOOPS_GROUP_ANONYMOUS;
-$gperm_handler = & xoops_gethandler( 'groupperm' );
+$gperm_handler = & xoops_gethandler('groupperm');
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 
-if ($action == 'search') {
-    include ICMS_ROOT_PATH.'/header.php';
-    include 'include/searchform.php';
-    $search_form->display();
-    $xoopsTpl->assign('xoops_pagetitle', _SEARCH);
-    include ICMS_ROOT_PATH.'/footer.php';
-    exit();
+if($action == 'search')
+{
+	include ICMS_ROOT_PATH.'/header.php';
+	include 'include/searchform.php';
+	$search_form->display();
+	$xoopsTpl->assign('xoops_pagetitle', _SEARCH);
+	include ICMS_ROOT_PATH.'/footer.php';
+	exit();
 }
 
-if ( $andor != "OR" && $andor != "exact" && $andor != "AND" ) {
-    $andor = "AND";
-}
+if($andor != 'OR' && $andor != 'exact' && $andor != 'AND') {$andor = 'AND';}
 
 $myts =& MyTextSanitizer::getInstance();
-if ($action != 'showallbyuser') {
-    if ( $andor != "exact" ) {
-        $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length  
-        
-        preg_match_all('/(?:").*?(?:")|(?:\').*?(?:\')/', $query,$compostas);
-        $res = $simpl = array();
-        foreach ($compostas[0] as $comp){
-        	$res[] = substr($comp,1,strlen($comp)-3);
-        }
-        $compostas = $res;
-        
-        $simples = preg_replace('/(?:").*?(?:")|(?:\').*?(?:\')/', '', $query);
-        $simples = preg_split('/[\s,]+/', $simples);
-        if (count($simples) > 0){
-        	foreach ($simples as $k=>$v){
-        		if ($v != "\\"){
-        			$simpl[] = $v;
-        		}
-        	}
-        	$simples = $simpl;
-        }        
-
-        if (count($compostas) > 0 && count($simples) > 0){
-          $temp_queries = array_merge($simples,$compostas);
-        }elseif (count($compostas) <= 0 && count($simples) > 0){
-        	$temp_queries = $simples;
-        }elseif (count($compostas) > 0 && count($simples) <= 0){
-        	$temp_queries = $compostas;
-        }else{
-        	$temp_queries = array();
-        }
-        
-        foreach ($temp_queries as $q) {
-            $q = trim($q);
-            if (strlen($q) >= $xoopsConfigSearch['keyword_min']) {
-                $queries[] = $myts->addSlashes($q);
-            } else {
-                $ignored_queries[] = $myts->addSlashes($q);
-            }
-        }
-        if (count($queries) == 0) {
-            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
-            exit();
-        }
-    } else {
-        $query = trim($query);
-        if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
-            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
-            exit();
-        }
-        $queries = array($myts->addSlashes($query));
-    }
+if($action != 'showallbyuser')
+{
+	if($andor != 'exact')
+	{
+		$ignored_queries = array(); // holds kewords that are shorter than allowed minmum length  
+		
+		preg_match_all('/(?:").*?(?:")|(?:\').*?(?:\')/', $query,$compostas);
+		$res = $simpl = array();
+		foreach($compostas[0] as $comp) {$res[] = substr($comp,1,strlen($comp)-3);}
+		$compostas = $res;
+		
+		$simples = preg_replace('/(?:").*?(?:")|(?:\').*?(?:\')/', '', $query);
+		$simples = preg_split('/[\s,]+/', $simples);
+		if(count($simples) > 0)
+		{
+			foreach($simples as $k=>$v)
+			{
+				if($v != '\\') {$simpl[] = $v;}
+			}
+			$simples = $simpl;
+		}
+	
+		if(count($compostas) > 0 && count($simples) > 0) {$temp_queries = array_merge($simples,$compostas);}
+		elseif(count($compostas) <= 0 && count($simples) > 0) {$temp_queries = $simples;}
+		elseif(count($compostas) > 0 && count($simples) <= 0) {$temp_queries = $compostas;}
+		else {$temp_queries = array();}
+		
+		foreach($temp_queries as $q)
+		{
+			$q = trim($q);
+			if(strlen($q) >= $xoopsConfigSearch['keyword_min']) {$queries[] = $myts->addSlashes($q);}
+			else {$ignored_queries[] = $myts->addSlashes($q);}
+		}
+		if(count($queries) == 0) {redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));}
+	}
+	else
+	{
+		$query = trim($query);
+		if(strlen($query) < $xoopsConfigSearch['keyword_min']) {redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));}
+		$queries = array($myts->addSlashes($query));
+	}
 }
 switch ($action) {
     case "results":
@@ -318,5 +284,5 @@ switch ($action) {
     ';
     break;
 }
-include ICMS_ROOT_PATH."/footer.php";
+include ICMS_ROOT_PATH.'/footer.php';
 ?>

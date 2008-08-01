@@ -28,8 +28,8 @@ if(!is_object($xoopsUser))
 
 // initialize $op variable
 $op = 'editprofile';
-if(!empty($_POST['op'])){$op = $_POST['op'];}
-if(!empty($_GET['op'])){$op = $_GET['op'];}
+if(!empty($_POST['op'])){$op = StopXSS($_POST['op']);}
+if(!empty($_GET['op'])){$op = StopXSS($_GET['op']);}
 
 $config_handler =& xoops_gethandler('config');
 $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);

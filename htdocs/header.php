@@ -54,6 +54,18 @@ else
 	$xoTheme->addScript('/include/xoops.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript('/include/linkexternal.js', array('type' => 'text/javascript'));
 
+        	if(file_exists(ICMS_ROOT_PATH."/icms.css"))
+		{
+            		$xoTheme->addStylesheet("/icms.css", array("media" => "screen"));
+        	}
+        	if(defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(ICMS_ROOT_PATH."/icms_rtl.css"))
+		{
+            		$xoTheme->addStylesheet("/icms_rtl.css", array("media" => "screen"));
+        	}
+        	if(defined('_ADM_USE_RTL') && _ADM_USE_RTL && file_exists(ICMS_ROOT_PATH."/include/icms_rtl.js"))
+		{
+            		$xoTheme->addScript("/include/icms_rtl.js", array("type" => "text/javascript"));
+        	}
     // Weird, but need extra <script> tags for 2.0.x themes
     //$xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
 	//$xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');

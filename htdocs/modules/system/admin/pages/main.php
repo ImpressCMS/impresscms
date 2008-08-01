@@ -18,9 +18,11 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
     $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
-    $content_id = (isset($_GET['content_id']))?intval($_GET['content_id']):((isset($_POST['content_id']))?intval($_POST['content_id']):0);
+    $page_id = (isset($_GET['page_id']))?intval($_GET['page_id']):((isset($_POST['page_id']))?intval($_POST['page_id']):0);
     $limit = (isset($_GET['limit']))?intval($_GET['limit']):((isset($_POST['limit']))?intval($_POST['limit']):15);
     $start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
+    $redir = (isset($_GET['redir']))?$_GET['redir']:((isset($_POST['redir']))?$_POST['redir']:null);
+    
     switch ($op){
     	case 'list':
     		xoops_cp_header();
@@ -39,15 +41,13 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     		pages_editpage($page_id);
     		break;
     	case 'delpage':
-    		xoops_cp_header();
-    		xoops_confirm(array('op' => 'delpageok', 'page_id' => $page_id, 'fct' => 'pages'), 'admin.php', _MD_RUDELPAGE);
-    		xoops_cp_footer();
+    		pages_confirmdelpage($page_id,$redir);
     		break;
     	case 'delpageok':
-    		pages_delpage($page_id);
+    		pages_delpage($page_id,$redir);
     		break;
     	case 'changestatus':
-    		pages_changestatus($page_id);
+    		pages_changestatus($page_id,$redir);
     		break;
     }
 }
@@ -169,7 +169,7 @@ function pages_editpage($page_id) {
 	redirect_header('admin.php?fct=pages&op=list',2,$msg);
 }
 
-function pages_delpage($page_id) {
+function pages_delpage($page_id,$redir=null) {
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header('admin.php?fct=pages',1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
@@ -189,21 +189,61 @@ function pages_delpage($page_id) {
 		exit();
 	}
 
-	redirect_header('admin.php?fct=pages',2,_MD_AM_DBUPDATED);
+	redirect_header((!is_null($redir))?base64_decode($redir):'admin.php?fct=pages',2,_MD_AM_DBUPDATED);
 }
 
-function pages_changestatus($page_id) {
+function pages_confirmdelpage($page_id,$redir=null){
+	global $xoopsConfig;
+	
 	$page_handler = xoops_gethandler('page');
 	$page = $page_handler->get($page_id);
-	$page->setVar('page_status',!$page->getVar('page_status'));
+	
+	if ($xoopsConfig['startpage'] == $page->getVar('page_moduleid').'-'.$page->getVar('page_id')){ //Selected page is the start page of the site
+		redirect_header((!is_null($redir))?base64_decode($redir).'&canceled=1':'admin.php?fct=pages&op=list',5,_MD_DELSTARTPAGE);
+	}else{
+		xoops_cp_header();
+		$arr = array();
+		$arr['op'] = 'delpageok';
+		$arr['page_id'] = $page_id;
+		$arr['fct'] = 'pages';
+		if (!is_null($redir)){
+			$arr['redir'] = $redir;
+		}
+		xoops_confirm($arr, 'admin.php', _MD_RUDELPAGE);
+		xoops_cp_footer();
+	}
+}
 
+function pages_changestatus($page_id,$redir=null) {
+	global $xoopsConfig;
+	
+	$page_handler = xoops_gethandler('page');
+	$page = $page_handler->get($page_id);
+	if (empty($redir)){
+		$sts = !$page->getVar('page_status');
+	}else{
+		$sts = 0;
+	}
+	$page->setVar('page_status',$sts);
+
+	$module_handler = xoops_gethandler('module');
+	$mod = $module_handler->get($page->getVar('page_moduleid'));
+	
+	if (!$mod->getVar('isactive')){
+		redirect_header((!is_null($redir))?base64_decode($redir).'&canceled=1':'admin.php?fct=pages&op=list',3,_MD_MODDEACTIVE);
+	}
+	
+	if ($xoopsConfig['startpage'] == $page->getVar('page_moduleid').'-'.$page->getVar('page_id')){ //Selected page is the start page of the site
+		redirect_header((!is_null($redir))?base64_decode($redir).'&canceled=1':'admin.php?fct=pages&op=list',5,_MD_DELSTARTPAGE);
+	}
+	
 	if (!$page_handler->insert($page)){
 		$msg = _MD_FAILEDIT;
 	}else{
 		$msg = _MD_AM_DBUPDATED;
 	}
 
-	redirect_header('admin.php?fct=pages&op=list',2,$msg);
+	redirect_header((!is_null($redir))?base64_decode($redir):'admin.php?fct=pages&op=list',2,$msg);
 }
 
 function pageform($id=null){

@@ -265,5 +265,26 @@ class XoopsPageHandler extends XoopsObjectHandler
     	
         return $ret;
     }
+    
+    function changestatus(&$page)
+    {
+        /**
+        * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
+        */
+        if (strtolower(get_class($page)) != 'xoopspage') {
+            return false;
+        }
+
+        $id = intval($page->getVar('page_id'));
+        
+        $sts = !$page->getVar('page_status');
+        
+        $sql = sprintf("UPDATE %s SET page_status='%u' WHERE page_id = '%u'", $this->db->prefix('icmspage'), $sts, $id);
+        if (!$result = $this->db->queryF($sql)) {
+            return false;
+        }
+        
+        return true;
+    }
 }
 ?>

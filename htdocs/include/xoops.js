@@ -322,6 +322,57 @@ function xoopsCodeHidden(id,enterHiddenPhrase){
         
 domobj.focus();
 }
+function xoopsmakeleft(id,enterHiddenPhrase){
+    if (enterHiddenPhrase == null) {
+        enterHiddenPhrase = "Enter The Text To Be Aligned On The Left Side:";
+    }
+    var text = prompt(enterHiddenPhrase, "");
+    var domobj = xoopsGetElementById(id);
+    if ( text != null && text != "" ) {
+        var pos = text.indexOf(unescape('%00'));
+        if(0 < pos){
+            text = text.substr(0,pos);
+        }
+        var result = "[left]" + text + "[/left]";
+        xoopsInsertText(domobj, result);
+    }
+        
+domobj.focus();
+}
+function xoopsmakecenter(id,enterHiddenPhrase){
+    if (enterHiddenPhrase == null) {
+        enterHiddenPhrase = "Enter The Text To Be Aligned On The Center Side:";
+    }
+    var text = prompt(enterHiddenPhrase, "");
+    var domobj = xoopsGetElementById(id);
+    if ( text != null && text != "" ) {
+        var pos = text.indexOf(unescape('%00'));
+        if(0 < pos){
+            text = text.substr(0,pos);
+        }
+        var result = "[center]" + text + "[/center]";
+        xoopsInsertText(domobj, result);
+    }
+        
+domobj.focus();
+}
+function xoopsmakeright(id,enterHiddenPhrase){
+    if (enterHiddenPhrase == null) {
+        enterHiddenPhrase = "Enter The Text To Be Aligned On The Right Side:";
+    }
+    var text = prompt(enterHiddenPhrase, "");
+    var domobj = xoopsGetElementById(id);
+    if ( text != null && text != "" ) {
+        var pos = text.indexOf(unescape('%00'));
+        if(0 < pos){
+            text = text.substr(0,pos);
+        }
+        var result = "[right]" + text + "[/right]";
+        xoopsInsertText(domobj, result);
+    }
+        
+domobj.focus();
+}
 function xoopsCodeCode(id, enterCodePhrase){
 	if (enterCodePhrase == null) {
 		enterCodePhrase = "Enter the codes that you want to add.";

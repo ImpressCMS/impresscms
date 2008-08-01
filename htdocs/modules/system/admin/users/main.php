@@ -32,18 +32,15 @@
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
     exit("Access Denied");
 }
-$op = 'mod_users';
 include_once XOOPS_ROOT_PATH."/modules/system/admin/users/users.php";
-if (isset($_POST)) {
-    foreach ( $_POST as $k => $v ) {
-        ${$k} = $v;
-    }
-}
-if (isset($_GET['op'])) {
-    $op = trim($_GET['op']);
-    if (isset($_GET['uid'])) {
-        $uid = intval($_GET['uid']);
-    }
+$allowedHTML = array('user_sig','bio');
+
+if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'mod_users');
+if(isset($_GET['op']))
+{
+	if(isset($_GET['uid'])) {$uid = intval($_GET['uid']);}
 }
 switch ($op) {
 
@@ -58,7 +55,7 @@ case "updateUser":
     $user_avatar = $theme = null;
 	if ( !isset( $attachsig ) ) $attachsig = null;
 	if ( !isset( $user_viewemail ) ) $user_viewemail = null;
-    updateUser($uid, $username, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $salt, $groups);
+    updateUser($uid, $username, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $groups);
     break;
 case "delUser":
     xoops_cp_header();
@@ -163,6 +160,11 @@ case "addUser":
             $newuser->setVar("name", $name);
             $newuser->setVar("uname", $username);
             $newuser->setVar("email", $email);
+            if(isset($user_viewoid))
+		  {
+                $newuser->setVar("user_viewoid",$user_viewoid);
+            }
+            $newuser->setVar("openid", $openid);
             $newuser->setVar("url", formatURL($url));
             $newuser->setVar("user_avatar",'blank.gif');
             $newuser->setVar("user_icq", $user_icq);

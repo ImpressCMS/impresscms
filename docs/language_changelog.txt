@@ -34,7 +34,7 @@ install/language/english/install.php
 +  define("_ADM_USE_RTL","0"); // turn this to 1 if your language is right to left
 +  define("_DEF_LANG_TAGS",'en,fr'); //Add local translation
 +  define("_DEF_LANG_NAMES",'english,french'); //Add local translation
-+  define("_LOCAL_LANG_NAMES",'English,Français'); //Add local translation
++  define("_LOCAL_LANG_NAMES",'English,Franï¿½ais'); //Add local translation
 +  define("_EXT_DATE_FUNC","0"); // change 0 to 1 if this language has an extended date function
 
 install/language/english/install2.php
@@ -272,6 +272,7 @@ modules/system/language/english/admin.php
 +  define('_MD_AM_CONTENT', 'Content Manager');
 +  define('_MD_AM_BKPOSAD','Block Positions');
 +  define('_MD_AM_PAGES','Links Manager');
++  define('_INVALID_ADMIN_FUNCTION', 'Invalid Admin Function');
 
 modules/system/language/english/blocks.php
 -------------------------------------------
@@ -309,6 +310,13 @@ modules/system/language/english/modinfo.php
 
 + modules/system/language/english/admin/social_bookmarks_links.php
 ---------------------------------------------------------
+
+modules/system/language/english/admin/users.php
+---------------------------------------------------------
+
++  define("_AM_OPENID","OpenID");
++  define("_AM_AOUTVTOIAD","Allow other users to view this OpenID address");
+
 
 modules/system/language/english/admin/modulesadmin.php
 ---------------------------------------------------------

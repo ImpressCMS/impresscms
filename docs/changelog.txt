@@ -14,14 +14,25 @@ ImpressCMS ChangeLog
 * Upgrade script 1.0 --> 1.1beta. (stranger)
 * new field to let user select if they want to sho their openid. (stranger)
 * new warning to let users know about upgrading system module. (stranger)
+* new warning to search if trust_path is defined. (stranger)
+* new warning to let users know about protector with credits to GIJOE. (stranger)
 * Upgrade script XOOPS2.2.x --> ImpressCMS. (stranger/phppp)
+* function "_filterImgUrl" to module.sanitizer, to keep compatibility with D3 modules.. (stranger/minahito/hodaka)
+* added 3 content alignments for dhtml text editor. (stranger)
+* Upgrade script XOOPS2.3 --> ImpressCMS. (stranger)
+* icms.css loads from the header. (stranger)
+* pdf.php in language files. (stranger)
 
 '''Improved'''
-* Updated TCPDF to version 4.0.005. (stranger)
+* Updated TCPDF to version 4.0.009. (stranger)
 * Formfield for OpenID, if OID is inactive users won't see it's fields. (stranger)
 
 '''Changed'''
 * after upgrade is done you'll get back to index to see if upgrade was successful. (stranger)
+* moved protector.php to extras. (stranger)
+* xoops.css to icms.css. (stranger)
+* xoops_rtl.css to icms_rtl.css. (stranger)
+* xoops_rtl.js to icms_rtl.js. (stranger)
 
 '''Fixed'''
 * Could not upload avatar. (real_therplima/stranger)
@@ -33,6 +44,9 @@ ImpressCMS ChangeLog
 * The installer was not properly creating the password hash of the administrator (Vaughan/real_therplima/malanciault)
 * #1871202 (was not completely fixed) - Avatar and Karma (Fixed). (stranger)
 * Issue with new hash generator, when replacing new core files. (stranger)
+* Security Vulnerabilty (http://www.securityfocus.com/bid/30330) in modules/system/admin.php (Vaughan/Rodrigo/Wtravel)
+* typo in htaccess.txt for error documents in error 500.. errpr.php should be error.php (Wizanda)
+
 
 ===2008-07-02 : 1.1 Alpha 2===
 

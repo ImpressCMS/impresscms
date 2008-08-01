@@ -58,10 +58,10 @@ function xoops_cp_header($ret = 0) {
 	<link rel="icon" type="image/png" href="' . XOOPS_URL . '/favicon.ico" />
 	';
 		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops_rtl.css" />';
+	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms_rtl.css" />';
 	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style_rtl.css" />';
 	   } else {
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops.css" />';
+	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms.css" />';
 	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style.css" />';
            }
 	// ################# Preload Trigger adminHeader ##############
@@ -421,6 +421,14 @@ function impresscms_get_adminmenu() {
 	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i ++;
 	
+	if ( _LANGCODE != 'en' ){
+	$menu [$i] ['link'] = _IMPRESSCMS_LOCAL_SUPPORT;
+	$menu [$i] ['title'] = _IMPRESSCMS_LOCAL_SUPPORT_TITLE;
+	$menu [$i] ['absolute'] = 1;
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	$i ++;
+    }
+
 	$menu [$i] ['link'] = 'http://community.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_COMMUNITY;
 	$menu [$i] ['absolute'] = 1;
