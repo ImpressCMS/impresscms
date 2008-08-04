@@ -44,10 +44,14 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		/*
 		 * gets list of themes folder from themes directory
 		 */
-		function getThemesList()
-		{
-			return XoopsLists::getDirListAsArray(XOOPS_THEME_PATH.'/');
-		}
+ function getThemesList(){
+    $dirtyList = XoopsLists::getDirListAsArray(ICMS_THEME_PATH.'/');
+    foreach($dirtyList as $item){
+        if(file_exists(ICMS_THEME_PATH.'/'.$item.'/theme.html'))
+            $cleanList[] = $item;
+    }
+    return $cleanList;
+}
 
 		/*
 		 * gets a list of module folders from the modules directory

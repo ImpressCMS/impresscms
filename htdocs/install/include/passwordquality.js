@@ -235,7 +235,7 @@ function getPasswordStrength(){
         	sbtn = btns[i];
         }
     }
-    //Se senha é menor do que o mínimo configurado desabilitar botão de submit
+/*    //Se senha é menor do que o mínimo configurado desabilitar botão de submit
     if (pwlength < minpass){
     	sbtn.disabled = true;
     	sbtn.style.color = '#B2B2B2';
@@ -244,7 +244,7 @@ function getPasswordStrength(){
     if (pwstrength < pass_level){
     	sbtn.disabled = true;
     	sbtn.style.color = '#B2B2B2';
-    }else
+    }else*/
     //Se segurança e o comprimento da senha maior que os níveis configurados libera o botão
     //do formulário permitindo a realização do cadastro
     if (pwstrength > pass_level && pwlength >= minpass){

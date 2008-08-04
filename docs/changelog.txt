@@ -27,6 +27,7 @@ ImpressCMS ChangeLog
 * Upgrade script XOOPS2.3 --> ImpressCMS. (stranger)
 * icms.css loads from the header. (stranger)
 * pdf.php in language files. (stranger)
+* system skips all folders with no theme.html. (nekro/stranger)
 
 '''Improved'''
 * Updated TCPDF to version 4.0.009. (stranger)
