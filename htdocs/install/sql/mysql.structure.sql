@@ -165,6 +165,7 @@ CREATE TABLE icmscontent (
   content_menu varchar(100) default NULL,
   content_body text,
   content_css text,
+  content_tags text,
   content_visibility int(10) NOT NULL default '3',
   content_created int(10) NOT NULL default '0',
   content_updated int(10) NOT NULL default '0',

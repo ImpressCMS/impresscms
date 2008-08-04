@@ -38,6 +38,12 @@ h2.content_title_info {
    padding:5px;
 }
 
+.content_tags {
+   padding:5px;
+   background: #efefef;
+   font-size: 11px;
+}
+
 #content_subs {
    margin-top: 5px;
 }

@@ -445,6 +445,7 @@ function contentform($id=null,$clone=false){
         $menu = $content->getVar('content_menu');
 		$body = $content->getVar('content_body','E');
 		$css = $content->getVar('content_css','E');
+		$tags = $content->getVar('content_tags','E');
 		$weight = $content->getVar('content_weight');
 		$status = $content->getVar('content_status');
 		$visibility = $content->getVar('content_visibility');
@@ -452,12 +453,12 @@ function contentform($id=null,$clone=false){
 		$content_uid = $content->getVar('content_uid');
 		$grupos_ids = $gperm_handler->getGroupIds('content_read', $id);
 	}else{
-		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
 		$ftitle = _MD_ADDCONTENT;
 		$title = '';
 		$menu = '';
 		$body = '';
-		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style_rtl.css');
+		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl.':'').'.css');
+		$tags = '';
 		$weight = 0;
 		$status = 1;
 		$visibility = 3;
@@ -466,23 +467,7 @@ function contentform($id=null,$clone=false){
 		$grupos_ids = $xoopsUser->getGroups();
 		if (!in_array(XOOPS_GROUP_ANONYMOUS, $grupos_ids)) {
 			array_push($grupos_ids, XOOPS_GROUP_ANONYMOUS);
-		}
-	   } else {
-		$ftitle = _MD_ADDCONTENT;
-		$title = '';
-		$menu = '';
-		$body = '';
-		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style.css');
-		$weight = 0;
-		$status = 1;
-		$visibility = 3;
-		global $content_supid;
-		$content_uid = $xoopsUser->getVar('uid');
-		$grupos_ids = $xoopsUser->getGroups();
-		if (!in_array(XOOPS_GROUP_ANONYMOUS, $grupos_ids)) {
-			array_push($grupos_ids, XOOPS_GROUP_ANONYMOUS);
-		}
-           }
+		}		
 	}
 
 	$form = new XoopsThemeForm($ftitle, 'content_form', 'admin.php', "post", true);
@@ -509,6 +494,9 @@ function contentform($id=null,$clone=false){
 	$fcss = new XoopsFormTextArea(_MD_CONTENT_CSS, 'content_css',$css,10);
 	$fcss->setDescription(sprintf(_MD_CONTENT_CSS_DESC,XOOPS_URL.'/modules/system/language/'.$xoopsConfig['language'].'/admin/content_css_doc.html'));
 	$form->addElement($fcss);
+	$ftags = new XoopsFormTextArea(_MD_CONTENT_TAGS, 'content_tags',$tags,2);
+	$ftags->setDescription(_MD_CONTENT_TAGS_DESC);
+	$form->addElement($ftags);
 	$form->addElement(new XoopsFormText(_MD_CONTENT_WEIGHT, 'content_weight', 3, 4, $weight));
 	$form->addElement(new XoopsFormRadioYN(_MD_CONTENT_DISPLAY, 'content_status', intval($status), _YES, _NO));
 

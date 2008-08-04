@@ -24,6 +24,16 @@ $gperm_handler = & xoops_gethandler('groupperm');
 $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 $uid = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
 $content_handler =& xoops_gethandler('content');
+
+$tag = (isset($_GET['tag']))?trim(StopXSS($_GET['tag'])):((isset($_POST['tag']))?trim(StopXSS($_POST['tag'])):null);
+$start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['tag']):0);
+if (!is_null($tag)){
+	include ICMS_ROOT_PATH.'/header.php';
+	echo list_by_tag($tag,$start);
+	include ICMS_ROOT_PATH.'/footer.php';
+	exit;
+}
+
 if(!$page)
 {
 	if($im_contentConfig['default_page'] != 0)
@@ -69,6 +79,8 @@ $xoopsTpl->assign("show_pinfo",$im_contentConfig['show_pinfo']);
 $xoopsTpl->assign("content_tinfo", sprintf(_CT_PUBLISHEDBY.' <a href="'.ICMS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%u '._CT_READS.')',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($impress_content->getVar('content_created'),"s"),$impress_content->getReads()));
 $xoopsTpl->assign("content_body", $myts->previewTarea($impress_content->getVar('content_body', "n"),1,1,1,1,0));
 $xoopsTpl->assign("content_css", sanitizeContentCss($impress_content->getVar('content_css')));
+$xoopsTpl->assign("content_tags", filter_bytags($impress_content->getVar('content_tags')));
+$xoopsTpl->assign("lang_tags", _CT_TAGS);
 
 if($im_contentConfig['show_subs'])
 {
@@ -115,4 +127,80 @@ else
 }
 $content_handler->insert($impress_content);
 include ICMS_ROOT_PATH.'/footer.php';
+
+function list_by_tag($tag,$start=0){
+    global $im_contentConfig,$groups,$uid,$xoopsTpl,$xoTheme;
+    
+    $myts =& MyTextSanitizer::getInstance();
+    
+    $gperm_handler   =& xoops_gethandler('groupperm');
+    $content_handler =& xoops_gethandler('content');
+	
+    $criteria = new CriteriaCompo(new Criteria('content_status', 1));
+    $criteria->add(new Criteria('content_tags', '%'.$tag.'%','LIKE'));
+    $pagecount = $content_handler->getCount($criteria);
+    $criteria->setLimit($im_contentConfig['num_pages']);
+    $criteria->setStart($start);
+	$pages = $content_handler->getObjects($criteria);
+	
+	foreach ($pages as $page){
+		if ($gperm_handler->checkRight('content_read', $page->getVar('content_id'), $groups)){
+			$adminperm = $gperm_handler->checkRight('content_admin', $page->getVar('content_id'), $uid);
+			$cont = array();
+			$cont['title'] = $page->getVar('content_title');
+			$cont['url'] = ICMS_URL.'/content.php?page='.$content_handler->makeLink($page);
+			$cont['isAdmin'] = $adminperm;
+			$options = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&op=editcontent&content_id='.$page->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/edit_big.png" title="'._CT_EDIT_CONTENT.'" alt="'._CT_EDIT_CONTENT.'" /></a>';
+			$options .= '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&op=delcontent&content_id='.$page->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/delete_big.png" title="'._CT_DELETE_CONTENT.'" alt="'._CT_DELETE_CONTENT.'" /></a>';
+			$cont['admlinks'] = $options;
+			$member_handler =& xoops_gethandler('member');
+			$autor =& $member_handler->getUser($page->getVar('content_uid'));
+			$cont['tinfo'] = sprintf(_CT_PUBLISHEDBY.' <a href="'.ICMS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%u '._CT_READS.')',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($page->getVar('content_created'),"s"),$page->getReads());
+			if ($im_contentConfig['teaser_length'] > 0){
+				$cont['body'] = icms_substr(icms_cleanTags($page->getVar("content_body",'n'),array()),0,$im_contentConfig['teaser_length']);
+			}else{
+				$cont['body'] = $myts->previewTarea($page->getVar('content_body', "n"),1,1,1,1,0);
+			}
+			$cont['tags'] = filter_bytags($page->getVar('content_tags'));
+			$xoopsTpl->append('contents',$cont);
+		}
+	}
+	
+	if ($pagecount > 0){
+		if ($pagecount > $im_contentConfig['num_pages']) {
+			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+			$nav = new XoopsPageNav($pagecount, $im_contentConfig['num_pages'], $start, 'start','tag='.$tag);
+			$xoopsTpl->assign('pag',$nav->renderNav());
+		}else{
+			$xoopsTpl->assign('pag','');
+		}
+	}else{
+		$xoopsTpl->assign('pag','');
+	}
+	
+    $xoopsTpl->assign("lang_tags", _CT_TAGS);
+	$xoopsTpl->assign("show_pinfo",$im_contentConfig['show_pinfo']);
+    
+	$xoTheme->addStylesheet(ICMS_URL.'/modules/system/admin/content/style.css');
+	
+	return $xoopsTpl->fetch('db:system_content_list.html');
+}
+
+function filter_bytags($tags){
+	
+	if (!empty($tags)){
+		$tags_arr = explode(',',$tags);
+	}else{
+		$tags_arr = array();
+	}
+
+	$ret = '';
+	if (count($tags_arr) > 0){
+		foreach ($tags_arr as $tag){
+			$ret .= '<a href="'.ICMS_URL.'/content.php?tag='.$tag.'">'.$tag.'</a>, ';
+		}
+		$ret = substr($ret,0,strlen($ret)-2);
+	}
+	return $ret;
+}
 ?>

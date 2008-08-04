@@ -47,6 +47,7 @@ class XoopsContent extends XoopsObject
         $this->initVar('content_menu', XOBJ_DTYPE_TXTBOX, null, true, 100);
         $this->initVar('content_body', XOBJ_DTYPE_TXTAREA, null, true);
         $this->initVar('content_css', XOBJ_DTYPE_TXTAREA, null, false);
+        $this->initVar('content_tags', XOBJ_DTYPE_TXTAREA, null, false);
         $this->initVar('content_visibility', XOBJ_DTYPE_INT, 3, false);
         $this->initVar('content_created', XOBJ_DTYPE_INT, null, false);
         $this->initVar('content_updated', XOBJ_DTYPE_INT, null, false);
@@ -130,7 +131,7 @@ class XoopsContentHandler extends XoopsObjectHandler
         }
         if ($content->isNew()) {
             $content_id = $this->db->genId('content_content_id_seq');
-            $sql = sprintf("INSERT INTO %s (content_id, content_catid, content_supid, content_uid, content_title, content_menu, content_body, content_css, content_visibility, content_created, content_updated, content_weight, content_reads, content_status) VALUES (%u, %u, %u, %u, %s, %s, %s, %s, %u, %u, %u, %u, %u, %u)", 
+            $sql = sprintf("INSERT INTO %s (content_id, content_catid, content_supid, content_uid, content_title, content_menu, content_body, content_css, content_tags, content_visibility, content_created, content_updated, content_weight, content_reads, content_status) VALUES (%u, %u, %u, %u, %s, %s, %s, %s, %s, %u, %u, %u, %u, %u, %u)", 
             $this->db->prefix('icmscontent'), 
             intval($content_id), 
             intval($content_catid), 
@@ -140,6 +141,7 @@ class XoopsContentHandler extends XoopsObjectHandler
             $this->db->quoteString($content_menu), 
             $this->db->quoteString($content_body), 
             $this->db->quoteString($content_css), 
+            $this->db->quoteString($content_tags), 
             intval($content_visibility), 
             time(), 
             time(), 
@@ -147,7 +149,7 @@ class XoopsContentHandler extends XoopsObjectHandler
             intval($content_reads), 
             intval($content_status));
         } else {
-        	$sql = sprintf("UPDATE %s SET content_catid=%u, content_supid=%u, content_uid=%u, content_title=%s, content_menu=%s, content_body=%s, content_css=%s, content_visibility=%u, content_updated=%u, content_weight=%u, content_reads=%u, content_status=%u WHERE content_id=%u", 
+        	$sql = sprintf("UPDATE %s SET content_catid=%u, content_supid=%u, content_uid=%u, content_title=%s, content_menu=%s, content_body=%s, content_css=%s, content_tags=%s, content_visibility=%u, content_updated=%u, content_weight=%u, content_reads=%u, content_status=%u WHERE content_id=%u", 
         	$this->db->prefix('icmscontent'), 
         	intval($content_catid), 
         	intval($content_supid), 
@@ -155,7 +157,8 @@ class XoopsContentHandler extends XoopsObjectHandler
         	$this->db->quoteString($content_title),
         	$this->db->quoteString($content_menu), 
         	$this->db->quoteString($content_body),
-        	$this->db->quoteString($content_css), 
+        	$this->db->quoteString($content_css),
+        	$this->db->quoteString($content_tags), 
         	intval($content_visibility), 
         	time(), 
         	intval($content_weight), 

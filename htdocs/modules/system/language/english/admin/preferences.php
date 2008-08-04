@@ -337,6 +337,12 @@ define("_MD_AM_CONT_SHOWPINFO","Show poster and published info?");
 define("_MD_AM_CONT_SHOWPINFODSC","Select yes to show in the page informations about the poster and publish of the page.");
 define("_MD_AM_CONT_ACTSEO","Use menu title instead the id in the url (improve seo)?");
 define("_MD_AM_CONT_ACTSEODSC","Select yes to the value of menu title instead of the id in the url of the page.");
+define("_MD_AM_CONT_NUMPAGES","Number of pages on list by tag mode");
+define("_MD_AM_CONT_NUMPAGESDSC","Define the number of pages to show in user side on list by tag mode.");
+define("_MD_AM_CONT_TEASERLENGTH","Teaser Length");
+define("_MD_AM_CONT_TEASERLENGTHDSC","Number of characters of the page teaser in list by tag mode.<br />Set to 0 to not limit.");
+
+
 //Captcha (Security image)
 define('_MD_AM_USECAPTCHA', 'Do you want to use CAPTCHA on registration form?');
 define('_MD_AM_USECAPTCHADSC', 'Select yes to CAPTCHA (anti-spam) up on registration form.');

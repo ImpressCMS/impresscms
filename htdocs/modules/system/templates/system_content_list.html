@@ -1,0 +1,16 @@
+<{$pag}>
+<{foreach item=content from=$contents}>
+  <div>
+    <div id="content_header">
+      <{if $content.isAdmin}><div class="content_title_admlinks"><{$content.admlinks}></div><{/if}>
+      <h1 class="content_title"><a href="<{$content.url}>"><{$content.title}></a></h1>
+      <{if $show_pinfo}><h2 class="content_title_info"><{$content.tinfo}></h2><{/if}>
+    </div>
+    <div class="content_body"><{$content.body}></div>
+    <{if $content.tags != ''}>
+      <div class="content_tags"><b><{$lang_tags}>:</b> <{$content.tags}></div>
+    <{/if}>
+  </div>
+  <div style="height: 5px; margin-top:10px; margin-bottom:20px; border-bottom: 1px dashed #333333;">&nbsp;</div>
+<{/foreach}>
+<{$pag}>
