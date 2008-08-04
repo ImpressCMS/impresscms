@@ -3,6 +3,11 @@ ImpressCMS ChangeLog
 == Impresscms 1.2==
 '''Added'''
 * Smarty xoPageNav function (Skalpa)
+* calendar block (Stranger)
+* simplepie library (marcan)
+
+'''Improved'''
+* Updated jscalendar to 1.15. (stranger)
 
 == Impresscms 1.1==
 
