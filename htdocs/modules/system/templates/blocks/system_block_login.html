@@ -23,7 +23,7 @@
 	    <{$smarty.const._MB_SYSTEM_OPENID_URL}>
 	    <input type="hidden" name="action" value="verify" />
 	    <input type="text" class="openid_url" name="openid_identifier" size="12" value="" />
-	    <input type="submit" value="Login" />
+	    <input type="submit" value="<{$block.lang_login}>" />
 	  </form>
 	  <div style="text-align: left;"><a href="#" onclick="xoopsGetElementById('xoops_block_login_form').style.display = 'block'; xoopsGetElementById('openid-verify-form2').style.display = 'none'; return false;"><{$smarty.const._MB_SYSTEM_OPENID_NORMAL_LOGIN}></a></div>
 	</div>
