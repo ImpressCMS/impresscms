@@ -42,13 +42,14 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		}
 
 		/*
-		 * gets list of themes folder from themes directory
+		 * gets list of themes folder from themes directory, excluding any directories that do not have theme.html
 		 */
  function getThemesList(){
+    $dirtyList = $cleanList = Array();
     $dirtyList = XoopsLists::getDirListAsArray(ICMS_THEME_PATH.'/');
     foreach($dirtyList as $item){
         if(file_exists(ICMS_THEME_PATH.'/'.$item.'/theme.html'))
-            $cleanList[] = $item;
+            $cleanList[$item] = $item;
     }
     return $cleanList;
 }

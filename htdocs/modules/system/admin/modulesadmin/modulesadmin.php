@@ -530,7 +530,7 @@ function xoops_module_uninstall($dirname) {
 
     	if ($pages > 0){
     		$pages = $page_handler->getObjects($criteria);
-    		$msgs[] = 'Deleting links fom Links Manager...';
+    		$msgs[] = 'Deleting links fom Symlink Manager...';
     		foreach ($pages as $page){
     			if (!$page_handler->delete($page)) {
     				$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete link '.$page->getVar('page_title').' from the database. Link ID: <b>'.$page->getVar('page_id').'</b></span>';

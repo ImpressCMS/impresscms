@@ -38,12 +38,16 @@ $email_tray->addElement($email_text, true);
 $email_cbox = new XoopsFormCheckBox("", "user_viewemail", $email_cbox_value);
 $email_cbox->addOption(1, _AM_AOUTVTEAD);
 $email_tray->addElement($email_cbox);
+$config_handler =& xoops_gethandler('config');
+$icmsauthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+if ($icmsauthConfig['auth_openid'] == 1) {
 $openid_tray = new XoopsFormElementTray(_AM_OPENID, "<br />");
-$openid_text = new XoopsFormText("", "openid", 30, 60, $openid_value);
-$openid_tray->addElement($openid_text, true);
+  $openid_text = new XoopsFormText("", "openid", 30, 255, $openid_value);
+  $openid_tray->addElement($openid_text);
 $openid_cbox = new XoopsFormCheckBox("", "user_viewoid", $openid_cbox_value);
 $openid_cbox->addOption(1, _AM_AOUTVTOIAD);
 $openid_tray->addElement($openid_cbox);
+}
 $url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
 //  $avatar_select = new XoopsFormSelect("", "user_avatar", $avatar_value);
 //  $avatar_array = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/");

@@ -37,15 +37,15 @@ this.parse = function(nodes, tree, id) { for (var i = 0; i < nodes.length; i++) 
 nodes[i].id = id + "-" + tree.length; tree.push(new Array()); nodes[i].onmouseover = buttonOver; nodes[i].onclick = buttonClick; break; case "item":
 nodes[i].id = id + "-" + tree.length; tree.push(new Array()); nodes[i].onmouseover = itemOver; nodes[i].onmouseout = itemOut; nodes[i].onclick = itemClick; break; case "section":
 nodes[i].id = id + "-" + (tree.length - 1) + "-section"; var box1 = document.getElementById(id + "-" + (tree.length - 1)); var box2 = document.getElementById(nodes[i].id); var el = new Element(box1.id); if (el.level == 1) { if (this.type == "horizontal") { box2.style.top = (box1.offsetTop + box1.offsetHeight + this.position.level1.top) + "px"; if (this.browser.ie5) { box2.style.left = (this.position.level1.left) + "px";} else {
-/* Start open menu from right_to_left - added by stranger @ www.mpxp.org , Script & Original hack are made by irmtfan (www.jadoogaran.org) */
+/* Start open menu from right_to_left - added by stranger @ www.impresscms.ir , Script & Original hack are made by irmtfan (www.jadoogaran.org) */
 box2.style.Right = ( box1.offsetLeft + this.position.level1.left) + "px";}
-/* End open menu from right_to_left - added by stranger @ www.mpxp.org , Script & Original hack are made by irmtfan (www.jadoogaran.org) */
+/* End open menu from right_to_left - added by stranger @ www.impresscms.ir , Script & Original hack are made by irmtfan (www.jadoogaran.org) */
 } else if (this.type == "vertical") { box2.style.top = (box1.offsetTop + this.position.level1.top) + "px"; if (this.browser.ie5) { box2.style.left = (box1.offsetWidth + this.position.level1.left) + "px";} else { box2.style.left = (box1.offsetLeft + box1.offsetWidth + this.position.level1.Left) + "px";}
 }
 } else { box2.style.top = (box1.offsetTop + this.position.levelX.top) + "px";
-/* Start open popup from right_to_left on mouse click - added by stranger @ www.mpxp.org , Script & Original hack are made by irmtfan (www.jadoogaran.org) */
+/* Start open popup from right_to_left on mouse click - added by stranger @ www.impresscms.ir , Script & Original hack are made by irmtfan (www.jadoogaran.org) */
 box2.style.right = (box1.offsetLeft + box1.offsetWidth + this.position.levelX.left) + "px";}
-/* End open popup from right_to_left on mouse click - added by stranger @ www.mpxp.org , Script & Original hack are made by irmtfan (www.jadoogaran.org) */
+/* End open popup from right_to_left on mouse click - added by stranger @ www.impresscms.ir , Script & Original hack are made by irmtfan (www.jadoogaran.org) */
 break; case "arrow":
 nodes[i].id = id + "-" + (tree.length - 1) + "-arrow"; break;}
 if (nodes[i].childNodes) { if (nodes[i].className == "section") { this.parse(nodes[i].childNodes, tree[tree.length - 1], id + "-" + (tree.length - 1));} else { this.parse(nodes[i].childNodes, tree, id);}

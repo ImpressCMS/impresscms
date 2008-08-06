@@ -271,7 +271,7 @@ modules/system/language/english/admin.php
 +- define('_MD_AM_VRSN','Version Checker');
 +  define('_MD_AM_CONTENT', 'Content Manager');
 +  define('_MD_AM_BKPOSAD','Block Positions');
-+  define('_MD_AM_PAGES','Links Manager');
++  define('_MD_AM_PAGES','Symlink Manager');
 +  define('_INVALID_ADMIN_FUNCTION', 'Invalid Admin Function');
 
 modules/system/language/english/blocks.php
@@ -300,7 +300,7 @@ modules/system/language/english/modinfo.php
 +  define("_MI_SYSTEM_ADMENU17", "Version");
 +  define("_MI_SYSTEM_ADMENU18", "Content Manager");
 +  define("_MI_SYSTEM_ADMENU19", "Block Positions");
-+  define("_MI_SYSTEM_ADMENU20", "Links Manager");
++  define("_MI_SYSTEM_ADMENU20", "Symlink Manager");
 +  define("_MI_SYSTEM_ADMENU21", "Custom Tags");
 
 ==================================================
@@ -684,7 +684,7 @@ modules/system/language/english/modinfo.php
 +  define('_MI_SYSTEM_BNAME17', "Related Content");
 +  define("_MI_SYSTEM_ADMENU18", "Content Manager");
 +  define("_MI_SYSTEM_ADMENU19", "Block Positions");
-+  define("_MI_SYSTEM_ADMENU20", "Links Manager");
++  define("_MI_SYSTEM_ADMENU20", "Symlink Manager");
 
 
 install/language/english/install.php

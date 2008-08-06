@@ -11,7 +11,7 @@
 * @package		core
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
-* @author		modified by stranger <www.impresscms.org>
+* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
 /**
@@ -573,7 +573,10 @@ function make_data(&$dbm, &$cm, $adminname, $adminpass, $adminmail, $language, $
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'footer', '_MD_AM_FOOTER', '"._LOCAL_FOOTER."', '_MD_AM_FOOTERDSC', 'textarea', 'text', $p)");
 	$i++;
 	$p++;
-    $dbm->insert('config', " VALUES ($i, 0, $c, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textsarea', 'text', $p)");
+    $dbm->insert('config', " VALUES ($i, 0, $c, 'use_google_analytics', '_MD_AM_USE_GOOGLE_ANA', 0, '_MD_AM_USE_GOOGLE_ANA_DESC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+    $dbm->insert('config', " VALUES ($i, 0, $c, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textbox', 'text', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'footadm', '_MD_AM_FOOTADM', '"._LOCAL_FOOTER."', '_MD_AM_FOOTADM_DESC', 'textarea', 'text', $p)");

@@ -1,5 +1,17 @@
-/*Made some necessary changes for RTL languages by stranger @ www.impresscms.ir */
-/* IMPORTANT, PLEASE RESPECT THIS SEMANTIC ORDER !!! :
+/**
+* ImpressCMS styles for RTL languages
+*
+* Main system style sheet information for control panel are rendered from here.
+* System tool to make ImpressCMS work under RTL (Right To Left).
+*
+* @copyright	The ImpressCMS Project http://www.impresscms.org/
+* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package	core
+* @since	1.1
+* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @version	$Id$
+*
+* IMPORTANT, PLEASE RESPECT THIS SEMANTIC ORDER !!! :
 	- position box,
 	- width,
 	- heigth,
@@ -9,7 +21,8 @@
 	- padding,
 	- content (color, style font, ...),
 	- border,
-	 ... */
+	 ... 
+*/
 
 /* General definitions */
 html, body {background-color : #FFF; font-size: 12px; font-family: Tahoma; margin: 0px; padding: 0px;
