@@ -6,6 +6,7 @@ ImpressCMS ChangeLog
 * A bug was preventing the deletion of any block (real_therplima/skenow/andrewvincent)
 * Deleting any template clone would delete the master set (real_therplima/skenow/sato-san)
 * HTML in Config Options in System Admin > Preferences was striped out (malanciault)
+* #2043607 - fatal error when includes/functions.php was included again 
 
 ===2008-07-29 : ImpressCMS 1.0.1 "Janus" Final===
 
