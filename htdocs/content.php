@@ -27,6 +27,20 @@ $content_handler =& xoops_gethandler('content');
 
 $tag = (isset($_GET['tag']))?trim(StopXSS($_GET['tag'])):((isset($_POST['tag']))?trim(StopXSS($_POST['tag'])):null);
 $start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['tag']):0);
+if ($page == 0){
+	$path = (substr($_SERVER['PATH_INFO'],0,1) == '/')?substr($_SERVER['PATH_INFO'],1,strlen($_SERVER['PATH_INFO'])):$_SERVER['PATH_INFO'];
+	$params = explode('/',$path);
+	if (count($params) > 0){
+		if ($params[0] == 'page'){
+			$page = (isset($params[1]))?$params[1]:0;
+		}elseif ($params[0] == 'tag'){
+			$tag = (isset($params[1]))?$params[1]:null;
+			$start = (isset($params[2]))?$params[2]:0;
+		}else{
+			$page = $params[0];
+		}
+	}
+}
 if (!is_null($tag)){
 	include ICMS_ROOT_PATH.'/header.php';
 	echo list_by_tag($tag,$start);
