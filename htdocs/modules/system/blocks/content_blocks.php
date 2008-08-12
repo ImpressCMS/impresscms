@@ -283,4 +283,17 @@ function getPages($showsubs = true, $sort='content_weight', $order='ASC', $conte
 
     return $pages;
 }
+
+function b_content_tagmenu_show($options) {
+    global $xoopsUser;
+
+    $block = array();
+
+    $content_handler =& xoops_gethandler('content');
+    $tags = $content_handler->getTags();
+    arsort($tags);
+    $block['tags'] = $tags;
+
+    return $block;
+}
 ?>

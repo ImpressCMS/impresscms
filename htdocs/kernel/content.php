@@ -282,7 +282,7 @@ class XoopsContentHandler extends XoopsObjectHandler
     			$ret[$j] = '-'.$subccontents[$j];
     		}
     	}
-    	asort($ret);
+
     	return $ret;
     }
     

@@ -300,6 +300,14 @@ $modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME19;
 $modversion['blocks'][$i]['description'] = "Menu of sit calendar";
 $modversion['blocks'][$i]['show_func'] = "b_icms_calendar";
 $modversion['blocks'][$i]['template'] = 'system_block_icms_calendar.html';
+
+$i++;
+$modversion['blocks'][$i]['file'] = "content_blocks.php";
+$modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME20;
+$modversion['blocks'][$i]['description'] = "Block that show tagswith links to see the list of pages that use the tag.";
+$modversion['blocks'][$i]['show_func'] = "b_content_tagmenu_show";
+$modversion['blocks'][$i]['template'] = 'system_block_contenttags.html';
+
 // Menu
 $modversion['hasMain'] = 0;
 $modversion['hasSearch'] = 1;
