@@ -282,7 +282,7 @@ class XoopsContentHandler extends XoopsObjectHandler
     			$ret[$j] = '-'.$subccontents[$j];
     		}
     	}
-    	
+    	asort($ret);
     	return $ret;
     }
     
@@ -325,6 +325,28 @@ class XoopsContentHandler extends XoopsObjectHandler
     	}else{
     		return false;
     	}
+    }
+    
+    function getTags(){
+    	$ret = array();
+    	
+    	$sql = "SELECT content_tags FROM ".$this->db->prefix('icmscontent');
+        $result = $this->db->query($sql);
+        if (!$result) {
+            return $ret;
+        }
+        while (list($tags) = $this->db->fetchRow($result)) {
+        	$tag_arr = explode(",",$tags);
+        	foreach ($tag_arr as $tag){
+        		$tag = trim($tag);
+        		if (isset($ret[$tag])){
+        			$ret[$tag]++;
+        		}else{
+        			$ret[$tag] = 1;
+        		}
+        	}
+        }
+        return $ret;
     }
 }
 ?>

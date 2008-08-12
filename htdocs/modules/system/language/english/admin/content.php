@@ -42,4 +42,7 @@ define('_MD_CONTENTCHANGESTS','Change the status of this page');
 define('_MD_NOTFOUND','No record found');
 define('_MD_DELLINKFIRST','This page is in use by the Symlink Manager.<br />You will be redirect to Symlink Manager to delete this link first and after you will be redirect back to delete this page.');
 define('_MD_STSLINKFIRST','This page is in use by the Symlink Manager.<br />You will be redirect to Symlink Manager to change the status of this link first and after you will be redirect back to change the status of this page.');
+
+######################## Added in 1.2 ###################################
+define('_MD_FILTERBYTAGS','Filter by Tag');
 ?>

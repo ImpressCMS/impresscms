@@ -25,11 +25,13 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     $start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
     $editor = (isset($_GET['editor']))?$_GET['editor']:null;
     $canceled = (isset($_GET['canceled']))?intval($_GET['canceled']):((isset($_POST['canceled']))?intval($_POST['canceled']):0);
+    $tag = (isset($_GET['tag']))?trim(StopXSS($_GET['tag'])):((isset($_POST['tag']))?trim(StopXSS($_POST['tag'])):null);
+    $tag = (trim($tag) == '')?null:trim($tag);
     
     switch ($op){
     	case 'list':
     		xoops_cp_header();
-    		echo contmanager_index($content_supid,$start);
+    		echo contmanager_index($content_supid,$start,$tag);
     		xoops_cp_footer();
     		break;
     	case 'savelist':
@@ -66,7 +68,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     }
 }
 
-function contmanager_index($content_supid,$start=0){
+function contmanager_index($content_supid,$start=0,$tag=null){
 	global $icmsAdminTpl,$xoopsUser,$xoopsConfig,$limit,$editor;
 
 	$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
@@ -95,6 +97,7 @@ function contmanager_index($content_supid,$start=0){
 	$icmsAdminTpl->assign('lang_cont_clonecont',_MD_CLONECONTENT);
 	$icmsAdminTpl->assign('lang_cont_editcont',_MD_EDITCONTENT);
 	$icmsAdminTpl->assign('lang_cont_delcont',_MD_DELETECONTENT);
+	$icmsAdminTpl->assign('lang_bytags',_MD_FILTERBYTAGS);
 	
 	$content_handler =& xoops_gethandler('content');
 	$gperm_handler = & xoops_gethandler( 'groupperm' );
@@ -104,6 +107,10 @@ function contmanager_index($content_supid,$start=0){
 		$crit = new CriteriaCompo(new Criteria('content_title', $query.'%','LIKE'));
 		$crit->add(new Criteria('content_menu', $query.'%','LIKE'),'OR');
 		$crit->add(new Criteria('content_body', '%'.$query.'%','LIKE'),'OR');
+		$criteria->add($crit);		
+	}
+	if (!is_null($tag)){
+		$crit = new CriteriaCompo(new Criteria('content_tags', '%'.$tag.'%','LIKE'));
 		$criteria->add($crit);		
 	}
 	$pagecount = $content_handler->getCount($criteria);
@@ -159,6 +166,18 @@ function contmanager_index($content_supid,$start=0){
 	$icmsAdminTpl->assign('addcontform',contentform());
 	
 	$icmsAdminTpl->assign('addformsts',(!is_null($editor))?'block':'none');
+	
+	$tags = new XoopsFormSelect('', "tag",$tag);
+	$tag_a = $content_handler->getTags();
+	$tags->addOption(' ','----------------------------');
+	foreach ($tag_a as $k=>$v){
+		$tags->addOption($k,$k.' ('.$v.')');
+	}
+	if (is_null($tag)){
+		$tags->setExtra('style="display:none;"');
+	}
+	$icmsAdminTpl->assign('tags',$tags->render());
+	$icmsAdminTpl->assign('bytags',(is_null($tag))?0:1);
 	
 	return $icmsAdminTpl->fetch('db:admin/content/system_adm_contentmanager_index.html');
 }
