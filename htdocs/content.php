@@ -28,7 +28,7 @@ $content_handler =& xoops_gethandler('content');
 $tag = (isset($_GET['tag']))?trim(StopXSS($_GET['tag'])):((isset($_POST['tag']))?trim(StopXSS($_POST['tag'])):null);
 $start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['tag']):0);
 if ($page == 0){
-	$path = (substr($_SERVER['PATH_INFO'],0,1) == '/')?substr($_SERVER['PATH_INFO'],1,strlen($_SERVER['PATH_INFO'])):$_SERVER['PATH_INFO'];
+	$path = (isset($_SERVER['PATH_INFO']) && substr($_SERVER['PATH_INFO'],0,1) == '/')?substr($_SERVER['PATH_INFO'],1,strlen($_SERVER['PATH_INFO'])):((isset($_SERVER['PATH_INFO']))?$_SERVER['PATH_INFO']:'');
 	$params = explode('/',$path);
 	if (count($params) > 0){
 		if ($params[0] == 'page'){
