@@ -99,7 +99,7 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         	$block['weight'] = $block_arr[$i]->getVar("weight");
         	$block['block_type'] = $block_arr[$i]->getVar("block_type");
         	$block['sidef'] = $side->render();
-        	$block['side'] = $block_arr[$i]->getVar("visible");
+        	$block['side'] = $block_arr[$i]->getVar("side");
         	$block['visible'] = $block_arr[$i]->getVar("visible");
         	$icmsAdminTpl->append('blocks',$block);
         }
