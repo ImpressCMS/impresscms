@@ -132,7 +132,7 @@ class icms_HTMLPurifier
 
 		// HTML_Allowed: allowed tags for html content. format: element, element[attribute] - seperate attributes using pipe '|'
 		$HTML_Allowed = 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
-					del, dfn, div[align|style], dl, dt, em, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p[style], pre, s, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var, font, span[style]'
+					del, dfn, div[align|style], dl, dt, em, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p[style], pre, s, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var, font, span[style]';
 		
 		// sets default config settings for htmpurifier
 		$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
