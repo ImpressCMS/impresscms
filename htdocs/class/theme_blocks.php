@@ -64,7 +64,9 @@ class xos_logos_PageBuilder {
 		
 		$page_handler = & xoops_gethandler ( 'page' );
 		$criteria = new CriteriaCompo ( new Criteria ( 'page_url', $fullurl ) );
-		$criteria->add(new Criteria ( 'page_url', $url ),'OR');
+		if (!empty($url)){
+			$criteria->add(new Criteria ( 'page_url', $url ),'OR');
+		}
 		$pages = $page_handler->getCount ( $criteria );
 		
 		if ($pages > 0){ //We have a sym-link defined for this page
