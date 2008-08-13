@@ -35,7 +35,7 @@
  * @author Kazumi Ono (AKA onokazu)
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */ 
-include '../../include/functions.php';
+include_once '../../include/functions.php';
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
 if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
 $fct = (isset($_GET['fct']))?trim(StopXSS($_GET['fct'])):((isset($_POST['fct']))?trim(StopXSS($_POST['fct'])):'');

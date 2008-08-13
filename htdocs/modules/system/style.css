@@ -135,7 +135,7 @@ a.fontSmall { background-color: transparent; color: #006699;}
 a.fontSmall:hover { background-color: transparent; color: #C23030; text-decoration: underline;}
 
 /* ===== forms elements ===== */
-input { background-color: #fff; color:inherit; border: #CCC 1px solid; font-size: .8em; font-family: verdana, arial, helvetica, sans-serif; }
+input { background-color: #fff; border: #CCC 1px solid; font-size: .8em; font-family: verdana, arial, helvetica, sans-serif; }
 input:focus { background-color: #FFFFBB; border: #000 1px solid;}
 input:hover { border: #000 1px solid;}
 

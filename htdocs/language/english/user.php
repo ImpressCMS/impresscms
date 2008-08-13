@@ -2,7 +2,7 @@
 // $Id: user.php 2 2005-11-02 18:23:29Z skalpa $
 //%%%%%%		File Name user.php 		%%%%%
 define('_US_NOTREGISTERED','Not registered?  Click <a href="register.php">here</a>.');
-define('_US_LOSTPASSWORD','Lost your Password?');
+define('_US_LOSTPASSWORD','Lost your password?');
 define('_US_NOPROBLEM','No problem. Simply enter the e-mail address we have on file for your account.');
 define('_US_YOUREMAIL','Your Email: ');
 define('_US_SENDPASSWORD','Send Password');
@@ -10,6 +10,14 @@ define('_US_LOGGEDOUT','You are now logged out');
 define('_US_THANKYOUFORVISIT','Thank you for your visit to our site!');
 define('_US_INCORRECTLOGIN','Incorrect Login!');
 define('_US_LOGGINGU','Thank you for logging in, %s.');
+define('_US_RESETPASSWORD','Reset your password');
+define('_US_SUBRESETPASSWORD','Reset Password');
+define('_US_RESETPASSTITLE','Your password has expired!');
+define('_US_RESETPASSINFO','Please complete the following form in order to reset your password. If your email, username and current password all match our record, your password will be changed instantly and you will be able to log back in!');
+define('_US_PASSEXPIRED','Your password has expired.<br />You will now be redirected to a form where you will be able to reset your password.');
+define('_US_SORRYUNAMENOTMATCHEMAIL','The username entered is not associated with the given Email address!');
+define('_US_PWDRESET','Your password has been reset successfully!');
+define('_US_SORRYINCORRECTPASS','You have entered your current password incorrectly!');
 
 // 2001-11-17 ADD
 define('_US_NOACTTPADM','The selected user has been deactivated or has not been activated yet.<br />Please contact the administrator for details.');
@@ -85,6 +93,14 @@ define('_US_NEWPWDREQ','New Password Request at %s');
 define('_US_YOURACCOUNT', 'Your account at %s');
 
 define('_US_MAILPWDNG','mail_password: could not update user entry. Contact the Administrator');
+define('_US_RESETPWDNG','reset_password: could not update user entry. Contact the Administrator');
+
+define('_US_RESETPWDREQ','Reset Password Request at %s');
+define('_US_MAILRESETPWDNG','reset_password: could not update user entry. Contact the Administrator');
+define('_US_NEWPASSWORD','New Password');
+define('_US_YOURUSERNAME','Your Username');
+define('_US_CURRENTPASS','Your Current Password');
+define('_US_BADPWD','Bad Password, Password can not contain username.');
 
 // %s is a username
 define('_US_PWDMAILED','Password for %s mailed.');
@@ -180,8 +196,6 @@ define('_US_OPENID_LINKED_DONE', 'Your OpenID has been linked with the user %S. 
 define('_US_ALREADY_LOGED_IN', 'You already are logged in, we are sorry but, you can\'t register while you\'re logged in the site');
 define('_US_ALLOWVIEWEMAILOPENID','Allow other users to view my OpenID');
 
-/*
-define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled');
-define('_US_AUTORESIZE_ATV_DESC', 'Images larger than %u x %u will be automatically resized, keeping the aspect ratio, so that it is within the maximum pixels set. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.');
-*/
+/* define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled'); */
+/* define('_US_AUTORESIZE_ATV_DESC', 'Images larger than %u x %u will be automatically resized, keeping the aspect ratio, so that it is within the maximum pixels set. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.'); */
 ?>

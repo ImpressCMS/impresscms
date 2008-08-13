@@ -11,7 +11,14 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
-===2008-07-02 : 1.1 Beta 1===
+===2008-08-08 : 1.1 RC 1===
+
+'''Fixed'''
+* 2 errors with google meta tag and google analytics. (stranger)
+* possible issue in modulesadmin/main.php (real_therplima/trabis)
+* #2048746: SQL error when creating invites and system_customtags tables (Commerce)
+
+===2008-08-08 : 1.1 Beta 1===
 
 '''Added'''
 * new plugin for tinymce. hiddencontent (luciorota/real_therplima/stranger)
@@ -28,10 +35,18 @@ ImpressCMS ChangeLog
 * icms.css loads from the header. (stranger)
 * pdf.php in language files. (stranger)
 * system skips all folders with no theme.html. (nekro/stranger)
+* new function: icms_utf8_strrev() - Allows reversing of strings for utf8 character sets. (vaughan)
+* reset/expired password system - when encryption changed, pass is expired, you need to then reset your password before logging in. (vaughan)
+* reset password page. user must enter registered email, username, current password & then enter new password in order to reset pass. (vaughan)
+* improved language and template of the password rest feature (malanicault)
+* addition of the pre-populated uname in the password reset form (malanciault)
 
 '''Improved'''
 * Updated TCPDF to version 4.0.009. (stranger)
 * Formfield for OpenID, if OID is inactive users won't see it's fields. (stranger)
+* Google Analytics is now being handled directly (without smartys). (stranger)
+* some enhancements to password secureness. pass can not equal username, or uname in reverse or even contain username. (vaughan)
+* finishing the implementation of xoops_footer in the footer of the site - adding it in redirect and site close template of the impresstheme (malanciault)
 
 '''Changed'''
 * after upgrade is done you'll get back to index to see if upgrade was successful. (stranger)
@@ -39,6 +54,7 @@ ImpressCMS ChangeLog
 * xoops.css to icms.css. (stranger)
 * xoops_rtl.css to icms_rtl.css. (stranger)
 * xoops_rtl.js to icms_rtl.js. (stranger)
+* Removed google_analytics smartys from themes. (stranger)
 
 '''Fixed'''
 * Could not upload avatar. (real_therplima/stranger)
@@ -52,11 +68,14 @@ ImpressCMS ChangeLog
 * Issue with new hash generator, when replacing new core files. (stranger)
 * Security Vulnerabilty (http://www.securityfocus.com/bid/30330) in modules/system/admin.php (Vaughan/Rodrigo/Wtravel)
 * typo in htaccess.txt for error documents in error 500.. errpr.php should be error.php (Wizanda)
-* #2037875 - theme block did not display theme names
-* #2037881 - SQL error when checking for protector module installation in Control Panel home
-* #1990271 - database charset can be set to ucs2 without generating any errors
-* #2038160 - custom tag admin functions now work properly
-* #2038233 - removed OpenID requirement when adding or editing users in admin area
+* #2037875 - theme block did not display theme names.
+* #2037881 - SQL error when checking for protector module installation in Control Panel home.
+* #1990271 - database charset can be set to ucs2 without generating any errors.
+* #2038160 - custom tag admin functions now work properly.
+* #2038233 - removed OpenID requirement when adding or editing users in admin area.
+* #2043607 - fatal error when includes/functions.php was included again
+* #2043612 - filtering of span tags from the rendering of the html
+* #2043716 - content pages not displaying when using SEO feature 
 
 ===2008-07-02 : 1.1 Alpha 2===
 

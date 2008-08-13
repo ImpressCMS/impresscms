@@ -63,7 +63,7 @@ if( strstr( $uname , '@' ) ) {
 	unset( $users ) ;
 }
 if( empty( $user ) || ! is_object( $user ) ) {
-	$user =& $member_handler->loginUser($uname4sql,$pass4sql);
+	$user =& $xoopsAuth->authenticate($uname4sql, $pass4sql);
 }
 // end of uname&email hack GIJ
 

@@ -13,9 +13,9 @@
 */
 /**
  * Login page for users, will redirect to userinfo.php if the user is logged in
- * @package kernel 
- * @subpackage users 
- */ 
+ * @package kernel
+ * @subpackage users
+ */
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 
@@ -55,10 +55,70 @@ if($op == 'main')
 		$xoopsTpl->assign('mailpasswd_token', $GLOBALS['xoopsSecurity']->createToken());
 		$config_handler =& xoops_gethandler('config');
 		$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-	
+
 		if($xoopsConfigUser['allow_register'] == 1) {$xoopsTpl->assign('allow_registration', $xoopsConfigUser['allow_register']);}
 		if($xoopsConfigUser['remember_me'] == 1) {$xoopsTpl->assign('rememberme', $xoopsConfigUser['remember_me']);}
-	
+
+		$xoopsTpl->assign('xoops_pagetitle', _LOGIN);
+		include 'footer.php';
+	}
+	elseif(!empty($_GET['xoops_redirect']))
+	{
+		$redirect = htmlspecialchars(trim($_GET['xoops_redirect']));
+		$isExternal = false;
+		if($pos = strpos($redirect, '://'))
+		{
+			$xoopsLocation = substr(ICMS_URL, strpos(ICMS_URL, '://') +3);
+			if(substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation) {$redirect = ICMS_URL;}
+			elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {$redirect = ICMS_URL;}
+		}
+		header('Location: '.$redirect);
+		exit();
+	}
+	else
+	{
+			header('Location: '.ICMS_URL.'/userinfo.php?uid='.intval($xoopsUser->getVar('uid')));
+			exit();
+	}
+	exit();
+}
+
+if($op == 'resetpass')
+{
+	if(!$xoopsUser)
+	{
+		$xoopsOption['template_main'] = 'system_userform.html';
+		include 'header.php';
+		$xoopsTpl->assign('lang_reset', 1);
+		$xoopsTpl->assign('lang_username', _USERNAME);
+		if(isset($_GET['xoops_redirect']))
+		{
+			$redirect = htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES);
+			$isExternal = false;
+			if($pos = strpos( $redirect, '://' ))
+			{
+				$xoopsLocation = substr( ICMS_URL, strpos( ICMS_URL, '://' ) + 3 );
+				if(substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)
+				{
+					$redirect = ICMS_URL;
+				}
+				elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {$redirect = ICMS_URL;}
+			}
+			$xoopsTpl->assign('redirect_page', $redirect);
+		}
+		$xoopsTpl->assign('lang_uname', isset($_GET['uname']) ? $_GET['uname'] : '');
+		$xoopsTpl->assign('lang_resetpassword', _US_RESETPASSWORD);
+		$xoopsTpl->assign('lang_resetpassinfo', _US_RESETPASSINFO);
+		$xoopsTpl->assign('lang_youremail', _US_YOUREMAIL);
+		$xoopsTpl->assign('lang_sendpassword', _US_SENDPASSWORD);
+		$xoopsTpl->assign('lang_subresetpassword', _US_SUBRESETPASSWORD);
+		$xoopsTpl->assign('lang_currentpass', _US_CURRENTPASS);
+		$xoopsTpl->assign('lang_newpass', _US_NEWPASSWORD);
+		$xoopsTpl->assign('lang_newpass2', _US_VERIFYPASS);
+		$xoopsTpl->assign('resetpassword_token', $GLOBALS['xoopsSecurity']->createToken());
+		$config_handler =& xoops_gethandler('config');
+		$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+
 		$xoopsTpl->assign('xoops_pagetitle', _LOGIN);
 		include 'footer.php';
 	}

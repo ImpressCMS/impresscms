@@ -8,7 +8,7 @@
 * @package		core
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @author		modified by stranger <stranger@impresscms.ir>
 * @version		$Id$
 */
 /**
@@ -119,6 +119,13 @@ function userCheck($uname, $email, $pass, $vpass)
 	} elseif ( ($pass != '') && (strlen($pass) < $xoopsConfigUser['minpass']) ) {
 		$stop .= sprintf(_US_PWDTOOSHORT,$xoopsConfigUser['minpass'])."<br />";
 	}
+	if((isset($pass)) && (isset($uname)))
+	{
+		if($pass == $uname || $pass == icms_utf8_strrev($uname, true) || strripos($pass, $uname) === true)
+		{
+			$stop .= _US_BADPWD.'<br />';
+		}
+	}
 	return $stop;
 }
 $op = !isset($_POST['op']) ? 'register' : $_POST['op'];
@@ -133,6 +140,7 @@ $user_mailok = (isset($_POST['user_mailok']) && intval($_POST['user_mailok'])) ?
 $agree_disc = (isset($_POST['agree_disc']) && intval($_POST['agree_disc'])) ? 1 : 0;
 $actkey = isset($_POST['actkey']) ? trim($myts->stripSlashesGPC($_POST['actkey'])) : '';
 $salt = isset($_POST['salt']) ? trim($myts->stripSlashesGPC($_POST['salt'])) : '';
+$enc_type = $xoopsConfigUser['enc_type'];
 switch ( $op ) {
 case 'newuser':
 	include 'header.php';
@@ -166,6 +174,7 @@ case 'newuser':
 		<input type='hidden' name='user_mailok' value='".$user_mailok."' />
 		<input type='hidden' name='actkey' value='".$myts->htmlSpecialChars($actkey)."' />
 		<input type='hidden' name='salt' value='".$myts->htmlSpecialChars($salt)."' />
+		<input type='hidden' name='enc_type' value='".intval($enc_type)."' />
 		<br /><br /><input type='hidden' name='op' value='finish' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='". _US_FINISH ."' /></form>";
 	} else {
 		echo "<span style='color:#ff0000;'>$stop</span>";
@@ -220,6 +229,7 @@ case 'finish':
 		$newuser->setVar('uorder',$xoopsConfig['com_order'], true);
 		$newuser->setVar('umode',$xoopsConfig['com_mode'], true);
 		$newuser->setVar('user_mailok',$user_mailok, true);
+		$newuser->setVar('enc_type',$enc_type, true);
 		$newuser->setVar('notify_method', 2);
 		if ($valid_actkey || $xoopsConfigUser['activation_type'] == 1) {
 			$newuser->setVar('level', 1, true);

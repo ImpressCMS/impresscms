@@ -19,10 +19,11 @@ include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 include_once ICMS_ROOT_PATH.'/modules/system/constants.php';
 
 $im_contentConfig =& $config_handler->getConfigsByCat(IM_CONF_CONTENT);
-$page = (isset($_GET['page']))?$_GET['page']:((isset($_POST['page']))?$_POST['page']:0);
+$page = (isset($_GET['page']))?trim(StopXSS($_GET['page'])):((isset($_POST['page']))?trim(StopXSS($_POST['page'])):0);
+
 $gperm_handler = & xoops_gethandler('groupperm');
 $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-$uid = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+$uid = is_object($xoopsUser) ? intval($xoopsUser->getVar('uid')) : 0;
 $content_handler =& xoops_gethandler('content');
 
 $tag = (isset($_GET['tag']))?trim(StopXSS($_GET['tag'])):((isset($_POST['tag']))?trim(StopXSS($_POST['tag'])):null);
@@ -62,7 +63,7 @@ if(!$page)
 		$criteria->setOrder('DESC');
 	}
 	$impress_content = $content_handler->getObjects($criteria);
-	$impress_content = $impress_content[0];
+	$impress_content = (isset($impress_content[0]))?$impress_content[0]:null;
 }
 else
 {
@@ -71,7 +72,7 @@ else
 	$criteria->add(new Criteria('content_menu', $page,'LIKE'));
 	$criteria->add(new Criteria('content_id', $page),'OR');
 	$impress_content = $content_handler->getObjects($criteria);
-	$impress_content = $impress_content[0];
+	$impress_content = (isset($impress_content[0]))?$impress_content[0]:null;
 }
 if(!is_object($impress_content)) {redirect_header('index.php', 2, _CT_SELECTNG);}
 $content_id = $impress_content->getVar('content_id');

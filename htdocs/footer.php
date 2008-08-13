@@ -76,7 +76,7 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 		}
 	$config_handler = & xoops_gethandler ( 'config' );
 	$xoopsConfigMetaFooter = & $config_handler->getConfigsByCat ( XOOPS_CONF_METAFOOTER );
-	if ($xoopsConfigMetaFooter['use_google_analytics'] == 1){
+	if ($xoopsConfigMetaFooter['use_google_analytics'] == 1 && isset($xoopsConfigMetaFooter['google_analytics']) && $xoopsConfigMetaFooter['google_analytics'] != ''){
 		$xoTheme->addScript('<script src="http://www.google-analytics.com/urchin.js" type="text/javascript">
 			</script>
 	<script type="text/javascript">

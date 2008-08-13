@@ -324,6 +324,8 @@ class XoopsMemberHandler{
      */
     function &loginUser($uname, $pwd)
     {
+    	$is_expired = icms_PassExpired($uname);
+    	if($is_expired == 1) {redirect_header(ICMS_URL.'/user.php?op=resetpass&uname=' . $uname, 5, _US_PASSEXPIRED, false);}
 	$salt = icms_getUserSaltFromUname($uname);
 	$pwd = icms_encryptPass($pwd, $salt);
         $criteria = new CriteriaCompo(new Criteria('uname', $uname));

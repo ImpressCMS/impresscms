@@ -11,7 +11,7 @@
 * @package		Installer
 * @since		1.0
 * @author		marcan <marcan@impresscms.org>
-* @author		modified by stranger <stranger@impresscms.ir>
+* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
 

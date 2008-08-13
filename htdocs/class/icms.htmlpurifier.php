@@ -129,6 +129,10 @@ class icms_HTMLPurifier
 	{
 		$host_domain = icms_get_base_domain(ICMS_URL);
 		$host_base = icms_get_url_domain(ICMS_URL);
+
+		// HTML_Allowed: allowed tags for html content. format: element, element[attribute] - seperate attributes using pipe '|'
+		$HTML_Allowed = 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
+					del, dfn, div[align|style], dl, dt, em, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p[style], pre, s, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var, font, span[style]'
 		
 		// sets default config settings for htmpurifier
 		$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
@@ -140,9 +144,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'system-global');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
-			$icms_PurifyConfig->set('HTML', 'Allowed', 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
-					del, dfn, div[align|style], dl, dt, em, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
-					td, tfoot, th, thead, tr, tt, u, ul, var, font'); // sets allowed html tags that can be used.
+			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
@@ -206,9 +208,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'display');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
-			$icms_PurifyConfig->set('HTML', 'Allowed', 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
-					del, dfn, div[align|style], dl, dt, em, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
-					td, tfoot, th, thead, tr, tt, u, ul, var, font'); // sets allowed html tags that can be used.
+			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
@@ -256,9 +256,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'preview');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
-			$icms_PurifyConfig->set('HTML', 'Allowed', 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
-					del, dfn, div[align|style], dl, dt, em, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p, pre, s, strike, strong, sub, sup, table, tbody,
-					td, tfoot, th, thead, tr, tt, u, ul, var, font'); // sets allowed html tags that can be used.
+			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'none');
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);

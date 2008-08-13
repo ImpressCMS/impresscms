@@ -149,7 +149,7 @@ a.fontSmall { background-color: transparent; color: #006699;font-family: Tahoma;
 a.fontSmall:hover { background-color: transparent; color: #C23030; text-decoration: underline;font-family: Tahoma; direction: rtl;}
 
 /* ===== forms elements ===== */
-input { background-color: #fff; color:inherit; border: #CCC 1px solid; font-size: .8em; font-family: Tahoma; font-family: Tahoma; direction: rtl;}
+input { background-color: #fff; border: #CCC 1px solid; font-size: .8em; font-family: Tahoma; font-family: Tahoma; direction: rtl;}
 input:focus { background-color: #FFFFBB; border: #000 1px solid;font-family: Tahoma; direction: rtl;}
 input:hover { border: #000 1px solid;font-family: Tahoma; direction: rtl;}
 
