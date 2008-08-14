@@ -1,3 +1,5 @@
+Options Multiviews
+
 ErrorDocument 400 /error.php?e=400
 ErrorDocument 401 /error.php?e=401
 ErrorDocument 402 /error.php?e=402
