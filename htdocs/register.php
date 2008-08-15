@@ -245,11 +245,12 @@ case 'finish':
 			include 'footer.php';
 			exit();
 		}
-		// Activate automatically
+		
+		// Send notification about the new user register to the selected group if config is true on admin preferences
 		if ($xoopsConfigUser['new_user_notify'] == 1) {
-			$newuser->sendWelcomeMessage();		
 			$newuser->newUserNotifyAdmin();	
 		}
+		
 		// update invite_code (if any)
 		if ($valid_actkey) {
 			update_invite_code($actkey, $newid);
@@ -278,7 +279,6 @@ case 'finish':
 			} else {
 				echo _US_YOURREGISTERED;
 			}
-			$thisuser->newUserNotifyAdmin();
 		// activation by admin
 		} elseif ($xoopsConfigUser['activation_type'] == 2) {
 			$xoopsMailer =& getMailer();
