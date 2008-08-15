@@ -17,7 +17,7 @@ ImpressCMS ChangeLog
 * 2 errors with google meta tag and google analytics. (stranger)
 * possible issue in modulesadmin/main.php (real_therplima/trabis)
 * #2048746: SQL error when creating invites and system_customtags tables (Commerce)
-
+* #2037989 - Registration notification sent twice (real_therplima)
 ===2008-08-08 : 1.1 Beta 1===
 
 '''Added'''
