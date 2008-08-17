@@ -369,8 +369,8 @@ function xoops_getbanner()
 			{
 				$bannerobject = $bannerobject
 					.'<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">'
-					.'<param name="movie" value="'.$imageurl.'"></param>'
-					.'<param name="quality" value="high"></param>'
+					.'<param name="movie" value="'.$imageurl.'">'
+					.'<param name="quality" value="high">'
 					.'</object>';
 			}
 			else {$bannerobject = $bannerobject.'<img src="'.$imageurl.'" alt="" />';}
