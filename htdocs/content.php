@@ -14,8 +14,11 @@
 */
 
 $xoopsOption['pagetype'] = 'content';
+/** Including mainfile.php is required */
 include 'mainfile.php';
+/** Include the textsanitizer class*/
 include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
+/** Include the system constants definitions */
 include_once ICMS_ROOT_PATH.'/modules/system/constants.php';
 
 $im_contentConfig =& $config_handler->getConfigsByCat(IM_CONF_CONTENT);
@@ -45,8 +48,10 @@ if (!$page){
 }
 
 if (!is_null($tag)){
+  /** Include the header that starts page rendering */
 	include ICMS_ROOT_PATH.'/header.php';
 	echo list_by_tag($tag,$start);
+	/** Include the footer that completes page rendering */
 	include ICMS_ROOT_PATH.'/footer.php';
 	exit;
 }
@@ -83,7 +88,7 @@ $adminperm = $gperm_handler->checkRight('content_admin', $content_id, $uid);	// 
 if(!$viewperm) {redirect_header('index.php', 2, _NOPERM);}
 $myts =& MyTextSanitizer::getInstance();
 $xoopsOption['template_main'] = 'system_content.html';
-
+/** Include the header file to start page rendering */
 include ICMS_ROOT_PATH.'/header.php';
 $xoopsTpl->assign("content_title", $impress_content->getVar('content_title'));
 $xoopsTpl->assign("isAdmin", $adminperm);
@@ -143,6 +148,7 @@ else
 	if($xoopsUser->getVar('uid') != $autor->getVar('uid')) {$impress_content->setReads();}
 }
 $content_handler->insert($impress_content);
+/** Include the footer file to complete page rendering */
 include ICMS_ROOT_PATH.'/footer.php';
 
 function list_by_tag($tag,$start=0){
@@ -185,7 +191,8 @@ function list_by_tag($tag,$start=0){
 	
 	if ($pagecount > 0){
 		if ($pagecount > $im_contentConfig['num_pages']) {
-			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+			/** Include the page navigation class for rendering */
+      include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
 			$nav = new XoopsPageNav($pagecount, $im_contentConfig['num_pages'], $start, 'start','tag='.$tag);
 			$xoopsTpl->assign('pag',$nav->renderNav());
 		}else{

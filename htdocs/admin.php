@@ -19,7 +19,9 @@
 */
 
 $xoopsOption['pagetype'] = 'admin';
+/** Including mainfile.php is required */
 include 'mainfile.php';
+/** Include the control panel functions */
 include ICMS_ROOT_PATH.'/include/cp_functions.php';
 
 // Admin Authentication

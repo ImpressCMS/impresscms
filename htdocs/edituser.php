@@ -1,6 +1,7 @@
 <?php
 /**
-*
+* Generates form and validation for editing users
+* 
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
@@ -10,14 +11,14 @@
 * @author		http://www.xoops.org The XOOPS Project
 * @author		modified by stranger <stranger@impresscms.ir>
 * @version		$Id$
+*
+* @package kernel 
+* @subpackage users
 */
-/**
- * Generates form and validation for editing users
- * @package kernel 
- * @subpackage users
- */
 $xoopsOption['pagetype'] = 'user';
+/** Include mainfile - required */
 include 'mainfile.php';
+/** Include the form class */
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 
 // If not a user, redirect
@@ -91,7 +92,8 @@ if($op == 'saveuser')
     	}
     	if(count($errors) > 0)
 	{
-        	include ICMS_ROOT_PATH.'/header.php';
+        	/** Include the header that starts page rendering */
+          include ICMS_ROOT_PATH.'/header.php';
         	echo '<div>';
         	foreach($errors as $er)
 		{
@@ -172,8 +174,10 @@ if($op == 'saveuser')
         	}
         	if(!$member_handler->insertUser($edituser))
 		{
-            		include ICMS_ROOT_PATH.'/header.php';
+            		/** Include the header that starts page rendering */
+                include ICMS_ROOT_PATH.'/header.php';
             		echo $edituser->getHtmlErrors();
+            		/** Include the footer file to complete page rendering */
             		include ICMS_ROOT_PATH.'/footer.php';
         	}
 		else
@@ -186,7 +190,8 @@ if($op == 'saveuser')
 
 if($op == 'editprofile')
 {
-    	include_once ICMS_ROOT_PATH.'/header.php';
+    	/** Include the header that starts page rendering */
+      include_once ICMS_ROOT_PATH.'/header.php';
     	include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
     	echo '<a href="userinfo.php?uid='.intval($xoopsUser->getVar('uid')).'">'._US_PROFILE.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._US_EDITPROFILE.'<br /><br />';
     	$form = new XoopsThemeForm(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
@@ -236,7 +241,8 @@ if($op == 'editprofile')
     	$location_text = new XoopsFormText(_US_LOCATION, 'user_from', 30, 100, $xoopsUser->getVar('user_from', 'E'));
     	$occupation_text = new XoopsFormText(_US_OCCUPATION, 'user_occ', 30, 100, $xoopsUser->getVar('user_occ', 'E'));
     	$interest_text = new XoopsFormText(_US_INTEREST, 'user_intrest', 30, 150, $xoopsUser->getVar('user_intrest', 'E'));
-    	include_once 'include/xoopscodes.php';
+    	/** include the file to display the xoopscodes and smilies */
+      include_once 'include/xoopscodes.php';
     	if($xoopsConfigUser['allwshow_sig'] == 1)
 	{
         	if($xoopsConfigUser['allow_htsig'] == 0)
@@ -345,12 +351,14 @@ if($op == 'editprofile')
         	$form->setRequired($email_text);
     	}
     	$form->display();
+    	/** Include the footer file to complete page rendering */
     	include ICMS_ROOT_PATH.'/footer.php';
 }
 
 if($op == 'avatarform')
 {
-    	include ICMS_ROOT_PATH.'/header.php';
+    	/** Include the header that starts page rendering */
+      include ICMS_ROOT_PATH.'/header.php';
     	echo '<a href="userinfo.php?uid='.intval($xoopsUser->getVar('uid')).'">'._US_PROFILE.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._US_UPLOADMYAVATAR.'<br /><br />';
     	$oldavatar = $xoopsUser->getVar('user_avatar');
     	if(!empty($oldavatar) && $oldavatar != 'blank.gif')
@@ -360,7 +368,8 @@ if($op == 'avatarform')
     	}
     	if($xoopsConfigUser['avatar_allow_upload'] == 1 && $xoopsUser->getVar('posts') >= $xoopsConfigUser['avatar_minposts'])
 	{
-        	include_once 'class/xoopsformloader.php';
+        	/* since this has been included at the beginning of the file, we shouldn't need it here 
+          include_once 'class/xoopsformloader.php'; */
         	$form = new XoopsThemeForm(_US_UPLOADMYAVATAR, 'uploadavatar', 'edituser.php', 'post', true);
         	$form->setExtra('enctype="multipart/form-data"');
 		/* the avatar resizer shall later be included
@@ -392,6 +401,7 @@ if($op == 'avatarform')
     		$form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
     		$form2->addElement(new XoopsFormButton('', 'submit2', _SUBMIT, 'submit'));
     		$form2->display();
+    		/** Include the footer file to complete page rendering */
     		include ICMS_ROOT_PATH.'/footer.php';
 }
 
@@ -458,8 +468,10 @@ if($op == 'avatarupload')
                 		}
             		}
         	}
-        	include ICMS_ROOT_PATH.'/header.php';
+        	/** Include the header that starts page rendering */
+          include ICMS_ROOT_PATH.'/header.php';
         	echo $uploader->getErrors();
+        	/** Include the footer file to complete page rendering */
         	include ICMS_ROOT_PATH.'/footer.php';
     	}
 }
@@ -502,8 +514,10 @@ if($op == 'avatarchoose')
         	$member_handler =& xoops_gethandler('member');
         	if(!$member_handler->insertUser($xoopsUser))
 		{
-            		include ICMS_ROOT_PATH.'/header.php';
+            		/** Include the header that starts page rendering */
+                include ICMS_ROOT_PATH.'/header.php';
             		echo $xoopsUser->getHtmlErrors();
+            		/** Include the footer file to complete page rendering */
             		include ICMS_ROOT_PATH.'/footer.php';
             		exit();
         	}

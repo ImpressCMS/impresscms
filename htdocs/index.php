@@ -11,14 +11,9 @@
 * @author		http://www.xoops.org The XOOPS Project
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
-*/
-/**
- * Catch new users and redirect them to the start page, if any
- * @copyright &copy; 2000 xoops.org
  **/
- 
 /**
- * redirects to installation, if xoops is not installed yet
+ * redirects to installation, if ImpressCMS is not installed yet
  **/
 include "mainfile.php";
 
@@ -34,7 +29,9 @@ if ( isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoo
 		}else{
 			$xoopsConfig['startpage'] = '--';
 			$xoopsOption['show_cblock'] =1;
-			include "header.php";
+			/** Included to start page rendering */
+      include "header.php";
+      /** Included to complete page rendering */
 			include "footer.php";
 		}
 	}else{
@@ -43,7 +40,9 @@ if ( isset($xoopsConfig['startpage']) && $xoopsConfig['startpage'] != "" && $xoo
 	exit();
 } else {
 	$xoopsOption['show_cblock'] =1;
+	/** Included to start page rendering */
 	include "header.php";
+	/** Included to complete page rendering */
 	include "footer.php";
 }
 ?>

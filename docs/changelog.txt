@@ -8,6 +8,7 @@ ImpressCMS ChangeLog
 
 '''Improved'''
 * Updated jscalendar to 1.15. (stranger)
+* Ongoing additions to  API documentation
 
 == Impresscms 1.1==
 

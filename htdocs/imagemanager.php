@@ -12,7 +12,7 @@
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
-
+/** Include mainfile.php - required */
 include './mainfile.php';
 if (!isset($_REQUEST['target'])) {
     exit();
@@ -31,6 +31,7 @@ if (!is_object($xoopsUser)) {
     $group =& $xoopsUser->getGroups();
 }
 if ($op == 'list') {
+    /** Requiring the template class */
     require_once ICMS_ROOT_PATH.'/class/template.php';
     $xoopsTpl = new XoopsTpl();
     $xoopsTpl->assign('lang_imgmanager', _IMGMANAGER);
@@ -100,6 +101,7 @@ if ($op == 'list') {
                     $xoopsTpl->append('images', array('id' => $images[$i]->getVar('image_id'), 'nicename' => $images[$i]->getVar('image_nicename'), 'mimetype' => $images[$i]->getVar('image_mimetype'), 'src' => $src, 'lxcode' => $lcode, 'xcode' => $code, 'rxcode' => $rcode));
                 }
                 if ($total > 10) {
+                    /** Including the page navigation class */
                     include_once ICMS_ROOT_PATH.'/class/pagenav.php';
                     $nav = new XoopsPageNav($total, 10, $start, 'start', 'target='.$target.'&amp;cat_id='.$catshow);
                     $xoopsTpl->assign('pagenav', $nav->renderNav());
@@ -143,12 +145,14 @@ if ($op == 'upload') {
         xoops_footer();
         exit();
     }
+    /** Requirin the template class */
     require_once ICMS_ROOT_PATH.'/class/template.php';
     $xoopsTpl = new XoopsTpl();
     $xoopsTpl->assign('show_cat', $imgcat_id);
     $xoopsTpl->assign('lang_imgmanager', _IMGMANAGER);
     $xoopsTpl->assign('sitename', htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
     $xoopsTpl->assign('target', htmlspecialchars($_GET['target'], ENT_QUOTES));
+    /** Including the forms class */
     include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
     $form = new XoopsThemeForm('', 'image_form', 'imagemanager.php', 'post', true);
     $form->setExtra('enctype="multipart/form-data"');
@@ -173,6 +177,7 @@ if ($op == 'doupload') {
         $image_nicename = isset($_POST['image_nicename']) ? $_POST['image_nicename'] : '';
         $xoops_upload_file = isset($_POST['xoops_upload_file']) ? $_POST['xoops_upload_file'] : array();
         $imgcat_id = isset($_POST['imgcat_id']) ? intval($_POST['imgcat_id']) : 0;
+        /** Including the uploader class */
         include_once ICMS_ROOT_PATH.'/class/uploader.php';
         $imgcat_handler =& xoops_gethandler('imagecategory');
         $imgcat =& $imgcat_handler->get($imgcat_id);
