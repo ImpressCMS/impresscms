@@ -25,7 +25,7 @@ define( "_RELOAD", "Reload" );
 define('_UPGRADE_CHARSET', _CHARSET);
 define( "LEGEND_DATABASE", "Database Character Set" );
 define( "DB_COLLATION_LABEL", "Database character set and collation" );
-define( "DB_COLLATION_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.<br />We <b>STRONGLY</b> recommend you to use '<b>UTF-8</b>' as default.");
+define( "DB_COLLATION_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.<br />If you don't know much about Character encodings, we <b>STRONGLY</b> recommend you to use '<b>none</b>' as default to keep your current configurations.");
 
 define("_UPGRADE_PRIVPOLICY", "<p>This privacy policy sets out how [website name] uses and protects any information that you give [website name] when you use this website. [website name] is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement. [website name] may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes.
 </p><p>
@@ -80,4 +80,5 @@ If you believe that any information we are holding on you is incorrect or incomp
 define( "ERR_COULD_NOT_WRITE_MAINFILE", "Error writing content to mainfile.php, write the content into mainfile.php manually." );
 define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
 define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password.<BR />Do Not change this key once your site is live, doing so will render ALL passwords invalid. If you are unsure, just keep the default"); // L97
+define( '_I_AM_AWARE', '<p><span style="color: red;">We strongly advise you to male a full backup of your database and core files, before running the upgrade script. By checking this box, you confirm you have made a full backup and/or you agree about being aware of any issues after upgrade without having backup, and all possible damages has nothing to do with ImpressCMS at all.</span></p>' );
 ?>

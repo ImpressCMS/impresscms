@@ -67,7 +67,7 @@ function xoFormFieldCollation( $name, $value, $label, $help = '' )
 	
 	$field = "<label for='$name'>$label</label>\n";
 	if ( $help ) {
-		$field .= '<div class="xoform-help">' . $help . "</div>\n";
+		$field .= '<div class="xoform-help1">' . $help . "</div>\n";
 	}
 	$field .= "<select name='$name' id='$name'\">";
 	$field .= "<option value=''>None</option>";

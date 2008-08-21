@@ -63,12 +63,7 @@ else
 	/** 
 	 * Now system first checks for RTL, if it is enabled it'll just load it, otherwise it will load the normal (LTR) styles
 	*/
- 		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-            		$xoTheme->addStylesheet(ICMS_URL."/icms_rtl.css", array("media" => "screen"));
-            		//$xoTheme->addScript(ICMS_URL."/include/icms_rtl.js", array("type" => "text/javascript"));
-	   } else {
-            		$xoTheme->addStylesheet(ICMS_URL."/icms.css", array("media" => "screen"));
-           }
+            		$xoTheme->addStylesheet(ICMS_URL."/icms".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css", array("media" => "screen"));
     // Weird, but need extra <script> tags for 2.0.x themes
     //$xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
 	//$xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');

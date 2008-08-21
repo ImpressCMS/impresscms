@@ -393,7 +393,7 @@ define("_MD_AM_MULTLOGINPREVENTDSC","With this option enabled, if a user is alre
 define("_MD_AM_MULTLOGINMSG","Multilogin redirection message:");
 define("_MD_AM_MULTLOGINMSG_DESC","Message that will be displayed to a user who tries to login with a username already loged in on the site. <br><i>This option only applies if 'Prevent multiple login from same user?' is set to Yes.</i>");
 define("_MD_AM_GRAVATARALLOW","Allow using GRAVATAR?");
-define("_MD_AM_GRAVATARALWDSC","By allowing this, user will be able to use their local avatar/gravatar linked to their email address.");
+define("_MD_AM_GRAVATARALWDSC","Show account images from members are hosted by <a href='http://www.gravatar.com/' target='_blank'>Gravatar</a>, a free avatar service. ImpressCMS will automatically display any Gravatar-hosted image linked to the email address from the members.");
 
 define("_MD_AM_SHOW_ICMSMENU","Show ImpressCMS Project drop down menu?");
 define("_MD_AM_SHOW_ICMSMENU_DESC","Select NO to not show the drop down menu and YES to show it.");

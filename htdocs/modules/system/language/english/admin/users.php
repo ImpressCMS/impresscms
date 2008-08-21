@@ -59,4 +59,6 @@ define("_AM_LIST","List");
 define("_AM_NOUSERS", "No users selected");
 
 define("_AM_CNRNU2","The new user could not be added to groups: %s.");
+
+define('_AM_BADPWD','Bad Password, Password can not contain username.');
 ?>

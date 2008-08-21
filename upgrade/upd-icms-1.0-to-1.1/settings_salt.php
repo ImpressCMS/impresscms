@@ -25,7 +25,7 @@ function xoFormField( $name, $value, $label, $maxlength, $help = '' )
    
     $field = "<label for='$name'>$label</label>\n";
     if ( $help ) {
-        $field .= '<div class="xoform-help">' . $help . "</div>\n";
+        $field .= '<div class="xoform-help1">' . $help . "</div>\n";
     }
     $field .= "<input type='text' name='$name' id='$name' value='$value' />";
     

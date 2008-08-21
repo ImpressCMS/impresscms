@@ -132,7 +132,7 @@ class icms_HTMLPurifier
 
 		// HTML_Allowed: allowed tags for html content. format: element, element[attribute] - seperate attributes using pipe '|'
 		$HTML_Allowed = 'a[href|title|target|rel], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite, code, dd,
-					del, dfn, div[align|style], dl, dt, em, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p[style], pre, s, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var, font, span[style]';
+					del, dfn, div[align|style], dl, dt, em, font[size|color], h1, h2, h3, h4, h5, h6, i, img[src|alt|title|class|align|style], ins, kbd, li, ol, p[style], pre, s, span[style], strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var';
 		
 		// sets default config settings for htmpurifier
 		$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
@@ -323,7 +323,7 @@ class icms_HTMLPurifier
 	 * @param   string  $config custom filtering config?
 	 * @return  string
 	 **/
-	function &displayHTMLarea($html, $config = 'display', $smiley = 1, $xcode = 1, $image = 1, $br = 1)
+	function &displayHTMLarea($html, $config = 'display')
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
 		global $icmsPreloadHandler;
@@ -344,57 +344,11 @@ class icms_HTMLPurifier
 	 * @param   string  $config custom filtering config?
 	 * @return  string
 	 **/
-	function &previewHTMLarea($html, $config = 'preview', $smiley = 1, $xcode = 1, $image = 1, $br = 1)
+	function &previewHTMLarea($html, $config = 'preview')
 	{
-		// ################# Preload Trigger beforeDisplayTarea ##############
-		global $icmsPreloadHandler;
-		$icmsPreloadHandler->triggerEvent('beforepreviewHTMLarea', array(&$html, $config));
-		
 		$html = $this->icms_html_purifier($html, $config);
 
-		// ################# Preload Trigger afterDisplayTarea ##############
-		global $icmsPreloadHandler;
-		$icmsPreloadHandler->triggerEvent('afterpreviewHTMLarea', array(&$html, $config));		
 		return $html;
-	}
-
-	/**
-	 * Function to clean & sanitize $text makes safe for DB Queries.
-	 * 
-	 * @param integer $html
-	 * @param string $value - $variable that is being escaped for query.
-	 * @param string $config - allows a custom filter set.
-	 * @return string
-	 */
-	function icms_escapeHTMLValue($value, $quotes = true, $config = 'system-global')
-	{
-		if (is_string($value))
-		{
-			if(get_magic_quotes_gpc)
-			{
-				$value = stripslashes($value);
-	        	}
-			$value = $this->icms_html_purifier($value, $config);
-			$value = mysql_real_escape_string($value);
-	    	}
-	    	else if ($value === null)
-		{
-	        	$value = 'NULL';
-		}
-	    	else if (is_bool($value))
-		{
-	        	$value = $value ? 1 : 0;
-	    	}
-	    	else if (!is_numeric($value))
-		{
-	        	$value = mysql_real_escape_string($value);
-	        	if ($quotes)
-			{
-	            		$value = '"' . $value . '"';
-			}
- 		}
-
-		return $value;
 	}
 
 }

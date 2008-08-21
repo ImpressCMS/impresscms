@@ -179,7 +179,14 @@ switch ($op)
 					if($password != $pass2)
 					{
 						xoops_cp_header();
-						echo "<b>"._AM_STNPDNM."</b>";
+						echo '<b>'._AM_STNPDNM.'</b>';
+						xoops_cp_footer();
+						exit();
+					}
+					if($password == $username || $password == icms_utf8_strrev($username, true) || strripos($password, $username) === true)
+					{
+						xoops_cp_header();
+						echo '<b>'._AM_BADPWD.'</b>';
 						xoops_cp_footer();
 						exit();
 					}

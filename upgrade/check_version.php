@@ -47,17 +47,20 @@
 		echo '<div class="x2-note">' . _NO_NEED_UPGRADE . '<br /><br /><a id="link-next" href="'. XOOPS_URL .'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">' . _SYS_NEED_UPGRADE . "</a></div>";
 		return;
 	} else {
+       echo'<div class="x2-note"><input class="checkbox" type="checkbox" id="help_button" onclick="showHideHelp(this)" />
+        '._I_AM_AWARE.'</div>
+        <div class="xoform-help">';
 		if ( !empty( $files ) ) {
-			echo '<div class="x2-note"><p>' . _NEED_UPGRADE . "</p>" . _SET_FILES_WRITABLE . "<br /><ul>";
+			echo '<div class="x2-note"><p>' . _NEED_UPGRADE . "</p>" . _SET_FILES_WRITABLE . "<br /><br /><ul>";
 			foreach ( $files as $file ) echo "<li>$file</li>\n";
-			echo "</ul></div>";
+			echo "</ul></div><br /><br />";
 		} else {
 						if ( !is_writable(XOOPS_ROOT_PATH."/mainfile.php" ) ) {
-			echo '<div class="x2-note"><p>' . _NEED_UPGRADE . "</p>" . _SET_FILES_WRITABLE . "<br /><ul>";
+			echo '<div class="x2-note"><p>' . _NEED_UPGRADE . "</p>" . _SET_FILES_WRITABLE . "<br /><br /><ul>";
 echo "<li>".XOOPS_ROOT_PATH."/mainfile.php</li>\n";
 			echo "</ul></div>";}else{
-			echo '<a id="link-next" href="index.php?action=next">' . _PROCEED_UPGRADE . '</a>';
+			echo '<a id="link-next" href="index.php?action=next">' . _PROCEED_UPGRADE . '</a><br /><br />';
 		}
 	}
 }
-?>
+?></div>

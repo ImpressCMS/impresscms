@@ -1,5 +1,17 @@
 <?php
-// $Id: xoopsformloader.php 669 2006-08-25 22:14:09Z skalpa $
+/**
+* Helper forms available in the ImpressCMS process
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package	core
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @version		$Id$
+*/
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
@@ -35,5 +47,7 @@ include_once XOOPS_ROOT_PATH."/class/xoopsform/formhiddentoken.php";
 //include_once XOOPS_ROOT_PATH."/class/xoopsform/grouppermform.php";
 include_once XOOPS_ROOT_PATH."/class/xoopsform/formcolorpicker.php";
 include_once XOOPS_ROOT_PATH."/class/xoopsform/formselecteditor.php";
-include_once XOOPS_ROOT_PATH."/libraries/captcha/formcaptcha.php";
+if(!@include_once XOOPS_ROOT_PATH."/Frameworks/captcha/formcaptcha.php") {
+	@include_once XOOPS_ROOT_PATH."/libraries/captcha/formcaptcha.php";
+}
 ?>

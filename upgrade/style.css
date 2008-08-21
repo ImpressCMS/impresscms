@@ -84,7 +84,6 @@ input[type=text], input[type=password], textarea {
 	margin:				1em .5em;
 	padding:			.5em;
 	background-color:	#F4FAFF;
-	border:				1px solid #E4EAEF;
 }
 
 #link-next {
@@ -95,4 +94,21 @@ input[type=text], input[type=password], textarea {
 }
 li {
 	margin-left: 30px;
+}
+#help_button
+{
+    FLOAT: left;
+    CURSOR: pointer;
+}
+.xoform-help
+{
+    DISPLAY: none;
+	background-color:	#F4FAFF;
+	border:				1px solid #E4EAEF;
+    PADDING:0px;
+    MARGIN: .5em;
+}
+BODY.show-help .xoform-help
+{
+    DISPLAY: block
 }

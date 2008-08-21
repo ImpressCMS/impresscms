@@ -316,6 +316,7 @@ modules/system/language/english/admin/users.php
 
 +  define("_AM_OPENID","OpenID");
 +  define("_AM_AOUTVTOIAD","Allow other users to view this OpenID address");
++  define('_AM_BADPWD','Bad Password, Password can not contain username.');
 
 
 modules/system/language/english/admin/modulesadmin.php
@@ -429,7 +430,7 @@ modules/system/language/english/admin/preferences.php
 +  define("_MD_AM_MULTLOGINMSG","Multilogin redirection message:");
 +  define("_MD_AM_MULTLOGINMSG_DESC","Mensage that will be shown to the user that tries to login with an already in use login. <br><i>This option will only be applyable if the option above is selected.</i>");
 +  define("_MD_AM_GRAVATARALLOW","Allow using GRAVATAR?");
-+  define("_MD_AM_GRAVATARALWDSC","By allowing this, user will be able to use their local avatar/gravatar linked to their email address.");
++  define("_MD_AM_GRAVATARALWDSC","Show account images from members are hosted by <a href='http://www.gravatar.com/' target='_blank'>Gravatar</a>, a free avatar service. ImpressCMS will automatically display any Gravatar-hosted image linked to the email address from the members.");
 
 +  define("_MD_AM_SHOW_ICMSMENU","Show ImpressCMS Project drop down menu?");
 +  define("_MD_AM_SHOW_ICMSMENU_DESC","Select NO to not show the drop down menu and YES to show it.");

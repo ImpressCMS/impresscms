@@ -46,14 +46,8 @@ function xoops_cp_header($ret = 0) {
 	<title>' . _IMPRESSCMS_ADMIN . ' ' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . '</title>
 	<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>' . '<link rel="shortcut icon" type="image/ico" href="' . XOOPS_URL . '/favicon.ico" />
 	<link rel="icon" type="image/png" href="' . XOOPS_URL . '/favicon.ico" />
-	';
-		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms_rtl.css" />';
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style_rtl.css" />';
-	   } else {
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms.css" />';
-	echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style.css" />';
-           }
+		<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />
+		<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
 	// ################# Preload Trigger adminHeader ##############
 	$icmsPreloadHandler->triggerEvent ( 'adminHeader' );
 	

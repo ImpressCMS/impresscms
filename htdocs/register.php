@@ -8,7 +8,7 @@
 * @package		core
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
-* @author		modified by stranger <stranger@impresscms.ir>
+* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
 /**
@@ -245,7 +245,7 @@ case 'finish':
 			include 'footer.php';
 			exit();
 		}
-		
+
 		// Send notification about the new user register to the selected group if config is true on admin preferences
 		if ($xoopsConfigUser['new_user_notify'] == 1) {
 			$newuser->newUserNotifyAdmin();	
