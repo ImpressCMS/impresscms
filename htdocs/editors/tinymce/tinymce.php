@@ -183,42 +183,44 @@ class TinyMCE
 		return true;
 	}
 	
-	function render()
-	{
-		static $rendered;
-		if($rendered) return null;
-		
-		$rendered = true;
-		
-		$this->init();
-		
-		if( !empty($this->setting["callback"]) ) {
-			$callback = $this->setting["callback"];
-			unset($this->setting["callback"]);
-		}else{
-			$callback = "";
-		}
-		
-		$ret = '<script language="javascript" type="text/javascript" src="' . XOOPS_URL . $this->rootpath . '/tiny_mce.js"></script>';
-		$ret .= '
-				<script language="javascript" type="text/javascript">
-					tinyMCE.init({
-				';
-		foreach($this->setting as $key => $val) {
-			$ret .= $key . ' : ';
-			if($val === true || $val === false) {
-				$ret .= $val.',';
-			}else{
-				$ret .= '"'. $val . '",';
-			}
-		}
-		$ret .= '
-					tinymceload : "1"});
-				'.$callback.'
-				</script>
-		';
-		return $ret ;
-	}
+    function render()
+    {
+        static $rendered;
+        if($rendered) return null;
+        
+        $rendered = true;
+        
+        $this->init();
+        
+        if( !empty($this->setting["callback"]) ) {
+            $callback = $this->setting["callback"];
+            unset($this->setting["callback"]);
+        }else{
+            $callback = "";
+        }
+        
+        $ret = '<script language="javascript" type="text/javascript" src="' . XOOPS_URL . $this->rootpath . '/tiny_mce.js"></script>';
+        $ret .= '
+                <script language="javascript" type="text/javascript">
+                    tinyMCE.init({
+                ';
+        foreach($this->setting as $key => $val) {
+            $ret .= $key . ' : ';
+            if($val === true || $val === false) {
+                $ret .= $val.','."\r\n";
+            }else{
+                $ret .= '"'. $val . '",'."\r\n";
+            }
+        }
+        $ret .= '   
+                    relative_urls : false,
+                    remove_script_host : false,
+                    tinymceload : "1"});
+                '.$callback.'
+                </script>
+        ';
+        return $ret ;
+    }
 }
 
 ?>

@@ -30,11 +30,11 @@ require_once ICMS_ROOT_PATH."/class/xoopsform/formelement.php";
  * Usage
  *
  * For form creation:
- * 1 Add [include_once ICMS_ROOT_PATH."/libraries/captcha/formcaptcha.php";] to class/xoopsformloader.php, OR add to the file that uses CAPTCHA before calling XoopsFormCaptcha
+ * 1 Add [include_once ICMS_ROOT_PATH."/class/captcha/formcaptcha.php";] to class/xoopsformloader.php, OR add to the file that uses CAPTCHA before calling XoopsFormCaptcha
  * 2 Add form element where proper: $xoopsform->addElement(new XoopsFormCaptcha($caption, $name, $skipmember, ...);
  * 
  * For verification:
- *   if(@include_once ICMS_ROOT_PATH."/libraries/captcha/captcha.php") {
+ *   if(@include_once ICMS_ROOT_PATH."/class/captcha/captcha.php") {
  *	    $xoopsCaptcha = XoopsCaptcha::instance();
  *	    if(! $xoopsCaptcha->verify() ) {
  *		    echo $xoopsCaptcha->getMessage();
@@ -61,7 +61,7 @@ class XoopsFormCaptcha extends XoopsFormElement {
 	 */
 	function XoopsFormCaptcha($caption = '', $name = 'xoopscaptcha', $skipmember = null, $numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null, $backgroundnum = null) {
 		if(!class_exists("XoopsCaptcaha")) {
-			require_once ICMS_ROOT_PATH."/libraries/captcha/captcha.php";
+			require_once ICMS_ROOT_PATH."/class/captcha/captcha.php";
 		}
 		
 		$this->_captchaHandler =& XoopsCaptcha::instance();

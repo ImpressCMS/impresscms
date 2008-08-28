@@ -2,7 +2,7 @@
 //============================================================+
 // File name   : tcpdf_config.php
 // Begin       : 2004-06-11
-// Last Update : 2008-06-03
+// Last Update : 2008-07-29
 //
 // Description : Congiguration file for TCPDF.
 //
@@ -23,7 +23,7 @@
  * @author Nicola Asuni
  * @copyright 2004-2008 Nicola Asuni - Tecnick.com S.r.l (www.tecnick.com) Via Della Pace, 11 - 09044 - Quartucciu (CA) - ITALY - www.tecnick.com - info@tecnick.com
  * @package com.tecnick.tcpdf
- * @version 3.0.013
+ * @version 4.0.014
  * @link http://tcpdf.sourceforge.net
  * @license http://www.gnu.org/copyleft/lesser.html LGPL
  * @since 2004-10-27
@@ -31,7 +31,9 @@
 
 // First we need to include the mainfile.
 include_once '../../../mainfile.php';
+$myts =& MyTextSanitizer::getInstance();
 // If you define the constant K_TCPDF_EXTERNAL_CONFIG, the following settings will be ignored.
+
 if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	
 	// DOCUMENT_ROOT fix for IIS Webserver
@@ -46,28 +48,34 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 		}
 	}
 	
+	// Automatic calculation for the following K_PATH_MAIN constant
+	$k_path_main = str_replace( '\\', '/', realpath(substr(dirname(__FILE__), 0, 0-strlen("config"))));
+	if (substr($k_path_main, -1) != '/') {
+		$k_path_main .= '/';
+	}
+	
 	/**
 	 * Installation path (/var/www/tcpdf/).
-	 * By default it is automatically calculated but you can also set it as a fixed string.
+	 * By default it is automatically calculated but you can also set it as a fixed string to improve performances.
 	 */
-	define ("K_PATH_MAIN", realpath(substr(dirname(__FILE__), 0, 0-strlen("config")))."/");
+	define ("K_PATH_MAIN", $k_path_main);
 	
 	// Automatic calculation for the following K_PATH_URL constant
 	if (isset($_SERVER["HTTP_HOST"]) AND (!empty($_SERVER["HTTP_HOST"]))) {
 		if(isset($_SERVER["HTTPS"]) AND (!empty($_SERVER["HTTPS"])) AND strtolower($_SERVER['HTTPS'])!='off') {
-			$path_url = "https://";
+			$k_path_url = "https://";
 		} else {
-			$path_url = "http://";
+			$k_path_url = "http://";
 		}
-		$path_url .= $_SERVER["HTTP_HOST"];
-		$path_url .= str_replace( '\\', '/', substr($_SERVER["PHP_SELF"], 0, -24));
+		$k_path_url .= $_SERVER["HTTP_HOST"];
+		$k_path_url .= str_replace( '\\', '/', substr($_SERVER["PHP_SELF"], 0, -24));
 	}
 	
 	/**
 	 * URL path to tcpdf installation folder (http://localhost/tcpdf/).
-	 * By default it is automatically calculated but you can also set it as a fixed string.
+	 * By default it is automatically calculated but you can also set it as a fixed string to improve performances..
 	 */
-	define ("K_PATH_URL", $path_url);
+	define ("K_PATH_URL", $k_path_url);
 	
 	/**
 	 * path for PDF fonts
@@ -122,7 +130,7 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	 */
 	$sitename = $xoopsConfig['sitename'];
 	$siteslogan = $xoopsConfig['slogan'];
-	$pdfheader = ''.$sitename.' - '.$siteslogan.'';
+	$pdfheader = $sitename.' - '.$siteslogan;
 	$firstLine = $myts->undoHtmlSpecialChars($pdfheader);
 	define ("PDF_HEADER_TITLE", $firstLine);
 	

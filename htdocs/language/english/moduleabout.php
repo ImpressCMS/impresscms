@@ -26,4 +26,5 @@ define('_MODABOUT_PEOPLE_DOCUMENTERS', 'Documenters');
 define('_MODABOUT_PEOPLE_TRANSLATERS', 'Translators');
 define('_MODABOUT_PEOPLE_OTHER', 'Other contributors');
 define('_MODABOUT_AUTHOR_INFO', 'Contributors information');
+define('_MODABOUT_AUTHOR_WORD', 'Author\'s words');
 ?>

@@ -33,10 +33,10 @@
 if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->isAdmin ( $xoopsModule->mid () )) {
 	exit ( "Access Denied" );
 } else {
-	$allowedHTML = array('conf_value');
-
-	if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
-	if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+	if(isset($_POST))
+	{
+		foreach($_POST as $k => $v) {${$k} = $v;}
+	}
 	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
 
 	if (isset ( $_GET ['confcat_id'] )) {
@@ -188,7 +188,7 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				case 'select_font' :
 					$ele = new XoopsFormSelect($title, $config[$i]->getVar('conf_name'), $config[$i]->getConfValueForOutput());
 					require_once ICMS_ROOT_PATH.'/class/xoopslists.php';
-					$dirlist = XoopsLists::getFileListAsArray(ICMS_ROOT_PATH.'/libraries/captcha/fonts/');
+					$dirlist = XoopsLists::getFontListAsArray(ICMS_ROOT_PATH.'/class/captcha/fonts/');
 					if(!empty($dirlist))
 					{
 						asort($dirlist);

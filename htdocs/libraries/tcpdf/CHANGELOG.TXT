@@ -1,3 +1,44 @@
+4.0.020 (2008-08-15)
+	- "[2052259] WriteHTML <u> & <b>" bug was fixed.
+
+4.0.019 (2008-08-13)
+	- "Rowspan on first cell" bug was fixed.
+
+4.0.018 (2008-08-08)
+	- Default cellpadding for HTML tables was fixed.
+	- Annotation() function was added to support some PDF annotations (see example_036.php and section 8.4 of PDF reference 1.7).
+	- HTML links are now correclty shifted during line alignments.
+	- function getAliasNbPages() was added and Footer() was updated.
+	- RowSpan mode for HTML tables was fixed.
+	- Bugs item #2043610 "Multiple sizes vertical align wrong" was fixed.
+	- ImageEPS() function was improved and RTL alignment was fixed (see example_032.php).
+
+4.0.017 (2008-08-05)
+	- Missing CNZ and CEO style modes were added to Rect() function.
+	- Fonts utils were updated to include support for OpenType fonts.
+	- getLastH() function was added.
+
+4.0.016 (2008-07-30)
+	- setPageMark() function was added. This function must be called after calling Image() function for a background image.
+
+4.0.015 (2008-07-29)
+	- Some functions were changed to support different page formats (see example_028.php).
+	- The signature of setPage() function is changed.
+
+4.0.014 (2008-07-29)
+	- K_PATH_MAIN calculation on tcpdf_config.php was fixed.
+	- HTML support for EPS/AI images was added (see example_006.php).
+	- Bugs item #2030807 "Truncated text on multipage html fields" was fixed.
+	- PDF header bug was fixed.
+	- helvetica was added as default font family.
+	- Stroke mode was fixed on Text function.
+	- several minor bugs were fixed.
+
+4.0.013 (2008-07-27)
+	- Bugs item #2027799 " Big spaces between lines after page break" was fixed.
+	- K_PATH_MAIN calculation on tcpdf_config.php was changed.
+	- Function setVisibility() was fixed to avoid the "Incorrect PDEObject type" error message.
+
 4.0.012 (2008-07-24)
 	- Addpage(), Header() and Footer() functions were changed to simplify the implementation of external header/footer functions.
 	- The following functions were added: 

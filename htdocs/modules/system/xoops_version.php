@@ -149,6 +149,9 @@ $modversion['templates'][$i]['file'] = 'admin/customtag/system_adm_customtag.htm
 $modversion['templates'][$i]['description'] = 'Template of the Custom Tag admin';
 
 $i++;
+$modversion['templates'][$i]['file'] = 'system_default_form.html';
+$modversion['templates'][$i]['description'] = 'Default form template';
+$i++;
 $modversion['templates'][$i]['file'] = 'system_content_list.html';
 $modversion['templates'][$i]['description'] = 'Template of content pages';
 

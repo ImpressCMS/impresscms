@@ -126,6 +126,13 @@ class XoopsConfigItem extends XoopsObject
      */
     function setConfValueForInput(&$value, $force_slash = false)
     {
+		if($this->getVar('conf_formtype') == 'textarea')
+		{
+//			include_once XOOPS_ROOT_PATH.'/class/module.textsanitizer.php';
+			$myts =& MyTextSanitizer::getInstance();
+			$value = $myts->displayTarea($value, 1);
+		}
+		else {$value = StopXSS($value);}
         switch($this->getVar('conf_valuetype')) {
         case 'array':
             if (!is_array($value)) {

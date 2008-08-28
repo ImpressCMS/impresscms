@@ -186,12 +186,12 @@ class XoopsCaptchaImageHandler {
 	{
 		$items = array();
 		
-		if(@ include_once ICMS_ROOT_PATH."/libraries/functions.ini.php") {
+		/*if(@ include_once ICMS_ROOT_PATH."/class/captcha/functions.ini.php") {
 			load_functions("cache");
 			if($items = mod_loadCacheFile("captcha_{$name}", "captcha")) {
 				return $items;
 			}
-		}
+		}*/
 		
 		require_once ICMS_ROOT_PATH."/class/xoopslists.php";
 		$file_path = $this->config["rootpath"]."/{$name}";

@@ -127,6 +127,25 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			}
 			return $filelist;
 		}
+		/*
+		 *  gets list of font file names in a directory
+		 */
+		function getFontListAsArray($dirname, $prefix="")
+		{
+			$filelist = array();
+			if ($handle = opendir($dirname)) {
+				while (false !== ($file = readdir($handle))) {
+					if ( preg_match("/(\.ttf)$/i", $file) ) {
+						$file = $prefix.$file;
+						$filelist[$file] = $file;
+					}
+				}
+				closedir($handle);
+				asort($filelist);
+				reset($filelist);
+			}
+			return $filelist;
+		}
 		
 		/*
 		 *  gets list of html file names in a certain directory
