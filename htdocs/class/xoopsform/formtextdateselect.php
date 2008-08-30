@@ -70,17 +70,15 @@ class XoopsFormTextDateSelect extends XoopsFormText
 	function render()
 	{
 	   	$ele_name = $this->getName();
-// This does nothing, it's just to make things work ;-)
-    	$ele_name2 = ''.$ele_name.'2';
-		$ele_value = $this->getValue(true);
-		$jstime = formatTimestamp( $ele_value, 'Y-m-d' );
+		$ele_value = $this->getValue(false);
+		$jstime = formatTimestamp( $ele_value, 'F j Y, H:i:s' );
 		include_once XOOPS_ROOT_PATH.'/include/calendarjs.php';
 //		return "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $ele_value)."'".$this->getExtra()." /><input type='reset' value=' ... ' onclick='return showCalendar(\"".$ele_name."\");'>";
 // Now it is time to let users use their own calendars.
-		return "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $ele_value)."' ".$this->getExtra()." /><input type='reset' id='".$ele_name2."' value=' ... ' onclick='return showCalendar(\"".$ele_name."\");'><script type='text/javascript'>
+		return "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $ele_value)."' ".$this->getExtra()." onclick='return showCalendar(\"".$ele_name."\");' /><script type='text/javascript'>
 				Calendar.setup({
 					inputField  : '".$ele_name."',   // id of the input field
-					button      : '".$ele_name2."',   // trigger for the calendar (button ID)
+					button      : '".$ele_name."',   // trigger for the calendar (button ID)
 		       		ifFormat    : '%Y-%m-%d',       // format of the input field
         			dateType	: '"._CALENDAR_TYPE."'
 
