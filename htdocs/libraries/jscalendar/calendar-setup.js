@@ -67,7 +67,7 @@ Calendar.setup = function (params) {
 	param_default("eventName",       "click");
 	param_default("ifFormat",        "%Y/%m/%d");
 	param_default("daFormat",        "%Y/%m/%d");
-	param_default("singleClick",     true);
+	param_default("singleClick",     false);
 	param_default("disableFunc",     null);
 	param_default("dateStatusFunc",  params["disableFunc"]);	// takes precedence if both are defined
 	param_default("dateText",        null);
@@ -107,7 +107,7 @@ Calendar.setup = function (params) {
 		var p = cal.params;
 		var update = (cal.dateClicked || p.electric);
 		if (update && p.inputField) {
-			p.inputField.value = cal.date.print(cal.dateFormat, cal.dateType, cal.langNumbers);
+			p.inputField.value = cal.date.print(cal.dateFormat, "gregorian", cal.langNumbers);
 			if (typeof p.inputField.onchange == "function")
 				p.inputField.onchange();
 		}
