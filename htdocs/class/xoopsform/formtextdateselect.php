@@ -69,9 +69,15 @@ class XoopsFormTextDateSelect extends XoopsFormText
 	 */
 	function render()
 	{
+	global $xoopsConfig;
+	if(!defined('_USE_PERSIANNUM') && defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC)
+	{
+	// For instance, we use different numbers in Persian, but the input must be in latin alphabets, thus we set the value off through here. I guess it must become a global value ...
+	define("_USE_PERSIANNUM","0");
+	}
 	   	$ele_name = $this->getName();
 		$ele_value = $this->getValue(false);
-		$jstime = formatTimestamp( $ele_value, 'F j Y, H:i:s' );
+		$jstime = formatTimestamp( $ele_value, 'Y-m-d' );
 		include_once XOOPS_ROOT_PATH.'/include/calendarjs.php';
 //		return "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $ele_value)."'".$this->getExtra()." /><input type='reset' value=' ... ' onclick='return showCalendar(\"".$ele_name."\");'>";
 // Now it is time to let users use their own calendars.
