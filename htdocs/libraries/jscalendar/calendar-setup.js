@@ -181,7 +181,7 @@ Calendar.setup = function (params) {
 	var triggerEl = params.button || params.displayArea || params.inputField;
 	triggerEl["on" + params.eventName] = function() {
 		if (!cal.element) cal.create();
-		var dateEl = params.inputField || params.displayArea;
+		var dateEl = /*params.inputField ||*/ params.displayArea;
 		if (dateEl) params.date = Date.parseDate(dateEl.value || dateEl.innerHTML, cal.dateFormat, cal.dateType);
 		if (params.date) cal.setDate(params.date);
 		cal.refresh();
