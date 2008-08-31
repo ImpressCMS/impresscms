@@ -67,7 +67,8 @@ Calendar.setup = function (params) {
 	param_default("eventName",       "click");
 	param_default("ifFormat",        "%Y/%m/%d");
 	param_default("daFormat",        "%Y/%m/%d");
-	param_default("singleClick",     false);
+	// Partial hack for making Calendar insert gregorian date, instead of Jalali.
+	//param_default("singleClick",     true);
 	param_default("disableFunc",     null);
 	param_default("dateStatusFunc",  params["disableFunc"]);	// takes precedence if both are defined
 	param_default("dateText",        null);
@@ -107,6 +108,8 @@ Calendar.setup = function (params) {
 		var p = cal.params;
 		var update = (cal.dateClicked || p.electric);
 		if (update && p.inputField) {
+	// Partial hack for making Calendar insert gregorian date, instead of Jalali.
+	//		p.inputField.value = cal.date.print(cal.dateFormat, cal.dateType, cal.langNumbers);
 			p.inputField.value = cal.date.print(cal.dateFormat, "gregorian", cal.langNumbers);
 			if (typeof p.inputField.onchange == "function")
 				p.inputField.onchange();
@@ -181,7 +184,9 @@ Calendar.setup = function (params) {
 	var triggerEl = params.button || params.displayArea || params.inputField;
 	triggerEl["on" + params.eventName] = function() {
 		if (!cal.element) cal.create();
-		var dateEl = /*params.inputField ||*/ params.displayArea;
+	// Partial hack for making Calendar insert gregorian date, instead of Jalali.
+	//	var dateEl = params.inputField || params.displayArea;
+		var dateEl = params.displayArea;
 		if (dateEl) params.date = Date.parseDate(dateEl.value || dateEl.innerHTML, cal.dateFormat, cal.dateType);
 		if (params.date) cal.setDate(params.date);
 		cal.refresh();
