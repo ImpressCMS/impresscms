@@ -66,7 +66,7 @@ Calendar.setup = function (params) {
 	param_default("button",          null);
 	param_default("eventName",       "click");
 	param_default("ifFormat",        "%Y/%m/%d");
-	param_default("daFormat",        "%Y/%m/%d");
+	param_default("daFormat",        "%Y-%m-%d");
 	// Partial hack for making Calendar insert gregorian date, instead of Jalali.
 	//param_default("singleClick",     true);
 	param_default("disableFunc",     null);
@@ -110,7 +110,7 @@ Calendar.setup = function (params) {
 		if (update && p.inputField) {
 	// Partial hack for making Calendar insert gregorian date, instead of Jalali.
 	//		p.inputField.value = cal.date.print(cal.dateFormat, cal.dateType, cal.langNumbers);
-			p.inputField.value = cal.date.print(cal.dateFormat, "gregorian", cal.langNumbers);
+			p.inputField.value = cal.date.print(cal.dateFormat, "gregorian", false);
 			if (typeof p.inputField.onchange == "function")
 				p.inputField.onchange();
 		}

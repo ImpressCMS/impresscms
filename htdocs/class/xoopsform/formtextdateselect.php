@@ -86,6 +86,7 @@ class XoopsFormTextDateSelect extends XoopsFormText
 					inputField  : '".$ele_name."',   // id of the input field
 					button      : '".$ele_name."',   // trigger for the calendar (button ID)
 		       		ifFormat    : '%Y-%m-%d',       // format of the input field
+        			langNumbers : true,
         			dateType	: '"._CALENDAR_TYPE."'
 
 				});
