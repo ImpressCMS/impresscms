@@ -10,6 +10,9 @@ define("_MD_AM_SLOGAN","Slogan for your site");
 define("_MD_AM_ADMINML","Admin mail address");
 define("_MD_AM_LANGUAGE","Default language");
 define("_MD_AM_STARTPAGE","Module or Page for your start page");
+### Added in 1.2 ### 
+define("_MD_AM_STARTPAGEDSC","Select the desired Module or Page for your start page by each group.");
+### Added in 1.2 ### 
 define("_MD_AM_NONE","None");
 define("_MD_CONTENTMAN","Content Manager");
 define("_MD_AM_SERVERTZ","Server timezone");
