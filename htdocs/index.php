@@ -17,19 +17,9 @@
  **/
 include "mainfile.php";
 
-$groups = @is_object ( $xoopsUser ) ? $xoopsUser->getGroups () : array (XOOPS_GROUP_ANONYMOUS );
-$spgi = array_keys ( $xoopsConfig ['startpage'] );
-
-if (in_array ( XOOPS_GROUP_ADMIN, $groups ) && in_array ( XOOPS_GROUP_ADMIN, $spgi )) {
-	$match = XOOPS_GROUP_ADMIN;
-} else {
-	foreach ( $groups as $group ) {
-		if (in_array ( $group, $spgi )) {
-			$match = $group;
-		}
-	}
-}
-$xoopsConfig ['startpage'] = $xoopsConfig ['startpage'] [$match];
+$member_handler = & xoops_gethandler ( 'member' );
+$group = $member_handler->getUserBestGroup((@is_object($xoopsUser)?$xoopsUser->uid():0));
+$xoopsConfig ['startpage'] = $xoopsConfig ['startpage'] [$group];
 
 if (isset ( $xoopsConfig ['startpage'] ) && $xoopsConfig ['startpage'] != "" && $xoopsConfig ['startpage'] != "--") {
 	$arr = explode ( '-', $xoopsConfig ['startpage'] );

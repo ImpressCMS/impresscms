@@ -55,25 +55,17 @@ class xos_logos_PageBuilder {
 	function retrieveBlocks() {
 		global $xoops, $xoopsUser, $xoopsModule, $xoopsConfig;
 		
-        $groups = @is_object ( $xoopsUser ) ? $xoopsUser->getGroups () : array (XOOPS_GROUP_ANONYMOUS );
+		$groups = @is_object ( $xoopsUser ) ? $xoopsUser->getGroups () : array (XOOPS_GROUP_ANONYMOUS );
 		
 		//Getting the start module and page configured in the admin panel
 		if (is_array ( $xoopsConfig ['startpage'] )) {
-			$spgi = array_keys ( $xoopsConfig ['startpage'] );
-			
-			if (in_array ( XOOPS_GROUP_ADMIN, $groups ) && in_array ( XOOPS_GROUP_ADMIN, $spgi )) {
-				$match = XOOPS_GROUP_ADMIN;
-			} else {
-				foreach ( $groups as $group ) {
-					if (in_array ( $group, $spgi )) {
-						$match = $group;
-					}
-				}
-			}
-			$xoopsConfig ['startpage'] = $xoopsConfig ['startpage'] [$match];
+			$member_handler = & xoops_gethandler ( 'member' );
+			$group = $member_handler->getUserBestGroup ( (@is_object ( $xoopsUser ) ? $xoopsUser->uid () : 0) );
+			$xoopsConfig ['startpage'] = $xoopsConfig ['startpage'] [$group];
 		}
 		$startMod = ($xoopsConfig ['startpage'] == '--') ? 'system' : $xoopsConfig ['startpage']; //Getting the top page		
 		
+
 		//Setting the full and relative url of the actual page
 		$fullurl = urldecode ( "http://" . $_SERVER ["SERVER_NAME"] . $_SERVER ["REQUEST_URI"] );
 		$url = urldecode ( substr ( str_replace ( XOOPS_URL, '', $fullurl ), 1 ) );
