@@ -70,7 +70,8 @@ define('_US_NICKNAMETOOLONG','Username is too long. It must be less than %s char
 define('_US_NICKNAMETOOSHORT','Username is too short. It must be more than %s characters.');
 define('_US_NAMERESERVED','ERROR: Name is reserved.');
 define('_US_NICKNAMENOSPACES','There cannot be any spaces in the Username.');
-define('_US_NICKNAMETAKEN','ERROR: Username taken.');
+define('_US_LOGINNAMETAKEN','ERROR: Username taken.');
+define('_US_NICKNAMETAKEN','ERROR: Display Name taken.');
 define('_US_EMAILTAKEN','ERROR: Email address already registered.');
 define('_US_ENTERPWD','ERROR: You must provide a password.');
 define('_US_SORRYNOTFOUND','Sorry, no corresponding user info was found.');
