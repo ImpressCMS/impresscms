@@ -32,7 +32,7 @@ define('_US_REMEMBERME', 'Remember me');
 
 //%%%%%%		File Name register.php 		%%%%%
 define('_US_USERREG','User Registration');
-define('_US_NICKNAME','Username');
+define('_US_NICKNAME','Display Name');
 define('_US_EMAIL','Email');
 define('_US_ALLOWVIEWEMAIL','Allow other users to view my email address');
 define('_US_WEBSITE','Website');
@@ -40,7 +40,8 @@ define('_US_TIMEZONE','Time Zone');
 define('_US_AVATAR','Avatar');
 define('_US_VERIFYPASS','Verify Password');
 define('_US_SUBMIT','Submit');
-define('_US_USERNAME','Username');
+define('_US_LOGINNAME','Username');
+define('_US_LOGIN_NAME', _US_LOGINNAME);
 define('_US_FINISH','Finish');
 define('_US_REGISTERNG','Could not register new user.');
 define('_US_MAILOK','Receive occasional email notices <br />from administrators and moderators?');

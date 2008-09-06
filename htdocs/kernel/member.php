@@ -313,7 +313,7 @@ class XoopsMemberHandler {
 		}
 		$salt = icms_getUserSaltFromUname ( $uname );
 		$pwd = icms_encryptPass ( $pwd, $salt );
-		$criteria = new CriteriaCompo ( new Criteria ( 'uname', $uname ) );
+		$criteria = new CriteriaCompo ( new Criteria ( 'login_name', $uname ) );
 		$criteria->add ( new Criteria ( 'pass', $pwd ) );
 		$user = $this->_uHandler->getObjects ( $criteria, false );
 		if (! $user || count ( $user ) != 1) {
@@ -331,7 +331,7 @@ class XoopsMemberHandler {
 	 * @return object XoopsUser {@link XoopsUser} reference to the logged in user. FALSE if failed to log in
 	 */
 	function &loginUserMd5($uname, $md5pwd) {
-		$criteria = new CriteriaCompo ( new Criteria ( 'uname', $uname ) );
+		$criteria = new CriteriaCompo ( new Criteria ( 'login_name', $uname ) );
 		$criteria->add ( new Criteria ( 'pass', $md5pwd ) );
 		$user = $this->_uHandler->getObjects ( $criteria, false );
 		if (! $user || count ( $user ) != 1) {

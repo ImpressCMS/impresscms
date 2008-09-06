@@ -39,13 +39,14 @@ if($_SESSION['xoopsUserId']){
  *  Username is validated for uniqueness and length, password is validated for length and strictness,
  *  email is validated as a proper email address pattern  
  *  
- *  @param string $uname Username entered by the user
+ *  @param string $uname User display name entered by the user
+ *  @param string $login_name Username entered by the user
  *  @param string $email Email address entered by the user   
  *  @param string $pass Password entered by the user
  *  @param string $vpass Password verification entered by the user
  *  @return string of errors encountered while validating the user information, will be blank if successful 
  */     
-function userCheck($uname, $email, $pass, $vpass)
+function userCheck($login_name, $uname, $email, $pass, $vpass)
 {
 	global $xoopsConfigUser;
 	$xoopsDB =& Database::getInstance();
@@ -63,7 +64,7 @@ function userCheck($uname, $email, $pass, $vpass)
 	if (strrpos($email,' ') > 0) {
 		$stop .= _US_EMAILNOSPACES.'<br />';
 	}
-	$uname = xoops_trim($uname);
+	$login_name = xoops_trim($login_name);
 	switch ($xoopsConfigUser['uname_test_level']) {
 	case 0:
 		// strict
@@ -78,30 +79,42 @@ function userCheck($uname, $email, $pass, $vpass)
 		$restriction = '/[\000-\040]/';
 		break;
 	}
-	if (empty($uname) || preg_match($restriction, $uname)) {
+	if (empty($login_name) || preg_match($restriction, $login_name)) {
 		$stop .= _US_INVALIDNICKNAME."<br />";
 	}
-	if (strlen($uname) > $xoopsConfigUser['maxuname']) {
+	if (strlen($login_name) > $xoopsConfigUser['maxuname']) {
 		$stop .= sprintf(_US_NICKNAMETOOLONG, $xoopsConfigUser['maxuname'])."<br />";
 	}
-	if (strlen($uname) < $xoopsConfigUser['minuname']) {
+	if (strlen($login_name) < $xoopsConfigUser['minuname']) {
 		$stop .= sprintf(_US_NICKNAMETOOSHORT, $xoopsConfigUser['minuname'])."<br />";
 	}
 	foreach ($xoopsConfigUser['bad_unames'] as $bu) {
-		if (!empty($bu) && preg_match("/".$bu."/i", $uname)) {
+		if (!empty($bu) && preg_match("/".$bu."/i", $login_name)) {
 			$stop .= _US_NAMERESERVED."<br />";
 			break;
 		}
 	}
-	if (strrpos($uname, ' ') > 0) {
+	if (strrpos($login_name, ' ') > 0) {
 		$stop .= _US_NICKNAMENOSPACES."<br />";
 	}
-	$sql = sprintf('SELECT COUNT(*) FROM %s WHERE uname = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($uname)));
+	$sql = sprintf('SELECT COUNT(*) FROM %s WHERE login_name = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($login_name)));
 	$result = $xoopsDB->query($sql);
 	list($count) = $xoopsDB->fetchRow($result);
 	if ($count > 0) {
-		$stop .= _US_NICKNAMETAKEN."<br />";
+		$stop .= _US_LOGINNAMETAKEN."<br />";
 	}
+	$count = 0;
+	if ( $uname ) {
+		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE uname = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($uname)));
+		$result = $xoopsDB->query($sql);
+		list($count) = $xoopsDB->fetchRow($result);
+		if ( $count > 0 ) {
+			$stop .= _US_NICKNAMETAKEN."<br />";
+		}
+	}
+/*	if (empty($uname)) {
+		$uname = $login_name;
+	}*/
 	$count = 0;
 	if ( $email ) {
 		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($email)));
@@ -119,9 +132,9 @@ function userCheck($uname, $email, $pass, $vpass)
 	} elseif ( ($pass != '') && (strlen($pass) < $xoopsConfigUser['minpass']) ) {
 		$stop .= sprintf(_US_PWDTOOSHORT,$xoopsConfigUser['minpass'])."<br />";
 	}
-	if((isset($pass)) && (isset($uname)))
+	if((isset($pass)) && (isset($login_name)) && (isset($uname)))
 	{
-		if($pass == $uname || $pass == icms_utf8_strrev($uname, true) || strripos($pass, $uname) === true)
+		if($pass == $login_name || $pass == icms_utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)
 		{
 			$stop .= _US_BADPWD.'<br />';
 		}
@@ -129,6 +142,7 @@ function userCheck($uname, $email, $pass, $vpass)
 	return $stop;
 }
 $op = !isset($_POST['op']) ? 'register' : $_POST['op'];
+$login_name = isset($_POST['login_name']) ? $myts->stripSlashesGPC($_POST['login_name']) : '';
 $uname = isset($_POST['uname']) ? $myts->stripSlashesGPC($_POST['uname']) : '';
 $email = isset($_POST['email']) ? trim($myts->stripSlashesGPC($_POST['email'])) : '';
 $url = isset($_POST['url']) ? trim($myts->stripSlashesGPC($_POST['url'])) : '';
@@ -153,8 +167,9 @@ case 'newuser':
 			$stop .= _US_UNEEDAGREE.'<br />';
 		}
 	}
-	$stop .= userCheck($uname, $email, $pass, $vpass);
+	$stop .= userCheck($login_name, $uname, $email, $pass, $vpass);
 	if (empty($stop)) {
+		echo _US_LOGINNAME.": ".$myts->htmlSpecialChars($login_name)."<br />";
 		echo _US_USERNAME.": ".$myts->htmlSpecialChars($uname)."<br />";
 		echo _US_EMAIL.": ".$myts->htmlSpecialChars($email)."<br />";
 		if ($url != '') {
@@ -164,6 +179,7 @@ case 'newuser':
 		$f_timezone = ($timezone_offset < 0) ? 'GMT '.$timezone_offset : 'GMT +'.$timezone_offset;
 		echo _US_TIMEZONE.": $f_timezone<br />";
 		echo "<form action='register.php' method='post'>
+		<input type='hidden' name='login_name' value='".$myts->htmlSpecialChars($login_name)."' />
 		<input type='hidden' name='uname' value='".$myts->htmlSpecialChars($uname)."' />
 		<input type='hidden' name='email' value='".$myts->htmlSpecialChars($email)."' />";
 		echo "<input type='hidden' name='user_viewemail' value='".$user_viewemail."' />
@@ -186,7 +202,7 @@ case 'newuser':
 	break;
 case 'finish':
 	include 'header.php';
-	$stop = userCheck($uname, $email, $pass, $vpass);
+	$stop = userCheck($login_name, $uname, $email, $pass, $vpass);
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 	    $stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
 	}
@@ -211,6 +227,7 @@ case 'finish':
 		$member_handler =& xoops_gethandler('member');
 		$newuser =& $member_handler->createUser();
 		$newuser->setVar('user_viewemail',$user_viewemail, true);
+		$newuser->setVar('login_name', $login_name, true);
 		$newuser->setVar('uname', $uname, true);
 		$newuser->setVar('email', $email, true);
 		if ($url != '') {
@@ -273,7 +290,7 @@ case 'finish':
 			$xoopsMailer->setToUsers(new XoopsUser($newid));
 			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
 			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
+			$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $login_name));
 			if ( !$xoopsMailer->send() ) {
 				echo _US_YOURREGMAILNG;
 			} else {
@@ -284,7 +301,7 @@ case 'finish':
 			$xoopsMailer =& getMailer();
 			$xoopsMailer->useMail();
 			$xoopsMailer->setTemplate('adminactivate.tpl');
-			$xoopsMailer->assign('USERNAME', $uname);
+			$xoopsMailer->assign('USERNAME', $login_name);
 			$xoopsMailer->assign('USEREMAIL', $email);
 			$xoopsMailer->assign('USERACTLINK', ICMS_URL.'/user.php?op=actv&id='.$newid.'&actkey='.$actkey);
 			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
@@ -294,7 +311,7 @@ case 'finish':
 			$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['activation_group']));
 			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
 			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
+			$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $login_name));
 			if ( !$xoopsMailer->send() ) {
 				echo _US_YOURREGMAILNG;
 			} else {

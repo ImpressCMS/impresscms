@@ -619,8 +619,10 @@ CREATE TABLE users (
   user_viewoid tinyint(1) unsigned NOT NULL default '0',
   pass_expired tinyint(1) unsigned NOT NULL default '0',
   enc_type tinyint(2) unsigned NOT NULL default '1',
+  login_name varchar(255) NOT NULL default '',
   PRIMARY KEY  (uid),
   KEY uname (uname),
+  KEY login_name (login_name),
   KEY email (email),
   KEY uiduname (uid,uname),
   KEY unamepass (uname(10),pass(10))

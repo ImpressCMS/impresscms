@@ -1155,7 +1155,7 @@ function icms_getUserSaltFromUname($uname = '')
 	$db =& Database::getInstance();
 	if($uname !== '')
 	{
-	    	$sql = $db->query("SELECT uname, salt FROM ".$db->prefix('users')." WHERE uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
+	    	$sql = $db->query("SELECT login_name, salt FROM ".$db->prefix('users')." WHERE login_name = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
 		list($uname, $salt) = $db->fetchRow($sql);
 	}
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}

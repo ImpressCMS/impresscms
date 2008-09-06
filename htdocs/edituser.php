@@ -26,7 +26,9 @@ if(!is_object($xoopsUser))
 {
 	redirect_header('index.php',3,_US_NOEDITRIGHT);
 }
-
+$allowedHTML = array('htmlcode');
+	if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+	if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'editprofile');
 
 $config_handler =& xoops_gethandler('config');
@@ -51,7 +53,6 @@ if($op == 'saveuser')
 	$errors = array();
     	$myts =& MyTextSanitizer::getInstance();
 
-
 	if($xoopsConfigUser['allow_chgmail'] == 1)
 	{
         	$email = '';
@@ -59,11 +60,38 @@ if($op == 'saveuser')
 		{
             		$email = $myts->stripSlashesGPC(trim($_POST['email']));
         	}
-        	if($email == '' || !checkEmail($email))
+
+        	if($email == '' || !checkEmail($email) )
 		{
             		$errors[] = _US_INVALIDMAIL;
         	}
     	}
+        	$uname = '';
+        	if(!empty($_POST['uname']))
+		{
+            		$uname = $myts->stripSlashesGPC(trim($_POST['uname']));
+        	}
+
+        	if($uname == '')
+		{
+            		$errors[] = _US_INVALIDNICKNAME;
+        	}
+        		if (strlen($uname) > $xoopsConfigUser['maxuname']) {
+		$errors[] .= sprintf(_US_NICKNAMETOOLONG, $xoopsConfigUser['maxuname'])."<br />";
+	}
+	if (strlen($uname) < $xoopsConfigUser['minuname']) {
+		$errors[] .= sprintf(_US_NICKNAMETOOSHORT, $xoopsConfigUser['minuname'])."<br />";
+	}
+	foreach ($xoopsConfigUser['bad_unames'] as $bu) {
+		if (!empty($bu) && preg_match("/".$bu."/i", $uname)) {
+			$errors[] .= _US_NAMERESERVED."<br />";
+			break;
+		}
+	}
+/*	if (strrpos($uname, ' ') > 0) {
+		$errors[] .= _US_NICKNAMENOSPACES."<br />";
+	}*/
+
 	$username = xoops_getLinkedUnameFromId($uid);
     	$password = '';
     	if(!empty($_POST['password']))
@@ -111,6 +139,7 @@ if($op == 'saveuser')
 		{
             		$edituser->setVar('email', $email, true);
         	}
+            		$edituser->setVar('uname', $uname, true);
         	$edituser->setVar('url', formatURL($_POST['url']));
         	$edituser->setVar('user_icq', $_POST['user_icq']);
         	$edituser->setVar('user_from', $_POST['user_from']);
@@ -166,7 +195,7 @@ if($op == 'saveuser')
         	}
         	if(!empty($_POST['usecookie']))
 		{
-            		setcookie($xoopsConfig['usercookie'], $xoopsUser->getVar('uname'), time()+ 31536000);
+            		setcookie($xoopsConfig['usercookie'], $xoopsUser->getVar('login_name'), time()+ 31536000);
         	}
 		else
 		{
@@ -195,10 +224,8 @@ if($op == 'editprofile')
     	include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
     	echo '<a href="userinfo.php?uid='.intval($xoopsUser->getVar('uid')).'">'._US_PROFILE.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._US_EDITPROFILE.'<br /><br />';
     	$form = new XoopsThemeForm(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
-    	$uname_label = new XoopsFormLabel(_US_NICKNAME, $xoopsUser->getVar('uname'));
-    	$form->addElement($uname_label);
-    	$name_text = new XoopsFormText(_US_REALNAME, 'name', 30, 60, $xoopsUser->getVar('name', 'E'));
-    	$form->addElement($name_text);
+    	$login_name_label = new XoopsFormLabel(_US_LOGINNAME, $xoopsUser->getVar('login_name'));
+    	$form->addElement($login_name_label);
     	$email_tray = new XoopsFormElementTray(_US_EMAIL, '<br />');
     	if($xoopsConfigUser['allow_chgmail'] == 1)
 	{
@@ -230,6 +257,10 @@ if($op == 'editprofile')
     	$openid_tray->addElement($openid_cbox);
     	$form->addElement($openid_tray);
 }
+    	$uname_label = new XoopsFormText(_US_NICKNAME, 'uname', 30, 60, $xoopsUser->getVar('uname', 'E'));
+    	$form->addElement($uname_label);
+    	$name_text = new XoopsFormText(_US_REALNAME, 'name', 30, 60, $xoopsUser->getVar('name', 'E'));
+    	$form->addElement($name_text);
     	$url_text = new XoopsFormText(_US_WEBSITE, 'url', 30, 100, $xoopsUser->getVar('url', 'E'));
     	$form->addElement($url_text);
 
