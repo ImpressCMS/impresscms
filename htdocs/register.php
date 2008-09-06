@@ -112,9 +112,6 @@ function userCheck($login_name, $uname, $email, $pass, $vpass)
 			$stop .= _US_NICKNAMETAKEN."<br />";
 		}
 	}
-/*	if (empty($uname)) {
-		$uname = $login_name;
-	}*/
 	$count = 0;
 	if ( $email ) {
 		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($email)));
@@ -132,7 +129,7 @@ function userCheck($login_name, $uname, $email, $pass, $vpass)
 	} elseif ( ($pass != '') && (strlen($pass) < $xoopsConfigUser['minpass']) ) {
 		$stop .= sprintf(_US_PWDTOOSHORT,$xoopsConfigUser['minpass'])."<br />";
 	}
-	if((isset($pass)) && (isset($login_name)) && (isset($uname)))
+	if((isset($pass)) && (isset($login_name)))
 	{
 		if($pass == $login_name || $pass == icms_utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)
 		{
@@ -290,7 +287,7 @@ case 'finish':
 			$xoopsMailer->setToUsers(new XoopsUser($newid));
 			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
 			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $login_name));
+			$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
 			if ( !$xoopsMailer->send() ) {
 				echo _US_YOURREGMAILNG;
 			} else {
@@ -301,7 +298,7 @@ case 'finish':
 			$xoopsMailer =& getMailer();
 			$xoopsMailer->useMail();
 			$xoopsMailer->setTemplate('adminactivate.tpl');
-			$xoopsMailer->assign('USERNAME', $login_name);
+			$xoopsMailer->assign('USERNAME', $uname);
 			$xoopsMailer->assign('USEREMAIL', $email);
 			$xoopsMailer->assign('USERACTLINK', ICMS_URL.'/user.php?op=actv&id='.$newid.'&actkey='.$actkey);
 			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
@@ -311,7 +308,7 @@ case 'finish':
 			$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['activation_group']));
 			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
 			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $login_name));
+			$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
 			if ( !$xoopsMailer->send() ) {
 				echo _US_YOURREGMAILNG;
 			} else {
