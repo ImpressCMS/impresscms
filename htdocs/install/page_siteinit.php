@@ -31,7 +31,7 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$vars['adminsalt'] = $_POST['adminsalt'];
 	$vars['adminname'] = $_POST['adminname'];
-	//$vars['adminlogin_name'] = $_POST['adminlogin_name'];
+	$vars['adminlogin_name'] = $_POST['adminlogin_name'];
 	$vars['adminmail'] = $_POST['adminmail'];
 	$vars['adminpass'] = $_POST['adminpass'];
 	$vars['adminpass2'] = $_POST['adminpass2'];
@@ -39,7 +39,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
     if (!preg_match( "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $vars['adminmail'] ) ) {
     	$error = ERR_INVALID_EMAIL;
-    } elseif ( @empty( $vars['adminlogin_name'] ) || @empty( $vars['adminname'] ) || @empty( $vars['adminpass'] ) || @empty( $vars['adminmail']) || empty( $vars['adminsalt']) ) {
+    } elseif ( @empty( $vars['adminlogin_name'] ) || @empty( $vars['adminname'] )  || @empty( $vars['adminlogin_name'] ) || @empty( $vars['adminpass'] ) || @empty( $vars['adminmail']) || empty( $vars['adminsalt']) ) {
     	$error = ERR_REQUIRED;
 	} elseif ( $vars['adminpass'] != $vars['adminpass2'] ) {
     	$error = ERR_PASSWORD_MATCH;
@@ -90,6 +90,8 @@ var pass_level = "60";
 	<legend><?php echo LEGEND_ADMIN_ACCOUNT; ?></legend>
 	<label for="adminname"><?php echo ADMIN_DISPLAY_LABEL; ?></label>
 	<input type="text" name="adminname" id="adminname" maxlength="25" value="<?php echo htmlspecialchars( $vars['adminname'], ENT_QUOTES ); ?>" />
+	<label for="adminlogin_name"><?php echo ADMIN_LOGIN_LABEL; ?></label>
+	<input type="text" name="adminlogin_name" id="adminlogin_name" maxlength="25" value="<?php echo htmlspecialchars( $vars['adminlogin_name'], ENT_QUOTES ); ?>" />
 	<label for="adminmail"><?php echo ADMIN_EMAIL_LABEL; ?></label>
 	<input type="text" name="adminmail" id="adminmail" maxlength="255" value="<?php echo htmlspecialchars( $vars['adminmail'], ENT_QUOTES ); ?>" />
 	<label for="adminpass"><?php echo ADMIN_PASS_LABEL; ?></label>
