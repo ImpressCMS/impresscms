@@ -71,6 +71,7 @@ function displayUsers()
 	echo "<br />\n";
 	$uid_value = '';
 	$uname_value = '';
+	$login_name_value = '';
 	$name_value = '';
 	$email_value = '';
 	$email_cbox_value = 0;
@@ -126,6 +127,7 @@ function modifyUser($user)
 		}
         	$uid_value = $user->getVar('uid');
         	$uname_value = $user->getVar('uname', 'E');
+        	$login_name_value = $user->getVar('login_name', 'E');
         	$name_value = $user->getVar('name', 'E');
         	$email_value = $user->getVar('email', 'E');
         	$email_cbox_value = $user->getVar('user_viewemail') ? 1 : 0;
@@ -185,12 +187,12 @@ function modifyUser($user)
 }
 
 // RMV-NOTIFY
-function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups = array())
+function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups = array())
 {
 	global $xoopsConfig, $xoopsDB, $xoopsModule;
 	$member_handler =& xoops_gethandler('member');
 	$edituser =& $member_handler->getUser($uid);
-	if($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new Criteria('uname', $uname)) > 0)
+	if($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new Criteria('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new Criteria('login_name', $login_name)) > 0)
 	{
 		xoops_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
@@ -201,6 +203,7 @@ function updateUser($uid, $uname, $name, $url, $email, $user_icq, $user_aim, $us
 	{
 		$edituser->setVar('name', $name);
 		$edituser->setVar('uname', $uname);
+		$edituser->setVar('login_name', $login_name);
 		$edituser->setVar('email', $email);
 		$edituser->setVar('openid', $openid);
         	$user_viewoid = (isset($user_viewoid) && $user_viewoid == 1) ? 1 : 0;

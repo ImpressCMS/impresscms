@@ -32,6 +32,7 @@ global $xoopsConfigUser;
 
 $uid_label = new XoopsFormLabel(_AM_USERID, $uid_value);
 $uname_text = new XoopsFormText(_AM_NICKNAME, "username", 25, 25, $uname_value);
+$login_name_text = new XoopsFormText(_AM_LOGINNAME, "login_name", 25, 25, $login_name_value);
 $name_text = new XoopsFormText(_AM_NAME, "name", 30, 60, $name_value);
 $email_tray = new XoopsFormElementTray(_AM_EMAIL, "<br />");
 $email_text = new XoopsFormText("", "email", 30, 60, $email_value);
@@ -148,6 +149,7 @@ $submit_button = new XoopsFormButton("", "submit", _SUBMIT, "submit");
 
 $form = new XoopsThemeForm($form_title, "userinfo", "admin.php", "post", true);
 $form->addElement($uname_text, true);
+$form->addElement($login_name_text, true);
 $form->addElement($name_text);
 $form->addElement($email_tray, true);
 $form->addElement($openid_tray, true);

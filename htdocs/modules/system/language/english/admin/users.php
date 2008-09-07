@@ -10,7 +10,7 @@ define("_AM_NO","No");
 define("_AM_YMCACF","You must complete all required fields");
 define("_AM_CNRNU","Could not register new user.");
 define("_AM_EDEUSER","Edit/Delete Users");
-define("_AM_NICKNAME","Nickname");
+define("_AM_NICKNAME","Displayname");
 define("_AM_MODIFYUSER","Modify User");
 define("_AM_DELUSER","Delete User");
 define("_AM_GO","Go!");
@@ -61,4 +61,5 @@ define("_AM_NOUSERS", "No users selected");
 define("_AM_CNRNU2","The new user could not be added to groups: %s.");
 
 define('_AM_BADPWD','Bad Password, Password can not contain username.');
+define("_AM_LOGINNAME","Loginname");
 ?>
