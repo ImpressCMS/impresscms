@@ -281,6 +281,9 @@ case 'finish':
 			$xoopsMailer =& getMailer();
 			$xoopsMailer->useMail();
 			$xoopsMailer->setTemplate('register.tpl');
+			$xoopsMailer->assign('USERNAME', $uname);
+			$xoopsMailer->assign('USERLOGINNAME', $login_name);
+			$xoopsMailer->assign('USERPASSWORD', $pass);
 			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
 			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
 			$xoopsMailer->assign('SITEURL', ICMS_URL."/");
@@ -299,6 +302,7 @@ case 'finish':
 			$xoopsMailer->useMail();
 			$xoopsMailer->setTemplate('adminactivate.tpl');
 			$xoopsMailer->assign('USERNAME', $uname);
+			$xoopsMailer->assign('USERLOGINNAME', $login_name);
 			$xoopsMailer->assign('USEREMAIL', $email);
 			$xoopsMailer->assign('USERACTLINK', ICMS_URL.'/user.php?op=actv&id='.$newid.'&actkey='.$actkey);
 			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
