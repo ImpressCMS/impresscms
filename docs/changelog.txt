@@ -2,15 +2,23 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.2==
 '''Added'''
-* Smarty xoPageNav function (Skalpa)
-* calendar block (Stranger)
-* simplepie library (marcan)
-* Geshi library (Stranger)
+* Smarty xoPageNav function. (Skalpa)
+* calendar block. (stranger)
+* simplepie library. (marcan)
+* Geshi library. (stranger)
+* Displayname features. (stranger)
+* Cofig Option to enable/disable change of displayname by user. (stranger)
+* Displayname field to installer. (stranger)
+* Displayname to registration form. (stranger)
+* FCKeditor. (skenow)
+
+'''Changed'''
+* Admin`s RSS feed to simplepie. (marcan/stranger)
 
 '''Improved'''
-* Updated jscalendar to 1.15. (stranger)
-* Time picker now works correctly with jalali. (stranger)
-* Ongoing additions to  API documentation
+* Ongoing additions to  API documentation.
+* register.tpl mail template contains more user`s information. (stranger)
+* adminactivate.tpl mail template contains more user`s information. (stranger)
 
 == Impresscms 1.1==
 
