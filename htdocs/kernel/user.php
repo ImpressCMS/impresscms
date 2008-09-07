@@ -74,7 +74,6 @@ class XoopsUser extends XoopsObject
 		$this->initVar('uid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, false, 60);
 		$this->initVar('uname', XOBJ_DTYPE_TXTBOX, null, true, 255);
-		$this->initVar('login_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
 		$this->initVar('email', XOBJ_DTYPE_TXTBOX, null, true, 60);
 		$this->initVar('url', XOBJ_DTYPE_TXTBOX, null, false, 255);
 		$this->initVar('user_avatar', XOBJ_DTYPE_TXTBOX, null, false, 30);
@@ -111,6 +110,7 @@ class XoopsUser extends XoopsObject
         	$this->initVar('user_viewoid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('pass_expired', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('enc_type', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('login_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
 	
 		// for backward compatibility
 		if(isset($id))
@@ -389,6 +389,11 @@ class XoopsUser extends XoopsObject
 	{
 		return $this->getVar('uname', $format);
 	}
+	/**
+	* get the user's login_name
+	* @param string $format format for the output, see {@link XoopsObject::getVar()}
+	* @return string
+	*/
 	function login_name($format='S')
 	{
 		return $this->getVar('login_name', $format);
@@ -650,11 +655,11 @@ class XoopsUserHandler extends XoopsObjectHandler
 	if($user->isNew())
 	{
 		$uid = $this->db->genId($this->db->prefix('users').'_uid_seq');
-		$sql = sprintf("INSERT INTO %s (uid, uname, login_name, name, email, url, user_avatar, user_regdate, user_icq, user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts, attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method, notify_mode, user_occ, bio, user_intrest, user_mailok, language, openid, salt, user_viewoid, pass_expired, enc_type) VALUES ('%u', %s, %s, %s, %s, %s, '%u', %s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u', '%u', '%u', %s, %s, %s, '%u', %s, %s, %s, '%u', '%u', '%u')", $this->db->prefix('users'), intval($uid), $this->db->quoteString($uname), $this->db->quoteString($login_name), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), time(), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), intval($user_viewemail), $this->db->quoteString($actkey), $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), $this->db->quoteString($pass), intval($posts), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), 0, $this->db->quoteString($umode), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), $this->db->quoteString($language), $this->db->quoteString($openid), $this->db->quoteString($salt), intval($user_viewoid), intval($pass_expired), intval($enc_type));
+		$sql = sprintf("INSERT INTO %s (uid, uname, name, email, url, user_avatar, user_regdate, user_icq, user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts, attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method, notify_mode, user_occ, bio, user_intrest, user_mailok, language, openid, salt, user_viewoid, pass_expired, enc_type, login_name) VALUES ('%u', %s, %s, %s, %s, %s, '%u', %s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u', '%u', '%u', %s, %s, %s, '%u', %s, %s, %s, '%u', '%u', '%u', %s)", $this->db->prefix('users'), intval($uid), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), time(), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), intval($user_viewemail), $this->db->quoteString($actkey), $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), $this->db->quoteString($pass), intval($posts), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), 0, $this->db->quoteString($umode), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), $this->db->quoteString($language), $this->db->quoteString($openid), $this->db->quoteString($salt), intval($user_viewoid), intval($pass_expired), intval($enc_type), $this->db->quoteString($login_name));
         }
 	else
 	{
-		$sql = sprintf("UPDATE %s SET uname = %s, login_name = %s, name = %s, email = %s, url = %s, user_avatar = %s, user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s, user_yim = %s, user_msnm = %s, posts = %d,  pass = %s, attachsig = '%u', rank = '%u', level= '%u', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u', uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s, user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s, user_viewoid = '%u', pass_expired = '%u', enc_type = '%u' WHERE uid = '%u'", $this->db->prefix('users'), $this->db->quoteString($uname), $this->db->quoteString($login_name), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), $user_viewemail, $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), intval($posts), $this->db->quoteString($pass), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), $this->db->quoteString($umode), intval($last_login), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), $this->db->quoteString($language), $this->db->quoteString($openid), $this->db->quoteString($salt), intval($user_viewoid), intval($pass_expired), intval($enc_type), intval($uid));
+		$sql = sprintf("UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s, user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s, user_yim = %s, user_msnm = %s, posts = %d,  pass = %s, attachsig = '%u', rank = '%u', level= '%u', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u', uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s, user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s, user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s WHERE uid = '%u'", $this->db->prefix('users'), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), $user_viewemail, $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), intval($posts), $this->db->quoteString($pass), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), $this->db->quoteString($umode), intval($last_login), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), $this->db->quoteString($language), $this->db->quoteString($openid), $this->db->quoteString($salt), intval($user_viewoid), intval($pass_expired), intval($enc_type), $this->db->quoteString($login_name), intval($uid));
         }
         if(false != $force)
 	{
