@@ -424,4 +424,6 @@ define("_MD_AM_USE_GOOGLE_ANA_DESC","");
 
 define('_MD_AM_PAGISTYLE','Paginations Style');
 define('_MD_AM_PAGISTYLE_DESC','Select the style of the paginations links.');
+define('_MD_AM_ALLWCHGUNAME', 'Allow users to change Display Name?');
+define('_MD_AM_ALLWCHGUNAMEDSC', '');
 ?>
