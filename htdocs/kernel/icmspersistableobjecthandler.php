@@ -11,7 +11,7 @@
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @author		This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk> 
+* @author		This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
 * @version		$Id$
 */
 
@@ -259,7 +259,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
         } else {
         	$obj_array = $this->getObjects($criteria, false, $as_object);
         	//patch : weird bug of indexing by id even if id_as_key = false;
-        	if(!isset($obj_array[0]) && is_object($obj_array[$id])){
+        	if(count($obj_array) && !isset($obj_array[0]) && is_object($obj_array[$id])){
         		$obj_array[0] = $obj_array[$id];
         		unset($obj_array[$id]);
 				$obj_array[0]->unsetNew();

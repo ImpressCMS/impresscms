@@ -260,6 +260,7 @@ class IcmsForm extends XoopsThemeForm {
 			$group_list = $member_handler->getGroupList();
 			asort($group_list);
 			foreach($permissions as $permission) {
+				$groups_value = false;
 				if ($this->targetObject->isNew()) {
 					if (isset($icmsModuleConfig['def_perm_' . $permission['perm_name']])) {
 						$groups_value = $icmsModuleConfig['def_perm_' . $permission['perm_name']];
@@ -432,7 +433,7 @@ class IcmsForm extends XoopsThemeForm {
 		} else {
 			$control = $this->targetObject->controls[$key];
 		}
-		
+
 		/**
 		 * @todo we need to integrate with new ICMS editors feature
 		 */

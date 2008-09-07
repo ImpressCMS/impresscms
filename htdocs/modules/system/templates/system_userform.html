@@ -1,6 +1,6 @@
 <{if $lang_reset !== 1}>
 <div style="position: relative;height: 160px;">
-	<div style="float: left; width: 45% ">
+	<div>
 		<fieldset style="padding: 10px;">
 			<legend style="font-weight: bold;"><{$lang_login}></legend>
 			<form action="user.php" method="post">
@@ -23,14 +23,14 @@
 		</fieldset>
 	</div>
 
-	<div style="float: right; width: 50% ">
+	<div>
 		<fieldset style="padding: 10px;">
 			<legend style="font-weight: bold;"><{$lang_lostpassword}></legend>
 			<div>
-				<br /><{$lang_noproblem}>
+				<{$lang_noproblem}>
 			</div>
 			<form action="lostpass.php" method="post">
-				<{$lang_youremail}> <input type="text" name="email" size="26" maxlength="60" />&nbsp;&nbsp;<input type="hidden" name="op" value="mailpasswd" /><input type="hidden" name="t" value="<{$mailpasswd_token}>" />
+				<br /><{$lang_youremail}> <input type="text" name="email" size="26" maxlength="60" />&nbsp;&nbsp;<input type="hidden" name="op" value="mailpasswd" /><input type="hidden" name="t" value="<{$mailpasswd_token}>" />
 		    	<br />
 		    	<br />
 		     	<input type="submit" value="<{$lang_sendpassword}>" />

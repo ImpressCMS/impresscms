@@ -55,11 +55,11 @@ class SystemCustomtag extends IcmsPersistableObject {
 			switch ( $this->getVar ( 'customtag_type' )) {
 				case ICMS_CUSTOMTAG_TYPE_XCODES :
 					$ret = $this->getVar ( 'content', 'N' );
-					$ret = $myts->displayTarea ( $ret, 1, 1, 1, 1, 1 );
+					$ret = $myts->displayTarea ( $ret, 1, 1, 1, 1, 1, 'system-basic' );
 				break;
 				case ICMS_CUSTOMTAG_TYPE_HTML :
 					$ret = $this->getVar ( 'content', 'N' );
-					$ret = $myts->displayTarea ( $ret, 1, 1, 1, 1, 0 );
+					$ret = $myts->displayTarea ( $ret, 1, 1, 1, 1, 0, 'system-basic' );
 				break;
 				
 				case ICMS_CUSTOMTAG_TYPE_PHP :

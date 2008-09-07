@@ -1,3 +1,19 @@
+4.0.023 (2008-09-05)
+	- Some HTML related problems were fixed.
+	- Image alignment on HTML was changed, now it always defaults to the normal mode (see example_006.php).
+	
+4.0.022 (2008-08-28)
+	- Line height on HTML was fixed.
+	- Image inside an HTML cell problem was fixed.
+	- A new "zarbold" persian font was added.
+	
+4.0.021 (2008-08-24)
+	- HTTP headers were fixed on Output function().
+	- getAliasNbPages() and getPageGroupAlias() functions were changed to support non-unicode fonts on unicode documents.
+	- Function Write() was fixed.
+	- The problem of additional vertical spaces on HTML was fixed.
+	- The problem of frame around HTML links was fixed.
+
 4.0.020 (2008-08-15)
 	- "[2052259] WriteHTML <u> & <b>" bug was fixed.
 

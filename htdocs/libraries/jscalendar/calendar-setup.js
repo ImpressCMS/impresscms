@@ -69,6 +69,7 @@ Calendar.setup = function (params) {
 	param_default("daFormat",        "%Y-%m-%d");
 	// Partial hack for making Calendar insert gregorian date, instead of Jalali.
 	//param_default("singleClick",     true);
+	param_default("singleClick",     false);
 	param_default("disableFunc",     null);
 	param_default("dateStatusFunc",  params["disableFunc"]);	// takes precedence if both are defined
 	param_default("dateText",        null);

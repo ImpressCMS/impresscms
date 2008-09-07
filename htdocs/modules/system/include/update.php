@@ -35,27 +35,32 @@ function xoops_module_update_system(&$module) {
     }
 
     $icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
-    
+
     ob_start();
-    
+
     $dbVersion  = $module->getDBVersion();
 
 	echo "<code>" . _DATABASEUPDATER_UPDATE_UPDATING_DATABASE . "<br />";
 
-	// db migrate version = 1
+	/**
+	 * Migrate the db with new changes from 1.1 since 1.0
+	 * Note: many of these changes have been implemented in the upgrade script, which is essential in 1.1 because
+	 * of the new dbversion field we have added in the modules table. However, starting with release after 1.1, all
+	 * upgrade scripts will be added here. Doing so, only the System module will need to be updated by webmaster.
+	 */
     $newDbVersion = 1;
 
     if ($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
-    	    	
+
 		// Now, first, let's increment the conf_order of user option starting at new_user_notify
 		$table = new IcmsDatabasetable('config');
 		$criteria = new CriteriaCompo();
 		$criteria->add(new Criteria('conf_order', 3, '>'));
     	$table->addUpdateAll('conf_order', 'conf_order + 2', $criteria, true);
-	    $icmsDatabaseUpdater->updateTable($table);	
-	    unset($table);	
-	    
+	    $icmsDatabaseUpdater->updateTable($table);
+	    unset($table);
+
 	    // create extended date function's config option
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF, 'use_ext_date', '_MD_AM_EXT_DATE', 0, '_MD_AM_EXT_DATEDSC', 'yesno', 'int', 12);
 	    // create editors config option
@@ -77,7 +82,7 @@ function xoops_module_update_system(&$module) {
         if ($fp) {
             $default_msg_content = fread($fp, filesize($default_msg_content_file));
         }
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', $default_msg_content, '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textarea', 'text', 3);	   
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', $default_msg_content, '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textarea', 'text', 3);
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'allwshow_sig', '_MD_AM_ALLWSHOWSIG', 1, '_MD_AM_ALLWSHOWSIGDSC', 'yesno', 'int', 4);
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'allow_htsig', '_MD_AM_ALLWHTSIG', 1, '_MD_AM_ALLWHTSIGDSC', 'yesno', 'int', 4);
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'sig_max_length', '_MD_AM_SIGMAXLENGTH', '255', '_MD_AM_SIGMAXLENGTHDSC', 'textbox', 'int', 4);
@@ -97,7 +102,7 @@ function xoops_module_update_system(&$module) {
 
 		// Adding new cofigurations added for multi language
 	    $icmsDatabaseUpdater->insertConfig(IM_CONF_MULILANGUAGE, 'ml_autoselect_enabled', '_MD_AM_ML_AUTOSELECT_ENABLED', '0', '_MD_AM_ML_AUTOSELECT_ENABLED_DESC', 'yesno', 'int', 1);
-	    
+
 	    // Adding new function of content manager
 	    $icmsDatabaseUpdater->insertConfig(IM_CONF_CONTENT, 'default_page', '_MD_AM_DEFAULT_CONTPAGE', '0', '_MD_AM_DEFAULT_CONTPAGEDSC', 'select_pages', 'int', 1);
 	    $icmsDatabaseUpdater->insertConfig(IM_CONF_CONTENT, 'show_nav', '_MD_AM_CONT_SHOWNAV', '1', '_MD_AM_CONT_SHOWNAVDSC', 'yesno', 'int', 2);
@@ -138,7 +143,7 @@ function xoops_module_update_system(&$module) {
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', 23);
 		// Adding new function of authentication
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_AUTH, 'auth_openid', '_MD_AM_AUTHOPENID', '0', '_MD_AM_AUTHOPENIDDSC', 'yesno', 'int', 1);
-	    
+
 	    $table = new IcmsDatabasetable('imagecategory');
 	    $icmsDatabaseUpdater->runQuery('INSERT INTO '.$table->name().' (imgcat_id, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype) VALUES (NULL, "Logos", 350000, 350, 80, 1, 0, "C", "file")','Successfully created Logos imagecategory','Problems when try to create Logos imagecategory');
 	    unset($table);
@@ -161,12 +166,32 @@ function xoops_module_update_system(&$module) {
 	         * @todo trap the errors
 	         */
 	    }
-	    
+
 	    $icmsDatabaseUpdater->runQuery('UPDATE '.$table->name().' SET module_id=0, page_id=1 WHERE module_id=-1','Block Visibility Restructured Successfully', 'Failed in Restructure the Block Visibility');
-	    
-		unset($table);	    
-}
-    
+
+		unset($table);
+	}
+
+    /**
+     * Changing $xoopsConfigPersona['rss_local'] from www.impresscms.org to community.impresscms.org
+     */
+    $newDbVersion = 2;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+		$configitem_handler = xoops_getHandler('configitem');
+		// fetch the rss_local configitem
+		$criteria = new CriteriaCompo();
+		$criteria->add(new Criteria('conf_name', 'rss_local'));
+		$criteria->add(new Criteria('conf_catid', XOOPS_CONF_PERSONA));
+		$configitemsObj = $configitem_handler->getObjects($criteria);
+		if (isset($configitemsObj[0]) && $configitemsObj[0]->getVar('conf_value', 'n') == 'http://www.impresscms.org/modules/smartsection/backend.php') {
+			$configitemsObj[0]->setVar('conf_value', 'http://community.impresscms.org/modules/smartsection/backend.php');
+			$configitem_handler->insert($configitemsObj[0]);
+			echo "&nbsp;&nbsp;Updating rss_local config with correct info (if value was not previously changed by user)<br />";
+		}
+
+	}
 
 	echo "</code>";
 
@@ -177,7 +202,7 @@ function xoops_module_update_system(&$module) {
         echo $feedback;
     }
     $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-    return true;    
+    return true;
 }
 
 ?>

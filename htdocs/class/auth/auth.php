@@ -29,7 +29,7 @@
 
 /**
  * Authentification base class
- *  
+ *
  * @package     kernel
  * @subpackage  auth
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
@@ -38,7 +38,7 @@
 class XoopsAuth {
 
   	var	$_dao;
-  
+
   	var	$_errors;
 
 
@@ -48,19 +48,19 @@ class XoopsAuth {
   	function XoopsAuth (&$dao){
   		$this->_dao = $dao;
   	}
-  
+
   	/**
   	 * @abstract need to be write in the derived class
-  	 */	
+  	 */
   	function authenticate() {
   		$authenticated = false;
-  				
+
   		return $authenticated;
-  	}		
-	
+  	}
+
     /**
-     * add an error 
-     * 
+     * add an error
+     *
      * @param string $value error to add
      * @access public
      */
@@ -71,7 +71,7 @@ class XoopsAuth {
 
     /**
      * return the errors for this object as an array
-     * 
+     *
      * @return array an array of errors
      * @access public
      */
@@ -82,7 +82,7 @@ class XoopsAuth {
 
     /**
      * return the errors for this object as html
-     * 
+     *
      * @return string $ret html listing the errors
      * @access public
      */
@@ -90,22 +90,28 @@ class XoopsAuth {
     {
     	global $xoopsConfig;
         $ret = '<br />';
-        if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 ) 
-        {	       
+        if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 )
+        {
 	        if (!empty($this->_errors)) {
-	            foreach ($this->_errors as $errno => $errstr) {            	
+	            foreach ($this->_errors as $errno => $errstr) {
 	                $ret .=  $errstr . '<br/>';
 	            }
 	        } else {
 	            $ret .= _NONE.'<br />';
-	        }        
-	        $ret .= sprintf(_AUTH_MSG_AUTH_METHOD, $this->auth_method);
+	        }
+	        /**
+	         * Fix to replace the message "Incorrect Login using xoops authenticated method"
+	         * as this message don't say much to normal users...
+	         * This fix of course is temporary and will change in the future
+	         */
+	        $auth_method_name = $this->auth_method == 'xoops' ? 'standard' : $this->auth_method;
+	        $ret .= sprintf(_AUTH_MSG_AUTH_METHOD, $auth_method_name);
         }
 	    else {
 	    	$ret .= _US_INCORRECTLOGIN;
 	    }
         return $ret;
-    }	
+    }
 }
 
 ?>

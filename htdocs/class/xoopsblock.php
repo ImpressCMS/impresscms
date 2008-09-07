@@ -141,7 +141,9 @@ class XoopsBlock extends XoopsObject
             // S : use text sanitizater (smilies enabled)
             // T : use text sanitizater (smilies disabled)
             if ( $c_type == 'H' ) {
-                return str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'N'));
+            	$ret = $this->getVar('content', 'N');
+            	$ret = icms_sanitizeCustomtags($ret);
+                return str_replace('{X_SITEURL}', XOOPS_URL.'/', $ret);
             } elseif ( $c_type == 'P' ) {
                 ob_start();
                 echo eval($this->getVar('content', 'N'));
@@ -459,7 +461,7 @@ class XoopsBlock extends XoopsObject
     }
 
     function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1)
-    { 	
+    {
     	$isactive = intval($isactive);
         $db =& Database::getInstance();
         $ret = array();
@@ -477,17 +479,17 @@ class XoopsBlock extends XoopsObject
         while ( $myrow = $db->fetchArray($result) ) {
             $blockids[] = $myrow['gperm_itemid'];
         }
-          
+
         if (!empty($blockids)) {
             $sql = "SELECT b.* FROM ".$db->prefix('newblocks')." b, ".$db->prefix('block_module_link')." m WHERE m.block_id=b.bid";
             $sql .= " AND b.isactive='".$isactive."'";
             if (isset($visible)) {
                 $sql .= " AND b.visible='".intval($visible)."'";
             }
-            
+
             $arr = explode('-',$module_id);
             $module_id = intval($arr[0]);
-            $page_id = intval($arr[1]);            
+            $page_id = intval($arr[1]);
             if ($module_id == 0){ //Entire Site
             	if ($page_id == 0){ //All pages
             		$sql .= " AND m.module_id='0' AND m.page_id=0";
@@ -501,7 +503,7 @@ class XoopsBlock extends XoopsObject
             		$sql .= " AND ((m.module_id='0' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=0) OR (m.module_id='$module_id' AND m.page_id=$page_id))";
             	}
             }
-            
+
             $sql .= " AND b.bid IN (".implode(',', $blockids).")";
             $sql .= " ORDER BY ".$orderby;
             $result = $db->query($sql);

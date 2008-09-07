@@ -37,24 +37,6 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 	if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
 	if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
 	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
-    if ($op != 'list') {
-        $id = $moddir = $file = $type = $tplset = null;
-        if (isset($_GET['id'])) {
-            $id = intval($_GET['id']);
-        }
-        if (isset($_GET['moddir'])) {
-            $moddir = trim($_GET['moddir']);
-        }
-        if (isset($_GET['file'])) {
-            $file = trim($_GET['file']);
-        }
-        if (isset($_GET['type'])) {
-            $type = trim($_GET['type']);
-        }
-        if (isset($_GET['tplset'])) {
-            $tplset = trim($_GET['tplset']);
-        }
-    }
 
     if ($op == 'edittpl_go') {
         if (isset($previewtpl)) {

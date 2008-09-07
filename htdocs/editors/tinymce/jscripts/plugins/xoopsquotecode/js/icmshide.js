@@ -19,8 +19,8 @@ var IcmshideDialog = {
 			var htext = formObj.htext.value;
 			htext.replace(new RegExp("<",'g'), "&lt;");
 			htext.replace(new RegExp(">",'g'), "&gt;");
-			var html = '<div class="xoopsQuote">';
-			html += htext+'</div><br />';
+			var html = '[hide]';
+			html += htext+'[/hide]<br />';
 			tinyMCEPopup.editor.execCommand('mceInsertContent', true, html);
 			tinyMCEPopup.close();
 			}

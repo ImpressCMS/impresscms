@@ -25,18 +25,29 @@ ImpressCMS ChangeLog
 '''Improved'''
 * Improved how we use rtl in system. (stranger/real_therplima)
 * Moved captcha to classes + some configurations were updated. (stranger)
-* Updated TCPDF to version 4.0.020. (stranger)
+* Updated TCPDF to version 4.0.023. (stranger)
 * Removed warnings for unhandled global attribut in icms.htmlpurifier.php
+* Updated jscalendar to 1.15. (stranger)
+* Time picker now works correctly with jalali. (stranger)
 
 '''Fixed'''
 * 2 errors with google meta tag and google analytics. (stranger)
 * possible issue in modulesadmin/main.php (real_therplima/trabis)
 * #2048746: SQL error when creating invites and system_customtags tables (Commerce)
-* #2037989 - Registration notification sent twice (real_therplima)
+* #2037989: Registration notification sent twice (real_therplima)
 * bug with modules when calling editors. (stranger)
 * bug "Cannot redeclare class XoopsFormCaptcha". (stranger)
 * Language constants in IcmsModuleAbout feature (malanciault)
 * bug with pdf generator. (stranger)
+* bug Hidencontent doesn`t work with TinyMCE. (stranger)
+* # 2090834: Customtag works not with TinyMCE (malanciault)
+* # 2046097: RSS admin news no longer works  (malanciault)
+* # 2046097: Upgrade script modified to update rss_local config with correct info (if value was not previously changed by user) (malanciault)
+* #1969061: _AUTH_MSG_AUTH_METHOD = xoops. This message was not saying much to users so the word 'xoops' was changed to 'standard' login (malanciault)
+* #1984939: Creating a new CustomTag: Undefined offset: 0 in file /kernel/icmspersistableobjecthandler.php line 262 (malanciault)
+* #1984939: Creating a new CustomTag: Undefined variable: groups_value in file /class/icmsform/icmsform.php line 270 (malanciault)
+* #2096670: Changed field types for meta_description and meta_keywords to only allow plain text
+* Notice: Undefined variable: openid in file /modules/system/admin/users/main.php line 61. (stranger)
 
 ===2008-08-08 : 1.1 Beta 1===
 

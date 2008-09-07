@@ -16,8 +16,11 @@
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
     exit(_CT_ACCESS_DENIED);
 } else {
-	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
-	if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
+
+    $allowedHTML = array('content_body','content_css');
+
+	if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+	if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
     $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
     $content_id = (isset($_GET['content_id']))?intval($_GET['content_id']):((isset($_POST['content_id']))?intval($_POST['content_id']):0);
     $content_supid = (isset($_GET['content_supid']))?intval($_GET['content_supid']):((isset($_POST['content_supid']))?intval($_POST['content_supid']):0);

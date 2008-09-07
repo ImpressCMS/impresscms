@@ -276,7 +276,9 @@ class upgrade_impcms06 {
 		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('9','_MD_AM_CONTMANAGER')");
 		if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_PERSON"') != 0){return true;}
 		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('10','_MD_AM_PERSON')");
-        
+    
+    $db->queryF("UPDATE ". $db->prefix('config') . "SET conf_formtype = 'textsarea' WHERE conf_name IN ('meta_keywords', 'meta_description')" );
+      
         $passwordmeter_installed = false;
         $sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'pass_level'";
         if ( $result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
