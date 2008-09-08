@@ -58,6 +58,7 @@ switch ($op)
 		if(!isset($attachsig)) $attachsig = null;
 		if(!isset($user_viewemail)) $user_viewemail = null;
 		if(!isset($user_viewoid)) $user_viewoid = null;
+		if(!isset($openid)) $openid = null;
 		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups);
 	break;
 	case 'delUser':

@@ -4,6 +4,7 @@
 define('_MD_TPLMAIN','Template Set Manager');
 define('_MD_INSTALL','Install');
 define('_MD_EDITTEMPLATE','Edit template file');
+define('_MD_VIEWTEMPLATE','View template file');
 define('_MD_FILENAME','File name');
 define('_MD_FILEDESC','Description');
 define('_MD_LASTMOD','Last modified');

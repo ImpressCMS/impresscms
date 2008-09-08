@@ -26,11 +26,19 @@
 //  ------------------------------------------------------------------------ //
 
 include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
-$form = new XoopsThemeForm(_MD_EDITTEMPLATE, 'template_form', 'admin.php', 'post', true);
+if ($tform['tpl_tplset'] != 'default') {
+    $form = new XoopsThemeForm(_MD_EDITTEMPLATE, 'template_form', 'admin.php', 'post', true);
+}else{
+    $form = new XoopsThemeForm(_MD_VIEWTEMPLATE, 'template_form', 'admin.php', 'post', true);
+}
 $form->addElement(new XoopsFormLabel(_MD_FILENAME, $tform['tpl_file']));
 $form->addElement(new XoopsFormLabel(_MD_FILEDESC, $tform['tpl_desc']));
 $form->addElement(new XoopsFormLabel(_MD_LASTMOD, formatTimestamp($tform['tpl_lastmodified'], 'l')));
-$form->addElement(new XoopsFormTextArea(_MD_FILEHTML, 'html', $tform['tpl_source'], 25, 70));
+$tpl_src = new XoopsFormTextArea(_MD_FILEHTML, 'html', $tform['tpl_source'], 25, 70);
+if ($tform['tpl_tplset'] == 'default'){
+    $tpl_src->setExtra('readonly');
+}
+$form->addElement($tpl_src);
 $form->addElement(new XoopsFormHidden('id', $tform['tpl_id']));
 $form->addElement(new XoopsFormHidden('op', 'edittpl_go'));
 $form->addElement(new XoopsFormHidden('redirect', 'edittpl'));

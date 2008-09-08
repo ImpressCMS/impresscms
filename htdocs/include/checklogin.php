@@ -52,7 +52,7 @@ $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
 // uname&email hack GIJ
 $uname4sql = addslashes( $myts->stripSlashesGPC($uname) ) ;
 $pass4sql = addslashes( $myts->stripSlashesGPC($pass) ) ;
-if( strstr( $uname , '@' ) ) {
+/*if( strstr( $uname , '@' ) ) {
 	// check by email if uname includes '@'
 	$criteria = new CriteriaCompo(new Criteria('email', $uname4sql ));
 	$criteria->add(new Criteria('pass', $pass4sql));
@@ -61,10 +61,8 @@ if( strstr( $uname , '@' ) ) {
 	if( empty( $users ) || count( $users ) != 1 ) $user = false ;
 	else $user = $users[0] ;
 	unset( $users ) ;
-}
-if( empty( $user ) || ! is_object( $user ) ) {
-	$user =& $xoopsAuth->authenticate($uname4sql, $pass4sql);
-}
+} */
+if(empty($user) || !is_object($user)) {$user =& $xoopsAuth->authenticate($uname4sql, $pass4sql);}
 // end of uname&email hack GIJ
 
 if (false != $user) {

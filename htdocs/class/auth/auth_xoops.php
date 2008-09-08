@@ -54,15 +54,17 @@ class XoopsAuthXoops extends XoopsAuth {
   	 *
   	 * @return object {@link XoopsUser}
      */	
-    function authenticate($uname, $pwd = null) {
-    	$member_handler =& xoops_gethandler('member');
-      	$user =& $member_handler->loginUser($uname, $pwd);
-      	if ($user == false) {
-      		$this->setErrors(1, _US_INCORRECTLOGIN);
-      	}
-      	return ($user);
-  	}
-
+	function authenticate($uname, $pwd = null)
+	{
+		$member_handler =& xoops_gethandler('member');
+		if(strstr($uname, '@'))
+		{
+			$uname = icms_getUnameFromUserEmail($uname);
+		}
+		$user =& $member_handler->loginUser($uname, $pwd);
+		if($user == false) {$this->setErrors(1, _US_INCORRECTLOGIN);}
+		return ($user);
+	}
 }
 
 ?>

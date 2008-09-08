@@ -17,7 +17,7 @@ function xoops_header($closehead=true)
 {
 	global $xoopsConfig, $xoopsTheme, $xoopsConfigMetaFooter;
 	$myts =& MyTextSanitizer::getInstance();
-	
+
 	if(!headers_sent())
 	{
 		header('Content-Type:text/html; charset='._CHARSET);
@@ -394,16 +394,16 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$theme = $xoopsConfig['theme_set'];
 	// if the user selected a theme in the theme block, let's use this theme
 	if(isset($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {$theme = $_SESSION['xoopsUserTheme'];}
-	
+
 	require_once ICMS_ROOT_PATH.'/class/template.php';
 	require_once ICMS_ROOT_PATH.'/class/theme.php';
-	
+
 	$xoopsThemeFactory =& new xos_opal_ThemeFactory();
 	$xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
 	$xoopsThemeFactory->defaultTheme = $theme;
 	$xoTheme =& $xoopsThemeFactory->createInstance(array("plugins" => array()));
 	$xoopsTpl =& $xoTheme->template;
-	
+
 	$xoopsTpl->assign(array(
 		'xoops_theme' => $theme,
 		'xoops_imageurl' => XOOPS_THEME_URL.'/'.$theme.'/',
@@ -415,7 +415,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 		'xoops_banner' => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
 		'xoops_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $xoopsConfig['slogan'], ENT_QUOTES),
 	));
-	
+
 	if($xoopsConfig['debug_mode'] == 2 && $xoopsUserIsAdmin)
 	{
 		$xoopsTpl->assign('time', 300);
@@ -593,8 +593,8 @@ function xoops_substr($str, $start, $length, $trimmarker = '...')
 }
 
 /**
-* Returns the portion of string specified by the start and length parameters. 
-* If $trimmarker is supplied, it is appended to the return string. 
+* Returns the portion of string specified by the start and length parameters.
+* If $trimmarker is supplied, it is appended to the return string.
 * This function works fine with multi-byte characters if mb_* functions exist on the server.
 *
 * @param    string    $str
@@ -627,9 +627,9 @@ function icms_substr($str, $start, $length, $trimmarker = '...')
 		}
 	}
 	else {$hasML = false;}
-	
+
 	if(!$hasML) {$strs = array($str);}
-	
+
 	for($i = 0; $i <= count($strs)-1; $i++)
 	{
 		if(!XOOPS_USE_MULTIBYTES)
@@ -840,7 +840,7 @@ function icms_chmod($target, $mode = 0777) {return @chmod($target, $mode);}
 * Get the XoopsModule object of a specified module
 *
 * @param string $moduleName dirname of the module
-* @return object XoopsModule object of the specified module 
+* @return object XoopsModule object of the specified module
 */
 function &icms_getModuleInfo($moduleName = false)
 {
@@ -937,7 +937,7 @@ function icms_getConfig($key, $moduleName = false, $default = 'default_is_undefi
 }
 
 /**
-* Get the dirname of the current module 
+* Get the dirname of the current module
 *
 * @return mixed dirname of the current module or false if no module loaded
 */
@@ -978,7 +978,7 @@ function icms_userIsAdmin($module = false)
 
 /**
 * Load a module language file
-* 
+*
 * If $module = core, file will be loaded from ICMS_ROOT_PATH/language/
 *
 * @param string $module dirname of the module
@@ -1123,7 +1123,7 @@ function icms_html2text($document)
 
 	$text = preg_replace($search, $replace, $document);
 	return $text;
-		
+
 }
 
 // ----- New Password System
@@ -1160,6 +1160,17 @@ function icms_getUserSaltFromUname($uname = '')
 	}
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 	return $salt;
+}
+function icms_getUnameFromUserEmail($email = '')
+{
+	$db =& Database::getInstance();
+	if($email !== '')
+	{
+	    	$sql = $db->query("SELECT login_name, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
+		list($uname, $email) = $db->fetchRow($sql);
+	}
+	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
+	return $uname;
 }
 
 function icms_encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
@@ -1198,11 +1209,11 @@ function icms_encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
 /**
 * Function to keeps the code clean while removing unwanted attributes and tags.
 * This function was got from http://www.php.net/manual/en/function.strip-tags.php#81553
-* 
+*
 * @var $sSource - string - text to remove the tags
 * @var $aAllowedTags - array - tags that dont will be striped
 * @var $aDisabledAttributes - array - attributes not allowed, will be removed from the text
-* 
+*
 * return string
 */
 function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>','<ul>','<li>'), $aDisabledAttributes = array('onabort', 'onblue', 'onchange', 'onclick', 'ondblclick', 'onerror', 'onfocus', 'onkeydown', 'onkeyup', 'onload', 'onmousedown', 'onmousemove', 'onmouseover', 'onmouseup', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload'))
@@ -1216,7 +1227,7 @@ function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>'
 *
 * @param string $name name of the cookie
 * @param string $value value of the cookie
-* @param int $time duration of the cookie   
+* @param int $time duration of the cookie
 */
 function icms_setCookieVar($name, $value, $time = 0)
 {
@@ -1230,7 +1241,7 @@ function icms_setCookieVar($name, $value, $time = 0)
 * @param string $name name of the cookie
 * @param string $default value to return if cookie not found
 *
-* @return string value of the cookie or default value   
+* @return string value of the cookie or default value
 */
 function icms_getCookieVar($name, $default = '')
 {
@@ -1241,7 +1252,7 @@ function icms_getCookieVar($name, $default = '')
 
 /**
 * Get URL of the page before the form to be able to redirect their after the form has been posted
-* 
+*
 * return string url before form
 */
 function icms_get_page_before_form()
@@ -1324,7 +1335,7 @@ function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $w
 
 /**
 * Get an array of the table used in a module
-* 
+*
 * @param string $moduleName name of the module
 * @param $items array of items managed by the module
 * @return array of tables used in the module
@@ -1339,7 +1350,7 @@ function icms_getTablesArray($moduleName, $items)
 /**
 * Function to create a navigation menu in content pages.
 * This function was based on the function that do the same in mastop publish module
-* 
+*
 * @param integer $id
 * @param string $separador
 * @param string $style
@@ -1389,7 +1400,7 @@ function StopXSS($text)
 	return $text;
 }
 
-function sanitizeContentCss($text)
+function icms_sanitizeContentCss($text)
 {
 	if(preg_match_all('/(.*?)\{(.*?)\}/ie',$text,$css))
 	{
@@ -1408,7 +1419,7 @@ function sanitizeContentCss($text)
 /**
 * Function to get the base domain name from a URL.
 * credit for this function should goto Phosphorus and Lime, it is released under LGPL.
-* 
+*
 * @param string $url the URL to be stripped.
 * @return string
 */
@@ -1479,7 +1490,7 @@ function icms_get_base_domain($url)
 /**
 * Function to get the domain from a URL.
 * credit for this function should goto Phosphorus and Lime, it is released under LGPL.
-* 
+*
 * @param string $url the URL to be stripped.
 * @return string
 */
@@ -1494,7 +1505,7 @@ function icms_get_url_domain($url)
 
 /**
 * Function to wordwrap given text.
-* 
+*
 * @param string $str 	The text to be wrapped.
 * @param string $width The column width - text will be wrapped when longer than $width.
 * @param string $break The line is broken using the optional break parameter.
@@ -1553,7 +1564,7 @@ function icms_wordwrap($str, $width, $break = '/n', $cut = false)
 * Function to reverse given text with utf-8 character sets
 *
 * credit for this function should goto lwc courtesy of php.net.
-* 
+*
 * @param string $str		The text to be reversed.
 * @param string $reverse	true will reverse everything including numbers, false will reverse text only but numbers will be left intact.
 *				example: when true: impresscms 2008 > 8002 smcsserpmi, false: impresscms 2008 > 2008 smcsserpmi
@@ -1603,7 +1614,7 @@ function getDbValue(&$db, $table, $field, $condition = '')
 
 /**
 * Function to escape $value makes safe for DB Queries.
-* 
+*
 * @param string $quotes - true/false - determines whether to add quotes to the value or not.
 * @param string $value - $variable that is being escaped for query.
 * @return string
@@ -1658,7 +1669,7 @@ $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
 
 $pdf->setLanguageArray($l); //set language items
-// set font 
+// set font
 if ( defined("_PDF_LOCAL_FONT") && _PDF_LOCAL_FONT && file_exists(ICMS_PDF_LIB_PATH.'/fonts/'._PDF_LOCAL_FONT.'.php')
 ) {
 $pdf -> SetFont(_PDF_LOCAL_FONT);
