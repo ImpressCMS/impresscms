@@ -82,7 +82,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 	 */
 	function render()
 	{
-		global $myts;
+		//global $myts;
 		$ret = '';
 		if ( @include_once(XOOPS_ROOT_PATH . $this->rootpath. "/fckeditor.php") )	{
 			$oFCKeditor = new FCKeditor($this->getName());
@@ -92,7 +92,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 			//$conv_pattern = array("/&gt;/i", "/&lt;/i", "/&quot;/i", "/&#039;/i"/* , "/(\015\012)|(\015)|(\012)|(\r\n)/" */);
 			//$conv_replace = array(">", "<", "\"", "'"/* , "<br />" */);
 			//$this->Value			= preg_replace($conv_pattern, $conv_replace, $this->_value);
-			$oFCKeditor->Value		= $myts->undoHtmlSpecialChars($this->_value);
+			$oFCKeditor->Value		= htmlspecialchars_decode($this->_value);
 			
 			//$oFCKeditor->Config['BaseHref'] = XOOPS_URL.$this->rootpath. "/";
 			if(is_readable(XOOPS_ROOT_PATH . $this->rootpath. '/editor/lang/'.$this->getLanguage().'.js')) {
@@ -102,7 +102,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 			if(defined("_XOOPS_EDITOR_FCKEDITOR_FONTLIST")){
 				$oFCKeditor->Config['FontNames'] = _XOOPS_EDITOR_FCKEDITOR_FONTLIST;
 			}
-			
+			if (is_object($GLOBALS['xoopsModule'])){
 			if(!file_exists($config_file = XOOPS_ROOT_PATH."/cache/fckconfig.".$GLOBALS["xoopsModule"]->getVar("dirname", "n").".js")) {
 				if ( $fp = fopen( $config_file , "wt" ) ) {
 					$fp_content = "/* FCKconfig module configuration */\n";
@@ -136,6 +136,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 			
 			if(is_readable($config_file = XOOPS_ROOT_PATH."/cache/fckconfig.".$GLOBALS["xoopsModule"]->getVar("dirname").".js")) {
 				$oFCKeditor->Config['CustomConfigurationsPath'] = XOOPS_URL . "/cache/fckconfig.".$GLOBALS["xoopsModule"]->getVar("dirname", "n").".js";
+			}
 			}
 			
 			foreach($this->config as $key => $val) {
