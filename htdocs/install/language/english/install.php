@@ -17,6 +17,7 @@ define( "SERVER_API", "Server API" );
 define( "PHP_EXTENSION", "%s extension" );
 define( "CHAR_ENCODING", "Character encoding" );
 define( "XML_PARSING", "XML parsing" );
+define( "OPEN_ID", "OpenID" );
 define( "REQUIREMENTS", "Requirements" );
 define( "_PHP_VERSION", "PHP version" );
 define( "RECOMMENDED_SETTINGS", "Recommended settings" );
@@ -60,9 +61,15 @@ define( "INITIAL_SETTINGS_TITLE", "Please enter your initial settings" );
 define( "DATA_INSERTION", "Data insertion" );
 define( "DATA_INSERTION_TITLE", "Saving your settings to the database" );
 define( "WELCOME", "Welcome" );
+define( "NO_PHP5", "No PHP 5" );
 define( "WELCOME_TITLE", "Installation of ImpressCMS completed" );		// L0
 define( "MODULES_INSTALL", "Install modules" );
 define( "MODULES_INSTALL_TITLE", "Installation of modules " );
+define( "NO_PHP5_TITLE", "No PHP 5" );
+define( "NO_PHP5_CONTENT","PHP 5 is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to PHP5 before attempting to install again. For more information, read <a href='http://community.impresscms.org/modules/smartsection/item.php?itemid=122' >ImpressCMS on PHP5 </a>.");
+define( "SAFE_MODE", "Safe Mode On" );
+define( "SAFE_MODE_TITLE", "Safe Mode On" );
+define( "SAFE_MODE_CONTENT", "ImpressCMS has detected PHP is running in Safe Mode. Because of this, your installation cannot continue. Please work with your hosting provider to change your environment before attempting to install again." );
 
 // Settings (labels and help text)
 define( "XOOPS_ROOT_PATH_LABEL", "ImpressCMS documents root physical path" ); // L55

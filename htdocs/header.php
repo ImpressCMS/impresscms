@@ -52,7 +52,7 @@ else
 	$config_handler =& xoops_gethandler('config');
 	$xoopsConfigMetaFooter =& $config_handler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
 	if (isset($xoopsConfigMetaFooter['google_meta']) && $xoopsConfigMetaFooter['google_meta'] != ''){
-		$arr_google_meta=explode('"',$xoopsConfigMetaFooter['google_meta']);
+		$arr_google_meta=explode('"', '<meta name="verify-v1" content="'.$xoopsConfigMetaFooter['google_meta'].'" />');
 		$xoTheme->addMeta('meta',$arr_google_meta[1],$arr_google_meta[3]);
 	}
 	// ################# Preload Trigger startOutputInit ##############

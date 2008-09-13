@@ -4,7 +4,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
 * Registry of IcmsPersistableObject
-* 
+*
 * Class responsible of caching objects to make them easily reusable without querying the database
 *
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
@@ -70,7 +70,7 @@ class IcmsPersistableRegistry {
 			return false;
 		}
 	}
-	
+
 	/**
     * Adding objects to the registry from an item name
     * This method will fetch the handler of the item / module and call the addObjectsFromHandler
@@ -93,7 +93,7 @@ class IcmsPersistableRegistry {
 		$object_handler = xoops_getModuleHandler($item, $modulename);
 		return $this->addObjectsFromHandler($object_handler, $criteria);
 	}
-	
+
 	/**
     * Adding objects as a list to the registry from an item name
     * This method will fetch the handler of the item / module and call the addListFromHandler
@@ -116,7 +116,7 @@ class IcmsPersistableRegistry {
 		$object_handler = xoops_getModuleHandler($item, $modulename);
 		return $this->addListFromHandler($object_handler, $criteria);
 
-	}	
+	}
 
 	/**
     * Fetching objects from the registry
@@ -200,7 +200,9 @@ class IcmsPersistableRegistry {
 		} else {
 			$objectHandler = xoops_getModuleHandler($itemname, $modulename);
 			$object = $objectHandler->get($key);
+
 			if (!$object->isNew()) {
+				$this->_registryArray['objects'][$modulename][$itemname][$key] = $object;
 				return $object;
 			} else {
 				return false;

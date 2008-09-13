@@ -1,9 +1,9 @@
-ImpressCMS 1.1 Beta 1 release notes
+ImpressCMS 1.1 RC 1 release notes
 ==================================
 
-The ImpressCMS Project is very proud to announce the third release of the all new 1.1 version of its Community Management System! This is the first Beta of the 1.1 series.
+The ImpressCMS Project is very proud to announce the 1.1 Release Candidate version of its Community Management System!
 
-Please note that this package is not to be installed on production site. The purpose of this release is solely to get the system tested as much as possible. We have implemented a huge amount of long requested features and now the time has finally come for our great community to test them !
+Please note that this package is not to be installed on production site. Altough we are very near a final release, we recommend our users to wait just a little bit ! If no bugs are found in this release, the highly expected ImpressCMS 1.1 Final release will be made shortly.
 
 Please see the full changelog for details in docs/changelog.txt.
 
@@ -30,7 +30,7 @@ Using wget command to download the .tar.gz full package
 
 This release can be downloaded directly on your server using the WGET command (providing you have SSH access to your server). To download it, simply use this code:
 
-wget http://www.impresscms.org/download/1.1-beta1
+wget http://www.impresscms.org/download/1.1-rc1
 
 
 Checking out ImpressCMS from the SVN
@@ -40,7 +40,7 @@ You can easily get ImpressCMS using SVN. Instructions about this can be found he
 http://wiki.impresscms.org/index.php?title=Install_and_update_using_SVN
 
 The path for this release is the following:
-https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.1_beta1/
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.1_rc1/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 

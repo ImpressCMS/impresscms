@@ -193,6 +193,44 @@ function xoops_module_update_system(&$module) {
 
 	}
 
+    /**
+     * A few fields were added in the DB after 1.1 Beta 1. Those fields were added to the upgrade script from 1.0 to 1.1,
+     * but it may be a problem for people following each of our release
+     * Bug item #2098379 is about this
+     */
+    $newDbVersion = 3;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+   		$table = new IcmsDatabasetable('users');
+	    if (!$table->fieldExists('opendid')) {
+	    	$table->addNewField('openid', "varchar(255) NOT NULL default ''");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+
+   		$table = new IcmsDatabasetable('users');
+	    if (!$table->fieldExists('user_viewoid')) {
+	    	$table->addNewField('user_viewoid', "tinyint(1) UNSIGNED NOT NULL default 0");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+
+   		$table = new IcmsDatabasetable('users');
+	    if (!$table->fieldExists('pass_expired')) {
+	    	$table->addNewField('pass_expired', "tinyint(1) UNSIGNED NOT NULL default 0");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+
+   		$table = new IcmsDatabasetable('users');
+	    if (!$table->fieldExists('enc_type')) {
+	    	$table->addNewField('enc_type', "tinyint(2) UNSIGNED NOT NULL default 0");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+	}
+
 	echo "</code>";
 
    $feedback = ob_get_clean();

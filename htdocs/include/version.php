@@ -10,7 +10,7 @@
 * @version		$Id: version.php 897 2008-02-15 19:53:31Z malanciault $
 */
 
-define("ICMS_VERSION_NAME",'ImpressCMS 1.1 Beta 1');
+define("ICMS_VERSION_NAME",'ImpressCMS 1.1 RC 1');
 
 // For backward compatibility with XOOPS
 define("XOOPS_VERSION", ICMS_VERSION_NAME);
@@ -23,12 +23,12 @@ define("XOOPS_VERSION", ICMS_VERSION_NAME);
  * 10 = Final
  */
 
-define("ICMS_VERSION_STATUS", 1);
+define("ICMS_VERSION_STATUS", 3);
 
 /*
  * Build number
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
-define("ICMS_VERSION_BUILD", 9);
+define("ICMS_VERSION_BUILD", 11);
 ?>

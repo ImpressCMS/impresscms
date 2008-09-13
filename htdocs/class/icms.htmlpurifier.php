@@ -127,6 +127,14 @@ class icms_HTMLPurifier
 	**/
 	function icms_html_purifier($html, $config = 'system-global')
 	{
+		global $xoopsUser;
+		// Admin Authentication
+		if($xoopsUser)
+		{
+			if(!$xoopsUser->isAdmin(-1)) {$is_admin = false;}
+			else {$is_admin = true;}
+		}
+		else {$is_admin = false;}
 		
 		if(get_magic_quotes_gpc()) {$html = stripslashes($html);}
 
@@ -150,6 +158,7 @@ class icms_HTMLPurifier
 		{
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'system-global');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
+			$icms_PurifyConfig->set('HTML', 'Trusted', $is_admin);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
 //			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
@@ -202,6 +211,7 @@ class icms_HTMLPurifier
 		{
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'system-basic');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
+			$icms_PurifyConfig->set('HTML', 'Trusted', $is_admin);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
 //			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
@@ -269,6 +279,7 @@ class icms_HTMLPurifier
 		{
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'display');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
+			$icms_PurifyConfig->set('HTML', 'Trusted', $is_admin);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
 //			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.
@@ -321,6 +332,7 @@ class icms_HTMLPurifier
 		{
 			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'preview');
 			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
+			$icms_PurifyConfig->set('HTML', 'Trusted', $is_admin);
 			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
 //			$icms_PurifyConfig->set('HTML', 'Allowed', $HTML_Allowed); // sets allowed html tags that can be used.
 			$icms_PurifyConfig->set('HTML', 'AllowedElements', $HTML_Allowed_Elms); // sets allowed html elements that can be used.

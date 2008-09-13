@@ -22,7 +22,8 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
-===2008-09-?? : 1.1 RC 1===
+===2008-09-14 : 1.1 RC 1===
+
 '''Added'''
 * agree box before upgrading to make sure of a backup. (stranger)
 * added password can't contain username to pass check in admin edit user form. (vaughan)
@@ -40,6 +41,9 @@ ImpressCMS ChangeLog
 * Time picker now works correctly with jalali (stranger)
 * Improving content manager page display to use displayTarea instead of previewTarea (malanciault)
 * Changing sanitizeContentCss() to icms_sanitizeContentCss() (malanciault)
+* #2011730: Installer: Check for phpOpenID requirements on install (malanciault/skenow)
+* #2014053: Installer: Check for php5 on install (malanciault/skenow)
+* #2091448: Installer: installation with safemode=on is not possible (malanciault/skenow)
 
 '''Fixed'''
 * it was not possible to login using email address like v1.0 (vaughan)
@@ -61,6 +65,7 @@ ImpressCMS ChangeLog
 * #1984939: Creating a new CustomTag: Undefined variable: groups_value in file /class/icmsform/icmsform.php line 270 (malanciault)
 * #2096670: Changed field types for meta_description and meta_keywords to only allow plain text
 * Notice: Undefined variable: openid in file /modules/system/admin/users/main.php line 61. (stranger/malanciault)
+* Fixed issues with inserting google meta tag. (stranger)
 
 ===2008-08-08 : 1.1 Beta 1===
 
@@ -214,6 +219,9 @@ ImpressCMS ChangeLog
 * #1970777 - Smilie bug with dhtml-editor. (real_therplima)
 * Fix a bug that not allow change the avatar. (real_therplima)
 * #1978931 - Re-committed fix for bug (icetomyst)
+* #2098379 a few fields were missing in users table on certain specific uprade path (malanciault)
+* #2103607 Core Userside: _RETRYPOST is missing (session_confim) (malanciault)
+
 
 ===2008-05-22 : 1.1 Apha 1 ===
 

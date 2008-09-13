@@ -16,7 +16,7 @@
 */
 /**
  *
- */ 
+ */
 require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
@@ -34,7 +34,7 @@ function xoDiag( $status = -1, $str = '' ) {
 	if ( empty($str) ) {
 		$str = $strings[$status];
 	}
-	return '<span class="' . $classes[$status] . '">' . $str . '</span>';	
+	return '<span class="' . $classes[$status] . '">' . $str . '</span>';
 }
 function xoDiagBoolSetting( $name, $wanted = false, $severe = false ) {
 	$setting = strtolower( ini_get( $name ) );
@@ -118,7 +118,7 @@ function xoDiagIfWritable( $path ) {
 					echo xoDiag( 1, implode( ',', $ext ) );
 				}
 			?></td>
-    </tr>   
+    </tr>
     <tr>
         <td><?php printf( PHP_EXTENSION, XML_PARSING ); ?></td>
         <td><?php
@@ -131,7 +131,22 @@ function xoDiagIfWritable( $path ) {
 					echo xoDiag( 1, implode( ',', $ext ) );
 				}
 			?></td>
-    </tr>   
+    </tr>
+    <tr>
+        <td><?php printf( PHP_EXTENSION, OPEN_ID ); ?></td>
+        <td><?php
+				$ext = array();
+				if ( extension_loaded( 'curl' ) )		$ext[] = 'Curl';
+				if ( extension_loaded( 'bcmath' ) )		$ext[] = 'Math Support';
+				if ( extension_loaded( 'openssl' ) )	$ext[] = 'OpenSSL';
+				if ( empty($ext) ) {
+					echo xoDiag( 0, NONE );
+				} else {
+					echo xoDiag( 1, implode( ',', $ext ) );
+				}
+			?></td>
+    </tr>
+
     </tbody>
 	</table>
 	<!--
@@ -150,11 +165,11 @@ function xoDiagIfWritable( $path ) {
 	</tr>
 	<?php } ?>
 	</table>
-	-->	
+	-->
 <?php
 	$content = ob_get_contents();
 	ob_end_clean();
-	
+
     include 'install_tpl.php';
 
 ?>
