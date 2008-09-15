@@ -83,6 +83,14 @@ if(isset($previewblock))
 	$block['ctype'] = isset($bctype) ? $bctype : $myblock->getVar('c_type');
 	$block['is_custom'] = true;
 	$block['cachetime'] = intval($bcachetime);
+        $db =& Database::getInstance();
+        $sql = "SELECT gperm_groupid FROM ".$db->prefix('group_permission')." WHERE gperm_itemid='".intval($block['bid'])."'";
+        $result = $db->query($sql);
+        $groups_ids = array();
+        while ($row = $db->fetchArray($result)) {
+            $groups_ids[] = intval($row['gperm_groupid']);
+        }
+        $block['groups'] = $groups_ids;
 	echo '<a href="admin.php?fct=blocksadmin">'. _AM_BADMIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$block['form_title'].'<br /><br />';
 	include ICMS_ROOT_PATH.'/modules/system/admin/blocksadmin/blockform.php';
 	$form->display();
@@ -125,7 +133,11 @@ if($op == 'changestatus')
 if($op == 'save')
 {
 	if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=blocksadmin', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
-	save_block($bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bmodule, $bcachetime);
+        $bgroups = isset($bgroups) ? $bgroups : array();
+        $gperm_handler =& xoops_gethandler('groupperm');
+        $groups = $_POST['bgroups'];
+        $count = count($groups);
+	save_block($bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bmodule, $bcachetime, $bgroups);
 	exit();
 }
 if($op == 'update')
@@ -135,7 +147,12 @@ if($op == 'update')
     $options = isset($options) ? $options : array();
     $bcontent = isset($bcontent) ? $bcontent : '';
     $bctype = isset($bctype) ? $bctype : '';
-    update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options);
+    $bgroups = isset($bgroups) ? $bgroups : array();
+    $gperm_handler =& xoops_gethandler('groupperm');
+    $groups = array();
+    if (isset($_POST['bgroups'])) { $groups = $_POST['bgroups']; }
+    $count = count($groups);
+    update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options, $bgroups);
 }
 if($op == 'delete_ok')
 {

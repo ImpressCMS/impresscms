@@ -106,7 +106,7 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         
         $icmsAdminTpl->assign('token',$GLOBALS['xoopsSecurity']->getTokenHTML());
         
-        $block = array('form_title' => _AM_ADDBLOCK, 'side' => 0, 'weight' => 0, 'visible' => 1, 'title' => '', 'content' => '', 'modules' => array('0-1'), 'is_custom' => true, 'ctype' => 'H', 'cachetime' => 0, 'op' => 'save', 'edit_form' => false);
+        $block = array('form_title' => _AM_ADDBLOCK, 'side' => 0, 'weight' => 0, 'visible' => 1, 'title' => '', 'content' => '', 'modules' => array('0-1'), 'is_custom' => true, 'ctype' => 'H', 'cachetime' => 0, 'op' => 'save', 'edit_form' => false, 'groups' => $groups_ids);
         include XOOPS_ROOT_PATH.'/modules/system/admin/blocksadmin/blockform.php';
         $icmsAdminTpl->assign('addform',$form->render());
         
@@ -135,7 +135,7 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
         return $icmsAdminTpl->fetch('db:admin/blocksadmin/system_adm_blocksadmin.html');
     }
 
-    function save_block($bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bmodule, $bcachetime)
+    function save_block($bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bmodule, $bcachetime, $bgroups)
     {
         global $xoopsUser;
         if (empty($bmodule)) {
@@ -184,7 +184,8 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
             $sql = "INSERT INTO ".$db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($newid)."', '".intval($mid)."', '".intval($pageid)."')";
             $db->query($sql);
         }
-		$groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+        $groups = array();
+        if (isset($_POST['bgroups'])) { $groups = $_POST['bgroups']; }
         $count = count($groups);
         for ($i = 0; $i < $count; $i++) {
             $sql = "INSERT INTO ".$db->prefix('group_permission')." (gperm_groupid, gperm_itemid, gperm_name, gperm_modid) VALUES ('".$groups[$i]."', '".intval($newid)."', 'block_read', '1')";
@@ -205,13 +206,20 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
             $modules[] = intval($row['module_id']).'-'.intval($row['page_id']);
         }
         $is_custom = ($myblock->getVar('block_type') == 'C' || $myblock->getVar('block_type') == 'E') ? true : false;
-        $block = array('form_title' => _AM_EDITBLOCK, 'name' => $myblock->getVar('name'), 'side' => $myblock->getVar('side'), 'weight' => $myblock->getVar('weight'), 'visible' => $myblock->getVar('visible'), 'title' => $myblock->getVar('title', 'E'), 'content' => $myblock->getVar('content', 'E'), 'modules' => $modules, 'is_custom' => $is_custom, 'ctype' => $myblock->getVar('c_type'), 'cachetime' => $myblock->getVar('bcachetime'), 'op' => 'update', 'bid' => $myblock->getVar('bid'), 'edit_form' => $myblock->getOptions(), 'template' => $myblock->getVar('template'), 'options' => $myblock->getVar('options'));
+        $sql = "SELECT gperm_groupid FROM ".$db->prefix('group_permission')." WHERE gperm_itemid='".intval($bid)."'";
+        $result = $db->query($sql);
+        $groups_ids = array();
+        while ($row = $db->fetchArray($result)) {
+            $groups_ids[] = intval($row['gperm_groupid']);
+        }
+        $block['groups'] = $groups_ids;
+        $block = array('form_title' => _AM_EDITBLOCK, 'name' => $myblock->getVar('name'), 'side' => $myblock->getVar('side'), 'weight' => $myblock->getVar('weight'), 'visible' => $myblock->getVar('visible'), 'title' => $myblock->getVar('title', 'E'), 'content' => $myblock->getVar('content', 'E'), 'modules' => $modules, 'is_custom' => $is_custom, 'ctype' => $myblock->getVar('c_type'), 'cachetime' => $myblock->getVar('bcachetime'), 'op' => 'update', 'bid' => $myblock->getVar('bid'), 'edit_form' => $myblock->getOptions(), 'template' => $myblock->getVar('template'), 'options' => $myblock->getVar('options'), 'groups' => $groups_ids);
         echo '<a href="admin.php?fct=blocksadmin">'. _AM_BADMIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITBLOCK.'<br /><br />';
         include XOOPS_ROOT_PATH.'/modules/system/admin/blocksadmin/blockform.php';
         $form->display();
     }
 
-    function update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options=array())
+    function update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options=array(),$bgroups=array())
     {
         global $xoopsConfig;
         if (empty($bmodule)) {
@@ -239,6 +247,15 @@ if ( $xoopsUser->isAdmin($xoopsModule->mid()) ) {
                 $options = implode('|', $options);
                 $myblock->setVar('options', $options);
             }
+        }
+        if (isset($bgroups)) {
+		$db =& Database::getInstance();
+		$sql = sprintf("DELETE FROM %s WHERE gperm_itemid = '%u'", $db->prefix('group_permission'), intval($bid));
+		$db->query($sql);
+		foreach ($bgroups as $bgroup) {
+			$sql = "INSERT INTO ".$db->prefix('group_permission')." (gperm_groupid, gperm_itemid, gperm_modid, gperm_name) VALUES ('".intval($bgroup)."', '".intval($bid)."', 1, 'block_read')";
+		   	$db->query($sql);
+		}
         }
         if ($myblock->getVar('block_type') == 'C') {
             switch ($bctype) {
