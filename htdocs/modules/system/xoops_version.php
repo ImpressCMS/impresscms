@@ -284,7 +284,7 @@ $modversion['blocks'][$i]['file'] = "content_blocks.php";
 $modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME16;
 $modversion['blocks'][$i]['description'] = "Menu of content pages and categories";
 $modversion['blocks'][$i]['show_func'] = "b_content_menu_show";
-$modversion['blocks'][$i]['options'] = "content_weight|ASC|1|#F2E2A0";
+$modversion['blocks'][$i]['options'] = "content_weight|ASC|1|#F2E2A0|0";
 $modversion['blocks'][$i]['edit_func'] = "b_content_menu_edit";
 $modversion['blocks'][$i]['template'] = 'system_block_contentmenu.html';
 

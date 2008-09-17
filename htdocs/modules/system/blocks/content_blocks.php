@@ -25,7 +25,7 @@ function b_content_menu_show($options) {
     
     $block['showsubs'] = $options[2];
     $block['selcolor'] = $options[3];
-    $block['menu'] = getPages($options[2],$options[0],$options[1]);
+    $block['menu'] = getPages($options[2],$options[0],$options[1],$options[4]);
 
     return $block;
 }
@@ -65,7 +65,8 @@ function b_content_menu_edit($options){
     }
     $form .= '&nbsp;<input type="radio" name="options[2]" value="0"'.$chk.' />'._NO;
     $form .= '<br />'._MB_SYSTEM_SELCOLOR.'&nbsp;<input type="text" name="options[3]" value="'.$options[3].'" />';
-
+    $form .= '<br />'._MB_SYSTEM_CONTID.'&nbsp;<input type="text" name="options[4]" value="'.$options[4].'" />';
+    
     return $form;
 }
 
