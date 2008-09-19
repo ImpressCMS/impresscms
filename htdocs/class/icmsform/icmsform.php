@@ -220,8 +220,7 @@ class IcmsForm extends XoopsThemeForm {
 							break;
 
 						case XOBJ_DTYPE_TXTAREA:
-
-							$form_text_area = $this->getTextArea($key, $var);
+							$form_text_area = $this->getControl('textarea', $key);
 							$this->addElement($form_text_area, $key, $var);
 							unset($form_text_area);
 							break;
@@ -347,7 +346,23 @@ class IcmsForm extends XoopsThemeForm {
 				break;
 
 			case 'textarea' :
-				return $this->getTextArea($key);
+				$form_rows = isset($this->targetObject->controls[$key]['rows']) ? $this->targetObject->controls[$key]['rows'] : 5;
+				$form_cols = isset($this->targetObject->controls[$key]['cols']) ? $this->targetObject->controls[$key]['cols'] : 60;
+
+				$editor = new XoopsFormTextArea($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
+				if ($this->targetObject->vars[$key]['form_dsc']) {
+					$editor->setDescription($this->targetObject->vars[$key]['form_dsc']);
+				}
+				return $editor;
+				break;
+
+			case 'dhtmltextarea' :
+				$editor = new XoopsFormDhtmlTextArea($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'), 20, 60);
+				if ($this->targetObject->vars[$key]['form_dsc']) {
+					$editor->setDescription($this->targetObject->vars[$key]['form_dsc']);
+				}
+				return $editor;
+				break;
 
 			case 'theme':
 				return $this->getThemeSelect($key, $this->targetObject->vars[$key]);
@@ -420,191 +435,6 @@ class IcmsForm extends XoopsThemeForm {
 		}
 	}
 
-	function getTextArea($key) {
-		$var = $this->targetObject->vars[$key];
-
-		// if no control has been created, let's create a default one
-		if (!isset($this->targetObject->controls[$key])) {
-			$control = array('name' => 'textarea',
-			'itemHandler' => false,
-			'method' => false,
-			'module' => false,
-			'form_editor'=>'default');
-		} else {
-			$control = $this->targetObject->controls[$key];
-		}
-
-		/**
-		 * @todo we need to integrate with new ICMS editors feature
-		 */
-		/*
-		$xoops22 = smart_isXoops22();
-
-		$form_editor = isset($control['form_editor']) ? $control['form_editor'] : 'textarea';
-		/**
-		 * If the editor is 'default', retreive the default editor of this module
-		 */
-/*		if ($form_editor == 'default') {
-			global $xoopsModuleConfig;
-			$form_editor = isset($xoopsModuleConfig['default_editor']) ? $xoopsModuleConfig['default_editor'] : 'textarea';
-		}
-
-		$caption = $var['form_caption'];
-		$name = $key;
-
-		$value = $this->targetObject->getVar($key);
-
-		$value = $this->targetObject->getValueFor($key, true);
-
-		$editor_configs=array();
-		$editor_configs["name"] = $name;
-		$editor_configs["value"] = $value;
-		if ($form_editor != 'textarea') {
-			$editor_configs["rows"] = 35;
-			$editor_configs["cols"] = 60;
-		}
-
-		if (isset($control['rows'])) {
-			$editor_configs["rows"] = $control['rows'];
-		}
-		if (isset($control['cols'])) {
-			$editor_configs["cols"] = $control['cols'];
-		}
-
-		$editor_configs["width"] = "100%";
-		$editor_configs["height"] = "400px";
-
-		$dhtml = true;
-		$xoopseditorclass = XOOPS_ROOT_PATH . '/class/xoopsform/formeditor.php';
-
-		if (file_exists($xoopseditorclass)) {
-			include_once($xoopseditorclass);
-			$editor = new XoopsFormEditor($caption, $form_editor, $editor_configs, $nohtml = false, $onfailure = "textarea");
-		} else {
-
-			switch($form_editor) {
-
-				case 'tiny' :
-					if (!$xoops22) {
-						if ( is_readable(XOOPS_ROOT_PATH . "/class/xoopseditor/tinyeditor/formtinytextarea.php"))	{
-							include_once(XOOPS_ROOT_PATH . "/class/xoopseditor/tinyeditor/formtinytextarea.php");
-							$editor = new XoopsFormTinyTextArea(array('caption'=> $caption, 'name'=>$name, 'value'=>$value, 'width'=>'100%', 'height'=>'300px'),true);
-						} else {
-							if ($dhtml) {
-								$editor = new XoopsFormDhtmlTextArea($caption, $name, $value, 20, 60);
-							} else {
-								$editor = new XoopsFormTextArea($caption, $name, $value, 7, 60);
-							}
-						}
-					} else {
-						$editor = new XoopsFormEditor($caption, "tinyeditor", $editor_configs);
-					}
-					break;
-
-				case 'dhtmltextarea' :
-				case 'dhtmltext' :
-					$editor = new XoopsFormDhtmlTextArea($var['form_caption'], $key, $this->targetObject->getVar($key, 'e'), 20, 60);
-					if ($var['form_dsc']) {
-						$editor->setDescription($var['form_dsc']);
-					}
-					break;
-
-				case 'fckeditor' :
-					if (!$xoops22) {
-						if ( is_readable(XOOPS_ROOT_PATH . "/class/xoopseditor/fckeditor/formfckeditor.php"))	{
-							include_once(XOOPS_ROOT_PATH . "/class/xoopseditor/fckeditor/formfckeditor.php");
-							$editor = new XoopsFormFckeditor(array('caption'=> $caption, 'name'=>$name, 'value'=>$value, 'width'=>'100%', 'height'=>'300px'),true);
-						} else {
-							if ($dhtml) {
-								$editor = new XoopsFormDhtmlTextArea($caption, $name, $value, 20, 60);
-							} else {
-								$editor = new XoopsFormTextArea($caption, $name, $value, 7, 60);
-							}
-						}
-					} else {
-						$editor = new XoopsFormEditor($caption, "fckeditor", $editor_configs);
-					}
-					break;
-
-				case 'inbetween' :
-					if (!$xoops22) {
-						if ( is_readable(XOOPS_ROOT_PATH . "/class/xoopseditor/inbetween/forminbetweentextarea.php"))	{
-							include_once(XOOPS_ROOT_PATH . "/class/xoopseditor/inbetween/forminbetweentextarea.php");
-							$editor = new XoopsFormInbetweenTextArea(array('caption'=> $caption, 'name'=>$name, 'value'=>$value, 'width'=>'100%', 'height'=>'300px'),true);
-						} else {
-							if ($dhtml) {
-								$editor = new XoopsFormDhtmlTextArea($caption, $name, $value, 20, 60);
-							} else {
-								$editor = new XoopsFormTextArea($caption, $name, $value, 7, 60);
-							}
-						}
-					} else {
-						$editor = new XoopsFormEditor($caption, "inbetween", $editor_configs);
-					}
-					break;
-
-				case 'koivi' :
-					if (!$xoops22) {
-						if ( is_readable(XOOPS_ROOT_PATH . "/class/wysiwyg/formwysiwygtextarea.php"))	{
-							include_once(XOOPS_ROOT_PATH . "/class/wysiwyg/formwysiwygtextarea.php");
-							$editor = new XoopsFormWysiwygTextArea($caption, $name, $value, '100%', '400px');
-						} else {
-							if ($dhtml) {
-								$editor = new XoopsFormDhtmlTextArea($caption, $name, $value, 20, 60);
-							} else {
-								$editor = new XoopsFormTextArea($caption, $name, $value, 7, 60);
-							}
-						}
-					} else {
-						$editor = new XoopsFormEditor($caption, "koivi", $editor_configs);
-					}
-					break;
-
-				case "spaw":
-					if(!$xoops22) {
-						if (is_readable(XOOPS_ROOT_PATH . "/class/spaw/formspaw.php"))	{
-							include_once(XOOPS_ROOT_PATH . "/class/spaw/formspaw.php");
-							$editor = new XoopsFormSpaw($caption, $name, $value);
-						}
-					} else {
-						$editor = new XoopsFormEditor($caption, "spaw", $editor_configs);
-					}
-					break;
-
-				case "htmlarea":
-					if(!$xoops22) {
-						if ( is_readable(XOOPS_ROOT_PATH . "/class/htmlarea/formhtmlarea.php"))	{
-							include_once(XOOPS_ROOT_PATH . "/class/htmlarea/formhtmlarea.php");
-							$editor = new XoopsFormHtmlarea($caption, $name, $value);
-						}
-					} else {
-						$editor = new XoopsFormEditor($caption, "htmlarea", $editor_configs);
-					}
-					break;
-
-				default:
-				case 'textarea':
-					$form_rows = isset($control['rows']) ? $control['rows'] : 5;
-					$form_cols = isset($control['cols']) ? $control['cols'] : 60;
-
-					$editor = new XoopsFormTextArea($var['form_caption'], $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
-					if ($var['form_dsc']) {
-						$editor->setDescription($var['form_dsc']);
-					}
-					break;
-
-			}
-		}
-*/
-// hack for now:
-			$editor = new XoopsFormDhtmlTextArea($var['form_caption'], $key, $this->targetObject->getVar($key, 'e'), 20, 60);
-			if ($var['form_dsc']) {
-				$editor->setDescription($var['form_dsc']);
-			}
-
-		return $editor;
-	}
-
 	function getThemeSelect($key, $var, $multiple=false) {
 
 		$size = $multiple ? 5 : 1;
@@ -656,7 +486,7 @@ class IcmsForm extends XoopsThemeForm {
 				$ret .= $ele;
 			} elseif ( !$ele->isHidden() ) {
 				//$class = ( $class == 'even' ) ? 'odd' : 'even';
-				$ret .= "<tr id='" . $ele->getName() . "' valign='top' align='left'><td class='head'>".$ele->getCaption();
+				$ret .= "<tr id='" . $ele->getName() . "_row' valign='top' align='left'><td class='head'>".$ele->getCaption();
 				if ($ele->getDescription() != '') {
 					$ret .= '<br /><br /><span style="font-weight: normal;">'.$ele->getDescription().'</span>';
 				}

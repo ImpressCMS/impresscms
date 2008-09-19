@@ -128,10 +128,10 @@ class icms_HTMLPurifier
 	function icms_html_purifier($html, $config = 'system-global')
 	{
 		global $xoopsUser;
-		// Admin Authentication
-		if($xoopsUser)
+		if(is_object($xoopsUser))
 		{
-			if(!$xoopsUser->isAdmin(-1)) {$is_admin = false;}
+			$xoopsModule =& XoopsModule::getByDirname('system');
+			if(!$xoopsUser->isAdmin($xoopsModule->mid())) {$is_admin = false;}
 			else {$is_admin = true;}
 		}
 		else {$is_admin = false;}
@@ -206,6 +206,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
 		}
 		elseif($config = 'system-basic')
 		{
@@ -258,6 +259,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
 		}
 		elseif($config = 'protector')
 		{
@@ -327,6 +329,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
 		}
 		elseif($config = 'preview') // config id level for preview HTMLArea
 		{
@@ -380,6 +383,7 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
+			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
 		}
 		$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition(true);
 

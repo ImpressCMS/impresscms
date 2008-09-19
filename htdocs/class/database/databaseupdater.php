@@ -75,14 +75,14 @@ class IcmsDatabasetable {
 	 * @var array $_deleteAll containing items to be deleted
 	 */
 	var $_deleteAll;
-	
+
 	var $_existingFieldsArray=false;
-	
+
 	/**
 	 * @var bool $force force the query even in a GET process
 	 */
 	var $force=false;
-	
+
 	/**
 	 * xoopsDB database object
 	 *
@@ -98,7 +98,7 @@ class IcmsDatabasetable {
 	 */
 	function IcmsDatabasetable($name) {
 		global $xoopsDB;
-		
+
 		$this->_db = $xoopsDB;
 		$this->_name = $name;
 		$this->_data = array ();
@@ -138,7 +138,7 @@ class IcmsDatabasetable {
 		$this->_db->freeRecordSet($ret);
 		return ($bRetVal);
 	}
-		
+
 	function getExistingFieldsArray() {
 		$sql = "SHOW COLUMNS FROM " . $this->name();
 		$result = $this->_db->queryF($sql);
@@ -220,7 +220,7 @@ class IcmsDatabasetable {
 			if ($this->force) {
 				$ret = $this->_db->queryF($query);
 			} else {
-				$ret = $this->_db->query($query);	
+				$ret = $this->_db->query($query);
 			}
 			if (!$ret) {
 				echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA_ERR, $this->name()) . "<br />";
@@ -274,7 +274,7 @@ class IcmsDatabasetable {
      * @param   object  $criteria   {@link CriteriaElement}
      * @param 	bool	$fieldvalueIsOperation TRUE if fieldvalue is an operation, for example, conf_order+1
 	 *
-     * @return  bool 
+     * @return  bool
 	 */
 	function addUpdateAll($fieldname, $fieldvalue, $criteria, $fieldvalueIsOperation) {
 		$item['fieldname'] = $fieldname;
@@ -290,12 +290,12 @@ class IcmsDatabasetable {
      * @param   string  $fieldvalue Value to write
      * @param   object  $criteria   {@link CriteriaElement}
 	 *
-     * @return  bool 
+     * @return  bool
 	 */
 	function addDeleteAll($criteria) {
 		$item['criteria'] = $criteria;
 		$this->_deleteAll[] = $item;
-	}	
+	}
 	/**
 	 * Get new fields to be added
 	 *
@@ -322,7 +322,7 @@ class IcmsDatabasetable {
 	 */
 	function getDeleteAll() {
 		return $this->_deleteAll;
-	}	
+	}
 	/**
 	 * Add values of a record to be added
 	 *
@@ -359,9 +359,9 @@ class IcmsDatabasetable {
 		$query = "CREATE TABLE `" . $this->name() . "` (" . $query . ") TYPE=MyISAM";
 
 		if ($this->force) {
-			$ret = $this->_db->queryF($query);	
+			$ret = $this->_db->queryF($query);
 		} else {
-			$ret = $this->_db->query($query);	
+			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
 			echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
@@ -412,7 +412,7 @@ class IcmsDatabasetable {
 			} else {
 				$ret = $ret && $this->_db->query($query);
 			}
-			
+
 			if ($alteredField['showerror']) {
 				if (!$ret) {
 				echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD_ERR, $alteredField['name'], $this->name()) . " (" . $this->_db->error(). ")<br />";
@@ -438,9 +438,9 @@ class IcmsDatabasetable {
 			if ($this->force) {
 				$ret = $ret && $this->_db->queryF($query);
 			} else {
-				$ret = $ret && $this->_db->query($query);	
+				$ret = $ret && $this->_db->query($query);
 			}
-			
+
 			if (!$ret) {
 				echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD_ERR, $newField['name'], $this->name()) . "<br />";
 			} else {
@@ -466,7 +466,7 @@ class IcmsDatabasetable {
     		$fieldname = $item['fieldname'];
     		$fieldvalue = $item['fieldvalue'];
     		$criteria = isset($item['criteria']) ? $item['criteria'] : null;
-    		 
+
     		$set_clause = $fieldname . ' = ';
 	    	if ( is_numeric( $fieldvalue ) || $item['fieldvalueIsOperation']) {
 	    		$set_clause .=  $fieldvalue;
@@ -504,7 +504,7 @@ class IcmsDatabasetable {
     {
 		$ret = true;
     	foreach ($this->getDeleteAll() as $item) {
-    		$criteria = isset($item['criteria']) ? $item['criteria'] : null;    	
+    		$criteria = isset($item['criteria']) ? $item['criteria'] : null;
 	        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
 	            $sql = 'DELETE FROM '.$this->table;
 	            $sql .= ' '.$criteria->renderWhere();
@@ -523,8 +523,8 @@ class IcmsDatabasetable {
     	}
 	    return $ret;
        }
-	
-	
+
+
 	/**
 	 * Use to drop fields
 	 *
@@ -540,7 +540,7 @@ class IcmsDatabasetable {
 			} else {
 				$ret = $ret && $this->_db->query($query);
 			}
-			
+
 			if (!$ret) {
 				echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD_ERR, $dropedField, $this->name()) . " (" . $this->_db->error(). ")<br />";
 			} else {
@@ -567,14 +567,14 @@ class IcmsDatabaseupdater {
 	 * xoopsDB database object
 	 *
 	 * @var @link XoopsDatabase object
-	 */	
+	 */
 	var $_db;
-	
+
 	function IcmsDatabaseupdater() {
 		global $xoopsDB;
-		
+
 		$this->_db = $xoopsDB;
-		
+
 		$this->_dbTypesArray[XOBJ_DTYPE_TXTBOX] = 'varchar(255)';
 		$this->_dbTypesArray[XOBJ_DTYPE_TXTAREA] = 'text';
 		$this->_dbTypesArray[XOBJ_DTYPE_INT] = 'int(11)';
@@ -607,11 +607,11 @@ class IcmsDatabaseupdater {
 	 */
 	function runQuery($query, $goodmsg, $badmsg, $force=false) {
 		if ($force) {
-			$ret = $this->_db->queryF($query);	
+			$ret = $this->_db->queryF($query);
 		} else {
 			$ret = $this->_db->query($query);
 		}
-		
+
 		if (!$ret) {
 			echo "&nbsp;&nbsp;$badmsg<br />";
 			return false;
@@ -625,7 +625,7 @@ class IcmsDatabaseupdater {
 	 *
 	 * @param string $from name of the table to rename
 	 * @param string $to new name of the renamed table
-	 * @param bool 	$force force the query even in a GET process 
+	 * @param bool 	$force force the query even in a GET process
 	 *
 	 * @return bool true if success, false if an error occured
 	 */
@@ -659,7 +659,7 @@ class IcmsDatabaseupdater {
 	function updateTable($table, $force=false) {
 		$ret = true;
 		$table->force = $force;
-		
+
 		// If table has a structure, create the table
 		if ($table->getStructure()) {
 			$ret = $table->createTable() && $ret;
@@ -693,8 +693,8 @@ class IcmsDatabaseupdater {
 
 	/**
 	 * Upgrade automaticaly an item of a module
-	 * 
-	 * Note that currently, $item needs to represent the name of an object derived 
+	 *
+	 * Note that currently, $item needs to represent the name of an object derived
 	 * from SmartObject, for example, $item == 'invoice' wich will represent $dirnameInvoice
 	 * for example SmartbillingInvoice which extends SmartObject class
 	 *
@@ -714,14 +714,14 @@ class IcmsDatabaseupdater {
 	/**
 	 * Get the type of the field based on the info of the var
 	 *
-	 * @param array $var array containing information about the var 
+	 * @param array $var array containing information about the var
 	 * @return string type of the field
 	 */
 	function getFieldTypeFromVar($var) {
 		$ret = isset($this->_dbTypesArray[$var['data_type']]) ? $this->_dbTypesArray[$var['data_type']] : 'text';
 		return $ret;
 	}
-	
+
 	/**
 	 * Get the default value based on the info of the var
 	 *
@@ -743,6 +743,8 @@ class IcmsDatabaseupdater {
 							XOBJ_DTYPE_FILE
 						))) {
 				return '0';
+			} elseif($var['data_type'] == XOBJ_DTYPE_TXTAREA) {
+				return 'nodefault';
 			} else {
 				return '';
 			}
@@ -769,11 +771,21 @@ class IcmsDatabaseupdater {
 						$extra = "auto_increment";
 					} else {
 						$default =  $this->getFieldDefaultFromVar($var);
-						$extra = "default '$default'
+						if ($default != 'nodefault') {
+							$extra = "default '$default'
+";
+						} else {
+							$extra = false;
+						}
+					}
+					if ($extra) {
+						$structure .= "`$key` $type not null $extra,
+";
+					} else {
+						$structure .= "`$key` $type not null,
 ";
 					}
-					$structure .= "`$key` $type not null $extra,
-";
+
 				}
 			}
 			$structure .= "PRIMARY KEY  (`" . $module_handler->keyName . "`)
@@ -797,13 +809,21 @@ class IcmsDatabaseupdater {
 						// if field already exists, let's check if the definition is correct
 						$definition =  strtolower($existingFieldsArray[$key]);
 						$type = $this->getFieldTypeFromVar($var);
+
 						if ($key == $module_handler->keyName) {
 							$extra = "auto_increment";
 						} else {
 							$default =  $this->getFieldDefaultFromVar($var, $key);
-							$extra = "default '$default'";
+							if ($default != 'nodefault') {
+								$extra = "default '$default'";
+							} else {
+								$extra = false;
+							}
 						}
-						$actual_definition = "$type not null $extra";
+						$actual_definition = "$type not null";
+						if ($extra) {
+							$actual_definition .= " $extra";
+						}
 						if ($definition != $actual_definition) {
 							$table->addAlteredField($key, $actual_definition);
 						}
@@ -852,7 +872,7 @@ class IcmsDatabaseupdater {
 	    if (!$configitem_handler->insert($configitemObj)) {
 	    	echo "Unable to insert config $conf_name'<br />";
 	    } else{
-			echo "Successfully inserted '$conf_name' config<br />";	    
+			echo "Successfully inserted '$conf_name' config<br />";
 	    }
 	}
 	function moduleUpgrade(&$module) {
@@ -863,8 +883,8 @@ class IcmsDatabaseupdater {
 	    $dbVersion  = $module->getDbversion();
 
 	    $newDbVersion = constant(strtoupper($dirname . '_db_version')) ? constant(strtoupper($dirname . '_db_version')) : 0;
-		echo '&nbsp;&nbsp;Database version : ' . $dbVersion . '<br />';
-		echo '&nbsp;&nbsp;New database version : ' . $newDbVersion . '<br />';
+		echo 'Current database version : ' . $dbVersion . '<br />';
+		echo '&nbsp;&nbsp;Latest database version : ' . $newDbVersion . '<br />';
 
 	    if ($newDbVersion > $dbVersion) {
 	    	for($i=$dbVersion+1;$i<=$newDbVersion; $i++) {
@@ -894,13 +914,13 @@ class IcmsDatabaseupdater {
 	    $this->updateModuleDBVersion($newDbVersion, $dirname);
 	    return true;
 	}
-	
+
 	/**
-	 * Update the DBVersion of a module 
-	 * 
+	 * Update the DBVersion of a module
+	 *
 	 * @param int $newDVersion new database version
 	 * @param string $dirname dirname of the module
-	 * 
+	 *
 	 * @return TRUE if success FALSE if not
 	 */
 	function updateModuleDBVersion($newDBVersion, $dirname) {
@@ -910,13 +930,13 @@ class IcmsDatabaseupdater {
 		$module = XoopsModuleHandler::getByDirname($dirname);
 		$module->setVar('dbversion', $newDBVersion);
 		$module_handler = xoops_getHandler('module');
-		
+
 		if (!$module_handler->insert($module)) {
 			$module->setErrors('Unable to update module dbversion');
 			return false;
 		}
 		return true;
-			
+
 	}
 }
 ?>

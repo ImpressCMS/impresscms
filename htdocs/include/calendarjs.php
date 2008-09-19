@@ -15,41 +15,6 @@ if (!defined('XOOPS_ROOT_PATH')) {
 ?>
 <script type="text/javascript">
 <!--
-var calendar = null;
-
-function selected(cal, date) {
-  cal.sel.value = date;
-}
-
-function closeHandler(cal) {
-  cal.hide();
-  Calendar.removeEvent(document, "mousedown", checkCalendar);
-}
-
-function checkCalendar(ev) {
-  var el = Calendar.is_ie ? Calendar.getElement(ev) : Calendar.getTargetElement(ev);
-  for (; el != null; el = el.parentNode)
-    if (el == calendar.element || el.tagName == "A") break;
-  if (el == null) {
-    calendar.callCloseHandler(); Calendar.stopEvent(ev);
-  }
-}
-function showCalendar(id) {
-  var el = xoopsGetElementById(id);
-  if (calendar != null) {
-    calendar.hide();
-  } else {
-    var cal = new Calendar(true, "<?php if (isset($jstime)) { echo $jstime; } else { echo 'null';}?>", selected, closeHandler);
-    calendar = cal;
-    cal.setRange(1000, 3000);
-    calendar.create();
-  }
-  calendar.sel = el;
-  calendar.parseDate(el.value);
-  calendar.showAtElement(el);
-  Calendar.addEvent(document, "mousedown", checkCalendar);
-  return false;
-}
 Calendar._DN = new Array
 ("<?php echo _CAL_SUNDAY;?>",
  "<?php echo _CAL_MONDAY;?>",
@@ -186,5 +151,5 @@ Calendar._TT["PM"] = "<?php echo _CAL_PM_CAPS;?>";
 Calendar._NUMBERS = [<?php echo _CAL_NUMS_ARRAY;?>];
 
 Calendar._DIR = '<?php echo _CAL_DIRECTION;?>';
-
+-->
 </script>

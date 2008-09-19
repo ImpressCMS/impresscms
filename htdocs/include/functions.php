@@ -1051,7 +1051,7 @@ function icms_float($var) {return icms_currency($var);}
 
 function icms_purifyText($text, $keyword = false)
 {
-	global $myts;
+	$myts = MyTextsanitizer::getInstance();
 	$text = str_replace('&nbsp;', ' ', $text);
 	$text = str_replace('<br />', ' ', $text);
 	$text = str_replace('<br/>', ' ', $text);

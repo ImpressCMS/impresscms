@@ -5,7 +5,7 @@
 
 include '../mainfile.php';
 $xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-$font = ICMS_ROOT_PATH.'/libraries/captcha/fonts/'.$xoopsConfigPersona['email_font'];
+$font = ICMS_ROOT_PATH.'/class/captcha/fonts/'.$xoopsConfigPersona['email_font'];
 // If you use TTF fontLength = 8
 // If you don't you may put 7 :-)
 $fontSize = intval($xoopsConfigPersona['email_font_len']);
