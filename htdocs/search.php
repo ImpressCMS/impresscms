@@ -12,16 +12,15 @@
 * @version		$Id$
 */
 
-$xoopsOption['pagetype'] = 'search';
+$xoopsOption['pagetype'] = "search";
 
 include 'mainfile.php';
 $config_handler =& xoops_gethandler('config');
 $xoopsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
-if($xoopsConfigSearch['enable_search'] != 1)
-{
-	header('Location: '.ICMS_URL.'/index.php');
-	exit();
+if ($xoopsConfigSearch['enable_search'] != 1) {
+    header('Location: '.ICMS_URL.'/index.php');
+    exit();
 }
 $action = 'search';
 if(!empty($_GET['action'])) {$action = trim(StopXSS($_GET['action']));}
@@ -40,78 +39,96 @@ elseif(!empty($_POST['uid'])) {$uid = intval($_POST['uid']);}
 if(!empty($_GET['start'])) {$start = intval($_GET['start']);}
 elseif(!empty($_POST['start'])) {$start = intval($_POST['start']);}
 
+
 $queries = array();
-if($action == 'results')
-{
-	if($query == '') {redirect_header('search.php',1,_SR_PLZENTER);}
-}
-elseif($action == 'showall')
-{
-	if($query == '' || empty($mid)) {redirect_header('search.php',1,_SR_PLZENTER);}
-}
-elseif($action == 'showallbyuser')
-{
-	if(empty($mid) || empty($uid)) {redirect_header("search.php",1,_SR_PLZENTER);}
+
+if ($action == "results") {
+    if ($query == "") {
+         redirect_header("search.php",1,_SR_PLZENTER);
+        exit();
+    }
+} elseif ($action == "showall") {
+    if ($query == "" || empty($mid)) {
+        redirect_header("search.php",1,_SR_PLZENTER);
+        exit();
+    }
+} elseif ($action == "showallbyuser") {
+    if (empty($mid) || empty($uid)) {
+        redirect_header("search.php",1,_SR_PLZENTER);
+        exit();
+    }
 }
 
 $groups = is_object($xoopsUser) ? $xoopsUser -> getGroups() : XOOPS_GROUP_ANONYMOUS;
-$gperm_handler = & xoops_gethandler('groupperm');
+$gperm_handler = & xoops_gethandler( 'groupperm' );
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 
-if($action == 'search')
-{
-	include ICMS_ROOT_PATH.'/header.php';
-	include 'include/searchform.php';
-	$search_form->display();
-	$xoopsTpl->assign('xoops_pagetitle', _SEARCH);
-	include ICMS_ROOT_PATH.'/footer.php';
-	exit();
+if ($action == 'search') {
+    include ICMS_ROOT_PATH.'/header.php';
+    include 'include/searchform.php';
+    $search_form->display();
+    $xoopsTpl->assign('xoops_pagetitle', _SEARCH);
+    include ICMS_ROOT_PATH.'/footer.php';
+    exit();
 }
 
-if($andor != 'OR' && $andor != 'exact' && $andor != 'AND') {$andor = 'AND';}
+if ( $andor != "OR" && $andor != "exact" && $andor != "AND" ) {
+    $andor = "AND";
+}
 
 $myts =& MyTextSanitizer::getInstance();
-if($action != 'showallbyuser')
-{
-	if($andor != 'exact')
-	{
-		$ignored_queries = array(); // holds kewords that are shorter than allowed minmum length  
-		
-		preg_match_all('/(?:").*?(?:")|(?:\').*?(?:\')/', $query,$compostas);
-		$res = $simpl = array();
-		foreach($compostas[0] as $comp) {$res[] = substr($comp,1,strlen($comp)-3);}
-		$compostas = $res;
-		
-		$simples = preg_replace('/(?:").*?(?:")|(?:\').*?(?:\')/', '', $query);
-		$simples = preg_split('/[\s,]+/', $simples);
-		if(count($simples) > 0)
-		{
-			foreach($simples as $k=>$v)
-			{
-				if($v != '\\') {$simpl[] = $v;}
-			}
-			$simples = $simpl;
-		}
-	
-		if(count($compostas) > 0 && count($simples) > 0) {$temp_queries = array_merge($simples,$compostas);}
-		elseif(count($compostas) <= 0 && count($simples) > 0) {$temp_queries = $simples;}
-		elseif(count($compostas) > 0 && count($simples) <= 0) {$temp_queries = $compostas;}
-		else {$temp_queries = array();}
-		
-		foreach($temp_queries as $q)
-		{
-			$q = trim($q);
-			if(strlen($q) >= $xoopsConfigSearch['keyword_min']) {$queries[] = $myts->addSlashes($q);}
-			else {$ignored_queries[] = $myts->addSlashes($q);}
-		}
-		if(count($queries) == 0) {redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));}
-	}
-	else
-	{
-		$query = trim($query);
-		if(strlen($query) < $xoopsConfigSearch['keyword_min']) {redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));}
-		$queries = array($myts->addSlashes($query));
-	}
+if ($action != 'showallbyuser') {
+    if ( $andor != "exact" ) {
+        $ignored_queries = array(); // holds kewords that are shorter than allowed minmum length  
+        
+        preg_match_all('/(?:").*?(?:")|(?:\').*?(?:\')/', $query,$compostas);
+        $res = $simpl = array();
+        foreach ($compostas[0] as $comp){
+        	$res[] = substr($comp,1,strlen($comp)-3);
+        }
+        $compostas = $res;
+        
+        $simples = preg_replace('/(?:").*?(?:")|(?:\').*?(?:\')/', '', $query);
+        $simples = preg_split('/[\s,]+/', $simples);
+        if (count($simples) > 0){
+        	foreach ($simples as $k=>$v){
+        		if ($v != "\\"){
+        			$simpl[] = $v;
+        		}
+        	}
+        	$simples = $simpl;
+        }        
+
+        if (count($compostas) > 0 && count($simples) > 0){
+          $temp_queries = array_merge($simples,$compostas);
+        }elseif (count($compostas) <= 0 && count($simples) > 0){
+        	$temp_queries = $simples;
+        }elseif (count($compostas) > 0 && count($simples) <= 0){
+        	$temp_queries = $compostas;
+        }else{
+        	$temp_queries = array();
+        }
+        
+        foreach ($temp_queries as $q) {
+            $q = trim($q);
+            if (strlen($q) >= $xoopsConfigSearch['keyword_min']) {
+                $queries[] = $myts->addSlashes($q);
+            } else {
+                $ignored_queries[] = $myts->addSlashes($q);
+            }
+        }
+        if (count($queries) == 0) {
+            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
+            exit();
+        }
+    } else {
+        $query = trim($query);
+        if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
+            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
+            exit();
+        }
+        $queries = array($myts->addSlashes($query));
+    }
 }
 switch ($action) {
     case "results":
@@ -207,7 +224,7 @@ switch ($action) {
             $has_next = true;
         }
         $xoopsTpl->assign('xoops_pagetitle', _SR_SEARCHRESULTS);
-        echo "<h4>"._SR_SEARCHRESULTS."</h4>";
+        echo "<h4>"._SR_SEARCHRESULTS."</h4>\n";
         if ($action == 'showall') {
             echo _SR_KEYWORDS.':';
             if ($andor != 'exact') {
@@ -259,7 +276,7 @@ switch ($action) {
             echo '<td align="left">
             ';
             $search_url_prev = $search_url."&start=$prev";
-            echo '<div class="pagination"><a href="'.htmlspecialchars($search_url_prev).'">&#9668; '._SR_PREVIOUS.'</a></div></td>
+            echo '<a href="'.htmlspecialchars($search_url_prev).'">'._SR_PREVIOUS.'</a></td>
             ';
         }
         echo '<td>&nbsp;&nbsp;</td>
@@ -267,7 +284,7 @@ switch ($action) {
         if (false != $has_next) {
             $next = $start + 20;
             $search_url_next = $search_url."&start=$next";
-            echo '<td align="right"><div class="pagination"><a href="'.htmlspecialchars($search_url_next).'">'._SR_NEXT.' &#9658;</a></div></td>
+            echo '<td align="right"><a href="'.htmlspecialchars($search_url_next).'">'._SR_NEXT.'</a></td>
             ';
         }
         echo '
@@ -284,5 +301,5 @@ switch ($action) {
     ';
     break;
 }
-include ICMS_ROOT_PATH.'/footer.php';
+include ICMS_ROOT_PATH."/footer.php";
 ?>

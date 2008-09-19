@@ -64,7 +64,7 @@ else
 		if(!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
 
 		// Next step: add the new password to the database
-		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', enc_type = '%u' WHERE uid = '%u'", $xoopsDB->prefix('users'), $pass, $salt, $enc_type,  intval($getuser[0]->getVar('uid')));
+		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', enc_type = '%u', pass_expired = '%u' WHERE uid = '%u'", $xoopsDB->prefix('users'), $pass, $salt, $enc_type, 0, intval($getuser[0]->getVar('uid')));
 		if(!$xoopsDB->queryF($sql))
 		{
 			/** Include header.php to start page rendering */
