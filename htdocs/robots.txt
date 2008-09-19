@@ -10,6 +10,7 @@ Disallow: /kernel/
 Disallow: /language/
 Disallow: /libraries/
 Disallow: /preload/
+Disallow: /plugins/
 Disallow: /templates_c/
 Disallow: /themes/
 Disallow: /uploads/

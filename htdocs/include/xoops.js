@@ -1,4 +1,3 @@
-
 if ( typeof window.$ != 'function' ) {
 function $() {
   var elements = new Array();
@@ -213,7 +212,11 @@ function showImgSelected(imgId, selectId, imgDir, extra, xoopsUrl) {
 	}
 	imgDom = xoopsGetElementById(imgId);
 	selectDom = xoopsGetElementById(selectId);
+if (selectDom.options[selectDom.selectedIndex].value != "") {
 	imgDom.src = xoopsUrl + "/"+ imgDir + "/" + selectDom.options[selectDom.selectedIndex].value + extra;
+} else {
+	imgDom.src = xoopsUrl + "/images/blank.gif";
+	}
 }
 
 function xoopsCodeUrl(id, enterUrlPhrase, enterWebsitePhrase){
@@ -373,14 +376,38 @@ function xoopsmakeright(id,enterHiddenPhrase){
         
 domobj.focus();
 }
-function xoopsCodeCode(id, enterCodePhrase){
+function xoopsCodeCode(id, enterCodePhrase, enterCodeLangPhrase, CodeLangTypePhrase, errorCodeLangPhrase){
 	if (enterCodePhrase == null) {
 		enterCodePhrase = "Enter the codes that you want to add.";
 	}
 	var text = prompt(enterCodePhrase, "");
 	var domobj = xoopsGetElementById(id);
 	if ( text != null && text != "" ) {
-		var result = "[code]" + text + "[/code]";
+		if (enterCodeLangPhrase == null) {
+			enterCodeLangPhrase = "Now, enter the language of your code.";
+		}
+		if (CodeLangTypePhrase == null) {
+			CodeLangTypePhrase = "'P' or 'p' for PHP, 'C' or 'c' for CSS, 'J' or 'j' for JAVASCRIPT, 'H' or 'h' for HTML, or leave it blank.";
+		}
+		if (errorCodeLangPhrase == null) {
+			errorCodeLangPhrase = "ERROR! Enter the language of your code:";
+		}
+		var text2 = prompt(enterCodeLangPhrase + "\n" + CodeLangTypePhrase, "");
+		while ( ( text2 != "" ) && ( text2 != "p" ) && ( text2 != "P" ) && ( text2 != "c" ) && ( text2 != "C" )  && ( text2 != "j" ) && ( text2 != "J" )  && ( text2 != "h" ) && ( text2 != "H" ) && ( text2 != null ) ) {
+			text2 = prompt(errorCodeLangPhrase + "\n" + CodeLangTypePhrase,"");
+		}
+		if ( text2 == "p" || text2 == "P" ) {
+			text2 = "php";
+		} else if ( text2 == "c" || text2 == "C" ) {
+			text2 = "css";
+		} else if ( text2 == "j" || text2 == "J" ) {
+			text2 = "js";
+		} else if ( text2 == "h" || text2 == "H" ) {
+			text2 = "html";
+		} else {
+			text2 = "";
+		}
+		var result = "[code" + text2 + "]" + text + "[/code" + text2 + "]";
 		xoopsInsertText(domobj, result);
 	}
 	domobj.focus();
