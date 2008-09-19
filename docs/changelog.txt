@@ -22,6 +22,26 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
+===2008-09-21 : 1.1 RC 2===
+
+'''Fixed'''
+* Warning: Value for HTML. Trusted is of invalid type, should be bool in file /libraries/htmlpurifier/HTMLPurifier.standalone.php line 1447 (vaughan)
+* In HTMLPurifier $is_admin wasn't defined if $xoopsUser wasn't an existing object.(vaughan)
+* In HTMPPurifier $xoopsUser undefined variable on line 130 (vaughan)
+* Wrong smarty variable name in IcmsPersistableController::handleObjectDeletionFromUserSide() (malanciault)
+* In IcmsDatabaseUpdater::upgradeObjectItem() when a TEXT field was created, a default value was set which is wrong. TEXT field can't have default value (malanciault)
+* Closed comment tag in include/calendarjs.php that created a problem with IE (skenow)
+* Undefined variable: ret in file /kernel/icmspersistablecontroller.php line 462 (malanciault)
+* #2115835: Typo when checking if openid field existed in database update version 3 (malanciault)
+
+'''Added'''
+* Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)
+* Adding movie filter in HTMLPurifier for vimeo movies (vaughan)
+* Adding IcmsSecureForm to create IcmsPersistable object form with a seucirty token. We will recommend to always use this within the IcmsPersistable Framework when not on the admin side (malanciault)
+
+'''Improved'''
+* Rendering of Google Analytics script and new script source from Google (skenow)
+
 ===2008-09-14 : 1.1 RC 1===
 
 '''Added'''
@@ -31,21 +51,26 @@ ImpressCMS ChangeLog
 * new function to list all fonts (stranger)
 * new function to generate pdfs (stranger)
 * implementing beforePreviewTarea and afterPreviewTarea preload events (malanciault)
+* implementing IcmsPersistableSeoObject to manage SEO-enabled object within the IcmsPersistable Framework (malanciault)
 
 '''Improved'''
 * Improved how we use rtl in system. (stranger/real_therplima)
 * Moved captcha to classes + some configurations were updated. (stranger)
 * Updated TCPDF to version 4.0.023. (stranger)
 * Removed warnings for unhandled global attribut in icms.htmlpurifier.php
-* Updated jscalendar to 1.15. (stranger)
-* Time picker now works correctly with jalali (stranger)
+* Updated jscalendar to 1.2 . (stranger)
+* Time picker now works correctly with jalali (stranger/Ali Farhadi)
 * Improving content manager page display to use displayTarea instead of previewTarea (malanciault)
 * Changing sanitizeContentCss() to icms_sanitizeContentCss() (malanciault)
 * #2011730: Installer: Check for phpOpenID requirements on install (malanciault/skenow)
 * #2014053: Installer: Check for php5 on install (malanciault/skenow)
 * #2091448: Installer: installation with safemode=on is not possible (malanciault/skenow)
+* Correct implementation of TextEditor within IcmsForm, we are now using normal dhtmltarea as ImpressCMS will handle what editor needs to be displayed (malanciault)
 
 '''Fixed'''
+* Error: Expected ';' when viewing social_bookmars_links.php block in IE7. (mcdonald)
+* pass_expired was not set to 0 after lost password request. (only happens if user uses lost password instead of reset password after encryption type is used). (vaughan)
+* unable to login when using sha512 or whirlpool encryption.  hash produces 128 chars and db field is set to varchar(100). (vaughan)
 * it was not possible to login using email address like v1.0 (vaughan)
 * 2 errors with google meta tag and google analytics. (stranger)
 * possible issue in modulesadmin/main.php (real_therplima/trabis)
@@ -66,6 +91,9 @@ ImpressCMS ChangeLog
 * #2096670: Changed field types for meta_description and meta_keywords to only allow plain text
 * Notice: Undefined variable: openid in file /modules/system/admin/users/main.php line 61. (stranger/malanciault)
 * Fixed issues with inserting google meta tag. (stranger)
+* Bug fixed in IcmsForm::render(): the id of the row was the same as the control. Now, the id of the row is <keyname>_row (malanciault)
+* Bug fixed in IcmsPersistableController::postDataToObject where date was not saved properly (malanciault)
+* #2118948: Email Protection does not work (real_therplima)
 
 ===2008-08-08 : 1.1 Beta 1===
 
