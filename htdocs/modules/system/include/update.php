@@ -243,6 +243,22 @@ function xoops_module_update_system(&$module) {
 	    }
 		unset($table);
 	}
+    $newDbVersion = 5;
+
+    if($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+
+   		$table = new IcmsDatabasetable('users');
+	    if (!$table->fieldExists('login_name2')) {
+	    	$table->addNewField('login_name2', "varchar(255) NOT NULL default ''");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+	    global $xoopsDB;
+        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("users") . "` SET login_name2=uname");
+	    unset($table);
+
+	}
 
 	echo "</code>";
 
