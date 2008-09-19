@@ -15,12 +15,14 @@ define("THEME_PASSWORD",				" Password");
 define("THEME_DESC_PASSWORD",			" Write your password");
 
 define("THEME_WELLCOME",				"Welcome");
-define("THEME_PROFILE",					"View profile");
-define("THEME_NOTIFICATION",			"View notifications");
-define("THEME_MESSAGE",					"View messages");
+define("THEME_PROFILE",					"Your profile");
+define("THEME_NOTIFICATION",			"View bookmarks");
+define("THEME_MESSAGE",					"Show your inbox content");
 define("THEME_YOUHAVE",					"You have ");
-define("THEME_NOTREAD",					"message(s) unread");
-define("THEME_MYACCOUNT",				"My account");
+define("THEME_NOTREAD",					"unread message(s)");
+define("THEME_MYACCOUNT",				"My profile");
+define("THEME_LOGOUT",				"Click to logout");
+define("THEME_ADMIN",				"Display site administration");
 
 // searchbar.html
 define("THEME_SEARCH",					"Search");
@@ -46,7 +48,7 @@ define("THEME_MODULE1_SUB3",			"Category 3"); //*** the SUB are for sub-menu in 
 define("THEME_MODULE1_SUB4",			"Category 4"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
 define("THEME_MODULE1_SUB5",			"Category 5"); //*** the SUB are for sub-menu in globalnav.html 'dynamic'
 
-define("THEME_MODULE2",					"BBS");
+define("THEME_MODULE2",					"Forum");
 define("THEME_MODULE2_DESC",			"Visit our Forums");
 
 define("THEME_MODULE3",					"Gallery");

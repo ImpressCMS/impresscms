@@ -616,7 +616,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 
 		if ($obj->seoEnabled) {
 	        // Auto create meta tags if empty
-		$icms_metagen = new SmartMetagen($obj->title(), $obj->getVar('meta_keywords'), $obj->summary());
+			$icms_metagen = new IcmsMetagen($obj->title(), $obj->getVar('meta_keywords'), $obj->summary());
 
 			if (!$obj->getVar('meta_keywords') || !$obj->getVar('meta_description')) {
 

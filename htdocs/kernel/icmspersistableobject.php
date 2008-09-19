@@ -355,6 +355,21 @@ class IcmsPersistableObject extends XoopsObject {
         return $form;
     }
 
+    /**
+    * Create the secure form for this object
+    *
+    * @return a {@link SmartobjectForm} object for this object
+    *
+    * @see IcmsPersistableObjectForm::IcmsPersistableObjectForm()
+    */
+    function getSecureForm($form_caption, $form_name, $form_action=false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action=false, $captcha=false)
+    {
+        include_once ICMS_ROOT_PATH . "/class/icmsform/icmssecureform.php";
+        $form = new IcmsSecureForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
+
+        return $form;
+    }
+
     function toArray()
     {
         $ret = array();
@@ -1170,7 +1185,7 @@ class IcmsPersistableObject extends XoopsObject {
 		$smartobject_file_handler = xoops_getModuleHandler('file', 'smartobject');
 		return $smartobject_file_handler->insert($fileObj);
 	}
-	*/	
+	*/
 }
 
 ?>

@@ -3,7 +3,7 @@
 </style>
 <!--
 <style type="text/css">
-.bg3 a{color: #fff;} 
+.bg3 a{color: #fff;}
 </style>
 //-->
 <div id="<{$icms_id}>">
@@ -22,12 +22,12 @@
 			</form>
 		</div>
 	<{/if}>
-	
+
 <{if $icms_showFilterAndLimit || $icms_quicksearch}>
 <form name="pick" id="pick" action="<{$icms_optionssel_action}>" method="POST" style="margin: 0;">
 	<{if $icms_quicksearch}>
 		<div style="vertical-align: middle; float: right; border: 2px solid #C2CDD6; padding: 5px; background-color: #E6E6E6;">
-			<b><{$icms_quicksearch}> :</b> <input style="vertical-align: middle;" type="text" id="quicksearch_<{$icms_id}>" name="quicksearch_<{$icms_id}>" size="20" maxlength="255"/>
+			<b><{$icms_quicksearch}> :</b> <input style="min-width: 10px; vertical-align: middle;" type="text" id="quicksearch_<{$icms_id}>" name="quicksearch_<{$icms_id}>" size="15" maxlength="255"/>
 			<input style="vertical-align: middle;" type="submit" name="button_quicksearch_<{$icms_id}>" value="<{$smarty.const._SEARCH}>" />
 		</div>
 	<{/if}>
@@ -138,9 +138,9 @@
 		</tr>
 	<{/if}>
 </table>
-<{if  $icms_actionButtons || $icms_withSelectedActions}> 
+<{if  $icms_actionButtons || $icms_withSelectedActions}>
 	<input type='hidden' name='op' id='op' value='' />
-	<{if $icms_withSelectedActions}> 
+	<{if $icms_withSelectedActions}>
 		<div style="padding: 5px;text-align: left; border-left: 1px solid silver; border-bottom: 1px solid silver; border-right: 1px solid silver;">
 		<{$smarty.const._CO_ICMS_WITH_SELECTED}>
 		<select name='selected_action'>
@@ -152,7 +152,7 @@
 		<input type="submit" name="<{$actionButton.op}>" onclick="this.form.elements.op.value='with_selected_actions'" value="<{$smarty.const._CO_ICMS_SUBMIT}>" />
 		</div>
 	<{/if}>
-	<{if $icms_actionButtons}> 
+	<{if $icms_actionButtons}>
 		<div style="padding: 5px;text-align: right; border-left: 1px solid silver; border-bottom: 1px solid silver; border-right: 1px solid silver;">
 			<{foreach from=$icms_actionButtons item=actionButton}>
 				<input type="submit" name="<{$actionButton.op}>" onclick="this.form.elements.op.value='<{$actionButton.op}>'" value="<{$actionButton.text}>" />
@@ -189,16 +189,16 @@
 
 
 
-<!-- 
+<!--
 <script language="javascript">
 function Clickheretoprint()
-{ 
-  var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,"; 
-      disp_setting+="scrollbars=yes,width=650, height=600, left=100, top=25"; 
-  var content_value = document.getElementById("<{$icms_id}>").innerHTML; 
-  
-  var docprint=window.open("","",disp_setting); 
-   docprint.document.open(); 
+{
+  var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,";
+      disp_setting+="scrollbars=yes,width=650, height=600, left=100, top=25";
+  var content_value = document.getElementById("<{$icms_id}>").innerHTML;
+
+  var docprint=window.open("","",disp_setting);
+   docprint.document.open();
    docprint.document.write('<html><head><title>Inel Power System</title>');
    docprint.document.write('<link rel="stylesheet" media="print" href="<{$xoops_url}>/modules/icms/print.css" type="text/css">');
    docprint.document.write('<link rel="stylesheet" media="all" href="<{$xoops_url}>/modules/system/style.css" type="text/css">');

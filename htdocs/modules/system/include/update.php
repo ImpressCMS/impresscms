@@ -203,7 +203,7 @@ function xoops_module_update_system(&$module) {
     if ($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
    		$table = new IcmsDatabasetable('users');
-	    if (!$table->fieldExists('opendid')) {
+	    if (!$table->fieldExists('openid')) {
 	    	$table->addNewField('openid', "varchar(255) NOT NULL default ''");
 		    $icmsDatabaseUpdater->updateTable($table);
 	    }
@@ -226,6 +226,19 @@ function xoops_module_update_system(&$module) {
    		$table = new IcmsDatabasetable('users');
 	    if (!$table->fieldExists('enc_type')) {
 	    	$table->addNewField('enc_type', "tinyint(2) UNSIGNED NOT NULL default 0");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+	}
+
+    $newDbVersion = 4;
+
+    if($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+
+   		$table = new IcmsDatabasetable('users');
+	    if ($table->fieldExists('pass')) {
+	    	$table->alterTable('pass', 'pass', "varchar(255) UNSIGNED NOT NULL default ''");
 		    $icmsDatabaseUpdater->updateTable($table);
 	    }
 		unset($table);
