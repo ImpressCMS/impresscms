@@ -11,6 +11,16 @@ ImpressCMS ChangeLog
 * Displayname field to installer. (stranger)
 * Displayname to registration form. (stranger)
 * FCKeditor. (skenow)
+* Plugin feature for tex sanitizer. (stranger)
+* PHP plugin for geshi. (stranger)
+* CSS plugin for geshi. (stranger)
+* JS plugin for geshi. (stranger)
+* HTML plugin for geshi. (stranger)
+* PHP code tag. (stranger)
+* CSS code tag. (stranger)
+* HTML code tag. (stranger)
+* JS code tag. (stranger)
+
 
 '''Changed'''
 * Admin`s RSS feed to simplepie. (marcan/stranger)
