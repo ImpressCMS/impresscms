@@ -9,7 +9,7 @@
 * @package		libraries
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: projax.php 1742 2008-04-20 14:46:20Z malanciault $
 */
 
 class IcmsPreloadProjax extends IcmsPreloadItem
