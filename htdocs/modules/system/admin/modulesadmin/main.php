@@ -378,7 +378,7 @@ if ($op == 'update_ok') {
                     if ($fcount == 0) {
                         $newbid = $xoopsDB->genId($xoopsDB->prefix('newblocks').'_bid_seq');
                         $block_name = addslashes($blocks[$i]['name']);
-                        $sql = "INSERT INTO ".$xoopsDB->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, isactive, dirname, func_file, show_func, edit_func, template, last_modified) VALUES ('".intval($newbid)."', '".intval($module->getVar('mid'))."', '".intval($i)."','".addslashes($options)."','".$block_name."', '".$block_name."', '', '0', '0', '0', 'M', '1', '".addslashes($dirname)."', '".addslashes($blocks[$i]['file'])."', '".addslashes($blocks[$i]['show_func'])."', '".addslashes($editfunc)."', '".$template."', '".time()."')";
+                        $sql = "INSERT INTO ".$xoopsDB->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('".intval($newbid)."', '".intval($module->getVar('mid'))."', '".intval($i)."','".addslashes($options)."','".$block_name."', '".$block_name."', '', '1', '0', '0', 'M', 'H', '1', '".addslashes($dirname)."', '".addslashes($blocks[$i]['file'])."', '".addslashes($blocks[$i]['show_func'])."', '".addslashes($editfunc)."', '".$template."', '0', '".time()."')";
                         $result = $xoopsDB->query($sql);
                         if (!$result) {
                             $msgs[] = '&nbsp;&nbsp;ERROR: Could not create '.$blocks[$i]['name'];echo $sql;
@@ -427,7 +427,7 @@ if ($op == 'update_ok') {
                                 }
                             }
                             $msgs[] = '&nbsp;&nbsp;Block <b>'.$blocks[$i]['name'].'</b> created. Block ID: <b>'.$newbid.'</b>';
-                            $sql = "INSERT INTO ".$xoopsDB->prefix('block_module_link')." (block_id, module_id) VALUES ('".intval($newbid)."', '-1')";
+                            $sql = "INSERT INTO ".$xoopsDB->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($newbid)."', '0', '1')";
                             $xoopsDB->query($sql);
                         }
                     }

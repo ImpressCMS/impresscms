@@ -31,7 +31,7 @@ class xos_opal_ThemeFactory {
 	 * Default theme to instanciate if none specified
 	 * @var string
 	 */
-	var $defaultTheme = 'default';
+	var $defaultTheme = 'impresstheme';
 	/**
 	 * If users are allowed to choose a custom theme
 	 * @var bool

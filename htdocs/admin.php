@@ -120,6 +120,7 @@ switch($op)
 			echo '<br />';
 		}
 		$db = $GLOBALS['xoopsDB'];
+
 		if(getDbValue($db, 'modules', 'version', 'version="120"') == 0 AND getDbValue($db, 'modules', 'mid', 'mid="1"') == 1)
 		{
 			xoops_error('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">'._WARNINGUPDATESYSTEM.'</a>');

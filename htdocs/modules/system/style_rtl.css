@@ -87,7 +87,7 @@ SELECT
 {
  	
 font-family: Tahoma; direction: rtl;}
-BUTTON, INPUT[type=submit] , INPUT[type=clear] , INPUT[type=button] 
+BUTTON, INPUT[type=submit] , INPUT[type=clear] , INPUT[type=button] , INPUT[type=reset] 
 {
     PADDING-RIGHT: 0.5em;
     PADDING-LEFT: 0.5em;
