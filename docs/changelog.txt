@@ -34,6 +34,16 @@ ImpressCMS ChangeLog
 
 ===2008-09-21 : 1.1 RC 2===
 
+'''Added'''
+* Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)
+* Adding movie filter in HTMLPurifier for vimeo movies (vaughan)
+* Adding IcmsSecureForm to create IcmsPersistable object form with a seucirty token. We will recommend to always use this within the IcmsPersistable Framework when not on the admin side (malanciault)
+* Added option to select calendar type for forms. (stranger)
+* Updated system to version 1.05. (stranger)
+
+'''Improved'''
+* Rendering of Google Analytics script and new script source from Google (skenow)
+
 '''Fixed'''
 * Warning: Value for HTML. Trusted is of invalid type, should be bool in file /libraries/htmlpurifier/HTMLPurifier.standalone.php line 1447 (vaughan)
 * In HTMLPurifier $is_admin wasn't defined if $xoopsUser wasn't an existing object.(vaughan)
@@ -43,18 +53,16 @@ ImpressCMS ChangeLog
 * Closed comment tag in include/calendarjs.php that created a problem with IE (skenow)
 * Undefined variable: ret in file /kernel/icmspersistablecontroller.php line 462 (malanciault)
 * #2115835: Typo when checking if openid field existed in database update version 3 (malanciault)
-
-'''Added'''
-* Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)
-* Adding movie filter in HTMLPurifier for vimeo movies (vaughan)
-* Adding IcmsSecureForm to create IcmsPersistable object form with a seucirty token. We will recommend to always use this within the IcmsPersistable Framework when not on the admin side (malanciault)
-
-'''Improved'''
-* Rendering of Google Analytics script and new script source from Google (skenow)
+* When the deafault selected theme was suddenly removed, blank page appeared. (stranger)
+* Using impresstheme instead of default. (stranger)
+* #2120445: Module block not showing when created on module update (real_therplima)
+* Issues with dateform. (stranger)
+* Issues with dateform in IE. (stranger/Ali Farhadi)
 
 ===2008-09-14 : 1.1 RC 1===
 
 '''Added'''
+* Added jalalijscalendar 1.2 . (stranger)
 * agree box before upgrading to make sure of a backup. (stranger)
 * added password can't contain username to pass check in admin edit user form. (vaughan)
 * default template form usable by core feature or any modules - system_default_form.html (malanciault)
@@ -68,7 +76,6 @@ ImpressCMS ChangeLog
 * Moved captcha to classes + some configurations were updated. (stranger)
 * Updated TCPDF to version 4.0.023. (stranger)
 * Removed warnings for unhandled global attribut in icms.htmlpurifier.php
-* Updated jscalendar to 1.2 . (stranger)
 * Time picker now works correctly with jalali (stranger/Ali Farhadi)
 * Improving content manager page display to use displayTarea instead of previewTarea (malanciault)
 * Changing sanitizeContentCss() to icms_sanitizeContentCss() (malanciault)
@@ -148,12 +155,11 @@ ImpressCMS ChangeLog
 * Fixed the isssue of password meter for RTL languages. (stranger)
 * Fixed the isssues of installation for RTL languages. (stranger)
 * Issue with PDF generator. (stranger)
-
 * HTML Purifier is now properly using the trust path to create its cache data (Vaughan/malanciault)
 * The installer was not properly creating the password hash of the administrator (Vaughan/real_therplima/malanciault)
 * #1871202 (was not completely fixed) - Avatar and Karma (Fixed). (stranger)
 * Issue with new hash generator, when replacing new core files. (stranger)
-* Security Vulnerabilty (http://www.securityfocus.com/bid/30330) in modules/system/admin.php (Vaughan/Real_therplima/Wtravel)
+* Security Vulnerabilty (http://www.securityfocus.com/bid/30330) in modules/system/admin.php (Vaughan/Rodrigo/Wtravel)
 * typo in htaccess.txt for error documents in error 500.. errpr.php should be error.php (Wizanda)
 * #2037875 - theme block did not display theme names.
 * #2037881 - SQL error when checking for protector module installation in Control Panel home.
