@@ -1,3 +1,29 @@
+4.0.027 (2008-09-19)
+	- Bug #2118588 "Undefined offset in tcpdf.php on line 9581" was fixed.
+	- arailunicid0.php font was updated.
+	- The problem of javascript form fields duplication after saving was fixed.
+		
+4.0.026 (2008-09-17)
+	- convertHTMLColorToDec() function was improved to support rgb(RR,GG,BB) notation.
+	- The following inline CSS attributes are now supported: text-decoration, color, background-color and font-size names: xx-small, x-small, small, medium, large, x-large, xx-large
+	- Example n. 6 was updated.
+		
+4.0.025 (2008-09-15)
+	- _putcidfont0 function was improved to include CJK fonts (Chinese, Japanese, Korean, CJK, Asian fonts) without embedding.
+	- arialunicid0 font was added (see the new example n. 38).
+	- The following Unicode to CID-0 tables were added on fonts folder: uni2cid_ak12.php, uni2cid_aj16.php, uni2cid_ag15.php, uni2cid_ac15.php. 
+		
+4.0.024 (2008-09-12)
+	- "stripos" function was replaced with "strpos + strtolower" for backward compatibility with PHP4.
+	- support for Spot Colors were added. Check the new example n. 37 and the following new functions:
+		AddSpotColor()
+		SetDrawSpotColor()
+		SetFillSpotColor()
+		SetTextSpotColor()
+		_putspotcolors()
+	- Bookmark() function was improved to fix wrong levels.
+	- $lasth changes after header/footer calls were fixed.
+	
 4.0.023 (2008-09-05)
 	- Some HTML related problems were fixed.
 	- Image alignment on HTML was changed, now it always defaults to the normal mode (see example_006.php).

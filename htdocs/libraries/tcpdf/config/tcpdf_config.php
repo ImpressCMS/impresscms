@@ -85,7 +85,7 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	
 	/**
 	 * cache directory for temporary files (full path)
-	 * This path has been changed to the cache folder in ICMS
+	 * This path has been changed to the cache folder in ImpressCMS
 	 */
 	define ("K_PATH_CACHE", ICMS_ROOT_PATH."/cache/");
 	
