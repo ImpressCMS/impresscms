@@ -222,7 +222,8 @@ return ucfirst(icmsdate($datestring,$usertimestamp));
 function icmsdate($datestring,$usertimestamp)
 {
 	global $xoopsConfig;
-	if ($xoopsConfig['language'] == 'persian' && $datestring != 'mysql'){
+	$basecheck = defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC;
+	if ($basecheck && $xoopsConfig['language'] == 'persian' && $datestring != 'mysql'){
 		include_once ICMS_ROOT_PATH.'/include/jalali.php';
 		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
 	}else{
