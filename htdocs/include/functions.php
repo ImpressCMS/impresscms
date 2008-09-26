@@ -217,12 +217,16 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		break;
 	}
 	//Start addition including extended date function
-	if(defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC && $format != 'mysql' && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/ext/ext_date_function.php'))
-	{
-		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/ext/ext_date_function.php';
-		return ucfirst(ext_date($datestring,$usertimestamp));
-	}
-	else {return ucfirst(date($datestring,$usertimestamp));}
+return ucfirst(icmsdate($datestring,$usertimestamp));
+}
+function icmsdate($datestring,$usertimestamp)
+{
+	global $xoopsConfig;
+	if ($xoopsConfig['language'] == 'persian' && $datestring != 'mysql'){
+		include_once ICMS_ROOT_PATH.'/include/jalali.php';
+		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
+	}else{
+	return ucfirst(date($datestring,$usertimestamp));}
 }
 
 /*
@@ -1688,5 +1692,12 @@ function icms_conv_nr2local($string)
 	return str_replace(
 		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
 		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), $string);
+}
+function icms_conv_local2nr($string)
+{
+	return str_replace(
+		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), 
+		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), 
+		$string);
 }
 ?>

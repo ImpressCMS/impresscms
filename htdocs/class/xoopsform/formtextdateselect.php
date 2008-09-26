@@ -63,7 +63,7 @@ class XoopsFormTextDateSelect extends XoopsFormText
 		include_once XOOPS_ROOT_PATH.'/include/calendarjalalijs.php';
 //		return "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $ele_value)."'".$this->getExtra()." /><input type='reset' value=' ... ' onclick='return showCalendar(\"".$ele_name."\");'>";
 // Now it is time to let users use their own calendars.
-		return "<input id='tmp_".$ele_name."' readonly='readonly' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".(_CALENDAR_TYPE=='jalali' ? Convertnumber2farsi(ext_date("Y-m-d", $ele_value)) : date("Y-m-d", $ele_value))."' /><input type='hidden' name='".$ele_name."' id='".$ele_name."' value='".date("Y-m-d", $ele_value)."' ".$this->getExtra()." /><script type='text/javascript'>
+		return "<input id='tmp_".$ele_name."' readonly='readonly' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".(_CALENDAR_TYPE=='jalali' ? icms_conv_nr2local(jdate("Y-m-d", $ele_value)) : date("Y-m-d", $ele_value))."' /><input type='hidden' name='".$ele_name."' id='".$ele_name."' value='".date("Y-m-d", $ele_value)."' ".$this->getExtra()." /><script type='text/javascript'>
 				Calendar.setup({
 				inputField  : 'tmp_".$ele_name."',   // id of the input field
 		       		ifFormat    : '%Y-%m-%d',       // format of the input field
