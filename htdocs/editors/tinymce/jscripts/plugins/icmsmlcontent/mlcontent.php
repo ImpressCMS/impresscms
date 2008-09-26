@@ -9,8 +9,12 @@ if (file_exists('../mainfile.php')) include_once '../mainfile.php';
 if (!defined('XOOPS_ROOT_PATH')) exit();
 
 
-//only site users can access this file
-if (is_object($xoopsUser)) {
+//only site users can access this file or if multilanguage is enabled
+        $easiestml_exist = false;
+	$config_handler =& xoops_gethandler('config');
+	$icmsConfigMultiLanguage =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
+        $easiestml_exist = ($icmsConfigMultiLanguage['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
+if (is_object($xoopsUser) && $easiestml_exist) {
     function langDropdown()
     {
         // check THE EASIEST MULTILANGUAGE HACK
