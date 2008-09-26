@@ -98,7 +98,7 @@ $xoopsTpl->assign("content_admlinks", $options);
 $member_handler =& xoops_gethandler('member');
 $autor =& $member_handler->getUser($impress_content->getVar('content_uid'));
 $xoopsTpl->assign("show_pinfo",$im_contentConfig['show_pinfo']);
-$xoopsTpl->assign("content_tinfo", sprintf(_CT_PUBLISHEDBY.' <a href="'.ICMS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%u '._CT_READS.')',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($impress_content->getVar('content_created'),"s"),$impress_content->getReads()));
+$xoopsTpl->assign("content_tinfo", sprintf(_CT_PUBLISHEDBY.' <a href="'.ICMS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%s '._CT_READS.')',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($impress_content->getVar('content_created'),"s"),icms_conv_nr2local($impress_content->getReads())));
 $xoopsTpl->assign("content_body", $myts->displayTarea($impress_content->getVar('content_body', "n"),1,1,1,1,0));
 $xoopsTpl->assign("content_css", icms_sanitizeContentCss($impress_content->getVar('content_css')));
 $xoopsTpl->assign("content_tags", filter_bytags($impress_content->getVar('content_tags')));
