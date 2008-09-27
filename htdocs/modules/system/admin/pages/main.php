@@ -106,6 +106,7 @@ function pages_index($start=0){
 	foreach ($pages as $page){
 		$pag = array();
 		$pag['page_id'] = $page->getVar('page_id');
+		$pag['pages_id'] = icms_conv_nr2local($page->getVar('page_id'));
 		$pag['page_moduleid'] = $page->getVar('page_moduleid');
 		$mod = $module_handler->get($page->getVar('page_moduleid'));
 		$pag['module'] = $mod->getVar('name');

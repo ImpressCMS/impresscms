@@ -93,20 +93,20 @@ class XoopsPageNav
 		if ( $total_pages > 1 ) {
 			$prev = $this->current - $this->perpage;
 			if ( $prev >= 0 ) {
-				$ret .= '<a href="'.$this->url.$prev.'">&#9668; '._PREV.'</a> ';
+				$ret .= '<a href="'.$this->url.$prev.'">'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"&#9658; ":"&#9668; ").''._PREV.'</a> ';
 			}else{
-				$ret .= '<span class="disabled"><b>&#9668; '._PREV.'</b></span> ';
+				$ret .= '<span class="disabled"><b>'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"&#9658; ":"&#9668; ").''._PREV.'</b></span> ';
 			}
 			$counter = 1;
 			$current_page = intval(floor(($this->current + $this->perpage) / $this->perpage));
 			while ( $counter <= $total_pages ) {
 				if ( $counter == $current_page ) {
-					$ret .= '<span class="current"><b>'.(($style == 'default')?'(':'').$counter.(($style == 'default')?')':'').'</b></span> ';
+					$ret .= '<span class="current"><b>'.(($style == 'default')?'(':'').icms_conv_nr2local($counter).(($style == 'default')?')':'').'</b></span> ';
 				} elseif ( ($counter > $current_page-$offset && $counter < $current_page + $offset ) || $counter == 1 || $counter == $total_pages ) {
 					if ( $counter == $total_pages && $current_page < $total_pages - $offset ) {
 						$ret .= '... ';
 					}
-					$ret .= '<a href="'.$this->url.(($counter - 1) * $this->perpage).'">'.$counter.'</a> ';
+					$ret .= '<a href="'.$this->url.(($counter - 1) * $this->perpage).'">'.icms_conv_nr2local($counter).'</a> ';
 					if ( $counter == 1 && $current_page > 1 + $offset ) {
 						$ret .= '... ';
 					}
@@ -115,9 +115,9 @@ class XoopsPageNav
 			}
 			$next = $this->current + $this->perpage;
 			if ( $this->total > $next ) {
-				$ret .= '<a href="'.$this->url.$next.'">'._NEXT.' &#9658;</a> ';
+				$ret .= '<a href="'.$this->url.$next.'">'._NEXT.''.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?" &#9668;":" &#9658;").'</a> ';
 			}else{
-				$ret .= '<span class="disabled"><b>'._NEXT.' &#9658;</b></span> ';
+				$ret .= '<span class="disabled"><b>'._NEXT.''.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?" &#9668;":" &#9658;").'</b></span> ';
 			}
 		}
 		return '<div class="pagination '.$style.'">'.$ret.'</div>';
@@ -143,9 +143,9 @@ class XoopsPageNav
 			$current_page = intval(floor(($this->current + $this->perpage) / $this->perpage));
 			while ( $counter <= $total_pages ) {
 				if ( $counter == $current_page ) {
-					$ret .= '<option value="'.$this->url.(($counter - 1) * $this->perpage).'" selected="selected">'.$counter.'</option>';
+					$ret .= '<option value="'.$this->url.(($counter - 1) * $this->perpage).'" selected="selected">'.icms_conv_nr2local($counter).'</option>';
 				} else {
-					$ret .= '<option value="'.$this->url.(($counter - 1) * $this->perpage).'">'.$counter.'</option>';
+					$ret .= '<option value="'.$this->url.(($counter - 1) * $this->perpage).'">'.icms_conv_nr2local($counter).'</option>';
 				}
 				$counter++;
 			}
