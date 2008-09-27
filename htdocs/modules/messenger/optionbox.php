@@ -61,7 +61,7 @@ if ( $total > $xoopsModuleConfig['maxuser']) {
       $formtype = "4";
       $sortname = _MP_TRI_DATE;
       $sortorder = _MP_TRI_ODESC;
-      $order = _MP_TRI_FLAT;
+      $vieworder = _MP_TRI_FLAT;
     } else {
       $limite = $opt->getVar('limite');
 	  $home = $opt->getVar('home');
@@ -107,13 +107,13 @@ if ( $total > $xoopsModuleConfig['maxuser']) {
 	
   $form->insertBreak(_MP_TRI_TRI, 'odd');
     $order_select = array('subject' => _MP_TRI_TITLE ,'msg_time' => _MP_TRI_DATE, 'read_msg' => _MP_TRI_READ);
-    $thread_select = new XoopsFormSelect ("", "sortname", $sortname);
+    $thread_select = new XoopsFormSelect (_MP_TRI_HOWTOSORT, "sortname", $sortname);
     $thread_select->addOptionArray($order_select);
     $sortorder_select = array('asc' => _MP_TRI_OASC,'desc' => _MP_TRI_ODESC);
-    $sort_select = new XoopsFormSelect ("", "sortorder", $sortorder);
+    $sort_select = new XoopsFormSelect (_MP_TRI_SORTORDER, "sortorder", $sortorder);
     $sort_select->addOptionArray($sortorder_select);
     $flat_select = array('flat' => _MP_TRI_FLAT,'thread' => _MP_TRI_THREAD);
-    $threadn_select = new XoopsFormSelect ("", "order", $vieworder);
+    $threadn_select = new XoopsFormSelect (_MP_TRI_VIEWORDER, "order", $vieworder);
     $threadn_select->addOptionArray($flat_select);
 
     $form->addElement($thread_select);

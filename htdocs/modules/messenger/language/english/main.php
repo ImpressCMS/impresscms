@@ -94,7 +94,10 @@ define("_MP_ADDO","Add to your message");
 define("_MP_TRI_TRI","Sort by");
 define("_MP_TRI_TITLE","Title of subject");
 define("_MP_TRI_DATE","Date");
+define("_MP_TRI_VIEWORDER","View order");
+define("_MP_TRI_SORTORDER","Sort order");
 define("_MP_TRI_READ","State");
+define("_MP_TRI_HOWTOSORT","How to sort?");
 
 define("_MP_TRI_OASC","Ascending order");
 define("_MP_TRI_ODESC","Downward order");
