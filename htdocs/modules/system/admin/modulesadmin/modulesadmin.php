@@ -69,7 +69,7 @@ function xoops_module_list() {
     	$mod['hasadmin'] = $module->getVar('hasadmin');
     	$mod['hasmain'] = $module->getVar('hasmain');
     	$mod['isactive'] = $module->getVar('isactive');
-    	$mod['version'] = round($module -> getVar('version') / 100, 2);
+    	$mod['version'] = icms_conv_nr2local(round($module -> getVar('version') / 100, 2));
     	$mod['status'] = ($module->getInfo('status'))?$module->getInfo('status'):'&nbsp;';
     	$mod['last_update'] = ($module -> getVar('last_update') != 0)?formatTimestamp($module -> getVar('last_update'), 'm'):'&nbsp;';
     	$mod['weight'] = $module->getVar('weight');
@@ -91,7 +91,7 @@ function xoops_module_list() {
             $mod['dirname'] = $module->getInfo('dirname');
             $mod['name'] = $module->getInfo('name');
             $mod['image'] = $module->getInfo('image');
-            $mod['version'] = round($module->getInfo('version'), 2);
+            $mod['version'] = icms_conv_nr2local(round($module->getInfo('version'), 2));
             $mod['status'] = $module->getInfo('status');
             $icmsAdminTpl->append('avmodules',$mod);
             unset($module);
@@ -119,7 +119,7 @@ function xoops_module_install($dirname) {
         if ($module->getInfo('image') != false && trim($module->getInfo('image')) != '') {
             $msgs[] ='<img src="'.XOOPS_URL.'/modules/'.$dirname.'/'.trim($module->getInfo('image')).'" alt="" />';
         }
-        $msgs[] ='<b>Version:</b> '.$module->getInfo('version');
+        $msgs[] ='<b>Version:</b> '.icms_conv_nr2local($module->getInfo('version'));
         if ($module->getInfo('author') != false && trim($module->getInfo('author')) != '') {
             $msgs[] ='<b>Author:</b> '.trim($module->getInfo('author'));
         }
@@ -199,7 +199,7 @@ function xoops_module_install($dirname) {
             } else {
                 $newmid = $module->getVar('mid');
                 unset($created_tables);
-                $msgs[] = 'Module data inserted successfully. Module ID: <b>'.$newmid.'</b>';
+                $msgs[] = 'Module data inserted successfully. Module ID: <b>'.icms_conv_nr2local($newmid).'</b>';
                 $tplfile_handler =& xoops_gethandler('tplfile');
                 $templates = $module->getInfo('templates');
                 if ($templates != false) {
@@ -221,7 +221,7 @@ function xoops_module_install($dirname) {
                             $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert template <b>'.$tpl['file'].'</b> to the database.</span>';
                         } else {
                             $newtplid = $tplfile->getVar('tpl_id');
-                            $msgs[] = '&nbsp;&nbsp;Template <b>'.$tpl['file'].'</b> added to the database. (ID: <b>'.$newtplid.'</b>)';
+                            $msgs[] = '&nbsp;&nbsp;Template <b>'.$tpl['file'].'</b> added to the database. (ID: <b>'.icms_conv_nr2local($newtplid).'</b>)';
                             // generate compiled file
                             include_once XOOPS_ROOT_PATH.'/class/template.php';
                             if (!xoops_template_touch($newtplid)) {
@@ -266,7 +266,7 @@ function xoops_module_install($dirname) {
                             if (empty($newbid)) {
                                 $newbid = $db->getInsertId();
                             }
-                            $msgs[] = '&nbsp;&nbsp;Block <b>'.$block['name'].'</b> added. Block ID: <b>'.$newbid.'</b>';
+                            $msgs[] = '&nbsp;&nbsp;Block <b>'.$block['name'].'</b> added. Block ID: <b>'.icms_conv_nr2local($newbid).'</b>';
                             $sql = 'INSERT INTO '.$db->prefix('block_module_link').' (block_id, module_id,page_id) VALUES ('.intval($newbid).', 0,1)';
                             $db->query($sql);
                             if ($template != '') {
@@ -284,7 +284,7 @@ function xoops_module_install($dirname) {
                                     $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert template <b>'.$block['template'].'</b> to the database.</span>';
                                 } else {
                                     $newtplid = $tplfile->getVar('tpl_id');
-                                    $msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> added to the database. (ID: <b>'.$newtplid.'</b>)';
+                                    $msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> added to the database. (ID: <b>'.icms_conv_nr2local($newtplid).'</b>)';
                                     // generate compiled file
                                     include_once XOOPS_ROOT_PATH.'/class/template.php';
                                     if (!xoops_template_touch($newtplid)) {
@@ -403,9 +403,9 @@ function xoops_module_install($dirname) {
                     $mperm->setVar('gperm_name', 'module_admin');
                     $mperm->setVar('gperm_modid', 1);
                     if (!$gperm_handler->insert($mperm)) {
-                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add admin access right for Group ID <b>'.$mygroup.'</b></span>';
+                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add admin access right for Group ID <b>'.icms_conv_nr2local($mygroup).'</b></span>';
                     } else {
-                        $msgs[] = '&nbsp;&nbsp;Added admin access right for Group ID <b>'.$mygroup.'</b>';
+                        $msgs[] = '&nbsp;&nbsp;Added admin access right for Group ID <b>'.icms_conv_nr2local($mygroup).'</b>';
                     }
                     unset($mperm);
                 }
@@ -415,9 +415,9 @@ function xoops_module_install($dirname) {
                 $mperm->setVar('gperm_name', 'module_read');
                 $mperm->setVar('gperm_modid', 1);
                 if (!$gperm_handler->insert($mperm)) {
-                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add user access right for Group ID: <b>'.$mygroup.'</b></span>';
+                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add user access right for Group ID: <b>'.icms_conv_nr2local($mygroup).'</b></span>';
                 } else {
-                    $msgs[] = '&nbsp;&nbsp;Added user access right for Group ID: <b>'.$mygroup.'</b>';
+                    $msgs[] = '&nbsp;&nbsp;Added user access right for Group ID: <b>'.icms_conv_nr2local($mygroup).'</b>';
                 }
                 unset($mperm);
                 foreach ($blocks as $blc) {
@@ -427,9 +427,9 @@ function xoops_module_install($dirname) {
                     $bperm->setVar('gperm_name', 'block_read');
                     $bperm->setVar('gperm_modid', 1);
                     if (!$gperm_handler->insert($bperm)) {
-                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add block access right. Block ID: <b>'.$blc.'</b> Group ID: <b>'.$mygroup.'</b></span>';
+                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add block access right. Block ID: <b>'.icms_conv_nr2local($blc).'</b> Group ID: <b>'.icms_conv_nr2local($mygroup).'</b></span>';
                     } else {
-                        $msgs[] = '&nbsp;&nbsp;Added block access right. Block ID: <b>'.$blc.'</b> Group ID: <b>'.$mygroup.'</b>';
+                        $msgs[] = '&nbsp;&nbsp;Added block access right. Block ID: <b>'.icms_conv_nr2local($blc).'</b> Group ID: <b>'.icms_conv_nr2local($mygroup).'</b>';
                     }
                     unset($bperm);
                 }
@@ -552,9 +552,9 @@ function xoops_module_uninstall($dirname) {
                 $msgs[] = 'Deleting templates...';
                 for ($i = 0; $i < $tcount; $i++) {
                     if (!$tplfile_handler->delete($templates[$i])) {
-                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete template '.$templates[$i]->getVar('tpl_file').' from the database. Template ID: <b>'.$templates[$i]->getVar('tpl_id').'</b></span>';
+                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete template '.$templates[$i]->getVar('tpl_file').' from the database. Template ID: <b>'.icms_conv_nr2local($templates[$i]->getVar('tpl_id')).'</b></span>';
                     } else {
-                        $msgs[] = '&nbsp;&nbsp;Template <b>'.$templates[$i]->getVar('tpl_file').'</b> deleted from the database. Template ID: <b>'.$templates[$i]->getVar('tpl_id').'</b>';
+                        $msgs[] = '&nbsp;&nbsp;Template <b>'.icms_conv_nr2local($templates[$i]->getVar('tpl_file')).'</b> deleted from the database. Template ID: <b>'.icms_conv_nr2local($templates[$i]->getVar('tpl_id')).'</b>';
                     }
                 }
             }
@@ -567,9 +567,9 @@ function xoops_module_uninstall($dirname) {
                 $msgs[] = 'Deleting block...';
                 for ($i = 0; $i < $bcount; $i++) {
                     if (!$block_arr[$i]->delete()) {
-                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block <b>'.$block_arr[$i]->getVar('name').'</b> Block ID: <b>'.$block_arr[$i]->getVar('bid').'</b></span>';
+                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block <b>'.$block_arr[$i]->getVar('name').'</b> Block ID: <b>'.icms_conv_nr2local($block_arr[$i]->getVar('bid')).'</b></span>';
                     } else {
-                        $msgs[] = '&nbsp;&nbsp;Block <b>'.$block_arr[$i]->getVar('name').'</b> deleted. Block ID: <b>'.$block_arr[$i]->getVar('bid').'</b>';
+                        $msgs[] = '&nbsp;&nbsp;Block <b>'.$block_arr[$i]->getVar('name').'</b> deleted. Block ID: <b>'.icms_conv_nr2local($block_arr[$i]->getVar('bid')).'</b>';
                     }
                     if ($block_arr[$i]->getVar('template') != ''){
                         $templates =& $tplfile_handler->find(null, 'block', $block_arr[$i]->getVar('bid'));
@@ -577,9 +577,9 @@ function xoops_module_uninstall($dirname) {
                         if ($btcount > 0) {
                             for ($j = 0; $j < $btcount; $j++) {
                                 if (!$tplfile_handler->delete($templates[$j])) {
-                                $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block template '.$templates[$j]->getVar('tpl_file').' from the database. Template ID: <b>'.$templates[$j]->getVar('tpl_id').'</b></span>';
+                                $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block template '.$templates[$j]->getVar('tpl_file').' from the database. Template ID: <b>'.icms_conv_nr2local($templates[$j]->getVar('tpl_id')).'</b></span>';
                                 } else {
-                                $msgs[] = '&nbsp;&nbsp;Block template <b>'.$templates[$j]->getVar('tpl_file').'</b> deleted from the database. Template ID: <b>'.$templates[$j]->getVar('tpl_id').'</b>';
+                                $msgs[] = '&nbsp;&nbsp;Block template <b>'.$templates[$j]->getVar('tpl_file').'</b> deleted from the database. Template ID: <b>'.icms_conv_nr2local($templates[$j]->getVar('tpl_id')).'</b>';
                                 }
                             }
                         }
@@ -646,9 +646,9 @@ function xoops_module_uninstall($dirname) {
                     $msgs[] = 'Deleting module config options...';
                     for ($i = 0; $i < $confcount; $i++) {
                         if (!$config_handler->deleteConfig($configs[$i])) {
-                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete config data from the database. Config ID: <b>'.$configs[$i]->getvar('conf_id').'</b></span>';
+                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete config data from the database. Config ID: <b>'.icms_conv_nr2local($configs[$i]->getvar('conf_id')).'</b></span>';
                         } else {
-                            $msgs[] = '&nbsp;&nbsp;Config data deleted from the database. Config ID: <b>'.$configs[$i]->getVar('conf_id').'</b>';
+                            $msgs[] = '&nbsp;&nbsp;Config data deleted from the database. Config ID: <b>'.icms_conv_nr2local($configs[$i]->getVar('conf_id')).'</b>';
                         }
                     }
                 }

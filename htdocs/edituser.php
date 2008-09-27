@@ -416,9 +416,9 @@ if($op == 'avatarform')
         		$form->addElement(new XoopsFormLabel(_US_AUTORESIZE_ATV, sprintf(_US_AUTORESIZE_ATV_DESC,$xoopsConfigUser['avatar_width'],$xoopsConfigUser['avatar_height'])));
         	}
 		*/
-        	$form->addElement(new XoopsFormLabel(_US_MAXPIXEL, $xoopsConfigUser['avatar_width'].' x '.$xoopsConfigUser['avatar_height']));
-        	$form->addElement(new XoopsFormLabel(_US_MAXIMGSZ, $xoopsConfigUser['avatar_maxsize']));
-        	$form->addElement(new XoopsFormFile(_US_SELFILE, 'avatarfile', $xoopsConfigUser['avatar_maxsize']), true);
+        	$form->addElement(new XoopsFormLabel(_US_MAXPIXEL, icms_conv_nr2local($xoopsConfigUser['avatar_width']).' x '.icms_conv_nr2local($xoopsConfigUser['avatar_height'])));
+        	$form->addElement(new XoopsFormLabel(_US_MAXIMGSZ, icms_conv_nr2local($xoopsConfigUser['avatar_maxsize'])));
+        	$form->addElement(new XoopsFormFile(_US_SELFILE, 'avatarfile', icms_conv_nr2local($xoopsConfigUser['avatar_maxsize'])), true);
         	$form->addElement(new XoopsFormHidden('op', 'avatarupload'));
         	$form->addElement(new XoopsFormHidden('uid', intval($xoopsUser->getVar('uid'))));
         	$form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
@@ -433,7 +433,7 @@ if($op == 'avatarform')
     		$avatar_tray->addElement($avatar_select);
     		$avatar_tray->addElement(new XoopsFormLabel('', "<img src='".ICMS_UPLOAD_URL."/".$xoopsUser->getVar("user_avatar", "E")."' name='avatar' id='avatar' alt='' /> <a href=\"javascript:openWithSelfMain('".ICMS_URL."/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">"._LIST."</a>"));
     		if($xoopsConfigUser['avatar_allow_upload'] == 1 && $xoopsUser->getVar('posts') < $xoopsConfigUser['avatar_minposts']){
-			$form2->addElement(new XoopsFormLabel(sprintf(_US_POSTSNOTENOUGH,$xoopsConfigUser['avatar_minposts']),_US_UNCHOOSEAVT));}
+			$form2->addElement(new XoopsFormLabel(sprintf(_US_POSTSNOTENOUGH,icms_conv_nr2local($xoopsConfigUser['avatar_minposts'])),_US_UNCHOOSEAVT));}
 			$form2->addElement($avatar_tray);
     		$form2->addElement(new XoopsFormHidden('uid', intval($xoopsUser->getVar('uid'))));
     		$form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));

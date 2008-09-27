@@ -165,7 +165,7 @@ function modifyUser($user)
 		include ICMS_ROOT_PATH.'/modules/system/admin/users/userform.php';
 		echo "<br /><b>"._AM_USERPOST."</b><br /><br />\n";
 		echo "<table>\n";
-		echo "<tr><td>"._AM_COMMENTS."</td><td>".$user->getVar('posts')."</td></tr>\n";
+		echo "<tr><td>"._AM_COMMENTS."</td><td>".icms_conv_nr2local($user->getVar('posts'))."</td></tr>\n";
 		echo "</table>\n";
 		echo "<br />"._AM_PTBBTSDIYT."<br />\n";
 		echo "<form action=\"admin.php\" method=\"post\">\n";

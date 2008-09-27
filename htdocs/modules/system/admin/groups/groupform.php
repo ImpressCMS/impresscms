@@ -94,7 +94,7 @@ foreach ($posarr as $k=>$v){
   $new_blocks_array = array();
   $blocks_array = XoopsBlock::getAllBlocks("list", $k);
   foreach ($blocks_array as $key=>$value) {
-  	$new_blocks_array[$key] = "<a href='".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&amp;op=edit&amp;bid=".$key."'>".$value." (ID: ".$key.")</a>";
+  	$new_blocks_array[$key] = "<a href='".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&amp;op=edit&amp;bid=".$key."'>".$value." ("._MD_AM_ID." : ".icms_conv_nr2local($key).")</a>";
   }
   $block_checkbox[$i]->addOptionArray($new_blocks_array);
   $i++;

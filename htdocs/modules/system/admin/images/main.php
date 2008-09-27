@@ -50,7 +50,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
         $image_handler =& xoops_gethandler('image');
         for ($i = 0; $i < $catcount; $i++) {
             $count = $image_handler->getCount(new Criteria('imgcat_id', $imagecategorys[$i]->getVar('imgcat_id')));
-            echo '<li>'.$imagecategorys[$i]->getVar('imgcat_name').' ('.sprintf(_NUMIMAGES, '<b>'.$count.'</b>').') [<a href="admin.php?fct=images&amp;op=listimg&amp;imgcat_id='.$imagecategorys[$i]->getVar('imgcat_id').'">'._LIST.'</a>] [<a href="admin.php?fct=images&amp;op=editcat&amp;imgcat_id='.$imagecategorys[$i]->getVar('imgcat_id').'">'._EDIT.'</a>]';
+            echo '<li>'.$imagecategorys[$i]->getVar('imgcat_name').' ('.sprintf(_NUMIMAGES, '<b>'.icms_conv_nr2local($count).'</b>').') [<a href="admin.php?fct=images&amp;op=listimg&amp;imgcat_id='.$imagecategorys[$i]->getVar('imgcat_id').'">'._LIST.'</a>] [<a href="admin.php?fct=images&amp;op=editcat&amp;imgcat_id='.$imagecategorys[$i]->getVar('imgcat_id').'">'._EDIT.'</a>]';
             if ($imagecategorys[$i]->getVar('imgcat_type') == 'C') {
                 echo ' [<a href="admin.php?fct=images&amp;op=delcat&amp;imgcat_id='.$imagecategorys[$i]->getVar('imgcat_id').'">'._DELETE.'</a>]';
             }
