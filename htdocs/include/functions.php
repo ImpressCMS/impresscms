@@ -1690,15 +1690,25 @@ return $Generate;
 }
 function icms_conv_nr2local($string)
 {
+	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
+	if ( $basecheck ){
 	return str_replace(
 		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
 		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), $string);
+	}else{
+		return $string;
+	}
 }
 function icms_conv_local2nr($string)
 {
+	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
+	if ( $basecheck ){
 	return str_replace(
 		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), 
 		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), 
 		$string);
+	}else{
+		return $string;
+	}
 }
 ?>

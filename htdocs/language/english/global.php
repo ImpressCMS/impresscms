@@ -286,4 +286,6 @@ define('_LCL_NUM6','6');
 define('_LCL_NUM7','7');
 define('_LCL_NUM8','8');
 define('_LCL_NUM9','9');
+// change 0 to 1 if your language has a different numbering than latin`s alphabet
+define("_USE_LOCAL_NUM","0");
 ?>
