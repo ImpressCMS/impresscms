@@ -1,0 +1,39 @@
+<table border='0' id='z' cellspacing='1' cellpadding='4' width='100%' class='outer'>
+<tr><th colspan='5' align='center'><{$lang_private}></th>
+</tr>
+<tr><td class="odd" align='center'><{$lang_file}></td>
+<td class="odd" align='center'><{$lang_news}></td>
+<td class="odd" align='center'><{$lang_mes}></td>
+<td class="odd" align='center'><{$mp_precistotal}></td>
+</tr>
+
+<{foreach item=category from=$categories}> 
+
+<tr align='left' class="<{cycle values="odd,even"}>">
+<td valign='top'  align='left'><div style="margin-left: 20px; text-align:left;" align="center"><{$category.title}></div></td>
+<td valign='middle' align='center' width='20%'><{$category.ms_news}></td>
+<td valign='middle' align='center' width='20%'><{$category.ms_old}></td>
+<td valign='middle' align='center' width='20%'><{$category.mp_precis}></td>
+</tr>
+<tr>
+<{$category.subcategories}>
+</tr>
+<{/foreach}>
+<tr class='foot' align='left'><td colspan='7' align='left'>
+<{foreach item=boutton from=$box_actions}> 
+<{$boutton}>
+<{/foreach}>
+</td>
+</tr>
+</table>
+
+<br /><br />
+<{if $mp_alert}>
+<{$mp_alert}>
+<br /><br />
+<{/if}>
+
+
+<table border='0' cellspacing='1' width='100%' height='25'>
+<tr><td width='40%' style='vertical-align: middle;'><{$lang_menu}></td>
+</tr></table>

@@ -14,7 +14,12 @@
 
 $xoopsOption['pagetype'] = "pmsg";
 include_once "mainfile.php";
-
+		$module_handler = xoops_gethandler('module');
+		$messenger_module = $module_handler->getByDirname('messenger');
+		if ($messenger_module && $messenger_module->getVar('isactive')) {
+    	header("location: ./modules/messenger/index.php" );
+    	exit();
+		}
 if (!is_object($xoopsUser)) {
     $errormessage = _PM_SORRY."<br />"._PM_PLZREG."";
     redirect_header("user.php",2,$errormessage);
