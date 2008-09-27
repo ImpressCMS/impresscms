@@ -20,7 +20,10 @@ ImpressCMS ChangeLog
 * CSS code tag. (stranger)
 * HTML code tag. (stranger)
 * JS code tag. (stranger)
-
+* Function icmsdate. (stranger)
+* Function icms_conv_nr2local. (stranger)
+* Function icms_conv_local2nr. (stranger)
+* Function icms_conv_nr2local to numeric outputs. (stranger)
 
 '''Changed'''
 * Admin`s RSS feed to simplepie. (marcan/stranger)
