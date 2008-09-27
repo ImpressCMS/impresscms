@@ -22,7 +22,8 @@ if (!defined('XOOPS_ROOT_PATH')) {
 <script type="text/javascript" src="'.XOOPS_URL.'/libraries/jalalijscalendar/calendar.js"></script>
 <script type="text/javascript" src="'.XOOPS_URL.'/libraries/jalalijscalendar/calendar-setup.js"></script>
 ';
-	if (defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC)){
+	$basecheck = defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC;
+	if ($basecheck && $xoopsConfig['language'] == 'persian'){
 		echo'<script type="text/javascript" src="'.XOOPS_URL.'/libraries/jalalijscalendar/jalali.js"></script>';
 }
 ?>
