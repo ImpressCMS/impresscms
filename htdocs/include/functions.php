@@ -219,16 +219,6 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 	//Start addition including extended date function
 return ucfirst(icmsdate($datestring,$usertimestamp));
 }
-function icmsdate($datestring,$usertimestamp)
-{
-	global $xoopsConfig;
-	$basecheck = defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC;
-	if ($basecheck && $xoopsConfig['language'] == 'persian' && $datestring != 'mysql'){
-		include_once ICMS_ROOT_PATH.'/include/jalali.php';
-		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
-	}else{
-	return ucfirst(date($datestring,$usertimestamp));}
-}
 
 /*
 * Function to calculate server timestamp from user entered time (timestamp)
@@ -1687,6 +1677,16 @@ $pdf->AddPage();
 $pdf->writeHTML($content, true, 0);
 $Generate = $pdf->Output();
 return $Generate;
+}
+function icmsdate($datestring,$usertimestamp)
+{
+	global $xoopsConfig;
+	$basecheck = defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC;
+	if ($basecheck && $xoopsConfig['language'] == 'persian' && $datestring != 'mysql'){
+		include_once ICMS_ROOT_PATH.'/include/jalali.php';
+		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
+	}else{
+	return ucfirst(date($datestring,$usertimestamp));}
 }
 function icms_conv_nr2local($string)
 {
