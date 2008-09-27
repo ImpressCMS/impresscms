@@ -730,7 +730,9 @@ class IcmsDatabaseupdater {
 	 * @return string default value
 	 */
 	function getFieldDefaultFromVar($var, $key = false) {
-		if ($var['value']) {
+		if ($var['data_type'] == XOBJ_DTYPE_TXTAREA) {
+			return 'nodefault';
+		} elseif ($var['value']) {
 			return $var['value'];
 		} else {
 			if (in_array($var['data_type'], array(
@@ -743,8 +745,6 @@ class IcmsDatabaseupdater {
 							XOBJ_DTYPE_FILE
 						))) {
 				return '0';
-			} elseif($var['data_type'] == XOBJ_DTYPE_TXTAREA) {
-				return 'nodefault';
 			} else {
 				return '';
 			}
@@ -804,7 +804,12 @@ class IcmsDatabaseupdater {
 						// the fiels does not exist, let's create it
 						$type = $this->getFieldTypeFromVar($var);
 						$default =  $this->getFieldDefaultFromVar($var);
-						$table->addNewField($key, "$type not null default '$default'");
+						if ($default != 'nodefault') {
+							$extra = "default '$default'";
+						} else {
+							$extra = false;
+						}
+						$table->addNewField($key, "$type not null " . $extra);
 					} else {
 						// if field already exists, let's check if the definition is correct
 						$definition =  strtolower($existingFieldsArray[$key]);

@@ -92,7 +92,7 @@ function xoops_module_update_system(&$module) {
 	    // Adding configurations of meta tag&footer
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_METAFOOTER, 'google_meta', '_MD_AM_METAGOOGLE', '', '_MD_AM_METAGOOGLE_DESC', 'textbox', 'text', 9);
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_METAFOOTER, 'use_google_analytics', '_MD_AM_USE_GOOGLE_ANA', 0, '_MD_AM_USE_GOOGLE_ANA_DESC', 'yesno', 'int', 21);
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_METAFOOTER, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textarea', 'text', 21);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_METAFOOTER, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textbox', 'text', 21);
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_METAFOOTER, 'footadm', '_MD_AM_FOOTADM', 'Powered by ImpressCMS &copy; 2007-' . date("Y", time()) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>', '_MD_AM_FOOTADM_DESC', 'textarea', 'text', 22);
 
 	    // Adding configurations of search preferences
@@ -264,8 +264,25 @@ function xoops_module_update_system(&$module) {
     $newDbVersion = 7;
     if($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
+		$configitem_handler = xoops_getHandler('configitem');
+		// fetch the rss_local configitem
+		$criteria = new CriteriaCompo();
+		$criteria->add(new Criteria('conf_name', 'google_analytics'));
+		$criteria->add(new Criteria('conf_catid', XOOPS_CONF_METAFOOTER));
+		$configitemsObj = $configitem_handler->getObjects($criteria);
+		if (isset($configitemsObj[0]) && $configitemsObj[0]->getVar('conf_formtype', 'n') == 'textarea') {
+			$configitemsObj[0]->setVar('conf_formtype', 'textbox');
+			$configitem_handler->insert($configitemsObj[0]);
+			echo "&nbsp;&nbsp;Updating google_analytics field type<br />";
+		}
 
-   		$table = new IcmsDatabasetable('users');
+	}
+ 
+    $newDbVersion = 8;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+  		$table = new IcmsDatabasetable('users');
 	    if (!$table->fieldExists('login_name')) {
 	    	$table->addNewField('login_name', "varchar(255) NOT NULL default ''");
 		    $icmsDatabaseUpdater->updateTable($table);
@@ -288,26 +305,4 @@ function xoops_module_update_system(&$module) {
     $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
 		return icms_cleaning_write_folders();
 	}
-
-	function icms_cleaning_write_folders() {
-	    global $xoopsConfig;
-		$dir = array();
-		$dir['templates_c'] = ICMS_ROOT_PATH."/templates_c/";
-		$dir['cache'] = ICMS_ROOT_PATH."/cache/";
-
-		foreach ($dir as $d)
-		{
-			$dd = opendir($d);
-			while($file = readdir($dd))
-			{
-		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != 'adminmenu_' . $xoopsConfig['language'] . '.php'))
-				{
-		  			unlink($d.$file);
-				}
-			}
-			closedir($dd);
-		}
-			return true;
-	}
-
 ?>

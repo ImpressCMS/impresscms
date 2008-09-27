@@ -359,8 +359,8 @@ function xoops_getbanner()
 			{
 				$bannerobject = $bannerobject
 					.'<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">'
-					.'<param name="movie" value="'.$imageurl.'" />'
-					.'<param name="quality" value="high" />'
+					.'<param name="movie" value="'.$imageurl.'"></param>'
+					.'<param name="quality" value="high"></param>'
 					.'</object>';
 			}
 			else {$bannerobject = $bannerobject.'<img src="'.$imageurl.'" alt="" />';}
@@ -1678,6 +1678,29 @@ $pdf->writeHTML($content, true, 0);
 $Generate = $pdf->Output();
 return $Generate;
 }
+
+	function icms_cleaning_write_folders() {
+	    global $xoopsConfig;
+		$dir = array();
+		$dir['templates_c'] = ICMS_ROOT_PATH."/templates_c/";
+		$dir['cache'] = ICMS_ROOT_PATH."/cache/";
+
+		foreach ($dir as $d)
+		{
+			$dd = opendir($d);
+			while($file = readdir($dd))
+			{
+		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != 'adminmenu_' . $xoopsConfig['language'] . '.php'))
+				{
+		  			unlink($d.$file);
+				}
+			}
+			closedir($dd);
+		}
+			return true;
+	}
+
+
 function icmsdate($datestring,$usertimestamp)
 {
 	global $xoopsConfig;

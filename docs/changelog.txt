@@ -32,6 +32,19 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
+===2008-09-28 : 1.1 FINAL===
+
+'''Improved'''
+* Updated system to version 1.10. (stranger)
+* Function icms_cleaning_write_folders. (stranger)
+
+'''Fixed'''
+* Issues with google analytic textform in admin menu. (stranger)
+* Issues with Jalalijscalendar option in admin menu. (stranger)
+* Issues with new templates not being inserted in system module. (stranger)
+* Issues with Jalalijscalendar option in Persian language. (stranger)
+* Issues with reset buttons. (mcdonald3072)
+
 ===2008-09-21 : 1.1 RC 2===
 
 '''Added'''
@@ -144,7 +157,7 @@ ImpressCMS ChangeLog
 
 '''Changed'''
 * after upgrade is done you'll get back to index to see if upgrade was successful. (stranger)
-* moved protector.php to extras. (stranger)
+* moved preload file "protector.php" to extras. (stranger)
 * xoops.css to icms.css. (stranger)
 * xoops_rtl.css to icms_rtl.css. (stranger)
 * xoops_rtl.js to icms_rtl.js. (stranger)
