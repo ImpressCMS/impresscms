@@ -14,7 +14,7 @@
 * @version			$Id$
 */
 
-error_reporting(1);
+error_reporting(0);
 include_once("header.php");
 
 $msg_id = empty($_REQUEST['msg_mp']) ? '' : $_REQUEST['msg_mp'];
