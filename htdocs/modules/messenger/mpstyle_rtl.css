@@ -1,0 +1,108 @@
+input[type=submit], input[type=reset], input[type=button]  {
+border-width: 1px;
+padding: 2px 4px;
+font-size: 11px;
+height: 20px;
+background-image:  url(images/theme/button.png);
+}
+
+input[type=submit]:hover, input[type=reset]:hover,  input[type=button]:hover {
+border-right: 1px solid black;
+border-bottom: 1px solid black;
+background-image:  url(images/theme/button.png);
+}
+
+input[type=text] {
+  text-decoration:none;
+  border: 1px solid silver;
+  background-color:#FFFFFF;
+  text-align:left;
+  color:#000000;
+ }
+ 
+ input[type=text]:focus {
+  background-color:#EBF5FF;
+  border: 1px solid #4A5F9A;
+   }
+ 
+ textarea {
+  text-decoration:none;
+  border: 1px solid silver;
+  background-color:#FFFFFF;
+  text-align:left;
+  color:#000000;
+ }
+
+th { font-size: 11px;  color: #666666; background-image:  url('images/theme/background.png'); height: 25px; }
+#centercolumn th {background-color: #2F5376; color: #666666; vertical-align: middle;}
+
+img {
+  /*behavior:url("include/pngbehavior.htc");*/
+}
+
+#mpbuttonbar {width:100%; font-size:12px; line-height:normal;  }
+#mpbuttonbar a { float:right; background:url('images/theme/tabLeft.png') no-repeat left top; margin:0; padding:0 10px 0 9px; text-decoration:none; color:#666;}
+#mpbuttonbar a span { float:right; display:block; background:url('images/theme/tabRight.png') no-repeat right top; padding:5px 15px 4px 6px; font-weight:bold;}
+#mpbuttonbar a:hover span { color: #FFF;}
+#mpbuttonbar #current span { color:#000; }
+
+#xo-mp-index {
+  width: 100%;
+}
+#xo-message-index {
+  width: 25%;
+}
+#xo-message-index .images {
+  width: auto;
+  height: 32px;
+  border: 0;
+  font: bold 12px Arial, Verdana;
+}
+#xo-message-index .text {
+  padding: 3px 0 3px 33px;
+  border: 0;
+}
+#xo-message-index .details {
+  padding: 3px 0 3px 50px;
+  border: 0;
+}
+#xo-message-index .percent {
+  padding: 0 0 0 50px;
+  width: 350px;
+  border: 0;
+}
+#xo-calendar {
+  color:            #666;
+  border:           1px solid silver;
+  font:             normal 11px Arial, verdana;
+}
+#xo-calendar .head {
+  width: 20px;
+  height: 16px;
+  text-align:       center;
+  padding: 1px;
+  background-color: #C2CDD6;
+}
+#xo-calendar .today {
+  font-weight: bold;
+  color: red;
+  text-align:       center;
+  padding: 1px;
+  background-color: #92A6BC;
+}
+#xo-calendar .today a{
+  color: red;
+}
+#xo-calendar .other {
+  text-align:       center;
+  padding: 1px;
+  background-color: #F3F3F3;
+}
+#xo-calendar .other a {
+  font-weight: bold;
+}
+#xo-calendar .footer {
+  text-align:       center;
+  padding: 0px;
+  background-color: #F3F3F3;
+}

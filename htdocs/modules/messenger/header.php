@@ -29,7 +29,7 @@ include_once XOOPS_ROOT_PATH.'/modules/messenger/class/formselectuser.php';
 include_once XOOPS_ROOT_PATH.'/modules/messenger/class/selectuser.php';
 
 
-$mp_module_header = "<link rel='stylesheet' type='text/css' href='" . XOOPS_URL . "/modules/messenger/mpstyle.css'/><script type='text/javascript' src='".XOOPS_URL."/modules/messenger/include/multifile.js'></script>";
+$mp_module_header = "<link rel='stylesheet' type='text/css' href='" . XOOPS_URL . "/modules/messenger/mpstyle".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css'/><script type='text/javascript' src='".XOOPS_URL."/modules/messenger/include/multifile.js'></script>";
 
 
 $myts = & MyTextSanitizer :: getInstance(); // MyTextSanitizer object
