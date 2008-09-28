@@ -17,7 +17,7 @@ include_once "mainfile.php";
 		$module_handler = xoops_gethandler('module');
 		$messenger_module = $module_handler->getByDirname('messenger');
 		if ($messenger_module && $messenger_module->getVar('isactive')) {
-    	header("location: ./modules/messenger/index.php" );
+    	header("location: ./modules/messenger/msgbox.php" );
     	exit();
 		}
 if (!is_object($xoopsUser)) {
