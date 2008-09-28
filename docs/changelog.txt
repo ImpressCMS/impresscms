@@ -24,6 +24,7 @@ ImpressCMS ChangeLog
 * Function icms_conv_nr2local. (stranger)
 * Function icms_conv_local2nr. (stranger)
 * Function icms_conv_nr2local to numeric outputs. (stranger)
+* Messenger module (based on mpmanager). (stranger)
 
 '''Changed'''
 * Admin`s RSS feed to simplepie. (marcan/stranger)
