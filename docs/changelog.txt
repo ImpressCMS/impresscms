@@ -5,7 +5,6 @@ ImpressCMS ChangeLog
 === ????-??-?? : 1.2 ALPHA 1 ===
 '''Added'''
 * Smarty xoPageNav function. (Skalpa)
-* calendar block. (stranger)
 * simplepie library. (marcan)
 * Geshi library. (stranger)
 * Displayname features. (stranger)
