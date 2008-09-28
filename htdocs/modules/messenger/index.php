@@ -19,7 +19,7 @@ require_once "header.php";
 $xoopsOption['template_main'] = 'mp_index.html';
 /* Include the header */
 include XOOPS_ROOT_PATH."/header.php";
-require_once "include/calendar.php";
+//require_once "include/calendar.php";
 /* Global Xoops User variable */
 global $xoopsUser;
 /* If $xoopsUser vriable is define then user is connected */
@@ -59,9 +59,9 @@ if ($ohome == 0 && $op != 'menu') {
   }
   
   $mp_total = number_format(($total*100)/$xoopsModuleConfig['maxuser'], 0, ",", " ");
-  $percent="<span style='border: 1px solid rgb(0, 0, 0); background: rgb(255, 255, 255) none repeat scroll 0%; margin: 4px; text-align:center; display: block; height: 8px; width: 70%; float: left; overflow: hidden;'><span style='background:  ".$xoopsModuleConfig['cssbtext']." none repeat scroll 0%; text-align:left; display: block; height: 8px; width: ".$mp_total."%; float: left; overflow: hidden;'></span></span>".$mp_total."%";
+  $percent="<span style='border: 1px solid rgb(0, 0, 0); background: rgb(255, 255, 255) none repeat scroll 0%; margin: 4px; text-align:center; display: block; height: 8px; width: 70%; overflow: hidden;'><span style='background:  ".$xoopsModuleConfig['cssbtext']." none repeat scroll 0%; display: block; height: 8px; width: ".$mp_total."%; overflow: hidden;'></span></span>".$mp_total."%";
 
-  $calendar=calendar();
+//  $calendar=calendar();
   $xoopsTpl->assign('mp_index_title', _MP_INDEX_TITLE);
   $xoopsTpl->assign('mp_index_message', _MP_MBOX);
   $xoopsTpl->assign('mp_index_message_desc', _MP_INDEX_MSG_DESC);
@@ -73,9 +73,9 @@ if ($ohome == 0 && $op != 'menu') {
   $xoopsTpl->assign('mp_index_folder_desc', _MP_INDEX_FOLDER_DESC);
   $xoopsTpl->assign('mp_index_options', _MP_MOPTION);
   $xoopsTpl->assign('mp_index_options_desc', _MP_INDEX_OPTN_DESC);
-  $xoopsTpl->assign('mp_calendrier', $calendar);
+//  $xoopsTpl->assign('mp_calendrier', $calendar);
   $xoopsTpl->assign('mp_percent', $percent);
-   $xoopsTpl->assign('xoops_module_header', $mp_module_header);
+  $xoopsTpl->assign('xoops_module_header', $mp_module_header);
 }
 include XOOPS_ROOT_PATH."/footer.php";
 ?>
