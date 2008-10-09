@@ -1734,4 +1734,25 @@ function icms_conv_local2nr($string)
 		return $string;
 	}
 }
+
+function icms_convert_size($size){ 	 
+    if ($size >= 1073741824){ 	 
+        $ret = round((($size/1024)/1024)/1024,1).' Gb'; 	 
+    }elseif($size >= 1048576 && $size < 1073741824){ 	 
+        $ret = round(($size/1024)/1024,1).' Mb'; 	 
+    }elseif($size >= 1024 && $size < 1048576){ 	 
+        $ret = round(($size/1024),1).' Kb'; 	 
+    }else{ 	 
+        $ret = round(($size),1).' bytes'; 	 
+    } 	 
+    return $ret; 	 
+} 	 
+	  	 
+function icms_random_str($numchar){ 	 
+    $letras = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,x,w,y,z,1,2,3,4,5,6,7,8,9,0"; 	 
+    $array = explode(",", $letras); 	 
+    shuffle($array); 	 
+    $senha = implode($array, ""); 	 
+    return substr($senha, 0, $numchar); 	 
+}
 ?>

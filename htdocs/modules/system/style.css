@@ -450,3 +450,59 @@ div#floats_l{
 div#floats_r{
 	float:right;
 }
+/*image manager*/
+.imanager_image_box {
+    float:left;
+    border:1px solid #CCCCCC;
+    padding:3px;
+    margin:5px;
+    text-align:center;
+    width:165px;
+    overflow:hidden;
+}
+
+.imanager_image_box:hover {
+    background-color: #FFF6BF;
+}
+
+.imanager_image_img {
+    display:block;
+    height:120px;
+    overflow:hidden;
+}
+
+.imanager_image_img img{
+    max-width:159px;
+}
+
+.imanager_image_label{
+    display:block;
+    font-size:13px;
+    color: #E24949;
+    font-weight:bold;
+    line-height:180%;
+}
+
+.imanager_image_info{
+    display:block;
+    font-size:9px;
+    font-weight:normal;
+    color: #333333;
+    line-height:120%;
+    text-align:left;
+}
+
+.imanager_image_btns{
+    display:block;
+    margin-top:3px;
+}
+
+.img_list_info_panel{
+    padding: 5px;
+    margin:5px;
+}
+
+tr.blocked td {background-color: #FF0000;}
+
+.imgcat_notwrite {background-color: #FF0000; width:20px; height: 17px; padding-top: 3px; overflow: visible; margin-bottom: 2px;}
+.imgcat_notwrite span{margin-left: 25px; display: block; width: 400px;}

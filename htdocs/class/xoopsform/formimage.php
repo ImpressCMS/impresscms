@@ -1,6 +1,6 @@
 <?PHP
 ### =============================================================
-### Mastop InfoDigital - Paix�o por Internet
+### Mastop InfoDigital - Paixão por Internet
 ### =============================================================
 ### Classe para Colocar as imagens da biblioteca em um Select
 ### =============================================================
@@ -29,8 +29,8 @@ class MastopFormSelectImage extends XoopsFormSelect
 	 *
 	 * @param	string	$caption
 	 * @param	string	$name
-	 * @param	mixed	$value	Valor pr�-selecionado (ou array de valores).
-	 * @param	int		$size	N�mero de Linhas. "1" d� um Select List normal de 1 op��o.
+	 * @param	mixed	$value	Valor pré-selecionado (ou array de valores).
+	 * @param	int		$size	Número de Linhas. "1" dá um Select List normal de 1 opção.
 	 * @param	string	$cat	Nome da Categoria da biblioteca. Se vazio ou n�o definido, retorna todas as bibliotecas que o cara pode acessar.
 	 */
 	function MastopFormSelectImage($caption, $name, $value=null, $cat = null)
@@ -42,8 +42,8 @@ class MastopFormSelectImage extends XoopsFormSelect
 	/**
 	 * Adiciona um Optgroup
      *
-	 * @param	string  $value  op��es do Grupo
-     * @param	string  $name   Nome do Grupo de Op��es
+	 * @param	string  $value  opções do Grupo
+     * @param	string  $name   Nome do Grupo de opções
 	 */
 	function addOptGroup($value=array(), $name="&nbsp;"){
 		$this->_optgroups[$name] = $value;
@@ -52,7 +52,7 @@ class MastopFormSelectImage extends XoopsFormSelect
 	/**
 	 * Adiciona m�ltiplos Optgroups
 	 *
-     * @param	array   $options    Array com nome->op��es
+     * @param	array   $options    Array com nome->opções
 	 */
 	function addOptGroupArray($options){
 		if ( is_array($options) ) {
@@ -100,7 +100,10 @@ class MastopFormSelectImage extends XoopsFormSelect
 						if($storetype == "db"){
 							$ret[$v]["/image.php?id=".$i->getVar('image_id')] = $i->getVar('image_nicename');
 						}else{
-							$ret[$v]["/uploads/".$i->getVar('image_name')] =  $i->getVar('image_nicename');
+							$categ_path = $imgcat_handler->getCategFolder($imgcat);
+							$categ_path = str_replace(ICMS_ROOT_PATH,'',$categ_path);
+							$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
+							$ret[$v][$path.$i->getVar('image_name')] = $i->getVar('image_nicename');
 						}
 					}
 				}else{
@@ -113,7 +116,7 @@ class MastopFormSelectImage extends XoopsFormSelect
 	/**
 	 * Pega todos os Optgroups
 	 *
-     * @return	array   Array com nome->op��es
+     * @return	array   Array com nome->opções
 	 */
 	function getOptGroups(){
 		return $this->_optgroups;
@@ -162,7 +165,7 @@ class MastopFormSelectImage extends XoopsFormSelect
 		}
 		$browse_url = XOOPS_URL."/class/xoopsform/formimage_browse.php";
 		$ret .= "</select>";
-		$ret .= ($catlist_total > 0) ? " <input type='button' value='"._ADDIMAGE."' onclick=\"window.open('$browse_url?target=".$this->getName()."','formImage','resizable=yes,width=600,height=470,left='+(screen.availWidth/2-200)+',top='+(screen.availHeight/2-200)+'');return false;\">":"" ;
+		$ret .= ($catlist_total > 0) ? " <input type='button' value='"._ADDIMAGE."' onclick=\"window.open('$browse_url?target=".$this->getName()."','formImage','resizable=yes,scrollbars=yes,width=985,height=470,left='+(screen.availWidth/2-492)+',top='+(screen.availHeight/2-235)+'');return false;\">":"" ;
 		$ret .= "<br /><img id='".$this->getName()."_img' src='".((!empty($imagem)) ? XOOPS_URL.$imagem : XOOPS_URL."/images/blank.gif")."'>";
 		return $ret;
 	}

@@ -91,11 +91,11 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     // default theme
 
     //Image Category to admin Logos
-    $dbm->insert("imagecategory", " (imgcat_id, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype) VALUES (1, 'Logos', 350000, 350, 80, 1, 0, 'C', 'file')");
+    $dbm->insert("imagecategory", " (imgcat_id, imgcat_pid, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype, imgcat_foldername) VALUES (1, 0, 'Logos', 358400, 350, 80, 1, 0, 'C', 'file', 'logos')");
     $dbm->insert("group_permission", " VALUES(0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'imgcat_write')");
     $dbm->insert("group_permission", " VALUES(0,".$gruops['XOOPS_GROUP_ADMIN'].",1,1,'imgcat_read')");
     //Default logo used in the admin
-   $dbm->insert("image", " (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (1, 'img482278e29e81c.png', 'ImpressCMS', 'image/png', ".time().", 1, 0, 1)");
+    $dbm->insert("image", " (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (1, 'img482278e29e81c.png', 'ImpressCMS', 'image/png', ".time().", 1, 0, 1)");
 
     $time = time();
     $dbm->insert('tplset', " VALUES (1, 'default', 'ImpressCMS Default Template Set', '', ".$time.")");
@@ -773,7 +773,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$c=10; // sets config category id
 	$i++;
 	$p=0;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/imagemanager/logos/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '".XOOPS_URL."/index.php', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', $p)");

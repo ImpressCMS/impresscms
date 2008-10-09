@@ -64,7 +64,9 @@ class XoopsImagecategory extends XoopsObject
   	{
   		$this->XoopsObject();
   		$this->initVar('imgcat_id', XOBJ_DTYPE_INT, null, false);
+		$this->initVar('imgcat_pid', XOBJ_DTYPE_INT, null, false);
   		$this->initVar('imgcat_name', XOBJ_DTYPE_TXTBOX, null, true, 100);
+		$this->initVar('imgcat_foldername', XOBJ_DTYPE_TXTBOX, null, true, 100);
   		$this->initVar('imgcat_display', XOBJ_DTYPE_INT, 1, false);
   		$this->initVar('imgcat_weight', XOBJ_DTYPE_INT, 0, false);
   		$this->initVar('imgcat_maxsize', XOBJ_DTYPE_INT, 0, false);
@@ -182,9 +184,9 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         }
         if ($imgcat->isNew()) {
             $imgcat_id = $this->db->genId('imgcat_imgcat_id_seq');
-            $sql = sprintf("INSERT INTO %s (imgcat_id, imgcat_name, imgcat_display, imgcat_weight, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_type, imgcat_storetype) VALUES ('%u', %s, '%u', '%u', '%u', '%u', '%u', %s, %s)", $this->db->prefix('imagecategory'), intval($imgcat_id), $this->db->quoteString($imgcat_name), intval($imgcat_display), intval($imgcat_weight), intval($imgcat_maxsize), intval($imgcat_maxwidth), intval($imgcat_maxheight), $this->db->quoteString($imgcat_type), $this->db->quoteString($imgcat_storetype));
+            $sql = sprintf("INSERT INTO %s (imgcat_id, imgcat_pid, imgcat_name, imgcat_foldername, imgcat_display, imgcat_weight, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_type, imgcat_storetype) VALUES ('%u', '%u', %s, %s, '%u', '%u', '%u', '%u', '%u', %s, %s)", $this->db->prefix('imagecategory'), intval($imgcat_id), intval($imgcat_pid), $this->db->quoteString($imgcat_name), $this->db->quoteString($imgcat_foldername), intval($imgcat_display), intval($imgcat_weight), intval($imgcat_maxsize), intval($imgcat_maxwidth), intval($imgcat_maxheight), $this->db->quoteString($imgcat_type), $this->db->quoteString($imgcat_storetype));
         } else {
-            $sql = sprintf("UPDATE %s SET imgcat_name = %s, imgcat_display = '%u', imgcat_weight = '%u', imgcat_maxsize = '%u', imgcat_maxwidth = '%u', imgcat_maxheight = '%u', imgcat_type = %s WHERE imgcat_id = '%u'", $this->db->prefix('imagecategory'), $this->db->quoteString($imgcat_name), intval($imgcat_display), intval($imgcat_weight), intval($imgcat_maxsize), intval($imgcat_maxwidth), intval($imgcat_maxheight), $this->db->quoteString($imgcat_type), intval($imgcat_id));
+            $sql = sprintf("UPDATE %s SET imgcat_pid = %u, imgcat_name = %s, imgcat_foldername = %s, imgcat_display = '%u', imgcat_weight = '%u', imgcat_maxsize = '%u', imgcat_maxwidth = '%u', imgcat_maxheight = '%u', imgcat_type = %s WHERE imgcat_id = '%u'", $this->db->prefix('imagecategory'), intval($imgcat_pid), $this->db->quoteString($imgcat_name), $this->db->quoteString($imgcat_foldername), intval($imgcat_display), intval($imgcat_weight), intval($imgcat_maxsize), intval($imgcat_maxwidth), intval($imgcat_maxheight), $this->db->quoteString($imgcat_type), intval($imgcat_id));
         }
         if (!$result = $this->db->query($sql)) {
             return false;
@@ -237,7 +239,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
-    		$sql .= ' ORDER BY imgcat_weight, imgcat_id ASC';
+    	$sql .= ' ORDER BY imgcat_weight, imgcat_id ASC';
         $result = $this->db->query($sql, $limit, $start);
         if (!$result) {
             return $ret;
@@ -308,6 +310,71 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
                 $ret[$i] = $categories[$i]->getVar('imgcat_name');
         }
         return $ret;
+    }
+    
+    function getCategList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null, $imgcat_id=null)
+    {
+    	$criteria = new CriteriaCompo();
+    	if (is_array($groups) && !empty($groups)) {
+    		$criteriaTray = new CriteriaCompo();
+    		foreach ($groups as $gid) {
+    			$criteriaTray->add(new Criteria('gperm_groupid', $gid), 'OR');
+    		}
+    		$criteria->add($criteriaTray);
+    		if ($perm == 'imgcat_read' || $perm == 'imgcat_write') {
+    			$criteria->add(new Criteria('gperm_name', $perm));
+    			$criteria->add(new Criteria('gperm_modid', 1));
+    		}
+    	}
+    	if (isset($display)) {
+    		$criteria->add(new Criteria('imgcat_display', intval($display)));
+    	}
+    	if (isset($storetype)) {
+    		$criteria->add(new Criteria('imgcat_storetype', $storetype));
+    	}
+    	if (is_null($imgcat_id))$imgcat_id = 0;
+    	$criteria->add(new Criteria('imgcat_pid', $imgcat_id));
+    	$categories =& $this->getObjects($criteria, true);
+    	$ret = array();
+    	foreach (array_keys($categories) as $i) {
+    		$ret[$i] = $categories[$i]->getVar('imgcat_name');
+    		$subcategories = $this->getCategList($groups, $perm, $display, $storetype, $categories[$i]->getVar('imgcat_id'));
+    		foreach (array_keys($subcategories) as $j) {
+    			$ret[$j] = '-'.$subcategories[$j];
+    		}
+    	}
+    	
+    	return $ret;
+    }
+    
+    /**
+     * Get the folder path or url
+     *
+     * @param integer $imgcat_id - Category ID
+     * @param string $full - if true return the full path or url else the relative path
+     * @param string $type - path or url
+     * 
+     * @return string - ful folder path or url
+     */
+    function getCategFolder(&$imgcat,$full=true,$type='path'){
+        /**
+        * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
+        */
+        if (!is_a($imgcat, 'xoopsimagecategory')) {
+            return false;
+        }
+    	if ($imgcat->getVar('imgcat_pid') != 0){
+    		$sup = $this->get($imgcat->getVar('imgcat_pid'));
+    		$supcateg = $this->getCategFolder($sup,false,$type);
+    	}else{
+    		$supcateg = 0;
+    	}
+    	$folder = ($supcateg)?$supcateg.'/':'';
+    	if ($full){
+    		$folder = ($type == 'path')?ICMS_IMANAGER_FOLDER_PATH.'/'.$folder:ICMS_IMANAGER_FOLDER_URL.'/'.$folder;
+    	}
+
+    	return $folder.$imgcat->getVar('imgcat_foldername');
     }
 }
 ?>

@@ -116,6 +116,10 @@ define("ICMS_CACHE_PATH", ICMS_ROOT_PATH."/cache");
 define("ICMS_IMAGES_URL", ICMS_URL."/images");
 define("ICMS_EDITOR_PATH", ICMS_ROOT_PATH."/editors");
 define("ICMS_EDITOR_URL", ICMS_URL."/editors");
+define('ICMS_IMANAGER_FOLDER_PATH',ICMS_UPLOAD_PATH.'/imagemanager');
+define('ICMS_IMANAGER_FOLDER_URL',ICMS_UPLOAD_URL.'/imagemanager');
+
+
 /**
  * @todo make this $icms_images_setname as an option in preferences...
  */
@@ -187,13 +191,15 @@ if ( $xoopsConfig['gzip_compression'] == 1 && extension_loaded( 'zlib' ) && !ini
 }
 
 // #################### Error reporting settings ##################
-if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 ) {
-	error_reporting(E_ALL);
-    $xoopsLogger->enableRendering();
-    $xoopsLogger->usePopup = ( $xoopsConfig['debug_mode'] == 2 );
-} else {
-	error_reporting(0);
-    $xoopsLogger->activated = false;
+if (!isset($xoopsOption['nodebug']) || !$xoopsOption['nodebug']){
+	if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 ) {
+		error_reporting(E_ALL);
+		$xoopsLogger->enableRendering();
+		$xoopsLogger->usePopup = ( $xoopsConfig['debug_mode'] == 2 );
+	} else {
+		error_reporting(0);
+		$xoopsLogger->activated = false;
+	}
 }
 $xoopsSecurity->checkBadips();
 

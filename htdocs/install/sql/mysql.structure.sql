@@ -337,6 +337,7 @@ CREATE TABLE imagebody (
 
 CREATE TABLE imagecategory (
   imgcat_id smallint(5) unsigned NOT NULL auto_increment,
+  imgcat_pid smallint(5) unsigned NOT NULL default '0',
   imgcat_name varchar(100) NOT NULL default '',
   imgcat_maxsize int(8) unsigned NOT NULL default '0',
   imgcat_maxwidth smallint(3) unsigned NOT NULL default '0',
@@ -345,6 +346,7 @@ CREATE TABLE imagecategory (
   imgcat_weight smallint(3) unsigned NOT NULL default '0',
   imgcat_type char(1) NOT NULL default '',
   imgcat_storetype varchar(5) NOT NULL default '',
+  imgcat_foldername varchar(100) default '',
   PRIMARY KEY  (imgcat_id),
   KEY imgcat_display (imgcat_display)
 ) TYPE=MyISAM;

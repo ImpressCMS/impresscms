@@ -85,6 +85,7 @@ function contmanager_index($content_supid,$start=0,$tag=null){
 	$icmsAdminTpl->assign('lang_submit',_SUBMIT);
 	$icmsAdminTpl->assign('lang_cancel',_CANCEL);
 	$icmsAdminTpl->assign('lang_search',_SEARCH);
+	$icmsAdminTpl->assign('lang_search_title',_QSEARCH);
 	$icmsAdminTpl->assign('lang_notfound',_MD_NOTFOUND);
 	$icmsAdminTpl->assign('lang_cont_id',_MD_ID);
 	$icmsAdminTpl->assign('lang_cont_title',_MD_TITLE);
