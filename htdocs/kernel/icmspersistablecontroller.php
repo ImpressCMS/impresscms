@@ -105,7 +105,8 @@ class IcmsPersistableController {
 
 		// Check if there were uploaded files
 		if (isset($_POST['icms_upload_image']) || isset($_POST['icms_upload_file'])) {
-			$uploaderObj = new XoopsMediaUploader($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
+		include_once ICMS_ROOT_PATH.'/class/uploader.php';	
+		$uploaderObj = new XoopsMediaUploader($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
 			foreach ($_FILES as $name=>$file_array) {
 				if (isset ($file_array['name']) && $file_array['name'] != "" && in_array(str_replace('upload_', '', $name), array_keys($icmsObj->vars))) {
 					if ($uploaderObj->fetchMedia($name)) {
