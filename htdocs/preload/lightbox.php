@@ -14,7 +14,7 @@
 
 class IcmsPreloadLightbox extends IcmsPreloadItem
 {
-	function finishOutputInit() {
+	function eventBeforeFooter() {
 		global $xoTheme;
 
 		$xoTheme->addScript(ICMS_LIBRARIES_URL . '/lightbox/js/lightbox.js');
@@ -24,7 +24,7 @@ class IcmsPreloadLightbox extends IcmsPreloadItem
 		$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/lightbox/css/lightbox.css');
 	}
 	
-	function eventadminBeforeFooter() {
+	function eventAdminBeforeFooter() {
 		$ret  = '<script type="text/javascript" src="'.ICMS_LIBRARIES_URL.'/lightbox/js/lightbox.js"></script>';
 		$ret .= '<script type="text/javascript">var fileLoadingImage = "'.ICMS_LIBRARIES_URL.'/lightbox/images/loading.gif";';
 		$ret .= 'var fileBottomNavCloseImage = "'.ICMS_LIBRARIES_URL.'/lightbox/images/close.gif";</script>';
