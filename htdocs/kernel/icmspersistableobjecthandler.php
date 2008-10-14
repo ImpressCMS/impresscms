@@ -16,7 +16,7 @@
 */
 
 if (!defined("ICMS_ROOT_PATH")) {
-	die("XOOPS root path not defined");
+	die("ImpressCMS root path not defined");
 }
 
 class IcmsPersistableObjectHandler extends XoopsObjectHandler {
@@ -415,7 +415,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
                     $value = $obj->toArray();
                 }
                 if ($id_as_key === 'parentid') {
-					$ret[$obj->getVar('parentid', 'e')][$obj->getVar($this->keyName)] =& $value;
+					$ret[$obj->getVar($obj->handler->parentName, 'e')][$obj->getVar($this->keyName)] =& $value;
                 } else {
                 	$ret[$obj->getVar($this->keyName)] = $value;
                 }

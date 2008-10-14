@@ -50,71 +50,6 @@ class icms_HTMLPurifier
 	**/
 	function icms_getPurifierConfig()
 	{
-/*
-		global $icmsSecurity;
-
-		if(!isset($icmsSecurity['htmlpurifier']['icms_PurifyConfig']))
-		{
-			// sets default config settings for htmpurifier
-			$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
-			
-			$host_domain = icms_get_base_domain(ICMS_URL);
-			$host_base = icms_get_url_domain(ICMS_URL);
-		
-			$icms_PurifyConfig->set('HTML', 'DefinitionID', 'system-global');
-			$icms_PurifyConfig->set('HTML', 'DefinitionRev', 1);
-			$icms_PurifyConfig->set('HTML', 'Doctype', 'XHTML 1.0 Transitional'); // sets purifier to use specified Doctype when tidying etc.
-			$icms_PurifyConfig->set('HTML', 'Allowed', 'a[href|title], abbr[title], acronym[title], b, blockquote[cite], br, caption, cite,
-						code, dd, del, dfn, div, dl, dt, em, i, img[src|alt|title|class], ins, kbd, li, ol, p, pre, s, strike,
-						strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var'); // sets allowed html tags.
-			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
-
-			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', true);
-			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
-		
-			$icms_PurifyConfig->set('Core', 'AggressivelyFixLt', true);
-			$icms_PurifyConfig->set('Core', 'Encoding', _CHARSET); // sets purifier to use specified encoding. default = UTF-8
-			if(strtolower(_CHARSET) !== 'utf-8')
-			{
-  				$icms_PurifyConfig->set('Core', 'EscapeNonASCIICharacters', true);
-			}
-
-			// sets the path where HTMLPurifier stores it's serializer cache.
-			if(is_dir(ICMS_PURIFIER_CACHE))
-			{
-				$icms_PurifyConfig->set('Cache', 'DefinitionImpl', 'Serializer');
-				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_PURIFIER_CACHE);
-			}
-			else
-			{
-				$icms_PurifyConfig->set('Cache', 'DefinitionImpl', 'Serializer');
-				$icms_PurifyConfig->set('Cache', 'SerializerPath', ICMS_ROOT_PATH.'/cache');
-			}
-
-			$icms_PurifyConfig->set('URI', 'DefinitionID', 'system-global');
-			$icms_PurifyConfig->set('URI', 'DefinitionRev', 1);
-			$icms_PurifyConfig->set('URI', 'Host', $host_domain); // sets host URI for filtering. this should be the base domain name. ie. impresscms.org and not community.impresscms.org.
-			$icms_PurifyConfig->set('URI', 'Base', $host_base); // sets host URI for filtering. this should be the base domain name. ie. impresscms.org and not community.impresscms.org.
-			$icms_PurifyConfig->set('URI', 'AllowedSchemes', array(	'http' => true,
-										'https' => true,
-										'mailto' => true,
-										'ftp' => true,
-										'nntp' => true,
-										'news' => true,)); // sets allowed URI schemes to be allowed in Forms.
-			$icms_PurifyConfig->set('URI', 'HostBlacklist', ''); // array of domain names to filter out (blacklist).
-			$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
-
-			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
-
-			$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition(true);
-
-		}
-		else
-		{
-			$icms_PurifyConfig = HTMLPurifier_Config::create($icmsSecurity['htmlpurifier']['icms_PurifyConfig']);
-		}
-    		return $icms_PurifyConfig;
-*/
 	}
 
 	/**
@@ -152,6 +87,9 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'SafeEmbed', true);
 			$icms_PurifyConfig->set('HTML', 'SafeObject', true);
 
+			$icms_PurifyConfig->set('CSS', 'DefinitionRev', 1);
+			$icms_PurifyConfig->set('CSS', 'AllowTricky', true);
+
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
 		
@@ -186,9 +124,12 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('URI', 'HostBlacklist', ''); // array of domain names to filter out (blacklist).
 			$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
 
+			$icms_PurifyConfig->set('Attr', 'EnableID', true);
+			$icms_PurifyConfig->set('Attr', 'IDPrefix', 'user_css_');
 			$icms_PurifyConfig->set('Attr', 'AllowedFrameTargets', '_blank, _parent, _self, _top');
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
+			$icms_PurifyConfig->set('Filter', 'ExtractStyleBlocks', false);
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
 			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
 		}
@@ -202,6 +143,9 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'none');
 			$icms_PurifyConfig->set('HTML', 'SafeEmbed', true);
 			$icms_PurifyConfig->set('HTML', 'SafeObject', true);
+
+			$icms_PurifyConfig->set('CSS', 'DefinitionRev', 1);
+			$icms_PurifyConfig->set('CSS', 'AllowTricky', true);
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
@@ -237,9 +181,12 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('URI', 'HostBlacklist', ''); // array of domain names to filter out (blacklist).
 			$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
 
+			$icms_PurifyConfig->set('Attr', 'EnableID', true);
+			$icms_PurifyConfig->set('Attr', 'IDPrefix', 'user_css_');
 			$icms_PurifyConfig->set('Attr', 'AllowedFrameTargets', '_blank, _parent, _self, _top');
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
+			$icms_PurifyConfig->set('Filter', 'ExtractStyleBlocks', false);
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
 			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
 		}
@@ -269,6 +216,9 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'medium');
 			$icms_PurifyConfig->set('HTML', 'SafeEmbed', true);
 			$icms_PurifyConfig->set('HTML', 'SafeObject', true);
+
+			$icms_PurifyConfig->set('CSS', 'DefinitionRev', 1);
+			$icms_PurifyConfig->set('CSS', 'AllowTricky', true);
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
@@ -304,9 +254,12 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('URI', 'HostBlacklist', ''); // array of domain names to filter out (blacklist).
 			$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
 
+			$icms_PurifyConfig->set('Attr', 'EnableID', true);
+			$icms_PurifyConfig->set('Attr', 'IDPrefix', 'user_css_');
 			$icms_PurifyConfig->set('Attr', 'AllowedFrameTargets', '_blank, _parent, _self, _top');
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
+			$icms_PurifyConfig->set('Filter', 'ExtractStyleBlocks', false);
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
 			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
 		}
@@ -320,6 +273,9 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('HTML', 'TidyLevel', 'light');
 			$icms_PurifyConfig->set('HTML', 'SafeEmbed', true);
 			$icms_PurifyConfig->set('HTML', 'SafeObject', true);
+
+			$icms_PurifyConfig->set('CSS', 'DefinitionRev', 1);
+			$icms_PurifyConfig->set('CSS', 'AllowTricky', true);
 
 			$icms_PurifyConfig->set('AutoFormat', 'AutoParagraph', false);
 			$icms_PurifyConfig->set('AutoFormat', 'Linkify', true);
@@ -355,9 +311,12 @@ class icms_HTMLPurifier
 			$icms_PurifyConfig->set('URI', 'HostBlacklist', ''); // array of domain names to filter out (blacklist).
 			$icms_PurifyConfig->set('URI', 'DisableExternal', false); // if enabled will disable all links/images from outside your domain (requires Host being set)
 
+			$icms_PurifyConfig->set('Attr', 'EnableID', true);
+			$icms_PurifyConfig->set('Attr', 'IDPrefix', 'user_css_');
 			$icms_PurifyConfig->set('Attr', 'AllowedFrameTargets', '_blank, _parent, _self, _top');
 			$icms_PurifyConfig->set('Attr', 'AllowedRel', 'external, nofollow, external nofollow, lightbox');
 
+			$icms_PurifyConfig->set('Filter', 'ExtractStyleBlocks', false);
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
 			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
 		}

@@ -407,7 +407,7 @@ define("_MD_AM_URLLEN","URL maximum length");
 define("_MD_AM_URLLEN_DESC","The maximum amount of characters of an URL. Extra characters will be truncated automatically.<br /><i>This option only applies if 'Truncate long URLs ?' is set to Yes.</i>");
 define("_MD_AM_PRECHARS","Amount of starting characters");
 define("_MD_AM_PRECHARS_DESC","How many characters should be displayed at the begining of an URL ?<br /><i>This option only applies if 'Truncate long URLs ?' is set to Yes.</i>");
-define("_MD_AM_LASTCHARS","Amoungt of ending characters");
+define("_MD_AM_LASTCHARS","Amount of ending characters");
 define("_MD_AM_LASTCHARS_DESC","How many characters should be displayed at the end of an URL ?<br /><i>This option only applies if 'Truncate long URLs ?' is set to Yes.</i>");
 define("_MD_AM_HIDDENCONTENT","Use Hide content tag?");
 define("_MD_AM_HIDDENCONTENTDSC","Set this option to Yes if you want use a tag to hide some content of your site for Anonymous users.<br /> Anonymous users will need to register to be able to see that content.<br /><i>If you disable this option, all contents between this tag will show as usual</i>");

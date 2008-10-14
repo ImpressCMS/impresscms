@@ -42,11 +42,19 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1==
 
-===2008-09-28 : 1.1 FINAL===
+===2008-10-17 : 1.1 RC 3===
+
+'''Added'''
+* Converter of 2.2.X to icms 1.0 then 1.1 (stranger/phppp)
+* Converter of 2.3.X to icms 1.0 then 1.1 (stranger)
+* TRUST_PATH to upgarder. (stranger)
+* a checker to see if TRUST_PATH exists in adminmenu, if it doesn't it will prompt admins from accessing admin menu. (stranger)
+* a checker to see if email address already exists in adminmenu. (stranger)
 
 '''Improved'''
 * Updated system to version 1.10. (stranger)
 * Function icms_cleaning_write_folders. (stranger)
+* Query execution during character set conversion
 
 '''Fixed'''
 * Issues with google analytic textform in admin menu. (stranger)
@@ -54,6 +62,14 @@ ImpressCMS ChangeLog
 * Issues with new templates not being inserted in system module. (stranger)
 * Issues with Jalalijscalendar option in Persian language. (stranger)
 * Issues with reset buttons. (mcdonald3072)
+* When converting the db to another character set during an upgrade, the default values were being dropped if they were empty strings (skenow)
+* Issues with Jalalijscalendar button in forms. (stranger)
+* Issue with upgrader, blocks got twice inserted. (stranger)
+* Issue with upgrader, blocks permissions were not inserted. (skenow/stranger)
+* Issue with upgrader, system sub-module permissions were not inserted. (stranger)
+* Issue with theme_rtl. (stranger)
+* Issue with <{if $xoops_contents}>. (Vaughan/Trabis)
+* Removed intermediate conversion of data to binary during db character set conversion, now the data integrity is improved
 
 ===2008-09-21 : 1.1 RC 2===
 

@@ -29,7 +29,7 @@
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
 if (!defined("XOOPS_ROOT_PATH")) {
-    die("XOOPS root path not defined");
+    die("ImpressCMS root path not defined");
 }
 if (isset($GLOBALS['xoopsConfig']['language']) && file_exists(XOOPS_ROOT_PATH.'/language/'.$GLOBALS['xoopsConfig']['language'].'/mail.php')) {
 	include_once XOOPS_ROOT_PATH.'/language/'.$GLOBALS['xoopsConfig']['language'].'/mail.php';

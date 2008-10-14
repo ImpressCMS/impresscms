@@ -1,13 +1,13 @@
 <?php
 /**
- * Setting to add SALT to mainfile.php
+ * Setting to add TRUST_PATH to mainfile.php
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		upgrader
  * @since		1.1
  * @author	   Sina Asghari <pesian_stranger@users.sourceforge.net>
- * @version		$Id: setting_salt.php 1747 2008-04-20 19:42:15Z pesian_stranger $
+ * @version		$Id: setting_trust_path.php 5547 2008-10-09 19:42:15Z pesian_stranger $
  */
 
 if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
@@ -16,7 +16,7 @@ if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
 
 $vars =& $_SESSION['settings'];
 
-function xoFormField( $name, $value, $label, $maxlength, $help = '' )
+function icmsFormField( $name, $value, $label, $maxlength, $help = '' )
 {
     $label = htmlspecialchars( $label );
     $name = htmlspecialchars( $name, ENT_QUOTES );
@@ -33,17 +33,28 @@ function xoFormField( $name, $value, $label, $maxlength, $help = '' )
 }
 
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'salt' ) {
-	$params = array( 'DB_SALT' );
-	foreach ( $params as $name ) {
-		$vars[$name] = isset($_POST[$name]) ? $_POST[$name] : "";
+if ( $_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'trust_path' ) {
+	$vars['TRUST_PATH'] = $_POST['TRUST_PATH'];
+	$error = '';
+	if ( @empty( $vars['TRUST_PATH'] ) )
+	{
+    	$error = ERR_NO_TRUST_PATH;
+	} elseif ( $vars['TRUST_PATH'] == XOOPS_ROOT_PATH ) {
+    	$error = ERR_INVALID_TRUST_PATH;
+	} elseif ( !is_dir( $vars['TRUST_PATH'] ) ) {
+    	$error = ERR_WRONG_TRUST_PATH;
 	}
-	
-	return $vars;
+	if ( $error ) {
+		echo '<div class="x2-note error">' . $error . "</div>\n";
+    	return false;
+	} elseif ( substr( $vars, -1 ) == '/' OR substr( $vars, -1 ) == '\'' ) {
+					return str_replace( "//", "/", str_replace( "\\", "/", substr( $vars, 0, -1 ) ) );
+	}else{
+					return str_replace( "//", "/", str_replace( "\\", "/", $vars ) );
+	}
 }
-
-if ( !isset( $vars['DB_SALT'] ) ) {
-    $vars['DB_SALT'] = icms_createSalt();
+if ( !isset( $vars['TRUST_PATH'] ) ) {
+    $vars['TRUST_PATH'] = '';
 }
 
 
@@ -52,12 +63,12 @@ if ( !isset( $vars['DB_SALT'] ) ) {
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method='post'>
 <fieldset>
-	<legend><?php echo DB_SALT_LABEL; ?></legend>
-	<?php echo xoFormField( 'DB_SALT',	$vars['DB_SALT'],	DB_SALT_LABEL, 255, DB_SALT_HELP ); ?>
+	<legend><?php echo TRUST_PATH_LABEL; ?></legend>
+	<?php echo icmsFormField( 'TRUST_PATH',	$vars['TRUST_PATH'],	TRUST_PATH_LABEL, 255, TRUST_PATH_HELP ); ?>
 	
 </fieldset>
 <input type="hidden" name="action" value="next" />
-<input type="hidden" name="task" value="salt" />
+<input type="hidden" name="task" value="trust_path" />
     
 <div class="xo-formbuttons">
     <button type="submit"><?php echo _SUBMIT; ?></button>

@@ -11,7 +11,7 @@
  */
 
 if (!defined("XOOPS_ROOT_PATH")) {
-	die("XOOPS root path not defined");
+	die("ImpressCMS root path not defined");
 }
 
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";

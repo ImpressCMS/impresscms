@@ -14,19 +14,20 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 class IcmsFormParentcategoryElement extends XoopsFormSelect {
     function IcmsFormParentcategoryElement($object, $key) {
+		$category_title_field = $object->handler->identifierName;
 
     	$addNoParent = isset($object->controls[$key]['addNoParent']) ? $object->controls[$key]['addNoParent'] : true;
     	$criteria = new CriteriaCompo();
-        $criteria->setSort("weight, name");
+        $criteria->setSort("weight, " . $category_title_field);
         $category_handler = xoops_getmodulehandler('category', $object->handler->_moduleName);
         $categories = $category_handler->getObjects($criteria);
 
         include_once(XOOPS_ROOT_PATH . "/class/tree.php");
-        $mytree = new XoopsObjectTree($categories, "categoryid", "parentid");
+        $mytree = new XoopsObjectTree($categories, "category_id", "category_pid");
         $this->XoopsFormSelect( $object->vars[$key]['form_caption'], $key, $object->getVar($key, 'e') );
 
         $ret = array();
-        $options = $this->getOptionArray($mytree, "name", 0, "", $ret);
+        $options = $this->getOptionArray($mytree, $category_title_field, 0, "", $ret);
         if ($addNoParent) {
         	$newOptions = array('0'=>'----');
         	foreach ($options as $k=>$v) {

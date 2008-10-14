@@ -70,7 +70,7 @@ function RankForumAdmin()
         } else {
             echo '<td>'._AM_OFF.'</td>';
         }
-        echo"<td><a href='admin.php?fct=userrank&amp;op=RankForumEdit&amp;rank_id=".$rank['rank_id']."'>"._AM_EDIT."</a> <a href='admin.php?fct=userrank&amp;op=RankForumDel&amp;rank_id=".$rank['rank_id']."&amp;ok=0'>"._AM_DEL."</a></td></tr>";
+        echo"<td><a href='admin.php?fct=userrank&amp;op=RankForumEdit&amp;rank_id=".intval($rank['rank_id'])."'>"._AM_EDIT."</a> <a href='admin.php?fct=userrank&amp;op=RankForumDel&amp;rank_id=".intval($rank['rank_id'])."&amp;ok=0'>"._AM_DEL."</a></td></tr>";
         $count++;
     }
     echo '</table><br /><br />';

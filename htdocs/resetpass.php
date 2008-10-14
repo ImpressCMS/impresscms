@@ -40,7 +40,7 @@ $getuser =& $member_handler->getUsers(new Criteria('email', $myts->addSlashes($e
 if(empty($getuser)) {redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 else
 {
-	if($getuser[0]->getVar('uname') !== $username) {redirect_header('user.php',2,_US_SORRYUNAMENOTMATCHEMAIL);}
+	if(strtolower($getuser[0]->getVar('uname')) !== strtolower($username)) {redirect_header('user.php',2,_US_SORRYUNAMENOTMATCHEMAIL);}
 	else
 	{
 		$current_pass = $getuser[0]->getVar('pass');

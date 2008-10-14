@@ -29,7 +29,7 @@
 // ------------------------------------------------------------------------- //
 
 if (!defined("XOOPS_ROOT_PATH")) {
-    die("XOOPS root path not defined");
+    die("ImpressCMS root path not defined");
 }
 include_once XOOPS_ROOT_PATH."/class/xoopslists.php";
 include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";

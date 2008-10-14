@@ -43,17 +43,17 @@ class xos_opal_ThemeFactory {
 	 */
 	function &createInstance( $options = array(), $initArgs = array() ) {
 		// Grab the theme folder from request vars if present
-		if (@empty ( $options ['folderName'] )) {
+		if ( @empty( $options['folderName'] ) ) {
 			// xoops_theme_select still exists to keep compatibilitie ...
 			if ( ( $req = @$_REQUEST['theme_select'] || $req = @$_REQUEST['xoops_theme_select'] ) && $this->isThemeAllowed( $req ) ) {
-				$options ['folderName'] = $req;
-				if (isset ( $_SESSION ) && $this->allowUserSelection) {
-					$_SESSION [$this->xoBundleIdentifier] ['defaultTheme'] = $req;
-				}
-			} elseif (isset ( $_SESSION [$this->xoBundleIdentifier] ['defaultTheme'] )) {
-				$options ['folderName'] = $_SESSION [$this->xoBundleIdentifier] ['defaultTheme'];
-			} elseif (@empty ( $options ['folderName'] ) || ! $this->isThemeAllowed ( $options ['folderName'] )) {
-				$options ['folderName'] = $this->defaultTheme;
+				$options['folderName'] = $req;
+				if ( isset( $_SESSION ) && $this->allowUserSelection ) {
+					$_SESSION[ $this->xoBundleIdentifier ]['defaultTheme'] = $req;
+	    		}
+			} elseif ( isset( $_SESSION[ $this->xoBundleIdentifier ]['defaultTheme'] ) ) {
+				$options['folderName'] = $_SESSION[ $this->xoBundleIdentifier ]['defaultTheme'];
+			} elseif ( @empty( $options['folderName'] ) || !$this->isThemeAllowed( $options['folderName'] ) ) {
+				$options['folderName'] = $this->defaultTheme;
 			}
 			$GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
 		}
@@ -97,7 +97,7 @@ class xos_opal_Theme {
 	* Canvas-level template to use
 	* @var string
 	*/
-	var $canvasTemplate = 'theme.html';
+	var $canvasTemplate = 'theme_rtl.html';
 	/**
 	* Content-level template to use
 	* @var string

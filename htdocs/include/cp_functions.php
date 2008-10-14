@@ -50,6 +50,11 @@ function xoops_cp_header($ret = 0) {
 		<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
 	// ################# Preload Trigger adminHeader ##############
 	$icmsPreloadHandler->triggerEvent ( 'adminHeader' );
+		if(!is_dir(XOOPS_TRUST_PATH))
+		{
+			xoops_error(_TRUST_PATH_HELP);
+	exit();
+		}
 	
 	echo "<script type=\"text/javascript\"><!--//--><![CDATA[//><!--
 startList = function() {

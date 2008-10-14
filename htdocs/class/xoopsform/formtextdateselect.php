@@ -13,7 +13,7 @@
 * @version	$Id$
 **/
 if (!defined('XOOPS_ROOT_PATH')) {
-	die("XOOPS root path not defined");
+	die("ImpressCMS root path not defined");
 }
 
 /**
@@ -63,14 +63,14 @@ class XoopsFormTextDateSelect extends XoopsFormText
 		include_once XOOPS_ROOT_PATH.'/include/calendarjalalijs.php';
 //		return "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $ele_value)."'".$this->getExtra()." /><input type='reset' value=' ... ' onclick='return showCalendar(\"".$ele_name."\");'>";
 // Now it is time to let users use their own calendars.
-		return "<input id='tmp_".$ele_name."' readonly='readonly' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".(_CALENDAR_TYPE=='jalali' ? icms_conv_nr2local(jdate("Y-m-d", $ele_value)) : date("Y-m-d", $ele_value))."' /><input type='hidden' name='".$ele_name."' id='".$ele_name."' value='".date("Y-m-d", $ele_value)."' ".$this->getExtra()." /><script type='text/javascript'>
+		return "<input id='tmp_".$ele_name."' readonly='readonly' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".(_CALENDAR_TYPE=='jalali' ? icms_conv_nr2local(jdate("Y-m-d", $ele_value)) : date("Y-m-d", $ele_value))."' /><input type='hidden' name='".$ele_name."' id='".$ele_name."' value='".date("Y-m-d", $ele_value)."' ".$this->getExtra()." />&nbsp;&nbsp;<img src='" . ICMS_URL . "/images/calendar.png' alt='"._CALENDAR."' title='"._CALENDAR."' id='btn_".$ele_name."'><script type='text/javascript'>
 				Calendar.setup({
 				inputField  : 'tmp_".$ele_name."',   // id of the input field
 		       		ifFormat    : '%Y-%m-%d',       // format of the input field
+		       		button      : 'btn_".$ele_name."',   // trigger for the calendar (button ID)
         			langNumbers : true,
         			dateType	: '"._CALENDAR_TYPE."',
 				onUpdate	: function(cal){document.getElementById('".$ele_name."').value = cal.date.print('%Y-%m-%d');}
-
 				});
 			</script>";}else{
 		include_once XOOPS_ROOT_PATH.'/include/calendarjs.php';

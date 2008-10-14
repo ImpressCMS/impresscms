@@ -10,7 +10,7 @@ class upgrade_impcms05 {
 		$this->apply_conf_config();
 		$this->apply_ml_config();
 		$this->blocks_engine_upgrade();
-		$this->apply_new_blocks();
+		//$this->apply_new_blocks();
 		$this->apply_templates();
 		return ($this->cleaning_write_folders());
 	}

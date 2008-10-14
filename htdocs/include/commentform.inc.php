@@ -25,7 +25,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 if (!defined("XOOPS_ROOT_PATH")) {
-    die("XOOPS root path not defined");
+    die("ImpressCMS root path not defined");
 }
 include_once XOOPS_ROOT_PATH."/class/xoopslists.php";
 include XOOPS_ROOT_PATH."/class/xoopsformloader.php";

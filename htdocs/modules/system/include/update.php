@@ -50,7 +50,7 @@ function xoops_module_update_system(&$module) {
 	 */
     $newDbVersion = 1;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($dbVersion <= $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
 
 		// Now, first, let's increment the conf_order of user option starting at new_user_notify
@@ -151,7 +151,7 @@ function xoops_module_update_system(&$module) {
 	    $result = $xoopsDB->query("SELECT imgcat_id FROM ".$xoopsDB->prefix('imagecategory')." WHERE imgcat_name = 'Logos'");
 	    list($categ_id) = $xoopsDB->fetchRow($result);
 	    $table = new IcmsDatabasetable('image');
-	    $icmsDatabaseUpdater->runQuery('INSERT INTO '.$table->name().' (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (1, "img482278e29e81c.png", "ImpressCMS", "image/png", '.time().', 1, 0, '.$categ_id.')','Successfully added default ImpressCMS admin logo','Problems when try to add ImpressCMS admin logo');
+	    $icmsDatabaseUpdater->runQuery('INSERT INTO '.$table->name().' (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (NULL, "img482278e29e81c.png", "ImpressCMS", "image/png", '.time().', 1, 0, '.$categ_id.')','Successfully added default ImpressCMS admin logo','Problems when try to add ImpressCMS admin logo');
 	    unset($table);
 	    $table = new IcmsDatabasetable('group_permission');
 	    $icmsDatabaseUpdater->runQuery('INSERT INTO '.$table->name().' VALUES(0,1,'.$categ_id.',1,"imgcat_write")','','');
@@ -238,7 +238,7 @@ function xoops_module_update_system(&$module) {
 
    		$table = new IcmsDatabasetable('users');
 	    if ($table->fieldExists('pass')) {
-	    	$table->alterTable('pass', 'pass', "varchar(255) UNSIGNED NOT NULL default ''");
+	    	$table->alterTable('pass', 'pass', "varchar(255) NOT NULL default ''");
 		    $icmsDatabaseUpdater->updateTable($table);
 	    }
 		unset($table);
@@ -277,8 +277,80 @@ function xoops_module_update_system(&$module) {
 		}
 
 	}
+	
+  $newDbVersion = 8;
+
+  if($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+
+   		$table = new IcmsDatabasetable('modules');
+	    if ($table->fieldExists('dbversion')) {
+       $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY dbversion INT(11) unsigned NOT NULL DEFAULT 1",'Successfully modified field dbversion in table modules','');
+ 	    }
+      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY version smallint(5) unsigned NOT NULL default '102'",'Successfully modified field version in table modules','');
+		unset($table);
+	}
+
+  $newDbVersion = 9;
+
+  if($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+     $table = new IcmsDatabasetable('users');
+      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))",'Successfully altered the index unamepass on table users','');      
+      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY pass_expired tinyint(1) unsigned NOT NULL default 0",'Successfully altered field pass_expired in table users','');
+	unset($table);
+	}
+
+    $newDbVersion = 10;
+  if($dbVersion < $newDbVersion) {
+    echo "Database migrate to version " . $newDbVersion . "<br />";
  
-    $newDbVersion = 8;
+        $db = $GLOBALS['xoopsDB'];
+ 
+        if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_social_bookmarks"') == 0) {
+		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_social_bookmarks'";
+		$result = $db->query($sql);
+		list($new_block_id) = $db->FetchRow($result);
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 1);");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+        }
+ 
+        if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_show"') == 0) {
+		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_show'";
+		$result = $db->query($sql);
+		list($new_block_id) = $db->FetchRow($result);
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+        }
+ 
+        if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_menu_show"') == 0) {
+		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_menu_show'";
+		$result = $db->query($sql);
+		list($new_block_id) = $db->FetchRow($result);
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+        }
+ 
+        if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_relmenu_show"') == 0) {
+		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_relmenu_show'";
+		$result = $db->query($sql);
+		list($new_block_id) = $db->FetchRow($result);
+		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+        }
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 16, 1, 'system_admin');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 17, 1, 'system_admin');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 18, 1, 'system_admin');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 19, 1, 'system_admin');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 20, 1, 'system_admin');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 1, 1, 'content_admin');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 2, 1, 'group_manager');");
+		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 3, 1, 'group_manager');");
+
+        }
+  
+ 
+    $newDbVersion = 10;
 
     if ($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";

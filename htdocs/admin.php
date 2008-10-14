@@ -136,11 +136,11 @@ switch($op)
 			xoops_error(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/upgrade/'));
 			echo '<br />';
 		}
-		if(!is_dir(XOOPS_TRUST_PATH))
+/*		if(!is_dir(XOOPS_TRUST_PATH))
 		{
 			xoops_error(_TRUST_PATH_HELP);
 			echo '<br />';
-		}
+		}*/
 		$sql1 = "SELECT conf_modid FROM `".$xoopsDB->prefix('config')."` WHERE conf_name = 'dos_skipmodules'";
 		if($result1 = $xoopsDB->query($sql1))
 		{

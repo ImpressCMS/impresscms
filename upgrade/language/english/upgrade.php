@@ -25,7 +25,7 @@ define( "_RELOAD", "Reload" );
 define('_UPGRADE_CHARSET', _CHARSET);
 define( "LEGEND_DATABASE", "Database Character Set" );
 define( "DB_COLLATION_LABEL", "Database character set and collation" );
-define( "DB_COLLATION_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.<br />If you don't know much about Character encodings, we <b>STRONGLY</b> recommend you to use '<b>none</b>' as default to keep your current configurations.");
+define( "DB_COLLATION_HELP",  "MySQL includes character set support that enables you to store data using a variety of character sets and perform comparisons according to a variety of collations.<br /><p>If you don't know much about Character encodings, we <b>STRONGLY</b> recommend you to use '<b>none</b>' as default to keep your current configurations.<p>This is about to change your entire database and the information in it. We've tested rather extensively, but your experience may be different.</p><p><span style="color: red;">We've already warned you once and we're not going to tell you again - this is your last chance to make a backup of your database!</span></p>");
 
 define("_UPGRADE_PRIVPOLICY", "<p>This privacy policy sets out how [website name] uses and protects any information that you give [website name] when you use this website. [website name] is committed to ensuring that your privacy is protected. Should we ask you to provide certain information by which you can be identified when using this website, then you can be assured that it will only be used in accordance with this privacy statement. [website name] may change this policy from time to time by updating this page. You should check this page from time to time to ensure that you are happy with any changes.
 </p><p>
@@ -81,4 +81,10 @@ define( "ERR_COULD_NOT_WRITE_MAINFILE", "Error writing content to mainfile.php, 
 define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
 define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password.<BR />Do Not change this key once your site is live, doing so will render ALL passwords invalid. If you are unsure, just keep the default"); // L97
 define( '_I_AM_AWARE', '<p><span style="color: red;">You are about to upgrade your existing web site - your pride and joy, or maybe your livelihood. If you like to take risks, check the box and proceed without making any backups. Otherwise, it might be wise to make sure your backups are recent before going ahead. Either way, you have to check the box and take some responsibility to continue.</span></p>' );
+define("TRUST_PATH", "Trust path");
+define("TRUST_PATH_LABEL", "ImpressCMS physical trust path");
+define( "TRUST_PATH_HELP", "This is the physical location of your ImpressCMS trust path. The trust path is a folder where ImpressCMS and its modules will store some sensible code and information for more security. It is recommended that this folder be outside of the web root, making it not accessible by a browser. If the folder does not exist, ImpressCMS will try and create it. If this is not possible, you will need to create it.<br /><br /><a target='_blank' href='http://wiki.impresscms.org/index.php?title=Trust_Path'>Click here</a> to learn more about the Trust path." ); // L59
+define("ERR_INVALID_TRUST_PATH", "Trust path is invalid");
+define("ERR_WRONG_TRUST_PATH", "Trust path does not exist");
+define("ERR_NO_TRUST_PATH", "You have not entered any path !! ");
 ?>

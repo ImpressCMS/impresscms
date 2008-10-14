@@ -157,6 +157,8 @@ switch ($op)
 			if($member_handler->getUserCount(new Criteria('uname', $username)) > 0 || $member_handler->getUserCount(new Criteria('login_name', $login_name)) > 0 )
 			{
 				$adduser_errormsg = 'User name '.$username.' already exists';
+			}elseif($member_handler->getUserCount(new Criteria('email', $email)) > 0){
+				$adduser_errormsg = 'A user with this this e-mail address "'.$email.'" already exists';
 			}
 			else
 			{
