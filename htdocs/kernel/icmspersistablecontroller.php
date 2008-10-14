@@ -384,6 +384,29 @@ class IcmsPersistableController {
     	return $ret;
     }
 
+    function getViewItemLink($icmsObj, $onlyUrl=false, $withimage=true, $userSide=false)
+    {
+		if ($this->handler->_moduleName != 'system') {
+			$admin_side = $userSide ? '' : 'admin/';
+			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+		} else {
+			/**
+			 * @todo: to be implemented...
+			 */
+			//$admin_side = $userSide ? '' : 'admin/';
+			$admin_side = '';
+			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct=' . $this->handler->_itemname . "&op=view&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+		}
+		if ($onlyUrl) {
+			return $ret;
+		}
+		elseif($withimage) {
+			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/viewmag.png' style='vertical-align: middle;' alt='" . _PREVIEW . "'  title='" . _PREVIEW . "'/></a>";
+		}
+
+    	return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
+    }
+    
     function getEditLanguageLink($icmsObj, $onlyUrl=false, $withimage=true)
     {
     	$ret = $this->handler->_moduleUrl . "admin/" . $this->handler->_page . "?op=mod&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName) . "&language=" . $icmsObj->getVar('language');

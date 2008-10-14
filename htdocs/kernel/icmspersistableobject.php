@@ -566,6 +566,12 @@ class IcmsPersistableObject extends XoopsObject {
     	return $controller->getItemLink($this, $onlyUrl);
     }
 
+    function getViewItemLink($onlyUrl=false, $withimage=true, $userSide=false)
+    {
+    	$controller = new IcmsPersistableController($this->handler);
+    	return $controller->getViewItemLink($this, $onlyUrl, $withimage, $userSide);
+    }
+
     function getEditItemLink($onlyUrl=false, $withimage=true, $userSide=false)
     {
     	$controller = new IcmsPersistableController($this->handler);
