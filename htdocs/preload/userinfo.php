@@ -17,8 +17,8 @@ class IcmsPreloadUserInfo extends IcmsPreloadItem {
 	 * @return	void
 	 */
 	function eventStartOutputInit() {
-		global $xoopsUser,$xoopsTpl;
-		if (is_object($xoopsUser)) {
+		global $xoopsUser, $xoopsTpl;
+		if (is_object ( $xoopsUser )) {
 			foreach ( $xoopsUser->vars as $key => $value ) {
 				$user [$key] = $value;
 			}
@@ -37,7 +37,16 @@ class IcmsPreloadUserInfo extends IcmsPreloadItem {
 			$criteria->add ( new Criteria ( 'to_userid', $xoopsUser->getVar ( 'uid' ) ) );
 			$user ['new_messages'] = $pm_handler->getCount ( $criteria );
 			
+			$config_handler = & xoops_gethandler ( 'config' );
+			$xoopsConfigUser = & $config_handler->getConfigsByCat ( XOOPS_CONF_USER );
+			if ($xoopsConfigUser ['avatar_allow_gravatar'] == 1) {
+				$user['user_avatar'] = $xoopsUser->gravatar ( 'G', $xoopsConfigUser ['avatar_width'] ) ;
+			} else {
+				$user['user_avatar'] = ICMS_UPLOAD_URL . '/' . $thisUser->getVar ( 'user_avatar' ) ;
+			}
+			
 			$xoopsTpl->assign ( 'user', $user );
+		
 		}
 	}
 
