@@ -427,4 +427,12 @@ define('_MD_AM_ALLWCHGUNAME', 'Allow users to change Display Name?');
 define('_MD_AM_ALLWCHGUNAMEDSC', '');
 define("_MD_AM_JALALICAL","Use Extended Calendar with Jalali?");
 define("_MD_AM_JALALICALDSC","By selecting this, you`ll have an extended calendar on forms.<br />Please be aware, this calendar may not work in some Browsers.");
+//ADDED SINCE 1.2
+define("_MD_AM_NOMAILPROTECT","None");
+define("_MD_AM_GDMAILPROTECT","GD protection");
+define("_MD_AM_REMAILPROTECT","re-Captcha");
+define("_MD_AM_RECPRVKEY","reCaptcha private api code");
+define("_MD_AM_RECPRVKEY_DESC","");
+define("_MD_AM_RECPUBKEY","reCaptcha public api code");
+define("_MD_AM_RECPUBKEY_DESC","");
 ?>

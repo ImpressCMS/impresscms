@@ -114,7 +114,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     $time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
-    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 120, ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 8)");
+    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 120, ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, 12)");
 
     foreach ($modversion['templates'] as $tplfile) {
         if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
@@ -801,9 +801,18 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'multi_login_msg', '_MD_AM_MULTLOGINMSG', '"._MD_AM_MULTLOGINMSG_TXT."', '_MD_AM_MULTLOGINMSG_DESC', 'textarea', 'text', $p)");
+	// ----------
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'email_protect', '_MD_AM_EMAILPROTECT', '0', '_MD_AM_EMAILPROTECTDSC', 'yesno', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'email_protect', '_MD_AM_EMAILPROTECT', '0', '_MD_AM_EMAILPROTECTDSC', 'select', 'text', $p)");
+	// Insert data for Config Options in selection field. (must be placed before $i++)
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_NOMAILPROTECT', '0', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_GDMAILPROTECT', '1', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_REMAILPROTECT', '2', $i)");
+	$ci++;
+	// ----------
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'email_font', '_MD_AM_EMAILTTF', 'arial.ttf', '_MD_AM_EMAILTTF_DESC', 'select_font', 'text', $p)");
@@ -822,6 +831,12 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'shadow_y', '_MD_AM_SHADOWY', '2', '_MD_AM_SHADOWY_DESC', 'textbox', 'int', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'recprvkey', '_MD_AM_RECPRVKEY', '', '_MD_AM_RECPRVKEY_DESC', 'textbox', 'text', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'recpubkey', '_MD_AM_RECPUBKEY', '', '_MD_AM_RECPUBKEY_DESC', 'textbox', 'text', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'shorten_url', '_MD_AM_SHORTURL', '0', '_MD_AM_SHORTURLDSC', 'yesno', 'int', $p)");

@@ -30,9 +30,11 @@ ImpressCMS ChangeLog
 * jalali converter to jalalijscalendar library. (stranger)
 * icmsmlcontent plugin in TinyMCE for multilanguage sites. (stranger)
 * recaptcha library. (stranger)
+* email protection methode using recaptcha. (stranger)
 
 '''Changed'''
 * Admin`s RSS feed to simplepie. (marcan/stranger)
+* email protection option to a multiple option one. (stranger)
 
 '''Improved'''
 * Ongoing additions to  API documentation.

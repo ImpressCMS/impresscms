@@ -350,7 +350,7 @@ function xoops_module_update_system(&$module) {
         }
   
  
-    $newDbVersion = 10;
+    $newDbVersion = 11;
 
     if ($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
@@ -364,6 +364,25 @@ function xoops_module_update_system(&$module) {
         $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("users") . "` SET login_name=uname");
 	    unset($table);
 
+	}
+
+    $newDbVersion = 12;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+        $db = $GLOBALS['xoopsDB'];
+		$sql = "SELECT conf_id FROM `".$db->prefix('config')."` WHERE conf_name = 'email_protect'";
+		$result = $db->query($sql);
+		list($conf_id) = $db->FetchRow($result);
+		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " VALUES ('', '_MD_AM_NOMAILPROTECT', '0', " . $conf_id . ");");
+		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " VALUES ('', '_MD_AM_GDMAILPROTECT', '1', " . $conf_id . ");");
+		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " VALUES ('', '_MD_AM_REMAILPROTECT', '2', " . $conf_id . ");");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'select', conf_valuetype = 'text' WHERE conf_name = 'email_protect'");
+		$table = new IcmsDatabasetable('config');
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'recprvkey', '_MD_AM_RECPRVKEY', '', '_MD_AM_RECPRVKEY_DESC', 'textbox', 'text', 17);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'recpubkey', '_MD_AM_RECPUBKEY', '', '_MD_AM_RECPUBKEY_DESC', 'textbox', 'text', 17);
+	    $icmsDatabaseUpdater->updateTable($table);
+	    unset($table);
 	}
 
 	echo "</code>";
