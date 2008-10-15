@@ -528,7 +528,7 @@ function imanager_addcat() {
 		$imagecategoryperm_handler->insert($imagecategoryperm);
 		unset($imagecategoryperm);
 	}
-	redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,2,_MD_AM_DBUPDATED);
+	redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,2,_ICMS_DBUPDATED);
 }
 
 function imanager_addfile() {
@@ -595,7 +595,7 @@ function imanager_addfile() {
 	}else{
 		$redir = '?op=list&target='.$target.'&type='.$type;
 	}
-	redirect_header($_SERVER['PHP_SELF'].$redir,2,_MD_AM_DBUPDATED);
+	redirect_header($_SERVER['PHP_SELF'].$redir,2,_ICMS_DBUPDATED);
 }
 
 function imanager_updateimage() {
@@ -656,7 +656,7 @@ function imanager_updateimage() {
 	}else{
 		$redir = '?op=list&target='.$target.'&type='.$type;
 	}
-	redirect_header($_SERVER['PHP_SELF'].$redir,2,_MD_AM_DBUPDATED);
+	redirect_header($_SERVER['PHP_SELF'].$redir,2,_ICMS_DBUPDATED);
 }
 
 function imanager_delfileok($image_id,$redir=null) {
@@ -689,7 +689,7 @@ function imanager_delfileok($image_id,$redir=null) {
 	}else{
 		$redir = '?op=list&target='.$target.'&type='.$type;
 	}
-	redirect_header($_SERVER['PHP_SELF'].$redir,2,_MD_AM_DBUPDATED);
+	redirect_header($_SERVER['PHP_SELF'].$redir,2,_ICMS_DBUPDATED);
 }
 
 function imanager_clone() {
@@ -740,7 +740,7 @@ function imanager_clone() {
 	if (!$image_handler->insert($newimg)) {
 		$msg = sprintf(_FAILSAVEIMG, $newimg->getVar('image_nicename'));
 	}else{
-		$msg = _MD_AM_DBUPDATED;
+		$msg = _ICMS_DBUPDATED;
 	}
 
 	if (isset($imgcat_id)){
