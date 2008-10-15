@@ -66,11 +66,11 @@
 		</tr>
 	<{/if}>
 
-	<{if $module_people_translaters}>
+	<{if $module_people_translators}>
 		<tr>
 			<td class='head' style="vertical-align: top;" width = '150px'><{$smarty.const._MODABOUT_PEOPLE_TRANSLATERS}></td>
 			<td class='even'>
-			    <{foreach item=person from=$module_people_translaters}>
+			    <{foreach item=person from=$module_people_translators}>
 			    	<div><{$person}></div>
 			    <{/foreach}>
 			</td>
@@ -139,7 +139,7 @@
 	<{if $module_support_site_name}>
 		<tr>
 			<td class='head' width = '200px'><{$smarty.const._MODABOUT_MODULE_SUPPORT}></td>
-			<td class='even'><a href="<{$module_developer_support_site_url}>" rel="external"><{$module_support_site_name}></a></td>
+			<td class='even'><a href="<{$module_support_site_url}>" rel="external"><{$module_support_site_name}></a></td>
 		</tr>
 	<{/if}>
 
