@@ -158,15 +158,17 @@
 	<{/if}>
 </table>
 
-<table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
-	<tr>
-		<td class='bg3'><b><{$smarty.const._MODABOUT_MODULE_DISCLAIMER}></b></td>
-	</tr>
+<{if $module_warning}>
+	<table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
+		<tr>
+			<td class='bg3'><b><{$smarty.const._MODABOUT_MODULE_DISCLAIMER}></b></td>
+		</tr>
 
-	<tr>
-		<td class='even'><{$module_warning}></td>
-	</tr>
-</table>
+		<tr>
+			<td class='even'><{$module_warning}></td>
+		</tr>
+	</table>
+<{/if}>
 
 <{if $module_author_word}>
 	<table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
@@ -180,14 +182,16 @@
 	</table>
 <{/if}>
 
-<table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
-	<tr>
-		<td class='bg3'><b><{$smarty.const._MODABOUT_VERSION_HISTORY}></b></td>
-	</tr>
+<{if $module_version_history}>
+	<table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
+		<tr>
+			<td class='bg3'><b><{$smarty.const._MODABOUT_VERSION_HISTORY}></b></td>
+		</tr>
 
-	<tr>
-		<td class='even'>
-			<div style='line-height: 18px;'><{$module_version_history}></div>
-		</td>
-	</tr>
-</table>
+		<tr>
+			<td class='even'>
+				<div style='line-height: 18px;'><{$module_version_history}></div>
+			</td>
+		</tr>
+	</table>
+<{/if}>
