@@ -43,6 +43,10 @@ ImpressCMS ChangeLog
 * Updated TinyMCE to version 3.2.0.1. (stranger)
 * Updated TCPDF to version 4.0.027. (stranger)
 
+'''Fixed'''
+* #2161527: error in xoopsimagebrowser.php (real_therplima)
+
+
 == Impresscms 1.1==
 
 ===2008-10-17 : 1.1 RC 3===

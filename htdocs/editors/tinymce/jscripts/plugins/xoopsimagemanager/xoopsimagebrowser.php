@@ -15,7 +15,6 @@
 if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
 if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
 if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../../mainfile.php';
-if (file_exists('../../../../../../../mainfile.php')) include_once '../../../../../../../mainfile.php';
 if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
 if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
 if (file_exists('../mainfile.php')) include_once '../mainfile.php';
