@@ -30,6 +30,7 @@ ImpressCMS ChangeLog
 * jalali converter to jalalijscalendar library. (stranger)
 * icmsmlcontent plugin in TinyMCE for multilanguage sites. (stranger)
 * recaptcha library. (stranger)
+* email protection methode using recaptcha. (stranger)
 * New preferences category for captcha. (stranger)
 * New option for "Captcha mode" in preferences. (stranger)
 * New option for "Case sensitive" in preferences. (stranger)
