@@ -1690,7 +1690,7 @@ return $Generate;
 			$dd = opendir($d);
 			while($file = readdir($dd))
 			{
-		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != 'adminmenu_' . $xoopsConfig['language'] . '.php'))
+		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'))
 				{
 		  			unlink($d.$file);
 				}

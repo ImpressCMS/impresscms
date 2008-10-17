@@ -51,6 +51,7 @@ INSERT INTO configcategory VALUES (7, '_MD_AM_AUTHENTICATION', 0);
 INSERT INTO configcategory VALUES (8, '_MD_AM_MULTILANGUAGE', 0);
 INSERT INTO configcategory VALUES (9, '_MD_AM_CONTMANAGER', 0);
 INSERT INTO configcategory VALUES (10, '_MD_AM_PERSON', 0);
+INSERT INTO configcategory VALUES (11, '_MD_AM_CAPTCHA', 0);
 
 #
 # Dumping data for table `image`

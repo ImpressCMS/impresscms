@@ -14,11 +14,11 @@
  * @version		$Id:$
 */
 
-class XoopsCaptchaText {
+class IcmsCaptchaText {
 	var $config	= array();
 	var $code;
 	
-	function XoopsCaptchaText()
+	function IcmsCaptchaText()
 	{
 	}
 	
@@ -26,7 +26,7 @@ class XoopsCaptchaText {
 	{
 		static $instance;
 		if(!isset($instance)) {
-			$instance =& new XoopsCaptchaText();
+			$instance =& new IcmsCaptchaText();
 		}
 		return $instance;
 	}
@@ -42,12 +42,14 @@ class XoopsCaptchaText {
 
 	function setCode()
 	{
-		$_SESSION['XoopsCaptcha_sessioncode'] = strval( $this->code );
+		$_SESSION['IcmsCaptcha_sessioncode'] = strval( $this->code );
 	}
 	
 	function render()
 	{
-		$form = $this->loadText()  . "&nbsp;&nbsp; <input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $this->config["num_chars"] . "' maxlength='" . $this->config["num_chars"] . "' value='' />";
+		$config_handler =& xoops_gethandler('config');
+		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
+		$form = $this->loadText()  . "&nbsp;&nbsp; <input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $IcmsConfigCaptcha['captcha_num_chars'] . "' maxlength='" . $IcmsConfigCaptcha['captcha_num_chars'] . "' value='' />";
 		$rule = constant("ICMS_CAPTCHA_RULE_TEXT");
 		if(!empty($rule)) {
 			$form .= "&nbsp;&nbsp;<small>{$rule}</small>";

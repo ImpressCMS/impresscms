@@ -35,9 +35,9 @@ require_once ICMS_ROOT_PATH."/class/xoopsform/formelement.php";
  * 
  * For verification:
  *   if(@include_once ICMS_ROOT_PATH."/class/captcha/captcha.php") {
- *	    $xoopsCaptcha = XoopsCaptcha::instance();
- *	    if(! $xoopsCaptcha->verify() ) {
- *		    echo $xoopsCaptcha->getMessage();
+ *	    $icmsCaptcha = IcmsCaptcha::instance();
+ *	    if(! $icmsCaptcha->verify() ) {
+ *		    echo $icmsCaptcha->getMessage();
  *		    ...
  *	    }
  *  }
@@ -59,12 +59,12 @@ class XoopsFormCaptcha extends XoopsFormElement {
 	 * @param int		$backgroundnum	Number of background images in image mode
 	 *
 	 */
-	function XoopsFormCaptcha($caption = '', $name = 'xoopscaptcha', $skipmember = null, $numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null, $backgroundnum = null) {
-		if(!class_exists("XoopsCaptcaha")) {
+	function XoopsFormCaptcha($caption = '', $name = 'icmscaptcha', $skipmember = null, $numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null, $backgroundnum = null) {
+		if(!class_exists("IcmsCaptcha")) {
 			require_once ICMS_ROOT_PATH."/class/captcha/captcha.php";
 		}
 		
-		$this->_captchaHandler =& XoopsCaptcha::instance();
+		$this->_captchaHandler =& IcmsCaptcha::instance();
 		$this->_captchaHandler->init($name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum);
 		if(!$this->_captchaHandler->active) {
 			$this->setHidden();
