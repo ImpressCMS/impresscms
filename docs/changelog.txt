@@ -51,7 +51,7 @@ ImpressCMS ChangeLog
 * Ongoing additions to  API documentation.
 * register.tpl mail template contains more user`s information. (stranger)
 * adminactivate.tpl mail template contains more user`s information. (stranger)
-* Updated TinyMCE to version 3.2.0.1. (stranger)
+* Updated TinyMCE to Version 3.2.0.2. (stranger)
 * Updated TCPDF to version 4.0.033. (stranger)
 * Captcha class. (stranger)
 
