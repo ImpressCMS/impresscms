@@ -102,7 +102,7 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	/**
 	 * blank image
 	 */
-	define ("K_BLANK_IMAGE", K_PATH_IMAGES."_blank.png");
+	define ("K_BLANK_IMAGE", K_PATH_IMAGES."blank.gif");
 	
 	/**
 	 * page format

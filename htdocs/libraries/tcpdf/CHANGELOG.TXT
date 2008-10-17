@@ -1,3 +1,30 @@
+4.0.033 (2008-10-13)
+	- Bug n. 2157099 was fixed.
+	- SetX() and SetY() functions were improved.
+	- SetY() includes a new parameter to avoid the X reset.
+
+4.0.032 (2008-10-10)
+	- Bug n. 2156926 was fixed (bold, italic, underlined, linethrough).
+	- setStyle() method was removed.
+	- Configuration file was changed to use helvetica (non-unicode) font by default.
+	- The use of mixed font types was improved.
+	- All examples were updated.
+
+4.0.031 (2008-10-09)
+	- _putannots() and _putbookmarks() links alignments were fixed.
+
+4.0.030 (2008-10-07)
+	- _putbookmarks() function was fixed.
+	- _putannots() was fixed to include internal links.
+
+4.0.029 (2008-09-27)
+	- Infinite loop bug was fixed [Bug item #130309].
+	- Multicell() problem on Header() was fixed.
+	
+4.0.028 (2008-09-26)
+	- setLIsymbol() was added to set the LI symbol used on UL lists.
+	- Missing $padding and $encryption_key variables declarations were added [Bug item #2129058].
+	
 4.0.027 (2008-09-19)
 	- Bug #2118588 "Undefined offset in tcpdf.php on line 9581" was fixed.
 	- arailunicid0.php font was updated.
