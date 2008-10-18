@@ -439,8 +439,8 @@ define("_MD_AM_RECPUBKEY_DESC","");
 define("_MD_AM_CAPTCHA","Captcha Settings");
 define("_MD_AM_CAPTCHA_MODE","Captcha mode");
 define("_MD_AM_CAPTCHA_MODEDSC","Please select a type of Captcha in for your website.");
-define("_MD_AM_CAPTCHA_SKIPMEMBER","Prompt just guests?");
-define("_MD_AM_CAPTCHA_SKIPMEMBERDSC","Do you want that, just visitors be prompted for Captcha in forms?<br />Select no if you want all groups be prompted.");
+define("_MD_AM_CAPTCHA_SKIPMEMBER","Prompt registered users?");
+define("_MD_AM_CAPTCHA_SKIPMEMBERDSC","Do you want registered users to be prompted for Captcha in forms?");
 define("_MD_AM_CAPTCHA_CASESENS","Case sensitive");
 define("_MD_AM_CAPTCHA_CASESENSDSC","Characters in image mode are case-sensitive.");
 define("_MD_AM_CAPTCHA_MAXATTEMP","Maximum attemps");
@@ -466,4 +466,5 @@ define("_MD_AM_POLYGON","Polygon");
 define("_MD_AM_RANDOM","Random");
 define("_MD_AM_CAPTCHA_IMG","Image");
 define("_MD_AM_CAPTCHA_TXT","Text");
+define("_MD_AM_CAPTCHA_OFF","Off");
 ?>

@@ -390,6 +390,7 @@ function xoops_module_update_system(&$module) {
             $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('configoption') . 
                     " (confop_id, confop_name, confop_value, conf_id)" .
                     " VALUES" .
+                    " (NULL, '_MD_AM_CAPTCHA_OFF', 'none', {$config_id})," .
                     " (NULL, '_MD_AM_CAPTCHA_IMG', 'image', {$config_id})," .
                     " (NULL, '_MD_AM_CAPTCHA_TXT', 'text', {$config_id})";
             if (!$GLOBALS['xoopsDB']->queryF( $sql )) {

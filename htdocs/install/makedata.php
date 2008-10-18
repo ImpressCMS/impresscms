@@ -868,6 +868,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$p=0;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', $p)");
 	// Insert data for Config Options in selection field. (must be placed before $i++)
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CAPTCHA_OFF', 'none', $i)");
+	$ci++;
     	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CAPTCHA_IMG', 'image', $i)");
 	$ci++;
     	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CAPTCHA_TXT', 'text', $i)");
