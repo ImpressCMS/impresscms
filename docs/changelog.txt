@@ -59,6 +59,7 @@ ImpressCMS ChangeLog
 
 '''Fixed'''
 * #2161527: error in xoopsimagebrowser.php (real_therplima)
+* #2176940: Can't change the theme using the block on user side (real_therplima)
 
 
 == Impresscms 1.1==
