@@ -380,7 +380,7 @@ function xoops_module_update_system(&$module) {
         $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'select', conf_valuetype = 'text' WHERE conf_name = 'email_protect'");
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'recprvkey', '_MD_AM_RECPRVKEY', '', '_MD_AM_RECPRVKEY_DESC', 'textbox', 'text', 17);
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'recpubkey', '_MD_AM_RECPUBKEY', '', '_MD_AM_RECPUBKEY_DESC', 'textbox', 'text', 17);
-        if (getDbValue($db, 'newblocks', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"') == 0) {
+        if (getDbValue($db, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"') == 0) {
 		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('11','_MD_AM_CAPTCHA')");
 		}
 	    // Adding new function of Captcha
