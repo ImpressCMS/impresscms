@@ -73,8 +73,8 @@ class IcmsCaptchaImageHandler {
 			$this->code = rand( pow(10, $IcmsConfigCaptcha['captcha_num_chars'] - 1), intval( str_pad("9", $IcmsConfigCaptcha['captcha_num_chars'], "9") ) );
 		}else{
             $raw_code = md5(uniqid(mt_rand(), 1));
-            if (!empty($IcmsConfigCaptcha['captcha_skip_characters'])) {
-                $valid_code = str_replace(array($IcmsConfigCaptcha['captcha_skip_characters']), "", $raw_code);
+            if (isset($IcmsConfigCaptcha['captcha_skip_characters'])) {
+                $valid_code = str_replace($IcmsConfigCaptcha['captcha_skip_characters'], "", $raw_code);
                 $this->code = substr( $valid_code, 0, $IcmsConfigCaptcha['captcha_num_chars'] );
             } else {
                 $this->code = substr( $raw_code, 0, $IcmsConfigCaptcha['captcha_num_chars'] );
