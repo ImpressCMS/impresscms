@@ -41,7 +41,7 @@ ImpressCMS ChangeLog
 * New option for "Background type" in preferences. (stranger)
 * New option for "image amounts" in preferences. (stranger)
 * New option for "polygon points" in preferences. (stranger)
-* New option for "Prompt just guests" in preferences. (stranger)
+* New option for "check groups" in preferences. (stranger)
 * New option for "skip characters" in preferences. (stranger)
 * New option for "disable captcha" in preferences. (stranger)
 
