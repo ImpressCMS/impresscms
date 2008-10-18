@@ -466,5 +466,5 @@ define("_MD_AM_POLYGON","Polygon");
 define("_MD_AM_RANDOM","Random");
 define("_MD_AM_CAPTCHA_IMG","Image");
 define("_MD_AM_CAPTCHA_TXT","Text");
-define("_MD_AM_CAPTCHA_OFF","Off");
+define("_MD_AM_CAPTCHA_OFF","Disabled");
 ?>
