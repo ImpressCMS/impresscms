@@ -366,7 +366,7 @@ function xoops_module_update_system(&$module) {
 
 	}
 
-    $newDbVersion = 12;
+    $newDbVersion = 14;
 
     if ($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
@@ -396,10 +396,9 @@ function xoops_module_update_system(&$module) {
             if (!$GLOBALS['xoopsDB']->queryF( $sql )) {
                 return false;
             }
-	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '0', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'yesno', 'int', 2);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', 2);
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', 3);
-		$cases = addslashes(serialize(array('o', '0', 'i', 'l', '1')));
-	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', $cases, '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textbox', 'text', 4);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', '', '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textarea', 'array', 4);
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_maxattempt', '_MD_AM_CAPTCHA_MAXATTEMP', '8', '_MD_AM_CAPTCHA_MAXATTEMPDSC', 'textbox', 'int', 5);
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_num_chars', '_MD_AM_CAPTCHA_NUMCHARS', '4', '_MD_AM_CAPTCHA_NUMCHARSDSC', 'textbox', 'int', 6);
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_fontsize_min', '_MD_AM_CAPTCHA_FONTMIN', '10', '_MD_AM_CAPTCHA_FONTMINDSC', 'textbox', 'int', 7);

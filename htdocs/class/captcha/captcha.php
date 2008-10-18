@@ -109,8 +109,11 @@ class IcmsCaptcha {
 		}
 		$this->config["name"] = $name;
 		
-		// Skip CAPTCHA for member if set
-		if($IcmsConfigCaptcha['captcha_skipmember'] == '0' && is_object($GLOBALS["xoopsUser"])) {
+		// Skip CAPTCHA for group
+		$gperm_handler = & xoops_gethandler( 'groupperm' );
+		$xoopsUser = $GLOBALS["xoopsUser"];
+		$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+		if(!array_intersect($groups, $IcmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {
 			$this->active = false;
 		}elseif($IcmsConfigCaptcha['captcha_mode'] =='none'){
 			$this->active = false;
