@@ -22,7 +22,6 @@ if(empty($_SERVER['HTTP_REFERER']) || !preg_match("/^".preg_quote(ICMS_URL, '/')
 }
 
 class IcmsCaptchaImageHandler {
-	var $config	= array();
 	//var $mode = "gd"; // GD or bmp
 	var $code;
 	var $invalid = false;
@@ -51,15 +50,6 @@ class IcmsCaptchaImageHandler {
 		}
 	}
 	
-	/**
-	 * Loading configs from CAPTCHA class
-	 */
-	function setConfig($config = array())
-	{
-		// Loading default preferences
-		$this->config =& $config;
-	}
-
 	function loadImage()
 	{
 		$this->createCode();
@@ -82,10 +72,16 @@ class IcmsCaptchaImageHandler {
 			$IcmsConfigCaptcha['captcha_num_chars'] = 4;
 			$this->code = rand( pow(10, $IcmsConfigCaptcha['captcha_num_chars'] - 1), intval( str_pad("9", $IcmsConfigCaptcha['captcha_num_chars'], "9") ) );
 		}else{
-			$this->code = substr(md5(uniqid(mt_rand(), 1)), 0, $IcmsConfigCaptcha['captcha_num_chars'] );
-			if (!$IcmsConfigCaptcha['captcha_casesensitive']) {
-				$this->code = strtoupper( $this->code );
-			}
+            $raw_code = md5(uniqid(mt_rand(), 1));
+            if (!empty($IcmsConfigCaptcha['captcha_skip_characters'])) {
+                $valid_code = str_replace(array($IcmsConfigCaptcha['captcha_skip_characters']), "", $raw_code);
+                $this->code = substr( $valid_code, 0, $IcmsConfigCaptcha['captcha_num_chars'] );
+            } else {
+                $this->code = substr( $raw_code, 0, $IcmsConfigCaptcha['captcha_num_chars'] );
+            }
+            if (!$IcmsConfigCaptcha['captcha_casesensitive']) {
+                $this->code = strtoupper( $this->code );
+            }
 		}
 	}
 	
@@ -434,9 +430,7 @@ class IcmsCaptchaImageHandler {
 	}
 }
 
-$config = @include "../config.php";
 $image_handler = new IcmsCaptchaImageHandler();
-$image_handler->setConfig($config);
 $image_handler->loadImage();
 
 ?>

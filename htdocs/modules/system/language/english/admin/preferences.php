@@ -467,4 +467,6 @@ define("_MD_AM_RANDOM","Random");
 define("_MD_AM_CAPTCHA_IMG","Image");
 define("_MD_AM_CAPTCHA_TXT","Text");
 define("_MD_AM_CAPTCHA_OFF","Disabled");
+define("_MD_AM_CAPTCHA_SKIPCHAR","Skip characters");
+define("_MD_AM_CAPTCHA_SKIPCHARDSC","This option will skip the entered characters, when generating Captcha");
 ?>

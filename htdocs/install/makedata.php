@@ -883,6 +883,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', 'o, 0, i, l, 1', '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textbox', 'text', $p)");
+	$i++;
+	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_maxattempt', '_MD_AM_CAPTCHA_MAXATTEMP', '8', '_MD_AM_CAPTCHA_MAXATTEMPDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
