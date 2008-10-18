@@ -366,7 +366,7 @@ function xoops_module_update_system(&$module) {
 
 	}
 
-    $newDbVersion = 14;
+    $newDbVersion = 12;
 
     if ($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
