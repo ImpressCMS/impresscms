@@ -1,6 +1,6 @@
 ImpressCMS ChangeLog
 
-===2008-10-21 : ImpressCMS 1.0.3 "Janus" RC===
+===2008-10-21 : ImpressCMS 1.0.3 "Janus" RC 1===
 
 '''Fixed'''
 * Security vulnerability in userranks reported by Muhaimin Dzulfakar (vaughan/malanciault)
