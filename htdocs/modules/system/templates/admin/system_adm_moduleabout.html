@@ -195,3 +195,17 @@
 		</tr>
 	</table>
 <{/if}>
+
+<{if $module_license_txt}>
+<table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
+	<tr>
+		<td class='bg3'><b><{$smarty.const._MODABOUT_MODULE_LICENSE}></b></td>
+	</tr>
+
+	<tr>
+		<td class='even'>
+			<div style='line-height: 18px;'><{$module_license_txt}></div>
+		</td>
+	</tr>
+</table>
+<{/if}>

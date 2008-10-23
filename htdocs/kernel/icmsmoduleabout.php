@@ -100,7 +100,7 @@ class IcmsModuleAbout
 
 		$myts = &MyTextSanitizer::getInstance();
 
-		global $xoopsModule;
+		global $xoopsModule, $xoopsConfig;
 
 		xoops_cp_header();
 
@@ -166,13 +166,26 @@ class IcmsModuleAbout
 		$this->_tpl->assign('module_author_word', $versioninfo->getInfo('author_word'));
 
 	    // For changelog thanks to 3Dev
-	    global $xoopsModule;
+	    //global $xoopsModule;
 	    $filename = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/changelog.txt';
 	    if(is_file($filename)){
 
 	        $filesize = filesize($filename);
 	        $handle = fopen($filename, 'r');
 	        $this->_tpl->assign('module_version_history', $myts->displayTarea(fread($handle, $filesize), true));
+	        fclose($handle);
+	    }
+		
+		// For license thanks to 3Dev
+		if ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license/' . $xoopsConfig['language'] . '_license.txt' ) ) {
+			$filename = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license/' . $xoopsConfig['language'] . '_license.txt';
+		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license.txt' ) ) {
+			$filename = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license.txt';
+		}
+	    if(is_file($filename)){
+	        $filesize = filesize($filename);
+	        $handle = fopen($filename, 'r');
+	        $this->_tpl->assign('module_license_txt', $myts->displayTarea(fread($handle, $filesize), 0, 0, 1, 1, 1, true));
 	        fclose($handle);
 	    }
 
