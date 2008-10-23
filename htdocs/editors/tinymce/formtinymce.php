@@ -51,7 +51,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 			return false;
 		}
 		
-		$this->XoopsFormTextArea ( "", @$this->_name, @$this->_value );
+		$this->XoopsFormTextArea ( @$this->_caption, @$this->_name, @$this->_value );
 		parent::setExtra ( "style='width: " . $this->_width . "; height: " . $this->_height . ";'" );
 		
 		$this->initTinymce ();
