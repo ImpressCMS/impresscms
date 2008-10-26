@@ -217,6 +217,13 @@ class TinyMCE
                     remove_script_host : false,
                     tinymceload : "1"});
                 '.$callback.'
+function showMCE(id) {
+    if (tinyMCE.getInstanceById(id) == null) {
+        tinyMCE.execCommand(\'mceAddControl\', false, id);
+    } else {
+        tinyMCE.execCommand(\'mceRemoveControl\', false, id);
+    }
+}
                 </script>
         ';
         return $ret ;

@@ -290,4 +290,6 @@ define('_LCL_NUM9','9');
 // change 0 to 1 if your language has a different numbering than latin`s alphabet
 define("_USE_LOCAL_NUM","0");
 define("_ICMS_DBUPDATED","Database Updated Successfully!");
+
+define('_TOGGLETINY','Toggle Editor');
 ?>

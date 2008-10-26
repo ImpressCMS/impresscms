@@ -142,6 +142,9 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		$ret = $this->tinymce->render ();
 		$ret .= parent::render ();
 		
+		$ret .= '<a href="#" id="switchtinymce" title="'._TOGGLETINY.'" onclick="showMCE(\''.$this->_name.'\'); return false;" style="float:right; display:box; background:#F0F0EE; padding:3px; margin-right:2px; border: 1px solid #ccc; border-top: none;">'._TOGGLETINY.'</a>';
+		$ret .= '<br clear="right" />';
+		
 		return $ret;
 	}
 	
