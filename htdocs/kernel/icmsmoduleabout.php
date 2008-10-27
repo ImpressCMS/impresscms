@@ -158,6 +158,12 @@ class IcmsModuleAbout
 		$this->_tpl->assign('module_support_site_name', $versioninfo->getInfo('support_site_name'));
 		$this->_tpl->assign('module_submit_bug', $versioninfo->getInfo('submit_bug'));
 		$this->_tpl->assign('module_submit_feature', $versioninfo->getInfo('submit_feature'));
+		
+		// Manual
+		$manual =$versioninfo->getInfo('manual');
+		if ($manual) {
+			$this->_tpl->assign('module_manual', isset($manual['wiki']) ? array_map(array($this, 'sanitize'), $manual['wiki']) : false);
+		}
 
 		// Warning
 		$this->_tpl->assign('module_warning', $this->sanitize($versioninfo->getInfo('warning')));
