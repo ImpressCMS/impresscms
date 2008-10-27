@@ -47,6 +47,7 @@ class IcmsFeed {
 	}
 
 	function render () {
+		include_once ICMS_ROOT_PATH . '/class/template.php';
 		//header ('Content-Type:text/xml; charset='._CHARSET);
 		$xoopsOption['template_main'] = "db:system_rss.html";
 		$tpl = new XoopsTpl();
