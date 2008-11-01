@@ -404,7 +404,7 @@ class upgrade_impcms06 {
         return $this->update_configs('trust_path');
     }
 		function check_db()
-    { return false;
+    { 
         $lines = file( XOOPS_ROOT_PATH . '/mainfile.php' );
         foreach ( $lines as $line ) {
             if( preg_match( "/(define\(\s*)([\"'])(XOOPS_DB_CHARSET)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) ) {
