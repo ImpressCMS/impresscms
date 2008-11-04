@@ -100,6 +100,7 @@ class IcmsPreloadHandler {
 	 * Triggers a specific event on all the libraries
 	 *
 	 * Here are the currently supported events:
+	 * - startCoreBoot : this event is triggered at the  start of the core booting process (start  of include/common.php)
 	 * - finishCoreBoot : this event is triggered at the end of the core booting process (end of include/common.php)
 	 * - adminHeader : this event is triggered when calling xoops_cp_header() and is used to output content in the head section of the admin side
 	 * - beforeFooter : this event is triggered when include/footer.php is called, at the begining of the file
