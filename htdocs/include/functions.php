@@ -1705,6 +1705,7 @@ function icmsdate($datestring,$usertimestamp)
 {
 	global $xoopsConfig;
 	$basecheck = defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC;
+// For persian only?
 	if ($basecheck && $xoopsConfig['language'] == 'persian' && $datestring != 'mysql'){
 		include_once ICMS_ROOT_PATH.'/include/jalali.php';
 		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
