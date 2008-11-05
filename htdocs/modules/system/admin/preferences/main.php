@@ -459,6 +459,14 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		$form->addElement ( new XoopsFormHidden ( 'op', 'save' ) );
 		$form->addElement ( new XoopsFormButton ( '', 'button', _GO, 'submit' ) );
 		xoops_cp_header ();
+		$iconbig = $module->getInfo('iconbig');
+		if ( isset( $iconbig ) && $iconbig == false ) {
+			echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/preferences/images/preferences_big.png);">'.$modname.' &raquo; '._PREFERENCES.'</div>';
+			
+		} 
+		if ( isset( $iconbig ) && $iconbig == true ) {
+			echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/'.$module->getVar('dirname').'/'.$iconbig.')">'.$modname.' &raquo; '._PREFERENCES.'</div>';
+		}
 		$form->display ();
 		xoops_cp_footer ();
 		exit ();
