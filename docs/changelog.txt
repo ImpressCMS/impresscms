@@ -56,6 +56,7 @@ ImpressCMS ChangeLog
 * Updated TinyMCE to Version 3.2.0.2. (stranger)
 * Updated TCPDF to version 4.0.033. (stranger)
 * Captcha class. (stranger)
+* Filters on group edit form to only allow options assigned to the current user
 
 '''Fixed'''
 * #2161527: error in xoopsimagebrowser.php (real_therplima)
