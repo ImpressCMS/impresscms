@@ -170,12 +170,11 @@
 	<{/if}>
 </table>
 
+<{if $module_manual}>
 <table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
 	<tr>
 		<td colspan='2' class='bg3'><b><{$smarty.const._MODABOUT_MANUAL}></b></td>
 	</tr>
-	
-	<{if $module_manual}>
 		<tr>
 			<td class='head' style="vertical-align: top;" width = '150px'><{$smarty.const._MODABOUT_MANUAL_WIKI}></td>
 			<td class='even'>
@@ -183,9 +182,9 @@
 					<div><{$manual}></div>
 				<{/foreach}>
 			</td>
-		</tr>
-	<{/if}>
+		</tr>	
 </table>
+<{/if}>
 
 <{if $module_warning}>
 	<table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
