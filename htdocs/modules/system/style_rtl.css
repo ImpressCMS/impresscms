@@ -60,7 +60,6 @@ font-family: Tahoma; direction: rtl;}
 INPUT[type=text]
 {
     PADDING-RIGHT: 0.25em;
-    MIN-WIDTH: 60%;
     PADDING-LEFT: 0.25em;
     BACKGROUND: url(images/form-input.png) #fff no-repeat left top;
     PADDING-BOTTOM: 1px;
@@ -71,7 +70,6 @@ font-family: Tahoma; direction: rtl;}
 INPUT[type=password]
 {
     PADDING-RIGHT: 0.25em;
-    MIN-WIDTH: 60%;
     PADDING-LEFT: 0.25em;
     BACKGROUND: url(images/form-input.png) #fff no-repeat left top;
     PADDING-BOTTOM: 1px;
@@ -118,7 +116,7 @@ h4 { font-size: 1.1em; font-weight: bold;font-family: Tahoma; direction: rtl;}
 /* ===== hypertext links ===== */
 a:link { background-color: transparent; color: #666; font-weight: bold; text-decoration: none;font-family: Tahoma; direction: rtl;}
 a:visited { background-color: transparent; color: #666; font-weight: bold; text-decoration: none;font-family: Tahoma; direction: rtl;}
-a:hover { background-color: transparent; color: #ff9966; font-weight: bold; text-decoration: none;font-family: Tahoma; direction: rtl;}
+a:hover { background-color: transparent; color: #E18A00; font-weight: bold; text-decoration: none;font-family: Tahoma; direction: rtl;}
 
 /* ===== Code and Quote Definition ===== */
 .xoopsCode { background-color: #FAFAFA; color: #006600; font-size: .9em; border: #c2cdd6 1px dashed;font-family: Tahoma; direction: rtl;}
@@ -181,7 +179,7 @@ input.formTextBox { background: #fff; color:inherit; font-size: .8em; font-famil
 /* ===== tables ===== */
 caption {font-style: italic; font-weight: bold;font-family: Tahoma; direction: rtl;}
 
-th, thead { background-color:#4e4e4e; color:#eeeeee; border:1px solid #AAAAAA; padding:2px; vertical-align:middle; font-family: Tahoma; direction: rtl;}
+th, thead { background:transparent url(images/bg-lr-titles.gif) repeat scroll 0 0; color:#666; border:1px solid #AAAAAA; padding:2px; vertical-align:middle; font-family: Tahoma; direction: rtl;}
 .head { background-color:#e3e3f3; color:inherit; border:1px solid #CCC;  padding:2px; font-weight:bold; font-family: Tahoma; direction: rtl;}
 .even { background-color:#FFFFFF; color:inherit; border: 1px solid #CCCCCC; padding:2px; font-family: Tahoma; direction: rtl;}
 .odd { background-color: #f1f4fb; color:inherit; border: 1px solid #CCCCCC; padding:2px; font-family: Tahoma; direction: rtl;}
@@ -202,15 +200,15 @@ form td.head {width: 30%;font-family: Tahoma; direction: rtl;}
  */
 div#logoHead{
 	padding: 0;
-	text-align: left;
+	text-align: right;
 	background: url(images/header-bg.png) repeat-x;
 	border-bottom: 4px solid #ffb500;
 font-family: Tahoma; direction: rtl;}
 div#logoHead span.right{
-	float: left;
+	float: right;
 }
 div#logoHead span.left{
-	float: right;
+	float: left;
 }
 div#navbarCP{
 	background: url(images/bg-lr-titles.gif);

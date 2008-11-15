@@ -139,9 +139,9 @@ case "preview":
 case "post":
     // Captcha Hack
     if(@include_once XOOPS_ROOT_PATH . "/class/captcha/captcha.php") {
-        if ( $xoopsConfig['use_captchaf'] == 1 ) {$xoopsCaptcha = XoopsCaptcha::instance();
-        if(! $xoopsCaptcha->verify(true) ) {
-            redirect_header($redirect_page.'='.$com_itemid.'&com_id='.$com_id.'&com_mode='.$com_mode.'&com_order='.$com_order, 2, $xoopsCaptcha->getMessage());
+        if ( $xoopsConfig['use_captchaf'] == 1 ) {$icmsCaptcha = IcmsCaptcha::instance();
+        if(! $icmsCaptcha->verify(true) ) {
+            redirect_header($redirect_page.'='.$com_itemid.'&com_id='.$com_id.'&com_mode='.$com_mode.'&com_order='.$com_order, 2, $icmsCaptcha->getMessage());
         }
     }
 }

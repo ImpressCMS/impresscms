@@ -34,6 +34,7 @@ if ($xoopsConfigUser['allow_register'] == 0 && $xoopsConfigUser['activation_type
 if($_SESSION['xoopsUserId']){
 	redirect_header('index.php', 6, _US_ALREADY_LOGED_IN);
 }
+include_once ICMS_ROOT_PATH . "/kernel/icmsstopspammer.php";
 /**
  *  Validates username, email address and password entries during registration
  *  Username is validated for uniqueness and length, password is validated for length and strictness,
@@ -78,6 +79,17 @@ function userCheck($login_name, $uname, $email, $pass, $vpass)
 		// loose
 		$restriction = '/[\000-\040]/';
 		break;
+	}
+	$icmsStopSpammers = new IcmsStopSpammer();
+	if ($icmsStopSpammers->badUsername($uname)) {
+		$stop .= _US_INVALIDNICKNAME . "<br />";
+	}
+	if ($icmsStopSpammers->badEmail($email)) {
+		$stop .= _US_INVALIDMAIL . "<br />";
+	}
+	if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) {
+		/** @todo need constant defined in language/english/ **/
+		$stop .= _US_INVALIDIP . "<br />";
 	}
 	if (empty($login_name) || preg_match($restriction, $login_name)) {
 		$stop .= _US_INVALIDNICKNAME."<br />";

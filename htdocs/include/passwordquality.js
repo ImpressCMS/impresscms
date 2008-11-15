@@ -260,18 +260,21 @@ function getPasswordStrength(){
     //Calcula a porcentagem da barra de qualidade com base nos passos checados anteriomente
     var pwstrength=((pwlength*10)-20) + (numeric*10) + (numsymbols*15) + (upper*10);
 
-    //Se senha é menor do que o mínimo configurado desabilitar botão de submit
+    /*//Se senha é menor do que o mínimo configurado desabilitar botão de submit
     if (pwlength < minpass){
       sbtn.disabled = true;
+      sbtn.style.color = '#B2B2B2';
     }else
     //Se o padrão de qualidade da senha for menor que o configurado desabilitar botão de submit
     if (pwstrength < pass_level){
       sbtn.disabled = true;
-    }else
+      sbtn.style.color = '#B2B2B2';
+    }else*/
     //Se segurança e o comprimento da senha maior que os níveis configurados libera o botão
     //do formulário permitindo a realização do cadastro
     if (pwstrength > pass_level && pwlength >= minpass){
-      sbtn.disabled = false;
+    	sbtn.disabled = false;
+    	sbtn.style.color = '#444';
     }
 
 	//Garantindo que o valor da porcentagem da barra fique sempre entre 0 e 100

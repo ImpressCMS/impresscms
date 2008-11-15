@@ -52,9 +52,10 @@ class XoopsInstallWizard {
 
 		if (version_compare( phpversion(), '5', '<')) {
 			$this->no_php5 = true;
-		} elseif(ini_get('safe_mode') == 1 || strtolower(ini_get('safe_mode')) == 'on') {
-			$this->safe_mode = true;
 		}
+/*		 elseif(ini_get('safe_mode') == 1 || strtolower(ini_get('safe_mode')) == 'on') {
+			$this->safe_mode = true;
+		} */
 
 		// Load the main language file
 		$this->initLanguage( !@empty( $_COOKIE['xo_install_lang'] ) ? $_COOKIE['xo_install_lang'] : 'english' );
@@ -89,9 +90,11 @@ class XoopsInstallWizard {
 		// Setup pages
 		if ($this->no_php5) {
 			$this->pages[]= 'no_php5';
-		}elseif ($this->safe_mode) {
+		}
+/*		elseif ($this->safe_mode) {
 			$this->pages[]= 'safe_mode';
-		}else {
+		} */
+		else {
 			$this->pages[]= 'langselect';
 			$this->pages[]= 'start';
 			$this->pages[]= 'modcheck';

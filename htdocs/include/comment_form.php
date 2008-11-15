@@ -81,6 +81,8 @@ if (is_object($xoopsUser)) {
         $html_checkbox = new XoopsFormCheckBox('', 'dohtml', $dohtml);
         $html_checkbox->addOption(1, _CM_DOHTML);
         $option_tray->addElement($html_checkbox);
+    }else{
+        $cform->addElement(new XoopsFormHidden('dohtml', $dohtml));
     }
 }
 $smiley_checkbox = new XoopsFormCheckBox('', 'dosmiley', $dosmiley);
@@ -122,7 +124,7 @@ if ('system' != $xoopsModule->getVar('dirname')) {
 }
 // Captcha Hack
 if ( $xoopsConfig['use_captchaf'] == 1 ) {
-$cform->addElement(new XoopsFormCaptcha());
+$cform->addElement(new IcmsFormCaptcha());
 }
 // Captcha Hack
 $button_tray->addElement(new XoopsFormButton('', 'com_dopreview', _PREVIEW, 'submit'));

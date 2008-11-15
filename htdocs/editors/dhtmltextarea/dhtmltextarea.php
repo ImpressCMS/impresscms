@@ -42,7 +42,7 @@ class FormDhtmlTextArea extends XoopsFormDhtmlTextArea
 		$rows = isset($rows)? $rows : 5;
 		$cols = isset($cols)? $cols : 50;
 		$hiddentext = empty($hiddentext)? "xoopsHiddenText" : $hiddentext;
-		$this->XoopsFormDhtmlTextArea(@$caption, $name, $value, $rows, $cols, $hiddentext);
+		$this->XoopsFormDhtmlTextArea(@$caption, $name, $value, $rows, $cols, $hiddentext,$configs);
 	}
 }
 ?>

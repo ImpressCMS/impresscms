@@ -12,100 +12,16 @@
 * @version	$Id$
 */
 
-body {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-
+body {direction : rtl;font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
 table {direction : rtl; text-align : right;}
-
 table.toptable , table.maintable , table.footertable{direction : rtl;}
-
-table td {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-body td , p , div {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-a:link , a:active , a:visited {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} 
-a:hover {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} 
-h1 {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;}
-
-h2 {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;}
-h4 {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;}  
-ul {text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;} 
-
+table td {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}body td , p , div {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}a:link , a:active , a:visited {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} a:hover {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} h1 {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;}
+h2 {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;}h4 {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;}  ul {text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;} 
 input , select , textarea {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align : right;}
-
-.formButton {direction : rtl; text-align : right;}
-.item {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;} 
-.itemHead {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} 
-.itemInfo {text-align : left; font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;}
-.itemTitle {direction : rtl; text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-.itemTitle a {direction : rtl;}
-.itemPoster {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-.itemPostDate {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align : left;}
-.itemStats {direction : rtl; text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} 
-.itemBody {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;} 
-.itemText {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align: Justify;} 
-.itemFoot {direction : rtl; text-align : left; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} 
-th {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;} 
-th a:link , th a:active , th a:visited {direction : rtl;}
-.outer {direction : rtl; text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-.head {direction : rtl; text-align : right; 	font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-.even {direction: rtl;  font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: right;}
-.odd {direction: rtl;  font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: right;}
-.foot {direction : rtl;}
-div.errorMsg {}
-div.confirmMsg {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align : right;} 
-div.resultMsg {}
-div.xoopsCode {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : ltr;} 
-div.xoopsQuote {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align : right;} 
-.comTitle {direction : rtl; text-align : right;}
-.comText {direction : rtl; text-align : justify;}
-.comUserStat {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;}
-.comUserName {	direction : rtl; text-align : right;}
-.comDate {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-.sCommentThread {text-align : right;} 
-.sCommentRank {text-align : right;} 
-p {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-.admin_menu {font-family : Tahoma, verdana, arial, helvetica, sans-serif;} 
-.admin_menu a , .admin_menu_thumb a {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-.admin_menu a:hover , .admin_menu_thumb a:hover , .alblink a:hover , .catlink a:hover , .user_thumb_infobox a:hover {}
-.admin_menu_thumb {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-.button {font-family : Tahoma, verdana, arial, helvetica, sans-serif;} 
-.checkbox {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-.listbox {font-family : Tahoma, verdana, arial, helvetica, sans-serif;} 
-.navmenu {}
-.navmenu a {}
-.navmenu a:hover {}
-.sortorder_options {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-.statlink a {}
-.statlink a:hover {}
-.textinput {}
-.user_thumb_infobox a {}
-td#mainmenu a {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction: rtl;  text-align:right;}
-td#mainmenu a:hover {}
-td#mainmenu a.menuTop {}
-td#mainmenu a.menuMain {}
-td#mainmenu a.menuSub {padding-right: 10px;}
-td#usermenu a {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction: rtl;  text-align:right; }
-td#usermenu a:hover {}
-td#usermenu a.menuTop {}
-td#usermenu a.highlight {}
-.headerlogo {direction: rtl;}
-.blockTitle {direction: rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-
+.formButton {direction : rtl; text-align : right;}.item {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;} .itemHead {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} .itemInfo {text-align : left; font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;}.itemTitle {direction : rtl; text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.itemTitle a {direction : rtl;}.itemPoster {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.itemPostDate {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align : left;}.itemStats {direction : rtl; text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} .itemBody {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;} .itemText {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align: Justify;} .itemFoot {direction : rtl; text-align : left; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} th {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;} th a:link , th a:active , th a:visited {direction : rtl;}.outer {direction : rtl; text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.head {direction : rtl; text-align : right; 	font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.even {direction: rtl;  font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: right;}.odd {direction: rtl;  font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: right;}.foot {direction : rtl;}div.confirmMsg {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align : right;} div.xoopsCode {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : ltr;} div.xoopsQuote {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align : right;} .comTitle {direction : rtl; text-align : right;}.comText {direction : rtl; text-align : justify;}.comUserStat {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;}.comUserName {	direction : rtl; text-align : right;}.comDate {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.sCommentThread {text-align : right;} .sCommentRank {text-align : right;} p {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.admin_menu {font-family : Tahoma, verdana, arial, helvetica, sans-serif;} .admin_menu a , .admin_menu_thumb a {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.admin_menu a:hover , .admin_menu_thumb a:hover , .alblink a:hover , .catlink a:hover , .user_thumb_infobox a:hover {}.admin_menu_thumb {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.button {font-family : Tahoma, verdana, arial, helvetica, sans-serif;} .checkbox {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.listbox {font-family : Tahoma, verdana, arial, helvetica, sans-serif;} .sortorder_options {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}td#mainmenu a {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction: rtl;  text-align:right;}td#mainmenu a.menuSub {padding-right: 10px;}td#usermenu a {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction: rtl;  text-align:right; }.headerlogo {direction: rtl;}.blockTitle {direction: rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
 .blockContent{font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction: rtl;}
-
 .footerbar {text-align:center;}
-
-form{font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-tr.even td {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align: right;} 
-tr.odd td {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align: right;}
-th {direction : rtl; text-align: right;}
-div#content {direction : rtl; text-align: right;}
-div#forum_header{direction : rtl; text-align: right;}
-p.desc { direction : rtl; text-align : right;}
-tr.head td{direction : rtl; text-align : right;}
-td.sideboxcontent{direction : rtl;}
-td#content{direction : rtl; text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-div#xo-logger-output{direction : rtl; text-align : right;}
-div#xo-logger-tabs{direction : rtl; text-align : right;}.outer { direction : rtl;}
-table.outer {
+form{font-family : Tahoma, verdana, arial, helvetica, sans-serif;}tr.even td {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align: right;} tr.odd td {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align: right;}th {direction : rtl; text-align: right;}div#content {direction : rtl; text-align: right;}div#forum_header{direction : rtl; text-align: right;}p.desc { direction : rtl; text-align : right;}tr.head td{direction : rtl; text-align : right;}td.sideboxcontent{direction : rtl;}td#content{direction : rtl; text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}div#xo-logger-output{direction : rtl; text-align : right;}div#xo-logger-tabs{direction : rtl; text-align : right;}.outer { direction : rtl;}table.outer {
 
     width:      100%;
 
@@ -424,28 +340,7 @@ div.cpicon span.unor{
 
 }
 
-#http_error_title {
-padding-top: 5px;
- padding-bottom: 5px;
- font-size: 20px;
- font-weight: bold;
-}
-#http_error_text {
-padding-top: 5px;
- padding-bottom: 5px;
- text-align: left;
-}
-#http_error_searchform{
-padding-top: 5px;
- line-height: 5px;
- padding-bottom: 0px;
-}
-#http_error li{
-color: black;
- padding-top: 5px;
- padding-bottom: 5px;
-}
-.ed_block_box {
+#http_error_title {padding-top: 5px; padding-bottom: 5px; font-size: 20px; font-weight: bold;}#http_error_text {padding-top: 5px; padding-bottom: 5px; text-align: right;}#http_error_searchform{padding-top: 5px; line-height: 5px; padding-bottom: 0px;}#http_error li{color: black; padding-top: 5px; padding-bottom: 5px;}.ed_block_box {
 	position:absolute;
 	display:none;
 	padding: 5px;
@@ -456,8 +351,7 @@ color: black;
 	font-size: 11px;
 	font-weight: normal;
 	color: #000;
-	width: 100px;
-	z-index:100 !important;
+	min-width: 100px;	width: auto;	z-index:100 !important;
 }
 .ed_block_box img{
     vertical-align: middle;
@@ -466,7 +360,6 @@ color: black;
 	font-weight: normal;
 	color: #000;
 }
-
 div#disclaimer{
 	background-color: #eee; 
 	border: #CCC 1px solid; 
@@ -475,8 +368,7 @@ div#disclaimer{
 	height: 8em; 
 	overflow: auto; 
 	font-size: 1em; 
-	font-family: tahoma,verdana,arial, helvetica, sans-serif;
-}
+	font-family: Tahoma, verdana,arial, helvetica, sans-serif;}
 .openid_url {
 	background-image: url(images/openid-inputicon.gif);
 	background-repeat: no-repeat;

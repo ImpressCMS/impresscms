@@ -96,7 +96,7 @@ switch($op)
 						<img style="vertical-align: middle;" src="<?php ICMS_URL?>/modules/smartsection/images/icon/doc.png" alt="<?php $items[$i]['title']?>">&nbsp;<a href="<?php $items[$i]['guid']?>"><?php $items[$i]['title']?></a>
 					</div>
 					<div>
-						<img class="smartsection_item_image" src="<?php ICMS_URL?>/uploads/smartsection/images/item/impresscms_news.gif" alt="<?php $items[$i]['title']?>" title="<?php $items[$i]['title']?>" align="right">
+						<img class="smartsection_item_image" src="<?php ICMS_URL?>/uploads/smartsection/images/item/impresscms_news.gif" alt="<?php $items[$i]['title']?>" title="<?php $items[$i]['title']?>" align="'._GLOBAL_RIGHT.'">
 						<?php $items[$i]['description']?>
 					</div>
 					<div style="clear: both;">&nbsp;</div>

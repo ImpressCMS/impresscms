@@ -125,17 +125,9 @@ if ($passField == 'pass'){
   $pass_tray = new XoopsFormElementTray(_US_PASSWORD, '');
   $pass_tray->setDescription(_US_REGFORM_WARNING);
   $pass_inp = new XoopsFormPassword('', $passField, 10, 72, $myts->htmlSpecialChars($pass));
-		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-  $pass_inp->setExtra('style="float:right;"');
-	   } else {
-  $pass_inp->setExtra('style="float:left;"');
-           }
+  $pass_inp->setExtra('style="float:'._GLOBAL_LEFT.';"');
   $pass_tray->addElement($pass_inp);
-		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-  $div_progress = new XoopsFormLabel('',' <script language="javascript" src="'.XOOPS_URL.'/include/percent_bar_rtl.js"></script>');
-	   } else {
-  $div_progress = new XoopsFormLabel('',' <script language="javascript" src="'.XOOPS_URL.'/include/percent_bar.js"></script>');
-           }
+  $div_progress = new XoopsFormLabel('',' <script language="javascript" src="'.XOOPS_URL.'/include/percent_bar'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.js"></script>');
   $pass_tray->addElement($div_progress);
   $reg_form->addElement($pass_tray);
 }else{
@@ -149,11 +141,7 @@ if ($passField == 'pass'){
 
   $pwd_text = new XoopsFormElementTray('', '');
   $pass_inp = new XoopsFormPassword('', $passField, 10, 72);
-		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-  $div_progress = new XoopsFormLabel('','<script language="javascript" src="'.XOOPS_URL.'/include/percent_bar_rtl.js"></script>');
-	   } else {
-  $div_progress = new XoopsFormLabel('','<script language="javascript" src="'.XOOPS_URL.'/include/percent_bar.js"></script>');
-           }
+  $div_progress = new XoopsFormLabel('','<script language="javascript" src="'.XOOPS_URL.'/include/percent_bar'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.js"></script>');
   $pwd_text->addElement($pass_inp);
   $pwd_text->addElement($div_progress);
 }

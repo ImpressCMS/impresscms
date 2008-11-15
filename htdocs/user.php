@@ -52,12 +52,18 @@ if($op == 'main')
 		$xoopsTpl->assign('lang_youremail', _US_YOUREMAIL);
 		$xoopsTpl->assign('lang_sendpassword', _US_SENDPASSWORD);
 		$xoopsTpl->assign('lang_rememberme', _US_REMEMBERME);
+		$xoopsTpl->assign('lang_youoid', _US_OPENID_URL);
+		$xoopsTpl->assign('lang_login_oid', _US_OPENID_LOGIN);
+		$xoopsTpl->assign('lang_back2normoid', _US_OPENID_NORMAL_LOGIN);
 		$xoopsTpl->assign('mailpasswd_token', $GLOBALS['xoopsSecurity']->createToken());
 		$config_handler =& xoops_gethandler('config');
 		$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
 		if($xoopsConfigUser['allow_register'] == 1) {$xoopsTpl->assign('allow_registration', $xoopsConfigUser['allow_register']);}
 		if($xoopsConfigUser['remember_me'] == 1) {$xoopsTpl->assign('rememberme', $xoopsConfigUser['remember_me']);}
+		$config_handler =& xoops_gethandler('config');
+		$xoopsConfigAuth =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+		if($xoopsConfigAuth['auth_openid'] == 1) {$xoopsTpl->assign('auth_openid', true);}
 
 		$xoopsTpl->assign('xoops_pagetitle', _LOGIN);
 		include 'footer.php';

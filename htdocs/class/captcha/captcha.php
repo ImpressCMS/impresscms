@@ -4,7 +4,7 @@
  *
  * Currently there are two types of CAPTCHA forms, text and image
  * The default mode is "text", it can be changed in the priority:
- * 1 If mode is set through XoopsFormCaptcha::setConfig("mode", $mode), take it
+ * 1 If mode is set through IcmsFormCaptcha::setConfig("mode", $mode), take it
  * 2 Elseif mode is set though captcha/config.php, take it
  * 3 Else, take "text"
  *
@@ -112,7 +112,7 @@ class IcmsCaptcha {
 		// Skip CAPTCHA for group
 		$gperm_handler = & xoops_gethandler( 'groupperm' );
 		$xoopsUser = $GLOBALS["xoopsUser"];
-		$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+		$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 		if(!array_intersect($groups, $IcmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {
 			$this->active = false;
 		}elseif($IcmsConfigCaptcha['captcha_mode'] =='none'){

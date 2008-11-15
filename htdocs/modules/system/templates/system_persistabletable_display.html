@@ -14,7 +14,7 @@
 
 <div style="margin-bottom: 12px;">
 	<{if $icms_introButtons}>
-		<div style="float: left;">
+		<div style="float: <{$smarty.const._GLOBAL_LEFT}>;">
 			<form>
 				<{foreach from=$icms_introButtons item=introButton}>
 					<input type="button" name="<{$introButton.name}>" onclick="location='<{$introButton.location}>'" value="<{$introButton.value}>" />
@@ -26,7 +26,7 @@
 <{if $icms_showFilterAndLimit || $icms_quicksearch}>
 <form name="pick" id="pick" action="<{$icms_optionssel_action}>" method="POST" style="margin: 0;">
 	<{if $icms_quicksearch}>
-		<div style="vertical-align: middle; float: right; border: 2px solid #C2CDD6; padding: 5px; background-color: #E6E6E6;">
+		<div style="vertical-align: middle; float: <{$smarty.const._GLOBAL_RIGHT}>; border: 2px solid #C2CDD6; padding: 5px; background-color: #E6E6E6;">
 			<b><{$icms_quicksearch}> :</b> <input style="min-width: 10px; vertical-align: middle;" type="text" id="quicksearch_<{$icms_id}>" name="quicksearch_<{$icms_id}>" size="15" maxlength="255"/>
 			<input style="vertical-align: middle;" type="submit" name="button_quicksearch_<{$icms_id}>" value="<{$smarty.const._SEARCH}>" />
 		</div>
@@ -47,7 +47,7 @@
 
 <{if $icms_showFilterAndLimit}>
 <{if $icms_pagenav}>
-	<div style="text-align:right; padding-bottom: 3px;"><{$icms_pagenav}></div>
+	<div style="text-align:<{$smarty.const._GLOBAL_RIGHT}>; padding-bottom: 3px;"><{$icms_pagenav}></div>
 <{/if}>
 
 	<table width="100%" cellspacing="1" cellpadding="2" border="0" style="border-left: 1px solid silver; border-top: 1px solid silver; border-right: 1px solid silver;">
@@ -69,7 +69,7 @@
 					<{/if}>
 				<{/if}>
 			</td>
-			<td align='right'>
+			<td align='<{$smarty.const._GLOBAL_RIGHT}>'>
 <!--				<span style="font-weight: bold; font-size: 12px;"><{$smarty.const._CO_ICMS_SORT_BY}> : </span>
 				<select name='sortsel' onchange='submit()'>
 					<{foreach from=$icms_optionssel_fieldsForSorting key=key item=field}>
@@ -121,7 +121,7 @@
 			<{/if}>
 			<tr>
 				<{foreach from=$icms_object.columns item=column}>
-					<td class="<{$icms_object.class}>" width="<{$column.width}>" align="<{$column.align}>"><{$column.value}></td>
+					<td class="<{$column.keyname}> <{$icms_object.class}>" width="<{$column.width}>" align="<{$column.align}>"><{$column.value}></td>
 				<{/foreach}>
 				<{if $icms_object.actions}>
 					<td class="<{$icms_object.class}>" align='center'>
@@ -141,7 +141,7 @@
 <{if  $icms_actionButtons || $icms_withSelectedActions}>
 	<input type='hidden' name='op' id='op' value='' />
 	<{if $icms_withSelectedActions}>
-		<div style="padding: 5px;text-align: left; border-left: 1px solid silver; border-bottom: 1px solid silver; border-right: 1px solid silver;">
+		<div style="padding: 5px;text-align: <{$smarty.const._GLOBAL_LEFT}>; border-left: 1px solid silver; border-bottom: 1px solid silver; border-right: 1px solid silver;">
 		<{$smarty.const._CO_ICMS_WITH_SELECTED}>
 		<select name='selected_action'>
 			<option value = ''>---</option>
@@ -153,7 +153,7 @@
 		</div>
 	<{/if}>
 	<{if $icms_actionButtons}>
-		<div style="padding: 5px;text-align: right; border-left: 1px solid silver; border-bottom: 1px solid silver; border-right: 1px solid silver;">
+		<div style="padding: 5px;text-align: <{$smarty.const._GLOBAL_RIGHT}>; border-left: 1px solid silver; border-bottom: 1px solid silver; border-right: 1px solid silver;">
 			<{foreach from=$icms_actionButtons item=actionButton}>
 				<input type="submit" name="<{$actionButton.op}>" onclick="this.form.elements.op.value='<{$actionButton.op}>'" value="<{$actionButton.text}>" />
 			<{/foreach}>
@@ -162,7 +162,7 @@
 </form>
 <{/if}>
 <{if $icms_pagenav}>
-	<div style="text-align:right; padding-top: 3px;"><{$icms_pagenav}></div>
+	<div style="text-align:<{$smarty.const._GLOBAL_RIGHT}>; padding-top: 3px;"><{$icms_pagenav}></div>
 <{/if}>
 
 <{if $icms_introButtons}>
@@ -194,7 +194,7 @@
 function Clickheretoprint()
 {
   var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,";
-      disp_setting+="scrollbars=yes,width=650, height=600, left=100, top=25";
+      disp_setting+="scrollbars=yes,width=650, height=600, <{$smarty.const._GLOBAL_LEFT}>=100, top=25";
   var content_value = document.getElementById("<{$icms_id}>").innerHTML;
 
   var docprint=window.open("","",disp_setting);

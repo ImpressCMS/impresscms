@@ -47,7 +47,7 @@ class IcmsCaptchaImage {
 		$form = "<input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $IcmsConfigCaptcha['captcha_num_chars'] . "' maxlength='" . $IcmsConfigCaptcha['captcha_num_chars'] . "' value='' /> &nbsp; ". $this->loadImage();
 		$rule = htmlspecialchars(ICMS_CAPTCHA_REFRESH, ENT_QUOTES);
 		if($IcmsConfigCaptcha['captcha_maxattempt']) {
-			$rule .=  " | ". sprintf( constant("ICMS_CAPTCHA_MAXATTEMPTS"), icms_conv_nr2local($IcmsConfigCaptcha['captcha_maxattempt']) );
+			$rule .=  " | ". sprintf( constant("ICMS_CAPTCHA_MAXATTEMPTS"), $IcmsConfigCaptcha['captcha_maxattempt'] );
 		}
 		$form .= "&nbsp;&nbsp;<small>{$rule}</small>";
 		

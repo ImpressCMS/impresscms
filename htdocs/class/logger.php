@@ -36,10 +36,10 @@ class XoopsLogger {
 
     var $usePopup = false;
     var $activated = true;
-    
+
 	/**@access protected*/
     var $renderingEnabled = false;
-    
+
     function XoopsLogger() {
     }
     /**
@@ -75,6 +75,16 @@ class XoopsLogger {
 		if ( $this->renderingEnabled ) {
     		$this->renderingEnabled = false;
 		}
+    }
+
+	/**
+	 * Disabling logger for some special occasion like AJAX requests and XML
+	 *
+	 * When the logger absolutely needs to be disabled whatever it is enabled or not in the preferences
+	 * and wether user has permission or not to view it
+	 */
+    function disableLogger() {
+    	$this->activated = false;
     }
 
 	/**
@@ -131,7 +141,7 @@ class XoopsLogger {
 
 	/**
 	 * Error handling callback (called by the zend engine)
-	 */  
+	 */
     function handleError( $errno, $errstr, $errfile, $errline ) {
     	$errstr = $this->sanitizePath( $errstr );
     	$errfile = $this->sanitizePath( $errfile );
@@ -157,7 +167,7 @@ class XoopsLogger {
 					if ( isset( $step['file'] ) ) {
 						echo $this->sanitizePath( $step['file'] );
 						echo ' (' . $step['line'] . ")\n<br />";
-					}					
+					}
 				}
 				echo '</div>';
 			}
@@ -168,14 +178,14 @@ class XoopsLogger {
 	 * @access protected
 	 */
 	function sanitizePath( $path ) {
-		$path = str_replace( 
+		$path = str_replace(
 			array( '\\', XOOPS_ROOT_PATH, str_replace( '\\', '/', realpath( XOOPS_ROOT_PATH ) ) ),
 			array( '/', '', '' ),
 			$path
-		);		
+		);
 		return $path;
 	}
-	
+
 	/**
 	 * Output buffering callback inserting logger dump in page output
 	 */
@@ -191,7 +201,7 @@ class XoopsLogger {
 			return $output;
 		}
 		$this->renderingEnabled = $this->activated = false;
-		
+
 		$log = $this->dump( $this->usePopup ? 'popup' : '' );
 
 		$pattern = '<!--{xo-logger-output}-->';

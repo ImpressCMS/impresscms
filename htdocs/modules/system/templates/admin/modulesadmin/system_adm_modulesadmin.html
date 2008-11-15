@@ -12,8 +12,8 @@
   </tr>
   <{foreach item=module from=$modules}>
     <tr valign='middle'class="<{cycle values="even,odd"}>">
-      <td align="left" valign="middle">
-        <div id="modlogo" style="padding: 2px;">
+      <td align="<{$smarty.const._GLOBAL_LEFT}>" valign="middle">
+        <div id="modlogo" style="float: <{$smarty.const._GLOBAL_LEFT}>; padding: 2px;">
           <{if $module.hasadmin == 1 && $module.isactive == '1'}>
             <a href="<{$xoops_url}>/modules/<{$module.dirname}>/<{$module.adminindex}>">
               <img src="<{$xoops_url}>/modules/<{$module.dirname}>/<{$module.image}>" alt="<{$module.name}>" title="<{$module.name}>" border="0" />
@@ -22,7 +22,7 @@
             <img src="<{$xoops_url}>/modules/<{$module.dirname}>/<{$module.image}>" alt="<{$module.name}>" title="<{$module.name}>" border="0" />
           <{/if}>&nbsp;
         </div>
-        <div id="modlogo" style="padding-top: 2px;">
+        <div id="modlogo" style="float: <{$smarty.const._GLOBAL_LEFT}>; padding-top: 2px;">
           <b><{$lang_modulename}>: </b><{$module.name}><br />
           <b><{$lang_moduletitle}>: </b><input type="text" name="newname[<{$module.mid}>]" value="<{$module.title}>" maxlength="150" size="30" />
         </div>

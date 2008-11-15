@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="<{$xoops_langcode}>" xml:lang="<{$xoops_langcode}>">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="<{$icms_langcode}>" xml:lang="<{$icms_langcode}>">
 <head>
 <!-- Center block custom positioning -->
 	<{* Center blocks display order
@@ -12,14 +12,14 @@
 	<{assign var=theme_name value=$xoTheme->folderName}>
 
 <!-- Title and meta -->
-	<title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
-	<meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />
-	<meta name="robots" content="<{$xoops_meta_robots}>" />
-	<meta name="keywords" content="<{$xoops_meta_keywords}>" />
-	<meta name="description" content="<{$xoops_meta_description}>" />
-	<meta name="rating" content="<{$xoops_meta_rating}>" />
-	<meta name="author" content="<{$xoops_meta_author}>" />
-	<meta name="copyright" content="<{$xoops_meta_copyright}>" />
+	<title><{if $icms_pagetitle !=''}><{$icms_pagetitle}> : <{/if}><{$icms_sitename}></title>
+	<meta http-equiv="content-type" content="text/html; charset=<{$icms_charset}>" />
+	<meta name="robots" content="<{$icms_meta_robots}>" />
+	<meta name="keywords" content="<{$icms_meta_keywords}>" />
+	<meta name="description" content="<{$icms_meta_description}>" />
+	<meta name="rating" content="<{$icms_meta_rating}>" />
+	<meta name="author" content="<{$icms_meta_author}>" />
+	<meta name="copyright" content="<{$icms_meta_copyright}>" />
 	<meta name="generator" content="ImpressCMS" />
 
 <!-- Favicon -->
@@ -27,13 +27,13 @@
 	<link rel="icon" type="image/png" href="<{xoImgUrl icons/icon.png}>" />
 
 <!-- Sheet Css -->
-	<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoImgUrl  /style.css}>" />
+	<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$icms_themecss}>" />
 
 <!-- Module Header -->
-<{$xoops_module_header}>
+<{$icms_module_header}>
 </head>
 
-<body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
+<body id="<{$icms_dirname}>" class="<{$icms_langcode}>">
 <{if $xoBlocks.canvas_left and $xoBlocks.canvas_right}>
 <{assign var=columns_layout value='threecolumns-layout'}>
 <{elseif $xoBlocks.canvas_left}>
@@ -44,8 +44,8 @@
 <div id="icms-canvas"<{if $columns_layout}> class="<{$columns_layout}>"<{/if}>>
 	<!-- Header -->
     <div id="icms-header">
-	    <div id="icms-headerlogo"><a href="<{xoAppUrl /}>" title=""><img src="<{xoImgUrl img/logo.png}>" alt="<{$xoops_sitename}>" /></a></div>
-	    <div id="icms-headerbanner"><{$xoops_banner}></div>
+	    <div id="icms-headerlogo"><a href="<{xoAppUrl /}>" title=""><img src="<{xoImgUrl img/logo.png}>" alt="<{$icms_sitename}>" /></a></div>
+	    <div id="icms-headerbanner"><{$icms_banner}></div>
     </div>
 	<!-- Header menu (optional) -->
 	<div id="icms-globalnav">
@@ -62,10 +62,18 @@
 	<div id="icms-canvas-content">
 		<div id="icms-canvas-columns">
 			<!-- Left column -->
+				<{if $icms_rtl}>
+			<{if $xoBlocks.canvas_right}>
+			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_right
+				zoneClass='icms-canvas-column' zoneId='icms-canvas-rightcolumn'
+			}>
+			<{/if}>
+			<{else}>
 			<{if $xoBlocks.canvas_left}>
 			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_left
 				zoneClass='icms-canvas-column' zoneId='icms-canvas-leftcolumn'
 			}>
+				<{/if}>
 			<{/if}>
 			<!-- Center column / page -->
 			<div id="icms-page">
@@ -78,8 +86,8 @@
 				</div>
 				<{/if}>
 				<!-- Module content -->
-				<{if $xoops_contents}>
-				<div id="icms-content"><{$xoops_contents}></div>
+				<{if $icms_contents}>
+				<div id="icms-content"><{$icms_contents}></div>
 				<{/if}>
 				<!-- Bottom blocks -->
 				<{if $xoBlocks.page_bottomleft or $xoBlocks.page_bottomcenter or $xoBlocks.page_bottomright}>
@@ -91,16 +99,24 @@
 				<{/if}>
 			</div>
 			<!-- Right column -->
+				<{if $icms_rtl}>
+			<{if $xoBlocks.canvas_left}>
+			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_left
+				zoneClass='icms-canvas-column' zoneId='icms-canvas-leftcolumn'
+			}>
+				<{/if}>
+			<{else}>
 			<{if $xoBlocks.canvas_right}>
 			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_right
 				zoneClass='icms-canvas-column' zoneId='icms-canvas-rightcolumn'
 			}>
 			<{/if}>
+			<{/if}>
 		</div>
 	</div>
 	<!-- Footer -->
 	<div id="icms-footer">
-		<{$xoops_footer}>
+		<{$icms_footer}>
 	</div>
 </div>
 

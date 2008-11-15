@@ -41,7 +41,7 @@ function RankForumAdmin()
     //echo "<h4 style='text-align:left;'>"._AM_RANKSSETTINGS."</h4>;
     echo "<table width='100%' class='outer' cellpadding='4' cellspacing='1'>
     <tr align='center'>
-    <th align='left'>"._AM_TITLE."</th>
+    <th align='"._GLOBAL_LEFT."'>"._AM_TITLE."</th>
     <th>"._AM_MINPOST."</th>
     <th>"._AM_MAXPOST."</th>
     <th>"._AM_IMAGE."</th>
@@ -56,7 +56,7 @@ function RankForumAdmin()
             $class = 'odd';
         }
         echo "<tr class='$class' align='center'>
-        <td align='left'>".$rank['rank_title']."</td>
+        <td align='"._GLOBAL_LEFT."'>".$rank['rank_title']."</td>
         <td>".icms_conv_nr2local($rank['rank_min'])."</td>
         <td>".icms_conv_nr2local($rank['rank_max'])."</td>
         <td>";

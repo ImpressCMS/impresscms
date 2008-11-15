@@ -104,7 +104,7 @@ $reg_form->addElement(new XoopsFormHidden("salt", $myts->htmlSpecialChars($salt)
 $reg_form->addElement(new XoopsFormHidden("enc_type", intval($enc_type)));
 $reg_form->addElement(new XoopsFormHidden("actkey", $myts->htmlSpecialChars($actkey)));
 	if ($xoopsConfigUser['use_captcha'] == 1) {
-	$reg_form->addElement(new XoopsFormCaptcha(_SECURITYIMAGE_GETCODE, "scode"));
+	$reg_form->addElement(new IcmsFormCaptcha(_SECURITYIMAGE_GETCODE, "scode"));
 	$reg_form->addElement(new XoopsFormHidden("op", "finish"));
 } else {
 	$reg_form->addElement(new XoopsFormHidden("op", "newuser"));

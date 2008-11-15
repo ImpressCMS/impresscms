@@ -48,6 +48,15 @@ function xoops_module_update_system(&$module) {
 	 * of the new dbversion field we have added in the modules table. However, starting with release after 1.1, all
 	 * upgrade scripts will be added here. Doing so, only the System module will need to be updated by webmaster.
 	 */
+
+	 /**
+	  * DEVELOPPER, PLEASE NOTE !!!
+	  *
+	  * Everytime we add a new upgrade block here, the dbversion of the System Module will get
+	  * incremented. It is very important to modify the ICMS_SYSTEM_DBVERSION accordingly
+	  * in htdocs/include/version.php
+	  */
+
     $newDbVersion = 1;
 
     if ($dbVersion <= $newDbVersion) {
@@ -277,7 +286,7 @@ function xoops_module_update_system(&$module) {
 		}
 
 	}
-	
+
   $newDbVersion = 8;
 
   if($dbVersion < $newDbVersion) {
@@ -296,7 +305,7 @@ function xoops_module_update_system(&$module) {
   if($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
      $table = new IcmsDatabasetable('users');
-      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))",'Successfully altered the index unamepass on table users','');      
+      $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))",'Successfully altered the index unamepass on table users','');
       $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY pass_expired tinyint(1) unsigned NOT NULL default 0",'Successfully altered field pass_expired in table users','');
 	unset($table);
 	}
@@ -304,9 +313,9 @@ function xoops_module_update_system(&$module) {
     $newDbVersion = 10;
   if($dbVersion < $newDbVersion) {
     echo "Database migrate to version " . $newDbVersion . "<br />";
- 
+
         $db = $GLOBALS['xoopsDB'];
- 
+
         if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_social_bookmarks"') == 0) {
 		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_social_bookmarks'";
 		$result = $db->query($sql);
@@ -314,7 +323,7 @@ function xoops_module_update_system(&$module) {
 		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 1);");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
- 
+
         if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_show"') == 0) {
 		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_show'";
 		$result = $db->query($sql);
@@ -322,7 +331,7 @@ function xoops_module_update_system(&$module) {
 		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
- 
+
         if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_menu_show"') == 0) {
 		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_menu_show'";
 		$result = $db->query($sql);
@@ -330,7 +339,7 @@ function xoops_module_update_system(&$module) {
 		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
         }
- 
+
         if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_relmenu_show"') == 0) {
 		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_relmenu_show'";
 		$result = $db->query($sql);
@@ -348,7 +357,64 @@ function xoops_module_update_system(&$module) {
 		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 3, 1, 'group_manager');");
 
         }
-  
+
+    $newDbVersion = 11;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+        $db = $GLOBALS['xoopsDB'];
+        if (getDbValue($db, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"') == 0) {
+		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('11','_MD_AM_CAPTCHA')");
+		}
+	    // Adding new function of Captcha
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', 1);
+            $config_id = $db->getInsertId();
+
+            $sql = "INSERT INTO " . $db->prefix('configoption') .
+                    " (confop_id, confop_name, confop_value, conf_id)" .
+                    " VALUES" .
+                    " (NULL, '_MD_AM_CAPTCHA_OFF', 'none', {$config_id})," .
+                    " (NULL, '_MD_AM_CAPTCHA_IMG', 'image', {$config_id})," .
+                    " (NULL, '_MD_AM_CAPTCHA_TXT', 'text', {$config_id})";
+            if (!$db->queryF( $sql )) {
+                return false;
+            }
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', 2);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', 3);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', '', '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textarea', 'array', 4);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_maxattempt', '_MD_AM_CAPTCHA_MAXATTEMP', '8', '_MD_AM_CAPTCHA_MAXATTEMPDSC', 'textbox', 'int', 5);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_num_chars', '_MD_AM_CAPTCHA_NUMCHARS', '4', '_MD_AM_CAPTCHA_NUMCHARSDSC', 'textbox', 'int', 6);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_fontsize_min', '_MD_AM_CAPTCHA_FONTMIN', '10', '_MD_AM_CAPTCHA_FONTMINDSC', 'textbox', 'int', 7);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_fontsize_max', '_MD_AM_CAPTCHA_FONTMAX', '12', '_MD_AM_CAPTCHA_FONTMAXDSC', 'textbox', 'int', 8);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_background_type', '_MD_AM_CAPTCHA_BGTYPE', '100', '_MD_AM_CAPTCHA_BGTYPEDSC', 'select', 'text', 9);
+            $config_id = $db->getInsertId();
+
+            $sql2 = "INSERT INTO " . $db->prefix('configoption') .
+                    " (confop_id, confop_name, confop_value, conf_id)" .
+                    " VALUES" .
+                    " (NULL, '_MD_AM_BAR', '0', {$config_id})," .
+                    " (NULL, '_MD_AM_CIRCLE', '1', {$config_id})," .
+                    " (NULL, '_MD_AM_LINE', '2', {$config_id})," .
+                    " (NULL, '_MD_AM_RECTANGLE', '3', {$config_id})," .
+                    " (NULL, '_MD_AM_ELLIPSE', '4', {$config_id})," .
+                    " (NULL, '_MD_AM_POLYGON', '5', {$config_id})," .
+                    " (NULL, '_MD_AM_RANDOM', '100', {$config_id})";
+            if (!$db->queryF( $sql2 )) {
+                return false;
+            }
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_background_num', '_MD_AM_CAPTCHA_BGNUM', '50', '_MD_AM_CAPTCHA_BGNUMDSC', 'textbox', 'int', 10);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_polygon_point', '_MD_AM_CAPTCHA_POLPNT', '3', '_MD_AM_CAPTCHA_POLPNTDSC', 'textbox', 'int', 11);
+
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_unames'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_emails'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'meta_keywords'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'meta_description'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'censor_words'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'ldap_users_bypass'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'ldap_field_mapping'");
+
+	}
+
  
     $newDbVersion = 11;
 
@@ -425,6 +491,15 @@ function xoops_module_update_system(&$module) {
 	}
 
 	echo "</code>";
+
+	 /**
+	  * DEVELOPPER, PLEASE NOTE !!!
+	  *
+	  * Everytime we add a new upgrade block here, the dbversion of the System Module will get
+	  * incremented. It is very important to modify the ICMS_SYSTEM_DBVERSION accordingly
+	  * in htdocs/include/version.php
+	  */
+
 
    $feedback = ob_get_clean();
     if (method_exists($module, "setMessage")) {

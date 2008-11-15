@@ -51,7 +51,7 @@ if ( $op == "confirm" ) {
         xoops_cp_footer();
         exit();
     }
-    echo "<h4 style='text-align:left;'>"._MD_AM_PCMFM."</h4>
+    echo "<h4 style='text-align:"._GLOBAL_LEFT.";'>"._MD_AM_PCMFM."</h4>
     <form action='admin.php' method='post'>
     <input type='hidden' name='fct' value='modulesadmin' />
     <input type='hidden' name='op' value='submit' />

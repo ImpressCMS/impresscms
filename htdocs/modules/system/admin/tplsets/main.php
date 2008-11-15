@@ -60,7 +60,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             $tplsetname = $tplsets[$i]->getVar('tplset_name');
             $installed_themes[] = $tplsetname;
             $class = ($class == 'even') ? 'odd' : 'even';
-            echo '<tr class="'.$class.'" align="center"><td class="head">'.$tplsetname.'<br /><br /><span style="font-weight:normal;">'.$tplsets[$i]->getVar('tplset_desc').'</span></td><td>'.formatTimestamp($tplsets[$i]->getVar('tplset_created'), 's').'</td><td align="left"><ul>';
+            echo '<tr class="'.$class.'" align="center"><td class="head">'.$tplsetname.'<br /><br /><span style="font-weight:normal;">'.$tplsets[$i]->getVar('tplset_desc').'</span></td><td>'.formatTimestamp($tplsets[$i]->getVar('tplset_created'), 's').'</td><td align="'._GLOBAL_LEFT.'"><ul>';
             $tplstats = $tpltpl_handler->getModuleTplCount($tplsetname);
             if (count($tplstats) > 0) {
                 $module_handler =& xoops_gethandler('module');
@@ -162,7 +162,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 } else {
                     echo '<td>'.$last_imported_f;
                 }
-                echo '</td><td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._EDIT.'</a>] [<a href="admin.php?fct=tplsets&amp;op=deletetpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._DELETE.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td><td align="right"><input type="file" name="'.$filename.'" id="'.$filename.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$filename.'" /><input type="hidden" name="old_template['.$filename.']" value="'.$templates[$i]->getVar('tpl_id').'" /></td>';
+                echo '</td><td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._EDIT.'</a>] [<a href="admin.php?fct=tplsets&amp;op=deletetpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._DELETE.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td><td align="'._GLOBAL_RIGHT.'"><input type="file" name="'.$filename.'" id="'.$filename.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$filename.'" /><input type="hidden" name="old_template['.$filename.']" value="'.$templates[$i]->getVar('tpl_id').'" /></td>';
             } else {
                 echo '<td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._MD_VIEW.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td>';
             }
@@ -182,7 +182,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                     } else {
                         echo '&nbsp;';
                     }
-                    echo '</td><td style="background-color:#FFFF99; padding: 5px;">[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=generatetpl&amp;type=module&amp;file='.urlencode($nfile).'">'._MD_GENERATE.'</a>]</td><td style="background-color:#FFFF99; padding: 5px; text-align:right;"><input type="file" name="'.$nfile.'" id="'.$nfile.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$nfile.'" /></td></tr>'."\n";
+                    echo '</td><td style="background-color:#FFFF99; padding: 5px;">[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=generatetpl&amp;type=module&amp;file='.urlencode($nfile).'">'._MD_GENERATE.'</a>]</td><td style="background-color:#FFFF99; padding: 5px; text-align:'._GLOBAL_RIGHT.';"><input type="file" name="'.$nfile.'" id="'.$nfile.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$nfile.'" /></td></tr>'."\n";
                 }
             }
         }
@@ -223,7 +223,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 } else {
                     echo '<td>'.$last_imported_f;
                 }
-                echo '</td><td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._EDIT.'</a>] [<a href="admin.php?fct=tplsets&amp;op=deletetpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._DELETE.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td><td align="right"><input type="file" name="'.$filename.'" id="'.$filename.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$filename.'" /><input type="hidden" name="old_template['.$filename.']" value="'.$btemplates[$j]->getVar('tpl_id').'" /></td>';
+                echo '</td><td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._EDIT.'</a>] [<a href="admin.php?fct=tplsets&amp;op=deletetpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._DELETE.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td><td align="'._GLOBAL_RIGHT.'"><input type="file" name="'.$filename.'" id="'.$filename.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$filename.'" /><input type="hidden" name="old_template['.$filename.']" value="'.$btemplates[$j]->getVar('tpl_id').'" /></td>';
             } else {
                 echo '<td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._MD_VIEW.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td>';
             }
@@ -242,13 +242,13 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                     } else {
                         echo '&nbsp;';
                     }
-                    echo '</td><td style="background-color:#FFFF99; padding: 5px;">[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=generatetpl&amp;type=block&amp;file='.urlencode($nfile).'">'._MD_GENERATE.'</a>]</td><td style="background-color:#FFFF99; padding: 5px; text-align: right"><input type="file" name="'.$nfile.'" id="'.$nfile.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$nfile.'" /></td></tr>'."\n";
+                    echo '</td><td style="background-color:#FFFF99; padding: 5px;">[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=generatetpl&amp;type=block&amp;file='.urlencode($nfile).'">'._MD_GENERATE.'</a>]</td><td style="background-color:#FFFF99; padding: 5px; text-align: '._GLOBAL_RIGHT.'"><input type="file" name="'.$nfile.'" id="'.$nfile.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$nfile.'" /></td></tr>'."\n";
                 }
             }
         }
         echo '</table>';
         if ($tplset != 'default') {
-            echo '<div style="text-align: right; margin-top: 5px;"><input type="hidden" name="fct" value="tplsets" /><input type="hidden" name="op" value="update" />'.$GLOBALS['xoopsSecurity']->getTokenHTML().'<input type="hidden" name="moddir" value="'.$moddir.'" /><input type="hidden" name="tplset" value="'.$tplset.'" /><input type="submit" value="'._MD_UPLOAD.'" /></div></form>';
+            echo '<div style="text-align: '._GLOBAL_RIGHT.'; margin-top: 5px;"><input type="hidden" name="fct" value="tplsets" /><input type="hidden" name="op" value="update" />'.$GLOBALS['xoopsSecurity']->getTokenHTML().'<input type="hidden" name="moddir" value="'.$moddir.'" /><input type="hidden" name="tplset" value="'.$tplset.'" /><input type="submit" value="'._MD_UPLOAD.'" /></div></form>';
         }
         xoops_cp_footer();
         break;

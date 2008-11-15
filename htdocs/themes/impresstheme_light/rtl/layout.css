@@ -1,24 +1,21 @@
 /* ---------- Canvas rules ---------- */
 
 #icms-canvas {
-	margin: 0;
-	width: 90%;
+	min-width: 850px;
+	width: 98%;
 	margin: 10px auto 0px;
 }
 
 #icms-canvas-content {}
 
 #icms-canvas-columns {
-	margin:			0px 10px;
-	padding-right:	4px;
-	margin-top:		12px;
+	margin:		12px 0px 0px 24px;
 }
 
 #icms-canvas-leftcolumn {
 	float:			right;
 	width:			170px;
-	padding-left:	5px;
-	margin-right:	-180px;
+	margin-right:	-170px;
 }
 
 * html #icms-canvas-leftcolumn {
@@ -46,7 +43,7 @@
 
 #icms-page {
 	float:			left;
-	width:			100%;
+	width:			97%;
 }
 
 /* ------- Top and bottom zones (2 columns) ------- */
@@ -56,7 +53,7 @@
 	width:			48%;
 	margin-left:	1%;
 	margin-right:	1%;
-	padding:		0px;
+	padding:			0px;
 }
 #icms-page-toprightblocks, #icms-page-bottomrightblocks {
 	float:			right;
@@ -92,5 +89,5 @@
 
 #icms-content {	
 	position:		relative;
-	clear: both;
+	clear: 			none;
 }

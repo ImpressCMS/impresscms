@@ -1,11 +1,11 @@
 <div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/blocksadmin/images/blocksadmin_big.png)"><{$lang_badmin}></div><br />
-<div style="float:left;">
+<div style="float:<{$smarty.const._GLOBAL_LEFT}>;">
   <form action="admin.php" method="get">
   <{$selmod}> <{$lang_group}>:<{$selgrp}> <{$lang_visible}>:<{$selvis}> <input type='submit' name='submit' value='<{$lang_go}>' />
   </form>
 </div>
 <form action='admin.php' name='blockadmin' method='post'>
-<div align="right" style="margin-bottom:5px;">
+<div align="<{$smarty.const._GLOBAL_RIGHT}>" style="margin-bottom:5px;">
   <input type="button" onclick="icms_showDiv('new','','hiddendiv'); return false;" value="<{$lang_addnew}>" />
   <input type="button" onclick="window.location.href='admin.php?fct=blockspadmin';" value="<{$lang_bpadmin}>" />
 </div>
@@ -21,9 +21,9 @@
   </tr>
   <{foreach item=block from=$blocks}>
     <tr valign='middle'class="<{cycle values="even,odd"}>">
-      <td align="left" valign="middle"><{$block.name}></td>
-      <td align="left" valign="middle"><{$block.title}></td>
-      <td align="left" valign="middle"><{$block.module}></td>
+      <td align="<{$smarty.const._GLOBAL_LEFT}>" valign="middle"><{$block.name}></td>
+      <td align="<{$smarty.const._GLOBAL_LEFT}>" valign="middle"><{$block.title}></td>
+      <td align="<{$smarty.const._GLOBAL_LEFT}>" valign="middle"><{$block.module}></td>
       <td align='center' valign="middle"><{$block.sidef}></td>
       <td align='center' valign="middle"><{$block.weightf}></td>
       <td align='center' valign="middle"><a href="admin.php?fct=blocksadmin&op=changestatus&bid=<{$block.bid}>&sts=<{$block.visible}>"><img src="images/<{$block.visible}>.png" title="<{$lang_changests}>" alt="<{$lang_changests}>" /></a></td>
@@ -42,7 +42,7 @@
     </tr>
   <{/foreach}>
 </table>
-<div align="right" style="margin-top:5px;">
+<div align="<{$smarty.const._GLOBAL_RIGHT}>" style="margin-top:5px;">
   <input type='submit' name='submit' value='<{$lang_submit}>' />
   <input type="button" onclick="icms_showDiv('new','','hiddendiv'); return false;" value="<{$lang_addnew}>" />
   <input type="button" onclick="window.location.href='admin.php?fct=blockspadmin';" value="<{$lang_bpadmin}>" />

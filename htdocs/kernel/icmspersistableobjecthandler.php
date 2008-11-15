@@ -583,6 +583,19 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
     	}
     }
 
+    /**
+     * Build an array containing all the ids of an array of objects as array
+     *
+     * @param array $objectsAsArray array of IcmsPersistableObject
+     */
+    function getIdsFromObjectsAsArray($objectsAsArray) {
+    	$ret = array();
+    	foreach($objectsAsArray as $array) {
+    		$ret[] = $array[$this->keyName];
+    	}
+    	return $ret;
+    }
+
     function getPermissions() {
     	return $this->permissionsArray;
     }

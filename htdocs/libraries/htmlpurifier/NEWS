@@ -9,6 +9,77 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
     . Internal change
 ==========================
 
+3.2.0, released 2008-10-31
+# Using %Core.CollectErrors forces line number/column tracking on, whereas
+  previously you could theoretically turn it off.
+# HTMLPurifier_Injector->notifyEnd() is formally deprecated. Please
+  use handleEnd() instead.
+! %Output.AttrSort for when you need your attributes in alphabetical order to
+  deal with a bug in FCKEditor. Requested by frank farmer.
+! Enable HTML comments when %HTML.Trusted is on. Requested by Waldo Jaquith.
+! Proper support for name attribute. It is now allowed and equivalent to the id
+  attribute in a and img tags, and is only converted to id when %HTML.TidyLevel 
+  is heavy (for all doctypes).
+! %AutoFormat.RemoveEmpty to remove some empty tags from documents. Please don't
+  use on hand-written HTML.
+! Add error-cases for unsupported elements in MakeWellFormed. This enables
+  the strategy to be used, standalone, on untrusted input.
+! %Core.AggressivelyFixLt is on by default. This causes more sensible
+  processing of left angled brackets in smileys and other whatnot.
+! Test scripts now have a 'type' parameter, which lets you say 'htmlpurifier',
+  'phpt', 'vtest', etc. in order to only execute those tests. This supercedes
+  the --only-phpt parameter, although for backwards-compatibility the flag
+  will still work. 
+! AutoParagraph auto-formatter will now preserve double-newlines upon output.
+  Users who are not performing inbound filtering, this may seem a little
+  useless, but as a bonus, the test suite and handling of edge cases is also
+  improved.
+! Experimental implementation of forms for %HTML.Trusted
+! Track column numbers when maintain line numbers is on
+! Proprietary 'background' attribute on table-related elements converted into
+  corresponding CSS.  Thanks Fusemail for sponsoring this feature!
+! Add forward(), forwardUntilEndToken(), backward() and current() to Injector
+  supertype.
+! HTMLPurifier_Injector->handleEnd() permits modification to end tokens. The
+  time of operation varies slightly from notifyEnd() as *all* end tokens are
+  processed by the injector before they are subject to the well-formedness rules.
+! %Attr.DefaultImageAlt allows overriding default behavior of setting alt to
+  basename of image when not present.
+! %AutoFormat.DisplayLinkURI neuters <a> tags into plain text URLs.
+- Fix two bugs in %URI.MakeAbsolute; one involving empty paths in base URLs,
+  the other involving an undefined $is_folder error.
+- Throw error when %Core.Encoding is set to a spurious value. Previously,
+  this errored silently and returned false.
+- Redirected stderr to stdout for flush error output.
+- %URI.DisableExternal will now use the host in %URI.Base if %URI.Host is not
+  available.
+- Do not re-munge URL if the output URL has the same host as the input URL.
+  Requested by Chris.
+- Fix error in documentation regarding %Filter.ExtractStyleBlocks
+- Prevent <![CDATA[<body></body>]]> from triggering %Core.ConvertDocumentToFragment
+- Fix bug with inline elements in blockquotes conflicting with strict doctype
+- Detect if HTML support is disabled for DOM by checking for loadHTML() method.
+- Fix bug where dots and double-dots in absolute URLs without hostname were
+  not collapsed by URIFilter_MakeAbsolute.
+- Fix bug with anonymous modules operating on SafeEmbed or SafeObject elements
+  by reordering their addition.
+- Will now throw exception on many error conditions during lexer creation; also
+  throw an exception when MaintainLineNumbers is true, but a non-tracksLineNumbers
+  is being used.
+- Detect if domxml extension is loaded, and use DirectLEx accordingly.
+- Improve handling of big numbers with floating point arithmetic in UnitConverter.
+  Reported by David Morton.
+. Strategy_MakeWellFormed now operates in-place, saving memory and allowing
+  for more interesting filter-backtracking
+. New HTMLPurifier_Injector->rewind() functionality, allows injectors to rewind
+  index to reprocess tokens.
+. StringHashParser now allows for multiline sections with "empty" content; 
+  previously the section would remain undefined.
+. Added --quick option to multitest.php, which tests only the most recent
+  release for each series.
+. Added --distro option to multitest.php, which accepts either 'normal' or
+  'standalone'. This supercedes --exclude-normal and --exclude-standalone
+
 3.1.1, released 2008-06-19
 # %URI.Munge now, by default, does not munge resources (for example, <img src="">)
   In order to enable this again, please set %URI.MungeResources to true. 

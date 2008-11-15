@@ -20,7 +20,7 @@ function showDiv(type,id){
     <th><{$lang_bp_bpname}></th>
     <th><{$lang_bp_bptitle}></th>
     <th width='30%'><{$lang_bp_bpdesc}></th>
-    <th align='right' width='12%'><{$lang_bp_bpaction}></th>
+    <th align='<{$smarty.const._GLOBAL_RIGHT}>' width='12%'><{$lang_bp_bpaction}></th>
   </tr>
   <{foreach item=oldzone key=key from=$oldzones}>
     <tr class="<{cycle values="even,odd"}>">
@@ -28,7 +28,7 @@ function showDiv(type,id){
       <td><{$oldzone.pname}></td>
       <td><{$oldzone.title}></td>
       <td><{$oldzone.description}></td>
-      <td align="right">
+      <td align="<{$smarty.const._GLOBAL_RIGHT}>">
         <{if !$oldzone.block_default}>
           <a href="admin.php?fct=blockspadmin&op=edit&pbid=<{$key}>"><img src="images/edit_big.png" title="<{$lang_bp_bpedit}>" alt="<{$lang_bp_bpedit}>" /></a>
           <a href="admin.php?fct=blockspadmin&op=delete&pbid=<{$key}>"><img src="images/delete_big.png" title="<{$lang_bp_bpdelete}>" alt="<{$lang_bp_bpdelete}>" /></a>
@@ -37,7 +37,7 @@ function showDiv(type,id){
     </tr>
   <{/foreach}>
   <tr>
-    <td class="head" colspan="5" align="right">
+    <td class="head" colspan="5" align="<{$smarty.const._GLOBAL_RIGHT}>">
       <input type="button" onclick="icms_showDiv('addbposform','','hiddendiv'); return false;" value="<{$lang_cont_addcont}>" />
     </td>
   </tr>

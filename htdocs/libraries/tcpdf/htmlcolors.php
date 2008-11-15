@@ -2,8 +2,8 @@
 //============================================================+
 // File name   : htmlcolors.php
 // Begin       : 2002-04-09
-// Last Update : 2008-04-01
-// Version     : 1.0.000
+// Last Update : 2008-10-23
+// Version     : 1.0.001
 // License     : GNU LGPL (http://www.gnu.org/copyleft/lesser.html)
 // 	----------------------------------------------------------------------------
 //  Copyright (C) 2002-2008  Nicola Asuni - Tecnick.com S.r.l.
@@ -51,6 +51,7 @@
 /**
  * Array of WEB safe colors
  */
+global $webcolor;
 $webcolor = array (
 "aliceblue" => "f0f8ff",
 "antiquewhite" => "faebd7",

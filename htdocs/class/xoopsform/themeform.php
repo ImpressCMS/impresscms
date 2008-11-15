@@ -101,7 +101,7 @@ class XoopsThemeForm extends XoopsForm
 			if (!is_object($ele)) {
 				$ret .= $ele;
 			} elseif ( !$ele->isHidden() ) {
-				$ret .= "<tr valign='top' align='left'><td class='head'>";
+				$ret .= "<tr valign='top' align='"._GLOBAL_LEFT."'><td class='head'>";
 				if ( ($caption = $ele->getCaption()) != '' ) {
 				    $ret .=
 				        "<div class='xoops-form-element-caption" . ($ele->isRequired() ? "-required" : "" ) . "'>".

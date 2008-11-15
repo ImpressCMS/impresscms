@@ -48,13 +48,13 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	* Extended HTML editor definition
 	*
 	* Set this property value if you want the editor to delegate rendering to an external class.
-	* 
+	*
 	* Note: this functionality is experimental, but feedback is welcome.
 	* Note: the PM window doesn't use XoopsFormDhtmlTextArea, so no need to report it doesn't work here
-	* 
+	*
 	* array( 'bundleId' ): For XOS components (2.3+)
 	* array( 'className', 'classPath' ):  To create an instance of "className", declared in the file ICMS_ROOT_PATH . $classPath
-	* 
+	*
 	* Example:
 	* $htmlEditor = array( 'XoopsFormTinyeditorTextArea', '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php' );
 	*/
@@ -84,24 +84,24 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		global $xoopsConfig, $xoopsUser,$xoopsModule;
 
 		$groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
-		$moduleid = (is_object($xoopsModule)) ? $xoopsModule->mid() : 1;
-		
+ 		$moduleid = (is_object($xoopsModule) && $name != 'com_text') ? $xoopsModule->mid() : 1;
+
 		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $xoopsConfig['editor_default']){
 			$editor_default = $options['editor'];
 		}else{
 			$editor_default = $xoopsConfig['editor_default'];
 		}
-		
+
 		$gperm_handler =& xoops_gethandler('groupperm');
-		if( file_exists( ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups)){
+		if( file_exists( ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)){
 			include(ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php");
 			$this->htmlEditor = array( $editorversion['class'], ICMS_EDITOR_PATH."/".$editorversion['dirname']."/".$editorversion['file'] );
 		}
-		
+
 		if ( !empty( $this->htmlEditor ) ) {
 			$options['name'] = $this->_name;
 			$options['value'] = $this->_value;
-			
+
 			if ( count( $this->htmlEditor ) == 1 ) {
 				$this->htmlEditor = XOS::create( $this->htmlEditor[0] );
 			} else {
@@ -171,7 +171,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		}
 		$ret .= "</select><span id='".$this->_hiddenText."'>"._EXAMPLE."</span>\n";
 		$ret .= "<br />\n";
-		$ret .= "<img onclick='javascript:xoopsmakeleft(\"".$ele_name."\", \"".htmlspecialchars(_ALLEFTCON, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/alignleft.gif' alt='alignleft' />&nbsp;"."<img onclick='javascript:xoopsmakecenter(\"".$ele_name."\", \"".htmlspecialchars(_ALCENTERCON, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/aligncenter.gif' alt='aligncenter' />&nbsp;"."<img onclick='javascript:xoopsmakeright(\"".$ele_name."\", \"".htmlspecialchars(_ALRIGHTCON, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/alignright.gif' alt='alignright' />&nbsp;"."<img onclick='javascript:setVisible(\"".$this->_hiddenText."\");makeBold(\"".$this->_hiddenText."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/bold.gif' alt='bold' />&nbsp;<img onclick='javascript:setVisible(\"".$this->_hiddenText."\");makeItalic(\"".$this->_hiddenText."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/italic.gif' alt='italic' />&nbsp;<img onclick='javascript:setVisible(\"".$this->_hiddenText."\");makeUnderline(\"".$this->_hiddenText."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/underline.gif' alt='underline' />&nbsp;<img onclick='javascript:setVisible(\"".$this->_hiddenText."\");makeLineThrough(\"".$this->_hiddenText."\");' src='".ICMS_URL."/images/linethrough.gif' alt='linethrough' onmouseover='style.cursor=\"hand\"' />&nbsp;&nbsp;<input type='text' id='".$ele_name."Addtext' size='20' />&nbsp;<input type='button' onclick='xoopsCodeText(\"".$ele_name."\", \"".$this->_hiddenText."\", \"".htmlspecialchars(_ENTERTEXTBOX, ENT_QUOTES)."\")' class='formButton' value='"._ADD."' /><br /><br /><textarea id='".$ele_name."' name='".$ele_name."' onselect=\"xoopsSavePosition('".$ele_name."');\" onclick=\"xoopsSavePosition('".$ele_name."');\" onkeyup=\"xoopsSavePosition('".$ele_name."');\" cols='".$this->getCols()."' rows='".$this->getRows()."'".$this->getExtra().">".$this->getValue()."</textarea><br />\n";
+		$ret .= "<img onclick='javascript:xoopsmake"._GLOBAL_LEFT."(\"".$ele_name."\", \"".htmlspecialchars((( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?_ALRIGHTCON:_ALLEFTCON), ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/align"._GLOBAL_LEFT.".gif' alt='align"._GLOBAL_LEFT."' />&nbsp;"."<img onclick='javascript:xoopsmakecenter(\"".$ele_name."\", \"".htmlspecialchars(_ALCENTERCON, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/aligncenter.gif' alt='aligncenter' />&nbsp;"."<img onclick='javascript:xoopsmake"._GLOBAL_RIGHT."(\"".$ele_name."\", \"".htmlspecialchars((( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?_ALLEFTCON:_ALRIGHTCON), ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/align"._GLOBAL_RIGHT.".gif' alt='align"._GLOBAL_RIGHT."' />&nbsp;"."<img onclick='javascript:setVisible(\"".$this->_hiddenText."\");makeBold(\"".$this->_hiddenText."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/bold.gif' alt='bold' />&nbsp;<img onclick='javascript:setVisible(\"".$this->_hiddenText."\");makeItalic(\"".$this->_hiddenText."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/italic.gif' alt='italic' />&nbsp;<img onclick='javascript:setVisible(\"".$this->_hiddenText."\");makeUnderline(\"".$this->_hiddenText."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/underline.gif' alt='underline' />&nbsp;<img onclick='javascript:setVisible(\"".$this->_hiddenText."\");makeLineThrough(\"".$this->_hiddenText."\");' src='".ICMS_URL."/images/linethrough.gif' alt='linethrough' onmouseover='style.cursor=\"hand\"' />&nbsp;&nbsp;<input type='text' id='".$ele_name."Addtext' size='20' />&nbsp;<input type='button' onclick='xoopsCodeText(\"".$ele_name."\", \"".$this->_hiddenText."\", \"".htmlspecialchars(_ENTERTEXTBOX, ENT_QUOTES)."\")' class='formButton' value='"._ADD."' /><br /><br /><textarea id='".$ele_name."' name='".$ele_name."' onselect=\"xoopsSavePosition('".$ele_name."');\" onclick=\"xoopsSavePosition('".$ele_name."');\" onkeyup=\"xoopsSavePosition('".$ele_name."');\" cols='".$this->getCols()."' rows='".$this->getRows()."'".$this->getExtra().">".$this->getValue()."</textarea><br />\n";
 		$ret .= $this->_renderSmileys();
 		return $ret;
 	}
@@ -189,7 +189,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 				return $this->htmlEditor->renderValidationJS();
 			}
 		}
-		return '';		
+		return '';
 	}
 
 

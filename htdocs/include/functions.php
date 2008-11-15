@@ -136,13 +136,50 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 /*
 * Function to display formatted times in user timezone
 */
-function formatTimestamp($time, $format='l', $timeoffset='')
-{
-	global $xoopsConfig, $xoopsUser;
-	$usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
-	switch(strtolower($format))
+	function formatTimestamp($time, $format = "l", $timeoffset = null)
 	{
-		case 'ds':
+	    global $xoopsConfig, $xoopsUser;
+	    
+	    $format_copy = $format;
+	    $format = strtolower($format);
+	    
+	    if ($format == "rss" || $format == "r"){
+        	$TIME_ZONE = "";
+        	if (!empty($GLOBALS['xoopsConfig']['server_TZ'])){
+				$server_TZ = abs(intval($GLOBALS['xoopsConfig']['server_TZ'] * 3600.0));
+				$prefix = ($GLOBALS['xoopsConfig']['server_TZ'] < 0) ?  " -" : " +";
+				$TIME_ZONE = $prefix.date("Hi", $server_TZ);
+			}
+			$date = gmdate("D, d M Y H:i:s", intval($time)) . $TIME_ZONE;
+			return $date;
+    	}
+	    
+	    if ( ($format == "elapse" || $format == "e") && $time < time() ) {
+			$elapse = time() - $time;
+			if ( $days = floor( $elapse / (24 * 3600) ) ) {
+				$num = $days > 1 ? sprintf(_DAYS, $days) : _DAY;
+			} elseif ( $hours = floor( ( $elapse % (24 * 3600) ) / 3600 ) ) {
+				$num = $hours > 1 ? sprintf(_HOURS, $hours) : _HOUR;
+			} elseif ( $minutes = floor( ( $elapse % 3600 ) / 60 ) ) {
+				$num = $minutes > 1 ? sprintf(_MINUTES, $minutes) : _MINUTE;
+			} else {
+				$seconds = $elapse % 60;
+				$num = $seconds > 1 ? sprintf(_SECONDS, $seconds) : _SECOND;
+			}
+			$ret = sprintf(_ELAPSE, icms_conv_nr2local($num));
+	   		return $ret;
+    	}
+    	
+    	// disable user timezone calculation and use default timezone,
+    	// for cache consideration
+    	if ($timeoffset === null) {
+	    	$timeoffset = ($xoopsConfig['default_TZ'] == '') ? '0.0' : $xoopsConfig['default_TZ'];
+    	}
+    	
+	    $usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
+	    
+	    switch ($format) {
+		case 'daynumber':
 			$datestring = 'd';
 		break;
 		case 'D':
@@ -157,7 +194,7 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		case 'H':
 			$datestring = 'H';
 		break;
-		case 'gs':
+		case 'gg':
 			$datestring = 'g';
 		break;
 		case 'G':
@@ -175,28 +212,25 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		case 'm':
 			$datestring = _MEDIUMDATESTRING;
 		break;
-		case 'ms':
+		case 'monthnr':
 			$datestring = 'm';
 		break;
 		case 'mysql':
 			$datestring = 'Y-m-d H:i:s';
 		break;
-		case 'Ml':
+		case 'month':
 			$datestring = 'M';
 		break;
 		case 'n':
 			$datestring = 'n';
 		break;
-		case 'rss':
-			$datestring = 'r';
-		break;
 		case 's':
 			$datestring = _SHORTDATESTRING;
 		break;
-		case 'ss':
+		case 'seconds':
 			$datestring = 's';
 		break;
-		case 'Sl':
+		case 'suffix':
 			$datestring = 'S';
 		break;
 		case 't':
@@ -205,19 +239,58 @@ function formatTimestamp($time, $format='l', $timeoffset='')
 		case 'w':
 			$datestring = 'w';
 		break;
-		case 'ys':
+		case 'shortyear':
 			$datestring = 'y';
 		break;
 		case 'Y':
 			$datestring = 'Y';
 		break;
-		default:
-			if($format != '') {$datestring = $format;}
-			else {$datestring = _DATESTRING;}
-		break;
+        case 'c':
+        case 'custom':
+		    static $current_timestamp, $today_timestamp, $monthy_timestamp;
+        	if (!isset($current_timestamp)) {
+		    	$current_timestamp = xoops_getUserTimestamp(time(), $timeoffset);
+	    	}
+	    	if (!isset($today_timestamp)) {
+		    	$today_timestamp = mktime(0, 0, 0, date("m", $current_timestamp), date("d", $current_timestamp), date("Y", $current_timestamp));
+	    	}
+	    	
+	        if ( abs($elapse_today = $usertimestamp - $today_timestamp) < 24*60*60) {
+				$datestring = ($elapse_today > 0) ? _TODAY : _YESTERDAY;
+			} else {
+		    	if (!isset($monthy_timestamp)) {
+			    	$monthy_timestamp[0] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp));
+			    	$monthy_timestamp[1] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp) + 1);
+		    	}
+		        if ($usertimestamp >= $monthy_timestamp[0] && $usertimestamp < $monthy_timestamp[1]) {
+					$datestring = _MONTHDAY;
+				} else{
+					$datestring = _YEARMONTHDAY;
+				}
+			}
+	        break;
+	        
+        default:
+	        if ($format != '') {
+	            $datestring = $format_copy;
+	        } else {
+	            $datestring = _DATESTRING;
+	        }
+	        break;
+	    }
+	    
+	$basecheck = $xoopsConfig['use_ext_date'] == 1 && $format != 'mysql';
+	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php'))
+	{
+		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
+		return ucfirst(local_date($datestring,$usertimestamp));
+	}elseif ($basecheck && $xoopsConfig['language'] != 'persian'){
+		return ucfirst(ext_date($datestring,$usertimestamp));
+	}elseif ($basecheck && $xoopsConfig['language'] == 'persian'){
+		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
+	}else{
+	return ucfirst(date($datestring,$usertimestamp));
 	}
-	//Start addition including extended date function
-return ucfirst(icmsdate($datestring,$usertimestamp));
 }
 
 /*
@@ -391,7 +464,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	if(isset($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {$theme = $_SESSION['xoopsUserTheme'];}
 
 	require_once ICMS_ROOT_PATH.'/class/template.php';
-	require_once ICMS_ROOT_PATH.'/class/theme.php';
+   	require_once ICMS_ROOT_PATH.'/class/theme.php';
 
 	$xoopsThemeFactory =& new xos_opal_ThemeFactory();
 	$xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
@@ -400,6 +473,16 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$xoopsTpl =& $xoTheme->template;
 
 	$xoopsTpl->assign(array(
+		'icms_style' => ICMS_URL."/icms".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css",
+		'icms_theme' => $theme,
+		'icms_imageurl' => XOOPS_THEME_URL.'/'.$theme.'/',
+		'icms_themecss'=> xoops_getcss($theme),
+		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
+		'icms_sitename' => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
+		'icms_slogan' => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
+		'icms_dirname' => @$xoopsModule ? $xoopsModule->getVar('dirname') : 'system',
+		'icms_banner' => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
+		'icms_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $xoopsConfig['slogan'], ENT_QUOTES),
 		'xoops_theme' => $theme,
 		'xoops_imageurl' => XOOPS_THEME_URL.'/'.$theme.'/',
 		'xoops_themecss'=> xoops_getcss($theme),
@@ -473,6 +556,18 @@ function xoops_getcss($theme = '')
 	if(stristr($uagent, 'mac')) {$str_css = 'styleMAC.css';}
 	elseif(preg_match("/MSIE ([0-9]\.[0-9]{1,2})/i", $uagent)) {$str_css = 'style.css';}
 	else {$str_css = 'styleNN.css';}
+	if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+	if(is_dir(XOOPS_THEME_PATH.'/'.$theme))
+	{
+		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/rtl/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/rtl/'.$str_css;}
+		elseif(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/rtl/style.css')) {return XOOPS_THEME_URL.'/'.$theme.'/rtl/style.css';}
+	}
+	if(is_dir(XOOPS_THEME_PATH.'/'.$theme.'/css/rtl'))
+	{
+		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/rtl/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/css/rtl/'.$str_css;}
+		elseif(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/rtl/style.css')) {return XOOPS_THEME_URL.'/'.$theme.'/css/rtl/style.css';}
+	}
+    }else{
 	if(is_dir(XOOPS_THEME_PATH.'/'.$theme))
 	{
 		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/'.$str_css;}
@@ -483,6 +578,7 @@ function xoops_getcss($theme = '')
 		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/css/'.$str_css;}
 		elseif(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/style.css')) {return XOOPS_THEME_URL.'/'.$theme.'/css/style.css';}
 	}
+    }
 	return '';
 }
 
@@ -1122,6 +1218,16 @@ function icms_html2text($document)
 }
 
 // ----- New Password System
+/**
+* This Function checks whether a users password has been expired
+*
+* @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+*
+* @since 1.1
+* @param string	$uname		The username of the account to be checked
+*
+* @return int	returns 1 if password is expired, 0 if password is ot expired.
+*/
 function icms_passExpired($uname = '')
 {
 	$db =& Database::getInstance();
@@ -1133,7 +1239,17 @@ function icms_passExpired($uname = '')
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 	return $pass_expired;
 }
-
+/**
+* This Function creates a unique random Salt Key for use with password encryptions
+* It can also be used to generate a random AlphaNumeric key sequence of any given length.
+*
+* @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+*
+* @since 1.1
+* @param string	$slength		The length of the key to produce
+*
+* @return string	returns the generated random key.
+*/
 function icms_createSalt($slength=64)
 {
 	$salt= '';
@@ -1144,7 +1260,16 @@ function icms_createSalt($slength=64)
 		$salt.= substr($base, rand() % strlen($base), 1);
     	return $salt;
 }
-
+/**
+* This Function returns the User Salt key belonging to username.
+*
+* @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+*
+* @since 1.1
+* @param string	$uname		Username to find User Salt key for..
+*
+* @return string	returns the Salt key of the user.
+*/
 function icms_getUserSaltFromUname($uname = '')
 {
 	$db =& Database::getInstance();
@@ -1156,6 +1281,16 @@ function icms_getUserSaltFromUname($uname = '')
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 	return $salt;
 }
+/**
+* This Function returns the Username of the account linked to the inputted email address
+*
+* @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+*
+* @since 1.1
+* @param string	$email		Email address to find username for.
+*
+* @return string	returns the username of the account linked to supplied email.
+*/
 function icms_getUnameFromUserEmail($email = '')
 {
 	$db =& Database::getInstance();
@@ -1168,6 +1303,20 @@ function icms_getUnameFromUserEmail($email = '')
 	return $uname;
 }
 
+/**
+* This Function is used to Encrypt User Passwords
+*
+* @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
+*
+* @since 1.1
+* @param string	$pass		plaintext password to be encrypted
+* @param string	$salt		unique user salt key used in encryption process
+* @param int		$enc_type		encryption type to use (this is required & only used when passwords are expired)
+* @param int		$reset		set to 1 if we have determined that the user password has been expired
+*							use in conjunction only with $enc_type above.
+*
+* @return string	returns the final encrypted hash of users password.
+*/
 function icms_encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
 {
 	$config_handler =& xoops_gethandler('config');
@@ -1314,13 +1463,13 @@ function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $w
 			$fullname2 = $user->getVar('name');
 			if(($name) && !empty($fullname2)) {$fullname = $user->getVar('name');}
 			if(!empty ($fullname)) {$linkeduser = "$fullname [<a href='".ICMS_URL."/userinfo.php?uid=".$userid."'>".$ts->htmlSpecialChars($username)."</a>]";}
-			else {$linkeduser = "<a href='".ICMS_URL."/userinfo.php?uid=".$userid."'>".ucwords($ts->htmlSpecialChars($username))."</a>";}
+			else {$linkeduser = "<a href='".ICMS_URL."/userinfo.php?uid=".$userid."'>".$ts->htmlSpecialChars($username)."</a>";}
 			// add contact info : email + PM
 			if($withContact)
 			{
-				$linkeduser .= '<a href="mailto:'.$user->getVar('email').'"><img style="vertical-align: middle;" src="'.ICMS_URL.'/images/icons/email.gif'.'" alt="'._US_SEND_MAIL.'" title="'._US_SEND_MAIL.'"/></a>';
+				$linkeduser .= '<a href="mailto:'.$user->getVar('email').'"><img style="vertical-align: middle;" src="'.ICMS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/email.gif'.'" alt="'._US_SEND_MAIL.'" title="'._US_SEND_MAIL.'"/></a>';
 				$js = "javascript:openWithSelfMain('".ICMS_URL.'/pmlite.php?send2=1&to_userid='.$userid."', 'pmlite',450,370);";
-				$linkeduser .= '<a href="'.$js.'"><img style="vertical-align: middle;" src="'.ICMS_URL.'/images/icons/pm.gif'.'" alt="'._US_SEND_PM.'" title="'._US_SEND_PM.'"/></a>';
+				$linkeduser .= '<a href="'.$js.'"><img style="vertical-align: middle;" src="'.ICMS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/pm.gif'.'" alt="'._US_SEND_PM.'" title="'._US_SEND_PM.'"/></a>';
 			}
 			return $linkeduser;
 		}
@@ -1386,10 +1535,14 @@ function StopXSS($text)
 	{
 		foreach($text as $k=>$t)
 		{
-			$t = preg_replace("/\(\)/si", "", $t);
-			$t = strip_tags($t);
-			$t = str_replace(array("'","\"",">","<","\\"), "", $t);
-			$text[$k] = $t;
+			if (is_array($t)) {
+				StopXSS($t);
+			} else {
+				$t = preg_replace("/\(\)/si", "", $t);
+				$t = strip_tags($t);
+				$t = str_replace(array("'","\"",">","<","\\"), "", $t);
+				$text[$k] = $t;
+			}
 		}
 	}
 	return $text;
@@ -1633,52 +1786,6 @@ function icms_escapeValue($value, $quotes = true)
 	}
 	return $value;
 }
-function Generate_PDF ($content, $doc_title, $doc_keywords){
- /*
-// Module developpers shall include this part of code everytime, it is weird but otherwise if we include these files from here, rtl won`t work.
-require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
-if(file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/pdf.php')) {
-	include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/pdf.php';
-} else {
-	include_once ICMS_ROOT_PATH.'/language/english/pdf.php';
-}
-*/
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true);
-// set document information
-$pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor(PDF_AUTHOR);
-$pdf->SetTitle($doc_title);
-$pdf->SetSubject($doc_title);
-$pdf->SetKeywords($doc_keywords);
-$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
-
-//set margins
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-//set auto page breaks
-$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); //set image scale factor
-
-$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-
-$pdf->setLanguageArray($l); //set language items
-// set font
-if ( defined("_PDF_LOCAL_FONT") && _PDF_LOCAL_FONT && file_exists(ICMS_PDF_LIB_PATH.'/fonts/'._PDF_LOCAL_FONT.'.php')
-) {
-$pdf -> SetFont(_PDF_LOCAL_FONT);
-}else{
-$pdf -> SetFont("dejavusans");
-}
-//initialize document
-$pdf->AliasNbPages();
-$pdf->AddPage();
-$pdf->writeHTML($content, true, 0);
-$Generate = $pdf->Output();
-return $Generate;
-}
-
 	function icms_cleaning_write_folders() {
 	    global $xoopsConfig;
 		$dir = array();
@@ -1699,43 +1806,538 @@ return $Generate;
 		}
 			return true;
 	}
-
-
-function icmsdate($datestring,$usertimestamp)
-{
-	global $xoopsConfig;
-	$basecheck = defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC;
-// For persian only?
-	if ($basecheck && $xoopsConfig['language'] == 'persian' && $datestring != 'mysql'){
-		include_once ICMS_ROOT_PATH.'/include/jalali.php';
-		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
-	}else{
-	return ucfirst(date($datestring,$usertimestamp));}
-}
 function icms_conv_nr2local($string)
 {
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
 	if ( $basecheck ){
-	return str_replace(
+	$string = str_replace(
 		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
 		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), $string);
-	}else{
-		return $string;
 	}
+		return $string;
 }
 function icms_conv_local2nr($string)
 {
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
 	if ( $basecheck ){
-	return str_replace(
-		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), 
-		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'), 
+	$string = str_replace(
+		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9),
+		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
 		$string);
-	}else{
-		return $string;
 	}
+		return $string;
 }
 
+function Icms_getMonthNameById($month_id) {
+	global $xoopsConfig;
+	icms_loadLanguageFile('core', 'calendar');
+	if( $xoopsConfig['use_ext_date'] == 1 && $xoopsConfig['language'] == 'persian'){
+	switch($month_id) {
+		case 1:
+			return _CAL_FARVARDIN;
+		break;
+		case 2:
+			return _CAL_ORDIBEHESHT;
+		break;
+		case 3:
+			return _CAL_KHORDAD;
+		break;
+		case 4:
+			return _CAL_TIR;
+		break;
+		case 5:
+			return _CAL_MORDAD;
+		break;
+		case 6:
+			return _CAL_SHAHRIVAR;
+		break;
+		case 7:
+			return _CAL_MEHR;
+		break;
+		case 8:
+			return _CAL_ABAN;
+		break;
+		case 9:
+			return _CAL_AZAR;
+		break;
+		case 10:
+			return _CAL_DEY;
+		break;
+		case 11:
+			return _CAL_BAHMAN;
+		break;
+		case 12:
+			return _CAL_ESFAND;
+		break;
+	}
+	}else{
+	switch($month_id) {
+		case 1:
+			return _CAL_JANUARY;
+		break;
+		case 2:
+			return _CAL_FEBRUARY;
+		break;
+		case 3:
+			return _CAL_MARCH;
+		break;
+		case 4:
+			return _CAL_APRIL;
+		break;
+		case 5:
+			return _CAL_MAY;
+		break;
+		case 6:
+			return _CAL_JUNE;
+		break;
+		case 7:
+			return _CAL_JULY;
+		break;
+		case 8:
+			return _CAL_AUGUST;
+		break;
+		case 9:
+			return _CAL_SEPTEMBER;
+		break;
+		case 10:
+			return _CAL_OCTOBER;
+		break;
+		case 11:
+			return _CAL_NOVEMBER;
+		break;
+		case 12:
+			return _CAL_DECEMBER;
+		break;
+	}
+}
+}
+/**
+ * These functions are some Persian users related functions
+ * In ImpressCMS we are trying to bring different calendar type in core, so this is the place to place them
+ * If you know other calendars, plaese contact ImpressCMS developpers to add them to core ;-)
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
+ * @copyright (C) jalali Date function by Milad Rastian (miladmovie AT yahoo DOT com)
+ * @copyright (C) 2003 FARSI PROJECTS GROUP
+ * @since		1.1.1
+ * @author		Roozbeh Pournader and Mohammad Toossi
+ * @author		jalali Date function by Milad Rastian (miladmovie AT yahoo DOT com)
+ * @author		FARSI PROJECTS GROUP
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ */
+function div($a,$b) {
+    return (int) ($a / $b);
+}
+function gregorian_to_jalali ($g_y, $g_m, $g_d)
+{
+    $g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+    $j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
+
+
+
+
+
+   $gy = $g_y-1600;
+   $gm = $g_m-1;
+   $gd = $g_d-1;
+
+   $g_day_no = 365*$gy+div($gy+3,4)-div($gy+99,100)+div($gy+399,400);
+
+   for ($i=0; $i < $gm; ++$i)
+      $g_day_no += $g_days_in_month[$i];
+   if ($gm>1 && (($gy%4==0 && $gy%100!=0) || ($gy%400==0)))
+      /* leap and after Feb */
+      $g_day_no++;
+   $g_day_no += $gd;
+
+   $j_day_no = $g_day_no-79;
+
+   $j_np = div($j_day_no, 12053); /* 12053 = 365*33 + 32/4 */
+   $j_day_no = $j_day_no % 12053;
+
+   $jy = 979+33*$j_np+4*div($j_day_no,1461); /* 1461 = 365*4 + 4/4 */
+
+   $j_day_no %= 1461;
+
+   if ($j_day_no >= 366) {
+      $jy += div($j_day_no-1, 365);
+      $j_day_no = ($j_day_no-1)%365;
+   }
+
+   for ($i = 0; $i < 11 && $j_day_no >= $j_days_in_month[$i]; ++$i)
+      $j_day_no -= $j_days_in_month[$i];
+   $jm = $i+1;
+   $jd = $j_day_no+1;
+
+   return array($jy, $jm, $jd);
+}
+
+function jalali_to_gregorian($j_y, $j_m, $j_d)
+{
+    $g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+    $j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
+
+
+
+   $jy = $j_y-979;
+   $jm = $j_m-1;
+   $jd = $j_d-1;
+
+   $j_day_no = 365*$jy + div($jy, 33)*8 + div($jy%33+3, 4);
+   for ($i=0; $i < $jm; ++$i)
+      $j_day_no += $j_days_in_month[$i];
+
+   $j_day_no += $jd;
+
+   $g_day_no = $j_day_no+79;
+
+   $gy = 1600 + 400*div($g_day_no, 146097); /* 146097 = 365*400 + 400/4 - 400/100 + 400/400 */
+   $g_day_no = $g_day_no % 146097;
+
+   $leap = true;
+   if ($g_day_no >= 36525) /* 36525 = 365*100 + 100/4 */
+   {
+      $g_day_no--;
+      $gy += 100*div($g_day_no,  36524); /* 36524 = 365*100 + 100/4 - 100/100 */
+      $g_day_no = $g_day_no % 36524;
+
+      if ($g_day_no >= 365)
+         $g_day_no++;
+      else
+         $leap = false;
+   }
+
+   $gy += 4*div($g_day_no, 1461); /* 1461 = 365*4 + 4/4 */
+   $g_day_no %= 1461;
+
+   if ($g_day_no >= 366) {
+      $leap = false;
+
+      $g_day_no--;
+      $gy += div($g_day_no, 365);
+      $g_day_no = $g_day_no % 365;
+   }
+
+   for ($i = 0; $g_day_no >= $g_days_in_month[$i] + ($i == 1 && $leap); $i++)
+      $g_day_no -= $g_days_in_month[$i] + ($i == 1 && $leap);
+   $gm = $i+1;
+   $gd = $g_day_no+1;
+
+   return array($gy, $gm, $gd);
+}
+// Begin of finding the begining day Of months
+function mstart($month,$day,$year)
+{
+	list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+	list( $year, $month, $day ) = jalali_to_gregorian($jyear, $jmonth, "1");
+	$timestamp=mktime(0,0,0,$month,$day,$year);
+	return date("w",$timestamp);
+}
+// End of finding the begining day Of months
+
+function lastday ($month,$day,$year)
+{
+	$lastdayen=date("d",mktime(0,0,0,$month+1,0,$year));
+	list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+	$lastdatep=$jday;
+	while($jday!="1")
+	{
+		if($day<$lastdayen)
+		{
+			$day++;
+			list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+			if($jday=="1") break;
+			if($jday="1") $lastdatep++;
+		}
+		else
+		{
+			$day=0;
+			$month++;
+			if($month==13)
+			{
+					$month="1";
+					$year++;
+			}
+		}
+
+	}
+	return $lastdatep-1;
+}
+function jmaketime($hour,$minute,$second,$jmonth,$jday,$jyear)
+{
+	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
+	if ( $basecheck ){
+	$hour = icms_conv_local2nr($hour);
+	$minute = icms_conv_local2nr($minute);
+	$second = icms_conv_local2nr($second);
+	$jmonth = icms_conv_local2nr($jday);
+	$jyear = icms_conv_local2nr($jyear);
+	}
+	list( $year, $month, $day ) = jalali_to_gregorian($jyear, $jmonth, $jday);
+	$i=mktime($hour,$minute,$second,$month,$day,$year);
+	return $i;
+}
+function jdate($type,$maket="now")
+{
+    global $xoopsConfig;
+	icms_loadLanguageFile('core', 'calendar');
+	$result="";
+	if($maket=="now"){
+		$year=date("Y");
+		$month=date("m");
+		$day=date("d");
+		list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+		$maket=jmaketime(date("h"),date("i"),date("s"),$jmonth,$jday,$jyear);
+	}else{
+		$date=date("Y-m-d",$maket);
+		list( $year, $month, $day ) = preg_split ( '/-/', $date );
+
+		list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+		}
+
+	$need= $maket;
+	$year=date("Y",$need);
+	$month=date("m",$need);
+	$day=date("d",$need);
+	$i=0;
+	while($i<strlen($type))
+	{
+		$subtype=substr($type,$i,1);
+		switch ($subtype)
+		{
+
+			case "A":
+				$result1=date("a",$need);
+				if($result1=="pm") $result.=_CAL_PM_LONG;
+				else $result.=_CAL_AM_LONG;
+				break;
+
+			case "a":
+				$result1=date("a",$need);
+				if($result1=="pm") $result.=_CAL_PM;
+				else $result.=_CAL_AM;
+				break;
+			case "d":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				if($jday<10)$result1="0".$jday;
+				else 	$result1=$jday;
+				$result.=$result1;
+				break;
+			case "D":
+				$result1=date("D",$need);
+				if($result1=="Sat") $result1=_CAL_SAT;
+				else if($result1=="Sun") $result1=_CAL_SUN;
+				else if($result1=="Mon") $result1=_CAL_MON;
+				else if($result1=="Tue") $result1=_CAL_TUE;
+				else if($result1=="Wed") $result1=_CAL_WED;
+				else if($result1=="Thu") $result1=_CAL_THU;
+                                else if($result1=="Fri") $result1=_CAL_FRI;
+				$result.=$result1;
+				break;
+			case"F":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				$result.=Icms_getMonthNameById($jmonth);
+				break;
+			case "g":
+				$result.=date("g",$need);
+				break;
+			case "G":
+				$result.=date("G",$need);
+				break;
+				case "h":
+				$result.=date("h",$need);
+				break;
+			case "H":
+				$result.=date("H",$need);
+				break;
+			case "i":
+				$result.=date("i",$need);
+				break;
+			case "j":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				$result.=$jday;
+				break;
+			case "l":
+				$result1=date("l",$need);
+				if($result1=="Saturday") $result1=_CAL_SATURDAY;
+				else if($result1=="Sunday") $result1=_CAL_SUNDAY;
+				else if($result1=="Monday") $result1=_CAL_MONDAY;
+				else if($result1=="Tuesday") $result1=_CAL_TUESDAY;
+				else if($result1=="Wednesday") $result1=_CAL_WEDNESDAY;
+				else if($result1=="Thursday") $result1=_CAL_THURSDAY;
+				else if($result1=="Friday") $result1=_CAL_FRIDAY;
+				$result.=$result1;
+				break;
+			case "m":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				if($jmonth<10) $result1="0".$jmonth;
+				else	$result1=$jmonth;
+				$result.=$result1;
+				break;
+			case "M":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				$result.=Icms_getMonthNameById($jmonth);
+				break;
+			case "n":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				$result.=$jmonth;
+				break;
+			case "s":
+				$result.=date("s",$need);
+				break;
+			case "S":
+				$result.=_CAL_SUFFIX;
+				break;
+			case "t":
+				$result.=lastday ($month,$day,$year);
+				break;
+			case "w":
+				$result.=date("w",$need);
+				break;
+			case "y":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				$result.=substr($jyear,2,4);
+				break;
+			case "Y":
+				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
+				$result.=$jyear;
+				break;
+			default:
+				$result.=$subtype;
+		}
+	$i++;
+	}
+	return $result;
+}
+/**
+ * This function is to convert date() function outputs into local values
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @since		1.1.1
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ */
+function ext_date($type,$maket="now")
+{
+    global $xoopsConfig;
+	icms_loadLanguageFile('core', 'calendar');
+	$result="";
+	if($maket=="now"){
+		$year=date("Y");
+		$month=date("m");
+		$day=date("d");
+		$maket=mktime(date("H"), date("i"), date("s"), $month, $day, $year);;
+	}else{
+		$date=date("Y-m-d",$maket);
+		list( $year, $month, $day ) = preg_split ( '/-/', $date );
+		}
+
+	$need= $maket;
+	$year=date("Y",$need);
+	$month=date("m",$need);
+	$day=date("d",$need);
+	$i=0;
+	while($i<strlen($type))
+	{
+		$subtype=substr($type,$i,1);
+		switch ($subtype)
+		{
+
+			case "A":
+				$result1=date("a",$need);
+				if($result1=="pm") $result.=_CAL_PM_LONG;
+				else $result.=_CAL_AM_LONG;
+				break;
+
+			case "a":
+				$result1=date("a",$need);
+				if($result1=="pm") $result.=_CAL_PM;
+				else $result.=_CAL_AM;
+				break;
+			case "d":
+				if($day<10)$result1="0".$day;
+				else 	$result1=$day;
+				$result.=$result1;
+				break;
+			case "D":
+				$result1=date("D",$need);
+				if($result1=="Sat") $result1=_CAL_SAT;
+				else if($result1=="Sun") $result1=_CAL_SUN;
+				else if($result1=="Mon") $result1=_CAL_MON;
+				else if($result1=="Tue") $result1=_CAL_TUE;
+				else if($result1=="Wed") $result1=_CAL_WED;
+				else if($result1=="Thu") $result1=_CAL_THU;
+                                else if($result1=="Fri") $result1=_CAL_FRI;
+				$result.=$result1;
+				break;
+			case"F":
+				$result.=Icms_getMonthNameById($month);
+				break;
+			case "g":
+				$result.=date("g",$need);
+				break;
+			case "G":
+				$result.=date("G",$need);
+				break;
+				case "h":
+				$result.=date("h",$need);
+				break;
+			case "H":
+				$result.=date("H",$need);
+				break;
+			case "i":
+				$result.=date("i",$need);
+				break;
+			case "j":
+				$result.=$day;
+				break;
+			case "l":
+				$result1=date("l",$need);
+				if($result1=="Saturday") $result1=_CAL_SATURDAY;
+				else if($result1=="Sunday") $result1=_CAL_SUNDAY;
+				else if($result1=="Monday") $result1=_CAL_MONDAY;
+				else if($result1=="Tuesday") $result1=_CAL_TUESDAY;
+				else if($result1=="Wednesday") $result1=_CAL_WEDNESDAY;
+				else if($result1=="Thursday") $result1=_CAL_THURSDAY;
+				else if($result1=="Friday") $result1=_CAL_FRIDAY;
+				$result.=$result1;
+				break;
+			case "m":
+				if($month<10) $result1="0".$month;
+				else	$result1=$month;
+				$result.=$result1;
+				break;
+			case "M":
+				$result.=Icms_getMonthNameById($month);
+				break;
+			case "n":
+				$result.= $month;
+				break;
+			case "s":
+				$result.=date("s",$need);
+				break;
+			case "S":
+				$result.=_CAL_SUFFIX;
+				break;
+			case "t":
+				$result.=date("t",$need);
+				break;
+			case "w":
+				$result.=date("w",$need);
+				break;
+			case "y":
+				$result.=substr($year,2,4);
+				break;
+			case "Y":
+				$result.=$year;
+				break;
+			default:
+				$result.=$subtype;
+		}
+	$i++;
+	}
+	return $result;
+}
 function icms_convert_size($size){ 	 
     if ($size >= 1073741824){ 	 
         $ret = round((($size/1024)/1024)/1024,1).' Gb'; 	 

@@ -27,7 +27,7 @@
 	<link rel="icon" type="image/png" href="<{xoImgUrl icons/icon.png}>" />
 	
 <!-- Sheet Css -->
-	<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{xoImgUrl style.css}>" />
+	<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$icms_themecss}>" />
 	
 <!-- Module Header -->
 <{$xoops_module_header}>
@@ -62,10 +62,18 @@
 	<div id="icms-canvas-content">
 		<div id="icms-canvas-columns">
 			<!-- Left column -->
+				<{if $icms_rtl}>
+			<{if $xoBlocks.canvas_right}>
+			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_right
+				zoneClass='icms-canvas-column' zoneId='icms-canvas-rightcolumn'
+			}>
+			<{/if}>
+			<{else}>
 			<{if $xoBlocks.canvas_left}>
 			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_left
 				zoneClass='icms-canvas-column' zoneId='icms-canvas-leftcolumn'
 			}>
+			<{/if}>
 			<{/if}>
 			<!-- Center column / page -->
 			<div id="icms-page">
@@ -91,10 +99,18 @@
 				<{/if}>
 			</div>
 			<!-- Right column -->
+				<{if $icms_rtl}>
+			<{if $xoBlocks.canvas_left}>
+			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_left
+				zoneClass='icms-canvas-column' zoneId='icms-canvas-leftcolumn'
+			}>
+			<{/if}>
+			<{else}>
 			<{if $xoBlocks.canvas_right}>
 			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_right
 				zoneClass='icms-canvas-column' zoneId='icms-canvas-rightcolumn'
 			}>
+			<{/if}>
 			<{/if}>
 		</div>
 	</div>

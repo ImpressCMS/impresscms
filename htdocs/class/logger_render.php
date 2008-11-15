@@ -37,7 +37,8 @@ if ( $mode == 'popup' ) {
 
 if ( empty( $mode ) ) {
 	$ret .= "\n<div id=\"xo-logger-output\">\n<div id='xo-logger-tabs'>\n";
-	$ret .= "<a href='javascript:xoSetLoggerView(\"\")'>"._ALL."</a>\n";
+	$ret .= "<hr /><a href='javascript:xoSetLoggerView(\"none\")'>"._NONE_LOGGER."</a> | \n";
+	$ret .= "<a href='javascript:xoSetLoggerView(\"\")'>"._ALL."</a> | \n";
 		$count = count( $this->errors );
 		$ret .= "<a href='javascript:xoSetLoggerView(\"errors\")'>"._ERRORS." (".icms_conv_nr2local($count).")</a>\n";
 		$count = count( $this->queries );

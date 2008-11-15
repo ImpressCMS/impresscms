@@ -60,7 +60,7 @@ if (!is_object($xoopsUser)) {
     }
     for ($i = 0; $i < $total_messages; $i++) {
         $class = ($i % 2 == 0) ? 'even' : 'odd';
-        echo "<tr align='left' class='$class'><td valign='top' width='2%' align='center'><input type='checkbox' id='msg_id[]' name='msg_id[]' value='".$pm_arr[$i]->getVar("msg_id")."' /></td>\n";
+        echo "<tr align='"._GLOBAL_LEFT."' class='$class'><td valign='top' width='2%' align='center'><input type='checkbox' id='msg_id[]' name='msg_id[]' value='".$pm_arr[$i]->getVar("msg_id")."' /></td>\n";
         if ($pm_arr[$i]->getVar('read_msg') == 1) {
             echo "<td valign='top' width='5%' align='center'>&nbsp;</td>\n";
         } else {
@@ -81,9 +81,9 @@ if (!is_object($xoopsUser)) {
     }
 
     if ( $display == 1 ) {
-        echo "<tr class='foot' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send=1\",\"pmlite\",800,680);' value='"._PM_SEND."' />&nbsp;<input type='submit' class='formButton' name='delete_messages' value='"._PM_DELETE."' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr></table></form>";
+        echo "<tr class='foot' align='"._GLOBAL_LEFT."'><td colspan='6' align='"._GLOBAL_LEFT."'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send=1\",\"pmlite\",800,680);' value='"._PM_SEND."' />&nbsp;<input type='submit' class='formButton' name='delete_messages' value='"._PM_DELETE."' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr></table></form>";
     } else {
-        echo "<tr class='bg2' align='left'><td colspan='6' align='left'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send=1\",\"pmlite\",800,680);' value='"._PM_SEND."' /></td></tr></table></form>";
+        echo "<tr class='bg2' align='"._GLOBAL_LEFT."'><td colspan='6' align='"._GLOBAL_LEFT."'><input type='button' class='formButton' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send=1\",\"pmlite\",800,680);' value='"._PM_SEND."' /></td></tr></table></form>";
     }
     include "footer.php";
 }

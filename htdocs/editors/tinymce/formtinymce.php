@@ -51,7 +51,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 			return false;
 		}
 		
-		$this->XoopsFormTextArea ( @$this->_caption, @$this->_name, @$this->_value );
+		$this->XoopsFormTextArea ( "", @$this->_name, @$this->_value );
 		parent::setExtra ( "style='width: " . $this->_width . "; height: " . $this->_height . ";'" );
 		
 		$this->initTinymce ();
@@ -143,7 +143,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		$ret .= parent::render ();
 		
 		$ret .= '<a href="#" id="switchtinymce" title="'._TOGGLETINY.'" onclick="showMCE(\''.$this->_name.'\'); return false;" style="float:right; display:box; background:#F0F0EE; padding:3px; margin-right:2px; border: 1px solid #ccc; border-top: none;">'._TOGGLETINY.'</a>';
-		$ret .= '<br clear="right" />';
+		$ret .= '<br clear="'._GLOBAL_RIGHT.'" />';
 		
 		return $ret;
 	}

@@ -45,7 +45,7 @@ function SmilesAdmin()
             //EMPTY
         } else {
             echo '<form action="admin.php" method="post"><table width="100%" class="outer" cellpadding="4" cellspacing="1">';
-            echo "<tr align='center'><th align='left'>" ._AM_CODE."</th>";
+            echo "<tr align='center'><th align='"._GLOBAL_LEFT."'>" ._AM_CODE."</th>";
             echo "<th>" ._AM_SMILIE."</th>";
             echo "<th>"._AM_SMILEEMOTION."</th>";
             echo "<th>" ._AM_DISPLAYF."</th>";
@@ -62,7 +62,7 @@ function SmilesAdmin()
                 $smiles['smile_url'] = $myts->makeTboxData4Edit($smiles['smile_url']);
                 $smiles['smile_emotion'] = $myts->makeTboxData4Edit($smiles['emotion']);
                 echo "<tr align='center' class='$class'>";
-                echo "<td align='left'>".$smiles['code']."</td>";
+                echo "<td align='"._GLOBAL_LEFT."'>".$smiles['code']."</td>";
                 echo "<td><img src='".$url_smiles."/".$smiles['smile_url']."' alt='' /></td>";
                 echo '<td>'.$smiles['smile_emotion'].'</td>';
                 echo '<td><input type="hidden" name="smile_id['.$i.']" value="'.$smiles['id'].'" /><input type="hidden" name="old_display['.$i.']" value="'.$smiles['display'].'" /><input type="checkbox" value="1" name="smile_display['.$i.']"';

@@ -342,7 +342,7 @@ if ( empty($_POST["user_submit"]) ) {
     $acttotal = $user_handler->getCount(new Criteria('level', 0, '>'));
     $inacttotal = $user_handler->getCount(new Criteria('level', 0, '<='));
     echo "</html><body>";
-    echo "<h2 style='text-align:left;'>"._MA_USER_FINDUS." - ".$modes[$mode]."</h2>";
+    echo "<h2 style='text-align:"._GLOBAL_LEFT.";'>"._MA_USER_FINDUS." - ".$modes[$mode]."</h2>";
     $modes_switch = array();
     foreach ($modes as $_mode => $title) {
 	    if ($mode == $_mode) continue;

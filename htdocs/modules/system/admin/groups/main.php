@@ -88,7 +88,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             $criteria2 = new CriteriaCompo(new Criteria('gperm_name', 'system_admin'));
             $criteria2->add(new Criteria('gperm_name', 'module_admin'), 'OR');
             $criteria2->add(new Criteria('gperm_name', 'module_read'), 'OR');
-            if ($g_id != 1 && $g_id != 3){
+            if ($g_id != 3){
                 $criteria2->add(new Criteria('gperm_name', 'use_wysiwygeditor'), 'OR');
             }
 			$criteria2->add(new Criteria('gperm_name', 'enable_debug'), 'OR');
@@ -124,7 +124,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                 $modperm->setVar('gperm_modid', 1);
                 $gperm_handler->insert($modperm);
             }
-            if ($g_id != 1 && $g_id != 3){
+            if ($g_id != 3){
             	foreach ($useeditor_mids as $ed_mid) {
             		$modperm =& $gperm_handler->create();
             		$modperm->setVar('gperm_groupid', $groupid);

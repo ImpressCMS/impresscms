@@ -306,10 +306,11 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
      * @param	int       $gperm_itemid     ID of an item
      * @param	int/array $gperm_groupid    A group ID or an array of group IDs
      * @param	int       $gperm_modid      ID of a module
+     * @param	bool	  $webmasterAlwaysTrue	If true, then Webmasters will always return true, if false, a real check will be made
      *
      * @return	bool    TRUE if permission is enabled
      */
-    function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1)
+    function checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1, $webmasterAlwaysTrue=true)
     {
         $criteria = new CriteriaCompo(new Criteria('gperm_modid', $gperm_modid));
         $criteria->add(new Criteria('gperm_name', $gperm_name));
@@ -318,7 +319,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
             $criteria->add(new Criteria('gperm_itemid', $gperm_itemid));
         }
         if (is_array($gperm_groupid)) {
-			if (in_array(XOOPS_GROUP_ADMIN, $gperm_groupid)) {
+			if ($webmasterAlwaysTrue && in_array(XOOPS_GROUP_ADMIN, $gperm_groupid)) {
                 return true;
             }
             $criteria2 = new CriteriaCompo();
@@ -327,7 +328,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
             }
             $criteria->add($criteria2);
         } else {
-            if (XOOPS_GROUP_ADMIN == $gperm_groupid) {
+            if ($webmasterAlwaysTrue && XOOPS_GROUP_ADMIN == $gperm_groupid) {
                 return true;
             }
             $criteria->add(new Criteria('gperm_groupid', $gperm_groupid));

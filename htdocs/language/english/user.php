@@ -197,6 +197,11 @@ define('_US_OPENID_NEW_USER_CREATED', 'A new user was created with the username 
 define('_US_OPENID_LINKED_DONE', 'Your OpenID has been linked with the user %S. Logging you in...');
 define('_US_ALREADY_LOGED_IN', 'You already are logged in, we are sorry but, you can\'t register while you\'re logged in the site');
 define('_US_ALLOWVIEWEMAILOPENID','Allow other users to view my OpenID');
+define('_US_SERVER_PROBLEM_OCCURRED','There was an issue while checking for spammers list!');
+define('_US_INVALIDIP','ERROR: This IP adress is not allowed to register');
+define("_US_OPENID_LOGIN", "Login with your OpenID");
+define("_US_OPENID_URL", "Your OpenID URL:");
+define("_US_OPENID_NORMAL_LOGIN", "Go back to normal login");
 
 /* define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled'); */
 /* define('_US_AUTORESIZE_ATV_DESC', 'Images larger than %u x %u will be automatically resized, keeping the aspect ratio, so that it is within the maximum pixels set. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.'); */

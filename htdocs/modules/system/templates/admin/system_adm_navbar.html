@@ -1,5 +1,5 @@
 <div id="logoHead">
-	<span class="left">
+	<span class="<{$smarty.const._GLOBAL_LEFT}>">
 		<{if $adm_left_logo == ''}>&nbsp;<{else}>
 		    <{if  $adm_left_logo_url != ''}>
 			    <a href="<{$adm_left_logo_url}>" title="<{if $adm_left_logo_alt != ''}><{$adm_left_logo_alt}><{else}>ImpressCMS<{/if}>">
@@ -10,7 +10,7 @@
 			<{/if}>   
 		<{/if}>
 	</span>
-	<span class="right">
+	<span class="<{$smarty.const._GLOBAL_RIGHT}>">
 		<{if $adm_right_logo == ''}>&nbsp;<{else}>
 		    <{if  $adm_right_logo_url != ''}>
 			    <a href="<{$adm_right_logo_url}>" title="<{if $adm_right_logo_alt != ''}><{$adm_right_logo_alt}><{else}>ImpressCMS<{/if}>">

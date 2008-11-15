@@ -1,12 +1,12 @@
 /**
 * XOOPS Copyrights information
 *
-* @copyright	http://www.impresscms.org/ The XOOPS Project 
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package		core
 * @since		1.0
 * @author		http://www.impresscms.org The ImpressCMS Project
-* @version		$Id: error.php 429 2008-01-02 22:21:41Z malanciault $
+* @version		$Id:
 */
 
 The ImpressCMS Project originally started as a fork from XOOPS 2.0.17.1, from revision 1077 (http://xoops.svn.sourceforge.net/viewvc/xoops/XoopsCore/trunk/?pathrev=1077). Because of this, many files in the code base comes from The XOOPS Project and were originally copyrighted as such.

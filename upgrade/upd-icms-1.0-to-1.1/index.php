@@ -47,7 +47,7 @@ class upgrade_impcms06 {
             if (!$res) return false;
             array_shift($_SESSION[__CLASS__]);
         }
-        return true;
+        return ($this->cleaning_write_folders());
     }
 
 	function cleaning_write_folders() {

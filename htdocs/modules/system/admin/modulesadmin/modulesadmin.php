@@ -115,7 +115,7 @@ function xoops_module_install($dirname) {
         $errs = array();
         $sqlfile =& $module->getInfo('sqlfile');
         $msgs = array();
-        $msgs[] = '<h4 style="text-align:left;margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
+        $msgs[] = '<h4 style="text-align:'._GLOBAL_LEFT.';margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
         if ($module->getInfo('image') != false && trim($module->getInfo('image')) != '') {
             $msgs[] ='<img src="'.XOOPS_URL.'/modules/'.$dirname.'/'.trim($module->getInfo('image')).'" alt="" />';
         }
@@ -124,7 +124,7 @@ function xoops_module_install($dirname) {
             $msgs[] ='<b>Author:</b> '.trim($module->getInfo('author'));
         }
         $msgs[] = '';
-        $errs[] = '<h4 style="text-align:left;margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
+        $errs[] = '<h4 style="text-align:'._GLOBAL_LEFT.';margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
         if ($sqlfile != false && is_array($sqlfile)) {
 
             $sql_file_path = XOOPS_ROOT_PATH."/modules/".$dirname."/".$sqlfile[XOOPS_DB_TYPE];

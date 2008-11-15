@@ -72,7 +72,7 @@ class XoopsTableForm extends XoopsForm
 		$hidden = '';
 		foreach ( $this->getElements() as $ele ) {
 			if ( !$ele->isHidden() ) {
-				$ret .= "<tr valign='top' align='left'><td>".$ele->getCaption();
+				$ret .= "<tr valign='top' align='"._GLOBAL_LEFT."'><td>".$ele->getCaption();
 				if ($ele_desc = $ele->getDescription()) {
 					$ret .= '<br /><br /><span style="font-weight: normal;">'.$ele_desc.'</span>';
 				}

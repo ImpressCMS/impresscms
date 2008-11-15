@@ -1,7 +1,7 @@
 <?php
 /**
 * IcmsPersistableObject Table Listing
-* 
+*
 * Contains the classes responsible for displaying a highly configurable and features rich listing of IcmseristableObject objects
 *
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
@@ -34,7 +34,7 @@ class IcmsPersistableColumn {
 	var $_sortable;
 	var $_customCaption;
 
-	function IcmsPersistableColumn($keyname, $align='left', $width=false, $customMethodForValue=false, $param = false, $customCaption = false, $sortable = true) {
+	function IcmsPersistableColumn($keyname, $align=_GLOBAL_LEFT, $width=false, $customMethodForValue=false, $param = false, $customCaption = false, $sortable = true) {
 		$this->_keyname = $keyname;
 		$this->_align = $align;
 		$this->_width = $width;
@@ -172,7 +172,7 @@ class IcmsPersistableTable {
 
 	function addPrinterFriendlyLink() {
 		global $impresscms;
-		
+
 		$current_url = $impresscms->urls['full'];
 		$this->_printerFriendlyPage = $current_url . '&print';
 	}
@@ -324,6 +324,7 @@ class IcmsPersistableTable {
 						}
 					}
 
+					$aColumn['keyname'] = $column->getKeyName();
 					$aColumn['value'] = $value;
 					$aColumn['class'] = $class;
 					$aColumn['width'] = $column->getWidth();
@@ -516,7 +517,7 @@ class IcmsPersistableTable {
 	function render($fetchOnly=false, $debug=false)
 	{
 		global $impresscms;
-		
+
 		include_once XOOPS_ROOT_PATH . '/class/template.php';
 
 		$this->_tpl =& new XoopsTpl();
@@ -595,6 +596,12 @@ class IcmsPersistableTable {
 		$this->_objects = $this->fetchObjects($debug);
 
 		include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+		/**
+		 * $params_of_the_options_sel is an array with all the parameters of the page
+		 * but without the pagenave parameters. This array will be used in the
+		 * OptionsSelection
+		 */
+		$params_of_the_options_sel = array();
 		if ($this->_criteria->getLimit() > 0) {
 
 			/**
@@ -602,13 +609,6 @@ class IcmsPersistableTable {
 			 * $new_get_array is an array containing the new GET parameters
 			 */
 			$new_get_array = array();
-
-			/**
-			 * $params_of_the_options_sel is an array with all the parameters of the page
-			 * but without the pagenave parameters. This array will be used in the
-			 * OptionsSelection
-			 */
-			$params_of_the_options_sel = array();
 
 			$not_needed_params = array('sortsel', 'limitsel', 'ordersel', 'start' . $this->_objectHandler->keyName);
 			foreach ($_GET as $k => $v) {
@@ -659,7 +659,7 @@ class IcmsPersistableTable {
 			$aColumn['width'] = $column->getWidth();
 			$aColumn['align'] = $column->getAlign();
 			$aColumn['key'] = $column->getKeyName();
-			
+
 			if($column->_keyname == 'checked'){
 				$aColumn['caption'] = '<input type ="checkbox" id="checkall_icmspersistableobjects" name="checkall_icmspersistableobjects"' .
 						' value="checkall_icmspersistableobjects" onclick="icms_checkall(window.document.form_'.$this->_id.', \'selected_icmspersistableobjects\');" />';

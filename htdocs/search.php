@@ -177,7 +177,7 @@ switch ($action) {
                     if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
                         echo "<img style='vertical-align:middle;' src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
                     } else {
-                        echo "<img style='vertical-align:middle;' src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' width='26' height='26' />&nbsp;";
+                        echo "<img style='vertical-align:middle;' src='images/icons/".$GLOBALS["xoopsConfig"]["language"]."/posticon2.gif' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' width='26' height='26' />&nbsp;";
                     }
                     if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                         $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
@@ -244,7 +244,7 @@ switch ($action) {
             if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
                 echo "<img style='vertical-align:middle;' src='modules/".$module->getVar('dirname')."/".$results[$i]['image']."' alt='".$myts->makeTboxData4Show($module->getVar('name'))."' />&nbsp;";
             } else {
-                echo "<img style='vertical-align:middle;' src='images/icons/posticon2.gif' alt='".$myts->makeTboxData4Show($module->name())."' width='26' height='26' />&nbsp;";
+                echo "<img style='vertical-align:middle;' src='images/icons/".$GLOBALS["xoopsConfig"]["language"]."/posticon2.gif' alt='".$myts->makeTboxData4Show($module->name())."' width='26' height='26' />&nbsp;";
             }
             if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                 $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
@@ -273,7 +273,7 @@ switch ($action) {
         }
         if ( $start > 0 ) {
             $prev = $start - 20;
-            echo '<td align="left">
+            echo '<td align="'._GLOBAL_LEFT.'">
             ';
             $search_url_prev = $search_url."&start=$prev";
             echo '<a href="'.htmlspecialchars($search_url_prev).'">'._SR_PREVIOUS.'</a></td>
@@ -284,7 +284,7 @@ switch ($action) {
         if (false != $has_next) {
             $next = $start + 20;
             $search_url_next = $search_url."&start=$next";
-            echo '<td align="right"><a href="'.htmlspecialchars($search_url_next).'">'._SR_NEXT.'</a></td>
+            echo '<td align="'._GLOBAL_RIGHT.'"><a href="'.htmlspecialchars($search_url_next).'">'._SR_NEXT.'</a></td>
             ';
         }
         echo '

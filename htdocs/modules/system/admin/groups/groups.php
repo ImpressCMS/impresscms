@@ -119,7 +119,7 @@ function modifyGroup($g_id)
     $s_cat_value =& $sysperm_handler->getItemIds('system_admin', $g_id);
 
     include XOOPS_ROOT_PATH."/modules/system/admin/groups/groupform.php";
-    echo "<br /><h4 style='text-align:left'>"._AM_EDITMEMBER."</h4>";
+    echo "<br /><h4 style='text-align:"._GLOBAL_LEFT."'>"._AM_EDITMEMBER."</h4>";
     $usercount = $member_handler->getUserCount(new Criteria('level', 0, '>'));
     $member_handler =& xoops_gethandler('member');
     $membercount = $member_handler->getUserCountByGroup($g_id);

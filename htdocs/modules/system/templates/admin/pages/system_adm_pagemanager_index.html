@@ -12,20 +12,20 @@ function showDiv(type,id){
 }
 </script>
 <div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/pages/images/pages_big.png)"><{$lang_page_manager}></div><br />
-<div style="margin-top:0; float: right; width:300px;" align="right">
+<div style="margin-top:0; float: <{$smarty.const._GLOBAL_RIGHT}>; width:300px;" align="<{$smarty.const._GLOBAL_RIGHT}>">
   <form action="admin.php?fct=pages&op=list" method="POST">
     <input type="text" name="query" id="query" size="30" value="<{$query}>" />
     <input type="submit" name="btn" value="<{$lang_search}>" />
     <input type="submit" name="btn1" value="<{$lang_cancel}>" onclick="document.getElementById('query').value='';" />
   </form>
 </div>
-<br style="clear: right; line-height:1px;" />
+<br style="clear: <{$smarty.const._GLOBAL_RIGHT}>; line-height:1px;" />
   <table width="100%" cellspacing="1" cellpadding="0" class="outer">
     <tr align="center">
       <th width="5%"><{$lang_page_id}></th>
       <th width="10%"><{$lang_page_module}></th>
-      <th align="left" width="20%"><{$lang_page_title}></th>
-      <th align="left" width="25%"><{$lang_page_url}></th>
+      <th align="<{$smarty.const._GLOBAL_LEFT}>" width="20%"><{$lang_page_title}></th>
+      <th align="<{$smarty.const._GLOBAL_LEFT}>" width="25%"><{$lang_page_url}></th>
       <th width="7%"><{$lang_page_status}></th>
       <th width="13%"><{$lang_page_options}></th>
     </tr>
@@ -34,8 +34,8 @@ function showDiv(type,id){
       <tr class="<{cycle values="even,odd"}>" align="center">
         <td><{$page.pages_id}></td>
         <td><{$page.module}></td>
-        <td align="left"><{$page.page_title}></td>
-        <td align="left"><{$page.page_url}></td>
+        <td align="<{$smarty.const._GLOBAL_LEFT}>"><{$page.page_title}></td>
+        <td align="<{$smarty.const._GLOBAL_LEFT}>"><{$page.page_url}></td>
         <td><a href="admin.php?fct=pages&op=changestatus&page_id=<{$page.page_id}>"><img src="images/<{$page.page_status}>.png" title="<{$lang_page_changests}>" alt="<{$lang_page_changests}>" /></a></td>
         <td>
           <{if $page.page_vurl != '0'}>
@@ -52,7 +52,7 @@ function showDiv(type,id){
       <tr><td class="head" colspan="8" align="center"><{$lang_notfound}></td></tr>
     <{/if}>
     <tr>
-      <td class="head" colspan="8" align="right">
+      <td class="head" colspan="8" align="<{$smarty.const._GLOBAL_RIGHT}>">
         <{$pag}>
         <input type="button" onclick="icms_showDiv('addpageform','','hiddendiv'); return false;" value="<{$lang_page_addpage}>" />
       </td>

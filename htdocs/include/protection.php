@@ -10,7 +10,7 @@ $font = ICMS_ROOT_PATH.'/class/captcha/fonts/'.$xoopsConfigPersona['email_font']
 // If you don't you may put 7 :-)
 $fontSize = intval($xoopsConfigPersona['email_font_len']);
 $height = $fontSize*1.2+14; // height of image
-$emailAddress = urldecode(base64_decode($HTTP_GET_VARS['p']));
+$emailAddress = urldecode(base64_decode($_GET['p']));
 
 Header( "Content-type: image/png");
 

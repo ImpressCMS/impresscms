@@ -72,16 +72,16 @@ if ( !is_object($xoopsUser) ) {
         echo "</td><td><img src='images/subject/".$pm_arr[0]->getVar("msg_image", "E")."' alt='' />&nbsp;"._PM_SENTC."".formatTimestamp($pm_arr[0]->getVar("msg_time"));
         echo "<hr /><b>".$pm_arr[0]->getVar("subject")."</b><br /><br />\n";
  $var = $pm_arr[0]->getVar('msg_text', 'N');
-       echo $myts->displayTarea( $var, 1, 1, 1 ) . "<br /><br /></td></tr><tr class='foot'><td width='20%' colspan='2' align='left'>";
+       echo $myts->displayTarea( $var, 1, 1, 1 ) . "<br /><br /></td></tr><tr class='foot'><td width='20%' colspan='2' align='"._GLOBAL_LEFT."'>";
         // we dont want to reply to a deleted user!
         if ( $poster != false ) {
-            echo "<a href='#' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?reply=1&amp;msg_id=".$pm_arr[0]->getVar("msg_id")."\",\"pmlite\",800,680);'><img src='".ICMS_URL."/images/icons/reply.gif' alt='"._PM_REPLY."' /></a>\n";
+            echo "<a href='#' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?reply=1&amp;msg_id=".$pm_arr[0]->getVar("msg_id")."\",\"pmlite\",800,680);'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/reply.gif' alt='"._PM_REPLY."' /></a>\n";
         }
         echo "<input type='hidden' name='delete' value='1' />";
         echo $GLOBALS['xoopsSecurity']->getTokenHTML();
         echo "<input type='hidden' name='msg_id' value='".$pm_arr[0]->getVar("msg_id")."' />";
-        echo "<a href='#".$pm_arr[0]->getVar("msg_id")."' onclick='javascript:document.delete".$pm_arr[0]->getVar("msg_id").".submit();'><img src='".ICMS_URL."/images/icons/delete.gif' alt='"._PM_DELETE."' /></a>";
-        echo "</td></tr><tr><td colspan='2' align='right'>";
+        echo "<a href='#".$pm_arr[0]->getVar("msg_id")."' onclick='javascript:document.delete".$pm_arr[0]->getVar("msg_id").".submit();'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/delete.gif' alt='"._PM_DELETE."' /></a>";
+        echo "</td></tr><tr><td colspan='2' align='"._GLOBAL_RIGHT."'>";
         $previous = $start - 1;
             $next = $start + 1;
             if ( $previous >= 0 ) {

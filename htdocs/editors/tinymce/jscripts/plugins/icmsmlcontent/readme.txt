@@ -6,7 +6,7 @@
 
 This plugin allows you and your site's users to add multi-language content into tinyMCE's area.
 
-Compatible with "THE EASIEST MULTILANGUAGE HACK" by GIJOE and/or "Xlanguage" module.
+Compatible with "THE EASIEST MULTILANGUAGE HACK" by GIJOE.
 
 NOTE
 You MUST have "THE EASIEST MULTILANGUAGE HACK" by GIJOE applied to your xoops installation before

@@ -1,3 +1,70 @@
+4.2.007 (2008-11-12)
+	- The function setListIndentWidth() was added to set custom indentation widht for HTML lists.
+	
+4.2.006 (2008-11-06)
+	- A bug relative to HTML justification was fixed.
+	
+4.2.005 (2008-11-06)
+	- A bug relative to HTML justification was fixed.
+	- The methods formatPageNumber() and PageNoFormatted() were added to format page numbers.
+	- Default Footer() method was changed to use PageNoFormatted() instead of PageNo().
+	- Example 6 was updated.
+	
+4.2.004 (2008-11-04)
+	- Bug item n. 2217039 "filename handling improvement" was fixed.
+	
+4.2.003 (2008-10-31)
+	- Font style bug was fixed.
+	
+4.2.002 (2008-10-31)
+	- Bug item #2210922 (htm element br not work) was fixed.
+	- Write() function was improved to support margin changes.
+	
+4.2.001 (2008-10-30)
+	- setHtmlVSpace($tagvs) function was added to set custom vertical spaces for HTML tags.
+	- writeHTML() function now support margin changes during execution.
+	- Signature of addHTMLVertSpace() function is changed.
+	
+4.2.000 (2008-10-29)
+	- htmlcolors.php was changed to support class-loaders.
+	- ImageEps() function was improved in performances.
+	- Signature of Link() And Annotation() functions were changed.
+	- (Bug item #2198926) Links and Annotations alignment were fixed (support for geometric tranformations was added).
+	- rowspan mode for HTML table cells was improved and fixed.
+	- Booklet mode for double-sided pages was added; see SetBooklet() function and example n. 40.
+	- lastPage() signature is changed.
+	- Signature of Write() function is changed.
+	- Some HTML justification problems were fixed.
+	- Some functions were fixed to better support RTL mode.
+	- Example n. 10 was changed to support RTL mode.
+	- All examples were updated.
+	
+4.1.004 (2008-10-23)
+	- unicode_data.php was changed to support class-loaders.
+	- Bug item #2186040/2 (writeHTML margin problem) was fixed.
+	
+4.1.003 (2008-10-22)
+	- Bug item #2185399 was fixed (rowspan and page break).
+	- Bugs item #2186040 was fixed (writeHTML margin problem).
+	- Newline after table was removed.
+	
+4.1.002 (2008-10-21)
+	- Bug item #2184525 was fixed (rowspan on HTML cell).
+	
+4.1.001 (2008-10-21)
+	- Support for "start" attribute was added to HTML ordered list.
+	- unicode_data.php file was changed to include UTF-8 to ASCII table.
+	- Some functions were modified to better support UTF-8 extensions to core fonts.
+	- Support for images on HTML lists was improved.
+	- Examples n. 1 and 6 were updated.
+	
+4.1.000 (2008-10-18)
+	- Page-break bug using HTML content was fixed.
+	- The "false" parameter was reintroduced to class_exists function on PHP5 version to avoid autoload.
+	- addHtmlLink() function was improved to support internal links (i.e.: <a href="#23">link to page 23</a>).
+	- Justification alignment is now supported on HTML (see example n. 39).
+	- example_006.php was updated.
+	
 4.0.033 (2008-10-13)
 	- Bug n. 2157099 was fixed.
 	- SetX() and SetY() functions were improved.

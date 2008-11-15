@@ -46,7 +46,6 @@ LABEL
 INPUT[type=text]
 {
     PADDING-RIGHT: 0.25em;
-    MIN-WIDTH: 60%;
     PADDING-LEFT: 0.25em;
     BACKGROUND: url(images/form-input.png) #fff no-repeat left top;
     PADDING-BOTTOM: 1px;
@@ -57,7 +56,6 @@ INPUT[type=text]
 INPUT[type=password]
 {
     PADDING-RIGHT: 0.25em;
-    MIN-WIDTH: 60%;
     PADDING-LEFT: 0.25em;
     BACKGROUND: url(images/form-input.png) #fff no-repeat left top;
     PADDING-BOTTOM: 1px;
@@ -71,9 +69,9 @@ INPUT
 
 SELECT
 {
- 	
+
 }
-BUTTON, INPUT[type=submit] , INPUT[type=clear] , INPUT[type=button] , INPUT[type=reset] 
+BUTTON, INPUT[type=submit] , INPUT[type=clear] , INPUT[type=button] , INPUT[type=reset]
 {
     PADDING-RIGHT: 0.5em;
     PADDING-LEFT: 0.5em;
@@ -104,7 +102,7 @@ h4 { font-size: 1.1em; font-weight: bold;}
 /* ===== hypertext links ===== */
 a:link { background-color: transparent; color: #666; font-weight: bold; text-decoration: none;}
 a:visited { background-color: transparent; color: #666; font-weight: bold; text-decoration: none;}
-a:hover { background-color: transparent; color: #ff9966; font-weight: bold; text-decoration: none;}
+a:hover { background-color: transparent; color: #E18A00; font-weight: bold; text-decoration: none;}
 
 /* ===== Code and Quote Definition ===== */
 .xoopsCode { background-color: #FAFAFA; color: #006600; font-size: .9em; border: #c2cdd6 1px dashed;}
@@ -167,7 +165,7 @@ input.formTextBox { background: #fff; color:inherit; font-size: .8em; font-famil
 /* ===== tables ===== */
 caption {font-style: italic; font-weight: bold;}
 
-th, thead { background-color:#4e4e4e; color:#eeeeee; border:1px solid #AAAAAA; padding:2px; vertical-align:middle; }
+th, thead { background:transparent url(images/bg-lr-titles.gif) repeat scroll 0 0; color:#666; border:1px solid #AAAAAA; padding:2px; vertical-align:middle; }
 .head { background-color:#e3e3f3; color:inherit; border:1px solid #CCC;  padding:2px; font-weight:bold; }
 .even { background-color:#FFFFFF; color:inherit; border: 1px solid #CCCCCC; padding:2px; }
 .odd { background-color: #f1f4fb; color:inherit; border: 1px solid #CCCCCC; padding:2px; }

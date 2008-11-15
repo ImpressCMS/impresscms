@@ -9,6 +9,28 @@ Legend :
   -  a constant was removed OR a whole file was removed
   #  Directory / Folders guide
 
+ImpressCMS 1.1.1 (changes from ImpressCMS 1.1)
+=========================================
+
+===================================================
+# Directory: modules/system/language/english/admin/
+===================================================
+
+modules/system/language/english/admin/preferences.php
+-----------------------------------------------------
+
++  define("_MD_AM_UNABLEENCCLOSED","Database Update Failed, You can't change password encryption whilst the site is closed");
+
+language/english/global.php
+-----------------------------------------------------
++  define("_NONE_LOGGER", "None");
+
+
+
+
+
+
+
 ImpressCMS 1.1 (changes from ImpressCMS 1.0)
 =========================================
 
@@ -102,12 +124,6 @@ INSERT INTO icmscontent VALUES (1, 1, 0, 1, 'Welcome to ImpressCMS', 'What is Im
 INSERT INTO icmspage VALUES (1, 1, 'Welcome to ImpressCMS', 'content.php?page=What_is_ImpressCMS?', 1);
 
 
-
-=====================
-# Directory: libraries
-=====================
-
-+  libraries/tcpdf/config/lang/en.php (added)
 
 =====================
 # Directory: editors

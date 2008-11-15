@@ -170,6 +170,11 @@ define('_MONTH', '1 month');
 define("_DATESTRING","Y/n/j G:i:s");
 define("_MEDIUMDATESTRING","Y/n/j G:i");
 define("_SHORTDATESTRING","Y/n/j");
+define("_TODAY", "\T\o\d\a\y G:i");
+define("_YESTERDAY", "\Y\e\s\\t\e\\r\d\a\y G:i");
+define("_MONTHDAY", "n/j G:i");
+define("_YEARMONTHDAY", "Y/n/j G:i");
+define("_ELAPSE", "%s ago");
 /*
 The following characters are recognized in the format string:
 a - "am" or "pm"
@@ -209,8 +214,6 @@ define('_LANGCODE', 'en');
 define("XOOPS_USE_MULTIBYTES", "0");
 // change 0 to 1 if this language is a RTL (right to left) language
 define("_ADM_USE_RTL","0");
-// change 0 to 1 if this language has an extended date function
-define("_EXT_DATE_FUNC","0");
 
 define('_MODULES','Modules');
 define('_IMPRESSCMS_PREFS','Preferences');
@@ -240,6 +243,7 @@ define("_SECURITYIMAGE_ERROR","Invalid security code");
 define("_SECURITYIMAGE_GDERROR","<b><font color='#CC0000'>Library GD not installed</font> : <a target='php' href='http://fr2.php.net/manual/fr/ref.image.php'>Manual PHP</a></b><br>");
 define("_SECURITYIMAGE_FONTERROR","<b><font color='#CC0000'>No true type fonts found</font>, verify your installation</b><br>");
 */
+define("_NONE_LOGGER", "None");
 define("_QUERIES", "Queries");
 define("_BLOCKS", "Blocks");
 define("_EXTRA", "Extra");

@@ -233,21 +233,21 @@ class XoopsComments extends XoopsObject
 		if ( $this->getVar("icon") != null && $this->getVar("icon") != "" ) {
 			$subject_image = "<a name='".$this->getVar("comment_id")."' id='".$this->getVar("comment_id")."'></a><img src='".XOOPS_URL."/images/subject/".$this->getVar("icon")."' alt='' />";
 		} else {
-			$subject_image =  "<a name='".$this->getVar("comment_id")."' id='".$this->getVar("comment_id")."'></a><img src='".XOOPS_URL."/images/icons/no_posticon.gif' alt='' />";
+			$subject_image =  "<a name='".$this->getVar("comment_id")."' id='".$this->getVar("comment_id")."'></a><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/no_posticon.gif' alt='' />";
 		}
 		if ( $adminview ) {
-			$ip_image = "<img src='".XOOPS_URL."/images/icons/ip.gif' alt='".$this->getVar("ip")."' />";
+			$ip_image = "<img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/ip.gif' alt='".$this->getVar("ip")."' />";
 		} else {
-			$ip_image = "<img src='".XOOPS_URL."/images/icons/ip.gif' alt='' />";
+			$ip_image = "<img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/ip.gif' alt='' />";
 		}
 		if ( $adminview || ($xoopsUser && $this->getVar("user_id") == $xoopsUser->getVar("uid")) ) {
-			$edit_image = "<a href='editcomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".XOOPS_URL."/images/icons/edit.gif' alt='"._EDIT."' /></a>";
+			$edit_image = "<a href='editcomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/edit.gif' alt='"._EDIT."' /></a>";
 		}
 		if ( $xoopsConfig['anonpost'] || $xoopsUser ) {
-			$reply_image = "<a href='replycomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".XOOPS_URL."/images/icons/reply.gif' alt='"._REPLY."' /></a>";
+			$reply_image = "<a href='replycomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/reply.gif' alt='"._REPLY."' /></a>";
 		}
 		if ( $adminview ) {
-			$delete_image = "<a href='deletecomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".XOOPS_URL."/images/icons/delete.gif' alt='"._DELETE."' /></a>";
+			$delete_image = "<a href='deletecomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/delete.gif' alt='"._DELETE."' /></a>";
 		}
 
 		if ( $poster ) {
@@ -271,40 +271,40 @@ class XoopsComments extends XoopsObject
 			} else {
 				$online_image = "";
 			}
-			$profile_image = "<a href='".XOOPS_URL."/userinfo.php?uid=".$poster->getVar("uid")."'><img src='".XOOPS_URL."/images/icons/profile.gif' alt='"._PROFILE."' /></a>";
+			$profile_image = "<a href='".XOOPS_URL."/userinfo.php?uid=".$poster->getVar("uid")."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/profile.gif' alt='"._PROFILE."' /></a>";
 			if ( $xoopsUser ) {
-				$pm_image =  "<a href='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".$poster->getVar("uid")."\",\"pmlite\",800,680);'><img src='".XOOPS_URL."/images/icons/pm.gif' alt='".sprintf(_SENDPMTO,$poster->getVar("uname", "E"))."' /></a>";
+				$pm_image =  "<a href='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".$poster->getVar("uid")."\",\"pmlite\",800,680);'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/pm.gif' alt='".sprintf(_SENDPMTO,$poster->getVar("uname", "E"))."' /></a>";
 			} else {
 				$pm_image = "";
 			}
    			if ( $poster->getVar("user_viewemail") ) {
-				$email_image = "<a href='mailto:".$poster->getVar("email", "E")."'><img src='".XOOPS_URL."/images/icons/email.gif' alt='".sprintf(_SENDEMAILTO,$poster->getVar("uname", "E"))."' /></a>";
+				$email_image = "<a href='mailto:".$poster->getVar("email", "E")."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/email.gif' alt='".sprintf(_SENDEMAILTO,$poster->getVar("uname", "E"))."' /></a>";
 			} else {
 				$email_image = "";
 			}
 			$posterurl = $poster->getVar("url");
    			if ( $posterurl != "" ) {
-				$www_image = "<a href='$posterurl' target='_blank'><img src='".XOOPS_URL."/images/icons/www.gif' alt='"._VISITWEBSITE."' /></a>";
+				$www_image = "<a href='$posterurl' target='_blank'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/www.gif' alt='"._VISITWEBSITE."' /></a>";
 			} else {
 				$www_image = "";
 			}
    			if ( $poster->getVar("user_icq") != "" ) {
-				$icq_image = "<a href='http://wwp.icq.com/scripts/search.dll?to=".$poster->getVar("user_icq", "E")."'><img src='".XOOPS_URL."/images/icons/icq_add.gif' alt='"._ADD."' /></a>";
+				$icq_image = "<a href='http://wwp.icq.com/scripts/search.dll?to=".$poster->getVar("user_icq", "E")."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/icq_add.gif' alt='"._ADD."' /></a>";
 			} else {
 				$icq_image = "";
 			}
 			if ( $poster->getVar("user_aim") != "" ) {
-				$aim_image = "<a href='aim:goim?screenname=".$poster->getVar("user_aim", "E")."&message=Hi+".$poster->getVar("user_aim")."+Are+you+there?'><img src='".XOOPS_URL."/images/icons/aim.gif' alt='aim' /></a>";
+				$aim_image = "<a href='aim:goim?screenname=".$poster->getVar("user_aim", "E")."&message=Hi+".$poster->getVar("user_aim")."+Are+you+there?'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/aim.gif' alt='aim' /></a>";
 			} else {
 				$aim_image = "";
 			}
    			if ( $poster->getVar("user_yim") != "" ) {
-				$yim_image = "<a href='http://edit.yahoo.com/config/send_webmesg?.target=".$poster->getVar("user_yim", "E")."&.src=pg'><img src='".XOOPS_URL."/images/icons/yim.gif' alt='yim' /></a>";
+				$yim_image = "<a href='http://edit.yahoo.com/config/send_webmesg?.target=".$poster->getVar("user_yim", "E")."&.src=pg'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/yim.gif' alt='yim' /></a>";
 			} else {
 				$yim_image = "";
 			}
 			if ( $poster->getVar("user_msnm") != "" ) {
-				$msnm_image = "<a href='".XOOPS_URL."/userinfo.php?uid=".$poster->getVar("uid")."'><img src='".XOOPS_URL."/images/icons/msnm.gif' alt='msnm' /></a>";
+				$msnm_image = "<a href='".XOOPS_URL."/userinfo.php?uid=".$poster->getVar("uid")."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/msnm.gif' alt='msnm' /></a>";
 			} else {
 				$msnm_image = "";
 			}
@@ -321,7 +321,7 @@ class XoopsComments extends XoopsObject
 
 	function showTreeHead($width="100%")
 	{
-		echo "<table border='0' class='outer' cellpadding='0' cellspacing='0' align='center' width='$width'><tr class='bg3' align='center'><td colspan='3'>". _CM_REPLIES ."</td></tr><tr class='bg3' align='left'><td width='60%' class='fg2'>". _CM_TITLE ."</td><td width='20%' class='fg2'>". _CM_POSTER ."</td><td class='fg2'>". _CM_POSTED ."</td></tr>";
+		echo "<table border='0' class='outer' cellpadding='0' cellspacing='0' align='center' width='$width'><tr class='bg3' align='center'><td colspan='3'>". _CM_REPLIES ."</td></tr><tr class='bg3' align='"._GLOBAL_LEFT."'><td width='60%' class='fg2'>". _CM_TITLE ."</td><td width='20%' class='fg2'>". _CM_POSTER ."</td><td class='fg2'>". _CM_POSTED ."</td></tr>";
 	}
 
 	function showTreeItem($order, $mode, $color_num)
@@ -338,7 +338,7 @@ class XoopsComments extends XoopsObject
 		} else {
 			$icon = "icons/no_posticon.gif";
 		}
-		echo "<tr class='$bg' align='left'><td>".$prefix."<img src='".XOOPS_URL."/images/".$icon."'>&nbsp;<a href='".$_SERVER['PHP_SELF']."?item_id=".$this->getVar("item_id")."&amp;comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".$order."#".$this->getVar("comment_id")."'>".$this->getVar("subject")."</a></td><td><a href='".XOOPS_URL."/userinfo.php?uid=".$this->getVar("user_id")."'>".XoopsUser::getUnameFromId($this->getVar("user_id"))."</a></td><td>".$date."</td></tr>";
+		echo "<tr class='$bg' align='"._GLOBAL_LEFT."'><td>".$prefix."<img src='".XOOPS_URL."/images/".$icon."'>&nbsp;<a href='".$_SERVER['PHP_SELF']."?item_id=".$this->getVar("item_id")."&amp;comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".$order."#".$this->getVar("comment_id")."'>".$this->getVar("subject")."</a></td><td><a href='".XOOPS_URL."/userinfo.php?uid=".$this->getVar("user_id")."'>".XoopsUser::getUnameFromId($this->getVar("user_id"))."</a></td><td>".$date."</td></tr>";
 	}
 
 	function showTreeFoot()

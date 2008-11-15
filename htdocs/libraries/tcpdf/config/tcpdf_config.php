@@ -2,7 +2,7 @@
 //============================================================+
 // File name   : tcpdf_config.php
 // Begin       : 2004-06-11
-// Last Update : 2008-07-29
+// Last Update : 2008-10-10
 //
 // Description : Congiguration file for TCPDF.
 //
@@ -29,9 +29,6 @@
  * @since 2004-10-27
  */
 
-// First we need to include the mainfile.
-include_once '../../../mainfile.php';
-$myts =& MyTextSanitizer::getInstance();
 // If you define the constant K_TCPDF_EXTERNAL_CONFIG, the following settings will be ignored.
 
 if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
@@ -126,24 +123,18 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	
 	/**
 	 * header title
-	 * Now if anybody include the default header, the site title and slogan will load.
 	 */
-	$sitename = $xoopsConfig['sitename'];
-	$siteslogan = $xoopsConfig['slogan'];
-	$pdfheader = $sitename.' - '.$siteslogan;
-	$firstLine = $myts->undoHtmlSpecialChars($pdfheader);
-	define ("PDF_HEADER_TITLE", $firstLine);
+	define ("PDF_HEADER_TITLE", "TCPDF Example");
 	
 	/**
 	 * header description string
-	 * The description contains the site url
 	 */
-	define ("PDF_HEADER_STRING", ICMS_URL);
+	define ("PDF_HEADER_STRING", "by Nicola Asuni - Tecnick.com\nwww.tcpdf.org");
 	
 	/**
 	 * image logo
 	 */
-	define ("PDF_HEADER_LOGO", "logo.gif");
+	define ("PDF_HEADER_LOGO", "tcpdf_logo.jpg");
 	
 	/**
 	 * header logo image width [mm]
@@ -188,7 +179,15 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	/**
 	 * main font name
 	 */
-	define ("PDF_FONT_NAME_MAIN", "dejavusans");
+	 // set font
+	if ( defined("_PDF_LOCAL_FONT") && _PDF_LOCAL_FONT && file_exists(ICMS_PDF_LIB_PATH.'/fonts/'._PDF_LOCAL_FONT.'.php')
+) {
+define('_PDF_FONT', _PDF_LOCAL_FONT);
+}else{
+define('_PDF_FONT', 'dejavusans');
+}
+
+	define ("PDF_FONT_NAME_MAIN", _PDF_FONT);
 	
 	/**
 	 * main font size
@@ -198,7 +197,7 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	/**
 	 * data font name
 	 */
-	define ("PDF_FONT_NAME_DATA", "dejavusans");
+	define ("PDF_FONT_NAME_DATA", _PDF_FONT);
 	
 	/**
 	 * data font size
@@ -206,7 +205,7 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	define ("PDF_FONT_SIZE_DATA", 8);
 	
 	/**
-	 *  scale factor for images (number of points in user unit)
+	 * Ratio used to scale the images
 	 */
 	define ("PDF_IMAGE_SCALE_RATIO", 4);
 	

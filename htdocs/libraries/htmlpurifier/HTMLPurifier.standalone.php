@@ -7,7 +7,7 @@
  * primary concern and you are using an opcode cache. PLEASE DO NOT EDIT THIS
  * FILE, changes will be overwritten the next time the script is run.
  * 
- * @version 3.1.1
+ * @version 3.2.0
  * 
  * @warning
  *      You must *not* include any other HTML Purifier files before this file,
@@ -39,7 +39,7 @@
  */
 
 /*
-    HTML Purifier 3.1.1 - Standards Compliant HTML Filtering
+    HTML Purifier 3.2.0 - Standards Compliant HTML Filtering
     Copyright (C) 2006-2008 Edward Z. Yang
 
     This library is free software; you can redistribute it and/or
@@ -75,10 +75,10 @@ class HTMLPurifier
 {
     
     /** Version of HTML Purifier */
-    public $version = '3.1.1';
+    public $version = '3.2.0';
     
     /** Constant with version of HTML Purifier */
-    const VERSION = '3.1.1';
+    const VERSION = '3.2.0';
     
     /** Global configuration object */
     public $config;
@@ -558,6 +558,9 @@ class HTMLPurifier_AttrTypes
         
         // unimplemented aliases
         $this->info['ContentType'] = new HTMLPurifier_AttrDef_Text();
+        $this->info['ContentTypes'] = new HTMLPurifier_AttrDef_Text();
+        $this->info['Charsets'] = new HTMLPurifier_AttrDef_Text();
+        $this->info['Character'] = new HTMLPurifier_AttrDef_Text();
         
         // number is really a positive integer (one or more digits)
         // FIXME: ^^ not always, see start and value of list items
@@ -633,8 +636,8 @@ class HTMLPurifier_AttrValidator
         if (!$current_token) $context->register('CurrentToken', $token);
         
         if (
-          !$token instanceof HTMLPurifier_Token_Start &&
-          !$token instanceof HTMLPurifier_Token_Empty
+            !$token instanceof HTMLPurifier_Token_Start &&
+            !$token instanceof HTMLPurifier_Token_Empty
         ) return $token;
         
         // create alias to global definition array, see also $defs
@@ -648,14 +651,18 @@ class HTMLPurifier_AttrValidator
         // nothing currently utilizes this
         foreach ($definition->info_attr_transform_pre as $transform) {
             $attr = $transform->transform($o = $attr, $config, $context);
-            if ($e && ($attr != $o)) $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
+            if ($e) {
+                if ($attr != $o) $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
+            }
         }
         
         // do local transformations only applicable to this element (pre)
         // ex. <p align="right"> to <p style="text-align:right;">
         foreach ($definition->info[$token->name]->attr_transform_pre as $transform) {
             $attr = $transform->transform($o = $attr, $config, $context);
-            if ($e && ($attr != $o)) $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
+            if ($e) {
+                if ($attr != $o) $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
+            }
         }
         
         // create alias to this element's attribute definition array, see
@@ -712,6 +719,8 @@ class HTMLPurifier_AttrValidator
                 
                 // simple substitution
                 $attr[$attr_key] = $result;
+            } else {
+                // nothing happens
             }
             
             // we'd also want slightly more complicated substitution
@@ -728,13 +737,17 @@ class HTMLPurifier_AttrValidator
         // global (error reporting untested)
         foreach ($definition->info_attr_transform_post as $transform) {
             $attr = $transform->transform($o = $attr, $config, $context);
-            if ($e && ($attr != $o)) $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
+            if ($e) {
+                if ($attr != $o) $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
+            }
         }
         
         // local (error reporting untested)
         foreach ($definition->info[$token->name]->attr_transform_post as $transform) {
             $attr = $transform->transform($o = $attr, $config, $context);
-            if ($e && ($attr != $o)) $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
+            if ($e) {
+                if ($attr != $o) $e->send(E_NOTICE, 'AttrValidator: Attributes transformed', $o, $attr);
+            }
         }
         
         $token->attr = $attr;
@@ -1203,6 +1216,14 @@ abstract class HTMLPurifier_ChildDef
     public $elements = array();
     
     /**
+     * Get lookup of tag names that should not close this element automatically.
+     * All other elements will do so.
+     */
+    public function getNonAutoCloseElements($config) {
+        return $this->elements;
+    }
+    
+    /**
      * Validates nodes according to definition and returns modification.
      * 
      * @param $tokens_of_children Array of HTMLPurifier_Token
@@ -1239,7 +1260,7 @@ class HTMLPurifier_Config
     /**
      * HTML Purifier's version
      */
-    public $version = '3.1.1';
+    public $version = '3.2.0';
     
     /**
      * Bool indicator whether or not to automatically finalize 
@@ -1971,33 +1992,35 @@ class HTMLPurifier_ContentSets
         // sorry, no way of overloading
         foreach ($modules as $module_i => $module) {
             foreach ($module->content_sets as $key => $value) {
-                if (isset($this->info[$key])) {
+                $temp = $this->convertToLookup($value);
+                if (isset($this->lookup[$key])) {
                     // add it into the existing content set
-                    $this->info[$key] = $this->info[$key] . ' | ' . $value;
+                    $this->lookup[$key] = array_merge($this->lookup[$key], $temp);
                 } else {
-                    $this->info[$key] = $value;
+                    $this->lookup[$key] = $temp;
                 }
             }
         }
-        // perform content_set expansions
-        $this->keys = array_keys($this->info);
-        foreach ($this->info as $i => $set) {
-            // only performed once, so infinite recursion is not
-            // a problem
-            $this->info[$i] =
-                str_replace(
-                    $this->keys,
-                    // must be recalculated each time due to
-                    // changing substitutions
-                    array_values($this->info),
-                $set);
+        $old_lookup = false;
+        while ($old_lookup !== $this->lookup) {
+            $old_lookup = $this->lookup;
+            foreach ($this->lookup as $i => $set) {
+                $add = array();
+                foreach ($set as $element => $x) {
+                    if (isset($this->lookup[$element])) {
+                        $add += $this->lookup[$element];
+                        unset($this->lookup[$i][$element]);
+                    }
+                }
+                $this->lookup[$i] += $add;
+            }
         }
-        $this->values = array_values($this->info);
         
-        // generate lookup tables
-        foreach ($this->info as $name => $set) {
-            $this->lookup[$name] = $this->convertToLookup($set);
+        foreach ($this->lookup as $key => $lookup) {
+            $this->info[$key] = implode(' | ', array_keys($lookup));
         }
+        $this->keys   = array_keys($this->info);
+        $this->values = array_values($this->info);
     }
     
     /**
@@ -2009,10 +2032,20 @@ class HTMLPurifier_ContentSets
         if (!empty($def->child)) return; // already done!
         $content_model = $def->content_model;
         if (is_string($content_model)) {
-            $def->content_model = str_replace(
-                $this->keys, $this->values, $content_model);
+            // Assume that $this->keys is alphanumeric
+            $def->content_model = preg_replace_callback(
+                '/\b(' . implode('|', $this->keys) . ')\b/',
+                array($this, 'generateChildDefCallback'),
+                $content_model
+            );
+            //$def->content_model = str_replace(
+            //    $this->keys, $this->values, $content_model);
         }
         $def->child = $this->getChildDef($def, $module);
+    }
+    
+    public function generateChildDefCallback($matches) {
+        return $this->info[$matches[0]];
     }
     
     /**
@@ -2954,6 +2987,12 @@ class HTMLPurifier_Encoder
         set_error_handler(array('HTMLPurifier_Encoder', 'muteErrorHandler'));
         if ($iconv && !$config->get('Test', 'ForceNoIconv')) {
             $str = iconv($encoding, 'utf-8//IGNORE', $str);
+            if ($str === false) {
+                // $encoding is not a valid encoding
+                restore_error_handler();
+                trigger_error('Invalid encoding ' . $encoding, E_USER_ERROR);
+                return '';
+            }
             // If the string is bjorked by Shift_JIS or a similar encoding
             // that doesn't support all of ASCII, convert the naughty
             // characters to their true byte-wise ASCII/UTF-8 equivalents.
@@ -2965,7 +3004,7 @@ class HTMLPurifier_Encoder
             restore_error_handler();
             return $str;
         }
-        trigger_error('Encoding not supported', E_USER_ERROR);
+        trigger_error('Encoding not supported, please install iconv', E_USER_ERROR);
     }
     
     /**
@@ -3292,22 +3331,37 @@ class HTMLPurifier_EntityParser
 class HTMLPurifier_ErrorCollector
 {
     
-    protected $errors = array();
+    /**
+     * Identifiers for the returned error array. These are purposely numeric
+     * so list() can be used.
+     */
+    const LINENO   = 0;
+    const SEVERITY = 1;
+    const MESSAGE  = 2;
+    const CHILDREN = 3;
+    
+    protected $errors;
+    protected $_current;
+    protected $_stacks = array(array());
     protected $locale;
     protected $generator;
     protected $context;
     
+    protected $lines = array();
+    
     public function __construct($context) {
         $this->locale    =& $context->get('Locale');
-        $this->generator =& $context->get('Generator');
         $this->context   = $context;
+        $this->_current  =& $this->_stacks[0];
+        $this->errors    =& $this->_stacks[0];
     }
     
     /**
      * Sends an error message to the collector for later use
-     * @param $line Integer line number, or HTMLPurifier_Token that caused error
      * @param $severity int Error severity, PHP error style (don't use E_USER_)
      * @param $msg string Error message text
+     * @param $subst1 string First substitution for $msg
+     * @param $subst2 string ...
      */
     public function send($severity, $msg) {
         
@@ -3320,6 +3374,7 @@ class HTMLPurifier_ErrorCollector
         
         $token = $this->context->get('CurrentToken', true);
         $line  = $token ? $token->line : $this->context->get('CurrentLine', true);
+        $col   = $token ? $token->col  : $this->context->get('CurrentCol',  true);
         $attr  = $this->context->get('CurrentAttr', true);
         
         // perform special substitutions, also add custom parameters
@@ -3340,13 +3395,66 @@ class HTMLPurifier_ErrorCollector
         
         if (!empty($subst)) $msg = strtr($msg, $subst);
         
-        $this->errors[] = array($line, $severity, $msg);
+        // (numerically indexed)
+        $error = array(
+            self::LINENO   => $line,
+            self::SEVERITY => $severity,
+            self::MESSAGE  => $msg,
+            self::CHILDREN => array()
+        );
+        $this->_current[] = $error;
+        
+        
+        // NEW CODE BELOW ...
+        
+        $struct = null;
+        // Top-level errors are either:
+        //  TOKEN type, if $value is set appropriately, or
+        //  "syntax" type, if $value is null
+        $new_struct = new HTMLPurifier_ErrorStruct();
+        $new_struct->type = HTMLPurifier_ErrorStruct::TOKEN;
+        if ($token) $new_struct->value = clone $token;
+        if (is_int($line) && is_int($col)) {
+            if (isset($this->lines[$line][$col])) {
+                $struct = $this->lines[$line][$col];
+            } else {
+                $struct = $this->lines[$line][$col] = $new_struct;
+            }
+            // These ksorts may present a performance problem
+            ksort($this->lines[$line], SORT_NUMERIC);
+        } else {
+            if (isset($this->lines[-1])) {
+                $struct = $this->lines[-1];
+            } else {
+                $struct = $this->lines[-1] = $new_struct;
+            }
+        }
+        ksort($this->lines, SORT_NUMERIC);
+        
+        // Now, check if we need to operate on a lower structure
+        if (!empty($attr)) {
+            $struct = $struct->getChild(HTMLPurifier_ErrorStruct::ATTR, $attr);
+            if (!$struct->value) {
+                $struct->value = array($attr, 'PUT VALUE HERE');
+            }
+        }
+        if (!empty($cssprop)) {
+            $struct = $struct->getChild(HTMLPurifier_ErrorStruct::CSSPROP, $cssprop);
+            if (!$struct->value) {
+                // if we tokenize CSS this might be a little more difficult to do
+                $struct->value = array($cssprop, 'PUT VALUE HERE');
+            }
+        }
+        
+        // Ok, structs are all setup, now time to register the error
+        $struct->addError($severity, $msg);
     }
     
     /**
      * Retrieves raw error data for custom formatter to use
-     * @param List of arrays in format of array(Error message text,
-     *        token that caused error, tokens surrounding token)
+     * @param List of arrays in format of array(line of error,
+     *        error severity, error message,
+     *        recursive sub-errors array)
      */
     public function getRaw() {
         return $this->errors;
@@ -3355,38 +3463,25 @@ class HTMLPurifier_ErrorCollector
     /**
      * Default HTML formatting implementation for error messages
      * @param $config Configuration array, vital for HTML output nature
+     * @param $errors Errors array to display; used for recursion.
      */
-    public function getHTMLFormatted($config) {
+    public function getHTMLFormatted($config, $errors = null) {
         $ret = array();
         
-        $errors = $this->errors;
+        $this->generator = new HTMLPurifier_Generator($config, $this->context);
+        if ($errors === null) $errors = $this->errors;
         
-        // sort error array by line
-        // line numbers are enabled if they aren't explicitly disabled
-        if ($config->get('Core', 'MaintainLineNumbers') !== false) {
-            $has_line       = array();
-            $lines          = array();
-            $original_order = array();
-            foreach ($errors as $i => $error) {
-                $has_line[] = (int) (bool) $error[0];
-                $lines[] = $error[0];
-                $original_order[] = $i;
+        // 'At line' message needs to be removed
+        
+        // generation code for new structure goes here. It needs to be recursive.
+        foreach ($this->lines as $line => $col_array) {
+            if ($line == -1) continue;
+            foreach ($col_array as $col => $struct) {
+                $this->_renderStruct($ret, $struct, $line, $col);
             }
-            array_multisort($has_line, SORT_DESC, $lines, SORT_ASC, $original_order, SORT_ASC, $errors);
         }
-        
-        foreach ($errors as $error) {
-            list($line, $severity, $msg) = $error;
-            $string = '';
-            $string .= '<strong>' . $this->locale->getErrorName($severity) . '</strong>: ';
-            $string .= $this->generator->escape($msg); 
-            if ($line) {
-                // have javascript link generation that causes 
-                // textarea to skip to the specified line
-                $string .= $this->locale->formatMessage(
-                    'ErrorCollector: At line', array('line' => $line));
-            }
-            $ret[] = $string;
+        if (isset($this->lines[-1])) {
+            $this->_renderStruct($ret, $this->lines[-1]);
         }
         
         if (empty($errors)) {
@@ -3397,8 +3492,103 @@ class HTMLPurifier_ErrorCollector
         
     }
     
+    private function _renderStruct(&$ret, $struct, $line = null, $col = null) {
+        $stack = array($struct);
+        $context_stack = array(array());
+        while ($current = array_pop($stack)) {
+            $context = array_pop($context_stack);
+            foreach ($current->errors as $error) {
+                list($severity, $msg) = $error;
+                $string = '';
+                $string .= '<div>';
+                // W3C uses an icon to indicate the severity of the error.
+                $error = $this->locale->getErrorName($severity);
+                $string .= "<span class=\"error e$severity\"><strong>$error</strong></span> ";
+                if (!is_null($line) && !is_null($col)) {
+                    $string .= "<em class=\"location\">Line $line, Column $col: </em> ";
+                } else {
+                    $string .= '<em class="location">End of Document: </em> ';
+                }
+                $string .= '<strong class="description">' . $this->generator->escape($msg) . '</strong> ';
+                $string .= '</div>';
+                // Here, have a marker for the character on the column appropriate.
+                // Be sure to clip extremely long lines.
+                //$string .= '<pre>';
+                //$string .= '';
+                //$string .= '</pre>';
+                $ret[] = $string;
+            }
+            foreach ($current->children as $type => $array) {
+                $context[] = $current;
+                $stack = array_merge($stack, array_reverse($array, true));
+                for ($i = count($array); $i > 0; $i--) {
+                    $context_stack[] = $context;
+                }
+            }
+        }
+    }
+    
 }
 
+
+
+
+/**
+ * Records errors for particular segments of an HTML document such as tokens,
+ * attributes or CSS properties. They can contain error structs (which apply
+ * to components of what they represent), but their main purpose is to hold
+ * errors applying to whatever struct is being used.
+ */
+class HTMLPurifier_ErrorStruct
+{
+    
+    /**
+     * Possible values for $children first-key. Note that top-level structures
+     * are automatically token-level.
+     */
+    const TOKEN     = 0;
+    const ATTR      = 1;
+    const CSSPROP   = 2;
+    
+    /**
+     * Type of this struct.
+     */
+    public $type;
+    
+    /**
+     * Value of the struct we are recording errors for. There are various
+     * values for this:
+     *  - TOKEN: Instance of HTMLPurifier_Token
+     *  - ATTR: array('attr-name', 'value')
+     *  - CSSPROP: array('prop-name', 'value')
+     */
+    public $value;
+    
+    /**
+     * Errors registered for this structure.
+     */
+    public $errors = array();
+    
+    /**
+     * Child ErrorStructs that are from this structure. For example, a TOKEN
+     * ErrorStruct would contain ATTR ErrorStructs. This is a multi-dimensional
+     * array in structure: [TYPE]['identifier']
+     */
+    public $children = array();
+    
+    public function getChild($type, $id) {
+        if (!isset($this->children[$type][$id])) {
+            $this->children[$type][$id] = new HTMLPurifier_ErrorStruct();
+            $this->children[$type][$id]->type = $type;
+        }
+        return $this->children[$type][$id];
+    }
+    
+    public function addError($severity, $message) {
+        $this->errors[] = array($severity, $message);
+    }
+    
+}
 
 
 
@@ -3487,6 +3677,11 @@ class HTMLPurifier_Generator
     private $_def;
     
     /**
+     * Cache of %Output.SortAttr
+     */
+    private $_sortAttr;
+    
+    /**
      * Configuration for the generator
      */
     protected $config;
@@ -3498,6 +3693,7 @@ class HTMLPurifier_Generator
     public function __construct($config, $context) {
         $this->config = $config;
         $this->_scriptFix = $config->get('Output', 'CommentScriptContents');
+        $this->_sortAttr = $config->get('Output', 'SortAttr');
         $this->_def = $config->getHTMLDefinition();
         $this->_xhtml = $this->_def->doctype->xml;
     }
@@ -3602,6 +3798,7 @@ class HTMLPurifier_Generator
      */
     public function generateAttributes($assoc_array_of_attributes, $element = false) {
         $html = '';
+        if ($this->_sortAttr) ksort($assoc_array_of_attributes);
         foreach ($assoc_array_of_attributes as $key => $value) {
             if (!$this->_xhtml) {
                 // Remove namespaced attributes
@@ -4364,7 +4561,11 @@ class HTMLPurifier_HTMLModuleManager
         $common = array(
             'CommonAttributes', 'Text', 'Hypertext', 'List',
             'Presentation', 'Edit', 'Bdo', 'Tables', 'Image',
-            'StyleAttribute', 'Scripting', 'Object'
+            'StyleAttribute',
+            // Unsafe:
+            'Scripting', 'Object',  'Forms',
+            // Sorta legacy, but present in strict:
+            'Name', 
         );
         $transitional = array('Legacy', 'Target');
         $xml = array('XMLCommonAttributes');
@@ -4383,7 +4584,7 @@ class HTMLPurifier_HTMLModuleManager
         $this->doctypes->register(
             'HTML 4.01 Strict', false,
             array_merge($common, $non_xml),
-            array('Tidy_Strict', 'Tidy_Proprietary'),
+            array('Tidy_Strict', 'Tidy_Proprietary', 'Tidy_Name'),
             array(),
             '-//W3C//DTD HTML 4.01//EN',
             'http://www.w3.org/TR/html4/strict.dtd'
@@ -4392,7 +4593,7 @@ class HTMLPurifier_HTMLModuleManager
         $this->doctypes->register(
             'XHTML 1.0 Transitional', true,
             array_merge($common, $transitional, $xml, $non_xml),
-            array('Tidy_Transitional', 'Tidy_XHTML', 'Tidy_Proprietary'),
+            array('Tidy_Transitional', 'Tidy_XHTML', 'Tidy_Proprietary', 'Tidy_Name'),
             array(),
             '-//W3C//DTD XHTML 1.0 Transitional//EN',
             'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'
@@ -4401,7 +4602,7 @@ class HTMLPurifier_HTMLModuleManager
         $this->doctypes->register(
             'XHTML 1.0 Strict', true,
             array_merge($common, $xml, $non_xml),
-            array('Tidy_Strict', 'Tidy_XHTML', 'Tidy_Strict', 'Tidy_Proprietary'),
+            array('Tidy_Strict', 'Tidy_XHTML', 'Tidy_Strict', 'Tidy_Proprietary', 'Tidy_Name'),
             array(),
             '-//W3C//DTD XHTML 1.0 Strict//EN',
             'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'
@@ -4410,7 +4611,7 @@ class HTMLPurifier_HTMLModuleManager
         $this->doctypes->register(
             'XHTML 1.1', true,
             array_merge($common, $xml, array('Ruby')),
-            array('Tidy_Strict', 'Tidy_XHTML', 'Tidy_Proprietary', 'Tidy_Strict'), // Tidy_XHTML1_1
+            array('Tidy_Strict', 'Tidy_XHTML', 'Tidy_Proprietary', 'Tidy_Strict', 'Tidy_Name'), // Tidy_XHTML1_1
             array(),
             '-//W3C//DTD XHTML 1.1//EN',
             'http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd'
@@ -4526,7 +4727,7 @@ class HTMLPurifier_HTMLModuleManager
         if ($config->get('HTML', 'SafeEmbed')) {
             $modules[] = 'SafeEmbed';
         }
-
+        
         // merge in custom modules
         $modules = array_merge($modules, $this->userModules);
         
@@ -4679,7 +4880,11 @@ class HTMLPurifier_HTMLModuleManager
             
             $this->contentSets->generateChildDef($def, $module);
         }
-            
+        
+        // This can occur if there is a blank definition, but no base to
+        // mix it in with
+        if (!$def) return false;
+        
         // add information on required attributes
         foreach ($def->attr as $attr_name => $attr_def) {
             if ($attr_def->required) {
@@ -4755,6 +4960,11 @@ class HTMLPurifier_IDAccumulator
  * This enables "formatter-like" functionality such as auto-paragraphing,
  * smiley-ification and linkification to take place.
  * 
+ * A note on how handlers create changes; this is done by assigning a new
+ * value to the $token reference. These values can take a variety of forms and
+ * are best described HTMLPurifier_Strategy_MakeWellFormed->processToken()
+ * documentation.
+ * 
  * @todo Allow injectors to request a re-run on their output. This 
  *       would help if an operation is recursive.
  */
@@ -4765,13 +4975,6 @@ abstract class HTMLPurifier_Injector
      * Advisory name of injector, this is for friendly error messages
      */
     public $name;
-    
-    /**
-     * Amount of tokens the injector needs to skip + 1. Because
-     * the decrement is the first thing that happens, this needs to
-     * be one greater than the "real" skip count.
-     */
-    public $skip = 1;
     
     /**
      * Instance of HTMLPurifier_HTMLDefinition
@@ -4803,6 +5006,32 @@ abstract class HTMLPurifier_Injector
      * array('element' => array('attr', 'attr2'), 'element2')
      */
     public $needed = array();
+    
+    /**
+     * Index of inputTokens to rewind to.
+     */
+    protected $rewind = false;
+    
+    /**
+     * Rewind to a spot to re-perform processing. This is useful if you
+     * deleted a node, and now need to see if this change affected any
+     * earlier nodes. Rewinding does not affect other injectors, and can
+     * result in infinite loops if not used carefully.
+     * @warning HTML Purifier will prevent you from fast-forwarding with this
+     *          function.
+     */
+    public function rewind($index) {
+        $this->rewind = $index;
+    }
+    
+    /**
+     * Retrieves rewind, and then unsets it.
+     */
+    public function getRewind() {
+        $r = $this->rewind;
+        $this->rewind = false;
+        return $r;
+    }
     
     /**
      * Prepares the injector by giving it the config and context objects:
@@ -4867,6 +5096,69 @@ abstract class HTMLPurifier_Injector
     }
     
     /**
+     * Iterator function, which starts with the next token and continues until
+     * you reach the end of the input tokens.
+     * @warning Please prevent previous references from interfering with this
+     *          functions by setting $i = null beforehand!
+     * @param &$i Current integer index variable for inputTokens
+     * @param &$current Current token variable. Do NOT use $token, as that variable is also a reference
+     */
+    protected function forward(&$i, &$current) {
+        if ($i === null) $i = $this->inputIndex + 1;
+        else $i++;
+        if (!isset($this->inputTokens[$i])) return false;
+        $current = $this->inputTokens[$i];
+        return true;
+    }
+    
+    /**
+     * Similar to _forward, but accepts a third parameter $nesting (which
+     * should be initialized at 0) and stops when we hit the end tag
+     * for the node $this->inputIndex starts in.
+     */
+    protected function forwardUntilEndToken(&$i, &$current, &$nesting) {
+        $result = $this->forward($i, $current);
+        if (!$result) return false;
+        if ($nesting === null) $nesting = 0;
+        if     ($current instanceof HTMLPurifier_Token_Start) $nesting++;
+        elseif ($current instanceof HTMLPurifier_Token_End) {
+            if ($nesting <= 0) return false;
+            $nesting--;
+        }
+        return true;
+    }
+    
+    /**
+     * Iterator function, starts with the previous token and continues until
+     * you reach the beginning of input tokens.
+     * @warning Please prevent previous references from interfering with this
+     *          functions by setting $i = null beforehand!
+     * @param &$i Current integer index variable for inputTokens
+     * @param &$current Current token variable. Do NOT use $token, as that variable is also a reference
+     */
+    protected function backward(&$i, &$current) {
+        if ($i === null) $i = $this->inputIndex - 1;
+        else $i--;
+        if ($i < 0) return false;
+        $current = $this->inputTokens[$i];
+        return true;
+    }
+    
+    /**
+     * Initializes the iterator at the current position. Use in a do {} while;
+     * loop to force the _forward and _backward functions to start at the
+     * current location.
+     * @warning Please prevent previous references from interfering with this
+     *          functions by setting $i = null beforehand!
+     * @param &$i Current integer index variable for inputTokens
+     * @param &$current Current token variable. Do NOT use $token, as that variable is also a reference
+     */
+    protected function current(&$i, &$current) {
+        if ($i === null) $i = $this->inputIndex;
+        $current = $this->inputTokens[$i];
+    }
+    
+    /**
      * Handler that is called when a text token is processed
      */
     public function handleText(&$token) {}
@@ -4877,8 +5169,16 @@ abstract class HTMLPurifier_Injector
     public function handleElement(&$token) {}
     
     /**
+     * Handler that is called when an end token is processed
+     */
+    public function handleEnd(&$token) {
+        $this->notifyEnd($token);
+    }
+    
+    /**
      * Notifier that is called when an end token is processed
      * @note This differs from handlers in that the token is read-only
+     * @deprecated
      */
     public function notifyEnd($token) {}
     
@@ -5405,6 +5705,12 @@ class HTMLPurifier_Length
 class HTMLPurifier_Lexer
 {
     
+    /**
+     * Whether or not this lexer implements line-number/column-number tracking.
+     * If it does, set to true.
+     */
+    public $tracksLineNumbers = false;
+    
     // -- STATIC ----------------------------------------------------------
     
     /**
@@ -5433,45 +5739,64 @@ class HTMLPurifier_Lexer
             $lexer = $config->get('Core', 'LexerImpl');
         }
         
+        $needs_tracking =
+            $config->get('Core', 'MaintainLineNumbers') ||
+            $config->get('Core', 'CollectErrors');
+        
+        $inst = null;
         if (is_object($lexer)) {
-            return $lexer;
+            $inst = $lexer;
+        } else {
+            
+            if (is_null($lexer)) { do {
+                // auto-detection algorithm
+                
+                if ($needs_tracking) {
+                    $lexer = 'DirectLex';
+                    break;
+                }
+                
+                if (
+                    class_exists('DOMDocument') &&
+                    method_exists('DOMDocument', 'loadHTML') &&
+                    !extension_loaded('domxml')
+                ) {
+                    // check for DOM support, because while it's part of the
+                    // core, it can be disabled compile time. Also, the PECL
+                    // domxml extension overrides the default DOM, and is evil
+                    // and nasty and we shan't bother to support it
+                    $lexer = 'DOMLex';
+                } else {
+                    $lexer = 'DirectLex';
+                }
+                
+            } while(0); } // do..while so we can break
+            
+            // instantiate recognized string names
+            switch ($lexer) {
+                case 'DOMLex':
+                    $inst = new HTMLPurifier_Lexer_DOMLex();
+                    break;
+                case 'DirectLex':
+                    $inst = new HTMLPurifier_Lexer_DirectLex();
+                    break;
+                case 'PH5P':
+                    $inst = new HTMLPurifier_Lexer_PH5P();
+                    break;
+                default:
+                    throw new HTMLPurifier_Exception("Cannot instantiate unrecognized Lexer type " . htmlspecialchars($lexer));
+            }
         }
         
-        if (is_null($lexer)) { do {
-            // auto-detection algorithm
-            
-            // once PHP DOM implements native line numbers, or we
-            // hack out something using XSLT, remove this stipulation
-            $line_numbers = $config->get('Core', 'MaintainLineNumbers');
-            if (
-                $line_numbers === true ||
-                ($line_numbers === null && $config->get('Core', 'CollectErrors'))
-            ) {
-                $lexer = 'DirectLex';
-                break;
-            }
-            
-            if (class_exists('DOMDocument')) {
-                // check for DOM support, because, surprisingly enough,
-                // it's *not* part of the core!
-                $lexer = 'DOMLex';
-            } else {
-                $lexer = 'DirectLex';
-            }
-            
-        } while(0); } // do..while so we can break
+        if (!$inst) throw new HTMLPurifier_Exception('No lexer was instantiated');
         
-        // instantiate recognized string names
-        switch ($lexer) {
-            case 'DOMLex':
-                return new HTMLPurifier_Lexer_DOMLex();
-            case 'DirectLex':
-                return new HTMLPurifier_Lexer_DirectLex();
-            case 'PH5P':
-                return new HTMLPurifier_Lexer_PH5P();
-            default:
-                trigger_error("Cannot instantiate unrecognized Lexer type " . htmlspecialchars($lexer), E_USER_ERROR);
+        // once PHP DOM implements native line numbers, or we
+        // hack out something using XSLT, remove this stipulation
+        if ($needs_tracking && !$inst->tracksLineNumbers) {
+            throw new HTMLPurifier_Exception('Cannot use lexer that does not support line numbers with Core.MaintainLineNumbers or Core.CollectErrors (use DirectLex instead)');
         }
+        
+        return $inst;
         
     }
     
@@ -5589,11 +5914,6 @@ class HTMLPurifier_Lexer
      */
     public function normalize($html, $config, $context) {
         
-        // extract body from document if applicable
-        if ($config->get('Core', 'ConvertDocumentToFragment')) {
-            $html = $this->extractBody($html);
-        }
-        
         // normalize newlines to \n
         $html = str_replace("\r\n", "\n", $html);
         $html = str_replace("\r", "\n", $html);
@@ -5605,6 +5925,11 @@ class HTMLPurifier_Lexer
         
         // escape CDATA
         $html = $this->escapeCDATA($html);
+        
+        // extract body from document if applicable
+        if ($config->get('Core', 'ConvertDocumentToFragment')) {
+            $html = $this->extractBody($html);
+        }
         
         // expand entities that aren't the big five
         $html = $this->_entity_parser->substituteNonSpecialEntities($html);
@@ -5876,6 +6201,7 @@ class HTMLPurifier_StringHashParser
             if (strncmp('--', $line, 2) === 0) {
                 // Multiline declaration
                 $state = trim($line, '- ');
+                if (!isset($ret[$state])) $ret[$state] = '';
                 continue;
             } elseif (!$state) {
                 $single = true;
@@ -5892,7 +6218,6 @@ class HTMLPurifier_StringHashParser
                 $single = false;
                 $state  = false;
             } else {
-                if (!isset($ret[$state])) $ret[$state] = '';
                 $ret[$state] .= "$line\n";
             }
         } while (!feof($fh));
@@ -5944,6 +6269,7 @@ abstract class HTMLPurifier_TagTransform
  */
 class HTMLPurifier_Token {
     public $line; /**< Line number node was on in source document. Null if unknown. */
+    public $col;  /**< Column of line node was on in source document. Null if unknown. */
     
     /**
      * Lookup array of processing that this token is exempt from.
@@ -5952,19 +6278,43 @@ class HTMLPurifier_Token {
      */
     public $armor = array();
     
+    /**
+     * Used during MakeWellFormed.
+     */
+    public $skip;
+    public $rewind;
+    
     public function __get($n) {
       if ($n === 'type') {
         trigger_error('Deprecated type property called; use instanceof', E_USER_NOTICE);
         switch (get_class($this)) {
-          case 'HTMLPurifier_Token_Start': return 'start';
-          case 'HTMLPurifier_Token_Empty': return 'empty';
-          case 'HTMLPurifier_Token_End': return 'end';
-          case 'HTMLPurifier_Token_Text': return 'text';
-          case 'HTMLPurifier_Token_Comment': return 'comment';
+          case 'HTMLPurifier_Token_Start':      return 'start';
+          case 'HTMLPurifier_Token_Empty':      return 'empty';
+          case 'HTMLPurifier_Token_End':        return 'end';
+          case 'HTMLPurifier_Token_Text':       return 'text';
+          case 'HTMLPurifier_Token_Comment':    return 'comment';
           default: return null;
         }
       }
     }
+    
+    /**
+     * Sets the position of the token in the source document.
+     */
+    public function position($l = null, $c = null) {
+        $this->line = $l;
+        $this->col  = $c;
+    }
+    
+    /**
+     * Convenience function for DirectLex settings line/col position.
+     */
+    public function rawPosition($l, $c) {
+        if ($c === -1) $l++;
+        $this->line = $l;
+        $this->col  = $c;
+    }
+    
 }
 
 
@@ -6788,6 +7138,18 @@ class HTMLPurifier_UnitConverter
      * Scales a float to $scale digits right of decimal point, like BCMath.
      */
     private function scale($r, $scale) {
+        if ($scale < 0) {
+            // The f sprintf type doesn't support negative numbers, so we
+            // need to cludge things manually. First get the string.
+            $r = sprintf('%.0f', (float) $r);
+            // Due to floating point precision loss, $r will more than likely
+            // look something like 4652999999999.9234. We grab one more digit
+            // than we need to precise from $r and then use that to round
+            // appropriately.
+            $precise = (string) round(substr($r, 0, strlen($r) + $scale), -1);
+            // Now we return it, truncating the zero that was rounded off.
+            return substr($precise, 0, -1) . str_repeat('0', -$scale + 1);
+        }
         return sprintf('%.' . $scale . 'f', (float) $r);
     }
     
@@ -8800,10 +9162,7 @@ class HTMLPurifier_AttrDef_HTML_LinkTypes extends HTMLPurifier_AttrDef
         }
         
         if (empty($ret_lookup)) return false;
-        
-        $ret_array = array();
-        foreach ($ret_lookup as $part => $bool) $ret_array[] = $part;
-        $string = implode(' ', $ret_array);
+        $string = implode(' ', array_keys($ret_lookup));
         
         return $string;
         
@@ -9140,6 +9499,29 @@ class HTMLPurifier_AttrDef_URI_Email_SimpleCheck extends HTMLPurifier_AttrDef_UR
 
 
 
+/**
+ * Pre-transform that changes proprietary background attribute to CSS.
+ */
+class HTMLPurifier_AttrTransform_Background extends HTMLPurifier_AttrTransform {
+
+    public function transform($attr, $config, $context) {
+        
+        if (!isset($attr['background'])) return $attr;
+        
+        $background = $this->confiscateAttr($attr, 'background');
+        // some validation should happen here
+        
+        $this->prependCSS($attr, "background-image:url($background);");
+        
+        return $attr;
+        
+    }
+    
+}
+
+
+
+
 // this MUST be placed in post, as it assumes that any value in dir is valid
 
 /**
@@ -9316,7 +9698,12 @@ class HTMLPurifier_AttrTransform_ImgRequired extends HTMLPurifier_AttrTransform
         
         if (!isset($attr['alt'])) {
             if ($src) {
-                $attr['alt'] = basename($attr['src']);
+                $alt = $config->get('Attr', 'DefaultImageAlt');
+                if ($alt === null) {
+                    $attr['alt'] = basename($attr['src']);
+                } else {
+                    $attr['alt'] = $alt;
+                }
             } else {
                 $attr['alt'] = $config->get('Attr', 'DefaultInvalidImageAlt');
             }
@@ -9368,6 +9755,46 @@ class HTMLPurifier_AttrTransform_ImgSpace extends HTMLPurifier_AttrTransform {
         
         return $attr;
         
+    }
+    
+}
+
+
+
+
+/**
+ * Performs miscellaneous cross attribute validation and filtering for
+ * input elements. This is meant to be a post-transform.
+ */
+class HTMLPurifier_AttrTransform_Input extends HTMLPurifier_AttrTransform {
+    
+    protected $pixels;
+    
+    public function __construct() {
+        $this->pixels = new HTMLPurifier_AttrDef_HTML_Pixels();
+    }
+    
+    public function transform($attr, $config, $context) {
+        if (!isset($attr['type'])) $t = 'text';
+        else $t = strtolower($attr['type']);
+        if (isset($attr['checked']) && $t !== 'radio' && $t !== 'checkbox') {
+            unset($attr['checked']);
+        }
+        if (isset($attr['maxlength']) && $t !== 'text' && $t !== 'password') {
+            unset($attr['maxlength']);
+        }
+        if (isset($attr['size']) && $t !== 'text' && $t !== 'password') {
+            $result = $this->pixels->validate($attr['size'], $config, $context);
+            if ($result === false) unset($attr['size']);
+            else $attr['size'] = $result;
+        }
+        if (isset($attr['src']) && $t !== 'image') {
+            unset($attr['src']);
+        }
+        if (!isset($attr['value']) && ($t === 'radio' || $t === 'checkbox')) {
+            $attr['value'] = '';
+        }
+        return $attr;
     }
     
 }
@@ -9543,6 +9970,22 @@ class HTMLPurifier_AttrTransform_ScriptRequired extends HTMLPurifier_AttrTransfo
 
 
 /**
+ * Sets height/width defaults for <textarea>
+ */
+class HTMLPurifier_AttrTransform_Textarea extends HTMLPurifier_AttrTransform
+{
+    
+    public function transform($attr, $config, $context) {
+        // Calculated from Firefox
+        if (!isset($attr['cols'])) $attr['cols'] = '22';
+        if (!isset($attr['rows'])) $attr['rows'] = '3';
+        return $attr;
+    }
+    
+}
+
+
+/**
  * Definition that uses different definitions depending on context.
  * 
  * The del and ins tags are notable because they allow different types of
@@ -9595,8 +10038,6 @@ class HTMLPurifier_ChildDef_Chameleon extends HTMLPurifier_ChildDef
  * 
  * @warning Currently this class is an all or nothing proposition, that is,
  *          it will only give a bool return value.
- * @note This class is currently not used by any code, although it is unit
- *       tested.
  */
 class HTMLPurifier_ChildDef_Custom extends HTMLPurifier_ChildDef
 {
@@ -9843,16 +10284,19 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
     public $allow_empty = true;
     public $type = 'strictblockquote';
     protected $init = false;
+    
+    /**
+     * @note We don't want MakeWellFormed to auto-close inline elements since
+     *       they might be allowed.
+     */
+    public function getNonAutoCloseElements($config) {
+        $this->init($config);
+        return $this->fake_elements;
+    }
+    
     public function validateChildren($tokens_of_children, $config, $context) {
         
-        $def = $config->getHTMLDefinition();
-        if (!$this->init) {
-            // allow all inline elements
-            $this->real_elements = $this->elements;
-            $this->fake_elements = $def->info_content_sets['Flow'];
-            $this->fake_elements['#PCDATA'] = true;
-            $this->init = true;
-        }
+        $this->init($config);
         
         // trick the parent class into thinking it allows more
         $this->elements = $this->fake_elements;
@@ -9862,6 +10306,7 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
         if ($result === false) return array();
         if ($result === true) $result = $tokens_of_children;
         
+        $def = $config->getHTMLDefinition();
         $block_wrap_start = new HTMLPurifier_Token_Start($def->info_block_wrapper);
         $block_wrap_end   = new HTMLPurifier_Token_End(  $def->info_block_wrapper);
         $is_inline = false;
@@ -9900,6 +10345,17 @@ class HTMLPurifier_ChildDef_StrictBlockquote extends HTMLPurifier_ChildDef_Requi
         }
         if ($is_inline) $ret[] = $block_wrap_end;
         return $ret;
+    }
+    
+    private function init($config) {
+        if (!$this->init) {
+            $def = $config->getHTMLDefinition();
+            // allow all inline elements
+            $this->real_elements = $this->elements;
+            $this->fake_elements = $def->info_content_sets['Flow'];
+            $this->fake_elements['#PCDATA'] = true;
+            $this->init = true;
+        }
     }
 }
 
@@ -10505,6 +10961,124 @@ class HTMLPurifier_HTMLModule_Edit extends HTMLPurifier_HTMLModule
 
 
 /**
+ * XHTML 1.1 Forms module, defines all form-related elements found in HTML 4.
+ */
+class HTMLPurifier_HTMLModule_Forms extends HTMLPurifier_HTMLModule
+{
+    public $name = 'Forms';
+    public $safe = false;
+    
+    public $content_sets = array(
+        'Block' => 'Form',
+        'Inline' => 'Formctrl',
+    );
+    
+    public function setup($config) {
+        $form = $this->addElement('form', 'Form',
+          'Required: Heading | List | Block | fieldset', 'Common', array(
+            'accept' => 'ContentTypes',
+            'accept-charset' => 'Charsets',
+            'action*' => 'URI',
+            'method' => 'Enum#get,post',
+            // really ContentType, but these two are the only ones used today
+            'enctype' => 'Enum#application/x-www-form-urlencoded,multipart/form-data',
+        ));
+        $form->excludes = array('form' => true);
+        
+        $input = $this->addElement('input', 'Formctrl', 'Empty', 'Common', array(
+            'accept' => 'ContentTypes',
+            'accesskey' => 'Character',
+            'alt' => 'Text',
+            'checked' => 'Bool#checked',
+            'disabled' => 'Bool#disabled',
+            'maxlength' => 'Number',
+            'name' => 'CDATA',
+            'readonly' => 'Bool#readonly',
+            'size' => 'Number',
+            'src' => 'URI#embeds',
+            'tabindex' => 'Number',
+            'type' => 'Enum#text,password,checkbox,button,radio,submit,reset,file,hidden,image',
+            'value' => 'CDATA',
+        ));
+        $input->attr_transform_post[] = new HTMLPurifier_AttrTransform_Input();
+        
+        $this->addElement('select', 'Formctrl', 'Required: optgroup | option', 'Common', array(
+            'disabled' => 'Bool#disabled',
+            'multiple' => 'Bool#multiple',
+            'name' => 'CDATA',
+            'size' => 'Number',
+            'tabindex' => 'Number',
+        ));
+        
+        $this->addElement('option', false, 'Optional: #PCDATA', 'Common', array(
+            'disabled' => 'Bool#disabled',
+            'label' => 'Text',
+            'selected' => 'Bool#selected',
+            'value' => 'CDATA',
+        ));
+        // It's illegal for there to be more than one selected, but not
+        // be multiple. Also, no selected means undefined behavior. This might
+        // be difficult to implement; perhaps an injector, or a context variable.
+        
+        $textarea = $this->addElement('textarea', 'Formctrl', 'Optional: #PCDATA', 'Common', array(
+            'accesskey' => 'Character',
+            'cols*' => 'Number',
+            'disabled' => 'Bool#disabled',
+            'name' => 'CDATA',
+            'readonly' => 'Bool#readonly',
+            'rows*' => 'Number',
+            'tabindex' => 'Number',
+        ));
+        $textarea->attr_transform_pre[] = new HTMLPurifier_AttrTransform_Textarea();
+        
+        $button = $this->addElement('button', 'Formctrl', 'Optional: #PCDATA | Heading | List | Block | Inline', 'Common', array(
+            'accesskey' => 'Character',
+            'disabled' => 'Bool#disabled',
+            'name' => 'CDATA',
+            'tabindex' => 'Number',
+            'type' => 'Enum#button,submit,reset',
+            'value' => 'CDATA',
+        ));
+        
+        // For exclusions, ideally we'd specify content sets, not literal elements
+        $button->excludes = $this->makeLookup(
+            'form', 'fieldset', // Form
+            'input', 'select', 'textarea', 'label', 'button', // Formctrl
+            'a' // as per HTML 4.01 spec, this is omitted by modularization
+        );
+        
+        // Extra exclusion: img usemap="" is not permitted within this element.
+        // We'll omit this for now, since we don't have any good way of
+        // indicating it yet.
+        
+        // This is HIGHLY user-unfriendly; we need a custom child-def for this
+        $this->addElement('fieldset', 'Form', 'Custom: (#WS?,legend,(Flow|#PCDATA)*)', 'Common');
+        
+        $label = $this->addElement('label', 'Formctrl', 'Optional: #PCDATA | Inline', 'Common', array(
+            'accesskey' => 'Character',
+            // 'for' => 'IDREF', // IDREF not implemented, cannot allow
+        ));
+        $label->excludes = array('label' => true);
+        
+        $this->addElement('legend', false, 'Optional: #PCDATA | Inline', 'Common', array(
+            'accesskey' => 'Character',
+        ));
+        
+        $this->addElement('optgroup', false, 'Required: option', 'Common', array(
+            'disabled' => 'Bool#disabled',
+            'label*' => 'Text',
+        ));
+        
+        // Don't forget an injector for <isindex>. This one's a little complex
+        // because it maps to multiple elements.
+        
+    }
+}
+
+
+
+
+/**
  * XHTML 1.1 Hypertext Module, defines hypertext links. Core Module.
  */
 class HTMLPurifier_HTMLModule_Hypertext extends HTMLPurifier_HTMLModule
@@ -10743,6 +11317,23 @@ class HTMLPurifier_HTMLModule_List extends HTMLPurifier_HTMLModule
     
 }
 
+
+
+
+class HTMLPurifier_HTMLModule_Name extends HTMLPurifier_HTMLModule
+{
+    
+    public $name = 'Name';
+    
+    public function setup($config) {
+        $elements = array('a', 'applet', 'form', 'frame', 'iframe', 'img', 'map');
+        foreach ($elements as $name) {
+            $element = $this->addBlankElement($name);
+            $element->attr['name'] = 'ID';
+        }
+    }
+    
+}
 
 
 
@@ -11431,6 +12022,30 @@ class HTMLPurifier_HTMLModule_XMLCommonAttributes extends HTMLPurifier_HTMLModul
 
 
 
+/**
+ * Name is deprecated, but allowed in strict doctypes, so onl
+ */
+class HTMLPurifier_HTMLModule_Tidy_Name extends HTMLPurifier_HTMLModule_Tidy
+{
+    public $name = 'Tidy_Name';
+    public $defaultLevel = 'heavy';
+    public function makeFixes() {
+        
+        $r = array();
+        
+        // @name for img, a -----------------------------------------------
+        // Technically, it's allowed even on strict, so we allow authors to use
+        // it. However, it's deprecated in future versions of XHTML.
+        $r['img@name'] = 
+        $r['a@name'] = new HTMLPurifier_AttrTransform_Name();
+        
+        return $r;
+    }
+}
+
+
+
+
 class HTMLPurifier_HTMLModule_Tidy_Proprietary extends HTMLPurifier_HTMLModule_Tidy
 {
     
@@ -11438,7 +12053,15 @@ class HTMLPurifier_HTMLModule_Tidy_Proprietary extends HTMLPurifier_HTMLModule_T
     public $defaultLevel = 'light';
     
     public function makeFixes() {
-        return array();
+        $r = array();
+        $r['table@background'] = new HTMLPurifier_AttrTransform_Background();
+        $r['td@background']    = new HTMLPurifier_AttrTransform_Background();
+        $r['th@background']    = new HTMLPurifier_AttrTransform_Background();
+        $r['tr@background']    = new HTMLPurifier_AttrTransform_Background();
+        $r['thead@background'] = new HTMLPurifier_AttrTransform_Background();
+        $r['tfoot@background'] = new HTMLPurifier_AttrTransform_Background();
+        $r['tbody@background'] = new HTMLPurifier_AttrTransform_Background();
+        return $r;
     }
     
 }
@@ -11549,10 +12172,6 @@ class HTMLPurifier_HTMLModule_Tidy_XHTMLAndHTML4 extends HTMLPurifier_HTMLModule
         // @hspace for img ------------------------------------------------
         $r['img@hspace'] = new HTMLPurifier_AttrTransform_ImgSpace('hspace');
         
-        // @name for img, a -----------------------------------------------
-        $r['img@name'] = 
-        $r['a@name'] = new HTMLPurifier_AttrTransform_Name();
-        
         // @noshade for hr ------------------------------------------------
         // this transformation is not precise but often good enough.
         // different browsers use different styles to designate noshade
@@ -11660,6 +12279,8 @@ class HTMLPurifier_HTMLModule_Tidy_XHTML extends HTMLPurifier_HTMLModule_Tidy
 /**
  * Injector that auto paragraphs text in the root node based on
  * double-spacing.
+ * @todo Ensure all states are unit tested, including variations as well.
+ * @todo Make a graph of the flow control for this Injector.
  */
 class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
 {
@@ -11675,116 +12296,177 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
     
     public function handleText(&$token) {
         $text = $token->data;
-        if (empty($this->currentNesting)) {
-            if (!$this->allowsElement('p')) return;
-            // case 1: we're in root node (and it allows paragraphs)
-            $token = array($this->_pStart());
-            $this->_splitText($text, $token);
-        } elseif ($this->currentNesting[count($this->currentNesting)-1]->name == 'p') {
-            // case 2: we're in a paragraph
-            $token = array();
-            $this->_splitText($text, $token);
-        } elseif ($this->allowsElement('p')) {
-            // case 3: we're in an element that allows paragraphs
-            if (strpos($text, "\n\n") !== false) {
-                // case 3.1: this text node has a double-newline
-                $token = array($this->_pStart());
-                $this->_splitText($text, $token);
-            } else {
-                $ok = false;
-                // test if up-coming tokens are either block or have
-                // a double newline in them
-                $nesting = 0;
-                for ($i = $this->inputIndex + 1; isset($this->inputTokens[$i]); $i++) {
-                    if ($this->inputTokens[$i] instanceof HTMLPurifier_Token_Start){
-                        if (!$this->_isInline($this->inputTokens[$i])) {
-                            // we haven't found a double-newline, and
-                            // we've hit a block element, so don't paragraph
-                            $ok = false;
-                            break;
-                        }
-                        $nesting++;
-                    }
-                    if ($this->inputTokens[$i] instanceof HTMLPurifier_Token_End) {
-                        if ($nesting <= 0) break;
-                        $nesting--;
-                    }
-                    if ($this->inputTokens[$i] instanceof HTMLPurifier_Token_Text) {
-                        // found it!
-                        if (strpos($this->inputTokens[$i]->data, "\n\n") !== false) {
-                            $ok = true;
-                            break;
-                        }
-                    }
+        // Does the current parent allow <p> tags?
+        if ($this->allowsElement('p')) {
+            if (empty($this->currentNesting) || strpos($text, "\n\n") !== false) {
+                // Note that we have differing behavior when dealing with text
+                // in the anonymous root node, or a node inside the document.
+                // If the text as a double-newline, the treatment is the same;
+                // if it doesn't, see the next if-block if you're in the document.
+                
+                $i = $nesting = null;
+                if (!$this->forwardUntilEndToken($i, $current, $nesting) && $token->is_whitespace) {
+                    // State 1.1: ...    ^ (whitespace, then document end)
+                    //               ----
+                    // This is a degenerate case
+                } else {
+                    // State 1.2: PAR1
+                    //            ----
+                    
+                    // State 1.3: PAR1\n\nPAR2
+                    //            ------------
+                    
+                    // State 1.4: <div>PAR1\n\nPAR2 (see State 2)
+                    //                 ------------
+                    $token = array($this->_pStart());
+                    $this->_splitText($text, $token);
                 }
-                if ($ok) {
-                    // case 3.2: this text node is next to another node
-                    // that will start a paragraph
+            } else {
+                // State 2:   <div>PAR1... (similar to 1.4)
+                //                 ----
+                
+                // We're in an element that allows paragraph tags, but we're not
+                // sure if we're going to need them.
+                if ($this->_pLookAhead()) {
+                    // State 2.1: <div>PAR1<b>PAR1\n\nPAR2
+                    //                 ----
+                    // Note: This will always be the first child, since any
+                    // previous inline element would have triggered this very
+                    // same routine, and found the double newline. One possible
+                    // exception would be a comment.
                     $token = array($this->_pStart(), $token);
+                } else {
+                    // State 2.2.1: <div>PAR1<div>
+                    //                   ----
+                    
+                    // State 2.2.2: <div>PAR1<b>PAR1</b></div>
+                    //                   ----
                 }
             }
+        // Is the current parent a <p> tag?
+        } elseif (
+            !empty($this->currentNesting) &&
+            $this->currentNesting[count($this->currentNesting)-1]->name == 'p'
+        ) {
+            // State 3.1: ...<p>PAR1
+            //                  ----
+            
+            // State 3.2: ...<p>PAR1\n\nPAR2
+            //                  ------------
+            $token = array();
+            $this->_splitText($text, $token);
+        // Abort!
+        } else {
+            // State 4.1: ...<b>PAR1
+            //                  ----
+            
+            // State 4.2: ...<b>PAR1\n\nPAR2
+            //                  ------------
         }
-        
     }
     
     public function handleElement(&$token) {
-        // check if we're inside a tag already
-        if (!empty($this->currentNesting)) {
-            if ($this->allowsElement('p')) {
-                // special case: we're in an element that allows paragraphs
-                
-                // this token is already paragraph, abort
-                if ($token->name == 'p') return;
-                
-                // this token is a block level, abort
-                if (!$this->_isInline($token)) return;
-                
-                // check if this token is adjacent to the parent token
-                $prev = $this->inputTokens[$this->inputIndex - 1];
-                if (!$prev instanceof HTMLPurifier_Token_Start) {
-                    // not adjacent, we can abort early
-                    // add lead paragraph tag if our token is inline
-                    // and the previous tag was an end paragraph
-                    if (
-                        $prev->name == 'p' && $prev instanceof HTMLPurifier_Token_End &&
-                        $this->_isInline($token)
-                    ) {
-                        $token = array($this->_pStart(), $token);
-                    }
-                    return;
-                }
-                
-                // this token is the first child of the element that allows
-                // paragraph. We have to peek ahead and see whether or not
-                // there is anything inside that suggests that a paragraph
-                // will be needed
-                $ok = false;
-                // maintain a mini-nesting counter, this lets us bail out
-                // early if possible
-                $j = 1; // current nesting, one is due to parent (we recalculate current token)
-                for ($i = $this->inputIndex; isset($this->inputTokens[$i]); $i++) {
-                    if ($this->inputTokens[$i] instanceof HTMLPurifier_Token_Start) $j++;
-                    if ($this->inputTokens[$i] instanceof HTMLPurifier_Token_End) $j--;
-                    if ($this->inputTokens[$i] instanceof HTMLPurifier_Token_Text) {
-                        if (strpos($this->inputTokens[$i]->data, "\n\n") !== false) {
-                            $ok = true;
-                            break;
+        // We don't have to check if we're already in a <p> tag for block
+        // tokens, because the tag would have been autoclosed by MakeWellFormed.
+        if ($this->allowsElement('p')) {
+            if (!empty($this->currentNesting)) {
+                if ($this->_isInline($token)) {
+                    // State 1: <div>...<b>
+                    //                  ---
+                    
+                    // Check if this token is adjacent to the parent token
+                    // (seek backwards until token isn't whitespace)
+                    $i = null;
+                    $this->backward($i, $prev);
+                    
+                    if (!$prev instanceof HTMLPurifier_Token_Start) {
+                        // Token wasn't adjacent
+                        
+                        if (
+                            $prev instanceof HTMLPurifier_Token_Text &&
+                            substr($prev->data, -2) === "\n\n"
+                        ) {
+                            // State 1.1.4: <div><p>PAR1</p>\n\n<b>
+                            //                                  ---
+                            
+                            // Quite frankly, this should be handled by splitText
+                            $token = array($this->_pStart(), $token);
+                        } else {
+                            // State 1.1.1: <div><p>PAR1</p><b>
+                            //                              ---
+                            
+                            // State 1.1.2: <div><br /><b>
+                            //                         ---
+                            
+                            // State 1.1.3: <div>PAR<b>
+                            //                      ---
+                        }
+                        
+                    } else {
+                        // State 1.2.1: <div><b>
+                        //                   ---
+                        
+                        // Lookahead to see if <p> is needed.
+                        if ($this->_pLookAhead()) {
+                            // State 1.3.1: <div><b>PAR1\n\nPAR2
+                            //                   ---
+                            $token = array($this->_pStart(), $token);
+                        } else {
+                            // State 1.3.2: <div><b>PAR1</b></div>
+                            //                   ---
+                            
+                            // State 1.3.3: <div><b>PAR1</b><div></div>\n\n</div>
+                            //                   ---
                         }
                     }
-                    if ($j <= 0) break;
+                } else {
+                    // State 2.3: ...<div>
+                    //               -----
                 }
-                if ($ok) {
+            } else {
+                if ($this->_isInline($token)) {
+                    // State 3.1: <b>
+                    //            ---
+                    // This is where the {p} tag is inserted, not reflected in
+                    // inputTokens yet, however.
                     $token = array($this->_pStart(), $token);
+                } else {
+                    // State 3.2: <div>
+                    //            -----
+                }
+                
+                $i = null;
+                if ($this->backward($i, $prev)) {
+                    if (
+                        !$prev instanceof HTMLPurifier_Token_Text
+                    ) {
+                        // State 3.1.1: ...</p>{p}<b>
+                        //                        ---
+                        
+                        // State 3.2.1: ...</p><div>
+                        //                     -----
+                        
+                        if (!is_array($token)) $token = array($token);
+                        array_unshift($token, new HTMLPurifier_Token_Text("\n\n"));
+                    } else {
+                        // State 3.1.2: ...</p>\n\n{p}<b>
+                        //                            ---
+                        
+                        // State 3.2.2: ...</p>\n\n<div>
+                        //                         -----
+                        
+                        // Note: PAR<ELEM> cannot occur because PAR would have been
+                        // wrapped in <p> tags.
+                    }
                 }
             }
-            return;
+        } else {
+            // State 2.2: <ul><li>
+            //                ----
+            
+            // State 2.4: <p><b>
+            //               ---
         }
-        
-        // check if the start tag counts as a "block" element
-        if (!$this->_isInline($token)) return;
-        
-        // append a paragraph tag before the token
-        $token = array($this->_pStart(), $token);
     }
     
     /**
@@ -11799,96 +12481,80 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
      */
     private function _splitText($data, &$result) {
         $raw_paragraphs = explode("\n\n", $data);
-        
-        // remove empty paragraphs
-        $paragraphs = array();
+        $paragraphs  = array(); // without empty paragraphs
         $needs_start = false;
         $needs_end   = false;
         
         $c = count($raw_paragraphs);
         if ($c == 1) {
-            // there were no double-newlines, abort quickly
+            // There were no double-newlines, abort quickly. In theory this
+            // should never happen.
             $result[] = new HTMLPurifier_Token_Text($data);
             return;
         }
-        
         for ($i = 0; $i < $c; $i++) {
             $par = $raw_paragraphs[$i];
             if (trim($par) !== '') {
                 $paragraphs[] = $par;
-                continue;
-            }
-            if ($i == 0 && empty($result)) {
-                // The empty result indicates that the AutoParagraph
-                // injector did not add any start paragraph tokens.
-                // The fact that the first paragraph is empty indicates
-                // that there was a double-newline at the start of the
-                // data.
-                // Combined together, this means that we are in a paragraph,
-                // and the newline means we should start a new one.
-                $result[] = new HTMLPurifier_Token_End('p');
-                // However, the start token should only be added if 
-                // there is more processing to be done (i.e. there are
-                // real paragraphs in here). If there are none, the
-                // next start paragraph tag will be handled by the
-                // next run-around the injector
-                $needs_start = true;
-            } elseif ($i + 1 == $c) {
-                // a double-paragraph at the end indicates that
-                // there is an overriding need to start a new paragraph
-                // for the next section. This has no effect until
-                // we've processed all of the other paragraphs though
-                $needs_end = true;
+            } else {
+                if ($i == 0) {
+                    // Double newline at the front
+                    if (empty($result)) {
+                        // The empty result indicates that the AutoParagraph
+                        // injector did not add any start paragraph tokens.
+                        // This means that we have been in a paragraph for
+                        // a while, and the newline means we should start a new one.
+                        $result[] = new HTMLPurifier_Token_End('p');
+                        $result[] = new HTMLPurifier_Token_Text("\n\n");
+                        // However, the start token should only be added if 
+                        // there is more processing to be done (i.e. there are
+                        // real paragraphs in here). If there are none, the
+                        // next start paragraph tag will be handled by the
+                        // next call to the injector
+                        $needs_start = true;
+                    } else {
+                        // We just started a new paragraph!
+                        // Reinstate a double-newline for presentation's sake, since
+                        // it was in the source code.
+                        array_unshift($result, new HTMLPurifier_Token_Text("\n\n"));
+                    }
+                } elseif ($i + 1 == $c) {
+                    // Double newline at the end
+                    // There should be a trailing </p> when we're finally done.
+                    $needs_end = true;
+                }
             }
         }
         
-        // check if there are no "real" paragraphs to be processed
+        // Check if this was just a giant blob of whitespace. Move this earlier,
+        // perhaps?
         if (empty($paragraphs)) {
             return;
         }
         
-        // add a start tag if an end tag was added while processing
-        // the raw paragraphs (that happens if there's a leading double
-        // newline)
-        if ($needs_start) $result[] = $this->_pStart();
-        
-        // append the paragraphs onto the result
-        foreach ($paragraphs as $par) {
-            $result[] = new HTMLPurifier_Token_Text($par);
-            $result[] = new HTMLPurifier_Token_End('p');
+        // Add the start tag indicated by \n\n at the beginning of $data
+        if ($needs_start) {
             $result[] = $this->_pStart();
         }
         
-        // remove trailing start token, if one is needed, it will
-        // be handled the next time this injector is called
-        array_pop($result);
-        
-        // check the outside to determine whether or not the
-        // end paragraph tag should be removed. It should be removed
-        // unless the next non-whitespace token is a paragraph
-        // or a block element.
-        $remove_paragraph_end = true;
-        
-        if (!$needs_end) {
-            // Start of the checks one after the current token's index
-            for ($i = $this->inputIndex + 1; isset($this->inputTokens[$i]); $i++) {
-                if ($this->inputTokens[$i] instanceof HTMLPurifier_Token_Start || $this->inputTokens[$i] instanceof HTMLPurifier_Token_Empty) {
-                    $remove_paragraph_end = $this->_isInline($this->inputTokens[$i]);
-                }
-                // check if we can abort early (whitespace means we carry-on!)
-                if ($this->inputTokens[$i] instanceof HTMLPurifier_Token_Text && !$this->inputTokens[$i]->is_whitespace) break;
-                // end tags will automatically be handled by MakeWellFormed,
-                // so we don't have to worry about them
-                if ($this->inputTokens[$i] instanceof HTMLPurifier_Token_End) break;
-            }
-        } else {
-            $remove_paragraph_end = false;
+        // Append the paragraphs onto the result
+        foreach ($paragraphs as $par) {
+            $result[] = new HTMLPurifier_Token_Text($par);
+            $result[] = new HTMLPurifier_Token_End('p');
+            $result[] = new HTMLPurifier_Token_Text("\n\n");
+            $result[] = $this->_pStart();
         }
         
-        // check the outside to determine whether or not the
-        // end paragraph tag should be removed
-        if ($remove_paragraph_end) {
-            array_pop($result);
+        // Remove trailing start token; Injector will handle this later if
+        // it was indeed needed. This prevents from needing to do a lookahead,
+        // at the cost of a lookbehind later.
+        array_pop($result);
+        
+        // If there is no need for an end tag, remove all of it and let 
+        // MakeWellFormed close it later.
+        if (!$needs_end) {
+            array_pop($result); // removes \n\n
+            array_pop($result); // removes </p>
         }
         
     }
@@ -11901,9 +12567,77 @@ class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector
         return isset($this->htmlDefinition->info['p']->child->elements[$token->name]);
     }
     
+    /**
+     * Looks ahead in the token list and determines whether or not we need
+     * to insert a <p> tag.
+     */
+    private function _pLookAhead() {
+        $this->current($i, $current);
+        if ($current instanceof HTMLPurifier_Token_Start) $nesting = 1;
+        else $nesting = 0;
+        $ok = false;
+        while ($this->forwardUntilEndToken($i, $current, $nesting)) {
+            $result = $this->_checkNeedsP($current);
+            if ($result !== null) {
+                $ok = $result;
+                break;
+            }
+        }
+        return $ok;
+    }
+    
+    /**
+     * Determines if a particular token requires an earlier inline token
+     * to get a paragraph. This should be used with _forwardUntilEndToken
+     */
+    private function _checkNeedsP($current) {
+        if ($current instanceof HTMLPurifier_Token_Start){
+            if (!$this->_isInline($current)) {
+                // <div>PAR1<div>
+                //      ----
+                // Terminate early, since we hit a block element
+                return false;
+            }
+        } elseif ($current instanceof HTMLPurifier_Token_Text) {
+            if (strpos($current->data, "\n\n") !== false) {
+                // <div>PAR1<b>PAR1\n\nPAR2
+                //      ----
+                return true;
+            } else {
+                // <div>PAR1<b>PAR1...
+                //      ----
+            }
+        }
+        return null;
+    }
+    
 }
 
 
+
+
+/**
+ * Injector that displays the URL of an anchor instead of linking to it, in addition to showing the text of the link.
+ */
+class HTMLPurifier_Injector_DisplayLinkURI extends HTMLPurifier_Injector
+{
+    
+    public $name = 'DisplayLinkURI';
+    public $needed = array('a');
+    
+    public function handleElement(&$token) {
+    }
+    
+    public function handleEnd(&$token) {
+        if (isset($token->start->attr['href'])){
+            $url = $token->start->attr['href'];
+            unset($token->start->attr['href']);
+            $token = array($token, new HTMLPurifier_Token_Text(" ($url)"));
+        } else {
+            // nothing to display
+        }
+    }
+}
 
 
 /**
@@ -11997,6 +12731,47 @@ class HTMLPurifier_Injector_PurifierLinkify extends HTMLPurifier_Injector
 
 
 
+class HTMLPurifier_Injector_RemoveEmpty extends HTMLPurifier_Injector
+{
+    
+    private $context, $config;
+    
+    public function prepare($config, $context) {
+        parent::prepare($config, $context);
+        $this->config = $config;
+        $this->context = $context;
+        $this->attrValidator = new HTMLPurifier_AttrValidator();
+    }
+    
+    public function handleElement(&$token) {
+        if (!$token instanceof HTMLPurifier_Token_Start) return;
+        $next = false;
+        for ($i = $this->inputIndex + 1, $c = count($this->inputTokens); $i < $c; $i++) {
+            $next = $this->inputTokens[$i];
+            if ($next instanceof HTMLPurifier_Token_Text && $next->is_whitespace) continue;
+            break;
+        }
+        if (!$next || ($next instanceof HTMLPurifier_Token_End && $next->name == $token->name)) {
+            if ($token->name == 'colgroup') return;
+            $this->attrValidator->validateToken($token, $this->config, $this->context);
+            $token->armor['ValidateAttributes'] = true;
+            if (isset($token->attr['id']) || isset($token->attr['name'])) return;
+            $token = $i - $this->inputIndex + 1;
+            for ($b = $this->inputIndex - 1; $b > 0; $b--) {
+                $prev = $this->inputTokens[$b];
+                if ($prev instanceof HTMLPurifier_Token_Text && $prev->is_whitespace) continue;
+                break;
+            }
+            // This is safe because we removed the token that triggered this.
+            $this->rewind($b - 1);
+            return;
+        }
+    }
+    
+}
+
+
+
 /**
  * Adds important param elements to inside of object in order to make
  * things safe.
@@ -12069,7 +12844,10 @@ class HTMLPurifier_Injector_SafeObject extends HTMLPurifier_Injector
         }
     }
     
-    public function notifyEnd($token) {
+    public function handleEnd(&$token) {
+        // This is the WRONG way of handling the object and param stacks;
+        // we should be inserting them directly on the relevant object tokens
+        // so that the global stack handling handles it.
         if ($token->name == 'object') {
             array_pop($this->objectStack);
             array_pop($this->paramStack);
@@ -12126,7 +12904,10 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
             $char = '[^a-z!\/]';
             $comment = "/<!--(.*?)(-->|\z)/is";
             $html = preg_replace_callback($comment, array($this, 'callbackArmorCommentEntities'), $html);
-            $html = preg_replace("/<($char)/i", '&lt;\\1', $html);
+            do {
+                $old = $html;
+                $html = preg_replace("/<($char)/i", '&lt;\\1', $html);
+            } while ($html !== $old);
             $html = preg_replace_callback($comment, array($this, 'callbackUndoCommentSubst'), $html); // fix comments
         }
         
@@ -12304,6 +13085,8 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer
 class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
 {
     
+    public $tracksLineNumbers = true;
+    
     /**
      * Whitespace characters for str(c)spn.
      */
@@ -12333,6 +13116,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
         $inside_tag = false; // whether or not we're parsing the inside of a tag
         $array = array(); // result array
         
+        // This is also treated to mean maintain *column* numbers too
         $maintain_line_numbers = $config->get('Core', 'MaintainLineNumbers');
         
         if ($maintain_line_numbers === null) {
@@ -12341,9 +13125,17 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
             $maintain_line_numbers = $config->get('Core', 'CollectErrors');
         }
         
-        if ($maintain_line_numbers) $current_line = 1;
-        else $current_line = false;
+        if ($maintain_line_numbers) {
+            $current_line = 1;
+            $current_col  = 0; 
+            $length = strlen($html);
+        } else {
+            $current_line = false;
+            $current_col  = false;
+            $length = false;
+        }
         $context->register('CurrentLine', $current_line);
+        $context->register('CurrentCol',  $current_col);
         $nl = "\n";
         // how often to manually recalculate. This will ALWAYS be right,
         // but it's pretty wasteful. Set to 0 to turn off
@@ -12359,14 +13151,31 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
         
         while(++$loops) {
             
-            // recalculate lines
-            if (
-                $maintain_line_numbers && // line number tracking is on
-                $synchronize_interval &&  // synchronization is on
-                $cursor > 0 &&            // cursor is further than zero
-                $loops % $synchronize_interval === 0 // time to synchronize!
-            ) {
-                $current_line = 1 + $this->substrCount($html, $nl, 0, $cursor);
+            // $cursor is either at the start of a token, or inside of
+            // a tag (i.e. there was a < immediately before it), as indicated
+            // by $inside_tag
+            
+            if ($maintain_line_numbers) {
+                
+                // $rcursor, however, is always at the start of a token.
+                $rcursor = $cursor - (int) $inside_tag;
+                
+                // Column number is cheap, so we calculate it every round.
+                // We're interested at the *end* of the newline string, so 
+                // we need to add strlen($nl) == 1 to $nl_pos before subtracting it
+                // from our "rcursor" position.
+                $nl_pos = strrpos($html, $nl, $rcursor - $length);
+                $current_col = $rcursor - (is_bool($nl_pos) ? 0 : $nl_pos + 1);
+                
+                // recalculate lines
+                if (
+                    $synchronize_interval &&  // synchronization is on
+                    $cursor > 0 &&            // cursor is further than zero
+                    $loops % $synchronize_interval === 0 // time to synchronize!
+                ) {
+                    $current_line = 1 + $this->substrCount($html, $nl, 0, $cursor);
+                }
+                
             }
             
             $position_next_lt = strpos($html, '<', $cursor);
@@ -12390,7 +13199,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                         )
                     );
                 if ($maintain_line_numbers) {
-                    $token->line = $current_line;
+                    $token->rawPosition($current_line, $current_col);
                     $current_line += $this->substrCount($html, $nl, $cursor, $position_next_lt - $cursor);
                 }
                 $array[] = $token;
@@ -12410,7 +13219,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                             )
                         )
                     );
-                if ($maintain_line_numbers) $token->line = $current_line;
+                if ($maintain_line_numbers) $token->rawPosition($current_line, $current_col);
                 $array[] = $token;
                 break;
             } elseif ($inside_tag && $position_next_gt !== false) {
@@ -12458,7 +13267,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                             )
                         );
                     if ($maintain_line_numbers) {
-                        $token->line = $current_line;
+                        $token->rawPosition($current_line, $current_col);
                         $current_line += $this->substrCount($html, $nl, $cursor, $strlen_segment);
                     }
                     $array[] = $token;
@@ -12473,7 +13282,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     $type = substr($segment, 1);
                     $token = new HTMLPurifier_Token_End($type);
                     if ($maintain_line_numbers) {
-                        $token->line = $current_line;
+                        $token->rawPosition($current_line, $current_col);
                         $current_line += $this->substrCount($html, $nl, $cursor, $position_next_gt - $cursor);
                     }
                     $array[] = $token;
@@ -12488,20 +13297,12 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                 if (!ctype_alpha($segment[0])) {
                     // XML:  $segment[0] !== '_' && $segment[0] !== ':'
                     if ($e) $e->send(E_NOTICE, 'Lexer: Unescaped lt');
-                    $token = new
-                        HTMLPurifier_Token_Text(
-                            '<' .
-                            $this->parseData(
-                                $segment
-                            ) . 
-                            '>'
-                        );
+                    $token = new HTMLPurifier_Token_Text('<');
                     if ($maintain_line_numbers) {
-                        $token->line = $current_line;
+                        $token->rawPosition($current_line, $current_col);
                         $current_line += $this->substrCount($html, $nl, $cursor, $position_next_gt - $cursor);
                     }
                     $array[] = $token;
-                    $cursor = $position_next_gt + 1;
                     $inside_tag = false;
                     continue;
                 }
@@ -12526,7 +13327,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                         $token = new HTMLPurifier_Token_Start($segment);
                     }
                     if ($maintain_line_numbers) {
-                        $token->line = $current_line;
+                        $token->rawPosition($current_line, $current_col);
                         $current_line += $this->substrCount($html, $nl, $cursor, $position_next_gt - $cursor);
                     }
                     $array[] = $token;
@@ -12558,7 +13359,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                     $token = new HTMLPurifier_Token_Start($type, $attr);
                 }
                 if ($maintain_line_numbers) {
-                    $token->line = $current_line;
+                    $token->rawPosition($current_line, $current_col);
                     $current_line += $this->substrCount($html, $nl, $cursor, $position_next_gt - $cursor);
                 }
                 $array[] = $token;
@@ -12575,7 +13376,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
                             substr($html, $cursor)
                         )
                     );
-                if ($maintain_line_numbers) $token->line = $current_line;
+                if ($maintain_line_numbers) $token->rawPosition($current_line, $current_col);
                 // no cursor scroll? Hmm...
                 $array[] = $token;
                 break;
@@ -12584,6 +13385,7 @@ class HTMLPurifier_Lexer_DirectLex extends HTMLPurifier_Lexer
         }
         
         $context->destroy('CurrentLine');
+        $context->destroy('CurrentCol');
         return $array;
     }
     
@@ -13139,31 +13941,61 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
 {
     
     /**
-     * Locally shared variable references
+     * Array stream of tokens being processed.
      */
-    protected $inputTokens, $inputIndex, $outputTokens, $currentNesting,
-        $currentInjector, $injectors;
+    protected $tokens;
+    
+    /**
+     * Current index in $tokens.
+     */
+    protected $t;
+    
+    /**
+     * Current nesting of elements.
+     */
+    protected $stack;
+    
+    /**
+     * Injectors active in this stream processing.
+     */
+    protected $injectors;
+    
+    /**
+     * Current instance of HTMLPurifier_Config.
+     */
+    protected $config;
+    
+    /**
+     * Current instance of HTMLPurifier_Context.
+     */
+    protected $context;
     
     public function execute($tokens, $config, $context) {
         
         $definition = $config->getHTMLDefinition();
         
         // local variables
-        $result = array();
         $generator = new HTMLPurifier_Generator($config, $context);
         $escape_invalid_tags = $config->get('Core', 'EscapeInvalidTags');
         $e = $context->get('ErrorCollector', true);
+        $t = false; // token index
+        $i = false; // injector index
+        $token      = false; // the current token
+        $reprocess  = false; // whether or not to reprocess the same token
+        $stack = array();
         
         // member variables
-        $this->currentNesting = array();
-        $this->inputIndex     = false;
-        $this->inputTokens    =& $tokens;
-        $this->outputTokens   =& $result;
+        $this->stack   =& $stack;
+        $this->t       =& $t;
+        $this->tokens  =& $tokens;
+        $this->config  = $config;
+        $this->context = $context;
         
         // context variables
-        $context->register('CurrentNesting', $this->currentNesting);
-        $context->register('InputIndex',     $this->inputIndex);
+        $context->register('CurrentNesting', $stack);
+        $context->register('InputIndex',     $t);
         $context->register('InputTokens',    $tokens);
+        $context->register('CurrentToken',   $token);
         
         // -- begin INJECTOR --
         
@@ -13190,73 +14022,119 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             $this->injectors[] = $injector;
         }
         
-        // array index of the injector that resulted in an array
-        // substitution. This enables processTokens() to know which
-        // injectors are affected by the added tokens and which are
-        // not (namely, the ones after the current injector are not
-        // affected)
-        $this->currentInjector = false;
-        
         // give the injectors references to the definition and context
         // variables for performance reasons
-        foreach ($this->injectors as $i => $injector) {
+        foreach ($this->injectors as $ix => $injector) {
             $error = $injector->prepare($config, $context);
             if (!$error) continue;
-            array_splice($this->injectors, $i, 1); // rm the injector
+            array_splice($this->injectors, $ix, 1); // rm the injector
             trigger_error("Cannot enable {$injector->name} injector because $error is not allowed", E_USER_WARNING);
         }
         
-        // warning: most foreach loops follow the convention $i => $injector.
-        // Don't define these as loop-wide variables, please!
-        
         // -- end INJECTOR --
         
-        $token = false;
-        $context->register('CurrentToken', $token);
+        // a note on punting:
+        //      In order to reduce code duplication, whenever some code needs
+        //      to make HTML changes in order to make things "correct", the
+        //      new HTML gets sent through the purifier, regardless of its
+        //      status. This means that if we add a start token, because it
+        //      was totally necessary, we don't have to update nesting; we just
+        //      punt ($reprocess = true; continue;) and it does that for us.
         
         // isset is in loop because $tokens size changes during loop exec
-        for ($this->inputIndex = 0; isset($tokens[$this->inputIndex]); $this->inputIndex++) {
+        for (
+            $t = 0;
+            $t == 0 || isset($tokens[$t - 1]);
+            // only increment if we don't need to reprocess
+            $reprocess ? $reprocess = false : $t++
+        ) {
             
-            // if all goes well, this token will be passed through unharmed
-            $token = $tokens[$this->inputIndex];
-            
-            //printTokens($tokens, $this->inputIndex);
-            
-            foreach ($this->injectors as $injector) {
-                if ($injector->skip > 0) $injector->skip--;
+            // check for a rewind
+            if (is_int($i) && $i >= 0) {
+                // possibility: disable rewinding if the current token has a
+                // rewind set on it already. This would offer protection from
+                // infinite loop, but might hinder some advanced rewinding.
+                $rewind_to = $this->injectors[$i]->getRewind();
+                if (is_int($rewind_to) && $rewind_to < $t) {
+                    if ($rewind_to < 0) $rewind_to = 0;
+                    while ($t > $rewind_to) {
+                        $t--;
+                        $prev = $tokens[$t];
+                        // indicate that other injectors should not process this token,
+                        // but we need to reprocess it
+                        unset($prev->skip[$i]);
+                        $prev->rewind = $i;
+                        if ($prev instanceof HTMLPurifier_Token_Start) array_pop($this->stack);
+                        elseif ($prev instanceof HTMLPurifier_Token_End) $this->stack[] = $prev->start;
+                    }
+                }
+                $i = false;
             }
             
-            // quick-check: if it's not a tag, no need to process
-            if (empty( $token->is_tag )) {
-                if ($token instanceof HTMLPurifier_Token_Text) {
-                     // injector handler code; duplicated for performance reasons
-                     foreach ($this->injectors as $i => $injector) {
-                         if (!$injector->skip) $injector->handleText($token);
-                         if (is_array($token)) {
-                             $this->currentInjector = $i;
-                             break;
-                         }
-                     }
+            // handle case of document end
+            if (!isset($tokens[$t])) {
+                // kill processing if stack is empty
+                if (empty($this->stack)) break;
+                
+                // peek
+                $top_nesting = array_pop($this->stack);
+                $this->stack[] = $top_nesting;
+                
+                // send error
+                if ($e && !isset($top_nesting->armor['MakeWellFormed_TagClosedError'])) {
+                    $e->send(E_NOTICE, 'Strategy_MakeWellFormed: Tag closed by document end', $top_nesting);
                 }
-                $this->processToken($token, $config, $context);
+                
+                // append, don't splice, since this is the end
+                $tokens[] = new HTMLPurifier_Token_End($top_nesting->name);
+                
+                // punt!
+                $reprocess = true;
                 continue;
             }
             
-            $info = $definition->info[$token->name]->child;
+            // if all goes well, this token will be passed through unharmed
+            $token = $tokens[$t];
+            
+            //echo '<hr>';
+            //printTokens($tokens, $t);
+            //var_dump($this->stack);
+            
+            // quick-check: if it's not a tag, no need to process
+            if (empty($token->is_tag)) {
+                if ($token instanceof HTMLPurifier_Token_Text) {
+                    foreach ($this->injectors as $i => $injector) {
+                        if (isset($token->skip[$i])) continue;
+                        if ($token->rewind !== null && $token->rewind !== $i) continue;
+                        $injector->handleText($token);
+                        $this->processToken($token, $i);
+                        $reprocess = true;
+                        break;
+                    }
+                }
+                // another possibility is a comment
+                continue;
+            }
+            
+            if (isset($definition->info[$token->name])) {
+                $type = $definition->info[$token->name]->child->type;
+            } else {
+                $type = false; // Type is unknown, treat accordingly
+            }
             
             // quick tag checks: anything that's *not* an end tag
             $ok = false;
-            if ($info->type === 'empty' && $token instanceof HTMLPurifier_Token_Start) {
-                // test if it claims to be a start tag but is empty
+            if ($type === 'empty' && $token instanceof HTMLPurifier_Token_Start) {
+                // claims to be a start tag but is empty
                 $token = new HTMLPurifier_Token_Empty($token->name, $token->attr);
                 $ok = true;
-            } elseif ($info->type !== 'empty' && $token instanceof HTMLPurifier_Token_Empty) {
+            } elseif ($type && $type !== 'empty' && $token instanceof HTMLPurifier_Token_Empty) {
                 // claims to be empty but really is a start tag
-                $token = array(
-                    new HTMLPurifier_Token_Start($token->name, $token->attr),
-                    new HTMLPurifier_Token_End($token->name)
-                );
-                $ok = true;
+                $this->swap(new HTMLPurifier_Token_End($token->name));
+                $this->insertBefore(new HTMLPurifier_Token_Start($token->name, $token->attr));
+                // punt (since we had to modify the input stream in a non-trivial way)
+                $reprocess = true;
+                continue;
             } elseif ($token instanceof HTMLPurifier_Token_Empty) {
                 // real empty token
                 $ok = true;
@@ -13264,62 +14142,88 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
                 // start tag
                 
                 // ...unless they also have to close their parent
-                if (!empty($this->currentNesting)) {
+                if (!empty($this->stack)) {
                     
-                    $parent = array_pop($this->currentNesting);
-                    $parent_info = $definition->info[$parent->name];
+                    $parent = array_pop($this->stack);
+                    $this->stack[] = $parent;
                     
-                    // this can be replaced with a more general algorithm:
-                    // if the token is not allowed by the parent, auto-close
-                    // the parent
-                    if (!isset($parent_info->child->elements[$token->name])) {
+                    if (isset($definition->info[$parent->name])) {
+                        $elements = $definition->info[$parent->name]->child->getNonAutoCloseElements($config);
+                        $autoclose = !isset($elements[$token->name]);
+                    } else {
+                        $autoclose = false;
+                    }
+                    
+                    if ($autoclose) {
                         if ($e) $e->send(E_NOTICE, 'Strategy_MakeWellFormed: Tag auto closed', $parent);
-                        // close the parent, then re-loop to reprocess token
-                        $result[] = new HTMLPurifier_Token_End($parent->name);
-                        $this->inputIndex--;
+                        // insert parent end tag before this tag
+                        $new_token = new HTMLPurifier_Token_End($parent->name);
+                        $new_token->start = $parent;
+                        $this->insertBefore($new_token);
+                        $reprocess = true;
                         continue;
                     }
                     
-                    $this->currentNesting[] = $parent; // undo the pop
                 }
                 $ok = true;
             }
             
-            // injector handler code; duplicated for performance reasons
             if ($ok) {
                 foreach ($this->injectors as $i => $injector) {
-                    if (!$injector->skip) $injector->handleElement($token);
-                    if (is_array($token)) {
-                        $this->currentInjector = $i;
-                        break;
+                    if (isset($token->skip[$i])) continue;
+                    if ($token->rewind !== null && $token->rewind !== $i) continue;
+                    $injector->handleElement($token);
+                    $this->processToken($token, $i);
+                    $reprocess = true;
+                    break;
+                }
+                if (!$reprocess) {
+                    // ah, nothing interesting happened; do normal processing
+                    $this->swap($token);
+                    if ($token instanceof HTMLPurifier_Token_Start) {
+                        $this->stack[] = $token;
+                    } elseif ($token instanceof HTMLPurifier_Token_End) {
+                        throw new HTMLPurifier_Exception('Improper handling of end tag in start code; possible error in MakeWellFormed');
                     }
                 }
-                $this->processToken($token, $config, $context);
                 continue;
             }
             
             // sanity check: we should be dealing with a closing tag
-            if (!$token instanceof HTMLPurifier_Token_End) continue;
+            if (!$token instanceof HTMLPurifier_Token_End) {
+                throw new HTMLPurifier_Exception('Unaccounted for tag token in input stream, bug in HTML Purifier');
+            }
             
             // make sure that we have something open
-            if (empty($this->currentNesting)) {
+            if (empty($this->stack)) {
                 if ($escape_invalid_tags) {
                     if ($e) $e->send(E_WARNING, 'Strategy_MakeWellFormed: Unnecessary end tag to text');
-                    $result[] = new HTMLPurifier_Token_Text(
+                    $this->swap(new HTMLPurifier_Token_Text(
                         $generator->generateFromToken($token)
-                    );
-                } elseif ($e) {
-                    $e->send(E_WARNING, 'Strategy_MakeWellFormed: Unnecessary end tag removed');
+                    ));
+                } else {
+                    $this->remove();
+                    if ($e) $e->send(E_WARNING, 'Strategy_MakeWellFormed: Unnecessary end tag removed');
                 }
+                $reprocess = true;
                 continue;
             }
             
-            // first, check for the simplest case: everything closes neatly
-            $current_parent = array_pop($this->currentNesting);
+            // first, check for the simplest case: everything closes neatly.
+            // Eventually, everything passes through here; if there are problems
+            // we modify the input stream accordingly and then punt, so that
+            // the tokens get processed again.
+            $current_parent = array_pop($this->stack);
             if ($current_parent->name == $token->name) {
-                $result[] = $token;
+                $token->start = $current_parent;
                 foreach ($this->injectors as $i => $injector) {
-                    $injector->notifyEnd($token);
+                    if (isset($token->skip[$i])) continue;
+                    if ($token->rewind !== null && $token->rewind !== $i) continue;
+                    $injector->handleEnd($token);
+                    $this->processToken($token, $i);
+                    $this->stack[] = $current_parent;
+                    $reprocess = true;
+                    break;
                 }
                 continue;
             }
@@ -13327,47 +14231,56 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
             // okay, so we're trying to close the wrong tag
             
             // undo the pop previous pop
-            $this->currentNesting[] = $current_parent;
+            $this->stack[] = $current_parent;
             
             // scroll back the entire nest, trying to find our tag.
             // (feature could be to specify how far you'd like to go)
-            $size = count($this->currentNesting);
+            $size = count($this->stack);
             // -2 because -1 is the last element, but we already checked that
             $skipped_tags = false;
-            for ($i = $size - 2; $i >= 0; $i--) {
-                if ($this->currentNesting[$i]->name == $token->name) {
-                    // current nesting is modified
-                    $skipped_tags = array_splice($this->currentNesting, $i);
+            for ($j = $size - 2; $j >= 0; $j--) {
+                if ($this->stack[$j]->name == $token->name) {
+                    $skipped_tags = array_slice($this->stack, $j);
                     break;
                 }
             }
             
-            // we still didn't find the tag, so remove
+            // we didn't find the tag, so remove
             if ($skipped_tags === false) {
                 if ($escape_invalid_tags) {
-                    $result[] = new HTMLPurifier_Token_Text(
+                    $this->swap(new HTMLPurifier_Token_Text(
                         $generator->generateFromToken($token)
-                    );
+                    ));
                     if ($e) $e->send(E_WARNING, 'Strategy_MakeWellFormed: Stray end tag to text');
-                } elseif ($e) {
-                    $e->send(E_WARNING, 'Strategy_MakeWellFormed: Stray end tag removed');
+                } else {
+                    $this->remove();
+                    if ($e) $e->send(E_WARNING, 'Strategy_MakeWellFormed: Stray end tag removed');
                 }
+                $reprocess = true;
                 continue;
             }
             
-            // okay, we found it, close all the skipped tags
-            // note that skipped tags contains the element we need closed
-            for ($i = count($skipped_tags) - 1; $i >= 0; $i--) {
-                // please don't redefine $i!
-                if ($i && $e && !isset($skipped_tags[$i]->armor['MakeWellFormed_TagClosedError'])) {
-                    $e->send(E_NOTICE, 'Strategy_MakeWellFormed: Tag closed by element end', $skipped_tags[$i]);
-                }
-                $result[] = $new_token = new HTMLPurifier_Token_End($skipped_tags[$i]->name);
-                foreach ($this->injectors as $injector) {
-                    $injector->notifyEnd($new_token);
+            // do errors, in REVERSE $j order: a,b,c with </a></b></c>
+            $c = count($skipped_tags);
+            if ($e) {
+                for ($j = $c - 1; $j > 0; $j--) {
+                    // notice we exclude $j == 0, i.e. the current ending tag, from
+                    // the errors...
+                    if (!isset($skipped_tags[$j]->armor['MakeWellFormed_TagClosedError'])) {
+                        $e->send(E_NOTICE, 'Strategy_MakeWellFormed: Tag closed by element end', $skipped_tags[$j]);
+                    }
                 }
             }
             
+            // insert tags, in FORWARD $j order: c,b,a with </a></b></c>
+            for ($j = 1; $j < $c; $j++) {
+                // ...as well as from the insertions
+                $new_token = new HTMLPurifier_Token_End($skipped_tags[$j]->name);
+                $new_token->start = $skipped_tags[$j];
+                $this->insertBefore($new_token);
+            }
+            $reprocess = true;
+            continue;
         }
         
         $context->destroy('CurrentNesting');
@@ -13375,59 +14288,77 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy
         $context->destroy('InputIndex');
         $context->destroy('CurrentToken');
         
-        // we're at the end now, fix all still unclosed tags (this is
-        // duplicated from the end of the loop with some slight modifications)
-        // not using $skipped_tags since it would invariably be all of them
-        if (!empty($this->currentNesting)) {
-            for ($i = count($this->currentNesting) - 1; $i >= 0; $i--) {
-                // please don't redefine $i!
-                if ($e && !isset($this->currentNesting[$i]->armor['MakeWellFormed_TagClosedError'])) {
-                    $e->send(E_NOTICE, 'Strategy_MakeWellFormed: Tag closed by document end', $this->currentNesting[$i]);
-                }
-                $result[] = $new_token = new HTMLPurifier_Token_End($this->currentNesting[$i]->name);
-                foreach ($this->injectors as $injector) {
-                    $injector->notifyEnd($new_token);
-                }
-            }
-        }
-        
-        unset($this->outputTokens, $this->injectors, $this->currentInjector,
-          $this->currentNesting, $this->inputTokens, $this->inputIndex);
-        
-        return $result;
+        unset($this->injectors, $this->stack, $this->tokens, $this->t);
+        return $tokens;
     }
     
-    function processToken($token, $config, $context) {
-        if (is_array($token)) {
-            // the original token was overloaded by an injector, time
-            // to some fancy acrobatics
-            
-            // $this->inputIndex is decremented so that the entire set gets
-            // re-processed
-            array_splice($this->inputTokens, $this->inputIndex--, 1, $token);
-            
-            // adjust the injector skips based on the array substitution
-            if ($this->injectors) {
-                $offset = count($token);
-                for ($i = 0; $i <= $this->currentInjector; $i++) {
-                    // because of the skip back, we need to add one more
-                    // for uninitialized injectors. I'm not exactly
-                    // sure why this is the case, but I think it has to
-                    // do with the fact that we're decrementing skips
-                    // before re-checking text
-                    if (!$this->injectors[$i]->skip) $this->injectors[$i]->skip++;
-                    $this->injectors[$i]->skip += $offset;
-                }
-            }
-        } elseif ($token) {
-            // regular case
-            $this->outputTokens[] = $token;
-            if ($token instanceof HTMLPurifier_Token_Start) {
-                $this->currentNesting[] = $token;
-            } elseif ($token instanceof HTMLPurifier_Token_End) {
-                array_pop($this->currentNesting); // not actually used
+    /**
+     * Processes arbitrary token values for complicated substitution patterns.
+     * In general:
+     * 
+     * If $token is an array, it is a list of tokens to substitute for the
+     * current token. These tokens then get individually processed. If there
+     * is a leading integer in the list, that integer determines how many
+     * tokens from the stream should be removed.
+     * 
+     * If $token is a regular token, it is swapped with the current token.
+     * 
+     * If $token is false, the current token is deleted.
+     * 
+     * If $token is an integer, that number of tokens (with the first token
+     * being the current one) will be deleted.
+     * 
+     * @param $token Token substitution value
+     * @param $injector Injector that performed the substitution; default is if
+     *        this is not an injector related operation.
+     */
+    protected function processToken($token, $injector = -1) {
+        
+        // normalize forms of token
+        if (is_object($token)) $token = array(1, $token);
+        if (is_int($token))    $token = array($token);
+        if ($token === false)  $token = array(1);
+        if (!is_array($token)) throw new HTMLPurifier_Exception('Invalid token type from injector');
+        if (!is_int($token[0])) array_unshift($token, 1);
+        if ($token[0] === 0) throw new HTMLPurifier_Exception('Deleting zero tokens is not valid');
+        
+        // $token is now an array with the following form:
+        // array(number nodes to delete, new node 1, new node 2, ...)
+        
+        $delete = array_shift($token);
+        $old = array_splice($this->tokens, $this->t, $delete, $token);
+        
+        if ($injector > -1) {
+            // determine appropriate skips
+            $oldskip = isset($old[0]) ? $old[0]->skip : array();
+            foreach ($token as $object) {
+                $object->skip = $oldskip;
+                $object->skip[$injector] = true;
             }
         }
+        
+    }
+    
+    /**
+     * Inserts a token before the current token. Cursor now points to this token
+     */
+    private function insertBefore($token) {
+        array_splice($this->tokens, $this->t, 0, array($token));
+    }
+
+    /**
+     * Removes current token. Cursor now points to new token occupying previously
+     * occupied space.
+     */
+    private function remove() {
+        array_splice($this->tokens, $this->t, 1);
+    }
+    
+    /**
+     * Swap current token with new token. Cursor points to new token (no change).
+     */
+    private function swap($token) {
+        $this->tokens[$this->t] = $token;
     }
     
 }
@@ -13453,6 +14384,9 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
         
         $escape_invalid_tags = $config->get('Core', 'EscapeInvalidTags');
         $remove_invalid_img  = $config->get('Core', 'RemoveInvalidImg');
+        
+        // currently only used to determine if comments should be kept
+        $trusted = $config->get('HTML', 'Trusted');
         
         $remove_script_contents = $config->get('Core', 'RemoveScriptContents');
         $hidden_elements     = $config->get('Core', 'HiddenElements');
@@ -13560,6 +14494,23 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy
                 if ($textify_comments !== false) {
                     $data = $token->data;
                     $token = new HTMLPurifier_Token_Text($data);
+                } elseif ($trusted) {
+                    // keep, but perform comment cleaning
+                    if ($e) {
+                        // perform check whether or not there's a trailing hyphen
+                        if (substr($token->data, -1) == '-') {
+                            $e->send(E_NOTICE, 'Strategy_RemoveForeignElements: Trailing hyphen in comment removed');
+                        }
+                    }
+                    $token->data = rtrim($token->data, '-');
+                    $found_double_hyphen = false;
+                    while (strpos($token->data, '--') !== false) {
+                        if ($e && !$found_double_hyphen) {
+                            $e->send(E_NOTICE, 'Strategy_RemoveForeignElements: Hyphens in comment collapsed');
+                        }
+                        $found_double_hyphen = true; // prevent double-erroring
+                        $token->data = str_replace('--', '-', $token->data);
+                    }
                 } else {
                     // strip comments
                     if ($e) $e->send(E_NOTICE, 'Strategy_RemoveForeignElements: Comment removed');
@@ -13764,9 +14715,10 @@ class HTMLPurifier_Token_Comment extends HTMLPurifier_Token
      * 
      * @param $data String comment data.
      */
-    public function __construct($data, $line = null) {
+    public function __construct($data, $line = null, $col = null) {
         $this->data = $data;
         $this->line = $line;
+        $this->col  = $col;
     }
 }
 
@@ -13806,7 +14758,7 @@ class HTMLPurifier_Token_Tag extends HTMLPurifier_Token
      * @param $name String name.
      * @param $attr Associative array of attributes.
      */
-    public function __construct($name, $attr = array(), $line = null) {
+    public function __construct($name, $attr = array(), $line = null, $col = null) {
         $this->name = ctype_lower($name) ? $name : strtolower($name);
         foreach ($attr as $key => $value) {
             // normalization only necessary when key is not lowercase
@@ -13822,6 +14774,7 @@ class HTMLPurifier_Token_Tag extends HTMLPurifier_Token
         }
         $this->attr = $attr;
         $this->line = $line;
+        $this->col  = $col;
     }
 }
 
@@ -13846,7 +14799,11 @@ class HTMLPurifier_Token_Empty extends HTMLPurifier_Token_Tag
  */
 class HTMLPurifier_Token_End extends HTMLPurifier_Token_Tag
 {
-    
+    /**
+     * Token that started this node. Added by MakeWellFormed. Please
+     * do not edit this!
+     */
+    public $start;
 }
 
 
@@ -13882,10 +14839,11 @@ class HTMLPurifier_Token_Text extends HTMLPurifier_Token
      * 
      * @param $data String parsed character data.
      */
-    public function __construct($data, $line = null) {
+    public function __construct($data, $line = null, $col = null) {
         $this->data = $data;
         $this->is_whitespace = ctype_space($data);
         $this->line = $line;
+        $this->col  = $col;
     }
     
 }
@@ -13897,7 +14855,7 @@ class HTMLPurifier_URIFilter_DisableExternal extends HTMLPurifier_URIFilter
     public $name = 'DisableExternal';
     protected $ourHostParts = false;
     public function prepare($config) {
-        $our_host = $config->get('URI', 'Host');
+        $our_host = $config->getDefinition('URI')->host;
         if ($our_host !== null) $this->ourHostParts = array_reverse(explode('.', $our_host));
     }
     public function filter(&$uri, $config, $context) {
@@ -13998,12 +14956,18 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
         }
         if ($uri->path === '') {
             $uri->path = $this->base->path;
-        }elseif ($uri->path[0] !== '/') {
+        } elseif ($uri->path[0] !== '/') {
             // relative path, needs more complicated processing
             $stack = explode('/', $uri->path);
             $new_stack = array_merge($this->basePathStack, $stack);
+            if ($new_stack[0] !== '' && !is_null($this->base->host)) {
+                array_unshift($new_stack, '');
+            }
             $new_stack = $this->_collapseStack($new_stack);
             $uri->path = implode('/', $new_stack);
+        } else {
+            // absolute path, but still we should collapse
+            $uri->path = implode('/', $this->_collapseStack(explode('/', $uri->path)));
         }
         // re-combine
         $uri->scheme = $this->base->scheme;
@@ -14018,6 +14982,7 @@ class HTMLPurifier_URIFilter_MakeAbsolute extends HTMLPurifier_URIFilter
      */
     private function _collapseStack($stack) {
         $result = array();
+        $is_folder = false;
         for ($i = 0; isset($stack[$i]); $i++) {
             $is_folder = false;
             // absorb an internally duplicated slash
@@ -14082,7 +15047,11 @@ class HTMLPurifier_URIFilter_Munge extends HTMLPurifier_URIFilter
         $this->replace = array_map('rawurlencode', $this->replace);
         
         $new_uri = strtr($this->target, $this->replace);
-        $uri = $this->parser->parse($new_uri); // overwrite
+        $new_uri = $this->parser->parse($new_uri);
+        // don't redirect if the target host is the same as the 
+        // starting host
+        if ($uri->host === $new_uri->host) return true;
+        $uri = $new_uri; // overwrite
         return true;
     }
     

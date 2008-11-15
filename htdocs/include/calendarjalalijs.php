@@ -22,9 +22,11 @@ if (!defined('XOOPS_ROOT_PATH')) {
 <script type="text/javascript" src="'.XOOPS_URL.'/libraries/jalalijscalendar/calendar.js"></script>
 <script type="text/javascript" src="'.XOOPS_URL.'/libraries/jalalijscalendar/calendar-setup.js"></script>
 ';
-	$basecheck = defined('_EXT_DATE_FUNC') && $xoopsConfig['use_ext_date'] == 1 && _EXT_DATE_FUNC;
-	if ($basecheck && $xoopsConfig['language'] == 'persian'){
+	if ( $xoopsConfig['use_ext_date'] == 1 && $xoopsConfig['language'] == 'persian'){
 		echo'<script type="text/javascript" src="'.XOOPS_URL.'/libraries/jalalijscalendar/jalali.js"></script>';
+}
+	if ( $xoopsConfig['use_ext_date'] == 1 && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.js')){
+		echo'<script type="text/javascript" src="'.XOOPS_URL.'/language/'.$xoopsConfig['language'].'/local.date.js"></script>';
 }
 ?>
 <script type="text/javascript">
@@ -83,32 +85,32 @@ Calendar._SMN = new Array
 
  // full month names
 Calendar._JMN = new Array
-("<?php echo _CAL_Far;?>",
- "<?php echo _CAL_Ord;?>",
- "<?php echo _CAL_Kho;?>",
- "<?php echo _CAL_Tir;?>",
- "<?php echo _CAL_Mor;?>",
- "<?php echo _CAL_Sha;?>",
- "<?php echo _CAL_Meh;?>",
- "<?php echo _CAL_Aba;?>",
- "<?php echo _CAL_Aza;?>",
- "<?php echo _CAL_Dey;?>",
- "<?php echo _CAL_Bah;?>",
- "<?php echo _CAL_Esf;?>");
+("<?php echo _CAL_FARVARDIN;?>",
+ "<?php echo _CAL_ORDIBEHESHT;?>",
+ "<?php echo _CAL_KHORDAD;?>",
+ "<?php echo _CAL_TIR;?>",
+ "<?php echo _CAL_MORDAD;?>",
+ "<?php echo _CAL_SHAHRIVAR;?>",
+ "<?php echo _CAL_MEHR;?>",
+ "<?php echo _CAL_ABAN;?>",
+ "<?php echo _CAL_AZAR;?>",
+ "<?php echo _CAL_DEY;?>",
+ "<?php echo _CAL_BAHMAN;?>",
+ "<?php echo _CAL_ESFAND;?>");
 // short month names
 Calendar._JSMN = new Array
-("<?php echo _CAL_Far;?>",
- "<?php echo _CAL_Ord;?>",
- "<?php echo _CAL_Kho;?>",
- "<?php echo _CAL_Tir;?>",
- "<?php echo _CAL_Mor;?>",
- "<?php echo _CAL_Sha;?>",
- "<?php echo _CAL_Meh;?>",
- "<?php echo _CAL_Aba;?>",
- "<?php echo _CAL_Aza;?>",
- "<?php echo _CAL_Dey;?>",
- "<?php echo _CAL_Bah;?>",
- "<?php echo _CAL_Esf;?>");
+("<?php echo _CAL_FARVARDIN;?>",
+ "<?php echo _CAL_ORDIBEHESHT;?>",
+ "<?php echo _CAL_KHORDAD;?>",
+ "<?php echo _CAL_TIR;?>",
+ "<?php echo _CAL_MORDAD;?>",
+ "<?php echo _CAL_SHAHRIVAR;?>",
+ "<?php echo _CAL_MEHR;?>",
+ "<?php echo _CAL_ABAN;?>",
+ "<?php echo _CAL_AZAR;?>",
+ "<?php echo _CAL_DEY;?>",
+ "<?php echo _CAL_BAHMAN;?>",
+ "<?php echo _CAL_ESFAND;?>");
 
 
  

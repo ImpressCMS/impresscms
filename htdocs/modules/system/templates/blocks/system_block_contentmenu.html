@@ -1,6 +1,11 @@
 <script src="<{$xoops_url}>/modules/system/admin/content/menu.js" type="text/javascript"></script>
+    <{if $block.menu_rtl }>
+<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/menu_rtl.css" />
+</style>
+    <{else}>
 <link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/menu.css" />
 </style>
+    <{/if}>
 <div id="mainmenu">
   <ul id="primary-nav">
     <{foreach from=$block.menu key=key item=menu}> 

@@ -179,7 +179,7 @@ function modifyUser($user)
 	}
 	else
 	{
-		echo "<h4 style='text-align:left;'>";
+		echo "<h4 style='text-align:"._GLOBAL_LEFT.";'>";
 		echo _AM_USERDONEXIT;
 		echo "</h4>";
 	}

@@ -33,11 +33,7 @@ else
 
     	/**  include Smarty template engine and initialize it*/
     	require_once ICMS_ROOT_PATH.'/class/template.php';
-	if ( file_exists(XOOPS_THEME_PATH . '/' . $xoopsConfig ['theme_set'] . '/theme_rtl.html') && defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-    	require_once ICMS_ROOT_PATH.'/class/theme_rtl.php';
-    }else{
     	require_once ICMS_ROOT_PATH.'/class/theme.php';
-    }
     	require_once ICMS_ROOT_PATH.'/class/theme_blocks.php';
 
 	if(@$xoopsOption['template_main'])

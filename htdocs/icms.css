@@ -208,7 +208,8 @@ div.cpicon span.unor{
 	font-size: 11px;
 	font-weight: normal;
 	color: #000;
-	width: 100px;
+	min-width: 100px;
+	width: auto;
 	z-index:100 !important;
 }
 .ed_block_box img{
@@ -219,13 +220,13 @@ div.cpicon span.unor{
 	color: #000;
 }
 div#disclaimer{
-	background-color: #eee; 
-	border: #CCC 1px solid; 
-	padding: 2px; 
-	width: 98%; 
-	height: 8em; 
-	overflow: auto; 
-	font-size: 1em; 
+	background-color: #eee;
+	border: #CCC 1px solid;
+	padding: 2px;
+	width: 98%;
+	height: 8em;
+	overflow: auto;
+	font-size: 1em;
 	font-family: verdana,arial, helvetica, sans-serif;
 }
 .openid_url {
@@ -235,7 +236,7 @@ div#disclaimer{
 	background-color: #ffffff;
 	padding-left: 18px;
 }
-
+#xo-logger-tabs hr{border: solid 2px; margin-top: 5px; margin-left: auto; margin-right: auto; magin-bottom:3 px; width: 100%;}
 /*Default ImpressCMS Pagination Style*/
 div.pagination.default{
     margin-top: 20px;

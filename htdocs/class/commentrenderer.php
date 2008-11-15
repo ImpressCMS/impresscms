@@ -374,7 +374,7 @@ class XoopsCommentRenderer {
 		if ($icon_image != '') {
 			if (false != $this->_doIconCheck) {
 				if (!file_exists(XOOPS_URL.'/images/subject/'.$icon_image)) {
-					return '<img src="'.XOOPS_URL.'/images/icons/no_posticon.gif" alt="" />';
+					return '<img src="'.XOOPS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/no_posticon.gif" alt="" />';
 				} else {
 					return '<img src="'.XOOPS_URL.'/images/subject/'.$icon_image.'" alt="" />';
 				}
@@ -382,7 +382,7 @@ class XoopsCommentRenderer {
 				return '<img src="'.XOOPS_URL.'/images/subject/'.$icon_image.'" alt="" />';
 			}
 		}
-		return '<img src="'.XOOPS_URL.'/images/icons/no_posticon.gif" alt="" />';
+		return '<img src="'.XOOPS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/no_posticon.gif" alt="" />';
 	}
 }
 ?>

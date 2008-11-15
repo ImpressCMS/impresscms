@@ -24,20 +24,20 @@
 
           <{if $xoops_iscommentadmin == true}>
 
-          <td class="even" align="right">
-            <a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>"><img src="<{$xoops_url}>/images/icons/edit.gif" alt="<{$lang_edit}>" /></a><a href="<{$deletecomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_delete}>"><img src="<{$xoops_url}>/images/icons/delete.gif" alt="<{$lang_delete}>" /></a><a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><img src="<{$xoops_url}>/images/icons/reply.gif" alt="<{$lang_reply}>" /></a>
+          <td class="even" align="<{$smarty.const._GLOBAL_RIGHT}>">
+            <a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_edit}>"><img src="<{$xoops_url}>/images/icons/<{$icms_langname}>/edit.gif" alt="<{$lang_edit}>" /></a><a href="<{$deletecomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_delete}>"><img src="<{$xoops_url}>/images/icons/<{$icms_langname}>/delete.gif" alt="<{$lang_delete}>" /></a><a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><img src="<{$xoops_url}>/images/icons/<{$icms_langname}>/reply.gif" alt="<{$lang_reply}>" /></a>
           </td>
 
           <{elseif $xoops_isuser == true && $xoops_userid == $comment.poster.id}>
 
-          <td class="even" align="right">
-            <a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title=="<{$lang_edit}>"><img src="<{$xoops_url}>/images/icons/edit.gif" alt="<{$lang_edit}>" /></a><a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><img src="<{$xoops_url}>/images/icons/reply.gif" alt="<{$lang_reply}>" /></a>
+          <td class="even" align="<{$smarty.const._GLOBAL_RIGHT}>">
+            <a href="<{$editcomment_link}>&amp;com_id=<{$comment.id}>" title=="<{$lang_edit}>"><img src="<{$xoops_url}>/images/icons/<{$icms_langname}>/edit.gif" alt="<{$lang_edit}>" /></a><a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><img src="<{$xoops_url}>/images/icons/<{$icms_langname}>/reply.gif" alt="<{$lang_reply}>" /></a>
           </td>
 
           <{elseif $xoops_isuser == true || $anon_canpost == true}>
 
-          <td class="even" align="right">
-            <a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><img src="<{$xoops_url}>/images/icons/reply.gif" alt="<{$lang_reply}>" /></a>
+          <td class="even" align="<{$smarty.const._GLOBAL_RIGHT}>">
+            <a href="<{$replycomment_link}>&amp;com_id=<{$comment.id}>" title="<{$lang_reply}>"><img src="<{$xoops_url}>/images/icons/<{$icms_langname}>/reply.gif" alt="<{$lang_reply}>" /></a>
           </td>
 
           <{else}>

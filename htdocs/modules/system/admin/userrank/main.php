@@ -81,7 +81,7 @@ case "RankForumAdd":
     $db =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
     $rank_special = isset($_POST['rank_special']) && intval($_POST['rank_special']) ? 1 : 0;
-	$rank_title = htmlspecialchars($_POST['rank_title'];
+	$rank_title = htmlspecialchars($_POST['rank_title']);
     $rank_title = $myts->stripSlashesGPC($rank_title);
     $rank_image = '';
     include_once XOOPS_ROOT_PATH.'/class/uploader.php';
@@ -117,7 +117,7 @@ case "RankForumSave":
     $db =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
     $rank_special = isset($_POST['rank_special']) && intval($_POST['rank_special']) ? 1 : 0;
-	$rank_title = htmlspecialchars($_POST['rank_title'];
+	$rank_title = htmlspecialchars($_POST['rank_title']);
     $rank_title = $myts->stripSlashesGPC($rank_title);
     $delete_old_image = false;
     include_once XOOPS_ROOT_PATH.'/class/uploader.php';

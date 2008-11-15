@@ -95,7 +95,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             if ($avtcount > 10) {
                 include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
                 $nav = new XoopsPageNav($avtcount, 10, $start, 'start', 'fct=avatars&amp;type='.$type.'&amp;op=listavt');
-                echo '<div style="text-align:right;">'.$nav->renderImageNav().'</div>';
+                echo '<div style="text-align:'._GLOBAL_RIGHT.';">'.$nav->renderImageNav().'</div>';
             }
             if ($type == 'S') {
                 echo '<div style="text-align:center;"><input type="hidden" name="op" value="save" /><input type="hidden" name="fct" value="avatars" /><input type="submit" name="submit" value="'._SUBMIT.'" />'.$GLOBALS['xoopsSecurity']->getTokenHTML().'</div></form>';

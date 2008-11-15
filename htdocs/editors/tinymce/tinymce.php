@@ -75,7 +75,7 @@ class TinyMCE
 		$configured[] = "language";
 		$configured[] = "theme";
 		$configured[] = "mode";
-		$this->setting["plugins"] = "icmsmlcontent,xoopsimagemanager,xoopsquotecode,xoopsemotions,table,advimage,advlink,emotions,insertdatetime,preview,media,contextmenu,paste,fullscreen,visualchars,nonbreaking" ;
+		$this->setting["plugins"] = "bbcode,mlcontent,xoopsimagemanager,xoopsquotecode,xoopsemotions,table,advimage,advlink,emotions,insertdatetime,preview,media,contextmenu,paste,fullscreen,visualchars,nonbreaking" ;
 		$this->setting["plugins"] .= !empty($this->config["plugins"]) ? ",".$this->config["plugins"] : "";
 		$configured[] = "plugins";
 
@@ -88,11 +88,11 @@ class TinyMCE
 		if( $this->setting["theme"] == "advanced" ) {
 		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
 			$this->setting["theme_advanced_buttons1"] = "bold,italic,underline,strikethrough,sub,sup,separator,justifyright,justifycenter,justifyleft,justifyfull,formatselect,fontselect,fontsizeselect";
-			$this->setting["theme_advanced_buttons2"] = "icmshide,icmsmlcontent,xoopsquote,xoopscode,separator,bullist,numlist,separator,outdent,indent,separator,undo,redo,removeformat,separator,link,unlink,anchor,xoopsimagemanager,media,separator,charmap,nonbreaking,hr,xoopsemotions,separator,pastetext,pasteword,separator,forecolor,backcolor";
+			$this->setting["theme_advanced_buttons2"] = "icmshide,xoopsquote,xoopscode,separator,bullist,numlist,separator,outdent,indent,separator,undo,redo,removeformat,separator,link,unlink,anchor,xoopsimagemanager,media,separator,charmap,nonbreaking,hr,xoopsemotions,separator,pastetext,pasteword,separator,forecolor,backcolor";
 			$this->setting["theme_advanced_buttons3"] = "tablecontrols,separator,cleanup,visualaid,visualchars,separator,insertdate,inserttime,separator,preview,fullscreen,help,code";
 	   } else {
 			$this->setting["theme_advanced_buttons1"] = "bold,italic,underline,strikethrough,sub,sup,separator,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect";
-			$this->setting["theme_advanced_buttons2"] = "icmshide,icmsmlcontent,xoopsquote,xoopscode,separator,bullist,numlist,separator,outdent,indent,separator,undo,redo,removeformat,separator,link,unlink,anchor,xoopsimagemanager,media,separator,charmap,nonbreaking,hr,xoopsemotions,separator,pastetext,pasteword,separator,forecolor,backcolor";
+			$this->setting["theme_advanced_buttons2"] = "icmshide,xoopsquote,xoopscode,separator,bullist,numlist,separator,outdent,indent,separator,undo,redo,removeformat,separator,link,unlink,anchor,xoopsimagemanager,media,separator,charmap,nonbreaking,hr,xoopsemotions,separator,pastetext,pasteword,separator,forecolor,backcolor";
 			$this->setting["theme_advanced_buttons3"] = "tablecontrols,separator,cleanup,visualaid,visualchars,separator,insertdate,inserttime,separator,preview,fullscreen,help,code";
            }
 		}
@@ -138,7 +138,7 @@ class TinyMCE
 				$this->setting["theme_".$this->setting["theme"]."_toolbar_align"] = $this->config["toolbar_align"];
 				$configured[] = "toolbar_align";
 			}else{
-				$this->setting["theme_".$this->setting["theme"]."_toolbar_align"] = "left";
+				$this->setting["theme_".$this->setting["theme"]."_toolbar_align"] = _GLOBAL_LEFT;
 			}
 			
 			if(isset($this->config["statusbar_location"])) {
@@ -217,13 +217,6 @@ class TinyMCE
                     remove_script_host : false,
                     tinymceload : "1"});
                 '.$callback.'
-function showMCE(id) {
-    if (tinyMCE.getInstanceById(id) == null) {
-        tinyMCE.execCommand(\'mceAddControl\', false, id);
-    } else {
-        tinyMCE.execCommand(\'mceRemoveControl\', false, id);
-    }
-}
                 </script>
         ';
         return $ret ;

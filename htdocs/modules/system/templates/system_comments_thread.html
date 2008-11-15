@@ -9,7 +9,7 @@
 </table>
 
 <{if $show_threadnav == true}>
-<div style="text-align:left; margin:3px; padding: 5px;">
+<div style="text-align:<{$smarty.const._GLOBAL_LEFT}>; margin:3px; padding: 5px;">
 <a href="<{$comment_url}>" title="<{$lang_top}>"><{$lang_top}></a> | <a href="<{$comment_url}>&amp;com_id=<{$comments[i].pid}>&amp;com_rootid=<{$comments[i].rootid}>#newscomment<{$comments[i].pid}>" title="<{$lang_parent}>"><{$lang_parent}></a>
 </div>
 <{/if}>
@@ -21,13 +21,13 @@
   <tr>
     <th width="50%"><{$lang_subject}></th>
     <th width="20%" align="center"><{$lang_poster}></th>
-    <th align="right"><{$lang_posted}></th>
+    <th align="<{$smarty.const._GLOBAL_RIGHT}>"><{$lang_posted}></th>
   </tr>
   <{foreach item=reply from=$comments[i].replies}>
   <tr>
     <td class="even"><{$reply.prefix}> <a href="<{$comment_url}>&amp;com_id=<{$reply.id}>&amp;com_rootid=<{$reply.root_id}>" title=<{$reply.title}>"><{$reply.title}></a></td>
     <td class="odd" align="center"><{$reply.poster.uname}></td>
-    <td class="even" align="right"><{$reply.date_posted}></td>
+    <td class="even" align="<{$smarty.const._GLOBAL_RIGHT}>"><{$reply.date_posted}></td>
   </tr>
   <{/foreach}>
 </table>

@@ -3,6 +3,7 @@
 	<div>
 		<fieldset style="padding: 10px;">
 			<legend style="font-weight: bold;"><{$lang_login}></legend>
+<div id="icms_block_login_form">
 			<form action="user.php" method="post">
 		    	<{$lang_username}><input type="text" name="uname" size="21" maxlength="25" value="<{$usercookie}>" />
 		    	<br />
@@ -16,9 +17,27 @@
 			    <br />
 		    	<input type="submit" value="<{$lang_login}>" />
 			</form>
+  <{if $auth_openid}>
+<br />
+	  <div style="text-align: <{$smarty.const._GLOBAL_LEFT}>;"><a href="#" onclick="xoopsGetElementById('icms_openid-verify-form2').style.display = 'block'; xoopsGetElementById('icms_block_login_form').style.display = 'none'; return false;"><{$lang_login_oid}></a></div>
+  <{/if}>
+</div>
+<{if $auth_openid}>
+	<div id="icms_openid-verify-form2" style="display: none;">
+	  <form method="get" action="<{$xoops_url}>/try_auth.php">
+	    <{$lang_youoid}>
+	    <input type="hidden" name="action" value="verify" />
+	    <input type="text" class="openid_url" name="openid_identifier" size="12" value="" />
+	    <input type="submit" value="<{$lang_login}>" />
+	  </form>
+<br />
+	  <div style="text-align: <{$smarty.const._GLOBAL_LEFT}>;"><a href="#" onclick="xoopsGetElementById('icms_block_login_form').style.display = 'block'; xoopsGetElementById('icms_openid-verify-form2').style.display = 'none'; return false;"><{$lang_back2normoid}></a></div>
+	</div>
+<br />
+<{/if}>
 			<a name="lost"></a>
 			<{if $allow_registration }>
-				<div style="text-align: right;"><{$lang_notregister}><br /></div>
+				<div style="text-align: <{$smarty.const._GLOBAL_RIGHT}>;"><{$lang_notregister}><br /></div>
 			<{/if}>
 		</fieldset>
 	</div>
@@ -40,7 +59,7 @@
 </div>
 <{else}>
 <div style="position: relative;height: 250px;">
-	<div style="float: left; width: 80% ">
+	<div style="float: <{$smarty.const._GLOBAL_LEFT}>; width: 80% ">
 		<fieldset style="padding: 10px;">
 			<legend style="font-weight: bold;"><{$smarty.const._US_RESETPASSWORD}></legend>
 			<h1><{$smarty.const._US_RESETPASSTITLE}></h1>

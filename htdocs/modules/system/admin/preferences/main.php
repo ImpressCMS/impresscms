@@ -500,9 +500,17 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 						$theme_updated = true;
 					}
 					// if password encryption has been changed
-					if ($config->getVar ( 'conf_catid' ) == XOOPS_CONF_USER && $config->getVar ( 'conf_name' ) == 'enc_type') {
-						$member_handler = & xoops_gethandler ( 'member' );
-						$member_handler->updateUsersByField ( 'pass_expired', 1 );
+					if($config->getVar('conf_catid') == XOOPS_CONF_USER && $config->getVar('conf_name') == 'enc_type')
+					{
+						if($config->getVar('closesite') !== 1)
+						{
+							$member_handler = & xoops_gethandler('member');
+							$member_handler->updateUsersByField('pass_expired', 1);
+						}
+						else
+						{
+							redirect_header('admin.php?fct=preferences', 2, _MD_AM_UNABLEENCCLOSED);
+						}
 					}
 					
 					// if default template set has been changed

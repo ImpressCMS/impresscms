@@ -331,8 +331,6 @@ if($op == 'editprofile')
     	$bio_tarea = new XoopsFormTextArea(_US_EXTRAINFO, 'bio', $xoopsUser->getVar('bio', 'E'));
     	$cookie_radio_value = empty($_COOKIE[$xoopsConfig['usercookie']]) ? 0 : 1;
     	$cookie_radio = new XoopsFormRadioYN(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
-	$pwd_change_radio = new XoopsFormRadioYN(_US_CHANGE_PASSWORD, 'change_pass', 0, _YES, _NO);
-	$pwd_change_radio->setExtra('onchange="initQualityMeter(this.value);"');
 	$config_handler =& xoops_gethandler('config');
 	$passConfig =& $config_handler->getConfigsByCat(2);
 	if($passConfig['pass_level'] <= 20)
@@ -341,6 +339,8 @@ if($op == 'editprofile')
 	}
 	else
 	{
+	$pwd_change_radio = new XoopsFormRadioYN(_US_CHANGE_PASSWORD, 'change_pass', 0, _YES, _NO);
+	$pwd_change_radio->setExtra('onchange="initQualityMeter(this.value);"');
 		include_once ICMS_ROOT_PATH."/include/passwordquality.php";
 	}
     	$pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 255);

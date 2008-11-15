@@ -31,19 +31,7 @@ ImpressCMS ChangeLog
 * icmsmlcontent plugin in TinyMCE for multilanguage sites. (stranger)
 * recaptcha library. (stranger)
 * email protection methode using recaptcha. (stranger)
-* New preferences category for captcha. (stranger)
-* New option for "Captcha mode" in preferences. (stranger)
-* New option for "Case sensitive" in preferences. (stranger)
-* New option for "Maximum attemps" in preferences. (stranger)
-* New option for "Minimum attemps" in preferences. (stranger)
-* New option for "Minimum font-size" in preferences. (stranger)
-* New option for "Maximum font-size" in preferences. (stranger)
-* New option for "Background type" in preferences. (stranger)
-* New option for "image amounts" in preferences. (stranger)
-* New option for "polygon points" in preferences. (stranger)
-* New option for "check groups" in preferences. (stranger)
-* New option for "skip characters" in preferences. (stranger)
-* New option for "disable captcha" in preferences. (stranger)
+
 
 '''Changed'''
 * Admin`s RSS feed to simplepie. (marcan/stranger)
@@ -63,7 +51,97 @@ ImpressCMS ChangeLog
 * #2176940: Can't change the theme using the block on user side (real_therplima)
 
 
+== Impresscms 1.1.1==
+
+===2008-11-16 : 1.1.1 Beta===
+
+'''Fixed'''
+* #2245090: Captcha being bypassed
+* #2098718: Sortlinks on Customtag-Table with bad color (sato-san)
+* #2245744: OpenID registration not possible from user.php (stranger)
+
+'''Added'''
+* Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS. (malanciault)
+* Implementing IcmsPersistableSingleView which provides an easy way to quickly display a single object information. (malanciault)
+* Implementing IcmsPersistableTreeTable extending IcmsPersistableTable with the concept of nested objects. (malanciault)
+* Implementing SimplePie as admin RSS. (stranger)
+* Implementing icmsstopspammer to stop spammers. (stranger)
+* smarty to change a theme&template between RTL and LTR. (stranger)
+* smarty <{$smarty.const._GLOBAL_LEFT}> for templates. (stranger)
+* smarty <{$smarty.const._GLOBAL_RIGHT}> for templates. (stranger)
+* TinyMCE plugin icmsmlcontent. (stranger)
+* Issues with ICMS Captcha Class. (stranger)
+* New preferences category for captcha. (stranger)
+* New option for "Captcha mode" in preferences. (stranger)
+* New option for "Case sensitive" in preferences. (stranger)
+* New option for "Maximum attemps" in preferences. (stranger)
+* New option for "Minimum attemps" in preferences. (stranger)
+* New option for "Minimum font-size" in preferences. (stranger)
+* New option for "Maximum font-size" in preferences. (stranger)
+* New option for "Background type" in preferences. (stranger)
+* New option for "image amounts" in preferences. (stranger)
+* New option for "polygon points" in preferences. (stranger)
+* New option for "check groups" in preferences. (stranger)
+* New option for "skip characters" in preferences. (stranger)
+* New option for "disable captcha" in preferences. (stranger)
+* New Function "icms_conv_nr2local". (stranger)
+* New Function "icms_conv_local2nr". (stranger)
+* New Function "Icms_getMonthNameById". (stranger)
+* New Function "div". (stranger)
+* New Function "gregorian_to_jalali". (stranger)
+* New Function "jalali_to_gregorian". (stranger)
+* New Function "mstart". (stranger)
+* New Function "lastday". (stranger)
+* New Function "jmaketime". (stranger)
+* New Function "jdate". (stranger)
+
+'''Improved'''
+* If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
+* Updated system to version 1.11. (stranger)
+* Updated HTML Purifier library from 3.1.1 to 3.2.0 (vaughan)
+* smarty values to make them use both $xoops_value and $icms_value. (stranger)
+* Fixed issues in redirection in RTL mode. (stranger)
+* Updated xoops_getcss to read rtl styles. (stranger)
+* Method we use RTL. (stranger)
+* Removed theme_rtl system at all. (stranger)
+* Updated Snoopy from v1.2.3 to v1.2.4. (stranger)
+* Added check to preferences, if closesite is true (site closed) it is no longer possible to change password encryption until site is reopened. (vaughan)
+* Updated TinyMCE to version 3.2.1. (stranger)
+* Updated TCPDF to version 4.2.007. (stranger)
+* ICMS Captcha Class. (stranger)
+* Adding coumpound class when building the IcmsPersistabkeTable onbject. Now, instead of <td class="odd"> we will get <td class="<{$column.keyname}> odd"> which offrs much more granularity in the was we want individual columns to be displayed. (malanciault/jmorris)
+* Improved Function "formatTimestamp" To use Jalali Calendar and use ext_date function. (stranger)
+* Removing ucword() in icms_getLinkedUnameFromId() as we don't need to capitalized the first leter ofusername (malanciault/mcdonald3072)
+* Implementing ICMS_SYSTEM_DBVERSION in include/version.php to centralized the definition of the latest dbversion of the system module (malanciault)
+
+'''Changed'''
+* impresstheme is using $icms_values. (stranger)
+* in installer config settings, changed some settings to use textsarea instead of textarea. as was causing problems with those fields if URI's were entered etc. (vaughan)
+
 == Impresscms 1.1==
+
+===2008-10-31 : 1.1 Final===
+
+'''Fixed'''
+* Issues with content menu in RTL. (stranger)
+* Issues with registration not completed with passwordmeter. (stranger)
+* Issues with too easy captcha configs. (stranger)
+* #2190687: When saving a block, if $options was a multi-levels array, StopXSS was failing to save array. StopXSS is now recursive and will all levels of $text parameter if it's an array (malanciault)
+* #2192679: Leading space in cache/index.html (dave_l)
+* Fixed issues with spambots. (Frederick/stranger)
+* Fixed issues multiple time stamps. (stranger)
+* Fixed security issue in snoopy.php: http://secunia.com/Advisories/32361/ (thanks to Gijoe)
+* Fixed issue on the pagination links of the image manager tinyMCE plugin.
+* The WYSIWYG group permission per module was confused when trying to know if a user should have permission to use WYSIWYG when posting a comment in a module that had such permission (malanciault/real_therplima)
+* Fixed a bug with RTL, if this is not implemented, we will have troubles while sending posts in some modules like newbb (stranger)
+
+'''Added'''
+* Stop Spam Registration class and its experimental use in extra/anti-spam/register.php (stranger/malanciault)
+
+''Improved'''
+* It is now possible to specify in which modules Webmasters can use WYSIWYG editor (malanciault)
+* Automatically check the Enable HTML check box and uncheck the Enable Linebreaks when using TinyMCE in a comment post form (real_therplima)
+* Improved the installer so it is now possible to install ImpressCMS even with safe_mode ON (vaughan)
 
 ===2008-10-17 : 1.1 RC 3===
 
@@ -80,6 +158,7 @@ ImpressCMS ChangeLog
 * Query execution during character set conversion
 
 '''Fixed'''
+* Issues with editors: switch from dhtml < > TinyMCE (sato-san)
 * Issues with google analytic textform in admin menu. (stranger)
 * Issues with Jalalijscalendar option in admin menu. (stranger)
 * Issues with new templates not being inserted in system module. (stranger)

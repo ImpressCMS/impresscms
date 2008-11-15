@@ -43,6 +43,15 @@ class IcmsPreloadHandler {
 				$this->addPreloadEvents($filename);
 			}
 		}
+
+		// add ondemand preload
+		global $icmsOnDemandPreload;
+		if (isset($icmsOnDemandPreload) && count($icmsOnDemandPreload) > 0) {
+			foreach ($icmsOnDemandPreload as $onDemandPreload) {
+				$this->_preloadFilesArray[] = $onDemandPreload['filename'];
+				$this->addPreloadEvents($onDemandPreload['filename'], $onDemandPreload['module']);
+			}
+		}
 	}
 
 	/**
@@ -50,8 +59,13 @@ class IcmsPreloadHandler {
 	 *
 	 * @param string $filename
 	 */
-	function addPreloadEvents($filename) {
-		include_once ICMS_PRELOAD_PATH . "/$filename";
+	function addPreloadEvents($filename, $module=false) {
+		if ($module) {
+			$filepath = ICMS_ROOT_PATH . "/modules/$module/preload/$filename";
+		} else {
+			$filepath = ICMS_PRELOAD_PATH . "/$filename";
+		}
+		include_once $filepath;
 
 		$classname = $this->getClassName($filename);
 		$preloadItem = new $classname();

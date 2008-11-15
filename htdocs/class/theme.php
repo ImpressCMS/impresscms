@@ -184,6 +184,16 @@ class xos_opal_Theme {
 
 		global $xoopsConfig, $xoopsModule, $xoopsUser;
 		$this->template->assign( array(
+			'icms_style' => ICMS_URL."/icms.css",
+	    	'icms_theme' => $xoopsConfig['theme_set'],
+	    	'icms_imageurl' => XOOPS_THEME_URL.'/'.$xoopsConfig['theme_set'].'/',
+	    	'icms_themecss'=> xoops_getcss($xoopsConfig['theme_set']),
+	    	'icms_requesturi' => htmlspecialchars( $_SERVER['REQUEST_URI'], ENT_QUOTES),
+	    	'icms_sitename' => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
+	    	'icms_slogan' => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
+	    	'icms_dirname' => @$xoopsModule ? $xoopsModule->getVar( 'dirname' ) : 'system',
+	    	'icms_banner' => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
+	    	'icms_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $xoopsConfig['slogan'], ENT_QUOTES ),
 	    	'xoops_theme' => $xoopsConfig['theme_set'],
 	    	'xoops_imageurl' => XOOPS_THEME_URL.'/'.$xoopsConfig['theme_set'].'/',
 	    	'xoops_themecss'=> xoops_getcss($xoopsConfig['theme_set']),
@@ -196,13 +206,17 @@ class xos_opal_Theme {
 	    ) );
 	    if ( isset($xoopsUser) && is_object($xoopsUser) ) {
 	        $this->template->assign( array(
+	        	'icms_isuser' => true,
+	        	'icms_userid' => $xoopsUser->getVar('uid'),
+	        	'icms_uname' => $xoopsUser->getVar('uname'),
+	        	'icms_isadmin' => $GLOBALS['xoopsUserIsAdmin'],
 	        	'xoops_isuser' => true,
 	        	'xoops_userid' => $xoopsUser->getVar('uid'),
 	        	'xoops_uname' => $xoopsUser->getVar('uname'),
 	        	'xoops_isadmin' => $GLOBALS['xoopsUserIsAdmin'],
 	        ) );
 	    } else {
-	        $this->template->assign( array( 'xoops_isuser' => false, 'xoops_isadmin' => false ) );
+	        $this->template->assign( array( 'icms_isuser' => false, 'icms_isadmin' => false, 'xoops_isuser' => false, 'xoops_isadmin' => false  ) );
 	    }
 		// Meta tags
 	    $config_handler =& xoops_gethandler('config');
@@ -217,6 +231,7 @@ class xos_opal_Theme {
 	    	} else {
 	        	// prefix each tag with 'xoops_'
 	        	$this->template->assign( "xoops_$name", $value );
+	        	$this->template->assign( "icms_$name", $value );
 	    	}
 	    }
 
@@ -332,6 +347,7 @@ class xos_opal_Theme {
 		foreach ( $this->metas['meta'] as $name => $value ) {
 			if ( in_array( $name, $old ) ) {
 				$this->template->assign( "xoops_meta_$name", htmlspecialchars( $value, ENT_QUOTES ) );
+				$this->template->assign( "icms_meta_$name", htmlspecialchars( $value, ENT_QUOTES ) );
 				unset( $this->metas['meta'][$name] );
 			}
 		}
@@ -350,12 +366,15 @@ class xos_opal_Theme {
 			ob_end_clean();
 		}
 		$this->template->assign_by_ref( 'xoops_contents', $this->content );
+		$this->template->assign_by_ref( 'icms_contents', $this->content );
 
 		$header = empty($xoopsOption['xoops_module_header']) ? $this->template->get_template_vars( 'xoops_module_header' ) : $xoopsOption['xoops_module_header'];
 		$this->template->assign( 'xoops_module_header', $header . "\n" . $this->renderMetas( null, true ) );
+		$this->template->assign( 'icms_module_header', $header . "\n" . $this->renderMetas( null, true ) );
 
 		if ( !empty($xoopsOption['xoops_pagetitle']) ) {
 			$this->template->assign( 'xoops_pagetitle', $xoopsOption['xoops_pagetitle'] );
+			$this->template->assign( 'icms_pagetitle', $xoopsOption['xoops_pagetitle'] );
 		}
 
 		// Do not cache the main (theme.html) template output

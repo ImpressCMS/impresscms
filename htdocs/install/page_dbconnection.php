@@ -89,7 +89,7 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
 <fieldset>
     <legend><?php echo LEGEND_CONNECTION; ?></legend>
     <label>
-        <?php echo 'Database:'; ?><br />
+        <?php echo LEGEND_DATABASE; ?><br />
 		<select size="2" name="DB_TYPE" class="db_select">
 			<option value="mysql" selected="selected">mysql</option>
 			<!-- <option value="mysqli">mysqli</option> //-->

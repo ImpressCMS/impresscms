@@ -139,7 +139,7 @@ function contmanager_index($content_supid,$start=0,$tag=null){
 		if ($pagecount > $limit) {
 			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
 			$nav = new XoopsPageNav($pagecount, $limit, $start, 'start', 'fct=content&amp;op=list&amp;content_supid='.$content_supid);
-			$icmsAdminTpl->assign('pag','<div style="float:left; padding-top:2px;" align="center">'.$nav->renderNav().'</div>');
+			$icmsAdminTpl->assign('pag','<div style="float:'._GLOBAL_LEFT.'; padding-top:2px;" align="center">'.$nav->renderNav().'</div>');
 		}else{
 			$icmsAdminTpl->assign('pag','');
 		}

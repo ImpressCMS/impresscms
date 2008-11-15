@@ -173,7 +173,7 @@ class XoopsGroupPermForm extends XoopsForm
             if (!is_object($elements[$i])) {
                 $ret .= $elements[$i];
             } elseif (!$elements[$i]->isHidden()) {
-                $ret .= "<tr valign='top' align='left'><td class='head'>" . $elements[$i]->getCaption();
+                $ret .= "<tr valign='top' align='"._GLOBAL_LEFT."'><td class='head'>" . $elements[$i]->getCaption();
                 if ($elements[$i]->getDescription() != '') {
                     $ret .= '<br /><br /><span style="font-weight: normal;">' . $elements[$i]->getDescription() . '</span>';
                 }

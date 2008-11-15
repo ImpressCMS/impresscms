@@ -50,7 +50,7 @@ class IcmsModuleAbout
 	 * @return IcmsModuleAbout
 	 */
 	
-	function IcmsModuleAbout($aboutTitle='About')
+	function IcmsModuleAbout($aboutTitle = _MODABOUT_ABOUT)
 	{
 		global $xoopsModule, $xoopsConfig;
 

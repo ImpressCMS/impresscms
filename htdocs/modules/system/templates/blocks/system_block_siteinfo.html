@@ -9,7 +9,7 @@
   <!-- start group member loop -->
   <{foreach item=user from=$group.users}>
   <tr>
-    <td class="even" valign="middle" align="center"><img src="<{$user.avatar}>" alt="<{$user.name}>'s avatar" width="32px" /><br /><a href="<{$xoops_url}>/userinfo.php?uid=<{$user.id}>" title="<{$user.name}>"><{$user.name}></a></td><td class="odd" width="20%" align="right" valign="middle"><{$user.msglink}></td>
+    <td class="even" valign="middle" align="center"><img src="<{$user.avatar}>" alt="<{$user.name}>'s avatar" width="32px" /><br /><a href="<{$xoops_url}>/userinfo.php?uid=<{$user.id}>" title="<{$user.name}>"><{$user.name}></a></td><td class="odd" width="20%" align="<{$smarty.const._GLOBAL_RIGHT}>" valign="middle"><{$user.msglink}></td>
   </tr>
   <{/foreach}>
   <!-- end group member loop -->

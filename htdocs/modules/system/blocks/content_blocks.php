@@ -22,7 +22,9 @@ function b_content_menu_show($options) {
     $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $uid = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
     $content_handler =& xoops_gethandler('content');
-    
+		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+			$block['menu_rtl'] = true;
+        }
     $block['showsubs'] = $options[2];
     $block['selcolor'] = $options[3];
     $block['menu'] = getPages($options[2],$options[0],$options[1],$options[4]);

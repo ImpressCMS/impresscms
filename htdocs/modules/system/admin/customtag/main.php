@@ -83,8 +83,8 @@ switch ($op) {
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
 		
 		$objectTable = new IcmsPersistableTable($icms_customtag_handler);
-		$objectTable->addColumn(new IcmsPersistableColumn('name', 'left', 150, 'getCustomtagName'));
-		$objectTable->addColumn(new IcmsPersistableColumn('description', 'left'));
+		$objectTable->addColumn(new IcmsPersistableColumn('name', _GLOBAL_LEFT, 150, 'getCustomtagName'));
+		$objectTable->addColumn(new IcmsPersistableColumn('description', _GLOBAL_LEFT));
 		$objectTable->addColumn(new IcmsPersistableColumn('language', 'center', 150));
 
 		$objectTable->addIntroButton('addcustomtag', 'admin.php?fct=customtag&op=mod', _CO_ICMS_CUSTOMTAG_CREATE);

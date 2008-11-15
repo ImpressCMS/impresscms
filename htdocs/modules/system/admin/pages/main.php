@@ -95,7 +95,7 @@ function pages_index($start=0){
 		if ($pagecount > $limit) {
 			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
 			$nav = new XoopsPageNav($pagecount, $limit, $start, 'start', 'fct=pages&amp;op=list');
-			$icmsAdminTpl->assign('pag','<div style="float:left; padding-top:2px;" align="center">'.$nav->renderNav().'</div>');
+			$icmsAdminTpl->assign('pag','<div style="float:'._GLOBAL_LEFT.'; padding-top:2px;" align="center">'.$nav->renderNav().'</div>');
 		}else{
 			$icmsAdminTpl->assign('pag','');
 		}
