@@ -50,8 +50,8 @@ class IcmsFeed {
 		$this->channelEditor = $xoopsConfig['adminmail'];
 		$this->generator = XOOPS_VERSION;
 		$this-> copyright = 'Copyright ' . formatTimestamp( time(), 'Y' ) . ' ' . $xoopsConfig['sitename'];
-		$this->width  = 88;
-		$this->height = 31;
+		$this->width  = 200;
+		$this->height = 50;
 		$this->ttl    = 60;
 		$this->image = array (
 			'title' => $this->title,
@@ -68,16 +68,16 @@ class IcmsFeed {
 		$tpl->assign('channel_title', $this->title);
 		$tpl->assign('channel_link', $this->url);
 		$tpl->assign('channel_desc', $this->description);
-		$tpl->assign('channel_webmaster', $this -> webMaster . ' (' . $this -> title . ')');
-		$tpl->assign('channel_editor', $this -> channelEditor . ' (' . $this -> title . ')');
+		$tpl->assign('channel_webmaster', $this->webMaster);
+		$tpl->assign('channel_editor', $this->channelEditor);
 		$tpl->assign('channel_category', $this->category);
 		$tpl->assign('channel_generator', $this->generator);
 		$tpl->assign('channel_language', $this->language);
-		$tpl->assign('channel_lastbuild', $this -> lastbuild);
-		$tpl->assign('channel_copyright', $this -> copyright);
-		$tpl->assign('channel_width', $this -> width); 
-        $tpl->assign('channel_height', $this -> height);
-		$tpl->assign('channel_ttl', $this -> ttl);
+		$tpl->assign('channel_lastbuild', $this->lastbuild);
+		$tpl->assign('channel_copyright', $this->copyright);
+		$tpl->assign('channel_width', $this->width); 
+        $tpl->assign('channel_height', $this->height);
+		$tpl->assign('channel_ttl', $this->ttl);
 		$tpl->assign('image_url', $this->image['url']);
 		foreach ($this->feeds as $feed) {
 			$tpl->append('items', $feed);
