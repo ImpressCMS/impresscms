@@ -54,11 +54,13 @@ class XoopsFormSelectEditor extends XoopsFormElementTray
 	function XoopsFormSelectEditor(&$form, $name="editor", $value=null, $noHtml=false)
 	{
 		$this->XoopsFormElementTray(_SELECT);
-
 		$edtlist = XoopsLists::getEditorsList();
-		if (!empty($edtlist)) {
-			asort($edtlist);
-		}
+/*		$config_handler =& xoops_gethandler('config');
+		$xoopsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
+		$edtlist = asort(str_replace('default',$xoopsConfig["editor_default"], $xoopsConfig["editor_enabled_list"]));
+	if ($edtlist = array ('')){
+		$edtlist = array ($xoopsConfig["editor_default"]);
+	}*/
 		$option_select = new XoopsFormSelect("", $name, $value);
 		$querys = preg_replace('/editor=(.*?)&/','',$_SERVER['QUERY_STRING']);
 		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){

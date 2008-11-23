@@ -192,6 +192,9 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 	global $xoopsConfig, $xoopsDB, $xoopsModule;
 	$member_handler =& xoops_gethandler('member');
 	$edituser =& $member_handler->getUser($uid);
+	$config_handler =& xoops_gethandler('config');
+	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+
 	if($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new Criteria('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new Criteria('login_name', $login_name)) > 0)
 	{
 		xoops_cp_header();
@@ -201,6 +204,8 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 	}
 	else
 	{
+		$myts =& MyTextSanitizer::getInstance();
+
 		$edituser->setVar('name', $name);
 		$edituser->setVar('uname', $uname);
 		$edituser->setVar('login_name', $login_name);
@@ -213,7 +218,16 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		//$edituser->setVar('user_avatar', $user_avatar);
 		$edituser->setVar('user_icq', $user_icq);
 		$edituser->setVar('user_from', $user_from);
-		$edituser->setVar('user_sig', $user_sig);
+		if($xoopsConfigUser['allow_htsig'] == 0)
+		{
+			$signature = strip_tags($myts->xoopsCodeDecode($user_sig, 1));
+			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($xoopsConfigUser['sig_max_length'])));
+		}
+		else
+		{
+			$signature = $myts->displayTarea($user_sig, 1, 1, 1, 1, 1, 'display');
+			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($xoopsConfigUser['sig_max_length'])));
+		}
 		$user_viewemail = (isset($user_viewemail) && $user_viewemail == 1) ? 1 : 0;
 		$edituser->setVar('user_viewemail', $user_viewemail);
 		$edituser->setVar('user_aim', $user_aim);

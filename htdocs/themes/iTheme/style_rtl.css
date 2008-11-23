@@ -1,0 +1,53 @@
+/* ------ General styles ------ */
+
+html, body {
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+}
+/* ------ Header rules ------ */
+#xo-headerlogo {
+	float: right;
+}
+
+#xo-headerbanner {
+	right:0px;
+	left:120px;
+	float: left;
+}
+#xo-canvas-leftcolumn {
+	float:			right;
+	width:			170px;
+	padding-left:	5px;
+	margin-left:	0px;
+	margin-right:	-180px;
+}
+
+* html #xo-canvas-leftcolumn {
+	margin-left:	-85px;
+}
+
+#xo-canvas-rightcolumn {
+	float:			left;
+	width:			170px;
+	margin-left:	-170px;
+	margin-right:	0px;
+	padding-left:	0px;
+}
+/* Start Main Menu */
+#mainmenu a:hover {background-position: right;}
+#mainmenu a.menuTop {padding-left: 0px; padding-right: 15px;}
+#mainmenu a.menuMain {padding-left: 0px; padding-right: 15px;}
+#mainmenu a.menuSub {padding-left: 0px; padding-right: 27px;}
+/* End Main Menu */
+
+/* Start User Menu */
+#usermenu a {padding-left: 0px; padding-right: 15px;}
+#usermenu a:hover {background-position: right;}
+#usermenu a.menuTop {padding-left: 0px; {padding-right: 15px;}
+#usermenu a.highlight {background-position: right;}
+/* End User Menu */
+#xo-canvas-leftcolumn .xo-blocktitle {
+	text-align: right;
+}
+#xo-canvas-rightcolumn .xo-blocktitle {
+	text-align: left;
+}

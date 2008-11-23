@@ -67,9 +67,14 @@ class icms_HTMLPurifier
 		$host_domain = icms_get_base_domain(ICMS_URL);
 		$host_base = icms_get_url_domain(ICMS_URL);
 
+		// Allowed Elements in HTML
 		$HTML_Allowed_Elms = 'a, abbr, acronym, b, blockquote, br, caption, cite, code, dd, del, dfn, div, dl, dt, em, font, h1, h2, h3, h4, h5, h6, i, img, ins, kbd, li, ol, p, pre, s, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var';
 
+		// Allowed Element Attributes in HTML, element must also be allowed in Allowed Elements for these attributes to work.
 		$HTML_Allowed_Attr = 'a.href, a.rev, a.title, a.target, a.rel, abbr.title, acronym.title, blockquote.cite, div.align, div.style, div.class, div.id, font.size, font.color,	h1.style, h2.style, h3.style, h4.style, h5.style, h6.style, img.src, img.alt, img.title, img.class, img.align, img.style, ol.style, p.style, span.style, span.class, span.id, table.class, table.id, table.border, table.cellpadding, table.cellspacing, table.style, table.width, td.abbr, td.align, td.class, td.id, td.colspan, td.rowspan, td.style, td.valign, tr.align, tr.class, tr.id, tr.style, tr.valign, th.abbr, th.align, th.class, th.id, th.colspan, th.rowspan, th.style, th.valign, ul.style';
+
+		// Filters used by Custom filter. Filter must be located in libraries/htmlpurifier/standalone/HTMLPurifier/Filter/
+		$Filter_Custom = array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo(), new HTMLPurifier_Filter_LocalMovie(), new HTMLPurifier_Filter_GoogleVideo());
 
 		// sets default config settings for htmpurifier
 		$icms_PurifyConfig = HTMLPurifier_Config::createDefault();
@@ -131,7 +136,7 @@ class icms_HTMLPurifier
 
 			$icms_PurifyConfig->set('Filter', 'ExtractStyleBlocks', false);
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
-			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
+			$icms_PurifyConfig->set('Filter', 'Custom', $Filter_Custom);
 		}
 		elseif($config = 'system-basic')
 		{
@@ -188,7 +193,7 @@ class icms_HTMLPurifier
 
 			$icms_PurifyConfig->set('Filter', 'ExtractStyleBlocks', false);
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
-			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
+			$icms_PurifyConfig->set('Filter', 'Custom', $Filter_Custom);
 		}
 		elseif($config = 'protector')
 		{
@@ -261,7 +266,7 @@ class icms_HTMLPurifier
 
 			$icms_PurifyConfig->set('Filter', 'ExtractStyleBlocks', false);
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
-			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
+			$icms_PurifyConfig->set('Filter', 'Custom', $Filter_Custom);
 		}
 		elseif($config = 'preview') // config id level for preview HTMLArea
 		{
@@ -318,7 +323,7 @@ class icms_HTMLPurifier
 
 			$icms_PurifyConfig->set('Filter', 'ExtractStyleBlocks', false);
 			$icms_PurifyConfig->set('Filter', 'YouTube', true); // setting to true will allow Youtube files to be embedded into your site & w3c validated.
-			$icms_PurifyConfig->set('Filter', 'Custom', array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_LiveLeak(), new HTMLPurifier_Filter_Vimeo()));
+			$icms_PurifyConfig->set('Filter', 'Custom', $Filter_Custom);
 		}
 		$icms_PurifyDef = $icms_PurifyConfig->getHTMLDefinition(true);
 

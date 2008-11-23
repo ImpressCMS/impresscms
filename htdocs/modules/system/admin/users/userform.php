@@ -94,7 +94,8 @@ $location_text = new XoopsFormText(_AM_LOCATION, "user_from", 30, 100, $location
 $occupation_text = new XoopsFormText(_AM_OCCUPATION, "user_occ", 30, 100, $occ_value);
 $interest_text = new XoopsFormText(_AM_INTEREST, "user_intrest", 30, 150, $interest_value);
 $sig_tray = new XoopsFormElementTray(_AM_SIGNATURE, "<br />");
-$sig_tarea = new XoopsFormTextArea("", "user_sig", $sig_value);
+if($xoopsConfigUser['allow_htsig'] == 0) {$sig_tarea = new XoopsFormTextArea("", "user_sig", $sig_value);}
+else {$sig_tarea = new XoopsFormDhtmlTextArea("", "user_sig", $sig_value);}
 $sig_tray->addElement($sig_tarea);
 $sig_cbox = new XoopsFormCheckBox("", "attachsig", $sig_cbox_value);
 $sig_cbox->addOption(1, _US_SHOWSIG);

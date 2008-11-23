@@ -59,8 +59,20 @@ ImpressCMS ChangeLog
 * #2245090: Captcha being bypassed
 * #2098718: Sortlinks on Customtag-Table with bad color (sato-san)
 * #2245744: OpenID registration not possible from user.php (stranger)
+* #2300634: Blocks Positions admin not totaly secured (real_therplima/trabis)
+* #2103517: Multilanguage tags & tables break translation (nachenko/malanciault)
+* #2178956: Empty space when rank doesn't have an icon (malanciault)
+* #2203239: Debugger stops icmsfeed (malanciault)
+* #2207696: Blocksform: Cancel button not working (malanciault)
+* #2215976: Character ' stripped out of website title (malanciault)
+* #2259562: Edit front end blocks with wrong groups (malanciault/skenow)
+* #2179432: Problem again with xoopsimagebrowser.php (real_therplima)
+* #2316120: Giving some group access is a high security risk (skenow)
 
 '''Added'''
+* Purifier Filters for GoogleVideo & Local Flash movies (movies that are stored locally on the same server as the site). (vaughan)
+* TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
+* choice of xoopsFormTextArea or xoopsFormDHTMLTextArea to edit user form (signature) depends on whether HTML sig is allowed or not. (vaughan)
 * Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS. (malanciault)
 * Implementing IcmsPersistableSingleView which provides an easy way to quickly display a single object information. (malanciault)
 * Implementing IcmsPersistableTreeTable extending IcmsPersistableTable with the concept of nested objects. (malanciault)
@@ -82,6 +94,7 @@ ImpressCMS ChangeLog
 * New option for "image amounts" in preferences. (stranger)
 * New option for "polygon points" in preferences. (stranger)
 * New option for "check groups" in preferences. (stranger)
+* We are now checking Groups that are free from Captcha, as opposed to groups which need captcha (malanciault)
 * New option for "skip characters" in preferences. (stranger)
 * New option for "disable captcha" in preferences. (stranger)
 * New Function "icms_conv_nr2local". (stranger)
@@ -94,6 +107,7 @@ ImpressCMS ChangeLog
 * New Function "lastday". (stranger)
 * New Function "jmaketime". (stranger)
 * New Function "jdate". (stranger)
+* New Function "icms_getmodulehandler". (stranger)
 
 '''Improved'''
 * If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
@@ -106,13 +120,13 @@ ImpressCMS ChangeLog
 * Removed theme_rtl system at all. (stranger)
 * Updated Snoopy from v1.2.3 to v1.2.4. (stranger)
 * Added check to preferences, if closesite is true (site closed) it is no longer possible to change password encryption until site is reopened. (vaughan)
-* Updated TinyMCE to version 3.2.1. (stranger)
 * Updated TCPDF to version 4.2.007. (stranger)
 * ICMS Captcha Class. (stranger)
 * Adding coumpound class when building the IcmsPersistabkeTable onbject. Now, instead of <td class="odd"> we will get <td class="<{$column.keyname}> odd"> which offrs much more granularity in the was we want individual columns to be displayed. (malanciault/jmorris)
 * Improved Function "formatTimestamp" To use Jalali Calendar and use ext_date function. (stranger)
 * Removing ucword() in icms_getLinkedUnameFromId() as we don't need to capitalized the first leter ofusername (malanciault/mcdonald3072)
 * Implementing ICMS_SYSTEM_DBVERSION in include/version.php to centralized the definition of the latest dbversion of the system module (malanciault)
+* Improving IcmsVersionChecker to use IcmsSimpleRss instead of Snoopy as we were having problems on some config (malanciault)
 
 '''Changed'''
 * impresstheme is using $icms_values. (stranger)

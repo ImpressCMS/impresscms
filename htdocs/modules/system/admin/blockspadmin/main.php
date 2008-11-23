@@ -109,16 +109,16 @@ function save_pblock($dados,$edit=false){
 	$db =& Database::getInstance();
 
 	if (!$edit)
-	  $sql = "INSERT INTO ".$db->prefix('block_positions')." (pname,title,description,block_default,block_type) VALUES ('".$dados['pname']."','".$dados['title']."','".$dados['description']."','0','L')";
+	  $sql = "INSERT INTO ".$db->prefix('block_positions')." (pname,title,description,block_default,block_type) VALUES (".$db->quoteString($dados['pname']).",".$db->quoteString($dados['title']).",".$db->quoteString($dados['description']).",'0','L')";
 	else
-	  $sql = "UPDATE ".$db->prefix('block_positions')." SET pname='".$dados['pname']."', title='".$dados['title']."', description='".$dados['description']."', block_default='0', block_type='L' WHERE id='".intval($dados['pbid'])."'";
+	  $sql = "UPDATE ".$db->prefix('block_positions')." SET pname=".$db->quoteString($dados['pname']).", title=".$db->quoteString($dados['title']).", description=".$db->quoteString($dados['description']).", block_default='0', block_type='L' WHERE id='".intval($dados['pbid'])."'";
 
 	if ($db->queryF($sql)){
 	  redirect_header('admin.php?fct=blockspadmin',1,_AM_BPMSG1);
 	}else{
 	  redirect_header('admin.php?fct=blockspadmin',1,_AM_BPMSG2);
 	}
-}
+
 
 function del_pblock($pbid){
 	$db =& Database::getInstance();

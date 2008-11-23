@@ -139,10 +139,10 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 	function formatTimestamp($time, $format = "l", $timeoffset = null)
 	{
 	    global $xoopsConfig, $xoopsUser;
-	    
+
 	    $format_copy = $format;
 	    $format = strtolower($format);
-	    
+
 	    if ($format == "rss" || $format == "r"){
         	$TIME_ZONE = "";
         	if (!empty($GLOBALS['xoopsConfig']['server_TZ'])){
@@ -153,7 +153,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 			$date = gmdate("D, d M Y H:i:s", intval($time)) . $TIME_ZONE;
 			return $date;
     	}
-	    
+
 	    if ( ($format == "elapse" || $format == "e") && $time < time() ) {
 			$elapse = time() - $time;
 			if ( $days = floor( $elapse / (24 * 3600) ) ) {
@@ -169,15 +169,15 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 			$ret = sprintf(_ELAPSE, icms_conv_nr2local($num));
 	   		return $ret;
     	}
-    	
+
     	// disable user timezone calculation and use default timezone,
     	// for cache consideration
     	if ($timeoffset === null) {
 	    	$timeoffset = ($xoopsConfig['default_TZ'] == '') ? '0.0' : $xoopsConfig['default_TZ'];
     	}
-    	
+
 	    $usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
-	    
+
 	    switch ($format) {
 		case 'daynumber':
 			$datestring = 'd';
@@ -254,7 +254,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 	    	if (!isset($today_timestamp)) {
 		    	$today_timestamp = mktime(0, 0, 0, date("m", $current_timestamp), date("d", $current_timestamp), date("Y", $current_timestamp));
 	    	}
-	    	
+
 	        if ( abs($elapse_today = $usertimestamp - $today_timestamp) < 24*60*60) {
 				$datestring = ($elapse_today > 0) ? _TODAY : _YESTERDAY;
 			} else {
@@ -269,7 +269,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 				}
 			}
 	        break;
-	        
+
         default:
 	        if ($format != '') {
 	            $datestring = $format_copy;
@@ -278,13 +278,13 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 	        }
 	        break;
 	    }
-	    
+
 	$basecheck = $xoopsConfig['use_ext_date'] == 1 && $format != 'mysql';
 	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php'))
 	{
 		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
 		return ucfirst(local_date($datestring,$usertimestamp));
-	}elseif ($basecheck && $xoopsConfig['language'] != 'persian'){
+	}elseif ($basecheck && $xoopsConfig['language'] != 'persian' && $xoopsConfig['language'] != 'english'){
 		return ucfirst(ext_date($datestring,$usertimestamp));
 	}elseif ($basecheck && $xoopsConfig['language'] == 'persian'){
 		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
@@ -556,18 +556,6 @@ function xoops_getcss($theme = '')
 	if(stristr($uagent, 'mac')) {$str_css = 'styleMAC.css';}
 	elseif(preg_match("/MSIE ([0-9]\.[0-9]{1,2})/i", $uagent)) {$str_css = 'style.css';}
 	else {$str_css = 'styleNN.css';}
-	if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-	if(is_dir(XOOPS_THEME_PATH.'/'.$theme))
-	{
-		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/rtl/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/rtl/'.$str_css;}
-		elseif(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/rtl/style.css')) {return XOOPS_THEME_URL.'/'.$theme.'/rtl/style.css';}
-	}
-	if(is_dir(XOOPS_THEME_PATH.'/'.$theme.'/css/rtl'))
-	{
-		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/rtl/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/css/rtl/'.$str_css;}
-		elseif(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/rtl/style.css')) {return XOOPS_THEME_URL.'/'.$theme.'/css/rtl/style.css';}
-	}
-    }else{
 	if(is_dir(XOOPS_THEME_PATH.'/'.$theme))
 	{
 		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/'.$str_css;}
@@ -578,7 +566,6 @@ function xoops_getcss($theme = '')
 		if(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/'.$str_css)) {return XOOPS_THEME_URL.'/'.$theme.'/css/'.$str_css;}
 		elseif(file_exists(XOOPS_THEME_PATH.'/'.$theme.'/css/style.css')) {return XOOPS_THEME_URL.'/'.$theme.'/css/style.css';}
 	}
-    }
 	return '';
 }
 
@@ -1529,7 +1516,7 @@ function StopXSS($text)
 	{
 		$text = preg_replace("/\(\)/si", "", $text);
 		$text = strip_tags($text);
-		$text = str_replace(array("'","\"",">","<","\\"), "", $text);
+		$text = str_replace(array("\"",">","<","\\"), "", $text);
 	}
 	else
 	{
@@ -1831,6 +1818,7 @@ function icms_conv_local2nr($string)
 function Icms_getMonthNameById($month_id) {
 	global $xoopsConfig;
 	icms_loadLanguageFile('core', 'calendar');
+	$month_id = icms_conv_local2nr($month_id);
 	if( $xoopsConfig['use_ext_date'] == 1 && $xoopsConfig['language'] == 'persian'){
 	switch($month_id) {
 		case 1:
@@ -2234,8 +2222,8 @@ function ext_date($type,$maket="now")
 
 	$need= $maket;
 	$year=date("Y",$need);
-	$month=date("m",$need);
-	$day=date("d",$need);
+	$month=date("n",$need);
+	$day=date("j",$need);
 	$i=0;
 	while($i<strlen($type))
 	{
@@ -2255,8 +2243,8 @@ function ext_date($type,$maket="now")
 				else $result.=_CAL_AM;
 				break;
 			case "d":
-				if($day<10)$result1="0".$day;
-				else 	$result1=$day;
+				if($day<10) $result1="0".$day;
+				else	$result1=$day;
 				$result.=$result1;
 				break;
 			case "D":
@@ -2267,7 +2255,7 @@ function ext_date($type,$maket="now")
 				else if($result1=="Tue") $result1=_CAL_TUE;
 				else if($result1=="Wed") $result1=_CAL_WED;
 				else if($result1=="Thu") $result1=_CAL_THU;
-                                else if($result1=="Fri") $result1=_CAL_FRI;
+                else if($result1=="Fri") $result1=_CAL_FRI;
 				$result.=$result1;
 				break;
 			case"F":
@@ -2338,6 +2326,35 @@ function ext_date($type,$maket="now")
 	}
 	return $result;
 }
+function &icms_getmodulehandler($name = null, $module_dir = null, $module_basename = null, $optional = false)
+{
+	static $handlers;
+	// if $module_dir is not specified
+	if(!isset($module_dir))
+	{
+		//if a module is loaded
+		if(isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {$module_dir = $GLOBALS['xoopsModule']->getVar('dirname');}
+		else {trigger_error('No Module is loaded', E_USER_ERROR);}
+	}
+	else {$module_dir = trim($module_dir);}
+	$name = (!isset($name)) ? $module_dir : trim($name);
+	if(!isset($handlers[$module_dir][$name]))
+	{
+		if($module_dir != 'system') {$hnd_file = ICMS_ROOT_PATH."/modules/{$module_dir}/class/{$name}.php";}
+		else {$hnd_file = ICMS_ROOT_PATH."/modules/{$module_dir}/admin/{$name}/class/{$name}.php";}
+		if(file_exists($hnd_file)) {include_once $hnd_file;}
+		$class = ucfirst(strtolower($module_basename)).ucfirst($name).'Handler';
+		if(class_exists($class)) {$handlers[$module_dir][$name] =& new $class($GLOBALS['xoopsDB']);}
+	}
+	if(!isset($handlers[$module_dir][$name]) && !$optional)
+	{
+		trigger_error('Handler does not exist<br />Module: '.$module_dir.'<br />Name: '.$name, E_USER_ERROR);
+	}
+	if(isset($handlers[$module_dir][$name])) {return $handlers[$module_dir][$name];}
+	$inst = false;
+	return $inst;
+}
+
 function icms_convert_size($size){ 	 
     if ($size >= 1073741824){ 	 
         $ret = round((($size/1024)/1024)/1024,1).' Gb'; 	 

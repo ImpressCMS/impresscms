@@ -28,19 +28,19 @@ class IcmsCaptcha {
 	var $active	= true;
 	var $mode 	= "text";	// potential values: image, text
 	var $config	= array();
-	
+
 	var $message = array(); // Logging error messages
-	
+
 	function IcmsCaptcha()
 	{
 		// Loading default preferences
 		$this->config = @include dirname(__FILE__)."/config.php";
-		
+
 	$config_handler =& xoops_gethandler('config');
 	$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
 		$this->setMode($IcmsConfigCaptcha['captcha_mode']);
 	}
-	
+
 	function &instance()
 	{
 		static $instance;
@@ -49,7 +49,7 @@ class IcmsCaptcha {
 		}
 		return $instance;
 	}
-	
+
 	function setConfig($name, $val)
 	{
 		if($name == "mode") {
@@ -61,29 +61,29 @@ class IcmsCaptcha {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Set CAPTCHA mode
 	 *
 	 * For future possible modes, right now force to use text or image
-	 * 
+	 *
 	 * @param string	$mode	if no mode is set, just verify current mode
 	 */
 	function setMode($mode = null)
 	{
 		if( !empty($mode) && in_array($mode, array("text", "image")) ) {
 			$this->mode = $mode;
-		
+
 			if($this->mode != "image") {
 				return;
 			}
 		}
-		
+
 		// Disable image mode
 		if(!extension_loaded('gd')) {
 			$this->mode = "text";
 		}else{
-			$required_functions = array("imagecreatetruecolor", "imagecolorallocate", "imagefilledrectangle", "imagejpeg", "imagedestroy", "imageftbbox"); 
+			$required_functions = array("imagecreatetruecolor", "imagecolorallocate", "imagefilledrectangle", "imagejpeg", "imagedestroy", "imageftbbox");
 			foreach($required_functions as $func) {
 				if(!function_exists($func)) {
 					$this->mode = "text";
@@ -91,9 +91,9 @@ class IcmsCaptcha {
 				}
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * Initializing the CAPTCHA class
 	 */
@@ -108,68 +108,68 @@ class IcmsCaptcha {
 			}
 		}
 		$this->config["name"] = $name;
-		
+
 		// Skip CAPTCHA for group
 		$gperm_handler = & xoops_gethandler( 'groupperm' );
 		$xoopsUser = $GLOBALS["xoopsUser"];
 		$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-		if(!array_intersect($groups, $IcmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {
+		if(array_intersect($groups, $IcmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {
 			$this->active = false;
 		}elseif($IcmsConfigCaptcha['captcha_mode'] =='none'){
 			$this->active = false;
 		}
 	}
-	
-	/** 
+
+	/**
 	 * Verify user submission
 	 */
-	function verify($skipMember = null) 
+	function verify($skipMember = null)
 	{
 		$config_handler =& xoops_gethandler('config');
 		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
 		$sessionName	= @$_SESSION['IcmsCaptcha_name'];
 		$skipMember		= ($skipMember === null) ? @$_SESSION['IcmsCaptcha_skipmember'] : $skipMember;
 		$maxAttempts	= intval( @$_SESSION['IcmsCaptcha_maxattempts'] );
-		
+
 		$is_valid = false;
-		
+
 		// Skip CAPTCHA for member if set
 		if( is_object($GLOBALS["xoopsUser"]) && !empty($skipMember) ) {
 			$is_valid = true;
-			
+
 		// Kill too many attempts
 		}elseif(!empty($maxAttempts) && $_SESSION['IcmsCaptcha_attempt_'.$sessionName] > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
-		
+
 		// Verify the code
 		}elseif(!empty($_SESSION['IcmsCaptcha_sessioncode'])){
 			$func = ($IcmsConfigCaptcha['captcha_casesensitive']) ? "strcmp" : "strcasecmp";
 			$is_valid = ! $func( trim(@$_POST[$sessionName]), $_SESSION['IcmsCaptcha_sessioncode']);
 		}
-		
+
 		if(!empty($maxAttempts)) {
 			if(!$is_valid) {
 				// Increase the attempt records on failure
 				$_SESSION['IcmsCaptcha_attempt_'.$sessionName]++;
 				// Log the error message
 				$this->message[] = ICMS_CAPTCHA_INVALID_CODE;
-				
+
 			}else{
 				// reset attempt records on success
 				$_SESSION['IcmsCaptcha_attempt_'.$sessionName] = null;
 			}
 		}
-		
+
 		$this->destroyGarbage(true);
-		
+
 		return $is_valid;
 	}
-	
+
 	function getCaption()
 	{
 		return defined("ICMS_CAPTCHA_CAPTION") ? constant("ICMS_CAPTCHA_CAPTION") : "";
 	}
-	
+
 	function getMessage()
 	{
 		return implode("<br />", $this->message);
@@ -178,7 +178,7 @@ class IcmsCaptcha {
 	/**
 	 * Destory historical stuff
 	 */
-	function destroyGarbage($clearSession = false) 
+	function destroyGarbage($clearSession = false)
 	{
 		require_once dirname(__FILE__)."/".$this->mode.".php";
 		$class = "IcmsCaptcha".ucfirst($this->mode);
@@ -187,14 +187,14 @@ class IcmsCaptcha {
 			$captcha_handler->loadConfig($this->config);
 			$captcha_handler->destroyGarbage();
 		}
-		
+
 		if($clearSession) {
 			$_SESSION['IcmsCaptcha_name'] = null;
 			$_SESSION['IcmsCaptcha_skipmember'] = null;
 			$_SESSION['IcmsCaptcha_sessioncode'] = null;
 			$_SESSION['IcmsCaptcha_maxattempts'] = null;
 		}
-		
+
 		return true;
 	}
 
@@ -203,11 +203,11 @@ class IcmsCaptcha {
 		$config_handler =& xoops_gethandler('config');
 		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
 		$form = "";
-		
+
 		if( !$this->active || empty($this->config["name"]) ) {
 			return $form;
 		}
-		
+
 		$_SESSION['IcmsCaptcha_name'] = $this->config["name"];
 		$_SESSION['IcmsCaptcha_skipmember'] = $IcmsConfigCaptcha['captcha_skipmember'];
 		$maxAttempts = $IcmsConfigCaptcha['captcha_maxattempt'];
@@ -217,7 +217,7 @@ class IcmsCaptcha {
 			$_SESSION['IcmsCaptcha_maxattempts_'.$_SESSION['IcmsCaptcha_name']] = $maxAttempts;
 		}
 		*/
-		
+
 		// Fail on too many attempts
 		if(!empty($maxAttempts) && @$_SESSION['IcmsCaptcha_attempt_'.$this->config["name"]] > $maxAttempts) {
 			$form = ICMS_CAPTCHA_TOOMANYATTEMPTS;
@@ -225,17 +225,17 @@ class IcmsCaptcha {
 		}else{
 			$form = $this->loadForm();
 		}
-		
+
 		return $form;
 	}
-	
+
 	function loadForm()
 	{
 		require_once dirname(__FILE__)."/".$this->mode.".php";
 		$class = "IcmsCaptcha".ucfirst($this->mode);
 		$captcha_handler =& new $class();
 		$captcha_handler->loadConfig($this->config);
-		
+
 		$form = $captcha_handler->render();
 		return $form;
 	}

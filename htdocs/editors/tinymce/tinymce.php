@@ -75,7 +75,7 @@ class TinyMCE
 		$configured[] = "language";
 		$configured[] = "theme";
 		$configured[] = "mode";
-		$this->setting["plugins"] = "bbcode,mlcontent,xoopsimagemanager,xoopsquotecode,xoopsemotions,table,advimage,advlink,emotions,insertdatetime,preview,media,contextmenu,paste,fullscreen,visualchars,nonbreaking" ;
+		$this->setting["plugins"] = "mlcontent,xoopsimagemanager,xoopsquotecode,xoopsemotions,table,advimage,advlink,emotions,insertdatetime,preview,media,contextmenu,paste,fullscreen,visualchars,nonbreaking" ;
 		$this->setting["plugins"] .= !empty($this->config["plugins"]) ? ",".$this->config["plugins"] : "";
 		$configured[] = "plugins";
 
@@ -217,6 +217,13 @@ class TinyMCE
                     remove_script_host : false,
                     tinymceload : "1"});
                 '.$callback.'
+function showMCE(id) {
+    if (tinyMCE.getInstanceById(id) == null) {
+        tinyMCE.execCommand(\'mceAddControl\', false, id);
+    } else {
+        tinyMCE.execCommand(\'mceRemoveControl\', false, id);
+    }
+}
                 </script>
         ';
         return $ret ;

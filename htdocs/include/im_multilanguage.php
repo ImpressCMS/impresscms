@@ -34,7 +34,7 @@ define('EASIESTML_CHARSETS',$im_multilanguageConfig['ml_charset']);
 define('EASIESTML_IMAGETAG','mlimg');
 
 // make regular expression which disallows language tags to cross it
-define('EASIESTML_NEVERCROSSREGEX','/\0/');
+define('EASIESTML_NEVERCROSSREGEX','');
 
 // the life time of language selection stored in cookie
 define('EASIESTML_COOKIELIFETIME',365*86400);

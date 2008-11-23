@@ -1,35 +1,18 @@
 <?php
-// $Id: groupform.php 694 2006-09-04 11:33:22Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+ * Form for setting group options
+ * @package Administration
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		XOOPS
+ * @author		Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/
+ * @version		$Id$
+ */
+/** include the general form class */
+include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
 
-include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
 $name_text = new XoopsFormText(_AM_NAME, "name", 30, 50, $name_value);
 $desc_text = new XoopsFormTextArea(_AM_DESCRIPTION, "desc", $desc_value);
 
@@ -37,9 +20,9 @@ $s_cat_checkbox = new XoopsFormCheckBox(_AM_SYSTEMRIGHTS, "system_catids[]", $s_
 //if (isset($s_cat_disable) && $s_cat_disable) {
 //  $s_cat_checkbox->setExtra('checked="checked" disabled="disabled"');
 //}
-include_once(XOOPS_ROOT_PATH.'/modules/system/constants.php');
-require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
-$admin_dir = XOOPS_ROOT_PATH."/modules/system/admin/";
+include_once XOOPS_ROOT_PATH.'/modules/system/constants.php';
+require_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
+$admin_dir = XOOPS_ROOT_PATH.'/modules/system/admin/';
 $dirlist = XoopsLists::getDirListAsArray($admin_dir);
 /* changes to only allow permission admins you already have */
 global $xoopsUser;
@@ -87,8 +70,8 @@ $ed_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 $debug_mod_checkbox = new XoopsFormCheckBox(_AM_DEBUG_PERM, "enabledebug_mids[]", $debug_mod_value);
 $criteria = new CriteriaCompo(new Criteria('isactive', 1));
 /* criteria added to see where the active user can view the debug mode (enable_debug)
-* administrators do not have explicit entries for this, do not filter
-*/
+ * administrators do not have explicit entries for this, do not filter
+ */
 if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
 	$debug_mod = $gperm->getItemIds('enable_debug',$groups);
 	$criteria->add(new Criteria('mid', '('.implode(',',$debug_mod).')', 'IN'));}

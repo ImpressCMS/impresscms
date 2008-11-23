@@ -108,8 +108,15 @@ if ($block ['is_custom']) {
 	$button_tray->addElement ( new XoopsFormButton ( '', 'previewblock', _PREVIEW, "submit" ) );
 }
 $button_tray->addElement ( new XoopsFormButton ( '', 'submitblock', _SUBMIT, "submit" ) );
-$btn = new XoopsFormButton ( '', 'reset', _CANCEL, 'button' );
-$btn->setExtra ( 'onclick="document.getElementById(\'new\').style.display = \'none\'; return false;"' );
+$btn = new XoopsFormButton ( '', 'reset', _CANCEL . '111', 'button' );
+
+global $impresscms, $op;
+if ($op == 'edit') {
+	$onclick = "location='" . $impresscms->urls['previouspage'] . "'";
+	$btn->setExtra ( 'onclick="' . $onclick . '"' );
+} else {
+	$btn->setExtra ( 'onclick="document.getElementById(\'new\').style.display = \'none\'; return false;"' );
+}
 $button_tray->addElement ( $btn );
 $form->addElement ( $button_tray );
 ?>
