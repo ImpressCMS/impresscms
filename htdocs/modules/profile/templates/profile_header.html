@@ -1,0 +1,15 @@
+<!-- Thank you for keeping this line in the template :-) //-->
+<div style="display: none;"><{$ref_smartfactory}></div>
+
+<div class="smartprofile_headertable">
+	<{if $module_home}>
+		<span class="smartprofile_modulename"><{$module_home}></span>
+	<{/if}>
+	<{if $categoryPath}>
+		<span class="smartprofile_breadcrumb">
+		<{if $module_home}>
+			&gt;
+		<{/if}>
+	  	<{$categoryPath}></span>
+	<{/if}>
+</div>

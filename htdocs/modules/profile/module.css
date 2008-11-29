@@ -1,0 +1,17 @@
+/**
+* $Id: module.css,v 1.8 2007/04/03 16:22:03 malanciault Exp $
+* Module: SmartFAQ
+* Author: marcan <marcan@notrevie.ca>
+* Licence: GNU
+*/
+
+.smartprofile_headertable {padding: 0; margin: 0; border-bottom: 1px solid; margin-bottom: 10px;}
+.smartprofile_modulename {font-size: 0.8em; text-align: left; font-weight: bold; padding-right: 0.3em;	line-height: 18px;}
+.smartprofile_breadcrumb {font-size: 0.8em; line-height: 18px;}
+.smartprofile_adminlinks {
+	padding-top: 15px;
+	padding-bottom: 5px;
+	font-size: 90%;
+	text-align: center;
+	line-height: 18px;
+}
