@@ -2399,4 +2399,106 @@ function icms_adminMenu($currentoption = 0, $breadcrumb = '', $submenus = false,
 	), 'submenus' => $submenus, 'currentsub' => $currentsub, 'submenuscount' => count($submenus)));
 	$tpl->display('db:system_admin_menu.html');
 }
+function icms_loadCommonLanguageFile() {
+	icms_loadLanguageFile('system', 'common');
+}
+function & icms_getcorehandler($name, $optional = false) {
+	static $handlers;
+	$name = strtolower(trim($name));
+	if (!isset ($handlers[$name])) {
+		if (file_exists($hnd_file = XOOPS_ROOT_PATH . '/kernel/' . $name . '.php')) {
+			require_once $hnd_file;
+		}
+		$class = 'Xoops' . ucfirst($name) . 'Handler';
+		if (class_exists($class)) {
+			$handlers[$name] = & new $class ($GLOBALS['xoopsDB'], 'xoops');
+		}
+	}
+	if (!isset ($handlers[$name]) && !$optional) {
+		trigger_error('Class <b>' . $class . '</b> does not exist<br />Handler Name: ' . $name, E_USER_ERROR);
+	}
+	if (isset ($handlers[$name])) {
+		return $handlers[$name];
+	}
+	$inst = false;
+}
+function icms_getCurrentUrls() {
+	$urls = array();
+	$http = ((strpos(XOOPS_URL, "https://")) === false) ? ("http://") : ("https://");
+	$phpself = $_SERVER['PHP_SELF'];
+	$httphost = $_SERVER['HTTP_HOST'];
+	$querystring = $_SERVER['QUERY_STRING'];
+	if ($querystring != '') {
+		$querystring = '?' . $querystring;
+	}
+	$currenturl = $http . $httphost . $phpself . $querystring;
+	$urls = array ();
+	$urls['http'] = $http;
+	$urls['httphost'] = $httphost;
+	$urls['phpself'] = $phpself;
+	$urls['querystring'] = $querystring;
+	$urls['full_phpself'] = $http . $httphost . $phpself;
+	$urls['full'] = $currenturl;
+	$urls['isHomePage'] = (XOOPS_URL . "/index.php") == ($http . $httphost . $phpself);
+	return $urls;
+}
+
+function icms_getCurrentPage() {
+	$urls = icms_getCurrentUrls();
+	return $urls['full'];
+}
+function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
+	if (!$moduleName) {
+		global $xoopsModule;
+		$moduleName = $xoopsModule->getVar('dirname');
+	}
+	$icmsModule = & icms_getModuleInfo($moduleName);
+	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
+	if (!isset ($icmsModule)) {
+		return '';
+	}
+
+	if ($forBreadCrumb && (isset ($icmsModuleConfig['show_mod_name_breadcrumb']) && !$icmsModuleConfig['show_mod_name_breadcrumb'])) {
+		return '';
+	}
+	if (!$withLink) {
+		return $icmsModule->getVar('name');
+	} else {
+	    $seoMode = icms_getModuleModeSEO($moduleName);
+	    if ($seoMode == 'rewrite') {
+	    	$seoModuleName = icms_getModuleNameForSEO($moduleName);
+	    	$ret = XOOPS_URL . '/' . $seoModuleName . '/';
+	    } elseif ($seoMode == 'pathinfo') {
+	    	$ret = XOOPS_URL . '/modules/' . $moduleName . '/seo.php/' . $seoModuleName . '/';
+	    } else {
+			$ret = XOOPS_URL . '/modules/' . $moduleName . '/';
+	    }
+
+		return '<a href="' . $ret . '">' . $icmsModule->getVar('name') . '</a>';
+	}
+}
+function icms_getModuleNameForSEO($moduleName = false) {
+	$icmsModule = & icms_getModuleInfo($moduleName);
+	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
+	if (isset ($icmsModuleConfig['seo_module_name'])) {
+		return $icmsModuleConfig['seo_module_name'];
+	}
+	$ret = icms_getModuleName(false, false, $moduleName);
+	return (strtolower($ret));
+}
+function icms_getModuleModeSEO($moduleName = false) {
+	$icmsModule = & icms_getModuleInfo($moduleName);
+	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
+	return isset ($icmsModuleConfig['seo_mode']) ? $icmsModuleConfig['seo_mode'] : false;
+}
+function icms_getModuleIncludeIdSEO($moduleName = false) {
+	$icmsModule = & icms_getModuleInfo($moduleName);
+	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
+	return !empty ($icmsModuleConfig['seo_inc_id']);
+}
+function icms_getenv($key) {
+	$ret = '';
+	$ret = isset ($_SERVER[$key]) ? $_SERVER[$key] : (isset ($_ENV[$key]) ? $_ENV[$key] : '');
+	return $ret;
+}
 ?>

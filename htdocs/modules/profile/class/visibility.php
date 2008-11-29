@@ -14,7 +14,6 @@
  * @version         $Id$
  */
 
-include_once(ICMS_ROOT_PATH."/modules/smartobject/include/common.php");
 include_once(ICMS_KERNEL_PATH."icmspersistableobject.php");
 
 class ProfileVisibility extends IcmsPersistableObject  {

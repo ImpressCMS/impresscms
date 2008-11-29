@@ -53,6 +53,7 @@ $criteria->setLimit($xoopsModuleConfig['perpage']);
 $usersObj =& $user_handler->getObjects($criteria, true);
 
 $uArray = array();
+	$wh = '';
 if($xoopsModuleConfig['index_avatar'] && $xoopsModuleConfig['index_avatar_height'] && $xoopsModuleConfig['index_avatar_width']){
 	$wh = "width='".$xoopsModuleConfig['index_avatar_width']."' height=".$xoopsModuleConfig['index_avatar_height']."'";
 }

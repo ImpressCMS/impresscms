@@ -17,5 +17,4 @@
 include_once "../../mainfile.php";
 
 include_once ICMS_ROOT_PATH.'/modules/'.basename( dirname( __FILE__ ) ).'/include/common.php';
-icms_loadCommonLanguageFile();
 ?>

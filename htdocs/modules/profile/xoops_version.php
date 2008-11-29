@@ -15,11 +15,11 @@
  */
 
 $modversion['name'] = _PROFILE_MI_NAME;
-$modversion['version'] = 1.02;
+$modversion['version'] = 1.20;
 $modversion['description'] = _PROFILE_MI_DESC;
 $modversion['author'] = "Jan Pedersen";
 $modversion['credits'] = "The XOOPS Project, Ackbarr for the general extensible profile idea";
-$modversion['license'] = "GPL see XOOPS LICENSE";
+$modversion['license'] = "GNU General Public License (GPL)";
 $modversion['official'] = 0;
 $modversion['image'] = "images/module_logo.gif";
 $modversion['dirname'] = basename( dirname( __FILE__ ) );
@@ -65,7 +65,7 @@ $modversion['tables'][2] = "profile_profile";
 $modversion['tables'][3] = "profile_field";
 $modversion['tables'][4] = "profile_visibility";
 $modversion['tables'][5] = "profile_regstep";
-$modversion['tables'][6] = "profile_meta";
+//$modversion['tables'][6] = "profile_meta";
 
 //update things
 //$modversion['onUpdate'] = 'include/update.php';
@@ -319,14 +319,6 @@ foreach ($groups as $groupid) {
 // Templates
 
 $i = 0;
-
-$i++;
-$modversion['templates'][$i]['file'] = 'profile_header.html';
-$modversion['templates'][$i]['description'] = '';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'profile_footer.html';
-$modversion['templates'][$i]['description'] = '';
 
 $i++;
 $modversion['templates'][$i]['file'] = 'profile_header.html';
