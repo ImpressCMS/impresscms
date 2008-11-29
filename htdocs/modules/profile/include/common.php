@@ -32,6 +32,5 @@ if( !defined("SMARTPROFILE_ROOT_PATH") ){
 if( !defined("SMARTPROFILE_IMAGES_URL") ){
 	define("SMARTPROFILE_IMAGES_URL", SMARTPROFILE_URL.'/images/');
 }
-include_once(ICMS_ROOT_PATH.'/modules/smartobject/include/functions.php');
-$profile_isAdmin = smart_userIsAdmin();
+$profile_isAdmin = icms_userIsAdmin();
 ?>

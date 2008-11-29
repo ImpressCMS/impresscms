@@ -14,15 +14,13 @@
  * @version         $Id$
  */
 
-include_once(ICMS_ROOT_PATH."/modules/smartobject/include/common.php");
-include_once(ICMS_ROOT_PATH."/modules/smartobject/class/smartobject.php");
-include_once(ICMS_ROOT_PATH."/modules/smartobject/class/smartobjecthandler.php");
+include_once(ICMS_KERNEL_PATH."icmspersistableobject.php");
 
 /**
  * @package kernel
  * @copyright copyright &copy; 2000 XOOPS.org
  */
-class ProfileProfile extends SmartObject {
+class ProfileProfile extends IcmsPersistableObject {
     function ProfileProfile($fields) {
         $this->initVar('profileid', XOBJ_DTYPE_INT, null, true);
         $this->initVar('newemail', XOBJ_DTYPE_TXTBOX);
@@ -45,7 +43,7 @@ class ProfileProfile extends SmartObject {
  * @package kernel
  * @copyright copyright &copy; 2000 XOOPS.org
  */
-class ProfileProfileHandler extends SmartPersistableObjectHandler {
+class ProfileProfileHandler extends IcmsPersistableObjectHandler {
     /**
     * holds reference to {@link ProfileFieldHandler} object
     */
@@ -58,16 +56,16 @@ class ProfileProfileHandler extends SmartPersistableObjectHandler {
     var $_fields = array();
 
     function ProfileProfileHandler(&$db) {
-        $this->SmartPersistableObjectHandler($db, "profile", "profileid", '', '', 'profile');
+        $this->IcmsPersistableObjectHandler($db, "profile", "profileid", '', '', 'profile');
         $this->_fHandler =& icms_getmodulehandler( 'field', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
     }
 
     /**
-     * create a new {@link SmartObject}
+     * create a new {@link IcmsPersistableObject}
      *
      * @param bool $isNew Flag the new objects as "new"?
      *
-     * @return object {@link SmartObject}
+     * @return object {@link IcmsPersistableObject}
      */
     function &create($isNew = true) {
 

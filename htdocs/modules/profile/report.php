@@ -28,13 +28,13 @@ include_once("footer.php");
 
 $profile_profile_handler = icms_getmodulehandler( 'profile', basename( dirname( __FILE__ ) ), 'profile' );
 
-$smart_registry = SmartObjectsRegistry::getInstance();
-/*$smart_registry->addObjectsFromItemName('account');
-$smart_registry->addObjectsFromItemName('project');
-$smart_registry->addObjectsFromItemName('activity');*/
+$icms_registry = IcmsPersistableObjectsRegistry::getInstance();
+/*$icms_registry->addObjectsFromItemName('account');
+$icms_registry->addObjectsFromItemName('project');
+$icms_registry->addObjectsFromItemName('activity');*/
 
-include_once SMARTOBJECT_ROOT_PATH."class/smartobjecttable.php";
-$objectTable = new SmartObjectTable($profile_profile_handler);
+include_once ICMS_KERNEL_PATH."icmspersistabletable.php";
+$objectTable = new IcmsPersistableTable($profile_profile_handler);
 $objectTable->isForUserSide();
 $objectTable->addIntroButton('', 'report.php?op=export', _AM_SPROFILE_EXPORT);
 //Filters
@@ -46,11 +46,11 @@ $objectTable->addFilter(_CO_SOFFSET_NEW_REG, array(
 ));
 
 
-$objectTable->addColumn(new SmartObjectColumn('uname', _GLOBAL_LEFT, 150));
-$objectTable->addColumn(new SmartObjectColumn('reg_date', _GLOBAL_LEFT, 150));
-/*$objectTable->addColumn(new SmartObjectColumn('activityid', _GLOBAL_LEFT, 150));
-$objectTable->addColumn(new SmartObjectColumn('accountid', _GLOBAL_LEFT, false));
-$objectTable->addColumn(new SmartObjectColumn('duration', _GLOBAL_RIGHT, 100));*/
+$objectTable->addColumn(new IcmsPersistableColumn('uname', _GLOBAL_LEFT, 150));
+$objectTable->addColumn(new IcmsPersistableColumn('reg_date', _GLOBAL_LEFT, 150));
+/*$objectTable->addColumn(new IcmsPersistableColumn('activityid', _GLOBAL_LEFT, 150));
+$objectTable->addColumn(new IcmsPersistableColumn('accountid', _GLOBAL_LEFT, false));
+$objectTable->addColumn(new IcmsPersistableColumn('duration', _GLOBAL_RIGHT, 100));*/
 
 
 //$objectTable->addFilter('accountid', 'getAccounts');
@@ -59,7 +59,7 @@ $xoopsTpl->assign('profile_report',$objectTable->fetch());
 //$xoopsTpl->assign('categoryPath', _MD_SBILLING_LOG_MYLOG);
 
 
-$xoopsTpl->assign('module_home', smart_getModuleName(false, true));
+$xoopsTpl->assign('module_home', icms_getModuleName(false, true));
 
 include_once(ICMS_ROOT_PATH . '/footer.php');
 ?>

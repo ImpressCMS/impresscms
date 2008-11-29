@@ -14,11 +14,9 @@
  * @version         $Id$
  */
 
-include_once(ICMS_ROOT_PATH."/modules/smartobject/include/common.php");
-include_once(ICMS_ROOT_PATH."/modules/smartobject/class/smartobject.php");
-include_once(ICMS_ROOT_PATH."/modules/smartobject/class/smartobjecthandler.php");
+include_once(ICMS_KERNEL_PATH."icmspersistableobject.php");
 
-class ProfileRegstep extends SmartObject  {
+class ProfileRegstep extends IcmsPersistableObject  {
     function ProfileRegstep() {
         $this->initVar('step_id', XOBJ_DTYPE_INT);
         $this->initVar('step_name', XOBJ_DTYPE_TXTBOX);
@@ -40,14 +38,14 @@ class ProfileRegstep extends SmartObject  {
     }
 }
 
-class ProfileRegstepHandler extends SmartPersistableObjectHandler {
+class ProfileRegstepHandler extends IcmsPersistableObjectHandler {
     function ProfileRegstepHandler($db) {
-        parent::SmartPersistableObjectHandler($db, 'regstep', 'step_id', 'step_name', '', 'profile');
+        parent::IcmsPersistableObjectHandler($db, 'regstep', 'step_id', 'step_name', '', 'profile');
     }
 
     /**
      * Insert a new object
-     * @see SmartPersistableObjectHandler
+     * @see IcmsPersistableObjectHandler
      *
      * @param ProfileRegstep $obj
      * @param bool $force
@@ -66,7 +64,7 @@ class ProfileRegstepHandler extends SmartPersistableObjectHandler {
 
     /**
      * Delete an object from the database
-     * @see SmartPersistableObjectHandler
+     * @see IcmsPersistableObjectHandler
      *
      * @param ProfileRegstep $obj
      * @param bool $force

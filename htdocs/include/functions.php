@@ -2375,4 +2375,28 @@ function icms_random_str($numchar){
     $senha = implode($array, ""); 	 
     return substr($senha, 0, $numchar); 	 
 }
+function icms_adminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1) {
+	global $xoopsModule, $xoopsConfig;
+	include_once XOOPS_ROOT_PATH . '/class/template.php';
+	if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
+		include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php';
+	} else {
+		include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/modinfo.php';
+	}
+	if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/admin.php')) {
+		include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/admin.php';
+	} else {
+		include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/admin.php';
+	}
+	include XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/menu.php';
+	$tpl = & new XoopsTpl();
+	$tpl->assign(array (
+		'headermenu' => $headermenu,
+		'adminmenu' => $adminmenu,
+		'current' => $currentoption,
+		'breadcrumb' => $breadcrumb,
+		'headermenucount' => count($headermenu
+	), 'submenus' => $submenus, 'currentsub' => $currentsub, 'submenuscount' => count($submenus)));
+	$tpl->display('db:system_admin_menu.html');
+}
 ?>

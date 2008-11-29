@@ -37,23 +37,23 @@ switch ($op) {
     	}
 
 		//xoops_cp_header();
-		smart_xoops_cp_header();
-		smart_adminMenu(6, _AM_SPROFILE_FINDUSER);
+		xoops_cp_header();
+		icms_adminMenu(6, _AM_SPROFILE_FINDUSER);
 
 		echo "<a href='finduser.php'>"._AM_SPROFILE_BACK_TO_FORM."</a><br/>";
-		include_once SMARTOBJECT_ROOT_PATH."class/smartobjecttable.php";
+		include_once ICMS_KERNEL_PATH."icmspersistabletable.php";
 
-		$objectTable = new SmartObjectTable($profile_smartuser_handler, $criteria, array());
-		$objectTable->addWithSelectedActions(array('export_sel'=>_CO_SOBJECT_EXPORT));
+		$objectTable = new IcmsPersistableTable($profile_smartuser_handler, $criteria, array());
+		$objectTable->addWithSelectedActions(array('export_sel'=>_CO_ICMS_EXPORT));
 		$objectTable->setTableId('profile_users');
 
 		$custom_fields = $profile_smartuser_handler->getFields();
-		$objectTable->addColumn(new SmartObjectColumn('uname', 'center', 100, 'getUserLink',  false,_AM_SPROFILE_UNAME));
-		$objectTable->addColumn(new SmartObjectColumn('email', 'center', 100, 'getUserEail',  false,_AM_SPROFILE_EMAIL));
+		$objectTable->addColumn(new IcmsPersistableColumn('uname', 'center', 100, 'getUserLink',  false,_AM_SPROFILE_UNAME));
+		$objectTable->addColumn(new IcmsPersistableColumn('email', 'center', 100, 'getUserEail',  false,_AM_SPROFILE_EMAIL));
 
 		foreach($custom_fields as $key => $custom_field){
 			if(!in_array($key, $hidden_fields_results)){
-				$objectTable->addColumn(new SmartObjectColumn($key, 'center', 100, false, false, $custom_field->getVar('field_title')));
+				$objectTable->addColumn(new IcmsPersistableColumn($key, 'center', 100, false, false, $custom_field->getVar('field_title')));
 			}
 		}
 
@@ -77,8 +77,8 @@ switch ($op) {
 					exit();
 				}
 			} else {
-				smart_xoops_cp_header();
-				smart_adminMenu(2, _AM_SSHOP_TRANSACTIONS);
+				xoops_cp_header();
+				icms_adminMenu(2, _AM_SSHOP_TRANSACTIONS);
 
 				// no confirm: show deletion condition
 				xoops_confirm(array('op' => 'with_selected_actions', 'selected_action'=>'delete_sel', 'ids' => implode('|', $_POST['selected_smartobjects']), 'confirm' => 1), 'transaction.php', _AM_SSSHOP_DELETETHOSETRANS . " <br />'" .implode(', ', $_POST['selected_smartobjects']). "'. <br /> <br />", _AM_SSHOP_DELETE);
@@ -94,7 +94,7 @@ switch ($op) {
 				$criteria = new CriteriaCompo();
 				$criteria->add(new Criteria('uid', '(' . implode(', ', $_POST['selected_smartobjects']) . ')', 'IN'));
 
-				include_once(SMARTOBJECT_ROOT_PATH . 'class/smartexport.php');
+				include_once(ICMS_KERNEL_PATH.'icmspersistableexport.php');
 				$custom_fields = $profile_smartuser_handler->getFields();
 
 				$fields = array();
@@ -103,7 +103,7 @@ switch ($op) {
 						$fields[] = $key;
 					}
 				}
-				$smartObjectExport = new SmartObjectExport($profile_smartuser_handler, $criteria, $fields);
+				$smartObjectExport = new IcmsPersistableExport($profile_smartuser_handler, $criteria, $fields);
 				$smartObjectExport->render(time().'_transactions.csv');
 				exit;
 			break;
@@ -113,7 +113,7 @@ switch ($op) {
 
 		$criteria = new CriteriaCompo();
 
-		include_once(SMARTOBJECT_ROOT_PATH . 'class/smartexport.php');
+		include_once(ICMS_KERNEL_PATH.'icmspersistableexport.php');
 		$custom_fields = $profile_smartuser_handler->getFields();
 
 		$fields = array();
@@ -128,7 +128,7 @@ switch ($op) {
     			$criteria->add(new Criteria($key, '%'.$_REQUEST[$key].'%', 'LIKE'));
     		}
     	}
-		$smartObjectExport = new SmartObjectExport($profile_smartuser_handler, $criteria, $fields);
+		$smartObjectExport = new IcmsPersistableExport($profile_smartuser_handler, $criteria, $fields);
 		$smartObjectExport->render(time().'_transactions.csv');
 		exit;
 	break;
@@ -139,8 +139,8 @@ switch ($op) {
 		include_once ICMS_ROOT_PATH."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/class/smartuser.php";
 		include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 		//xoops_cp_header();
-		smart_xoops_cp_header();
-		smart_adminMenu(6, _AM_SPROFILE_FINDUSER);
+		xoops_cp_header();
+		icms_adminMenu(6, _AM_SPROFILE_FINDUSER);
 
  		$custom_fields = $profile_smartuser_handler->getFields();
 
@@ -182,6 +182,6 @@ switch ($op) {
 }
 
 
-smart_modFooter();
+
 xoops_cp_footer();
 ?>

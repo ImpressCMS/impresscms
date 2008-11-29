@@ -16,29 +16,13 @@
 
 require_once("../../../include/cp_header.php");
 
-//include_once ICMS_ROOT_PATH.'/modules/smartobject/include/common.php';
-define("SMARTOBJECT_ROOT_PATH", ICMS_ROOT_PATH.'/modules/smartobject/');
-include_once(SMARTOBJECT_ROOT_PATH.'include/functions.php');
-
 /**
  * Include the common language constants for the SmartObject Framework
  */
  if (!defined('SMARTOBJECT_COMMON_CONSTANTS')) {
-	$common_file = SMARTOBJECT_ROOT_PATH . "language/" . $xoopsConfig['language'] . "/common.php";
-	if (!file_exists($common_file)) {
-
-		$common_file = SMARTOBJECT_ROOT_PATH . "language/english/common.php";
-	}
-	include_once($common_file);
+	icms_loadLanguageFile('system', 'common.php');
 	define('SMARTOBJECT_COMMON_CONSTANTS', true);
 }
-$admin_file = SMARTOBJECT_ROOT_PATH . "language/" . $xoopsConfig['language'] . "/admin.php";
-if (!file_exists($admin_file)) {
-
-    $admin_file = SMARTOBJECT_ROOT_PATH . "language/english/admin.php";
-}
-include_once($admin_file);
-
 if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {
 	include_once(ICMS_ROOT_PATH."/class/template.php");
 	$xoopsTpl = new XoopsTpl();

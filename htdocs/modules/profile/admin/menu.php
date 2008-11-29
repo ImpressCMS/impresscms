@@ -39,15 +39,15 @@ if (isset($xoopsModule)) {
 	$headermenu[$i]['link'] = '../../system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $xoopsModule->getVar('mid');
 
 	$i++;
-	$headermenu[$i]['title'] = _CO_SOBJECT_GOTOMODULE;
+	$headermenu[$i]['title'] = _CO_ICMS_GOTOMODULE;
 	$headermenu[$i]['link'] = ICMS_URL."/modules/".$xoopsModule->getVar('dirname') . '/';
 
 	$i++;
-	$headermenu[$i]['title'] = _CO_SOBJECT_UPDATE_MODULE;
+	$headermenu[$i]['title'] = _CO_ICMS_UPDATE_MODULE;
 	$headermenu[$i]['link'] = ICMS_URL . "/modules/system/admin.php?fct=modulesadmin&op=update&module=" . $xoopsModule->getVar('dirname');
 
 	$i++;
-	$headermenu[$i]['title'] = _AM_SOBJECT_ABOUT;
+	$headermenu[$i]['title'] = _MODABOUT_ABOUT;
 	$headermenu[$i]['link'] = ICMS_URL . "/modules/".$xoopsModule->getVar('dirname')."/admin/about.php";
 }
 ?>

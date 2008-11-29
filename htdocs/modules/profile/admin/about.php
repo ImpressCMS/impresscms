@@ -16,8 +16,8 @@
 
 include_once("header.php");
 
-include_once(SMARTOBJECT_ROOT_PATH . "class/smartobjectabout.php");
-$aboutObj = new SmartobjectAbout();
-$aboutObj->render();
+include_once ICMS_ROOT_PATH . '/kernel/icmsmoduleabout.php';
+$aboutObj = new IcmsModuleAbout();
+$aboutObj -> render();
 
 ?>

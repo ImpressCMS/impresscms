@@ -14,14 +14,12 @@
  * @version         $Id$
  */
 
-include_once(ICMS_ROOT_PATH."/modules/smartobject/include/common.php");
-include_once(ICMS_ROOT_PATH."/modules/smartobject/class/smartobject.php");
-include_once(ICMS_ROOT_PATH."/modules/smartobject/class/smartobjecthandler.php");
+include_once(ICMS_KERNEL_PATH."icmspersistableobject.php");
 /**
  * @package kernel
  * @copyright copyright &copy; 2000 XOOPS.org
  */
-class ProfileField extends SmartObject {
+class ProfileField extends IcmsPersistableObject {
     function ProfileField() {
         $this->initVar('fieldid', XOBJ_DTYPE_INT, null, true);
         $this->initVar('catid', XOBJ_DTYPE_INT, null, true);
@@ -393,9 +391,9 @@ class ProfileField extends SmartObject {
  * @package kernel
  * @copyright copyright &copy; 2000 XOOPS.org
  */
-class ProfileFieldHandler extends SmartPersistableObjectHandler {
+class ProfileFieldHandler extends IcmsPersistableObjectHandler {
     function ProfileFieldHandler(&$db) {
-        parent::SmartPersistableObjectHandler($db, 'field', "fieldid", 'field_title', 'field_description', 'profile');
+        parent::IcmsPersistableObjectHandler($db, 'field', "fieldid", 'field_title', 'field_description', 'profile');
     }
 
     /**

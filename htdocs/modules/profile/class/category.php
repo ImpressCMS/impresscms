@@ -17,14 +17,12 @@
 if (!defined("ICMS_ROOT_PATH")) {
     die("XOOPS root path not defined");
 }
-include_once(ICMS_ROOT_PATH."/modules/smartobject/include/common.php");
-include_once(ICMS_ROOT_PATH."/modules/smartobject/class/smartobject.php");
-include_once(ICMS_ROOT_PATH."/modules/smartobject/class/smartobjecthandler.php");
+include_once(ICMS_KERNEL_PATH."icmspersistableobject.php");
 /**
  * @package kernel
  * @copyright copyright &copy; 2000 XOOPS.org
  */
-class ProfileCategory extends SmartObject {
+class ProfileCategory extends IcmsPersistableObject {
     function ProfileCategory() {
         $this->initVar('catid', XOBJ_DTYPE_INT, null, true);
         $this->initVar('cat_title', XOBJ_DTYPE_TXTBOX);
@@ -68,9 +66,9 @@ class ProfileCategory extends SmartObject {
  * @package kernel
  * @copyright copyright &copy; 2000 XOOPS.org
  */
-class ProfileCategoryHandler extends SmartPersistableObjectHandler {
+class ProfileCategoryHandler extends IcmsPersistableObjectHandler {
     function ProfileCategoryHandler(&$db) {
-        parent::SmartPersistableObjectHandler($db, "category", "catid", 'cat_title', 'cat_description', 'profile');
+        parent::IcmsPersistableObjectHandler($db, "category", "catid", 'cat_title', 'cat_description', 'profile');
     }
 }
 ?>

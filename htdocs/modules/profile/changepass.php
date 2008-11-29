@@ -31,7 +31,7 @@ if (!isset($_POST['submit'])) {
     $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
     $form->assign($xoopsTpl);
 
-	$xoopsTpl->assign('module_home', smart_getModuleName(true));
+	$xoopsTpl->assign('module_home', icms_getModuleName(true));
 	$xoopsTpl->assign('categoryPath', _PROFILE_MA_CHANGEPASSWORD);
 
 }

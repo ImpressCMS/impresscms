@@ -54,7 +54,7 @@ class IcmsPersistableObject extends XoopsObject {
     /**
 	 * Reference to the handler managing this object
 	 *
-	 * @var object reference to {@link SmartPersistableObjectHandler}
+	 * @var object reference to {@link IcmsPersistableObjectHandler}
 	 */
     var $handler;
 

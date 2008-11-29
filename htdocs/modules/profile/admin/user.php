@@ -17,7 +17,7 @@
 include 'header.php';
 xoops_cp_header();
 
-smart_adminMenu(1, "");
+icms_adminMenu(1, "");
 //$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? "edit" : 'list');
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
 if($op == "editordelete") {

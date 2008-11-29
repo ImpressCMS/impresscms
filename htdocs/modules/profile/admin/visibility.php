@@ -17,7 +17,7 @@
 include 'header.php';
 xoops_cp_header();
 
-smart_adminMenu(5, "");
+icms_adminMenu(5, "");
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : "visibility";
 
 include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";

@@ -17,7 +17,7 @@
 include 'header.php';
 xoops_cp_header();
 
-smart_adminMenu(3, "");
+icms_adminMenu(3, "");
 $op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? "edit" : 'list');
 
 $profilefield_handler =& icms_getmodulehandler( 'field', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );

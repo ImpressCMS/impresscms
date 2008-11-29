@@ -15,10 +15,9 @@
  */
 
 include_once(ICMS_ROOT_PATH."/modules/smartobject/include/common.php");
-include_once(ICMS_ROOT_PATH."/modules/smartobject/class/smartobject.php");
-include_once(ICMS_ROOT_PATH."/modules/smartobject/class/smartobjecthandler.php");
+include_once(ICMS_KERNEL_PATH."icmspersistableobject.php");
 
-class ProfileVisibility extends SmartObject  {
+class ProfileVisibility extends IcmsPersistableObject  {
     function ProfileVisibility() {
         $this->initVar('fieldid', XOBJ_DTYPE_INT);
         $this->initVar('user_group', XOBJ_DTYPE_INT);
@@ -26,10 +25,10 @@ class ProfileVisibility extends SmartObject  {
     }
 }
 
-class ProfileVisibilityHandler extends SmartPersistableObjectHandler {
+class ProfileVisibilityHandler extends IcmsPersistableObjectHandler {
 
     function ProfileVisibilityHandler($db) {
-        parent::SmartPersistableObjectHandler($db, 'visibility', array('fieldid', 'user_group', 'profile_group'), '', '', 'profile');
+        parent::IcmsPersistableObjectHandler($db, 'visibility', array('fieldid', 'user_group', 'profile_group'), '', '', 'profile');
     }
 
     /**

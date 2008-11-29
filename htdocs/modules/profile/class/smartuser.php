@@ -17,9 +17,9 @@
 if (!defined("ICMS_ROOT_PATH")) {
     die("XOOPS root path not defined");
 }
-include_once SMARTOBJECT_ROOT_PATH."class/smartobject.php";
+include_once ICMS_KERNEL_PATH."icmspersistableobject.php";
 
-class ProfileSmartuser extends SmartObject {
+class ProfileSmartuser extends IcmsPersistableObject {
 
 	  function ProfileSmartuser(&$handler) {
     	//ini_set('memory_limit','32M');
@@ -27,7 +27,7 @@ class ProfileSmartuser extends SmartObject {
 		$this->initNonPersistableVar('uname', XOBJ_DTYPE_TXTBOX, false, "_AM_SPROFILE_UNAME");
 		$this->initNonPersistableVar('email', XOBJ_DTYPE_TXTBOX, false, "_AM_SPROFILE_EMAIL");
 
-    	$this->SmartObject($handler);
+    	$this->IcmsPersistableObject($handler);
     	$fields =& $this->handler->getFields();
     	foreach($fields as $key =>$field){
     		$this->initNonPersistableVar($key, XOBJ_DTYPE_TXTBOX, false, $field->getVar('field_title'));
@@ -44,10 +44,10 @@ class ProfileSmartuser extends SmartObject {
     }
 
 }
-class ProfileSmartuserHandler extends SmartPersistableObjectHandler {
+class ProfileSmartuserHandler extends IcmsPersistableObjectHandler {
 
     function ProfileSmartuserHandler($db) {
-    	 $this->SmartPersistableObjectHandler($db, 'smartuser', 'uid', 'uname', 'uname', 'profile');
+    	 $this->IcmsPersistableObjectHandler($db, 'smartuser', 'uid', 'uname', 'uname', 'profile');
     	 $this->generalSQL = 'SELECT * FROM '.$this->db->prefix('users') . " AS " . $this->_itemname . ' JOIN ' . $this->db->prefix('profile_profile') . ' AS profile ON profileid='.$this->_itemname.'.uid ';
 
     }
