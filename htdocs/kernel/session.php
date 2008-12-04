@@ -215,14 +215,49 @@ class XoopsSessionHandler
 
 
 
-    /**
-     * Update the current session id with a newly generated one
-     *
-     * To be refactored 
-     * 
-     * @param   bool $delete_old_session
-  	 * @return  bool
-     **/
+	/**
+	* Update the current session id with a newly generated one
+	*
+	* To be refactored 
+	* 
+	* @param   bool $delete_old_session
+		* @return  bool
+	**/
+	function regenerate_id($delete_old_session = false)
+	{
+		$old_session_id = session_id();
+		$old_session_data = $_SESSION;
+	
+		$success = session_regenerate_id($delete_old_session);
+		$new_session_id = session_id();
+	
+		session_id($old_session_id);
+
+		$this->destroy($old_session_id);
+		session_destroy();
+	
+		session_id($new_session_id);
+		session_start();
+	
+		foreach($old_session_data as $key=>$val)
+			$_SESSION[$key] = $val;
+		
+		$_SESSION['session_id'] = session_id();
+	
+		// update the session creation time
+		$_SESSION['regenerated'] = time();
+		
+		// end the current session and store session data.
+		session_write_close();
+	
+		// Force updating cookie for session cookie is not issued correctly in some IE versions or not automatically issued prior to PHP 4.3.3 for all browsers 
+		if($success) {$this->update_cookie();}
+	
+		return $success;
+	}
+
+
+/*
     function regenerate_id($delete_old_session = false)
     {
         if (!$this->enableRegenerateId) {
@@ -268,7 +303,7 @@ class XoopsSessionHandler
         
         return $success;
     }
-
+*/
 
 
 

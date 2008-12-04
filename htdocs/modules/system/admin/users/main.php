@@ -59,6 +59,10 @@ switch ($op)
 		if(!isset($user_viewemail)) $user_viewemail = null;
 		if(!isset($user_viewoid)) $user_viewoid = null;
 		if(!isset($openid)) $openid = null;
+		$groups = isset($_POST['groups']) ? $groups : array(XOOPS_GROUP_ANONYMOUS);
+		if (@is_array($groups_hidden)) {
+			$groups = array_unique(array_merge($groups, $groups_hidden)) ;
+		}
 		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups);
 	break;
 	case 'delUser':
@@ -223,6 +227,7 @@ switch ($op)
 				else
 				{
 					$groups_failed = array();
+					if(!isset($_POST['groups'])) $groups = array(XOOPS_GROUP_ANONYMOUS);
 					foreach($groups as $group)
 					{
 						if(!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {$groups_failed[] = $group;}

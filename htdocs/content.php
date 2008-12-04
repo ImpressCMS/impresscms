@@ -25,7 +25,9 @@ $im_contentConfig =& $config_handler->getConfigsByCat(IM_CONF_CONTENT);
 $page = (isset($_GET['page']))?trim(StopXSS($_GET['page'])):((isset($_POST['page']))?trim(StopXSS($_POST['page'])):0);
 
 $gperm_handler = & xoops_gethandler('groupperm');
-$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+$agroups = $gperm_handler->getGroupIds('system_admin',XOOPS_SYSTEM_CONTENT);
+$allowed_groups = array_intersect($groups, $agroups);
 $uid = is_object($xoopsUser) ? intval($xoopsUser->getVar('uid')) : 0;
 $content_handler =& xoops_gethandler('content');
 
@@ -83,7 +85,7 @@ else
 if(!is_object($impress_content)) {redirect_header('index.php', 2, _CT_SELECTNG);}
 $content_id = $impress_content->getVar('content_id');
 $viewperm  = $gperm_handler->checkRight('content_read', $content_id, $groups);	// $viewperm is true if user has permition to see this page
-$adminperm = $gperm_handler->checkRight('content_admin', $content_id, $uid) || (is_object($xoopsUser) && $xoopsUser->isAdmin());	// $adminperm is true if user has permition to admin this page
+$adminperm = $gperm_handler->checkRight('content_admin', $content_id, $uid) || (is_object($xoopsUser) && count($allowed_groups) > 0);	// $adminperm is true if user has permition to admin this page
 
 if(!$viewperm) {redirect_header('index.php', 2, _NOPERM);}
 $myts =& MyTextSanitizer::getInstance();

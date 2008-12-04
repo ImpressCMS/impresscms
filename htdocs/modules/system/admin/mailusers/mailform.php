@@ -56,8 +56,8 @@ if ( !empty($display_criteria) ) {
     $idle_less = new XoopsFormText(_AM_IDLELESS."<br />", "mail_idle_less", 10, 5);
     $mailok_cbox = new XoopsFormCheckBox('', 'mail_mailok');
     $mailok_cbox->addOption(1, _AM_MAILOK);
-    $inactive_cbox = new XoopsFormCheckBox(_AM_INACTIVE."<br />", "mail_inactive");
-    $inactive_cbox->addOption(1, _AMIFCHECKD);
+    $inactive_cbox = new XoopsFormCheckBox('', "mail_inactive");
+    $inactive_cbox->addOption(1, _AM_INACTIVE.". " . _AMIFCHECKD);
     $inactive_cbox->setExtra("onclick='javascript:disableElement(\"mail_lastlog_min\");disableElement(\"mail_lastlog_max\");disableElement(\"mail_idle_more\");disableElement(\"mail_idle_less\");disableElement(\"mail_to_group[]\");'");
     $criteria_tray = new XoopsFormElementTray(_AM_SENDTOUSERS, "<br /><br />");
     $criteria_tray->addElement($group_select);

@@ -52,8 +52,8 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Constructor
-	 * 
-	 * @param   object  &$tpl   
+	 *
+	 * @param   object  &$tpl
 	 * @param   boolean $use_icons
 	 * @param   boolean $do_iconcheck
 	 **/
@@ -68,11 +68,11 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Access the only instance of this class
-	 * 
+	 *
 	 * @param   object  $tpl        reference to a {@link Smarty} object
 	 * @param   boolean $use_icons
 	 * @param   boolean $do_iconcheck
-	 * @return 
+	 * @return
 	 **/
 	function &instance(&$tpl, $use_icons = true, $do_iconcheck = false)
 	{
@@ -85,7 +85,7 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Accessor
-	 * 
+	 *
 	 * @param   object  &$comments_arr  array of {@link XoopsComment} objects
 	 **/
 	function setComments(&$comments_arr)
@@ -98,7 +98,7 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Render the comments in flat view
-	 * 
+	 *
 	 * @param boolean $admin_view
 	 **/
 	function renderFlatView($admin_view = false)
@@ -127,9 +127,9 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Render the comments in thread view
-     * 
+     *
      * This method calls itself recursively
-	 * 
+	 *
 	 * @param integer $comment_id   Should be "0" when called by client
 	 * @param boolean $admin_view
 	 * @param boolean $show_nav
@@ -178,7 +178,7 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Render replies to a thread
-	 * 
+	 *
 	 * @param   array   &$thread
 	 * @param   int     $key
 	 * @param   array   $replies
@@ -186,19 +186,20 @@ class XoopsCommentRenderer {
 	 * @param   bool    $admin_view
 	 * @param   integer $depth
 	 * @param   string  $current_prefix
-     * 
+     *
      * @access	private
 	 **/
 	function _renderThreadReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0, $current_prefix = '')
 	{
         if ($depth > 0) {
+        	$simple_title = $thread[$key]['obj']->getVar('com_title');
 			if (false != $this->_useIcons) {
 				$title = $this->_getTitleIcon($thread[$key]['obj']->getVar('com_icon')).'&nbsp;'.$thread[$key]['obj']->getVar('com_title');
 			} else {
 				$title = $thread[$key]['obj']->getVar('com_title');
 			}
 			$title = (false != $admin_view) ? $title.' '.$this->_statusText[$thread[$key]['obj']->getVar('com_status')] : $title;
-			$replies[] = array('id' => $key, 'prefix' => $current_prefix, 'date_posted' => formatTimestamp($thread[$key]['obj']->getVar('com_created'), 'm'), 'title' => $title, 'root_id' => $thread[$key]['obj']->getVar('com_rootid'), 'status' => $this->_statusText[$thread[$key]['obj']->getVar('com_status')], 'poster' => $this->_getPosterName($thread[$key]['obj']->getVar('com_uid')));
+			$replies[] = array('id' => $key, 'prefix' => $current_prefix, 'date_posted' => formatTimestamp($thread[$key]['obj']->getVar('com_created'), 'm'), 'simple_title' => $simple_title, 'title' => $title, 'root_id' => $thread[$key]['obj']->getVar('com_rootid'), 'status' => $this->_statusText[$thread[$key]['obj']->getVar('com_status')], 'poster' => $this->_getPosterName($thread[$key]['obj']->getVar('com_uid')));
             $current_prefix .= $prefix;
         }
         if (isset($thread[$key]['child']) && !empty($thread[$key]['child'])) {
@@ -220,9 +221,9 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Render comments in nested view
-     * 
+     *
      * Danger: Recursive!
-	 * 
+	 *
 	 * @param integer $comment_id   Always "0" when called by client.
 	 * @param boolean $admin_view
 	 **/
@@ -259,15 +260,15 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Render replies in nested view
-	 * 
+	 *
 	 * @param   array   $thread
 	 * @param   int     $key
 	 * @param   array   $replies
 	 * @param   string  $prefix
 	 * @param   bool    $admin_view
 	 * @param   integer $depth
-     * 
-     * @access	private 
+     *
+     * @access	private
 	 **/
 	function _renderNestReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0)
 	{
@@ -302,10 +303,10 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Get the name of the poster
-	 * 
+	 *
 	 * @param   int $poster_id
 	 * @return  string
-     * 
+     *
      * @access	private
 	 **/
 	function _getPosterName($poster_id)
@@ -325,10 +326,10 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Get an array with info about the poster
-	 * 
+	 *
 	 * @param   int $poster_id
 	 * @return  array
-     * 
+     *
      * @access	private
 	 **/
 	function _getPosterArray($poster_id)
@@ -339,7 +340,7 @@ class XoopsCommentRenderer {
 			if (is_object($com_poster)) {
 				$poster['uname'] = '<a href="'.XOOPS_URL.'/userinfo.php?uid='.$poster['id'].'">'.$com_poster->getVar('uname').'</a>';
 				$poster_rank = $com_poster->rank();
-				$poster['rank_image'] = ($poster_rank['image'] != '') ? $poster_rank['image'] : 'blank.gif'; 
+				$poster['rank_image'] = ($poster_rank['image'] != '') ? $poster_rank['image'] : 'blank.gif';
 				$poster['rank_title'] = $poster_rank['title'];
 				$poster['avatar'] = $com_poster->getVar('user_avatar');
 				$poster['regdate'] = formatTimestamp($com_poster->getVar('user_regdate'), 's');
@@ -362,10 +363,10 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Get the IMG tag for the title icon
-	 * 
+	 *
 	 * @param   string  $icon_image
 	 * @return  string  HTML IMG tag
-     * 
+     *
      * @access	private
 	 **/
 	function _getTitleIcon($icon_image)

@@ -143,7 +143,7 @@ define("_ENTERURL","Enter the URL of the link you want to add:");
 define("_ENTERWEBTITLE","Enter the web site title:");
 define("_ENTERIMGURL","Enter the URL of the image you want to add.");
 define("_ENTERIMGPOS","Now, enter the position of the image.");
-define("_IMGPOSRORL","'R' or 'r' for right, 'L' or 'l' for left, or leave it blank.");
+define("_IMGPOSRORL","'R' or 'r' for right, 'L' or 'l' for left, 'C' or 'c' for center, or leave it blank.");
 define("_ERRORIMGPOS","ERROR! Enter the position of the image.");
 define("_ENTEREMAIL","Enter the email address you want to add.");
 define("_ENTERCODE","Enter the codes that you want to add.");

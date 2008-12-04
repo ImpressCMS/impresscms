@@ -257,19 +257,21 @@ function xoopsCodeImg(id, enterImgUrlPhrase, enterImgPosPhrase, imgPosRorLPhrase
 			enterImgPosPhrase = "Now, enter the position of the image.";
 		}
 		if (imgPosRorLPhrase == null) {
-			imgPosRorLPhrase = "'R' or 'r' for right, 'L' or 'l' for left, or leave it blank.";
+			imgPosRorLPhrase = "'R' or 'r' for right, 'L' or 'l' for left, 'C' or 'c' for center, or leave it blank.";
 		}
 		if (errorImgPosPhrase == null) {
 			errorImgPosPhrase = "ERROR! Enter the position of the image:";
 		}
 		var text2 = prompt(enterImgPosPhrase + "\n" + imgPosRorLPhrase, "");
-		while ( ( text2 != "" ) && ( text2 != "r" ) && ( text2 != "R" ) && ( text2 != "l" ) && ( text2 != "L" ) && ( text2 != null ) ) {
+		while ( ( text2 != "" ) && ( text2 != "r" ) && ( text2 != "R" ) && ( text2 != "c" ) && ( text2 != "C" ) && ( text2 != "l" ) && ( text2 != "L" ) && ( text2 != null ) ) {
 			text2 = prompt(errorImgPosPhrase + "\n" + imgPosRorLPhrase,"");
 		}
 		if ( text2 == "l" || text2 == "L" ) {
 			text2 = " align=left";
 		} else if ( text2 == "r" || text2 == "R" ) {
 			text2 = " align=right";
+		} else if ( text2 == "c" || text2 == "C" ) {
+			text2 = " align=center";
 		} else {
 			text2 = "";
 		}

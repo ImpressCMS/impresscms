@@ -582,10 +582,18 @@ if ($op == 'update_ok') {
 
         // execute module specific update script if any
         $update_script = $module->getInfo('onUpdate');
-        if (false != $update_script && trim($update_script) != '') {
+        $ModName = $module->getInfo('modname');
+       if (false != $update_script && trim($update_script) != '') {
             include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($update_script);
             if (function_exists('xoops_module_update_'.$dirname)) {
                 $func = 'xoops_module_update_'.$dirname;
+                if (!$func($module, $prev_version)) {
+                    $msgs[] = 'Failed to execute '.$func;
+                } else {
+                    $msgs[] = '<b>'.$func.'</b> executed successfully.';
+                }
+            }elseif (function_exists('icms_module_update_'.$ModName)) {
+                $func = 'icms_module_update_'.$ModName;
                 if (!$func($module, $prev_version)) {
                     $msgs[] = 'Failed to execute '.$func;
                 } else {

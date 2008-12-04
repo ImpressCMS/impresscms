@@ -20,10 +20,10 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 	var $_language = _LANGCODE;
 	var $_width = "100%";
 	var $_height = "500px";
-	
+
 	var $tinymce;
 	var $config = array ( );
-	
+
 	/**
 	 * Constructor
 	 *
@@ -34,8 +34,8 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		$current_path = __FILE__;
 		if (DIRECTORY_SEPARATOR != "/")
 			$current_path = str_replace ( strpos ( $current_path, "\\\\", 2 ) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path );
-		$this->rootpath = substr ( dirname ( $current_path ), strlen ( XOOPS_ROOT_PATH ) );
-		
+		$this->rootpath = substr ( strstr ( dirname ( $current_path ), XOOPS_ROOT_PATH) , strlen ( XOOPS_ROOT_PATH ) );
+
 		if (is_array ( $configs )) {
 			$vars = array_keys ( get_object_vars ( $this ) );
 			foreach ( $configs as $key => $val ) {
@@ -46,17 +46,17 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 				}
 			}
 		}
-		
+
 		if ($checkCompatible && ! $this->isCompatible ()) {
 			return false;
 		}
-		
+
 		$this->XoopsFormTextArea ( @$this->_caption, @$this->_name, @$this->_value );
 		parent::setExtra ( "style='width: " . $this->_width . "; height: " . $this->_height . ";'" );
-		
+
 		$this->initTinymce ();
 	}
-	
+
 	function initTinymce() {
 		$this->config ["elements"] = $this->getName ();
 		$this->config ["language"] = $this->getLanguage ();
@@ -72,7 +72,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 					break;
 				case "media":
 					break;
-				case "flash": 
+				case "flash":
 					break;
 				case "file":
 					break;
@@ -89,8 +89,8 @@ class XoopsFormTinymce extends XoopsFormTextArea {
                 window : win,
                 input : field_name
             });
-            
-/*            return false;			
+
+/*            return false;
 			var fileBrowserWindow = new Array();
 			fileBrowserWindow["file"] = ajaxfilemanagerurl;
 			fileBrowserWindow["title"] = "Ajax File Manager";
@@ -104,14 +104,14 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 			  inline : "yes",
 			  editor_id : tinyMCE.getWindowArg("editor_id")
 			});
-			
+
 			return false;
 		}';*/
-		
+
 		require_once dirname ( __FILE__ ) . "/tinymce.php";
 		$this->tinymce = TinyMCE::instance ( $this->config );
 	}
-	
+
 	/**
 	 * get language
 	 *
@@ -124,15 +124,15 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		}
 		return $language;
 	}
-	
+
 	function getFonts() {
 		if (empty ( $this->config ["fonts"] ) && defined ( "_XOOPS_EDITOR_TINYMCE_FONTS" )) {
 			$this->config ["fonts"] = constant ( "_XOOPS_EDITOR_TINYMCE_FONTS" );
 		}
-		
+
 		return @$this->config ["fonts"];
 	}
-	
+
 	/**
 	 * prepare HTML for output
 	 *
@@ -141,13 +141,13 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 	function render() {
 		$ret = $this->tinymce->render ();
 		$ret .= parent::render ();
-		
+
 		$ret .= '<a href="#" id="switchtinymce" title="'._TOGGLETINY.'" onclick="showMCE(\''.$this->_name.'\'); return false;" style="float:right; display:box; background:#F0F0EE; padding:3px; margin-right:2px; border: 1px solid #ccc; border-top: none;">'._TOGGLETINY.'</a>';
 		$ret .= '<br clear="'._GLOBAL_RIGHT.'" />';
-		
+
 		return $ret;
 	}
-	
+
 	/**
 	 * Check if compatible
 	 *

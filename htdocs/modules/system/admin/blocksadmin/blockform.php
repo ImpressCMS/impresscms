@@ -108,7 +108,7 @@ if ($block ['is_custom']) {
 	$button_tray->addElement ( new XoopsFormButton ( '', 'previewblock', _PREVIEW, "submit" ) );
 }
 $button_tray->addElement ( new XoopsFormButton ( '', 'submitblock', _SUBMIT, "submit" ) );
-$btn = new XoopsFormButton ( '', 'reset', _CANCEL . '111', 'button' );
+$btn = new XoopsFormButton ( '', 'reset', _CANCEL, 'button' );
 
 global $impresscms, $op;
 if ($op == 'edit') {

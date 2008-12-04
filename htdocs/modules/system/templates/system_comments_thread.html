@@ -25,7 +25,7 @@
   </tr>
   <{foreach item=reply from=$comments[i].replies}>
   <tr>
-    <td class="even"><{$reply.prefix}> <a href="<{$comment_url}>&amp;com_id=<{$reply.id}>&amp;com_rootid=<{$reply.root_id}>" title=<{$reply.title}>"><{$reply.title}></a></td>
+    <td class="even"><{$reply.prefix}> <a href="<{$comment_url}>&amp;com_id=<{$reply.id}>&amp;com_rootid=<{$reply.root_id}>" title="<{$reply.simple_title}>"><{$reply.title}></a></td>
     <td class="odd" align="center"><{$reply.poster.uname}></td>
     <td class="even" align="<{$smarty.const._GLOBAL_RIGHT}>"><{$reply.date_posted}></td>
   </tr>

@@ -439,10 +439,21 @@ function xoops_module_install($dirname) {
 
             // execute module specific install script if any
             $install_script = $module->getInfo('onInstall');
+            $ModName = $module->getInfo('modname');
             if (false != $install_script && trim($install_script) != '') {
                 include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($install_script);
                 if (function_exists('xoops_module_install_'.$dirname)) {
                     $func = 'xoops_module_install_'.$dirname;
+                    if ( !( $lastmsg = $func($module) ) ) {
+                        $msgs[] = 'Failed to execute '.$func;
+                    } else {
+                        $msgs[] = '<b>'.$func.'</b> executed successfully.';
+						if ( is_string( $lastmsg ) ) {
+							$msgs[] = $lastmsg;
+						}
+                    }
+                }elseif (function_exists('icms_module_install_'.$ModName)) {
+                    $func = 'icms_module_install_'.$ModName;
                     if ( !( $lastmsg = $func($module) ) ) {
                         $msgs[] = 'Failed to execute '.$func;
                     } else {
@@ -656,6 +667,7 @@ function xoops_module_uninstall($dirname) {
 
             // execute module specific install script if any
             $uninstall_script = $module->getInfo('onUninstall');
+            $ModName = $module->getInfo('modname');
             if (false != $uninstall_script && trim($uninstall_script) != '') {
                 include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($uninstall_script);
                 if (function_exists('xoops_module_uninstall_'.$dirname)) {
@@ -665,7 +677,15 @@ function xoops_module_uninstall($dirname) {
                     } else {
                         $msgs[] = '<b>'.$func.'</b> executed successfully.';
                     }
+                }elseif (function_exists('icms_module_uninstall_'.$ModName)) {
+                    $func = 'icms_module_uninstall_'.$ModName;
+                    if (!$func($module)) {
+                        $msgs[] = 'Failed to execute <b>'.$func.'</b>';
+                    } else {
+                        $msgs[] = '<b>'.$func.'</b> executed successfully.';
+                    }
                 }
+
             }
 
             $msgs[] = '</code><p>'.sprintf(_MD_AM_OKUNINS, "<b>".$module->getVar('name')."</b>").'</p>';

@@ -53,7 +53,7 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1.1==
 
-===2008-11-16 : 1.1.1 Beta===
+===2008-12-5 : 1.1.1 RC===
 
 '''Fixed'''
 * #2245090: Captcha being bypassed
@@ -68,6 +68,13 @@ ImpressCMS ChangeLog
 * #2259562: Edit front end blocks with wrong groups (malanciault/skenow)
 * #2179432: Problem again with xoopsimagebrowser.php (real_therplima)
 * #2316120: Giving some group access is a high security risk (skenow)
+* #2324673: Content page edit button shown on user side for wrong groups (real_therplima)
+* #2333245: Setting managed groups when creating a new group failed (skenow)
+* #2353878: HTML editor for the disclaimer(felix)
+* #2354713: Security issue in SESSION id (vaughan/malanciault)
+* #2316581: When viewing comments in Threaded View it does not display the threads right and add's a > with the title twice (malanciault)
+* #2181891: TinyMCE and XAMPP relative paths (nekro/malanciault)
+* #2339182: Mail to User > missing checkbox (malanciault)
 
 '''Added'''
 * Purifier Filters for GoogleVideo & Local Flash movies (movies that are stored locally on the same server as the site). (vaughan)
@@ -108,6 +115,10 @@ ImpressCMS ChangeLog
 * New Function "jmaketime". (stranger)
 * New Function "jdate". (stranger)
 * New Function "icms_getmodulehandler". (stranger)
+* New tag which can we used in templates to switch language: change_lang_<lang> will produce the URL to swtich the current page to <lang> (malanciault)
+* New Function 'icms_module_uninstall_'.$ModName (stranger)
+* New Function 'icms_module_install_'.$ModName (stranger)
+* New Function 'icms_module_update_'.$ModName (stranger)
 
 '''Improved'''
 * If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)

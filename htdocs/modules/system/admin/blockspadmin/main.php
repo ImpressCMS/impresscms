@@ -16,7 +16,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     exit(_CT_ACCESS_DENIED);
 } else {
 	include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
-	
+
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 
 	$op = (isset($_GET['op']) && $_GET['op'] != '')?$_GET['op']:((isset($_POST['op']) && $_POST['op'] != '')?$_POST['op']:'list');
@@ -118,7 +118,7 @@ function save_pblock($dados,$edit=false){
 	}else{
 	  redirect_header('admin.php?fct=blockspadmin',1,_AM_BPMSG2);
 	}
-
+}
 
 function del_pblock($pbid){
 	$db =& Database::getInstance();

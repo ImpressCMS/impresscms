@@ -153,6 +153,7 @@ function easiestml( $s )
 	$langimage_html = '' ;
 	foreach( $easiestml_langs as $l => $lang ) {
 		$langimage_html .= '<a href="'.$link_base.urlencode($lang).'"><img src="'.XOOPS_URL.'/'.$langimages[$l].'" alt="'.$langnames[$l].'" /></a>&nbsp;' ;
+		$s = preg_replace( '/\[change_lang_'.$lang.'\]/' , $link_base.urlencode($lang) , $s ) ;
 	}
 	$s = preg_replace( '/\['.EASIESTML_IMAGETAG.'\]/' , $langimage_html , $s ) ;
 

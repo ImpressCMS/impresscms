@@ -569,11 +569,15 @@ class IcmsDatabaseupdater {
 	 * @var @link XoopsDatabase object
 	 */
 	var $_db;
+	var $db;
 
 	function IcmsDatabaseupdater() {
 		global $xoopsDB;
 
+		// backward compat
 		$this->_db = $xoopsDB;
+
+		$this->db = $xoopsDB;
 
 		$this->_dbTypesArray[XOBJ_DTYPE_TXTBOX] = 'varchar(255)';
 		$this->_dbTypesArray[XOBJ_DTYPE_TXTAREA] = 'text';

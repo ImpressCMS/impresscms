@@ -279,7 +279,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 				if($edituser->getVar('uid') == $xoopsUser->getVar('uid') && (in_array(XOOPS_GROUP_ADMIN, $oldgroups)) && !(in_array(XOOPS_GROUP_ADMIN, $groups)))
 				{
 					//Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
-					array_push($groups, XOOPS_GROUP_ADMIN);
+					$groups[] = XOOPS_GROUP_ADMIN;
 				}
 				$member_handler =& xoops_gethandler('member');
 				foreach($oldgroups as $groupid) {$member_handler->removeUsersFromGroup($groupid, array($edituser->getVar('uid')));}

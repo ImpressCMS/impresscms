@@ -6,7 +6,7 @@
     <div class="content_nav"><{$nav}></div>
   <{/if}>  
   <div id="content_header">
-    <{if $isAdmin}><div class="content_title_admlinks"><{$content_admlinks}></div><{/if}>
+    <{if $isAdmin}><{if $editre_block}><div class="content_title_admlinks"><{$content_admlinks}></div><{/if}><{/if}>
     <h1 class="content_title"><{$content_title}></h1>
     <{if $show_pinfo}><h2 class="content_title_info"><{$content_tinfo}></h2><{/if}>
   </div>
