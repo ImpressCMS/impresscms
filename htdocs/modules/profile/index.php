@@ -78,6 +78,6 @@ $xoopsTpl->assign('avatar_height', $xoopsModuleConfig['index_avatar_height']);
 $xoopsTpl->assign('avatar_width', $xoopsModuleConfig['index_avatar_width']);
 include_once ICMS_ROOT_PATH.'/class/pagenav.php';
 $pagenav = new XoopsPageNav($real_total_items, $xoopsModuleConfig['perpage'], $start, 'start', '');
-$xoopsTpl->assign('navbar', '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>');
+$xoopsTpl->assign('navbar', '<div style="text-align:'._GLOBAL_RIGHT.';">' . $pagenav->renderNav() . '</div>');
 include(ICMS_ROOT_PATH.'/footer.php');
 ?>
