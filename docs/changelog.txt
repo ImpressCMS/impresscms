@@ -22,7 +22,7 @@ ImpressCMS ChangeLog
 * HTML code tag. (stranger)
 * JS code tag. (stranger)
 * Messenger module (based on mpmanager). (stranger)
-* Profile module (based on mpmanager). (stranger)
+* Profile module (based on smartprofile). (stranger)
 * jalali converter to core. (stranger)
 * jalali converter to jalalijscalendar library. (stranger)
 * icmsmlcontent plugin in TinyMCE for multilanguage sites. (stranger)
