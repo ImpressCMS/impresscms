@@ -113,17 +113,6 @@
 			<td class='even'><a href="mailto:<{$module_developer_email}>" rel="external"><{$module_developer_email}></a></td>
 		</tr>
 	<{/if}>
-	
-	<{if $module_manual}>
-		<tr>
-			<td class='head' style="vertical-align: top;" width = '150px'><{$smarty.const._MODABOUT_MANUAL}></td>
-			<td class='even'>
-				<{foreach item=manual from=$module_manual}>
-					<div><{$manual}></div>
-				<{/foreach}>
-			</td>
-		</tr>
-	<{/if}>
 </table>
 
 <table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
