@@ -576,7 +576,7 @@ function contentform($id=null,$clone=false){
 		    $title = '';
 		    $body = '';
 		}
-		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl.':'').'.css');
+		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css');
 		$tags = '';
 		$weight = 0;
 		$status = 1;

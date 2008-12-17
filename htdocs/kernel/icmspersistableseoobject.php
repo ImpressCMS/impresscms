@@ -7,7 +7,7 @@
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmspersistableobject.php 3193 2008-06-23 15:21:00Z malanciault $
+* @version		$Id: icmspersistableseoobject.php 3193 2008-06-23 15:21:00Z malanciault $
  */
 
 if (!defined("XOOPS_ROOT_PATH")) {

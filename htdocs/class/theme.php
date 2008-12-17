@@ -184,7 +184,7 @@ class xos_opal_Theme {
 
 		global $xoopsConfig, $xoopsModule, $xoopsUser;
 		$this->template->assign( array(
-			'icms_style' => ICMS_URL."/icms.css",
+			'icms_style' => ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css',
 	    	'icms_theme' => $xoopsConfig['theme_set'],
 	    	'icms_imageurl' => XOOPS_THEME_URL.'/'.$xoopsConfig['theme_set'].'/',
 	    	'icms_themecss'=> xoops_getcss($xoopsConfig['theme_set']),

@@ -18,7 +18,7 @@ class IcmsKernel {
 		$this->_buildRelevantUrls();
 	}
 	/**
-	 * Convert a XOOPS path to a physical one
+	 * Convert a ImpressCMS path to a physical one
 	 */
 	function path( $url, $virtual = false ) {
 		$path = '';
@@ -32,7 +32,7 @@ class IcmsKernel {
 		return !isset( $this->paths[$root][1] ) ? '' : ( $this->paths[$root][1] . '/' . $path );
 	}
 	/**
-	* Convert a XOOPS path to an URL
+	* Convert a ImpressCMS path to an URL
 	*/
 	function url( $url ) {
 		return ( false !== strpos( $url, '://' ) ? $url : $this->path( $url, true ) );
@@ -65,7 +65,7 @@ class IcmsKernel {
 	function _buildRelevantUrls() {
 
 		if (!$this->urls) {
-			$http = ((strpos(XOOPS_URL, "https://")) === false) ? ("http://") : ("https://");
+			$http = ((strpos(ICMS_URL, "https://")) === false) ? ("http://") : ("https://");
 			$phpself = $_SERVER['PHP_SELF'];
 			$httphost = $_SERVER['HTTP_HOST'];
 			$querystring = $_SERVER['QUERY_STRING'];
@@ -85,7 +85,7 @@ class IcmsKernel {
 		    if ( array_key_exists( 'HTTP_REFERER', $_SERVER) && isset($_SERVER['HTTP_REFERER']) ) {
 		        $this->urls['previouspage'] = $_SERVER['HTTP_REFERER'];
 		    }
-			//$this->urls['isHomePage'] = (XOOPS_URL . "/index.php") == ($http . $httphost . $phpself);
+			//$this->urls['isHomePage'] = (ICMS_URL . "/index.php") == ($http . $httphost . $phpself);
 		}
 		return $this->urls;
 	}

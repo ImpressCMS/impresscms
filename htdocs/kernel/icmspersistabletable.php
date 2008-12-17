@@ -518,7 +518,7 @@ class IcmsPersistableTable {
 	{
 		global $impresscms;
 
-		include_once XOOPS_ROOT_PATH . '/class/template.php';
+		include_once ICMS_ROOT_PATH . '/class/template.php';
 
 		$this->_tpl =& new XoopsTpl();
 
@@ -595,7 +595,7 @@ class IcmsPersistableTable {
 
 		$this->_objects = $this->fetchObjects($debug);
 
-		include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+		include_once ICMS_ROOT_PATH . '/class/pagenav.php';
 		/**
 		 * $params_of_the_options_sel is an array with all the parameters of the page
 		 * but without the pagenave parameters. This array will be used in the

@@ -231,6 +231,9 @@ class XoopsModule extends XoopsObject
 		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/xoops_version.php'))
 		{
 			include ICMS_ROOT_PATH.'/modules/'.$dirname.'/xoops_version.php';
+		}elseif(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/icms_version.php'))
+		{
+			include ICMS_ROOT_PATH.'/modules/'.$dirname.'/icms_version.php';
 		}
 		else
 		{

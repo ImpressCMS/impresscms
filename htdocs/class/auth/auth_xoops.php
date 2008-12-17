@@ -62,7 +62,17 @@ class XoopsAuthXoops extends XoopsAuth {
 			$uname = icms_getUnameFromUserEmail($uname);
 		}
 		$user =& $member_handler->loginUser($uname, $pwd);
-		if($user == false) {$this->setErrors(1, _US_INCORRECTLOGIN);}
+		$sess_handler =& xoops_gethandler('session');
+		$sess_handler->securityLevel = 3;
+		$sess_handler->check_ip_blocks = 2;
+		$sess_handler->salt_key = XOOPS_DB_SALT;
+		$sess_handler->enableRegenerateId = true;
+		$sess_handler->icms_sessionOpen();
+		if($user == false)
+		{
+			$sess_handler->destroy(session_id());
+			$this->setErrors(1, _US_INCORRECTLOGIN);
+		}
 		return ($user);
 	}
 }

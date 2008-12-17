@@ -1,7 +1,7 @@
-ImpressCMS 1.1.1 RC 1 release notes
+ImpressCMS 1.1.2 Beta 1 release notes
 ==================================
 
-The ImpressCMS Project is very proud to announce a new version in the 1.1 series. ImpressCMS 1.1.1 addresses a few issues found in 1.1 final and introduce a few improvments motivated by our constant desire of developing the best easy to use open source CMS.
+The ImpressCMS Project is very proud to announce a new version in the 1.1.2 series. ImpressCMS 1.1.2 introduce a few improvments motivated by our constant desire of developing the best easy to use open source CMS.
 
 Please note that as a release candidate version, this release if testing purposes only and should not be installed on production servers.
 

@@ -4,7 +4,6 @@
  * Website: http://www.iso.org/iso/country_codes.htm
  *
  */
-
 define('_COUNTRY_AD', 'Andorra');
 define('_COUNTRY_AE', 'United Arab Emirates');
 define('_COUNTRY_AF', 'Afghanistan');
@@ -258,5 +257,4 @@ define('_COUNTRY_ZA', 'South Africa');
 define('_COUNTRY_ZM', 'Zambia');
 define('_COUNTRY_ZR', 'Zaire');	//  Not listed in ISO 3166
 define('_COUNTRY_ZW', 'Zimbabwe');
-				
 ?>

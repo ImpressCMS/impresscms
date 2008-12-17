@@ -17,7 +17,7 @@ include 'mainfile.php';
 
 $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
-if($xoopsConfigUser['priv_dpolicy'] !== 1) {redirect_header('index.php', 2, _US_NOPERM);}
+if($xoopsConfigUser['priv_dpolicy'] !== 1) {redirect_header('index.php', 2, _US_NOPERMISS);}
 
 $xoopsOption['template_main'] = 'system_privpolicy.html';
 include ICMS_ROOT_PATH.'/header.php';

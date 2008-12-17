@@ -8,7 +8,7 @@
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmspersistableobject.php 5474 2008-10-07 19:00:07Z m0nty_ $
+* @version		$Id$
 */
 
 /**

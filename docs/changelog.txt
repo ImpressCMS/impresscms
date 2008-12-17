@@ -48,15 +48,15 @@ ImpressCMS ChangeLog
 * #2176940: Can't change the theme using the block on user side (real_therplima)
 
 
-== Impresscms 1.1.1==
+== Impresscms 1.1.2==
+=======
 
-===2008-12-5 : 1.1.1 RC===
+===200?-??-?? : 1.1.2 Beta===
 
 '''Fixed'''
 * #2245090: Captcha being bypassed
 * #2098718: Sortlinks on Customtag-Table with bad color (sato-san)
 * #2245744: OpenID registration not possible from user.php (stranger)
-* #2300634: Blocks Positions admin not totaly secured (real_therplima/trabis)
 * #2103517: Multilanguage tags & tables break translation (nachenko/malanciault)
 * #2178956: Empty space when rank doesn't have an icon (malanciault)
 * #2203239: Debugger stops icmsfeed (malanciault)
@@ -68,7 +68,6 @@ ImpressCMS ChangeLog
 * #2324673: Content page edit button shown on user side for wrong groups (real_therplima)
 * #2333245: Setting managed groups when creating a new group failed (skenow)
 * #2353878: HTML editor for the disclaimer(felix)
-* #2354713: Security issue in SESSION id (vaughan/malanciault)
 * #2316581: When viewing comments in Threaded View it does not display the threads right and add's a > with the title twice (malanciault)
 * #2181891: TinyMCE and XAMPP relative paths (nekro/malanciault)
 * #2339182: Mail to User > missing checkbox (malanciault)
@@ -118,8 +117,7 @@ ImpressCMS ChangeLog
 * New Function 'icms_module_update_'.$ModName (stranger)
 
 '''Improved'''
-* If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
-* Updated system to version 1.11. (stranger)
+* Updated system to version 1.20. (stranger)
 * Updated HTML Purifier library from 3.1.1 to 3.2.0 (vaughan)
 * smarty values to make them use both $xoops_value and $icms_value. (stranger)
 * Fixed issues in redirection in RTL mode. (stranger)
@@ -139,6 +137,17 @@ ImpressCMS ChangeLog
 '''Changed'''
 * impresstheme is using $icms_values. (stranger)
 * in installer config settings, changed some settings to use textsarea instead of textarea. as was causing problems with those fields if URI's were entered etc. (vaughan)
+
+== Impresscms 1.1.1==
+
+===2008-12-2 : 1.1.1 RC===
+
+'''Fixed'''
+* #2354713: Security issue in SESSION id (vaughan/malanciault)
+* #2300634: Blocks Positions admin not totaly secured (real_therplima/trabis)
+
+'''Improved'''
+* If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
 
 == Impresscms 1.1==
 

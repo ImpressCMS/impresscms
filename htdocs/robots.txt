@@ -9,7 +9,7 @@ Disallow: /install/
 Disallow: /kernel/
 Disallow: /language/
 Disallow: /libraries/
-Disallow: /preload/
+Disallow: /preloads/
 Disallow: /plugins/
 Disallow: /templates_c/
 Disallow: /themes/

@@ -80,7 +80,7 @@ if (false != $user) {
 			foreach( $onlines as $online ) {
 				if( $online['online_uid'] == $user->uid() ) {
 					$user = false;
-					redirect_header(XOOPS_URL.'/index.php',3,_US_MULTLOGIN);
+					redirect_header(XOOPS_URL.'/index.php',3,$xoopsConfigPersona['multi_login_msg']);
 				}
 			}
 			if( is_object( $user ) ) {

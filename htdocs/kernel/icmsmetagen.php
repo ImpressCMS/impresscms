@@ -12,7 +12,7 @@
 * @version		$Id$
 */
 
-if (!defined("XOOPS_ROOT_PATH")) {
+if (!defined("ICMS_ROOT_PATH")) {
 die("ImpressCMS root path not defined");
 }
 
@@ -249,7 +249,7 @@ class IcmsMetagen
 			$keywords = array_merge($keywords, $moduleKeywords);
 		}
 
-		/* Commenting this out as it may cause problem on XOOPS ML websites
+		/* Commenting this out as it may cause problem on ImpressCMS ML websites
 		$return_keywords = array();
 
 		// Cleaning for duplicate keywords

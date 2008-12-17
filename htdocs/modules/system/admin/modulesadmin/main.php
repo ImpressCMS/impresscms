@@ -7,7 +7,7 @@
 * @package		Admin
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
-* @author	    
+* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
 
@@ -247,7 +247,7 @@ if ($op == 'update_ok') {
     } else {
         $newmid = $module->getVar('mid');
         $msgs = array();
-        $msgs[] = 'Module data updated.';
+        $msgs[] = _MD_AM_MOD_DATA_UPDATED;
         $tplfile_handler =& xoops_gethandler('tplfile');
         $deltpl =& $tplfile_handler->find('default', 'module', $module->getVar('mid'));
         $delng = array();
@@ -265,7 +265,7 @@ if ($op == 'update_ok') {
         }
         $templates = $module->getInfo('templates');
         if ($templates != false) {
-            $msgs[] = 'Updating templates...';
+            $msgs[] = _MD_AM_MOD_UP_TEM;
             foreach ($templates as $tpl) {
                 $tpl['file'] = trim($tpl['file']);
                 if (!in_array($tpl['file'], $delng)) {
@@ -288,12 +288,12 @@ if ($op == 'update_ok') {
                         $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert template <b>'.$tpl['file'].'</b> to the database.</span>';
                     } else {
                         $newid = $tplfile->getVar('tpl_id');
-                        $msgs[] = '&nbsp;&nbsp;Template <b>'.$tpl['file'].'</b> inserted to the database.';
+                        $msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_TEMPINS.'</span>', $tpl['file']);
                         if ($xoopsConfig['template_set'] == 'default') {
                             if (!xoops_template_touch($newid)) {
                                 $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not recompile template <b>'.$tpl['file'].'</b>.</span>';
                             } else {
-                                $msgs[] = '&nbsp;&nbsp;<span>Template <b>'.$tpl['file'].'</b> recompiled.</span>';
+                                $msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_RECOMPTEMPFILE.'</span>', $tpl['file']);
                             }
                         }
                     }
@@ -308,7 +308,7 @@ if ($op == 'update_ok') {
             $msgs[] = '<p><span style="color:#ff0000;">'._MD_AM_FAILWRITE.'</span></p>';
         }
         $blocks = $module->getInfo('blocks');
-        $msgs[] = 'Rebuilding blocks...';
+        $msgs[] = _MD_AM_MOD_REBUILD_BLOCKS;
         if ($blocks != false) {
             $count = count($blocks);
             $showfuncs = array();
@@ -588,16 +588,16 @@ if ($op == 'update_ok') {
             if (function_exists('xoops_module_update_'.$dirname)) {
                 $func = 'xoops_module_update_'.$dirname;
                 if (!$func($module, $prev_version)) {
-                    $msgs[] = 'Failed to execute '.$func;
+                    $msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
                 } else {
-                    $msgs[] = '<b>'.$func.'</b> executed successfully.';
+                    $msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
                 }
             }elseif (function_exists('icms_module_update_'.$ModName)) {
                 $func = 'icms_module_update_'.$ModName;
                 if (!$func($module, $prev_version)) {
-                    $msgs[] = 'Failed to execute '.$func;
+                    $msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
                 } else {
-                    $msgs[] = '<b>'.$func.'</b> executed successfully.';
+                    $msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
                 }
             }
         }

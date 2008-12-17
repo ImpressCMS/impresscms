@@ -11,7 +11,7 @@
 * @author		marcan <marcan@impresscms.org>
 * @version		$Id$
 */
-if (!defined("XOOPS_ROOT_PATH")) {
+if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
 
@@ -107,7 +107,7 @@ class IcmsPersistablePermissionHandler extends XoopsObjectHandler
 				$gperm_handler =& xoops_gethandler('groupperm');
 
 				//Get user's groups
-				$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+				$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 
 				//Get all allowed item ids in this module and for this user's groups
 				$userpermissions =& $gperm_handler->getItemIds($gperm_name, $groups, $icmsModule->getVar('mid'));
@@ -195,7 +195,7 @@ class IcmsPersistablePermissionHandler extends XoopsObjectHandler
 	function accessGranted($gperm_name, $gperm_itemid) {
 		global $xoopsUser;
 
-		$gperm_groupid = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		$gperm_groupid = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$icmsModule =& $this->handler->getModuleInfo();
 		$gperm_modid = $icmsModule->getVar('mid')   ;
 

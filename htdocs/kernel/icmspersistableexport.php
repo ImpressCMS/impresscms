@@ -85,7 +85,7 @@ class IcmsPersistableExport {
 		$data = array();
 		$data['rows'] = $rows;
 		$data['columnsHeaders'] = $columnsHeaders;
-		$smartExportRenderer = new SmartExportRenderer($data, $this->filename, $this->filepath, $this->format, $this->options);
+		$smartExportRenderer = new IcmsExportRenderer($data, $this->filename, $this->filepath, $this->format, $this->options);
 		$smartExportRenderer->execute();
 	}
 
@@ -119,7 +119,7 @@ class IcmsPersistableExport {
 }
 
 /**
- * SmartExportRenderer class
+ * IcmsExportRenderer class
  *
  * Class that renders a set of data into a specific export format
  *
@@ -127,7 +127,7 @@ class IcmsPersistableExport {
  * @author marcan <marcan@smartfactory.ca>
  * @link http://www.smartfactory.ca The SmartFactory
  */
-class SmartExportRenderer {
+class IcmsExportRenderer {
 
 	var $data;
 	var $format;
@@ -144,7 +144,7 @@ class SmartExportRenderer {
 	 * @param string $filepath path where the file will be saved
 	 * @param array $options options of the format to be exported in
 	 */
-	function SmartExportRenderer($data, $filename=false, $filepath=false, $format='csv', $options=array('separator'=>';')) {
+	function IcmsExportRenderer($data, $filename=false, $filepath=false, $format='csv', $options=array('separator'=>';')) {
 		$this->data = $data;
 		$this->format = $format;
 		$this->filename = $filename;
@@ -231,7 +231,7 @@ class SmartExportRenderer {
 
 	function saveCsv($content) {
 		if (!$this->filepath) {
-			$this->filepath = XOOPS_UPLOAD_PATH . '/';
+			$this->filepath = ICMS_UPLOAD_PATH . '/';
 		}
 		if (!$this->filename) {
 			$this->filename .= time();
