@@ -28,6 +28,11 @@
 // URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
 // Project: The XOOPS Project                                                //
 // ------------------------------------------------------------------------- //
+/*
+  Based on SecureSession class
+  Written by Vagharshak Tozalakyan <vagh@armdex.com>
+  Released under GNU Public License
+*/
 /**
 * Handler for a session
 * @package     kernel
@@ -240,5 +245,4 @@ class XoopsSessionHandler
 
 
 }
-
 ?>

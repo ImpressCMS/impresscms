@@ -41,12 +41,12 @@ if ($xoopsUser->isAdmin ( $xoopsModule->mid () )) {
 	# Adding dynamic block area/position system - TheRpLima - 2007-10-21
 	$oldzones = XoopsBlock::getBlockPositions ( true );
 	#
-	$editor = (isset ( $_GET ['editor'] )) ? $_GET ['editor'] : null;
+	$editor = (isset($_GET['editor'])) ? StopXSS($_GET['editor']):null;
 	function list_blocks() {
 		global $xoopsUser, $xoopsConfig, $icmsAdminTpl, $oldzones, $editor;
 		include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 		//OpenTable();
-		$selmod = isset ( $_GET ['selmod'] ) ? $_GET ['selmod'] : '0-1';
+		$selmod = isset ( $_GET ['selmod'] ) ? preg_replace('/[^0-9-]/','',$_GET['selmod']) : '0-1';
 		$selvis = isset ( $_GET ['selvis'] ) ? intval ( $_GET ['selvis'] ) : 2;
 		$selgrp = isset ( $_GET ['selgrp'] ) ? intval ( $_GET ['selgrp'] ) : XOOPS_GROUP_USERS;
 		

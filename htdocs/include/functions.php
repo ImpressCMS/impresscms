@@ -448,6 +448,13 @@ function xoops_getbanner()
 */
 function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 {
+	/*
+	 * Here comes the part for removing inactive users after X days.
+	 * The reason is clear, redirect header is used all over the core and modules, and doing so we can allways make sure those users are removed.
+	 * Maybe we require to add a preload here too?
+	 * If this method is secure, needs to be discussed!
+	 */
+	 // remove_usersxdays ();
 	global $xoopsConfig, $xoopsLogger, $xoopsUserIsAdmin;
 	if(preg_match("/[\\0-\\31]|about:|script:/i", $url))
 	{
@@ -2535,6 +2542,28 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
 	}
 }
 
+/**
+ * Deletes users who registered but aren't yet active for X days.
+ *
+ * To be used in ImpressCMS 1.2
+ *
+ **/
+/*
+function remove_usersxdays (){
+	$config_handler =& xoops_gethandler('config');
+	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+	$days = $xoopsConfigUser['enc_type'];
+	$member_handler = xoops_gethandler('member');
+	$criteria = new Criteria("level", 0); //points all inactive users
+	$users = $member_handler->getUsers($criteria);
+	$delete_regdate= time() - ( $days * 24 * 60 * 60 );  // X days/month * 24 hrs/day
+	foreach (array_keys($users) as $i) {
+		if ($users[$i]->getVar('user_regdate') < $delete_regdate){ //all users who registered more than X days ago
+			return $member_handler->deleteUser($users[$i]);
+		}
+	}
+}
+*/
 function icms_convert_size($size){ 	 
     if ($size >= 1073741824){ 	 
         $ret = round((($size/1024)/1024)/1024,1).' Gb'; 	 

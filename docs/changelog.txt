@@ -4,75 +4,6 @@ ImpressCMS ChangeLog
 
 === ????-??-?? : 1.2 ALPHA 1 ===
 '''Added'''
-* Smarty xoPageNav function. (Skalpa)
-* simplepie library. (marcan)
-* Geshi library. (stranger)
-* Displayname features. (stranger)
-* Cofig Option to enable/disable change of displayname by user. (stranger)
-* Displayname field to installer. (stranger)
-* Displayname to registration form. (stranger)
-* FCKeditor. (skenow)
-* Plugin feature for tex sanitizer. (stranger)
-* PHP plugin for geshi. (stranger)
-* CSS plugin for geshi. (stranger)
-* JS plugin for geshi. (stranger)
-* HTML plugin for geshi. (stranger)
-* PHP code tag. (stranger)
-* CSS code tag. (stranger)
-* HTML code tag. (stranger)
-* JS code tag. (stranger)
-* Messenger module (based on mpmanager). (stranger)
-* Profile module (based on smartprofile). (stranger)
-* jalali converter to core. (stranger)
-* jalali converter to jalalijscalendar library. (stranger)
-* icmsmlcontent plugin in TinyMCE for multilanguage sites. (stranger)
-* recaptcha library. (stranger)
-* email protection methode using recaptcha. (stranger)
-
-
-'''Changed'''
-* Admin`s RSS feed to simplepie. (marcan/stranger)
-* email protection option to a multiple option one. (stranger)
-
-'''Improved'''
-* Ongoing additions to  API documentation.
-* register.tpl mail template contains more user`s information. (stranger)
-* adminactivate.tpl mail template contains more user`s information. (stranger)
-* Updated TinyMCE to Version 3.2.0.2. (stranger)
-* Updated TCPDF to version 4.0.033. (stranger)
-* Captcha class. (stranger)
-* Filters on group edit form to only allow options assigned to the current user
-
-'''Fixed'''
-* #2161527: error in xoopsimagebrowser.php (real_therplima)
-* #2176940: Can't change the theme using the block on user side (real_therplima)
-
-
-== Impresscms 1.1.2==
-=======
-
-===200?-??-?? : 1.1.2 Beta===
-
-'''Fixed'''
-* #2245090: Captcha being bypassed
-* #2098718: Sortlinks on Customtag-Table with bad color (sato-san)
-* #2245744: OpenID registration not possible from user.php (stranger)
-* #2103517: Multilanguage tags & tables break translation (nachenko/malanciault)
-* #2178956: Empty space when rank doesn't have an icon (malanciault)
-* #2203239: Debugger stops icmsfeed (malanciault)
-* #2207696: Blocksform: Cancel button not working (malanciault)
-* #2215976: Character ' stripped out of website title (malanciault)
-* #2259562: Edit front end blocks with wrong groups (malanciault/skenow)
-* #2179432: Problem again with xoopsimagebrowser.php (real_therplima)
-* #2316120: Giving some group access is a high security risk (skenow)
-* #2324673: Content page edit button shown on user side for wrong groups (real_therplima)
-* #2333245: Setting managed groups when creating a new group failed (skenow)
-* #2353878: HTML editor for the disclaimer(felix)
-* #2316581: When viewing comments in Threaded View it does not display the threads right and add's a > with the title twice (malanciault)
-* #2181891: TinyMCE and XAMPP relative paths (nekro/malanciault)
-* #2339182: Mail to User > missing checkbox (malanciault)
-
-'''Added'''
 * Purifier Filters for GoogleVideo & Local Flash movies (movies that are stored locally on the same server as the site). (vaughan)
 * TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
 * choice of xoopsFormTextArea or xoopsFormDHTMLTextArea to edit user form (signature) depends on whether HTML sig is allowed or not. (vaughan)
@@ -115,8 +46,46 @@ ImpressCMS ChangeLog
 * New Function 'icms_module_uninstall_'.$ModName (stranger)
 * New Function 'icms_module_install_'.$ModName (stranger)
 * New Function 'icms_module_update_'.$ModName (stranger)
+* Smarty xoPageNav function. (Skalpa)
+* simplepie library. (marcan)
+* Geshi library. (stranger)
+* Displayname features. (stranger)
+* Cofig Option to enable/disable change of displayname by user. (stranger)
+* Displayname field to installer. (stranger)
+* Displayname to registration form. (stranger)
+* FCKeditor. (skenow)
+* Plugin feature for tex sanitizer. (stranger)
+* PHP plugin for geshi. (stranger)
+* CSS plugin for geshi. (stranger)
+* JS plugin for geshi. (stranger)
+* HTML plugin for geshi. (stranger)
+* PHP code tag. (stranger)
+* CSS code tag. (stranger)
+* HTML code tag. (stranger)
+* JS code tag. (stranger)
+* Messenger module (based on mpmanager). (stranger)
+* Profile module (based on smartprofile). (stranger)
+* jalali converter to core. (stranger)
+* jalali converter to jalalijscalendar library. (stranger)
+* icmsmlcontent plugin in TinyMCE for multilanguage sites. (stranger)
+* recaptcha library. (stranger)
+* email protection methode using recaptcha. (stranger)
+
+
+'''Changed'''
+* Admin`s RSS feed to simplepie. (marcan/stranger)
+* email protection option to a multiple option one. (stranger)
+* impresstheme is using $icms_values. (stranger)
+* in installer config settings, changed some settings to use textsarea instead of textarea. as was causing problems with those fields if URI's were entered etc. (vaughan)
 
 '''Improved'''
+* Ongoing additions to  API documentation.
+* register.tpl mail template contains more user`s information. (stranger)
+* adminactivate.tpl mail template contains more user`s information. (stranger)
+* Updated TinyMCE to Version 3.2.0.2. (stranger)
+* Updated TCPDF to version 4.0.033. (stranger)
+* Captcha class. (stranger)
+* Filters on group edit form to only allow options assigned to the current user
 * Updated system to version 1.20. (stranger)
 * Updated HTML Purifier library from 3.1.1 to 3.2.0 (vaughan)
 * smarty values to make them use both $xoops_value and $icms_value. (stranger)
@@ -134,11 +103,39 @@ ImpressCMS ChangeLog
 * Implementing ICMS_SYSTEM_DBVERSION in include/version.php to centralized the definition of the latest dbversion of the system module (malanciault)
 * Improving IcmsVersionChecker to use IcmsSimpleRss instead of Snoopy as we were having problems on some config (malanciault)
 
-'''Changed'''
-* impresstheme is using $icms_values. (stranger)
-* in installer config settings, changed some settings to use textsarea instead of textarea. as was causing problems with those fields if URI's were entered etc. (vaughan)
+'''Fixed'''
+* #2161527: error in xoopsimagebrowser.php (real_therplima)
+* #2176940: Can't change the theme using the block on user side (real_therplima)
+* #2245090: Captcha being bypassed
+* #2098718: Sortlinks on Customtag-Table with bad color (sato-san)
+* #2245744: OpenID registration not possible from user.php (stranger)
+* #2103517: Multilanguage tags & tables break translation (nachenko/malanciault)
+* #2178956: Empty space when rank doesn't have an icon (malanciault)
+* #2203239: Debugger stops icmsfeed (malanciault)
+* #2207696: Blocksform: Cancel button not working (malanciault)
+* #2215976: Character ' stripped out of website title (malanciault)
+* #2259562: Edit front end blocks with wrong groups (malanciault/skenow)
+* #2179432: Problem again with xoopsimagebrowser.php (real_therplima)
+* #2316120: Giving some group access is a high security risk (skenow)
+* #2324673: Content page edit button shown on user side for wrong groups (real_therplima)
+* #2333245: Setting managed groups when creating a new group failed (skenow)
+* #2353878: HTML editor for the disclaimer(felix)
+* #2316581: When viewing comments in Threaded View it does not display the threads right and add's a > with the title twice (malanciault)
+* #2181891: TinyMCE and XAMPP relative paths (nekro/malanciault)
+* #2339182: Mail to User > missing checkbox (malanciault)
+
 
 == Impresscms 1.1.1==
+
+===2008-12-20 : 1.1.1 Final===
+
+* Only version number changed
+
+===2008-12-12 : 1.1.1 RC2===
+
+'''Fixed'''
+* #2354713: Security issue in SESSION id (Fixation), previous fix caused problems with some users being logged out sporadically. (vaughan)
+* XSS vulnerability in blocksadmin.php $_GET['selmod'], potential (but not necessarily vulnerable) exploit in $_GET['editor']. (GiJoe/vaughan)
 
 ===2008-12-2 : 1.1.1 RC===
 

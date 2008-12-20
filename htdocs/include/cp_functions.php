@@ -44,7 +44,7 @@ function xoops_cp_header($ret = 0) {
 	<meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" />
 	<meta http-equiv="content-language" content="' . _LANGCODE . '" />
 	<title>' . _IMPRESSCMS_ADMIN . ' ' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . '</title>
-	<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>' . '<link rel="shortcut icon" type="image/ico" href="' . XOOPS_URL . '/favicon.ico" />
+	<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script><script type="text/javascript" src="' . XOOPS_URL . '/include/linkexternal.js"></script>' . '<link rel="shortcut icon" type="image/ico" href="' . XOOPS_URL . '/favicon.ico" />
 	<link rel="icon" type="image/png" href="' . XOOPS_URL . '/favicon.ico" />
 		<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />
 		<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
@@ -379,10 +379,10 @@ function impresscms_get_adminmenu() {
 			}
 			$subs = array ('title' => _PREFERENCES, 'link' => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $module->mid () );
 			$rtn ['subs'] [] = $subs;
-		} else {
+		}/* else {
 			$rtn ['hassubs'] = 0;
 			unset ( $rtn ['subs'] );
-		}
+		}*/
 		if ($module->dirname () == 'system') {
 			$systemadm = true;
 		}
