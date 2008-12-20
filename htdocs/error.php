@@ -27,7 +27,7 @@ if($e == 0) {
 }
 
 $xoopsOption['template_main'] = 'system_error.html';
-/** require header.php to start page rendering */)
+/** require header.php to start page rendering */
 require_once ICMS_ROOT_PATH.'/header.php';
 
 $siteName = $xoopsConfig['sitename'];
