@@ -553,7 +553,7 @@ class XoopsUser extends XoopsObject
 		{
 			return XOOPS_UPLOAD_URL.'/'.$this->getVar('user_avatar');
 		}
-		$ret = "http://www.gravatar.com/avatar.php?gravatar_id=".md5(strtolower($this->getVar('email', 'E')));
+		$ret = "http://www.gravatar.com/avatar.php?identicon&gravatar_id=".md5(strtolower($this->getVar('email', 'E')));
 		if($rating && $rating != ''){$ret .= "&amp;rating=".$rating;}
 		if($size && $size != ''){$ret .="&amp;size=".$size;}
 		if($default && $default != ''){$ret .= "&amp;default=".urlencode($default);}

@@ -73,6 +73,7 @@ ImpressCMS ChangeLog
 
 
 '''Changed'''
+* Identicon for Gravatar added (sato-san)
 * Admin`s RSS feed to simplepie. (marcan/stranger)
 * email protection option to a multiple option one. (stranger)
 * impresstheme is using $icms_values. (stranger)
