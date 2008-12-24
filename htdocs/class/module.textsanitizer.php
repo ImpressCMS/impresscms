@@ -277,7 +277,7 @@ class MyTextSanitizer
 		$patterns[] = "/a{$c}b{$c}o{$c}u{$c}t{$c}:/si";
 		$replacements[] = "about :";
 		$text = preg_replace($patterns, $replacements, $text);
-		$text = icmsCodeDecode_extended($text);
+		$text = $this->icmsCodeDecode_extended($text);
 		return $text;
 	}
 
@@ -770,42 +770,16 @@ class MyTextSanitizer
 	}
 	/**#@-*/
 /*
-* @TODO: At the moment, this does nothing ;-)
-* This needs to be extended in order to load allowed plugins from Database!
+* This function gets allowed plugins from DB and loads them in the sanitizer
 *
 */
-	function icmsCodeDecode_extended($allowimage = 1)
+	function icmsCodeDecode_extended($text, $allowimage = 1)
 	{
 	$config_handler =& xoops_gethandler('config');
 	$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-   	$items = $xoopsConfigPersona['sanitizer_plugins'];
-	foreach($items as $item) {$items = $this->icmsloadExtension($item);}
+   	$items = array();
+	foreach(str_replace('.php', '', $xoopsConfigPersona['sanitizer_plugins']) as $item) {$items = $this->icmsloadExtension($item, $text);}
 	return $items;
-/*		$this->patterns[] = "/&quot;/i";
-		$this->replacements[] = "\"";
-		$this->patterns[] = "/&#039;/i";
-		$this->replacements[] = "'";
-		
-		$this->icmsloadExtension("iframe");
-		//$this->icmsloadExtension("image", $allowimage);
-		if (EXTCODE_ENABLE_FLASH) {
-			$this->icmsloadExtension("flash");
-		}
-		if (EXTCODE_ENABLE_YOUTUBE) {
-			$this->icmsloadExtension("youtube");
-		}
-		if (EXTCODE_ENABLE_WMP) {
-			$this->icmsloadExtension("wmp");
-		}
-		if (EXTCODE_ENABLE_MMS) {
-			$this->icmsloadExtension("mms");
-		}
-		if (EXTCODE_ENABLE_RTSP) {
-			$this->icmsloadExtension("rtsp");
-		}
-		if (EXTCODE_ENABLE_WIKI) {
-			$this->icmsloadExtension("wiki");
-		}*/
 	}
 	
 	function icmsloadExtension($name)

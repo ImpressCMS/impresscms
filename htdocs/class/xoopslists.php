@@ -164,7 +164,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 				asort($filelist);
 				reset($filelist);
 			}
-			return $filelist;
+			return str_replace('.php', '', $filelist);
 		}
 		
 		/*

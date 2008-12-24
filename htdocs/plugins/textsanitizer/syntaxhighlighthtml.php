@@ -8,7 +8,7 @@
  * @package		plugins
  * @since		1.2
  * @version		$Id$
- */
+ 
 
 	
 function textsanitizer_syntaxhighlighthtml(&$ts, &$source, $language )
@@ -37,5 +37,5 @@ function _textsanitizer_geshi_html_highlight( $source, $language )
     $code = $geshi->parse_code();
 
     return $code;
-}
+}*/
 ?>

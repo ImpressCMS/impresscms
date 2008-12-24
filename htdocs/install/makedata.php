@@ -865,7 +865,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'pagstyle', '_MD_AM_PAGISTYLE', 'default', '_MD_AM_PAGISTYLE_DESC', 'select_paginati', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'sanitizer_plugins', '_MD_AM_SLECTSPLUGINS', '', '_MD_AM_SLECTSPLUGINS_DESC', 'select_plugin', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'sanitizer_plugins', '_MD_AM_SLECTSPLUGINS', '', '_MD_AM_SLECTSPLUGINS_DESC', 'select_plugin', 'array', $p)");
 
 	// Data for Config Category 11 (CAPTCHA Settings)
 	$c=11; // sets config category id

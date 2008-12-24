@@ -8,7 +8,7 @@
  * @since		4.00
  * @version		$Id$
  * @package		Frameworks::textsanitizer
- */
+ 
 
 	
 function textsanitizer_syntaxhighlight(&$ts, &$source, $language )
@@ -52,5 +52,5 @@ function _textsanitizer_php_highlight($text)
 	$buffer = $str_open.$str_internal.$str_close;
 	return $buffer;
 }
-
+*/
 ?>
