@@ -2615,7 +2615,7 @@ function icms_getCurrentPage() {
 	$urls = icms_getCurrentUrls();
 	return $urls['full'];
 }
-function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
+/*function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
 	if (!$moduleName) {
 		global $xoopsModule;
 		$moduleName = $xoopsModule->getVar('dirname');
@@ -2644,7 +2644,7 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
 
 		return '<a href="' . $ret . '">' . $icmsModule->getVar('name') . '</a>';
 	}
-}
+}*/
 function icms_getModuleNameForSEO($moduleName = false) {
 	$icmsModule = & icms_getModuleInfo($moduleName);
 	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
