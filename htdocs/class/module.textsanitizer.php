@@ -770,6 +770,8 @@ class MyTextSanitizer
 	/**#@-*/
 /*
 * @TODO: At the moment, this does nothing ;-)
+* This needs to be extended in order to load allowed plugins from Database!
+*
 */
 	function icmsCodeDecode_extended($allowimage = 1)
 	{
