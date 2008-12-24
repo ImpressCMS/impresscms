@@ -368,6 +368,11 @@ class PHPMailer {
    * @return bool
    */
   function Send() {
+    $this->From = easiestml( $this->From ) ;
+    $this->FromName = easiestml( $this->FromName ) ;
+    $this->Sender = easiestml( $this->Sender ) ;
+    $this->Subject = easiestml( $this->Subject ) ;
+    $this->Body = easiestml( $this->Body ) ;
     $header = '';
     $body = '';
     $result = true;
