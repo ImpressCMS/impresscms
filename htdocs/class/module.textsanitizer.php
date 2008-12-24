@@ -277,6 +277,7 @@ class MyTextSanitizer
 		$patterns[] = "/a{$c}b{$c}o{$c}u{$c}t{$c}:/si";
 		$replacements[] = "about :";
 		$text = preg_replace($patterns, $replacements, $text);
+		icmsCodeDecode_extended;
 		return $text;
 	}
 
@@ -401,7 +402,7 @@ class MyTextSanitizer
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
-		$text = $this->codesPreConv($text, $xcode); // Ryuji_edit(2003-11-18)
+		//$text = $this->codesPreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
 		if($smiley != 0)
 		{
@@ -423,7 +424,7 @@ class MyTextSanitizer
 			$text = $this->nl2Br($text);
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
-		$text = $this->codesConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
+		//$text = $this->codesConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
 		if($html != 0)
 		{
 			$text = $this->html_purifier($text, $config);
@@ -458,7 +459,7 @@ class MyTextSanitizer
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
-		$text = $this->codesPreConv($text, $xcode); // Ryuji_edit(2003-11-18)
+		//$text = $this->codesPreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
 		if($smiley != 0)
 		{
@@ -480,7 +481,7 @@ class MyTextSanitizer
 			$text = $this->nl2Br($text);
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
-		$text = $this->codesConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
+		//$text = $this->codesConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
 		if($html != 0)
 		{
 			$text = $this->html_purifier($text, $config);
@@ -533,12 +534,12 @@ class MyTextSanitizer
 	/**#@+
 	* Sanitizing of [code] tag
 	*/
-	function codePreConv($text, $xcode = 1) {
+	function codesPreConv($text, $xcode = 1) {
 		if ($xcode != 0) {
 			//$patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/esU";
 			//$replacements = "'[code\\1]'.base64_encode('\\2').'[/code]'";
 			//$text =  preg_replace($patterns, $replacements, $text);
-			$patterns = "/\[code_php([^\]]*?)\](.*)\[\/code_php\]/esU";
+/*			$patterns = "/\[code_php([^\]]*?)\](.*)\[\/code_php\]/esU";
 			$replacements = "'[code_php\\1]'.base64_encode('\\2').'[/code_php]'";
 			$text =  preg_replace($patterns, $replacements, $text);
 			$patterns = "/\[code_css([^\]]*?)\](.*)\[\/code_css\]/esU";
@@ -549,18 +550,18 @@ class MyTextSanitizer
 			$text =  preg_replace($patterns, $replacements, $text);
 			$patterns = "/\[code_html([^\]]*?)\](.*)\[\/code_html\]/esU";
 			$replacements = "'[code_html\\1]'.base64_encode('\\2').'[/code_html]'";
-			$text =  preg_replace($patterns, $replacements, $text);
+			$text =  preg_replace($patterns, $replacements, $text);*/
 		}
 		return $text;
 	}
 
-	function codeConv($text, $xcode = 1, $image = 1) {
+	function codesConv($text, $xcode = 1, $image = 1) {
 		if (empty($xcode)) return $text;
 		//$patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/esU";
 		//$codeSanitizerParameter = "'$2'" . (empty($image) ? ", 0" : "");
 		//$replacements = "'<div class=\"xoopsCode\"><code>'.\$this->icmsloadExtension('syntaxhighlight', \$this->codeSanitizer($codeSanitizerParameter), '$1').'</code></div>'";
 		//$text =  preg_replace($patterns, $replacements, $text);
-		$patterns = "/\[code_php([^\]]*?)\](.*)\[\/code_php\]/esU";
+/*		$patterns = "/\[code_php([^\]]*?)\](.*)\[\/code_php\]/esU";
 		$codeSanitizerParameter = "'$2'" . (empty($image) ? ", 0" : "");
 		$replacements = "'<div class=\"xoopsCodePHP\"><code>'.\$this->icmsloadExtension('syntaxhighlightphp', \$this->codeSanitizer($codeSanitizerParameter), '$1').'</code></div>'";
 		$text =  preg_replace($patterns, $replacements, $text);
@@ -575,7 +576,7 @@ class MyTextSanitizer
 		$patterns = "/\[code_html([^\]]*?)\](.*)\[\/code_html\]/esU";
 		$codeSanitizerParameter = "'$2'" . (empty($image) ? ", 0" : "");
 		$replacements = "'<div class=\"xoopsCodeHTML\"><code>'.\$this->icmsloadExtension('syntaxhighlighthtml', \$this->codeSanitizer($codeSanitizerParameter), '$1').'</code></div>'";
-		$text =  preg_replace($patterns, $replacements, $text);
+		$text =  preg_replace($patterns, $replacements, $text);*/
 		return $text;
 	}
 
@@ -584,7 +585,7 @@ class MyTextSanitizer
 		$str = $this->xoopsCodeDecode($str, $image);
 		return $str;
 	}
-	function codesPreConv($text, $xcode = 1)
+	function codePreConv($text, $xcode = 1)
 	{
 		if($xcode != 0)
 		{
@@ -595,7 +596,7 @@ class MyTextSanitizer
 		return $text;
 	}
 
-	function codesConv($text, $xcode = 1, $image = 1)
+	function codeConv($text, $xcode = 1, $image = 1)
 	{
 		if($xcode != 0)
 		{
@@ -775,6 +776,11 @@ class MyTextSanitizer
 */
 	function icmsCodeDecode_extended($allowimage = 1)
 	{
+	$config_handler =& xoops_gethandler('config');
+	$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+   	$items = $xoopsConfigPersona['sanitizer_plugins'];
+	foreach($items as $item) {$items = $this->icmsloadExtension($item);}
+	return $items;
 /*		$this->patterns[] = "/&quot;/i";
 		$this->replacements[] = "\"";
 		$this->patterns[] = "/&#039;/i";

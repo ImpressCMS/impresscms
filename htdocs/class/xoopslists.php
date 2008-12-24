@@ -148,6 +148,26 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		}
 		
 		/*
+		 *  gets list of php file names in a directory
+		 */
+		function getPhpListAsArray($dirname, $prefix="")
+		{
+			$filelist = array();
+			if ($handle = opendir($dirname)) {
+				while (false !== ($file = readdir($handle))) {
+					if ( preg_match("/(\.php)$/i", strtolower( $file )) ) {
+						$file = $prefix.$file;
+						$filelist[$file] = $file;
+					}
+				}
+				closedir($handle);
+				asort($filelist);
+				reset($filelist);
+			}
+			return $filelist;
+		}
+		
+		/*
 		 *  gets list of html file names in a certain directory
 		*/
 		function getHtmlListAsArray($dirname, $prefix="")

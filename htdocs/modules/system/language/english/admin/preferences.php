@@ -470,5 +470,7 @@ define("_MD_AM_CAPTCHA_OFF","Disabled");
 define("_MD_AM_CAPTCHA_SKIPCHAR","Skip characters");
 define("_MD_AM_CAPTCHA_SKIPCHARDSC","This option will skip the entered characters when generating Captcha");
 define("_MD_AM_DELUSRES","Removing inactive users");
-define("_MD_AM_DELUSRESDESC","This Option will remove users who have registered but have not activated their accounts for X days.<br />Please enter an amount of days.");
+define("_MD_AM_DELUSRESDSC","This Option will remove users who have registered but have not activated their accounts for X days.<br />Please enter an amount of days.");
+define("_MD_AM_SLECTSPLUGINS","Select plugins to be used");
+define("_MD_AM_SLECTSPLUGINS_DESC","You can hereby select which plugins are used to sanitize your texts.");
 ?>

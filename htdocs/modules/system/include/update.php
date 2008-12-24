@@ -469,6 +469,7 @@ function xoops_module_update_system(&$module) {
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'recprvkey', '_MD_AM_RECPRVKEY', '', '_MD_AM_RECPRVKEY_DESC', 'textbox', 'text', 17);
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'recpubkey', '_MD_AM_RECPUBKEY', '', '_MD_AM_RECPUBKEY_DESC', 'textbox', 'text', 17);
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '0', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'sanitizer_plugins', '_MD_AM_SLECTSPLUGINS', '', '_MD_AM_SLECTSPLUGINS_DESC', 'select_plugin', 'text', 17);
 	}
 
 
