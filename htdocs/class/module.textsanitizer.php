@@ -277,7 +277,7 @@ class MyTextSanitizer
 		$patterns[] = "/a{$c}b{$c}o{$c}u{$c}t{$c}:/si";
 		$replacements[] = "about :";
 		$text = preg_replace($patterns, $replacements, $text);
-		icmsCodeDecode_extended;
+		$text = icmsCodeDecode_extended($text);
 		return $text;
 	}
 
