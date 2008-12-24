@@ -46,6 +46,9 @@ ImpressCMS ChangeLog
 * New Function 'icms_module_uninstall_'.$ModName (stranger)
 * New Function 'icms_module_install_'.$ModName (stranger)
 * New Function 'icms_module_update_'.$ModName (stranger)
+* New Function 'getPhpListAsArray'. (stranger)
+* New Function 'icmsCodeDecode_extended'. (stranger)
+* New Function 'icmsloadExtension'. (stranger/phppp)
 * Smarty xoPageNav function. (Skalpa)
 * simplepie library. (marcan)
 * Geshi library. (stranger)
@@ -65,11 +68,13 @@ ImpressCMS ChangeLog
 * JS code tag. (stranger)
 * Messenger module (based on mpmanager). (stranger)
 * Profile module (based on smartprofile). (stranger)
-* jalali converter to core. (stranger)
-* jalali converter to jalalijscalendar library. (stranger)
-* icmsmlcontent plugin in TinyMCE for multilanguage sites. (stranger)
-* recaptcha library. (stranger)
-* email protection methode using recaptcha. (stranger)
+* Jalali converter to core. (stranger)
+* Jalali converter to jalalijscalendar library. (stranger)
+* Icmsmlcontent plugin in TinyMCE for multilanguage sites. (stranger)
+* Recaptcha library. (stranger)
+* Email protection methode using recaptcha. (stranger)
+* Plugin manager using DataBase. (stranger)
+* New config Option to select allowed plugins. (stranger)
 
 
 '''Changed'''
