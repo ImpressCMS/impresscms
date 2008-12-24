@@ -469,4 +469,6 @@ define("_MD_AM_CAPTCHA_TXT","Text");
 define("_MD_AM_CAPTCHA_OFF","Disabled");
 define("_MD_AM_CAPTCHA_SKIPCHAR","Skip characters");
 define("_MD_AM_CAPTCHA_SKIPCHARDSC","This option will skip the entered characters when generating Captcha");
+define("_MD_AM_DELUSRES","Removing inactive users");
+define("_MD_AM_DELUSRESDESC","This Option will remove users who have registered but have not activated their accounts for X days.<br />Please enter an amount of days.");
 ?>

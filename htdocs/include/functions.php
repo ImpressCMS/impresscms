@@ -2548,11 +2548,11 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
  * To be used in ImpressCMS 1.2
  *
  **/
-/*
+
 function remove_usersxdays (){
 	$config_handler =& xoops_gethandler('config');
 	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-	$days = $xoopsConfigUser['enc_type'];
+	$days = $xoopsConfigUser['delusers'];
 	$member_handler = xoops_gethandler('member');
 	$criteria = new Criteria("level", 0); //points all inactive users
 	$users = $member_handler->getUsers($criteria);
@@ -2563,7 +2563,7 @@ function remove_usersxdays (){
 		}
 	}
 }
-*/
+
 function icms_convert_size($size){ 	 
     if ($size >= 1073741824){ 	 
         $ret = round((($size/1024)/1024)/1024,1).' Gb'; 	 
