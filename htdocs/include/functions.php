@@ -2611,27 +2611,6 @@ function icms_adminMenu($currentoption = 0, $breadcrumb = '', $submenus = false,
 function icms_loadCommonLanguageFile() {
 	icms_loadLanguageFile('system', 'common');
 }
-function icms_getCurrentUrls() {
-	$urls = array();
-	$http = ((strpos(XOOPS_URL, "https://")) === false) ? ("http://") : ("https://");
-	$phpself = $_SERVER['PHP_SELF'];
-	$httphost = $_SERVER['HTTP_HOST'];
-	$querystring = $_SERVER['QUERY_STRING'];
-	if ($querystring != '') {
-		$querystring = '?' . $querystring;
-	}
-	$currenturl = $http . $httphost . $phpself . $querystring;
-	$urls = array ();
-	$urls['http'] = $http;
-	$urls['httphost'] = $httphost;
-	$urls['phpself'] = $phpself;
-	$urls['querystring'] = $querystring;
-	$urls['full_phpself'] = $http . $httphost . $phpself;
-	$urls['full'] = $currenturl;
-	$urls['isHomePage'] = (XOOPS_URL . "/index.php") == ($http . $httphost . $phpself);
-	return $urls;
-}
-
 function icms_getCurrentPage() {
 	$urls = icms_getCurrentUrls();
 	return $urls['full'];
