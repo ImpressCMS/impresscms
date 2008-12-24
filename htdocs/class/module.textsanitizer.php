@@ -778,7 +778,7 @@ class MyTextSanitizer
 	$config_handler =& xoops_gethandler('config');
 	$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
    	$items = array();
-	foreach(str_replace('.php', '', $xoopsConfigPersona['sanitizer_plugins']) as $item) {$items = $this->icmsloadExtension($item, $text);}
+	foreach(str_replace('.php', '', $xoopsConfigPersona['sanitizer_plugins']) as $item) {$items = (( !empty($item) ) ? $this->icmsloadExtension($item, $text) : $text);}
 	return $items;
 	}
 	
