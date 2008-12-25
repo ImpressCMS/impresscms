@@ -323,6 +323,15 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 						$ele->addOptionArray ( $arr );
 					}
 				break;
+				case 'select_geshi' :
+					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
+					$dirlist = XoopsLists::getPhpListAsArray ( ICMS_LIBRARIES_PATH.'/geshi/geshi/' );
+					if (! empty ( $dirlist )) {
+						asort ( $dirlist );
+						$ele->addOptionArray ( $dirlist );
+					}
+				break;
 				case 'textbox' :
 				default :
 					$myts = & MyTextSanitizer::getInstance ();

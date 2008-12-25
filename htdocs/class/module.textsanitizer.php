@@ -402,7 +402,6 @@ class MyTextSanitizer
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
-		//$text = $this->codesPreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
 		if($smiley != 0)
 		{
@@ -424,7 +423,6 @@ class MyTextSanitizer
 			$text = $this->nl2Br($text);
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
-		//$text = $this->codesConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
 		if($html != 0)
 		{
 			$text = $this->html_purifier($text, $config);
@@ -459,7 +457,6 @@ class MyTextSanitizer
 		}
 
 		$text = $this->codePreConv($text, $xcode); // Ryuji_edit(2003-11-18)
-		//$text = $this->codesPreConv($text, $xcode); // Ryuji_edit(2003-11-18)
 		$text = $this->makeClickable($text);
 		if($smiley != 0)
 		{
@@ -481,7 +478,6 @@ class MyTextSanitizer
 			$text = $this->nl2Br($text);
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
-		//$text = $this->codesConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
 		if($html != 0)
 		{
 			$text = $this->html_purifier($text, $config);
@@ -534,57 +530,6 @@ class MyTextSanitizer
 	/**#@+
 	* Sanitizing of [code] tag
 	*/
-	function codesPreConv($text, $xcode = 1) {
-		if ($xcode != 0) {
-			//$patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/esU";
-			//$replacements = "'[code\\1]'.base64_encode('\\2').'[/code]'";
-			//$text =  preg_replace($patterns, $replacements, $text);
-/*			$patterns = "/\[code_php([^\]]*?)\](.*)\[\/code_php\]/esU";
-			$replacements = "'[code_php\\1]'.base64_encode('\\2').'[/code_php]'";
-			$text =  preg_replace($patterns, $replacements, $text);
-			$patterns = "/\[code_css([^\]]*?)\](.*)\[\/code_css\]/esU";
-			$replacements = "'[code_css\\1]'.base64_encode('\\2').'[/code_css]'";
-			$text =  preg_replace($patterns, $replacements, $text);
-			$patterns = "/\[code_js([^\]]*?)\](.*)\[\/code_js\]/esU";
-			$replacements = "'[code_js\\1]'.base64_encode('\\2').'[/code_js]'";
-			$text =  preg_replace($patterns, $replacements, $text);
-			$patterns = "/\[code_html([^\]]*?)\](.*)\[\/code_html\]/esU";
-			$replacements = "'[code_html\\1]'.base64_encode('\\2').'[/code_html]'";
-			$text =  preg_replace($patterns, $replacements, $text);*/
-		}
-		return $text;
-	}
-
-	function codesConv($text, $xcode = 1, $image = 1) {
-		if (empty($xcode)) return $text;
-		//$patterns = "/\[code([^\]]*?)\](.*)\[\/code\]/esU";
-		//$codeSanitizerParameter = "'$2'" . (empty($image) ? ", 0" : "");
-		//$replacements = "'<div class=\"xoopsCode\"><code>'.\$this->icmsloadExtension('syntaxhighlight', \$this->codeSanitizer($codeSanitizerParameter), '$1').'</code></div>'";
-		//$text =  preg_replace($patterns, $replacements, $text);
-/*		$patterns = "/\[code_php([^\]]*?)\](.*)\[\/code_php\]/esU";
-		$codeSanitizerParameter = "'$2'" . (empty($image) ? ", 0" : "");
-		$replacements = "'<div class=\"xoopsCodePHP\"><code>'.\$this->icmsloadExtension('syntaxhighlightphp', \$this->codeSanitizer($codeSanitizerParameter), '$1').'</code></div>'";
-		$text =  preg_replace($patterns, $replacements, $text);
-		$patterns = "/\[code_css([^\]]*?)\](.*)\[\/code_css\]/esU";
-		$codeSanitizerParameter = "'$2'" . (empty($image) ? ", 0" : "");
-		$replacements = "'<div class=\"xoopsCodeCSS\"><code>'.\$this->icmsloadExtension('syntaxhighlightcss', \$this->codeSanitizer($codeSanitizerParameter), '$1').'</code></div>'";
-		$text =  preg_replace($patterns, $replacements, $text);
-		$patterns = "/\[code_js([^\]]*?)\](.*)\[\/code_js\]/esU";
-		$codeSanitizerParameter = "'$2'" . (empty($image) ? ", 0" : "");
-		$replacements = "'<div class=\"xoopsCodeJS\"><code>'.\$this->icmsloadExtension('syntaxhighlightjs', \$this->codeSanitizer($codeSanitizerParameter), '$1').'</code></div>'";
-		$text =  preg_replace($patterns, $replacements, $text);
-		$patterns = "/\[code_html([^\]]*?)\](.*)\[\/code_html\]/esU";
-		$codeSanitizerParameter = "'$2'" . (empty($image) ? ", 0" : "");
-		$replacements = "'<div class=\"xoopsCodeHTML\"><code>'.\$this->icmsloadExtension('syntaxhighlighthtml', \$this->codeSanitizer($codeSanitizerParameter), '$1').'</code></div>'";
-		$text =  preg_replace($patterns, $replacements, $text);*/
-		return $text;
-	}
-
-	function codeSanitizer($str, $image = 1) {
-		$str =  str_replace('\"', '"', base64_decode($str));
-		$str = $this->xoopsCodeDecode($str, $image);
-		return $str;
-	}
 	function codePreConv($text, $xcode = 1)
 	{
 		if($xcode != 0)
@@ -595,39 +540,29 @@ class MyTextSanitizer
 		}
 		return $text;
 	}
-
-	function codeConv($text, $xcode = 1, $image = 1)
-	{
+	function codeConv($text, $xcode = 1, $image = 1) {
 		if($xcode != 0)
 		{
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			if($image != 0)
 			{
-				$replacements = "'<div class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::codesSanitizer('$1').'</pre></code></div>'";
+				$replacements = "'<div class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1')).'</pre></code></div>'";
 			}
 			else
 			{
-				$replacements = "'<div class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::codesSanitizer('$1', 0).'</pre></code></div>'";
+				$replacements = "'<div class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1', 0)).'</pre></code></div>'";
 			}
 			$text = preg_replace($patterns, $replacements, $text);
 		}
 		return $text;
+		return $text;
 	}
 
-	function codesSanitizer($str, $image = 1)
-	{
-		if($image != 0)
-		{
-			$str = $this->xoopsCodeDecode($this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str))));
-		}
-		else
-		{
-			$str = $this->xoopsCodeDecode($this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str))),0);
-		}
+	function codeSanitizer($str, $image = 1) {
+		$str =  str_replace('\"', '"', base64_decode($str));
+		$str = $this->xoopsCodeDecode($str, $image);
 		return $str;
 	}
-
-	/**#@-*/
 ##################### Deprecated Methods ######################
 
 	/**#@+
@@ -776,9 +711,9 @@ class MyTextSanitizer
 	function icmsCodeDecode_extended($text, $allowimage = 1)
 	{
 	$config_handler =& xoops_gethandler('config');
-	$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
    	$items = array();
-	foreach(str_replace('.php', '', $xoopsConfigPersona['sanitizer_plugins']) as $item) {$items = (( !empty($item) && file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$item.'.php') ) ? $this->icmsloadExtension($item, $text) : $text);}
+	foreach(str_replace('.php', '', $icmsConfigPlugins['sanitizer_plugins']) as $item) {$items = (( !empty($item) && file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$item.'.php') ) ? $this->icmsloadExtension($item, $text) : $text);}
 	return $items;
 	}
 	
@@ -794,6 +729,74 @@ class MyTextSanitizer
 		$args = array_slice(func_get_args(), 1);
 		return call_user_func_array($func, array_merge( array(&$this), $args));
 	}
+function textsanitizer_syntaxhighlight(&$text)
+{
+	$config_handler =& xoops_gethandler('config');
+	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+	$text = $this->undoHtmlSpecialChars($text);
+	if( $icmsConfigPlugins['code_sanitizer'] == 'php' ){
+	$text = $this->textsanitizer_php_highlight($text);
+	}elseif( $icmsConfigPlugins['code_sanitizer'] == 'geshi' ){
+	$text = $this->textsanitizer_geshi_highlight($text);
+	}
+	return $text;
+}
+function textsanitizer_php_highlight($text)
+{
+	$text = trim($text);
+	$addedtag_open = 0;
+	if ( !strpos($text, "<?php") and (substr($text, 0, 5) != "<?php") ) {
+		$text = "<?php\n" . $text;
+		$addedtag_open = 1;
+	}
+	$addedtag_close = 0;
+	if ( !strpos($text, "?>") ) {
+		$text .= "?>";
+		$addedtag_close = 1;
+	}
+	$oldlevel = error_reporting(0);
+	$buffer = highlight_string($text, true); // Require PHP 4.20+
+	error_reporting($oldlevel);
+	$pos_open = $pos_close = 0;
+	if ($addedtag_open) {
+		$pos_open = strpos($buffer, '&lt;?php');
+	}
+	if ($addedtag_close) {
+		$pos_close = strrpos($buffer, '?&gt;');
+	}
 	
+	$str_open = ($addedtag_open) ? substr($buffer, 0, $pos_open) : "";
+	$str_close = ($pos_close) ? substr($buffer, $pos_close + 5) : "";
+	
+	$length_open = ($addedtag_open) ? $pos_open + 8 : 0;
+	$length_text = ($pos_close) ? $pos_close - $length_open : 0;
+	$str_internal = ($length_text) ? substr($buffer, $length_open, $length_text) : substr($buffer, $length_open);
+	
+	$buffer = $str_open.$str_internal.$str_close;
+	return $buffer;
+}
+function textsanitizer_geshi_highlight( $text )
+{
+	$config_handler =& xoops_gethandler('config');
+	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+	if ( !@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
+	$language = str_replace('.php', '', $icmsConfigPlugins['geshi_default']);
+
+    // Create the new GeSHi object, passing relevant stuff
+    $geshi = new GeSHi($text, $language);
+    // Enclose the code in a <div>
+    $geshi->set_header_type(GESHI_HEADER_NONE);
+
+	// Sets the proper encoding charset other than "ISO-8859-1"
+    $geshi->set_encoding(_CHARSET);
+
+	$geshi->set_link_target ( "_blank" );
+
+    // Parse the code
+    $code = $geshi->parse_code();
+
+    return $code;
+}
+
 }
 ?>

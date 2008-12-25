@@ -471,6 +471,14 @@ define("_MD_AM_CAPTCHA_SKIPCHAR","Skip characters");
 define("_MD_AM_CAPTCHA_SKIPCHARDSC","This option will skip the entered characters when generating Captcha");
 define("_MD_AM_DELUSRES","Removing inactive users");
 define("_MD_AM_DELUSRESDSC","This Option will remove users who have registered but have not activated their accounts for X days.<br />Please enter an amount of days.");
-define("_MD_AM_SLECTSPLUGINS","Select plugins to be used");
-define("_MD_AM_SLECTSPLUGINS_DESC","You can hereby select which plugins are used to sanitize your texts.");
+define("_MD_AM_PLUGINS","Plugins Manager");
+define("_MD_AM_SELECTSPLUGINS","Select allowed plugins to be used");
+define("_MD_AM_SELECTSPLUGINS_DESC","You can hereby select which plugins are used to sanitize your texts.");
+define("_MD_AM_GESHI_DEFAULT","Select plugin to be used for geshi");
+define("_MD_AM_GESHI_DEFAULT_DESC","GeSHi (Generic Syntax Hilighter) is a syntax highlighter for your codes.");
+define("_MD_AM_SELECTSHIGHLIGHT","Select type of highlighter for the codes");
+define("_MD_AM_SELECTSHIGHLIGHT_DESC","You can hereby select which highlighter is used to highlight your codes.");
+define("_MD_AM_HIGHLIGHTER_GESHI","GeSHi highlighter");
+define("_MD_AM_HIGHLIGHTER_PHP","php highlighter");
+define("_MD_AM_HIGHLIGHTER_OFF","Disabled");
 ?>
