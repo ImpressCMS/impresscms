@@ -53,7 +53,7 @@ ImpressCMS ChangeLog
 * simplepie library. (marcan)
 * Geshi library. (stranger)
 * Displayname features. (stranger)
-* Cofig Option to enable/disable change of displayname by user. (stranger)
+* Config Option to enable/disable change of displayname by user. (stranger)
 * Displayname field to installer. (stranger)
 * Displayname to registration form. (stranger)
 * FCKeditor. (skenow)
