@@ -28,25 +28,25 @@
 $xoopsOption['pagetype'] = "pmsg";
 
 include("mainfile.php");
-$mydirname = "mpmanager" ; 
-require_once "modules/mpmanager/include/functions.php";
+$mydirname = "messenger" ; 
+require_once "modules/messenger/include/functions.php";
 include_once XOOPS_ROOT_PATH."/include/xoopscodes.php";
 include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
 include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
-include_once XOOPS_ROOT_PATH.'/modules/mpmanager/class/priv_msgs.php';
-include_once XOOPS_ROOT_PATH.'/modules/mpmanager/class/priv_msgsup.php';
-include_once XOOPS_ROOT_PATH.'/modules/mpmanager/class/priv_msgsopt.php';
-include XOOPS_ROOT_PATH."/modules/mpmanager/include/get_perms.php" ;
+include_once XOOPS_ROOT_PATH.'/modules/messenger/class/priv_msgs.php';
+include_once XOOPS_ROOT_PATH.'/modules/messenger/class/priv_msgsup.php';
+include_once XOOPS_ROOT_PATH.'/modules/messenger/class/priv_msgsopt.php';
+include XOOPS_ROOT_PATH."/modules/messenger/include/get_perms.php" ;
 
 $module_handler =& xoops_gethandler('module');
-$xoopsModule =& $module_handler->getByDirname("mpmanager");
+$xoopsModule =& $module_handler->getByDirname("messenger");
 $xoopsModuleConfig =& $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 $myts = & MyTextSanitizer :: getInstance(); // MyTextSanitizer object
 
-if( file_exists(XOOPS_ROOT_PATH."/modules/mpmanager/language/".$xoopsConfig['language']."/main.php") ) {
-	include(XOOPS_ROOT_PATH."/modules/mpmanager/language/".$xoopsConfig['language']."/main.php");
+if( file_exists(XOOPS_ROOT_PATH."/modules/messenger/language/".$xoopsConfig['language']."/main.php") ) {
+	include(XOOPS_ROOT_PATH."/modules/messenger/language/".$xoopsConfig['language']."/main.php");
 } else {
-	include(XOOPS_ROOT_PATH."/modules/mpmanager/language/english/main.php");
+	include(XOOPS_ROOT_PATH."/modules/messenger/language/english/main.php");
 }
 
 
@@ -92,7 +92,7 @@ echo '<script type="text/JavaScript"><!--
   var w=700;
    window.resizeTo(w, h);
  // -->
- </script><script type="text/javascript" src="'.XOOPS_URL.'/modules/mpmanager/include/multifile.js"></script>';
+ </script><script type="text/javascript" src="'.XOOPS_URL.'/modules/messenger/include/multifile.js"></script>';
  
  echo '<script type="text/javascript">
 function auto_close(delai)
@@ -220,7 +220,7 @@ if( ( $view_perms & GPERM_OEIL ) ) {
 	$indeximage_select -> setExtra("readonly=\"readonly\" ");
     $indeximage_tray = new XoopsFormElementTray(_MP_MESSAGEOEIL, '&nbsp;');
     $indeximage_tray->addElement($indeximage_select);
-    $indeximage_tray->addElement(new XoopsFormLabel('', "<A HREF=\"#\" onClick=\"window.open('".XOOPS_URL."/modules/mpmanager/pop.php','_blank','toolbar=0, location=0, directories=0, status=0, scrollbars=1, resizable=0, copyhistory=0, menuBar=0, width=700, height=400');return false;\"><img src=\"".XOOPS_URL."/modules/mpmanager/images/popup.gif\">&nbsp;"._MP_MESSAGEVUOEIL."</A>"));
+    $indeximage_tray->addElement(new XoopsFormLabel('', "<A HREF=\"#\" onClick=\"window.open('".XOOPS_URL."/modules/messenger/pop.php','_blank','toolbar=0, location=0, directories=0, status=0, scrollbars=1, resizable=0, copyhistory=0, menuBar=0, width=700, height=400');return false;\"><img src=\"".XOOPS_URL."/modules/messenger/images/popup.gif\">&nbsp;"._MP_MESSAGEVUOEIL."</A>"));
     $form->addElement($indeximage_tray);
 }
 
