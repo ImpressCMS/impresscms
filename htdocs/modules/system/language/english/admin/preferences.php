@@ -10,9 +10,6 @@ define("_MD_AM_SLOGAN","Slogan for your site");
 define("_MD_AM_ADMINML","Admin mail address");
 define("_MD_AM_LANGUAGE","Default language");
 define("_MD_AM_STARTPAGE","Module or Page for your start page");
-### Added in 1.2 ### 
-define("_MD_AM_STARTPAGEDSC","Select the desired Module or Page for your start page by each group.");
-### Added in 1.2 ### 
 define("_MD_AM_NONE","None");
 define("_MD_CONTENTMAN","Content Manager");
 define("_MD_AM_SERVERTZ","Server timezone");
@@ -340,12 +337,6 @@ define("_MD_AM_CONT_SHOWPINFO","Show poster and published info?");
 define("_MD_AM_CONT_SHOWPINFODSC","Select yes to show in the page informations about the poster and publish of the page.");
 define("_MD_AM_CONT_ACTSEO","Use menu title instead the id in the url (improve seo)?");
 define("_MD_AM_CONT_ACTSEODSC","Select yes to the value of menu title instead of the id in the url of the page.");
-define("_MD_AM_CONT_NUMPAGES","Number of pages on list by tag mode");
-define("_MD_AM_CONT_NUMPAGESDSC","Define the number of pages to show in user side on list by tag mode.");
-define("_MD_AM_CONT_TEASERLENGTH","Teaser Length");
-define("_MD_AM_CONT_TEASERLENGTHDSC","Number of characters of the page teaser in list by tag mode.<br />Set to 0 to not limit.");
-
-
 //Captcha (Security image)
 define('_MD_AM_USECAPTCHA', 'Do you want to use CAPTCHA on registration form?');
 define('_MD_AM_USECAPTCHADSC', 'Select yes to CAPTCHA (anti-spam) up on registration form.');
@@ -421,20 +412,6 @@ define("_MD_AM_AUTHOPENID","Enable OpenID authentication");
 define("_MD_AM_AUTHOPENIDDSC","Select Yes to enable OpenID authentication. This will allow users to login on the site using their OpenID account. For complete information about the OpenID Integration in ImpressCMS, please visit <a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID'>our wiki</a>.");
 define("_MD_AM_USE_GOOGLE_ANA"," Enable Google Analytics?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC","");
-define('_MD_AM_PAGISTYLE','Style of the paginations links:');
-define('_MD_AM_PAGISTYLE_DESC','Select the style of the paginations links.');
-define('_MD_AM_ALLWCHGUNAME', 'Allow users to change Display Name?');
-define('_MD_AM_ALLWCHGUNAMEDSC', '');
-define("_MD_AM_JALALICAL","Use Extended Calendar with Jalali?");
-define("_MD_AM_JALALICALDSC","By selecting this, you`ll have an extended calendar on forms.<br />Please be aware, this calendar may not work in some Browsers.");
-//ADDED SINCE 1.2
-define("_MD_AM_NOMAILPROTECT","None");
-define("_MD_AM_GDMAILPROTECT","GD protection");
-define("_MD_AM_REMAILPROTECT","re-Captcha");
-define("_MD_AM_RECPRVKEY","reCaptcha private api code");
-define("_MD_AM_RECPRVKEY_DESC","");
-define("_MD_AM_RECPUBKEY","reCaptcha public api code");
-define("_MD_AM_RECPUBKEY_DESC","");
 // CAPTCHA Category
 define("_MD_AM_CAPTCHA","Captcha Settings");
 define("_MD_AM_CAPTCHA_MODE","Captcha mode");
@@ -469,6 +446,26 @@ define("_MD_AM_CAPTCHA_TXT","Text");
 define("_MD_AM_CAPTCHA_OFF","Disabled");
 define("_MD_AM_CAPTCHA_SKIPCHAR","Skip characters");
 define("_MD_AM_CAPTCHA_SKIPCHARDSC","This option will skip the entered characters when generating Captcha");
+
+######################## Added in 1.2 ###################################
+define('_MD_AM_PAGISTYLE','Style of the paginations links:');
+define('_MD_AM_PAGISTYLE_DESC','Select the style of the paginations links.');
+define('_MD_AM_ALLWCHGUNAME', 'Allow users to change Display Name?');
+define('_MD_AM_ALLWCHGUNAMEDSC', '');
+define("_MD_AM_JALALICAL","Use Extended Calendar with Jalali?");
+define("_MD_AM_JALALICALDSC","By selecting this, you`ll have an extended calendar on forms.<br />Please be aware, this calendar may not work in some Browsers.");
+define("_MD_AM_NOMAILPROTECT","None");
+define("_MD_AM_GDMAILPROTECT","GD protection");
+define("_MD_AM_REMAILPROTECT","re-Captcha");
+define("_MD_AM_RECPRVKEY","reCaptcha private api code");
+define("_MD_AM_RECPRVKEY_DESC","");
+define("_MD_AM_RECPUBKEY","reCaptcha public api code");
+define("_MD_AM_RECPUBKEY_DESC","");
+define("_MD_AM_CONT_NUMPAGES","Number of pages on list by tag mode");
+define("_MD_AM_CONT_NUMPAGESDSC","Define the number of pages to show in user side on list by tag mode.");
+define("_MD_AM_CONT_TEASERLENGTH","Teaser Length");
+define("_MD_AM_CONT_TEASERLENGTHDSC","Number of characters of the page teaser in list by tag mode.<br />Set to 0 to not limit.");
+define("_MD_AM_STARTPAGEDSC","Select the desired Module or Page for your start page by each group.");
 define("_MD_AM_DELUSRES","Removing inactive users");
 define("_MD_AM_DELUSRESDSC","This Option will remove users who have registered but have not activated their accounts for X days.<br />Please enter an amount of days.");
 define("_MD_AM_PLUGINS","Plugins Manager");
