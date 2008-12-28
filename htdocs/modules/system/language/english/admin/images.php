@@ -7,8 +7,6 @@ define('_MD_IMGMAIN','Image Manager Main');
 
 define('_MD_ADDIMGCAT','Add Image Category:');
 define('_MD_EDITIMGCAT','Edit Image Category:');
-define('_MD_DELETEIMGCAT','Delete Image Category');
-define('_MD_IMGCATPARENT','Parent Category:');
 define('_MD_IMGCATNAME','Category Name:');
 define('_MD_IMGCATRGRP','Select groups for image manager use:<br /><br /><span style="font-weight: normal;">These are groups allowed to use the image manager for selecting images but not uploading. Webmaster has automatic access.</span>');
 define('_MD_IMGCATWGRP','Select groups allowed to upload images:<br /><br /><span style="font-weight: normal;">Typical usage is for moderator and admin groups.</span>');
@@ -22,11 +20,16 @@ define('_MD_RUDELIMGCAT','Are you sure that you want to delete this category and
 define('_MD_RUDELIMG','Are you sure that you want to delete this images file?');
 
 define('_MD_FAILDEL', 'Failed deleting image %s from the database');
+define('_MD_FAILDELCAT', 'Failed deleting image category %s from the database');
+define('_MD_FAILUNLINK', 'Failed deleting image %s from the server directory');
+
+######################## Added in 1.2 ###################################
+define('_MD_FAILADDCAT', 'Failed adding image category');
 define('_MD_FAILEDIT', 'Failed update image');
 define('_MD_FAILEDITCAT', 'Failed update category');
-define('_MD_FAILDELCAT', 'Failed deleting image category %s from the database');
-define('_MD_FAILADDCAT', 'Failed adding image category');
-define('_MD_FAILUNLINK', 'Failed deleting image %s from the server directory');
+define('_MD_IMGCATPARENT','Parent Category:');
+define('_MD_DELETEIMGCAT','Delete Image Category');
+
 define('_MD_ADDIMGCATBTN','Add new category');
 define('_MD_ADDIMGBTN','Add new image');
 
@@ -72,5 +75,4 @@ define('IMANAGER_HEIGHT', 'Height');
 define('IMANAGER_SIZE', 'Size');
 define('IMANAGER_ORIGINAL', 'Original Image');
 define('IMANAGER_EDITED', 'Edited Image');
-
 ?>
