@@ -24,8 +24,6 @@ define('_MD_CONTENT_PARENT','Parent Page');
 define('_MD_CONTENT_AUTOR','Author');
 define('_MD_CONTENT_CSS','Custom CSS');
 define('_MD_CONTENT_CSS_DESC','Recommended only for advanced users.<br />Click <a href="javascript:openWithSelfMain(\'%s\', \'content_help\', 1000, 600);">here</a> to see the documentation.');
-define('_MD_CONTENT_TAGS','Tags');
-define('_MD_CONTENT_TAGS_DESC','Separate the tags with "<font color=red>,</font>"');
 
 define('_MD_ID','ID');
 define('_MD_TITLE','Title');
@@ -44,5 +42,7 @@ define('_MD_DELLINKFIRST','This page is in use by the Symlink Manager.<br />You 
 define('_MD_STSLINKFIRST','This page is in use by the Symlink Manager.<br />You will be redirect to Symlink Manager to change the status of this link first and after you will be redirect back to change the status of this page.');
 
 ######################## Added in 1.2 ###################################
+define('_MD_CONTENT_TAGS','Tags');
+define('_MD_CONTENT_TAGS_DESC','Separate the tags with "<font color=red>,</font>"');
 define('_MD_FILTERBYTAGS','Filter by Tag');
 ?>
