@@ -86,7 +86,6 @@ define('_ON','on');
 define('_READS','reads');
 define('_WELCOMETO','Welcome to %s');
 define('_SEARCH','Search');
-define('_QSEARCH','Quick Search');
 define('_ALL', 'All');
 define('_TITLE', 'Title');
 define('_OPTIONS', 'Options');
@@ -279,8 +278,8 @@ define('_CALENDAR_TYPE',''); // this value is for the local calendar used in thi
 define('_CALENDAR','Calendar');
 define('_RETRYPOST','Sorry, a time-out occured. Would you like to post again ?'); // autologin hack GIJ
 
- ############# added since 1.2 #############
-
+############# added since 1.2 #############
+define('_QSEARCH','Quick Search');
 define('_PREV','Prev');
 define('_NEXT','Next');
 define('_LCL_NUM0','0');
