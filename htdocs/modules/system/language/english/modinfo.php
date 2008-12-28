@@ -29,8 +29,6 @@ define('_MI_SYSTEM_BNAME15', "Content");
 define('_MI_SYSTEM_BNAME16', "Content Menu");
 define('_MI_SYSTEM_BNAME17', "Related Content");
 define('_MI_SYSTEM_BNAME18', "Share this page!");
-######################## Added in 1.2 ###################################
-define('_MI_SYSTEM_BNAME19', "Content Tags");
 
 // Names of admin menu items
 define("_MI_SYSTEM_ADMENU1","Banners");
@@ -53,4 +51,7 @@ define("_MI_SYSTEM_ADMENU18", "Content Manager");
 define("_MI_SYSTEM_ADMENU19", "Block Positions");
 define("_MI_SYSTEM_ADMENU20", "Symlink Manager");
 define("_MI_SYSTEM_ADMENU21", "Custom Tags");
+
+######################## Added in 1.2 ###################################
+define('_MI_SYSTEM_BNAME19', "Content Tags");
 ?>
