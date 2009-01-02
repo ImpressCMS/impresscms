@@ -714,22 +714,19 @@ class MyTextSanitizer
 	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
    	$items = str_replace('.php', '', $icmsConfigPlugins['sanitizer_plugins']);
 	foreach($items as $item) {
-		if (! include_once(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$item.'.php') ) {
-			return $text;
-		}
-		$text = (( !empty($item) && function_exists('textsanitizer_'.$item)) ? $this->icmsloadExtension($item, $text) : $text);
+		$text = $this->icmsloadExtension($item, $text);
 		}
 	return $text;
 	}
 	
-	function icmsloadExtension($name)
+	function icmsloadExtension($name, $text)
 	{
-		if (! include_once(ICMS_ROOT_PATH."/plugins/textsanitizer/{$name}.php") ) {
-			return;
+		if (empty($name) or ! include_once(ICMS_ROOT_PATH."/plugins/textsanitizer/{$name}.php") ) {
+			return $text;
 		}
 		$func = "textsanitizer_{$name}";
 		if (! function_exists($func) ) {
-			return;
+			return $text;
 		}
 		$args = array_slice(func_get_args(), 1);
 		return call_user_func_array($func, array_merge( array(&$this), $args));
