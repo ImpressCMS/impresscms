@@ -481,7 +481,7 @@ function xoops_module_update_system(&$module) {
 		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('12','_MD_AM_PLUGINS')");
 		}
 	    // Adding new function of Captcha
-	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS', '', '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', 1);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS', addslashes(serialize(array('syntaxhighlightphp.php', 'hiddencontent.php'))), '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', 1);
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'code_sanitizer', '_MD_AM_SELECTSHIGHLIGHT', 'none', '_MD_AM_SELECTSHIGHLIGHT_DESC', 'select', 'text', 2);
             $config_id = $db->getInsertId();
             $sql = "INSERT INTO " . $db->prefix('configoption') .
