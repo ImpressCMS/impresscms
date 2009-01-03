@@ -721,9 +721,10 @@ class MyTextSanitizer
 	
 	function icmsloadExtension($name, $text)
 	{
-		if (empty($name) or ! include_once(ICMS_ROOT_PATH."/plugins/textsanitizer/{$name}.php") ) {
+		if (empty($name) or ! file_exists(ICMS_ROOT_PATH."/plugins/textsanitizer/{$name}.php") ) {
 			return $text;
 		}
+		include_once(ICMS_ROOT_PATH."/plugins/textsanitizer/{$name}.php");
 		$func = "textsanitizer_{$name}";
 		if (! function_exists($func) ) {
 			return $text;
