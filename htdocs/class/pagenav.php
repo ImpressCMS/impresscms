@@ -85,7 +85,7 @@ class XoopsPageNav
 		if ( $total_pages > 1 ) {
 			$prev = $this->current - $this->perpage;
 			if ( $prev >= 0 ) {
-				$ret .= '<a href="'.$this->url.$prev.'"><u>&laquo;</u></a> ';
+				$ret .= '<a href="'.$this->url.$prev.'">&laquo;</a> ';
 			}
 			$counter = 1;
 			$current_page = intval(floor(($this->current + $this->perpage) / $this->perpage));
@@ -105,7 +105,7 @@ class XoopsPageNav
 			}
 			$next = $this->current + $this->perpage;
 			if ( $this->total > $next ) {
-				$ret .= '<a href="'.$this->url.$next.'"><u>&raquo;</u></a> ';
+				$ret .= '<a href="'.$this->url.$next.'">&raquo;</a> ';
 			}
 		}
 		return $ret;

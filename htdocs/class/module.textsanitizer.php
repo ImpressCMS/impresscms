@@ -267,9 +267,9 @@ class MyTextSanitizer
 			$replacements[] = '<img src="'.ICMS_URL.'/image.php?id=\\2" alt="\\3" />';
 		}
 		$patterns[] = "/\[quote]/sU";
-		$replacements[] = _QUOTEC.'<div class="xoopsQuote"><blockquote>';
+		$replacements[] = _QUOTEC.'<div class="xoopsQuote"><blockquote><p>';
 		$patterns[] = "/\[\/quote]/sU";
-		$replacements[] = '</blockquote></div>';
+		$replacements[] = '</p></blockquote></div>';
 		$text = str_replace( "\x00", "", $text );
 		$c = "[\x01-\x1f]*";
 		$patterns[] = "/j{$c}a{$c}v{$c}a{$c}s{$c}c{$c}r{$c}i{$c}p{$c}t{$c}:/si";

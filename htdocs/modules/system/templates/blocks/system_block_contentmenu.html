@@ -1,3 +1,4 @@
+<!-- Again with the css in the middle of the page... If it needs unique css it needs to be in icms.css - or find a way to call it in preload...
 <script src="<{$xoops_url}>/modules/system/admin/content/menu.js" type="text/javascript"></script>
     <{if $block.menu_rtl }>
 <link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/menu_rtl.css" />
@@ -6,10 +7,11 @@
 <link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/menu.css" />
 </style>
     <{/if}>
-<div id="mainmenu">
-  <ul id="primary-nav">
+-->
+<div class="contentmenu">
+  <ul class="primary-nav">
     <{foreach from=$block.menu key=key item=menu}> 
-      <li<{if $block.showsubs && $menu.hassubs}> class="menuparent"<{/if}>>
+      <li>
         <a class="menuMain" href="<{$xoops_url}>/content.php?page=<{$menu.menu}>"><{$menu.title}></a>
         <{if $block.showsubs && $menu.hassubs}><{includeq file='db:blocks/system_block_contentmenu_structure.html' menus=$menu.subs}><{/if}> 
       </li> 

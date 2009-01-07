@@ -164,7 +164,7 @@ if ($xoopsUser) {
         echo "</form>\n";
     }
 } else {
-    echo _PM_SORRY."<br /><br /><a href='".ICMS_URL."/register.php'>"._PM_REGISTERNOW."</a>.";
+    echo "<div>"._PM_SORRY."<br /><br /><a href='".ICMS_URL."/register.php'>"._PM_REGISTERNOW."</a>.</div>";
 }
 
 xoops_footer();

@@ -5,17 +5,17 @@
 			<legend style="font-weight: bold;"><{$lang_login}></legend>
 <div id="icms_block_login_form">
 			<form action="user.php" method="post">
-		    	<{$lang_username}><input type="text" name="uname" size="21" maxlength="25" value="<{$usercookie}>" />
+		    	<div><{$lang_username}><input type="text" name="uname" size="21" maxlength="25" value="<{$usercookie}>" />
 		    	<br />
-			    <br>
-		    	<{$lang_password}><input type="password" name="pass" size="21" maxlength="32" /><br />
+			    <br /></div>
+		    	<div><{$lang_password}><input type="password" name="pass" size="21" maxlength="32" /><br /></div>
 			    <{if $rememberme }>
-			    	<input type="checkbox" name="rememberme" value="On" /><{$lang_rememberme}><br />
+			    	<div><input type="checkbox" name="rememberme" value="On" /><{$lang_rememberme}><br /></div>
 			    <{/if}>
-			    <input type="hidden" name="op" value="login" />
-		    	<input type="hidden" name="xoops_redirect" value="<{$redirect_page}>"/>
+			    <div><input type="hidden" name="op" value="login" /></div>
+		    	<div><input type="hidden" name="xoops_redirect" value="<{$redirect_page}>"/>
 			    <br />
-		    	<input type="submit" value="<{$lang_login}>" />
+		    	<input type="submit" value="<{$lang_login}>" /></div>
 			</form>
   <{if $auth_openid}>
 <br />
@@ -49,10 +49,10 @@
 				<{$lang_noproblem}>
 			</div>
 			<form action="lostpass.php" method="post">
-				<br /><{$lang_youremail}> <input type="text" name="email" size="26" maxlength="60" />&nbsp;&nbsp;<input type="hidden" name="op" value="mailpasswd" /><input type="hidden" name="t" value="<{$mailpasswd_token}>" />
+				<div><br /><{$lang_youremail}> <input type="text" name="email" size="26" maxlength="60" />&nbsp;&nbsp;<input type="hidden" name="op" value="mailpasswd" /><input type="hidden" name="t" value="<{$mailpasswd_token}>" />
 		    	<br />
 		    	<br />
-		     	<input type="submit" value="<{$lang_sendpassword}>" />
+		     	<input type="submit" value="<{$lang_sendpassword}>" /></div>
 			</form>
 		</fieldset>
 	</div>
