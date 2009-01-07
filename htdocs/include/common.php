@@ -238,9 +238,12 @@ $xoopsUserIsAdmin = false;
 $member_handler =& xoops_gethandler('member');
 global $sess_handler;
 $sess_handler =& xoops_gethandler('session');
-if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
+if($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '')
+{
 	session_id($_POST[$xoopsConfig['sslpost_name']]);
-} elseif ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0) {
+}
+elseif($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0)
+{
 	if (isset($_COOKIE[$xoopsConfig['session_name']])) {
     	session_id($_COOKIE[$xoopsConfig['session_name']]);
 	}
@@ -252,6 +255,8 @@ if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_
 
 session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
 
+if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {session_name($xoopsConfig['session_name']);}
+else {session_name("ICMSSESSION");}
 session_start();
 /*
 $sess_handler->securityLevel = 3;
@@ -412,10 +417,9 @@ if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/theme.p
 } else {
 	include_once XOOPS_ROOT_PATH."/language/english/theme.php";
 }
-if(!defined('_GLOBAL_LEFT')){
-define('_GLOBAL_LEFT', (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'right':'left'));} // type here right in rtl languages
-if(!defined('_GLOBAL_RIGHT')){
-define('_GLOBAL_RIGHT', (( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'left':'right'));} // type here left in rtl languages
+// for RTL users
+@define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;
+@define( '_GLOBAL_RIGHT' , @_ADM_USE_RTL == 1 ? 'left' : 'right' ) ;
 // ################ Include page-specific lang file ################
 if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
 	if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php") ) {

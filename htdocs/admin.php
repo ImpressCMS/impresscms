@@ -36,14 +36,11 @@ $op = isset($_GET['rssnews']) ? intval($_GET['rssnews']) : 0;
 if(!empty($_GET['op'])) {$op = intval($_GET['op']);}
 if(!empty($_POST['op'])) {$op = intval($_POST['op']);}
 
-	$sess_handler =& xoops_gethandler('session');
-	$sess_handler->securityLevel = 3;
-	$sess_handler->check_ip_blocks = 2;
-	$sess_handler->salt_key = XOOPS_DB_SALT;
-	if($_SESSION['reg_i']) {$sess_handler->enableRegenerateId = true;}
-	$sess_handler->icms_sessionOpen();
-	$_SESSION['reg_i'] = true;
-
+$sess_handler =& xoops_gethandler('session');
+if(!$_SESSION['ad_sess_regen']) {$sess_handler->icms_sessionOpen(true);}
+else {$sess_handler->icms_sessionOpen();}
+$_SESSION['ad_sess_regen'] = true;
+$_SESSION['sess_regen'] = true;
 
 if(!file_exists(ICMS_CACHE_PATH.'/adminmenu_'.$xoopsConfig['language'].'.php') && $op != 2)
 {

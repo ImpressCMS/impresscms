@@ -62,6 +62,18 @@ if(is_object($xoopsUser))
 	$xoopsModule =& XoopsModule::getByDirname('system');
 	if(!$xoopsUser->isAdmin($xoopsModule->mid())) {redirect_header(ICMS_URL.'/',3,_NOPERM);}
 	$admintest=1;
+	$sess_handler =& xoops_gethandler('session');
+	if(!$_SESSION['ad_sess_regen'])
+	{
+		$sess_handler->icms_sessionOpen(true);
+		$_SESSION['ad_sess_regen'] = true;
+	}
+	else
+	{
+		$sess_handler->icms_sessionOpen();
+		$_SESSION['ad_sess_regen'] = true;
+		$_SESSION['sess_regen'] = true;
+	}
 }
 else {redirect_header(ICMS_URL.'/',3,_NOPERM);}
 

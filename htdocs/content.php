@@ -117,6 +117,6 @@ else
 {
 	if($xoopsUser->getVar('uid') != $autor->getVar('uid')) {$impress_content->setReads();}
 }
-$content_handler->insert($impress_content);
+
 include ICMS_ROOT_PATH.'/footer.php';
 ?>

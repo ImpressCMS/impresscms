@@ -59,15 +59,16 @@ class XoopsContent extends XoopsObject
     	return $this->getVar('content_reads');
     }
     
-    function setReads($qtde=null){
-    	$t = $this->getVar('content_reads');
-    	if (isset($qtde)){
-    		$t += $qtde;
-    	}else{
-    		$t ++;
-    	}
-    	$this->setVar('content_reads',$t);
-    }
+	function setReads($qtde=null)
+	{
+		global $xoopsDB;
+		$t = $this->getVar('content_reads');
+		$cont_id = $this->getVar('content_id');
+		if(isset($qtde)) {$t += $qtde;}
+		else {$t ++;}
+		$sql = sprintf("UPDATE %s SET content_reads='%u' WHERE content_id='%u'", $xoopsDB->prefix('icmscontent'), intval($t), intval($cont_id));
+		if(!$result = $xoopsDB->queryF($sql)) {return false;}
+	}
 }
 
 
