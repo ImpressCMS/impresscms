@@ -234,6 +234,7 @@ if ($op == 'update_ok') {
     
     // Save current version for use in the update function
     $prev_version = $module->getVar('version');
+    $prev_dbversion = $module->getVar('dbversion');
     include_once XOOPS_ROOT_PATH.'/class/template.php';
     xoops_template_clear_module_cache($module->getVar('mid'));
     // we dont want to change the module name set by admin
@@ -594,7 +595,7 @@ if ($op == 'update_ok') {
                 }
             }elseif (function_exists('icms_module_update_'.$ModName)) {
                 $func = 'icms_module_update_'.$ModName;
-                if (!$func($module, $prev_version)) {
+                if (!$func($module, $prev_version, $prev_dbversion)) {
                     $msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
                 } else {
                     $msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
