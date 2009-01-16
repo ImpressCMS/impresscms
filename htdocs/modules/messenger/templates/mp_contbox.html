@@ -1,0 +1,39 @@
+<form name='prvmsg' method='post' action='contbox.php'>
+<{include file="db:mp_box.html"}>
+
+  <table border='0' cellspacing='1' width='100%' class='outer'>
+    <tr align="center"> 
+      <td class='head' colspan='8'><{$lang_msg}></td>
+</tr>
+<tr><td><table class="outer" cellspacing="1" width="100%">
+<tr align='center' valign='middle'><th><input name='allbox' id='allbox' onclick='xoopsCheckAll("prvmsg", "allbox");ChangeStatut(this)' type='checkbox' value='Check All' /></th>
+<th class="odd"><{$lang_avatar}></th>
+<th class="odd"><{$lang_from}></th>
+<th class="odd"><{$lang_groupe}></th>
+<th class="odd"><{$lang_com}></th>
+<th class="odd"><{$lang_joindate}></th>
+<th class="odd"><{$lang_last}></th>
+<th class="odd"><{$lang_online}></th>
+</tr>
+
+<{if $mp_amount == 0}>
+<tr><td class='even' colspan='8' align='center'><{$lang_none}></td></tr> 
+<{/if}>
+
+<{foreach item=mp from=$prive}>
+
+<tr align='left' class="<{cycle values="odd,even"}>"><td valign='top' width='2%' align='center'><input type='checkbox' id='ct_contact[]' name='ct_contact[]'  onClick='ChangeStatut(this)' value='<{$mp.msg_id}>'  /></td>
+<td valign='middle' width='10%'><div align="center"><{$mp.msg_avatar}></div></td>
+<td width='10%'><div align="center"><{$mp.msg_poster}></div></td>
+<td width='20%'><div align="center"><{$mp.msg_groupe}></div></td>
+<td width='10%'><div align="center"><{$mp.msg_com}></div></td>
+<td width='20%'><div align="center"><{$mp.msg_joindate}></div></td>
+<td  width='20%'><div align="center"><{$mp.msg_last}></div></td>
+<td width='5%'><div align="center"><{$mp.msg_online}></div></td>
+</tr>
+<{/foreach}>
+<tr><td align='center' colspan='8' class='head'><{$mp_select}></td>
+</tr>
+</table></td></tr></table>
+<div align=right><{$mp_pagenav}></div>
+</form>

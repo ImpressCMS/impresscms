@@ -1,0 +1,43 @@
+<{if $block.lang_none}>
+<{$block.lang_none}>
+<{else}>
+
+<{if $block.disp_mode == 0}>
+<table class="outer" cellspacing="1">
+  <tr>
+<th>&nbsp;</th>
+    <th class="head" nowrap="nowrap"><{$smarty.const._MP_BLOCK_FROM}></th>
+    <th class="head" nowrap="nowrap"><{$smarty.const._MP_BLOCK_SUBJECT}></th>
+    <th class="head" align="center" nowrap="nowrap"><{$smarty.const._MP_BLOCK_DATE}></th>
+  </tr>
+
+<{foreach item=mp from=$block.manager}>
+  <tr class="<{cycle values="even,odd"}>">
+    <td valign='top' width='5%' align='center'><{$mp.img}></td>
+<td  valign='middle' width='10%' align='center'><{$mp.from}></a></td>
+    <td  valign='middle' width='20%'><{$mp.subject}></td>
+    <td  valign='middle' width='10%' align='center'><{$mp.date}></td>
+  </tr>
+  <{/foreach}>
+</table>
+
+ <{elseif $block.disp_mode == 1}>
+<ul>
+ <{foreach item=mp from=$block.manager}>
+
+<{$mp.list}>
+<a href="<{$xoops_url}>/modules/mydownloads/singlefile.php?cid=<{$download.cid}>&amp;lid=<{$download.id}>"><{$mp.subject}></a> (<{$mp.date}>)
+</li>
+  <{/foreach}>
+</ul>
+
+ <{elseif $block.disp_mode == 2}>
+<a href="<{$xoops_url}>/modules/mpmanager/index.php"><img src="<{$xoops_url}>/modules/mpmanager/images/new.png" alt="<{$smarty.const._MP_BLOCK_NEW}>" />&nbsp;<{$smarty.const._MP_BLOCK_NEW}>&nbsp;(<{$block.news}>)
+<br />
+<a href="<{$xoops_url}>/modules/mpmanager/index.php"><img src="<{$xoops_url}>/modules/mpmanager/images/lus.png" alt="<{$smarty.const._MP_BLOCK_READ}>" />&nbsp;<{$smarty.const._MP_BLOCK_READ}>&nbsp;(<{$block.read}>)
+<br />
+<a href="<{$xoops_url}>/modules/mpmanager/index.php"><img src="<{$xoops_url}>/modules/mpmanager/images/all.png" alt="<{$smarty.const._MP_BLOCK_ALL}>" />&nbsp;<{$smarty.const._MP_BLOCK_ALL}>&nbsp;(<{$block.all}>)
+<{/if}>
+
+
+<{/if}>

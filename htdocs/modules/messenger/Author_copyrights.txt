@@ -1,0 +1,59 @@
+/**
+* MESSENGER Copyrights information
+*
+* @copyright		http://lexode.info/mods/ Venom (Original_Author) 
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		modules
+* @since		1.2
+* @author		{developers_details}
+* @version		$Id$
+*/
+
+The MESSENGER modules originally started as a fork from mpmanager, from version 2.63. Because of this, many files in the code base comes from Venom (Original_Author) and were originally copyrighted as such.
+
+Every file that was originally created by Venom (Original_Author) but then edited by The ImpressCMS Project has seen its header comment block edited, to replace the original author comment block by a new smaller one. Every single file created by the author but edited by ImpressCMS is and will always display in its comment block, a @copyright and @author tags to mention the file originally came from the author.
+
+An example of such file would be, messenger/index.php. Here is the new comment block on header.
+
+/**
+* Module`s index
+* When users click on a modules link, they come to here
+*
+* @copyright		http://lexode.info/mods/ Venom (Original_Author)
+* @copyright		Author_copyrights.txt
+* @copyright		http://www.impresscms.org/ The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		modules
+* @since		XOOPS
+* @author		modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @version		$Id$
+*/
+
+The original comment block for this file as well as all XOOPS original file is the following:
+
+// ------------------------------------------------------------------------- //
+//                       XOOPS - Module MP Manager                           //
+//                       <http://www.xoops.org/>                             //
+// ------------------------------------------------------------------------- //
+//  This program is free software; you can redistribute it and/or modify     //
+//  it under the terms of the GNU General Public License as published by     //
+//  the Free Software Foundation; either version 2 of the License, or        //
+//  (at your option) any later version.                                      //
+//                                                                           //
+//  This program is distributed in the hope that it will be useful,          //
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
+//  GNU General Public License for more details.                             //
+//                                                                           //
+//  You should have received a copy of the GNU General Public License        //
+//  along with this program; if not, write to the Free Software              //
+//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
+// ------------------------------------------------------------------------- // 
+//                 Votre nouveau systeme de messagerie priver                //
+//                                                                           //
+//                               "MP"                                        //
+//                                                                           //
+//                       http://lexode.info/mods                             //
+//                                                                           //
+//                                                                           //
+//---------------------------------------------------------------------------//

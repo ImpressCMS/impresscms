@@ -1,0 +1,142 @@
+ImpressCMS 1.2 Beta 1 release notes
+==================================
+
+The ImpressCMS Project is very proud to announce a new version in the 1.1.2 series. ImpressCMS 1.1.2 introduce a few improvments motivated by our constant desire of developing the best easy to use open source CMS.
+
+Please note that as a release candidate version, this release if testing purposes only and should not be installed on production servers.
+
+Please see the full changelog for details in docs/changelog.txt.
+
+
+System requirements
+==================================
+
+PHP
+   PHP 5.1 or higher (5.2 or higher recommended)
+MySQL
+    MySQL 4.1.0 or higher (5.0 or higher recommended)
+Web server
+    Any server supporting the required PHP version (Apache highly recommended)
+
+
+Downloading ImpressCMS
+==================================
+
+This release can be downloaded here : https://sourceforge.net/project/showfiles.php?group_id=205633&package_id=245707&release_id=601361
+
+
+Using wget command to download the .tar.gz full package
+==================================
+
+This release can be downloaded directly on your server using the WGET command (providing you have SSH access to your server). To download it, simply use this code:
+
+wget http://www.impresscms.org/download/1.1.1_rc1/
+
+
+Checking out ImpressCMS from the SVN
+==================================
+
+You can easily get ImpressCMS using SVN. Instructions about this can be found here:
+http://wiki.impresscms.org/index.php?title=Install_and_update_using_SVN
+
+The path for this release is the following:
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/tags/impresscms_1.1_rc1/
+
+If you feel like getting the latest "edge" version, you can checkout the core trunk at :
+
+https://impresscms.svn.sourceforge.net/svnroot/impresscms/core/trunk/
+
+The ImpressCMS trunk is always the latest as-stable-as-possible development code. It is, of course, not to be used on production sites.
+
+
+Installing ImpressCMS
+==================================
+
+   1. Copy the content of the htdocs/ folder where it can be accessed by your server
+   2. Ensure mainfile.php, cache, templates_c and uploads are writable by the webserver
+   3. Using your web browser, access <your.site.url>/folder, "folder" being where you uploaded the htdocs/ files to launch the installation wizard
+
+For a complete installation documentation, please refer to /docs/install.html in the ImpressCMS package.
+
+
+Upgrading from a previous version of ImpressCMS or from XOOPS 2.0.18.1 or earlier
+==================================
+
+If you are upgrading from a previous version of ImpressCMS, please follow these instructions:
+
+1. Get the xoops-or-impresscms_1.0-to-impresscms-1.1 package from the sourceforge file repository.
+2. Copy the content of htdocs/ over your existing files.
+3. On your server, delete the file cache/adminmenu.php
+4. Access <your.site.url>/upgrade/ with a browser.
+5. Follow the instructions to update your database.
+6. You will then be asked to enter the admin area will see a message saying you are entering the admin area for the first time, click on the Submit button.
+7. You will then be asked to Update the System module. Follow the instructions.
+8. Flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox).
+9. A few folders were moved to other place in ImpressCMS structure to introduce more logic in the structure. Thus, you will need to remove these folders and files from your server:
+   a) htdocs/class/smarty
+   b) htdocs/class/phpmailer
+   c) htdocs/class/xoopseditor/dhtmltext
+   d) htdocs/class/xoopseditor/dhtmltextarea
+   e) htdocs/class/xoopseditor/textarea
+   f) htdocs/class/xoopseditor/readme.txt
+   g) htdocs/class/xoopseditor/sampleform.inc.php
+   h) htdocs/class/xoopseditor/xoopseditor.inc.php
+   i) htdocs/class/xoopseditor/xoops_version.php
+   j) htdocs/include/calendar-blue.css
+   k) htdocs/include/calendar.js
+   l) htdocs/modules/system/blocksadmin/blockspadmin.php
+   m) htdocs/modules/system/blocksadmin/pblockform.php
+   n) htdocs/themes/impresstheme_light/css
+   o) htdocs/themes/impresstheme_light/xotpl
+10. Enjoy !
+
+Revealing the blank page backtrace log
+==================================
+
+ImpressCMS displays a basic error page when a fatal error preventing it to run is encountered. To help you diagnose the cause of the error, this page contains additional messages that are hidden by default. To reveal them, use your browser "select all" function (for most browsers, you can use "Ctrl+A").
+
+
+Modules, themes and languages
+==================================
+
+The packages do not contain any module apart from the system one. You are invited to browse the ImpressCMS Addons web site at http://addons.impresscms.org to get all the modules, themes and languages you need.
+
+We also highly recommend the installation of the Protector module which will bring additional protection and logging capabilities to your site.
+
+
+Where to find more information ?
+==================================
+
+The ImpressCMS Network
+------------------------
+Sourceforge Project: http://www.sourceforge.net/projects/impresscms
+Home of ImpressCMS: http://www.impresscms.org
+Community support: http://community.impresscms.org
+Addons, modules, themes and languages: http://addons.impresscms.org
+Community driven documentation: http://wiki.impresscms.org
+ImpressCMS Blogs: http://community.impresscms.org/modules/imblogging/
+ImpressCMS Core development updates on Twitter: http://twitter.com/impresscms_svn
+ImpressCMS IRC Channel: #impresscms on freenode.net or simply : http://community.impresscms.org/chat/
+
+ImpressCMS Mailing Lists
+------------------------
+
+A few mailing lists are available for everyone to stay informed regarding development information, bug tracking, feature requests, etc...
+
+Simply go here to subscribe to the desired mailing lists: http://sourceforge.net/mail/?group_id=205633
+
+ImpressCMS Related Sites
+------------------------
+Ohloh project: http://www.ohloh.net/projects/10042?p=ImpressCMS
+Facebook group: http://www.facebook.com/group.php?gid=7395938599
+Facebook fans page: http://www.facebook.com/pages/The-ImpressCMS-Project/22332836800
+LinkedIn group: http://www.linkedin.com/e/gis/45459/3A9B02585174
+Delicious: http://del.icio.us/tag/impresscms
+Flickr: http://www.flickr.com/photos/tags/impresscms/
+YouTube: http://www.youtube.com/impresscms
+LastFM Group: http://www.last.fm/group/ImpressCMS
+ImpressCMS Toolbar: http://impresscms.ourtoolbar.com/
+
+==================================
+The ImpressCMS Project
+http://www.impresscms.org

@@ -1,0 +1,47 @@
+<script type="text/javascript">
+function showDiv(type,id){
+	divs = document.getElementsByTagName('div');
+	for (i=0; i<divs.length;i++){
+		if (/opt_divs/.test(divs[i].className)){
+			divs[i].style.display = 'none';
+		}
+	}
+	if (!id)id = '';
+	document.getElementById(type+id).style.display = 'block';
+	document.anchors.item(type+id).scrollIntoView();
+}
+</script>
+<div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/blocksadmin/images/blocksadmin_big.png)"><{$lang_bp_admin}></div><br />
+<p><{$lang_bp_help}></p><br /><br />
+
+<table width='100%' class='outer' cellpadding='4' cellspacing='1'>
+  <tr valign='middle'>
+    <th><{$lang_bp_bpid}></th>
+    <th><{$lang_bp_bpname}></th>
+    <th><{$lang_bp_bptitle}></th>
+    <th width='30%'><{$lang_bp_bpdesc}></th>
+    <th align='<{$smarty.const._GLOBAL_RIGHT}>' width='12%'><{$lang_bp_bpaction}></th>
+  </tr>
+  <{foreach item=oldzone key=key from=$oldzones}>
+    <tr class="<{cycle values="even,odd"}>">
+      <td align="center"><{$key}></td>
+      <td><{$oldzone.pname}></td>
+      <td><{$oldzone.title}></td>
+      <td><{$oldzone.description}></td>
+      <td align="<{$smarty.const._GLOBAL_RIGHT}>">
+        <{if !$oldzone.block_default}>
+          <a href="admin.php?fct=blockspadmin&op=edit&pbid=<{$key}>"><img src="images/edit_big.png" title="<{$lang_bp_bpedit}>" alt="<{$lang_bp_bpedit}>" /></a>
+          <a href="admin.php?fct=blockspadmin&op=delete&pbid=<{$key}>"><img src="images/delete_big.png" title="<{$lang_bp_bpdelete}>" alt="<{$lang_bp_bpdelete}>" /></a>
+        <{/if}>
+      </td>
+    </tr>
+  <{/foreach}>
+  <tr>
+    <td class="head" colspan="5" align="<{$smarty.const._GLOBAL_RIGHT}>">
+      <input type="button" onclick="icms_showDiv('addbposform','','hiddendiv'); return false;" value="<{$lang_cont_addcont}>" />
+    </td>
+  </tr>
+</table>
+<br />
+<a name="addbposform_anchor"></a>
+<div id="addbposform" class="hiddendiv" style="display:none;"><{$addbposform}></div>

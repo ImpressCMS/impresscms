@@ -1,0 +1,737 @@
+ImpressCMS ChangeLog
+
+== Impresscms 1.2==
+
+=== ????-??-?? : 1.2 ALPHA 1 ===
+'''Added'''
+* Purifier Filters for GoogleVideo & Local Flash movies (movies that are stored locally on the same server as the site). (vaughan)
+* TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
+* choice of xoopsFormTextArea or xoopsFormDHTMLTextArea to edit user form (signature) depends on whether HTML sig is allowed or not. (vaughan)
+* Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS. (malanciault)
+* Implementing IcmsPersistableSingleView which provides an easy way to quickly display a single object information. (malanciault)
+* Implementing IcmsPersistableTreeTable extending IcmsPersistableTable with the concept of nested objects. (malanciault)
+* Implementing SimplePie as admin RSS. (stranger)
+* Implementing icmsstopspammer to stop spammers. (stranger)
+* smarty to change a theme&template between RTL and LTR. (stranger)
+* smarty <{$smarty.const._GLOBAL_LEFT}> for templates. (stranger)
+* smarty <{$smarty.const._GLOBAL_RIGHT}> for templates. (stranger)
+* TinyMCE plugin icmsmlcontent. (stranger)
+* Issues with ICMS Captcha Class. (stranger)
+* New preferences category for captcha. (stranger)
+* New preferences category for plugins. (stranger)
+* New option for "Captcha mode" in preferences. (stranger)
+* New option for "Case sensitive" in preferences. (stranger)
+* New option for "Maximum attemps" in preferences. (stranger)
+* New option for "Minimum attemps" in preferences. (stranger)
+* New option for "Minimum font-size" in preferences. (stranger)
+* New option for "Maximum font-size" in preferences. (stranger)
+* New option for "Background type" in preferences. (stranger)
+* New option for "image amounts" in preferences. (stranger)
+* New option for "polygon points" in preferences. (stranger)
+* New option for "check groups" in preferences. (stranger)
+* We are now checking Groups that are free from Captcha, as opposed to groups which need captcha (malanciault)
+* New option for "skip characters" in preferences. (stranger)
+* New option for "disable captcha" in preferences. (stranger)
+* New option for "removing inactive users" in preferences. (stranger)
+* New option for "selecting codes highlighter" in preferences. (stranger)
+* New option for "selecting GeSHi plugin" in preferences. (stranger)
+* New Function "icms_conv_nr2local". (stranger)
+* New Function "icms_conv_local2nr". (stranger)
+* New Function "Icms_getMonthNameById". (stranger)
+* New Function "div". (stranger)
+* New Function "gregorian_to_jalali". (stranger)
+* New Function "jalali_to_gregorian". (stranger)
+* New Function "mstart". (stranger)
+* New Function "lastday". (stranger)
+* New Function "jmaketime". (stranger)
+* New Function "jdate". (stranger)
+* New Function "icms_getmodulehandler". (stranger)
+* New tag which can we used in templates to switch language: change_lang_<lang> will produce the URL to swtich the current page to <lang> (malanciault)
+* New Function 'icms_module_uninstall_'.$ModName (stranger)
+* New Function 'icms_module_install_'.$ModName (stranger)
+* New Function 'icms_module_update_'.$ModName (stranger)
+* New Function 'getPhpListAsArray'. (stranger)
+* New Function 'icmsCodeDecode_extended'. (stranger)
+* New Function 'icmsloadExtension'. (stranger/phppp)
+* New Function 'textsanitizer_geshi_highlight'. (stranger/phppp)
+* New Function 'textsanitizer_php_highlight'. (stranger/phppp)
+* New Function 'textsanitizer_syntaxhighlight'. (stranger)
+* Smarty xoPageNav function. (Skalpa)
+* simplepie library. (marcan)
+* Geshi library. (stranger)
+* Displayname features. (stranger)
+* Config Option to enable/disable change of displayname by user. (stranger)
+* Displayname field to installer. (stranger)
+* Displayname to registration form. (stranger)
+* FCKeditor. (skenow)
+* Plugin feature for tex sanitizer. (stranger)
+* PHP plugin for geshi. (stranger)
+* CSS plugin for geshi. (stranger)
+* JS plugin for geshi. (stranger)
+* HTML plugin for geshi. (stranger)
+* PHP code tag. (stranger)
+* CSS code tag. (stranger)
+* HTML code tag. (stranger)
+* JS code tag. (stranger)
+* Messenger module (based on mpmanager). (stranger)
+* Profile module (based on smartprofile). (stranger)
+* Jalali converter to core. (stranger)
+* Jalali converter to jalalijscalendar library. (stranger)
+* Icmsmlcontent plugin in TinyMCE for multilanguage sites. (stranger)
+* Recaptcha library. (stranger)
+* Email protection methode using recaptcha. (stranger)
+* Plugin manager using DataBase. (stranger)
+* New config Option to select allowed plugins. (stranger)
+
+
+'''Changed'''
+* Identicon for Gravatar added (sato-san)
+* Admin`s RSS feed to simplepie. (marcan/stranger)
+* email protection option to a multiple option one. (stranger)
+* impresstheme is using $icms_values. (stranger)
+* in installer config settings, changed some settings to use textsarea instead of textarea. as was causing problems with those fields if URI's were entered etc. (vaughan)
+
+'''Improved'''
+* Ongoing additions to  API documentation.
+* register.tpl mail template contains more user`s information. (stranger)
+* adminactivate.tpl mail template contains more user`s information. (stranger)
+* Updated TinyMCE to Version 3.2.0.2. (stranger)
+* Updated TCPDF to version 4.0.033. (stranger)
+* Captcha class. (stranger)
+* Filters on group edit form to only allow options assigned to the current user
+* Updated system to version 1.20. (stranger)
+* Updated HTML Purifier library from 3.1.1 to 3.2.0 (vaughan)
+* smarty values to make them use both $xoops_value and $icms_value. (stranger)
+* Fixed issues in redirection in RTL mode. (stranger)
+* Updated xoops_getcss to read rtl styles. (stranger)
+* Method we use RTL. (stranger)
+* Removed theme_rtl system at all. (stranger)
+* Updated Snoopy from v1.2.3 to v1.2.4. (stranger)
+* Added check to preferences, if closesite is true (site closed) it is no longer possible to change password encryption until site is reopened. (vaughan)
+* Updated TCPDF to version 4.2.007. (stranger)
+* ICMS Captcha Class. (stranger)
+* Adding coumpound class when building the IcmsPersistabkeTable onbject. Now, instead of <td class="odd"> we will get <td class="<{$column.keyname}> odd"> which offrs much more granularity in the was we want individual columns to be displayed. (malanciault/jmorris)
+* Improved Function "formatTimestamp" To use Jalali Calendar and use ext_date function. (stranger)
+* Removing ucword() in icms_getLinkedUnameFromId() as we don't need to capitalized the first leter ofusername (malanciault/mcdonald3072)
+* Implementing ICMS_SYSTEM_DBVERSION in include/version.php to centralized the definition of the latest dbversion of the system module (malanciault)
+* Improving IcmsVersionChecker to use IcmsSimpleRss instead of Snoopy as we were having problems on some config (malanciault)
+
+'''Fixed'''
+* #2161527: error in xoopsimagebrowser.php (real_therplima)
+* #2176940: Can't change the theme using the block on user side (real_therplima)
+* #2245090: Captcha being bypassed
+* #2098718: Sortlinks on Customtag-Table with bad color (sato-san)
+* #2245744: OpenID registration not possible from user.php (stranger)
+* #2103517: Multilanguage tags & tables break translation (nachenko/malanciault)
+* #2178956: Empty space when rank doesn't have an icon (malanciault)
+* #2203239: Debugger stops icmsfeed (malanciault)
+* #2207696: Blocksform: Cancel button not working (malanciault)
+* #2215976: Character ' stripped out of website title (malanciault)
+* #2259562: Edit front end blocks with wrong groups (malanciault/skenow)
+* #2179432: Problem again with xoopsimagebrowser.php (real_therplima)
+* #2316120: Giving some group access is a high security risk (skenow)
+* #2324673: Content page edit button shown on user side for wrong groups (real_therplima)
+* #2333245: Setting managed groups when creating a new group failed (skenow)
+* #2353878: HTML editor for the disclaimer(felix)
+* #2316581: When viewing comments in Threaded View it does not display the threads right and add's a > with the title twice (malanciault)
+* #2181891: TinyMCE and XAMPP relative paths (nekro/malanciault)
+* #2339182: Mail to User > missing checkbox (malanciault)
+
+
+== Impresscms 1.1.1==
+
+===2008-12-20 : 1.1.1 Final===
+
+* Only version number changed
+
+===2008-12-12 : 1.1.1 RC2===
+
+'''Fixed'''
+* #2354713: Security issue in SESSION id (Fixation), previous fix caused problems with some users being logged out sporadically. (vaughan)
+* XSS vulnerability in blocksadmin.php $_GET['selmod'], potential (but not necessarily vulnerable) exploit in $_GET['editor']. (GiJoe/vaughan)
+
+===2008-12-2 : 1.1.1 RC===
+
+'''Fixed'''
+* #2354713: Security issue in SESSION id (vaughan/malanciault)
+* #2300634: Blocks Positions admin not totaly secured (real_therplima/trabis)
+
+'''Improved'''
+* If an email notification is sent on PM, the user's email will appear in the From header if he has activated "Allow other users to view my email address" (malanciaut)
+
+== Impresscms 1.1==
+
+===2008-10-31 : 1.1 Final===
+
+'''Fixed'''
+* Issues with content menu in RTL. (stranger)
+* Issues with registration not completed with passwordmeter. (stranger)
+* Issues with too easy captcha configs. (stranger)
+* #2190687: When saving a block, if $options was a multi-levels array, StopXSS was failing to save array. StopXSS is now recursive and will all levels of $text parameter if it's an array (malanciault)
+* #2192679: Leading space in cache/index.html (dave_l)
+* Fixed issues with spambots. (Frederick/stranger)
+* Fixed issues multiple time stamps. (stranger)
+* Fixed security issue in snoopy.php: http://secunia.com/Advisories/32361/ (thanks to Gijoe)
+* Fixed issue on the pagination links of the image manager tinyMCE plugin.
+* The WYSIWYG group permission per module was confused when trying to know if a user should have permission to use WYSIWYG when posting a comment in a module that had such permission (malanciault/real_therplima)
+* Fixed a bug with RTL, if this is not implemented, we will have troubles while sending posts in some modules like newbb (stranger)
+
+'''Added'''
+* Stop Spam Registration class and its experimental use in extra/anti-spam/register.php (stranger/malanciault)
+
+''Improved'''
+* It is now possible to specify in which modules Webmasters can use WYSIWYG editor (malanciault)
+* Automatically check the Enable HTML check box and uncheck the Enable Linebreaks when using TinyMCE in a comment post form (real_therplima)
+* Improved the installer so it is now possible to install ImpressCMS even with safe_mode ON (vaughan)
+
+===2008-10-17 : 1.1 RC 3===
+
+'''Added'''
+* Converter of 2.2.X to icms 1.0 then 1.1 (stranger/phppp)
+* Converter of 2.3.X to icms 1.0 then 1.1 (stranger)
+* TRUST_PATH to upgarder. (stranger)
+* a checker to see if TRUST_PATH exists in adminmenu, if it doesn't it will prompt admins from accessing admin menu. (stranger)
+* a checker to see if email address already exists in adminmenu. (stranger)
+
+'''Improved'''
+* Updated system to version 1.10. (stranger)
+* Function icms_cleaning_write_folders. (stranger)
+* Query execution during character set conversion
+
+'''Fixed'''
+* Issues with editors: switch from dhtml < > TinyMCE (sato-san)
+* Issues with google analytic textform in admin menu. (stranger)
+* Issues with Jalalijscalendar option in admin menu. (stranger)
+* Issues with new templates not being inserted in system module. (stranger)
+* Issues with Jalalijscalendar option in Persian language. (stranger)
+* Issues with reset buttons. (mcdonald3072)
+* When converting the db to another character set during an upgrade, the default values were being dropped if they were empty strings (skenow)
+* Issues with Jalalijscalendar button in forms. (stranger)
+* Issue with upgrader, blocks got twice inserted. (stranger)
+* Issue with upgrader, blocks permissions were not inserted. (skenow/stranger)
+* Issue with upgrader, system sub-module permissions were not inserted. (stranger)
+* Issue with theme_rtl. (stranger)
+* Issue with <{if $xoops_contents}>. (Vaughan/Trabis)
+* Removed intermediate conversion of data to binary during db character set conversion, now the data integrity is improved
+
+===2008-09-21 : 1.1 RC 2===
+
+'''Added'''
+* Adding movie filter in HTMLPurifier for Liveleak movies (vaughan)
+* Adding movie filter in HTMLPurifier for vimeo movies (vaughan)
+* Adding IcmsSecureForm to create IcmsPersistable object form with a seucirty token. We will recommend to always use this within the IcmsPersistable Framework when not on the admin side (malanciault)
+* Added option to select calendar type for forms. (stranger)
+* Updated system to version 1.05. (stranger)
+
+'''Improved'''
+* Rendering of Google Analytics script and new script source from Google (skenow)
+
+'''Fixed'''
+* Warning: Value for HTML. Trusted is of invalid type, should be bool in file /libraries/htmlpurifier/HTMLPurifier.standalone.php line 1447 (vaughan)
+* In HTMLPurifier $is_admin wasn't defined if $xoopsUser wasn't an existing object.(vaughan)
+* In HTMPPurifier $xoopsUser undefined variable on line 130 (vaughan)
+* Wrong smarty variable name in IcmsPersistableController::handleObjectDeletionFromUserSide() (malanciault)
+* In IcmsDatabaseUpdater::upgradeObjectItem() when a TEXT field was created, a default value was set which is wrong. TEXT field can't have default value (malanciault)
+* Closed comment tag in include/calendarjs.php that created a problem with IE (skenow)
+* Undefined variable: ret in file /kernel/icmspersistablecontroller.php line 462 (malanciault)
+* #2115835: Typo when checking if openid field existed in database update version 3 (malanciault)
+* When the deafault selected theme was suddenly removed, blank page appeared. (stranger)
+* Using impresstheme instead of default. (stranger)
+* #2120445: Module block not showing when created on module update (real_therplima)
+* Issues with dateform. (stranger)
+* Issues with dateform in IE. (stranger/Ali Farhadi)
+
+===2008-09-14 : 1.1 RC 1===
+
+'''Added'''
+* Added jalalijscalendar 1.2 . (stranger)
+* agree box before upgrading to make sure of a backup. (stranger)
+* added password can't contain username to pass check in admin edit user form. (vaughan)
+* default template form usable by core feature or any modules - system_default_form.html (malanciault)
+* new function to list all fonts (stranger)
+* new function to generate pdfs (stranger)
+* implementing beforePreviewTarea and afterPreviewTarea preload events (malanciault)
+* implementing IcmsPersistableSeoObject to manage SEO-enabled object within the IcmsPersistable Framework (malanciault)
+
+'''Improved'''
+* Improved how we use rtl in system. (stranger/real_therplima)
+* Moved captcha to classes + some configurations were updated. (stranger)
+* Updated TCPDF to version 4.0.023. (stranger)
+* Removed warnings for unhandled global attribut in icms.htmlpurifier.php
+* Time picker now works correctly with jalali (stranger/Ali Farhadi)
+* Improving content manager page display to use displayTarea instead of previewTarea (malanciault)
+* Changing sanitizeContentCss() to icms_sanitizeContentCss() (malanciault)
+* #2011730: Installer: Check for phpOpenID requirements on install (malanciault/skenow)
+* #2014053: Installer: Check for php5 on install (malanciault/skenow)
+* #2091448: Installer: installation with safemode=on is not possible (malanciault/skenow)
+* Correct implementation of TextEditor within IcmsForm, we are now using normal dhtmltarea as ImpressCMS will handle what editor needs to be displayed (malanciault)
+
+'''Fixed'''
+* Error: Expected ';' when viewing social_bookmars_links.php block in IE7. (mcdonald)
+* pass_expired was not set to 0 after lost password request. (only happens if user uses lost password instead of reset password after encryption type is used). (vaughan)
+* unable to login when using sha512 or whirlpool encryption.  hash produces 128 chars and db field is set to varchar(100). (vaughan)
+* it was not possible to login using email address like v1.0 (vaughan)
+* 2 errors with google meta tag and google analytics. (stranger)
+* possible issue in modulesadmin/main.php (real_therplima/trabis)
+* #2048746: SQL error when creating invites and system_customtags tables (Commerce)
+* #2037989: Registration notification sent twice (real_therplima)
+* bug with modules when calling editors. (stranger)
+* bug "Cannot redeclare class XoopsFormCaptcha". (stranger)
+* Language constants in IcmsModuleAbout feature (malanciault)
+* bug with pdf generator. (stranger)
+* bug Hidencontent doesn`t work with TinyMCE. (stranger)
+* # 2090834: Customtag works not with TinyMCE and Custom HTML Blocks (malanciault)
+* # 2090834: Customtag works not with TinyMCE and Content Manager (malanciault)
+* # 2046097: RSS admin news no longer works  (malanciault)
+* # 2046097: Upgrade script modified to update rss_local config with correct info (if value was not previously changed by user) (malanciault)
+* #1969061: _AUTH_MSG_AUTH_METHOD = xoops. This message was not saying much to users so the word 'xoops' was changed to 'standard' login (malanciault)
+* #1984939: Creating a new CustomTag: Undefined offset: 0 in file /kernel/icmspersistableobjecthandler.php line 262 (malanciault)
+* #1984939: Creating a new CustomTag: Undefined variable: groups_value in file /class/icmsform/icmsform.php line 270 (malanciault)
+* #2096670: Changed field types for meta_description and meta_keywords to only allow plain text
+* Notice: Undefined variable: openid in file /modules/system/admin/users/main.php line 61. (stranger/malanciault)
+* Fixed issues with inserting google meta tag. (stranger)
+* Bug fixed in IcmsForm::render(): the id of the row was the same as the control. Now, the id of the row is <keyname>_row (malanciault)
+* Bug fixed in IcmsPersistableController::postDataToObject where date was not saved properly (malanciault)
+* #2118948: Email Protection does not work (real_therplima)
+
+===2008-08-08 : 1.1 Beta 1===
+
+'''Added'''
+* new plugin for tinymce. hiddencontent (luciorota/real_therplima/stranger)
+* Password meter op on installation. (stranger/real_therplima)
+* Upgrade script 1.0 --> 1.1beta. (stranger)
+* new field to let user select if they want to sho their openid. (stranger)
+* new warning to let users know about upgrading system module. (stranger)
+* new warning to search if trust_path is defined. (stranger)
+* new warning to let users know about protector with credits to GIJOE. (stranger)
+* Upgrade script XOOPS2.2.x --> ImpressCMS. (stranger/phppp)
+* function "_filterImgUrl" to module.sanitizer, to keep compatibility with D3 modules.. (stranger/minahito/hodaka)
+* added 3 content alignments for dhtml text editor. (stranger)
+* Upgrade script XOOPS2.3 --> ImpressCMS. (stranger)
+* icms.css loads from the header. (stranger)
+* pdf.php in language files. (stranger)
+* system skips all folders with no theme.html. (nekro/stranger)
+* new function: icms_utf8_strrev() - Allows reversing of strings for utf8 character sets. (vaughan)
+* reset/expired password system - when encryption changed, pass is expired, you need to then reset your password before logging in. (vaughan)
+* reset password page. user must enter registered email, username, current password & then enter new password in order to reset pass. (vaughan)
+* improved language and template of the password rest feature (malanicault)
+* addition of the pre-populated uname in the password reset form (malanciault)
+
+'''Improved'''
+* Updated TCPDF to version 4.0.009. (stranger)
+* Formfield for OpenID, if OID is inactive users won't see it's fields. (stranger)
+* Google Analytics is now being handled directly (without smartys). (stranger)
+* some enhancements to password secureness. pass can not equal username, or uname in reverse or even contain username. (vaughan)
+* finishing the implementation of xoops_footer in the footer of the site - adding it in redirect and site close template of the impresstheme (malanciault)
+
+'''Changed'''
+* after upgrade is done you'll get back to index to see if upgrade was successful. (stranger)
+* moved preload file "protector.php" to extras. (stranger)
+* xoops.css to icms.css. (stranger)
+* xoops_rtl.css to icms_rtl.css. (stranger)
+* xoops_rtl.js to icms_rtl.js. (stranger)
+* Removed google_analytics smartys from themes. (stranger)
+
+'''Fixed'''
+* Could not upload avatar. (real_therplima/stranger)
+* Fixed the isssue of password meter for RTL languages. (stranger)
+* Fixed the isssues of installation for RTL languages. (stranger)
+* Issue with PDF generator. (stranger)
+* HTML Purifier is now properly using the trust path to create its cache data (Vaughan/malanciault)
+* The installer was not properly creating the password hash of the administrator (Vaughan/real_therplima/malanciault)
+* #1871202 (was not completely fixed) - Avatar and Karma (Fixed). (stranger)
+* Issue with new hash generator, when replacing new core files. (stranger)
+* Security Vulnerabilty (http://www.securityfocus.com/bid/30330) in modules/system/admin.php (Vaughan/Rodrigo/Wtravel)
+* typo in htaccess.txt for error documents in error 500.. errpr.php should be error.php (Wizanda)
+* #2037875 - theme block did not display theme names.
+* #2037881 - SQL error when checking for protector module installation in Control Panel home.
+* #1990271 - database charset can be set to ucs2 without generating any errors.
+* #2038160 - custom tag admin functions now work properly.
+* #2038233 - removed OpenID requirement when adding or editing users in admin area.
+* #2043607 - fatal error when includes/functions.php was included again
+* #2043612 - filtering of span tags from the rendering of the html
+* #2043716 - content pages not displaying when using SEO feature
+
+===2008-07-02 : 1.1 Alpha 2===
+
+'''Added'''
+* new icms.htmlpurifier.php class file, can now be called anytime in the same way as module.textsanitizer.php. (vaughan)
+* new sanitizing functions in html purifier class. displayHTMLarea(), previewHTMLarea() & icms_escapeHTMLValue(). we can configure these in future. (vaughan)
+* New encryption methods, admin can now select from multiple PW encryptions, such as: SHA256, SHA384, SHA512, Whirlpool etc. (vaughan)
+* New option in control panel for hidden contents. (stranger)
+* New date cases for our ext_date_function. (stranger)
+* _CHARSET to function htmlSpecialChars() in module.textsanitizer, by default htmlspecialchars encodes/decodes using ISO unless charset is explicitly defined. (Vaughan/Stranger)
+* New field type for Text Area. (stranger)
+* New block for social bookmarking. (sato-san/stranger)
+* New field type in installation proccess. (stranger)
+* New function to improve converting to utf-8 (upgarde proccess). (stranger)
+* New library for PDF. (stranger)
+* New path definitions to easier include the PDF library. (stranger)
+* Task # 1914769 Including PHP class for generating PDF documents, in the core. (stranger)
+* New Language constants for the logger. (stranger)
+* New page to introduce ImpressCMS after a clean installation. (stranger)
+* New custom internal page/link directed to our introduce page. (stranger)
+* New start page for ImpressCMS (our custom page). (stranger)
+* Social bookmark block to be shown as default. (stranger)
+* Search block to be shown as default. (stranger)
+* Themes block to be shown as default. (stranger)
+* 3 new plugins for tinymce. Xoopsimagemanager, XoopsEmotions, XoopsCodeQuote (luciorota/real_therplima)
+* OpenID relying party now integrated in the core (malanciault)
+* Implementation of the IcmsPersistableRegistry allowing caching when fetching IcmsPersistableObjects from the database (malanciault)
+* new theme "iTheme" is now included (MrTheme)
+
+'''Improved'''
+* The size of pop-ups for TinyMCE. (sato-san)
+* Made a suffix for shorten date cases, for servers with O.S windows . (stranger)
+* Removing the logger out of array, now each part is running separately. (stranger)
+* Xoops_rtl.css has been reformed to let the logger be rtl. (stranger)
+* Updated PDF library to the latest version 3.1.000 (stranger)
+* All 3 theme set to be selectable. (stranger)
+* In footer.php, we are now including notificaton_select.php only when needed (wizanda/malanciault)
+* Changing the way we call set_magic_quotes_runtime(0) to add @ before so if the function is not available or turned off in php.ini, we don't try to collect it (wizanda/malanciault)
+* External links were not working externally. (vaughan)
+* Modules unable to uninstall. (vaughan)
+* Pictures for the Image-Manager (sato-san)
+* Adding a condition before adding a preloadEvent to make sure the specified file is not "index.html" (malanciault)
+
+'''Changed'''
+* Small change with the term "Personalization" instead of "Personalisation". (malanciault)
+* Encryption method in preferences to select field type instead of yesno. (vaughan)
+* Replacing the string on the footer in the install process with date func. (stranger)
+* updated htmlpurifier library from 3.1.0 rc1 to 3.1.1 Final (Standalone version) (vaughan)
+* htmlpurifier now loaded only when icms.htmlpurifier.php class is instanciated rather than with preload. (vaughan)
+* undoHtmlSpecialChars() now uses php 5 function, htmlspecialchars_decode($var, ENT_NOQUOTES, _CHARSET)  (vaughan/stranger)
+* Logger terms like XOOPS have been changed to ICMS. (vaughan/stranger)
+
+'''Fixed'''
+* In the control panel, changing the top-left logo link to default to the home page of the site as discussed here http://lnk.in/5zvw . (stranger/malanciault))
+* #1971839 - Undefined variable: key in \kernel\icmskernel.php on line 88. (trabis/malanciault)
+* #1971844 - Undefined variable: urls in kernel\icmskernel.php on line 93. (trabis/malanciault)
+* #1969064 - edit the blocks from frontend. (real_therplima)
+* #1968351 - Personalisation preferences name in english. (stranger)
+* #1968350 - Make the [hide] tag optional and turned off by default. (stranger)
+* #1964821 - Sorting of "Site Preferences". (real_therplima)
+* #1964817 - Hardcodevariable on "content_blocks.php". (stranger)
+* #1964812 - e-mail protection and userinfo.php. (stranger)
+* #1964440 - e-mail protection and content. (stranger)
+* #1971202 - Hide Salt Key on step 9. (vaughan)
+* Corrected language constant: "_BRDDRMB_SEP", changed to : "_BRDCRMB_SEP". (stranger/skenow)
+* #1954781 - When editing a block: Undefined variable: editor. (real_therplima)
+* #1968311 - No update name module. (real_therplima)
+* #1964815 - e-mail protection and blocks. (real_therplima/stranger)
+* #1964823 - Content Manager > Title to display in Smartcontent. (real_therplima)
+* #1968362 - Defines duplicated in two files blocksadmin and blocspadim. (real_therplima)
+* #1971246 - Turning on phpDebug and Check templates for modifications. (real_therplima)
+* #1964824 - tinymce does not use a language file. (real_therplima)
+* #1980853 - Backend > Personalisation > JavaScript Error. (real_therplima)
+* #1980999 - 1st Update in Multilanguage (undefined _MD_AM_DBUPDATED). (stranger)
+* #1982512 - Undefined message in file /pmlite.php line 134. (stranger)
+* #1982601 - Signature length needs to be defined by users. (stranger)
+* #1871202 - Avatar and Karma. (stranger)
+* #1980591 - install/makedata.php is hardcode. (stranger)
+* #1986411 - (html) text not showing in signature and pm. (stranger)
+* #1986035 - html purifier causing (encoding) problems with utf-8 language. (stranger)
+* #1972006 - Notice and warning on updating Anonymous Group permissions. (real_therplima)
+* #1984932 - Undefined variable: msg in file... (real_therplima)
+* #1983318 - Bug in disclaimer + Multilanguage (user side). (real_therplima)
+* #1986750 - Footer problems in ie6. (real_therplima)
+* All language files of phpmailer, except English, have been removed. (stranger)
+* All "Thumbs.db" files have been removed. (stranger/davidl2)
+* Colation is not working with mysql 4.1.22 but with mysql>5. (trabis/stranger)
+* #1964826 - missing DB_PCONNECT_HELP on install. (stranger)
+* #1991855 - The cache-folder of HTMLPurifier after installation. (stranger)
+* #1990733 - "Link Manager" saved not the module. (real_therplima)
+* When user has logged in can register. (stranger)
+* #1970777 - Smilie bug with dhtml-editor. (real_therplima)
+* Fix a bug that not allow change the avatar. (real_therplima)
+* #1978931 - Re-committed fix for bug (icetomyst)
+* #2098379 a few fields were missing in users table on certain specific uprade path (malanciault)
+* #2103607 Core Userside: _RETRYPOST is missing (session_confim) (malanciault)
+
+
+===2008-05-22 : 1.1 Apha 1 ===
+
+'''Added'''
+* New permission category in System Admin > Groups to configure what groups can be configured by a specific group (nekro)
+* IcmsFeed for module developers (nachenko)
+* ImpressCMS now using UTF-8 encoding as default encoding.  (stranger)
+* icms_createSalt function to generate a unique random salt key. (vaughan)
+* icms_getUserSaltFromUname function to get the users unique salt key for logging in. (vaughan)
+* icms_encryptPass function to add the salts & encrypt password using sha256 (vaughan)
+* Unique Salt key to users table. (vaughan)
+* Unique Salt key to mainfile/sdata trust path for use with Password encryption. (vaughan)
+* enable sha256 choice in admin preferences user settings. default = yes sha256, no = md5 (basic). (vaughan)
+* Prototype Library (Updated to the last version , and removed old prototype files from other places like install and scriptaculous library). (nekro)
+* Projax Library to integrate better Scriptaculous in php. (nekro)
+* The configuration to enable or disable the userinfo.php view by anonymous users. (nekro)
+* Feature to select rights for different groups and modules for the debug. (nekro)
+* Location for Third Party Libraries (malanciault/davidl2)
+* Including Scriptaculous library
+* Feature to select the editor in the preferences. (nekro)
+* The XOOPS_EDITOR_PATH and XOOPS_EDITOR_URL constants. (nekro)
+* The /editors folder. (nekro)
+* The TinyMCE editor. (nekro)
+* Feature to select in which modules the groups can use the editor. (real_therplima)
+* Autoselection of system language depending the browser language configuration. (if multilanguage enabled). (nekro)
+* New User Info config option to enable the mailing of a welcome message to new activated user (malanciault)
+* New User Info config option to customize the welcome message to be send to new activated user (malanciault)
+* IcmsDatabaseUpdater object to easily perform database upgrade procedure (malanciault)
+* New field in the XoopsModule object, dbversion, which will track the version of the tables related to a module (malanciault)
+* Implementation of the onUpdate event for the System module to allow easy database upgrades performed automatically while updating the System module (malanciault)
+* Upgrade script from ImpressCMS 1.0 to ImpressCMS 1.1 which only adds the dbversion field to the modules table; after this upgrade has been performed, all database upgrades will be done automatically when updating the System module (malanciault/stranger)
+* Addition of assigning language's css & Javascripts files to the template. (stranger)
+* Addition of assigning/integrating a local date function in to the core, configurable through administration menu. (stranger)
+* New module added in admin: Content manager that allow create content pages out of the box. (real_therplima)
+* New module added in admin: Links manager that allow the admin create shortcuts to be used to show blocks and as start page of the site. (real_therplima)
+* Addition of the editor select field in block form. Now you can select the editor you want to use into the allowed editors. (real_therplima)
+* Enable a local date function in admin preferences settings. default = no. (stranger)
+* Customized admin footer. (stranger/GibaPhp/Fabio Egas)
+* Multilogin prohibition, this will check if somebody had previously logged in the site with your account. (stranger/real_therplima)
+* Implementation of adding google analytics code (like smarty). (stranger)
+* Implementation of adding google meta tag (like smarty). (stranger)
+* Protecting Emails against SPAMMIng . (stranger/real_therplima)
+* RSS URL for admin, with this option, you can define a local site on the list of . (stranger)
+* CAPTCHA (task #145604). (stranger)
+* using CAPTCHA on register/comment forms for guests/anonymous. (stranger)
+* Password meter op on edit user and register form. (stranger/real_therplima)
+* Addition for allowing webmaster to disable/enable signature of users on a site. (stranger)
+* Addition for allowing webmaster to disable/enable of using html and external images on signatures of users of a site. (stranger/Hervet)
+* Using GRAVATAR in Impresscms. (real_therplima)
+* Option in System Preference to use GRAVATAR. (stranger)
+* Option in System Preference to use extended date function. (stranger)
+* Option in System Preference to use CAPTCHA in registration form. (stranger)
+* Option in System Preference to use CAPTCHA in comments form (stranger)
+* Option in System Preference to use custom footer for admin menu. (stranger)
+* Option in System Preference to use html/image purifier for signatures. (stranger)
+* Option in System Preference to enable/disable signatures. (stranger)
+* Built in RTL style for administration menu. (stranger)
+* Option in System Preference to Select the Admin Panel left Logo (real_therplima/marcan)
+* Option in System Preference to Select the Admin Panel Right Logo (real_therplima/marcan)
+* Option in System Preference to enable/disable the ImpressCMS Project drop down menu (real_therplima/marcan)
+* Option in System Preference to enable/disable shortcut icons for block editing on block titles (stranger)
+* Option in System Preference to Truncate url's (stranger)
+* Option in System Preference to Select truncated url's length (stranger)
+* Option in System Preference to Select truncated url's pre characteres length (stranger)
+* Option in System Preference to Select truncated url's last characteres length (stranger)
+* Ability to use theme_rtl.html for languages with a right to left style. (stranger)
+* Use of theme.php in language files for an easier use of smartys in themes instead of hardcoded texts. (stranger)
+* RTL to install process. (stranger)
+* Feature #1957019: added logging hook. (dave_l)
+* Hide tag, content in this tag will be hidden for anonymous users. (stranger)
+
+'''Improved'''
+* The pm form to use the selected editor. (real_therplima)
+* XoopsTree::getNicePathFromId has new parameter, allowing specification of the separator between links (skenow)
+* System admin page markup (skenow)
+* Revamping the modules list in System Admin > Modules (mcdonald/real_therplima/davidl2/mrtheme)
+* Added templates support for the blocks admin area and some icons to improve the userfriendly (real_therplima)
+* Improve the System dropdown menu including subitems for the preferences (real_therplima)
+* Smarty library (Updated to the lastest version 2.6.19) (real_therplima)
+* The Block Positons feature was separated from the blocks admin and added to system as a new system module (real_therplima)
+* Added possibility to change current encoding while upgrading. (stranger)
+* Libraries default encoding is now UTF-8. (stranger)
+* New smarty variables on themes for "google analytics code" and "google meta tag". (stranger)
+* Changing fiih link (after upgrading) to a new place for updating system module, right after upgrading is done. (stranger)
+* Improving the language constants of System Admin > Groups (malanciault)
+* Added theme_rtl.html to all themes. (stranger)
+* Admin templates to use their style from style files, to make icms more compatible with rtl languages. (stranger
+
+'''Changed'''
+* Moved the Smarty library from /class to /libraries. (nekro)
+* Moved the PHPmailer library from /class to /libraries. (nekro)
+* Textarea is now wider. Better to create blocks and editing of templates. (sato-san)
+* PM-Popup size bigger. (sato-san)
+* All instances of target="_blank" replaced with rel="external". (vaughan)
+
+'''Fixed'''
+*  #1899685 : Parse error: banners.php on line 226 (kurak_bu/nekro)
+*  #1932374 : Changing the 100% width of table in xoops.css to make it 100% only for table.outer (malanciault/real_therplima)
+
+== Impresscms 1.0 ==
+===2008-03-10 : ImpressCMS 1.0 "Janus" Final===
+
+'''Improved'''
+*Updating the VersionChecker to handle situation where the impresscms_xml feed cann not be read (firewall, no internet access, etc...) (malanciault)
+*In the VersionChecker, changed errors to an array and provided a the language constant as the error message - the version checker now reports correctly when it cannot find a valid version_xml (skenow)
+*admin_version template (sato-san/davidl2)
+*Syntax/grammar check in install wizard (andrewvincent/xoops-magazine)
+*Syntax/grammar check in preferences (andrewvincent)
+*Changing the links in About ImpressCMS admin menu for the links to open in new window (malanciaut)
+
+'''Fixed'''
+*Fixing the version checker to reinstate the code about module info popup (malanciault)
+
+'''Added'''
+*htmlspecialchars to $_GET['xoops_redirect'] parameter in user.php to prevent XSS. (vaughan/skenow)
+
+===2008-03-04 : ImpressCMS 1.0 "Janus" RC 3===
+
+'''Improved'''
+* Improved system_redirect template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
+* Improved system_siteclose template in impresstheme theme (Snow/malanciault/Underdogg/davidl2)
+* Upgrade script has been improved to also clean the cache folder (malanciault/rplima)
+
+'''Fixed'''
+* #1905281 Redirect function not using the user selected theme (malanciault)
+* the ImpressCMS logo used on impresstheme as well as in the admin section have been updated (nekro/MrTheme)
+
+'''Added'''
+* Addition of the global navigationlink in impresstheme theme (mcdonald/skenow/malanciault)
+* Addition of the danish flag (anderssk)
+* Addition of the persian flag (malanciault)
+* definitions for ul and li in impresstheme (McDonald/snow/malanciault)
+* New module added in admin: ImpressCMS Version Checker (malanciault/nekro/MrTheme/davidl2)
+* A new Welcome custom block is now added by the install wizard to welcome the "not-yet-loged" user on the new site (malanciault/MrTheme/davidl2)
+* A new Welcome custom block is now added by the install wizard to welcome the webmaster when loged in and to remind him some useful links to start his new ImpressCMS website (malanciault/MrTheme/davidl2)
+* #1904910 A small anchor "new" in System Admin > Blocks so it becomes possible to link to modules/system/admin.php?fct=blocksadmin#new and get the user at the begining of the new block form (malanciault/drummond2)
+
+===2008-02-24 : ImpressCMS 1.0 "Janus" RC 2===
+
+'''Added'''
+* New smarty variable now available, <{$icmsLang}> representing the selected language. For example, if French is the current language selected by the user, then the value of this variable will be "french". (malanciault/davidl2)
+
+'''Fixed'''
+*Revision 955: Display issues with impresstheme. (Snow)
+* #1891588: Timezone offset empty (compatibility issue with versions of PHP aswell as operating system when using floats. (changed to an integer value instead). (vaughan / jegelstaff)
+* #1892430: Typo in language/english/user.php (malanciault/jegelstaff)
+
+===2008-02-07 : ImpressCMS 1.0 "Janus" RC===
+
+'''Fixed'''
+* #1890400 Can't register new user. (seems to be a mysql version compatibility issue) (vaughan)
+
+===2008-02-01 : ImpressCMS 1.0 "Janus" Beta 2===
+
+'''Fixed'''
+* w3c validation in impresstheme and impresstheme_light (sato-san)
+* #1870346 System blocks not visible to added group (skenow/dave_l)
+* #1867922 No nice path from getNicePathFromId (MacDonald/malanciault)
+* #1876797 the $tpl XoopsTpl object used in htdocs/cp_functions.php and htdocs/admin.php had a too generic name which was creating conflict (with AltSys for example). The variable name was renamed for $icsmAdminTpl (malanciault)
+* #1875382 error in xoops.css (display: inline-block) (MacDonald/malanciault)
+* #1881367 Problems in the queries executed when editing User Ranks (malanciault/vaughan)
+* Adding a few @ in install/page_pathsettings.php to prevent the display of some errors that would confuse users (rplima/malanciault)
+* #1872191 Small display bug in user.php (incama/malanciault)
+* Local file inclusion (DSecRG/malanciault)
+* URL Redirection Phishing (DSecRG/malanciault/fx2024)
+
+===2008-01-08 : ImpressCMS 1.0 "Janus" Beta===
+
+'''Added'''
+* linkexternal.js to header, allows devs & designers to utilise 'rel="external" or rel="nofollow" in <A > tags as a replacement for target="_blank". (Vaughan)
+* New admin interface based on XOOPS EXM and improved. Thanks to XOOPS EXM!. (BitC3R0 / malanciault / young-pee)
+* Addition of the XoopsEditors framework with default editor (malanciault)
+* Integration of the Easiest Multilanguage originally created by GIJOE (malanciault)
+* Addition of Gijoe Remember me hack (malanciault)
+* Added a new Database Driver (MySQLi). (young-pee)
+* New feature to add/edit/delete blocks positions. (rplima/young-pee)
+* New installer (skalpa/wtravel)
+* Configuration of XOOPS_TRUST_PATH in intall wizard (malanciault)
+* Saving the database information in a file inside trust_path if possible (malanciault)
+* Upgrade script from XOOPS 2.0.18 (Vaughan/malanciault)
+* Handling HTTP errors automatically on the site. (malanciault/young-pee)
+* Creating a random DB prefix in instalation process like mentioned in feature request item #1848819 (real_therplima)
+* New default theme : impresstheme created by aphex and snow (malanciault)
+* Another theme : impresstheme_light created by nekro (malanciault)
+* Ability to set & define your sites Privacy Policy from admin/preferences/user settings. (vaughan)
+* New function to show warnings. Also added a new css class for that. xoops_warning() (young-pee)
+* 4 new System warnings. 1 for Security and 3 for correct functionality of the system. (young-pee)
+* The users can change they personal theme to be display when they change they profile. (young-pee)
+* Added debugging functions included in the XOOPS boot process to allow easy output of debugging lines by core and modules developers (include/debug_functions.php) (malanciault)
+* Configuration options to turn on or off and configure the Multilanguage on the site (malanciault)
+* Integrating some flags image to be used by the multilanguage feature (malanicault)
+* A system block to allow users to select their language (real_therplima)
+* icms_copyr function to copy a folder an its content (malanciault)
+* icms_mkdir function to create a folder (malanciault)
+* icms_chmod function to chmode a file or folder (malanciault)
+* pagetitles to user.php, register.php, search.php, userinfo.php (skenow, malanciault)
+* PM notification by email if notification method is set to email (malanciault)
+
+'''Changed'''
+* The icons of /class/xoopseditor/dhtmlext/images/*.* (sato-san)
+* Theme changes; Link to impressCMS, poweredby.gif (sato-san)
+* Theme image; logo.png with impressCMS-Logo (sato-san)
+* resource.db.php - changed for version by GiJoe (Andrew Vincent)
+* Picture/Icon for impressCMS: icon_big.png (sato-san)
+* Picture/Icon for impressCMS: icon_small.png (sato-san)
+* Picture/Icon for impressCMS: logo.gif (sato-san)
+* Picture/Icon for impressCMS: poweredby.gif (sato-san)
+* Picture/Icon for impressCMS: poweredby.jpg (sato-san)
+* Picture/Icon for impressCMS: s_poweredby.gif (sato-san)
+* The official smilies had been changed by new ones. Thanks BaNaNa-BOi [http://banana-boi.deviantart.com] for the design. (davidl2 / young-pee)
+
+'''Removed'''
+* The 'Default' theme has been removed (malanciault)
+* backend.php (dependent on news module)
+* phpkaox and x2t themes
+
+'''Improved'''
+* When the User registration is Off... all links to register.php are not shown.
+* The 'remember me' feature now can be enable and disabled (young-pee)
+* Changing the Config options container from 60% to 50% #1849876 (malanciault)
+* Auth Class Folder Organization. (young-pee)
+* Database Class Folder Organization. (Needed for include more drivers) (young-pee)
+* Improve the Modules dropdown menu including subitems of modules that have it (real_therplima)
+* templates in system module for xHTML validation
+* Banner and some ImpressCMS logos are change. Thanks drummond
+
+'''Fixed'''
+* #1854703 : mainfile.php was filled #213  (sato-san)
+* #1851636 : Corrected error in profile administration in the admin side. (young-pee)
+* #1852655 : Gzip warning in admin side. (young-pee)
+* #1854527 : Corrected error updating user profile. (young-pee)
+* Corrected a hardcoded route to the smarty classes. (young-pee)
+* system templates corrected for validation, added title attributes to links and filled alt attributes for images. (skenow|kris_fr)
+* #1851559 : Corrected a bug where it was unable to set block permissions in group settings (young-pee)
+* #1851555 : Corrected a bug in the install script (young-pee)
+* #1851361 : Changing the user block position to another position generated an error (young-pee)
+* #1851442 : There was a PHP parser error in the modules admin (young-pee)
+* #1851077 : Some texts were hardcoded in the login block and the user.php file (young-pee)
+* #1851404 : Changed the xoopsblock.php file; the query for asking wich blocks are active was wrong formed; fixed deleting two ' from the query (young-pee)
+* #1850759 : Fixing the left column of forms to a 30% width (malanciault)
+* #1851361 : Block display disabled at a fresh install (young-pee)
+* #1850054 : Notice: Use of undefined constant _US_SELECT_THEME in file /edituser.php (real_therplima)
+* #1848916 : Removing the System Options title in Control Panel home (malanciault)
+* #1848663 : _MD_AM_ML_NAMESDSC already defined (malanciault)
+* #1849080 : RSS link to backend.php in theme.html (real_therplima)
+* #1848177 : Icon small in /include/cp_functions.php (young-pee)
+* #1848178 : Space between header and content removed (real_therplima)
+* #1847782 : Block y/n not selected by default (real_therplima)
+* #1858648 : Improve multilanguage config options (real_therplima)
+* #1858923 : Modules DropDown menu must have submenus (real_therplima)
+* #1864229 : Missing small icon for System (real_therplima)
+* #1863118 : CSS-class 'cpicon' is too narrow (real_therplima)
+* #1860254 : System templates not inserted on upgrade (real_therplima)
+* #1855709 : Problems on block positions after fresh install (real_therplima)
+* #1855498 : Modules admin doesn't reflect permissions (real_therplima)
+* #1850242 : White page after changing language (real_therplima)
+* #1863125 : no login possible through banners.php (real_therplima)
+* #1863110 : Change the order of the remember me field on user settings (real_therplima)
+* #1861592 : Step 2 out of 10 confusing chmod & spelling (real_therplima)
+* Admin email no longer visible by default after install
+
+==Working Changes : (Changes to be reverted or made definitive)==
+
+* Security Audit : making sure that php header(location: ) redirects are followed with exit(); (protection from telnet vulnerability aswell as other instances where the page is viewed with a system that does not understand the 'header' function, it would skip the redirection page and continue displaying the rest of page. (Vaughan)
+* Security Audit : making sure that sql query values are all encapsulated in single quotes, helps prevent SQLi. Added intval to values in sql queries that should only be an integer value. (Vaughan)
+
+==Changes from : XOOPS 2.0.18 dev branch ==
+
+
+'''Fixed'''
+* _MA_USER_SENDMAIL not defined (Garrath/dugris)
+* $modversion constant language truncated (zoullou/dugris)
+* City renamed (young-pee)
+* Grp memberships lost when user w. no Group perm edits user act (jegelstaff/dugris)
+* mistake on RpcDateTimeHandle (Garrath/dugris)
+* Do not display the comment form if the option module "Allow anonymous post in comments?" is disabled (dugris)
+* Check modules permissions before displaying "Recent comments blocks" (herve/dugris)
+* Adding new parameters (width, height, max file size) for uploading ranks (dugris)
+* cannot herit methods from kernel's class (Garrath/dugris)
+* Corrected a line hardcoded (young-pee)
+* Making sure params used in queries are properly sanitized with intval() when they are integer (herve/malanciault)
+* In XoopsUser::getUnameFromId, if usereal, then making sure the real name is not just an empty space (herve/malanciault)
+* XoopsTree::getNicePathFromId Add separator only if necessary (dugris)
+* Check if $_SERVER[$key] AND $_ENV[$key] exists before turning over the value (xoops_getenv) (dugris)
+
+'''Improved'''
+* XoopsSecurity, personalize the variable of session and the variable of form (dugris)

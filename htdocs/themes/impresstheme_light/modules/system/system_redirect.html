@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>" lang="<{$xoops_langcode}>">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />
+<meta http-equiv="content-language" content="<{$xoops_langcode}>" />
+<meta http-equiv="Refresh" content="<{$time}>; url=<{$url}>" />
+<title><{$xoops_sitename}></title>
+<link rel="stylesheet" type="text/css" media="all" href="<{$icms_style}>" />
+<link rel="stylesheet" type="text/css" media="screen" href="<{$xoops_themecss}>" />
+
+</head>
+<br />
+ <body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
+<div class="warper">
+<{if $xoBlocks.canvas_left and $xoBlocks.canvas_right}><{assign var=columns_layout value='threecolumns-layout'}>
+<{elseif $xoBlocks.canvas_left}><{assign var=columns_layout value='leftcolumn-layout'}>
+<{elseif $xoBlocks.canvas_right}><{assign var=columns_layout value='rightcolumn-layout'}>
+<{/if}>
+<div id="icms-canvas"<{if $columns_layout}> class="<{$columns_layout}>"<{/if}>>
+  <!-- Start header -->
+    <div id="icms-header">
+	    <div id="icms-headerlogo"><a href="<{xoAppUrl /}>" title=""><img src="<{xoImgUrl img/logo.png}>" alt="<{$xoops_sitename}>" /></a></div>
+	    <div id="icms-headerbanner"><{$xoops_banner}></div>
+		<div id="icms-globalnav">&nbsp;</div>
+    </div>  <!-- End header -->
+  
+<!-- Start Main Content Area -->
+<div id="icms-canvas-content">
+<center>
+<br />
+<div style="width: 85%;background-color: #f7e6bd; color: #222222; text-align: center; border-top: 1px solid #DDDDFF; border-left: 1px solid #DDDDFF; border-right: 1px solid #DDDDFF; border-bottom: 1px solid #DDDDFF; font-weight: bold; padding: 10px;">
+  <h4><{$message}></h4>
+  <p><{$lang_ifnotreload}></p>
+</div>
+<{if $xoops_logdump != ''}><div><{$xoops_logdump}></div><{/if}>
+</div>
+<!-- Start footer -->
+<br class="clear" />
+<div id="icms-footer">
+<a href="http://www.impresscms.org/" title=""><img src="<{xoImgUrl img/poweredby.gif}>" alt="impressCMS" /></a>
+</div>
+<!-- end Footer -->
+</div>
+</div>
+</body>
+</html>

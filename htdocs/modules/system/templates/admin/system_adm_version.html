@@ -1,0 +1,37 @@
+<div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/version/images/version_big.png)"><{$smarty.const._AM_VERSION_TITLE}></div><br />
+
+<div class="head" style="padding: 2px; margin-bottom: 5px;">
+	<b><{$smarty.const._AM_VERSION_YOUR_VERSION}></b> <{$your_version}>
+</div>
+<div class="head" style="padding: 2px; margin-bottom: 5px;">
+	<b><{$smarty.const._AM_VERSION_LATEST_VERSION}></b> <{$latest_version}>
+</div>
+
+<{if $update_available}>
+    <div class="even">
+	    <div class="errorMsg">
+	        <b><{$smarty.const._AM_VERSION_UPDATE_NEEDED}></b><br />
+	        <br />
+	        <{$smarty.const._AM_VERSION_MOREINFO}><br />
+	        <h1><a href="<{$latest_url}>" rel="external"><{$latest_version}></a></h1>
+		<{if $not_a_final_comment}> 	 
+			<div><b><{$smarty.const._AM_VERSION_WARNING}></b>: <{$smarty.const._AM_VERSION_WARNING_NOT_A_FINAL}></div> 	 
+		<{/if}>
+	    </div>
+    </div>
+
+    <div class="odd">
+	    <h1><{$latest_version}> <{$smarty.const._AM_VERSION_CHANGELOG}></h1>
+   		<p><pre><{$latest_changelog}></pre></p>
+    </div>
+<{else}>
+	<div class="even">
+		<{if $errors}>
+			<div class="errorMsg">
+				<{$errors}>
+			</div>
+		<{else}>    
+        	<div class="successMsg"><b><{$smarty.const._AM_VERSION_NO_UPDATE}></b></div>
+        <{/if}>
+    </div>
+<{/if}>
