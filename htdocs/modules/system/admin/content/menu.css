@@ -1,19 +1,19 @@
-ul#primary-nav,
-ul#primary-nav ul {
+ul.primary-nav,
+ul.primary-nav ul {
 	margin: 0;
 	padding: 0;
 	width: 100%; /* Width of Menu Items */
-	background: #fff; /* IE6 Bug */
+	background: inherit; /* IE6 Bug */
 }
 
-ul#primary-nav li {
+ul.primary-nav li {
 	position: relative;
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 
-ul#primary-nav li a {
+ul.primary-nav li a {
 	display: block;
 	text-decoration: none;
 	padding: 3px;
@@ -21,11 +21,11 @@ ul#primary-nav li a {
 }
 
 /* Fix IE. Hide from IE Mac \*/
-* html ul#primary-nav li { float: left; height: 1%; }
-* html ul#primary-nav li a { height: 1%; }
+* html ul.primary-nav li { float: left; height: 1%; }
+* html ul.primary-nav li a { height: 1%; }
 /* End */
 
-ul#primary-nav ul {
+ul.primary-nav ul {
 	position: absolute;
 	display: none;
 	left: 99%;
@@ -33,52 +33,54 @@ ul#primary-nav ul {
 	z-index: 1;
 }
 
-ul#primary-nav li:hover ul ul,
-ul#primary-nav li:hover ul ul ul,
-ul#primary-nav li:hover ul ul ul ul,
-ul#primary-nav li:hover ul ul ul ul ul,
-ul#primary-nav li:hover ul ul ul ul ul ul,
-ul#primary-nav li:hover ul ul ul ul ul ul ul,
-ul#primary-nav li:hover ul ul ul ul ul ul ul ul,
-ul#primary-nav li:hover ul ul ul ul ul ul ul ul ul,
-ul#primary-nav li:hover ul ul ul ul ul ul ul ul ul ul,
-ul#primary-nav li:hover ul ul ul ul ul ul ul ul ul ul ul,
-ul#primary-nav li.over ul ul,
-ul#primary-nav li.over ul ul ul,
-ul#primary-nav li.over ul ul ul ul,
-ul#primary-nav li.over ul ul ul ul ul,
-ul#primary-nav li.over ul ul ul ul ul ul,
-ul#primary-nav li.over ul ul ul ul ul ul ul,
-ul#primary-nav li.over ul ul ul ul ul ul ul ul,
-ul#primary-nav li.over ul ul ul ul ul ul ul ul ul,
-ul#primary-nav li.over ul ul ul ul ul ul ul ul ul ul,
-ul#primary-nav li.over ul ul ul ul ul ul ul ul ul ul ul { display: none; }
+ul.primary-nav li:hover ul ul,
+ul.primary-nav li:hover ul ul ul,
+ul.primary-nav li:hover ul ul ul ul,
+ul.primary-nav li:hover ul ul ul ul ul,
+ul.primary-nav li:hover ul ul ul ul ul ul,
+ul.primary-nav li:hover ul ul ul ul ul ul ul,
+ul.primary-nav li:hover ul ul ul ul ul ul ul ul,
+ul.primary-nav li:hover ul ul ul ul ul ul ul ul ul,
+ul.primary-nav li:hover ul ul ul ul ul ul ul ul ul ul,
+ul.primary-nav li:hover ul ul ul ul ul ul ul ul ul ul ul,
+ul.primary-nav li.over ul ul,
+ul.primary-nav li.over ul ul ul,
+ul.primary-nav li.over ul ul ul ul,
+ul.primary-nav li.over ul ul ul ul ul,
+ul.primary-nav li.over ul ul ul ul ul ul,
+ul.primary-nav li.over ul ul ul ul ul ul ul,
+ul.primary-nav li.over ul ul ul ul ul ul ul ul,
+ul.primary-nav li.over ul ul ul ul ul ul ul ul ul,
+ul.primary-nav li.over ul ul ul ul ul ul ul ul ul ul,
+ul.primary-nav li.over ul ul ul ul ul ul ul ul ul ul ul { display: none; }
 
-ul#primary-nav li:hover ul,
-ul#primary-nav li li:hover ul,
-ul#primary-nav li li li:hover ul,
-ul#primary-nav li li li li:hover ul,
-ul#primary-nav li li li li li:hover ul,
-ul#primary-nav li li li li li li:hover ul,
-ul#primary-nav li li li li li li li:hover ul,
-ul#primary-nav li li li li li li li li:hover ul,
-ul#primary-nav li li li li li li li li li:hover ul,
-ul#primary-nav li li li li li li li li li li:hover ul,
-ul#primary-nav li li li li li li li li li li li:hover ul,
-ul#primary-nav li.over ul,
-ul#primary-nav li li.over ul,
-ul#primary-nav li li li.over ul,
-ul#primary-nav li li li li.over ul,
-ul#primary-nav li li li li li.over ul,
-ul#primary-nav li li li li li li.over ul,
-ul#primary-nav li li li li li li li.over ul,
-ul#primary-nav li li li li li li li li.over ul,
-ul#primary-nav li li li li li li li li li.over ul,
-ul#primary-nav li li li li li li li li li li.over ul,
-ul#primary-nav li li li li li li li li li li li.over ul { display: block; } /* The magic */
+ul.primary-nav li:hover ul,
+ul.primary-nav li li:hover ul,
+ul.primary-nav li li li:hover ul,
+ul.primary-nav li li li li:hover ul,
+ul.primary-nav li li li li li:hover ul,
+ul.primary-nav li li li li li li:hover ul,
+ul.primary-nav li li li li li li li:hover ul,
+ul.primary-nav li li li li li li li li:hover ul,
+ul.primary-nav li li li li li li li li li:hover ul,
+ul.primary-nav li li li li li li li li li li:hover ul,
+ul.primary-nav li li li li li li li li li li li:hover ul,
+ul.primary-nav li.over ul,
+ul.primary-nav li li.over ul,
+ul.primary-nav li li li.over ul,
+ul.primary-nav li li li li.over ul,
+ul.primary-nav li li li li li.over ul,
+ul.primary-nav li li li li li li.over ul,
+ul.primary-nav li li li li li li li.over ul,
+ul.primary-nav li li li li li li li li.over ul,
+ul.primary-nav li li li li li li li li li.over ul,
+ul.primary-nav li li li li li li li li li li.over ul,
+ul.primary-nav li li li li li li li li li li li.over ul { display: block; } /* The magic */
 
-ul#primary-nav li.menuparent { background: transparent url(<{$xoops_url}>/images/arrow.gif) right center no-repeat; }
+ul.primary-nav li.menuparent { background: transparent url(../../../../images/arrow.gif) right center no-repeat; }
 
-ul#primary-nav li.menuparent:hover,
-ul#primary-nav li.over { background-color: <{$block.selcolor}>; }
+ul.primary-nav li.menuparent:hover,
+ul.primary-nav li.over { background-color: inherit; }
+
+.contentmenu {display: block;}
 

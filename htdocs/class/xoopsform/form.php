@@ -158,7 +158,7 @@ class XoopsForm {
      * @return	string
   	 */
   	function getMethod(){
-  		return ( strtolower($this->_method) == "get" ) ? "GET" : "POST";
+  		return ( strtolower($this->_method) == "get" ) ? "get" : "post";
   	}
 
   	/**

@@ -82,7 +82,7 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	
 	/**
 	 * cache directory for temporary files (full path)
-	 * This path has been changed to the cache folder in ImpressCMS
+	 * This path has been changed to the cache folder in ICMS
 	 */
 	define ("K_PATH_CACHE", ICMS_ROOT_PATH."/cache/");
 	
@@ -99,7 +99,7 @@ if (!defined("K_TCPDF_EXTERNAL_CONFIG")) {
 	/**
 	 * blank image
 	 */
-	define ("K_BLANK_IMAGE", K_PATH_IMAGES."blank.gif");
+	define ("K_BLANK_IMAGE", K_PATH_IMAGES."_blank.png");
 	
 	/**
 	 * page format

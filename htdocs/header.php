@@ -12,7 +12,7 @@
 * @version		$Id$
 */
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-/** Including the xoopsblock class to handle block display */
+
 include_once ICMS_ROOT_PATH.'/class/xoopsblock.php';
 
 //global $xoopsLogger;
@@ -23,15 +23,14 @@ $xoopsLogger->startTime('ICMS output init');
 
 if($xoopsConfig['theme_set'] != 'default' && file_exists(ICMS_THEME_PATH.'/'.$xoopsConfig['theme_set'].'/theme.php'))
 {
-	/** For backwards compatibility with XOOPS 1.3.x */
-  require_once ICMS_ROOT_PATH.'/include/xoops13_header.php';
+	require_once ICMS_ROOT_PATH.'/include/xoops13_header.php';
 }
 else
 {
 	global $xoopsOption, $xoopsConfig, $xoopsModule;
     	$xoopsOption['theme_use_smarty'] = 1;
 
-    	/**  include Smarty template engine and initialize it*/
+    	// include Smarty template engine and initialize it
     	require_once ICMS_ROOT_PATH.'/class/template.php';
     	require_once ICMS_ROOT_PATH.'/class/theme.php';
     	require_once ICMS_ROOT_PATH.'/class/theme_blocks.php';

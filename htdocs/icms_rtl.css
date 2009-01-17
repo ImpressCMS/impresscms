@@ -12,387 +12,7 @@
 * @version	$Id$
 */
 
-body,table,table.toptable,table.maintable,table.footertable,table td,body td,p,div,a:link,a:active,a:visited,a:hover,h1,h2,h3,h4,h5,h6,ul,input,select,textarea,.formButton,.item,.itemHead,.itemInfo,.itemTitle,.itemTitle a,.itemPoster,.itemPostDate,.itemStats,.itemBody,.itemText,.itemFoot,th,th a:link,th a:active,th a:visited,.outer,.head,.even,.odd,.foot,div.confirmMsg,div.xoopsCode,div.xoopsQuote,.comTitle,.comText,.comUserStat,.comUserName,.comDate,.sCommentThread,.sCommentRank,.admin_menu,.admin_menu a,.admin_menu_thumb a,.admin_menu a:hover,.admin_menu_thumb a:hover,.alblink a:hover,.catlink a:hover,.user_thumb_infobox a:hover,.admin_menu_thumb,.button,.checkbox,.listbox,.sortorder_options,td#mainmenu a,td#mainmenu a.menuSub,td#usermenu a,.headerlogo,.blockTitle,.blockContent,.footerbar,form,tr.even td,tr.odd td,th,div#content,div#forum_header,p.desc,tr.head td,td.sideboxcontent,td#content,div#xo-logger-output,div#xo-logger-tabs {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
-table,input,select,textarea,.formButton,.itemTitle,.even,.odd,div.confirmMsg,div.xoopsQuote,.comTitle,.comUserName,.sCommentThread,.sCommentRank,td#mainmenu a,td#usermenu a,tr.even td,tr.odd td,th,div#content,div#forum_header,p.desc,tr.head td,td#content,div#xo-logger-output,div#xo-logger-tabs {text-align : right;}
-h1,h2,h3,h4,h5,h6,.itemBody,.itemText,.comText {text-align: Justify;}
-.itemInfo,.itemPostDate,.itemFoot {text-align : left;}
-td#mainmenu a.menuSub {padding-right: 10px;}
-.footerbar {text-align:center;}
-
-
-#xo-logger-tabs hr{border: solid 2px; margin-top: 5px; margin-left: auto; margin-right: auto; margin-bottom:3 px; width: 100%;}
-table.outer {
-
-    width:      100%;
-
-}
-
-img {
-
-    border:     0;
-
-}
-
-acronym, abbr, dfn {
-
-    cursor:     help;
-
-}
-
-#xoopsHiddenText {
-
-    visibility:         hidden;
-
-    color:              #000000;
-
-    font-weight:        normal;
-
-    font-style:         normal;
-
-    text-decoration:    none;
-
-}
-
-.pagneutral {
-
-    font-size:          10px;
-
-    width:              16px;
-
-    height:             19px;
-
-    text-align:         center;
-
-    background-image:   url(./images/pagneutral.gif);
-
-}
-
-.pagact {
-
-    font-size:          10px;
-
-    width:              16px;
-
-    height:             19px;
-
-    text-align:         center;
-
-    background-image:   url(./images/pagact.gif);
-
-}
-
-.paginact {
-
-    font-size:          10px;
-
-    width:              16px;
-
-    height:             19px;
-
-    text-align:         center;
-
-    background-image:   url(./images/paginact.gif);
-
-}
-
-/* For required elements in XOOPS form, can be overwritten in theme styles */
-.xo-theme-form td.head {
-
-    width: 30%;
-
-}
-
-.xoops-form-element-caption .caption-marker {
-
-    display:            none;
-
-}
-
-.xoops-form-element-caption-required .caption-marker {
-
-	background-color:   inherit;
-
-	padding-left: 	    2px;
-
-	color: 			    #ff0000;
-
-}
-
-.xoops-form-element-help {
-
-	font-size:		    .9em;
-
-    padding-top:        5px;
-
-    font-weight:        normal;
-
-}
-
-#xo-logger-output{
- font-size: .8em;
-} /* only needed until logger.php and logger_render.php are modified */
-
-/* For banners.php */
-#bannerstats {
-}
-#login_window  {
-
-	max-width:						480px;
-
-	margin:							1em auto;
-
-	background-color:				#f8f8f8;
-
-	color: 							inherit;
-
-	border:							1px solid #000;
-
-}
-#login_window  h2 {
-
-	margin:							.5em;
-
-	padding:							130px 0 0;
-
-	background:						url( images/password.png) no-repeat center top;
-
-	text-align:						center;
-
-}
-.login_form  .credentials {
-
-	margin:							.5em 1em;
-
-	padding:							1em;
-
-	background-color:				#ccc;
-
-	color:							inherit;
-
-}
-.login_form  .credentials label {
-
-	display:						block;
-
-	width:							33%;
-
-	margin:							1px;
-
-}
-.login_form  .credentials input {
-
-	width:							50%;
-
-	margin:							1px;
-
-	padding:							1px;
-
-	border:							1px solid #000;
-
-}
-.login_form  .credentials input:focus {
-
-	border:							1px solid #2266cc;
-
-}
-.login_form  .actions {
-
-	padding:							1.5em .5em .5em;
-
-	text-align:						center;
-
-}
-.login_info {
-
-	margin:							.5em 1em;
-
-	text-align: 					center;
-
-}
-.content_title {
-
-	font-size: 						1.2em;
-
-}
-#bannerstats td {
-
-	text-align: 					center;
-
-}
-
-.CPbigTitle{
-
-	font-size: 20px;
-
-	color: #1E90FF;
-
-	background: no-repeat left top;
-
-	font-weight: bold;
-
-	height: 40px;
-
-	vertical-align: middle;
-
-	padding: 10px 0 0 50px;
-
-	border-bottom: 3px solid #1E90FF;
-
-	font-family : Tahoma, verdana, arial, helvetica, sans-serif; }
-.CPindexOptions{
-
-	padding: 4px;
-
-	vertical-align: top;
-
-}
-.CPmediumTitle{
-
-	font-weight: bold;
-
-	font-size: 14px;
-
-	color: #FF4500;
-
-}
-div.cpicon{
-
-	margin: 3px;
-
-	font-family : Tahoma, verdana, arial, helvetica, sans-serif;
-	text-align: center;
-
-}
-div.cpicon a {
-
-	display: block;
- float: right;
-
-	height: 85px !important;
-
-	height: 85px;
-
-	width: 85px !important;
-
-	width: 85px;
-
-	vertical-align: middle;
-
-	text-decoration : none;
-
-	border: 1px solid #CCCCCC;
-
-	padding: 2px 5px 1px 5px;
-
-	margin: 3px;
-
-	color: #666666;
-
-}
-
-div.cpicon a:hover{
-
-	background-color: #FFF6C1;
-
-	border: 1px solid #FF9900;
-
-	color: #1E90FF;
-
-}
-
-div.cpicon img {
- margin-top: 4px;
- margin-bottom: 4px;
- width: 32px;
- height: 32px;
-}
-div.cpicon span {
-
-	font-size: 11px;
-
-	font-weight: bold;
-
-	display: block;
-
-	overflow: hidden;
-
-}
-div.cpicon span.uno{
-
-	font-size: 11px;
-
-	font-weight: normal;
-
-	text-decoration: underline;
-
-	color: Blue;
-
-}
-div.cpicon span.unor{
-
-	font-size: 11px;
-
-	font-weight: normal;
-
-	text-decoration: underline;
-
-	color: #CC0000;
-
-}
-
-#http_error_title {padding-top: 5px; padding-bottom: 5px; font-size: 20px; font-weight: bold;}#http_error_text {padding-top: 5px; padding-bottom: 5px; text-align: right;}#http_error_searchform{padding-top: 5px; line-height: 5px; padding-bottom: 0px;}#http_error li{color: black; padding-top: 5px; padding-bottom: 5px;}.ed_block_box {
-	position:absolute;
-	display:none;
-	padding: 5px;
-	background: #FFF;
-	border: 2px solid #000;
-	text-align: right;
-	line-height: 180%;
-	font-size: 11px;
-	font-weight: normal;
-	color: #000;
-	min-width: 100px;	width: auto;	z-index:100 !important;
-}
-.ed_block_box img{
-    vertical-align: middle;
-}
-.ed_block_box a{
-	font-weight: normal;
-	color: #000;
-}
-div#disclaimer{
-	background-color: #eee; 
-	border: #CCC 1px solid; 
-	padding: 2px; 
-	width: 98%; 
-	height: 8em; 
-	overflow: auto; 
-	font-size: 1em; 
-	font-family: Tahoma, verdana,arial, helvetica, sans-serif;}
-.openid_url {
-	background-image: url(images/openid-inputicon.gif);
-	background-repeat: no-repeat;
-	background-attachment: scroll;
-	background-color: #ffffff;
-	padding-left: 18px;
-}
-
-/*Default ImpressCMS Pagination Style*/
-div.pagination.default{
-    margin-top: 20px;
-    margin-bottom: 10px;
-}
-
-div.pagination.default a {
-    text-decoration: none;
-}
-div.pagination.default a:hover, div.pagination.default a:active {
-    /*CSS Style for the mouse hover of the links inside the pagination div*/
-}
-
-div.pagination.default span.current {
-    /*CSS Style for the link of the current page*/
-}
-div.pagination.default span.disabled {
-    display: none;
-}
+@import url(modules/system/admin/content/menu_rtl.css);
+body {direction : rtl;font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
+table {direction : rtl; text-align : right;}table.toptable , table.maintable , table.footertable{direction : rtl;}table td {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}body td , p , div {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}a:link , a:active , a:visited {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} a:hover {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} h1 {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;}h2 {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;}h4 {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;}  ul {text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;} input , select , textarea {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align : right;}.formButton {direction : rtl; text-align : right;}.item {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;} .itemHead {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} .itemInfo {text-align : left; font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;}.itemTitle {direction : rtl; text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.itemTitle a {direction : rtl;}.itemPoster {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.itemPostDate {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align : left;}.itemStats {direction : rtl; text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} .itemBody {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: Justify;} .itemText {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align: Justify;} .itemFoot {direction : rtl; text-align : left; font-family : Tahoma, verdana, arial, helvetica, sans-serif;} th {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;} th a:link , th a:active , th a:visited {direction : rtl;}.outer {direction : rtl; text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.head {direction : rtl; text-align : right; 	font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.even {direction: rtl;  font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: right;}.odd {direction: rtl;  font-family : Tahoma, verdana, arial, helvetica, sans-serif; text-align: right;}.foot {direction : rtl;}div.confirmMsg {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align : right;} div.xoopsCode {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : ltr;} div.xoopsQuote {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align : right;} .comTitle {direction : rtl; text-align : right;}.comText {direction : rtl; text-align : justify;}.comUserStat {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl;}.comUserName {	direction : rtl; text-align : right;}.comDate {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.sCommentThread {text-align : right;} .sCommentRank {text-align : right;} p {font-family : Tahoma, verdana, arial, helvetica, sans-serif; padding: 0; margin: 0;}
+.admin_menu {font-family : Tahoma, verdana, arial, helvetica, sans-serif;} .admin_menu a , .admin_menu_thumb a {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.admin_menu a:hover , .admin_menu_thumb a:hover , .alblink a:hover , .catlink a:hover , .user_thumb_infobox a:hover {}.admin_menu_thumb {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.button {font-family : Tahoma, verdana, arial, helvetica, sans-serif;} .checkbox {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.listbox {font-family : Tahoma, verdana, arial, helvetica, sans-serif;} .sortorder_options {font-family : Tahoma, verdana, arial, helvetica, sans-serif;}td#mainmenu a {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction: rtl;  text-align:right;}td#mainmenu a.menuSub {padding-right: 10px;}td#usermenu a {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction: rtl;  text-align:right; }.headerlogo {direction: rtl;}.blockTitle {direction: rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}.blockContent{font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction: rtl;}.footerbar {text-align:center;}form{font-family : Tahoma, verdana, arial, helvetica, sans-serif;}tr.even td {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align: right;} tr.odd td {font-family : Tahoma, verdana, arial, helvetica, sans-serif; direction : rtl; text-align: right;}th {direction : rtl; text-align: right;}div#content {direction : rtl; text-align: right;}div#forum_header{direction : rtl; text-align: right;}p.desc { direction : rtl; text-align : right;}tr.head td{direction : rtl; text-align : right;}td.sideboxcontent{direction : rtl;}td#content{direction : rtl; text-align : right; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}div#xo-logger-output{direction : rtl; text-align : right;}div#xo-logger-tabs{direction : rtl; text-align : right;}#xo-logger-tabs hr{border: solid 2px; margin-top: 5px; margin-left: auto; margin-right: auto; margin-bottom:3 px; width: 100%;}.outer { direction : rtl;}table.outer {    width:      100%;}img {    border:     0;}acronym, abbr, dfn {    cursor:     help;}#xoopsHiddenText {    visibility:         hidden;    color:              #000000;    font-weight:        normal;    font-style:         normal;    text-decoration:    none;}.pagneutral {    font-size:          10px;    width:              16px;    height:             19px;    text-align:         center;    background-image:   url(./images/pagneutral.gif);}.pagact {    font-size:          10px;    width:              16px;    height:             19px;    text-align:         center;    background-image:   url(./images/pagact.gif);}.paginact {    font-size:          10px;    width:              16px;    height:             19px;    text-align:         center;    background-image:   url(./images/paginact.gif);}/* For required elements in XOOPS form, can be overwritten in theme styles */.xo-theme-form td.head {    width: 30%;}.xoops-form-element-caption .caption-marker {    display:            none;}.xoops-form-element-caption-required .caption-marker {	background-color:   inherit;	padding-left: 	    2px;	color: 			    #ff0000;}.xoops-form-element-help {	font-size:		    .9em;    padding-top:        5px;    font-weight:        normal;}#xo-logger-output{ font-size: .8em;} /* only needed until logger.php and logger_render.php are modified *//* For banners.php */#bannerstats {}#login_window  {	max-width:						480px;	margin:							1em auto;	background-color:				#f8f8f8;	color: 							inherit;	border:							1px solid #000;}#login_window  h2 {	margin:							.5em;	padding:							130px 0 0;	background:						url( images/password.png) no-repeat center top;	text-align:						center;}.login_form  .credentials {	margin:							.5em 1em;	padding:							1em;	background-color:				#ccc;	color:							inherit;}.login_form  .credentials label {	display:						block;	width:							33%;	margin:							1px;}.login_form  .credentials input {	width:							50%;	margin:							1px;	padding:							1px;	border:							1px solid #000;}.login_form  .credentials input:focus {	border:							1px solid #2266cc;}.login_form  .actions {	padding:							1.5em .5em .5em;	text-align:						center;}.login_info {	margin:							.5em 1em;	text-align: 					center;}.content_title {	font-size: 						1.2em;}#bannerstats td {	text-align: 					center;}.CPbigTitle{	font-size: 20px;	color: #1E90FF;	background: no-repeat left top;	font-weight: bold;	height: 40px;	vertical-align: middle;	padding: 10px 0 0 50px;	border-bottom: 3px solid #1E90FF;	font-family : Tahoma, verdana, arial, helvetica, sans-serif; }.CPindexOptions{	padding: 4px;	vertical-align: top;}.CPmediumTitle{	font-weight: bold;	font-size: 14px;	color: #FF4500;}div.cpicon{	margin: 3px;	font-family : Tahoma, verdana, arial, helvetica, sans-serif;	text-align: center;}div.cpicon a {	display: block; float: right;	height: 85px !important;	height: 85px;	width: 85px !important;	width: 85px;	vertical-align: middle;	text-decoration : none;	border: 1px solid #CCCCCC;	padding: 2px 5px 1px 5px;	margin: 3px;	color: #666666;}div.cpicon a:hover{	background-color: #FFF6C1;	border: 1px solid #FF9900;	color: #1E90FF;}div.cpicon img { margin-top: 4px; margin-bottom: 4px; width: 32px; height: 32px;}div.cpicon span {	font-size: 11px;	font-weight: bold;	display: block;	overflow: hidden;}div.cpicon span.uno{	font-size: 11px;	font-weight: normal;	text-decoration: underline;	color: Blue;}div.cpicon span.unor{	font-size: 11px;	font-weight: normal;	text-decoration: underline;	color: #CC0000;}#http_error_title {padding-top: 5px; padding-bottom: 5px; font-size: 20px; font-weight: bold;}#http_error_text {padding-top: 5px; padding-bottom: 5px; text-align: right;}#http_error_searchform{padding-top: 5px; line-height: 5px; padding-bottom: 0px;}#http_error li{color: black; padding-top: 5px; padding-bottom: 5px;}.ed_block_box {	position:absolute;	display:none;	padding: 5px;	background: #FFF;	border: 2px solid #000;	text-align: right;	line-height: 180%;	font-size: 11px;	font-weight: normal;	color: #000;	min-width: 100px;	width: auto;	z-index:100 !important;}.ed_block_box img{    vertical-align: middle;}.ed_block_box a{	font-weight: normal;	color: #000;}div#disclaimer{	background-color: #eee; 	border: #CCC 1px solid; 	padding: 2px; 	width: 98%; 	height: 8em; 	overflow: auto; 	font-size: 1em; 	font-family: Tahoma, verdana,arial, helvetica, sans-serif;}.openid_url {	background-image: url(images/openid-inputicon.gif);	background-repeat: no-repeat;	background-attachment: scroll;	background-color: #ffffff;	padding-left: 18px;}

@@ -57,13 +57,6 @@ if (!defined('_CT_DELETE_CONTENT')){define('_CT_DELETE_CONTENT','Delete Content'
 if (!defined('_CT_PUBLISHEDBY')){define('_CT_PUBLISHEDBY','Published by');}
 if (!defined('_CT_READS')){define('_CT_READS','reads');}
 if (!defined('_CT_ON')){define('_CT_ON','on');}
-/*
- * Added in 1.2
- */
-define("_MB_SYSTEM_CONTID", "Show only sub-pages of the page ID (Use 0 to not filter):");
-/*
- * 
- */
 
 // openid
 define("_MB_SYSTEM_OPENID_LOGIN", "Login with your OpenID");

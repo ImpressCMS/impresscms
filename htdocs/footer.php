@@ -15,8 +15,15 @@
 if(!defined('ICMS_ROOT_PATH')) {die('ICMS root path not defined');}
 if(!defined("XOOPS_FOOTER_INCLUDED"))
 {
-	/** Set the constant XOOPS_FOOTER_INCLUDED to 1 - this file has been included */
-  define("XOOPS_FOOTER_INCLUDED",1);
+	define("XOOPS_FOOTER_INCLUDED",1);
+
+$_SESSION['ad_sess_regen'] = false;
+if(isset($_SESSION['sess_regen']) && $_SESSION['sess_regen'])
+{
+	$sess_handler->icms_sessionOpen(true);
+	$_SESSION['sess_regen'] = false;
+}
+else {$sess_handler->icms_sessionOpen();}
 
 	// ################# Preload Trigger beforeFooter ##############
 	$icmsPreloadHandler->triggerEvent('beforeFooter');
@@ -41,11 +48,9 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 	{
 		// RMV-NOTIFY
 		if (is_object($xoopsModule) && $xoopsModule->getVar('hasnotification') == 1 && is_object($xoopsUser)) {
-			/** Require the notifications area */
-      require_once 'include/notification_select.php';
+			require_once 'include/notification_select.php';
 		}
-    /** @todo Notifications include/require clarification in footer.php - if this is included here, why does it need to be required above? */
-    /** Include the notifications area */
+
 		include_once ICMS_ROOT_PATH . '/include/notification_select.php';
 
 		if(!headers_sent())

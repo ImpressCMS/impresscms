@@ -109,15 +109,7 @@ $modversion['templates'][$i]['file'] = 'system_content.html';
 $modversion['templates'][$i]['description'] = 'Template of content pages';
 
 $i++;
-$modversion['templates'][$i]['file'] = 'system_content_list.html';
-$modversion['templates'][$i]['description'] = 'Template of content pages';
-
-$i++;
 $modversion['templates'][$i]['file'] = 'system_openid.html';
-$modversion['templates'][$i]['description'] = '';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'system_admin_menu.html';
 $modversion['templates'][$i]['description'] = '';
 
 $i++;
@@ -159,31 +151,6 @@ $modversion['templates'][$i]['description'] = 'Template of the Custom Tag admin'
 $i++;
 $modversion['templates'][$i]['file'] = 'system_default_form.html';
 $modversion['templates'][$i]['description'] = 'Default form template';
-$i++;
-$modversion['templates'][$i]['file'] = 'system_content_list.html';
-$modversion['templates'][$i]['description'] = 'Template of content pages';
-
-### Image Manager ###
-$i++;
-$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager.html';
-$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_imglist.html';
-$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_img.html';
-$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_editimg.html';
-$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'admin/images/system_adm_imagemanager_cloneimg.html';
-$modversion['templates'][$i]['description'] = 'Template of the Image Manager admin';
-###
 
 // Blocks
 $i=0;
@@ -313,7 +280,7 @@ $modversion['blocks'][$i]['file'] = "content_blocks.php";
 $modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME16;
 $modversion['blocks'][$i]['description'] = "Menu of content pages and categories";
 $modversion['blocks'][$i]['show_func'] = "b_content_menu_show";
-$modversion['blocks'][$i]['options'] = "content_weight|ASC|1|#F2E2A0|0";
+$modversion['blocks'][$i]['options'] = "content_weight|ASC|1|#F2E2A0";
 $modversion['blocks'][$i]['edit_func'] = "b_content_menu_edit";
 $modversion['blocks'][$i]['template'] = 'system_block_contentmenu.html';
 
@@ -325,13 +292,6 @@ $modversion['blocks'][$i]['show_func'] = "b_content_relmenu_show";
 $modversion['blocks'][$i]['options'] = "content_weight|ASC|1";
 $modversion['blocks'][$i]['edit_func'] = "b_content_relmenu_edit";
 $modversion['blocks'][$i]['template'] = 'system_block_contentmenu.html';
-
-$i++;
-$modversion['blocks'][$i]['file'] = "content_blocks.php";
-$modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME19;
-$modversion['blocks'][$i]['description'] = "Block that show tagswith links to see the list of pages that use the tag.";
-$modversion['blocks'][$i]['show_func'] = "b_content_tagmenu_show";
-$modversion['blocks'][$i]['template'] = 'system_block_contenttags.html';
 
 // Menu
 $modversion['hasMain'] = 0;

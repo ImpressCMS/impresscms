@@ -44,7 +44,7 @@ if (trim($rank['rank_image']) != '' && file_exists(XOOPS_UPLOAD_PATH.'/'.$rank['
     $rank_tray->addElement($rank_label);
     unset($rank_label);
 }
-$rank_label = new XoopsFormLabel('', '<br />' . sprintf(_AM_RANKW, icms_conv_nr2local($xoopsConfigUser['rank_width'])) . '<br />' . sprintf(_AM_RANKH, icms_conv_nr2local($xoopsConfigUser['rank_height'])) . '<br />' . sprintf(_AM_RANKMAX, icms_conv_nr2local($xoopsConfigUser['rank_maxsize'])) );
+$rank_label = new XoopsFormLabel('', '<br />' . sprintf(_AM_RANKW, $xoopsConfigUser['rank_width']) . '<br />' . sprintf(_AM_RANKH, $xoopsConfigUser['rank_height']) . '<br />' . sprintf(_AM_RANKMAX, $xoopsConfigUser['rank_maxsize']) );
 $rank_tray->addElement($rank_label);
 
 $rank_form->addElement($rank_tray);

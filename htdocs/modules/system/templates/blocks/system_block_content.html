@@ -1,12 +1,14 @@
-<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/style<{if $icms_rtl}>_rtl<{/if}>.css" />
+<!-- We Need a legitimate way to pull this admin side styling - we cant just pull stylesheets in the middle of the page like this. Preload the stylesheet - or put it in icms.css
+<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$xoops_url}>/modules/system/admin/content/style.css" />
 <style type="text/css">
   <{$content_css}>
 </style>
-<div id="impress_content">
+-->
+<div class="impress_content">
   <{if $block.showNav}>
-    <div id="nav"><{$block.nav}></div>
+    <div class="content_nav"><{$block.nav}></div>
   <{/if}>  
-  <div id="title">
+  <div class="title">
     <{if $block.isAdmin}><div class="title_admlinks"><{$block.content_admlinks}></div><{/if}>
     <h1 class="title_body"><{$block.content_title}></h1>
     <{if $block.show_pinfo}><h2 class="title_info"><{$block.content_tinfo}></h2><{/if}>
@@ -16,12 +18,12 @@
   </div>
   <{if $block.showSubs}>
     <hr style="margin:20px;" />
-    <div id="subs">
+    <div class="subs">
       <div class="title_subs"><{$block.subs_label}></div>
       <{foreach item=sub from=$block.content_subs}>
         <div style="margin:5px;" class="<{cycle values="even,odd"}>">
           <h3 style="margin:0;"><a href="<{$sub.link}>"><{$sub.titulo}></a></h3>
-          <em><{$sub.teaser}></em>
+          <{$sub.teaser}>
         </div>
       <{/foreach}>
     </div>

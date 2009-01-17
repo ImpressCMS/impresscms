@@ -190,7 +190,7 @@ class MyTextSanitizer
 		//$replacements[] = "'<div class=\"xoopsCode\"><code><pre>'.wordwrap(MyTextSanitizer::htmlSpecialChars('\\1'), 100).'</pre></code></div>'";
 		// RMV: added new markup for intrasite url (allows easier site moves)
 		// TODO: automatically convert other URLs to this format if ICMS_URL matches??
-		/*$config_handler =& xoops_gethandler('config');
+		$config_handler =& xoops_gethandler('config');
 		$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
         	if($xoopsConfigPersona['use_hidden'] == 1)
 		{
@@ -208,7 +208,7 @@ class MyTextSanitizer
 		{
         		$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
 			$replacements[] = '\\1';
-		}*/
+		}
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
 		$replacements[] = '<a href="'.ICMS_URL.'/\\2">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
@@ -267,9 +267,9 @@ class MyTextSanitizer
 			$replacements[] = '<img src="'.ICMS_URL.'/image.php?id=\\2" alt="\\3" />';
 		}
 		$patterns[] = "/\[quote]/sU";
-		$replacements[] = _QUOTEC.'<div class="xoopsQuote"><blockquote>';
+		$replacements[] = _QUOTEC.'<div class="xoopsQuote"><blockquote><p>';
 		$patterns[] = "/\[\/quote]/sU";
-		$replacements[] = '</blockquote></div>';
+		$replacements[] = '</p></blockquote></div>';
 		$text = str_replace( "\x00", "", $text );
 		$c = "[\x01-\x1f]*";
 		$patterns[] = "/j{$c}a{$c}v{$c}a{$c}s{$c}c{$c}r{$c}i{$c}p{$c}t{$c}:/si";
@@ -277,7 +277,6 @@ class MyTextSanitizer
 		$patterns[] = "/a{$c}b{$c}o{$c}u{$c}t{$c}:/si";
 		$replacements[] = "about :";
 		$text = preg_replace($patterns, $replacements, $text);
-		$text = $this->icmsCodeDecode_extended($text);
 		return $text;
 	}
 
@@ -540,29 +539,39 @@ class MyTextSanitizer
 		}
 		return $text;
 	}
-	function codeConv($text, $xcode = 1, $image = 1) {
+
+	function codeConv($text, $xcode = 1, $image = 1)
+	{
 		if($xcode != 0)
 		{
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			if($image != 0)
 			{
-				$replacements = "'<div class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1')).'</pre></code></div>'";
+				$replacements = "'<div class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::codeSanitizer('$1').'</pre></code></div>'";
 			}
 			else
 			{
-				$replacements = "'<div class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1', 0)).'</pre></code></div>'";
+				$replacements = "'<div class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::codeSanitizer('$1', 0).'</pre></code></div>'";
 			}
 			$text = preg_replace($patterns, $replacements, $text);
 		}
 		return $text;
-		return $text;
 	}
 
-	function codeSanitizer($str, $image = 1) {
-		$str =  str_replace('\"', '"', base64_decode($str));
-		$str = $this->xoopsCodeDecode($str, $image);
+	function codeSanitizer($str, $image = 1)
+	{
+		if($image != 0)
+		{
+			$str = $this->xoopsCodeDecode($this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str))));
+		}
+		else
+		{
+			$str = $this->xoopsCodeDecode($this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str))),0);
+		}
 		return $str;
 	}
+
+	/**#@-*/
 ##################### Deprecated Methods ######################
 
 	/**#@+
@@ -704,102 +713,5 @@ class MyTextSanitizer
 		return $this->nl2br($text);
 	}
 	/**#@-*/
-/*
-* This function gets allowed plugins from DB and loads them in the sanitizer
-*
-*/
-	function icmsCodeDecode_extended($text, $allowimage = 1)
-	{
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
-   	$items = str_replace('.php', '', $icmsConfigPlugins['sanitizer_plugins']);
-	foreach($items as $item) {
-		$text = $this->icmsloadExtension($item, $text);
-		}
-	return $text;
-	}
-	
-	function icmsloadExtension($name, $text)
-	{
-		if (empty($name) or ! file_exists(ICMS_ROOT_PATH."/plugins/textsanitizer/{$name}.php") ) {
-			return $text;
-		}
-		include_once(ICMS_ROOT_PATH."/plugins/textsanitizer/{$name}.php");
-		$func = "textsanitizer_{$name}";
-		if (! function_exists($func) ) {
-			return $text;
-		}
-		$args = array_slice(func_get_args(), 1);
-		return call_user_func_array($func, array_merge( array(&$this), $args));
-	}
-function textsanitizer_syntaxhighlight(&$text)
-{
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
-	$text = $this->undoHtmlSpecialChars($text);
-	if( $icmsConfigPlugins['code_sanitizer'] == 'php' ){
-	$text = $this->textsanitizer_php_highlight($text);
-	}elseif( $icmsConfigPlugins['code_sanitizer'] == 'geshi' ){
-	$text = $this->textsanitizer_geshi_highlight($text);
-	}
-	return $text;
-}
-function textsanitizer_php_highlight($text)
-{
-	$text = trim($text);
-	$addedtag_open = 0;
-	if ( !strpos($text, "<?php") and (substr($text, 0, 5) != "<?php") ) {
-		$text = "<?php\n" . $text;
-		$addedtag_open = 1;
-	}
-	$addedtag_close = 0;
-	if ( !strpos($text, "?>") ) {
-		$text .= "?>";
-		$addedtag_close = 1;
-	}
-	$oldlevel = error_reporting(0);
-	$buffer = highlight_string($text, true); // Require PHP 4.20+
-	error_reporting($oldlevel);
-	$pos_open = $pos_close = 0;
-	if ($addedtag_open) {
-		$pos_open = strpos($buffer, '&lt;?php');
-	}
-	if ($addedtag_close) {
-		$pos_close = strrpos($buffer, '?&gt;');
-	}
-	
-	$str_open = ($addedtag_open) ? substr($buffer, 0, $pos_open) : "";
-	$str_close = ($pos_close) ? substr($buffer, $pos_close + 5) : "";
-	
-	$length_open = ($addedtag_open) ? $pos_open + 8 : 0;
-	$length_text = ($pos_close) ? $pos_close - $length_open : 0;
-	$str_internal = ($length_text) ? substr($buffer, $length_open, $length_text) : substr($buffer, $length_open);
-	
-	$buffer = $str_open.$str_internal.$str_close;
-	return $buffer;
-}
-function textsanitizer_geshi_highlight( $text )
-{
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
-	if ( !@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
-	$language = str_replace('.php', '', $icmsConfigPlugins['geshi_default']);
-
-    // Create the new GeSHi object, passing relevant stuff
-    $geshi = new GeSHi($text, $language);
-    // Enclose the code in a <div>
-    $geshi->set_header_type(GESHI_HEADER_NONE);
-
-	// Sets the proper encoding charset other than "ISO-8859-1"
-    $geshi->set_encoding(_CHARSET);
-
-	$geshi->set_link_target ( "_blank" );
-
-    // Parse the code
-    $code = $geshi->parse_code();
-
-    return $code;
-}
-
 }
 ?>

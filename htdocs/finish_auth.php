@@ -1,17 +1,5 @@
 <?php
-/**
-* Short summary of the purpose of this file
-*
-* Longer description about this page
-*
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project 
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package     kernel
-* @subpackage  auth
-* @since	 1.1
-* @author malanciault <marcan@impresscms.org>
-* @version	$Id$
-*/
+
 /**
  * Set this to true to troubleshoot OpenID login
  */
@@ -19,16 +7,13 @@ $openid_debug = false;
 
 define('ICMS_INCLUDE_OPENID', true);
 $xoopsOption['pagetype'] = 'user';
-/** Including mainfile.php is required */
-include_once 'mainfile.php';
+include_once ("mainfile.php");
 
 $redirect_url = $_SESSION['frompage'];
 $myts = MyTextSanitizer :: getInstance();
 $member_handler = xoops_gethandler('member');
 
-/** Including the authentication class */
 include_once ICMS_ROOT_PATH . '/class/auth/authfactory.php';
-/** Including the language files for the authentication pages */
 include_once ICMS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
 
 $xoopsAuth = & XoopsAuthFactory :: getAuthConnection();
@@ -41,7 +26,6 @@ if ($xoopsAuth->errorOccured()) {
 switch ($xoopsAuth->step) {
 	case OPENID_STEP_NO_USER_FOUND :
 		$xoopsOption['template_main'] = 'system_openid.html';
-		/** Including header.php to start page rendering */
 		include_once (ICMS_ROOT_PATH . "/header.php");
 
 		$sreg = $_SESSION['openid_sreg'];
@@ -50,7 +34,7 @@ switch ($xoopsAuth->step) {
 		$xoopsTpl->assign('cid', $xoopsAuth->openid);
 		$xoopsTpl->assign('uname', isset ($sreg['nickname']) ? $sreg['nickname'] : '');
 		$xoopsTpl->assign('email', isset ($sreg['email']) ? $sreg['email'] : '');
-    /** Including footer.php to complete page rendering */
+
 		include_once ICMS_ROOT_PATH . '/footer.php';
 		break;
 
@@ -63,7 +47,6 @@ switch ($xoopsAuth->step) {
 		$_SESSION['openid_step'] = OPENID_STEP_NO_USER_FOUND;
 
 		$sreg = $_SESSION['openid_sreg'];
-		/** Including header.php to start page rendering */
 		include_once (ICMS_ROOT_PATH . '/header.php');
 
 		/**
@@ -276,14 +259,14 @@ switch ($xoopsAuth->step) {
 		break;
 
 	case OPENID_STEP_USER_FOUND :
-		/** Including the login authentication page */
-    include_once 'include/checklogin.php';
+		include_once ("include/checklogin.php");
 		exit;
 		break;
 
 	case OPENID_STEP_LINK :
-		// Linking an existing user with this openid
-		/** Including header.php to start page rendering */
+		/**
+		 * Linking an existing user with this openid
+		 */
 		include_once (ICMS_ROOT_PATH . '/header.php');
 
 		$uname4sql = addslashes($myts->stripSlashesGPC($_POST['uname']));

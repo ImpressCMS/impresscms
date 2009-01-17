@@ -1,5 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="<{$xoops_langcode}>" xml:lang="<{$xoops_langcode}>">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>">
 <head>
 <!-- Center block custom positioning -->
 	<{* Center blocks display order
@@ -86,17 +86,18 @@
 			<!-- Center column / page -->
 			<div id="xo-page">
 				<div id="controlbar">
-					<div align="<{$smarty.const._GLOBAL_LEFT}>">
-					<a href="" title="Increase Font Size" href="" onclick="dw_fontSizerDX.adjust(2); return false">A+</a> | 
-  					<a href="" title="Decrease Font Size" href="" onclick="dw_fontSizerDX.adjust(-2); return false">A-</a> |
-  					<a href="" title="Restore Defaults" href="" onclick="dw_fontSizerDX.reset(); return false">Aa</a>
-					<div align="<{$smarty.const._GLOBAL_RIGHT}>" style="margin-top: -17px;">
+					<div style="margin-left: auto;">
+					<a title="Increase Font Size" href="" onclick="dw_fontSizerDX.adjust(2); return false">A+</a> | 
+  					<a title="Decrease Font Size" href="" onclick="dw_fontSizerDX.adjust(-2); return false">A-</a> |
+  					<a title="Restore Defaults" href="" onclick="dw_fontSizerDX.reset(); return false">Aa</a>
+					<div style="float: <{$smarty.const._GLOBAL_RIGHT}>; margin-right: auto; margin-top: -17px; display: inline;">
 					<a href="#" onclick="setActiveStyleSheet('blue'); return false;"><img src="<{$xoops_imageurl}>img/icons/blue_icon.jpg" alt="Select Blue Style" /></a>
 					<a href="#" onclick="setActiveStyleSheet('green'); return false;"><img src="<{$xoops_imageurl}>img/icons/green_icon.jpg" alt="Select Green Style" /></a>
 					<a href="#" onclick="setActiveStyleSheet('pink'); return false;"><img src="<{$xoops_imageurl}>img/icons/pink_icon.jpg" alt="Select Pink Style" /></a>
 					<a href="#" onclick="setActiveStyleSheet('sunset'); return false;"><img src="<{$xoops_imageurl}>img/icons/sunset_icon.jpg" alt="Select Sunset Style" /></a>
 					<a href="#" onclick="setActiveStyleSheet('corp'); return false;"><img src="<{$xoops_imageurl}>img/icons/corp_icon.jpg" alt="Select Corp Style" /></a>
 					</div>
+					<div class="clear"></div>
 					</div>					
 				</div>
 				<!-- Top blocks -->
@@ -139,11 +140,10 @@
 </div>
 	<!-- Footer -->
 	<div id="xo-footer">
-	<center><{$xoops_banner}>
+	<div id="banner" style="margin-left: auto; margin-right: auto;"><{$xoops_banner}>
 	<br />
 	<{$xoops_footer}>
-	</center>
-	<br />
+	</div>
 	</div>
 <script type="text/javascript">
 

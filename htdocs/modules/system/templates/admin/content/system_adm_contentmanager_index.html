@@ -10,28 +10,13 @@ function showDiv(type,id){
 	document.getElementById(type+id).style.display = 'block';
 	document.anchors.item(type+id).scrollIntoView();
 }
-function changeFilter(sts){
-	if (sts){
-		xoopsGetElementById('query').style.display = 'none';
-		xoopsGetElementById('tag').style.display = 'block';
-	}else{
-		xoopsGetElementById('query').style.display = 'block';
-		xoopsGetElementById('tag').style.display = 'none';
-	}
-}
-function resetForm(){
-	document.getElementById('query').value='';
-	document.getElementById('tag').value=' ';
-	document.getElementById('chk').checked=false;	
-}
 </script>
 <div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/content/images/content_big.png)"><{$lang_cont_manager}></div><br />
 <div style="margin-top:0; float: <{$smarty.const._GLOBAL_RIGHT}>; width:350px;" align="<{$smarty.const._GLOBAL_RIGHT}>">
   <form action="admin.php?fct=content&op=list&content_supid=<{$content_supid}>" method="POST">
-    <div style="float:left;"><{$tags}><input type="text" name="query" id="query" size="30" value="<{$query}>"<{if $bytags == 1}> style="display:none;"<{/if}> /></div>
+    <input type="text" name="query" id="query" size="30" value="<{$query}>" />
     <input type="submit" name="btn" value="<{$lang_search}>" />
-    <input type="submit" name="btn1" value="<{$lang_cancel}>" onclick="resetForm();" />
-    <input type="checkbox" name="chk" id="chk" value="1" onclick="changeFilter(this.checked)"<{if $bytags == 1}> checked="checked"<{/if}> /> <{$lang_bytags}>
+    <input type="submit" name="btn1" value="<{$lang_cancel}>" onclick="document.getElementById('query').value='';" />
   </form>
 </div>
 <p style="margin-top:0;"><{$adminNav}></p>

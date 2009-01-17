@@ -47,7 +47,6 @@ class XoopsContent extends XoopsObject
         $this->initVar('content_menu', XOBJ_DTYPE_TXTBOX, null, true, 100);
         $this->initVar('content_body', XOBJ_DTYPE_TXTAREA, null, true);
         $this->initVar('content_css', XOBJ_DTYPE_TXTAREA, null, false);
-        $this->initVar('content_tags', XOBJ_DTYPE_TXTAREA, null, false);
         $this->initVar('content_visibility', XOBJ_DTYPE_INT, 3, false);
         $this->initVar('content_created', XOBJ_DTYPE_INT, null, false);
         $this->initVar('content_updated', XOBJ_DTYPE_INT, null, false);
@@ -60,15 +59,16 @@ class XoopsContent extends XoopsObject
     	return $this->getVar('content_reads');
     }
     
-    function setReads($qtde=null){
-    	$t = $this->getVar('content_reads');
-    	if (isset($qtde)){
-    		$t += $qtde;
-    	}else{
-    		$t ++;
-    	}
-    	$this->setVar('content_reads',$t);
-    }
+	function setReads($qtde=null)
+	{
+		global $xoopsDB;
+		$t = $this->getVar('content_reads');
+		$cont_id = $this->getVar('content_id');
+		if(isset($qtde)) {$t += $qtde;}
+		else {$t ++;}
+		$sql = sprintf("UPDATE %s SET content_reads='%u' WHERE content_id='%u'", $xoopsDB->prefix('icmscontent'), intval($t), intval($cont_id));
+		if(!$result = $xoopsDB->queryF($sql)) {return false;}
+	}
 }
 
 
@@ -131,7 +131,7 @@ class XoopsContentHandler extends XoopsObjectHandler
         }
         if ($content->isNew()) {
             $content_id = $this->db->genId('content_content_id_seq');
-            $sql = sprintf("INSERT INTO %s (content_id, content_catid, content_supid, content_uid, content_title, content_menu, content_body, content_css, content_tags, content_visibility, content_created, content_updated, content_weight, content_reads, content_status) VALUES (%u, %u, %u, %u, %s, %s, %s, %s, %s, %u, %u, %u, %u, %u, %u)", 
+            $sql = sprintf("INSERT INTO %s (content_id, content_catid, content_supid, content_uid, content_title, content_menu, content_body, content_css, content_visibility, content_created, content_updated, content_weight, content_reads, content_status) VALUES (%u, %u, %u, %u, %s, %s, %s, %s, %u, %u, %u, %u, %u, %u)", 
             $this->db->prefix('icmscontent'), 
             intval($content_id), 
             intval($content_catid), 
@@ -141,7 +141,6 @@ class XoopsContentHandler extends XoopsObjectHandler
             $this->db->quoteString(str_replace(array("_","-","/","|",";")," ", $content_menu)), 
             $this->db->quoteString($content_body), 
             $this->db->quoteString($content_css), 
-            $this->db->quoteString($content_tags), 
             intval($content_visibility), 
             time(), 
             time(), 
@@ -149,7 +148,7 @@ class XoopsContentHandler extends XoopsObjectHandler
             intval($content_reads), 
             intval($content_status));
         } else {
-        	$sql = sprintf("UPDATE %s SET content_catid=%u, content_supid=%u, content_uid=%u, content_title=%s, content_menu=%s, content_body=%s, content_css=%s, content_tags=%s, content_visibility=%u, content_updated=%u, content_weight=%u, content_reads=%u, content_status=%u WHERE content_id=%u", 
+        	$sql = sprintf("UPDATE %s SET content_catid=%u, content_supid=%u, content_uid=%u, content_title=%s, content_menu=%s, content_body=%s, content_css=%s, content_visibility=%u, content_updated=%u, content_weight=%u, content_reads=%u, content_status=%u WHERE content_id=%u", 
         	$this->db->prefix('icmscontent'), 
         	intval($content_catid), 
         	intval($content_supid), 
@@ -157,8 +156,7 @@ class XoopsContentHandler extends XoopsObjectHandler
         	$this->db->quoteString($content_title),
         	$this->db->quoteString(str_replace(array("_","-","/","|",";")," ", $content_menu)), 
         	$this->db->quoteString($content_body),
-        	$this->db->quoteString($content_css),
-        	$this->db->quoteString($content_tags), 
+        	$this->db->quoteString($content_css), 
         	intval($content_visibility), 
         	time(), 
         	intval($content_weight), 
@@ -282,7 +280,7 @@ class XoopsContentHandler extends XoopsObjectHandler
     			$ret[$j] = '-'.$subccontents[$j];
     		}
     	}
-
+    	
     	return $ret;
     }
     
@@ -325,28 +323,6 @@ class XoopsContentHandler extends XoopsObjectHandler
     	}else{
     		return false;
     	}
-    }
-    
-    function getTags(){
-    	$ret = array();
-    	
-    	$sql = "SELECT content_tags FROM ".$this->db->prefix('icmscontent');
-        $result = $this->db->query($sql);
-        if (!$result) {
-            return $ret;
-        }
-        while (list($tags) = $this->db->fetchRow($result)) {
-        	$tag_arr = explode(",",$tags);
-        	foreach ($tag_arr as $tag){
-        		$tag = trim($tag);
-        		if (isset($ret[$tag])){
-        			$ret[$tag]++;
-        		}else{
-        			$ret[$tag] = 1;
-        		}
-        	}
-        }
-        return $ret;
     }
 }
 ?>

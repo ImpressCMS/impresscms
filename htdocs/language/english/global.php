@@ -115,7 +115,7 @@ define('_IMGMAXWIDTH','Max width allowed (pixels):');
 define('_IMGMAXHEIGHT','Max height allowed (pixels):');
 define('_IMAGECAT','Category:');
 define('_IMAGEFILE','Image file:');
-define('_IMGWEIGHT','Order:');
+define('_IMGWEIGHT','Display order in image manager:');
 define('_IMGDISPLAY','Display this image?');
 define('_IMAGEMIME','MIME type:');
 define('_FAILFETCHIMG', 'Could not get uploaded file %s');
@@ -277,11 +277,9 @@ define('_PDF_LOCAL_FONT', '');
 define('_CALENDAR_TYPE',''); // this value is for the local calendar used in this system, if you're not sure about this leave this value as it is!
 define('_CALENDAR','Calendar');
 define('_RETRYPOST','Sorry, a time-out occured. Would you like to post again ?'); // autologin hack GIJ
-
-############# added since 1.2 #############
-define('_QSEARCH','Quick Search');
-define('_PREV','Prev');
-define('_NEXT','Next');
+// Added since 1.1.1
+// change 0 to 1 if your language has a different numbering than latin`s alphabet
+define("_USE_LOCAL_NUM","0");
 define('_LCL_NUM0','0');
 define('_LCL_NUM1','1');
 define('_LCL_NUM2','2');
@@ -292,9 +290,5 @@ define('_LCL_NUM6','6');
 define('_LCL_NUM7','7');
 define('_LCL_NUM8','8');
 define('_LCL_NUM9','9');
-// change 0 to 1 if your language has a different numbering than latin`s alphabet
-define("_USE_LOCAL_NUM","0");
-define("_ICMS_DBUPDATED","Database Updated Successfully!");
-
 define('_TOGGLETINY','Toggle Editor');
 ?>

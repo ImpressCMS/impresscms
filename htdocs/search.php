@@ -118,13 +118,13 @@ if ($action != 'showallbyuser') {
             }
         }
         if (count($queries) == 0) {
-            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, icms_conv_nr2local($xoopsConfigSearch['keyword_min'])));
+            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
             exit();
         }
     } else {
         $query = trim($query);
         if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
-            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, icms_conv_nr2local($xoopsConfigSearch['keyword_min'])));
+            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, $xoopsConfigSearch['keyword_min']));
             exit();
         }
         $queries = array($myts->addSlashes($query));

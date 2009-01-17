@@ -51,7 +51,4 @@ define("_MI_SYSTEM_ADMENU18", "Content Manager");
 define("_MI_SYSTEM_ADMENU19", "Block Positions");
 define("_MI_SYSTEM_ADMENU20", "Symlink Manager");
 define("_MI_SYSTEM_ADMENU21", "Custom Tags");
-
-######################## Added in 1.2 ###################################
-define('_MI_SYSTEM_BNAME19', "Content Tags");
 ?>

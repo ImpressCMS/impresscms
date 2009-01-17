@@ -1,6 +1,8 @@
+<!-- We Need a legitimate way to pull this admin side styling - we cant just pull stylesheets in the middle of the page like this. Preload the stylesheet - or put it in icms.css
 <style type="text/css">
   <{$content_css}>
 </style>
+-->
 <div id="impress_content">
   <{if $showNav}>
     <div class="content_nav"><{$nav}></div>
@@ -11,12 +13,9 @@
     <{if $show_pinfo}><h2 class="content_title_info"><{$content_tinfo}></h2><{/if}>
   </div>
   <div class="content_body"><{$content_body}></div>
-  <{if $content_tags != ''}>
-    <div class="content_tags"><b><{$lang_tags}>:</b> <{$content_tags}></div>
-  <{/if}>
   <{if $showSubs}>
     <hr style="margin:20px;" />
-    <div id="content_subs">
+    <div class="subs">
       <div class="content_subs_header"><{$subs_label}></div>
       <{foreach item=sub from=$content_subs}>
         <div style="margin:5px;" class="content_subs_item <{cycle values="even,odd"}>">

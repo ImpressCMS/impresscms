@@ -105,7 +105,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             if (isset($limit) && $k == $limit) {
                 $sel = ' selected="selected"';
             }
-            $form .= '<option value="'.$k.'"'.$sel.'>'.icms_conv_nr2local($k).'</option>';
+            $form .= '<option value="'.$k.'"'.$sel.'>'.$k.'</option>';
         }
         $form .= '</select>&nbsp;<input type="hidden" name="fct" value="comments" /><input type="submit" value="'._GO.'" name="selsubmit" /></form>';
 
@@ -127,10 +127,10 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
             $icon = empty( $icon ) ? '/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/no_posticon.gif' : ( '/images/subject/' . htmlspecialchars( $icon, ENT_QUOTES ) );
             $icon = '<img src="' . XOOPS_URL . $icon  . '" alt="" />';
 
-            echo '<tr align="center"><td class="'.$class.'">'.$icon.'</td><td class="'.$class.'" align="'._GLOBAL_LEFT.'"><a href="admin.php?fct=comments&amp;op=jump&amp;com_id='.$i.'">'. $comments[$i]->getVar('com_title').'</a></td><td class="'.$class.'">'.formatTimestamp($comments[$i]->getVar('com_created'), 'm').'</td><td class="'.$class.'">'.$poster_uname.'</td><td class="'.$class.'">'.icms_conv_nr2local($comments[$i]->getVar('com_ip')).'</td><td class="'.$class.'">'.$module_array[$comments[$i]->getVar('com_modid')].'</td><td class="'.$class.'">'.$status_array2[$comments[$i]->getVar('com_status')].'</td><td class="'.$class.'" align="'._GLOBAL_RIGHT.'"><a href="admin/comments/comment_edit.php?com_id='.$i.'">'._EDIT.'</a> <a href="admin/comments/comment_delete.php?com_id='.$i.'">'._DELETE.'</a></td></tr>';
+            echo '<tr align="center"><td class="'.$class.'">'.$icon.'</td><td class="'.$class.'" align="'._GLOBAL_LEFT.'"><a href="admin.php?fct=comments&amp;op=jump&amp;com_id='.$i.'">'. $comments[$i]->getVar('com_title').'</a></td><td class="'.$class.'">'.formatTimestamp($comments[$i]->getVar('com_created'), 'm').'</td><td class="'.$class.'">'.$poster_uname.'</td><td class="'.$class.'">'.$comments[$i]->getVar('com_ip').'</td><td class="'.$class.'">'.$module_array[$comments[$i]->getVar('com_modid')].'</td><td class="'.$class.'">'.$status_array2[$comments[$i]->getVar('com_status')].'</td><td class="'.$class.'" align="'._GLOBAL_RIGHT.'"><a href="admin/comments/comment_edit.php?com_id='.$i.'">'._EDIT.'</a> <a href="admin/comments/comment_delete.php?com_id='.$i.'">'._DELETE.'</a></td></tr>';
         }
         echo '</table>';
-        echo '<table style="width: 100%; border: 0; margin: 3px; padding: 3px;"><tr><td>'.sprintf(_MD_AM_COMFOUND, '<b>'.icms_conv_nr2local($total).'</b>');
+        echo '<table style="width: 100%; border: 0; margin: 3px; padding: 3px;"><tr><td>'.sprintf(_MD_AM_COMFOUND, '<b>'.$total.'</b>');
         if ($total > $limit) {
             include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
             $nav = new XoopsPageNav($total, $limit, $start, 'start', 'fct=comments&amp;op=list&amp;limit='.$limit.'&amp;sort='.$sort.'&amp;order='.$order.'&amp;module='.$module);

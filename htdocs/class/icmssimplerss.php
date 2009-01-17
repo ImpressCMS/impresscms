@@ -2,7 +2,7 @@
 /**
 * Class handling RSS feeds, using SimplePie class
 *
-* SimplePie is a very fast and easy-to-use class, written in PHP, that puts the ?simple? back into ?really simple syndication?.
+* SimplePie is a very fast and easy-to-use class, written in PHP, that puts the �simple� back into �really simple syndication�.
 * Flexible enough to suit beginners and veterans alike, SimplePie is focused on speed, ease of use, compatibility and
 * standards compliance.
 *
@@ -11,7 +11,7 @@
 * @package		core
 * @since		1.2
 * @author		malanciault <marcan@impresscms.org)
-* @version		$Id$
+* @version		$Id: icmssimplerss.php 2386 2008-05-24 14:52:54Z malanciault $
 */
 
 include_once(ICMS_LIBRARIES_PATH . '/simplepie/simplepie.inc');

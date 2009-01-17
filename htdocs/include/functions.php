@@ -454,7 +454,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	 * Maybe we require to add a preload here too?
 	 * If this method is secure, needs to be discussed!
 	 */
-	 remove_usersxdays ();
+	 // remove_usersxdays ();
 	global $xoopsConfig, $xoopsLogger, $xoopsUserIsAdmin;
 	if(preg_match("/[\\0-\\31]|about:|script:/i", $url))
 	{
@@ -1269,7 +1269,7 @@ function icms_getUserSaltFromUname($uname = '')
 	$db =& Database::getInstance();
 	if($uname !== '')
 	{
-	    	$sql = $db->query("SELECT login_name, salt FROM ".$db->prefix('users')." WHERE login_name = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
+	    	$sql = $db->query("SELECT uname, salt FROM ".$db->prefix('users')." WHERE uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
 		list($uname, $salt) = $db->fetchRow($sql);
 	}
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
@@ -1290,7 +1290,7 @@ function icms_getUnameFromUserEmail($email = '')
 	$db =& Database::getInstance();
 	if($email !== '')
 	{
-	    	$sql = $db->query("SELECT login_name, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
+	    	$sql = $db->query("SELECT uname, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
 		list($uname, $email) = $db->fetchRow($sql);
 	}
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
@@ -1791,7 +1791,7 @@ function icms_escapeValue($value, $quotes = true)
 			$dd = opendir($d);
 			while($file = readdir($dd))
 			{
-		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'))
+		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != 'adminmenu_' . $xoopsConfig['language'] . '.php'))
 				{
 		  			unlink($d.$file);
 				}
@@ -1821,7 +1821,6 @@ function icms_conv_local2nr($string)
 	}
 		return $string;
 }
-
 /**
  * Get month name by its ID
  *
@@ -2548,11 +2547,11 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
  * To be used in ImpressCMS 1.2
  *
  **/
-
+/*
 function remove_usersxdays (){
 	$config_handler =& xoops_gethandler('config');
 	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-	$days = $xoopsConfigUser['delusers'];
+	$days = $xoopsConfigUser['enc_type'];
 	$member_handler = xoops_gethandler('member');
 	$criteria = new Criteria("level", 0); //points all inactive users
 	$users = $member_handler->getUsers($criteria);
@@ -2563,110 +2562,5 @@ function remove_usersxdays (){
 		}
 	}
 }
-
-function icms_convert_size($size){ 	 
-    if ($size >= 1073741824){ 	 
-        $ret = round((($size/1024)/1024)/1024,1).' Gb'; 	 
-    }elseif($size >= 1048576 && $size < 1073741824){ 	 
-        $ret = round(($size/1024)/1024,1).' Mb'; 	 
-    }elseif($size >= 1024 && $size < 1048576){ 	 
-        $ret = round(($size/1024),1).' Kb'; 	 
-    }else{ 	 
-        $ret = round(($size),1).' bytes'; 	 
-    } 	 
-    return $ret; 	 
-} 	 
-	  	 
-function icms_random_str($numchar){ 	 
-    $letras = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,x,w,y,z,1,2,3,4,5,6,7,8,9,0"; 	 
-    $array = explode(",", $letras); 	 
-    shuffle($array); 	 
-    $senha = implode($array, ""); 	 
-    return substr($senha, 0, $numchar); 	 
-}
-function icms_adminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1) {
-	global $xoopsModule, $xoopsConfig;
-	include_once XOOPS_ROOT_PATH . '/class/template.php';
-	if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
-		include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php';
-	} else {
-		include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/modinfo.php';
-	}
-	if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/admin.php')) {
-		include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/admin.php';
-	} else {
-		include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/admin.php';
-	}
-	include XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/menu.php';
-	$tpl = & new XoopsTpl();
-	$tpl->assign(array (
-		'headermenu' => $headermenu,
-		'adminmenu' => $adminmenu,
-		'current' => $currentoption,
-		'breadcrumb' => $breadcrumb,
-		'headermenucount' => count($headermenu
-	), 'submenus' => $submenus, 'currentsub' => $currentsub, 'submenuscount' => count($submenus)));
-	$tpl->display('db:system_admin_menu.html');
-}
-function icms_loadCommonLanguageFile() {
-	icms_loadLanguageFile('system', 'common');
-}
-function icms_getCurrentPage() {
-	$urls = icms_getCurrentUrls();
-	return $urls['full'];
-}
-/*function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
-	if (!$moduleName) {
-		global $xoopsModule;
-		$moduleName = $xoopsModule->getVar('dirname');
-	}
-	$icmsModule = & icms_getModuleInfo($moduleName);
-	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
-	if (!isset ($icmsModule)) {
-		return '';
-	}
-
-	if ($forBreadCrumb && (isset ($icmsModuleConfig['show_mod_name_breadcrumb']) && !$icmsModuleConfig['show_mod_name_breadcrumb'])) {
-		return '';
-	}
-	if (!$withLink) {
-		return $icmsModule->getVar('name');
-	} else {
-	    $seoMode = icms_getModuleModeSEO($moduleName);
-	    if ($seoMode == 'rewrite') {
-	    	$seoModuleName = icms_getModuleNameForSEO($moduleName);
-	    	$ret = XOOPS_URL . '/' . $seoModuleName . '/';
-	    } elseif ($seoMode == 'pathinfo') {
-	    	$ret = XOOPS_URL . '/modules/' . $moduleName . '/seo.php/' . $seoModuleName . '/';
-	    } else {
-			$ret = XOOPS_URL . '/modules/' . $moduleName . '/';
-	    }
-
-		return '<a href="' . $ret . '">' . $icmsModule->getVar('name') . '</a>';
-	}
-}*/
-function icms_getModuleNameForSEO($moduleName = false) {
-	$icmsModule = & icms_getModuleInfo($moduleName);
-	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
-	if (isset ($icmsModuleConfig['seo_module_name'])) {
-		return $icmsModuleConfig['seo_module_name'];
-	}
-	$ret = icms_getModuleName(false, false, $moduleName);
-	return (strtolower($ret));
-}
-function icms_getModuleModeSEO($moduleName = false) {
-	$icmsModule = & icms_getModuleInfo($moduleName);
-	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
-	return isset ($icmsModuleConfig['seo_mode']) ? $icmsModuleConfig['seo_mode'] : false;
-}
-function icms_getModuleIncludeIdSEO($moduleName = false) {
-	$icmsModule = & icms_getModuleInfo($moduleName);
-	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
-	return !empty ($icmsModuleConfig['seo_inc_id']);
-}
-function icms_getenv($key) {
-	$ret = '';
-	$ret = isset ($_SERVER[$key]) ? $_SERVER[$key] : (isset ($_ENV[$key]) ? $_ENV[$key] : '');
-	return $ret;
-}
+*/
 ?>

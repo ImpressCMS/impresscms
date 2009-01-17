@@ -108,7 +108,6 @@ define("XOOPS_MATCH_END",1);
 define("XOOPS_MATCH_EQUAL",2);
 define("XOOPS_MATCH_CONTAIN",3);
 
-define("ICMS_KERNEL_PATH", ICMS_ROOT_PATH."/kernel/");
 define("ICMS_INCLUDE_PATH", ICMS_ROOT_PATH."/include");
 define("ICMS_INCLUDE_URL", ICMS_ROOT_PATH."/include");
 define("ICMS_UPLOAD_PATH", ICMS_ROOT_PATH."/uploads");
@@ -120,10 +119,6 @@ define("ICMS_CACHE_PATH", ICMS_ROOT_PATH."/cache");
 define("ICMS_IMAGES_URL", ICMS_URL."/images");
 define("ICMS_EDITOR_PATH", ICMS_ROOT_PATH."/editors");
 define("ICMS_EDITOR_URL", ICMS_URL."/editors");
-define('ICMS_IMANAGER_FOLDER_PATH',ICMS_UPLOAD_PATH.'/imagemanager');
-define('ICMS_IMANAGER_FOLDER_URL',ICMS_UPLOAD_URL.'/imagemanager');
-
-
 /**
  * @todo make this $icms_images_setname as an option in preferences...
  */
@@ -195,15 +190,13 @@ if ( $xoopsConfig['gzip_compression'] == 1 && extension_loaded( 'zlib' ) && !ini
 }
 
 // #################### Error reporting settings ##################
-if (!isset($xoopsOption['nodebug']) || !$xoopsOption['nodebug']){
-	if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 ) {
-		error_reporting(E_ALL);
-		$xoopsLogger->enableRendering();
-		$xoopsLogger->usePopup = ( $xoopsConfig['debug_mode'] == 2 );
-	} else {
-		error_reporting(0);
-		$xoopsLogger->activated = false;
-	}
+if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 ) {
+	error_reporting(E_ALL);
+    $xoopsLogger->enableRendering();
+    $xoopsLogger->usePopup = ( $xoopsConfig['debug_mode'] == 2 );
+} else {
+	error_reporting(0);
+    $xoopsLogger->activated = false;
 }
 $xoopsSecurity->checkBadips();
 
@@ -245,9 +238,12 @@ $xoopsUserIsAdmin = false;
 $member_handler =& xoops_gethandler('member');
 global $sess_handler;
 $sess_handler =& xoops_gethandler('session');
-if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
+if($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '')
+{
 	session_id($_POST[$xoopsConfig['sslpost_name']]);
-} elseif ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0) {
+}
+elseif($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0)
+{
 	if (isset($_COOKIE[$xoopsConfig['session_name']])) {
     	session_id($_COOKIE[$xoopsConfig['session_name']]);
 	}
@@ -259,6 +255,8 @@ if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_
 
 session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
 
+if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {session_name($xoopsConfig['session_name']);}
+else {session_name("ICMSSESSION");}
 session_start();
 /*
 $sess_handler->securityLevel = 3;
@@ -419,6 +417,7 @@ if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/theme.p
 } else {
 	include_once XOOPS_ROOT_PATH."/language/english/theme.php";
 }
+// for RTL users
 @define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;
 @define( '_GLOBAL_RIGHT' , @_ADM_USE_RTL == 1 ? 'left' : 'right' ) ;
 // ################ Include page-specific lang file ################
@@ -436,9 +435,9 @@ if ( !defined("XOOPS_USE_MULTIBYTES") ) {
 	define("XOOPS_USE_MULTIBYTES",0);
 }
 
-if (!empty($_POST['theme_select']) && in_array($_POST['theme_select'], $xoopsConfig['theme_set_allowed'])) {
-	$xoopsConfig['theme_set'] = $_POST['theme_select'];
-    $_SESSION['xoopsUserTheme'] = $_POST['theme_select'];
+if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $xoopsConfig['theme_set_allowed'])) {
+	$xoopsConfig['theme_set'] = $_POST['xoops_theme_select'];
+    $_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
 } elseif (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {
 	$xoopsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
 }

@@ -118,7 +118,6 @@ foreach ($block_checkbox as $k=>$v){
   $r_block_tray->addElement($block_checkbox[$k]);
 }
 
-
 $op_hidden = new XoopsFormHidden("op", $op_value);
 $fct_hidden = new XoopsFormHidden("fct", "groups");
 $submit_button = new XoopsFormButton("", "groupsubmit", $submit_value, "submit");

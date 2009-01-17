@@ -1,15 +1,15 @@
-<div id="xoops_block_login_form">
+<div id="block_login_form">
   <form style="margin-top: 0px;" action="<{$xoops_url}>/user.php" method="post">
-    <{$block.lang_username}><br />
-    <input type="text" name="uname" size="12" value="<{$block.unamevalue}>" maxlength="75" /><br />
-    <{$block.lang_password}><br />
-    <input type="password" name="pass" size="12" maxlength="32" /><br />
+    <p><{$block.lang_username}></p>
+    <div><input type="text" name="uname" size="12" value="<{$block.unamevalue}>" maxlength="25" /><br /></div>
+    <p><{$block.lang_password}></p>
+    <div><input type="password" name="pass" size="12" maxlength="32" /><br /></div>
     <{if $block.rememberme }>
-    <input type="checkbox" name="rememberme" value="On" /><{$block.lang_rememberme}><br />
+    <div><input type="checkbox" name="rememberme" value="On" /><{$block.lang_rememberme}><br /></div>
     <{/if}>
-    <input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>" />
-    <input type="hidden" name="op" value="login" />
-    <input type="submit" value="<{$block.lang_login}>" /><br />
+    <div><input type="hidden" name="redirect" value="<{$xoops_requesturi}>" /></div>
+    <div><input type="hidden" name="op" value="login" /></div>
+    <div><input type="submit" value="<{$block.lang_login}>" /><br /></div>
     <{$block.sslloginlink}>
   </form>
   <{if $block.auth_openid}>

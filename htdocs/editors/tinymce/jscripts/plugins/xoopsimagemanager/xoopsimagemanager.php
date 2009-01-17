@@ -60,7 +60,7 @@ $html = "<img
 	alt=\"image\"
 	src=\"".XOOPS_URL."/images/imgsrc.gif\"
 
-	onclick=\"javascript:xoopspopup=openWithSelfMain('xoopsimagebrowser.php?target=src&type=tiny','imgmanager',985,470,1);\"
+	onclick=\"javascript:xoopspopup=openWithSelfMain('xoopsimagebrowser.php?target=src','imgmanager',800,430,1);\"
 	onmouseover=\"style.cursor='hand'\"
 	style=\"\" />\n";
 //	onclick='javascript:openWithSelfMain(\"".XOOPS_URL."/imagemanager.php?target=".$this->getName()."\",\"imgmanager\",400,430);'
@@ -189,7 +189,7 @@ echo ($html);
 									  <td>
 										<input id="onmouseoversrc" name="onmouseoversrc" type="text" value="" />
 <?php
-$html = "<img alt=\"image\" src=\"".XOOPS_URL."/images/imgsrc.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoversrc','imgmanager',985,470);\" onmouseover=\"style.cursor='hand'\" style=\"\" />\n";
+$html = "<img alt=\"image\" src=\"".XOOPS_URL."/images/imgsrc.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoversrc','imgmanager',800,430);\" onmouseover=\"style.cursor='hand'\" style=\"\" />\n";
 echo ($html);
 ?>
 										</td> 
@@ -208,7 +208,7 @@ echo ($html);
 									  <td>
 										<input id="onmouseoutsrc" name="onmouseoutsrc" type="text" value="" />
 <?php
-$html = "<img alt=\"image\" src=\"".XOOPS_URL."/images/imgsrc.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoutsrc','imgmanager',985,470);\" onmouseover=\"style.cursor='hand'\" style=\"\" />\n";
+$html = "<img alt=\"image\" src=\"".XOOPS_URL."/images/imgsrc.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoutsrc','imgmanager',800,430);\" onmouseover=\"style.cursor='hand'\" style=\"\" />\n";
 echo ($html);
 ?>
 										</td> 

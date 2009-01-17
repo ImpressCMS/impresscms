@@ -77,9 +77,8 @@ class XoopsImage extends XoopsObject
 	}
 	
 	function getInfo($path,$type='url',$ret=false){
-		$path = (substr($path,-1) != '/')?$path.'/':$path;
         if ($type == 'url'){
-        	$img = $path.$this->getVar('image_name');
+        	$img = $path.'/'.$this->getVar('image_name');
         }else{
         	$img = $path;
         }
@@ -179,7 +178,7 @@ class XoopsImageHandler extends XoopsObjectHandler
         if ($image->isNew()) {
             $image_id = $this->db->genId('image_image_id_seq');
             $sql = sprintf("INSERT INTO %s (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES ('%u', %s, %s, %s, '%u', '%u', '%u', '%u')", $this->db->prefix('image'), intval($image_id), $this->db->quoteString($image_name), $this->db->quoteString($image_nicename), $this->db->quoteString($image_mimetype), time(), intval($image_display), intval($image_weight), intval($imgcat_id));
-            if (!$result = $this->db->queryF($sql)) {
+            if (!$result = $this->db->query($sql)) {
                 return false;
             }
             if (empty($image_id)) {
@@ -187,7 +186,7 @@ class XoopsImageHandler extends XoopsObjectHandler
             }
             if (isset($image_body) && $image_body != '') {
                 $sql = sprintf("INSERT INTO %s (image_id, image_body) VALUES ('%u', %s)", $this->db->prefix('imagebody'), intval($image_id), $this->db->quoteString($image_body));
-                if (!$result = $this->db->queryF($sql)) {
+                if (!$result = $this->db->query($sql)) {
                     $sql = sprintf("DELETE FROM %s WHERE image_id = '%u'", $this->db->prefix('image'), intval($image_id));
                     $this->db->query($sql);
                     return false;
@@ -196,12 +195,12 @@ class XoopsImageHandler extends XoopsObjectHandler
             $image->assignVar('image_id', $image_id);
         } else {
             $sql = sprintf("UPDATE %s SET image_name = %s, image_nicename = %s, image_display = '%u', image_weight = '%u', imgcat_id = '%u' WHERE image_id = '%u'", $this->db->prefix('image'), $this->db->quoteString($image_name), $this->db->quoteString($image_nicename), intval($image_display), intval($image_weight), intval($imgcat_id), intval($image_id));
-            if (!$result = $this->db->queryF($sql)) {
+            if (!$result = $this->db->query($sql)) {
                 return false;
             }
             if (isset($image_body) && $image_body != '') {
                 $sql = sprintf("UPDATE %s SET image_body = %s WHERE image_id = '%u'", $this->db->prefix('imagebody'), $this->db->quoteString($image_body), intval($image_id));
-                if (!$result = $this->db->queryF($sql)) {
+                if (!$result = $this->db->query($sql)) {
                     $this->db->query(sprintf("DELETE FROM %s WHERE image_id = '%u'", $this->db->prefix('image'), intval($image_id)));
                     return false;
                 }

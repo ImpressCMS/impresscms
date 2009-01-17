@@ -15,8 +15,7 @@
 */
 
 $xoopsOption['pagetype'] = 'error';
-/** Including mainfile.php is required */
-include_once 'mainfile.php';
+include_once ('mainfile.php');
 
 $e = isset($_GET['e']) ? $_GET['e'] : 0;
 
@@ -27,7 +26,6 @@ if($e == 0) {
 }
 
 $xoopsOption['template_main'] = 'system_error.html';
-/** require header.php to start page rendering */
 require_once ICMS_ROOT_PATH.'/header.php';
 
 $siteName = $xoopsConfig['sitename'];
@@ -42,6 +40,5 @@ $xoopsTpl->assign('lang_advanced_search', _ERR_ADVANCED_SEARCH);
 $xoopsTpl->assign('lang_start_again', _ERR_START_AGAIN);
 $xoopsTpl->assign('lang_search_our_site', _ERR_SEARCH_OUR_SITE);
 
-/** require footer.php to complete page rendering */
 require_once ICMS_ROOT_PATH.'/footer.php';
 ?>

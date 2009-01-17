@@ -14,15 +14,6 @@ request by clicking on the link below:
 
 {X_UACTLINK}
 
-To be able to login the site:
-
-Your username:
-{X_USERNAME}
-Your display name:
-{X_USERLOGINNAME}
-Your password:
-{X_USERPASSWORD}
-
 -----------
 Best Regards
 {X_SITENAME}

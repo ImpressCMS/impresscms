@@ -16,12 +16,6 @@
 $xoopsOption['pagetype'] = "pmsg";
 
 include "mainfile.php";
-		$module_handler = xoops_gethandler('module');
-		$messenger_module = $module_handler->getByDirname('messenger');
-		if ($messenger_module && $messenger_module->getVar('isactive')) {
-    	header("location: ./messenger.php" );
-    	exit();
-		}
 $reply = !empty($_GET['reply']) ? 1 : 0;
 $send = !empty($_GET['send']) ? 1 : 0;
 $send2 = !empty($_GET['send2']) ? 1 : 0;
@@ -170,7 +164,7 @@ if ($xoopsUser) {
         echo "</form>\n";
     }
 } else {
-    echo _PM_SORRY."<br /><br /><a href='".ICMS_URL."/register.php'>"._PM_REGISTERNOW."</a>.";
+    echo "<div>"._PM_SORRY."<br /><br /><a href='".ICMS_URL."/register.php'>"._PM_REGISTERNOW."</a>.</div>";
 }
 
 xoops_footer();

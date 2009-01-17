@@ -41,8 +41,8 @@ xoops_cp_header();
 
 if ( $op == "form" ) {
     $member_handler =& xoops_gethandler('member');
-    $acttotal = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0, '>')));
-    $inacttotal = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0)));
+    $acttotal = $member_handler->getUserCount(new Criteria('level', 0, '>'));
+    $inacttotal = $member_handler->getUserCount(new Criteria('level', 0));
     include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
     $group_select = new XoopsFormSelectGroup(_AM_GROUPS, "selgroups", null, false, 5, true);
     $uname_text = new XoopsFormText("", "user_uname", 30, 60);
@@ -353,7 +353,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
     if ( $total == 0 ) {
         echo "<h4>"._AM_NOFOUND,"</h4>";
     } elseif ( $start < $total ) {
-        echo sprintf(_AM_USERSFOUND, icms_conv_nr2local($total))."<br />";
+        echo sprintf(_AM_USERSFOUND, $total)."<br />";
         echo "<form action='admin.php' method='post' name='memberslist' id='memberslist'><input type='hidden' name='op' value='delete_many' />
         <table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'><tr><th align='center'><input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"memberslist\", \"memberslist_checkall\");' /></th><th align='center'>"._AM_AVATAR."</th><th align='center'>"._AM_UNAME."</th><th align='center'>"._AM_REALNAME."</th><th align='center'>"._AM_EMAIL."</th><th align='center'>"._AM_PM."</th><th align='center'>"._AM_URL."</th><th align='center'>"._AM_REGDATE."</th><th align='center'>"._AM_LASTLOGIN."</th><th align='center'>"._AM_POSTS."</th><th align='center'>&nbsp;</th></tr>";
         $criteria->setSort($sort);
@@ -388,7 +388,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
             } else {
                 echo "&nbsp;";
             }
-            echo "</td><td align='center'>".icms_conv_nr2local($foundusers[$j]->getVar("posts"))."</td>";
+            echo "</td><td align='center'>".$foundusers[$j]->getVar("posts")."</td>";
             echo "<td align='center'><a href='".XOOPS_URL."/modules/system/admin.php?fct=users&amp;uid=".$foundusers[$j]->getVar("uid")."&amp;op=modifyUser'>"._EDIT."</a></td></tr>\n";
         }
         echo "<tr class='foot'><td><select name='fct'><option value='users'>"._DELETE."</option><option value='mailusers'>"._AM_SENDMAIL."</option>";

@@ -133,12 +133,12 @@ class IcmsCaptcha {
 
 		$is_valid = false;
 
-		// Skip CAPTCHA for member if set
-		if( is_object($GLOBALS["xoopsUser"]) && !empty($skipMember) ) {
+		// Skip CAPTCHA for member if set & Kept for backward compatibilities
+/*		if( is_object($GLOBALS["xoopsUser"]) && !empty($skipMember) ) {
 			$is_valid = true;
-
+*/
 		// Kill too many attempts
-		}elseif(!empty($maxAttempts) && $_SESSION['IcmsCaptcha_attempt_'.$sessionName] > $maxAttempts) {
+		/*}else*/if(!empty($maxAttempts) && $_SESSION['IcmsCaptcha_attempt_'.$sessionName] > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 
 		// Verify the code

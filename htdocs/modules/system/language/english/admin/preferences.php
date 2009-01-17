@@ -412,6 +412,10 @@ define("_MD_AM_AUTHOPENID","Enable OpenID authentication");
 define("_MD_AM_AUTHOPENIDDSC","Select Yes to enable OpenID authentication. This will allow users to login on the site using their OpenID account. For complete information about the OpenID Integration in ImpressCMS, please visit <a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID'>our wiki</a>.");
 define("_MD_AM_USE_GOOGLE_ANA"," Enable Google Analytics?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC","");
+define("_MD_AM_JALALICAL","Use Extended Calendar with Jalali?");
+define("_MD_AM_JALALICALDSC","By selecting this, you`ll have an extended calendar on forms.<br />Please be aware, this calendar may not work in some Browsers.");
+
+define("_MD_AM_UNABLEENCCLOSED","Database Update Failed, You can't change password encryption whilst the site is closed");
 // CAPTCHA Category
 define("_MD_AM_CAPTCHA","Captcha Settings");
 define("_MD_AM_CAPTCHA_MODE","Captcha mode");
@@ -446,36 +450,4 @@ define("_MD_AM_CAPTCHA_TXT","Text");
 define("_MD_AM_CAPTCHA_OFF","Disabled");
 define("_MD_AM_CAPTCHA_SKIPCHAR","Skip characters");
 define("_MD_AM_CAPTCHA_SKIPCHARDSC","This option will skip the entered characters when generating Captcha");
-
-######################## Added in 1.2 ###################################
-define('_MD_AM_PAGISTYLE','Style of the paginations links:');
-define('_MD_AM_PAGISTYLE_DESC','Select the style of the paginations links.');
-define('_MD_AM_ALLWCHGUNAME', 'Allow users to change Display Name?');
-define('_MD_AM_ALLWCHGUNAMEDSC', '');
-define("_MD_AM_JALALICAL","Use Extended Calendar with Jalali?");
-define("_MD_AM_JALALICALDSC","By selecting this, you`ll have an extended calendar on forms.<br />Please be aware, this calendar may not work in some Browsers.");
-define("_MD_AM_NOMAILPROTECT","None");
-define("_MD_AM_GDMAILPROTECT","GD protection");
-define("_MD_AM_REMAILPROTECT","re-Captcha");
-define("_MD_AM_RECPRVKEY","reCaptcha private api code");
-define("_MD_AM_RECPRVKEY_DESC","");
-define("_MD_AM_RECPUBKEY","reCaptcha public api code");
-define("_MD_AM_RECPUBKEY_DESC","");
-define("_MD_AM_CONT_NUMPAGES","Number of pages on list by tag mode");
-define("_MD_AM_CONT_NUMPAGESDSC","Define the number of pages to show in user side on list by tag mode.");
-define("_MD_AM_CONT_TEASERLENGTH","Teaser Length");
-define("_MD_AM_CONT_TEASERLENGTHDSC","Number of characters of the page teaser in list by tag mode.<br />Set to 0 to not limit.");
-define("_MD_AM_STARTPAGEDSC","Select the desired Module or Page for your start page by each group.");
-define("_MD_AM_DELUSRES","Removing inactive users");
-define("_MD_AM_DELUSRESDSC","This Option will remove users who have registered but have not activated their accounts for X days.<br />Please enter an amount of days.");
-define("_MD_AM_PLUGINS","Plugins Manager");
-define("_MD_AM_SELECTSPLUGINS","Select allowed plugins to be used");
-define("_MD_AM_SELECTSPLUGINS_DESC","You can hereby select which plugins are used to sanitize your texts.");
-define("_MD_AM_GESHI_DEFAULT","Select plugin to be used for geshi");
-define("_MD_AM_GESHI_DEFAULT_DESC","GeSHi (Generic Syntax Hilighter) is a syntax highlighter for your codes.");
-define("_MD_AM_SELECTSHIGHLIGHT","Select type of highlighter for the codes");
-define("_MD_AM_SELECTSHIGHLIGHT_DESC","You can hereby select which highlighter is used to highlight your codes.");
-define("_MD_AM_HIGHLIGHTER_GESHI","GeSHi highlighter");
-define("_MD_AM_HIGHLIGHTER_PHP","php highlighter");
-define("_MD_AM_HIGHLIGHTER_OFF","Disabled");
 ?>

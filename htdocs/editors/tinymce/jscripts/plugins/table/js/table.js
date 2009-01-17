@@ -12,7 +12,7 @@ function insertTable() {
 	tinyMCEPopup.restoreSelection();
 
 	if (!AutoValidator.validate(formObj)) {
-		tinyMCEPopup.alert(inst.getLang('invalid_data'));
+		alert(inst.getLang('invalid_data'));
 		return false;
 	}
 
@@ -46,13 +46,13 @@ function insertTable() {
 
 	// Validate table size
 	if (colLimit && cols > colLimit) {
-		tinyMCEPopup.alert(inst.getLang('table_dlg.col_limit').replace(/\{\$cols\}/g, colLimit));
+		alert(inst.getLang('table_col_limit', '', true, {cols : colLimit}));
 		return false;
 	} else if (rowLimit && rows > rowLimit) {
-		tinyMCEPopup.alert(inst.getLang('table_dlg.row_limit').replace(/\{\$rows\}/g, rowLimit));
+		alert(inst.getLang('table_row_limit', '', true, {rows : rowLimit}));
 		return false;
 	} else if (cellLimit && cols * rows > cellLimit) {
-		tinyMCEPopup.alert(inst.getLang('table_dlg.cell_limit').replace(/\{\$cells\}/g, cellLimit));
+		alert(inst.getLang('table_cell_limit', '', true, {cells : cellLimit}));
 		return false;
 	}
 
@@ -87,7 +87,7 @@ function insertTable() {
 			elm.insertBefore(capEl, elm.firstChild);
 		}
 
-		if (width && inst.settings.inline_styles) {
+		if (width && /(pt|em|cm)$/.test(width)) {
 			dom.setStyle(elm, 'width', width);
 			dom.setAttrib(elm, 'width', '');
 		} else {
@@ -100,13 +100,10 @@ function insertTable() {
 		dom.setAttrib(elm, 'bgColor', '');
 		dom.setAttrib(elm, 'background', '');
 
-		if (height && inst.settings.inline_styles) {
+		if (height) {
 			dom.setStyle(elm, 'height', height);
 			dom.setAttrib(elm, 'height', '');
-		} else {
-			dom.setAttrib(elm, 'height', height, true);
-			dom.setStyle(elm, 'height', '');
- 		}
+		}
 
 		if (background != '')
 			elm.style.backgroundImage = "url('" + background + "')";
@@ -152,7 +149,7 @@ function insertTable() {
 	html += makeAttrib('cellpadding', cellpadding);
 	html += makeAttrib('cellspacing', cellspacing);
 
-	if (width && inst.settings.inline_styles) {
+	if (width && /(pt|em|cm)$/.test(width)) {
 		if (style)
 			style += '; ';
 

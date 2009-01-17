@@ -60,8 +60,7 @@ class IcmsCaptchaImage {
 		$config_handler =& xoops_gethandler('config');
 		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
 		$rule = $IcmsConfigCaptcha['captcha_casesensitive'] ? constant("ICMS_CAPTCHA_RULE_CASESENSITIVE") : constant("ICMS_CAPTCHA_RULE_CASEINSENSITIVE");
-		$ret = "<img id='captcha' src='" . ICMS_URL. "/class/captcha/scripts/img.php' onclick=\"this.src='" . ICMS_URL. "/class/captcha/scripts/img.php?refresh='+Math.random()"."\" align='absmiddle'  style='cursor: pointer;' alt='".htmlspecialchars($rule, ENT_QUOTES)."' />";
-		
+		$ret = "<img id='captcha' src='" . ICMS_URL. "/class/captcha/scripts/img.php' onclick=\"this.src='" . ICMS_URL. "/class/captcha/scripts/img.php?refresh='+Math.random()"."\" style='cursor: pointer;margin-left: auto;margin-right: auto;text-align:center;' alt='".htmlspecialchars($rule, ENT_QUOTES)."' />";
 		return $ret;
 	}
 

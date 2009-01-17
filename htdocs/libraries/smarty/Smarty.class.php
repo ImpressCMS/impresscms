@@ -1183,7 +1183,7 @@ class Smarty {
 				##############################################################################################
 				$config_handler = & xoops_gethandler ( 'config' );
 				$xoopsConfigPersona = & $config_handler->getConfigsByCat ( XOOPS_CONF_PERSONA );
-				if ( $xoopsConfigPersona ['email_protect'] != 0 ) {
+				if (($xoopsConfigPersona ['email_protect']) && (function_exists ( 'gd_info' ))) {
 					if (preg_match_all ( "/([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i", $_smarty_results, $texto )) {
 						$patterns = array ( );
 						$replacements = array ( );
@@ -1191,16 +1191,8 @@ class Smarty {
 							if (preg_match_all ( "/value=['\"]$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/$email(.*?)<\/textarea>/i", $_smarty_results, $texto1 )) { //Dont allow to change the email inside input or textarea form fields
 								continue;
 							}
-							$protection_type = intval($xoopsConfigPersona['email_protect']);
-							if($protection_type == 1 && (function_exists ( 'gd_info' ))) {
 							$patterns [] = '/' . $email . '/';
 							$replacements [] = "<img src='" . XOOPS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
-							} // uses gd protection methode.
-							elseif($protection_type == 2 && isset($xoopsConfigPersona['recprvkey']) && $xoopsConfigPersona['recprvkey'] != '' && isset($xoopsConfigPersona['recpubkey']) && $xoopsConfigPersona['recpubkey'] != ''){
-							require_once ICMS_LIBRARIES_PATH.'/recaptcha/recaptchalib.php';
-							$patterns [] = '/' . $email . '/';
-							$replacements [] = recaptcha_mailhide_html ($xoopsConfigPersona['recpubkey'], $xoopsConfigPersona['recprvkey'], $email);;
-							}// using reCaptcha methode
 						}
 						$_smarty_results = preg_replace ( $patterns, $replacements, $_smarty_results );
 					}
@@ -1229,7 +1221,7 @@ class Smarty {
 				##############################################################################################
 				$config_handler = & xoops_gethandler ( 'config' );
 				$xoopsConfigPersona = & $config_handler->getConfigsByCat ( XOOPS_CONF_PERSONA );
-				if ( $xoopsConfigPersona ['email_protect'] != 0 ) {
+				if (($xoopsConfigPersona ['email_protect']) && (function_exists ( 'gd_info' ))) {
 					if (preg_match_all ( "/([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i", $_smarty_results, $texto )) {
 						$patterns = array ( );
 						$replacements = array ( );
@@ -1237,16 +1229,8 @@ class Smarty {
 							if (preg_match_all ( "/value=['\"]$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/$email(.*?)<\/textarea>/i", $_smarty_results, $texto1 )) { //Dont allow to change the email inside input or textarea form fields
 								continue;
 							}
-							$protection_type = intval($xoopsConfigPersona['email_protect']);
-							if($protection_type == 1 && (function_exists ( 'gd_info' ))) {
 							$patterns [] = '/' . $email . '/';
 							$replacements [] = "<img src='" . XOOPS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
-							} // uses gd protection methode.
-							elseif($protection_type == 2 && isset($xoopsConfigPersona['recprvkey']) && $xoopsConfigPersona['recprvkey'] != '' && isset($xoopsConfigPersona['recpubkey']) && $xoopsConfigPersona['recpubkey'] != ''){
-							require_once ICMS_LIBRARIES_PATH.'/recaptcha/recaptchalib.php';
-							$patterns [] = '/' . $email . '/';
-							$replacements [] = recaptcha_mailhide_html ($xoopsConfigPersona['recpubkey'], $xoopsConfigPersona['recprvkey'], $email);;
-							}// using reCaptcha methode
 						}
 						$_smarty_results = preg_replace ( $patterns, $replacements, $_smarty_results );
 					}

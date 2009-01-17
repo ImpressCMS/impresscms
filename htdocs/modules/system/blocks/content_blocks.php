@@ -27,7 +27,7 @@ function b_content_menu_show($options) {
         }
     $block['showsubs'] = $options[2];
     $block['selcolor'] = $options[3];
-    $block['menu'] = getPages($options[2],$options[0],$options[1],$options[4]);
+    $block['menu'] = getPages($options[2],$options[0],$options[1]);
 
     return $block;
 }
@@ -67,8 +67,7 @@ function b_content_menu_edit($options){
     }
     $form .= '&nbsp;<input type="radio" name="options[2]" value="0"'.$chk.' />'._NO;
     $form .= '<br />'._MB_SYSTEM_SELCOLOR.'&nbsp;<input type="text" name="options[3]" value="'.$options[3].'" />';
-    $form .= '<br />'._MB_SYSTEM_CONTID.'&nbsp;<input type="text" name="options[4]" value="'.$options[4].'" />';
-    
+
     return $form;
 }
 
@@ -101,8 +100,8 @@ function b_content_show($options) {
     
     $block["content_title"] = $impress_content->getVar('content_title');
     $block["isAdmin"] = $adminperm;
-    $opts = '<a href="'.XOOPS_URL.'/modules/system/admin.php?fct=content&op=editcontent&content_id='.$impress_content->getVar('content_id').'"><img src="'.XOOPS_URL.'/modules/system/images/edit_big.png" title="'._CT_EDIT_CONTENT.'" alt="'._CT_EDIT_CONTENT.'" /></a>';
-    $opts .= '<a href="'.XOOPS_URL.'/modules/system/admin.php?fct=content&op=delcontent&content_id='.$impress_content->getVar('content_id').'"><img src="'.XOOPS_URL.'/modules/system/images/delete_big.png" title="'._CT_DELETE_CONTENT.'" alt="'._CT_DELETE_CONTENT.'" /></a>';
+    $opts = '<a href="'.XOOPS_URL.'/modules/system/admin.php?fct=content&op=editcontent&content_id='.$impress_content->getVar('content_id').'"><img src="'.XOOPS_URL.'/modules/system/admin/content/images/edit_big.png" title="'._CT_EDIT_CONTENT.'" alt="'._CT_EDIT_CONTENT.'" /></a>';
+    $opts .= '<a href="'.XOOPS_URL.'/modules/system/admin.php?fct=content&op=delcontent&content_id='.$impress_content->getVar('content_id').'"><img src="'.XOOPS_URL.'/modules/system/admin/content/images/delete_big.png" title="'._CT_DELETE_CONTENT.'" alt="'._CT_DELETE_CONTENT.'" /></a>';
     $block["content_admlinks"] = $opts;
     $member_handler =& xoops_gethandler('member');
     $autor =& $member_handler->getUser($impress_content->getVar('content_uid'));
@@ -285,18 +284,5 @@ function getPages($showsubs = true, $sort='content_weight', $order='ASC', $conte
     }
 
     return $pages;
-}
-
-function b_content_tagmenu_show($options) {
-    global $xoopsUser;
-
-    $block = array();
-
-    $content_handler =& xoops_gethandler('content');
-    $tags = $content_handler->getTags();
-    arsort($tags);
-    $block['tags'] = $tags;
-
-    return $block;
 }
 ?>

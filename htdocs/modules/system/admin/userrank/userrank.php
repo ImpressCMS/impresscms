@@ -57,8 +57,8 @@ function RankForumAdmin()
         }
         echo "<tr class='$class' align='center'>
         <td align='"._GLOBAL_LEFT."'>".$rank['rank_title']."</td>
-        <td>".icms_conv_nr2local($rank['rank_min'])."</td>
-        <td>".icms_conv_nr2local($rank['rank_max'])."</td>
+        <td>".$rank['rank_min']."</td>
+        <td>".$rank['rank_max']."</td>
         <td>";
         if ($rank['rank_image'] && file_exists(XOOPS_UPLOAD_PATH.'/'.$rank['rank_image'])) {
             echo '<img src="'.XOOPS_UPLOAD_URL.'/'.$rank['rank_image'].'" alt="" /></td>';

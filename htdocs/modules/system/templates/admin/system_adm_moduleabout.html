@@ -1,7 +1,6 @@
-<script language="javascript" src="<{$xoops_url}>/include/linkexternal.js"></script>
 <img src='<{$module_url}><{$module_image}>' alt='<{$module_name}>' style='float: <{$smarty.const._GLOBAL_LEFT}>; margin-right: 10px;'/></a>
 <div style='margin-top: 1px; color: #33538e; margin-bottom: 4px; font-size: 18px; line-height: 18px; font-weight: bold;'>
-	<{$module_name}> version <{$module_version}><{if $module_status_version}> (<{$module_status_version}>)<{/if}>
+	<{$module_name}> version <{$module_version}> (<{$module_status_version}>)
 </div>
 
 <div style='line-height: 16px; font-weight: bold;'>
@@ -67,11 +66,11 @@
 		</tr>
 	<{/if}>
 
-	<{if $module_people_translators}>
+	<{if $module_people_translaters}>
 		<tr>
 			<td class='head' style="vertical-align: top;" width = '150px'><{$smarty.const._MODABOUT_PEOPLE_TRANSLATERS}></td>
 			<td class='even'>
-			    <{foreach item=person from=$module_people_translators}>
+			    <{foreach item=person from=$module_people_translaters}>
 			    	<div><{$person}></div>
 			    <{/foreach}>
 			</td>
@@ -140,7 +139,7 @@
 	<{if $module_support_site_name}>
 		<tr>
 			<td class='head' width = '200px'><{$smarty.const._MODABOUT_MODULE_SUPPORT}></td>
-			<td class='even'><a href="<{$module_support_site_url}>" rel="external"><{$module_support_site_name}></a></td>
+			<td class='even'><a href="<{$module_developer_support_site_url}>" rel="external"><{$module_support_site_name}></a></td>
 		</tr>
 	<{/if}>
 
@@ -159,33 +158,15 @@
 	<{/if}>
 </table>
 
-<{if $module_manual}>
 <table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
 	<tr>
-		<td colspan='2' class='bg3'><b><{$smarty.const._MODABOUT_MANUAL}></b></td>
+		<td class='bg3'><b><{$smarty.const._MODABOUT_MODULE_DISCLAIMER}></b></td>
 	</tr>
-		<tr>
-			<td class='head' style="vertical-align: top;" width = '150px'><{$smarty.const._MODABOUT_MANUAL_WIKI}></td>
-			<td class='even'>
-				<{foreach item=manual from=$module_manual}>
-					<div><{$manual}></div>
-				<{/foreach}>
-			</td>
-		</tr>	
+
+	<tr>
+		<td class='even'><{$module_warning}></td>
+	</tr>
 </table>
-<{/if}>
-
-<{if $module_warning}>
-	<table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
-		<tr>
-			<td class='bg3'><b><{$smarty.const._MODABOUT_MODULE_DISCLAIMER}></b></td>
-		</tr>
-
-		<tr>
-			<td class='even'><{$module_warning}></td>
-		</tr>
-	</table>
-<{/if}>
 
 <{if $module_author_word}>
 	<table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
@@ -199,30 +180,14 @@
 	</table>
 <{/if}>
 
-<{if $module_version_history}>
-	<table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
-		<tr>
-			<td class='bg3'><b><{$smarty.const._MODABOUT_VERSION_HISTORY}></b></td>
-		</tr>
-
-		<tr>
-			<td class='even'>
-				<div style='overflow-y: auto; height: 500px; line-height: 18px;'><{$module_version_history}></div>
-			</td>
-		</tr>
-	</table>
-<{/if}>
-
-<{if $module_license_txt}>
 <table width='100%' cellspacing="1" cellpadding="3" border="0" class="outer" style="margin-top: 15px;">
 	<tr>
-		<td class='bg3'><b><{$smarty.const._MODABOUT_MODULE_LICENSE}></b></td>
+		<td class='bg3'><b><{$smarty.const._MODABOUT_VERSION_HISTORY}></b></td>
 	</tr>
 
 	<tr>
 		<td class='even'>
-			<div style='overflow-y: auto; height: 500px; line-height: 18px;'><{$module_license_txt}></div>
+			<div style='line-height: 18px;'><{$module_version_history}></div>
 		</td>
 	</tr>
 </table>
-<{/if}>

@@ -49,12 +49,6 @@ if(file_exists(ICMS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language
 	include ICMS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin.php';
 }
 else {include ICMS_ROOT_PATH.'/modules/system/language/english/admin.php';}
-
-// Include lang defines for About page
-if ( file_exists( ICMS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/moduleabout.php' ) ) {
-	include_once ICMS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/moduleabout.php';
-} else { include ICMS_ROOT_PATH . '/language/english/moduleabout.php'; }
-
 include_once ICMS_ROOT_PATH.'/class/xoopsmodule.php';
 // Check if function call does exist (security)
 require_once ICMS_ROOT_PATH.'/class/xoopslists.php';
@@ -68,6 +62,18 @@ if(is_object($xoopsUser))
 	$xoopsModule =& XoopsModule::getByDirname('system');
 	if(!$xoopsUser->isAdmin($xoopsModule->mid())) {redirect_header(ICMS_URL.'/',3,_NOPERM);}
 	$admintest=1;
+	$sess_handler =& xoops_gethandler('session');
+	if(!$_SESSION['ad_sess_regen'])
+	{
+		$sess_handler->icms_sessionOpen(true);
+		$_SESSION['ad_sess_regen'] = true;
+	}
+	else
+	{
+		$sess_handler->icms_sessionOpen();
+		$_SESSION['ad_sess_regen'] = true;
+		$_SESSION['sess_regen'] = true;
+	}
 }
 else {redirect_header(ICMS_URL.'/',3,_NOPERM);}
 
