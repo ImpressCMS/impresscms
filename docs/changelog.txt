@@ -1,8 +1,8 @@
 ImpressCMS ChangeLog
 
-== Impresscms 1.1.3==
+== Impresscms 1.2==
 
-===2009-??-?? : 1.1.3 Beta===
+===2009-??-?? : 1.2 Alpha===
 
 '''Fixed'''
 * #2245090: Captcha being bypassed
@@ -405,7 +405,7 @@ ImpressCMS ChangeLog
 * #2103607 Core Userside: _RETRYPOST is missing (session_confim) (malanciault)
 
 
-===2008-05-22 : 1.1 Apha 1 ===
+===2008-05-22 : 1.1 Alpha 1 ===
 
 '''Added'''
 * New permission category in System Admin > Groups to configure what groups can be configured by a specific group (nekro)
