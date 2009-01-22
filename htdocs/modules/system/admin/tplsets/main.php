@@ -71,7 +71,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
                         if ($installed_mods[$moddir] > $filecount) {
                             $filecount = '<span style="color:#ff0000;">'.$filecount.'</span>';
                         }
-                    echo '<li>'.$module->getVar('name').' [<a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset='.$tplsetname.'&amp;moddir='.$moddir.'">'._LIST.'</a> (<b>'.$filecount.'</b>)]</li>';
+                    echo '<li>'.$module->getVar('name').' [<a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset='.$tplsetname.'&amp;moddir='.$moddir.'">'._LIST.'</a> (<b>'.icms_conv_nr2local($filecount).'</b>)]</li>';
                     }
                     unset($module);
                 }

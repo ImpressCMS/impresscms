@@ -74,11 +74,11 @@ function BannersAdmin()
         } else {
             $left = $imptotal-$impmade;
         }
-        echo "<td align='center'>$bid</td>
-        <td align='center'>$impmade</td>
-        <td align='center'>$left</td>
-        <td align='center'>$clicks</td>
-        <td align='center'>$percent%</td>
+        echo "<td align='center'>".icms_conv_nr2local($bid)."</td>
+        <td align='center'>".icms_conv_nr2local($impmade)."</td>
+        <td align='center'>".icms_conv_nr2local($left)."</td>
+        <td align='center'>".icms_conv_nr2local($clicks)."</td>
+        <td align='center'>".icms_conv_nr2local($percent)."%</td>
         <td align='center'>$name</td>
         <td align='center'><a href='admin.php?fct=banners&amp;op=BannerEdit&amp;bid=$bid'>"._AM_EDIT."</a> | <a href='admin.php?fct=banners&amp;op=BannerDelete&amp;bid=$bid&amp;ok=0'>"._AM_DELETE."</a></td><tr>";
     }
@@ -106,10 +106,10 @@ function BannersAdmin()
         $name = $myts->makeTboxData4Show($name);
         $percent = substr(100 * $clicks / $impressions, 0, 5);
         echo "
-        <td align='center'>$bid</td>
-        <td align='center'>$impressions</td>
-        <td align='center'>$clicks</td>
-        <td align='center'>$percent%</td>
+        <td align='center'>".icms_conv_nr2local($bid)."</td>
+        <td align='center'>".icms_conv_nr2local($impressions)."</td>
+        <td align='center'>".icms_conv_nr2local($clicks)."</td>
+        <td align='center'>".icms_conv_nr2local($percent)."%</td>
         <td align='center'>".formatTimestamp($datestart,"m")."</td>
         <td align='center'>".formatTimestamp($dateend,"m")."</td>
         <td align='center'>$name</td>
@@ -137,9 +137,9 @@ function BannersAdmin()
         $result2 = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("banner")." WHERE cid='".intval($cid)."'");
         list($numrows) = $xoopsDB->fetchRow($result2);
         echo "
-        <td align='center'>$cid</td>
+        <td align='center'>".icms_conv_nr2local($cid)."</td>
         <td align='center'>$name</td>
-        <td align='center'>$numrows</td>
+        <td align='center'>".icms_conv_nr2local($numrows)."</td>
         <td align='center'>$contact</td>
         <td align='center'>$email</td>
         <td align='center'><a href='admin.php?fct=banners&amp;op=BannerClientEdit&amp;cid=$cid'>"._AM_EDIT."</a> | <a href='admin.php?fct=banners&amp;op=BannerClientDelete&amp;cid=$cid'>"._AM_DELETE."</a></td><tr>";
@@ -165,7 +165,7 @@ function BannersAdmin()
             }
             echo "
             </select><br />
-            "._AM_IMPPURCHT."<input type='text' name='imptotal' size='12' maxlength='11' /> 0 = "._AM_UNLIMIT."<br />
+            "._AM_IMPPURCHT."<input type='text' name='imptotal' size='12' maxlength='11' /> ".icms_conv_nr2local(0)." = "._AM_UNLIMIT."<br />
             "._AM_IMGURLT."<input type='text' name='imageurl' size='50' maxlength='255' /><br />
             "._AM_CLICKURLT."<input type='text' name='clickurl' size='50' maxlength='255' /><br />
             "._AM_USEHTML." <input type='checkbox' name='htmlbanner' value='1' />
@@ -242,11 +242,11 @@ function BannerDelete($bid)
         $left = $imptotal-$impmade;
     }
     echo "
-        <td align='center'>$bid</td>
-        <td align='center'>$impmade</td>
-        <td align='center'>$left</td>
-        <td align='center'>$clicks</td>
-        <td align='center'>$percent%</td>
+        <td align='center'>".icms_conv_nr2local($bid)."</td>
+        <td align='center'>".icms_conv_nr2local($impmade)."</td>
+        <td align='center'>".icms_conv_nr2local($left)."</td>
+        <td align='center'>".icms_conv_nr2local($clicks)."</td>
+        <td align='center'>".icms_conv_nr2local($percent)."%</td>
         <td align='center'>$name</td>
         </tr></table><br />";
     xoops_confirm(array('fct' => 'banners', 'op' => 'BannerDelete2', 'bid' => $bid), 'admin.php', _AM_SUREDELE);
@@ -301,7 +301,7 @@ function BannerEdit($bid)
         $impressions = $imptotal;
     }
     echo "
-    "._AM_ADDIMPT."<input type='text' name='impadded' size='12' maxlength='11' /> "._AM_PURCHT."<b>$impressions</b> "._AM_MADET."<b>$impmade</b><br />
+    "._AM_ADDIMPT."<input type='text' name='impadded' size='12' maxlength='11' /> "._AM_PURCHT."<b>$impressions</b> "._AM_MADET."<b>".icms_conv_nr2local($impmade)."</b><br />
     "._AM_IMGURLT."<input type='text' name='imageurl' size='50' maxlength='200' value='".htmlspecialchars($imageurl, ENT_QUOTES)."' /><br />
     "._AM_CLICKURLT."<input type='text' name='clickurl' size='50' maxlength='200' value='".htmlspecialchars($clickurl, ENT_QUOTES)."' /><br />
     "._AM_USEHTML;

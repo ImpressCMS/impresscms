@@ -13,6 +13,9 @@
     <{if $show_pinfo}><h2 class="content_title_info"><{$content_tinfo}></h2><{/if}>
   </div>
   <div class="content_body"><{$content_body}></div>
+  <{if $content_tags != ''}>
+    <div class="content_tags"><b><{$lang_tags}>:</b> <{$content_tags}></div>
+  <{/if}>
   <{if $showSubs}>
     <hr style="margin:20px;" />
     <div class="subs">

@@ -15,7 +15,7 @@ include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 * @package		core
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmspreloadhandler.php 6931 2008-11-15 13:49:11Z pesian_stranger $
 */
 class IcmsPreloadHandler {
 
@@ -114,6 +114,7 @@ class IcmsPreloadHandler {
 	 * Triggers a specific event on all the libraries
 	 *
 	 * Here are the currently supported events:
+	 * - startCoreBoot : this event is triggered at the  start of the core booting process (start  of include/common.php)
 	 * - finishCoreBoot : this event is triggered at the end of the core booting process (end of include/common.php)
 	 * - adminHeader : this event is triggered when calling xoops_cp_header() and is used to output content in the head section of the admin side
 	 * - beforeFooter : this event is triggered when include/footer.php is called, at the begining of the file
@@ -160,7 +161,7 @@ class IcmsPreloadHandler {
 * @package		libraries
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmspreloadhandler.php 6931 2008-11-15 13:49:11Z pesian_stranger $
 */
 
 class IcmsPreloadItem {

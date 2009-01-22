@@ -32,7 +32,7 @@ function showDiv(type,id){
     <{if $pagecount > 0}>
     <{foreach item=page key=key from=$pages}>
       <tr class="<{cycle values="even,odd"}>" align="center">
-        <td><{$page.page_id}></td>
+        <td><{$page.pages_id}></td>
         <td><{$page.module}></td>
         <td align="<{$smarty.const._GLOBAL_LEFT}>"><{$page.page_title}></td>
         <td align="<{$smarty.const._GLOBAL_LEFT}>"><{$page.page_url}></td>

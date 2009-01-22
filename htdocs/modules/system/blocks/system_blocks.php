@@ -549,9 +549,9 @@ function b_system_themes_show($options)
     }
     $block = array();
     if ($options[0] == 1) {
-        $block['theme_select'] = "<p><img id=\"theme_img\" src=\"".XOOPS_THEME_URL."/".$xoopsConfig['theme_set']."/shot.gif\" alt=\"screenshot\" width=\"".intval($options[1])."\" /></p><div><select id=\"xoops_theme_select\" name=\"xoops_theme_select\" onchange=\"showImgSelected('theme_img', 'xoops_theme_select', 'themes', '/shot.gif', '".XOOPS_URL."');\">".$theme_options."</select><input type=\"submit\" value=\""._GO."\" /></div>";
+        $block['theme_select'] = "<img vspace=\"2\" id=\"theme_img\" src=\"".XOOPS_THEME_URL."/".$xoopsConfig['theme_set']."/shot.gif\" alt=\"screenshot\" width=\"".intval($options[1])."\" /><br /><select id=\"theme_select\" name=\"theme_select\" onchange=\"showImgSelected('theme_img', 'theme_select', 'themes', '/shot.gif', '".XOOPS_URL."');\">".$theme_options."</select><input type=\"submit\" value=\""._GO."\" />";
     } else {
-        $block['theme_select'] = '<p><select name="xoops_theme_select" onchange="submit();" size="10">'.$theme_options.'</select></p>';
+        $block['theme_select'] = '<select name="theme_select" onchange="submit();" size="3">'.$theme_options.'</select>';
     }
 
     $block['theme_select'] .= '<p>('.sprintf(_MB_SYSTEM_NUMTHEME, count($xoopsConfig['theme_set_allowed']).'').')</p>';

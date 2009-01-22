@@ -431,11 +431,69 @@ function xoops_module_update_system(&$module) {
 
     if ($dbVersion < $newDbVersion) {
     	echo "Database migrate to version " . $newDbVersion . "<br />";
-		icms_copyr(ICMS_ROOT_PATH.'/preload', ICMS_ROOT_PATH.'/preloads');
-		if (is_file(ICMS_ROOT_PATH.'/preloads')){
+		icms_copyr(ICMS_ROOT_PATH.'/preload', ICMS_ROOT_PATH.'/plugins/preloads');
+		if (is_file(ICMS_ROOT_PATH.'/plugins/preloads')){
 			icms_deleteFile(ICMS_ROOT_PATH.'/preload');
 		}
 		
+	}
+
+    $newDbVersion = 14;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+  		$table = new IcmsDatabasetable('users');
+	    if (!$table->fieldExists('login_name')) {
+	    	$table->addNewField('login_name', "varchar(255) NOT NULL default ''");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+	    global $xoopsDB;
+        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("users") . "` SET login_name=uname");
+	    unset($table);
+
+	}
+
+    $newDbVersion = 15;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+        $db = $GLOBALS['xoopsDB'];
+		$sql = "SELECT conf_id FROM `".$db->prefix('config')."` WHERE conf_name = 'email_protect'";
+		$result = $db->query($sql);
+		list($conf_id) = $db->FetchRow($result);
+		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " VALUES ('', '_MD_AM_NOMAILPROTECT', '0', " . $conf_id . ");");
+		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " VALUES ('', '_MD_AM_GDMAILPROTECT', '1', " . $conf_id . ");");
+		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " VALUES ('', '_MD_AM_REMAILPROTECT', '2', " . $conf_id . ");");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'select', conf_valuetype = 'text' WHERE conf_name = 'email_protect'");
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'recprvkey', '_MD_AM_RECPRVKEY', '', '_MD_AM_RECPRVKEY_DESC', 'textbox', 'text', 17);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'recpubkey', '_MD_AM_RECPUBKEY', '', '_MD_AM_RECPUBKEY_DESC', 'textbox', 'text', 17);
+	}
+
+
+    $newDbVersion = 16;
+
+    if ($dbVersion < $newDbVersion) {
+    	echo "Database migrate to version " . $newDbVersion . "<br />";
+        $db = $GLOBALS['xoopsDB'];
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '0', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
+        if (getDbValue($db, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"') == 0) {
+		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('12','_MD_AM_PLUGINS')");
+		}
+	    // Adding new function of Captcha
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS', addslashes(serialize(array('syntaxhighlightphp.php', 'hiddencontent.php'))), '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', 1);
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'code_sanitizer', '_MD_AM_SELECTSHIGHLIGHT', 'none', '_MD_AM_SELECTSHIGHLIGHT_DESC', 'select', 'text', 2);
+            $config_id = $db->getInsertId();
+            $sql = "INSERT INTO " . $db->prefix('configoption') .
+                    " (confop_id, confop_name, confop_value, conf_id)" .
+                    " VALUES" .
+                    " (NULL, '_MD_AM_HIGHLIGHTER_OFF', 'none', {$config_id})," .
+                    " (NULL, '_MD_AM_HIGHLIGHTER_PHP', 'php', {$config_id})," .
+                    " (NULL, '_MD_AM_HIGHLIGHTER_GESHI', 'geshi', {$config_id})";
+            if (!$db->queryF( $sql )) {
+                return false;
+            }
+	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'geshi_default', '_MD_AM_GESHI_DEFAULT', 'php', '_MD_AM_GESHI_DEFAULT_DESC', 'select_geshi', 'text', 3);
 	}
 
 

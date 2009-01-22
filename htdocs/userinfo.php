@@ -139,7 +139,7 @@ $xoopsTpl->assign('lang_posts', _US_POSTS);
 $xoopsTpl->assign('lang_basicInfo', _US_BASICINFO);
 $xoopsTpl->assign('lang_more', _US_MOREABOUT);
 $xoopsTpl->assign('lang_myinfo', _US_MYINFO);
-$xoopsTpl->assign('user_posts', $thisUser->getVar('posts'));
+$xoopsTpl->assign('user_posts', icms_conv_nr2local($thisUser->getVar('posts')));
 $xoopsTpl->assign('lang_lastlogin', _US_LASTLOGIN);
 $xoopsTpl->assign('lang_notregistered', _US_NOTREGISTERED);
 if ($xoopsConfigUser['allwshow_sig'] == 1) {

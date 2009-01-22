@@ -3615,7 +3615,7 @@ if (!class_exists('TCPDF', false)) {
 		* @since 2.3.000 (2008-03-05)
 		*/
 		public function unichr($c) {
-			if (!$this->isunicode) {
+			if ((!$this->isunicode) OR  ($this->CurrentFont['type'] == 'core') OR ($this->CurrentFont['type'] == 'TrueType') OR ($this->CurrentFont['type'] == 'Type1')) {
 				return chr($c);
 			} elseif ($c <= 0x7F) {
 				// one byte
@@ -4857,6 +4857,24 @@ if (!class_exists('TCPDF', false)) {
 				}
 			}
 		}
+		
+		/**
+		* Output Spot Colors Resources.
+		* @access protected
+		* @since 4.0.024 (2008-09-12)
+		*/
+		protected function _putspotcolors() {
+			foreach ($this->spot_colors as $name => $color) {
+				$this->_newobj();
+				$this->spot_colors[$name]['n'] = $this->n;
+				$this->_out('[/Separation /'.str_replace(' ', '#20', $name));
+				$this->_out('/DeviceCMYK <<');
+				$this->_out('/Range [0 1 0 1 0 1 0 1] /C0 [0 0 0 0] ');
+				$this->_out(sprintf('/C1 [%.4f %.4f %.4f %.4f] ', $color['c']/100, $color['m']/100, $color['y']/100, $color['k']/100));
+				$this->_out('/FunctionType 2 /Domain [0 1] /N 1>>]');
+				$this->_out('endobj');
+			}
+		}
 
 		/**
 		* Output Spot Colors Resources.
@@ -5510,7 +5528,7 @@ if (!class_exists('TCPDF', false)) {
 		 * @since 1.53.0.TC005 (2005-01-05)
 		 */
 		protected function UTF8StringToArray($str) {
-			if (!$this->isunicode) {
+			if ((!$this->isunicode) OR  ($this->CurrentFont['type'] == 'core') OR ($this->CurrentFont['type'] == 'TrueType') OR ($this->CurrentFont['type'] == 'Type1')) {
 				// split string into array of equivalent codes
 				$strarr = array();
 				$strlen = strlen($str);
@@ -7882,6 +7900,7 @@ if (!class_exists('TCPDF', false)) {
 			} else {
 				$this->x += $w;
 			}
+			$this->javascript .= "}";
 			$this->javascript .= "}";
 		}
 		
@@ -10997,6 +11016,16 @@ if (!class_exists('TCPDF', false)) {
 		*/
 		public function setListIndentWidth($width) {
 			return $this->customlistindent = floatval($width);
+        }
+        
+		/**
+		 * Set the character or string to be used as LI item symbol on UL lists.
+		 * @param string $symbol character or string to be used
+		 * @access public
+		 * @since 4.0.028 (2008-09-26)
+		 */
+		public function setLIsymbol($symbol='-') {
+			$this->lisymbol = $symbol;
         }
         
 	} // END OF TCPDF CLASS

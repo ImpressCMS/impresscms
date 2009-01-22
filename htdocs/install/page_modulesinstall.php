@@ -10,7 +10,7 @@
 * @package		installer
 * @since        1.0
 * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
-* @version		$Id$
+* @version		$Id: page_modulesinstall.php 2041 2008-05-06 20:57:24Z skenow $
 */
 /**
  *

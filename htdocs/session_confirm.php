@@ -9,7 +9,7 @@
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
+* @version		$Id: session_confirm.php 4070 2008-08-06 00:36:27Z pesian_stranger $
 */
 
 include "mainfile.php";

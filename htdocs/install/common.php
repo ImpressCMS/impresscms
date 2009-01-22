@@ -10,7 +10,7 @@
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author		modified by m0nty_
-* @version		$Id$
+* @version		$Id: common.php 4539 2008-08-25 01:23:55Z mrtheme $
 */
 /**
  *
@@ -250,9 +250,9 @@ $xoops =& new xos_kernel_Xoops2();
             $xoopsUserIsAdmin = $xoopsUser->isAdmin();
         }
     }
-    if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $xoopsConfig['theme_set_allowed'])) {
-        $xoopsConfig['theme_set'] = $_POST['xoops_theme_select'];
-        $_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
+    if (!empty($_POST['theme_select']) && in_array($_POST['theme_select'], $xoopsConfig['theme_set_allowed'])) {
+        $xoopsConfig['theme_set'] = $_POST['theme_select'];
+        $_SESSION['xoopsUserTheme'] = $_POST['theme_select'];
     } elseif (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {
         $xoopsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
     }

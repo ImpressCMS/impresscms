@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: sqlutility.php 261 2007-12-21 13:44:27Z malanciault $
 // sqlutility.php - defines utility class for MySQL database
 
 /**

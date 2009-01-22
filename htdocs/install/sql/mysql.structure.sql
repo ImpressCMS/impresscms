@@ -165,6 +165,7 @@ CREATE TABLE icmscontent (
   content_menu varchar(100) default NULL,
   content_body text,
   content_css text,
+  content_tags text,
   content_visibility int(10) NOT NULL default '3',
   content_created int(10) NOT NULL default '0',
   content_updated int(10) NOT NULL default '0',
@@ -336,6 +337,7 @@ CREATE TABLE imagebody (
 
 CREATE TABLE imagecategory (
   imgcat_id smallint(5) unsigned NOT NULL auto_increment,
+  imgcat_pid smallint(5) unsigned NOT NULL default '0',
   imgcat_name varchar(100) NOT NULL default '',
   imgcat_maxsize int(8) unsigned NOT NULL default '0',
   imgcat_maxwidth smallint(3) unsigned NOT NULL default '0',
@@ -344,6 +346,7 @@ CREATE TABLE imagecategory (
   imgcat_weight smallint(3) unsigned NOT NULL default '0',
   imgcat_type char(1) NOT NULL default '',
   imgcat_storetype varchar(5) NOT NULL default '',
+  imgcat_foldername varchar(100) default '',
   PRIMARY KEY  (imgcat_id),
   KEY imgcat_display (imgcat_display)
 ) TYPE=MyISAM;
@@ -618,8 +621,10 @@ CREATE TABLE users (
   user_viewoid tinyint(1) unsigned NOT NULL default '0',
   pass_expired tinyint(1) unsigned NOT NULL default '0',
   enc_type tinyint(2) unsigned NOT NULL default '1',
+  login_name varchar(255) NOT NULL default '',
   PRIMARY KEY  (uid),
   KEY uname (uname),
+  KEY login_name (login_name),
   KEY email (email),
   KEY uiduname (uid,uname),
   KEY unamepass (uname(10),pass(10))

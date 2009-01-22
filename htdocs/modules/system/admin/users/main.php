@@ -63,7 +63,7 @@ switch ($op)
 		if (@is_array($groups_hidden)) {
 			$groups = array_unique(array_merge($groups, $groups_hidden)) ;
 		}
-		updateUser($uid, $username, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups);
+		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups);
 	break;
 	case 'delUser':
 		xoops_cp_header();
@@ -150,7 +150,7 @@ switch ($op)
 	break;
 	case 'addUser':
 		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
-		if(!$username || !$email || !$password)
+		if(!$username || !$email || !$password || !$login_name)
 		{
 			$adduser_errormsg = _AM_YMCACF;
 		}
@@ -158,7 +158,7 @@ switch ($op)
 		{
 			$member_handler =& xoops_gethandler('member');
 			// make sure the username doesnt exist yet
-			if($member_handler->getUserCount(new Criteria('uname', $username)) > 0)
+			if($member_handler->getUserCount(new Criteria('uname', $username)) > 0 || $member_handler->getUserCount(new Criteria('login_name', $login_name)) > 0 )
 			{
 				$adduser_errormsg = 'User name '.$username.' already exists';
 			}elseif($member_handler->getUserCount(new Criteria('email', $email)) > 0){
@@ -171,6 +171,7 @@ switch ($op)
 				if(isset($user_viewoid)) {$newuser->setVar('user_viewoid',$user_viewoid);}
 				if(isset($attachsig)) {$newuser->setVar('attachsig',$attachsig);}
 				$newuser->setVar('name', $name);
+				$newuser->setVar('login_name', $login_name);
 				$newuser->setVar('uname', $username);
 				$newuser->setVar('email', $email);
 				$newuser->setVar('url', formatURL($url));
@@ -190,7 +191,7 @@ switch ($op)
 						xoops_cp_footer();
 						exit();
 					}
-					if($password == $username || $password == icms_utf8_strrev($username, true) || strripos($password, $username) === true)
+					if($password == $username || $password == icms_utf8_strrev($username, true) || strripos($password, $username) === true || $password == $login_name || $password == icms_utf8_strrev($login_name, true) || strripos($password, $login_name) === true)
 					{
 						xoops_cp_header();
 						echo '<b>'._AM_BADPWD.'</b>';
@@ -214,7 +215,6 @@ switch ($op)
 				$newuser->setVar('user_occ', $user_occ);
 				$newuser->setVar('user_intrest', $user_intrest);
 				$newuser->setVar('user_mailok', $user_mailok);
-				$newuser->setVar('language', $language);
 				$newuser->setVar('language', $language);
 				$config_handler =& xoops_gethandler('config');
 				$icmsauthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);

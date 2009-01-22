@@ -7,7 +7,7 @@
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmspersistableobject.php 7728 2008-12-17 19:37:01Z pesian_stranger $
 */
 
 if (!defined("ICMS_ROOT_PATH")) {
@@ -54,7 +54,7 @@ class IcmsPersistableObject extends XoopsObject {
     /**
 	 * Reference to the handler managing this object
 	 *
-	 * @var object reference to {@link SmartPersistableObjectHandler}
+	 * @var object reference to {@link IcmsPersistableObjectHandler}
 	 */
     var $handler;
 
@@ -564,6 +564,12 @@ class IcmsPersistableObject extends XoopsObject {
     {
     	$controller = new IcmsPersistableController($this->handler);
     	return $controller->getItemLink($this, $onlyUrl);
+    }
+
+    function getViewItemLink($onlyUrl=false, $withimage=true, $userSide=false)
+    {
+    	$controller = new IcmsPersistableController($this->handler);
+    	return $controller->getViewItemLink($this, $onlyUrl, $withimage, $userSide);
     }
 
     function getEditItemLink($onlyUrl=false, $withimage=true, $userSide=false)

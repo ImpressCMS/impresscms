@@ -14,7 +14,7 @@ die("ImpressCMS root path not defined");
 * @package		core
 * @since		1.0
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmsmoduleabout.php 7728 2008-12-17 19:37:01Z pesian_stranger $
 */
 
 class IcmsModuleAbout
@@ -100,7 +100,7 @@ class IcmsModuleAbout
 
 		$myts = &MyTextSanitizer::getInstance();
 
-		global $xoopsModule;
+		global $xoopsModule, $xoopsConfig;
 
 		xoops_cp_header();
 
@@ -158,6 +158,12 @@ class IcmsModuleAbout
 		$this->_tpl->assign('module_support_site_name', $versioninfo->getInfo('support_site_name'));
 		$this->_tpl->assign('module_submit_bug', $versioninfo->getInfo('submit_bug'));
 		$this->_tpl->assign('module_submit_feature', $versioninfo->getInfo('submit_feature'));
+		
+		// Manual
+		$manual =$versioninfo->getInfo('manual');
+		if ($manual) {
+			$this->_tpl->assign('module_manual', isset($manual['wiki']) ? array_map(array($this, 'sanitize'), $manual['wiki']) : false);
+		}
 
 		// Warning
 		$this->_tpl->assign('module_warning', $this->sanitize($versioninfo->getInfo('warning')));
@@ -166,13 +172,26 @@ class IcmsModuleAbout
 		$this->_tpl->assign('module_author_word', $versioninfo->getInfo('author_word'));
 
 	    // For changelog thanks to 3Dev
-	    global $xoopsModule;
+	    //global $xoopsModule;
 	    $filename = ICMS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/changelog.txt';
 	    if(is_file($filename)){
 
 	        $filesize = filesize($filename);
 	        $handle = fopen($filename, 'r');
 	        $this->_tpl->assign('module_version_history', $myts->displayTarea(fread($handle, $filesize), true));
+	        fclose($handle);
+	    }
+		
+		// For license thanks to 3Dev
+		if ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license/' . $xoopsConfig['language'] . '_license.txt' ) ) {
+			$filename = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license/' . $xoopsConfig['language'] . '_license.txt';
+		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license.txt' ) ) {
+			$filename = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license.txt';
+		}
+	    if(is_file($filename)){
+	        $filesize = filesize($filename);
+	        $handle = fopen($filename, 'r');
+	        $this->_tpl->assign('module_license_txt', $myts->displayTarea(fread($handle, $filesize), 0, 0, 1, 1, 1, true));
 	        fclose($handle);
 	    }
 

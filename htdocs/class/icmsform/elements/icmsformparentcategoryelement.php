@@ -7,7 +7,7 @@
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmsformparentcategoryelement.php 5669 2008-10-14 19:53:37Z pesian_stranger $
 */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");

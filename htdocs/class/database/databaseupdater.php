@@ -4,7 +4,7 @@
  *
  * @license GNU
  * @author marcan <marcan@smartfactory.ca>
- * @version $Id$
+ * @version $Id: databaseupdater.php 7417 2008-12-04 13:29:47Z pesian_stranger $
  * @link http://www.smartfactory.ca The SmartFactory
  * @package SmartObject
  */

@@ -12,7 +12,7 @@
 * @author		Kazumi Ono (AKA onokazu)
 * @author		RpLima
 * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
-* @version		$Id$
+* @version		$Id: modulesadmin.php 4070 2008-08-06 00:36:27Z pesian_stranger $
 */
 /**
  *

@@ -70,8 +70,8 @@ class XoopsFormRadioYN extends XoopsFormRadio
 	function XoopsFormRadioYN($caption, $name, $value = null, $yes = _YES, $no = _NO)
 	{
 		$this->XoopsFormRadio($caption, $name, $value);
-		$this->addOption(1, $yes);
-		$this->addOption(0, $no);
+		$this->addOption(1, '&nbsp;' . $yes . '&nbsp;');
+		$this->addOption(0, '&nbsp;' . $no);
 	}
 }
 

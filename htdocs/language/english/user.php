@@ -32,7 +32,7 @@ define('_US_REMEMBERME', 'Remember me');
 
 //%%%%%%		File Name register.php 		%%%%%
 define('_US_USERREG','User Registration');
-define('_US_NICKNAME','Username');
+define('_US_NICKNAME','Display Name');
 define('_US_EMAIL','Email');
 define('_US_ALLOWVIEWEMAIL','Allow other users to view my email address');
 define('_US_WEBSITE','Website');
@@ -40,7 +40,8 @@ define('_US_TIMEZONE','Time Zone');
 define('_US_AVATAR','Avatar');
 define('_US_VERIFYPASS','Verify Password');
 define('_US_SUBMIT','Submit');
-define('_US_USERNAME','Username');
+define('_US_LOGINNAME','Username');
+define('_US_LOGIN_NAME', _US_LOGINNAME);
 define('_US_FINISH','Finish');
 define('_US_REGISTERNG','Could not register new user.');
 define('_US_MAILOK','Receive occasional email notices <br />from administrators and moderators?');
@@ -69,7 +70,8 @@ define('_US_NICKNAMETOOLONG','Username is too long. It must be less than %s char
 define('_US_NICKNAMETOOSHORT','Username is too short. It must be more than %s characters.');
 define('_US_NAMERESERVED','ERROR: Name is reserved.');
 define('_US_NICKNAMENOSPACES','There cannot be any spaces in the Username.');
-define('_US_NICKNAMETAKEN','ERROR: Username taken.');
+define('_US_LOGINNAMETAKEN','ERROR: Username taken.');
+define('_US_NICKNAMETAKEN','ERROR: Display Name taken.');
 define('_US_EMAILTAKEN','ERROR: Email address already registered.');
 define('_US_ENTERPWD','ERROR: You must provide a password.');
 define('_US_SORRYNOTFOUND','Sorry, no corresponding user info was found.');

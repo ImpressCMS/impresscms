@@ -16,6 +16,7 @@ define('_MODABOUT_MODULE_SUBMIT_FEATURE', 'Request a feature');
 define('_MODABOUT_MODULE_SUPPORT', 'Official support site');
 define('_MODABOUT_UPDATE_MODULE', 'Update module');
 define('_MODABOUT_VERSION_HISTORY', 'Version History');
+define('_MODABOUT_WARNING_ALPHA', "This module comes as is, without any guarantees whatsoever. This module is ALPHA, meaning it is still under active development. This release is meant for <b>development and testing purposes only</b>, and we <b>strongly</b> recommend that you do not use it on a live website or in a production environment.");
 define('_MODABOUT_WARNING_BETA', "This module comes as is, without any guarantees whatsoever. This module is BETA, meaning it is still under active development. This release is meant for <b>testing purposes only</b> and we <b>strongly</b> recommend that you do not use it on a live website or in a production environment.");
 define('_MODABOUT_WARNING_FINAL', "This module comes as is, without any guarantees whatsoever. Although this module is not beta, it is still under active development. This release can be used in a live website or a production environment, but its use is under your own responsibility, which means the author is not responsible.");
 define('_MODABOUT_WARNING_RC', "This module comes as is, without any guarantees whatsoever. This module is a Release Candidate and should not be used on a production web site. The module is still under active development and its use is under your own responsibility, which means the author is not responsible.");
@@ -27,4 +28,7 @@ define('_MODABOUT_PEOPLE_TRANSLATERS', 'Translators');
 define('_MODABOUT_PEOPLE_OTHER', 'Other contributors');
 define('_MODABOUT_AUTHOR_INFO', 'Contributors information');
 define('_MODABOUT_AUTHOR_WORD', 'Author\'s words');
+define('_MODABOUT_MODULE_LICENSE', 'License');
+define('_MODABOUT_MANUAL', 'Manual');
+define('_MODABOUT_MANUAL_WIKI', 'ImpressCMS Wiki');
 ?>

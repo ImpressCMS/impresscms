@@ -7,7 +7,7 @@
 * @package		core
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: xoops_version.php 1955 2008-05-01 21:22:45Z malanciault $
 */
 
 

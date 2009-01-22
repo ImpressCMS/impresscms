@@ -13,7 +13,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		$Id: page_dbsettings.php 4759 2008-09-08 15:37:16Z pesian_stranger $
  */
 /**
  *

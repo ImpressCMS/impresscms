@@ -28,11 +28,13 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     $start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
     $editor = (isset($_GET['editor']))?$_GET['editor']:null;
     $canceled = (isset($_GET['canceled']))?intval($_GET['canceled']):((isset($_POST['canceled']))?intval($_POST['canceled']):0);
+    $tag = (isset($_GET['tag']))?trim(StopXSS($_GET['tag'])):((isset($_POST['tag']))?trim(StopXSS($_POST['tag'])):null);
+    $tag = (trim($tag) == '')?null:trim($tag);
     
     switch ($op){
     	case 'list':
     		xoops_cp_header();
-    		echo contmanager_index($content_supid,$start);
+    		echo contmanager_index($content_supid,$start,$tag);
     		xoops_cp_footer();
     		break;
     	case 'savelist':
@@ -69,7 +71,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     }
 }
 
-function contmanager_index($content_supid,$start=0){
+function contmanager_index($content_supid,$start=0,$tag=null){
 	global $icmsAdminTpl,$xoopsUser,$xoopsConfig,$limit,$editor;
 
 	$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
@@ -83,6 +85,7 @@ function contmanager_index($content_supid,$start=0){
 	$icmsAdminTpl->assign('lang_submit',_SUBMIT);
 	$icmsAdminTpl->assign('lang_cancel',_CANCEL);
 	$icmsAdminTpl->assign('lang_search',_SEARCH);
+	$icmsAdminTpl->assign('lang_search_title',_QSEARCH);
 	$icmsAdminTpl->assign('lang_notfound',_MD_NOTFOUND);
 	$icmsAdminTpl->assign('lang_cont_id',_MD_ID);
 	$icmsAdminTpl->assign('lang_cont_title',_MD_TITLE);
@@ -98,6 +101,7 @@ function contmanager_index($content_supid,$start=0){
 	$icmsAdminTpl->assign('lang_cont_clonecont',_MD_CLONECONTENT);
 	$icmsAdminTpl->assign('lang_cont_editcont',_MD_EDITCONTENT);
 	$icmsAdminTpl->assign('lang_cont_delcont',_MD_DELETECONTENT);
+	$icmsAdminTpl->assign('lang_bytags',_MD_FILTERBYTAGS);
 	
 	$content_handler =& xoops_gethandler('content');
 	$gperm_handler = & xoops_gethandler( 'groupperm' );
@@ -107,6 +111,10 @@ function contmanager_index($content_supid,$start=0){
 		$crit = new CriteriaCompo(new Criteria('content_title', $query.'%','LIKE'));
 		$crit->add(new Criteria('content_menu', $query.'%','LIKE'),'OR');
 		$crit->add(new Criteria('content_body', '%'.$query.'%','LIKE'),'OR');
+		$criteria->add($crit);		
+	}
+	if (!is_null($tag)){
+		$crit = new CriteriaCompo(new Criteria('content_tags', '%'.$tag.'%','LIKE'));
 		$criteria->add($crit);		
 	}
 	$pagecount = $content_handler->getCount($criteria);
@@ -163,6 +171,18 @@ function contmanager_index($content_supid,$start=0){
 	
 	$icmsAdminTpl->assign('addformsts',(!is_null($editor))?'block':'none');
 	
+	$tags = new XoopsFormSelect('', "tag",$tag);
+	$tag_a = $content_handler->getTags();
+	$tags->addOption(' ','----------------------------');
+	foreach ($tag_a as $k=>$v){
+		$tags->addOption($k,$k.' ('.$v.')');
+	}
+	if (is_null($tag)){
+		$tags->setExtra('style="display:none;"');
+	}
+	$icmsAdminTpl->assign('tags',$tags->render());
+	$icmsAdminTpl->assign('bytags',(is_null($tag))?0:1);
+	
 	return $icmsAdminTpl->fetch('db:admin/content/system_adm_contentmanager_index.html');
 }
 
@@ -196,6 +216,25 @@ function contmanager_savelist($content_supid) {
 }
 
 function contmanager_addcontent() {
+    global $im_multilanguageConfig;
+    
+    if ($im_multilanguageConfig['ml_enable']) {
+        $easiestml_langs = explode( ',' , $im_multilanguageConfig['ml_tags'] ) ;
+        $content_body = $content_title = '';
+        foreach($easiestml_langs as $k=>$lang){
+            if (isset($_POST['content_title_'.$lang])){
+                $content_title .= '['.$lang.']'.$_POST['content_title_'.$lang].'[/'.$lang.']';
+                unset($_POST['content_title_'.$lang]);
+            }
+            if (isset($_POST['content_body_'.$lang])){
+                $content_body .= '['.$lang.']'.$_POST['content_body_'.$lang].'[/'.$lang.']';
+                unset($_POST['content_body_'.$lang]);
+            }
+        }
+        $_POST['content_title'] = $content_title;
+        $_POST['content_body'] = $content_body;
+    }
+    
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header('admin.php?fct=content', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
@@ -231,6 +270,25 @@ function contmanager_addcontent() {
 }
 
 function contmanager_editcontent($content_id) {
+    global $im_multilanguageConfig;
+    
+    if ($im_multilanguageConfig['ml_enable']) {
+        $easiestml_langs = explode( ',' , $im_multilanguageConfig['ml_tags'] ) ;
+        $content_body = $content_title = '';
+        foreach($easiestml_langs as $k=>$lang){
+            if (isset($_POST['content_title_'.$lang])){
+                $content_title .= '['.$lang.']'.$_POST['content_title_'.$lang].'[/'.$lang.']';
+                unset($_POST['content_title_'.$lang]);
+            }
+            if (isset($_POST['content_body_'.$lang])){
+                $content_body .= '['.$lang.']'.$_POST['content_body_'.$lang].'[/'.$lang.']';
+                unset($_POST['content_body_'.$lang]);
+            }
+        }
+        $_POST['content_title'] = $content_title;
+        $_POST['content_body'] = $content_body;
+    }
+    
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header('admin.php?fct=content', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
@@ -276,6 +334,25 @@ function contmanager_editcontent($content_id) {
 }
 
 function contmanager_clonecontent() {
+    global $im_multilanguageConfig;
+    
+    if ($im_multilanguageConfig['ml_enable']) {
+        $easiestml_langs = explode( ',' , $im_multilanguageConfig['ml_tags'] ) ;
+        $content_body = $content_title = '';
+        foreach($easiestml_langs as $k=>$lang){
+            if (isset($_POST['content_title_'.$lang])){
+                $content_title .= '['.$lang.']'.$_POST['content_title_'.$lang].'[/'.$lang.']';
+                unset($_POST['content_title_'.$lang]);
+            }
+            if (isset($_POST['content_body_'.$lang])){
+                $content_body .= '['.$lang.']'.$_POST['content_body_'.$lang].'[/'.$lang.']';
+                unset($_POST['content_body_'.$lang]);
+            }
+        }
+        $_POST['content_title'] = $content_title;
+        $_POST['content_body'] = $content_body;
+    }
+    
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header('admin.php?fct=content', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
@@ -431,9 +508,15 @@ function contmanager_changestatus($content_id) {
 }
 
 function contentform($id=null,$clone=false){
-	global $xoopsUser,$xoopsConfig,$editor;
+	global $xoopsUser,$xoopsConfig,$editor,$im_multilanguageConfig;
 	include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
 	$gperm_handler =& xoops_gethandler('groupperm');
+
+    if ($im_multilanguageConfig['ml_enable']) {
+        $easiestml_langs = explode( ',' , $im_multilanguageConfig['ml_tags'] ) ;
+        $easiestml_names = explode( ',' , $im_multilanguageConfig['ml_names'] ) ;
+        $easiestml_captions = explode( ',' , $im_multilanguageConfig['ml_captions'] ) ;
+    }
 	
 	if (isset($id)){
 		if ($clone){
@@ -444,10 +527,36 @@ function contentform($id=null,$clone=false){
         $id = $id;
         $content_handler = xoops_gethandler('content');
         $content =& $content_handler->get($id);
-        $title = $content->getVar('content_title');
+        $t = $content->getVar('content_title');
+        $b = $content->getVar('content_body','E');
+        if ($im_multilanguageConfig['ml_enable']) {
+            foreach($easiestml_langs as $lang){
+                $title[$lang] = $t;
+                if (preg_match_all('/\['.preg_quote($lang).'\].*\[\/'.preg_quote($lang).'(?:\]\<br \/\>|\])/isU',$title[$lang],$resul)){
+                    $title[$lang] = '';
+                    foreach($resul[0] as $res){
+                        $title[$lang] .= preg_replace( '/\[\/?'.preg_quote($lang).'\](\<br \/\>)?/i' , '' , $res);
+                    }
+                }
+                $body[$lang] = $b;
+                if (preg_match_all('/\['.preg_quote($lang).'\].*\[\/'.preg_quote($lang).'(?:\]\<br \/\>|\])/isU',$body[$lang],$resul)){
+                    $body[$lang] = '';
+                    foreach($resul[0] as $res){
+                        $body[$lang] .= preg_replace( '/\[\/?'.preg_quote($lang).'\](\<br \/\>)?/i' , '' , $res);
+                    }
+                }
+            }
+            unset($t);
+            unset($b);
+        }else{
+            $title = $t;
+            unset($t);
+            $body = $b;
+            unset($b);
+        }
         $menu = $content->getVar('content_menu');
-		$body = $content->getVar('content_body','E');
 		$css = $content->getVar('content_css','E');
+		$tags = $content->getVar('content_tags','E');
 		$weight = $content->getVar('content_weight');
 		$status = $content->getVar('content_status');
 		$visibility = $content->getVar('content_visibility');
@@ -456,10 +565,19 @@ function contentform($id=null,$clone=false){
 		$grupos_ids = $gperm_handler->getGroupIds('content_read', $id);
 	}else{
 		$ftitle = _MD_ADDCONTENT;
-		$title = '';
 		$menu = '';
-		$body = '';
+		if ($im_multilanguageConfig['ml_enable']) {
+		    $title = $body = array();
+		    foreach($easiestml_langs as $lang){
+		        $title[$lang] = '';
+		        $body[$lang] = '';
+		    }
+		}else{
+		    $title = '';
+		    $body = '';
+		}
 		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css');
+		$tags = '';
 		$weight = 0;
 		$status = 1;
 		$visibility = 3;
@@ -468,7 +586,7 @@ function contentform($id=null,$clone=false){
 		$grupos_ids = $xoopsUser->getGroups();
 		if (!in_array(XOOPS_GROUP_ANONYMOUS, $grupos_ids)) {
 			array_push($grupos_ids, XOOPS_GROUP_ANONYMOUS);
-		}
+		}		
 	}
 
 	$form = new XoopsThemeForm($ftitle, 'content_form', 'admin.php', "post", true);
@@ -482,19 +600,39 @@ function contentform($id=null,$clone=false){
 	$form->addElement($parent);
 	
 	$form->addElement(new XoopsFormSelectUser(_MD_CONTENT_AUTOR, "content_uid", false, $content_uid));
-	
-	$form->addElement(new XoopsFormText(_MD_CONTENT_TITLE, 'content_title', 50, 255,$title), true);
+	if ($im_multilanguageConfig['ml_enable']) {
+        foreach($easiestml_langs as $k=>$lang){
+            $img = '<img src="'.ICMS_URL.'/images/flags/'.$easiestml_names[$k].'.gif" alt="'.$easiestml_captions[$k].'" title="'.$easiestml_captions[$k].'" align="absmiddle" />';
+            $form->addElement(new XoopsFormText(_MD_CONTENT_TITLE.' '.$img, 'content_title_'.$lang, 50, 255,$title[$lang]), true);
+        }
+    }else{	
+	    $form->addElement(new XoopsFormText(_MD_CONTENT_TITLE, 'content_title', 50, 255,$title), true);
+    }
 	$fmenu = new XoopsFormText(_MD_CONTENT_MENU, 'content_menu', 50, 100,$menu);
 	$fmenu->setDescription(_MD_CONTENT_MENU_DSC);
 	$form->addElement($fmenu, true);
-	if (!is_null($editor)){
-		$form->addElement(new XoopsFormDhtmlTextArea(_MD_CONTENT_BODY, 'content_body',$body,30,70,"xoopsHiddenText",array('editor'=>$editor)),true);
-	}else{
-		$form->addElement(new XoopsFormDhtmlTextArea(_MD_CONTENT_BODY, 'content_body',$body,30,70,"xoopsHiddenText",array('editor'=>$xoopsConfig['editor_default'])),true);
-	}
+    if ($im_multilanguageConfig['ml_enable']) {
+        foreach($easiestml_langs as $k=>$lang){
+            $img = '<img src="'.ICMS_URL.'/images/flags/'.$easiestml_names[$k].'.gif" alt="'.$easiestml_captions[$k].'" title="'.$easiestml_captions[$k].'" align="absmiddle" />';
+            if (!is_null($editor)){
+		        $form->addElement(new XoopsFormDhtmlTextArea(_MD_CONTENT_BODY.' '.$img, 'content_body_'.$lang,$body[$lang],30,70,"xoopsHiddenText",array('editor'=>$editor)),true);
+	        }else{
+		        $form->addElement(new XoopsFormDhtmlTextArea(_MD_CONTENT_BODY.' '.$img, 'content_body_'.$lang,$body[$lang],30,70,"xoopsHiddenText",array('editor'=>$xoopsConfig['editor_default'])),true);
+	        }
+        }
+    }else{	
+	    if (!is_null($editor)){
+		    $form->addElement(new XoopsFormDhtmlTextArea(_MD_CONTENT_BODY, 'content_body',$body,30,70,"xoopsHiddenText",array('editor'=>$editor)),true);
+	    }else{
+		    $form->addElement(new XoopsFormDhtmlTextArea(_MD_CONTENT_BODY, 'content_body',$body,30,70,"xoopsHiddenText",array('editor'=>$xoopsConfig['editor_default'])),true);
+	    }
+    }
 	$fcss = new XoopsFormTextArea(_MD_CONTENT_CSS, 'content_css',$css,10);
 	$fcss->setDescription(sprintf(_MD_CONTENT_CSS_DESC,XOOPS_URL.'/modules/system/language/'.$xoopsConfig['language'].'/admin/content_css_doc.html'));
 	$form->addElement($fcss);
+	$ftags = new XoopsFormTextArea(_MD_CONTENT_TAGS, 'content_tags',$tags,2);
+	$ftags->setDescription(_MD_CONTENT_TAGS_DESC);
+	$form->addElement($ftags);
 	$form->addElement(new XoopsFormText(_MD_CONTENT_WEIGHT, 'content_weight', 3, 4, $weight));
 	$form->addElement(new XoopsFormRadioYN(_MD_CONTENT_DISPLAY, 'content_status', intval($status), _YES, _NO));
 

@@ -12,7 +12,7 @@
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
 * @author		This was inspired by Mithrandir PersistableObjectHanlder: Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
-* @version		$Id$
+* @version		$Id: icmspersistableobjecthandler.php 6931 2008-11-15 13:49:11Z pesian_stranger $
 */
 
 if (!defined("ICMS_ROOT_PATH")) {

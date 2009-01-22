@@ -11,11 +11,12 @@
 * @since	1.0
 * @author	young-pee <nekro@impresscms.org>
 * @author	malanciault <marcan@impresscms.org)
-* @version	$Id$
+* @version	$Id: error.php 7748 2008-12-20 17:44:02Z skenow $
 */
 
 $xoopsOption['pagetype'] = 'error';
-include_once ('mainfile.php');
+/** Including mainfile.php is required */
+include_once 'mainfile.php';
 
 $e = isset($_GET['e']) ? $_GET['e'] : 0;
 
@@ -26,6 +27,7 @@ if($e == 0) {
 }
 
 $xoopsOption['template_main'] = 'system_error.html';
+/** require header.php to start page rendering */
 require_once ICMS_ROOT_PATH.'/header.php';
 
 $siteName = $xoopsConfig['sitename'];
@@ -40,5 +42,6 @@ $xoopsTpl->assign('lang_advanced_search', _ERR_ADVANCED_SEARCH);
 $xoopsTpl->assign('lang_start_again', _ERR_START_AGAIN);
 $xoopsTpl->assign('lang_search_our_site', _ERR_SEARCH_OUR_SITE);
 
+/** require footer.php to complete page rendering */
 require_once ICMS_ROOT_PATH.'/footer.php';
 ?>

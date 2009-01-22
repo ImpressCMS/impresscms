@@ -73,4 +73,7 @@ define('_AM_GROUP', 'Group');
 define('_AM_UNASSIGNED', 'Unassigned');
 
 define('_AM_CHANGESTS', 'Change the block visibility');
+
+######################## Added in 1.2 ###################################
+define('_AM_BLOCKS_PERMGROUPS','Groups allowed to view this block');
 ?>

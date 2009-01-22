@@ -15,7 +15,7 @@ include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 * @package		libraries
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmslibrarieshandler.php 5669 2008-10-14 19:53:37Z pesian_stranger $
 */
 class IcmsLibrariesHandler {
 

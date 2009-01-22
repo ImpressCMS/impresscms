@@ -7,7 +7,7 @@
 * @package		core
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: customtag.php 2005 2008-05-03 17:49:17Z malanciault $
 */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");

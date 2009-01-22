@@ -63,7 +63,11 @@ class XoopsAuthXoops extends XoopsAuth {
 		}
 		$user =& $member_handler->loginUser($uname, $pwd);
 		$sess_handler =& xoops_gethandler('session');
-		$sess_handler->icms_sessionOpen(true);
+		$sess_handler->securityLevel = 3;
+		$sess_handler->check_ip_blocks = 2;
+		$sess_handler->salt_key = XOOPS_DB_SALT;
+		$sess_handler->enableRegenerateId = true;
+		$sess_handler->icms_sessionOpen();
 		if($user == false)
 		{
 			$sess_handler->destroy(session_id());
@@ -72,4 +76,5 @@ class XoopsAuthXoops extends XoopsAuth {
 		return ($user);
 	}
 }
+
 ?>

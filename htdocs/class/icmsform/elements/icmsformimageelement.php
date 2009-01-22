@@ -7,7 +7,7 @@
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmsformimageelement.php 5540 2008-10-10 16:16:16Z real_therplima $
 */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -18,14 +18,15 @@ class IcmsFormImageElement extends XoopsFormElementTray {
         $object_imageurl = $object->getImageDir();
         $this->XoopsFormElementTray( $var['form_caption'], ' ' );
 
+        if (isset($objectArray['image'])){
+            $objectArray['image'] = str_replace('{XOOPS_URL}', XOOPS_URL, $objectArray['image']);
+        }
 
-        $objectArray['image'] = str_replace('{XOOPS_URL}', XOOPS_URL, $objectArray['image']);
 
-
-        if($object->getVar($key) != '' && (substr($object->getVar($key), 0, 4) == 'http' || substr($object->getVar($key), 0, 11) == '{XOOPS_URL}')){
-        	$this->addElement( new XoopsFormLabel( '', "<img src='" . str_replace('{XOOPS_URL}', XOOPS_URL, $object->getVar($key)) . "' alt='' /><br/><br/>" ) );
-        }elseif($object->getVar($key) != ''){
-        	$this->addElement( new XoopsFormLabel( '', "<img src='" . $object_imageurl . $object->getVar($key) . "' alt='' /><br/><br/>" ) );
+        if($object->getVar($key,'e') != '' && (substr($object->getVar($key,'e'), 0, 4) == 'http' || substr($object->getVar($key,'e'), 0, 11) == '{XOOPS_URL}')){
+        	$this->addElement( new XoopsFormLabel( '', "<img src='" . str_replace('{XOOPS_URL}', XOOPS_URL, $object->getVar($key,'e')) . "' alt='' /><br/><br/>" ) );
+        }elseif($object->getVar($key,'e') != ''){
+        	$this->addElement( new XoopsFormLabel( '', "<img src='" . $object_imageurl . $object->getVar($key,'e') . "' alt='' /><br/><br/>" ) );
        	}
 
         include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformfileuploadelement.php";

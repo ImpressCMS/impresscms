@@ -1,5 +1,5 @@
 <?php
-// $Id$
+// $Id: upgrade.php 6931 2008-11-15 13:49:11Z pesian_stranger $
 
 define( "_XOOPS_UPGRADE", "ImpressCMS Upgrade" );
 define( "_CHECKING_APPLIED", "Checking applied upgrades:" );

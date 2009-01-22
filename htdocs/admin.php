@@ -15,7 +15,7 @@
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author		modified by marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: admin.php 7728 2008-12-17 19:37:01Z pesian_stranger $
 */
 
 $xoopsOption['pagetype'] = 'admin';

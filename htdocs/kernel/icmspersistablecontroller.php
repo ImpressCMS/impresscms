@@ -9,7 +9,7 @@
 * @since		1.1
 * @author		Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmspersistablecontroller.php 7728 2008-12-17 19:37:01Z pesian_stranger $
 */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -105,7 +105,8 @@ class IcmsPersistableController {
 
 		// Check if there were uploaded files
 		if (isset($_POST['icms_upload_image']) || isset($_POST['icms_upload_file'])) {
-			$uploaderObj = new XoopsMediaUploader($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
+		include_once ICMS_ROOT_PATH.'/class/uploader.php';	
+		$uploaderObj = new XoopsMediaUploader($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
 			foreach ($_FILES as $name=>$file_array) {
 				if (isset ($file_array['name']) && $file_array['name'] != "" && in_array(str_replace('upload_', '', $name), array_keys($icmsObj->vars))) {
 					if ($uploaderObj->fetchMedia($name)) {
@@ -383,6 +384,29 @@ class IcmsPersistableController {
     	return $ret;
     }
 
+    function getViewItemLink($icmsObj, $onlyUrl=false, $withimage=true, $userSide=false)
+    {
+		if ($this->handler->_moduleName != 'system') {
+			$admin_side = $userSide ? '' : 'admin/';
+			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+		} else {
+			/**
+			 * @todo: to be implemented...
+			 */
+			//$admin_side = $userSide ? '' : 'admin/';
+			$admin_side = '';
+			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct=' . $this->handler->_itemname . "&op=view&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+		}
+		if ($onlyUrl) {
+			return $ret;
+		}
+		elseif($withimage) {
+			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/viewmag.png' style='vertical-align: middle;' alt='" . _PREVIEW . "'  title='" . _PREVIEW . "'/></a>";
+		}
+
+    	return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
+    }
+    
     function getEditLanguageLink($icmsObj, $onlyUrl=false, $withimage=true)
     {
     	$ret = $this->handler->_moduleUrl . "admin/" . $this->handler->_page . "?op=mod&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName) . "&language=" . $icmsObj->getVar('language');

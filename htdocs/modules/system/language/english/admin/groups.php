@@ -49,4 +49,7 @@ define("_AM_CBBOTTOM","Center Block - Bottom");
 define("_AM_EDPERM","Can use the WYSIWYG editor in the following modules");
 define("_AM_DEBUG_PERM","Can see the Debug Mode in the following modules");
 define("_AM_GROUPMANAGER_PERM","Can change permissions on these groups");
+
+// Added Since 1.2
+define('_MD_AM_ID', 'ID');
 ?>

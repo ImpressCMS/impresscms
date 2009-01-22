@@ -16,7 +16,7 @@ include_once XOOPS_ROOT_PATH.'/class/xml/rss/xmlrss2parser.php';
 * @package		core
 * @since		1.0
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmsversionchecker.php 7171 2008-11-23 10:36:17Z pesian_stranger $
 */
 class IcmsVersionChecker {
 

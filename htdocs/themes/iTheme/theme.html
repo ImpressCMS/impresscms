@@ -86,11 +86,11 @@
 			<!-- Center column / page -->
 			<div id="xo-page">
 				<div id="controlbar">
-					<div style="margin-left: auto;">
+					<div style="margin-<{$smarty.const._GLOBAL_LEFT}>: auto;">
 					<a title="Increase Font Size" href="" onclick="dw_fontSizerDX.adjust(2); return false">A+</a> | 
   					<a title="Decrease Font Size" href="" onclick="dw_fontSizerDX.adjust(-2); return false">A-</a> |
   					<a title="Restore Defaults" href="" onclick="dw_fontSizerDX.reset(); return false">Aa</a>
-					<div style="float: <{$smarty.const._GLOBAL_RIGHT}>; margin-right: auto; margin-top: -17px; display: inline;">
+					<div style="float: <{$smarty.const._GLOBAL_RIGHT}>; margin-<{$smarty.const._GLOBAL_RIGHT}>: auto; margin-top: -17px; display: inline;">
 					<a href="#" onclick="setActiveStyleSheet('blue'); return false;"><img src="<{$xoops_imageurl}>img/icons/blue_icon.jpg" alt="Select Blue Style" /></a>
 					<a href="#" onclick="setActiveStyleSheet('green'); return false;"><img src="<{$xoops_imageurl}>img/icons/green_icon.jpg" alt="Select Green Style" /></a>
 					<a href="#" onclick="setActiveStyleSheet('pink'); return false;"><img src="<{$xoops_imageurl}>img/icons/pink_icon.jpg" alt="Select Pink Style" /></a>

@@ -238,3 +238,22 @@ div#disclaimer{
 	padding-left: 18px;
 }
 #xo-logger-tabs hr{border: solid 2px; margin-top: 5px; margin-left: auto; margin-right: auto; margin-bottom:3 px; width: 100%;}
+/*Default ImpressCMS Pagination Style*/
+div.pagination.default{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+div.pagination.default a {
+    text-decoration: none;
+}
+div.pagination.default a:hover, div.pagination.default a:active {
+    /*CSS Style for the mouse hover of the links inside the pagination div*/
+}
+
+div.pagination.default span.current {
+    /*CSS Style for the link of the current page*/
+}
+div.pagination.default span.disabled {
+    display: none;
+}

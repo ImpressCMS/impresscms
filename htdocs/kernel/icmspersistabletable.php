@@ -9,7 +9,7 @@
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmspersistabletable.php 7728 2008-12-17 19:37:01Z pesian_stranger $
 */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -22,7 +22,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmspersistabletable.php 7728 2008-12-17 19:37:01Z pesian_stranger $
  */
 class IcmsPersistableColumn {
 
@@ -81,7 +81,7 @@ class IcmsPersistableColumn {
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmspersistabletable.php 7728 2008-12-17 19:37:01Z pesian_stranger $
 
  */
 class IcmsPersistableTable {
@@ -457,28 +457,28 @@ class IcmsPersistableTable {
 		$ret['all']['caption'] = _CO_ICMS_LIMIT_ALL;
 		$ret['all']['selected'] = ('all' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['5']['caption'] = '5';
+		$ret['5']['caption'] = icms_conv_nr2local('5');
 		$ret['5']['selected'] = ('5' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['10']['caption'] = '10';
+		$ret['10']['caption'] = icms_conv_nr2local('10');
 		$ret['10']['selected'] = ('10' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['15']['caption'] = '15';
+		$ret['15']['caption'] = icms_conv_nr2local('15');
 		$ret['15']['selected'] = ('15' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['20']['caption'] = '20';
+		$ret['20']['caption'] = icms_conv_nr2local('20');
 		$ret['20']['selected'] = ('20' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['25']['caption'] = '25';
+		$ret['25']['caption'] = icms_conv_nr2local('25');
 		$ret['25']['selected'] = ('25' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['30']['caption'] = '30';
+		$ret['30']['caption'] = icms_conv_nr2local('30');
 		$ret['30']['selected'] = ('30' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['35']['caption'] = '35';
+		$ret['35']['caption'] = icms_conv_nr2local('35');
 		$ret['35']['selected'] = ('35' == $this->_limitsel) ? "selected='selected'" : "";
 
-		$ret['40']['caption'] = '40';
+		$ret['40']['caption'] = icms_conv_nr2local('40');
 		$ret['40']['selected'] = ('40' == $this->_limitsel) ? "selected='selected'" : "";
 		return $ret;
 	}

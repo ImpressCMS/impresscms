@@ -22,6 +22,7 @@
 **/
  
 $xoopsOption['pagetype'] = "banners";
+/** Including mainfile.php is required */
 include 'mainfile.php';
 
 /**

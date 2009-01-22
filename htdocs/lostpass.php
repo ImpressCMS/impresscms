@@ -2,23 +2,23 @@
 /**
 * All functions for lost password generator are going through here.
 *
+* Form and process for sending a new password to a user
+* 
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
-*/
-/**
-* Form and process for sending a new password to a user
+* 
 * @package	kernel 
 * @subpackage	users
 **/
 
 $xoopsOption['pagetype'] = 'user';
+/** Include mainfile.php - required */
 include 'mainfile.php';
 
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
@@ -67,8 +67,10 @@ else
 		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', enc_type = '%u', pass_expired = '%u' WHERE uid = '%u'", $xoopsDB->prefix('users'), $pass, $salt, $enc_type, 0, intval($getuser[0]->getVar('uid')));
 		if(!$xoopsDB->queryF($sql))
 		{
-			include 'header.php';
+			/** Include header.php to start page rendering */
+      include 'header.php';
 			echo _US_MAILPWDNG;
+			/** Include footer.php to complete page rendering */
 			include 'footer.php';
 			exit();
 		}
@@ -89,11 +91,13 @@ else
 		$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
 		$xoopsMailer->setFromName($xoopsConfig['sitename']);
 		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ,$xoopsConfig['sitename']));
-		include 'header.php';
+		/** Include header.php to start page rendering */
+    include 'header.php';
 		if(!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
 		echo '<h4>';
 		printf(_US_CONFMAIL,$getuser[0]->getVar('uname'));
 		echo '</h4>';
+		/** Include footer.php to complete page rendering */
 		include 'footer.php';
 	}
 }

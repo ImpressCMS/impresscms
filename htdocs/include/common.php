@@ -108,6 +108,7 @@ define("XOOPS_MATCH_END",1);
 define("XOOPS_MATCH_EQUAL",2);
 define("XOOPS_MATCH_CONTAIN",3);
 
+define("ICMS_KERNEL_PATH", ICMS_ROOT_PATH."/kernel/");
 define("ICMS_INCLUDE_PATH", ICMS_ROOT_PATH."/include");
 define("ICMS_INCLUDE_URL", ICMS_ROOT_PATH."/include");
 define("ICMS_UPLOAD_PATH", ICMS_ROOT_PATH."/uploads");
@@ -119,6 +120,10 @@ define("ICMS_CACHE_PATH", ICMS_ROOT_PATH."/cache");
 define("ICMS_IMAGES_URL", ICMS_URL."/images");
 define("ICMS_EDITOR_PATH", ICMS_ROOT_PATH."/editors");
 define("ICMS_EDITOR_URL", ICMS_URL."/editors");
+define('ICMS_IMANAGER_FOLDER_PATH',ICMS_UPLOAD_PATH.'/imagemanager');
+define('ICMS_IMANAGER_FOLDER_URL',ICMS_UPLOAD_URL.'/imagemanager');
+
+
 /**
  * @todo make this $icms_images_setname as an option in preferences...
  */
@@ -417,7 +422,6 @@ if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/theme.p
 } else {
 	include_once XOOPS_ROOT_PATH."/language/english/theme.php";
 }
-// for RTL users
 @define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;
 @define( '_GLOBAL_RIGHT' , @_ADM_USE_RTL == 1 ? 'left' : 'right' ) ;
 // ################ Include page-specific lang file ################
@@ -435,9 +439,9 @@ if ( !defined("XOOPS_USE_MULTIBYTES") ) {
 	define("XOOPS_USE_MULTIBYTES",0);
 }
 
-if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $xoopsConfig['theme_set_allowed'])) {
-	$xoopsConfig['theme_set'] = $_POST['xoops_theme_select'];
-    $_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
+if (!empty($_POST['theme_select']) && in_array($_POST['theme_select'], $xoopsConfig['theme_set_allowed'])) {
+	$xoopsConfig['theme_set'] = $_POST['theme_select'];
+    $_SESSION['xoopsUserTheme'] = $_POST['theme_select'];
 } elseif (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {
 	$xoopsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
 }

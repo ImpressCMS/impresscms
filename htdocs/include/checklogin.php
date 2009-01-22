@@ -159,7 +159,7 @@ if (false != $user) {
 	if( $xoops_cookie_path == XOOPS_URL ) $xoops_cookie_path = '/' ;
 	if (!empty($_POST['rememberme'])) {
 		$expire = time() + ( defined('XOOPS_AUTOLOGIN_LIFETIME') ? XOOPS_AUTOLOGIN_LIFETIME : 604800 ) ; // 1 week default
-		setcookie('autologin_uname', $user->getVar('uname'), $expire, $xoops_cookie_path, '', 0);
+		setcookie('autologin_uname', $user->getVar('login_name'), $expire, $xoops_cookie_path, '', 0);
 		$Ynj = date( 'Y-n-j' ) ;
 		setcookie('autologin_pass', $Ynj . ':' . md5( $user->getVar('pass') . XOOPS_DB_PASS . XOOPS_DB_PREFIX . $Ynj ) , $expire, $xoops_cookie_path, '', 0);
 	}
