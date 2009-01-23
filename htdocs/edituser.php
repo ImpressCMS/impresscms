@@ -66,7 +66,9 @@ if($op == 'saveuser')
             		$errors[] = _US_INVALIDMAIL;
         	}
     	}
-        	$uname = '';
+ 	if($xoopsConfigUser['allow_chguname'] == 1)
+	{
+       	$uname = '';
         	if(!empty($_POST['uname']))
 		{
             		$uname = $myts->stripSlashesGPC(trim($_POST['uname']));
@@ -88,10 +90,20 @@ if($op == 'saveuser')
 			break;
 		}
 	}
+	$count = 0;
+	if ( $uname ) {
+		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE uname = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($uname)));
+		$result = $xoopsDB->query($sql);
+		list($count) = $xoopsDB->fetchRow($result);
+		if ( $count > 1 ) {
+			$errors[] .= _US_NICKNAMETAKEN."<br />";
+		}
+	}
 /*	if (strrpos($uname, ' ') > 0) {
 		$errors[] .= _US_NICKNAMENOSPACES."<br />";
 	}*/
 
+	}
 	$username = xoops_getLinkedUnameFromId($uid);
     	$password = '';
     	if(!empty($_POST['password']))
@@ -139,7 +151,10 @@ if($op == 'saveuser')
 		{
             		$edituser->setVar('email', $email, true);
         	}
+        	if($xoopsConfigUser['allow_chguname'] == 1)
+		{
             		$edituser->setVar('uname', $uname, true);
+        	}
         	$edituser->setVar('url', formatURL($_POST['url']));
         	$edituser->setVar('user_icq', $_POST['user_icq']);
         	$edituser->setVar('user_from', $_POST['user_from']);
