@@ -214,7 +214,7 @@ define('_LANGCODE', 'en');
 // change 0 to 1 if this language is a multi-bytes language
 define("XOOPS_USE_MULTIBYTES", "0");
 // change 0 to 1 if this language is a RTL (right to left) language
-define("_ADM_USE_RTL","0");
+define("_ADM_USE_RTL","1");
 
 define('_MODULES','Modules');
 define('_IMPRESSCMS_PREFS','Preferences');
