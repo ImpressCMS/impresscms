@@ -1,63 +1,63 @@
 <?php
 // $Id: global.php 1029 2007-09-09 03:49:25Z phppp $
 //%%%%%%	File Name mainfile.php 	%%%%%
-define("_PLEASEWAIT","Please Wait");
-define("_FETCHING","Loading...");
-define("_TAKINGBACK","Taking you back to where you were....");
-define("_LOGOUT","Logout");
-define("_SUBJECT","Subject");
-define("_MESSAGEICON","Message Icon");
-define("_COMMENTS","Comments");
-define("_POSTANON","Post Anonymously");
-define("_DISABLESMILEY","Disable smiley");
-define("_DISABLEHTML","Disable html");
-define("_PREVIEW","Preview");
+define('_PLEASEWAIT','Please Wait');
+define('_FETCHING','Loading...');
+define('_TAKINGBACK','Taking you back to where you were....');
+define('_LOGOUT','Logout');
+define('_SUBJECT','Subject');
+define('_MESSAGEICON','Message Icon');
+define('_COMMENTS','Comments');
+define('_POSTANON','Post Anonymously');
+define('_DISABLESMILEY','Disable smiley');
+define('_DISABLEHTML','Disable html');
+define('_PREVIEW','Preview');
 
-define("_GO","Go!");
-define("_NESTED","Nested");
-define("_NOCOMMENTS","No Comments");
-define("_FLAT","Flat");
-define("_THREADED","Threaded");
-define("_OLDESTFIRST","Oldest First");
-define("_NEWESTFIRST","Newest First");
-define("_MORE","more...");
-define("_MULTIPAGE","To have your article span multiple pages, insert the word <font color=red>[pagebreak]</font> (with brackets) in the article.");
-define("_IFNOTRELOAD","If the page does not automatically reload, please click <a href='%s'>here</a>");
-define("_WARNINSTALL2","WARNING: Directory %s exists on your server. <br />Please remove this directory for security reasons.");
-define("_WARNINWRITEABLE","WARNING: File %s is writeable by the server. <br />Please change the permission of this file for security reasons.<br /> in Unix (444), in Win32 (read-only)");
-define("_WARNINNOTWRITEABLE","WARNING: File %s is not writeable by the server. <br />Please change the permission of this file for functionality reasons.<br /> in Unix (777), in Win32 (writeable)");
+define('_GO','Go!');
+define('_NESTED','Nested');
+define('_NOCOMMENTS','No Comments');
+define('_FLAT','Flat');
+define('_THREADED','Threaded');
+define('_OLDESTFIRST','Oldest First');
+define('_NEWESTFIRST','Newest First');
+define('_MORE','more...');
+define('_MULTIPAGE','To have your article span multiple pages, insert the word <font color=red>[pagebreak]</font> (with brackets) in the article.');
+define('_IFNOTRELOAD','If the page does not automatically reload, please click <a href="%s">here</a>');
+define('_WARNINSTALL2','WARNING: Directory %s exists on your server. <br />Please remove this directory for security reasons.');
+define('_WARNINWRITEABLE','WARNING: File %s is writeable by the server. <br />Please change the permission of this file for security reasons.<br /> in Unix (444), in Win32 (read-only)');
+define('_WARNINNOTWRITEABLE','WARNING: File %s is not writeable by the server. <br />Please change the permission of this file for functionality reasons.<br /> in Unix (777), in Win32 (writeable)');
 
 // Error messages issued by XoopsObject::cleanVars()
-define( "_XOBJ_ERR_REQUIRED", "%s is required" );
-define( "_XOBJ_ERR_SHORTERTHAN", "%s must be shorter than %d characters." );
+define( '_XOBJ_ERR_REQUIRED', '%s is required' );
+define( '_XOBJ_ERR_SHORTERTHAN', '%s must be shorter than %d characters.' );
 
 //%%%%%%	File Name themeuserpost.php 	%%%%%
-define("_PROFILE","Profile");
-define("_POSTEDBY","Posted by");
-define("_VISITWEBSITE","Visit Website");
-define("_SENDPMTO","Send Private Message to %s");
-define("_SENDEMAILTO","Send Email to %s");
-define("_ADD","Add");
-define("_REPLY","Reply");
-define("_DATE","Date");   // Posted date
+define('_PROFILE','Profile');
+define('_POSTEDBY','Posted by');
+define('_VISITWEBSITE','Visit Website');
+define('_SENDPMTO','Send Private Message to %s');
+define('_SENDEMAILTO','Send Email to %s');
+define('_ADD','Add');
+define('_REPLY','Reply');
+define('_DATE','Date');   // Posted date
 
 //%%%%%%	File Name admin_functions.php 	%%%%%
-define("_MAIN","Main");
-define("_MANUAL","Manual");
-define("_INFO","Info");
-define("_CPHOME","Control Panel Home");
-define("_YOURHOME","Home Page");
+define('_MAIN','Main');
+define('_MANUAL','Manual');
+define('_INFO','Info');
+define('_CPHOME','Control Panel Home');
+define('_YOURHOME','Home Page');
 
 //%%%%%%	File Name misc.php (who's-online popup)	%%%%%
-define("_WHOSONLINE","Who's Online");
+define('_WHOSONLINE','Who\'s Online');
 define('_GUESTS', 'Guests');
 define('_MEMBERS', 'Members');
-define("_ONLINEPHRASE","<b>%s</b> user(s) are online");
-define("_ONLINEPHRASEX","<b>%s</b> user(s) are browsing <b>%s</b>");
-define("_CLOSE","Close");  // Close window
+define('_ONLINEPHRASE','<b>%s</b> user(s) are online');
+define('_ONLINEPHRASEX','<b>%s</b> user(s) are browsing <b>%s</b>');
+define('_CLOSE','Close');  // Close window
 
 //%%%%%%	File Name module.textsanitizer.php 	%%%%%
-define("_QUOTEC","Quote:");
+define('_QUOTEC','Quote:');
 
 //%%%%%%	File Name admin.php 	%%%%%
 define("_NOPERM","Sorry, you don't have the permission to access this area.");
@@ -214,7 +214,7 @@ define('_LANGCODE', 'en');
 // change 0 to 1 if this language is a multi-bytes language
 define("XOOPS_USE_MULTIBYTES", "0");
 // change 0 to 1 if this language is a RTL (right to left) language
-define("_ADM_USE_RTL","1");
+define("_ADM_USE_RTL","0");
 
 define('_MODULES','Modules');
 define('_IMPRESSCMS_PREFS','Preferences');
