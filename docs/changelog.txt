@@ -95,7 +95,7 @@ ImpressCMS ChangeLog
 * Ongoing additions to  API documentation.
 * register.tpl mail template contains more user`s information. (stranger)
 * adminactivate.tpl mail template contains more user`s information. (stranger)
-* Updated TinyMCE to Version 3.2.0.2. (stranger)
+* Updated TinyMCE to Version 3.2.1.1. (stranger)
 * Updated TCPDF to version 4.5.006. (stranger)
 * Captcha class. (stranger)
 * Filters on group edit form to only allow options assigned to the current user
@@ -108,7 +108,6 @@ ImpressCMS ChangeLog
 * Removed theme_rtl system at all. (stranger)
 * Updated Snoopy from v1.2.3 to v1.2.4. (stranger)
 * Added check to preferences, if closesite is true (site closed) it is no longer possible to change password encryption until site is reopened. (vaughan)
-* Updated TCPDF to version 4.2.007. (stranger)
 * ICMS Captcha Class. (stranger)
 * Adding coumpound class when building the IcmsPersistabkeTable onbject. Now, instead of <td class="odd"> we will get <td class="<{$column.keyname}> odd"> which offrs much more granularity in the was we want individual columns to be displayed. (malanciault/jmorris)
 * Improved Function "formatTimestamp" To use Jalali Calendar and use ext_date function. (stranger)
