@@ -96,7 +96,7 @@ ImpressCMS ChangeLog
 * register.tpl mail template contains more user`s information. (stranger)
 * adminactivate.tpl mail template contains more user`s information. (stranger)
 * Updated TinyMCE to Version 3.2.0.2. (stranger)
-* Updated TCPDF to version 4.0.033. (stranger)
+* Updated TCPDF to version 4.5.006. (stranger)
 * Captcha class. (stranger)
 * Filters on group edit form to only allow options assigned to the current user
 * Updated system to version 1.20. (stranger)
