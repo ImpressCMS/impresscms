@@ -187,4 +187,6 @@ define('_CO_ICMS_URLLINK_BLANK', "new window");
 define('_CO_ICMS_ANY', "Any");
 define('_CO_ICMS_EDITOR', "Prefered text editor");
 define('_CO_ICMS_WITH_SELECTED', "With selected: ");
+// Added Since ImpressCMS 1.2
+define('_CO_ICMS_UPDATE_DBVERSION', "Database migrate to version '<em>%s</em>' <br /> ");
 ?>

@@ -40,7 +40,7 @@ if (!defined('ICMS_GROUP_ANONYMOUS')) {
 /**
  * Creating ICMS specific constants
  */
-define('ICMS_PRELOAD_PATH', XOOPS_ROOT_PATH . '/preloads');
+define('ICMS_PRELOAD_PATH', ICMS_ROOT_PATH.'/plugins/preloads');
 define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH.'/cache/htmlpurifier');
 
 // ################# Creation of the IcmsPreloadHandler ##############
@@ -54,8 +54,8 @@ $icmsPreloadHandler = IcmsPreloadHandler::getInstance();
  * @todo The definition of the library path needs to be in mainfile
  */
 // ImpressCMS Third Party Libraries folder
-define( 'ICMS_LIBRARIES_PATH', XOOPS_ROOT_PATH . '/libraries' );
-define( 'ICMS_LIBRARIES_URL', XOOPS_URL . '/libraries' );
+define( 'ICMS_LIBRARIES_PATH', ICMS_ROOT_PATH . '/libraries' );
+define( 'ICMS_LIBRARIES_URL', ICMS_URL . '/libraries' );
 // ImpressCMS Third Party Library for PDF generator
 define( 'ICMS_PDF_LIB_PATH', ICMS_ROOT_PATH . '/libraries/tcpdf' );
 define( 'ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf' );

@@ -60,7 +60,8 @@ function xoops_module_update_system(&$module) {
     $newDbVersion = 1;
 
     if ($dbVersion <= $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
 
 		// Now, first, let's increment the conf_order of user option starting at new_user_notify
 		$table = new IcmsDatabasetable('config');
@@ -187,7 +188,8 @@ function xoops_module_update_system(&$module) {
     $newDbVersion = 2;
 
     if ($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
 		$configitem_handler = xoops_getHandler('configitem');
 		// fetch the rss_local configitem
 		$criteria = new CriteriaCompo();
@@ -210,7 +212,8 @@ function xoops_module_update_system(&$module) {
     $newDbVersion = 3;
 
     if ($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
    		$table = new IcmsDatabasetable('users');
 	    if (!$table->fieldExists('openid')) {
 	    	$table->addNewField('openid', "varchar(255) NOT NULL default ''");
@@ -243,7 +246,8 @@ function xoops_module_update_system(&$module) {
     $newDbVersion = 4;
 
     if($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
 
    		$table = new IcmsDatabasetable('users');
 	    if ($table->fieldExists('pass')) {
@@ -256,7 +260,8 @@ function xoops_module_update_system(&$module) {
     $newDbVersion = 5;
 
     if($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23);
 			unset($table);
 }
@@ -264,7 +269,8 @@ function xoops_module_update_system(&$module) {
     $newDbVersion = 6;
 
     if($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
 	    global $xoopsDB;
         $xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('config') . "` WHERE conf_name='use_jsjalali'");
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23);
@@ -274,7 +280,8 @@ function xoops_module_update_system(&$module) {
     $newDbVersion = 7;
 
     if ($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
 		$configitem_handler = xoops_getHandler('configitem');
 		// fetch the rss_local configitem
 		$criteria = new CriteriaCompo();
@@ -292,7 +299,8 @@ function xoops_module_update_system(&$module) {
   $newDbVersion = 8;
 
   if($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
 
    		$table = new IcmsDatabasetable('modules');
 	    if ($table->fieldExists('dbversion')) {
@@ -305,7 +313,8 @@ function xoops_module_update_system(&$module) {
   $newDbVersion = 9;
 
   if($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
      $table = new IcmsDatabasetable('users');
       $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))",'Successfully altered the index unamepass on table users','');
       $icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` MODIFY pass_expired tinyint(1) unsigned NOT NULL default 0",'Successfully altered field pass_expired in table users','');
@@ -363,7 +372,8 @@ function xoops_module_update_system(&$module) {
     $newDbVersion = 11;
 
     if ($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
         $db = $GLOBALS['xoopsDB'];
         if (getDbValue($db, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"') == 0) {
 		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('11','_MD_AM_CAPTCHA')");
@@ -420,7 +430,8 @@ function xoops_module_update_system(&$module) {
 	$newDbVersion = 12;
 
     if ($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
 
         $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'reg_disclaimer'");
 
@@ -430,7 +441,8 @@ function xoops_module_update_system(&$module) {
 	$newDbVersion = 13;
 
     if ($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
 		icms_copyr(ICMS_ROOT_PATH.'/preload', ICMS_ROOT_PATH.'/plugins/preloads');
 		if (is_file(ICMS_ROOT_PATH.'/plugins/preloads')){
 			icms_deleteFile(ICMS_ROOT_PATH.'/preload');
@@ -441,23 +453,24 @@ function xoops_module_update_system(&$module) {
     $newDbVersion = 14;
 
     if ($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+	    global $xoopsDB;
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
   		$table = new IcmsDatabasetable('users');
 	    if (!$table->fieldExists('login_name')) {
 	    	$table->addNewField('login_name', "varchar(255) NOT NULL default ''");
 		    $icmsDatabaseUpdater->updateTable($table);
+         	$xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("users") . "` SET login_name=uname");
+      		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` ADD INDEX   KEY login_name (login_name)",'Successfully altered the index login_name on table users','');
 	    }
 		unset($table);
-	    global $xoopsDB;
-        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("users") . "` SET login_name=uname");
-	    unset($table);
-
 	}
 
     $newDbVersion = 15;
 
     if ($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
         $db = $GLOBALS['xoopsDB'];
 		$sql = "SELECT conf_id FROM `".$db->prefix('config')."` WHERE conf_name = 'email_protect'";
 		$result = $db->query($sql);
@@ -474,7 +487,8 @@ function xoops_module_update_system(&$module) {
     $newDbVersion = 16;
 
     if ($dbVersion < $newDbVersion) {
-    	echo "Database migrate to version " . $newDbVersion . "<br />";
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
         $db = $GLOBALS['xoopsDB'];
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '0', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
         if (getDbValue($db, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"') == 0) {
@@ -494,6 +508,46 @@ function xoops_module_update_system(&$module) {
                 return false;
             }
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'geshi_default', '_MD_AM_GESHI_DEFAULT', 'php', '_MD_AM_GESHI_DEFAULT_DESC', 'select_geshi', 'text', 3);
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_valuetype = 'array' WHERE conf_name = 'startpage'");
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '0', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 6);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'allow_chguname', '_MD_AM_ALLWCHGUNAME', '0', '_MD_AM_ALLWCHGUNAMEDSC', 'yesno', 'int', 11);
+	    $icmsDatabaseUpdater->insertConfig(IM_CONF_CONTENT, 'num_pages', '_MD_AM_CONT_NUMPAGES', '10', '_MD_AM_CONT_NUMPAGESDSC', 'textbox', 'int', 5);
+	    $icmsDatabaseUpdater->insertConfig(IM_CONF_CONTENT, 'teaser_length', '_MD_AM_CONT_TEASERLENGTH', '500', '_MD_AM_CONT_TEASERLENGTHDSC', 'textbox', 'int', 6);
+		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'pagstyle', '_MD_AM_PAGISTYLE', 'default', '_MD_AM_PAGISTYLE_DESC', 'select_paginati', 'text', 24);
+	}
+
+    $newDbVersion = 17;
+
+    if ($dbVersion < $newDbVersion) {
+	    global $xoopsDB;
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
+  		$table = new IcmsDatabasetable('icmscontent');
+	    if (!$table->fieldExists('content_tags')) {
+	    	$table->addNewField('content_tags', "text");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+  		$table = new IcmsDatabasetable('imagecategory');
+	    if (!$table->fieldExists('imgcat_foldername')) {
+	    	$table->addNewField('imgcat_pid', "varchar(100) default ''");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+	    if (!$table->fieldExists('imgcat_pid')) {
+	    	$table->addNewField('imgcat_pid', "smallint(5) unsigned NOT NULL default '0'");
+		    $icmsDatabaseUpdater->updateTable($table);
+	    }
+		unset($table);
+
+	 /**
+	  * DEVELOPPER, PLEASE NOTE !!!
+	  *
+	  * Everytime we add a new modules to system, the cache folders must get cleaned up so,
+	  * set a value for '$CleanWritingFolders' in each upgrade block here, if there is a cache
+	  * cleaning required please add $CleanWritingFolders = 1 and otherwise $CleanWritingFolders = 0
+	  * Like this bellow:
+	  */
+   	$CleanWritingFolders = 1;
 	}
 
 
@@ -516,6 +570,10 @@ function xoops_module_update_system(&$module) {
         echo $feedback;
     }
     $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-		return icms_cleaning_write_folders();
+	$answer = true;
+    if($CleanWritingFolders == 1){
+	    $answer = icms_cleaning_write_folders();
+	}
+		return $answer;
 	}
 ?>

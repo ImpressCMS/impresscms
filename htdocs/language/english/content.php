@@ -11,6 +11,4 @@ define('_CT_ON','on');
 define('_CT_ACCESS_DENIED','Access denied');
 define('_CT_TAGS','Tags');
 define('_CT_READS','viewed');
-
-define('_CT_TAGS','Tags');
 ?>
