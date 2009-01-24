@@ -13,9 +13,8 @@ function textsanitizer_hiddencontent(&$ts, $text)
 {
         	$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
 			if($_SESSION['xoopsUserId'])
-			{$replacements[] = _HIDDENC.'<div class="icmsHidden">\\1</div>';}
-			else{$replacements[] = _HIDDENC.'<div class="icmsHidden">'._HIDDENTEXT.'</div>';}
-			$replacements[] = '<div class="icmsHidden">\\1</div>';
+			{$replacements[] = stlye_hiddencontent() . _HIDDENC.'<div class="icmsHidden">\\1</div>';}
+			else{$replacements[] = stlye_hiddencontent() . _HIDDENC.'<div class="icmsHidden">'._HIDDENTEXT.'</div>';}
 	return preg_replace($patterns, $replacements, $text);
 }
 function javascript_hiddencontent($ele_name)
@@ -45,6 +44,7 @@ EOH;
 }
 function stlye_hiddencontent(){
 echo'<style type="text/css">
+.icmsHidden { background-color: #FAFAFA; color: #444; font-size: .9em; line-height: 1.2em; text-align: justify; border: #c2cdd6 1px dashed;}
 </style>';
 }
 ?>
