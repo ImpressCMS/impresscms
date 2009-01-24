@@ -310,7 +310,7 @@ function xoopsCodeQuote(id, enterQuotePhrase){
 	}
 	domobj.focus();
 }
-function xoopsCodeHidden(id,enterHiddenPhrase){
+/*function xoopsCodeHidden(id,enterHiddenPhrase){
     if (enterHiddenPhrase == null) {
         enterHiddenPhrase = "Enter The Text To Be Hidden:";
     }
@@ -326,7 +326,7 @@ function xoopsCodeHidden(id,enterHiddenPhrase){
     }
         
 domobj.focus();
-}
+}*/
 function xoopsmakeleft(id,enterHiddenPhrase){
     if (enterHiddenPhrase == null) {
         enterHiddenPhrase = "Enter The Text To Be Aligned On The Left Side:";

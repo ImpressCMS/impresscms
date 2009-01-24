@@ -712,19 +712,21 @@ class MyTextSanitizer
 	{
 	$config_handler =& xoops_gethandler('config');
 	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
-   	$items = str_replace('.php', '', $icmsConfigPlugins['sanitizer_plugins']);
-	foreach($items as $item) {
-		$text = $this->icmsloadExtension($item, $text);
+	foreach($icmsConfigPlugins['sanitizer_plugins'] as $item) {
+		$text = $this->icmsExecuteExtension($item, $text);
 		}
 	return $text;
 	}
 	
-	function icmsloadExtension($name, $text)
-	{
-		if (empty($name) or ! file_exists(ICMS_ROOT_PATH."/plugins/textsanitizer/{$name}.php") ) {
-			return $text;
+    function icmsloadExtension($name)
+    {
+		if (empty($name) or ! include_once ICMS_ROOT_PATH."/plugins/textsanitizer/{$name}/{$name}.php" ) {
+			return false;
 		}
-		include_once(ICMS_ROOT_PATH."/plugins/textsanitizer/{$name}.php");
+    }
+	function icmsExecuteExtension($name, $text)
+	{
+		$this->icmsloadExtension($name);
 		$func = "textsanitizer_{$name}";
 		if (! function_exists($func) ) {
 			return $text;

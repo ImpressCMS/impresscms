@@ -297,4 +297,9 @@ define("_USE_LOCAL_NUM","0");
 define("_ICMS_DBUPDATED","Database Updated Successfully!");
 
 define('_TOGGLETINY','Toggle Editor');
+define("_ENTERHTMLCODE","Enter the HTML codes that you want to add.");
+define("_ENTERPHPCODE","Enter the PHP codes that you want to add.");
+define("_ENTERCSSCODE","Enter the CSS codes that you want to add.");
+define("_ENTERJSCODE","Enter the JavaScript codes that you want to add.");
+define("_ENTERWIKICODE","Enter the wiki term that you want to add.");
 ?>

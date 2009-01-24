@@ -65,6 +65,15 @@ if($op == 'saveuser')
 		{
             		$errors[] = _US_INVALIDMAIL;
         	}
+	$count = 0;
+	if ( $email ) {
+		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($email)));
+		$result = $xoopsDB->query($sql);
+		list($count) = $xoopsDB->fetchRow($result);
+		if ( $count > 1 ) {
+			$errors[] .= _US_EMAILTAKEN."<br />";
+		}
+	}
     	}
  	if($xoopsConfigUser['allow_chguname'] == 1)
 	{
