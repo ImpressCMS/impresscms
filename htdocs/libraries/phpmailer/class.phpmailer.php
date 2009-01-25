@@ -368,11 +368,15 @@ class PHPMailer {
    * @return bool
    */
   function Send() {
+	$config_handler =& xoops_gethandler('config');
+	$icmsConfigMultiLanguage =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
+	if($icmsConfigMultiLanguage['ml_enable']){
     $this->From = easiestml( $this->From ) ;
     $this->FromName = easiestml( $this->FromName ) ;
     $this->Sender = easiestml( $this->Sender ) ;
     $this->Subject = easiestml( $this->Subject ) ;
     $this->Body = easiestml( $this->Body ) ;
+    }
     $header = '';
     $body = '';
     $result = true;

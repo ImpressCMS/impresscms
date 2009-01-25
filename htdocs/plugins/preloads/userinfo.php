@@ -26,7 +26,7 @@ class IcmsPreloadUserInfo extends IcmsPreloadItem {
 				foreach ( $user [$key] as $key1 => $value1 ) {
 					if ($key1 == 'value') {
 						if ($key == 'last_login') {
-							$value1 = date ( 'd/m/Y H:i:s', (isset ( $_SESSION ['xoopsUserLastLogin'] )) ? $_SESSION ['xoopsUserLastLogin'] : time () );
+							$value1 = formatTimestamp( (isset ( $_SESSION ['xoopsUserLastLogin'] )) ? $_SESSION ['xoopsUserLastLogin'] : time (), 'd/m/Y H:i:s' );
 						}
 						$user [$key] = $value1;
 					}
@@ -39,7 +39,7 @@ class IcmsPreloadUserInfo extends IcmsPreloadItem {
 			
 			$xoopsTpl->assign ( 'user', $user );
 		}
+		remove_usersxdays ();
 	}
-
 }
 ?>

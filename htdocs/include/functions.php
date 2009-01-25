@@ -454,7 +454,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	 * Maybe we require to add a preload here too?
 	 * If this method is secure, needs to be discussed!
 	 */
-	 remove_usersxdays ();
+	 //remove_usersxdays ();
 	global $xoopsConfig, $xoopsLogger, $xoopsUserIsAdmin;
 	if(preg_match("/[\\0-\\31]|about:|script:/i", $url))
 	{

@@ -88,7 +88,6 @@ function userCheck($login_name, $uname, $email, $pass, $vpass)
 		$stop .= _US_INVALIDMAIL . "<br />";
 	}
 	if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) {
-		/** @todo need constant defined in language/english/ **/
 		$stop .= _US_INVALIDIP . "<br />";
 	}
 	if (empty($login_name) || preg_match($restriction, $login_name)) {

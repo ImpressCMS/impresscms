@@ -492,7 +492,7 @@ function xoops_module_update_system(&$module) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
         $db = $GLOBALS['xoopsDB'];
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '0', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '90', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
         if (getDbValue($db, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"') == 0) {
 		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('12','_MD_AM_PLUGINS')");
 		}

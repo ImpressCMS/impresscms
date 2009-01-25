@@ -314,7 +314,7 @@ function b_system_newmembers_show($options)
     }
         if ( $options[2] == 1 ) {
         	$block['index_enabled'] = true;
-            $block['registered'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria()));
+            $block['registered'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level')));
             $block['inactive'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0)));
             $block['active'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0, '>')));
             $block['lang_totalusers'] = _MB_SYSTEM_TOTAL_USERS;
