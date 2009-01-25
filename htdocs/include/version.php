@@ -10,7 +10,7 @@
 * @version		$Id: version.php 897 2008-02-15 19:53:31Z malanciault $
 */
 
-define('ICMS_VERSION_NAME','ImpressCMS 1.2 Final');
+define('ICMS_VERSION_NAME','ImpressCMS 1.2 Alpha 1');
 /**
  * To developpers:
  * if you want to get the version number of the core, please use something like:
