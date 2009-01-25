@@ -10,8 +10,16 @@
 * @version		$Id: version.php 897 2008-02-15 19:53:31Z malanciault $
 */
 
-define('ICMS_VERSION_NAME','ImpressCMS 1.2 Alpha 1');
-
+define('ICMS_VERSION_NAME','ImpressCMS 1.2 Final');
+/**
+ * To developpers:
+ * if you want to get the version number of the core, please use something like:
+ * substr(ICMS_VERSION_NAME, 11, -6)
+ * OR
+ * substr(XOOPS_VERSION, 11, -6)
+ * Please note: This code works only on FINAL versions
+ */
+ 
 // For backward compatibility with XOOPS
 define('XOOPS_VERSION', ICMS_VERSION_NAME);
 
