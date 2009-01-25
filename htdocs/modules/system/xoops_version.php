@@ -253,7 +253,7 @@ $modversion['blocks'][$i]['file'] = "system_blocks.php";
 $modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME10;
 $modversion['blocks'][$i]['description'] = "Shows most recent users";
 $modversion['blocks'][$i]['show_func'] = "b_system_newmembers_show";
-$modversion['blocks'][$i]['options'] = "10|1";
+$modversion['blocks'][$i]['options'] = "10|1|1";
 $modversion['blocks'][$i]['edit_func'] = "b_system_newmembers_edit";
 $modversion['blocks'][$i]['template'] = 'system_block_newusers.html';
 

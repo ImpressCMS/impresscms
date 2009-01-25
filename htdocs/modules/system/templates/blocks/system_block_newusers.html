@@ -11,3 +11,10 @@
     </tr>
   <{/foreach}>
 </table>
+<table cellspacing="1px" class="outer">
+	  <{if $block.index_enabled == true}>
+  <{$block.lang_activeusers}>: <{$block.active}><br />
+  <{$block.lang_inactiveusers}>: <{$block.inactive}><br />
+  <{$block.lang_totalusers}>: <{$block.registered}><br />
+	  <{/if}>
+</table>

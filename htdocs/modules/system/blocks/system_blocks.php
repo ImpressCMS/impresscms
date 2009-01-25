@@ -312,6 +312,15 @@ function b_system_newmembers_show($options)
         $block['users'][$i]['name'] = $newmembers[$i]->getVar('uname');
         $block['users'][$i]['joindate'] = formatTimestamp($newmembers[$i]->getVar('user_regdate'), 's');
     }
+        if ( $options[2] == 1 ) {
+        	$block['index_enabled'] = true;
+            $block['registered'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria()));
+            $block['inactive'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0)));
+            $block['active'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0, '>')));
+            $block['lang_totalusers'] = _MB_SYSTEM_TOTAL_USERS;
+            $block['lang_activeusers'] = _MB_SYSTEM_ACT_USERS;
+            $block['lang_inactiveusers'] = _MB_SYSTEM_INACT_USERS;
+        }
     return $block;
 }
 
@@ -500,14 +509,23 @@ function b_system_topposters_edit($options)
 
 function b_system_newmembers_edit($options)
 {
-    $inputtag = "<input type='text' name='options[]' value='".$options[0]."' />";
+    $inputtag = "<input type='text' name='options[0]' value='".$options[0]."' />";
     $form = sprintf(_MB_SYSTEM_DISPLAY,$inputtag);
-    $form .= "<br />"._MB_SYSTEM_DISPLAYA."&nbsp;<input type='radio' id='options[]' name='options[]' value='1'";
+    $form .= "<br />"._MB_SYSTEM_DISPLAYA."&nbsp;<input type='radio' id='options[1]' name='options[1]' value='1'";
     if ( $options[1] == 1 ) {
         $form .= " checked='checked'";
     }
-    $form .= " />&nbsp;"._YES."<input type='radio' id='options[]' name='options[]' value='0'";
+    $form .= " />&nbsp;"._YES."<input type='radio' id='options[1]' name='options[1]' value='0'";
     if ( $options[1] == 0 ) {
+        $form .= " checked='checked'";
+    }
+    $form .= " />&nbsp;"._NO."";
+    $form .= "<br />"._MB_SYSTEM_DISPLAYTOT."&nbsp;<input type='radio' id='options[2]' name='options[2]' value='1'";
+    if ( $options[2] == 1 ) {
+        $form .= " checked='checked'";
+    }
+    $form .= " />&nbsp;"._YES."<input type='radio' id='options[2]' name='options[2]' value='0'";
+    if ( $options[2] == 0 ) {
         $form .= " checked='checked'";
     }
     $form .= " />&nbsp;"._NO."";

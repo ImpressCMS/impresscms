@@ -56,6 +56,8 @@ function xoops_module_update_system(&$module) {
 	  * incremented. It is very important to modify the ICMS_SYSTEM_DBVERSION accordingly
 	  * in htdocs/include/version.php
 	  */
+	  
+   	$CleanWritingFolders = 0;
 
     $newDbVersion = 1;
 
