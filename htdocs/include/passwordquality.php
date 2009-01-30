@@ -1,19 +1,21 @@
 <?php
-##################################################################################################
-# Medidor de Qualidade de Senhas
-# Tipo: Core Hack
-# Descrição: Este hack cria um medidor de qualidade das senhas digitadas pelo usuário na hora do
-# cadastro ou edição do perfil. Ele só habilita o envio do formulário caso a senha digitada estiver
-# dentro do padrão definido na administração (Sistema=>Preferências=>Configuração dos usuários).
-# Este hack não altera o formulário de cadastro/edição de usuários da administração pois é de se
-# que o administrador do site que necessita usar um hack deste use senhas seguras na hora de criar
-# os usuários.
-##################################################################################################
-# Rodrigo Pereira Lima aka TheRplima
-# therplima@gmail.com
-# Última Atualização: 16/09/2006
-# Veja o hack funcionando aqui http://rwbanner.brinfo.com.br/register.php
-##################################################################################################
+/**
+* Password Quality Meeter
+*
+* This script create a password quality meeter in the register and change profile forms
+* to make users use more secure passwords on the site.
+* To activate the password meeter you need to go to System Admin >> Preferences >> User Settings and
+* change the value of the Minimum security level field to something different of OFF (insecure).
+* With the password meeter activated the users will be forced to use password in accordance with the 
+* defined security level.
+*
+* @copyright	The ImpressCMS Project http://www.impresscms.org/
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		1.1
+* @author		Rodrigo Pereira Lima (aka TheRplima) <therplima@impresscms.org>
+* @version		$Id$
+*/
 
 function get_rnd_iv($iv_len)
 {
@@ -95,7 +97,9 @@ if ($tipo[count($tipo)-1] == 'register.php'){
   $tipo1 = $xoopsUser->getVar('email');
 }
 echo '<script type="text/javascript">
-//Texto dos nomes dos níveis de qualidade
+/**
+ * Variables to define the names of the quality levels (Insecure, Weak, Resonable, etc)
+ */
 var qualityName1 = "'._MD_AM_PASSLEVEL1.'";
 var qualityName2 = "'._MD_AM_PASSLEVEL2.'";
 var qualityName3 = "'._MD_AM_PASSLEVEL3.'";
@@ -107,20 +111,26 @@ var passField = "'.$passField.'";
 var tipo = "'.$tipo.'";
 var tipo1 = "'.$tipo1.'";
 
-//Obtendo informações de configuração do xoops
+/**
+ * Getting the settings defined in the ImpressCMS preferences about the password (min length and security level)
+ */
 var minpass = "'.$passConfig['minpass'].'";
 var pass_level = "'.$passConfig['pass_level'].'";
 </script>';
 
-//Campo senha do formulário mais barra de progresso
+/**
+ * Adding the password field with the password meeter
+ */
 if ($passField == 'pass'){
-  //Regras Regex para filtrar senha digitada
-  $reg_form->addElement(new XoopsFormHidden("regex",'[^0-9]'));      //Regex para filrar somente os digitos numéricos da string
-  $reg_form->addElement(new XoopsFormHidden("regex3",'([0-9])\1+')); //Regex para filrar somente os digitos numéricos repetidos e em sequência da string
-  $reg_form->addElement(new XoopsFormHidden("regex1",'[0-9a-zA-Z]'));//Regex para filtrar os símbolos da string
-  $reg_form->addElement(new XoopsFormHidden("regex4",'(\W)\1+'));    //Regex para filtrar os símbolos repetidos e em sequência da string
-  $reg_form->addElement(new XoopsFormHidden("regex2",'[^A-Z]'));     //Regex para filtrar as letras maiúsculas da string
-  $reg_form->addElement(new XoopsFormHidden("regex5",'([A-Z])\1+')); //Regex para filtrar as letras maiúsculas repetidas e em sequência da string
+  /**
+   * Regex rules to deterine the password level 
+   */
+  $reg_form->addElement(new XoopsFormHidden("regex",'[^0-9]'));      //Regex rule to get only the numeric digits on the password string
+  $reg_form->addElement(new XoopsFormHidden("regex3",'([0-9])\1+')); //Regex rule to get only the numeric digits repeated and in sequence (i.e: 111222333) on the password string
+  $reg_form->addElement(new XoopsFormHidden("regex1",'[0-9a-zA-Z]'));//Regex rule to get only the symbols on the password string
+  $reg_form->addElement(new XoopsFormHidden("regex4",'(\W)\1+'));    //Regex rule to get only the symbols repeated and in sequence (i.e: {{{}}}]]]\\\) on the password string
+  $reg_form->addElement(new XoopsFormHidden("regex2",'[^A-Z]'));     //Regex rule to get only the uppercase letters in the password string
+  $reg_form->addElement(new XoopsFormHidden("regex5",'([A-Z])\1+')); //Regex rule to get only the uppercase letters repeated and in sequence (i.e: AAABBBCCC) on the password string
 
   $pass_tray = new XoopsFormElementTray(_US_PASSWORD, '');
   $pass_tray->setDescription(_US_REGFORM_WARNING);
@@ -131,13 +141,15 @@ if ($passField == 'pass'){
   $pass_tray->addElement($div_progress);
   $reg_form->addElement($pass_tray);
 }else{
-  //Regras Regex para filtrar senha digitada
-  $form->addElement(new XoopsFormHidden("regex",'[^0-9]'));      //Regex para filrar somente os digitos numéricos da string
-  $form->addElement(new XoopsFormHidden("regex3",'([0-9])\1+')); //Regex para filrar somente os digitos numéricos repetidos e em sequência da string
-  $form->addElement(new XoopsFormHidden("regex1",'[0-9a-zA-Z]'));//Regex para filtrar os símbolos da string
-  $form->addElement(new XoopsFormHidden("regex4",'(\W)\1+'));    //Regex para filtrar os símbolos repetidos e em sequência da string
-  $form->addElement(new XoopsFormHidden("regex2",'[^A-Z]'));     //Regex para filtrar as letras maiúsculas da string
-  $form->addElement(new XoopsFormHidden("regex5",'([A-Z])\1+')); //Regex para filtrar as letras maiúsculas repetidas e em sequência da string
+  /**
+   * Regex rules to deterine the password level 
+   */
+  $form->addElement(new XoopsFormHidden("regex",'[^0-9]'));      //Regex rule to get only the numeric digits on the password string
+  $form->addElement(new XoopsFormHidden("regex3",'([0-9])\1+')); //Regex rule to get only the numeric digits repeated and in sequence (i.e: 111222333) on the password string
+  $form->addElement(new XoopsFormHidden("regex1",'[0-9a-zA-Z]'));//Regex rule to get only the symbols on the password string
+  $form->addElement(new XoopsFormHidden("regex4",'(\W)\1+'));    //Regex rule to get only the symbols repeated and in sequence (i.e: {{{}}}]]]\\\) on the password string
+  $form->addElement(new XoopsFormHidden("regex2",'[^A-Z]'));     //Regex rule to get only the uppercase letters in the password string
+  $form->addElement(new XoopsFormHidden("regex5",'([A-Z])\1+')); //Regex rule to get only the uppercase letters repeated and in sequence (i.e: AAABBBCCC) on the password string
 
   $pwd_text = new XoopsFormElementTray('', '');
   $pass_inp = new XoopsFormPassword('', $passField, 10, 72);
