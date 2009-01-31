@@ -99,7 +99,7 @@ else {$sess_handler->icms_sessionOpen();}
     } elseif ($scheme == 'https') {
   	/* 	New GA code, https protocol */
       $xoTheme->addScript('https://ssl.google-analytics.com/ga.js',array('type' => 'text/javascript'),'');
-      $xoTheme->addScript('',array('type' => 'text/javascript'),'var pageTracker = _gat._getTracker("UA-'.$xoopsConfigMetaFooter['google_analytics'].'"); pageTracker._trackPageview();');
+      $xoTheme->addScript(null ,array('type' => 'text/javascript'),'var pageTracker = _gat._getTracker("UA-'.$xoopsConfigMetaFooter['google_analytics'].'"); pageTracker._trackPageview();');
   	}
 	}
 		$xoTheme->render();

@@ -38,26 +38,7 @@ function textsanitizer_geshi_css_highlight( $source )
 function javascript_syntaxhighlightcss($ele_name)
 {
         $code = "<img onclick='javascript:icmsCodeCSS(\"".$ele_name."\", \"".htmlspecialchars(_ENTERCSSCODE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/plugins/textsanitizer/".basename(dirname(__FILE__))."/css.png' alt='css' />&nbsp;";
-        $javascript = <<<EOH
-				function icmsCodeCSS(id,enterCSSPhrase){
-    				if (enterCSSPhrase == null) {
-    				        enterCSSPhrase = "Enter The Text To Be CSS Code:";
-    				}
-					var text = prompt(enterCSSPhrase, "");
-					var domobj = xoopsGetElementById(id);
-					if ( text != null && text != "" ) {
-						var pos = text.indexOf(unescape('%00'));
-						if(0 < pos){
-							text = text.substr(0,pos);
-						}
-					    var result = "[code_css]" + text + "[/code_css]";
-					    xoopsInsertText(domobj, result);
-					}
-					
-					domobj.focus();
-					}
-EOH;
-
+		$javascript='';
         return array($code, $javascript);
 }
 function stlye_syntaxhighlightcss(){

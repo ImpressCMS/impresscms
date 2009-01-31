@@ -20,26 +20,8 @@ function textsanitizer_hiddencontent(&$ts, $text)
 function javascript_hiddencontent($ele_name)
 {
         $code = "<img onclick='javascript:icmsCodeHidden(\"".$ele_name."\", \"".htmlspecialchars(_ENTERHIDDEN, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/hide.gif' alt='hide' />&nbsp;";
-        $javascript = <<<EOH
-				function icmsCodeHidden(id,enterHiddenPhrase){
-    				if (enterHiddenPhrase == null) {
-    				        enterHiddenPhrase = "Enter The Text To Be Hidden:";
-    				}
-					var text = prompt(enterHiddenPhrase, "");
-					var domobj = xoopsGetElementById(id);
-					if ( text != null && text != "" ) {
-						var pos = text.indexOf(unescape('%00'));
-						if(0 < pos){
-							text = text.substr(0,pos);
-						}
-					    var result = "[hide]" + text + "[/hide]";
-					    xoopsInsertText(domobj, result);
-					}
-					
-					domobj.focus();
-					}
-EOH;
-
+        //$javascript = 'plugins/textsanitizer/'.basename(dirname(__FILE__)).'/hiddencontent.js';;
+$javascript='';
         return array($code, $javascript);
 }
 function stlye_hiddencontent(){

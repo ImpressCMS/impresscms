@@ -63,10 +63,32 @@ else
 	/** 
 	 * Now system first checks for RTL, if it is enabled it'll just load it, otherwise it will load the normal (LTR) styles
 	*/
-            		$xoTheme->addStylesheet(ICMS_URL."/icms".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css", array("media" => "screen"));
+    $xoTheme->addStylesheet(ICMS_URL."/icms".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css", array("media" => "screen"));
     // Weird, but need extra <script> tags for 2.0.x themes
     //$xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
 	//$xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');
+    // Weird, but we need to bring plugins java information in header because doing it form elsewhere will drop system required Java Script files!!
+			$config_handler =& xoops_gethandler('config');
+			$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+ 			$jscript = '';
+			if(class_exists('XoopsFormDhtmlTextArea')){
+ 		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+ 		        	$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+ 		        	$func = 'javascript_'.$key;
+ 		        	if ( function_exists($func) ) {
+ 		        		@list($encode, $jscript) = $func($ele_name);
+ 		        		 	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
+ 		        				$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
+ 		        			}elseif (!empty($jscript)) {
+ 		        				if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
+ 		        					$xoTheme->addScript('', array('type' => 'text/javascript'), $jscript);
+ 		        				}else{
+ 		        					$xoTheme->addScript(ICMS_URL.'/'.$jscript, array('type' => 'text/javascript'));
+ 		        			}
+ 		        		}
+ 		        	}
+ 		        }
+ 		    }
 
 	if(@is_object($xoTheme->plugins['xos_logos_PageBuilder']))
 	{

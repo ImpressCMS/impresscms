@@ -25,7 +25,14 @@ function wikiLink($text)
 function javascript_wiki($ele_name)
 {
         $code = "<img onclick='javascript:icmsCodeWIKI(\"".$ele_name."\", \"".htmlspecialchars(_ENTERWIKICODE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/plugins/textsanitizer/".basename(dirname(__FILE__))."/wiki.png' alt='wiki' />&nbsp;";
-        $javascript = <<<EOH
+        /**
+        * Using this method You can add a file to load your java script informations
+        */
+        $javascript = 'plugins/textsanitizer/'.basename(dirname(__FILE__)).'/wiki.js';;
+         /**
+        * Using this method You can add a code to load your java script informations
+        */
+       /*$javascript = <<<EOH
 				function icmsCodeWIKI(id,enterWIKIPhrase){
     				if (enterWIKIPhrase == null) {
     				        enterWIKIPhrase = "Enter The Text To Be WIKI Code:";
@@ -43,7 +50,7 @@ function javascript_wiki($ele_name)
 					
 					domobj.focus();
 					}
-EOH;
+EOH;*/
 
         return array($code, $javascript);
 }

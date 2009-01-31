@@ -302,4 +302,5 @@ define("_ENTERPHPCODE","Enter the PHP codes that you want to add.");
 define("_ENTERCSSCODE","Enter the CSS codes that you want to add.");
 define("_ENTERJSCODE","Enter the JavaScript codes that you want to add.");
 define("_ENTERWIKICODE","Enter the wiki term that you want to add.");
+define("_ENTERLANGCONTENT","Enter the text that you want to be in %s.");
 ?>
