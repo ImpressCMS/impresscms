@@ -78,6 +78,30 @@ window.onload=startList;
 //--><!]]></script>";
 	// ################# Preload Trigger adminBeforeFooter ##############
 	$icmsPreloadHandler->triggerEvent ( 'adminBeforeFooter' );
+			$config_handler =& xoops_gethandler('config');
+			$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+ 			$jscript = '';
+			if(class_exists('XoopsFormDhtmlTextArea')){
+ 		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+ 		        	$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+ 		        	$func = 'javascript_'.$key;
+ 		        	$javascript = '';
+ 		        	if ( function_exists($func) ) {
+ 		        		@list($encode, $jscript) = $func($ele_name);
+ 		        		 	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
+ 		        				$javascript = '<script type="text/javascript" src="' . ICMS_URL .'/plugins/textsanitizer/'.$key.'/'.$key.'.js"></script>';
+ 		        			}elseif (!empty($jscript)) {
+ 		        				if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
+ 		        					$javascript = '<script type="text/javascript" src="' . $jscript .'"></script>';
+ 		        				}else{
+ 		        					$javascript = '<script type="text/javascript"><!--//--><![CDATA[//><!--' . $jscript .'//--><!]]></script>';
+ 		        			}
+ 		        		}
+ 		        	}
+ 		        	echo $javascript;
+ 		        }
+ 		    }
+
 	
 	echo "</head>
         <body>";
