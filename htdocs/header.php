@@ -71,24 +71,44 @@ else
 			$config_handler =& xoops_gethandler('config');
 			$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
  			$jscript = '';
-			if(class_exists('XoopsFormDhtmlTextArea')){
  		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
- 		        	$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
- 		        	$func = 'javascript_'.$key;
- 		        	if ( function_exists($func) ) {
- 		        		@list($encode, $jscript) = $func($ele_name);
- 		        		 	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
- 		        				$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
- 		        			}elseif (!empty($jscript)) {
- 		        				if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
+ 		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
+ 		        		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
+ 		        	}else{
+ 		        		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+ 		        		$func = 'javascript_'.$key;
+ 		        		if ( function_exists($func) ) {
+ 		        			@list($encode, $jscript) = $func($ele_name);
+ 		        		 	if (!empty($jscript)) {
+ 		        		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
  		        					$xoTheme->addScript('', array('type' => 'text/javascript'), $jscript);
  		        				}else{
- 		        					$xoTheme->addScript(ICMS_URL.'/'.$jscript, array('type' => 'text/javascript'));
+ 		        					$xoTheme->addScript($jscript, array('type' => 'text/javascript'));
+ 		        				}
  		        			}
  		        		}
  		        	}
  		        }
- 		    }
+
+ 			$style_info = '';
+ 		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+ 		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
+ 		        		$xoTheme->addStylesheet(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
+ 		        	}else{
+ 		        		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+ 		        		$func = 'stlye_'.$key;
+ 		        		if ( function_exists($func) ) {
+ 		        			$style_info = $func();
+ 		        		 	if (!empty($style_info)) {
+ 		        		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
+ 		        					$xoTheme->addStylesheet('', array('media' => 'screen'), $style_info);
+ 		        				}else{
+ 		        					$xoTheme->addStylesheet($style_info, array('media' => 'screen'));
+ 		        				}
+ 		        			}
+ 		        		}
+ 		        	}
+ 		        }
 
 	if(@is_object($xoTheme->plugins['xos_logos_PageBuilder']))
 	{

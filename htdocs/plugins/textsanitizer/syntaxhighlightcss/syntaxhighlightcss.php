@@ -42,7 +42,7 @@ function javascript_syntaxhighlightcss($ele_name)
         return array($code, $javascript);
 }
 function stlye_syntaxhighlightcss(){
-echo'<style type="text/css">
-</style>';
+$style_info = '';
+return $style_info;
 }
 ?>

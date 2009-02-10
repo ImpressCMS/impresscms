@@ -43,6 +43,50 @@ function xoops_header($closehead=true)
 	<script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script>
 	<script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
+			$config_handler =& xoops_gethandler('config');
+			$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+ 			$jscript = '';
+ 		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+ 		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
+ 		        		echo '<script type="text/javascript" src="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js"></script>';
+ 		        	}else{
+ 		        		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+ 		        		$func = 'javascript_'.$key;
+ 		        		if ( function_exists($func) ) {
+ 		        			@list($encode, $jscript) = $func($ele_name);
+ 		        		 	if (!empty($jscript)) {
+ 		        		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
+ 		        					echo '<script type="text/javascript">'.$jscript.'</script>';
+ 		        				}else{
+ 		        					echo '<script type="text/javascript" src="'.$jscript.'"></script>';
+ 		        				}
+ 		        			}
+ 		        		}
+ 		        	}
+ 		        }
+
+ 			$style_info = '';
+ 		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+ 		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
+ 		        		echo '<link rel="stylesheet" media="screen" href="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css" type="text/css" />';
+ 		        	}else{
+ 		        		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+ 		        		$func = 'stlye_'.$key;
+ 		        		if ( function_exists($func) ) {
+ 		        			$style_info = $func();
+ 		        		 	if (!empty($style_info)) {
+ 		        		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
+ 		        		 			echo '<style media="screen" type="text/css">
+ 		        		 			'.$style_info.'
+ 		        		 			</style>';
+ 		        				}else{
+ 		        					echo '<link rel="stylesheet" media="screen" href="'.$style_info.'" type="text/css" />';
+ 		        				}
+ 		        			}
+ 		        		}
+ 		        	}
+ 		        }
+
 	$themecss = getcss($xoopsConfig['theme_set']);
 	if ($themecss) {
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$themecss.'" />';
@@ -2591,29 +2635,9 @@ function icms_random_str($numchar){
     $senha = implode($array, ""); 	 
     return substr($senha, 0, $numchar); 	 
 }
-function icms_adminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1) {
-	global $xoopsModule, $xoopsConfig;
-	include_once XOOPS_ROOT_PATH . '/class/template.php';
-	if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php')) {
-		include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/modinfo.php';
-	} else {
-		include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/modinfo.php';
-	}
-	if (file_exists(XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/admin.php')) {
-		include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/admin.php';
-	} else {
-		include_once XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/language/english/admin.php';
-	}
-	include XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/menu.php';
-	$tpl = & new XoopsTpl();
-	$tpl->assign(array (
-		'headermenu' => $headermenu,
-		'adminmenu' => $adminmenu,
-		'current' => $currentoption,
-		'breadcrumb' => $breadcrumb,
-		'headermenucount' => count($headermenu
-	), 'submenus' => $submenus, 'currentsub' => $currentsub, 'submenuscount' => count($submenus)));
-	$tpl->display('db:system_admin_menu.html');
+function icms_adminMenu($currentoption = 0, $breadcrumb = '') {
+	global $xoopsModule;
+	$xoopsModule -> displayAdminMenu( $currentoption, $xoopsModule -> name() . ' | ' . $breadcrumb );
 }
 function icms_loadCommonLanguageFile() {
 	icms_loadLanguageFile('system', 'common');

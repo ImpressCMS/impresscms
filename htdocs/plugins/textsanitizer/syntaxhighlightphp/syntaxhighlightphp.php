@@ -42,7 +42,7 @@ function javascript_syntaxhighlightphp($ele_name)
         return array($code, $javascript);
 }
 function stlye_syntaxhighlightphp(){
-echo'<style type="text/css">
-</style>';
+$style_info = '';
+return $style_info;
 }
 ?>

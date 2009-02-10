@@ -81,28 +81,47 @@ window.onload=startList;
 			$config_handler =& xoops_gethandler('config');
 			$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
  			$jscript = '';
-			if(class_exists('XoopsFormDhtmlTextArea')){
  		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
- 		        	$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
- 		        	$func = 'javascript_'.$key;
- 		        	$javascript = '';
- 		        	if ( function_exists($func) ) {
- 		        		@list($encode, $jscript) = $func($ele_name);
- 		        		 	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
- 		        				$javascript = '<script type="text/javascript" src="' . ICMS_URL .'/plugins/textsanitizer/'.$key.'/'.$key.'.js"></script>';
- 		        			}elseif (!empty($jscript)) {
- 		        				if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
- 		        					$javascript = '<script type="text/javascript" src="' . $jscript .'"></script>';
+ 		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
+ 		        		echo '<script type="text/javascript" src="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js"></script>';
+ 		        	}else{
+ 		        		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+ 		        		$func = 'javascript_'.$key;
+ 		        		if ( function_exists($func) ) {
+ 		        			@list($encode, $jscript) = $func($ele_name);
+ 		        		 	if (!empty($jscript)) {
+ 		        		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
+ 		        					echo '<script type="text/javascript">'.$jscript.'</script>';
  		        				}else{
- 		        					$javascript = '<script type="text/javascript"><!--//--><![CDATA[//><!--' . $jscript .'//--><!]]></script>';
+ 		        					echo '<script type="text/javascript" src="'.$jscript.'"></script>';
+ 		        				}
  		        			}
  		        		}
  		        	}
- 		        	echo $javascript;
  		        }
- 		    }
 
-	
+ 			$style_info = '';
+ 		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+ 		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
+ 		        		echo '<link rel="stylesheet" media="screen" href="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css" type="text/css" />';
+ 		        	}else{
+ 		        		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+ 		        		$func = 'stlye_'.$key;
+ 		        		if ( function_exists($func) ) {
+ 		        			$style_info = $func();
+ 		        		 	if (!empty($style_info)) {
+ 		        		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
+ 		        		 			echo '<style media="screen" type="text/css">
+ 		        		 			'.$style_info.'
+ 		        		 			</style>';
+ 		        				}else{
+ 		        					echo '<link rel="stylesheet" media="screen" href="'.$style_info.'" type="text/css" />';
+ 		        				}
+ 		        			}
+ 		        		}
+ 		        	}
+ 		        }
+
 	echo "</head>
         <body>";
 	/**

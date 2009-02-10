@@ -505,7 +505,7 @@ class xos_opal_Theme {
 			case 'stylesheet':
 				foreach ( $this->metas[$type] as $attrs ) {
 					if ( @$attrs['_'] ) {
-						$str .= '<style' . $this->renderAttributes($attrs) . ">\n/* <![CDATA[ */\n" . $attrs['_'] . "\n/* //]]> */\n</style>";
+						$str .= '<style' . $this->renderAttributes($attrs) . ">\n" . $attrs['_'] . "\n</style>";
 					} else {
 						$str .= '<link rel="stylesheet"' . $this->renderAttributes($attrs) . " />\n";
 					}

@@ -12,9 +12,9 @@
 function textsanitizer_hiddencontent(&$ts, $text)
 {
         	$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
-			if($_SESSION['xoopsUserId'])
-			{$replacements[] = stlye_hiddencontent() . _HIDDENC.'<div class="icmsHidden">\\1</div>';}
-			else{$replacements[] = stlye_hiddencontent() . _HIDDENC.'<div class="icmsHidden">'._HIDDENTEXT.'</div>';}
+			if(!empty($_SESSION['xoopsUserId']) && $_SESSION['xoopsUserId'])
+			{$replacements[] = _HIDDENC.'<div class="icmsHidden">\\1</div>';}
+			else{$replacements[] = _HIDDENC.'<div class="icmsHidden">'._HIDDENTEXT.'</div>';}
 	return preg_replace($patterns, $replacements, $text);
 }
 function javascript_hiddencontent($ele_name)
@@ -24,9 +24,14 @@ function javascript_hiddencontent($ele_name)
 $javascript='';
         return array($code, $javascript);
 }
+/**
+ * You can use a function like this to add css information
+ */
+ 
+/*
 function stlye_hiddencontent(){
-echo'<style type="text/css">
-.icmsHidden { background-color: #FAFAFA; color: #444; font-size: .9em; line-height: 1.2em; text-align: justify; border: #c2cdd6 1px dashed;}
-</style>';
+$style_info = '.icmsHidden { background-color: #FAFAFA; color: #444; font-size: .9em; line-height: 1.2em; text-align: justify; border: #c2cdd6 1px dashed;}';
+return $style_info;
 }
+*/
 ?>
