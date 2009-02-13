@@ -51,20 +51,5 @@ CREATE TABLE `profile_regstep` (
 CREATE TABLE `profile_profile` (
   `profileid` int(12) unsigned NOT NULL auto_increment,
   `newemail` varchar(255) NOT NULL default '',
-  `first_name` varchar(20) NOT NULL default '',
-  `middle_name` varchar(30) NOT NULL default '',
-  `last_name` varchar(50) NOT NULL default '',
-  `company` varchar(255) NOT NULL default '',
-  `address` tinytext NOT NULL,
-  `city` varchar(50) NOT NULL default '',
-  `state` varchar(255) NOT NULL default '',
-  `zip` varchar(10) NOT NULL default '',
-  `country` varchar(255) NOT NULL default '',
-  `phone` varchar(25) NOT NULL default '',
-  `phone2` varchar(25) NOT NULL default '',
-  `birth_date` int(10) NOT NULL default '0',
-  `newsletter` int(1) NOT NULL default '1',
-  `newsletter_partners` int(1) NOT NULL default '1',
-  `email_format` varchar(255) NOT NULL default 'HTML',
   PRIMARY KEY  (`profileid`)
 ) TYPE=MyISAM;
