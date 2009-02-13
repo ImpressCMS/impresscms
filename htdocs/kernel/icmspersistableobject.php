@@ -467,7 +467,7 @@ class IcmsPersistableObject extends XoopsObject {
      */
 	function getGroupPerm($group_perm) {
 		if (!$this->handler->getPermissions()) {
-			$this->setError("Trying to access a permission that does not exists for thisobject's handler");
+			$this->setError("Trying to access a permission that does not exists for this object's handler");
 			return false;
 		}
 

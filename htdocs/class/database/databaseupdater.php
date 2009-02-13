@@ -4,7 +4,7 @@
  *
  * @license GNU
  * @author marcan <marcan@smartfactory.ca>
- * @version $Id: databaseupdater.php 7417 2008-12-04 13:29:47Z pesian_stranger $
+ * @version $Id: databaseupdater.php 7996 2009-01-27 14:05:34Z malanciault $
  * @link http://www.smartfactory.ca The SmartFactory
  * @package SmartObject
  */
@@ -83,12 +83,15 @@ class IcmsDatabasetable {
 	 */
 	var $force=false;
 
+	/** For backward compat */
+	var $_db;
+
 	/**
 	 * xoopsDB database object
 	 *
 	 * @var @link XoopsDatabase object
 	 */
-	var $_db;
+	var $db;
 
 	/**
 	 * Constructor
@@ -99,7 +102,10 @@ class IcmsDatabasetable {
 	function IcmsDatabasetable($name) {
 		global $xoopsDB;
 
+		$this->db = $xoopsDB;
+		/** For backward compat */
 		$this->_db = $xoopsDB;
+
 		$this->_name = $name;
 		$this->_data = array ();
 	}
@@ -576,7 +582,6 @@ class IcmsDatabaseupdater {
 
 		// backward compat
 		$this->_db = $xoopsDB;
-
 		$this->db = $xoopsDB;
 
 		$this->_dbTypesArray[XOBJ_DTYPE_TXTBOX] = 'varchar(255)';

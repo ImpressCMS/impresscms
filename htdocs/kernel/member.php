@@ -313,7 +313,13 @@ class XoopsMemberHandler {
 		}
 		$salt = icms_getUserSaltFromUname ( $uname );
 		$pwd = icms_encryptPass ( $pwd, $salt );
+ 		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
+ 		$table = new IcmsDatabasetable('users');
+	    if ($table->fieldExists('login_name')) {
 		$criteria = new CriteriaCompo ( new Criteria ( 'login_name', $uname ) );
+	    }else{
+		$criteria = new CriteriaCompo ( new Criteria ( 'uname', $uname ) );
+	    }
 		$criteria->add ( new Criteria ( 'pass', $pwd ) );
 		$user = $this->_uHandler->getObjects ( $criteria, false );
 		if (! $user || count ( $user ) != 1) {
@@ -324,14 +330,20 @@ class XoopsMemberHandler {
 	}
 	
 	/**
-	 * logs in a user with an nd5 encrypted password
+	 * logs in a user with an md5 encrypted password
 	 *
 	 * @param string $uname username
 	 * @param string $md5pwd password encrypted with md5
 	 * @return object XoopsUser {@link XoopsUser} reference to the logged in user. FALSE if failed to log in
 	 */
 	function &loginUserMd5($uname, $md5pwd) {
+ 		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
+ 		$table = new IcmsDatabasetable('users');
+	    if ($table->fieldExists('login_name')) {
 		$criteria = new CriteriaCompo ( new Criteria ( 'login_name', $uname ) );
+	    }else{
+		$criteria = new CriteriaCompo ( new Criteria ( 'uname', $uname ) );
+	    }
 		$criteria->add ( new Criteria ( 'pass', $md5pwd ) );
 		$user = $this->_uHandler->getObjects ( $criteria, false );
 		if (! $user || count ( $user ) != 1) {

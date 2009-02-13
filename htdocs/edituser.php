@@ -18,6 +18,14 @@
 $xoopsOption['pagetype'] = 'user';
 /** Include mainfile - required */
 include 'mainfile.php';
+$module_handler = xoops_gethandler('module');
+$profile_module = $module_handler->getByDirname('profile');
+if($profile_module && $profile_module->getVar('isactive') && file_exists(ICMS_ROOT_PATH.'/modules/profile/edituser.php'))
+{
+	header('Location: '.ICMS_URL.'/modules/profile/edituser.php');
+	exit();
+}
+
 /** Include the form class */
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 

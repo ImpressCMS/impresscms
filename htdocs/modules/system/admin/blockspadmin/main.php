@@ -107,7 +107,11 @@ function edit_pblock($pbid){
 
 function save_pblock($dados,$edit=false){
 	$db =& Database::getInstance();
-
+     foreach($dados as $k=>$field)
+	{
+		if(is_int($field)) {$dados[$k] = (int)$field;}
+		else {$dados[$k] = htmlentities($field);}
+	}
 	if (!$edit)
 	  $sql = "INSERT INTO ".$db->prefix('block_positions')." (pname,title,description,block_default,block_type) VALUES (".$db->quoteString($dados['pname']).",".$db->quoteString($dados['title']).",".$db->quoteString($dados['description']).",'0','L')";
 	else

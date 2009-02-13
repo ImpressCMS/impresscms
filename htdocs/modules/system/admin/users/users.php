@@ -194,7 +194,6 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 	$edituser =& $member_handler->getUser($uid);
 	$config_handler =& xoops_gethandler('config');
 	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-
 	if($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new Criteria('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new Criteria('login_name', $login_name)) > 0)
 	{
 		xoops_cp_header();

@@ -86,7 +86,7 @@ class xos_logos_PageBuilder {
 			$module_handler = & xoops_gethandler ( 'module' );
 			$module = & $module_handler->get ( $mid );
 			$dirname = $module->getVar ( 'dirname' );
-			$isStart = ($startMod == $mid . '-' . $pid || $startMod == $dirname);
+			$isStart = ($startMod == $mid.'-'.$pid);
 		} else { //Don't have a sym-link for this page
 			if (@is_object ( $xoopsModule )) {
 				list ( $mid, $dirname ) = array ($xoopsModule->getVar ( 'mid' ), $xoopsModule->getVar ( 'dirname' ) );

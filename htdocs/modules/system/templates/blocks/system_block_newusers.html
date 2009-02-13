@@ -6,6 +6,7 @@
       <img src="<{$user.avatar}>" alt="<{$user.name}>'s avatar" width="32px" /><br />
       <{/if}>
       <a href="<{$xoops_url}>/userinfo.php?uid=<{$user.id}>" title="<{$user.name}>"><{$user.name}></a>
+      <{if $xoops_isadmin}><br />(<{$user.login_name}>)<{/if}>
       </td>
       <td align="center"><{$user.joindate}></td>
     </tr>

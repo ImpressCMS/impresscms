@@ -376,6 +376,23 @@ function xoops_module_update_system(&$module) {
     if ($dbVersion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
+		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_unames'");
+		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_emails'");
+		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'meta_keywords'");
+		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'meta_description'");
+		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'censor_words'");
+		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'ldap_users_bypass'");
+		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'ldap_field_mapping'");
+		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'reg_disclaimer'");
+		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_ips'");
+		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'smtphost'");
+		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'multi_login_msg'");
+	}
+    $newDbVersion = 12;
+
+    if ($dbVersion < $newDbVersion) {
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
         $db = $GLOBALS['xoopsDB'];
         if (getDbValue($db, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"') == 0) {
 		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('11','_MD_AM_CAPTCHA')");
@@ -418,18 +435,9 @@ function xoops_module_update_system(&$module) {
             }
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_background_num', '_MD_AM_CAPTCHA_BGNUM', '50', '_MD_AM_CAPTCHA_BGNUMDSC', 'textbox', 'int', 10);
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_polygon_point', '_MD_AM_CAPTCHA_POLPNT', '3', '_MD_AM_CAPTCHA_POLPNTDSC', 'textbox', 'int', 11);
-
-        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_unames'");
-        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_emails'");
-        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'meta_keywords'");
-        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'meta_description'");
-        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'censor_words'");
-        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'ldap_users_bypass'");
-        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'ldap_field_mapping'");
-
 	}
 
-	$newDbVersion = 12;
+	$newDbVersion = 13;
 
     if ($dbVersion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
@@ -440,7 +448,7 @@ function xoops_module_update_system(&$module) {
 	}
 
 
-	$newDbVersion = 13;
+	$newDbVersion = 14;
 
     if ($dbVersion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
@@ -452,7 +460,7 @@ function xoops_module_update_system(&$module) {
 		
 	}
 
-    $newDbVersion = 14;
+    $newDbVersion = 15;
 
     if ($dbVersion < $newDbVersion) {
 	    global $xoopsDB;
@@ -468,7 +476,7 @@ function xoops_module_update_system(&$module) {
 		unset($table);
 	}
 
-    $newDbVersion = 15;
+    $newDbVersion = 16;
 
     if ($dbVersion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
@@ -486,7 +494,7 @@ function xoops_module_update_system(&$module) {
 	}
 
 
-    $newDbVersion = 16;
+    $newDbVersion = 17;
 
     if ($dbVersion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
@@ -514,14 +522,14 @@ function xoops_module_update_system(&$module) {
             }
 	    $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'geshi_default', '_MD_AM_GESHI_DEFAULT', 'php', '_MD_AM_GESHI_DEFAULT_DESC', 'select_geshi', 'text', 3);
         $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_valuetype = 'array' WHERE conf_name = 'startpage'");
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '0', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 6);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '30', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 6);
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'allow_chguname', '_MD_AM_ALLWCHGUNAME', '0', '_MD_AM_ALLWCHGUNAMEDSC', 'yesno', 'int', 11);
 	    $icmsDatabaseUpdater->insertConfig(IM_CONF_CONTENT, 'num_pages', '_MD_AM_CONT_NUMPAGES', '10', '_MD_AM_CONT_NUMPAGESDSC', 'textbox', 'int', 5);
 	    $icmsDatabaseUpdater->insertConfig(IM_CONF_CONTENT, 'teaser_length', '_MD_AM_CONT_TEASERLENGTH', '500', '_MD_AM_CONT_TEASERLENGTHDSC', 'textbox', 'int', 6);
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'pagstyle', '_MD_AM_PAGISTYLE', 'default', '_MD_AM_PAGISTYLE_DESC', 'select_paginati', 'text', 24);
 	}
 
-    $newDbVersion = 17;
+    $newDbVersion = 18;
 
     if ($dbVersion < $newDbVersion) {
 	    global $xoopsDB;

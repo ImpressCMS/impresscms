@@ -85,7 +85,7 @@ if (false != $user) {
 			}
 			if( is_object( $user ) ) {
 				$online_handler->write($user->uid(), $user->uname(),
-				time(),0,$HTTP_SERVER_VARS['REMOTE_ADDR']);
+				time(),0,$_SERVER['REMOTE_ADDR']);
 			}
 		}
 	}

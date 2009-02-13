@@ -492,13 +492,6 @@ function xoops_getbanner()
 */
 function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 {
-	/*
-	 * Here comes the part for removing inactive users after X days.
-	 * The reason is clear, redirect header is used all over the core and modules, and doing so we can allways make sure those users are removed.
-	 * Maybe we require to add a preload here too?
-	 * If this method is secure, needs to be discussed!
-	 */
-	 //remove_usersxdays ();
 	global $xoopsConfig, $xoopsLogger, $xoopsUserIsAdmin;
 	if(preg_match("/[\\0-\\31]|about:|script:/i", $url))
 	{
@@ -1341,8 +1334,15 @@ function icms_getUnameFromUserEmail($email = '')
 	$db =& Database::getInstance();
 	if($email !== '')
 	{
+ 		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
+ 		$table = new IcmsDatabasetable('users');
+	    if (!$table->fieldExists('login_name')) {
+	    	$sql = $db->query("SELECT uname, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
+		list($uname, $email) = $db->fetchRow($sql);
+	    }else{
 	    	$sql = $db->query("SELECT login_name, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
 		list($uname, $email) = $db->fetchRow($sql);
+	    }
 	}
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 	return $uname;
@@ -1585,7 +1585,7 @@ function StopXSS($text)
 			} else {
 				$t = preg_replace("/\(\)/si", "", $t);
 				$t = strip_tags($t);
-				$t = str_replace(array("'","\"",">","<","\\"), "", $t);
+				$t = str_replace(array("\"",">","<","\\"), "", $t);
 				$text[$k] = $t;
 			}
 		}
@@ -1851,6 +1851,20 @@ function icms_escapeValue($value, $quotes = true)
 		}
 			return true;
 	}
+	/**
+	* Get a number value in other languages
+	*
+	* @param int $string Content to be transported into another language
+	* @return string inout with replaced numeric values
+	*
+	* Example: In Persian we use, (۱, ۲, ۳, ۴, ۵, ۶, ۷, ۸, ۹, ۰) instead of (1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
+	* Now in a module and we are showing amount of reads, the output in Persian must be ۱۲ (which represents 12).
+	* To developers, please use this function when you are having a numeric output, as this is counted as a string in php so you should use %s.
+	* Like: 
+	* $views = sprintf ( 'Viewed: %s Times.', icms_conv_nr2local($string) );
+	*/
+	
+	
 function icms_conv_nr2local($string)
 {
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
@@ -1861,6 +1875,13 @@ function icms_conv_nr2local($string)
 	}
 		return $string;
 }
+/**
+ * Get a number value in other languages and transform it to English
+ * 
+ * This function is exactly the opposite of icms_conv_nr2local();
+ * Please view the notes there for more information.
+ */
+
 function icms_conv_local2nr($string)
 {
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
@@ -2601,17 +2622,14 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
  **/
 
 function remove_usersxdays (){
+	$db =& Database::getInstance();
 	$config_handler =& xoops_gethandler('config');
 	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 	$days = $xoopsConfigUser['delusers'];
-	$member_handler = xoops_gethandler('member');
-	$criteria = new Criteria("level", 0); //points all inactive users
-	$users = $member_handler->getUsers($criteria);
 	$delete_regdate= time() - ( $days * 24 * 60 * 60 );  // X days/month * 24 hrs/day
-	foreach (array_keys($users) as $i) {
-		if ($users[$i]->getVar('user_regdate') < $delete_regdate){ //all users who registered more than X days ago
-			return $member_handler->deleteUser($users[$i]);
-		}
+	$sql = sprintf("DELETE FROM %s WHERE (level = '0' AND user_regdate < '%s')", $db->prefix('users'), $delete_regdate);
+	if(!$result = $db->queryF($sql)){
+		return false;
 	}
 }
 

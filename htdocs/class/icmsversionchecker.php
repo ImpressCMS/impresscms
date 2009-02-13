@@ -1,10 +1,5 @@
 <?php
-if (!defined('XOOPS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
-}
-
-require_once XOOPS_ROOT_PATH.'/class/snoopy.php';
-include_once XOOPS_ROOT_PATH.'/class/xml/rss/xmlrss2parser.php';
+if (!defined('XOOPS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
 * IcmsVersionChecker
@@ -16,7 +11,7 @@ include_once XOOPS_ROOT_PATH.'/class/xml/rss/xmlrss2parser.php';
 * @package		core
 * @since		1.0
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmsversionchecker.php 7171 2008-11-23 10:36:17Z pesian_stranger $
+* @version		$Id: icmsversionchecker.php 8005 2009-01-28 17:03:50Z malanciault $
 */
 class IcmsVersionChecker {
 
@@ -31,12 +26,6 @@ class IcmsVersionChecker {
 	 * @var $version_xml string
 	 */
 	var $version_xml = "http://www.impresscms.org/impresscms_version.xml";
-
-	/*
-	 * Path of the file containing the cached version of the $version_xml content
-	 * @var cache_version_xml string
-	 */
-	var $cache_version_xml = "impresscms_version.xml";
 
 	/*
 	 * Time before fetching the $version_xml again and store it in $cache_version_xml
@@ -95,8 +84,6 @@ class IcmsVersionChecker {
      */
 	function IcmsVersionChecker() {
 		$this->installed_version_name = ICMS_VERSION_NAME;
-
-		$this->cache_version_xml = XOOPS_CACHE_PATH . '/' . $this->cache_version_xml;
 	}
 
 	/**
@@ -127,8 +114,14 @@ class IcmsVersionChecker {
 
 		// Create a new instance of the SimplePie object
 		include_once(ICMS_ROOT_PATH . '/class/icmssimplerss.php');
-		$feed = new IcmsSimpleRss($this->version_xml, 0);
-		if ($feed) {
+		$feed = new IcmsSimpleRss();
+		$feed->set_feed_url($this->version_xml);
+		$feed->set_cache_duration(0);
+		$feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_NONE);
+		$feed->init();
+		$feed->handle_content_type();
+
+		if (!$feed->error) {
 			$versionInfo['title'] = $feed->get_title();
 			$versionInfo['link'] = $feed->get_link();
 			$versionInfo['image_url'] = $feed->get_image_url();

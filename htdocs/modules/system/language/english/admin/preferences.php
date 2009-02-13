@@ -447,6 +447,9 @@ define("_MD_AM_CAPTCHA_OFF","Disabled");
 define("_MD_AM_CAPTCHA_SKIPCHAR","Skip characters");
 define("_MD_AM_CAPTCHA_SKIPCHARDSC","This option will skip the entered characters when generating Captcha");
 
+// added in 1.1.2 
+define("_MD_AM_UNABLEENCCLOSED","Database Update Failed, You can't change password encryption whilst the site is closed");
+
 ######################## Added in 1.2 ###################################
 define('_MD_AM_PAGISTYLE','Style of the paginations links:');
 define('_MD_AM_PAGISTYLE_DESC','Select the style of the paginations links.');

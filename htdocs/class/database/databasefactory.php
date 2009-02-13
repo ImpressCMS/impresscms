@@ -47,7 +47,10 @@ class XoopsDatabaseFactory{
 		if (!isset($instance)) {
 			$file = XOOPS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/database.php';
 			require_once $file;
-			if (!defined('XOOPS_DB_PROXY')) {
+			/* begin DB Layer Trapping patch */
+			if ( defined('XOOPS_DB_ALTERNATIVE') && class_exists( XOOPS_DB_ALTERNATIVE ) ) {
+				$class = XOOPS_DB_ALTERNATIVE ;
+			} else /* end DB Layer Trapping patch */if (!defined('XOOPS_DB_PROXY')) {
 				$class = 'Xoops'.ucfirst(XOOPS_DB_TYPE).'DatabaseSafe';
 			} else {
 				$class = 'Xoops'.ucfirst(XOOPS_DB_TYPE).'DatabaseProxy';

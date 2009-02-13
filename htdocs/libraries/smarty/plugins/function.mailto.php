@@ -9,12 +9,12 @@
 /**
  * Smarty {mailto} function plugin
  *
- * Type:     function
- * Name:     mailto
+ * Type:     function<br>
+ * Name:     mailto<br>
  * Date:     May 21, 2002
  * Purpose:  automate mailto address link creation, and optionally
- *           encode them.
- * Input:
+ *           encode them.<br>
+ * Input:<br>
  *         - address = e-mail address
  *         - text = (optional) text to display, default is address
  *         - encode = (optional) can be one of:

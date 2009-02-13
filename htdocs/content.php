@@ -84,9 +84,8 @@ else
 }
 if(!is_object($impress_content)) {redirect_header('index.php', 2, _CT_SELECTNG);}
 $content_id = $impress_content->getVar('content_id');
-$viewperm  = $gperm_handler->checkRight('content_read', $content_id, $groups);	// $viewperm is true if user has permition to see this page
-$adminperm = $gperm_handler->checkRight('content_admin', $content_id, $uid) || (is_object($xoopsUser) && count($allowed_groups) > 0);	// $adminperm is true if user has permition to admin this page
-
+$viewperm  = $gperm_handler->checkRight('content_read', $content_id, $groups); // $viewperm is true if user has permision to see this page
+$adminperm = $gperm_handler->checkRight('content_admin', $content_id, $uid) || (is_object($xoopsUser) && count($allowed_groups) > 0); // $adminperm is true if user has permision to admin this page
 if(!$viewperm) {redirect_header('index.php', 2, _NOPERM);}
 $myts =& MyTextSanitizer::getInstance();
 $xoopsOption['template_main'] = 'system_content.html';

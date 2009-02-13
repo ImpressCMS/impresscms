@@ -34,7 +34,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		$current_path = __FILE__;
 		if (DIRECTORY_SEPARATOR != "/")
 			$current_path = str_replace ( strpos ( $current_path, "\\\\", 2 ) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path );
-		$this->rootpath = substr ( strstr ( dirname ( $current_path ), XOOPS_ROOT_PATH) , strlen ( XOOPS_ROOT_PATH ) );
+		$this->rootpath = substr(strstr(dirname($current_path), XOOPS_ROOT_PATH), strlen(XOOPS_ROOT_PATH));
 
 		if (is_array ( $configs )) {
 			$vars = array_keys ( get_object_vars ( $this ) );

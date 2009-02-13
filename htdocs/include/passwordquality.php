@@ -136,7 +136,7 @@ if ($passField == 'pass'){
   $pass_tray->setDescription(_US_REGFORM_WARNING);
   $pass_inp = new XoopsFormPassword('', $passField, 10, 72, $myts->htmlSpecialChars($pass));
   $pass_inp->setExtra('style="float:'._GLOBAL_LEFT.';"');
-  $pass_tray->addElement($pass_inp);
+  $pass_tray->addElement($pass_inp, true);
   $div_progress = new XoopsFormLabel('',' <script language="javascript" src="'.XOOPS_URL.'/include/percent_bar'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.js"></script>');
   $pass_tray->addElement($div_progress);
   $reg_form->addElement($pass_tray);

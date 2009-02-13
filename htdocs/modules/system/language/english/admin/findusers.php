@@ -50,4 +50,5 @@ define("_AM_SENDMAIL", "Send mail");
 define("_AM_ADD2GROUP", "Add users to %s group");
 
 define("_AM_GROUPS", "Groups");
+define("_AM_LOGINNAME","Login Name");
 ?>

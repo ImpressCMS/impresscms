@@ -133,7 +133,73 @@ ImpressCMS ChangeLog
 * #2316581: When viewing comments in Threaded View it does not display the threads right and add's a > with the title twice (malanciault)
 * #2181891: TinyMCE and XAMPP relative paths (nekro/malanciault)
 * #2339182: Mail to User > missing checkbox (malanciault)
+* #233: Translate the code comments of the file include/passwordquality.php (realtherplima)
+* #183: Captcha bugs or enhancements ? (stranger)
+* #176: RTL languages in redirects + icms constants for themes (stranger)
+* #174: Use simplepie in admin RSS (stranger)
+* #170: Images by language name (stranger)
+* #84: Calendar button (stranger)
+* #8: Source code editor with syntax highlighting (stranger)
+* #239: Plugins javascript files not loaded in admin menu. (stranger)
+* #256: Deleting inactive users after X days not working! (stranger)
+* #28: New Image Manager (realtherplima)
+* #235: Login is not possible after upgrading from any elder version to 1.2 (stranger)
+* #171: SimplePie and IcmsSimpleRss (malanciault)
+* #172: IcmsPersistableSingleView (malanciault)
+* #173: IcmsPersistableTreeTable (malanciault)
+* #175: comments to functions (vaughan)
 
+
+== Impresscms 1.1.2==
+
+===2009-01-31 : 1.1.2 RC===
+
+'''Fixed'''
+* #167: Issue when doubleclicking a link and unexpectedly getting logged out (PHP issue) (vaughan)
+* #166: undefined index xoopsUserId in register.php (vaughan)
+* #165: Register fails when disclaimer used & CAPTCHA enabled. (vaughan/rgriffith)
+* #164: Activation key is not being sent along with the activation email when set to Activation by Admin. (vaughan)
+* #162: The wrong version of purifier library was included. updated to 3.2.0 version. (vaughan)
+* #163: Removed password from 'Reset Password' confirmation email (was changed in 1.1. Final but not carried to 1.1.1.) (vaughan)
+* #161: Fatal Error in footer.php & header.php. (vaughan)
+* #179: some preference settings are being sanitized inappropriately due to textarea being used instead of textsarea. (vaughan)
+* #184: TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
+* #178: HTTP_GET_VARS used instead of $_GET['p'] in protection.php causing issues with email protection image. (thanks to hisapapa)
+* #185: Blocks Positions admin not totaly secured (real_therplima)
+* #193: Character ' stripped out of website title (malanciault)
+* #195: Problem again with xoopsimagebrowser.php (real_therplima)
+* #204: Mail to User > missing checkbox (malanciault)
+* #188: Empty space when rank doesn't have an icon (malanciault)
+* #192: Blocksform: Cancel button not working (malanciault)
+* #203: TinyMCE and XAMPP relative paths (nekro/malanciault)
+* #197: Setting managed groups when creating a new group failed (skenow)
+* #187: Multilanguage tags & tables break translation (nachenko/malanciault)
+* #168: No When viewing comments in Threaded View it does not display the threads right and add's a > with the title twice. (malanciault)
+* #194: SourceForge item 2259562: Edit front end blocks with wrong groups. (malanciault/skenow)
+* #196: Content page edit button shown on user side for wrong groups (real_therplima)
+* #190: Debugger stops icmsfeed (malanciault)
+* #201: HTML editor for the disclaimer (felix)
+* #202: IcmsDatabaseUpdater->_db change for IcmsDatabaseUpdater->db (malanciault)
+* #211: Call to undefined method XoopsLists::getfontlistasarray() in modules/system/admin/preferences/main.php on line 191 (vaughan)
+* #169: captcha was being bypassed because it had been moved from libraries to class folder. (skenow)
+* #199: Admin Side > Preferences Main > Personalization > Edit and Remove blocks from user side? settings not work. (algalochkin)
+* #182: fixed a bug in pdf.php (pesian_stranger)
+* #198: "Show ImpressCMS Project drop down menu?" needs to only affect admin side, not user side (malanciault)
+* #224: Admin RSS feed was not UTF-8 compatible (malanciault)
+* #228: Password field was missing the * even thought it is mandatory (malanciault)
+* #228: Security code field was missing the * even thought it is mandatory (malanciault)
+
+'''Improved'''
+* #177: SMARTY updated to 2.6.22 (vaughan)
+* #180: If site is closed, you are now unable to change password encryption. (previous caused issues as you couldn't access reset password page in order to reset your password after encryption change if the site was set to closed. which meant you could not login afterwards). (vaughan)
+* #184: choice of xoopsFormTextArea or xoopsFormDHTMLTextArea to edit user form (signature) depends on whether HTML sig is allowed or not. (vaughan)
+* #208: Databasefactory.php update (GIJoe) for latest protector module (3.30). (gijoe)
+* #189: Improving IcmsVersionChecker to use IcmsSimpleRss instead of Snoopy as we were having problems on some config (malanciault)
+* #224: Admin RSS now using SimplePie innstead of Snoopy (malanciault)
+
+'''Added'''
+
+* #189: Implementing SimplePie as a new library and IcmsSimpleRss extending it for ImpressCMS (malanciault)
 
 == Impresscms 1.1.1==
 

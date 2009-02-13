@@ -783,5 +783,121 @@ class XoopsUserHandler extends XoopsObjectHandler
 		if(!$result = $this->db->query($sql)) {return false;}
 		return true;
 	}
+/**
+ *  Validates username, email address and password entries during registration
+ *  Username is validated for uniqueness and length, password is validated for length and strictness,
+ *  email is validated as a proper email address pattern  
+ *  
+ *  @param string $uname User display name entered by the user
+ *  @param string $login_name Username entered by the user
+ *  @param string $email Email address entered by the user   
+ *  @param string $pass Password entered by the user
+ *  @param string $vpass Password verification entered by the user
+ *  @return string of errors encountered while validating the user information, will be blank if successful 
+ */     
+function userCheck($login_name, $uname, $email, $pass, $vpass)
+{
+	include_once ICMS_ROOT_PATH . '/kernel/icmsstopspammer.php';
+	$config_handler =& xoops_gethandler('config');
+	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+	$xoopsDB =& Database::getInstance();
+	$myts =& MyTextSanitizer::getInstance();
+	$stop = '';
+	if (!checkEmail($email)) {
+		$stop .= _US_INVALIDMAIL.'<br />';
+	}
+	foreach ($xoopsConfigUser['bad_emails'] as $be) {
+		if (!empty($be) && preg_match('/'.$be.'/i', $email)) {
+			$stop .= _US_INVALIDMAIL.'<br />';
+			break;
+		}
+	}
+	if (strrpos($email,' ') > 0) {
+		$stop .= _US_EMAILNOSPACES.'<br />';
+	}
+	$login_name = xoops_trim($login_name);
+	switch ($xoopsConfigUser['uname_test_level']) {
+	case 0:
+		// strict
+		$restriction = '/[^a-zA-Z0-9\_\-]/';
+		break;
+	case 1:
+		// medium
+		$restriction = '/[^a-zA-Z0-9\_\-\<\>\,\.\$\%\#\@\!\\\'\"]/';
+		break;
+	case 2:
+		// loose
+		$restriction = '/[\000-\040]/';
+		break;
+	}
+	$icmsStopSpammers = new IcmsStopSpammer();
+	if ($icmsStopSpammers->badUsername($uname)) {
+		$stop .= _US_INVALIDNICKNAME . '<br />';
+	}
+	if ($icmsStopSpammers->badEmail($email)) {
+		$stop .= _US_INVALIDMAIL . '<br />';
+	}
+	if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) {
+		$stop .= _US_INVALIDIP . '<br />';
+	}
+	if (empty($login_name) || preg_match($restriction, $login_name)) {
+		$stop .= _US_INVALIDNICKNAME.'<br />';
+	}
+	if (strlen($login_name) > $xoopsConfigUser['maxuname']) {
+		$stop .= sprintf(_US_NICKNAMETOOLONG, $xoopsConfigUser['maxuname']).'<br />';
+	}
+	if (strlen($login_name) < $xoopsConfigUser['minuname']) {
+		$stop .= sprintf(_US_NICKNAMETOOSHORT, $xoopsConfigUser['minuname']).'<br />';
+	}
+	foreach ($xoopsConfigUser['bad_unames'] as $bu) {
+		if (!empty($bu) && preg_match('/'.$bu.'/i', $login_name)) {
+			$stop .= _US_NAMERESERVED.'<br />';
+			break;
+		}
+	}
+	if (strrpos($login_name, ' ') > 0) {
+		$stop .= _US_NICKNAMENOSPACES.'<br />';
+	}
+	$sql = sprintf('SELECT COUNT(*) FROM %s WHERE login_name = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($login_name)));
+	$result = $xoopsDB->query($sql);
+	list($count) = $xoopsDB->fetchRow($result);
+	if ($count > 0) {
+		$stop .= _US_LOGINNAMETAKEN.'<br />';
+	}
+	$count = 0;
+	if ( $uname ) {
+		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE uname = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($uname)));
+		$result = $xoopsDB->query($sql);
+		list($count) = $xoopsDB->fetchRow($result);
+		if ( $count > 0 ) {
+			$stop .= _US_NICKNAMETAKEN.'<br />';
+		}
+	}
+	$count = 0;
+	if ( $email ) {
+		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($email)));
+		$result = $xoopsDB->query($sql);
+		list($count) = $xoopsDB->fetchRow($result);
+		if ( $count > 0 ) {
+			$stop .= _US_EMAILTAKEN.'<br />';
+		}
+	}
+	if ( !isset($pass) || $pass == '' || !isset($vpass) || $vpass == '' ) {
+		$stop .= _US_ENTERPWD.'<br />';
+	}
+	if ( (isset($pass)) && ($pass != $vpass) ) {
+		$stop .= _US_PASSNOTSAME.'<br />';
+	} elseif ( ($pass != '') && (strlen($pass) < $xoopsConfigUser['minpass']) ) {
+		$stop .= sprintf(_US_PWDTOOSHORT,$xoopsConfigUser['minpass']).'<br />';
+	}
+	if((isset($pass)) && (isset($login_name)))
+	{
+		if($pass == $login_name || $pass == icms_utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)
+		{
+			$stop .= _US_BADPWD.'<br />';
+		}
+	}
+	return $stop;
+}
 }
 ?>

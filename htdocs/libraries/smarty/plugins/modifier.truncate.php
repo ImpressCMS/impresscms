@@ -9,8 +9,8 @@
 /**
  * Smarty truncate modifier plugin
  *
- * Type:     modifier
- * Name:     truncate
+ * Type:     modifier<br>
+ * Name:     truncate<br>
  * Purpose:  Truncate a string to a certain length if necessary,
  *           optionally splitting in the middle of a word, and
  *           appending the $etc string or inserting $etc into the middle.

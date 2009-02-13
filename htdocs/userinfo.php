@@ -21,6 +21,15 @@
  */
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
+$uid = intval($_GET['uid']);
+$module_handler = xoops_gethandler('module');
+$profile_module = $module_handler->getByDirname('profile');
+if($profile_module && $profile_module->getVar('isactive') && file_exists(ICMS_ROOT_PATH.'/modules/profile/userinfo.php'))
+{
+	header('Location: '.ICMS_URL.'/modules/profile/userinfo.php?uid='.$uid);
+	exit();
+}
+
 
 include_once ICMS_ROOT_PATH . '/class/module.textsanitizer.php';
 
@@ -29,7 +38,7 @@ include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 $config_handler = & xoops_gethandler('config');
 $xoopsConfigUser = & $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 if (!$xoopsConfigUser['allow_annon_view_prof'] && !is_object($xoopsUser)) {
-	redirect_header('index.php', 3, _NOPERM);
+	redirect_header(ICMS_URL.'/user.php', 3, _NOPERM);
 	exit ();
 }
 

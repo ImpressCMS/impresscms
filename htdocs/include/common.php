@@ -424,6 +424,14 @@ if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/theme.p
 }
 @define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;
 @define( '_GLOBAL_RIGHT' , @_ADM_USE_RTL == 1 ? 'left' : 'right' ) ;
+	/*
+	 * Here comes the part for removing inactive users after X days.
+	 * I used to ad it here, because it is always loaded within core loading.
+	 * I also made a condition to run the function, only when system is not doing a GET action!
+	 */
+	 if ($_SERVER['REQUEST_METHOD'] != 'GET'){
+	 	 remove_usersxdays ();
+	 }
 // ################ Include page-specific lang file ################
 if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
 	if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php") ) {
@@ -491,7 +499,7 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 		if( is_object( $xoopsUser ) ) {
 			$online_handler =& xoops_gethandler('online');
 			$online_handler->write($xoopsUser->uid(), $xoopsUser->uname(),
-			time(),0,$HTTP_SERVER_VARS['REMOTE_ADDR']);
+			time(),0,$_SERVER['REMOTE_ADDR']);
 		}
 	}
 // ################# Preload Trigger finishCoreBoot ##############

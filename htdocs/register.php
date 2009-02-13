@@ -23,6 +23,14 @@
 $xoopsOption['pagetype'] = 'user';
 
 include 'mainfile.php';
+$module_handler = xoops_gethandler('module');
+$profile_module = $module_handler->getByDirname('profile');
+if($profile_module && $profile_module->getVar('isactive') && file_exists(ICMS_ROOT_PATH.'/modules/profile/register.php'))
+{
+	header('Location: '.ICMS_URL.'/modules/profile/register.php');
+	exit();
+}
+
 $myts =& MyTextSanitizer::getInstance();
 
 $config_handler =& xoops_gethandler('config');
@@ -33,121 +41,6 @@ if ($xoopsConfigUser['allow_register'] == 0 && $xoopsConfigUser['activation_type
 }
 if($_SESSION['xoopsUserId']){
 	redirect_header('index.php', 6, _US_ALREADY_LOGED_IN);
-}
-include_once ICMS_ROOT_PATH . "/kernel/icmsstopspammer.php";
-/**
- *  Validates username, email address and password entries during registration
- *  Username is validated for uniqueness and length, password is validated for length and strictness,
- *  email is validated as a proper email address pattern  
- *  
- *  @param string $uname User display name entered by the user
- *  @param string $login_name Username entered by the user
- *  @param string $email Email address entered by the user   
- *  @param string $pass Password entered by the user
- *  @param string $vpass Password verification entered by the user
- *  @return string of errors encountered while validating the user information, will be blank if successful 
- */     
-function userCheck($login_name, $uname, $email, $pass, $vpass)
-{
-	global $xoopsConfigUser;
-	$xoopsDB =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
-	$stop = '';
-	if (!checkEmail($email)) {
-		$stop .= _US_INVALIDMAIL.'<br />';
-	}
-	foreach ($xoopsConfigUser['bad_emails'] as $be) {
-		if (!empty($be) && preg_match("/".$be."/i", $email)) {
-			$stop .= _US_INVALIDMAIL.'<br />';
-			break;
-		}
-	}
-	if (strrpos($email,' ') > 0) {
-		$stop .= _US_EMAILNOSPACES.'<br />';
-	}
-	$login_name = xoops_trim($login_name);
-	switch ($xoopsConfigUser['uname_test_level']) {
-	case 0:
-		// strict
-		$restriction = '/[^a-zA-Z0-9\_\-]/';
-		break;
-	case 1:
-		// medium
-		$restriction = '/[^a-zA-Z0-9\_\-\<\>\,\.\$\%\#\@\!\\\'\"]/';
-		break;
-	case 2:
-		// loose
-		$restriction = '/[\000-\040]/';
-		break;
-	}
-	$icmsStopSpammers = new IcmsStopSpammer();
-	if ($icmsStopSpammers->badUsername($uname)) {
-		$stop .= _US_INVALIDNICKNAME . "<br />";
-	}
-	if ($icmsStopSpammers->badEmail($email)) {
-		$stop .= _US_INVALIDMAIL . "<br />";
-	}
-	if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) {
-		$stop .= _US_INVALIDIP . "<br />";
-	}
-	if (empty($login_name) || preg_match($restriction, $login_name)) {
-		$stop .= _US_INVALIDNICKNAME."<br />";
-	}
-	if (strlen($login_name) > $xoopsConfigUser['maxuname']) {
-		$stop .= sprintf(_US_NICKNAMETOOLONG, $xoopsConfigUser['maxuname'])."<br />";
-	}
-	if (strlen($login_name) < $xoopsConfigUser['minuname']) {
-		$stop .= sprintf(_US_NICKNAMETOOSHORT, $xoopsConfigUser['minuname'])."<br />";
-	}
-	foreach ($xoopsConfigUser['bad_unames'] as $bu) {
-		if (!empty($bu) && preg_match("/".$bu."/i", $login_name)) {
-			$stop .= _US_NAMERESERVED."<br />";
-			break;
-		}
-	}
-	if (strrpos($login_name, ' ') > 0) {
-		$stop .= _US_NICKNAMENOSPACES."<br />";
-	}
-	$sql = sprintf('SELECT COUNT(*) FROM %s WHERE login_name = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($login_name)));
-	$result = $xoopsDB->query($sql);
-	list($count) = $xoopsDB->fetchRow($result);
-	if ($count > 0) {
-		$stop .= _US_LOGINNAMETAKEN."<br />";
-	}
-	$count = 0;
-	if ( $uname ) {
-		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE uname = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($uname)));
-		$result = $xoopsDB->query($sql);
-		list($count) = $xoopsDB->fetchRow($result);
-		if ( $count > 0 ) {
-			$stop .= _US_NICKNAMETAKEN."<br />";
-		}
-	}
-	$count = 0;
-	if ( $email ) {
-		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($email)));
-		$result = $xoopsDB->query($sql);
-		list($count) = $xoopsDB->fetchRow($result);
-		if ( $count > 0 ) {
-			$stop .= _US_EMAILTAKEN."<br />";
-		}
-	}
-	if ( !isset($pass) || $pass == '' || !isset($vpass) || $vpass == '' ) {
-		$stop .= _US_ENTERPWD.'<br />';
-	}
-	if ( (isset($pass)) && ($pass != $vpass) ) {
-		$stop .= _US_PASSNOTSAME.'<br />';
-	} elseif ( ($pass != '') && (strlen($pass) < $xoopsConfigUser['minpass']) ) {
-		$stop .= sprintf(_US_PWDTOOSHORT,$xoopsConfigUser['minpass'])."<br />";
-	}
-	if((isset($pass)) && (isset($login_name)))
-	{
-		if($pass == $login_name || $pass == icms_utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)
-		{
-			$stop .= _US_BADPWD.'<br />';
-		}
-	}
-	return $stop;
 }
 $op = !isset($_POST['op']) ? 'register' : $_POST['op'];
 $login_name = isset($_POST['login_name']) ? $myts->stripSlashesGPC($_POST['login_name']) : '';
@@ -175,7 +68,8 @@ case 'newuser':
 			$stop .= _US_UNEEDAGREE.'<br />';
 		}
 	}
-	$stop .= userCheck($login_name, $uname, $email, $pass, $vpass);
+	$thisuser = new XoopsUserHandler();
+	$stop .= $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass);
 	if (empty($stop)) {
 		echo _US_LOGINNAME.": ".$myts->htmlSpecialChars($login_name)."<br />";
 		echo _US_USERNAME.": ".$myts->htmlSpecialChars($uname)."<br />";
@@ -210,20 +104,20 @@ case 'newuser':
 	break;
 case 'finish':
 	include 'header.php';
-	$stop = userCheck($login_name, $uname, $email, $pass, $vpass);
+	$stop = $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass);
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 	    $stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
 	}
-  if(@include_once ICMS_ROOT_PATH."/libraries/captcha/captcha.php") {
-	include_once(ICMS_ROOT_PATH ."/class/xoopsformloader.php");
 	if ($xoopsConfigUser['use_captcha'] == 1) {
-            $xoopsCaptcha = XoopsCaptcha::instance();
-            if(! $xoopsCaptcha->verify() ) {
-                   $stop = $xoopsCaptcha->getMessage();
+		include_once (ICMS_ROOT_PATH ."/class/captcha/captcha.php");
+			include_once(ICMS_ROOT_PATH ."/class/xoopsformloader.php");
+            $icmsCaptcha = IcmsCaptcha::instance();
+            if(! $icmsCaptcha->verify() ) {
+                   $stop .= $icmsCaptcha->getMessage().'<br />';
                     
             }
     }
-}
+
 
 	if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'] != '') {
 		if (empty($agree_disc)) {

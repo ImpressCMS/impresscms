@@ -60,6 +60,11 @@ if ( $op == "form" ) {
     $email_tray = new XoopsFormElementTray(_AM_EMAIL, "&nbsp;");
     $email_tray->addElement($email_match);
     $email_tray->addElement($email_text);
+    $login_name_text = new XoopsFormText("", "user_login_name", 30, 60);
+    $login_name_match = new XoopsFormSelectMatchOption("", "user_login_name_match");
+    $login_name_tray = new XoopsFormElementTray(_AM_LOGINNAME, "&nbsp;");
+    $login_name_tray->addElement($login_name_match);
+    $login_name_tray->addElement($login_name_text);
     $url_text = new XoopsFormText(_AM_URLC, "user_url", 30, 100);
     //$theme_select = new XoopsFormSelectTheme(_AM_THEME, "user_theme");
     //$timezone_select = new XoopsFormSelectTimezone(_AM_TIMEZONE, "user_timezone_offset");
@@ -99,7 +104,7 @@ if ( $op == "form" ) {
     $type_radio = new XoopsFormRadio(_AM_SHOWTYPE, "user_type", "actv");
     $type_radio->addOptionArray(array("actv"=>_AM_ACTIVE, "inactv"=>_AM_INACTIVE, "both"=>_AM_BOTH));
     $sort_select = new XoopsFormSelect(_AM_SORT, "user_sort");
-    $sort_select->addOptionArray(array("uname"=>_AM_UNAME,"email"=>_AM_EMAIL,"last_login"=>_AM_LASTLOGIN,"user_regdate"=>_AM_REGDATE,"posts"=>_AM_POSTS));
+    $sort_select->addOptionArray(array("uname"=>_AM_UNAME,"login_name"=>_AM_LOGINNAME,"email"=>_AM_EMAIL,"last_login"=>_AM_LASTLOGIN,"user_regdate"=>_AM_REGDATE,"posts"=>_AM_POSTS));
     $order_select = new XoopsFormSelect(_AM_ORDER, "user_order");
     $order_select->addOptionArray(array("ASC"=>_AM_ASC,"DESC"=>_AM_DESC));
     $limit_text = new XoopsFormText(_AM_LIMIT, "limit", 6, 2);
@@ -110,6 +115,7 @@ if ( $op == "form" ) {
     $form = new XoopsThemeForm(_AM_FINDUS, "uesr_findform", "admin.php", 'post', true);
     $form->addElement($uname_tray);
     $form->addElement($name_tray);
+    $form->addElement($login_name_tray);
     $form->addElement($email_tray);
     $form->addElement($group_select);
     //$form->addElement($theme_select);
@@ -181,6 +187,23 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
             break;
         case XOOPS_MATCH_CONTAIN:
             $criteria->add(new Criteria('name', '%'.$myts->addSlashes(trim($_POST['user_name'])).'%', 'LIKE'));
+            break;
+        }
+    }
+    if ( !empty($_POST['user_login_name']) ) {
+        $match = (!empty($_POST['user_login_name_match'])) ? intval($_POST['user_login_name_match']) : XOOPS_MATCH_START;
+        switch ($match) {
+        case XOOPS_MATCH_START:
+            $criteria->add(new Criteria('login_name', $myts->addSlashes(trim($_POST['user_login_name'])).'%', 'LIKE'));
+            break;
+        case XOOPS_MATCH_END:
+            $criteria->add(new Criteria('login_name', '%'.$myts->addSlashes(trim($_POST['user_login_name'])), 'LIKE'));
+            break;
+        case XOOPS_MATCH_EQUAL:
+            $criteria->add(new Criteria('login_name', $myts->addSlashes(trim($_POST['user_login_name']))));
+            break;
+        case XOOPS_MATCH_CONTAIN:
+            $criteria->add(new Criteria('login_name', '%'.$myts->addSlashes(trim($_POST['user_login_name'])).'%', 'LIKE'));
             break;
         }
     }
@@ -336,7 +359,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
         }
     }
 	$groups = empty($_POST['selgroups']) ? array() : array_map("intval", $_POST['selgroups']);
-    $validsort = array("uname", "email", "last_login", "user_regdate", "posts");
+    $validsort = array("uname", "login_name", "email", "last_login", "user_regdate", "posts");
     $sort = (!in_array($_POST['user_sort'], $validsort)) ? "uname" : $_POST['user_sort'];
     $order = "ASC";
     if ( isset($_POST['user_order']) && $_POST['user_order'] == "DESC") {
@@ -355,7 +378,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
     } elseif ( $start < $total ) {
         echo sprintf(_AM_USERSFOUND, icms_conv_nr2local($total))."<br />";
         echo "<form action='admin.php' method='post' name='memberslist' id='memberslist'><input type='hidden' name='op' value='delete_many' />
-        <table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'><tr><th align='center'><input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"memberslist\", \"memberslist_checkall\");' /></th><th align='center'>"._AM_AVATAR."</th><th align='center'>"._AM_UNAME."</th><th align='center'>"._AM_REALNAME."</th><th align='center'>"._AM_EMAIL."</th><th align='center'>"._AM_PM."</th><th align='center'>"._AM_URL."</th><th align='center'>"._AM_REGDATE."</th><th align='center'>"._AM_LASTLOGIN."</th><th align='center'>"._AM_POSTS."</th><th align='center'>&nbsp;</th></tr>";
+        <table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'><tr><th align='center'><input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"memberslist\", \"memberslist_checkall\");' /></th><th align='center'>"._AM_AVATAR."</th><th align='center'>"._AM_UNAME."</th><th align='center'>"._AM_LOGINNAME."</th><th align='center'>"._AM_REALNAME."</th><th align='center'>"._AM_EMAIL."</th><th align='center'>"._AM_PM."</th><th align='center'>"._AM_URL."</th><th align='center'>"._AM_REGDATE."</th><th align='center'>"._AM_LASTLOGIN."</th><th align='center'>"._AM_POSTS."</th><th align='center'>&nbsp;</th></tr>";
         $criteria->setSort($sort);
         $criteria->setOrder($order);
         $criteria->setLimit($limit);
@@ -372,7 +395,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
             $fuser_avatar = $foundusers[$j]->getVar("user_avatar") ? "<img src='".XOOPS_UPLOAD_URL."/".$foundusers[$j]->getVar("user_avatar")."' alt='' />" : "&nbsp;";
             $fuser_name = $foundusers[$j]->getVar("name") ? $foundusers[$j]->getVar("name") : "&nbsp;";
             echo "<tr class='$class'><td align='center'><input type='checkbox' name='memberslist_id[]' id='memberslist_id[]' value='".$foundusers[$j]->getVar("uid")."' /><input type='hidden' name='memberslist_uname[".$foundusers[$j]->getVar("uid")."]' id='memberslist_uname[]' value='".$foundusers[$j]->getVar("uname")."' /></td>";
-            echo "<td>$fuser_avatar</td><td><a href='".XOOPS_URL."/userinfo.php?uid=".$foundusers[$j]->getVar("uid")."'>".$foundusers[$j]->getVar("uname")."</a></td><td>".$fuser_name."</td><td align='center'><a href='mailto:".$foundusers[$j]->getVar("email")."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/email.gif' border='0' alt='";
+            echo "<td>$fuser_avatar</td><td><a href='".XOOPS_URL."/userinfo.php?uid=".$foundusers[$j]->getVar("uid")."'>".$foundusers[$j]->getVar("uname")."</a></td><td>".$foundusers[$j]->getVar("login_name")."</td><td>".$fuser_name."</td><td align='center'><a href='mailto:".$foundusers[$j]->getVar("email")."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/email.gif' border='0' alt='";
             printf(_SENDEMAILTO,$foundusers[$j]->getVar("uname", "E"));
             echo "' /></a></td><td align='center'><a href='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".$foundusers[$j]->getVar("uid")."\",\"pmlite\",800,680);'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/pm.gif' border='0' alt='";
             printf(_SENDPMTO,$foundusers[$j]->getVar("uname", "E"));
@@ -402,7 +425,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
         if ( $group > 0 ) {
             echo "<input type='hidden' name='groupid' value='".$group."' />";
         }
-        echo "</td><td colspan='10'>".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='"._SUBMIT."' /></td></tr></table></form>\n";
+        echo "</td><td colspan='12'>".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='"._SUBMIT."' /></td></tr></table></form>\n";
         $totalpages = ceil($total / $limit);
         if ( $totalpages > 1 ) {
             $hiddenform = "<form name='findnext' action='admin.php' method='post'>";

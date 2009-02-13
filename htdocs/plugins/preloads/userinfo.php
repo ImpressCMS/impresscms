@@ -39,7 +39,6 @@ class IcmsPreloadUserInfo extends IcmsPreloadItem {
 			
 			$xoopsTpl->assign ( 'user', $user );
 		}
-		//remove_usersxdays ();
 	}
 }
 ?>

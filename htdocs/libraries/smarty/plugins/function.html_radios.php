@@ -9,11 +9,11 @@
 /**
  * Smarty {html_radios} function plugin
  *
- * File:       function.html_radios.php
- * Type:       function
- * Name:       html_radios
- * Date:       24.Feb.2003
- * Purpose:    Prints out a list of radio input types
+ * File:       function.html_radios.php<br>
+ * Type:       function<br>
+ * Name:       html_radios<br>
+ * Date:       24.Feb.2003<br>
+ * Purpose:    Prints out a list of radio input types<br>
  * Input:<br>
  *           - name       (optional) - string default "radio"
  *           - values     (required) - array

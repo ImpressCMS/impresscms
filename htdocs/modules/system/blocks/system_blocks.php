@@ -311,6 +311,7 @@ function b_system_newmembers_show($options)
         $block['users'][$i]['id'] = $newmembers[$i]->getVar('uid');
         $block['users'][$i]['name'] = $newmembers[$i]->getVar('uname');
         $block['users'][$i]['joindate'] = formatTimestamp($newmembers[$i]->getVar('user_regdate'), 's');
+        $block['users'][$i]['login_name'] = $newmembers[$i]->getVar('login_name');
     }
         if ( $options[2] == 1 ) {
         	$block['index_enabled'] = true;
