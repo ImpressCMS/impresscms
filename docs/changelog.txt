@@ -151,6 +151,7 @@ ImpressCMS ChangeLog
 * #175: comments to functions (vaughan)
 * #260: default fields in profile module are too much. (stranger)
 * #261: PDF not being generated with latest tcpdf. (stranger)
+* #2: Bug in smarty.class.php. (stranger)
 
 
 == Impresscms 1.1.2==

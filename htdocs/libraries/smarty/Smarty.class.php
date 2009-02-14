@@ -1303,7 +1303,7 @@ class Smarty
 						$patterns = array ( );
 						$replacements = array ( );
 						foreach ( $texto [0] as $email ) {
-							if (preg_match_all ( "/value=['\"]$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/$email(.*?)<\/textarea>/i", $_smarty_results, $texto1 )) { //Dont allow to change the email inside input or textarea form fields
+							if (preg_match_all ( "/mailto(.*?)$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/value=['\"]$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/$email(.*?)<\/textarea>/i", $_smarty_results, $texto1 )) { //Dont allow to change the email inside input or textarea form fields
 								continue;
 							}
 							$protection_type = intval($xoopsConfigPersona['email_protect']);
@@ -1349,7 +1349,7 @@ class Smarty
 						$patterns = array ( );
 						$replacements = array ( );
 						foreach ( $texto [0] as $email ) {
-							if (preg_match_all ( "/value=['\"]$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/$email(.*?)<\/textarea>/i", $_smarty_results, $texto1 )) { //Dont allow to change the email inside input or textarea form fields
+							if (preg_match_all ( "/mailto(.*?)$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/value=['\"]$email/i", $_smarty_results, $texto1 ) || preg_match_all ( "/$email(.*?)<\/textarea>/i", $_smarty_results, $texto1 )) { //Dont allow to change the email inside input or textarea form fields
 								continue;
 							}
 							$protection_type = intval($xoopsConfigPersona['email_protect']);

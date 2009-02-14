@@ -200,7 +200,11 @@ function easiestml_escape_bracket_textarea( $matches )
 
 function easiestml_check_nevercross( $matches )
 {
-	return preg_match( EASIESTML_NEVERCROSSREGEX , $matches[0] ) ? $matches[0] : '' ;
+	$answer = '' ;
+	if(EASIESTML_NEVERCROSSREGEX != ''){
+		$answer = preg_match( EASIESTML_NEVERCROSSREGEX , $matches[0] ) ? $matches[0] : '' ;
+	}
+	return $answer;
 }
 // Fix for bug #1905485 in tracker
 function easiestml_escape_bracket_input( $matches )
