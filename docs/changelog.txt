@@ -152,6 +152,7 @@ ImpressCMS ChangeLog
 * #260: default fields in profile module are too much. (stranger)
 * #261: PDF not being generated with latest tcpdf. (stranger)
 * #2: Bug in smarty.class.php. (stranger)
+* #52: Empty Custom Block - Xoops2.3 Upgrad. (stranger)
 
 
 == Impresscms 1.1.2==

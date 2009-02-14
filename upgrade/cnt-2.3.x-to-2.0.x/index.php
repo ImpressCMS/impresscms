@@ -71,6 +71,30 @@ class upgrade_230
         $db->queryF("DELETE FROM `" . $db->prefix('configoption') . "` WHERE confop_name='_MD_AM_WELCOMETYPE_BOTH'");
         // remove cache_model table
         $db->queryF("DROP TABLE " . $db->prefix("cache_model"));
+            $sql = "ALTER TABLE `" . $db->prefix('block_module_link') . "` DROP PRIMARY KEY (`block_id`, `module_id`)";
+			if (!$result = $db->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $db->error());
+				return false;
+			}
+
+            $sql = "ALTER IGNORE TABLE `" . $db->prefix('block_module_link') . "` ADD KEY module_id (module_id)";
+			if (!$result = $db->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $db->error());
+				return false;
+			}
+
+            $sql = "ALTER IGNORE TABLE `" . $db->prefix('block_module_link') . "` ADD KEY block_id (block_id)";
+			if (!$result = $db->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $db->error());
+				return false;
+			}
+
+			$sql = "ALTER TABLE `" . $db->prefix('newblocks') . "` MODIFY content text NOT NULL";
+			if (!$result = $db->queryF($sql)) {
+				icms_debug('An error occurred while executing "' . $sql . '" - ' . $db->error());
+				return false;
+			}
+
         return true;
     }
 }
