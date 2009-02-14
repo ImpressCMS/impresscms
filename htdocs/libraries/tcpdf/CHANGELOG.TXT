@@ -1,3 +1,34 @@
+4.5.014 (2009-02-13)
+	- Bug item #2595015 "POSTNET Barcode Checksum Error" was fixed (on barcode.php).
+	- Pagebreak bug for barcode was fixed.
+	
+4.5.013 (2009-02-12)
+	- border attribute is now supported on HTML images (only accepts the same values accepted by Cell()).
+	
+4.5.012 (2009-02-12)
+	- An error on image border feature was fixed.
+	
+4.5.011 (2009-02-12)
+	- HTML links for images are now supported.
+	- height attribute is now supported on HTML cells.
+	- $border parameter was added to Image() and ImageEps() methods.
+	- The method getNumLines() was added to estimate the number of lines required for the specified text.
+	
+4.5.010 (2009-01-29)
+	- Bug n. 2546108 "BarCode Y position" was fixed.
+	
+4.5.009 (2009-01-26)
+	- Bug n. 2538094 "Empty pdf file created" was fixed.
+	
+4.5.008 (2009-01-26)
+	- setPage() method was fixed to correctly restore graphic states.
+	- Source code was cleaned up for performances.
+
+4.5.007 (2009-01-24)
+	- checkPageBreak() and write1DBarcode() methods were fixed.
+	- Source code was cleaned up for performances.
+	- barcodes.php was updated.
+
 4.5.006 (2009-01-23)
 	- getHTMLUnitToPoints() method was replaced by getHTMLUnitToUnits() to fix HTML units bugs.
 
