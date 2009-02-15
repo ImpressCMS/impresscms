@@ -550,34 +550,34 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbversion = n
     	echo $action;
     	    $module_handler = xoops_gethandler('module');
     	        $smartprofile_module = $module_handler->getByDirname('smartprofile');
+    	        $profile_module = $module_handler->getByDirname('profile');
     	            if($smartprofile_module && $smartprofile_module->getVar('isactive')){
-    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("profile_category") . "` TO `" . $xoopsDB->prefix("profile_category_bak") . "`");
-    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("profile_field") . "` TO `" . $xoopsDB->prefix("profile_field_bak") . "`");
-    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("profile_visibility") . "` TO `" . $xoopsDB->prefix("profile_visibility_bak") . "`");
-    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("profile_profile") . "` TO `" . $xoopsDB->prefix("profile_profile_bak") . "`");
-    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("profile_regstep") . "` TO `" . $xoopsDB->prefix("profile_regstep_bak") . "`");
+    	            	if ($profile_module && $profile_module->getVar('isactive')){
+    	            	        // Drop profile tables
+    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_category");
+    	            	        $xoopsDB->queryF($sql);
+    	            	        // Drop profile tables
+    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_field");
+    	            	        $xoopsDB->queryF($sql);
+    	            	        // Drop profile tables
+    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_visibility");
+    	            	        $xoopsDB->queryF($sql);
+    	            	        // Drop profile tables
+    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_profile");
+    	            	        $xoopsDB->queryF($sql);
+    	            	        // Drop profile tables
+    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_regstep");
+    	            	        $xoopsDB->queryF($sql);
+    	            	}
     	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_category") . "` TO `" . $xoopsDB->prefix("profile_category") . "`");
     	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_field") . "` TO `" . $xoopsDB->prefix("profile_field") . "`");
     	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_visibility") . "` TO `" . $xoopsDB->prefix("profile_visibility") . "`");
     	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_profile") . "` TO `" . $xoopsDB->prefix("profile_profile") . "`");
     	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_regstep") . "` TO `" . $xoopsDB->prefix("profile_regstep") . "`");
-    	            	        // Drop profile tables
-    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_category_bak");
-    	            	        $xoopsDB->queryF($sql);
-    	            	        // Drop profile tables
-    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_field_bak");
-    	            	        $xoopsDB->queryF($sql);
-    	            	        // Drop profile tables
-    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_visibility_bak");
-    	            	        $xoopsDB->queryF($sql);
-    	            	        // Drop profile tables
-    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_profile_bak");
-    	            	        $xoopsDB->queryF($sql);
-    	            	        // Drop profile tables
-    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_regstep_bak");
-    	            	        $xoopsDB->queryF($sql);
     	            	        $command = array("ALTER TABLE `".$GLOBALS['xoopsDB']->prefix("profile_profile")."` ADD `newemail` varchar(255) NOT NULL default '' AFTER `profile_id`",
-    	            	        	"ALTER TABLE `".$GLOBALS['xoopsDB']->prefix("profile_field")."` ADD `exportable` int unsigned NOT NULL default 0 AFTER `step_id`");
+    	            	        	"ALTER TABLE `".$GLOBALS['xoopsDB']->prefix("profile_field")."` ADD `exportable` int unsigned NOT NULL default 0 AFTER `step_id`",
+    	            	        	"UPDATE `" . $xoopsDB->prefix('modules') . "` SET dirname='profile' WHERE dirname='smartprofile'"
+    	            	        );
     	            	        foreach($command as $sql){
     	            	        	if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
     	            	        		icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());

@@ -158,6 +158,7 @@ ImpressCMS ChangeLog
 * #259: Upgrade script from x2.2 and 2.3 for profile module. (stranger)
 * #263: Upgrade script from smartprofile for profile module. (stranger)
 * #264: function icms_copyr not working. (stranger)
+* #266: smartprofile upgrade not successful. (stranger)
 
 
 == Impresscms 1.1.2==
