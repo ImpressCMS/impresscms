@@ -934,7 +934,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$c=12; // sets config category id
 	$i++;
 	$p=0;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS', '".addslashes(serialize(array('syntaxhighlightphp.php', 'hiddencontent.php')))."', '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS', '".addslashes(serialize(array('syntaxhighlightphp', 'hiddencontent')))."', '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'code_sanitizer', '_MD_AM_SELECTSHIGHLIGHT', 'none', '_MD_AM_SELECTSHIGHLIGHT_DESC', 'select', 'text', $p)");
