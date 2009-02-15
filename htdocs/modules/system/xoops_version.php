@@ -187,6 +187,10 @@ $modversion['templates'][$i]['description'] = 'Template of the Image Manager adm
 $i++;
 $modversion['templates'][$i]['file'] = 'admin/system_adm_rss.html';
 $modversion['templates'][$i]['description'] = 'Template of Admin RSS';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_search.html';
+$modversion['templates'][$i]['description'] = 'Smarty template forsearch page';
 ###
 
 // Blocks

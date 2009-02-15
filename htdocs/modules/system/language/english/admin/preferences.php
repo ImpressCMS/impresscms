@@ -481,4 +481,10 @@ define("_MD_AM_SELECTSHIGHLIGHT_DESC","You can hereby select which highlighter i
 define("_MD_AM_HIGHLIGHTER_GESHI","GeSHi highlighter");
 define("_MD_AM_HIGHLIGHTER_PHP","php highlighter");
 define("_MD_AM_HIGHLIGHTER_OFF","Disabled");
+define('_MD_AM_DODEEPSEARCH', "Enable 'deep' searching?");
+define('_MD_AM_DODEEPSEARCHDSC', "Would you like your initial search results page to indicate how many hits were found in each module?  Note: turning this on can slow down the search process!");
+define('_MD_AM_NUMINITSRCHRSLTS', "Number of initial search results: (for 'shallow' searching)");
+define('_MD_AM_NUMINITSRCHRSLTSDSC', "'Shallow' searches are made quicker by limiting the results that are returned for each module on the initial search page.");
+define('_MD_AM_NUMMDLSRCHRESULTS', "Number of search results per page:");
+define('_MD_AM_NUMMDLSRCHRESULTSDSC', "This determines how many hits per page are shown after drilling down into a particular module's search results.");
 ?>

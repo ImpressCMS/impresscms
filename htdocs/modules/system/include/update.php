@@ -588,6 +588,17 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbversion = n
     	            }
 	}
 
+    $newDbVersion = 20;
+
+    if ($dbversion < $newDbVersion) {
+	    global $xoopsDB;
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
+	    // Adding configurations of search preferences
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_SEARCH, 'enable_deep_search', '_MD_AM_DODEEPSEARCH', '1', '_MD_AM_DODEEPSEARCHDSC', 'yesno', 'int', 2);
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_SEARCH, 'num_shallow_search', '_MD_AM_NUMINITSRCHRSLTS', '5', '_MD_AM_NUMINITSRCHRSLTSDSC', 'textbox', 'int', 4);
+	}
+
 	echo "</code>";
 
 	 /**
