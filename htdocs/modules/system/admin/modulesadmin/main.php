@@ -588,7 +588,7 @@ if ($op == 'update_ok') {
             include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($update_script);
             if (function_exists('xoops_module_update_'.$dirname)) {
                 $func = 'xoops_module_update_'.$dirname;
-                if (!$func($module, $prev_version)) {
+                if (!$func($module, $prev_version, $prev_dbversion)) {
                     $msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
                 } else {
                     $msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);

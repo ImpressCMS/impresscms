@@ -10,35 +10,13 @@
 * @version		$Id: update.php 429 2008-003-25 22:21:41Z malanciault $
 */
 
-function xoops_module_update_system(&$module) {
-    /**
-     * For compatibility upgrade...
-     */
-     $moduleVersion  = $module->getVar('version');
-	if ($moduleVersion < 110) {
-        $result = $xoopsDB->query("SELECT t1.tpl_id FROM ".$xoopsDB->prefix('tplfile')." t1, ".$xoopsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
-
-        $tplids = array();
-        while (list($tplid) = $xoopsDB->fetchRow($result)) {
-            $tplids[] = $tplid;
-        }
-        if (count($tplids) > 0) {
-            $tplfile_handler =& xoops_gethandler('tplfile');
-            $duplicate_files = $tplfile_handler->getObjects(new Criteria('tpl_id', "(".implode(',', $tplids).")", "IN"));
-
-            if (count($duplicate_files) > 0) {
-                foreach (array_keys($duplicate_files) as $i) {
-                    $tplfile_handler->delete($duplicate_files[$i]);
-                }
-            }
-        }
-    }
+function xoops_module_update_system(&$module, $oldversion = null, $dbversion = null) {
 
     $icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
-
+    //$dbversion  = $module->getDBVersion();
+    //$oldversion  = $module->getVar('version');
+    
     ob_start();
-
-    $dbVersion  = $module->getDBVersion();
 
 	echo "<code>" . _DATABASEUPDATER_UPDATE_UPDATING_DATABASE . "<br />";
 
@@ -61,7 +39,7 @@ function xoops_module_update_system(&$module) {
 
     $newDbVersion = 1;
 
-    if ($dbVersion <= $newDbVersion) {
+    if ($dbversion <= $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
 
@@ -189,7 +167,7 @@ function xoops_module_update_system(&$module) {
      */
     $newDbVersion = 2;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
 		$configitem_handler = xoops_getHandler('configitem');
@@ -213,7 +191,7 @@ function xoops_module_update_system(&$module) {
      */
     $newDbVersion = 3;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
    		$table = new IcmsDatabasetable('users');
@@ -247,7 +225,7 @@ function xoops_module_update_system(&$module) {
 
     $newDbVersion = 4;
 
-    if($dbVersion < $newDbVersion) {
+    if($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
 
@@ -261,7 +239,7 @@ function xoops_module_update_system(&$module) {
 
     $newDbVersion = 5;
 
-    if($dbVersion < $newDbVersion) {
+    if($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23);
@@ -270,7 +248,7 @@ function xoops_module_update_system(&$module) {
 	//Some users had used a copy of working branch and they got multiple option, this is to remove all those re-created options and make a single option
     $newDbVersion = 6;
 
-    if($dbVersion < $newDbVersion) {
+    if($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
 	    global $xoopsDB;
@@ -281,7 +259,7 @@ function xoops_module_update_system(&$module) {
 
     $newDbVersion = 7;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
 		$configitem_handler = xoops_getHandler('configitem');
@@ -300,7 +278,7 @@ function xoops_module_update_system(&$module) {
 
   $newDbVersion = 8;
 
-  if($dbVersion < $newDbVersion) {
+  if($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
 
@@ -314,7 +292,7 @@ function xoops_module_update_system(&$module) {
 
   $newDbVersion = 9;
 
-  if($dbVersion < $newDbVersion) {
+  if($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
      $table = new IcmsDatabasetable('users');
@@ -324,7 +302,7 @@ function xoops_module_update_system(&$module) {
 	}
 
     $newDbVersion = 10;
-  if($dbVersion < $newDbVersion) {
+  if($dbversion < $newDbVersion) {
     echo "Database migrate to version " . $newDbVersion . "<br />";
 
         $db = $GLOBALS['xoopsDB'];
@@ -373,7 +351,7 @@ function xoops_module_update_system(&$module) {
 
     $newDbVersion = 11;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
 		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_unames'");
@@ -390,7 +368,7 @@ function xoops_module_update_system(&$module) {
 	}
     $newDbVersion = 12;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
         $db = $GLOBALS['xoopsDB'];
@@ -439,7 +417,7 @@ function xoops_module_update_system(&$module) {
 
 	$newDbVersion = 13;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
 
@@ -450,7 +428,7 @@ function xoops_module_update_system(&$module) {
 
 	$newDbVersion = 14;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
 		icms_copyr(ICMS_ROOT_PATH.'/preload', ICMS_ROOT_PATH.'/plugins/preloads');
@@ -462,7 +440,7 @@ function xoops_module_update_system(&$module) {
 
     $newDbVersion = 15;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($dbversion < $newDbVersion) {
 	    global $xoopsDB;
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
@@ -471,14 +449,14 @@ function xoops_module_update_system(&$module) {
 	    	$table->addNewField('login_name', "varchar(255) NOT NULL default ''");
 		    $icmsDatabaseUpdater->updateTable($table);
          	$xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("users") . "` SET login_name=uname");
-      		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` ADD INDEX   KEY login_name (login_name)",'Successfully altered the index login_name on table users','');
+      		$icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` ADD INDEX login_name (login_name)",'Successfully altered the index login_name on table users','');
 	    }
 		unset($table);
 	}
 
     $newDbVersion = 16;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
         $db = $GLOBALS['xoopsDB'];
@@ -496,11 +474,11 @@ function xoops_module_update_system(&$module) {
 
     $newDbVersion = 17;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($dbversion < $newDbVersion) {
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
         $db = $GLOBALS['xoopsDB'];
-	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '90', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
+	    //$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '90', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
         if (getDbValue($db, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"') == 0) {
 		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('12','_MD_AM_PLUGINS')");
 		}
@@ -531,7 +509,7 @@ function xoops_module_update_system(&$module) {
 
     $newDbVersion = 18;
 
-    if ($dbVersion < $newDbVersion) {
+    if ($dbversion < $newDbVersion) {
 	    global $xoopsDB;
     	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
     	echo $action;
@@ -563,7 +541,52 @@ function xoops_module_update_system(&$module) {
    	$CleanWritingFolders = 1;
 	}
 
+    
+    $newDbVersion = 19;
 
+    if ($dbversion < $newDbVersion) {
+	    global $xoopsDB;
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
+    	    $module_handler = xoops_gethandler('module');
+    	        $smartprofile_module = $module_handler->getByDirname('smartprofile');
+    	            if($smartprofile_module && $smartprofile_module->getVar('isactive')){
+    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("profile_category") . "` TO `" . $xoopsDB->prefix("profile_category_bak") . "`");
+    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("profile_field") . "` TO `" . $xoopsDB->prefix("profile_field_bak") . "`");
+    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("profile_visibility") . "` TO `" . $xoopsDB->prefix("profile_visibility_bak") . "`");
+    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("profile_profile") . "` TO `" . $xoopsDB->prefix("profile_profile_bak") . "`");
+    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("profile_regstep") . "` TO `" . $xoopsDB->prefix("profile_regstep_bak") . "`");
+    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_category") . "` TO `" . $xoopsDB->prefix("profile_category") . "`");
+    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_field") . "` TO `" . $xoopsDB->prefix("profile_field") . "`");
+    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_visibility") . "` TO `" . $xoopsDB->prefix("profile_visibility") . "`");
+    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_profile") . "` TO `" . $xoopsDB->prefix("profile_profile") . "`");
+    	            	        $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_regstep") . "` TO `" . $xoopsDB->prefix("profile_regstep") . "`");
+    	            	        // Drop profile tables
+    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_category_bak");
+    	            	        $xoopsDB->queryF($sql);
+    	            	        // Drop profile tables
+    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_field_bak");
+    	            	        $xoopsDB->queryF($sql);
+    	            	        // Drop profile tables
+    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_visibility_bak");
+    	            	        $xoopsDB->queryF($sql);
+    	            	        // Drop profile tables
+    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_profile_bak");
+    	            	        $xoopsDB->queryF($sql);
+    	            	        // Drop profile tables
+    	            	        $sql = "DROP TABLE " . $xoopsDB->prefix("profile_regstep_bak");
+    	            	        $xoopsDB->queryF($sql);
+    	            	        $command = array("ALTER TABLE `".$GLOBALS['xoopsDB']->prefix("profile_profile")."` ADD `newemail` varchar(255) NOT NULL default '' AFTER `profile_id`",
+    	            	        	"ALTER TABLE `".$GLOBALS['xoopsDB']->prefix("profile_field")."` ADD `exportable` int unsigned NOT NULL default 0 AFTER `step_id`");
+    	            	        foreach($command as $sql){
+    	            	        	if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
+    	            	        		icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+    	            	        		return false;
+    	            	        	}
+    	            	        }
+
+    	            }
+	}
 
 	echo "</code>";
 
@@ -583,6 +606,26 @@ function xoops_module_update_system(&$module) {
         echo $feedback;
     }
     $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
+    
+	if ($oldversion < 120) {
+        $result = $xoopsDB->query("SELECT t1.tpl_id FROM ".$xoopsDB->prefix('tplfile')." t1, ".$xoopsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
+
+        $tplids = array();
+        while (list($tplid) = $xoopsDB->fetchRow($result)) {
+            $tplids[] = $tplid;
+        }
+        if (count($tplids) > 0) {
+            $tplfile_handler =& xoops_gethandler('tplfile');
+            $duplicate_files = $tplfile_handler->getObjects(new Criteria('tpl_id', "(".implode(',', $tplids).")", "IN"));
+
+            if (count($duplicate_files) > 0) {
+                foreach (array_keys($duplicate_files) as $i) {
+                    $tplfile_handler->delete($duplicate_files[$i]);
+                }
+            }
+        }
+    }
+
 	$answer = true;
     if($CleanWritingFolders == 1){
 	    $answer = icms_cleaning_write_folders();

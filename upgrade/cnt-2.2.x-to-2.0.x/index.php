@@ -66,10 +66,12 @@ class upgrade_220
      */
     function check_profile()
     {
-        $sql = "SHOW TABLES LIKE '" . $GLOBALS['xoopsDB']->prefix("user_profile") . "'";
+        $module_handler =& xoops_getHandler('module');
+        if (!$profile_module = $module_handler->getByDirname('profile')) return true;
+        $sql = "SHOW COLUMNS FROM " . $GLOBALS['xoopsDB']->prefix("users") . " LIKE 'posts'";
         $result = $GLOBALS['xoopsDB']->queryF($sql);
-        if (!$result) return true;
-        if ($GLOBALS['xoopsDB']->getRowsNum($result) > 0) return false;
+        if (!$result) return false;
+        if ($GLOBALS['xoopsDB']->getRowsNum($result) == 0) return false;
         return true;
     }
 
@@ -109,7 +111,7 @@ class upgrade_220
         $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix('config') . "` SET conf_modid = 0 WHERE conf_modid = 1");
         
         //Change debug modes so there can only be one active at any one time
-        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix('config') . "` SET conf_formtype = 'select', conf_valuetype = 'int' WHERE conf_name = 'debug_mode'");
+        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix('config') . "` SET conf_value = '1', conf_formtype = 'select', conf_valuetype = 'int' WHERE conf_name = 'debug_mode'");
         
         //Reset category ID for non-system configs
         $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix('config') . "` SET conf_catid = 0 WHERE conf_modid > 1 AND conf_catid > 0");
@@ -232,11 +234,11 @@ class upgrade_220
             $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("users") . "` u, `" . $xoopsDB->prefix("user_profile") . "` p SET u.{$field} = p.{$field} WHERE u.uid=p.profileid");
         }
         //Set loginname as uname
-        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("users") . "` SET uname=loginname");
+        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("users") . "` SET login_name=loginname");
         
         //Drop loginname
         $xoopsDB->queryF("ALTER TABLE " . $xoopsDB->prefix("users") . " DROP loginname");
-        
+/*        
         // Drop user profile table
         $xoopsDB->queryF("DROP TABLE " . $xoopsDB->prefix("user_profile"));
         
@@ -249,12 +251,9 @@ class upgrade_220
         // Drop user profile_category field table
         $xoopsDB->queryF("DROP TABLE " . $xoopsDB->prefix("profile_category"));
 
-        // remove pm module
-        $xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('modules') . "` WHERE dirname='pm'");
-
         // remove profile module
         $xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('modules') . "` WHERE dirname='profile'");
-
+*/
         return true;
     }
 
@@ -481,6 +480,9 @@ class upgrade_220
     	    ";
         $xoopsDB->queryF($sql);
         
+        // remove pm module
+        $xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('modules') . "` WHERE dirname='pm'");
+
         return true;
     }
 }

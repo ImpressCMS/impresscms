@@ -72,6 +72,7 @@ else
 			$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
  			$jscript = '';
  		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+ 		        	if(empty($key)) continue;
  		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
  		        		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
  		        	}else{
@@ -92,6 +93,7 @@ else
 
  			$style_info = '';
  		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+ 		        	if(empty($key)) continue;
  		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
  		        		$xoTheme->addStylesheet(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
  		        	}else{

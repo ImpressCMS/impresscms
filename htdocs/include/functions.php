@@ -47,6 +47,7 @@ function xoops_header($closehead=true)
 			$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
  			$jscript = '';
  		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+ 		        	if(empty($key)) continue;
  		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
  		        		echo '<script type="text/javascript" src="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js"></script>';
  		        	}else{
@@ -67,7 +68,8 @@ function xoops_header($closehead=true)
 
  			$style_info = '';
  		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
- 		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
+  		        	if(empty($key)) continue;
+		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
  		        		echo '<link rel="stylesheet" media="screen" href="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css" type="text/css" />';
  		        	}else{
  		        		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
@@ -902,7 +904,7 @@ function xoops_trim($text)
 */
 function icms_copyr($source, $dest)
 {
-	// Simple copy for a file
+/*	// Simple copy for a file
 	if(is_file($source)) {return copy($source, $dest);}
 	// Make destination directory
 	if(!is_dir($dest)) {mkdir($dest);}
@@ -913,11 +915,11 @@ function icms_copyr($source, $dest)
 		// Skip pointers
 		if($entry == '.' || $entry == '..') {continue;}
 		// Deep copy directories
-		if(is_dir("$source/$entry") && ($dest !== "$source/$entry")) {copy("$source/$entry", "$dest/$entry");}
+		if(is_dir("$source/$entry") && ($dest !== "$source/$entry")) {copyr("$source/$entry", "$dest/$entry");}
 		else {copy("$source/$entry", "$dest/$entry");}
 	}
 	// Clean up
-	$dir->close();
+	$dir->close();*/
 	return true;
 }
 
@@ -1308,12 +1310,15 @@ function icms_getUserSaltFromUname($uname = '')
 	{
  		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
  		$table = new IcmsDatabasetable('users');
-	    if (!$table->fieldExists('login_name')) {
-	    	$sql = $db->query("SELECT uname, salt FROM ".$db->prefix('users')." WHERE uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
-		list($uname, $salt) = $db->fetchRow($sql);
-	    }else{
+	    if ($table->fieldExists('loginname')) {
+	    	$sql = $db->query("SELECT loginname, salt FROM ".$db->prefix('users')." WHERE loginname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
+		list($loginname, $salt) = $db->fetchRow($sql);
+	    }elseif($table->fieldExists('login_name')){
 	    	$sql = $db->query("SELECT login_name, salt FROM ".$db->prefix('users')." WHERE login_name = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
 		list($login_name, $salt) = $db->fetchRow($sql);
+	    }else{
+	    	$sql = $db->query("SELECT uname, salt FROM ".$db->prefix('users')." WHERE uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
+		list($uname, $salt) = $db->fetchRow($sql);
 	    }
 	}
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}

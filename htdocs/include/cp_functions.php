@@ -80,8 +80,10 @@ window.onload=startList;
 	$icmsPreloadHandler->triggerEvent ( 'adminBeforeFooter' );
 			$config_handler =& xoops_gethandler('config');
 			$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+			if(!empty($icmsConfigPlugins['sanitizer_plugins'])){
  			$jscript = '';
  		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+ 		        	if(empty($key)) continue;
  		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
  		        		echo '<script type="text/javascript" src="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js"></script>';
  		        	}else{
@@ -102,6 +104,7 @@ window.onload=startList;
 
  			$style_info = '';
  		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+ 		        	if(empty($key)) continue;
  		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
  		        		echo '<link rel="stylesheet" media="screen" href="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css" type="text/css" />';
  		        	}else{
@@ -121,6 +124,7 @@ window.onload=startList;
  		        		}
  		        	}
  		        }
+ 		    }
 
 	echo "</head>
         <body>";

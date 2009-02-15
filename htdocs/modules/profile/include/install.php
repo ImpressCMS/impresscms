@@ -65,9 +65,12 @@ function icms_module_install_profile($module) {
     addField('rank', 'Rank', '', 4, 'rank', 3, 3, 1, array(), 0, 0);
     addField('last_login', 'Last login', '', 4, 'datetime', 3, 4, 0, array(), 0, 10);
     addField('user_sig', _PROFILE_MI_SIG_TITLE, _PROFILE_MI_SIG_DESCRIPTION, 4, 'dhtml', 1, 5, 1, array(), 0, 0);
+		$config_handler =& xoops_gethandler('config');
+		$xoopsConfigAuth =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+		if($xoopsConfigAuth['auth_openid'] == 1) {
     addField('openid', 'Your OpenID', 'Your OPENID login data', 4, 'textbox', 1, 1, 1, array(), 1, 255);
     addField('user_viewoid', _PROFILE_MI_VIEWEOID_TITLE, '', 3, 'yesno', 3, 1, 1, array(), 1, 1);
-
+    	}
     // Add visbility permissions
     addVisibility(1, 1, 0);
     addVisibility(1, 2, 0);

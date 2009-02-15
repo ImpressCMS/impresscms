@@ -315,7 +315,9 @@ class XoopsMemberHandler {
 		$pwd = icms_encryptPass ( $pwd, $salt );
  		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
  		$table = new IcmsDatabasetable('users');
-	    if ($table->fieldExists('login_name')) {
+	    if ($table->fieldExists('loginname')) {
+		$criteria = new CriteriaCompo ( new Criteria ( 'loginname', $uname ) );
+	    }elseif ($table->fieldExists('login_name')) {
 		$criteria = new CriteriaCompo ( new Criteria ( 'login_name', $uname ) );
 	    }else{
 		$criteria = new CriteriaCompo ( new Criteria ( 'uname', $uname ) );
@@ -339,7 +341,9 @@ class XoopsMemberHandler {
 	function &loginUserMd5($uname, $md5pwd) {
  		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
  		$table = new IcmsDatabasetable('users');
-	    if ($table->fieldExists('login_name')) {
+	    if ($table->fieldExists('loginname')) {
+		$criteria = new CriteriaCompo ( new Criteria ( 'loginname', $uname ) );
+	    }elseif ($table->fieldExists('login_name')) {
 		$criteria = new CriteriaCompo ( new Criteria ( 'login_name', $uname ) );
 	    }else{
 		$criteria = new CriteriaCompo ( new Criteria ( 'uname', $uname ) );

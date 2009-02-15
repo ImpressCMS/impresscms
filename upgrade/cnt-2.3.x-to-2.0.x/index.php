@@ -69,9 +69,10 @@ class upgrade_230
         $db->queryF("DELETE FROM `" . $db->prefix('configoption') . "` WHERE confop_name='_MD_AM_WELCOMETYPE_EMAIL'");
         $db->queryF("DELETE FROM `" . $db->prefix('configoption') . "` WHERE confop_name='_MD_AM_WELCOMETYPE_PM'");
         $db->queryF("DELETE FROM `" . $db->prefix('configoption') . "` WHERE confop_name='_MD_AM_WELCOMETYPE_BOTH'");
+        $db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_value = 'iTheme' WHERE conf_name = 'theme_set'");
         // remove cache_model table
         $db->queryF("DROP TABLE " . $db->prefix("cache_model"));
-            $sql = "ALTER TABLE `" . $db->prefix('block_module_link') . "` DROP PRIMARY KEY (`block_id`, `module_id`)";
+            $sql = "ALTER TABLE `" . $db->prefix('block_module_link') . "` DROP PRIMARY KEY";
 			if (!$result = $db->queryF($sql)) {
 				icms_debug('An error occurred while executing "' . $sql . '" - ' . $db->error());
 				return false;

@@ -69,7 +69,7 @@ $modversion['tables'][5] = "profile_regstep";
 //$modversion['tables'][6] = "profile_meta";
 
 //update things
-//$modversion['onUpdate'] = 'include/update.php';
+$modversion['onUpdate'] = 'include/update.php';
 
 // Config categories
 $modversion['configcat'][1]['nameid'] = 'settings';

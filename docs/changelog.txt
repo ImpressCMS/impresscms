@@ -153,6 +153,8 @@ ImpressCMS ChangeLog
 * #261: PDF not being generated with latest tcpdf. (stranger)
 * #2: Bug in smarty.class.php. (stranger)
 * #52: Empty Custom Block - Xoops2.3 Upgrad. (stranger)
+* #259: Upgrade script from x2.2 and 2.3 for profile module. (stranger)
+* #263: Upgrade script from smartprofile for profile module. (stranger)
 
 
 == Impresscms 1.1.2==
