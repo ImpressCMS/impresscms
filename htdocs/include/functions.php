@@ -904,7 +904,7 @@ function xoops_trim($text)
 */
 function icms_copyr($source, $dest)
 {
-/*	// Simple copy for a file
+	// Simple copy for a file
 	if(is_file($source)) {return copy($source, $dest);}
 	// Make destination directory
 	if(!is_dir($dest)) {mkdir($dest);}
@@ -915,11 +915,11 @@ function icms_copyr($source, $dest)
 		// Skip pointers
 		if($entry == '.' || $entry == '..') {continue;}
 		// Deep copy directories
-		if(is_dir("$source/$entry") && ($dest !== "$source/$entry")) {copyr("$source/$entry", "$dest/$entry");}
+		if(is_dir("$source/$entry") && ($dest !== "$source/$entry")) {copy("$source/$entry", "$dest/$entry");}
 		else {copy("$source/$entry", "$dest/$entry");}
 	}
 	// Clean up
-	$dir->close();*/
+	$dir->close();
 	return true;
 }
 
