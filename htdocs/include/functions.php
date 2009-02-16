@@ -1847,7 +1847,7 @@ function icms_escapeValue($value, $quotes = true)
 			$dd = opendir($d);
 			while($file = readdir($dd))
 			{
-		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' $file != '.svn'))
+		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn'))
 				{
 		  			unlink($d.$file);
 				}
