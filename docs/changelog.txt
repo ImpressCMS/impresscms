@@ -161,6 +161,7 @@ ImpressCMS ChangeLog
 * #266: smartprofile upgrade not successful. (stranger)
 * #267: issues with plugin manager. (stranger)
 * #268: The cache clear delete .svn folder in /cache and /template_c and svn update gets imposible. (stranger)
+* #270: Parse error: syntax error, unexpected T_VARIABLE in \htdocs\include\functions.php on line 1914. (stranger)
 
 
 == Impresscms 1.1.2==

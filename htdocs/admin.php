@@ -45,7 +45,7 @@ if(!file_exists(ICMS_CACHE_PATH.'/adminmenu_'.$xoopsConfig['language'].'.php') &
 switch($op)
 {
 	case 1:
-		xoops_cp_header();
+		 icms_cp_header();
 		showRSS();
 	break;
 	case 2:
@@ -54,9 +54,9 @@ switch($op)
 	break;
 
 	default:
-		$mods = xoops_cp_header(1);
+		icms_cp_header();
 
-		// ###### Output warn messages for security  ######
+/*		// ###### Output warn messages for security  ######
 		if(is_dir(ICMS_ROOT_PATH.'/install/'))
 		{
 			xoops_error(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/'));
@@ -164,7 +164,7 @@ switch($op)
 		if($cont > 0) {$icmsAdminTpl->assign('systemadm', 1);}
 		else {$icmsAdminTpl->assign('systemadm', 0);}
 
-		echo $icmsAdminTpl->fetch(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_indexcp.html');
+		echo $icmsAdminTpl->fetch(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_indexcp.html');*/
 	break;
 }
 
@@ -206,5 +206,5 @@ function showRSS()
 
 	$icmsAdminTpl->display('db:admin/system_adm_rss.html');
 }
-xoops_cp_footer();
+icms_cp_footer();
 ?>

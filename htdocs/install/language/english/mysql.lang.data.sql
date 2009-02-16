@@ -43,3 +43,4 @@ INSERT INTO icmscontent VALUES (1, 1, 0, 1, 'Welcome to ImpressCMS', 'What is Im
 #
 
 INSERT INTO icmspage VALUES (1, 1, 'Welcome to ImpressCMS', 'content.php?page=What_is_ImpressCMS?', 1);
+INSERT INTO icmspage VALUES (2, 1, 'Admin Control Panel', 'admin.php', 1);

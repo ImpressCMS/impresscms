@@ -31,7 +31,7 @@ if (isset($_GET['mid'])) {
 /**
  * Now here is the version checker :-)
  */
-
+global $icmsAdminTpl;
 require_once XOOPS_ROOT_PATH.'/class/icmsversionchecker.php';
 $icmsVersionChecker = IcmsVersionChecker::getInstance();
 
@@ -51,11 +51,11 @@ else {
 		$icmsAdminTpl->assign('errors', $checkerErrors);
 	}
 }
+xoops_cp_header();
 $icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name);
 $icmsAdminTpl->assign('your_version', $icmsVersionChecker->installed_version_name);
 $icmsAdminTpl->assign('latest_url', $icmsVersionChecker->latest_url);	
 
-xoops_cp_header();
 $icmsAdminTpl->display(XOOPS_ROOT_PATH.'/modules/system/templates/admin/system_adm_version.html');
 xoops_cp_footer();
 ?>

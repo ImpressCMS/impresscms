@@ -340,6 +340,32 @@ $modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME19;
 $modversion['blocks'][$i]['description'] = "Block that show tagswith links to see the list of pages that use the tag.";
 $modversion['blocks'][$i]['show_func'] = "b_content_tagmenu_show";
 $modversion['blocks'][$i]['template'] = 'system_block_contenttags.html';
+$i++;
+$modversion['blocks'][$i]['file'] = "system_admin_blocks.php";
+$modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME101;
+$modversion['blocks'][$i]['description'] = "Menu of content pages and categories";
+$modversion['blocks'][$i]['show_func'] = "b_system_admin_warnings_show";
+$modversion['blocks'][$i]['options'] = "";
+$modversion['blocks'][$i]['edit_func'] = "";
+$modversion['blocks'][$i]['template'] = 'system_admin_block_warnings.html';
+
+$i++;
+$modversion['blocks'][$i]['file'] = "system_admin_blocks.php";
+$modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME102;
+$modversion['blocks'][$i]['description'] = "Admin Control Panel Block";
+$modversion['blocks'][$i]['show_func'] = "b_system_admin_cp_show";
+$modversion['blocks'][$i]['options'] = "";
+$modversion['blocks'][$i]['edit_func'] = "";
+$modversion['blocks'][$i]['template'] = 'system_admin_block_cp.html';
+
+$i++;
+$modversion['blocks'][$i]['file'] = "system_admin_blocks.php";
+$modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME103;
+$modversion['blocks'][$i]['description'] = "Module List";
+$modversion['blocks'][$i]['show_func'] = "b_system_admin_modules_show";
+$modversion['blocks'][$i]['options'] = "";
+$modversion['blocks'][$i]['edit_func'] = "";
+$modversion['blocks'][$i]['template'] = 'system_admin_block_modules.html';
 
 // Menu
 $modversion['hasMain'] = 0;

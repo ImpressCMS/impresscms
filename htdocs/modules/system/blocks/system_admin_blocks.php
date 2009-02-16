@@ -1,0 +1,205 @@
+<?php
+/**
+ * Admin Warnings Block
+ * 
+ * @copyright The ImpressCMS Project <http://www.impresscms.org> 
+ * @license GNU GPL v2
+ * 
+ * @since ImpressCMS 1.3
+ * @version $Id: $
+ * 
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ *
+ * @return array
+ * 
+ * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
+ */
+function b_system_admin_warnings_show(){
+	
+	global $xoopsDB;
+	$block = array();
+	$block['msg'] = array();
+	// ###### Output warn messages for security  ######
+	if(is_dir(ICMS_ROOT_PATH.'/install/')){
+		//array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/')));
+	}
+	if(getDbValue($xoopsDB, 'modules', 'version', 'version="110"') == 0 AND getDbValue($xoopsDB, 'modules', 'mid', 'mid="1"') == 1){
+		array_push($block['msg'], icms_error_msg('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">'._WARNINGUPDATESYSTEM.'</a>'));
+	}
+	if(is_writable(ICMS_ROOT_PATH.'/mainfile.php')){
+		array_push($block['msg'], icms_error_msg(sprintf(_WARNINWRITEABLE,ICMS_ROOT_PATH.'/mainfile.php')));
+	}
+	if(is_dir(ICMS_ROOT_PATH.'/upgrade/')){
+		array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/upgrade/')));
+	}
+	if(!is_dir(XOOPS_TRUST_PATH)){
+		array_push($block['msg'], icms_error_msg(_TRUST_PATH_HELP));
+	}
+	$sql1 = "SELECT conf_modid FROM `".$xoopsDB->prefix('config')."` WHERE conf_name = 'dos_skipmodules'";
+	if($result1 = $xoopsDB->query($sql1)){
+		list($modid) = $xoopsDB->FetchRow($result1);
+		$protector_is_active = '0';
+		if (!is_null($modid)){
+		$sql2 = "SELECT isactive FROM `".$xoopsDB->prefix('modules')."` WHERE mid =".$modid;
+		$result2 = $xoopsDB->query($sql2);
+		list($protector_is_active) = $xoopsDB->FetchRow($result2);
+		}
+	}
+	if($protector_is_active == 0){
+		array_push($block['msg'], xoops_error(_PROTECTOR_NOT_FOUND));
+		echo '<br />';
+	}
+	
+	// ###### Output warn messages for correct functionality  ######
+	if(!is_writable(ICMS_CACHE_PATH))
+	{
+		array_push($block['msg'], xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH)));
+	}
+	if(!is_writable(ICMS_UPLOAD_PATH))
+	{
+		array_push($block['msg'], xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_UPLOAD_PATH)));
+	}
+	if(!is_writable(ICMS_COMPILE_PATH))
+	{
+		array_push($block['msg'], xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_COMPILE_PATH)));
+	}
+	
+	if(count($block['msg'] ) > 0){
+		return $block;	
+	}
+	
+}
+
+/**
+ * Admin Control Panel Block
+ * 
+ * @since ImpressCMS 1.3
+ * @version $Id: $
+ * 
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ *
+ * @return array
+ * 
+ * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
+ */
+function b_system_admin_cp_show(){
+	global $icmsTpl, $xoopsConfig, $xoopsUser;
+	
+	$block['lang_cp']= _CPHOME;
+	$block['lang_insmodules'] = _AD_INSTALLEDMODULES;
+	
+	// Loading System Configuration Links
+	$groups = $xoopsUser->getGroups();
+	$all_ok = false;
+	if(!in_array(XOOPS_GROUP_ADMIN, $groups))
+	{
+		$sysperm_handler =& xoops_gethandler('groupperm');
+		$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
+	}
+	else {$all_ok = true;}
+
+	require_once ICMS_ROOT_PATH.'/class/xoopslists.php';
+	require_once ICMS_ROOT_PATH.'/modules/system/constants.php';
+
+	$admin_dir = ICMS_ROOT_PATH.'/modules/system/admin';
+	$dirlist = XoopsLists::getDirListAsArray($admin_dir);
+
+	if(file_exists(ICMS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin.php')){
+		include_once ICMS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin.php';
+	}elseif(file_exists(ICMS_ROOT_PATH.'/modules/system/language/english/admin.php')){
+		include_once ICMS_ROOT_PATH.'/modules/system/language/english/admin.php';
+	}
+
+	asort($dirlist);
+	$block['sysmod'] = array();
+	foreach($dirlist as $file){
+		include $admin_dir.'/'.$file.'/xoops_version.php';
+		if($modversion['hasAdmin']){
+			$category = isset($modversion['category']) ? intval($modversion['category']) : 0;
+			if(false != $all_ok || in_array($modversion['category'], $ok_syscats)){
+				$sysmod = array('title' => $modversion['name'], 'link' => ICMS_URL.'/modules/system/admin.php?fct='.$file, 'image' => ICMS_URL.'/modules/system/admin/'.$file.'/images/'.$file.'_big.png');
+				array_push($block['sysmod'], $sysmod);
+			}
+		}
+		unset($modversion);
+	}
+	if(count($block['sysmod']) > 0)
+		return $block;
+}
+
+/**
+ * System Admin Modules Block Show Fuction
+ * 
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * 
+ * @since ImpressCMS 1.3
+ * @version $Id: $
+ * 
+ * @return array
+ * 
+ * @todo Maybe it can be improved a little, is just a copy of the generate menu function.
+ */
+function b_system_admin_modules_show(){
+	global $xoopsUser;
+	$block['mods'] = array();
+	$module_handler = & xoops_gethandler ( 'module' );
+	$moduleperm_handler = & xoops_gethandler ( 'groupperm' );
+	$criteria = new CriteriaCompo ( );
+	$criteria->add ( new Criteria ( 'hasadmin', 1 ) );
+	$criteria->add ( new Criteria ( 'isactive', 1 ) );
+	$criteria->setSort ( 'mid' );
+	$modules = $module_handler->getObjects ( $criteria );
+	foreach ( $modules as $module ) {
+		$rtn = array ( );
+		$inf = & $module->getInfo ();
+		$rtn ['link'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . (isset ( $inf ['adminindex'] ) ? $inf ['adminindex'] : '');
+		$rtn ['title'] = $module->name ();
+		$rtn ['dir'] = $module->dirname ();
+		if (isset ( $inf ['iconsmall'] ) && $inf ['iconsmall'] != '') {
+			$rtn ['small'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconsmall'];
+		}
+		if (isset ( $inf ['iconbig'] ) && $inf ['iconbig'] != '') {
+			$rtn ['iconbig'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconbig'];
+		}
+		$rtn ['absolute'] = 1;
+		$module->loadAdminMenu ();
+		if (is_array ( $module->adminmenu ) && count ( $module->adminmenu ) > 0) {
+			$rtn ['hassubs'] = 1;
+			$rtn ['subs'] = array ( );
+			foreach ( $module->adminmenu as $item ) {
+				$item ['link'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . $item ['link'];
+				$rtn ['subs'] [] = $item;
+			}
+		} else {
+			$rtn ['hassubs'] = 0;
+			unset ( $rtn ['subs'] );
+		}
+		$hasconfig = $module->getVar ( 'hasconfig' );
+		$hascomments = $module->getVar ( 'hascomments' );
+		if ((isset ( $hasconfig ) && $hasconfig == 1) || (isset ( $hascomments ) && $hascomments == 1)) {
+			$rtn ['hassubs'] = 1;
+			if (! isset ( $rtn ['subs'] )) {
+				$rtn ['subs'] = array ( );
+			}
+			$subs = array ('title' => _PREFERENCES, 'link' => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $module->mid () );
+			$rtn ['subs'] [] = $subs;
+		} else {
+			$rtn ['hassubs'] = 0;
+			unset ( $rtn ['subs'] );
+		}
+		if ($module->dirname () == 'system') {
+			$systemadm = true;
+		}
+		$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->mid (), $xoopsUser->getGroups () );
+		if ($admin_perm) {
+			if ($rtn ['dir'] != 'system') {
+				$block['mods'][] = $rtn;
+			}
+		}
+		
+	}
+	
+	if(count($block['mods'] > 0))
+		return $block;
+}
+?>

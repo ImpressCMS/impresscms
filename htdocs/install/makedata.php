@@ -127,17 +127,23 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
     foreach ($modversion['blocks'] as $func_num => $newblock) {
         if ($fp = fopen('../modules/system/templates/blocks/'.$newblock['template'], 'r')) {
-            if (in_array($newblock['template'], array('system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html', 'system_block_socialbookmark.html', 'system_block_themes.html', 'system_block_search.html'))) {
+            if (in_array($newblock['template'], array('system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html', 'system_block_socialbookmark.html', 'system_block_themes.html', 'system_block_search.html','system_admin_block_warnings.html','system_admin_block_cp.html','system_admin_block_modules.html'))) {
                 $visible = 1;
             } else {
                 $visible = 0;
             }
             if (in_array($newblock['template'], array('system_block_search.html'))) {
-            $canvaspos = 2;
+            	$canvaspos = 2;
             } elseif (in_array($newblock['template'], array('system_block_socialbookmark.html'))) {
-            $canvaspos = 7;
+            	$canvaspos = 7;
+            } elseif (in_array($newblock['template'], array('system_admin_block_warnings.html'))) {
+             	$canvaspos = 4;
+            } elseif (in_array($newblock['template'], array('system_admin_block_cp.html'))) {
+            	$canvaspos = 3;
+            } elseif (in_array($newblock['template'], array('system_admin_block_modules.html'))) {
+            	$canvaspos = 5;
             } else {
-            $canvaspos = 1;
+            	$canvaspos = 1;
             }
             $options = !isset($newblock['options']) ? '' : trim($newblock['options']);
             $edit_func = !isset($newblock['edit_func']) ? '' : trim($newblock['edit_func']);
@@ -193,7 +199,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
     // data for table 'block_module_link'
 
-    $sql = 'SELECT bid, side FROM '.$dbm->prefix('newblocks');
+    $sql = 'SELECT bid, side, template FROM '.$dbm->prefix('newblocks');
     $result = $dbm->query($sql);
 
     while ($myrow = $dbm->fetchArray($result)) {
@@ -201,6 +207,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     	#if ($myrow['side'] == 0) {
         if ($myrow['side'] == 1 OR $myrow['side'] == 2 OR $myrow['side'] == 7) {
             $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0, 0)");
+            }elseif($myrow['template'] == 'system_admin_block_warnings.html' OR $myrow['template'] == 'system_admin_block_cp.html' OR $myrow['template'] == 'system_admin_block_modules.html'){
+            	 $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 1, 2)");
         } else {
             $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0, 1)");
         }
@@ -242,7 +250,10 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
    	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_set', '_MD_AM_DTHEME', 'impresstheme', '_MD_AM_DTHEMEDSC', 'theme', 'other', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_fromfile', '_MD_AM_THEMEFILE', '0', '_MD_AM_THEMEFILEDSC', 'yesno', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_admin_set', '_MD_AM_ADMIN_DTHEME', 'iTheme', '_MD_AM_ADMIN_DTHEME_DESC', 'theme', 'other', $p)");
+	$i++;
+	$p++;
+    $dbm->insert('config', " VALUES ($i, 0, $c, 'theme_fromfile', '_MD_AM_THEMEFILE', '0', '_MD_AM_THEMEFILEDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
   	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_set_allowed', '_MD_AM_THEMEOK', '".serialize(array('impresstheme', 'impresstheme_light', 'iTheme'))."', '_MD_AM_THEMEOKDSC', 'theme_multi', 'array', $p)");
