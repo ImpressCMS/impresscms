@@ -160,6 +160,7 @@ ImpressCMS ChangeLog
 * #264: function icms_copyr not working. (stranger)
 * #266: smartprofile upgrade not successful. (stranger)
 * #267: issues with plugin manager. (stranger)
+* #268: The cache clear delete .svn folder in /cache and /template_c and svn update gets imposible. (stranger)
 
 
 == Impresscms 1.1.2==

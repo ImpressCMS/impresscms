@@ -66,7 +66,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		 * gets list of name of directories inside a directory
 		 */
 		function getDirListAsArray( $dirname ) {
-			$ignored = array( 'cvs', '_darcs' );
+			$ignored = array( 'cvs', '_darcs', '.svn' );
 			$list = array();
 			if ( substr( $dirname, -1 ) != '/' ) {
 				$dirname .= '/';
