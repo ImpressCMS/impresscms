@@ -223,14 +223,16 @@ class XoopsMediaUploader
         $this->targetFileName = strval(trim($value));
     }
 
-    /**
-     * Set the prefix
-     * 
-     * @param   string  $value
-     **/
-    function setPrefix($value){
-        $this->prefix = strval(trim($value));
-    }
+	/**
+	* Set the prefix
+	* @param   string	$value
+	* @param   bool	$unique
+	**/
+	function setPrefix($value, $unique)
+	{
+		if(!isset($unique) || (isset($unique) && $unique !== true)) {$this->prefix = strval(trim($value));}
+		elseif(isset($unique) && $unique = true) {$this->prefix = strval(trim($value)).'_'.uniqid(rand());}
+	}
 
     /**
      * Get the uploaded filename
@@ -332,43 +334,42 @@ class XoopsMediaUploader
         return $this->_copyFile($chmod);
     }
 
-    /**
-     * Copy the file to its destination
-     * 
-     * @return  bool 
-     **/
-    function _copyFile($chmod)
-    {
-        $matched = array();
-        if (!preg_match("/\.([a-zA-Z0-9]+)$/", $this->mediaName, $matched)) {
-            $this->setErrors(sprintf(_ER_UP_INVALIDFILENAME, $this->mediaName));
-            return false;
-        }
-        if (isset($this->targetFileName)) {
-            $this->savedFileName = $this->targetFileName;
-        } elseif (isset($this->prefix)) {
-            $this->savedFileName = uniqid($this->prefix).'.'.strtolower($matched[1]);
-        } else {
-            $this->savedFileName = strtolower($this->mediaName);
-        }
-        $this->savedDestination = $this->uploadDir.'/'.$this->savedFileName;
-        if (!move_uploaded_file($this->mediaTmpName, $this->savedDestination)) {
-            $this->setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
-            return false;
-        }
+	/**
+	* Copy the file to its destination
+	* @return  bool 
+	**/
+	function _copyFile($chmod)
+	{
+		$matched = array();
+		if(!preg_match("/\.([a-zA-Z0-9]+)$/", $this->mediaName, $matched))
+		{
+			$this->setErrors(sprintf(_ER_UP_INVALIDFILENAME, $this->mediaName));
+			return false;
+		}
+		if(isset($this->targetFileName)) {$this->savedFileName = $this->targetFileName;}
+		elseif(isset($this->prefix)) {$this->savedFileName = $this->prefix.'.'.strtolower($matched[1]);}
+		else {$this->savedFileName = strtolower($this->mediaName);}
+		$this->savedDestination = $this->uploadDir.'/'.$this->savedFileName;
+		if(!move_uploaded_file($this->mediaTmpName, $this->savedDestination))
+		{
+			$this->setErrors(sprintf(_ER_UP_FAILEDSAVEFILE, $this->savedDestination));
+			return false;
+		}
 		// Check IE XSS before returning success
-		$ext = strtolower( substr( strrchr( $this->savedDestination , '.' ) , 1 ) ) ;
-		if( in_array( $ext , $this->imageExtensions ) ) {
-			$info = @getimagesize( $this->savedDestination ) ;
-			if( $info === false || $this->imageExtensions[ (int)$info[2] ] != $ext ) {
-				$this->setErrors( _ER_UP_SUSPICIOUSREFUSED );
-				@unlink( $this->savedDestination );
+		$ext = strtolower(substr(strrchr($this->savedDestination, '.'), 1));
+		if(in_array($ext, $this->imageExtensions))
+		{
+			$info = @getimagesize($this->savedDestination);
+			if($info === false || $this->imageExtensions[(int)$info[2]] != $ext)
+			{
+				$this->setErrors(_ER_UP_SUSPICIOUSREFUSED);
+				@unlink($this->savedDestination);
 				return false;
 			}
 		}
-        @chmod($this->savedDestination, $chmod);
-        return true;
-    }
+		@chmod($this->savedDestination, $chmod);
+		return true;
+	}
 
     /**
      * Is the file the right size?
