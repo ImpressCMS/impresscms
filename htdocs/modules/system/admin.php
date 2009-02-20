@@ -120,56 +120,7 @@ if($admintest != 0)
 	else {$error = true;}
 }
 
-if(false != $error)
-{
-	xoops_cp_header();
-	echo '<h4>'._MD_AM_CONFIG.'</h4>';
-	echo '<table class="outer" cellpadding="4" cellspacing="1">';
-	echo '<tr>';
-	$groups = $xoopsUser->getGroups();
-	$all_ok = false;
-	if(!in_array(XOOPS_GROUP_ADMIN, $groups))
-	{
-		$sysperm_handler =& xoops_gethandler('groupperm');
-		$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
-	}
-	else {$all_ok = true;}
-	$counter = 0;
-	$class = 'even';
-	foreach($dirlist as $file)
-	{
-		include $admin_dir.'/'.$file.'/xoops_version.php';
-		if($modversion['hasAdmin'])
-		{
-			$category = isset($modversion['category']) ? intval($modversion['category']) : 0;
-			if(false != $all_ok || in_array($modversion['category'], $ok_syscats))
-			{
-				echo '<td class="'.$class.'" align="center" valign="bottom" width="19%">';
-				echo '<a href="'.ICMS_URL.'/modules/system/admin.php?fct='.$file.'"><img src="'.ICMS_URL.'/modules/system/admin/'.$file.'/images/'.$file.'.png" alt="'.$file.'" /><br />';
-				echo '<b>' .trim($modversion['name'])."</b></a>\n";
-				echo '</td>';
-				$counter++;
-				$class = ($class == 'even') ? 'odd' : 'even';
-			}
-			if($counter > 4)
-			{
-				$counter = 0;
-				echo '</tr><tr>';
-			}
-		}
-		unset($modversion);
-	}
-	unset($dirlist);
-	if($counter > 0)
-	{
-		while($counter < 5)
-		{
-			echo '<td class="'.$class.'">&nbsp;</td>';
-			$class = ($class == 'even') ? 'odd' : 'even';
-			$counter++;
-		}
-	}
-	echo '</tr></table>';
-	xoops_cp_footer();
+if($false != $error){
+	header("Location:".ICMS_URL."/admin.php");
 }
 ?>
