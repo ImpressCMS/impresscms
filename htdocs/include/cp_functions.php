@@ -1,6 +1,5 @@
 <?php
 /**
-*
 * All control panel functions and forming goes from here.
 * Be careful while editing this file!
 *
@@ -12,7 +11,8 @@
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
+* @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+* @version		$Id: $
 */
 define ( 'XOOPS_CPFUNC_LOADED', 1 );
 
@@ -375,7 +375,7 @@ function impresscms_get_adminmenu() {
 	
 	$admin_menu [$cont] ['id'] = 'opsystem';
 	$admin_menu [$cont] ['text'] = _SYSTEM;
-	$admin_menu [$cont] ['link'] = XOOPS_URL . '/modules/system/admin.php';
+	$admin_menu [$cont] ['link'] = '';
 	$admin_menu [$cont] ['menu'] = $menu;
 	$cont ++;
 	#########################################################################
