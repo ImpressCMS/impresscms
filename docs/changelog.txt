@@ -164,6 +164,7 @@ ImpressCMS ChangeLog
 * #268: The cache clear delete .svn folder in /cache and /template_c and svn update gets imposible. (stranger)
 * #270: Parse error: syntax error, unexpected T_VARIABLE in \htdocs\include\functions.php on line 1914. (stranger)
 * #285: DHTML-Editor: Icons is loading from different folders. (stranger)
+* #288: Hardcode on: system_adm_imagemanager.html. (stranger)
 
 
 == Impresscms 1.1.2==

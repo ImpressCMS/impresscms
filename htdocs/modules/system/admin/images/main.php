@@ -149,6 +149,7 @@ function imanager_index($imgcat_id=null){
 	$icmsAdminTpl->assign('lang_imanager_cat_del',_DELETE);
 	$icmsAdminTpl->assign('lang_imanager_cat_listimg',_LIST);
 	$icmsAdminTpl->assign('lang_imanager_cat_submit',_SUBMIT);
+	$icmsAdminTpl->assign('lang_imanager_folder_not_writable',IMANAGER_FOLDER_NOT_WRITABLE);
 	
 	$icmsAdminTpl->assign('lang_imanager_cat_addnewcat',_MD_ADDIMGCATBTN);
 	$icmsAdminTpl->assign('lang_imanager_cat_addnewimg',_MD_ADDIMGBTN);
@@ -318,6 +319,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('lang_imanager_cat_del',_DELETE);
 	$icmsAdminTpl->assign('lang_imanager_cat_listimg',_LIST);
 	$icmsAdminTpl->assign('lang_imanager_cat_submit',_SUBMIT);
+	$icmsAdminTpl->assign('lang_imanager_folder_not_writable',IMANAGER_FOLDER_NOT_WRITABLE);
 	$icmsAdminTpl->assign('lang_imanager_cat_back',_BACK);
 	$icmsAdminTpl->assign('lang_imanager_cat_addimg',_ADDIMAGE);
 	
