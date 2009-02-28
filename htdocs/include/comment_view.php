@@ -41,7 +41,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
 	$groups = ( $xoopsUser ) ? $xoopsUser -> getGroups() : XOOPS_GROUP_ANONYMOUS;
 	$xoopsTpl->assign( 'xoops_iscommentadmin', $gperm_handler->checkRight( 'system_admin', XOOPS_SYSTEM_COMMENT, $groups) );
 
- 	include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/comment.php';
+	icms_loadLanguageFile('core', 'comment');
 	$comment_config = $xoopsModule->getInfo('comments');
 	$com_itemid = (trim($comment_config['itemName']) != '' && isset($_GET[$comment_config['itemName']])) ? intval($_GET[$comment_config['itemName']]) : 0;
 

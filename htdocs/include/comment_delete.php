@@ -105,7 +105,7 @@ if (false != $accesserror) {
 	exit();
 }
 
-include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/comment.php';
+icms_loadLanguageFile('core', 'comment');
 
 switch ($op) {
 case 'delete_one':
@@ -218,9 +218,9 @@ case 'delete_all':
 	$member_handler =& xoops_gethandler('member');
 	foreach (array_keys($child_comments) as $i) {
 		if (!$comment_handler->delete($child_comments[$i])) {
-			$msgs[] = _CM_COMDELETENG.' (ID: '.$child_comments[$i]->getVar('com_id').')';
+			$msgs[] = _CM_COMDELETENG.' (ID: '.icms_conv_nr2local($child_comments[$i]->getVar('com_id')).')';
 		} else {
-			$msgs[] = _CM_COMDELETED.' (ID: '.$child_comments[$i]->getVar('com_id').')';
+			$msgs[] = _CM_COMDELETED.' (ID: '.icms_conv_nr2local($child_comments[$i]->getVar('com_id')).')';
 			// store poster ID and deleted post number into array for later use
 			$poster_id = $child_comments[$i]->getVar('com_uid');
 			if ($poster_id > 0) {

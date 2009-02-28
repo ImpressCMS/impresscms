@@ -38,6 +38,7 @@ if (! $allowed) {
 	$xoopsThemeFactory->defaultTheme = $xoopsConfig ['theme_set'];
 	$xoTheme = & $xoopsThemeFactory->createInstance ( array ("plugins" => array ( ) ) );
 	$xoTheme->addScript ( '/include/xoops.js', array ('type' => 'text/javascript' ) );
+    $xoTheme->addStylesheet(ICMS_URL."/icms".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css", array("media" => "screen"));
 	$xoopsTpl = & $xoTheme->template;
 	
 	$xoopsTpl->assign ( array ('xoops_theme' => $xoopsConfig ['theme_set'], 'xoops_imageurl' => XOOPS_THEME_URL . '/' . $xoopsConfig ['theme_set'] . '/', 'xoops_themecss' => xoops_getcss ( $xoopsConfig ['theme_set'] ), 'xoops_requesturi' => htmlspecialchars ( $_SERVER ['REQUEST_URI'], ENT_QUOTES ), 'xoops_sitename' => htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ), 'xoops_slogan' => htmlspecialchars ( $xoopsConfig ['slogan'], ENT_QUOTES ), 'xoops_dirname' => @$xoopsModule ? $xoopsModule->getVar ( 'dirname' ) : 'system', 'xoops_banner' => $xoopsConfig ['banners'] ? xoops_getbanner () : '&nbsp;', 'xoops_pagetitle' => isset ( $xoopsModule ) && is_object ( $xoopsModule ) ? $xoopsModule->getVar ( 'name' ) : htmlspecialchars ( $xoopsConfig ['slogan'], ENT_QUOTES ), 'lang_login' => _LOGIN, 'lang_username' => _USERNAME, 'lang_password' => _PASSWORD, 'lang_siteclosemsg' => $xoopsConfig ['closesite_text'] )

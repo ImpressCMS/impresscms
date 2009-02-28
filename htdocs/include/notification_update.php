@@ -48,7 +48,7 @@ if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
 
 include_once XOOPS_ROOT_PATH.'/include/notification_constants.php';
 include_once XOOPS_ROOT_PATH.'/include/notification_functions.php';
-include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/notification.php';
+icms_loadLanguageFile('core', 'notification');
 
 if (!isset($_POST['not_submit'])) {
     exit();

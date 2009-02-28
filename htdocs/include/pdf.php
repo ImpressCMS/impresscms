@@ -18,11 +18,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 	    global $xoopsConfig;
 $myts =& MyTextSanitizer::getInstance();
 require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
-if(file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/pdf.php')) {
-	include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/pdf.php';
-} else {
-	include_once ICMS_ROOT_PATH.'/language/english/pdf.php';
-}
+icms_loadLanguageFile('core', 'pdf');
 $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true);
 // set document information
 $pdf->SetCreator(PDF_CREATOR);

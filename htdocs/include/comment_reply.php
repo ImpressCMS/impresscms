@@ -37,7 +37,7 @@ if ( ('system' != $xoopsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE =
 	redirect_header(XOOPS_URL . '/user.php', 1, _NOPERM);
 }
 
-include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/comment.php';
+icms_loadLanguageFile('core', 'comment');
 $com_id = isset($_GET['com_id']) ? intval($_GET['com_id']) : 0;
 $com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
 if ($com_mode == '') {

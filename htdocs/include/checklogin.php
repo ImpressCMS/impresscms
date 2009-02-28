@@ -32,7 +32,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
     exit();
 }
-include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/user.php';
+icms_loadLanguageFile('core', 'user');
 $uname = !isset($_POST['uname']) ? '' : trim($_POST['uname']);
 $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
 /**
@@ -46,7 +46,7 @@ $member_handler =& xoops_gethandler('member');
 $myts =& MyTextsanitizer::getInstance();
 
 include_once XOOPS_ROOT_PATH.'/class/auth/authfactory.php';
-include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/auth.php';
+icms_loadLanguageFile('core', 'auth');
 $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
 //$user = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlashes($pass));
 // uname&email hack GIJ

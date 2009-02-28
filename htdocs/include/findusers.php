@@ -33,9 +33,7 @@ $name_form = 'memberslist';
 $name_userid = 'uid' . ( @$_REQUEST['multiple'] ? "[]" : "" );
 $name_username = 'uname' . ( @$_REQUEST['multiple'] ? "[]" : "" );
 
-if (!@include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig["language"]."/findusers.php") {
-	include_once XOOPS_ROOT_PATH."/language/english/findusers.php";
-}
+icms_loadLanguageFile('core', 'findusers');
 
 class XoopsRank extends XoopsObject
 {

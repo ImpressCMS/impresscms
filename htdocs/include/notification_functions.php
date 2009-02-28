@@ -191,7 +191,7 @@ function &notificationEvents ($category_name, $enabled_only, $module_id=null)
 		}
 	}
 
-	include_once XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/notification.php';
+icms_loadLanguageFile('core', 'notification');
 
 	// Insert comment info if applicable
 	

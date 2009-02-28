@@ -32,7 +32,7 @@
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
 	exit();
 }
-include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/comment.php';
+icms_loadLanguageFile('core', 'comment');
 include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
 if ('system' == $xoopsModule->getVar('dirname')) {
 	$com_id = isset($_POST['com_id']) ? intval($_POST['com_id']) : 0;

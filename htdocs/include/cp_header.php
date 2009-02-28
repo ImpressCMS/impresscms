@@ -27,11 +27,5 @@ if ( $xoopsModule->getVar( 'hasconfig' ) == 1 || $xoopsModule->getVar( 'hascomme
     $xoopsModuleConfig = & $config_handler->getConfigsByCat( 0, $xoopsModule->getVar( 'mid' ) );
 }
 
-// include the default language file for the admin interface
-if ( file_exists( "../language/" . $xoopsConfig['language'] . "/admin.php" ) ) {
-    include "../language/" . $xoopsConfig['language'] . "/admin.php";
-}
-elseif ( file_exists( "../language/english/admin.php" ) ) {
-    include "../language/english/admin.php";
-}
+icms_loadLanguageFile('core', 'admin');
 ?>

@@ -427,11 +427,7 @@ icms_loadLanguageFile('core', 'core');
 	 }
 // ################ Include page-specific lang file ################
 if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
-	if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php") ) {
-    	include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php";
-	} else {
-    	include_once XOOPS_ROOT_PATH."/language/english/".$xoopsOption['pagetype'].".php";
-	}
+icms_loadLanguageFile('core', $xoopsOption['pagetype']);
 }
 
 $xoopsOption = array();
