@@ -59,7 +59,7 @@ class XoopsDatabaseFactory{
 			$instance->setLogger(XoopsLogger::instance());
 			$instance->setPrefix(XOOPS_DB_PREFIX);
 			if (!$instance->connect()) {
-				trigger_error("notrace:Unable to connect to database", E_USER_ERROR);
+				trigger_error(_CORE_DB_NOTRACEDB, E_USER_ERROR);
 			}
 		}
 		return $instance;

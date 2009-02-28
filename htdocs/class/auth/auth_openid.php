@@ -13,6 +13,7 @@
 * @since		1.1
 * @author		malanciault <marcan@impresscms.org)
 * @credits		Sakimura <http://www.sakimura.org/> Evan Prodromou <http://evan.prodromou.name/>
+* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id: auth_openid.php 3539 2008-07-08 22:28:20Z pesian_stranger $
 */
 
@@ -72,12 +73,12 @@ class XoopsAuthOpenid extends XoopsAuth {
 
 		// check to see if we alredy have an OpenID response in SESSION
 		if (isset($_SESSION['openid_response'])) {
-			if ($debug) icms_debug('we already have an openid_response in SESSION');
+			if ($debug) icms_debug(_CORE_OID_INSESSIONS);
 			//icms_debug_vardump($_SESSION['openid_response']);
 
 			$this->response = $_SESSION['openid_response'];
 		} else {
-			if ($debug) icms_debug('fetching the response from the OID server');
+			if ($debug) icms_debug(_CORE_OID_FETCHING);
 			// Complete the authentication process using the server's response.
 			$consumer = getConsumer();//1123
 			$return_to = getReturnTo();//1123
@@ -87,20 +88,20 @@ class XoopsAuthOpenid extends XoopsAuth {
 		}
 
 		if ($this->response->status == Auth_OpenID_CANCEL) {
-			if ($debug) icms_debug('OOI Server response status is Auth_OpenID_CANCEL');
+			if ($debug) icms_debug(_CORE_OID_STATCANCEL);
 
 		    // This means the authentication was cancelled.
-		    $this->setErrors('100', 'Verification cancelled.');
+		    $this->setErrors('100', _CORE_OID_VERIFCANCEL);
 		} else if ($this->response->status == Auth_OpenID_FAILURE) {
-			if ($debug) icms_debug('OOI Server response status is Auth_OpenID_FAILURE');
+			if ($debug) icms_debug(_CORE_OID_SERVERFAILED);
 
-		    $this->setErrors('101', "OpenID authentication failed: " . $this->response->message);
+		    $this->setErrors('101', _CORE_OID_FAILED . $this->response->message);
 			/**
 			 * This can be uncommented to display the $_REQUEST array. This is usefull for
 			 * troubleshooting purposes
 			 */
 			 if ($debug) {
-				icms_debug('Outputing the REQUEST');
+				icms_debug(_CORE_OID_DUMPREQ);
 				icms_debug_vardump($_REQUEST);
 			 }
 
@@ -115,20 +116,20 @@ class XoopsAuthOpenid extends XoopsAuth {
 			$_SESSION['openid_sreg']=$sreg;
 
 			if ($debug) {
-				icms_debug('OOI Server response status is Auth_OpenID_SUCCESS');
-				icms_debug('displayid: ' . $this->displayid);
-				icms_debug('openid: ' . $this->openid);
-				icms_debug('dumping sreg info');
+				icms_debug(_CORE_OID_SERVERSUCCESS);
+				icms_debug(_CORE_OID_DISPID . $this->displayid);
+				icms_debug(_CORE_OID_OPENID . $this->openid);
+				icms_debug(_CORE_OID_DUMPING);
 				icms_debug_vardump($sreg);
 			}
 
 		    // $openid = $this->response->identity_url;
 		    $esc_identity = htmlspecialchars($this->openid, ENT_QUOTES);
 
-		    $success = "You have successfully verified $esc_identity (" . $this->displayid . ") as your identity.";
+		    $success = sprintf(_CORE_OID_SUCESSFULLYIDENTIFIED, $esc_identity, $this->displayid);
 
 		    if ($this->response->endpoint->canonicalID) {
-		        $success .= '  (XRI CanonicalID: '.$this->response->endpoint->canonicalID.') ';
+		        $success .= sprintf(_CORE_OID_CANONID, $this->response->endpoint->canonicalID);
 		    }
 
 			/**
@@ -141,16 +142,16 @@ class XoopsAuthOpenid extends XoopsAuth {
 		     * trying to link to an existing account
 		     */
 		    if (isset($_POST['openid_register'])) {
-		    	if ($debug) icms_debug('Step is OPENID_STEP_REGISTER');
+		    	if ($debug) icms_debug(_CORE_OID_STEPIS.'OPENID_STEP_REGISTER');
 		    	$this->step = OPENID_STEP_REGISTER;
 		    } elseif (isset($_POST['openid_link'])) {
-		    	if ($debug) icms_debug('Step is OPENID_STEP_LINK');
+		    	if ($debug) icms_debug(_CORE_OID_STEPIS.'OPENID_STEP_LINK');
 		    	$this->step = OPENID_STEP_LINK;
 		    } elseif(isset($_SESSION['openid_step'])) {
-		    	if ($debug) icms_debug('Step is ' . $_SESSION['openid_step']);
+		    	if ($debug) icms_debug(_CORE_OID_STEPIS . $_SESSION['openid_step']);
 		    	$this->step = $_SESSION['openid_step'];
 		    } else {
-		    	if ($debug) icms_debug('Checking if we have a user with this OpenID');
+		    	if ($debug) icms_debug(_CORE_OID_CHECKINGID);
 				// Do we already have a user with this openid
 				$member_handler = & xoops_gethandler('member');
 				$criteria = new CriteriaCompo();
@@ -158,7 +159,7 @@ class XoopsAuthOpenid extends XoopsAuth {
 				$users =& $member_handler->getUsers($criteria);
 				if ($users && count($users) > 0) {
 					$this->step = OPENID_STEP_USER_FOUND;
-					if ($debug) icms_debug('We found a user, step is now OPENID_STEP_USER_FOUND');
+					if ($debug) icms_debug(_CORE_OID_FOUNDSTEPIS.'OPENID_STEP_USER_FOUND');
 					return $users[0];
 			    } else {
 			    	/*
@@ -166,7 +167,7 @@ class XoopsAuthOpenid extends XoopsAuth {
 			    	 * to create a new user account on the site or else login with his already registered
 			    	 * account
 			    	 */
-			    	if ($debug) icms_debug('No user found for this OpenID, step is now OPENID_STEP_NO_USER_FOUND');
+			    	if ($debug) icms_debug(_CORE_OID_NOTFOUNDSTEPIS);
 					$this->step = OPENID_STEP_NO_USER_FOUND;
 					return false;
 			    }

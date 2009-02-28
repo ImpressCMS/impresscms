@@ -33,7 +33,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
 }
 include_once XOOPS_ROOT_PATH."/class/xoopstree.php";
 require_once XOOPS_ROOT_PATH.'/class/xoopsobject.php';
-include_once XOOPS_ROOT_PATH.'/language/'.$GLOBALS['xoopsConfig']['language'].'/comment.php';
+icms_loadLanguageFile('core', 'comment');
 
 class XoopsComments extends XoopsObject
 {
@@ -103,7 +103,7 @@ class XoopsComments extends XoopsObject
 		if ( $isnew != false ) {
 			$sql = sprintf("UPDATE %s SET posts = posts+1 WHERE uid = '%u'", $this->db->prefix("users"), intval($user_id));
 			if (!$result = $this->db->query($sql)) {
-				echo "Could not update user posts.";
+				echo _CM_COULDNOTUPDATEPOSTS;
 			}
 		}
 		return $comment_id;
@@ -117,7 +117,7 @@ class XoopsComments extends XoopsObject
 		}
 		$sql = sprintf("UPDATE %s SET posts = posts-1 WHERE uid = '%u'", $this->db->prefix("users"), intval($this->getVar("user_id")));
 		if ( !$result = $this->db->query($sql) ) {
-			echo "Could not update user posts.";
+			echo _CM_COULDNOTUPDATEPOSTS;
 		}
 		$mytree = new XoopsTree($this->ctable, "comment_id", "pid");
 		$arr = $mytree->getAllChild($this->getVar("comment_id"), "comment_id");
@@ -126,11 +126,11 @@ class XoopsComments extends XoopsObject
 			for ( $i = 0; $i < $size; $i++ ) {
 				$sql = sprintf("DELETE FROM %s WHERE comment_bid = '%u'", $this->ctable, $arr[$i]['comment_id']);
 				if ( !$result = $this->db->query($sql) ) {
-					echo "Could not delete comment.";
+					echo _CM_COMDELETENG;
 				}
 				$sql = sprintf("UPDATE %s SET posts = posts-1 WHERE uid = '%u'", $this->db->prefix("users"), $arr[$i]['user_id']);
 				if ( !$result = $this->db->query($sql) ) {
-					echo "Could not update user posts.";
+					echo _CM_COULDNOTUPDATEPOSTS;
 				}
 			}
 		}

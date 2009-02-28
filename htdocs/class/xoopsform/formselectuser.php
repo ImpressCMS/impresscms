@@ -77,10 +77,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
     	    return;
     	}
     	
-		
-		if (!@include_once XOOPS_ROOT_PATH.'/language/'.$GLOBALS['xoopsConfig']['language'].'/findusers.php') {
-			include_once XOOPS_ROOT_PATH.'/language/english/findusers.php';
-		}
+		icms_loadLanguageFile('core', 'findusers');
 		
 		$js_addusers =
 			"<script type=\"text/javascript\">

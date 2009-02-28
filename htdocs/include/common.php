@@ -412,16 +412,9 @@ if (isset( $_GET['lang'] ) && isset($_COOKIE['lang'])){
 }
 
 // #################### Include site-wide lang file ##################
-if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php") ) {
-	include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php";
-} else {
-	include_once XOOPS_ROOT_PATH."/language/english/global.php";
-}
-if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/theme.php") ) {
-	include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/theme.php";
-} else {
-	include_once XOOPS_ROOT_PATH."/language/english/theme.php";
-}
+icms_loadLanguageFile('core', 'global');
+icms_loadLanguageFile('core', 'theme');
+icms_loadLanguageFile('core', 'core');
 @define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;
 @define( '_GLOBAL_RIGHT' , @_ADM_USE_RTL == 1 ? 'left' : 'right' ) ;
 	/*

@@ -228,12 +228,12 @@ class XoopsModule extends XoopsObject
 		{
 			include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/language/english/modinfo.php';
 		}
-		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/xoops_version.php'))
-		{
-			include ICMS_ROOT_PATH.'/modules/'.$dirname.'/xoops_version.php';
-		}elseif(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/icms_version.php'))
+		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/icms_version.php'))
 		{
 			include ICMS_ROOT_PATH.'/modules/'.$dirname.'/icms_version.php';
+		}elseif(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/xoops_version.php'))
+		{
+			include ICMS_ROOT_PATH.'/modules/'.$dirname.'/xoops_version.php';
 		}
 		else
 		{

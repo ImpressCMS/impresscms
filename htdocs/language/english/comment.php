@@ -38,4 +38,8 @@ define('_CM_COMAPPROVEADMIN','All comments need to be approved by administrator'
 define('_CM_COMANONPOST','Allow anonymous post in comments?');
 define('_CM_COMNOCOM','Disable comments');
 define('_CM_RE','Re');
+define('_CM_COULDNOTCHANGEPIDTOID', 'Could not change comment parent ID from <b>%s</b> to <b>%s</b>. (ID: %s)');
+define('_CM_COULDNOTCHANGEROOTID', 'Could not change comment root ID from <b>%s</b> to <b>%s</b>.');
+define('_CM_COULDNOTCHANGEPAID', 'Could not change comment parent ID from <b>%s</b> to <b>%s</b>.');
+define('_CM_COULDNOTUPDATEPOSTS', 'Could not update user posts.');
 ?>

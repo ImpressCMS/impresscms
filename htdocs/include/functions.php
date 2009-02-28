@@ -648,7 +648,7 @@ function &xoops_gethandler($name, $optional = false )
 			if(class_exists($class)) {$handlers[$name] =& new $class($GLOBALS['xoopsDB']);}
 		}
 	}
-	if(!isset($handlers[$name]) && !$optional) {trigger_error('Class <b>'.$class.'</b> does not exist<br />Handler Name: '.$name, E_USER_ERROR);}
+	if(!isset($handlers[$name]) && !$optional) {trigger_error(sprintf(_CORE_COREHANDLER_NOTAVAILABLE, $class, $name), E_USER_ERROR);}
 	if(isset($handlers[$name])) {return $handlers[$name];}
 	$inst = false;
 	return $inst;
@@ -662,7 +662,7 @@ function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = f
 	{
 		//if a module is loaded
 		if(isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {$module_dir = $GLOBALS['xoopsModule']->getVar('dirname');}
-		else {trigger_error('No Module is loaded', E_USER_ERROR);}
+		else {trigger_error(_CORE_NOMODULE, E_USER_ERROR);}
 	}
 	else {$module_dir = trim($module_dir);}
 	$name = (!isset($name)) ? $module_dir : trim($name);
@@ -676,7 +676,7 @@ function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = f
 	}
 	if(!isset($handlers[$module_dir][$name]) && !$optional)
 	{
-		trigger_error('Handler does not exist<br />Module: '.$module_dir.'<br />Name: '.$name, E_USER_ERROR);
+		trigger_error(sprintf(_CORE_MODULEHANDLER_NOTAVAILABLE, $module_dir, $name), E_USER_ERROR);
 	}
 	if(isset($handlers[$module_dir][$name])) {return $handlers[$module_dir][$name];}
 	$inst = false;
@@ -2425,7 +2425,7 @@ function &icms_getmodulehandler($name = null, $module_dir = null, $module_basena
 	{
 		//if a module is loaded
 		if(isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {$module_dir = $GLOBALS['xoopsModule']->getVar('dirname');}
-		else {trigger_error('No Module is loaded', E_USER_ERROR);}
+		else {trigger_error(_CORE_NOMODULE, E_USER_ERROR);}
 	}
 	else {$module_dir = trim($module_dir);}
 	$name = (!isset($name)) ? $module_dir : trim($name);
@@ -2439,7 +2439,7 @@ function &icms_getmodulehandler($name = null, $module_dir = null, $module_basena
 	}
 	if(!isset($handlers[$module_dir][$name]) && !$optional)
 	{
-		trigger_error('Handler does not exist<br />Module: '.$module_dir.'<br />Name: '.$name, E_USER_ERROR);
+		trigger_error(sprintf(_CORE_MODULEHANDLER_NOTAVAILABLE, $module_dir, $name), E_USER_ERROR);
 	}
 	if(isset($handlers[$module_dir][$name])) {return $handlers[$module_dir][$name];}
 	$inst = false;
@@ -2479,26 +2479,6 @@ function icms_getModuleAdminLink($moduleName=false) {
 		$ret = "<a href='" . ICMS_URL . "/modules/$moduleName/admin/index.php'>" . _CO_ICMS_ADMIN_PAGE . "</a>";
 	}
 	return $ret;
-}
-function & icms_getcorehandler($name, $optional = false) {
-	static $handlers;
-	$name = strtolower(trim($name));
-	if (!isset ($handlers[$name])) {
-		if (file_exists($hnd_file = ICMS_ROOT_PATH . '/kernel/' . $name . '.php')) {
-			require_once $hnd_file;
-		}
-		$class = 'ImpressCMS' . ucfirst($name) . 'Handler';
-		if (class_exists($class)) {
-			$handlers[$name] = & new $class ($GLOBALS['xoopsDB'], 'xoops');
-		}
-	}
-	if (!isset ($handlers[$name]) && !$optional) {
-		trigger_error('Class <b>' . $class . '</b> does not exist<br />Handler Name: ' . $name, E_USER_ERROR);
-	}
-	if (isset ($handlers[$name])) {
-		return $handlers[$name];
-	}
-	$inst = false;
 }
 /**
  * Finds the width and height of an image (can also be a flash file)
@@ -2640,15 +2620,15 @@ function remove_usersxdays (){
 
 function icms_convert_size($size){ 	 
     if ($size >= 1073741824){ 	 
-        $ret = round((($size/1024)/1024)/1024,1).' Gb'; 	 
+        $ret = round((($size/1024)/1024)/1024,1).' '._CORE_GIGABYTES_SHORTEN; 	 
     }elseif($size >= 1048576 && $size < 1073741824){ 	 
-        $ret = round(($size/1024)/1024,1).' Mb'; 	 
+        $ret = round(($size/1024)/1024,1).' '._CORE_MEGABYTES_SHORTEN; 	 
     }elseif($size >= 1024 && $size < 1048576){ 	 
-        $ret = round(($size/1024),1).' Kb'; 	 
+        $ret = round(($size/1024),1).' '._CORE_KILOBYTES_SHORTEN; 	 
     }else{ 	 
-        $ret = round(($size),1).' bytes'; 	 
+        $ret = round(($size),1).' '._CORE_BYTES; 	 
     } 	 
-    return $ret; 	 
+    return icms_conv_nr2local($ret); 	 
 } 	 
 	  	 
 function icms_random_str($numchar){ 	 

@@ -56,7 +56,7 @@ class XoopsSecurity {
     *
     * @return bool
     */
-    function check($clearIfValid = true, $token = false, $name = 'XOOPS_TOKEN') {
+    function check($clearIfValid = true, $token = false, $name = _CORE_TOKEN) {
         return $this->validateToken($token, $clearIfValid, $name);
     }
 
@@ -68,7 +68,7 @@ class XoopsSecurity {
     *
     * @return string token value
     */
-    function createToken($timeout = 0, $name = 'XOOPS_TOKEN')
+    function createToken($timeout = 0, $name = _CORE_TOKEN)
     {
         $this->garbageCollection($name);
         if ($timeout == 0) {
@@ -93,12 +93,12 @@ class XoopsSecurity {
     *
     * @return bool
     **/
-    function validateToken($token = false, $clearIfValid = true, $name = 'XOOPS_TOKEN')
+    function validateToken($token = false, $clearIfValid = true, $name = _CORE_TOKEN)
     {
         global $xoopsLogger;
         $token = ($token !== false) ? $token : ( isset($_REQUEST[$name . '_REQUEST']) ? $_REQUEST[$name . '_REQUEST'] : '' );
         if (empty($token) || empty($_SESSION[$name . '_SESSION'])) {
-            $xoopsLogger->addExtra('Token Validation', 'No valid token found in request/session');
+            $xoopsLogger->addExtra(_CORE_TOKENVALID, _CORE_TOKENNOVALID);
             return false;
         }
         $validFound = false;
@@ -110,17 +110,17 @@ class XoopsSecurity {
                         // token should be valid once, so clear it once validated
                         unset($token_data[$i]);
                     }
-                    $xoopsLogger->addExtra('Token Validation', 'Valid token found');
+                    $xoopsLogger->addExtra(_CORE_TOKENVALID, _CORE_TOKENISVALID);
                     $validFound = true;
                 } else {
-                    $str = 'Valid token expired';
+                    $str = _CORE_TOKENEXPIRED;
                     $this->setErrors($str);
-                    $xoopsLogger->addExtra('Token Validation', $str);
+                    $xoopsLogger->addExtra(_CORE_TOKENVALID, $str);
                 }
             }
         }
         if (!$validFound) {
-            $xoopsLogger->addExtra('Token Validation', 'No valid token found');
+            $xoopsLogger->addExtra(_CORE_TOKENVALID, _CORE_TOKENINVALID);
         }
         $this->garbageCollection($name);
         return $validFound;
@@ -131,7 +131,7 @@ class XoopsSecurity {
     *
     * @param string $name session name
     **/
-    function clearTokens($name = 'XOOPS_TOKEN')
+    function clearTokens($name = _CORE_TOKEN)
     {
         $_SESSION[$name . '_SESSION'] = array();
     }
@@ -155,7 +155,7 @@ class XoopsSecurity {
     *
     * @return void
     **/
-    function garbageCollection($name = 'XOOPS_TOKEN') {
+    function garbageCollection($name = _CORE_TOKEN) {
         if (isset($_SESSION[$name . '_SESSION']) && count($_SESSION[$name . '_SESSION']) > 0) {
             $_SESSION[$name . '_SESSION'] = array_filter($_SESSION[$name . '_SESSION'], array($this, 'filterToken'));
         }
@@ -221,7 +221,7 @@ class XoopsSecurity {
     *
     * @return string
     **/
-    function getTokenHTML($name = 'XOOPS_TOKEN') {
+    function getTokenHTML($name = _CORE_TOKEN) {
         require_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
         $token = new XoopsFormHiddenToken($name);
         return $token->render();

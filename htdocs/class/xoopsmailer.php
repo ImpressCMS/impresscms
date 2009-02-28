@@ -31,12 +31,7 @@
 if (!defined("XOOPS_ROOT_PATH")) {
     die("ImpressCMS root path not defined");
 }
-if (isset($GLOBALS['xoopsConfig']['language']) && file_exists(XOOPS_ROOT_PATH.'/language/'.$GLOBALS['xoopsConfig']['language'].'/mail.php')) {
-	include_once XOOPS_ROOT_PATH.'/language/'.$GLOBALS['xoopsConfig']['language'].'/mail.php';
-} else {
-	include_once XOOPS_ROOT_PATH.'/language/english/mail.php';
-}
-
+icms_loadLanguageFile('core', 'mail');
 /**
  * The new Multimailer class that will carry out the actual sending and will later replace this class. 
  * If you're writing new code, please use that class instead.
@@ -125,7 +120,7 @@ class XoopsMailer
 	var $templatedir;
 
 	// protected
-	var $charSet = 'iso-8859-1';
+	var $charSet = 'utf-8';
 
 	// protected
 	var $encoding = '8bit';

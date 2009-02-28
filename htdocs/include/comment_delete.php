@@ -172,7 +172,7 @@ case 'delete_one':
 			$new_rootid = $child_comments[$i]->getVar('com_id');
 			$child_comments[$i]->setVar('com_rootid', $child_comments[$i]->getVar('com_id'));
 			if (!$comment_handler->insert($child_comments[$i])) {
-				$errs[] = 'Could not change comment parent ID from <b>'.$com_id.'</b> to <b>'.$new_pid.'</b>. (ID: '.$new_rootid.')';
+				$errs[] = sprintf(_CM_COULDNOTCHANGEPIDTOID, icms_conv_nr2local($com_id), icms_conv_nr2local($new_pid), icms_conv_nr2local($new_rootid));
 			} else {
 				// need to change root id for all its child comments as well
 				$c_child_comments =& $xot->getAllChild($new_rootid);
@@ -180,13 +180,13 @@ case 'delete_one':
 				foreach (array_keys($c_child_comments) as $j) {
 					$c_child_comments[$j]->setVar('com_rootid', $new_rootid);
 					if (!$comment_handler->insert($c_child_comments[$j])) {
-						$errs[] = 'Could not change comment root ID from <b>'.$com_id.'</b> to <b>'.$new_rootid.'</b>.';
+						$errs[] = sprintf(_CM_COULDNOTCHANGEROOTID, icms_conv_nr2local($com_id), icms_conv_nr2local($new_rootid));
 					}
 				}
 			}
 		} else {
 			if (!$comment_handler->insert($child_comments[$i])) {
-				$errs[] = 'Could not change comment parent ID from <b>'.$com_id.'</b> to <b>'.$new_pid.'</b>.';
+				$errs[] = sprintf(_CM_COULDNOTCHANGEPAID, icms_conv_nr2local($com_id), icms_conv_nr2local($new_pid));
 			}
 		}
 	}

@@ -155,10 +155,8 @@ class XoopsLogger {
 				$trace = false;
 				$errstr = substr( $errstr, 8 );
 			}
-			echo 'This page cannot be displayed due to an internal error.<br/><br/>';
-			echo "You can provide the following information to the administrators of ";
-			echo "this site to help them solve the problem:<br /><br />";
-			echo "Error: $errstr<br />";
+			$errortext = sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
+			echo $errortext;
 			if ( $trace && function_exists( 'debug_backtrace' ) ) {
 				echo "<div style='color:#ffffff;background-color:#ffffff'>Backtrace:<br />";
 				$trace = debug_backtrace();

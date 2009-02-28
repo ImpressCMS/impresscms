@@ -81,7 +81,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
 		$this->allowWebChanges = ( $_SERVER['REQUEST_METHOD'] != 'GET' );
 		
 		if ( !extension_loaded( 'mysql' ) ) {
-			trigger_error( 'notrace:mysql extension not loaded', E_USER_ERROR );
+			trigger_error( _CORE_DB_NOTRACE, E_USER_ERROR );
 			return false;
 		}
 		
@@ -419,7 +419,7 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
 		// End of Hack by marcan to track query count
 	    $sql = ltrim($sql);
 		if ( !$this->allowWebChanges && strtolower( substr($sql, 0, 6) ) != 'select' )  {
-			trigger_error( 'Database updates are not allowed during processing of a GET request', E_USER_WARNING );
+			trigger_error( _CORE_DB_NOTALLOWEDINGET, E_USER_WARNING );
 			return false;
 		}
     	

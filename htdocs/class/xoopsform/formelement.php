@@ -124,7 +124,7 @@ class XoopsFormElement {
 	 *
 	 */
 	function XoopsFormElement(){
-		exit("This class cannot be instantiated!");
+		exit(_CORE_CLASSNOTINSTANIATED);
 	}
 
 	/**

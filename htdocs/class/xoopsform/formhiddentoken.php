@@ -51,7 +51,7 @@ class XoopsFormHiddenToken extends XoopsFormHidden {
      *
      * @param   string  $name   "name" attribute
      */
-    function XoopsFormHiddenToken($name = 'XOOPS_TOKEN', $timeout = 0){
+    function XoopsFormHiddenToken($name = _CORE_TOKEN, $timeout = 0){
         $this->XoopsFormHidden($name . '_REQUEST', $GLOBALS['xoopsSecurity']->createToken($timeout, $name));
     }
 }

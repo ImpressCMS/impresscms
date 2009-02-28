@@ -151,9 +151,7 @@ class XoopsMediaUploader
             $this->maxHeight = intval($maxHeight);
         }
         
-		if ( ! @ include_once XOOPS_ROOT_PATH."/language/".$GLOBALS['xoopsConfig']['language']."/uploader.php" ) {
-		    include_once XOOPS_ROOT_PATH."/language/english/uploader.php";
-		}
+        icms_loadLanguageFile('core', 'uploader');
     }
 
     /**

@@ -25,11 +25,7 @@ if (!defined("XOOPS_ROOT_PATH")) {
  * Include the language constants for the IcmsDatabaseupdater
  */
 global $xoopsConfig;
-$common_file = XOOPS_ROOT_PATH . "/language/" . $xoopsConfig['language'] . "/databaseupdater.php";
-if (!file_exists($common_file)) {
-	$common_file = XOOPS_ROOT_PATH . "/language/" . $xoopsConfig['language'] . "/databaseupdater.php";
-}
-include ($common_file);
+icms_loadLanguageFile('core', 'databaseupdater');
 
 class IcmsDatabasetable {
 	/**
@@ -884,10 +880,11 @@ class IcmsDatabaseupdater {
 	    $configitemObj->setVar('conf_valuetype', $conf_valuetype);
 	    $configitemObj->setVar('conf_order', $conf_order);
 	    if (!$configitem_handler->insert($configitemObj)) {
-	    	echo "Unable to insert config $conf_name'<br />";
+	    	$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_ERR, $dbVersion);
 	    } else{
-			echo "Successfully inserted '$conf_name' config<br />";
+	    	$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_SCC, $dbVersion);
 	    }
+	    echo $querry_answer;
 	}
 	function moduleUpgrade(&$module) {
 		$dirname = $module->getVar('dirname');
@@ -897,8 +894,10 @@ class IcmsDatabaseupdater {
 	    $dbVersion  = $module->getDbversion();
 
 	    $newDbVersion = constant(strtoupper($dirname . '_db_version')) ? constant(strtoupper($dirname . '_db_version')) : 0;
-		echo 'Current database version : ' . $dbVersion . '<br />';
-		echo '&nbsp;&nbsp;Latest database version : ' . $newDbVersion . '<br />';
+	    $textcurrentversion = sprintf(_DATABASEUPDATER_CURRENTVER, $dbVersion);
+	    $textlatestversion = sprintf(_DATABASEUPDATER_CURRENTVER, $newDbVersion);
+		echo $textcurrentversion;
+		echo $textlatestversion;
 
 	    if ($newDbVersion > $dbVersion) {
 	    	for($i=$dbVersion+1;$i<=$newDbVersion; $i++) {
@@ -946,7 +945,7 @@ class IcmsDatabaseupdater {
 		$module_handler = xoops_getHandler('module');
 
 		if (!$module_handler->insert($module)) {
-			$module->setErrors('Unable to update module dbversion');
+			$module->setErrors(_DATABASEUPDATER_MSG_DB_VERSION_ERR);
 			return false;
 		}
 		return true;

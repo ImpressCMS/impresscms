@@ -113,7 +113,7 @@ if ( empty($mode) || $mode == 'extra' ) {
 		}
 	}
 	if ( $memory ) {
-		$this->addExtra( 'Memory usage', $memory );
+		$this->addExtra( _CORE_MEMORYUSAGE, icms_conv_nr2local($memory) );
 	}
 	
     $class = 'even';
