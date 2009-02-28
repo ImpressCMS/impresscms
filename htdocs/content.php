@@ -138,7 +138,7 @@ $xoopsTpl->assign('showNav',$im_contentConfig['show_nav']);
 $xoopsTpl->assign('nav', showNav($content_id));
 $xoopsTpl->assign("xoops_pagetitle", $impress_content->getVar('content_title'));
 //$xoopsTpl->assign("xoops_module_header", '<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="'.ICMS_URL.'/modules/system/admin/content/style.css" />');
-$xoTheme->addStylesheet(ICMS_URL.'/modules/system/admin/content/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css');
+$xoTheme->addStylesheet('/modules/system/admin/content/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css');
 
 if(!is_object($xoopsUser))
 {

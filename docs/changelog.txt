@@ -169,6 +169,27 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1.2==
 
+===2009-02-28 : 1.1.2 RC2===
+
+'''Fixed'''
+* #244: $HTTP_SERVER_VARS replaced with $_SERVER in checklogin.php (vaughan)
+* #245: $HTTP_SERVER_VARS replaced with $_SERVER in common.php (vaughan)
+* #246: <>\/ specialchars were being stripped from password fields unneccessarily. changed from stopXSS to filter_var() (and use FILTER_SANITIZE_URL) which sanitizes & escapes '<>&' and characters with ASCII value less than 32. (vaughan)
+* #246: SMTPAuth not working - xoopsmultimailer was setting authentication type to ssl (skenow)
+* #247: height & width attributes were being stripped from <img> elements. (vaughan)
+* #257: Wrong blocks showed in the content manager pages when startpage = none. (realtherplima)
+* #237: "Protect email addresses against SPAM?" - do not work. (stranger)
+* #49: issue with multi language. (stranger)
+* #273: xoThem Bug in Content.php. (stranger)
+* #279: standard attributes (style, class, id) missing from anchor elements in purifier. (vaughan)
+* #289:Lizenz Problem iTheme with .js file. (Nachenko/ stranger)
+* #278: Missing Edit Button over Content Sites in Frontendview. (stranger)
+* #293: The Update/Upgrade Script does not check the PHP-Version. (stranger)
+ 
+
+'''Changed''' 
+* Updated HTMLPurifier Library from 3.2.0 to 3.3.0 (various bugfixes in the library including a bugfix in youtube filter). (vaughan) ===2009-01-31 : 1.1.2 RC===
+
 ===2009-01-31 : 1.1.2 RC===
 
 '''Fixed'''

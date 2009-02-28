@@ -87,4 +87,5 @@ define( "TRUST_PATH_HELP", "This is the physical location of your ImpressCMS tru
 define("ERR_INVALID_TRUST_PATH", "Trust path is invalid");
 define("ERR_WRONG_TRUST_PATH", "Trust path does not exist");
 define("ERR_NO_TRUST_PATH", "You have not entered any path !! ");
+	define( "ERR_NO_PHP5_CONTENT","PHP 5.2.0 minimum is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to a version of PHP that is newer than 5.2.0 (5.2.8 + is recommended) before attempting to install again. For more information, read <a href='http://community.impresscms.org/modules/smartsection/item.php?itemid=122' >ImpressCMS on PHP5 </a>.");
 ?>

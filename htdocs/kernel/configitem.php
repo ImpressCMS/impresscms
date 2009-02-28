@@ -133,7 +133,7 @@ class XoopsConfigItem extends XoopsObject
 //			include_once XOOPS_ROOT_PATH.'/class/module.textsanitizer.php';
 			$myts =& MyTextSanitizer::getInstance();
 			$value = $myts->displayTarea($value, 1);
-		}elseif($this->getVar('conf_formtype') == 'password') {$value = filter_var($value, FILTER_SANITIZE_SPECIAL_CHARS);}
+		}elseif($this->getVar('conf_formtype') == 'password') {$value = filter_var($value, FILTER_SANITIZE_URL);}
 		else {$value = StopXSS($value);}
         switch($this->getVar('conf_valuetype')) {
         case 'array':
