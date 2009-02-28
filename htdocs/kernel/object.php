@@ -517,7 +517,7 @@ class XoopsObject
                         continue;
                     }
                     if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i",$cleanv)) {
-                        $this->setErrors("Invalid Email");
+                        $this->setErrors(_CORE_DB_INVALIDEMAIL);
                         continue;
                     }
                     if (!$v['not_gpc']) {
@@ -636,13 +636,13 @@ class XoopsObject
      */
     function getHtmlErrors()
     {
-        $ret = '<h4>Errors</h4>';
+        $ret = '<h4>'._ERROR.'</h4>';
         if (!empty($this->_errors)) {
             foreach ($this->_errors as $error) {
                 $ret .= $error.'<br />';
             }
         } else {
-            $ret .= 'None<br />';
+            $ret .= _NONE.'<br />';
         }
         return $ret;
     }
