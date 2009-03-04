@@ -191,6 +191,10 @@ $modversion['templates'][$i]['description'] = 'Template of Admin RSS';
 $i++;
 $modversion['templates'][$i]['file'] = 'system_search.html';
 $modversion['templates'][$i]['description'] = 'Smarty template forsearch page';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_persistable_singleview.html';
+$modversion['templates'][$i]['description'] = 'Persistable Singel View';
 ###
 
 // Blocks

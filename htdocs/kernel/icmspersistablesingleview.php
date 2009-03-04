@@ -121,9 +121,9 @@ class IcmsPersistableSingleView {
 		 * @todo when ICMS 1.2 is out, change this for system_persistable_singleview.html
 		 */
 		if ($fetchOnly) {
-			return $this->_tpl->fetch( 'db:imtagging_persistable_singleview.html' );
+			return $this->_tpl->fetch( 'db:system_persistable_singleview.html' );
 		} else {
-			$this->_tpl->display( 'db:imtagging_persistable_singleview.html' );
+			$this->_tpl->display( 'db:system_persistable_singleview.html' );
 		}
 	}
 
