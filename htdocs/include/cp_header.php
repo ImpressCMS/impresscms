@@ -1,4 +1,4 @@
-<?php 
+<?php
 // $Id: cp_header.php 506 2006-05-26 23:10:37Z skalpa $
 /**
  * module files can include this file for admin authorization
@@ -13,10 +13,10 @@ if ( $xoopsUser ) {
     $module_handler =& xoops_gethandler('module');
     $xoopsModule =& $module_handler->getByDirname($url_arr[2]);
     unset($url_arr);
-    
+
     if ( !$moduleperm_handler->checkRight( 'module_admin', $xoopsModule->getVar( 'mid' ), $xoopsUser->getGroups() ) ) {
         redirect_header( XOOPS_URL . "/user.php", 1, _NOPERM );
-    } 
+    }
 } else {
     redirect_header( XOOPS_URL . "/user.php", 1, _NOPERM );
 }
@@ -27,5 +27,6 @@ if ( $xoopsModule->getVar( 'hasconfig' ) == 1 || $xoopsModule->getVar( 'hascomme
     $xoopsModuleConfig = & $config_handler->getConfigsByCat( 0, $xoopsModule->getVar( 'mid' ) );
 }
 
-icms_loadLanguageFile('core', 'admin');
+// include the default language file for the admin interface
+icms_loadLanguageFile($xoopsModule->dirname(), 'admin');
 ?>
