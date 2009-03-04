@@ -195,7 +195,7 @@ class XoopsLogger {
 
 		$gperm_handler =& xoops_gethandler('groupperm');
 
-		if ( !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups) ) {
+		if ( !$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups) ) {
 			return $output;
 		}
 		$this->renderingEnabled = $this->activated = false;
