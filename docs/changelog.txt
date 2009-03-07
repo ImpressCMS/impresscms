@@ -81,8 +81,9 @@ ImpressCMS ChangeLog
 * Email protection methode using recaptcha. (stranger)
 * Plugin manager using DataBase. (stranger)
 * New config Option to select allowed plugins. (stranger)
-* #25: Profile Module (stranger)
+* #21: Profile Module (stranger)
 * #26: Search improvements (stranger/RLankford)
+* #19: Themable administrative area (stranger/Nekro)
 
 
 '''Changed'''

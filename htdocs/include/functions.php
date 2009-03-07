@@ -106,29 +106,93 @@ function xoops_footer()
 	ob_end_flush();
 }
 
-function xoops_error($msg, $title='')
-{
-	echo '<div class="errorMsg">';
-	if($title != '') {echo '<h4>'.$title.'</h4>';}
+/**
+ * ImpressCMS Error Message Function
+ * 
+ * @since ImpressCMS 1.2
+ * @version $Id$
+ *
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * 
+ * @param string $msg
+ * @param string $title
+ * 
+ * @todo Make this work with templates ;)
+ */
+function icms_error_msg($msg, $title='', $render = false){
+	$ret = '<div class="errorMsg">';
+	if($title != '') {$ret .= '<h4>'.$title.'</h4>';}
 	if(is_array($msg))
 	{
-		foreach($msg as $m) {echo $m.'<br />';}
+		foreach($msg as $m) {$ret .= $m.'<br />';}
 	}
-	else {echo $msg;}
-	echo '</div>';
+	else {$ret .= $msg;}
+	$ret .= '</div>';
+	if($render)
+		echo $ret;
+	else
+		return $ret;
 }
 
-function xoops_warning($msg, $title='')
-{
-	echo '<div class="warningMsg">';
-	if($title != '') {echo '<h4>'.$title.'</h4>';}
+/**
+ * Backwards Compatibility Function
+ * 
+ * @since XOOPS
+ * @version $Id$
+ * @deprecated
+ * @see icms_error_msg
+ *
+ * @author The XOOPS Project <http://www.xoops.org>
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * 
+ * @param string $msg
+ * @param string $title
+ */
+function xoops_error($msg, $title=''){ icms_error_msg($msg, $title, true); }
+
+/**
+ * ImpressCMS Warning Message Function
+ * 
+ * @since ImpressCMS 1.2
+ * @version $Id$
+ *
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * 
+ * @param string $msg
+ * @param string $title
+ * 
+ * @todo Make this work with templates ;)
+ */
+function icms_warning_msg($msg, $title='', $render = false){
+	$ret = '<div class="warningMsg">';
+	if($title != '') {$ret .= '<h4>'.$title.'</h4>';}
 	if(is_array($msg))
 	{
-		foreach($msg as $m) {echo $m.'<br />';}
+		foreach($msg as $m) {$ret .= $m.'<br />';}
 	}
-	else {echo $msg;}
-	echo '</div>';
+	else {$ret .= $msg;}
+	$ret .= '</div>';
+	if($render)
+		echo $ret;
+	else
+		return $ret;
 }
+
+/**
+ * Backwards Compatibility Function
+ * 
+ * @since XOOPS
+ * @version $Id$
+ * @deprecated
+ * @see icms_warning_msg
+ * 
+ * @author The XOOPS Project <http://www.xoops.org>
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * 
+ * @param string $msg
+ * @param string $title
+ */
+function xoops_warning($msg, $title=''){ icms_warning_msg($msg, $title, true); }
 
 function xoops_result($msg, $title='')
 {

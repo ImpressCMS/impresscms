@@ -601,6 +601,16 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbversion = n
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF_SEARCH, 'num_shallow_search', '_MD_AM_NUMINITSRCHRSLTS', '5', '_MD_AM_NUMINITSRCHRSLTSDSC', 'textbox', 'int', 4);
 	}
 
+    $newDbVersion = 21;
+
+    if ($dbversion < $newDbVersion) {
+	    global $xoopsDB;
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
+	    // create extended date function's config option
+	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF, 'theme_admin_set', '_MD_AM_ADMIN_DTHEME', 'iTheme', '_MD_AM_ADMIN_DTHEME_DESC', 'theme', 'other', 12);
+	}
+
 	echo "</code>";
 
 	 /**
