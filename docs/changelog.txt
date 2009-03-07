@@ -175,6 +175,7 @@ ImpressCMS ChangeLog
 * #324: admin.php language file of any given module are not loaded anymore. (malanciault)
 * #3: TinyMCE: adv. imagemanager not working correctly. (realtherplima)
 * #291: Block "social bookmarks" missing. (stranger)
+* #378: installation fails. (stranger)
 
 
 == Impresscms 1.1.2==
