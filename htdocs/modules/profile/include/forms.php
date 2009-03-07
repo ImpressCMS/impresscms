@@ -425,9 +425,15 @@ function getUserForm(&$user, $profile = false, $action = false) {
     $elements[0][] = array('element' => new XoopsFormText(_PROFILE_MA_USERNAME, 'uname', 25, 75, $user->getVar('uname', 'e')), 'required' => 1);
         $email_text = new XoopsFormText('', 'email', 30, 60, $user->getVar('email'));
     } else {
-    $elements[0][] = array('element' => new XoopsFormText(_PROFILE_MA_USERLOGINNAME, 'login_name', 25, 75, $user->getVar('login_name', 'e')), 'required' => 0);
+    $config_handler =& xoops_gethandler('config');
+	$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+   	$elements[0][] = array('element' => new XoopsFormLabel(_PROFILE_MA_USERLOGINNAME, 'login_name', 25, 75, $user->getVar('login_name', 'e')), 'required' => 0);
     $weights[0][] = 0;
-    $elements[0][] = array('element' => new XoopsFormText(_PROFILE_MA_USERNAME, 'uname', 25, 75, $user->getVar('uname', 'e')), 'required' => 0);
+   if ($icmsConfigUser['allow_chguname'] == 1) {
+   	   $elements[0][] = array('element' => new XoopsFormText(_PROFILE_MA_USERNAME, 'uname', 25, 75, $user->getVar('uname', 'e')), 'required' => 1);
+   }else{
+   	   $elements[0][] = array('element' => new XoopsFormLabel(_PROFILE_MA_USERNAME, $user->getVar('uname')), 'required' => 0);
+   }
         $email_text = new XoopsFormLabel('', $user->getVar('email'));
     }
     // Weight for uname element

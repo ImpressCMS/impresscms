@@ -20,7 +20,7 @@ require_once("../../../include/cp_header.php");
  * Include the common language constants for the SmartObject Framework
  */
  if (!defined('SMARTOBJECT_COMMON_CONSTANTS')) {
-	icms_loadLanguageFile('system', 'common.php');
+	icms_loadLanguageFile('system', 'common');
 	define('SMARTOBJECT_COMMON_CONSTANTS', true);
 }
 if (!isset($xoopsTpl) || !is_object($xoopsTpl)) {

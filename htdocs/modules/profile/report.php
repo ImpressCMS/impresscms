@@ -18,7 +18,7 @@
  * new page by felix<inbox> for validusdc
  * adding report page
  */
-
+die('Feature not ready yet!');
 include_once('header.php');
 
 $xoopsOption['template_main'] = 'profile_report.html';

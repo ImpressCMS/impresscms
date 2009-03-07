@@ -41,7 +41,7 @@ function javascript_syntaxhighlightjs($ele_name)
 		$javascript='';
         return array($code, $javascript);
 }
-/*function stlye_syntaxhighlightjs(){
+/*function style_syntaxhighlightjs(){
 $style_info = '.icmsCodeJs { background-color: #FAFAFA; color: #444; font-size: .9em; line-height: 1.2em; text-align: justify; border: #c2cdd6 1px dashed;}';
 return $style_info;
 }*/

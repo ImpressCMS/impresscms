@@ -25,9 +25,25 @@ if (!isset($_POST['submit'])) {
     //show change password form
     include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
     $form = new XoopsThemeForm(_PROFILE_MA_CHANGEPASSWORD, 'form', $_SERVER['REQUEST_URI'], 'post', true);
-    $form->addElement(new XoopsFormPassword(_PROFILE_MA_OLDPASSWORD, 'oldpass', 15, 50), true);
-    $form->addElement(new XoopsFormPassword(_PROFILE_MA_NEWPASSWORD, 'newpass', 15, 50), true);
-    $form->addElement(new XoopsFormPassword(_PROFILE_MA_VERIFYPASS, 'vpass', 15, 50), true);
+    $form->addElement(new XoopsFormPassword(_PROFILE_MA_OLDPASSWORD, 'oldpass', 10, 50), true);
+	$config_handler =& xoops_gethandler('config');
+	$passConfig =& $config_handler->getConfigsByCat(2);
+	if($passConfig['pass_level'] <= 20)
+	{
+		$pwd_text = new XoopsFormPassword('', 'password', 10, 255);
+	}
+	else
+	{
+	$pwd_change_radio = new XoopsFormRadioYN(_US_CHANGE_PASSWORD, 'change_pass', 1, _YES, _NO);
+	$pwd_change_radio->setExtra('onchange="initQualityMeter(this.value);"');
+		include_once ICMS_ROOT_PATH."/include/passwordquality.php";
+	}
+    	$pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 255);
+    	$pwd_tray = new XoopsFormElementTray(_PROFILE_MA_NEWPASSWORD.'<br />'._PROFILE_MA_VERIFYPASS);
+    	$pwd_tray->addElement($pwd_text);
+    	$pwd_tray->addElement($pwd_text2);
+    	$form->addElement($pwd_change_radio);
+    	$form->addElement($pwd_tray);
     $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
     $form->assign($xoopsTpl);
 

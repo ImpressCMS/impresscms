@@ -41,7 +41,6 @@ define('_US_AVATAR','Avatar');
 define('_US_VERIFYPASS','Verify Password');
 define('_US_SUBMIT','Submit');
 define('_US_LOGINNAME','Username');
-define('_US_LOGIN_NAME', _US_LOGINNAME);
 define('_US_FINISH','Finish');
 define('_US_REGISTERNG','Could not register new user.');
 define('_US_MAILOK','Receive occasional email notices <br />from administrators and moderators?');
@@ -205,4 +204,8 @@ define("_US_OPENID_NORMAL_LOGIN", "Go back to normal login");
 
 /* define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled'); */
 /* define('_US_AUTORESIZE_ATV_DESC', 'Images larger than %u x %u will be automatically resized, keeping the aspect ratio, so that it is within the maximum pixels set. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.'); */
+define('_US_MULTLOGIN', 'You are already logged in on the site. Or someone else logged in and using your username and password.<br />Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
+
+######################## Added in 1.2 ###################################
+define('_US_LOGIN_NAME', "Loginname");
 ?>

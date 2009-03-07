@@ -73,4 +73,10 @@ define("_MB_SYSTEM_TOTAL_USERS", "Total Users");
 define("_MB_SYSTEM_ACT_USERS", "Active Users");
 define("_MB_SYSTEM_INACT_USERS", "Inactive Users");
 define("_MB_SYSTEM_DISPLAYTOT","Display total members information?");
+// Social bookmarking
+define('_MB_SYSTEM_ADDTO_LAYOUT', "Layout: ");
+define('_MB_SYSTEM_ADDTO_LAYOUT_OPTION0', "Horizontal 1 row");
+define('_MB_SYSTEM_ADDTO_LAYOUT_OPTION1', "Horizontal 2 rows");
+define('_MB_SYSTEM_ADDTO_LAYOUT_OPTION2', "Vertical with icons");
+define('_MB_SYSTEM_ADDTO_LAYOUT_OPTION3', "Vertical no icon");
 ?>

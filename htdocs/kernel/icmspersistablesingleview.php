@@ -111,7 +111,7 @@ class IcmsPersistableSingleView {
 		}
 		if ($action_row) {
 			$icms_object_array['zaction']['value'] = $action_row;
-			$icms_object_array['zaction']['caption'] = _CO_SOBJECT_ACTIONS;
+			$icms_object_array['zaction']['caption'] = _CO_ICMS_ACTIONS;
 		}
 
 		$this->_tpl->assign('icms_header_as_row', $this->_headerAsRow);

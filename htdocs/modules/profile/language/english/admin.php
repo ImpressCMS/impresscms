@@ -1,5 +1,20 @@
 <?php
-// $Id$
+/**
+ * Extended User Profile
+ *
+ *
+ *
+ * @copyright       The ImpressCMS Project http://www.impresscms.org/
+ * @license         LICENSE.txt
+ * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @package         modules
+ * @since           1.2
+ * @author          Jan Pedersen
+ * @author          Marcello Brandao <marcello.brandao@gmail.com>
+ * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version         $Id$
+ */
+
 define("_PROFILE_AM_FIELD", "Field");
 define("_PROFILE_AM_FIELDS", "Fields");
 define("_PROFILE_AM_CATEGORY", "Category");
@@ -145,4 +160,27 @@ define("_AM_SPROFILE_UID", "Userid");
 define("_AM_SPROFILE_EMAIL", "Email");
 define("_AM_SPROFILE_BACK_TO_FORM", "<< Back to search form");
 define("_AM_SPROFILE_EXPORT_ALL", "Export all matching users");
+define("_MA_PROFILE_BY","By");
+define("_MA_PROFILE_DESC","Description");
+define("_MA_PROFILE_CREDITS","Credits");
+define("_MA_PROFILE_CONTRIBUTORS","Contributors Information");
+define("_MA_PROFILE_DEVELOPERS","Developers");
+define("_MA_PROFILE_TESTERS","Testers");
+define("_MA_PROFILE_TRANSLATIONS","Translations");
+define("_MA_PROFILE_EMAIL","Email");
+define("_MA_PROFILE_MODDEVDET","Module Development details");
+define("_MA_PROFILE_RELEASEDATE","Release date");
+define("_MA_PROFILE_STATUS","Status");
+define("_MA_PROFILE_OFCSUPORTSITE","Official Support Site");
+define("_MA_PROFILE_VERSIONHIST","Version History");
+define("_MA_PROFILE_CONFIGEVERYTHING","Make sure you've configured everything under the preferences tab ");
+define("_MA_PROFILE_ALLTESTSOK","All tests must be OK for this module to work 100%:");
+define("_MA_PROFILE_GDEXTENSIONOK","GD extension loaded: OK!");
+define("_MA_PROFILE_MOREINFO","Here is more info on:");
+define("_MA_PROFILE_GDEXTENSIONFALSE","GD extension loaded: FAILED ");
+define("_MA_PROFILE_CONFIGPHPINI","Configure your php.ini or ask your server manager to install it and enable it for you.");
+define("_MA_PROFILE_PHP5PRESENT","You have a compatible version of PHP:");
+define("_MA_PROFILE_PHP5NOTPRESENT","Your PHP version is compatible, but many details would work better on a php5 server and above.");
+define("_MA_PROFILE_MAXBYTESPHPINI","Your server limits the size of uploads to %s");
+define("_MA_PROFILE_MEMORYLIMIT","The Memory Limit of your server is:");
 ?>

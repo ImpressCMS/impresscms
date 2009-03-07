@@ -1,0 +1,67 @@
+<{if $module_is_socialmode == true }>
+<{include file="db:profile_navbar.html"}>
+<{/if}>
+    
+    <div id="profile-tribe-container" class='outer'>
+                
+                <h2 class="head"><{$tribe_title}></h2>
+    
+            <p id="profile-tribe-img" class=odd>
+                <img src="<{$icms_upload_url}>/<{$tribe_img}>" alt="" />
+            </p>
+            
+            <p id="profile-tribe-desc" class="even">
+            <{$tribe_desc}>
+            <{ if $isanonym!=1 }>
+            	<{if $memberOfTribe ==1}><form action="abandontribe.php" method="POST" id="form_abandontribe">
+                                    <input type="hidden" value="<{$tribe_id}>" name="reltribe_id" id="reltribe_id" />
+                                    <input type="image" src="images/<{$icms_langname}>/abandontribe.gif" title="<{$lang_abandontribe}>" alt="<{$lang_abandontribe}>"/>
+                                </form><{ else}>
+                                <form action="becomemembertribe.php" method="POST" id="form_becomemember" class="profile-tribes-form-becomemember">
+                        <input type="hidden" value="<{$tribe_id}>" name="tribe_id" id="tribe_id" />
+                        <input type="image" src="images/<{$icms_langname}>/makememember.gif" alt="<{$lang_jointribe}>" title="<{$lang_jointribe}>"/>
+                    </form><{/if}>
+          <{/if}>
+            </p>
+    
+    <{ if $allow_friends }>		
+    <div id="profile-tribe-edit-members" class="outer odd">
+    <h2 class="head"><{$lang_membersoftribe}></h2>
+    <{section name=i loop=$tribe_members}>
+                <div class="profile-tribe-edit-member <{cycle values="odd,even"}>">
+                    <h2 class="head">
+                        <a href="<{$icms_url}>/modules/<{$icms_dirname}>/index.php?uid=<{$tribe_members[i].uid}>" alt="<{$tribe_members[i].uname}>" title="<{$tribe_members[i].uname}>"><{$tribe_members[i].uname}></a>
+<{if $tribe_owneruid==$tribe_members[i].uid}><img src="images/owner.gif" alt="<{$lang_owner}>" title="<{$lang_owner}>" /><{/if}>                    
+</h2>
+                    <p>
+                        <a href="<{$icms_url}>/modules/<{$icms_dirname}>/index.php?uid=<{$tribe_members[i].uid}>" alt="<{$tribe_members[i].uname}>" title="<{$tribe_members[i].uname}>">
+                           <{ if $tribe_members[i].avatar=="blank.gif"}><img src="images/noavatar.gif" alt="" /><{else}> <img src="<{$icms_upload_url}>/<{$tribe_members[i].avatar}>" alt="" /><{/if}></a>
+                            
+                        <{if $tribe_owneruid==$useruid}>
+                        <form action="kickfromtribe.php" method="post" >
+                                <input type="hidden" value="<{$tribe_id}>" name="tribe_id" id="tribe_id" />
+                                <input type="hidden" value="<{$tribe_members[i].uid}>" name="rel_user_uid" id="rel_user_uid" />
+                                <input type="image" src="images/<{$icms_langname}>/abandontribe.gif"/>
+                                </form>	
+                        <{/if}>
+                    </p>
+                </div>
+            <{/section}>
+    </div>
+    <{/if}>
+    
+    
+    <div style="clear:both;">
+        <{$commentsnav}>
+        <{$lang_notice}>
+    </div>
+    <div style="clear:both;">
+    <{if $comment_mode == "flat"}>
+        <{include file="db:system_comments_flat.html"}>
+    <{elseif $comment_mode == "thread"}>
+        <{include file="db:system_comments_thread.html"}>
+    <{elseif $comment_mode == "nest"}>
+        <{include file="db:system_comments_nest.html"}>
+    <{/if}>
+    </div>
+    <{include file="db:profile_footer.html"}>

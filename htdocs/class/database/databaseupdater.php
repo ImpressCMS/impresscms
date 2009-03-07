@@ -25,7 +25,6 @@ if (!defined("XOOPS_ROOT_PATH")) {
  * Include the language constants for the IcmsDatabaseupdater
  */
 global $xoopsConfig;
-icms_loadLanguageFile('core', 'databaseupdater');
 
 class IcmsDatabasetable {
 	/**

@@ -18,7 +18,7 @@ include 'header.php';
 
 include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 
-$uid = intval($_GET['uid']);
+$uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
 	if(is_object($xoopsUser)){
@@ -100,9 +100,11 @@ unset($cat_crit);
 //    $categories[0]['fields'][] = array('title' => _PROFILE_MA_REALNAME, 'value' => $thisUser->getVar('name'));
 //    $weights[0][] = 0;
 //}
-$avatar = "";
+$avatar = '';
 if($thisUser->getVar('user_avatar') && "blank.gif" != $thisUser->getVar('user_avatar')){
     $avatar = ICMS_UPLOAD_URL."/".$thisUser->getVar('user_avatar');
+}elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
+    $avatar = $thisUser->gravatar('G', $icmsConfigUser['avatar_width']);
 }
 
 if ($thisUser->getVar('user_viewemail') == 1 && is_object($xoopsUser)) { //MPB disallow anonymous viewing

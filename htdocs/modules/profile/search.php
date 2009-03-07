@@ -3,21 +3,30 @@
  * Extended User Profile
  *
  *
+ *
  * @copyright       The ImpressCMS Project http://www.impresscms.org/
  * @license         LICENSE.txt
  * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @package         modules
  * @since           1.2
  * @author          Jan Pedersen
- * @author          The SmartFactory <www.smartfactory.ca>
+ * @author          Marcello Brandao <marcello.brandao@gmail.com>
  * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version         $Id$
  */
 
-
 include '../../mainfile.php';
+$modname = basename( dirname( __FILE__ ) );
+$mod_handler =& xoops_gethandler('module');
+$mod_profile =& $mod_handler->getByDirname($modname);
+$conf_handler =& xoops_gethandler('config');
+$moduleConfig =& $conf_handler->getConfigsByCat(0, $mod_profile->getVar('mid'));
+if($moduleConfig['profile_social']==1){
+	header('Location: '.ICMS_URL.'/modules/profile/searchmembers.php');
+	exit();
+}
 $myts =& MyTextSanitizer::getInstance();
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : "search";
+$op = isset($_REQUEST['op']) ? htmlspecialchars($_REQUEST['op']) : 'search';
 $groups = $xoopsUser ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 switch ($op) {
     default:
@@ -27,12 +36,12 @@ switch ($op) {
         include ICMS_ROOT_PATH."/header.php";
 
         // Dynamic fields
-        $profile_handler =& icms_getmodulehandler( 'profile', basename( dirname( __FILE__ ) ), 'profile' );
+        $profile_handler =& xoops_getmodulehandler('profile');
         // Get fields
         $fields =& $profile_handler->loadFields();
         // Get ids of fields that can be searched
         $gperm_handler =& xoops_gethandler('groupperm');
-        $searchable_fields =& $gperm_handler->getItemIds('profile_search', $groups, $xoopsModule->getVar('mid'));
+        $searchable_fields =& $gperm_handler->getItemIds('smartprofile_search', $groups, $xoopsModule->getVar('mid'));
 
         include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
         $searchform = new XoopsThemeForm("", "searchform", "search.php", "post");
@@ -146,12 +155,12 @@ switch ($op) {
 
         $member_handler =& xoops_gethandler('member');
         // Dynamic fields
-        $profile_handler =& icms_getmodulehandler( 'profile', basename( dirname( __FILE__ ) ), 'profile' );
+        $profile_handler =& xoops_getmodulehandler('profile');
         // Get fields
         $fields =& $profile_handler->loadFields();
         // Get ids of fields that can be searched
         $gperm_handler =& xoops_gethandler('groupperm');
-        $searchable_fields =& $gperm_handler->getItemIds('profile_search', $groups, $xoopsModule->getVar('mid'));
+        $searchable_fields =& $gperm_handler->getItemIds('smartprofile_search', $groups, $xoopsModule->getVar('mid'));
         $searchvars = array();
 
         $criteria = new CriteriaCompo(new Criteria('level', 0, ">"));
@@ -367,26 +376,22 @@ switch ($op) {
         $criteria->setStart($start);
 
         //Get users based on criteria
-        $profile_handler = icms_getmodulehandler( 'profile', basename( dirname( __FILE__ ) ), 'profile' );
+        $profile_handler = xoops_getmodulehandler('profile');
         list($users, $profiles, $total_users) = $profile_handler->search($criteria, $searchvars);
 
         //Sort information
-    if(!empty($users)){
         foreach (array_keys($users) as $k) {
-            $userarray["output"][] = "<a href='userinfo.php?uid=".$users[$k]->getVar('uid')."'>".$users[$k]->getVar('uname')."</a>";
+            $userarray["output"][] = "<a href='userinfo.php?uid=".intval($users[$k]->getVar('uid'))."'>".$users[$k]->getVar('uname')."</a>";
             $userarray["output"][] = $users[$k]->getVar('user_viewemail') == 1 || $xoopsUser->isAdmin() ? $users[$k]->getVar('email') : "";
-            
-            if(!empty($profiles)){
+
             foreach (array_keys($fields) as $i) {
                 if (in_array($fields[$i]->getVar('fieldid'), $searchable_fields) && in_array($fields[$i]->getVar('field_type'), $searchable_types) && in_array($fields[$i]->getVar('field_name'), $searchvars)) {
                     $userarray["output"][] = $fields[$i]->getOutputValue($users[$k], $profiles[$k]);
                 }
             }
-        }
             $xoopsTpl->append('users', $userarray);
             unset($userarray);
         }
-    }
 
         //Get captions
         $captions[] = _PROFILE_MA_DISPLAYNAME;

@@ -41,7 +41,7 @@ function javascript_syntaxhighlightcss($ele_name)
 		$javascript='';
         return array($code, $javascript);
 }
-function stlye_syntaxhighlightcss(){
+function style_syntaxhighlightcss(){
 $style_info = '';
 return $style_info;
 }

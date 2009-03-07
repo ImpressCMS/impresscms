@@ -29,7 +29,7 @@ $javascript='';
  */
  
 /*
-function stlye_hiddencontent(){
+function style_hiddencontent(){
 $style_info = '.icmsHidden { background-color: #FAFAFA; color: #444; font-size: .9em; line-height: 1.2em; text-align: justify; border: #c2cdd6 1px dashed;}';
 return $style_info;
 }

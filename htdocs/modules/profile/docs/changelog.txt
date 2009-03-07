@@ -1,0 +1,147 @@
+## 06/10/2008
+
+fixed TextSanitizer added for more security (dhcst)
+fixed a many IMG-Tags closed in the templates (sato-san)
+added signatur with HTML (sato-san)
+added uploads/yogurt/mp3 is automatically created (sato-san)
+
+
+## 25/08/2008
+
+fixed #2074440 file upload size on the search page (m0nty_)
+fixed #2074263 check for /uploads/yogurt/mp3 in the backend (dhcst)
+fixed #2074362 MP3 player read now ID3v1 and v2 (dhcst)
+fixed #1993627 deleting Photos with errors (dhcst)
+fixed #1939798 Smarty error: mailto: missing (dhcst)
+fixed height scrapbook > bbcode tips (sato-san)
+fixed bug triebes in navbar (dhcst)
+fixed Permission audio.php (dhcst)
+fixed Permission mainfile.php (dhcst)
+fixed sanitize $_GET['uid'] (dhcst)
+fixed some sanitizing (m0nty_)
+fixed configuration > cosmetic (sato-san)
+added tables for impresscms (m0nty_)
+added folder uploads/yogurt/mp3 (sato-san)
+added yogurt works now without Frameworks (dhcst)
+added code for simple-xoops updater
+deleted URL is not available (sato-san)
+
+
+## 13/04/2008
+
+New features:
+
+Fans page
+Notifications upon new friend petition
+
+
+## 07/04/2008
+
+Bugs fixed:
+
+1933366 Redirect page when user does not exist. gibaphp
+1904670 Textual error: "see your emails" dbrazil
+1933885 No avatar for userid above 100
+1902089 filename for thumbnail is too long frogx
+1888645 yogurt.css
+1888643 cr in scraps
+1888640 display error with right column
+1888639 too much friends, no second page
+1886972 avatar in scraps
+1886412 notification is not sent to PM for new scraps notifications
+1886319 website url in user's profile
+
+
+## 31/01/2008
+First Release Candidate Version 3.0 BETA 2
+
+Translations removed from the release as it was too hard to maintain
+all of them up to date :D
+Bugs report treated. Most of them corrected, some I could not reproduce
+
+1844542  	tribes insert [saba]    	
+1844582 	Some definitions not in lang files [irmtfan]
+1849511 	If I use yogurt as profile page I can't upload avatar
+1844586 	place holder for main video and avatar [irtmfan]
+1844541 	true videos problem [saba]
+1844538 	blank video area after insert [pewy]
+1844530 	Main video doesn t disapear [maxxy]
+1840158 	upload path in templates [feightl]
+1880026 	Adding embed code for video URL
+1877872 	send notification in PM not working
+1877874 	reject friend language
+1854035 	Main Menu
+1849485 	Show All in user info error
+1788733 	Private configs
+1854153 	Private images disappear
+1858658 	Two Notices in php debug
+1854039 	Notification Bug
+1854042 	friend list - AVATAR
+1862190 	avatar bugs
+1854038 	redirect confusion
+1854036 	no avatar in friendship config setting
+1852981 	New Feature-User Album
+1851942 	missing semicolon in french file
+1844587 	repeated definitions [irtmfan]
+1844552 	no search on yogurt [takeaweb]
+1844590 	album page missing requirements [patrick80]
+1854041 	Typo
+1875338 	notification.inc scrap $item['url']
+1844585 	Ugly license [irtmfan]
+1854617 	misredirect
+1849019 	installation error
+1848654 	Private Messenger No Longer Works
+1845594 	Xoops new members block linking
+1844583 	module name not in modinfo.php [irtmfan]
+1844591 	protect email address [patrick80]
+1844559 	User contributions remains exploded [takeaweb]
+1876676 	Private Message bug in My Friends Block
+1845327 	delete scrap
+1844589 	lang definitions missing [eparcyl]
+1844560 	error on search.php [takeaweb]
+1844570 	misredirection to user un myfriends box[ctoa]
+1844558 	star smile, heart problem with ie [takeaweb]
+1844556 	view all not defined [takeaweb]
+1844555 	you can upload only... not defined [takeaweb]
+1844554 	_MI_YOGURT_FRIENDS_DESC not defined [takeaweb]
+1844553 	scrap error on ie on delete [takeaweb]
+1844549 	xoops.js $ click smilies doesn t work [maxxy]
+1844546 	album: newest first [maxxy]
+1844545 	last pictures point to profile not album [maxxy]
+1844543 	fatal error in xoops cube legacy [pewy]
+1844537  	  blank page after del in scraps[pewy]
+1844536 	last picture block qtty [maxxy]
+1844533 	can t set avatar [maxxy]
+1844535 	user listed in visitors of the profile [maxxy]
+1851078 	French translation
+1844520 	ENGINE=MyISAM I can't install it. [sinoer]
+1844518 	in yogurt_visitors the column datetime no present [takeaweb]
+1802818 	Imagem modelo de tribo dando pau
+1783746 	link to album won t show for anonyms
+
+Visit https://sourceforge.net/tracker/?func=browse&group_id=204109&atid=988288
+and help this project reporting your bugs too
+
+## 26/11/2007
+First Beta Release Version 2.9
+Changed the project to yogurt social network
+Picures, Videos, Scraps, Tribes, Configs, Friends
+
+## 26/08/2007
+First Candidate Release Version 1.0
+Licence added to all files
+Removed unused files from the folder
+Error messages added when user were not he owner and tryied to edit or delete pic
+Changelog updated
+readme updated
+
+## 25/08/2007
+First Beta
+Corrections of many bugs
+New features:
+Comments System
+Search
+
+## 22/08/2007
+First alpha release.
+

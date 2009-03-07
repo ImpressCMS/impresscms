@@ -14,6 +14,7 @@
  * @version         $Id$
  */
 
+die('Feature is not ready yet');
 include_once '../../mainfile.php';
 include_once(ICMS_ROOT_PATH . '/modules/'.basename( dirname( __FILE__ ) ).'/class/vcard.php');
 

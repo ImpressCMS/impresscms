@@ -12,7 +12,7 @@
 * @version		$Id$
 */
 
-function icms_module_update_profile(&$module, $oldversion = null, $dbversion = null) 
+/*function icms_module_update_profile(&$module, $oldversion = null, $dbversion = null) 
 {
     GLOBAL $xoopsDB;
     
@@ -27,7 +27,7 @@ function icms_module_update_profile(&$module, $oldversion = null, $dbversion = n
         $xoopsDB->queryF($sql);
         
         // Create new tables for new profile module
-        $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/sql/mysql.sql");
+        $xoopsDB->queryFromFile(ICMS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/sql/mysql.sql");
         
         icms_module_install_profile($module);
         $goupperm_handler =& xoops_getHandler("groupperm");
@@ -102,7 +102,7 @@ function icms_module_update_profile(&$module, $oldversion = null, $dbversion = n
         $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("profile_visibility") . "` TO `" . $xoopsDB->prefix("profile_visibility_bak") . "`");
         $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("profile_profile") . "` TO `" . $xoopsDB->prefix("profile_profile_bak") . "`");
         $xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("profile_regstep") . "` TO `" . $xoopsDB->prefix("profile_regstep_bak") . "`");
-        $xoopsDB->queryFromFile(XOOPS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/sql/mysql.sql");
+        $xoopsDB->queryFromFile(ICMS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/sql/mysql.sql");
         
         icms_module_install_profile($module);
         
@@ -236,5 +236,5 @@ function addCategory($name, $weight) {
 function addStep($name, $desc, $order, $save) {
     global $xoopsDB;
     $xoopsDB->query("INSERT INTO ".$xoopsDB->prefix("profile_regstep")." VALUES (0, '".$name."', '".$desc."', ".$order.", ".$save.")");
-}
+}*/
 ?>

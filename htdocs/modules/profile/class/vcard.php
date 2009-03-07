@@ -24,6 +24,9 @@
  * $Id$
  * Description:
  ********************************************************************************/
+if (!defined("ICMS_ROOT_PATH")) {
+    die("ICMS root path not defined");
+}
 class ProfileVcard {
 
 	var $properties = array ();

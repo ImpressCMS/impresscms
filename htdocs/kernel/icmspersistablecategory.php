@@ -1,31 +1,31 @@
 <?php
-
 /**
- * Contains the basic classe for managing a category object based on IcmsPersistableObject
- *
- * @license GNU
- * @author marcan <marcan@smartfactory.ca>
- * @version $Id: smartobjectcategory.php 799 2008-02-04 22:14:27Z malanciault $
+* Contains the basic classe for managing a category object based on IcmsPersistableObject
+*
+* @copyright	The ImpressCMS Project http://www.impresscms.org/
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		IcmsPersistableObject
+* @since		1.2
+* @author		marcan <marcan@impresscms.org>
+* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @version		$Id: icmspersistablememberhandler.php 7264 2008-11-29 05:08:31Z pesian_stranger $
+*/
 
- * @link http://smartfactory.ca The SmartFactory
- * @package IcmsPersistableObject
- * @subpackage IcmsPersistableObjectItems
- */
 
 if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistableseoobject..php";
+include_once ICMS_ROOT_PATH . "/kernel/icmspersistableseoobject.php";
 class IcmsPersistableCategory extends IcmsPersistableSeoObject {
 
 	var $_categoryPath;
 
 	function IcmsPersistableCategory() {
 	    $this->initVar('categoryid', XOBJ_DTYPE_INT, '', true);
-    	$this->initVar('parentid', XOBJ_DTYPE_INT, '', false, null, '', false, _CO_SOBJECT_CATEGORY_PARENTID, _CO_SOBJECT_CATEGORY_PARENTID_DSC);
-    	$this->initVar('name', XOBJ_DTYPE_TXTBOX, '', false, null, '', false, _CO_SOBJECT_CATEGORY_NAME, _CO_SOBJECT_CATEGORY_NAME_DSC);
-        $this->initVar('description', XOBJ_DTYPE_TXTAREA, '', false, null, '', false, _CO_SOBJECT_CATEGORY_DESCRIPTION, _CO_SOBJECT_CATEGORY_DESCRIPTION_DSC);
-        $this->initVar('image', XOBJ_DTYPE_TXTBOX, '', false, null, '',  false, _CO_SOBJECT_CATEGORY_IMAGE, _CO_SOBJECT_CATEGORY_IMAGE_DSC);
+    	$this->initVar('parentid', XOBJ_DTYPE_INT, '', false, null, '', false, _CO_ICMS_CATEGORY_PARENTID, _CO_ICMS_CATEGORY_PARENTID_DSC);
+    	$this->initVar('name', XOBJ_DTYPE_TXTBOX, '', false, null, '', false, _CO_ICMS_CATEGORY_NAME, _CO_ICMS_CATEGORY_NAME_DSC);
+        $this->initVar('description', XOBJ_DTYPE_TXTAREA, '', false, null, '', false, _CO_ICMS_CATEGORY_DESCRIPTION, _CO_ICMS_CATEGORY_DESCRIPTION_DSC);
+        $this->initVar('image', XOBJ_DTYPE_TXTBOX, '', false, null, '',  false, _CO_ICMS_CATEGORY_IMAGE, _CO_ICMS_CATEGORY_IMAGE_DSC);
 
         $this->initCommonVar('doxcode');
 
@@ -87,7 +87,7 @@ class IcmsPersistableCategory extends IcmsPersistableSeoObject {
      */
 	function getCategoryPath($withAllLink=true, $currentCategory=false)	{
 
-		include_once SMARTOBJECT_ROOT_PATH . "class/smartobjectcontroller.php";
+		include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
         $controller = new IcmsPersistableObjectController($this->handler);
 
 		if (!$this->_categoryPath) {

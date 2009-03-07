@@ -19,11 +19,7 @@ include "../../mainfile.php";
 include ICMS_ROOT_PATH.'/header.php';
 
 if (isset($_REQUEST['op']) && $_REQUEST['op'] == "actv") {
-	if ( file_exists(ICMS_ROOT_PATH."/language/".$GLOBALS['xoopsConfig']['language']."/user.php") ) {
-	    include_once ICMS_ROOT_PATH."/language/".$GLOBALS['xoopsConfig']['language']."/user.php";
-	} else {
-	    include_once ICMS_ROOT_PATH."/language/english/user.php";
-	}
+icms_loadLanguageFile('core', 'user');
     $id = intval($_GET['id']);
     $actkey = trim($_GET['actkey']);
     if (empty($id)) {

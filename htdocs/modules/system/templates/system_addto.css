@@ -1,0 +1,124 @@
+/* AddToBookmarks Style Sheet */
+/*	<license>
+	Script: Add To Bookmarks
+	Version: 1.1
+	Homepage: http://www.AddToBookmarks.com
+	Author:	Gideon Marken
+	Author Blog: http://www.gideonmarken.com/
+	Author Work: http://www.markenmedia.com/
+	Author Work: http://www.webandaudio.com/
+	Date: July 18, 2007
+	License: Mozilla Public License 1.1	http://www.mozilla.org/MPL/MPL-1.1.html
+	</license>
+*/
+.addToContent {
+ 	text-align: center;
+ 	padding:3px;
+}
+.addTo {
+	background-color: #f8f8f8;
+	border:1px  #bbbbbb solid;
+	padding:1px;
+	width: 600px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:9px;
+	margin: auto;
+	text-align:center;
+}
+.addTo img {
+	vertical-align: middle;
+	padding: 1px 2px 1px 6px;
+	cursor:pointer;
+}
+.addTo dl {
+  	background-color: #fbfbfb;
+  	color: #000000;
+	margin: 0px;
+	padding: 0px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+.addTo dd {
+	display: inline;
+	list-style: none;
+	padding:1px;
+	margin:0px;
+	cursor:pointer;
+}
+.addToAbout{
+	display: inline;
+	list-style: none;
+	padding:1px;
+	margin:0px;
+	font-weight: bold;
+	cursor:help;
+}
+.addToHeader{
+	padding:1px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:9px;
+	background-color:#666666;
+	color:#FFFFFF;
+	cursor:help;}
+/*  the next 2 styles are only for horizontal 2 row layouts */
+.addTo2Row {
+	background-color: #f8f8f8;
+	border:1px  #bbbbbb solid;
+	padding:1px;
+	width: 350px; height:65px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:9px;
+	margin: auto;
+	text-align:left;
+	overflow:visible;
+}
+.addToFloat{
+	float:left;
+	text-align:left;
+	padding:3px;
+	cursor:pointer;
+}
+/*  the next section of styles are only for vertical layouts */
+.addToV {
+	background-color: #f8f8f8;
+	border:1px  #bbbbbb solid;
+	padding:1px;
+	width: 90px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:9px;
+	margin: auto;
+	text-align:left;
+}
+.addToVNoImg{
+	background-color: #f8f8f8;
+	border:1px  #bbbbbb solid;
+	padding:1px;
+	width: 60px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+	font-size:9px;
+	margin: auto;
+	text-align:left;
+}
+.addToV img {
+	vertical-align: middle;
+	padding: 1px 2px 1px 3px;
+	cursor:pointer;
+}
+.addToV dl, .addToVNoImg dl {
+  	background-color: #fbfbfb;
+  	color: #000000;
+	margin: 0px;
+	padding: 0px;
+	font-family:Verdana, Arial, Helvetica, sans-serif;
+}
+.addToV dd, .addToVNoImg dd {
+	list-style: none;
+	padding:1px;
+	margin:0px;
+	cursor:pointer;
+}
+.addToAboutV{
+	list-style: none;
+	padding:1px;
+	font-weight: bold;
+	cursor:help;
+}

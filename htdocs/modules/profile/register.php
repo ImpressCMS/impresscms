@@ -31,9 +31,9 @@ include ICMS_ROOT_PATH.'/header.php';
 
 $member_handler =& xoops_gethandler('member');
 
-$template_dir = ICMS_ROOT_PATH.'/modules/'.basename( dirname( __FILE__ ) ).'/language/'.$xoopsConfig['language'].'/mail_template';
+$template_dir = ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/mail_template';
 if (!file_exists($template_dir)) {
-	$template_dir = ICMS_ROOT_PATH.'/modules/'.basename( dirname( __FILE__ ) ).'/language/english/mail_template';
+	$template_dir = ICMS_ROOT_PATH.'/language/english/mail_template';
 }
 
 
@@ -241,10 +241,11 @@ function postSaveProcess($newuser) {
         $xoopsMailer->useMail();
         $xoopsMailer->setTemplate('register.tpl');
         $xoopsMailer->setTemplateDir($template_dir);
-        $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-        $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
-        $xoopsMailer->assign('SITEURL', ICMS_URL.'/');
-        $xoopsMailer->assign('X_UPASS', $_POST['vpass']);
+        $xoopsMailer->assign('X_SITENAME', $xoopsConfig['sitename']);
+        $xoopsMailer->assign('X_ADMINMAIL', $xoopsConfig['adminmail']);
+        $xoopsMailer->assign('X_SITEURL', ICMS_URL.'/');
+        $xoopsMailer->assign('X_USERPASSWORD', $_POST['vpass']);
+        $xoopsMailer->assign('X_USERLOGINNAME', $_POST['login_name']);
         $xoopsMailer->setToUsers(new XoopsUser($newid));
         $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
         $xoopsMailer->setFromName($xoopsConfig['sitename']);
@@ -263,6 +264,7 @@ function postSaveProcess($newuser) {
         $xoopsMailer->setTemplate('adminactivate.tpl');
         $xoopsMailer->setTemplateDir($template_dir);
         $xoopsMailer->assign('USERNAME', $newuser->getVar('uname'));
+        $xoopsMailer->assign('USERLOGINNAME', $newuser->getVar('login_name'));
         $xoopsMailer->assign('USEREMAIL', $newuser->getVar('email'));
         $actkey = ICMS_URL.'/user.php?op=actv&id='.$newid.'&actkey='.$newuser->getVar('actkey');
         $xoopsMailer->assign('USERACTLINK', $actkey);

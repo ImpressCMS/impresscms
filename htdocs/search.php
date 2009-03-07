@@ -25,14 +25,8 @@ if ($xoopsConfigSearch['enable_search'] != 1) {
     exit();
 }
 
-if ($xoopsConfigSearch['enable_deep_search'] == 1) {
-	$xoopsOption['template_main'] = 'system_search_deep.html';
-	$search_limiter = 0;	// Do not limit search results.
-} else {
-	$search_limiter = $xoopsConfigSearch['num_shallow_search'];	// Limit the number of search results based on user preference.
-}
+$search_limiter = (($xoopsConfigSearch['enable_deep_search'] == 1) ? $xoopsConfigSearch['num_shallow_search'] : 0);
 $xoopsOption['template_main'] = 'system_search.html';
-
 include ICMS_ROOT_PATH.'/header.php';
 
 $action = 'search';

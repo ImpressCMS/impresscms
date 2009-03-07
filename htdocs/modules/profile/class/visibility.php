@@ -14,6 +14,9 @@
  * @version         $Id$
  */
 
+if (!defined("ICMS_ROOT_PATH")) {
+    die("ICMS root path not defined");
+}
 include_once(ICMS_KERNEL_PATH."icmspersistableobject.php");
 
 class ProfileVisibility extends IcmsPersistableObject  {

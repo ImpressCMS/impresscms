@@ -3,7 +3,7 @@
 
 
 function smarty_function_xoManager( $params, &$smarty ) {
-	global $xoops,$xoopsUser,$xoopsConfig, $HTTP_COOKIE_VARS, $xoopsModule;
+	global $xoops,$xoopsUser,$xoopsConfig, $_COOKIE, $xoopsModule;
 
 	if ( !isset($xoopsUser) || !is_object($xoopsUser) ) {
 		return;
@@ -73,7 +73,7 @@ $text = addslashes($msg_text5);
  
 }
 
-if (@$HTTP_COOKIE_VARS['messenger'] < $count) {
+if (@$_COOKIE['messenger'] < $count) {
 
 if ($xoopsModuleConfig['newmsg'] == "popup" && $count > 0) {
  $mes .= '<div id="pop_up" style="color: '.$xoopsModuleConfig['cssptext'].';
@@ -119,7 +119,7 @@ $criteria->add( new Criteria( 'to_userid', $xoopsUser->getVar('uid') ) );
 $total = $pm_handler->getCount($criteria);
 if ($total > $xoopsModuleConfig['maxuser']) {
  
-if (!@$HTTP_COOKIE_VARS['messengeralert']) {
+if (!@$_COOKIE['messengeralert']) {
  $mes .= '<div id="pop_upalert" style="color: '.$xoopsModuleConfig['cssptext'].';
 	width: 350px;
 	position: absolute;

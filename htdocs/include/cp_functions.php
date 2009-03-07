@@ -109,7 +109,7 @@ window.onload=startList;
  		        		echo '<link rel="stylesheet" media="screen" href="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css" type="text/css" />';
  		        	}else{
  		        		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
- 		        		$func = 'stlye_'.$key;
+ 		        		$func = 'style_'.$key;
  		        		if ( function_exists($func) ) {
  		        			$style_info = $func();
  		        		 	if (!empty($style_info)) {

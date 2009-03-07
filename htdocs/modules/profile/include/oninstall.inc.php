@@ -15,15 +15,18 @@
  */
 
 function icms_module_install_profile($module) {
+	icms_loadLanguageFile('core', 'user');
+	icms_loadLanguageFile('core', 'notification');
     // Create registration steps
-    addStep('Basic information', '', 1, 1);
-    addStep('Complementary information', '', 2, 0);
+    addStep(_PROFILE_MI_CAT_BASEINFO, '', 1, 1);
+    addStep(_PROFILE_MI_CAT_EXTINFO, '', 2, 0);
+    
 
     // Create categories
-    addCategory('Personal', 1);
-    addCategory('Messaging', 2);
-    addCategory('Settings', 3);
-    addCategory('Community', 4);
+    addCategory(_PROFILE_MI_CAT_PERSONAL, 1);
+    addCategory(_PROFILE_MI_CAT_MESSAGING, 2);
+    addCategory(_PROFILE_MI_CAT_SETTINGS1, 3);
+    addCategory(_PROFILE_MI_CAT_COMMUNITY, 4);
 
 
     // Add user fields
@@ -43,32 +46,33 @@ function icms_module_install_profile($module) {
     addField('user_yim', _PROFILE_MI_YIM_TITLE, _PROFILE_MI_YIM_DESCRIPTION, 1, 'textbox', 1, 3, 1, array(), 2, 255);
     addField('user_msnm', _PROFILE_MI_MSN_TITLE, _PROFILE_MI_MSN_DESCRIPTION, 1, 'textbox', 1, 4, 1, array(), 2, 255);
 
-    addField('name', 'Name', '', 2, 'textbox', 1, 1, 1, array(), 1, 255);
+    addField('name', _US_REALNAME, '', 2, 'textbox', 1, 1, 1, array(), 1, 255);
     addField('user_from', _PROFILE_MI_FROM_TITLE, _PROFILE_MI_FROM_DESCRIPTION, 2, 'textbox', 1, 2, 1, array(), 2, 255);
-    addField('timezone_offset', 'Timezone', '', 2, 'timezone', 1, 3, 1, array(), 2, 0);
+    addField('timezone_offset', _US_TIMEZONE, '', 2, 'timezone', 1, 3, 1, array(), 2, 0);
     addField('user_occ', _PROFILE_MI_OCCUPATION_TITLE, _PROFILE_MI_OCCUPATION_DESCRIPTION, 2, 'textbox', 1, 4, 1, array(), 2, 255);
     addField('user_intrest', _PROFILE_MI_INTEREST_TITLE, _PROFILE_MI_INTEREST_DESCRIPTION, 2, 'textbox', 1, 5, 1, array(), 2, 255);
     addField('bio', _PROFILE_MI_BIO_TITLE, _PROFILE_MI_BIO_DESCRIPTION, 2, 'textarea', 2, 6, 1, array(), 2, 0);
-    addField('user_regdate', 'Member since', '', 2, 'datetime', 3, 7, 0, array(), 0, 10);
+    addField('user_regdate', _US_MEMBERSINCE, '', 2, 'datetime', 3, 7, 0, array(), 0, 10);
 
     addField('user_viewemail', _PROFILE_MI_VIEWEMAIL_TITLE, '', 3, 'yesno', 3, 1, 1, array(), 1, 1);
-    addField('attachsig', 'Attach signature', '', 3, 'yesno', 3, 2, 1, array(), 0, 1);
-    addField('user_mailok', 'Receive mails from admins', 'Can administrators contact you periodically via email', 3, 'yesno', 3, 3, 1, array(), 1, 1);
-    addField('theme', 'Theme', '', 3, 'theme', 1, 4, 1, array(), 0, 0);
-    addField('umode', 'Comments display mode', '', 3, 'select', 3, 5, 1, $umode_options, 0, 0);
-    addField('uorder', 'Comments sort order', '', 3, 'select', 3, 6, 1, $uorder_options, 0, 0);
-    addField('notify_mode', 'Notification mode', '', 3, 'select', 3, 7, 1, $notify_mode_options, 0, 0);
-    addField('notify_method', 'Notification method', '', 3, 'select', 3, 8, 1, $notify_method_options, 0, 0);
+    addField('attachsig', _US_SHOWSIG, '', 3, 'yesno', 3, 2, 1, array(), 0, 1);
+    addField('user_mailok', _US_MAILOK, '', 3, 'yesno', 3, 3, 1, array(), 1, 1);
+    addField('theme', _US_SELECT_THEME, '', 3, 'theme', 1, 4, 1, array(), 0, 0);
+    addField('language', _US_SELECT_LANG, $GLOBALS['xoopsConfig']['language'], 3, 'language', 1, 5, 1, array(), 0, 0);
+    addField('umode', _US_CDISPLAYMODE, '', 3, 'select', 3, 6, 1, $umode_options, 0, 0);
+    addField('uorder', _US_CSORTORDER, '', 3, 'select', 3, 7, 1, $uorder_options, 0, 0);
+    addField('notify_mode', _NOT_NOTIFYMODE, '', 3, 'select', 3, 8, 1, $notify_mode_options, 0, 0);
+    addField('notify_method', _NOT_NOTIFYMETHOD, '', 3, 'select', 3, 9, 1, $notify_method_options, 0, 0);
 
     addField('url', _PROFILE_MI_URL_TITLE, _PROFILE_MI_URL_DESCRIPTION, 4, 'textbox', 1, 1, 1, array(), 1, 255);
-    addField('posts', 'Posts', '', 4, 'textbox', 3, 2, 1, array(), 0, 255);
-    addField('rank', 'Rank', '', 4, 'rank', 3, 3, 1, array(), 0, 0);
-    addField('last_login', 'Last login', '', 4, 'datetime', 3, 4, 0, array(), 0, 10);
+    addField('posts', _US_POSTS, '', 4, 'textbox', 3, 2, 1, array(), 0, 255);
+    addField('rank', _US_RANK, '', 4, 'rank', 3, 3, 1, array(), 0, 0);
+    addField('last_login', _US_LASTLOGIN, '', 4, 'datetime', 3, 4, 0, array(), 0, 10);
     addField('user_sig', _PROFILE_MI_SIG_TITLE, _PROFILE_MI_SIG_DESCRIPTION, 4, 'dhtml', 1, 5, 1, array(), 0, 0);
 		$config_handler =& xoops_gethandler('config');
 		$xoopsConfigAuth =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
 		if($xoopsConfigAuth['auth_openid'] == 1) {
-    addField('openid', 'Your OpenID', 'Your OPENID login data', 4, 'textbox', 1, 1, 1, array(), 1, 255);
+    addField('openid', _US_OPENID_FORM_CAPTION, _US_OPENID_URL, 4, 'textbox', 1, 1, 1, array(), 1, 255);
     addField('user_viewoid', _PROFILE_MI_VIEWEOID_TITLE, '', 3, 'yesno', 3, 1, 1, array(), 1, 1);
     	}
     // Add visbility permissions

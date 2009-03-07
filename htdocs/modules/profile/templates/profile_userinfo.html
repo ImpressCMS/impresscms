@@ -6,9 +6,9 @@
         <img align="<{$smarty.const._GLOBAL_RIGHT}>" src="<{$avatar}>" alt="<{$uname}>" />
     <{/if}>
 <{if $email}>
-	<a href="<{$user_pmlink}>"><img src="<{$xoops_url}>/modules/profile/images/pm.gif" width="26" height="20" alt="<{$user_pmlink_imgsrc_alttxt}>" align="<{$smarty.const._GLOBAL_LEFT}>"><{$uname}></a>
+	<a href="<{$user_pmlink}>"><img src="<{$icms_url}>/modules/<{$icms_dirname}>/images/pm.gif" width="26" height="20" alt="<{$user_pmlink_imgsrc_alttxt}>" align="<{$smarty.const._GLOBAL_LEFT}>"><{$uname}></a>
 <{else}>
-	<a href="<{$user_pmlink}>"><img src="<{$xoops_url}>/modules/profile/images/pm.gif" width="26" height="20" alt="<{$user_pmlink_imgsrc_alttxt}>"></a>
+	<a href="<{$user_pmlink}>"><img src="<{$icms_url}>/modules/<{$icms_dirname}>/images/pm.gif" width="26" height="20" alt="<{$user_pmlink_imgsrc_alttxt}>"></a>
 <{/if}>
 </div>
 <{if $user_ownpage == true}>
@@ -20,18 +20,18 @@
     <table width="100%" align="center" border="0">
       <tr align="center">
         <td>
-        <input type="button" value="<{$lang_editprofile}>" onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/edituser.php'" />
-        <input type="button" value="<{$lang_changepassword}>" onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/changepass.php'" />
+        <input type="button" value="<{$lang_editprofile}>" onclick="location='<{$icms_url}>/modules/<{$icms_dirname}>/edituser.php'" />
+        <input type="button" value="<{$lang_changepassword}>" onclick="location='<{$icms_url}>/modules/<{$icms_dirname}>/changepass.php'" />
         <{if $user_changeemail}>
-            <input type="button" value="<{$smarty.const._PROFILE_MA_CHANGEMAIL}>" onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/changemail.php'" />
+            <input type="button" value="<{$smarty.const._PROFILE_MA_CHANGEMAIL}>" onclick="location='<{$icms_url}>/modules/<{$icms_dirname}>/changemail.php'" />
         <{/if}>
 
         <{if $user_candelete == true}>
-            <form method="post" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/deactivate.php"><input type="hidden" name="uid" value="<{$user_uid}>"><input type="button" value="<{$smarty.const._PROFILE_MA_DEACTIVATE}>" onclick="submit();" /></form>
+            <form method="post" action="<{$icms_url}>/modules/<{$icms_dirname}>/admin/deactivate.php"><input type="hidden" name="uid" value="<{$user_uid}>"><input type="button" value="<{$smarty.const._PROFILE_MA_DEACTIVATE}>" onclick="submit();" /></form>
         <{/if}>
 
         <input type="button" value="<{$lang_avatar}>" onclick="location='edituser.php?op=avatarform'" />
-        <input type="button" value="<{$lang_logout}>" onclick="location='<{$xoops_url}>/user.php?op=logout'" /></td>
+        <input type="button" value="<{$lang_logout}>" onclick="location='<{$icms_url}>/user.php?op=logout'" /></td>
       </tr>
     </table>
     </form>
@@ -44,8 +44,8 @@
     <table width="70%" align="center" border="0">
       <tr align="center">
         <td>
-        <form method="post" action="<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/deactivate.php">
-        <input type="button" value="<{$lang_editprofile}>" onclick="location='<{$xoops_url}>/modules/<{$xoops_dirname}>/admin/user.php?op=edit&amp;id=<{$user_uid}>'" />
+        <form method="post" action="<{$icms_url}>/modules/<{$icms_dirname}>/admin/deactivate.php">
+        <input type="button" value="<{$lang_editprofile}>" onclick="location='<{$icms_url}>/modules/<{$icms_dirname}>/admin/user.php?op=edit&amp;id=<{$user_uid}>'" />
         <input type="hidden" name="uid" value="<{$user_uid}>" />
         <{if $userlevel == 1}>
             <input type="hidden" name="level" value="0" />

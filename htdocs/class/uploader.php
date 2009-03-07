@@ -226,7 +226,7 @@ class XoopsMediaUploader
 	* @param   string	$value
 	* @param   bool	$unique
 	**/
-	function setPrefix($value, $unique)
+	function setPrefix($value, $unique=true)
 	{
 		if(!isset($unique) || (isset($unique) && $unique !== true)) {$this->prefix = strval(trim($value));}
 		elseif(isset($unique) && $unique = true) {$this->prefix = strval(trim($value)).'_'.uniqid(rand());}

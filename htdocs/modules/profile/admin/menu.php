@@ -14,8 +14,8 @@
  * @version         $Id$
  */
 
-//$adminmenu[1]['title'] = _PROFILE_MI_INDEX;
-//$adminmenu[1]['link'] = 'admin/admin.php';
+$adminmenu[7]['title'] = _PROFILE_MI_INDEX;
+$adminmenu[7]['link'] = 'admin/admin.php';
 $adminmenu[1]['title'] = _PROFILE_MI_USERS;
 $adminmenu[1]['link'] = 'admin/user.php';
 $adminmenu[2]['title'] = _PROFILE_MI_CATEGORIES;
@@ -28,14 +28,14 @@ $adminmenu[5]['title'] = _PROFILE_MI_PERMISSIONS;
 $adminmenu[5]['link'] = 'admin/permissions.php';
 $gperm =& xoops_gethandler ( 'groupperm' );
 $xoopsUser = $GLOBALS['xoopsUser'];
-$ugroups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-$agroups = $gperm->getGroupIds('system_admin',7); //XOOPS_SYSTEM_BLOCK constant not available?
+$ugroups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+$agroups = $gperm->getGroupIds('system_admin',7); //ICMS_SYSTEM_BLOCK constant not available?
 if (array_intersect($ugroups, $agroups)) {
 $adminmenu[6]['title'] = _PROFILE_MI_FINDUSER;
 $adminmenu[6]['link'] = '../system/admin.php?fct=findusers';
 //$adminmenu[6]['link'] = 'admin/finduser.php'; // This one is removed because feature is at this stage incomplete.
 }
-
+global $xoopsModule;
 if (isset($xoopsModule)) {
 
 	$i = -1;

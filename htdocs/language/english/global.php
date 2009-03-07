@@ -302,4 +302,9 @@ define("_ENTERCSSCODE","Enter the CSS codes that you want to add.");
 define("_ENTERJSCODE","Enter the JavaScript codes that you want to add.");
 define("_ENTERWIKICODE","Enter the wiki term that you want to add.");
 define("_ENTERLANGCONTENT","Enter the text that you want to be in %s.");
+define('_LANGNAME', 'English');
+define('_ENTERYOUTUBEURL', 'Enter YouTube url:');
+define('_ENTERHEIGHT', 'Enter frame\'s height');
+define('_ENTERWIDTH', 'Enter frame\'s width');
+define('_ENTERMEDIAURL', 'Enter media url:');
 ?>

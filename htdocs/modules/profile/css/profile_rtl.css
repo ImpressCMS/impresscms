@@ -1,0 +1,692 @@
+/*
+General properties
+*/
+
+div.profile-profile-group1{
+float:right;
+width:60%;
+
+}
+
+div.profile-profile-group2{
+float:right;
+width:40%;
+}
+
+div#profile-suspension {
+float:left;
+}
+
+img#profile-suspensiontools {
+	cursor: pointer;
+}
+
+.present{
+background-color:#FFFFCC;
+}
+
+
+div#profile-nav-bar{
+margin:3px;
+width:95%;
+padding:1px;
+}
+
+div#profile-footer{
+margin:3px;
+float:right;
+padding:1px;
+width:95%;
+overflow:hidden;
+text-align:left;
+}
+
+img.profile-nav-bar-icon {
+width:15px;
+height:15px;
+border:none;
+}
+
+
+
+p#breadcrumbs {
+	display:block;
+	margin:0px;
+	border-bottom: 2px solid;
+	margin-bottom: 5px;
+	padding:2px;
+}
+
+/*
+Search
+*/
+
+div.search-element {
+clear:both;
+}
+div.search-element-label {
+float:right;
+width:300px;
+}
+div.search-element-body {
+float:right;
+
+}
+
+/*
+CONFIGS
+*/
+
+form#form_configs input {
+
+
+}
+
+form#form_configs label{
+
+}
+
+form#form_configs fieldset{
+display:inline;
+width:90%;
+}
+
+
+
+/* 
+Profile
+*/
+
+div#profile-profile-petition {
+margin:3px;
+}
+
+div#profile-profile-petition img {
+margin:15px 3px;
+float:right;
+}
+
+div#profile-album-visitors, div#profile-profile-search-results, div#profile-profile-visual, div#profile-profile-statistics, div#profile-profile-details {
+margin:3px;
+float:right;
+padding:1px;
+width:95%;
+overflow:hidden;
+}
+
+
+div#profile-profile-tribes, div#profile-profile-friends {
+margin:3px;
+padding:1px;
+width:95%;
+overflow:hidden;
+text-align:center;
+}
+
+div.profile-profile-friend{
+margin:1px;
+width:27%;
+height:100px;
+float:right;
+text-align:center;
+padding:5px;
+}
+
+div.profile-profile-friend img{
+margin:auto;
+width:60px;
+display:block;
+}
+
+
+
+div#profile-profile-avatar {
+
+margin:1px;
+width:45%;
+float:right;
+text-align:center;
+}
+
+div#profile-profile-avatar img{
+border:2px solid black;
+}
+
+div#profile-profile-mainvideo{
+margin:1px;
+width:45%;
+float:right;
+}
+
+
+span.profile-profileinfo-label {
+margin:1px 5px;
+font-weight:bold;
+width:60px;
+min-width:60px;
+display:inline;
+}
+
+span.profile-profileinfo-value {
+margin:1px 5px;
+}
+p.profile-profileinfo-valuebigtext {
+text-align:justify;
+margin:1px 5px;
+}
+
+
+p#profile-profile-friend-viewall
+{
+margin:1px;
+float:right;
+padding:1px;
+width:100%;
+overflow:hidden;
+}
+
+div#profile-profile-tribes h2, div#profile-profile-search-results p, div#profile-profile-statistics p, div#profile-profile-details p, div#profile-profile-search-results h2, div#profile-profile-search-results h4, div#profile-profile-friends h2, div#profile-profile-visual h2, div#profile-profile-statistics h2, div#profile-profile-details h2 {
+margin:0px;
+}
+
+/****************************************************************************************************** 
+ *  SCRAPS
+ */
+ 
+a.profile-scraps-replyscrap {
+	clear:both;
+	cursor: pointer;
+}
+
+div#profile-scraps-container {
+margin:3px;
+float:right;
+padding:1px;
+width:95%;
+overflow:hidden;
+}
+
+div#profile-scraps-container h2 {
+margin:0px;
+}
+
+img.avatar_scrap {
+border:1px solid;
+padding:1px;
+margin:3px;
+overflow:hidden;
+
+
+}
+
+div#profile-scraps-form {
+margin:3px;
+float:right;
+padding:1px;
+width:95%;
+overflow:hidden;
+}
+
+p.profile-scrap-uname{
+clear:both;
+}
+
+div.profile-scrap-details {
+min-height:200px;
+margin:3px;
+clear:both;
+padding:1px;
+width:95%;
+}
+
+div.profile-scrap-avatarandname{
+float:right;
+}
+
+form.profile-scrap-form{
+height:75px;
+width:450px;
+border:1px solid black;
+padding:1px;
+margin:auto;
+background-color:white;
+text-align:center;
+}
+
+form.profile-scrap-form-delete{
+display:inline;
+}
+
+input.post{
+display:block;
+}
+
+
+div.profile-scrap-details-texts{
+float:right;
+width:70%;
+}
+
+div.profile-scrap-details-form{
+height:100px;
+margin:3px;
+clear:both;
+padding:1px;
+width:95%;
+overflow:hidden;
+}
+
+p.profile-scraps-editdelete-forms{
+float:right;
+}
+
+
+
+/* **********************************************************************************************************
+Videos
+*/
+
+div#profile-videos-container {
+margin:3px;
+float:right;
+padding:1px;
+width:95%;
+overflow:hidden;
+}
+div.profile-video-container {
+margin:1px;
+float:right;
+padding:1px;
+width:95%;
+overflow:hidden;
+}
+
+div.profile-video {
+margin:3px;
+float:right;
+overflow:hidden;
+text-align:center;
+vertical-align:bottom;
+}
+
+div.profile-video embed{
+margin:auto;
+}
+
+div.profile-video-details form {
+display:inline;
+}
+
+div.profile-video-details {
+text-align:right;
+margin:3px;
+float:right;
+width:50%;
+}
+
+
+h2#profile-videos-title {
+margin:0px;
+}
+
+
+div#profile-video-form p, div#profile-video-form h2{
+margin:0px;
+}
+div#profile-video-form{
+margin:3px;
+float:right;
+padding:1px;
+width:95%;
+overflow:hidden;
+}
+
+
+/***************************************************************************************************************** 
+Audio
+*/
+
+div#profile-audio-form p, div#profile-audio-form h2, div#profile-audio-allaudiocontainer p, div#profile-audio-allaudiocontainer h2, h2#profile-audio-title{
+margin:0px;
+}
+
+
+div#profile-audio-form, div#profile-audio-container, div#profile-audio-allaudiocontainer{
+margin:3px;
+float:right;
+padding:1px;
+width:95%;
+overflow:hidden;
+}
+/***************************************************************************************************************** 
+Friends
+*/
+
+div#profile-friends-container {
+margin:3px;
+float:right;
+padding:1px;
+width:95%;
+overflow:hidden;
+}
+
+div#profile-friends-container h2{
+margin:0px;
+}
+
+div.profile-friend {
+margin:1px;
+width:23%;
+height:250px;
+float:right;
+text-align:center;
+}
+
+div.profile-friend img{
+margin:auto;
+display:block;
+}
+
+form.profile-friends-evaluateform, form.profile-friends-deleteform {
+
+display:inline;
+}
+
+/* 
+NAVEGACAO MAIS
+*/
+div#profile-navegacao {
+margin:auto;
+float:right;
+width:300px;
+overflow:hidden;
+}
+
+p#trustybw{
+display:inline;
+height:18px;
+background-image:url(../images/trustybw.gif); 
+background-repeat:no-repeat;
+width:48px;
+}
+
+span#trustycolor {
+width:32px;
+background-image:url(../images/trustycolor.gif);
+background-repeat:no-repeat;
+}
+
+p#coolbw{
+display:inline;
+height:18px;
+background-image:url(../images/coolbw.gif); 
+background-repeat:no-repeat;
+width:48px;
+}
+
+span#coolcolor {
+width:32px;
+background-image:url(../images/coolcolor.gif);
+background-repeat:no-repeat;
+}
+
+p#sexybw{
+display:inline;
+height:18px;
+background-image:url(../images/sexybw.gif); 
+background-repeat:no-repeat;
+width:48px;
+}
+
+span#sexycolor {
+width:32px;
+background-image:url(../images/sexycolor.gif);
+background-repeat:no-repeat;
+}
+
+p#profile-profile-fans {
+display:inline;
+height:18px;
+}
+/*************************************************************************************************************************************** 
+album
+***************************************************************************************************************************************/
+
+div#profile-album-form{
+margin:3px;
+padding:1px;
+float:right;
+width:95%;
+overflow:hidden;
+}
+
+div#profile-album-visitors h2, div#profile-album-container h2, div#profile-album-form h2,div#profile-album-form p {
+margin:0px;
+}
+
+div#profile-album-container{
+padding:1px;
+margin:3px;
+float:right;
+width:95%;
+overflow:hidden;
+}
+
+div.profile-album-picture {
+margin:0px;
+width:31%;
+height:250px;
+float:right;
+text-align:center;
+
+}
+
+div.profile-album-picture img{
+border:3px solid;
+padding:3px;
+}
+
+div.class {
+margin:10px;
+}
+
+form.profile-album-formquick {
+display:inline;
+}
+
+
+
+
+/*********************************************************************************************************
+tribes
+*/
+
+div#profile-tribe-edit-members, form#profile-tribe-edit-form, form#form_tribe_search, form#form_tribe, div#profile-tribe-container, div#profile-tribes-container, div#profile-mytribes-container{
+margin:3px;
+float:right;
+padding:1px;
+width:95%;
+overflow:hidden;
+}
+
+div#profile-tribe-edit-members h2, div.profile-tribe-edit-member h2, form#profile-tribe-edit-form h2, form#form_tribe_search h2, form#form_tribe h2, div#profile-tribes-container h2, div#profile-mytribes-container h2, div#profile-tribe-container p,div#profile-tribe-container h2{
+margin:0px;
+}
+
+
+
+div.profile-tribe-edit-member, div.profile-tribe-my{
+margin:1px;
+width:23%;
+height:250px;
+float:right;
+text-align:center;
+}
+
+div.profile-tribe-all{
+min-height:100px;
+}
+
+div.profile-tribe-all img{
+float:right;
+margin:3px;
+}
+
+form#form_tribe_search p, form#profile-tribe-edit-form p, form#form_tribe p, div.profile-tribe-all h4, div.profile-tribe-all p{
+margin:1px;
+}
+
+form.profile-tribes-form-becomemember,form.profile-tribes-form-delete,form.profile-tribes-form-edit {
+display:inline;
+}
+
+/* 
+Others
+*/
+
+.yogerrors {color:#FF0000; background-color:#FFEAF4; border-color:#FF0000; border-width:thick;}
+
+fieldset.myconfigs-fieldset {
+	border: 1px dotted #80021A;
+	padding: 10px;
+}
+
+legend.myconfigs-legend {
+	color: #80021a;
+	font-size: 1.5em;
+}
+p.alert {
+	background-color: #ffc;
+	border: 2px solid #fc6;
+	padding: 10px;
+	margin-bottom: 10px;
+}
+
+
+
+div#nav{
+	margin-right:auto;
+	margin-left:auto;
+	width:100px;
+	page-break-after: always;
+	
+	
+	}
+div#titulo-friends div {
+	float:right;
+	margin-left: auto;
+	margin-right: auto;
+	page-break-after: always;
+}
+
+div#wrapper-titulo-ishot div {
+	float:right;
+	margin-bottom: 10px;
+}
+div#titulo {
+	width: 35%;
+}
+div#titulo h2 {
+	font-size: 1.5em;
+}
+div#ishot {
+	width: 60%;
+}
+div#ishot form {
+	display: inline;
+}
+div#ishot p#ishot-result {
+	font-size: 0.5em;
+}
+div#album {
+margin:auto;
+text-align:center;
+
+}
+
+ul#album_photos {
+	padding: 0;
+	margin:auto;
+text-align:center;
+	
+	
+}
+ul#album_photos:after {
+	content: ".";
+	width: 95%;
+	clear: both;
+	display: block;
+	visibility: hidden;
+	font-size: 1px;
+}
+ul#album_photos li {
+	list-style: none;
+	width: 180px;
+	float:right;
+	padding: 0;
+	margin: 0 6px 20px 0;
+}
+
+ul#friend {
+	padding: 3;
+	margin:auto;
+text-align:center;
+	
+	
+}
+ul#friend li  {
+	list-style: none;
+	width: 75px;
+	float:right;
+	padding: 0;
+	margin: 5px 6px 20px 5px;
+}
+
+ul#friend:after {
+	content: ".";
+	width: 95%;
+	clear: both;
+	display: block;
+	visibility: hidden;
+	font-size: 1px;
+}
+
+ul#album_photos li div.photo_in_album {
+	height: 240px;
+	text-align: center;
+}
+
+ul#album_photos li div.photo_in_album:hover {
+	background-color: #E1C3C3;	
+}
+ul#album_photos li div.photo_in_album p a {
+	/*background-color:#99FFFF;*/
+	height: 110px;
+	display: block;
+}
+ul#album_photos li div.photo_in_album img {
+	border: 5px solid #000;
+	padding: 2px;
+}
+ul#album_photos li div.photo_in_album a:hover img {
+	border-color: #80021A;
+}
+ul#album_photos li div.photo_in_album a:hover {
+	color: #80021A;
+}
+div.photo_in_album p#desc {
+	height: 50px;
+}
+div.photo_in_album form {
+	display: inline;
+}
+.smartprofile_headertable {padding: 0; margin: 0; border-bottom: 1px solid; margin-bottom: 10px;}
+.smartprofile_modulename {font-size: 0.8em; text-align: right; font-weight: bold; padding-right: 0.3em;	line-height: 18px;}
+.smartprofile_breadcrumb {font-size: 0.8em; line-height: 18px;}
+.smartprofile_adminlinks {
+	padding-top: 15px;
+	padding-bottom: 5px;
+	font-size: 90%;
+	text-align: center;
+	line-height: 18px;
+}

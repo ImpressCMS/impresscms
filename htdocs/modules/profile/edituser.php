@@ -43,12 +43,17 @@ if ($op == 'save') {
     $errors = array();
     $myts =& MyTextSanitizer::getInstance();
     $member_handler =& xoops_gethandler('member');
+    $config_handler =& xoops_gethandler('config');
+	$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     $edituser =& $member_handler->getUser($uid);
+    if ($xoopsUser->isAdmin()) {
     $edituser->setVar('login_name', $myts->stripSlashesGPC(trim($_POST['login_name'])));
     $edituser->setVar('uname', $myts->stripSlashesGPC(trim($_POST['uname'])));
-    if ($xoopsUser->isAdmin()) {
-        $edituser->setVar('email', $myts->stripSlashesGPC(trim($_POST['email'])));
+    $edituser->setVar('email', $myts->stripSlashesGPC(trim($_POST['email'])));
+    }elseif($icmsConfigUser['allow_chguname'] == 1){
+    $edituser->setVar('uname', $myts->stripSlashesGPC(trim($_POST['uname'])));
     }
+	
     $stop = userCheck($edituser);
     if (!empty($stop)) {
         echo "<span style='color:#ff0000;'>$stop</span>";

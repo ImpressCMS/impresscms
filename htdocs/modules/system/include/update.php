@@ -12,6 +12,25 @@
 
 function xoops_module_update_system(&$module, $oldversion = null, $dbversion = null) {
 
+	if ($oldversion < 120) {
+        $result = $xoopsDB->query("SELECT t1.tpl_id FROM ".$xoopsDB->prefix('tplfile')." t1, ".$xoopsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
+
+        $tplids = array();
+        while (list($tplid) = $xoopsDB->fetchRow($result)) {
+            $tplids[] = $tplid;
+        }
+        if (count($tplids) > 0) {
+            $tplfile_handler =& xoops_gethandler('tplfile');
+            $duplicate_files = $tplfile_handler->getObjects(new Criteria('tpl_id', "(".implode(',', $tplids).")", "IN"));
+
+            if (count($duplicate_files) > 0) {
+                foreach (array_keys($duplicate_files) as $i) {
+                    $tplfile_handler->delete($duplicate_files[$i]);
+                }
+            }
+        }
+    }
+
     $icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
     //$dbversion  = $module->getDBVersion();
     //$oldversion  = $module->getVar('version');
@@ -601,25 +620,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbversion = n
     }
     $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
     
-	if ($oldversion < 120) {
-        $result = $xoopsDB->query("SELECT t1.tpl_id FROM ".$xoopsDB->prefix('tplfile')." t1, ".$xoopsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
-
-        $tplids = array();
-        while (list($tplid) = $xoopsDB->fetchRow($result)) {
-            $tplids[] = $tplid;
-        }
-        if (count($tplids) > 0) {
-            $tplfile_handler =& xoops_gethandler('tplfile');
-            $duplicate_files = $tplfile_handler->getObjects(new Criteria('tpl_id', "(".implode(',', $tplids).")", "IN"));
-
-            if (count($duplicate_files) > 0) {
-                foreach (array_keys($duplicate_files) as $i) {
-                    $tplfile_handler->delete($duplicate_files[$i]);
-                }
-            }
-        }
-    }
-
 	$answer = true;
     if($CleanWritingFolders == 1){
 	    $answer = icms_cleaning_write_folders();

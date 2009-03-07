@@ -16,12 +16,5 @@
 
 $xoopsTpl->assign("profile_adminpage", "<a href='" . ICMS_URL . "/modules/".basename( dirname( __FILE__ ) )."/admin/user.php'>" ._CO_ICMS_ADMIN_PAGE . "</a>");
 $xoopsTpl->assign("profile_isAdmin", $profile_isAdmin);
-$xoopsTpl->assign('profile_url', SMARTPROFILE_URL);
-$xoopsTpl->assign('profile_images_url', SMARTPROFILE_IMAGES_URL);
-
-$xoopsTpl->assign("xoops_module_header", '<link rel="stylesheet" type="text/css" href="' . SMARTPROFILE_URL . 'module'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />');
-
-//$xoopsTpl->assign("ref_smartfactory", "Profile is developed by The SmartFactory (http://smartfactory.ca), a division of INBOX International (http://inboxinternational.com)");
-
 include ICMS_ROOT_PATH.'/footer.php';
 ?>

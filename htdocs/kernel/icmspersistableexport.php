@@ -1,23 +1,16 @@
 <?php
 /**
- * Contains the classes for easily exporting data
- *
- * @license GNU
- * @author marcan <marcan@smartfactory.ca>
- * @version $Id$
- * @link http://www.smartfactory.ca The SmartFactory
- * @package IcmsPersistable
- */
+* Class to easily export data from IcmsPersistables
+*
+* @copyright	The ImpressCMS Project http://www.impresscms.org/
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		IcmsPersistableObject
+* @since		1.2
+* @author		marcan <marcan@impresscms.org>
+* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @version		$Id: icmspersistablememberhandler.php 7264 2008-11-29 05:08:31Z pesian_stranger $
+*/
 
-/**
- * IcmsPersistableExport class
- *
- * Class to easily export data from IcmsPersistables
- *
- * @package IcmsPersistable
- * @author marcan <marcan@smartfactory.ca>
- * @link http://www.smartfactory.ca The SmartFactory
- */
 class IcmsPersistableExport {
 
 	var $handler;

@@ -469,13 +469,7 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
         	redirect_header(XOOPS_URL."/user.php",1,_NOPERM);
 		}
 	}
-    if ( file_exists(XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/language/".$xoopsConfig['language']."/main.php") ) {
-    	include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/language/".$xoopsConfig['language']."/main.php";
-	} else {
-    	if ( file_exists(XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/language/english/main.php") ) {
-        	include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/language/english/main.php";
-		}
-	}
+	icms_loadLanguageFile($xoopsModule->getVar('dirname'), 'main');
     if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1 || $xoopsModule->getVar( 'hasnotification' ) == 1) {
     	$xoopsModuleConfig =& $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 	}

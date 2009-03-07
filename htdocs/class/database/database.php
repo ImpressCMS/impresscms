@@ -42,6 +42,7 @@
 if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
 	define("XOOPS_C_DATABASE_INCLUDED",1);
 
+icms_loadLanguageFile('core', 'databaseupdater');
 /**
  * Abstract base class for Database access classes
  *

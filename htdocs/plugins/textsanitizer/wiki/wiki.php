@@ -54,7 +54,7 @@ EOH;*/
 
         return array($code, $javascript);
 }
-function stlye_wiki(){
+function style_wiki(){
 $style_info = '';
 return $style_info;
 }
