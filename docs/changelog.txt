@@ -179,7 +179,11 @@ ImpressCMS ChangeLog
 
 == Impresscms 1.1.2==
 
-===2009-02-28 : 1.1.2 RC2===
+===2009-03-08 : 1.1.2 Final===
+
+* Released 1.1.2 RC2 as Final
+
+===2009-03-01 : 1.1.2 RC2===
 
 '''Fixed'''
 * #244: $HTTP_SERVER_VARS replaced with $_SERVER in checklogin.php (vaughan)
