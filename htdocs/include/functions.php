@@ -119,7 +119,7 @@ function xoops_footer()
  * 
  * @todo Make this work with templates ;)
  */
-function icms_error_msg($msg, $title='', $render = false){
+function icms_error_msg($msg, $title='', $render = true){
 	$ret = '<div class="errorMsg">';
 	if($title != '') {$ret .= '<h4>'.$title.'</h4>';}
 	if(is_array($msg))

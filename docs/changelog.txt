@@ -176,6 +176,7 @@ ImpressCMS ChangeLog
 * #3: TinyMCE: adv. imagemanager not working correctly. (realtherplima)
 * #291: Block "social bookmarks" missing. (stranger)
 * #378: installation fails. (stranger)
+* #406: all errors are not shown in admin menu. (stranger)
 
 
 == Impresscms 1.1.2==

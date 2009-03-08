@@ -21,9 +21,9 @@ function b_system_admin_warnings_show(){
 	$block['msg'] = array();
 	// ###### Output warn messages for security  ######
 	if(is_dir(ICMS_ROOT_PATH.'/install/')){
-		//array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/')));
+		array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/')));
 	}
-	if(getDbValue($xoopsDB, 'modules', 'version', 'version="110"') == 0 AND getDbValue($xoopsDB, 'modules', 'mid', 'mid="1"') == 1){
+	if(getDbValue($xoopsDB, 'modules', 'version', 'version="120"') == 0 AND getDbValue($xoopsDB, 'modules', 'mid', 'mid="1"') == 1){
 		array_push($block['msg'], icms_error_msg('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">'._WARNINGUPDATESYSTEM.'</a>'));
 	}
 	if(is_writable(ICMS_ROOT_PATH.'/mainfile.php')){
@@ -46,7 +46,7 @@ function b_system_admin_warnings_show(){
 		}
 	}
 	if($protector_is_active == 0){
-		array_push($block['msg'], xoops_error(_PROTECTOR_NOT_FOUND));
+		array_push($block['msg'], icms_error_msg(_PROTECTOR_NOT_FOUND));
 		echo '<br />';
 	}
 	
