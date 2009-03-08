@@ -32,8 +32,7 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
 function icms_cp_header(){
-    global $xoopsConfig, $xoopsOption, $xoTheme, $xoopsLogger, $icmsAdminTpl;
-	
+    global $xoopsConfig, $xoopsModule, $xoopsUser, $xoopsOption, $xoTheme, $im_multilanguageConfig, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
 	$xoopsLogger->stopTime( 'Module init' );
 	$xoopsLogger->startTime( 'ImpressCMS CP Output Init' );
 	
@@ -140,6 +139,124 @@ window.onload=startList;');
  		        	}
  		        }
 
+	/**
+	 * Loading admin dropdown menus
+	 */
+	if (! file_exists ( XOOPS_CACHE_PATH . '/adminmenu_' . $xoopsConfig ['language'] . '.php' )) {
+		xoops_confirm ( array ('op' => 2 ), XOOPS_URL . '/admin.php', _RECREATE_ADMINMENU_FILE );
+		exit ();
+	}
+	$file = file_get_contents ( XOOPS_CACHE_PATH . "/adminmenu_" . $xoopsConfig ['language'] . ".php" );
+	$admin_menu = eval ( 'return ' . $file . ';' );
+	
+	$moduleperm_handler = & xoops_gethandler ( 'groupperm' );
+	$module_handler = & xoops_gethandler ( 'module' );
+	foreach ( $admin_menu as $k => $navitem ) {
+		if ($navitem ['id'] == 'modules') { //Getting array of allowed modules to use in admin home
+			$perm_itens = array ( );
+			foreach ( $navitem ['menu'] as $item ) {
+				$module = $module_handler->getByDirname ( $item ['dir'] );
+				$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->mid (), $xoopsUser->getGroups () );
+				if ($admin_perm) {
+					if ($item ['dir'] != 'system') {
+						$perm_itens [] = $item;
+					}
+				}
+			}
+			$navitem ['menu'] = $mods = $perm_itens;
+		} //end
+		if ($navitem ['id'] == 'opsystem') {
+			$groups = $xoopsUser->getGroups ();
+			$all_ok = false;
+			if (! in_array ( XOOPS_GROUP_ADMIN, $groups )) {
+				$sysperm_handler = & xoops_gethandler ( 'groupperm' );
+				$ok_syscats = & $sysperm_handler->getItemIds ( 'system_admin', $groups );
+			} else {
+				$all_ok = true;
+			}
+			$perm_itens = array ( );
+			
+			/**
+			 * Allow easely change the order of system dropdown menu.
+			 * $adminmenuorder = 1; Alphabetically order;
+			 * $adminmenuorder = 0; Indice key order;
+			 * To change the order when using Indice key order just change the order of the array in the file modules/system/menu.php and after update the system module
+			 * 
+			 * @todo: Create a preference option to set this value and improve the way to change the order.
+			 */
+			$adminmenuorder = 1;
+			$adminsubmenuorder = 1;
+			if ($adminmenuorder == 1) {
+				foreach ( $navitem ['menu'] as $k => $sortarray ) {
+					$column [] = $sortarray ['title'];
+					if (isset ( $sortarray ['subs'] ) && count ( $sortarray ['subs'] ) > 0 && $adminsubmenuorder) {
+						asort ( $navitem ['menu'] [$k] ['subs'] ); //Sorting submenus of preferences
+					}
+				}
+				//sort arrays after loop
+				array_multisort ( $column, SORT_ASC, $navitem ['menu'] );
+			}
+			foreach ( $navitem ['menu'] as $item ) {
+				if (false != $all_ok || in_array ( $item ['id'], $ok_syscats )) {
+					$perm_itens [] = $item;
+				}
+			}
+			$navitem ['menu'] = $sysprefs = $perm_itens; //Getting array of allowed system prefs
+		}
+		$icmsAdminTpl->append ( 'navitems', $navitem );
+	}
+	//icms_debug_vardump($sysprefs);
+	if (count ( $sysprefs ) > 0) {
+		$icmsAdminTpl->assign ( 'systemadm', 1 );
+	} else {
+		$icmsAdminTpl->assign ( 'systemadm', 0 );
+	}
+	if (count ( $mods ) > 0) {
+		$icmsAdminTpl->assign ( 'modulesadm', 1 );
+	} else {
+		$icmsAdminTpl->assign ( 'modulesadm', 0 );
+	}
+	
+	/**
+	 * Loading options of the current module.
+	 */
+	if ($xoopsModule) {
+		if ($xoopsModule->dirname () == 'system') {
+			if (isset ( $sysprefs ) && count ( $sysprefs ) > 0) {
+				for($i = count ( $sysprefs ) - 1; $i >= 0; $i = $i - 1) {
+					if (isset ( $sysprefs [$i] )) {
+						$reversed_sysprefs [] = $sysprefs [$i];
+					}
+				}
+				foreach ( $reversed_sysprefs as $k ) {
+					$icmsAdminTpl->append ( 'mod_options', array ('title' => $k ['title'], 'link' => $k ['link'], 'icon' => (isset ( $k ['icon'] ) && $k ['icon'] != '' ? $k ['icon'] : '') ) );
+				}
+			}
+		} else {
+			foreach ( $mods as $mod ) {
+				if ($mod ['dir'] == $xoopsModule->dirname ()) {
+					$m = $mod; //Getting info of the current module
+					break;
+				}
+			}
+			if (isset ( $m ['subs'] ) && count ( $m ['subs'] ) > 0) {
+				for($i = count ( $m ['subs'] ) - 1; $i >= 0; $i = $i - 1) {
+					if (isset ( $m ['subs'] [$i] )) {
+						$reversed_module_admin_menu [] = $m ['subs'] [$i];
+					}
+				}
+				foreach ( $reversed_module_admin_menu as $k ) {
+					$icmsAdminTpl->append ( 'mod_options', array ('title' => $k ['title'], 'link' => $k ['link'], 'icon' => (isset ( $k ['icon'] ) && $k ['icon'] != '' ? $k ['icon'] : '') ) );
+				}
+			}
+		}
+		$icmsAdminTpl->assign ( 'modpath', XOOPS_URL . '/modules/' . $xoopsModule->dirname () );
+		$icmsAdminTpl->assign ( 'modname', $xoopsModule->name () );
+		$icmsAdminTpl->assign ( 'modid', $xoopsModule->mid () );
+		$icmsAdminTpl->assign ( 'moddir', $xoopsModule->dirname () );
+		$icmsAdminTpl->assign ( 'lang_prefs', _PREFERENCES );
+	}
+	
 	if ( @is_object( $xoTheme->plugins['xos_logos_PageBuilder'] ) ) {
 		$aggreg =& $xoTheme->plugins['xos_logos_PageBuilder'];
 
@@ -156,6 +273,11 @@ window.onload=startList;');
 		$icmsAdminTpl->assign( 'xoops_showrblock', !empty($aggreg->blocks['canvas_right']) );
 		$icmsAdminTpl->assign( 'xoops_showcblock', !empty($aggreg->blocks['page_topcenter']) || !empty($aggreg->blocks['page_topleft']) || !empty($aggreg->blocks['page_topright']) );
 		
+		/**
+		 * Send to template some ml infos
+		 */
+		$icmsAdminTpl->assign ( 'lang_prefs', _IMPRESSCMS_PREFS );
+		$icmsAdminTpl->assign ( 'ml_is_enabled', $im_multilanguageConfig ['ml_enable'] );
 		$config_handler = & xoops_gethandler ( 'config' );
 		$xoopsConfigPersona = & $config_handler->getConfigsByCat( XOOPS_CONF_PERSONA );
 		$icmsAdminTpl->assign( 'adm_left_logo', $xoopsConfigPersona['adm_left_logo'] );		
@@ -333,60 +455,6 @@ function impresscms_get_adminmenu() {
 	#########################################################################
 	# end
 	#########################################################################
-	
-
-	#########################################################################
-	# Modules menu
-	#########################################################################
-	$module_handler = & xoops_gethandler ( 'module' );
-	$criteria = new CriteriaCompo ( );
-	$criteria->add ( new Criteria ( 'hasadmin', 1 ) );
-	$criteria->add ( new Criteria ( 'isactive', 1 ) );
-	$criteria->setSort ( 'mid' );
-	$modules = $module_handler->getObjects ( $criteria );
-	foreach ( $modules as $module ) {
-		$rtn = array ( );
-		$inf = & $module->getInfo ();
-		$rtn ['link'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . (isset ( $inf ['adminindex'] ) ? $inf ['adminindex'] : '');
-		$rtn ['title'] = $module->name ();
-		$rtn ['dir'] = $module->dirname ();
-		if (isset ( $inf ['iconsmall'] ) && $inf ['iconsmall'] != '') {
-			$rtn ['small'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconsmall'];
-		}
-		if (isset ( $inf ['iconbig'] ) && $inf ['iconbig'] != '') {
-			$rtn ['iconbig'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconbig'];
-		}
-		$rtn ['absolute'] = 1;
-		$module->loadAdminMenu ();
-		if (is_array ( $module->adminmenu ) && count ( $module->adminmenu ) > 0) {
-			$rtn ['hassubs'] = 1;
-			$rtn ['subs'] = array ( );
-			foreach ( $module->adminmenu as $item ) {
-				$item ['link'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $item ['link'];
-				$rtn ['subs'] [] = $item;
-			}
-		} else {
-			$rtn ['hassubs'] = 0;
-			unset ( $rtn ['subs'] );
-		}
-		$hasconfig = $module->getVar ( 'hasconfig' );
-		$hascomments = $module->getVar ( 'hascomments' );
-		if ((isset ( $hasconfig ) && $hasconfig == 1) || (isset ( $hascomments ) && $hascomments == 1)) {
-			$rtn ['hassubs'] = 1;
-			if (! isset ( $rtn ['subs'] )) {
-				$rtn ['subs'] = array ( );
-			}
-			$subs = array ('title' => _PREFERENCES, 'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $module->mid () );
-			$rtn ['subs'] [] = $subs;
-		} else {
-			$rtn ['hassubs'] = 0;
-			unset ( $rtn ['subs'] );
-		}
-		if ($module->dirname () == 'system') {
-			$systemadm = true;
-		}
-		$modules_menu [] = $rtn;
-	}
 	
 	$admin_menu [$cont] ['id'] = 'modules';
 	$admin_menu [$cont] ['text'] = _MODULES;

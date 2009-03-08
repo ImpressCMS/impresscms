@@ -113,7 +113,11 @@ function b_system_admin_cp_show(){
 	asort($dirlist);
 	$block['sysmod'] = array();
 	foreach($dirlist as $file){
-		include $admin_dir.'/'.$file.'/xoops_version.php';
+		$mod_version_file = 'xoops_version.php';
+		if(file_exists($admin_dir.'/'.$file.'/icms_version.php')){
+		$mod_version_file = 'icms_version.php';
+		}
+		include $admin_dir.'/'.$file.'/'.$mod_version_file;
 		if($modversion['hasAdmin']){
 			$category = isset($modversion['category']) ? intval($modversion['category']) : 0;
 			if(false != $all_ok || in_array($modversion['category'], $ok_syscats)){

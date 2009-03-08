@@ -42,18 +42,10 @@ $fct = (isset($_GET['fct']))?trim(StopXSS($_GET['fct'])):((isset($_POST['fct']))
 
 if(isset($fct) && $fct == 'users') {$xoopsOption['pagetype'] = 'user';}
 include '../../mainfile.php';
-
+$false = false;
 include ICMS_ROOT_PATH.'/include/cp_functions.php';
-if(file_exists(ICMS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin.php'))
-{
-	include ICMS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin.php';
-}
-else {include ICMS_ROOT_PATH.'/modules/system/language/english/admin.php';}
-
-// Include lang defines for About page
-if ( file_exists( ICMS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/moduleabout.php' ) ) {
-	include_once ICMS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/moduleabout.php';
-} else { include ICMS_ROOT_PATH . '/language/english/moduleabout.php'; }
+icms_loadLanguageFile('system', 'admin');
+icms_loadLanguageFile('core', 'moduleabout');
 
 include_once ICMS_ROOT_PATH.'/class/xoopsmodule.php';
 // Check if function call does exist (security)
@@ -80,14 +72,7 @@ if($admintest != 0)
 	{
 		if(file_exists(ICMS_ROOT_PATH.'/modules/system/admin/'.$fct.'/xoops_version.php'))
 		{
-			if(file_exists(ICMS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin/'.$fct.'.php'))
-			{
-				include_once ICMS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin/'.$fct.'.php';
-			}
-			elseif(file_exists(ICMS_ROOT_PATH.'/modules/system/language/english/admin/'.$fct.'.php'))
-			{
-				include_once ICMS_ROOT_PATH.'/modules/system/language/english/admin/'.$fct.'.php';
-			}
+			icms_loadLanguageFile('system', $fct, true);
 			include ICMS_ROOT_PATH.'/modules/system/admin/'.$fct.'/xoops_version.php';
 			$sysperm_handler =& xoops_gethandler('groupperm');
 			$category = !empty($modversion['category']) ? intval($modversion['category']) : 0;
