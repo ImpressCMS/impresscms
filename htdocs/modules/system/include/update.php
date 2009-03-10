@@ -13,7 +13,7 @@
 function xoops_module_update_system(&$module, $oldversion = null, $dbversion = null) {
 
 	    global $xoopsDB;
-	if ($oldversion < 140) {
+	if ($oldversion < 120) {
         $result = $xoopsDB->query("SELECT t1.tpl_id FROM ".$xoopsDB->prefix('tplfile')." t1, ".$xoopsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
 
         $tplids = array();
@@ -610,6 +610,17 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbversion = n
     	echo $action;
 	    // create extended date function's config option
 	    $icmsDatabaseUpdater->insertConfig(XOOPS_CONF, 'theme_admin_set', '_MD_AM_ADMIN_DTHEME', 'iTheme', '_MD_AM_ADMIN_DTHEME_DESC', 'theme', 'other', 12);
+	}
+
+    $newDbVersion = 22;
+
+    if ($dbversion < $newDbVersion) {
+	    global $xoopsDB;
+    	$action = sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+    	echo $action;
+        $xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('modules') . "` WHERE dirname='waiting'");
+        $xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('newblocks') . "` WHERE dirname='waiting'");
+        $xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('tplfile') . "` WHERE tpl_module='waiting'");
 	}
 
 	echo "</code>";
