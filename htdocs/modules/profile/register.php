@@ -14,7 +14,8 @@
  * @version         $Id$
  */
 
-include_once 'header.php';
+include_once '../../mainfile.php';
+include_once '../../header.php';
 include_once 'include/functions.php';
 $myts =& MyTextSanitizer::getInstance();
 if ($xoopsUser) {

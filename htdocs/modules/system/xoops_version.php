@@ -14,7 +14,7 @@
 */
 
 $modversion['name'] = _MI_SYSTEM_NAME;
-$modversion['version'] = 1.20;
+$modversion['version'] = 1.40;
 $modversion['description'] = _MI_SYSTEM_DESC;
 $modversion['author'] = "";
 $modversion['credits'] = "The ImpressCMS Project";
@@ -223,11 +223,13 @@ $modversion['blocks'][$i]['show_func'] = "b_system_search_show";
 $modversion['blocks'][$i]['template'] = 'system_block_search.html';
 
 $i++;
-$modversion['blocks'][$i]['file'] = "system_blocks.php";
+$modversion['blocks'][$i]['file'] = "system_waiting.php";
 $modversion['blocks'][$i]['name'] = _MI_SYSTEM_BNAME5;
 $modversion['blocks'][$i]['description'] = "Shows contents waiting for approval";
 $modversion['blocks'][$i]['show_func'] = "b_system_waiting_show";
+$modversion['blocks'][$i]['edit_func'] = "b_system_waiting_edit";
 $modversion['blocks'][$i]['template'] = 'system_block_waiting.html';
+$modversion['blocks'][$i]['options'] = '1|5';
 
 $i++;
 $modversion['blocks'][$i]['file'] = "system_blocks.php";

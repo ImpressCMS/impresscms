@@ -40,7 +40,9 @@ if (!defined('ICMS_GROUP_ANONYMOUS')) {
 /**
  * Creating ICMS specific constants
  */
-define('ICMS_PRELOAD_PATH', ICMS_ROOT_PATH.'/plugins/preloads');
+define('ICMS_PRELOAD_PATH', ICMS_PLUGINS_PATH.'/preloads');
+define('ICMS_PLUGINS_PATH', ICMS_ROOT_PATH.'/plugins');
+define('ICMS_PLUGINS_URL', ICMS_URL.'/plugins');
 define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH.'/cache/htmlpurifier');
 
 // ################# Creation of the IcmsPreloadHandler ##############
@@ -415,6 +417,7 @@ if (isset( $_GET['lang'] ) && isset($_COOKIE['lang'])){
 icms_loadLanguageFile('core', 'global');
 icms_loadLanguageFile('core', 'theme');
 icms_loadLanguageFile('core', 'core');
+icms_loadLanguageFile('system', 'common');
 @define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;
 @define( '_GLOBAL_RIGHT' , @_ADM_USE_RTL == 1 ? 'left' : 'right' ) ;
 	/*

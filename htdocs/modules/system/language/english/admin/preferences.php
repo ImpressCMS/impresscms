@@ -412,7 +412,11 @@ define("_MD_AM_AUTHOPENID","Enable OpenID authentication");
 define("_MD_AM_AUTHOPENIDDSC","Select Yes to enable OpenID authentication. This will allow users to login on the site using their OpenID account. For complete information about the OpenID Integration in ImpressCMS, please visit <a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID'>our wiki</a>.");
 define("_MD_AM_USE_GOOGLE_ANA"," Enable Google Analytics?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC","");
-// CAPTCHA Category
+
+// added in 1.1.2 
+define("_MD_AM_UNABLEENCCLOSED","Database Update Failed, You can't change password encryption whilst the site is closed");
+
+######################## Added in 1.2 ###################################
 define("_MD_AM_CAPTCHA","Captcha Settings");
 define("_MD_AM_CAPTCHA_MODE","Captcha mode");
 define("_MD_AM_CAPTCHA_MODEDSC","Please select a type of Captcha for your website");
@@ -446,11 +450,6 @@ define("_MD_AM_CAPTCHA_TXT","Text");
 define("_MD_AM_CAPTCHA_OFF","Disabled");
 define("_MD_AM_CAPTCHA_SKIPCHAR","Skip characters");
 define("_MD_AM_CAPTCHA_SKIPCHARDSC","This option will skip the entered characters when generating Captcha");
-
-// added in 1.1.2 
-define("_MD_AM_UNABLEENCCLOSED","Database Update Failed, You can't change password encryption whilst the site is closed");
-
-######################## Added in 1.2 ###################################
 define('_MD_AM_PAGISTYLE','Style of the paginations links:');
 define('_MD_AM_PAGISTYLE_DESC','Select the style of the paginations links.');
 define('_MD_AM_ALLWCHGUNAME', 'Allow users to change Display Name?');
@@ -487,4 +486,6 @@ define('_MD_AM_NUMINITSRCHRSLTS', "Number of initial search results: (for 'shall
 define('_MD_AM_NUMINITSRCHRSLTSDSC', "'Shallow' searches are made quicker by limiting the results that are returned for each module on the initial search page.");
 define('_MD_AM_NUMMDLSRCHRESULTS', "Number of search results per page:");
 define('_MD_AM_NUMMDLSRCHRESULTSDSC', "This determines how many hits per page are shown after drilling down into a particular module's search results.");
+define('_MD_AM_ADMIN_DTHEME', 'Admin Theme');
+define('_MD_AM_ADMIN_DTHEME_DESC', '');
 ?>
