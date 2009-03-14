@@ -12,7 +12,7 @@
 * @version		$Id$
 */
 
-/*function icms_module_update_profile(&$module, $oldversion = null, $dbversion = null) 
+function icms_module_update_profile(&$module, $oldversion = null, $dbversion = null) 
 {
     GLOBAL $xoopsDB;
     
@@ -151,12 +151,6 @@
         $sql = "DROP TABLE " . $xoopsDB->prefix("profile_regstep_bak");
         $xoopsDB->queryF($sql);
     }
-		$config_handler =& xoops_gethandler('config');
-		$xoopsConfigAuth =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
-		if($xoopsConfigAuth['auth_openid'] == 1) {
-    addField('openid', 'Your OpenID', 'Your OPENID login data', 4, 'textbox', 1, 1, 1, array(), 1, 255);
-    addField('user_viewoid', _PROFILE_MI_VIEWEOID_TITLE, '', 3, 'yesno', 3, 1, 1, array(), 1, 1);
-    	}
     return true;
 }
 function addField($name, $title, $description, $category, $type, $valuetype, $weight, $canedit, $options, $step_id, $length) {
@@ -236,5 +230,5 @@ function addCategory($name, $weight) {
 function addStep($name, $desc, $order, $save) {
     global $xoopsDB;
     $xoopsDB->query("INSERT INTO ".$xoopsDB->prefix("profile_regstep")." VALUES (0, '".$name."', '".$desc."', ".$order.", ".$save.")");
-}*/
+}
 ?>
