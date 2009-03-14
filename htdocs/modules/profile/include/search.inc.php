@@ -69,7 +69,7 @@ function profile_search($queryarray, $andor, $limit, $offset, $userid)
  	while ( $myrow = $xoopsDB->fetchArray($result) ) {
 		if ( $userid != 0 ) {
 		if ($limit>5){
-		$ret[$i]['image'] = "images/search.png' /><a href='".ICMS_URL."/modules/profile/album.php?uid=".$myrow['uid_owner']."'><img src='".$path_uploadimages."/thumb_".$myrow['url']."' /></a><br />"."<img src=".ICMS_URL."/modules/profile/images/search.png" ;		
+		$ret[$i]['image'] = "images/search.png' /><a href='".ICMS_URL."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/album.php?uid=".$myrow['uid_owner']."'><img src='".$path_uploadimages."/thumb_".$myrow['url']."' /></a><br />"."<img src=".ICMS_URL."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/images/search.png" ;		
 		$ret[$i]['link'] = "album.php?uid=".$myrow['uid_owner'];
 		$ret[$i]['title'] = $myrow['title'];
 		//$ret[$i]['time'] = $myrow['data_creation'];
@@ -77,11 +77,11 @@ function profile_search($queryarray, $andor, $limit, $offset, $userid)
 			
 			
 			}else{
-		$stringofimage .= '<a href="'.ICMS_URL."/modules/profile/album.php?uid=".$myrow['uid_owner'].'" title="'.$myrow['title'].'"><img src="'.$path_uploadimages.'/thumb_'.$myrow['url'].'" /></a>&nbsp;' ;
+		$stringofimage .= '<a href="'.ICMS_URL."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/album.php?uid=".$myrow['uid_owner'].'" title="'.$myrow['title'].'"><img src="'.$path_uploadimages.'/thumb_'.$myrow['url'].'" /></a>&nbsp;' ;
 		
 		}
 		} else {
-		$ret[$i]['image'] = "images/search.png' /><a href='".ICMS_URL."/modules/profile/album.php?uid=".$myrow['uid_owner']."'><img src='".$path_uploadimages."/thumb_".$myrow['url']."' /></a><br />"."<img src='".ICMS_URL."/modules/profile/images/search.png" ;	
+		$ret[$i]['image'] = "images/search.png' /><a href='".ICMS_URL."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/album.php?uid=".$myrow['uid_owner']."'><img src='".$path_uploadimages."/thumb_".$myrow['url']."' /></a><br />"."<img src='".ICMS_URL."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/images/search.png" ;	
 		$ret[$i]['link'] = "album.php?uid=".$myrow['uid_owner'];
 		$ret[$i]['title'] = $myrow['title'];
 		//$ret[$i]['time'] = $myrow['data_creation'];
@@ -99,7 +99,7 @@ function profile_search($queryarray, $andor, $limit, $offset, $userid)
 		$ret[0]['time'] = time();
 		$ret[0]['uid'] = $userid;
 		$ret[0]['link'] = "album.php?uid=".$userid;
-		$stringofimage .= '<img src="'.ICMS_URL.'/modules/profile/images/search.png';
+		$stringofimage .= '<img src="'.ICMS_URL.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/images/search.png';
 		$ret[0]['image'] = $stringofimage;
 		}}
 	return $ret;

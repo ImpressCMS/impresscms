@@ -179,6 +179,7 @@ ImpressCMS ChangeLog
 * #291: Block "social bookmarks" missing. (stranger)
 * #378: installation fails. (stranger)
 * #406: all errors are not shown in admin menu. (stranger)
+* #466: Changing profile name to improfile. (stranger)
 
 
 == Impresscms 1.1.2==

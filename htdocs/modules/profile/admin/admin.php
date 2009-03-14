@@ -67,17 +67,17 @@ if ( (str_replace('.', '', PHP_VERSION)) > 520 ){
     
      ";}
 
-if (!is_dir(XOOPS_ROOT_PATH."/uploads/profile/mp3/")) {
+if (!is_dir(XOOPS_ROOT_PATH."/uploads/".basename(  dirname(  dirname( __FILE__ ) ) )."/mp3/")) {
   echo "<tr>
-          <td class='odd'><img src='../images/red.gif'> /uploads/profile/mp3/ is not exists</td>
+          <td class='odd'><img src='../images/red.gif'> /uploads/".basename(  dirname(  dirname( __FILE__ ) ) )."/mp3/ is not exists</td>
         </tr>";
-}elseif (!is_writable(XOOPS_ROOT_PATH."/uploads/profile/mp3/")) {
+}elseif (!is_writable(XOOPS_ROOT_PATH."/uploads/".basename(  dirname(  dirname( __FILE__ ) ) )."/mp3/")) {
   echo "<tr>
-          <td class='odd'><img src='../images/red.gif'>".XOOPS_ROOT_PATH."/uploads/profile/mp3/ is not writable</td>
+          <td class='odd'><img src='../images/red.gif'>".XOOPS_ROOT_PATH."/uploads/".basename(  dirname(  dirname( __FILE__ ) ) )."/mp3/ is not writable</td>
         </tr>";
 }else{
   echo "<tr>
-          <td class='odd'><img src='../images/green.gif' align='baseline'>".XOOPS_ROOT_PATH."/uploads/profile/mp3/ exists and writable</td>
+          <td class='odd'><img src='../images/green.gif' align='baseline'>".XOOPS_ROOT_PATH."/uploads/".basename(  dirname(  dirname( __FILE__ ) ) )."/mp3/ exists and writable</td>
         </tr>";
 }
 

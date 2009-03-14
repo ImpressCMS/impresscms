@@ -68,9 +68,10 @@ if ($uid <= 0) {
 		exit();
 	}
 }
+$modname = basename( dirname( __FILE__ ) );
 
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/userinfo.php?uid='.$uid);
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/userinfo.php?uid='.$uid);
 	exit();
 }
 

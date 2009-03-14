@@ -18,10 +18,12 @@
 $xoopsOption['template_main'] = 'profile_index.html';
 include_once 'header.php';
 
+$modname = basename( dirname( __FILE__ ) );
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/');
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/');
 	exit();
 }
+
 
 /**
 * Factory of petitions created
@@ -56,19 +58,19 @@ if($friendpetition_factory->getCount($criteria)>0)
 		$friendship_factory->insert($newfriendship1);
 		$friendship_factory->insert($newfriendship2);
 	
-		redirect_header(ICMS_URL.'/modules/profile/friends.php?uid='.$friend2_uid,3,_MD_PROFILE_FRIENDMADE);
+		redirect_header(ICMS_URL.'/modules/'.$modname.'/friends.php?uid='.$friend2_uid,3,_MD_PROFILE_FRIENDMADE);
 	}
 	else
 	{
 		if($friendship_level==0)
 		{
 			$friendpetition_factory->deleteAll($criteria);
-			redirect_header(ICMS_URL.'/modules/profile/video.php?uid='.$uid,3,_MD_PROFILE_FRIENDSHIPNOTACCEPTED);
+			redirect_header(ICMS_URL.'/modules/'.$modname.'/video.php?uid='.$uid,3,_MD_PROFILE_FRIENDSHIPNOTACCEPTED);
 		}
-		redirect_header(ICMS_URL.'/modules/profile/index.php?uid='.$uid,3,_MD_PROFILE_NOCACHACA);
+		redirect_header(ICMS_URL.'/modules/'.$modname.'/index.php?uid='.$uid,3,_MD_PROFILE_NOCACHACA);
 	}
 }
-else {redirect_header(ICMS_URL.'/modules/profile/index.php?uid='.$uid,3,_MD_PROFILE_NOCACHACA);}
+else {redirect_header(ICMS_URL.'/modules/'.$modname.'/index.php?uid='.$uid,3,_MD_PROFILE_NOCACHACA);}
 
 include 'footer.php';
 ?>

@@ -20,15 +20,16 @@
  */
 include_once 'header.php';
 
+$modname = basename( dirname( __FILE__ ) );
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/');
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/');
 	exit();
 }
+
 
 /**
  * Factories of tribes  
  */
-$modname = basename( dirname( __FILE__ ) );
 $reltribeuser_factory      = icms_getmodulehandler('reltribeuser', $modname, 'profile' );
 $tribes_factory = icms_getmodulehandler('tribes', $modname, 'profile' );
 

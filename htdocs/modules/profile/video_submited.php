@@ -18,15 +18,15 @@
 include_once 'header.php';
 $xoopsOption['template_main'] = 'profile_index.html';
 
+$modname = basename( dirname( __FILE__ ) );
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/');
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/');
 	exit();
 }
 
 /**
 * Factory of pictures created  
 */
-$modname = basename( dirname( __FILE__ ) );
 $album_factory = icms_getmodulehandler('video', $modname, 'profile' );
 
 $url = $_POST['codigo'];
@@ -54,9 +54,9 @@ if($album_factory->insert($newvideo))
 	$extra_tags['X_OWNER_UID'] = intval($xoopsUser->getVar('uid'));
 	$notification_handler =& xoops_gethandler('notification');
 	$notification_handler->triggerEvent('video', intval($xoopsUser->getVar('uid')), 'new_video',$extra_tags);
-	redirect_header(ICMS_URL.'/modules/profile/video.php?uid='.intval($xoopsUser->getVar('uid')),2,_MD_PROFILE_VIDEOSAVED);
+	redirect_header(ICMS_URL.'/modules/'.$modname.'/video.php?uid='.intval($xoopsUser->getVar('uid')),2,_MD_PROFILE_VIDEOSAVED);
 }
-else {redirect_header(ICMS_URL.'/modules/profile/video.php?uid='.intval($xoopsUser->getVar('uid')),2,_MD_PROFILE_NOCACHACA);}
+else {redirect_header(ICMS_URL.'/modules/'.$modname.'/video.php?uid='.intval($xoopsUser->getVar('uid')),2,_MD_PROFILE_NOCACHACA);}
 
 include 'footer.php';
 ?>

@@ -20,15 +20,15 @@
  */
 $xoopsOption['template_main'] = 'profile_index.html';
 include_once 'header.php';
+$modname = basename( dirname( __FILE__ ) );
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/');
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/');
 	exit();
 }
 
 /**
  * Factory of pictures created  
  */
-$modname = basename( dirname( __FILE__ ) );
 $audio_factory = icms_getmodulehandler('audio', $modname, 'profile' );;
 
 $myts =& MyTextSanitizer::getInstance();	
@@ -41,7 +41,7 @@ $author = $myts->displayTarea($_POST['author'],0,1,1,1,1);
 /**
  * Getting parameters defined in admin side  
  */
-$path_upload    = ICMS_ROOT_PATH."/uploads/profile/mp3/";
+$path_upload    = ICMS_ROOT_PATH.'/uploads/'.$modname.'/mp3/';
 $maxfilebytes   = $xoopsModuleConfig['maxfilesize'];
 
 /**
@@ -64,10 +64,10 @@ if ($_POST['xoops_upload_file'][0]=='sel_audio') {
 //                     $extra_tags['X_OWNER_UID'] = $xoopsUser->getVar('uid');
 //                     $notification_handler =& xoops_gethandler('notification');
 //                     $notification_handler->triggerEvent ("picture", $xoopsUser->getVar('uid'), "new_picture",$extra_tags);
-                     //header("Location: ".ICMS_URL."/modules/profile/index.php?uid=".$xoopsUser->getVar('uid'));
-                     redirect_header(ICMS_URL."/modules/profile/audio.php?uid=".$xoopsUser->getVar('uid'),5,_MD_PROFILE_UPLOADEDAUDIO);
+                     //header("Location: ".ICMS_URL."/modules/".$modname."/index.php?uid=".$xoopsUser->getVar('uid'));
+                     redirect_header(ICMS_URL."/modules/".$modname."/audio.php?uid=".$xoopsUser->getVar('uid'),5,_MD_PROFILE_UPLOADEDAUDIO);
               } else {
-                     redirect_header(ICMS_URL."/modules/profile/audio.php?uid=".$xoopsUser->getVar('uid'),5,_MD_PROFILE_NOCACHACA);
+                     redirect_header(ICMS_URL."/modules/".$modname."/audio.php?uid=".$xoopsUser->getVar('uid'),5,_MD_PROFILE_NOCACHACA);
               }
 }
 

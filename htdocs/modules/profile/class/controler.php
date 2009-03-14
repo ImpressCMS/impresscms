@@ -470,7 +470,7 @@ class ProfileAudioControler extends ProfileControler {
                 $audios_array[$i]['author']   = $audio->getVar("author","s");
 
                 if ( (str_replace('.', '', PHP_VERSION)) > 499 ){  
-                  $audio_path = ICMS_ROOT_PATH.'/uploads/profile/mp3/'.$audio->getVar("url","s");
+                  $audio_path = ICMS_ROOT_PATH.'/uploads/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/mp3/'.$audio->getVar("url","s");
                   // echo $audio_path;
                   $mp3filemetainfo = new Id3v1($audio_path, true);
                   $mp3filemetainfoarray = array();

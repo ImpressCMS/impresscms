@@ -21,17 +21,18 @@
 include_once 'header.php';
 $xoopsOption['template_main'] = 'profile_index.html';
 
+$modname = basename( dirname( __FILE__ ) );
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/');
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/');
 	exit();
 }
+
 
 $myts =& MyTextSanitizer::getInstance();
 
 /**
  * Factory of pictures created  
  */
-$modname = basename( dirname( __FILE__ ) );
 $album_factory = icms_getmodulehandler('images', $modname, 'profile' );
 
 /**
@@ -71,10 +72,10 @@ if ($_POST['xoops_upload_file'][0]=='sel_photo'){
                      $extra_tags['X_OWNER_UID'] = $xoopsUser->getVar('uid');
                      $notification_handler =& xoops_gethandler('notification');
                      $notification_handler->triggerEvent ("picture", $xoopsUser->getVar('uid'), "new_picture",$extra_tags);
-                     //header("Location: ".ICMS_URL."/modules/profile/index.php?uid=".$xoopsUser->getVar('uid'));
-                     redirect_header(ICMS_URL."/modules/profile/album.php?uid=".$xoopsUser->getVar('uid'),3,_MD_PROFILE_UPLOADED);
+                     //header("Location: ".ICMS_URL."/modules/".$modname."/index.php?uid=".$xoopsUser->getVar('uid'));
+                     redirect_header(ICMS_URL."/modules/".$modname."/album.php?uid=".$xoopsUser->getVar('uid'),3,_MD_PROFILE_UPLOADED);
               } else {
-                     redirect_header(ICMS_URL."/modules/profile/album.php?uid=".$xoopsUser->getVar('uid'),3,_MD_PROFILE_NOCACHACA);
+                     redirect_header(ICMS_URL."/modules/".$modname."/album.php?uid=".$xoopsUser->getVar('uid'),3,_MD_PROFILE_NOCACHACA);
               }
 }
 

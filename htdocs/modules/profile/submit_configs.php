@@ -20,13 +20,14 @@
  */
 include_once '../../mainfile.php';
 
+$modname = basename( dirname( __FILE__ ) );
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/');
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/');
 	exit();
 }
 
 
-$modname = basename( dirname( __FILE__ ) );
+
 if (!is_object($xoopsUser)) {
   redirect_header("index.php",3,_NOPERM);
   exit();

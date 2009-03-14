@@ -21,15 +21,16 @@
 $xoopsOption['template_main'] = 'profile_index.html';
 include_once 'header.php';
 
+$modname = basename( dirname( __FILE__ ) );
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/');
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/');
 	exit();
 }
+
 
 /**
  * Factory of petitions created  
  */
-$modname = basename( dirname( __FILE__ ) );
 $friendpetition_factory      = icms_getmodulehandler('friendpetition', $modname, 'profile' );
 
 /**
@@ -50,12 +51,12 @@ $petitioned_uid = intval($_POST['petitioned_uid']);
 $criteria= new criteriaCompo (new criteria('petioned_uid',$petitioned_uid));
 $criteria->add(new criteria('petitioner_uid',$xoopsUser->getVar('uid')));
 if ($friendpetition_factory->getCount($criteria)>0){
-redirect_header(ICMS_URL."/modules/profile/index.php?uid=".$_POST['petitioned_uid'],3,_MD_PROFILE_ALREADY_PETITIONED);
+redirect_header(ICMS_URL."/modules/".$modname."/index.php?uid=".$_POST['petitioned_uid'],3,_MD_PROFILE_ALREADY_PETITIONED);
 } else {
 $criteria2= new criteriaCompo (new criteria('petitioner_uid',$petitioned_uid));
 $criteria2->add(new criteria('petioned_uid',$xoopsUser->getVar('uid')));
 if ($friendpetition_factory->getCount($criteria2)>0){
-redirect_header(ICMS_URL."/modules/profile/index.php?uid=".$_POST['petitioned_uid'],3,_MD_PROFILE_ALREADY_PETITIONED);
+redirect_header(ICMS_URL."/modules/".$modname."/index.php?uid=".$_POST['petitioned_uid'],3,_MD_PROFILE_ALREADY_PETITIONED);
 }	
 }             
               /**
@@ -71,9 +72,9 @@ redirect_header(ICMS_URL."/modules/profile/index.php?uid=".$_POST['petitioned_ui
               $notification_handler =& xoops_gethandler('notification');
               $notification_handler->triggerEvent ("friendship", $_POST['petitioned_uid'] , "new_friendship",$extra_tags);       
                      
-                     redirect_header(ICMS_URL."/modules/profile/index.php?uid=".$_POST['petitioned_uid'],3,_MD_PROFILE_PETITIONED);
+                     redirect_header(ICMS_URL."/modules/".$modname."/index.php?uid=".$_POST['petitioned_uid'],3,_MD_PROFILE_PETITIONED);
               } else {
-                     redirect_header(ICMS_URL."/modules/profile/index.php?uid=".$xoopsUser->getVar('uid'),3,_MD_PROFILE_NOCACHACA);
+                     redirect_header(ICMS_URL."/modules/".$modname."/index.php?uid=".$xoopsUser->getVar('uid'),3,_MD_PROFILE_NOCACHACA);
               }
 
 

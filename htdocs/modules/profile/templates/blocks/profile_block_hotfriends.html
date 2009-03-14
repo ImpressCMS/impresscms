@@ -1,7 +1,7 @@
 <{section name=i loop=$block.friends}>
     <div style="width:80%; text-align: center; page-break-after: always; margin: auto; page-break-before: always;">
-    <a href="<{$xoops_url}>/modules/profile/index.php?uid=<{$block.friends[i].uid_voted}>" title=" Qtty<{$block.friends[i].qtd}>"><img src="<{$xoops_upload_url}>/<{$block.friends[i].user_avatar}>" alt=" Qtty<{$block.friends[i].qtd}>" /><br /><{$block.friends[i].uname}> </a>
+    <a href="<{$xoops_url}>/modules/improfile/index.php?uid=<{$block.friends[i].uid_voted}>" title=" Qtty<{$block.friends[i].qtd}>"><img src="<{$xoops_upload_url}>/<{$block.friends[i].user_avatar}>" alt=" Qtty<{$block.friends[i].qtd}>" /><br /><{$block.friends[i].uname}> </a>
     <br /><a href='javascript:openWithSelfMain("<{$xoops_url}>/pmlite.php?send2=1&to_userid=<{$block.friends[i].uid_voted}>","pmlite",500,450);'><img src="<{$xoops_url}>/images/icons/pm.gif" alt="" /></a>
     </div><br />
 <{/section}>
-<a href="<{$xoops_url}>/modules/profile/friends.php"><{$block.lang_allfriends}></a>
+<a href="<{$xoops_url}>/modules/improfile/friends.php"><{$block.lang_allfriends}></a>

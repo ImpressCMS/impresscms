@@ -23,7 +23,7 @@ $mod_profile =& $mod_handler->getByDirname($modname);
 $conf_handler =& xoops_gethandler('config');
 $moduleConfig =& $conf_handler->getConfigsByCat(0, $mod_profile->getVar('mid'));
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/search.php');
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/search.php');
 	exit();
 }
 $op = "form";

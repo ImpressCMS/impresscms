@@ -22,7 +22,7 @@ $mod_profile =& $mod_handler->getByDirname($modname);
 $conf_handler =& xoops_gethandler('config');
 $moduleConfig =& $conf_handler->getConfigsByCat(0, $mod_profile->getVar('mid'));
 if($moduleConfig['profile_social']==1){
-	header('Location: '.ICMS_URL.'/modules/profile/searchmembers.php');
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/searchmembers.php');
 	exit();
 }
 $myts =& MyTextSanitizer::getInstance();

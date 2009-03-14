@@ -17,12 +17,12 @@
 
 include_once 'header.php';
 include_once ICMS_ROOT_PATH.'/class/criteria.php';
+$modname = basename( dirname( __FILE__ ) );
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/');
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/');
 	exit();
 }
 
-$modname = basename( dirname( __FILE__ ) );
 
 $cod_img = $_POST['cod_img'];
 $marker = (!empty($_POST['marker'])) ? intval($_POST['marker']):0;

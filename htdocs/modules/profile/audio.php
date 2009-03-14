@@ -29,8 +29,9 @@ if ($uid <= 0) {
 	}
 }
 
+$modname = basename( dirname( __FILE__ ) );
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/userinfo.php?uid='.$uid);
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/userinfo.php?uid='.$uid);
 	exit();
 }
 
@@ -56,7 +57,7 @@ if(is_array($audios_array)) {
 	$xoopsTpl->assign('audios', $audios_array);
 	$audio_list = '';
 	foreach($audios_array as $audio_item) {
-	  $audio_list .= '../../uploads/profile/mp3/'.$audio_item['url'].' | ';
+	  $audio_list .= '../../uploads/'.$modname.'/mp3/'.$audio_item['url'].' | ';
 	}
 	//$audio_list = substr($audio_list,-2);
 	$xoopsTpl->assign('audio_list',$audio_list);
@@ -96,7 +97,7 @@ $xoopsTpl->assign('nb_friends',$nbSections['nbFriends']);
 $xoopsTpl->assign('nb_audio',$nbSections['nbAudio']);
 
 //navbar
-$xoopsTpl->assign('lang_mysection',_MI_YOGURT_MYAUDIOS);
+$xoopsTpl->assign('lang_mysection',_MI_PROFILE_MYAUDIOS);
 $xoopsTpl->assign('section_name',_MD_PROFILE_AUDIOS);
 //page atributes
 $xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$xoopsModule->getVar('name'), $controler->nameOwner));

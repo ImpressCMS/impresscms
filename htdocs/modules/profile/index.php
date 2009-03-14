@@ -17,6 +17,7 @@
 
 $profile_template = 'profile_index.html';
 include_once 'header.php';
+$modname = basename( dirname( __FILE__ ) );
 include_once ICMS_ROOT_PATH.'/modules/'.$modname.'/class/controler.php';
 
 $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
@@ -31,7 +32,7 @@ if ($uid <= 0) {
 }
 
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/userinfo.php?uid='.$uid);
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/userinfo.php?uid='.$uid);
 	exit();
 }
 $config_handler =& xoops_gethandler('config');

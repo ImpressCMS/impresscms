@@ -18,10 +18,12 @@
 include_once 'header.php';
 include_once ICMS_ROOT_PATH.'/class/criteria.php';
 
+$modname = basename( dirname( __FILE__ ) );
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/');
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/');
 	exit();
 }
+
 
 if(!($GLOBALS['xoopsSecurity']->check())) {
   redirect_header($_SERVER['HTTP_REFERER'], 3, _MD_PROFILE_TOKENEXPIRED);

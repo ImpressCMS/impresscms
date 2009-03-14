@@ -16,13 +16,13 @@
  */
 
 include_once 'header.php';
+$modname = basename( dirname( __FILE__ ) );
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/');
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/');
 	exit();
 }
 
 include_once ICMS_ROOT_PATH.'/class/criteria.php';
-$modname = basename( dirname( __FILE__ ) );
 
 if(!($GLOBALS['xoopsSecurity']->check())) {
   redirect_header($_SERVER['HTTP_REFERER'], 3, _MD_PROFILE_TOKENEXPIRED);
@@ -53,7 +53,7 @@ if(!isset($_POST['confirm']) || $_POST['confirm']!=1) {
 	* Try to delete  
 	*/
 	if($audio_factory->deleteAll($criteria)) 	{
-		unlink(ICMS_ROOT_PATH.'/uploads/profile/mp3/'.$audio_name);
+		unlink(ICMS_ROOT_PATH.'/uploads/'.$modname.'/mp3/'.$audio_name);
 		redirect_header('audio.php', 2, _MD_PROFILE_AUDIODELETED);
 	} else {
 	  redirect_header('audio.php', 2, _MD_PROFILE_NOCACHACA);

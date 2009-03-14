@@ -18,10 +18,12 @@
 include_once 'header.php';
 include_once ICMS_ROOT_PATH.'/class/criteria.php';
 
+$modname = basename( dirname( __FILE__ ) );
 if($moduleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/profile/');
+	header('Location: '.ICMS_URL.'/modules/'.$modname.'/');
 	exit();
 }
+
 
 $tribe_id = intval($_POST['tribe_id']);
 $rel_user_uid = intval($_POST['rel_user_uid']);
