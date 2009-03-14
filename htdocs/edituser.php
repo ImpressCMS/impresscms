@@ -20,9 +20,9 @@ $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 $module_handler = xoops_gethandler('module');
 $profile_module = $module_handler->getByDirname('profile');
-if($profile_module && $profile_module->getVar('isactive') && file_exists(ICMS_ROOT_PATH.'/modules/profile/edituser.php'))
+if($profile_module && $profile_module->getVar('isactive') && file_exists(ICMS_ROOT_PATH.'/modules/improfile/edituser.php'))
 {
-	header('Location: '.ICMS_URL.'/modules/profile/edituser.php');
+	header('Location: '.ICMS_URL.'/modules/improfile/edituser.php');
 	exit();
 }
 

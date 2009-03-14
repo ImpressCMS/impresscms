@@ -1,0 +1,2 @@
+<b><u> Version 1.20 </u></b>
+- Merged a clone of SmartProfile with Yogurt

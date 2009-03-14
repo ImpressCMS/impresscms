@@ -1,0 +1,16 @@
+<div style="clear: both"></div>
+<{if $profile_isAdmin == 1}>
+	<div class="profile_adminlinks"><{$profile_adminpage}></div>
+<{/if}>
+
+<{include file='db:profile_notifications.html'}>
+<!-- this open blank div is here only for not putting bottom blocks on the right column -->
+<{if $section_name != $lang_profile}></div><{/if}>
+<!-- this open blank div is here only for not putting bottom blocks on the right column 
+<{if $section_name==$lang_photos}></div><{/if}>
+<{if $section_name==$lang_scrapbook}></div><{/if}>
+<{if $section_name==$lang_audio}></div><{/if}>
+<{if $section_name==$lang_videos}></div><{/if}>
+<{if $section_name==$lang_friends}></div><{/if}>
+<{if $section_name==$lang_tribes}></div><{/if}>
+<{if $section_name==$lang_configs}></div><{/if}>-->
