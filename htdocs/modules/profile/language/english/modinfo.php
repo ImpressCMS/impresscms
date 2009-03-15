@@ -161,7 +161,7 @@ define("_MI_PROFILE_AUDIOSPERPAGE_TITLE","Number of mp3 files per page");
 //19/04/2008
 define("_MI_PROFILE_MYAUDIOS","My audios");
 // $Id$
-define("_PROFILE_MI_NAME", "Extended Profiles");
+define("_PROFILE_MI_NAME", "imProfile");
 define("_PROFILE_MI_DESC", "Module for managing custom user profile fields");
 
 //Main menu links
