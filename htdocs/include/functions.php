@@ -108,15 +108,15 @@ function xoops_footer()
 
 /**
  * ImpressCMS Error Message Function
- * 
+ *
  * @since ImpressCMS 1.2
  * @version $Id$
  *
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * 
+ *
  * @param string $msg
  * @param string $title
- * 
+ *
  * @todo Make this work with templates ;)
  */
 function icms_error_msg($msg, $title='', $render = true){
@@ -136,7 +136,7 @@ function icms_error_msg($msg, $title='', $render = true){
 
 /**
  * Backwards Compatibility Function
- * 
+ *
  * @since XOOPS
  * @version $Id$
  * @deprecated
@@ -144,7 +144,7 @@ function icms_error_msg($msg, $title='', $render = true){
  *
  * @author The XOOPS Project <http://www.xoops.org>
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * 
+ *
  * @param string $msg
  * @param string $title
  */
@@ -152,15 +152,15 @@ function xoops_error($msg, $title=''){ icms_error_msg($msg, $title, true); }
 
 /**
  * ImpressCMS Warning Message Function
- * 
+ *
  * @since ImpressCMS 1.2
  * @version $Id$
  *
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * 
+ *
  * @param string $msg
  * @param string $title
- * 
+ *
  * @todo Make this work with templates ;)
  */
 function icms_warning_msg($msg, $title='', $render = false){
@@ -180,15 +180,15 @@ function icms_warning_msg($msg, $title='', $render = false){
 
 /**
  * Backwards Compatibility Function
- * 
+ *
  * @since XOOPS
  * @version $Id$
  * @deprecated
  * @see icms_warning_msg
- * 
+ *
  * @author The XOOPS Project <http://www.xoops.org>
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * 
+ *
  * @param string $msg
  * @param string $title
  */
@@ -1474,7 +1474,7 @@ function icms_encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
 *
 * return string
 */
-function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>','<ul>','<li>'), $aDisabledAttributes = array('onabort', 'onblue', 'onchange', 'onclick', 'ondblclick', 'onerror', 'onfocus', 'onkeydown', 'onkeyup', 'onload', 'onmousedown', 'onmousemove', 'onmouseover', 'onmouseup', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload'))
+function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>','<ul>','<li>'), $aDisabledAttributes = array('onabort', 'onblur', 'onchange', 'onclick', 'ondblclick', 'onerror', 'onfocus', 'onkeydown', 'onkeyup', 'onload', 'onmousedown', 'onmousemove', 'onmouseover', 'onmouseup', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload'))
 {
 	if(empty($aDisabledAttributes)) return strip_tags($sSource, implode('', $aAllowedTags));
 	return preg_replace('/<(.*?)>/ie', "'<' . preg_replace(array('/javascript:[^\"\']*/i', '/(".implode('|', $aDisabledAttributes).")[ \\t\\n]*=[ \\t\\n]*[\"\'][^\"\']*[\"\']/i', '/\s+/'), array('', '', ' '), stripslashes('\\1')) . '>'", strip_tags($sSource, implode('', $aAllowedTags)));
@@ -1929,11 +1929,11 @@ function icms_escapeValue($value, $quotes = true)
 	* Example: In Persian we use, (۱, ۲, ۳, ۴, ۵, ۶, ۷, ۸, ۹, ۰) instead of (1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
 	* Now in a module and we are showing amount of reads, the output in Persian must be ۱۲ (which represents 12).
 	* To developers, please use this function when you are having a numeric output, as this is counted as a string in php so you should use %s.
-	* Like: 
+	* Like:
 	* $views = sprintf ( 'Viewed: %s Times.', icms_conv_nr2local($string) );
 	*/
-	
-	
+
+
 function icms_conv_nr2local($string)
 {
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
@@ -1946,7 +1946,7 @@ function icms_conv_nr2local($string)
 }
 /**
  * Get a number value in other languages and transform it to English
- * 
+ *
  * This function is exactly the opposite of icms_conv_nr2local();
  * Please view the notes there for more information.
  */
@@ -2682,25 +2682,25 @@ function remove_usersxdays (){
 	}
 }
 
-function icms_convert_size($size){ 	 
-    if ($size >= 1073741824){ 	 
-        $ret = round((($size/1024)/1024)/1024,1).' '._CORE_GIGABYTES_SHORTEN; 	 
-    }elseif($size >= 1048576 && $size < 1073741824){ 	 
-        $ret = round(($size/1024)/1024,1).' '._CORE_MEGABYTES_SHORTEN; 	 
-    }elseif($size >= 1024 && $size < 1048576){ 	 
-        $ret = round(($size/1024),1).' '._CORE_KILOBYTES_SHORTEN; 	 
-    }else{ 	 
-        $ret = round(($size),1).' '._CORE_BYTES; 	 
-    } 	 
-    return icms_conv_nr2local($ret); 	 
-} 	 
-	  	 
-function icms_random_str($numchar){ 	 
-    $letras = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,x,w,y,z,1,2,3,4,5,6,7,8,9,0"; 	 
-    $array = explode(",", $letras); 	 
-    shuffle($array); 	 
-    $senha = implode($array, ""); 	 
-    return substr($senha, 0, $numchar); 	 
+function icms_convert_size($size){
+    if ($size >= 1073741824){
+        $ret = round((($size/1024)/1024)/1024,1).' '._CORE_GIGABYTES_SHORTEN;
+    }elseif($size >= 1048576 && $size < 1073741824){
+        $ret = round(($size/1024)/1024,1).' '._CORE_MEGABYTES_SHORTEN;
+    }elseif($size >= 1024 && $size < 1048576){
+        $ret = round(($size/1024),1).' '._CORE_KILOBYTES_SHORTEN;
+    }else{
+        $ret = round(($size),1).' '._CORE_BYTES;
+    }
+    return icms_conv_nr2local($ret);
+}
+
+function icms_random_str($numchar){
+    $letras = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,x,w,y,z,1,2,3,4,5,6,7,8,9,0";
+    $array = explode(",", $letras);
+    shuffle($array);
+    $senha = implode($array, "");
+    return substr($senha, 0, $numchar);
 }
 function icms_adminMenu($currentoption = 0, $breadcrumb = '') {
 	global $xoopsModule;
