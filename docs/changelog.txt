@@ -181,6 +181,7 @@ ImpressCMS ChangeLog
 * #406: all errors are not shown in admin menu. (stranger)
 * #466: Changing profile name to improfile. (stranger)
 * #469: warning: error when submitting in admin personalization settings. (stranger)
+* #468: undefined Constant (CUSTOMTAG) using French language in admin. (stranger)
 
 
 == Impresscms 1.1.2==
