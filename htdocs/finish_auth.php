@@ -29,7 +29,7 @@ $member_handler = xoops_gethandler('member');
 /** Including the authentication class */
 include_once ICMS_ROOT_PATH . '/class/auth/authfactory.php';
 /** Including the language files for the authentication pages */
-include_once ICMS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/auth.php';
+icms_loadLanguageFile('core', 'auth');
 
 $xoopsAuth = & XoopsAuthFactory :: getAuthConnection();
 $user = $xoopsAuth->authenticate($openid_debug);

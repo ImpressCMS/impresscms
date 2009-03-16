@@ -13,7 +13,7 @@
 **/
 
 include 'mainfile.php';
-include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/misc.php';
+icms_loadLanguageFile('core', 'misc');
 $action = isset($_GET['action']) ? trim(StopXSS($_GET['action'])) : '';
 $action = isset($_POST['action']) ? trim(StopXSS($_POST['action'])) : $action;
 $type = isset($_GET['type']) ? trim(StopXSS($_GET['type'])) : '';
@@ -210,7 +210,7 @@ if($action == 'showpopups')
 		case 'ssllogin':
 			if($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && is_object($xoopsUser))
 			{
-				include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/user.php';
+				icms_loadLanguageFile('core', 'user');
 				echo sprintf(_US_LOGGINGU, $xoopsUser->getVar('uname'));
 				echo '<div style="text-align:center;"><input class="formButton" value="'._CLOSE.'" type="button" onclick="window.opener.location.reload();window.close();" /></div>';
 				$closebutton = false;

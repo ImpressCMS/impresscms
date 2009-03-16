@@ -354,7 +354,7 @@ if($op == 'editprofile')
 	}
     	// RMV-NOTIFY
     	// TODO: add this to admin user-edit functions...
-    	include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/notification.php';
+    	icms_loadLanguageFile('core', 'notification');
     	include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
     	$notify_method_select = new XoopsFormSelect(_NOT_NOTIFYMETHOD, 'notify_method', $xoopsUser->getVar('notify_method'));
     	$notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE, XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM, XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL));
