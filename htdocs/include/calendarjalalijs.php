@@ -17,7 +17,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
 }
 	$config_handler =& xoops_gethandler('config');
 	$xoopsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
-	include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/calendar.php';
+	icms_loadLanguageFile('core', 'calendar');
 		echo'<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/libraries/jalalijscalendar/aqua/style.css" />
 <script type="text/javascript" src="'.XOOPS_URL.'/libraries/jalalijscalendar/calendar.js"></script>
 <script type="text/javascript" src="'.XOOPS_URL.'/libraries/jalalijscalendar/calendar-setup.js"></script>

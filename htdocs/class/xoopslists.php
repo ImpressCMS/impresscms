@@ -36,7 +36,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 	{
 		function getTimeZoneList()
 		{
-			include_once XOOPS_ROOT_PATH.'/language/'.$GLOBALS['xoopsConfig']['language'].'/timezone.php';
+			icms_loadLanguageFile('core', 'timezone');
 			$time_zone_list = array ("-12" => _TZ_GMTM12, "-11" => _TZ_GMTM11, "-10" => _TZ_GMTM10, "-9" => _TZ_GMTM9, "-8" => _TZ_GMTM8, "-7" => _TZ_GMTM7, "-6" => _TZ_GMTM6, "-5" => _TZ_GMTM5, "-4" => _TZ_GMTM4, "-3.5" => _TZ_GMTM35, "-3" => _TZ_GMTM3, "-2" => _TZ_GMTM2, "-1" => _TZ_GMTM1, "0" => _TZ_GMT0, "1" => _TZ_GMTP1, "2" => _TZ_GMTP2, "3" => _TZ_GMTP3, "3.5" => _TZ_GMTP35, "4" => _TZ_GMTP4, "4.5" => _TZ_GMTP45, "5" => _TZ_GMTP5, "5.5" => _TZ_GMTP55, "6" => _TZ_GMTP6, "7" => _TZ_GMTP7, "8" => _TZ_GMTP8, "9" => _TZ_GMTP9, "9.5" => _TZ_GMTP95, "10" => _TZ_GMTP10, "11" => _TZ_GMTP11, "12" => _TZ_GMTP12);
 			return $time_zone_list;
 		}
@@ -265,11 +265,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		function getCountryList() {	
 			global $xoopsConfig;
-			if (file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/countries.php' ) ) {
-				include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/countries.php';
-			} else { 
-				include_once ICMS_ROOT_PATH.'/language/english/countries.php'; 
-			}
+			icms_loadLanguageFile('core', 'countries');
 			$country_list = array (
 				""   => "-",
 				"AD" => _COUNTRY_AD,

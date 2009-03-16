@@ -220,14 +220,7 @@ class XoopsModule extends XoopsObject
 	function loadInfo($dirname, $verbose = true)
 	{
 		global $xoopsConfig;
-		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/language/'.$xoopsConfig['language'].'/modinfo.php'))
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/language/'.$xoopsConfig['language'].'/modinfo.php';
-		}
-		elseif(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/language/english/modinfo.php'))
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/language/english/modinfo.php';
-		}
+		icms_loadLanguageFile($dirname, 'modinfo');
 		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/icms_version.php'))
 		{
 			include ICMS_ROOT_PATH.'/modules/'.$dirname.'/icms_version.php';
@@ -282,23 +275,8 @@ class XoopsModule extends XoopsObject
 	{
 		global $xoopsModule, $xoopsConfig;
 		include_once ICMS_ROOT_PATH.'/class/template.php';
-		
-		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/language/'.$xoopsConfig['language'].'/modinfo.php'))
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/language/'.$xoopsConfig['language'].'/modinfo.php';
-		}
-		else
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/language/english/modinfo.php';
-		}
-		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/language/'.$xoopsConfig['language'].'/admin.php'))
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/language/'.$xoopsConfig['language'].'/admin.php';
-		}
-		else
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/language/english/admin.php';
-		}
+		icms_loadLanguageFile($xoopsModule->getVar('dirname'), 'modinfo');
+		icms_loadLanguageFile($xoopsModule->getVar('dirname'), 'admin');
 		$tpl = & new XoopsTpl();
 		$tpl->assign(array('headermenu' => $this->getAdminHeaderMenu(), 'adminmenu' => $this->getAdminMenu(), 'current' => $currentoption, 'breadcrumb' => $breadcrumb, 'headermenucount' => count($this->getAdminHeaderMenu()), 'submenus' => $submenus, 'currentsub' => $currentsub, 'submenuscount' => count($submenus)));
 		$tpl->display(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_adm_modulemenu.html');

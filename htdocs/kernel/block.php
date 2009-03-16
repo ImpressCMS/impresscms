@@ -158,12 +158,7 @@ class XoopsBlock extends XoopsObject
             if (!$edit_func) {
                 return false;
             }
-            if (file_exists(XOOPS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/blocks/'.$this->getVar('func_file'))) {
-                if (file_exists(XOOPS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/language/'.$GLOBALS['xoopsConfig']['language'].'/blocks.php')) {
-                    include_once XOOPS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/language/'.$GLOBALS['xoopsConfig']['language'].'/blocks.php';
-                } elseif (file_exists(XOOPS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/language/english/blocks.php')) {
-                    include_once XOOPS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/language/english/blocks.php';
-                }
+			icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
                 include_once XOOPS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/blocks/'.$this->getVar('func_file');
                 $options = explode('|', $this->getVar('options'));
                 $edit_form = $edit_func($options);

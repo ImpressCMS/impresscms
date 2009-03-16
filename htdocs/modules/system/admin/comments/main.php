@@ -39,7 +39,7 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
     switch ($op) {
     case 'list':
         include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
-        include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/comment.php';
+		icms_loadLanguageFile('core', 'comment');
         $limit_array = array(10, 20, 50, 100);
         $status_array = array(XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE => _CM_ACTIVE, XOOPS_COMMENT_HIDDEN => _CM_HIDDEN);
         $status_array2 = array(XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #00ff00;">'._CM_PENDING.'</span>', XOOPS_COMMENT_ACTIVE => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">'._CM_ACTIVE.'</span>', XOOPS_COMMENT_HIDDEN => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">'._CM_HIDDEN.'</span>');

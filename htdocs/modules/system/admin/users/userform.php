@@ -105,7 +105,7 @@ $umode_select->addOptionArray(array("nest"=>_NESTED, "flat"=>_FLAT, "thread"=>_T
 $uorder_select = new XoopsFormSelect(_US_CSORTORDER, "uorder", $uorder_value);
 $uorder_select->addOptionArray(array("0"=>_OLDESTFIRST, "1"=>_NEWESTFIRST));
 // RMV-NOTIFY
-include_once XOOPS_ROOT_PATH. '/language/' . $xoopsConfig['language'] . '/notification.php';
+icms_loadLanguageFile('core', 'notification');
 include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
 $notify_method_select = new XoopsFormSelect(_NOT_NOTIFYMETHOD, 'notify_method', $notify_method_value);
 $notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE, XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM, XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL));

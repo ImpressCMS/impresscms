@@ -368,17 +368,15 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		$form = new XoopsThemeForm ( _MD_AM_MODCONFIG, 'pref_form', 'admin.php?fct=preferences', 'post', true );
 		$module_handler = & xoops_gethandler ( 'module' );
 		$module = & $module_handler->get ( $mod );
-		if (file_exists ( ICMS_ROOT_PATH . '/modules/' . $module->getVar ( 'dirname' ) . '/language/' . $xoopsConfig ['language'] . '/modinfo.php' )) {
-			include_once ICMS_ROOT_PATH . '/modules/' . $module->getVar ( 'dirname' ) . '/language/' . $xoopsConfig ['language'] . '/modinfo.php';
-		}
+		icms_loadLanguageFile($module->getVar ( 'dirname' ), 'modinfo');
 		// if has comments feature, need comment lang file
 		if ($module->getVar ( 'hascomments' ) == 1) {
-			include_once ICMS_ROOT_PATH . '/language/' . $xoopsConfig ['language'] . '/comment.php';
+			icms_loadLanguageFile('core', 'comment');
 		}
 		// RMV-NOTIFY
 		// if has notification feature, need notification lang file
 		if ($module->getVar ( 'hasnotification' ) == 1) {
-			include_once ICMS_ROOT_PATH . '/language/' . $xoopsConfig ['language'] . '/notification.php';
+			icms_loadLanguageFile('core', 'notification');
 		}
 		
 		$modname = $module->getVar ( 'name' );

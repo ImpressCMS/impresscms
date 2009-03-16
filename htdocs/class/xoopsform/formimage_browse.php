@@ -37,12 +37,7 @@ $type = (isset($_GET['type']))?$_GET['type']:((isset($_POST['type']))?$_POST['ty
 
 global $xoopsConfig;
 #Adding language files
-if (file_exists(ICMS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin/images.php")) {
-	include ICMS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin/images.php";
-} elseif (file_exists(ICMS_ROOT_PATH."/modules/system/language/english/admin/images.php")) {
-	include ICMS_ROOT_PATH."/modules/system/language/english/admin/images.php";
-}
-
+icms_loadLanguageFile('system', 'images', true);
 switch ($op){
 	case 'list':
 		icmsPopupHeader();

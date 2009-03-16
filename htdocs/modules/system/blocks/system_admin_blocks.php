@@ -104,12 +104,7 @@ function b_system_admin_cp_show(){
 	$admin_dir = ICMS_ROOT_PATH.'/modules/system/admin';
 	$dirlist = XoopsLists::getDirListAsArray($admin_dir);
 
-	if(file_exists(ICMS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin.php')){
-		include_once ICMS_ROOT_PATH.'/modules/system/language/'.$xoopsConfig['language'].'/admin.php';
-	}elseif(file_exists(ICMS_ROOT_PATH.'/modules/system/language/english/admin.php')){
-		include_once ICMS_ROOT_PATH.'/modules/system/language/english/admin.php';
-	}
-
+	icms_loadLanguageFile('system', 'admin');
 	asort($dirlist);
 	$block['sysmod'] = array();
 	foreach($dirlist as $file){

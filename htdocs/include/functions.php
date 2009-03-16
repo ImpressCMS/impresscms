@@ -1180,7 +1180,7 @@ function icms_loadLanguageFile($module, $file, $admin=false)
 	else {$languagePath = ICMS_ROOT_PATH.'/modules/'.$module.'/language/';}
 	$extraPath = $admin ? 'admin/' : '';
 	$filename = $languagePath.$xoopsConfig['language'].'/'.$extraPath.$file.'.php';
-	if(!file_exists($filename)) {$filename = $languagePath.'english/'.$file.'.php';}
+	if(!file_exists($filename)) {$filename = $languagePath.'english/'.$extraPath.$file.'.php';}
 	if(file_exists($filename)) {include_once($filename);}
 }
 

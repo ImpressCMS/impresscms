@@ -2,7 +2,7 @@
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
-include_once XOOPS_ROOT_PATH.'/language/'.$GLOBALS['xoopsConfig']['language'].'/calendar.php';
+	icms_loadLanguageFile('core', 'calendar');
 ?>
 <link rel="stylesheet" type="text/css" media="all" href="<?php echo XOOPS_URL;?>/libraries/jscalendar/calendar-blue.css" />
 <script type="text/javascript" src="<?php echo XOOPS_URL.'/libraries/jscalendar/calendar.js';?>"></script>

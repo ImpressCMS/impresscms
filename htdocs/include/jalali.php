@@ -43,6 +43,9 @@
 // xoops (which is based for this work)                                      //
 //  ------------------------------------------------------------------------ //
 
+if (!defined('XOOPS_ROOT_PATH')) {
+	exit();
+}
 // Defining some variables
 define("_EXT_TZhours","0");
 define("_EXT_TZminute","0");
@@ -53,7 +56,7 @@ function jdate($type,$maket="now")
 {
     global $xoopsConfig;
     $myts =& MyTextSanitizer::getInstance();
-	include_once ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/calendar.php";
+	icms_loadLanguageFile('core', 'calendar');
 	$result="";
 	if($maket=="now"){
 		$year=date("Y");

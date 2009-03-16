@@ -301,18 +301,18 @@ if ($xoopsUser->isAdmin ( $xoopsModule->mid () )) {
 			if ($myblock->getVar ( 'template' ) != '') {
 				if ($xoopsTpl->is_cached ( 'db:' . $myblock->getVar ( 'template' ), 'blk_' . $myblock->getVar ( 'bid' ) )) {
 					if (! $xoopsTpl->clear_cache ( 'db:' . $myblock->getVar ( 'template' ), 'blk_' . $myblock->getVar ( 'bid' ) )) {
-						$msg = 'Unable to clear cache for block ID ' . $bid;
+						$msg = sprintf(_AM_UNABLE2DELCACHE, icms_conv_nr2local($bid));
 					}
 				}
 			} else {
 				if ($xoopsTpl->is_cached ( 'db:system_dummy.html', 'blk_' . $bid )) {
 					if (! $xoopsTpl->clear_cache ( 'db:system_dummy.html', 'blk_' . $bid )) {
-						$msg = 'Unable to clear cache for block ID ' . $bid;
+						$msg = sprintf(_AM_UNABLE2DELCACHE, icms_conv_nr2local($bid));
 					}
 				}
 			}
 		} else {
-			$msg = 'Failed update of block. ID:' . $bid;
+			$msg = sprintf(_AM_FAILED2UPDATE, icms_conv_nr2local($bid));
 		}
 		redirect_header ( 'admin.php?fct=blocksadmin&amp;t=' . time (), 1, $msg );
 	}

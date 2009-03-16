@@ -85,7 +85,7 @@ $passConfig =& $config_handler->getConfigsByCat(2);
 global $xoopsConfig;
 echo '<script type="text/javascript" src="'.XOOPS_URL.'/include/passwordquality.js"></script>';
 
-include_once XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin/preferences.php";
+icms_loadLanguageFile('system', 'preferences', true);
 $tipo = explode("/",$_SERVER['PHP_SELF']);
 if ($tipo[count($tipo)-1] == 'register.php'){
   $passField = 'pass';

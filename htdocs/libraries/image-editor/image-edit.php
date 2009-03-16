@@ -35,11 +35,7 @@ include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.inc.php';
 include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 
 global $xoopsConfig;
-if (file_exists ( XOOPS_ROOT_PATH . "/modules/system/language/" . $xoopsConfig ['language'] . "/admin/images.php" )) {
-	include_once XOOPS_ROOT_PATH . "/modules/system/language/" . $xoopsConfig ['language'] . "/admin/images.php";
-} else {
-	include_once XOOPS_ROOT_PATH . "/modules/system/language/english/admin/images.php";
-}
+icms_loadLanguageFile('system', 'images', true);
 
 $icmsTpl = new XoopsTpl ( );
 

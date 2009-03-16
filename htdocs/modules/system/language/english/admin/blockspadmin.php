@@ -34,4 +34,7 @@ define("_AM_CBBOTTOMLEFT","Center Block - Bottom left");
 define("_AM_CBBOTTOMRIGHT","Center Block - Bottom right");
 define("_AM_CBBOTTOM","Center Block - Bottom");
 define("_AM_SUBMIT","Submit");
+######################## Added in 1.2 ###################################
+define("_AM_UNABLE2DELCACHE","Unable to clear cache for block ID %s");
+define("_AM_FAILED2UPDATE","Failed update of block. ID: %s");
 ?>
