@@ -182,6 +182,7 @@ ImpressCMS ChangeLog
 * #466: Changing profile name to improfile. (stranger)
 * #469: warning: error when submitting in admin personalization settings. (stranger)
 * #468: undefined Constant (CUSTOMTAG) using French language in admin. (stranger)
+* #472: Flagg for Japan added (we have language files). (sato-san)
 
 
 == Impresscms 1.1.2==
