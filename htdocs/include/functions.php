@@ -684,11 +684,8 @@ function &getMailer()
 	global $xoopsConfig;
 	$inst = false;
 	include_once ICMS_ROOT_PATH.'/class/xoopsmailer.php';
-	if(file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/xoopsmailerlocal.php'))
-	{
-		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/xoopsmailerlocal.php';
-		if(class_exists('XoopsMailerLocal')) {$inst =& new XoopsMailerLocal();}
-	}
+    icms_loadLanguageFile('core', 'xoopsmailerlocal');
+	if(class_exists('XoopsMailerLocal')) {$inst =& new XoopsMailerLocal();}
 	if(!$inst) {$inst =& new XoopsMailer();}
 	return $inst;
 }

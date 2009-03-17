@@ -1,5 +1,5 @@
 <div id="profile-section-container">
-<{ if $isWebmaster==1 }><div id="profile-suspension">
+<{ if $isWebmaster==1 }><div id="profile-suspension" style="display: none;">
 <{ if $isSuspended==0 }><form action="suspend.php" method="POST" name="suspend_form" id="suspend_form">
 <{$token}><input type="hidden" value="<{$uid_owner}>" id="uid" name="uid" /><label for="time">
 <{$lang_timeinseconds}></label><input type="text" name="time" id="time" value="604800" />
@@ -24,7 +24,7 @@
 		 <{$section_name}>
 	</p>
 	<h2>
-		<{if $isOwner}>::<{$lang_mysection}><{else}><{$owner_uname}>::<{$section_name}><{/if}><{ if $isWebmaster==1 }><img id="profile-suspensiontools" src="images/suspend.gif" alt="<{$lang_suspensionadmin}>" title="<{$lang_suspensionadmin}>"/><{/if}>
+		<{if $isOwner}>::<{$lang_mysection}><{else}><{$owner_uname}>::<{$section_name}><{/if}><{ if $isWebmaster==1 }><img id="profile-suspensiontools" src="images/suspend.gif" alt="<{$lang_suspensionadmin}>" title="<{$lang_suspensionadmin}>"  onclick="xoopsGetElementById('profile-suspension').style.display = 'block'; return false;" /><{/if}>
 	</h2>
 
     
