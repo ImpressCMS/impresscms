@@ -121,11 +121,11 @@ include_once(ICMS_ROOT_PATH."/header.php");
 * Adding to the module js and css of the lightbox and new ones
 */
 $xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/css/profile'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
-$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/css/jquery.tabs'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
+$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/css/jquery.tabs'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
 // what browser they use if IE then add corrective script.
-if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/css/jquery.tabs-ie.css');}
-$xoTheme->addScript(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/js/jquery.js');
-$xoTheme->addScript(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/js/jquery.lightbox-0.3.js');
+if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/css/jquery.tabs-ie.css');}
+$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js');
+$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.lightbox-0.3.js');
 $xoTheme->addScript(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/js/profile.js');
 
 //navbar
