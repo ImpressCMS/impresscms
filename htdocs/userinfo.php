@@ -24,9 +24,9 @@ include 'mainfile.php';
 $uid = intval($_GET['uid']);
 $module_handler = xoops_gethandler('module');
 $profile_module = $module_handler->getByDirname('profile');
-if($profile_module && $profile_module->getVar('isactive') && file_exists(ICMS_ROOT_PATH.'/modules/improfile/userinfo.php'))
+if($profile_module && $profile_module->getVar('isactive') && file_exists(ICMS_ROOT_PATH.'/modules/profile/userinfo.php'))
 {
-	header('Location: '.ICMS_URL.'/modules/improfile/userinfo.php?uid='.$uid);
+	header('Location: '.ICMS_URL.'/modules/profile/userinfo.php?uid='.$uid);
 	exit();
 }
 
