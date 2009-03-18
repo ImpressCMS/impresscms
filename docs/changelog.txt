@@ -121,7 +121,8 @@ ImpressCMS ChangeLog
 * #299: Code is not w3c conform. (MrTheme)
 * #271: option of unique filenames along with prefix in uploader. (vaughan/stranger)
 * #286: missing the default language on profile-module. (stranger)
-* #459: Using an extended waiting block. (stranger/GIJOE)
+* #459: Using an extended waiting block. (GIJOE)
+* #473: Updating JalaliJSCalendar to version 1.3. (stranger)
 
 '''Fixed'''
 * #2161527: error in xoopsimagebrowser.php (real_therplima)
