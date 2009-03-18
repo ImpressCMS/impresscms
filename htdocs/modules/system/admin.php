@@ -104,7 +104,7 @@ if($admintest != 0)
 	}
 	else {$error = true;}
 }
-if(icms_get_module_status('profile')){
+if(isset($fct) && $fct == 'users' && icms_get_module_status('profile')){
 		header("Location:".ICMS_MODULES_URL."/profile/admin/user.php");
 
 }
