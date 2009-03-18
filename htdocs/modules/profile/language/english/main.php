@@ -267,6 +267,7 @@ define("_MD_PROFILE_SETMAINVIDEO","This video is selected on your front page fro
 
 //video.php
 define("_MD_PROFILE_YOUTUBECODE","YouTube code or URL");
+define("_MD_PROFILE_PLEASEYOUTUBECODE","Please enter YouTube code");
 define("_MD_PROFILE_ADDVIDEO","Add video");
 define("_MD_PROFILE_ADDFAVORITEVIDEOS","Add favourite videos");
 define("_MD_PROFILE_ADDVIDEOSHELP","If you want to upload your own video for sharing, then upload your videos to 

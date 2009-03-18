@@ -24,7 +24,7 @@
 		 <{$section_name}>
 	</p>
 	<h2>
-		<{if $isOwner}>::<{$lang_mysection}><{else}><{$owner_uname}>::<{$section_name}><{/if}><{ if $isWebmaster==1 }><img id="profile-suspensiontools" src="images/suspend.gif" alt="<{$lang_suspensionadmin}>" title="<{$lang_suspensionadmin}>"  onclick="xoopsGetElementById('profile-suspension').style.display = 'block'; return false;" /><{/if}>
+		<{if $isOwner}>::<{$lang_mysection}><{else}><{$owner_uname}>::<{$section_name}><{/if}><{ if $isWebmaster==1 }><img id="profile-suspensiontools" src="images/suspend.gif" alt="<{$lang_suspensionadmin}>" title="<{$lang_suspensionadmin}>"  onclick ="jQuery('div#profile-suspension').toggle()" /><{/if}>
 	</h2>
 
     

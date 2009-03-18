@@ -14,12 +14,12 @@
 
 			<p>
 				<input type='submit' class='formButton' name='post_scrap'  id='post_scrap' value='<{$lang_submit}>' />
-				<a href="#" name='show_tips'  id='show_tips' value='scraptips'>					
+				<a href="#" onclick ="jQuery('div#xtips').slideToggle();" name='show_tips'  id='show_tips' value='scraptips'>					
 					<{$lang_tips}>
 				</a> 
 			</p>
 		</form>
-		<div id="xtips" name="xtips" style="width:500px;height:50px;" action="">
+		<div id="xtips" name="xtips" style="width:500px;height:50px; display: none;" action="">
 		[b]<{$lang_bold}>[/b] => <b><{$lang_bold}></b> | [i]<{$lang_italic}>[/i] => <i><{$lang_italic}></i> | [u]<{$lang_underline}>[/u] => <u><{$lang_underline}></u>
 		</div>
 </div>
@@ -52,28 +52,28 @@
 				<a name="replyform<{$scraps[i].id}>" id="replyform<{$scraps[i].id}>" ></a>
 			</p>
 			<{ if $isOwner==1}>			
-				<div class="profile-scrap-details-form" >				
-				  <form  action="scrapbook.php" method="post" name="form_reply_<{$scraps[i].id}>"
+				<div class="profile-scrap-details-form<{$scraps[i].id}>" style="display: none;" >				
+				  <form  action="scrapbook.php" method="post" name="form_reply_<{$scraps[i].id}>" id="form_reply_<{$scraps[i].id}>" >
 				  <input type='hidden' name='mainscrap' id='mainscrap' value='reply' />
-					id="form_reply_<{$scraps[i].id}>" class="profile-scrap-form">
+					
             			<input type="hidden" value="<{$scraps[i].uid}>" name="uid" id="uid"/>
         	    		<textarea name="text" id="text" cols="50" ></textarea>
             	    	<{$token}>
 						<div>
-							<input type="submit" name="submit" value="<{$lang_answerscrap}>" /><input type="reset" name="reset" 
-							value="<{$lang_cancel}>" class="resetscrap"  />
+							<input type="submit" class="formButton" name="reply_scrap" id="reply_scrap" value="<{$lang_answerscrap}>" />
+							<input type="reset" name="reset" value="<{$lang_cancel}>" class="resetscrap" onclick ="jQuery().find('div.profile-scrap-details-form<{$scraps[i].id}>').slideToggle();" />
 						</div>
 	              </form> 
 	          	</div>
 	       	<{/if}>
         </div>
-		<!--
+		
 		<{ if $isOwner==1}>
-		  <div ><a  class="profile-scraps-replyscrap">
+		  <div ><a href="#" onclick ="jQuery().find('div.profile-scrap-details-form<{$scraps[i].id}>').slideToggle();" class="profile-scraps-replyscrap">
 			<{$lang_answerscrap}>
 		  </a></div>
 		<{ /if}> 
-		-->
+		
      </div>
  <{/section}>
  <{ else }>

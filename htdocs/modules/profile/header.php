@@ -75,6 +75,7 @@ $xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/c
 if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/css/tabs-ie.css');}
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/lightbox/css/lightbox.css');
 $xoTheme->addScript(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/js/profile.js');
+$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/jquery.js');
 $xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/prototype.js');
 $xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/scriptaculous.js?load=effects,builder');
 $xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/lightbox.js');
@@ -124,6 +125,7 @@ $xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/c
 if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/css/tabs-ie.css');}
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/lightbox/css/lightbox.css');
 $xoTheme->addScript(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/js/profile.js');
+$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/jquery.js');
 $xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/prototype.js');
 $xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/scriptaculous.js?load=effects,builder');
 $xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/lightbox.js');

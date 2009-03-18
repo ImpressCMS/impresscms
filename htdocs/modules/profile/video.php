@@ -99,6 +99,7 @@ $xoopsTpl->assign('lang_makemain',_MD_PROFILE_MAKEMAIN);
 //FORM SUBMIT
 $xoopsTpl->assign('lang_addvideos',_MD_PROFILE_ADDFAVORITEVIDEOS);
 $xoopsTpl->assign('lang_youtubecodeLabel',_MD_PROFILE_YOUTUBECODE);
+$xoopsTpl->assign('lang_pleaseenteryoutubecode',_MD_PROFILE_PLEASEYOUTUBECODE);
 $xoopsTpl->assign('lang_captionLabel',_MD_PROFILE_CAPTION);
 $xoopsTpl->assign('lang_submitValue',_MD_PROFILE_ADDVIDEO);
 
