@@ -300,7 +300,7 @@ function getRegisterForm(&$user, $profile, $next_step = 0, $step) {
 // MPB ADD - START
 // Set field persistance - load profile with session vars
         $fieldname = $fields[$i]->getVar('field_name');
-        if ($value = $_SESSION['profile'][$fieldname]) {
+        if (!empty($_SESSION['profile'][$fieldname]) && $value = $_SESSION['profile'][$fieldname]) {
             $profile->setVar($fieldname,$value);
         }
 // MPB ADD - END
@@ -335,7 +335,8 @@ function getRegisterForm(&$user, $profile, $next_step = 0, $step) {
         $disc_tray = new XoopsFormElementTray(_PROFILE_MA_DISCLAIMER, '<br />');
         $disc_text = new XoopsFormLabel("", "<div style=\"padding: 5px;\">".$GLOBALS["myts"]->displayTarea($icmsConfigUser['reg_disclaimer'],1)."</div>");
         $disc_tray->addElement($disc_text);
-        $agree_chk = new XoopsFormCheckBox('', 'agree_disc', $_SESSION['profile']['agree_disc']);
+        $session_agreement = empty($_SESSION['profile']['agree_disc']) ? '':$_SESSION['profile']['agree_disc'];
+        $agree_chk = new XoopsFormCheckBox('', 'agree_disc', $session_agreement);
         $agree_chk->addOption(1, _PROFILE_MA_IAGREE);
         $disc_tray->addElement($agree_chk);
         $reg_form->addElement($disc_tray);

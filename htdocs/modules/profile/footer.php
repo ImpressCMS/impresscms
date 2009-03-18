@@ -15,6 +15,7 @@
  */
 
 $xoopsTpl->assign("profile_adminpage", "<a href='" . ICMS_URL . "/modules/".basename( dirname( __FILE__ ) )."/admin/user.php'>" ._CO_ICMS_ADMIN_PAGE . "</a>");
+$profile_isAdmin = icms_userIsAdmin();
 $xoopsTpl->assign("profile_isAdmin", $profile_isAdmin);
 include ICMS_ROOT_PATH.'/footer.php';
 ?>
