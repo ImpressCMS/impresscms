@@ -76,6 +76,7 @@ switch ( $op ) {
                 $fieldname = $fields[$i]->getVar('field_name');
                 if (isset($_POST[$fieldname])) {
 // MPB ADD/EDIT - START
+                	if(!empty($_SESSION['profile'][$fieldname]){
                     if ('date' == $fields[$i]->getVar('field_type') || 'longdate' == $fields[$i]->getVar('field_type')) {
                         // change text time back to unix timestamp
                         $_SESSION['profile'][$fieldname] = strtotime($_POST[$fieldname]);
@@ -86,6 +87,7 @@ switch ( $op ) {
                         $_SESSION['profile'][$fieldname] = $_POST[$fieldname];
                     }
 // MPB ADD/EDIT - END
+                	}
                 }
             }
         }
