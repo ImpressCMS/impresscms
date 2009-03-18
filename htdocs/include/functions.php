@@ -2764,4 +2764,12 @@ function icms_getenv($key) {
 	$ret = isset ($_SERVER[$key]) ? $_SERVER[$key] : (isset ($_ENV[$key]) ? $_ENV[$key] : '');
 	return $ret;
 }
+function icms_get_module_status($module_name){
+	$module_handler = xoops_gethandler('module');
+	$this_module = $module_handler->getByDirname($module_name);
+	if($this_module && $this_module->getVar('isactive')){
+		return true;
+	}
+	return false;
+}
 ?>

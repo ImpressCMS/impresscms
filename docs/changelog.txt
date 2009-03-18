@@ -184,7 +184,8 @@ ImpressCMS ChangeLog
 * #469: warning: error when submitting in admin personalization settings. (stranger)
 * #468: undefined Constant (CUSTOMTAG) using French language in admin. (stranger)
 * #472: Flagg for Japan added (we have language files). (sato-san)
-* #379: Making profile module use the core jQuery library instead of its own.
+* #379: Making profile module use the core jQuery library instead of its own. (stranger/nachenko)
+* #474: When having profile module installed, system points to the core user's administration. (stranger)
 
 == Impresscms 1.1.2==
 

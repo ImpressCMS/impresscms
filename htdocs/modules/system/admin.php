@@ -104,7 +104,10 @@ if($admintest != 0)
 	}
 	else {$error = true;}
 }
+if(icms_get_module_status('profile')){
+		header("Location:".ICMS_MODULES_URL."/profile/admin/user.php");
 
+}
 if($false != $error){
 	header("Location:".ICMS_URL."/admin.php");
 }
