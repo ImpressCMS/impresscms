@@ -151,14 +151,10 @@ class upgrade_220
         $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix('config') . "` SET conf_modid = '0', conf_catid = '2', conf_title = '_MD_AM_DSPDSCLMR', conf_desc = '_MD_AM_DSPDSCLMRDSC' WHERE conf_name = 'display_disclaimer'");
         $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix('config') . "` SET conf_modid = '0', conf_catid = '2', conf_title = '_MD_AM_REGDSCLMR', conf_desc = '_MD_AM_REGDSCLMRDSC' WHERE conf_name = 'disclaimer'");
         $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix('config') . "` SET conf_modid = '0', conf_catid = '2', conf_title = '_MD_AM_ALLOWREG', conf_desc = '_MD_AM_ALLOWREGDSC' WHERE conf_name = 'allow_register'");
-        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("config") . "` SET reg_disclaimer=disclaimer");
-        $xoopsDB->queryF("ALTER TABLE " . $xoopsDB->prefix("config") . " DROP disclaimer");
-        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("config") . "` SET reg_dispdsclmr=display_disclaimer");
-        $xoopsDB->queryF("ALTER TABLE " . $xoopsDB->prefix("config") . " DROP display_disclaimer");
-        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("config") . "` SET maxuname=max_uname");
-        $xoopsDB->queryF("ALTER TABLE " . $xoopsDB->prefix("config") . " DROP max_uname");
-        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("config") . "` SET minuname=min_uname");
-        $xoopsDB->queryF("ALTER TABLE " . $xoopsDB->prefix("config") . " DROP min_uname");
+        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix('config') . "` SET conf_name = 'reg_disclaimer' WHERE conf_name = 'disclaimer'");
+        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix('config') . "` SET conf_name = 'reg_dispdsclmr' WHERE conf_name = 'display_disclaimer'");
+        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix('config') . "` SET conf_name = 'maxuname' WHERE conf_name = 'max_uname'");
+        $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix('config') . "` SET conf_name = 'minuname' WHERE conf_name = 'min_uname'");
 
         $xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix('config') . "` SET conf_value = 'iTheme' WHERE conf_name = 'theme_set'");
 
