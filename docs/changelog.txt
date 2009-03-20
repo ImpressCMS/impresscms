@@ -189,6 +189,7 @@ ImpressCMS ChangeLog
 * #465: User registration do not work!. (stranger)
 * #37: iTheme as default theme of ImpressCMS. (stranger)
 * #216: Signature destroyed the design. (stranger)
+* #60: Date format more configurable. (stranger)
 
 == Impresscms 1.1.2==
 

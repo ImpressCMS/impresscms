@@ -2359,7 +2359,6 @@ function jdate($type,$maket='now')
  */
 function ext_date($type,$maket='now')
 {
-    global $xoopsConfig;
 	icms_loadLanguageFile('core', 'calendar');
 	$result='';
 	if($maket=='now'){
@@ -2371,11 +2370,6 @@ function ext_date($type,$maket='now')
 		$date=date('Y-m-d',$maket);
 		list( $year, $month, $day ) = preg_split ( '/-/', $date );
 		}
-
-	$need= $maket;
-	$year=date('Y',$need);
-	$month=date('n',$need);
-	$day=date('j',$need);
 	$i=0;
 	while($i<strlen($type))
 	{
@@ -2384,13 +2378,13 @@ function ext_date($type,$maket='now')
 		{
 
 			case 'A':
-				$result1=date('a',$need);
+				$result1=date('a',$maket);
 				if($result1=='pm') $result.=_CAL_PM_LONG;
 				else $result.=_CAL_AM_LONG;
 				break;
 
 			case 'a':
-				$result1=date('a',$need);
+				$result1=date('a',$maket);
 				if($result1=='pm') $result.=_CAL_PM;
 				else $result.=_CAL_AM;
 				break;
@@ -2400,7 +2394,7 @@ function ext_date($type,$maket='now')
 				$result.=$result1;
 				break;
 			case 'D':
-				$result1=date('D',$need);
+				$result1=date('D',$maket);
 				if($result1=='Sat') $result1=_CAL_SAT;
 				else if($result1=='Sun') $result1=_CAL_SUN;
 				else if($result1=='Mon') $result1=_CAL_MON;
@@ -2414,25 +2408,25 @@ function ext_date($type,$maket='now')
 				$result.=Icms_getMonthNameById($month);
 				break;
 			case 'g':
-				$result.=date('g',$need);
+				$result.=date('g',$maket);
 				break;
 			case 'G':
-				$result.=date('G',$need);
+				$result.=date('G',$maket);
 				break;
 				case 'h':
-				$result.=date('h',$need);
+				$result.=date('h',$maket);
 				break;
 			case 'H':
-				$result.=date('H',$need);
+				$result.=date('H',$maket);
 				break;
 			case 'i':
-				$result.=date('i',$need);
+				$result.=date('i',$maket);
 				break;
 			case 'j':
 				$result.=$day;
 				break;
 			case 'l':
-				$result1=date('l',$need);
+				$result1=date('l',$maket);
 				if($result1=='Saturday') $result1=_CAL_SATURDAY;
 				else if($result1=='Sunday') $result1=_CAL_SUNDAY;
 				else if($result1=='Monday') $result1=_CAL_MONDAY;
@@ -2454,16 +2448,16 @@ function ext_date($type,$maket='now')
 				$result.= $month;
 				break;
 			case 's':
-				$result.=date('s',$need);
+				$result.=date('s',$maket);
 				break;
 			case 'S':
 				$result.=_CAL_SUFFIX;
 				break;
 			case 't':
-				$result.=date('t',$need);
+				$result.=date('t',$maket);
 				break;
 			case 'w':
-				$result.=date('w',$need);
+				$result.=date('w',$maket);
 				break;
 			case 'y':
 				$result.=substr($year,2,4);
