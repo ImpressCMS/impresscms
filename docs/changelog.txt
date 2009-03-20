@@ -187,6 +187,7 @@ ImpressCMS ChangeLog
 * #379: Making profile module use the core jQuery library instead of its own. (stranger/nachenko)
 * #474: When having profile module installed, system points to the core user's administration. (stranger)
 * #465: User registration do not work!. (stranger)
+* #37: iTheme as default theme of ImpressCMS. (stranger)
 
 == Impresscms 1.1.2==
 
