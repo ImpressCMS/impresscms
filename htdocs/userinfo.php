@@ -154,7 +154,7 @@ $xoopsTpl->assign('lang_notregistered', _US_NOTREGISTERED);
 if ($xoopsConfigUser['allwshow_sig'] == 1) {
 	$xoopsTpl->assign('user_showsignature', true);
 	$xoopsTpl->assign('lang_signature', _US_SIGNATURE);
-	$var = $thisUser->getVar('user_sig', 'N');
+	$var = one_wordwrap($thisUser->getVar('user_sig', 'N'));
 	$xoopsTpl->assign('user_signature', $myts->displayTarea($var, 1, 1));
 }
 

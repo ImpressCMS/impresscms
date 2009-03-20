@@ -2772,4 +2772,24 @@ function icms_get_module_status($module_name){
 	}
 	return false;
 }
+/**
+* Wrap a long term or word
+*
+* @author	<admin@jcink.com>
+* @param	string	$string    The string
+* @param	string  $width      The length
+* @return   bool    Returns a long term, in several small parts with the length of $width
+*/
+function one_wordwrap($string,$width=false){
+  $width = $width ? $width : '15';
+  $new_string = '';
+  $s=explode(" ", $string);
+  foreach ($s as $k=>$v) {
+    $cnt=strlen($v);
+    if($cnt>$width) $v=wordwrap($v, $width, ' ', true);
+      $new_string.="$v ";
+  }
+  return $new_string;
+}
+
 ?>
