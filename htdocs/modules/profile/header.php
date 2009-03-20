@@ -73,13 +73,9 @@ if ($isanonym == 1 && $uid_owner==0) {
 */
 $xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/css/profile'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
 if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/css/tabs-ie.css');}
-$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/lightbox/css/lightbox.css');
 $xoTheme->addScript(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/js/profile.js');
 $xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/jquery.js');
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/prototype.js');
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/scriptaculous.js?load=effects,builder');
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/lightbox.js');
-  $xoopsTpl->assign('lang_mysection',_MD_PROFILE_MYPROFILE);
+$xoopsTpl->assign('lang_mysection',_MD_PROFILE_MYPROFILE);
 
     if($moduleConfig['profile_social']==1){
   $xoopsTpl->assign('module_is_socialmode', true);
@@ -123,12 +119,8 @@ include_once(ICMS_ROOT_PATH."/header.php");
 */
 $xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/css/profile'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
 if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/css/tabs-ie.css');}
-$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/lightbox/css/lightbox.css');
 $xoTheme->addScript(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/js/profile.js');
 $xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/jquery.js');
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/prototype.js');
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/scriptaculous.js?load=effects,builder');
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/lightbox.js');
 
 //navbar
 $xoopsTpl->assign('module_name',$xoopsModule->getVar('name'));

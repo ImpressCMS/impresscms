@@ -2681,15 +2681,15 @@ function remove_usersxdays (){
 
 function icms_convert_size($size){
     if ($size >= 1073741824){
-        $ret = round((($size/1024)/1024)/1024,1).' '._CORE_GIGABYTES_SHORTEN;
+        $ret = ((($size/1024)/1024)/1024).' '._CORE_GIGABYTES_SHORTEN;
     }elseif($size >= 1048576 && $size < 1073741824){
-        $ret = round(($size/1024)/1024,1).' '._CORE_MEGABYTES_SHORTEN;
+        $ret = (($size/1024)/1024).' '._CORE_MEGABYTES_SHORTEN;
     }elseif($size >= 1024 && $size < 1048576){
-        $ret = round(($size/1024),1).' '._CORE_KILOBYTES_SHORTEN;
+        $ret = ($size/1024).' '._CORE_KILOBYTES_SHORTEN;
     }else{
-        $ret = round(($size),1).' '._CORE_BYTES;
+        $ret = ($size).' '._CORE_BYTES;
     }
-    return icms_conv_nr2local($ret);
+    return icms_conv_nr2local(round($ret,1));
 }
 
 function icms_random_str($numchar){
