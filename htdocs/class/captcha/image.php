@@ -16,12 +16,21 @@
 
 class IcmsCaptchaImage {
 	//var $config	= array();
-	
+
+
+	/**
+	 * Constructor
+	 */
 	function IcmsCaptchaImage()
 	{
 		//$this->name = md5( session_id() );
 	}
-	
+
+
+	/**
+	 * Creates instance of icmsCaptchaImage
+   * @return  object the IcmsCaptchaImage object
+	 */
 	function &instance()
 	{
 		static $instance;
@@ -30,9 +39,13 @@ class IcmsCaptchaImage {
 		}
 		return $instance;
 	}
-	
+
+
+
+
 	/**
 	 * Loading configs from CAPTCHA class
+   * @param   array $config the configuration array
 	 */
 	function loadConfig($config = array())
 	{
@@ -40,6 +53,12 @@ class IcmsCaptchaImage {
 		$this->config =& $config;
 	}
 
+
+
+	/**
+	 * Renders the Captcha image Returns form with image in it
+   * @return  string String that contains the Captcha Image form
+	 */
 	function render()
 	{
 		$config_handler =& xoops_gethandler('config');
@@ -55,6 +74,10 @@ class IcmsCaptchaImage {
 	}
 
 
+	/**
+	 * Loads the Captcha Image
+   * @return  string String that contains the Captcha image
+	 */
 	function loadImage()
 	{
 		$config_handler =& xoops_gethandler('config');

@@ -17,11 +17,21 @@
 class IcmsCaptchaText {
 	var $config	= array();
 	var $code;
-	
+
+
+	/**
+	 * Constructor
+	 */
 	function IcmsCaptchaText()
 	{
 	}
-	
+
+
+
+	/**
+	 * Creates IcmsCaptchaText object
+	 * @return object	reference to IcmsCaptchaText (@link IcmsCaptchaText) Object
+	 */
 	function &instance()
 	{
 		static $instance;
@@ -30,9 +40,13 @@ class IcmsCaptchaText {
 		}
 		return $instance;
 	}
-	
+
+
+
+
 	/**
 	 * Loading configs from CAPTCHA class
+	 * @param string	$config	the config array
 	 */
 	function loadConfig($config = array())
 	{
@@ -40,11 +54,21 @@ class IcmsCaptchaText {
 		$this->config =& $config;
 	}
 
+
+	/**
+	 * Sets CAPTCHA code
+	 */
 	function setCode()
 	{
 		$_SESSION['IcmsCaptcha_sessioncode'] = strval( $this->code );
 	}
-	
+
+
+
+	/**
+	 * Render the form
+	 * @return string	$form the Captcha Form
+	 */
 	function render()
 	{
 		$config_handler =& xoops_gethandler('config');
@@ -60,6 +84,11 @@ class IcmsCaptchaText {
 		return $form;
 	}
 
+
+	/**
+	 * Load the ICMS Captcha Text
+	 * @return string	The Captcha Expression
+	 */
 	function loadText()
 	{
 		$val_a = rand(0, 9);
@@ -76,4 +105,6 @@ class IcmsCaptchaText {
 	}
 
 }
+
+
 ?>

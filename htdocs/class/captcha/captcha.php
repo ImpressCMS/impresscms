@@ -24,6 +24,9 @@
 if(! @include_once ICMS_ROOT_PATH."/language/".$GLOBALS["xoopsConfig"]["language"]."/captcha.php") {
 	require_once ICMS_ROOT_PATH."/language/english/captcha.php";
 }
+
+
+
 class IcmsCaptcha {
 	var $active	= true;
 	var $mode 	= "text";	// potential values: image, text
@@ -31,16 +34,25 @@ class IcmsCaptcha {
 
 	var $message = array(); // Logging error messages
 
+
+	/**
+	 * Constructor
+	 */
 	function IcmsCaptcha()
 	{
 		// Loading default preferences
 		$this->config = @include dirname(__FILE__)."/config.php";
 
-	$config_handler =& xoops_gethandler('config');
-	$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
+  	$config_handler =& xoops_gethandler('config');
+  	$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
 		$this->setMode($IcmsConfigCaptcha['captcha_mode']);
 	}
 
+
+	/**
+	 * Creates instance of IcmsCaptcha Object
+   * @return  object Reference to the IcmsCaptcha Object
+	 */
 	function &instance()
 	{
 		static $instance;
@@ -50,6 +62,13 @@ class IcmsCaptcha {
 		return $instance;
 	}
 
+
+	/**
+	 * Sets the Captcha Config
+   * @param   string $name Config Name
+   * @param   string $val Config Value
+   * @return  bool  Always returns true if the setting of the config has succeeded
+	 */
 	function setConfig($name, $val)
 	{
 		if($name == "mode") {
@@ -61,6 +80,10 @@ class IcmsCaptcha {
 		}
 		return true;
 	}
+
+
+
+
 
 	/**
 	 * Set CAPTCHA mode
@@ -94,8 +117,19 @@ class IcmsCaptcha {
 
 	}
 
+
+
+
+
 	/**
 	 * Initializing the CAPTCHA class
+   * @param   string  $name             name of the instance
+   * @param   string  $skipmember       Skip the captcha because the user is member / logged in
+   * @param   string  $num_chars        comes from config, just initializes the variable
+   * @param   string  $fontsize_min     comes from config, just initializes the variable
+   * @param   string  $fontsize_max     comes from config, just initializes the variable
+   * @param   string  $background_type  comes from config, just initializes the variable
+   * @param   string  $background_num   comes from config, just initializes the variable
 	 */
 	function init($name = 'icmscaptcha', $skipmember = null, $num_chars = null, $fontsize_min = null, $fontsize_max = null, $background_type = null, $background_num = null)
 	{
@@ -120,8 +154,15 @@ class IcmsCaptcha {
 		}
 	}
 
+
+
+
+
+
+
 	/**
 	 * Verify user submission
+	 * @param bool	$skipMember	Skip Captcha because user is member / logged in
 	 */
 	function verify($skipMember = null)
 	{
@@ -165,18 +206,35 @@ class IcmsCaptcha {
 		return $is_valid;
 	}
 
+
+
+	/**
+	 * Get Caption
+	 * @return string	The Caption Constant
+	 */
 	function getCaption()
 	{
 		return defined("ICMS_CAPTCHA_CAPTION") ? constant("ICMS_CAPTCHA_CAPTION") : "";
 	}
 
+
+	/**
+	 * Set Message
+	 * @return string	The message
+	 */
 	function getMessage()
 	{
 		return implode("<br />", $this->message);
 	}
 
+
+
+
+
 	/**
 	 * Destory historical stuff
+	 * @param bool	$clearSession	also clear session variables?
+   * @return bool True if destroying succeeded
 	 */
 	function destroyGarbage($clearSession = false)
 	{
@@ -198,6 +256,14 @@ class IcmsCaptcha {
 		return true;
 	}
 
+
+
+
+
+	/**
+	 * Render
+   * @return  string  the rendered form
+	 */
 	function render()
 	{
 		$config_handler =& xoops_gethandler('config');
@@ -229,6 +295,14 @@ class IcmsCaptcha {
 		return $form;
 	}
 
+
+
+
+
+	/**
+	 * Load Form
+	 * @return string	The Loaded Captcha Form
+	 */
 	function loadForm()
 	{
 		require_once dirname(__FILE__)."/".$this->mode.".php";

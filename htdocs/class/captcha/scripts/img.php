@@ -21,6 +21,17 @@ if(empty($_SERVER['HTTP_REFERER']) || !preg_match("/^".preg_quote(ICMS_URL, '/')
 	exit();
 }
 
+
+
+
+/**
+ * Captcha Image Handler
+ *  
+ * @package     kernel
+ * @subpackage  captcha
+ * @author
+ * @copyright
+ */
 class IcmsCaptchaImageHandler {
 	//var $mode = "gd"; // GD or bmp
 	var $code;
@@ -30,7 +41,12 @@ class IcmsCaptchaImageHandler {
 	var $spacing;
 	var $width;
 	var $height;
-	
+
+
+
+	/**
+	 * Constructor
+	 */
 	function IcmsCaptchaImageHandler()
 	{
 		if(empty($_SESSION['IcmsCaptcha_name'])) {
@@ -49,7 +65,12 @@ class IcmsCaptchaImageHandler {
 			}
 		}
 	}
-	
+
+
+
+	/**
+	 * Loads the captcha image
+	 */
 	function loadImage()
 	{
 		$this->createCode();
@@ -57,8 +78,10 @@ class IcmsCaptchaImageHandler {
 		$this->createImage();
 	}
 
+
+
 	/**
-	* Create Code
+	* Creates the Captcha Code
 	*/
 	function createCode() 
 	{
@@ -67,24 +90,30 @@ class IcmsCaptchaImageHandler {
 		if($this->invalid) {
 			return;
 		}
-		
+
 		if($this->mode == "bmp") {
 			$IcmsConfigCaptcha['captcha_num_chars'] = 4;
 			$this->code = rand( pow(10, $IcmsConfigCaptcha['captcha_num_chars'] - 1), intval( str_pad("9", $IcmsConfigCaptcha['captcha_num_chars'], "9") ) );
 		}else{
-            $raw_code = md5(uniqid(mt_rand(), 1));
-            if (isset($IcmsConfigCaptcha['captcha_skip_characters'])) {
-                $valid_code = str_replace($IcmsConfigCaptcha['captcha_skip_characters'], "", $raw_code);
-                $this->code = substr( $valid_code, 0, $IcmsConfigCaptcha['captcha_num_chars'] );
-            } else {
-                $this->code = substr( $raw_code, 0, $IcmsConfigCaptcha['captcha_num_chars'] );
-            }
-            if (!$IcmsConfigCaptcha['captcha_casesensitive']) {
-                $this->code = strtoupper( $this->code );
-            }
+      $raw_code = md5(uniqid(mt_rand(), 1));
+      if (isset($IcmsConfigCaptcha['captcha_skip_characters'])) {
+          $valid_code = str_replace($IcmsConfigCaptcha['captcha_skip_characters'], "", $raw_code);
+          $this->code = substr( $valid_code, 0, $IcmsConfigCaptcha['captcha_num_chars'] );
+      } else {
+          $this->code = substr( $raw_code, 0, $IcmsConfigCaptcha['captcha_num_chars'] );
+      }
+      if (!$IcmsConfigCaptcha['captcha_casesensitive']) {
+          $this->code = strtoupper( $this->code );
+      }
 		}
 	}
-	
+
+
+
+
+  /**
+   * Sets the Captcha code
+   */
 	function setCode()
 	{
 		if($this->invalid) {
@@ -103,6 +132,14 @@ class IcmsCaptchaImageHandler {
 		}
 	}
 
+
+
+
+	/**
+	 * Creates the Captcha Image File
+   * @param   string $file filename of the Captcha image
+   * @return  object  The created image @todo is this an object?
+	 */
 	function createImage($file = "") 
 	{
 		if($this->invalid) {
@@ -118,9 +155,15 @@ class IcmsCaptchaImageHandler {
 		}
 	}
 
+
+
+
+
+
 	/**
-	 *  Create CAPTCHA iamge with GD
-	 *  Originated from DuGris' SecurityImage
+	 * Create CAPTCHA iamge with GD
+	 * Originated from DuGris' SecurityImage
+   * @param   string $file filename of the Captcha image
 	 */
 	//  --------------------------------------------------------------------------- //
 	// Class : SecurityImage 1.5													//
@@ -175,13 +218,23 @@ class IcmsCaptchaImageHandler {
 
 		if(empty($file)) {
 			header("Content-type: image/jpeg");
-			imagejpeg ($this->oImage);
+			imagejpeg($this->oImage);
 		}else{
-			imagejpeg ($this->oImage, ICMS_ROOT_PATH. "/cache/captcha/". $file . ".jpg");
+			imagejpeg($this->oImage, ICMS_ROOT_PATH. "/cache/captcha/". $file . ".jpg");
 		}
 		imagedestroy($this->oImage);
 	}
-	
+
+
+
+
+
+	/**
+	 * Gets list of Captcha items (Internal Function)
+   * @param   string $name directory name to look in
+   * @param   string $extension extension of the files to look for
+   * @return  array  array of Captcha items
+	 */
 	function _getList($name, $extension = "") 
 	{
 		$items = array();
@@ -207,12 +260,24 @@ class IcmsCaptchaImageHandler {
 		return $items;
 	}
 
+
+
+
+
+	/**
+	 * Loads the Captcha font
+	 */
 	function loadFont() 
 	{
 		$fonts = $this->_getList("fonts", "ttf");
 		$this->font = "../fonts/".$fonts[array_rand($fonts)];
 	}
-	
+
+
+
+	/**
+	 * Sets the Captcha image size
+	 */
 	function setImageSize()
 	{
 		$MaxCharWidth = 0;
@@ -242,10 +307,12 @@ class IcmsCaptchaImageHandler {
 		$this->width = ($IcmsConfigCaptcha['captcha_num_chars'] * $MaxCharWidth) + ($this->spacing/2);
 	}
 
+
+
 	/**
-	* Return random background
+	* Returns random background
 	*
-	* @return array
+	* @return array Random Background
 	*/
 	function loadBackground() 
 	{
@@ -256,8 +323,11 @@ class IcmsCaptchaImageHandler {
 		return $RandBackground;
 	}
 
+
+
+
 	/**
-	* Draw Image background
+	* Draws Image background
 	*/
 	function createFromFile() 
 	{
@@ -285,8 +355,11 @@ class IcmsCaptchaImageHandler {
 		}
 	}
 
+
+
+
 	/**
-	* Draw Code
+	* Draw Captcha Code
 	*/
 	function drawCode() 
 	{
@@ -316,8 +389,11 @@ class IcmsCaptchaImageHandler {
 		}
 	}
 
+
+
+
 	/**
-	* Draw Border
+	* Draw Captcha Border
 	*/
 	function drawBorder() 
 	{
@@ -326,8 +402,11 @@ class IcmsCaptchaImageHandler {
 		imagerectangle($this->oImage, 0, 0, $this->width-1, $this->height-1, $border_color);
 	}
 
+
+
+
 	/**
-	* Draw Circles background
+	* Draw Captcha Circles background
 	*/
 	function drawCircles() 
 	{
@@ -339,8 +418,10 @@ class IcmsCaptchaImageHandler {
 		}
 	}
 
+
+
 	/**
-	* Draw Lines background
+	* Draw Captcha Lines background
 	*/
 	function drawLines() 
 	{
@@ -352,8 +433,10 @@ class IcmsCaptchaImageHandler {
 		}
 	}
 
+
+
 	/**
-	* Draw Rectangles background
+	* Draw Captcha Rectangles background
 	*/
 	function drawRectangles() 
 	{
@@ -365,8 +448,11 @@ class IcmsCaptchaImageHandler {
 		}
 	}
 
+
+
+
 	/**
-	* Draw Bars background
+	* Draw Captcha Bars background
 	*/
 	function drawBars() 
 	{
@@ -382,8 +468,11 @@ class IcmsCaptchaImageHandler {
 		}
 	}
 
+
+
+
 	/**
-	* Draw Ellipses background
+	* Draw Captcha Ellipses background
 	*/
 	function drawEllipses() 
 	{
@@ -395,8 +484,12 @@ class IcmsCaptchaImageHandler {
 		}
 	}
 
+
+
+
+
 	/**
-	* Draw polygons background
+	* Draw Captcha polygons background
 	*/
 	function drawPolygons() 
 	{
@@ -413,10 +506,19 @@ class IcmsCaptchaImageHandler {
 		}
 	}
 
+
+
+
+
+
 	/**
 	 *  Create CAPTCHA iamge with BMP
-	 *  TODO
+	 *  @TODO
+   * @param   string $file filename
+   * @return  string $image he image that was created from bmp file
 	 */
+
+
 	function createImageBmp($file = "") 
 	{
 		$image = "";

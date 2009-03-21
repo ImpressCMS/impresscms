@@ -13,10 +13,10 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @package		class
- * @since		XOOPS
+ * @since     XOOPS
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @author	  Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		$Id:$
 */
 

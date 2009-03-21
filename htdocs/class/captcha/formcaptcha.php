@@ -73,7 +73,14 @@ class IcmsFormCaptcha extends XoopsFormElement {
 			$this->setCaption($caption);
 		}
 	}
-	
+
+
+	/**
+	 * Sets the Config
+   * @param   string $name Config Name
+   * @param   string $val Config Value
+   * @return  object reference to the IcmsCaptcha Object (@link IcmsCaptcha)
+	 */
 	function setConfig($name, $val)
 	{
 		return $this->_captchaHandler->setConfig($name, $val);
@@ -86,4 +93,5 @@ class IcmsFormCaptcha extends XoopsFormElement {
 		}
 	}
 }
+
 ?>
