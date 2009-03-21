@@ -1,46 +1,22 @@
 <?php
-// $Id$
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+* Manage groups and memberships
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		LICENSE.txt
+* @package		kernel
+* @subpackage	member
+* @since		XOOPS
+* @author		Kazumi Ono (aka onokazo)
+* @author		http://www.xoops.org The XOOPS Project
+* @version		$Id$
+*/
 
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
-
-/**
- *
- *
- * @package     kernel
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
 
 /**
  * A group permission
@@ -48,7 +24,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
  * These permissions are managed through a {@link XoopsGroupPermHandler} object
  *
  * @package     kernel
- *
+ * @subpackage	member
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
@@ -86,6 +62,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	 * Create a new {@link XoopsGroupPerm}
 	 *
 	 * @return	bool    $isNew  Flag the object as "new"?
+	 * @see htdocs/kernel/XoopsObjectHandler#create()
 	 */
 	function &create($isNew = true)
 	{
@@ -102,6 +79,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	 * @param	int $id ID
 	 *
 	 * @return	object  {@link XoopsGroupPerm}, FALSE on fail
+	 * @see htdocs/kernel/XoopsObjectHandler#get($int_id)
 	 */
 	function &get($id)
 	{
@@ -127,6 +105,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	 * @param	object  &$perm  {@link XoopsGroupPerm} object
 	 *
 	 * @return	bool    TRUE on success
+	 * @see htdocs/kernel/XoopsObjectHandler#insert($object)
 	 */
 	function insert(&$perm)
 	{
@@ -167,6 +146,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	 * @param	object  &$perm
 	 *
 	 * @return	bool    TRUE on success
+	 * @see htdocs/kernel/XoopsObjectHandler#delete($object)
 	 */
 	function delete(&$perm)
 	{
@@ -344,7 +324,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	 * @param	int     $gperm_groupid    ID of a group
 	 * @param	int     $gperm_modid      ID of a module
 	 *
-	 * @return	bool    TRUE jf success
+	 * @return	bool    TRUE if success
 	 */
 	function addRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1)
 	{

@@ -1,33 +1,18 @@
 <?php
-// $Id$
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+* Manage groups and memberships
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		LICENSE.txt
+* @package		kernel
+* @subpackage	member
+* @since		XOOPS
+* @author		Kazumi Ono (aka onokazo)
+* @author		http://www.xoops.org The XOOPS Project
+* @version		$Id$
+*/
 
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
@@ -73,7 +58,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
 	 *
 	 * @param bool $isNew mark the new object as "new"?
 	 * @return object XoopsGroup {@link XoopsGroup} reference to the new object
-	 *
+	 * @see htdocs/kernel/XoopsObjectHandler#create()
 	 */
 	function &create($isNew = true)
 	{
@@ -89,6 +74,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
 	 *
 	 * @param int $id ID of the group to get
 	 * @return object XoopsGroup {@link XoopsGroup} reference to the group object, FALSE if failed
+	 * @see htdocs/kernel/XoopsObjectHandler#get($int_id)
 	 */
 	function &get($id)
 	{
@@ -113,6 +99,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
 	 *
 	 * @param object reference to the group object
 	 * @return mixed ID of the group if inserted, FALSE if failed, TRUE if already present and unchanged.
+	 * @see htdocs/kernel/XoopsObjectHandler#insert($object)
 	 */
 	function insert(&$group)
 	{
@@ -152,6 +139,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
 	 *
 	 * @param object $group reference to the group to be removed
 	 * @return bool FALSE if failed
+	 * @see htdocs/kernel/XoopsObjectHandler#delete($object)
 	 */
 	function delete(&$group)
 	{
@@ -209,6 +197,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
  * @author Kazumi Ono <onokazu@xoops.org>
  * @copyright copyright (c) 2000-2003 XOOPS.org
  * @package kernel
+ * @subpackage	member
  */
 class XoopsMembership extends XoopsObject
 {
@@ -233,6 +222,7 @@ class XoopsMembership extends XoopsObject
  * @author Kazumi Ono <onokazu@xoops.org>
  * @copyright copyright (c) 2000-2003 XOOPS.org
  * @package kernel
+ * @subpackage	member
  */
 class XoopsMembershipHandler extends XoopsObjectHandler
 {
@@ -241,6 +231,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 	 *
 	 * @param bool $isNew should the new object be set to "new"?
 	 * @return object XoopsMembership {@link XoopsMembership}
+	 * @see htdocs/kernel/XoopsObjectHandler#create()
 	 */
 	function &create($isNew = true)
 	{
@@ -256,6 +247,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 	 *
 	 * @param int $id ID of the membership to get
 	 * @return mixed reference to the object if successful, else FALSE
+	 * @see htdocs/kernel/XoopsObjectHandler#get($int_id)
 	 */
 	function &get($id)
 	{
@@ -280,6 +272,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 	 *
 	 * @param object $mship reference to the membership object
 	 * @return bool TRUE if already in DB or successful, FALSE if failed
+	 * @see htdocs/kernel/XoopsObjectHandler#insert($object)
 	 */
 	function insert(&$mship)
 	{
@@ -319,6 +312,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 	 *
 	 * @param object $mship reference to the membership object
 	 * @return bool FALSE if failed
+	 * @see htdocs/kernel/XoopsObjectHandler#delete($object)
 	 */
 	function delete(&$mship)
 	{
