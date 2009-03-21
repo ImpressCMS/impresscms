@@ -33,13 +33,13 @@ class XoopsDatabaseFactory{
 
 	/**
 	 * Get a reference to the only instance of database class and connects to DB
-     *
-     * if the class has not been instantiated yet, this will also take
-     * care of that
+   *
+   * if the class has not been instantiated yet, this will also take
+   * care of that
 	 *
-     * @static
-     * @staticvar   object  The only instance of database class
-     * @return      object  Reference to the only instance of database class
+   * @static
+   * @staticvar   object  The only instance of database class
+   * @return      object  Reference to the only instance of database class
 	 */
 	function &getDatabaseConnection()
 	{
@@ -65,13 +65,15 @@ class XoopsDatabaseFactory{
 		return $instance;
 	}
 
+
+
 	/**
 	 * Gets a reference to the only instance of database class. Currently
 	 * only being used within the installer.
 	 *
-     * @static
-     * @staticvar   object  The only instance of database class
-     * @return      object  Reference to the only instance of database class
+   * @static
+   * @staticvar   object  The only instance of database class
+   * @return      object  Reference to the only instance of database class
 	 */
 	function &getDatabase()
 	{
@@ -92,7 +94,7 @@ class XoopsDatabaseFactory{
 	/**
 	 * Gets the databaseupdater object.
 	 *
-     * @return	object  @link IcmsDatabaseUpdater
+   * @return	object  @link IcmsDatabaseUpdater
 	 */
 	function getDatabaseUpdater()
 	{
@@ -103,4 +105,5 @@ class XoopsDatabaseFactory{
 		return $databaseUpdater;
 	}
 }
+
 ?>

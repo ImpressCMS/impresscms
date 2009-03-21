@@ -140,10 +140,10 @@ class SqlUtility
 	}
 
 	/**
-	 * add a prefix.'_' to all tablenames in a query
-     *
-     * @param   string  $query  valid SQL query string
-     * @param   string  $prefix prefix to add to all table names
+	 * Adds a prefix.'_' to all tablenames in a query
+   *
+   * @param   string  $query  valid SQL query string
+   * @param   string  $prefix prefix to add to all table names
 	 * @return  mixed   FALSE on failure
 	 */
 	function prefixQuery($query, $prefix)

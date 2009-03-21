@@ -141,6 +141,11 @@ class IcmsDatabasetable {
 		return ($bRetVal);
 	}
 
+
+   /*
+   * Gets the field array from one table name
+   * @return array array of fields
+   */
 	function getExistingFieldsArray() {
 		$sql = "SHOW COLUMNS FROM " . $this->name();
 		$result = $this->_db->queryF($sql);
@@ -158,10 +163,21 @@ class IcmsDatabasetable {
 		}
 		return $fields;
 	}
+
+
+
+   /*
+   * Checks whether the field exists or not
+   * @param string $field does the field exist in the database
+   * @return bool whether the field exists or not
+   */
 	function fieldExists($field) {
 		$existingFields = $this->getExistingFieldsArray();
-		return isset ($existingFields[$field]);
+		return isset($existingFields[$field]);
 	}
+
+
+
 	/**
 	 * Set the table structure
 	 *
@@ -182,8 +198,10 @@ class IcmsDatabasetable {
 	function setStructure($structure) {
 		$this->_structure = $structure;
 	}
+
+
 	/**
-	* Return the table structure
+	* Returns the table structure
 	*
 	* @return string table structure
 	*
@@ -191,6 +209,8 @@ class IcmsDatabasetable {
 	function getStructure() {
 		return sprintf($this->_structure, $this->name());
 	}
+
+
 	/**
 	 * Add values of a record to be added
 	 *
@@ -210,6 +230,8 @@ class IcmsDatabasetable {
 	function getData() {
 		return $this->_data;
 	}
+
+
 	/**
 	 * Use to insert data in a table
 	 *
@@ -232,6 +254,8 @@ class IcmsDatabasetable {
 		}
 		return $ret;
 	}
+
+
 	/**
 	 * Add a field to be added
 	 *
@@ -259,6 +283,8 @@ class IcmsDatabasetable {
 		$field['properties'] = $properties;
 		$this->_newFields[] = $field;
 	}
+
+
 	/**
 	 * Get fields that need to be altered
 	 *
@@ -268,15 +294,17 @@ class IcmsDatabasetable {
 	function getAlteredFields() {
 		return $this->_alteredFields;
 	}
+
+
 	/**
 	 * Add item to be updated on the the table via the UpdateAll method
 	 *
-     * @param   string  $fieldname  Name of the field
-     * @param   string  $fieldvalue Value to write
-     * @param   object  $criteria   {@link CriteriaElement}
-     * @param 	bool	$fieldvalueIsOperation TRUE if fieldvalue is an operation, for example, conf_order+1
+   * @param   string  $fieldname  Name of the field
+   * @param   string  $fieldvalue Value to write
+   * @param   object  $criteria   {@link CriteriaElement}
+   * @param 	bool	$fieldvalueIsOperation TRUE if fieldvalue is an operation, for example, conf_order+1
 	 *
-     * @return  bool
+   * @return  bool
 	 */
 	function addUpdateAll($fieldname, $fieldvalue, $criteria, $fieldvalueIsOperation) {
 		$item['fieldname'] = $fieldname;
@@ -285,19 +313,23 @@ class IcmsDatabasetable {
 		$item['fieldvalueIsOperation'] = $fieldvalueIsOperation;
 		$this->_updateAll[] = $item;
 	}
+
+
 	/**
 	 * Add item to be updated on the the table via the UpdateAll method
 	 *
-     * @param   string  $fieldname  Name of the field
-     * @param   string  $fieldvalue Value to write
-     * @param   object  $criteria   {@link CriteriaElement}
+   * @param   string  $fieldname  Name of the field
+   * @param   string  $fieldvalue Value to write
+   * @param   object  $criteria   {@link CriteriaElement}
 	 *
-     * @return  bool
+   * @return  bool
 	 */
 	function addDeleteAll($criteria) {
 		$item['criteria'] = $criteria;
 		$this->_deleteAll[] = $item;
 	}
+
+
 	/**
 	 * Get new fields to be added
 	 *
@@ -307,6 +339,8 @@ class IcmsDatabasetable {
 	function getNewFields() {
 		return $this->_newFields;
 	}
+
+
 	/**
 	 * Get items to be updated
 	 *
@@ -316,6 +350,8 @@ class IcmsDatabasetable {
 	function getUpdateAll() {
 		return $this->_updateAll;
 	}
+
+
 	/**
 	 * Get items to be deleted
 	 *
@@ -325,6 +361,8 @@ class IcmsDatabasetable {
 	function getDeleteAll() {
 		return $this->_deleteAll;
 	}
+
+
 	/**
 	 * Add values of a record to be added
 	 *
@@ -334,6 +372,8 @@ class IcmsDatabasetable {
 	function addDropedField($name) {
 		$this->_dropedFields[] = $name;
 	}
+
+
 	/**
 	 * Get fields that need to be droped
 	 *
@@ -343,6 +383,8 @@ class IcmsDatabasetable {
 	function getDropedFields() {
 		return $this->_dropedFields;
 	}
+
+
 	/**
 	 * Set the flag to drop the table
 	 *
@@ -350,6 +392,8 @@ class IcmsDatabasetable {
 	function setFlagForDrop() {
 		$this->_flagForDrop = true;
 	}
+
+
 	/**
 	 * Use to create a table
 	 *
@@ -373,6 +417,8 @@ class IcmsDatabasetable {
 		}
 		return $ret;
 	}
+
+
 	/**
 	 * Use to drop a table
 	 *
@@ -394,6 +440,8 @@ class IcmsDatabasetable {
 			return true;
 		}
 	}
+
+
 	/**
 	 * Use to alter a table
 	 *
@@ -426,6 +474,8 @@ class IcmsDatabasetable {
 
 		return $ret;
 	}
+
+
 	/**
 	 * Use to add new fileds in the table
 	 *
@@ -452,79 +502,79 @@ class IcmsDatabasetable {
 		return $ret;
 	}
 
-    /**
-     * Change a value for objects with a certain criteria
-     *
-     * @param   string  $fieldname  Name of the field
-     * @param   string  $fieldvalue Value to write
-     * @param   object  $criteria   {@link CriteriaElement}
-     *
-     * @return  bool
-     **/
-    function updateAll()
-    {
-    	$ret = true;
-    	foreach ($this->getUpdateAll() as $item) {
-    		$fieldname = $item['fieldname'];
-    		$fieldvalue = $item['fieldvalue'];
-    		$criteria = isset($item['criteria']) ? $item['criteria'] : null;
+  /**
+   * Change a value for objects with a certain criteria
+   *
+   * @param   string  $fieldname  Name of the field
+   * @param   string  $fieldvalue Value to write
+   * @param   object  $criteria   {@link CriteriaElement}
+   *
+   * @return  bool
+   **/
+  function updateAll()
+  {
+  	$ret = true;
+  	foreach ($this->getUpdateAll() as $item) {
+  		$fieldname = $item['fieldname'];
+  		$fieldvalue = $item['fieldvalue'];
+  		$criteria = isset($item['criteria']) ? $item['criteria'] : null;
 
-    		$set_clause = $fieldname . ' = ';
-	    	if ( is_numeric( $fieldvalue ) || $item['fieldvalueIsOperation']) {
-	    		$set_clause .=  $fieldvalue;
-	    	} elseif ( is_array( $fieldvalue ) ) {
-	    		$set_clause .= $this->_db->quoteString( implode( ',', $fieldvalue ) );
-	    	} else {
-	    		$set_clause .= $this->_db->quoteString( $fieldvalue );
-	    	}
-	        $sql = 'UPDATE '.$this->name().' SET '.$set_clause;
-	        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-	            $sql .= ' '.$criteria->renderWhere();
-	        }
-	        if ($this->force) {
-	        	$ret = $this->_db->queryF($sql);
-	        } else {
-	        	$ret = $this->_db->query($sql);
-	        }
-            if (!$ret) {
-	        	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
-	        } else {
-	        	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE, $this->name()) . "<br />";
-	        }
-    	}
-    	return $ret;
-    }
-
-    /**
-     * delete all objects meeting the conditions
-     *
-     * @param object $criteria {@link CriteriaElement} with conditions to meet
-     * @return bool
-     */
-
-    function deleteAll()
-    {
-		$ret = true;
-    	foreach ($this->getDeleteAll() as $item) {
-    		$criteria = isset($item['criteria']) ? $item['criteria'] : null;
-	        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-	            $sql = 'DELETE FROM '.$this->table;
-	            $sql .= ' '.$criteria->renderWhere();
-	            if ($this->force) {
-	            	$result = $this->_db->queryF($sql);
-	            } else {
-	            	$result = $this->_db->query($sql);
-	            }
-	            if (!$result) {
-	                echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
-	            } else {
-	            	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE, $this->name()) . " (" . $this->_db->error(). ")<br />";
-	            }
-	        }
-	        $ret = $result && $ret;
-    	}
-	    return $ret;
+  		$set_clause = $fieldname . ' = ';
+   	if ( is_numeric( $fieldvalue ) || $item['fieldvalueIsOperation']) {
+   		$set_clause .=  $fieldvalue;
+   	} elseif ( is_array( $fieldvalue ) ) {
+   		$set_clause .= $this->_db->quoteString( implode( ',', $fieldvalue ) );
+   	} else {
+   		$set_clause .= $this->_db->quoteString( $fieldvalue );
+   	}
+       $sql = 'UPDATE '.$this->name().' SET '.$set_clause;
+       if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+           $sql .= ' '.$criteria->renderWhere();
        }
+       if ($this->force) {
+       	$ret = $this->_db->queryF($sql);
+       } else {
+       	$ret = $this->_db->query($sql);
+       }
+          if (!$ret) {
+       	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
+       } else {
+       	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE, $this->name()) . "<br />";
+       }
+  	}
+  	return $ret;
+  }
+
+  /**
+   * delete all objects meeting the conditions
+   *
+   * @param object $criteria {@link CriteriaElement} with conditions to meet
+   * @return bool
+   */
+
+  function deleteAll()
+  {
+    $ret = true;
+  	foreach ($this->getDeleteAll() as $item) {
+  		$criteria = isset($item['criteria']) ? $item['criteria'] : null;
+       if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+           $sql = 'DELETE FROM '.$this->table;
+           $sql .= ' '.$criteria->renderWhere();
+           if ($this->force) {
+           	$result = $this->_db->queryF($sql);
+           } else {
+           	$result = $this->_db->query($sql);
+           }
+           if (!$result) {
+               echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
+           } else {
+           	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE, $this->name()) . " (" . $this->_db->error(). ")<br />";
+           }
+       }
+       $ret = $result && $ret;
+  	}
+   return $ret;
+ }
 
 
 	/**
@@ -552,6 +602,9 @@ class IcmsDatabasetable {
 		return $ret;
 	}
 }
+
+
+
 /**
  * IcmsDatabaseupdater class
  *
@@ -599,6 +652,8 @@ class IcmsDatabaseupdater {
 		$this->_dbTypesArray[XOBJ_DTYPE_FILE] = 'int(11)';
 		$this->_dbTypesArray[XOBJ_DTYPE_IMAGE] = 'varchar(255)';
 	}
+
+
 	/**
 	 * Use to execute a general query
 	 *
@@ -625,6 +680,8 @@ class IcmsDatabaseupdater {
 			return true;
 		}
 	}
+
+
 	/**
 	 * Use to rename a table
 	 *
@@ -651,6 +708,8 @@ class IcmsDatabaseupdater {
 			return true;
 		}
 	}
+
+
 	/**
 	 * Use to update a table
 	 *
@@ -756,6 +815,12 @@ class IcmsDatabaseupdater {
 		}
 	}
 
+
+
+   /*
+   * Upgrades the object
+   * @param string $dirname
+   */
 	function upgradeObjectItem($dirname, $item) {
 		$module_handler = xoops_getModuleHandler($item, $dirname);
 		if (!$module_handler) {
@@ -855,6 +920,8 @@ class IcmsDatabaseupdater {
 		    }
 		}
 	}
+
+
 	/**
 	 * Insert a config in System Preferences
 	 *
@@ -886,6 +953,13 @@ class IcmsDatabaseupdater {
 	    }
 	    echo $querry_answer;
 	}
+
+
+   /*
+   * Module Upgrade
+   * @param object reference to Module Object
+   * @return bool whether upgrade succeeded or not
+   */
 	function moduleUpgrade(&$module) {
 		$dirname = $module->getVar('dirname');
 
@@ -928,13 +1002,17 @@ class IcmsDatabaseupdater {
 	    return true;
 	}
 
+
+
+
+
 	/**
 	 * Update the DBVersion of a module
 	 *
 	 * @param int $newDVersion new database version
 	 * @param string $dirname dirname of the module
 	 *
-	 * @return TRUE if success FALSE if not
+	 * @return bool TRUE if success FALSE if not
 	 */
 	function updateModuleDBVersion($newDBVersion, $dirname) {
 		if (!$dirname) {
@@ -952,4 +1030,6 @@ class IcmsDatabaseupdater {
 
 	}
 }
+
+
 ?>
