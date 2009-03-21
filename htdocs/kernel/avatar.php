@@ -1,42 +1,36 @@
 <?php
-// $Id: avatar.php 1102 2007-10-19 02:55:52Z dugris $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+* Manage avatars for users
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		LICENSE.txt
+* @package		kernel
+* @subpackage	avatar
+* @since		XOOPS
+* @author		Kazumi Ono (aka onokazo)
+* @author		http://www.xoops.org The XOOPS Project
+* @version		$Id$
+*/
 
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
-
+/**
+ * Avatar class
+ * @package avatar
+ *
+ */
 class XoopsAvatar extends XoopsObject
 {
-    var $_userCount;
+    /** @var integer */
+	var $_userCount;
 
+	/**
+	 * Constructor for avatar class, initializing all the properties of the class object
+	 *
+	 */
     function XoopsAvatar()
     {
         $this->XoopsObject();
@@ -50,11 +44,20 @@ class XoopsAvatar extends XoopsObject
         $this->initVar('avatar_type', XOBJ_DTYPE_OTHER, 0, false);
     }
 
+    /**
+     * Sets the value for the number of users
+     * @param integer $value
+     *
+     */
     function setUserCount($value)
     {
         $this->_userCount = intval($value);
     }
 
+    /**
+     * Gets the value for the number of users
+     * @return integer
+     */
     function getUserCount()
     {
         return $this->_userCount;
@@ -74,7 +77,11 @@ class XoopsAvatar extends XoopsObject
 class XoopsAvatarHandler extends XoopsObjectHandler
 {
 
-    function &create($isNew = true)
+    /**
+     * Creates a new avatar object
+     * @see htdocs/kernel/XoopsObjectHandler#create()
+     */
+	function &create($isNew = true)
     {
         $avatar = new XoopsAvatar();
         if ($isNew) {
@@ -83,6 +90,11 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         return $avatar;
     }
 
+    /**
+     * Gets an avatar object
+     * @see htdocs/kernel/XoopsObjectHandler#get($int_id)
+     * @return mixed
+     */
     function &get($id)
     {
         $avatar = false;
@@ -102,6 +114,11 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         return $avatar;
     }
 
+    /**
+     * Inserts an avatar or updates an existing avatar
+     * @see htdocs/kernel/XoopsObjectHandler#insert($object)
+     * @return boolean
+     */
     function insert(&$avatar)
     {
         /**
@@ -135,6 +152,11 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         return true;
     }
 
+    /**
+     * Deletes an avatar
+     * @see htdocs/kernel/XoopsObjectHandler#delete($object)
+     * @return boolean
+     */
     function delete(&$avatar)
     {
         /**
@@ -155,6 +177,12 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         return true;
     }
 
+    /**
+     *
+     * @param object $criteria
+     * @param boolean $id_as_key
+     * @return array
+     */
     function &getObjects($criteria = null, $id_as_key = false)
     {
         $ret = array();
@@ -184,6 +212,11 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         return $ret;
     }
 
+    /**
+     * Get a count of avatars meeting criteria
+     * @param object $criteria
+     * @return integer
+     */
     function getCount($criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('avatar');
@@ -197,6 +230,12 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         return $count;
     }
 
+    /**
+     * Links a user with an avatar
+     * @param integer $avatar_id
+     * @param integer $user_id
+     * @return boolean
+     */
     function addUser($avatar_id, $user_id){
         $avatar_id = intval($avatar_id);
         $user_id = intval($user_id);
@@ -212,6 +251,11 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         return true;
     }
 
+    /**
+     * Get an array of users linked to an avatar
+     * @param object $avatar
+     * @return array
+     */
     function getUser(&$avatar){
         $ret = array();
 
@@ -232,6 +276,12 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         return $ret;
     }
 
+    /**
+     * Get a list of avatars
+     * @param string $avatar_type
+     * @param integer $avatar_display
+     * @return array
+     */
     function getList($avatar_type = null, $avatar_display = null)
     {
         $criteria = new CriteriaCompo();
