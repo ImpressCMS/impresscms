@@ -64,7 +64,8 @@ class XoopsAuthOpenid extends XoopsAuth {
 	/**
 	 * Authenticate using the OpenID protocol
 	 *
-     * @return bool successful?
+	 * @param bool $debug Turn debug on or not
+   * @return bool successful?
 	 */
 	function authenticate($debug=false) {
 		//require_once ICMS_LIBRARIES_PATH . "/phpopenid/occommon.php";
@@ -175,6 +176,12 @@ class XoopsAuthOpenid extends XoopsAuth {
 		}
 	}
 
+
+	/**
+	 * Has an error occurred or not
+	 *
+   * @return bool true if number of errors are greater than 0
+	 */
 	function errorOccured() {
 		return count($this->_errors) > 0;
 	}

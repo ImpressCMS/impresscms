@@ -96,7 +96,7 @@ class XoopsAuthLdap extends XoopsAuth
 	function cp1252_to_utf8($str) {return strtr(utf8_encode($str), $this->cp1252_map);}
 
 	/**
-	*  Authenticate  user again LDAP directory (Bind)
+	*  Authenticate  user against LDAP directory (Bind)
 	*  2 options :
 	*		Authenticate directly with uname in the DN
 	*		Authenticate with manager, search the dn
@@ -151,7 +151,8 @@ class XoopsAuthLdap extends XoopsAuth
 	}
 
 	/**
-	*  Compose the user DN with the configuration.
+	* Compose the user DN with the configuration.
+	* @param string $uname UserName
 	* @return userDN or false
 	*/
 	function getUserDN($uname)
@@ -176,8 +177,9 @@ class XoopsAuthLdap extends XoopsAuth
 	}
 	
 	/**
-	*  Load user from ImpressCMS Database
-	* @return XoopsUser object
+	* Load user from ImpressCMS Database
+	* @param string $uname UserName
+	* @return object {@link XoopsUser} XoopsUser object
 	*/
 	function getFilter($uname)
 	{
@@ -192,7 +194,7 @@ class XoopsAuthLdap extends XoopsAuth
 	* @param string $userdn
 	* @param string $uname Username
 	* @param string $pwd Password
-	* @return object {@link XoopsUser} 
+	* @return object {@link XoopsUser} XoopsUser object
 	**/
 	function loadXoopsUser($userdn, $uname, $pwd = null)
 	{

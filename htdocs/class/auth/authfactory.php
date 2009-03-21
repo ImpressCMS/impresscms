@@ -42,9 +42,9 @@ class XoopsAuthFactory
      * 
      * if the class has not been instantiated yet, this will also take 
      * care of that
-     * @param string $uname Username to get Authentication class for
+     * @param   string $uname Username to get Authentication class for
      * @static
-     * @return      object  Reference to the only instance of authentication class
+     * @return  object  Reference to the only instance of authentication class
   	 */
   	function &getAuthConnection($uname)
   	{

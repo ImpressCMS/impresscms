@@ -36,24 +36,24 @@
  */
 class XoopsAuthXoops extends XoopsAuth {
 
-  	/**
-  	 * Authentication Service constructor
-     * constructor
-     * @param object $dao reference to dao object
-  	 */
-  	function XoopsAuthXoops (&$dao) {
-  		$this->_dao = $dao;
-  		$this->auth_method = 'xoops';
-  	}
+	/**
+	 * Authentication Service constructor
+   * constructor
+   * @param object $dao reference to dao object
+	 */
+	function XoopsAuthXoops (&$dao) {
+		$this->_dao = $dao;
+		$this->auth_method = 'xoops';
+	}
 
-  	/**
-  	 *  Authenticate user
-  	 *
-  	 * @param string $uname
-  	 * @param string $pwd
-  	 *
-  	 * @return object {@link XoopsUser}
-     */	
+	/**
+	 *  Authenticate user
+	 *
+	 * @param string $uname
+	 * @param string $pwd
+	 *
+	 * @return object {@link XoopsUser} XoopsUser object
+   */	
 	function authenticate($uname, $pwd = null)
 	{
 		$member_handler =& xoops_gethandler('member');

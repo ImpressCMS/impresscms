@@ -50,7 +50,10 @@ class XoopsAuth {
   	}
 
   	/**
+     * authenticate
+     *
   	 * @abstract need to be write in the derived class
+     * @return bool whether user is authenticated
   	 */
   	function authenticate() {
   		$authenticated = false;

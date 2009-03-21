@@ -40,8 +40,8 @@ class XoopsAuthProvisionning {
 
     /**
      * Gets instance of {@link XoopsAuthProvisionning}
-  	 * @param object $auth_instance
-  	 * @return object $provis_instance {@link XoopsAuthProvisionning}
+  	 * @param   object $auth_instance
+  	 * @return  object $provis_instance {@link XoopsAuthProvisionning}
      **/
   	function &getInstance(&$auth_instance)
   	{
@@ -72,8 +72,8 @@ class XoopsAuthProvisionning {
 
     /**
   	 * Return a Xoops User Object 
-     * @param string $uname Username of the user
-  	 * @return mixed XoopsUser {@link XoopsUser} or false if failed
+     * @param   string $uname Username of the user
+  	 * @return  mixed XoopsUser {@link XoopsUser} or false if failed
   	 */	
   	function getXoopsUser($uname) {
   		$member_handler =& xoops_gethandler('member');
@@ -146,7 +146,7 @@ class XoopsAuthProvisionning {
 
     /**
   	 * Modify user information
-     * @param object {@link XoopsUser} reference to Xoops User Object
+     * @param object {@link XoopsUser} reference to XoopsUser Object
      * @param array $datas Some Data
      * @param string $uname Username of the user
      * @param string $pwd Password of the user
