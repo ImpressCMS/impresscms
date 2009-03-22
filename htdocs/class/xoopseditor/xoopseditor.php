@@ -7,10 +7,16 @@
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package		core
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @since		  XOOPS
+* @author		  http://www.xoops.org The XOOPS Project
+* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
+
+/*
+@todo   Should we tell the modules that use this path to look at the other path?
+Added Ticket #44 to trac http://trac.impresscms.org/addons/ticket/44
+*/
+
 include_once str_replace("/class/xoopseditor/", "/class/", str_replace("\\", "/", __FILE__));
 ?>
