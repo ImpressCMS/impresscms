@@ -32,7 +32,7 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
 function icms_cp_header(){
-    global $xoopsConfig, $xoopsModule, $xoopsUser, $xoopsOption, $xoTheme, $im_multilanguageConfig, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
+    global $xoopsConfig, $xoopsModule, $xoopsUser, $xoopsOption, $im_multilanguageConfig, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
 	$xoopsLogger->stopTime( 'Module init' );
 	$xoopsLogger->startTime( 'ImpressCMS CP Output Init' );
 	
@@ -60,22 +60,22 @@ function icms_cp_header(){
 			$xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];
 		}
 	}
-	$xoopsThemeFactory = new xos_opal_ThemeFactory();
-	$xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
+	$icmsThemeFactory = new xos_opal_ThemeFactory();
+	$icmsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
 	
 	// The next 2 lines are for compatibility only... to implement the admin theme ;)
 	// TODO: Remove all this after a few versions!!
 	if(isset($xoopsConfig['theme_admin_set']))
-		$xoopsThemeFactory->defaultTheme = $xoopsConfig['theme_admin_set'];
-    $xoTheme =& $xoopsThemeFactory->createInstance( array(
+		$icmsThemeFactory->defaultTheme = $xoopsConfig['theme_admin_set'];
+    $icmsTheme =& $icmsThemeFactory->createInstance( array(
     	'contentTemplate'	=> @$xoopsOption['template_main'],
     	'canvasTemplate'	=> 'theme'.(( file_exists(ICMS_THEME_PATH.'/'.$xoopsConfig['theme_admin_set'].'/theme_admin.html')) ?'_admin':'').'.html',
     	'plugins' 			=> array('xos_logos_PageBuilder')
     ) );
-    $icmsAdminTpl = $xoTheme->template;
+    $icmsAdminTpl = $icmsTheme->template;
     
-	$xoTheme->addScript( ICMS_URL.'/include/xoops.js', array( 'type' => 'text/javascript' ) );
-	$xoTheme->addScript( '' ,array( 'type' => 'text/javascript' ) , 'startList = function() {
+	$icmsTheme->addScript( ICMS_URL.'/include/xoops.js', array( 'type' => 'text/javascript' ) );
+	$icmsTheme->addScript( '' ,array( 'type' => 'text/javascript' ) , 'startList = function() {
 	if (document.all&&document.getElementById) {
 		navRoot = document.getElementById("nav");
 		for (i=0; i<navRoot.childNodes.length; i++) {
@@ -92,16 +92,16 @@ function icms_cp_header(){
 	}
 }
 window.onload=startList;');
-    $xoTheme->addStylesheet(ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css', array('media' => 'screen'));
-//	$xoTheme->addStylesheet( '/modules/system/style.css' );
+    $icmsTheme->addStylesheet(ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css', array('media' => 'screen'));
 	
 			$config_handler =& xoops_gethandler('config');
 			$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
  			$jscript = '';
+ 			if(class_exists('XoopsFormDhtmlTextArea')){
  		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
  		        	if(empty($key)) continue;
  		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
- 		        		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
+ 		        		$icmsTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
  		        	}else{
  		        		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
  		        		$func = 'javascript_'.$key;
@@ -109,20 +109,21 @@ window.onload=startList;');
  		        			@list($encode, $jscript) = $func($ele_name);
  		        		 	if (!empty($jscript)) {
  		        		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
- 		        					$xoTheme->addScript('', array('type' => 'text/javascript'), $jscript);
+ 		        					$icmsTheme->addScript('', array('type' => 'text/javascript'), $jscript);
  		        				}else{
- 		        					$xoTheme->addScript($jscript, array('type' => 'text/javascript'));
+ 		        					$icmsTheme->addScript($jscript, array('type' => 'text/javascript'));
  		        				}
  		        			}
  		        		}
  		        	}
  		        }
+ 		    }
 
  			$style_info = '';
  		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
  		        	if(empty($key)) continue;
  		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
- 		        		$xoTheme->addStylesheet(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
+ 		        		$icmsTheme->addStylesheet(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
  		        	}else{
  		        		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
  		        		$func = 'style_'.$key;
@@ -130,9 +131,9 @@ window.onload=startList;');
  		        			$style_info = $func();
  		        		 	if (!empty($style_info)) {
  		        		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
- 		        					$xoTheme->addStylesheet('', array('media' => 'screen'), $style_info);
+ 		        					$icmsTheme->addStylesheet('', array('media' => 'screen'), $style_info);
  		        				}else{
- 		        					$xoTheme->addStylesheet($style_info, array('media' => 'screen'));
+ 		        					$icmsTheme->addStylesheet($style_info, array('media' => 'screen'));
  		        				}
  		        			}
  		        		}
@@ -257,8 +258,8 @@ window.onload=startList;');
 		$icmsAdminTpl->assign ( 'lang_prefs', _PREFERENCES );
 	}
 	
-	if ( @is_object( $xoTheme->plugins['xos_logos_PageBuilder'] ) ) {
-		$aggreg =& $xoTheme->plugins['xos_logos_PageBuilder'];
+	if ( @is_object( $icmsTheme->plugins['xos_logos_PageBuilder'] ) ) {
+		$aggreg =& $icmsTheme->plugins['xos_logos_PageBuilder'];
 
 	    $icmsAdminTpl->assign_by_ref( 'xoAdminBlocks', $aggreg->blocks );
 
@@ -314,7 +315,7 @@ function xoops_cp_header(){
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function icms_cp_footer(){
-	global $xoopsConfig, $xoopsOption, $xoopsLogger, $xoopsUser, $xoTheme, $icmsTpl ,$im_multilanguageConfig, $icmsLibrariesHandler, $xoopsModule;
+	global $xoopsConfig, $xoopsOption, $xoopsLogger, $xoopsUser, $icmsTheme, $icmsTpl ,$im_multilanguageConfig, $icmsLibrariesHandler, $xoopsModule;
 	$xoopsLogger->stopTime( 'Module display' );
 
 	if (!headers_sent()) {
@@ -323,19 +324,19 @@ function icms_cp_footer(){
 			header('Cache-Control: private, no-cache');
 			header('Pragma: no-cache');
 	}
-	if ( isset( $xoopsOption['template_main'] ) && $xoopsOption['template_main'] != $xoTheme->contentTemplate ) {
+	if ( isset( $xoopsOption['template_main'] ) && $xoopsOption['template_main'] != $icmsTheme->contentTemplate ) {
 		trigger_error( "xoopsOption[template_main] should be defined before including header.php", E_USER_WARNING );
 		if ( false === strpos( $xoopsOption['template_main'], ':' ) ) {
-			$xoTheme->contentTemplate = 'db:' . $xoopsOption['template_main'];
+			$icmsTheme->contentTemplate = 'db:' . $xoopsOption['template_main'];
 		} else {
-			$xoTheme->contentTemplate = $xoopsOption['template_main'];
+			$icmsTheme->contentTemplate = $xoopsOption['template_main'];
 		}
 	}
 		
 	$xoopsLogger->stopTime( 'XOOPS output init' );
 	$xoopsLogger->startTime( 'Module display' );
 	
-	$xoTheme->render();
+	$icmsTheme->render();
 
 	$xoopsLogger->stopTime();
 	return;

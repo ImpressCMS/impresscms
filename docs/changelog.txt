@@ -191,6 +191,7 @@ ImpressCMS ChangeLog
 * #216: Signature destroyed the design. (stranger)
 * #60: Date format more configurable. (stranger)
 * #275: Upgrade Script issue from X 2.2.4 - Unable to register new users. (stranger)
+* #482: JS files of plugin manage must not always be loaded. (stranger)
 
 == Impresscms 1.1.2==
 

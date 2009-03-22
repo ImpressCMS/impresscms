@@ -71,6 +71,7 @@ else
 			$config_handler =& xoops_gethandler('config');
 			$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
  			$jscript = '';
+ 			if(class_exists('XoopsFormDhtmlTextArea')){
  		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
  		        	if(empty($key)) continue;
  		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
@@ -90,6 +91,7 @@ else
  		        		}
  		        	}
  		        }
+ 		    }
 
  			$style_info = '';
  		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
