@@ -195,6 +195,7 @@ ImpressCMS ChangeLog
 * #486: Improving cleaning folder's function to be more global. (stranger)
 * #485: Admin panel after fresh install: Fatal error: Call to a member function render() on a non-object. (stranger)
 * #484: Fresh install: theme changed after login. (stranger)
+* #483: Fresh install: ImpressCMS Logo missing image. (stranger)
 
 == Impresscms 1.1.2==
 
