@@ -5,8 +5,8 @@
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package		IcmsPersistableObject
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
+* @since		  1.1
+* @author		  marcan <marcan@impresscms.org>
 * @version		$Id: icmsformcheckelement.php 1889 2008-04-30 15:54:09Z malanciault $
 */
 
@@ -15,11 +15,9 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 class IcmsFormCheckElement extends XoopsFormCheckBox {
 
 	/**
-
-	/**
 	* prepare HTML for output
 	*
-	* @return	string
+	* @return	string  $ret  the constructed input form element string
 	*/
 	function render(){
 		$ret = "";
@@ -36,6 +34,12 @@ class IcmsFormCheckElement extends XoopsFormCheckBox {
 		}
 		return $ret;
 	}
+
+
+	/**
+	 * Creates validation javascript
+	 * @return	string    $js   the constructed javascript
+	 */
 	function renderValidationJS(){
 		$js .= "var hasSelections = false;";
 		//sometimes, there is an implicit '[]', sometimes not

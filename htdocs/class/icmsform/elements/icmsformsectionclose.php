@@ -5,8 +5,8 @@
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package		IcmsPersistableObject
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
+* @since		  1.1
+* @author		  marcan <marcan@impresscms.org>
 * @version		$Id: icmsformsectionclose.php 1889 2008-04-30 15:54:09Z malanciault $
 */
 
@@ -19,12 +19,17 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 class IcmsFormSectionClose extends XoopsFormElement {
 
 	/**
-     * Text
+   * Text
 	 * @var	string
 	 * @access	private
 	 */
 	var $_value;
 
+	/**
+	 * Constructor
+	 * @param	string    $sectionname  name of the section to close
+	 * @param	string    $value        value of the section to close
+	 */
 	function IcmsFormSectionClose($sectionname, $value=false){
 		$this->setName($sectionname);
 		$this->_value = $value;
