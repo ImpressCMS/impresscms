@@ -149,8 +149,8 @@ class XoopsFormElement {
 	/**
 	 * get the "name" attribute for the element
 	 *
-	 * @param	bool    encode?
-	 * @return	string  "name" attribute
+	 * @param   bool    encode?
+	 * @return  string  "name" attribute
 	 */
 	function getName($encode = true) {
 		if (false != $encode) {
@@ -200,7 +200,7 @@ class XoopsFormElement {
 	function setClass($class) {
 		$class = trim($class);
 		if ( !empty($class) ) {
-            $this->_class[] = $class;
+      $this->_class[] = $class;
 		}
 	}
 
@@ -210,11 +210,11 @@ class XoopsFormElement {
 	 * @return 	string  "class" attribute value
 	 */
 	function getClass() {
-    	if( empty($this->_class) ) return '';
-    	$class = array();
-    	foreach ($this->_class as $class) {
-        	$class[] = htmlspecialchars($class, ENT_QUOTES);
-    	}
+  	if( empty($this->_class) ) return '';
+  	$class = array();
+  	foreach ($this->_class as $class) {
+      	$class[] = htmlspecialchars($class, ENT_QUOTES);
+  	}
 		return implode(" ", $class);
 	}
 
@@ -319,10 +319,10 @@ class XoopsFormElement {
 	}
 
 	/**
-	 * Render custom javascript validation code
-	 *
-	 * @see XoopsForm::renderValidationJS
-	*/
+   * Render custom javascript validation code
+   *
+   * @see XoopsForm::renderValidationJS
+   */
 	function renderValidationJS() {
     	// render custom validation code if any
 		if ( !empty( $this->customValidationCode ) ) {

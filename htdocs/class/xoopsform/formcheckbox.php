@@ -93,14 +93,14 @@ class XoopsFormCheckBox extends XoopsFormElement {
    * @return	array
 	 */
 	function getValue($encode = false) {
-    	if (!$encode) {
-        	return $this->_value;
-    	}
-    	$value = array();
-    	foreach ($this->_value as $val) {
-		    $value[] = $val ? htmlspecialchars($val, ENT_QUOTES) : $val;
-    	}
-    	return $value;
+  	if (!$encode) {
+      	return $this->_value;
+  	}
+  	$value = array();
+  	foreach ($this->_value as $val) {
+    $value[] = $val ? htmlspecialchars($val, ENT_QUOTES) : $val;
+  	}
+  	return $value;
 	}
 
 	/**
@@ -153,14 +153,14 @@ class XoopsFormCheckBox extends XoopsFormElement {
    * @return	array   Associative array of value->name pairs
 	 */
 	function getOptions($encode = false) {
-    	if (!$encode) {
-        	return $this->_options;
-    	}
-    	$value = array();
-    	foreach ($this->_options as $val => $name) {
-		    $value[ $encode ? htmlspecialchars($val, ENT_QUOTES) : $val ] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
-    	}
-    	return $value;
+  	if (!$encode) {
+      	return $this->_options;
+  	}
+  	$value = array();
+  	foreach ($this->_options as $val => $name) {
+    $value[ $encode ? htmlspecialchars($val, ENT_QUOTES) : $val ] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
+  	}
+  	return $value;
 	}
 
 	/**

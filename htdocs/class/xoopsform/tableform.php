@@ -64,7 +64,7 @@ class XoopsTableForm extends XoopsForm
 	/**
 	 * create HTML to output the form as a table
 	 * 
-   * @return	string
+   * @return	string  $ret  the constructed HTML
 	 */
 	function render()
 	{
@@ -85,4 +85,5 @@ class XoopsTableForm extends XoopsForm
 		return $ret;
 	}
 }
+
 ?>

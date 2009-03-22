@@ -111,10 +111,10 @@ class XoopsFormElementTray extends XoopsFormElement {
 	function addElement(&$formElement, $required = false) {
 		$this->_elements[] =& $formElement;
 		if (!$formElement->isContainer()) {
-    	    if ($required) {
-    	        $formElement->_required = true;
-    	        $this->_required[] =& $formElement;
-		    }
+	    if ($required) {
+        $formElement->_required = true;
+        $this->_required[] =& $formElement;
+      }
 		} else {
 			$required_elements =& $formElement->getRequired();
 			$count = count($required_elements);

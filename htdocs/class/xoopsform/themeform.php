@@ -65,7 +65,7 @@ class XoopsThemeForm extends XoopsForm
 	/**
 	 * Insert an empty row in the table to serve as a seperator.
 	 *
-     * @param	string  $extra  HTML to be displayed in the empty row.
+   * @param	string  $extra  HTML to be displayed in the empty row.
 	 * @param	string	$class	CSS class name for <td> tag
 	 */
 	function insertBreak($extra = '', $class= '')

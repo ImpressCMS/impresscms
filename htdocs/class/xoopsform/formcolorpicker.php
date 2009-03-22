@@ -38,14 +38,17 @@ class XoopsFormColorPicker extends XoopsFormText {
 	
 	/**
 	 * Constructor
+   * @param	string  $caption  Caption of the element
+   * @param	string  $name     Name of the element
+   * @param	string  $value    Value of the element
 	 */
 	function XoopsFormColorPicker($caption, $name, $value = "#FFFFFF") {
-		$this->XoopsFormText ( $caption, $name, 9, 7, $value );
+		$this->XoopsFormText( $caption, $name, 9, 7, $value );
 	}
 	
 	/**
 	 * Render the color picker
-	 * @return  $string	rendered color picker (?)
+	 * @return  $string	rendered color picker HTML
 	 */
 	function render() {
 		if (isset ( $GLOBALS ['xoTheme'] )) {
@@ -54,9 +57,9 @@ class XoopsFormColorPicker extends XoopsFormText {
 			echo "<script type=\"text/javascript\" src=\"" . XOOPS_URL . "/include/color-picker.js\"></script>";
 		}
 		$this->setExtra ( ' style="background-color:' . $this->getValue () . ';"' );
-		return parent::render () . "\n<input type='reset' value=' ... ' onclick=\"return TCP.popup('" . XOOPS_URL . "/include/',document.getElementById('" . $this->getName () . "'));\">\n";
+		return parent::render() . "\n<input type='reset' value=' ... ' onclick=\"return TCP.popup('" . XOOPS_URL . "/include/',document.getElementById('" . $this->getName () . "'));\">\n";
 	}
-	
+
 	/**
 	 * Returns custom validation Javascript
 	 * 

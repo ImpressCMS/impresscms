@@ -73,10 +73,12 @@ class XoopsFormEditor extends XoopsFormTextArea
 
 	/**
 	 * Renders the editor
+   * @return	string  the constructed html string for the editor
 	 */
 	function render()
 	{
 		return $this->editor->render();
 	}
 }
+
 ?>

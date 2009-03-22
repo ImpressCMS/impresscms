@@ -49,7 +49,7 @@ class XoopsFormSelectEditor extends XoopsFormElementTray
 	 * @param	object	$form	the form calling the editor selection	
 	 * @param	string	$name	editor name
 	 * @param	string	$value	Pre-selected text value
-     * @param	bool	$noHtml  dohtml disabled
+   * @param	bool	$noHtml  dohtml disabled
 	 */
 	function XoopsFormSelectEditor(&$form, $name="editor", $value=null, $noHtml=false)
 	{

@@ -56,6 +56,10 @@ class XoopsFormDateTime extends XoopsFormElementTray
 
 	/**
 	 * Constructor
+   * @param	string  $caption    Caption of the element
+   * @param	string  $name       Name of the element
+   * @param	string  $size       Size of the element
+   * @param	string  $value      Value of the element
 	 */
 	function XoopsFormDateTime($caption, $name, $size = 15, $value=0)
 	{

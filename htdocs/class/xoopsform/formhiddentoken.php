@@ -46,14 +46,15 @@ if (!defined('XOOPS_ROOT_PATH')) {
  */
 class XoopsFormHiddenToken extends XoopsFormHidden {
 
-    /**
-     * Constructor
-     *
-     * @param   string  $name   "name" attribute
-     */
-    function XoopsFormHiddenToken($name = _CORE_TOKEN, $timeout = 0){
-        $this->XoopsFormHidden($name . '_REQUEST', $GLOBALS['xoopsSecurity']->createToken($timeout, $name));
-    }
+  /**
+   * Constructor
+   *
+   * @param   string  $name       "name" attribute
+   * @param   int     $timeout    timeout variable for the createToken function
+   */
+  function XoopsFormHiddenToken($name = _CORE_TOKEN, $timeout = 0){
+      $this->XoopsFormHidden($name . '_REQUEST', $GLOBALS['xoopsSecurity']->createToken($timeout, $name));
+  }
 }
 
 ?>
