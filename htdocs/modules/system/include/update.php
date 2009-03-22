@@ -55,7 +55,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbversion = n
 	  * in htdocs/include/version.php
 	  */
 	  
-   	$CleanWritingFolders = 0;
+   	$CleanWritingFolders = false;
 
     $newDbVersion = 1;
 
@@ -558,7 +558,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbversion = n
 	  * cleaning required please add $CleanWritingFolders = 1 and otherwise $CleanWritingFolders = 0
 	  * Like this bellow:
 	  */
-   	$CleanWritingFolders = 1;
+   	$CleanWritingFolders = true;
 	}
 
     
@@ -641,11 +641,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbversion = n
         echo $feedback;
     }
     $icmsDatabaseUpdater->updateModuleDBVersion($newDbVersion, 'system');
-    
-	$answer = true;
-    if($CleanWritingFolders == 1){
-	    $answer = icms_cleaning_write_folders();
-	}
-		return $answer;
+    return icms_cleaning_write_folders(false, $CleanWritingFolders);
 	}
 ?>

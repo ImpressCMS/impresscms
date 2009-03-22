@@ -1900,24 +1900,7 @@ function icms_escapeValue($value, $quotes = true)
 	return $value;
 }
 	function icms_cleaning_write_folders() {
-	    global $xoopsConfig;
-		$dir = array();
-		$dir['templates_c'] = ICMS_ROOT_PATH."/templates_c/";
-		$dir['cache'] = ICMS_ROOT_PATH."/cache/";
-
-		foreach ($dir as $d)
-		{
-			$dd = opendir($d);
-			while($file = readdir($dd))
-			{
-		 		if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn'))
-				{
-		  			unlink($d.$file);
-				}
-			}
-			closedir($dd);
-		}
-			return true;
+		return icms_clean_folders();
 	}
 	/**
 	* Get a number value in other languages
@@ -2787,5 +2770,31 @@ function one_wordwrap($string,$width=false){
   }
   return $new_string;
 }
+/**
+* Removes the content of a folder.
+*
+* @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @param	string	$path    The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_ROOT_PATH."/templates_c/");
+* @param	string  $remove_admin_cache      Removes admin cache, if required.
+*/
+	function icms_clean_folders($path=false, $remove_admin_cache=false) {
+	    global $xoopsConfig;
+		$dir = $path ? $path : array('templates_c' => ICMS_ROOT_PATH."/templates_c/", 'cache' => ICMS_ROOT_PATH."/cache/");
+
+		foreach ($dir as $d)
+		{
+			$dd = opendir($d);
+			while($file = readdir($dd))
+			{
+				$files_array = $remove_admin_cache ? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn') : ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn' && $file != 'adminmenu_' . $xoopsConfig['language'] . '.php');
+		 		if(is_file($d.$file) && $files_array)
+				{
+		  			unlink($d.$file);
+				}
+			}
+			closedir($dd);
+		}
+			return true;
+	}
 
 ?>
