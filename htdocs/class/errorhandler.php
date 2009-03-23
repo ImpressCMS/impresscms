@@ -35,6 +35,7 @@ require_once XOOPS_ROOT_PATH . '/class/logger.php';
 class XoopsErrorHandler extends XoopsLogger {
 	/**
 	 * Activate the error handler
+	 * @param   string  $showErrors
 	 */
 	function activate( $showErrors = false ) {
 		$this->activated = $showErrors;
@@ -42,6 +43,7 @@ class XoopsErrorHandler extends XoopsLogger {
 
 	/**
 	 * Render the list of errors
+	 * @return   string  $list of errors
 	 */
 	function renderErrors() {
 		return $this->dump( 'errors' );

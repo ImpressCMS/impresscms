@@ -4,6 +4,8 @@ defined( 'XOOPS_ROOT_PATH' ) or die();
 
 $ret = '';
 
+
+
 if ( $mode == 'popup' ) {
 	$dump = $this->dump( '' );
 	$content = '
@@ -86,6 +88,7 @@ if ( empty($mode) || $mode == 'queries' ) {
     }
     $ret .= '<tr class="foot"><td>'._TOTAL.' <span style="color:#ff0000;">'.icms_conv_nr2local(count($this->queries)).'</span> '._QUERIES.'</td></tr></table>';
 }
+
 if ( empty($mode) || $mode == 'blocks' ) {
     $class = 'even';
     $ret .= '<table id="xo-logger-blocks" class="outer"><tr><th colspan="2">'._BLOCKS.'</th></tr>';
@@ -99,6 +102,7 @@ if ( empty($mode) || $mode == 'blocks' ) {
     }
     $ret .= '<tr class="foot"><td>'._TOTAL.' <span style="color:#ff0000;">'.icms_conv_nr2local(count($this->blocks)).'</span> '._BLOCK.'</td></tr></table>';
 }
+
 if ( empty($mode) || $mode == 'extra' ) {
 	$this->addExtra( 'Included files', count ( get_included_files() ) . ' files' );
 	$memory = 0;
@@ -124,6 +128,7 @@ if ( empty($mode) || $mode == 'extra' ) {
     }
     $ret .= '</table>';
 }
+
 if ( empty($mode) || $mode == 'timers' ) {
     $class = 'even';
     $ret .= '<table id="xo-logger-timers" class="outer"><tr><th colspan="2">'._TIMERS.'</th></tr>';
@@ -133,6 +138,8 @@ if ( empty($mode) || $mode == 'timers' ) {
     }
     $ret .= '</table>';
 }
+
+
 
 if ( empty( $mode ) ) {
 	$ret .= <<<EOT
