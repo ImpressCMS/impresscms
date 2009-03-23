@@ -78,23 +78,23 @@ class IcmsVersionChecker {
 
 	/**
 	 * Constructor
-     *
-     * @return	void
-     *
-     */
+   *
+   * @return	void
+   *
+   */
 	function IcmsVersionChecker() {
 		$this->installed_version_name = ICMS_VERSION_NAME;
 	}
 
 	/**
 	 * Access the only instance of this class
-     *
-     * @static
-     * @staticvar object
-     *
-     * @return	object
-     *
-     */
+   *
+   * @static
+   * @staticvar object
+   *
+   * @return	object
+   *
+   */
 	function &getInstance()
 	{
 		static $instance;
@@ -106,10 +106,10 @@ class IcmsVersionChecker {
 
 	/**
 	 * Check for a newer version of ImpressCMS
-     *
-     * @return	TRUE if there is an update, FALSE if no update OR errors occuered
-     *
-     */
+   *
+   * @return	TRUE if there is an update, FALSE if no update OR errors occured
+   *
+   */
 	function check() {
 
 		// Create a new instance of the SimplePie object
@@ -159,17 +159,17 @@ class IcmsVersionChecker {
 	 * @return	mixed
 	 */
 	function getErrors($ashtml=true) {
-	    if (!$ashtml) {
-            return $this->errors;
-        } else {
-        	$ret = '';
-        	if (count($this->errors) > 0) {
-            	foreach ($this->errors as $error) {
-            	    $ret .= $error.'<br />';
-            	}
-        	}
-        	return $ret;
-        }
-	}
+    if (!$ashtml) {
+        return $this->errors;
+    } else {
+    	$ret = '';
+    	if (count($this->errors) > 0) {
+      	foreach ($this->errors as $error) {
+    	    $ret .= $error.'<br />';
+      	}
+    	}
+    	return $ret;
+    }
+  }
 }
 ?>
