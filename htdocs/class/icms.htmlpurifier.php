@@ -18,6 +18,9 @@ class icms_HTMLPurifier
 	**/
 	var $purifier;
 
+	/**
+	 * Constructor
+	 */
 	function icms_HTMLPurifier()
 	{
 		require ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.standalone.php';
@@ -28,9 +31,9 @@ class icms_HTMLPurifier
 	* Access the only instance of this class
 	*
 	* @return	object
-     	*
-     	* @static 	$purify_instance
-     	* @staticvar   	object
+ 	*
+ 	* @static 	$purify_instance
+ 	* @staticvar   	object
 	**/
 	function &getPurifierInstance()
 	{
@@ -333,9 +336,15 @@ class icms_HTMLPurifier
 		else {$html = $this->purifier->purify($html);}
 
 		return $html;
-	
 	}
 
+
+	/**
+	 * Purifies $data recursively
+	 *
+	 * @param	  array   $data   data array to purify
+	 * @return	string  $data   purified data array
+	 */
 	function icms_purify_recursive($data)
 	{
 		if(is_array($data)) {return array_map(array($this, 'icms_purify_recursive'), $data);}
@@ -378,4 +387,5 @@ class icms_HTMLPurifier
 	}
 
 }
+
 ?>
