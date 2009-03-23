@@ -120,11 +120,11 @@ class tar
 
 	/**
 	 * Computes the unsigned Checksum of a file's header
-     * to try to ensure valid file
-     * 
-     * @param	string  $bytestring
-     * 
-     * @access	private
+   * to try to ensure valid file
+   * 
+   * @param	string  $bytestring
+   * 
+   * @access	private
 	 */
 	function __computeUnsignedChecksum($bytestring)
 	{
@@ -143,10 +143,10 @@ class tar
 	 * Converts a NULL padded string to a non-NULL padded string
 	 * 
 	 * @param   string  $string
-     * 
+   * 
 	 * @return  string 
-     * 
-     * @access	private
+   * 
+   * @access	private
 	 **/
 	function __parseNullPaddedString($string)
 	{
@@ -158,8 +158,8 @@ class tar
 	 * This function parses the current TAR file
 	 * 
 	 * @return  bool    always TRUE
-     * 
-     * @access	private
+   * 
+   * @access	private
 	 **/
 	function __parseTar()
 	{
@@ -265,8 +265,8 @@ class tar
 	 * 
 	 * @param   string  $filename   full filename
 	 * @return  bool    always TRUE
-     * 
-     * @access	private
+   * 
+   * @access	private
 	 **/
 	function __readTar($filename='')
 	{
@@ -298,8 +298,8 @@ class tar
 	 * Generates a TAR file from the processed data
 	 * 
 	 * @return  bool    always TRUE
-     * 
-     * @access	private
+   * 
+   * @access	private
 	 **/
 	function __generateTAR()
 	{

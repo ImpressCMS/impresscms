@@ -71,7 +71,7 @@ class zipfile
      * @access private
      */
     function unix2DosTime($unixtime = 0)
-	{
+  	{
         $timearray = ($unixtime == 0) ? getdate() : getdate($unixtime);
 
         if ($timearray['year'] < 1980) {

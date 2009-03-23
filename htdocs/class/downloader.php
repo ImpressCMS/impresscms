@@ -58,10 +58,10 @@ class XoopsDownloader
 
 	/**
 	 * Send the HTTP header
-     * 
-     * @param	string  $filename
-     * 
-     * @access	private
+   * 
+   * @param	string  $filename
+   * 
+   * @access	private
 	 */
 	function _header($filename)
 	{
@@ -84,8 +84,8 @@ class XoopsDownloader
 	/**
 	 * XoopsDownloader::addFile()
 	 * 
-	 * @param   string  $filepath
-	 * @param   string   $newfilename
+	 * @param   string    $filepath
+	 * @param   string    $newfilename
 	 **/
 	function addFile($filepath, $newfilename=null)
 	{
@@ -95,8 +95,8 @@ class XoopsDownloader
 	/**
 	 * XoopsDownloader::addBinaryFile()
 	 * 
-	 * @param   string  $filepath
-	 * @param   string  $newfilename
+	 * @param   string    $filepath
+	 * @param   string    $newfilename
 	 **/
 	function addBinaryFile($filepath, $newfilename=null)
 	{
