@@ -20,23 +20,26 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
 
 class IcmsFeed {
 
-		var $title;
-		var $url;
-		var $description;
-		var $language;
-		var $charset;
-		var $category;
-		var $pubDate;
-		var $webMaster;
-		var $generator;
-		var $copyright;
-		var $lastbuild;
-		var $channelEditor;
-		var $width;
-		var $height;
-		var $ttl;
-		var $image = array ();
+  var $title;
+  var $url;
+  var $description;
+  var $language;
+  var $charset;
+  var $category;
+  var $pubDate;
+  var $webMaster;
+  var $generator;
+  var $copyright;
+  var $lastbuild;
+  var $channelEditor;
+  var $width;
+  var $height;
+  var $ttl;
+  var $image = array ();
 
+	/**
+	 * Constructor
+	 */
 	function IcmsFeed () {
 		global $xoopsConfig;
 		$this->title = $xoopsConfig['sitename'];
@@ -60,7 +63,10 @@ class IcmsFeed {
 		$this->feeds = array ();
 	}
 
-	function render () {
+	/**
+	 * Render the feed and display it directly
+	 */
+	function render() {
 		global $xoopsLogger;
 		$xoopsLogger->disableLogger();
 
@@ -79,7 +85,7 @@ class IcmsFeed {
 		$tpl->assign('channel_lastbuild', $this->lastbuild);
 		$tpl->assign('channel_copyright', $this->copyright);
 		$tpl->assign('channel_width', $this->width); 
-        $tpl->assign('channel_height', $this->height);
+    $tpl->assign('channel_height', $this->height);
 		$tpl->assign('channel_ttl', $this->ttl);
 		$tpl->assign('image_url', $this->image['url']);
 		foreach ($this->feeds as $feed) {
