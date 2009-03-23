@@ -13,8 +13,8 @@ include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package		libraries
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
+* @since		  1.1
+* @author		  marcan <marcan@impresscms.org>
 * @version		$Id: icmslibrarieshandler.php 5669 2008-10-14 19:53:37Z pesian_stranger $
 */
 class IcmsLibrariesHandler {
@@ -26,8 +26,8 @@ class IcmsLibrariesHandler {
 
 	/**
 	 * Constructor
-     *
-     * @return	void
+   *
+   * @return	void
 	 */
 	function IcmsLibrariesHandler() {
 		$librariesArray = XoopsLists::getDirListAsArray(ICMS_LIBRARIES_PATH);
@@ -42,13 +42,13 @@ class IcmsLibrariesHandler {
 
 	/**
 	 * Access the only instance of this class
-     *
-     * @static
-     * @staticvar   object
-     *
-     * @return	object
-     *
-     */
+   *
+   * @static
+   * @staticvar   object
+   *
+   * @return	object
+   *
+   */
 	function &getInstance()
 	{
 		static $instance;
@@ -96,13 +96,13 @@ class IcmsLibrariesHandler {
 
 	/**
 	 * Construct the name of the function which would be call on a specific event for a specific library
-     *
-     * @param $event string name of the event
-     * @param $library string name of the library
-     *
-     * @return	string name of the function
-     *
-     */
+   *
+   * @param $event string name of the event
+   * @param $library string name of the library
+   *
+   * @return	string name of the function
+   *
+   */
 	function getFunctionName($event, $library) {
 		$ret = 'icmsLibrary' . ucfirst($library) . '_' . $event;
 		return $ret;
