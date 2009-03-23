@@ -40,15 +40,23 @@ class MyTextSanitizer
 	* Gets allowed html tags from admin config settings
 	* <br> should not be allowed since nl2br will be used
 	* when storing data.
-    	*
-    	* @access	private
-    	*
-    	* @todo Sofar, this does nuttin' ;-)
+	*
+	* @access	private
+	*
+	* @todo Sofar, this does nuttin' ;-)
 	**/
 	function MyTextSanitizer()
     	{
 	}
 
+
+	/**
+	 * Starts HTML Purifier (from icms.htmlpurifier class)
+	 *
+	 * @param     string    $text     Text to purify
+	 * @param     string    $config   configuration for the purifier
+	 * @return    string    string    the purified text
+	 */
 	function html_purifier($text, $config = 'system-global')
 	{
 		include_once ICMS_ROOT_PATH.'/class/icms.htmlpurifier.php';
@@ -76,11 +84,11 @@ class MyTextSanitizer
 
 	/**
 	* Access the only instance of this class
-     	*
-     	* @return	object
-     	*
-     	* @static
-     	* @staticvar   object
+ 	*
+ 	* @return	object
+ 	*
+ 	* @static
+ 	* @staticvar   object
 	*/
 	function &getInstance()
 	{
@@ -93,10 +101,10 @@ class MyTextSanitizer
 	}
 
 	/**
-	* Get the smileys
-     	*
-     	* @return	array
-	*/
+   * Get the smileys
+   *
+   * @return	array
+   */
 	function getSmileys($all=0)
 	{
 		if(count($this->smileys) == 0)
@@ -112,13 +120,13 @@ class MyTextSanitizer
 		return $this->smileys;
 	}
 
-    	/**
-     	* Replace emoticons in the message with smiley images
-     	*
-     	* @param	string  $message
-     	* @return	string
-     	*/
-    	function smiley($message)
+  /**
+   * Replace emoticons in the message with smiley images
+   *
+   * @param	string  $message
+   * @return	string
+   */
+  function smiley($message)
 	{
 		$smileys = $this->getSmileys();
 		foreach($smileys as $smile)
@@ -129,24 +137,24 @@ class MyTextSanitizer
 	}
 
 	/**
-	* Make links in the text clickable
-	*
-	* @param   string  $text
-	* @return  string
-	**/
+ 	 * Make links in the text clickable
+ 	 *
+	 * @param   string  $text
+	 * @return  string
+	 **/
 	function makeClickable(&$text)
 	{
 		$config_handler =& xoops_gethandler('config');
 		$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-			$text = ' '.$text;
-			$patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i"/*, "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i"*/);
-			$replacements = array("\\1<a href=\"\\2://\\3\" rel=\"external\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\" rel=\"external\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"external\">ftp.\\2.\\3</a>"/*, "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>"*/);
-			$text = preg_replace($patterns, $replacements, $text);
-        	if($xoopsConfigPersona['shorten_url'] == 1)
+    $text = ' '.$text;
+    $patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i"/*, "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i"*/);
+    $replacements = array("\\1<a href=\"\\2://\\3\" rel=\"external\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\" rel=\"external\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"external\">ftp.\\2.\\3</a>"/*, "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>"*/);
+    $text = preg_replace($patterns, $replacements, $text);
+  	if($xoopsConfigPersona['shorten_url'] == 1)
 		{
 			$links = explode('<a', $text);
 			$countlinks = count($links);
-   			for($i = 0; $i < $countlinks; $i++)
+ 			for($i = 0; $i < $countlinks; $i++)
 			{
 				$link = $links[$i];
 				$link = (preg_match('#(.*)(href=")#is', $link)) ? '<a'.$link : $link;
@@ -161,7 +169,7 @@ class MyTextSanitizer
 				$middleurl = " ... ";
 				$chunked = (strlen($urlname) > $maxlength && preg_match('#^(https://|http://|ftp://|www\.)#is', $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $urlname;
 				$text = str_replace('>'.$urlname.'<', '>'.$chunked.'<', $text);
-   			}
+ 			}
 			$text = substr($text, 1);
 		}
 			return($text);
@@ -172,7 +180,7 @@ class MyTextSanitizer
 	*
 	* @param   string  $text
 	* @param   bool    $allowimage Allow images in the text?
-     	*                  On FALSE, uses links to images.
+ 	*                  On FALSE, uses links to images.
 	* @return  string
 	**/
 	function &xoopsCodeDecode(&$text, $allowimage = 1)
@@ -226,13 +234,13 @@ class MyTextSanitizer
 		$replacements[] = '<u>\\1</u>';
 		$patterns[] = "/\[d](.*)\[\/d\]/sU";
 		$replacements[] = '<del>\\1</del>';
-    	$patterns[] = "/\[center](.*)\[\/center\]/sU";
+  	$patterns[] = "/\[center](.*)\[\/center\]/sU";
 		$replacements[] = '<div align=center>\\1</div>';
-    	$patterns[] = "/\[left](.*)\[\/left\]/sU";
+  	$patterns[] = "/\[left](.*)\[\/left\]/sU";
 		$replacements[] = '<div align=left>\\1</div>';
-    	$patterns[] = "/\[right](.*)\[\/right\]/sU";
+  	$patterns[] = "/\[right](.*)\[\/right\]/sU";
 		$replacements[] = '<div align=right>\\1</div>';
-    	$patterns[] = "/\[img align=center](.*)\[\/img\]/sU";
+  	$patterns[] = "/\[img align=center](.*)\[\/img\]/sU";
 		if($allowimage != 1)
 		{
 			$replacements[] = '<div align=center><a href="\\1" rel="external">\\1</a></div>';
@@ -274,54 +282,54 @@ class MyTextSanitizer
 		return $text;
 	}
 
-/**
-     * Filters out invalid strings included in URL, if any
-     *
-     * @param   array  $matches
-     * @return  string
-     */
-    function _filterImgUrl($matches)
-    {
-        if ($this->checkUrlString($matches[2])) {
-            return $matches[0];
-        } else {
-            return "";
-        }
+  /**
+   * Filters out invalid strings included in URL, if any
+   *
+   * @param   array  $matches
+   * @return  string
+   */
+  function _filterImgUrl($matches)
+  {
+    if ($this->checkUrlString($matches[2])) {
+      return $matches[0];
+    } else {
+      return "";
     }
+  }
 
-    /**
-     * Checks if invalid strings are included in URL
-     *
-     * @param   string  $text
-     * @return  bool
-     */
-    function checkUrlString($text)
-    {
-        // Check control code
-        if (preg_match("/[\0-\31]/", $text)) {
-            return false;
-        }
-        // check black pattern(deprecated)
-        return !preg_match("/^(javascript|vbscript|about):/i", $text);
+  /**
+   * Checks if invalid strings are included in URL
+   *
+   * @param   string  $text
+   * @return  bool
+   */
+  function checkUrlString($text)
+  {
+    // Check control code
+    if (preg_match("/[\0-\31]/", $text)) {
+        return false;
     }
+    // check black pattern(deprecated)
+    return !preg_match("/^(javascript|vbscript|about):/i", $text);
+  }
 
 	/**
-	* Convert linebreaks to <br /> tags
-     	*
-     	* @param	string  $text
-     	* @return	string
-	*/
+	 * Convert linebreaks to <br /> tags
+ 	 *
+ 	 * @param	string  $text
+ 	 * @return	string
+	 */
 	function nl2Br($text)
 	{
 		return preg_replace("/(\015\012)|(\015)|(\012)/","<br />",$text);
 	}
 
 	/**
-	* Add slashes to the text if magic_quotes_gpc is turned off.
-	*
-	* @param   string  $text
-	* @return  string
-	**/
+	 * Add slashes to the text if magic_quotes_gpc is turned off.
+	 *
+	 * @param   string  $text
+	 * @return  string
+	 **/
 	function addSlashes($text)
 	{
 		if(!get_magic_quotes_gpc())
@@ -330,12 +338,14 @@ class MyTextSanitizer
 		}
 		return $text;
 	}
+
+
 	/**
-	* if magic_quotes_gpc is on, stirip back slashes
-    	*
-    	* @param	string  $text
-    	* @return	string
-	**/
+	 * if magic_quotes_gpc is on, stirip back slashes
+	 *
+	 * @param	string  $text
+	 * @return	string
+	 **/
 	function stripSlashesGPC($text)
 	{
 		if(get_magic_quotes_gpc())
@@ -346,22 +356,22 @@ class MyTextSanitizer
 	}
 
 	/**
-	*  for displaying data in html textbox forms
-    	*
-    	* @param	string  $text
-    	* @return	string
-	**/
+	 * for displaying data in html textbox forms
+	 *
+	 * @param	string  $text
+	 * @return	string
+	 **/
 	function htmlSpecialChars($text)
 	{
 		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'), @htmlspecialchars($text, ENT_QUOTES, _CHARSET));
 	}
 
 	/**
-	* Reverses {@link htmlSpecialChars()}
-	*
-	* @param   string  $text
-	* @return  string
-	**/
+	 * Reverses {@link htmlSpecialChars()}
+	 *
+	 * @param   string  $text
+	 * @return  string
+	 **/
 	function undoHtmlSpecialChars($text) // not needed with PHP 5.1, use htmlspecialchars_decode() instead
 	{
 		return htmlspecialchars_decode($text, ENT_NOQUOTES);
@@ -373,16 +383,16 @@ class MyTextSanitizer
 	}
 
 	/**
-	* Filters textarea form data in DB for display
-	*
-	* @param   string  $text
-	* @param   bool    $html   allow html?
-	* @param   bool    $smiley allow smileys?
-	* @param   bool    $xcode  allow xoopscode?
-	* @param   bool    $image  allow inline images?
-	* @param   bool    $br     convert linebreaks?
-	* @return  string
-	**/
+	 * Filters textarea form data in DB for display
+	 *
+	 * @param   string  $text
+	 * @param   bool    $html   allow html?
+	 * @param   bool    $smiley allow smileys?
+	 * @param   bool    $xcode  allow xoopscode?
+	 * @param   bool    $image  allow inline images?
+	 * @param   bool    $br     convert linebreaks?
+	 * @return  string
+	 **/
 	function &displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1, $config = 'display')
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
@@ -427,16 +437,16 @@ class MyTextSanitizer
 	}
 
 	/**
-	* Filters textarea form data submitted for preview
-	*
-	* @param   string  $text
-	* @param   bool    $html   allow html?
-	* @param   bool    $smiley allow smileys?
-	* @param   bool    $xcode  allow xoopscode?
-	* @param   bool    $image  allow inline images?
-	* @param   bool    $br     convert linebreaks?
-	* @return  string
-	**/
+	 * Filters textarea form data submitted for preview
+	 *
+	 * @param   string  $text
+	 * @param   bool    $html   allow html?
+	 * @param   bool    $smiley allow smileys?
+	 * @param   bool    $xcode  allow xoopscode?
+	 * @param   bool    $image  allow inline images?
+	 * @param   bool    $br     convert linebreaks?
+	 * @return  string
+	 **/
 	function &previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1, $config = 'preview')
 	{
 		// ################# Preload Trigger beforePreviewTarea ##############
@@ -484,12 +494,12 @@ class MyTextSanitizer
 	}
 
 	/**
-	* Replaces banned words in a string with their replacements
-	*
-	* @param   string $text
-	* @return  string
-	* @deprecated
-	**/
+	 * Replaces banned words in a string with their replacements
+	 *
+	 * @param   string $text
+	 * @return  string
+	 * @deprecated
+	 **/
 	function &censorString(&$text)
 	{
 		if(!isset($this->censorConf))
@@ -533,6 +543,17 @@ class MyTextSanitizer
 		}
 		return $text;
 	}
+
+
+
+	/**
+	 * Converts text to xcode
+	 *
+	 * @param     string    $text     Text to convert
+	 * @param     int       $xcode    Is the code Xcode?
+	 * @param     int       $image    configuration for the purifier
+	 * @return    string    $text     the converted text
+	 */
 	function codeConv($text, $xcode = 1, $image = 1) {
 		if($xcode != 0)
 		{
@@ -551,13 +572,22 @@ class MyTextSanitizer
 		return $text;
 	}
 
+
+	/**
+	 * Sanitizes decoded string
+	 *
+	 * @param   string    $str      String to sanitize
+	 * @param   string    $image    Is the string an image
+	 * @return  string    $str      The sanitized decoded string
+	 */
 	function codeSanitizer($str, $image = 1) {
 		$str =  str_replace('\"', '"', base64_decode($str));
 		$str = $this->xoopsCodeDecode($str, $image);
 		return $str;
 	}
-##################### Deprecated Methods ######################
 
+
+##################### Deprecated Methods ######################
 	/**#@+
 	* @deprecated
 	*/
@@ -697,104 +727,154 @@ class MyTextSanitizer
 		return $this->nl2br($text);
 	}
 	/**#@-*/
-/*
-* This function gets allowed plugins from DB and loads them in the sanitizer
-*
-*/
+##################### Deprecated Methods ######################
+
+
+
+  /*
+   * This function gets allowed plugins from DB and loads them in the sanitizer
+	 * @param	int     $id             ID of the config
+	 * @param	bool    $withoptions    load the config's options now?
+	 * @return	object  reference to the {@link XoopsConfig}
+	 */
 	function icmsCodeDecode_extended($text, $allowimage = 1)
 	{
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
-	foreach($icmsConfigPlugins['sanitizer_plugins'] as $item) {
-		$text = $this->icmsExecuteExtension($item, $text);
-		}
-	return $text;
-	}
-	
-    function icmsloadExtension($name)
-    {
-		if (empty($name) or ! include_once ICMS_ROOT_PATH."/plugins/textsanitizer/{$name}/{$name}.php" ) {
-			return false;
-		}
+    $config_handler =& xoops_gethandler('config');
+    $icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+    foreach($icmsConfigPlugins['sanitizer_plugins'] as $item) {
+    $text = $this->icmsExecuteExtension($item, $text);
     }
+    return $text;
+	}
+
+
+	/**
+	 * Starts HTML Purifier (from icms.htmlpurifier class)
+	 *
+	 * @param     string    $name     Name of the extension to load
+	 * @return    bool
+	 */
+  function icmsloadExtension($name)
+  {
+    if (empty($name) or ! include_once ICMS_ROOT_PATH."/plugins/textsanitizer/{$name}/{$name}.php" ) {
+      return false;
+    }
+  }
+
+
+
+
+	/**
+	 * Executes file with a certain extension using call_user_func_array
+	 *
+	 * @param     string    $name     Name of the file to load
+	 * @param     string    $text     Text to show if the function doesn't exist
+	 * @return    array     the return of the called function
+	 */
 	function icmsExecuteExtension($name, $text)
 	{
 		$this->icmsloadExtension($name);
 		$func = "textsanitizer_{$name}";
-		if (! function_exists($func) ) {
+		if (!function_exists($func) ) {
 			return $text;
 		}
 		$args = array_slice(func_get_args(), 1);
 		return call_user_func_array($func, array_merge( array(&$this), $args));
 	}
-function textsanitizer_syntaxhighlight(&$text)
-{
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
-	$text = $this->undoHtmlSpecialChars($text);
-	if( $icmsConfigPlugins['code_sanitizer'] == 'php' ){
-	$text = $this->textsanitizer_php_highlight($text);
-	}elseif( $icmsConfigPlugins['code_sanitizer'] == 'geshi' ){
-	$text = $this->textsanitizer_geshi_highlight($text);
-	}
-	return $text;
-}
-function textsanitizer_php_highlight($text)
-{
-	$text = trim($text);
-	$addedtag_open = 0;
-	if ( !strpos($text, "<?php") and (substr($text, 0, 5) != "<?php") ) {
-		$text = "<?php\n" . $text;
-		$addedtag_open = 1;
-	}
-	$addedtag_close = 0;
-	if ( !strpos($text, "?>") ) {
-		$text .= "?>";
-		$addedtag_close = 1;
-	}
-	$oldlevel = error_reporting(0);
-	$buffer = highlight_string($text, true); // Require PHP 4.20+
-	error_reporting($oldlevel);
-	$pos_open = $pos_close = 0;
-	if ($addedtag_open) {
-		$pos_open = strpos($buffer, '&lt;?php');
-	}
-	if ($addedtag_close) {
-		$pos_close = strrpos($buffer, '?&gt;');
-	}
-	
-	$str_open = ($addedtag_open) ? substr($buffer, 0, $pos_open) : "";
-	$str_close = ($pos_close) ? substr($buffer, $pos_close + 5) : "";
-	
-	$length_open = ($addedtag_open) ? $pos_open + 8 : 0;
-	$length_text = ($pos_close) ? $pos_close - $length_open : 0;
-	$str_internal = ($length_text) ? substr($buffer, $length_open, $length_text) : substr($buffer, $length_open);
-	
-	$buffer = $str_open.$str_internal.$str_close;
-	return $buffer;
-}
-function textsanitizer_geshi_highlight( $text )
-{
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
-	if ( !@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
-	$language = str_replace('.php', '', $icmsConfigPlugins['geshi_default']);
 
+
+	/**
+	 * Syntaxhighlight the code
+	 *
+	 * @param     string    $text     purifies (lightly) and then syntax highlights the text
+	 * @return    string    $text     the syntax highlighted text
+	 */
+  function textsanitizer_syntaxhighlight(&$text)
+  {
+  	$config_handler =& xoops_gethandler('config');
+  	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+  	$text = $this->undoHtmlSpecialChars($text);
+  	if( $icmsConfigPlugins['code_sanitizer'] == 'php' ){
+    	$text = $this->textsanitizer_php_highlight($text);
+  	}elseif( $icmsConfigPlugins['code_sanitizer'] == 'geshi' ){
+    	$text = $this->textsanitizer_geshi_highlight($text);
+  	}
+  	return $text;
+  }
+
+
+
+	/**
+	 * Syntaxhighlight the code using PHP highlight
+	 *
+	 * @param     string    $text     Text to highlight
+	 * @return    string    $buffer   the highlighted text
+	 */
+  function textsanitizer_php_highlight($text)
+  {
+  	$text = trim($text);
+  	$addedtag_open = 0;
+  	if ( !strpos($text, "<?php") and (substr($text, 0, 5) != "<?php") ) {
+  		$text = "<?php\n" . $text;
+  		$addedtag_open = 1;
+  	}
+  	$addedtag_close = 0;
+  	if ( !strpos($text, "?>") ) {
+  		$text .= "?>";
+  		$addedtag_close = 1;
+  	}
+  	$oldlevel = error_reporting(0);
+  	$buffer = highlight_string($text, true); // Require PHP 4.20+
+  	error_reporting($oldlevel);
+  	$pos_open = $pos_close = 0;
+  	if ($addedtag_open) {
+  		$pos_open = strpos($buffer, '&lt;?php');
+  	}
+  	if ($addedtag_close) {
+  		$pos_close = strrpos($buffer, '?&gt;');
+  	}
+  	
+  	$str_open = ($addedtag_open) ? substr($buffer, 0, $pos_open) : "";
+  	$str_close = ($pos_close) ? substr($buffer, $pos_close + 5) : "";
+  	
+  	$length_open = ($addedtag_open) ? $pos_open + 8 : 0;
+  	$length_text = ($pos_close) ? $pos_close - $length_open : 0;
+  	$str_internal = ($length_text) ? substr($buffer, $length_open, $length_text) : substr($buffer, $length_open);
+  	
+  	$buffer = $str_open.$str_internal.$str_close;
+  	return $buffer;
+  }
+
+
+	/**
+	 * Syntaxhighlight the code using Geshi highlight
+	 *
+	 * @param     string    $text     The text to highlight
+	 * @return    string    $code     the highlighted text
+	 */
+  function textsanitizer_geshi_highlight( $text )
+  {
+    $config_handler =& xoops_gethandler('config');
+    $icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+    if ( !@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
+    $language = str_replace('.php', '', $icmsConfigPlugins['geshi_default']);
+    
     // Create the new GeSHi object, passing relevant stuff
     $geshi = new GeSHi($text, $language);
     // Enclose the code in a <div>
     $geshi->set_header_type(GESHI_HEADER_NONE);
-
-	// Sets the proper encoding charset other than "ISO-8859-1"
+    
+    // Sets the proper encoding charset other than "ISO-8859-1"
     $geshi->set_encoding(_CHARSET);
-
-	$geshi->set_link_target ( "_blank" );
-
+    
+    $geshi->set_link_target ( "_blank" );
+    
     // Parse the code
     $code = $geshi->parse_code();
-
+    
     return $code;
-}
+  }
 
 }
+
 ?>
