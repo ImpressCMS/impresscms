@@ -99,7 +99,7 @@ class XoopsCommentRenderer {
 	/**
 	 * Render the comments in flat view
 	 *
-	 * @param boolean $admin_view
+	 * @param bool  $admin_view
 	 **/
 	function renderFlatView($admin_view = false)
 	{
@@ -127,8 +127,8 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Render the comments in thread view
-     *
-     * This method calls itself recursively
+   *
+   * This method calls itself recursively
 	 *
 	 * @param integer $comment_id   Should be "0" when called by client
 	 * @param boolean $admin_view
@@ -186,8 +186,8 @@ class XoopsCommentRenderer {
 	 * @param   bool    $admin_view
 	 * @param   integer $depth
 	 * @param   string  $current_prefix
-     *
-     * @access	private
+   *
+   * @access	private
 	 **/
 	function _renderThreadReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0, $current_prefix = '')
 	{
@@ -221,8 +221,8 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Render comments in nested view
-     *
-     * Danger: Recursive!
+   *
+   * Danger: Recursive!
 	 *
 	 * @param integer $comment_id   Always "0" when called by client.
 	 * @param boolean $admin_view
@@ -267,8 +267,8 @@ class XoopsCommentRenderer {
 	 * @param   string  $prefix
 	 * @param   bool    $admin_view
 	 * @param   integer $depth
-     *
-     * @access	private
+   *
+   * @access	private
 	 **/
 	function _renderNestReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0)
 	{
@@ -284,7 +284,7 @@ class XoopsCommentRenderer {
             $prefix = $prefix + 25;
         }
         if (isset($thread[$key]['child']) && !empty($thread[$key]['child'])) {
-			$depth++;
+      			$depth++;
             foreach ($thread[$key]['child'] as $childkey) {
                 if (!$admin_view && $thread[$childkey]['obj']->getVar('com_status') != XOOPS_COMMENT_ACTIVE) {
                     // skip this comment if it is not active and continue on processing its child comments instead
@@ -306,8 +306,8 @@ class XoopsCommentRenderer {
 	 *
 	 * @param   int $poster_id
 	 * @return  string
-     *
-     * @access	private
+   *
+   * @access	private
 	 **/
 	function _getPosterName($poster_id)
 	{
@@ -329,8 +329,8 @@ class XoopsCommentRenderer {
 	 *
 	 * @param   int $poster_id
 	 * @return  array
-     *
-     * @access	private
+   *
+   * @access	private
 	 **/
 	function _getPosterArray($poster_id)
 	{
