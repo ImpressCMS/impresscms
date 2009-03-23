@@ -69,7 +69,7 @@ function icms_cp_header(){
 		$xoopsThemeFactory->defaultTheme = $xoopsConfig['theme_admin_set'];
     $xoTheme =& $xoopsThemeFactory->createInstance( array(
     	'contentTemplate'	=> @$xoopsOption['template_main'],
-    	'canvasTemplate'	=> 'theme'.(( !file_exists(ICMS_THEME_PATH.'/'.$xoopsConfig['theme_admin_set'].'/theme_admin.html')) ?'_admin':'').'.html',
+    	'canvasTemplate'	=> 'theme'.(( file_exists(ICMS_THEME_PATH.'/'.$xoopsConfig['theme_admin_set'].'/theme_admin.html')) ?'_admin':'').'.html',
     	'plugins' 			=> array('xos_logos_PageBuilder')
     ) );
     $icmsAdminTpl = $xoTheme->template;
