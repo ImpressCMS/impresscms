@@ -43,9 +43,25 @@ class XoopsPageNav
 	/**#@+
 	 * @access	private
 	 */
+
+  /**
+   * @var int $total  Total of pages to show
+   */
 	var $total;
+
+  /**
+   * @var int $perpage  Total of items to show per page
+   */
 	var $perpage;
+
+  /**
+   * @var int $current  What is the current page
+   */
 	var $current;
+
+  /**
+   * @var string $url   What is the current url
+   */
 	var $url;
     /**#@-*/
 
