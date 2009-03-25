@@ -196,6 +196,7 @@ ImpressCMS ChangeLog
 * #485: Admin panel after fresh install: Fatal error: Call to a member function render() on a non-object. (stranger)
 * #484: Fresh install: theme changed after login. (stranger)
 * #483: Fresh install: ImpressCMS Logo missing image. (stranger)
+* #477: Improfile and the theme_select function. (stranger)
 
 == Impresscms 1.1.2==
 
