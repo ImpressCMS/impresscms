@@ -197,6 +197,7 @@ ImpressCMS ChangeLog
 * #484: Fresh install: theme changed after login. (stranger)
 * #483: Fresh install: ImpressCMS Logo missing image. (stranger)
 * #477: Improfile and the theme_select function. (stranger)
+* #287: Protection works not on the Profile Module. (stranger)
 
 == Impresscms 1.1.2==
 

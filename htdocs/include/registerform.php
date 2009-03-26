@@ -74,13 +74,30 @@ $reg_form->addElement(new XoopsFormText(_US_LOGIN_NAME, "login_name", $login_nam
 $reg_form->addElement($email_tray);
 //$reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, "pass", 10, 72, $myts->htmlSpecialChars($pass)), true);
 //$reg_form->addElement(new XoopsFormPassword(_US_VERIFYPASS, "vpass", 10, 72, $myts->htmlSpecialChars($vpass)), true);
-$config_handler =& xoops_gethandler('config');
-$passConfig =& $config_handler->getConfigsByCat(2);
-if ($passConfig['pass_level'] <= 20){
-	$reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, "pass", 10, 255, $myts->htmlSpecialChars($pass)), true);
-}else{
-	include_once XOOPS_ROOT_PATH."/include/passwordquality.php";
+if($xoopsConfigUser['pass_level']){
+$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
+$xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
+$xoTheme->addScript('', array('type' => ''), '
+                $(document).ready( function() {
+                    $.fn.shortPass = "'._CORE_PASSLEVEL1.'";
+                    $.fn.badPass = "'._CORE_PASSLEVEL2.'";
+                    $.fn.goodPass = "'._CORE_PASSLEVEL3.'";
+                    $.fn.strongPass = "'._CORE_PASSLEVEL4.'";
+                    $.fn.samePassword = "Username and Password identical.";
+                    $.fn.resultStyle = "";
+				$(".password_adv").passStrength({
+					shortPass: 		"top_shortPass",
+					badPass:		"top_badPass",
+					goodPass:		"top_goodPass",
+					strongPass:		"top_strongPass",
+					baseStyle:		"top_testresult",
+					messageloc:		0
+
+				});
+			});
+');
 }
+$reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, "pass", 10, 255, $myts->htmlSpecialChars($pass), false, ($xoopsConfigUser['pass_level']?'password_adv':'')), true);
 $reg_form->addElement(new XoopsFormPassword(_US_VERIFYPASS, "vpass", 10, 255, $myts->htmlSpecialChars($vpass)), true);
 $reg_form->addElement(new XoopsFormText(_US_WEBSITE, "url", 25, 255, $myts->htmlSpecialChars($url)));
 $tzselected = ($timezone_offset != "") ? $timezone_offset : $xoopsConfig['default_TZ'];

@@ -59,6 +59,17 @@ $enc_type = $xoopsConfigUser['enc_type'];
 switch ( $op ) {
 case 'newuser':
 	include 'header.php';
+ 		        					$xoTheme->addScript('', array('type' => ''), '
+				$(".password").passStrength({
+					shortPass: 		"top_shortPass",
+					badPass:		"top_badPass",
+					goodPass:		"top_goodPass",
+					strongPass:		"top_strongPass",
+					baseStyle:		"top_testresult",
+					messageloc:		0
+				});
+			});
+');
 	$stop = '';
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 	    $stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";

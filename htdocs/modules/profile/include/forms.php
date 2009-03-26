@@ -285,8 +285,9 @@ function getRegisterForm(&$user, $profile, $next_step = 0, $step) {
         $elements[0][] = array('element' => new XoopsFormText(_PROFILE_MA_EMAIL, "email", $uname_size, 60, $user->getVar('email', 'e')), 'required' => true);
         $weights[0][] = 0;
 
-        $elements[0][] = array('element' => new XoopsFormPassword(_PROFILE_MA_PASSWORD, "pass", 10, 32, ""), 'required' => true);
+        $elements[0][] = array('element' => new XoopsFormPassword(_PROFILE_MA_PASSWORD, "pass", 10, 32, "", false, ($icmsConfigUser['pass_level']?'password_adv':'')), 'required' => true);
         $weights[0][] = 0;
+        
         $elements[0][] = array('element' => new XoopsFormPassword(_PROFILE_MA_VERIFYPASS, "vpass", 10, 32, ""), 'required' => true);
         $weights[0][] = 0;
     }
@@ -447,7 +448,7 @@ function getUserForm(&$user, $profile = false, $action = false) {
 
     if ($xoopsUser->isAdmin() && $user->getVar('uid') != $xoopsUser->getVar('uid')) {
         //If the user is an admin and is editing someone else
-        $pwd_text = new XoopsFormPassword('', 'password', 10, 32);
+        $pwd_text = new XoopsFormPassword('', 'password', 10, 32, "", false, ($icmsConfigUser['pass_level']?'password_adv':''));
         $pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 32);
         $pwd_tray = new XoopsFormElementTray(_PROFILE_MA_PASSWORD.'<br />'._PROFILE_MA_TYPEPASSTWICE);
         $pwd_tray->addElement($pwd_text);

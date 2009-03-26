@@ -51,5 +51,9 @@ define('_CORE_OID_NOTFOUNDSTEPIS', 'No user found for this OpenID, step is now '
 define('_CORE_DB_NOTRACE', 'notrace:mysql extension not loaded');
 define('_CORE_DB_NOTALLOWEDINGET', 'Database updates are not allowed during processing of a GET request');
 define('_CORE_DB_NOTRACEDB', 'notrace:Unable to connect to database');
-define('_CORE_DB_INVALIDEMAIL', "Invalid Email");
+define('_CORE_DB_INVALIDEMAIL', 'Invalid Email');
+define('_CORE_PASSLEVEL1','Too short');
+define('_CORE_PASSLEVEL2','Weak');
+define('_CORE_PASSLEVEL3','Good');
+define('_CORE_PASSLEVEL4','Strong');
 ?>

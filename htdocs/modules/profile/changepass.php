@@ -20,30 +20,42 @@ if (!$xoopsUser) {
 }
 $xoopsOption['template_main'] = 'profile_changepass.html';
 include ICMS_ROOT_PATH.'/header.php';
+$config_handler =& xoops_gethandler('config');
+$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+if($icmsConfigUser['pass_level']){
+$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
+$xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
+$xoTheme->addScript('', array('type' => ''), '
+                $(document).ready( function() {
+                    $.fn.shortPass = "'._CORE_PASSLEVEL1.'";
+                    $.fn.badPass = "'._CORE_PASSLEVEL2.'";
+                    $.fn.goodPass = "'._CORE_PASSLEVEL3.'";
+                    $.fn.strongPass = "'._CORE_PASSLEVEL4.'";
+                    $.fn.samePassword = "Username and Password identical.";
+                    $.fn.resultStyle = "";
+				$(".password_adv").passStrength({
+					shortPass: 		"top_shortPass",
+					badPass:		"top_badPass",
+					goodPass:		"top_goodPass",
+					strongPass:		"top_strongPass",
+					baseStyle:		"top_testresult",
+					messageloc:		0
 
+				});
+			});
+');
+}
 if (!isset($_POST['submit'])) {
     //show change password form
     include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
     $form = new XoopsThemeForm(_PROFILE_MA_CHANGEPASSWORD, 'form', $_SERVER['REQUEST_URI'], 'post', true);
     $form->addElement(new XoopsFormPassword(_PROFILE_MA_OLDPASSWORD, 'oldpass', 10, 50), true);
-	$config_handler =& xoops_gethandler('config');
-	$passConfig =& $config_handler->getConfigsByCat(2);
-	if($passConfig['pass_level'] <= 20)
-	{
-		$pwd_text = new XoopsFormPassword('', 'password', 10, 255);
-	}
-	else
-	{
-	$pwd_change_radio = new XoopsFormRadioYN(_US_CHANGE_PASSWORD, 'change_pass', 1, _YES, _NO);
-	$pwd_change_radio->setExtra('onchange="initQualityMeter(this.value);"');
-		include_once ICMS_ROOT_PATH."/include/passwordquality.php";
-	}
-    	$pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 255);
-    	$pwd_tray = new XoopsFormElementTray(_PROFILE_MA_NEWPASSWORD.'<br />'._PROFILE_MA_VERIFYPASS);
-    	$pwd_tray->addElement($pwd_text);
-    	$pwd_tray->addElement($pwd_text2);
-    	$form->addElement($pwd_change_radio);
-    	$form->addElement($pwd_tray);
+    $pwd_text = new XoopsFormPassword('', 'password', 10, 255, '', false, ($icmsConfigUser['pass_level']?'password_adv':''));
+    $pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 255);
+    $pwd_tray = new XoopsFormElementTray(_PROFILE_MA_NEWPASSWORD.'<br />'._PROFILE_MA_VERIFYPASS);
+    $pwd_tray->addElement($pwd_text);
+    $pwd_tray->addElement($pwd_text2);
+    $form->addElement($pwd_tray);
     $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
     $form->assign($xoopsTpl);
 
@@ -59,8 +71,6 @@ else {
     }
     else {
         //update password
-        $config_handler =& xoops_gethandler('config');
-        $icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         $salt = icms_createSalt();
         $pass = icms_encryptPass($_POST['newpass'], $salt);
         $xoopsUser->setVar('pass', $pass);

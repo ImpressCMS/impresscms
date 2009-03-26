@@ -77,6 +77,13 @@ class XoopsFormPassword extends XoopsFormElement
 	var $autocomplete = false;
 	
 	/**
+	* Initial content of the field.
+	* @var 		string
+	* @access 	private
+	*/
+	var $_classname;
+	
+	/**
 	* Constructor
 	*
 	* @param	string	$caption	Caption
@@ -86,7 +93,7 @@ class XoopsFormPassword extends XoopsFormElement
 	* @param	int		$value		Initial value of the field. 
 	* 							<b>Warning:</b> this is readable in cleartext in the page's source!
 	*/
-	function XoopsFormPassword($caption, $name, $size, $maxlength, $value = '', $autocomplete = false)
+	function XoopsFormPassword($caption, $name, $size, $maxlength, $value = '', $autocomplete = false, $classname = 'password')
 	{
 		$this->setCaption($caption);
 		$this->setName($name);
@@ -94,6 +101,7 @@ class XoopsFormPassword extends XoopsFormElement
 		$this->_maxlength = intval($maxlength);
 		$this->setValue($value);
 		$this->autoComplete = !empty($autocomplete);
+		$this->setClassName($classname);
 	}
 	
 	/**
@@ -126,6 +134,21 @@ class XoopsFormPassword extends XoopsFormElement
 	function setValue($value) {$this->_value = $value;}
 	
 	/**
+	* Set the initial value
+	* 
+	* @param	$value	string
+	*/
+	function setClassName($classname) {$this->_classname = $classname;}
+	
+	/**
+	* Get the "class" attribute
+	*
+	* @param	bool    $encode To sanitizer the text?
+	* @return	string
+	*/
+	function getClassName($encode = false) {return $encode ? htmlspecialchars($this->_classname, ENT_QUOTES) : $this->_classname;}
+	
+	/**
 	* Prepare HTML for output
 	*
 	* @return	string	HTML
@@ -133,7 +156,7 @@ class XoopsFormPassword extends XoopsFormElement
 	function render()
 	{
 		$ele_name = $this->getName();
-		return "<input type='password' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".$this->getValue()."'".$this->getExtra()." ".($this->autoComplete ? "" : "autocomplete='off' ")."/>";
+		return "<input class='".$this->getClassName()."' type='password' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".$this->getValue()."'".$this->getExtra()." ".($this->autoComplete ? "" : "autocomplete='off' ")."/>";
 	}
 }
 ?>

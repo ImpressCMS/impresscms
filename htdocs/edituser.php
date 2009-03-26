@@ -41,7 +41,6 @@ $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?tri
 
 $config_handler =& xoops_gethandler('config');
 $xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-
 if($op == 'saveuser')
 {
 	if(!$GLOBALS['xoopsSecurity']->check())
@@ -254,6 +253,30 @@ if($op == 'editprofile')
     	/** Include the header that starts page rendering */
       include_once ICMS_ROOT_PATH.'/header.php';
     	include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
+if($xoopsConfigUser['pass_level']){
+$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
+$xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
+$xoTheme->addScript('', array('type' => ''), '
+                $(document).ready( function() {
+                    $.fn.shortPass = "'._CORE_PASSLEVEL1.'";
+                    $.fn.badPass = "'._CORE_PASSLEVEL2.'";
+                    $.fn.goodPass = "'._CORE_PASSLEVEL3.'";
+                    $.fn.strongPass = "'._CORE_PASSLEVEL4.'";
+                    $.fn.samePassword = "Username and Password identical.";
+                    $.fn.resultStyle = "";
+				$(".password_adv").passStrength({
+					shortPass: 		"top_shortPass",
+					badPass:		"top_badPass",
+					goodPass:		"top_goodPass",
+					strongPass:		"top_strongPass",
+					baseStyle:		"top_testresult",
+					messageloc:		0
+
+				});
+			});
+');
+}
+
     	echo '<a href="userinfo.php?uid='.intval($xoopsUser->getVar('uid')).'">'._US_PROFILE.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._US_EDITPROFILE.'<br /><br />';
     	$form = new XoopsThemeForm(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
     	$login_name_label = new XoopsFormLabel(_US_LOGINNAME, $xoopsUser->getVar('login_name'));
@@ -363,18 +386,7 @@ if($op == 'editprofile')
     	$bio_tarea = new XoopsFormTextArea(_US_EXTRAINFO, 'bio', $xoopsUser->getVar('bio', 'E'));
     	$cookie_radio_value = empty($_COOKIE[$xoopsConfig['usercookie']]) ? 0 : 1;
     	$cookie_radio = new XoopsFormRadioYN(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
-	$config_handler =& xoops_gethandler('config');
-	$passConfig =& $config_handler->getConfigsByCat(2);
-	if($passConfig['pass_level'] <= 20)
-	{
-		$pwd_text = new XoopsFormPassword('', 'password', 10, 255);
-	}
-	else
-	{
-	$pwd_change_radio = new XoopsFormRadioYN(_US_CHANGE_PASSWORD, 'change_pass', 0, _YES, _NO);
-	$pwd_change_radio->setExtra('onchange="initQualityMeter(this.value);"');
-		include_once ICMS_ROOT_PATH."/include/passwordquality.php";
-	}
+		$pwd_text = new XoopsFormPassword('', 'password', 10, 255, "", false, ($xoopsConfigUser['pass_level']?'password_adv':''));
     	$pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 255);
     	$pwd_tray = new XoopsFormElementTray(_US_PASSWORD.'<br />'._US_TYPEPASSTWICE);
     	$pwd_tray->addElement($pwd_text);
