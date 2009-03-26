@@ -53,7 +53,7 @@ class XoopsObjectTree {
 	/**
 	 * Constructor
 	 *
-	 * @param   array   $objectArr  Array of {@link XoopsObject}s
+	 * @param   array      $objectArr  Array of {@link XoopsObject}s
 	 * @param   string     $myId       field name of object ID
 	 * @param   string     $parentId   field name of parent object ID
 	 * @param   string     $rootId     field name of root object ID
@@ -77,15 +77,15 @@ class XoopsObjectTree {
 	function _initialize()
 	{
 		foreach (array_keys($this->_objects) as $i) {
-            $key1 = $this->_objects[$i]->getVar($this->_myId);
-            $this->_tree[$key1]['obj'] =& $this->_objects[$i];
-            $key2 = $this->_objects[$i]->getVar($this->_parentId);
-            $this->_tree[$key1]['parent'] = $key2;
-            $this->_tree[$key2]['child'][] = $key1;
+      $key1 = $this->_objects[$i]->getVar($this->_myId);
+      $this->_tree[$key1]['obj'] =& $this->_objects[$i];
+      $key2 = $this->_objects[$i]->getVar($this->_parentId);
+      $this->_tree[$key1]['parent'] = $key2;
+      $this->_tree[$key2]['child'][] = $key1;
 			if (isset($this->_rootId)) {
-            	$this->_tree[$key1]['root'] = $this->_objects[$i]->getVar($this->_rootId);
+      	$this->_tree[$key1]['root'] = $this->_objects[$i]->getVar($this->_rootId);
 			}
-        }
+    }
 	}
 
 	/**
@@ -102,7 +102,7 @@ class XoopsObjectTree {
 	 * returns an object from the tree specified by its id
 	 *
 	 * @param   string  $key    ID of the object to retrieve
-     * @return  object  Object within the tree
+   * @return  object          Object within the tree
 	 **/
 	function &getByKey($key)
 	{
@@ -148,8 +148,8 @@ class XoopsObjectTree {
 	}
 
 	/**
-     * returns an array of all parent objects.
-     * the key of returned array represents how many levels up from the specified object
+   * returns an array of all parent objects.
+   * the key of returned array represents how many levels up from the specified object
 	 *
 	 * @param   string     $key    ID of the child object
 	 * @param   array   $ret    (empty when called from outside) Result from previous recursions
@@ -172,32 +172,32 @@ class XoopsObjectTree {
 	 * Make options for a select box from
 	 *
 	 * @param   string  $fieldName   Name of the member variable from the
-     *  node objects that should be used as the title for the options.
+   *                               node objects that should be used as the title for the options.
 	 * @param   string  $selected    Value to display as selected
-	 * @param   int $key         ID of the object to display as the root of select options
-     * @param   string  $ret         (reference to a string when called from outside) Result from previous recursions
+	 * @param   int     $key         ID of the object to display as the root of select options
+   * @param   string  $ret         (reference to a string when called from outside) Result from previous recursions
 	 * @param   string  $prefix_orig  String to indent items at deeper levels
 	 * @param   string  $prefix_curr  String to indent the current item
 	 * @return
-     *
-     * @access	private
+   *
+   * @access	private
 	 **/
 	function _makeSelBoxOptions($fieldName, $selected, $key, &$ret, $prefix_orig, $prefix_curr = '')
 	{
-        if ($key > 0) {
-            $value = $this->_tree[$key]['obj']->getVar($this->_myId);
-            $ret .= '<option value="'.$value.'"';
-			if ($value == $selected) {
-				$ret .= ' selected="selected"';
-			}
-			$ret .= '>'.$prefix_curr.$this->_tree[$key]['obj']->getVar($fieldName).'</option>';
-            $prefix_curr .= $prefix_orig;
-        }
-        if (isset($this->_tree[$key]['child']) && !empty($this->_tree[$key]['child'])) {
-            foreach ($this->_tree[$key]['child'] as $childkey) {
-                $this->_makeSelBoxOptions($fieldName, $selected, $childkey, $ret, $prefix_orig, $prefix_curr);
-            }
-        }
+    if ($key > 0) {
+      $value = $this->_tree[$key]['obj']->getVar($this->_myId);
+      $ret .= '<option value="'.$value.'"';
+      if ($value == $selected) {
+        $ret .= ' selected="selected"';
+      }
+      $ret .= '>'.$prefix_curr.$this->_tree[$key]['obj']->getVar($fieldName).'</option>';
+      $prefix_curr .= $prefix_orig;
+    }
+    if (isset($this->_tree[$key]['child']) && !empty($this->_tree[$key]['child'])) {
+      foreach ($this->_tree[$key]['child'] as $childkey) {
+        $this->_makeSelBoxOptions($fieldName, $selected, $childkey, $ret, $prefix_orig, $prefix_curr);
+      }
+    }
 	}
 
 	/**
@@ -205,22 +205,22 @@ class XoopsObjectTree {
 	 *
 	 * @param   string  $name            Name of the select box
 	 * @param   string  $fieldName       Name of the member variable from the
-     *  node objects that should be used as the title for the options.
+   *                                   node objects that should be used as the title for the options.
 	 * @param   string  $prefix          String to indent deeper levels
 	 * @param   string  $selected        Value to display as selected
 	 * @param   bool    $addEmptyOption  Set TRUE to add an empty option with value "0" at the top of the hierarchy
 	 * @param   integer $key             ID of the object to display as the root of select options
-	 * @return  string  HTML select box
+	 * @return  string                   HTML select box
 	 **/
 	function makeSelBox($name, $fieldName, $prefix='-', $selected='', $addEmptyOption = false, $key=0)
-    {
-        $ret = '<select name="'.$name.'" id="'.$name.'">';
-        if (false != $addEmptyOption) {
-            $ret .= '<option value="0"></option>';
-        }
-        $this->_makeSelBoxOptions($fieldName, $selected, $key, $ret, $prefix);
-        return $ret.'</select>';
+  {
+    $ret = '<select name="'.$name.'" id="'.$name.'">';
+    if (false != $addEmptyOption) {
+        $ret .= '<option value="0"></option>';
     }
+    $this->_makeSelBoxOptions($fieldName, $selected, $key, $ret, $prefix);
+    return $ret.'</select>';
+  }
 
 
 }
