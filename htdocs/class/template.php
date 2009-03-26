@@ -126,6 +126,13 @@ class XoopsTpl extends Smarty {
         return smarty_function_eval( array('var' => $tplSource), $this );
     }
 
+
+	/**
+	 * Touch the resource (file) which means get it to recompile the resource
+	 *
+	 * @param   string  $resourcename		Resourcename to touch
+	 * @return  string  $result         Was the resource recompiled
+	 **/
     function touch( $resourceName ) {
     	$isForced = $this->force_compile;
     	$this->force_compile = true;
@@ -135,9 +142,9 @@ class XoopsTpl extends Smarty {
     	return $result;
 	}
 
-    /**
-     * @deprecated DO NOT USE THESE METHODS, ACCESS THE CORRESPONDING PROPERTIES INSTEAD
-     */
+  /**
+   * @deprecated DO NOT USE THESE METHODS, ACCESS THE CORRESPONDING PROPERTIES INSTEAD
+   */
 	function xoops_setTemplateDir($dirname) {		$this->template_dir = $dirname;			}
 	function xoops_getTemplateDir() {				return $this->template_dir;				}
 	function xoops_setDebugging($flag=false) {		$this->debugging = is_bool($flag) ? $flag : false;	}
@@ -154,6 +161,10 @@ class XoopsTpl extends Smarty {
 		}
 	}
 }
+
+
+
+
 
 /**
  * function to update compiled template file in templates_c folder

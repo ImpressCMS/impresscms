@@ -300,6 +300,11 @@ class xos_opal_Theme {
 		return $cache_id;
 	}
 
+
+  /**
+   * Checks cache for a changed version of the template and renders template
+   * @return  bool
+   */
 	function checkCache() {
 		global $xoopsModule, $xoopsLogger;
 
@@ -317,10 +322,10 @@ class xos_opal_Theme {
 			$this->contentCacheId = $this->generateCacheId($dirname . '|' . $uri);
 
 			if ( $this->template->is_cached( $template, $this->contentCacheId ) ) {
-	            $xoopsLogger->addExtra( $template, sprintf ( _REGENERATES, $this->contentCacheLifetime ) );
+        $xoopsLogger->addExtra( $template, sprintf ( _REGENERATES, $this->contentCacheLifetime ) );
 				$this->render( null, null, $template );
 				return true;
-            }
+      }
 		}
 		return false;
 	}
@@ -391,69 +396,75 @@ class xos_opal_Theme {
 	}
 
 	/**#@+ @tasktype 20 Manipulating page meta-information*/
-    /**
-    * Adds script code to the document head
-    *
-    * This methods allows the insertion of an external script file (if $src is provided), or
-    * of a script snippet. The file URI is parsed to take benefit of the theme resource
-    * overloading system.
-    *
-    * The $attributes parameter allows you to specify the attributes that will be added to the
-    * inserted <script> tag. If unspecified, the <var>type</var> attribute value will default to
-    * 'text/javascript'.
-    *
-    * <code>
-    * // Add an external script using a physical path
-    * $theme->addScript( 'www/script.js', null, '' );
-    * $theme->addScript( 'modules/newbb/script.js', null, '' );
-    * // Specify attributes for the <script> tag
-    * $theme->addScript( 'mod_xoops_SiteManager#common.js', array( 'type' => 'application/x-javascript' ), '' );
-    * // Insert a code snippet
-    * $theme->addScript( null, array( 'type' => 'application/x-javascript' ), 'window.open("Hello world");' );
-    * </code>
-    *
-    * @param string $src path to an external script file
-    * @param array $attributes hash of attributes to add to the <script> tag
-    * @param string $content Code snippet to output within the <script> tag
-    *
-    * @return void
-    **/
-    function addScript( $src = '', $attributes = array(), $content = '' ) {
-    	global $xoops;
-    	if ( empty( $attributes ) )     		$attributes = array();
-		if ( !empty( $src ) ) 					$attributes['src'] = $xoops->url( $this->resourcePath( $src ) );
-		if ( !empty( $content ) )				$attributes['_'] = $content;
-		if ( !isset( $attributes['type'] ) ) 	$attributes['type'] = 'text/javascript';
-		$this->addMeta( 'script', $src, $attributes );
-    }
-    /**
-     * Add StyleSheet or CSS code to the document head
-     * @param string $src path to .css file
-     * @param array $attributes name => value paired array of attributes such as title
-     * @param string $content CSS code to output between the <style> tags (in case $src is empty)
-     *
-     * @return void
-     **/
-    function addStylesheet( $src = '', $attributes = array(), $content = '' ) {
-    	global $xoops;
-    	if ( empty( $attributes ) )     		$attributes = array();
-		if ( !empty( $src ) ) 					$attributes['href'] = $xoops->url( $this->resourcePath( $src ) );
-		if ( !isset($attributes['type']) ) 		$attributes['type'] = 'text/css';
-		if ( !empty( $content ) ) 				$attributes['_'] = $content;
-    	$this->addMeta( 'stylesheet', $src, $attributes );
-    }
+  /**
+  * Adds script code to the document head
+  *
+  * This methods allows the insertion of an external script file (if $src is provided), or
+  * of a script snippet. The file URI is parsed to take benefit of the theme resource
+  * overloading system.
+  *
+  * The $attributes parameter allows you to specify the attributes that will be added to the
+  * inserted <script> tag. If unspecified, the <var>type</var> attribute value will default to
+  * 'text/javascript'.
+  *
+  * <code>
+  * // Add an external script using a physical path
+  * $theme->addScript( 'www/script.js', null, '' );
+  * $theme->addScript( 'modules/newbb/script.js', null, '' );
+  * // Specify attributes for the <script> tag
+  * $theme->addScript( 'mod_xoops_SiteManager#common.js', array( 'type' => 'application/x-javascript' ), '' );
+  * // Insert a code snippet
+  * $theme->addScript( null, array( 'type' => 'application/x-javascript' ), 'window.open("Hello world");' );
+  * </code>
+  *
+  * @param string $src path to an external script file
+  * @param array $attributes hash of attributes to add to the <script> tag
+  * @param string $content Code snippet to output within the <script> tag
+  *
+  * @return void
+  **/
+  function addScript( $src = '', $attributes = array(), $content = '' ) {
+  	global $xoops;
+  	if ( empty( $attributes ) )     		$attributes = array();
+    if ( !empty( $src ) ) 					$attributes['src'] = $xoops->url( $this->resourcePath( $src ) );
+    if ( !empty( $content ) )				$attributes['_'] = $content;
+    if ( !isset( $attributes['type'] ) ) 	$attributes['type'] = 'text/javascript';
+    $this->addMeta( 'script', $src, $attributes );
+  }
+
+  /**
+   * Add StyleSheet or CSS code to the document head
+   * @param string $src path to .css file
+   * @param array $attributes name => value paired array of attributes such as title
+   * @param string $content CSS code to output between the <style> tags (in case $src is empty)
+   *
+   * @return void
+   **/
+  function addStylesheet( $src = '', $attributes = array(), $content = '' ) {
+  	global $xoops;
+  	if ( empty( $attributes ) )     		$attributes = array();
+    if ( !empty( $src ) ) 					$attributes['href'] = $xoops->url( $this->resourcePath( $src ) );
+    if ( !isset($attributes['type']) ) 		$attributes['type'] = 'text/css';
+    if ( !empty( $content ) ) 				$attributes['_'] = $content;
+  	$this->addMeta( 'stylesheet', $src, $attributes );
+  }
+
+
+
 	/**
-	  * Add a <link> to the header
-	  * @param string	$rel		Relationship from the current doc to the anchored one
-	  * @param string	$href		URI of the anchored document
-	  * @param array		$attributes	Additional attributes to add to the <link> element
-	  */
+   * Add a <link> to the header
+   * @param string	$rel		Relationship from the current doc to the anchored one
+   * @param string	$href		URI of the anchored document
+   * @param array		$attributes	Additional attributes to add to the <link> element
+   */
 	function addLink( $rel, $href = '', $attributes = array() ) {
 		global $xoops;
-    	if ( empty( $attributes ) )     		$attributes = array();
+  	if ( empty( $attributes ) )     		$attributes = array();
 		if ( !empty( $href ) ) 					$attributes['href'] = $href;
 		$this->addMeta( 'link', $rel, $attributes );
 	}
+
+
 	/**
 	 * Set a meta http-equiv value
 	 */
@@ -463,27 +474,46 @@ class xos_opal_Theme {
 		}
 		unset( $this->metas['http'][$name] );
 	}
+
 	/**
 	 * Change output page meta-information
 	 */
-    function addMeta( $type = 'meta', $name = '', $value = '' ) {
-		if ( !isset( $this->metas[$type] ) ) {
-			$this->metas[$type] = array();
-		}
-    	if ( isset($name) ) {
-			$this->metas[$type][$name] = $value;
-		} else {
-			$this->metas[$type][] = 	$value;
-		}
-		return $value;
+  function addMeta( $type = 'meta', $name = '', $value = '' ) {
+    if ( !isset( $this->metas[$type] ) ) {
+    	$this->metas[$type] = array();
     }
 
+  	if ( isset($name) ) {
+  	$this->metas[$type][$name] = $value;
+    } else {
+    	$this->metas[$type][] = 	$value;
+    }
+    return $value;
+  }
+
+
+  /**
+   * Puts $content into the htmlheadstrings array
+   *
+   * @param   string  $params
+   * @param   string  $content    content to put in the htmlheadstrings array
+   * @param   string  &$smarty
+   * @param   string  &$repeat
+   */
 	function headContent( $params, $content, &$smarty, &$repeat ) {
 		if ( !$repeat ) {
 			$this->htmlHeadStrings[] = $content;
 		}
 	}
 
+
+  /**
+   * Render the meta content in the metas array (carefull Recursive!)
+   *
+   * @param   string  $type     what type of metacontent is it
+   * @param   string  $return   will we return to the calling function (just default setting)
+   * @return  bool
+   */
 	function renderMetas( $type = null, $return = false ) {
 		$str = '';
 		if ( !isset($type) ) {

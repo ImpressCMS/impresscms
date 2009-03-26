@@ -238,3 +238,5 @@ class xos_logos_PageBuilder {
 	}
 
 }
+
+?>
