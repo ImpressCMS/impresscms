@@ -227,4 +227,8 @@ define("_EXT_DATE_FUNC","0"); // change 0 to 1 if this language has an extended 
 
 ######################## Added in 1.2 ###################################
 define( "ADMIN_DISPLAY_LABEL", "Admin Display Name" ); // L37
+define('_CORE_PASSLEVEL1','Too short');
+define('_CORE_PASSLEVEL2','Weak');
+define('_CORE_PASSLEVEL3','Good');
+define('_CORE_PASSLEVEL4','Strong');
 ?>

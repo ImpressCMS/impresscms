@@ -210,22 +210,9 @@ class upgrade_impcms06 {
             $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('config') . 
                     " (conf_id, conf_modid, conf_catid, conf_name, conf_title, conf_value, conf_desc, conf_formtype, conf_valuetype, conf_order) " .
                     " VALUES " .
-                    " (NULL, 0, 2, 'pass_level', '_MD_AM_PASSLEVEL', '20', '_MD_AM_PASSLEVEL_DESC', 'select', 'int', 2)";
+                    " (NULL, 0, 2, 'pass_level', '_MD_AM_PASSLEVEL', '1', '_MD_AM_PASSLEVEL_DESC', 'yesno', 'int', 2)";
 
             if (!$GLOBALS['xoopsDB']->queryF( $sql )) {
-                return false;
-            }
-            $config_id = $GLOBALS['xoopsDB']->getInsertId();
-            
-            $sql = "INSERT INTO " . $GLOBALS['xoopsDB']->prefix('configoption') . 
-                    " (confop_id, confop_name, confop_value, conf_id)" .
-                    " VALUES" .
-                    " (NULL, '_MD_AM_PASSLEVEL1', '20', {$config_id})," .
-                    " (NULL, '_MD_AM_PASSLEVEL2', '40', {$config_id})," .
-                    " (NULL, '_MD_AM_PASSLEVEL3', '60', {$config_id})," .
-                    " (NULL, '_MD_AM_PASSLEVEL4', '80', {$config_id})," .
-                    " (NULL, '_MD_AM_PASSLEVEL5', '95', {$config_id})";
-            if ( !$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
                 return false;
             }
         }

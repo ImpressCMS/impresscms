@@ -483,3 +483,93 @@ HTML > BODY .tagsoup1 .tagsoup2
     POSITION: relative;
     TOP: -12px
 }
+/*  ADVANCED STYLES */
+.top_testresult{
+	font-weight: bold;
+	font-size:13px;
+	font-family: arail,helvetica,san-serif;
+	color:#666;
+	padding:0;
+	margin:0 0 2px 0;
+}
+.top_testresult span{
+	padding:6px ;
+	margin:0;
+}
+.top_shortPass{
+	background:#edabab;
+	border:1px solid #bc0000;
+	display:block;
+}
+.top_shortPass span{
+	
+}
+.top_badPass{
+	background:#edabab;
+	border:1px solid #bc0000;
+	display:block;
+}
+.top_badPass span{
+	
+}
+.top_goodPass{
+	background:#ede3ab;
+	border:1px solid #bc9f00;
+	display:block;
+}
+.top_goodPass span{
+
+}
+.top_strongPass{
+	background:#d3edab;
+	border:1px solid #73bc00;
+	display:block;
+}
+.top_strongPass span{
+
+}
+
+
+/* 	RESULT STYLE  */
+.testresult{
+	font-weight: bold;
+	font-size:13px;
+	font-family: Tahoma,arial,helvetica,san-serif;
+	color:#666;
+	padding:0px 0px 12px 10px;
+	margin-left:10px;
+	display: block;
+	height:28px;
+	float:right;
+}
+.testresult span{
+	padding:10px 20px 12px 10px;
+	margin: 0px 0px 0px 20px;
+	display:block;
+	float:left;
+	white-space: nowrap;
+}
+.shortPass{
+	background:url(img/red.png) no-repeat 0 0;
+}
+.shortPass span{
+	background:url(img/red.png) no-repeat top right;
+}
+.badPass{
+	background:url(img/red.png) no-repeat 0 0;
+}
+.badPass span{
+	background:url(img/red.png) no-repeat top right;
+}
+.goodPass{
+	background:url(img/yellow.png) no-repeat 0 0;
+}
+.goodPass span{
+	background:url(img/yellow.png) no-repeat top right;
+}
+.strongPass{
+	background:url(img/green.png) no-repeat 0 0;
+}
+.strongPass span{
+	background:url(img/green.png) no-repeat top right;
+}
