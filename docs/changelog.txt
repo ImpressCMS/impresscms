@@ -199,6 +199,7 @@ ImpressCMS ChangeLog
 * #477: Improfile and the theme_select function. (stranger)
 * #287: Protection works not on the Profile Module. (stranger)
 * #147: Forgetting system_redirect.html. (stranger)
+* #157: style.css should be the last line of the header. (stranger)
 
 == Impresscms 1.1.2==
 
