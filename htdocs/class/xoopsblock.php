@@ -38,50 +38,65 @@ class XoopsBlock extends XoopsObject
 {
   var $db;
 
+  /**
+   * Constructor
+   * @param   int   $id   ID of the block to construct
+   */
   function XoopsBlock($id = null)
   {
-      $this->db =& Database::getInstance();
-      $this->initVar('bid', XOBJ_DTYPE_INT, null, false);
-      $this->initVar('mid', XOBJ_DTYPE_INT, 0, false);
-      $this->initVar('func_num', XOBJ_DTYPE_INT, 0, false);
-      $this->initVar('options', XOBJ_DTYPE_TXTBOX, null, false, 255);
-      $this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 150);
-      //$this->initVar('position', XOBJ_DTYPE_INT, 0, false);
-      $this->initVar('title', XOBJ_DTYPE_TXTBOX, null, false, 150);
-      $this->initVar('content', XOBJ_DTYPE_TXTAREA, null, false);
-      $this->initVar('side', XOBJ_DTYPE_INT, 0, false);
-      $this->initVar('weight', XOBJ_DTYPE_INT, 0, false);
-      $this->initVar('visible', XOBJ_DTYPE_INT, 0, false);
-      $this->initVar('block_type', XOBJ_DTYPE_OTHER, null, false);
-      $this->initVar('c_type', XOBJ_DTYPE_OTHER, null, false);
-      $this->initVar('isactive', XOBJ_DTYPE_INT, null, false);
+    $this->db =& Database::getInstance();
+    $this->initVar('bid', XOBJ_DTYPE_INT, null, false);
+    $this->initVar('mid', XOBJ_DTYPE_INT, 0, false);
+    $this->initVar('func_num', XOBJ_DTYPE_INT, 0, false);
+    $this->initVar('options', XOBJ_DTYPE_TXTBOX, null, false, 255);
+    $this->initVar('name', XOBJ_DTYPE_TXTBOX, null, true, 150);
+    //$this->initVar('position', XOBJ_DTYPE_INT, 0, false);
+    $this->initVar('title', XOBJ_DTYPE_TXTBOX, null, false, 150);
+    $this->initVar('content', XOBJ_DTYPE_TXTAREA, null, false);
+    $this->initVar('side', XOBJ_DTYPE_INT, 0, false);
+    $this->initVar('weight', XOBJ_DTYPE_INT, 0, false);
+    $this->initVar('visible', XOBJ_DTYPE_INT, 0, false);
+    $this->initVar('block_type', XOBJ_DTYPE_OTHER, null, false);
+    $this->initVar('c_type', XOBJ_DTYPE_OTHER, null, false);
+    $this->initVar('isactive', XOBJ_DTYPE_INT, null, false);
 
-      $this->initVar('dirname', XOBJ_DTYPE_TXTBOX, null, false, 50);
-      $this->initVar('func_file', XOBJ_DTYPE_TXTBOX, null, false, 50);
-      $this->initVar('show_func', XOBJ_DTYPE_TXTBOX, null, false, 50);
-      $this->initVar('edit_func', XOBJ_DTYPE_TXTBOX, null, false, 50);
+    $this->initVar('dirname', XOBJ_DTYPE_TXTBOX, null, false, 50);
+    $this->initVar('func_file', XOBJ_DTYPE_TXTBOX, null, false, 50);
+    $this->initVar('show_func', XOBJ_DTYPE_TXTBOX, null, false, 50);
+    $this->initVar('edit_func', XOBJ_DTYPE_TXTBOX, null, false, 50);
 
-      $this->initVar('template', XOBJ_DTYPE_OTHER, null, false);
-      $this->initVar('bcachetime', XOBJ_DTYPE_INT, 0, false);
-      $this->initVar('last_modified', XOBJ_DTYPE_INT, 0, false);
+    $this->initVar('template', XOBJ_DTYPE_OTHER, null, false);
+    $this->initVar('bcachetime', XOBJ_DTYPE_INT, 0, false);
+    $this->initVar('last_modified', XOBJ_DTYPE_INT, 0, false);
 
-      if ( !empty($id) ) {
-          if ( is_array($id) ) {
-              $this->assignVars($id);
-          } else {
-              $this->load(intval($id));
-          }
+    if ( !empty($id) ) {
+      if ( is_array($id) ) {
+          $this->assignVars($id);
+      } else {
+          $this->load(intval($id));
       }
+    }
   }
 
+
+  /**
+   * Load a block from the database and assign the array to the variables
+   * @param   int   $id   Which blockID to load
+   */
   function load($id)
   {
   	$id = intval($id);
-      $sql = "SELECT * FROM ".$this->db->prefix('newblocks')." WHERE bid = '".$id."'";
-      $arr = $this->db->fetchArray($this->db->query($sql));
-      $this->assignVars($arr);
+    $sql = "SELECT * FROM ".$this->db->prefix('newblocks')." WHERE bid = '".$id."'";
+    $arr = $this->db->fetchArray($this->db->query($sql));
+    $this->assignVars($arr);
   }
 
+
+  /**
+   * Post a new block to the database
+   * @param (optional, if the method accepts parameters, use a separate tag for each parameter
+   * @return    int   $bid    BlockID that was posted to the database
+   */
   function store()
   {
       if ( !$this->cleanVars() ) {
@@ -111,6 +126,11 @@ class XoopsBlock extends XoopsObject
       return $bid;
   }
 
+
+  /**
+   * Delete a blockID from the database
+   * @return    bool    was deleteing the block from the database successfull
+   */
   function delete()
   {
       $sql = sprintf("DELETE FROM %s WHERE bid = '%u'", $this->db->prefix('newblocks'), intval($this->getVar('bid')));
@@ -127,8 +147,8 @@ class XoopsBlock extends XoopsObject
   /**
   * do stripslashes/htmlspecialchars according to the needed output
   *
-  * @param $format      output use: S for Show and E for Edit
-  * @param $c_type    type of block content
+  * @param    string    $format   output use: S for Show and E for Edit
+  * @param    string    $c_type   type of block content
   * @returns string
   */
   function getContent($format = 'S', $c_type = 'T')
@@ -169,6 +189,11 @@ class XoopsBlock extends XoopsObject
       }
   }
 
+
+  /**
+   * Builds the block using the function file that belongs to the block
+   * @return    string    $block    the block that was built
+   */
   function buildBlock()
   {
       global $xoopsConfig, $xoopsOption;
@@ -224,6 +249,13 @@ class XoopsBlock extends XoopsObject
       return $ret;
   }
 
+
+  /**
+   * Build the title of the block
+   * @param   string    $originaltitle    The old title
+   * @param   string    $newtitle         The new title if an empty string was not passed
+   * @return  string    $ret              The title of the block
+   */
   function buildTitle($originaltitle, $newtitle="")
   {
       if ($newtitle != "") {
@@ -234,6 +266,10 @@ class XoopsBlock extends XoopsObject
       return $ret;
   }
 
+  /**
+   * Is it a custom block?
+   * @return    bool
+   */
   function isCustom()
   {
       if ( $this->getVar("block_type") == "C" || $this->getVar("block_type") == "E" ) {
@@ -243,9 +279,9 @@ class XoopsBlock extends XoopsObject
   }
 
   /**
-  * gets html form for editting block options
-  *
-  */
+   * gets html form for editing block options
+   * @return    bool
+   */
   function getOptions()
   {
       global $xoopsConfig;
@@ -360,6 +396,16 @@ class XoopsBlock extends XoopsObject
       return $ret;
   }
 
+
+  /**
+   * Get all the blocks based on the side, visibility and weight
+   * @param   string    $rettype    What is the type of variable to return (object, list, id)
+   * @param   string    $side       Where should the block go (based on block position)
+   * @param   int       $visible    Is the block visible
+   * @param   string    $orderby    How is the query sorted (weight)
+   * @param   string    $isactive   Is the block active
+   * @return  mixed     $ret
+   */
   function getAllBlocks($rettype="object", $side=null, $visible=null, $orderby="side,weight,bid", $isactive=1)
   {
       $db =& Database::getInstance();
@@ -431,6 +477,13 @@ class XoopsBlock extends XoopsObject
       return $ret;
   }
 
+
+  /**
+   * Get all the blocks by module
+   * @param   int       $moduleid   Which module does the block belong to
+   * @param   bool      $asobject   Return the block as an object
+   * @return  mixed     $ret
+   */
   function getByModule($moduleid, $asobject=true)
   {
   	$moduleid = intval($moduleid);
@@ -452,6 +505,17 @@ class XoopsBlock extends XoopsObject
       return $ret;
   }
 
+
+  /**
+   * Get all the blocks by module and usergroup (for the admin section)
+   * @param   int       $groupid        For which usergroup are these blocks?
+   * @param   string    $module_id      What is the module ID (constructed)
+   * @param   bool      $toponlyblock   Is it a top only block?
+   * @param   int       $visible        Is the block visible
+   * @param   string    $orderby        How is the query sorted (weight)
+   * @param   string    $isactive       Is the block active
+   * @return  mixed     $ret
+   */
   function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1)
   {
   	$isactive = intval($isactive);
@@ -508,6 +572,17 @@ class XoopsBlock extends XoopsObject
       return $ret;
   }
 
+
+
+  /**
+   * Get all the blocks by module when they're not grouped (don't belong to a usergroup)
+   * @param   int       $module_id      What is the module ID (constructed)
+   * @param   bool      $toponlyblock   Is it a top only block?
+   * @param   int       $visible        Is the block visible
+   * @param   string    $orderby        How is the query sorted (weight)
+   * @param   string    $isactive       Is the block active
+   * @return  mixed     $ret
+   */
   function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1)
   {
       $db =& Database::getInstance();
@@ -559,6 +634,13 @@ class XoopsBlock extends XoopsObject
       return $ret;
   }
 
+  /**
+   * Count blocks that are similar
+   * @param   int       $moduleId       What is the module ID
+   * @param   bool      $funcNum        What is the function number (?)
+   * @param   int       $showFunc       What is the name of the show function
+   * @return  int       $count
+   */
   function countSimilarBlocks($moduleId, $funcNum, $showFunc = null)
   {
       $funcNum = intval($funcNum);
@@ -581,7 +663,15 @@ class XoopsBlock extends XoopsObject
       return $count;
   }
 
+
+
   # Adding dynamic block area/position system - TheRpLima - 2007-10-21
+  /**
+   * Get block positions
+   * Adding dynamic block area/position system - TheRpLima - 2007-10-21
+   * @param   bool      $full           Make a row for every field in the table?
+   * @return  string    $ret
+   */
   function getBlockPositions($full=false){
   	$db =& Database::getInstance();
 
