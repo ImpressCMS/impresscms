@@ -31,7 +31,7 @@ if (isset($_GET['mid'])) {
 /**
  * Now here is the version checker :-)
  */
-global $icmsAdminTpl;
+global $icmsAdminTpl, $xoTheme;
 require_once XOOPS_ROOT_PATH.'/class/icmsversionchecker.php';
 $icmsVersionChecker = IcmsVersionChecker::getInstance();
 
@@ -51,11 +51,29 @@ else {
 		$icmsAdminTpl->assign('errors', $checkerErrors);
 	}
 }
-xoops_cp_header();
+icms_cp_header();
+$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
 $icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name);
 $icmsAdminTpl->assign('your_version', $icmsVersionChecker->installed_version_name);
 $icmsAdminTpl->assign('latest_url', $icmsVersionChecker->latest_url);	
+$icmsAdminTpl->assign('lang_php_vesion', PHP_VERSION);
+$icmsAdminTpl->assign('lang_mysql_version', mysql_get_server_info());
+$icmsAdminTpl->assign('lang_server_api', PHP_SAPI);
+$icmsAdminTpl->assign('lang_os_name', PHP_OS);
+$icmsAdminTpl->assign('safe_mode', ini_get( 'safe_mode' ) ? _CO_ICMS_ON : _CO_ICMS_OFF);
+$icmsAdminTpl->assign('register_globals', ini_get( 'register_globals' ) ? _CO_ICMS_ON : _CO_ICMS_OFF);
+$icmsAdminTpl->assign('magic_quotes_gpc', ini_get( 'magic_quotes_gpc' ) ? _CO_ICMS_ON : _CO_ICMS_OFF);
+$icmsAdminTpl->assign('allow_url_fopen', ini_get( 'allow_url_fopen' ) ? _CO_ICMS_ON : _CO_ICMS_OFF);
+$icmsAdminTpl->assign('fsockopen', function_exists( 'fsockopen' ) ? _CO_ICMS_ON : _CO_ICMS_OFF);
+$icmsAdminTpl->assign('allow_call_time_pass_reference', ini_get( 'allow_call_time_pass_reference' ) ? _CO_ICMS_ON : _CO_ICMS_OFF);
+$icmsAdminTpl->assign('post_max_size', icms_conv_nr2local(ini_get( 'post_max_size' )));
+$icmsAdminTpl->assign('max_input_time', icms_conv_nr2local(ini_get( 'max_input_time' )));
+$icmsAdminTpl->assign('output_buffering', icms_conv_nr2local(ini_get( 'output_buffering' )));
+$icmsAdminTpl->assign('max_execution_time', icms_conv_nr2local(ini_get( 'max_execution_time' )));
+$icmsAdminTpl->assign('memory_limit', icms_conv_nr2local(ini_get( 'memory_limit' )));
+$icmsAdminTpl->assign('file_uploads', ini_get( 'file_uploads' ) ? _CO_ICMS_ON : _CO_ICMS_OFF);
+$icmsAdminTpl->assign('upload_max_filesize', icms_conv_nr2local(ini_get( 'upload_max_filesize' )));
 
 $icmsAdminTpl->display(XOOPS_ROOT_PATH.'/modules/system/templates/admin/system_adm_version.html');
-xoops_cp_footer();
+icms_cp_footer();
 ?>

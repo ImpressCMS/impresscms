@@ -200,6 +200,7 @@ ImpressCMS ChangeLog
 * #287: Protection works not on the Profile Module. (stranger)
 * #147: Forgetting system_redirect.html. (stranger)
 * #157: style.css should be the last line of the header. (stranger)
+* #81: phpstats/webaliser. (stranger)
 
 == Impresscms 1.1.2==
 
