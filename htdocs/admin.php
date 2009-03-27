@@ -34,12 +34,9 @@ $op = isset($_GET['rssnews']) ? intval($_GET['rssnews']) : 0;
 if(!empty($_GET['op'])) {$op = intval($_GET['op']);}
 if(!empty($_POST['op'])) {$op = intval($_POST['op']);}
 
-if(!file_exists(ICMS_CACHE_PATH.'/adminmenu_'.$xoopsConfig['language'].'.php') && $op != 2)
+if(!file_exists(ICMS_CACHE_PATH.'/adminmenu_'.$xoopsConfig['language'].'.php'))
 {
-	xoops_header();
-	xoops_confirm(array('op' => 2), 'admin.php', _RECREATE_ADMINMENU_FILE);
-	xoops_footer();
-	exit();
+xoops_module_write_admin_menu(impresscms_get_adminmenu());
 }
 
 switch($op)
@@ -48,10 +45,10 @@ switch($op)
 		 icms_cp_header();
 		 showRSS();
 	break;
-	case 2:
+/*	case 2:
 		xoops_module_write_admin_menu(impresscms_get_adminmenu());
 		redirect_header('javascript:history.go(-1)', 1, _AD_LOGINADMIN);
-	break;
+	break;*/
 
 	default:
 		icms_cp_header();
