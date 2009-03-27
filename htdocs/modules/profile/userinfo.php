@@ -14,7 +14,7 @@
  * @version         $Id$
  */
 
-include 'header.php';
+include '../../mainfile.php';
 
 include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 

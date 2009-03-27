@@ -127,7 +127,7 @@ else
                         		}
                         		(function($){
                         			$(document).ready(function(){
-                        				$.jGrowl("'.$_SESSION['redirect_message'].'", {  sticky:true , position: "center", speed: "slow" });
+                        				$.jGrowl("'.$_SESSION['redirect_message'].'", {  life:5000 , position: "center", speed: "slow" });
                         			});
                         		})(jQuery);
                         ');
