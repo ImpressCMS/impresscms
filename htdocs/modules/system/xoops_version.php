@@ -57,10 +57,6 @@ $modversion['templates'][$i]['file'] = 'system_rss.html';
 $modversion['templates'][$i]['description'] = '';
 
 $i++;
-$modversion['templates'][$i]['file'] = 'system_redirect.html';
-$modversion['templates'][$i]['description'] = '';
-
-$i++;
 $modversion['templates'][$i]['file'] = 'system_comment.html';
 $modversion['templates'][$i]['description'] = '';
 

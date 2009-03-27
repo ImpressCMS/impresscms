@@ -198,7 +198,7 @@ ImpressCMS ChangeLog
 * #483: Fresh install: ImpressCMS Logo missing image. (stranger)
 * #477: Improfile and the theme_select function. (stranger)
 * #287: Protection works not on the Profile Module. (stranger)
-* #210: Password meter during installation is different than password meter in edit user. (stranger)
+* #147: Forgetting system_redirect.html. (stranger)
 
 == Impresscms 1.1.2==
 

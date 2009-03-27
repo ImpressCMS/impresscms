@@ -113,6 +113,27 @@ else
  		        		}
  		        	}
  		        }
+                
+                
+                if(! empty( $_SESSION['redirect_message'] )){
+                        $xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
+                        $xoTheme->addScript(ICMS_URL.'/libraries/jquery/jgrowl.js', array('type' => 'text/javascript'));
+                        $xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/jgrowl'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css', array('media' => 'screen'));
+                        $xoTheme->addScript('', array('type' => 'text/javascript'), '
+                        		if (!window.console || !console.firebug) {
+                        			var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
+                        			window.console = {};
+                        			for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
+                        		}
+                        		(function($){
+                        			$(document).ready(function(){
+                        				$.jGrowl("'.$_SESSION['redirect_message'].'", {  sticky:true , position: "center", speed: "slow" });
+                        			});
+                        		})(jQuery);
+                        ');
+                        unset( $_SESSION['redirect_message'] ) ;
+                }
+
 
 	if(@is_object($xoTheme->plugins['xos_logos_PageBuilder']))
 	{

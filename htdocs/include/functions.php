@@ -583,7 +583,6 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$xoopsThemeFactory->defaultTheme = $theme;
 	$xoTheme =& $xoopsThemeFactory->createInstance(array("plugins" => array()));
 	$xoopsTpl =& $xoTheme->template;
-
 	$xoopsTpl->assign(array(
 		'icms_style' => ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css',
 		'icms_theme' => $theme,
@@ -627,8 +626,11 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$message = trim($message) != '' ? $message : _TAKINGBACK;
 	$xoopsTpl->assign('message', $message);
 	$xoopsTpl->assign('lang_ifnotreload', sprintf(_IFNOTRELOAD, $url));
-	$xoopsTpl->display('db:system_redirect.html');
+    if( ! headers_sent() ) {
+	$_SESSION['redirect_message'] = $message ;
+    header( "Location: ".preg_replace("/[&]amp;/i",'&',$url) ) ;
 	exit();
+    }
 }
 
 function xoops_getenv($key)
