@@ -64,6 +64,13 @@ class XoopsEditorHandler
     return $editor;
   }
 
+
+  /**
+   * Gets list of available editors
+   *
+   * @param   bool    $noHtml   is this an editor with no html options?
+   * @return  array   $_list    list of available editors that are allowed (through admin config)
+   */
   function &getList($noHtml = false)
   {
     if(@ include_once XOOPS_ROOT_PATH."/Frameworks/art/functions.ini.php") {
@@ -85,6 +92,7 @@ class XoopsEditorHandler
 					$list[$item] = array("title" => $config["title"], "nohtml" => @$config["nohtml"]);
 				}
 			}
+
 			array_multisort($order, $list);
 			if(function_exists("mod_createCacheFile")) {
 				mod_createCacheFile($list, "list", "xoopseditor");
@@ -104,11 +112,22 @@ class XoopsEditorHandler
 		return $_list;
   }
 
+
+  /**
+   * Render the editor
+   */
   function render(&$editor)
   {
     return $editor->render();
   }
 
+
+  /**
+   * Sets the config of the editor
+   *
+   * @param   string    &$editor    Reference to the editor object
+   * @param   string    $options    Options in the configuration to set
+   */
   function setConfig(&$editor, $options)
   {
     if(method_exists($editor, 'setConfig')) {
@@ -120,6 +139,15 @@ class XoopsEditorHandler
     }
   }
 
+
+  /**
+   * Loads the editor
+   *
+   * @param   string    $name       Name of the editor to load
+   * @param   string    $options    Options in the editor to load (configuration)
+   * @return  object                The loaded Editor object
+   *
+   */
   function &_loadEditor($name, $options = null)
   {
     $editor = null;
