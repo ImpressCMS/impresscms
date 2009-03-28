@@ -69,6 +69,11 @@ class XoopsComments extends XoopsObject
 		}
 	}
 
+
+  /**
+   * Loads one comment ID
+   * @param   int     $id   ID of the comment to load
+   */
 	function load($id)
 	{
 		$id = intval($id);
@@ -77,6 +82,11 @@ class XoopsComments extends XoopsObject
 		$this->assignVars($arr);
 	}
 
+
+  /**
+   * Stores the comment into the database
+   * @return   int     $comment_id   ID of the comment that was stored
+   */
 	function store()
 	{
 		if ( !$this->cleanVars() ) {
@@ -109,6 +119,11 @@ class XoopsComments extends XoopsObject
 		return $comment_id;
 	}
 
+
+  /**
+   * Deletes one comment ID
+   * @return   mixed
+   */
 	function delete()
 	{
 		$sql = sprintf("DELETE FROM %s WHERE comment_id = '%u'", $this->ctable, intval($this->getVar('comment_id')));
@@ -137,6 +152,11 @@ class XoopsComments extends XoopsObject
 		return ($size + 1);
 	}
 
+
+  /**
+   * Gets Comments and comments belonging to that comment in a tree
+   * @return   array     $ret   Array of comments in a tree
+   */
 	function getCommentTree()
 	{
 		$mytree = new XoopsTree($this->ctable, "comment_id", "pid");
@@ -148,6 +168,16 @@ class XoopsComments extends XoopsObject
 		return $ret;
 	}
 
+
+  /**
+   * Loads one comment ID
+   * @param    array      $criteria   Criteria of the WHERE statement to get the comments
+   * @param    bool       $asobject   Would we want the comments loaded as an object?
+   * @param    string     $orderby    The ordering of the comments
+   * @param    int        $limit      Limit the comments by <number> per page
+   * @param    int        $start      Start showing the comments at number <number> (for pagination of the comments)
+   * @return   array      $ret        Array of comments
+   */
 	function getAllComments($criteria=array(), $asobject=true, $orderby="comment_id ASC", $limit=0, $start=0)
 	{
 		$ret = array();
@@ -176,7 +206,15 @@ class XoopsComments extends XoopsObject
 		return $ret;
 	}
 
+
+
+
 	/* Methods below will be moved to maybe another class? */
+  /**
+   * Prints navigation bar with ways to show the comments (threaded, flat, etc)
+   * @param    int        $item_id    Comment ID
+   * @param    int        $order      The way the comments were sorted
+   */
 	function printNavBar($item_id, $mode="flat", $order=1)
 	{
 		global $xoopsConfig, $xoopsUser;
@@ -210,11 +248,23 @@ class XoopsComments extends XoopsObject
 		echo "</td></tr></table></form>";
 	}
 
+
+  /**
+   * Shows the heading ot the comment thread
+   */
 	function showThreadHead()
 	{
 		openThread();
 	}
 
+
+  /**
+   * Shows the entire comment thread
+   * @param    int        $order        The way the comments were sorted
+   * @param    string     $mode         The way the comments are shown (flat, threaded, etc)
+   * @param    int        $adminview    Turn on the admin view
+   * @param    int        $color_num    Color number for the odd even alternate row colors cycle
+   */
 	function showThreadPost($order, $mode, $adminview=0, $color_num=1)
 	{
 		global $xoopsConfig, $xoopsUser;
@@ -314,16 +364,31 @@ class XoopsComments extends XoopsObject
 		}
 	}
 
+
+  /**
+   * Shows the comment thread footer
+   */
 	function showThreadFoot()
 	{
 		closeThread();
 	}
 
+
+  /**
+   * Shows the comment tree header
+   */
 	function showTreeHead($width="100%")
 	{
 		echo "<table border='0' class='outer' cellpadding='0' cellspacing='0' align='center' width='$width'><tr class='bg3' align='center'><td colspan='3'>". _CM_REPLIES ."</td></tr><tr class='bg3' align='"._GLOBAL_LEFT."'><td width='60%' class='fg2'>". _CM_TITLE ."</td><td width='20%' class='fg2'>". _CM_POSTER ."</td><td class='fg2'>". _CM_POSTED ."</td></tr>";
 	}
 
+
+  /**
+   * Loads one comment ID
+   * @param    int        $order        The way the comments were sorted
+   * @param    string     $mode         The way the comments are shown (flat, threaded, etc)
+   * @param    int        $color_num    Color number for the odd even alternate row colors cycle
+   */
 	function showTreeItem($order, $mode, $color_num)
 	{
 		if ( $color_num == 1 ) {
@@ -341,6 +406,10 @@ class XoopsComments extends XoopsObject
 		echo "<tr class='$bg' align='"._GLOBAL_LEFT."'><td>".$prefix."<img src='".XOOPS_URL."/images/".$icon."'>&nbsp;<a href='".$_SERVER['PHP_SELF']."?item_id=".$this->getVar("item_id")."&amp;comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".$order."#".$this->getVar("comment_id")."'>".$this->getVar("subject")."</a></td><td><a href='".XOOPS_URL."/userinfo.php?uid=".$this->getVar("user_id")."'>".XoopsUser::getUnameFromId($this->getVar("user_id"))."</a></td><td>".$date."</td></tr>";
 	}
 
+
+  /**
+   * Shows the comment tree footer
+   */
 	function showTreeFoot()
 	{
 		echo "</table><br />";
