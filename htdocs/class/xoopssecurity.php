@@ -37,7 +37,6 @@
  * @author        Jan Pedersen     <mithrandir@xoops.org>
  * @copyright    (c) 2000-2005 The Xoops Project - www.xoops.org
  */
-
 class XoopsSecurity {
   var $errors = array();
   /**
@@ -57,7 +56,7 @@ class XoopsSecurity {
   * @return bool
   */
   function check($clearIfValid = true, $token = false, $name = _CORE_TOKEN) {
-      return $this->validateToken($token, $clearIfValid, $name);
+    return $this->validateToken($token, $clearIfValid, $name);
   }
 
   /**
@@ -70,18 +69,18 @@ class XoopsSecurity {
   */
   function createToken($timeout = 0, $name = _CORE_TOKEN)
   {
-      $this->garbageCollection($name);
-      if ($timeout == 0) {
-          $timeout = $GLOBALS['xoopsConfig']['session_expire'] * 60; //session_expire is in minutes, we need seconds
-      }
-      $token_id = md5(uniqid(rand(), true));
-      // save token data on the server
-      if (!isset($_SESSION[$name . '_SESSION'])) {
-          $_SESSION[$name . '_SESSION'] = array();
-      }
-      $token_data = array('id' => $token_id, 'expire' => time() + intval($timeout));
-      array_push($_SESSION[$name . '_SESSION'], $token_data);
-      return md5($token_id.$_SERVER['HTTP_USER_AGENT'].XOOPS_DB_PREFIX);
+    $this->garbageCollection($name);
+    if ($timeout == 0) {
+        $timeout = $GLOBALS['xoopsConfig']['session_expire'] * 60; //session_expire is in minutes, we need seconds
+    }
+    $token_id = md5(uniqid(rand(), true));
+    // save token data on the server
+    if (!isset($_SESSION[$name . '_SESSION'])) {
+        $_SESSION[$name . '_SESSION'] = array();
+    }
+    $token_data = array('id' => $token_id, 'expire' => time() + intval($timeout));
+    array_push($_SESSION[$name . '_SESSION'], $token_data);
+    return md5($token_id.$_SERVER['HTTP_USER_AGENT'].XOOPS_DB_PREFIX);
   }
 
   /**
@@ -198,7 +197,7 @@ class XoopsSecurity {
 
   /**
   * Check if visitor's IP address is banned
-  * Should be changed to return bool and let the action be up to the calling script
+  * @todo : Should be changed to return bool and let the action be up to the calling script
   *
   * @return void
   **/
@@ -217,7 +216,7 @@ class XoopsSecurity {
   }
 
   /**
-  * Get the HTML code for a XoopsFormHiddenToken object - used in forms that do not use XoopsForm elements
+  * Get the HTML code for a @link XoopsFormHiddenToken object - used in forms that do not use XoopsForm elements
   *
   * @return string
   **/
