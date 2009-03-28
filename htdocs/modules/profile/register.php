@@ -102,12 +102,12 @@ switch ( $op ) {
                 	if(!empty($_SESSION['profile'][$fieldname])){
                     if ('date' == $fields[$i]->getVar('field_type') || 'longdate' == $fields[$i]->getVar('field_type')) {
                         // change text time back to unix timestamp
-                        $_SESSION['profile'][$fieldname] = strtotime($_POST[$fieldname]);
+                        $_SESSION['profile'][$fieldname] = trim(strtotime($_POST[$fieldname]));
                     } elseif ('datetime' == $fields[$i]->getVar('field_type')) {
                         // change text datetime back to unix timestamp
-                        $_SESSION['profile'][$fieldname] = strtotime($_POST[$fieldname]['date']) + $_POST[$fieldname]['time'];
+                        $_SESSION['profile'][$fieldname] = trim(strtotime($_POST[$fieldname]['date']) + $_POST[$fieldname]['time']);
                     } else {
-                        $_SESSION['profile'][$fieldname] = $_POST[$fieldname];
+                        $_SESSION['profile'][$fieldname] = trim($_POST[$fieldname]);
                     }
 // MPB ADD/EDIT - END
                 	}

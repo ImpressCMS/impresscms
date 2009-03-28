@@ -130,12 +130,12 @@ switch($op) {
         redirect_header('field.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
     }
     if (isset($_POST['fieldids']) && count($_POST['fieldids']) > 0) {
-        $oldweight = $_POST['oldweight'];
-        $oldcat = $_POST['oldcat'];
-        $oldstep = $_POST['oldstep']; //AK ADD
-        $step = $_POST['step']; //AK ADD
-        $category = $_POST['category'];
-        $weight = $_POST['weight'];
+        $oldweight = trim(StopXSS($_POST['oldweight']));
+        $oldcat = trim(StopXSS($_POST['oldcat']));
+        $oldstep = trim(StopXSS($_POST['oldstep'])); //AK ADD
+        $step = trim(StopXSS($_POST['step'])); //AK ADD
+        $category = trim(StopXSS($_POST['category']));
+        $weight = trim(StopXSS($_POST['weight']));
         $ids = array();
         $showFld = array(); // AK ADD
         $reqFld = array(); // AK ADD
@@ -147,16 +147,8 @@ switch($op) {
             }
             // AK ADD - START
             // get values of show_field and required_field
-            if (isset($_POST['show'][$fieldid])) {
-            	$showFld[$fieldid] = 1;
-            } else {
-            	$showFld[$fieldid] = 0;
-            }
-            if (isset($_POST['required'][$fieldid])) {
-            	$reqFld[$fieldid] = 1;
-            } else {
-            	$reqFld[$fieldid] = 0;
-            }
+            $showFld[$fieldid] = isset($_POST['show'][$fieldid]) ? intval($_POST['show'][$fieldid]) : 0;
+            $reqFld[$fieldid] = isset($_POST['required'][$fieldid]) ? intval($_POST['required'][$fieldid]) : 0;
             // AK ADD - END
         }
         // AK ADD - START
