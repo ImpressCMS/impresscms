@@ -43,7 +43,8 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/*
 		 * gets list of themes folder from themes directory, excluding any directories that do not have theme.html
-		 */
+   * @return    array   
+   */
  function getThemesList(){
     $dirtyList = $cleanList = Array();
     $dirtyList = XoopsLists::getDirListAsArray(ICMS_THEME_PATH.'/');
@@ -64,7 +65,9 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/*
 		 * gets list of name of directories inside a directory
-		 */
+     * @param   string    $dirname    name of the directory to scan
+     * @return  array     $list       list of directories in the directory
+     */
 		function getDirListAsArray( $dirname ) {
 			$ignored = array( 'cvs', '_darcs', '.svn' );
 			$list = array();
@@ -86,8 +89,11 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		}
 
 		/*
-		 *  gets list of all files in a directory
-		 */
+		 * gets list of all files in a directory
+     * @param   string    $dirname    name of the directory to scan for files
+     * @param   string    $prefix     prefix to put in front of the file
+     * @return  array     $filelist   list of files in the directory
+     */
 		function getFileListAsArray($dirname, $prefix="")
 		{
 			$filelist = array();
@@ -109,8 +115,11 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		}
 
 		/*
-		 *  gets list of image file names in a directory
-		 */
+		 * gets list of image file names in a directory
+     * @param   string    $dirname    name of the directory to scan for image files
+     * @param   string    $prefix     prefix to put in front of the image file
+     * @return  array     $filelist   list of files in the directory
+     */
 		function getImgListAsArray($dirname, $prefix="")
 		{
 			$filelist = array();
@@ -127,9 +136,14 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			}
 			return $filelist;
 		}
+
+
 		/*
-		 *  gets list of font file names in a directory
-		 */
+		 * gets list of font file names in a directory
+     * @param   string    $dirname    name of the directory to scan for font files
+     * @param   string    $prefix     prefix to put in front of the font file
+     * @return  array     $filelist   list of font files in the directory
+     */
 		function getFontListAsArray($dirname, $prefix="")
 		{
 			$filelist = array();
@@ -146,10 +160,14 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			}
 			return $filelist;
 		}
-		
+
+
 		/*
-		 *  gets list of php file names in a directory
-		 */
+		 * gets list of php file names in a directory
+     * @param   string    $dirname    name of the directory to scan for PHP files
+     * @param   string    $prefix     prefix to put in front of the PHP file
+     * @return  array     $filelist   list of PHP files in the directory
+     */
 		function getPhpListAsArray($dirname, $prefix="")
 		{
 			$filelist = array();
@@ -168,8 +186,11 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		}
 		
 		/*
-		 *  gets list of html file names in a certain directory
-		*/
+		 * gets list of html file names in a certain directory
+     * @param   string    $dirname    name of the directory to scan for HTML files
+     * @param   string    $prefix     prefix to put in front of the HTML file
+     * @return  array     $filelist   list of HTML files in the directory
+     */
 		function getHtmlListAsArray($dirname, $prefix="")
 		{
 			$filelist = array();
@@ -186,11 +207,13 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			}
 			return $filelist;
 		}
-					
+
 		/*
-		 *  gets list of avatar file names in a certain directory
-		 *  if directory is not specified, default directory will be searched
-		 */
+		 * gets list of avatar file names in a certain directory
+		 * if directory is not specified, default directory will be searched
+     * @param   string    $avatar_dir name of the directory to scan for files
+     * @return  array     $avatars    list of avatars in the directory
+     */
 		function getAvatarsList($avatar_dir="")
 		{
 			$avatars = array();
@@ -203,8 +226,9 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		}
 
 		/*
-		 *  gets list of all avatar image files inside default avatars directory
-		 */
+		 * gets list of all avatar image files inside default avatars directory
+     * @return  mixed     $avatars|false  list of avatar files in the directory or false if no avatars
+     */
 		function getAllAvatarsList()
 		{
 			$avatars = array();
@@ -223,7 +247,9 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		/*
 		*  gets list of subject icon image file names in a certain directory
 		*  if directory is not specified, default directory will be searched
-		*/
+     * @param   string    $sub_dir    name of the directory to scan for files
+     * @return  array     $subjects   list of subject files in the directory
+     */
 		function getSubjectsList($sub_dir="")
 		{
 			$subjects = array();
@@ -237,7 +263,8 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/*
 		 * gets list of language folders inside default language directory
-		 */
+     * @return  array     $lang_list   list of language files in the directory
+     */
 		function getLangList()
 		{
 			$lang_list = array();
@@ -247,22 +274,29 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/*
 		 * gets list of editors folders inside editors directory
-		 */
+     * @return  array     $editor_list   list of files in the directory
+     */
 		function getEditorsList(){
 			$editor_list = array();
 			$editor_list = XoopsLists::getDirListAsArray(XOOPS_EDITOR_PATH);
 			$editor_list = array_merge(array('default'=>'default'),$editor_list);
 			return $editor_list;
 		}
-		
+
 		/*
-		 * gets list of editors folders inside editors directory
-		 */
+		 * gets list of enabled editors folders inside editors directory
+     * @return  bool
+     */
 		function getEnabledEditorsList(){
 			global $xoopsConfig;
 			return $xoopsConfig['editor_enabled'];
 		}
 
+
+		/*
+		 * gets list of countries
+     * @return  array     $country_list   list of countries
+     */
 		function getCountryList() {	
 			global $xoopsConfig;
 			icms_loadLanguageFile('core', 'countries');
@@ -527,6 +561,11 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
     		return $country_list;
 		}
 
+
+		/*
+		 * gets list HTML tags
+     * @return  array     $html_list
+     */
 		function getHtmlList()
 		{
 			$html_list = array (
@@ -587,6 +626,11 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
     		return $html_list;
 		}
 
+
+		/*
+		 * gets list of all user ranks in the database
+     * @return  array     $ret   list of user ranks
+     */
 		function getUserRankList()
 		{
 			$db =& Database::getInstance();
