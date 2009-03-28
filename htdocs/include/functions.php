@@ -626,11 +626,13 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$message = trim($message) != '' ? $message : _TAKINGBACK;
 	$xoopsTpl->assign('message', $message);
 	$xoopsTpl->assign('lang_ifnotreload', sprintf(_IFNOTRELOAD, $url));
+    // GIJ start
     if( ! headers_sent() ) {
 	$_SESSION['redirect_message'] = $message ;
     header( "Location: ".preg_replace("/[&]amp;/i",'&',$url) ) ;
 	exit();
     }
+    // GIJ end
 }
 
 function xoops_getenv($key)

@@ -198,7 +198,7 @@ ImpressCMS ChangeLog
 * #483: Fresh install: ImpressCMS Logo missing image. (stranger)
 * #477: Improfile and the theme_select function. (stranger)
 * #287: Protection works not on the Profile Module. (stranger)
-* #147: Forgetting system_redirect.html. (stranger)
+* #147: Forgetting system_redirect.html. (Gijoe/stranger)
 * #157: style.css should be the last line of the header. (stranger)
 * #81: phpstats/webaliser. (stranger)
 
