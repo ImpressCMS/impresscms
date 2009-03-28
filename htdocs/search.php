@@ -190,7 +190,7 @@ switch ($action) {
 	            } else {
 								(($count - $start) > $max_results_per_page)? $num_show_this_page = $max_results_per_page: $num_show_this_page = $count - $start;
 								for ($i = 0; $i < $num_show_this_page; $i++) {
-	                	  $results[$i]['processed_image_alt_text'] = $myts->makeTboxData4Show($module->getVar('name')) . ": ";
+	                	  $results[$i]['processed_image_alt_text'] = $myts->displayTarea($module->getVar('name')) . ": ";
 	                    if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
 	                    	  $results[$i]['processed_image_url'] = "modules/" . $module->getVar('dirname') . "/" . $results[$i]['image'];
 	                    } else {
@@ -199,7 +199,7 @@ switch ($action) {
 	                    if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
 	                        $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
 	                    }
-	                    $results[$i]['processed_title'] = $myts->makeTboxData4Show($results[$i]['title']);
+	                    $results[$i]['processed_title'] = $myts->displayTarea($results[$i]['title']);
 	                    if( $xoopsConfigSearch['search_user_date']){$results[$i]['uid'] = @intval($results[$i]['uid']);
 	                    if ( !empty($results[$i]['uid']) ) {
 	                        $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
@@ -247,7 +247,7 @@ switch ($action) {
 	    if (is_array($results) && $count > 0) {
 					(($count - $start) > $max_results_per_page)? $num_show_this_page = $max_results_per_page: $num_show_this_page = $count - $start;
         	for ($i = 0; $i < $num_show_this_page; $i++) {
-            	  $results[$i]['processed_image_alt_text'] = $myts->makeTboxData4Show($module->getVar('name')) . ": ";
+            	  $results[$i]['processed_image_alt_text'] = $myts->displayTarea($module->getVar('name')) . ": ";
                 if (isset($results[$i]['image']) && $results[$i]['image'] != "") {
                 	  $results[$i]['processed_image_url'] = "modules/" . $module->getVar('dirname') . "/" . $results[$i]['image'];
                 } else {
@@ -256,7 +256,7 @@ switch ($action) {
                 if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
                     $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
                 }
-                $results[$i]['processed_title'] = $myts->makeTboxData4Show($results[$i]['title']);
+                $results[$i]['processed_title'] = $myts->displayTarea($results[$i]['title']);
                 if( $xoopsConfigSearch['search_user_date']){
                 $results[$i]['uid'] = @intval($results[$i]['uid']);
                 if ( !empty($results[$i]['uid']) ) {
