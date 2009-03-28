@@ -50,7 +50,7 @@ $xoopsTpl->assign("start", $start + 1);
 
 $queries = array();
 
-if ($action == "recoosults") {
+if ($action == "results") {
     if ($query == "") {
          redirect_header("search.php",1,_SR_PLZENTER);
         exit();
