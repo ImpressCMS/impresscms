@@ -43,17 +43,17 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/*
 		 * gets list of themes folder from themes directory, excluding any directories that do not have theme.html
-   * @return    array   
-   */
- function getThemesList(){
-    $dirtyList = $cleanList = Array();
-    $dirtyList = XoopsLists::getDirListAsArray(ICMS_THEME_PATH.'/');
-    foreach($dirtyList as $item){
+     * @return    array   
+     */
+    function getThemesList(){
+      $dirtyList = $cleanList = Array();
+      $dirtyList = XoopsLists::getDirListAsArray(ICMS_THEME_PATH.'/');
+      foreach($dirtyList as $item){
         if(file_exists(ICMS_THEME_PATH.'/'.$item.'/theme.html'))
-            $cleanList[$item] = $item;
+          $cleanList[$item] = $item;
+      }
+      return $cleanList;
     }
-    return $cleanList;
-}
 
 		/*
 		 * gets a list of module folders from the modules directory
@@ -184,7 +184,9 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			}
 			return str_replace('.php', '', $filelist);
 		}
-		
+
+
+
 		/*
 		 * gets list of html file names in a certain directory
      * @param   string    $dirname    name of the directory to scan for HTML files
@@ -245,8 +247,8 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		}
 
 		/*
-		*  gets list of subject icon image file names in a certain directory
-		*  if directory is not specified, default directory will be searched
+  	 * gets list of subject icon image file names in a certain directory
+  	 * if directory is not specified, default directory will be searched
      * @param   string    $sub_dir    name of the directory to scan for files
      * @return  array     $subjects   list of subject files in the directory
      */
