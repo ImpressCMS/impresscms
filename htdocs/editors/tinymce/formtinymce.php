@@ -28,7 +28,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 	 * Constructor
 	 *
 	 * @param	array   $configs  Editor Options
-	 * @param	binary 	$checkCompatible  true - return false on failure
+	 * @param	bool 	  $checkCompatible  true - return false on failure
 	 */
 	function XoopsFormTinymce($configs, $checkCompatible = false) {
 		$current_path = __FILE__;
@@ -57,6 +57,9 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		$this->initTinymce ();
 	}
 
+  /**
+  * Initializes tinyMCE
+  **/
 	function initTinymce() {
 		$this->config ["elements"] = $this->getName ();
 		$this->config ["language"] = $this->getLanguage ();
@@ -109,7 +112,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		}';*/
 
 		require_once dirname ( __FILE__ ) . "/tinymce.php";
-		$this->tinymce = TinyMCE::instance ( $this->config );
+		$this->tinymce = TinyMCE::instance( $this->config );
 	}
 
 	/**
@@ -125,6 +128,9 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		return $language;
 	}
 
+  /**
+  * Gets the fonts for tinymce
+  **/
 	function getFonts() {
 		if (empty ( $this->config ["fonts"] ) && defined ( "_XOOPS_EDITOR_TINYMCE_FONTS" )) {
 			$this->config ["fonts"] = constant ( "_XOOPS_EDITOR_TINYMCE_FONTS" );
@@ -135,8 +141,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 
 	/**
 	 * prepare HTML for output
-	 *
-	 * @return	sting HTML
+	 * @return	string    $ret    HTML
 	 */
 	function render() {
 		$ret = $this->tinymce->render ();
@@ -151,10 +156,10 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 	/**
 	 * Check if compatible
 	 *
-	 * @return
+	 * @return  bool
 	 */
 	function isCompatible() {
-		return is_readable ( XOOPS_ROOT_PATH . $this->rootpath . "/tinymce.php" );
+		return is_readable( XOOPS_ROOT_PATH . $this->rootpath . "/tinymce.php" );
 	}
 }
 ?>

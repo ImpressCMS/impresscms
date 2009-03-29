@@ -16,7 +16,11 @@ class TinyMCE
 	var $setting = array();
 
 
-	// PHP 5 Constructor
+  /**
+  * PHP 5 Constructor
+  *
+  * @param    string    $config   The configuration
+  **/
 	function __construct($config)
  	{
 		$this->setConfig($config);
@@ -31,7 +35,13 @@ class TinyMCE
 	}
 
 
-	function &instance( $config ) 
+  /**
+  * Creates one instance of the tinyMCE object
+  *
+  * @param    array     $config     The configuration
+  * @return   object    $instance   The instance of tinyMCE object
+  **/
+	function &instance( $config )
 	{
 		static $instance;
 		if(!isset($instance)) {
@@ -43,7 +53,12 @@ class TinyMCE
 		return $instance;
 	}
 
-
+  /**
+  * Gets configuration Elements
+  *
+  * @param    string  $element    The configuration element
+  * @return   array   $elements   The array of configuration elements
+  **/
 	function getElements($element = null)
 	{
 		static $elements = array();
@@ -53,7 +68,13 @@ class TinyMCE
 		
 		return $elements;
 	}
-	
+
+  /**
+  * Gets configuration Elements
+  *
+  * @param    string  $element    The configuration element
+  * @return   array   $elements   The array of configuration elements
+  **/
 	function setConfig( $config )
 	{
 		$config["elements"] = implode(",", $this->getElements($config["elements"]));
@@ -62,14 +83,17 @@ class TinyMCE
 		}
 	}
 
-
+  /**
+  * Initializes the tinyMCE
+  * @return   true
+  **/
 	function init()
 	{
 		$configured = array();
 		if(is_readable(XOOPS_ROOT_PATH . $this->rootpath. '/langs/'.$this->config["language"].'.js')) {
 			$this->setting["language"] = $this->config["language"];
 		}
-		
+
 		if( empty($this->config["theme"]) || !is_dir(XOOPS_ROOT_PATH . $this->rootpath."/themes/".$this->config["theme"]) ) {
 			$this->setting["theme"] = "advanced"; 
 		}else {
@@ -83,8 +107,7 @@ class TinyMCE
 		$this->setting["plugins"] .= !empty($this->config["plugins"]) ? ",".$this->config["plugins"] : "";
 		$configured[] = "plugins";
 
-		$this->setting["content_css"] = @$this->config["content_css"] ? $this->config["content_css"] : 
-										"editor_xoops.css";
+		$this->setting["content_css"] = @$this->config["content_css"] ? $this->config["content_css"] : "editor_xoops.css";
 		if(!is_readable(XOOPS_ROOT_PATH . $this->rootpath. '/themes/'.$this->setting["theme"].'/css/' .$this->setting["content_css"])) {
 			unset( $this->setting["content_css"] );
 		}
@@ -184,6 +207,10 @@ class TinyMCE
 		return true;
 	}
 
+  /**
+  * Renders the tinyMCE
+  * @return   string  $ret      The rendered HTML string
+  **/
   function render()
   {
     static $rendered;
