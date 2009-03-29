@@ -9,12 +9,12 @@
  * @version		$Id: tinymce.php 1522 2008-04-10 19:54:49Z wtravel $
  * @package		xoopseditor
  */
-
 class TinyMCE
 {
 	var $rootpath;
 	var $config = array();
 	var $setting = array();
+
 
 	// PHP 5 Constructor
 	function __construct($config)
@@ -22,12 +22,14 @@ class TinyMCE
 		$this->setConfig($config);
 		$this->rootpath = $this->config["rootpath"] . "/jscripts";
 	}
-	
+
+
 	// PHP 4 Contructor
 	function TinyMCE( $config )
 	{
 		$this->__construct( $config ) ;
 	}
+
 
 	function &instance( $config ) 
 	{
@@ -40,7 +42,8 @@ class TinyMCE
 		
 		return $instance;
 	}
-	
+
+
 	function getElements($element = null)
 	{
 		static $elements = array();
@@ -58,7 +61,8 @@ class TinyMCE
 			$this->config[$key] = $val;
 		}
 	}
-	
+
+
 	function init()
 	{
 		$configured = array();
@@ -179,52 +183,52 @@ class TinyMCE
 		
 		return true;
 	}
-	
-    function render()
-    {
-        static $rendered;
-        if($rendered) return null;
-        
-        $rendered = true;
-        
-        $this->init();
-        
-        if( !empty($this->setting["callback"]) ) {
-            $callback = $this->setting["callback"];
-            unset($this->setting["callback"]);
+
+  function render()
+  {
+    static $rendered;
+    if($rendered) return null;
+    
+    $rendered = true;
+    
+    $this->init();
+    
+    if( !empty($this->setting["callback"]) ) {
+        $callback = $this->setting["callback"];
+        unset($this->setting["callback"]);
+    }else{
+        $callback = "";
+    }
+    
+    $ret = '<script language="javascript" type="text/javascript" src="' . XOOPS_URL . $this->rootpath . '/tiny_mce.js"></script>';
+    $ret .= '
+            <script language="javascript" type="text/javascript">
+                tinyMCE.init({
+            ';
+    foreach($this->setting as $key => $val) {
+        $ret .= $key . ' : ';
+        if($val === true || $val === false) {
+            $ret .= $val.','."\r\n";
         }else{
-            $callback = "";
+            $ret .= '"'. $val . '",'."\r\n";
         }
-        
-        $ret = '<script language="javascript" type="text/javascript" src="' . XOOPS_URL . $this->rootpath . '/tiny_mce.js"></script>';
-        $ret .= '
-                <script language="javascript" type="text/javascript">
-                    tinyMCE.init({
-                ';
-        foreach($this->setting as $key => $val) {
-            $ret .= $key . ' : ';
-            if($val === true || $val === false) {
-                $ret .= $val.','."\r\n";
-            }else{
-                $ret .= '"'. $val . '",'."\r\n";
-            }
-        }
-        $ret .= '   
-                    relative_urls : false,
-                    remove_script_host : false,
-                    tinymceload : "1"});
-                '.$callback.'
+    }
+    $ret .= '   
+                  relative_urls : false,
+                  remove_script_host : false,
+                  tinymceload : "1"});
+              '.$callback.'
 function showMCE(id) {
-    if (tinyMCE.getInstanceById(id) == null) {
-        tinyMCE.execCommand(\'mceAddControl\', false, id);
-    } else {
-        tinyMCE.execCommand(\'mceRemoveControl\', false, id);
-    }
+  if (tinyMCE.getInstanceById(id) == null) {
+      tinyMCE.execCommand(\'mceAddControl\', false, id);
+  } else {
+      tinyMCE.execCommand(\'mceRemoveControl\', false, id);
+  }
 }
-                </script>
-        ';
-        return $ret ;
-    }
+              </script>
+      ';
+    return $ret ;
+  }
 }
 
 ?>
