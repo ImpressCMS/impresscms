@@ -36,7 +36,7 @@ include_once XOOPS_ROOT_PATH."/class/xoopsuser.php";
 
 class XoopsStory
 {
-    var $table;
+  var $table;
 	var $storyid;
 	var $topicid;
 	var $uid;
@@ -60,6 +60,12 @@ class XoopsStory
 	var $topicstable;
 	var $comments;
 
+
+  /**
+  * Contstructor
+  *
+  * @param   int      $storyid
+  **/
 	function Story($storyid=-1)
 	{
 		$this->db =& Database::getInstance();
@@ -72,96 +78,191 @@ class XoopsStory
 		}
 	}
 
+  /**
+  * Sets current storyid
+  *
+  * @param   int      $value
+  **/
 	function setStoryId($value)
 	{
 		$this->storyid = intval($value);
 	}
 
+  /**
+  * Sets current topicid
+  *
+  * @param   int      $value
+  **/
 	function setTopicId($value)
 	{
 		$this->topicid = intval($value);
 	}
 
+  /**
+  * Sets current userid
+  *
+  * @param   int      $value
+  **/
 	function setUid($value)
 	{
 		$this->uid = intval($value);
 	}
 
+  /**
+  * Sets current title
+  *
+  * @param   string   $value
+  **/
 	function setTitle($value)
 	{
 		$this->title = $value;
 	}
 
+  /**
+  * Sets current hometext (intro text)
+  *
+  * @param   string   $value
+  **/
 	function setHometext($value)
 	{
 		$this->hometext = $value;
 	}
 
+  /**
+  * Sets current body (body text)
+  *
+  * @param   string   $value
+  **/
 	function setBodytext($value)
 	{
 		$this->bodytext = $value;
 	}
 
+  /**
+  * Sets current date published
+  *
+  * @param   int      $value
+  **/
 	function setPublished($value)
 	{
 		$this->published = intval($value);
 	}
 
+  /**
+  * Sets current date expired
+  *
+  * @param   int      $value
+  **/
 	function setExpired($value)
 	{
 		$this->expired = intval($value);
 	}
 
+  /**
+  * Sets current hostname
+  *
+  * @param   string      $value
+  **/
 	function setHostname($value)
 	{
 		$this->hostname = $value;
 	}
 
+  /**
+  * Sets value of nohtml
+  *
+  * @param   int      $value
+  **/
 	function setNohtml($value=0)
 	{
 		$this->nohtml = $value;
 	}
 
+  /**
+  * Sets value of nosmiley
+  *
+  * @param   int      $value
+  **/
 	function setNosmiley($value=0)
 	{
 		$this->nosmiley = $value;
 	}
 
+  /**
+  * Sets current value of ihome
+  *
+  * @param   string      $value
+  **/
 	function setIhome($value)
 	{
 		$this->ihome = $value;
 	}
 
+  /**
+  * Sets current value of notifypub
+  *
+  * @param   string      $value
+  **/
 	function setNotifyPub($value)
 	{
 		$this->notifypub = $value;
 	}
 
+  /**
+  * Sets type
+  *
+  * @param   string      $value
+  **/
 	function setType($value)
 	{
 		$this->type = $value;
 	}
 
+  /**
+  * Sets current value of approved
+  *
+  * @param   int        $value
+  **/
 	function setApproved($value)
 	{
 		$this->approved = intval($value);
 	}
 
+  /**
+  * Sets current value of topicdisplay
+  *
+  * @param   string      $value
+  **/
 	function setTopicdisplay($value)
 	{
 		$this->topicdisplay = $value;
 	}
 
+  /**
+  * Sets current value of topicalign
+  *
+  * @param   string      $value
+  **/
 	function setTopicalign($value)
 	{
 		$this->topicalign = $value;
 	}
 
+  /**
+  * Sets current value of comments
+  *
+  * @param   int      $value
+  **/
 	function setComments($value)
 	{
 		$this->comments = intval($value);
 	}
 
+  /**
+  * Stores the story. Don't set to published when not approved
+  *
+  * @param   bool      $approved
+  **/
 	function store($approved=false)
 	{
 		//$newpost = 0;
@@ -210,6 +311,11 @@ class XoopsStory
 		return $newstoryid;
 	}
 
+  /**
+  * Gets story by ID
+  *
+  * @param   int      $storyid
+  **/
 	function getStory($storyid)
 	{
 		$storyid = intval($storyid);
@@ -218,6 +324,11 @@ class XoopsStory
 		$this->makeStory($array);
 	}
 
+  /**
+  * Makes the story
+  *
+  * @param   array      $array
+  **/
 	function makeStory($array)
 	{
 		foreach ( $array as $key=>$value ){
@@ -225,6 +336,11 @@ class XoopsStory
 		}
 	}
 
+  /**
+  * Deletes the story by ID
+  *
+  * @return   bool
+  **/
 	function delete()
 	{
 		$sql = sprintf("DELETE FROM %s WHERE storyid = '%u'", $this->table, intval($this->storyid));
@@ -234,6 +350,11 @@ class XoopsStory
 		return true;
 	}
 
+  /**
+  * Updates the counter
+  *
+  * @param   bool
+  **/
 	function updateCounter()
 	{
 		$sql = sprintf("UPDATE %s SET counter = counter+1 WHERE storyid = '%u'", $this->table, intval($this->storyid));
@@ -243,6 +364,11 @@ class XoopsStory
 		return true;
 	}
 
+  /**
+  * Updates the number of comments
+  *
+  * @param   bool
+  **/
 	function updateComments($total)
 	{
 		$sql = sprintf("UPDATE %s SET comments = '%u' WHERE storyid = '%u'", $this->table, intval($total), intval($this->storyid));
@@ -252,11 +378,21 @@ class XoopsStory
 		return true;
 	}
 
+  /**
+  * Returns the current topicid
+  *
+  * @return   int
+  **/
 	function topicid()
 	{
 		return $this->topicid;
 	}
 
+  /**
+  * Returns the current topic (@link XoopsTopic) object
+  *
+  * @param   object
+  **/
 	function topic()
 	{
 		return new XoopsTopic($this->topicstable, $this->topicid);
@@ -267,11 +403,22 @@ class XoopsStory
 		return $this->uid;
 	}
 
+  /**
+  * Returns the current username from (@link XoopsUser)
+  *
+  * @return   string
+  **/
 	function uname()
 	{
 		return XoopsUser::getUnameFromId($this->uid);
 	}
 
+  /**
+  * Returns the title in a certain format
+  *
+  * @param    string    $format
+  * @return   string    $title
+  **/
 	function title($format="Show")
 	{
 		$myts =& MyTextSanitizer::getInstance();
@@ -296,6 +443,12 @@ class XoopsStory
 		return $title;
 	}
 
+  /**
+  * Returns the hometext in a certain format
+  *
+  * @param    string    $format
+  * @return   string    $hometext
+  **/
 	function hometext($format="Show")
 	{
 		$myts =& MyTextSanitizer::getInstance();
@@ -325,6 +478,12 @@ class XoopsStory
 		return $hometext;
 	}
 
+  /**
+  * Returns the bodytext in a certain format
+  *
+  * @param    string    $format
+  * @return   string    $bodytext
+  **/
 	function bodytext($format="Show")
 	{
 		$myts =& MyTextSanitizer::getInstance();
@@ -354,66 +513,132 @@ class XoopsStory
 		return $bodytext;
 	}
 
+  /**
+  * Returns the counter
+  *
+  * @return   int
+  **/
 	function counter()
 	{
 		return $this->counter;
 	}
 
+  /**
+  * Returns date created
+  *
+  * @return   int
+  **/
 	function created()
 	{
 		return $this->created;
 	}
 
+  /**
+  * Returns date published
+  *
+  * @return   int
+  **/
 	function published()
 	{
 		return $this->published;
 	}
 
+  /**
+  * Returns date expired
+  *
+  * @return   int
+  **/
 	function expired()
 	{
 		return $this->expired;
 	}
 
+  /**
+  * Returns hostname
+  *
+  * @return   string
+  **/
 	function hostname()
 	{
 		return $this->hostname;
 	}
 
+  /**
+  * Returns storyid
+  *
+  * @return   int
+  **/
 	function storyid()
 	{
 		return $this->storyid;
 	}
 
+  /**
+  * Returns value for nohtml
+  *
+  * @return   int
+  **/
 	function nohtml()
 	{
 		return $this->nohtml;
 	}
 
+  /**
+  * Returns value for nosmiley
+  *
+  * @return   int
+  **/
 	function nosmiley()
 	{
 		return $this->nosmiley;
 	}
 
+  /**
+  * Returns value for notifypub
+  *
+  * @return   int
+  **/
 	function notifypub()
 	{
 		return $this->notifypub;
 	}
 
+  /**
+  * Returns the type
+  *
+  * @return   string
+  **/
 	function type()
 	{
 		return $this->type;
 	}
 
+  /**
+  * Returns value for ihome
+  *
+  * @return   string
+  **/
 	function ihome()
 	{
 		return $this->ihome;
 	}
 
+  /**
+  * Returns value for topicdisplay
+  *
+  * @return   string
+  **/
 	function topicdisplay()
 	{
 		return $this->topicdisplay;
 	}
 
+  /**
+  * Returns value for topicalign
+  *
+  * @param    bool      $astext   Align the topic as text
+  * @return   string
+  **/
 	function topicalign($astext=true)
 	{
 		if ( $astext ) {
@@ -427,6 +652,11 @@ class XoopsStory
 		return $this->topicalign;
 	}
 
+  /**
+  * Returns the number of comments
+  *
+  * @return   int
+  **/
 	function comments()
 	{
 		return $this->comments;
