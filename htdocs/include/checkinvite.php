@@ -32,6 +32,11 @@ if (!defined('XOOPS_ROOT_PATH')) {
     exit();
 }
 
+/**
+* Loads the invite code
+*
+* @param    string    $code     Invitation code
+**/
 function load_invite_code($code) {
 	// validate if code is of valid length.
 	if (empty($code) || strlen($code) != 8) {
@@ -66,6 +71,12 @@ function load_invite_code($code) {
 	$result = $xoopsDB->queryF($sql);
 }
 
+/**
+* Checks if invite code is correct
+*
+* @param    string    $code     Invitation code
+* @return   bool
+**/
 function check_invite_code($code) {
 	// validate if code is of valid length.
 	if (empty($code) || strlen($code) != 8) {
@@ -78,9 +89,16 @@ function check_invite_code($code) {
 	if (empty($invite_to) || !empty($register_id) || intval($invite_date) < time() - 3 * 86400) {
 		return false;
 	}
-	return true;	
+	return true;
 }
 
+/**
+* Updates the invite code into the database
+*
+* @param    string    $code     Invitation code
+* @param    int       $new_id   New registration id
+* @return   true
+**/
 function update_invite_code($code, $new_id) {
 	$xoopsDB =& Database::getInstance();
 	// update register_id
