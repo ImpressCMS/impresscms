@@ -31,6 +31,7 @@ include_once "../class/xoopsblock.php";
 include_once "../kernel/module.php";
 include_once "../include/cp_functions.php";
 include_once './class/dbmanager.php';
+require_once "../class/xoopslists.php";
 include "modulesadmin.php";
 $dbm =& new db_manager();
 
@@ -86,7 +87,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$content .= '<td>';
 	$content .= _INSTALL_SELECT_MODULES.'<br />';
 	$content .= '<select name="install_mods[]"  multiple>';
-	$langarr = getDirList("../modules/");
+	$langarr = XoopsLists::getModulesList();
 	foreach ($langarr as $lang) {
 		if ($lang == 'system' || $lang == 'protector'){
 			continue;

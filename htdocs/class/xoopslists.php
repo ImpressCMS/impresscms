@@ -60,8 +60,18 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		 */
 		function getModulesList()
 		{
-			return XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH."/modules/");
+            $dirtyList = $cleanList = array();
+            $dirtyList = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH.'/modules/');
+            foreach($dirtyList as $item){
+                if(file_exists(XOOPS_ROOT_PATH.'/modules/'.$item.'/icms_version.php')){
+                    $cleanList[$item] = $item;
+                }elseif(file_exists(XOOPS_ROOT_PATH.'/modules/'.$item.'/xoops_version.php')){
+                    $cleanList[$item] = $item;
+                    }
+            }
+			return $cleanList;
 		}
+
 
 		/*
 		 * gets list of name of directories inside a directory
