@@ -43,53 +43,53 @@ function xoops_header($closehead=true)
 	<script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script>
 	<script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
-			$config_handler =& xoops_gethandler('config');
-			$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
- 			$jscript = '';
- 			if(class_exists('XoopsFormDhtmlTextArea')){
- 		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
- 		        	if(empty($key)) continue;
- 		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
- 		        		echo '<script type="text/javascript" src="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js"></script>';
- 		        	}else{
- 		        		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
- 		        		$func = 'javascript_'.$key;
- 		        		if ( function_exists($func) ) {
- 		        			@list($encode, $jscript) = $func($ele_name);
- 		        		 	if (!empty($jscript)) {
- 		        		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
- 		        					echo '<script type="text/javascript">'.$jscript.'</script>';
- 		        				}else{
- 		        					echo '<script type="text/javascript" src="'.$jscript.'"></script>';
- 		        				}
- 		        			}
- 		        		}
- 		        	}
- 		        }
- 		    }
+	$config_handler =& xoops_gethandler('config');
+	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+	$jscript = '';
+	if(class_exists('XoopsFormDhtmlTextArea')){
+		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+			if(empty($key)) continue;
+			if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
+				echo '<script type="text/javascript" src="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js"></script>';
+			}else{
+				$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+				$func = 'javascript_'.$key;
+				if ( function_exists($func) ) {
+					@list($encode, $jscript) = $func($ele_name);
+					if (!empty($jscript)) {
+						if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
+							echo '<script type="text/javascript">'.$jscript.'</script>';
+						}else{
+							echo '<script type="text/javascript" src="'.$jscript.'"></script>';
+						}
+					}
+				}
+			}
+		}
+	}
 
- 			$style_info = '';
- 		        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-  		        	if(empty($key)) continue;
-		        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
- 		        		echo '<link rel="stylesheet" media="screen" href="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css" type="text/css" />';
- 		        	}else{
- 		        		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
- 		        		$func = 'style_'.$key;
- 		        		if ( function_exists($func) ) {
- 		        			$style_info = $func();
- 		        		 	if (!empty($style_info)) {
- 		        		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
- 		        		 			echo '<style media="screen" type="text/css">
- 		        		 			'.$style_info.'
- 		        		 			</style>';
- 		        				}else{
- 		        					echo '<link rel="stylesheet" media="screen" href="'.$style_info.'" type="text/css" />';
- 		        				}
- 		        			}
- 		        		}
- 		        	}
- 		        }
+	$style_info = '';
+	foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+		if(empty($key)) continue;
+		if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
+			echo '<link rel="stylesheet" media="screen" href="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css" type="text/css" />';
+		}else{
+			$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+			$func = 'style_'.$key;
+			if ( function_exists($func) ) {
+				$style_info = $func();
+				if (!empty($style_info)) {
+					if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
+						echo '<style media="screen" type="text/css">
+						'.$style_info.'
+						</style>';
+					}else{
+						echo '<link rel="stylesheet" media="screen" href="'.$style_info.'" type="text/css" />';
+					}
+				}
+			}
+		}
+	}
 
 	$themecss = getcss($xoopsConfig['theme_set']);
 	if ($themecss) {
@@ -250,23 +250,23 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 */
 	function formatTimestamp($time, $format = "l", $timeoffset = null)
 	{
-	    global $xoopsConfig, $xoopsUser;
-
-	    $format_copy = $format;
-	    $format = strtolower($format);
-
-	    if ($format == "rss" || $format == "r"){
-        	$TIME_ZONE = "";
-        	if (!empty($GLOBALS['xoopsConfig']['server_TZ'])){
+		global $xoopsConfig, $xoopsUser;
+		
+		$format_copy = $format;
+		$format = strtolower($format);
+		
+		if ($format == "rss" || $format == "r"){
+			$TIME_ZONE = "";
+			if (!empty($GLOBALS['xoopsConfig']['server_TZ'])){
 				$server_TZ = abs(intval($GLOBALS['xoopsConfig']['server_TZ'] * 3600.0));
 				$prefix = ($GLOBALS['xoopsConfig']['server_TZ'] < 0) ?  " -" : " +";
 				$TIME_ZONE = $prefix.date("Hi", $server_TZ);
 			}
 			$date = gmdate("D, d M Y H:i:s", intval($time)) . $TIME_ZONE;
 			return $date;
-    	}
-
-	    if ( ($format == "elapse" || $format == "e") && $time < time() ) {
+		}
+		
+		if ( ($format == "elapse" || $format == "e") && $time < time() ) {
 			$elapse = time() - $time;
 			if ( $days = floor( $elapse / (24 * 3600) ) ) {
 				$num = $days > 1 ? sprintf(_DAYS, $days) : _DAY;
@@ -279,131 +279,131 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 				$num = $seconds > 1 ? sprintf(_SECONDS, $seconds) : _SECOND;
 			}
 			$ret = sprintf(_ELAPSE, icms_conv_nr2local($num));
-	   		return $ret;
-    	}
-
-    	// disable user timezone calculation and use default timezone,
-    	// for cache consideration
-    	if ($timeoffset === null) {
-	    	$timeoffset = ($xoopsConfig['default_TZ'] == '') ? '0.0' : $xoopsConfig['default_TZ'];
-    	}
-
-	    $usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
-
-	    switch ($format) {
-		case 'daynumber':
+			return $ret;
+		}
+		
+		// disable user timezone calculation and use default timezone,
+		// for cache consideration
+		if ($timeoffset === null) {
+			$timeoffset = ($xoopsConfig['default_TZ'] == '') ? '0.0' : $xoopsConfig['default_TZ'];
+		}
+		
+		$usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
+		
+		switch ($format) {
+			case 'daynumber':
 			$datestring = 'd';
-		break;
-		case 'D':
+			break;
+			case 'D':
 			$datestring = 'D';
-		break;
-		case 'F':
+			break;
+			case 'F':
 			$datestring = 'F';
-		break;
-		case 'hs':
+			break;
+			case 'hs':
 			$datestring = 'h';
-		break;
-		case 'H':
+			break;
+			case 'H':
 			$datestring = 'H';
-		break;
-		case 'gg':
+			break;
+			case 'gg':
 			$datestring = 'g';
-		break;
-		case 'G':
+			break;
+			case 'G':
 			$datestring = 'G';
-		break;
-		case 'i':
+			break;
+			case 'i':
 			$datestring = 'i';
-		break;
-		case 'j':
+			break;
+			case 'j':
 			$datestring = 'j';
-		break;
-		case 'l':
+			break;
+			case 'l':
 			$datestring = _DATESTRING;
-		break;
-		case 'm':
+			break;
+			case 'm':
 			$datestring = _MEDIUMDATESTRING;
-		break;
-		case 'monthnr':
+			break;
+			case 'monthnr':
 			$datestring = 'm';
-		break;
-		case 'mysql':
+			break;
+			case 'mysql':
 			$datestring = 'Y-m-d H:i:s';
-		break;
-		case 'month':
+			break;
+			case 'month':
 			$datestring = 'M';
-		break;
-		case 'n':
+			break;
+			case 'n':
 			$datestring = 'n';
-		break;
-		case 's':
+			break;
+			case 's':
 			$datestring = _SHORTDATESTRING;
-		break;
-		case 'seconds':
+			break;
+			case 'seconds':
 			$datestring = 's';
-		break;
-		case 'suffix':
+			break;
+			case 'suffix':
 			$datestring = 'S';
-		break;
-		case 't':
+			break;
+			case 't':
 			$datestring = 't';
-		break;
-		case 'w':
+			break;
+			case 'w':
 			$datestring = 'w';
-		break;
-		case 'shortyear':
+			break;
+			case 'shortyear':
 			$datestring = 'y';
-		break;
-		case 'Y':
+			break;
+			case 'Y':
 			$datestring = 'Y';
-		break;
-        case 'c':
-        case 'custom':
-		    static $current_timestamp, $today_timestamp, $monthy_timestamp;
-        	if (!isset($current_timestamp)) {
-		    	$current_timestamp = xoops_getUserTimestamp(time(), $timeoffset);
-	    	}
-	    	if (!isset($today_timestamp)) {
-		    	$today_timestamp = mktime(0, 0, 0, date("m", $current_timestamp), date("d", $current_timestamp), date("Y", $current_timestamp));
-	    	}
-
-	        if ( abs($elapse_today = $usertimestamp - $today_timestamp) < 24*60*60) {
+			break;
+			case 'c':
+			case 'custom':
+			static $current_timestamp, $today_timestamp, $monthy_timestamp;
+			if (!isset($current_timestamp)) {
+				$current_timestamp = xoops_getUserTimestamp(time(), $timeoffset);
+			}
+			if (!isset($today_timestamp)) {
+				$today_timestamp = mktime(0, 0, 0, date("m", $current_timestamp), date("d", $current_timestamp), date("Y", $current_timestamp));
+			}
+			
+			if ( abs($elapse_today = $usertimestamp - $today_timestamp) < 24*60*60) {
 				$datestring = ($elapse_today > 0) ? _TODAY : _YESTERDAY;
 			} else {
-		    	if (!isset($monthy_timestamp)) {
-			    	$monthy_timestamp[0] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp));
-			    	$monthy_timestamp[1] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp) + 1);
-		    	}
-		        if ($usertimestamp >= $monthy_timestamp[0] && $usertimestamp < $monthy_timestamp[1]) {
+				if (!isset($monthy_timestamp)) {
+					$monthy_timestamp[0] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp));
+					$monthy_timestamp[1] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp) + 1);
+				}
+				if ($usertimestamp >= $monthy_timestamp[0] && $usertimestamp < $monthy_timestamp[1]) {
 					$datestring = _MONTHDAY;
 				} else{
 					$datestring = _YEARMONTHDAY;
 				}
 			}
-	        break;
+			break;
+	
+			default:
+				if ($format != '') {
+					$datestring = $format_copy;
+				} else {
+					$datestring = _DATESTRING;
+				}
+			break;
+		}
 
-        default:
-	        if ($format != '') {
-	            $datestring = $format_copy;
-	        } else {
-	            $datestring = _DATESTRING;
-	        }
-	        break;
-	    }
-
-	$basecheck = $xoopsConfig['use_ext_date'] == 1 && defined ('_CALENDAR_TYPE') && $format != 'mysql';
-	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php'))
-	{
-		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
-		return ucfirst(local_date($datestring,$usertimestamp));
-	}elseif ($basecheck && _CALENDAR_TYPE != "jalali" && $xoopsConfig['language'] != 'english'){
-		return ucfirst(icms_conv_nr2local(ext_date($datestring,$usertimestamp)));
-	}elseif ($basecheck && _CALENDAR_TYPE == "jalali"){
-		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
-	}else{
-	return ucfirst(date($datestring,$usertimestamp));
+		$basecheck = $xoopsConfig['use_ext_date'] == 1 && defined ('_CALENDAR_TYPE') && $format != 'mysql';
+		if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php'))
+		{
+			include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
+			return ucfirst(local_date($datestring,$usertimestamp));
+		}elseif ($basecheck && _CALENDAR_TYPE != "jalali" && $xoopsConfig['language'] != 'english'){
+			return ucfirst(icms_conv_nr2local(ext_date($datestring,$usertimestamp)));
+		}elseif ($basecheck && _CALENDAR_TYPE == "jalali"){
+			return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
+		}else{
+			return ucfirst(date($datestring,$usertimestamp));
+		}
 	}
-}
 
 /*
 * Function to calculate server timestamp from user entered time (timestamp)
@@ -626,13 +626,13 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$message = trim($message) != '' ? $message : _TAKINGBACK;
 	$xoopsTpl->assign('message', $message);
 	$xoopsTpl->assign('lang_ifnotreload', sprintf(_IFNOTRELOAD, $url));
-    // GIJ start
-    if( ! headers_sent() ) {
-	$_SESSION['redirect_message'] = $message ;
-    header( "Location: ".preg_replace("/[&]amp;/i",'&',$url) ) ;
-	exit();
-    }
-    // GIJ end
+	// GIJ start
+	if( ! headers_sent() ) {
+		$_SESSION['redirect_message'] = $message ;
+		header( "Location: ".preg_replace("/[&]amp;/i",'&',$url) ) ;
+		exit();
+	}
+	// GIJ end
 }
 
 function xoops_getenv($key)
@@ -859,30 +859,29 @@ function icms_substr($str, $start, $length, $trimmarker = '...')
 // How do we specify this??
 function xoops_notification_deletebymodule ($module_id)
 {
-    $notification_handler =& xoops_gethandler('notification');
-    return $notification_handler->unsubscribeByModule ($module_id);
+	$notification_handler =& xoops_gethandler('notification');
+	return $notification_handler->unsubscribeByModule ($module_id);
 }
 
 function xoops_notification_deletebyuser ($user_id)
 {
-    $notification_handler =& xoops_gethandler('notification');
-    return $notification_handler->unsubscribeByUser ($user_id);
+	$notification_handler =& xoops_gethandler('notification');
+	return $notification_handler->unsubscribeByUser ($user_id);
 }
 
 function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 {
-    $notification_handler =& xoops_gethandler('notification');
-    return $notification_handler->unsubscribeByItem ($module_id, $category, $item_id);
+	$notification_handler =& xoops_gethandler('notification');
+	return $notification_handler->unsubscribeByItem ($module_id, $category, $item_id);
 }
 
 // ################### Comment helper functions ####################
-
 function xoops_comment_count($module_id, $item_id = null)
 {
-    $comment_handler =& xoops_gethandler('comment');
-    $criteria = new CriteriaCompo(new Criteria('com_modid', intval($module_id)));
-    if(isset($item_id)) {$criteria->add(new Criteria('com_itemid', intval($item_id)));}
-    return $comment_handler->getCount($criteria);
+	$comment_handler =& xoops_gethandler('comment');
+	$criteria = new CriteriaCompo(new Criteria('com_modid', intval($module_id)));
+	if(isset($item_id)) {$criteria->add(new Criteria('com_itemid', intval($item_id)));}
+	return $comment_handler->getCount($criteria);
 }
 
 function xoops_comment_delete($module_id, $item_id)
@@ -921,10 +920,10 @@ function xoops_comment_delete($module_id, $item_id)
 
 function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null)
 {
-    // do not allow system permissions to be deleted
-    if(intval($module_id) <= 1) {return false;}
-    $gperm_handler =& xoops_gethandler('groupperm');
-    return $gperm_handler->deleteByModule($module_id, $perm_name, $item_id);
+	// do not allow system permissions to be deleted
+	if(intval($module_id) <= 1) {return false;}
+	$gperm_handler =& xoops_gethandler('groupperm');
+	return $gperm_handler->deleteByModule($module_id, $perm_name, $item_id);
 }
 
 function xoops_utf8_encode(&$text)
@@ -1360,6 +1359,7 @@ function icms_createSalt($slength=64)
 		$salt.= substr($base, rand() % strlen($base), 1);
     	return $salt;
 }
+
 /**
 * This Function returns the User Salt key belonging to username.
 *
@@ -1375,22 +1375,23 @@ function icms_getUserSaltFromUname($uname = '')
 	$db =& Database::getInstance();
 	if($uname !== '')
 	{
- 		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
- 		$table = new IcmsDatabasetable('users');
-	    if ($table->fieldExists('loginname')) {
-	    	$sql = $db->query("SELECT loginname, salt FROM ".$db->prefix('users')." WHERE loginname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
-		list($loginname, $salt) = $db->fetchRow($sql);
-	    }elseif($table->fieldExists('login_name')){
-	    	$sql = $db->query("SELECT login_name, salt FROM ".$db->prefix('users')." WHERE login_name = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
-		list($login_name, $salt) = $db->fetchRow($sql);
-	    }else{
-	    	$sql = $db->query("SELECT uname, salt FROM ".$db->prefix('users')." WHERE uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
-		list($uname, $salt) = $db->fetchRow($sql);
-	    }
+		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
+		$table = new IcmsDatabasetable('users');
+		if ($table->fieldExists('loginname')) {
+			$sql = $db->query("SELECT loginname, salt FROM ".$db->prefix('users')." WHERE loginname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
+			list($loginname, $salt) = $db->fetchRow($sql);
+		}elseif($table->fieldExists('login_name')){
+			$sql = $db->query("SELECT login_name, salt FROM ".$db->prefix('users')." WHERE login_name = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
+			list($login_name, $salt) = $db->fetchRow($sql);
+		}else{
+			$sql = $db->query("SELECT uname, salt FROM ".$db->prefix('users')." WHERE uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
+			list($uname, $salt) = $db->fetchRow($sql);
+		}
 	}
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 	return $salt;
 }
+
 /**
 * This Function returns the Username of the account linked to the inputted email address
 *
@@ -1406,15 +1407,15 @@ function icms_getUnameFromUserEmail($email = '')
 	$db =& Database::getInstance();
 	if($email !== '')
 	{
- 		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
- 		$table = new IcmsDatabasetable('users');
-	    if (!$table->fieldExists('login_name')) {
-	    	$sql = $db->query("SELECT uname, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
-		list($uname, $email) = $db->fetchRow($sql);
-	    }else{
-	    	$sql = $db->query("SELECT login_name, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
-		list($uname, $email) = $db->fetchRow($sql);
-	    }
+		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
+		$table = new IcmsDatabasetable('users');
+		if (!$table->fieldExists('login_name')) {
+			$sql = $db->query("SELECT uname, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
+			list($uname, $email) = $db->fetchRow($sql);
+		}else{
+			$sql = $db->query("SELECT login_name, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
+			list($uname, $email) = $db->fetchRow($sql);
+		}
 	}
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 	return $uname;
@@ -1961,85 +1962,86 @@ function Icms_getMonthNameById($month_id) {
 	icms_loadLanguageFile('core', 'calendar');
 	$month_id = icms_conv_local2nr($month_id);
 	if( $xoopsConfig['use_ext_date'] == 1 && defined ('_CALENDAR_TYPE') && _CALENDAR_TYPE == "jalali"){
-	switch($month_id) {
-		case 1:
-			return _CAL_FARVARDIN;
-		break;
-		case 2:
-			return _CAL_ORDIBEHESHT;
-		break;
-		case 3:
-			return _CAL_KHORDAD;
-		break;
-		case 4:
-			return _CAL_TIR;
-		break;
-		case 5:
-			return _CAL_MORDAD;
-		break;
-		case 6:
-			return _CAL_SHAHRIVAR;
-		break;
-		case 7:
-			return _CAL_MEHR;
-		break;
-		case 8:
-			return _CAL_ABAN;
-		break;
-		case 9:
-			return _CAL_AZAR;
-		break;
-		case 10:
-			return _CAL_DEY;
-		break;
-		case 11:
-			return _CAL_BAHMAN;
-		break;
-		case 12:
-			return _CAL_ESFAND;
-		break;
-	}
+		switch($month_id) {
+			case 1:
+				return _CAL_FARVARDIN;
+			break;
+			case 2:
+				return _CAL_ORDIBEHESHT;
+			break;
+			case 3:
+				return _CAL_KHORDAD;
+			break;
+			case 4:
+				return _CAL_TIR;
+			break;
+			case 5:
+				return _CAL_MORDAD;
+			break;
+			case 6:
+				return _CAL_SHAHRIVAR;
+			break;
+			case 7:
+				return _CAL_MEHR;
+			break;
+			case 8:
+				return _CAL_ABAN;
+			break;
+			case 9:
+				return _CAL_AZAR;
+			break;
+			case 10:
+				return _CAL_DEY;
+			break;
+			case 11:
+				return _CAL_BAHMAN;
+			break;
+			case 12:
+				return _CAL_ESFAND;
+			break;
+		}
 	}else{
-	switch($month_id) {
-		case 1:
-			return _CAL_JANUARY;
-		break;
-		case 2:
-			return _CAL_FEBRUARY;
-		break;
-		case 3:
-			return _CAL_MARCH;
-		break;
-		case 4:
-			return _CAL_APRIL;
-		break;
-		case 5:
-			return _CAL_MAY;
-		break;
-		case 6:
-			return _CAL_JUNE;
-		break;
-		case 7:
-			return _CAL_JULY;
-		break;
-		case 8:
-			return _CAL_AUGUST;
-		break;
-		case 9:
-			return _CAL_SEPTEMBER;
-		break;
-		case 10:
-			return _CAL_OCTOBER;
-		break;
-		case 11:
-			return _CAL_NOVEMBER;
-		break;
-		case 12:
-			return _CAL_DECEMBER;
-		break;
+		switch($month_id) {
+			case 1:
+				return _CAL_JANUARY;
+			break;
+			case 2:
+				return _CAL_FEBRUARY;
+			break;
+			case 3:
+				return _CAL_MARCH;
+			break;
+			case 4:
+				return _CAL_APRIL;
+			break;
+			case 5:
+				return _CAL_MAY;
+			break;
+			case 6:
+				return _CAL_JUNE;
+			break;
+			case 7:
+				return _CAL_JULY;
+			break;
+			case 8:
+				return _CAL_AUGUST;
+			break;
+			case 9:
+				return _CAL_SEPTEMBER;
+			break;
+			case 10:
+				return _CAL_OCTOBER;
+			break;
+			case 11:
+				return _CAL_NOVEMBER;
+			break;
+			case 12:
+				return _CAL_DECEMBER;
+			break;
+		}
 	}
 }
-}
+
 /**
  * These functions are some Persian users related functions
  * In ImpressCMS we are trying to bring different calendar type in core, so this is the place to place them
@@ -2058,6 +2060,7 @@ function Icms_getMonthNameById($month_id) {
 function div($a,$b) {
     return (int) ($a / $b);
 }
+
 function gregorian_to_jalali ($g_y, $g_m, $g_d)
 {
     $g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
@@ -2155,6 +2158,7 @@ function jalali_to_gregorian($j_y, $j_m, $j_d)
 
    return array($gy, $gm, $gd);
 }
+
 // Begin of finding the begining day Of months
 function mstart($month,$day,$year)
 {
@@ -2193,6 +2197,7 @@ function lastday ($month,$day,$year)
 	}
 	return $lastdatep-1;
 }
+
 function jmaketime($hour,$minute,$second,$jmonth,$jday,$jyear)
 {
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
@@ -2207,6 +2212,7 @@ function jmaketime($hour,$minute,$second,$jmonth,$jday,$jyear)
 	$i=mktime($hour,$minute,$second,$month,$day,$year);
 	return $i;
 }
+
 function jdate($type,$maket='now')
 {
     global $xoopsConfig;
@@ -2339,6 +2345,7 @@ function jdate($type,$maket='now')
 	}
 	return $result;
 }
+
 /**
  * This function is to convert date() function outputs into local values
  *
@@ -2461,6 +2468,7 @@ function ext_date($type,$maket='now')
 	}
 	return $result;
 }
+
 function &icms_getmodulehandler($name = null, $module_dir = null, $module_basename = null, $optional = false)
 {
 	static $handlers;
@@ -2489,6 +2497,7 @@ function &icms_getmodulehandler($name = null, $module_dir = null, $module_basena
 	$inst = false;
 	return $inst;
 }
+
 /**
  * Get URL of previous page
  *
@@ -2524,6 +2533,7 @@ function icms_getModuleAdminLink($moduleName=false) {
 	}
 	return $ret;
 }
+
 /**
  * Finds the width and height of an image (can also be a flash file)
  *
@@ -2576,6 +2586,7 @@ function icms_getCurrentUrls() {
 	$urls['isHomePage'] = (ICMS_URL . "/index.php") == ($http . $httphost . $phpself);
 	return $urls;
 }
+
 /**
  * Deletes a file
  *
@@ -2588,6 +2599,7 @@ function icms_deleteFile($dirname) {
 		return unlink($dirname);
 	}
 }
+
 function icms_imageResize($src, $maxWidth, $maxHeight) {
 	$width = '';
 	$height = '';
@@ -2614,6 +2626,7 @@ function icms_imageResize($src, $maxWidth, $maxHeight) {
 		$attr
 	);
 }
+
 function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
 	if (!$moduleName) {
 		global $xoopsModule;
@@ -2649,7 +2662,6 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
  * To be used in ImpressCMS 1.2
  *
  **/
-
 function remove_usersxdays (){
 	$db =& Database::getInstance();
 	$config_handler =& xoops_gethandler('config');
@@ -2663,36 +2675,40 @@ function remove_usersxdays (){
 }
 
 function icms_convert_size($size){
-    if ($size >= 1073741824){
-        $ret = ((($size/1024)/1024)/1024).' '._CORE_GIGABYTES_SHORTEN;
-    }elseif($size >= 1048576 && $size < 1073741824){
-        $ret = (($size/1024)/1024).' '._CORE_MEGABYTES_SHORTEN;
-    }elseif($size >= 1024 && $size < 1048576){
-        $ret = ($size/1024).' '._CORE_KILOBYTES_SHORTEN;
-    }else{
-        $ret = ($size).' '._CORE_BYTES;
-    }
-    return icms_conv_nr2local(round($ret,1));
+	if ($size >= 1073741824){
+		$ret = ((($size/1024)/1024)/1024).' '._CORE_GIGABYTES_SHORTEN;
+	}elseif($size >= 1048576 && $size < 1073741824){
+		$ret = (($size/1024)/1024).' '._CORE_MEGABYTES_SHORTEN;
+	}elseif($size >= 1024 && $size < 1048576){
+		$ret = ($size/1024).' '._CORE_KILOBYTES_SHORTEN;
+	}else{
+		$ret = ($size).' '._CORE_BYTES;
+	}
+	return icms_conv_nr2local(round($ret,1));
 }
 
 function icms_random_str($numchar){
-    $letras = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,x,w,y,z,1,2,3,4,5,6,7,8,9,0";
-    $array = explode(",", $letras);
-    shuffle($array);
-    $senha = implode($array, "");
-    return substr($senha, 0, $numchar);
+	$letras = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,x,w,y,z,1,2,3,4,5,6,7,8,9,0";
+	$array = explode(",", $letras);
+	shuffle($array);
+	$senha = implode($array, "");
+	return substr($senha, 0, $numchar);
 }
+
 function icms_adminMenu($currentoption = 0, $breadcrumb = '') {
 	global $xoopsModule;
-	$xoopsModule -> displayAdminMenu( $currentoption, $xoopsModule -> name() . ' | ' . $breadcrumb );
+	$xoopsModule->displayAdminMenu( $currentoption, $xoopsModule -> name() . ' | ' . $breadcrumb );
 }
+
 function icms_loadCommonLanguageFile() {
 	icms_loadLanguageFile('system', 'common');
 }
+
 function icms_getCurrentPage() {
 	$urls = icms_getCurrentUrls();
 	return $urls['full'];
 }
+
 /*function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
 	if (!$moduleName) {
 		global $xoopsModule;
@@ -2723,6 +2739,7 @@ function icms_getCurrentPage() {
 		return '<a href="' . $ret . '">' . $icmsModule->getVar('name') . '</a>';
 	}
 }*/
+
 function icms_getModuleNameForSEO($moduleName = false) {
 	$icmsModule = & icms_getModuleInfo($moduleName);
 	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
@@ -2732,21 +2749,25 @@ function icms_getModuleNameForSEO($moduleName = false) {
 	$ret = icms_getModuleName(false, false, $moduleName);
 	return (strtolower($ret));
 }
+
 function icms_getModuleModeSEO($moduleName = false) {
 	$icmsModule = & icms_getModuleInfo($moduleName);
 	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
 	return isset ($icmsModuleConfig['seo_mode']) ? $icmsModuleConfig['seo_mode'] : false;
 }
+
 function icms_getModuleIncludeIdSEO($moduleName = false) {
 	$icmsModule = & icms_getModuleInfo($moduleName);
 	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
 	return !empty ($icmsModuleConfig['seo_inc_id']);
 }
+
 function icms_getenv($key) {
 	$ret = '';
 	$ret = isset ($_SERVER[$key]) ? $_SERVER[$key] : (isset ($_ENV[$key]) ? $_ENV[$key] : '');
 	return $ret;
 }
+
 function icms_get_module_status($module_name){
 	$module_handler = xoops_gethandler('module');
 	$this_module = $module_handler->getByDirname($module_name);
@@ -2755,6 +2776,7 @@ function icms_get_module_status($module_name){
 	}
 	return false;
 }
+
 /**
 * Wrap a long term or word
 *
@@ -2764,16 +2786,17 @@ function icms_get_module_status($module_name){
 * @return   bool    Returns a long term, in several small parts with the length of $width
 */
 function one_wordwrap($string,$width=false){
-  $width = $width ? $width : '15';
-  $new_string = '';
-  $s=explode(" ", $string);
-  foreach ($s as $k=>$v) {
-    $cnt=strlen($v);
-    if($cnt>$width) $v=wordwrap($v, $width, ' ', true);
-      $new_string.="$v ";
-  }
-  return $new_string;
+	$width = $width ? $width : '15';
+	$new_string = '';
+	$s=explode(" ", $string);
+	foreach ($s as $k=>$v) {
+	$cnt=strlen($v);
+	if($cnt>$width) $v=wordwrap($v, $width, ' ', true);
+		$new_string.="$v ";
+	}
+	return $new_string;
 }
+
 /**
 * Removes the content of a folder.
 *
@@ -2783,22 +2806,22 @@ function one_wordwrap($string,$width=false){
 * @param	string	$path    The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_ROOT_PATH."/templates_c/");
 * @param	bool  $remove_admin_cache      True to remove admin cache, if required.
 */
-	function icms_clean_folders($dir, $remove_admin_cache=false) {
-	    global $xoopsConfig;
-		foreach ($dir as $d)
+function icms_clean_folders($dir, $remove_admin_cache=false) {
+	global $xoopsConfig;
+	foreach ($dir as $d)
+	{
+		$dd = opendir($d);
+		while($file = readdir($dd))
 		{
-			$dd = opendir($d);
-			while($file = readdir($dd))
+			$files_array = $remove_admin_cache ? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn') : ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn' && $file != 'adminmenu_' . $xoopsConfig['language'] . '.php');
+			if(is_file($d.$file) && $files_array)
 			{
-				$files_array = $remove_admin_cache ? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn') : ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn' && $file != 'adminmenu_' . $xoopsConfig['language'] . '.php');
-		 		if(is_file($d.$file) && $files_array)
-				{
-		  			unlink($d.$file);
-				}
+				unlink($d.$file);
 			}
-			closedir($dd);
 		}
-			return true;
+		closedir($dd);
 	}
+	return true;
+}
 
 ?>
