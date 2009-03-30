@@ -74,7 +74,7 @@ echo '<link rel="stylesheet" type="text/css" media="all" href="style.css" />';
 			</div>
 			<div id="buttons">
 				<?php if ( $wizard->currentPage != 0  && ( $wizard->currentPage != 11 )) { ?>
-				<button type="button" onclick="history.back()">
+				<button type="button" onclick="location.href='<?php echo $wizard->pageURI('-1'); ?>'">
 					<?php echo BUTTON_PREVIOUS; ?>
 				</button>
 				<?php } ?>

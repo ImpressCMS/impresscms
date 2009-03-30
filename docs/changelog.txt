@@ -203,6 +203,7 @@ ImpressCMS ChangeLog
 * #157: style.css should be the last line of the header. (stranger)
 * #81: phpstats/webaliser. (stranger)
 * #79: Automatic attempt to make mainfile readonly after install. (stranger)
+* #5: Installer: Back button not always working in wizard. (stranger)
 
 == Impresscms 1.1.2==
 
