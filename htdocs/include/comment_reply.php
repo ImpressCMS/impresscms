@@ -70,11 +70,11 @@ $dosmiley = 1;
 $groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
 $gperm_handler =& xoops_gethandler('groupperm');
 if ($xoopsConfig ['editor_default'] != 'dhtmltextarea' && $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
-    $dohtml = 1;
-    $dobr = 0;
+  $dohtml = 1;
+  $dobr = 0;
 }else{
-    $dohtml = 0;
-    $dobr = 1;
+  $dohtml = 0;
+  $dobr = 1;
 }
 $doxcode = 1;
 $doimage = 1;
