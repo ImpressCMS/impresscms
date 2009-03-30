@@ -184,18 +184,18 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
 		$link_extra = '';
 		if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
 			foreach ($comment_config['extraParams'] as $extra_param) {
-			    if (isset(${$extra_param})) {
-			        $link_extra .= '&amp;'.$extra_param.'='.${$extra_param};
-			        $hidden_value = htmlspecialchars(${$extra_param}, ENT_QUOTES);
-			        $extra_param_val = ${$extra_param};
-			    } elseif (isset($_POST[$extra_param])) {
-			        $extra_param_val = $_POST[$extra_param];
-			    } elseif (isset($_GET[$extra_param])) {
-			        $extra_param_val = $_GET[$extra_param];
-			    }
-			    if (isset($extra_param_val)) {
-			        $link_extra .= '&amp;'.$extra_param.'='.$extra_param_val;
-			        $hidden_value = htmlspecialchars($extra_param_val, ENT_QUOTES);
+  	    if (isset(${$extra_param})) {
+          $link_extra .= '&amp;'.$extra_param.'='.${$extra_param};
+          $hidden_value = htmlspecialchars(${$extra_param}, ENT_QUOTES);
+          $extra_param_val = ${$extra_param};
+  	    } elseif (isset($_POST[$extra_param])) {
+  	        $extra_param_val = $_POST[$extra_param];
+  	    } elseif (isset($_GET[$extra_param])) {
+	        $extra_param_val = $_GET[$extra_param];
+  	    }
+  	    if (isset($extra_param_val)) {
+	        $link_extra .= '&amp;'.$extra_param.'='.$extra_param_val;
+	        $hidden_value = htmlspecialchars($extra_param_val, ENT_QUOTES);
 					$navbar .= '<input type="hidden" name="'.$extra_param.'" value="'.$hidden_value.'" />';
 				}
 			}
