@@ -77,6 +77,10 @@ $modversion['templates'][$i]['file'] = 'system_siteclosed.html';
 $modversion['templates'][$i]['description'] = '';
 
 $i++;
+$modversion['templates'][$i]['file'] = 'system_redirect.html';
+$modversion['templates'][$i]['description'] = '';
+
+$i++;
 $modversion['templates'][$i]['file'] = 'system_dummy.html';
 $modversion['templates'][$i]['description'] = 'Dummy template file for holding non-template contents. This should not be edited.';
 

@@ -804,6 +804,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     $dbm->insert('config', " VALUES ($i, 0, $c, 'editre_block', '_MD_AM_EDITREMOVEBLOCK', '1', '_MD_AM_EDITREMOVEBLOCKDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_custom_redirection', '_MD_AM_CUSTOMRED', '1', '_MD_AM_CUSTOMREDDSC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
     $dbm->insert('config', " VALUES ($i, 0, $c, 'multi_login', '_MD_AM_MULTLOGINPREVENT', '0', '_MD_AM_MULTLOGINPREVENTDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;

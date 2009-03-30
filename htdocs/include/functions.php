@@ -561,6 +561,8 @@ function xoops_getbanner()
 function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 {
 	global $xoopsConfig, $xoopsLogger, $xoopsUserIsAdmin;
+    $config_handler =& xoops_gethandler('config');
+    $imConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
 	if(preg_match("/[\\0-\\31]|about:|script:/i", $url))
 	{
 		if(preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {$url = ICMS_URL;}
@@ -626,13 +628,15 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$message = trim($message) != '' ? $message : _TAKINGBACK;
 	$xoopsTpl->assign('message', $message);
 	$xoopsTpl->assign('lang_ifnotreload', sprintf(_IFNOTRELOAD, $url));
-	// GIJ start
-	if( ! headers_sent() ) {
-		$_SESSION['redirect_message'] = $message ;
-		header( "Location: ".preg_replace("/[&]amp;/i",'&',$url) ) ;
-		exit();
-	}
-	// GIJ end
+    // GIJ start
+    if( ! headers_sent() && $imConfigPersona['use_custom_redirection']==1) {
+        $_SESSION['redirect_message'] = $message ;
+        header( "Location: ".preg_replace("/[&]amp;/i",'&',$url) ) ;
+        exit();
+    }else{
+        $xoopsTpl->display('db:system_redirect.html');
+    }
+    // GIJ end
 }
 
 function xoops_getenv($key)

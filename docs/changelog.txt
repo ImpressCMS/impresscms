@@ -204,6 +204,7 @@ ImpressCMS ChangeLog
 * #81: phpstats/webaliser. (stranger)
 * #79: Automatic attempt to make mainfile readonly after install. (stranger)
 * #5: Installer: Back button not always working in wizard. (stranger)
+* #493: Make the redirect use plugin. (stranger)
 
 == Impresscms 1.1.2==
 
