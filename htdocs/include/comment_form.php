@@ -63,27 +63,27 @@ $button_tray = new XoopsFormElementTray('' ,'&nbsp;');
 
 
 if (is_object($xoopsUser)) {
-    if ($xoopsModuleConfig['com_anonpost'] == 1) {
-        $noname = !empty($noname) ? 1 : 0;
-        $noname_checkbox = new XoopsFormCheckBox('', 'noname', $noname);
-        $noname_checkbox->addOption(1, _POSTANON);
-        $option_tray->addElement($noname_checkbox);
+  if ($xoopsModuleConfig['com_anonpost'] == 1) {
+    $noname = !empty($noname) ? 1 : 0;
+    $noname_checkbox = new XoopsFormCheckBox('', 'noname', $noname);
+    $noname_checkbox->addOption(1, _POSTANON);
+    $option_tray->addElement($noname_checkbox);
+  }
+  if (false != $xoopsUser->isAdmin($com_modid)) {
+    // show status change box when editing (comment id is not empty)
+    if (!empty($com_id)) {
+      include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
+      $status_select = new XoopsFormSelect(_CM_STATUS, 'com_status', $com_status);
+      $status_select->addOptionArray(array(XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE => _CM_ACTIVE, XOOPS_COMMENT_HIDDEN => _CM_HIDDEN));
+      $cform->addElement($status_select);
+      $button_tray->addElement(new XoopsFormButton('', 'com_dodelete', _DELETE, 'submit'));
     }
-    if (false != $xoopsUser->isAdmin($com_modid)) {
-        // show status change box when editing (comment id is not empty)
-        if (!empty($com_id)) {
-            include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
-            $status_select = new XoopsFormSelect(_CM_STATUS, 'com_status', $com_status);
-            $status_select->addOptionArray(array(XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE => _CM_ACTIVE, XOOPS_COMMENT_HIDDEN => _CM_HIDDEN));
-            $cform->addElement($status_select);
-            $button_tray->addElement(new XoopsFormButton('', 'com_dodelete', _DELETE, 'submit'));
-        }
-        $html_checkbox = new XoopsFormCheckBox('', 'dohtml', $dohtml);
-        $html_checkbox->addOption(1, _CM_DOHTML);
-        $option_tray->addElement($html_checkbox);
-    }else{
-        $cform->addElement(new XoopsFormHidden('dohtml', $dohtml));
-    }
+    $html_checkbox = new XoopsFormCheckBox('', 'dohtml', $dohtml);
+    $html_checkbox->addOption(1, _CM_DOHTML);
+    $option_tray->addElement($html_checkbox);
+  }else{
+    $cform->addElement(new XoopsFormHidden('dohtml', $dohtml));
+  }
 }
 $smiley_checkbox = new XoopsFormCheckBox('', 'dosmiley', $dosmiley);
 $smiley_checkbox->addOption(1, _CM_DOSMILEY);
@@ -108,13 +108,13 @@ $cform->addElement(new XoopsFormHidden('com_mode', $com_mode));
 if ('system' != $xoopsModule->getVar('dirname')) {
 	$comment_config = $xoopsModule->getInfo('comments');
  	if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
-        $myts =& MyTextSanitizer::getInstance();
-        foreach ($comment_config['extraParams'] as $extra_param) {
-            // This routine is included from forms accessed via both GET and POST
-            if (isset($_POST[$extra_param])) {
-                $hidden_value = $myts->stripSlashesGPC($_POST[$extra_param]);
-            } elseif (isset($_GET[$extra_param])) {
-                $hidden_value = $myts->stripSlashesGPC($_GET[$extra_param]);
+    $myts =& MyTextSanitizer::getInstance();
+    foreach ($comment_config['extraParams'] as $extra_param) {
+      // This routine is included from forms accessed via both GET and POST
+      if (isset($_POST[$extra_param])) {
+          $hidden_value = $myts->stripSlashesGPC($_POST[$extra_param]);
+      } elseif (isset($_GET[$extra_param])) {
+          $hidden_value = $myts->stripSlashesGPC($_GET[$extra_param]);
 			} else {
 				$hidden_value = '';
 			}
@@ -124,7 +124,7 @@ if ('system' != $xoopsModule->getVar('dirname')) {
 }
 // Captcha Hack
 if ( $xoopsConfig['use_captchaf'] == 1 ) {
-$cform->addElement(new IcmsFormCaptcha());
+  $cform->addElement(new IcmsFormCaptcha());
 }
 // Captcha Hack
 $button_tray->addElement(new XoopsFormButton('', 'com_dopreview', _PREVIEW, 'submit'));
