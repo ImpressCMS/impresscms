@@ -202,6 +202,7 @@ ImpressCMS ChangeLog
 * #147: Forgetting system_redirect.html. (Gijoe/stranger)
 * #157: style.css should be the last line of the header. (stranger)
 * #81: phpstats/webaliser. (stranger)
+* #79: Automatic attempt to make mainfile readonly after install. (stranger)
 
 == Impresscms 1.1.2==
 

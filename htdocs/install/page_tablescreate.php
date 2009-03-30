@@ -20,6 +20,7 @@
 require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
+    imcms_install_chmod("../mainfile.php", 0444);
 	$wizard->setPage( 'tablescreate' );
 	$pageHasForm = true;
 	$pageHasHelp = false;
