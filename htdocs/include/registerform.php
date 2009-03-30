@@ -68,6 +68,7 @@ $email_tray->addElement($email_option);
 
 $reg_form = new XoopsThemeForm(_US_USERREG, "userinfo", "register.php", "post", true);
 $uname_size = $xoopsConfigUser['maxuname'] < 75 ? $xoopsConfigUser['maxuname'] : 75;
+$uname_size = $xoopsConfigUser['maxuname'] > 3 ? $xoopsConfigUser['maxuname'] : 3;
 $reg_form->addElement(new XoopsFormText(_US_NICKNAME, "uname", $uname_size, $uname_size, $myts->htmlSpecialChars($uname)), true);
 $login_name_size = $xoopsConfigUser['maxuname'] < 75 ? $xoopsConfigUser['maxuname'] : 75;
 $reg_form->addElement(new XoopsFormText(_US_LOGIN_NAME, "login_name", $login_name_size, $login_name_size, $myts->htmlSpecialChars($login_name)), true);

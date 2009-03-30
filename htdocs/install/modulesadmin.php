@@ -17,8 +17,8 @@
 /**
  *
  */ 
-function xoops_module_install($dirname)
-{
+icms_loadLanguageFile('system', 'modulesadmin', true);
+function xoops_module_install($dirname) {
     global $xoopsUser, $xoopsConfig;
     $dirname = trim($dirname);
     $db =& Database::getInstance();
@@ -32,22 +32,25 @@ function xoops_module_install($dirname)
         $errs = array();
         $sqlfile =& $module->getInfo('sqlfile');
         $msgs = array();
-        $msgs[] = '<h4 style="text-align:left;margin-bottom: 0px;border-bottom: dashed 1px #000000;">'.sprintf(_INSTALL_INSTALLING, $module->getInfo('name')).'...</h4>';
+        $msgs[] = '<h4 style="text-align:'._GLOBAL_LEFT.';margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
         if ($module->getInfo('image') != false && trim($module->getInfo('image')) != '') {
             $msgs[] ='<img src="'.XOOPS_URL.'/modules/'.$dirname.'/'.trim($module->getInfo('image')).'" alt="" />';
         }
-        $msgs[] ='<b>Version:</b> '.$module->getInfo('version');
+        $msgs[] ='<b>Version:</b> '.icms_conv_nr2local($module->getInfo('version'));
+        if ($module->getInfo('author') != false && trim($module->getInfo('author')) != '') {
+            $msgs[] ='<b>Author:</b> '.trim($module->getInfo('author'));
+        }
         $msgs[] = '';
-        $errs[] = '<h4 style="text-align:left;margin-bottom: 0px;border-bottom: dashed 1px #000000;">'.sprintf(_INSTALL_INSTALLING, $module->getInfo('name')).'...</h4>';
+        $errs[] = '<h4 style="text-align:'._GLOBAL_LEFT.';margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
         if ($sqlfile != false && is_array($sqlfile)) {
 
             $sql_file_path = XOOPS_ROOT_PATH."/modules/".$dirname."/".$sqlfile[XOOPS_DB_TYPE];
             if (!file_exists($sql_file_path)) {
-                //$errs[] = "SQL file not found at <b>$sql_file_path</b>";
+                $errs[] = "SQL file not found at <b>$sql_file_path</b>";
                 $error = true;
             } else {
-                //$msgs[] = "SQL file found at <b>$sql_file_path</b>.<br  /> Creating tables...";
-                include_once XOOPS_ROOT_PATH.'/class/database/sqlutility.php';
+                $msgs[] = "SQL file found at <b>$sql_file_path</b>.<br  /> Creating tables...";
+                include_once XOOPS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/sqlutility.php';
                 $sql_query = fread(fopen($sql_file_path, 'r'), filesize($sql_file_path));
                 $sql_query = trim($sql_query);
                 SqlUtility::splitSqlFile($pieces, $sql_query);
@@ -71,15 +74,15 @@ function xoops_module_install($dirname)
                         } else {
 
                             if (!in_array($prefixed_query[4], $created_tables)) {
-                                //$msgs[] = '&nbsp;&nbsp;Table <b>'.$db->prefix($prefixed_query[4]).'</b> created.';
+                                $msgs[] = '&nbsp;&nbsp;Table <b>'.$db->prefix($prefixed_query[4]).'</b> created.';
                                 $created_tables[] = $prefixed_query[4];
                             } else {
-                                //$msgs[] = '&nbsp;&nbsp;Data inserted to table <b>'.$db->prefix($prefixed_query[4]).'</b>.';
+                                $msgs[] = '&nbsp;&nbsp;Data inserted to table <b>'.$db->prefix($prefixed_query[4]).'</b>.';
                             }
                         }
                     } else {
                         // the table name is reserved, so halt the installation
-                        //$errs[] = '<b>'.$prefixed_query[4]."</b> is a reserved table!";
+                        $errs[] = '<b>'.$prefixed_query[4]."</b> is a reserved table!";
                         $error = true;
                         break;
                     }
@@ -93,14 +96,14 @@ function xoops_module_install($dirname)
                 }
             }
         }
-        // if no error, save the module info and blocks info associated with it.
+        // if no error, save the module info and blocks info associated with it
         if ($error == false) {
             if (!$module_handler->insert($module)) {
-                $errs[] = sprintf(_INSTALL_COULD_NOT_INSERT, $module->getVar('name'));
+                $errs[] = 'Could not insert <b>'.$module->getVar('name').'</b> to database.';
                 foreach ($created_tables as $ct) {
                     $db->query("DROP TABLE ".$db->prefix($ct));
                 }
-                $ret = "<p>".sprintf(_INSTALL_COULD_NOT_INSERT, "<b>".$module->name()."</b>")."&nbsp;"._INSTALL_ERRORS."<br />";
+                $ret = "<p>".sprintf(_MD_AM_FAILINS, "<b>".$module->name()."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />";
                 foreach ( $errs as $err ) {
                     $ret .= " - ".$err."<br />";
                 }
@@ -113,14 +116,17 @@ function xoops_module_install($dirname)
             } else {
                 $newmid = $module->getVar('mid');
                 unset($created_tables);
+                $msgs[] = 'Module data inserted successfully. Module ID: <b>'.icms_conv_nr2local($newmid).'</b>';
                 $tplfile_handler =& xoops_gethandler('tplfile');
                 $templates = $module->getInfo('templates');
                 if ($templates != false) {
+                    $msgs[] = 'Adding templates...';
                     foreach ($templates as $tpl) {
                         $tplfile =& $tplfile_handler->create();
-                        $tpldata =& xoops_module_gettemplate1($dirname, $tpl['file']);
+                        $tpldata =& xoops_module_gettemplate($dirname, $tpl['file']);
                         $tplfile->setVar('tpl_source', $tpldata, true);
                         $tplfile->setVar('tpl_refid', $newmid);
+
                         $tplfile->setVar('tpl_tplset', 'default');
                         $tplfile->setVar('tpl_file', $tpl['file']);
                         $tplfile->setVar('tpl_desc', $tpl['description'], true);
@@ -128,14 +134,18 @@ function xoops_module_install($dirname)
                         $tplfile->setVar('tpl_lastmodified', time());
                         $tplfile->setVar('tpl_lastimported', 0);
                         $tplfile->setVar('tpl_type', 'module');
-                        if ($tplfile_handler->insert($tplfile)) {
+                        if (!$tplfile_handler->insert($tplfile)) {
+                            $msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILINSTEMPFILE.'</span>', $tpl['file']);
+                        } else {
                             $newtplid = $tplfile->getVar('tpl_id');
+                            $msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_INSTEMPFILE, $tpl['file'], $newtplid);
+                            
                             // generate compiled file
                             include_once XOOPS_ROOT_PATH.'/class/template.php';
                             if (!xoops_template_touch($newtplid)) {
-                                //$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed compiling template <b>'.$tpl['file'].'</b>.</span>';
+                                $msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILCOMPTEMPFILE.'</span>', $tpl['file']);
                             } else {
-                                //$msgs[] = '&nbsp;&nbsp;Template <b>'.$tpl['file'].'</b> compiled.</span>';
+                                $msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_COMPTEMPFILE, $tpl['file']);
                             }
                         }
                         unset($tpldata);
@@ -145,6 +155,7 @@ function xoops_module_install($dirname)
                 xoops_template_clear_module_cache($newmid);
                 $blocks = $module->getInfo('blocks');
                 if ($blocks != false) {
+                    $msgs[] = 'Adding blocks...';
                     foreach ($blocks as $blockkey => $block) {
                         // break the loop if missing block config
                         if (!isset($block['file']) || !isset($block['show_func'])) {
@@ -158,21 +169,23 @@ function xoops_module_install($dirname)
                         $edit_func = isset($block['edit_func']) ? trim($block['edit_func']) : '';
                         $template = '';
                         if ((isset($block['template']) && trim($block['template']) != '')) {
-                            $content =& xoops_module_gettemplate1($dirname, $block['template'], true);
+                            $content =& xoops_module_gettemplate($dirname, $block['template'], true);
                         }
-                        if (!$content) {
+                        if (empty($content)) {
                             $content = '';
                         } else {
                             $template = trim($block['template']);
                         }
                         $block_name = addslashes(trim($block['name']));
-                        $sql = "INSERT INTO ".$db->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ($newbid, $newmid, ".intval($blockkey).", '$options', '".$block_name."','".$block_name."', '', 0, 0, 0, 'M', 'H', 1, '".addslashes($dirname)."', '".addslashes(trim($block['file']))."', '".addslashes(trim($block['show_func']))."', '".addslashes($edit_func)."', '".$template."', 0, ".time().")";
+                        $sql = "INSERT INTO ".$db->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('".intval($newbid)."', '".intval($newmid)."', '".intval($blockkey)."', '$options', '".$block_name."','".$block_name."', '', '1', '0', '0', 'M', 'H', '1', '".addslashes($dirname)."', '".addslashes(trim($block['file']))."', '".addslashes(trim($block['show_func']))."', '".addslashes($edit_func)."', '".$template."', '0', '".time()."')";
                         if (!$db->query($sql)) {
+                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add block <b>'.$block['name'].'</b> to the database! Database error: <b>'.$db->error().'</b></span>';
                         } else {
                             if (empty($newbid)) {
                                 $newbid = $db->getInsertId();
                             }
-                            $sql = 'INSERT INTO '.$db->prefix('block_module_link').' (block_id, module_id) VALUES ('.$newbid.', -1)';
+                            $msgs[] = '&nbsp;&nbsp;Block <b>'.$block['name'].'</b> added. Block ID: <b>'.icms_conv_nr2local($newbid).'</b>';
+                            $sql = 'INSERT INTO '.$db->prefix('block_module_link').' (block_id, module_id,page_id) VALUES ('.intval($newbid).', 0,1)';
                             $db->query($sql);
                             if ($template != '') {
                                 $tplfile =& $tplfile_handler->create();
@@ -185,14 +198,17 @@ function xoops_module_install($dirname)
                                 $tplfile->setVar('tpl_desc', $block['description'], true);
                                 $tplfile->setVar('tpl_lastimported', 0);
                                 $tplfile->setVar('tpl_lastmodified', time());
-                                if ($tplfile_handler->insert($tplfile)) {
+                                if (!$tplfile_handler->insert($tplfile)) {
+                                    $msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILINSTEMP.'</span>', $block['template']);
+                                } else {
                                     $newtplid = $tplfile->getVar('tpl_id');
+                                    $msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> added to the database. (ID: <b>'.icms_conv_nr2local($newtplid).'</b>)';
                                     // generate compiled file
                                     include_once XOOPS_ROOT_PATH.'/class/template.php';
                                     if (!xoops_template_touch($newtplid)) {
-                                        //$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed compiling template <b>'.$block['template'].'</b>.</span>';
+                                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed compiling template <b>'.$block['template'].'</b>.</span>';
                                     } else {
-                                        //$msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> compiled.</span>';
+                                        $msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> compiled.</span>';
                                     }
                                 }
                             }
@@ -230,6 +246,7 @@ function xoops_module_install($dirname)
                     $options['_NOT_CONFIG_ENABLEINLINE'] = XOOPS_NOTIFICATION_ENABLEINLINE;
                     $options['_NOT_CONFIG_ENABLEBOTH'] = XOOPS_NOTIFICATION_ENABLEBOTH;
 
+                    //$configs[] = array ('name' => 'notification_enabled', 'title' => '_NOT_CONFIG_ENABLED', 'description' => '_NOT_CONFIG_ENABLEDDSC', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 1);
                     $configs[] = array ('name' => 'notification_enabled', 'title' => '_NOT_CONFIG_ENABLE', 'description' => '_NOT_CONFIG_ENABLEDSC', 'formtype' => 'select', 'valuetype' => 'int', 'default' => XOOPS_NOTIFICATION_ENABLEBOTH, 'options' => $options);
                     // Event-specific notification options
                     // FIXME: doesn't work when update module... can't read back the array of options properly...  " changing to &quot;
@@ -250,6 +267,7 @@ function xoops_module_install($dirname)
                 }
 
                 if ($configs != false) {
+                    $msgs[] = 'Adding module config data...';
                     $config_handler =& xoops_gethandler('config');
                     $order = 0;
                     foreach ($configs as $config) {
@@ -262,6 +280,7 @@ function xoops_module_install($dirname)
                         $confobj->setVar('conf_formtype', $config['formtype']);
                         $confobj->setVar('conf_valuetype', $config['valuetype']);
                         $confobj->setConfValueForInput($config['default'], true);
+                        //$confobj->setVar('conf_value', $config['default'], true);
                         $confobj->setVar('conf_order', $order);
                         $confop_msgs = '';
                         if (isset($config['options']) && is_array($config['options'])) {
@@ -276,24 +295,23 @@ function xoops_module_install($dirname)
                         }
                         $order++;
                         if ($config_handler->insertConfig($confobj) != false) {
-                            //$msgs[] = '&nbsp;&nbsp;Config <b>'.$config['name'].'</b> added to the database.'.$confop_msgs;
+                            $msgs[] = '&nbsp;&nbsp;Config <b>'.$config['name'].'</b> added to the database.'.$confop_msgs;
                         } else {
-                            //$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert config <b>'.$config['name'].'</b> to the database.</span>';
+                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert config <b>'.$config['name'].'</b> to the database.</span>';
                         }
                         unset($confobj);
                     }
                     unset($configs);
                 }
             }
-            //#################################################################################
-            //#Alterei o código comentado pelo código abaixo e a instalação dos módulos funcionou blz.
-            //#$groups =& $xoopsUser->getGroups();
-            //#Depois tire esse comentário daqui.
-            //#by RpLima
-            //#####################################################################################
-            $groups = ($xoopsUser) ? $xoopsUser->getGroups() : '';
+				if ($module->getInfo('hasMain')) {
+					$groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+				} else {
+					$groups = array(XOOPS_GROUP_ADMIN);
+				}
             // retrieve all block ids for this module
             $blocks =& XoopsBlock::getByModule($newmid, false);
+            $msgs[] = 'Setting group rights...';
             $gperm_handler =& xoops_gethandler('groupperm');
             foreach ($groups as $mygroup) {
                 if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
@@ -303,9 +321,9 @@ function xoops_module_install($dirname)
                     $mperm->setVar('gperm_name', 'module_admin');
                     $mperm->setVar('gperm_modid', 1);
                     if (!$gperm_handler->insert($mperm)) {
-                        //$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add admin access right for Group ID <b>'.$mygroup.'</b></span>';
+                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add admin access right for Group ID <b>'.icms_conv_nr2local($mygroup).'</b></span>';
                     } else {
-                        //$msgs[] = '&nbsp;&nbsp;Added admin access right for Group ID <b>'.$mygroup.'</b>';
+                        $msgs[] = '&nbsp;&nbsp;Added admin access right for Group ID <b>'.icms_conv_nr2local($mygroup).'</b>';
                     }
                     unset($mperm);
                 }
@@ -315,9 +333,9 @@ function xoops_module_install($dirname)
                 $mperm->setVar('gperm_name', 'module_read');
                 $mperm->setVar('gperm_modid', 1);
                 if (!$gperm_handler->insert($mperm)) {
-                    //$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add user access right for Group ID: <b>'.$mygroup.'</b></span>';
+                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add user access right for Group ID: <b>'.icms_conv_nr2local($mygroup).'</b></span>';
                 } else {
-                   // $msgs[] = '&nbsp;&nbsp;Added user access right for Group ID: <b>'.$mygroup.'</b>';
+                    $msgs[] = '&nbsp;&nbsp;Added user access right for Group ID: <b>'.icms_conv_nr2local($mygroup).'</b>';
                 }
                 unset($mperm);
                 foreach ($blocks as $blc) {
@@ -327,9 +345,9 @@ function xoops_module_install($dirname)
                     $bperm->setVar('gperm_name', 'block_read');
                     $bperm->setVar('gperm_modid', 1);
                     if (!$gperm_handler->insert($bperm)) {
-                        //$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add block access right. Block ID: <b>'.$blc.'</b> Group ID: <b>'.$mygroup.'</b></span>';
+                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not add block access right. Block ID: <b>'.icms_conv_nr2local($blc).'</b> Group ID: <b>'.icms_conv_nr2local($mygroup).'</b></span>';
                     } else {
-                        //$msgs[] = '&nbsp;&nbsp;Added block access right. Block ID: <b>'.$blc.'</b> Group ID: <b>'.$mygroup.'</b>';
+                        $msgs[] = '&nbsp;&nbsp;Added block access right. Block ID: <b>'.icms_conv_nr2local($blc).'</b> Group ID: <b>'.icms_conv_nr2local($mygroup).'</b>';
                     }
                     unset($bperm);
                 }
@@ -339,14 +357,28 @@ function xoops_module_install($dirname)
 
             // execute module specific install script if any
             $install_script = $module->getInfo('onInstall');
+            $ModName = $module->getInfo('modname');
             if (false != $install_script && trim($install_script) != '') {
                 include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($install_script);
                 if (function_exists('xoops_module_install_'.$dirname)) {
                     $func = 'xoops_module_install_'.$dirname;
-                    if (!$func($module)) {
-                        $msgs[] = _INSTALL_FAILED_TO_EXECUTE.$func;
+                    if ( !( $lastmsg = $func($module) ) ) {
+                        $msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
                     } else {
-                        $msgs[] = '<b>'.$func.'</b>'._INSTALL_EXECUTED_SUCCESSFULLY;
+                        $msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
+						if ( is_string( $lastmsg ) ) {
+							$msgs[] = $lastmsg;
+						}
+                    }
+                }elseif (function_exists('icms_module_install_'.$ModName)) {
+                    $func = 'icms_module_install_'.$ModName;
+                    if ( !( $lastmsg = $func($module) ) ) {
+                        $msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
+                    } else {
+                        $msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
+						if ( is_string( $lastmsg ) ) {
+							$msgs[] = $lastmsg;
+						}
                     }
                 }
             }
@@ -357,7 +389,7 @@ function xoops_module_install($dirname)
             }
             unset($msgs);
             unset($errs);
-            $ret .= '</code>'.sprintf(_INSTALL_MOD_INSTALL_SUCCESSFULLY, "<b>".$module->getVar('name')."</b>").'</p>';
+            $ret .= '</code><br />'.sprintf(_MD_AM_OKINS, "<b>".$module->getVar('name')."</b>").'</p>';
             unset($module);
             return $ret;
         } else {
@@ -367,31 +399,31 @@ function xoops_module_install($dirname)
             }
             unset($msgs);
             unset($errs);
-            $ret .= '<br />'.sprintf(_INSTALL_MOD_INSTALL_FAILED, '<b>'.$dirname.'</b>').'&nbsp;'._INSTALL_ERRORS.':</p>';
+            $ret .= '<br />'.sprintf(_MD_AM_FAILINS, '<b>'.$dirname.'</b>').'&nbsp;'._MD_AM_ERRORSC.'</p>';
             return $ret;
         }
-    } else {
-        return "<p>".sprintf(_INSTALL_IMPOSSIBLE_MOD_INSTALL, "<b>".$dirname."</b>")."&nbsp;"._INSTALL_ERRORS.":"."<br />&nbsp;&nbsp;".sprintf(_INSTALL_MOD_ALREADY_INSTALLED, $dirname)."</p>";
+    }
+    else {
+        return "<p>".sprintf(_MD_AM_FAILINS, "<b>".$dirname."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />&nbsp;&nbsp;".sprintf(_MD_AM_ALEXISTS, $dirname)."</p>";
     }
 }
 
-function &xoops_module_gettemplate1($dirname, $template, $block=false)
-{
+function &xoops_module_gettemplate($dirname, $template, $block=false) {
     global $xoopsConfig;
+    $ret = '';
     if ($block) {
         $path = XOOPS_ROOT_PATH.'/modules/'.$dirname.'/templates/blocks/'.$template;
     } else {
         $path = XOOPS_ROOT_PATH.'/modules/'.$dirname.'/templates/'.$template;
     }
     if (!file_exists($path)) {
-        return false;
+        return $ret;
     } else {
         $lines = file($path);
     }
     if (!$lines) {
-        return false;
+        return $ret;
     }
-    $ret = '';
     $count = count($lines);
     for ($i = 0; $i < $count; $i++) {
         $ret .= str_replace("\n", "\r\n", str_replace("\r\n", "\n", $lines[$i]));

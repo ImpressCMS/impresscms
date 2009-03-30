@@ -59,7 +59,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 <?php
 function createSalt() {
 	include_once './include/functions.php';
-	return icms_createSalt(64);
+	return imcms_createSalt(64);
 }
 $adminsalt = createSalt();
 ?>

@@ -47,7 +47,7 @@
 * @param	string	$target    folder being created
 * @return   bool    Returns true on success, false on failure
 */
-function icms_install_mkdir($target) {
+function imcms_install_mkdir($target) {
 	// http://www.php.net/manual/en/function.mkdir.php
 	// saint at corenova.com
 	// bart at cdasites dot com
@@ -57,10 +57,10 @@ function icms_install_mkdir($target) {
 	if (file_exists($target) && !is_dir($target)) {
 		return false;
 	}
-	if (icms_install_mkdir(substr($target, 0, strrpos($target, '/')))) {
+	if (imcms_install_mkdir(substr($target, 0, strrpos($target, '/')))) {
 		if (!file_exists($target)) {
 			$res = mkdir($target, 0777); // crawl back up & create dir tree
-			icms_install_chmod($target);
+			imcms_install_chmod($target);
 			return $res;
 		}
 	}
@@ -75,12 +75,11 @@ function icms_install_mkdir($target) {
 * @param	int		$mode    permission
 * @return   bool    Returns true on success, false on failure
 */
-function icms_install_chmod($target, $mode = 0777) {
+function imcms_install_chmod($target, $mode = 0777) {
 	return @ chmod($target, $mode);
 }
-
 // ----- New Password System
-function icms_createSalt($slength=64)
+function imcms_createSalt($slength=64)
 {
 	$salt= '';
 	$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -90,8 +89,7 @@ function icms_createSalt($slength=64)
 		$salt.= substr($base, rand() % strlen($base), 1);
     	return $salt;
 }
-
-function icms_encryptPass($adminpass, $adminsalt, $mainSalt)
+function imcms_encryptPass($adminpass, $adminsalt, $mainSalt)
 {
 	if(!function_exists('hash'))
     	{

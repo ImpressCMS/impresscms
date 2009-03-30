@@ -96,7 +96,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$content .= ">".$lang."</option>";
 	}
 	$content .= "</select></td>";
-	$content .= '<td>';
+	/*$content .= '<td>';
 	$content .= _INSTALL_SELECT_MODULES_ANON_VISIBLE.'<br />';
 	$content .= '<select name="anon_accessible_mods[]"  multiple>';
 	$langarr = getDirList("../modules/");
@@ -110,7 +110,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		}
 		$content .= ">".$lang."</option>";
 	}
-	$content .= "</select></td>";
+	$content .= "</select></td>";*/
 	$content .= '</tr></table>';
 	$content .= '<input type="hidden" name="mod" value="1">';
 }

@@ -138,14 +138,14 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	if(ini_get('safe_mode') == 0 || strtolower(ini_get('safe_mode')) == 'off')
 	{
 		// creating the required folders in trust_path
-		if (!icms_install_mkdir($vars['TRUST_PATH'] . '/cache/htmlpurifier')) {
+		if (!imcms_install_mkdir($vars['TRUST_PATH'] . '/cache/htmlpurifier')) {
 		/**
 		* @todo trap error
 		*/
 		}
 		if (is_dir($vars['TRUST_PATH'] . '/cache/htmlpurifier'))
 		{
-			if (!icms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/HTML') && !icms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/CSS') && !icms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/URI') && !icms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/Test'))
+			if (!imcms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/HTML') && !imcms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/CSS') && !imcms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/URI') && !imcms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/Test'))
 			{
 				/**
 				* @todo trap error

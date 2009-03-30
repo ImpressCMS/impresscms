@@ -84,6 +84,7 @@ ImpressCMS ChangeLog
 * #21: Profile Module (stranger)
 * #26: Search improvements (stranger/RLankford)
 * #19: Themable administrative area (stranger/Nekro)
+* #230: Installer Improvements. (stranger)
 
 
 '''Changed'''

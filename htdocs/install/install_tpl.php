@@ -73,12 +73,12 @@ echo '<link rel="stylesheet" type="text/css" media="all" href="style.css" />';
 				<?php echo $content; ?>
 			</div>
 			<div id="buttons">
-				<?php if ( $wizard->currentPage != 0  && ( $wizard->currentPage != 10 )) { ?>
+				<?php if ( $wizard->currentPage != 0  && ( $wizard->currentPage != 11 )) { ?>
 				<button type="button" onclick="history.back()">
 					<?php echo BUTTON_PREVIOUS; ?>
 				</button>
 				<?php } ?>
-				<?php if ( $wizard->currentPage == 10 ) { ?>
+				<?php if ( $wizard->currentPage == 11 ) { ?>
 				<button type="button" onclick="location.href='../index.php'">
 					<?php echo BUTTON_SHOW_SITE; ?>
 				</button>

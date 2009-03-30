@@ -118,7 +118,7 @@ $xoops =& new xos_kernel_Xoops2();
     define("XOOPS_MATCH_END",1);
     define("XOOPS_MATCH_EQUAL",2);
     define("XOOPS_MATCH_CONTAIN",3);
-    define("SMARTY_DIR", XOOPS_ROOT_PATH."/class/smarty/");
+    define("SMARTY_DIR", XOOPS_ROOT_PATH."/libraries/smarty/");
     define("XOOPS_CACHE_PATH", XOOPS_ROOT_PATH."/cache");
     define("XOOPS_UPLOAD_PATH", XOOPS_ROOT_PATH."/uploads");
     define("XOOPS_THEME_PATH", XOOPS_ROOT_PATH."/themes");
