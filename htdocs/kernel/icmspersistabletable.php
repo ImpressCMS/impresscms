@@ -349,15 +349,12 @@ class IcmsPersistableTable {
 						$actions[] = $object->$action();
 					}
 				}
-
-				include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
-				$controller = new IcmsPersistableController($this->_objectHandler);
-
+				
 				if ((!is_array($this->_actions)) || in_array('edit', $this->_actions)) {
-					$actions[] = $controller->getEditItemLink($object, false, true, $this->_userSide);
+					$actions[] = $object->getEditItemLink(false, true, $this->_userSide);
 				}
 				if ((!is_array($this->_actions)) || in_array('delete', $this->_actions)) {
-					$actions[] = $controller->getDeleteItemLink($object, false, true, $this->_userSide);
+					$actions[] = $object->getDeleteItemLink( false, true, $this->_userSide);
 				}
 				$aObject['actions'] = $actions;
 
@@ -520,7 +517,7 @@ class IcmsPersistableTable {
 
 		include_once ICMS_ROOT_PATH . '/class/template.php';
 
-		$this->_tpl =& new XoopsTpl();
+		$this->_tpl = new XoopsTpl();
 
 		/**
 		 * We need access to the vars of the IcmsPersistableObject for a few things in the table creation.
@@ -710,17 +707,18 @@ class IcmsPersistableTable {
 			$this->_tpl->assign('icms_withSelectedActions', $this->_withSelectedActions);
 		}
 
-		$smartobject_table_template = $this->_customTemplate ? $this->_customTemplate : 'system_persistabletable_display.html';
+		$icms_table_template = $this->_customTemplate ? $this->_customTemplate : 'system_persistabletable_display.html';
 		if ($fetchOnly) {
-			return $this->_tpl->fetch( 'db:' . $smartobject_table_template );
+			return $this->_tpl->fetch( 'db:' . $icms_table_template );
 		} else {
-			$this->_tpl->display( 'db:' . $smartobject_table_template );
+			$this->_tpl->display( 'db:' . $icms_table_template );
 		}
 	}
 
 	function disableColumnsSorting() {
 		$this->_enableColumnsSorting = false;
 	}
+	
 	function fetch($debug=false) {
 		return $this->render(true, $debug);
 	}
