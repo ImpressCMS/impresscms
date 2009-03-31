@@ -28,5 +28,8 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
     
     include 'install_tpl.php';
  
-    
+if(is_dir(ICMS_ROOT_PATH.'/install')){
+    unlinkRecursive(ICMS_ROOT_PATH.'/install', true);
+}
+
 ?>

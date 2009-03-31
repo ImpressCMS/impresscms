@@ -2827,5 +2827,38 @@ function icms_clean_folders($dir, $remove_admin_cache=false) {
 	}
 	return true;
 }
+/**
+ * Recursively delete a directory
+ *
+ * @param string $dir Directory name
+ * @param boolean $deleteRootToo Delete specified top-level directory as well
+ */
+function icms_unlinkRecursive($dir, $deleteRootToo)
+{
+    if(!$dh = @opendir($dir))
+    {
+        return;
+    }
+    while (false !== ($obj = readdir($dh)))
+    {
+        if($obj == '.' || $obj == '..')
+        {
+            continue;
+        }
 
+        if (!@unlink($dir . '/' . $obj))
+        {
+            unlinkRecursive($dir.'/'.$obj, true);
+        }
+    }
+
+    closedir($dh);
+   
+    if ($deleteRootToo)
+    {
+        @rmdir($dir);
+    }
+   
+    return;
+} 
 ?>

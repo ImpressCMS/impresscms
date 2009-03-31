@@ -205,6 +205,7 @@ ImpressCMS ChangeLog
 * #79: Automatic attempt to make mainfile readonly after install. (stranger)
 * #5: Installer: Back button not always working in wizard. (stranger)
 * #493: Make the redirect use plugin. (stranger)
+* #43: Automation of removal of install folder. (stranger)
 
 == Impresscms 1.1.2==
 
