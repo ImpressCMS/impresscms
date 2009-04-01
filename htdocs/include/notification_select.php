@@ -46,9 +46,9 @@ if ($xoops_notification['show']) {
 			$section['events'] = array();
 			$subscribed_events = $notification_handler->getSubscribedEvents($category['name'], $category['item_id'], $xoopsModule->getVar('mid'), $xoopsUser->getVar('uid'));
 			foreach (notificationEvents($category['name'], true) as $event) {
-            	if (!empty($event['admin_only']) && !$xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
-                	continue;
-            	}
+				if (!empty($event['admin_only']) && !$xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
+					continue;
+				}
 				if (!empty($event['invisible'])) {
 					continue;
 				}
@@ -80,4 +80,5 @@ if ($xoops_notification['show']) {
 	}
 }
 $xoopsTpl->assign('xoops_notification', $xoops_notification);
+
 ?>
