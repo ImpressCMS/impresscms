@@ -42,7 +42,7 @@
  * @param  int     $module_id  ID of the module  (default current module)
  * @return bool
  */
-function notificationEnabled ($style, $module_id=null)
+function notificationEnabled($style, $module_id=null)
 {
 	if (isset($GLOBALS['xoopsModuleConfig']['notification_enabled'])) {
 		$status = $GLOBALS['xoopsModuleConfig']['notification_enabled'];
@@ -82,7 +82,7 @@ function notificationEnabled ($style, $module_id=null)
  * @param  int     $module_id  ID of the module (default current module)
  * @return mixed
  */
-function &notificationCategoryInfo ($category_name='', $module_id=null)
+function &notificationCategoryInfo($category_name='', $module_id=null)
 {
 	if (!isset($module_id)) {
 		global $xoopsModule;
@@ -121,7 +121,7 @@ function &notificationCategoryInfo ($category_name='', $module_id=null)
 function &notificationCommentCategoryInfo($module_id=null)
 {
 	$ret = false;
-	$all_categories =& notificationCategoryInfo ('', $module_id);
+	$all_categories =& notificationCategoryInfo('', $module_id);
 	if (empty($all_categories)) {
 		return $ret;
 	}
@@ -150,7 +150,7 @@ function &notificationCommentCategoryInfo($module_id=null)
  * @param  int     $module_id      ID of the module (default current module)
  * @return mixed
  */
-function &notificationEvents ($category_name, $enabled_only, $module_id=null)
+function &notificationEvents($category_name, $enabled_only, $module_id=null)
 {
 	if (!isset($module_id)) {
 		global $xoopsModule;
@@ -191,7 +191,7 @@ function &notificationEvents ($category_name, $enabled_only, $module_id=null)
 		}
 	}
 
-icms_loadLanguageFile('core', 'notification');
+	icms_loadLanguageFile('core', 'notification');
 
 	// Insert comment info if applicable
 	
@@ -275,7 +275,7 @@ icms_loadLanguageFile('core', 'notification');
  * @param  object $module    Module
  * @return bool
  **/
-function notificationEventEnabled (&$category, &$event, &$module)
+function notificationEventEnabled(&$category, &$event, &$module)
 {
 	$config_handler =& xoops_gethandler('config');
 	$mod_config = $config_handler->getConfigsByCat(0,$module->getVar('mid'));
@@ -300,9 +300,9 @@ function notificationEventEnabled (&$category, &$event, &$module)
  * @param  int     $module_id      ID of the module (default current module)
  * @return mixed
  */
-function &notificationEventInfo ($category_name, $event_name, $module_id=null)
+function &notificationEventInfo($category_name, $event_name, $module_id=null)
 {
-	$all_events =& notificationEvents ($category_name, false, $module_id);
+	$all_events =& notificationEvents($category_name, false, $module_id);
 	foreach ($all_events as $event) {
 		if ($event['name'] == $event_name) {
 			return $event;
@@ -320,10 +320,9 @@ function &notificationEventInfo ($category_name, $event_name, $module_id=null)
  * @param  int  $module_id  ID of the module
  * @return mixed
  */
-
-function &notificationSubscribableCategoryInfo ($module_id=null)
+function &notificationSubscribableCategoryInfo($module_id=null)
 {
-	$all_categories =& notificationCategoryInfo ('', $module_id);
+	$all_categories =& notificationCategoryInfo('', $module_id);
 
 	// FIXME: better or more standardized way to do this?
 	$script_url = explode('/', $_SERVER['PHP_SELF']);
@@ -380,7 +379,7 @@ function &notificationSubscribableCategoryInfo ($module_id=null)
  * @param  string $type      The particular name to generate
  * return string
  **/
-function notificationGenerateConfig (&$category, &$event, $type)
+function notificationGenerateConfig(&$category, &$event, $type)
 {
 	switch ($type) {
 	case 'option_value':
