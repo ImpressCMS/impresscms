@@ -6,7 +6,7 @@
 * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
 * @author       Kazumi Ono (onokazu)
 * @since        2.0.14
-* @version		$Id: xoops13_header.php 506 2006-05-26 23:10:37Z skalpa $
+* @version		$Id$
 * @package 		xoops
 */
 defined( 'XOOPS_ROOT_PATH' ) or die();
