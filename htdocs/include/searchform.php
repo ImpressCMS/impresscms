@@ -25,8 +25,9 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 //  ------------------------------------------------------------------------ //
 if (!defined("XOOPS_ROOT_PATH")) {
-    die("ImpressCMS root path not defined");
+	die("ImpressCMS root path not defined");
 }
+
 include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
 
 // create form
@@ -37,33 +38,38 @@ $search_form->addElement(new XoopsFormText(_SR_KEYWORDS, "query", 30, 255, htmls
 $type_select = new XoopsFormSelect(_SR_TYPE, "andor", $andor);
 $type_select->addOptionArray(array("AND"=>_SR_ALL, "OR"=>_SR_ANY, "exact"=>_SR_EXACT));
 $search_form->addElement($type_select);
+
 if (!empty($mids)) {
 	$mods_checkbox = new XoopsFormCheckBox(_SR_SEARCHIN, "mids[]", $mids);
 } else {
 	$mods_checkbox = new XoopsFormCheckBox(_SR_SEARCHIN, "mids[]", $mid);
 }
+
 if (empty($modules)) {
-    $criteria = new CriteriaCompo();
-    $criteria->add(new Criteria('hassearch', 1));
-    $criteria->add(new Criteria('isactive', 1));
-    if (!empty($available_modules)) {
-        $criteria->add(new Criteria('mid', "(".implode(',', $available_modules).")", 'IN'));
-    }
-    $module_handler =& xoops_gethandler('module');
-    $mods_checkbox->addOptionArray($module_handler->getList($criteria));
+	$criteria = new CriteriaCompo();
+	$criteria->add(new Criteria('hassearch', 1));
+	$criteria->add(new Criteria('isactive', 1));
+	if (!empty($available_modules)) {
+		$criteria->add(new Criteria('mid', "(".implode(',', $available_modules).")", 'IN'));
+	}
+	$module_handler =& xoops_gethandler('module');
+	$mods_checkbox->addOptionArray($module_handler->getList($criteria));
 }
 else {
-    foreach ($modules as $mid => $module) {
-        $module_array[$mid] = $module->getVar('name');
-    }
-    $mods_checkbox->addOptionArray($module_array);
+	foreach ($modules as $mid => $module) {
+		$module_array[$mid] = $module->getVar('name');
+	}
+	$mods_checkbox->addOptionArray($module_array);
 }
+
 $search_form->addElement($mods_checkbox);
 if ($xoopsConfigSearch['keyword_min'] > 0) {
 	$search_form->addElement(new XoopsFormLabel(_SR_SEARCHRULE, sprintf(_SR_KEYIGNORE, icms_conv_nr2local($xoopsConfigSearch['keyword_min']))));
 }
+
 $search_form->addElement(new XoopsFormHidden("action", "results"));
 $search_form->addElement(new XoopsFormHiddenToken('id'));
 $search_form->addElement(new XoopsFormButton("", "submit", _SR_SEARCH, "submit"));
 return $search_form->render();	// Added by Lankford on 2007/7/26.
+
 ?>
