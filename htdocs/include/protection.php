@@ -68,4 +68,5 @@ imagettftext($image, $fontSize, 0, 0, $height-10, $frente, $font, $emailAddress)
 ImagePNG($image);
 
 ImageDestroy($image);
+
 ?>
