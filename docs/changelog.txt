@@ -206,6 +206,7 @@ ImpressCMS ChangeLog
 * #5: Installer: Back button not always working in wizard. (stranger)
 * #493: Make the redirect use plugin. (stranger)
 * #43: Automation of removal of install folder. (stranger)
+* #494: Error and Problem with IE7. (vaughan/stranger)
 
 == Impresscms 1.1.2==
 

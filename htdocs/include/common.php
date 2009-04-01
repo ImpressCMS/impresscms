@@ -40,10 +40,13 @@ if (!defined('ICMS_GROUP_ANONYMOUS')) {
 /**
  * Creating ICMS specific constants
  */
-define('ICMS_PRELOAD_PATH', ICMS_PLUGINS_PATH.'/preloads');
 define('ICMS_PLUGINS_PATH', ICMS_ROOT_PATH.'/plugins');
 define('ICMS_PLUGINS_URL', ICMS_URL.'/plugins');
+define('ICMS_PRELOAD_PATH', ICMS_PLUGINS_PATH.'/preloads');
 define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH.'/cache/htmlpurifier');
+// ImpressCMS Modules path & url
+define( 'ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules' );
+define( 'ICMS_MODULES_URL', ICMS_URL . '/modules' );
 
 // ################# Creation of the IcmsPreloadHandler ##############
 include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
@@ -61,9 +64,6 @@ define( 'ICMS_LIBRARIES_URL', ICMS_URL . '/libraries' );
 // ImpressCMS Third Party Library for PDF generator
 define( 'ICMS_PDF_LIB_PATH', ICMS_ROOT_PATH . '/libraries/tcpdf' );
 define( 'ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf' );
-// ImpressCMS Modules path & url
-define( 'ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules' );
-define( 'ICMS_MODULES_URL', ICMS_URL . '/modules' );
 
 // ################# Preload Trigger startCoreBoot ##############
 $icmsPreloadHandler->triggerEvent('startCoreBoot');
