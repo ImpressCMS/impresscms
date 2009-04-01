@@ -211,4 +211,5 @@ function easiestml_escape_bracket_input( $matches )
 {
 	return str_replace('[','&#91;',$matches[1]) ;
 }
+
 ?>
