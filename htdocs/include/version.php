@@ -12,7 +12,7 @@
 
 define('ICMS_VERSION_NAME','ImpressCMS 1.2 Alpha 1');
 /**
- * To developpers:
+ * To developers:
  * if you want to get the version number of the core, please use something like:
  * substr(ICMS_VERSION_NAME, 11, -6)
  * OR
@@ -50,4 +50,5 @@ define('ICMS_VERSION_BUILD', 25);
  * pease also change this constant
  */
 define('ICMS_SYSTEM_DBVERSION', 24);
+
 ?>
