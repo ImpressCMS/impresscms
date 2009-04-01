@@ -37,13 +37,13 @@
 // not_list[1][status] = 1 if selected; 0 or missing if not selected
 // etc...
 
-// TODO: can we put arguments in the not_redirect argument??? do we need
+// @TODO: can we put arguments in the not_redirect argument??? do we need
 // to specially encode them first???
 
-// TODO: allow 'GET' also so we can process 'unsubscribe' requests??
+// @TODO: allow 'GET' also so we can process 'unsubscribe' requests??
 
 if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
-    exit();
+	exit();
 }
 
 include_once XOOPS_ROOT_PATH.'/include/notification_constants.php';
@@ -51,12 +51,12 @@ include_once XOOPS_ROOT_PATH.'/include/notification_functions.php';
 icms_loadLanguageFile('core', 'notification');
 
 if (!isset($_POST['not_submit'])) {
-    exit();
+	exit();
 }
 
 if (!$GLOBALS['xoopsSecurity']->check()) {
-    redirect_header($_POST['not_redirect'], 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-    exit();
+	redirect_header($_POST['not_redirect'], 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+	exit();
 }
 
 // NOTE: in addition to the templates provided in the block and view
@@ -79,22 +79,22 @@ $notification_handler =& xoops_gethandler('notification');
 
 foreach ($update_list as $update_item) {
 
-    list($category, $item_id, $event) = split (',', $update_item['params']);
-    $status = !empty($update_item['status']) ? 1 : 0;
-
-    if (!$status) {
-        $notification_handler->unsubscribe($category, $item_id, $event, $module_id, $user_id);
-    } else {
-        $notification_handler->subscribe($category, $item_id, $event);
-    }
+	list($category, $item_id, $event) = split (',', $update_item['params']);
+	$status = !empty($update_item['status']) ? 1 : 0;
+	
+	if (!$status) {
+		$notification_handler->unsubscribe($category, $item_id, $event, $module_id, $user_id);
+	} else {
+		$notification_handler->subscribe($category, $item_id, $event);
+	}
 
 }
 
-// TODO: something like grey box summary of actions (like multiple comment
+// @TODO: something like grey box summary of actions (like multiple comment
 // deletion), with a button to return back...  NOTE: we need some arguments
 // to help us get back to where we were...
 
-// TODO: finish integration with comments... i.e. need calls to
+// @TODO: finish integration with comments... i.e. need calls to
 // notifyUsers at appropriate places... (need to figure out where
 // comment submit occurs and where comment approval occurs)...
 
@@ -102,24 +102,24 @@ include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
 
 $redirect_args = array();
 foreach ($update_list as $update_item) {
-    list($category,$item_id,$event) = split(',',$update_item['params']);
-    $category_info =& notificationCategoryInfo($category);
-    if (!empty($category_info['item_name'])) {
-        $redirect_args[$category_info['item_name']] = $item_id;
-    }
+	list($category,$item_id,$event) = split(',',$update_item['params']);
+	$category_info =& notificationCategoryInfo($category);
+	if (!empty($category_info['item_name'])) {
+		$redirect_args[$category_info['item_name']] = $item_id;
+	}
 }
 
-// TODO: write a central function to put together args with '?' and '&'
+// @TODO: write a central function to put together args with '?' and '&'
 // symbols...
 $argstring = '';
 $first_arg = 1;
 foreach (array_keys($redirect_args) as $arg) {
-    if ($first_arg) {
-        $argstring .= "?" . $arg . "=" . $redirect_args[$arg];
-        $first_arg = 0;
-    } else {
-        $argstring .= "&" . $arg . "=" . $redirect_args[$arg];
-    }
+	if ($first_arg) {
+		$argstring .= "?" . $arg . "=" . $redirect_args[$arg];
+		$first_arg = 0;
+	} else {
+		$argstring .= "&" . $arg . "=" . $redirect_args[$arg];
+	}
 }
 
 redirect_header ($_POST['not_redirect'].$argstring, 3, _NOT_UPDATEOK);
