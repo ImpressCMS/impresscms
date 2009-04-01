@@ -105,10 +105,11 @@ $tzselected = ($timezone_offset != "") ? $timezone_offset : $xoopsConfig['defaul
 $reg_form->addElement(new XoopsFormSelectTimezone(_US_TIMEZONE, "timezone_offset", $tzselected));
 //$reg_form->addElement($avatar_tray);
 $reg_form->addElement(new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', $user_mailok));
+
 if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'] != '') {
 	$disc_tray = new XoopsFormElementTray(_US_DISCLAIMER, '<br />');
 	$disclaimer_html = '<div id="disclaimer">'.nl2br($xoopsConfigUser['reg_disclaimer']).'</div>';
-    $disc_text = new XoopsFormLabel('', $disclaimer_html, 'disclaimer');
+	$disc_text = new XoopsFormLabel('', $disclaimer_html, 'disclaimer');
 	$disc_tray->addElement($disc_text);
 	$agree_chk = new XoopsFormCheckBox('', 'agree_disc', $agree_disc);
 	$agree_chk->addOption(1, _US_IAGREE);
@@ -118,14 +119,18 @@ if ($xoopsConfigUser['reg_dispdsclmr'] != 0 && $xoopsConfigUser['reg_disclaimer'
 	$disc_tray->addElement($agree_chk, true);
 	$reg_form->addElement($disc_tray);
 }
+
 $reg_form->addElement(new XoopsFormHidden("salt", $myts->htmlSpecialChars($salt)));
 $reg_form->addElement(new XoopsFormHidden("enc_type", intval($enc_type)));
 $reg_form->addElement(new XoopsFormHidden("actkey", $myts->htmlSpecialChars($actkey)));
-	if ($xoopsConfigUser['use_captcha'] == 1) {
+
+if ($xoopsConfigUser['use_captcha'] == 1) {
 	$reg_form->addElement(new IcmsFormCaptcha(_SECURITYIMAGE_GETCODE, "scode"), true);
 	$reg_form->addElement(new XoopsFormHidden("op", "finish"));
 } else {
 	$reg_form->addElement(new XoopsFormHidden("op", "newuser"));
 }
+
 $reg_form->addElement(new XoopsFormButton("", "submit", _US_SUBMIT, "submit"));
+
 ?>
