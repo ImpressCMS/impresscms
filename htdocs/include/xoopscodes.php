@@ -1,5 +1,5 @@
 <?php
-// $Id: xoopscodes.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -30,8 +30,8 @@
 // ------------------------------------------------------------------------- //
 
 /*
-*  displayes xoopsCode buttons and target textarea to which xoopscodes are inserted
-*  $textarea_id is a unique id of the target textarea
+* displayes xoopsCode buttons and target textarea to which xoopscodes are inserted
+* $textarea_id is a unique id of the target textarea
 */
 function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 {
@@ -75,7 +75,7 @@ function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 }
 
 /*
-*  Displays smilie image buttons used to insert smilie codes to a target textarea in a form
+* Displays smilie image buttons used to insert smilie codes to a target textarea in a form
 * $textarea_id is a unique of the target textarea
 */
 function xoopsSmilies($textarea_id)
