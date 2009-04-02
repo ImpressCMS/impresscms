@@ -1,189 +1,216 @@
 <?php
 /**
-* Admin ImpressCMS Blocks
-*
-* List, add, edit and delete block objects
-*
-* @copyright	The ImpressCMS Project <http://www.impresscms.org>
-* @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html> 
-* @since		ImpressCMS 1.2
-* @version		$Id: $
-* @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
-*/
+ * Admin ImpressCMS Blocks
+ *
+ * List, add, edit and delete block objects
+ *
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org>
+ * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html> 
+ * @since		ImpressCMS 1.2
+ * @version		$Id: $
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ */
 
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
-    exit("Access Denied");
+if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->isAdmin ( $xoopsModule->mid () )) {
+	exit ( "Access Denied" );
 }
 
 /**
  * Edit a Blog Post
  *
  * @param int $post_id Postid to be edited
-*/
-function editblock($bid = 0, $clone=false)
-{
+ */
+function editblock($bid = 0, $clone = false) {
 	global $icms_block_handler, $icmsAdminTpl;
 	
-	$blockObj = $icms_block_handler->get($bid);
+	$blockObj = $icms_block_handler->get ( $bid );
 	
-	if (!$clone && !$blockObj->isNew()){
-		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKSADMIN_EDIT, 'addblock');
-		$sform->assign($icmsAdminTpl);
-
+	if (! $clone && ! $blockObj->isNew ()) {
+		$sform = $blockObj->getForm ( _AM_SYSTEM_BLOCKSADMIN_EDIT, 'addblock' );
+		$sform->assign ( $icmsAdminTpl );
+	
 	} else {
-		$blockObj->setVar('block_type', 'C');
-		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKSADMIN_CREATE, 'addblock');
-		$sform->assign($icmsAdminTpl);
-		
+		$blockObj->setVar ( 'block_type', 'C' );
+		$sform = $blockObj->getForm ( _AM_SYSTEM_BLOCKSADMIN_CREATE, 'addblock' );
+		$sform->assign ( $icmsAdminTpl );
+	
 	}
-	$icmsAdminTpl->assign('bid', $bid);
-	$icmsAdminTpl->display('db:admin/blocksadmin/system_adm_blocksadmin.html');
+	$icmsAdminTpl->assign ( 'bid', $bid );
+	$icmsAdminTpl->display ( 'db:admin/blocksadmin/system_adm_blocksadmin.html' );
 }
 
-$icms_block_handler = xoops_getmodulehandler('blocksadmin');
+$icms_block_handler = xoops_getmodulehandler ( 'blocksadmin' );
 /** Use a naming convention that indicates the source of the content of the variable */
 $clean_op = '';
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition
  */
-$valid_op = array ('mod','changedField','addblock', 'del', 'clone', 'config','do_config', 'up', 'down', 'visible', '');
+$valid_op = array ('mod', 'changedField', 'addblock', 'del', 'clone', 'config', 'do_config', 'up', 'down', 'visible', 'change_blocks', '' );
 
-if (isset($_GET['op'])) $clean_op = htmlentities($_GET['op']);
-if (isset($_POST['op'])) $clean_op = htmlentities($_POST['op']);
+if (isset ( $_GET ['op'] ))
+	$clean_op = htmlentities ( $_GET ['op'] );
+if (isset ( $_POST ['op'] ))
+	$clean_op = htmlentities ( $_POST ['op'] );
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
-$clean_bid = isset($_GET['bid']) ? (int) $_GET['bid'] : 0 ;
-$clean_bid = isset($_POST['bid']) ? (int) $_POST['bid'] : $clean_bid;
+$clean_bid = isset ( $_GET ['bid'] ) ? ( int ) $_GET ['bid'] : 0;
+$clean_bid = isset ( $_POST ['bid'] ) ? ( int ) $_POST ['bid'] : $clean_bid;
 
 /**
  * in_array() is a native PHP function that will determine if the value of the
  * first argument is found in the array listed in the second argument. Strings
  * are case sensitive and the 3rd argument determines whether type matching is
  * required
-*/
-if (in_array($clean_op,$valid_op,true)){
-  switch ($clean_op) {
-  	case 'config':
-  		$blockObj = $icms_block_handler->get($bid);
-  		$func = $blockObj->getVar('edit_func');
-  		require_once(ICMS_ROOT_PATH."/modules/".$icms_block_handler->getModuleDirname($blockObj->getVar('mid', 'e'))."/blocks/".$blockObj->getVar('func_file'));
-  		include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
-		icms_loadLanguageFile($icms_block_handler->getModuleDirname($blockObj->getVar('mid', 'e')), 'blocks');
-  		icms_cp_header();
-  		$action = ICMS_URL."/modules/system/admin.php?fct=blocksadmin";
-		$form = new XoopsThemeForm(_AM_SYSTEM_BLOCKSADMIN_EDIT, "blockoptions", $action, "post", true);
-  		$elementTray = new XoopsFormElementTray(_CO_SYSTEM_BLOCKSADMIN_OPTIONS , ' ', 'options' . '_password_tray');
-		$visible_label = new XoopsFormLabel('', $func( explode('|', $blockObj->getVar('options') ) ) );
-		
-		$elementTray->addElement($visible_label);
-		$form->addElement($elementTray);
-		$form->addElement(new XoopsFormHidden("bid", $blockObj->getVar('bid')));
-		$form->addElement(new XoopsFormHidden("op", "do_config"));
-		$form->addElement(new XoopsFormButton("", "submit", _SUBMIT, "submit"));
-		$form->display();
-  		break;
-  		
-  	case 'do_config':
-  		$blockObj = $icms_block_handler->get($_POST['bid']);
-  		$options = "";
-  		foreach($_POST['options'] as $opt){
-  			if($options != "")
-  				$options .= '|';
-  			$options .= $opt; 
-  		}
-  		$blockObj->setVar('options', $options);
-  		$icms_block_handler->insert($blockObj);
-  		$action = ICMS_URL."/modules/system/admin.php?fct=blocksadmin";
-  		redirect_header( $action );
-  		break;
-  		
-  	case 'visible':
-  		$icms_block_handler->changeVisible($bid);
-  		$rtn = '/modules/system/admin.php?fct=blocksadmin';
-  		if(isset($_GET['sortsel']))
-  			$rtn = '&sortsel='.$_GET['sortsel'].'&ordersel='.$_GET['ordersel'].'&limitsel='.$_GET['limitsel'].'&startbid='.$_GET['startbid'];
-  		if(isset($_GET['rtn']))
-  			redirect_header(ICMS_URL.base64_decode($_GET['rtn']));
-  		else
-  			redirect_header(ICMS_URL.$rtn);
-  		break;
-  		
-  	case "up":
-  		$icms_block_handler->upWeight($bid);
-  		$rtn = '/modules/system/admin.php?fct=blocksadmin';
-  		if(isset($_GET['sortsel']))
-  			$rtn = '&sortsel='.$_GET['sortsel'].'&ordersel='.$_GET['ordersel'].'&limitsel='.$_GET['limitsel'].'&startbid='.$_GET['startbid'];
-  		if(isset($_GET['rtn']))
-  			redirect_header(ICMS_URL.base64_decode($_GET['rtn']));
-  		else
-  			redirect_header(ICMS_URL.$rtn);
-  		break;
-
-  	case "down":
-  		$icms_block_handler->downWeight($bid);
-  		$rtn = '/modules/system/admin.php?fct=blocksadmin';
-  		if(isset($_GET['sortsel']))
-  			$rtn = '&sortsel='.$_GET['sortsel'].'&ordersel='.$_GET['ordersel'].'&limitsel='.$_GET['limitsel'].'&startbid='.$_GET['startbid'];
-  		if(isset($_GET['rtn']))
-  			redirect_header(ICMS_URL.base64_decode($_GET['rtn']));
-  		else
-  			redirect_header(ICMS_URL.$rtn);
-  		break;
-  		
-  	case "clone":
-  		xoops_cp_header();
-		editblock($clean_bid, true);
+ */
+if (in_array ( $clean_op, $valid_op, true )) {
+	switch ( $clean_op) {
+		case 'config' :
+			$blockObj = $icms_block_handler->get ( $bid );
+			$func = $blockObj->getVar ( 'edit_func' );
+			require_once (ICMS_ROOT_PATH . "/modules/" . $icms_block_handler->getModuleDirname ( $blockObj->getVar ( 'mid', 'e' ) ) . "/blocks/" . $blockObj->getVar ( 'func_file' ));
+			include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+			icms_loadLanguageFile ( $icms_block_handler->getModuleDirname ( $blockObj->getVar ( 'mid', 'e' ) ), 'blocks' );
+			icms_cp_header ();
+			$action = ICMS_URL . "/modules/system/admin.php?fct=blocksadmin";
+			$form = new XoopsThemeForm ( _AM_SYSTEM_BLOCKSADMIN_EDIT, "blockoptions", $action, "post", true );
+			$elementTray = new XoopsFormElementTray ( _CO_SYSTEM_BLOCKSADMIN_OPTIONS, ' ', 'options' . '_password_tray' );
+			$visible_label = new XoopsFormLabel ( '', $func ( explode ( '|', $blockObj->getVar ( 'options' ) ) ) );
+			
+			$elementTray->addElement ( $visible_label );
+			$form->addElement ( $elementTray );
+			$form->addElement ( new XoopsFormHidden ( "bid", $blockObj->getVar ( 'bid' ) ) );
+			$form->addElement ( new XoopsFormHidden ( "op", "do_config" ) );
+			$form->addElement ( new XoopsFormButton ( "", "submit", _SUBMIT, "submit" ) );
+			$form->display ();
 		break;
 		
-  	case "mod":
-  	case "changedField":
-  		icms_cp_header();
-  		editblock($clean_bid);
-  		break;
-  		
-  	case "addblock":
-        include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-        $controller = new IcmsPersistableController($icms_block_handler);
-		$controller->storeFromDefaultForm(_AM_SYSTEM_BLOCKSADMIN_CREATED, _AM_SYSTEM_BLOCKSADMIN_MODIFIED);
-  		break;
-
-  	case "del":
-  	    include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-        $controller = new IcmsPersistableController($icms_block_handler);
-  		$controller->handleObjectDeletion();
-
-  		break;
-
-  	default:
-
-  		icms_cp_header();
-  		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-  		$objectTable = new IcmsPersistableTable($icms_block_handler);
-  		$objectTable->addColumn(new IcmsPersistableColumn('visible'), 'center');
-		$objectTable->addColumn(new IcmsPersistableColumn('name'));
-		$objectTable->addColumn(new IcmsPersistableColumn('title'),_GLOBAL_LEFT,false,'getAdminViewItemLink');
-		$objectTable->addColumn(new IcmsPersistableColumn('mid'));
-		$objectTable->addColumn(new IcmsPersistableColumn('side'));
-		$objectTable->addColumn(new IcmsPersistableColumn('weight'), 'center');
-
-  		$objectTable->addIntroButton('addpost', 'admin.php?fct=blocksadmin&op=mod', _AM_SYSTEM_BLOCKSADMIN_CREATE);
-  		$objectTable->addQuickSearch(array('title', 'name'));
-
-  		$objectTable->addFilter('mid', 'getModulesArray');
-  		$objectTable->addFilter('visible', 'getVisibleStatusArray');
-  		$objectTable->addFilter('side', 'getBlockPositionArray');
+		case 'do_config' :
+			$blockObj = $icms_block_handler->get ( $_POST ['bid'] );
+			$options = "";
+			foreach ( $_POST ['options'] as $opt ) {
+				if ($options != "")
+					$options .= '|';
+				$options .= $opt;
+			}
+			$blockObj->setVar ( 'options', $options );
+			$icms_block_handler->insert ( $blockObj );
+			$action = ICMS_URL . "/modules/system/admin.php?fct=blocksadmin";
+			redirect_header ( $action );
+		break;
 		
-  		$objectTable->addCustomAction('getConfigureActionLink');
-  		$objectTable->addCustomAction('getUpActionLink');
-  		$objectTable->addCustomAction('getDownActionLink');
-  		$objectTable->addCustomAction('getCloneActionLink');
-  		  		
-  		$icmsAdminTpl->assign('icms_block_table', $objectTable->fetch());
+		case 'visible' :
+			$icms_block_handler->changeVisible ( $bid );
+			$rtn = '/modules/system/admin.php?fct=blocksadmin';
+			if (isset ( $_GET ['sortsel'] ))
+				$rtn .= '&sortsel=' . $_GET ['sortsel'] . '&ordersel=' . $_GET ['ordersel'] . '&limitsel=' . $_GET ['limitsel'] . '&startbid=' . $_GET ['startbid'];
+			if (isset ( $_GET ['rtn'] ))
+				redirect_header ( ICMS_URL . base64_decode ( $_GET ['rtn'] ) ); else
+				redirect_header ( ICMS_URL . $rtn );
+		break;
+		
+		case "up" :
+			$icms_block_handler->upWeight ( $bid );
+			$rtn = '/modules/system/admin.php?fct=blocksadmin';
+			if (isset ( $_GET ['sortsel'] ))
+				$rtn .= '&sortsel=' . $_GET ['sortsel'] . '&ordersel=' . $_GET ['ordersel'] . '&limitsel=' . $_GET ['limitsel'] . '&startbid=' . $_GET ['startbid'];
+			if (isset ( $_GET ['rtn'] ))
+				redirect_header ( ICMS_URL . base64_decode ( $_GET ['rtn'] ) ); else
+				redirect_header ( ICMS_URL . $rtn );
+		break;
+		
+		case "down" :
+			$icms_block_handler->downWeight ( $bid );
+			$rtn = '/modules/system/admin.php?fct=blocksadmin';
+			if (isset ( $_GET ['sortsel'] ))
+				$rtn .= '&sortsel=' . $_GET ['sortsel'] . '&ordersel=' . $_GET ['ordersel'] . '&limitsel=' . $_GET ['limitsel'] . '&startbid=' . $_GET ['startbid'];
+			if (isset ( $_GET ['rtn'] ))
+				redirect_header ( ICMS_URL . base64_decode ( $_GET ['rtn'] ) ); else
+				redirect_header ( ICMS_URL . $rtn );
+		break;
+		
+		case "clone" :
+			xoops_cp_header ();
+			editblock ( $clean_bid, true );
+		break;
+		
+		case "mod" :
+		case "changedField" :
+			icms_cp_header ();
+			editblock ( $clean_bid );
+		break;
+		
+		case "addblock" :
+			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController ( $icms_block_handler );
+			$controller->storeFromDefaultForm ( _AM_SYSTEM_BLOCKSADMIN_CREATED, _AM_SYSTEM_BLOCKSADMIN_MODIFIED );
+		break;
+		
+		case "del" :
+			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController ( $icms_block_handler );
+			$controller->handleObjectDeletion ();
+		
+		break;
+		
+		case "change_blocks" :
+			foreach ( $_POST ['SystemBlocksadmin_objects'] as $k => $v ) {
+				$changed = false;
+				$obj = $icms_block_handler->get ( $v );
+				
+				if ($obj->getVar ( 'side', 'e' ) != $_POST ['block_side'] [$k]) {
+					$obj->setVar ( 'side', intval ( $_POST ['block_side'] [$k] ) );
+					$changed = true;
+				}
+				if ($obj->getVar ( 'weight', 'e' ) != $_POST ['block_weight'] [$k]) {
+					$obj->setVar ( 'weight', intval ( $_POST ['block_weight'] [$k] ) );
+					$changed = true;
+				}
+				if ($changed) {
+					$icms_block_handler->insert ( $obj );
+				}
+			}
 
-  		$icmsAdminTpl->display('db:admin/blocksadmin/system_adm_blocksadmin.html');
-  		break;
-  }
-  xoops_cp_footer();
+			$rtn = '/modules/system/admin.php?fct=blocksadmin';
+			if (isset ( $_GET ['sortsel'] ))
+				$rtn .= '&sortsel=' . $_GET ['sortsel'] . '&ordersel=' . $_GET ['ordersel'] . '&limitsel=' . $_GET ['limitsel'] . '&startbid=' . $_GET ['startbid'];
+			if (isset ( $_GET ['rtn'] ))
+				redirect_header ( ICMS_URL . base64_decode ( $_GET ['rtn'] ), 2, _AM_SYSTEM_BLOCKSADMIN_MODIFIED ); else
+				redirect_header ( ICMS_URL . $rtn, 2, _AM_SYSTEM_BLOCKSADMIN_MODIFIED );
+		
+		break;
+		
+		default :
+			
+			icms_cp_header ();
+			include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php";
+			$objectTable = new IcmsPersistableTable ( $icms_block_handler );
+			$objectTable->addColumn ( new IcmsPersistableColumn ( 'visible', 'center' ) );
+			$objectTable->addColumn ( new IcmsPersistableColumn ( 'name' ) );
+			$objectTable->addColumn ( new IcmsPersistableColumn ( 'title', _GLOBAL_LEFT, false, 'getAdminViewItemLink' ) );
+			$objectTable->addColumn ( new IcmsPersistableColumn ( 'mid' ) );
+			$objectTable->addColumn ( new IcmsPersistableColumn ( 'side', 'center', false, 'getSideControl' ) );
+			$objectTable->addColumn ( new IcmsPersistableColumn ( 'weight', 'center', false, 'getWeightControl' ) );
+			
+			$objectTable->addIntroButton ( 'addpost', 'admin.php?fct=blocksadmin&op=mod', _AM_SYSTEM_BLOCKSADMIN_CREATE );
+			$objectTable->addQuickSearch ( array ('title', 'name' ) );
+			
+			$objectTable->addFilter ( 'mid', 'getModulesArray' );
+			$objectTable->addFilter ( 'visible', 'getVisibleStatusArray' );
+			$objectTable->addFilter ( 'side', 'getBlockPositionArray' );
+			
+			$objectTable->addCustomAction ( 'getConfigureActionLink' );
+			$objectTable->addCustomAction ( 'getUpActionLink' );
+			$objectTable->addCustomAction ( 'getDownActionLink' );
+			$objectTable->addCustomAction ( 'getCloneActionLink' );
+			
+			$objectTable->addActionButton ( 'change_blocks', false, _SUBMIT );
+			
+			$icmsAdminTpl->assign ( 'icms_block_table', $objectTable->fetch () );
+			
+			$icmsAdminTpl->display ( 'db:admin/blocksadmin/system_adm_blocksadmin.html' );
+		break;
+	}
+	xoops_cp_footer ();
 }
 /**
  * If you want to have a specific action taken because the user input was invalid,
