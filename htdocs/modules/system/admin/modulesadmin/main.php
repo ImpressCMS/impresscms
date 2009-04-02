@@ -14,7 +14,6 @@
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
     exit("Access Denied");
 }
-include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
 include_once XOOPS_ROOT_PATH."/modules/system/admin/modulesadmin/modulesadmin.php";
 require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
@@ -434,7 +433,8 @@ if ($op == 'update_ok') {
                     }
                 }
             }
-            $block_arr = XoopsBlock::getByModule($module->getVar('mid'));
+            $icms_block_handler = xoops_gethandler('block');
+            $block_arr = $icms_block_handler->getByModule($module->getVar('mid'));
             foreach ($block_arr as $block) {
                 if (!in_array($block->getVar('show_func'), $showfuncs) || !in_array($block->getVar('func_file'), $funcfiles)) {
                     $sql = sprintf("DELETE FROM %s WHERE bid = '%u'", $xoopsDB->prefix('newblocks'), intval($block->getVar('bid')));

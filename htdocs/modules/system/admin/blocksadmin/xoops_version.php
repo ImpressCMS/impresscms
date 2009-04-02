@@ -30,9 +30,9 @@
 // ------------------------------------------------------------------------- //
 
 $modversion['name'] = _MD_AM_BKAD;
-$modversion['version'] = "";
+$modversion['version'] = 2.0;
 $modversion['description'] = "Side Blocks Administration";
-$modversion['author'] = "";
+$modversion['author'] = "Gustavo Pilla (aka nekro) <nekro@impresscms.org>";
 $modversion['credits'] = "The MPN SE Project";
 $modversion['help'] = "blocks.html";
 $modversion['license'] = "GPL see LICENSE";

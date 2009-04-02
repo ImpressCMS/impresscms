@@ -12,8 +12,6 @@
 * @version		$Id$
 */
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
-/** Including the xoopsblock class to handle block display */
-include_once ICMS_ROOT_PATH.'/class/xoopsblock.php';
 
 //global $xoopsLogger;
 if(!isset($xoopsLogger)) {$xoopsLogger =& $GLOBALS['xoopsLogger'];}

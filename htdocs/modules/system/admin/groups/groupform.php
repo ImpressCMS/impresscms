@@ -90,16 +90,16 @@ foreach($groups as $group){
 	if($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), $xoopsUser->getGroups()))
 		$group_manager_checkbox->addOption($group->getVar('groupid'),$group->getVar('name'));
 }
-
-$posarr = XoopsBlock::getBlockPositions(true);
+$icms_block_handler = xoops_gethandler('block');
+$posarr = $icms_block_handler->getBlockPositions(true);
 $block_checkbox = array();
 $i = 0;
 $groups = $xoopsUser->getGroups();
 foreach ($posarr as $k=>$v){
-  $tit = (defined($posarr[$k]['title']))?constant($posarr[$k]['title']):$posarr[$k]['title'];
+  $tit = (defined($posarr[$k]['title'])) ? constant($posarr[$k]['title']) : $posarr[$k]['title'];
   $block_checkbox[$i] = new XoopsFormCheckBox('<b>'.$tit.'</b><br />', "read_bids[]", $r_block_value);
   $new_blocks_array = array();
-  $blocks_array = XoopsBlock::getAllBlocks("list", $k);
+  $blocks_array = $icms_block_handler->getAllBlocks("list", $k);
   /* compare to list of blocks the group can read, do not filter for administrator group */
   if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
 	  $r_blocks = $gperm->getItemIds('block_read', $groups);

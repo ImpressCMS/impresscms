@@ -192,8 +192,9 @@ function xoops_template_touch($tpl_id, $clear_old = true) {
  * @return
  **/
 function xoops_template_clear_module_cache($mid)
-{
-	$block_arr = XoopsBlock::getByModule($mid);
+{	
+	$icms_block_handler = xoops_gethandler('block');
+	$block_arr = $icms_block_handler->getByModule($mid);
 	$count = count($block_arr);
 	if ($count > 0) {
 		$xoopsTpl = new XoopsTpl();

@@ -375,7 +375,8 @@ function xoops_module_install($dirname) {
 					$groups = array(XOOPS_GROUP_ADMIN);
 				}
             // retrieve all block ids for this module
-            $blocks =& XoopsBlock::getByModule($newmid, false);
+            $icms_block_handler = xoops_gethandler('block');
+            $blocks =& $icms_block_handler->getByModule($newmid, false);
             $msgs[] = 'Setting group rights...';
             $gperm_handler =& xoops_gethandler('groupperm');
             foreach ($groups as $mygroup) {
@@ -555,7 +556,8 @@ function xoops_module_uninstall($dirname) {
             unset($templates);
 
             // delete blocks and block tempalte files
-            $block_arr =& XoopsBlock::getByModule($module->getVar('mid'));
+            $icms_block_handler = xoops_gethandler('block');
+            $block_arr =& $icms_block_handler->getByModule($module->getVar('mid'));
             if (is_array($block_arr)) {
                 $bcount = count($block_arr);
                 $msgs[] = 'Deleting block...';
@@ -691,7 +693,8 @@ function xoops_module_activate($mid) {
         $ret = "<p>".sprintf(_MD_AM_FAILACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />".$module->getHtmlErrors();
         return $ret."</p>";
     }
-    $blocks =& XoopsBlock::getByModule($module->getVar('mid'));
+    $icms_block_handler = xoops_gethandler('block');
+    $blocks =& $icms_block_handler->getByModule($module->getVar('mid'));
     $bcount = count($blocks);
     for ($i = 0; $i < $bcount; $i++) {
         $blocks[$i]->setVar('isactive', 1);
@@ -734,7 +737,8 @@ function xoops_module_deactivate($mid) {
             $ret = "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />".$module->getHtmlErrors();
             return $ret."</p>";
         }
-        $blocks =& XoopsBlock::getByModule($module->getVar('mid'));
+        $icms_block_handler = xoops_gethandler('block');
+        $blocks =& $icms_block_handler->getByModule($module->getVar('mid'));
         $bcount = count($blocks);
         for ($i = 0; $i < $bcount; $i++) {
             $blocks[$i]->setVar('isactive', 0);

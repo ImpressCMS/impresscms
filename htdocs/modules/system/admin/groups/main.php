@@ -32,7 +32,6 @@ $gperm_handler =& xoops_gethandler('groupperm');
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) || ( isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], $xoopsUser->getGroups() ) )) {
     exit("Access Denied");
 } else {
-	include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
 	include_once XOOPS_ROOT_PATH."/modules/system/admin/groups/groups.php";
 	if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
 	if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
