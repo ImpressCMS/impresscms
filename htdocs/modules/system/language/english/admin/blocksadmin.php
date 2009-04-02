@@ -76,4 +76,47 @@ define('_AM_CHANGESTS', 'Change the block visibility');
 
 ######################## Added in 1.2 ###################################
 define('_AM_BLOCKS_PERMGROUPS','Groups allowed to view this block');
+
+/**
+ * The next Language definitions are included since 2.0 of blockadmin module, because now is based on IPF.
+ * TODO: Add the rest of the fields, are added only the ones wich are shown.
+ */
+// Texts
+
+// Actions
+define("_AM_SYSTEM_BLOCKSADMIN_CREATE", "Create a New Block");
+define("_AM_SYSTEM_BLOCKSADMIN_EDIT", "Edit a Block");
+define("_AM_SYSTEM_BLOCKSADMIN_MODIFIED", "Block Modified Succesfully!");
+define("_AM_SYSTEM_BLOCKSADMIN_CREATED", "Block Created Succesfully!");
+
+
+// Fields
+define("_CO_SYSTEM_BLOCKSADMIN_NAME", "Name");
+define("_CO_SYSTEM_BLOCKSADMIN_NAME_DSC", "");
+define("_CO_SYSTEM_BLOCKSADMIN_TITLE", "Title");
+define("_CO_SYSTEM_BLOCKSADMIN_TITLE_DSC", "");
+define("_CO_SYSTEM_BLOCKSADMIN_MID", "Module");
+define("_CO_SYSTEM_BLOCKSADMIN_MID_DSC", "");
+define("_CO_SYSTEM_BLOCKSADMIN_VISIBLE", "Visible");
+define("_CO_SYSTEM_BLOCKSADMIN_VISIBLE_DSC", "");
+define("_CO_SYSTEM_BLOCKSADMIN_CONTENT", "Content");
+define("_CO_SYSTEM_BLOCKSADMIN_CONTENT_DSC", "");
+define("_CO_SYSTEM_BLOCKSADMIN_SIDE", "Side");
+define("_CO_SYSTEM_BLOCKSADMIN_SIDE_DSC", "");
+define("_CO_SYSTEM_BLOCKSADMIN_WEIGHT", "Weight");
+define("_CO_SYSTEM_BLOCKSADMIN_WEIGHT_DSC", "");
+define("_CO_SYSTEM_BLOCKSADMIN_BLOCK_TYPE", "Block Type");
+define("_CO_SYSTEM_BLOCKSADMIN_BLOCK_TYPE_DSC", "");
+define("_CO_SYSTEM_BLOCKSADMIN_C_TYPE", "Content Type");
+define("_CO_SYSTEM_BLOCKSADMIN_C_TYPE_DSC", "");
+define("_CO_SYSTEM_BLOCKSADMIN_OPTIONS", "Options");
+define("_CO_SYSTEM_BLOCKSADMIN_OPTIONS_DSC", "");
+define("_CO_SYSTEM_BLOCKSADMIN_BCACHETIME", "Block Cache Time");
+define("_CO_SYSTEM_BLOCKSADMIN_BCACHETIME_DSC", "");
+
+define("_VISIBLE", 'Visible');
+define("_UNVISIBLE", 'Unvisible');
+define("_CONFIGURE", 'Configure');
+define("_UP", 'Up');
+define("_DOWN", 'Down');
 ?>
