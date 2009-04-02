@@ -310,7 +310,8 @@ function xoops_module_install($dirname) {
 					$groups = array(XOOPS_GROUP_ADMIN);
 				}
             // retrieve all block ids for this module
-            $blocks =& XoopsBlock::getByModule($newmid, false);
+            $icms_block_handler = xoops_gethandler('block');
+            $blocks = $icms_block_handler->getByModule($newmid, false);
             $msgs[] = 'Setting group rights...';
             $gperm_handler =& xoops_gethandler('groupperm');
             foreach ($groups as $mygroup) {
