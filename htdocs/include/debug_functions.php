@@ -4,7 +4,7 @@
  *
  * @license GNU
  * @author marcan <marcan@smartfactory.ca>
- * @version		$Id: page_pathsettings.php 345 2007-12-24 16:17:22Z malanciault $
+ * @version		$Id$
  * @link http://impresscms.org ImpressCMS
  */
 
