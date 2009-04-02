@@ -41,6 +41,9 @@ class XoopsRank extends XoopsObject
 		$this->XoopsRank();
 	}
 
+	/**
+	* Constructor
+	**/
 	function XoopsRank()
 	{
 		$this->XoopsObject();
@@ -56,14 +59,29 @@ class XoopsRank extends XoopsObject
 
 class XoopsRankHandler extends XoopsObjectHandler
 {
+
+	/**
+	* Constructor for PHP5
+	* @param   object  $db reference to the DB class object
+	**/
 	function __construct(&$db) {
 		$this->XoopsRankHandler($db);
 	}
 
+	/**
+	* Constructor for PHP4
+	* @param   object  $db reference to the DB class object
+	**/
 	function XoopsRankHandler(&$db) {
 		$this->XoopsObjectHandler($db);
 	}
 
+	/**
+	* Create a new rank
+	*
+	* @param   bool  $isNew is it a new rank?
+	* @return  object	reference to the (@link XoopsRank) object
+	**/
 	function &create($isNew = true) {
 		$obj =& new XoopsRank();
 		if ($isNew === true) {
@@ -72,6 +90,12 @@ class XoopsRankHandler extends XoopsObjectHandler
 		return $obj;
 	}
 
+	/**
+	* Gets the rank from the database
+	*
+	* @param   int  $id
+	* @return  object
+	**/
 	function &get($id = 0)
 	{
 		$object =& $this->create(false);
@@ -86,7 +110,15 @@ class XoopsRankHandler extends XoopsObjectHandler
 
 		return $object;
 	}
-	
+
+	/**
+	* Gets list of ranks
+	*
+	* @param   object  $criteria Criteria (@link CriteriaCompo) to match when getting the ranks
+	* @param   string  $limit How many ranks to get
+	* @param   string  $start Where to start with getting the ranks (for pagination)
+	* @return  array
+	**/
 	function getList($criteria = null, $limit = 0, $start = 0) 
 	{
 		$ret = array();
@@ -120,10 +152,17 @@ class XoopsRankHandler extends XoopsObjectHandler
 
 class XoUser extends XoopsUser
 {
+	/**
+	* Constructor for PHP5
+	*
+	**/
 	function __construct() {
 		$this->XoUser();
 	}
 
+	/**
+	* Constructor for PHP4
+	**/
 	function XoUser() {
 		$this->XoopsUser();
 
@@ -137,14 +176,30 @@ class XoUser extends XoopsUser
 
 class XoUserHandler extends XoopsObjectHandler
 {
+	/**
+	* Constructor for PHP5
+	*
+	* @param   object  $db reference to the DB Class object
+	**/
 	function __construct(&$db) {
 		$this->XoUserHandler($db);
 	}
 
+	/**
+	* Constructor for PHP4
+	*
+	* @param   object  $db reference to the DB Class object
+	**/
 	function XoUserHandler(&$db) {
 		$this->XoopsObjectHandler($db);
 	}
 
+	/**
+	* Create a new user
+	*
+	* @param   bool  $isNew is it a new user?
+	* @return  object	reference to the (@link XoopsUser) object
+	**/
 	function &create($isNew = true) {
 		$obj =& new XoUser();
 		if ($isNew === true) {
@@ -153,6 +208,13 @@ class XoUserHandler extends XoopsObjectHandler
 		return $obj;
 	}
 
+	/**
+	* Count how many users belong to certain criteria
+	*
+	* @param   object $criteria reference to the Criteria object
+	* @param   array  $groups array of usergroups
+	* @return  int	how many users belong to certain criteria
+	**/
 	function getCount($criteria = null, $groups = array()) {
 		if (!is_array($groups)) {
 			$groups = array($groups);
@@ -179,6 +241,13 @@ class XoUserHandler extends XoopsObjectHandler
 		return $count;
 	}
 
+	/**
+	* Get all users
+	*
+	* @param   object $criteria reference to the Criteria object
+	* @param   array  $groups array of usergroups
+	* @return  array	array of (@link XoopsUser) objects
+	**/
 	function getAll($criteria = null, $groups = array()) {
 		if (!is_array($groups)) {
 			$groups = array($groups);
