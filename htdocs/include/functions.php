@@ -280,177 +280,177 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 }
 
 
-	/*
-	* Function to display formatted times in user timezone
-	* 
-	* @param string  $time  String with time
-	* @param string  $format  The time format based on PHP function format parameters
-	* @param string  $timeoffset  The time offset string
-	* @return string  $usertimestamp  The generated user timestamp
-	*/
-	function formatTimestamp($time, $format = "l", $timeoffset = null)
-	{
-		global $xoopsConfig, $xoopsUser;
-		
-		$format_copy = $format;
-		$format = strtolower($format);
-		
-		if ($format == "rss" || $format == "r"){
-			$TIME_ZONE = "";
-			if (!empty($GLOBALS['xoopsConfig']['server_TZ'])){
-				$server_TZ = abs(intval($GLOBALS['xoopsConfig']['server_TZ'] * 3600.0));
-				$prefix = ($GLOBALS['xoopsConfig']['server_TZ'] < 0) ?  " -" : " +";
-				$TIME_ZONE = $prefix.date("Hi", $server_TZ);
-			}
-			$date = gmdate("D, d M Y H:i:s", intval($time)) . $TIME_ZONE;
-			return $date;
-		}
-		
-		if ( ($format == "elapse" || $format == "e") && $time < time() ) {
-			$elapse = time() - $time;
-			if ( $days = floor( $elapse / (24 * 3600) ) ) {
-				$num = $days > 1 ? sprintf(_DAYS, $days) : _DAY;
-			} elseif ( $hours = floor( ( $elapse % (24 * 3600) ) / 3600 ) ) {
-				$num = $hours > 1 ? sprintf(_HOURS, $hours) : _HOUR;
-			} elseif ( $minutes = floor( ( $elapse % 3600 ) / 60 ) ) {
-				$num = $minutes > 1 ? sprintf(_MINUTES, $minutes) : _MINUTE;
-			} else {
-				$seconds = $elapse % 60;
-				$num = $seconds > 1 ? sprintf(_SECONDS, $seconds) : _SECOND;
-			}
-			$ret = sprintf(_ELAPSE, icms_conv_nr2local($num));
-			return $ret;
-		}
-		
-		// disable user timezone calculation and use default timezone,
-		// for cache consideration
-		if ($timeoffset === null) {
-			$timeoffset = ($xoopsConfig['default_TZ'] == '') ? '0.0' : $xoopsConfig['default_TZ'];
-		}
-		
-		$usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
-		
-		switch ($format) {
-			case 'daynumber':
-			$datestring = 'd';
-			break;
-			case 'D':
-			$datestring = 'D';
-			break;
-			case 'F':
-			$datestring = 'F';
-			break;
-			case 'hs':
-			$datestring = 'h';
-			break;
-			case 'H':
-			$datestring = 'H';
-			break;
-			case 'gg':
-			$datestring = 'g';
-			break;
-			case 'G':
-			$datestring = 'G';
-			break;
-			case 'i':
-			$datestring = 'i';
-			break;
-			case 'j':
-			$datestring = 'j';
-			break;
-			case 'l':
-			$datestring = _DATESTRING;
-			break;
-			case 'm':
-			$datestring = _MEDIUMDATESTRING;
-			break;
-			case 'monthnr':
-			$datestring = 'm';
-			break;
-			case 'mysql':
-			$datestring = 'Y-m-d H:i:s';
-			break;
-			case 'month':
-			$datestring = 'M';
-			break;
-			case 'n':
-			$datestring = 'n';
-			break;
-			case 's':
-			$datestring = _SHORTDATESTRING;
-			break;
-			case 'seconds':
-			$datestring = 's';
-			break;
-			case 'suffix':
-			$datestring = 'S';
-			break;
-			case 't':
-			$datestring = 't';
-			break;
-			case 'w':
-			$datestring = 'w';
-			break;
-			case 'shortyear':
-			$datestring = 'y';
-			break;
-			case 'Y':
-			$datestring = 'Y';
-			break;
-			case 'c':
-			case 'custom':
-			static $current_timestamp, $today_timestamp, $monthy_timestamp;
-			if (!isset($current_timestamp)) {
-				$current_timestamp = xoops_getUserTimestamp(time(), $timeoffset);
-			}
-			if (!isset($today_timestamp)) {
-				$today_timestamp = mktime(0, 0, 0, date("m", $current_timestamp), date("d", $current_timestamp), date("Y", $current_timestamp));
-			}
-			
-			if ( abs($elapse_today = $usertimestamp - $today_timestamp) < 24*60*60) {
-				$datestring = ($elapse_today > 0) ? _TODAY : _YESTERDAY;
-			} else {
-				if (!isset($monthy_timestamp)) {
-					$monthy_timestamp[0] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp));
-					$monthy_timestamp[1] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp) + 1);
-				}
-				if ($usertimestamp >= $monthy_timestamp[0] && $usertimestamp < $monthy_timestamp[1]) {
-					$datestring = _MONTHDAY;
-				} else{
-					$datestring = _YEARMONTHDAY;
-				}
-			}
-			break;
+/*
+ * Function to display formatted times in user timezone
+ * 
+ * @param string  $time  String with time
+ * @param string  $format  The time format based on PHP function format parameters
+ * @param string  $timeoffset  The time offset string
+ * @return string  $usertimestamp  The generated user timestamp
+ */
+function formatTimestamp($time, $format = "l", $timeoffset = null)
+{
+	global $xoopsConfig, $xoopsUser;
 	
-			default:
-				if ($format != '') {
-					$datestring = $format_copy;
-				} else {
-					$datestring = _DATESTRING;
-				}
-			break;
+	$format_copy = $format;
+	$format = strtolower($format);
+	
+	if ($format == "rss" || $format == "r"){
+		$TIME_ZONE = "";
+		if (!empty($GLOBALS['xoopsConfig']['server_TZ'])){
+			$server_TZ = abs(intval($GLOBALS['xoopsConfig']['server_TZ'] * 3600.0));
+			$prefix = ($GLOBALS['xoopsConfig']['server_TZ'] < 0) ?  " -" : " +";
+			$TIME_ZONE = $prefix.date("Hi", $server_TZ);
 		}
+		$date = gmdate("D, d M Y H:i:s", intval($time)) . $TIME_ZONE;
+		return $date;
+	}
+	
+	if ( ($format == "elapse" || $format == "e") && $time < time() ) {
+		$elapse = time() - $time;
+		if ( $days = floor( $elapse / (24 * 3600) ) ) {
+			$num = $days > 1 ? sprintf(_DAYS, $days) : _DAY;
+		} elseif ( $hours = floor( ( $elapse % (24 * 3600) ) / 3600 ) ) {
+			$num = $hours > 1 ? sprintf(_HOURS, $hours) : _HOUR;
+		} elseif ( $minutes = floor( ( $elapse % 3600 ) / 60 ) ) {
+			$num = $minutes > 1 ? sprintf(_MINUTES, $minutes) : _MINUTE;
+		} else {
+			$seconds = $elapse % 60;
+			$num = $seconds > 1 ? sprintf(_SECONDS, $seconds) : _SECOND;
+		}
+		$ret = sprintf(_ELAPSE, icms_conv_nr2local($num));
+		return $ret;
+	}
+	
+	// disable user timezone calculation and use default timezone,
+	// for cache consideration
+	if ($timeoffset === null) {
+		$timeoffset = ($xoopsConfig['default_TZ'] == '') ? '0.0' : $xoopsConfig['default_TZ'];
+	}
+	
+	$usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
+	
+	switch ($format) {
+		case 'daynumber':
+		$datestring = 'd';
+		break;
+		case 'D':
+		$datestring = 'D';
+		break;
+		case 'F':
+		$datestring = 'F';
+		break;
+		case 'hs':
+		$datestring = 'h';
+		break;
+		case 'H':
+		$datestring = 'H';
+		break;
+		case 'gg':
+		$datestring = 'g';
+		break;
+		case 'G':
+		$datestring = 'G';
+		break;
+		case 'i':
+		$datestring = 'i';
+		break;
+		case 'j':
+		$datestring = 'j';
+		break;
+		case 'l':
+		$datestring = _DATESTRING;
+		break;
+		case 'm':
+		$datestring = _MEDIUMDATESTRING;
+		break;
+		case 'monthnr':
+		$datestring = 'm';
+		break;
+		case 'mysql':
+		$datestring = 'Y-m-d H:i:s';
+		break;
+		case 'month':
+		$datestring = 'M';
+		break;
+		case 'n':
+		$datestring = 'n';
+		break;
+		case 's':
+		$datestring = _SHORTDATESTRING;
+		break;
+		case 'seconds':
+		$datestring = 's';
+		break;
+		case 'suffix':
+		$datestring = 'S';
+		break;
+		case 't':
+		$datestring = 't';
+		break;
+		case 'w':
+		$datestring = 'w';
+		break;
+		case 'shortyear':
+		$datestring = 'y';
+		break;
+		case 'Y':
+		$datestring = 'Y';
+		break;
+		case 'c':
+		case 'custom':
+		static $current_timestamp, $today_timestamp, $monthy_timestamp;
+		if (!isset($current_timestamp)) {
+			$current_timestamp = xoops_getUserTimestamp(time(), $timeoffset);
+		}
+		if (!isset($today_timestamp)) {
+			$today_timestamp = mktime(0, 0, 0, date("m", $current_timestamp), date("d", $current_timestamp), date("Y", $current_timestamp));
+		}
+		
+		if ( abs($elapse_today = $usertimestamp - $today_timestamp) < 24*60*60) {
+			$datestring = ($elapse_today > 0) ? _TODAY : _YESTERDAY;
+		} else {
+			if (!isset($monthy_timestamp)) {
+				$monthy_timestamp[0] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp));
+				$monthy_timestamp[1] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp) + 1);
+			}
+			if ($usertimestamp >= $monthy_timestamp[0] && $usertimestamp < $monthy_timestamp[1]) {
+				$datestring = _MONTHDAY;
+			} else{
+				$datestring = _YEARMONTHDAY;
+			}
+		}
+		break;
 
-		$basecheck = $xoopsConfig['use_ext_date'] == 1 && defined ('_CALENDAR_TYPE') && $format != 'mysql';
-		if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php'))
-		{
-			include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
-			return ucfirst(local_date($datestring,$usertimestamp));
-		}elseif ($basecheck && _CALENDAR_TYPE != "jalali" && $xoopsConfig['language'] != 'english'){
-			return ucfirst(icms_conv_nr2local(ext_date($datestring,$usertimestamp)));
-		}elseif ($basecheck && _CALENDAR_TYPE == "jalali"){
-			return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
-		}else{
-			return ucfirst(date($datestring,$usertimestamp));
-		}
+		default:
+			if ($format != '') {
+				$datestring = $format_copy;
+			} else {
+				$datestring = _DATESTRING;
+			}
+		break;
 	}
 
+	$basecheck = $xoopsConfig['use_ext_date'] == 1 && defined ('_CALENDAR_TYPE') && $format != 'mysql';
+	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php'))
+	{
+		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
+		return ucfirst(local_date($datestring,$usertimestamp));
+	}elseif ($basecheck && _CALENDAR_TYPE != "jalali" && $xoopsConfig['language'] != 'english'){
+		return ucfirst(icms_conv_nr2local(ext_date($datestring,$usertimestamp)));
+	}elseif ($basecheck && _CALENDAR_TYPE == "jalali"){
+		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
+	}else{
+		return ucfirst(date($datestring,$usertimestamp));
+	}
+}
+
 /*
-* Function to calculate server timestamp from user entered time (timestamp)
-* 
-* @param string  $timestamp  String with time
-* @return string  $timestamp  The generated timestamp
-*/
+ * Function to calculate server timestamp from user entered time (timestamp)
+ * 
+ * @param string  $timestamp  String with time
+ * @return string  $timestamp  The generated timestamp
+ */
 function userTimeToServerTime($timestamp, $userTZ=null)
 {
 	global $xoopsConfig;
@@ -2133,23 +2133,24 @@ function icms_escapeValue($value, $quotes = true)
 	}
 	return $value;
 }
-	function icms_cleaning_write_folders() {
-		return icms_clean_folders(array('templates_c' => ICMS_ROOT_PATH."/templates_c/", 'cache' => ICMS_ROOT_PATH."/cache/"));
-	}
-	/**
-	* Get a number value in other languages
-	*
-	* @param int $string Content to be transported into another language
-	* @return string inout with replaced numeric values
-	*
-	* Example: In Persian we use, (۱, ۲, ۳, ۴, ۵, ۶, ۷, ۸, ۹, ۰) instead of (1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
-	* Now in a module and we are showing amount of reads, the output in Persian must be ۱۲ (which represents 12).
-	* To developers, please use this function when you are having a numeric output, as this is counted as a string in php so you should use %s.
-	* Like:
-	* $views = sprintf ( 'Viewed: %s Times.', icms_conv_nr2local($string) );
-	*/
 
 
+function icms_cleaning_write_folders() {
+	return icms_clean_folders(array('templates_c' => ICMS_ROOT_PATH."/templates_c/", 'cache' => ICMS_ROOT_PATH."/cache/"));
+}
+
+/**
+* Get a number value in other languages
+*
+* @param int $string Content to be transported into another language
+* @return string inout with replaced numeric values
+*
+* Example: In Persian we use, (۱, ۲, ۳, ۴, ۵, ۶, ۷, ۸, ۹, ۰) instead of (1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
+* Now in a module and we are showing amount of reads, the output in Persian must be ۱۲ (which represents 12).
+* To developers, please use this function when you are having a numeric output, as this is counted as a string in php so you should use %s.
+* Like:
+* $views = sprintf ( 'Viewed: %s Times.', icms_conv_nr2local($string) );
+*/
 function icms_conv_nr2local($string)
 {
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
@@ -2160,13 +2161,13 @@ function icms_conv_nr2local($string)
 	}
 		return $string;
 }
+
 /**
  * Get a number value in other languages and transform it to English
  *
  * This function is exactly the opposite of icms_conv_nr2local();
  * Please view the notes there for more information.
  */
-
 function icms_conv_local2nr($string)
 {
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
@@ -2179,13 +2180,13 @@ function icms_conv_local2nr($string)
 		return $string;
 }
 
+
 /**
  * Get month name by its ID
  *
  * @param int $month_id ID of the month
  * @return string month name
  */
-
 function Icms_getMonthNameById($month_id) {
 	global $xoopsConfig;
 	icms_loadLanguageFile('core', 'calendar');
@@ -2303,46 +2304,42 @@ function div($a,$b) {
  */
 function gregorian_to_jalali ($g_y, $g_m, $g_d)
 {
-    $g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-    $j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
-
-
-
-
-
-   $gy = $g_y-1600;
-   $gm = $g_m-1;
-   $gd = $g_d-1;
-
-   $g_day_no = 365*$gy+div($gy+3,4)-div($gy+99,100)+div($gy+399,400);
-
-   for ($i=0; $i < $gm; ++$i)
-      $g_day_no += $g_days_in_month[$i];
-   if ($gm>1 && (($gy%4==0 && $gy%100!=0) || ($gy%400==0)))
-      /* leap and after Feb */
-      $g_day_no++;
-   $g_day_no += $gd;
-
-   $j_day_no = $g_day_no-79;
-
-   $j_np = div($j_day_no, 12053); /* 12053 = 365*33 + 32/4 */
-   $j_day_no = $j_day_no % 12053;
-
-   $jy = 979+33*$j_np+4*div($j_day_no,1461); /* 1461 = 365*4 + 4/4 */
-
-   $j_day_no %= 1461;
-
-   if ($j_day_no >= 366) {
-      $jy += div($j_day_no-1, 365);
-      $j_day_no = ($j_day_no-1)%365;
-   }
-
-   for ($i = 0; $i < 11 && $j_day_no >= $j_days_in_month[$i]; ++$i)
-      $j_day_no -= $j_days_in_month[$i];
-   $jm = $i+1;
-   $jd = $j_day_no+1;
-
-   return array($jy, $jm, $jd);
+	$g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+	$j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
+	
+	$gy = $g_y-1600;
+	$gm = $g_m-1;
+	$gd = $g_d-1;
+	
+	$g_day_no = 365*$gy+div($gy+3,4)-div($gy+99,100)+div($gy+399,400);
+	
+	for ($i=0; $i < $gm; ++$i)
+	   $g_day_no += $g_days_in_month[$i];
+	if ($gm>1 && (($gy%4==0 && $gy%100!=0) || ($gy%400==0)))
+	   /* leap and after Feb */
+	   $g_day_no++;
+	$g_day_no += $gd;
+	
+	$j_day_no = $g_day_no-79;
+	
+	$j_np = div($j_day_no, 12053); /* 12053 = 365*33 + 32/4 */
+	$j_day_no = $j_day_no % 12053;
+	
+	$jy = 979+33*$j_np+4*div($j_day_no,1461); /* 1461 = 365*4 + 4/4 */
+	
+	$j_day_no %= 1461;
+	
+	if ($j_day_no >= 366) {
+	   $jy += div($j_day_no-1, 365);
+	   $j_day_no = ($j_day_no-1)%365;
+	}
+	
+	for ($i = 0; $i < 11 && $j_day_no >= $j_days_in_month[$i]; ++$i)
+	   $j_day_no -= $j_days_in_month[$i];
+	$jm = $i+1;
+	$jd = $j_day_no+1;
+	
+	return array($jy, $jm, $jd);
 }
 
 /**
@@ -2355,56 +2352,54 @@ function gregorian_to_jalali ($g_y, $g_m, $g_d)
  */
 function jalali_to_gregorian($j_y, $j_m, $j_d)
 {
-    $g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-    $j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
+	$g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+	$j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
 
+  $jy = $j_y-979;
+  $jm = $j_m-1;
+  $jd = $j_d-1;
 
+  $j_day_no = 365*$jy + div($jy, 33)*8 + div($jy%33+3, 4);
+  for ($i=0; $i < $jm; ++$i)
+     $j_day_no += $j_days_in_month[$i];
 
-   $jy = $j_y-979;
-   $jm = $j_m-1;
-   $jd = $j_d-1;
+  $j_day_no += $jd;
 
-   $j_day_no = 365*$jy + div($jy, 33)*8 + div($jy%33+3, 4);
-   for ($i=0; $i < $jm; ++$i)
-      $j_day_no += $j_days_in_month[$i];
+  $g_day_no = $j_day_no+79;
 
-   $j_day_no += $jd;
+  $gy = 1600 + 400*div($g_day_no, 146097); /* 146097 = 365*400 + 400/4 - 400/100 + 400/400 */
+  $g_day_no = $g_day_no % 146097;
 
-   $g_day_no = $j_day_no+79;
+  $leap = true;
+  if ($g_day_no >= 36525) /* 36525 = 365*100 + 100/4 */
+  {
+     $g_day_no--;
+     $gy += 100*div($g_day_no,  36524); /* 36524 = 365*100 + 100/4 - 100/100 */
+     $g_day_no = $g_day_no % 36524;
 
-   $gy = 1600 + 400*div($g_day_no, 146097); /* 146097 = 365*400 + 400/4 - 400/100 + 400/400 */
-   $g_day_no = $g_day_no % 146097;
+     if ($g_day_no >= 365)
+        $g_day_no++;
+     else
+        $leap = false;
+  }
 
-   $leap = true;
-   if ($g_day_no >= 36525) /* 36525 = 365*100 + 100/4 */
-   {
-      $g_day_no--;
-      $gy += 100*div($g_day_no,  36524); /* 36524 = 365*100 + 100/4 - 100/100 */
-      $g_day_no = $g_day_no % 36524;
+  $gy += 4*div($g_day_no, 1461); /* 1461 = 365*4 + 4/4 */
+  $g_day_no %= 1461;
 
-      if ($g_day_no >= 365)
-         $g_day_no++;
-      else
-         $leap = false;
-   }
+  if ($g_day_no >= 366) {
+     $leap = false;
 
-   $gy += 4*div($g_day_no, 1461); /* 1461 = 365*4 + 4/4 */
-   $g_day_no %= 1461;
+     $g_day_no--;
+     $gy += div($g_day_no, 365);
+     $g_day_no = $g_day_no % 365;
+  }
 
-   if ($g_day_no >= 366) {
-      $leap = false;
+  for ($i = 0; $g_day_no >= $g_days_in_month[$i] + ($i == 1 && $leap); $i++)
+     $g_day_no -= $g_days_in_month[$i] + ($i == 1 && $leap);
+  $gm = $i+1;
+  $gd = $g_day_no+1;
 
-      $g_day_no--;
-      $gy += div($g_day_no, 365);
-      $g_day_no = $g_day_no % 365;
-   }
-
-   for ($i = 0; $g_day_no >= $g_days_in_month[$i] + ($i == 1 && $leap); $i++)
-      $g_day_no -= $g_days_in_month[$i] + ($i == 1 && $leap);
-   $gm = $i+1;
-   $gd = $g_day_no+1;
-
-   return array($gy, $gm, $gd);
+  return array($gy, $gm, $gd);
 }
 
 /*
@@ -2814,7 +2809,6 @@ function icms_getPreviousPage($default=false) {
  * @param string $moduleName dirname of the moodule
  * @return string URL of the admin side of the module
  */
-
 function icms_getModuleAdminLink($moduleName=false) {
 	global $xoopsModule;
 	if (!$moduleName && (isset ($xoopsModule) && is_object($xoopsModule))) {
@@ -3202,30 +3196,30 @@ function icms_clean_folders($dir, $remove_admin_cache=false) {
  */
 function icms_unlinkRecursive($dir, $deleteRootToo)
 {
-    if(!$dh = @opendir($dir))
-    {
-        return;
-    }
-    while (false !== ($obj = readdir($dh)))
-    {
-        if($obj == '.' || $obj == '..')
-        {
-            continue;
-        }
+   if(!$dh = @opendir($dir))
+   {
+       return;
+   }
+   while (false !== ($obj = readdir($dh)))
+   {
+       if($obj == '.' || $obj == '..')
+       {
+           continue;
+       }
 
-        if (!@unlink($dir . '/' . $obj))
-        {
-            unlinkRecursive($dir.'/'.$obj, true);
-        }
-    }
+       if (!@unlink($dir . '/' . $obj))
+       {
+           unlinkRecursive($dir.'/'.$obj, true);
+       }
+   }
 
-    closedir($dh);
-   
-    if ($deleteRootToo)
-    {
-        @rmdir($dir);
-    }
-   
-    return;
-} 
+   closedir($dh);
+  
+   if ($deleteRootToo)
+   {
+       @rmdir($dir);
+   }
+  
+   return;
+}
 ?>
