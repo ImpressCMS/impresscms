@@ -212,6 +212,11 @@ function icms_warning_msg($msg, $title='', $render = false){
  */
 function xoops_warning($msg, $title=''){ icms_warning_msg($msg, $title, true); }
 
+/**
+ * Render result message (echo, so no return string)
+ * @param string $msg
+ * @param string $title
+ */
 function xoops_result($msg, $title='')
 {
 	echo '<div class="resultMsg">';
@@ -1728,6 +1733,12 @@ function icms_get_page_before_form()
 	return isset($_POST['icms_page_before_form']) ? $_POST['icms_page_before_form'] : $impresscms->urls['previouspage'];
 }
 
+/**
+* Get URL of the page before the form to be able to redirect their after the form has been posted
+*
+* @param	array	$matches	Array of matches to sanitize
+* @return mixed The sanitized tag or empty string
+*/
 function icms_sanitizeCustomtags_callback($matches)
 {
 	global $icms_customtag_handler;
@@ -2134,7 +2145,10 @@ function icms_escapeValue($value, $quotes = true)
 	return $value;
 }
 
-
+/**
+ * Clean up all the writeable folders
+ * @param bool
+ */
 function icms_cleaning_write_folders() {
 	return icms_clean_folders(array('templates_c' => ICMS_ROOT_PATH."/templates_c/", 'cache' => ICMS_ROOT_PATH."/cache/"));
 }
