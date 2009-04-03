@@ -307,4 +307,6 @@ define('_ENTERYOUTUBEURL', 'Enter YouTube url:');
 define('_ENTERHEIGHT', 'Enter frame\'s height');
 define('_ENTERWIDTH', 'Enter frame\'s width');
 define('_ENTERMEDIAURL', 'Enter media url:');
+define("_UP", 'Up');
+define("_DOWN", 'Down');
 ?>

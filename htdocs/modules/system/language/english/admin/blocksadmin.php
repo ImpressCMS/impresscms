@@ -117,6 +117,4 @@ define("_CO_SYSTEM_BLOCKSADMIN_BCACHETIME_DSC", "");
 define("_VISIBLE", 'Visible');
 define("_UNVISIBLE", 'Unvisible');
 define("_CONFIGURE", 'Configure');
-define("_UP", 'Up');
-define("_DOWN", 'Down');
 ?>
