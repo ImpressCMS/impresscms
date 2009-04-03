@@ -246,22 +246,32 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
     	return $rtn;
     }
     
-	public function getModulesArray(){
+	public function getModulesArray($nameonly=false){
     	if( !count($this->modules_name) ){
 			$icms_module_handler = xoops_gethandler('module');
 			$installed_modules =& $icms_module_handler->getObjects();
 			foreach( $installed_modules as $module ){
-				$this->modules_name[$module->getVar('mid')] = $module->getVar('name');
+				if (!$nameonly){
+					$this->modules_name[$module->getVar('mid')]['name'] = $module->getVar('name');
+					$this->modules_name[$module->getVar('mid')]['dirname'] = $module->getVar('dirname');
+				}else{
+					$this->modules_name[$module->getVar('mid')] = $module->getVar('name');
+				}
 			}	
 		}
     	return $this->modules_name;
     }
     
+    public function getModulesNamesArray(){
+    	return $this->getModulesArray(true);
+    }
+    
     public function getModuleName($mid){
     	if($mid == 0)
     		return '';
-    	$modules = $this->getModulesArray();	
-		$rtn = $modules[$mid];
+    		$this->modules_name = array();
+    	$modules = $this->getModulesArray(false);	
+		$rtn = $modules[$mid]['name'];
 		return $rtn;	
     }
 
