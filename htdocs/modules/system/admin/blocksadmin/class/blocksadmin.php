@@ -252,7 +252,6 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
 			$installed_modules =& $icms_module_handler->getObjects();
 			foreach( $installed_modules as $module ){
 				$this->modules_name[$module->getVar('mid')] = $module->getVar('name');
-				//$this->modules_name[$module->getVar('mid')]['dirname'] = $module->getVar('dirname');
 			}	
 		}
     	return $this->modules_name;
