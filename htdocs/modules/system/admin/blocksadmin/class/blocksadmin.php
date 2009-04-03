@@ -181,7 +181,7 @@ class SystemBlocksadmin extends IcmsBlock {
 		$positions = $this->handler->getBlockPositions( true );
 		$block_positions = array();
 		foreach ($positions as $k=>$position){
-			$block_positions[$k] = constant($position['title']);
+			$block_positions[$k] = defined($position['title'])?constant($position['title']):$position['title'];
 		}
 		$control->addOptionArray($block_positions);
 		
@@ -251,8 +251,8 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
 			$icms_module_handler = xoops_gethandler('module');
 			$installed_modules =& $icms_module_handler->getObjects();
 			foreach( $installed_modules as $module ){
-				$this->modules_name[$module->getVar('mid')]['name'] = $module->getVar('name');
-				$this->modules_name[$module->getVar('mid')]['dirname'] = $module->getVar('dirname');
+				$this->modules_name[$module->getVar('mid')] = $module->getVar('name');
+				//$this->modules_name[$module->getVar('mid')]['dirname'] = $module->getVar('dirname');
 			}	
 		}
     	return $this->modules_name;
@@ -262,7 +262,7 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
     	if($mid == 0)
     		return '';
     	$modules = $this->getModulesArray();	
-		$rtn = $modules[$mid]['name'];
+		$rtn = $modules[$mid];
 		return $rtn;	
     }
 
