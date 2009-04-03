@@ -211,6 +211,8 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
 	public function __construct(& $db) {
 		$this->IcmsPersistableObjectHandler($db, 'blocksadmin', 'bid', 'title', 'content', 'system');
 		$this->table = $this->db->prefix('newblocks');
+		
+		$this->addPermission ( 'block_read', _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS, _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC );
 	}
     
     public function getVisibleStatusArray(){
