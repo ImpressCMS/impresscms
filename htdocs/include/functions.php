@@ -13,6 +13,15 @@
 * @version	$Id: functions.php 1683 2008-04-19 13:50:00Z malanciault $
 */
 
+/**
+* The header
+* 
+* Implements all functions that are executed within the header of the page
+* (meta tags, header expiration, etc)
+* It will all be echoed, so no return in this function
+*
+* @param bool  $closehead  close the <head> tag
+*/
 function xoops_header($closehead=true)
 {
 	global $xoopsConfig, $xoopsTheme, $xoopsConfigMetaFooter;
@@ -101,6 +110,11 @@ function xoops_header($closehead=true)
 	}
 }
 
+/**
+* The footer
+* 
+* Implements all functions that are executed in the footer
+*/
 function xoops_footer()
 {
 	global $xoopsConfigMetaFooter;
@@ -116,9 +130,10 @@ function xoops_footer()
  *
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  *
- * @param string $msg
- * @param string $title
- *
+ * @param string $msg	The Error Message
+ * @param string $title	The Error message title
+ * @param bool $render	Whether to echo (render) or return the HTML string
+ * @return string $ret The entire error message in a HTML string
  * @todo Make this work with templates ;)
  */
 function icms_error_msg($msg, $title='', $render = true){
@@ -160,8 +175,9 @@ function xoops_error($msg, $title=''){ icms_error_msg($msg, $title, true); }
  *
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  *
- * @param string $msg
- * @param string $title
+ * @param string $msg	The Error Message
+ * @param string $title	The Error Message title
+ * @param	bool	$render	Whether to echo (render) or return the HTML string
  *
  * @todo Make this work with templates ;)
  */
@@ -208,6 +224,17 @@ function xoops_result($msg, $title='')
 	echo '</div>';
 }
 
+/**
+* Generates a confirm form
+* 
+* Will render (echo) the form so no return in this function
+*
+* @param array  $hiddens  Array of Hidden values
+* @param string  $action  The Form action
+* @param string  $msg  The message in the confirm form
+* @param string  $submit  The text on the submit button
+* @param bool  $addtoken  Whether or not to add a security token
+*/
 function xoops_confirm($hiddens, $action, $msg, $submit='', $addtoken = true)
 {
 	$submit = ($submit != '') ? trim($submit) : _SUBMIT;
@@ -233,6 +260,13 @@ function xoops_confirm($hiddens, $action, $msg, $submit='', $addtoken = true)
 **/
 function xoops_refcheck($docheck=1) {return $GLOBALS['xoopsSecurity']->checkReferer($docheck);}
 
+/**
+* Get the timestamp based on the user settings
+* 
+* @param string  $time  String with time
+* @param string  $timeoffset  The time offset string
+* @return string  $usertimestamp  The generated user timestamp
+*/
 function xoops_getUserTimestamp($time, $timeoffset="")
 {
 	global $xoopsConfig, $xoopsUser;
@@ -245,9 +279,15 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 	return $usertimestamp;
 }
 
-/*
-* Function to display formatted times in user timezone
-*/
+
+	/*
+	* Function to display formatted times in user timezone
+	* 
+	* @param string  $time  String with time
+	* @param string  $format  The time format based on PHP function format parameters
+	* @param string  $timeoffset  The time offset string
+	* @return string  $usertimestamp  The generated user timestamp
+	*/
 	function formatTimestamp($time, $format = "l", $timeoffset = null)
 	{
 		global $xoopsConfig, $xoopsUser;
@@ -407,6 +447,9 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 
 /*
 * Function to calculate server timestamp from user entered time (timestamp)
+* 
+* @param string  $timestamp  String with time
+* @return string  $timestamp  The generated timestamp
 */
 function userTimeToServerTime($timestamp, $userTZ=null)
 {
@@ -416,6 +459,11 @@ function userTimeToServerTime($timestamp, $userTZ=null)
 	return $timestamp;
 }
 
+/*
+* Function to generate password
+* 
+* @return string  $makepass  The generated password
+*/
 function xoops_makepass() {
 	$makepass = '';
 	$syllables = array("er","in","tia","wol","fe","pre","vet","jo","nes","al","len","son","cha","ir","ler","bo","ok","tio","nar","sim","ple","bla","ten","toe","cho","co","lat","spe","ak","er","po","co","lor","pen","cil","li","ght","wh","at","the","he","ck","is","mam","bo","no","fi","ve","any","way","pol","iti","cs","ra","dio","sou","rce","sea","rch","pa","per","com","bo","sp","eak","st","fi","rst","gr","oup","boy","ea","gle","tr","ail","bi","ble","brb","pri","dee","kay","en","be","se");
@@ -428,9 +476,10 @@ function xoops_makepass() {
 	return $makepass;
 }
 
+
 /*
- * Functions to display dhtml loading image box
- */
+* Function to display dhtml loading image box
+*/
 function OpenWaitBox()
 {
 	echo "<div id='waitDiv' style='position:absolute;left:40%;top:50%;visibility:hidden;text-align: center;'>
@@ -470,6 +519,10 @@ function OpenWaitBox()
 	</script>";
 }
 
+/*
+* Function to display the finish of the dhtml wait box
+* 
+*/
 function CloseWaitBox()
 {
 	echo "<script type='text/javascript'>
@@ -480,6 +533,13 @@ function CloseWaitBox()
 	";
 }
 
+/*
+* Checks if email is of correct formatting
+* 
+* @param string  $email  The email address
+* @param string  $antispam  Generate an email address that is protected from spammers
+* @return string  $email  The generated email address
+*/
 function checkEmail($email,$antispam = false)
 {
 	if(!$email || !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i",$email)) {return false;}
@@ -491,6 +551,12 @@ function checkEmail($email,$antispam = false)
 	return $email;
 }
 
+/*
+* Format an URL
+* 
+* @param string  $url  The URL to format
+* @return string  $url The generated URL
+*/
 function formatURL($url)
 {
 	$url = trim($url);
@@ -507,7 +573,9 @@ function formatURL($url)
 function showbanner() {echo xoops_getbanner();}
 
 /*
-* Function to get banner html tags for use in templates
+* Gets banner HTML for use in templates
+* 
+* @return object  $bannerobject  The generated banner HTML string
 */
 function xoops_getbanner()
 {
@@ -557,6 +625,12 @@ function xoops_getbanner()
 
 /*
 * Function to redirect a user to certain pages
+* 
+* @param string  $url  The URL to redirect to
+* @param int  $time  The time it takes to redirect to the URL
+* @param string  $message  The message to show while redirecting
+* @param bool  $addredirect  Add a link to the redirect URL?
+* @param string  $allowExternalLink  Allow external links
 */
 function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 {
@@ -639,6 +713,12 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
     // GIJ end
 }
 
+/*
+* Gets environment key from the $_SERVER or $_ENV superglobal
+* 
+* @param string  $key  The key to get
+* @return string  $ret  The retrieved key
+*/
 function xoops_getenv($key)
 {
 	$ret = '';
@@ -668,6 +748,9 @@ function getcss($theme = '') {return xoops_getcss($theme);}
 
 /*
 * Function to get css file for a certain themeset
+* 
+* @param string  $theme  The theme set from the config
+* @return mixed  The generated theme HTML string or an empty string
 */
 function xoops_getcss($theme = '')
 {
@@ -689,6 +772,11 @@ function xoops_getcss($theme = '')
 	return '';
 }
 
+/*
+* Gets Mailer object
+* 
+* @return		object  $inst  Reference to the (@link XoopsMailerLocal) or (@link XoopsMailer) object
+*/
 function &getMailer()
 {
 	global $xoopsConfig;
@@ -700,6 +788,13 @@ function &getMailer()
 	return $inst;
 }
 
+/*
+* Gets the handler for a class
+* 
+* @param string  $name  The name of the handler to get
+* @param bool  $optional	Is the handler optional?
+* @return		object		$inst		The instance of the object that was created
+*/
 function &xoops_gethandler($name, $optional = false )
 {
 	static $handlers;
@@ -725,6 +820,13 @@ function &xoops_gethandler($name, $optional = false )
 	return $inst;
 }
 
+/*
+* Gets module handler
+* 
+* @param	string  $name  The name of the module
+* @param	string	$module_dir		The module directory where to get the module class
+* @return	object  $inst	The reference to the generated object
+*/
 function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = false)
 {
 	static $handlers;
@@ -754,6 +856,13 @@ function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = f
 	return $inst;
 }
 
+/*
+* Gets rank
+* 
+* @param	int  $rank_id  The Rank ID to get
+* @param 	int	 $posts		The number of posts to match for the rank
+* @return	array	$rank		The fetched rank array
+*/
 function xoops_getrank($rank_id =0, $posts = 0)
 {
 	$db =& Database::getInstance();
@@ -859,20 +968,39 @@ function icms_substr($str, $start, $length, $trimmarker = '...')
 
 // RMV-NOTIFY
 // ################ Notification Helper Functions ##################
-// We want to be able to delete by module, by user, or by item.
-// How do we specify this??
+/*
+* We want to be able to delete by module, by user, or by item.
+* How do we specify this??
+* 
+* @param	int  $module_id	The ID of the module to unsubscribe from
+* @return	bool	Did the unsubscribing succeed?
+*/
 function xoops_notification_deletebymodule ($module_id)
 {
 	$notification_handler =& xoops_gethandler('notification');
 	return $notification_handler->unsubscribeByModule ($module_id);
 }
 
+/**
+* Deletes / unsubscribes by user ID
+* 
+* @param	int  $user_id	The User ID to unsubscribe
+* @return	bool	Did the unsubscribing succeed?
+*/
 function xoops_notification_deletebyuser ($user_id)
 {
 	$notification_handler =& xoops_gethandler('notification');
 	return $notification_handler->unsubscribeByUser ($user_id);
 }
 
+/**
+* Deletes / unsubscribes by Item ID
+* 
+* @param	int  $module_id	The Module ID to unsubscribe
+* @param	int  $category	The Item ID to unsubscribe
+* @param	int  $item_id	The Item ID to unsubscribe
+* @return	bool	Did the unsubscribing succeed?
+*/
 function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 {
 	$notification_handler =& xoops_gethandler('notification');
@@ -880,6 +1008,13 @@ function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 }
 
 // ################### Comment helper functions ####################
+/**
+* Count the comments belonging to a certain item in a certain module
+* 
+* @param	int  $module_id	The Module ID to count the comments for
+* @param	int  $item_id	The Item ID to count the comments for
+* @return	int	The number of comments
+*/
 function xoops_comment_count($module_id, $item_id = null)
 {
 	$comment_handler =& xoops_gethandler('comment');
@@ -888,6 +1023,13 @@ function xoops_comment_count($module_id, $item_id = null)
 	return $comment_handler->getCount($criteria);
 }
 
+/**
+* Delete the comments belonging to a certain item in a certain module
+* 
+* @param	int  $module_id	The Module ID to delete the comments for
+* @param	int  $item_id	The Item ID to delete the comments for
+* @return	bool	Did the deleting of the comments succeed?
+*/
 function xoops_comment_delete($module_id, $item_id)
 {
 	if(intval($module_id) > 0 && intval($item_id) > 0)
@@ -921,7 +1063,14 @@ function xoops_comment_delete($module_id, $item_id)
 }
 
 // ################ Group Permission Helper Functions ##################
-
+/**
+* Deletes group permissions by module and item id
+* 
+* @param	int  $module_id	The Module ID to delete the permissions for
+* @param	string  $perm_name	The permission name (for the module_id and item_id to delete
+* @param	int  $item_id	The Item ID to delete the permissions for
+* @return	int	Did the deleting of the group permissions succeed?
+*/
 function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null)
 {
 	// do not allow system permissions to be deleted
@@ -930,6 +1079,12 @@ function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null
 	return $gperm_handler->deleteByModule($module_id, $perm_name, $item_id);
 }
 
+/**
+* Converts text to UTF-8 encoded text
+* 
+* @param	string	$text	The Text to convert
+* @return	string	$text	The converted text
+*/
 function xoops_utf8_encode(&$text)
 {
 	if(XOOPS_USE_MULTIBYTES == 1)
@@ -940,8 +1095,18 @@ function xoops_utf8_encode(&$text)
 	return utf8_encode($text);
 }
 
+/**
+* Converts text to UTF-8 encoded text
+* @see xoops_utf8_encode
+*/
 function xoops_convert_encoding(&$text) {return xoops_utf8_encode($text);}
 
+/**
+* Converts text to UTF-8 encoded text
+* 
+* @param	int	$userid	The User ID
+* @return	string	The linked username (from userID or "Anonymous")
+*/
 function xoops_getLinkedUnameFromId($userid)
 {
 	$userid = intval($userid);
@@ -958,6 +1123,12 @@ function xoops_getLinkedUnameFromId($userid)
     return $GLOBALS['xoopsConfig']['anonymous'];
 }
 
+/**
+* Trims certain text
+* 
+* @param	string	$text	The Text to trim
+* @return	string	$text	The trimmed text
+*/
 function xoops_trim($text)
 {
     if(function_exists('xoops_language_trim')) {return xoops_language_trim($text);}
@@ -1145,7 +1316,8 @@ function icms_getCurrentModuleName()
 /**
 * Checks if a user is admin of $module
 *
-* @return boolean : true if user is admin
+* @param mixed	Module to check or false if no module is passed
+* @return bool : true if user is admin
 */
 function icms_userIsAdmin($module = false)
 {
@@ -1195,6 +1367,10 @@ function icms_loadLanguageFile($module, $file, $admin=false)
 *
 * Use this snippet to extract any float out of a string. You can choose how a single dot is treated with the (bool) 'single_dot_as_decimal' directive.
 * This function should be able to cover almost all floats that appear in an european environment.
+* 
+* @param string $str	String to get float value from
+* @param mixed	$set	Array of settings of False if no settings were passed
+* @param mixed	Float value or 0 if no match was found in the string
 */
 function icms_getfloat($str, $set=FALSE)
 {
@@ -1223,11 +1399,18 @@ function icms_getfloat($str, $set=FALSE)
 	else {return 0;}
 }
 
+/**
+* Use this snippet to extract any currency out of a string
+* 
+* @param string $var	String to get currency value from
+* @param mixed	$currencyObj	Currency object or false if no object was passed
+* @return string	$ret The returned value
+*/
 function icms_currency($var, $currencyObj=false)
 {
 	$ret = icms_getfloat($var,  array('single_dot_as_decimal'=> TRUE));
 	$ret = round($ret, 2);
-	// make sur we have at least .00 in the $var
+	// make sure we have at least .00 in the $var
 	$decimal_section_original = strstr($ret, '.');
 	$decimal_section = $decimal_section_original;
 	if($decimal_section)
@@ -1241,8 +1424,20 @@ function icms_currency($var, $currencyObj=false)
 	return $ret;
 }
 
+/**
+* Use this snippet to extract any currency out of a string
+* 
+* @see icms_currency
+*/
 function icms_float($var) {return icms_currency($var);}
 
+/**
+* Strip text from unwanted text (purify)
+* 
+* @param string $text	String to purify
+* @param mixed	$keyword	The keyword string or false if none was passed
+* @return string	$text The purified text
+*/
 function icms_purifyText($text, $keyword = false)
 {
 	$myts = MyTextsanitizer::getInstance();
@@ -1277,6 +1472,12 @@ function icms_purifyText($text, $keyword = false)
 	return $text;
 }
 
+/**
+* Converts HTML to text equivalents
+* 
+* @param string $document	The document string to convert
+* @return string	$text The converted text
+*/
 function icms_html2text($document)
 {
 	// PHP Manual:: function preg_replace
@@ -1480,7 +1681,7 @@ function icms_encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
 * @var $aAllowedTags - array - tags that dont will be striped
 * @var $aDisabledAttributes - array - attributes not allowed, will be removed from the text
 *
-* return string
+* @return string
 */
 function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>','<ul>','<li>'), $aDisabledAttributes = array('onabort', 'onblur', 'onchange', 'onclick', 'ondblclick', 'onerror', 'onfocus', 'onkeydown', 'onkeyup', 'onload', 'onmousedown', 'onmousemove', 'onmouseover', 'onmouseup', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload'))
 {
@@ -1519,7 +1720,7 @@ function icms_getCookieVar($name, $default = '')
 /**
 * Get URL of the page before the form to be able to redirect their after the form has been posted
 *
-* return string url before form
+* @return string url before form
 */
 function icms_get_page_before_form()
 {
@@ -1539,6 +1740,12 @@ function icms_sanitizeCustomtags_callback($matches)
 	else {return '';}
 }
 
+/**
+* Sanitizes custom tags
+* 
+* @param string $text	Purifies passed text
+* @return string	$text The purified text
+*/
 function icms_sanitizeCustomtags($text)
 {
 	$patterns = array();
@@ -1645,6 +1852,12 @@ function showNav($id = null, $separador = '/', $style="style='font-weight:bold'"
 	return $ret;
 }
 
+/**
+* Searches text for unwanted tags and removes them
+* 
+* @param string $text	String to purify
+* @return string	$text The purified text
+*/
 function StopXSS($text)
 {
 	if(!is_array($text))
@@ -1670,6 +1883,12 @@ function StopXSS($text)
 	return $text;
 }
 
+/**
+* Purifies the CSS that is put in the content (pages) system
+* 
+* @param string $text	String to purify
+* @return string	$text The purified text
+*/
 function icms_sanitizeContentCss($text)
 {
 	if(preg_match_all('/(.*?)\{(.*?)\}/ie',$text,$css))
@@ -1867,6 +2086,12 @@ function icms_utf8_strrev($str, $reverse = false)
 
 /**
 * Function to get a query from DB
+* 
+* @param object $db	Reference to the database object
+* @param string	$table	The table to get the value from
+* @param string	$field	The table to get the value from
+* @param string	$condition	The where condition (where clause) to use
+* @return	mixed	
 */
 function getDbValue(&$db, $table, $field, $condition = '')
  {
@@ -2049,7 +2274,7 @@ function Icms_getMonthNameById($month_id) {
 /**
  * These functions are some Persian users related functions
  * In ImpressCMS we are trying to bring different calendar type in core, so this is the place to place them
- * If you know other calendars, plaese contact ImpressCMS developpers to add them to core ;-)
+ * If you know other calendars, plaese contact ImpressCMS developers to add them to core ;-)
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
@@ -2060,11 +2285,22 @@ function Icms_getMonthNameById($month_id) {
  * @author		jalali Date function by Milad Rastian (miladmovie AT yahoo DOT com)
  * @author		FARSI PROJECTS GROUP
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @param	int	$a	Integer to divide
+ * @param	int	$b	Integer to divide to
+ * @return	int
  */
 function div($a,$b) {
     return (int) ($a / $b);
 }
 
+/**
+ * Converts gregorian to jalali calendar
+ *
+ * @param int $g_y	The gregorian year
+ * @param int $g_m	The gregorian month
+ * @param int $g_d	The gregorian day
+ * @return array The jalali date array
+ */
 function gregorian_to_jalali ($g_y, $g_m, $g_d)
 {
     $g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
@@ -2109,6 +2345,14 @@ function gregorian_to_jalali ($g_y, $g_m, $g_d)
    return array($jy, $jm, $jd);
 }
 
+/**
+ * Converts jalali to gregorian calendar
+ *
+ * @param int $j_y	The jalali year
+ * @param int $j_m	The jalali month
+ * @param int $j_d	The jalali day
+ * @return array The gregorian date array
+ */
 function jalali_to_gregorian($j_y, $j_m, $j_d)
 {
     $g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
@@ -2163,7 +2407,14 @@ function jalali_to_gregorian($j_y, $j_m, $j_d)
    return array($gy, $gm, $gd);
 }
 
-// Begin of finding the begining day Of months
+/*
+ * Finds the begining day of the month
+ *
+ * @param int $month	The month
+ * @param int $day	The day
+ * @param int $year	The year
+ * @return string The beginning day of the month
+ */
 function mstart($month,$day,$year)
 {
 	list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
@@ -2173,6 +2424,14 @@ function mstart($month,$day,$year)
 }
 // End of finding the begining day Of months
 
+/*
+ * Finds the last day of the month
+ *
+ * @param int $month	The month
+ * @param int $day	The day
+ * @param int $year	The year
+ * @return string The last day of the month
+ */
 function lastday ($month,$day,$year)
 {
 	$lastdayen=date('d',mktime(0,0,0,$month+1,0,$year));
@@ -2202,6 +2461,17 @@ function lastday ($month,$day,$year)
 	return $lastdatep-1;
 }
 
+/*
+ * Make time for jalali calendar
+ *
+ * @param int $hour	The hour
+ * @param int $minute	The minute
+ * @param int $second	The second
+ * @param int $jmonth	The jalali month
+ * @param int $jday	The jalali day
+ * @param int $jyear	The jalali year
+ * @return string The mktime string
+ */
 function jmaketime($hour,$minute,$second,$jmonth,$jday,$jyear)
 {
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
@@ -2217,6 +2487,13 @@ function jmaketime($hour,$minute,$second,$jmonth,$jday,$jyear)
 	return $i;
 }
 
+/*
+ * Make time for jalali calendar
+ *
+ * @param string $type	The type of date string?
+ * @param string $maket	The date string type
+ * @return mixed The mktime string
+ */
 function jdate($type,$maket='now')
 {
     global $xoopsConfig;
@@ -2356,6 +2633,9 @@ function jdate($type,$maket='now')
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @since		1.1.2
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @param int $type	The type of date string?
+ * @param string $maket	The date string type
+ * @return mixed The converted date string
  */
 function ext_date($type,$maket='now')
 {
@@ -2473,6 +2753,15 @@ function ext_date($type,$maket='now')
 	return $result;
 }
 
+/**
+ * Gets module handler instance
+ *
+ * @param string $name	The name of the module
+ * @param string $module_dir	The module directory where to get the module class
+ * @param string $module_basename	The basename of the module
+ * @param bool $optional	Is the module optional? Is it bad when the module cannot be loaded?
+ * @return object The module handler instance
+ */
 function &icms_getmodulehandler($name = null, $module_dir = null, $module_basename = null, $optional = false)
 {
 	static $handlers;
@@ -2570,6 +2859,11 @@ function icms_getImageSize($url, & $width, & $height) {
 	}
 }
 
+/**
+ * Gets all types of urls in one array
+ *
+ * @return array The array of urls
+ */
 function icms_getCurrentUrls() {
 	$urls = array();
 	$http = ((strpos(ICMS_URL, "https://")) === false) ? ("http://") : ("https://");
@@ -2594,8 +2888,8 @@ function icms_getCurrentUrls() {
 /**
  * Deletes a file
  *
- * @var string $dirname path of the file
- *
+ * @param string $dirname path of the file
+ * @return	The unlinked dirname
  */
 function icms_deleteFile($dirname) {
 	// Simple delete for a file
@@ -2604,6 +2898,14 @@ function icms_deleteFile($dirname) {
 	}
 }
 
+/**
+ * Resizes an image to maxheight and maxwidth
+ *
+ * @param string $src	The image file to resize
+ * @param string $maxWidth	The maximum width to resize the image to
+ * @param string $maxHeight	The maximum height to resize the image to
+ * @return array The resized image array
+ */
 function icms_imageResize($src, $maxWidth, $maxHeight) {
 	$width = '';
 	$height = '';
@@ -2631,6 +2933,14 @@ function icms_imageResize($src, $maxWidth, $maxHeight) {
 	);
 }
 
+/**
+ * Generates the module name with either a link or not
+ *
+ * @param bool $withLink	Generate the modulename with in an anchor link?
+ * @param bool $forBreadCrumb	Is the module name for the breadcrumbs?
+ * @param mixed $moduleName	The passed modulename or false if no modulename was passed
+ * @return array The resized image array
+ */
 function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
 	if (!$moduleName) {
 		global $xoopsModule;
@@ -2664,7 +2974,7 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
  * Deletes users who registered but aren't yet active for X days.
  *
  * To be used in ImpressCMS 1.2
- *
+ * @return mixed Did the query succeed or not? Returns nothing if succeeded, false if not succeeded
  **/
 function remove_usersxdays (){
 	$db =& Database::getInstance();
@@ -2678,6 +2988,12 @@ function remove_usersxdays (){
 	}
 }
 
+/**
+ * Converts size to human readable text
+ *
+ * @param int $size	The size to convert
+ * @return string The converted size
+ */
 function icms_convert_size($size){
 	if ($size >= 1073741824){
 		$ret = ((($size/1024)/1024)/1024).' '._CORE_GIGABYTES_SHORTEN;
@@ -2691,6 +3007,12 @@ function icms_convert_size($size){
 	return icms_conv_nr2local(round($ret,1));
 }
 
+/**
+ * Generates a random string
+ *
+ * @param int $numchar	How many characters should the string consist of?
+ * @return string The generated random string
+ */
 function icms_random_str($numchar){
 	$letras = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,x,w,y,z,1,2,3,4,5,6,7,8,9,0";
 	$array = explode(",", $letras);
@@ -2699,15 +3021,29 @@ function icms_random_str($numchar){
 	return substr($senha, 0, $numchar);
 }
 
+/**
+ * Generates a random string
+ *
+ * @param int $currentoption	What current admin option are we in?
+ * @param string $breadcrumb	The breadcrumb if it is passed, otherwise empty string
+ */
 function icms_adminMenu($currentoption = 0, $breadcrumb = '') {
 	global $xoopsModule;
 	$xoopsModule->displayAdminMenu( $currentoption, $xoopsModule -> name() . ' | ' . $breadcrumb );
 }
 
+/**
+ * Loads common language file
+ */
 function icms_loadCommonLanguageFile() {
 	icms_loadLanguageFile('system', 'common');
 }
 
+/**
+ * Gets current page
+ *
+ * @return string The URL of the current page
+ */
 function icms_getCurrentPage() {
 	$urls = icms_getCurrentUrls();
 	return $urls['full'];
@@ -2744,6 +3080,12 @@ function icms_getCurrentPage() {
 	}
 }*/
 
+/**
+ * Gets module name in SEO format
+ *
+ * @param mixed $moduleName	Modulename if it is passed, otherwise false
+ * @return string The modulename in SEO format
+ */
 function icms_getModuleNameForSEO($moduleName = false) {
 	$icmsModule = & icms_getModuleInfo($moduleName);
 	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
@@ -2754,24 +3096,48 @@ function icms_getModuleNameForSEO($moduleName = false) {
 	return (strtolower($ret));
 }
 
+/**
+ * Determines if the module is in SEO mode
+ *
+ * @param mixed $moduleName	Modulename if it is passed, otherwise false
+ * @return bool Is the module in SEO format?
+ */
 function icms_getModuleModeSEO($moduleName = false) {
 	$icmsModule = & icms_getModuleInfo($moduleName);
 	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
 	return isset ($icmsModuleConfig['seo_mode']) ? $icmsModuleConfig['seo_mode'] : false;
 }
 
+/**
+ * Gets the include ID if the module is in SEO format (otherwise nothing)
+ *
+ * @param mixed $moduleName	Modulename if it is passed, otherwise false
+ * @return mixed The module include ID otherwise nothing
+ */
 function icms_getModuleIncludeIdSEO($moduleName = false) {
 	$icmsModule = & icms_getModuleInfo($moduleName);
 	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
 	return !empty ($icmsModuleConfig['seo_inc_id']);
 }
 
+/*
+* Gets environment key from the $_SERVER or $_ENV superglobal
+* 
+* @param string  $key  The key to get
+* @return string  $ret  The retrieved key
+*/
 function icms_getenv($key) {
 	$ret = '';
 	$ret = isset ($_SERVER[$key]) ? $_SERVER[$key] : (isset ($_ENV[$key]) ? $_ENV[$key] : '');
 	return $ret;
 }
 
+/*
+* Gets environment key from the $_SERVER or $_ENV superglobal
+* 
+* @param string  $key  The key to get
+* @param string  $ret  The retrieved key
+*/
 function icms_get_module_status($module_name){
 	$module_handler = xoops_gethandler('module');
 	$this_module = $module_handler->getByDirname($module_name);
@@ -2827,11 +3193,12 @@ function icms_clean_folders($dir, $remove_admin_cache=false) {
 	}
 	return true;
 }
+
 /**
  * Recursively delete a directory
  *
  * @param string $dir Directory name
- * @param boolean $deleteRootToo Delete specified top-level directory as well
+ * @param bool $deleteRootToo Delete specified top-level directory as well
  */
 function icms_unlinkRecursive($dir, $deleteRootToo)
 {
