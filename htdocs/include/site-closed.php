@@ -6,7 +6,7 @@
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		phppp (infomax@gmail.com)
  * @since		2.0.17
- * @version		$Id: theme.php 892 2007-07-28 09:35:49Z phppp $
+ * @version		$Id$
  */
 
 if (! defined ( "XOOPS_ROOT_PATH" )) {
