@@ -67,7 +67,9 @@ function listPblocks(){
 	$icmsAdminTpl->assign('lang_cont_addcont',_AM_ADDPBLOCK);
 
 
-	$oldzones = XoopsBlock::getBlockPositions(true);
+	$blocks_handler = xoops_gethandler('block');
+	
+	$oldzones = $blocks_handler->getBlockPositions(true);
 	foreach ($oldzones as $k=>$v){
 		$oldzones[$k]['title'] = (defined($oldzones[$k]['title']))?constant($oldzones[$k]['title']):$oldzones[$k]['title'];
 	}
@@ -87,8 +89,9 @@ function listPblocks(){
 }
 
 function edit_pblock($pbid){
-	include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
-	$oldzones = XoopsBlock::getBlockPositions(true);
+	$blocks_handler = xoops_gethandler('block');
+	
+	$oldzones = $blocks_handler->getBlockPositions(true);
 
 	echo '<a href="admin.php?fct=blockspadmin">'. _AM_BPADMIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITPBLOCK.'<br /><br />';
 
