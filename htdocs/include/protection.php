@@ -1,7 +1,14 @@
 <?php 
-
-/* Config emailprotection.php */
-/* written by Kuba Zygmunt (kuba.zygmunt@gmail.com) */
+/**
+* Config emailprotection.php
+*
+* @author	Kuba Zygmunt (kuba.zygmunt@gmail.com)
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		LICENSE.txt
+* @package	core
+* @since		1.2
+* @version		$Id$
+*/
 
 include '../mainfile.php';
 $xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
