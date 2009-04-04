@@ -1,6 +1,6 @@
 <?php
 /**
-* Function to allow search on content pages of the content manager and in Links on Symlinks Mnager
+* Search Functions for the core
 *
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -10,6 +10,18 @@
 * @version		$Id$
 */
 
+
+
+/**
+* Function to allow search on content pages of the content manager and in Links on Symlinks Mnager
+*
+* @param array $queryarray The array with query information
+* @param string $andor The search setting for "AND" or "OR"
+* @param string $limit The limit results per page
+* @param string $offset The results offset per page (for pagination)
+* @param string $userid The userid to search for
+* @return array $ret 
+*/
 function search_content($queryarray, $andor, $limit, $offset, $userid){
 	global $xoopsDB, $xoopsConfig, $xoopsUser;
 	$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
