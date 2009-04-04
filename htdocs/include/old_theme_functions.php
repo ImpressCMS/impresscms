@@ -1,5 +1,5 @@
 <?php
-// $Id: old_theme_functions.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
