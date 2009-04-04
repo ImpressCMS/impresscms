@@ -1,15 +1,23 @@
 <?php
 /**
-* Automatic update of the system module
+* DataBase Update Functons
 *
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package		core
 * @since		1.0
 * @author		malanciault <marcan@impresscms.org)
-* @version		$Id: update.php 429 2008-003-25 22:21:41Z malanciault $
+* @version		$Id$
 */
 
+/**
+* Automatic update of the system module
+*
+* @param object $module reference to the module object
+* @param int $oldversion The old version of the database
+* @param int $dbVersion The database version
+* @return mixed
+*/
 function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = null) {
 
 	    global $xoopsDB;
