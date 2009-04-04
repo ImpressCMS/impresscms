@@ -9,6 +9,7 @@
  *             other:   Only on one side (
  *                          Call from theme.php makes all blocks on the left side
  *                          and from theme.php for the right site)
+ * @param	string	$side	Which side will the sidebar be on?
  */
 function make_sidebar($side)
 {
@@ -91,8 +92,9 @@ function make_sidebar($side)
 }
 
 /*
- * Function to display center block
- */
+* Function to display center block
+* Renders the block to echoes it (no return string)
+*/
 function make_cblock()
 {
 	global $xoopsUser, $xoopsOption;
@@ -184,11 +186,20 @@ function make_cblock()
 	}
 }
 
+/**
+* Opens table with forum thread
+*
+* @param string $width Width of the table
+*/
 function openThread($width="100%")
 {
 	echo "<table border='0' cellpadding='0' cellspacing='0' align='center' width='$width'><tr><td class='bg2'><table border='0' cellpadding='4' cellspacing='1' width='100%'><tr class='bg3' align='"._GLOBAL_LEFT."'><td class='bg3' width='20%'>". _CM_POSTER ."</td><td class='bg3'>". _CM_THREAD ."</td></tr>";
 }
 
+/**
+* Shows thread
+*
+*/
 function showThread($color_number, $subject_image, $subject, $text, $post_date, $ip_image, $reply_image, $edit_image, $delete_image, $username="", $rank_title="", $rank_image="", $avatar_image="", $reg_date="", $posts="", $user_from="", $online_image="", $profile_image="", $pm_image="", $email_image="", $www_image="", $icq_image="", $aim_image="", $yim_image="", $msnm_image="")
 {
 	if ( $color_number == 1 ) {
@@ -202,6 +213,10 @@ function showThread($color_number, $subject_image, $subject, $text, $post_date, 
 	echo "<tr align='"._GLOBAL_LEFT."'><td class='$bg' valign='middle'>$post_date</td><td class='$bg' valign='middle'>".$profile_image."".$pm_image."".$email_image."".$www_image."".$icq_image."".$aim_image."".$yim_image."".$msnm_image."</td></tr>";
 }
 
+/**
+* Closes table with forum thread
+*
+*/
 function closeThread()
 {
 	echo '</table></td></tr></table>';
