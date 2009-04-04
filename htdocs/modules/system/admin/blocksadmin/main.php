@@ -181,6 +181,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 		
 		default :
 			
+			
 			icms_cp_header ();
 			include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php";
 			$objectTable = new IcmsPersistableTable ( $icms_block_handler );
@@ -194,7 +195,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			$objectTable->addIntroButton ( 'addpost', 'admin.php?fct=blocksadmin&op=mod', _AM_SYSTEM_BLOCKSADMIN_CREATE );
 			$objectTable->addQuickSearch ( array ('title', 'name' ) );
 			
-			$objectTable->addFilter ( 'mid', 'getModulesNamesArray' );
+			$objectTable->addFilter ( 'mid', 'getModulesArray' );
 			$objectTable->addFilter ( 'visible', 'getVisibleStatusArray' );
 			$objectTable->addFilter ( 'side', 'getBlockPositionArray' );
 			

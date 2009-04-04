@@ -57,28 +57,28 @@ class IcmsBlock extends IcmsPersistableObject {
 		switch ( $format ) {
 			case 'S':
 				if ( $c_type == 'H' ) {
-					return str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'N'));
+					return str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'n'));
 				} elseif ( $c_type == 'P' ) {
 					ob_start();
-					echo eval($this->getVar('content', 'N'));
+					echo eval($this->getVar('content', 'n'));
 					$content = ob_get_contents();
 					ob_end_clean();
 					return str_replace('{X_SITEURL}', XOOPS_URL.'/', $content);
 				} elseif ( $c_type == 'S' ) {
 					$myts =& MyTextSanitizer::getInstance();
-					$content = str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'N'));
-					return $myts->displayTarea($content, 0, 1);
+					$content = str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'n'));
+					return $myts->displayTarea($content, 1, 1);
 				} else {
 					$myts =& MyTextSanitizer::getInstance();
-					$content = str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'N'));
+					$content = str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'n'));
 					return $myts->displayTarea($content, 0, 0);
 				}
 				break;
 			case 'E':
-				return $this->getVar('content', 'E');
+				return $this->getVar('content', 'e');
 				break;
 			default:
-				return $this->getVar('content', 'N');
+				return $this->getVar('content', 'n');
 				break;
 		}
 	}
@@ -120,7 +120,7 @@ class IcmsBlock extends IcmsPersistableObject {
         return false;
     }
 	
-	function buildBlock(){
+	public function buildBlock(){
         global $xoopsConfig, $xoopsOption;
         $block = array();
         // M for module block, S for system block C for Custom
@@ -164,7 +164,7 @@ class IcmsBlock extends IcmsPersistableObject {
     * If position is 1, content in DB is positioned
     * after the original content
     */
-    function buildContent($position,$content="",$contentdb="")
+    public function buildContent($position,$content="",$contentdb="")
     {
         if ( $position == 0 ) {
             $ret = $contentdb.$content;
@@ -174,7 +174,7 @@ class IcmsBlock extends IcmsPersistableObject {
         return $ret;
     }
 	
-    function buildTitle($originaltitle, $newtitle="")
+    public function buildTitle($originaltitle, $newtitle="")
     {
         if ($newtitle != "") {
             $ret = $newtitle;
@@ -182,6 +182,10 @@ class IcmsBlock extends IcmsPersistableObject {
             $ret = $originaltitle;
         }
         return $ret;
+    }
+    
+    public function getBlockPositions($full=false){
+    	return $this->handler->getBlockPositions($full);
     }
     
 }
@@ -215,15 +219,18 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	 */
 	public function getBlockPositions($full=false){
 		if( !count($this->block_positions ) ){
-			// TODO: Implement IPF for block_positions 
-	    	$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
-	    	$result = $this->db->query($sql);
-	    	while ($row = $this->db->fetchArray($result)) {	    		
-    			$this->block_positions[$row['id']]['pname'] = $row['pname'];
-    			$this->block_positions[$row['id']]['title'] = $row['title'];
-    			$this->block_positions[$row['id']]['description'] = $row['description'];
-    			$this->block_positions[$row['id']]['block_default'] = $row['block_default'];
-    			$this->block_positions[$row['id']]['block_type'] = $row['block_type'];
+			// TODO: Implement IPF for block_positions
+			$icms_blockposition_handler = xoops_gethandler('blockposition'); 
+//	    	$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
+//	    	$result = $this->db->query($sql);
+//	    	while ($row = $this->db->fetchArray($result)) {
+			$block_positions = $icms_blockposition_handler->getObjects();
+			foreach( $block_positions as $bp){	    		
+    			$this->block_positions[$bp->getVar('id')]['pname'] = $bp->getVar('pname');
+    			$this->block_positions[$bp->getVar('id')]['title'] = $bp->getVar('title');
+    			$this->block_positions[$bp->getVar('id')]['description'] = $bp->getVar('description');
+    			$this->block_positions[$bp->getVar('id')]['block_default'] = $bp->getVar('block_default');
+    			$this->block_positions[$bp->getVar('id')]['block_type'] = $bp->getVar('block_type');
 	    	}
     	}
     	if (!$full)
@@ -278,11 +285,13 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
             // get both sides in sidebox? (some themes need this)
             $tp = ($side == -2)?'L':($side == -6)?'C':'';
             if ( $tp != '') {
-              $side = "";
-            	$s1 = "SELECT id FROM ".$this->db->prefix('block_positions')." WHERE block_type='".$tp."' ORDER BY id ASC";
-            	$res = $db->query($s1);
-            	while ( $myrow = $this->db->fetchArray($res) ) {
-                $side .= "side='".intval($myrow['id'])."' OR ";
+             	$side = "";
+             	$icms_blockposition_handler = xoops_gethandler('blockposition');
+             	$criteria = new CriteriaCompo();
+             	$criteria->add( new Criteria('block_type', $tp) );
+             	$blockpositions = $icms_blockposition_handler->getObjects($criteria);
+				foreach( $blockpositions as $bp ){
+                $side .= "side='".intval( $bp->getVar('id') )."' OR ";
             	}
             	$side = "('".substr($side,0,strlen($side)-4)."')";
             } else {

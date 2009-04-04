@@ -8,12 +8,12 @@
  * @since 		ImpressCMS 1.2
  * @version		$Id: $
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author		Rodrigo Pereira Lima (aka therplima) <therplima@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 include_once ICMS_ROOT_PATH . '/kernel/block.php';
-
 
 /**
  * System Block Configuration Object Class
@@ -222,12 +222,10 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
     	return $rtn;
     }
     
-	public function getVisibleInArray(){
-    	$rtn = array();
-    	$rtn[1] = _VISIBLE;
-    	$rtn[0] = _UNVISIBLE;
-    	return $rtn;
-    }
+
+//	public function getVisibleInArray(){
+//		/* TODO: To be implemented... */
+//  }
     
     public function getBlockPositionArray(){
     	$block_positions = $this->getBlockPositions(true);
@@ -246,37 +244,32 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
     	return $rtn;
     }
     
-	public function getModulesArray($nameonly=false){
+	public function getModulesArray($full = false){
     	if( !count($this->modules_name) ){
 			$icms_module_handler = xoops_gethandler('module');
 			$installed_modules =& $icms_module_handler->getObjects();
 			foreach( $installed_modules as $module ){
-				if (!$nameonly){
-					$this->modules_name[$module->getVar('mid')]['name'] = $module->getVar('name');
-					$this->modules_name[$module->getVar('mid')]['dirname'] = $module->getVar('dirname');
-				}else{
-					$this->modules_name[$module->getVar('mid')] = $module->getVar('name');
-				}
+				$this->modules_name[$module->getVar('mid')]['name'] = $module->getVar('name');
+				$this->modules_name[$module->getVar('mid')]['dirname'] = $module->getVar('dirname');
 			}	
 		}
-    	return $this->modules_name;
-    }
-    
-    public function getModulesNamesArray(){
-    	return $this->getModulesArray(true);
+		$rtn = $this->modules_name;
+		if(!$full)
+			foreach($this->modules_name as $key => $module)
+				$rtn[$key] = $module['name'];
+    	return $rtn;
     }
     
     public function getModuleName($mid){
     	if($mid == 0)
     		return '';
-    		$this->modules_name = array();
-    	$modules = $this->getModulesArray(false);	
-		$rtn = $modules[$mid]['name'];
+    	$modules = $this->getModulesArray();	
+		$rtn = $modules[$mid];
 		return $rtn;	
     }
 
 	public function getModuleDirname($mid){
-    	$modules = $this->getModulesArray();	
+    	$modules = $this->getModulesArray(true);	
 		$rtn = $modules[$mid]['dirname'];
 		return $rtn;	
     }
