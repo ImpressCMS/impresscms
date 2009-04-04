@@ -7,7 +7,7 @@
 * @package		core
 * @since		1.1
 * @author		real_therplima <therplima@impresscms.org)
-* @version		$Id: search.inc.php 429 2008-003-25 22:21:41Z real_therplima $
+* @version		$Id$
 */
 
 function search_content($queryarray, $andor, $limit, $offset, $userid){
