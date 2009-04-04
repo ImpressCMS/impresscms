@@ -5,7 +5,7 @@
  *
  * @license GNU
  * @author GIJOE
- * @version $Id: smartobject.php,v 1.22 2007/11/06 13:25:30 felix Exp $
+ * @version $Id$
  * @package ImpressCMS
  */
 
@@ -106,10 +106,6 @@ if( ! preg_match( '?'.preg_quote(XOOPS_ROOT_PATH,'?').'(/common/)?' , $_SERVER['
 	ob_start( 'easiestml' ) ;
 }
 
-
-
-
-// ob filter
 /**
 * The multilanguage function
 *
@@ -190,6 +186,12 @@ function easiestml( $s )
 }
 
 
+/**
+* Escape textbox function for MultiLanguage
+*
+* @param array $matches Matches array to escape
+* @return array
+*/
 function easiestml_escape_bracket_textbox( $matches )
 {
 	if( preg_match( '/type=["\']?text["\']?/i' , $matches[2] ) ) {
@@ -199,11 +201,23 @@ function easiestml_escape_bracket_textbox( $matches )
 	}
 }
 
+/**
+* Escape textarea function for MultiLanguage
+*
+* @param array $matches Matches array to escape
+* @return array
+*/
 function easiestml_escape_bracket_textarea( $matches )
 {
 	return $matches[1].str_replace('[','&#91;',$matches[2]).$matches[3] ;
 }
 
+/**
+* Escape regex function for MultiLanguage
+*
+* @param array $matches Matches array to escape
+* @return array
+*/
 function easiestml_check_nevercross( $matches )
 {
 	$answer = '' ;
@@ -212,7 +226,14 @@ function easiestml_check_nevercross( $matches )
 	}
 	return $answer;
 }
-// Fix for bug #1905485 in tracker
+
+
+/**
+* Fix for bug #1905485 in tracker
+*
+* @param array $matches Matches array to escape
+* @return array
+*/
 function easiestml_escape_bracket_input( $matches )
 {
 	return str_replace('[','&#91;',$matches[1]) ;
