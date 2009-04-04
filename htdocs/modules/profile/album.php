@@ -116,8 +116,8 @@ $barra_navegacao = new XoopsPageNav($nbSections['nbPhotos'],$xoopsModuleConfig['
 $navegacao = $barra_navegacao->renderImageNav(2);
 
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/lightbox/css/lightbox.css');
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/prototype.js');
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/scriptaculous.js?load=effects,builder');
+$xoTheme->addScript(ICMS_LIBRARIES_URL.'/prototype/prototype.js');
+$xoTheme->addScript(ICMS_LIBRARIES_URL.'/scriptaculous/src/scriptaculous.js?load=effects,builder');
 $xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/lightbox.js');
 /**
 * Assigning smarty variables

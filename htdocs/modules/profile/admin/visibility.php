@@ -18,7 +18,7 @@ include 'header.php';
 xoops_cp_header();
 
 icms_adminMenu(5, "");
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : "visibility";
+$op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : "visibility";
 
 include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 $opform = new XoopsSimpleForm('', 'opform', 'permissions.php', "get");
@@ -36,13 +36,13 @@ $fields = $field_handler->getList();
 
 if (isset($_REQUEST['submit'])) {
     $visibility = $visibility_handler->create();
-    $visibility->setVar('fieldid', $_REQUEST['fieldid']);
+    $visibility->setVar('fieldid', intval($_REQUEST['fieldid']));
     $visibility->setVar('user_group', $_REQUEST['ug']);
     $visibility->setVar('profile_group', $_REQUEST['pg']);
     $visibility_handler->insert($visibility);
 }
 if ($op == "del") {
-    $visibility = $visibility_handler->get(array($_REQUEST['fieldid'], $_REQUEST['ug'], $_REQUEST['pg']));
+    $visibility = $visibility_handler->get(array(intval($_REQUEST['fieldid']), $_REQUEST['ug'], $_REQUEST['pg']));
     $visibility_handler->delete($visibility, true);
     header("Location: visibility.php");
 }

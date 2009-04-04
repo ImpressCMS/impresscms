@@ -18,7 +18,7 @@ include 'header.php';
 xoops_cp_header();
 
 icms_adminMenu(2, "");
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? "edit" : 'list');
+$op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : (isset($_REQUEST['id']) ? "edit" : 'list');
 
 $handler =& icms_getmodulehandler( 'category', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
 switch($op) {
@@ -37,7 +37,7 @@ switch($op) {
 
     case "edit":
     include_once('../include/forms.php');
-    $obj =& $handler->get($_REQUEST['id']);
+    $obj =& $handler->get(trim($_REQUEST['id']));
     $form =& $obj->getForm();
     $form->display();
     break;
@@ -47,14 +47,14 @@ switch($op) {
         redirect_header('category.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
     }
     if (isset($_REQUEST['id'])) {
-        $obj =& $handler->get($_REQUEST['id']);
+        $obj =& $handler->get(trim($_REQUEST['id']));
     }
     else {
         $obj =& $handler->create();
     }
-    $obj->setVar('cat_title', $_REQUEST['cat_title']);
-    $obj->setVar('cat_description', $_REQUEST['cat_description']);
-    $obj->setVar('cat_weight', $_REQUEST['cat_weight']);
+    $obj->setVar('cat_title', trim($_REQUEST['cat_title']));
+    $obj->setVar('cat_description', trim($_REQUEST['cat_description']));
+    $obj->setVar('cat_weight', intval($_REQUEST['cat_weight']));
     if ($handler->insert($obj)) {
         redirect_header('category.php', 3, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_CATEGORY));
     }
@@ -65,7 +65,7 @@ switch($op) {
     break;
 
     case "delete":
-    $obj =& $handler->get($_REQUEST['id']);
+    $obj =& $handler->get(trim($_REQUEST['id']));
     if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('category.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
@@ -78,7 +78,7 @@ switch($op) {
         }
     }
     else {
-        xoops_confirm(array('ok' => 1, 'id' => $_REQUEST['id'], 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('cat_title')));
+        xoops_confirm(array('ok' => 1, 'id' => intval($_REQUEST['id']), 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('cat_title')));
     }
     break;
 }

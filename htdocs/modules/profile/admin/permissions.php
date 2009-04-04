@@ -18,7 +18,7 @@ include 'header.php';
 xoops_cp_header();
 
 icms_adminMenu(5, "");
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : "edit";
+$op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : "edit";
 switch ($op) {
     case "visibility":
     header("Location: visibility.php");

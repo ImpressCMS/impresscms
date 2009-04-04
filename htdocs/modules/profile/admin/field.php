@@ -18,7 +18,7 @@ include 'header.php';
 xoops_cp_header();
 
 icms_adminMenu(3, "");
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? "edit" : 'list');
+$op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : (isset($_REQUEST['id']) ? "edit" : 'list');
 
 $profilefield_handler =& icms_getmodulehandler( 'field', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
 
@@ -116,7 +116,7 @@ switch($op) {
     break;
 
     case "edit":
-    $obj =& $profilefield_handler->get($_REQUEST['id']);
+    $obj =& $profilefield_handler->get(intval($_REQUEST['id']));
     if (!$obj->getVar('field_config') && !$obj->getVar('field_show') && !$obj->getVar('field_edit')) { //If no configs exist
         redirect_header('field.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
     }
@@ -195,57 +195,57 @@ switch($op) {
     }
     $redirect_to_edit = false;
     if (isset($_REQUEST['id'])) {
-        $obj =& $profilefield_handler->get($_REQUEST['id']);
+        $obj =& $profilefield_handler->get(intval($_REQUEST['id']));
         if (!$obj->getVar('field_config') && !$obj->getVar('field_show') && !$obj->getVar('field_edit')) { //If no configs exist
             redirect_header('admin.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
         }
     }
     else {
         $obj =& $profilefield_handler->create();
-        $obj->setVar('field_name', $_REQUEST['field_name']);
+        $obj->setVar('field_name', trim($_REQUEST['field_name']));
         $obj->setVar('field_moduleid', $xoopsModule->getVar('mid'));
         $obj->setVar('field_show', 1);
         $obj->setVar('field_edit', 1);
         $obj->setVar('field_config', 1);
         $redirect_to_edit = true;
     }
-    $obj->setVar('field_title', $_REQUEST['field_title']);
-    $obj->setVar('field_description', $_REQUEST['field_description']);
+    $obj->setVar('field_title', trim($_REQUEST['field_title']));
+    $obj->setVar('field_description', trim($_REQUEST['field_description']));
     if ($obj->getVar('field_config')) {
-        $obj->setVar('field_type', $_REQUEST['field_type']);
+        $obj->setVar('field_type', trim($_REQUEST['field_type']));
         if (isset($_REQUEST['field_valuetype'])) {
-            $obj->setVar('field_valuetype', $_REQUEST['field_valuetype']);
+            $obj->setVar('field_valuetype', trim($_REQUEST['field_valuetype']));
         }
         $options = $obj->getVar('field_options');
         if (isset($_REQUEST['addOption']) && $_REQUEST['addOption']['value'] != "") {
             if ($_REQUEST['addOption']['key'] == "") {
-                $_REQUEST['addOption']['key'] = $_REQUEST['addOption']['value'];
+                $_REQUEST['addOption']['key'] = trim($_REQUEST['addOption']['value']);
             }
-            $options[$_REQUEST['addOption']['key']] = $_REQUEST['addOption']['value'];
+            $options[$_REQUEST['addOption']['key']] = trim($_REQUEST['addOption']['value']);
             $redirect_to_edit = true;
         }
         if (isset($_REQUEST['removeOptions']) && is_array($_REQUEST['removeOptions'])) {
             foreach ($_REQUEST['removeOptions'] as $index) {
-                unset($options[$index]);
+                unset(trim($options[$index]));
             }
             $redirect_to_edit = true;
         }
         $obj->setVar('field_options', $options);
     }
     if ($obj->getVar('field_edit')) {
-        $required = isset($_REQUEST['field_required']) ? $_REQUEST['field_required'] : 0;
+        $required = isset($_REQUEST['field_required']) ? intval($_REQUEST['field_required']) : 0;
         $obj->setVar('field_required', $required); //0 = no, 1 = yes
         if (isset($_REQUEST['field_maxlength'])) {
-            $obj->setVar('field_maxlength', $_REQUEST['field_maxlength']);
+            $obj->setVar('field_maxlength', intval($_REQUEST['field_maxlength']));
         }
         if (isset($_REQUEST['field_default'])) {
             //Check for multiple selections
             if (is_array($_REQUEST['field_default'])) {
 // MPB ADD/EDIT - START
                 if ('datetime' == $obj->getVar('field_type')) {
-                    $obj->setVar('field_default',strtotime($_REQUEST['field_default']['date']) + $_REQUEST['field_default']['time']);
+                    $obj->setVar('field_default',intval(strtotime($_REQUEST['field_default']['date'])) + intval($_REQUEST['field_default']['time']));
                 } else {
-                    $obj->setVar('field_default', serialize($_REQUEST['field_default']));
+                    $obj->setVar('field_default', intval(serialize($_REQUEST['field_default'])));
                 }
 // MPB ADD/EDIT - END
             }
@@ -254,7 +254,7 @@ switch($op) {
                 if ('date' == $obj->getVar('field_type') || 'longdate' == $obj->getVar('field_type')) {
                     $obj->setVar('field_default',strtotime($_REQUEST['field_default']));
                 } else {
-                    $obj->setVar('field_default', $_REQUEST['field_default']);
+                    $obj->setVar('field_default', trim($_REQUEST['field_default']));
                 }
 // MPB ADD/EDIT - END
             }
@@ -267,15 +267,15 @@ switch($op) {
     }
 
     if ($obj->getVar('field_show')) {
-        $obj->setVar('field_weight', $_REQUEST['field_weight']);
-        $obj->setVar('catid', $_REQUEST['field_category']);
+        $obj->setVar('field_weight', intval($_REQUEST['field_weight']));
+        $obj->setVar('catid', intval($_REQUEST['field_category']));
     }
     
     if (isset($_REQUEST['exportable'])) {
-        $obj->setVar('exportable', $_REQUEST['exportable']);
+        $obj->setVar('exportable', intval($_REQUEST['exportable']));
     }
     if ($obj->getVar('field_edit') && isset($_REQUEST['step_id'])) {
-        $obj->setVar('step_id', $_REQUEST['step_id']);
+        $obj->setVar('step_id', intval($_REQUEST['step_id']));
     }
     if ($profilefield_handler->insert($obj)) {
         $groupperm_handler =& xoops_gethandler('groupperm');
@@ -342,7 +342,7 @@ switch($op) {
     break;
 
     case "delete":
-    $obj =& $profilefield_handler->get($_REQUEST['id']);
+    $obj =& $profilefield_handler->get(intval($_REQUEST['id']));
     if (!$obj->getVar('field_config')) {
         redirect_header('index.php', 2, _PROFILE_AM_FIELDNOTCONFIGURABLE);
     }
@@ -364,7 +364,7 @@ switch($op) {
         }
     }
     else {
-        xoops_confirm(array('ok' => 1, 'id' => $_REQUEST['id'], 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('field_title')));
+        xoops_confirm(array('ok' => 1, 'id' => intval($_REQUEST['id']), 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('field_title')));
     }
     break;
 }

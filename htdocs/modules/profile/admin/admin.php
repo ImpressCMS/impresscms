@@ -83,7 +83,7 @@ if (!is_dir(XOOPS_ROOT_PATH."/uploads/".basename(  dirname(  dirname( __FILE__ )
 
 echo "<tr><td class='odd'><img src='../images/messagebox_info.gif'> ".sprintf(_MA_PROFILE_MAXBYTESPHPINI,ini_get('post_max_size'))."</td></tr>";     
 if (function_exists('memory_get_usage')){
-echo "<tr><td class='even'><img src='../images/messagebox_info.gif'> "._MA_PROFILE_MEMORYLIMIT." ".memory_get_usage()."</td></tr>";     
+echo "<tr><td class='even'><img src='../images/messagebox_info.gif'> "._MA_PROFILE_MEMORYLIMIT." ".icms_convert_size(memory_get_usage())."</td></tr>";     
 }
 echo "</table>";
 xoops_cp_footer();

@@ -19,7 +19,7 @@ xoops_cp_header();
 
 icms_adminMenu(4, "");
 
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? "edit" : 'list');
+$op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : (isset($_REQUEST['id']) ? "edit" : 'list');
 
 $handler =& icms_getmodulehandler( 'regstep', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
 switch ($op) {
@@ -35,22 +35,22 @@ switch ($op) {
         break;
 
     case "edit":
-        $obj =& $handler->get($_REQUEST['id']);
+        $obj =& $handler->get(intval($_REQUEST['id']));
         $form =& $obj->getForm();
         $form->display();
         break;
 
     case "save":
         if (isset($_REQUEST['id'])) {
-            $obj =& $handler->get($_REQUEST['id']);
+            $obj =& $handler->get(intval($_REQUEST['id']));
         }
         else {
             $obj =& $handler->create();
         }
-        $obj->setVar('step_name', $_REQUEST['step_name']);
-        $obj->setVar('step_order', $_REQUEST['step_order']);
-        $obj->setVar('step_intro', $_REQUEST['step_intro']);
-        $obj->setVar('step_save', $_REQUEST['step_save']);
+        $obj->setVar('step_name', trim($_REQUEST['step_name']));
+        $obj->setVar('step_order', intval($_REQUEST['step_order']));
+        $obj->setVar('step_intro', intval($_REQUEST['step_intro']));
+        $obj->setVar('step_save', intval($_REQUEST['step_save']));
         if ($handler->insert($obj)) {
             redirect_header('step.php', 3, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_STEP));
         }
@@ -70,7 +70,7 @@ switch ($op) {
             }
         }
         else {
-            xoops_confirm(array('ok' => 1, 'id' => $_REQUEST['id'], 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('step_name')));
+            xoops_confirm(array('ok' => 1, 'id' => intval($_REQUEST['id']), 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('step_name')));
         }
         break;
 }

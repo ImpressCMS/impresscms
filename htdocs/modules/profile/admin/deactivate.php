@@ -21,7 +21,7 @@ if (!isset($_REQUEST['uid'])) {
     redirect_header("index.php", 2, _PROFILE_AM_NOSELECTION);
 }
 $member_handler = xoops_gethandler('member');
-$user = $member_handler->getUser($_REQUEST['uid']);
+$user = $member_handler->getUser(intval($_REQUEST['uid']));
 if (!$user || $user->isNew()) {
     redirect_header("index.php", 2, _PROFILE_AM_USERDONEXIT);
 }
@@ -29,7 +29,7 @@ if (!$user || $user->isNew()) {
 if (in_array(ICMS_GROUP_ADMIN, $user->getGroups())) {
     redirect_header("index.php", 2, _PROFILE_AM_CANNOTDEACTIVATEWEBMASTERS);
 }
-$user->setVar('level', $_REQUEST['level']);
+$user->setVar('level', intval($_REQUEST['level']));
 if ($member_handler->insertUser($user)) {
     if ($_REQUEST['level'] == 1) {
         $message = _PROFILE_AM_USER_ACTIVATED;

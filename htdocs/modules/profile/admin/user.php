@@ -19,7 +19,7 @@ xoops_cp_header();
 
 icms_adminMenu(1, '');
 //$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : 'list';
+$op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : 'list';
 if($op == 'editordelete') {
     $op = isset($_REQUEST['delete'])?'delete':'edit';
 }
@@ -55,7 +55,7 @@ switch($op) {
         if (@!include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/'.$xoopsConfig['language'].'/main.php')) {
             include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/english/main.php');
         }
-        $obj =& $handler->getUser($_REQUEST['id']);
+        $obj =& $handler->getUser(intval($_REQUEST['id']));
         if (in_array(ICMS_GROUP_ADMIN, $obj->getGroups()) && !in_array(ICMS_GROUP_ADMIN, $xoopsUser->getGroups())) {
             // If not webmaster trying to edit a webmaster - disallow
             redirect_header('user.php', 3, _PROFILE_AM_CANNOTEDITWEBMASTERS);
@@ -117,8 +117,8 @@ switch($op) {
             }
             $user->setVar('level', intval($_POST['level']));
         }
-        $user->setVar('uname', $_POST['uname']);
-        $user->setVar('login_name', $_POST['login_name']);
+        $user->setVar('uname', trim($_POST['uname']));
+        $user->setVar('login_name', trim($_POST['login_name']));
         include_once('../include/functions.php');
         $stop = userCheck($user);
         if ($stop != '') {
@@ -139,11 +139,11 @@ switch($op) {
             $fieldname = $fields[$i]->getVar('field_name');
             if (in_array($fields[$i]->getVar('fieldid'), $editable_fields) && ($fields[$i]->getvar('field_type') == 'image' || isset($_REQUEST[$fieldname]))) {
                 if (in_array($fieldname, $profile_handler->getUserVars())) {
-                    $value = $fields[$i]->getValueForSave($_REQUEST[$fieldname], $user->getVar($fieldname, 'n'));
+                    $value = $fields[$i]->getValueForSave(trim($_REQUEST[$fieldname]), $user->getVar($fieldname, 'n'));
                     $user->setVar($fieldname, $value);
                 }
                 else {
-                    $value = $fields[$i]->getValueForSave((isset($_REQUEST[$fieldname]) ? $_REQUEST[$fieldname] : ''), $profile->getVar($fieldname, 'n'));
+                    $value = $fields[$i]->getValueForSave((isset($_REQUEST[$fieldname]) ? trim($_REQUEST[$fieldname]) : ''), $profile->getVar($fieldname, 'n'));
                     $profile->setVar($fieldname, $value);
                 }
             }
@@ -222,7 +222,7 @@ switch($op) {
 
         }
         else {
-            xoops_confirm(array('ok' => 1, 'id' => $_REQUEST['id'], 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('uname').' ('.$obj->getVar('email').')'));
+            xoops_confirm(array('ok' => 1, 'id' => intval($_REQUEST['id']), 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('uname').' ('.$obj->getVar('email').')'));
         }
         break;
 }
