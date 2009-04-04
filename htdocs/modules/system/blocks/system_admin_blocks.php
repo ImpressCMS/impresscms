@@ -1,5 +1,15 @@
 <?php
 /**
+* System admin blocks
+*
+* @copyright      http://www.impresscms.org/ The ImpressCMS Project
+* @license         LICENSE.txt
+* @package	Administration
+* @since            1.3
+* @version		$Id$
+*/
+
+/**
  * Admin Warnings Block
  * 
  * @copyright The ImpressCMS Project <http://www.impresscms.org> 
