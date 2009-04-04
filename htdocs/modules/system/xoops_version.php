@@ -10,7 +10,7 @@
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author		modified by marcan <marcan@impresscms.org>
-* @version		$Id: admin.php 1683 2008-04-19 13:50:00Z malanciault $
+* @version		$Id$
 */
 
 $modversion['name'] = _MI_SYSTEM_NAME;
@@ -380,4 +380,5 @@ $modversion['hasMain'] = 0;
 $modversion['hasSearch'] = 1;
 $modversion['search']['file'] = "include/search.inc.php";
 $modversion['search']['func'] = "search_content";
+
 ?>
