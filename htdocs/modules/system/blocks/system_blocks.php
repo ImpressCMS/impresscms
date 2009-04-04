@@ -1,34 +1,20 @@
 <?php
 // $Id: system_blocks.php 1129 2007-10-24 09:45:47Z dugris $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+* Good ol' system blocks
+*
+* @copyright      http://www.impresscms.org/ The ImpressCMS Project
+* @license         LICENSE.txt
+* @package	Administration
+* @since            1.0
+* @version		$Id$
+*/
 
+/**
+* Shows which users and guests are online
+*
+* @return mixed $block or false if no users were online
+*/
 function b_system_online_show()
 {
     global $xoopsUser, $xoopsModule;
@@ -80,6 +66,11 @@ function b_system_online_show()
     }
 }
 
+/**
+* Shows the login block
+*
+* @return mixed $block or false if no users were online
+*/
 function b_system_login_show()
 {
     global $xoopsUser, $xoopsConfig;
@@ -122,6 +113,11 @@ function b_system_login_show()
     return false;
 }
 
+/**
+* Shows the main menu block
+*
+* @return array $block the main menu block array
+*/
 function b_system_main_show()
 {
     $config_handler =& xoops_gethandler('config');
@@ -161,6 +157,11 @@ function b_system_main_show()
     return $block;
 }
 
+/**
+* Shows the search block
+*
+* @return array $block The search block
+*/
 function b_system_search_show()
 {
     $block = array();
@@ -169,6 +170,11 @@ function b_system_search_show()
     return $block;
 }
 
+/**
+* Shows the user menu block
+*
+* @return mixed $block or false if the user is a guest
+*/
 function b_system_user_show()
 {
     global $xoopsUser;
@@ -190,6 +196,12 @@ function b_system_user_show()
     return false;
 }
 
+/**
+* Shows information about the user
+*
+* @param array $options The block options
+* @return array $block the block array
+*/
 function b_system_info_show($options)
 {
     global $xoopsConfig, $xoopsUser;
@@ -227,6 +239,12 @@ function b_system_info_show($options)
     return $block;
 }
 
+/**
+* Shows the latest members that were added
+*
+* @param array $options The block options
+* @return array $block The newest members block array
+*/
 function b_system_newmembers_show($options)
 {
     $block = array();
@@ -261,6 +279,12 @@ function b_system_newmembers_show($options)
     return $block;
 }
 
+/**
+* Shows the top posters block
+*
+* @param array $options The block options
+* @return mixed $block or false if no users were online
+*/
 function b_system_topposters_show($options)
 {
     $block = array();
@@ -290,7 +314,12 @@ function b_system_topposters_show($options)
     return $block;
 }
 
-
+/**
+* Shows The latest comments
+*
+* @param array $options The block options
+* @return array $block the block array
+*/
 function b_system_comments_show($options)
 {
     $block = array();
@@ -351,6 +380,12 @@ function b_system_comments_show($options)
 }
 
 // RMV-NOTIFY
+/**
+* Shows The latest notifications
+*
+* @param array $options The block options
+* @return array $block the block array
+*/
 function b_system_notification_show()
 {
     global $xoopsConfig, $xoopsUser, $xoopsModule;
@@ -395,6 +430,11 @@ function b_system_notification_show()
     return $block;
 }
 
+/**
+* Shows The multilanguage (flags) block
+*
+* @return array $block the block array
+*/
 function b_system_multilanguage_show()
 {
     $block = array();
@@ -403,6 +443,12 @@ function b_system_multilanguage_show()
     return $block;
 }
 
+/**
+* Shows the form to edit the comments
+*
+* @param array $options The block options
+* @return string $form The edit comments form HTML string
+*/
 function b_system_comments_edit($options)
 {
     $inputtag = "<input type='text' name='options[]' value='".intval($options[0])."' />";
@@ -410,6 +456,12 @@ function b_system_comments_edit($options)
     return $form;
 }
 
+/**
+* Shows the form to edit the top posters
+*
+* @param array $options The block options
+* @return string $form The edit top posters form HTML string
+*/
 function b_system_topposters_edit($options)
 {
     include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
@@ -440,6 +492,12 @@ function b_system_topposters_edit($options)
     return $form;
 }
 
+/**
+* Shows the form to edit the newest members
+*
+* @param array $options The block options
+* @return string $form The edit newest members form HTML string
+*/
 function b_system_newmembers_edit($options)
 {
     $inputtag = "<input type='text' name='options[0]' value='".$options[0]."' />";
@@ -465,6 +523,12 @@ function b_system_newmembers_edit($options)
     return $form;
 }
 
+/**
+* Shows the form to edit the sysem info
+*
+* @param array $options The block options
+* @return string $form The edit system info form HTML string
+*/
 function b_system_info_edit($options)
 {
     $form = _MB_SYSTEM_PWWIDTH."&nbsp;";
@@ -487,6 +551,12 @@ function b_system_info_edit($options)
     return $form;
 }
 
+/**
+* Shows the activated themes
+*
+* @param array $options The block options
+* @return array $block The themes block array
+*/
 function b_system_themes_show($options)
 {
     global $xoopsConfig;
@@ -509,6 +579,12 @@ function b_system_themes_show($options)
     return $block;
 }
 
+/**
+* Shows the form to edit the themes
+*
+* @param array $options The block options
+* @return string $form The edit themes form HTML string
+*/
 function b_system_themes_edit($options)
 {
 
