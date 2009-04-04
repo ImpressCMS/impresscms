@@ -1,19 +1,19 @@
 <?php
 // $Id$
 /**
-* Short summary of the purpose of this file
-*
-* Longer description about this page
-*
-* @copyright      http://www.impresscms.org/ The ImpressCMS Project
-* @license         LICENSE.txt
-* @author Kazumi Ono (AKA onokazu)
-* @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* The beginning of the admin interface for ImpressCMS
+* 
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		LICENSE.txt
 * @package	Administration
 * @subpackage System
-* @since            1.0
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
 * @version		$Id$
 */
+
 
 include_once '../../include/functions.php';
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
