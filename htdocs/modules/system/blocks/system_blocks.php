@@ -2,11 +2,14 @@
 // $Id: system_blocks.php 1129 2007-10-24 09:45:47Z dugris $
 /**
 * Good ol' system blocks
-*
-* @copyright      http://www.impresscms.org/ The ImpressCMS Project
-* @license         LICENSE.txt
+* 
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		LICENSE.txt
 * @package	Administration
-* @since            1.0
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
 * @version		$Id$
 */
 
