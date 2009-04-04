@@ -110,6 +110,12 @@ if( ! preg_match( '?'.preg_quote(XOOPS_ROOT_PATH,'?').'(/common/)?' , $_SERVER['
 
 
 // ob filter
+/**
+* The multilanguage function
+*
+* @param string $s The passed string
+* @return string $s	The (translated?) string
+*/
 function easiestml( $s )
 {
 	global $easiestml_lang , $xoopsUser, $im_multilanguageConfig;
