@@ -18,12 +18,25 @@ if (!defined("ICMS_ROOT_PATH")) {
     die("ICMS root path not defined");
 }
 
+/**
+* Shows the social bookmarks
+*
+* @param array $options Array for options
+* @return array $block The block array
+*/
 function b_social_bookmarks($options){
 	include_once ICMS_ROOT_PATH . '/kernel/icmsaddto.php';
 	$icmsaddto = new IcmsAddTo($options[0]);
 	$block = $icmsaddto->renderForBlock();
 	return $block;
 }
+
+/**
+* Shows the edit options for the social bookmarks
+*
+* @param array $options Shows the options for the social bookmarks edit form
+* @return string $form The rendered edit form HTML string
+*/
 function b_social_bookmarks_edit($options)
 {
 	include_once ICMS_ROOT_PATH . "/class/xoopsformloader.php";
