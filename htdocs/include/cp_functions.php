@@ -48,6 +48,7 @@ function icms_cp_header(){
   require_once ICMS_ROOT_PATH . '/class/template.php';
   require_once ICMS_ROOT_PATH . '/class/theme.php';
   require_once ICMS_ROOT_PATH . '/class/theme_blocks.php';
+if(!isset($icmsPreloadHandler)) {$icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];}
 
 	$icmsAdminTpl = new XoopsTpl();
 
@@ -74,6 +75,9 @@ function icms_cp_header(){
     ) );
     $icmsAdminTpl = $xoTheme->template;
 
+	// ################# Preload Trigger startOutputInit ##############
+	$icmsPreloadHandler->triggerEvent('adminHeader');
+	
 	$xoTheme->addScript( ICMS_URL.'/include/xoops.js', array( 'type' => 'text/javascript' ) );
 	$xoTheme->addScript( '' ,array( 'type' => 'text/javascript' ) , 'startList = function() {
 	if (document.all&&document.getElementById) {
@@ -392,9 +396,6 @@ function xoopsfwrite() {
  * This array will be saved, by the function xoops_module_write_admin_menu, in a cache file 
  * to preserve resources of the server and to maintain compatibility with some modules Xoops.
  * 
- * @since ImpressCMS 1.1
- * @version $Id$
- * 
  * @author TheRplima
  * 
  * @return array (content of admin panel dropdown menus)
@@ -411,22 +412,22 @@ function impresscms_get_adminmenu() {
 	# Control Panel Home menu
 	#########################################################################
 	$i = 0;
-	$menu [$i] ['link'] = ICMS_URL . "/admin.php";
+	$menu [$i] ['link'] = XOOPS_URL . "/admin.php";
 	$menu [$i] ['title'] = _CPHOME;
 	$menu [$i] ['absolute'] = 1;
-	$menu [$i] ['small'] = ICMS_URL . "/modules/system/images/mini_cp.png";
+	$menu [$i] ['small'] = XOOPS_URL . "/modules/system/images/mini_cp.png";
 	$i ++;
 	
-	$menu [$i] ['link'] = ICMS_URL;
+	$menu [$i] ['link'] = XOOPS_URL;
 	$menu [$i] ['title'] = _YOURHOME;
 	$menu [$i] ['absolute'] = 1;
-	$menu [$i] ['small'] = ICMS_URL . "/modules/system/images/home.png";
+	$menu [$i] ['small'] = XOOPS_URL . "/modules/system/images/home.png";
 	$i ++;
 	
-	$menu [$i] ['link'] = ICMS_URL . "/user.php?op=logout";
+	$menu [$i] ['link'] = XOOPS_URL . "/user.php?op=logout";
 	$menu [$i] ['title'] = _LOGOUT;
 	$menu [$i] ['absolute'] = 1;
-	$menu [$i] ['small'] = ICMS_URL . '/images/logout.png';
+	$menu [$i] ['small'] = XOOPS_URL . '/images/logout.png';
 	
 	$admin_menu [$cont] ['id'] = 'cphome';
 	$admin_menu [$cont] ['text'] = _CPHOME;
@@ -451,22 +452,76 @@ function impresscms_get_adminmenu() {
 	
 	$admin_menu [$cont] ['id'] = 'opsystem';
 	$admin_menu [$cont] ['text'] = _SYSTEM;
-	$admin_menu [$cont] ['link'] = '';
+	$admin_menu [$cont] ['link'] = XOOPS_URL . '/modules/system/admin.php';
 	$admin_menu [$cont] ['menu'] = $menu;
 	$cont ++;
 	#########################################################################
 	# end
 	#########################################################################
 	
+
+	#########################################################################
+	# Modules menu
+	#########################################################################
+	$module_handler = & xoops_gethandler ( 'module' );
+	$criteria = new CriteriaCompo ( );
+	$criteria->add ( new Criteria ( 'hasadmin', 1 ) );
+	$criteria->add ( new Criteria ( 'isactive', 1 ) );
+	$criteria->setSort ( 'mid' );
+	$modules = $module_handler->getObjects ( $criteria );
+	foreach ( $modules as $module ) {
+		$rtn = array ( );
+		$inf = & $module->getInfo ();
+		$rtn ['link'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . (isset ( $inf ['adminindex'] ) ? $inf ['adminindex'] : '');
+		$rtn ['title'] = $module->name ();
+		$rtn ['dir'] = $module->dirname ();
+		if (isset ( $inf ['iconsmall'] ) && $inf ['iconsmall'] != '') {
+			$rtn ['small'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconsmall'];
+		}
+		if (isset ( $inf ['iconbig'] ) && $inf ['iconbig'] != '') {
+			$rtn ['iconbig'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconbig'];
+		}
+		$rtn ['absolute'] = 1;
+		$module->loadAdminMenu ();
+		if (is_array ( $module->adminmenu ) && count ( $module->adminmenu ) > 0) {
+			$rtn ['hassubs'] = 1;
+			$rtn ['subs'] = array ( );
+			foreach ( $module->adminmenu as $item ) {
+				$item ['link'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . $item ['link'];
+				$rtn ['subs'] [] = $item;
+			}
+		} else {
+			$rtn ['hassubs'] = 0;
+			unset ( $rtn ['subs'] );
+		}
+		$hasconfig = $module->getVar ( 'hasconfig' );
+		$hascomments = $module->getVar ( 'hascomments' );
+		if ((isset ( $hasconfig ) && $hasconfig == 1) || (isset ( $hascomments ) && $hascomments == 1)) {
+			$rtn ['hassubs'] = 1;
+			if (! isset ( $rtn ['subs'] )) {
+				$rtn ['subs'] = array ( );
+			}
+			$subs = array ('title' => _PREFERENCES, 'link' => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $module->mid () );
+			$rtn ['subs'] [] = $subs;
+		} else {
+			$rtn ['hassubs'] = 0;
+			unset ( $rtn ['subs'] );
+		}
+		if ($module->dirname () == 'system') {
+			$systemadm = true;
+		}
+		$modules_menu [] = $rtn;
+	}
+	
 	$admin_menu [$cont] ['id'] = 'modules';
 	$admin_menu [$cont] ['text'] = _MODULES;
-	$admin_menu [$cont] ['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin';
+	$admin_menu [$cont] ['link'] = XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin';
 	$admin_menu [$cont] ['menu'] = $modules_menu;
 	$cont ++;
 	#########################################################################
 	# end
 	#########################################################################
-
+	
 
 	#########################################################################
 	# ImpressCMS News Feed menu
@@ -477,57 +532,57 @@ function impresscms_get_adminmenu() {
 	$menu [$i] ['link'] = 'http://www.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_HOME;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	if ( _LANGCODE != 'en' ){
-  	$menu [$i] ['link'] = _IMPRESSCMS_LOCAL_SUPPORT;
-  	$menu [$i] ['title'] = _IMPRESSCMS_LOCAL_SUPPORT_TITLE;
-  	$menu [$i] ['absolute'] = 1;
-  	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
-  	$i ++;
-  }
+	$menu [$i] ['link'] = _IMPRESSCMS_LOCAL_SUPPORT;
+	$menu [$i] ['title'] = _IMPRESSCMS_LOCAL_SUPPORT_TITLE;
+	$menu [$i] ['absolute'] = 1;
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	$i ++;
+    }
 
 	$menu [$i] ['link'] = 'http://community.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_COMMUNITY;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	$menu [$i] ['link'] = 'http://addons.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_ADDONS;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	$menu [$i] ['link'] = 'http://wiki.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_WIKI;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	$menu [$i] ['link'] = 'http://blog.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_BLOG;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	$menu [$i] ['link'] = 'http://sourceforge.net/projects/impresscms/';
 	$menu [$i] ['title'] = _IMPRESSCMS_SOURCEFORGE;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	$menu [$i] ['link'] = 'http://www.impresscms.org/donations/';
 	$menu [$i] ['title'] = _IMPRESSCMS_DONATE;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i ++;
 	
-	$menu [$i] ['link'] = ICMS_URL . "/admin.php?rssnews=1";
+	$menu [$i] ['link'] = XOOPS_URL . "/admin.php?rssnews=1";
 	$menu [$i] ['title'] = _IMPRESSCMS_NEWS;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	$admin_menu [$cont] ['id'] = 'news';
@@ -538,7 +593,7 @@ function impresscms_get_adminmenu() {
 	#########################################################################
 	# end
 	#########################################################################
-
+	
 
 	return $admin_menu;
 }
