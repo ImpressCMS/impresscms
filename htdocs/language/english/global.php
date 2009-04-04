@@ -123,6 +123,10 @@ define('_FAILSAVEIMG', 'Failed storing image %s into the database');
 define('_NOCACHE', 'No Cache');
 define('_CLONE', 'Clone');
 define('_INVISIBLE', 'Invisible');
+define('_VISIBLE', 'Visible');
+define('_UP', 'Up');
+define('_DOWN', 'Down');
+define('_CONFIGURE', 'Configure');
 
 //%%%%%	File Name class/xoopsform/formmatchoption.php 	%%%%%
 define("_STARTSWITH", "Starts with");
@@ -307,6 +311,4 @@ define('_ENTERYOUTUBEURL', 'Enter YouTube url:');
 define('_ENTERHEIGHT', 'Enter frame\'s height');
 define('_ENTERWIDTH', 'Enter frame\'s width');
 define('_ENTERMEDIAURL', 'Enter media url:');
-define("_UP", 'Up');
-define("_DOWN", 'Down');
 ?>
