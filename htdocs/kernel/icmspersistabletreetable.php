@@ -7,7 +7,7 @@
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmspersistableobject.php 4909 2008-09-16 19:06:08Z malanciault $
+* @version		$Id$
 */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
