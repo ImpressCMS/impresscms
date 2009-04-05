@@ -1,19 +1,19 @@
 <?php
 /**
- * Admin ImpressCMS Block Positions
- *
- * List, add, edit and delete block objects
- *
- * @copyright	The ImpressCMS Project <http://www.impresscms.org>
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.2
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+* Admin ImpressCMS Block Positions
+*
+* List, add, edit and delete block objects
+*
+* @copyright	The ImpressCMS Project <http://www.impresscms.org>
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @since		1.2
+* @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
 * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
- * @version		$Id$
- */
+* @version		$Id$
+*/
 
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
-    exit(_CT_ACCESS_DENIED);
+	exit(_CT_ACCESS_DENIED);
 }
 
 function editblockposition($id = 0)
@@ -36,6 +36,7 @@ function editblockposition($id = 0)
 	$icmsAdminTpl->display('db:admin/blockspadmin/system_adm_blockspadmin.html');
 }
 
+
 $icms_blockposition_handler = xoops_getmodulehandler('blockspadmin');
 
 $clean_op = '';
@@ -48,7 +49,9 @@ if (isset($_POST['op'])) $clean_op = htmlentities($_POST['op']);
 $clean_id = isset($_GET['id']) ? (int) $_GET['id'] : 0 ;
 $clean_id = isset($_POST['id']) ? (int) $_POST['id'] : $clean_id;
 
+
 if (in_array($clean_op,$valid_op,true)){
+
   switch ($clean_op) {
    	case "mod":
   	case "changedField":
@@ -56,27 +59,27 @@ if (in_array($clean_op,$valid_op,true)){
   		icms_cp_header();
 
   		editblockposition($clean_id);
-  		break;
-  	case "addblockposition":
-          include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-          $controller = new IcmsPersistableController($icms_blockposition_handler);
-  		  $controller->storeFromDefaultForm(_AM_SYSTEM_BLOCKSPADMIN_CREATED, _AM_SYSTEM_BLOCKSPADMIN_MODIFIED);
+ 		break;
 
-  		break;
+  	case "addblockposition":
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController($icms_blockposition_handler);
+			$controller->storeFromDefaultForm(_AM_SYSTEM_BLOCKSPADMIN_CREATED, _AM_SYSTEM_BLOCKSPADMIN_MODIFIED);
+ 		break;
 
   	case "del":
-  	    include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-        $controller = new IcmsPersistableController($icms_blockposition_handler);
-  		$controller->handleObjectDeletion();
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController($icms_blockposition_handler);
+			$controller->handleObjectDeletion();
+ 		break;
 
-  		break;
   	default:
   		icms_cp_header();
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($icms_blockposition_handler, false);
   		$objectTable->addColumn(new IcmsPersistableColumn('pname'), 'center');
-		$objectTable->addColumn(new IcmsPersistableColumn('titlec', false, false, false, false, _CO_SYSTEM_BLOCKSPADMIN_TITLE));
-		$objectTable->addColumn(new IcmsPersistableColumn('description'));
+			$objectTable->addColumn(new IcmsPersistableColumn('titlec', false, false, false, false, _CO_SYSTEM_BLOCKSPADMIN_TITLE));
+			$objectTable->addColumn(new IcmsPersistableColumn('description'));
 
   		$objectTable->addIntroButton('addblockposition', 'admin.php?fct=blockspadmin&op=mod', _AM_SYSTEM_BLOCKSPADMIN_CREATE);
   		$objectTable->addQuickSearch(array('pname','title', 'description'));
@@ -87,8 +90,9 @@ if (in_array($clean_op,$valid_op,true)){
   		$icmsAdminTpl->assign('icms_blockposition_info', _AM_SYSTEM_BLOCKSPADMIN_INFO);
   		
   		$icmsAdminTpl->display('db:admin/blockspadmin/system_adm_blockspadmin.html');
-  		break;
+ 		break;
   }
   icms_cp_footer();
 }
+
 ?>
