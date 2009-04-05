@@ -10,7 +10,7 @@
 * @package		core
 * @since		1.1
 * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
-* @version		$Id: main.php 1244 2008-03-18 17:09:11Z TheRplima $
+* @version		$Id$
 */
 
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
