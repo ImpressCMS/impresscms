@@ -9,7 +9,7 @@
 * @package		core
 * @since		1.1
 * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
-* @version		$Id: xoops_version.php 1244 2008-03-18 17:09:11Z TheRplima $
+* @version		$Id$
 */
 
 $modversion['name'] = _MD_AM_BKPOSAD;
@@ -24,4 +24,5 @@ $modversion['image'] = "blockspadmin.gif";
 $modversion['hasAdmin'] = 1;
 $modversion['adminpath'] = "admin.php?fct=blockspadmin";
 $modversion['category'] = XOOPS_SYSTEM_BLOCKP;
+
 ?>
