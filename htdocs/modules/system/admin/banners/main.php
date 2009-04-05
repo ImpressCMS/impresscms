@@ -1,43 +1,35 @@
 <?php
-// $Id: main.php 669 2006-08-25 22:14:09Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-// ------------------------------------------------------------------------- //
+// $Id$
+/**
+* Administration of banners, mainfile
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	Administration
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
 
 if(!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {exit('Access Denied');}
 include_once ICMS_ROOT_PATH.'/modules/system/admin/banners/banners.php';
 include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 $allowedHTML = array('htmlcode');
-	if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
-	if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+
+if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'BannersAdmin');
+
 switch($op)
 {
 	case 'BannersAdmin':
 		BannersAdmin();
 	break;
-	
+
 	case 'BannersAdd':
 		if(!$GLOBALS['xoopsSecurity']->check())
 		{
@@ -58,7 +50,7 @@ switch($op)
 		$db->query($sql);
 		redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top',1,_AM_DBUPDATED);
 	break;
-	
+
 	case 'BannerAddClient':
 		if(!$GLOBALS['xoopsSecurity']->check())
 		{
@@ -77,13 +69,13 @@ switch($op)
 		$db->query($sql);
 		redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top',1,_AM_DBUPDATED);
 	break;
-	
+
 	case 'BannerFinishDelete':
 		xoops_cp_header();
 		xoops_confirm(array('op' => 'BannerFinishDelete2', 'bid' => intval($_GET['bid']), 'fct' => 'banners'), 'admin.php', _AM_SUREDELE);
 		xoops_cp_footer();
 	break;
-	
+
 	case 'BannerFinishDelete2':
 		$bid = isset($_POST['bid']) ? intval($_POST['bid']) : 0;
 		if($bid <= 0 | !$GLOBALS['xoopsSecurity']->check())
@@ -95,12 +87,12 @@ switch($op)
 		$db->query($sql);
 		redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top',1,_AM_DBUPDATED);
 	break;
-	
+
 	case 'BannerDelete':
 		$bid = isset($_GET['bid']) ? intval($_GET['bid']) : 0;
 		if($bid > 0) {BannerDelete($bid);}
 	break;
-	
+
 	case 'BannerDelete2':
 		$bid = isset($_POST['bid']) ? intval($_POST['bid']) : 0;
 		if($bid <= 0 | !$GLOBALS['xoopsSecurity']->check())
@@ -112,12 +104,12 @@ switch($op)
 		$db->query($sql);
 		redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top',1,_AM_DBUPDATED);
 	break;
-	
+
 	case 'BannerEdit':
 		$bid = isset($_GET['bid']) ? intval($_GET['bid']) : 0;
 		if($bid > 0) {BannerEdit($bid);}
 	break;
-	
+
 	case 'BannerChange':
 		$bid = isset($_POST['bid']) ? intval($_POST['bid']) : 0;
 		$cid = isset($_POST['cid']) ? intval($_POST['cid']) : 0;
@@ -137,12 +129,12 @@ switch($op)
 		$db->query($sql);
 		redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top',1,_AM_DBUPDATED);
 	break;
-	
+
 	case 'BannerClientDelete':
 		$cid = isset($_GET['cid']) ? intval($_GET['cid']) : 0;
 		if($cid > 0) {BannerClientDelete($cid);}
 	break;
-	
+
 	case 'BannerClientDelete2':
 		$cid = isset($_POST['cid']) ? intval($_POST['cid']) : 0;
 		$db =& Database::getInstance();
@@ -156,12 +148,12 @@ switch($op)
 		$db->query($sql);
 		redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top',1,_AM_DBUPDATED);
 	break;
-	
+
 	case 'BannerClientEdit':
 		$cid = isset($_GET['cid']) ? intval($_GET['cid']) : 0;
 		if($cid > 0) {BannerClientEdit($cid);}
 	break;
-	
+
 	case 'BannerClientChange':
 		$cid = isset($_POST['cid']) ? intval($_POST['cid']) : 0;
 		if($cid <= 0 | !$GLOBALS['xoopsSecurity']->check())
@@ -189,9 +181,10 @@ switch($op)
 		$db->query($sql);
 		redirect_header('admin.php?fct=banners&amp;op=BannersAdmin#top',1,_AM_DBUPDATED);
 	break;
-	
+
 	default:
 		BannersAdmin();
 	break;
 }
+
 ?>
