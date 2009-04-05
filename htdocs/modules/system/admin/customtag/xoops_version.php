@@ -7,11 +7,8 @@
 * @package		core
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: xoops_version.php 1955 2008-05-01 21:22:45Z malanciault $
+* @version		$Id$
 */
-
-
-
 
 $modversion['name'] = _MD_AM_CUSTOMTAGS;
 $modversion['version'] = "1.0";
@@ -25,4 +22,5 @@ $modversion['image'] = "banners.gif";
 $modversion['hasAdmin'] = 1;
 $modversion['adminpath'] = "admin.php?fct=customtag";
 $modversion['category'] = XOOPS_SYSTEM_CUSTOMTAGS;
+
 ?>
