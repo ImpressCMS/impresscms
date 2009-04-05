@@ -1,9 +1,7 @@
 <?php
 // $Id$
 /**
-* Administration of avatars, versionfile
-*
-* Longer description about this page
+* Administration of mailusers, versionfile
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt
