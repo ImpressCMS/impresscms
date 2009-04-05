@@ -6,7 +6,7 @@
  * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
  * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
  * @since 		ImpressCMS 1.2
- * @version		$Id: $
+ * @version		$Id$
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @author		Rodrigo Pereira Lima (aka therplima) <therplima@impresscms.org>
  */
@@ -134,50 +134,52 @@ class SystemBlocksadmin extends IcmsBlock {
 		return $rtn;
 	}
 	
-    /**
-     * getDeleteItemLink
-     * 
-     * Overwrited Method
-     *
-     * @param string $onlyUrl
-     * @param boolean $withimage
-     * @param boolean $userSide
-     * @return string
-     */
-    public function getDeleteItemLink($onlyUrl=false, $withimage=true, $userSide=false){ 
-	  	if($this->getVar('block_type') != 'C')
-	  		return "";
-    	$ret = ICMS_URL. "/modules/system/admin.php?fct=blocksadmin&op=del&" . $this->handler->keyName . "=" . $this->getVar($this->handler->keyName);
-		if ($onlyUrl) {
+	/**
+	* getDeleteItemLink
+	* 
+	* Overwrited Method
+	*
+	* @param string $onlyUrl
+	* @param boolean $withimage
+	* @param boolean $userSide
+	* @return string
+	*/
+	public function getDeleteItemLink($onlyUrl=false, $withimage=true, $userSide=false){ 
+		if($this->getVar('block_type') != 'C')
+		return "";
+			$ret = ICMS_URL. "/modules/system/admin.php?fct=blocksadmin&op=del&" . $this->handler->keyName . "=" . $this->getVar($this->handler->keyName);
+			if ($onlyUrl) {
 			return $ret;
 		}
 		elseif($withimage) {
 			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' style='vertical-align: middle;' alt='" . _CO_ICMS_DELETE . "'  title='" . _CO_ICMS_DELETE . "'/></a>";
 		}
 
-    	return "<a href='" . $ret . "'>" . $this->getVar($this->handler->identifierName) . "</a>";
-    }
-    
+		return "<a href='" . $ret . "'>" . $this->getVar($this->handler->identifierName) . "</a>";
+	}
+
+
+
 	/**
-     * Create the form for this object
-     *
-     * @return a {@link SmartobjectForm} object for this object
-     *
-     * @see IcmsPersistableObjectForm::IcmsPersistableObjectForm()
-     */
-    function getForm($form_caption, $form_name, $form_action=false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action=false, $captcha=false){
-    	if(!$this->isNew())
-    		$this->hideFieldFromForm('c_type');
-    	if( !$this->isNew() && $this->getVar('block_type') != 'C' )
-    		$this->hideFieldFromForm('content');
-        include_once ICMS_ROOT_PATH . "/class/icmsform/icmsform.php";
-        $form = new IcmsForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
-        return $form;
-    }
-    
+	 * Create the form for this object
+	 *
+	 * @return a {@link SmartobjectForm} object for this object
+	 *
+	 * @see IcmsPersistableObjectForm::IcmsPersistableObjectForm()
+	 */
+	function getForm($form_caption, $form_name, $form_action=false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action=false, $captcha=false){
+		if(!$this->isNew())
+			$this->hideFieldFromForm('c_type');
+		if( !$this->isNew() && $this->getVar('block_type') != 'C' )
+		$this->hideFieldFromForm('content');
+		include_once ICMS_ROOT_PATH . "/class/icmsform/icmsform.php";
+		$form = new IcmsForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
+		return $form;
+	}
+
 	function getSideControl(){
-	    include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
-	    $control = new XoopsFormSelect('','block_side[]',$this->getVar( 'side', 'e'));
+		include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
+		$control = new XoopsFormSelect('','block_side[]',$this->getVar( 'side', 'e'));
 		$positions = $this->handler->getBlockPositions( true );
 		$block_positions = array();
 		foreach ($positions as $k=>$position){
@@ -187,14 +189,14 @@ class SystemBlocksadmin extends IcmsBlock {
 		
 		return $control->render();
 	}
-	
+
 	function getWeightControl(){
-	    include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
-	    $control = new XoopsFormText('','block_weight[]',5,10,$this->getVar( 'weight', 'e'));
+		include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
+		$control = new XoopsFormText('','block_weight[]',5,10,$this->getVar( 'weight', 'e'));
 		$control->setExtra('style="text-align:center;"');
 		return $control->render();
 	}
-    
+
 }
 
 /**
@@ -226,75 +228,78 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
 //	public function getVisibleInArray(){
 //		/* TODO: To be implemented... */
 //  }
-    
-    public function getBlockPositionArray(){
-    	$block_positions = $this->getBlockPositions(true);
-    	$rtn = array();
-    	foreach ($block_positions as $k=>$v){
-  			$rtn[$k] = (defined($block_positions[$k]['title'])) ? constant($block_positions[$k]['title']) : $block_positions[$k]['title'];
-    	}
-    	return $rtn;
-    }
-    
-    public function getContentTypeArray(){
-    	return array('H' => _AM_HTML, 'P' => _AM_PHP, 'S' => _AM_AFWSMILE, 'T' => _AM_AFNOSMILE);
-    }
-    public function getBlockCacheTimeArray(){
-    	$rtn = array('0' => _NOCACHE, '30' => sprintf(_SECONDS, 30), '60' => _MINUTE, '300' => sprintf(_MINUTES, 5), '1800' => sprintf(_MINUTES, 30), '3600' => _HOUR, '18000' => sprintf(_HOURS, 5), '86400' => _DAY, '259200' => sprintf(_DAYS, 3), '604800' => _WEEK, '2592000' => _MONTH);
-    	return $rtn;
-    }
-    
+
+	public function getBlockPositionArray(){
+		$block_positions = $this->getBlockPositions(true);
+		$rtn = array();
+		foreach ($block_positions as $k=>$v){
+			$rtn[$k] = (defined($block_positions[$k]['title'])) ? constant($block_positions[$k]['title']) : $block_positions[$k]['title'];
+		}
+		return $rtn;
+	}
+
+	public function getContentTypeArray(){
+		return array('H' => _AM_HTML, 'P' => _AM_PHP, 'S' => _AM_AFWSMILE, 'T' => _AM_AFNOSMILE);
+	}
+
+	public function getBlockCacheTimeArray(){
+		$rtn = array('0' => _NOCACHE, '30' => sprintf(_SECONDS, 30), '60' => _MINUTE, '300' => sprintf(_MINUTES, 5), '1800' => sprintf(_MINUTES, 30), '3600' => _HOUR, '18000' => sprintf(_HOURS, 5), '86400' => _DAY, '259200' => sprintf(_DAYS, 3), '604800' => _WEEK, '2592000' => _MONTH);
+		return $rtn;
+	}
+
 	public function getModulesArray($full = false){
-    	if( !count($this->modules_name) ){
+		if( !count($this->modules_name) ){
 			$icms_module_handler = xoops_gethandler('module');
 			$installed_modules =& $icms_module_handler->getObjects();
 			foreach( $installed_modules as $module ){
 				$this->modules_name[$module->getVar('mid')]['name'] = $module->getVar('name');
 				$this->modules_name[$module->getVar('mid')]['dirname'] = $module->getVar('dirname');
-			}	
+			}
 		}
+
 		$rtn = $this->modules_name;
 		if(!$full)
 			foreach($this->modules_name as $key => $module)
 				$rtn[$key] = $module['name'];
-    	return $rtn;
-    }
-    
-    public function getModuleName($mid){
-    	if($mid == 0)
-    		return '';
-    	$modules = $this->getModulesArray();	
+		return $rtn;
+	}
+
+
+	public function getModuleName($mid){
+		if($mid == 0)
+		return '';
+		$modules = $this->getModulesArray();	
 		$rtn = $modules[$mid];
 		return $rtn;	
-    }
+	}
 
 	public function getModuleDirname($mid){
-    	$modules = $this->getModulesArray(true);	
+		$modules = $this->getModulesArray(true);	
 		$rtn = $modules[$mid]['dirname'];
 		return $rtn;	
-    }
-    
-    public function upWeight( $bid ){
-    	$blockObj = $this->get($bid);
-    	$weight = $blockObj->getVar('weight','n') - 1;
-  		$blockObj->setVar('weight', $weight);
-  		$this->insert($blockObj, true);
-    }
-    
+	}
+
+	public function upWeight( $bid ){
+		$blockObj = $this->get($bid);
+		$weight = $blockObj->getVar('weight','n') - 1;
+		$blockObj->setVar('weight', $weight);
+		$this->insert($blockObj, true);
+	}
+
 	public function downWeight( $bid ){
-    	$blockObj = $this->get($bid);
-    	$weight = $blockObj->getVar('weight' ,'n') + 1;
-  		$blockObj->setVar('weight', $weight);  
-  		$this->insert($blockObj, true);
-    }	
+		$blockObj = $this->get($bid);
+		$weight = $blockObj->getVar('weight' ,'n') + 1;
+		$blockObj->setVar('weight', $weight);  
+		$this->insert($blockObj, true);
+	}
 
 	public function changeVisible( $bid ){
-    	$blockObj = $this->get($bid);
-    	if($blockObj->getVar('visible' ,'n'))
-  			$blockObj->setVar('visible', 0);  
-  		else
-  			$blockObj->setVar('visible', 1);
-  		$this->insert($blockObj, true);
-    }
+		$blockObj = $this->get($bid);
+		if($blockObj->getVar('visible' ,'n'))
+		$blockObj->setVar('visible', 0);  
+		else
+		$blockObj->setVar('visible', 1);
+		$this->insert($blockObj, true);
+	}
 }
 ?>
