@@ -7,7 +7,7 @@
 * @package		core
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: main.php 6931 2008-11-15 13:49:11Z pesian_stranger $
+* @version		$Id$
 */
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
     exit("Access Denied");
