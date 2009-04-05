@@ -1,4 +1,19 @@
 <?php
+/**
+* Administration of images, preview file
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	Administration
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
+
 include('../../../../mainfile.php');
 include(ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.inc.php");
 include(ICMS_ROOT_PATH."/kernel/image.php");
@@ -58,4 +73,5 @@ if (!is_null($filter)){
 		echo $img->asString('png');
 	}
 }
+
 ?>
