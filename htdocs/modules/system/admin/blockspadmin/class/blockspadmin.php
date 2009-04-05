@@ -4,9 +4,10 @@
 *
 * @copyright      http://www.impresscms.org/ The ImpressCMS Project
 * @license         LICENSE.txt
-* @package	(use an appropriate package name)
-* @since            1.2
-* @author		UnderDog <underdog@impresscms.org>
+* @package	Administration
+* @since	1.2
+* @author	Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
+* @author	modified by UnderDog <underdog@impresscms.org>
 * @version		$Id$
 */
 
