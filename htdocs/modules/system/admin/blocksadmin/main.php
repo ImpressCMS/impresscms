@@ -7,7 +7,7 @@
  * @copyright	The ImpressCMS Project <http://www.impresscms.org>
  * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html> 
  * @since		ImpressCMS 1.2
- * @version		$Id: $
+ * @version		$Id$
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 
