@@ -7,8 +7,9 @@
  * @package		core
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: customtag.php 4731 2008-09-07 11:22:08Z pesian_stranger $
+ * @version		$Id$
  */
+
 if (! defined ( "ICMS_ROOT_PATH" ))
 	die ( "ImpressCMS root path not defined" );
 
@@ -134,6 +135,7 @@ class SystemCustomtag extends IcmsPersistableObject {
 		return $ret;
 	}
 }
+
 class SystemCustomtagHandler extends IcmsPersistableObjectHandler {
 	
 	var $objects = false;
