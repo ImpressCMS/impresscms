@@ -3004,15 +3004,15 @@ function remove_usersxdays (){
  */
 function icms_convert_size($size){
 	if ($size >= 1073741824){
-		$ret = ((($size/1024)/1024)/1024).' '._CORE_GIGABYTES_SHORTEN;
+		$ret = round(((($size/1024)/1024)/1024),1).' '._CORE_GIGABYTES_SHORTEN;
 	}elseif($size >= 1048576 && $size < 1073741824){
-		$ret = (($size/1024)/1024).' '._CORE_MEGABYTES_SHORTEN;
+		$ret = round((($size/1024)/1024),1).' '._CORE_MEGABYTES_SHORTEN;
 	}elseif($size >= 1024 && $size < 1048576){
-		$ret = ($size/1024).' '._CORE_KILOBYTES_SHORTEN;
+		$ret = round(($size/1024),1).' '._CORE_KILOBYTES_SHORTEN;
 	}else{
 		$ret = ($size).' '._CORE_BYTES;
 	}
-	return icms_conv_nr2local(round($ret,1));
+	return icms_conv_nr2local($ret);
 }
 
 /**
@@ -3140,11 +3140,12 @@ function icms_getenv($key) {
 	return $ret;
 }
 
+
 /*
-* Gets environment key from the $_SERVER or $_ENV superglobal
+* Gets the status of a module to see if it's active or not.
 * 
-* @param string  $key  The key to get
-* @param string  $ret  The retrieved key
+* @param string $module_name  The module's name to get
+* @param bool True if module exists and is active, otherwise false
 */
 function icms_get_module_status($module_name){
 	$module_handler = xoops_gethandler('module');
@@ -3169,7 +3170,7 @@ function one_wordwrap($string,$width=false){
 	$s=explode(" ", $string);
 	foreach ($s as $k=>$v) {
 	$cnt=strlen($v);
-	if($cnt>$width) $v=wordwrap($v, $width, ' ', true);
+	if($cnt>$width) $v=icms_wordwrap($v, $width, ' ', true);
 		$new_string.="$v ";
 	}
 	return $new_string;

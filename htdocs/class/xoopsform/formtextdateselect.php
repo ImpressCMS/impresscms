@@ -73,6 +73,7 @@ class XoopsFormTextDateSelect extends XoopsFormText
 				});
 			</script>";
 		}
+		return $result;
 	}
 }
 
