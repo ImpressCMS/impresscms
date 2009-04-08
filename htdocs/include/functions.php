@@ -3237,4 +3237,35 @@ function icms_unlinkRecursive($dir, $deleteRootToo)
   
    return;
 }
+
+/**
+ * Adds required jQuery files to header for Password meter.
+ *
+ */
+function icms_PasswordMeter(){
+    global $xoTheme;
+	$config_handler =& xoops_gethandler('config');
+	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
+	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
+	$xoTheme->addScript('', array('type' => ''), '
+				$(document).ready( function() {
+					$.fn.shortPass = "'._CORE_PASSLEVEL1.'";
+					$.fn.badPass = "'._CORE_PASSLEVEL2.'";
+					$.fn.goodPass = "'._CORE_PASSLEVEL3.'";
+					$.fn.strongPass = "'._CORE_PASSLEVEL4.'";
+					$.fn.samePassword = "Username and Password identical.";
+					$.fn.resultStyle = "";
+				$(".password_adv").passStrength({
+					minPass: '.$xoopsConfigUser['minpass'].',
+					shortPass: 		"top_shortPass",
+					badPass:		"top_badPass",
+					goodPass:		"top_goodPass",
+					strongPass:		"top_strongPass",
+					baseStyle:		"top_testresult",
+					messageloc:		0
+				});
+			});
+');
+}
 ?>

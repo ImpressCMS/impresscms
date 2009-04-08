@@ -41,6 +41,7 @@
 	 $.fn.passStrength = function(options) {  
 	  
 		 var defaults = {
+				minPass: 		4,	//optional
 				shortPass: 		"shortPass",	//optional
 				badPass:		"badPass",		//optional
 				goodPass:		"goodPass",		//optional
@@ -78,7 +79,7 @@
 		 			 	var score = 0; 
 		 			    
 		 			    //password < 4
-		 			    if (password.length < 4 ) { this.resultStyle =  option.shortPass;return $(this).shortPass; }
+		 			    if (password.length < option.minPass ) { this.resultStyle =  option.shortPass;return $(this).shortPass; }
 		 			    
 		 			    //password == user name
 		 			    if (password.toLowerCase()==uname.toLowerCase()){this.resultStyle = option.badPass;return $(this).samePassword;}
@@ -94,13 +95,13 @@
 		 			    if (password.match(/(.*[0-9].*[0-9].*[0-9])/)){ score += 5;} 
 		 			    
 		 			    //password has 2 symbols
-		 			    if (password.match(/(.*[!,@,#,$,%,^,&,*,?,_,~].*[!,@,#,$,%,^,&,*,?,_,~])/)){ score += 5 ;}
+		 			    if (password.match(/(.*[!,@,#,$,%,^,&,*,?,_,~].*[!,@,#,$,%,^,&,*,?,_,~])/)){ score += 8 ;}
 		 			    
 		 			    //password has Upper and Lower chars
 		 			    if (password.match(/([a-z].*[A-Z])|([A-Z].*[a-z])/)){  score += 10;} 
 		 			    
 		 			    //password has number and chars
-		 			    if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)){  score += 15;} 
+		 			    if (password.match(/([a-zA-Z])/) && password.match(/([0-9])/)){  score += 12;} 
 		 			    //
 		 			    //password has number and symbol
 		 			    if (password.match(/([!,@,#,$,%,^,&,*,?,_,~])/) && password.match(/([0-9])/)){  score += 15;} 
@@ -109,14 +110,14 @@
 		 			    if (password.match(/([!,@,#,$,%,^,&,*,?,_,~])/) && password.match(/([a-zA-Z])/)){score += 15;}
 		 			    
 		 			    //password is just a numbers or chars
-		 			    if (password.match(/^\w+$/) || password.match(/^\d+$/) ){ score -= 10;}
+		 			    if (password.match(/^\w+$/) || password.match(/^\d+$/) ){ score -= 12;}
 		 			    
 		 			    //verifying 0 < score < 100
 		 			    if ( score < 0 ){score = 0;} 
-		 			    if ( score > 100 ){  score = 100;} 
+		 			    if ( score > 120 ){  score = 120;} 
 		 			    
-		 			    if (score < 34 ){ this.resultStyle = option.badPass; return $(this).badPass;} 
-		 			    if (score < 68 ){ this.resultStyle = option.goodPass;return $(this).goodPass;}
+		 			    if (score < 45 ){ this.resultStyle = option.badPass; return $(this).badPass;} 
+		 			    if (score < 75 ){ this.resultStyle = option.goodPass;return $(this).goodPass;}
 		 			    
 		 			   this.resultStyle= option.strongPass;
 		 			    return $(this).strongPass;

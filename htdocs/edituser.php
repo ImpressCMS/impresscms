@@ -254,27 +254,7 @@ if($op == 'editprofile')
       include_once ICMS_ROOT_PATH.'/header.php';
     	include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
 if($xoopsConfigUser['pass_level']){
-$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
-$xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
-$xoTheme->addScript('', array('type' => ''), '
-                $(document).ready( function() {
-                    $.fn.shortPass = "'._CORE_PASSLEVEL1.'";
-                    $.fn.badPass = "'._CORE_PASSLEVEL2.'";
-                    $.fn.goodPass = "'._CORE_PASSLEVEL3.'";
-                    $.fn.strongPass = "'._CORE_PASSLEVEL4.'";
-                    $.fn.samePassword = "Username and Password identical.";
-                    $.fn.resultStyle = "";
-				$(".password_adv").passStrength({
-					shortPass: 		"top_shortPass",
-					badPass:		"top_badPass",
-					goodPass:		"top_goodPass",
-					strongPass:		"top_strongPass",
-					baseStyle:		"top_testresult",
-					messageloc:		0
-
-				});
-			});
-');
+icms_PasswordMeter();
 }
 
     	echo '<a href="userinfo.php?uid='.intval($xoopsUser->getVar('uid')).'">'._US_PROFILE.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._US_EDITPROFILE.'<br /><br />';
