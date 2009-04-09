@@ -39,7 +39,18 @@ class SystemPages extends IcmsPage {
 		$rtn = $this->getVar('page_title');
 		return $rtn;
 	}
+
 	
+	public function getViewItemLink() {
+		if (preg_match('/\*/',$this->getVar('page_url','e'))){
+			$ret = '';
+		}else{
+			$url = (substr($this->getVar('page_url','e'),0,7) == 'http://')?$this->getVar('page_url','e'):ICMS_URL.'/'.$this->getVar('page_url','e');
+			$ret = '<a href="'.$url.'" alt="'._PREVIEW.'" title="'._PREVIEW.'" targe="_blank"><img src="' . ICMS_URL . '/images/crystal/actions/viewmag.png" /></a>';
+		}
+		
+		return $ret;
+	}
 }
 
 

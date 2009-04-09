@@ -108,9 +108,12 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'page_moduleid_custom', 'center', false, false, false, _CO_SYSTEM_PAGES_PAGE_MODULEID ) );
 			
 			$objectTable->addIntroButton ( 'addpost', 'admin.php?fct=pages&op=mod', _AM_SYSTEM_PAGES_CREATE );
+			
+			$objectTable->addCustomAction('getViewItemLink');
+			
 			$objectTable->addQuickSearch ( array ('page_title', 'page_url' ) );
 			
-//			$objectTable->addFilter ( 'mid', 'getModulesArray' );
+			$objectTable->addFilter ( 'page_moduleid', 'getModulesArray' );
 //			$objectTable->addFilter ( 'visible', 'getVisibleStatusArray' );
 //			$objectTable->addFilter ( 'side', 'getpagePositionArray' );
 			
