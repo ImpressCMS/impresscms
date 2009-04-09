@@ -181,7 +181,7 @@ class xos_logos_PageBuilder {
 		if ($xoopsConfigPersona ['editre_block'] == 1) {
 			if ($xoopsUser && count($uagroups) > 0) {
 				$url = base64_encode( str_replace( ICMS_URL, '', "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ) );
-				$titlebtns = ' <a href="#" onclick="changeDisplay(\'ed_block_' . $xobject->getVar ( 'bid' ) . '\'); return false;"><img src="' . XOOPS_URL . '/images/crystal/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a><div id="ed_block_' . $xobject->getVar ( 'bid' ) . '" class="ed_block_box">';
+				$titlebtns = ' <a href="#" onclick="changeDisplay(\'ed_block_' . $xobject->getVar ( 'bid' ) . '\'); return false;"onclick="hide"><img src="' . XOOPS_URL . '/images/crystal/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a><div id="ed_block_' . $xobject->getVar ( 'bid' ) . '" class="ed_block_box">';
 				$titlebtns .= "<a href='" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=visible&bid=" . $xobject->getVar ( 'bid' ) . "&rtn=$url'> <img src=" . XOOPS_URL . "/images/crystal/actions/button_cancel.png" . " title=" . _INVISIBLE . " alt=" . _INVISIBLE . "  /> " . _INVISIBLE . "</a><br />";
 				$titlebtns .= "<a href='" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=clone&bid=" . $xobject->getVar ( 'bid' ) . "'> <img src=" . XOOPS_URL . "/images/crystal/actions/editcopy.png" . " title=" . _CLONE . " alt=" . _CLONE . "  /> " . _CLONE . "</a><br />";
 				$titlebtns .= "<a href='" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=mod&bid=" . $xobject->getVar ( 'bid' ) . "'> <img src=" . XOOPS_URL . "/images/crystal/actions/edit.png" . " title=" . _EDIT . " alt=" . _EDIT . "  /> " . _EDIT . "</a><br />";

@@ -95,6 +95,7 @@ ImpressCMS ChangeLog
 * in installer config settings, changed some settings to use textsarea instead of textarea. as was causing problems with those fields if URI's were entered etc. (vaughan)
 
 '''Improved'''
+* #518:  Improvement to frontside block menu (Aph3x)
 * #415:  Improvement to MultiLanguage php block (talon39/david)
 * Ongoing additions to  API documentation.
 * register.tpl mail template contains more user`s information. (stranger)
