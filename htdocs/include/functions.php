@@ -10,7 +10,7 @@
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author		modified by marcan <marcan@impresscms.org>
-* @version	$Id: functions.php 1683 2008-04-19 13:50:00Z malanciault $
+* @version	$Id$
 */
 
 /**
@@ -171,12 +171,11 @@ function xoops_error($msg, $title=''){ icms_error_msg($msg, $title, true); }
  * ImpressCMS Warning Message Function
  *
  * @since ImpressCMS 1.2
- * @version $Id$
  *
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  *
- * @param string $msg	The Error Message
- * @param string $title	The Error Message title
+ * @param string $msg	The warning message
+ * @param string $title	The warning message title
  * @param	bool	$render	Whether to echo (render) or return the HTML string
  *
  * @todo Make this work with templates ;)
@@ -200,7 +199,7 @@ function icms_warning_msg($msg, $title='', $render = false){
  * Backwards Compatibility Function
  *
  * @since XOOPS
- * @version $Id$
+ * 
  * @deprecated
  * @see icms_warning_msg
  *
@@ -2289,7 +2288,7 @@ function Icms_getMonthNameById($month_id) {
 /**
  * These functions are some Persian users related functions
  * In ImpressCMS we are trying to bring different calendar type in core, so this is the place to place them
- * If you know other calendars, plaese contact ImpressCMS developers to add them to core ;-)
+ * If you know other calendars, please contact ImpressCMS developers to add them to core ;-)
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
@@ -2897,7 +2896,7 @@ function icms_getCurrentUrls() {
  * Deletes a file
  *
  * @param string $dirname path of the file
- * @return	The unlinked dirname
+ * @return	bool The result of deleting the file/path
  */
 function icms_deleteFile($dirname) {
 	// Simple delete for a file
