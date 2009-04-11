@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id$
 //%%%%%%	File Name  admin.php 	%%%%%
 define("_AD_NORIGHT","You don't have the right to access this area");
 define("_AD_ACTION","Action");

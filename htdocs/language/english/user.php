@@ -1,5 +1,5 @@
 <?php
-// $Id: user.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id$
 //%%%%%%		File Name user.php 		%%%%%
 define('_US_NOTREGISTERED','Not registered?  Click <a href="register.php">here</a>.');
 define('_US_LOSTPASSWORD','Lost your password?');

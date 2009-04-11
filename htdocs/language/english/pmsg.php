@@ -1,5 +1,5 @@
 <?php
-// $Id: pmsg.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id$
 //%%%%%%	File Name readpmsg.php 	%%%%%
 define("_PM_DELETED","Your message(s) has been deleted");
 define("_PM_PRIVATEMESSAGE","Private Messages");

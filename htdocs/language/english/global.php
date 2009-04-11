@@ -1,5 +1,5 @@
 <?php
-// $Id: global.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id$
 //%%%%%%	File Name mainfile.php 	%%%%%
 define('_PLEASEWAIT','Please Wait');
 define('_FETCHING','Loading...');

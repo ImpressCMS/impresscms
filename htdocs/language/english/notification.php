@@ -1,5 +1,5 @@
 <?php
-// $Id: notification.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id$
 
 // RMV-NOTIFY
 
