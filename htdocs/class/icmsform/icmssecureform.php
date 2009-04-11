@@ -14,7 +14,7 @@ include_once ICMS_ROOT_PATH . '/class/icmsform/icmsform.php';
 * @package		IcmsPersistableObject
 * @since		  1.1
 * @author		  marcan <marcan@impresscms.org>
-* @version		$Id: icmsform.php 4847 2008-09-14 15:50:58Z malanciault $
+* @version		$Id$
 */
 class IcmsSecureForm extends IcmsForm {
 

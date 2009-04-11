@@ -16,7 +16,7 @@ include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 * @package		IcmsPersistableObject
 * @since		  1.1
 * @author		  marcan <marcan@impresscms.org>
-* @version		$Id: icmsform.php 6931 2008-11-15 13:49:11Z pesian_stranger $
+* @version		$Id$
 */
 class IcmsForm extends XoopsThemeForm {
 

@@ -7,7 +7,7 @@
 * @package		IcmsPersistableObject
 * @since		  1.1
 * @author		  marcan <marcan@impresscms.org>
-* @version		$Id: icmsformimageelement.php 5540 2008-10-10 16:16:16Z real_therplima $
+* @version		$Id$
 */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
