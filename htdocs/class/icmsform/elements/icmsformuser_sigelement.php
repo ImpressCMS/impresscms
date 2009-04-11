@@ -34,4 +34,5 @@ class IcmsFormUser_sigElement extends XoopsFormElementTray {
     $this->addElement($attach_checkbox);
 	}
 }
+
 ?>

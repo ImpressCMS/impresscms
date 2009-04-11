@@ -1,5 +1,4 @@
 <?php
-
 /**
 * Form control creating a file upload element for an object derived from IcmsPersistableObject
 *
@@ -40,4 +39,5 @@ class IcmsFormFileUploadElement extends IcmsFormUploadElement {
     <input type='hidden' name='icms_upload_file[]' id='icms_upload_file[]' value='".$this->getName()."' />";
   }
 }
+
 ?>

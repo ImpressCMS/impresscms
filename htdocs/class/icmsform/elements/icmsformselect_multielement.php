@@ -26,4 +26,5 @@ class IcmsFormSelect_multiElement extends IcmsFormSelectElement  {
     parent::IcmsFormSelectElement($object, $key);
   }
 }
+
 ?>

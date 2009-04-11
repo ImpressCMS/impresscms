@@ -46,4 +46,5 @@ class IcmsFormUserElement extends XoopsFormSelect {
 
   }
 }
+
 ?>

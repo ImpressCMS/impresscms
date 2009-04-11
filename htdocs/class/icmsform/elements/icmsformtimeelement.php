@@ -33,4 +33,5 @@ class IcmsFormTimeElement extends XoopsFormSelect {
     $this->addOptionArray($timearray);
   }
 }
+
 ?>

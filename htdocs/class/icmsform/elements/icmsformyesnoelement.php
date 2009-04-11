@@ -23,4 +23,5 @@ class IcmsFormYesnoElement extends XoopsFormRadioYN {
     $this->XoopsFormRadioYN($object->vars[$key]['form_caption'], $key, $object->getVar($key,'e'));
   }
 }
+
 ?>

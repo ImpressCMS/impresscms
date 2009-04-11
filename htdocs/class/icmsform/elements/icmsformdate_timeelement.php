@@ -1,5 +1,4 @@
 <?php
-
 /**
 * Form control creating a DateTime Picker element for an object derived from IcmsPersistableObject
 *
@@ -24,4 +23,5 @@ class IcmsFormDate_timeElement extends XoopsFormDateTime {
       $this->XoopsFormDateTime($object->vars[$key]['form_caption'], $key, 15, $object->getVar($key, 'e'));
   }
 }
+
 ?>

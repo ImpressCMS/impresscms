@@ -67,4 +67,5 @@ class IcmsFormCheckElement extends XoopsFormCheckBox {
 	}
 
 }
+
 ?>

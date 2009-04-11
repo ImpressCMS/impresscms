@@ -29,4 +29,5 @@ class IcmsFormAutocompleteElement extends IcmsAutocompleteElement {
     $this->IcmsAutocompleteElement($var['form_caption'], $key, $form_size, $form_maxlength, $object->getVar($key, 'e'));
   }
 }
+
 ?>

@@ -1,4 +1,15 @@
 <?php
+/**
+* Form control creating a page element for an object derived from IcmsPersistableObject
+*
+* @copyright	The ImpressCMS Project http://www.impresscms.org/
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		IcmsPersistableObject
+* @since		  1.1
+* @author		  marcan <marcan@impresscms.org>
+* @version		$Id$
+*/
+
 class IcmsFormPageElement extends XoopsFormElementTray {
 	
 	public function __construct($object, $key) {
@@ -72,4 +83,5 @@ class IcmsFormPageElement extends XoopsFormElementTray {
     }
   	
 }
+
 ?>

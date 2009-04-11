@@ -72,4 +72,5 @@ class IcmsFormParentcategoryElement extends XoopsFormSelect {
     return $ret;
   }
 }
+
 ?>

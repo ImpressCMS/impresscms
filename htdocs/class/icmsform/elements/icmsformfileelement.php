@@ -48,4 +48,5 @@ class IcmsFormFileElement extends XoopsFormFile {
   	return $ret;
 	}
 }
+
 ?>

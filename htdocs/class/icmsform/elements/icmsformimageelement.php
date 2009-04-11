@@ -49,4 +49,5 @@ class IcmsFormImageElement extends XoopsFormElementTray {
     $this->addElement($delete_check);
   }
 }
+
 ?>

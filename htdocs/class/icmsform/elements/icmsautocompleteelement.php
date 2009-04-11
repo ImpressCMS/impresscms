@@ -46,4 +46,5 @@ class IcmsAutocompleteElement extends XoopsFormText {
 		return $ret;
 	}
 }
+
 ?>

@@ -54,4 +54,5 @@ class IcmsFormSection extends XoopsFormElement {
 		return $this->getValue();
 	}
 }
+
 ?>

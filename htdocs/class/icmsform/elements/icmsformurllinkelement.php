@@ -42,4 +42,5 @@ class IcmsFormUrlLinkElement extends XoopsFormElementTray {
     $this->addElement($targetRadio);
   }
 }
+
 ?>

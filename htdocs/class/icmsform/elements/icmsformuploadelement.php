@@ -36,4 +36,5 @@ class IcmsFormUploadElement extends XoopsFormFile {
 		        <input type='hidden' name='icms_upload_file[]' id='icms_upload_file[]' value='".$this->getName()."' />";
 	}
 }
+
 ?>

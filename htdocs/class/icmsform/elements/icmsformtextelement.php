@@ -34,4 +34,5 @@ class IcmsFormTextElement extends XoopsFormText {
     $this->XoopsFormText($var['form_caption'], $key, $form_size, $form_maxlength, $object->getVar($key, 'e'));
   }
 }
+
 ?>

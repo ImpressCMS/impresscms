@@ -65,4 +65,5 @@ class IcmsFormSet_passwordElement extends XoopsFormElementTray {
     $this->addElement($password_box2);
 	}
 }
+
 ?>

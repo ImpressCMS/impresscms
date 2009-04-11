@@ -31,4 +31,5 @@ class IcmsFormLanguageElement extends XoopsFormSelectLang {
     }
   }
 }
+
 ?>
