@@ -12,8 +12,7 @@
  */
 
 /**
- * @package     kernel
- * @subpackage  database
+ * @package     database
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org

@@ -6,7 +6,7 @@
  * @author marcan <marcan@smartfactory.ca>
  * @version $Id$
  * @link http://www.smartfactory.ca The SmartFactory
- * @package SmartObject
+ * @package database
  */
 /**
  * IcmsDatabasetable class

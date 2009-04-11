@@ -158,4 +158,5 @@ class SqlUtility
 		return false;
 	}
 }
+
 ?>

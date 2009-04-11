@@ -23,4 +23,5 @@ $classversion['dirname'] = "system";
 
 $classversion['require']['php_version'] = "4.1.0";
 $classversion['require']['php_extension'] = "mysql";
+
 ?>
