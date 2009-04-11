@@ -1,33 +1,19 @@
 <?php
-// $Id: userform.php 1137 2007-11-01 23:41:51Z dugris $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+// $Id$
+/**
+* Administration of users, form file
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	Administration
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
 global $xoopsConfigUser;
 
 $uid_label = new XoopsFormLabel(_AM_USERID, $uid_value);
@@ -43,12 +29,12 @@ $email_tray->addElement($email_cbox);
 $config_handler =& xoops_gethandler('config');
 $icmsauthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
 if ($icmsauthConfig['auth_openid'] == 1) {
-$openid_tray = new XoopsFormElementTray(_AM_OPENID, "<br />");
-  $openid_text = new XoopsFormText("", "openid", 30, 255, $openid_value);
-  $openid_tray->addElement($openid_text);
-$openid_cbox = new XoopsFormCheckBox("", "user_viewoid", $openid_cbox_value);
-$openid_cbox->addOption(1, _AM_AOUTVTOIAD);
-$openid_tray->addElement($openid_cbox);
+	$openid_tray = new XoopsFormElementTray(_AM_OPENID, "<br />");
+	$openid_text = new XoopsFormText("", "openid", 30, 255, $openid_value);
+	$openid_tray->addElement($openid_text);
+	$openid_cbox = new XoopsFormCheckBox("", "user_viewoid", $openid_cbox_value);
+	$openid_cbox->addOption(1, _AM_AOUTVTOIAD);
+	$openid_tray->addElement($openid_cbox);
 }
 $url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
 //  $avatar_select = new XoopsFormSelect("", "user_avatar", $avatar_value);
@@ -104,6 +90,7 @@ $umode_select = new XoopsFormSelect(_US_CDISPLAYMODE, "umode", $umode_value);
 $umode_select->addOptionArray(array("nest"=>_NESTED, "flat"=>_FLAT, "thread"=>_THREADED));
 $uorder_select = new XoopsFormSelect(_US_CSORTORDER, "uorder", $uorder_value);
 $uorder_select->addOptionArray(array("0"=>_OLDESTFIRST, "1"=>_NEWESTFIRST));
+
 // RMV-NOTIFY
 icms_loadLanguageFile('core', 'notification');
 include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
@@ -115,10 +102,10 @@ $bio_tarea = new XoopsFormTextArea(_US_EXTRAINFO, "bio", $bio_value);
 $rank_select = new XoopsFormSelect(_AM_RANK, "rank", $rank_value);
 $ranklist = XoopsLists::getUserRankList();
 if ( count($ranklist) > 0 ) {
-    $rank_select->addOption(0, "--------------");
-    $rank_select->addOptionArray($ranklist);
+	$rank_select->addOption(0, "--------------");
+	$rank_select->addOptionArray($ranklist);
 } else {
-    $rank_select->addOption(0, _AM_NSRID);
+	$rank_select->addOption(0, _AM_NSRID);
 }
 $pwd_text = new XoopsFormPassword(_AM_PASSWORD, "password", 10, 255);
 $pwd_text2 = new XoopsFormPassword(_AM_RETYPEPD, "pass2", 10, 255);
@@ -131,27 +118,28 @@ global $xoopsUser;
 $gperm_handler =& xoops_gethandler('groupperm');
 //If user has admin rights on groups
 if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, $xoopsUser->getGroups(), 1)) {
-    //add group selection
-    if ( in_array(XOOPS_GROUP_ADMIN, $xoopsUser->getGroups())){
-        $group_select = array(new XoopsFormSelectGroup(_US_GROUPS, 'groups', false, $groups, 5, true));
-    } else {
-        $group_manager_value = array_intersect_key(xoops_gethandler('member')->getGroupList(), array_flip($gperm_handler->getItemIds('group_manager', $xoopsUser->getGroups()))) ;
-        $group_array = new XoopsFormSelect(_US_GROUPS, 'groups',$groups, 5, true);
-        $group_array->addOptionArray($group_manager_value);
-        $group_select = array ($group_array);
-        //$group_hidden = array_diff(xoops_gethandler('member')->getGroupList(),$group_manager_value);
-        $group_hidden = array_diff($groups,array_flip($group_manager_value));
-	    foreach ($group_hidden as $key => $group) {
-	        $group_hidden_select[] = new XoopsFormHidden('groups_hidden[' . $key . ']', $group);
-	    }
-    }
+	//add group selection
+	if ( in_array(XOOPS_GROUP_ADMIN, $xoopsUser->getGroups())){
+		$group_select = array(new XoopsFormSelectGroup(_US_GROUPS, 'groups', false, $groups, 5, true));
+	} else {
+		$group_manager_value = array_intersect_key(xoops_gethandler('member')->getGroupList(), array_flip($gperm_handler->getItemIds('group_manager', $xoopsUser->getGroups()))) ;
+		$group_array = new XoopsFormSelect(_US_GROUPS, 'groups',$groups, 5, true);
+		$group_array->addOptionArray($group_manager_value);
+		$group_select = array ($group_array);
+		//$group_hidden = array_diff(xoops_gethandler('member')->getGroupList(),$group_manager_value);
+		$group_hidden = array_diff($groups,array_flip($group_manager_value));
+		foreach ($group_hidden as $key => $group) {
+			$group_hidden_select[] = new XoopsFormHidden('groups_hidden[' . $key . ']', $group);
+		}
+	}
 }
 else {
-    //add each user groups
-    foreach ($groups as $key => $group) {
-        $group_select[] = new XoopsFormHidden('groups[' . $key . ']', $group);
-    }
+	//add each user groups
+	foreach ($groups as $key => $group) {
+		$group_select[] = new XoopsFormHidden('groups[' . $key . ']', $group);
+	}
 }
+
 $salt_hidden = new XoopsFormHidden('salt', icms_createSalt());
 
 $enc_type_hidden = new XoopsFormHidden('enc_type', $xoopsConfigUser['enc_type']);
@@ -185,6 +173,7 @@ $form->addElement($notify_method_select);
 $form->addElement($notify_mode_select);
 $form->addElement($bio_tarea);
 $form->addElement($rank_select);
+
 // adding a new user requires password fields
 if (!$form_isedit) {
 	$form->addElement($pwd_text, true);
@@ -193,33 +182,39 @@ if (!$form_isedit) {
 	$form->addElement($enc_type_hidden, true);
 	$form->addElement($pass_expired_hidden, true);
 } else {
-    $form->addElement($pwd_text);
-    $form->addElement($pwd_text2);
-    $form->addElement($salt_hidden);
-    $form->addElement($enc_type_hidden);
-    $form->addElement($pass_expired_hidden);
+	$form->addElement($pwd_text);
+	$form->addElement($pwd_text2);
+	$form->addElement($salt_hidden);
+	$form->addElement($enc_type_hidden);
+	$form->addElement($pass_expired_hidden);
 }
+
 $form->addElement($mailok_radio);
 $form->addElement($language);
 
 foreach ($group_select as $group) {
-    $form->addElement($group);
-    unset($group);
+	$form->addElement($group);
+	unset($group);
 }
+
 if (@is_array($group_hidden_select)){
 	foreach ($group_hidden_select as $group) {
-	    $form->addElement($group);
-	    unset($group);
+		$form->addElement($group);
+		unset($group);
 	}
 }
+
 $form->addElement($fct_hidden);
 $form->addElement($op_hidden);
 $form->addElement($submit_button);
+
 if ( !empty($uid_value) ) {
-    $uid_hidden = new XoopsFormHidden("uid", $uid_value);
-    $form->addElement($uid_hidden);
+	$uid_hidden = new XoopsFormHidden("uid", $uid_value);
+	$form->addElement($uid_hidden);
 }
+
 //$form->setRequired($uname_text);
 //$form->setRequired($email_text);
 $form->display();
+
 ?>
