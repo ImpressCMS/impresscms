@@ -10,7 +10,7 @@
 * @package		installer
 * @since        2.0.14
 * @author		Skalpa Keo <skalpa@xoops.org>
-* @version		$Id: common.inc.php 6931 2008-11-15 13:49:11Z pesian_stranger $
+* @version		$Id$
 */
 
 /**

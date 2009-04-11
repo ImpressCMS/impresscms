@@ -12,7 +12,7 @@
 * @author		Haruki Setoyama  <haruki@planewave.org>
 * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
 * @author		Skalpa Keo <skalpa@xoops.org>
-* @version		$Id: page_siteinit.php 4724 2008-09-07 10:07:51Z pesian_stranger $
+* @version		$Id$
 */
 /**
  *

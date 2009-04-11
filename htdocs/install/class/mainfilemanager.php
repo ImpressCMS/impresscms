@@ -28,7 +28,7 @@
 * mainfile manager for XOOPS installer
 *
 * @author Haruki Setoyama  <haruki@planewave.org>
-* @version $Id: mainfilemanager.php 1029 2007-09-09 03:49:25Z phppp $
+* @version $Id$
 * @access public
 **/
 class mainfile_manager {

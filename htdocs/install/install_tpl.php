@@ -12,7 +12,7 @@
 * @author		Haruki Setoyama  <haruki@planewave.org>
 * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
 * @author		Skalpa Keo <skalpa@xoops.org>
-* @version		$Id: install_tpl.php 404 2007-12-29 19:26:33Z malanciault $
+* @version		$Id$
 */
 /**
  *

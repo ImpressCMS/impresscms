@@ -1,5 +1,5 @@
 <?php
-// $Id: textsanitizer.php 669 2006-08-25 22:14:09Z skalpa $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

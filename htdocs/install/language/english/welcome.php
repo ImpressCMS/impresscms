@@ -1,5 +1,5 @@
 <?php
-// $Id: welcome.php 565 2006-06-23 06:39:22Z skalpa $
+// $Id$
 $content .= '
 <p>
 	ImpressCMS is a Web publishing system written in PHP. It is an ideal tool for

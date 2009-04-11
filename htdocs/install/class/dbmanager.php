@@ -32,7 +32,7 @@ include_once XOOPS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/sqlutili
 * database manager for XOOPS installer
 *
 * @author Haruki Setoyama  <haruki@planewave.org>
-* @version $Id: dbmanager.php 592 2006-06-30 02:33:23Z skalpa $
+* @version $Id$
 * @access public
 **/
 class db_manager {

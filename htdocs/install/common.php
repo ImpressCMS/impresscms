@@ -10,7 +10,7 @@
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author		modified by m0nty_
-* @version		$Id: common.php 4539 2008-08-25 01:23:55Z mrtheme $
+* @version		$Id$
 */
 /**
  *

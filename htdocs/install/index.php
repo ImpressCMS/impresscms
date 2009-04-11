@@ -1,5 +1,5 @@
 <?php
-// $Id: index.php 567 2006-06-24 11:44:44Z skalpa $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
