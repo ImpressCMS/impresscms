@@ -4,7 +4,7 @@
 *
 * @copyright      http://www.impresscms.org/ The ImpressCMS Project
 * @license         LICENSE.txt
-* @package	Administration
+* @package	Systemblocks
 * @since            1.3
 * @version		$Id$
 */

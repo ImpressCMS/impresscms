@@ -1,15 +1,16 @@
 <?php
 /**
- * Admin ImpressCMS Blocks
- *
- * List, add, edit and delete block objects
- *
- * @copyright	The ImpressCMS Project <http://www.impresscms.org>
- * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html> 
- * @since		ImpressCMS 1.2
- * @version		$Id$
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- */
+* Admin ImpressCMS Blocks
+*
+* List, add, edit and delete block objects
+*
+* @copyright	The ImpressCMS Project <http://www.impresscms.org>
+* @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html> 
+* @since		ImpressCMS 1.2
+* @package Administration
+* @version		$Id$
+* @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+*/
 
 if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->isAdmin ( $xoopsModule->mid () )) {
 	exit ( "Access Denied" );

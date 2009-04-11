@@ -7,7 +7,7 @@
 *
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
+* @package		Systemblocks
 * @since		1.2
 * @author		Sina Asghari (AKA stranger) <stranger@impresscms.ir>
 * @author		Rene Sato (AKA sato-san) <www.impresscms.de>

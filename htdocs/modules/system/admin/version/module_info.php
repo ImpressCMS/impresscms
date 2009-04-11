@@ -4,9 +4,8 @@
 *
 * @copyright      http://www.impresscms.org/ The ImpressCMS Project
 * @license         LICENSE.txt
-* @package	(use an appropriate package name)
+* @package	Administration
 * @since            1.0
-* @author		name of the author <email@domain.tld>
 * @version		$Id$
 */
 

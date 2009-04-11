@@ -7,7 +7,7 @@
 * @copyright	XOOPS_copyrights.txt
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license		LICENSE.txt
-* @package	Administration
+* @package	Systemblocks
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @version		$Id$

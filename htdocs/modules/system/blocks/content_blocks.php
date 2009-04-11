@@ -7,7 +7,7 @@
 *
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
+* @package		Systemblocks
 * @since		1.1
 * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
 * @version		$Id: content_blocks.php 1244 2008-03-18 17:09:11Z TheRplima $
