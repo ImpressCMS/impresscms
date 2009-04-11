@@ -11,7 +11,7 @@
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id:$
+ * @version		$Id$
 */
 
 class IcmsCaptchaImage {
