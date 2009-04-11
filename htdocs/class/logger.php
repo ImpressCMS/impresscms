@@ -9,8 +9,8 @@
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		Kazumi Ono  <onokazu@xoops.org>
  * @author		Skalpa Keo <skalpa@xoops.org>
- * @since		2.0
- * @package		xos_kernel
+ * @since		XOOPS
+ * @package		core
  * @subpackage	XoopsLogger
  * @version		$Id$
  */

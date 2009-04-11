@@ -1,5 +1,4 @@
 <?php
-
 /**
 *
 * Module RSS Feed Class

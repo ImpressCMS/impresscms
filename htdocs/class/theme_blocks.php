@@ -4,12 +4,13 @@
  *
  * @copyright	The XOOPS project http://www.xoops.org/
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
- * @package      xos_logos
- * @subpackage   xos_logos_PageBuilder
+ * @package      core
+ * @subpackage   Templates
  * @version		$Id$
  * @author       Skalpa Keo <skalpa@xoops.org>
  * @since        2.3.0
  */
+
 /**
  * This file cannot be requested directly
  */

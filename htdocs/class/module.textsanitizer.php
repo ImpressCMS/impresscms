@@ -1,6 +1,6 @@
 <?php
 /**
-*All BB codes allowed in the site are generated through here.
+* All BB codes allowed in the site are generated through here.
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt

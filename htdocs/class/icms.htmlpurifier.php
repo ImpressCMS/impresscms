@@ -4,8 +4,7 @@
  *
  * Class uses external HTML Purifier for filtering.
  *
- * @package	kernel
- * @subpackage	core
+ * @package	core
  *
  * @author	vaughan montgomery (vaughan@impresscms.org)
  * @author      ImpressCMS Project

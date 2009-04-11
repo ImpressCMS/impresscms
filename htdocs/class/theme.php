@@ -7,8 +7,8 @@
 * @author       Skalpa Keo <skalpa@xoops.org>
 * @since        2.3.0
 * @version		$Id$
-* @package 		xos_opal
-* @subpackage 	xos_opal_Theme
+* @package 		core
+* @subpackage 	Templates
 */
 
 /**
