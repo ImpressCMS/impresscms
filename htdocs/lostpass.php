@@ -101,4 +101,5 @@ else
 		include 'footer.php';
 	}
 }
+
 ?>
