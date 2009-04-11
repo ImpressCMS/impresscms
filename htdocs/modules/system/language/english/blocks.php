@@ -1,5 +1,5 @@
 <?php
-// $Id: blocks.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id$
 // Blocks
 define("_MB_SYSTEM_ADMENU","Administration Menu");
 define("_MB_SYSTEM_RNOW","Register now!");

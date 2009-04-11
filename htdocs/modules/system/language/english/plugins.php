@@ -1,5 +1,5 @@
 <?php
-// $Id: plugins.php,v 1.1 2005/04/20 03:27:04 gij Exp $
+// $Id$
 // FILE		::	plugins.php
 // AUTHOR	::	Ryuji AMANO <info@ryus.biz>
 // WEB		::	Ryu's Planning <http://ryus.biz/>

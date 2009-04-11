@@ -1,5 +1,5 @@
 <?php
-// $Id: admin.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id$
 //%%%%%%	File Name  admin.php 	%%%%%
 define('_MD_AM_DBUPDATED',_ICMS_DBUPDATED);
 

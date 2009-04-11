@@ -1,7 +1,7 @@
 <?php
 
 /**
-* $Id: common.php 2065 2008-05-08 15:25:54Z m0nty_ $
+* $Id$
 */
 
 if (!defined("XOOPS_ROOT_PATH")) {
