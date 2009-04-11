@@ -8,7 +8,7 @@
 * @copyright    The XOOPS project http://www.xoops.org/
 * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
 * @package		installer
-* @since        2.0.14
+* @since        Xoops 2.0.14
 * @author		Skalpa Keo <skalpa@xoops.org>
 * @version		$Id$
 */
