@@ -16,19 +16,39 @@ if (!defined("ICMS_ROOT_PATH")) {
 die("ImpressCMS root path not defined");
 }
 
+/**
+ * Generates META tags
+ * 
+ * @package IcmsPersistableObject
+ */
 class IcmsMetagen
 {
-
+	/** @var object */
 	var $_myts;
-
+	/** @var string */
 	var $_title;
+	/** @var string */
 	var $_original_title;
+	/** @var string */
 	var $_keywords;
+	/** @var string */
 	var $_meta_description;
+	/** @var string */
 	var $_categoryPath;
+	/** @var string */
 	var $_description;
+	/** @var int */
 	var $_minChar = 4;
-
+	
+	/**
+	 * Constructor for IcmsMetagen
+	 * 
+	 * @param string $title Page title
+	 * @param string $keywords List of meta keywords
+	 * @param string $description Meta description
+	 * @param string $categoryPath
+	 *
+	 */
 	function IcmsMetagen($title, $keywords=false, $description=false, $categoryPath=false)
 	{
 		$this->_myts = MyTextSanitizer::GetInstance();
@@ -55,8 +75,8 @@ class IcmsMetagen
  	*
  	* @author psylove
  	*
- 	* @var string $string Chaine de caract�re
-	 * @return boolean
+ 	* @var string String to test 
+	* @return boolean
  	*/
 	function emptyString($var)
 	{
@@ -104,11 +124,21 @@ class IcmsMetagen
 	        return '';
 	}
 
+	/**
+	 * 
+	 * @param $document
+	 * @return string Converted text
+	 */
 	function html2text($document)
 	{
 		return icms_html2text($document);
 	}
 
+	/**
+	 * Sets the title property
+	 * @param string $title
+	 *
+	 */
 	function setTitle($title)
 	{
 		global $xoopsModule, $xoopsModuleConfig;
@@ -151,17 +181,34 @@ class IcmsMetagen
 		$this->_title = $ret;
 	}
 
+	/**
+	 * Sets the keyword property
+	 * 
+	 * @param string $keywords
+	 * 
+	 */
 	function setKeywords($keywords)
 	{
 		$this->_keywords = $keywords;
 	}
 
+	/**
+	 * Sets the categoryPath property
+	 * 
+	 * @param string $categoryPath
+	 *
+	 */
 	function setCategoryPath($categoryPath)
 	{
 		$categoryPath = $this->html2text($categoryPath);
 		$this->_categoryPath = $categoryPath;
 	}
 
+	/**
+	 * Sets the description property
+	 * @param string $description
+	 * 
+	 */
 	function setDescription($description)
 	{
 		if (!$description) {
@@ -184,16 +231,32 @@ class IcmsMetagen
 
 	}
 
+	/**
+	 * An empty function
+	 * 
+	 */
 	function createTitleTag()
 	{
 
 	}
 
+	/**
+	 * Cleans the provided text, a wrapper for icms_purifyText
+	 * @see icms_purifyText
+	 * @param string $text Text to be cleaned
+	 * @param boolean $keyword Whether the provided string is a keyword, or not
+	 * @return string The purified text
+	 */
 	function purifyText($text, $keyword = false)
 	{
 		return icms_purifyText($text, $keyword);
 	}
 
+	/**
+	 * Creates a meta description
+	 * @param int $maxWords Maximum number of words for the description
+	 * @return string
+	 */
 	function createMetaDescription($maxWords = 100)
 	{
 		$words = array();
@@ -212,6 +275,12 @@ class IcmsMetagen
 		return $ret;
 	}
 
+	/**
+	 * Generates a list of keywords from the provided text
+	 * @param steing $text Text to parse
+	 * @param int $minChar Minimum word length for the keywords
+	 * @return array An array of keywords
+	 */
 	function findMetaKeywords($text, $minChar)
 	{
 		$keywords = array();
@@ -240,6 +309,10 @@ class IcmsMetagen
 		return $keywords;
 	}
 
+	/**
+	 * Creates a string of keywords
+	 * @return string
+	 */
 	function createMetaKeywords()
 	{
 		global $xoopsModuleConfig;
@@ -271,11 +344,19 @@ class IcmsMetagen
 		return $ret;
 	}
 
+	/**
+	 * An empty function
+	 * 
+	 */
 	function autoBuildMeta_keywords()
 	{
 
 	}
 
+	/**
+	 * Generates keywords, description and title, setting the associated properties
+	 * 
+	 */
 	function buildAutoMetaTags()
 	{
 		global $xoopsModule, $xoopsModuleConfig;
@@ -286,6 +367,10 @@ class IcmsMetagen
 
 	}
 
+	/**
+	 * Assigns the meta tags to the template
+	 *
+	 */
 	function createMetaTags()
 	{
 		global $xoopsTpl, $xoTheme;
