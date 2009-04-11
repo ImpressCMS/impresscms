@@ -1,16 +1,31 @@
 <?php
 // $Id$
+
+
+/**
+* XML Parser Sax Parser
+*
 /*******************************************************************************
-    Location: <b>xml/SaxParser.class</b>
-    Provides basic functionality to read and parse XML documents.  Subclasses
-    must implement all the their custom handlers by using add* function methods.
-    They may also use the handle*() methods to parse a specific XML begin and end
-    tags, but this is not recommended as it is more difficult.
+*   Location: <b>xml/SaxParser.class</b>
+*   Provides basic functionality to read and parse XML documents.  Subclasses
+*   must implement all the their custom handlers by using add* function methods.
+*   They may also use the handle*() methods to parse a specific XML begin and end
+*   tags, but this is not recommended as it is more difficult.
 
-    Copyright &copy; 2001 eXtremePHP.  All rights reserved.
+*   @Copyright &copy; 2001 eXtremePHP.  All rights reserved.
 
-    @author Ken Egervari<br>
-*******************************************************************************/
+*   @author Ken Egervari<br>
+*******************************************************************************
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	XML
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
 
 class SaxParser
 {
