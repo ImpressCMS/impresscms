@@ -1,5 +1,5 @@
 <?php 
-// $Id: grouppermform.php 1158 2007-12-08 06:24:20Z phppp $
+// $Id$
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                                    //
 // Copyright (c) 2000-2003 XOOPS.org                                        //

@@ -1,5 +1,5 @@
 <?php
-// $Id: formhiddentoken.php 1148 2007-12-04 14:57:24Z phppp $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

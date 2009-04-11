@@ -1,5 +1,5 @@
 <?php
-// $Id: formeditor.php,v 1.2 2007/10/03 11:58:47 marcan Exp $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

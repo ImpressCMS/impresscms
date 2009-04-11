@@ -1,5 +1,5 @@
 <?php
-// $Id: formradio.php 1162 2007-12-08 06:58:50Z phppp $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

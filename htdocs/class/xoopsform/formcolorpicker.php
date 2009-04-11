@@ -9,7 +9,7 @@
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author       Zoullou <webmaster@zoullou.org>
  * @since        2.0.15
- * @version		$Id: formcolorpicker.php 1151 2007-12-04 15:43:01Z phppp $
+ * @version		$Id$
  * @package 		xoops20
  * @subpackage 	xoops20_XoopsForm
  */

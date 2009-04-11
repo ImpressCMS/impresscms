@@ -1,5 +1,5 @@
 <?php
-// $Id: formelementtray.php 1151 2007-12-04 15:43:01Z phppp $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

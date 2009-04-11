@@ -1,5 +1,5 @@
 <?php
-// $Id: formtext.php 1158 2007-12-08 06:24:20Z phppp $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
