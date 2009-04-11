@@ -7,7 +7,7 @@
 * @package		libraries
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: customtag.php 7728 2008-12-17 19:37:01Z pesian_stranger $
+* @version		$Id$
 */
 
 class IcmsPreloadCustomtag extends IcmsPreloadItem

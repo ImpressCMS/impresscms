@@ -7,7 +7,7 @@
  * @package		libraries
  * @since		1.1
  * @author		TheRplima <therplima@impresscms.org>
- * @version		$Id: userinfo.php 2005 2008-05-03 17:49:17Z real_therplima $
+ * @version		$Id$
  */
 
 class IcmsPreloadUserInfo extends IcmsPreloadItem {
