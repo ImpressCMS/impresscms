@@ -12,7 +12,7 @@
 * @package		core
 * @since		XOOPS
 * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
-* @version		$Id: $
+* @version		$Id$
 * 
 * @author		The XOOPS Project <http://www.xoops.org>
 * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>

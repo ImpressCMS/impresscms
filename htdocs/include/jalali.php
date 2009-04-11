@@ -1,5 +1,5 @@
 <?php
-// $Id: jdate_function.php               2008-04-14 20:15:14Z stranger $  //
+// $Id$  //
 //  ------------------------------------------------------------------------ //
 //                ImpressCMS - PHP Content Management System                 //
 //                    Copyright (c) 2008 impresscms.org                      //

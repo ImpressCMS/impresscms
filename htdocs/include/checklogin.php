@@ -1,5 +1,5 @@
 <?php
-// $Id: checklogin.php 1083 2007-10-16 16:42:51Z phppp $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

@@ -1,5 +1,5 @@
 <?php
-// $Id: xoopscodes.php 8353 2009-04-01 06:21:41Z icmsunderdog $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
