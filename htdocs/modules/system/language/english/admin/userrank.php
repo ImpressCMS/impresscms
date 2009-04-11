@@ -1,5 +1,5 @@
 <?php
-// $Id: userrank.php 1121 2007-10-23 01:17:53Z dugris $
+// $Id$
 //%%%%%%	Admin Module Name  UserRank 	%%%%%
 define("_AM_DBUPDATED","Database Updated Successfully!");
 define("_AM_RANKSSETTINGS","User Ranks Settings");

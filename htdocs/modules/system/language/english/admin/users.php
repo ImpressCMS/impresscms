@@ -1,5 +1,5 @@
 <?php
-// $Id: users.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id$
 //%%%%%%	Admin Module Name  Users 	%%%%%
 define("_AM_DBUPDATED","Database Updated Successfully!");
 

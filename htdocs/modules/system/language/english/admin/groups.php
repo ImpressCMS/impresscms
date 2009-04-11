@@ -1,5 +1,5 @@
 <?php
-// $Id: groups.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id$
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 define("_AM_DBUPDATED","Database Updated Successfully!");
 

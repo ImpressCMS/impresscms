@@ -1,5 +1,5 @@
 <?php
-// $Id: modulesadmin.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id$
 //%%%%%%	File Name  modulesadmin.php 	%%%%%
 define("_MD_AM_MODADMIN","Modules Administration");
 define("_MD_AM_MODULE","Module");

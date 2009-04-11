@@ -1,5 +1,5 @@
 <?php
-// $Id: preferences.php 1121 2007-10-23 01:17:53Z dugris $
+// $Id$
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 // dont change
 define("_AM_DBUPDATED","Database Updated Successfully!");
