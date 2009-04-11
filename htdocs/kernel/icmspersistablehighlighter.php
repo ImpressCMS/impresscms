@@ -1,6 +1,6 @@
 <?php
 /**
-* This file contains the keyhighlighter class that highlight the chosen keyword in the current output buffer.
+* This file contains the keyhighlighter class that highlights the chosen keyword in the current output buffer.
 *
 * @package keyhighlighter
 */

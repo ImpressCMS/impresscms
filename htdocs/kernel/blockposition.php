@@ -1,4 +1,15 @@
 <?php
+/**
+* Block Positions manager for the Impress Persistable Framework
+*
+* Longer description about this page
+*
+* @copyright      http://www.impresscms.org/ The ImpressCMS Project
+* @license         LICENSE.txt
+* @package	core
+* @since            1.0
+* @version		$Id$
+*/
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 

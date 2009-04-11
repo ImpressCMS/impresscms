@@ -1,5 +1,15 @@
 <?php
 /**
+* ICMS kernel Base Class
+*
+* @copyright      http://www.impresscms.org/ The ImpressCMS Project
+* @license         LICENSE.txt
+* @package	IcmsPersistableObject
+* @since            1.0
+* @version		$Id$
+*/
+
+/**
  * Extremely reduced kernel class
  * Few notes:
  * - modules should use this class methods to generate physical paths/URIs (the ones which do not conform
@@ -92,4 +102,5 @@ class IcmsKernel {
 	
 
 }
+
 ?>

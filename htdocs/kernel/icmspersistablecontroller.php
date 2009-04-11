@@ -492,3 +492,5 @@ class IcmsPersistableController {
     	return $ret;
     }
 }
+
+?>

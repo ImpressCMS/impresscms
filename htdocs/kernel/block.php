@@ -1,15 +1,15 @@
 <?php
 /**
- * ImpressCMS Block Persistable Class
- * 
- * @since 		XOOPS
- * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
- * @copyright 	The XOOPS Project <http://www.xoops.org>
- * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
- * @version		$Id$
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @author		The XOOPS Project Community <http://www.xoops.org>
- */
+* ImpressCMS Block Persistable Class
+* 
+* @since 		XOOPS
+* @copyright 	The ImpressCMS Project <http://www.impresscms.org>
+* @copyright 	The XOOPS Project <http://www.xoops.org>
+* @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+* @version		$Id$
+* @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+* @author		The XOOPS Project Community <http://www.xoops.org>
+*/
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 

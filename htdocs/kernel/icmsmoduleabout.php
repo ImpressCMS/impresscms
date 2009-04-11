@@ -1,4 +1,14 @@
 <?php
+/**
+* Information about a module
+*
+* @copyright      http://www.impresscms.org/ The ImpressCMS Project
+* @license         LICENSE.txt
+* @package	core
+* @since            1.0
+* @author		marcan <marcan@impresscms.org>
+* @version		$Id$
+*/
 
 if (!defined("ICMS_ROOT_PATH")) {
 die("ImpressCMS root path not defined");

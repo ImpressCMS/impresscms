@@ -2,7 +2,7 @@
 /**
  * Core class for managing comments
  *
- * @package     kernel
+ * @package     core
  * @subpackage	comment
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	http://www.xoops.org/ The XOOPS Project

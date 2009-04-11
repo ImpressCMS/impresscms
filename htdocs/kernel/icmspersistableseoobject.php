@@ -67,4 +67,5 @@ class IcmsPersistableSeoObject extends IcmsPersistableObject {
     	return $this->getVar('meta_description');
     }
 }
+
 ?>

@@ -1,10 +1,15 @@
 <?php
-
 /**
- * IcmsAddTo class to easily add content to social networking/bookmarking site
- *
- * @credit http://addtobookmarks.com/, James Morris and the XoopsInfo team
- */
+* IcmsAddTo class to easily add content to social networking/bookmarking site
+*
+* @credit http://addtobookmarks.com/, James Morris and the XoopsInfo team
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
 
 if (!defined("ICMS_ROOT_PATH")) {
     die("ICMS root path not defined");

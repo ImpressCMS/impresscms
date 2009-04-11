@@ -1,5 +1,4 @@
 <?php
-
 /**
 * Contains the basis classes for displaying a single IcmsPersistableObject
 *
