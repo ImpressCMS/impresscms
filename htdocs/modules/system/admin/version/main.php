@@ -9,11 +9,11 @@
 * @package		core
 * @since		1.0
 * @author		malanciault <marcan@impresscms.org)
-* @version		$Id: error.php 429 2008-01-02 22:21:41Z malanciault $
+* @version		$Id$
 */
 
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin() ) {
-    exit("Access Denied");
+	exit("Access Denied");
 }
 
 /*
@@ -38,7 +38,7 @@ $icmsVersionChecker = IcmsVersionChecker::getInstance();
 if ($icmsVersionChecker->check()) {
 	$icmsAdminTpl->assign('update_available', true);
 	$icmsAdminTpl->assign('latest_changelog', $icmsVersionChecker->latest_changelog);
-	
+
 	if (ICMS_VERSION_STATUS == 10 && $icmsVersionChecker->latest_status < 10) {
 		// I'm runing a final release so make sure to notify the user that the update is not a final
 		$icmsAdminTpl->assign('not_a_final_comment', true);
@@ -51,6 +51,7 @@ else {
 		$icmsAdminTpl->assign('errors', $checkerErrors);
 	}
 }
+
 icms_cp_header();
 $xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
 $icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name);
@@ -76,4 +77,5 @@ $icmsAdminTpl->assign('upload_max_filesize', icms_conv_nr2local(ini_get( 'upload
 
 $icmsAdminTpl->display(XOOPS_ROOT_PATH.'/modules/system/templates/admin/system_adm_version.html');
 icms_cp_footer();
+
 ?>
