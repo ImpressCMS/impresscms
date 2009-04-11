@@ -24,7 +24,6 @@ die("ImpressCMS root path not defined");
 * @package		core
 * @since		1.0
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
 */
 
 class IcmsModuleAbout
@@ -88,10 +87,10 @@ class IcmsModuleAbout
 	}
 
 	/**
-	 * Santizie a value 
+	 * Sanitize a value 
 	 *
 	 * @param string $value to be sanitized
-	 * @return string santizied value
+	 * @return string sanitized value
 	 */
 	function sanitize($value) {
 		$myts = MyTextSanitizer::getInstance();
