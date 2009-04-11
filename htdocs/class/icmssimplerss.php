@@ -11,7 +11,7 @@
 * @package		core
 * @since		1.2
 * @author		malanciault <marcan@impresscms.org)
-* @version		$Id: icmssimplerss.php 6931 2008-11-15 13:49:11Z pesian_stranger $
+* @version		$Id$
 */
 
 include_once(ICMS_LIBRARIES_PATH . '/simplepie/simplepie.inc');

@@ -1,5 +1,5 @@
 <?php
-// $Id: xoopsstory.php 1099 2007-10-19 01:08:14Z dugris $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

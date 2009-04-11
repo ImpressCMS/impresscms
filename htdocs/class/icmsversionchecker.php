@@ -11,7 +11,7 @@ if (!defined('XOOPS_ROOT_PATH')) die("ImpressCMS root path not defined");
 * @package		core
 * @since		1.0
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmsversionchecker.php 8005 2009-01-28 17:03:50Z malanciault $
+* @version		$Id$
 */
 class IcmsVersionChecker {
 

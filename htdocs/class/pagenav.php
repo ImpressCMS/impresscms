@@ -1,5 +1,5 @@
 <?php
-// $Id: pagenav.php 1057 2007-09-17 07:05:32Z dugris $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

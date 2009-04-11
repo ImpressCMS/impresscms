@@ -1,5 +1,5 @@
 <?php
-// $Id: tree.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

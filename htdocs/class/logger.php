@@ -12,7 +12,7 @@
  * @since		2.0
  * @package		xos_kernel
  * @subpackage	XoopsLogger
- * @version		$Id: logger.php 694 2006-09-04 11:33:22Z skalpa $
+ * @version		$Id$
  */
 
 /**

@@ -8,7 +8,7 @@
  * @author 		The XOOPS Project Community <http://www.xoops.org>
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * 
- * @version		$Id: $
+ * @version		$Id$
  * 
  * @deprecated
  * 

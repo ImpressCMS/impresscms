@@ -6,7 +6,7 @@
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package      xos_logos
  * @subpackage   xos_logos_PageBuilder
- * @version		$Id: theme_blocks.php 1029 2007-09-09 03:49:25Z phppp $
+ * @version		$Id$
  * @author       Skalpa Keo <skalpa@xoops.org>
  * @since        2.3.0
  */

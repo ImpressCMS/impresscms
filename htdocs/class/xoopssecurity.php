@@ -1,5 +1,5 @@
 <?php
-// $Id: xoopssecurity.php 1153 2007-12-05 13:37:51Z phppp $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

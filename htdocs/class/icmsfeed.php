@@ -9,7 +9,7 @@
 * @package	    core
 * @since		1.1
 * @author		Ignacio Segura, "Nachenko"
-* @version		$Id: icmsfeed.php 7171 2008-11-23 10:36:17Z pesian_stranger $
+* @version		$Id$
 */
 
 if (!defined('ICMS_ROOT_PATH')) {

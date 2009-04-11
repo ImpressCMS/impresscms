@@ -1,5 +1,5 @@
 <?php
-// $Id: errorhandler.php 506 2006-05-26 23:10:37Z skalpa $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

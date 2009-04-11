@@ -1,5 +1,5 @@
 <?php
-// $Id: uploader.php 1083 2007-10-16 16:42:51Z phppp $
+// $Id$
 /**
 * The uploader class of media files
 *

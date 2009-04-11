@@ -6,7 +6,7 @@
 * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
 * @author       Skalpa Keo <skalpa@xoops.org>
 * @since        2.3.0
-* @version		$Id: theme.php 1100 2007-10-19 01:36:05Z dugris $
+* @version		$Id$
 * @package 		xos_opal
 * @subpackage 	xos_opal_Theme
 */
