@@ -11,7 +11,7 @@
 * @since	1.0
 * @author	young-pee <nekro@impresscms.org>
 * @author	malanciault <marcan@impresscms.org)
-* @version	$Id: error.php 7748 2008-12-20 17:44:02Z skenow $
+* @version	$Id$
 */
 
 $xoopsOption['pagetype'] = 'error';

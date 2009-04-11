@@ -9,7 +9,7 @@
 * @package		core
 * @since		1.0
 * @author		m0nty_
-* @version		$Id: privpolicy.php 7728 2008-12-17 19:37:01Z pesian_stranger $
+* @version		$Id$
 */
 
 $xoopsOption['pagetype'] = 'privpolicy';

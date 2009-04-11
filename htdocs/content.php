@@ -10,7 +10,7 @@
 * @package	core
 * @since	1.1
 * @author	Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
-* @version	$Id: content.php 1244 2008-03-18 17:09:11Z TheRplima $
+* @version	$Id$
 */
 
 $xoopsOption['pagetype'] = 'content';
