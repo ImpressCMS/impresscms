@@ -1,17 +1,23 @@
 <?php
-
 /**
- * user select with page navigation
- *
- * limit: Only works with javascript enabled
- *
- * @copyright	The XOOPS project http://www.xoops.org/
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @since		1.00
- * @version		$Id$
- * @package		kernel
- */
+* user select with page navigation
+*
+* limit: Only works with javascript enabled
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @license		http://www.fsf.org/copyleft/gpl.html GNU public license
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	XoopsForms
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
+
 
 if (!defined('XOOPS_ROOT_PATH')) {
 	die('ImpressCMS root path not defined');

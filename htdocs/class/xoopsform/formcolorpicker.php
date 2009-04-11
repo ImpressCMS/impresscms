@@ -1,18 +1,21 @@
 <?php
 /**
- * XoopsFormColorPicker component class file
- * 
- * This class provides a textfield with a color picker popup. This color picker
- * comes from Tigra project (http://www.softcomplex.com/products/tigra_color_picker/).
- *
- * @copyright	The Xoops project http://www.xoops.org/
- * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author       Zoullou <webmaster@zoullou.org>
- * @since        2.0.15
- * @version		$Id$
- * @package 		xoops20
- * @subpackage 	xoops20_XoopsForm
- */
+* XoopsFormColorPicker component class file
+* 
+* This class provides a textfield with a color picker popup. This color picker
+* comes from Tigra project (http://www.softcomplex.com/products/tigra_color_picker/).
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @license      http://www.fsf.org/copyleft/gpl.html GNU public license
+* @author       Zoullou <webmaster@zoullou.org>
+* @since        Xoops 2.0.15
+* @version		$Id$
+* @package 		XoopsForms
+* @subpackage 	ColorPicker
+*/
 
 if (! defined ( 'XOOPS_ROOT_PATH' )) {
 	die ( "ImpressCMS root path not defined" );
