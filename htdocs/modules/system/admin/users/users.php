@@ -1,33 +1,18 @@
 <?php
-// $Id: users.php 1029 2007-09-09 03:49:25Z phppp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+// $Id$
+/**
+* Administration of users, main functions file
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	Administration
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
 
 if(!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {exit('Access Denied');}
 
@@ -75,9 +60,9 @@ function displayUsers()
 	$name_value = '';
 	$email_value = '';
 	$email_cbox_value = 0;
-    	$openid_value = '';
-    	$openid_cbox_value = 0;
-    	$url_value = '';
+	$openid_value = '';
+	$openid_cbox_value = 0;
+	$url_value = '';
 	//  $avatar_value = 'blank.gif';
 	//  $theme_value = $xoopsConfig['default_theme'];
 	$timezone_value = $xoopsConfig['default_TZ'];
@@ -125,17 +110,18 @@ function modifyUser($user)
 			xoops_cp_footer();
 			exit();
 		}
-        	$uid_value = $user->getVar('uid');
-        	$uname_value = $user->getVar('uname', 'E');
-        	$login_name_value = $user->getVar('login_name', 'E');
-        	$name_value = $user->getVar('name', 'E');
-        	$email_value = $user->getVar('email', 'E');
-        	$email_cbox_value = $user->getVar('user_viewemail') ? 1 : 0;
+
+		$uid_value = $user->getVar('uid');
+		$uname_value = $user->getVar('uname', 'E');
+		$login_name_value = $user->getVar('login_name', 'E');
+		$name_value = $user->getVar('name', 'E');
+		$email_value = $user->getVar('email', 'E');
+		$email_cbox_value = $user->getVar('user_viewemail') ? 1 : 0;
 		$openid_value = $user->getVar('openid', 'E');
 		$openid_cbox_value = $user->getVar('user_viewoid') ? 1 : 0;
-        	$url_value = $user->getVar('url', 'E');
+		$url_value = $user->getVar('url', 'E');
 		//      $avatar_value = $user->getVar('user_avatar');
-        	$temp = $user->getVar('theme');
+		$temp = $user->getVar('theme');
 		//$theme_value = empty($temp) ? $xoopsConfig['default_theme'] : $temp;
 		$timezone_value = $user->getVar('timezone_offset');
 		$icq_value = $user->getVar('user_icq', 'E');
@@ -210,8 +196,8 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		$edituser->setVar('login_name', $login_name);
 		$edituser->setVar('email', $email);
 		$edituser->setVar('openid', $openid);
-        	$user_viewoid = (isset($user_viewoid) && $user_viewoid == 1) ? 1 : 0;
-        	$edituser->setVar('user_viewoid', $user_viewoid);
+		$user_viewoid = (isset($user_viewoid) && $user_viewoid == 1) ? 1 : 0;
+		$edituser->setVar('user_viewoid', $user_viewoid);
 		$url = isset( $url ) ? formatURL( $url ) : '';
 		$edituser->setVar('url', $url);
 		//$edituser->setVar('user_avatar', $user_avatar);
@@ -318,6 +304,7 @@ function synchronize($id, $type)
 			$sql = "UPDATE ".$xoopsDB->prefix("users")." SET posts = '".intval($total_posts)."' WHERE uid = '".intval($id)."'";
 			if(!$result = $xoopsDB->query($sql)) {exit(sprintf(_AM_CNUUSER %s ,$id));}
 		break;
+
 		case 'all users':
 			$sql = "SELECT uid FROM ".$xoopsDB->prefix('users')."";
 			if(!$result = $xoopsDB->query($sql)) {exit(_AM_CNGUSERID);}
@@ -327,10 +314,12 @@ function synchronize($id, $type)
 				synchronize($id, "user");
 			}
 		break;
+
 		default:
 		break;
 	}
 	redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid='.$id,1,_AM_DBUPDATED);
 	exit();
 }
+
 ?>
