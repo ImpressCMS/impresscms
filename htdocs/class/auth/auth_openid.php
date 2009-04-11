@@ -14,7 +14,7 @@
 * @author		malanciault <marcan@impresscms.org)
 * @credits		Sakimura <http://www.sakimura.org/> Evan Prodromou <http://evan.prodromou.name/>
 * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id: auth_openid.php 3539 2008-07-08 22:28:20Z pesian_stranger $
+* @version		$Id$
 */
 
 define('OPENID_STEP_BACK_FROM_SERVER', 1);

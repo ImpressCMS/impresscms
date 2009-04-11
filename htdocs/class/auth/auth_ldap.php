@@ -1,5 +1,5 @@
 <?php
-// $Id: auth_ldap.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id$
 // auth_ldap.php - LDAP authentification class
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //

@@ -1,5 +1,5 @@
 <?php
-// $Id: auth_xoops.php 694 2006-09-04 11:33:22Z skalpa $
+// $Id$
 // auth_xoops.php - XOOPS authentification class 
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //

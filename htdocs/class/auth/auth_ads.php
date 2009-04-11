@@ -1,5 +1,5 @@
 <?php
-// $Id: auth_ads.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id$
 // auth_ads.php - Authentification class for Active Directory
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //

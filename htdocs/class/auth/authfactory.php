@@ -1,5 +1,5 @@
 <?php
-// $Id: authfactory.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id$
 // authfactory.php - Authentification class factory
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
