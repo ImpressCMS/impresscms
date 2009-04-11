@@ -1,12 +1,14 @@
 <?php
 /**
- * Debugging functions
- *
- * @license GNU
- * @author marcan <marcan@smartfactory.ca>
- * @version		$Id$
- * @link http://impresscms.org ImpressCMS
- */
+* Debugging functions
+*
+* @license GNU
+* @author marcan <marcan@smartfactory.ca>
+* @link http://impresscms.org ImpressCMS
+* @package core
+* @subpackage Debugging
+* @version		$Id$
+*/
 
 /**
  * Output a line of debug

@@ -8,7 +8,7 @@
 * @copyright	XOOPS_copyrights.txt
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package	kernel
+* @package	core
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author		modified by underdog <underdog@impresscms.org>

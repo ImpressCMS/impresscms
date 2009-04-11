@@ -1,12 +1,11 @@
 <?php
-
 /**
  * This is the file handling multilanguage on the site
  *
  * @license GNU
  * @author GIJOE
  * @version $Id$
- * @package ImpressCMS
+ * @package core
  */
 
 // CONFIGURATIONS BEGIN

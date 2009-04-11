@@ -5,7 +5,8 @@
  * @copyright	The Xoops project http://www.xoops.org/
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		phppp (infomax@gmail.com)
- * @since		2.0.17
+ * @since		Xoops 2.0.17
+ * @package core
  * @version		$Id$
  */
 

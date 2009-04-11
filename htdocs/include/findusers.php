@@ -1,16 +1,17 @@
 <?php
 /**
- * user selection
- *
- * limit: Only work with javascript enabled
- * TODO: plugins for external applications, including but not limited: sending massive emails/PMs, membership edit
- *
- * @copyright	The XOOPS project http://www.xoops.org/
- * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @since		1.00
- * @version		$Id$
- */
+* Finds users
+*
+* limit: Only work with javascript enabled
+* TODO: plugins for external applications, including but not limited: sending massive emails/PMs, membership edit
+*
+* @copyright	The XOOPS project http://www.xoops.org/
+* @license		http://www.fsf.org/copyleft/gpl.html GNU public license
+* @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
+* @since		Xoops 1.00
+* @package core
+* @version		$Id$
+*/
 
 include "../mainfile.php";
 xoops_header(false);
