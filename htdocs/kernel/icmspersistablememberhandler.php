@@ -10,7 +10,7 @@
 * @author		Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
 * @author		marcan <marcan@impresscms.org>
 * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id: icmspersistablememberhandler.php 7264 2008-11-29 05:08:31Z pesian_stranger $
+* @version		$Id$
 */
 
 

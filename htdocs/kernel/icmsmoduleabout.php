@@ -14,7 +14,7 @@ die("ImpressCMS root path not defined");
 * @package		core
 * @since		1.0
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmsmoduleabout.php 7728 2008-12-17 19:37:01Z pesian_stranger $
+* @version		$Id$
 */
 
 class IcmsModuleAbout

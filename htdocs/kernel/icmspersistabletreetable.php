@@ -24,7 +24,7 @@ include_once(ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php");
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmspersistabletable.php 1948 2008-05-01 19:01:10Z malanciault $
+* @version		$Id$
 
  */
 class IcmsPersistableTreeTable extends IcmsPersistableTable {

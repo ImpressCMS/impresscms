@@ -9,7 +9,7 @@
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmsmetagen.php 7728 2008-12-17 19:37:01Z pesian_stranger $
+* @version		$Id$
 */
 
 if (!defined("ICMS_ROOT_PATH")) {

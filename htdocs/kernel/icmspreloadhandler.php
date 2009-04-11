@@ -15,7 +15,7 @@ include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 * @package		core
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmspreloadhandler.php 6931 2008-11-15 13:49:11Z pesian_stranger $
+* @version		$Id$
 */
 class IcmsPreloadHandler {
 
@@ -161,7 +161,7 @@ class IcmsPreloadHandler {
 * @package		libraries
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmspreloadhandler.php 6931 2008-11-15 13:49:11Z pesian_stranger $
+* @version		$Id$
 */
 
 class IcmsPreloadItem {

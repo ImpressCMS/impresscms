@@ -1,5 +1,5 @@
 <?php
-// $Id: page.php 1102 2007-12-22 12:08:52Z TheRplima $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                ImpressCMS - PHP Content Management System                 //
 //                    Copyright (c) 2000 ImpressCMS.org                      //

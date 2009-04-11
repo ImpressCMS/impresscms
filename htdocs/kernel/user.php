@@ -1,5 +1,5 @@
 <?php
-// $Id: user.php 1102 2007-10-19 02:55:52Z dugris $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //

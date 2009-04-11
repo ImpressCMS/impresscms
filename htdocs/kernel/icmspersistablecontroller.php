@@ -9,7 +9,7 @@
 * @since		1.1
 * @author		Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmspersistablecontroller.php 7728 2008-12-17 19:37:01Z pesian_stranger $
+* @version		$Id$
 */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");

@@ -9,7 +9,7 @@
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmspersistabletable.php 7728 2008-12-17 19:37:01Z pesian_stranger $
+* @version		$Id$
 */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -22,7 +22,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmspersistabletable.php 7728 2008-12-17 19:37:01Z pesian_stranger $
+* @version		$Id$
  */
 class IcmsPersistableColumn {
 
@@ -81,7 +81,7 @@ class IcmsPersistableColumn {
 * @package		IcmsPersistableObject
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: icmspersistabletable.php 7728 2008-12-17 19:37:01Z pesian_stranger $
+* @version		$Id$
 
  */
 class IcmsPersistableTable {

@@ -1,5 +1,5 @@
 <?php
-// $Id: online.php 694 2006-09-04 11:33:22Z skalpa $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
