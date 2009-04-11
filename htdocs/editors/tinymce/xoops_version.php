@@ -1,4 +1,18 @@
 <?php
+/**
+* XoopsEditors class TinyMCE editor, version file
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	xoopseditors
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
 // ImpressCMS - Nekro!
 
 $editorversion['name'] = "TinyMCE WYSIWYG Editor";

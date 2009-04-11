@@ -6,7 +6,7 @@
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		4.00
- * @version		$Id: formtinymce.php 1522 2008-04-10 19:54:49Z wtravel $
+ * @version		$Id$
  * @package		xoopseditor
  */
 if (! defined ( "XOOPS_ROOT_PATH" )) {
