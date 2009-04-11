@@ -13,7 +13,7 @@
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author		modified by stranger <www.impresscms.org>
-* @version		$Id: mysqldatabase.php 5669 2008-10-14 19:53:37Z pesian_stranger $
+* @version		$Id$
 */
 
 /**

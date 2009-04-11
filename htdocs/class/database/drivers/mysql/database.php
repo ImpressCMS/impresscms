@@ -1,5 +1,5 @@
 <?php
-// $Id: mysqldatabase.php 694 2006-09-04 11:33:22Z skalpa $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
@@ -34,7 +34,7 @@ if (!defined("XOOPS_ROOT_PATH")) {
 /**
  * @package    database
  * @subpackage  mysql
- * @version $Id: $
+ * @version $Id$
  * @since XOOPS
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>

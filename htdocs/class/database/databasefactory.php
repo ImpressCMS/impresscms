@@ -3,7 +3,7 @@
  * @package database
  * @subpackage  main
  * @since XOOPS
- * @version $Id: $
+ * @version $Id$
  *
  * @author ?
  * @copyright   copyright (c) 2000-2003 XOOPS.org
@@ -16,7 +16,7 @@
  * @package database
  * @subpackage  main
  * @since XOOPS
- * @version $Id: $
+ * @version $Id$
  *
  * @author ?
  * @copyright   copyright (c) 2000-2003 XOOPS.org

@@ -1,5 +1,5 @@
 <?php
-// $Id: database.php 506 2006-05-26 23:10:37Z skalpa $
+// $Id$
 // database.php - defines abstract database wrapper class
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
@@ -29,7 +29,7 @@
  * @package database
  * @subpackage  main
  * @since XOOPS
- * @version $Id: $
+ * @version $Id$
  *
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright   copyright (c) 2000-2003 XOOPS.org
