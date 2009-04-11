@@ -12,7 +12,7 @@
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		installer
+ * @package		FormCaptcha
  * @since		XOOPS
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
