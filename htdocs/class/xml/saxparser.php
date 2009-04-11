@@ -1,5 +1,5 @@
 <?php
-// $Id: saxparser.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id$
 /*******************************************************************************
     Location: <b>xml/SaxParser.class</b>
     Provides basic functionality to read and parse XML documents.  Subclasses

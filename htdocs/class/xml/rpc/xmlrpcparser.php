@@ -1,5 +1,5 @@
 <?php
-// $Id: xmlrpcparser.php 1136 2007-11-01 16:57:08Z dugris $
+// $Id$
 //  ------------------------------------------------------------------------ //
 //                XOOPS - PHP Content Management System                      //
 //                    Copyright (c) 2000 XOOPS.org                           //
