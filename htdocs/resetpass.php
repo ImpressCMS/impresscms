@@ -80,4 +80,5 @@ else
 		redirect_header('user.php', 3, sprintf(_US_PWDRESET,$getuser[0]->getVar('uname')), false);
 	}
 }
+
 ?>
