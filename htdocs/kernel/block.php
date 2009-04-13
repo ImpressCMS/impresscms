@@ -1,15 +1,15 @@
 <?php
 /**
-* ImpressCMS Block Persistable Class
-* 
-* @since 		XOOPS
-* @copyright 	The ImpressCMS Project <http://www.impresscms.org>
-* @copyright 	The XOOPS Project <http://www.xoops.org>
-* @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
-* @version		$Id$
-* @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
-* @author		The XOOPS Project Community <http://www.xoops.org>
-*/
+ * ImpressCMS Block Persistable Class
+ * 
+ * @since 		XOOPS
+ * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
+ * @copyright 	The XOOPS Project <http://www.xoops.org>
+ * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+ * @version		$Id$
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author		The XOOPS Project Community <http://www.xoops.org>
+ */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
@@ -157,15 +157,14 @@ class IcmsBlock extends IcmsPersistableObject {
         return $block;
     }
 
-    /*
-    * Aligns the content of a block
-    * If position is 0, content in DB is positioned
-    * before the original content
-    * If position is 1, content in DB is positioned
-    * after the original content
-    */
-    public function buildContent($position,$content="",$contentdb="")
-    {
+    /**
+     * Aligns the content of a block
+     * If position is 0, content in DB is positioned
+     * before the original content
+     * If position is 1, content in DB is positioned
+     * after the original content
+     */
+    public function buildContent($position,$content="",$contentdb=""){
         if ( $position == 0 ) {
             $ret = $contentdb.$content;
         } elseif ( $position == 1 ) {
@@ -174,8 +173,7 @@ class IcmsBlock extends IcmsPersistableObject {
         return $ret;
     }
 	
-    public function buildTitle($originaltitle, $newtitle="")
-    {
+    public function buildTitle($originaltitle, $newtitle=""){
         if ($newtitle != "") {
             $ret = $newtitle;
         } else {
@@ -183,9 +181,202 @@ class IcmsBlock extends IcmsPersistableObject {
         }
         return $ret;
     }
-    
+
+    /**
+     * Get Block Positions
+     *
+     * @param boolean $full
+     * @return array
+     */
     public function getBlockPositions($full=false){
     	return $this->handler->getBlockPositions($full);
+    }
+
+    /**
+     * Load a Block
+     *
+     * @param integer $id
+     * 
+     * @deprecated 
+     */
+    public function load($id){
+    	$this->$this->handler->getObject($id);
+    }
+	
+    /**
+     * Save this block
+     *
+     * @return integer
+     * 
+     * @deprecated
+     */
+    public function store(){
+    	$this->handler->insert( $this );
+        return $this->getVar('bid');
+    }
+	
+    /**
+     * Delete this block
+     *
+     * @return boolean
+     * 
+     * @deprecated 
+     */
+    public function delete(){        
+        return $this->handler->delete( $this );
+    }
+ 
+    /**
+     * Get all the blocks that match the supplied parameters
+     * 
+     * @param $side   0: sideblock - left
+     *        1: sideblock - right
+     *        2: sideblock - left and right
+     *        3: centerblock - left
+     *        4: centerblock - right
+     *        5: centerblock - center
+     *        6: centerblock - left, right, center
+     * @param $groupid   groupid (can be an array)
+     * @param $visible   0: not visible 1: visible
+     * @param $orderby   order of the blocks
+     * @return array of block objects
+     * 
+     * @deprecated 
+     */
+    public function getAllBlocksByGroup($groupid, $asobject=true, $side=null, $visible=null, $orderby="b.weight,b.bid", $isactive=1){
+    	return $this->handler->getAllBlocksByGroup( $groupid, $asobject, $side, $visible, $orderby, $isactive );
+    }
+
+    /**
+     * Get All Blocks
+     *
+     * @since XOOPS
+     * 
+     * @param unknown_type $rettype
+     * @param unknown_type $side
+     * @param unknown_type $visible
+     * @param unknown_type $orderby
+     * @param unknown_type $isactive
+     * @return unknown
+     * 
+     * @deprecated 
+     */
+    public function getAllBlocks( $rettype = "object", $side = null, $visible = null, $orderby = "side,weight,bid", $isactive = 1 ){
+        return $this->handler->getAllBlocks( $rettype, $side, $visible, $orderby, $isactive );
+    }
+    
+    /**
+     * Get Block By Module ID (mid)
+     *
+     * @since XOOPS
+     * 
+     * @param integer $moduleid
+     * @param boolean $asobject
+     * @return unknown
+     * 
+     * @deprecated 
+     */
+    public function getByModule($moduleid, $asobject=true){
+    	return $this->handler->getByModule( $moduleid, $asobject );
+    }
+	
+    /**
+     * Get All Blocks By Group and Module
+     * 
+     * @since XOOPS
+     * 
+     * @param integer $groupid
+     * @param integer $module_id
+     * @param boolean $toponlyblock
+     * @param boolean $visible
+     * @param string $orderby
+     * @param booelan $isactive
+     * @return unknown
+     * 
+     * @deprecated
+     * 
+     * @todo Check if is still used, probably it was only used in the core block admin, and this has been rewrited.
+     */
+    public function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
+    	return $this->handler->getAllByGroupModule( $groupid, $module_id, $toponlyblock, $visible, $orderby, $isactive );
+    }
+	
+    /**
+     * Get Non Grouped Blocks
+     *
+     * @param integer $module_id
+     * @param unknown_type $toponlyblock
+     * @param boolean $visible
+     * @param string $orderby
+     * @param boolean $isactive
+     * @return array
+     * 
+     * @todo Rewrite this method under the ImpressCMS Pessitable Framework
+     */
+    public function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
+        $ret = array();
+        $bids = array();
+        $sql = "SELECT DISTINCT(bid) from ".$db->prefix('newblocks');
+        if ($result = $db->query($sql)) {
+            while ( $myrow = $db->fetchArray($result) ) {
+                $bids[] = $myrow['bid'];
+            }
+        }
+        $sql = "SELECT DISTINCT(p.gperm_itemid) from ".$db->prefix('group_permission')." p, ".$db->prefix('groups')." g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
+        $grouped = array();
+        if ($result = $db->query($sql)) {
+            while ( $myrow = $db->fetchArray($result) ) {
+                $grouped[] = $myrow['gperm_itemid'];
+            }
+        }
+        $non_grouped = array_diff($bids, $grouped);
+        if (!empty($non_grouped)) {
+            $sql = "SELECT b.* FROM ".$db->prefix('newblocks')." b, ".$db->prefix('block_module_link')." m WHERE m.block_id=b.bid";
+            $sql .= " AND b.isactive='".intval($isactive)."'";
+            if (isset($visible)) {
+                $sql .= " AND b.visible='".intval($visible)."'";
+            }
+            $module_id = intval($module_id);
+            if (!empty($module_id)) {
+                $sql .= " AND m.module_id IN ('0','".intval($module_id)."'";
+                if ($toponlyblock) {
+                    $sql .= ",'-1'";
+                }
+                $sql .= ")";
+            } else {
+                if ($toponlyblock) {
+                    $sql .= " AND m.module_id IN ('0','-1')";
+                } else {
+                    $sql .= " AND m.module_id='0'";
+                }
+            }
+            $sql .= " AND b.bid IN (".implode(',', $non_grouped).")";
+            $sql .= " ORDER BY ".$orderby;
+            $result = $db->query($sql);
+            while ( $myrow = $db->fetchArray($result) ) {
+                $block = $this->handler->get($myrow['bid']);
+                $ret[$myrow['bid']] =& $block;
+                unset($block);
+            }
+        }
+        return $ret;
+    }
+	
+    /**
+     * Count Similar Blocks
+     * 
+     * This method has been implemented in the block handler, because is was thought as usefull.
+     *
+     * @since XOOPS
+     *  
+     * @param integer $moduleId
+     * @param integer $funcNum
+     * @param string $showFunc
+     * 
+     * @return integer
+     */
+    public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
+   		return $this->handler->getCountSimilarBlocks( $moduleId, $funcNum, $showFunc );       
     }
     
 }
@@ -519,7 +710,26 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
         return $obj;
 	}
 	
-	
+	public function getCountSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
+        $funcNum = intval($funcNum);
+        $moduleId = intval($moduleId);
+        if ($funcNum < 1 || $moduleId < 1) {
+            return 0;
+        }
+        $criteria = new CriteriaCompo();
+        if (isset($showFunc)) {
+            // showFunc is set for more strict comparison
+	        $criteria->add( new Criteria( 'mid', $moduleId ) );
+	        $criteria->add( new Criteria( 'func_num', $funcNum ) );
+	        $criteria->add( new Criteria( 'show_func', $showFunc ) );    
+        } else {
+            $criteria->add( new Criteria( 'mid', $moduleId ) );
+	        $criteria->add( new Criteria( 'func_num', $funcNum ) );
+        }
+        $count = $this->handler->getCount($criteria);
+        return $count;
+        
+    }
     
 }
 
