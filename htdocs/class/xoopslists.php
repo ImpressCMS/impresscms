@@ -1,49 +1,57 @@
 <?php
-// $Id$
 /**
-* Handles all list functions within ImpressCMS
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	XoopsForms
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Handles all list functions within ImpressCMS
+ *
+ * @copyright	The XOOPS Project <http://www.xoops.org/>
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/> 
+ * @license		LICENSE.txt
+ * @package		misc
+ * @since		XOOPS
+ * @author		The XOOPS Project Community <http://www.xoops.org> 
+ * @author		modified by UnderDog <underdog@impresscms.org>
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @version		$Id$
+ */
 
 if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 	define("XOOPS_LISTS_INCLUDED",1);
-	class XoopsLists
-	{
-		function getTimeZoneList()
-		{
+	
+	/**
+	 * Handles all list functions within ImpressCMS
+	 *
+	 * @copyright	The ImpressCMS Project <http://www.impresscms.org/> 
+	 * @license		LICENSE.txt
+	 * @package		misc
+	 * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+	 * @version		$Id$
+	 */
+	class IcmsLists {
+		
+		static public function getTimeZoneList() {
 			icms_loadLanguageFile('core', 'timezone');
 			$time_zone_list = array ("-12" => _TZ_GMTM12, "-11" => _TZ_GMTM11, "-10" => _TZ_GMTM10, "-9" => _TZ_GMTM9, "-8" => _TZ_GMTM8, "-7" => _TZ_GMTM7, "-6" => _TZ_GMTM6, "-5" => _TZ_GMTM5, "-4" => _TZ_GMTM4, "-3.5" => _TZ_GMTM35, "-3" => _TZ_GMTM3, "-2" => _TZ_GMTM2, "-1" => _TZ_GMTM1, "0" => _TZ_GMT0, "1" => _TZ_GMTP1, "2" => _TZ_GMTP2, "3" => _TZ_GMTP3, "3.5" => _TZ_GMTP35, "4" => _TZ_GMTP4, "4.5" => _TZ_GMTP45, "5" => _TZ_GMTP5, "5.5" => _TZ_GMTP55, "6" => _TZ_GMTP6, "7" => _TZ_GMTP7, "8" => _TZ_GMTP8, "9" => _TZ_GMTP9, "9.5" => _TZ_GMTP95, "10" => _TZ_GMTP10, "11" => _TZ_GMTP11, "12" => _TZ_GMTP12);
 			return $time_zone_list;
 		}
 
-		/*
-		 * gets list of themes folder from themes directory, excluding any directories that do not have theme.html
-     * @return    array   
-     */
-    function getThemesList(){
-      $dirtyList = $cleanList = Array();
-      $dirtyList = XoopsLists::getDirListAsArray(ICMS_THEME_PATH.'/');
-      foreach($dirtyList as $item){
-        if(file_exists(ICMS_THEME_PATH.'/'.$item.'/theme.html'))
-          $cleanList[$item] = $item;
-      }
-      return $cleanList;
-    }
+		/**
+		 * Gets list of themes folder from themes directory, excluding any directories that do not have theme.html
+	     * @return    array   
+	     */
+	    static public function getThemesList(){
+	      $dirtyList = $cleanList = Array();
+	      $dirtyList = XoopsLists::getDirListAsArray(ICMS_THEME_PATH.'/');
+	      foreach($dirtyList as $item){
+	        if(file_exists(ICMS_THEME_PATH.'/'.$item.'/theme.html'))
+	          $cleanList[$item] = $item;
+	      }
+	      return $cleanList;
+	    }
 
-		/*
-		 * gets a list of module folders from the modules directory
+		/**
+		 * Gets a list of module folders from the modules directory
 		 */
-		function getModulesList()
-		{
+		static public function getModulesList() {
             $dirtyList = $cleanList = array();
             $dirtyList = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH.'/modules/');
             foreach($dirtyList as $item){
@@ -57,12 +65,12 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		}
 
 
-		/*
+		/**
 		 * gets list of name of directories inside a directory
-     * @param   string    $dirname    name of the directory to scan
-     * @return  array     $list       list of directories in the directory
-     */
-		function getDirListAsArray( $dirname ) {
+	     * @param   string    $dirname    name of the directory to scan
+	     * @return  array     $list       list of directories in the directory
+	     */
+		static public function getDirListAsArray( $dirname ) {
 			$ignored = array( 'cvs', '_darcs', '.svn' );
 			$list = array();
 			if ( substr( $dirname, -1 ) != '/' ) {
@@ -82,13 +90,14 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			return $list;
 		}
 
-		/*
-		 * gets list of all files in a directory
-     * @param   string    $dirname    name of the directory to scan for files
-     * @param   string    $prefix     prefix to put in front of the file
-     * @return  array     $filelist   list of files in the directory
-     */
-		function getFileListAsArray($dirname, $prefix="")
+		/**
+		 * Gets list of all files in a directory
+		 * 
+	     * @param   string    $dirname    name of the directory to scan for files
+	     * @param   string    $prefix     prefix to put in front of the file
+	     * @return  array     $filelist   list of files in the directory
+	     */
+		static public function getFileListAsArray($dirname, $prefix="")
 		{
 			$filelist = array();
 			if (substr($dirname, -1) == '/') {
@@ -110,12 +119,11 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/*
 		 * gets list of image file names in a directory
-     * @param   string    $dirname    name of the directory to scan for image files
-     * @param   string    $prefix     prefix to put in front of the image file
-     * @return  array     $filelist   list of files in the directory
-     */
-		function getImgListAsArray($dirname, $prefix="")
-		{
+	     * @param   string    $dirname    name of the directory to scan for image files
+	     * @param   string    $prefix     prefix to put in front of the image file
+	     * @return  array     $filelist   list of files in the directory
+	     */
+		static public function getImgListAsArray($dirname, $prefix="") {
 			$filelist = array();
 			if ($handle = opendir($dirname)) {
 				while (false !== ($file = readdir($handle))) {
@@ -132,13 +140,14 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		}
 
 
-		/*
-		 * gets list of font file names in a directory
-     * @param   string    $dirname    name of the directory to scan for font files
-     * @param   string    $prefix     prefix to put in front of the font file
-     * @return  array     $filelist   list of font files in the directory
-     */
-		function getFontListAsArray($dirname, $prefix="")
+		/**
+		 * Gets list of font file names in a directory
+		 * 
+	     * @param   string    $dirname    name of the directory to scan for font files
+	     * @param   string    $prefix     prefix to put in front of the font file
+	     * @return  array     $filelist   list of font files in the directory
+	     */
+		static public function getFontListAsArray($dirname, $prefix="")
 		{
 			$filelist = array();
 			if ($handle = opendir($dirname)) {
@@ -156,14 +165,14 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		}
 
 
-		/*
-		 * gets list of php file names in a directory
-     * @param   string    $dirname    name of the directory to scan for PHP files
-     * @param   string    $prefix     prefix to put in front of the PHP file
-     * @return  array     $filelist   list of PHP files in the directory
-     */
-		function getPhpListAsArray($dirname, $prefix="")
-		{
+		/**
+		 * Gets list of php file names in a directory
+		 * 
+	     * @param   string    $dirname    name of the directory to scan for PHP files
+	     * @param   string    $prefix     prefix to put in front of the PHP file
+	     * @return  array     $filelist   list of PHP files in the directory
+	     */
+		static public function getPhpListAsArray($dirname, $prefix="") {
 			$filelist = array();
 			if ($handle = opendir($dirname)) {
 				while (false !== ($file = readdir($handle))) {
@@ -183,12 +192,11 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/*
 		 * gets list of html file names in a certain directory
-     * @param   string    $dirname    name of the directory to scan for HTML files
-     * @param   string    $prefix     prefix to put in front of the HTML file
-     * @return  array     $filelist   list of HTML files in the directory
-     */
-		function getHtmlListAsArray($dirname, $prefix="")
-		{
+	     * @param   string    $dirname    name of the directory to scan for HTML files
+	     * @param   string    $prefix     prefix to put in front of the HTML file
+	     * @return  array     $filelist   list of HTML files in the directory
+	     */
+		static public function getHtmlListAsArray($dirname, $prefix="") {
 			$filelist = array();
 			if ($handle = opendir($dirname)) {
 				while (false !== ($file = readdir($handle))) {
@@ -204,14 +212,14 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			return $filelist;
 		}
 
-		/*
-		 * gets list of avatar file names in a certain directory
+		/**
+		 * Gets list of avatar file names in a certain directory
 		 * if directory is not specified, default directory will be searched
-     * @param   string    $avatar_dir name of the directory to scan for files
-     * @return  array     $avatars    list of avatars in the directory
-     */
-		function getAvatarsList($avatar_dir="")
-		{
+	     * 
+	     * @param   string    $avatar_dir name of the directory to scan for files
+	     * @return  array     $avatars    list of avatars in the directory
+	     */
+		static public function getAvatarsList($avatar_dir="") {
 			$avatars = array();
 			if ( $avatar_dir != "" ) {
 				$avatars = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/".$avatar_dir."/", $avatar_dir."/");
@@ -221,79 +229,79 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			return $avatars;
 		}
 
-		/*
-		 * gets list of all avatar image files inside default avatars directory
-     * @return  mixed     $avatars|false  list of avatar files in the directory or false if no avatars
-     */
-		function getAllAvatarsList()
-		{
+		/**
+		 * Gets list of all avatar image files inside default avatars directory
+		 * 
+         * @return  mixed     $avatars|false  list of avatar files in the directory or false if no avatars
+	     */
+		static public function getAllAvatarsList() {
 			$avatars = array();
 			$dirlist = array();
 			$dirlist = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
-			if ( count($dirlist) > 0 ) {
-				foreach ( $dirlist as $dir ) {
+			if ( count($dirlist) > 0 )
+				foreach ( $dirlist as $dir )
 					$avatars[$dir] =& XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/".$dir."/", $dir."/");
-				}
-			} else {
+			else
 				return false;
-			}
 			return $avatars;
 		}
 
-		/*
-  	 * gets list of subject icon image file names in a certain directory
-  	 * if directory is not specified, default directory will be searched
-     * @param   string    $sub_dir    name of the directory to scan for files
-     * @return  array     $subjects   list of subject files in the directory
-     */
-		function getSubjectsList($sub_dir="")
-		{
+		/**
+	  	 * gets list of subject icon image file names in a certain directory
+	  	 * if directory is not specified, default directory will be searched
+	  	 * 
+	     * @param   string    $sub_dir    name of the directory to scan for files
+	     * @return  array     $subjects   list of subject files in the directory
+	     */
+		static public function getSubjectsList($sub_dir="") {
 			$subjects = array();
-			if($sub_dir != ""){
+			if($sub_dir != "")
 				$subjects = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/subject/".$sub_dir, $sub_dir."/");
-			} else {
+			else
 				$subjects = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/subject/");
-			}
 			return $subjects;
 		}
 
-		/*
-		 * gets list of language folders inside default language directory
-     * @return  array     $lang_list   list of language files in the directory
-     */
-		function getLangList()
-		{
+		/**
+		 * Gets list of language folders inside default language directory
+     	 * 
+     	 * @return  array     $lang_list   list of language files in the directory
+     	 */
+		static public function getLangList() {
 			$lang_list = array();
 			$lang_list = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH."/language/");
 			return $lang_list;
 		}
 
-		/*
-		 * gets list of editors folders inside editors directory
-     * @return  array     $editor_list   list of files in the directory
-     */
-		function getEditorsList(){
+		/**
+		 * Gets list of editors folders inside editors directory
+     	 * 
+     	 * @return  array     $editor_list   list of files in the directory
+     	 */
+		static public function getEditorsList() {
 			$editor_list = array();
 			$editor_list = XoopsLists::getDirListAsArray(XOOPS_EDITOR_PATH);
 			$editor_list = array_merge(array('default'=>'default'),$editor_list);
 			return $editor_list;
 		}
 
-		/*
-		 * gets list of enabled editors folders inside editors directory
-     * @return  bool
-     */
-		function getEnabledEditorsList(){
+		/**
+		 * Gets list of enabled editors folders inside editors directory
+		 * 
+     	 * @return array
+     	 */
+		static public function getEnabledEditorsList() {
 			global $xoopsConfig;
 			return $xoopsConfig['editor_enabled'];
 		}
 
 
-		/*
-		 * gets list of countries
-     * @return  array     $country_list   list of countries
-     */
-		function getCountryList() {	
+		/**
+		 * Gets list of countries
+		 * 
+     	 * @return  array     $country_list   list of countries
+    	 */
+		static public function getCountryList() {	
 			global $xoopsConfig;
 			icms_loadLanguageFile('core', 'countries');
 			$country_list = array (
@@ -558,12 +566,12 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		}
 
 
-		/*
-		 * gets list HTML tags
-     * @return  array     $html_list
-     */
-		function getHtmlList()
-		{
+		/**
+		 * Gets list HTML tags
+		 * 
+     	 * @return  array     $html_list
+     	 */
+		static public function getHtmlList() {
 			$html_list = array (
 				"a" => "&lt;a&gt;",
 				"abbr" => "&lt;abbr&gt;",
@@ -623,12 +631,12 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		}
 
 
-		/*
-		 * gets list of all user ranks in the database
-     * @return  array     $ret   list of user ranks
-     */
-		function getUserRankList()
-		{
+		/**
+		 * Gets list of all user ranks in the database
+		 * 
+     	 * @return  array     $ret   list of user ranks
+         */
+		static public function getUserRankList() {
 			$db =& Database::getInstance();
 			$myts =& MyTextSanitizer::getInstance();
 			$sql = "SELECT rank_id, rank_title FROM ".$db->prefix("ranks")." WHERE rank_special = '1'";
@@ -640,5 +648,18 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			return $ret;
 		}
 	}
+	
+	/**
+	 * XoopsLists
+	 *
+	 * @copyright	The XOOPS Project <http://www.xoops.org/>
+	 * @copyright	XOOPS_copyrights.txt
+	 * @license		LICENSE.txt
+	 * @since		XOOPS
+	 * @author		The XOOPS Project Community <http://www.xoops.org>
+	 * 
+	 * @deprecated  
+	 */
+	class XoopsLists extends IcmsLists { /* For Backwards Compatibility */ }
 }
 ?>
