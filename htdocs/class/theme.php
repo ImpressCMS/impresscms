@@ -233,6 +233,17 @@ class xos_opal_Theme {
 	    	$value = $config[$i]->getVar( 'conf_value', 'n' );
 	    	if ( substr( $name, 0, 5 ) == 'meta_' ) {
 	    		$this->addMeta( 'meta', substr( $name, 5 ), $value );
+	    	} elseif ( substr( $name, 0, 6 ) == 'footer' ) {
+                $values = $value;
+                $config_handler = & xoops_gethandler ( 'config' );
+                $xoopsConfigMetaFooter = & $config_handler->getConfigsByCat ( XOOPS_CONF_METAFOOTER );
+                if ($xoopsConfigMetaFooter['use_google_analytics'] == true && isset($xoopsConfigMetaFooter['google_analytics']) && $xoopsConfigMetaFooter['google_analytics'] != ''){
+                    $values = $value.'<script type="text/javascript">
+                    var pageTracker = _gat._getTracker("UA-'.$xoopsConfigMetaFooter['google_analytics'].'"); pageTracker._trackPageview();
+                    </script>';
+                }
+	        	$this->template->assign( "xoops_$name", $values );
+	        	$this->template->assign( "icms_$name", $values );
 	    	} else {
 	        	// prefix each tag with 'xoops_'
 	        	$this->template->assign( "xoops_$name", $value );

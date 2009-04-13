@@ -47,8 +47,21 @@ else
 	*/
     	$xoTheme =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
     	$xoopsTpl =& $xoTheme->template;
-	$config_handler =& xoops_gethandler('config');
-	$xoopsConfigMetaFooter =& $config_handler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
+	$config_handler = & xoops_gethandler ( 'config' );
+	$xoopsConfigMetaFooter = & $config_handler->getConfigsByCat ( XOOPS_CONF_METAFOOTER );
+	if ($xoopsConfigMetaFooter['use_google_analytics'] == true && isset($xoopsConfigMetaFooter['google_analytics']) && $xoopsConfigMetaFooter['google_analytics'] != ''){
+        
+        /* Legacy GA urchin code */
+        //$xoTheme->addScript('http://www.google-analytics.com/urchin.js',array('type' => 'text/javascript'),'_uacct = "UA-'.$xoopsConfigMetaFooter['google_analytics'].'";urchinTracker();');
+        $scheme = parse_url(ICMS_URL, PHP_URL_SCHEME);
+        if ($scheme == 'http'){
+            /* New GA code, http protocol */
+            $xoTheme->addScript('http://www.google-analytics.com/ga.js',array('type' => 'text/javascript'),'');
+        } elseif ($scheme == 'https') {
+            /* 	New GA code, https protocol */
+            $xoTheme->addScript('https://ssl.google-analytics.com/ga.js',array('type' => 'text/javascript'),'');
+        }
+    }
 	if (isset($xoopsConfigMetaFooter['google_meta']) && $xoopsConfigMetaFooter['google_meta'] != ''){
 		$arr_google_meta=explode('"', '<meta name="verify-v1" content="'.$xoopsConfigMetaFooter['google_meta'].'" />');
 		$xoTheme->addMeta('meta',$arr_google_meta[1],$arr_google_meta[3]);
