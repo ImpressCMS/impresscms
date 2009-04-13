@@ -63,7 +63,7 @@ class xos_opal_ThemeFactory {
 			$GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
 		}
 		$options['path'] = XOOPS_THEME_PATH . '/' . $options['folderName'];
-		$inst =& new xos_opal_Theme();
+		$inst = new xos_opal_Theme();
 		foreach ( $options as $k => $v ) $inst->$k = $v;
 		$inst->xoInit();
 		return $inst;
@@ -183,7 +183,7 @@ class xos_opal_Theme {
 		$this->path = XOOPS_THEME_PATH . '/' . $this->folderName;
 		$this->url = XOOPS_THEME_URL . '/' . $this->folderName;
 
-		$this->template =& new XoopsTpl();
+		$this->template = new XoopsTpl();
 		$this->template->currentTheme =& $this;
 		$this->template->assign_by_ref( 'xoTheme', $this );
 
@@ -259,7 +259,7 @@ class xos_opal_Theme {
 		// Instanciate and initialize all the theme plugins
 		foreach ( $this->plugins as $k => $bundleId ) {
 			if ( !is_object( $bundleId ) ) {
-				$this->plugins[$bundleId] =& new $bundleId();
+				$this->plugins[$bundleId] = new $bundleId();
 				$this->plugins[$bundleId]->theme =& $this;
 				$this->plugins[$bundleId]->xoInit();
 				unset( $this->plugins[$k] );
