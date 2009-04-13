@@ -1,17 +1,17 @@
 <?php
 /**
-* All BB codes allowed in the site are generated through here.
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ * All BB codes allowed in the site are generated through here.
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id: module.textsanitizer.php 8565 2009-04-11 12:44:10Z icmsunderdog $
+ */
 
 /**
  * Class to "clean up" text for various uses
@@ -397,6 +397,13 @@ class MyTextSanitizer
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
 		global $icmsPreloadHandler;
+		// FIXME: Review this fix, is not the best. I dont found the problem, it really should never worked in the admin side!
+		// Maybe the preload handler should be in the install kernel.
+		if(!is_object($icmsPreloadHandler)){
+			include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
+			global $icmsPreloadHandler;
+			$icmsPreloadHandler = IcmsPreloadHandler::getInstance();
+		}
 		$icmsPreloadHandler->triggerEvent('beforeDisplayTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		if($html != 1)
