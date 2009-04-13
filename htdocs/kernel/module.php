@@ -263,7 +263,7 @@ class XoopsModule extends XoopsObject
 		include_once ICMS_ROOT_PATH.'/class/template.php';
 		icms_loadLanguageFile($xoopsModule->getVar('dirname'), 'modinfo');
 		icms_loadLanguageFile($xoopsModule->getVar('dirname'), 'admin');
-		$tpl = & new XoopsTpl();
+		$tpl = new XoopsTpl();
 		$tpl->assign(array('headermenu' => $this->getAdminHeaderMenu(), 'adminmenu' => $this->getAdminMenu(), 'current' => $currentoption, 'breadcrumb' => $breadcrumb, 'headermenucount' => count($this->getAdminHeaderMenu()), 'submenus' => $submenus, 'currentsub' => $currentsub, 'submenuscount' => count($submenus)));
 		$tpl->display(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_adm_modulemenu.html');
 	}
