@@ -2,13 +2,15 @@
 /**
  * ImpressCMS Block Persistable Class
  * 
- * @since 		XOOPS
  * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
  * @copyright 	The XOOPS Project <http://www.xoops.org>
  * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+ * 
  * @version		$Id$
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @since 		XOOPS
+ * 
  * @author		The XOOPS Project Community <http://www.xoops.org>
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
@@ -120,6 +122,13 @@ class IcmsBlock extends IcmsPersistableObject {
         return false;
     }
 	
+    /**
+     * Enter description here...
+     *
+     * @return unknown
+     * 
+     * @deprecated
+     */
 	public function buildBlock(){
         global $xoopsConfig, $xoopsOption;
         $block = array();
@@ -130,10 +139,10 @@ class IcmsBlock extends IcmsPersistableObject {
             if ( !$show_func ) {
                 return false;
             }
-            // must get lang files b4 execution of the function
-            if ( file_exists(XOOPS_ROOT_PATH."/modules/".$this->getVar('dirname')."/blocks/".$this->getVar('func_file')) ) {
+            // Must get lang files before execution of the function.
+            if ( file_exists(ICMS_ROOT_PATH."/modules/".$this->getVar('dirname')."/blocks/".$this->getVar('func_file')) ) {
 				icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
-                include_once XOOPS_ROOT_PATH."/modules/".$this->getVar('dirname')."/blocks/".$this->getVar('func_file');
+                include_once ICMS_ROOT_PATH."/modules/".$this->getVar('dirname')."/blocks/".$this->getVar('func_file');
                 $options = explode("|", $this->getVar("options"));
                 if ( function_exists($show_func) ) {
                     // execute the function
@@ -163,6 +172,8 @@ class IcmsBlock extends IcmsPersistableObject {
      * before the original content
      * If position is 1, content in DB is positioned
      * after the original content
+     * 
+     * @deprecated 
      */
     public function buildContent($position,$content="",$contentdb=""){
         if ( $position == 0 ) {
@@ -173,6 +184,15 @@ class IcmsBlock extends IcmsPersistableObject {
         return $ret;
     }
 	
+    /**
+     * Build Block Title
+     *
+     * @param string $originaltitle
+     * @param string $newtitle
+     * @return string
+     * 
+     * @deprecated 
+     */
     public function buildTitle($originaltitle, $newtitle=""){
         if ($newtitle != "") {
             $ret = $newtitle;
@@ -187,6 +207,8 @@ class IcmsBlock extends IcmsPersistableObject {
      *
      * @param boolean $full
      * @return array
+     * 
+     * @deprecated
      */
     public function getBlockPositions($full=false){
     	return $this->handler->getBlockPositions($full);
@@ -312,54 +334,11 @@ class IcmsBlock extends IcmsPersistableObject {
      * @return array
      * 
      * @todo Rewrite this method under the ImpressCMS Pessitable Framework
+     * 
+     * @deprecated 
      */
     public function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
-        $ret = array();
-        $bids = array();
-        $sql = "SELECT DISTINCT(bid) from ".$db->prefix('newblocks');
-        if ($result = $db->query($sql)) {
-            while ( $myrow = $db->fetchArray($result) ) {
-                $bids[] = $myrow['bid'];
-            }
-        }
-        $sql = "SELECT DISTINCT(p.gperm_itemid) from ".$db->prefix('group_permission')." p, ".$db->prefix('groups')." g WHERE g.groupid=p.gperm_groupid AND p.gperm_name='block_read'";
-        $grouped = array();
-        if ($result = $db->query($sql)) {
-            while ( $myrow = $db->fetchArray($result) ) {
-                $grouped[] = $myrow['gperm_itemid'];
-            }
-        }
-        $non_grouped = array_diff($bids, $grouped);
-        if (!empty($non_grouped)) {
-            $sql = "SELECT b.* FROM ".$db->prefix('newblocks')." b, ".$db->prefix('block_module_link')." m WHERE m.block_id=b.bid";
-            $sql .= " AND b.isactive='".intval($isactive)."'";
-            if (isset($visible)) {
-                $sql .= " AND b.visible='".intval($visible)."'";
-            }
-            $module_id = intval($module_id);
-            if (!empty($module_id)) {
-                $sql .= " AND m.module_id IN ('0','".intval($module_id)."'";
-                if ($toponlyblock) {
-                    $sql .= ",'-1'";
-                }
-                $sql .= ")";
-            } else {
-                if ($toponlyblock) {
-                    $sql .= " AND m.module_id IN ('0','-1')";
-                } else {
-                    $sql .= " AND m.module_id='0'";
-                }
-            }
-            $sql .= " AND b.bid IN (".implode(',', $non_grouped).")";
-            $sql .= " ORDER BY ".$orderby;
-            $result = $db->query($sql);
-            while ( $myrow = $db->fetchArray($result) ) {
-                $block = $this->handler->get($myrow['bid']);
-                $ret[$myrow['bid']] =& $block;
-                unset($block);
-            }
-        }
-        return $ret;
+        return $this->hanler->getNonGroupedBlocks( $module_id, $toponlyblock, $visible, $orderby, $isactive );
     }
 	
     /**
@@ -374,6 +353,8 @@ class IcmsBlock extends IcmsPersistableObject {
      * @param string $showFunc
      * 
      * @return integer
+     * 
+     * @deprecated 
      */
     public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
    		return $this->handler->getCountSimilarBlocks( $moduleId, $funcNum, $showFunc );       
