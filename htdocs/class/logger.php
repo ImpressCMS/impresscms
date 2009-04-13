@@ -20,25 +20,21 @@
  *
  * Records information about database queries, blocks, and execution time
  * and can display it as HTML. It also catches php runtime errors.
- * @package xos_kernel
+ * @package kernel
  */
 class XoopsLogger {
-  /**#@+
-  * @var array
-  */
-  var $queries = array();
-  var $blocks = array();
-  var $extra = array();
-  var $logstart = array();
-  var $logend = array();
-  var $errors = array();
-  /**#@-*/
   
-  var $usePopup = false;
-  var $activated = true;
-  
-  /**@access protected*/
-  var $renderingEnabled = false;
+	public $queries = array();
+	public $blocks = array();
+	public $extra = array();
+	public $logstart = array();
+	public $logend = array();
+	public $errors = array();
+	
+	public $usePopup = false;
+	public $activated = true;
+	
+	private $renderingEnabled = false;
 
 
 	/**
@@ -63,248 +59,245 @@ class XoopsLogger {
   	}
 
 
-  /**
-  * Enable logger output rendering
-  * When output rendering is enabled, the logger will insert its output within the page content.
-  * If the string <!--{xo-logger-output}--> is found in the page content, the logger output will
-  * replace it, otherwise it will be inserted after all the page output.
-  */
-  function enableRendering() {
-    if ( !$this->renderingEnabled ) {
-      ob_start( array( &$this, 'render' ) );
-      $this->renderingEnabled = true;
-    }
-  }
+	/**
+ 	 * Enable logger output rendering
+	 * When output rendering is enabled, the logger will insert its output within the page content.
+	 * If the string <!--{xo-logger-output}--> is found in the page content, the logger output will
+	 * replace it, otherwise it will be inserted after all the page output.
+	 */
+	public function enableRendering() {
+		if ( !$this->renderingEnabled ) {
+	    	ob_start( array( &$this, 'render' ) );
+	    	$this->renderingEnabled = true;
+	  	}
+	}
 
 
-  /**
-  * Disable logger output rendering.
-  */
-  function disableRendering() {
-    if ( $this->renderingEnabled ) {
-      $this->renderingEnabled = false;
-    }
-  }
+	/**
+	 * Disable logger output rendering.
+	 */
+	public function disableRendering() {
+		if ( $this->renderingEnabled ) {
+			$this->renderingEnabled = false;
+		}
+	}
+
+	/**
+	 * Disabling logger for some special occasion like AJAX requests and XML
+	 *
+	 * When the logger absolutely needs to be disabled whatever it is enabled or not in the preferences
+	 * and whether user has permission or not to view it
+	 */
+	public function disableLogger() {
+		$this->activated = false;
+	}
+
+	/**
+	 * Returns the current microtime in seconds.
+	 * @return float
+	 */
+	function microtime() {
+		$now = explode( ' ', microtime() );
+		return (float)$now[0] + (float)$now[1];
+	}
 
 
+	/**
+	 * Start a timer
+	 * @param   string  $name   name of the timer
+	 */
+	function startTime($name = 'ICMS') {
+		$this->logstart[$name] = $this->microtime();
+	}
 
-  /**
-  * Disabling logger for some special occasion like AJAX requests and XML
-  *
-  * When the logger absolutely needs to be disabled whatever it is enabled or not in the preferences
-  * and whether user has permission or not to view it
-  */
-  function disableLogger() {
-    $this->activated = false;
-  }
+	/**
+	 * Stop a timer
+	 * @param   string  $name   name of the timer
+	 */
+	function stopTime($name = 'ICMS') {
+		$this->logend[$name] = $this->microtime();
+	}
 
-  /**
-  * Returns the current microtime in seconds.
-  * @return float
-  */
-  function microtime() {
-    $now = explode( ' ', microtime() );
-    return (float)$now[0] + (float)$now[1];
-  }
+	/**
+	 * Log a database query
+	 * @param   string  $sql    SQL string
+	 * @param   string  $error  error message (if any)
+	 * @param   int     $errno  error number (if any)
+	 */
+	function addQuery($sql, $error=null, $errno=null) {
+		if ( $this->activated )		$this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno);
+		if (defined('ICMS_LOGGING_HOOK') and ICMS_LOGGING_HOOK != '') {
+			include ICMS_LOGGING_HOOK;
+		}
+	}
 
+	/**
+	 * Log display of a block
+	 * @param   string  $name       name of the block
+	 * @param   bool    $cached     was the block cached?
+	 * @param   int     $cachetime  cachetime of the block
+	 */
+  	function addBlock($name, $cached = false, $cachetime = 0) {
+  		if ( $this->activated )
+  			$this->blocks[] = array('name' => $name, 'cached' => $cached, 'cachetime' => $cachetime);
+  	}
 
-  /**
-  * Start a timer
-  * @param   string  $name   name of the timer
-  */
-  function startTime($name = 'ICMS') {
-    $this->logstart[$name] = $this->microtime();
-  }
+	/**
+	 * Log extra information
+	 * @param   string  $name       name for the entry
+	 * @param   int     $msg  text message for the entry
+	 */
+	public function addExtra($name, $msg) {
+	  	if ( $this->activated )		
+	  		$this->extra[] = array('name' => $name, 'msg' => $msg);
+	}
 
+	/**
+	 * Error handling callback (called by the zend engine)
+	 * @param  string  $errno
+	 * @param  string  $errstr
+	 * @param  string  $errfile
+	 * @param  string  $errline
+	 */
+	public function handleError( $errno, $errstr, $errfile, $errline ) {
+		$errstr = $this->sanitizePath( $errstr );
+		$errfile = $this->sanitizePath( $errfile );
+		if ( $this->activated && ( $errno & error_reporting() ) ) {
+			// NOTE: we only store relative pathnames
+			$this->errors[] = compact( 'errno', 'errstr', 'errfile', 'errline' );
+		}
+		
+		if ( $errno == E_USER_ERROR ) {
+			$trace = true;
+			if ( substr( $errstr, 0, '8' ) == 'notrace:' ) {
+				$trace = false;
+				$errstr = substr( $errstr, 8 );
+			}
+			
+			$errortext = sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
+			echo $errortext;
+			if ( $trace && function_exists( 'debug_backtrace' ) ) {
+				echo "<div style='color:#ffffff;background-color:#ffffff'>Backtrace:<br />";
+				$trace = debug_backtrace();
+				array_shift( $trace );
+				foreach ( $trace as $step ) {
+					if ( isset( $step['file'] ) ) {
+						echo $this->sanitizePath( $step['file'] );
+						echo ' (' . $step['line'] . ")\n<br />";
+					}
+				}
+				echo '</div>';
+			}
+			exit();
+		 }
+	}
 
-  /**
-  * Stop a timer
-  * @param   string  $name   name of the timer
-  */
-  function stopTime($name = 'ICMS') {
-    $this->logend[$name] = $this->microtime();
-  }
+	/**
+	 * Sanitize path / url to file in erorr report
+	 * @param  string  $path   path to sanitize
+	 * @return string  $path   sanitized path
+	 * @access protected
+	 */
+	function sanitizePath( $path ) {
+		$path = str_replace(
+	    	array( '\\', XOOPS_ROOT_PATH, str_replace( '\\', '/', realpath( XOOPS_ROOT_PATH ) ) ),
+	    	array( '/', '', '' ),
+	    	$path
+	  	);
+	  	return $path;
+	}
+	
+	/**
+	* Output buffering callback inserting logger dump in page output
+	* Determines wheter output can be shown (based on permissions)
+	* @param  string  $output
+	* @return string  $output
+	*/
+	function render( $output ) {
+		global $xoopsUser,$xoopsModule;
+		$groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+		$moduleid = (isset($xoopsModule) && is_object($xoopsModule)) ? $xoopsModule->mid() : 1;
+		$gperm_handler =& xoops_gethandler('groupperm');
+		if ( !$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups) )
+			return $output;
+		$this->renderingEnabled = $this->activated = false;
+		$log = $this->dump( $this->usePopup ? 'popup' : '' );
+		$pattern = '<!--{xo-logger-output}-->';
+		$pos = strpos( $output, $pattern );
+		if ( $pos !== false )
+			return substr( $output, 0, $pos ) . $log . substr( $output, $pos + strlen( $pattern ) );
+		else
+			return $output . $log;
+	}
 
+	/**
+	 * dump the logger output
+	 *
+	 * @param   string  $mode
+	 * @return  string  $ret
+	 * @access protected
+	 */
+	protected function dump( $mode = '' ) {
+		include XOOPS_ROOT_PATH . '/class/logger_render.php';
+	  	return $ret;
+	}
 
-  /**
-  * Log a database query
-  * @param   string  $sql    SQL string
-  * @param   string  $error  error message (if any)
-  * @param   int     $errno  error number (if any)
-  */
-  function addQuery($sql, $error=null, $errno=null) {
-    if ( $this->activated )		$this->queries[] = array('sql' => $sql, 'error' => $error, 'errno' => $errno);
-    if (defined('ICMS_LOGGING_HOOK') and ICMS_LOGGING_HOOK != '') {
-      include ICMS_LOGGING_HOOK;
-    }
-  }
-
-
-  /**
-  * Log display of a block
-  * @param   string  $name       name of the block
-  * @param   bool    $cached     was the block cached?
-  * @param   int     $cachetime  cachetime of the block
-  */
-  function addBlock($name, $cached = false, $cachetime = 0) {
-    if ( $this->activated )		$this->blocks[] = array('name' => $name, 'cached' => $cached, 'cachetime' => $cachetime);
-  }
-
-
-  /**
-  * Log extra information
-  * @param   string  $name       name for the entry
-  * @param   int     $msg  text message for the entry
-  */
-  function addExtra($name, $msg) {
-    if ( $this->activated )		$this->extra[] = array('name' => $name, 'msg' => $msg);
-  }
-
-
-
-  /**
-  * Error handling callback (called by the zend engine)
-  * @param  string  $errno
-  * @param  string  $errstr
-  * @param  string  $errfile
-  * @param  string  $errline
-  */
-  function handleError( $errno, $errstr, $errfile, $errline ) {
-    $errstr = $this->sanitizePath( $errstr );
-    $errfile = $this->sanitizePath( $errfile );
-    if ( $this->activated && ( $errno & error_reporting() ) ) {
-    // NOTE: we only store relative pathnames
-      $this->errors[] = compact( 'errno', 'errstr', 'errfile', 'errline' );
-    }
-
-    if ( $errno == E_USER_ERROR ) {
-      $trace = true;
-      if ( substr( $errstr, 0, '8' ) == 'notrace:' ) {
-        $trace = false;
-        $errstr = substr( $errstr, 8 );
-      }
-  
-      $errortext = sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
-      echo $errortext;
-      if ( $trace && function_exists( 'debug_backtrace' ) ) {
-        echo "<div style='color:#ffffff;background-color:#ffffff'>Backtrace:<br />";
-        $trace = debug_backtrace();
-        array_shift( $trace );
-        foreach ( $trace as $step ) {
-          if ( isset( $step['file'] ) ) {
-            echo $this->sanitizePath( $step['file'] );
-            echo ' (' . $step['line'] . ")\n<br />";
-          }
-        }
-        echo '</div>';
-      }
-      exit();
-    }
-  }
-
-
-  /**
-  * Sanitize path / url to file in erorr report
-  * @param  string  $path   path to sanitize
-  * @return string  $path   sanitized path
-  * @access protected
-  */
-  function sanitizePath( $path ) {
-    $path = str_replace(
-      array( '\\', XOOPS_ROOT_PATH, str_replace( '\\', '/', realpath( XOOPS_ROOT_PATH ) ) ),
-      array( '/', '', '' ),
-      $path
-    );
-    return $path;
-  }
-
-
-
-
-  /**
-  * Output buffering callback inserting logger dump in page output
-  * Determines wheter output can be shown (based on permissions)
-  * @param  string  $output
-  * @return string  $output
-  */
-  function render( $output ) {
-    global $xoopsUser,$xoopsModule;
-
-    $groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-    $moduleid = (isset($xoopsModule) && is_object($xoopsModule)) ? $xoopsModule->mid() : 1;
-
-    $gperm_handler =& xoops_gethandler('groupperm');
-
-    if ( !$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups) ) {
-      return $output;
-    }
-
-    $this->renderingEnabled = $this->activated = false;
-
-    $log = $this->dump( $this->usePopup ? 'popup' : '' );
-
-    $pattern = '<!--{xo-logger-output}-->';
-    $pos = strpos( $output, $pattern );
-    if ( $pos !== false ) {
-      return substr( $output, 0, $pos ) . $log . substr( $output, $pos + strlen( $pattern ) );
-    } else {
-      return $output . $log;
-    }
-  }
-
-
-  /**#@+
-  * dump the logger output
-  *
-  * @param   string  $mode
-  * @return  string  $ret
-  * @access protected
-  */
-  function dump( $mode = '' ) {
-    include XOOPS_ROOT_PATH . '/class/logger_render.php';
-    return $ret;
-  }
-
-
-  /**
-  * get the current execution time of a timer
-  *
-  * @param   string  $name   name of the counter
-  * @return  float   current execution time of the counter
-  */
-  function dumpTime( $name = 'ICMS' ) {
-    if ( !isset($this->logstart[$name]) ) {
-      return 0;
-    }
-    $stop = isset( $this->logend[$name] ) ? $this->logend[$name] : $this->microtime();
-    return $stop - $this->logstart[$name];
-  }
-
-
-
-  /**#@-*/
-  /**#@+
-  * @deprecated
-  */
-  function dumpAll() {			return $this->dump( '' );			}
-  function dumpBlocks() {	    	return $this->dump( 'blocks' );		}
-  function dumpExtra() {	    	return $this->dump( 'extra' );		}
-  function dumpQueries() {		return $this->dump( 'queries' );	}
-  /**#@-*/
+	/**
+	 * get the current execution time of a timer
+	 *
+	 * @param   string  $name   name of the counter
+	 * @return  float   current execution time of the counter
+	 */
+	public function dumpTime( $name = 'ICMS' ) {
+		if ( !isset($this->logstart[$name]) ) {
+	    	return 0;
+	  	}
+	 	$stop = isset( $this->logend[$name] ) ? $this->logend[$name] : $this->microtime();
+	  	return $stop - $this->logstart[$name];
+	}
+	
+  	/**
+  	 * dumpAll
+  	 *
+  	 * @return string
+  	 * @deprecated 
+  	 */
+	public function dumpAll(){ return $this->dump( '' ); }
+	
+	/**
+  	 * dumpBlocks
+  	 *
+  	 * @return unknown 
+  	 * @deprecated 
+  	 */
+	public function dumpBlocks(){ return $this->dump( 'blocks' ); }
+	
+	/**
+  	 * dumpExtra
+  	 *
+  	 * @return unknown
+  	 * @deprecated 
+  	 */
+	public function dumpExtra(){ return $this->dump( 'extra' ); }
+	
+	/**
+  	 * dumpQueries
+  	 *
+  	 * @return unknown 
+  	 * @deprecated 
+  	 */
+	public function dumpQueries(){ return $this->dump( 'queries' ); }
 }
 
-
-
-
-/*
-* PHP Error handler
-*
-* NB: You're not supposed to call this function directly, if you dont understand why, then
-* you'd better spend some time reading your PHP manual before you hurt somebody
-*
-* @internal: Using a function and not calling the handler method directly coz old PHP versions
-* set_error_handler() have problems with the array( obj,methodname ) syntax
-*/
+/**
+ * PHP Error handler
+ *
+ * NB: You're not supposed to call this function directly, if you dont understand why, then
+ * you'd better spend some time reading your PHP manual before you hurt somebody
+ *
+ * @internal: Using a function and not calling the handler method directly coz old PHP versions
+ * set_error_handler() have problems with the array( obj,methodname ) syntax
+ */
 function XoopsErrorHandler_HandleError( $errNo, $errStr, $errFile, $errLine, $errContext = null ) {
 	$logger =& XoopsLogger::instance();
 	$logger->handleError( $errNo, $errStr, $errFile, $errLine, $errContext );
