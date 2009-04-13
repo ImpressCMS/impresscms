@@ -44,23 +44,23 @@ class XoopsLogger {
 	/**
 	 * Constructor
 	 */
-  function XoopsLogger() {
-  }
+	private function __construct(){ /* Empty! */ }
 
-
-  /**
-  * Get a reference to the only instance of this class
-  * @return  object XoopsLogger  (@link XoopsLogger) reference to the only instance
-  */
-  function &instance() {
-    static $instance;
-    if ( !isset( $instance ) ) {
-    $instance = new XoopsLogger();
-    // Always catch errors, for security reasons
-    set_error_handler( 'XoopsErrorHandler_HandleError' );
-    }
-    return $instance;
-  }
+	/**
+	 * Get a reference to the only instance of this class
+	 * 
+	 * @return  object XoopsLogger  (@link XoopsLogger) reference to the only instance
+	 * @static 
+	 */
+	static public function &instance() {
+		static $instance;
+    	if ( !isset( $instance ) ) {
+	    	$instance = new XoopsLogger();
+	    	// Always catch errors, for security reasons
+	    	set_error_handler( 'XoopsErrorHandler_HandleError' );
+    	}
+    	return $instance;
+  	}
 
 
   /**
