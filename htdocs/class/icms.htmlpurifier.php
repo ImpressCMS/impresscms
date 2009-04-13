@@ -34,7 +34,7 @@ class icms_HTMLPurifier
  	* @static 	$purify_instance
  	* @staticvar   	object
 	**/
-	function &getPurifierInstance()
+	public static function &getPurifierInstance()
 	{
 		static $purify_instance;
 		if (!isset($purify_instance))
