@@ -135,6 +135,11 @@ class SystemBlocksadmin extends IcmsBlock {
 		return $rtn;
 	}
 	
+	public function getAdminViewItemLink(){
+		$rtn = $this->getVar('title');
+		return $rtn;
+	}
+	
 	/**
 	* getDeleteItemLink
 	* 
