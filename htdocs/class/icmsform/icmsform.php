@@ -7,7 +7,7 @@
 * @package		IcmsPersistableObject
 * @since		  1.1
 * @author		  marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmsform.php 8560 2009-04-11 11:35:42Z icmsunderdog $
 */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -27,7 +27,7 @@ include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 * @package		IcmsPersistableObject
 * @since		  1.1
 * @author		  marcan <marcan@impresscms.org>
-* @version		$Id$
+* @version		$Id: icmsform.php 8560 2009-04-11 11:35:42Z icmsunderdog $
 */
 class IcmsForm extends XoopsThemeForm {
 
@@ -44,7 +44,7 @@ class IcmsForm extends XoopsThemeForm {
 
 	/**
 	 * Constructor
-   * Sets all the values / variables for the IcmsForm class
+     * Sets all the values / variables for the IcmsForm class
 	 * @param	string    &$target                  reference to targetobject (@todo, which object will be passed here?)
 	 * @param	string    $form_name                the form name
 	 * @param	string    $form_caption             the form caption
@@ -479,7 +479,10 @@ class IcmsForm extends XoopsThemeForm {
 					} else {
 						// perhaps this is a control created by the module
 						$moduleName = $this->targetObject->handler->_moduleName;
-						$moduleFormElementsPath = $this->targetObject->handler->_modulePath . 'class/form/elements/';
+						if($module_dir != 'system')
+							$moduleFormElementsPath = $this->targetObject->handler->_modulePath.'/class/form/elements/';
+						else
+							$moduleFormElementsPath = $this->targetObject->handler->_modulePath.'/admin/{$name}/class/form/elements/';
 						$classname = ucfirst($moduleName) . ucfirst($controlName) . "Element";
 						$classFileName = strtolower($classname).".php";
 
