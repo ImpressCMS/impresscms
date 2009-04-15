@@ -8,7 +8,7 @@
     <{foreach item=element from=$form.elements}>
       <{if $element.hidden != true}>
       <tr id="<{$element.name}>_row">
-        <td class="head"><{$element.caption}>
+        <td class="head"><label for='<{$element.name}>'><{$element.caption}> <{if $element.required}> <span style='color:#f00'>*</span><{/if}></label>
         <{if $element.description}>
         	<div style="font-weight: normal"><{$element.description}></div>
         <{/if}>

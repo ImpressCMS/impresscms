@@ -558,7 +558,7 @@ class IcmsForm extends XoopsThemeForm {
 	{
 		$required =& $this->getRequired();
 		$ret = "
-			<form name='".$this->getName()."' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$this->getName()."(this);'".$this->getExtra().">
+			<form name='".$this->getName()."_dorga' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$this->getName()."(this);'".$this->getExtra().">
 			<table width='100%' class='outer' cellspacing='1'>
 			<tr><th colspan='2'>".$this->getTitle()."</th></tr>
 		";
@@ -602,6 +602,7 @@ class IcmsForm extends XoopsThemeForm {
 			$elements[$n]['caption']  = $ele->getCaption();
 			$elements[$n]['body']	  = $ele->render();
 			$elements[$n]['hidden']	  = $ele->isHidden();
+			$elements[$n]['required']	  = $ele->isRequired();
 			$elements[$n]['section']  = strToLower(get_class($ele)) == strToLower('IcmsFormSection');
 			$elements[$n]['section_close']  = get_class($ele) == 'IcmsFormSectionClose';
 			$elements[$n]['hide'] = isset($this->targetObject->vars[$n]['hide']) ? $this->targetObject->vars[$n]['hide'] : false;
@@ -611,7 +612,7 @@ class IcmsForm extends XoopsThemeForm {
 			}
 			$i++;
 		}
-		$js = $this->renderValidationJS();
+		$js = $this->renderValidationJS2();
 		if (!$smartyName) {
 			$smartyName = $this->getName();
 		}
@@ -704,6 +705,27 @@ class IcmsForm extends XoopsThemeForm {
 			$js .= "//--></script>\n<!-- End Form Vaidation JavaScript //-->\n";
 		}
 		return $js;
+	}
+	
+	function renderValidationJS2( $withtags = true ) {
+		global $xoTheme;
+		$elements = $this->getRequired();
+		foreach ( $elements as $elt ) {
+			if(isset($rules))
+				$rules .= ",";
+			$rules .= $elt->getName().': { required: true }';
+			if(isset($titles))
+				$titles .= ",";
+			$titles .= $elt->getName().': "'._REQUIRED.'"'; 
+		}
+		$xoTheme->addScript('', array('type' => 'text/javascript'), '$().ready(function() { $("#'.$this->getName().'").validate({
+		rules: {
+			'.$rules.'
+		},
+		messages: {
+			'.$titles.'
+		}
+		})});');
 	}
 }
 
