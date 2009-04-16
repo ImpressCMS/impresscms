@@ -123,8 +123,11 @@ function icms_module_install_profile($module) {
 }
 
 function addField($name, $title, $description, $category, $type, $valuetype, $weight, $canedit, $options, $step_id, $length) {
-    global $xoopsDB;
-    $xoopsDB->query("INSERT INTO ".$xoopsDB->prefix("profile_field")." VALUES (0, ".$category.", '".$type."', ".$valuetype.", '".$name."', '".$title."', '".$description."', 0, $length, ".$weight.", '', 1, ".$canedit.", 1, 0, '".serialize($options)."', 1, ".$step_id.")");
+    global $xoopsDB, $myts;
+    if(!$myts){
+        $myts =& MyTextSanitizer::getInstance();
+    }
+    $xoopsDB->query("INSERT INTO ".$xoopsDB->prefix("profile_field")." VALUES (0, ".$category.", '".$type."', ".$valuetype.", '".$name."', '".$myts->displayTarea($title, true)."', '".$myts->displayTarea($description, true)."', 0, $length, ".$weight.", '', 1, ".$canedit.", 1, 0, '".serialize($options)."', 1, ".$step_id.")");
 }
 
 function addCategory($name, $weight) {

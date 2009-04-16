@@ -226,7 +226,8 @@ switch($op) {
         }
         if (isset($_REQUEST['removeOptions']) && is_array($_REQUEST['removeOptions'])) {
             foreach ($_REQUEST['removeOptions'] as $index) {
-                unset(trim($options[$index]));
+                $index = trim($index);
+                unset($options[$index]);
             }
             $redirect_to_edit = true;
         }

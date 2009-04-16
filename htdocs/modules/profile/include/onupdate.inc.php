@@ -154,12 +154,15 @@ function icms_module_update_profile(&$module, $oldversion = null, $dbversion = n
     return true;
 }
 function addField($name, $title, $description, $category, $type, $valuetype, $weight, $canedit, $options, $step_id, $length) {
-    global $xoopsDB;
+    global $xoopsDB, $myts;
+    if(!$myts){
+        $myts =& MyTextSanitizer::getInstance();
+    }
 	$sql = sprintf("SELECT COUNT(*) FROM %s WHERE field_name = '%s'", $xoopsDB->prefix('profile_field'), $name);
 	$result = $xoopsDB->query($sql);
 	list($count) = $xoopsDB->fetchRow($result);
 	if ($count == 0) {
-		$xoopsDB->query("INSERT INTO ".$xoopsDB->prefix("profile_field")." VALUES (0, ".$category.", '".$type."', ".$valuetype.", '".$name."', '".$title."', '".$description."', 0, $length, ".$weight.", '', 1, ".$canedit.", 1, 0, '".serialize($options)."', 1, ".$step_id.")");
+		$xoopsDB->query("INSERT INTO ".$xoopsDB->prefix("profile_field")." VALUES (0, ".$category.", '".$type."', ".$valuetype.", '".$name."', '".$myts->displayTarea($title, true)."', '".$myts->displayTarea($description, true)."', 0, $length, ".$weight.", '', 1, ".$canedit.", 1, 0, '".serialize($options)."', 1, ".$step_id.")");
 	}
 }
 function icms_module_install_profile($module) {
