@@ -31,16 +31,16 @@ function b_system_admin_warnings_show(){
 	$block['msg'] = array();
 	// ###### Output warn messages for security  ######
 	if(is_dir(ICMS_ROOT_PATH.'/install/')){
-		array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/')));
+		array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/'), '', false));
 	}
 	if(getDbValue($xoopsDB, 'modules', 'version', 'version="120"') == 0 AND getDbValue($xoopsDB, 'modules', 'mid', 'mid="1"') == 1){
 		array_push($block['msg'], icms_error_msg('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">'._WARNINGUPDATESYSTEM.'</a>'));
 	}
 	if(is_writable(ICMS_ROOT_PATH.'/mainfile.php')){
-		array_push($block['msg'], icms_error_msg(sprintf(_WARNINWRITEABLE,ICMS_ROOT_PATH.'/mainfile.php')));
+		array_push($block['msg'], icms_error_msg(sprintf(_WARNINWRITEABLE,ICMS_ROOT_PATH.'/mainfile.php'), '', false));
 	}
 	if(is_dir(ICMS_ROOT_PATH.'/upgrade/')){
-		array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/upgrade/')));
+		array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/upgrade/'), '', false));
 	}
 	if(!is_dir(XOOPS_TRUST_PATH)){
 		array_push($block['msg'], icms_error_msg(_TRUST_PATH_HELP));
@@ -56,23 +56,17 @@ function b_system_admin_warnings_show(){
 		}
 	}
 	if($protector_is_active == 0){
-		array_push($block['msg'], icms_error_msg(_PROTECTOR_NOT_FOUND));
+		array_push($block['msg'], icms_error_msg(_PROTECTOR_NOT_FOUND, '', false));
 		echo '<br />';
 	}
 	
 	// ###### Output warn messages for correct functionality  ######
 	if(!is_writable(ICMS_CACHE_PATH))
-	{
-		array_push($block['msg'], xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH)));
-	}
+			array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH)), '', false);
 	if(!is_writable(ICMS_UPLOAD_PATH))
-	{
-		array_push($block['msg'], xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_UPLOAD_PATH)));
-	}
+		array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_UPLOAD_PATH)), '', false);
 	if(!is_writable(ICMS_COMPILE_PATH))
-	{
-		array_push($block['msg'], xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_COMPILE_PATH)));
-	}
+		array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_COMPILE_PATH)), '', false);
 	
 	if(count($block['msg'] ) > 0){
 		return $block;	
