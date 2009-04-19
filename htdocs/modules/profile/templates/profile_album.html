@@ -4,18 +4,24 @@
 
 <{ if ($showForm==1) }>
 	<div id="profile-album-form" class="outer">
-	  <h2 class="head">
+      <h2 class="head">
+      	<a href="#" onclick ="jQuery().find('div.profile-album-form').toggle(400);">
 		<{$lang_formtitle}>
+        </a>
 	  </h2>
+      <div class="profile-album-form" style="display: none">
       <form name="form_picture"  id="form_picture" action="submit.php" method="post"  enctype="multipart/form-data" >
         <p class="odd"><{$token}><label class="profile-album-label-alert"><{$lang_youcanupload}></label></p>
         <p class="even"><label class="profile-album-label-alert"><{$lang_nb_pict}> <{$lang_max_nb_pict}></label></p>
         <p class="odd"><label class="profile-album-label" for="sel_photo"><{$lang_selectphoto}></label><input type='hidden' name='MAX_FILE_SIZE' value='<{$maxfilebytes}>' /><input type='file' name='sel_photo' id='sel_photo' /><input type='hidden' name='xoops_upload_file[]' id='xoops_upload_file[]' value='sel_photo' /> </p>
-        <p class="even"> <label class="profile-album-label" for="caption"><{$lang_caption}>:
+        <p class="even"> <label class="profile-album-label" for="caption"><{$lang_caption}>:</label>
 	    <input type='text' name='caption' id='caption' size='35' maxlength='55' value='' /> </p>
         <p class="foot"><input type='submit' class='formButton' name='submit_button'  id='submit_button' value='<{$lang_uploadpicture}>' /></p>
       </form>
+      </div>
    </div>
+   
+   
 <{ /if}>
 <div id="profile-album-container" class="outer">
   <h2 class="head">

@@ -45,16 +45,10 @@
 <!-- end if -->
 <{ /if }>
 <{ /if }>
-<{ if $allow_friends }>
-<div id="profile-nav-bar">    
-   <p id="profile-profile-fans"><a href="fans.php?uid=<{$uid_owner}>" title="<{$lang_fans}>" > <{$lang_fans}> </a><img src="images/fans.gif" alt="<{$lang_fans}>" /> ( <{$nb_fans}> ) 
-| <{$lang_trusty}> </p> <p id="trustybw"> <span id="trustycolor">&nbsp;<img width="<{$trusty}>" height="0" src="images/transparent.gif" /></span>&nbsp;<img width="<{$trusty_rest}>" height="0" src="images/transparent.gif" /></p>
 
-| <{$lang_cool}> <p id="coolbw"> <span id="coolcolor">&nbsp;<img width="<{$cool}>" height="0" src="images/transparent.gif" /></span>&nbsp;<img width="<{$cool_rest}>" height="0" src="images/transparent.gif" /></p>
 
-| <{$lang_sexy}> <p id="sexybw"> <span id="sexycolor">&nbsp;<img width="<{$sexy}>" height="0" src="images/transparent.gif" /></span>&nbsp;<img width="<{$sexy_rest}>" height="0" src="images/transparent.gif" /></p>
-</div>
-<{/if}>
+
+
 
 <div class="profile-profile-group1">
 <{ if $allow_pictures || $allow_videos }>
@@ -62,8 +56,11 @@
 	<h2 class="profile-profile-title head">
 		<{$owner_uname}>
 	</h2>
+
 <{ if $allow_pictures }>
-	<div id="profile-profile-avatar">
+    <div id="profile-profile-avatar">
+    
+    
 		<{if $avatar_url!="" && $avatar_url!="blank.gif" }>
 			<img src="<{$icms_url}>/uploads/<{$avatar_url}>" />
 		<{ else }>
@@ -78,9 +75,70 @@
 				</p>
 			<{/if}>
 		<{ /if }>
+
 	</div>
 <{/if}>	
-</div>
+        
+        
+        
+      <{ if $allow_friends }>
+        <div id="profile-profile-atribs">
+         
+       	<p id="profile-profile-fans"><a href="fans.php?uid=<{$uid_owner}>" title="<{$lang_fans}>" > <{$lang_fans}> </a>
+        <img src="images/fans.gif" alt="<{$lang_fans}>" /> ( <{$nb_fans}> ) 
+		<br /> <{$lang_trusty}> </p> 
+        
+        <p id="trustybw"> <span id="trustycolor">&nbsp;
+        <img width="<{$trusty}>" height="0" src="images/transparent.gif" /></span>&nbsp;
+        <img width="<{$trusty_rest}>" height="0" src="images/transparent.gif" />
+        </p>
+
+		<br />
+        <{$lang_cool}> 
+        <p id="coolbw"> 
+        <span id="coolcolor">&nbsp;
+        <img width="<{$cool}>" height="0" src="images/transparent.gif" /></span>&nbsp;
+        <img width="<{$cool_rest}>" height="0" src="images/transparent.gif" />
+        </p>
+		
+        <br />
+		<{$lang_sexy}> 
+        <p id="sexybw"> 
+        <span id="sexycolor">&nbsp;
+        <img width="<{$sexy}>" height="0" src="images/transparent.gif" /></span>&nbsp;
+        <img width="<{$sexy_rest}>" height="0" src="images/transparent.gif" /></p>
+        </p>
+        
+       <p id="profil-settings">  
+         <a href="userinfo.php?uid=<{$uid_owner}>"> 
+         <img class="profile-nav-bar-icon" src="images/profile.gif"  />
+         <{$lang_exprofile}>
+         
+         </a>
+       </p>   
+       
+        <{if $isOwner}>
+         <p id="profil-settings">
+ 		   <a href="configs.php?uid=<{$uid_owner}>">
+           <img class="profile-nav-bar-icon" src="images/configs.gif"  />
+           <{$lang_configs}>
+           </a>
+        </p>
+        
+        <p id="profil-settings">
+        	<{if $profile_isAdmin == 1}>
+				<{$profile_adminpage}>
+			<{/if}>
+        </p>
+       <{/if}>
+       
+       </div>
+      <{/if}>
+        
+         
+        
+        <div style="clear:both"></div>
+     	</div>
 <{/if}>
 
 
@@ -182,7 +240,7 @@
 <div class="profile-profile-group2">
 <{ if $allow_videos == 1 }>
   <div id="profile-profile-friends" class="outer">
-	        <h2 id="titulo-friends" class="head"><{$lang_videos}> ( <{$nb_videos}> )</h2>		
+	        <h2 id="titulo-friends" class="head"><{$lang_videos}> (<{$nb_videos}>)</h2>		
 			<div id="profile-profile-tribe">
 			    <{if $mainvideocode!="" }>
 			        <object width="200" height="150">
@@ -206,6 +264,7 @@
 			        <{/if}>
 			    <{ /if }>
 			</div>
+            
   </div>
 <{/if}>
 
@@ -238,4 +297,6 @@
 </div>
 <{ /if }>
 </div><!-- end of group2 -->
+
+
 <{include file="db:profile_footer.html"}>

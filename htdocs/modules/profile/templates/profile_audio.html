@@ -3,9 +3,13 @@
 <{/if}>
 <{ if $isOwner }>
 	<div id="profile-audio-form" class="outer">
+    
 		<h2 id="profile-audio-form-title" class="head">
+        	<a href="#" onclick ="jQuery().find('div.profile-audio-form').toggle(400);">
 			<{$lang_addaudios}>
+          	</a>
 		</h2>
+        <div class="profile-audio-form" style="display: none">
 		<form name="form_audios" id="form_audios" action="submitaudio.php" method="post" onsubmit="return xoopsFormValidate_form_audios();" enctype="multipart/form-data" >
 			<{$token}>
 			<p class="even">
@@ -29,6 +33,7 @@
 				<input type='submit' class='formButton' name='submit_button'  id='submit_button' value='<{$lang_submitValue}>' />
 			</p>
 		</form>
+        </div>
 		
 	</div>
 <{ /if}>

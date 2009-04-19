@@ -1,12 +1,17 @@
 <{if $module_is_socialmode == true }>
 <{include file="db:profile_navbar.html"}>
 <{/if}>
+
 <{ if $isOwner }>
-	<div id="profile-video-form" class="outer">
-		<h2 id="profile-video-form-title" class="head">
-			<{$lang_addvideos}>
+<div class="outer" id="profile-video-form">
+	<h2 id="profile-video-form-title" class="head">
+			<a href="#"  onclick ="jQuery().find('div.profile-video-form').toggle(400);">
+            <{$lang_addvideos}>
+            </a>
 		</h2>
-		<form name="form_videos" id="form_videos" action="video_submited.php" method="post" onsubmit="return xoopsFormValidate_form_videos();" enctype="multipart/form-data" >
+	
+    <div class="profile-video-form" style="display: none">
+			<form name="form_videos" id="form_videos" action="video_submited.php" method="post" onsubmit="return xoopsFormValidate_form_videos();" enctype="multipart/form-data" >
 			<{$token}>
 			<p class="even">
 				<{$lang_videohelp}> <{$icms_sitename}>.
@@ -38,6 +43,7 @@ function xoopsFormValidate_form_videos() { myform = window.document.form_videos;
 </script>
 <!-- End Form Vaidation JavaScript //-->
 	</div>
+</div>
 <{ /if}>
 
 <div id="profile-videos-container" class="outer">
@@ -87,6 +93,9 @@ function xoopsFormValidate_form_videos() { myform = window.document.form_videos;
 		</div>          
 	<{/section}>
 </div>
+
+
+
 <div style="clear:both;width:100%"></div>
 <div id="profile-navegacao">
 	<{$pageNav}>

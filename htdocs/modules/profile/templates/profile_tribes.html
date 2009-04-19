@@ -1,23 +1,21 @@
 <{if $module_is_socialmode == true }>
 <{include file="db:profile_navbar.html"}>
 <{/if}>
-<form class='outer' name='form_tribe_search' id='form_tribe_search' action='search_tribe.php' method='get'>			
-	    <h2 class="head"><{$lang_searchtribe}></h2>				
-		<p class=even>
-			<label for='tribe_keyword' class='xoops-form-element-caption-required'>
-			<span class='profile-tribes-search-keyword'><{$lang_tribekeyword}></span><span class='caption-marker'>*</span></label>
-			<input type='text' name='tribe_keyword' id='tribe_keyword' size='35' maxlength='55' value='' />
-			<input type='hidden' name='uid' id='uid' value='<{$uid_owner}>' />
-		</p>
+
+<{ if $isanonym!=1 }>
+
+<div id="form_tribe">
 		
-		<p class=odd>
-			<input type='submit' class='formButton' name='submit_button'  id='submit_button' value='<{$lang_searchtribe}>' />
-		</p>
-        <{$token}>
-</form>
-<{ if $isanonym!=1 }>		
 <form class='outer' name='form_tribe' id='form_tribe' action='submit_tribe.php' method='post' onsubmit='return xoopsFormValidate_form_tribe();' enctype="multipart/form-data">
-		<h2 class="head"><{$lang_createtribe}></h2>
+		
+        <h2 class="head">
+        <a href="#" onclick ="jQuery().find('div.form_tribe').toggle(400);">
+	        <{$lang_createtribe}>
+        </a>
+        </h2>
+        
+        <div class="form_tribe" style="display: none">
+        
 		<p class="odd">
 			<label for='' class='xoops-form-element-caption'><span class='caption-text'><{$lang_youcanupload}></span><span class='caption-marker'>*</span></label>
 		</p>		
@@ -44,8 +42,10 @@
 		</p>
         <{$token}>
 		<input type='hidden' name='marker' id='marker' value='1' />
+        
+        </div>
 </form>
-
+</div>
 <!-- Start Form Validation JavaScript //-->
 <script type='text/javascript'>
 <!--//
@@ -148,6 +148,23 @@ function xoopsFormValidate_form_tribe() { myform = window.document.form_tribe; i
 	<{/section}>
 
 </div>
+
+
+<form class='outer' name='form_tribe_search' id='form_tribe_search' action='search_tribe.php' method='get'>			
+	    <h2 class="head"><{$lang_searchtribe}></h2>				
+		<p class=even>
+			<label for='tribe_keyword' class='xoops-form-element-caption-required'>
+			<span class='profile-tribes-search-keyword'><{$lang_tribekeyword}></span><span class='caption-marker'>*</span></label>
+			<input type='text' name='tribe_keyword' id='tribe_keyword' size='35' maxlength='55' value='' />
+			<input type='hidden' name='uid' id='uid' value='<{$uid_owner}>' />
+		</p>
+		
+		<p class=odd>
+			<input type='submit' class='formButton' name='submit_button'  id='submit_button' value='<{$lang_searchtribe}>' />
+		</p>
+        <{$token}>
+</form>
+
 
 <div id="profile-navegacao">
 	<{$barra_navegacao}>

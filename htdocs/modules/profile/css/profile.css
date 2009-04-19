@@ -17,6 +17,7 @@
     list-style: none;
     margin: 0;
     padding: 0 0 0 4px;
+	border-bottom: 1px solid #CCC;
 }
 .tabs-nav:after { /* clearing without presentational markup, IE gets extra treatment */
     display: block;
@@ -25,14 +26,16 @@
 }
 .tabs-nav li {
     float: left;
-    margin: 0 0 0 1px;
+    margin: 0 0 0 0px;
     min-width: 64px; /* be nice to Opera */
-	list-style:none;
+	list-style: none !important;
 }
+
 .tabs-nav a, .tabs-nav a span {
     display: block;
-    padding: 0 10px;
+    padding: 0 7px;
     background: url(../images/tab.png) no-repeat;
+	list-style: none;
 }
 .tabs-nav a {
     position: relative;
@@ -42,7 +45,7 @@
     color: #27537a;
     font-size: 12px;
     font-weight: bold;
-    line-height: 1.2;
+    line-height: 12px;
     text-align: center;
     text-decoration: none;
     white-space: nowrap; /* required in IE 6 */    
@@ -62,7 +65,8 @@
     min-width: 64px;
     height: 18px; /* IE 6 treats height as min-height */
     min-height: 18px;
-    padding-top: 6px;
+    padding-top: 4px;
+	padding-bottom: 4px;
     padding-right: 0;
 }
 *>.tabs-nav a span { /* hide from IE 6 */
@@ -70,7 +74,8 @@
     height: auto;
 }
 .tabs-nav .tabs-selected a span {
-    padding-top: 7px;
+      padding-top: 4px;
+	padding-bottom: 4px;
 }
 .tabs-nav .tabs-selected a span, .tabs-nav a:hover span, .tabs-nav a:focus span, .tabs-nav a:active span {
     background-position: 0 -50px;
@@ -87,7 +92,7 @@
 .tabs-nav .tabs-disabled {
     opacity: .4;
 }
-.tabs-container {
+/*.tabs-container {
     border-top: 1px solid #97a5b0;
     padding: 1em 8px;
     
@@ -95,20 +100,20 @@
 .tabs-loading em {
     padding: 0 0 0 20px;
     background: url(../images/loading.gif) no-repeat 0 50%;
-}
+}*/
 /*
 General properties
 */
 
 div.profile-profile-group1{
 float:left;
-width:60%;
+width:59%;
 
 }
 
 div.profile-profile-group2{
-float:left;
-width:40%;
+float:right;
+width:39%;
 }
 
 div#profile-suspension {
@@ -147,14 +152,14 @@ border:none;
 
 
 
-p#breadcrumbs {
+/*p#breadcrumbs {
 	display:block;
 	margin:0px;
 	border-bottom: 2px solid;
 	margin-bottom: 5px;
 	padding:2px;
 }
-
+*/
 /*
 Search
 */
@@ -204,6 +209,11 @@ margin:15px 3px;
 float:left;
 }
 
+div#profile-profile-petition li{
+	text-align: left;
+	list-style: none;
+	}
+
 div#profile-album-visitors, div#profile-profile-search-results, div#profile-profile-visual, div#profile-profile-statistics, div#profile-profile-details {
 margin:3px;
 float:left;
@@ -245,6 +255,138 @@ width:45%;
 float:left;
 text-align:center;
 }
+
+/*************************************************/
+div#profile-profile-atribs{
+margin:1px;
+width:45%;
+height: auto;
+padding: 10px 0 0 0;
+float:right;
+text-align:left;
+}
+
+p#profil-settings{
+	padding: 7px 0 3px 0;
+	}
+p#profil-settings a{
+	display: block;
+	width: 120px;
+	height: 30px;
+	color: #000;
+	border: 1px solid #3c556b;
+	background: url(../images/button.gif) repeat-x;
+	line-height: 30px;
+	padding: 0px;
+	padding-left: 3px;
+	margin: 0px;
+	font-size: 12px;
+	font-weight: normal;
+	}
+
+*html p#profil-settings a{ /*let the buttons in IE6 looks good*/
+	height: 25px;
+	padding-top: 5px;
+	padding-left: 3px;
+	line-height: 20px;
+	}
+
+p#profil-settings a:hover{
+	border: 1px solid #3c556b;
+	background: url(../images/button-h.gif) repeat-x;
+	}
+	
+
+	
+p#profil-settings-long{
+	padding: 7px 0 3px 0;
+	}
+p#profil-settings-long a{
+	display: block;
+	width: 140px;
+	height: 30px;
+	color: #000;
+	border: 1px solid #3c556b;
+	background: url(../images/button.gif) repeat-x;
+	line-height: 30px;
+	padding: 0px;
+	padding-left: 3px;
+	margin: 0px;
+	font-size: 12px;
+	font-weight: normal;
+	}
+
+*html p#profil-settings-long a{ /*let the buttons in IE6 looks good*/
+	height: 25px;
+	padding-top: 5px;
+	padding-left: 3px;
+	line-height: 20px;
+	}
+
+p#profil-settings-long a:hover{
+	border: 1px solid #3c556b;
+	background: url(../images/button-h.gif) repeat-x;
+	}
+
+/* 
+NAVEGACAO MAIS
+*/
+div#profile-navegacao {
+margin:auto;
+float:left;
+width:300px;
+overflow:hidden;
+}
+
+p#trustybw{
+display:inline;
+height:18px;
+background-image:url(../images/trustybw.gif); 
+background-repeat:no-repeat;
+width:48px;
+}
+
+span#trustycolor {
+width:32px;
+background-image:url(../images/trustycolor.gif);
+background-repeat:no-repeat;
+}
+
+p#coolbw{
+display:inline;
+height:18px;
+background-image:url(../images/coolbw.gif); 
+background-repeat:no-repeat;
+width:48px;
+}
+
+span#coolcolor {
+width:32px;
+background-image:url(../images/coolcolor.gif);
+background-repeat:no-repeat;
+}
+
+p#sexybw{
+display:inline;
+height:18px;
+background-image:url(../images/sexybw.gif); 
+background-repeat:no-repeat;
+width:48px;
+}
+
+span#sexycolor {
+width:32px;
+background-image:url(../images/sexycolor.gif);
+background-repeat:no-repeat;
+}
+
+p#profile-profile-fans {
+display:inline;
+height:18px;
+}
+
+
+/*************************************************/
 
 div#profile-profile-avatar img{
 border:2px solid black;
@@ -490,62 +632,7 @@ form.profile-friends-evaluateform, form.profile-friends-deleteform {
 display:inline;
 }
 
-/* 
-NAVEGACAO MAIS
-*/
-div#profile-navegacao {
-margin:auto;
-float:left;
-width:300px;
-overflow:hidden;
-}
 
-p#trustybw{
-display:inline;
-height:18px;
-background-image:url(../images/trustybw.gif); 
-background-repeat:no-repeat;
-width:48px;
-}
-
-span#trustycolor {
-width:32px;
-background-image:url(../images/trustycolor.gif);
-background-repeat:no-repeat;
-}
-
-p#coolbw{
-display:inline;
-height:18px;
-background-image:url(../images/coolbw.gif); 
-background-repeat:no-repeat;
-width:48px;
-}
-
-span#coolcolor {
-width:32px;
-background-image:url(../images/coolcolor.gif);
-background-repeat:no-repeat;
-}
-
-p#sexybw{
-display:inline;
-height:18px;
-background-image:url(../images/sexybw.gif); 
-background-repeat:no-repeat;
-width:48px;
-}
-
-span#sexycolor {
-width:32px;
-background-image:url(../images/sexycolor.gif);
-background-repeat:no-repeat;
-}
-
-p#profile-profile-fans {
-display:inline;
-height:18px;
-}
 /*************************************************************************************************************************************** 
 album
 ***************************************************************************************************************************************/
