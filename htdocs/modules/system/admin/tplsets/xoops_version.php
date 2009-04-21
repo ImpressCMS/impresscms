@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Administration of template sets, versionfile
 *
