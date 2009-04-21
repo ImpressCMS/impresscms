@@ -93,6 +93,7 @@ ImpressCMS ChangeLog
 * email protection option to a multiple option one. (stranger)
 * impresstheme is using $icms_values. (stranger)
 * in installer config settings, changed some settings to use textsarea instead of textarea. as was causing problems with those fields if URI's were entered etc. (vaughan)
+* banner.swf (nadine/sato-san)
 
 '''Improved'''
 * #518:  Improvement to frontside block menu (Aph3x)
