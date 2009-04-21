@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Administration of user ranks, form file
 *
