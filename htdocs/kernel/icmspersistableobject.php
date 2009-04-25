@@ -132,6 +132,7 @@ class IcmsPersistableObject extends XoopsObject {
     function initNonPersistableVar($key, $data_type, $itemName=false, $form_caption='', $sortby=false, $value='', $displayOnForm=false, $required=false) {
 		$this->initVar($key, $data_type, $value, $required, null, '', false, $form_caption, '', $sortby, false, $displayOnForm);
 		$this->vars[$key]['itemName'] = $itemName;
+		$this->vars[$key]['displayOnSingleView'] = false;
     }
 
 	/**

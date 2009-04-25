@@ -211,6 +211,7 @@ ImpressCMS ChangeLog
 * #43: Automation of removal of install folder. (stranger)
 * #494: Error and Problem with IE7. (vaughan/stranger)
 * #496: No Modules Menu in 1.2a. (MrTheme/stranger)
+* #534: IPF: NonPersistableVar should not be displayed on SingleView by default (malanciault)
 
 == Impresscms 1.1.2==
 
