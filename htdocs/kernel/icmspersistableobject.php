@@ -616,6 +616,16 @@ class IcmsPersistableObject extends XoopsObject {
 		$this->vars[$key][$info] = $value;
 	}
 
+	/**
+	 * store object
+	 *
+	 * @param bool $force
+	 * @return bool true if successful, false if not
+	 */
+	function store($force=false) {
+		return $this->handler->insert($this, $force);
+	}
+
 	function getValueFor($key, $editor=true) {
     	global $xoopsModuleConfig;
 
@@ -1131,6 +1141,16 @@ class IcmsPersistableObject extends XoopsObject {
 		} else {
 			$this->doShowFieldOnForm($key);
 		}
+	}
+
+	/**
+	 * delete object
+	 *
+	 * @param bool $force
+	 * @return bool true if successful, false if not
+	 */
+	function delete($force=false) {
+		return $this->handler->delete($this, $force);
 	}
 
 	function displayFieldOnSingleView($key) {

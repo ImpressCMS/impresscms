@@ -87,6 +87,7 @@ ImpressCMS ChangeLog
 * #230: Installer Improvements. (stranger)
 * #532: new function icms_buildCriteria() (malanciault)
 * #533: new IcmsBreadcrumb class (malanciault)
+* #535: IcmsPersistableObject store and delete methods (malanciault)
 
 '''Changed'''
 * Identicon for Gravatar added (sato-san)
