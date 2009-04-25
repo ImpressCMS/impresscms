@@ -85,7 +85,7 @@ ImpressCMS ChangeLog
 * #26: Search improvements (stranger/RLankford)
 * #19: Themable administrative area (stranger/Nekro)
 * #230: Installer Improvements. (stranger)
-
+* #532: new function icms_buildCriteria() (malanciault)
 
 '''Changed'''
 * Identicon for Gravatar added (sato-san)
@@ -233,9 +233,9 @@ ImpressCMS ChangeLog
 * #289:Lizenz Problem iTheme with .js file. (Nachenko/ stranger)
 * #278: Missing Edit Button over Content Sites in Frontendview. (stranger)
 * #293: The Update/Upgrade Script does not check the PHP-Version. (stranger)
- 
 
-'''Changed''' 
+
+'''Changed'''
 * Updated HTMLPurifier Library from 3.2.0 to 3.3.0 (various bugfixes in the library including a bugfix in youtube filter). (vaughan) ===2009-01-31 : 1.1.2 RC===
 
 ===2009-01-31 : 1.1.2 RC===

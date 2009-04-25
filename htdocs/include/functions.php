@@ -15,7 +15,7 @@
 
 /**
 * The header
-* 
+*
 * Implements all functions that are executed within the header of the page
 * (meta tags, header expiration, etc)
 * It will all be echoed, so no return in this function
@@ -112,7 +112,7 @@ function xoops_header($closehead=true)
 
 /**
 * The footer
-* 
+*
 * Implements all functions that are executed in the footer
 */
 function xoops_footer()
@@ -199,7 +199,7 @@ function icms_warning_msg($msg, $title='', $render = false){
  * Backwards Compatibility Function
  *
  * @since XOOPS
- * 
+ *
  * @deprecated
  * @see icms_warning_msg
  *
@@ -230,7 +230,7 @@ function xoops_result($msg, $title='')
 
 /**
 * Generates a confirm form
-* 
+*
 * Will render (echo) the form so no return in this function
 *
 * @param array  $hiddens  Array of Hidden values
@@ -266,7 +266,7 @@ function xoops_refcheck($docheck=1) {return $GLOBALS['xoopsSecurity']->checkRefe
 
 /**
 * Get the timestamp based on the user settings
-* 
+*
 * @param string  $time  String with time
 * @param string  $timeoffset  The time offset string
 * @return string  $usertimestamp  The generated user timestamp
@@ -286,7 +286,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 
 /*
  * Function to display formatted times in user timezone
- * 
+ *
  * @param string  $time  String with time
  * @param string  $format  The time format based on PHP function format parameters
  * @param string  $timeoffset  The time offset string
@@ -295,10 +295,10 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 function formatTimestamp($time, $format = "l", $timeoffset = null)
 {
 	global $xoopsConfig, $xoopsUser;
-	
+
 	$format_copy = $format;
 	$format = strtolower($format);
-	
+
 	if ($format == "rss" || $format == "r"){
 		$TIME_ZONE = "";
 		if (!empty($GLOBALS['xoopsConfig']['server_TZ'])){
@@ -309,7 +309,7 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
 		$date = gmdate("D, d M Y H:i:s", intval($time)) . $TIME_ZONE;
 		return $date;
 	}
-	
+
 	if ( ($format == "elapse" || $format == "e") && $time < time() ) {
 		$elapse = time() - $time;
 		if ( $days = floor( $elapse / (24 * 3600) ) ) {
@@ -325,15 +325,15 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
 		$ret = sprintf(_ELAPSE, icms_conv_nr2local($num));
 		return $ret;
 	}
-	
+
 	// disable user timezone calculation and use default timezone,
 	// for cache consideration
 	if ($timeoffset === null) {
 		$timeoffset = ($xoopsConfig['default_TZ'] == '') ? '0.0' : $xoopsConfig['default_TZ'];
 	}
-	
+
 	$usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
-	
+
 	switch ($format) {
 		case 'daynumber':
 		$datestring = 'd';
@@ -410,7 +410,7 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
 		if (!isset($today_timestamp)) {
 			$today_timestamp = mktime(0, 0, 0, date("m", $current_timestamp), date("d", $current_timestamp), date("Y", $current_timestamp));
 		}
-		
+
 		if ( abs($elapse_today = $usertimestamp - $today_timestamp) < 24*60*60) {
 			$datestring = ($elapse_today > 0) ? _TODAY : _YESTERDAY;
 		} else {
@@ -451,7 +451,7 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
 
 /*
  * Function to calculate server timestamp from user entered time (timestamp)
- * 
+ *
  * @param string  $timestamp  String with time
  * @return string  $timestamp  The generated timestamp
  */
@@ -465,7 +465,7 @@ function userTimeToServerTime($timestamp, $userTZ=null)
 
 /*
 * Function to generate password
-* 
+*
 * @return string  $makepass  The generated password
 */
 function xoops_makepass() {
@@ -525,7 +525,7 @@ function OpenWaitBox()
 
 /*
 * Function to display the finish of the dhtml wait box
-* 
+*
 */
 function CloseWaitBox()
 {
@@ -539,7 +539,7 @@ function CloseWaitBox()
 
 /*
 * Checks if email is of correct formatting
-* 
+*
 * @param string  $email  The email address
 * @param string  $antispam  Generate an email address that is protected from spammers
 * @return string  $email  The generated email address
@@ -557,7 +557,7 @@ function checkEmail($email,$antispam = false)
 
 /*
 * Format an URL
-* 
+*
 * @param string  $url  The URL to format
 * @return string  $url The generated URL
 */
@@ -578,7 +578,7 @@ function showbanner() {echo xoops_getbanner();}
 
 /*
 * Gets banner HTML for use in templates
-* 
+*
 * @return object  $bannerobject  The generated banner HTML string
 */
 function xoops_getbanner()
@@ -629,7 +629,7 @@ function xoops_getbanner()
 
 /*
 * Function to redirect a user to certain pages
-* 
+*
 * @param string  $url  The URL to redirect to
 * @param int  $time  The time it takes to redirect to the URL
 * @param string  $message  The message to show while redirecting
@@ -719,7 +719,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 
 /*
 * Gets environment key from the $_SERVER or $_ENV superglobal
-* 
+*
 * @param string  $key  The key to get
 * @return string  $ret  The retrieved key
 */
@@ -752,7 +752,7 @@ function getcss($theme = '') {return xoops_getcss($theme);}
 
 /*
 * Function to get css file for a certain themeset
-* 
+*
 * @param string  $theme  The theme set from the config
 * @return mixed  The generated theme HTML string or an empty string
 */
@@ -778,7 +778,7 @@ function xoops_getcss($theme = '')
 
 /*
 * Gets Mailer object
-* 
+*
 * @return		object  $inst  Reference to the (@link XoopsMailerLocal) or (@link XoopsMailer) object
 */
 function &getMailer()
@@ -794,7 +794,7 @@ function &getMailer()
 
 /*
 * Gets the handler for a class
-* 
+*
 * @param string  $name  The name of the handler to get
 * @param bool  $optional	Is the handler optional?
 * @return		object		$inst		The instance of the object that was created
@@ -826,7 +826,7 @@ function &xoops_gethandler($name, $optional = false )
 
 /*
 * Gets module handler
-* 
+*
 * @param	string  $name  The name of the module
 * @param	string	$module_dir		The module directory where to get the module class
 * @return	object  $inst	The reference to the generated object
@@ -862,7 +862,7 @@ function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = f
 
 /*
 * Gets rank
-* 
+*
 * @param	int  $rank_id  The Rank ID to get
 * @param 	int	 $posts		The number of posts to match for the rank
 * @return	array	$rank		The fetched rank array
@@ -975,7 +975,7 @@ function icms_substr($str, $start, $length, $trimmarker = '...')
 /*
 * We want to be able to delete by module, by user, or by item.
 * How do we specify this??
-* 
+*
 * @param	int  $module_id	The ID of the module to unsubscribe from
 * @return	bool	Did the unsubscribing succeed?
 */
@@ -987,7 +987,7 @@ function xoops_notification_deletebymodule ($module_id)
 
 /**
 * Deletes / unsubscribes by user ID
-* 
+*
 * @param	int  $user_id	The User ID to unsubscribe
 * @return	bool	Did the unsubscribing succeed?
 */
@@ -999,7 +999,7 @@ function xoops_notification_deletebyuser ($user_id)
 
 /**
 * Deletes / unsubscribes by Item ID
-* 
+*
 * @param	int  $module_id	The Module ID to unsubscribe
 * @param	int  $category	The Item ID to unsubscribe
 * @param	int  $item_id	The Item ID to unsubscribe
@@ -1014,7 +1014,7 @@ function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 // ################### Comment helper functions ####################
 /**
 * Count the comments belonging to a certain item in a certain module
-* 
+*
 * @param	int  $module_id	The Module ID to count the comments for
 * @param	int  $item_id	The Item ID to count the comments for
 * @return	int	The number of comments
@@ -1029,7 +1029,7 @@ function xoops_comment_count($module_id, $item_id = null)
 
 /**
 * Delete the comments belonging to a certain item in a certain module
-* 
+*
 * @param	int  $module_id	The Module ID to delete the comments for
 * @param	int  $item_id	The Item ID to delete the comments for
 * @return	bool	Did the deleting of the comments succeed?
@@ -1069,7 +1069,7 @@ function xoops_comment_delete($module_id, $item_id)
 // ################ Group Permission Helper Functions ##################
 /**
 * Deletes group permissions by module and item id
-* 
+*
 * @param	int  $module_id	The Module ID to delete the permissions for
 * @param	string  $perm_name	The permission name (for the module_id and item_id to delete
 * @param	int  $item_id	The Item ID to delete the permissions for
@@ -1085,7 +1085,7 @@ function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null
 
 /**
 * Converts text to UTF-8 encoded text
-* 
+*
 * @param	string	$text	The Text to convert
 * @return	string	$text	The converted text
 */
@@ -1107,7 +1107,7 @@ function xoops_convert_encoding(&$text) {return xoops_utf8_encode($text);}
 
 /**
 * Converts text to UTF-8 encoded text
-* 
+*
 * @param	int	$userid	The User ID
 * @return	string	The linked username (from userID or "Anonymous")
 */
@@ -1129,7 +1129,7 @@ function xoops_getLinkedUnameFromId($userid)
 
 /**
 * Trims certain text
-* 
+*
 * @param	string	$text	The Text to trim
 * @return	string	$text	The trimmed text
 */
@@ -1371,7 +1371,7 @@ function icms_loadLanguageFile($module, $file, $admin=false)
 *
 * Use this snippet to extract any float out of a string. You can choose how a single dot is treated with the (bool) 'single_dot_as_decimal' directive.
 * This function should be able to cover almost all floats that appear in an european environment.
-* 
+*
 * @param string $str	String to get float value from
 * @param mixed	$set	Array of settings of False if no settings were passed
 * @param mixed	Float value or 0 if no match was found in the string
@@ -1405,7 +1405,7 @@ function icms_getfloat($str, $set=FALSE)
 
 /**
 * Use this snippet to extract any currency out of a string
-* 
+*
 * @param string $var	String to get currency value from
 * @param mixed	$currencyObj	Currency object or false if no object was passed
 * @return string	$ret The returned value
@@ -1430,14 +1430,14 @@ function icms_currency($var, $currencyObj=false)
 
 /**
 * Use this snippet to extract any currency out of a string
-* 
+*
 * @see icms_currency
 */
 function icms_float($var) {return icms_currency($var);}
 
 /**
 * Strip text from unwanted text (purify)
-* 
+*
 * @param string $text	String to purify
 * @param mixed	$keyword	The keyword string or false if none was passed
 * @return string	$text The purified text
@@ -1478,7 +1478,7 @@ function icms_purifyText($text, $keyword = false)
 
 /**
 * Converts HTML to text equivalents
-* 
+*
 * @param string $document	The document string to convert
 * @return string	$text The converted text
 */
@@ -1752,7 +1752,7 @@ function icms_sanitizeCustomtags_callback($matches)
 
 /**
 * Sanitizes custom tags
-* 
+*
 * @param string $text	Purifies passed text
 * @return string	$text The purified text
 */
@@ -1864,7 +1864,7 @@ function showNav($id = null, $separador = '/', $style="style='font-weight:bold'"
 
 /**
 * Searches text for unwanted tags and removes them
-* 
+*
 * @param string $text	String to purify
 * @return string	$text The purified text
 */
@@ -1895,7 +1895,7 @@ function StopXSS($text)
 
 /**
 * Purifies the CSS that is put in the content (pages) system
-* 
+*
 * @param string $text	String to purify
 * @return string	$text The purified text
 */
@@ -2096,12 +2096,12 @@ function icms_utf8_strrev($str, $reverse = false)
 
 /**
 * Function to get a query from DB
-* 
+*
 * @param object $db	Reference to the database object
 * @param string	$table	The table to get the value from
 * @param string	$field	The table to get the value from
 * @param string	$condition	The where condition (where clause) to use
-* @return	mixed	
+* @return	mixed
 */
 function getDbValue(&$db, $table, $field, $condition = '')
  {
@@ -2319,39 +2319,39 @@ function gregorian_to_jalali ($g_y, $g_m, $g_d)
 {
 	$g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
 	$j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
-	
+
 	$gy = $g_y-1600;
 	$gm = $g_m-1;
 	$gd = $g_d-1;
-	
+
 	$g_day_no = 365*$gy+div($gy+3,4)-div($gy+99,100)+div($gy+399,400);
-	
+
 	for ($i=0; $i < $gm; ++$i)
 	   $g_day_no += $g_days_in_month[$i];
 	if ($gm>1 && (($gy%4==0 && $gy%100!=0) || ($gy%400==0)))
 	   /* leap and after Feb */
 	   $g_day_no++;
 	$g_day_no += $gd;
-	
+
 	$j_day_no = $g_day_no-79;
-	
+
 	$j_np = div($j_day_no, 12053); /* 12053 = 365*33 + 32/4 */
 	$j_day_no = $j_day_no % 12053;
-	
+
 	$jy = 979+33*$j_np+4*div($j_day_no,1461); /* 1461 = 365*4 + 4/4 */
-	
+
 	$j_day_no %= 1461;
-	
+
 	if ($j_day_no >= 366) {
 	   $jy += div($j_day_no-1, 365);
 	   $j_day_no = ($j_day_no-1)%365;
 	}
-	
+
 	for ($i = 0; $i < 11 && $j_day_no >= $j_days_in_month[$i]; ++$i)
 	   $j_day_no -= $j_days_in_month[$i];
 	$jm = $i+1;
 	$jd = $j_day_no+1;
-	
+
 	return array($jy, $jm, $jd);
 }
 
@@ -3129,7 +3129,7 @@ function icms_getModuleIncludeIdSEO($moduleName = false) {
 
 /*
 * Gets environment key from the $_SERVER or $_ENV superglobal
-* 
+*
 * @param string  $key  The key to get
 * @return string  $ret  The retrieved key
 */
@@ -3142,7 +3142,7 @@ function icms_getenv($key) {
 
 /*
 * Gets the status of a module to see if it's active or not.
-* 
+*
 * @param string $module_name  The module's name to get
 * @param bool True if module exists and is active, otherwise false
 */
@@ -3228,12 +3228,12 @@ function icms_unlinkRecursive($dir, $deleteRootToo)
    }
 
    closedir($dh);
-  
+
    if ($deleteRootToo)
    {
        @rmdir($dir);
    }
-  
+
    return;
 }
 
@@ -3266,5 +3266,19 @@ function icms_PasswordMeter(){
 				});
 			});
 ');
+}
+
+/**
+ * Build criteria automatically from an array of key=>value
+ *
+ * @param array $criterias array of fieldname=>value criteria
+ * @return CriteriaCompo object
+ */
+function icms_buildCriteria($criterias) {
+	$criteria = new CriteriaCompo();
+	foreach($criterias as $k=>$v) {
+		$criteria->add(new Criteria($k, $v));
+	}
+	return $criteria;
 }
 ?>
