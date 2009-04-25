@@ -86,6 +86,7 @@ ImpressCMS ChangeLog
 * #19: Themable administrative area (stranger/Nekro)
 * #230: Installer Improvements. (stranger)
 * #532: new function icms_buildCriteria() (malanciault)
+* #533: new IcmsBreadcrumb class (malanciault)
 
 '''Changed'''
 * Identicon for Gravatar added (sato-san)

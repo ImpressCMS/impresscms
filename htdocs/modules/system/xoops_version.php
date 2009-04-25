@@ -195,6 +195,10 @@ $modversion['templates'][$i]['description'] = 'Smarty template forsearch page';
 $i++;
 $modversion['templates'][$i]['file'] = 'system_persistable_singleview.html';
 $modversion['templates'][$i]['description'] = 'Persistable Singel View';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_breadcrumb.html';
+$modversion['templates'][$i]['description'] = 'Breadcrumb';
 ###
 
 $i++;

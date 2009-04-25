@@ -3281,4 +3281,16 @@ function icms_buildCriteria($criterias) {
 	}
 	return $criteria;
 }
+
+/**
+ * Build a breadcrumb
+ *
+ * @param array $items of the breadcrumb to be displayed
+ * @return str HTML code of the breadcrumb to be inserted in another template
+ */
+function icms_getBreadcrumb($items) {
+	include_once(ICMS_ROOT_PATH . '/class/icmsbreadcrumb.php');
+	$icmsBreadcrumb = new IcmsBreadcrumb($items);
+	return $icmsBreadcrumb->render(true);
+}
 ?>
