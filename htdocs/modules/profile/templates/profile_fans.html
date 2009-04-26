@@ -2,10 +2,38 @@
 <{include file="db:profile_navbar.html"}>
 <{/if}>
 
+<div class="outer"  id="profile-video-form">
+	<h2 id="profile-video-form-title" class="head">
+       <img src="images/toggle.gif" />&nbsp;
+       <a href="#" onclick ="jQuery().find('div.profile-searchform-form').toggle(400);">
+       <{$lang_search}>
+       </a>
+     </h2>
+    <{$searchform.javascript}>
+    <div class="profile-searchform-form" style="display: none">
+        <form name="<{$searchform.name}>" action="<{$searchform.action}>" method="<{$searchform.method}>" <{$searchform.extra}>>
+          <div>
+            <!-- start of form elements loop -->
+            <{foreach item=element from=$searchform.elements}>
+              <{if $element.hidden != true}>
+              <div class="search-element">
+                <div class="search-element-label"><label><{$element.caption}></label></div>
+                <div class="search-element-body"><{$element.body}></div>
+              </div>
+              <{else}>
+              <{$element.body}>
+              <{/if}>
+            <{/foreach}>
+            <!-- end of form elements loop -->
+          </div>
+        </form>
+    </div>
+</div>
+
+
 <div  id="profile-friends-container" class="outer">        
 <h2 class="head"><{$lang_fanstitle}></h2>
 <{if $lang_nofansyet==""}>
-
 	<{section name=i loop=$friends}>
 		<div class="profile-friend <{cycle values="odd,even"}>">  
 			<p><a href="<{$icms_url}>/modules/<{$icms_dirname}>/index.php?uid=<{$friends[i].uid}>" title="<{$friends[i].uname}>"> <{ if $friends[i].user_avatar=="blank.gif" }><img src="images/noavatar.gif" alt=" <{$friends[i].uname}>" /> <{ else }> <img src="<{$icms_upload_url}>/<{$friends[i].user_avatar}>" alt=" <{$friends[i].uname}>" /><{/if}><{$friends[i].uname}></a></p>
@@ -20,8 +48,6 @@
             
             
             <{ /if }>
-            
-            
             
 		</div>
 	<{/section}>
