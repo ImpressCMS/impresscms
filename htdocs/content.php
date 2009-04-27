@@ -75,7 +75,7 @@ if(!$page)
 }
 else
 {
-	$page = (is_int($page)) ? intval($page) : str_replace("_"," ", $page);
+	$page = (is_int($page)) ? intval($page) : str_replace("-"," ", $page);
 	$criteria = new CriteriaCompo(new Criteria('content_status', 1));
 	$criteria->add(new Criteria('content_menu', $page,'LIKE'));
 	$criteria->add(new Criteria('content_id', $page),'OR');
@@ -122,7 +122,7 @@ if($im_contentConfig['show_subs'])
 			$content_subs = array();
 			$content_subs['titulo'] = $sub->getVar("content_title");
 			$content_subs['teaser'] = icms_substr(icms_cleanTags($sub->getVar("content_body",'n'),array()),0,300);
-			$seo = urlencode(str_replace(" ", "_",$sub->getVar('content_menu')));
+			$seo = urlencode(str_replace(" ", "-",$sub->getVar('content_menu')));
 			$content_subs['link'] = ICMS_URL.'/content.php?page='.$seo;
 			$xoopsTpl->append("content_subs", $content_subs);
 		}

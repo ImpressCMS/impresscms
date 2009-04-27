@@ -277,7 +277,7 @@ class XoopsContentHandler extends XoopsObjectHandler
 		if ($count > 1){
 			return $content->getVar('content_id');
 		}else{
-			$seo = str_replace(" ", "_",$content->getVar('content_menu'));
+			$seo = str_replace(" ", "-",$content->getVar('content_menu'));
 			return $seo;
 		}
 	}
