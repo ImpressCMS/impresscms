@@ -269,12 +269,6 @@ class IcmsForm extends XoopsThemeForm {
 							unset($form_text_area);
 							break;
 
-                              case XOBJ_DTYPE_HTMLAREA:
-                                   $form_html_area = $this->getControl('htmlarea', $key);
-                                   $this->addElement($form_html_area, $key, $var);
-                                   unset($form_html_area);
-                                   break;
-
 						case XOBJ_DTYPE_ARRAY:
 							// TODO : To come...
 							break;
