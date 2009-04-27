@@ -172,6 +172,8 @@ CREATE TABLE icmscontent (
   content_weight smallint(5) unsigned NOT NULL default '0',
   content_reads int(11) NOT NULL default '0',
   content_status tinyint(1) unsigned NOT NULL default '0',
+  content_seo_description text,
+  content_seo_keywords text,
   PRIMARY KEY  (content_id)
 ) TYPE=MyISAM;
 # --------------------------------------------------------

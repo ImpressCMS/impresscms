@@ -4,6 +4,8 @@ ImpressCMS ChangeLog
 
 ===2009-03-15 : 1.2 Alpha===
 '''Added'''
+* meta_description & meta_keywords to content manager pages. (vaughan)
+* seo URL in content manager changed from underscore to hyphen. (vaughan)
 * extra parameter in uploader class setPrefix function to select whether a unique filename is created or whether just to add a prefix. (vaughan)
 * Purifier Filters for GoogleVideo & Local Flash movies (movies that are stored locally on the same server as the site). (vaughan)
 * TextSanitizer to admin users edit form, for sanitizing signature field when HTML is allowed. (vaughan)
