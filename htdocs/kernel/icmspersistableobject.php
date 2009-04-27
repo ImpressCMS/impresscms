@@ -930,7 +930,7 @@ class IcmsPersistableObject extends XoopsObject {
             case 's':
             case 'show':
                 $ts = MyTextSanitizer::getInstance();
-//                $html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
+                $html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
 
                 $xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
 
@@ -950,7 +950,7 @@ class IcmsPersistableObject extends XoopsObject {
 				 * Setting mastop as the main editor
 		 		 */
 
-                return $ts->displayTarea($ret, 0, $smiley, $xcode, $image, $br);
+                return $ts->displayTarea($ret, $html, $smiley, $xcode, $image, $br);
                 break 1;
             case 'e':
             case 'edit':
@@ -959,63 +959,12 @@ class IcmsPersistableObject extends XoopsObject {
             case 'p':
             case 'preview':
                 $ts = MyTextSanitizer::getInstance();
-//                $html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
+                $html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
                 $xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
                 $smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
                 $image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
                 $br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
-                return $ts->previewTarea($ret, 0, $smiley, $xcode, $image, $br);
-                break 1;
-            case 'f':
-            case 'formpreview':
-                $ts = MyTextSanitizer::getInstance();
-                return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
-                break 1;
-            case 'n':
-            case 'none':
-            default:
-                break 1;
-            }
-            break;
-        case XOBJ_DTYPE_HTMLAREA:
-            switch (strtolower($format)) {
-            case 's':
-            case 'show':
-                $ts = MyTextSanitizer::getInstance();
-//                $html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
-
-                $xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
-                $smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
-                $image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
-//                $br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
-
-                    /**
-                     * Hack by marcan <INBOX> for SCSPRO
-                     * Setting mastop as the main editor
-                     */
-                if (defined('XOOPS_EDITOR_IS_HTML')) {
-                    $br = false;
-                }
-                    /**
-                     * Hack by marcan <INBOX> for SCSPRO
-                     * Setting mastop as the main editor
-                     */
-
-                return $ts->displayTarea($ret, 1, $smiley, $xcode, $image, 0);
-                break 1;
-            case 'e':
-            case 'edit':
-                return htmlspecialchars($ret, ENT_QUOTES);
-                break 1;
-            case 'p':
-            case 'preview':
-                $ts = MyTextSanitizer::getInstance();
-//                $html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
-                $xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
-                $smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
-                $image = (!isset($this->vars['doimage']['value']) || $this->vars['doimage']['value'] == 1) ? 1 : 0;
-//                $br = (!isset($this->vars['dobr']['value']) || $this->vars['dobr']['value'] == 1) ? 1 : 0;
-                return $ts->previewTarea($ret, 1, $smiley, $xcode, $image, 0);
+                return $ts->previewTarea($ret, $html, $smiley, $xcode, $image, $br);
                 break 1;
             case 'f':
             case 'formpreview':
@@ -1045,12 +994,12 @@ class IcmsPersistableObject extends XoopsObject {
                 break 1;
             case 'p':
             case 'preview':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 return $ts->stripSlashesGPC($ret);
                 break 1;
             case 'f':
             case 'formpreview':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
                 break 1;
             case 'n':
