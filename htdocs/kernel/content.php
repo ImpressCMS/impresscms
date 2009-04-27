@@ -20,26 +20,27 @@ if (!defined('XOOPS_ROOT_PATH')) {
 
 class XoopsContent extends XoopsObject
 {
-
-	function XoopsContent()
-	{
-		$this->XoopsObject();
-		$this->initVar('content_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('content_catid', XOBJ_DTYPE_INT, 1, true);
-		$this->initVar('content_supid', XOBJ_DTYPE_INT, 0, true);
-		$this->initVar('content_uid', XOBJ_DTYPE_INT, 1, true);
-		$this->initVar('content_title', XOBJ_DTYPE_TXTBOX, null, true, 255);
-		$this->initVar('content_menu', XOBJ_DTYPE_TXTBOX, null, true, 100);
-		$this->initVar('content_body', XOBJ_DTYPE_TXTAREA, null, true);
-		$this->initVar('content_css', XOBJ_DTYPE_TXTAREA, null, false);
-		$this->initVar('content_tags', XOBJ_DTYPE_TXTAREA, null, false);
-		$this->initVar('content_visibility', XOBJ_DTYPE_INT, 3, false);
-		$this->initVar('content_created', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('content_updated', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('content_weight', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('content_reads', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('content_status', XOBJ_DTYPE_INT, 1, false);
-	}
+     function XoopsContent()
+     {
+          $this->XoopsObject();
+          $this->initVar('content_id', XOBJ_DTYPE_INT, null, false);
+          $this->initVar('content_catid', XOBJ_DTYPE_INT, 1, true);
+          $this->initVar('content_supid', XOBJ_DTYPE_INT, 0, true);
+          $this->initVar('content_uid', XOBJ_DTYPE_INT, 1, true);
+          $this->initVar('content_title', XOBJ_DTYPE_TXTBOX, null, true, 255);
+          $this->initVar('content_menu', XOBJ_DTYPE_TXTBOX, null, true, 100);
+          $this->initVar('content_body', XOBJ_DTYPE_TXTAREA, null, true);
+          $this->initVar('content_css', XOBJ_DTYPE_TXTAREA, null, false);
+          $this->initVar('content_tags', XOBJ_DTYPE_TXTAREA, null, false);
+          $this->initVar('content_visibility', XOBJ_DTYPE_INT, 3, false);
+          $this->initVar('content_created', XOBJ_DTYPE_INT, null, false);
+          $this->initVar('content_updated', XOBJ_DTYPE_INT, null, false);
+          $this->initVar('content_weight', XOBJ_DTYPE_INT, 0, false);
+          $this->initVar('content_reads', XOBJ_DTYPE_INT, 0, false);
+          $this->initVar('content_status', XOBJ_DTYPE_INT, 1, false);
+          $this->initVar('content_seo_description', XOBJ_DTYPE_TXTBOX, null, false, 255);
+          $this->initVar('content_seo_keywords', XOBJ_DTYPE_TXTAREA, null, false);
+     }
 
 	function getReads(){
 		return $this->getVar('content_reads');
@@ -115,7 +116,7 @@ class XoopsContentHandler extends XoopsObjectHandler
 		}
 		if ($content->isNew()) {
 			$content_id = $this->db->genId('content_content_id_seq');
-			$sql = sprintf("INSERT INTO %s (content_id, content_catid, content_supid, content_uid, content_title, content_menu, content_body, content_css, content_tags, content_visibility, content_created, content_updated, content_weight, content_reads, content_status) VALUES (%u, %u, %u, %u, %s, %s, %s, %s, %s, %u, %u, %u, %u, %u, %u)",
+			$sql = sprintf("INSERT INTO %s (content_id, content_catid, content_supid, content_uid, content_title, content_menu, content_body, content_css, content_tags, content_visibility, content_created, content_updated, content_weight, content_reads, content_status, content_seo_description, content_seo_keywords) VALUES (%u, %u, %u, %u, %s, %s, %s, %s, %s, %u, %u, %u, %u, %u, %u, %s, %s)",
 			$this->db->prefix('icmscontent'),
 			intval($content_id),
 			intval($content_catid),
@@ -131,9 +132,11 @@ class XoopsContentHandler extends XoopsObjectHandler
 			time(),
 			intval($content_weight),
 			intval($content_reads),
-			intval($content_status));
+			intval($content_status),
+               $this->db->quoteString($content_seo_description),
+               $this->db->quoteString($content_seo_keywords));
 		} else {
-			$sql = sprintf("UPDATE %s SET content_catid=%u, content_supid=%u, content_uid=%u, content_title=%s, content_menu=%s, content_body=%s, content_css=%s, content_tags=%s, content_visibility=%u, content_updated=%u, content_weight=%u, content_reads=%u, content_status=%u WHERE content_id=%u",
+			$sql = sprintf("UPDATE %s SET content_catid=%u, content_supid=%u, content_uid=%u, content_title=%s, content_menu=%s, content_body=%s, content_css=%s, content_tags=%s, content_visibility=%u, content_updated=%u, content_weight=%u, content_reads=%u, content_status=%u, content_seo_description=%s, content_seo_keywords=%s WHERE content_id=%u",
 			$this->db->prefix('icmscontent'),
 			intval($content_catid),
 			intval($content_supid),
@@ -148,7 +151,9 @@ class XoopsContentHandler extends XoopsObjectHandler
 			intval($content_weight),
 			intval($content_reads),
 			intval($content_status),
-			intval($content_id));
+			intval($content_id),
+               $this->db->quoteString($content_seo_description),
+               $this->db->quoteString($content_seo_keywords));
 		}
 		if (!$result = $this->db->queryF($sql)) {
 			return false;

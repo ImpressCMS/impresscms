@@ -91,6 +91,10 @@ $myts =& MyTextSanitizer::getInstance();
 $xoopsOption['template_main'] = 'system_content.html';
 /** Include the header file to start page rendering */
 include ICMS_ROOT_PATH.'/header.php';
+
+$xoTheme->addMeta('meta', 'description', $impress_content->getVar('content_seo_description'));
+$xoTheme->addMeta('meta', 'keywords', $impress_content->getVar('content_seo_keywords'));
+
 $xoopsTpl->assign("content_title", $impress_content->getVar('content_title'));
 $xoopsTpl->assign("isAdmin", $adminperm);
 $options = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&amp;op=editcontent&amp;content_id='.$impress_content->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/edit_big.png" title="'._CT_EDIT_CONTENT.'" alt="'._CT_EDIT_CONTENT.'" /></a>';

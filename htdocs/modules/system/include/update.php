@@ -640,6 +640,27 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_custom_redirection', '_MD_AM_CUSTOMRED', '0', '_MD_AM_CUSTOMREDDSC', 'yesno', 'int', 9);
 	}
 
+     $newDbVersion = 25;
+     
+     if($dbVersion < $newDbVersion)
+     {
+          $table = new IcmsDatabasetable('icmscontent');
+          if(!$table->fieldExists('content_seo_description'))
+          {
+               $table->addNewField('content_seo_description', "text");
+               $icmsDatabaseUpdater->updateTable($table);
+          }
+          unset($table);
+
+          $table = new IcmsDatabasetable('icmscontent');
+          if(!$table->fieldExists('content_seo_keywords'))
+          {
+               $table->addNewField('content_seo_keywords', "text");
+               $icmsDatabaseUpdater->updateTable($table);
+          }
+          unset($table);
+     }
+
 	echo "</code>";
 
  /**

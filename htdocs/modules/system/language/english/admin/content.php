@@ -45,4 +45,7 @@ define('_MD_STSLINKFIRST','This page is in use by the Symlink Manager.<br />You 
 define('_MD_CONTENT_TAGS','Tags');
 define('_MD_CONTENT_TAGS_DESC','Separate the tags with "<font color=red>,</font>"');
 define('_MD_FILTERBYTAGS','Filter by Tag');
+define('_MD_CONTENT_SEO_DESCRIPTION','SEO Meta Description');
+define('_MD_CONTENT_SEO_KEYWORDS','SEO Meta Keywords<br /><br />(use comma to seperate)');
+
 ?>

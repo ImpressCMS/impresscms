@@ -563,6 +563,8 @@ function contentform($id=null,$clone=false){
 		$content_supid = $content->getVar('content_supid');
 		$content_uid = $content->getVar('content_uid');
 		$grupos_ids = $gperm_handler->getGroupIds('content_read', $id);
+          $seo_desc = $content->getVar('content_seo_description');
+          $seo_keyw = $content->getVar('content_seo_keywords');
 	}else{
 		$ftitle = _MD_ADDCONTENT;
 		$menu = '';
@@ -575,6 +577,8 @@ function contentform($id=null,$clone=false){
 		}else{
 		    $title = '';
 		    $body = '';
+               $seo_desc = '';
+               $seo_keyw = '';
 		}
 		$css = file_get_contents(XOOPS_ROOT_PATH.'/modules/system/admin/content/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css');
 		$tags = '';
@@ -635,6 +639,9 @@ function contentform($id=null,$clone=false){
 	$form->addElement($ftags);
 	$form->addElement(new XoopsFormText(_MD_CONTENT_WEIGHT, 'content_weight', 3, 4, $weight));
 	$form->addElement(new XoopsFormRadioYN(_MD_CONTENT_DISPLAY, 'content_status', intval($status), _YES, _NO));
+
+     $form->addElement(new XoopsFormText(_MD_CONTENT_SEO_DESCRIPTION, 'content_seo_description', 50, 255, $seo_desc));
+     $form->addElement(new XoopsFormTextArea(_MD_CONTENT_SEO_KEYWORDS, 'content_seo_keywords', $seo_keyw, 5));
 
 	$visibility_select = new XoopsFormSelect(_MD_CONTENT_VISIBILITY, "content_visibility",$visibility);
 	$visibility_select->addOptionArray(array(1=>_MD_CONTENT_VISIBILITY_1, 2=>_MD_CONTENT_VISIBILITY_2, 3=>_MD_CONTENT_VISIBILITY_3, 4=>_MD_CONTENT_VISIBILITY_4));
