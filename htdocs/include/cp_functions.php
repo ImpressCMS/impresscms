@@ -292,7 +292,7 @@ function icms_cp_header(){
 		/**
 		 * Send to template some ml infos
 		 */
-		$icmsAdminTpl->assign ( 'lang_prefs', _IMPRESSCMS_PREFS );
+		$icmsAdminTpl->assign ( 'lang_prefs', _PREFERENCES );
 		$icmsAdminTpl->assign ( 'ml_is_enabled', $im_multilanguageConfig ['ml_enable'] );
 		$config_handler = & xoops_gethandler ( 'config' );
 		$xoopsConfigPersona = & $config_handler->getConfigsByCat( XOOPS_CONF_PERSONA );

@@ -221,7 +221,6 @@ define("XOOPS_USE_MULTIBYTES", "0");
 define("_ADM_USE_RTL","0");
 
 define('_MODULES','Modules');
-define('_IMPRESSCMS_PREFS','Preferences');
 define('_SYSTEM','System');
 define('_IMPRESSCMS_NEWS','News');
 define('_ABOUT','The ImpressCMS Project');

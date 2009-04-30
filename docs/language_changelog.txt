@@ -9,6 +9,17 @@ Legend :
   -  a constant was removed OR a whole file was removed
   #  Directory / Folders guide
 
+ImpressCMS 1.2 (changes from ImpressCMS 1.1.1)
+==============================================
+
+=====================
+# Directory: language
+=====================
+language/english/global.php
+---------------------------
+-  define('_IMPRESSCMS_PREFS','Preferences');
+
+
 ImpressCMS 1.1.1 (changes from ImpressCMS 1.1)
 =========================================
 
