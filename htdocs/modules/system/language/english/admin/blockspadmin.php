@@ -24,4 +24,15 @@ define("_CO_SYSTEM_BLOCKSPADMIN_TITLE", "Title");
 define("_CO_SYSTEM_BLOCKSPADMIN_PNAME", "Position Name");
 define('_CO_SYSTEM_BLOCKSPADMIN_PNAME_DSC',"Name of Block Position, it is with this name that will have to be created the Loop in the theme for the exhibition of blocks.<br/>Use a name with small_caption letters, without spaces and special characters.");
 define("_CO_SYSTEM_BLOCKSPADMIN_DESCRIPTION", "Description");
+
+#################### Added in 1.2 alpha 1 ############################
+
+define("_AM_SBLEFT_ADMIN","Admin Side Block - Left");
+define("_AM_SBRIGHT_ADMIN","Admin Side Block - Right");
+define("_AM_CBLEFT_ADMIN","Admin Center Block - Left");
+define("_AM_CBRIGHT_ADMIN","Admin Center Block - Right");
+define("_AM_CBCENTER_ADMIN","Admin Center Block - Center");
+define("_AM_CBBOTTOMLEFT_ADMIN","Admin Center Block - Bottom left");
+define("_AM_CBBOTTOMRIGHT_ADMIN","Admin Center Block - Bottom right");
+define("_AM_CBBOTTOM_ADMIN","Admin Center Block - Bottom");
 ?>

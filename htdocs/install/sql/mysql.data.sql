@@ -31,6 +31,14 @@ INSERT INTO `block_positions` VALUES (5,'page_topright','_AM_CBRIGHT',NULL,1,'C'
 INSERT INTO `block_positions` VALUES (6,'page_bottomleft','_AM_CBBOTTOMLEFT',NULL,1,'C');
 INSERT INTO `block_positions` VALUES (7,'page_bottomcenter','_AM_CBBOTTOM',NULL,1,'C');
 INSERT INTO `block_positions` VALUES (8,'page_bottomright','_AM_CBBOTTOMRIGHT',NULL,1,'C');
+INSERT INTO `block_positions` VALUES (9,'canvas_left_admin','_AM_SBLEFT_ADMIN',NULL,1,'L');
+INSERT INTO `block_positions` VALUES (10,'canvas_right_admin','_AM_SBRIGHT_ADMIN',NULL,1,'L');
+INSERT INTO `block_positions` VALUES (11,'page_topleft_admin','_AM_CBLEFT_ADMIN',NULL,1,'C');
+INSERT INTO `block_positions` VALUES (12,'page_topcenter_admin','_AM_CBCENTER_ADMIN',NULL,1,'C');
+INSERT INTO `block_positions` VALUES (13,'page_topright_admin','_AM_CBRIGHT_ADMIN',NULL,1,'C');
+INSERT INTO `block_positions` VALUES (14,'page_bottomleft_admin','_AM_CBBOTTOMLEFT_ADMIN',NULL,1,'C');
+INSERT INTO `block_positions` VALUES (15,'page_bottomcenter_admin','_AM_CBBOTTOM_ADMIN',NULL,1,'C');
+INSERT INTO `block_positions` VALUES (16,'page_bottomright_admin','_AM_CBBOTTOMRIGHT_ADMIN',NULL,1,'C');
 
 #
 # Dumping data for table `comments`

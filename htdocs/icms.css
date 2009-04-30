@@ -154,16 +154,17 @@ div.cpicon{
 	text-align: center;
 }
 div.cpicon a {
-	display: block; float: left;
-	height: 85px !important;
-	height: 85px;
-	width: 85px !important;
-	width: 85px;
+	display: inline-block;
+	height: 70px !important;
+	height: 70px;
+	width: 70px !important;
+	width: 70px;
 	vertical-align: middle;
 	text-decoration : none;
 	border: 1px solid #CCCCCC;
 	padding: 2px 5px 1px 5px;
-	margin: 3px;
+	margin: 0;
+	margin-bottom:4px;
 	color: #666666;
 }
 
@@ -173,7 +174,7 @@ div.cpicon a:hover{
 	color: #1E90FF;
 }
 
-div.cpicon img { margin-top: 4px; margin-bottom: 4px; width: 32px; height: 32px;}
+div.cpicon img { margin-top: 1px; margin-bottom: 1px; width: 32px; height: 32px;}
 div.cpicon span {
 	font-size: 11px;
 	font-weight: bold;

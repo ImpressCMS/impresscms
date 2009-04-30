@@ -1,5 +1,5 @@
 <?php
-// $Id: blocksadmin.php 506 2006-05-26 23:10:37Z skalpa $
+// $Id$
 //%%%%%%	Admin Module Name  Blocks 	%%%%%
 define("_AM_DBUPDATED","Database Updated Successfully!");
 
@@ -116,4 +116,16 @@ define("_CO_SYSTEM_BLOCKSADMIN_BCACHETIME_DSC", "");
 
 define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS", "Block View permission");
 define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC", "Select wich groups will have view permission for this block. This means that a user belonging to one of these groups will be able to view the block when it is activated in the site.");
+
+
+#################### Added in 1.2 alpha 1 ############################
+
+define("_AM_SBLEFT_ADMIN","Admin Side Block - Left");
+define("_AM_SBRIGHT_ADMIN","Admin Side Block - Right");
+define("_AM_CBLEFT_ADMIN","Admin Center Block - Left");
+define("_AM_CBRIGHT_ADMIN","Admin Center Block - Right");
+define("_AM_CBCENTER_ADMIN","Admin Center Block - Center");
+define("_AM_CBBOTTOMLEFT_ADMIN","Admin Center Block - Bottom left");
+define("_AM_CBBOTTOMRIGHT_ADMIN","Admin Center Block - Bottom right");
+define("_AM_CBBOTTOM_ADMIN","Admin Center Block - Bottom");
 ?>

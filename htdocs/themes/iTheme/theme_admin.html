@@ -18,7 +18,7 @@
 	<{assign var=theme_name value=$xoTheme->folderName}>
 
 <!-- Title and meta -->
-	<title><{if $xoops_pagetitle !=''}><{$xoops_pagetitle}> : <{/if}><{$xoops_sitename}></title>
+	<title><{$smarty.const._IMPRESSCMS_ADMIN}> <{$xoops_sitename}></title>
 	<meta http-equiv="content-type" content="text/html; charset=<{$xoops_charset}>" />	
 	<meta name="robots" content="<{$xoops_meta_robots}>" />
 	<meta name="keywords" content="<{$xoops_meta_keywords}>" />
@@ -62,11 +62,11 @@ if (!window.console || !console.firebug) {
 </head>
 
 <body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">
-<{if $xoBlocks.canvas_left and $xoBlocks.canvas_right}>
+<{if $xoBlocks.canvas_left_admin and $xoBlocks.canvas_right_admin}>
 <{assign var=columns_layout value='threecolumns-layout'}>
-<{elseif $xoBlocks.canvas_left}>
+<{elseif $xoBlocks.canvas_left_admin}>
 <{assign var=columns_layout value='leftcolumn-layout'}>
-<{elseif $xoBlocks.canvas_right}>
+<{elseif $xoBlocks.canvas_right_admin}>
 <{assign var=columns_layout value='rightcolumn-layout'}>
 <{/if}>
 <div id="xo-canvas"<{if $columns_layout}> class="<{$columns_layout}>"<{/if}>>
@@ -163,14 +163,14 @@ if (!window.console || !console.firebug) {
 		<div id="xo-canvas-columns">
 			<!-- Left column -->
 				<{if $icms_rtl}>
-			<{if $xoBlocks.canvas_right}>
-			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_right
+			<{if $xoBlocks.canvas_right_admin}>
+			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_right_admin
 				zoneClass='xo-canvas-column' zoneId='xo-canvas-rightcolumn'
 			}>
 			<{/if}>
 			<{else}>
-			<{if $xoBlocks.canvas_left}>
-			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_left
+			<{if $xoBlocks.canvas_left_admin}>
+			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_left_admin
 				zoneClass='xo-canvas-column' zoneId='xo-canvas-leftcolumn'
 			}>
 			<{/if}>
@@ -178,11 +178,11 @@ if (!window.console || !console.firebug) {
 			<!-- Center column / page -->
 			<div id="xo-page">
 				<!-- Top blocks -->
-				<{if $xoBlocks.page_topleft or $xoBlocks.page_topcenter or $xoBlocks.page_topright}>
+				<{if $xoBlocks.page_topleft_admin or $xoBlocks.page_topcenter_admin or $xoBlocks.page_topright_admin}>
 				<div class="xo-blockszone xo-<{$theme_top_order}>pageblocks" id="xo-page-topblocks">
-					<{includeq file="$theme_name/centerblocks.html" topbottom=top lcr=$theme_top_order|substr:0:1}>
-					<{includeq file="$theme_name/centerblocks.html" topbottom=top lcr=$theme_top_order|substr:1:1}>
-					<{includeq file="$theme_name/centerblocks.html" topbottom=top lcr=$theme_top_order|substr:2:1}>
+					<{includeq file="$theme_name/centerblocks_admin.html" topbottom=top lcr=$theme_top_order|substr:0:1}>
+					<{includeq file="$theme_name/centerblocks_admin.html" topbottom=top lcr=$theme_top_order|substr:1:1}>
+					<{includeq file="$theme_name/centerblocks_admin.html" topbottom=top lcr=$theme_top_order|substr:2:1}>
 				</div>
 				<{/if}>
 				<!-- Module content -->
@@ -190,24 +190,24 @@ if (!window.console || !console.firebug) {
 				<div id="xo-content"><{$xoops_contents}></div>
 				<{/if}>
 				<!-- Bottom blocks -->
-				<{if $xoBlocks.page_bottomleft or $xoBlocks.page_bottomcenter or $xoBlocks.page_bottomright}>
+				<{if $xoBlocks.page_bottomleft_admin or $xoBlocks.page_bottomcenter_admin or $xoBlocks.page_bottomright_admin}>
 				<div class="xo-blockszone xo-<{$theme_bottom_order}>pageblocks" id="xo-page-bottomblocks">
-					<{includeq file="$theme_name/centerblocks.html" topbottom=bottom lcr=$theme_bottom_order|substr:0:1}>
-					<{includeq file="$theme_name/centerblocks.html" topbottom=bottom lcr=$theme_bottom_order|substr:1:1}>
-					<{includeq file="$theme_name/centerblocks.html" topbottom=bottom lcr=$theme_bottom_order|substr:2:1}>
+					<{includeq file="$theme_name/centerblocks_admin.html" topbottom=bottom lcr=$theme_bottom_order|substr:0:1}>
+					<{includeq file="$theme_name/centerblocks_admin.html" topbottom=bottom lcr=$theme_bottom_order|substr:1:1}>
+					<{includeq file="$theme_name/centerblocks_admin.html" topbottom=bottom lcr=$theme_bottom_order|substr:2:1}>
 				</div>
 				<{/if}>
 			</div>
 			<!-- Right column -->
 				<{if $icms_rtl}>
-			<{if $xoBlocks.canvas_left}>
-			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_left
+			<{if $xoBlocks.canvas_left_admin}>
+			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_left_admin
 				zoneClass='xo-canvas-column' zoneId='xo-canvas-leftcolumn'
 			}>
 			<{/if}>
 			<{else}>
-			<{if $xoBlocks.canvas_right}>
-			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_right
+			<{if $xoBlocks.canvas_right_admin}>
+			<{includeq file="$theme_name/blockszone.html" blocks=$xoBlocks.canvas_right_admin
 				zoneClass='xo-canvas-column' zoneId='xo-canvas-rightcolumn'
 			}>
 			<{/if}>

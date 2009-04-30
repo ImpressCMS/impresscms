@@ -127,7 +127,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
     foreach ($modversion['blocks'] as $func_num => $newblock) {
         if ($fp = fopen('../modules/system/templates/blocks/'.$newblock['template'], 'r')) {
-            if (in_array($newblock['template'], array('system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html', 'system_block_socialbookmark.html', 'system_block_themes.html', 'system_block_search.html','system_admin_block_warnings.html','system_admin_block_cp.html','system_admin_block_modules.html'))) {
+            if (in_array($newblock['template'], array('system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html', 'system_block_socialbookmark.html', 'system_block_themes.html', 'system_block_search.html','system_admin_block_warnings.html','system_admin_block_cp.html','system_admin_block_modules.html','system_block_newusers.html','system_block_online.html','system_block_waiting.html','system_block_topusers.html'))) {
                 $visible = 1;
             } else {
                 $visible = 0;
@@ -137,11 +137,15 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
             } elseif (in_array($newblock['template'], array('system_block_socialbookmark.html'))) {
             	$canvaspos = 7;
             } elseif (in_array($newblock['template'], array('system_admin_block_warnings.html'))) {
-             	$canvaspos = 4;
+             	$canvaspos = 12;
             } elseif (in_array($newblock['template'], array('system_admin_block_cp.html'))) {
-            	$canvaspos = 3;
+            	$canvaspos = 11;
             } elseif (in_array($newblock['template'], array('system_admin_block_modules.html'))) {
-            	$canvaspos = 5;
+            	$canvaspos = 13;
+            } elseif (in_array($newblock['template'], array('system_block_online.html','system_block_waiting.html'))) {
+            	$canvaspos = 9;
+            } elseif (in_array($newblock['template'], array('system_block_newusers.html','system_block_topusers.html'))) {
+            	$canvaspos = 10;
             } else {
             	$canvaspos = 1;
             }
@@ -207,8 +211,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     	#if ($myrow['side'] == 0) {
         if ($myrow['side'] == 1 OR $myrow['side'] == 2 OR $myrow['side'] == 7) {
             $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0, 0)");
-            }elseif($myrow['template'] == 'system_admin_block_warnings.html' OR $myrow['template'] == 'system_admin_block_cp.html' OR $myrow['template'] == 'system_admin_block_modules.html'){
-            	 $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 1, 2)");
+        }elseif(in_array($myrow['template'],array('system_admin_block_warnings.html','system_admin_block_cp.html','system_admin_block_modules.html','system_block_newusers.html','system_block_online.html','system_block_waiting.html','system_block_topusers.html'))){
+            $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 1, 2)");
         } else {
             $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0, 1)");
         }
