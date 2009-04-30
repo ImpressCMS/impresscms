@@ -43,7 +43,7 @@ define('_US_SUBMIT','Submit');
 define('_US_LOGINNAME','Username');
 define('_US_FINISH','Finish');
 define('_US_REGISTERNG','Could not register new user.');
-define('_US_MAILOK','Receive occasional email notices <br />from administrators and moderators?');
+define('_US_MAILOK','Receive occasional email notices from administrators and moderators?');
 define('_US_DISCLAIMER','Disclaimer');
 define('_US_IAGREE','I agree to the above');
 define('_US_UNEEDAGREE', 'Sorry, you have to agree to our disclaimer to get registered.');
