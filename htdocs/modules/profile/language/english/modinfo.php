@@ -58,7 +58,7 @@ define("_MI_PROFILE_PICTURESPERPAGE_TITLE","Pictures showing per page before pag
 
 define("_MI_PROFILE_LAST","Last pictures block");
 define("_MI_PROFILE_LAST_DESC","Last pictures sent independently of the album");
-define("_MI_PROFILE_DELETEPHYSICAL_TITLE","Delete files from the upload folder to");
+define("_MI_PROFILE_DELETEPHYSICAL_TITLE","Delete files from the upload folder too");
 define("_MI_PROFILE_DELETEPHYSICAL_DESC","Confirming yes here, will allow the script to delete the files from the uploaded data in the database as well.<br /> Be careful about this feature, if you exclude the files from the folder and not only in the database, some people who may have linked to the image directly in another part of the site may also lose their content;<br /> at the same time if you don't exclude them, you may use to much space in the server hard disk.<br />Configure this item well for your needs.");
 
 define("_MI_PROFILE_MYVIDEOS","My Videos");
@@ -223,7 +223,7 @@ define("_PROFILE_MI_CAT_USER", "User Settings");
 define("_PROFILE_MI_CAT_USER_DSC", "");
 
 //Configuration items
-define("_PROFILE_MI_PROFILE_SEARCH", "Show latest submissals by user on user profile");
+define("_PROFILE_MI_PROFILE_SEARCH", "Show latest submissions by user on user profile");
 define("_PROFILE_MI_MAX_UNAME", "Maximum Username Length");
 define("_PROFILE_MI_MAX_UNAME_DESC", "This indicates the maximum number of characters, a username may have");
 define("_PROFILE_MI_MIN_UNAME", "Minimum Username Length");
