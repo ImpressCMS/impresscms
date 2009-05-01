@@ -159,7 +159,7 @@ class IcmsPersistableController {
 			return $icmsObj;
 		} else {
 			if ( !$storeResult ) {
-				redirect_header($impresscms->urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
+				redirect_header($icmsObj->urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
 			}
 
 			$redirect_page = $redirect_page ? $redirect_page : icms_get_page_before_form();
