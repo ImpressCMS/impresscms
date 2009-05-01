@@ -90,7 +90,6 @@ ImpressCMS ChangeLog
 * #532: new function icms_buildCriteria() (malanciault)
 * #533: new IcmsBreadcrumb class (malanciault)
 * #535: IcmsPersistableObject store and delete methods (malanciault)
-* #21: Content manager Module (real_therplima/stranger)
 
 '''Changed'''
 * Identicon for Gravatar added (sato-san)
