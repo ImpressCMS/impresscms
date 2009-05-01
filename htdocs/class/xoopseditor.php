@@ -115,6 +115,8 @@ class XoopsEditorHandler
 
   /**
    * Render the editor
+   * @param   string    &$editor    Reference to the editor object
+   * @return  string    The rendered Editor string
    */
   function render(&$editor)
   {
