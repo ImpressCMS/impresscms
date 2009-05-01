@@ -216,6 +216,8 @@ ImpressCMS ChangeLog
 * #496: No Modules Menu in 1.2a. (MrTheme/stranger)
 * #534: IPF: NonPersistableVar should not be displayed on SingleView by default (malanciault)
 * #514: Duplicate language define _IMPRESSCMS_PREFS replaced with _PREFERENCES (mcdonald/skenow)
+* #551: google analytic code is not loaded at the bottom of the page. (stranger)
+* #550: Admin actions not being sanitized in profile moduleþ. (stranger)
 
 == Impresscms 1.1.2==
 
