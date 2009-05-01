@@ -13,11 +13,11 @@
 * @version	$Id$
 */
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
-include_once XOOPS_ROOT_PATH."/class/xoopstopic.php";
-include_once XOOPS_ROOT_PATH."/class/xoopsuser.php";
+include_once ICMS_ROOT_PATH."/class/xoopstopic.php";
+include_once ICMS_ROOT_PATH."/class/xoopsuser.php";
 
 class XoopsStory
 {

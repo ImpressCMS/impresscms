@@ -54,9 +54,7 @@ if (false != $user) {
         redirect_header(XOOPS_URL.'/index.php', 5, _US_NOACTTPADM);
         exit();
     }
-    $config_handler =& xoops_gethandler('config');
-	$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-	if ($xoopsConfigPersona['multi_login']){
+	if ($icmsConfigPersona['multi_login']){
 		if( is_object( $user ) ) {
 			$online_handler =& xoops_gethandler('online');
 			$online_handler->gc(300);
@@ -64,7 +62,7 @@ if (false != $user) {
 			foreach( $onlines as $online ) {
 				if( $online['online_uid'] == $user->uid() ) {
 					$user = false;
-					redirect_header(XOOPS_URL.'/index.php',3,$xoopsConfigPersona['multi_login_msg']);
+					redirect_header(XOOPS_URL.'/index.php',3,$icmsConfigPersona['multi_login_msg']);
 				}
 			}
 			if( is_object( $user ) ) {
@@ -73,10 +71,10 @@ if (false != $user) {
 			}
 		}
 	}
-    if ($xoopsConfig['closesite'] == 1) {
+    if ($icmsConfig['closesite'] == 1) {
         $allowed = false;
         foreach ($user->getGroups() as $group) {
-            if (in_array($group, $xoopsConfig['closesite_okgrp']) || XOOPS_GROUP_ADMIN == $group) {
+            if (in_array($group, $icmsConfig['closesite_okgrp']) || XOOPS_GROUP_ADMIN == $group) {
                 $allowed = true;
                 break;
             }
@@ -94,14 +92,14 @@ if (false != $user) {
     $_SESSION = array();
     $_SESSION['xoopsUserId'] = $user->getVar('uid');
     $_SESSION['xoopsUserGroups'] = $user->getGroups();
-    if ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {
-        setcookie($xoopsConfig['session_name'], session_id(), time()+(60 * $xoopsConfig['session_expire']), '/',  '', 0);
+    if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
+        setcookie($icmsConfig['session_name'], session_id(), time()+(60 * $icmsConfig['session_expire']), '/',  '', 0);
     }
     $_SESSION['xoopsUserLastLogin'] = $user->getVar('last_login');
     if (!$member_handler->updateUserByField($user, 'last_login', time())) {
     }
     $user_theme = $user->getVar('theme');
-    if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
+    if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
         $_SESSION['xoopsUserTheme'] = $user_theme;
     }
     if (!empty($_POST['xoops_redirect']) && !strpos($_POST['xoops_redirect'], 'register')) {

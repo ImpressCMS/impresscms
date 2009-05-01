@@ -197,22 +197,22 @@ class XoopsUser extends XoopsObject
 	*/
 	function sendWelcomeMessage()
 	{
-		global $xoopsConfig, $xoopsConfigUser;
+		global $icmsConfig, $icmsConfigUser;
 		
 		$myts =& MyTextSanitizer::getInstance();
 
-		if(!$xoopsConfigUser['welcome_msg']) {return true;}
+		if(!$icmsConfigUser['welcome_msg']) {return true;}
 		
 		$xoopsMailer =& getMailer();
 		$xoopsMailer->useMail();
-		$xoopsMailer->setBody($xoopsConfigUser['welcome_msg_content']);
+		$xoopsMailer->setBody($icmsConfigUser['welcome_msg_content']);
 		$xoopsMailer->assign('UNAME', $this->getVar('uname'));
 		$user_email = $this->getVar('email');
 		$xoopsMailer->assign('X_UEMAIL', $user_email);
 		$xoopsMailer->setToEmails($user_email);
-		$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-		$xoopsMailer->setFromName($xoopsConfig['sitename']);
-		$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION, $myts->stripSlashesGPC($xoopsConfig['sitename'])));
+		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+		$xoopsMailer->setFromName($icmsConfig['sitename']);
+		$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION, $myts->stripSlashesGPC($icmsConfig['sitename'])));
 		if(!$xoopsMailer->send(true))
 		{
 			$this->setErrors(_US_WELCOMEMSGFAILED);
@@ -231,9 +231,9 @@ class XoopsUser extends XoopsObject
 	*/
 	function newUserNotifyAdmin()
 	{
-		global $xoopsConfigUser, $xoopsConfig;
+		global $icmsConfigUser, $icmsConfig;
 		
-		if($xoopsConfigUser['new_user_notify'] == 1 && !empty($xoopsConfigUser['new_user_notify_group']))
+		if($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group']))
 		{
 			$member_handler = xoops_getHandler('member');
 			$xoopsMailer =& getMailer();
@@ -241,10 +241,10 @@ class XoopsUser extends XoopsObject
 			$xoopsMailer->setTemplate('newuser_notify.tpl');
 			$xoopsMailer->assign('UNAME', $this->getVar('uname'));
 			$xoopsMailer->assign('EMAIL', $this->getVar('email'));
-			$xoopsMailer->setToGroups($member_handler->getGroup($xoopsConfigUser['new_user_notify_group']));
-			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT,$xoopsConfig['sitename']));
+			$xoopsMailer->setToGroups($member_handler->getGroup($icmsConfigUser['new_user_notify_group']));
+			$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+			$xoopsMailer->setFromName($icmsConfig['sitename']);
+			$xoopsMailer->setSubject(sprintf(_US_NEWUSERREGAT,$icmsConfig['sitename']));
 			if(!$xoopsMailer->send(true))
 			{
 				$this->setErrors(_US_NEWUSERNOTIFYADMINFAIL);
@@ -782,16 +782,14 @@ class XoopsUserHandler extends XoopsObjectHandler
  */     
 function userCheck($login_name, $uname, $email, $pass, $vpass)
 {
-	include_once ICMS_ROOT_PATH . '/kernel/icmsstopspammer.php';
-	$config_handler =& xoops_gethandler('config');
-	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-	$xoopsDB =& Database::getInstance();
+	global $icmsConfigUser, $xoopsDB;
 	$myts =& MyTextSanitizer::getInstance();
+	include_once ICMS_ROOT_PATH . '/kernel/icmsstopspammer.php';
 	$stop = '';
 	if (!checkEmail($email)) {
 		$stop .= _US_INVALIDMAIL.'<br />';
 	}
-	foreach ($xoopsConfigUser['bad_emails'] as $be) {
+	foreach ($icmsConfigUser['bad_emails'] as $be) {
 		if (!empty($be) && preg_match('/'.$be.'/i', $email)) {
 			$stop .= _US_INVALIDMAIL.'<br />';
 			break;
@@ -801,7 +799,7 @@ function userCheck($login_name, $uname, $email, $pass, $vpass)
 		$stop .= _US_EMAILNOSPACES.'<br />';
 	}
 	$login_name = xoops_trim($login_name);
-	switch ($xoopsConfigUser['uname_test_level']) {
+	switch ($icmsConfigUser['uname_test_level']) {
 	case 0:
 		// strict
 		$restriction = '/[^a-zA-Z0-9\_\-]/';
@@ -828,13 +826,13 @@ function userCheck($login_name, $uname, $email, $pass, $vpass)
 	if (empty($login_name) || preg_match($restriction, $login_name)) {
 		$stop .= _US_INVALIDNICKNAME.'<br />';
 	}
-	if (strlen($login_name) > $xoopsConfigUser['maxuname']) {
-		$stop .= sprintf(_US_NICKNAMETOOLONG, $xoopsConfigUser['maxuname']).'<br />';
+	if (strlen($login_name) > $icmsConfigUser['maxuname']) {
+		$stop .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']).'<br />';
 	}
-	if (strlen($login_name) < $xoopsConfigUser['minuname']) {
-		$stop .= sprintf(_US_NICKNAMETOOSHORT, $xoopsConfigUser['minuname']).'<br />';
+	if (strlen($login_name) < $icmsConfigUser['minuname']) {
+		$stop .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']).'<br />';
 	}
-	foreach ($xoopsConfigUser['bad_unames'] as $bu) {
+	foreach ($icmsConfigUser['bad_unames'] as $bu) {
 		if (!empty($bu) && preg_match('/'.$bu.'/i', $login_name)) {
 			$stop .= _US_NAMERESERVED.'<br />';
 			break;
@@ -872,8 +870,8 @@ function userCheck($login_name, $uname, $email, $pass, $vpass)
 	}
 	if ( (isset($pass)) && ($pass != $vpass) ) {
 		$stop .= _US_PASSNOTSAME.'<br />';
-	} elseif ( ($pass != '') && (strlen($pass) < $xoopsConfigUser['minpass']) ) {
-		$stop .= sprintf(_US_PWDTOOSHORT,$xoopsConfigUser['minpass']).'<br />';
+	} elseif ( ($pass != '') && (strlen($pass) < $icmsConfigUser['minpass']) ) {
+		$stop .= sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']).'<br />';
 	}
 	if((isset($pass)) && (isset($login_name)))
 	{

@@ -28,14 +28,14 @@ if ($com_mode == '') {
 	if (is_object($xoopsUser)) {
 		$com_mode = $xoopsUser->getVar('umode');
 	} else {
-		$com_mode = $xoopsConfig['com_mode'];
+		$com_mode = $icmsConfig['com_mode'];
 	}
 }
 if (!isset($_GET['com_order'])) {
 	if (is_object($xoopsUser)) {
 		$com_order = $xoopsUser->getVar('uorder');
 	} else {
-		$com_order = $xoopsConfig['com_order'];
+		$com_order = $icmsConfig['com_order'];
 	}
 } else {
 	$com_order = intval($_GET['com_order']);
@@ -53,7 +53,7 @@ $com_id = 0;
 $dosmiley = 1;
 $groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
 $gperm_handler =& xoops_gethandler('groupperm');
-if ($xoopsConfig ['editor_default'] != 'dhtmltextarea' && $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
+if ($icmsConfig ['editor_default'] != 'dhtmltextarea' && $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
   $dohtml = 1;
   $dobr = 0;
 }else{

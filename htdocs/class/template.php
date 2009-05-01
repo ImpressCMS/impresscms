@@ -41,11 +41,11 @@ class XoopsTpl extends Smarty {
 	var $compile_dir = XOOPS_COMPILE_PATH;
 
 	function XoopsTpl() {
-		global $xoopsConfig;
+		global $icmsConfig;
 
-		$this->compile_id = $xoopsConfig['template_set'] . '-' . $xoopsConfig['theme_set'];
+		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
 		$this->_compile_id = $this->compile_id;
-		$this->compile_check = ( $xoopsConfig['theme_fromfile'] == 1 );
+		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
 		$this->plugins_dir = array(
 			SMARTY_DIR . 'icms_plugins',
 			SMARTY_DIR . 'plugins',
@@ -60,9 +60,9 @@ class XoopsTpl extends Smarty {
 			$this->plugins_dir[] = ICMS_ROOT_PATH.'/class/smarty/xoops_plugins';	
 		}
 		
-		if ( $xoopsConfig['debug_mode'] ) {
+		if ( $icmsConfig['debug_mode'] ) {
 			$this->debugging_ctrl = 'URL';
-		    if ( $xoopsConfig['debug_mode'] == 3 ) {
+		    if ( $icmsConfig['debug_mode'] == 3 ) {
 		    	$this->debugging = true;
 		    }
 		}
@@ -72,8 +72,8 @@ class XoopsTpl extends Smarty {
     }
 
 		$this->assign( array(
-			'icms_url' => XOOPS_URL,
-			'icms_rootpath' => XOOPS_ROOT_PATH,
+			'icms_url' => ICMS_URL,
+			'icms_rootpath' => ICMS_ROOT_PATH,
 			'modules_url' => ICMS_MODULES_URL,
 			'modules_rootpath' => ICMS_MODULES_PATH,
 			'icms_langcode' => _LANGCODE,
@@ -81,8 +81,8 @@ class XoopsTpl extends Smarty {
 			'icms_charset' => _CHARSET,
 			'icms_version' => XOOPS_VERSION,
 			'icms_upload_url' => XOOPS_UPLOAD_URL,
-			'xoops_url' => XOOPS_URL,
-			'xoops_rootpath' => XOOPS_ROOT_PATH,
+			'xoops_url' => ICMS_URL,
+			'xoops_rootpath' => ICMS_ROOT_PATH,
 			'xoops_langcode' => _LANGCODE,
 			'xoops_charset' => _CHARSET,
 			'xoops_version' => XOOPS_VERSION,

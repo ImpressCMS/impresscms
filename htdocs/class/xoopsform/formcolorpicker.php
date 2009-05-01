@@ -17,7 +17,7 @@
 * @subpackage 	ColorPicker
 */
 
-if (! defined ( 'XOOPS_ROOT_PATH' )) {
+if (! defined ( 'ICMS_ROOT_PATH' )) {
 	die ( "ImpressCMS root path not defined" );
 }
 
@@ -57,10 +57,10 @@ class XoopsFormColorPicker extends XoopsFormText {
 		if (isset ( $GLOBALS ['xoTheme'] )) {
 			$GLOBALS ['xoTheme']->addScript ( 'include/color-picker.js' );
 		} else {
-			echo "<script type=\"text/javascript\" src=\"" . XOOPS_URL . "/include/color-picker.js\"></script>";
+			echo "<script type=\"text/javascript\" src=\"" . ICMS_URL . "/include/color-picker.js\"></script>";
 		}
 		$this->setExtra ( ' style="background-color:' . $this->getValue () . ';"' );
-		return parent::render() . "\n<input type='reset' value=' ... ' onclick=\"return TCP.popup('" . XOOPS_URL . "/include/',document.getElementById('" . $this->getName () . "'));\">\n";
+		return parent::render() . "\n<input type='reset' value=' ... ' onclick=\"return TCP.popup('" . ICMS_URL . "/include/',document.getElementById('" . $this->getName () . "'));\">\n";
 	}
 
 	/**

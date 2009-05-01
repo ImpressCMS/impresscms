@@ -105,14 +105,6 @@ $modversion['templates'][$i]['file'] = 'system_error.html';
 $modversion['templates'][$i]['description'] = 'Template for handling HTTP errors';
 
 $i++;
-$modversion['templates'][$i]['file'] = 'system_content.html';
-$modversion['templates'][$i]['description'] = 'Template of content pages';
-
-$i++;
-$modversion['templates'][$i]['file'] = 'system_content_list.html';
-$modversion['templates'][$i]['description'] = 'Template of content pages';
-
-$i++;
 $modversion['templates'][$i]['file'] = 'system_openid.html';
 $modversion['templates'][$i]['description'] = '';
 
@@ -120,6 +112,7 @@ $modversion['templates'][$i]['description'] = '';
 $modversion['templates'][$i]['file'] = 'system_admin_menu.html';
 $modversion['templates'][$i]['description'] = '';
 */
+if(is_dir(ICMS_ROOT_PATH.'/modules/system/admin/content')){
 $i++;
 $modversion['templates'][$i]['file'] = 'blocks/system_block_contentmenu_structure.html';
 $modversion['templates'][$i]['description'] = 'Template of content pages';
@@ -127,6 +120,13 @@ $modversion['templates'][$i]['description'] = 'Template of content pages';
 $i++;
 $modversion['templates'][$i]['file'] = 'admin/content/system_adm_contentmanager_index.html';
 $modversion['templates'][$i]['description'] = 'Template of the admin of content manager';
+$i++;
+$modversion['templates'][$i]['file'] = 'system_content_list.html';
+$modversion['templates'][$i]['description'] = 'Template of content pages';
+$i++;
+$modversion['templates'][$i]['file'] = 'system_content.html';
+$modversion['templates'][$i]['description'] = '';
+}
 
 $i++;
 $modversion['templates'][$i]['file'] = 'admin/blockspadmin/system_adm_blockspadmin.html';
@@ -159,9 +159,6 @@ $modversion['templates'][$i]['description'] = 'Template of the Custom Tag admin'
 $i++;
 $modversion['templates'][$i]['file'] = 'system_default_form.html';
 $modversion['templates'][$i]['description'] = 'Default form template';
-$i++;
-$modversion['templates'][$i]['file'] = 'system_content_list.html';
-$modversion['templates'][$i]['description'] = 'Template of content pages';
 
 ### Image Manager ###
 $i++;

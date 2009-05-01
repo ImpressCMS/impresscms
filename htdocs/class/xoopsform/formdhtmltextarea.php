@@ -81,15 +81,15 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	{
 		$this->XoopsFormTextArea($caption, $name, $value, $rows, $cols);
 		$this->_hiddenText = $hiddentext;
-		global $xoopsConfig, $xoopsUser,$xoopsModule;
+		global $icmsConfig, $xoopsUser,$xoopsModule;
 
 		$groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
  		$moduleid = (is_object($xoopsModule) && $name != 'com_text') ? $xoopsModule->mid() : 1;
 
-		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $xoopsConfig['editor_default']){
+		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $icmsConfig['editor_default']){
 			$editor_default = $options['editor'];
 		}else{
-			$editor_default = $xoopsConfig['editor_default'];
+			$editor_default = $icmsConfig['editor_default'];
 		}
 
 		$gperm_handler =& xoops_gethandler('groupperm');
@@ -125,7 +125,8 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	 */
 	function render()
 	{
-    $myts =& MyTextSanitizer::getInstance();
+		global $icmsConfigPlugins, $icmsConfigMultilang;
+		$myts =& MyTextSanitizer::getInstance();
 		$editor = false;
 		if ( $this->htmlEditor && is_object( $this->htmlEditor ) ) {
 			if ( !isset( $this->htmlEditor->isEnabled ) || $this->htmlEditor->isEnabled ) {
@@ -141,8 +142,6 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		        "<img onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/email.gif' alt='email' onclick='javascript:xoopsCodeEmail(\"".$ele_name."\", \"".htmlspecialchars(_ENTEREMAIL, ENT_QUOTES)."\");' />&nbsp;".
 		        "<img onclick='javascript:xoopsCodeImg(\"".$ele_name."\", \"".htmlspecialchars(_ENTERIMGURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES)."\", \"".htmlspecialchars(_IMGPOSRORL, ENT_QUOTES)."\", \"".htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/imgsrc.gif' alt='imgsrc' />&nbsp;".
 		        "<img onmouseover='style.cursor=\"hand\"' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/class/xoopsform/formimage_browse.php?target=".$ele_name."&type=iman\",\"imgmanager\",985,470);' src='".ICMS_URL."/images/image.gif' alt='image' />&nbsp;";
-				$config_handler =& xoops_gethandler('config');
-				$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
  			  	$jscript = '';
 	        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 	        	$extension = $myts->icmsloadExtension($key);
@@ -155,12 +154,11 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	        }
           $ret .= "<img src='".ICMS_URL."/images/code.gif' onmouseover='style.cursor=\"hand\"' alt='code' onclick='javascript:xoopsCodeCode(\"".$ele_name."\", \"".htmlspecialchars(_ENTERCODE, ENT_QUOTES)."\");' />&nbsp;".
           "<img onclick='javascript:xoopsCodeQuote(\"".$ele_name."\", \"".htmlspecialchars(_ENTERQUOTE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/quote.gif' alt='quote' /><br />\n";
-        	$icmsConfigMultiLanguage =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
-  				$easiestml_exist = ($icmsConfigMultiLanguage['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
+  				$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
           if ($easiestml_exist) {
             $easiestml_langs = explode( ',' , EASIESTML_LANGS ) ;
             $langlocalnames = explode( ',' , EASIESTML_LANGNAMES ) ;
-       			$langnames = explode( ',' , $icmsConfigMultiLanguage['ml_names'] ) ;
+       			$langnames = explode( ',' , $icmsConfigMultilang['ml_names'] ) ;
 
             $code = '' ;
             $javascript = '' ;

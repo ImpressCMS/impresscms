@@ -23,7 +23,7 @@
  * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-include_once XOOPS_ROOT_PATH . '/class/auth/auth_ldap.php';
+include_once ICMS_ROOT_PATH . '/class/auth/auth_ldap.php';
  
 class XoopsAuthAds extends XoopsAuthLdap {
 

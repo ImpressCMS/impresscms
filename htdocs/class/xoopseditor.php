@@ -73,7 +73,7 @@ class XoopsEditorHandler
    */
   function &getList($noHtml = false)
   {
-    if(@ include_once XOOPS_ROOT_PATH."/Frameworks/art/functions.ini.php") {
+    if(@ include_once ICMS_ROOT_PATH."/Frameworks/art/functions.ini.php") {
       load_functions("cache");
       $list = mod_loadCacheFile("list", "xoopseditor");
     }
@@ -82,7 +82,7 @@ class XoopsEditorHandler
 
 			$list = array();
 			$order = array();
-			require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
+			require_once ICMS_ROOT_PATH."/class/xoopslists.php";
 			$_list = XoopsLists::getDirListAsArray($this->root_path.'/');
 
 			foreach($_list as $item){

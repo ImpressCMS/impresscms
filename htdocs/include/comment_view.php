@@ -35,7 +35,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
 			if (is_object($xoopsUser)) {
 				$com_mode = $xoopsUser->getVar('umode');
 			} else {
-				$com_mode = $xoopsConfig['com_mode'];
+				$com_mode = $icmsConfig['com_mode'];
 			}
 		}
 		$xoopsTpl->assign('comment_mode', $com_mode);
@@ -43,7 +43,7 @@ if (XOOPS_COMMENT_APPROVENONE != $xoopsModuleConfig['com_rule']) {
 			if (is_object($xoopsUser)) {
 				$com_order = $xoopsUser->getVar('uorder');
 			} else {
-				$com_order = $xoopsConfig['com_order'];
+				$com_order = $icmsConfig['com_order'];
 			}
 		} else {
 			$com_order = intval($_GET['com_order']);

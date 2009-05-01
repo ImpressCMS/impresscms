@@ -34,7 +34,7 @@ $op = isset($_GET['rssnews']) ? intval($_GET['rssnews']) : 0;
 if(!empty($_GET['op'])) {$op = intval($_GET['op']);}
 if(!empty($_POST['op'])) {$op = intval($_POST['op']);}
 
-if(!file_exists(ICMS_CACHE_PATH.'/adminmenu_'.$xoopsConfig['language'].'.php'))
+if(!file_exists(ICMS_CACHE_PATH.'/adminmenu_'.$icmsConfig['language'].'.php'))
 {
 xoops_module_write_admin_menu(impresscms_get_adminmenu());
 }
@@ -57,11 +57,9 @@ switch($op)
 
 function showRSS()
 {
-	global $icmsAdminTpl;
+	global $icmsAdminTpl, $icmsConfigPersona;
 
-	$config_handler =& xoops_gethandler('config');
-	$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-	$rssurl = $xoopsConfigPersona['rss_local'];
+	$rssurl = $icmsConfigPersona['rss_local'];
 	$rssfile = ICMS_CACHE_PATH.'/adminnews_'._LANGCODE.'.xml';
 
 	include_once(ICMS_ROOT_PATH . '/class/icmssimplerss.php');

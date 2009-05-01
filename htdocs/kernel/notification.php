@@ -76,6 +76,7 @@ class XoopsNotification extends XoopsObject
 	 **/
 	function notifyUser($template_dir, $template, $subject, $tags)
 	{
+        global $icmsConfigMailer;
 		// Check the user's notification preference.
 
 		$member_handler =& xoops_gethandler('member');
@@ -90,9 +91,7 @@ class XoopsNotification extends XoopsObject
 		switch($method) {
 		case XOOPS_NOTIFICATION_METHOD_PM:
 			$xoopsMailer->usePM();
-			$config_handler =& xoops_gethandler('config');
-			$xoopsMailerConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
-			$xoopsMailer->setFromUser($member_handler->getUser($xoopsMailerConfig['fromuid']));
+			$xoopsMailer->setFromUser($member_handler->getUser($icmsConfigMailer['fromuid']));
 			foreach ($tags as $k=>$v) {
 				$xoopsMailer->assign($k, $v);
 			}
@@ -112,9 +111,9 @@ class XoopsNotification extends XoopsObject
 		$xoopsMailer->setTemplateDir($template_dir);
 		$xoopsMailer->setTemplate($template);
 		$xoopsMailer->setToUsers($user);
-		//global $xoopsConfig;
-		//$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-		//$xoopsMailer->setFromName($xoopsConfig['sitename']);
+		//global $icmsConfig;
+		//$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+		//$xoopsMailer->setFromName($icmsConfig['sitename']);
 		$xoopsMailer->setSubject($subject);
 		$success = $xoopsMailer->send();
 

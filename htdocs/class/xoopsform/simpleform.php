@@ -13,7 +13,7 @@
 * @version	$Id$
 */
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 
@@ -31,7 +31,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
 /**
  * base class
  */
-include_once XOOPS_ROOT_PATH."/class/xoopsform/form.php";
+include_once ICMS_ROOT_PATH."/class/xoopsform/form.php";
 
 /**
  * Form that will output as a simple HTML form with minimum formatting

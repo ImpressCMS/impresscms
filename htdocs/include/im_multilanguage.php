@@ -12,13 +12,13 @@
 
 // list the language tags separated with comma
 //define('EASIESTML_LANGS','xlang:en,xlang:ja'); // This is a sample of long pattern against tag misunderstanding [xlang:en]english[/xlang:en]
-define('EASIESTML_LANGS',$im_multilanguageConfig['ml_tags']); // [en]english[/en]  [ja]japananese[/ja] common
+define('EASIESTML_LANGS',$icmsConfigMultilang['ml_tags']); // [en]english[/en]  [ja]japananese[/ja] common
 
 // list the language images separated with comma
 define('EASIESTML_LANGIMAGES','images/flags/english.gif,images/flags/french.gif');
 
 // list the language names separated with comma (these will be alt of <img>)
-define('EASIESTML_LANGNAMES',$im_multilanguageConfig['ml_captions']);
+define('EASIESTML_LANGNAMES',$icmsConfigMultilang['ml_captions']);
 
 // list language - accept_chaset patterns (perl regex) separated with comma
 define('EASIESTML_ACCEPT_CHARSET_REGEXES',',/shift_jis/i');
@@ -27,7 +27,7 @@ define('EASIESTML_ACCEPT_CHARSET_REGEXES',',/shift_jis/i');
 define('EASIESTML_ACCEPT_LANGUAGE_REGEXES','/^en/,/^ja/');
 
 // charset in Content-Type separated with comma (only for fastestcache)
-define('EASIESTML_CHARSETS',$im_multilanguageConfig['ml_charset']);
+define('EASIESTML_CHARSETS',$icmsConfigMultilang['ml_charset']);
 
 // tag name for language image  (default [mlimg]. don't include specialchars)
 define('EASIESTML_IMAGETAG','mlimg');
@@ -113,7 +113,7 @@ if( ! preg_match( '?'.preg_quote(XOOPS_ROOT_PATH,'?').'(/common/)?' , $_SERVER['
 */
 function easiestml( $s )
 {
-	global $easiestml_lang , $xoopsUser, $im_multilanguageConfig;
+	global $easiestml_lang , $xoopsUser, $icmsConfigMultilang;
 
 	// all mode for debug (allowed to system admin only)
 	if( is_object( $xoopsUser ) && $xoopsUser->isAdmin(1) && ! empty( $_GET['lang'] ) && $_GET['lang'] == 'all' ) {
@@ -137,7 +137,7 @@ function easiestml( $s )
 	$s = preg_replace_callback( '/(\<textarea[^>]*\>)(.*)(<\/textarea\>)/isU' , 'easiestml_escape_bracket_textarea' , $s ) ;
 
 	// multilanguage image tag
-	$langnames = explode( ',' , $im_multilanguageConfig['ml_names'] ) ;
+	$langnames = explode( ',' , $icmsConfigMultilang['ml_names'] ) ;
 	foreach($langnames as $v) {
 		$langimages[] = "images/flags/$v.gif";
 	}

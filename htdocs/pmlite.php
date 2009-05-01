@@ -73,19 +73,19 @@ if ($xoopsUser) {
 						$xoopsMailer->setFromEmail($xoopsUser->email());
 						$xoopsMailer->setFromName($xoopsUser->uname());
 					} else {
-						$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-						$xoopsMailer->setFromName($xoopsConfig['sitename']);
+						$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+						$xoopsMailer->setFromName($icmsConfig['sitename']);
 					}
 					$xoopsMailer->setTemplate('new_pm.tpl');
-					$xoopsMailer->assign('X_SITENAME', $xoopsConfig['sitename']);
+					$xoopsMailer->assign('X_SITENAME', $icmsConfig['sitename']);
 					$xoopsMailer->assign('X_SITEURL', ICMS_URL."/");
-					$xoopsMailer->assign('X_ADMINMAIL', $xoopsConfig['adminmail']);
+					$xoopsMailer->assign('X_ADMINMAIL', $icmsConfig['adminmail']);
 					$xoopsMailer->assign('X_UNAME', $toUser->uname());
 					$xoopsMailer->assign('X_FROMUNAME', $xoopsUser->uname());
 					$xoopsMailer->assign('X_SUBJECT', $myts->stripSlashesGPC($_POST['subject']));
 					$xoopsMailer->assign('X_MESSAGE', $myts->stripSlashesGPC($_POST['message']));
 					$xoopsMailer->assign('X_ITEM_URL', ICMS_URL . "/viewpmsg.php");
-					$xoopsMailer->setSubject(sprintf(_PM_MESSAGEPOSTED_EMAILSUBJ, $xoopsConfig['sitename']));
+					$xoopsMailer->setSubject(sprintf(_PM_MESSAGEPOSTED_EMAILSUBJ, $icmsConfig['sitename']));
 					$xoopsMailer->send();
 				}
                 echo "<br /><br /><div style='text-align:center;'><h4>"._PM_MESSAGEPOSTED."</h4><br /><a href=\"javascript:window.opener.location='".ICMS_URL."/viewpmsg.php';window.close();\">"._PM_CLICKHERE."</a><br /><br /><a href=\"javascript:window.close();\">"._PM_ORCLOSEWINDOW."</a></div>";

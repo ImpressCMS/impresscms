@@ -21,7 +21,7 @@
 * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
 * @copyright	copyright (c) 2000-2003 XOOPS.org
 */
-include_once XOOPS_ROOT_PATH.'/class/auth/auth_provisionning.php';
+include_once ICMS_ROOT_PATH.'/class/auth/auth_provisionning.php';
 
 class XoopsAuthLdap extends XoopsAuth
 {
@@ -76,10 +76,9 @@ class XoopsAuthLdap extends XoopsAuth
 	{
 		$this->_dao = $dao;
 		//The config handler object allows us to look at the configuration options that are stored in the database
-		$config_handler =& xoops_gethandler('config');    
-		$config =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
-		$confcount = count($config);
-		foreach($config as $key => $val) {$this->$key = $val;}
+		global $icmsConfigAuth;
+		$confcount = count($icmsConfigAuth);
+		foreach($icmsConfigAuth as $key => $val) {$this->$key = $val;}
 	}
 
 	function cp1252_to_utf8($str) {return strtr(utf8_encode($str), $this->cp1252_map);}

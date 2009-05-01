@@ -29,9 +29,9 @@ if($op == 'main')
 		include 'header.php';
 		$xoopsTpl->assign('lang_login', _LOGIN);
 		$xoopsTpl->assign('lang_username', _USERNAME);
-		if(isset($_COOKIE[$xoopsConfig['usercookie']]))
+		if(isset($_COOKIE[$icmsConfig['usercookie']]))
 		{
-			$xoopsTpl->assign('usercookie', $_COOKIE[$xoopsConfig['usercookie']]);
+			$xoopsTpl->assign('usercookie', $_COOKIE[$icmsConfig['usercookie']]);
 		}
 		if(isset($_GET['xoops_redirect']))
 		{
@@ -56,14 +56,9 @@ if($op == 'main')
 		$xoopsTpl->assign('lang_login_oid', _US_OPENID_LOGIN);
 		$xoopsTpl->assign('lang_back2normoid', _US_OPENID_NORMAL_LOGIN);
 		$xoopsTpl->assign('mailpasswd_token', $GLOBALS['xoopsSecurity']->createToken());
-		$config_handler =& xoops_gethandler('config');
-		$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-
-		if($xoopsConfigUser['allow_register'] == 1) {$xoopsTpl->assign('allow_registration', $xoopsConfigUser['allow_register']);}
-		if($xoopsConfigUser['remember_me'] == 1) {$xoopsTpl->assign('rememberme', $xoopsConfigUser['remember_me']);}
-		$config_handler =& xoops_gethandler('config');
-		$xoopsConfigAuth =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
-		if($xoopsConfigAuth['auth_openid'] == 1) {$xoopsTpl->assign('auth_openid', true);}
+		if($icmsConfigUser['allow_register'] == 1) {$xoopsTpl->assign('allow_registration', $icmsConfigUser['allow_register']);}
+		if($icmsConfigUser['remember_me'] == 1) {$xoopsTpl->assign('rememberme', $icmsConfigUser['remember_me']);}
+		if($icmsConfigAuth['auth_openid'] == 1) {$xoopsTpl->assign('auth_openid', true);}
 
 		$xoopsTpl->assign('xoops_pagetitle', _LOGIN);
 		include 'footer.php';
@@ -122,9 +117,6 @@ if($op == 'resetpass')
 		$xoopsTpl->assign('lang_newpass', _US_NEWPASSWORD);
 		$xoopsTpl->assign('lang_newpass2', _US_VERIFYPASS);
 		$xoopsTpl->assign('resetpassword_token', $GLOBALS['xoopsSecurity']->createToken());
-		$config_handler =& xoops_gethandler('config');
-		$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-
 		$xoopsTpl->assign('xoops_pagetitle', _LOGIN);
 		include 'footer.php';
 	}
@@ -161,9 +153,9 @@ if($op == 'logout')
 	// Regenrate a new session id and destroy old session
 	session_regenerate_id(true);
 	$_SESSION = array();
-	if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '')
+	if($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '')
 	{
-		setcookie($xoopsConfig['session_name'], '', time()- 3600, '/',  '', 0);
+		setcookie($icmsConfig['session_name'], '', time()- 3600, '/',  '', 0);
 	}
 	// autologin hack GIJ (clear autologin cookies)
 	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace('?http://[^/]+(/.*)$?', '$1', ICMS_URL);
@@ -197,21 +189,19 @@ if($op == 'actv')
 		{
 			if(false != $member_handler->activateUser($thisuser))
 			{
-				$config_handler =& xoops_gethandler('config');
-				$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-				if($xoopsConfigUser['activation_type'] == 2)
+				if($icmsConfigUser['activation_type'] == 2)
 				{
 					$myts =& MyTextSanitizer::getInstance();
 					$xoopsMailer =& getMailer();
 					$xoopsMailer->useMail();
 					$xoopsMailer->setTemplate('activated.tpl');
-					$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-					$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+					$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
+					$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
 					$xoopsMailer->assign('SITEURL', ICMS_URL."/");
 					$xoopsMailer->setToUsers($thisuser);
-					$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-					$xoopsMailer->setFromName($xoopsConfig['sitename']);
-					$xoopsMailer->setSubject(sprintf(_US_YOURACCOUNT,$xoopsConfig['sitename']));
+					$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+					$xoopsMailer->setFromName($icmsConfig['sitename']);
+					$xoopsMailer->setSubject(sprintf(_US_YOURACCOUNT,$icmsConfig['sitename']));
 					include 'header.php';
 					if(!$xoopsMailer->send()) {printf(_US_ACTVMAILNG, $thisuser->getVar('uname'));}
 					else {printf(_US_ACTVMAILOK, $thisuser->getVar('uname'));}
@@ -231,9 +221,7 @@ if($op == 'actv')
 
 if($op == 'delete')
 {
-	$config_handler =& xoops_gethandler('config');
-	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-	if(!$xoopsUser || $xoopsConfigUser['self_delete'] != 1) {redirect_header('index.php',5,_US_NOPERMISS);}
+	if(!$xoopsUser || $icmsConfigUser['self_delete'] != 1) {redirect_header('index.php',5,_US_NOPERMISS);}
 	else
 	{
 		$groups = $xoopsUser->getGroups();

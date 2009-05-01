@@ -13,11 +13,11 @@
 * @version	$Id$
 */
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
-include_once XOOPS_ROOT_PATH.'/class/downloader.php';
-include_once XOOPS_ROOT_PATH.'/class/class.zipfile.php';
+include_once ICMS_ROOT_PATH.'/class/downloader.php';
+include_once ICMS_ROOT_PATH.'/class/class.zipfile.php';
 
 class XoopsZipDownloader extends XoopsDownloader
 {

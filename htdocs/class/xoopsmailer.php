@@ -13,7 +13,7 @@
 * @version	$Id$
 */
 
-if (!defined("XOOPS_ROOT_PATH")) {
+if (!defined("ICMS_ROOT_PATH")) {
     die("ImpressCMS root path not defined");
 }
 icms_loadLanguageFile('core', 'mail');
@@ -21,7 +21,7 @@ icms_loadLanguageFile('core', 'mail');
  * The new Multimailer class that will carry out the actual sending and will later replace this class. 
  * If you're writing new code, please use that class instead.
  */
-include_once(XOOPS_ROOT_PATH."/class/mail/xoopsmultimailer.php");
+include_once(ICMS_ROOT_PATH."/class/mail/xoopsmultimailer.php");
 
 
 /**
@@ -211,14 +211,14 @@ class XoopsMailer
 	// public
 	function send($debug = false)
 	{
-		global $xoopsConfig;
+		global $icmsConfig;
 		if ( $this->body == "" && $this->template == "" ) {
 			if ($debug) {
 				$this->errors[] = _MAIL_MSGBODY;
 			}
 			return false;
 		} elseif ( $this->template != "" ) {
-			$path = ( $this->templatedir != "" ) ? $this->templatedir."".$this->template : (XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/mail_template/".$this->template);
+			$path = ( $this->templatedir != "" ) ? $this->templatedir."".$this->template : (ICMS_ROOT_PATH."/language/".$icmsConfig['language']."/mail_template/".$this->template);
 			if ( !($fd = @fopen($path, 'r')) ) {
 				if ($debug) {
 					$this->errors[] = _MAIL_FAILOPTPL;
@@ -244,10 +244,10 @@ class XoopsMailer
 // give good instructions in the message.
 
 		// add some standard tags (user-dependent tags are included later)
-		global $xoopsConfig;
-		$this->assign ('X_ADMINMAIL', $xoopsConfig['adminmail']);
-		$this->assign ('X_SITENAME', $xoopsConfig['sitename']);
-		$this->assign ('X_SITEURL', XOOPS_URL);
+		global $icmsConfig;
+		$this->assign ('X_ADMINMAIL', $icmsConfig['adminmail']);
+		$this->assign ('X_SITENAME', $icmsConfig['sitename']);
+		$this->assign ('X_SITEURL', ICMS_URL);
 		// TODO: also X_ADMINNAME??
 		// TODO: X_SIGNATURE, X_DISCLAIMER ?? - these are probably best
 		//  done as includes if mail templates ever get this sophisticated
@@ -286,7 +286,7 @@ class XoopsMailer
 			$text = str_replace("{X_UID}", $user->getVar("uid"), $this->body );
 			$text = str_replace("{X_UEMAIL}", $user->getVar("email"), $text );
 			$text = str_replace("{X_UNAME}", $user->getVar("uname"), $text );
-			$text = str_replace("{X_UACTLINK}", XOOPS_URL."/user.php?op=actv&id=".$user->getVar("uid")."&actkey=".$user->getVar('actkey'), $text );
+			$text = str_replace("{X_UACTLINK}", ICMS_URL."/user.php?op=actv&id=".$user->getVar("uid")."&actkey=".$user->getVar('actkey'), $text );
 			// send mail
 			if ( $this->isMail ) {
 				if ( !$this->sendMail($user->getVar("email"), $subject, $text, $headers) ) {

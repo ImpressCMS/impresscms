@@ -13,7 +13,7 @@
 * @version	$Id$
 */
 
-defined( 'XOOPS_ROOT_PATH' ) or die();
+defined( 'ICMS_ROOT_PATH' ) or die();
 
 $ret = '';
 
@@ -26,8 +26,8 @@ if ( $mode == 'popup' ) {
 <head>
 	<meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" />
 	<meta http-equiv="content-language" content="'._LANGCODE.'" />
-	<title>'.$xoopsConfig['sitename'].'</title>
-	<link rel="stylesheet" type="text/css" media="all" href="'.getcss($xoopsConfig['theme_set']).'" />
+	<title>'.$icmsConfig['sitename'].'</title>
+	<link rel="stylesheet" type="text/css" media="all" href="'.getcss($icmsConfig['theme_set']).'" />
 </head>
 <body>' . $dump . '
 	<div style="text-align:center;">

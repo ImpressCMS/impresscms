@@ -119,12 +119,14 @@ $adminmenu[$i]['link'] = "admin.php?fct=version";
 $adminmenu[$i]['icon'] = "admin/version/images/version.png";
 $adminmenu[$i]['small'] = "admin/version/images/version_small.png";
 $adminmenu[$i]['id'] = XOOPS_SYSTEM_VERSION;
+if(is_dir(ICMS_ROOT_PATH.'/modules/system/admin/content')){
 $i++;
 $adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU18;
 $adminmenu[$i]['link'] = "admin.php?fct=content";
 $adminmenu[$i]['icon'] = "admin/content/images/content.png";
 $adminmenu[$i]['small'] = "admin/content/images/content_small.png";
 $adminmenu[$i]['id'] = XOOPS_SYSTEM_CONTENT;
+}
 $i++;
 $adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU19;
 $adminmenu[$i]['link'] = "admin.php?fct=blockspadmin";

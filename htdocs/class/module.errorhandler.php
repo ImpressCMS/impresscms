@@ -33,11 +33,11 @@ if ( !defined("XOOPS_C_ERRORHANDLER_INCLUDED") ) {
 		 * @param   string  $e_code Errorcode
 		 * @param   integer $pages  How many pages should the link take you back?
          * 
-         * @global  $xoopsConfig
+         * @global  $icmsConfig
 		 **/
 		function show($e_code, $pages=1)
 		{
-			global $xoopsConfig, $xoopsUser, $xoopsRequestUri, $xoopsModule, $xoopsLogger;
+			global $icmsConfig, $xoopsUser, $xoopsRequestUri, $xoopsModule, $xoopsLogger;
 			$errmsg = array(
 			"0001" =>"Could not connect to the forums database.",
 			"0002" => "The forum you selected does not exist. Please go back and try again.",
@@ -94,14 +94,14 @@ if ( !defined("XOOPS_C_ERRORHANDLER_INCLUDED") ) {
 			if (!in_array($e_code, $errorno)) {
 				$e_code = '9999';
 			}
-			include_once XOOPS_ROOT_PATH."/header.php";
+			include_once ICMS_ROOT_PATH."/header.php";
 			//OpenTable();
-			echo "<div><b>".$xoopsConfig['sitename']." Error</b><br /><br />";
+			echo "<div><b>".$icmsConfig['sitename']." Error</b><br /><br />";
 			echo "Error Code: $e_code<br /><br /><br />";
 			echo "<b>ERROR:</b> $errmsg[$e_code]<br /><br /><br />";
 			echo "[ <a href='javascript:history.go(-".$pages.")'>Go Back</a> ]</div>";
 			//CloseTable();
-			include_once XOOPS_ROOT_PATH."/footer.php";
+			include_once ICMS_ROOT_PATH."/footer.php";
 			exit();
 		}
 	}

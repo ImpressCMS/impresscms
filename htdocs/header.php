@@ -20,14 +20,14 @@ if( !isset($icmsPreloadHandler) )
 $xoopsLogger->stopTime('Module init');
 $xoopsLogger->startTime('ICMS output init');
 
-if($xoopsConfig['theme_set'] != 'default' && file_exists(ICMS_THEME_PATH.'/'.$xoopsConfig['theme_set'].'/theme.php'))
+if($icmsConfig['theme_set'] != 'default' && file_exists(ICMS_THEME_PATH.'/'.$icmsConfig['theme_set'].'/theme.php'))
 {
 	/** For backwards compatibility with XOOPS 1.3.x */
   require_once ICMS_ROOT_PATH.'/include/xoops13_header.php';
 }
 else
 {
-	global $xoopsOption, $xoopsConfig, $xoopsModule;
+	global $xoopsOption, $icmsConfig, $xoopsModule;
     	$xoopsOption['theme_use_smarty'] = 1;
 
     	/**  include Smarty template engine and initialize it*/
@@ -40,20 +40,18 @@ else
 		if(false === strpos($xoopsOption['template_main'], ':')) {$xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];}
 	}
 	$xoopsThemeFactory = new xos_opal_ThemeFactory();
-    $xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
-    $xoopsThemeFactory->defaultTheme = $xoopsConfig['theme_set'];
+    $xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
+    $xoopsThemeFactory->defaultTheme = $icmsConfig['theme_set'];
 
 	/**
 	 * @var xos_opal_Theme
 	 */
     $xoTheme =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
     $xoopsTpl =& $xoTheme->template;
-	$config_handler = & xoops_gethandler ( 'config' );
-	$xoopsConfigMetaFooter = & $config_handler->getConfigsByCat ( XOOPS_CONF_METAFOOTER );
-	if ($xoopsConfigMetaFooter['use_google_analytics'] == true && isset($xoopsConfigMetaFooter['google_analytics']) && $xoopsConfigMetaFooter['google_analytics'] != ''){
+	if ($icmsConfigMetaFooter['use_google_analytics'] == true && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != ''){
         
         /* Legacy GA urchin code */
-        //$xoTheme->addScript('http://www.google-analytics.com/urchin.js',array('type' => 'text/javascript'),'_uacct = "UA-'.$xoopsConfigMetaFooter['google_analytics'].'";urchinTracker();');
+        //$xoTheme->addScript('http://www.google-analytics.com/urchin.js',array('type' => 'text/javascript'),'_uacct = "UA-'.$icmsConfigMetaFooter['google_analytics'].'";urchinTracker();');
         $scheme = parse_url(ICMS_URL, PHP_URL_SCHEME);
         if ($scheme == 'http'){
             /* New GA code, http protocol */
@@ -63,8 +61,8 @@ else
             $xoTheme->addScript('https://ssl.google-analytics.com/ga.js',array('type' => 'text/javascript'),'');
         }
     }
-	if (isset($xoopsConfigMetaFooter['google_meta']) && $xoopsConfigMetaFooter['google_meta'] != ''){
-		$arr_google_meta=explode('"', '<meta name="verify-v1" content="'.$xoopsConfigMetaFooter['google_meta'].'" />');
+	if (isset($icmsConfigMetaFooter['google_meta']) && $icmsConfigMetaFooter['google_meta'] != ''){
+		$arr_google_meta=explode('"', '<meta name="verify-v1" content="'.$icmsConfigMetaFooter['google_meta'].'" />');
 		$xoTheme->addMeta('meta',$arr_google_meta[1],$arr_google_meta[3]);
 	}
 	// ################# Preload Trigger startOutputInit ##############
@@ -86,8 +84,6 @@ else
      * Weird, but we need to bring plugins java information in header because doing it form elsewhere will drop system required Java Script files!! 
      */
  
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
 	$jscript = '';
 	if(class_exists('XoopsFormDhtmlTextArea')){
         foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
@@ -172,7 +168,7 @@ else
 		$xoopsTpl->assign('xoops_showcblock', !empty($aggreg->blocks['page_topcenter']) || !empty($aggreg->blocks['page_topleft']) || !empty($aggreg->blocks['page_topright']));
 	}
 	if( $xoopsModule ) 
-		$xoTheme->contentCacheLifetime = @$xoopsConfig['module_cache'][$xoopsModule->getVar('mid', 'n')];
+		$xoTheme->contentCacheLifetime = @$icmsConfig['module_cache'][$xoopsModule->getVar('mid', 'n')];
 		
 	if( $xoTheme->checkCache() )
 		exit();
@@ -181,12 +177,12 @@ else
        	// new themes using Smarty does not have old functions that are required in old modules, so include them now
        	include ICMS_ROOT_PATH.'/include/old_theme_functions.php';
        	// Need this also
-       	$xoopsTheme['thename'] = $xoopsConfig['theme_set'];
+       	$xoopsTheme['thename'] = $icmsConfig['theme_set'];
        	ob_start();
    	}
 
 	// Assigning the selected language as a smarty var
-	$xoopsTpl->assign('icmsLang', $xoopsConfig['language']);
+	$xoopsTpl->assign('icmsLang', $icmsConfig['language']);
 
 	$xoopsLogger->stopTime('ICMS output init');
 	$xoopsLogger->startTime('Module display');

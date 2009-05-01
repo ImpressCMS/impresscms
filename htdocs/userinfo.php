@@ -35,9 +35,7 @@ include_once ICMS_ROOT_PATH . '/class/module.textsanitizer.php';
 
 include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 
-$config_handler = & xoops_gethandler('config');
-$xoopsConfigUser = & $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-if (!$xoopsConfigUser['allow_annon_view_prof'] && !is_object($xoopsUser)) {
+if (!$icmsConfigUser['allow_annon_view_prof'] && !is_object($xoopsUser)) {
 	redirect_header(ICMS_URL.'/user.php', 3, _NOPERM);
 	exit ();
 }
@@ -62,7 +60,7 @@ if (is_object($xoopsUser)) {
 		$xoopsTpl->assign('lang_avatar', _US_AVATAR);
 		$xoopsTpl->assign('lang_inbox', _US_INBOX);
 		$xoopsTpl->assign('lang_logout', _US_LOGOUT);
-		if ($xoopsConfigUser['self_delete'] == 1) {
+		if ($icmsConfigUser['self_delete'] == 1) {
 			$xoopsTpl->assign('user_candelete', true);
 			$xoopsTpl->assign('lang_deleteaccount', _US_DELACCOUNT);
 		} else {
@@ -99,8 +97,8 @@ if (is_object($xoopsUser) && $isAdmin) {
 }
 $xoopsTpl->assign('lang_allaboutuser', sprintf(_US_ALLABOUT, $thisUser->getVar('uname')));
 $xoopsTpl->assign('lang_avatar', _US_AVATAR);
-if ($xoopsConfigUser['avatar_allow_gravatar'] == 1) {
-	$xoopsTpl->assign('user_avatarurl', $thisUser->gravatar('G', $xoopsConfigUser['avatar_width']));
+if ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
+	$xoopsTpl->assign('user_avatarurl', $thisUser->gravatar('G', $icmsConfigUser['avatar_width']));
 } else {
 	$xoopsTpl->assign('user_avatarurl', ICMS_UPLOAD_URL . '/' . $thisUser->getVar('user_avatar'));
 }
@@ -113,9 +111,7 @@ if ($thisUser->getVar('url', 'E') == '') {
 	$xoopsTpl->assign('user_websiteurl', '<a href="' . $thisUser->getVar('url', 'E') . '" rel="external">' . $thisUser->getVar('url') . '</a>');
 }
 $xoopsTpl->assign('lang_email', _US_EMAIL);
-$config_handler = & xoops_gethandler('config');
-$icmsauthConfig = & $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
-if ($icmsauthConfig['auth_openid'] == 1) {
+if ($icmsConfigAuth['auth_openid'] == 1) {
 	$xoopsTpl->assign('user_alwopenid', true);
 	$xoopsTpl->assign('lang_openid', _US_OPENID_FORM_CAPTION);
 } else {
@@ -151,7 +147,7 @@ $xoopsTpl->assign('lang_myinfo', _US_MYINFO);
 $xoopsTpl->assign('user_posts', icms_conv_nr2local($thisUser->getVar('posts')));
 $xoopsTpl->assign('lang_lastlogin', _US_LASTLOGIN);
 $xoopsTpl->assign('lang_notregistered', _US_NOTREGISTERED);
-if ($xoopsConfigUser['allwshow_sig'] == 1) {
+if ($icmsConfigUser['allwshow_sig'] == 1) {
 	$xoopsTpl->assign('user_showsignature', true);
 	$xoopsTpl->assign('lang_signature', _US_SIGNATURE);
 	$var = one_wordwrap($thisUser->getVar('user_sig', 'N'));
@@ -170,7 +166,7 @@ if ($thisUser->getVar('user_viewemail') == 1) {
 		}
 	}
 }
-if ($icmsauthConfig['auth_openid'] == 1) {
+if ($icmsConfigAuth['auth_openid'] == 1) {
 	if ($thisUser->getVar('user_viewoid') == 1) {
 		$xoopsTpl->assign('user_openid', $thisUser->getVar('openid', 'E'));
 	} else {

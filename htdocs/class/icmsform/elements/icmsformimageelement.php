@@ -25,11 +25,11 @@ class IcmsFormImageElement extends XoopsFormElementTray {
     $this->XoopsFormElementTray( $var['form_caption'], ' ' );
 
     if (isset($objectArray['image'])){
-        $objectArray['image'] = str_replace('{XOOPS_URL}', XOOPS_URL, $objectArray['image']);
+        $objectArray['image'] = str_replace('{ICMS_URL}', ICMS_URL, $objectArray['image']);
     }
 
-    if($object->getVar($key,'e') != '' && (substr($object->getVar($key,'e'), 0, 4) == 'http' || substr($object->getVar($key,'e'), 0, 11) == '{XOOPS_URL}')){
-    	$this->addElement( new XoopsFormLabel( '', "<img src='" . str_replace('{XOOPS_URL}', XOOPS_URL, $object->getVar($key,'e')) . "' alt='' /><br/><br/>" ) );
+    if($object->getVar($key,'e') != '' && (substr($object->getVar($key,'e'), 0, 4) == 'http' || substr($object->getVar($key,'e'), 0, 11) == '{ICMS_URL}')){
+    	$this->addElement( new XoopsFormLabel( '', "<img src='" . str_replace('{ICMS_URL}', ICMS_URL, $object->getVar($key,'e')) . "' alt='' /><br/><br/>" ) );
     }elseif($object->getVar($key,'e') != ''){
     	$this->addElement( new XoopsFormLabel( '', "<img src='" . $object_imageurl . $object->getVar($key,'e') . "' alt='' /><br/><br/>" ) );
    	}

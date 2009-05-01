@@ -61,7 +61,7 @@ class IcmsModuleAbout
 	
 	function IcmsModuleAbout($aboutTitle = _MODABOUT_ABOUT)
 	{
-		global $xoopsModule, $xoopsConfig;
+		global $xoopsModule, $icmsConfig;
 
 		icms_loadLanguageFile($xoopsModule->dirname(), 'modinfo');
 		icms_loadLanguageFile('core', 'moduleabout');
@@ -109,7 +109,7 @@ class IcmsModuleAbout
 
 		$myts = &MyTextSanitizer::getInstance();
 
-		global $xoopsModule, $xoopsConfig;
+		global $xoopsModule, $icmsConfig;
 
 		xoops_cp_header();
 
@@ -192,8 +192,8 @@ class IcmsModuleAbout
 	    }
 		
 		// For license thanks to 3Dev
-		if ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license/' . $xoopsConfig['language'] . '_license.txt' ) ) {
-			$filename = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license/' . $xoopsConfig['language'] . '_license.txt';
+		if ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt' ) ) {
+			$filename = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt';
 		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license.txt' ) ) {
 			$filename = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license.txt';
 		}

@@ -445,7 +445,7 @@ var elestyle = xoopsGetElementById(img).style;
 		}
 		if ($change_img==1){
 			// mimetypes and settings put this in admin part later
-			$allowed_mimetypes = array( 'image/jpeg', 'image/pjpeg');
+			$allowed_mimetypes = array( 'image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png' );
 			$maxfilesize = $maxfilebytes;
 			// create the object to upload
 			$uploader = new XoopsMediaUploader($path_upload, $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);

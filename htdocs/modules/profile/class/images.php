@@ -412,7 +412,7 @@ class ProfileImagesHandler extends XoopsObjectHandler
 		//$hash = substr($hash1,0,4);
 		
 		// mimetypes and settings put this in admin part later
-		$allowed_mimetypes = array( 'image/jpeg', 'image/pjpeg', 'image/png');
+		$allowed_mimetypes = array( 'image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png' );
 		$maxfilesize = $maxfilebytes;
 		
 		// create the object to upload

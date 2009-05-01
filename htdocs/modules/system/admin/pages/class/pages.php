@@ -37,9 +37,9 @@ class SystemPages extends IcmsPage {
 
 	private function page_status_custom(){
 		if($this->getVar('page_status') == 1)
-			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=pages&op=status&page_id='.$this->getVar('page_id').'" title="'._VISIBLE.'" ><img src="'.ICMS_URL.'/images/crystal/actions/button_ok.png" alt="'._VISIBLE.'"/></a>';
+			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=pages&op=status&page_id='.$this->getVar('page_id').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_ok.png" alt="'._VISIBLE.'"/></a>';
 		else
-			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=pages&op=status&page_id='.$this->getVar('page_id').'" title="'._VISIBLE.'" ><img src="'.ICMS_URL.'/images/crystal/actions/button_cancel.png" alt="'._VISIBLE.'"/></a>';
+			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=pages&op=status&page_id='.$this->getVar('page_id').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_cancel.png" alt="'._VISIBLE.'"/></a>';
 		return $rtn;
 	}
 
@@ -59,7 +59,7 @@ class SystemPages extends IcmsPage {
 			$ret = '';
 		}else{
 			$url = (substr($this->getVar('page_url','e'),0,7) == 'http://')?$this->getVar('page_url','e'):ICMS_URL.'/'.$this->getVar('page_url','e');
-			$ret = '<a href="'.$url.'" alt="'._PREVIEW.'" title="'._PREVIEW.'" targe="_blank"><img src="' . ICMS_URL . '/images/crystal/actions/viewmag.png" /></a>';
+			$ret = '<a href="'.$url.'" alt="'._PREVIEW.'" title="'._PREVIEW.'" targe="_blank"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
 		}
 
 		return $ret;

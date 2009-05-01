@@ -24,7 +24,7 @@ if(!function_exists("xoopseditor_get_rootpath")){
 	}
 }
 
-if(defined("XOOPS_ROOT_PATH")) {
+if(defined("ICMS_ROOT_PATH")) {
 	return true;
 }
 
@@ -32,5 +32,5 @@ $mainfile = dirname(dirname(__FILE__))."/mainfile.php";
 if ( DIRECTORY_SEPARATOR != "/" ) $mainfile = str_replace( DIRECTORY_SEPARATOR, "/", $mainfile);
 
 include $mainfile;
-return defined("XOOPS_ROOT_PATH");
+return defined("ICMS_ROOT_PATH");
 ?>

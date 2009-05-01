@@ -67,7 +67,7 @@ if ( !is_object($xoopsUser) ) {
             echo "<span style='color:#ee0000;font-weight:bold;'>"._PM_ONLINE."</span><br /><br />\n";
             }
         } else {
-            echo $xoopsConfig['anonymous']; // we need to do this for deleted users
+            echo $icmsConfig['anonymous']; // we need to do this for deleted users
         }
         echo "</td><td><img src='images/subject/".$pm_arr[0]->getVar("msg_image", "E")."' alt='' />&nbsp;"._PM_SENTC."".formatTimestamp($pm_arr[0]->getVar("msg_time"));
         echo "<hr /><b>".$pm_arr[0]->getVar("subject")."</b><br /><br />\n";

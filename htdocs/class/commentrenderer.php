@@ -121,7 +121,7 @@ class XoopsCommentRenderer {
 	 **/
 	function renderThreadView($comment_id = 0, $admin_view = false, $show_nav = true)
 	{
-		include_once XOOPS_ROOT_PATH.'/class/tree.php';
+		include_once ICMS_ROOT_PATH.'/class/tree.php';
 		// construct comment tree
 		$xot = new XoopsObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
@@ -214,7 +214,7 @@ class XoopsCommentRenderer {
 	 **/
 	function renderNestView($comment_id = 0, $admin_view = false)
 	{
-		include_once XOOPS_ROOT_PATH.'/class/tree.php';
+		include_once ICMS_ROOT_PATH.'/class/tree.php';
 		$xot = new XoopsObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
 		if (false != $this->_useIcons) {
@@ -300,7 +300,7 @@ class XoopsCommentRenderer {
 		if ($poster['id'] > 0) {
 			$com_poster =& $this->_memberHandler->getUser($poster_id);
 			if (is_object($com_poster)) {
-				$poster['uname'] = '<a href="'.XOOPS_URL.'/userinfo.php?uid='.$poster['id'].'">'.$com_poster->getVar('uname').'</a>';
+				$poster['uname'] = '<a href="'.ICMS_URL.'/userinfo.php?uid='.$poster['id'].'">'.$com_poster->getVar('uname').'</a>';
 				return $poster;
 			}
 		}
@@ -323,7 +323,7 @@ class XoopsCommentRenderer {
 		if ($poster['id'] > 0) {
 			$com_poster =& $this->_memberHandler->getUser($poster['id']);
 			if (is_object($com_poster)) {
-				$poster['uname'] = '<a href="'.XOOPS_URL.'/userinfo.php?uid='.$poster['id'].'">'.$com_poster->getVar('uname').'</a>';
+				$poster['uname'] = '<a href="'.ICMS_URL.'/userinfo.php?uid='.$poster['id'].'">'.$com_poster->getVar('uname').'</a>';
 				$poster_rank = $com_poster->rank();
 				$poster['rank_image'] = ($poster_rank['image'] != '') ? $poster_rank['image'] : 'blank.gif';
 				$poster['rank_title'] = $poster_rank['title'];
@@ -359,16 +359,16 @@ class XoopsCommentRenderer {
 		$icon_image = htmlspecialchars( trim( $icon_image ) );
 		if ($icon_image != '') {
 			if (false != $this->_doIconCheck) {
-				if (!file_exists(XOOPS_URL.'/images/subject/'.$icon_image)) {
-					return '<img src="'.XOOPS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/no_posticon.gif" alt="" />';
+				if (!file_exists(ICMS_URL.'/images/subject/'.$icon_image)) {
+					return '<img src="'.ICMS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/no_posticon.gif" alt="" />';
 				} else {
-					return '<img src="'.XOOPS_URL.'/images/subject/'.$icon_image.'" alt="" />';
+					return '<img src="'.ICMS_URL.'/images/subject/'.$icon_image.'" alt="" />';
 				}
 			} else {
-				return '<img src="'.XOOPS_URL.'/images/subject/'.$icon_image.'" alt="" />';
+				return '<img src="'.ICMS_URL.'/images/subject/'.$icon_image.'" alt="" />';
 			}
 		}
-		return '<img src="'.XOOPS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/no_posticon.gif" alt="" />';
+		return '<img src="'.ICMS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/no_posticon.gif" alt="" />';
 	}
 }
 ?>

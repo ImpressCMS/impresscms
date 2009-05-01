@@ -180,16 +180,27 @@ include_once(XOOPS_ROOT_PATH . "/include/debug_functions.php");
 
 // ################# Load Config Settings ##############
 $config_handler =& xoops_gethandler('config');
-$xoopsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
+$xoopsConfig = $icmsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
+$xoopsConfigUser = $icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+$xoopsConfigMetaFooter = $icmsConfigMetaFooter =& $config_handler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
+$xoopsConfigCensor = $icmsConfigCensor =& $config_handler->getConfigsByCat(XOOPS_CONF_CENSOR);
+$xoopsConfigSearch = $icmsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
+$xoopsConfigMailer = $icmsConfigMailer =& $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
+$xoopsConfigAuth = $icmsConfigAuth =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+$im_multilanguageConfig = $icmsConfigMultilang =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
+//$xoopsConfigContent = $icmsConfigContent =& $config_handler->getConfigsByCat(IM_CONF_CONTENT);
+$xoopsConfigPersona = $icmsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+$icmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
+$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
 
 // #################### Easiest ML by Gijoe #################
 
 // Disable gzip compression if PHP is run under CLI mode
 // To be refactored
 if (empty($_SERVER['SERVER_NAME']) || substr(PHP_SAPI, 0, 3) == 'cli') {
-	$xoopsConfig['gzip_compression'] = 0;
+	$icmsConfig['gzip_compression'] = 0;
 }
-if ( $xoopsConfig['gzip_compression'] == 1 && extension_loaded( 'zlib' ) && !ini_get( 'zlib.output_compression' ) ) {
+if ( $icmsConfig['gzip_compression'] == 1 && extension_loaded( 'zlib' ) && !ini_get( 'zlib.output_compression' ) ) {
 	if ( @ini_get( 'zlib.output_compression_level' ) < 0 ) {
   	ini_set( 'zlib.output_compression_level', 6 );
 	}
@@ -197,10 +208,10 @@ if ( $xoopsConfig['gzip_compression'] == 1 && extension_loaded( 'zlib' ) && !ini
 }
 
 // #################### Error reporting settings ##################
-if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 ) {
+if ( $icmsConfig['debug_mode'] == 1 || $icmsConfig['debug_mode'] == 2 ) {
 	error_reporting(E_ALL);
   $xoopsLogger->enableRendering();
-  $xoopsLogger->usePopup = ( $xoopsConfig['debug_mode'] == 2 );
+  $xoopsLogger->usePopup = ( $icmsConfig['debug_mode'] == 2 );
 } else {
 	error_reporting(0);
   $xoopsLogger->activated = false;
@@ -211,8 +222,8 @@ $xoopsSecurity->checkBadips();
 include_once XOOPS_ROOT_PATH."/include/version.php";
 
 // for older versions...will be DEPRECATED!
-$xoopsConfig['xoops_url'] = XOOPS_URL;
-$xoopsConfig['root_path'] = XOOPS_ROOT_PATH."/";
+$icmsConfig['xoops_url'] = XOOPS_URL;
+$icmsConfig['root_path'] = XOOPS_ROOT_PATH."/";
 
 /**#@+
  * Host abstraction layer
@@ -246,24 +257,24 @@ $xoopsUserIsAdmin = false;
 $member_handler =& xoops_gethandler('member');
 global $sess_handler;
 $sess_handler =& xoops_gethandler('session');
-if($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '')
+if($icmsConfig['use_ssl'] && isset($_POST[$icmsConfig['sslpost_name']]) && $_POST[$icmsConfig['sslpost_name']] != '')
 {
-	session_id($_POST[$xoopsConfig['sslpost_name']]);
+	session_id($_POST[$icmsConfig['sslpost_name']]);
 }
-elseif($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && $xoopsConfig['session_expire'] > 0)
+elseif($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '' && $icmsConfig['session_expire'] > 0)
 {
-	if (isset($_COOKIE[$xoopsConfig['session_name']])) {
-    	session_id($_COOKIE[$xoopsConfig['session_name']]);
+	if (isset($_COOKIE[$icmsConfig['session_name']])) {
+    	session_id($_COOKIE[$icmsConfig['session_name']]);
 	}
     if (function_exists('session_cache_expire')) {
-    	session_cache_expire($xoopsConfig['session_expire']);
+    	session_cache_expire($icmsConfig['session_expire']);
 	}
-    @ini_set('session.gc_maxlifetime', $xoopsConfig['session_expire'] * 60);
+    @ini_set('session.gc_maxlifetime', $icmsConfig['session_expire'] * 60);
 }
 
 session_set_save_handler(array(&$sess_handler, 'open'), array(&$sess_handler, 'close'), array(&$sess_handler, 'read'), array(&$sess_handler, 'write'), array(&$sess_handler, 'destroy'), array(&$sess_handler, 'gc'));
 
-if($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {session_name($xoopsConfig['session_name']);}
+if($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {session_name($icmsConfig['session_name']);}
 else {session_name("ICMSSESSION");}
 session_start();
 /*
@@ -274,7 +285,7 @@ $sess_handler->enableRegenerateId = true;
 $sess_handler->icms_sessionOpen(); */
 
 // Remove expired session for xoopsUserId
-if ( $xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset($_COOKIE[$xoopsConfig['session_name']]) && !empty($_SESSION['xoopsUserId']) ) {
+if ( $icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '' && !isset($_COOKIE[$icmsConfig['session_name']]) && !empty($_SESSION['xoopsUserId']) ) {
 	unset( $_SESSION['xoopsUserId'] );
 }
 
@@ -332,7 +343,7 @@ if(empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isse
   	// begin newly added in 2004-11-30
   	$user_theme = $user->getVar('theme');
   	$user_language = $user->language();
-  	if (in_array($user_theme, $xoopsConfig['theme_set_allowed'])) {
+  	if (in_array($user_theme, $icmsConfig['theme_set_allowed'])) {
   		$_SESSION['xoopsUserTheme'] = $user_theme;
   	}
   	$_SESSION['xoopsUserLanguage'] = $user_language;
@@ -359,8 +370,8 @@ if (!empty($_SESSION['xoopsUserId'])) {
 		$sess_handler->icms_sessionRegenerateId(true);
     $_SESSION = array();
 	} else {
-  	if ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {
-    	setcookie($xoopsConfig['session_name'], session_id(), time()+(60*$xoopsConfig['session_expire']), '/',  '', 0);
+  	if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
+    	setcookie($icmsConfig['session_name'], session_id(), time()+(60*$icmsConfig['session_expire']), '/',  '', 0);
 		}
     $xoopsUser->setGroups($_SESSION['xoopsUserGroups']);
     $xoopsUserIsAdmin = $xoopsUser->isAdmin();
@@ -369,28 +380,26 @@ if (!empty($_SESSION['xoopsUserId'])) {
 		}
 	}
 }
-
-$im_multilanguageConfig =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
-
-if ($im_multilanguageConfig['ml_enable']) {
+$UserGroups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+if ($icmsConfigMultilang['ml_enable']) {
 
   require XOOPS_ROOT_PATH.'/include/im_multilanguage.php' ;
-  $easiestml_langs = explode( ',' , $im_multilanguageConfig['ml_tags'] ) ;
+  $easiestml_langs = explode( ',' , $icmsConfigMultilang['ml_tags'] ) ;
   include_once(XOOPS_ROOT_PATH . '/class/xoopslists.php');
 
   $easiestml_langpaths = XoopsLists::getLangList();
-  $langs = array_combine($easiestml_langs,explode( ',' , $im_multilanguageConfig['ml_names'] ));
+  $langs = array_combine($easiestml_langs,explode( ',' , $icmsConfigMultilang['ml_names'] ));
 
-  if( $im_multilanguageConfig['ml_autoselect_enabled']  && isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $_SERVER['HTTP_ACCEPT_LANGUAGE'] != "" ){
+  if( $icmsConfigMultilang['ml_autoselect_enabled']  && isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && $_SERVER['HTTP_ACCEPT_LANGUAGE'] != "" ){
   	$autolang = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"],0,2);
   	if (in_array($autolang,$easiestml_langs)){
-      	$xoopsConfig['language'] = $langs[$autolang];
+      	$icmsConfig['language'] = $langs[$autolang];
   	}
   }
 
   if (isset( $_GET['lang'] ) && isset($_COOKIE['lang'])){
   	if (in_array($_GET['lang'],$easiestml_langs)){
-    	$xoopsConfig['language'] = $langs[$_GET['lang']];
+    	$icmsConfig['language'] = $langs[$_GET['lang']];
     	if(isset( $_SESSION['xoopsUserLanguage'] )){
     		$_SESSION['xoopsUserLanguage'] = $langs[$_GET['lang']];
   		}
@@ -398,24 +407,24 @@ if ($im_multilanguageConfig['ml_enable']) {
   }elseif(isset($_COOKIE['lang']) && isset( $_SESSION['xoopsUserLanguage'] )){
   	if($_COOKIE['lang'] != $_SESSION['xoopsUserLanguage'] ){
     	if( in_array( $_SESSION['xoopsUserLanguage'] , $langs ) )
-    		$xoopsConfig['language'] = $_SESSION['xoopsUserLanguage'];
+    		$icmsConfig['language'] = $_SESSION['xoopsUserLanguage'];
   	}else{
     	if (in_array($_COOKIE['lang'],$easiestml_langs))
-    		$xoopsConfig['language'] = $langs[$_COOKIE['lang']];
+    		$icmsConfig['language'] = $langs[$_COOKIE['lang']];
   	}
   }elseif(isset($_COOKIE['lang'])){
   	if (in_array($_COOKIE['lang'],$easiestml_langs)){
-  		$xoopsConfig['language'] = $langs[$_COOKIE['lang']];
+  		$icmsConfig['language'] = $langs[$_COOKIE['lang']];
   		if(isset( $_SESSION['xoopsUserLanguage'] )){
   			$_SESSION['xoopsUserLanguage'] = $langs[$_GET['lang']];
   		}
   	}
   }elseif(isset($_GET['lang'])){
   	if (in_array($_GET['lang'],$easiestml_langs)){
-  		$xoopsConfig['language'] = $langs[$_GET['lang']];
+  		$icmsConfig['language'] = $langs[$_GET['lang']];
   	}
   }
-} //END if ($im_multilanguageConfig['ml_enable'])
+} //END if ($icmsConfigMultilang['ml_enable'])
 
 // #################### Include site-wide lang file ##################
 icms_loadLanguageFile('core', 'global');
@@ -444,17 +453,17 @@ if ( !defined("XOOPS_USE_MULTIBYTES") ) {
 	define("XOOPS_USE_MULTIBYTES",0);
 }
 
-if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $xoopsConfig['theme_set_allowed'])) {
-	$xoopsConfig['theme_set'] = $_POST['xoops_theme_select'];
+if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'], $icmsConfig['theme_set_allowed'])) {
+	$icmsConfig['theme_set'] = $_POST['xoops_theme_select'];
     $_SESSION['xoopsUserTheme'] = $_POST['xoops_theme_select'];
-} elseif (!empty($_POST['theme_select']) && in_array($_POST['theme_select'], $xoopsConfig['theme_set_allowed'])) {
-	$xoopsConfig['theme_set'] = $_POST['theme_select'];
+} elseif (!empty($_POST['theme_select']) && in_array($_POST['theme_select'], $icmsConfig['theme_set_allowed'])) {
+	$icmsConfig['theme_set'] = $_POST['theme_select'];
     $_SESSION['xoopsUserTheme'] = $_POST['theme_select'];
-} elseif (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {
-	$xoopsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
+} elseif (!empty($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {
+	$icmsConfig['theme_set'] = $_SESSION['xoopsUserTheme'];
 }
 
-if ($xoopsConfig['closesite'] == 1) {
+if ($icmsConfig['closesite'] == 1) {
 	include XOOPS_ROOT_PATH . "/include/site-closed.php";
 }
 
@@ -488,9 +497,7 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 	$xoopsUserIsAdmin = $xoopsUser->isAdmin(1);
 }
 
-$config_handler =& xoops_gethandler('config');
-$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-if ($xoopsConfigPersona['multi_login']){
+if ($icmsConfigPersona['multi_login']){
   if( is_object( $xoopsUser ) ) {
   	$online_handler =& xoops_gethandler('online');
   	$online_handler->write($xoopsUser->uid(), $xoopsUser->uname(),

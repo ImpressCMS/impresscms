@@ -130,7 +130,7 @@ class IcmsBlock extends IcmsPersistableObject {
      * @deprecated
      */
 	public function buildBlock(){
-        global $xoopsConfig, $xoopsOption;
+        global $icmsConfig, $xoopsOption;
         $block = array();
         // M for module block, S for system block C for Custom
         if ( !$this->isCustom() ) {

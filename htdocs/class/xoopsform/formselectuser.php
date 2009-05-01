@@ -19,7 +19,7 @@
 
 
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	die('ImpressCMS root path not defined');
 }
 
@@ -41,8 +41,8 @@ if (!defined('XOOPS_ROOT_PATH')) {
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 
-include_once XOOPS_ROOT_PATH.'/class/xoopsform/formelementtray.php';
-include_once XOOPS_ROOT_PATH.'/class/xoopsform/formselect.php';
+include_once ICMS_ROOT_PATH.'/class/xoopsform/formelementtray.php';
+include_once ICMS_ROOT_PATH.'/class/xoopsform/formselect.php';
 
 class XoopsFormSelectUser extends XoopsFormElementTray
 {
@@ -118,7 +118,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
         $token = $GLOBALS['xoopsSecurity']->createToken();
 	    $action_tray = new XoopsFormElementTray("", " | ");
 	    $action_tray->addElement(new XoopsFormLabel('', "<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name . ( $multiple ? "[]" : "" ) . "\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;'>"._MA_USER_REMOVE."</a>"));
-	    $action_tray->addElement(new XoopsFormLabel('', "<a href='#' onclick='openWithSelfMain(\"".XOOPS_URL."/include/findusers.php?target={$name}&amp;multiple={$multiple}&amp;token={$token}\", \"userselect\", 800, 600, null); return false;' >"._MA_USER_MORE."</a>".$js_addusers));
+	    $action_tray->addElement(new XoopsFormLabel('', "<a href='#' onclick='openWithSelfMain(\"".ICMS_URL."/include/findusers.php?target={$name}&amp;multiple={$multiple}&amp;token={$token}\", \"userselect\", 800, 600, null); return false;' >"._MA_USER_MORE."</a>".$js_addusers));
 
 	    $this->XoopsFormElementTray($caption, '<br /><br />', $name);
 	    $this->addElement($select_element);

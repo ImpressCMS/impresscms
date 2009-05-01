@@ -592,11 +592,11 @@ if ($op == 'update_ok') {
 
 		// execute module specific update script if any
 		$update_script = $module->getInfo('onUpdate');
-		$ModName = $module->getInfo('modname');
+		$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
 		if (false != $update_script && trim($update_script) != '') {
 			include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($update_script);
-			if (function_exists('xoops_module_update_'.$dirname)) {
-				$func = 'xoops_module_update_'.$dirname;
+			if (function_exists('xoops_module_update_'.$ModName)) {
+				$func = 'xoops_module_update_'.$ModName;
 				if (!$func($module, $prev_version, $prev_dbversion)) {
 					$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
 				} else {

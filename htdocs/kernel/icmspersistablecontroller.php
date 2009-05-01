@@ -467,7 +467,7 @@ class IcmsPersistableController {
     }
 
     function getPrintAndMailLink($icmsObj) {
-    	global $xoopsConfig, $impresscms;
+    	global $icmsConfig, $impresscms;
 
 		/**
 		 * @todo to be completed...

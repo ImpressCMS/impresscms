@@ -18,11 +18,8 @@ $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 $myts =& MyTextSanitizer::getInstance();
 
-$config_handler =& xoops_gethandler('config');
-$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-
 // If not a user and invite needs one, redirect
-if ($xoopsConfigUser['activation_type'] == 3 && $xoopsConfigUser['allow_register'] == 0 && !is_object($xoopsUser)) {
+if ($icmsConfigUser['activation_type'] == 3 && $icmsConfigUser['allow_register'] == 0 && !is_object($xoopsUser)) {
 	redirect_header('index.php', 6, _US_INVITEBYMEMBER);
     exit();
 }
@@ -57,14 +54,14 @@ case 'finish':
 			$xoopsMailer =& getMailer();
 			$xoopsMailer->useMail();
 			$xoopsMailer->setTemplate('invite.tpl');
-			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+			$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
+			$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
 			$xoopsMailer->assign('SITEURL', ICMS_URL."/");
 			$xoopsMailer->assign('USEREMAIL', $email);
 			$xoopsMailer->assign('REGISTERLINK', ICMS_URL.'/register.php?code='.$invite_code);
 			$xoopsMailer->setToEmails($email);
-			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-			$xoopsMailer->setFromName($xoopsConfig['sitename']);
+			$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+			$xoopsMailer->setFromName($icmsConfig['sitename']);
 			$xoopsMailer->setSubject(sprintf(_US_INVITEREGLINK,ICMS_URL));
 			if ( !$xoopsMailer->send() ) {
 				$stop .= _US_INVITEMAILERR;

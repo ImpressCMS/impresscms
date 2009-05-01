@@ -32,14 +32,15 @@
 	<link rel="shortcut icon" type="image/ico" href="<{xoImgUrl icons/favicon.ico}>" />
 	<link rel="icon" type="image/png" href="<{xoImgUrl icons/icon.png}>" />
 	
+<!-- Module Header -->
+		<{$xoops_module_header}>
+	
 <!-- Sheet Css -->
 	<link rel="stylesheet" type="text/css" media="all" href="<{$icms_url}>/modules/system/style<{if $icms_rtl}>_rtl<{/if}>.css" />
 	<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="<{$icms_imageurl}>/<{if $icms_rtl}>rtl/<{/if}>style_admin.css" />
 
 <!-- If You want to have messages and errors in the admin menu, you should add this part to each admin them. -->
 <{if $site_msg}>
-<script type="text/javascript" src="<{$icms_url}>/libraries/jquery/jquery.js">
-</script>
 <script type="text/javascript" src="<{$icms_url}>/libraries/jquery/jgrowl.js">
 </script>
 <link rel="stylesheet" media="screen" href="<{$icms_url}>/libraries/jquery/jgrowl.css" type="text/css" />
@@ -57,8 +58,6 @@ if (!window.console || !console.firebug) {
 </script>
 <{/if}>
 
-<!-- Module Header -->
-		<{$xoops_module_header}>
 </head>
 
 <body id="<{$xoops_dirname}>" class="<{$xoops_langcode}>">

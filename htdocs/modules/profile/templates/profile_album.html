@@ -65,7 +65,7 @@
 		<{ if ($pics_array[i].private == 1) }>
 		  <p><span class="profile-album-private"> Private </span></p>
 		<{ /if }> 
-        <p class="profile-album-picture-img"><a href="<{$icms_url}>/uploads/resized_<{$pics_array[i].url}>" rel="lightbox[album]" title="<{$pics_array[i].desc}>">
+        <p class="profile-album-picture-img"><a href="<{$icms_url}>/uploads/resized_<{$pics_array[i].url}>" rel="lightbox" title="<{$pics_array[i].desc}>">
           <img class="thumb" src="<{$icms_url}>/uploads/thumb_<{$pics_array[i].url}>" rel="lightbox" title="<{$pics_array[i].desc}>" />
         </a></p>
         <p id="profile-album-picture-desc"><{$pics_array[i].desc}></p>

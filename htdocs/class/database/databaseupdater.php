@@ -17,14 +17,14 @@
  * @author marcan <marcan@smartfactory.ca>
  * @link http://www.smartfactory.ca The SmartFactory
  */
-if (!defined("XOOPS_ROOT_PATH")) {
+if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
 
 /**
  * Include the language constants for the IcmsDatabaseupdater
  */
-global $xoopsConfig;
+global $icmsConfigPersona;
 icms_loadLanguageFile('core', 'databaseupdater');
 
 class IcmsDatabasetable {

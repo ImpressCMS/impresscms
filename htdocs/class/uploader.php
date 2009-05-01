@@ -150,7 +150,7 @@ class XoopsMediaUploader
    **/
   function XoopsMediaUploader($uploadDir, $allowedMimeTypes, $maxFileSize=0, $maxWidth=null, $maxHeight=null)
   {
-    @$this->extensionToMime = include( XOOPS_ROOT_PATH . '/class/mimetypes.inc.php' );
+    @$this->extensionToMime = include( ICMS_ROOT_PATH . '/class/mimetypes.inc.php' );
     if ( !is_array( $this->extensionToMime ) ) {
      	$this->extensionToMime = array();
     	return false;

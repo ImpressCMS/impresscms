@@ -150,7 +150,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 
 	$category =& notificationCategoryInfo($category_name, $module_id);
 
-	global $xoopsConfig;
+	global $icmsConfig;
 	$event_array = array();
 
 	$override_comment = false;
@@ -159,7 +159,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 	
 	foreach ($not_config['event'] as $event) {
 		if ($event['category'] == $category_name) {
-			$event['mail_template_dir'] = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/language/' . $xoopsConfig['language'] . '/mail_template/';
+			$event['mail_template_dir'] = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/language/' . $icmsConfig['language'] . '/mail_template/';
 			if (!$enabled_only || notificationEventEnabled ($category, $event, $module)) {
 				$event_array[] = $event;
 			}
@@ -182,7 +182,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 	if ($module->getVar('hascomments')) {
 		$com_config = $module->getInfo('comments');
 		if (!empty($category['item_name']) && $category['item_name'] == $com_config['itemName']) {
-			$mail_template_dir = XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/mail_template/';
+			$mail_template_dir = XOOPS_ROOT_PATH . '/language/' . $icmsConfig['language'] . '/mail_template/';
 			include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
 			$config_handler =& xoops_gethandler('config');
 			$com_config = $config_handler->getConfigsByCat(0,$module_id);

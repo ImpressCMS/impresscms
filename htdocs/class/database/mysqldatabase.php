@@ -25,7 +25,7 @@
  * @package ImpressCMS
  */
 
-if (!defined("XOOPS_ROOT_PATH")) {
+if (!defined("ICMS_ROOT_PATH")) {
     die("ImpressCMS root path not defined");
 }
 /**
@@ -39,7 +39,7 @@ if (!defined("XOOPS_ROOT_PATH")) {
 /**
  * base class
  */
-include_once XOOPS_ROOT_PATH."/class/database/database.php";
+include_once ICMS_ROOT_PATH."/class/database/database.php";
 
 /**
  * connection to a mysql database
@@ -300,7 +300,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
 	 */
 	function queryFromFile($file){
     if (false !== ($fp = fopen($file, 'r'))) {
-  	include_once XOOPS_ROOT_PATH.'/class/database/sqlutility.php';
+  	include_once ICMS_ROOT_PATH.'/class/database/sqlutility.php';
         $sql_queries = trim(fread($fp, filesize($file)));
         SqlUtility::splitMySqlFile($pieces, $sql_queries);
         foreach ($pieces as $query) {

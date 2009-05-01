@@ -13,10 +13,10 @@
 * @version	$Id$
 */
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
-require_once XOOPS_ROOT_PATH.'/class/xml/rpc/xmlrpcapi.php';
+require_once ICMS_ROOT_PATH.'/class/xml/rpc/xmlrpcapi.php';
 
 class XoopsApi extends XoopsXmlRpcApi
 {
@@ -57,7 +57,7 @@ class XoopsApi extends XoopsXmlRpcApi
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
                 } else {
                     // will be removed... don't worry if this looks bad
-                    include_once XOOPS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
+                    include_once ICMS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
                     $story = new NewsStory();
                     $error = false;
                     if (intval($this->params[4]) > 0) {
@@ -144,7 +144,7 @@ class XoopsApi extends XoopsXmlRpcApi
                     $this->response->add(new XoopsXmlRpcFault(109, $msg));
                 } else {
                     // will be removed... don't worry if this looks bad
-                    include_once XOOPS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
+                    include_once ICMS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
                     $story = new NewsStory($this->params[0]);
                     $storyid = $story->storyid();
                     if (empty($storyid)) {
@@ -186,7 +186,7 @@ class XoopsApi extends XoopsXmlRpcApi
                 $this->response->add(new XoopsXmlRpcFault(111));
             } else {
                 // will be removed... don't worry if this looks bad
-                include_once XOOPS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
+                include_once ICMS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
                 $story = new NewsStory($this->params[0]);
                 if (!$story->delete()) {
                     $this->response->add(new XoopsXmlRpcFault(106));
@@ -204,7 +204,7 @@ class XoopsApi extends XoopsXmlRpcApi
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
             // will be removed... don't worry if this looks bad
-            include_once XOOPS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
+            include_once ICMS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
             $story = new NewsStory($this->params[0]);
             $ret = array('uid' => $story->uid(), 'published' => $story->published(), 'storyid' => $story->storyId(), 'title' => $story->title('Edit'), 'hometext' => $story->hometext('Edit'), 'moretext' => $story->bodytext('Edit'));
             if (!$respond) {
@@ -225,8 +225,8 @@ class XoopsApi extends XoopsXmlRpcApi
                             break;
                         case 'storyid':
                             $struct->add('postid', new XoopsXmlRpcString($value));
-                            $struct->add('link', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/article.php?item_id='.$value));
-                            $struct->add('permaLink', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/article.php?item_id='.$value));
+                            $struct->add('link', new XoopsXmlRpcString(ICMS_URL.'/modules/news/article.php?item_id='.$value));
+                            $struct->add('permaLink', new XoopsXmlRpcString(ICMS_URL.'/modules/news/article.php?item_id='.$value));
                             break;
                         case 'title':
                             $struct->add('title', new XoopsXmlRpcString($value));
@@ -248,7 +248,7 @@ class XoopsApi extends XoopsXmlRpcApi
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            include_once XOOPS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
+            include_once ICMS_ROOT_PATH.'/modules/news/class/class.newsstory.php';
 			if (isset($this->params[4]) && intval($this->params[4]) > 0) {
 				$stories =& NewsStory::getAllPublished(intval($this->params[3]), 0, $this->params[4]);
 			} else {
@@ -280,8 +280,8 @@ class XoopsApi extends XoopsXmlRpcApi
                                 break;
                             case 'storyid':
                                 $struct->add('postid', new XoopsXmlRpcString($value));
-                                $struct->add('link', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/article.php?item_id='.$value));
-                                $struct->add('permaLink', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/article.php?item_id='.$value));
+                                $struct->add('link', new XoopsXmlRpcString(ICMS_URL.'/modules/news/article.php?item_id='.$value));
+                                $struct->add('permaLink', new XoopsXmlRpcString(ICMS_URL.'/modules/news/article.php?item_id='.$value));
                                 break;
                             case 'title':
                                 $struct->add('title', new XoopsXmlRpcString($value));
@@ -306,7 +306,7 @@ class XoopsApi extends XoopsXmlRpcApi
         if (!$this->_checkUser($this->params[1], $this->params[2])) {
             $this->response->add(new XoopsXmlRpcFault(104));
         } else {
-            include_once XOOPS_ROOT_PATH.'/class/xoopstopic.php';
+            include_once ICMS_ROOT_PATH.'/class/xoopstopic.php';
             $db =& Database::getInstance();
             $xt = new XoopsTopic($db->prefix('topics'));
             $ret = $xt->getTopicsList();

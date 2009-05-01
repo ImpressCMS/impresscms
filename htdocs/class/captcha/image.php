@@ -61,12 +61,11 @@ class IcmsCaptchaImage {
 	 */
 	function render()
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		$form = "<input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $IcmsConfigCaptcha['captcha_num_chars'] . "' maxlength='" . $IcmsConfigCaptcha['captcha_num_chars'] . "' value='' /> &nbsp; ". $this->loadImage();
+		global $icmsConfigCaptcha;
+		$form = "<input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $icmsConfigCaptcha['captcha_num_chars'] . "' maxlength='" . $icmsConfigCaptcha['captcha_num_chars'] . "' value='' /> &nbsp; ". $this->loadImage();
 		$rule = htmlspecialchars(ICMS_CAPTCHA_REFRESH, ENT_QUOTES);
-		if($IcmsConfigCaptcha['captcha_maxattempt']) {
-			$rule .=  " | ". sprintf( constant("ICMS_CAPTCHA_MAXATTEMPTS"), $IcmsConfigCaptcha['captcha_maxattempt'] );
+		if($icmsConfigCaptcha['captcha_maxattempt']) {
+			$rule .=  " | ". sprintf( constant("ICMS_CAPTCHA_MAXATTEMPTS"), $icmsConfigCaptcha['captcha_maxattempt'] );
 		}
 		$form .= "&nbsp;&nbsp;<small>{$rule}</small>";
 		
@@ -80,9 +79,8 @@ class IcmsCaptchaImage {
 	 */
 	function loadImage()
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		$rule = $IcmsConfigCaptcha['captcha_casesensitive'] ? constant("ICMS_CAPTCHA_RULE_CASESENSITIVE") : constant("ICMS_CAPTCHA_RULE_CASEINSENSITIVE");
+		global $icmsConfigCaptcha;
+		$rule = $icmsConfigCaptcha['captcha_casesensitive'] ? constant("ICMS_CAPTCHA_RULE_CASESENSITIVE") : constant("ICMS_CAPTCHA_RULE_CASEINSENSITIVE");
 		$ret = "<img id='captcha' src='" . ICMS_URL. "/class/captcha/scripts/img.php' onclick=\"this.src='" . ICMS_URL. "/class/captcha/scripts/img.php?refresh='+Math.random()"."\" style='cursor: pointer;margin-left: auto;margin-right: auto;text-align:center;' alt='".htmlspecialchars($rule, ENT_QUOTES)."' />";
 		return $ret;
 	}

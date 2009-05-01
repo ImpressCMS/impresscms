@@ -13,6 +13,8 @@
 * @version	$Id$
 */
 
+// ############## Include jalali functions file ##############
+include_once XOOPS_ROOT_PATH.'/include/jalali.php';
 /**
 * The header
 *
@@ -24,7 +26,7 @@
 */
 function xoops_header($closehead=true)
 {
-	global $xoopsConfig, $xoopsTheme, $xoopsConfigMetaFooter;
+	global $icmsConfig, $xoopsTheme, $icmsConfigPlugins, $icmsConfigMetaFooter;
 	$myts =& MyTextSanitizer::getInstance();
 
 	if(!headers_sent())
@@ -40,20 +42,18 @@ function xoops_header($closehead=true)
 	<head>
 	<meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" />
 	<meta http-equiv="content-language" content="'._LANGCODE.'" />
-	'.htmlspecialchars($xoopsConfigMetaFooter['google_meta']).'
-	<meta name="robots" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_robots']).'" />
-	<meta name="keywords" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_keywords']).'" />
-	<meta name="description" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_desc']).'" />
-	<meta name="rating" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_rating']).'" />
-	<meta name="author" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_author']).'" />
-	<meta name="copyright" content="'.htmlspecialchars($xoopsConfigMetaFooter['meta_copyright']).'" />
+	'.htmlspecialchars($icmsConfigMetaFooter['google_meta']).'
+	<meta name="robots" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_robots']).'" />
+	<meta name="keywords" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_keywords']).'" />
+	<meta name="description" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_desc']).'" />
+	<meta name="rating" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_rating']).'" />
+	<meta name="author" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_author']).'" />
+	<meta name="copyright" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_copyright']).'" />
 	<meta name="generator" content="ImpressCMS" />
-	<title>'.htmlspecialchars($xoopsConfig['sitename']).'</title>
+	<title>'.htmlspecialchars($icmsConfig['sitename']).'</title>
 	<script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script>
 	<script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
 	$jscript = '';
 	if(class_exists('XoopsFormDhtmlTextArea')){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
@@ -100,7 +100,7 @@ function xoops_header($closehead=true)
 		}
 	}
 
-	$themecss = getcss($xoopsConfig['theme_set']);
+	$themecss = getcss($icmsConfig['theme_set']);
 	if ($themecss) {
 		echo '<link rel="stylesheet" type="text/css" media="all" href="'.$themecss.'" />';
 		//echo '<style type="text/css" media="all"><!-- @import url('.$themecss.'); --></style>';
@@ -117,8 +117,8 @@ function xoops_header($closehead=true)
 */
 function xoops_footer()
 {
-	global $xoopsConfigMetaFooter;
-	echo ''.htmlspecialchars($xoopsConfigMetaFooter['google_analytics']).'</body></html>';
+	global $icmsConfigMetaFooter;
+	echo ''.htmlspecialchars($icmsConfigMetaFooter['google_analytics']).'</body></html>';
 	ob_end_flush();
 }
 
@@ -171,11 +171,12 @@ function xoops_error($msg, $title=''){ icms_error_msg($msg, $title, true); }
  * ImpressCMS Warning Message Function
  *
  * @since ImpressCMS 1.2
+ * @version $Id$
  *
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  *
- * @param string $msg	The warning message
- * @param string $title	The warning message title
+ * @param string $msg	The Error Message
+ * @param string $title	The Error Message title
  * @param	bool	$render	Whether to echo (render) or return the HTML string
  *
  * @todo Make this work with templates ;)
@@ -273,13 +274,13 @@ function xoops_refcheck($docheck=1) {return $GLOBALS['xoopsSecurity']->checkRefe
 */
 function xoops_getUserTimestamp($time, $timeoffset="")
 {
-	global $xoopsConfig, $xoopsUser;
+	global $icmsConfig, $xoopsUser;
 	if($timeoffset == '')
 	{
 		if($xoopsUser) {$timeoffset = $xoopsUser->getVar('timezone_offset');}
-		else {$timeoffset = $xoopsConfig['default_TZ'];}
+		else {$timeoffset = $icmsConfig['default_TZ'];}
 	}
-	$usertimestamp = intval($time) + (floatval($timeoffset) - $xoopsConfig['server_TZ'])*3600;
+	$usertimestamp = intval($time) + (floatval($timeoffset) - $icmsConfig['server_TZ'])*3600;
 	return $usertimestamp;
 }
 
@@ -294,7 +295,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
  */
 function formatTimestamp($time, $format = "l", $timeoffset = null)
 {
-	global $xoopsConfig, $xoopsUser;
+	global $icmsConfig, $xoopsUser;
 
 	$format_copy = $format;
 	$format = strtolower($format);
@@ -329,7 +330,7 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
 	// disable user timezone calculation and use default timezone,
 	// for cache consideration
 	if ($timeoffset === null) {
-		$timeoffset = ($xoopsConfig['default_TZ'] == '') ? '0.0' : $xoopsConfig['default_TZ'];
+		$timeoffset = ($icmsConfig['default_TZ'] == '') ? '0.0' : $icmsConfig['default_TZ'];
 	}
 
 	$usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
@@ -435,12 +436,12 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
 		break;
 	}
 
-	$basecheck = $xoopsConfig['use_ext_date'] == 1 && defined ('_CALENDAR_TYPE') && $format != 'mysql';
-	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php'))
+	$basecheck = $icmsConfig['use_ext_date'] == true && defined ('_CALENDAR_TYPE') && $format != 'mysql';
+	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/local.date.php'))
 	{
-		include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.php';
+		include_once ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/local.date.php';
 		return ucfirst(local_date($datestring,$usertimestamp));
-	}elseif ($basecheck && _CALENDAR_TYPE != "jalali" && $xoopsConfig['language'] != 'english'){
+	}elseif ($basecheck && _CALENDAR_TYPE != "jalali" && $icmsConfig['language'] != 'english'){
 		return ucfirst(icms_conv_nr2local(ext_date($datestring,$usertimestamp)));
 	}elseif ($basecheck && _CALENDAR_TYPE == "jalali"){
 		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
@@ -457,9 +458,9 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
  */
 function userTimeToServerTime($timestamp, $userTZ=null)
 {
-	global $xoopsConfig;
-	if(!isset($userTZ)) {$userTZ = $xoopsConfig['default_TZ'];}
-	$timestamp = $timestamp - (($userTZ - $xoopsConfig['server_TZ']) * 3600);
+	global $icmsConfig;
+	if(!isset($userTZ)) {$userTZ = $icmsConfig['default_TZ'];}
+	$timestamp = $timestamp - (($userTZ - $icmsConfig['server_TZ']) * 3600);
 	return $timestamp;
 }
 
@@ -583,7 +584,7 @@ function showbanner() {echo xoops_getbanner();}
 */
 function xoops_getbanner()
 {
-	global $xoopsConfig;
+	global $icmsConfig;
 	$db =& Database::getInstance();
 	$bresult = $db->query("SELECT COUNT(*) FROM ".$db->prefix('banner'));
 	list($numrows) = $db->fetchRow($bresult);
@@ -598,7 +599,7 @@ function xoops_getbanner()
 	{
 		$bresult = $db->query("SELECT * FROM ".$db->prefix('banner'), 1, $bannum);
 		list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
-		if($xoopsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {}
+		if($icmsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {}
 		else {$db->queryF(sprintf("UPDATE %s SET impmade = impmade+1 WHERE bid = '%u'", $db->prefix('banner'), intval($bid)));}
 		/* Check if this impression is the last one and print the banner */
 		if($imptotal == $impmade)
@@ -638,9 +639,7 @@ function xoops_getbanner()
 */
 function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 {
-	global $xoopsConfig, $xoopsLogger, $xoopsUserIsAdmin;
-    $config_handler =& xoops_gethandler('config');
-    $imConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+	global $icmsConfig, $xoopsLogger, $icmsConfigPersona, $xoopsUserIsAdmin;
 	if(preg_match("/[\\0-\\31]|about:|script:/i", $url))
 	{
 		if(preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {$url = ICMS_URL;}
@@ -651,15 +650,15 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 		if(substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation) {$url = ICMS_URL;}
 		elseif(substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {$url = ICMS_URL;}
 	}
-	$theme = $xoopsConfig['theme_set'];
+	$theme = $icmsConfig['theme_set'];
 	// if the user selected a theme in the theme block, let's use this theme
-	if(isset($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $xoopsConfig['theme_set_allowed'])) {$theme = $_SESSION['xoopsUserTheme'];}
+	if(isset($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {$theme = $_SESSION['xoopsUserTheme'];}
 
 	require_once ICMS_ROOT_PATH.'/class/template.php';
    	require_once ICMS_ROOT_PATH.'/class/theme.php';
 
 	$xoopsThemeFactory =& new xos_opal_ThemeFactory();
-	$xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
+	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 	$xoopsThemeFactory->defaultTheme = $theme;
 	$xoTheme =& $xoopsThemeFactory->createInstance(array("plugins" => array()));
 	$xoopsTpl =& $xoTheme->template;
@@ -669,23 +668,23 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 		'icms_imageurl' => ICMS_THEME_URL.'/'.$theme.'/',
 		'icms_themecss'=> xoops_getcss($theme),
 		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
-		'icms_sitename' => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
-		'icms_slogan' => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
+		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
+		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 		'icms_dirname' => @$xoopsModule ? $xoopsModule->getVar('dirname') : 'system',
-		'icms_banner' => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-		'icms_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $xoopsConfig['slogan'], ENT_QUOTES),
+		'icms_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
+		'icms_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES),
 		'xoops_theme' => $theme,
 		'xoops_imageurl' => ICMS_THEME_URL.'/'.$theme.'/',
 		'xoops_themecss'=> xoops_getcss($theme),
 		'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
-		'xoops_sitename' => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
-		'xoops_slogan' => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
+		'xoops_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
+		'xoops_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 		'xoops_dirname' => @$xoopsModule ? $xoopsModule->getVar('dirname') : 'system',
-		'xoops_banner' => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-		'xoops_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $xoopsConfig['slogan'], ENT_QUOTES),
+		'xoops_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
+		'xoops_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES),
 	));
 
-	if($xoopsConfig['debug_mode'] == 2 && $xoopsUserIsAdmin)
+	if($icmsConfig['debug_mode'] == 2 && $xoopsUserIsAdmin)
 	{
 		$xoopsTpl->assign('time', 300);
 		$xoopsTpl->assign('xoops_logdump', $xoopsLogger->dump());
@@ -696,7 +695,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 		if(!strstr($url, '?')) {$url .= '?xoops_redirect='.urlencode($_SERVER['REQUEST_URI']);}
 		else {$url .= '&amp;xoops_redirect='.urlencode($_SERVER['REQUEST_URI']);}
 	}
-	if(defined('SID') && SID && (!isset($_COOKIE[session_name()]) || ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '' && !isset($_COOKIE[$xoopsConfig['session_name']]))))
+	if(defined('SID') && SID && (!isset($_COOKIE[session_name()]) || ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '' && !isset($_COOKIE[$icmsConfig['session_name']]))))
 	{
 		if(!strstr($url, '?')) {$url .= '?' . SID;}
 		else {$url .= '&amp;'.SID;}
@@ -707,7 +706,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$xoopsTpl->assign('message', $message);
 	$xoopsTpl->assign('lang_ifnotreload', sprintf(_IFNOTRELOAD, $url));
     // GIJ start
-    if( ! headers_sent() && $imConfigPersona['use_custom_redirection']==1) {
+    if( ! headers_sent() && $icmsConfigPersona['use_custom_redirection']==1) {
         $_SESSION['redirect_message'] = $message ;
         header( "Location: ".preg_replace("/[&]amp;/i",'&',$url) ) ;
         exit();
@@ -783,7 +782,7 @@ function xoops_getcss($theme = '')
 */
 function &getMailer()
 {
-	global $xoopsConfig;
+	global $icmsConfig;
 	$inst = false;
 	include_once ICMS_ROOT_PATH.'/class/xoopsmailer.php';
     icms_loadLanguageFile('core', 'xoopsmailerlocal');
@@ -914,12 +913,11 @@ function xoops_substr($str, $start, $length, $trimmarker = '...')
 */
 function icms_substr($str, $start, $length, $trimmarker = '...')
 {
-	$config_handler =& xoops_gethandler('config');
-	$im_multilanguageConfig =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
+	global $icmsConfigMultilang;
 
-	if($im_multilanguageConfig['ml_enable'])
+	if($icmsConfigMultilang['ml_enable'])
 	{
-		$tags = explode(',',$im_multilanguageConfig['ml_tags']);
+		$tags = explode(',',$icmsConfigMultilang['ml_tags']);
 		$strs = array();
 		$hasML = false;
 		foreach($tags as $tag)
@@ -1160,7 +1158,7 @@ function icms_copyr($source, $dest)
 		// Skip pointers
 		if($entry == '.' || $entry == '..') {continue;}
 		// Deep copy directories
-		if(is_dir("$source/$entry") && ($dest !== "$source/$entry")) {copy("$source/$entry", "$dest/$entry");}
+		if(is_dir("$source/$entry") && ($dest !== "$source/$entry")) {icms_copyr("$source/$entry", "$dest/$entry");}
 		else {copy("$source/$entry", "$dest/$entry");}
 	}
 	// Clean up
@@ -1357,11 +1355,11 @@ function icms_userIsAdmin($module = false)
 */
 function icms_loadLanguageFile($module, $file, $admin=false)
 {
-	global $xoopsConfig;
+	global $icmsConfig;
 	if($module == 'core') {$languagePath = ICMS_ROOT_PATH.'/language/';}
 	else {$languagePath = ICMS_ROOT_PATH.'/modules/'.$module.'/language/';}
 	$extraPath = $admin ? 'admin/' : '';
-	$filename = $languagePath.$xoopsConfig['language'].'/'.$extraPath.$file.'.php';
+	$filename = $languagePath.$icmsConfig['language'].'/'.$extraPath.$file.'.php';
 	if(!file_exists($filename)) {$filename = $languagePath.'english/'.$extraPath.$file.'.php';}
 	if(file_exists($filename)) {include_once($filename);}
 }
@@ -1646,11 +1644,10 @@ function icms_getUnameFromUserEmail($email = '')
 */
 function icms_encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
 {
-	$config_handler =& xoops_gethandler('config');
-	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+	global $icmsConfigUser;
 	$mainSalt = XOOPS_DB_SALT;
 
-	if($reset == 0) {$enc_type = intval($xoopsConfigUser['enc_type']);}
+	if($reset == 0) {$enc_type = intval($icmsConfigUser['enc_type']);}
 	if(function_exists('hash'))
 	{
 		if($enc_type == 0) {$pass = md5($pass);} // no salt used for compatibility with external scripts such as ipb/phpbb etc.
@@ -2201,10 +2198,10 @@ function icms_conv_local2nr($string)
  * @return string month name
  */
 function Icms_getMonthNameById($month_id) {
-	global $xoopsConfig;
+	global $icmsConfig;
 	icms_loadLanguageFile('core', 'calendar');
 	$month_id = icms_conv_local2nr($month_id);
-	if( $xoopsConfig['use_ext_date'] == 1 && defined ('_CALENDAR_TYPE') && _CALENDAR_TYPE == "jalali"){
+	if( $icmsConfig['use_ext_date'] == true && defined ('_CALENDAR_TYPE') && _CALENDAR_TYPE == "jalali"){
 		switch($month_id) {
 			case 1:
 				return _CAL_FARVARDIN;
@@ -2286,360 +2283,10 @@ function Icms_getMonthNameById($month_id) {
 }
 
 /**
- * These functions are some Persian users related functions
- * In ImpressCMS we are trying to bring different calendar type in core, so this is the place to place them
- * If you know other calendars, please contact ImpressCMS developers to add them to core ;-)
- *
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi
- * @copyright (C) jalali Date function by Milad Rastian (miladmovie AT yahoo DOT com)
- * @copyright (C) 2003 FARSI PROJECTS GROUP
- * @since		1.1.2
- * @author		Roozbeh Pournader and Mohammad Toossi
- * @author		jalali Date function by Milad Rastian (miladmovie AT yahoo DOT com)
- * @author		FARSI PROJECTS GROUP
- * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @param	int	$a	Integer to divide
- * @param	int	$b	Integer to divide to
- * @return	int
- */
-function div($a,$b) {
-    return (int) ($a / $b);
-}
-
-/**
- * Converts gregorian to jalali calendar
- *
- * @param int $g_y	The gregorian year
- * @param int $g_m	The gregorian month
- * @param int $g_d	The gregorian day
- * @return array The jalali date array
- */
-function gregorian_to_jalali ($g_y, $g_m, $g_d)
-{
-	$g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-	$j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
-
-	$gy = $g_y-1600;
-	$gm = $g_m-1;
-	$gd = $g_d-1;
-
-	$g_day_no = 365*$gy+div($gy+3,4)-div($gy+99,100)+div($gy+399,400);
-
-	for ($i=0; $i < $gm; ++$i)
-	   $g_day_no += $g_days_in_month[$i];
-	if ($gm>1 && (($gy%4==0 && $gy%100!=0) || ($gy%400==0)))
-	   /* leap and after Feb */
-	   $g_day_no++;
-	$g_day_no += $gd;
-
-	$j_day_no = $g_day_no-79;
-
-	$j_np = div($j_day_no, 12053); /* 12053 = 365*33 + 32/4 */
-	$j_day_no = $j_day_no % 12053;
-
-	$jy = 979+33*$j_np+4*div($j_day_no,1461); /* 1461 = 365*4 + 4/4 */
-
-	$j_day_no %= 1461;
-
-	if ($j_day_no >= 366) {
-	   $jy += div($j_day_no-1, 365);
-	   $j_day_no = ($j_day_no-1)%365;
-	}
-
-	for ($i = 0; $i < 11 && $j_day_no >= $j_days_in_month[$i]; ++$i)
-	   $j_day_no -= $j_days_in_month[$i];
-	$jm = $i+1;
-	$jd = $j_day_no+1;
-
-	return array($jy, $jm, $jd);
-}
-
-/**
- * Converts jalali to gregorian calendar
- *
- * @param int $j_y	The jalali year
- * @param int $j_m	The jalali month
- * @param int $j_d	The jalali day
- * @return array The gregorian date array
- */
-function jalali_to_gregorian($j_y, $j_m, $j_d)
-{
-	$g_days_in_month = array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-	$j_days_in_month = array(31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
-
-  $jy = $j_y-979;
-  $jm = $j_m-1;
-  $jd = $j_d-1;
-
-  $j_day_no = 365*$jy + div($jy, 33)*8 + div($jy%33+3, 4);
-  for ($i=0; $i < $jm; ++$i)
-     $j_day_no += $j_days_in_month[$i];
-
-  $j_day_no += $jd;
-
-  $g_day_no = $j_day_no+79;
-
-  $gy = 1600 + 400*div($g_day_no, 146097); /* 146097 = 365*400 + 400/4 - 400/100 + 400/400 */
-  $g_day_no = $g_day_no % 146097;
-
-  $leap = true;
-  if ($g_day_no >= 36525) /* 36525 = 365*100 + 100/4 */
-  {
-     $g_day_no--;
-     $gy += 100*div($g_day_no,  36524); /* 36524 = 365*100 + 100/4 - 100/100 */
-     $g_day_no = $g_day_no % 36524;
-
-     if ($g_day_no >= 365)
-        $g_day_no++;
-     else
-        $leap = false;
-  }
-
-  $gy += 4*div($g_day_no, 1461); /* 1461 = 365*4 + 4/4 */
-  $g_day_no %= 1461;
-
-  if ($g_day_no >= 366) {
-     $leap = false;
-
-     $g_day_no--;
-     $gy += div($g_day_no, 365);
-     $g_day_no = $g_day_no % 365;
-  }
-
-  for ($i = 0; $g_day_no >= $g_days_in_month[$i] + ($i == 1 && $leap); $i++)
-     $g_day_no -= $g_days_in_month[$i] + ($i == 1 && $leap);
-  $gm = $i+1;
-  $gd = $g_day_no+1;
-
-  return array($gy, $gm, $gd);
-}
-
-/*
- * Finds the begining day of the month
- *
- * @param int $month	The month
- * @param int $day	The day
- * @param int $year	The year
- * @return string The beginning day of the month
- */
-function mstart($month,$day,$year)
-{
-	list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-	list( $year, $month, $day ) = jalali_to_gregorian($jyear, $jmonth, '1');
-	$timestamp=mktime(0,0,0,$month,$day,$year);
-	return date('w',$timestamp);
-}
-// End of finding the begining day Of months
-
-/*
- * Finds the last day of the month
- *
- * @param int $month	The month
- * @param int $day	The day
- * @param int $year	The year
- * @return string The last day of the month
- */
-function lastday ($month,$day,$year)
-{
-	$lastdayen=date('d',mktime(0,0,0,$month+1,0,$year));
-	list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-	$lastdatep=$jday;
-	while($jday!='1')
-	{
-		if($day<$lastdayen)
-		{
-			$day++;
-			list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-			if($jday=='1') break;
-			if($jday='1') $lastdatep++;
-		}
-		else
-		{
-			$day=0;
-			$month++;
-			if($month==13)
-			{
-					$month='1';
-					$year++;
-			}
-		}
-
-	}
-	return $lastdatep-1;
-}
-
-/*
- * Make time for jalali calendar
- *
- * @param int $hour	The hour
- * @param int $minute	The minute
- * @param int $second	The second
- * @param int $jmonth	The jalali month
- * @param int $jday	The jalali day
- * @param int $jyear	The jalali year
- * @return string The mktime string
- */
-function jmaketime($hour,$minute,$second,$jmonth,$jday,$jyear)
-{
-	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
-	if ( $basecheck ){
-	$hour = icms_conv_local2nr($hour);
-	$minute = icms_conv_local2nr($minute);
-	$second = icms_conv_local2nr($second);
-	$jmonth = icms_conv_local2nr($jday);
-	$jyear = icms_conv_local2nr($jyear);
-	}
-	list( $year, $month, $day ) = jalali_to_gregorian($jyear, $jmonth, $jday);
-	$i=mktime($hour,$minute,$second,$month,$day,$year);
-	return $i;
-}
-
-/*
- * Make time for jalali calendar
- *
- * @param string $type	The type of date string?
- * @param string $maket	The date string type
- * @return mixed The mktime string
- */
-function jdate($type,$maket='now')
-{
-    global $xoopsConfig;
-	icms_loadLanguageFile('core', 'calendar');
-	$result='';
-	if($maket=='now'){
-		$year=date('Y');
-		$month=date('m');
-		$day=date('d');
-		list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-		$maket=jmaketime(date('h'),date('i'),date('s'),$jmonth,$jday,$jyear);
-	}else{
-		$date=date('Y-m-d',$maket);
-		list( $year, $month, $day ) = preg_split ( '/-/', $date );
-
-		list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-		}
-
-	$need= $maket;
-	$year=date('Y',$need);
-	$month=date('m',$need);
-	$day=date('d',$need);
-	$i=0;
-	while($i<strlen($type))
-	{
-		$subtype=substr($type,$i,1);
-		switch ($subtype)
-		{
-
-			case 'A':
-				$result1=date('a',$need);
-				if($result1=='pm') $result.=_CAL_PM_LONG;
-				else $result.=_CAL_AM_LONG;
-				break;
-
-			case 'a':
-				$result1=date('a',$need);
-				if($result1=='pm') $result.=_CAL_PM;
-				else $result.=_CAL_AM;
-				break;
-			case 'd':
-				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-				if($jday<10)$result1='0'.$jday;
-				else 	$result1=$jday;
-				$result.=$result1;
-				break;
-			case 'D':
-				$result1=date('D',$need);
-				if($result1=='Sat') $result1=_CAL_SAT;
-				else if($result1=='Sun') $result1=_CAL_SUN;
-				else if($result1=='Mon') $result1=_CAL_MON;
-				else if($result1=='Tue') $result1=_CAL_TUE;
-				else if($result1=='Wed') $result1=_CAL_WED;
-				else if($result1=='Thu') $result1=_CAL_THU;
-                                else if($result1=='Fri') $result1=_CAL_FRI;
-				$result.=$result1;
-				break;
-			case'F':
-				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-				$result.=Icms_getMonthNameById($jmonth);
-				break;
-			case 'g':
-				$result.=date('g',$need);
-				break;
-			case 'G':
-				$result.=date('G',$need);
-				break;
-				case 'h':
-				$result.=date('h',$need);
-				break;
-			case 'H':
-				$result.=date('H',$need);
-				break;
-			case 'i':
-				$result.=date('i',$need);
-				break;
-			case 'j':
-				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-				$result.=$jday;
-				break;
-			case 'l':
-				$result1=date('l',$need);
-				if($result1=='Saturday') $result1=_CAL_SATURDAY;
-				else if($result1=='Sunday') $result1=_CAL_SUNDAY;
-				else if($result1=='Monday') $result1=_CAL_MONDAY;
-				else if($result1=='Tuesday') $result1=_CAL_TUESDAY;
-				else if($result1=='Wednesday') $result1=_CAL_WEDNESDAY;
-				else if($result1=='Thursday') $result1=_CAL_THURSDAY;
-				else if($result1=='Friday') $result1=_CAL_FRIDAY;
-				$result.=$result1;
-				break;
-			case 'm':
-				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-				if($jmonth<10) $result1='0'.$jmonth;
-				else	$result1=$jmonth;
-				$result.=$result1;
-				break;
-			case 'M':
-				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-				$result.=Icms_getMonthNameById($jmonth);
-				break;
-			case 'n':
-				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-				$result.=$jmonth;
-				break;
-			case 's':
-				$result.=date('s',$need);
-				break;
-			case 'S':
-				$result.=_CAL_SUFFIX;
-				break;
-			case 't':
-				$result.=lastday ($month,$day,$year);
-				break;
-			case 'w':
-				$result.=date('w',$need);
-				break;
-			case 'y':
-				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-				$result.=substr($jyear,2,4);
-				break;
-			case 'Y':
-				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-				$result.=$jyear;
-				break;
-			default:
-				$result.=$subtype;
-		}
-	$i++;
-	}
-	return $result;
-}
-
-/**
  * This function is to convert date() function outputs into local values
  *
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @since		1.1.2
+ * @since		1.2
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @param int $type	The type of date string?
  * @param string $maket	The date string type
@@ -2647,6 +2294,11 @@ function jdate($type,$maket='now')
  */
 function ext_date($type,$maket='now')
 {
+/*    	$string = str_replace(
+		array(_CAL_AM, _CAL_PM, _CAL_AM_LONG, _CAL_PM_LONG, _CAL_SAT, _CAL_SUN, _CAL_MON, _CAL_TUE, _CAL_WED, _CAL_THU, _CAL_FRI, _CAL_SATURDAY, _CAL_SUNDAY, _CAL_MONDAY, _CAL_TUESDAY, _CAL_WEDNESDAY, _CAL_THURSDAY, _CAL_FRIDAY),
+		array('Am', 'Pm', 'AM', 'PM', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'),
+		$string);
+*/
 	icms_loadLanguageFile('core', 'calendar');
 	$result='';
 	if($maket=='now'){
@@ -2896,7 +2548,7 @@ function icms_getCurrentUrls() {
  * Deletes a file
  *
  * @param string $dirname path of the file
- * @return	bool The result of deleting the file/path
+ * @return	The unlinked dirname
  */
 function icms_deleteFile($dirname) {
 	// Simple delete for a file
@@ -2985,9 +2637,8 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
  **/
 function remove_usersxdays (){
 	$db =& Database::getInstance();
-	$config_handler =& xoops_gethandler('config');
-	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-	$days = $xoopsConfigUser['delusers'];
+	global $icmsConfigUser;
+	$days = $icmsConfigUser['delusers'];
 	$delete_regdate= time() - ( $days * 24 * 60 * 60 );  // X days/month * 24 hrs/day
 	$sql = sprintf("DELETE FROM %s WHERE (level = '0' AND user_regdate < '%s')", $db->prefix('users'), $delete_regdate);
 	if(!$result = $db->queryF($sql)){
@@ -3185,13 +2836,13 @@ function one_wordwrap($string,$width=false){
 * @param	bool  $remove_admin_cache      True to remove admin cache, if required.
 */
 function icms_clean_folders($dir, $remove_admin_cache=false) {
-	global $xoopsConfig;
+	global $icmsConfig;
 	foreach ($dir as $d)
 	{
 		$dd = opendir($d);
 		while($file = readdir($dd))
 		{
-			$files_array = $remove_admin_cache ? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn') : ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn' && $file != 'adminmenu_' . $xoopsConfig['language'] . '.php');
+			$files_array = $remove_admin_cache ? ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn') : ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess' && $file != '.svn' && $file != 'adminmenu_' . $icmsConfig['language'] . '.php');
 			if(is_file($d.$file) && $files_array)
 			{
 				unlink($d.$file);
@@ -3208,7 +2859,7 @@ function icms_clean_folders($dir, $remove_admin_cache=false) {
  * @param string $dir Directory name
  * @param bool $deleteRootToo Delete specified top-level directory as well
  */
-function icms_unlinkRecursive($dir, $deleteRootToo)
+function icms_unlinkRecursive($dir, $deleteRootToo=true)
 {
    if(!$dh = @opendir($dir))
    {
@@ -3223,7 +2874,7 @@ function icms_unlinkRecursive($dir, $deleteRootToo)
 
        if (!@unlink($dir . '/' . $obj))
        {
-           unlinkRecursive($dir.'/'.$obj, true);
+           icms_unlinkRecursive($dir.'/'.$obj, true);
        }
    }
 
@@ -3242,9 +2893,7 @@ function icms_unlinkRecursive($dir, $deleteRootToo)
  *
  */
 function icms_PasswordMeter(){
-    global $xoTheme;
-	$config_handler =& xoops_gethandler('config');
-	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+    global $xoTheme, $icmsConfigUser;
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript('', array('type' => ''), '
@@ -3256,7 +2905,7 @@ function icms_PasswordMeter(){
 					$.fn.samePassword = "Username and Password identical.";
 					$.fn.resultStyle = "";
 				$(".password_adv").passStrength({
-					minPass: '.$xoopsConfigUser['minpass'].',
+					minPass: '.$icmsConfigUser['minpass'].',
 					shortPass: 		"top_shortPass",
 					badPass:		"top_badPass",
 					goodPass:		"top_goodPass",

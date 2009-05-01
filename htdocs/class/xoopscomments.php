@@ -13,11 +13,11 @@
 * @version	$Id$
 */
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
-include_once XOOPS_ROOT_PATH."/class/xoopstree.php";
-require_once XOOPS_ROOT_PATH.'/class/xoopsobject.php';
+include_once ICMS_ROOT_PATH."/class/xoopstree.php";
+require_once ICMS_ROOT_PATH.'/class/xoopsobject.php';
 icms_loadLanguageFile('core', 'comment');
 
 class XoopsComments extends XoopsObject
@@ -202,7 +202,7 @@ class XoopsComments extends XoopsObject
    */
 	function printNavBar($item_id, $mode="flat", $order=1)
 	{
-		global $xoopsConfig, $xoopsUser;
+		global $icmsConfig, $xoopsUser;
 		echo "<form method='get' action='".$_SERVER['PHP_SELF']."'><table width='100%' border='0' cellspacing='1' cellpadding='2'><tr><td class='bg1' align='center'><select name='mode'><option value='nocomments'";
 		if ( $mode == "nocomments" ) {
 			echo " selected='selected'";
@@ -224,7 +224,7 @@ class XoopsComments extends XoopsObject
 			echo " selected='selected'";
 		}
 		echo ">". _NEWESTFIRST ."</option></select><input type='hidden' name='item_id' value='".intval($item_id)."' /><input type='submit' value='". _CM_REFRESH ."' />";
-		if ( $xoopsConfig['anonpost'] == 1 || $xoopsUser ) {
+		if ( $icmsConfig['anonpost'] == 1 || $xoopsUser ) {
 			if ($mode != "flat" || $mode != "nocomments" || $mode != "thread" ) {
 				$mode = "flat";
 			}
@@ -252,7 +252,7 @@ class XoopsComments extends XoopsObject
    */
 	function showThreadPost($order, $mode, $adminview=0, $color_num=1)
 	{
-		global $xoopsConfig, $xoopsUser;
+		global $icmsConfig, $xoopsUser;
 		$edit_image = "";
 		$reply_image = "";
 		$delete_image = "";
@@ -266,23 +266,23 @@ class XoopsComments extends XoopsObject
 			$poster = 0;
 		}
 		if ( $this->getVar("icon") != null && $this->getVar("icon") != "" ) {
-			$subject_image = "<a name='".$this->getVar("comment_id")."' id='".$this->getVar("comment_id")."'></a><img src='".XOOPS_URL."/images/subject/".$this->getVar("icon")."' alt='' />";
+			$subject_image = "<a name='".$this->getVar("comment_id")."' id='".$this->getVar("comment_id")."'></a><img src='".ICMS_URL."/images/subject/".$this->getVar("icon")."' alt='' />";
 		} else {
-			$subject_image =  "<a name='".$this->getVar("comment_id")."' id='".$this->getVar("comment_id")."'></a><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/no_posticon.gif' alt='' />";
+			$subject_image =  "<a name='".$this->getVar("comment_id")."' id='".$this->getVar("comment_id")."'></a><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/no_posticon.gif' alt='' />";
 		}
 		if ( $adminview ) {
-			$ip_image = "<img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/ip.gif' alt='".$this->getVar("ip")."' />";
+			$ip_image = "<img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/ip.gif' alt='".$this->getVar("ip")."' />";
 		} else {
-			$ip_image = "<img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/ip.gif' alt='' />";
+			$ip_image = "<img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/ip.gif' alt='' />";
 		}
 		if ( $adminview || ($xoopsUser && $this->getVar("user_id") == $xoopsUser->getVar("uid")) ) {
-			$edit_image = "<a href='editcomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/edit.gif' alt='"._EDIT."' /></a>";
+			$edit_image = "<a href='editcomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/edit.gif' alt='"._EDIT."' /></a>";
 		}
-		if ( $xoopsConfig['anonpost'] || $xoopsUser ) {
-			$reply_image = "<a href='replycomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/reply.gif' alt='"._REPLY."' /></a>";
+		if ( $icmsConfig['anonpost'] || $xoopsUser ) {
+			$reply_image = "<a href='replycomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/reply.gif' alt='"._REPLY."' /></a>";
 		}
 		if ( $adminview ) {
-			$delete_image = "<a href='deletecomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/delete.gif' alt='"._DELETE."' /></a>";
+			$delete_image = "<a href='deletecomment.php?comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".intval($order)."'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/delete.gif' alt='"._DELETE."' /></a>";
 		}
 
 		if ( $poster ) {
@@ -306,46 +306,46 @@ class XoopsComments extends XoopsObject
 			} else {
 				$online_image = "";
 			}
-			$profile_image = "<a href='".XOOPS_URL."/userinfo.php?uid=".$poster->getVar("uid")."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/profile.gif' alt='"._PROFILE."' /></a>";
+			$profile_image = "<a href='".ICMS_URL."/userinfo.php?uid=".$poster->getVar("uid")."'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/profile.gif' alt='"._PROFILE."' /></a>";
 			if ( $xoopsUser ) {
-				$pm_image =  "<a href='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".$poster->getVar("uid")."\",\"pmlite\",800,680);'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/pm.gif' alt='".sprintf(_SENDPMTO,$poster->getVar("uname", "E"))."' /></a>";
+				$pm_image =  "<a href='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send2=1&amp;to_userid=".$poster->getVar("uid")."\",\"pmlite\",800,680);'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/pm.gif' alt='".sprintf(_SENDPMTO,$poster->getVar("uname", "E"))."' /></a>";
 			} else {
 				$pm_image = "";
 			}
    			if ( $poster->getVar("user_viewemail") ) {
-				$email_image = "<a href='mailto:".$poster->getVar("email", "E")."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/email.gif' alt='".sprintf(_SENDEMAILTO,$poster->getVar("uname", "E"))."' /></a>";
+				$email_image = "<a href='mailto:".$poster->getVar("email", "E")."'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/email.gif' alt='".sprintf(_SENDEMAILTO,$poster->getVar("uname", "E"))."' /></a>";
 			} else {
 				$email_image = "";
 			}
 			$posterurl = $poster->getVar("url");
    			if ( $posterurl != "" ) {
-				$www_image = "<a href='$posterurl' target='_blank'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/www.gif' alt='"._VISITWEBSITE."' /></a>";
+				$www_image = "<a href='$posterurl' target='_blank'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/www.gif' alt='"._VISITWEBSITE."' /></a>";
 			} else {
 				$www_image = "";
 			}
    			if ( $poster->getVar("user_icq") != "" ) {
-				$icq_image = "<a href='http://wwp.icq.com/scripts/search.dll?to=".$poster->getVar("user_icq", "E")."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/icq_add.gif' alt='"._ADD."' /></a>";
+				$icq_image = "<a href='http://wwp.icq.com/scripts/search.dll?to=".$poster->getVar("user_icq", "E")."'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/icq_add.gif' alt='"._ADD."' /></a>";
 			} else {
 				$icq_image = "";
 			}
 			if ( $poster->getVar("user_aim") != "" ) {
-				$aim_image = "<a href='aim:goim?screenname=".$poster->getVar("user_aim", "E")."&message=Hi+".$poster->getVar("user_aim")."+Are+you+there?'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/aim.gif' alt='aim' /></a>";
+				$aim_image = "<a href='aim:goim?screenname=".$poster->getVar("user_aim", "E")."&message=Hi+".$poster->getVar("user_aim")."+Are+you+there?'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/aim.gif' alt='aim' /></a>";
 			} else {
 				$aim_image = "";
 			}
    			if ( $poster->getVar("user_yim") != "" ) {
-				$yim_image = "<a href='http://edit.yahoo.com/config/send_webmesg?.target=".$poster->getVar("user_yim", "E")."&.src=pg'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/yim.gif' alt='yim' /></a>";
+				$yim_image = "<a href='http://edit.yahoo.com/config/send_webmesg?.target=".$poster->getVar("user_yim", "E")."&.src=pg'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/yim.gif' alt='yim' /></a>";
 			} else {
 				$yim_image = "";
 			}
 			if ( $poster->getVar("user_msnm") != "" ) {
-				$msnm_image = "<a href='".XOOPS_URL."/userinfo.php?uid=".$poster->getVar("uid")."'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/msnm.gif' alt='msnm' /></a>";
+				$msnm_image = "<a href='".ICMS_URL."/userinfo.php?uid=".$poster->getVar("uid")."'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/msnm.gif' alt='msnm' /></a>";
 			} else {
 				$msnm_image = "";
 			}
 			showThread($color_num, $subject_image, $this->getVar("subject"), $text, $post_date, $ip_image, $reply_image, $edit_image, $delete_image, $poster->getVar("uname"), $rank['title'], $rank['image'], $avatar_image, $reg_date, $posts, $user_from, $online_image, $profile_image, $pm_image, $email_image, $www_image, $icq_image, $aim_image, $yim_image, $msnm_image);
 		} else {
-			showThread($color_num, $subject_image, $this->getVar("subject"), $this->getVar("comment"), $post_date, $ip_image, $reply_image, $edit_image, $delete_image, $xoopsConfig['anonymous']);
+			showThread($color_num, $subject_image, $this->getVar("subject"), $this->getVar("comment"), $post_date, $ip_image, $reply_image, $edit_image, $delete_image, $icmsConfig['anonymous']);
 		}
 	}
 
@@ -389,7 +389,7 @@ class XoopsComments extends XoopsObject
 		} else {
 			$icon = "icons/no_posticon.gif";
 		}
-		echo "<tr class='$bg' align='"._GLOBAL_LEFT."'><td>".$prefix."<img src='".XOOPS_URL."/images/".$icon."'>&nbsp;<a href='".$_SERVER['PHP_SELF']."?item_id=".$this->getVar("item_id")."&amp;comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".$order."#".$this->getVar("comment_id")."'>".$this->getVar("subject")."</a></td><td><a href='".XOOPS_URL."/userinfo.php?uid=".$this->getVar("user_id")."'>".XoopsUser::getUnameFromId($this->getVar("user_id"))."</a></td><td>".$date."</td></tr>";
+		echo "<tr class='$bg' align='"._GLOBAL_LEFT."'><td>".$prefix."<img src='".ICMS_URL."/images/".$icon."'>&nbsp;<a href='".$_SERVER['PHP_SELF']."?item_id=".$this->getVar("item_id")."&amp;comment_id=".$this->getVar("comment_id")."&amp;mode=".$mode."&amp;order=".$order."#".$this->getVar("comment_id")."'>".$this->getVar("subject")."</a></td><td><a href='".ICMS_URL."/userinfo.php?uid=".$this->getVar("user_id")."'>".XoopsUser::getUnameFromId($this->getVar("user_id"))."</a></td><td>".$date."</td></tr>";
 	}
 
 

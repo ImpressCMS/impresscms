@@ -127,20 +127,14 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				break;
 				case 'theme' :
 				case 'theme_multi' :
+				case 'theme_admin' :
 					$ele = ($config [$i]->getVar ( 'conf_formtype' ) != 'theme_multi') ? new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () ) : new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = XoopsLists::getThemesList ();
+					$dirlist = ($config [$i]->getVar ( 'conf_formtype' ) != 'theme_admin') ? XoopsLists::getThemesList () : XoopsLists::getAdminThemesList ();
 					if (! empty ( $dirlist )) {
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
 					}
-					//$themeset_handler =& xoops_gethandler('themeset');
-					//$themesetlist =& $themeset_handler->getList();
-					//asort($themesetlist);
-					//foreach ($themesetlist as $key => $name) {
-					//  $ele->addOption($key, $name.' ('._MD_AM_THEMESET.')');
-					//}
-					// old theme value is used to determine whether to update cache or not. kind of dirty way
 					$form->addElement ( new XoopsFormHidden ( '_old_theme', $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'editor' :
@@ -285,7 +279,11 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				break;
 				case 'select_pages' :
 					$myts = & MyTextSanitizer::getInstance ();
-					$content_handler = & xoops_gethandler ( 'content' );
+					if (!file_exists(ICMS_ROOT_PATH.'/kernel/content.php')){
+						$content_handler = & xoops_getmodulehandler ( 'content', 'content' );
+					}else{
+						$content_handler = & xoops_gethandler ( 'content' );
+					}
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 					$ele->addOptionArray ( $content_handler->getContentList () );
 				break;
@@ -444,7 +442,11 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				break;
 				case 'select_pages' :
 					$myts = & MyTextSanitizer::getInstance ();
-					$content_handler = & xoops_gethandler ( 'content' );
+					if (!file_exists(ICMS_ROOT_PATH.'/kernel/content.php')){
+						$content_handler = & xoops_getmodulehandler ( 'content', 'content' );
+					}else{
+						$content_handler = & xoops_gethandler ( 'content' );
+					}
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 					$ele->addOptionArray ( $content_handler->getContentList () );
 				break;

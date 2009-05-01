@@ -54,8 +54,8 @@ else {
 }
 
 $search_form->addElement($mods_checkbox);
-if ($xoopsConfigSearch['keyword_min'] > 0) {
-	$search_form->addElement(new XoopsFormLabel(_SR_SEARCHRULE, sprintf(_SR_KEYIGNORE, icms_conv_nr2local($xoopsConfigSearch['keyword_min']))));
+if ($icmsConfigSearch['keyword_min'] > 0) {
+	$search_form->addElement(new XoopsFormLabel(_SR_SEARCHRULE, sprintf(_SR_KEYIGNORE, icms_conv_nr2local($icmsConfigSearch['keyword_min']))));
 }
 
 $search_form->addElement(new XoopsFormHidden("action", "results"));

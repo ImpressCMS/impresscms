@@ -84,9 +84,9 @@ class SystemBlocksadmin extends IcmsBlock {
 	
 	private function visible(){
 		if($this->getVar('visible','n') == 1)
-			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=visible&bid='.$this->getVar('bid').'" title="'._VISIBLE.'" ><img src="'.ICMS_URL.'/images/crystal/actions/button_ok.png" alt="'._VISIBLE.'"/></a>';
+			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=visible&bid='.$this->getVar('bid').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_ok.png" alt="'._VISIBLE.'"/></a>';
 		else
-			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=visible&bid='.$this->getVar('bid').'" title="'._VISIBLE.'" ><img src="'.ICMS_URL.'/images/crystal/actions/button_cancel.png" alt="'._VISIBLE.'"/></a>';
+			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=visible&bid='.$this->getVar('bid').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_cancel.png" alt="'._VISIBLE.'"/></a>';
 		return $rtn;
 	}
 	
@@ -109,29 +109,29 @@ class SystemBlocksadmin extends IcmsBlock {
 	// Render Methods for Action Buttons
 	
 	public function getUpActionLink(){
-		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=up&bid='.$this->getVar('bid').'" title="'._UP.'" ><img src="'.ICMS_URL.'/images/crystal/actions/up.png" alt="'._UP.'"/></a>';
+		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=up&bid='.$this->getVar('bid').'" title="'._UP.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/up.png" alt="'._UP.'"/></a>';
 		return $rtn;
 	}
 	
 	public function getDownActionLink(){
-		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=down&bid='.$this->getVar('bid').'" title="'._DOWN.'" ><img src="'.ICMS_URL.'/images/crystal/actions/down.png" alt="'._DOWN.'"/></a>';
+		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=down&bid='.$this->getVar('bid').'" title="'._DOWN.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/down.png" alt="'._DOWN.'"/></a>';
 		return $rtn;
 	}
 	
 	public function getConfigureActionLink(){
 		if($this->getVar('edit_func') == "")
 			return "";
-		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=config&bid='.$this->getVar('bid').'" title="'._CONFIGURE.'" ><img src="'.ICMS_URL.'/images/crystal/actions/configure.png" alt="'._CONFIGURE.'"/></a>';
+		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=config&bid='.$this->getVar('bid').'" title="'._CONFIGURE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/configure.png" alt="'._CONFIGURE.'"/></a>';
 		return $rtn;
 	}
 	
 	public function getCloneActionLink(){
-		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=clone&bid='.$this->getVar('bid').'" title="'._CLONE.'" ><img src="'.ICMS_URL.'/images/crystal/actions/editcopy.png" alt="'._CLONE.'"/></a>';
+		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=clone&bid='.$this->getVar('bid').'" title="'._CLONE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/editcopy.png" alt="'._CLONE.'"/></a>';
 		return $rtn;
 	}
 	
 	public function getEditActionLink(){
-		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=mod&bid='.$this->getVar('bid').'" title="'._EDIT.'" ><img src="'.ICMS_URL.'/images/crystal/actions/edit.png" alt="'._EDIT.'"/></a>';
+		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=mod&bid='.$this->getVar('bid').'" title="'._EDIT.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/edit.png" alt="'._EDIT.'"/></a>';
 		return $rtn;
 	}
 	

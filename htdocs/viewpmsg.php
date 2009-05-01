@@ -73,7 +73,7 @@ if (!is_object($xoopsUser)) {
         if ($postername) {
             echo "<a href='userinfo.php?uid=".intval($pm_arr[$i]->getVar("from_userid"))."'>".$postername."</a>";
         } else {
-            echo $xoopsConfig['anonymous'];
+            echo $icmsConfig['anonymous'];
         }
         echo "</td>\n";
 		echo "<td valign='middle'><a href='readpmsg.php?start=".intval(($total_messages-$i-1)),"&amp;total_messages=".intval($total_messages)."'>".$pm_arr[$i]->getVar("subject")."</a></td>";

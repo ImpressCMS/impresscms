@@ -111,13 +111,10 @@ class TinyMCE
 		if(!is_readable(XOOPS_ROOT_PATH . $this->rootpath. '/themes/'.$this->setting["theme"].'/css/' .$this->setting["content_css"])) {
 			unset( $this->setting["content_css"] );
 		}
-		$config_handler =& xoops_gethandler('config');
-		$icmsConfigMultiLanguage =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
-		$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-        $easiestml_exist = ($icmsConfigMultiLanguage['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
+		$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
 		if( $this->setting["theme"] == "advanced" ) {
 			$this->setting["theme_advanced_buttons1"] = "bold,italic,underline,strikethrough,sub,sup,separator,justify"._GLOBAL_LEFT.",justifycenter,justify"._GLOBAL_RIGHT.",justifyfull,formatselect,fontselect,fontsizeselect";
-			$this->setting["theme_advanced_buttons2"] = "".(($xoopsConfigPersona['use_hidden'] == 1)?"icmshide,":"")."xoopsquote,xoopscode,".(($easiestml_exist)?"icmsmlcontent,":"")."separator,bullist,numlist,separator,outdent,indent,separator,undo,redo,removeformat,separator,link,unlink,anchor,xoopsimagemanager,media,separator,charmap,nonbreaking,hr,xoopsemotions,separator,pastetext,pasteword,separator,forecolor,backcolor";
+			$this->setting["theme_advanced_buttons2"] = "".(($icmsConfigPersona['use_hidden'] == 1)?"icmshide,":"")."xoopsquote,xoopscode,".(($easiestml_exist)?"icmsmlcontent,":"")."separator,bullist,numlist,separator,outdent,indent,separator,undo,redo,removeformat,separator,link,unlink,anchor,xoopsimagemanager,media,separator,charmap,nonbreaking,hr,xoopsemotions,separator,pastetext,pasteword,separator,forecolor,backcolor";
 			$this->setting["theme_advanced_buttons3"] = "tablecontrols,separator,cleanup,visualaid,visualchars,separator,insertdate,inserttime,separator,preview,fullscreen,help,code";
 		}
 		

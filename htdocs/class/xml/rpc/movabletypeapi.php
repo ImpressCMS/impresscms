@@ -13,10 +13,10 @@
 * @version	$Id$
 */
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
-require_once XOOPS_ROOT_PATH.'/class/xml/rpc/xmlrpcapi.php';
+require_once ICMS_ROOT_PATH.'/class/xml/rpc/xmlrpcapi.php';
 
 class MovableTypeApi extends XoopsXmlRpcApi
 {

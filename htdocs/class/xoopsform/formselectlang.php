@@ -13,7 +13,7 @@
 * @version	$Id$
 */
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 /**
@@ -26,11 +26,11 @@ if (!defined('XOOPS_ROOT_PATH')) {
 /**
  * lists of values
  */
-include_once XOOPS_ROOT_PATH."/class/xoopslists.php";
+include_once ICMS_ROOT_PATH."/class/xoopslists.php";
 /**
  * parent class
  */
-include_once XOOPS_ROOT_PATH."/class/xoopsform/formselect.php";
+include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 
 /**
  * A select field with available languages
@@ -49,7 +49,7 @@ class XoopsFormSelectLang extends XoopsFormSelect
 	 * @param	string	$caption
 	 * @param	string	$name
 	 * @param	mixed	$value	Pre-selected value (or array of them).
-	 * 							Legal is any name of a XOOPS_ROOT_PATH."/language/" subdirectory.
+	 * 							Legal is any name of a ICMS_ROOT_PATH."/language/" subdirectory.
 	 * @param	int		$size	Number of rows. "1" makes a drop-down-list.
 	 */
 	function XoopsFormSelectLang($caption, $name, $value = null, $size = 1)

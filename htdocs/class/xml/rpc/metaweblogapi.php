@@ -13,10 +13,10 @@
 * @version	$Id$
 */
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
-require_once XOOPS_ROOT_PATH.'/class/xml/rpc/xmlrpcapi.php';
+require_once ICMS_ROOT_PATH.'/class/xml/rpc/xmlrpcapi.php';
 
 class MetaWeblogApi extends XoopsXmlRpcApi
 {
@@ -161,8 +161,8 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                         break;
                     case 'postid':
                         $struct->add('postid', new XoopsXmlRpcString($value));
-                        $struct->add('link', new XoopsXmlRpcString(XOOPS_URL.'/modules/xoopssections/item.php?item='.$value));
-                        $struct->add('permaLink', new XoopsXmlRpcString(XOOPS_URL.'/modules/xoopssections/item.php?item='.$value));
+                        $struct->add('link', new XoopsXmlRpcString(ICMS_URL.'/modules/xoopssections/item.php?item='.$value));
+                        $struct->add('permaLink', new XoopsXmlRpcString(ICMS_URL.'/modules/xoopssections/item.php?item='.$value));
                         break;
                     case 'title':
                         $struct->add('title', new XoopsXmlRpcString($value));
@@ -208,8 +208,8 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                                 break;
                             case 'postid':
                                 $struct->add('postid', new XoopsXmlRpcString($value));
-                                $struct->add('link', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/article.php?item_id='.$value));
-                                $struct->add('permaLink', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/article.php?item_id='.$value));
+                                $struct->add('link', new XoopsXmlRpcString(ICMS_URL.'/modules/news/article.php?item_id='.$value));
+                                $struct->add('permaLink', new XoopsXmlRpcString(ICMS_URL.'/modules/news/article.php?item_id='.$value));
                                 break;
                             case 'title':
                                 $struct->add('title', new XoopsXmlRpcString($value));
@@ -244,7 +244,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                 foreach ($ret as $id => $detail) {
                     $struct = new XoopsXmlRpcStruct();
                     $struct->add('description', new XoopsXmlRpcString($detail));
-                    $struct->add('htmlUrl', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/index.php?storytopic='.$id));
+                    $struct->add('htmlUrl', new XoopsXmlRpcString(ICMS_URL.'/modules/news/index.php?storytopic='.$id));
                     $struct->add('rssUrl', new XoopsXmlRpcString(''));
                     $catstruct = new XoopsXmlRpcStruct();
                     $catstruct->add($detail['title'], $struct);

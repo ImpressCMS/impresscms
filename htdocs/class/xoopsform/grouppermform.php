@@ -21,15 +21,15 @@
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
  
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 
-require_once XOOPS_ROOT_PATH . '/class/xoopsform/formelement.php';
-require_once XOOPS_ROOT_PATH . '/class/xoopsform/formhidden.php';
-require_once XOOPS_ROOT_PATH . '/class/xoopsform/formbutton.php';
-require_once XOOPS_ROOT_PATH . '/class/xoopsform/formelementtray.php';
-require_once XOOPS_ROOT_PATH . '/class/xoopsform/form.php';
+require_once ICMS_ROOT_PATH . '/class/xoopsform/formelement.php';
+require_once ICMS_ROOT_PATH . '/class/xoopsform/formhidden.php';
+require_once ICMS_ROOT_PATH . '/class/xoopsform/formbutton.php';
+require_once ICMS_ROOT_PATH . '/class/xoopsform/formelementtray.php';
+require_once ICMS_ROOT_PATH . '/class/xoopsform/form.php';
 
 
 /**
@@ -72,7 +72,7 @@ class XoopsGroupPermForm extends XoopsForm
      */
     function XoopsGroupPermForm($title, $modid, $permname, $permdesc, $url = "")
     {
-        $this->XoopsForm($title, 'groupperm_form', XOOPS_URL . '/modules/system/admin/groupperm.php', 'post');
+        $this->XoopsForm($title, 'groupperm_form', ICMS_URL . '/modules/system/admin/groupperm.php', 'post');
         $this->_modid = intval($modid);
         $this->_permName = $permname;
         $this->_permDesc = $permdesc;

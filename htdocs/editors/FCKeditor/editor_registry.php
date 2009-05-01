@@ -9,14 +9,14 @@
  * @version		$Id: editor_registry.php 4709 2008-09-06 21:07:58Z skenow $
  * @package		xoopseditor
  */
-global $xoopsConfig;
+global $icmsConfig;
 
 $current_path = __FILE__;
 if ( DIRECTORY_SEPARATOR != "/" ) $current_path = str_replace( strpos( $current_path, "\\\\", 2 ) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path);
 $root_path = dirname($current_path);
 
-$xoopsConfig['language'] = preg_replace("/[^a-z0-9_\-]/i", "", $xoopsConfig['language']);
-if(!@include_once($root_path."/language/".$xoopsConfig['language'].".php")){
+$icmsConfig['language'] = preg_replace("/[^a-z0-9_\-]/i", "", $icmsConfig['language']);
+if(!@include_once($root_path."/language/".$icmsConfig['language'].".php")){
 	include_once($root_path."/language/english.php");
 }
 

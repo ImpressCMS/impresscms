@@ -33,10 +33,10 @@ $limit = (isset($_GET['limit']))?intval($_GET['limit']):((isset($_POST['limit'])
 $start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
 $type = (isset($_GET['type']))?$_GET['type']:((isset($_POST['type']))?$_POST['type']:'ibrow');
 
-global $xoopsConfig;
+global $icmsConfig;
 #Adding language files
-if (file_exists(ICMS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin/images.php")) {
-	include ICMS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin/images.php";
+if (file_exists(ICMS_ROOT_PATH."/modules/system/language/".$icmsConfig['language']."/admin/images.php")) {
+	include ICMS_ROOT_PATH."/modules/system/language/".$icmsConfig['language']."/admin/images.php";
 } elseif (file_exists(ICMS_ROOT_PATH."/modules/system/language/english/admin/images.php")) {
 	include ICMS_ROOT_PATH."/modules/system/language/english/admin/images.php";
 }
@@ -82,7 +82,7 @@ switch ($op){
 }
 
 function imanager_index($imgcat_id=null){
-	global $icmsTpl,$xoopsUser,$xoopsConfig,$target,$type;
+	global $icmsTpl,$xoopsUser,$icmsConfig,$target,$type;
 
 	if (!is_object($xoopsUser)) {
 		$groups = array(XOOPS_GROUP_ANONYMOUS);
@@ -751,7 +751,7 @@ function imanager_clone() {
 }
 
 function icmsPopupHeader(){
-	global $xoopsConfig,$icmsPreloadHandler;
+	global $icmsConfig,$icmsPreloadHandler;
 	if (! headers_sent ()) {
 		header ( 'Content-Type:text/html; charset=' . _CHARSET );
 		header ( 'Expires: Mon, 26 Jul 1997 05:00:00 GMT' );
@@ -765,7 +765,7 @@ function icmsPopupHeader(){
 	<head>
 	<meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" />
 	<meta http-equiv="content-language" content="' . _LANGCODE . '" />
-	<title>' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . ' - ' . _IMGMANAGER . '</title>
+	<title>' . htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ) . ' - ' . _IMGMANAGER . '</title>
 	<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>' . '<link rel="shortcut icon" type="image/ico" href="' . XOOPS_URL . '/favicon.ico" />
 	<link rel="icon" type="image/png" href="' . XOOPS_URL . '/favicon.ico" />
 	';

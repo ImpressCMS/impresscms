@@ -40,18 +40,18 @@ class IcmsFeed {
 	 * Constructor
 	 */
 	function IcmsFeed () {
-		global $xoopsConfig;
-		$this->title = $xoopsConfig['sitename'];
+		global $icmsConfig;
+		$this->title = $icmsConfig['sitename'];
 		$this->url = ICMS_URL;
-		$this->description = $xoopsConfig['slogan'];
+		$this->description = $icmsConfig['slogan'];
 		$this->language = _LANGCODE;
 		$this->charset = _CHARSET;
 		$this->pubDate = date(_DATESTRING, time());
 		$this->lastbuild = formatTimestamp( time(), 'D, d M Y H:i:s' );
-		$this->webMaster = $xoopsConfig['adminmail'];
-		$this->channelEditor = $xoopsConfig['adminmail'];
+		$this->webMaster = $icmsConfig['adminmail'];
+		$this->channelEditor = $icmsConfig['adminmail'];
 		$this->generator = XOOPS_VERSION;
-		$this-> copyright = 'Copyright ' . formatTimestamp( time(), 'Y' ) . ' ' . $xoopsConfig['sitename'];
+		$this-> copyright = 'Copyright ' . formatTimestamp( time(), 'Y' ) . ' ' . $icmsConfig['sitename'];
 		$this->width  = 200;
 		$this->height = 50;
 		$this->ttl    = 60;

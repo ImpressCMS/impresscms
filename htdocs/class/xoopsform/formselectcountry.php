@@ -13,7 +13,7 @@
 * @version	$Id$
 */
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 
@@ -28,12 +28,12 @@ if (!defined('XOOPS_ROOT_PATH')) {
 /**
  * lists of values
  */
-include_once XOOPS_ROOT_PATH."/class/xoopslists.php";
+include_once ICMS_ROOT_PATH."/class/xoopslists.php";
 
 /**
  * Parent
  */
-include_once XOOPS_ROOT_PATH."/class/xoopsform/formselect.php";
+include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 
 /**
  * A select field with countries

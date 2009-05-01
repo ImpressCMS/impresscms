@@ -29,7 +29,9 @@ define('XOOPS_CONF_SEARCH', 5);
 define('XOOPS_CONF_MAILER', 6);
 define('XOOPS_CONF_AUTH', 7);
 define('IM_CONF_MULILANGUAGE', 8);
+if(is_dir(ICMS_ROOT_PATH.'/modules/system/admin/content')){
 define('IM_CONF_CONTENT', 9);
+}
 define('XOOPS_CONF_PERSONA', 10);
 define('ICMS_CONF_CAPTCHA', 11);
 define('ICMS_CONF_PLUGINS', 12);

@@ -9,14 +9,14 @@
  * @package SmartObject
  */
 
-if (!defined("XOOPS_ROOT_PATH")) {
+if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
 
 /**
  * base class
  */
-include_once XOOPS_ROOT_PATH."/class/database/databaseupdater.php";
+include_once ICMS_ROOT_PATH."/class/database/databaseupdater.php";
 
 class IcmsMysqlDatabasetable extends IcmsDatabasetable {
 	

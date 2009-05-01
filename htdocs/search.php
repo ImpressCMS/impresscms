@@ -16,16 +16,12 @@ $xoopsOption['pagetype'] = "search";
 
 include 'mainfile.php';
 
-
-$config_handler =& xoops_gethandler('config');
-$xoopsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
-
-if ($xoopsConfigSearch['enable_search'] != 1) {
+if ($icmsConfigSearch['enable_search'] == false) {
     header('Location: '.ICMS_URL.'/index.php');
     exit();
 }
 
-$search_limiter = (($xoopsConfigSearch['enable_deep_search'] == 1) ? $xoopsConfigSearch['num_shallow_search'] : 0);
+$search_limiter = (($icmsConfigSearch['enable_deep_search'] == 1) ? $icmsConfigSearch['num_shallow_search'] : 0);
 $xoopsOption['template_main'] = 'system_search.html';
 include ICMS_ROOT_PATH.'/header.php';
 
@@ -123,20 +119,20 @@ if ($action != 'showallbyuser') {
         
         foreach ($temp_queries as $q) {
             $q = trim($q);
-            if (strlen($q) >= $xoopsConfigSearch['keyword_min']) {
+            if (strlen($q) >= $icmsConfigSearch['keyword_min']) {
                 $queries[] = $myts->addSlashes($q);
             } else {
                 $ignored_queries[] = $myts->addSlashes($q);
             }
         }
         if (count($queries) == 0) {
-            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, icms_conv_nr2local($xoopsConfigSearch['keyword_min'])));
+            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, icms_conv_nr2local($icmsConfigSearch['keyword_min'])));
             exit();
         }
     } else {
         $query = trim($query);
-        if (strlen($query) < $xoopsConfigSearch['keyword_min']) {
-            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, icms_conv_nr2local($xoopsConfigSearch['keyword_min'])));
+        if (strlen($query) < $icmsConfigSearch['keyword_min']) {
+            redirect_header('search.php', 2, sprintf(_SR_KEYTOOSHORT, icms_conv_nr2local($icmsConfigSearch['keyword_min'])));
             exit();
         }
         $queries = array($myts->addSlashes($query));
@@ -152,7 +148,7 @@ foreach ($queries as $q) {
 	$keywords[] = htmlspecialchars(stripslashes($q));
 }
 if (!empty($ignored_queries)) {
-	 $xoopsTpl->assign("label_ignored_keywords", sprintf(_SR_IGNOREDWORDS, $xoopsConfigSearch['keyword_min']));
+	 $xoopsTpl->assign("label_ignored_keywords", sprintf(_SR_IGNOREDWORDS, $icmsConfigSearch['keyword_min']));
     foreach ($ignored_queries as $q) {
     	$ignored_keywords[] = htmlspecialchars(stripslashes($q));
     }
@@ -164,7 +160,7 @@ $all_results = array();
 $all_results_counts = array();
 switch ($action) {
     case "results":
-    	$max_results_per_page = intval($xoopsConfigSearch['num_shallow_search']);
+    	$max_results_per_page = intval($icmsConfigSearch['num_shallow_search']);
 	    $module_handler =& xoops_gethandler('module');
 	    $criteria = new CriteriaCompo(new Criteria('hassearch', 1));
 	    $criteria->add(new Criteria('isactive', 1));
@@ -186,7 +182,7 @@ switch ($action) {
             	$all_results_counts[$module->getVar('name')] = $count;
 
             	if (!is_array($results) || $count == 0) {
-            		if( $xoopsConfigSearch['search_no_res_mod']){$all_results[$module->getVar('name')] = array(); }
+            		if( $icmsConfigSearch['search_no_res_mod']){$all_results[$module->getVar('name')] = array(); }
 	            } else {
 								(($count - $start) > $max_results_per_page)? $num_show_this_page = $max_results_per_page: $num_show_this_page = $count - $start;
 								for ($i = 0; $i < $num_show_this_page; $i++) {
@@ -200,7 +196,7 @@ switch ($action) {
 	                        $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
 	                    }
 	                    $results[$i]['processed_title'] = $myts->displayTarea($results[$i]['title']);
-	                    if( $xoopsConfigSearch['search_user_date']){$results[$i]['uid'] = @intval($results[$i]['uid']);
+	                    if( $icmsConfigSearch['search_user_date']){$results[$i]['uid'] = @intval($results[$i]['uid']);
 	                    if ( !empty($results[$i]['uid']) ) {
 	                        $uname = XoopsUser::getUnameFromId($results[$i]['uid']);
 	                        $results[$i]['processed_user_name'] = $uname;
@@ -209,7 +205,7 @@ switch ($action) {
 	                    $results[$i]['processed_time'] = !empty($results[$i]['time']) ? " (". formatTimestamp(intval($results[$i]['time'])).")" : "";
 	                }
 	                }
-									if ($xoopsConfigSearch['enable_deep_search'] == 1) {
+									if ($icmsConfigSearch['enable_deep_search'] == 1) {
 										if ( $count > $max_results_per_page) {
 		                    $search_url = ICMS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
 		                    $search_url .= "&mid=$mid&action=showall&andor=$andor";
@@ -236,7 +232,7 @@ switch ($action) {
 	    break;
     case "showall":
     case 'showallbyuser':
-    	$max_results_per_page = intval($xoopsConfigSearch['search_per_page']);
+    	$max_results_per_page = intval($icmsConfigSearch['search_per_page']);
 	    $module_handler =& xoops_gethandler('module');
 	    $module =& $module_handler->get($mid);
 	    $results =& $module->search($queries, $andor, 0, $start, $uid);
@@ -257,7 +253,7 @@ switch ($action) {
                     $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
                 }
                 $results[$i]['processed_title'] = $myts->displayTarea($results[$i]['title']);
-                if( $xoopsConfigSearch['search_user_date']){
+                if( $icmsConfigSearch['search_user_date']){
                 $results[$i]['uid'] = @intval($results[$i]['uid']);
                 if ( !empty($results[$i]['uid']) ) {
                     $uname = XoopsUser::getUnameFromId($results[$i]['uid']);

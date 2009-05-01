@@ -91,7 +91,7 @@ define('_TITLE', 'Title');
 define('_OPTIONS', 'Options');
 define('_QUOTE', 'Quote');
 define('_HIDDENC', 'Hidden Content:');
-define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registeration at ' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
+define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registeration at ' . htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
 define('_LIST', 'List');
 define('_LOGIN','User Login');
 define('_USERNAME','Username: ');

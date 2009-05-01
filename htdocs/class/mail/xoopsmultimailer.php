@@ -13,7 +13,7 @@
 * @version	$Id$
 */
 
-if (!defined("XOOPS_ROOT_PATH")) {
+if (!defined("ICMS_ROOT_PATH")) {
     die("ImpressCMS root path not defined");
 }
 /**
@@ -141,38 +141,35 @@ class XoopsMultiMailer extends PHPMailer {
 	 * @access public
 	 * @return void 
 	 * 
-	 * @global	$xoopsConfig
+	 * @global	$icmsConfigPersona
 	 */
 	function XoopsMultiMailer(){
-		global $xoopsConfig;
-	
-		$config_handler =& xoops_gethandler('config');
-		$xoopsMailerConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
-		$this->From = $xoopsMailerConfig['from'];
+		global $icmsConfigPersona, $icmsConfigMailer;
+		$this->From = $icmsConfigMailer['from'];
 		if ($this->From == '') {
-		    $this->From = $xoopsConfig['adminmail'];
+		    $this->From = $icmsConfigPersona['adminmail'];
 		}
 		$this->Sender = $this->From;
 
-		if ($xoopsMailerConfig["mailmethod"] == "smtpauth") {
+		if ($icmsConfigMailer["mailmethod"] == "smtpauth") {
 		    	$this->Mailer = "smtp";
 			$this->SMTPAuth = true;
 			// @todo create a config option for authentication type: none, ssl, tls
             		//$this->SMTPSecure = "ssl";
 			// TODO: change value type of xoopsConfig "smtphost" from array to text
-			$this->Host = implode(';',$xoopsMailerConfig['smtphost']);
-			$this->Username = $xoopsMailerConfig['smtpuser'];
-			$this->Password = $xoopsMailerConfig['smtppass'];
+			$this->Host = implode(';',$icmsConfigMailer['smtphost']);
+			$this->Username = $icmsConfigMailer['smtpuser'];
+			$this->Password = $icmsConfigMailer['smtppass'];
 			//$this->Port = 465;
 		} else {
-			$this->Mailer = $xoopsMailerConfig['mailmethod'];
+			$this->Mailer = $icmsConfigMailer['mailmethod'];
 			$this->SMTPAuth = false;
-			$this->Sendmail = $xoopsMailerConfig['sendmailpath'];
-			$this->Host = implode(';',$xoopsMailerConfig['smtphost']);
+			$this->Sendmail = $icmsConfigMailer['sendmailpath'];
+			$this->Host = implode(';',$icmsConfigMailer['smtphost']);
 		}
 		$this->CharSet = strtolower( _CHARSET );
-		if ( file_exists( XOOPS_ROOT_PATH . "/language/{$xoopsConfig['language']}/phpmailer.php" ) ) {
-			include( XOOPS_ROOT_PATH . "/language/{$xoopsConfig['language']}/phpmailer.php" );
+		if ( file_exists( ICMS_ROOT_PATH . "/language/{$icmsConfigPersona['language']}/phpmailer.php" ) ) {
+			include( ICMS_ROOT_PATH . "/language/{$icmsConfigPersona['language']}/phpmailer.php" );
 			$this->language = $PHPMAILER_LANG;
 		} else {
 			$this->SetLanguage( 'en', ICMS_LIBRARIES_PATH . "/phpmailer/language/" );

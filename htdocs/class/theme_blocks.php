@@ -18,9 +18,9 @@
 /**
  * This file cannot be requested directly
  */
-if ( !defined ( 'XOOPS_ROOT_PATH' )) exit ();
+if ( !defined ( 'ICMS_ROOT_PATH' )) exit ();
 
-include_once XOOPS_ROOT_PATH . '/class/template.php';
+include_once ICMS_ROOT_PATH . '/class/template.php';
 
 /**
  * xos_logos_PageBuilder main class
@@ -58,22 +58,22 @@ class xos_logos_PageBuilder {
 	public function postRender($zone = '') { /* Empty! */ }
 
 	public function retrieveBlocks() {
-		global $xoops, $xoopsUser, $xoopsModule, $xoopsConfig;
+		global $xoops, $xoopsUser, $xoopsModule, $icmsConfig;
 
 		$groups = @is_object ( $xoopsUser ) ? $xoopsUser->getGroups () : array (XOOPS_GROUP_ANONYMOUS );
 		
 		//Getting the start module and page configured in the admin panel
-		if (is_array ( $xoopsConfig ['startpage'] )) {
+		if (is_array ( $icmsConfig ['startpage'] )) {
 			$member_handler = & xoops_gethandler ( 'member' );
 			$group = $member_handler->getUserBestGroup ( (@is_object ( $xoopsUser ) ? $xoopsUser->uid () : 0) );
-			$xoopsConfig ['startpage'] = $xoopsConfig ['startpage'] [$group];
+			$icmsConfig ['startpage'] = $icmsConfig ['startpage'] [$group];
 		}
-		$startMod = ($xoopsConfig ['startpage'] == '--') ? 'system' : $xoopsConfig ['startpage']; //Getting the top page		
+		$startMod = ($icmsConfig ['startpage'] == '--') ? 'system' : $icmsConfig ['startpage']; //Getting the top page		
 		
 
 		//Setting the full and relative url of the actual page
 		$fullurl = urldecode ( "http://" . $_SERVER ["SERVER_NAME"] . $_SERVER ["REQUEST_URI"] );
-		$url = urldecode ( substr ( str_replace ( XOOPS_URL, '', $fullurl ), 1 ) );
+		$url = urldecode ( substr ( str_replace ( ICMS_URL, '', $fullurl ), 1 ) );
 
 		$page_handler = & xoops_gethandler ( 'page' );
 		$criteria = new CriteriaCompo ( new Criteria ( 'page_url', $fullurl ) );
@@ -163,23 +163,23 @@ class xos_logos_PageBuilder {
 		// The lame type workaround will change
 		// bid is added temporarily as workaround for specific block manipulation
 		
-		global $xoopsUser, $xoopsConfigPersona;
+		global $xoopsUser, $icmsConfigPersona;
 		$gperm =& xoops_gethandler ( 'groupperm' );
 		$ugroups = @is_object ( $xoopsUser ) ? $xoopsUser->getGroups () : array(XOOPS_GROUP_ANONYMOUS );
 		$agroups = $gperm->getGroupIds('system_admin',5); //XOOPS_SYSTEM_BLOCK constant not available?
 		$uagroups = array_intersect($ugroups, $agroups);
-		if ($xoopsConfigPersona ['editre_block'] == 1) {
+		if ($icmsConfigPersona ['editre_block'] == true) {
 			if ($xoopsUser && count($uagroups) > 0) {
 				$url = base64_encode( str_replace( ICMS_URL, '', "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ) );
-				$titlebtns = ' <a href="#" onclick="$(\'#ed_block_' . $xobject->getVar ( 'bid' ) . '\').dialog(\'open\'); return false;"><img src="' . ICMS_URL . '/images/crystal/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>';
+				$titlebtns = ' <a href="#" onclick="$(\'#ed_block_' . $xobject->getVar ( 'bid' ) . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>';
 				$titlebtns .= '<div id="ed_block_' . $xobject->getVar ( 'bid' ) . '" name="ed_block_' . $xobject->getVar ( 'bid' ) . '" title="Block #' . $xobject->getVar ( 'bid' ) . '">';
-				$titlebtns .= "<a href='" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=visible&bid=" . $xobject->getVar ( 'bid' ) . "&rtn=$url'> <img src=" . XOOPS_URL . "/images/crystal/actions/button_cancel.png" . " title=" . _INVISIBLE . " alt=" . _INVISIBLE . "  /> " . _INVISIBLE . "</a><br />";
-				$titlebtns .= "<a href='" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=clone&bid=" . $xobject->getVar ( 'bid' ) . "'> <img src=" . XOOPS_URL . "/images/crystal/actions/editcopy.png" . " title=" . _CLONE . " alt=" . _CLONE . "  /> " . _CLONE . "</a><br />";
-				$titlebtns .= "<a href='" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=mod&bid=" . $xobject->getVar ( 'bid' ) . "'> <img src=" . XOOPS_URL . "/images/crystal/actions/edit.png" . " title=" . _EDIT . " alt=" . _EDIT . "  /> " . _EDIT . "</a><br />";
-				$titlebtns .= "<a href='" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=up&bid=" . $xobject->getVar ( 'bid' ) . "&rtn=$url'> <img src=" . XOOPS_URL . "/images/crystal/actions/up.png" . " title=" . _UP . " alt=" . _UP . "  /> " . _UP . "</a><br />";
-				$titlebtns .= "<a href='" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=down&bid=" . $xobject->getVar ( 'bid' ) . "&rtn=$url'> <img src=" . XOOPS_URL . "/images/crystal/actions/down.png" . " title=" . _DOWN . " alt=" . _DOWN . "  /> " . _DOWN . "</a>";
+				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=visible&bid=" . $xobject->getVar ( 'bid' ) . "&rtn=$url'> <img src=" . ICMS_IMAGES_SET_URL . "/actions/button_cancel.png" . " title=" . _INVISIBLE . " alt=" . _INVISIBLE . "  /> " . _INVISIBLE . "</a><br />";
+				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=clone&bid=" . $xobject->getVar ( 'bid' ) . "'> <img src=" . ICMS_IMAGES_SET_URL . "/actions/editcopy.png" . " title=" . _CLONE . " alt=" . _CLONE . "  /> " . _CLONE . "</a><br />";
+				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=mod&bid=" . $xobject->getVar ( 'bid' ) . "'> <img src=" . ICMS_IMAGES_SET_URL . "/actions/edit.png" . " title=" . _EDIT . " alt=" . _EDIT . "  /> " . _EDIT . "</a><br />";
+				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=up&bid=" . $xobject->getVar ( 'bid' ) . "&rtn=$url'> <img src=" . ICMS_IMAGES_SET_URL . "/actions/up.png" . " title=" . _UP . " alt=" . _UP . "  /> " . _UP . "</a><br />";
+				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=down&bid=" . $xobject->getVar ( 'bid' ) . "&rtn=$url'> <img src=" . ICMS_IMAGES_SET_URL . "/actions/down.png" . " title=" . _DOWN . " alt=" . _DOWN . "  /> " . _DOWN . "</a>";
 				if ($xobject->getVar ( 'dirname' ) == '') {
-					$titlebtns .= "<br /><a href=" . XOOPS_URL . "/modules/system/admin.php?fct=blocksadmin&op=delete&bid=" . $xobject->getVar ( 'bid' ) . "> <img src=" . XOOPS_URL . "/images/crystal/actions/editdelete.png" . " title=" . _DELETE . " alt=" . _DELETE . "  /> " . _DELETE . "</a>";
+					$titlebtns .= "<br /><a href=" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=delete&bid=" . $xobject->getVar ( 'bid' ) . "> <img src=" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png" . " title=" . _DELETE . " alt=" . _DELETE . "  /> " . _DELETE . "</a>";
 				}
 				$titlebtns .= '</div>';
 				$titlebtns .= '<script type="text/javascript">

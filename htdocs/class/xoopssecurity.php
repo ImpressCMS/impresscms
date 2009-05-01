@@ -145,7 +145,7 @@ class XoopsSecurity {
     }
   }
   /**
-  * Check the user agent's HTTP REFERER against XOOPS_URL
+  * Check the user agent's HTTP REFERER against ICMS_URL
   *
   * @param int $docheck 0 to not check the referer (used with XML-RPC), 1 to actively check it
   *
@@ -160,7 +160,7 @@ class XoopsSecurity {
     if ($ref == '') {
       return false;
     }
-    if (strpos($ref, XOOPS_URL) !== 0 ) {
+    if (strpos($ref, ICMS_URL) !== 0 ) {
       return false;
     }
     return true;
@@ -174,7 +174,7 @@ class XoopsSecurity {
   function checkSuperglobals() {
     foreach (array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri') as $bad_global) {
       if (isset($_REQUEST[$bad_global])) {
-        header('Location: '.XOOPS_URL.'/');
+        header('Location: '.ICMS_URL.'/');
         exit();
       }
     }
@@ -187,9 +187,9 @@ class XoopsSecurity {
   * @return void
   **/
   function checkBadips() {
-    global $xoopsConfig;
-    if ($xoopsConfig['enable_badips'] == 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != '') {
-      foreach ($xoopsConfig['bad_ips'] as $bi) {
+    global $icmsConfig;
+    if ($icmsConfig['enable_badips'] == 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != '') {
+      foreach ($icmsConfig['bad_ips'] as $bi) {
         if (!empty($bi) && preg_match("/".$bi."/", $_SERVER['REMOTE_ADDR'])) {
           exit();
         }
@@ -197,7 +197,7 @@ class XoopsSecurity {
     }
     unset($bi);
     unset($bad_ips);
-    unset($xoopsConfig['badips']);
+    unset($icmsConfig['badips']);
   }
 
   /**
@@ -206,7 +206,7 @@ class XoopsSecurity {
   * @return string
   **/
   function getTokenHTML($name = _CORE_TOKEN) {
-    require_once(XOOPS_ROOT_PATH."/class/xoopsformloader.php");
+    require_once(ICMS_ROOT_PATH."/class/xoopsformloader.php");
     $token = new XoopsFormHiddenToken($name);
     return $token->render();
   }

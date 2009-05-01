@@ -148,15 +148,15 @@ if($action == 'showpopups')
 				}
 				$xoopsMailer =& getMailer();
 				$xoopsMailer->setTemplate('tellfriend.tpl');
-				$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-				$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+				$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
+				$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
 				$xoopsMailer->assign('SITEURL', ICMS_URL.'/');
 				$xoopsMailer->assign('YOUR_NAME', $yname);
 				$xoopsMailer->assign('FRIEND_NAME', $fname);
 				$xoopsMailer->setToEmails($fmail);
 				$xoopsMailer->setFromEmail($ymail);
 				$xoopsMailer->setFromName($yname);
-				$xoopsMailer->setSubject(sprintf(_MSC_INTSITE,$xoopsConfig['sitename']));
+				$xoopsMailer->setSubject(sprintf(_MSC_INTSITE,$icmsConfig['sitename']));
 				//OpenTable();
 				if(!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
 				else {echo '<div><h4>'._MSC_REFERENCESENT.'</h4></div>';}
@@ -195,7 +195,7 @@ if($action == 'showpopups')
 					$avatar = $onlineUsers[$i]['user']->getVar('user_avatar') ? '<img src="'.ICMS_UPLOAD_URL.'/'.$onlineUsers[$i]['user']->getVar('user_avatar').'" alt="" />' : '&nbsp;';
 					echo '<td>'.$avatar."</td><td><a href=\"javascript:window.opener.location='".ICMS_URL."/userinfo.php?uid=".$onlineUsers[$i]['user']->getVar('uid')."';window.close();\">".$onlineUsers[$i]['user']->getVar('uname')."</a>";
 				}
-				else {echo '<td>&nbsp;</td><td>'.$xoopsConfig['anonymous'];}
+				else {echo '<td>&nbsp;</td><td>'.$icmsConfig['anonymous'];}
 				if($isadmin == 1) {echo '<br />('.$onlineUsers[$i]['ip'].')';}
 				echo '</td><td>'.$onlineUsers[$i]['module'].'</td></tr>';
 			}
@@ -208,7 +208,7 @@ if($action == 'showpopups')
 			}
 		break;
 		case 'ssllogin':
-			if($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && is_object($xoopsUser))
+			if($icmsConfig['use_ssl'] && isset($_POST[$icmsConfig['sslpost_name']]) && is_object($xoopsUser))
 			{
 				icms_loadLanguageFile('core', 'user');
 				echo sprintf(_US_LOGGINGU, $xoopsUser->getVar('uname'));

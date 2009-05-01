@@ -200,7 +200,7 @@ class XoopsLogger {
 	 */
 	function sanitizePath( $path ) {
 		$path = str_replace(
-	    	array( '\\', XOOPS_ROOT_PATH, str_replace( '\\', '/', realpath( XOOPS_ROOT_PATH ) ) ),
+	    	array( '\\', ICMS_ROOT_PATH, str_replace( '\\', '/', realpath( ICMS_ROOT_PATH ) ) ),
 	    	array( '/', '', '' ),
 	    	$path
 	  	);
@@ -238,7 +238,7 @@ class XoopsLogger {
 	 * @access protected
 	 */
 	protected function dump( $mode = '' ) {
-		include XOOPS_ROOT_PATH . '/class/logger_render.php';
+		include ICMS_ROOT_PATH . '/class/logger_render.php';
 	  	return $ret;
 	}
 

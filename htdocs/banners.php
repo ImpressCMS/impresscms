@@ -31,7 +31,7 @@ include 'mainfile.php';
 */
 function clientlogin()
 {
-    	global $xoopsDB, $xoopsLogger, $xoopsConfig;
+    	global $xoopsDB, $xoopsLogger, $icmsConfig;
     	include 'header.php';
     	echo "<div id='login_window'>
           <h2 class='content_title'>"._BANNERS_LOGIN_TITLE."</h2>
@@ -55,7 +55,7 @@ function clientlogin()
 **/
 function bannerstats()
 {
-	global $xoopsDB, $xoopsConfig, $xoopsLogger;
+	global $xoopsDB, $icmsConfig, $xoopsLogger;
     	if($_SESSION['banner_login'] == '' || $_SESSION['banner_pass'] == '') {redirect_header('banners.php',2);}
     	$result = $xoopsDB->query(sprintf("SELECT cid, name, passwd FROM %s WHERE login=%s", $xoopsDB->prefix('bannerclient'), $xoopsDB->quoteString($_SESSION['banner_login'])));
     	list($cid, $name, $passwd) = $xoopsDB->fetchRow($result);
@@ -109,7 +109,7 @@ function bannerstats()
             	}
             	echo "</table>
                   <br /><br />
-                  <h4 class='content_title'>". _BANNERS_FOW_IN . htmlspecialchars( $xoopsConfig['sitename'] ). "</h4><hr />";
+                  <h4 class='content_title'>". _BANNERS_FOW_IN . htmlspecialchars( $icmsConfig['sitename'] ). "</h4><hr />";
 
             	$result = $xoopsDB->query("select bid, imageurl, clickurl, htmlbanner, htmlcode from ".$xoopsDB->prefix('banner')." where cid='".intval($cid)."'");
             	while(list($bid, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result))
@@ -196,7 +196,7 @@ function bannerstats()
 */
 function EmailStats($cid, $bid)
 {
-	global $xoopsDB, $xoopsConfig;
+	global $xoopsDB, $icmsConfig;
     	if($_SESSION['banner_login'] != "" && $_SESSION['banner_pass'] != "")
 	{
         	$cid = intval($cid);
@@ -233,13 +233,13 @@ function EmailStats($cid, $bid)
                             				$left = $imptotal-$impmade;
                         			}
                         			$fecha = date("F jS Y, h:iA.");
-                        			$subject = sprintf(_BANNERS_MAIL_SUBJECT, $xoopsConfig['sitename']);
-                        			$message = sprintf(_BANNERS_MAIL_MESSAGE, $xoopsConfig['sitename'], $name, $bid, $imageurl, $clickurl, $imptotal, $impmade, $left, $clicks, $percent, $fecha);
+                        			$subject = sprintf(_BANNERS_MAIL_SUBJECT, $icmsConfig['sitename']);
+                        			$message = sprintf(_BANNERS_MAIL_MESSAGE, $icmsConfig['sitename'], $name, $bid, $imageurl, $clickurl, $imptotal, $impmade, $left, $clicks, $percent, $fecha);
                         			$xoopsMailer =& getMailer();
                         			$xoopsMailer->useMail();
                         			$xoopsMailer->setToEmails($email);
-                        			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-                        			$xoopsMailer->setFromName($xoopsConfig['sitename']);
+                        			$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+                        			$xoopsMailer->setFromName($icmsConfig['sitename']);
                         			$xoopsMailer->setSubject($subject);
                         			$xoopsMailer->setBody($message);
                         			$xoopsMailer->send();

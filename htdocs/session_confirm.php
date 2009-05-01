@@ -40,7 +40,7 @@ if( isset( $_SESSION['AUTOLOGIN_POST'] ) ) {
 	<html>
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset='._CHARSET.'" />
-	<title>'.$xoopsConfig['sitename'].'</title>
+	<title>'.$icmsConfig['sitename'].'</title>
 	</head>
 	<body>
 	<div style="text-align:center; background-color: #EBEBEB; border-top: 1px solid #FFFFFF; border-left: 1px solid #FFFFFF; border-right: 1px solid #AAAAAA; border-bottom: 1px solid #AAAAAA; font-weight : bold;">
@@ -68,7 +68,7 @@ if( isset( $_SESSION['AUTOLOGIN_POST'] ) ) {
 	<head>
 	<meta http-equiv="Content-Type" content="text/html; charset='._CHARSET.'" />
 	<meta http-equiv="Refresh" content="'.$time.'; url='.$url4disp.'" />
-	<title>'.$xoopsConfig['sitename'].'</title>
+	<title>'.$icmsConfig['sitename'].'</title>
 	</head>
 	<body>
 	<div style="text-align:center; background-color: #EBEBEB; border-top: 1px solid #FFFFFF; border-left: 1px solid #FFFFFF; border-right: 1px solid #AAAAAA; border-bottom: 1px solid #AAAAAA; font-weight : bold;">

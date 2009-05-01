@@ -62,7 +62,7 @@ class xos_opal_ThemeFactory {
 			}
 			$GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
 		}
-		$options['path'] = XOOPS_THEME_PATH . '/' . $options['folderName'];
+		$options['path'] = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$options['folderName']))?ICMS_MODULES_PATH.'/system/themes/' . $options['folderName']:XOOPS_THEME_PATH . '/' . $options['folderName'];
 		$inst = new xos_opal_Theme();
 		foreach ( $options as $k => $v ) $inst->$k = $v;
 		$inst->xoInit();
@@ -180,34 +180,34 @@ class xos_opal_Theme {
    function xoInit( $options = array() ) {
 		global $xoops;
 
-		$this->path = XOOPS_THEME_PATH . '/' . $this->folderName;
-		$this->url = XOOPS_THEME_URL . '/' . $this->folderName;
+		$this->path = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName))?ICMS_MODULES_PATH.'/system/themes/' . $this->folderName:XOOPS_THEME_PATH . '/' . $this->folderName;
+		$this->url = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName))?ICMS_MODULES_URL.'/system/themes/' . $this->folderName:XOOPS_THEME_URL . '/' . $this->folderName;
 
 		$this->template = new XoopsTpl();
 		$this->template->currentTheme =& $this;
 		$this->template->assign_by_ref( 'xoTheme', $this );
 
-		global $xoopsConfig, $xoopsModule, $xoopsUser;
+		global $icmsConfig, $icmsConfigMetaFooter, $xoopsModule, $xoopsUser;
 		$this->template->assign( array(
 			'icms_style' => ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css',
-	    	'icms_theme' => $xoopsConfig['theme_set'],
-	    	'icms_imageurl' => XOOPS_THEME_URL.'/'.$xoopsConfig['theme_set'].'/',
-	    	'icms_themecss'=> xoops_getcss($xoopsConfig['theme_set']),
+	    	'icms_theme' => $this->folderName,
+	    	'icms_imageurl' => (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName.'/'))?ICMS_MODULES_URL.'/system/themes/'.$this->folderName.'/':XOOPS_THEME_URL . '/'.$this->folderName.'/',
+	    	'icms_themecss'=> xoops_getcss($this->folderName),
 	    	'icms_requesturi' => htmlspecialchars( $_SERVER['REQUEST_URI'], ENT_QUOTES),
-	    	'icms_sitename' => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
-	    	'icms_slogan' => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
+	    	'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
+	    	'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 	    	'icms_dirname' => @$xoopsModule ? $xoopsModule->getVar( 'dirname' ) : 'system',
-	    	'icms_banner' => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-	    	'icms_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $xoopsConfig['slogan'], ENT_QUOTES ),
-	    	'xoops_theme' => $xoopsConfig['theme_set'],
-	    	'xoops_imageurl' => XOOPS_THEME_URL.'/'.$xoopsConfig['theme_set'].'/',
-	    	'xoops_themecss'=> xoops_getcss($xoopsConfig['theme_set']),
+	    	'icms_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
+	    	'icms_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES ),
+	    	'xoops_theme' => $this->folderName,
+	    	'xoops_imageurl' => (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName.'/'))?ICMS_MODULES_URL.'/system/themes/'.$this->folderName.'/':XOOPS_THEME_URL . '/'.$this->folderName.'/',
+	    	'xoops_themecss'=> xoops_getcss($this->folderName),
 	    	'xoops_requesturi' => htmlspecialchars( $_SERVER['REQUEST_URI'], ENT_QUOTES),
-	    	'xoops_sitename' => htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES),
-	    	'xoops_slogan' => htmlspecialchars($xoopsConfig['slogan'], ENT_QUOTES),
+	    	'xoops_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
+	    	'xoops_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 	    	'xoops_dirname' => @$xoopsModule ? $xoopsModule->getVar( 'dirname' ) : 'system',
-	    	'xoops_banner' => $xoopsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-	    	'xoops_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $xoopsConfig['slogan'], ENT_QUOTES ),
+	    	'xoops_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
+	    	'xoops_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES ),
 	    ) );
 	    if ( isset($xoopsUser) && is_object($xoopsUser) ) {
 	        $this->template->assign( array(
@@ -235,11 +235,9 @@ class xos_opal_Theme {
 	    		$this->addMeta( 'meta', substr( $name, 5 ), $value );
 	    	} elseif ( substr( $name, 0, 6 ) == 'footer' ) {
                 $values = $value;
-                $config_handler = & xoops_gethandler ( 'config' );
-                $xoopsConfigMetaFooter = & $config_handler->getConfigsByCat ( XOOPS_CONF_METAFOOTER );
-                if ($xoopsConfigMetaFooter['use_google_analytics'] == true && isset($xoopsConfigMetaFooter['google_analytics']) && $xoopsConfigMetaFooter['google_analytics'] != ''){
+                if ($icmsConfigMetaFooter['use_google_analytics'] == true && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != ''){
                     $values = $value.'<script type="text/javascript">
-                    var pageTracker = _gat._getTracker("UA-'.$xoopsConfigMetaFooter['google_analytics'].'"); pageTracker._trackPageview();
+                    var pageTracker = _gat._getTracker("UA-'.$icmsConfigMetaFooter['google_analytics'].'"); pageTracker._trackPageview();
                     </script>';
                 }
 	        	$this->template->assign( "xoops_$name", $values );
@@ -288,10 +286,10 @@ class xos_opal_Theme {
 
 		if (empty($extraString)) {
 			if (empty($extra_string)) {
-				global $xoopsUser, $xoopsConfig;
+				global $xoopsUser, $icmsConfig;
 
 				// Generate language section
-				$extra_string = $xoopsConfig['language'];
+				$extra_string = $icmsConfig['language'];
 
 				// Generate group section
 				if ( !@is_object( $xoopsUser ) ) {
@@ -325,7 +323,7 @@ class xos_opal_Theme {
 
 			$this->template->caching = 2;
 			$this->template->cache_lifetime = $this->contentCacheLifetime;
-			$uri = str_replace( XOOPS_URL, '', $_SERVER['REQUEST_URI'] );
+			$uri = str_replace( ICMS_URL, '', $_SERVER['REQUEST_URI'] );
 			// Clean uri by removing session id
 			if (defined('SID') && SID && strpos($uri, SID)) {
 				$uri = preg_replace("/([\?&])(".SID."$|".SID."&)/", "\\1", $uri);
@@ -538,7 +536,7 @@ class xos_opal_Theme {
 				foreach ( $this->metas[$type] as $attrs ) {
 					$str .= '<script' . $this->renderAttributes( $attrs ) . ">\n";
 					if ( @$attrs['_'] ) {
-						$str .= "\n//<![CDATA[\n" . $attrs['_'] . "\n//]]>";
+						$str .= "\n\n" . $attrs['_'] . "\n";
 					}
 					$str .= "</script>\n";
 				}

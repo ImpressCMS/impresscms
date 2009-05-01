@@ -78,7 +78,7 @@ class XoopsFormPassword extends XoopsFormElement
 	* @param	int		$value		Initial value of the field. 
 	* 							<b>Warning:</b> this is readable in cleartext in the page's source!
 	*/
-	function XoopsFormPassword($caption, $name, $size, $maxlength, $value = '', $autocomplete = false, $classname = 'password')
+	function XoopsFormPassword($caption, $name, $size, $maxlength, $value = '', $autocomplete = false, $classname = 'password_adv')
 	{
 		$this->setCaption($caption);
 		$this->setName($name);
@@ -140,6 +140,8 @@ class XoopsFormPassword extends XoopsFormElement
 	*/
 	function render()
 	{
+        global $icmsConfigUser;
+        if($icmsConfigUser['pass_level']){icms_PasswordMeter();}
 		$ele_name = $this->getName();
 		return "<input class='".$this->getClassName()."' type='password' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".$this->getValue()."'".$this->getExtra()." ".($this->autoComplete ? "" : "autocomplete='off' ")."/>";
 	}

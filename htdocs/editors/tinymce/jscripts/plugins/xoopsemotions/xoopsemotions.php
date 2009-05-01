@@ -8,7 +8,7 @@ if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../
 if (file_exists('../../../../../../../mainfile.php')) include_once '../../../../../../../mainfile.php';
 if (!defined('XOOPS_ROOT_PATH')) exit();
 
-include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/misc.php';
+include_once XOOPS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/misc.php';
 
 xoops_header(false);
 ?>

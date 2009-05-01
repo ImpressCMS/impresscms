@@ -77,11 +77,10 @@ class XoopsPageNav
 	 **/
 	function renderNav($offset = 4)
 	{	
-		$config_handler =& xoops_gethandler('config');
-		$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+		global $icmsConfigPersona;
 		
-		if (isset($xoopsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php')){
-			$style = $xoopsConfigPersona['pagstyle'];
+		if (isset($icmsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php')){
+			$style = $icmsConfigPersona['pagstyle'];
 		}else{
 			$style = 'default';
 		}
@@ -175,9 +174,9 @@ class XoopsPageNav
    			$ret = '<table><tr>';
 			$prev = $this->current - $this->perpage;
 			if ( $prev >= 0 ) {
-				$ret .= '<td class="pagneutral"><a href="'.$this->url.$prev.'">&lt;</a></td><td><img src="'.XOOPS_URL.'/images/blank.gif" width="6" alt="" /></td>';
+				$ret .= '<td class="pagneutral"><a href="'.$this->url.$prev.'">&lt;</a></td><td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td>';
 			} else {
-				$ret .= '<td class="pagno"></a></td><td><img src="'.XOOPS_URL.'/images/blank.gif" width="6" alt="" /></td>';
+				$ret .= '<td class="pagno"></a></td><td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td>';
 			}
 			$counter = 1;
 			$current_page = intval(floor(($this->current + $this->perpage) / $this->perpage));
@@ -197,9 +196,9 @@ class XoopsPageNav
 			}
 			$next = $this->current + $this->perpage;
 			if ( $this->total > $next ) {
-				$ret .= '<td><img src="'.XOOPS_URL.'/images/blank.gif" width="6" alt="" /></td><td class="pagneutral"><a href="'.$this->url.$next.'">&gt;</a></td>';
+				$ret .= '<td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td><td class="pagneutral"><a href="'.$this->url.$next.'">&gt;</a></td>';
 			} else {
-				$ret .= '<td><img src="'.XOOPS_URL.'/images/blank.gif" width="6" alt="" /></td><td class="pagno"></td>';
+				$ret .= '<td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td><td class="pagno"></td>';
 			}
 			$ret .= '</tr></table>';
 		}

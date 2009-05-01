@@ -87,11 +87,11 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 		    }
 		}
 
-		global $xoopsConfig;
+		global $icmsConfig;
 
 		$config_handler = & xoops_gethandler('config');
-		$xoopsConfigUser = & $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-		switch ($xoopsConfigUser['activation_type']) {
+		$icmsConfigUser = & $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+		switch ($icmsConfigUser['activation_type']) {
 			case 0 :
 				$level = 0;
 				$mailtemplate = 'smartmail_activate_user.tpl';
@@ -112,7 +112,7 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 	    $userObj->setVar('uname',$usernames[$i]);
 	    $userObj->setVar('user_avatar','blank.gif');
 	    $userObj->setVar('user_regdate', time());
-	    $userObj->setVar('timezone_offset', $xoopsConfig['default_TZ']);
+	    $userObj->setVar('timezone_offset', $icmsConfig['default_TZ']);
 	    $actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
 	    $userObj->setVar('actkey', $actkey);
 	    $userObj->setVar('email',$email);
@@ -137,18 +137,18 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 			// send some notifications
 			$xoopsMailer = & getMailer();
 			$xoopsMailer->useMail();
-			$xoopsMailer->setTemplateDir(ICMS_ROOT_PATH . 'language/' . $xoopsConfig['language'] . '/mail_template');
+			$xoopsMailer->setTemplateDir(ICMS_ROOT_PATH . 'language/' . $icmsConfig['language'] . '/mail_template');
 			$xoopsMailer->setTemplate('smartobject_notify_user_added_by_admin.tpl');
 			$xoopsMailer->assign('XOOPS_USER_PASSWORD', $password);
-			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+			$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
+			$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
 			$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
 			$xoopsMailer->assign('NAME', $userObj->getVar('name'));
 			$xoopsMailer->assign('UNAME', $userObj->getVar('uname'));
 			$xoopsMailer->setToUsers($userObj);
-			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_CO_ICMS_NEW_USER_NOTIFICATION_SUBJECT, $xoopsConfig['sitename']));
+			$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+			$xoopsMailer->setFromName($icmsConfig['sitename']);
+			$xoopsMailer->setSubject(sprintf(_CO_ICMS_NEW_USER_NOTIFICATION_SUBJECT, $icmsConfig['sitename']));
 
 			if (!$xoopsMailer->send(true)) {
 				/**

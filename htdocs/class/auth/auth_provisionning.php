@@ -47,16 +47,14 @@ class XoopsAuthProvisionning {
      **/
     function XoopsAuthProvisionning(&$auth_instance) {
         $this->_auth_instance = &$auth_instance;        
-        $config_handler =& xoops_gethandler('config');    
-        $config =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
-        foreach ($config as $key => $val) {
+        global $icmsConfig, $icmsConfigAuth;
+        foreach ($icmsConfigAuth as $key => $val) {
             $this->$key = $val;
         }
-        $config_gen =& $config_handler->getConfigsByCat(XOOPS_CONF);
-        $this->default_TZ = $config_gen['default_TZ'];
-        $this->theme_set = $config_gen['theme_set'];
-        $this->com_mode = $config_gen['com_mode'];
-        $this->com_order = $config_gen['com_order'];
+        $this->default_TZ = $icmsConfig['default_TZ'];
+        $this->theme_set = $icmsConfig['theme_set'];
+        $this->com_mode = $icmsConfig['com_mode'];
+        $this->com_order = $icmsConfig['com_order'];
     }
 
     /**
@@ -128,7 +126,7 @@ class XoopsAuthProvisionning {
           	$newuser->unsetNew();
           	return $newuser;
           } else {
-      			redirect_header(XOOPS_URL.'/user.php', 5, $newuser->getHtmlErrors());
+      			redirect_header(ICMS_URL.'/user.php', 5, $newuser->getHtmlErrors());
   		}
       	return $ret;
   	}
@@ -154,7 +152,7 @@ class XoopsAuthProvisionning {
   		if ($member_handler->insertUser($xoopsUser)) {
           	return $xoopsUser;
           } else {
-  			redirect_header(XOOPS_URL.'/user.php', 5, $xoopsUser->getHtmlErrors());
+  			redirect_header(ICMS_URL.'/user.php', 5, $xoopsUser->getHtmlErrors());
   		}         
       	return $ret;
   	}

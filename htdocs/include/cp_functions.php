@@ -33,7 +33,7 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
 function icms_cp_header(){
-  	global $xoopsConfig, $xoopsModule, $xoopsUser, $xoopsOption, $xoTheme, $im_multilanguageConfig, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
+  	global $icmsConfig, $icmsConfigPlugins, $icmsConfigPersona, $xoopsModule, $xoopsUser, $xoopsOption, $xoTheme, $icmsConfigMultilang, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
 	$xoopsLogger->stopTime( 'Module init' );
 	$xoopsLogger->startTime( 'ImpressCMS CP Output Init' );
 
@@ -47,7 +47,8 @@ function icms_cp_header(){
   	}
 
 	require_once ICMS_ROOT_PATH . '/class/template.php';
-	require_once ICMS_ROOT_PATH . '/class/theme.php';
+	//require_once ICMS_ROOT_PATH . '/class/theme'.(( file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme_admin.html' ) || file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme.html' )) ?'_admin':'').'.php';
+    require_once ICMS_ROOT_PATH . '/class/theme.php';
 	require_once ICMS_ROOT_PATH . '/class/theme_blocks.php';
 	if( !isset($icmsPreloadHandler) )
 		$icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];
@@ -55,7 +56,7 @@ function icms_cp_header(){
 	$icmsAdminTpl = new XoopsTpl();
 
 	$icmsAdminTpl->assign('xoops_url',ICMS_URL);
-	$icmsAdminTpl->assign('xoops_sitename',$xoopsConfig['sitename']);
+	$icmsAdminTpl->assign('xoops_sitename',$icmsConfig['sitename']);
 
 	if ( @$xoopsOption['template_main'] ) {
 		if ( false === strpos( $xoopsOption['template_main'], ':' ) ) {
@@ -64,15 +65,15 @@ function icms_cp_header(){
 	}
 
 	$xoopsThemeFactory = new xos_opal_ThemeFactory();
-	$xoopsThemeFactory->allowedThemes = $xoopsConfig['theme_set_allowed'];
+	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 
 	// The next 2 lines are for compatibility only... to implement the admin theme ;)
 	// TODO: Remove all this after a few versions!!
-	if(isset($xoopsConfig['theme_admin_set']))
-		$xoopsThemeFactory->defaultTheme = $xoopsConfig['theme_admin_set'];
+	if(isset($icmsConfig['theme_admin_set']))
+		$xoopsThemeFactory->defaultTheme = $icmsConfig['theme_admin_set'];
     $xoTheme =& $xoopsThemeFactory->createInstance( array(
     	'contentTemplate'	=> @$xoopsOption['template_main'],
-    	'canvasTemplate'	=> 'theme'.(( file_exists(ICMS_THEME_PATH.'/'.$xoopsConfig['theme_admin_set'].'/theme_admin.html')) ?'_admin':'').'.html',
+    	'canvasTemplate'	=> 'theme'.(( file_exists(ICMS_THEME_PATH.'/'.$icmsConfig['theme_admin_set'].'/theme_admin.html') || file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme_admin.html') ) ?'_admin':'').'.html',
     	'plugins' 			=> array('xos_logos_PageBuilder')
     ) );
     $icmsAdminTpl = $xoTheme->template;
@@ -107,8 +108,6 @@ function icms_cp_header(){
 	$xoTheme->addScript( ICMS_URL.'/libraries/jquery/ui/ui.dialog.js', array( 'type' => 'text/javascript' ) );
 	$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/ui/themes/base/ui.all.css', array('media' => 'screen'));
 	
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
 	$jscript = '';
  	if(class_exists('XoopsFormDhtmlTextArea')){
         foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
@@ -158,11 +157,11 @@ function icms_cp_header(){
 	/**
 	 * Loading admin dropdown menus
 	 */
-	if (! file_exists ( XOOPS_CACHE_PATH . '/adminmenu_' . $xoopsConfig ['language'] . '.php' )) {
+	if (! file_exists ( XOOPS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php' )) {
 		xoops_module_write_admin_menu(impresscms_get_adminmenu());
 	}
 
-	$file = file_get_contents ( XOOPS_CACHE_PATH . "/adminmenu_" . $xoopsConfig ['language'] . ".php" );
+	$file = file_get_contents ( XOOPS_CACHE_PATH . "/adminmenu_" . $icmsConfig ['language'] . ".php" );
 	$admin_menu = eval ( 'return ' . $file . ';' );
 
 	$moduleperm_handler = & xoops_gethandler ( 'groupperm' );
@@ -293,16 +292,14 @@ function icms_cp_header(){
 		 * Send to template some ml infos
 		 */
 		$icmsAdminTpl->assign ( 'lang_prefs', _PREFERENCES );
-		$icmsAdminTpl->assign ( 'ml_is_enabled', $im_multilanguageConfig ['ml_enable'] );
-		$config_handler = & xoops_gethandler ( 'config' );
-		$xoopsConfigPersona = & $config_handler->getConfigsByCat( XOOPS_CONF_PERSONA );
-		$icmsAdminTpl->assign( 'adm_left_logo', $xoopsConfigPersona['adm_left_logo'] );		
-		$icmsAdminTpl->assign( 'adm_left_logo_url', $xoopsConfigPersona['adm_left_logo_url'] );
-		$icmsAdminTpl->assign( 'adm_left_logo_alt', $xoopsConfigPersona['adm_left_logo_alt'] );
-		$icmsAdminTpl->assign( 'adm_right_logo', $xoopsConfigPersona['adm_right_logo'] );
-		$icmsAdminTpl->assign( 'adm_right_logo_url', $xoopsConfigPersona['adm_right_logo_url'] );
-		$icmsAdminTpl->assign( 'adm_right_logo_alt', $xoopsConfigPersona['adm_right_logo_alt'] );
-		$icmsAdminTpl->assign( 'show_impresscms_menu', $xoopsConfigPersona['show_impresscms_menu']);
+		$icmsAdminTpl->assign ( 'ml_is_enabled', $icmsConfigMultilang ['ml_enable'] );
+		$icmsAdminTpl->assign( 'adm_left_logo', $icmsConfigPersona['adm_left_logo'] );		
+		$icmsAdminTpl->assign( 'adm_left_logo_url', $icmsConfigPersona['adm_left_logo_url'] );
+		$icmsAdminTpl->assign( 'adm_left_logo_alt', $icmsConfigPersona['adm_left_logo_alt'] );
+		$icmsAdminTpl->assign( 'adm_right_logo', $icmsConfigPersona['adm_right_logo'] );
+		$icmsAdminTpl->assign( 'adm_right_logo_url', $icmsConfigPersona['adm_right_logo_url'] );
+		$icmsAdminTpl->assign( 'adm_right_logo_alt', $icmsConfigPersona['adm_right_logo_alt'] );
+		$icmsAdminTpl->assign( 'show_impresscms_menu', $icmsConfigPersona['show_impresscms_menu']);
 
 	}
 }
@@ -330,7 +327,7 @@ function xoops_cp_header(){
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function icms_cp_footer(){
-	global $xoopsConfig, $xoopsOption, $xoopsLogger, $xoopsUser, $xoTheme, $icmsTpl ,$im_multilanguageConfig, $icmsLibrariesHandler, $xoopsModule;
+	global $icmsConfig, $xoopsOption, $xoopsLogger, $xoopsUser, $xoTheme, $icmsTpl ,$icmsConfigMultilang, $icmsLibrariesHandler, $xoopsModule;
 	$xoopsLogger->stopTime( 'Module display' );
 
 	if (!headers_sent()) {
@@ -626,8 +623,8 @@ function xoops_module_get_admin_menu() {
 * @return true
 */
 function xoops_module_write_admin_menu($content) {
-	global $xoopsConfig;
-	$filename = ICMS_CACHE_PATH . '/adminmenu_' . $xoopsConfig ['language'] . '.php';
+	global $icmsConfig;
+	$filename = ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php';
 	if (! $file = fopen ( $filename, "w" )) {
 		echo 'failed open file';
 		return false;

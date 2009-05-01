@@ -1,6 +1,6 @@
 <?php
 // $Id$
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
 /**
@@ -10,5 +10,5 @@ if (!defined('XOOPS_ROOT_PATH')) {
 /**
  * load the new module class 
  **/
-require_once XOOPS_ROOT_PATH.'/kernel/module.php';
+require_once ICMS_ROOT_PATH.'/kernel/module.php';
 ?>

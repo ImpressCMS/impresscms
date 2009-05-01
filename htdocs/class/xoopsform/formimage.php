@@ -24,11 +24,11 @@
 */
 
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	die("Oooops!!");
 }
 
-include_once XOOPS_ROOT_PATH."/class/xoopsform/formselect.php";
+include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 
 class MastopFormSelectImage extends XoopsFormSelect
 {
@@ -170,7 +170,7 @@ class MastopFormSelectImage extends XoopsFormSelect
 		$catlist =& $imgcat_handler->getList($group, 'imgcat_write', 1);
 		$catlist_total = count($catlist);
 		$optIds = $this->getOptGroupsID();
-		$ret = "<select onchange='if(this.options[this.selectedIndex].value != \"\"){ document.getElementById(\"".$this->getName()."_img\").src=\"".XOOPS_URL."\"+this.options[this.selectedIndex].value;}else{document.getElementById(\"".$this->getName()."_img\").src=\"".XOOPS_URL."/images/blank.gif\";}'  size='".$this->getSize()."'".$this->getExtra()."";
+		$ret = "<select onchange='if(this.options[this.selectedIndex].value != \"\"){ document.getElementById(\"".$this->getName()."_img\").src=\"".ICMS_URL."\"+this.options[this.selectedIndex].value;}else{document.getElementById(\"".$this->getName()."_img\").src=\"".ICMS_URL."/images/blank.gif\";}'  size='".$this->getSize()."'".$this->getExtra()."";
 		if ($this->isMultiple() != false) {
 			$ret .= " name='".$this->getName()."[]' id='".$this->getName()."[]' multiple='multiple'>\n";
 		} else {
@@ -191,10 +191,10 @@ class MastopFormSelectImage extends XoopsFormSelect
 			}
 			$ret .= '</optgroup>\n';
 		}
-		$browse_url = XOOPS_URL."/class/xoopsform/formimage_browse.php";
+		$browse_url = ICMS_URL."/class/xoopsform/formimage_browse.php";
 		$ret .= "</select>";
 		$ret .= ($catlist_total > 0) ? " <input type='button' value='"._ADDIMAGE."' onclick=\"window.open('$browse_url?target=".$this->getName()."','formImage','resizable=yes,scrollbars=yes,width=985,height=470,left='+(screen.availWidth/2-492)+',top='+(screen.availHeight/2-235)+'');return false;\">":"" ;
-		$ret .= "<br /><img id='".$this->getName()."_img' src='".((!empty($imagem)) ? XOOPS_URL.$imagem : XOOPS_URL."/images/blank.gif")."'>";
+		$ret .= "<br /><img id='".$this->getName()."_img' src='".((!empty($imagem)) ? ICMS_URL.$imagem : ICMS_URL."/images/blank.gif")."'>";
 		return $ret;
 	}
 }

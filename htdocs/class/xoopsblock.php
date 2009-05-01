@@ -17,5 +17,5 @@
 
 if (!defined('ICMS_ROOT_PATH')) { exit(); }
 
-require_once XOOPS_ROOT_PATH."/kernel/block.php";
+require_once ICMS_ROOT_PATH."/kernel/block.php";
 ?>

@@ -183,7 +183,7 @@ class XoopsSessionHandler
 	/**
 	* Update cookie status for current session
 	* To be refactored 
-	* FIXME: how about $xoopsConfig['use_ssl'] is enabled?
+	* FIXME: how about $icmsConfig['use_ssl'] is enabled?
 	* 
 	* @param   string  $sess_id    session ID
 	* @param   int     $expire     Time in seconds until a session expires
@@ -191,9 +191,9 @@ class XoopsSessionHandler
 	**/
 	function update_cookie($sess_id = null, $expire = null)
 	{
-		global $xoopsConfig;
-		$session_name = ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') ? $xoopsConfig['session_name'] : session_name();
-		$session_expire = !is_null($expire) ? intval($expire) : ( ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') ? $xoopsConfig['session_expire'] * 60 : ini_get('session.cookie_lifetime') );
+		global $icmsConfig;
+		$session_name = ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') ? $icmsConfig['session_name'] : session_name();
+		$session_expire = !is_null($expire) ? intval($expire) : ( ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') ? $icmsConfig['session_expire'] * 60 : ini_get('session.cookie_lifetime') );
 		$session_id = empty($sess_id) ? session_id() : $sess_id;
 		setcookie($session_name, $session_id, $session_expire ? time() + $session_expire : 0, '/',  '', 0);
 	}

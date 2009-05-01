@@ -144,13 +144,12 @@ class MyTextSanitizer
 	 **/
 	function makeClickable(&$text)
 	{
-		$config_handler =& xoops_gethandler('config');
-		$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+	global $icmsConfigPersona;
     $text = ' '.$text;
     $patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i"/*, "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i"*/);
     $replacements = array("\\1<a href=\"\\2://\\3\" rel=\"external\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\" rel=\"external\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"external\">ftp.\\2.\\3</a>"/*, "\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>"*/);
     $text = preg_replace($patterns, $replacements, $text);
-  	if($xoopsConfigPersona['shorten_url'] == 1)
+  	if($icmsConfigPersona['shorten_url'] == 1)
 		{
 			$links = explode('<a', $text);
 			$countlinks = count($links);
@@ -163,9 +162,9 @@ class MyTextSanitizer
 				$length = $end - $begin;
 				$urlname = substr($link, $begin, $length);
 
-				$maxlength = intval($xoopsConfigPersona['max_url_long']);
-				$cutlength = intval($xoopsConfigPersona['pre_chars_left']);
-				$endlength = -intval($xoopsConfigPersona['last_chars_left']);
+				$maxlength = intval($icmsConfigPersona['max_url_long']);
+				$cutlength = intval($icmsConfigPersona['pre_chars_left']);
+				$endlength = -intval($icmsConfigPersona['last_chars_left']);
 				$middleurl = " ... ";
 				$chunked = (strlen($urlname) > $maxlength && preg_match('#^(https://|http://|ftp://|www\.)#is', $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $urlname;
 				$text = str_replace('>'.$urlname.'<', '>'.$chunked.'<', $text);
@@ -187,29 +186,6 @@ class MyTextSanitizer
 	{
 		$patterns = array();
 		$replacements = array();
-		//$patterns[] = "/\[code](.*)\[\/code\]/esU";
-		//$replacements[] = "'<div class=\"xoopsCode\"><code><pre>'.wordwrap(MyTextSanitizer::htmlSpecialChars('\\1'), 100).'</pre></code></div>'";
-		// RMV: added new markup for intrasite url (allows easier site moves)
-		// TODO: automatically convert other URLs to this format if ICMS_URL matches??
-		/*$config_handler =& xoops_gethandler('config');
-		$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-        	if($xoopsConfigPersona['use_hidden'] == 1)
-		{
-        		$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
-			if($_SESSION['xoopsUserId'])
-			{
-				$replacements[] = _HIDDENC.'<div class="xoopsQuote">\\1</div>';
-			}
-			else
-			{
-				$replacements[] = _HIDDENC.'<div class="xoopsQuote">'._HIDDENTEXT.'</div>';
-			}
-		}
-		else
-		{
-        		$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
-			$replacements[] = '\\1';
-		}*/
 		$patterns[] = "/\[siteurl=(['\"]?)([^\"'<>]*)\\1](.*)\[\/siteurl\]/sU";
 		$replacements[] = '<a href="'.ICMS_URL.'/\\2">\\3</a>';
 		$patterns[] = "/\[url=(['\"]?)(http[s]?:\/\/[^\"'<>]*)\\1](.*)\[\/url\]/sU";
@@ -509,15 +485,11 @@ class MyTextSanitizer
 	 **/
 	function &censorString(&$text)
 	{
-		if(!isset($this->censorConf))
+		global $icmsConfigCensor;
+		if($icmsConfigCensor['censor_enable'] == true)
 		{
-			$config_handler =& xoops_gethandler('config');
-			$this->censorConf =& $config_handler->getConfigsByCat(XOOPS_CONF_CENSOR);
-		}
-		if($this->censorConf['censor_enable'] == 1)
-		{
-			$replacement = $this->censorConf['censor_replace'];
-			foreach($this->censorConf['censor_words'] as $bad)
+			$replacement = $icmsConfigCensor['censor_replace'];
+			foreach($icmsConfigCensor['censor_words'] as $bad)
 			{
 				if(!empty($bad))
 				{
@@ -746,8 +718,7 @@ class MyTextSanitizer
 	 */
 	function icmsCodeDecode_extended($text, $allowimage = 1)
 	{
-    $config_handler =& xoops_gethandler('config');
-    $icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+    global $icmsConfigPlugins;
     foreach($icmsConfigPlugins['sanitizer_plugins'] as $item) {
     $text = $this->icmsExecuteExtension($item, $text);
     }
@@ -798,8 +769,7 @@ class MyTextSanitizer
 	 */
   function textsanitizer_syntaxhighlight(&$text)
   {
-  	$config_handler =& xoops_gethandler('config');
-  	$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+  	global $icmsConfigPlugins;
   	$text = $this->undoHtmlSpecialChars($text);
   	if( $icmsConfigPlugins['code_sanitizer'] == 'php' ){
     	$text = $this->textsanitizer_php_highlight($text);
@@ -861,8 +831,7 @@ class MyTextSanitizer
 	 */
   function textsanitizer_geshi_highlight( $text )
   {
-    $config_handler =& xoops_gethandler('config');
-    $icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+    global $icmsConfigPlugins;
     if ( !@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
     $language = str_replace('.php', '', $icmsConfigPlugins['geshi_default']);
     

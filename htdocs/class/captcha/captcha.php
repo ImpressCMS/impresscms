@@ -21,12 +21,7 @@
 */
 
 
-if(! @include_once ICMS_ROOT_PATH."/language/".$GLOBALS["xoopsConfig"]["language"]."/captcha.php") {
-	require_once ICMS_ROOT_PATH."/language/english/captcha.php";
-}
-
-
-
+icms_loadLanguageFile('core', 'captcha');
 class IcmsCaptcha {
 	var $active	= true;
 	var $mode 	= "text";	// potential values: image, text
@@ -43,9 +38,8 @@ class IcmsCaptcha {
 		// Loading default preferences
 		$this->config = @include dirname(__FILE__)."/config.php";
 
-  	$config_handler =& xoops_gethandler('config');
-  	$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		$this->setMode($IcmsConfigCaptcha['captcha_mode']);
+		global $icmsConfigCaptcha;
+		$this->setMode($icmsConfigCaptcha['captcha_mode']);
 	}
 
 
@@ -133,8 +127,7 @@ class IcmsCaptcha {
 	 */
 	function init($name = 'icmscaptcha', $skipmember = null, $num_chars = null, $fontsize_min = null, $fontsize_max = null, $background_type = null, $background_num = null)
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
+		global $icmsConfigCaptcha;
 		// Loading RUN-TIME settings
 		foreach(array_keys($this->config) as $key) {
 			if(isset(${$key}) && ${$key} !== null) {
@@ -144,12 +137,12 @@ class IcmsCaptcha {
 		$this->config["name"] = $name;
 
 		// Skip CAPTCHA for group
-		$gperm_handler = & xoops_gethandler( 'groupperm' );
+		//$gperm_handler = & xoops_gethandler( 'groupperm' );
 		$xoopsUser = $GLOBALS["xoopsUser"];
 		$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-		if(array_intersect($groups, $IcmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {
+		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {
 			$this->active = false;
-		}elseif($IcmsConfigCaptcha['captcha_mode'] =='none'){
+		}elseif($icmsConfigCaptcha['captcha_mode'] =='none'){
 			$this->active = false;
 		}
 	}
@@ -166,8 +159,7 @@ class IcmsCaptcha {
 	 */
 	function verify($skipMember = null)
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
+		global $icmsConfigCaptcha;
 		$sessionName	= @$_SESSION['IcmsCaptcha_name'];
 		$skipMember		= ($skipMember === null) ? @$_SESSION['IcmsCaptcha_skipmember'] : $skipMember;
 		$maxAttempts	= intval( @$_SESSION['IcmsCaptcha_maxattempts'] );
@@ -179,12 +171,17 @@ class IcmsCaptcha {
 			$is_valid = true;
 */
 		// Kill too many attempts
-		/*}else*/if(!empty($maxAttempts) && $_SESSION['IcmsCaptcha_attempt_'.$sessionName] > $maxAttempts) {
+		/*}else*/
+		$xoopsUser = $GLOBALS["xoopsUser"];
+		$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {
+			$is_valid = true;
+        }elseif(!empty($maxAttempts) && $_SESSION['IcmsCaptcha_attempt_'.$sessionName] > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 
 		// Verify the code
 		}elseif(!empty($_SESSION['IcmsCaptcha_sessioncode'])){
-			$func = ($IcmsConfigCaptcha['captcha_casesensitive']) ? "strcmp" : "strcasecmp";
+			$func = ($icmsConfigCaptcha['captcha_casesensitive']) ? "strcmp" : "strcasecmp";
 			$is_valid = ! $func( trim(@$_POST[$sessionName]), $_SESSION['IcmsCaptcha_sessioncode']);
 		}
 
@@ -266,8 +263,7 @@ class IcmsCaptcha {
 	 */
 	function render()
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
+		global $icmsConfigCaptcha;
 		$form = "";
 
 		if( !$this->active || empty($this->config["name"]) ) {
@@ -275,8 +271,8 @@ class IcmsCaptcha {
 		}
 
 		$_SESSION['IcmsCaptcha_name'] = $this->config["name"];
-		$_SESSION['IcmsCaptcha_skipmember'] = $IcmsConfigCaptcha['captcha_skipmember'];
-		$maxAttempts = $IcmsConfigCaptcha['captcha_maxattempt'];
+		$_SESSION['IcmsCaptcha_skipmember'] = $icmsConfigCaptcha['captcha_skipmember'];
+		$maxAttempts = $icmsConfigCaptcha['captcha_maxattempt'];
 		$_SESSION['IcmsCaptcha_maxattempts'] = $maxAttempts;
 		/*
 		if(!empty($maxAttempts)) {

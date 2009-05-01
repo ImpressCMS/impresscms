@@ -33,8 +33,8 @@ else {$sess_handler->icms_sessionOpen();}
 	if($xoopsOption['theme_use_smarty'] == 0)
 	{
 		// the old way
-		$footer = htmlspecialchars($xoopsConfigMetaFooter['footer']).'<br /><div style="text-align:center">Powered by ImpressCMS &copy; 2007-'.date('Y').' <a href="http://www.impresscms.org/" rel="external">ImpressCMS</a></div>';
-		$google_analytics = $xoopsConfigMetaFooter['google_analytics'];
+		$footer = htmlspecialchars($icmsConfigMetaFooter['footer']).'<br /><div style="text-align:center">Powered by ImpressCMS &copy; 2007-'.date('Y').' <a href="http://www.impresscms.org/" rel="external">ImpressCMS</a></div>';
+		$google_analytics = $icmsConfigMetaFooter['google_analytics'];
 
 		if(isset($xoopsOption['template_main']))
 		{
@@ -64,8 +64,8 @@ else {$sess_handler->icms_sessionOpen();}
 			header('Pragma: no-cache');
 		}
 		/*
-		global $xoopsDB, $xoopsConfig;
-		if(!$xoopsConfig['theme_fromfile'])
+		global $xoopsDB, $icmsConfig;
+		if(!$icmsConfig['theme_fromfile'])
 		{
 			session_write_close();
 			$xoopsDB->close();

@@ -7,12 +7,12 @@
 * @package		Administration
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
-* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
 
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
-    exit("Access Denied");
+	exit("Access Denied");
 }
 
 function xoops_module_list() {
@@ -428,11 +428,11 @@ function xoops_module_install($dirname) {
 
 			// execute module specific install script if any
 			$install_script = $module->getInfo('onInstall');
-			$ModName = $module->getInfo('modname');
+			$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
 			if (false != $install_script && trim($install_script) != '') {
 				include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($install_script);
-				if (function_exists('xoops_module_install_'.$dirname)) {
-					$func = 'xoops_module_install_'.$dirname;
+				if (function_exists('xoops_module_install_'.$ModName)) {
+					$func = 'xoops_module_install_'.$ModName;
 					if ( !( $lastmsg = $func($module) ) ) {
 						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
 					} else {
@@ -503,213 +503,225 @@ function &xoops_module_gettemplate($dirname, $template, $block=false) {
 }
 
 function xoops_module_uninstall($dirname) {
-    global $xoopsConfig;
-    $reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
-    $db =& Database::getInstance();
-    $module_handler =& xoops_gethandler('module');
-    $module =& $module_handler->getByDirname($dirname);
-    include_once XOOPS_ROOT_PATH.'/class/template.php';
-    xoops_template_clear_module_cache($module->getVar('mid'));
-    if ($module->getVar('dirname') == 'system') {
-        return "<p>".sprintf(_MD_AM_FAILUNINS, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_SYSNO."</p>";
-    } elseif ($module->getVar('dirname') == $xoopsConfig['startpage']) {
-        return "<p>".sprintf(_MD_AM_FAILUNINS, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
-    } else {	
-        $msgs = array();
-        
-    	$stararr = explode('-',$xoopsConfig['startpage']);
-    	if (count($stararr) > 0){
-    		if ($module->getVar('mid') == $stararr[0]){
-    			return "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
-    		}
-    	}
+	global $xoopsConfig;
+	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
+	$db =& Database::getInstance();
+	$module_handler =& xoops_gethandler('module');
+	$module =& $module_handler->getByDirname($dirname);
+	include_once XOOPS_ROOT_PATH.'/class/template.php';
+	xoops_template_clear_module_cache($module->getVar('mid'));
+	if ($module->getVar('dirname') == 'system') {
+		return "<p>".sprintf(_MD_AM_FAILUNINS, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_SYSNO."</p>";
+	} elseif ($module->getVar('dirname') == $xoopsConfig['startpage']) {
+		return "<p>".sprintf(_MD_AM_FAILUNINS, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
+	} else {	
+		$msgs = array();
+		
+		$member_handler = & xoops_gethandler ( 'member' );
+		$grps = $member_handler->getGroupList ();
+		foreach ( $grps as $k => $v ) {
+			$stararr = explode('-',$xoopsConfig['startpage'][$k]);
+			if (count($stararr) > 0){
+				if ($module->getVar('mid') == $stararr[0]){
+					return "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
+				}
+			}
+		}
+		if (in_array($module->getVar('dirname'), $xoopsConfig ['startpage'])){
+			return "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
+		}
 
-    	$page_handler = xoops_gethandler('page');
-    	$criteria = new CriteriaCompo(new Criteria('page_moduleid', $module->getVar('mid')));
-    	$pages = $page_handler->getCount($criteria);
+		$page_handler = xoops_gethandler('page');
+		$criteria = new CriteriaCompo(new Criteria('page_moduleid', $module->getVar('mid')));
+		$pages = $page_handler->getCount($criteria);
 
-    	if ($pages > 0){
-    		$pages = $page_handler->getObjects($criteria);
-    		$msgs[] = 'Deleting links fom Symlink Manager...';
-    		foreach ($pages as $page){
-    			if (!$page_handler->delete($page)) {
-    				$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete link '.$page->getVar('page_title').' from the database. Link ID: <b>'.$page->getVar('page_id').'</b></span>';
-    			} else {
-    				$msgs[] = '&nbsp;&nbsp;Link <b>'.$page->getVar('page_title').'</b> deleted from the database. Link ID: <b>'.$page->getVar('page_id').'</b>';
-    			}
-    		}
-    	}
-        
-        if (!$module_handler->delete($module)) {
-            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete '.$module->getVar('name').'</span>';
-        } else {
+		if ($pages > 0){
+			$pages = $page_handler->getObjects($criteria);
+			$msgs[] = 'Deleting links fom Symlink Manager...';
+			foreach ($pages as $page){
+				if (!$page_handler->delete($page)) {
+					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete link '.$page->getVar('page_title').' from the database. Link ID: <b>'.$page->getVar('page_id').'</b></span>';
+				} else {
+					$msgs[] = '&nbsp;&nbsp;Link <b>'.$page->getVar('page_title').'</b> deleted from the database. Link ID: <b>'.$page->getVar('page_id').'</b>';
+				}
+			}
+		}
+		
+		if (!$module_handler->delete($module)) {
+			$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete '.$module->getVar('name').'</span>';
+		} else {
 
-            // delete template files
-            $tplfile_handler = xoops_gethandler('tplfile');
-            $templates =& $tplfile_handler->find(null, 'module', $module->getVar('mid'));
-            $tcount = count($templates);
-            if ($tcount > 0) {
-                $msgs[] = 'Deleting templates...';
-                for ($i = 0; $i < $tcount; $i++) {
-                    if (!$tplfile_handler->delete($templates[$i])) {
-                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete template '.$templates[$i]->getVar('tpl_file').' from the database. Template ID: <b>'.icms_conv_nr2local($templates[$i]->getVar('tpl_id')).'</b></span>';
-                    } else {
-                        $msgs[] = '&nbsp;&nbsp;Template <b>'.icms_conv_nr2local($templates[$i]->getVar('tpl_file')).'</b> deleted from the database. Template ID: <b>'.icms_conv_nr2local($templates[$i]->getVar('tpl_id')).'</b>';
-                    }
-                }
-            }
-            unset($templates);
+			// delete template files
+			$tplfile_handler = xoops_gethandler('tplfile');
+			$templates =& $tplfile_handler->find(null, 'module', $module->getVar('mid'));
+			$tcount = count($templates);
+			if ($tcount > 0) {
+				$msgs[] = 'Deleting templates...';
+				for ($i = 0; $i < $tcount; $i++) {
+					if (!$tplfile_handler->delete($templates[$i])) {
+						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete template '.$templates[$i]->getVar('tpl_file').' from the database. Template ID: <b>'.icms_conv_nr2local($templates[$i]->getVar('tpl_id')).'</b></span>';
+					} else {
+						$msgs[] = '&nbsp;&nbsp;Template <b>'.icms_conv_nr2local($templates[$i]->getVar('tpl_file')).'</b> deleted from the database. Template ID: <b>'.icms_conv_nr2local($templates[$i]->getVar('tpl_id')).'</b>';
+					}
+				}
+			}
+			unset($templates);
 
-            // delete blocks and block tempalte files
-            $icms_block_handler = xoops_gethandler('block');
-            $block_arr =& $icms_block_handler->getByModule($module->getVar('mid'));
-            if (is_array($block_arr)) {
-                $bcount = count($block_arr);
-                $msgs[] = 'Deleting block...';
-                for ($i = 0; $i < $bcount; $i++) {
-                    if (!$block_arr[$i]->delete()) {
-                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block <b>'.$block_arr[$i]->getVar('name').'</b> Block ID: <b>'.icms_conv_nr2local($block_arr[$i]->getVar('bid')).'</b></span>';
-                    } else {
-                        $msgs[] = '&nbsp;&nbsp;Block <b>'.$block_arr[$i]->getVar('name').'</b> deleted. Block ID: <b>'.icms_conv_nr2local($block_arr[$i]->getVar('bid')).'</b>';
-                    }
-                    if ($block_arr[$i]->getVar('template') != ''){
-                        $templates =& $tplfile_handler->find(null, 'block', $block_arr[$i]->getVar('bid'));
-                        $btcount = count($templates);
-                        if ($btcount > 0) {
-                            for ($j = 0; $j < $btcount; $j++) {
-                                if (!$tplfile_handler->delete($templates[$j])) {
-                                $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block template '.$templates[$j]->getVar('tpl_file').' from the database. Template ID: <b>'.icms_conv_nr2local($templates[$j]->getVar('tpl_id')).'</b></span>';
-                                } else {
-                                $msgs[] = '&nbsp;&nbsp;Block template <b>'.$templates[$j]->getVar('tpl_file').'</b> deleted from the database. Template ID: <b>'.icms_conv_nr2local($templates[$j]->getVar('tpl_id')).'</b>';
-                                }
-                            }
-                        }
-                        unset($templates);
-                    }
-                }
-            }
+			// delete blocks and block tempalte files
+			$icms_block_handler = xoops_gethandler('block');
+			$block_arr =& $icms_block_handler->getByModule($module->getVar('mid'));
+			if (is_array($block_arr)) {
+				$bcount = count($block_arr);
+				$msgs[] = 'Deleting block...';
+				for ($i = 0; $i < $bcount; $i++) {
+					if (!$block_arr[$i]->delete()) {
+						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block <b>'.$block_arr[$i]->getVar('name').'</b> Block ID: <b>'.icms_conv_nr2local($block_arr[$i]->getVar('bid')).'</b></span>';
+					} else {
+						$msgs[] = '&nbsp;&nbsp;Block <b>'.$block_arr[$i]->getVar('name').'</b> deleted. Block ID: <b>'.icms_conv_nr2local($block_arr[$i]->getVar('bid')).'</b>';
+					}
+					if ($block_arr[$i]->getVar('template') != ''){
+						$templates =& $tplfile_handler->find(null, 'block', $block_arr[$i]->getVar('bid'));
+						$btcount = count($templates);
+						if ($btcount > 0) {
+							for ($j = 0; $j < $btcount; $j++) {
+								if (!$tplfile_handler->delete($templates[$j])) {
+								$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block template '.$templates[$j]->getVar('tpl_file').' from the database. Template ID: <b>'.icms_conv_nr2local($templates[$j]->getVar('tpl_id')).'</b></span>';
+								} else {
+								$msgs[] = '&nbsp;&nbsp;Block template <b>'.$templates[$j]->getVar('tpl_file').'</b> deleted from the database. Template ID: <b>'.icms_conv_nr2local($templates[$j]->getVar('tpl_id')).'</b>';
+								}
+							}
+						}
+						unset($templates);
+					}
+				}
+			}
 
-            // delete tables used by this module
-            $modtables = $module->getInfo('tables');
-            if ($modtables != false && is_array($modtables)) {
-                $msgs[] = 'Deleting module tables...';
-                foreach ($modtables as $table) {
-                    // prevent deletion of reserved core tables!
-                    if (!in_array($table, $reservedTables)) {
-                        $sql = 'DROP TABLE '.$db->prefix($table);
-                        if (!$db->query($sql)) {
-                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not drop table <b>'.$db->prefix($table).'<b>.</span>';
-                        } else {
-                            $msgs[] = '&nbsp;&nbsp;Table <b>'.$db->prefix($table).'</b> dropped.</span>';
-                        }
-                    } else {
-                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Not allowed to drop table <b>'.$db->prefix($table).'</b>!</span>';
-                    }
-                }
-            }
+			// delete tables used by this module
+			$modtables = $module->getInfo('tables');
+			if ($modtables != false && is_array($modtables)) {
+				$msgs[] = 'Deleting module tables...';
+				foreach ($modtables as $table) {
+					// prevent deletion of reserved core tables!
+					if (!in_array($table, $reservedTables)) {
+						$sql = 'DROP TABLE '.$db->prefix($table);
+						if (!$db->query($sql)) {
+							$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not drop table <b>'.$db->prefix($table).'<b>.</span>';
+						} else {
+							$msgs[] = '&nbsp;&nbsp;Table <b>'.$db->prefix($table).'</b> dropped.</span>';
+						}
+					} else {
+						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Not allowed to drop table <b>'.$db->prefix($table).'</b>!</span>';
+					}
+				}
+			}
 
-            // delete comments if any
-            if ($module->getVar('hascomments') != 0) {
-                $msgs[] = 'Deleting comments...';
-                $comment_handler =& xoops_gethandler('comment');
-                if (!$comment_handler->deleteByModule($module->getVar('mid'))) {
-                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete comments</span>';
-                } else {
-                    $msgs[] = '&nbsp;&nbsp;Comments deleted';
-                }
-            }
+			// delete comments if any
+			if ($module->getVar('hascomments') != 0) {
+				$msgs[] = 'Deleting comments...';
+				$comment_handler =& xoops_gethandler('comment');
+				if (!$comment_handler->deleteByModule($module->getVar('mid'))) {
+					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete comments</span>';
+				} else {
+					$msgs[] = '&nbsp;&nbsp;Comments deleted';
+				}
+			}
 
-            // RMV-NOTIFY
-            // delete notifications if any
-            if ($module->getVar('hasnotification') != 0) {
-                $msgs[] = 'Deleting notifications...';
-                if (!xoops_notification_deletebymodule($module->getVar('mid'))) {
-                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete notifications</span>';
-                } else {
-                    $msgs[] = '&nbsp;&nbsp;Notifications deleted';
-                }
-            }
+			// RMV-NOTIFY
+			// delete notifications if any
+			if ($module->getVar('hasnotification') != 0) {
+				$msgs[] = 'Deleting notifications...';
+				if (!xoops_notification_deletebymodule($module->getVar('mid'))) {
+					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete notifications</span>';
+				} else {
+					$msgs[] = '&nbsp;&nbsp;Notifications deleted';
+				}
+			}
 
-            // delete permissions if any
-            $gperm_handler =& xoops_gethandler('groupperm');
-            if (!$gperm_handler->deleteByModule($module->getVar('mid'))) {
-                $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete group permissions</span>';
-            } else {
-                $msgs[] = '&nbsp;&nbsp;Group permissions deleted';
-            }
+			// delete permissions if any
+			$gperm_handler =& xoops_gethandler('groupperm');
+			if (!$gperm_handler->deleteByModule($module->getVar('mid'))) {
+				$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete group permissions</span>';
+			} else {
+				$msgs[] = '&nbsp;&nbsp;Group permissions deleted';
+			}
 
-            // delete module config options if any
-            if ($module->getVar('hasconfig') != 0 || $module->getVar('hascomments') != 0) {
-                $config_handler =& xoops_gethandler('config');
-                $configs =& $config_handler->getConfigs(new Criteria('conf_modid', $module->getVar('mid')));
-                $confcount = count($configs);
-                if ($confcount > 0) {
-                    $msgs[] = 'Deleting module config options...';
-                    for ($i = 0; $i < $confcount; $i++) {
-                        if (!$config_handler->deleteConfig($configs[$i])) {
-                            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete config data from the database. Config ID: <b>'.icms_conv_nr2local($configs[$i]->getvar('conf_id')).'</b></span>';
-                        } else {
-                            $msgs[] = '&nbsp;&nbsp;Config data deleted from the database. Config ID: <b>'.icms_conv_nr2local($configs[$i]->getVar('conf_id')).'</b>';
-                        }
-                    }
-                }
-            }
+			// delete module config options if any
+			if ($module->getVar('hasconfig') != 0 || $module->getVar('hascomments') != 0) {
+				$config_handler =& xoops_gethandler('config');
+				$configs =& $config_handler->getConfigs(new Criteria('conf_modid', $module->getVar('mid')));
+				$confcount = count($configs);
+				if ($confcount > 0) {
+					$msgs[] = 'Deleting module config options...';
+					for ($i = 0; $i < $confcount; $i++) {
+						if (!$config_handler->deleteConfig($configs[$i])) {
+							$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete config data from the database. Config ID: <b>'.icms_conv_nr2local($configs[$i]->getvar('conf_id')).'</b></span>';
+						} else {
+							$msgs[] = '&nbsp;&nbsp;Config data deleted from the database. Config ID: <b>'.icms_conv_nr2local($configs[$i]->getVar('conf_id')).'</b>';
+						}
+					}
+				}
+			}
 
-            // execute module specific install script if any
-            $uninstall_script = $module->getInfo('onUninstall');
-            $ModName = $module->getInfo('modname');
-            if (false != $uninstall_script && trim($uninstall_script) != '') {
-                include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($uninstall_script);
-                if (function_exists('xoops_module_uninstall_'.$dirname)) {
-                    $func = 'xoops_module_uninstall_'.$dirname;
-                    if (!$func($module)) {
-                        $msgs[] = 'Failed to execute <b>'.$func.'</b>';
-                    } else {
-                        $msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
-                    }
-                }elseif (function_exists('icms_module_uninstall_'.$ModName)) {
-                    $func = 'icms_module_uninstall_'.$ModName;
-                    if (!$func($module)) {
-                        $msgs[] = 'Failed to execute <b>'.$func.'</b>';
-                    } else {
-                        $msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
-                    }
-                }
+			// execute module specific install script if any
+			$uninstall_script = $module->getInfo('onUninstall');
+			$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
+			if (false != $uninstall_script && trim($uninstall_script) != '') {
+				include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($uninstall_script);
+				if (function_exists('xoops_module_uninstall_'.$ModName)) {
+					$func = 'xoops_module_uninstall_'.$ModName;
+					if (!$func($module)) {
+						$msgs[] = 'Failed to execute <b>'.$func.'</b>';
+					} else {
+						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
+					}
+				}elseif (function_exists('icms_module_uninstall_'.$ModName)) {
+					$func = 'icms_module_uninstall_'.$ModName;
+					if (!$func($module)) {
+						$msgs[] = 'Failed to execute <b>'.$func.'</b>';
+					} else {
+						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
+					}
+				}
 
-            }
+			}
 
-            $msgs[] = '</code><p>'.sprintf(_MD_AM_OKUNINS, "<b>".$module->getVar('name')."</b>").'</p>';
-        }
-        $ret = '<code>';
-        foreach ($msgs as $msg) {
-            $ret .= $msg.'<br />';
-        }
-        return $ret;
-    }
+			$msgs[] = '</code><p>'.sprintf(_MD_AM_OKUNINS, "<b>".$module->getVar('name')."</b>").'</p>';
+		}
+		$ret = '<code>';
+		foreach ($msgs as $msg) {
+			$ret .= $msg.'<br />';
+		}
+		return $ret;
+	}
 }
 
 function xoops_module_activate($mid) {
-    $module_handler =& xoops_gethandler('module');
-    $module =& $module_handler->get($mid);
-    include_once XOOPS_ROOT_PATH.'/class/template.php';
-    xoops_template_clear_module_cache($module->getVar('mid'));
-    $module->setVar('isactive', 1);
-    if (!$module_handler->insert($module)) {
+	global $icms_block_handler;
+	$module_handler =& xoops_gethandler('module');
+	$module =& $module_handler->get($mid);
+	include_once XOOPS_ROOT_PATH.'/class/template.php';
+	xoops_template_clear_module_cache($module->getVar('mid'));
+	$module->setVar('isactive', 1);
+	if (!$module_handler->insert($module)) {
 			$ret = "<p>".sprintf(_MD_AM_FAILACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />".$module->getHtmlErrors();
 			return $ret."</p>";
-    }
-    $icms_block_handler = xoops_gethandler('block');
-    $blocks =& $icms_block_handler->getByModule($module->getVar('mid'));
-    $bcount = count($blocks);
-    for ($i = 0; $i < $bcount; $i++) {
+	}
+	$icms_block_handler = xoops_getmodulehandler ( 'blocksadmin', 'system' );
+	$blocks =& $icms_block_handler->getByModule($module->getVar('mid'));
+	$bcount = count($blocks);
+	for ($i = 0; $i < $bcount; $i++) {
 			$blocks[$i]->setVar('isactive', 1);
 			$blocks[$i]->store();
-    }
-    return "<p>".sprintf(_MD_AM_OKACT, "<b>".$module->getVar('name')."</b>")."</p>";
+	}
+	return "<p>".sprintf(_MD_AM_OKACT, "<b>".$module->getVar('name')."</b>")."</p>";
 }
 
 function xoops_module_deactivate($mid) {
-	global $xoopsConfig;
+	global $icms_page_handler, $icms_block_handler, $xoopsConfig;
+	if(!isset($icms_page_handler)){
+	   $icms_page_handler = xoops_getmodulehandler ( 'pages', 'system' );
+	}
+
 	$module_handler =& xoops_gethandler('module');
 	$module =& $module_handler->get($mid);
 	include_once XOOPS_ROOT_PATH.'/class/template.php';
@@ -720,34 +732,29 @@ function xoops_module_deactivate($mid) {
 	} elseif ($module->getVar('dirname') == $xoopsConfig['startpage']) {
 		return "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
 	} else {
-		$stararr = explode('-',$xoopsConfig['startpage']);
-		if (count($stararr) > 0){
-			if ($module->getVar('mid') == $stararr[0]){
-				return "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
+		$member_handler = & xoops_gethandler ( 'member' );
+		$grps = $member_handler->getGroupList ();
+		foreach ( $grps as $k => $v ) {
+			$stararr = explode('-',$xoopsConfig['startpage'][$k]);
+			if (count($stararr) > 0){
+				if ($module->getVar('mid') == $stararr[0]){
+					return "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
+				}
 			}
 		}
-	
-		$page_handler = xoops_gethandler('page');
-		$criteria = new CriteriaCompo(new Criteria('page_moduleid', $module->getVar('mid')));
-		$pages = $page_handler->getCount($criteria);
-		
-		if ($pages > 0){
-			$pages = $page_handler->getObjects($criteria);
-			foreach ($pages as $page){
-				$page_handler->changestatus($page);
-			}
+		if (in_array($module->getVar('dirname'), $xoopsConfig ['startpage'])){
+			return "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
 		}
-	
 		if (!$module_handler->insert($module)) {
 			$ret = "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />".$module->getHtmlErrors();
 			return $ret."</p>";
 		}
 
-		$icms_block_handler = xoops_gethandler('block');
+		$icms_block_handler = xoops_getmodulehandler ( 'blocksadmin', 'system' );
 		$blocks =& $icms_block_handler->getByModule($module->getVar('mid'));
 		$bcount = count($blocks);
 		for ($i = 0; $i < $bcount; $i++) {
-			$blocks[$i]->setVar('isactive', 0);
+			$blocks[$i]->setVar('isactive', false);
 			$blocks[$i]->store();
 		}
 		return "<p>".sprintf(_MD_AM_OKDEACT, "<b>".$module->getVar('name')."</b>")."</p>";

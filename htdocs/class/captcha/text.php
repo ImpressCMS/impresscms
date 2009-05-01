@@ -71,9 +71,8 @@ class IcmsCaptchaText {
 	 */
 	function render()
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		$form = $this->loadText()  . "&nbsp;&nbsp; <input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $IcmsConfigCaptcha['captcha_num_chars'] . "' maxlength='" . $IcmsConfigCaptcha['captcha_num_chars'] . "' value='' />";
+		global $icmsConfigCaptcha;
+		$form = $this->loadText()  . "&nbsp;&nbsp; <input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $icmsConfigCaptcha['captcha_num_chars'] . "' maxlength='" . $icmsConfigCaptcha['captcha_num_chars'] . "' value='' />";
 		$rule = constant("ICMS_CAPTCHA_RULE_TEXT");
 		if(!empty($rule)) {
 			$form .= "&nbsp;&nbsp;<small>{$rule}</small>";

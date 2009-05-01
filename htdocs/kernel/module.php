@@ -204,7 +204,7 @@ class XoopsModule extends XoopsObject
 	*/
 	function loadInfo($dirname, $verbose = true)
 	{
-		global $xoopsConfig;
+		global $icmsConfig;
 		icms_loadLanguageFile($dirname, 'modinfo');
 		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/icms_version.php'))
 		{
@@ -258,7 +258,7 @@ class XoopsModule extends XoopsObject
 	
 	function displayAdminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1)
 	{
-		global $xoopsModule, $xoopsConfig;
+		global $xoopsModule, $icmsConfig;
 		include_once ICMS_ROOT_PATH.'/class/template.php';
 		icms_loadLanguageFile($xoopsModule->getVar('dirname'), 'modinfo');
 		icms_loadLanguageFile($xoopsModule->getVar('dirname'), 'admin');

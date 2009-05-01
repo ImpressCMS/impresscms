@@ -35,6 +35,27 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		}
 
 		/**
+		 * Gets list of administration themes folder from themes directory, excluding any directories that do not have theme_admin.html
+	     * @return    array   
+	     */
+	    static public function getAdminThemesList(){
+	      $dirtyList1 = $cleanList1 = Array();
+	      $dirtyList2 = $cleanList2 = Array();
+	      $dirtyList1 = XoopsLists::getDirListAsArray(ICMS_THEME_PATH.'/');
+	      $dirtyList2 = XoopsLists::getDirListAsArray(ICMS_MODULES_PATH.'/system/themes/');
+	      foreach($dirtyList1 as $item1){
+	        if(file_exists(ICMS_THEME_PATH.'/'.$item1.'/theme_admin.html'))
+	          $cleanList1[$item1] = $item1;
+	      }
+	      foreach($dirtyList2 as $item2){
+	        if(file_exists(ICMS_MODULES_PATH.'/system/themes/'.$item2.'/theme.html') || file_exists(ICMS_MODULES_PATH.'/system/themes/'.$item2.'/theme_admin.html'))
+                $cleanList2[$item2] = $item2;
+	      }
+          $cleanList = array_merge($cleanList1, $cleanList2);
+	      return $cleanList;
+	    }
+
+		/**
 		 * Gets list of themes folder from themes directory, excluding any directories that do not have theme.html
 	     * @return    array   
 	     */
@@ -53,11 +74,11 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		 */
 		static public function getModulesList() {
             $dirtyList = $cleanList = array();
-            $dirtyList = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH.'/modules/');
+            $dirtyList = XoopsLists::getDirListAsArray(ICMS_ROOT_PATH.'/modules/');
             foreach($dirtyList as $item){
-                if(file_exists(XOOPS_ROOT_PATH.'/modules/'.$item.'/icms_version.php')){
+                if(file_exists(ICMS_ROOT_PATH.'/modules/'.$item.'/icms_version.php')){
                     $cleanList[$item] = $item;
-                }elseif(file_exists(XOOPS_ROOT_PATH.'/modules/'.$item.'/xoops_version.php')){
+                }elseif(file_exists(ICMS_ROOT_PATH.'/modules/'.$item.'/xoops_version.php')){
                     $cleanList[$item] = $item;
                     }
             }
@@ -222,9 +243,9 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		static public function getAvatarsList($avatar_dir="") {
 			$avatars = array();
 			if ( $avatar_dir != "" ) {
-				$avatars = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/".$avatar_dir."/", $avatar_dir."/");
+				$avatars = XoopsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/avatar/".$avatar_dir."/", $avatar_dir."/");
 			} else {
-				$avatars = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
+				$avatars = XoopsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/avatar/");
 			}
 			return $avatars;
 		}
@@ -237,10 +258,10 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		static public function getAllAvatarsList() {
 			$avatars = array();
 			$dirlist = array();
-			$dirlist = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
+			$dirlist = XoopsLists::getDirListAsArray(ICMS_ROOT_PATH."/images/avatar/");
 			if ( count($dirlist) > 0 )
 				foreach ( $dirlist as $dir )
-					$avatars[$dir] =& XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/".$dir."/", $dir."/");
+					$avatars[$dir] =& XoopsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/avatar/".$dir."/", $dir."/");
 			else
 				return false;
 			return $avatars;
@@ -256,9 +277,9 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		static public function getSubjectsList($sub_dir="") {
 			$subjects = array();
 			if($sub_dir != "")
-				$subjects = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/subject/".$sub_dir, $sub_dir."/");
+				$subjects = XoopsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/subject/".$sub_dir, $sub_dir."/");
 			else
-				$subjects = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/subject/");
+				$subjects = XoopsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/subject/");
 			return $subjects;
 		}
 
@@ -269,7 +290,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
      	 */
 		static public function getLangList() {
 			$lang_list = array();
-			$lang_list = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH."/language/");
+			$lang_list = XoopsLists::getDirListAsArray(ICMS_ROOT_PATH."/language/");
 			return $lang_list;
 		}
 
@@ -291,8 +312,8 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
      	 * @return array
      	 */
 		static public function getEnabledEditorsList() {
-			global $xoopsConfig;
-			return $xoopsConfig['editor_enabled'];
+			global $icmsConfig;
+			return $icmsConfig['editor_enabled'];
 		}
 
 
@@ -302,7 +323,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
      	 * @return  array     $country_list   list of countries
     	 */
 		static public function getCountryList() {	
-			global $xoopsConfig;
+			global $icmsConfig;
 			icms_loadLanguageFile('core', 'countries');
 			$country_list = array (
 				""   => "-",

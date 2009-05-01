@@ -32,7 +32,7 @@ $cform->addElement($icons_radio);
 $cform->addElement(new XoopsFormDhtmlTextArea(_CM_MESSAGE, 'message', $message, 10, 50), true);
 $option_tray = new XoopsFormElementTray(_OPTIONS,'<br />');
 if ($xoopsUser) {
-	if ($xoopsConfig['anonpost'] == 1) {
+	if ($icmsConfig['anonpost'] == true) {
 		$noname_checkbox = new XoopsFormCheckBox('', 'noname', $noname);
 		$noname_checkbox->addOption(1, _POSTANON);
 		$option_tray->addElement($noname_checkbox);

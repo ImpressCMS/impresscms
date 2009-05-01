@@ -709,6 +709,7 @@ class IcmsForm extends XoopsThemeForm {
 	
 	function renderValidationJS2( $withtags = true ) {
 		global $xoTheme;
+        $rules = $titles = '';
 		$elements = $this->getRequired();
 		foreach ( $elements as $elt ) {
 			if(isset($rules))

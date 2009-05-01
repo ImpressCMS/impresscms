@@ -14,9 +14,9 @@
 * @version	$Id$
 */
 
-defined( 'XOOPS_ROOT_PATH' ) or die();
+defined( 'ICMS_ROOT_PATH' ) or die();
 
-require_once XOOPS_ROOT_PATH . '/class/logger.php';
+require_once ICMS_ROOT_PATH . '/class/logger.php';
 
 /**
  * Backward compatibility code, do not use this class directly

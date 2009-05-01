@@ -115,10 +115,11 @@ $avatar = $owner->getVar('user_avatar');
 $barra_navegacao = new XoopsPageNav($nbSections['nbPhotos'],$xoopsModuleConfig['picturesperpage'],$start,'start','uid='.intval($controler->uidOwner));
 $navegacao = $barra_navegacao->renderImageNav(2);
 
-$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/lightbox/css/lightbox.css');
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/prototype/prototype.js');
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/scriptaculous/src/scriptaculous.js?load=effects,builder');
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/lightbox/js/lightbox.js');
+$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
+$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom.css');
+if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom-ie.css');}
+$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.js');
+$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/lightbox.js');
 /**
 * Assigning smarty variables
 */

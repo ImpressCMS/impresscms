@@ -13,18 +13,18 @@
 * @version	$Id$
 */
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
 
 /**
  * base class
  */
-include_once XOOPS_ROOT_PATH.'/class/downloader.php';
+include_once ICMS_ROOT_PATH.'/class/downloader.php';
 /**
  * Class to handle tar files
  */
-include_once XOOPS_ROOT_PATH.'/class/class.tar.php';
+include_once ICMS_ROOT_PATH.'/class/class.tar.php';
 
 /**
  * Send tar files through a http socket
