@@ -123,9 +123,9 @@ class IcmsBlock extends IcmsPersistableObject {
     }
 	
     /**
-     * Enter description here...
+     * Builds the block
      *
-     * @return unknown
+     * @return array $block the block information array
      * 
      * @deprecated
      */
