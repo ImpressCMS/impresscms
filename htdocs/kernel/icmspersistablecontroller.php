@@ -95,6 +95,7 @@ class IcmsPersistableController {
 
     function &doStoreFromDefaultForm(&$icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page=false, $debug=false)
     {
+		global $impresscms;
 		$this->postDataToObject($icmsObj);
 
     	if ($icmsObj->isNew()) {
@@ -159,7 +160,7 @@ class IcmsPersistableController {
 			return $icmsObj;
 		} else {
 			if ( !$storeResult ) {
-				redirect_header($icmsObj->urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
+				redirect_header($impresscms->urls['previouspage'], 3, _CO_ICMS_SAVE_ERROR . $icmsObj->getHtmlErrors());
 			}
 
 			$redirect_page = $redirect_page ? $redirect_page : icms_get_page_before_form();
