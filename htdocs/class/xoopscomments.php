@@ -56,8 +56,8 @@ class XoopsComments extends XoopsObject
 
 
   /**
-   * Loads one comment ID
-   * @param   int     $id   ID of the comment to load
+   * Loads all the data from one comment ID
+   * @param   int     $id   ID of all the commentdata to load
    */
 	function load($id)
 	{
@@ -361,6 +361,7 @@ class XoopsComments extends XoopsObject
 
   /**
    * Shows the comment tree header
+   * @param    string        $width    The width of the table for the treeHead
    */
 	function showTreeHead($width="100%")
 	{
