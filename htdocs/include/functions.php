@@ -1106,7 +1106,7 @@ function xoops_utf8_encode(&$text)
 function xoops_convert_encoding(&$text) {return xoops_utf8_encode($text);}
 
 /**
-* Converts text to UTF-8 encoded text
+* Gets Username from UserID and creates a link to the userinfo (!) page
 *
 * @param	int	$userid	The User ID
 * @return	string	The linked username (from userID or "Anonymous")
@@ -3272,7 +3272,7 @@ function icms_PasswordMeter(){
  * Build criteria automatically from an array of key=>value
  *
  * @param array $criterias array of fieldname=>value criteria
- * @return CriteriaCompo object
+ * @return object (@link CriteriaCompo) the CriteriaCompo object
  */
 function icms_buildCriteria($criterias) {
 	$criteria = new CriteriaCompo();
