@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Shows all tree structures within ImpressCMS (including breadcrumbs)
 *

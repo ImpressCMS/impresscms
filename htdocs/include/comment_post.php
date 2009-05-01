@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * The post a comment include file
 *

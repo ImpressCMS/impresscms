@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Handler registry Class
 *

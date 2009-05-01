@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Creates a textbox form attribut
 *

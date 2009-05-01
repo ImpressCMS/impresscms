@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Handles all functions related to downloading zipfiles within ImpressCMS
 *

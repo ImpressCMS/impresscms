@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * XML Parser RPC document
 *

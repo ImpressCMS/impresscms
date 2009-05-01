@@ -1,6 +1,6 @@
 <?PHP
 /**
-* Creates a form attribut which is able to select an image
+* Creates a form attribute which is able to select an image
 *
 ### =============================================================
 ### Mastop InfoDigital - Paixão por Internet
@@ -11,8 +11,6 @@
 ### @Copyright: Mastop InfoDigital � 2003-2007
 ### -------------------------------------------------------------
 ### www.mastop.com.br
-### =============================================================
-### $Id$
 ### =============================================================
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt

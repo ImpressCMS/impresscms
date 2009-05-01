@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Renders the comments
 *

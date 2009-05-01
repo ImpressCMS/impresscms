@@ -1,7 +1,6 @@
 <?php
-// $Id$
 /**
-* Creates a form select attribut (base class)
+* Creates a form select attribute (base class)
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt

@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * XML to RSS parser
 *

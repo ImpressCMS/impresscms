@@ -1,5 +1,4 @@
 <?php 
-// $Id$
 /**
 * Creates a group permission form
 *

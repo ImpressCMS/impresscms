@@ -7,7 +7,7 @@
 * @package		IcmsPersistableObject
 * @since		  1.1
 * @author		  marcan <marcan@impresscms.org>
-* @version		$Id: icmsform.php 8560 2009-04-11 11:35:42Z icmsunderdog $
+* @version		$Id$
 */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -27,7 +27,7 @@ include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 * @package		IcmsPersistableObject
 * @since		  1.1
 * @author		  marcan <marcan@impresscms.org>
-* @version		$Id: icmsform.php 8560 2009-04-11 11:35:42Z icmsunderdog $
+* @version		$Id$
 */
 class IcmsForm extends XoopsThemeForm {
 

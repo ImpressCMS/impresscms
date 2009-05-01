@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * The templates class that extends Smarty
 *

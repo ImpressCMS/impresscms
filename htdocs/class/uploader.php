@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * The uploader class of media files
 *

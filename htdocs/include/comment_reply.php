@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * The commentreply include file
 *

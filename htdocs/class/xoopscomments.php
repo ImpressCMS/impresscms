@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Handles all the comments within ImpressCMS
 *

@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Manage of users for the Icms Persistable framework
 *

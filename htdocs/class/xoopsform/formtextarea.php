@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Creates a textarea form attribut
 *

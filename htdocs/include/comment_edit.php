@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * The edit comment include file
 *

@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * The check invite include file
 *

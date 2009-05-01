@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * XoopsDownloader Base Class
 *

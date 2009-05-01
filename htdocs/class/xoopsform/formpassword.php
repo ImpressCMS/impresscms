@@ -1,7 +1,6 @@
 <?php
-// $Id$
 /**
-* Creates a form passwordfield attribut
+* Creates a form passwordfield attribute
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt

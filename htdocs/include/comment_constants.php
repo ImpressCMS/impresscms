@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * The constants regarding comments
 *

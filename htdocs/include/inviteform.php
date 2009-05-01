@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Handles all functions for the invitation form within ImpressCMS
 *

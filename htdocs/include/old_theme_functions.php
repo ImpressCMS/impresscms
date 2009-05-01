@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Handles all old theme functions within ImpressCMS (for old themes)
 *

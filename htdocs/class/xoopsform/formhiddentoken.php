@@ -1,7 +1,6 @@
 <?php
-// $Id$
 /**
-* Creates a hidden token form attribut
+* Creates a hidden token form attribute
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt

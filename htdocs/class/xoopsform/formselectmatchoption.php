@@ -1,7 +1,6 @@
 <?php
-// $Id$
 /**
-* Creates form attribut which shows match possibilities for search form
+* Creates form attribute which shows match possibilities for search form
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt

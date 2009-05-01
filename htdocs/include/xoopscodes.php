@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * The functions that take care of BB Codes
 *

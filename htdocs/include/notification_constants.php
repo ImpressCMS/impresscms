@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Handles all notification constants within ImpressCMS
 *

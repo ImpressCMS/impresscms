@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Textsanitizer Class
 *

@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Error Handler class
 *

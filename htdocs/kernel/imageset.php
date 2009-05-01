@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Manage of imagesets baseclass
 *

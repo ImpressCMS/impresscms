@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Criteria Base Class for composing Where clauses in SQL Queries
 *

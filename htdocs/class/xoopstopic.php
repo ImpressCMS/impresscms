@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Old class for generating news topics
 *

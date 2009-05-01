@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * The Tar files downloader class
 *

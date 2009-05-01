@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Creates a form element tray
 *

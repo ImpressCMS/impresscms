@@ -1,5 +1,5 @@
 <?php
-// $Id
+// $Id$
 //%%%%%% Avatar Manager %%%%%
 define('_MD_AVATARMAN','Avatar Manager');
 

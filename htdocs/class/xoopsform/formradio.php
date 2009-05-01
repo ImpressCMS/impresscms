@@ -1,7 +1,6 @@
 <?php
-// $Id$
 /**
-* Creates a form radiobutton attribut (base class)
+* Creates a form radiobutton attribute (base class)
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt

@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * The delete comment include file
 *

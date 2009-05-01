@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * The check login include file
 *

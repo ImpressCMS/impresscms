@@ -1,7 +1,6 @@
 <?php
-// $Id$
 /**
-* Creates a form attribut which is able to select a country
+* Creates a form attribute which is able to select a country
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt

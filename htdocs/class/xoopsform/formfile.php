@@ -1,7 +1,6 @@
 <?php
-// $Id$
 /**
-* Creates a form file attribut
+* Creates a form file attribute
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt

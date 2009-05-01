@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * XML Parser Sax Parser
 *

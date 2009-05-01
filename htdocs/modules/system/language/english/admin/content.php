@@ -1,5 +1,5 @@
 <?php
-// $Id
+// $Id$
 //%%%%%% Content Manager %%%%%
 define('_MD_CONTENTMAN','Content Manager');
 

@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Creates a basic form element (Base Class)
 *

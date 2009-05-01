@@ -1,7 +1,6 @@
 <?php
-// $Id$
 /**
-* Creates a form text label attribut
+* Creates a form text label attribute
 *
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt

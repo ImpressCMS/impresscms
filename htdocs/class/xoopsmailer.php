@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Handles all mailer functions within ImpressCMS
 *

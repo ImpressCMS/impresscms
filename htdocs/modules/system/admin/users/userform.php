@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Administration of users, form file
 *
