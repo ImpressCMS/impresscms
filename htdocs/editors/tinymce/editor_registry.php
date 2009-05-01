@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Handles the editor registry
 *

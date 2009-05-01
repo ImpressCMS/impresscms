@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Functions to extend PHPMailer to email the users
 *
