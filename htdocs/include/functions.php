@@ -14,7 +14,7 @@
 */
 
 // ############## Include jalali functions file ##############
-include XOOPS_ROOT_PATH.'/include/jalali.php';
+include_once 'jalali.php';
 /**
 * The header
 *

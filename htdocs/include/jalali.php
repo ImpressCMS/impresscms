@@ -33,9 +33,6 @@
 // xoops (which is based for this work)                                      //
 //  ------------------------------------------------------------------------ //
 
-if (!defined('XOOPS_ROOT_PATH')) {
-	exit();
-}
 /**
  * Divides two integers.
  *
