@@ -231,4 +231,5 @@ define('_CORE_PASSLEVEL1','Too short');
 define('_CORE_PASSLEVEL2','Weak');
 define('_CORE_PASSLEVEL3','Good');
 define('_CORE_PASSLEVEL4','Strong');
+define( "DB_PCONNECT_HELPS",  "Persistent connections are useful with slower internet connections. They are not generally required for most installations."); // L69
 ?>

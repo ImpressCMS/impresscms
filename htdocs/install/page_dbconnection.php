@@ -101,7 +101,7 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
 
     <label>
         <?php echo htmlspecialchars( DB_PCONNECT_LABEL ); ?>
-        <input class="checkbox" type="checkbox" name="DB_PCONNECT" value="1" <?php echo $vars['DB_PCONNECT'] ? "'checked'" : ""; ?>/>
+        <input class="checkbox" type="checkbox" name="DB_PCONNECT" value="1" onclick ="alert('<?php echo htmlspecialchars( DB_PCONNECT_HELPS ); ?>');" <?php echo $vars['DB_PCONNECT'] ? "'checked'" : ""; ?>/>
         <div class="xoform-help"><?php echo htmlspecialchars( DB_PCONNECT_HELP ); ?></div>
     </label>
 </fieldset>
