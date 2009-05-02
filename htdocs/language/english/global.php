@@ -21,7 +21,7 @@ define('_THREADED','Threaded');
 define('_OLDESTFIRST','Oldest First');
 define('_NEWESTFIRST','Newest First');
 define('_MORE','more...');
-define('_MULTIPAGE','To have your article span multiple pages, insert the word <font color=red>[pagebreak]</font> (with brackets) in the article.');
+//define('_MULTIPAGE','To have your article span multiple pages, insert the word <font color=red>[pagebreak]</font> (with brackets) in the article.');
 define('_IFNOTRELOAD','If the page does not automatically reload, please click <a href="%s">here</a>');
 define('_WARNINSTALL2','WARNING: Directory %s exists on your server. <br />Please remove this directory for security reasons.');
 define('_WARNINWRITEABLE','WARNING: File %s is writeable by the server. <br />Please change the permission of this file for security reasons.<br /> in Unix (444), in Win32 (read-only)');
@@ -84,7 +84,7 @@ define("_ERRORS", "Errors");
 define("_NONE", "None");
 define('_ON','on');
 define('_READS','reads');
-define('_WELCOMETO','Welcome to %s');
+//define('_WELCOMETO','Welcome to %s');
 define('_SEARCH','Search');
 define('_ALL', 'All');
 define('_TITLE', 'Title');
@@ -153,10 +153,10 @@ define("_ENTERCODE","Enter the codes that you want to add.");
 define("_ENTERQUOTE","Enter the text that you want to be quoted.");
 define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
 define("_ENTERTEXTBOX","Please input text into the textbox.");
-define("_ALLOWEDCHAR","Allowed max chars length: ");
-define("_CURRCHAR","Current chars length: ");
-define("_PLZCOMPLETE","Please complete the subject and message fields.");
-define("_MESSAGETOOLONG","Your message is too long.");
+//define("_ALLOWEDCHAR","Allowed max chars length: ");
+//define("_CURRCHAR","Current chars length: ");
+//define("_PLZCOMPLETE","Please complete the subject and message fields.");
+//define("_MESSAGETOOLONG","Your message is too long.");
 
 //%%%%%		TIME FORMAT SETTINGS   %%%%%
 define('_SECOND', '1 second');
@@ -232,7 +232,7 @@ define('_IMPRESSCMS_BLOG','Blog');
 define('_IMPRESSCMS_DONATE','Donate!');
 define("_IMPRESSCMS_Support","Support the project !");
 define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
-define('_RECREATE_ADMINMENU_FILE', 'This is your first time to enter the administration section. Press the button below to proceed.');
+//define('_RECREATE_ADMINMENU_FILE', 'This is your first time to enter the administration section. Press the button below to proceed.');
 define('_IMPRESSCMS_ADMIN','Administration of');
 /** The default separator used in XoopsTree::getNicePathFromId */
 define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
@@ -240,7 +240,7 @@ define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
 define('_CT_NAV','Home');
 define('_CT_RELATEDS','Related pages');
 //Security image (captcha)
-define("_SECURITYIMAGE_CODE","Security code");
+//define("_SECURITYIMAGE_CODE","Security code");
 define("_SECURITYIMAGE_GETCODE","Enter the security code");
 /*
 define("_SECURITYIMAGE_ERROR","Invalid security code");

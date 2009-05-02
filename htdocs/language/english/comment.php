@@ -15,7 +15,7 @@ define('_CM_POSTCOMMENT','Post Comment');
 define('_CM_REPLIES','Replies');
 define('_CM_PARENT','Parent');
 define('_CM_TOP','Top');
-define('_CM_BOTTOM','Bottom');
+//define('_CM_BOTTOM','Bottom');
 define('_CM_ONLINE','Online!');
 define('_CM_POSTED','Posted'); // Posted date
 define('_CM_UPDATED', 'Updated');

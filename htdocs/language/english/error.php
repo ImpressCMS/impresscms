@@ -7,16 +7,16 @@ define("_ERR_START_AGAIN","Start again from the <a href='" . XOOPS_URL . "'>home
 define("_ERR_CONTACT","Contact the <a href='mailto:%s'>webmaster</a> to report this error.");
 define("_ERR_NO", "Error %u");
 
-define("_ERR_400_TITLE", "Bad Request");
-define("_ERR_400_DESC", "The request contains bad syntax or cannot be fulfilled.");
-define("_ERR_401_TITLE", "Forbidden");
-define("_ERR_401_DESC", "");
-define("_ERR_402_TITLE", "Payment Required");
-define("_ERR_402_DESC", "");
-define("_ERR_403_TITLE", "Forbidden");
-define("_ERR_403_DESC", "");
-define("_ERR_404_TITLE", "Not Found");
-define("_ERR_404_DESC", "The page you are trying to access could not be found.");
+//define("_ERR_400_TITLE", "Bad Request");
+//define("_ERR_400_DESC", "The request contains bad syntax or cannot be fulfilled.");
+//define("_ERR_401_TITLE", "Forbidden");
+//define("_ERR_401_DESC", "");
+//define("_ERR_402_TITLE", "Payment Required");
+//define("_ERR_402_DESC", "");
+//define("_ERR_403_TITLE", "Forbidden");
+//define("_ERR_403_DESC", "");
+//define("_ERR_404_TITLE", "Not Found");
+//define("_ERR_404_DESC", "The page you are trying to access could not be found.");
 
 /*
  *  // TODO: Define all the other errors constants (4xx and 5xx). Can be found in "http://en.wikipedia.org/wiki/List_of_HTTP_status_codes"

@@ -1,6 +1,8 @@
 ImpressCMS ChangeLog
 
 == Impresscms 1.2==
+===2009-05-02 : 1.2 Alpha===
+* Ongoing process of cleaning up unused language constants thanks to a function written by trabis. Credits : www.xuups.org (trabis)
 
 ===2009-03-15 : 1.2 Alpha===
 '''Added'''

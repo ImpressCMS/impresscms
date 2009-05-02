@@ -36,7 +36,7 @@ define ('_NOT_NOACCESS', 'You do not have permission to access this page.');
 
 // Text for module config options
 
-define ('_NOT_ENABLE', 'Enable');
+//define ('_NOT_ENABLE', 'Enable');
 define ('_NOT_NOTIFICATION', 'Notification');
 
 define ('_NOT_CONFIG_ENABLED', 'Enable Notification');

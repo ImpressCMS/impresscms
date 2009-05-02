@@ -16,7 +16,7 @@ define("_MA_USER_LEVEL_DISABLED", "Disabled");
 define("_MA_USER_RANK", "Rank");
 
 define("_MA_USER_FINDUS","Find Users");
-define("_MA_USER_AVATAR","Avatar");
+//define("_MA_USER_AVATAR","Avatar");
 define("_MA_USER_REALNAME","Real Name");
 define("_MA_USER_REGDATE","Joined Date");
 define("_MA_USER_EMAIL","Email");

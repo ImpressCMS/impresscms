@@ -5,7 +5,7 @@ define("_SR_SEARCH","Search");
 define("_SR_PLZENTER","Please enter all required data!");
 define("_SR_SEARCHRESULTS","Search Results");
 define("_SR_NOMATCH","No Match Found for your Query");
-define("_SR_FOUND","Found <b>%s</b> match(es)");
+//define("_SR_FOUND","Found <b>%s</b> match(es)");
 define("_SR_SHOWING","(Showing %d - %d)");
 define("_SR_ANY","Any (OR)");
 define("_SR_ALL","All (AND)");
