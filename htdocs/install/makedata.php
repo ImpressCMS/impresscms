@@ -257,7 +257,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_admin_set', '_MD_AM_ADMIN_DTHEME', 'iTheme', '_MD_AM_ADMIN_DTHEME_DESC', 'theme_admin', 'other', $p)");
 	$i++;
 	$p++;
-    $dbm->insert('config', " VALUES ($i, 0, $c, 'theme_fromfile', '_MD_AM_THEMEFILE', '0', '_MD_AM_THEMEFILEDSC', 'yesno', 'int', $p)");
+    $dbm->insert('config', " VALUES ($i, 0, $c, 'theme_fromfile', '_MD_AM_THEMEFILE', '1', '_MD_AM_THEMEFILEDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
   	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_set_allowed', '_MD_AM_THEMEOK', '".serialize(array('impresstheme', 'impresstheme_light', 'iTheme'))."', '_MD_AM_THEMEOKDSC', 'theme_multi', 'array', $p)");
@@ -367,7 +367,19 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'minpass', '_MD_AM_MINPASS', '5', '_MD_AM_MINPASSDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'pass_level', '_MD_AM_PASSLEVEL', '1', '_MD_AM_PASSLEVEL_DESC', 'yesno', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'pass_level', '_MD_AM_PASSLEVEL', '40', '_MD_AM_PASSLEVEL_DESC', 'select', 'int', $p)");
+		// Insert data for Config Options in selection field. (must be placed before $i++)
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PASSLEVEL1', '20', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PASSLEVEL2', '40', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PASSLEVEL3', '60', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PASSLEVEL4', '80', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PASSLEVEL5', '95', $i)");
+	$ci++;
+	// ----------
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'minuname', '_MD_AM_MINUNAME', '3', '_MD_AM_MINUNAMEDSC', 'textbox', 'int', $p)");

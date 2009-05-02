@@ -141,7 +141,7 @@ class XoopsFormPassword extends XoopsFormElement
 	function render()
 	{
         global $icmsConfigUser;
-        if($icmsConfigUser['pass_level']){icms_PasswordMeter();}
+        if($icmsConfigUser['pass_level'] > 20 ){icms_PasswordMeter();}
 		$ele_name = $this->getName();
 		return "<input class='".$this->getClassName()."' type='password' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".$this->getValue()."'".$this->getExtra()." ".($this->autoComplete ? "" : "autocomplete='off' ")."/>";
 	}

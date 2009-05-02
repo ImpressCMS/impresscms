@@ -2906,6 +2906,7 @@ function icms_PasswordMeter(){
 					$.fn.resultStyle = "";
 				$(".password_adv").passStrength({
 					minPass: '.$icmsConfigUser['minpass'].',
+					strongnessPass: '.$icmsConfigUser['pass_level'].',
 					shortPass: 		"top_shortPass",
 					badPass:		"top_badPass",
 					goodPass:		"top_goodPass",

@@ -22,7 +22,7 @@ $xoopsOption['template_main'] = 'profile_changepass.html';
 include ICMS_ROOT_PATH.'/header.php';
 $config_handler =& xoops_gethandler('config');
 $icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-if($icmsConfigUser['pass_level']){
+if($icmsConfigUser['pass_level']>20){
 icms_PasswordMeter();
 }
 if (!isset($_POST['submit'])) {

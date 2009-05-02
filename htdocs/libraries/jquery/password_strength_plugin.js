@@ -42,6 +42,7 @@
 	  
 		 var defaults = {
 				minPass: 		4,	//optional
+				strongnessPass: 		20,	//optional
 				shortPass: 		"shortPass",	//optional
 				badPass:		"badPass",		//optional
 				goodPass:		"goodPass",		//optional
@@ -112,12 +113,14 @@
 		 			    //password is just a numbers or chars
 		 			    if (password.match(/^\w+$/) || password.match(/^\d+$/) ){ score -= 12;}
 		 			    
+		 			    if (option.strongnessPass > 20){ score -= option.strongnessPass/4;}
+		 			    
 		 			    //verifying 0 < score < 100
 		 			    if ( score < 0 ){score = 0;} 
 		 			    if ( score > 120 ){  score = 120;} 
 		 			    
-		 			    if (score < 45 ){ this.resultStyle = option.badPass; return $(this).badPass;} 
-		 			    if (score < 75 ){ this.resultStyle = option.goodPass;return $(this).goodPass;}
+		 			    if (score < 40 ){ this.resultStyle = option.badPass; return $(this).badPass;} 
+		 			    if (score < 70 ){ this.resultStyle = option.goodPass;return $(this).goodPass;}
 		 			    
 		 			   this.resultStyle= option.strongPass;
 		 			    return $(this).strongPass;

@@ -31,7 +31,7 @@ $reg_form->addElement(new XoopsFormText(_US_NICKNAME, "uname", $uname_size, $una
 $login_name_size = $icmsConfigUser['maxuname'] < 75 ? $icmsConfigUser['maxuname'] : 75;
 $reg_form->addElement(new XoopsFormText(_US_LOGIN_NAME, "login_name", $login_name_size, $login_name_size, $myts->htmlSpecialChars($login_name)), true);
 $reg_form->addElement($email_tray);
-if($icmsConfigUser['pass_level']){
+if($icmsConfigUser['pass_level']>20){
 icms_PasswordMeter();
 }
 $reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, "pass", 10, 255, $myts->htmlSpecialChars($pass), false, ($icmsConfigUser['pass_level']?'password_adv':'')), true);

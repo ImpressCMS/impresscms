@@ -256,7 +256,7 @@ if($op == 'editprofile')
     	/** Include the header that starts page rendering */
       include_once ICMS_ROOT_PATH.'/header.php';
     	include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
-if($icmsConfigUser['pass_level']){
+if($icmsConfigUser['pass_level']>20){
 icms_PasswordMeter();
 }
 

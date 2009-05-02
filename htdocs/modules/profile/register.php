@@ -29,7 +29,7 @@ if (empty($icmsConfigUser['allow_register'])) {
 }
 $xoopsOption['template_main'] = 'profile_register.html';
 include ICMS_ROOT_PATH.'/header.php';
-if($icmsConfigUser['pass_level']){
+if($icmsConfigUser['pass_level']>20){
 icms_PasswordMeter();
 }
 

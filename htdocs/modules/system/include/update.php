@@ -623,7 +623,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('tplfile') . "` WHERE tpl_module='waiting'");
 	}
 
-	$newDbVersion = 23;
+/*	$newDbVersion = 23;
 	
 	if($dbVersion < $newDbVersion) {
 		echo $action;
@@ -631,7 +631,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('config') . "` WHERE conf_name='pass_level'");
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'pass_level', '_MD_AM_PASSLEVEL', '1', '_MD_AM_PASSLEVEL_DESC', 'yesno', 'int', 2);
 	}
-
+*/
 
 	$newDbVersion = 24;
 	
