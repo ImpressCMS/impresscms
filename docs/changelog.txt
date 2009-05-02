@@ -1,10 +1,8 @@
 ImpressCMS ChangeLog
 
 == Impresscms 1.2==
-===2009-05-02 : 1.2 Alpha===
-* Ongoing process of cleaning up unused language constants thanks to a function written by trabis. Credits : www.xuups.org (trabis)
 
-===2009-03-15 : 1.2 Alpha===
+===2009-05-02 : 1.2 Alpha===
 '''Added'''
 * meta_description & meta_keywords to content manager pages. (vaughan)
 * seo URL in content manager changed from underscore to hyphen. (vaughan)
@@ -131,6 +129,7 @@ ImpressCMS ChangeLog
 * #286: missing the default language on profile-module. (stranger)
 * #459: Using an extended waiting block. (GIJOE)
 * #473: Updating JalaliJSCalendar to version 1.3. (stranger)
+* #560: Ongoing process of cleaning up unused language constants(trabis/underdog)
 
 '''Fixed'''
 * #2161527: error in xoopsimagebrowser.php (real_therplima)
@@ -227,6 +226,7 @@ ImpressCMS ChangeLog
 * #549: Password meter should become a select box in preferences again. (stranger)
 * #480: Warning: Undefined index with ICMS 1.1.2Final. (63rd/stranger)
 * #225: Preload - beforeDisplyTarea. (Nekro)
+* #154: Error when enable censor words and word list is blank. (stranger)
 
 == Impresscms 1.1.2==
 

@@ -489,23 +489,25 @@ class MyTextSanitizer
 		if($icmsConfigCensor['censor_enable'] == true)
 		{
 			$replacement = $icmsConfigCensor['censor_replace'];
-			foreach($icmsConfigCensor['censor_words'] as $bad)
-			{
-				if(!empty($bad))
+            if(!empty($icmsConfigCensor['censor_words'])){
+				foreach($icmsConfigCensor['censor_words'] as $bad)
 				{
-	 				$bad = quotemeta($bad);
-					$patterns[] = "/(\s)".$bad."/siU";
-					$replacements[] = "\\1".$replacement;
-					$patterns[] = "/^".$bad."/siU";
-					$replacements[] = $replacement;
-					$patterns[] = "/(\n)".$bad."/siU";
-					$replacements[] = "\\1".$replacement;
-					$patterns[] = "/]".$bad."/siU";
-					$replacements[] = "]".$replacement;
-					$text = preg_replace($patterns, $replacements, $text);
+					if(!empty($bad))
+					{
+						$bad = quotemeta($bad);
+						$patterns[] = "/(\s)".$bad."/siU";
+						$replacements[] = "\\1".$replacement;
+						$patterns[] = "/^".$bad."/siU";
+						$replacements[] = $replacement;
+						$patterns[] = "/(\n)".$bad."/siU";
+						$replacements[] = "\\1".$replacement;
+						$patterns[] = "/]".$bad."/siU";
+						$replacements[] = "]".$replacement;
+						$text = preg_replace($patterns, $replacements, $text);
+					}
 				}
-   			}
-		}
+			}
+        }
    		return $text;
 	}
 

@@ -18,6 +18,7 @@
 * @param int $dbVersion The database version
 * @return mixed
 */
+icms_loadLanguageFile('core', 'databaseupdater');
 function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = null) {
 
 	global $xoopsDB;
@@ -49,7 +50,9 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	ob_start();
 
 	$dbVersion  = $module->getDBVersion();
+	$action = sprintf (_DATABASEUPDATER_CURRENTVER, icms_conv_nr2local($dbVersion));
 	echo "<code>" . _DATABASEUPDATER_UPDATE_UPDATING_DATABASE . "<br />";
+	echo $action;
 
 /**
  * Migrate the db with new changes from 1.1 since 1.0
