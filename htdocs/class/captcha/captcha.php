@@ -310,4 +310,5 @@ class IcmsCaptcha {
 		return $form;
 	}
 }
+class XoopsCaptcha extends IcmsCaptcha { /* For backwards compatibility */ }
 ?>

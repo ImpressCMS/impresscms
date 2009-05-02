@@ -93,5 +93,6 @@ class IcmsFormCaptcha extends XoopsFormElement {
 		}
 	}
 }
+class XoopsFormCaptcha extends IcmsFormCaptcha { /* For backwards compatibility */ }
 
 ?>
