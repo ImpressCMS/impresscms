@@ -77,4 +77,6 @@ define('_MD_AM_MOD_UP_TEM','Updating templates...');
 define('_MD_AM_MOD_REBUILD_BLOCKS','Rebuilding blocks...');
 define('_MD_AM_FUNCT_EXEC','Function <b>%s</b> is successfully executed.');
 define('_MD_AM_FAIL_EXEC','Failed to execute <b>%s</b>.');
+define('_MD_AM_INSTALLED', 'Installed Modules');
+define('_MD_AM_NONINSTALL', 'Non-Install Modules');
 ?>
