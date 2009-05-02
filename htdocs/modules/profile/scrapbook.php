@@ -27,7 +27,7 @@ if ( !empty($_POST['mainscrap']) ) {
 	   exit();
      }
      $scrapbook_uid 	= intval($_POST['uid']);
-     $scrap_text    	= $myts->displayTarea($_POST['text'],0,1,1,1,1);
+     $scrap_text    	= $myts->displayTarea($_POST['text'],1,1,1,1,1);
      $mainform	   		= (!empty($_POST['mainform'])) ? 1 : 0;
      $scrap = $scraps_factory->create();
      $scrap->setVar('scrap_text',$scrap_text);
@@ -45,7 +45,32 @@ if ( !empty($_POST['mainscrap']) ) {
      }
 	 exit();
   } elseif ( trim($_POST['mainscrap'])=='reply' ) {  //answer
-    exit();
+     $profile_template = 'profile_scrapbook.html';
+     include_once("header.php");
+	 $controler = new ProfileControlerScraps($xoopsDB,$xoopsUser);
+     $nbSections = $controler->getNumbersSections();
+     if (!($GLOBALS['xoopsSecurity']->check())){
+	   redirect_header($_SERVER['HTTP_REFERER'], 3, _MD_PROFILE_TOKENEXPIRED);
+	   exit();
+     }
+     $scrapbook_uid 	= intval($_POST['uid']);
+     $scrap_text    	= $myts->displayTarea($_POST['text'],1,1,1,1,1);
+     $mainform	   		= (!empty($_POST['mainform'])) ? 1 : 0;
+     $scrap = $scraps_factory->create();
+     $scrap->setVar('scrap_text',$scrap_text);
+     $scrap->setVar('scrap_from',$xoopsUser->getVar('uid'));
+     $scrap->setVar('scrap_to',$scrapbook_uid);
+     $scraps_factory->insert($scrap);
+     $extra_tags['X_OWNER_NAME'] =  $xoopsUser->getUnameFromId($scrapbook_uid);
+     $extra_tags['X_OWNER_UID'] = $scrapbook_uid;
+     $notification_handler =& xoops_gethandler('notification');
+     $notification_handler->triggerEvent ("scrap", $scrapbook_uid, "new_scrap",$extra_tags);
+     if ($mainform==1) {
+	   redirect_header("scrapbook.php?uid=".$scrapbook_uid,1,_MD_PROFILE_SCRAP_SENT);
+     } else {
+	   redirect_header("scrapbook.php?uid=".$xoopsUser->getVar('uid'),1,_MD_PROFILE_SCRAP_SENT);
+     }
+	 exit();
   } elseif ( trim($_POST['mainscrap'])=='delete' ) {  //delete    
     $scrap_id = intval($_POST['scrap_id']);
     $confirm = isset($_POST['confirm'])? intval($_POST['confirm']):'';

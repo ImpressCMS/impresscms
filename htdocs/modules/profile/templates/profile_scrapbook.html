@@ -51,13 +51,13 @@
 				&nbsp;<{$scraps[i].text}>
 				<a name="replyform<{$scraps[i].id}>" id="replyform<{$scraps[i].id}>" ></a>
 			</p>
-			<{ if $isOwner==1}>			
+			<{ if $isOwner==1}>
 				<div class="profile-scrap-details-form<{$scraps[i].id}>" style="display: none;" >				
 				  <form  action="scrapbook.php" method="post" name="form_reply_<{$scraps[i].id}>" id="form_reply_<{$scraps[i].id}>" >
 				  <input type='hidden' name='mainscrap' id='mainscrap' value='reply' />
 					
             			<input type="hidden" value="<{$scraps[i].uid}>" name="uid" id="uid"/>
-        	    		<textarea name="text_reply" id="text_reply" cols="50" ></textarea>
+        	    		<textarea name="text" id="text" cols="50" >[quote]<{$scraps[i].text}>[/quote]</textarea>
             	    	<{$token}>
 						<div>
 							<input type="submit" class="formButton" name="reply_scrap" id="reply_scrap" value="<{$lang_answerscrap}>" />
