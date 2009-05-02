@@ -225,6 +225,7 @@ ImpressCMS ChangeLog
 * #498: answer in the scrapbook = blank page. (stranger)
 * #98: Change Password. (stranger)
 * #549: Password meter should become a select box in preferences again. (stranger)
+* #480: Warning: Undefined index with ICMS 1.1.2Final. (63rd/stranger)
 
 == Impresscms 1.1.2==
 

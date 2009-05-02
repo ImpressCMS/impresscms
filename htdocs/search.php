@@ -192,10 +192,12 @@ switch ($action) {
 	                    } else {
 	                    	  $results[$i]['processed_image_url'] = "images/icons/posticon2.gif";
 	                    }
-	                    if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+	                    if (isset ($results[$i]['link']) && $results[$i]['link'] != '') {
+                        if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
 	                        $results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
 	                    }
 	                    $results[$i]['processed_title'] = $myts->displayTarea($results[$i]['title']);
+                        }
 	                    if( $icmsConfigSearch['search_user_date']){$results[$i]['uid'] = @intval($results[$i]['uid']);
 	                    if ( !empty($results[$i]['uid']) ) {
 	                        $uname = XoopsUser::getUnameFromId($results[$i]['uid']);

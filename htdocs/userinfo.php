@@ -212,10 +212,11 @@ foreach ($mids as $mid) {
 				} else {
 					$results[$i]['image'] = 'images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/posticon2.gif';
 				}
-
+                if (isset ($results[$i]['link']) && $results[$i]['link'] != '') {
 				if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
 					$results[$i]['link'] = "modules/" . $module->getVar('dirname') . "/" . $results[$i]['link'];
 				}
+                }
 
 				$results[$i]['title'] = $myts->makeTboxData4Show($results[$i]['title']);
 				$results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
