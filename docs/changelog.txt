@@ -226,6 +226,7 @@ ImpressCMS ChangeLog
 * #98: Change Password. (stranger)
 * #549: Password meter should become a select box in preferences again. (stranger)
 * #480: Warning: Undefined index with ICMS 1.1.2Final. (63rd/stranger)
+* #225: Preload - beforeDisplyTarea. (Nekro)
 
 == Impresscms 1.1.2==
 
