@@ -18,14 +18,14 @@
 $xoopsOption['pagetype'] = 'user';
 /** Include mainfile - required */
 include 'mainfile.php';
-$module_handler = xoops_gethandler('module');
+/*$module_handler = xoops_gethandler('module');
 $profile_module = $module_handler->getByDirname('profile');
 if($profile_module && $profile_module->getVar('isactive') && file_exists(ICMS_ROOT_PATH.'/modules/profile/edituser.php'))
 {
 	header('Location: '.ICMS_URL.'/modules/profile/edituser.php');
 	exit();
 }
-
+*/
 /** Include the form class */
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 
@@ -119,13 +119,18 @@ if($op == 'saveuser')
 
 	}
 	$username = xoops_getLinkedUnameFromId($uid);
-    	$password = '';
+    	$password = $oldpass = '';
     	if(!empty($_POST['password']))
 	{
         	$password = $myts->stripSlashesGPC(trim($_POST['password']));
+        	$oldpass = !empty($_POST['old_password'])?$myts->stripSlashesGPC(trim($_POST['old_password'])):'';
     	}
     	if($password !== '' && $_POST['change_pass'] == 1)
 	{
+        $member_handler =& xoops_gethandler('member');
+        if(!$member_handler->loginUser(addslashes($uname), addslashes($oldpass))){
+                $errors[] = _US_BADPWD;
+        }
         	if(strlen($password) < $icmsConfigUser['minpass'])
 		{
             		$errors[] = sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']);
@@ -365,6 +370,7 @@ icms_PasswordMeter();
     	$pwd_tray = new XoopsFormElementTray(_US_PASSWORD.'<br />'._US_TYPEPASSTWICE);
     	$pwd_tray->addElement($pwd_text);
     	$pwd_tray->addElement($pwd_text2);
+    	$pwd_text_old = new XoopsFormPassword(_US_OLD_PASSWORD, 'old_password', 10, 255);
     	$mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', intval($xoopsUser->getVar('user_mailok')));
     	$salt_hidden = new XoopsFormHidden('salt', $xoopsUser->getVar('salt'));
     	$uid_hidden = new XoopsFormHidden('uid', intval($xoopsUser->getVar('uid')));
@@ -374,7 +380,7 @@ icms_PasswordMeter();
     	$form->addElement($timezone_select);
     	$form->addElement($icq_text);
     	$form->addElement($aim_text);
-   	$form->addElement($yim_text);
+   	    $form->addElement($yim_text);
     	$form->addElement($msnm_text);
     	$form->addElement($location_text);
     	$form->addElement($occupation_text);
@@ -394,7 +400,9 @@ icms_PasswordMeter();
     	$form->addElement($notify_mode_select);
     	$form->addElement($bio_tarea);
     	$form->addElement($pwd_change_radio);
+    	$form->addElement($pwd_text_old);
     	$form->addElement($pwd_tray);
+    	$form->addElement($pwd_tray_old);
     	$form->addElement($cookie_radio);
     	$form->addElement($mailok_radio);
     	$form->addElement($salt_hidden);

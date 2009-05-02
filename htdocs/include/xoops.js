@@ -557,20 +557,20 @@ function viewFoto(img){
 	finestra.document.close();
 	return false;
 }
-				function icmsCode_languages(id,enterLanguagePhrase,langcode){
-    				if (enterLanguagePhrase == null) {
-    				        enterLanguagePhrase = "Enter The Text To Be Language:";
-    				}
-					var text = prompt(enterLanguagePhrase, "");
-					var domobj = xoopsGetElementById(id);
-					if ( text != null && text != "" ) {
-						var pos = text.indexOf(unescape('%00'));
-						if(0 < pos){
-							text = text.substr(0,pos);
-						}
-					    var result = "["+langcode+"]" + text + "[/"+langcode+"]";
-					    xoopsInsertText(domobj, result);
-					}
-					
-					domobj.focus();
-					}
+function icmsCode_languages(id,enterLanguagePhrase,langcode){
+    if (enterLanguagePhrase == null) {
+            enterLanguagePhrase = "Enter The Text To Be Language:";
+    }
+	var text = prompt(enterLanguagePhrase, "");
+	var domobj = xoopsGetElementById(id);
+	if ( text != null && text != "" ) {
+		var pos = text.indexOf(unescape('%00'));
+		if(0 < pos){
+			text = text.substr(0,pos);
+		}
+	    var result = "["+langcode+"]" + text + "[/"+langcode+"]";
+	    xoopsInsertText(domobj, result);
+	}
+	
+	domobj.focus();
+	}

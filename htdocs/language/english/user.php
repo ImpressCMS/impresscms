@@ -208,4 +208,5 @@ define('_US_MULTLOGIN', 'You are already logged in on the site. Or someone else 
 
 ######################## Added in 1.2 ###################################
 define('_US_LOGIN_NAME', "Loginname");
+define('_US_OLD_PASSWORD', "Old Password");
 ?>

@@ -221,6 +221,7 @@ ImpressCMS ChangeLog
 * #522: Class 'wiImage' not found in editors\tinymce\jscripts\plugins\xoopsimagemanager\xoopsimagebrowser.php on line 411. (stranger)
 * #519: Better identify installed/not installed modules in module administration. (Hisapapa/stranger)
 * #498: answer in the scrapbook = blank page. (stranger)
+* #98: Change Password. (stranger)
 
 == Impresscms 1.1.2==
 
