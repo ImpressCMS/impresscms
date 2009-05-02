@@ -227,6 +227,7 @@ ImpressCMS ChangeLog
 * #480: Warning: Undefined index with ICMS 1.1.2Final. (63rd/stranger)
 * #225: Preload - beforeDisplyTarea. (Nekro)
 * #154: Error when enable censor words and word list is blank. (stranger)
+* #526: missing _MD_AM_DTHEME_DESC. (stranger)
 
 == Impresscms 1.1.2==
 

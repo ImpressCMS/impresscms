@@ -490,4 +490,5 @@ define('_MD_AM_ADMIN_DTHEME', 'Admin Theme');
 define('_MD_AM_ADMIN_DTHEME_DESC', '');
 define('_MD_AM_CUSTOMRED', 'Use Ajaxed redirection method?');
 define('_MD_AM_CUSTOMREDDSC', '');
+define('_MD_AM_DTHEMEDSC','Default theme used to show your site.');
 ?>
