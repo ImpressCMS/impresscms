@@ -89,6 +89,7 @@ class TinyMCE
   **/
 	function init()
 	{
+        global $icmsConfigMultilang, $icmsConfigPersona;
 		$configured = array();
 		if(is_readable(XOOPS_ROOT_PATH . $this->rootpath. '/langs/'.$this->config["language"].'.js')) {
 			$this->setting["language"] = $this->config["language"];
@@ -111,10 +112,10 @@ class TinyMCE
 		if(!is_readable(XOOPS_ROOT_PATH . $this->rootpath. '/themes/'.$this->setting["theme"].'/css/' .$this->setting["content_css"])) {
 			unset( $this->setting["content_css"] );
 		}
-		$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
+		$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == true && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
 		if( $this->setting["theme"] == "advanced" ) {
 			$this->setting["theme_advanced_buttons1"] = "bold,italic,underline,strikethrough,sub,sup,separator,justify"._GLOBAL_LEFT.",justifycenter,justify"._GLOBAL_RIGHT.",justifyfull,formatselect,fontselect,fontsizeselect";
-			$this->setting["theme_advanced_buttons2"] = "".(($icmsConfigPersona['use_hidden'] == 1)?"icmshide,":"")."xoopsquote,xoopscode,".(($easiestml_exist)?"icmsmlcontent,":"")."separator,bullist,numlist,separator,outdent,indent,separator,undo,redo,removeformat,separator,link,unlink,anchor,xoopsimagemanager,media,separator,charmap,nonbreaking,hr,xoopsemotions,separator,pastetext,pasteword,separator,forecolor,backcolor";
+			$this->setting["theme_advanced_buttons2"] = "".(($icmsConfigPersona['use_hidden'] == true)?"icmshide,":"")."xoopsquote,xoopscode,".(($easiestml_exist)?"icmsmlcontent,":"")."separator,bullist,numlist,separator,outdent,indent,separator,undo,redo,removeformat,separator,link,unlink,anchor,xoopsimagemanager,media,separator,charmap,nonbreaking,hr,xoopsemotions,separator,pastetext,pasteword,separator,forecolor,backcolor";
 			$this->setting["theme_advanced_buttons3"] = "tablecontrols,separator,cleanup,visualaid,visualchars,separator,insertdate,inserttime,separator,preview,fullscreen,help,code";
 		}
 		

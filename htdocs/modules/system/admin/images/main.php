@@ -15,7 +15,6 @@
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
 	exit(_CT_ACCESS_DENIED);
 } else {
-	include(ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.inc.php");
 	include(ICMS_ROOT_PATH."/kernel/image.php");
 	include(ICMS_ROOT_PATH."/kernel/imagecategory.php");
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);

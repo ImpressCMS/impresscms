@@ -218,6 +218,7 @@ ImpressCMS ChangeLog
 * #551: google analytic code is not loaded at the bottom of the page. (stranger)
 * #550: Admin actions not being sanitized in profile moduleþ. (stranger)
 * #83: persistent connection? y/n. (stranger)
+* #522: Class 'wiImage' not found in editors\tinymce\jscripts\plugins\xoopsimagemanager\xoopsimagebrowser.php on line 411. (stranger)
 
 == Impresscms 1.1.2==
 
