@@ -77,14 +77,11 @@ class XoopsPageNav
 	 **/
 	function renderNav($offset = 4)
 	{	
-		global $icmsConfigPersona;
+		global $icmsConfigPersona, $xoTheme;
 		
-		if (isset($icmsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php')){
-			$style = $icmsConfigPersona['pagstyle'];
-		}else{
-			$style = 'default';
-		}
+		$style = (isset($icmsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php'))?$icmsConfigPersona['pagstyle']:'default';
 		$ret = '';
+		$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css', array("media" => "all"));
 		if ( $this->total <= $this->perpage ) {
 			return $ret;
 		}
