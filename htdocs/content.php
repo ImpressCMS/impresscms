@@ -165,20 +165,20 @@ include ICMS_ROOT_PATH.'/footer.php';
 * @return string  the generated list
 */
 function list_by_tag($tag,$start=0){
-    global $im_contentConfig,$groups,$uid,$xoopsTpl,$xoTheme;
-    
-    $myts =& MyTextSanitizer::getInstance();
-    
-    $gperm_handler   =& xoops_gethandler('groupperm');
-    $content_handler =& xoops_gethandler('content');
+	global $im_contentConfig,$groups,$uid,$xoopsTpl,$xoTheme;
 	
-    $criteria = new CriteriaCompo(new Criteria('content_status', 1));
-    $criteria->add(new Criteria('content_tags', '%'.$tag.'%','LIKE'));
-    $pagecount = $content_handler->getCount($criteria);
-    $criteria->setLimit($im_contentConfig['num_pages']);
-    $criteria->setStart($start);
+	$myts =& MyTextSanitizer::getInstance();
+	
+	$gperm_handler   =& xoops_gethandler('groupperm');
+	$content_handler =& xoops_gethandler('content');
+	
+	$criteria = new CriteriaCompo(new Criteria('content_status', 1));
+	$criteria->add(new Criteria('content_tags', '%'.$tag.'%','LIKE'));
+	$pagecount = $content_handler->getCount($criteria);
+	$criteria->setLimit($im_contentConfig['num_pages']);
+	$criteria->setStart($start);
 	$pages = $content_handler->getObjects($criteria);
-	
+
 	foreach ($pages as $page){
 		if ($gperm_handler->checkRight('content_read', $page->getVar('content_id'), $groups)){
 			$adminperm = $gperm_handler->checkRight('content_admin', $page->getVar('content_id'), $uid);
@@ -231,7 +231,6 @@ function list_by_tag($tag,$start=0){
 * @return string  the filtered list
 */
 function filter_bytags($tags){
-	
 	if (!empty($tags)){
 		$tags_arr = explode(',',$tags);
 	}else{
