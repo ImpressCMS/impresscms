@@ -270,7 +270,13 @@ class XoopsTplsetHandler extends XoopsObjectHandler
     }
 
 
-
+		/**
+		* Gets list of tplset objects into an array
+		* 
+		* @param array  $criteria  array of WHERE statement criteria
+		* 
+		* @return array  The array of tplset objects
+		*/
     function getList($criteria = null)
   	{
         $ret = array();
