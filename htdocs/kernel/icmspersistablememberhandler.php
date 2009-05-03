@@ -153,7 +153,7 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 			if (!$xoopsMailer->send(true)) {
 				/**
 				 * @todo trap error if email was not sent
-				 */
+				 *	/
 				$xoopsMailer->getErrors(true);
 			}
 		}
@@ -161,6 +161,9 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 	    return true;
 	}
 */
+// This function here below needs some changes to work under 1.2 Final. it's temporarily disabled.
+
+
 	/**
 	 * Generates an array of usernames
 	 *

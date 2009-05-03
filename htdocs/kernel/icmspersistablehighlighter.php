@@ -58,7 +58,7 @@ class IcmsPersistableHighlighter {
 	*
 	* new keyhighlighter ('W3C', false, 'my_highlighter');
 	* readfile ('http://www.w3c.org/');
-	* ?>
+	*
 	* </code>
 	*/
 	// public function __construct ()
