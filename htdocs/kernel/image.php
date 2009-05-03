@@ -59,7 +59,16 @@ class XoopsImage extends XoopsObject
 		$this->initVar('image_body', XOBJ_DTYPE_SOURCE, null, true);
 		$this->initVar('imgcat_id', XOBJ_DTYPE_INT, 0, false);
 	}
-	
+
+	/**
+	* Function short description
+	* 
+	* @param string  $path  the path to search through
+	* @param string  $type  the path type, url or other
+	* @param bool  $ret  return the information or keep it stored
+	* 
+	* @return array  the array of image information
+	*/
 	function getInfo($path,$type='url',$ret=false){
 		$path = (substr($path,-1) != '/')?$path.'/':$path;
         if ($type == 'url'){
