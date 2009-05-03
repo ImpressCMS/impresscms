@@ -20,7 +20,7 @@ $smile_form->addElement(new XoopsFormText(_AM_SMILECODE, 'smile_code', 26, 25, $
 $smile_form->addElement(new XoopsFormText(_AM_SMILEEMOTION, 'smile_desc', 26, 25, $smiles['smile_desc']), true);
 $smile_select = new XoopsFormFile('', 'smile_url', 5000000);
 $smile_label = new XoopsFormLabel('', '<img src="'.XOOPS_UPLOAD_URL.'/'.$smiles['smile_url'].'" alt="" />');
-$smile_tray = new XoopsFormElementTray(_IMAGEFILE.':', '&nbsp;');
+$smile_tray = new XoopsFormElementTray(_IMAGEFILE.'&nbsp;');
 $smile_tray->addElement($smile_select);
 $smile_tray->addElement($smile_label);
 $smile_form->addElement($smile_tray);
