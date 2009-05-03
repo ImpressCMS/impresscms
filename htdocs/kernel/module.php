@@ -255,7 +255,18 @@ class XoopsModule extends XoopsObject
 		}
 		return false;
 	}
-	
+
+
+	/**
+	* Displays the (good old) adminmenu
+	* 
+	* @param int  $currentoption  The current option of the admin menu
+	* @param string  $breadcrumb  The breadcrumb trail
+	* @param bool  $submenus  Show the submenus!
+	* @param int  $currentsub  The current submenu
+	* 
+	* @return datatype  description
+	*/
 	function displayAdminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1)
 	{
 		global $xoopsModule, $icmsConfig;
@@ -266,7 +277,8 @@ class XoopsModule extends XoopsObject
 		$tpl->assign(array('headermenu' => $this->getAdminHeaderMenu(), 'adminmenu' => $this->getAdminMenu(), 'current' => $currentoption, 'breadcrumb' => $breadcrumb, 'headermenucount' => count($this->getAdminHeaderMenu()), 'submenus' => $submenus, 'currentsub' => $currentsub, 'submenuscount' => count($submenus)));
 		$tpl->display(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_adm_modulemenu.html');
 	}
-	
+
+
 	/**#@+
 	* For backward compatibility only!
 	* @deprecated
