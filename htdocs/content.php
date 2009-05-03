@@ -156,6 +156,14 @@ $content_handler->insert($impress_content);
 /** Include the footer file to complete page rendering */
 include ICMS_ROOT_PATH.'/footer.php';
 
+/**
+* List content items by tag
+* 
+* @param string  $tag  The tag to list the content items of
+* @param int  $start  When the list contains more than 1 page, this is where to start the next pages
+* 
+* @return string  the generated list
+*/
 function list_by_tag($tag,$start=0){
     global $im_contentConfig,$groups,$uid,$xoopsTpl,$xoTheme;
     
@@ -215,6 +223,13 @@ function list_by_tag($tag,$start=0){
 	return $xoopsTpl->fetch('db:system_content_list.html');
 }
 
+/**
+* Filter the list by tag
+* 
+* @param string  $tag  the tag to filter the list on
+* 
+* @return string  the filtered list
+*/
 function filter_bytags($tags){
 	
 	if (!empty($tags)){
