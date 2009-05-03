@@ -174,7 +174,7 @@ class SystemCustomtagHandler extends IcmsPersistableObjectHandler {
 	}
 	
 	function getCustomtag_types() {
-		$ret = array (ICMS_CUSTOMTAG_TYPE_XCODES => 'XCodes', ICMS_CUSTOMTAG_TYPE_HTML => 'HTML', ICMS_CUSTOMTAG_TYPE_PHP => 'PHP' );
+		$ret = array (ICMS_CUSTOMTAG_TYPE_XCODES => 'BB-Codes', ICMS_CUSTOMTAG_TYPE_HTML => 'HTML', ICMS_CUSTOMTAG_TYPE_PHP => 'PHP' );
 		return $ret;
 	}
 }
