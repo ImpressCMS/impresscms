@@ -28,158 +28,160 @@ if($icmsConfig['theme_set'] != 'default' && file_exists(ICMS_THEME_PATH.'/'.$icm
 else
 {
 	global $xoopsOption, $icmsConfig, $xoopsModule;
-    	$xoopsOption['theme_use_smarty'] = 1;
-
-    	/**  include Smarty template engine and initialize it*/
-    	require_once ICMS_ROOT_PATH.'/class/template.php';
-    	require_once ICMS_ROOT_PATH.'/class/theme.php';
-    	require_once ICMS_ROOT_PATH.'/class/theme_blocks.php';
+	$xoopsOption['theme_use_smarty'] = 1;
+	
+	/**  include Smarty template engine and initialize it*/
+	require_once ICMS_ROOT_PATH.'/class/template.php';
+	require_once ICMS_ROOT_PATH.'/class/theme.php';
+	require_once ICMS_ROOT_PATH.'/class/theme_blocks.php';
 
 	if(@$xoopsOption['template_main'])
 	{
 		if(false === strpos($xoopsOption['template_main'], ':')) {$xoopsOption['template_main'] = 'db:' . $xoopsOption['template_main'];}
 	}
 	$xoopsThemeFactory = new xos_opal_ThemeFactory();
-    $xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
-    $xoopsThemeFactory->defaultTheme = $icmsConfig['theme_set'];
+	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
+	$xoopsThemeFactory->defaultTheme = $icmsConfig['theme_set'];
 
 	/**
 	 * @var xos_opal_Theme
 	 */
-    $xoTheme =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
-    $xoopsTpl =& $xoTheme->template;
+	$xoTheme =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
+	$xoopsTpl =& $xoTheme->template;
 	if ($icmsConfigMetaFooter['use_google_analytics'] == true && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != ''){
-        
-        /* Legacy GA urchin code */
-        //$xoTheme->addScript('http://www.google-analytics.com/urchin.js',array('type' => 'text/javascript'),'_uacct = "UA-'.$icmsConfigMetaFooter['google_analytics'].'";urchinTracker();');
-        $scheme = parse_url(ICMS_URL, PHP_URL_SCHEME);
-        if ($scheme == 'http'){
-            /* New GA code, http protocol */
-            $xoTheme->addScript('http://www.google-analytics.com/ga.js',array('type' => 'text/javascript'),'');
-        } elseif ($scheme == 'https') {
-            /* New GA code, https protocol */
-            $xoTheme->addScript('https://ssl.google-analytics.com/ga.js',array('type' => 'text/javascript'),'');
-        }
-    }
+
+		/* Legacy GA urchin code */
+		//$xoTheme->addScript('http://www.google-analytics.com/urchin.js',array('type' => 'text/javascript'),'_uacct = "UA-'.$icmsConfigMetaFooter['google_analytics'].'";urchinTracker();');
+		$scheme = parse_url(ICMS_URL, PHP_URL_SCHEME);
+		if ($scheme == 'http'){
+			/* New GA code, http protocol */
+			$xoTheme->addScript('http://www.google-analytics.com/ga.js',array('type' => 'text/javascript'),'');
+		} elseif ($scheme == 'https') {
+			/* New GA code, https protocol */
+			$xoTheme->addScript('https://ssl.google-analytics.com/ga.js',array('type' => 'text/javascript'),'');
+		}
+	}
 	if (isset($icmsConfigMetaFooter['google_meta']) && $icmsConfigMetaFooter['google_meta'] != ''){
 		$arr_google_meta=explode('"', '<meta name="verify-v1" content="'.$icmsConfigMetaFooter['google_meta'].'" />');
 		$xoTheme->addMeta('meta',$arr_google_meta[1],$arr_google_meta[3]);
 	}
 	// ################# Preload Trigger startOutputInit ##############
 	$icmsPreloadHandler->triggerEvent('startOutputInit');
-	
+
 	$xoTheme->addScript(ICMS_URL.'/include/xoops.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript(ICMS_URL.'/include/linkexternal.js', array('type' => 'text/javascript'));
 	/** 
 	 * Now system first checks for RTL, if it is enabled it'll just load it, otherwise it will load the normal (LTR) styles
 	 */
-    $xoTheme->addStylesheet(ICMS_URL."/icms".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css", array("media" => "screen"));
-    
-    /**
-     * Weird, but need extra <script> tags for 2.0.x themes
-     *
-     * $xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
-     * $xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');
-     * 
-     * Weird, but we need to bring plugins java information in header because doing it form elsewhere will drop system required Java Script files!! 
-     */
- 
+	$xoTheme->addStylesheet(ICMS_URL."/icms".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css", array("media" => "screen"));
+
+	/**
+	 * Weird, but need extra <script> tags for 2.0.x themes
+	 *
+	 * $xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
+	 * $xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');
+	 * 
+	 * Weird, but we need to bring plugins java information in header because doing it form elsewhere will drop system required Java Script files!! 
+	 */
+
 	$jscript = '';
 	if(class_exists('XoopsFormDhtmlTextArea')){
-        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-        	if(empty($key)) continue;
-        	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
-        		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
-        	}else{
-        		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-        		$func = 'javascript_'.$key;
-        		if ( function_exists($func) ) {
-        			@list($encode, $jscript) = $func($ele_name);
-        		 	if (!empty($jscript)) {
-        		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
-        					$xoTheme->addScript('', array('type' => 'text/javascript'), $jscript);
-        				}else{
-        					$xoTheme->addScript($jscript, array('type' => 'text/javascript'));
-        				}
-        			}
-        		}
-        	}
-        }
-    }
+		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+			if(empty($key)) continue;
+			if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
+				$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
+			}else{
+				$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+				$func = 'javascript_'.$key;
+				if ( function_exists($func) ) {
+					@list($encode, $jscript) = $func($ele_name);
+					if (!empty($jscript)) {
+						if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
+							$xoTheme->addScript('', array('type' => 'text/javascript'), $jscript);
+						}else{
+							$xoTheme->addScript($jscript, array('type' => 'text/javascript'));
+						}
+					}
+				}
+			}
+		}
+	}
 
 	$style_info = '';
-    foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-    	if(empty($key)) continue;
-    	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
-    		$xoTheme->addStylesheet(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
-    	}else{
-    		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-    		$func = 'style_'.$key;
-    		if ( function_exists($func) ) {
-    			$style_info = $func();
-    		 	if (!empty($style_info)) {
-    		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
-    					$xoTheme->addStylesheet('', array('media' => 'screen'), $style_info);
-    				}else{
-    					$xoTheme->addStylesheet($style_info, array('media' => 'screen'));
-    				}
-    			}
-    		}
-    	}
-    }
-                
-    $xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
-    if(! empty( $_SESSION['redirect_message'] )){
-            $xoTheme->addScript(ICMS_URL.'/libraries/jquery/jgrowl.js', array('type' => 'text/javascript'));
-            $xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/jgrowl'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css', array('media' => 'screen'));
-            $xoTheme->addScript('', array('type' => 'text/javascript'), '
-            		if (!window.console || !console.firebug) {
-            			var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
-            			window.console = {};
-            			
-            			for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
-            		}
-            		(function($){
-            			$(document).ready(function(){
-            				$.jGrowl("'.$_SESSION['redirect_message'].'", {  life:5000 , position: "center", speed: "slow" });
-            			});
-            		})(jQuery);
-            ');
-            unset( $_SESSION['redirect_message'] ) ;
-    }
+	foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+		if(empty($key)) continue;
+		if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
+			$xoTheme->addStylesheet(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
+		}else{
+			$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+			$func = 'style_'.$key;
+			if ( function_exists($func) ) {
+				$style_info = $func();
+				if (!empty($style_info)) {
+					if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
+						$xoTheme->addStylesheet('', array('media' => 'screen'), $style_info);
+					}else{
+						$xoTheme->addStylesheet($style_info, array('media' => 'screen'));
+					}
+				}
+			}
+		}
+	}
 
-    $xoTheme->addScript(ICMS_URL.'/libraries/jquery/ui/ui.core.js', array('type' => 'text/javascript'));
-    $xoTheme->addScript(ICMS_URL.'/libraries/jquery/ui/ui.dialog.js', array('type' => 'text/javascript'));
-    $xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/ui/themes/base/ui.all.css', array('media' => 'screen'));
+	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
+	if(! empty( $_SESSION['redirect_message'] )){
+		$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jgrowl.js', array('type' => 'text/javascript'));
+		$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/jgrowl'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css', array('media' => 'screen'));
+		$xoTheme->addScript('', array('type' => 'text/javascript'), '
+		if (!window.console || !console.firebug) {
+			var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
+			window.console = {};
+			
+			for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
+		}
+
+		(function($){
+			$(document).ready(function(){
+				$.jGrowl("'.$_SESSION['redirect_message'].'", {  life:5000 , position: "center", speed: "slow" });
+			});
+		})(jQuery);
+		');
+		unset( $_SESSION['redirect_message'] ) ;
+	}
+
+	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/ui/ui.core.js', array('type' => 'text/javascript'));
+	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/ui/ui.dialog.js', array('type' => 'text/javascript'));
+	$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/ui/themes/base/ui.all.css', array('media' => 'screen'));
 
 	if(@is_object($xoTheme->plugins['xos_logos_PageBuilder'])) {
 		$aggreg =& $xoTheme->plugins['xos_logos_PageBuilder'];
-	    $xoopsTpl->assign_by_ref('xoBlocks', $aggreg->blocks);
+		$xoopsTpl->assign_by_ref('xoBlocks', $aggreg->blocks);
 
-	    // Backward compatibility code for pre 2.0.14 themes
+		// Backward compatibility code for pre 2.0.14 themes
 		$xoopsTpl->assign_by_ref('xoops_lblocks', $aggreg->blocks['canvas_left']);
 		$xoopsTpl->assign_by_ref('xoops_rblocks', $aggreg->blocks['canvas_right']);
 		$xoopsTpl->assign_by_ref('xoops_ccblocks', $aggreg->blocks['page_topcenter']);
 		$xoopsTpl->assign_by_ref('xoops_clblocks', $aggreg->blocks['page_topleft']);
 		$xoopsTpl->assign_by_ref('xoops_crblocks', $aggreg->blocks['page_topright']);
-
+		
 		$xoopsTpl->assign('xoops_showlblock', !empty($aggreg->blocks['canvas_left']));
 		$xoopsTpl->assign('xoops_showrblock', !empty($aggreg->blocks['canvas_right']));
 		$xoopsTpl->assign('xoops_showcblock', !empty($aggreg->blocks['page_topcenter']) || !empty($aggreg->blocks['page_topleft']) || !empty($aggreg->blocks['page_topright']));
 	}
+
 	if( $xoopsModule ) 
 		$xoTheme->contentCacheLifetime = @$icmsConfig['module_cache'][$xoopsModule->getVar('mid', 'n')];
-		
+
 	if( $xoTheme->checkCache() )
 		exit();
 
-   	if(!isset($xoopsOption['template_main']) && $xoopsModule) {
-       	// new themes using Smarty does not have old functions that are required in old modules, so include them now
-       	include ICMS_ROOT_PATH.'/include/old_theme_functions.php';
-       	// Need this also
-       	$xoopsTheme['thename'] = $icmsConfig['theme_set'];
-       	ob_start();
-   	}
+	if(!isset($xoopsOption['template_main']) && $xoopsModule) {
+		// new themes using Smarty does not have old functions that are required in old modules, so include them now
+		include ICMS_ROOT_PATH.'/include/old_theme_functions.php';
+		// Need this also
+		$xoopsTheme['thename'] = $icmsConfig['theme_set'];
+		ob_start();
+	}
 
 	// Assigning the selected language as a smarty var
 	$xoopsTpl->assign('icmsLang', $icmsConfig['language']);
@@ -187,4 +189,5 @@ else
 	$xoopsLogger->stopTime('ICMS output init');
 	$xoopsLogger->startTime('Module display');
 }
+
 ?>
