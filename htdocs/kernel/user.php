@@ -28,34 +28,34 @@ if(!defined('ICMS_ROOT_PATH')) {exit();}
 class XoopsUser extends XoopsObject
 {
 	/**
-     	* Array of groups that user belongs to
-     	* @var array
-  	* @access private
-     	*/
-    	var $_groups = array();
-    	/**
-     	* @var bool is the user admin?
-  	* @access private
-     	*/
-    	var $_isAdmin = null;
-    	/**
-     	* @var string user's rank
-  	* @access private
-     	*/
-    	var $_rank = null;
-    	/**
-     	* @var bool is the user online?
-     	* @access private
-     	*/
-    	var $_isOnline = null;
-
-    	/**
-     	* constructor
-     	* @param array $id Array of key-value-pairs to be assigned to the user. (for backward compatibility only)
-     	* @param int $id ID of the user to be loaded from the database.
-     	*/
-    	function XoopsUser($id = null)
-    	{
+	* Array of groups that user belongs to
+	* @var array
+	* @access private
+	*/
+	var $_groups = array();
+	/**
+	* @var bool is the user admin?
+	* @access private
+	*/
+	var $_isAdmin = null;
+	/**
+	* @var string user's rank
+	* @access private
+	*/
+	var $_rank = null;
+	/**
+	* @var bool is the user online?
+	* @access private
+	*/
+	var $_isOnline = null;
+	
+	/**
+	* constructor
+	* @param array $id Array of key-value-pairs to be assigned to the user. (for backward compatibility only)
+	* @param int $id ID of the user to be loaded from the database.
+	*/
+	function XoopsUser($id = null)
+	{
 		$this->initVar('uid', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('name', XOBJ_DTYPE_TXTBOX, null, false, 60);
 		$this->initVar('uname', XOBJ_DTYPE_TXTBOX, null, true, 255);
@@ -88,7 +88,7 @@ class XoopsUser extends XoopsObject
 		$this->initVar('bio', XOBJ_DTYPE_TXTAREA, null, false, null);
 		$this->initVar('user_intrest', XOBJ_DTYPE_TXTBOX, null, false, 150);
 		$this->initVar('user_mailok', XOBJ_DTYPE_INT, 1, false);
-		
+
 		$this->initVar('language', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('openid', XOBJ_DTYPE_TXTBOX, '', false, 255);
 		$this->initVar('salt', XOBJ_DTYPE_TXTBOX, null, false, 255);
@@ -96,7 +96,7 @@ class XoopsUser extends XoopsObject
 		$this->initVar('pass_expired', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('enc_type', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('login_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
-	
+
 		// for backward compatibility
 		if(isset($id))
 		{
@@ -198,11 +198,11 @@ class XoopsUser extends XoopsObject
 	function sendWelcomeMessage()
 	{
 		global $icmsConfig, $icmsConfigUser;
-		
+
 		$myts =& MyTextSanitizer::getInstance();
 
 		if(!$icmsConfigUser['welcome_msg']) {return true;}
-		
+
 		$xoopsMailer =& getMailer();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setBody($icmsConfigUser['welcome_msg_content']);
@@ -220,7 +220,7 @@ class XoopsUser extends XoopsObject
 		}
 		else{return true;}
 	}
-	
+
 	/**
 	* sends a notification to admins to inform them that a new user registered
 	* 
@@ -254,7 +254,7 @@ class XoopsUser extends XoopsObject
 		}
 		else{return true;}
 	}
-	
+
 	/**
 	* get the groups that the user belongs to
 	*
@@ -262,11 +262,11 @@ class XoopsUser extends XoopsObject
 	*/
 	function &getGroups()
 	{
-        	if(empty($this->_groups))
+		if(empty($this->_groups))
 		{
-        		$member_handler =& xoops_gethandler('member');
+			$member_handler =& xoops_gethandler('member');
 			$this->_groups =& $member_handler->getGroupsByUser($this->getVar('uid'));
-        	}
+		}
 		return $this->_groups;
 	}
 
@@ -299,8 +299,9 @@ class XoopsUser extends XoopsObject
 			$module_id = isset($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('mid', 'n') : 1;
 		}
 		elseif(intval($module_id) < 1) {$module_id = 0;}
-        	$moduleperm_handler =& xoops_gethandler('groupperm');
-        	return $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
+
+		$moduleperm_handler =& xoops_gethandler('groupperm');
+		return $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
 	}
 
 	/**
@@ -356,6 +357,7 @@ class XoopsUser extends XoopsObject
 	{
 		return $this->getVar('uid');
 	}
+
 	/**
 	* get the users name
 	* @param string $format format for the output, see {@link XoopsObject::getVar()}
@@ -365,6 +367,7 @@ class XoopsUser extends XoopsObject
 	{
 		return $this->getVar('name', $format);
 	}
+
 	/**
 	* get the user's uname
 	* @param string $format format for the output, see {@link XoopsObject::getVar()}
@@ -374,6 +377,7 @@ class XoopsUser extends XoopsObject
 	{
 		return $this->getVar('uname', $format);
 	}
+
 	/**
 	* get the user's login_name
 	* @param string $format format for the output, see {@link XoopsObject::getVar()}
@@ -383,6 +387,7 @@ class XoopsUser extends XoopsObject
 	{
 		return $this->getVar('login_name', $format);
 	}
+
 	/**
 	* get the user's email
 	*
@@ -405,12 +410,10 @@ class XoopsUser extends XoopsObject
 	{
 		return $this->getVar('user_regdate');
 	}
-	
 	function user_icq($format='S')
 	{
 		return $this->getVar('user_icq', $format);
 	}
-	
 	function user_from($format='S')
 	{
 		return $this->getVar('user_from', $format);
@@ -587,12 +590,12 @@ class XoopsUserHandler extends XoopsObjectHandler
 	*/
 	function &create($isNew = true)
 	{
-        	$user = new XoopsUser();
-        	if($isNew)
+		$user = new XoopsUser();
+		if($isNew)
 		{
 			$user->setNew();
-        	}
-        	return $user;
+		}
+		return $user;
 	}
 
 	/**
@@ -615,7 +618,7 @@ class XoopsUserHandler extends XoopsObjectHandler
 				$user = new XoopsUser();
 				$user->assignVars($this->db->fetchArray($result));
 			}
-        	}
+		}
 		return $user;
 	}
 
@@ -635,33 +638,33 @@ class XoopsUserHandler extends XoopsObjectHandler
 		if(!$user->isDirty()) {return true;}
 		if(!$user->cleanVars()) {return false;}
 		foreach($user->cleanVars as $k => $v) {${$k} = $v;}
- 
-	// RMV-NOTIFY
-	if($user->isNew())
-	{
-		$uid = $this->db->genId($this->db->prefix('users').'_uid_seq');
-		$sql = sprintf("INSERT INTO %s (uid, uname, name, email, url, user_avatar, user_regdate, user_icq, user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts, attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method, notify_mode, user_occ, bio, user_intrest, user_mailok, language, openid, salt, user_viewoid, pass_expired, enc_type, login_name) VALUES ('%u', %s, %s, %s, %s, %s, '%u', %s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u', '%u', '%u', %s, %s, %s, '%u', %s, %s, %s, '%u', '%u', '%u', %s)", $this->db->prefix('users'), intval($uid), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), time(), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), intval($user_viewemail), $this->db->quoteString($actkey), $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), $this->db->quoteString($pass), intval($posts), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), 0, $this->db->quoteString($umode), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), $this->db->quoteString($language), $this->db->quoteString($openid), $this->db->quoteString($salt), intval($user_viewoid), intval($pass_expired), intval($enc_type), $this->db->quoteString($login_name));
-        }
-	else
-	{
-		$sql = sprintf("UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s, user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s, user_yim = %s, user_msnm = %s, posts = %d,  pass = %s, attachsig = '%u', rank = '%u', level= '%u', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u', uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s, user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s, user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s WHERE uid = '%u'", $this->db->prefix('users'), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), $user_viewemail, $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), intval($posts), $this->db->quoteString($pass), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), $this->db->quoteString($umode), intval($last_login), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), $this->db->quoteString($language), $this->db->quoteString($openid), $this->db->quoteString($salt), intval($user_viewoid), intval($pass_expired), intval($enc_type), $this->db->quoteString($login_name), intval($uid));
-        }
-        if(false != $force)
-	{
-		$result = $this->db->queryF($sql);
+
+		// RMV-NOTIFY
+		if($user->isNew())
+		{
+			$uid = $this->db->genId($this->db->prefix('users').'_uid_seq');
+			$sql = sprintf("INSERT INTO %s (uid, uname, name, email, url, user_avatar, user_regdate, user_icq, user_from, user_sig, user_viewemail, actkey, user_aim, user_yim, user_msnm, pass, posts, attachsig, rank, level, theme, timezone_offset, last_login, umode, uorder, notify_method, notify_mode, user_occ, bio, user_intrest, user_mailok, language, openid, salt, user_viewoid, pass_expired, enc_type, login_name) VALUES ('%u', %s, %s, %s, %s, %s, '%u', %s, %s, %s, '%u', %s, %s, %s, %s, %s, '%u', '%u', '%u', '%u', %s, %s, '%u', %s, '%u', '%u', '%u', %s, %s, %s, '%u', %s, %s, %s, '%u', '%u', '%u', %s)", $this->db->prefix('users'), intval($uid), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), time(), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), intval($user_viewemail), $this->db->quoteString($actkey), $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), $this->db->quoteString($pass), intval($posts), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), 0, $this->db->quoteString($umode), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), $this->db->quoteString($language), $this->db->quoteString($openid), $this->db->quoteString($salt), intval($user_viewoid), intval($pass_expired), intval($enc_type), $this->db->quoteString($login_name));
+		}
+		else
+		{
+			$sql = sprintf("UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s, user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s, user_yim = %s, user_msnm = %s, posts = %d,  pass = %s, attachsig = '%u', rank = '%u', level= '%u', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u', uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s, user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s, user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s WHERE uid = '%u'", $this->db->prefix('users'), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), $user_viewemail, $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), intval($posts), $this->db->quoteString($pass), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), $this->db->quoteString($umode), intval($last_login), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), $this->db->quoteString($language), $this->db->quoteString($openid), $this->db->quoteString($salt), intval($user_viewoid), intval($pass_expired), intval($enc_type), $this->db->quoteString($login_name), intval($uid));
+		}
+		if(false != $force)
+		{
+			$result = $this->db->queryF($sql);
+		}
+		else
+		{
+			$result = $this->db->query($sql);
+		}
+		if(!$result) {return false;}
+		if($user->isNew())
+		{
+			$uid = $this->db->getInsertId();
+			$user->assignVar('uid', $uid);
+		}
+		return true;
 	}
-	else
-	{
-		$result = $this->db->query($sql);
-	}
-	if(!$result) {return false;}
-	if($user->isNew())
-	{
-		$uid = $this->db->getInsertId();
-		$user->assignVar('uid', $uid);
-	}
-	return true;
-}
 
 	/**
 	* delete a user from the database
@@ -677,7 +680,7 @@ class XoopsUserHandler extends XoopsObjectHandler
 		*/
 		if(!is_a($user, 'xoopsuser')) {return false;}
 		$sql = sprintf("DELETE FROM %s WHERE uid = '%u'", $this->db->prefix('users'), intval($user->getVar('uid')));
-        	if(false != $force)
+		if(false != $force)
 		{
 			$result = $this->db->queryF($sql);
 		}
@@ -768,119 +771,120 @@ class XoopsUserHandler extends XoopsObjectHandler
 		if(!$result = $this->db->query($sql)) {return false;}
 		return true;
 	}
-/**
- *  Validates username, email address and password entries during registration
- *  Username is validated for uniqueness and length, password is validated for length and strictness,
- *  email is validated as a proper email address pattern  
- *  
- *  @param string $uname User display name entered by the user
- *  @param string $login_name Username entered by the user
- *  @param string $email Email address entered by the user   
- *  @param string $pass Password entered by the user
- *  @param string $vpass Password verification entered by the user
- *  @return string of errors encountered while validating the user information, will be blank if successful 
- */     
-function userCheck($login_name, $uname, $email, $pass, $vpass)
-{
-	global $icmsConfigUser, $xoopsDB;
-	$myts =& MyTextSanitizer::getInstance();
-	include_once ICMS_ROOT_PATH . '/kernel/icmsstopspammer.php';
-	$stop = '';
-	if (!checkEmail($email)) {
-		$stop .= _US_INVALIDMAIL.'<br />';
-	}
-	foreach ($icmsConfigUser['bad_emails'] as $be) {
-		if (!empty($be) && preg_match('/'.$be.'/i', $email)) {
-			$stop .= _US_INVALIDMAIL.'<br />';
-			break;
-		}
-	}
-	if (strrpos($email,' ') > 0) {
-		$stop .= _US_EMAILNOSPACES.'<br />';
-	}
-	$login_name = xoops_trim($login_name);
-	switch ($icmsConfigUser['uname_test_level']) {
-	case 0:
-		// strict
-		$restriction = '/[^a-zA-Z0-9\_\-]/';
-		break;
-	case 1:
-		// medium
-		$restriction = '/[^a-zA-Z0-9\_\-\<\>\,\.\$\%\#\@\!\\\'\"]/';
-		break;
-	case 2:
-		// loose
-		$restriction = '/[\000-\040]/';
-		break;
-	}
-	$icmsStopSpammers = new IcmsStopSpammer();
-	if ($icmsStopSpammers->badUsername($uname)) {
-		$stop .= _US_INVALIDNICKNAME . '<br />';
-	}
-	if ($icmsStopSpammers->badEmail($email)) {
-		$stop .= _US_INVALIDMAIL . '<br />';
-	}
-	if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) {
-		$stop .= _US_INVALIDIP . '<br />';
-	}
-	if (empty($login_name) || preg_match($restriction, $login_name)) {
-		$stop .= _US_INVALIDNICKNAME.'<br />';
-	}
-	if (strlen($login_name) > $icmsConfigUser['maxuname']) {
-		$stop .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']).'<br />';
-	}
-	if (strlen($login_name) < $icmsConfigUser['minuname']) {
-		$stop .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']).'<br />';
-	}
-	foreach ($icmsConfigUser['bad_unames'] as $bu) {
-		if (!empty($bu) && preg_match('/'.$bu.'/i', $login_name)) {
-			$stop .= _US_NAMERESERVED.'<br />';
-			break;
-		}
-	}
-	if (strrpos($login_name, ' ') > 0) {
-		$stop .= _US_NICKNAMENOSPACES.'<br />';
-	}
-	$sql = sprintf('SELECT COUNT(*) FROM %s WHERE login_name = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($login_name)));
-	$result = $xoopsDB->query($sql);
-	list($count) = $xoopsDB->fetchRow($result);
-	if ($count > 0) {
-		$stop .= _US_LOGINNAMETAKEN.'<br />';
-	}
-	$count = 0;
-	if ( $uname ) {
-		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE uname = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($uname)));
-		$result = $xoopsDB->query($sql);
-		list($count) = $xoopsDB->fetchRow($result);
-		if ( $count > 0 ) {
-			$stop .= _US_NICKNAMETAKEN.'<br />';
-		}
-	}
-	$count = 0;
-	if ( $email ) {
-		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($email)));
-		$result = $xoopsDB->query($sql);
-		list($count) = $xoopsDB->fetchRow($result);
-		if ( $count > 0 ) {
-			$stop .= _US_EMAILTAKEN.'<br />';
-		}
-	}
-	if ( !isset($pass) || $pass == '' || !isset($vpass) || $vpass == '' ) {
-		$stop .= _US_ENTERPWD.'<br />';
-	}
-	if ( (isset($pass)) && ($pass != $vpass) ) {
-		$stop .= _US_PASSNOTSAME.'<br />';
-	} elseif ( ($pass != '') && (strlen($pass) < $icmsConfigUser['minpass']) ) {
-		$stop .= sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']).'<br />';
-	}
-	if((isset($pass)) && (isset($login_name)))
+
+	/**
+	 *  Validates username, email address and password entries during registration
+	 *  Username is validated for uniqueness and length, password is validated for length and strictness,
+	 *  email is validated as a proper email address pattern  
+	 *  
+	 *  @param string $uname User display name entered by the user
+	 *  @param string $login_name Username entered by the user
+	 *  @param string $email Email address entered by the user   
+	 *  @param string $pass Password entered by the user
+	 *  @param string $vpass Password verification entered by the user
+	 *  @return string of errors encountered while validating the user information, will be blank if successful 
+	 */     
+	function userCheck($login_name, $uname, $email, $pass, $vpass)
 	{
-		if($pass == $login_name || $pass == icms_utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)
-		{
-			$stop .= _US_BADPWD.'<br />';
+		global $icmsConfigUser, $xoopsDB;
+		$myts =& MyTextSanitizer::getInstance();
+		include_once ICMS_ROOT_PATH . '/kernel/icmsstopspammer.php';
+		$stop = '';
+		if (!checkEmail($email)) {
+			$stop .= _US_INVALIDMAIL.'<br />';
 		}
+		foreach ($icmsConfigUser['bad_emails'] as $be) {
+			if (!empty($be) && preg_match('/'.$be.'/i', $email)) {
+				$stop .= _US_INVALIDMAIL.'<br />';
+				break;
+			}
+		}
+		if (strrpos($email,' ') > 0) {
+			$stop .= _US_EMAILNOSPACES.'<br />';
+		}
+		$login_name = xoops_trim($login_name);
+		switch ($icmsConfigUser['uname_test_level']) {
+		case 0:
+			// strict
+			$restriction = '/[^a-zA-Z0-9\_\-]/';
+			break;
+		case 1:
+			// medium
+			$restriction = '/[^a-zA-Z0-9\_\-\<\>\,\.\$\%\#\@\!\\\'\"]/';
+			break;
+		case 2:
+			// loose
+			$restriction = '/[\000-\040]/';
+			break;
+		}
+		$icmsStopSpammers = new IcmsStopSpammer();
+		if ($icmsStopSpammers->badUsername($uname)) {
+			$stop .= _US_INVALIDNICKNAME . '<br />';
+		}
+		if ($icmsStopSpammers->badEmail($email)) {
+			$stop .= _US_INVALIDMAIL . '<br />';
+		}
+		if ($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])) {
+			$stop .= _US_INVALIDIP . '<br />';
+		}
+		if (empty($login_name) || preg_match($restriction, $login_name)) {
+			$stop .= _US_INVALIDNICKNAME.'<br />';
+		}
+		if (strlen($login_name) > $icmsConfigUser['maxuname']) {
+			$stop .= sprintf(_US_NICKNAMETOOLONG, $icmsConfigUser['maxuname']).'<br />';
+		}
+		if (strlen($login_name) < $icmsConfigUser['minuname']) {
+			$stop .= sprintf(_US_NICKNAMETOOSHORT, $icmsConfigUser['minuname']).'<br />';
+		}
+		foreach ($icmsConfigUser['bad_unames'] as $bu) {
+			if (!empty($bu) && preg_match('/'.$bu.'/i', $login_name)) {
+				$stop .= _US_NAMERESERVED.'<br />';
+				break;
+			}
+		}
+		if (strrpos($login_name, ' ') > 0) {
+			$stop .= _US_NICKNAMENOSPACES.'<br />';
+		}
+		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE login_name = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($login_name)));
+		$result = $xoopsDB->query($sql);
+		list($count) = $xoopsDB->fetchRow($result);
+		if ($count > 0) {
+			$stop .= _US_LOGINNAMETAKEN.'<br />';
+		}
+		$count = 0;
+		if ( $uname ) {
+			$sql = sprintf('SELECT COUNT(*) FROM %s WHERE uname = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($uname)));
+			$result = $xoopsDB->query($sql);
+			list($count) = $xoopsDB->fetchRow($result);
+			if ( $count > 0 ) {
+				$stop .= _US_NICKNAMETAKEN.'<br />';
+			}
+		}
+		$count = 0;
+		if ( $email ) {
+			$sql = sprintf('SELECT COUNT(*) FROM %s WHERE email = %s', $xoopsDB->prefix('users'), $xoopsDB->quoteString(addslashes($email)));
+			$result = $xoopsDB->query($sql);
+			list($count) = $xoopsDB->fetchRow($result);
+			if ( $count > 0 ) {
+				$stop .= _US_EMAILTAKEN.'<br />';
+			}
+		}
+		if ( !isset($pass) || $pass == '' || !isset($vpass) || $vpass == '' ) {
+			$stop .= _US_ENTERPWD.'<br />';
+		}
+		if ( (isset($pass)) && ($pass != $vpass) ) {
+			$stop .= _US_PASSNOTSAME.'<br />';
+		} elseif ( ($pass != '') && (strlen($pass) < $icmsConfigUser['minpass']) ) {
+			$stop .= sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']).'<br />';
+		}
+		if((isset($pass)) && (isset($login_name)))
+		{
+			if($pass == $login_name || $pass == icms_utf8_strrev($login_name, true) || strripos($pass, $login_name) === true)
+			{
+				$stop .= _US_BADPWD.'<br />';
+			}
+		}
+		return $stop;
 	}
-	return $stop;
-}
 }
 ?>
