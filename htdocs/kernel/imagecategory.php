@@ -48,9 +48,9 @@ class XoopsImagecategory extends XoopsObject
   	{
   		$this->XoopsObject();
   		$this->initVar('imgcat_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('imgcat_pid', XOBJ_DTYPE_INT, null, false);
+			$this->initVar('imgcat_pid', XOBJ_DTYPE_INT, null, false);
   		$this->initVar('imgcat_name', XOBJ_DTYPE_TXTBOX, null, true, 100);
-		$this->initVar('imgcat_foldername', XOBJ_DTYPE_TXTBOX, null, true, 100);
+			$this->initVar('imgcat_foldername', XOBJ_DTYPE_TXTBOX, null, true, 100);
   		$this->initVar('imgcat_display', XOBJ_DTYPE_INT, 1, false);
   		$this->initVar('imgcat_weight', XOBJ_DTYPE_INT, 0, false);
   		$this->initVar('imgcat_maxsize', XOBJ_DTYPE_INT, 0, false);
@@ -223,7 +223,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
-    	$sql .= ' ORDER BY imgcat_weight, imgcat_id ASC';
+	    	$sql .= ' ORDER BY imgcat_weight, imgcat_id ASC';
         $result = $this->db->query($sql, $limit, $start);
         if (!$result) {
             return $ret;
@@ -295,7 +295,18 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         }
         return $ret;
     }
-    
+
+		/**
+		* Gets list of categories for that image
+		* 
+		* @param array  $groups  the usergroups to get the permissions for
+		* @param string  $perm  the permissions to retrieve
+		* @param string  $display
+		* @param string  $storetype
+		* @param int  $imgcat_id  the image cat id
+		* 
+		* @return array  list of categories
+		*/
     function getCategList($groups = array(), $perm = 'imgcat_read', $display = null, $storetype = null, $imgcat_id=null)
     {
     	$criteria = new CriteriaCompo();
@@ -330,7 +341,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     	
     	return $ret;
     }
-    
+
     /**
      * Get the folder path or url
      *
