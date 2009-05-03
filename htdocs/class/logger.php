@@ -30,10 +30,10 @@ class XoopsLogger {
 	public $logstart = array();
 	public $logend = array();
 	public $errors = array();
-	
+
 	public $usePopup = false;
 	public $activated = true;
-	
+
 	private $renderingEnabled = false;
 
 
@@ -50,13 +50,13 @@ class XoopsLogger {
 	 */
 	static public function &instance() {
 		static $instance;
-    	if ( !isset( $instance ) ) {
-	    	$instance = new XoopsLogger();
-	    	// Always catch errors, for security reasons
-	    	set_error_handler( 'XoopsErrorHandler_HandleError' );
-    	}
-    	return $instance;
-  	}
+		if ( !isset( $instance ) ) {
+			$instance = new XoopsLogger();
+			// Always catch errors, for security reasons
+			set_error_handler( 'XoopsErrorHandler_HandleError' );
+		}
+		return $instance;
+	}
 
 
 	/**
@@ -67,9 +67,9 @@ class XoopsLogger {
 	 */
 	public function enableRendering() {
 		if ( !$this->renderingEnabled ) {
-	    	ob_start( array( &$this, 'render' ) );
-	    	$this->renderingEnabled = true;
-	  	}
+			ob_start( array( &$this, 'render' ) );
+			$this->renderingEnabled = true;
+		}
 	}
 
 
@@ -137,10 +137,10 @@ class XoopsLogger {
 	 * @param   bool    $cached     was the block cached?
 	 * @param   int     $cachetime  cachetime of the block
 	 */
-  	function addBlock($name, $cached = false, $cachetime = 0) {
-  		if ( $this->activated )
-  			$this->blocks[] = array('name' => $name, 'cached' => $cached, 'cachetime' => $cachetime);
-  	}
+	function addBlock($name, $cached = false, $cachetime = 0) {
+		if ( $this->activated )
+		$this->blocks[] = array('name' => $name, 'cached' => $cached, 'cachetime' => $cachetime);
+	}
 
 	/**
 	 * Log extra information
@@ -148,8 +148,8 @@ class XoopsLogger {
 	 * @param   int     $msg  text message for the entry
 	 */
 	public function addExtra($name, $msg) {
-	  	if ( $this->activated )		
-	  		$this->extra[] = array('name' => $name, 'msg' => $msg);
+		if ( $this->activated )		
+		$this->extra[] = array('name' => $name, 'msg' => $msg);
 	}
 
 	/**
@@ -173,7 +173,7 @@ class XoopsLogger {
 				$trace = false;
 				$errstr = substr( $errstr, 8 );
 			}
-			
+
 			$errortext = sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
 			echo $errortext;
 			if ( $trace && function_exists( 'debug_backtrace' ) ) {
@@ -200,13 +200,13 @@ class XoopsLogger {
 	 */
 	function sanitizePath( $path ) {
 		$path = str_replace(
-	    	array( '\\', ICMS_ROOT_PATH, str_replace( '\\', '/', realpath( ICMS_ROOT_PATH ) ) ),
-	    	array( '/', '', '' ),
-	    	$path
-	  	);
-	  	return $path;
+			array( '\\', ICMS_ROOT_PATH, str_replace( '\\', '/', realpath( ICMS_ROOT_PATH ) ) ),
+			array( '/', '', '' ),
+			$path
+		);
+		return $path;
 	}
-	
+
 	/**
 	* Output buffering callback inserting logger dump in page output
 	* Determines wheter output can be shown (based on permissions)
@@ -239,7 +239,7 @@ class XoopsLogger {
 	 */
 	protected function dump( $mode = '' ) {
 		include ICMS_ROOT_PATH . '/class/logger_render.php';
-	  	return $ret;
+		return $ret;
 	}
 
 	/**
@@ -250,42 +250,42 @@ class XoopsLogger {
 	 */
 	public function dumpTime( $name = 'ICMS' ) {
 		if ( !isset($this->logstart[$name]) ) {
-	    	return 0;
-	  	}
-	 	$stop = isset( $this->logend[$name] ) ? $this->logend[$name] : $this->microtime();
-	  	return $stop - $this->logstart[$name];
+			return 0;
+		}
+		$stop = isset( $this->logend[$name] ) ? $this->logend[$name] : $this->microtime();
+		return $stop - $this->logstart[$name];
 	}
-	
-  	/**
-  	 * dumpAll
-  	 *
-  	 * @return string
-  	 * @deprecated 
-  	 */
+
+	/**
+	* dumpAll
+	*
+	* @return string
+	* @deprecated 
+	*/
 	public function dumpAll(){ return $this->dump( '' ); }
-	
+
 	/**
-  	 * dumpBlocks
-  	 *
-  	 * @return unknown 
-  	 * @deprecated 
-  	 */
+	* dumpBlocks
+	*
+	* @return unknown 
+	* @deprecated 
+	*/
 	public function dumpBlocks(){ return $this->dump( 'blocks' ); }
-	
+
 	/**
-  	 * dumpExtra
-  	 *
-  	 * @return unknown
-  	 * @deprecated 
-  	 */
+	* dumpExtra
+	*
+	* @return unknown
+	* @deprecated 
+	*/
 	public function dumpExtra(){ return $this->dump( 'extra' ); }
-	
+
 	/**
-  	 * dumpQueries
-  	 *
-  	 * @return unknown 
-  	 * @deprecated 
-  	 */
+	* dumpQueries
+	*
+	* @return unknown 
+	* @deprecated 
+	*/
 	public function dumpQueries(){ return $this->dump( 'queries' ); }
 }
 
