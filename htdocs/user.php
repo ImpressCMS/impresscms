@@ -135,8 +135,8 @@ if($op == 'resetpass')
 	}
 	else
 	{
-			header('Location: '.ICMS_URL.'/userinfo.php?uid='.intval($xoopsUser->getVar('uid')));
-			exit();
+		header('Location: '.ICMS_URL.'/userinfo.php?uid='.intval($xoopsUser->getVar('uid')));
+		exit();
 	}
 	exit();
 }
