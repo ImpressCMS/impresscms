@@ -40,6 +40,13 @@ class IcmsAddTo {
 		$this->_method = $method;
 	}
 
+	/**
+	* Render the social bookmark block
+	* 
+	* @param bool  $fetchonly  only fetch the information and don't display it yet
+	* 
+	* @return string  the rendered social bookmark block or none if displayed immediately
+	*/
 	function render($fetchOnly=false)
 	{
 		global $xoTheme, $xoopsTpl;
@@ -62,6 +69,11 @@ class IcmsAddTo {
 		}
 	}
 
+	/**
+	* Renders the social bookmarks for a block
+	* 
+	* @return array  The rendered block array
+	*/
 	function renderForBlock()
 	{
 		global $xoTheme;
