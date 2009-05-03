@@ -56,7 +56,17 @@ class IcmsBlockpositionHandler extends IcmsPersistableObjectHandler {
 		$this->IcmsPersistableObjectHandler($db, 'blockposition', 'id', 'title', 'description', 'icms');
 		$this->table = $this->db->prefix('block_positions');
 	}
-	
+
+	/**
+	* Inserts block position into the database
+	* 
+	* @param object  $obj  the block position object
+	* @param bool  $force  force the insertion of the object into the database
+	* @param bool  $checkObject  Check the object before insertion
+	* @param bool  $debug  turn on debug mode?
+	* 
+	* @return bool  the result of the insert action
+	*/
 	public function insert(& $obj, $force = false, $checkObject = true, $debug=false){
 		$obj->setVar('block_default', 0);
 		$obj->setVar('block_type', 'L');
