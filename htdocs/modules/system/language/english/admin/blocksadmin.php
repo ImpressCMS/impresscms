@@ -117,9 +117,6 @@ define("_CO_SYSTEM_BLOCKSADMIN_BCACHETIME_DSC", "");
 define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS", "Block View permission");
 define("_CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC", "Select wich groups will have view permission for this block. This means that a user belonging to one of these groups will be able to view the block when it is activated in the site.");
 
-
-#################### Added in 1.2 alpha 1 ############################
-
 define("_AM_SBLEFT_ADMIN","Admin Side Block - Left");
 define("_AM_SBRIGHT_ADMIN","Admin Side Block - Right");
 define("_AM_CBLEFT_ADMIN","Admin Center Block - Left");
