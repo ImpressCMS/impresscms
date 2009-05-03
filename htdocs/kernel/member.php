@@ -451,7 +451,7 @@ class XoopsMemberHandler {
 		}
 		return $ret;
 	}
-	
+
 	/**
 	 * Get count of users belonging to certain groups and matching criteria
 	 * Temporary solution
@@ -476,7 +476,14 @@ class XoopsMemberHandler {
 		list ( $ret ) = $this->_uHandler->db->fetchRow ( $result );
 		return $ret;
 	}
-	
+
+	/**
+	* Gets the usergroup with the most rights for a specific userid
+	* 
+	* @param int  $uid  the userid to get the usergroup for
+	* 
+	* @return int  the best usergroup belonging to the userid
+	*/
 	function getUserBestGroup($uid) {
 		$ret = XOOPS_GROUP_ANONYMOUS;
 		$uid = intval ( $uid );
