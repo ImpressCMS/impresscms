@@ -15,7 +15,7 @@ class IcmsFormPageElement extends XoopsFormElementTray {
 	public function __construct($object, $key) {
 		$this->XoopsFormElementTray(_AM_VISIBLEIN , ' ', $key . '_password_tray');
     	$icms_page_handler = & xoops_gethandler('page');
-		$visible_label = new XoopsFormLabel('', '<select name="visiblein[]" id="visiblein[]" multiple="multiple" size="5">'.$this->getPageSelOptions($icms_page_handler, $object->getVar('visiblein')).'</select>');
+		$visible_label = new XoopsFormLabel('', '<select name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">'.$this->getPageSelOptions($icms_page_handler, $object->getVar('visiblein')).'</select>');
 		$this->addElement($visible_label);
   	}
   	
