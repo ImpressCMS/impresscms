@@ -291,16 +291,13 @@ class XoopsMemberHandler {
      */
      function loginUser($uname, $pwd)
      {
-          include_once ICMS_ROOT_PATH.'/class/icms.password.php';
-          $icmspass = new icms_Password();
-
-          $is_expired = $icmspass->icms_PassExpired($uname);
+          $is_expired = icms_PassExpired($uname);
           if($is_expired == 1)
           {
                redirect_header(ICMS_URL.'/user.php?op=resetpass&uname='.$uname, 5, _US_PASSEXPIRED, false);
           }
-          $salt = $icmspass->icms_getUserSaltFromUname($uname);
-          $pwd = $icmspass->icms_encryptPass($pwd, $salt);
+          $salt = icms_getUserSaltFromUname($uname);
+          $pwd = icms_encryptPass($pwd, $salt);
           include_once ICMS_ROOT_PATH.'/class/database/databaseupdater.php';
           $table = new IcmsDatabasetable('users');
           if($table->fieldExists('loginname'))
@@ -348,8 +345,8 @@ class XoopsMemberHandler {
 			$user = false;
 			return $user;
 		}
-		return $user [0]; */
-	}
+		return $user [0];
+	} */
 	
 	/**
 	 * count users matching certain conditions
