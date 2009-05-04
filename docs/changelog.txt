@@ -1,4 +1,4 @@
-ImpressCMS ChangeLog
+﻿ImpressCMS ChangeLog
 
 == Impresscms 1.2==
 
@@ -87,6 +87,7 @@ ImpressCMS ChangeLog
 * #26: Search improvements (stranger/RLankford)
 * #19: Themable administrative area (stranger/Nekro)
 * #230: Installer Improvements. (stranger)
+* #274: Smarty image resizer tag plugin. It inserts -and caches- resized copies of images as requested by the template (nachenko)
 * #532: new function icms_buildCriteria() (malanciault)
 * #533: new IcmsBreadcrumb class (malanciault)
 * #535: IcmsPersistableObject store and delete methods (malanciault)
