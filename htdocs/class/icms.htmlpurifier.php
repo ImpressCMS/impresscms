@@ -22,8 +22,8 @@ class icms_HTMLPurifier
 	 */
 	function icms_HTMLPurifier()
 	{
-		require ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.standalone.php';
-		require ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.autoload.php';
+		require_once ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.standalone.php';
+		require_once ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.autoload.php';
 	}
 
 	/**

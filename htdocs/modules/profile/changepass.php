@@ -45,14 +45,14 @@ if (!isset($_POST['submit'])) {
 }
 else {
     include_once ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/include/functions.php';
-    $stop = checkPassword($xoopsUser->getVar('login_name'), $_POST['oldpass'], $_POST['newpass'], $_POST['vpass']);
+    $stop = checkPassword($xoopsUser->getVar('login_name'), $_POST['oldpass'], $_POST['password'], $_POST['vpass']);
     if ($stop != '') {
         redirect_header(ICMS_URL.'/modules/'.basename( dirname( __FILE__ ) ).'/userinfo.php?uid='.$xoopsUser->getVar('uid'), 2, $stop);
     }
     else {
         //update password
         $salt = icms_createSalt();
-        $pass = icms_encryptPass($_POST['newpass'], $salt);
+        $pass = icms_encryptPass($_POST['password'], $salt);
         $xoopsUser->setVar('pass', $pass);
         $xoopsUser->setVar('enc_type', $icmsConfigUser['enc_type']);
         $xoopsUser->setVar('pass_expired', 0);
