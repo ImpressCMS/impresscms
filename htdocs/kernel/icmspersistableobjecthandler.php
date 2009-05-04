@@ -89,6 +89,8 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 
 	var $_moduleName;
 
+	var $uploadEnabled=false;
+
     var $_uploadUrl;
 
     var $_uploadPath;
@@ -183,14 +185,6 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 		}
     }
 
-    function setUploaderConfig($_uploadPath=false, $_allowedMimeTypes=false, $_maxFileSize=false, $_maxWidth=false, $_maxHeight=false) {
-    	$this->_uploadPath = $_uploadPath ? $_uploadPath : $this->_uploadPath;
-    	$this->_allowedMimeTypes = $_allowedMimeTypes ? $_allowedMimeTypes : $this->_allowedMimeTypes;
-    	$this->_maxFileSize = $_maxFileSize ? $_maxFileSize : $this->_maxFileSize;
-    	$this->_maxWidth = $_maxWidth ? $_maxWidth : $this->_maxWidth;
-    	$this->_maxHeight = $_maxHeight ? $_maxHeight : $this->_maxHeight;
-    }
-
     /**
      * create a new {@link IcmsPersistableObject}
      *
@@ -200,7 +194,6 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
      */
     function &create($isNew = true) {
     	$obj =& new $this->className($this);
-		$obj->setImageDir($this->getImageUrl(), $this->getImagePath());
 		if (!$obj->handler) {
 			$obj->handler =& $this;
 		}
@@ -208,6 +201,10 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
         if ($isNew === true) {
             $obj->setNew();
         }
+
+		if ($this->uploadEnabled)
+			$obj->setImageDir($this->getImageUrl(), $this->getImagePath());
+
         return $obj;
     }
 
@@ -880,6 +877,33 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
     		return $this->identifierName;
     	}
     }
-}
 
+    function enableUpload($allowedMimeTypes=false, $maxFileSize=false, $maxWidth=false, $maxHeight=false) {
+    	$this->uploadEnabled = true;
+    	$this->_allowedMimeTypes = $allowedMimeTypes ? $allowedMimeTypes : $this->allowedMimeTypes;
+    	$this->_maxFileSize = $maxFileSize ? $maxFileSize : $this->maxFileSize;
+    	$this->_maxWidth = $maxWidth ? $maxWidth : $this->maxWidth;
+    	$this->_maxHeight = $maxHeight ? $maxHeight : $this->maxHeight;
+    }
+
+/********** Deprecated ***************/
+    /**
+     * Set the uploader config options.
+     * @deprecated please use enableUpload() instead
+     * @param str $_uploadPath
+     * @param array $_allowedMimeTypes
+     * @param int $_maxFileSize
+     * @param int $_maxFileWidth
+     * @param int $_maxFileHeight
+     * @return VOID
+     */
+    function setUploaderConfig($_uploadPath=false, $_allowedMimeTypes=false, $_maxFileSize=false, $_maxWidth=false, $_maxHeight=false) {
+    	$this->uploadEnabled = true;
+    	$this->_uploadPath = $_uploadPath ? $_uploadPath : $this->_uploadPath;
+    	$this->_allowedMimeTypes = $_allowedMimeTypes ? $_allowedMimeTypes : $this->_allowedMimeTypes;
+    	$this->_maxFileSize = $_maxFileSize ? $_maxFileSize : $this->_maxFileSize;
+    	$this->_maxWidth = $_maxWidth ? $_maxWidth : $this->_maxWidth;
+    	$this->_maxHeight = $_maxHeight ? $_maxHeight : $this->_maxHeight;
+    }
+}
 ?>
