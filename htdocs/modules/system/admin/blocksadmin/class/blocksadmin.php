@@ -174,10 +174,10 @@ class SystemBlocksadmin extends IcmsBlock {
 	 * @see IcmsPersistableObjectForm::IcmsPersistableObjectForm()
 	 */
 	function getForm($form_caption, $form_name, $form_action=false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action=false, $captcha=false){
-		if(!$this->isNew())
+		if( !$this->isNew() && $this->getVar('block_type') != 'C' ){
+			$this->hideFieldFromForm('content');
 			$this->hideFieldFromForm('c_type');
-		if( !$this->isNew() && $this->getVar('block_type') != 'C' )
-		$this->hideFieldFromForm('content');
+		}
 		include_once ICMS_ROOT_PATH . "/class/icmsform/icmsform.php";
 		$form = new IcmsForm($this, $form_name, $form_caption, $form_action, null, $submit_button_caption, $cancel_js_action, $captcha);
 		return $form;
