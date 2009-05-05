@@ -24,6 +24,11 @@ function wikiLink($text)
 }
 function render_wiki($ele_name)
 {
+    global $xoTheme;
+    $dirname = basename(dirname(__FILE__));
+    if(isset($xoTheme)){
+        $xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$dirname.'/'.$dirname.'.js', array('type' => 'text/javascript'));
+    }
         $code = "<img onclick='javascript:icmsCodeWIKI(\"".$ele_name."\", \"".htmlspecialchars(_ENTERWIKICODE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/plugins/textsanitizer/".basename(dirname(__FILE__))."/wiki.png' alt='wiki' />&nbsp;";
         /**
         * Using this method You can add a file to load your java script informations
@@ -51,6 +56,11 @@ function render_wiki($ele_name)
 					domobj.focus();
 					}
 EOH;*/
+        /**
+        * Or if you are using a dynamic template:
+        */
+        
+        //if(isset($xoTheme)){$xoTheme->addScript(false, array('type' => 'text/javascript'), $javascript)};
 
         return array($code, $javascript);
 }

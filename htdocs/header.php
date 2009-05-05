@@ -84,7 +84,7 @@ else
 	 * Weird, but we need to bring plugins java information in header because doing it form elsewhere will drop system required Java Script files!! 
 	 */
 
-	$jscript = '';
+/*	$jscript = '';
 	if(class_exists('XoopsFormDhtmlTextArea')){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 			if(empty($key)) continue;
@@ -106,7 +106,7 @@ else
 			}
 		}
 	}
-
+*/
 	$style_info = '';
 	foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 		if(empty($key)) continue;

@@ -19,9 +19,14 @@ function textsanitizer_hiddencontent(&$ts, $text)
 }
 function render_hiddencontent($ele_name)
 {
+    global $xoTheme;
+    $javascript='';
+    $dirname = basename(dirname(__FILE__));
+    if(isset($xoTheme)){
+        $xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$dirname.'/'.$dirname.'.js', array('type' => 'text/javascript'));
+    }
         $code = "<img onclick='javascript:icmsCodeHidden(\"".$ele_name."\", \"".htmlspecialchars(_ENTERHIDDEN, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/hide.gif' alt='hide' />&nbsp;";
         //$javascript = 'plugins/textsanitizer/'.basename(dirname(__FILE__)).'/hiddencontent.js';;
-$javascript='';
         return array($code, $javascript);
 }
 /**

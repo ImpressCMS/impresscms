@@ -108,7 +108,7 @@ function icms_cp_header(){
 	$xoTheme->addScript( ICMS_URL.'/libraries/jquery/ui/ui.dialog.js', array( 'type' => 'text/javascript' ) );
 	$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/ui/themes/base/ui.all.css', array('media' => 'screen'));
 	
-	$jscript = '';
+/*	$jscript = '';
  	if(class_exists('XoopsFormDhtmlTextArea')){
         foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
          	if( empty( $key ) ) 
@@ -131,7 +131,7 @@ function icms_cp_header(){
          	}
         }
  	}
-
+*/
 	$style_info = '';
     foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
        	if( empty( $key ) ) 
