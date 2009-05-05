@@ -79,7 +79,7 @@ if (in_array($clean_op,$valid_op,true)){
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($icms_blockposition_handler, false);
   		$objectTable->addColumn(new IcmsPersistableColumn('pname'), 'center');
-			$objectTable->addColumn(new IcmsPersistableColumn('titlec', false, false, false, false, _CO_SYSTEM_BLOCKSPADMIN_TITLE));
+			$objectTable->addColumn(new IcmsPersistableColumn('title', false, false, 'getCustomTitle'));
 			$objectTable->addColumn(new IcmsPersistableColumn('description'));
 
   		$objectTable->addIntroButton('addblockposition', 'admin.php?fct=blockspadmin&op=mod', _AM_SYSTEM_BLOCKSPADMIN_CREATE);
