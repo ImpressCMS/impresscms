@@ -2,7 +2,8 @@
 
 == Impresscms 1.2==
 
-===2009-05-02 : 1.2 Alpha===
+===2009-05-05 : 1.2 Alpha===
+
 '''Added'''
 * meta_description & meta_keywords to content manager pages. (vaughan)
 * seo URL in content manager changed from underscore to hyphen. (vaughan)
