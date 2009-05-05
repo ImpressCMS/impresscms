@@ -28,14 +28,7 @@ class SystemPages extends IcmsPage {
 		));
 	}
 
-	public function getVar($key, $format = 's') {
-		if ($format == 's' && in_array($key, array ( 'page_status_custom', 'page_moduleid_custom'))) {
-			return call_user_func(array ($this,	$key));
-		}
-		return parent :: getVar($key, $format);
-	}
-
-	private function page_status_custom(){
+	public function getCustomPageStatus(){
 		if($this->getVar('page_status') == 1)
 			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=pages&op=status&page_id='.$this->getVar('page_id').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_ok.png" alt="'._VISIBLE.'"/></a>';
 		else
@@ -43,7 +36,7 @@ class SystemPages extends IcmsPage {
 		return $rtn;
 	}
 
-	private function page_moduleid_custom(){
+	public function getCustomPageModuleid(){
 		$modules = $this->handler->getModulesArray();
 		return $modules[$this->getVar('page_moduleid')];
 	}

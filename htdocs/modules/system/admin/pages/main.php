@@ -103,10 +103,10 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			icms_cp_header ();
 			include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php";
 			$objectTable = new IcmsPersistableTable ( $icms_page_handler );
-			$objectTable->addColumn ( new IcmsPersistableColumn ( 'page_status_custom', 'center', false, false, false, _CO_SYSTEM_PAGES_PAGE_STATUS ) );
+			$objectTable->addColumn ( new IcmsPersistableColumn ( 'page_status', 'center', false, 'getCustomPageStatus' ) );
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'page_title', _GLOBAL_LEFT, false, 'getAdminViewItemLink' ) );
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'page_url' ) );
-			$objectTable->addColumn ( new IcmsPersistableColumn ( 'page_moduleid_custom', 'center', false, false, false, _CO_SYSTEM_PAGES_PAGE_MODULEID ) );
+			$objectTable->addColumn ( new IcmsPersistableColumn ( 'page_moduleid', 'center', false, 'getCustomPageModuleid' ) );
 			
 			$objectTable->addIntroButton ( 'addpost', 'admin.php?fct=pages&op=mod', _AM_SYSTEM_PAGES_CREATE );
 			
@@ -115,8 +115,6 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			$objectTable->addQuickSearch ( array ('page_title', 'page_url' ) );
 			
 			$objectTable->addFilter ( 'page_moduleid', 'getModulesArray' );
-//			$objectTable->addFilter ( 'visible', 'getVisibleStatusArray' );
-//			$objectTable->addFilter ( 'side', 'getpagePositionArray' );
 			
 			$icmsAdminTpl->assign ( 'icms_page_table', $objectTable->fetch () );
 			$icmsAdminTpl->assign ( 'icms_page_title', _AM_SYSTEM_PAGES_TITLE );
