@@ -145,7 +145,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
  			  	$jscript = '';
 	        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 	        	$extension = $myts->icmsloadExtension($key);
-	        	$func = "javascript_{$key}";
+	        	$func = "render_{$key}";
 	        	if ( function_exists($func) ) {
 	        		@list($encode, $js) = $func($ele_name);
 	        		if (empty($encode)) continue;

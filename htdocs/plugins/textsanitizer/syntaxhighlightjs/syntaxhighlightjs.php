@@ -35,7 +35,7 @@ function textsanitizer_geshi_js_highlight( $source )
 	$code = "<div class=\"icmsCodeJs\"><code><pre>".$code."</pre></code></div>";
     return $code;
 }
-function javascript_syntaxhighlightjs($ele_name)
+function render_syntaxhighlightjs($ele_name)
 {
         $code = "<img onclick='javascript:icmsCodeJS(\"".$ele_name."\", \"".htmlspecialchars(_ENTERJSCODE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/plugins/textsanitizer/".basename(dirname(__FILE__))."/js.png' alt='js' />&nbsp;";
 		$javascript='';

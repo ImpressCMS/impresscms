@@ -17,7 +17,7 @@ function textsanitizer_hiddencontent(&$ts, $text)
 			else{$replacements[] = _HIDDENC.'<div class="icmsHidden">'._HIDDENTEXT.'</div>';}
 	return preg_replace($patterns, $replacements, $text);
 }
-function javascript_hiddencontent($ele_name)
+function render_hiddencontent($ele_name)
 {
         $code = "<img onclick='javascript:icmsCodeHidden(\"".$ele_name."\", \"".htmlspecialchars(_ENTERHIDDEN, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/images/hide.gif' alt='hide' />&nbsp;";
         //$javascript = 'plugins/textsanitizer/'.basename(dirname(__FILE__)).'/hiddencontent.js';;

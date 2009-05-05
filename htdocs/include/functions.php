@@ -62,7 +62,7 @@ function xoops_header($closehead=true)
 				echo '<script type="text/javascript" src="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js"></script>';
 			}else{
 				$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-				$func = 'javascript_'.$key;
+				$func = 'render_'.$key;
 				if ( function_exists($func) ) {
 					@list($encode, $jscript) = $func($ele_name);
 					if (!empty($jscript)) {

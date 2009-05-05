@@ -22,7 +22,7 @@ function wikiLink($text)
 	$ret = "<a href='".sprintf( WIKI_LINK, $text )."' target='_blank' title=''>".$text."</a>";
 	return $ret;
 }
-function javascript_wiki($ele_name)
+function render_wiki($ele_name)
 {
         $code = "<img onclick='javascript:icmsCodeWIKI(\"".$ele_name."\", \"".htmlspecialchars(_ENTERWIKICODE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/plugins/textsanitizer/".basename(dirname(__FILE__))."/wiki.png' alt='wiki' />&nbsp;";
         /**

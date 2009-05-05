@@ -20,7 +20,7 @@ function textsanitizer_wmp(&$ts, $text)
 	$replacements[] = $rp;
 	return preg_replace($patterns, $replacements, $text);
 }
-function javascript_wmp($ele_name)
+function render_wmp($ele_name)
 {
         $code = "<img onclick='javascript:icmsCodeWmp(\"".$ele_name."\", \"".htmlspecialchars(_ENTERMEDIAURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERHEIGHT, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERWIDTH, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/plugins/textsanitizer/".basename(dirname(__FILE__))."/wmp.gif' alt='hide' />&nbsp;";
 

@@ -117,7 +117,7 @@ function icms_cp_header(){
          		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
          	}else{
          		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-         		$func = 'javascript_'.$key;
+         		$func = 'render_'.$key;
          		if ( function_exists($func) ) {
          			@list($encode, $jscript) = $func($ele_name);
          		 	if (!empty($jscript)) {
