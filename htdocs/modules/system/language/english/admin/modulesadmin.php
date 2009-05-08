@@ -63,6 +63,7 @@ define('_MD_AM_MODULESADMIN_STATUS', 'Status');
 define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
 define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
 define('_MD_AM_FAILINSTEMP','ERROR: Could not insert template <b>%s</b> to the database.');
+define('_MD_AM_FAILUPDTEMP','ERROR: Could not update template <b>%s</b>.');
 define('_MD_AM_INSTEMP','Template <b>%s</b> added to the database. (ID: <b>%s</b>)');
 define('_MD_AM_FAILCOMPTEMP','ERROR: Failed compiling template <b>%s</b>.');
 define('_MD_AM_COMPTEMP','Template <b>%s</b> compiled.');
@@ -71,6 +72,7 @@ define('_MD_AM_INSTEMPFILE','Template <b>%s</b> added to the database. (ID: <b>%
 define('_MD_AM_FAILCOMPTEMPFILE','ERROR: Failed compiling template <b>%s</b>.');
 define('_MD_AM_COMPTEMPFILE','Template <b>%s</b> compiled.');
 define('_MD_AM_RECOMPTEMPFILE','Template <b>%s</b> recompiled.');
+define('_MD_AM_NOTRECOMPTEMPFILE','ERROR: Could not recompile template <b>%s</b>.');
 define('_MD_AM_TEMPINS','Template <b>%s</b> inserted to the database.');
 define('_MD_AM_MOD_DATA_UPDATED','Module data updated.');
 define('_MD_AM_MOD_UP_TEM','Updating templates...');
@@ -79,4 +81,8 @@ define('_MD_AM_FUNCT_EXEC','Function <b>%s</b> is successfully executed.');
 define('_MD_AM_FAIL_EXEC','Failed to execute <b>%s</b>.');
 define('_MD_AM_INSTALLED', 'Installed Modules');
 define('_MD_AM_NONINSTALL', 'Non-Install Modules');
+define('_MD_AM_NOTDELTEMPFILE', 'ERROR: Could not delete old template <b>%s</b>. Aborting update of this file.');
+define('_MD_AM_COULDNOTUPDATE', 'ERROR: Could not update <b>%s</b>.');
+define('_MD_AM_BLOCKUPDATED', 'Block <b>%s</b> updated. Block ID: <b>%s</b>.');
+define('_MD_AM_BLOCKCREATED', 'Block <b>%s</b> created. Block ID: <b>%s</b>.');
 ?>

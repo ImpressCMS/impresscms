@@ -22,14 +22,12 @@
 $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 $uid = intval($_GET['uid']);
-$module_handler = xoops_gethandler('module');
-$profile_module = $module_handler->getByDirname('profile');
-if($profile_module && $profile_module->getVar('isactive') && file_exists(ICMS_ROOT_PATH.'/modules/profile/userinfo.php'))
+
+if(icms_get_module_status('profile') && file_exists(ICMS_ROOT_PATH.'/modules/profile/userinfo.php'))
 {
 	header('Location: '.ICMS_URL.'/modules/profile/userinfo.php?uid='.$uid);
 	exit();
 }
-
 
 include_once ICMS_ROOT_PATH . '/class/module.textsanitizer.php';
 
@@ -40,7 +38,6 @@ if (!$icmsConfigUser['allow_annon_view_prof'] && !is_object($xoopsUser)) {
 	exit ();
 }
 
-$uid = intval($_GET['uid']);
 if ($uid <= 0) {
 	redirect_header('index.php', 3, _US_SELECTNG);
 	exit ();
@@ -56,16 +53,14 @@ if (is_object($xoopsUser)) {
 		$xoopsOption['template_main'] = 'system_userinfo.html';
 		include ICMS_ROOT_PATH . '/header.php';
 		$xoopsTpl->assign('user_ownpage', true);
-		$xoopsTpl->assign('lang_editprofile', _US_EDITPROFILE);
-		$xoopsTpl->assign('lang_avatar', _US_AVATAR);
-		$xoopsTpl->assign('lang_inbox', _US_INBOX);
-		$xoopsTpl->assign('lang_logout', _US_LOGOUT);
-		if ($icmsConfigUser['self_delete'] == 1) {
-			$xoopsTpl->assign('user_candelete', true);
-			$xoopsTpl->assign('lang_deleteaccount', _US_DELACCOUNT);
-		} else {
-			$xoopsTpl->assign('user_candelete', false);
-		}
+		icms_makeSmarty(array(
+			'user_ownpage' => true,
+			'lang_editprofile' => _US_EDITPROFILE,
+			'lang_avatar' => _US_AVATAR,
+			'lang_inbox' => _US_INBOX,
+			'lang_logout' => _US_LOGOUT,
+			'user_candelete' => $icmsConfigUser['self_delete']?true:false,
+			'lang_deleteaccount' => $icmsConfigUser['self_delete']?_US_DELACCOUNT:''));
 		$thisUser = & $xoopsUser;
 	} else {
 		$member_handler = & xoops_gethandler('member');
@@ -212,11 +207,11 @@ foreach ($mids as $mid) {
 				} else {
 					$results[$i]['image'] = 'images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/posticon2.gif';
 				}
-                if (isset ($results[$i]['link']) && $results[$i]['link'] != '') {
+				if (isset ($results[$i]['link']) && $results[$i]['link'] != '') {
 				if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
 					$results[$i]['link'] = "modules/" . $module->getVar('dirname') . "/" . $results[$i]['link'];
 				}
-                }
+				}
 
 				$results[$i]['title'] = $myts->makeTboxData4Show($results[$i]['title']);
 				$results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';

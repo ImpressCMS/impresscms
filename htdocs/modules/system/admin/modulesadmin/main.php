@@ -290,13 +290,13 @@ if ($op == 'update_ok') {
 					$tplfile->setVar('tpl_file', $tpl['file'], true);
 					$tplfile->setVar('tpl_desc', $tpl['description'], true);
 					if (!$tplfile_handler->insert($tplfile)) {
-						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert template <b>'.$tpl['file'].'</b> to the database.</span>';
+						$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILINSTEMPFILE.'</span>', $tpl['file']);
 					} else {
 						$newid = $tplfile->getVar('tpl_id');
 						$msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_TEMPINS.'</span>', $tpl['file']);
 						if ($xoopsConfig['template_set'] == 'default') {
 							if (!xoops_template_touch($newid)) {
-								$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not recompile template <b>'.$tpl['file'].'</b>.</span>';
+								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_NOTRECOMPTEMPFILE.'</span>', $tpl['file']);
 							} else {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_RECOMPTEMPFILE.'</span>', $tpl['file']);
 							}
@@ -304,7 +304,7 @@ if ($op == 'update_ok') {
 					}
 					unset($tpldata);
 				} else {
-					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete old template <b>'.$tpl['file'].'</b>. Aborting update of this file.</span>';
+					$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_NOTDELTEMPFILE.'</span>', $tpl['file']);
 				}
 			}
 		}
@@ -346,9 +346,9 @@ if ($op == 'update_ok') {
 						$sql = "UPDATE ".$xoopsDB->prefix("newblocks")." SET name='".addslashes($blocks[$i]['name'])."', edit_func='".addslashes($editfunc)."', content='', template='".$template."', last_modified=".time()." WHERE bid='".intval($fblock['bid'])."'";
 						$result = $xoopsDB->query($sql);
 						if (!$result) {
-							$msgs[] = '&nbsp;&nbsp;ERROR: Could not update '.$fblock['name'];
+							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_COULDNOTUPDATE,$fblock['name']);
 						} else {
-							$msgs[] = '&nbsp;&nbsp;Block <b>'.$fblock['name'].'</b> updated. Block ID: <b>'.$fblock['bid'].'</b>';
+							$msgs[] = >sprintf('&nbsp;&nbsp;'._MD_AM_COULDNOTUPDATE,$fblock['name'],icms_conv_nr2local($fblock['bid']));
 							if ($template != '') {
 								$tplfile =& $tplfile_handler->find('default', 'block', $fblock['bid']);
 								if (count($tplfile) == 0) {
@@ -367,14 +367,14 @@ if ($op == 'update_ok') {
 								$tplfile_new->setVar('tpl_lastmodified', time());
 								$tplfile_new->setVar('tpl_lastimported', 0);
 								if (!$tplfile_handler->insert($tplfile_new)) {
-									$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not update template <b>'.$blocks[$i]['template'].'</b>.</span>';
+									$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILUPDTEMP.'</span>', $blocks[$i]['template']);
 								} else {
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> updated.';
 									if ($xoopsConfig['template_set'] == 'default') {
 										if (!xoops_template_touch($tplfile_new->getVar('tpl_id'))) {
-											$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not recompile template <b>'.$blocks[$i]['template'].'</b>.</span>';
+											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_NOTRECOMPTEMPFILE.'</span>', $blocks[$i]['template']);
 										} else {
-											$msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> recompiled.';
+											$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_RECOMPTEMPFILE, $blocks[$i]['template']);
 										}
 									}
 								}
@@ -428,7 +428,7 @@ if ($op == 'update_ok') {
 										if (!xoops_template_touch($newid)) {
 											$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Template <b>'.$blocks[$i]['template'].'</b> recompile failed.</span>';
 										} else {
-											$msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> recompiled.';
+											$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_RECOMPTEMPFILE, $blocks[$i]['template']);
 										}
 									}
 								}

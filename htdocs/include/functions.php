@@ -660,8 +660,8 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$xoopsThemeFactory =& new xos_opal_ThemeFactory();
 	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 	$xoopsThemeFactory->defaultTheme = $theme;
-	$xoTheme =& $xoopsThemeFactory->createInstance(array("plugins" => array()));
-	$xoopsTpl =& $xoTheme->template;
+	$icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array("plugins" => array()));
+	$xoopsTpl = $icmsTpl =& $xoTheme->template;
 	$xoopsTpl->assign(array(
 		'icms_style' => ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css',
 		'icms_theme' => $theme,
@@ -2942,5 +2942,19 @@ function icms_getBreadcrumb($items) {
 	include_once(ICMS_ROOT_PATH . '/class/icmsbreadcrumb.php');
 	$icmsBreadcrumb = new IcmsBreadcrumb($items);
 	return $icmsBreadcrumb->render(true);
+}
+/**
+ * Build a template assignement
+ *
+ * @param array $items to build the smarty to be used in templates
+ * @return smarty value for each item
+ */
+function icms_makeSmarty($items) {
+	global $icmsTpl;
+	if (!isset($icmsTpl) || !is_array($items))return false;
+	foreach ($items as $item => $value){
+        $icmsTpl->assign($item, $value);
+    }
+	return true;
 }
 ?>

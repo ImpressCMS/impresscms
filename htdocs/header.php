@@ -46,8 +46,8 @@ else
 	/**
 	 * @var xos_opal_Theme
 	 */
-	$xoTheme =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
-	$xoopsTpl =& $xoTheme->template;
+	$icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array('contentTemplate' => @$xoopsOption['template_main'],));
+	$xoopsTpl = $icmsTpl =& $xoTheme->template;
 	if ($icmsConfigMetaFooter['use_google_analytics'] == true && isset($icmsConfigMetaFooter['google_analytics']) && $icmsConfigMetaFooter['google_analytics'] != ''){
 
 		/* Legacy GA urchin code */
