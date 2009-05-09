@@ -2,15 +2,15 @@
 /**
  * Extended User Profile
  *
- *
- * @copyright       The ImpressCMS Project http://www.impresscms.org/
+ * @copyright       The ImpressCMS Project <http://www.impresscms.org/>
  * @license         LICENSE.txt
  * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package         modules
+ * @package         profile
  * @since           1.2
  * @author          Jan Pedersen
  * @author          The SmartFactory <www.smartfactory.ca>
  * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @version         $Id$
  */
 
@@ -18,12 +18,12 @@ $adminmenu[7]['title'] = _PROFILE_MI_INDEX;
 $adminmenu[7]['link'] = 'admin/admin.php';
 $adminmenu[1]['title'] = _PROFILE_MI_USERS;
 $adminmenu[1]['link'] = 'admin/user.php';
-$adminmenu[2]['title'] = _PROFILE_MI_CATEGORIES;
+$adminmenu[2]['title'] = _AM_PROFILE_CATEGORYS;
 $adminmenu[2]['link'] = 'admin/category.php';
-$adminmenu[3]['title'] = _PROFILE_MI_FIELDS;
+$adminmenu[3]['title'] = _AM_PROFILE_FIELDS;
 $adminmenu[3]['link'] = 'admin/field.php';
-$adminmenu[4]['title'] = _PROFILE_MI_STEPS;
-$adminmenu[4]['link'] = 'admin/step.php';
+$adminmenu[4]['title'] = _AM_PROFILE_REGSTEPS;
+$adminmenu[4]['link'] = 'admin/regstep.php';
 $adminmenu[5]['title'] = _PROFILE_MI_PERMISSIONS;
 $adminmenu[5]['link'] = 'admin/permissions.php';
 $gperm =& xoops_gethandler ( 'groupperm' );

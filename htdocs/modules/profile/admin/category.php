@@ -1,89 +1,121 @@
 <?php
 /**
- * Extended User Profile
+* Admin page to manage categorys
+*
+* List, add, edit and delete category objects
+*
+* @copyright	The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @since		1.0
+* @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+* @package		improfile
+* @version		$Id$
+*/
+
+/**
+ * Edit a Category
  *
- *
- * @copyright       The ImpressCMS Project http://www.impresscms.org/
- * @license         LICENSE.txt
- * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package         modules
- * @since           1.2
- * @author          Jan Pedersen
- * @author          The SmartFactory <www.smartfactory.ca>
- * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version         $Id$
+ * @param int $category_id Categoryid to be edited
+*/
+function editcategory($category_id = 0)
+{
+	global $profile_category_handler, $xoopsModule, $icmsAdminTpl;
+
+	$categoryObj = $profile_category_handler->get($category_id);
+
+	if (!$categoryObj->isNew()){
+		$xoopsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORYS . " > " . _CO_ICMS_EDITING);
+		$sform = $categoryObj->getForm(_AM_PROFILE_CATEGORY_EDIT, 'addcategory');
+		$sform->assign($icmsAdminTpl);
+
+	} else {
+		$xoopsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORYS . " > " . _CO_ICMS_CREATINGNEW);
+		$sform = $categoryObj->getForm(_AM_PROFILE_CATEGORY_CREATE, 'addcategory');
+		$sform->assign($icmsAdminTpl);
+
+	}
+	$icmsAdminTpl->display('db:profile_admin_category.html');
+}
+
+include_once("admin_header.php");
+
+$profile_category_handler = xoops_getModuleHandler('category');
+/** Use a naming convention that indicates the source of the content of the variable */
+$clean_op = '';
+/** Create a whitelist of valid values, be sure to use appropriate types for each value
+ * Be sure to include a value for no parameter, if you have a default condition
  */
+$valid_op = array ('mod','changedField','addcategory','del','view','');
 
-include 'header.php';
-xoops_cp_header();
+if (isset($_GET['op'])) $clean_op = htmlentities($_GET['op']);
+if (isset($_POST['op'])) $clean_op = htmlentities($_POST['op']);
 
-icms_adminMenu(2, "");
-$op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : (isset($_REQUEST['id']) ? "edit" : 'list');
+/** Again, use a naming convention that indicates the source of the content of the variable */
+$clean_category_id = isset($_GET['catid']) ? (int) $_GET['catid'] : 0 ;
 
-$handler =& icms_getmodulehandler( 'category', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
-switch($op) {
-    default:
-    case "list":
-    $xoopsTpl->assign('categories', $handler->getObjects(null, true, false));
-    $smartOption['template_main'] = "profile_admin_categorylist.html";
-    break;
-    
-    case "new":
-    include_once('../include/forms.php');
-    $obj =& $handler->create();
-    $form =& $obj->getForm();
-    $form->display();
-    break;
+/**
+ * in_array() is a native PHP function that will determine if the value of the
+ * first argument is found in the array listed in the second argument. Strings
+ * are case sensitive and the 3rd argument determines whether type matching is
+ * required
+*/
+if (in_array($clean_op,$valid_op,true)){
+  switch ($clean_op) {
+  	case "mod":
+  	case "changedField":
 
-    case "edit":
-    include_once('../include/forms.php');
-    $obj =& $handler->get(trim($_REQUEST['id']));
-    $form =& $obj->getForm();
-    $form->display();
-    break;
+  		xoops_cp_header();
 
-    case "save":
-    if (!$GLOBALS['xoopsSecurity']->check()) {
-        redirect_header('category.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
-    }
-    if (isset($_REQUEST['id'])) {
-        $obj =& $handler->get(trim($_REQUEST['id']));
-    }
-    else {
-        $obj =& $handler->create();
-    }
-    $obj->setVar('cat_title', trim($_REQUEST['cat_title']));
-    $obj->setVar('cat_description', trim($_REQUEST['cat_description']));
-    $obj->setVar('cat_weight', intval($_REQUEST['cat_weight']));
-    if ($handler->insert($obj)) {
-        redirect_header('category.php', 3, sprintf(_PROFILE_AM_SAVEDSUCCESS, _PROFILE_AM_CATEGORY));
-    }
-    include_once('../include/forms.php');
-    echo $obj->getHtmlErrors();
-    $form =& $obj->getForm();
-    $form->display();
-    break;
+  		editcategory($clean_category_id);
+  		break;
+  	case "addcategory":
+          include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+          $controller = new IcmsPersistableController($profile_category_handler);
+  		  $controller->storeFromDefaultForm(_AM_PROFILE_CATEGORY_CREATED, _AM_PROFILE_CATEGORY_MODIFIED);
 
-    case "delete":
-    $obj =& $handler->get(trim($_REQUEST['id']));
-    if (isset($_REQUEST['ok']) && $_REQUEST['ok'] == 1) {
-        if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('category.php', 3, implode(',', $GLOBALS['xoopsSecurity']->getErrors()));
-        }
-        if ($handler->delete($obj)) {
-            redirect_header('category.php', 3, sprintf(_PROFILE_AM_DELETEDSUCCESS, _PROFILE_AM_CATEGORY));
-        }
-        else {
-            echo $obj->getHtmlErrors();
-        }
-    }
-    else {
-        xoops_confirm(array('ok' => 1, 'id' => intval($_REQUEST['id']), 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('cat_title')));
-    }
-    break;
+  		break;
+
+  	case "del":
+  	    include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+          $controller = new IcmsPersistableController($profile_category_handler);
+  		$controller->handleObjectDeletion();
+
+  		break;
+
+  	case "view" :
+  		$categoryObj = $profile_category_handler->get($clean_category_id);
+
+  		icms_cp_header();
+  		$xoopsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORY_VIEW . ' > ' . $categoryObj->getVar('category_name'));
+
+//  		smart_collapsableBar('categoryview', $categoryObj->getVar('category_name') . $categoryObj->getEditCategoryLink(), _AM_IMPROFILE_CATEGORY_VIEW_DSC);
+
+  		$categoryObj->displaySingleObject();
+
+//  		smart_close_collapsable('categoryview');
+
+  		break;
+
+  	default:
+
+  		icms_cp_header();
+
+  		$xoopsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORYS);
+
+  		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
+  		$objectTable = new IcmsPersistableTable($profile_category_handler);
+  		$objectTable->addColumn(new IcmsPersistableColumn('cat_title'));
+  		$objectTable->addColumn(new IcmsPersistableColumn('cat_description'));
+
+  		$objectTable->addIntroButton('addcategory', 'category.php?op=mod', _AM_PROFILE_CATEGORY_CREATE);
+  		$icmsAdminTpl->assign('profile_category_table', $objectTable->fetch());
+  		$icmsAdminTpl->display('db:profile_admin_category.html');
+  		break;
+  }
+  icms_cp_footer();
 }
-if (isset($smartOption['template_main'])) {
-    $xoopsTpl->display("db:".$smartOption['template_main']);
-}
-xoops_cp_footer();
+/**
+ * If you want to have a specific action taken because the user input was invalid,
+ * place it at this point. Otherwise, a blank page will be displayed
+ */
 ?>

@@ -1,24 +1,85 @@
 <?php
 /**
- * Extended User Profile
+ * English language constants used in admin section of the module
  *
- *
- *
- * @copyright       The ImpressCMS Project http://www.impresscms.org/
- * @license         LICENSE.txt
- * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package         modules
- * @since           1.2
- * @author          Jan Pedersen
- * @author          Marcello Brandao <marcello.brandao@gmail.com>
- * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version         $Id$
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org>
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.0
+ * @author      Jan Pedersen
+ * @author      Marcello Brandao <marcello.brandao@gmail.com>
+ * @author	   	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @package		profile
+ * @version		$Id$
  */
 
-define("_PROFILE_AM_FIELD", "Field");
-define("_PROFILE_AM_FIELDS", "Fields");
-define("_PROFILE_AM_CATEGORY", "Category");
-define("_PROFILE_AM_STEP", "Step");
+if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
+
+// Requirements
+define("_AM_PROFILE_REQUIREMENTS", "imProfile Requirements");
+define("_AM_PROFILE_REQUIREMENTS_INFO", "We've reviewed your system, unfortunately it doesn't meet all the requirements needed for improfile to function. Below are the requirements needed.");
+define("_AM_PROFILE_REQUIREMENTS_ICMS_BUILD", "imProfile requires at least ImpressCMS 1.1.1 RC 1.");
+define("_AM_PROFILE_REQUIREMENTS_SUPPORT", "Should you have any question or concerns, please visit our forums at <a href='http://community.impresscms.org'>http://community.impresscms.org</a>.");
+
+// General
+define("_AM_PROFILE_FIRST_USE", "This is the first time you access this module. Please update the module in order to dynamically create the database scheme.");
+
+// Field
+define("_AM_PROFILE_FIELDS", "Fields");
+define("_AM_PROFILE_FIELDS_DSC", "All fields in the module");
+define("_AM_PROFILE_FIELD_CREATE", "Add a field");
+define("_AM_PROFILE_FIELD", "Field");
+define("_AM_PROFILE_FIELD_CREATE_INFO", "Fill-out the following form to create a new field.");
+define("_AM_PROFILE_FIELD_EDIT", "Edit this field");
+define("_AM_PROFILE_FIELD_EDIT_INFO", "Fill-out the following form in order to edit this field.");
+define("_AM_PROFILE_FIELD_MODIFIED", "The field was successfully modified.");
+define("_AM_PROFILE_FIELD_CREATED", "The field has been successfully created.");
+define("_AM_PROFILE_FIELD_VIEW", "Field info");
+define("_AM_PROFILE_FIELD_VIEW_DSC", "Here is the info about this field.");
+
+define("_AM_PROFILE_FIELD_TYPE_CHECKBOX", "Checkbox");
+define("_AM_PROFILE_FIELD_TYPE_GROUP", "Group Select");
+define("_AM_PROFILE_FIELD_TYPE_GROUPMULTI", "Group Multi Select");
+define("_AM_PROFILE_FIELD_TYPE_LANGUAGE", "Language Select");
+define("_AM_PROFILE_FIELD_TYPE_RADIO", "Radio Buttons");
+define("_AM_PROFILE_FIELD_TYPE_SELECT", "Select");
+define("_AM_PROFILE_FIELD_TYPE_SELECTMULTI", "Multi Select");
+define("_AM_PROFILE_FIELD_TYPE_TEXTAREA", "Text Area");
+define("_AM_PROFILE_FIELD_TYPE_DHTMLTEXTAREA", "DHTML Text Area");
+define("_AM_PROFILE_FIELD_TYPE_TEXTBOX", "Text Field");
+define("_AM_PROFILE_FIELD_TYPE_TIMEZONE", "Timezone");
+define("_AM_PROFILE_FIELD_TYPE_YESNO", "Radio Yes/No");
+define("_AM_PROFILE_FIELD_TYPE_DATE", "Date");
+define("_AM_PROFILE_FIELD_TYPE_AUTOTEXT", "Auto Text");
+define("_AM_PROFILE_FIELD_TYPE_DATETIME", "Date and Time");
+define("_AM_PROFILE_FIELD_TYPE_LONGDATE", "Long Date");
+define("_AM_PROFILE_FIELD_TYPE_IMAGE", "Image");
+
+// Regstep
+define("_AM_PROFILE_REGSTEPS", "Registration Steps");
+define("_AM_PROFILE_REGSTEPS_DSC", "All Registration Steps in the module");
+define("_AM_PROFILE_REGSTEP_CREATE", "Add a Registration step");
+define("_AM_PROFILE_REGSTEP", "Registration Step");
+define("_AM_PROFILE_REGSTEP_CREATE_INFO", "Fill-out the following form to create a new Registration Step.");
+define("_AM_PROFILE_REGSTEP_EDIT", "Edit this Registration Step");
+define("_AM_PROFILE_REGSTEP_EDIT_INFO", "Fill-out the following form in order to edit this Registration Step.");
+define("_AM_PROFILE_REGSTEP_MODIFIED", "The Registration Step was successfully modified.");
+define("_AM_PROFILE_REGSTEP_CREATED", "The Registration Step has been successfully created.");
+define("_AM_PROFILE_REGSTEP_VIEW", "Registration Step info");
+define("_AM_PROFILE_REGSTEP_VIEW_DSC", "Here is the info about this Registration Step.");
+
+// Category
+define("_AM_PROFILE_CATEGORYS", "Categories");
+define("_AM_PROFILE_CATEGORYS_DSC", "All categories in the module");
+define("_AM_PROFILE_CATEGORY_CREATE", "Add a category");
+define("_AM_PROFILE_CATEGORY", "Category");
+define("_AM_PROFILE_CATEGORY_CREATE_INFO", "Fill-out the following form to create a new category.");
+define("_AM_PROFILE_CATEGORY_EDIT", "Edit this category");
+define("_AM_PROFILE_CATEGORY_EDIT_INFO", "Fill-out the following form in order to edit this category.");
+define("_AM_PROFILE_CATEGORY_MODIFIED", "The category was successfully modified.");
+define("_AM_PROFILE_CATEGORY_CREATED", "The category has been successfully created.");
+define("_AM_PROFILE_CATEGORY_VIEW", "Category info");
+define("_AM_PROFILE_CATEGORY_VIEW_DSC", "Here is the info about this category.");
 
 define("_PROFILE_AM_SAVEDSUCCESS", "%s Saved Successfully");
 define("_PROFILE_AM_DELETEDSUCCESS", "%s Deleted Successfully");

@@ -2,56 +2,96 @@
 /**
  * Extended User Profile
  *
- *
- * @copyright       The ImpressCMS Project http://www.impresscms.org/
+ * @copyright       The ImpressCMS <Project http://www.impresscms.org/>
  * @license         LICENSE.txt
  * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package         modules
- * @since           1.2
+ * @package         Modules
+ * @subpackage 		Profile
+ * @since           ImpressCMS 1.2
  * @author          Jan Pedersen
- * @author          The SmartFactory <www.smartfactory.ca>
+ * @author          The SmartFactory <http://www.smartfactory.ca>
  * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version         $Id$
  */
 
-if (!defined("ICMS_ROOT_PATH")) {
-    die("ICMS root path not defined");
-}
-include_once(ICMS_KERNEL_PATH."icmspersistableobject.php");
+if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
+
+require_once( ICMS_KERNEL_PATH."icmspersistableobject.php" );
+
 /**
- * @package kernel
- * @copyright copyright &copy; 2000 XOOPS.org
+ * Profile Module Field Class
+ * 
+ * @copyright 		copyright &copy; 2000 XOOPS.org
+ * @copyright 		The ImpressCMS Project <http://www.impresscms.org>
+ * @license         LICENSE.txt
+ * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @package         modules
+ * @subpackage 		Profile
+ * @since           ImpressCMS 1.2
+ * @author          Jan Pedersen 
+ * @author          The SmartFactory <http://www.smartfactory.ca> 
+ * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 class ProfileField extends IcmsPersistableObject {
-    function ProfileField() {
-        $this->initVar('fieldid', XOBJ_DTYPE_INT, null, true);
-        $this->initVar('catid', XOBJ_DTYPE_INT, null, true);
-        $this->initVar('field_type', XOBJ_DTYPE_TXTBOX);
-        $this->initVar('field_valuetype', XOBJ_DTYPE_INT, null, true);
-        $this->initVar('field_name', XOBJ_DTYPE_TXTBOX, null, true);
-        $this->initVar('field_title', XOBJ_DTYPE_TXTBOX);
-        $this->initVar('field_description', XOBJ_DTYPE_TXTAREA);
-        $this->initVar('field_required', XOBJ_DTYPE_INT, 0); //0 = no, 1 = yes
-        $this->initVar('field_maxlength', XOBJ_DTYPE_INT, 0);
-        $this->initVar('field_weight', XOBJ_DTYPE_INT, 0);
-        $this->initVar('field_default', XOBJ_DTYPE_TXTAREA, "");
-        $this->initVar('field_notnull', XOBJ_DTYPE_INT, 1);
-        $this->initVar('field_edit', XOBJ_DTYPE_INT, 0);
-        $this->initVar('field_show', XOBJ_DTYPE_INT, 0);
-        $this->initVar('exportable', XOBJ_DTYPE_INT, 0);
-        $this->initVar('field_config', XOBJ_DTYPE_INT, 0);
-        $this->initVar('field_options', XOBJ_DTYPE_ARRAY, array());
-        $this->initVar('step_id', XOBJ_DTYPE_INT, 0);
+    
+	/**
+	 * Constructor
+	 *
+	 * @param object $handler ProfileFieldHandler object
+	 */
+	public function __construct(& $handler) {
+		global $xoopsConfig;
+
+		$this->IcmsPersistableObject($handler);
+
+		$this->quickInitVar('fieldid', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('catid', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('field_type', XOBJ_DTYPE_TXTBOX, false);
+		$this->quickInitVar('field_valuetype', XOBJ_DTYPE_TXTBOX, false);
+		$this->quickInitVar('field_name', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('field_title', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('field_description', XOBJ_DTYPE_TXTAREA, false);
+		$this->quickInitVar('field_required', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('field_maxlength', XOBJ_DTYPE_TXTBOX, false, false, false, 0);
+		$this->quickInitVar('field_weight', XOBJ_DTYPE_INT, false, false, false, 0);
+		$this->quickInitVar('field_default', XOBJ_DTYPE_TXTAREA, false);
+		$this->quickInitVar('field_notnull', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('field_edit', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('field_show', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('field_config', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('field_options', XOBJ_DTYPE_TXTBOX, false);
+		$this->quickInitVar('exportable', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('step_id', XOBJ_DTYPE_INT, false);
+		
+		$this->hideFieldFromForm('field_valuetype');
+		
+		$this->setControl('field_required', 'yesno');
+		$this->setControl('field_notnull', 'yesno');
+		$this->setControl('field_edit', 'yesno');
+		$this->setControl('field_config', 'yesno');
+		$this->setControl('field_show', 'yesno');
+		$this->setControl('exportable', 'yesno');
+		
+		$this->setControl('catid', array('itemHandler' => 'category',
+                                          'method' => 'getList',
+                                          'module' => 'profile'));
+		$this->setControl('field_type', array ( 'itemHandler' => 'field',
+												'method' => 'getFieldTypeArray',
+												'module' => 'profile'));
+		$this->setControl('step_id', array('itemHandler' => 'regstep',
+                                          'method' => 'getList',
+                                          'module' => 'profile'));
+        
     }
 
     /**
-    * Returns a {@link XoopsFormElement} for editing the value of this field
-    *
-    * @param XoopsUser $user {@link XoopsUser} object to edit the value of
-    * @param ProfileProfile $profile {@link ProfileProfile} object to edit the value of
-    *
-    * @return XoopsFormElement
-    **/
+     * Returns a {@link XoopsFormElement} for editing the value of this field
+     *
+     * @param XoopsUser $user {@link XoopsUser} object to edit the value of
+     * @param ProfileProfile $profile {@link ProfileProfile} object to edit the value of
+     *
+     * @return XoopsFormElement
+     */
     function getEditElement($user, $profile) {
         $value = in_array($this->getVar('field_name'), $this->getUserVars()) ? $user->getVar($this->getVar('field_name'), 'e') : $profile->getVar($this->getVar('field_name'), 'e');
         if (is_null($value)) {
@@ -396,11 +436,20 @@ class ProfileField extends IcmsPersistableObject {
 }
 
 /**
+ * Profile Module Field Handler
+ * 
  * @package kernel
  * @copyright copyright &copy; 2000 XOOPS.org
  */
 class ProfileFieldHandler extends IcmsPersistableObjectHandler {
-    function ProfileFieldHandler(&$db) {
+    
+	protected $_fieldTypeArray;
+	/**
+	 * Constructor
+	 *
+	 * @param unknown_type $db
+	 */
+	public function __construct( & $db ) {
         parent::IcmsPersistableObjectHandler($db, 'field', "fieldid", 'field_title', 'field_description', 'profile');
     }
 
@@ -411,7 +460,7 @@ class ProfileFieldHandler extends IcmsPersistableObjectHandler {
     *
     * @return array
     */
-    function loadFields($force_update = false) {
+    public function loadFields($force_update = false) {
         static $fields = array();
         if (!empty($force_update) || count($fields) == 0) {
             $criteria = new Criteria('fieldid', 0, "!=");
@@ -425,14 +474,14 @@ class ProfileFieldHandler extends IcmsPersistableObjectHandler {
     }
 
     /**
-    * save a profile field in the database
-    *
-    * @param object $obj reference to the object
-    * @param bool $force whether to force the query execution despite security settings
-    * @param bool $checkObject check if the object is dirty and clean the attributes
-    * @return bool FALSE if failed, TRUE if already present and unchanged or successful
-    */
-    function insert(&$obj, $force = false) {
+     * Save a profile field in the database
+     *
+     * @param object $obj reference to the object
+     * @param bool $force whether to force the query execution despite security settings
+     * @param bool $checkObject check if the object is dirty and clean the attributes
+     * @return bool FALSE if failed, TRUE if already present and unchanged or successful
+     */
+    public function insert(&$obj, $force = false) {
         $profile_handler =& icms_getmodulehandler( 'profile', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
 
         $obj->cleanVars();
@@ -595,11 +644,11 @@ class ProfileFieldHandler extends IcmsPersistableObjectHandler {
     }
 
     /**
-    * Update cached storage of profile field information
-    *
-    * @return bool
-    **/
-    function updateCache() {
+     * Update cached storage of profile field information
+     *
+     * @return bool
+     **/
+    public function updateCache() {
         $criteria = new Criteria('fieldid', 0, "!=");
         $criteria->setSort('field_weight');
         $field_objs =& $this->getObjects(null);
@@ -621,8 +670,31 @@ class ProfileFieldHandler extends IcmsPersistableObjectHandler {
      *
      * @return array
      */
-    function getUserVars() {
+    public function getUserVars() {
         return array('uid', 'uname', 'name', 'email', 'url', 'user_avatar', 'user_regdate', 'user_icq', 'user_from', 'user_sig', 'user_viewemail', 'actkey', 'user_aim', 'user_yim', 'user_msnm', 'pass', 'posts', 'attachsig', 'rank', 'level', 'theme', 'timezone_offset', 'last_login', 'umode', 'uorder', 'notify_method', 'notify_mode', 'user_occ', 'bio', 'user_intrest', 'user_mailok', 'language', 'openid', 'salt', 'user_viewoid', 'pass_expired', 'enc_type', 'login_name');
     }
+    
+	public function getFieldTypeArray() {
+		if (!$this->_fieldTypeArray) {
+			$this->_fieldTypeArray["checkbox"] = _AM_PROFILE_FIELD_TYPE_CHECKBOX;
+			$this->_fieldTypeArray["date"] = _AM_PROFILE_FIELD_TYPE_DATE;
+			$this->_fieldTypeArray["datetime"] = _AM_PROFILE_FIELD_TYPE_DATETIME;
+			$this->_fieldTypeArray["longdate"] = _AM_PROFILE_FIELD_TYPE_LONGDATE;
+			$this->_fieldTypeArray["group"] = _AM_PROFILE_FIELD_TYPE_GROUP;
+			$this->_fieldTypeArray["group_multi"] = _AM_PROFILE_FIELD_TYPE_GROUPMULTI;
+			$this->_fieldTypeArray["language"] = _AM_PROFILE_FIELD_TYPE_LANGUAGE;
+			$this->_fieldTypeArray["radio"] = _AM_PROFILE_FIELD_TYPE_RADIO;
+			$this->_fieldTypeArray["select"] = _AM_PROFILE_FIELD_TYPE_SELECT;
+			$this->_fieldTypeArray["select_multi"] = _AM_PROFILE_FIELD_TYPE_SELECTMULTI;
+			$this->_fieldTypeArray["textarea"] = _AM_PROFILE_FIELD_TYPE_TEXTAREA;
+			$this->_fieldTypeArray["dhtml"] = _AM_PROFILE_FIELD_TYPE_DHTMLTEXTAREA;
+			$this->_fieldTypeArray["textbox"] = _AM_PROFILE_FIELD_TYPE_TEXTAREA;
+			$this->_fieldTypeArray["timezone"] = _AM_PROFILE_FIELD_TYPE_TIMEZONE;
+			$this->_fieldTypeArray["image"] = _AM_PROFILE_FIELD_TYPE_IMAGE;
+			$this->_fieldTypeArray["yesno"] = _AM_PROFILE_FIELD_TYPE_YESNO;
+			asort($this->_fieldTypeArray);
+		}
+		return $this->_fieldTypeArray;
+	}
 }
 ?>

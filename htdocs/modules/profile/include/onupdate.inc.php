@@ -12,6 +12,8 @@
 * @version		$Id$
 */
 
+define('PROFILE_DB_VERSION', 1);
+
 function icms_module_update_profile(&$module, $oldversion = null, $dbversion = null) 
 {
     GLOBAL $xoopsDB;
@@ -151,6 +153,10 @@ function icms_module_update_profile(&$module, $oldversion = null, $dbversion = n
         $sql = "DROP TABLE " . $xoopsDB->prefix("profile_regstep_bak");
         $xoopsDB->queryF($sql);
     }
+
+	$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
+	$icmsDatabaseUpdater->moduleUpgrade($module);
+
     return true;
 }
 function addField($name, $title, $description, $category, $type, $valuetype, $weight, $canedit, $options, $step_id, $length) {

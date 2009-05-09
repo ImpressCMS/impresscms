@@ -20,9 +20,9 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 /**  General Information  */
 $modversion = array(
 	'name'=> _PROFILE_MI_NAME,
-	'version'=> 1.2,
+	'version'=> 1.3,
 	'description'=> _PROFILE_MI_DESC,
-	'author'=> "Jan Pedersen, Marcello Brandao, Sina Asghari.",
+	'author'=> "Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla.",
 	'credits'=> "The XOOPS Project, The ImpressCMS Project, The SmartFactory, Ackbarr, Komeia, vaughan, alfred.",
 	'help'=> "",
 	'license'=> "GNU General Public License (GPL)",
@@ -42,7 +42,7 @@ $modversion = array(
 	'author_word'=> "",
 
 /** Contributors */
-  'developer_website_url' => "http://www.impresscms.org",
+    'developer_website_url' => "http://www.impresscms.org",
 	'developer_website_name' => "ImpressCMS Core & Module developpers",
 	'developer_email' => "contact@impresscms.org",
 
@@ -71,8 +71,8 @@ $modversion['people']['developers'][] = "[url=http://community.impresscms.org/us
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=69]vaughan[/url]";
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=54]skenow[/url]";
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=10]sato-san[/url]";
+$modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=340]nekro[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=53]davidl2[/url]";
-$modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=340]nekro[/url]";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=392]stranger[/url] (Sina Asghari)";
 $modversion['people']['testers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=10]sato-san[/url]";
 $modversion['people']['translators'][] = "";
@@ -277,23 +277,11 @@ $modversion['templates'][] = array(
   'description' => '');
 
 $modversion['templates'][] = array(
-  'file' => 'profile_admin_fieldlist.html',
-  'description' => '');
-
-$modversion['templates'][] = array(
   'file' => 'profile_userinfo.html',
   'description' => '');
 
 $modversion['templates'][] = array(
-  'file' => 'profile_admin_categorylist.html',
-  'description' => '');
-
-$modversion['templates'][] = array(
   'file' => 'profile_admin_visibility.html',
-  'description' => '');
-
-$modversion['templates'][] = array(
-  'file' => 'profile_admin_steplist.html',
   'description' => '');
 
 $modversion['templates'][] = array(
@@ -310,6 +298,18 @@ $modversion['templates'][] = array(
 
 $modversion['templates'][] = array(
   'file' => 'profile_report.html',
+  'description' => '');
+
+$modversion['templates'][] = array(
+  'file' => 'profile_admin_field.html',
+  'description' => '');
+
+$modversion['templates'][] = array(
+  'file' => 'profile_admin_regstep.html',
+  'description' => '');
+
+$modversion['templates'][] = array(
+  'file' => 'profile_admin_category.html',
   'description' => '');
 
 /** Preferences categories */
