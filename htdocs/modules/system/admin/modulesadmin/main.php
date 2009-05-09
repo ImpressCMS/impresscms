@@ -348,7 +348,7 @@ if ($op == 'update_ok') {
 						if (!$result) {
 							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_COULDNOTUPDATE,$fblock['name']);
 						} else {
-							$msgs[] = >sprintf('&nbsp;&nbsp;'._MD_AM_COULDNOTUPDATE,$fblock['name'],icms_conv_nr2local($fblock['bid']));
+							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_COULDNOTUPDATE,$fblock['name'],icms_conv_nr2local($fblock['bid']));
 							if ($template != '') {
 								$tplfile =& $tplfile_handler->find('default', 'block', $fblock['bid']);
 								if (count($tplfile) == 0) {

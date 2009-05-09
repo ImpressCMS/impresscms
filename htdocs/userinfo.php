@@ -86,35 +86,24 @@ if (is_object($xoopsUser)) {
 }
 $myts = & MyTextSanitizer :: getInstance();
 if (is_object($xoopsUser) && $isAdmin) {
-	$xoopsTpl->assign('lang_editprofile', _US_EDITPROFILE);
-	$xoopsTpl->assign('lang_deleteaccount', _US_DELACCOUNT);
-	$xoopsTpl->assign('user_uid', intval($thisUser->getVar('uid')));
-}
-$xoopsTpl->assign('lang_allaboutuser', sprintf(_US_ALLABOUT, $thisUser->getVar('uname')));
-$xoopsTpl->assign('lang_avatar', _US_AVATAR);
-if ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
-	$xoopsTpl->assign('user_avatarurl', $thisUser->gravatar('G', $icmsConfigUser['avatar_width']));
-} else {
-	$xoopsTpl->assign('user_avatarurl', ICMS_UPLOAD_URL . '/' . $thisUser->getVar('user_avatar'));
-}
-$xoopsTpl->assign('lang_realname', _US_REALNAME);
-$xoopsTpl->assign('user_realname', $thisUser->getVar('name'));
-$xoopsTpl->assign('lang_website', _US_WEBSITE);
-if ($thisUser->getVar('url', 'E') == '') {
-	$xoopsTpl->assign('user_websiteurl', '');
-} else {
-	$xoopsTpl->assign('user_websiteurl', '<a href="' . $thisUser->getVar('url', 'E') . '" rel="external">' . $thisUser->getVar('url') . '</a>');
-}
-$xoopsTpl->assign('lang_email', _US_EMAIL);
-if ($icmsConfigAuth['auth_openid'] == 1) {
-	$xoopsTpl->assign('user_alwopenid', true);
-	$xoopsTpl->assign('lang_openid', _US_OPENID_FORM_CAPTION);
-} else {
-	$xoopsTpl->assign('user_alwopenid', false);
+	icms_makeSmarty(array(
+	'lang_editprofile' => _US_EDITPROFILE,
+	'lang_deleteaccount' => _US_DELACCOUNT,
+	'user_uid' => intval($thisUser->getVar('uid'))));
 }
 $userrank = & $thisUser->rank();
 $date = $thisUser->getVar('last_login');
 icms_makeSmarty(array(
+	'user_avatarurl' => $icmsConfigUser['avatar_allow_gravatar'] == true?'user_avatarurl', $thisUser->gravatar('G', $icmsConfigUser['avatar_width']):ICMS_UPLOAD_URL . '/' . $thisUser->getVar('user_avatar'),
+	'user_websiteurl' => ($thisUser->getVar('url', 'E') == '')?'':'<a href="' . $thisUser->getVar('url', 'E') . '" rel="external">' . $thisUser->getVar('url') . '</a>',
+	'lang_website' => _US_WEBSITE,
+	'user_realname' => $thisUser->getVar('name'),
+	'lang_realname' => _US_REALNAME,
+	'lang_avatar' => _US_AVATAR,
+	'lang_allaboutuser' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
+	'user_alwopenid' => $icmsConfigAuth['auth_openid'],
+	'lang_openid', $icmsConfigAuth['auth_openid'] == true?_US_OPENID_FORM_CAPTION:'',
+	'lang_email' => _US_EMAIL,
 	'lang_privmsg' => _US_PM,
 	'lang_icq' => _US_ICQ,
 	'user_icq' => $thisUser->getVar('user_icq'),
@@ -172,7 +161,7 @@ foreach ($mids as $mid) {
 				if (isset ($results[$i]['image']) && $results[$i]['image'] != '') {
 					$results[$i]['image'] = 'modules/' . $module->getVar('dirname') . '/' . $results[$i]['image'];
 				} else {
-					$results[$i]['image'] = 'images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/posticon2.gif';
+					$results[$i]['image'] = 'images/icons/'.$icmsConfig ['language'].'/posticon2.gif';
 				}
 				if (isset ($results[$i]['link']) && $results[$i]['link'] != '') {
 				if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {

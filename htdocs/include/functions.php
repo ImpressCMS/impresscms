@@ -45,7 +45,7 @@ function xoops_header($closehead=true)
 	'.htmlspecialchars($icmsConfigMetaFooter['google_meta']).'
 	<meta name="robots" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_robots']).'" />
 	<meta name="keywords" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_keywords']).'" />
-	<meta name="description" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_desc']).'" />
+	<meta name="description" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_description']).'" />
 	<meta name="rating" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_rating']).'" />
 	<meta name="author" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_author']).'" />
 	<meta name="copyright" content="'.htmlspecialchars($icmsConfigMetaFooter['meta_copyright']).'" />

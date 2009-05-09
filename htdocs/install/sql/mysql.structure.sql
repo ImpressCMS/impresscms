@@ -669,11 +669,11 @@ CREATE TABLE system_customtag (
 #
 
 CREATE TABLE system_mimetypes (
-  mimetypesid int(11) NOT NULL auto_increment,
-  mimetypesname varchar(255) NOT NULL default '',
-  mimetypesext varchar(60) NOT NULL default '',
-  mimetypestypes text NOT NULL,
-  mimetypesadmin int(1) NOT NULL default '1',
-  mimetypesuser int(1) NOT NULL default '0',
-  KEY mimetypes_id (mimetypes_id)
+  mime_id int(11) NOT NULL auto_increment,
+  mime_name varchar(255) NOT NULL default '',
+  mime_ext varchar(60) NOT NULL default '',
+  mime_text NOT NULL,
+  mime_admin int(1) NOT NULL default '1',
+  mime_user int(1) NOT NULL default '0',
+  KEY mime_id (mime_id)
 ) TYPE=MyISAM;

@@ -27,12 +27,7 @@ if($op == 'main')
 	{
 		$xoopsOption['template_main'] = 'system_userform.html';
 		include 'header.php';
-		$xoopsTpl->assign('lang_login', _LOGIN);
-		$xoopsTpl->assign('lang_username', _USERNAME);
-		if(isset($_COOKIE[$icmsConfig['usercookie']]))
-		{
-			$xoopsTpl->assign('usercookie', $_COOKIE[$icmsConfig['usercookie']]);
-		}
+		$redirect = false;
 		if(isset($_GET['xoops_redirect']))
 		{
 			$redirect = htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES);
@@ -43,24 +38,27 @@ if($op == 'main')
 				if(substr($redirect, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation) {$redirect = ICMS_URL;}
 				elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {$redirect = ICMS_URL;}
 			}
-			$xoopsTpl->assign('redirect_page', $redirect);
 		}
-		$xoopsTpl->assign('lang_password', _PASSWORD);
-		$xoopsTpl->assign('lang_notregister', _US_NOTREGISTERED);
-		$xoopsTpl->assign('lang_lostpassword', _US_LOSTPASSWORD);
-		$xoopsTpl->assign('lang_noproblem', _US_NOPROBLEM);
-		$xoopsTpl->assign('lang_youremail', _US_YOUREMAIL);
-		$xoopsTpl->assign('lang_sendpassword', _US_SENDPASSWORD);
-		$xoopsTpl->assign('lang_rememberme', _US_REMEMBERME);
-		$xoopsTpl->assign('lang_youoid', _US_OPENID_URL);
-		$xoopsTpl->assign('lang_login_oid', _US_OPENID_LOGIN);
-		$xoopsTpl->assign('lang_back2normoid', _US_OPENID_NORMAL_LOGIN);
-		$xoopsTpl->assign('mailpasswd_token', $GLOBALS['xoopsSecurity']->createToken());
-		if($icmsConfigUser['allow_register'] == 1) {$xoopsTpl->assign('allow_registration', $icmsConfigUser['allow_register']);}
-		if($icmsConfigUser['remember_me'] == 1) {$xoopsTpl->assign('rememberme', $icmsConfigUser['remember_me']);}
-		if($icmsConfigAuth['auth_openid'] == 1) {$xoopsTpl->assign('auth_openid', true);}
-
-		$xoopsTpl->assign('xoops_pagetitle', _LOGIN);
+		icms_makeSmarty(array(
+			'usercookie' => isset($_COOKIE[$icmsConfig['usercookie']])?$_COOKIE[$icmsConfig['usercookie']]:false,
+			'lang_login' => _LOGIN,
+			'lang_username' => _USERNAME,
+			'redirect_page' => $redirect,
+			'lang_password' => _PASSWORD,
+			'lang_notregister' => _US_NOTREGISTERED,
+			'lang_lostpassword' => _US_LOSTPASSWORD,
+			'lang_noproblem' => _US_NOPROBLEM,
+			'lang_youremail' => _US_YOUREMAIL,
+			'lang_sendpassword' => _US_SENDPASSWORD,
+			'lang_rememberme' => _US_REMEMBERME,
+			'lang_youoid' => _US_OPENID_URL,
+			'lang_login_oid' => _US_OPENID_LOGIN,
+			'lang_back2normoid' => _US_OPENID_NORMAL_LOGIN,
+			'mailpasswd_token' => $GLOBALS['xoopsSecurity']->createToken(),
+			'allow_registration' => $icmsConfigUser['allow_register'],
+			'rememberme' => $icmsConfigUser['remember_me'],
+			'auth_openid' => $icmsConfigAuth['auth_openid'],
+			'xoops_pagetitle' => _LOGIN));
 		include 'footer.php';
 	}
 	elseif(!empty($_GET['xoops_redirect']))
@@ -90,8 +88,7 @@ if($op == 'resetpass')
 	{
 		$xoopsOption['template_main'] = 'system_userform.html';
 		include 'header.php';
-		$xoopsTpl->assign('lang_reset', 1);
-		$xoopsTpl->assign('lang_username', _USERNAME);
+		$redirect = false;
 		if(isset($_GET['xoops_redirect']))
 		{
 			$redirect = htmlspecialchars(trim($_GET['xoops_redirect']), ENT_QUOTES);
@@ -105,19 +102,22 @@ if($op == 'resetpass')
 				}
 				elseif(substr($redirect, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {$redirect = ICMS_URL;}
 			}
-			$xoopsTpl->assign('redirect_page', $redirect);
 		}
-		$xoopsTpl->assign('lang_uname', isset($_GET['uname']) ? $_GET['uname'] : '');
-		$xoopsTpl->assign('lang_resetpassword', _US_RESETPASSWORD);
-		$xoopsTpl->assign('lang_resetpassinfo', _US_RESETPASSINFO);
-		$xoopsTpl->assign('lang_youremail', _US_YOUREMAIL);
-		$xoopsTpl->assign('lang_sendpassword', _US_SENDPASSWORD);
-		$xoopsTpl->assign('lang_subresetpassword', _US_SUBRESETPASSWORD);
-		$xoopsTpl->assign('lang_currentpass', _US_CURRENTPASS);
-		$xoopsTpl->assign('lang_newpass', _US_NEWPASSWORD);
-		$xoopsTpl->assign('lang_newpass2', _US_VERIFYPASS);
-		$xoopsTpl->assign('resetpassword_token', $GLOBALS['xoopsSecurity']->createToken());
-		$xoopsTpl->assign('xoops_pagetitle', _LOGIN);
+		icms_makeSmarty(array(
+			'redirect_page' => $redirect,
+			'lang_reset' => 1,
+			'lang_username' => _USERNAME,
+			'lang_uname' => isset($_GET['uname']) ? $_GET['uname'] : '',
+			'lang_resetpassword' => _US_RESETPASSWORD,
+			'lang_resetpassinfo' => _US_RESETPASSINFO,
+			'lang_youremail' => _US_YOUREMAIL,
+			'lang_sendpassword' => _US_SENDPASSWORD,
+			'lang_subresetpassword' => _US_SUBRESETPASSWORD,
+			'lang_currentpass' => _US_CURRENTPASS,
+			'lang_newpass' => _US_NEWPASSWORD,
+			'lang_newpass2' => _US_VERIFYPASS,
+			'resetpassword_token' => $GLOBALS['xoopsSecurity']->createToken(),
+			'xoops_pagetitle' => _LOGIN));
 		include 'footer.php';
 	}
 	elseif(!empty($_GET['xoops_redirect']))
@@ -143,8 +143,8 @@ if($op == 'resetpass')
 
 if($op == 'login')
 {
-    include_once ICMS_ROOT_PATH.'/include/checklogin.php';
-    exit();
+	include_once ICMS_ROOT_PATH.'/include/checklogin.php';
+	exit();
 }
 
 if($op == 'logout')
