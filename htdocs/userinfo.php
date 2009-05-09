@@ -112,82 +112,49 @@ if ($icmsConfigAuth['auth_openid'] == 1) {
 } else {
 	$xoopsTpl->assign('user_alwopenid', false);
 }
-$xoopsTpl->assign('lang_privmsg', _US_PM);
-$xoopsTpl->assign('lang_icq', _US_ICQ);
-$xoopsTpl->assign('user_icq', $thisUser->getVar('user_icq'));
-$xoopsTpl->assign('lang_aim', _US_AIM);
-$xoopsTpl->assign('user_aim', $thisUser->getVar('user_aim'));
-$xoopsTpl->assign('lang_yim', _US_YIM);
-$xoopsTpl->assign('user_yim', $thisUser->getVar('user_yim'));
-$xoopsTpl->assign('lang_msnm', _US_MSNM);
-$xoopsTpl->assign('user_msnm', $thisUser->getVar('user_msnm'));
-$xoopsTpl->assign('lang_location', _US_LOCATION);
-$xoopsTpl->assign('user_location', $thisUser->getVar('user_from'));
-$xoopsTpl->assign('lang_occupation', _US_OCCUPATION);
-$xoopsTpl->assign('user_occupation', $thisUser->getVar('user_occ'));
-$xoopsTpl->assign('lang_interest', _US_INTEREST);
-$xoopsTpl->assign('user_interest', $thisUser->getVar('user_intrest'));
-$xoopsTpl->assign('lang_extrainfo', _US_EXTRAINFO);
-$var = $thisUser->getVar('bio', 'N');
-$xoopsTpl->assign('user_extrainfo', $myts->displayTarea($var, 0, 1, 1));
-$xoopsTpl->assign('lang_statistics', _US_STATISTICS);
-$xoopsTpl->assign('lang_membersince', _US_MEMBERSINCE);
-$var = $thisUser->getVar('user_regdate');
-$xoopsTpl->assign('user_joindate', formatTimestamp($var, 's'));
-$xoopsTpl->assign('lang_rank', _US_RANK);
-$xoopsTpl->assign('lang_posts', _US_POSTS);
-$xoopsTpl->assign('lang_basicInfo', _US_BASICINFO);
-$xoopsTpl->assign('lang_more', _US_MOREABOUT);
-$xoopsTpl->assign('lang_myinfo', _US_MYINFO);
-$xoopsTpl->assign('user_posts', icms_conv_nr2local($thisUser->getVar('posts')));
-$xoopsTpl->assign('lang_lastlogin', _US_LASTLOGIN);
-$xoopsTpl->assign('lang_notregistered', _US_NOTREGISTERED);
-if ($icmsConfigUser['allwshow_sig'] == 1) {
-	$xoopsTpl->assign('user_showsignature', true);
-	$xoopsTpl->assign('lang_signature', _US_SIGNATURE);
-	$var = one_wordwrap($thisUser->getVar('user_sig', 'N'));
-	$xoopsTpl->assign('user_signature', $myts->displayTarea($var, 1, 1));
-}
-
-if ($thisUser->getVar('user_viewemail') == 1) {
-	$xoopsTpl->assign('user_email', $thisUser->getVar('email', 'E'));
-} else {
-	if (is_object($xoopsUser)) {
-		// All admins will be allowed to see emails, even those that are not allowed to edit users (I think it's ok like this)
-		if ($xoopsUserIsAdmin || ($xoopsUser->getVar("uid") == $thisUser->getVar("uid"))) {
-			$xoopsTpl->assign('user_email', $thisUser->getVar('email', 'E'));
-		} else {
-			$xoopsTpl->assign('user_email', '&nbsp;');
-		}
-	}
-}
-if ($icmsConfigAuth['auth_openid'] == 1) {
-	if ($thisUser->getVar('user_viewoid') == 1) {
-		$xoopsTpl->assign('user_openid', $thisUser->getVar('openid', 'E'));
-	} else {
-		if (is_object($xoopsUser)) {
-			// All admins will be allowed to see openids, even those that are not allowed to edit users
-			if ($xoopsUserIsAdmin || ($xoopsUser->getVar("uid") == $thisUser->getVar("uid"))) {
-				$xoopsTpl->assign('user_openid', $thisUser->getVar('openid', 'E'));
-			} else {
-				$xoopsTpl->assign('user_openid', '&nbsp;');
-			}
-		}
-	}
-}
-if (is_object($xoopsUser)) {
-	$xoopsTpl->assign('user_pmlink', "<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . intval($thisUser->getVar('uid')) . "', 'pmlite', 800,680);\"><img src=\"" . ICMS_URL . "/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/pm.gif\" alt=\"" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>");
-} else {
-	$xoopsTpl->assign('user_pmlink', '');
-}
 $userrank = & $thisUser->rank();
-if ($userrank['image']) {
-	$xoopsTpl->assign('user_rankimage', '<img src="' . ICMS_UPLOAD_URL . '/' . $userrank['image'] . '" alt="" />');
-}
-$xoopsTpl->assign('user_ranktitle', $userrank['title']);
-$date = $thisUser->getVar("last_login");
-if (!empty ($date)) {
-	$xoopsTpl->assign('user_lastlogin', formatTimestamp($date, "m"));
+$date = $thisUser->getVar('last_login');
+icms_makeSmarty(array(
+	'lang_privmsg' => _US_PM,
+	'lang_icq' => _US_ICQ,
+	'user_icq' => $thisUser->getVar('user_icq'),
+	'lang_aim' => _US_AIM,
+	'user_aim' => $thisUser->getVar('user_aim'),
+	'lang_yim' => _US_YIM,
+	'user_yim' => $thisUser->getVar('user_yim'),
+	'lang_msnm' => _US_MSNM,
+	'user_msnm' => $thisUser->getVar('user_msnm'),
+	'lang_location' => _US_LOCATION,
+	'user_location' => $thisUser->getVar('user_from'),
+	'lang_occupation' => _US_OCCUPATION,
+	'user_occupation' => $thisUser->getVar('user_occ'),
+	'lang_interest' => _US_INTEREST,
+	'user_interest' => $thisUser->getVar('user_intrest'),
+	'lang_extrainfo' => _US_EXTRAINFO,
+	'user_extrainfo' => $myts->displayTarea($thisUser->getVar('bio', 'N'), 0, 1, 1),
+	'lang_statistics' => _US_STATISTICS,
+	'lang_membersince' => _US_MEMBERSINCE,
+	'user_joindate' => formatTimestamp($thisUser->getVar('user_regdate'), 's'),
+	'lang_rank' => _US_RANK,
+	'lang_posts' => _US_POSTS,
+	'lang_basicInfo' => _US_BASICINFO,
+	'lang_more' => _US_MOREABOUT,
+	'lang_myinfo' => _US_MYINFO,
+	'user_posts' => icms_conv_nr2local($thisUser->getVar('posts')),
+	'lang_lastlogin' => _US_LASTLOGIN,
+	'lang_notregistered' => _US_NOTREGISTERED,
+	'user_pmlink' => is_object($xoopsUser)?"<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . intval($thisUser->getVar('uid')) . "', 'pmlite', 800,680);\"><img src=\"" . ICMS_URL . "/images/icons/".$icmsConfig ['language']."/pm.gif\" alt=\"" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>":'',
+	'user_rankimage' => $userrank['image']?'<img src="' . ICMS_UPLOAD_URL . '/' . $userrank['image'] . '" alt="" />':'',
+	'user_ranktitle' => $userrank['title'],
+	'user_lastlogin' => !empty ($date)?formatTimestamp($thisUser->getVar("last_login"), "m"):'',
+	'xoops_pagetitle' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
+	'user_email' => ($thisUser->getVar('user_viewemail') == true || (is_object($xoopsUser) && ($xoopsUserIsAdmin || ($xoopsUser->getVar("uid") == $thisUser->getVar("uid")))))?$thisUser->getVar('email', 'E'):'&nbsp;',
+	'user_openid' => ($icmsConfigAuth['auth_openid'] == true && ($thisUser->getVar('user_viewoid') == true || (is_object($xoopsUser) && ($xoopsUserIsAdmin || ($xoopsUser->getVar("uid") == $thisUser->getVar("uid"))))))?$thisUser->getVar('openid', 'E'):'&nbsp;'));
+if ($icmsConfigUser['allwshow_sig'] == true){
+	icms_makeSmarty(array(
+	'user_showsignature' => true,
+	'lang_signature' => _US_SIGNATURE,
+	'user_signature' => $myts->displayTarea(one_wordwrap($thisUser->getVar('user_sig', 'N')), 1, 1)));
 }
 
 $module_handler = & xoops_gethandler('module');
@@ -228,8 +195,6 @@ foreach ($mids as $mid) {
 		unset ($module);
 	}
 }
-
-$xoopsTpl->assign('xoops_pagetitle', sprintf(_US_ALLABOUT, $thisUser->getVar('uname')));
 
 include ICMS_ROOT_PATH . '/footer.php';
 ?>
