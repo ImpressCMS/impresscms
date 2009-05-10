@@ -1,6 +1,6 @@
 <?php
 /**
- * Classes responsible for managing improfile regstep objects
+ * Classes responsible for managing profile regstep objects
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org>
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -9,7 +9,7 @@
  * @author      The SmartFactory <www.smartfactory.ca>
  * @author	   	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @package		improfile
+ * @package		profile
  * @version		$Id$
  */
 
@@ -88,7 +88,7 @@ class ProfileRegstepHandler extends IcmsPersistableObjectHandler {
      *
      * @return bool
      */
-    function insert($obj, $force = false) {
+    public function insert($obj, $force = false) {
         if (parent::insert($obj, $force)) {
             if ($obj->getVar('step_save') == 1) {
                 return $this->updateAll('step_save', 0, new Criteria('step_id', $obj->getVar('step_id'), "!="));
@@ -107,7 +107,7 @@ class ProfileRegstepHandler extends IcmsPersistableObjectHandler {
      *
      * @return bool
      */
-    function delete($obj, $force = false) {
+    public function delete($obj, $force = false) {
         if (parent::delete($obj, $force)) {
             $field_handler = icms_getmodulehandler( 'field', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
             return $field_handler->updateAll('step_id', 0, new Criteria('step_id', $obj->getVar('step_id')));

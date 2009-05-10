@@ -1,12 +1,12 @@
 <?php
 /**
- * Classes responsible for managing improfile category objects
+ * Classes responsible for managing profile category objects
  *
  * @copyright	The ImpressCMS Project <http://www.impresscms.org>
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since		1.0
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * @package		improfile
+ * @package		profile
  * @version		$Id$
  */
 
@@ -14,7 +14,6 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
 // including the IcmsPersistabelSeoObject
 include_once ICMS_ROOT_PATH . '/kernel/icmspersistableobject.php';
-include_once(ICMS_ROOT_PATH . '/modules/improfile/include/functions.php');
 
 class ProfileCategory extends IcmsPersistableObject {
 
