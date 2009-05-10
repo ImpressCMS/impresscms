@@ -94,7 +94,7 @@ if (is_object($xoopsUser) && $isAdmin) {
 $userrank = & $thisUser->rank();
 $date = $thisUser->getVar('last_login');
 icms_makeSmarty(array(
-	'user_avatarurl' => $icmsConfigUser['avatar_allow_gravatar'] == true?'user_avatarurl', $thisUser->gravatar('G', $icmsConfigUser['avatar_width']):ICMS_UPLOAD_URL . '/' . $thisUser->getVar('user_avatar'),
+	'user_avatarurl' => $icmsConfigUser['avatar_allow_gravatar'] == true?$thisUser->gravatar('G', $icmsConfigUser['avatar_width']):ICMS_UPLOAD_URL . '/' . $thisUser->getVar('user_avatar'),
 	'user_websiteurl' => ($thisUser->getVar('url', 'E') == '')?'':'<a href="' . $thisUser->getVar('url', 'E') . '" rel="external">' . $thisUser->getVar('url') . '</a>',
 	'lang_website' => _US_WEBSITE,
 	'user_realname' => $thisUser->getVar('name'),
