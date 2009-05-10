@@ -672,7 +672,7 @@ CREATE TABLE system_mimetypes (
   mime_id int(11) NOT NULL auto_increment,
   mime_name varchar(255) NOT NULL default '',
   mime_ext varchar(60) NOT NULL default '',
-  mime_text NOT NULL,
+  mime_text varchar(60) NOT NULL default '',
   mime_admin int(1) NOT NULL default '1',
   mime_user int(1) NOT NULL default '0',
   KEY mime_id (mime_id)
