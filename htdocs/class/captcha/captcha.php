@@ -117,11 +117,11 @@ class IcmsCaptcha {
 
 	/**
 	 * Initializing the CAPTCHA class
-   * @param   string  $name             name of the instance
-   * @param   string  $skipmember       Skip the captcha because the user is member / logged in
-   * @param   string  $num_chars        comes from config, just initializes the variable
-   * @param   string  $fontsize_min     comes from config, just initializes the variable
-   * @param   string  $fontsize_max     comes from config, just initializes the variable
+   * @param   string  $name			 name of the instance
+   * @param   string  $skipmember	   Skip the captcha because the user is member / logged in
+   * @param   string  $num_chars		comes from config, just initializes the variable
+   * @param   string  $fontsize_min	 comes from config, just initializes the variable
+   * @param   string  $fontsize_max	 comes from config, just initializes the variable
    * @param   string  $background_type  comes from config, just initializes the variable
    * @param   string  $background_num   comes from config, just initializes the variable
 	 */
@@ -159,7 +159,7 @@ class IcmsCaptcha {
 	 */
 	function verify($skipMember = null)
 	{
-		global $icmsConfigCaptcha;
+		global $icmsConfig, $icmsConfigCaptcha;
 		$sessionName	= @$_SESSION['IcmsCaptcha_name'];
 		$skipMember		= ($skipMember === null) ? @$_SESSION['IcmsCaptcha_skipmember'] : $skipMember;
 		$maxAttempts	= intval( @$_SESSION['IcmsCaptcha_maxattempts'] );
@@ -176,7 +176,14 @@ class IcmsCaptcha {
 		$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {
 			$is_valid = true;
-        }elseif(!empty($maxAttempts) && $_SESSION['IcmsCaptcha_attempt_'.$sessionName] > $maxAttempts) {
+		}elseif($icmsConfig['enable_badips']){
+			foreach ($icmsConfig['bad_ips'] as $bi) {
+				if (!empty($bi) && preg_match("/".$bi."/", $_SERVER['REMOTE_ADDR'])) {
+					$is_valid = false;
+				}
+			}
+			unset($bi);
+		}elseif(!empty($maxAttempts) && $_SESSION['IcmsCaptcha_attempt_'.$sessionName] > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 
 		// Verify the code
