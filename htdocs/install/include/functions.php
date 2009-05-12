@@ -18,8 +18,8 @@
 * Create a folder
 *
 * @author	Newbb2 developpement team
-* @param	string	$target    folder being created
-* @return   bool    Returns true on success, false on failure
+* @param	string	$target	folder being created
+* @return   bool	Returns true on success, false on failure
 */
 function imcms_install_mkdir($target) {
 	// http://www.php.net/manual/en/function.mkdir.php
@@ -46,8 +46,8 @@ function imcms_install_mkdir($target) {
 *
 * @author	Newbb2 developpement team
 * @param	string	$target  target file or folder
-* @param	int		$mode    permission
-* @return   bool    Returns true on success, false on failure
+* @param	int		$mode	permission
+* @return   bool	Returns true on success, false on failure
 */
 function imcms_install_chmod($target, $mode = 0777) {
 	return @ chmod($target, $mode);
@@ -58,17 +58,17 @@ function imcms_createSalt($slength=64)
 	$salt= '';
 	$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	$microtime = function_exists('microtime') ? microtime() : time();
-    	srand((double)$microtime * 1000000);
-    	for($i=0; $i<=$slength; $i++)
+		srand((double)$microtime * 1000000);
+		for($i=0; $i<=$slength; $i++)
 		$salt.= substr($base, rand() % strlen($base), 1);
-    	return $salt;
+		return $salt;
 }
 function imcms_encryptPass($adminpass, $adminsalt, $mainSalt)
 {
 	if(!function_exists('hash'))
-    	{
+		{
 		$pass = md5($adminpass);
-    	}
+		}
 	else
 	{
 		$pass = hash('sha256', $adminsalt.md5($adminpass).$mainSalt);
@@ -85,30 +85,60 @@ function imcms_encryptPass($adminpass, $adminsalt, $mainSalt)
  */
 function unlinkRecursive($dir, $deleteRootToo=true)
 {
-    if(!$dh = @opendir($dir))
-    {
-        return;
-    }
-    while (false !== ($obj = readdir($dh)))
-    {
-        if($obj == '.' || $obj == '..')
-        {
-            continue;
-        }
+	if(!$dh = @opendir($dir))
+	{
+		return;
+	}
+	while (false !== ($obj = readdir($dh)))
+	{
+		if($obj == '.' || $obj == '..')
+		{
+			continue;
+		}
 
-        if (!@unlink($dir . '/' . $obj))
-        {
-            unlinkRecursive($dir.'/'.$obj, true);
-        }
-    }
+		if (!@unlink($dir . '/' . $obj))
+		{
+			unlinkRecursive($dir.'/'.$obj, true);
+		}
+	}
 
-    closedir($dh);
+	closedir($dh);
    
-    if ($deleteRootToo)
-    {
-        @rmdir($dir);
-    }
+	if ($deleteRootToo)
+	{
+		@rmdir($dir);
+	}
    
-    return;
+	return;
 } 
+
+/**
+* Copy a file, or a folder and its contents
+*
+* @author	Aidan Lister <aidan@php.net>
+* @param	string	$source	The source
+* @param	string  $dest	  The destination
+* @return   bool	Returns true on success, false on failure
+*/
+function imcms_copyr($source, $dest)
+{
+	// Simple copy for a file
+	if(is_file($source)) {return copy($source, $dest);}
+	// Make destination directory
+	if(!is_dir($dest)) {mkdir($dest);}
+	// Loop through the folder
+	$dir = dir($source);
+	while(false !== $entry = $dir->read())
+	{
+		// Skip pointers
+		if($entry == '.' || $entry == '..') {continue;}
+		// Deep copy directories
+		if(is_dir("$source/$entry") && ($dest !== "$source/$entry")) {imcms_copyr("$source/$entry", "$dest/$entry");}
+		else {copy("$source/$entry", "$dest/$entry");}
+	}
+	// Clean up
+	$dir->close();
+	return true;
+}
+
 ?>

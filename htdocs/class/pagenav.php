@@ -81,7 +81,9 @@ class XoopsPageNav
 		
 		$style = (isset($icmsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php'))?$icmsConfigPersona['pagstyle']:'default';
 		$ret = '';
+        if(isset($xoTheme)){
 		$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css', array("media" => "all"));
+        }
 		if ( $this->total <= $this->perpage ) {
 			return $ret;
 		}

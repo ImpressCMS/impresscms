@@ -21,6 +21,12 @@ require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
     imcms_install_chmod("../mainfile.php", 0444);
+    if(defined('XOOPS_TRUST_PATH') && XOOPS_TRUST_PATH != ''){
+        imcms_install_chmod("/modules/protector/root/modules/protector", 0777);
+        imcms_install_chmod("/modules/protector/trust_path/modules", 0777);
+        imcms_copyr(XOOPS_ROOT_PATH.'/install/modules/protector/root/modules/protector',XOOPS_ROOT_PATH.'/modules/protector');
+        imcms_copyr(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules',XOOPS_TRUST_PATH.'/modules');
+    }
 	$wizard->setPage( 'tablescreate' );
 	$pageHasForm = true;
 	$pageHasHelp = false;

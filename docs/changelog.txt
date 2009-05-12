@@ -2,6 +2,12 @@
 
 == Impresscms 1.2==
 
+
+===2009-06-05 : 1.2 Alpha 2 ===
+
+'''Added'''
+* #580: Adding protector as a part of core modules. (stranger)
+
 ===2009-05-05 : 1.2 Alpha===
 
 '''Added'''
