@@ -56,40 +56,43 @@ class xos_logos_PageBuilder {
 	 * @param string $zone
 	 */
 	public function postRender($zone = '') { /* Empty! */ }
-
+	
+	/**
+	 * Retrieve Blocks
+	 *
+	 */
 	public function retrieveBlocks() {
 		global $xoops, $xoopsUser, $xoopsModule, $icmsConfig;
 
-		$groups = @is_object ( $xoopsUser ) ? $xoopsUser->getGroups () : array (XOOPS_GROUP_ANONYMOUS );
+		$groups = @is_object( $xoopsUser ) ? $xoopsUser->getGroups () : array (XOOPS_GROUP_ANONYMOUS );
 		
 		//Getting the start module and page configured in the admin panel
 		if (is_array ( $icmsConfig ['startpage'] )) {
-			$member_handler = & xoops_gethandler ( 'member' );
-			$group = $member_handler->getUserBestGroup ( (@is_object ( $xoopsUser ) ? $xoopsUser->uid () : 0) );
-			$icmsConfig ['startpage'] = $icmsConfig ['startpage'] [$group];
+			$member_handler =& xoops_gethandler ( 'member' );
+			$group = $member_handler->getUserBestGroup( (@is_object( $xoopsUser ) ? $xoopsUser->uid () : 0) );
+			$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 		}
-		$startMod = ($icmsConfig ['startpage'] == '--') ? 'system' : $icmsConfig ['startpage']; //Getting the top page		
 		
+		$startMod = ( $icmsConfig['startpage'] == '--' ) ? 'system' : $icmsConfig ['startpage'];		
 
 		//Setting the full and relative url of the actual page
 		$fullurl = urldecode ( "http://" . $_SERVER ["SERVER_NAME"] . $_SERVER ["REQUEST_URI"] );
 		$url = urldecode ( substr ( str_replace ( ICMS_URL, '', $fullurl ), 1 ) );
 
-		$page_handler = & xoops_gethandler ( 'page' );
-		$criteria = new CriteriaCompo ( new Criteria ( 'page_url', $fullurl ) );
-		if (! empty ( $url )) {
-			$criteria->add ( new Criteria ( 'page_url', $url ), 'OR' );
-		}
-		$pages = $page_handler->getCount ( $criteria );
+		$icms_page_handler =& xoops_gethandler ( 'page' );
+		$criteria = new CriteriaCompo( new Criteria( 'page_url', $fullurl ) );
+		if (! empty ( $url ))
+			$criteria->add( new Criteria( 'page_url', $url ), 'OR' );
+		$pages = $icms_page_handler->getCount ( $criteria );
 
 		if ($pages > 0) { //We have a sym-link defined for this page
-			$pages = $page_handler->getObjects ( $criteria );
+			$pages = $icms_page_handler->getObjects( $criteria );
 			$page = $pages [0];
 			$purl = $page->getVar ( 'page_url' );
 			$mid = $page->getVar ( 'page_moduleid' );
 			$pid = $page->getVar ( 'page_id' );
 			$module_handler = & xoops_gethandler ( 'module' );
-			$module = & $module_handler->get ( $mid );
+			$module =& $module_handler->get ( $mid );
 			$dirname = $module->getVar ( 'dirname' );
 			$isStart = ($startMod == $mid.'-'.$pid);
 		} else { //Don't have a sym-link for this page
@@ -106,9 +109,8 @@ class xos_logos_PageBuilder {
 		if ($isStart) {
 			$modid = '0-1';
 		} else {
-			$page_handler = & xoops_gethandler ( 'page' );
 			$criteria = new CriteriaCompo ( new Criteria ( 'page_status', 1 ) );
-			$pages = $page_handler->getObjects ( $criteria );
+			$pages = $icms_page_handler->getObjects ( $criteria );
 			$pid = 0;
 			foreach ( $pages as $page ) {
 				$purl = $page->getVar ( 'page_url' );
@@ -138,11 +140,11 @@ class xos_logos_PageBuilder {
 			$template = & $this->theme->template;
 			$backup = array ($template->caching, $template->cache_lifetime );
 		} else {
-			$template = new XoopsTpl ( );
+			$template = new XoopsTpl();
 		}
 		$block_arr = $icms_block_handler->getAllByGroupModule ( $groups, $modid, $isStart, XOOPS_BLOCK_VISIBLE );
 		foreach ( $block_arr as $block ) {
-			$side = $oldzones [$block->getVar ( 'side', 'n' )];
+			$side = $oldzones[$block->getVar ( 'side', 'n' )];
 			if ($var = $this->buildBlock ( $block, $template )) {
 				$this->blocks [$side] [$var ["id"]] = $var;
 			}
@@ -158,11 +160,16 @@ class xos_logos_PageBuilder {
 		}
 		return $cache_id;
 	}
-
+	
+	/**
+	 * The lame type workaround will change
+	 * bid is added temporarily as workaround for specific block manipulation
+	 *
+	 * @param unknown_type $xobject
+	 * @param unknown_type $template
+	 * @return unknown
+	 */
 	public function buildBlock($xobject, &$template) {
-		// The lame type workaround will change
-		// bid is added temporarily as workaround for specific block manipulation
-		
 		global $xoopsUser, $icmsConfigPersona;
 		$gperm =& xoops_gethandler ( 'groupperm' );
 		$ugroups = @is_object ( $xoopsUser ) ? $xoopsUser->getGroups () : array(XOOPS_GROUP_ANONYMOUS );
@@ -172,7 +179,7 @@ class xos_logos_PageBuilder {
 			if ($xoopsUser && count($uagroups) > 0) {
 				$url = base64_encode( str_replace( ICMS_URL, '', "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ) );
 				$titlebtns = ' <a href="#" onclick="$(\'#ed_block_' . $xobject->getVar ( 'bid' ) . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>';
-				$titlebtns .= '<div id="ed_block_' . $xobject->getVar ( 'bid' ) . '" name="ed_block_' . $xobject->getVar ( 'bid' ) . '" title="Block #' . $xobject->getVar ( 'bid' ) . '">';
+				$titlebtns .= '<div id="ed_block_' . $xobject->getVar ( 'bid' ) . '" name="ed_block_' . $xobject->getVar ( 'bid' ) . '" title="' . $xobject->getVar ( 'title' ) . '">';
 				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=visible&bid=" . $xobject->getVar ( 'bid' ) . "&rtn=$url'> <img src=" . ICMS_IMAGES_SET_URL . "/actions/button_cancel.png" . " title=" . _INVISIBLE . " alt=" . _INVISIBLE . "  /> " . _INVISIBLE . "</a><br />";
 				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=clone&bid=" . $xobject->getVar ( 'bid' ) . "'> <img src=" . ICMS_IMAGES_SET_URL . "/actions/editcopy.png" . " title=" . _CLONE . " alt=" . _CLONE . "  /> " . _CLONE . "</a><br />";
 				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=mod&bid=" . $xobject->getVar ( 'bid' ) . "'> <img src=" . ICMS_IMAGES_SET_URL . "/actions/edit.png" . " title=" . _EDIT . " alt=" . _EDIT . "  /> " . _EDIT . "</a><br />";
