@@ -21,5 +21,4 @@ define("_PI_WAITING_ASKED","Asked");
 define("_PI_WAITING_NEWANSWERS","New Answers");
 define("_PI_WAITING_ANSWERED","Answered");
 define("_PI_WAITING_WAITINGS_FMT","Waitings (%s)");
-
 ?>
