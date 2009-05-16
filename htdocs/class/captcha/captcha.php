@@ -138,8 +138,8 @@ class IcmsCaptcha {
 
 		// Skip CAPTCHA for group
 		//$gperm_handler = & xoops_gethandler( 'groupperm' );
-		$xoopsUser = $GLOBALS["xoopsUser"];
-		$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		$icmsUser = $GLOBALS["icmsUser"];
+		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {
 			$this->active = false;
 		}elseif($icmsConfigCaptcha['captcha_mode'] =='none'){
@@ -174,9 +174,9 @@ class IcmsCaptcha {
 		/*}else*/
         include_once ICMS_ROOT_PATH . '/kernel/icmsstopspammer.php';
         $icmsStopSpammers = new IcmsStopSpammer();
-		$xoopsUser = $GLOBALS["xoopsUser"];
-		$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($xoopsUser)) {
+		$icmsUser = $GLOBALS["xoopsUser"];
+		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($icmsUser)) {
 			$is_valid = true;
 		}elseif($icmsConfig['enable_badips']){
 			foreach ($icmsConfig['bad_ips'] as $bi) {

@@ -30,12 +30,12 @@
 
 // @TODO: allow 'GET' also so we can process 'unsubscribe' requests??
 
-if (!defined('XOOPS_ROOT_PATH') || !is_object($xoopsModule)) {
+if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 	exit();
 }
 
-include_once XOOPS_ROOT_PATH.'/include/notification_constants.php';
-include_once XOOPS_ROOT_PATH.'/include/notification_functions.php';
+include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
+include_once ICMS_ROOT_PATH.'/include/notification_functions.php';
 icms_loadLanguageFile('core', 'notification');
 
 if (!isset($_POST['not_submit'])) {
@@ -54,8 +54,8 @@ if (!$GLOBALS['xoopsSecurity']->check()) {
 
 $update_list = $_POST['not_list'];
 
-$module_id = $xoopsModule->getVar('mid');
-$user_id = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+$module_id = $icmsModule->getVar('mid');
+$user_id = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;
 
 // For each event, update the notification depending on the status.
 // If status=1, subscribe to the event; otherwise, unsubscribe.
@@ -86,7 +86,7 @@ foreach ($update_list as $update_item) {
 // notifyUsers at appropriate places... (need to figure out where
 // comment submit occurs and where comment approval occurs)...
 
-include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
+include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 
 $redirect_args = array();
 foreach ($update_list as $update_item) {

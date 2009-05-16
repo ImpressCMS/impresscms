@@ -13,14 +13,14 @@
 * @version	$Id$
 */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-    exit();
+if (!defined('ICMS_ROOT_PATH')) {
+	exit();
 }
 
 /**
 * Loads the invite code
 *
-* @param    string    $code     Invitation code
+* @param	string	$code	 Invitation code
 **/
 function load_invite_code($code) {
 	// validate if code is of valid length.
@@ -59,7 +59,7 @@ function load_invite_code($code) {
 /**
 * Checks if invite code is correct
 *
-* @param    string    $code     Invitation code
+* @param	string	$code	 Invitation code
 * @return   bool
 **/
 function check_invite_code($code) {
@@ -80,8 +80,8 @@ function check_invite_code($code) {
 /**
 * Updates the invite code into the database
 *
-* @param    string    $code     Invitation code
-* @param    int       $new_id   New registration id
+* @param	string	$code	 Invitation code
+* @param	int	   $new_id   New registration id
 * @return   true
 **/
 function update_invite_code($code, $new_id) {

@@ -25,10 +25,10 @@ $im_contentConfig =& $config_handler->getConfigsByCat(IM_CONF_CONTENT);
 $page = (isset($_GET['page']))?trim(StopXSS($_GET['page'])):((isset($_POST['page']))?trim(StopXSS($_POST['page'])):0);
 
 $gperm_handler = & xoops_gethandler('groupperm');
-$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 $agroups = $gperm_handler->getGroupIds('system_admin',XOOPS_SYSTEM_CONTENT);
 $allowed_groups = array_intersect($groups, $agroups);
-$uid = is_object($xoopsUser) ? intval($xoopsUser->getVar('uid')) : 0;
+$uid = is_object($icmsUser) ? intval($icmsUser->getVar('uid')) : 0;
 $content_handler =& xoops_gethandler('content');
 
 $tag = (isset($_GET['tag']))?trim(StopXSS($_GET['tag'])):((isset($_POST['tag']))?trim(StopXSS($_POST['tag'])):null);
@@ -85,7 +85,7 @@ else
 if(!is_object($impress_content)) {redirect_header('index.php', 2, _CT_SELECTNG);}
 $content_id = $impress_content->getVar('content_id');
 $viewperm  = $gperm_handler->checkRight('content_read', $content_id, $groups); // $viewperm is true if user has permision to see this page
-$adminperm = $gperm_handler->checkRight('content_admin', $content_id, $uid) || (is_object($xoopsUser) && count($allowed_groups) > 0); // $adminperm is true if user has permision to admin this page
+$adminperm = $gperm_handler->checkRight('content_admin', $content_id, $uid) || (is_object($icmsUser) && count($allowed_groups) > 0); // $adminperm is true if user has permision to admin this page
 if(!$viewperm) {redirect_header('index.php', 2, _NOPERM);}
 $myts =& MyTextSanitizer::getInstance();
 $xoopsOption['template_main'] = 'system_content.html';
@@ -144,13 +144,13 @@ $xoopsTpl->assign("xoops_pagetitle", $impress_content->getVar('content_title'));
 //$xoopsTpl->assign("xoops_module_header", '<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="'.ICMS_URL.'/modules/system/admin/content/style.css" />');
 $xoTheme->addStylesheet('/modules/system/admin/content/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css');
 
-if(!is_object($xoopsUser))
+if(!is_object($icmsUser))
 {
 	$impress_content->setReads();
 }
 else
 {
-	if($xoopsUser->getVar('uid') != $autor->getVar('uid')) {$impress_content->setReads();}
+	if($icmsUser->getVar('uid') != $autor->getVar('uid')) {$impress_content->setReads();}
 }
 $content_handler->insert($impress_content);
 /** Include the footer file to complete page rendering */

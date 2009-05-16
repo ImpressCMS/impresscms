@@ -37,7 +37,7 @@ if ( !defined("XOOPS_C_ERRORHANDLER_INCLUDED") ) {
 		 **/
 		function show($e_code, $pages=1)
 		{
-			global $icmsConfig, $xoopsUser, $xoopsRequestUri, $xoopsModule, $xoopsLogger;
+			global $icmsConfig, $icmsUser, $xoopsRequestUri, $icmsModule, $xoopsLogger;
 			$errmsg = array(
 			"0001" =>"Could not connect to the forums database.",
 			"0002" => "The forum you selected does not exist. Please go back and try again.",

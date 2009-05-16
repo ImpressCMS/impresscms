@@ -269,10 +269,10 @@ class XoopsModule extends XoopsObject
 	*/
 	function displayAdminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1)
 	{
-		global $xoopsModule, $icmsConfig;
+		global $icmsModule, $icmsConfig;
 		include_once ICMS_ROOT_PATH.'/class/template.php';
-		icms_loadLanguageFile($xoopsModule->getVar('dirname'), 'modinfo');
-		icms_loadLanguageFile($xoopsModule->getVar('dirname'), 'admin');
+		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'modinfo');
+		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'admin');
 		$tpl = new XoopsTpl();
 		$tpl->assign(array('headermenu' => $this->getAdminHeaderMenu(), 'adminmenu' => $this->getAdminMenu(), 'current' => $currentoption, 'breadcrumb' => $breadcrumb, 'headermenucount' => count($this->getAdminHeaderMenu()), 'submenus' => $submenus, 'currentsub' => $currentsub, 'submenuscount' => count($submenus)));
 		$tpl->display(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_adm_modulemenu.html');

@@ -35,10 +35,10 @@ $dirlist = XoopsLists::getDirListAsArray($admin_dir);
 if($fct && !in_array($fct,$dirlist)) {redirect_header(ICMS_URL.'/',3,_INVALID_ADMIN_FUNCTION);}
 $admintest = 0;
 
-if(is_object($xoopsUser))
+if(is_object($icmsUser))
 {
-	$xoopsModule =& XoopsModule::getByDirname('system');
-	if(!$xoopsUser->isAdmin($xoopsModule->mid())) {redirect_header(ICMS_URL.'/',3,_NOPERM);}
+	$icmsModule =& XoopsModule::getByDirname('system');
+	if(!$icmsUser->isAdmin($icmsModule->mid())) {redirect_header(ICMS_URL.'/',3,_NOPERM);}
 	$admintest=1;
 }
 else {redirect_header(ICMS_URL.'/',3,_NOPERM);}
@@ -59,8 +59,8 @@ if($admintest != 0)
 			unset($modversion);
 			if($category > 0)
 			{
-				$groups =& $xoopsUser->getGroups();
-				if(in_array(XOOPS_GROUP_ADMIN, $groups) || false != $sysperm_handler->checkRight('system_admin', $category, $groups, $xoopsModule->getVar('mid')))
+				$groups =& $icmsUser->getGroups();
+				if(in_array(XOOPS_GROUP_ADMIN, $groups) || false != $sysperm_handler->checkRight('system_admin', $category, $groups, $icmsModule->getVar('mid')))
 				{
 					if(file_exists(ICMS_ROOT_PATH.'/modules/system/admin/'.$fct.'/main.php'))
 					{

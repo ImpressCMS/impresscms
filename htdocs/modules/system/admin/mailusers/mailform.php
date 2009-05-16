@@ -61,7 +61,7 @@ if ( !empty($display_criteria) ) {
 }
 
 $fname_text = new XoopsFormText(_AM_MAILFNAME, "mail_fromname", 30, 255, htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES));
-$fromemail = !empty($xoopsConfig['adminmail']) ? $xoopsConfig['adminmail'] : $xoopsUser->getVar("email", "E");
+$fromemail = !empty($xoopsConfig['adminmail']) ? $xoopsConfig['adminmail'] : $icmsUser->getVar("email", "E");
 $femail_text = new XoopsFormText(_AM_MAILFMAIL, "mail_fromemail", 30, 255, $fromemail);
 //$subject_caption = _AM_MAILSUBJECT."<br /><br /><span style='font-size:x-small;font-weight:bold;'>"._AM_MAILTAGS."</span><br /><span style='font-size:x-small;font-weight:normal;'>"._AM_MAILTAGS1."<br />"._AM_MAILTAGS2."<br />"._AM_MAILTAGS3."</span>";
 $subject_caption = _AM_MAILSUBJECT."<br /><br /><span style='font-size:x-small;font-weight:bold;'>"._AM_MAILTAGS."</span><br /><span style='font-size:x-small;font-weight:normal;'>"._AM_MAILTAGS2."</span>";

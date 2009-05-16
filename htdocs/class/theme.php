@@ -187,7 +187,7 @@ class xos_opal_Theme {
 		$this->template->currentTheme =& $this;
 		$this->template->assign_by_ref( 'xoTheme', $this );
 
-		global $icmsConfig, $icmsConfigMetaFooter, $xoopsModule, $xoopsUser;
+		global $icmsConfig, $icmsConfigMetaFooter, $icmsModule, $icmsUser;
 		$this->template->assign( array(
 			'icms_style' => ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css',
 	    	'icms_theme' => $this->folderName,
@@ -196,28 +196,28 @@ class xos_opal_Theme {
 	    	'icms_requesturi' => htmlspecialchars( $_SERVER['REQUEST_URI'], ENT_QUOTES),
 	    	'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 	    	'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
-	    	'icms_dirname' => @$xoopsModule ? $xoopsModule->getVar( 'dirname' ) : 'system',
+	    	'icms_dirname' => @$icmsModule ? $icmsModule->getVar( 'dirname' ) : 'system',
 	    	'icms_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-	    	'icms_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES ),
+	    	'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule) ? $icmsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES ),
 	    	'xoops_theme' => $this->folderName,
 	    	'xoops_imageurl' => (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName.'/'))?ICMS_MODULES_URL.'/system/themes/'.$this->folderName.'/':XOOPS_THEME_URL . '/'.$this->folderName.'/',
 	    	'xoops_themecss'=> xoops_getcss($this->folderName),
 	    	'xoops_requesturi' => htmlspecialchars( $_SERVER['REQUEST_URI'], ENT_QUOTES),
 	    	'xoops_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 	    	'xoops_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
-	    	'xoops_dirname' => @$xoopsModule ? $xoopsModule->getVar( 'dirname' ) : 'system',
+	    	'xoops_dirname' => @$icmsModule ? $icmsModule->getVar( 'dirname' ) : 'system',
 	    	'xoops_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-	    	'xoops_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES ),
+	    	'xoops_pagetitle' => isset($icmsModule) && is_object($icmsModule) ? $icmsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES ),
 	    ) );
-	    if ( isset($xoopsUser) && is_object($xoopsUser) ) {
+	    if ( isset($icmsUser) && is_object($icmsUser) ) {
 	        $this->template->assign( array(
 	        	'icms_isuser' => true,
-	        	'icms_userid' => $xoopsUser->getVar('uid'),
-	        	'icms_uname' => $xoopsUser->getVar('uname'),
+	        	'icms_userid' => $icmsUser->getVar('uid'),
+	        	'icms_uname' => $icmsUser->getVar('uname'),
 	        	'icms_isadmin' => $GLOBALS['xoopsUserIsAdmin'],
 	        	'xoops_isuser' => true,
-	        	'xoops_userid' => $xoopsUser->getVar('uid'),
-	        	'xoops_uname' => $xoopsUser->getVar('uname'),
+	        	'xoops_userid' => $icmsUser->getVar('uid'),
+	        	'xoops_uname' => $icmsUser->getVar('uname'),
 	        	'xoops_isadmin' => $GLOBALS['xoopsUserIsAdmin'],
 	        ) );
 	    } else {
@@ -286,16 +286,16 @@ class xos_opal_Theme {
 
 		if (empty($extraString)) {
 			if (empty($extra_string)) {
-				global $xoopsUser, $icmsConfig;
+				global $icmsUser, $icmsConfig;
 
 				// Generate language section
 				$extra_string = $icmsConfig['language'];
 
 				// Generate group section
-				if ( !@is_object( $xoopsUser ) ) {
+				if ( !@is_object( $icmsUser ) ) {
 					$extra_string .= '|' . XOOPS_GROUP_ANONYMOUS;
 				} else {
-					$groups = $xoopsUser->getGroups();
+					$groups = $icmsUser->getGroups();
 					sort($groups);
 					// Generate group string for non-anonymous groups,
 					// XOOPS_DB_PASS and XOOPS_DB_NAME (before we find better variables) are used to protect group sensitive contents
@@ -315,11 +315,11 @@ class xos_opal_Theme {
    * @return  bool
    */
 	function checkCache() {
-		global $xoopsModule, $xoopsLogger;
+		global $icmsModule, $xoopsLogger;
 
 		if ( $_SERVER['REQUEST_METHOD'] != 'POST' && $this->contentCacheLifetime ) {
 			$template = $this->contentTemplate ? $this->contentTemplate : 'db:system_dummy.html';
-			$dirname = $xoopsModule->getVar( 'dirname', 'n' );
+			$dirname = $icmsModule->getVar( 'dirname', 'n' );
 
 			$this->template->caching = 2;
 			$this->template->cache_lifetime = $this->contentCacheLifetime;

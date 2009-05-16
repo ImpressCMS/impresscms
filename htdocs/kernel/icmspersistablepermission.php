@@ -94,7 +94,7 @@ class IcmsPersistablePermissionHandler extends XoopsObjectHandler
 	* @return array
 	*/
 	function getGrantedItems($gperm_name, $id = null) {
-		global $xoopsUser;
+		global $icmsUser;
 		static $permissions;
 
 		if (!isset($permissions[$gperm_name]) || ($id != null && !isset($permissions[$gperm_name][$id]))) {
@@ -107,7 +107,7 @@ class IcmsPersistablePermissionHandler extends XoopsObjectHandler
 				$gperm_handler =& xoops_gethandler('groupperm');
 
 				//Get user's groups
-				$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+				$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 
 				//Get all allowed item ids in this module and for this user's groups
 				$userpermissions =& $gperm_handler->getItemIds($gperm_name, $groups, $icmsModule->getVar('mid'));
@@ -171,7 +171,7 @@ class IcmsPersistablePermissionHandler extends XoopsObjectHandler
 	 */
 /*	function deletePermissions($itemid, $gperm_name)
 	{
-		global $xoopsModule;
+		global $icmsModule;
 
 		$icmsModule =& smartsection_getModuleInfo();
 
@@ -193,9 +193,9 @@ class IcmsPersistablePermissionHandler extends XoopsObjectHandler
 	* @return boolean : TRUE if user has access, FALSE if not
 	**/
 	function accessGranted($gperm_name, $gperm_itemid) {
-		global $xoopsUser;
+		global $icmsUser;
 
-		$gperm_groupid = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$gperm_groupid = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$icmsModule =& $this->handler->getModuleInfo();
 		$gperm_modid = $icmsModule->getVar('mid')   ;
 

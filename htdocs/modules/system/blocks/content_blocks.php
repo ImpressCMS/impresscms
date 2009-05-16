@@ -20,13 +20,13 @@
 * @return array $block The generated block content with its options
 */
 function b_content_menu_show($options) {
-	global $xoopsUser;
+	global $icmsUser;
 	
 	$block = array();
 	
 	$gperm_handler = & xoops_gethandler( 'groupperm' );
-	$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-	$uid = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+	$uid = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;
 	$content_handler =& xoops_gethandler('content');
 	if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
 		$block['menu_rtl'] = true;
@@ -91,13 +91,13 @@ function b_content_menu_edit($options){
 * @return array $block The content block
 */
 function b_content_show($options) {
-	global $xoopsUser;
+	global $icmsUser;
 	$myts =& MyTextSanitizer::getInstance();
 	$block = array();
 	
 	$gperm_handler = & xoops_gethandler( 'groupperm' );
-	$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-	$uid = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+	$uid = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;
 	$content_handler =& xoops_gethandler('content');
 	$criteria = new CriteriaCompo(new Criteria('content_status', 1));
 	$criteria->add(new Criteria('content_id', $options[0]));
@@ -217,13 +217,13 @@ function b_content_edit($options){
 * @return array $block The related menu block array
 */
 function b_content_relmenu_show($options) {
-	global $xoopsUser;
+	global $icmsUser;
 	
 	$block = array();
 	
 	$gperm_handler = & xoops_gethandler( 'groupperm' );
-	$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-	$uid = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+	$uid = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;
 	$content_handler =& xoops_gethandler('content');
 	$content_id = isset($_GET['page'])?$_GET['page']:0;
 	
@@ -289,11 +289,11 @@ function b_content_relmenu_edit($options){
 * @return array $pages The array with pages in a certain weight, order and with related id's
 */
 function getPages($showsubs = true, $sort='content_weight', $order='ASC', $content_id = 0, $relateds = 0 ) {
-	global $xoopsUser;
+	global $icmsUser;
 	
 	$gperm_handler = & xoops_gethandler( 'groupperm' );
-	$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-	$uid = is_object($xoopsUser) ? $xoopsUser->getVar('uid') : 0;
+	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+	$uid = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;
 	$content_handler =& xoops_gethandler('content');
 	
 	$criteria = new CriteriaCompo(new Criteria('content_status', 1));
@@ -339,7 +339,7 @@ function getPages($showsubs = true, $sort='content_weight', $order='ASC', $conte
 * @return array $block The block array with tags
 */
 function b_content_tagmenu_show($options) {
-	global $xoopsUser;
+	global $icmsUser;
 	
 	$block = array();
 	

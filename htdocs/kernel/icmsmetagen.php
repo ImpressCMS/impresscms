@@ -141,16 +141,16 @@ class IcmsMetagen
 	 */
 	function setTitle($title)
 	{
-		global $xoopsModule, $xoopsModuleConfig;
+		global $icmsModule, $icmsModuleConfig;
 		$this->_title = $this->html2text($title);
 		$this->_title = $this->purifyText($this->_title);
 		$this->_original_title = $this->_title;
 
-		$moduleName = $xoopsModule->getVar('name');
+		$moduleName = $icmsModule->getVar('name');
 
 		$titleTag = array();
 
-		$show_mod_name_breadcrumb = isset($xoopsModuleConfig['show_mod_name_breadcrumb']) ? $xoopsModuleConfig['show_mod_name_breadcrumb'] : true;
+		$show_mod_name_breadcrumb = isset($icmsModuleConfig['show_mod_name_breadcrumb']) ? $icmsModuleConfig['show_mod_name_breadcrumb'] : true;
 
 		if ($moduleName && $show_mod_name_breadcrumb) {
 			$titleTag['module'] = $moduleName;
@@ -212,9 +212,9 @@ class IcmsMetagen
 	function setDescription($description)
 	{
 		if (!$description) {
-			global $xoopsModuleConfig;
-			if (isset($xoopsModuleConfig['module_meta_description'])) {
-				$description = $xoopsModuleConfig['module_meta_description'];
+			global $icmsModuleConfig;
+			if (isset($icmsModuleConfig['module_meta_description'])) {
+				$description = $icmsModuleConfig['module_meta_description'];
 			}
 		}
 
@@ -315,10 +315,10 @@ class IcmsMetagen
 	 */
 	function createMetaKeywords()
 	{
-		global $xoopsModuleConfig;
+		global $icmsModuleConfig;
 		$keywords = $this->findMetaKeywords($this->_original_title . " " . $this->_description, $this->_minChar);
-		if (isset($xoopsModuleConfig) && isset($xoopsModuleConfig['moduleMetaKeywords']) && $xoopsModuleConfig['moduleMetaKeywords'] != '') {
-			$moduleKeywords = explode(",", $xoopsModuleConfig['moduleMetaKeywords']);
+		if (isset($icmsModuleConfig) && isset($icmsModuleConfig['moduleMetaKeywords']) && $icmsModuleConfig['moduleMetaKeywords'] != '') {
+			$moduleKeywords = explode(",", $icmsModuleConfig['moduleMetaKeywords']);
 			$keywords = array_merge($keywords, $moduleKeywords);
 		}
 
@@ -359,7 +359,7 @@ class IcmsMetagen
 	 */
 	function buildAutoMetaTags()
 	{
-		global $xoopsModule, $xoopsModuleConfig;
+		global $icmsModule, $icmsModuleConfig;
 
 		$this->_keywords = $this->createMetaKeywords();
 		$this->_meta_description = $this->createMetaDescription();

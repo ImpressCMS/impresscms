@@ -7,7 +7,7 @@
 * @link http://impresscms.org ImpressCMS
 * @package core
 * @subpackage Debugging
-* @version		$Id$
+* @version	$Id$
 */
 
 /**

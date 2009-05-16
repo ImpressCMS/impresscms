@@ -18,7 +18,7 @@
 include "mainfile.php";
 
 $member_handler = & xoops_gethandler ( 'member' );
-$group = $member_handler->getUserBestGroup((@is_object($xoopsUser)?$xoopsUser->uid():0));
+$group = $member_handler->getUserBestGroup((@is_object($icmsUser)?$icmsUser->uid():0));
 $icmsConfig ['startpage'] = $icmsConfig ['startpage'] [$group];
 
 if (isset ( $icmsConfig ['startpage'] ) && $icmsConfig ['startpage'] != "" && $icmsConfig ['startpage'] != "--") {

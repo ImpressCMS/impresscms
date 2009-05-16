@@ -4,7 +4,7 @@
  * PROJECT:   mygosuMenu
  * VERSION:   1.4.2
  * COPYRIGHT: (c) 2003,2004 Cezary Tomczak
- * LINK:      http://gosu.pl/dhtml/mygosumenu.html
+ * LINK:	  http://gosu.pl/dhtml/mygosumenu.html
  * LICENSE:   BSD (revised)
  */
 function AdMenu(id) { this.type = "horizontal"; this.position = { "level1": { "top": 0, "left": 0}, "levelX": { "top": 0, "left": 0}

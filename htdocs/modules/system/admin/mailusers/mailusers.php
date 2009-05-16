@@ -14,7 +14,7 @@
 * @version	$Id$
 */
 
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
+if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
 } else {
 	include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";

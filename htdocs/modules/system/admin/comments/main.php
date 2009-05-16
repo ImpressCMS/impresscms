@@ -15,7 +15,7 @@
 */
 
 
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->getVar('mid')) ) {
+if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->getVar('mid')) ) {
 	exit("Access Denied");
 } else {
 	if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);

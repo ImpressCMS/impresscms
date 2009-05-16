@@ -16,12 +16,12 @@
 $xoopsOption['pagetype'] = 'notification';
 include 'mainfile.php';
 
-if (empty($xoopsUser)) {
+if (empty($icmsUser)) {
     redirect_header('index.php', 3, _NOT_NOACCESS);
     exit();
 }
 
-$uid = $xoopsUser->getVar('uid');
+$uid = $icmsUser->getVar('uid');
 
 $op = 'list';
 
@@ -127,7 +127,7 @@ case 'list':
     $xoopsOption['template_main'] = 'system_notification_list.html';
     include ICMS_ROOT_PATH.'/header.php';
     $xoopsTpl->assign ('modules', $modules);
-    $user_info = array ('uid' => $xoopsUser->getVar('uid'));
+    $user_info = array ('uid' => $icmsUser->getVar('uid'));
     $xoopsTpl->assign ('user', $user_info);
     $xoopsTpl->assign ('lang_cancel', _CANCEL);
     $xoopsTpl->assign ('lang_clear', _NOT_CLEAR);

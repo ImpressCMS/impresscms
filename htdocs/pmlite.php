@@ -35,7 +35,7 @@ if ( empty($_GET['refresh'] ) && isset($_POST['op']) && $_POST['op'] != "submit"
     exit();
 }
 xoops_header();
-if ($xoopsUser) {
+if ($icmsUser) {
     $myts =& MyTextSanitizer::getInstance();
     if (isset($_POST['op']) && $_POST['op'] == "submit") {
         if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -56,7 +56,7 @@ if ($xoopsUser) {
             $pm->setVar("subject", $_POST['subject']);
             $pm->setVar("msg_text", $_POST['message']);
             $pm->setVar("to_userid", intval($_POST['to_userid']));
-            $pm->setVar("from_userid", intval($xoopsUser->getVar("uid")));
+            $pm->setVar("from_userid", intval($icmsUser->getVar("uid")));
             if (!$pm_handler->insert($pm)) {
                 echo $pm->getHtmlErrors();
                 echo "<br /><a href='javascript:history.go(-1)'>"._PM_GOBACK."</a>";
@@ -69,9 +69,9 @@ if ($xoopsUser) {
 					$xoopsMailer =& getMailer();
 					$xoopsMailer->useMail();
 					$xoopsMailer->setToEmails($toUser->email());
-					if ($xoopsUser->getVar('user_viewemail')) {
-						$xoopsMailer->setFromEmail($xoopsUser->email());
-						$xoopsMailer->setFromName($xoopsUser->uname());
+					if ($icmsUser->getVar('user_viewemail')) {
+						$xoopsMailer->setFromEmail($icmsUser->email());
+						$xoopsMailer->setFromName($icmsUser->uname());
 					} else {
 						$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 						$xoopsMailer->setFromName($icmsConfig['sitename']);
@@ -81,7 +81,7 @@ if ($xoopsUser) {
 					$xoopsMailer->assign('X_SITEURL', ICMS_URL."/");
 					$xoopsMailer->assign('X_ADMINMAIL', $icmsConfig['adminmail']);
 					$xoopsMailer->assign('X_UNAME', $toUser->uname());
-					$xoopsMailer->assign('X_FROMUNAME', $xoopsUser->uname());
+					$xoopsMailer->assign('X_FROMUNAME', $icmsUser->uname());
 					$xoopsMailer->assign('X_SUBJECT', $myts->stripSlashesGPC($_POST['subject']));
 					$xoopsMailer->assign('X_MESSAGE', $myts->stripSlashesGPC($_POST['message']));
 					$xoopsMailer->assign('X_ITEM_URL', ICMS_URL . "/viewpmsg.php");
@@ -96,7 +96,7 @@ if ($xoopsUser) {
         if ($reply == 1) {
             $pm_handler =& xoops_gethandler('privmessage');
             $pm =& $pm_handler->get($msg_id);
-            if ($pm->getVar("to_userid") == intval($xoopsUser->getVar('uid'))) {
+            if ($pm->getVar("to_userid") == intval($icmsUser->getVar('uid'))) {
                 $pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
                 $message  = "[quote]\n";
                 $message .= sprintf(_PM_USERWROTE,$pm_uname);
@@ -139,7 +139,7 @@ if ($xoopsUser) {
         if ($reply == 1) {
             $pm_handler =& xoops_gethandler('privmessage');
             $pm =& $pm_handler->get($msg_id);
-            if ($pm->getVar("to_userid") == intval($xoopsUser->getVar('uid'))) {
+            if ($pm->getVar("to_userid") == intval($icmsUser->getVar('uid'))) {
                 $pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
                 $message  = "[quote]\n";
                 $message .= sprintf(_PM_USERWROTE,$pm_uname);

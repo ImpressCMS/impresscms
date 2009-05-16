@@ -23,9 +23,9 @@ include 'mainfile.php';
 include ICMS_ROOT_PATH.'/include/cp_functions.php';
 
 // Admin Authentication
-if($xoopsUser)
+if($icmsUser)
 {
-	if(!$xoopsUser->isAdmin(-1)) {redirect_header('index.php',2,_AD_NORIGHT);}
+	if(!$icmsUser->isAdmin(-1)) {redirect_header('index.php',2,_AD_NORIGHT);}
 }
 else {redirect_header('index.php',2,_AD_NORIGHT);}
 // end Admin Authentication

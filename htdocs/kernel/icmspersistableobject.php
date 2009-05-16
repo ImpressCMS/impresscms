@@ -302,7 +302,7 @@ class IcmsPersistableObject extends XoopsObject {
      *
      * In this example, IcmsPersistableObject will create a TextArea for the variable 'body'. And it will use
      * the 'default' editor, providing it is defined in the module
-     * preferences : $xoopsModuleConfig['default_editor']
+     * preferences : $icmsModuleConfig['default_editor']
      *
      * Of course, you can force the use of a specific editor :
      *
@@ -627,7 +627,7 @@ class IcmsPersistableObject extends XoopsObject {
 	}
 
 	function getValueFor($key, $editor=true) {
-    	global $xoopsModuleConfig;
+    	global $icmsModuleConfig;
 
     	$ret = $this->getVar($key, 'n');
     	$myts = MyTextSanitizer::getInstance();
@@ -643,8 +643,8 @@ class IcmsPersistableObject extends XoopsObject {
 		$formatML = true;
 
     	if ($form_editor == 'default') {
-			global $xoopsModuleConfig;
-			$form_editor = isset($xoopsModuleConfig['default_editor']) ? $xoopsModuleConfig['default_editor'] : 'textarea';
+			global $icmsModuleConfig;
+			$form_editor = isset($icmsModuleConfig['default_editor']) ? $icmsModuleConfig['default_editor'] : 'textarea';
 		}
 
 		if ($editor) {

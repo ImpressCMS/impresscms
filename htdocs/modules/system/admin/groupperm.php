@@ -20,7 +20,7 @@ include '../../../include/cp_header.php';
 $modid = isset($_POST['modid']) ? intval($_POST['modid']) : 0;
 
 // we dont want system module permissions to be changed here
-if ($modid <= 1 || !is_object($xoopsUser) || !$xoopsUser->isAdmin($modid)) {
+if ($modid <= 1 || !is_object($icmsUser) || !$icmsUser->isAdmin($modid)) {
 	redirect_header(XOOPS_URL.'/index.php', 1, _NOPERM);
 	exit();
 }

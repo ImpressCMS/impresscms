@@ -15,11 +15,11 @@
 * @author		modified by author <email@domain.tld>
 * @version		$Id$
 */
-if (!defined("XOOPS_ROOT_PATH")) {
+if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
 
-include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
+include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 
 // create form
 $search_form = new XoopsThemeForm(_SR_SEARCH, "search", "search.php", 'get');

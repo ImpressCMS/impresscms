@@ -322,12 +322,12 @@ class XoopsMailer
 	// private
 	function sendPM($uid, $subject, $body)
 	{
-		global $xoopsUser;
+		global $icmsUser;
 		$pm_handler =& xoops_gethandler('privmessage');
 		$pm =& $pm_handler->create();
 		$pm->setVar("subject", $subject);
 		// RMV-NOTIFY
-		$pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : $xoopsUser->getVar('uid'));
+		$pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : $icmsUser->getVar('uid'));
 		$pm->setVar("msg_text", $body);
 		$pm->setVar("to_userid", $uid);
 		if (!$pm_handler->insert($pm)) {

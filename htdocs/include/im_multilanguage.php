@@ -45,16 +45,16 @@ define('EASIESTML_DEFAULT_LANG',0);
 
 
 // Patch check
-//if( ! defined( 'XOOPS_ROOT_PATH' ) || ! defined( 'XOOPS_URL' ) || defined( 'XOOPS_SIDEBLOCK_LEFT' ) ) die( "You should patch just after define('XOOPS_URL', ... ) in mainfile.php" ) ;
+//if( ! defined( 'ICMS_ROOT_PATH' ) || ! defined( 'ICMS_URL' ) || defined( 'XOOPS_SIDEBLOCK_LEFT' ) ) die( "You should patch just after define('ICMS_URL', ... ) in mainfile.php" ) ;
 // moving the inclusing of easiest ml just after the xoopsDB creation because we need the db...
-if( ! defined( 'XOOPS_ROOT_PATH' ) || ! defined( 'XOOPS_URL' ) ) die( "You should patch just after define('XOOPS_URL', ... ) in mainfile.php" ) ;
+if( ! defined( 'ICMS_ROOT_PATH' ) || ! defined( 'ICMS_URL' ) ) die( "You should patch just after define('ICMS_URL', ... ) in mainfile.php" ) ;
 
 // Target check
-if( ! preg_match( '?'.preg_quote(XOOPS_ROOT_PATH,'?').'(/common/)?' , $_SERVER['SCRIPT_FILENAME'] ) ) {
+if( ! preg_match( '?'.preg_quote(ICMS_ROOT_PATH,'?').'(/common/)?' , $_SERVER['SCRIPT_FILENAME'] ) ) {
 
 	// get cookie path
-	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , XOOPS_URL ) ;
-	if( $xoops_cookie_path == XOOPS_URL ) $xoops_cookie_path = '/' ;
+	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , ICMS_URL ) ;
+	if( $xoops_cookie_path == ICMS_URL ) $xoops_cookie_path = '/' ;
 
 	// deciding the current language (the priority is important)
 	$easiestml_langs = explode( ',' , EASIESTML_LANGS ) ;
@@ -113,10 +113,10 @@ if( ! preg_match( '?'.preg_quote(XOOPS_ROOT_PATH,'?').'(/common/)?' , $_SERVER['
 */
 function easiestml( $s )
 {
-	global $easiestml_lang , $xoopsUser, $icmsConfigMultilang;
+	global $easiestml_lang , $icmsUser, $icmsConfigMultilang;
 
 	// all mode for debug (allowed to system admin only)
-	if( is_object( $xoopsUser ) && $xoopsUser->isAdmin(1) && ! empty( $_GET['lang'] ) && $_GET['lang'] == 'all' ) {
+	if( is_object( $icmsUser ) && $icmsUser->isAdmin(1) && ! empty( $_GET['lang'] ) && $_GET['lang'] == 'all' ) {
 		return $s ;
 	}
 
@@ -153,7 +153,7 @@ function easiestml( $s )
 	}
 	$langimage_html = '' ;
 	foreach( $easiestml_langs as $l => $lang ) {
-		$langimage_html .= '<a href="'.$link_base.urlencode($lang).'"><img src="'.XOOPS_URL.'/'.$langimages[$l].'" title="'.$langnames[$l].'" alt="'.$langnames[$l].'" /></a>&nbsp;' ;
+		$langimage_html .= '<a href="'.$link_base.urlencode($lang).'"><img src="'.ICMS_URL.'/'.$langimages[$l].'" title="'.$langnames[$l].'" alt="'.$langnames[$l].'" /></a>&nbsp;' ;
 		$s = preg_replace( '/\[change_lang_'.$lang.'\]/' , $link_base.urlencode($lang) , $s ) ;
 	}
 	$s = preg_replace( '/\['.EASIESTML_IMAGETAG.'\]/' , $langimage_html , $s ) ;

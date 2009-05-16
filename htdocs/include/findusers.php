@@ -21,7 +21,7 @@ if (!empty($_REQUEST['token'])) {
 	if ($GLOBALS['xoopsSecurity']->validateToken($_REQUEST['token'], false)) {
 		$denied = false;
 	}
-} elseif ( is_object($xoopsUser) && $xoopsUser->isAdmin() ) {
+} elseif ( is_object($icmsUser) && $icmsUser->isAdmin() ) {
 	$denied = false;
 }
 if ($denied) {
@@ -139,7 +139,7 @@ class XoopsRankHandler extends XoopsObjectHandler
 
 		$result = $this->db->query($sql, $limit, $start);
 		if (!$result) {
-		    return $ret;
+			return $ret;
 		}
 
 		$myts =& MyTextSanitizer::getInstance();
@@ -327,7 +327,7 @@ $modes = array(
 
 if ( empty($_POST["user_submit"]) ) {
 	
-	include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
+	include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 	
 	$form = new XoopsThemeForm(_MA_USER_FINDUS, "uesr_findform", "findusers.php", 'post', true);
 	
@@ -451,17 +451,17 @@ if ( empty($_POST["user_submit"]) ) {
 				$value = str_replace("_", "\\\_", $myts->addSlashes(trim($_POST[$var])));
 				switch ($match) {
 				case XOOPS_MATCH_START:
-				    $criteria->add(new Criteria($var, $value.'%', 'LIKE'));
-				    break;
+					$criteria->add(new Criteria($var, $value.'%', 'LIKE'));
+					break;
 				case XOOPS_MATCH_END:
-				    $criteria->add(new Criteria($var, '%'.$value, 'LIKE'));
-				    break;
+					$criteria->add(new Criteria($var, '%'.$value, 'LIKE'));
+					break;
 				case XOOPS_MATCH_EQUAL:
-				    $criteria->add(new Criteria($var, $value));
-				    break;
+					$criteria->add(new Criteria($var, $value));
+					break;
 				case XOOPS_MATCH_CONTAIN:
-				    $criteria->add(new Criteria($var, '%'.$value.'%', 'LIKE'));
-				    break;
+					$criteria->add(new Criteria($var, '%'.$value.'%', 'LIKE'));
+					break;
 				}
 			}
 		}
@@ -689,7 +689,7 @@ if ( empty($_POST["user_submit"]) ) {
 					echo "<input type='hidden' name='{$name_username}' id='{$name_username}' value='".$foundusers[$j]->getVar("uname")."' />";
 				}
 				echo "</td>
-				<td><a href='".XOOPS_URL."/userinfo.php?uid=".$foundusers[$j]->getVar("uid")."' target='_blank'>".$foundusers[$j]->getVar("uname")."</a></td>
+				<td><a href='".ICMS_URL."/userinfo.php?uid=".$foundusers[$j]->getVar("uid")."' target='_blank'>".$foundusers[$j]->getVar("uname")."</a></td>
 				<td>".$fuser_name."</td>
 				<td align='center'>".($foundusers[$j]->getVar("user_regdate") ? date("Y-m-d", $foundusers[$j]->getVar("user_regdate")) : "")."</td>
 				<td align='center'>".($foundusers[$j]->getVar("last_login") ? date("Y-m-d H:i", $foundusers[$j]->getVar("last_login")) : "")."</td>

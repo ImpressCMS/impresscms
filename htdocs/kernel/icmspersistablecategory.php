@@ -129,8 +129,8 @@ class IcmsPersistableCategoryHandler extends IcmsPersistableObjectHandler {
 			$criteria = new CriteriaCompo();
 			$criteria->setSort($sort);
 			$criteria->setOrder($order);
-			global $xoopsUser;
-			$userIsAdmin = is_object($xoopsUser) && $xoopsUser->isAdmin();
+			global $icmsUser;
+			$userIsAdmin = is_object($icmsUser) && $icmsUser->isAdmin();
 
 			if ($perm_name && !$userIsAdmin) {
 				if (!$this->setGrantedObjectsCriteria($criteria, $perm_name)) {

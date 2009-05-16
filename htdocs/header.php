@@ -27,7 +27,7 @@ if($icmsConfig['theme_set'] != 'default' && file_exists(ICMS_THEME_PATH.'/'.$icm
 }
 else
 {
-	global $xoopsOption, $icmsConfig, $xoopsModule;
+	global $xoopsOption, $icmsConfig, $icmsModule;
 	$xoopsOption['theme_use_smarty'] = 1;
 	
 	/**  include Smarty template engine and initialize it*/
@@ -169,13 +169,13 @@ else
 		$xoopsTpl->assign('xoops_showcblock', !empty($aggreg->blocks['page_topcenter']) || !empty($aggreg->blocks['page_topleft']) || !empty($aggreg->blocks['page_topright']));
 	}
 
-	if( $xoopsModule ) 
-		$xoTheme->contentCacheLifetime = @$icmsConfig['module_cache'][$xoopsModule->getVar('mid', 'n')];
+	if( $icmsModule ) 
+		$xoTheme->contentCacheLifetime = @$icmsConfig['module_cache'][$icmsModule->getVar('mid', 'n')];
 
 	if( $xoTheme->checkCache() )
 		exit();
 
-	if(!isset($xoopsOption['template_main']) && $xoopsModule) {
+	if(!isset($xoopsOption['template_main']) && $icmsModule) {
 		// new themes using Smarty does not have old functions that are required in old modules, so include them now
 		include ICMS_ROOT_PATH.'/include/old_theme_functions.php';
 		// Need this also

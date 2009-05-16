@@ -48,7 +48,7 @@ else {$sess_handler->icms_sessionOpen();}
 	else
 	{
 		// RMV-NOTIFY
-		if (is_object($xoopsModule) && $xoopsModule->getVar('hasnotification') == 1 && is_object($xoopsUser)) {
+		if (is_object($icmsModule) && $icmsModule->getVar('hasnotification') == 1 && is_object($icmsUser)) {
 			/** Require the notifications area */
       require_once 'include/notification_select.php';
 		}

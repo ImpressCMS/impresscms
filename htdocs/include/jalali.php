@@ -19,18 +19,18 @@
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version	$Id$
 */
-//                                                                           //
-// The main function which convert Gregorian to Jalali calendars is:         //
-// JALAI DATE FUNCTION                                                       //
-// this function is simillar than date function in PHP.                      //
-// "jalali.php" is convertor to and from Gregorian and Jalali calendars.     //
-// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi                 //
-// Copyright (C) jalali Date function by Milad Rastian                       //
-// (miladmovie AT yahoo DOT com)                                             //
-// Copyright (C) 2003 FARSI PROJECTS GROUP                                   //
-// This has been imported to ImpressCMS by stranger @ www.impresscms.ir      //
-// I would like to thank irmtfan @ www.jadoogaran.org for his script for     //
-// xoops (which is based for this work)                                      //
+//																		   //
+// The main function which convert Gregorian to Jalali calendars is:		 //
+// JALAI DATE FUNCTION													   //
+// this function is simillar than date function in PHP.					  //
+// "jalali.php" is convertor to and from Gregorian and Jalali calendars.	 //
+// Copyright (C) 2000  Roozbeh Pournader and Mohammad Toossi				 //
+// Copyright (C) jalali Date function by Milad Rastian					   //
+// (miladmovie AT yahoo DOT com)											 //
+// Copyright (C) 2003 FARSI PROJECTS GROUP								   //
+// This has been imported to ImpressCMS by stranger @ www.impresscms.ir	  //
+// I would like to thank irmtfan @ www.jadoogaran.org for his script for	 //
+// xoops (which is based for this work)									  //
 //  ------------------------------------------------------------------------ //
 
 /**
@@ -41,7 +41,7 @@
  * @return	int
  */
 function div($a,$b) {
-    return (int) ($a / $b);
+	return (int) ($a / $b);
 }
 
 /**
@@ -111,7 +111,7 @@ function jalali_to_gregorian($j_y, $j_m, $j_d)
 
   $j_day_no = 365*$jy + div($jy, 33)*8 + div($jy%33+3, 4);
   for ($i=0; $i < $jm; ++$i)
-     $j_day_no += $j_days_in_month[$i];
+	 $j_day_no += $j_days_in_month[$i];
 
   $j_day_no += $jd;
 
@@ -123,29 +123,29 @@ function jalali_to_gregorian($j_y, $j_m, $j_d)
   $leap = true;
   if ($g_day_no >= 36525) /* 36525 = 365*100 + 100/4 */
   {
-     $g_day_no--;
-     $gy += 100*div($g_day_no,  36524); /* 36524 = 365*100 + 100/4 - 100/100 */
-     $g_day_no = $g_day_no % 36524;
+	 $g_day_no--;
+	 $gy += 100*div($g_day_no,  36524); /* 36524 = 365*100 + 100/4 - 100/100 */
+	 $g_day_no = $g_day_no % 36524;
 
-     if ($g_day_no >= 365)
-        $g_day_no++;
-     else
-        $leap = false;
+	 if ($g_day_no >= 365)
+		$g_day_no++;
+	 else
+		$leap = false;
   }
 
   $gy += 4*div($g_day_no, 1461); /* 1461 = 365*4 + 4/4 */
   $g_day_no %= 1461;
 
   if ($g_day_no >= 366) {
-     $leap = false;
+	 $leap = false;
 
-     $g_day_no--;
-     $gy += div($g_day_no, 365);
-     $g_day_no = $g_day_no % 365;
+	 $g_day_no--;
+	 $gy += div($g_day_no, 365);
+	 $g_day_no = $g_day_no % 365;
   }
 
   for ($i = 0; $g_day_no >= $g_days_in_month[$i] + ($i == 1 && $leap); $i++)
-     $g_day_no -= $g_days_in_month[$i] + ($i == 1 && $leap);
+	 $g_day_no -= $g_days_in_month[$i] + ($i == 1 && $leap);
   $gm = $i+1;
   $gd = $g_day_no+1;
 
@@ -241,7 +241,7 @@ function jmaketime($hour,$minute,$second,$jmonth,$jday,$jyear)
  */
 function jdate($type,$maket='now')
 {
-    global $icmsConfig;
+	global $icmsConfig;
 	icms_loadLanguageFile('core', 'calendar');
 	$result='';
 	if($maket=='now'){
@@ -293,7 +293,7 @@ function jdate($type,$maket='now')
 				else if($result1=='Tue') $result1=_CAL_TUE;
 				else if($result1=='Wed') $result1=_CAL_WED;
 				else if($result1=='Thu') $result1=_CAL_THU;
-                                else if($result1=='Fri') $result1=_CAL_FRI;
+								else if($result1=='Fri') $result1=_CAL_FRI;
 				$result.=$result1;
 				break;
 			case'F':

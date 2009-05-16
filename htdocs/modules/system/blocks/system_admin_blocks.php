@@ -87,13 +87,13 @@ function b_system_admin_warnings_show(){
  * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
  */
 function b_system_admin_cp_show(){
-	global $icmsTpl, $xoopsConfig, $xoopsUser;
+	global $icmsTpl, $xoopsConfig, $icmsUser;
 	
 	$block['lang_cp']= _CPHOME;
 	$block['lang_insmodules'] = _AD_INSTALLEDMODULES;
 	
 	// Loading System Configuration Links
-	$groups = $xoopsUser->getGroups();
+	$groups = $icmsUser->getGroups();
 	$all_ok = false;
 	if(!in_array(XOOPS_GROUP_ADMIN, $groups))
 	{
@@ -143,7 +143,7 @@ function b_system_admin_cp_show(){
  * @todo Maybe it can be improved a little, is just a copy of the generate menu function.
  */
 function b_system_admin_modules_show(){
-	global $xoopsUser;
+	global $icmsUser;
 	$block['mods'] = array();
 	$module_handler = & xoops_gethandler ( 'module' );
 	$moduleperm_handler = & xoops_gethandler ( 'groupperm' );
@@ -193,7 +193,7 @@ function b_system_admin_modules_show(){
 		if ($module->dirname () == 'system') {
 			$systemadm = true;
 		}
-		$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->mid (), $xoopsUser->getGroups () );
+		$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->mid (), $icmsUser->getGroups () );
 		if ($admin_perm) {
 			if ($rtn ['dir'] != 'system') {
 				$block['mods'][] = $rtn;

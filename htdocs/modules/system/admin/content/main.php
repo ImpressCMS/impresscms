@@ -13,7 +13,7 @@
 * @version		$Id$
 */
 
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
+if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
     exit(_CT_ACCESS_DENIED);
 } else {
 
@@ -72,9 +72,9 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 }
 
 function contmanager_index($content_supid,$start=0,$tag=null){
-	global $icmsAdminTpl,$xoopsUser,$xoopsConfig,$limit,$editor;
+	global $icmsAdminTpl,$icmsUser,$xoopsConfig,$limit,$editor;
 
-	$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 	
 	include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
 	
@@ -508,7 +508,7 @@ function contmanager_changestatus($content_id) {
 }
 
 function contentform($id=null,$clone=false){
-	global $xoopsUser,$xoopsConfig,$editor,$im_multilanguageConfig;
+	global $icmsUser,$xoopsConfig,$editor,$im_multilanguageConfig;
 	include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
 	$gperm_handler =& xoops_gethandler('groupperm');
 
@@ -586,8 +586,8 @@ function contentform($id=null,$clone=false){
 		$status = 1;
 		$visibility = 3;
 		global $content_supid;
-		$content_uid = $xoopsUser->getVar('uid');
-		$grupos_ids = $xoopsUser->getGroups();
+		$content_uid = $icmsUser->getVar('uid');
+		$grupos_ids = $icmsUser->getGroups();
 		if (!in_array(XOOPS_GROUP_ANONYMOUS, $grupos_ids)) {
 			array_push($grupos_ids, XOOPS_GROUP_ANONYMOUS);
 		}		

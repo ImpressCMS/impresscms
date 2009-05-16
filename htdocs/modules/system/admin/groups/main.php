@@ -15,7 +15,7 @@
 */
 
 $gperm_handler =& xoops_gethandler('groupperm');
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) || ( isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], $xoopsUser->getGroups() ) )) {
+if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) || ( isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], $icmsUser->getGroups() ) )) {
 	exit("Access Denied");
 } else {
 	include_once XOOPS_ROOT_PATH."/modules/system/admin/groups/groups.php";

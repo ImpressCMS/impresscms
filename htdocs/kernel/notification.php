@@ -444,17 +444,17 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     function subscribe($category, $item_id, $events, $mode=null, $module_id=null, $user_id=null)
     {
         if (!isset($user_id)) {
-            global $xoopsUser;
-            if (empty($xoopsUser)) {
+            global $icmsUser;
+            if (empty($icmsUser)) {
                 return false;  // anonymous cannot subscribe
             } else {
-                $user_id = $xoopsUser->getVar('uid');
+                $user_id = $icmsUser->getVar('uid');
             }
         }
 
         if (!isset($module_id)) {
-            global $xoopsModule;
-            $module_id = $xoopsModule->getVar('mid');
+            global $icmsModule;
+            $module_id = $icmsModule->getVar('mid');
         }
 
         if (!isset($mode)) {
@@ -610,9 +610,9 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     function triggerEvent($category, $item_id, $event, $extra_tags=array(), $user_list=array(), $module_id=null, $omit_user_id=null)
     {
         if (!isset($module_id)) {
-            global $xoopsModule;
-            $module =& $xoopsModule;
-            $module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
+            global $icmsModule;
+            $module =& $icmsModule;
+            $module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
         } else {
             $module_handler =& xoops_gethandler('module');
             $module =& $module_handler->get($module_id);
@@ -632,9 +632,9 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     		}
 
         if (!isset($omit_user_id)) {
-            global $xoopsUser;
-            if (!empty($xoopsUser)) {
-                $omit_user_id = $xoopsUser->getVar('uid');
+            global $icmsUser;
+            if (!empty($icmsUser)) {
+                $omit_user_id = $icmsUser->getVar('uid');
             } else {
                 $omit_user_id = 0;
             }
@@ -753,17 +753,17 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     function unsubscribe($category, $item_id, $events, $module_id=null, $user_id=null)
     {
         if (!isset($user_id)) {
-            global $xoopsUser;
-            if (empty($xoopsUser)) {
+            global $icmsUser;
+            if (empty($icmsUser)) {
                 return false;  // anonymous cannot subscribe
             } else {
-                $user_id = $xoopsUser->getVar('uid');
+                $user_id = $icmsUser->getVar('uid');
             }
         }
 
         if (!isset($module_id)) {
-            global $xoopsModule;
-            $module_id = $xoopsModule->getVar('mid');
+            global $icmsModule;
+            $module_id = $icmsModule->getVar('mid');
         }
 
         $criteria = new CriteriaCompo();

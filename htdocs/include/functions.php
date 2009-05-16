@@ -118,7 +118,7 @@ function xoops_header($closehead=true)
 function xoops_footer()
 {
 	global $icmsConfigMetaFooter;
-	echo ''.htmlspecialchars($icmsConfigMetaFooter['google_analytics']).'</body></html>';
+	echo htmlspecialchars($icmsConfigMetaFooter['google_analytics']).'</body></html>';
 	ob_end_flush();
 }
 
@@ -274,10 +274,10 @@ function xoops_refcheck($docheck=1) {return $GLOBALS['xoopsSecurity']->checkRefe
 */
 function xoops_getUserTimestamp($time, $timeoffset="")
 {
-	global $icmsConfig, $xoopsUser;
+	global $icmsConfig, $icmsUser;
 	if($timeoffset == '')
 	{
-		if($xoopsUser) {$timeoffset = $xoopsUser->getVar('timezone_offset');}
+		if($icmsUser) {$timeoffset = $icmsUser->getVar('timezone_offset');}
 		else {$timeoffset = $icmsConfig['default_TZ'];}
 	}
 	$usertimestamp = intval($time) + (floatval($timeoffset) - $icmsConfig['server_TZ'])*3600;
@@ -295,7 +295,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
  */
 function formatTimestamp($time, $format = "l", $timeoffset = null)
 {
-	global $icmsConfig, $xoopsUser;
+	global $icmsConfig, $icmsUser;
 
 	$format_copy = $format;
 	$format = strtolower($format);
@@ -639,7 +639,7 @@ function xoops_getbanner()
 */
 function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 {
-	global $icmsConfig, $xoopsLogger, $icmsConfigPersona, $xoopsUserIsAdmin;
+	global $icmsConfig, $xoopsLogger, $icmsConfigPersona, $icmsUserIsAdmin;
 	if(preg_match("/[\\0-\\31]|about:|script:/i", $url))
 	{
 		if(preg_match('/^\b(java)?script:([\s]*)history\.go\(-[0-9]*\)([\s]*[;]*[\s]*)$/si', $url)) {$url = ICMS_URL;}
@@ -670,21 +670,21 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 		'icms_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
 		'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
-		'icms_dirname' => @$xoopsModule ? $xoopsModule->getVar('dirname') : 'system',
+		'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
 		'icms_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-		'icms_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES),
+		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule) ? $icmsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES),
 		'xoops_theme' => $theme,
 		'xoops_imageurl' => ICMS_THEME_URL.'/'.$theme.'/',
 		'xoops_themecss'=> xoops_getcss($theme),
 		'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
 		'xoops_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
 		'xoops_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
-		'xoops_dirname' => @$xoopsModule ? $xoopsModule->getVar('dirname') : 'system',
+		'xoops_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
 		'xoops_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-		'xoops_pagetitle' => isset($xoopsModule) && is_object($xoopsModule) ? $xoopsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES),
+		'xoops_pagetitle' => isset($icmsModule) && is_object($icmsModule) ? $icmsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES),
 	));
 
-	if($icmsConfig['debug_mode'] == 2 && $xoopsUserIsAdmin)
+	if($icmsConfig['debug_mode'] == 2 && $icmsUserIsAdmin)
 	{
 		$xoopsTpl->assign('time', 300);
 		$xoopsTpl->assign('xoops_logdump', $xoopsLogger->dump());
@@ -705,15 +705,15 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	$message = trim($message) != '' ? $message : _TAKINGBACK;
 	$xoopsTpl->assign('message', $message);
 	$xoopsTpl->assign('lang_ifnotreload', sprintf(_IFNOTRELOAD, $url));
-    // GIJ start
-    if( ! headers_sent() && $icmsConfigPersona['use_custom_redirection']==1) {
-        $_SESSION['redirect_message'] = $message ;
-        header( "Location: ".preg_replace("/[&]amp;/i",'&',$url) ) ;
-        exit();
-    }else{
-        $xoopsTpl->display('db:system_redirect.html');
-    }
-    // GIJ end
+	// GIJ start
+	if( ! headers_sent() && $icmsConfigPersona['use_custom_redirection']==1) {
+		$_SESSION['redirect_message'] = $message ;
+		header( "Location: ".preg_replace("/[&]amp;/i",'&',$url) ) ;
+		exit();
+	}else{
+		$xoopsTpl->display('db:system_redirect.html');
+	}
+	// GIJ end
 }
 
 /*
@@ -785,7 +785,7 @@ function &getMailer()
 	global $icmsConfig;
 	$inst = false;
 	include_once ICMS_ROOT_PATH.'/class/xoopsmailer.php';
-    icms_loadLanguageFile('core', 'xoopsmailerlocal');
+	icms_loadLanguageFile('core', 'xoopsmailerlocal');
 	if(class_exists('XoopsMailerLocal')) {$inst =& new XoopsMailerLocal();}
 	if(!$inst) {$inst =& new XoopsMailer();}
 	return $inst;
@@ -890,8 +890,8 @@ function xoops_getrank($rank_id =0, $posts = 0)
 * Function maintained only for compatibility
 *
 * @todo Search all places that this function is called
-*       and rename it to icms_substr.
-*       After this function can be removed.
+*	   and rename it to icms_substr.
+*	   After this function can be removed.
 *
 */
 function xoops_substr($str, $start, $length, $trimmarker = '...')
@@ -904,10 +904,10 @@ function xoops_substr($str, $start, $length, $trimmarker = '...')
 * If $trimmarker is supplied, it is appended to the return string.
 * This function works fine with multi-byte characters if mb_* functions exist on the server.
 *
-* @param    string    $str
-* @param    int       $start
-* @param    int       $length
-* @param    string    $trimmarker
+* @param	string	$str
+* @param	int	   $start
+* @param	int	   $length
+* @param	string	$trimmarker
 *
 * @return   string
 */
@@ -1121,8 +1121,8 @@ function xoops_getLinkedUnameFromId($userid)
 			$linkeduser = '<a href="'.ICMS_URL.'/userinfo.php?uid='.$userid.'">'.$user->getVar('uname').'</a>';
 			return $linkeduser;
 		}
-    }
-    return $GLOBALS['xoopsConfig']['anonymous'];
+	}
+	return $GLOBALS['xoopsConfig']['anonymous'];
 }
 
 /**
@@ -1133,17 +1133,17 @@ function xoops_getLinkedUnameFromId($userid)
 */
 function xoops_trim($text)
 {
-    if(function_exists('xoops_language_trim')) {return xoops_language_trim($text);}
-    return trim($text);
+	if(function_exists('xoops_language_trim')) {return xoops_language_trim($text);}
+	return trim($text);
 }
 
 /**
 * Copy a file, or a folder and its contents
 *
 * @author	Aidan Lister <aidan@php.net>
-* @param	string	$source    The source
-* @param	string  $dest      The destination
-* @return   bool    Returns true on success, false on failure
+* @param	string	$source	The source
+* @param	string  $dest	  The destination
+* @return   bool	Returns true on success, false on failure
 */
 function icms_copyr($source, $dest)
 {
@@ -1170,8 +1170,8 @@ function icms_copyr($source, $dest)
 * Create a folder
 *
 * @author	Newbb2 developpement team
-* @param	string	$target    folder being created
-* @return   bool    Returns true on success, false on failure
+* @param	string	$target	folder being created
+* @return   bool	Returns true on success, false on failure
 */
 function icms_mkdir($target)
 {
@@ -1198,8 +1198,8 @@ function icms_mkdir($target)
 *
 * @author	Newbb2 developpement team
 * @param	string	$target  target file or folder
-* @param	int		$mode    permission
-* @return   bool    Returns true on success, false on failure
+* @param	int		$mode	permission
+* @return   bool	Returns true on success, false on failure
 */
 function icms_chmod($target, $mode = 0777) {return @chmod($target, $mode);}
 
@@ -1217,18 +1217,18 @@ function &icms_getModuleInfo($moduleName = false)
 		$ret =& $icmsModules[$moduleName];
 		return $ret;
 	}
-	global $xoopsModule;
+	global $icmsModule;
 	if(!$moduleName)
 	{
-		if(isset($xoopsModule) && is_object($xoopsModule))
+		if(isset($icmsModule) && is_object($icmsModule))
 		{
-			$icmsModules[$xoopsModule->getVar('dirname')] = & $xoopsModule;
-			return $icmsModules[$xoopsModule->getVar('dirname')];
+			$icmsModules[$icmsModule->getVar('dirname')] = & $icmsModule;
+			return $icmsModules[$icmsModule->getVar('dirname')];
 		}
 	}
 	if(!isset($icmsModules[$moduleName]))
 	{
-		if(isset($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $moduleName) {$icmsModules[$moduleName] = & $xoopsModule;}
+		if(isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {$icmsModules[$moduleName] = & $icmsModule;}
 		else
 		{
 			$hModule = & xoops_gethandler('module');
@@ -1253,13 +1253,13 @@ function &icms_getModuleConfig($moduleName = false)
 		$ret = & $icmsConfigs[$moduleName];
 		return $ret;
 	}
-	global $xoopsModule, $xoopsModuleConfig;
+	global $icmsModule, $icmsModuleConfig;
 	if(!$moduleName)
 	{
-		if(isset($xoopsModule) && is_object($xoopsModule))
+		if(isset($icmsModule) && is_object($icmsModule))
 		{
-			$icmsConfigs[$xoopsModule->getVar('dirname')] = & $xoopsModuleConfig;
-			return $icmsConfigs[$xoopsModule->getVar('dirname')];
+			$icmsConfigs[$icmsModule->getVar('dirname')] = & $icmsModuleConfig;
+			return $icmsConfigs[$icmsModule->getVar('dirname')];
 		}
 	}
 	// if we still did not found the xoopsModule, this is because there is none
@@ -1268,7 +1268,7 @@ function &icms_getModuleConfig($moduleName = false)
 		$ret = false;
 		return $ret;
 	}
-	if(isset($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == $moduleName) {$icmsConfigs[$moduleName] = & $xoopsModuleConfig;}
+	if(isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {$icmsConfigs[$moduleName] = & $icmsModuleConfig;}
 	else
 	{
 		$module = & icms_getModuleInfo($moduleName);
@@ -1310,8 +1310,8 @@ function icms_getConfig($key, $moduleName = false, $default = 'default_is_undefi
 */
 function icms_getCurrentModuleName()
 {
-	global $xoopsModule;
-	if(is_object($xoopsModule)) {return $xoopsModule->getVar('dirname');}
+	global $icmsModule;
+	if(is_object($icmsModule)) {return $icmsModule->getVar('dirname');}
 	else {return false;}
 }
 
@@ -1323,15 +1323,15 @@ function icms_getCurrentModuleName()
 */
 function icms_userIsAdmin($module = false)
 {
-	global $xoopsUser;
+	global $icmsUser;
 	static $icms_isAdmin;
 	if(!$module)
 	{
-		global $xoopsModule;
-		$module = $xoopsModule->getVar('dirname');
+		global $icmsModule;
+		$module = $icmsModule->getVar('dirname');
 	}
 	if(isset ($icms_isAdmin[$module])) {return $icms_isAdmin[$module];}
-	if(!$xoopsUser)
+	if(!$icmsUser)
 	{
 		$icms_isAdmin[$module] = false;
 		return $icms_isAdmin[$module];
@@ -1340,7 +1340,7 @@ function icms_userIsAdmin($module = false)
 	$icmsModule = icms_getModuleInfo($module);
 	if(!is_object($icmsModule)) {return false;}
 	$module_id = $icmsModule->getVar('mid');
-	$icms_isAdmin[$module] = $xoopsUser->isAdmin($module_id);
+	$icms_isAdmin[$module] = $icmsUser->isAdmin($module_id);
 	return $icms_isAdmin[$module];
 }
 
@@ -1393,7 +1393,7 @@ function icms_getfloat($str, $set=FALSE)
 			if(preg_match("/^[0-9\-]*[\.]{1}[0-9-]+$/", $str) == TRUE && $set['single_dot_as_decimal'] == TRUE) {return floatval($str);}
 			else
 			{
-				$str = str_replace('.', '', $str);    // Erase thousand seps
+				$str = str_replace('.', '', $str);	// Erase thousand seps
 				return floatval($str);
 			}
 		}
@@ -1489,10 +1489,10 @@ function icms_html2text($document)
 	// common HTML entities to their text equivalent.
 	// Credits : newbb2
 	$search = array ("'<script[^>]*?>.*?</script>'si",  // Strip out javascript
-	"'<img.*?/>'si",       // Strip out img tags
-	"'<[\/\!]*?[^<>]*?>'si",          // Strip out HTML tags
-	"'([\r\n])[\s]+'",                // Strip out white space
-	"'&(quot|#34);'i",                // Replace HTML entities
+	"'<img.*?/>'si",	   // Strip out img tags
+	"'<[\/\!]*?[^<>]*?>'si",		  // Strip out HTML tags
+	"'([\r\n])[\s]+'",				// Strip out white space
+	"'&(quot|#34);'i",				// Replace HTML entities
 	"'&(amp|#38);'i",
 	"'&(lt|#60);'i",
 	"'&(gt|#62);'i",
@@ -1501,7 +1501,7 @@ function icms_html2text($document)
 	"'&(cent|#162);'i",
 	"'&(pound|#163);'i",
 	"'&(copy|#169);'i",
-	"'&#(\d+);'e");                    // evaluate as php
+	"'&#(\d+);'e");					// evaluate as php
 
 	$replace = array ("",
 	"",
@@ -1539,7 +1539,7 @@ function icms_passExpired($uname = '')
 	$db =& Database::getInstance();
 	if($uname !== '')
 	{
-	    	$sql = $db->query("SELECT uname, pass_expired FROM ".$db->prefix('users')." WHERE uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
+			$sql = $db->query("SELECT uname, pass_expired FROM ".$db->prefix('users')." WHERE uname = '".@htmlspecialchars($uname, ENT_QUOTES, _CHARSET)."'");
 		list($uname, $pass_expired) = $db->fetchRow($sql);
 	}
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
@@ -1561,10 +1561,10 @@ function icms_createSalt($slength=64)
 	$salt= '';
 	$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	$microtime = function_exists('microtime') ? microtime() : time();
-    	srand((double)$microtime * 1000000);
-    	for($i=0; $i<=$slength; $i++)
+		srand((double)$microtime * 1000000);
+		for($i=0; $i<=$slength; $i++)
 		$salt.= substr($base, rand() % strlen($base), 1);
-    	return $salt;
+		return $salt;
 }
 
 /**
@@ -2294,7 +2294,7 @@ function Icms_getMonthNameById($month_id) {
  */
 function ext_date($type,$maket='now')
 {
-/*    	$string = str_replace(
+/*		$string = str_replace(
 		array(_CAL_AM, _CAL_PM, _CAL_AM_LONG, _CAL_PM_LONG, _CAL_SAT, _CAL_SUN, _CAL_MON, _CAL_TUE, _CAL_WED, _CAL_THU, _CAL_FRI, _CAL_SATURDAY, _CAL_SUNDAY, _CAL_MONDAY, _CAL_TUESDAY, _CAL_WEDNESDAY, _CAL_THURSDAY, _CAL_FRIDAY),
 		array('Am', 'Pm', 'AM', 'PM', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'),
 		$string);
@@ -2341,7 +2341,7 @@ function ext_date($type,$maket='now')
 				else if($result1=='Tue') $result1=_CAL_TUE;
 				else if($result1=='Wed') $result1=_CAL_WED;
 				else if($result1=='Thu') $result1=_CAL_THU;
-                else if($result1=='Fri') $result1=_CAL_FRI;
+				else if($result1=='Fri') $result1=_CAL_FRI;
 				$result.=$result1;
 				break;
 			case'F':
@@ -2475,9 +2475,9 @@ function icms_getPreviousPage($default=false) {
  * @return string URL of the admin side of the module
  */
 function icms_getModuleAdminLink($moduleName=false) {
-	global $xoopsModule;
-	if (!$moduleName && (isset ($xoopsModule) && is_object($xoopsModule))) {
-		$moduleName = $xoopsModule->getVar('dirname');
+	global $icmsModule;
+	if (!$moduleName && (isset ($icmsModule) && is_object($icmsModule))) {
+		$moduleName = $icmsModule->getVar('dirname');
 	}
 	$ret = '';
 	if ($moduleName) {
@@ -2602,8 +2602,8 @@ function icms_imageResize($src, $maxWidth, $maxHeight) {
  */
 function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
 	if (!$moduleName) {
-		global $xoopsModule;
-		$moduleName = $xoopsModule->getVar('dirname');
+		global $icmsModule;
+		$moduleName = $icmsModule->getVar('dirname');
 	}
 	$icmsModule = icms_getModuleInfo($moduleName);
 	$icmsModuleConfig = icms_getModuleConfig($moduleName);
@@ -2614,15 +2614,15 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
 	if (!$withLink) {
 		return $icmsModule->getVar('name');
 	} else {
-/*	    $seoMode = smart_getModuleModeSEO($moduleName);
-	    if ($seoMode == 'rewrite') {
-	    	$seoModuleName = smart_getModuleNameForSEO($moduleName);
-	    	$ret = XOOPS_URL . '/' . $seoModuleName . '/';
-	    } elseif ($seoMode == 'pathinfo') {
-	    	$ret = XOOPS_URL . '/modules/' . $moduleName . '/seo.php/' . $seoModuleName . '/';
-	    } else {
-			$ret = XOOPS_URL . '/modules/' . $moduleName . '/';
-	    }
+/*		$seoMode = smart_getModuleModeSEO($moduleName);
+		if ($seoMode == 'rewrite') {
+			$seoModuleName = smart_getModuleNameForSEO($moduleName);
+			$ret = ICMS_URL . '/' . $seoModuleName . '/';
+		} elseif ($seoMode == 'pathinfo') {
+			$ret = ICMS_URL . '/modules/' . $moduleName . '/seo.php/' . $seoModuleName . '/';
+		} else {
+			$ret = ICMS_URL . '/modules/' . $moduleName . '/';
+		}
 */
 		$ret = ICMS_URL . '/modules/' . $moduleName . '/';
 		return '<a href="' . $ret . '">' . $icmsModule->getVar('name') . '</a>';
@@ -2686,8 +2686,8 @@ function icms_random_str($numchar){
  * @param string $breadcrumb	The breadcrumb if it is passed, otherwise empty string
  */
 function icms_adminMenu($currentoption = 0, $breadcrumb = '') {
-	global $xoopsModule;
-	$xoopsModule->displayAdminMenu( $currentoption, $xoopsModule -> name() . ' | ' . $breadcrumb );
+	global $icmsModule;
+	$icmsModule->displayAdminMenu( $currentoption, $icmsModule -> name() . ' | ' . $breadcrumb );
 }
 
 /**
@@ -2709,8 +2709,8 @@ function icms_getCurrentPage() {
 
 /*function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
 	if (!$moduleName) {
-		global $xoopsModule;
-		$moduleName = $xoopsModule->getVar('dirname');
+		global $icmsModule;
+		$moduleName = $icmsModule->getVar('dirname');
 	}
 	$icmsModule = & icms_getModuleInfo($moduleName);
 	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
@@ -2724,15 +2724,15 @@ function icms_getCurrentPage() {
 	if (!$withLink) {
 		return $icmsModule->getVar('name');
 	} else {
-	    $seoMode = icms_getModuleModeSEO($moduleName);
-	    if ($seoMode == 'rewrite') {
-	    	$seoModuleName = icms_getModuleNameForSEO($moduleName);
-	    	$ret = XOOPS_URL . '/' . $seoModuleName . '/';
-	    } elseif ($seoMode == 'pathinfo') {
-	    	$ret = XOOPS_URL . '/modules/' . $moduleName . '/seo.php/' . $seoModuleName . '/';
-	    } else {
-			$ret = XOOPS_URL . '/modules/' . $moduleName . '/';
-	    }
+		$seoMode = icms_getModuleModeSEO($moduleName);
+		if ($seoMode == 'rewrite') {
+			$seoModuleName = icms_getModuleNameForSEO($moduleName);
+			$ret = ICMS_URL . '/' . $seoModuleName . '/';
+		} elseif ($seoMode == 'pathinfo') {
+			$ret = ICMS_URL . '/modules/' . $moduleName . '/seo.php/' . $seoModuleName . '/';
+		} else {
+			$ret = ICMS_URL . '/modules/' . $moduleName . '/';
+		}
 
 		return '<a href="' . $ret . '">' . $icmsModule->getVar('name') . '</a>';
 	}
@@ -2810,9 +2810,9 @@ function icms_get_module_status($module_name){
 * Wrap a long term or word
 *
 * @author	<admin@jcink.com>
-* @param	string	$string    The string
-* @param	string  $width      The length
-* @return   bool    Returns a long term, in several small parts with the length of $width
+* @param	string	$string	The string
+* @param	string  $width	  The length
+* @return   bool	Returns a long term, in several small parts with the length of $width
 */
 function one_wordwrap($string,$width=false){
 	$width = $width ? $width : '15';
@@ -2832,8 +2832,8 @@ function one_wordwrap($string,$width=false){
 * @author	Steve Kenow (aka skenow) <skenow@impresscms.org>
 * @author	modified by Vaughan <vaughan@impresscms.org>
 * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @param	string	$path    The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_ROOT_PATH."/templates_c/");
-* @param	bool  $remove_admin_cache      True to remove admin cache, if required.
+* @param	string	$path	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_ROOT_PATH."/templates_c/");
+* @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
 */
 function icms_clean_folders($dir, $remove_admin_cache=false) {
 	global $icmsConfig;
@@ -2863,26 +2863,26 @@ function icms_unlinkRecursive($dir, $deleteRootToo=true)
 {
    if(!$dh = @opendir($dir))
    {
-       return;
+	   return;
    }
    while (false !== ($obj = readdir($dh)))
    {
-       if($obj == '.' || $obj == '..')
-       {
-           continue;
-       }
+	   if($obj == '.' || $obj == '..')
+	   {
+		   continue;
+	   }
 
-       if (!@unlink($dir . '/' . $obj))
-       {
-           icms_unlinkRecursive($dir.'/'.$obj, true);
-       }
+	   if (!@unlink($dir . '/' . $obj))
+	   {
+		   icms_unlinkRecursive($dir.'/'.$obj, true);
+	   }
    }
 
    closedir($dh);
 
    if ($deleteRootToo)
    {
-       @rmdir($dir);
+	   @rmdir($dir);
    }
 
    return;
@@ -2893,7 +2893,7 @@ function icms_unlinkRecursive($dir, $deleteRootToo=true)
  *
  */
 function icms_PasswordMeter(){
-    global $xoTheme, $icmsConfigUser;
+	global $xoTheme, $icmsConfigUser;
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript(ICMS_URL.'/libraries/jquery/password_strength_plugin.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript('', array('type' => ''), '
@@ -2953,8 +2953,46 @@ function icms_makeSmarty($items) {
 	global $icmsTpl;
 	if (!isset($icmsTpl) || !is_array($items))return false;
 	foreach ($items as $item => $value){
-        $icmsTpl->assign($item, $value);
-    }
+		$icmsTpl->assign($item, $value);
+	}
 	return true;
 }
+
+/**
+* Copy a file, or a folder and its contents from a website to your host
+*
+* @author	Sina Asghari <stranger@impresscms.org>
+* @author	nensa at zeec dot biz
+* @param	string	$src	The source
+* @param	string  $dest	  The destination
+* @return   bool	Returns stream_copy_to_stream($src, $dest) on success, false on failure
+*/
+	function icms_stream_copy($src, $dest)
+	{
+		$len = false;
+		if(@ini_get('allow_url_fopen')){
+		//if(!ini_get('allow_url_fopen')){
+			/*$output = $input = '';
+			$chdest = $chsrc = curl_init();
+			curl_setopt($chsrc, CURLOPT_URL, "$src");
+			curl_setopt($chsrc, CURLOPT_HEADER,0);
+			curl_setopt($chsrc, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($chdest, CURLOPT_URL, "$dest");
+			curl_setopt($chdest, CURLOPT_POST, 1);
+			curl_setopt($chdest, CURLOPT_POSTFIELDS, 1);
+			$input .=curl_exec($chsrc);
+			$output .=curl_exec($chdest);
+			curl_close($chsrc);
+			curl_close($chdest);
+			$len = stream_copy_to_stream($input,$output);
+		}else{*/
+		$fsrc = fopen($src,'r');
+		$fdest = fopen($dest,'w+');
+		$len = stream_copy_to_stream($fsrc,$fdest);
+		fclose($fsrc);
+		fclose($fdest);
+		}
+		return $len;
+	}
+
 ?>

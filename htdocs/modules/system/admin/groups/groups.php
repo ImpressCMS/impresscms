@@ -14,7 +14,7 @@
 * @version	$Id$
 */
 
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
+if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
 }
 
@@ -24,14 +24,14 @@ if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin(
 function displayGroups()
 {
 	xoops_cp_header();
-	global $xoopsUser;
+	global $icmsUser;
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/groups/images/groups_big.png)">'._AM_EDITADG.'</div><br />';
 	$member_handler =& xoops_gethandler('member');
 	$groups =& $member_handler->getGroups();
 	echo "<table class='outer' width='40%' cellpadding='4' cellspacing='1'><tr><th colspan='2'>"._AM_EDITADG."</th></tr>";
 	$count = count($groups);
 	$gperm_handler =& xoops_gethandler('groupperm');
-	$ugroups  = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+	$ugroups  = (is_object($icmsUser)) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 	for ($i = 0; $i < $count; $i++) {
 		$id = $groups[$i]->getVar('groupid');
 		if($gperm_handler->checkRight('group_manager', $id, $ugroups)){

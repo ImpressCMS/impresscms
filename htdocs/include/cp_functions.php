@@ -33,7 +33,7 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
 function icms_cp_header(){
-  	global $icmsConfig, $icmsConfigPlugins, $icmsConfigPersona, $xoopsModule, $xoopsUser, $xoopsOption, $xoTheme, $icmsConfigMultilang, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
+  	global $icmsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule, $icmsUser, $xoopsOption, $xoTheme, $icmsConfigMultilang, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
 	$xoopsLogger->stopTime( 'Module init' );
 	$xoopsLogger->startTime( 'ImpressCMS CP Output Init' );
 
@@ -48,7 +48,7 @@ function icms_cp_header(){
 
 	require_once ICMS_ROOT_PATH . '/class/template.php';
 	//require_once ICMS_ROOT_PATH . '/class/theme'.(( file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme_admin.html' ) || file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme.html' )) ?'_admin':'').'.php';
-    require_once ICMS_ROOT_PATH . '/class/theme.php';
+	require_once ICMS_ROOT_PATH . '/class/theme.php';
 	require_once ICMS_ROOT_PATH . '/class/theme_blocks.php';
 	if( !isset($icmsPreloadHandler) )
 		$icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];
@@ -71,12 +71,12 @@ function icms_cp_header(){
 	// TODO: Remove all this after a few versions!!
 	if(isset($icmsConfig['theme_admin_set']))
 		$xoopsThemeFactory->defaultTheme = $icmsConfig['theme_admin_set'];
-    $xoTheme =& $xoopsThemeFactory->createInstance( array(
-    	'contentTemplate'	=> @$xoopsOption['template_main'],
-    	'canvasTemplate'	=> 'theme'.(( file_exists(ICMS_THEME_PATH.'/'.$icmsConfig['theme_admin_set'].'/theme_admin.html') || file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme_admin.html') ) ?'_admin':'').'.html',
-    	'plugins' 			=> array('xos_logos_PageBuilder')
-    ) );
-    $icmsAdminTpl = $xoTheme->template;
+	$xoTheme =& $xoopsThemeFactory->createInstance( array(
+		'contentTemplate'	=> @$xoopsOption['template_main'],
+		'canvasTemplate'	=> 'theme'.(( file_exists(ICMS_THEME_PATH.'/'.$icmsConfig['theme_admin_set'].'/theme_admin.html') || file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme_admin.html') ) ?'_admin':'').'.html',
+		'plugins' 			=> array('xos_logos_PageBuilder')
+	) );
+	$icmsAdminTpl = $xoTheme->template;
 
 	// ################# Preload Trigger startOutputInit ##############
 	$icmsPreloadHandler->triggerEvent('adminHeader');
@@ -110,58 +110,58 @@ function icms_cp_header(){
 	
 /*	$jscript = '';
  	if(class_exists('XoopsFormDhtmlTextArea')){
-        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-         	if( empty( $key ) ) 
-         		continue;
-         	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
-         		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
-         	}else{
-         		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-         		$func = 'render_'.$key;
-         		if ( function_exists($func) ) {
-         			@list($encode, $jscript) = $func($ele_name);
-         		 	if (!empty($jscript)) {
-         		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
-         					$xoTheme->addScript('', array('type' => 'text/javascript'), $jscript);
-         				}else{
-         					$xoTheme->addScript($jscript, array('type' => 'text/javascript'));
-         				}
-         			}
-         		}
-         	}
-        }
+		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+		 	if( empty( $key ) ) 
+		 		continue;
+		 	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
+		 		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
+		 	}else{
+		 		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+		 		$func = 'render_'.$key;
+		 		if ( function_exists($func) ) {
+		 			@list($encode, $jscript) = $func($ele_name);
+		 		 	if (!empty($jscript)) {
+		 		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
+		 					$xoTheme->addScript('', array('type' => 'text/javascript'), $jscript);
+		 				}else{
+		 					$xoTheme->addScript($jscript, array('type' => 'text/javascript'));
+		 				}
+		 			}
+		 		}
+		 	}
+		}
  	}
 */
 	$style_info = '';
-    foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-       	if( empty( $key ) ) 
-       		continue;
-       	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
-       		$xoTheme->addStylesheet(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
-       	}else{
-       		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-       		$func = 'style_'.$key;
-       		if ( function_exists($func) ) {
-       			$style_info = $func();
-       		 	if (!empty($style_info)) {
-       		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
-       					$xoTheme->addStylesheet('', array('media' => 'screen'), $style_info);
-       				}else{
-       					$xoTheme->addStylesheet($style_info, array('media' => 'screen'));
-       				}
-       			}
-       		}
-       	}
-      }
+	foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+	   	if( empty( $key ) ) 
+	   		continue;
+	   	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
+	   		$xoTheme->addStylesheet(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
+	   	}else{
+	   		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+	   		$func = 'style_'.$key;
+	   		if ( function_exists($func) ) {
+	   			$style_info = $func();
+	   		 	if (!empty($style_info)) {
+	   		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
+	   					$xoTheme->addStylesheet('', array('media' => 'screen'), $style_info);
+	   				}else{
+	   					$xoTheme->addStylesheet($style_info, array('media' => 'screen'));
+	   				}
+	   			}
+	   		}
+	   	}
+	  }
 
 	/**
 	 * Loading admin dropdown menus
 	 */
-	if (! file_exists ( XOOPS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php' )) {
+	if (! file_exists ( ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php' )) {
 		xoops_module_write_admin_menu(impresscms_get_adminmenu());
 	}
 
-	$file = file_get_contents ( XOOPS_CACHE_PATH . "/adminmenu_" . $icmsConfig ['language'] . ".php" );
+	$file = file_get_contents ( ICMS_CACHE_PATH . "/adminmenu_" . $icmsConfig ['language'] . ".php" );
 	$admin_menu = eval ( 'return ' . $file . ';' );
 
 	$moduleperm_handler = & xoops_gethandler ( 'groupperm' );
@@ -171,7 +171,7 @@ function icms_cp_header(){
 			$perm_itens = array ( );
 			foreach ( $navitem ['menu'] as $item ) {
 				$module = $module_handler->getByDirname ( $item ['dir'] );
-				$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->mid (), $xoopsUser->getGroups () );
+				$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->mid (), $icmsUser->getGroups () );
 				if ($admin_perm) {
 					if ($item ['dir'] != 'system') {
 						$perm_itens [] = $item;
@@ -181,9 +181,9 @@ function icms_cp_header(){
 			$navitem ['menu'] = $mods = $perm_itens;
 		} //end
 		if ($navitem ['id'] == 'opsystem') {
-			$groups = $xoopsUser->getGroups ();
+			$groups = $icmsUser->getGroups ();
 			$all_ok = false;
-			if (! in_array ( XOOPS_GROUP_ADMIN, $groups )) {
+			if (! in_array ( ICMS_GROUP_ADMIN, $groups )) {
 				$sysperm_handler = & xoops_gethandler ( 'groupperm' );
 				$ok_syscats = & $sysperm_handler->getItemIds ( 'system_admin', $groups );
 			} else {
@@ -235,8 +235,8 @@ function icms_cp_header(){
 	/**
 	 * Loading options of the current module.
 	 */
-	if ($xoopsModule) {
-		if ($xoopsModule->dirname () == 'system') {
+	if ($icmsModule) {
+		if ($icmsModule->dirname () == 'system') {
 			if (isset ( $sysprefs ) && count ( $sysprefs ) > 0) {
 				for($i = count ( $sysprefs ) - 1; $i >= 0; $i = $i - 1) {
 					if (isset ( $sysprefs [$i] )) {
@@ -249,7 +249,7 @@ function icms_cp_header(){
 			}
 		} else {
 			foreach ( $mods as $mod ) {
-				if ($mod ['dir'] == $xoopsModule->dirname ()) {
+				if ($mod ['dir'] == $icmsModule->dirname ()) {
 					$m = $mod; //Getting info of the current module
 					break;
 				}
@@ -265,19 +265,19 @@ function icms_cp_header(){
 				}
 			}
 		}
-		$icmsAdminTpl->assign ( 'modpath', XOOPS_URL . '/modules/' . $xoopsModule->dirname () );
-		$icmsAdminTpl->assign ( 'modname', $xoopsModule->name () );
-		$icmsAdminTpl->assign ( 'modid', $xoopsModule->mid () );
-		$icmsAdminTpl->assign ( 'moddir', $xoopsModule->dirname () );
+		$icmsAdminTpl->assign ( 'modpath', ICMS_URL . '/modules/' . $icmsModule->dirname () );
+		$icmsAdminTpl->assign ( 'modname', $icmsModule->name () );
+		$icmsAdminTpl->assign ( 'modid', $icmsModule->mid () );
+		$icmsAdminTpl->assign ( 'moddir', $icmsModule->dirname () );
 		$icmsAdminTpl->assign ( 'lang_prefs', _PREFERENCES );
 	}
 
 	if ( @is_object( $xoTheme->plugins['xos_logos_PageBuilder'] ) ) {
 		$aggreg =& $xoTheme->plugins['xos_logos_PageBuilder'];
 
-    $icmsAdminTpl->assign_by_ref( 'xoAdminBlocks', $aggreg->blocks );
+	$icmsAdminTpl->assign_by_ref( 'xoAdminBlocks', $aggreg->blocks );
 
-    // Backward compatibility code for pre 2.0.14 themes
+	// Backward compatibility code for pre 2.0.14 themes
 		$icmsAdminTpl->assign_by_ref( 'xoops_lblocks', $aggreg->blocks['canvas_left'] );
 		$icmsAdminTpl->assign_by_ref( 'xoops_rblocks', $aggreg->blocks['canvas_right'] );
 		$icmsAdminTpl->assign_by_ref( 'xoops_ccblocks', $aggreg->blocks['page_topcenter'] );
@@ -327,14 +327,14 @@ function xoops_cp_header(){
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function icms_cp_footer(){
-	global $icmsConfig, $xoopsOption, $xoopsLogger, $xoopsUser, $xoTheme, $icmsTpl ,$icmsConfigMultilang, $icmsLibrariesHandler, $xoopsModule;
+	global $icmsConfig, $xoopsOption, $xoopsLogger, $icmsUser, $xoTheme, $icmsTpl ,$icmsConfigMultilang, $icmsLibrariesHandler, $icmsModule;
 	$xoopsLogger->stopTime( 'Module display' );
 
 	if (!headers_sent()) {
-    header('Content-Type:text/html; charset='._CHARSET);
-    header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-    header('Cache-Control: private, no-cache');
-    header('Pragma: no-cache');
+	header('Content-Type:text/html; charset='._CHARSET);
+	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+	header('Cache-Control: private, no-cache');
+	header('Pragma: no-cache');
 	}
 	if ( isset( $xoopsOption['template_main'] ) && $xoopsOption['template_main'] != $xoTheme->contentTemplate ) {
 		trigger_error( "xoopsOption[template_main] should be defined before including header.php", E_USER_WARNING );
@@ -408,7 +408,7 @@ function xoopsfwrite() {
  * @return array (content of admin panel dropdown menus)
  */
 function impresscms_get_adminmenu() {
-	global $xoopsUser;
+	global $icmsUser;
 	
 	$admin_menu = array ( );
 	$modules_menu = array ( );
@@ -419,22 +419,22 @@ function impresscms_get_adminmenu() {
 	# Control Panel Home menu
 	#########################################################################
 	$i = 0;
-	$menu [$i] ['link'] = XOOPS_URL . "/admin.php";
+	$menu [$i] ['link'] = ICMS_URL . "/admin.php";
 	$menu [$i] ['title'] = _CPHOME;
 	$menu [$i] ['absolute'] = 1;
-	$menu [$i] ['small'] = XOOPS_URL . "/modules/system/images/mini_cp.png";
+	$menu [$i] ['small'] = ICMS_URL . "/modules/system/images/mini_cp.png";
 	$i ++;
 	
-	$menu [$i] ['link'] = XOOPS_URL;
+	$menu [$i] ['link'] = ICMS_URL;
 	$menu [$i] ['title'] = _YOURHOME;
 	$menu [$i] ['absolute'] = 1;
-	$menu [$i] ['small'] = XOOPS_URL . "/modules/system/images/home.png";
+	$menu [$i] ['small'] = ICMS_URL . "/modules/system/images/home.png";
 	$i ++;
 	
-	$menu [$i] ['link'] = XOOPS_URL . "/user.php?op=logout";
+	$menu [$i] ['link'] = ICMS_URL . "/user.php?op=logout";
 	$menu [$i] ['title'] = _LOGOUT;
 	$menu [$i] ['absolute'] = 1;
-	$menu [$i] ['small'] = XOOPS_URL . '/images/logout.png';
+	$menu [$i] ['small'] = ICMS_URL . '/images/logout.png';
 	
 	$admin_menu [$cont] ['id'] = 'cphome';
 	$admin_menu [$cont] ['text'] = _CPHOME;
@@ -459,7 +459,7 @@ function impresscms_get_adminmenu() {
 	
 	$admin_menu [$cont] ['id'] = 'opsystem';
 	$admin_menu [$cont] ['text'] = _SYSTEM;
-	$admin_menu [$cont] ['link'] = XOOPS_URL . '/modules/system/admin.php';
+	$admin_menu [$cont] ['link'] = ICMS_URL . '/modules/system/admin.php';
 	$admin_menu [$cont] ['menu'] = $menu;
 	$cont ++;
 	#########################################################################
@@ -479,14 +479,14 @@ function impresscms_get_adminmenu() {
 	foreach ( $modules as $module ) {
 		$rtn = array ( );
 		$inf = & $module->getInfo ();
-		$rtn ['link'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . (isset ( $inf ['adminindex'] ) ? $inf ['adminindex'] : '');
+		$rtn ['link'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . (isset ( $inf ['adminindex'] ) ? $inf ['adminindex'] : '');
 		$rtn ['title'] = $module->name ();
 		$rtn ['dir'] = $module->dirname ();
 		if (isset ( $inf ['iconsmall'] ) && $inf ['iconsmall'] != '') {
-			$rtn ['small'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconsmall'];
+			$rtn ['small'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconsmall'];
 		}
 		if (isset ( $inf ['iconbig'] ) && $inf ['iconbig'] != '') {
-			$rtn ['iconbig'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconbig'];
+			$rtn ['iconbig'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconbig'];
 		}
 		$rtn ['absolute'] = 1;
 		$module->loadAdminMenu ();
@@ -494,7 +494,7 @@ function impresscms_get_adminmenu() {
 			$rtn ['hassubs'] = 1;
 			$rtn ['subs'] = array ( );
 			foreach ( $module->adminmenu as $item ) {
-				$item ['link'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . $item ['link'];
+				$item ['link'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $item ['link'];
 				$rtn ['subs'] [] = $item;
 			}
 		} else {
@@ -508,7 +508,7 @@ function impresscms_get_adminmenu() {
 			if (! isset ( $rtn ['subs'] )) {
 				$rtn ['subs'] = array ( );
 			}
-			$subs = array ('title' => _PREFERENCES, 'link' => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $module->mid () );
+			$subs = array ('title' => _PREFERENCES, 'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $module->mid () );
 			$rtn ['subs'] [] = $subs;
 		} else {
 			$rtn ['hassubs'] = 0;
@@ -522,7 +522,7 @@ function impresscms_get_adminmenu() {
 	
 	$admin_menu [$cont] ['id'] = 'modules';
 	$admin_menu [$cont] ['text'] = _MODULES;
-	$admin_menu [$cont] ['link'] = XOOPS_URL . '/modules/system/admin.php?fct=modulesadmin';
+	$admin_menu [$cont] ['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin';
 	$admin_menu [$cont] ['menu'] = $modules_menu;
 	$cont ++;
 	#########################################################################
@@ -539,57 +539,57 @@ function impresscms_get_adminmenu() {
 	$menu [$i] ['link'] = 'http://www.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_HOME;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	if ( _LANGCODE != 'en' ){
 	$menu [$i] ['link'] = _IMPRESSCMS_LOCAL_SUPPORT;
 	$menu [$i] ['title'] = _IMPRESSCMS_LOCAL_SUPPORT_TITLE;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
-    }
+	}
 
 	$menu [$i] ['link'] = 'http://community.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_COMMUNITY;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	$menu [$i] ['link'] = 'http://addons.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_ADDONS;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	$menu [$i] ['link'] = 'http://wiki.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_WIKI;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	$menu [$i] ['link'] = 'http://blog.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_BLOG;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	$menu [$i] ['link'] = 'http://sourceforge.net/projects/impresscms/';
 	$menu [$i] ['title'] = _IMPRESSCMS_SOURCEFORGE;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	$menu [$i] ['link'] = 'http://www.impresscms.org/donations/';
 	$menu [$i] ['title'] = _IMPRESSCMS_DONATE;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
 	
-	$menu [$i] ['link'] = XOOPS_URL . "/admin.php?rssnews=1";
+	$menu [$i] ['link'] = ICMS_URL . "/admin.php?rssnews=1";
 	$menu [$i] ['title'] = _IMPRESSCMS_NEWS;
 	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = XOOPS_URL.'/images/impresscms.png';
+	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
 	
 	$admin_menu [$cont] ['id'] = 'news';
@@ -609,8 +609,8 @@ function impresscms_get_adminmenu() {
  * Function maintained only for compatibility
  *
  * @todo Search all places that this function is called
- *       and rename it to impresscms_get_adminmenu.
- *       After this function can be removed.
+ *	   and rename it to impresscms_get_adminmenu.
+ *	   After this function can be removed.
  *
  */
 function xoops_module_get_admin_menu() {

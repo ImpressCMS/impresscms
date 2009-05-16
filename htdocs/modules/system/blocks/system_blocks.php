@@ -20,22 +20,22 @@
 */
 function b_system_online_show()
 {
-    global $xoopsUser, $xoopsModule;
+    global $icmsUser, $icmsModule;
     $online_handler =& xoops_gethandler('online');
     mt_srand((double)microtime()*1000000);
     // set gc probabillity to 10% for now..
     if (mt_rand(1, 100) < 11) {
         $online_handler->gc(300);
     }
-    if (is_object($xoopsUser)) {
-        $uid = $xoopsUser->getVar('uid');
-        $uname = $xoopsUser->getVar('uname');
+    if (is_object($icmsUser)) {
+        $uid = $icmsUser->getVar('uid');
+        $uname = $icmsUser->getVar('uname');
     } else {
         $uid = 0;
         $uname = '';
     }
-    if (is_object($xoopsModule)) {
-        $online_handler->write($uid, $uname, time(), $xoopsModule->getVar('mid'), $_SERVER['REMOTE_ADDR']);
+    if (is_object($icmsModule)) {
+        $online_handler->write($uid, $uname, time(), $icmsModule->getVar('mid'), $_SERVER['REMOTE_ADDR']);
     } else {
         $online_handler->write($uid, $uname, time(), 0, $_SERVER['REMOTE_ADDR']);
     }
@@ -53,9 +53,9 @@ function b_system_online_show()
             }
         }
         $block['online_total'] = sprintf(_ONLINEPHRASE, $total);
-        if (is_object($xoopsModule)) {
-            $mytotal = $online_handler->getCount(new Criteria('online_module', $xoopsModule->getVar('mid')));
-            $block['online_total'] .= ' ('.sprintf(_ONLINEPHRASEX, $mytotal, $xoopsModule->getVar('name')).')';
+        if (is_object($icmsModule)) {
+            $mytotal = $online_handler->getCount(new Criteria('online_module', $icmsModule->getVar('mid')));
+            $block['online_total'] .= ' ('.sprintf(_ONLINEPHRASEX, $mytotal, $icmsModule->getVar('name')).')';
         }
         $block['lang_members'] = _MEMBERS;
         $block['lang_guests'] = _GUESTS;
@@ -76,8 +76,8 @@ function b_system_online_show()
 */
 function b_system_login_show()
 {
-    global $xoopsUser, $xoopsConfig;
-    if (!$xoopsUser) {
+    global $icmsUser, $xoopsConfig;
+    if (!$icmsUser) {
         $block = array();
         $block['lang_username'] = _USERNAME;
         $block['unamevalue'] = "";
@@ -126,7 +126,7 @@ function b_system_main_show()
     $config_handler =& xoops_gethandler('config');
 	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
-    global $xoopsUser,$xoopsModule;
+    global $icmsUser,$icmsModule;
     $block = array();
     $block['lang_home'] = _MB_SYSTEM_HOME;
 	if ($xoopsConfigUser['priv_dpolicy'] == 1)
@@ -141,14 +141,14 @@ function b_system_main_show()
     $criteria->add(new Criteria('weight', 0, '>'));
     $modules = $module_handler->getObjects($criteria, true);
     $moduleperm_handler =& xoops_gethandler('groupperm');
-    $groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+    $groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
     $read_allowed = $moduleperm_handler->getItemIds('module_read', $groups);
     foreach (array_keys($modules) as $i) {
         if (in_array($i, $read_allowed)) {
             $block['modules'][$i]['name'] = $modules[$i]->getVar('name');
             $block['modules'][$i]['directory'] = $modules[$i]->getVar('dirname');
             $sublinks = $modules[$i]->subLink();
-            if ((count($sublinks) > 0) && (!empty($xoopsModule)) && ($i == $xoopsModule->getVar('mid'))) {
+            if ((count($sublinks) > 0) && (!empty($icmsModule)) && ($i == $icmsModule->getVar('mid'))) {
                 foreach($sublinks as $sublink){
                     $block['modules'][$i]['sublinks'][] = array('name' => $sublink['name'], 'url' => XOOPS_URL.'/modules/'.$modules[$i]->getVar('dirname').'/'.$sublink['url']);
                 }
@@ -180,17 +180,17 @@ function b_system_search_show()
 */
 function b_system_user_show()
 {
-    global $xoopsUser;
-    if (is_object($xoopsUser)) {
+    global $icmsUser;
+    if (is_object($icmsUser)) {
         $pm_handler =& xoops_gethandler('privmessage');
         $block = array();
         $block['lang_youraccount'] = _MB_SYSTEM_VACNT;
         $block['lang_editaccount'] = _MB_SYSTEM_EACNT;
         $block['lang_notifications'] = _MB_SYSTEM_NOTIF;
-        $block['uid'] = $xoopsUser->getVar('uid');
+        $block['uid'] = $icmsUser->getVar('uid');
         $block['lang_logout'] = _MB_SYSTEM_LOUT;
         $criteria = new CriteriaCompo(new Criteria('read_msg', 0));
-        $criteria->add(new Criteria('to_userid', $xoopsUser->getVar('uid')));
+        $criteria->add(new Criteria('to_userid', $icmsUser->getVar('uid')));
         $block['new_messages'] = $pm_handler->getCount($criteria);
         $block['lang_inbox'] = _MB_SYSTEM_INBOX;
         $block['lang_adminmenu'] = _MB_SYSTEM_ADMENU;
@@ -207,7 +207,7 @@ function b_system_user_show()
 */
 function b_system_info_show($options)
 {
-    global $xoopsConfig, $xoopsUser;
+    global $xoopsConfig, $icmsUser;
     $xoopsDB =& Database::getInstance();
     $myts =& MyTextSanitizer::getInstance();
     $block = array();
@@ -222,7 +222,7 @@ function b_system_info_show($options)
                     $prev_caption = $userinfo['groupname'];
                     $block['groups'][$i]['name'] = $myts->htmlSpecialChars($userinfo['groupname']);
                 }
-                if (isset($xoopsUser) && is_object($xoopsUser)) {
+                if (isset($icmsUser) && is_object($icmsUser)) {
                     $block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".$userinfo['uid']."','pmlite',800,680);\"><img src=\"".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/pm_small.gif\" border=\"0\" width=\"27px\" height=\"17px\" alt=\"\" /></a>", 'avatar' => XOOPS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
                 } else {
                     if ($userinfo['user_viewemail']) {
@@ -334,9 +334,9 @@ function b_system_comments_show($options)
     $criteria->setOrder('DESC');
 
     // Check modules permissions
-    global $xoopsUser;
+    global $icmsUser;
     $moduleperm_handler =& xoops_gethandler('groupperm');
-    $gperm_groupid = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+    $gperm_groupid = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
     $criteria1 = new CriteriaCompo(new Criteria('gperm_name','module_read','='));
     $criteria1->add(new Criteria('gperm_groupid', '('.implode(',', $gperm_groupid).')', 'IN'));
     $perms = $moduleperm_handler->getObjects($criteria1, true);
@@ -391,11 +391,11 @@ function b_system_comments_show($options)
 */
 function b_system_notification_show()
 {
-    global $xoopsConfig, $xoopsUser, $xoopsModule;
+    global $xoopsConfig, $icmsUser, $icmsModule;
     include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
 	icms_loadLanguageFile('core', 'notification');
     // Notification must be enabled, and user must be logged in
-    if (empty($xoopsUser) || !notificationEnabled('block')) {
+    if (empty($icmsUser) || !notificationEnabled('block')) {
         return false; // do not display block
     }
     $notification_handler =& xoops_gethandler('notification');
@@ -412,9 +412,9 @@ function b_system_notification_show()
         $section['description'] = $category['description'];
         $section['itemid'] = $category['item_id'];
         $section['events'] = array();
-        $subscribed_events = $notification_handler->getSubscribedEvents ($category['name'], $category['item_id'], $xoopsModule->getVar('mid'), $xoopsUser->getVar('uid'));
+        $subscribed_events = $notification_handler->getSubscribedEvents ($category['name'], $category['item_id'], $icmsModule->getVar('mid'), $icmsUser->getVar('uid'));
         foreach (notificationEvents($category['name'], true) as $event) {
-            if (!empty($event['admin_only']) && !$xoopsUser->isAdmin($xoopsModule->getVar('mid'))) {
+            if (!empty($event['admin_only']) && !$icmsUser->isAdmin($icmsModule->getVar('mid'))) {
                 continue;
             }
             $subscribed = in_array($event['name'], $subscribed_events) ? 1 : 0;

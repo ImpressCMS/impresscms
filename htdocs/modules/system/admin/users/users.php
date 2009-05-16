@@ -14,14 +14,14 @@
 * @version	$Id$
 */
 
-if(!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {exit('Access Denied');}
+if(!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {exit('Access Denied');}
 
 include_once ICMS_ROOT_PATH.'/class/xoopslists.php';
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 
 function displayUsers()
 {
-	global $xoopsDB, $xoopsConfig, $xoopsModule;
+	global $xoopsDB, $xoopsConfig, $icmsModule;
 	$userstart = isset($_GET['userstart']) ? intval($_GET['userstart']) : 0;
 	$config_handler =& xoops_gethandler('config');
 	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
@@ -97,7 +97,7 @@ function displayUsers()
 
 function modifyUser($user)
 {
-	global $xoopsDB, $xoopsConfig, $xoopsModule;
+	global $xoopsDB, $xoopsConfig, $icmsModule;
 	xoops_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
 	$member_handler =& xoops_gethandler('member');
@@ -175,7 +175,7 @@ function modifyUser($user)
 // RMV-NOTIFY
 function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups = array())
 {
-	global $xoopsConfig, $xoopsDB, $xoopsModule;
+	global $xoopsConfig, $xoopsDB, $icmsModule;
 	$member_handler =& xoops_gethandler('member');
 	$edituser =& $member_handler->getUser($uid);
 	$config_handler =& xoops_gethandler('config');
@@ -258,10 +258,10 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		{
 			if($groups != array())
 			{
-				global $xoopsUser;
+				global $icmsUser;
 				$oldgroups = $edituser->getGroups();
 				//If the edited user is the current user and the current user WAS in the webmaster's group and is NOT in the new groups array
-				if($edituser->getVar('uid') == $xoopsUser->getVar('uid') && (in_array(XOOPS_GROUP_ADMIN, $oldgroups)) && !(in_array(XOOPS_GROUP_ADMIN, $groups)))
+				if($edituser->getVar('uid') == $icmsUser->getVar('uid') && (in_array(XOOPS_GROUP_ADMIN, $oldgroups)) && !(in_array(XOOPS_GROUP_ADMIN, $groups)))
 				{
 					//Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
 					$groups[] = XOOPS_GROUP_ADMIN;

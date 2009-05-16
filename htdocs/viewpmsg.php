@@ -21,7 +21,7 @@ if ($messenger_module && $messenger_module->getVar('isactive')) {
 	exit();
 }
 
-if (!is_object($xoopsUser)) {
+if (!is_object($icmsUser)) {
 		$errormessage = _PM_SORRY."<br />"._PM_PLZREG."";
 		redirect_header("user.php",2,$errormessage);
 } else {
@@ -35,7 +35,7 @@ if (!is_object($xoopsUser)) {
 		$msg =& $_POST['msg_id'];
 		for ( $i = 0; $i < $size; $i++ ) {
 			$pm =& $pm_handler->get($msg[$i]);
-			if ($pm->getVar('to_userid') == $xoopsUser->getVar('uid')) {
+			if ($pm->getVar('to_userid') == $icmsUser->getVar('uid')) {
 				$pm_handler->delete($pm);
 			}
 			unset($pm);
@@ -44,10 +44,10 @@ if (!is_object($xoopsUser)) {
 		exit();
 	}
 	include ICMS_ROOT_PATH.'/header.php';
-	$criteria = new Criteria('to_userid', intval($xoopsUser->getVar('uid')));
+	$criteria = new Criteria('to_userid', intval($icmsUser->getVar('uid')));
 	$criteria->setOrder('DESC');
 	$pm_arr =& $pm_handler->getObjects($criteria);
-	echo "<h4 style='text-align:center;'>". _PM_PRIVATEMESSAGE ."</h4><br /><a href='userinfo.php?uid=". intval($xoopsUser->getVar("uid"))."'>". _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;". _PM_INBOX ."<br /><br />";
+	echo "<h4 style='text-align:center;'>". _PM_PRIVATEMESSAGE ."</h4><br /><a href='userinfo.php?uid=". intval($icmsUser->getVar("uid"))."'>". _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;". _PM_INBOX ."<br /><br />";
 	echo "<form name='prvmsg' method='post' action='viewpmsg.php'>";
 	echo "<table border='0' cellspacing='1' cellpadding='4' width='100%' class='outer'>\n";
 	echo "<tr align='center' valign='middle'><th><input name='allbox' id='allbox' onclick='xoopsCheckAll(\"prvmsg\", \"allbox\");' type='checkbox' value='Check All' /></th><th><img src='images/download.gif' alt='' border='0' /></th><th>&nbsp;</th><th>". _PM_FROM ."</th><th>". _PM_SUBJECT ."</th><th align='center'>". _PM_DATE ."</th></tr>\n";

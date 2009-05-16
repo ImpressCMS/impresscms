@@ -214,9 +214,9 @@ class XoopsLogger {
 	* @return string  $output
 	*/
 	function render( $output ) {
-		global $xoopsUser,$xoopsModule;
-		$groups   = (is_object($xoopsUser)) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
-		$moduleid = (isset($xoopsModule) && is_object($xoopsModule)) ? $xoopsModule->mid() : 1;
+		global $icmsUser,$icmsModule;
+		$groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+		$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->mid() : 1;
 		$gperm_handler =& xoops_gethandler('groupperm');
 		if ( !$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups) )
 			return $output;

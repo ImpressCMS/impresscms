@@ -13,13 +13,13 @@
 * @version	$Id$
 */
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
 	icms_loadLanguageFile('core', 'calendar');
 ?>
-<link rel="stylesheet" type="text/css" media="all" href="<?php echo XOOPS_URL;?>/libraries/jscalendar/calendar-blue.css" />
-<script type="text/javascript" src="<?php echo XOOPS_URL.'/libraries/jscalendar/calendar.js';?>"></script>
+<link rel="stylesheet" type="text/css" media="all" href="<?php echo ICMS_URL;?>/libraries/jscalendar/calendar-blue.css" />
+<script type="text/javascript" src="<?php echo ICMS_URL.'/libraries/jscalendar/calendar.js';?>"></script>
 <script type="text/javascript">
 <!--
 var calendar = null;
@@ -36,20 +36,20 @@ function closeHandler(cal) {
 function checkCalendar(ev) {
   var el = Calendar.is_ie ? Calendar.getElement(ev) : Calendar.getTargetElement(ev);
   for (; el != null; el = el.parentNode)
-    if (el == calendar.element || el.tagName == "A") break;
+	if (el == calendar.element || el.tagName == "A") break;
   if (el == null) {
-    calendar.callCloseHandler(); Calendar.stopEvent(ev);
+	calendar.callCloseHandler(); Calendar.stopEvent(ev);
   }
 }
 function showCalendar(id) {
   var el = xoopsGetElementById(id);
   if (calendar != null) {
-    calendar.hide();
+	calendar.hide();
   } else {
-    var cal = new Calendar(true, "<?php if (isset($jstime)) { echo $jstime; } else { echo 'null';}?>", selected, closeHandler);
-    calendar = cal;
-    cal.setRange(2000, 2015);
-    calendar.create();
+	var cal = new Calendar(true, "<?php if (isset($jstime)) { echo $jstime; } else { echo 'null';}?>", selected, closeHandler);
+	calendar = cal;
+	cal.setRange(2000, 2015);
+	calendar.create();
   }
   calendar.sel = el;
   calendar.parseDate(el.value);

@@ -23,7 +23,7 @@ $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?tri
 
 if($op == 'main')
 {
-	if(!$xoopsUser)
+	if(!$icmsUser)
 	{
 		$xoopsOption['template_main'] = 'system_userform.html';
 		include 'header.php';
@@ -76,7 +76,7 @@ if($op == 'main')
 	}
 	else
 	{
-			header('Location: '.ICMS_URL.'/userinfo.php?uid='.intval($xoopsUser->getVar('uid')));
+			header('Location: '.ICMS_URL.'/userinfo.php?uid='.intval($icmsUser->getVar('uid')));
 			exit();
 	}
 	exit();
@@ -84,7 +84,7 @@ if($op == 'main')
 
 if($op == 'resetpass')
 {
-	if(!$xoopsUser)
+	if(!$icmsUser)
 	{
 		$xoopsOption['template_main'] = 'system_userform.html';
 		include 'header.php';
@@ -135,7 +135,7 @@ if($op == 'resetpass')
 	}
 	else
 	{
-		header('Location: '.ICMS_URL.'/userinfo.php?uid='.intval($xoopsUser->getVar('uid')));
+		header('Location: '.ICMS_URL.'/userinfo.php?uid='.intval($icmsUser->getVar('uid')));
 		exit();
 	}
 	exit();
@@ -164,10 +164,10 @@ if($op == 'logout')
 	setcookie('autologin_pass', '', time() - 3600, $xoops_cookie_path, '', 0);
 	// end of autologin hack GIJ
 	// clear entry from online users table
-	if(is_object($xoopsUser))
+	if(is_object($icmsUser))
 	{
 		$online_handler =& xoops_gethandler('online');
-		$online_handler->destroy($xoopsUser->getVar('uid'));
+		$online_handler->destroy($icmsUser->getVar('uid'));
 	}
 	$message = _US_LOGGEDOUT.'<br />'._US_THANKYOUFORVISIT;
 	redirect_header('index.php', 1, $message);
@@ -221,10 +221,10 @@ if($op == 'actv')
 
 if($op == 'delete')
 {
-	if(!$xoopsUser || $icmsConfigUser['self_delete'] != 1) {redirect_header('index.php',5,_US_NOPERMISS);}
+	if(!$icmsUser || $icmsConfigUser['self_delete'] != 1) {redirect_header('index.php',5,_US_NOPERMISS);}
 	else
 	{
-		$groups = $xoopsUser->getGroups();
+		$groups = $icmsUser->getGroups();
 		if(in_array(XOOPS_GROUP_ADMIN, $groups)) {redirect_header('user.php', 5, _US_ADMINNO);}
 		$ok = !isset($_POST['ok']) ? 0 : intval($_POST['ok']);
 		if($ok != 1)
@@ -235,9 +235,9 @@ if($op == 'delete')
 		}
 		else
 		{
-			$del_uid = intval($xoopsUser->getVar('uid'));
+			$del_uid = intval($icmsUser->getVar('uid'));
 			$member_handler =& xoops_gethandler('member');
-			if(false != $member_handler->deleteUser($xoopsUser))
+			if(false != $member_handler->deleteUser($icmsUser))
 			{
 				$online_handler =& xoops_gethandler('online');
 				$online_handler->destroy($del_uid);

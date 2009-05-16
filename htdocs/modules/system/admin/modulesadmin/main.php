@@ -11,7 +11,7 @@
 * @version		$Id$
 */
 
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
+if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
     exit("Access Denied");
 }
 include_once XOOPS_ROOT_PATH."/modules/system/admin/modulesadmin/modulesadmin.php";
@@ -393,7 +393,7 @@ if ($op == 'update_ok') {
 							if (empty($newbid)) {
 								$newbid = $xoopsDB->getInsertId();
 							}
-							$groups =& $xoopsUser->getGroups();
+							$groups =& $icmsUser->getGroups();
 							$gperm_handler =& xoops_gethandler('groupperm');
 							foreach ($groups as $mygroup) {
 								$bperm =& $gperm_handler->create();

@@ -31,9 +31,9 @@ require_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
 $admin_dir = XOOPS_ROOT_PATH.'/modules/system/admin/';
 $dirlist = XoopsLists::getDirListAsArray($admin_dir);
 /* changes to only allow permission admins you already have */
-global $xoopsUser;
+global $icmsUser;
 $gperm =& xoops_gethandler ( 'groupperm' );
-$groups = $xoopsUser->getGroups ();
+$groups = $icmsUser->getGroups ();
 foreach($dirlist as $file){
 	include XOOPS_ROOT_PATH.'/modules/system/admin/'.$file.'/xoops_version.php';
 	if (!empty($modversion['category']) && count(array_intersect($groups, $gperm->getGroupIds('system_admin', $modversion['category'])))>0) {
@@ -92,16 +92,16 @@ $criteria = new CriteriaCompo(new Criteria('isactive', 1));
 $groups = $member_handler->getGroups();
 $gperm_handler =& xoops_gethandler('groupperm');
 
-//global $xoopsUser; // already declared above
+//global $icmsUser; // already declared above
 foreach($groups as $group){
-	if($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), $xoopsUser->getGroups()))
+	if($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), $icmsUser->getGroups()))
 		$group_manager_checkbox->addOption($group->getVar('groupid'),$group->getVar('name'));
 }
 $icms_block_handler = xoops_gethandler('block');
 $posarr = $icms_block_handler->getBlockPositions(true);
 $block_checkbox = array();
 $i = 0;
-$groups = $xoopsUser->getGroups();
+$groups = $icmsUser->getGroups();
 foreach ($posarr as $k=>$v){
 	$tit = (defined($posarr[$k]['title'])) ? constant($posarr[$k]['title']) : $posarr[$k]['title'];
 	$block_checkbox[$i] = new XoopsFormCheckBox('<b>'.$tit.'</b><br />', "read_bids[]", $r_block_value);

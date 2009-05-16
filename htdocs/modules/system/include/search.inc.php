@@ -23,8 +23,8 @@
 * @return array $ret 
 */
 function search_content($queryarray, $andor, $limit, $offset, $userid){
-	global $xoopsDB, $xoopsConfig, $xoopsUser;
-	$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+	global $xoopsDB, $xoopsConfig, $icmsUser;
+	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 	
 	$content_handler =& xoops_gethandler('content');
 	$gperm_handler = & xoops_gethandler( 'groupperm' );

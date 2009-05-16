@@ -17,7 +17,7 @@ include_once "mainfile.php";
 include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 $myts =& MyTextSanitizer::getInstance();
 
-if ( !is_object($xoopsUser) ) {
+if ( !is_object($icmsUser) ) {
     redirect_header("user.php",0);
 } else {
     $pm_handler =& xoops_gethandler('privmessage');
@@ -27,7 +27,7 @@ if ( !is_object($xoopsUser) ) {
             exit();
         }
         $pm =& $pm_handler->get(intval($_POST['msg_id']));
-        if (!is_object($pm) || $pm->getVar('to_userid') != $xoopsUser->getVar('uid') || !$pm_handler->delete($pm)) {
+        if (!is_object($pm) || $pm->getVar('to_userid') != $icmsUser->getVar('uid') || !$pm_handler->delete($pm)) {
             exit();
         } else {
             redirect_header("viewpmsg.php",1,_PM_DELETED);
@@ -37,12 +37,12 @@ if ( !is_object($xoopsUser) ) {
     $start = !empty($_GET['start']) ? intval($_GET['start']) : 0;
     $total_messages = !empty($_GET['total_messages']) ? intval($_GET['total_messages']) : 0;
     include ICMS_ROOT_PATH.'/header.php';
-    $criteria = new Criteria('to_userid', intval($xoopsUser->getVar('uid')));
+    $criteria = new Criteria('to_userid', intval($icmsUser->getVar('uid')));
     $criteria->setLimit(1);
     $criteria->setStart($start);
     $criteria->setSort('msg_time');
     $pm_arr =& $pm_handler->getObjects($criteria);
-    echo "<div><h4>". _PM_PRIVATEMESSAGE."</h4></div><br /><a href='userinfo.php?uid=". intval($xoopsUser->getVar("uid")) ."'>". _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;<a href='viewpmsg.php'>". _PM_INBOX ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;\n";
+    echo "<div><h4>". _PM_PRIVATEMESSAGE."</h4></div><br /><a href='userinfo.php?uid=". intval($icmsUser->getVar("uid")) ."'>". _PM_PROFILE ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;<a href='viewpmsg.php'>". _PM_INBOX ."</a>&nbsp;<span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;\n";
     if (empty($pm_arr)) {
         echo '<br /><br />'._PM_YOUDONTHAVE;
     } else {

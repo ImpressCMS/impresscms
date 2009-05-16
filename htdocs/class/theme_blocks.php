@@ -62,15 +62,15 @@ class xos_logos_PageBuilder {
 	 *
 	 */
 	public function retrieveBlocks() {
-		global $xoops, $xoopsUser, $xoopsModule, $icmsConfig;
+		global $xoops, $icmsUser, $icmsModule, $icmsConfig;
 
-		$groups = @is_object( $xoopsUser ) ? $xoopsUser->getGroups () : array (XOOPS_GROUP_ANONYMOUS );
+		$groups = @is_object ( $icmsUser ) ? $icmsUser->getGroups () : array (XOOPS_GROUP_ANONYMOUS );
 		
 		//Getting the start module and page configured in the admin panel
 		if (is_array ( $icmsConfig ['startpage'] )) {
-			$member_handler =& xoops_gethandler ( 'member' );
-			$group = $member_handler->getUserBestGroup( (@is_object( $xoopsUser ) ? $xoopsUser->uid () : 0) );
-			$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
+			$member_handler = & xoops_gethandler ( 'member' );
+			$group = $member_handler->getUserBestGroup ( (@is_object ( $icmsUser ) ? $icmsUser->uid () : 0) );
+			$icmsConfig ['startpage'] = $icmsConfig ['startpage'] [$group];
 		}
 		
 		$startMod = ( $icmsConfig['startpage'] == '--' ) ? 'system' : $icmsConfig ['startpage'];		
@@ -96,8 +96,8 @@ class xos_logos_PageBuilder {
 			$dirname = $module->getVar ( 'dirname' );
 			$isStart = ($startMod == $mid.'-'.$pid);
 		} else { //Don't have a sym-link for this page
-			if (@is_object ( $xoopsModule )) {
-				list ( $mid, $dirname ) = array ($xoopsModule->getVar ( 'mid' ), $xoopsModule->getVar ( 'dirname' ) );
+			if (@is_object ( $icmsModule )) {
+				list ( $mid, $dirname ) = array ($icmsModule->getVar ( 'mid' ), $icmsModule->getVar ( 'dirname' ) );
 				$isStart = (substr ( $_SERVER ['PHP_SELF'], - 9 ) == 'index.php' && $startMod == $dirname);
 			} else {
 				list ( $mid, $dirname ) = array (1, 'system' );
@@ -170,13 +170,13 @@ class xos_logos_PageBuilder {
 	 * @return unknown
 	 */
 	public function buildBlock($xobject, &$template) {
-		global $xoopsUser, $icmsConfigPersona;
+		global $icmsUser, $icmsConfigPersona;
 		$gperm =& xoops_gethandler ( 'groupperm' );
-		$ugroups = @is_object ( $xoopsUser ) ? $xoopsUser->getGroups () : array(XOOPS_GROUP_ANONYMOUS );
+		$ugroups = @is_object ( $icmsUser ) ? $icmsUser->getGroups () : array(XOOPS_GROUP_ANONYMOUS );
 		$agroups = $gperm->getGroupIds('system_admin',5); //XOOPS_SYSTEM_BLOCK constant not available?
 		$uagroups = array_intersect($ugroups, $agroups);
 		if ($icmsConfigPersona ['editre_block'] == true) {
-			if ($xoopsUser && count($uagroups) > 0) {
+			if ($icmsUser && count($uagroups) > 0) {
 				$url = base64_encode( str_replace( ICMS_URL, '', "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ) );
 				$titlebtns = ' <a href="#" onclick="$(\'#ed_block_' . $xobject->getVar ( 'bid' ) . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>';
 				$titlebtns .= '<div id="ed_block_' . $xobject->getVar ( 'bid' ) . '" name="ed_block_' . $xobject->getVar ( 'bid' ) . '" title="' . $xobject->getVar ( 'title' ) . '">';

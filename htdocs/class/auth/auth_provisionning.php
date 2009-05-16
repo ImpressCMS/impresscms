@@ -79,17 +79,17 @@ class XoopsAuthProvisionning {
   	 * @return object XoopsUser {@link XoopsUser}
   	 */
   	function sync($datas, $uname, $pwd = null) {
-  		$xoopsUser = $this->getXoopsUser($uname);		
-  		if (!$xoopsUser) { // Xoops User Database not exists
+  		$icmsUser = $this->getXoopsUser($uname);		
+  		if (!$icmsUser) { // Xoops User Database not exists
   			if ($this->ldap_provisionning) { 
-  				$xoopsUser = $this->add($datas, $uname, $pwd);
+  				$icmsUser = $this->add($datas, $uname, $pwd);
   			} else $this->_auth_instance->setErrors(0, sprintf(_AUTH_LDAP_XOOPS_USER_NOTFOUND, $uname));
   		} else { // Xoops User Database exists
   			if ($this->ldap_provisionning && $this->ldap_provisionning_upd) { 
-  				$xoopsUser = $this->change($xoopsUser, $datas, $uname, $pwd);
+  				$icmsUser = $this->change($icmsUser, $datas, $uname, $pwd);
   			}
   		}
-  		return $xoopsUser;
+  		return $icmsUser;
   	}
 
     /**
@@ -139,20 +139,20 @@ class XoopsAuthProvisionning {
      * @param string $pwd Password of the user
   	 * @return object XoopsUser {@link XoopsUser}
   	 */
-  	function change(&$xoopsUser, $datas, $uname, $pwd = null) {	
+  	function change(&$icmsUser, $datas, $uname, $pwd = null) {	
   		$ret = false;
   		$member_handler =& xoops_gethandler('member');
-  		$xoopsUser->setVar('pass', md5(stripslashes($pwd)));
+  		$icmsUser->setVar('pass', md5(stripslashes($pwd)));
           $tab_mapping = explode('|', $this->ldap_field_mapping);
           foreach ($tab_mapping as $mapping) {
   			$fields = explode('=', trim($mapping));
   			if ($fields[0] && $fields[1])
-  				$xoopsUser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
+  				$icmsUser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
           }
-  		if ($member_handler->insertUser($xoopsUser)) {
-          	return $xoopsUser;
+  		if ($member_handler->insertUser($icmsUser)) {
+          	return $icmsUser;
           } else {
-  			redirect_header(ICMS_URL.'/user.php', 5, $xoopsUser->getHtmlErrors());
+  			redirect_header(ICMS_URL.'/user.php', 5, $icmsUser->getHtmlErrors());
   		}         
       	return $ret;
   	}

@@ -85,12 +85,12 @@ class MastopFormSelectImage extends XoopsFormSelect
   */
 	function getImageList($cat = null)
 	{
-		global $xoopsUser;
+		global $icmsUser;
 		$ret = array();
-		if (!is_object($xoopsUser)) {
+		if (!is_object($icmsUser)) {
 			$group = array(XOOPS_GROUP_ANONYMOUS);
 		} else {
-			$group =& $xoopsUser->getGroups();
+			$group =& $icmsUser->getGroups();
 		}
 		$imgcat_handler =& xoops_gethandler('imagecategory');
 		$catlist =& $imgcat_handler->getList($group, 'imgcat_read', 1);
@@ -160,11 +160,11 @@ class MastopFormSelectImage extends XoopsFormSelect
   * @return   string    $ret    the constructed select form attribute HTML
   */
 	function render(){
-		global $xoopsUser;
-		if (!is_object($xoopsUser)) {
+		global $icmsUser;
+		if (!is_object($icmsUser)) {
 			$group = array(XOOPS_GROUP_ANONYMOUS);
 		} else {
-			$group =& $xoopsUser->getGroups();
+			$group =& $icmsUser->getGroups();
 		}
 		$imgcat_handler =& xoops_gethandler('imagecategory');
 		$catlist =& $imgcat_handler->getList($group, 'imgcat_write', 1);

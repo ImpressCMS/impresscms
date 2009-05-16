@@ -33,7 +33,7 @@ include_once ICMS_ROOT_PATH . '/class/module.textsanitizer.php';
 
 include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 
-if (!$icmsConfigUser['allow_annon_view_prof'] && !is_object($xoopsUser)) {
+if (!$icmsConfigUser['allow_annon_view_prof'] && !is_object($icmsUser)) {
 	redirect_header(ICMS_URL.'/user.php', 3, _NOPERM);
 	exit ();
 }
@@ -44,12 +44,12 @@ if ($uid <= 0) {
 }
 
 $gperm_handler = & xoops_gethandler('groupperm');
-$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
+$groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
 $isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups); // isadmin is true if user has 'edit users' admin rights
 
-if (is_object($xoopsUser)) {
-	if ($uid == intval($xoopsUser->getVar('uid'))) {
+if (is_object($icmsUser)) {
+	if ($uid == intval($icmsUser->getVar('uid'))) {
 		$xoopsOption['template_main'] = 'system_userinfo.html';
 		include ICMS_ROOT_PATH . '/header.php';
 		$xoopsTpl->assign('user_ownpage', true);
@@ -61,7 +61,7 @@ if (is_object($xoopsUser)) {
 			'lang_logout' => _US_LOGOUT,
 			'user_candelete' => $icmsConfigUser['self_delete']?true:false,
 			'lang_deleteaccount' => $icmsConfigUser['self_delete']?_US_DELACCOUNT:''));
-		$thisUser = & $xoopsUser;
+		$thisUser = & $icmsUser;
 	} else {
 		$member_handler = & xoops_gethandler('member');
 		$thisUser = & $member_handler->getUser($uid);
@@ -85,7 +85,7 @@ if (is_object($xoopsUser)) {
 	$xoopsTpl->assign('user_ownpage', false);
 }
 $myts = & MyTextSanitizer :: getInstance();
-if (is_object($xoopsUser) && $isAdmin) {
+if (is_object($icmsUser) && $isAdmin) {
 	icms_makeSmarty(array(
 	'lang_editprofile' => _US_EDITPROFILE,
 	'lang_deleteaccount' => _US_DELACCOUNT,
@@ -132,13 +132,13 @@ icms_makeSmarty(array(
 	'user_posts' => icms_conv_nr2local($thisUser->getVar('posts')),
 	'lang_lastlogin' => _US_LASTLOGIN,
 	'lang_notregistered' => _US_NOTREGISTERED,
-	'user_pmlink' => is_object($xoopsUser)?"<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . intval($thisUser->getVar('uid')) . "', 'pmlite', 800,680);\"><img src=\"" . ICMS_URL . "/images/icons/".$icmsConfig ['language']."/pm.gif\" alt=\"" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>":'',
+	'user_pmlink' => is_object($icmsUser)?"<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . intval($thisUser->getVar('uid')) . "', 'pmlite', 800,680);\"><img src=\"" . ICMS_URL . "/images/icons/".$icmsConfig ['language']."/pm.gif\" alt=\"" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>":'',
 	'user_rankimage' => $userrank['image']?'<img src="' . ICMS_UPLOAD_URL . '/' . $userrank['image'] . '" alt="" />':'',
 	'user_ranktitle' => $userrank['title'],
 	'user_lastlogin' => !empty ($date)?formatTimestamp($thisUser->getVar("last_login"), "m"):'',
 	'xoops_pagetitle' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),
-	'user_email' => ($thisUser->getVar('user_viewemail') == true || (is_object($xoopsUser) && ($xoopsUserIsAdmin || ($xoopsUser->getVar("uid") == $thisUser->getVar("uid")))))?$thisUser->getVar('email', 'E'):'&nbsp;',
-	'user_openid' => ($icmsConfigAuth['auth_openid'] == true && ($thisUser->getVar('user_viewoid') == true || (is_object($xoopsUser) && ($xoopsUserIsAdmin || ($xoopsUser->getVar("uid") == $thisUser->getVar("uid"))))))?$thisUser->getVar('openid', 'E'):'&nbsp;'));
+	'user_email' => ($thisUser->getVar('user_viewemail') == true || (is_object($icmsUser) && ($icmsUserIsAdmin || ($icmsUser->getVar("uid") == $thisUser->getVar("uid")))))?$thisUser->getVar('email', 'E'):'&nbsp;',
+	'user_openid' => ($icmsConfigAuth['auth_openid'] == true && ($thisUser->getVar('user_viewoid') == true || (is_object($icmsUser) && ($icmsUserIsAdmin || ($icmsUser->getVar("uid") == $thisUser->getVar("uid"))))))?$thisUser->getVar('openid', 'E'):'&nbsp;'));
 if ($icmsConfigUser['allwshow_sig'] == true){
 	icms_makeSmarty(array(
 	'user_showsignature' => true,

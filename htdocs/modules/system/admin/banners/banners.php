@@ -16,7 +16,7 @@
 * @version	$Id$
 */
 
-if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
 } else {
 
@@ -25,7 +25,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 	*/
 	function BannersAdmin()
 	{
-		global $xoopsConfig, $xoopsModule;
+		global $xoopsConfig, $icmsModule;
 		$xoopsDB =& Database::getInstance();
 		xoops_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/banners/images/banners_big.png)">'._MD_AM_BANS.'</div><br />';
@@ -191,7 +191,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 	 */
 	function BannerDelete($bid)
 	{
-	  global $xoopsConfig, $xoopsModule;
+	  global $xoopsConfig, $icmsModule;
 	  $xoopsDB =& Database::getInstance();
 	  $myts =& MyTextSanitizer::getInstance();
 	  xoops_cp_header();
@@ -242,7 +242,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 	 */
 	function BannerEdit($bid)
 	{
-		global $xoopsConfig, $xoopsModule;
+		global $xoopsConfig, $icmsModule;
 		$bid = intval($bid);
 		xoops_cp_header();
 		$xoopsDB =& Database::getInstance();
@@ -316,7 +316,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 	 */  
 	function BannerClientDelete($cid)
 	{
-		global $xoopsConfig, $xoopsModule;
+		global $xoopsConfig, $icmsModule;
 		$xoopsDB =& Database::getInstance();
 		$myts =& MyTextSanitizer::getInstance();
 		xoops_cp_header();
@@ -364,7 +364,7 @@ if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($
 	 */
 	function BannerClientEdit($cid)
 	{
-		global $xoopsConfig, $xoopsModule;
+		global $xoopsConfig, $icmsModule;
 		$xoopsDB =& Database::getInstance();
 		$myts =& MyTextSanitizer::getInstance();
 		xoops_cp_header();

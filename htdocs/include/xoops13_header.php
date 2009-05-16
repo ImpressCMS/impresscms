@@ -3,36 +3,36 @@
 * header.php code for pre-2.0 themes
 *
 * @copyright	The Xoops project http://www.xoops.org/
-* @license      http://www.fsf.org/copyleft/gpl.html GNU public license
-* @author       Kazumi Ono (onokazu)
-* @since        Xoops 2.0.14
+* @license	  http://www.fsf.org/copyleft/gpl.html GNU public license
+* @author	   Kazumi Ono (onokazu)
+* @since		Xoops 2.0.14
 * @version		$Id$
 * @package 		core
 */
-defined( 'XOOPS_ROOT_PATH' ) or die();
+defined( 'ICMS_ROOT_PATH' ) or die();
 
 $xoopsOption['theme_use_smarty'] = 0;
-if (file_exists(XOOPS_THEME_PATH.'/'.$icmsConfig['theme_set'].'/language/lang-'.$icmsConfig['language'].'.php')) {
-	include XOOPS_THEME_PATH.'/'.$icmsConfig['theme_set'].'/language/lang-'.$icmsConfig['language'].'.php';
-} elseif (file_exists(XOOPS_THEME_PATH.'/'.$icmsConfig['theme_set'].'/language/lang-english.php')) {
-	include XOOPS_THEME_PATH.'/'.$icmsConfig['theme_set'].'/language/lang-english.php';
+if (file_exists(ICMS_THEME_PATH.'/'.$icmsConfig['theme_set'].'/language/lang-'.$icmsConfig['language'].'.php')) {
+	include ICMS_THEME_PATH.'/'.$icmsConfig['theme_set'].'/language/lang-'.$icmsConfig['language'].'.php';
+} elseif (file_exists(ICMS_THEME_PATH.'/'.$icmsConfig['theme_set'].'/language/lang-english.php')) {
+	include ICMS_THEME_PATH.'/'.$icmsConfig['theme_set'].'/language/lang-english.php';
 }
 xoops_header(false);
-include XOOPS_THEME_PATH.'/'.$icmsConfig['theme_set'].'/theme.php';
+include ICMS_THEME_PATH.'/'.$icmsConfig['theme_set'].'/theme.php';
 $xoopsOption['show_rblock'] = (!empty($xoopsOption['show_rblock'])) ? $xoopsOption['show_rblock'] : 0;
 // include Smarty template engine and initialize it
-require_once XOOPS_ROOT_PATH.'/class/template.php';
+require_once ICMS_ROOT_PATH.'/class/template.php';
 $xoopsTpl = new XoopsTpl();
 if ($icmsConfig['debug_mode'] == 3) {
 	$xoopsTpl->xoops_setDebugging(true);
 }
-if ($xoopsUser != '') {
-	$xoopsTpl->assign(array('xoops_isuser' => true, 'xoops_userid' => $xoopsUser->getVar('uid'), 'xoops_uname' => $xoopsUser->getVar('uname'), 'xoops_isadmin' => $xoopsUserIsAdmin));
+if ($icmsUser != '') {
+	$xoopsTpl->assign(array('xoops_isuser' => true, 'xoops_userid' => $icmsUser->getVar('uid'), 'xoops_uname' => $icmsUser->getVar('uname'), 'xoops_isadmin' => $icmsUserIsAdmin));
 }
 $xoopsTpl->assign('xoops_requesturi', htmlspecialchars($GLOBALS['xoopsRequestUri'], ENT_QUOTES));
-include XOOPS_ROOT_PATH.'/include/old_functions.php';
+include ICMS_ROOT_PATH.'/include/old_functions.php';
 
-if ($xoopsOption['show_cblock'] || (!empty($xoopsModule) && preg_match("/index\.php$/i", xoops_getenv('PHP_SELF')) && $icmsConfig['startpage'] == $xoopsModule->getVar('dirname'))) {
+if ($xoopsOption['show_cblock'] || (!empty($icmsModule) && preg_match("/index\.php$/i", xoops_getenv('PHP_SELF')) && $icmsConfig['startpage'] == $icmsModule->getVar('dirname'))) {
 	$xoopsOption['show_rblock'] = $xoopsOption['show_cblock'] = 1;
 }
 themeheader($xoopsOption['show_rblock']);

@@ -99,10 +99,10 @@ if($action == 'showpopups')
 		break;
 		case 'friend':
 			if(!$GLOBALS['xoopsSecurity']->check() || !isset($_POST['op']) || StopXSS($_POST['op']) == 'sendform') {
-				if($xoopsUser)
+				if($icmsUser)
 				{
-					$yname = $xoopsUser->getVar('uname', 'e');
-					$ymail = $xoopsUser->getVar('email', 'e');
+					$yname = $icmsUser->getVar('uname', 'e');
+					$ymail = $icmsUser->getVar('email', 'e');
 					$fname = '';
 					$fmail = '';
 				}
@@ -132,7 +132,7 @@ if($action == 'showpopups')
 			elseif(StopXSS($_POST['op']) == 'sendsite')
 			{
 				$myts =& MyTextsanitizer::getInstance();
-				if($xoopsUser) {$ymail = $xoopsUser->getVar('email');}
+				if($icmsUser) {$ymail = $icmsUser->getVar('email');}
 				else {$ymail = isset($_POST['ymail']) ? $myts->stripSlashesGPC(trim($_POST['ymail'])) : '';}
 				if(!isset($_POST['yname']) || trim($_POST['yname']) == '' || $ymail == '' || !isset($_POST['fname']) || trim($_POST['fname']) == ''  || !isset($_POST['fmail']) || trim($_POST['fmail']) == '')
 				{
@@ -164,7 +164,7 @@ if($action == 'showpopups')
 			}
 		break;
 		case 'online':
-			$isadmin = $xoopsUserIsAdmin;
+			$isadmin = $icmsUserIsAdmin;
 			echo '<table  width="100%" cellspacing="1" class="outer"><tr><th colspan="3">'._WHOSONLINE.'</th></tr>';
 			$start = isset($_GET['start']) ? intval($_GET['start']) : 0;
 			$online_handler =& xoops_gethandler('online');
@@ -208,10 +208,10 @@ if($action == 'showpopups')
 			}
 		break;
 		case 'ssllogin':
-			if($icmsConfig['use_ssl'] && isset($_POST[$icmsConfig['sslpost_name']]) && is_object($xoopsUser))
+			if($icmsConfig['use_ssl'] && isset($_POST[$icmsConfig['sslpost_name']]) && is_object($icmsUser))
 			{
 				icms_loadLanguageFile('core', 'user');
-				echo sprintf(_US_LOGGINGU, $xoopsUser->getVar('uname'));
+				echo sprintf(_US_LOGGINGU, $icmsUser->getVar('uname'));
 				echo '<div style="text-align:center;"><input class="formButton" value="'._CLOSE.'" type="button" onclick="window.opener.location.reload();window.close();" /></div>';
 				$closebutton = false;
 			}

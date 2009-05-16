@@ -95,11 +95,11 @@ class IcmsPersistableRegistry {
     */
 	function addObjectsFromItemName($item, $modulename=false, $criteria=false) {
 		if (!$modulename) {
-			global $xoopsModule;
-			if (!is_object($xoopsModule)) {
+			global $icmsModule;
+			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $xoopsModule->dirname();
+				$modulename = $icmsModule->dirname();
 			}
 		}
 		$object_handler = xoops_getModuleHandler($item, $modulename);
@@ -118,11 +118,11 @@ class IcmsPersistableRegistry {
     */
 	function addListFromItemName($item, $modulename=false, $criteria=false) {
 		if (!$modulename) {
-			global $xoopsModule;
-			if (!is_object($xoopsModule)) {
+			global $icmsModule;
+			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $xoopsModule->dirname();
+				$modulename = $icmsModule->dirname();
 			}
 		}
 		$object_handler = xoops_getModuleHandler($item, $modulename);
@@ -140,11 +140,11 @@ class IcmsPersistableRegistry {
     */
 	function getObjects($itemname, $modulename) {
 		if (!$modulename) {
-			global $xoopsModule;
-			if (!is_object($xoopsModule)) {
+			global $icmsModule;
+			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $xoopsModule->dirname();
+				$modulename = $icmsModule->dirname();
 			}
 		}
 		if (isset($this->_registryArray['objects'][$modulename][$itemname])) {
@@ -170,11 +170,11 @@ class IcmsPersistableRegistry {
     */
 	function getList($itemname, $modulename) {
 		if (!$modulename) {
-			global $xoopsModule;
-			if (!is_object($xoopsModule)) {
+			global $icmsModule;
+			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $xoopsModule->dirname();
+				$modulename = $icmsModule->dirname();
 			}
 		}
 		if (isset($this->_registryArray['list'][$modulename][$itemname])) {
@@ -200,11 +200,11 @@ class IcmsPersistableRegistry {
     */
 	function getSingleObject($itemname, $key, $modulename=false) {
 		if (!$modulename) {
-			global $xoopsModule;
-			if (!is_object($xoopsModule)) {
+			global $icmsModule;
+			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $xoopsModule->dirname();
+				$modulename = $icmsModule->dirname();
 			}
 		}
 		if (isset($this->_registryArray['objects'][$modulename][$itemname][$key])) {

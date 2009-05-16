@@ -189,9 +189,9 @@ class XoopsAuthLdap extends XoopsAuth
 		$provisHandler = XoopsAuthProvisionning::getInstance($this);
 		$sr = ldap_read($this->_ds, $userdn, '(objectclass=*)');
 		$entries = ldap_get_entries($this->_ds, $sr);
-		if($entries['count'] > 0) {$xoopsUser = $provisHandler->sync($entries[0], $uname, $pwd);}
+		if($entries['count'] > 0) {$icmsUser = $provisHandler->sync($entries[0], $uname, $pwd);}
 		else {$this->setErrors(0, sprintf('loadXoopsUser - '._AUTH_LDAP_CANT_READ_ENTRY, $userdn));}
-		return $xoopsUser;
+		return $icmsUser;
 	}
 } // end class
 ?>

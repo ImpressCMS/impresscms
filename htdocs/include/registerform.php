@@ -11,11 +11,11 @@
 * @author		http://www.xoops.org The XOOPS Project
 * @version		$Id$
 */
-if (!defined("XOOPS_ROOT_PATH")) {
-    die("ImpressCMS root path not defined");
+if (!defined("ICMS_ROOT_PATH")) {
+	die("ImpressCMS root path not defined");
 }
-include_once XOOPS_ROOT_PATH."/class/xoopslists.php";
-include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
+include_once ICMS_ROOT_PATH."/class/xoopslists.php";
+include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 
 
 $email_tray = new XoopsFormElementTray(_US_EMAIL, "<br />");

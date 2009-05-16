@@ -22,8 +22,8 @@
 /**
  * Determine if notification is enabled for the selected module.
  *
- * @param  string  $style      Subscription style: 'block' or 'inline'
- * @param  int     $module_id  ID of the module  (default current module)
+ * @param  string  $style	  Subscription style: 'block' or 'inline'
+ * @param  int	 $module_id  ID of the module  (default current module)
  * @return bool
  */
 function notificationEnabled($style, $module_id=null)
@@ -44,7 +44,7 @@ function notificationEnabled($style, $module_id=null)
 			return false;
 		}
 	}
-	include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
+	include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 	if (($style == 'block') && ($status == XOOPS_NOTIFICATION_ENABLEBLOCK || $status == XOOPS_NOTIFICATION_ENABLEBOTH)) {
 		return true;
 	}
@@ -62,16 +62,16 @@ function notificationEnabled($style, $module_id=null)
  * category in the selected module.  If no category is selected,
  * return an array of info for all categories.
  *
- * @param  string  $name       Category name (default all categories)
- * @param  int     $module_id  ID of the module (default current module)
+ * @param  string  $name	   Category name (default all categories)
+ * @param  int	 $module_id  ID of the module (default current module)
  * @return mixed
  */
 function &notificationCategoryInfo($category_name='', $module_id=null)
 {
 	if (!isset($module_id)) {
-		global $xoopsModule;
-		$module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
-		$module =& $xoopsModule;
+		global $icmsModule;
+		$module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
+		$module =& $icmsModule;
 	} else {
 		$module_handler =& xoops_gethandler('module');
 		$module =& $module_handler->get($module_id);
@@ -94,13 +94,13 @@ function &notificationCategoryInfo($category_name='', $module_id=null)
  * belong.
  *
  * @todo This could be more efficient... maybe specify in
- *        $modversion['comments'] the notification category.
- *       This would also serve as a way to enable notification
- *        of comments, and also remove the restriction that
- *        all notification categories must have unique item_name. (TODO)
+ *		$modversion['comments'] the notification category.
+ *	   This would also serve as a way to enable notification
+ *		of comments, and also remove the restriction that
+ *		all notification categories must have unique item_name. (TODO)
  *
  * @param  int  $module_id  ID of the module (default current module)
- * @return mixed            Associative array of category info
+ * @return mixed			Associative array of category info
  */
 function &notificationCommentCategoryInfo($module_id=null)
 {
@@ -130,16 +130,16 @@ function &notificationCommentCategoryInfo($module_id=null)
  * in the selected category of the selected module.
  *
  * @param  string  $category_name  Category name
- * @param  bool    $enabled_only   If true, return only enabled events
- * @param  int     $module_id      ID of the module (default current module)
+ * @param  bool	$enabled_only   If true, return only enabled events
+ * @param  int	 $module_id	  ID of the module (default current module)
  * @return mixed
  */
 function &notificationEvents($category_name, $enabled_only, $module_id=null)
 {
 	if (!isset($module_id)) {
-		global $xoopsModule;
-		$module_id = !empty($xoopsModule) ? $xoopsModule->getVar('mid') : 0;
-		$module =& $xoopsModule;
+		global $icmsModule;
+		$module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
+		$module =& $icmsModule;
 	} else {
 		$module_handler =& xoops_gethandler('module');
 		$module =& $module_handler->get($module_id);
@@ -159,7 +159,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 	
 	foreach ($not_config['event'] as $event) {
 		if ($event['category'] == $category_name) {
-			$event['mail_template_dir'] = XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/language/' . $icmsConfig['language'] . '/mail_template/';
+			$event['mail_template_dir'] = ICMS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/language/' . $icmsConfig['language'] . '/mail_template/';
 			if (!$enabled_only || notificationEventEnabled ($category, $event, $module)) {
 				$event_array[] = $event;
 			}
@@ -182,8 +182,8 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 	if ($module->getVar('hascomments')) {
 		$com_config = $module->getInfo('comments');
 		if (!empty($category['item_name']) && $category['item_name'] == $com_config['itemName']) {
-			$mail_template_dir = XOOPS_ROOT_PATH . '/language/' . $icmsConfig['language'] . '/mail_template/';
-			include_once XOOPS_ROOT_PATH . '/include/comment_constants.php';
+			$mail_template_dir = ICMS_ROOT_PATH . '/language/' . $icmsConfig['language'] . '/mail_template/';
+			include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
 			$config_handler =& xoops_gethandler('config');
 			$com_config = $config_handler->getConfigsByCat(0,$module_id);
 			if (!$enabled_only) {
@@ -255,8 +255,8 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
  *   events which depend on additional config options...
  *
  * @param  array  $category  Category info array
- * @param  array  $event     Event info array
- * @param  object $module    Module
+ * @param  array  $event	 Event info array
+ * @param  object $module	Module
  * @return bool
  **/
 function notificationEventEnabled(&$category, &$event, &$module)
@@ -265,11 +265,11 @@ function notificationEventEnabled(&$category, &$event, &$module)
 	$mod_config = $config_handler->getConfigsByCat(0,$module->getVar('mid'));
 
 	if (is_array($mod_config['notification_events']) && $mod_config['notification_events'] != array()) {
-	    $option_name = notificationGenerateConfig ($category, $event, 'option_name');
-	    if (in_array($option_name, $mod_config['notification_events'])) {
-	        return true;
-	    }
-	    $notification_handler =& xoops_gethandler('notification');
+		$option_name = notificationGenerateConfig ($category, $event, 'option_name');
+		if (in_array($option_name, $mod_config['notification_events'])) {
+			return true;
+		}
+		$notification_handler =& xoops_gethandler('notification');
 	}
 	return false;
 }
@@ -280,8 +280,8 @@ function notificationEventEnabled(&$category, &$event, &$module)
  * category (for the selected module).
  *
  * @param  string  $category_name  Notification category
- * @param  string  $event_name     Notification event
- * @param  int     $module_id      ID of the module (default current module)
+ * @param  string  $event_name	 Notification event
+ * @param  int	 $module_id	  ID of the module (default current module)
  * @return mixed
  */
 function &notificationEventInfo($category_name, $event_name, $module_id=null)
@@ -359,8 +359,8 @@ function &notificationSubscribableCategoryInfo($module_id=null)
  * case we wish to alter the syntax.
  *
  * @param  array  $category  Array of category info
- * @param  array  $event     Array of event info
- * @param  string $type      The particular name to generate
+ * @param  array  $event	 Array of event info
+ * @param  string $type	  The particular name to generate
  * return string
  **/
 function notificationGenerateConfig(&$category, &$event, $type)
