@@ -22,7 +22,7 @@ include_once 'header.php';
 $xoopsOption['template_main'] = 'profile_index.html';
 
 $modname = basename( dirname( __FILE__ ) );
-if($moduleConfig['profile_social']==0){
+if($icmsModuleConfig['profile_social']==0){
 	header('Location: '.ICMS_URL.'/modules/'.$modname.'/');
 	exit();
 }

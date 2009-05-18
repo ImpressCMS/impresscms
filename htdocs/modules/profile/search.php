@@ -17,11 +17,7 @@
 
 include '../../mainfile.php';
 $modname = basename( dirname( __FILE__ ) );
-$mod_handler =& xoops_gethandler('module');
-$mod_profile =& $mod_handler->getByDirname($modname);
-$conf_handler =& xoops_gethandler('config');
-$moduleConfig =& $conf_handler->getConfigsByCat(0, $mod_profile->getVar('mid'));
-if($moduleConfig['profile_social']==1){
+if($icmsModuleConfig['profile_social']==1){
 	header('Location: '.ICMS_URL.'/modules/'.$modname.'/searchmembers.php');
 	exit();
 }

@@ -24,9 +24,7 @@ die("XOOPS root path not defined");
 
 function profile_iteminfo($category, $item_id)
 {
-	$module_handler =& xoops_gethandler('module');
-	$module =& $module_handler->getByDirname('profile');
-
+	global $icmsModule;
 	if ($category=='global') {
 		$item['name'] = '';
 		$item['url'] = '';
@@ -47,7 +45,7 @@ function profile_iteminfo($category, $item_id)
 		$owner = new XoopsUser();
 		$identifier = $owner->getUnameFromId($result_array['uid_owner']);
 		$item['name'] = $identifier."'s Album";
-		$item['url'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/album.php?uid=' . $result_array['uid_owner'];
+		$item['url'] = ICMS_URL . '/modules/' . $icmsModule->getVar('dirname') . '/album.php?uid=' . $result_array['uid_owner'];
 		return $item;
 	}
 	
@@ -62,7 +60,7 @@ function profile_iteminfo($category, $item_id)
 		$owner = new XoopsUser();
 		$identifier = $owner->getUnameFromId($result_array['uid_owner']);
 		$item['name'] = $identifier."'s Videos";
-		$item['url'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/video.php?uid=' . $result_array['uid_owner'];
+		$item['url'] = ICMS_URL . '/modules/' . $icmsModule->getVar('dirname') . '/video.php?uid=' . $result_array['uid_owner'];
 		return $item;
 	}
 	
@@ -77,7 +75,7 @@ function profile_iteminfo($category, $item_id)
 		$owner = new XoopsUser();
 		$identifier = $owner->getUnameFromId($result_array['scrap_from']);
 		$item['name'] = $identifier."'s Scraps";
-		$item['url'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/scrapbook.php?uid=' . $result_array['scrap_from'];
+		$item['url'] = ICMS_URL . '/modules/' . $icmsModule->getVar('dirname') . '/scrapbook.php?uid=' . $result_array['scrap_from'];
 		return $item;
 	}
 	

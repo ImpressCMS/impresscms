@@ -103,56 +103,52 @@ $modversion['search'] = array (
 $modversion['hasMain'] = 1;
 
 $i = 1;
-global $icmsModule, $icmsUser;
+global $icmsModule, $icmsModuleConfig, $icmsUser;
 if (is_object($icmsModule) && $icmsModule->dirname() == $modversion['dirname']) {
-$mod_handler =& xoops_gethandler('module');
-$mod_profile =& $mod_handler->getByDirname(basename( dirname( __FILE__ ) ));
-$conf_handler =& xoops_gethandler('config');
-$moduleConfig =& $conf_handler->getConfigsByCat(0, $mod_profile->getVar('mid'));
 $modversion['sub'][$i]['name'] = _MI_PROFILE_SEARCH;
-$modversion['sub'][$i]['url'] = ($moduleConfig['profile_social']? 'searchmembers.php':'search.php');
+$modversion['sub'][$i]['url'] = ($icmsModuleConfig['profile_social']? 'searchmembers.php':'search.php');
   if ($icmsUser) {
   $i++;
       $modversion['sub'][$i]['name'] = _MI_PROFILE_MYPROFILE;
-      $modversion['sub'][$i]['url'] = $moduleConfig['profile_social']? 'index.php':'userinfo.php';
+      $modversion['sub'][$i]['url'] = $icmsModuleConfig['profile_social']? 'index.php':'userinfo.php';
   $i++;
       $modversion['sub'][$i]['name'] = _PROFILE_MI_EDITACCOUNT;
       $modversion['sub'][$i]['url'] = "edituser.php";
   $i++;
       $modversion['sub'][$i]['name'] = _PROFILE_MI_CHANGEPASS;
       $modversion['sub'][$i]['url'] = "changepass.php";
-    if (isset($moduleConfig) && isset($moduleConfig['allow_chgmail']) && $moduleConfig['allow_chgmail'] == 1) {
+    if (isset($icmsModuleConfig) && isset($icmsModuleConfig['allow_chgmail']) && $icmsModuleConfig['allow_chgmail'] == 1) {
   $i++;
         $modversion['sub'][$i]['name'] = _PROFILE_MI_CHANGEMAIL;
         $modversion['sub'][$i]['url'] = "changemail.php";
     }
-    if($moduleConfig['profile_social']==1){
-	  if ($moduleConfig['enable_scraps']==1){ 
+    if($icmsModuleConfig['profile_social']==1){
+	  if ($icmsModuleConfig['enable_scraps']==1){ 
   $i++;
         $modversion['sub'][$i]['name'] = _MI_PROFILE_MYSCRAPS;
         $modversion['sub'][$i]['url'] = "scrapbook.php";
       }
-	  if ($moduleConfig['enable_pictures']==1){
+	  if ($icmsModuleConfig['enable_pictures']==1){
   $i++;
         $modversion['sub'][$i]['name'] = _MI_PROFILE_MYPICTURES;
         $modversion['sub'][$i]['url'] = "album.php";
       }
-      if ($moduleConfig['enable_audio']==1){
+      if ($icmsModuleConfig['enable_audio']==1){
   $i++;
         $modversion['sub'][$i]['name'] = _MI_PROFILE_MYAUDIOS;
         $modversion['sub'][$i]['url'] = "audio.php";
       }
-      if ($moduleConfig['enable_videos']==1){ 
+      if ($icmsModuleConfig['enable_videos']==1){ 
   $i++;
         $modversion['sub'][$i]['name'] = _MI_PROFILE_MYVIDEOS;
         $modversion['sub'][$i]['url'] = "video.php";
       }
-      if ($moduleConfig['enable_friends']==1){ 
+      if ($icmsModuleConfig['enable_friends']==1){ 
   $i++;
         $modversion['sub'][$i]['name'] = _MI_PROFILE_MYFRIENDS;
         $modversion['sub'][$i]['url'] = "friends.php";
       }
-      if ($moduleConfig['enable_tribes']==1){ 
+      if ($icmsModuleConfig['enable_tribes']==1){ 
   $i++;
         $modversion['sub'][$i]['name'] = _MI_PROFILE_MYTRIBES;
         $modversion['sub'][$i]['url'] = "tribes.php";

@@ -34,12 +34,8 @@ die("XOOPS root path not defined");
 	*/
 function profile_search($queryarray, $andor, $limit, $offset, $userid)
 {
-	global $xoopsDB, $module;
+	global $xoopsDB, $icmsModule, $icmsModuleConfig;
 	//getting the url to the uploads directory
-	$module_handler =& xoops_gethandler('module');
-	$modulo         =& $module_handler->getByDirname('profile');
-	$config_handler =& xoops_gethandler('config');
-	$moduleConfig   =& $config_handler->getConfigsByCat(0, $modulo->getVar('mid'));
 	$path_uploadimages = ICMS_UPLOAD_URL;
 
 	$ret = array();

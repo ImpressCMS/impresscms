@@ -30,7 +30,7 @@ if ($uid <= 0) {
 }
 $modname = basename( dirname( __FILE__ ) );
 
-if($moduleConfig['profile_social']==0){
+if($icmsModuleConfig['profile_social']==0){
 	header('Location: '.ICMS_URL.'/modules/'.$modname.'/userinfo.php?uid='.$uid);
 	exit();
 }
@@ -113,7 +113,7 @@ $xoopsTpl->assign('lang_evaluate',_MD_PROFILE_FRIENDSHIPCONFIGS );
 
 /***********************************************************************************/
 
-if($moduleConfig['profile_social']==0){
+if($icmsModuleConfig['profile_social']==0){
 	header('Location: '.ICMS_URL.'/modules/'.$modname.'/search.php');
 	exit();
 }

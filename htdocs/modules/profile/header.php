@@ -21,10 +21,7 @@ $modname = basename( dirname( __FILE__ ) );
 include_once ICMS_ROOT_PATH.'/modules/'.$modname.'/include/common.php';
 include_once ICMS_ROOT_PATH.'/modules/'.$modname.'/class/controler.php';
 icms_loadLanguageFile('core', 'user');
-  $mod_handler =& xoops_gethandler('module');
-  $mod_profile  =& $mod_handler->getByDirname($modname);
-  $conf_handler =& xoops_gethandler('config');
-  $moduleConfig   =& $conf_handler->getConfigsByCat(0, $mod_profile->getVar('mid'));
+global $icmsModuleConfig;
 $album_factory 			= icms_getmodulehandler('images', $modname, 'profile' );
 $visitors_factory 		= icms_getmodulehandler('visitors', $modname, 'profile' );
 $videos_factory 			= icms_getmodulehandler('video', $modname, 'profile' );
@@ -76,7 +73,7 @@ if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStyleshe
 $xoTheme->addScript(ICMS_URL.'/modules/'.$icmsModule->getVar('dirname').'/js/profile.js');
 $xoopsTpl->assign('lang_mysection',_MD_PROFILE_MYPROFILE);
 
-    if($moduleConfig['profile_social']==1){
+    if($icmsModuleConfig['profile_social']==1){
   $xoopsTpl->assign('module_is_socialmode', true);
     }
 
@@ -122,7 +119,7 @@ $xoTheme->addScript(ICMS_URL.'/modules/'.$icmsModule->getVar('dirname').'/js/pro
 
 //navbar
 $xoopsTpl->assign('module_name',$icmsModule->getVar('name'));
-    if($moduleConfig['profile_social']==1){
+    if($icmsModuleConfig['profile_social']==1){
   $xoopsTpl->assign('module_is_socialmode', true);
     }
 
