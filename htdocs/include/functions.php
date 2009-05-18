@@ -2994,5 +2994,55 @@ function icms_makeSmarty($items) {
 		}
 		return $len;
 	}
+/**
+ * Is a module being installed, updated or uninstalled
+ * Used for setting module configuration default values or options
+ *
+ * The function should be in functions.admin.php, however it requires extra inclusion in xoops_version.php if so
+ *
+ * @param	string	$dirname	dirname of current module
+ * @return	bool
+ */
+function mod_isModuleAction($dirname = "system")
+{
+	global $icmsModule;
+	$ret = @(
+		// action module "system"
+		!empty($icmsModule) && "system" == $icmsModule->getVar("dirname", "n")
+		&&
+		// current dirname
+		($dirname == $_POST["dirname"] || $dirname == $_POST["module"])
+		&&
+		// current op 
+		("update_ok" == $_POST["op"] || "install_ok" == $_POST["op"] || "uninstall_ok" == $_POST["op"])
+		&&
+		// current action
+		"modulesadmin" == $_POST["fct"]
+		);
+	return $ret;
+}
+
+
+/**
+ * Get localized string if it is defined 
+ *
+ * @param	string	$name	string to be localized
+ */
+if (!function_exists("mod_constant")) {
+function mod_constant($name)
+{
+	global $icmsModule;
+	if (!empty($GLOBALS["VAR_PREFIXU"]) && @defined($GLOBALS["VAR_PREFIXU"]."_".strtoupper($name))) {
+		return CONSTANT($GLOBALS["VAR_PREFIXU"]."_".strtoupper($name));
+	} elseif (!empty($icmsModule) && @defined(strtoupper($icmsModule->getVar("dirname", "n")."_".$name))) {
+		return CONSTANT(strtoupper($icmsModule->getVar("dirname", "n")."_".$name));
+	} elseif (defined(strtoupper($name))) {
+		return CONSTANT(strtoupper($name));
+	} else {
+		return str_replace("_", " ", strtolower($name));
+	}
+}
+}
+
 
 ?>

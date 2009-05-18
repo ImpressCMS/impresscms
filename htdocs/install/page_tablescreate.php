@@ -26,8 +26,15 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
         imcms_install_chmod(XOOPS_ROOT_PATH.'/modules', 0777);
         imcms_install_chmod("/modules/protector/root/modules/protector", 0777);
         imcms_install_chmod("/modules/protector/trust_path/modules", 0777);
+        if(!is_dir(XOOPS_ROOT_PATH.'/modules/protector')){
         imcms_copyr(XOOPS_ROOT_PATH.'/install/modules/protector/root/modules/protector',XOOPS_ROOT_PATH.'/modules/protector');
+        }
+        if(!is_dir(XOOPS_TRUST_PATH.'/modules')){
         imcms_copyr(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules',XOOPS_TRUST_PATH.'/modules');
+        }
+        if(!is_dir(XOOPS_TRUST_PATH.'/modules/protector')){
+        imcms_copyr(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules/protector',XOOPS_TRUST_PATH.'/modules/protector');
+        }
         imcms_install_chmod(XOOPS_ROOT_PATH.'/modules', 0755);
     }
 	$wizard->setPage( 'tablescreate' );
