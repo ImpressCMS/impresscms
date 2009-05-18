@@ -47,16 +47,16 @@ class XoopsPageNav
    * @var string $url   What is the current url
    */
 	var $url;
-    /**#@-*/
+	/**#@-*/
 
 	/**
 	 * Constructor
 	 *
-	 * @param   int     $total_items    Total number of items
-	 * @param   int     $items_perpage  Number of items per page
-	 * @param   int     $current_start  First item on the current page
-	 * @param   string  $start_name     Name for "start" or "offset"
-	 * @param   string  $extra_arg      Additional arguments to pass in the URL
+	 * @param   int	 $total_items	Total number of items
+	 * @param   int	 $items_perpage  Number of items per page
+	 * @param   int	 $current_start  First item on the current page
+	 * @param   string  $start_name	 Name for "start" or "offset"
+	 * @param   string  $extra_arg	  Additional arguments to pass in the URL
 	 **/
 	function XoopsPageNav($total_items, $items_perpage, $current_start, $start_name="start", $extra_arg="")
 	{
@@ -81,9 +81,11 @@ class XoopsPageNav
 		
 		$style = (isset($icmsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php'))?$icmsConfigPersona['pagstyle']:'default';
 		$ret = '';
-        if(isset($xoTheme)){
+		if(isset($xoTheme)){
 		$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css', array("media" => "all"));
-        }
+		}else{
+			echo'<link rel="stylesheet" type="text/css" href="'.ICMS_LIBRARIES_URL . '/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css" />';
+		} 
 		if ( $this->total <= $this->perpage ) {
 			return $ret;
 		}
@@ -124,7 +126,7 @@ class XoopsPageNav
 	/**
 	 * Create a navigational dropdown list
 	 *
-	 * @param   boolean     $showbutton Show the "Go" button?
+	 * @param   boolean	 $showbutton Show the "Go" button?
 	 * @return  string
 	 **/
 	function renderSelect($showbutton = false)
@@ -159,7 +161,7 @@ class XoopsPageNav
 	/**
 	 * Create navigation with images
 	 *
-	 * @param   integer     $offset
+	 * @param   integer	 $offset
 	 * @return  string
 	 **/
 	function renderImageNav($offset = 4)

@@ -21,7 +21,7 @@ if ($icmsConfigSearch['enable_search'] == false) {
     exit();
 }
 
-$search_limiter = (($icmsConfigSearch['enable_deep_search'] == 1) ? $icmsConfigSearch['num_shallow_search'] : 0);
+$search_limiter = (($icmsConfigSearch['enable_deep_search'] == true) ? $icmsConfigSearch['num_shallow_search'] : false);
 $xoopsOption['template_main'] = 'system_search.html';
 include ICMS_ROOT_PATH.'/header.php';
 
@@ -215,7 +215,7 @@ switch ($action) {
 						}
 					}
 
-					if ($icmsConfigSearch['enable_deep_search'] == 1) {
+					if ($icmsConfigSearch['enable_deep_search'] == true) {
 						if ( $count > $max_results_per_page) {
 							$search_url = ICMS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
 							$search_url .= "&mid=$mid&action=showall&andor=$andor";
