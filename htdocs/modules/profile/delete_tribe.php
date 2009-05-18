@@ -40,7 +40,7 @@ if(!isset($_POST['confirm']) || $_POST['confirm']!=1) {
 	* The user must be the owner
 	*/
 	$criteria_tribe_id = new Criteria ('tribe_id',$tribe_id);
-	$uid = intval($xoopsUser->getVar('uid'));
+	$uid = intval($icmsUser->getVar('uid'));
 	$criteria_uid = new Criteria ('owner_uid',$uid);
 	$criteria = new CriteriaCompo ($criteria_tribe_id);
 	$criteria->add($criteria_uid);

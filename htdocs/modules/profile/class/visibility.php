@@ -42,7 +42,7 @@ class ProfileVisibilityHandler extends IcmsPersistableObjectHandler {
      * @return array
      */
     function getVisibleFields($user_groups, $profile_groups) {
-        global $xoopsUser;
+        global $icmsUser;
         $profile_groups[] = 0;
         $user_groups[] = 0;
 

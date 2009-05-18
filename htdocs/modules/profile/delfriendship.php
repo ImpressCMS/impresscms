@@ -33,7 +33,7 @@ $friendship_factory = icms_getmodulehandler('friendship', $modname, 'profile' );
 * Getting the uid of the user which user want to ask to be friend
 */
 $friend1_uid = intval($_POST['friend_uid']);
-$friend2_uid = intval($xoopsUser->getVar('uid'));
+$friend2_uid = intval($icmsUser->getVar('uid'));
 
 $criteria_friend1 = new Criteria('friend1_uid',$friend1_uid);
 $criteria_friend2 = new Criteria('friend2_uid',$friend2_uid);

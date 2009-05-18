@@ -21,8 +21,8 @@ include_once 'header.php';
 $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
-	if(is_object($xoopsUser)){
-		$uid = $xoopsUser->getVar('uid');
+	if(is_object($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
@@ -35,7 +35,7 @@ if($moduleConfig['profile_social']==0){
 	exit();
 }
 
-$controler = new ProfileAudioControler($xoopsDB,$xoopsUser);
+$controler = new ProfileAudioControler($xoopsDB,$icmsUser);
 $nbSections = $controler->getNumbersSections();
 
 $start = (isset($_GET['start']))? intval($_GET['start']) : 0;
@@ -45,7 +45,7 @@ $start = (isset($_GET['start']))? intval($_GET['start']) : 0;
 */
 $criteriaUidAudio = new criteria('uid_owner',$controler->uidOwner);
 $criteriaUidAudio->setStart($start);
-$criteriaUidAudio->setLimit($xoopsModuleConfig['audiosperpage']);
+$criteriaUidAudio->setLimit($icmsModuleConfig['audiosperpage']);
 
 /**
 * Get all audios of this user and assign them to template
@@ -65,7 +65,7 @@ if(is_array($audios_array)) {
   $xoopsTpl->assign('lang_noaudioyet',_MD_PROFILE_NOAUDIOYET);
 }
 
-$pageNav = $controler->AudiosNavBar($nbSections['nbAudio'], $xoopsModuleConfig['audiosperpage'],$start,2);
+$pageNav = $controler->AudiosNavBar($nbSections['nbAudio'], $icmsModuleConfig['audiosperpage'],$start,2);
 
 //meta language names
 $xoopsTpl->assign('lang_meta',_MD_PROFILE_META);
@@ -100,7 +100,7 @@ $xoopsTpl->assign('nb_audio',$nbSections['nbAudio']);
 $xoopsTpl->assign('lang_mysection',_MI_PROFILE_MYAUDIOS);
 $xoopsTpl->assign('section_name',_MD_PROFILE_AUDIOS);
 //page atributes
-$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$xoopsModule->getVar('name'), $controler->nameOwner));
+$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$icmsModule->getVar('name'), $controler->nameOwner));
 
 //form actions
 $xoopsTpl->assign('lang_delete',_MD_PROFILE_DELETE );
@@ -114,12 +114,12 @@ $xoopsTpl->assign('lang_titleLabel',_MD_PROFILE_TITLEAUDIO);
 $xoopsTpl->assign('lang_submitValue',_MD_PROFILE_SUBMITAUDIO);
 $xoopsTpl->assign('lang_addaudios',_MD_PROFILE_ADDAUDIO);
 
-$xoopsTpl->assign('width',$xoopsModuleConfig['width_tube']);
-$xoopsTpl->assign('height',$xoopsModuleConfig['height_tube']);
+$xoopsTpl->assign('width',$icmsModuleConfig['width_tube']);
+$xoopsTpl->assign('height',$icmsModuleConfig['height_tube']);
 $xoopsTpl->assign('player_from_list',_MD_PROFILE_PLAYER);
 
-$xoopsTpl->assign('lang_audiohelp',sprintf(_MD_PROFILE_ADDAUDIOHELP,($xoopsModuleConfig['maxfilesize'])/1024));
-$xoopsTpl->assign('max_youcanupload',$xoopsModuleConfig['maxfilesize']);
+$xoopsTpl->assign('lang_audiohelp',sprintf(_MD_PROFILE_ADDAUDIOHELP,($icmsModuleConfig['maxfilesize'])/1024));
+$xoopsTpl->assign('max_youcanupload',$icmsModuleConfig['maxfilesize']);
 //Videos NAvBAr
 $xoopsTpl->assign('pageNav',$pageNav);
 

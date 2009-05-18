@@ -25,7 +25,7 @@ if($moduleConfig['profile_social']==0){
 }
 
 
-$controler = new ProfileControlerTribes($xoopsDB,$xoopsUser);
+$controler = new ProfileControlerTribes($xoopsDB,$icmsUser);
 $nbSections = $controler->getNumbersSections();
 
 $start_all = (isset($_GET['start_all']))? intval($_GET['start_all']) : 0;
@@ -41,7 +41,7 @@ $criteria_desc = new criteria('tribe_desc','%'.$tribe_keyword.'%','LIKE');
 $criteria_tribes = new CriteriaCompo($criteria_title);
 $criteria_tribes->add($criteria_desc,'OR');
 $nb_tribes = $controler->tribes_factory->getCount($criteria_tribes);
-$criteria_tribes->setLimit($xoopsModuleConfig['tribesperpage']);
+$criteria_tribes->setLimit($icmsModuleConfig['tribesperpage']);
 $criteria_tribes->setStart($start_all);
 $tribes_objects = $controler->tribes_factory->getObjects($criteria_tribes);
 $i = 0;
@@ -58,7 +58,7 @@ foreach($tribes_objects as $tribe_object)
 /**
 * Criando a barra de navegao caso tenha muitos amigos
 */
-$barra_navegacao = new XoopsPageNav($nb_tribes,$xoopsModuleConfig['tribesperpage'],$start_all,'start_all','tribe_keyword='.$tribe_keyword.'&amp;start_my='.$start_my);
+$barra_navegacao = new XoopsPageNav($nb_tribes,$icmsModuleConfig['tribesperpage'],$start_all,'start_all','tribe_keyword='.$tribe_keyword.'&amp;start_my='.$start_my);
 $barrinha = $barra_navegacao->renderImageNav(2);
 
 //permissions
@@ -97,9 +97,9 @@ $xoopsTpl->assign('lang_mysection',_MD_PROFILE_MYTRIBES);
 $xoopsTpl->assign('section_name',_MD_PROFILE_TRIBES);
 
 //page atributes
-$xoopsTpl->assign('xoops_pagetitle',  sprintf(_MD_PROFILE_PAGETITLE,$xoopsModule->getVar('name'), $controler->nameOwner));
+$xoopsTpl->assign('xoops_pagetitle',  sprintf(_MD_PROFILE_PAGETITLE,$icmsModule->getVar('name'), $controler->nameOwner));
 
-//$xoopsTpl->assign('path_profile_uploads',$xoopsModuleConfig['link_path_upload']);
+//$xoopsTpl->assign('path_profile_uploads',$icmsModuleConfig['link_path_upload']);
 //$xoopsTpl->assign('tribes',$tribes);
 //$xoopsTpl->assign('mytribes',$mytribes);
 $xoopsTpl->assign('lang_mytribestitle',_MD_PROFILE_MYTRIBES);

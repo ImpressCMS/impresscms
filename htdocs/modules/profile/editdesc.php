@@ -26,7 +26,7 @@ if($moduleConfig['profile_social']==0){
 
 $cod_img = $_POST['cod_img'];
 $marker = (!empty($_POST['marker'])) ? intval($_POST['marker']):0;
-$uid = intval($xoopsUser->getVar('uid'));
+$uid = intval($icmsUser->getVar('uid'));
 
 if($marker==1){
     if(!($GLOBALS['xoopsSecurity']->check())) {
@@ -66,7 +66,7 @@ if($array_pict = $album_factory->getObjects($criteria)){
 	$caption = $array_pict[0]->getVar('title');
 	$url = $array_pict[0]->getVar('url');
 }
-//$url = $xoopsModuleConfig['link_path_upload']."/thumb_".$url;
+//$url = $icmsModuleConfig['link_path_upload']."/thumb_".$url;
 $url = ICMS_URL.'/uploads/thumb_'.$url;
 $album_factory->renderFormEdit($caption,$cod_img,$url);
 

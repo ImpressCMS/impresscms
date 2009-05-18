@@ -21,8 +21,8 @@ include_once 'header.php';
 $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
-	if(is_object($xoopsUser)){
-		$uid = $xoopsUser->getVar('uid');
+	if(is_object($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
@@ -35,7 +35,7 @@ if($moduleConfig['profile_social']==0){
 	exit();
 }
 
-$controler = new ProfileControlerPhotos($xoopsDB,$xoopsUser);
+$controler = new ProfileControlerPhotos($xoopsDB,$icmsUser);
 $nbSections = $controler->getNumbersSections();
 
 /**
@@ -55,9 +55,9 @@ if($controler->isOwner==1) {
 	$criteria_uid = new criteriaCompo($criteria_uid2);
 	$criteria_uid->add($criteria_private);
 }
-$criteria_uid->setLimit($xoopsModuleConfig['picturesperpage']);
+$criteria_uid->setLimit($icmsModuleConfig['picturesperpage']);
 $criteria_uid->setStart($start);
-if($xoopsModuleConfig['images_order']==1) {
+if($icmsModuleConfig['images_order']==1) {
 	$criteria_uid->setOrder('DESC');
 	$criteria_uid->setSort('cod_img');
 }
@@ -94,9 +94,9 @@ if($nbSections['nbPhotos']==0) {
 * Show the form if it is the owner and he can still upload pictures
 */
 $maxfilebytes = '';
-if(!empty($xoopsUser)) {
-	if(($controler->isOwner==1) && $xoopsModuleConfig['nb_pict']>$nbSections['nbPhotos']) 	{
-		$maxfilebytes = $xoopsModuleConfig['maxfilesize'];
+if(!empty($icmsUser)) {
+	if(($controler->isOwner==1) && $icmsModuleConfig['nb_pict']>$nbSections['nbPhotos']) 	{
+		$maxfilebytes = $icmsModuleConfig['maxfilesize'];
 		$xoopsTpl->assign('maxfilebytes',$maxfilebytes);
 		$xoopsTpl->assign('showForm','1');
 	}
@@ -112,7 +112,7 @@ $avatar = $owner->getVar('user_avatar');
 /**
 * Criando a barra de navegao caso tenha muitos amigos
 */
-$barra_navegacao = new XoopsPageNav($nbSections['nbPhotos'],$xoopsModuleConfig['picturesperpage'],$start,'start','uid='.intval($controler->uidOwner));
+$barra_navegacao = new XoopsPageNav($nbSections['nbPhotos'],$icmsModuleConfig['picturesperpage'],$start,'start','uid='.intval($controler->uidOwner));
 $navegacao = $barra_navegacao->renderImageNav(2);
 
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
@@ -149,7 +149,7 @@ $xoopsTpl->assign('lang_mysection',_MD_PROFILE_MYPHOTOS);
 $xoopsTpl->assign('section_name',_MD_PROFILE_PHOTOS);
 
 //page atributes
-$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$xoopsModule->getVar('name'), $controler->nameOwner));
+$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$icmsModule->getVar('name'), $controler->nameOwner));
 $xoopsTpl->assign('isanonym',$controler->isAnonym);
 
 //form
@@ -159,8 +159,8 @@ $xoopsTpl->assign('lang_caption',_MD_PROFILE_CAPTION);
 $xoopsTpl->assign('lang_uploadpicture',_MD_PROFILE_UPLOADPICTURE);
 $xoopsTpl->assign('lang_youcanupload',sprintf(_MD_PROFILE_YOUCANUPLOAD,$maxfilebytes/1024));
 
-//$xoopsTpl->assign('path_profile_uploads',$xoopsModuleConfig['link_path_upload']);
-$xoopsTpl->assign('lang_max_nb_pict', sprintf(_MD_PROFILE_YOUCANHAVE,$xoopsModuleConfig['nb_pict']));
+//$xoopsTpl->assign('path_profile_uploads',$icmsModuleConfig['link_path_upload']);
+$xoopsTpl->assign('lang_max_nb_pict', sprintf(_MD_PROFILE_YOUCANHAVE,$icmsModuleConfig['nb_pict']));
 $xoopsTpl->assign('lang_delete',_MD_PROFILE_DELETE );
 $xoopsTpl->assign('lang_editdesc',_MD_PROFILE_EDITDESC );
 $xoopsTpl->assign('lang_nb_pict', sprintf(_MD_PROFILE_YOUHAVE,$nbSections['nbPhotos']));

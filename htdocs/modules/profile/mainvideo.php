@@ -42,7 +42,7 @@ $video->setVar('main_video',1);
 /**
 * Verifying who's the owner to allow changes
 */
-$uid = intval($xoopsUser->getVar('uid'));
+$uid = intval($icmsUser->getVar('uid'));
 if($uid == $video->getVar('uid_owner')) {
 	if($video_factory->unsetAllMainsbyID($uid))	{
 		if($video_factory->insert($video)) {

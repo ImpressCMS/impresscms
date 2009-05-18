@@ -49,7 +49,7 @@ $op_select->addOption('search', _PROFILE_AM_PROF_SEARCH);
 $opform->addElement($op_select);
 $opform->display();
 
-$module_id = $xoopsModule->getVar('mid');
+$module_id = $icmsModule->getVar('mid');
 $perm_desc = "";
 include_once ICMS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 $form = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php', $anonymous);

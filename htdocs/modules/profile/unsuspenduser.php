@@ -34,7 +34,7 @@ $suspensions_factory = icms_getmodulehandler('suspensions', $modname, 'profile' 
 $suspension = $suspensions_factory->create(false);
 $suspension->load($uid);
 
-if ($xoopsUser->isAdmin(1))
+if ($icmsUser->isAdmin(1))
 {
 	$member_handler =& xoops_gethandler('member');
 	$thisUser =& $member_handler->getUser($uid);

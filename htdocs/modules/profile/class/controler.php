@@ -89,7 +89,7 @@ class ProfileControler extends XoopsObject {
     }
 	
 	function checkPrivilege($items_asked) {			
-		global $xoopsModuleConfig,$xoopsUser;
+		global $icmsModuleConfig,$icmsUser;
    	    $criteria = new Criteria('config_uid',$this->owner->getVar('uid'));
 	    if ($this->configs_factory->getCount($criteria)==1){
 		  $configs = $this->configs_factory->getObjects($criteria);
@@ -114,7 +114,7 @@ class ProfileControler extends XoopsObject {
 
 	
 	function getPermissions() {
-	   global $uid_owner,$xoopsUser;
+	   global $uid_owner,$icmsUser;
        /**
        * @desc Check if the user uid exists if not redirect back to where he was
 	   */
@@ -164,7 +164,7 @@ class ProfileControler extends XoopsObject {
        //isfriend?
        $criteria_friends = new criteria('friend1_uid',$this->uidOwner);
 
-       if (!$xoopsUser) {
+       if (!$icmsUser) {
          $controler->isFriend = 0;	
        } else {
          $criteria_isfriend = new criteriaCompo (new criteria ('friend2_uid',$this->user->getVar('uid')));
@@ -237,10 +237,10 @@ class ProfileControler extends XoopsObject {
 	}
 
 	function checkPrivilegeBySection($section){
-		global $xoopsModuleConfig,$xoopsUser;
+		global $icmsModuleConfig,$icmsUser;
 		$configsectionname = 'enable_'.$section;
-		if (array_key_exists($configsectionname,$xoopsModuleConfig)) {
-	      if ($xoopsModuleConfig[$configsectionname]==0) {	 
+		if (array_key_exists($configsectionname,$icmsModuleConfig)) {
+	      if ($icmsModuleConfig[$configsectionname]==0) {	 
 	  	    return -1;
 	      }
 	    }
@@ -332,8 +332,8 @@ class ProfileVideoControler extends ProfileControler {
 	
 	
 	function checkPrivilege(){
-		global $xoopsModuleConfig;
-		if ($xoopsModuleConfig['enable_videos']==0){
+		global $icmsModuleConfig;
+		if ($icmsModuleConfig['enable_videos']==0){
 			redirect_header("index.php?uid=".$this->owner->getVar('uid'),3,_MD_PROFILE_VIDEOSNOTENABLED);
 		}
 		$criteria = new Criteria('config_uid',$this->owner->getVar('uid'));
@@ -382,8 +382,8 @@ class ProfileControlerScraps extends ProfileControler {
 	}
 	
     function checkPrivilege($privilegeType="") {
-        global $xoopsModuleConfig;
-		if ($xoopsModuleConfig['enable_scraps']==0){
+        global $icmsModuleConfig;
+		if ($icmsModuleConfig['enable_scraps']==0){
 		  redirect_header("index.php?uid=".$this->owner->getVar('uid'),3,_MD_PROFILE_SCRAPSNOTENABLED);
 		}
 		if ($privilegeType=="sendscraps"){
@@ -411,8 +411,8 @@ class ProfileControlerScraps extends ProfileControler {
 class ProfileControlerPhotos extends ProfileControler {
 	
 	function checkPrivilege(){
-        global $xoopsModuleConfig;
-		if ($xoopsModuleConfig['enable_pictures']==0){
+        global $icmsModuleConfig;
+		if ($icmsModuleConfig['enable_pictures']==0){
 			redirect_header("index.php?uid=".$this->owner->getVar('uid'),3,_MD_PROFILE_PICTURESNOTENABLED);
 		}
 		$criteria = new Criteria('config_uid',$this->owner->getVar('uid'));
@@ -506,8 +506,8 @@ class ProfileAudioControler extends ProfileControler {
     }
     
     function checkPrivilege(){
-        global $xoopsModuleConfig;
-        if ($xoopsModuleConfig['enable_audio']==0){
+        global $icmsModuleConfig;
+        if ($icmsModuleConfig['enable_audio']==0){
             redirect_header("index.php?uid=".$this->owner->getVar('uid'),3,_MD_PROFILE_AUDIONOTENABLED);
         }
 		$criteria = new Criteria('config_uid',$this->owner->getVar('uid'));
@@ -525,8 +525,8 @@ class ProfileAudioControler extends ProfileControler {
 
 class ProfileControlerFriends extends ProfileControler {	
 	function checkPrivilege() {
-        global $xoopsModuleConfig;
-		if ($xoopsModuleConfig['enable_friends']==0){
+        global $icmsModuleConfig;
+		if ($icmsModuleConfig['enable_friends']==0){
 			redirect_header("index.php?uid=".$this->owner->getVar('uid'),3,_MD_PROFILE_FRIENDSNOTENABLED);
 		}
 		$criteria = new Criteria('config_uid',$this->owner->getVar('uid'));
@@ -545,8 +545,8 @@ class ProfileControlerFriends extends ProfileControler {
 class ProfileControlerTribes extends ProfileControler  {
 	
 	function checkPrivilege(){
-        global $xoopsModuleConfig;
-		if ($xoopsModuleConfig['enable_tribes']==0){
+        global $icmsModuleConfig;
+		if ($icmsModuleConfig['enable_tribes']==0){
 			redirect_header("index.php?uid=".$this->owner->getVar('uid'),3,_MD_PROFILE_TRIBESNOTENABLED);
 		}
 		$criteria = new Criteria('config_uid',$this->owner->getVar('uid'));
@@ -565,11 +565,11 @@ class ProfileControlerTribes extends ProfileControler  {
 class ProfileControlerIndex extends ProfileControler  {
 
 	function checkPrivilege($section){
-		global $xoopsModuleConfig,$xoopsUser;
+		global $icmsModuleConfig,$icmsUser;
 		if (trim($section)=="") return -1;
 		$configsectionname = 'enable_'.$section;		
-		if (array_key_exists($configsectionname,$xoopsModuleConfig)){
-	       if ($xoopsModuleConfig[$configsectionname]==0){
+		if (array_key_exists($configsectionname,$icmsModuleConfig)){
+	       if ($icmsModuleConfig[$configsectionname]==0){
 	  	      return -1;
 	       }
 		}

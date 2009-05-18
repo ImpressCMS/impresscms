@@ -262,9 +262,7 @@ function getFieldForm(&$field, $action = false) {
 */
 function getRegisterForm(&$user, $profile, $next_step = 0, $step) {
     $action = $_SERVER['REQUEST_URI'];
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-    //global $icmsConfigUser;
+    global $icmsConfigUser;
     include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 	include_once ICMS_ROOT_PATH."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/class/forms/profile_form.php";
     $reg_form = new ProfileForm($step->getVar('step_name'), "regform", $action, "post");
@@ -397,9 +395,7 @@ function getFinishForm(&$user, $vpass, $action = false) {
 * @return object
 */
 function getUserForm(&$user, $profile = false, $action = false) {
-    global $xoopsConfig, $xoopsModule, $xoopsUser;
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+    global $icmsConfig, $icmsModule, $icmsUser, $icmsConfigUser;
     if ($action === false) {
         $action = $_SERVER['REQUEST_URI'];
     }
@@ -418,17 +414,15 @@ function getUserForm(&$user, $profile = false, $action = false) {
     $fields =& $profile_handler->loadFields();
     // Get ids of fields that can be edited
     $gperm_handler =& xoops_gethandler('groupperm');
-    $editable_fields =& $gperm_handler->getItemIds('profile_edit', $xoopsUser->getGroups(), $xoopsModule->getVar('mid'));
+    $editable_fields =& $gperm_handler->getItemIds('profile_edit', $icmsUser->getGroups(), $icmsModule->getVar('mid'));
 
     $email_tray = new XoopsFormElementTray(_PROFILE_MA_EMAIL, '<br />');
-    if ($user->isNew() || $xoopsUser->isAdmin()) {
+    if ($user->isNew() || $icmsUser->isAdmin()) {
     $elements[0][] = array('element' => new XoopsFormText(_PROFILE_MA_USERLOGINNAME, 'login_name', 25, 75, $user->getVar('login_name', 'e')), 'required' => 1);
     $weights[0][] = 0;
     $elements[0][] = array('element' => new XoopsFormText(_PROFILE_MA_USERNAME, 'uname', 25, 75, $user->getVar('uname', 'e')), 'required' => 1);
         $email_text = new XoopsFormText('', 'email', 30, 60, $user->getVar('email'));
     } else {
-    $config_handler =& xoops_gethandler('config');
-	$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
    	$elements[0][] = array('element' => new XoopsFormLabel(_PROFILE_MA_USERLOGINNAME, 'login_name', 25, 75, $user->getVar('login_name', 'e')), 'required' => 0);
     $weights[0][] = 0;
    if ($icmsConfigUser['allow_chguname'] == 1) {
@@ -446,7 +440,7 @@ function getUserForm(&$user, $profile = false, $action = false) {
     $weights[0][] = 0;
 
 
-    if ($xoopsUser->isAdmin() && $user->getVar('uid') != $xoopsUser->getVar('uid')) {
+    if ($icmsUser->isAdmin() && $user->getVar('uid') != $icmsUser->getVar('uid')) {
         //If the user is an admin and is editing someone else
         $pwd_text = new XoopsFormPassword('', 'password', 10, 32, "", false, ($icmsConfigUser['pass_level']?'password_adv':''));
         $pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 32);
@@ -490,14 +484,14 @@ function getUserForm(&$user, $profile = false, $action = false) {
         }
     }
 
-    if ($xoopsUser && $xoopsUser->isAdmin()) {
-        if (@!include_once(ICMS_ROOT_PATH."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/language/".$xoopsConfig['language']."/admin.php")) {
+    if ($icmsUser && $icmsUser->isAdmin()) {
+        if (@!include_once(ICMS_ROOT_PATH."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/language/".$icmsConfig['language']."/admin.php")) {
             include_once(ICMS_ROOT_PATH."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/language/english/admin.php");
         }
         $gperm_handler =& xoops_gethandler('groupperm');
         //If user has admin rights on groups
         include_once ICMS_ROOT_PATH."/modules/system/constants.php";
-        if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, $xoopsUser->getGroups(), 1)) {
+        if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, $icmsUser->getGroups(), 1)) {
             //add group selection
             $group_select = new XoopsFormSelectGroup(_PROFILE_AM_GROUP, 'groups', false, $user->getGroups(), 5, true);
             $elements[0][] = array('element' => $group_select, 'required' => 0);

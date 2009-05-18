@@ -29,7 +29,7 @@ $picture_factory = icms_getmodulehandler('images', $modname, 'profile' );
 $picture = $picture_factory->create(false);
 $picture->load($_POST['cod_img']);
 
-$uid = intval($xoopsUser->getVar('uid'));
+$uid = intval($icmsUser->getVar('uid'));
 
 $image = ICMS_ROOT_PATH.'/uploads/'.'thumb_'.$picture->getVar('url');
 $avatar = 'av'.$uid.'_'.time().'.jpg';
@@ -38,13 +38,13 @@ $imageavatar = ICMS_ROOT_PATH.'/uploads/'.$avatar;
 if(!copy($image, $imageavatar)) {
   echo 'failed to copy $file...\n';
 }
-$xoopsUser->setVar('user_avatar',$avatar);
+$icmsUser->setVar('user_avatar',$avatar);
 $userHandler = new XoopsUserHandler($xoopsDB);
 /**
 * Verifying who's the owner to allow changes
 */
 if($uid == $picture->getVar('uid_owner')) {
-	if($userHandler->insert($xoopsUser)) {
+	if($userHandler->insert($icmsUser)) {
 	  redirect_header('album.php', 2, _MD_PROFILE_AVATAR_EDITED);
 	} else {
 	  redirect_header('album.php', 2, _MD_PROFILE_NOCACHACA);

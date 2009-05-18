@@ -15,9 +15,7 @@
  */
 
 include '../../mainfile.php';
-$config_handler =& xoops_gethandler('config');
-$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-if (!$xoopsUser || $icmsConfigUser['allow_chgmail'] != 1) {
+if (!$icmsUser || $icmsConfigUser['allow_chgmail'] != 1) {
     redirect_header(ICMS_URL.'/modules/'.basename( dirname( __FILE__ ) ).'/', 2, _NOPERM);
 }
 include ICMS_ROOT_PATH.'/header.php';
@@ -32,7 +30,7 @@ if (!isset($_POST['submit']) && !isset($_REQUEST['oldmail'])) {
 }
 else {
     //compute unique key
-    $key = md5(substr($xoopsUser->getVar('pass'), 0, 5));
+    $key = md5(substr($icmsUser->getVar('pass'), 0, 5));
     if (!isset($_REQUEST['oldmail'])) {
         if (!checkEmail($_POST['newmail'])) {
             redirect_header('changemail.php', 2, _PROFILE_MA_INVALIDMAIL);
@@ -41,23 +39,23 @@ else {
             //send email to new email address with key
             $xoopsMailer =& getMailer();
             $xoopsMailer->useMail();
-            $xoopsMailer->setTemplateDir(ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/language/'.$xoopsConfig['language'].'/mail_template');
+            $xoopsMailer->setTemplateDir(ICMS_ROOT_PATH.'/modules/'.$icmsModule->getVar('dirname').'/language/'.$icmsConfig['language'].'/mail_template');
             $xoopsMailer->setTemplate('changemail.tpl');
-            $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-            $xoopsMailer->assign('X_UNAME', $xoopsUser->getVar('uname'));
-            $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+            $xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
+            $xoopsMailer->assign('X_UNAME', $icmsUser->getVar('uname'));
+            $xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
             $xoopsMailer->assign('SITEURL', ICMS_URL.'/');
             $xoopsMailer->assign('IP', $_SERVER['REMOTE_ADDR']);
-            $xoopsMailer->assign('NEWEMAIL_LINK', ICMS_URL.'/modules/'.basename( dirname( __FILE__ ) ).'/changemail.php?code='.$key.'&oldmail='.$xoopsUser->getVar('email'));
+            $xoopsMailer->assign('NEWEMAIL_LINK', ICMS_URL.'/modules/'.basename( dirname( __FILE__ ) ).'/changemail.php?code='.$key.'&oldmail='.$icmsUser->getVar('email'));
             $xoopsMailer->assign('NEWEMAIL', $_POST['newmail']);
             $xoopsMailer->setToEmails($_POST['newmail']);
-            $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-            $xoopsMailer->setFromName($xoopsConfig['sitename']);
-            $xoopsMailer->setSubject(sprintf(_PROFILE_MA_NEWEMAILREQ,$xoopsConfig['sitename']));
+            $xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+            $xoopsMailer->setFromName($icmsConfig['sitename']);
+            $xoopsMailer->setSubject(sprintf(_PROFILE_MA_NEWEMAILREQ,$icmsConfig['sitename']));
             if ($xoopsMailer->send()) {
                 //set proposed email as the user's newemail
                	$profile_handler = icms_getmodulehandler( 'profile', basename( dirname( __FILE__ ) ), 'profile' );
-               	$profile = $profile_handler->get($xoopsUser->getVar('uid'));
+               	$profile = $profile_handler->get($icmsUser->getVar('uid'));
                 $profile->setVar('newemail', $_POST['newmail']);
                 if ($profile_handler->insert($profile)) {
                     //redirect with success
@@ -76,23 +74,23 @@ else {
         if ($code == $key) {
             //change email address to the proposed on
             $profile_handler = icms_getmodulehandler( 'profile', basename( dirname( __FILE__ ) ), 'profile' );
-           	$profile = $profile_handler->get($xoopsUser->getVar('uid'));
-            $xoopsUser->setVar('email', $profile->getVar('newemail'));
+           	$profile = $profile_handler->get($icmsUser->getVar('uid'));
+            $icmsUser->setVar('email', $profile->getVar('newemail'));
             //update user data
             $member_handler =& xoops_gethandler('member');
-            if ($member_handler->insertUser($xoopsUser, true)) {
+            if ($member_handler->insertUser($icmsUser, true)) {
                 //redirect with success
                 redirect_header(ICMS_URL.'/modules/'.basename( dirname( __FILE__ ) ).'/', 2, _PROFILE_MA_EMAILCHANGED);
             }
             else {
                 //error in update process
-                echo implode('<br />', $xoopsUser->getErrors());
+                echo implode('<br />', $icmsUser->getErrors());
             }
         }
         else {
             //wrong key
             $eh =& XoopsErrorHandler::getInstance();
-		    $eh->errorPage(1, $xoopsModule->getVar('mid'));
+		    $eh->errorPage(1, $icmsModule->getVar('mid'));
         }
     }
 }

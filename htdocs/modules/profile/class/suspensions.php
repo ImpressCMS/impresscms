@@ -150,7 +150,7 @@ class ProfileSuspensionsHandler extends XoopsObjectHandler
 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
 */
 	function insert(&$profile_suspensions, $force = false) {
-		Global $xoopsConfig;
+		Global $icmsConfig;
 		if (get_class($profile_suspensions) != 'Suspensions') {
 				return false;
 		}
@@ -163,7 +163,7 @@ class ProfileSuspensionsHandler extends XoopsObjectHandler
 		foreach ($profile_suspensions->cleanVars as $k => $v) {
 				${$k} = $v;
 		}
-		$now = "date_add(now(), interval ".$xoopsConfig['server_TZ']." hour)";
+		$now = "date_add(now(), interval ".$icmsConfig['server_TZ']." hour)";
 		if ($profile_suspensions->isNew()) {
 			// ajout/modification d'un profile_suspensions
 			$profile_suspensions = new Suspensions();

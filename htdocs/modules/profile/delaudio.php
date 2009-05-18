@@ -41,7 +41,7 @@ if(!isset($_POST['confirm']) || $_POST['confirm']!=1) {
 	*/  
 	$audio_factory = icms_getmodulehandler('audio', $modname, 'profile' );
 	$criteria_aud = new Criteria('audio_id',$cod_audio);
-	$uid = intval($xoopsUser->getVar('uid'));
+	$uid = intval($icmsUser->getVar('uid'));
 	$criteria_uid = new Criteria('uid_owner',$uid);
 	$criteria = new CriteriaCompo($criteria_aud);
 	$criteria->add($criteria_uid);

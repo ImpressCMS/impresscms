@@ -40,7 +40,7 @@ class ProfileField extends IcmsPersistableObject {
 	 * @param object $handler ProfileFieldHandler object
 	 */
 	public function __construct(& $handler) {
-		global $xoopsConfig;
+		global $icmsConfig;
 
 		$this->IcmsPersistableObject($handler);
 

@@ -21,8 +21,8 @@ include_once 'header.php';
 $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
-	if(is_object($xoopsUser)){
-		$uid = $xoopsUser->getVar('uid');
+	if(is_object($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
@@ -36,7 +36,7 @@ if($moduleConfig['profile_social']==0){
 }
 
 
-$controler = new ProfileControlerFriends($xoopsDB,$xoopsUser);
+$controler = new ProfileControlerFriends($xoopsDB,$icmsUser);
 $nbSections = $controler->getNumbersSections();
 
 $start = (isset($_GET['start']))? intval($_GET['start']) : 0;
@@ -49,7 +49,7 @@ $criteria_fans = new criteria('fan',1);
 $criteria_compo_fans = new CriteriaCompo($criteria_friends);
 $criteria_compo_fans->add($criteria_fans);
 $nb_friends = $controler->friendships_factory->getCount($criteria_compo_fans);
-$criteria_compo_fans->setLimit($xoopsModuleConfig['friendsperpage']);
+$criteria_compo_fans->setLimit($icmsModuleConfig['friendsperpage']);
 $criteria_compo_fans->setStart($start);
 $vetor = $controler->friendships_factory->getFans('',$criteria_compo_fans,0);
 if($nb_friends ==0) {$xoopsTpl->assign('lang_nofansyet',_MD_PROFILE_NOFANSYET);}
@@ -63,7 +63,7 @@ $identifier = $owner->getUnameFromId($controler->uidOwner);
 /**
 * Criando a barra de navegao caso tenha muitos amigos
 */
-$barra_navegacao = new XoopsPageNav($nb_friends,$xoopsModuleConfig['friendsperpage'],$start,'start','uid='.intval($controler->uidOwner));
+$barra_navegacao = new XoopsPageNav($nb_friends,$icmsModuleConfig['friendsperpage'],$start,'start','uid='.intval($controler->uidOwner));
 $navegacao = $barra_navegacao->renderImageNav(2);
 
 //permissions
@@ -96,10 +96,10 @@ $xoopsTpl->assign('section_name',_MD_PROFILE_FRIENDS);
 $xoopsTpl->assign('navegacao',$navegacao);  
 
 //page atributes
-$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$xoopsModule->getVar('name'), $controler->nameOwner));
+$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$icmsModule->getVar('name'), $controler->nameOwner));
 
 $xoopsTpl->assign('lang_fanstitle',  sprintf(_MD_PROFILE_FANSTITLE,$identifier));
-//$xoopsTpl->assign('path_profile_uploads',$xoopsModuleConfig['link_path_upload']);
+//$xoopsTpl->assign('path_profile_uploads',$icmsModuleConfig['link_path_upload']);
 
 $xoopsTpl->assign('friends',$vetor);
 
@@ -122,7 +122,7 @@ $op = isset($_POST['op']) ? trim(htmlspecialchars($_POST['op'])) : 'form';
 
 if(isset($_POST['op']) && $_POST['op'] == 'submit' ) {$op = 'submit';}
 include_once 'class/controler.php';
-$controler = new ProfileControlerIndex($xoopsDB,$xoopsUser);
+$controler = new ProfileControlerIndex($xoopsDB,$icmsUser);
 
 /**
 * Fecthing numbers of tribes friends videos pictures etc...
@@ -226,7 +226,7 @@ if($op == 'form'){
 if($op == 'submit'){
 	$xoopsOption['template_main'] = 'profile_searchresults.html';
 	include 'header.php';
-	$iamadmin = $xoopsUserIsAdmin;
+	$iamadmin = $icmsUserIsAdmin;
 	$myts =& MyTextSanitizer::getInstance();
 	$criteria = new CriteriaCompo();
 	if(!empty($_POST['user_uname']))
@@ -446,7 +446,7 @@ if($op == 'submit'){
 				$userdata['email'] = "<a href='mailto:".$foundusers[$j]->getVar('email')."'><img src='".ICMS_URL."/images/icons/email.gif' border='0' alt='".sprintf(_SENDEMAILTO,$foundusers[$j]->getVar('uname', "E"))."' /></a>";
 			}
 			else {$userdata['email'] = '&nbsp;';}
-			if($xoopsUser)
+			if($icmsUser)
 			{
 				$userdata['pmlink'] = "<a href='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send2=1&amp;to_userid=".$foundusers[$j]->getVar('uid')."\",\"pmlite\",450,370);'><img src='".ICMS_URL."/images/icons/pm.gif' border='0' alt='".sprintf(_SENDPMTO,$foundusers[$j]->getVar('uname', 'E'))."' /></a>";
 			}

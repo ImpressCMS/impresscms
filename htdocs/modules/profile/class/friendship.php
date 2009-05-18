@@ -161,7 +161,7 @@ class ProfileFriendshipHandler extends XoopsObjectHandler
 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
 */
 	function insert(&$profile_friendship, $force = false) {
-		Global $xoopsConfig;
+		Global $icmsConfig;
 		if (get_class($profile_friendship) != 'Friendship') {
 				return false;
 		}
@@ -174,7 +174,7 @@ class ProfileFriendshipHandler extends XoopsObjectHandler
 		foreach ($profile_friendship->cleanVars as $k => $v) {
 				${$k} = $v;
 		}
-		$now = "date_add(now(), interval ".$xoopsConfig['server_TZ']." hour)";
+		$now = "date_add(now(), interval ".$icmsConfig['server_TZ']." hour)";
 		if ($profile_friendship->isNew()) {
 			// ajout/modification d'un profile_friendship
 			$profile_friendship = new Friendship();
@@ -397,11 +397,11 @@ function getFans($nbfriends, $criteria = null, $shuffle=1)
 	
 function renderFormSubmit($friend)
 	{
-		global $xoopsUser;
+		global $icmsUser;
 		/**
  * criteria fetch friendship to be edited  
  */
-$criteria_friend1 = new criteria('friend1_uid',$xoopsUser->getVar('uid'));
+$criteria_friend1 = new criteria('friend1_uid',$icmsUser->getVar('uid'));
 $criteria_friend2 = new criteria('friend2_uid',$friend->getVar('uid'));
 $criteria_friendship = new criteriaCompo($criteria_friend1);
 $criteria_friendship->add($criteria_friend2);
@@ -474,7 +474,7 @@ $friendship = $friendships[0];
 	
 	function getMoyennes($user_uid){
 	
-	global $xoopsUser;
+	global $icmsUser;
 	
 	$vetor = array();
 	$vetor['mediahot']=0;

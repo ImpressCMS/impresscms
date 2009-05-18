@@ -40,7 +40,7 @@ if($confirm != 1){
 	$tribe = $tribes_factory->get($tribe_id);
 	//	echo "<pre>";
 	//	print_r($tribe);
-	if($xoopsUser->getVar('uid')==$tribe->getVar('owner_uid'))	{
+	if($icmsUser->getVar('uid')==$tribe->getVar('owner_uid'))	{
 		$criteria_rel_user_uid = new Criteria('rel_user_uid',$rel_user_uid);
 		$criteria_tribe_id 	   = new Criteria('rel_tribe_id',$tribe_id);
 		$criteria = new CriteriaCompo($criteria_rel_user_uid);

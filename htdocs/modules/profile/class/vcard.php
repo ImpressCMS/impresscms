@@ -39,10 +39,10 @@ class ProfileVcard {
 
 	function loadContact($uid)
 	{
-		global $xoopsUser;
+		global $icmsUser;
 
 		$gperm_handler = & xoops_gethandler( 'groupperm' );
-		$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 
 		$userHandler = xoops_gethandler('user');
 		$user = $userHandler->get($uid);

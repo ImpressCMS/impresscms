@@ -50,17 +50,17 @@ if ($marker==1) {
   $tribe_desc  = $myts->displayTarea($_POST['tribe_desc'],0,1,1,1,1);
   $tribe_img   = (!empty($_POST['tribe_img'])) ? $_POST['tribe_img'] : "";
   $path_upload    = ICMS_ROOT_PATH."/uploads";
-  $pictwidth      = $xoopsModuleConfig['resized_width'];
-  $pictheight     = $xoopsModuleConfig['resized_height'];
-  $thumbwidth     = $xoopsModuleConfig['thumb_width'];
-  $thumbheight    = $xoopsModuleConfig['thumb_height'];
-  $maxfilebytes   = $xoopsModuleConfig['maxfilesize'];
-  $maxfileheight  = $xoopsModuleConfig['max_original_height'];
-  $maxfilewidth   = $xoopsModuleConfig['max_original_width'];
+  $pictwidth      = $icmsModuleConfig['resized_width'];
+  $pictheight     = $icmsModuleConfig['resized_height'];
+  $thumbwidth     = $icmsModuleConfig['thumb_width'];
+  $thumbheight    = $icmsModuleConfig['thumb_height'];
+  $maxfilebytes   = $icmsModuleConfig['maxfilesize'];
+  $maxfileheight  = $icmsModuleConfig['max_original_height'];
+  $maxfilewidth   = $icmsModuleConfig['max_original_width'];
   if ($tribes_factory->receiveTribe($tribe_title,$tribe_desc,'',$path_upload,$maxfilebytes,$maxfilewidth,$maxfileheight)) {
     $reltribeuser = $reltribeuser_factory->create();
     $reltribeuser->setVar('rel_tribe_id',$xoopsDB->getInsertId());
-    $reltribeuser->setVar('rel_user_uid',$xoopsUser->getVar('uid'));
+    $reltribeuser->setVar('rel_user_uid',$icmsUser->getVar('uid'));
     $reltribeuser_factory->insert($reltribeuser);
     redirect_header("tribes.php",5,_MD_PROFILE_TRIBE_CREATED);
   } else {

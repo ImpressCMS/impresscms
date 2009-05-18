@@ -22,7 +22,7 @@ include_once("../../mainfile.php");
 include_once("../../header.php");
 include_once("class/profile_controler.php");
 
-$controler = new ProfileControlerTribes($xoopsDB,$xoopsUser);
+$controler = new ProfileControlerTribes($xoopsDB,$icmsUser);
 
 /**
  * Receiving info from get parameters  

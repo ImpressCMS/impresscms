@@ -23,8 +23,8 @@ include_once ICMS_ROOT_PATH.'/modules/'.$modname.'/class/controler.php';
 $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
-	if(is_object($xoopsUser)){
-		$uid = $xoopsUser->getVar('uid');
+	if(is_object($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
@@ -35,11 +35,9 @@ if($moduleConfig['profile_social']==0){
 	header('Location: '.ICMS_URL.'/modules/'.$modname.'/userinfo.php?uid='.$uid);
 	exit();
 }
-$config_handler =& xoops_gethandler('config');
-$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
 $start = (isset($_GET['start']))? intval($_GET['start']) : 0;
-$controler = new ProfileControler($xoopsDB,$xoopsUser);
+$controler = new ProfileControler($xoopsDB,$icmsUser);
 $nbSections = $controler->getNumbersSections();
 //permissions
 $xoopsTpl->assign('allow_scraps',$controler->checkPrivilegeBySection('scraps'));
@@ -68,7 +66,7 @@ $xoopsTpl->assign('lang_mysection',_MD_PROFILE_MYPROFILE);
 $xoopsTpl->assign('section_name',_MD_PROFILE_PROFILE);
 
 //page atributes
-$xoopsTpl->assign('xoops_pagetitle',  sprintf(_MD_PROFILE_PAGETITLE,$xoopsModule->getVar("name"), $controler->nameOwner));
+$xoopsTpl->assign('xoops_pagetitle',  sprintf(_MD_PROFILE_PAGETITLE,$icmsModule->getVar("name"), $controler->nameOwner));
 
 
 /**
@@ -136,11 +134,11 @@ if ($controler->isAnonym == 0){
     /**
      * Fectching last visitors
      */
-    if ($controler->uidOwner != $xoopsUser->getVar('uid')){
+    if ($controler->uidOwner != $icmsUser->getVar('uid')){
     	$visitor_now = $controler->visitors_factory->create();
     	$visitor_now->setVar('uid_owner', $controler->uidOwner);
-    	$visitor_now->setVar('uid_visitor',$xoopsUser->getVar('uid'));
-    	$visitor_now->setVar('uname_visitor',$xoopsUser->getVar('uname'));
+    	$visitor_now->setVar('uid_visitor',$icmsUser->getVar('uid'));
+    	$visitor_now->setVar('uname_visitor',$icmsUser->getVar('uname'));
     	$controler->visitors_factory->insert($visitor_now);
     }
     $criteria_visitors = new criteria('uid_owner',  $controler->uidOwner);
@@ -182,7 +180,7 @@ if ($controler->isSuspended==0){
   $xoopsTpl->assign('isSuspended',1);
   $xoopsTpl->assign('lang_suspended',_MD_PROFILE_USERSUSPENDED);	
 }
-if ($xoopsUser && $xoopsUser->isAdmin(1)){
+if ($icmsUser && $icmsUser->isAdmin(1)){
   $xoopsTpl->assign('isWebmaster',"1");
 }else{
   $xoopsTpl->assign('isWebmaster',"0");
@@ -237,8 +235,8 @@ $xoopsTpl->assign('lang_nomainvideo',_MD_PROFILE_NOMAINVIDEOYET);
 if ($nbSections['nbVideos']>0){
   $xoopsTpl->assign('mainvideocode',$mainvideocode);
   $xoopsTpl->assign('mainvideodesc',$mainvideodesc);
-  $xoopsTpl->assign('width',$xoopsModuleConfig['width_maintube']);// Falta configurar o tamnho do main nas configs e alterar no template
-  $xoopsTpl->assign('height',$xoopsModuleConfig['height_maintube']);
+  $xoopsTpl->assign('width',$icmsModuleConfig['width_maintube']);// Falta configurar o tamnho do main nas configs e alterar no template
+  $xoopsTpl->assign('height',$icmsModuleConfig['height_maintube']);
 }
 //friends
 $xoopsTpl->assign('friends',$friends);
@@ -251,8 +249,8 @@ $xoopsTpl->assign('lang_nofriendsyet',_MD_PROFILE_NOFRIENDSYET);
 $xoopsTpl->assign('lang_usercontributions',_MD_PROFILE_USERCONTRIBUTIONS);
 $xoopsTpl->assign('lang_detailsinfo',_MD_PROFILE_USERDETAILS);
 $xoopsTpl->assign('lang_contactinfo',_MD_PROFILE_CONTACTINFO);
-//$xoopsTpl->assign('path_profile_uploads',$xoopsModuleConfig['link_path_upload']);
-$xoopsTpl->assign('lang_max_nb_pict', sprintf(_MD_PROFILE_YOUCANHAVE,$xoopsModuleConfig['nb_pict']));
+//$xoopsTpl->assign('path_profile_uploads',$icmsModuleConfig['link_path_upload']);
+$xoopsTpl->assign('lang_max_nb_pict', sprintf(_MD_PROFILE_YOUCANHAVE,$icmsModuleConfig['nb_pict']));
 $xoopsTpl->assign('lang_delete',_MD_PROFILE_DELETE );
 $xoopsTpl->assign('lang_editdesc',_MD_PROFILE_EDITDESC );
 $xoopsTpl->assign('lang_visitors',_MD_PROFILE_VISITORS);
@@ -313,7 +311,7 @@ $xoopsTpl->assign('lang_realname', _US_REALNAME);
 $xoopsTpl->assign('name',$thisUser->getVar('name'));
 
 $gperm_handler = & xoops_gethandler( 'groupperm' );
-$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
+$groups = is_object($icmsUser) ? $icmsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
 $module_handler =& xoops_gethandler('module');
 $criteria = new CriteriaCompo(new Criteria('hassearch', 1));
 $criteria->add(new Criteria('isactive', 1));

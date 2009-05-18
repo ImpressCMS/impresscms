@@ -24,8 +24,6 @@
 function userCheck($user)
 {
 	global $icmsConfigUser;
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     $stop = '';
     if (!checkEmail($user->getVar('email'))) {
         $stop .= _PROFILE_MA_INVALIDMAIL;
@@ -164,8 +162,6 @@ function checkPassword($uname, $oldpass, $newpass, $vpass) {
     if ( $newpass == '' || !$vpass || $vpass == '' ) {
         $stop .= _PROFILE_MA_ENTERPWD.'<br />';
     }
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
     if ( ($newpass != $vpass) ) {
         $stop .= _PROFILE_MA_PASSNOTSAME.'<br />';
     } elseif ( ($newpass != '') && (strlen($newpass) < $icmsConfigUser['minpass']) ) {

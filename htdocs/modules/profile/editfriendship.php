@@ -24,7 +24,7 @@ if($moduleConfig['profile_social']==0){
 }
 
 
-if(!$xoopsUser) {redirect_header('index.php');}
+if(!$icmsUser) {redirect_header('index.php');}
 
 $friendship_factory = icms_getmodulehandler('friendship', $modname, 'profile' );
 $friend2_uid = intval($_POST['friend_uid']);

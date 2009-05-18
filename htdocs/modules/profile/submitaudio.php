@@ -42,7 +42,7 @@ $author = $myts->displayTarea($_POST['author'],0,1,1,1,1);
  * Getting parameters defined in admin side  
  */
 $path_upload    = ICMS_ROOT_PATH.'/uploads/'.$modname.'/mp3/';
-$maxfilebytes   = $xoopsModuleConfig['maxfilesize'];
+$maxfilebytes   = $icmsModuleConfig['maxfilesize'];
 
 /**
  * If we are receiving a file  
@@ -60,14 +60,14 @@ if ($_POST['xoops_upload_file'][0]=='sel_audio') {
               * Try to upload picture resize it insert in database and then redirect to index
               */
               if ($audio_factory->receiveAudio($title,$path_upload, $author, $maxfilebytes)){
-                     //$extra_tags['X_OWNER_NAME'] = $xoopsUser->getVar('uname');
-//                     $extra_tags['X_OWNER_UID'] = $xoopsUser->getVar('uid');
+                     //$extra_tags['X_OWNER_NAME'] = $icmsUser->getVar('uname');
+//                     $extra_tags['X_OWNER_UID'] = $icmsUser->getVar('uid');
 //                     $notification_handler =& xoops_gethandler('notification');
-//                     $notification_handler->triggerEvent ("picture", $xoopsUser->getVar('uid'), "new_picture",$extra_tags);
-                     //header("Location: ".ICMS_URL."/modules/".$modname."/index.php?uid=".$xoopsUser->getVar('uid'));
-                     redirect_header(ICMS_URL."/modules/".$modname."/audio.php?uid=".$xoopsUser->getVar('uid'),5,_MD_PROFILE_UPLOADEDAUDIO);
+//                     $notification_handler->triggerEvent ("picture", $icmsUser->getVar('uid'), "new_picture",$extra_tags);
+                     //header("Location: ".ICMS_URL."/modules/".$modname."/index.php?uid=".$icmsUser->getVar('uid'));
+                     redirect_header(ICMS_URL."/modules/".$modname."/audio.php?uid=".$icmsUser->getVar('uid'),5,_MD_PROFILE_UPLOADEDAUDIO);
               } else {
-                     redirect_header(ICMS_URL."/modules/".$modname."/audio.php?uid=".$xoopsUser->getVar('uid'),5,_MD_PROFILE_NOCACHACA);
+                     redirect_header(ICMS_URL."/modules/".$modname."/audio.php?uid=".$icmsUser->getVar('uid'),5,_MD_PROFILE_NOCACHACA);
               }
 }
 

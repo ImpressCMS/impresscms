@@ -21,8 +21,8 @@ include_once("header.php");
 $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
-	if(is_object($xoopsUser)){
-		$uid = $xoopsUser->getVar('uid');
+	if(is_object($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
@@ -35,7 +35,7 @@ if($moduleConfig['profile_social']==0){
 	exit();
 }
 
-$controler = new ProfileControlerTribes($xoopsDB,$xoopsUser);
+$controler = new ProfileControlerTribes($xoopsDB,$icmsUser);
 $nbSections = $controler->getNumbersSections();
 
 $start_all = (isset($_GET['start_all']))? intval($_GET['start_all']) : 0;
@@ -46,7 +46,7 @@ $start_my = (isset($_GET['start_my']))? intval($_GET['start_my']) : 0;
 */
 $criteria_tribes = new criteria('tribe_id',0,'>');
 $nb_tribes = $controler->tribes_factory->getCount($criteria_tribes);
-$criteria_tribes->setLimit($xoopsModuleConfig['tribesperpage']);
+$criteria_tribes->setLimit($icmsModuleConfig['tribesperpage']);
 $criteria_tribes->setStart($start_all);
 $tribes = $controler->tribes_factory->getTribes($criteria_tribes);
 
@@ -56,20 +56,20 @@ $tribes = $controler->tribes_factory->getTribes($criteria_tribes);
 $mytribes = '';
 $criteria_mytribes = new criteria('rel_user_uid', $controler->uidOwner);
 $nb_mytribes = $controler->reltribeusers_factory->getCount($criteria_mytribes);
-$criteria_mytribes->setLimit($xoopsModuleConfig['tribesperpage']);
+$criteria_mytribes->setLimit($icmsModuleConfig['tribesperpage']);
 $criteria_mytribes->setStart($start_my);
 $mytribes = $controler->reltribeusers_factory->getTribes('', $criteria_mytribes,0);
 
 /**
 * Criando a barra de navegao caso tenha muitos amigos
 */
-$barra_navegacao = new XoopsPageNav($nb_tribes,$xoopsModuleConfig['tribesperpage'],$start_all,'start_all','uid='.intval($controler->uidOwner).'&amp;start_my='.$start_my);
+$barra_navegacao = new XoopsPageNav($nb_tribes,$icmsModuleConfig['tribesperpage'],$start_all,'start_all','uid='.intval($controler->uidOwner).'&amp;start_my='.$start_my);
 $barrinha = $barra_navegacao->renderImageNav(2);//alltribes
 
-$barra_navegacao_my = new XoopsPageNav($nb_mytribes,$xoopsModuleConfig['tribesperpage'],$start_my,'start_my','uid='.intval($controler->uidOwner).'&amp;start_all='.$start_all);
+$barra_navegacao_my = new XoopsPageNav($nb_mytribes,$icmsModuleConfig['tribesperpage'],$start_my,'start_my','uid='.intval($controler->uidOwner).'&amp;start_all='.$start_all);
 $barrinha_my = $barra_navegacao_my->renderImageNav(2);
 
-$maxfilebytes = $xoopsModuleConfig['maxfilesize'];
+$maxfilebytes = $icmsModuleConfig['maxfilesize'];
 
 //permissions
 $xoopsTpl->assign('allow_scraps',$controler->checkPrivilegeBySection('scraps'));
@@ -107,9 +107,9 @@ $xoopsTpl->assign('lang_mysection',_MD_PROFILE_MYTRIBES);
 $xoopsTpl->assign('section_name',_MD_PROFILE_TRIBES);
 
 //page atributes
-$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$xoopsModule->getVar('name'), $controler->nameOwner));
+$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$icmsModule->getVar('name'), $controler->nameOwner));
 
-//$xoopsTpl->assign('path_profile_uploads',$xoopsModuleConfig['link_path_upload']);
+//$xoopsTpl->assign('path_profile_uploads',$icmsModuleConfig['link_path_upload']);
 $xoopsTpl->assign('tribes',$tribes);
 $xoopsTpl->assign('mytribes',$mytribes);
 $xoopsTpl->assign('lang_mytribestitle',_MD_PROFILE_MYTRIBES);

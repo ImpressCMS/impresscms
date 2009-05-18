@@ -103,15 +103,15 @@ $modversion['search'] = array (
 $modversion['hasMain'] = 1;
 
 $i = 1;
-global $xoopsModule, $xoopsUser;
-if (is_object($xoopsModule) && $xoopsModule->dirname() == $modversion['dirname']) {
+global $icmsModule, $icmsUser;
+if (is_object($icmsModule) && $icmsModule->dirname() == $modversion['dirname']) {
 $mod_handler =& xoops_gethandler('module');
 $mod_profile =& $mod_handler->getByDirname(basename( dirname( __FILE__ ) ));
 $conf_handler =& xoops_gethandler('config');
 $moduleConfig =& $conf_handler->getConfigsByCat(0, $mod_profile->getVar('mid'));
 $modversion['sub'][$i]['name'] = _MI_PROFILE_SEARCH;
 $modversion['sub'][$i]['url'] = ($moduleConfig['profile_social']? 'searchmembers.php':'search.php');
-  if ($xoopsUser) {
+  if ($icmsUser) {
   $i++;
       $modversion['sub'][$i]['name'] = _MI_PROFILE_MYPROFILE;
       $modversion['sub'][$i]['url'] = $moduleConfig['profile_social']? 'index.php':'userinfo.php';

@@ -39,23 +39,23 @@ if(!isset($_POST['confirm']) || $_POST['confirm']!=1){
 	*/
 	$album_factory = icms_getmodulehandler('images', $modname, 'profile' );
 	$criteria_img = new Criteria('cod_img',$cod_img);
-	$uid = intval($xoopsUser->getVar('uid'));
+	$uid = intval($icmsUser->getVar('uid'));
 	$criteria_uid = new Criteria('uid_owner',$uid);
 	$criteria = new CriteriaCompo($criteria_img);
 	$criteria->add($criteria_uid);
 	
 	$objects_array = $album_factory->getObjects($criteria);
 	$image_name = $objects_array[0]->getVar('url');  
-	$avatar_image = $xoopsUser->getVar('user_avatar');
+	$avatar_image = $icmsUser->getVar('user_avatar');
 	
 	/**
 	* Try to delete  
 	*/
 	if($album_factory->deleteAll($criteria))
 	{
-		if($xoopsModuleConfig['physical_delete']==1)
+		if($icmsModuleConfig['physical_delete']==1)
 		{
-			//unlink($xoopsModuleConfig['path_upload']."\/".$image_name);
+			//unlink($icmsModuleConfig['path_upload']."\/".$image_name);
 			unlink(ICMS_ROOT_PATH.'/uploads'.'/'.$image_name);
 			unlink(ICMS_ROOT_PATH.'/uploads'.'/resized_'.$image_name);
 			/**

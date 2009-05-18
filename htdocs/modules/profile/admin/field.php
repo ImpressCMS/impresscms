@@ -18,17 +18,17 @@
  * @param int $field_id Fieldid to be edited
 */
 function editfield($field_id = 0) {
-	global $profile_field_handler, $xoopsModule, $icmsAdminTpl;
+	global $profile_field_handler, $icmsModule, $icmsAdminTpl;
 
 	$fieldObj = $profile_field_handler->get($field_id);
 
 	if (!$fieldObj->isNew()){
-		$xoopsModule->displayAdminMenu(3, _AM_PROFILE_FIELDS . " > " . _CO_ICMS_EDITING);
+		$icmsModule->displayAdminMenu(3, _AM_PROFILE_FIELDS . " > " . _CO_ICMS_EDITING);
 		$sform = $fieldObj->getForm(_AM_PROFILE_FIELD_EDIT, 'addfield');
 		$sform->assign($icmsAdminTpl);
 
 	} else {
-		$xoopsModule->displayAdminMenu(3, _AM_PROFILE_FIELDS . " > " . _CO_ICMS_CREATINGNEW);
+		$icmsModule->displayAdminMenu(3, _AM_PROFILE_FIELDS . " > " . _CO_ICMS_CREATINGNEW);
 		$sform = $fieldObj->getForm(_AM_PROFILE_FIELD_CREATE, 'addfield');
 		$sform->assign($icmsAdminTpl);
 
@@ -86,7 +86,7 @@ if (in_array($clean_op,$valid_op,true)){
   		$fieldObj = $profile_field_handler->get($clean_field_id);
 
   		icms_cp_header();
-  		$xoopsModule->displayAdminMenu(3, _AM_PROFILE_FIELD_VIEW . ' > ' . $fieldObj->getVar('field_name'));
+  		$icmsModule->displayAdminMenu(3, _AM_PROFILE_FIELD_VIEW . ' > ' . $fieldObj->getVar('field_name'));
 
 //  		icms_collapsableBar('fieldview', $fieldObj->getVar('field_name') . $fieldObj->getEditFieldLink(), _AM_IMPROFILE_FIELD_VIEW_DSC);
 
@@ -100,7 +100,7 @@ if (in_array($clean_op,$valid_op,true)){
 
   		icms_cp_header();
 
-  		$xoopsModule->displayAdminMenu(3, _AM_PROFILE_FIELDS);
+  		$icmsModule->displayAdminMenu(3, _AM_PROFILE_FIELDS);
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_field_handler);

@@ -148,7 +148,7 @@ class ProfileFriendpetitionHandler extends XoopsObjectHandler
 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
 */
 	function insert(&$profile_friendpetition, $force = false) {
-		Global $xoopsConfig;
+		Global $icmsConfig;
 		if (get_class($profile_friendpetition) != 'Friendpetition') {
 				return false;
 		}
@@ -161,7 +161,7 @@ class ProfileFriendpetitionHandler extends XoopsObjectHandler
 		foreach ($profile_friendpetition->cleanVars as $k => $v) {
 				${$k} = $v;
 		}
-		$now = "date_add(now(), interval ".$xoopsConfig['server_TZ']." hour)";
+		$now = "date_add(now(), interval ".$icmsConfig['server_TZ']." hour)";
 		if ($profile_friendpetition->isNew()) {
 			// ajout/modification d'un profile_friendpetition
 			$profile_friendpetition = new Friendpetition();

@@ -32,7 +32,7 @@ $ishot_factory = icms_getmodulehandler('ishot', $modname, 'profile' );
 
 $uid_voted = intval($_POST['uid_voted']);
 $ishot = intval($_POST['ishot']);
-$uid_voter = intval($xoopsUser->getVar('uid'));
+$uid_voter = intval($icmsUser->getVar('uid'));
 
 if(!($GLOBALS['xoopsSecurity']->check())) {redirect_header($_SERVER['HTTP_REFERER'], 3, _MD_PROFILE_TOKENEXPIRED);}
 

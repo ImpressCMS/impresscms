@@ -160,7 +160,7 @@ class ProfileConfigsHandler extends XoopsObjectHandler
 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
 */
 	function insert(&$profile_configs, $force = false) {
-		Global $xoopsConfig;
+		Global $icmsConfig;
 		if (get_class($profile_configs) != 'Configs') {
 				return false;
 		}
@@ -173,7 +173,7 @@ class ProfileConfigsHandler extends XoopsObjectHandler
 		foreach ($profile_configs->cleanVars as $k => $v) {
 				${$k} = $v;
 		}
-		$now = "date_add(now(), interval ".$xoopsConfig['server_TZ']." hour)";
+		$now = "date_add(now(), interval ".$icmsConfig['server_TZ']." hour)";
 		if ($profile_configs->isNew()) {
 			// ajout/modification d'un profile_configs
 			$profile_configs = new Configs();

@@ -160,7 +160,7 @@ class ProfileVideoHandler extends XoopsObjectHandler
 	* @return bool FALSE if failed, TRUE if already present and unchanged or successful
 	*/
 	function insert(&$profile_video, $force = false) {
-		Global $xoopsConfig;
+		Global $icmsConfig;
 		if (get_class($profile_video) != 'Video') {
 				return false;
 		}
@@ -173,7 +173,7 @@ class ProfileVideoHandler extends XoopsObjectHandler
 		foreach ($profile_video->cleanVars as $k => $v) {
 				${$k} = $v;
 		}
-		$now = "date_add(now(), interval ".$xoopsConfig['server_TZ']." hour)";
+		$now = "date_add(now(), interval ".$icmsConfig['server_TZ']." hour)";
 		if ($profile_video->isNew()) {
 			// ajout/modification d'un profile_video
 			$profile_video = new Video();

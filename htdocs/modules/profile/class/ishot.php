@@ -153,7 +153,7 @@ class ProfileIshotHandler extends XoopsObjectHandler
 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
 */
 	function insert(&$profile_ishot, $force = false) {
-		Global $xoopsConfig;
+		Global $icmsConfig;
 		if (get_class($profile_ishot) != 'Ishot') {
 				return false;
 		}
@@ -166,7 +166,7 @@ class ProfileIshotHandler extends XoopsObjectHandler
 		foreach ($profile_ishot->cleanVars as $k => $v) {
 				${$k} = $v;
 		}
-		$now = "date_add(now(), interval ".$xoopsConfig['server_TZ']." hour)";
+		$now = "date_add(now(), interval ".$icmsConfig['server_TZ']." hour)";
 		if ($profile_ishot->isNew()) {
 			// ajout/modification d'un profile_ishot
 			$profile_ishot = new Ishot();

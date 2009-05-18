@@ -148,7 +148,7 @@ class ProfileReltribeuserHandler extends XoopsObjectHandler
 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
 */
 	function insert(&$profile_reltribeuser, $force = false) {
-		Global $xoopsConfig;
+		Global $icmsConfig;
 		if (get_class($profile_reltribeuser) != 'Reltribeuser') {
 				return false;
 		}
@@ -161,7 +161,7 @@ class ProfileReltribeuserHandler extends XoopsObjectHandler
 		foreach ($profile_reltribeuser->cleanVars as $k => $v) {
 				${$k} = $v;
 		}
-		$now = "date_add(now(), interval ".$xoopsConfig['server_TZ']." hour)";
+		$now = "date_add(now(), interval ".$icmsConfig['server_TZ']." hour)";
 		if ($profile_reltribeuser->isNew()) {
 			// ajout/modification d'un profile_reltribeuser
 			$profile_reltribeuser = new Reltribeuser();

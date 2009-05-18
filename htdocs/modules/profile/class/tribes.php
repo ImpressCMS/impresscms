@@ -161,7 +161,7 @@ class ProfileTribesHandler extends XoopsObjectHandler
 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
 */
 	function insert(&$profile_tribes, $force = false) {
-		Global $xoopsConfig;
+		Global $icmsConfig;
 		if (get_class($profile_tribes) != 'Tribes') {
 				return false;
 		}
@@ -174,7 +174,7 @@ class ProfileTribesHandler extends XoopsObjectHandler
 		foreach ($profile_tribes->cleanVars as $k => $v) {
 				${$k} = $v;
 		}
-		$now = "date_add(now(), interval ".$xoopsConfig['server_TZ']." hour)";
+		$now = "date_add(now(), interval ".$icmsConfig['server_TZ']." hour)";
 		if ($profile_tribes->isNew()) {
 			// ajout/modification d'un profile_tribes
 			$profile_tribes = new Tribes();
@@ -435,9 +435,9 @@ var elestyle = xoopsGetElementById(img).style;
 	function receiveTribe($tribe_title,$tribe_desc,$tribe_img,$path_upload, $maxfilebytes,$maxfilewidth, $maxfileheight,$change_img=1,$tribe="")
 	{
 
-		global $xoopsUser, $xoopsDB, $_POST, $_FILES;
+		global $icmsUser, $xoopsDB, $_POST, $_FILES;
 		//busca id do user logado
-		$uid = $xoopsUser->getVar('uid');
+		$uid = $icmsUser->getVar('uid');
 		if (!is_a($tribe,"profile_tribes")) {
 		  $tribe = $this->create();
 		} else {
@@ -535,7 +535,7 @@ var elestyle = xoopsGetElementById(img).style;
 	*/	
 	function resizeImage2($img_path, $thumbwidth, $thumbheight, $path_upload) {
 
-		global $xoopsUser, $xoopsModule ;
+		global $icmsUser, $icmsModule ;
 
 		$path = pathinfo($img_path);
 		$img=imagecreatefromjpeg($img_path);
@@ -566,7 +566,7 @@ var elestyle = xoopsGetElementById(img).style;
 		$resized = imagecreatefromgif("images/tribetemplate.gif");
 		
 		$imagem = imagecopymerge($resized,$img,$x1,$y1,$x2,$y2,$w,$h,90);
-		$gif_name = "tribe_".$xoopsUser->getVar('uid').rand(1000000,9999999).".gif";
+		$gif_name = "tribe_".$icmsUser->getVar('uid').rand(1000000,9999999).".gif";
 		imagegif($resized,$path_upload."/".$gif_name);
 		imagedestroy($resized);
 		imagedestroy($img);

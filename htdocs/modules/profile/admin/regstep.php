@@ -21,17 +21,17 @@
  * @param int $regstep_id Regstepid to be edited
 */
 function editregstep($regstep_id = 0) { 
-	global $profile_regstep_handler, $xoopsModule, $icmsAdminTpl;
+	global $profile_regstep_handler, $icmsModule, $icmsAdminTpl;
 
 	$regstepObj = $profile_regstep_handler->get($regstep_id);
 
 	if (!$regstepObj->isNew()){
-		$xoopsModule->displayAdminMenu(4, _AM_PROFILE_REGSTEPS . " > " . _CO_ICMS_EDITING);
+		$icmsModule->displayAdminMenu(4, _AM_PROFILE_REGSTEPS . " > " . _CO_ICMS_EDITING);
 		$sform = $regstepObj->getForm(_AM_PROFILE_REGSTEP_EDIT, 'addregstep');
 		$sform->assign($icmsAdminTpl);
 
 	} else {
-		$xoopsModule->displayAdminMenu(4, _AM_PROFILE_REGSTEPS . " > " . _CO_ICMS_CREATINGNEW);
+		$icmsModule->displayAdminMenu(4, _AM_PROFILE_REGSTEPS . " > " . _CO_ICMS_CREATINGNEW);
 		$sform = $regstepObj->getForm(_AM_PROFILE_REGSTEP_CREATE, 'addregstep');
 		$sform->assign($icmsAdminTpl);
 
@@ -88,7 +88,7 @@ if (in_array($clean_op,$valid_op,true)){
   		$regstepObj = $profile_regstep_handler->get($clean_regstep_id);
 
   		icms_cp_header();
-  		$xoopsModule->displayAdminMenu(4, _AM_IMPROFILE_REGSTEP_VIEW . ' > ' . $regstepObj->getVar('regstep_name'));
+  		$icmsModule->displayAdminMenu(4, _AM_IMPROFILE_REGSTEP_VIEW . ' > ' . $regstepObj->getVar('regstep_name'));
 
 //  		icms_collapsableBar('regstepview', $regstepObj->getVar('regstep_name') . $regstepObj->getEditRegstepLink(), _AM_IMPROFILE_REGSTEP_VIEW_DSC);
 
@@ -102,7 +102,7 @@ if (in_array($clean_op,$valid_op,true)){
 
   		icms_cp_header();
 
-  		$xoopsModule->displayAdminMenu(4, _AM_PROFILE_REGSTEPS);
+  		$icmsModule->displayAdminMenu(4, _AM_PROFILE_REGSTEPS);
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_regstep_handler);

@@ -41,7 +41,7 @@ else
 	*/
 	$reltribeuser_factory = icms_getmodulehandler('reltribeuser', $modname, 'profile' );
 	$criteria_rel_id = new Criteria('rel_id',$reltribeuser_id);
-	$uid = intval($xoopsUser->getVar('uid'));
+	$uid = intval($icmsUser->getVar('uid'));
 	$criteria_uid = new Criteria('rel_user_uid',$uid);
 	$criteria = new CriteriaCompo($criteria_rel_id);
 	$criteria->add($criteria_uid);

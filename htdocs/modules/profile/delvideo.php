@@ -38,7 +38,7 @@ if($confirm != 1){
 	*/
 	$album_factory = icms_getmodulehandler('video', $modname, 'profile' );
 	$criteria_img = new Criteria('video_id',$cod_video);
-	$uid = intval($xoopsUser->getVar('uid'));
+	$uid = intval($icmsUser->getVar('uid'));
 	$criteria_uid = new Criteria('uid_owner',$uid);
 	$criteria = new CriteriaCompo($criteria_img);
 	$criteria->add($criteria_uid);

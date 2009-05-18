@@ -25,7 +25,7 @@ if($op == 'editordelete') {
 }
 $handler =& xoops_gethandler('member');
 /* @var $handler XoopsMemberHandler */
-
+global $icmsConfigUser;
 switch($op) {
     default:
     case 'list':
@@ -41,7 +41,7 @@ switch($op) {
         $form->display();
 
     case 'new':
-        if (@!include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/'.$xoopsConfig['language'].'/main.php')) {
+        if (@!include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/'.$icmsConfig['language'].'/main.php')) {
             include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/english/main.php');
         }
         include_once('../include/forms.php');
@@ -52,11 +52,11 @@ switch($op) {
         break;
 
     case 'edit':
-        if (@!include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/'.$xoopsConfig['language'].'/main.php')) {
+        if (@!include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/'.$icmsConfig['language'].'/main.php')) {
             include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/english/main.php');
         }
         $obj =& $handler->getUser(intval($_REQUEST['id']));
-        if (in_array(ICMS_GROUP_ADMIN, $obj->getGroups()) && !in_array(ICMS_GROUP_ADMIN, $xoopsUser->getGroups())) {
+        if (in_array(ICMS_GROUP_ADMIN, $obj->getGroups()) && !in_array(ICMS_GROUP_ADMIN, $icmsUser->getGroups())) {
             // If not webmaster trying to edit a webmaster - disallow
             redirect_header('user.php', 3, _PROFILE_AM_CANNOTEDITWEBMASTERS);
         }
@@ -66,11 +66,9 @@ switch($op) {
         break;
 
     case 'save':
-        if (@!include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/'.$xoopsConfig['language'].'/main.php')) {
+        if (@!include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/'.$icmsConfig['language'].'/main.php')) {
             include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/english/main.php');
         }
-		$config_handler =& xoops_gethandler('config');
-		$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
         if (!$GLOBALS['xoopsSecurity']->check()) {
             redirect_header('admin.php',3,_PROFILE_MA_NOEDITRIGHT.'<br />'.implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
             exit;
@@ -88,7 +86,7 @@ switch($op) {
         $errors = array();
         $myts =& MyTextSanitizer::getInstance();
         $user->setVar('email', trim($_POST['email']));
-        if ($user->getVar('uid') != $xoopsUser->getVar('uid')) {
+        if ($user->getVar('uid') != $icmsUser->getVar('uid')) {
             $password = '';
             if (!empty($_POST['password'])) {
                 $password = $myts->stripSlashesGPC(trim($_POST['password']));
@@ -131,7 +129,7 @@ switch($op) {
         $fields =& $profile_handler->loadFields();
         // Get ids of fields that can be edited
         $gperm_handler =& xoops_gethandler('groupperm');
-        $editable_fields =& $gperm_handler->getItemIds('profile_edit', $xoopsUser->getGroups(), $xoopsModule->getVar('mid'));
+        $editable_fields =& $gperm_handler->getItemIds('profile_edit', $icmsUser->getGroups(), $icmsModule->getVar('mid'));
 
         $profile = $profile_handler->get($user->getVar('uid'));
 
@@ -158,7 +156,7 @@ switch($op) {
                 $profile_handler->insert($profile);
 
                 include_once(ICMS_ROOT_PATH.'/modules/system/constants.php');
-                if ($gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_GROUP, $xoopsUser->getGroups(), 1)) {
+                if ($gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_GROUP, $icmsUser->getGroups(), 1)) {
                     //Update group memberships
                     $cur_groups = $user->getGroups();
 
@@ -197,7 +195,7 @@ switch($op) {
         break;
 
     case 'delete':
-        if ($_REQUEST['id'] == $xoopsUser->getVar('uid')) {
+        if ($_REQUEST['id'] == $icmsUser->getVar('uid')) {
             redirect_header('user.php', 2, _PROFILE_AM_CANNOTDELETESELF);
         }
         $obj =& $handler->getUser($_REQUEST['id']);

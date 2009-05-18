@@ -28,7 +28,7 @@ if($moduleConfig['profile_social']==0){
 
 
 
-if (!is_object($xoopsUser)) {
+if (!is_object($icmsUser)) {
   redirect_header("index.php",3,_NOPERM);
   exit();
 }
@@ -45,7 +45,7 @@ if (!($GLOBALS['xoopsSecurity']->check())){
 	redirect_header($_SERVER['HTTP_REFERER'], 3, _MD_PROFILE_TOKENEXPIRED);
 }
 
-$criteria = new Criteria('config_uid',$xoopsUser->getVar("uid"));
+$criteria = new Criteria('config_uid',$icmsUser->getVar("uid"));
 if ($configs_factory->getCount($criteria)>0){
   $configs = $configs_factory->getObjects($criteria);
   $config = $configs[0];
@@ -54,7 +54,7 @@ if ($configs_factory->getCount($criteria)>0){
   $config = $configs_factory->create();
 }
 
-$config->setVar('config_uid',$xoopsUser->getVar("uid"));
+$config->setVar('config_uid',$icmsUser->getVar("uid"));
 if (isset($_POST['pic']))  $config->setVar('pictures',$_POST['pic']);
 if (isset($_POST['aud'])) $config->setVar('audio',$_POST['aud']);
 if (isset($_POST['vid'])) $config->setVar('videos',$_POST['vid']);
@@ -67,5 +67,5 @@ if (isset($_POST['stat'])) $config->setVar('profile_stats',$_POST['stat']);
 if (!$configs_factory->insert($config)) {
 
 }
-redirect_header("configs.php?uid=".$xoopsUser->getVar("uid"),3,_MD_PROFILE_CONFIGSSAVE);
+redirect_header("configs.php?uid=".$icmsUser->getVar("uid"),3,_MD_PROFILE_CONFIGSSAVE);
 ?>

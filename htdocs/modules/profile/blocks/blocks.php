@@ -17,18 +17,18 @@
 
 if (!defined('ICMS_ROOT_PATH')){ exit(); }
 function b_profile_friends_show($options) {
-   global $xoopsDB, $xoopsModule, $xoopsModuleConfig, $xoopsUser;
+   global $xoopsDB, $icmsModule, $icmsModuleConfig, $icmsUser;
    $myts =& MyTextSanitizer::getInstance();
    $block = array(); 
 
-if (!empty($xoopsUser)){
+if (!empty($icmsUser)){
 
 /**
  * Filter for fetch votes ishot and isnothot
  */
 
 
-$criteria_2       = new criteria('friend1_uid',$xoopsUser->getVar('uid'));
+$criteria_2       = new criteria('friend1_uid',$icmsUser->getVar('uid'));
 
 
 /**
@@ -50,7 +50,7 @@ return $form;
    
 }
 function b_profile_lastpictures_show($options) {
-   global $xoopsDB, $xoopsModule, $xoopsModuleConfig;
+   global $xoopsDB, $icmsModule, $icmsModuleConfig;
    $myts =& MyTextSanitizer::getInstance();
    $block = array(); 
 

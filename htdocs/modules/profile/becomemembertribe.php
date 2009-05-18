@@ -20,8 +20,8 @@ include_once 'header.php';
 $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
-	if(is_object($xoopsUser)){
-		$uid = $xoopsUser->getVar('uid');
+	if(is_object($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
@@ -41,7 +41,7 @@ $reltribeuser_factory = icms_getmodulehandler('reltribeuser', $modname, 'profile
 $tribes_factory = icms_getmodulehandler('tribes', $modname, 'profile' );
 
 $tribe_id = intval($_POST['tribe_id']);
-$uid = intval($xoopsUser->getVar('uid'));
+$uid = intval($icmsUser->getVar('uid'));
 
 $criteria_uid = new Criteria('rel_user_uid',$uid);
 $criteria_tribe_id = new Criteria('rel_tribe_id',$tribe_id);

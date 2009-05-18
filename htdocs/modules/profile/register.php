@@ -18,11 +18,9 @@ include_once '../../mainfile.php';
 include_once '../../header.php';
 include_once 'include/functions.php';
 $myts =& MyTextSanitizer::getInstance();
-if ($xoopsUser) {
-    header('location: userinfo.php?uid='.$xoopsUser->getVar('uid'));
+if ($icmsUser) {
+    header('location: userinfo.php?uid='.$icmsUser->getVar('uid'));
 }
-$config_handler =& xoops_gethandler('config');
-$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 if (empty($icmsConfigUser['allow_register'])) {
     redirect_header(ICMS_URL.'/', 6, _PROFILE_MA_NOREGISTER);
     exit();
@@ -35,7 +33,7 @@ icms_PasswordMeter();
 
 $member_handler =& xoops_gethandler('member');
 
-$template_dir = ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/mail_template';
+$template_dir = ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/mail_template';
 if (!file_exists($template_dir)) {
 	$template_dir = ICMS_ROOT_PATH.'/language/english/mail_template';
 }
@@ -220,7 +218,7 @@ switch ( $op ) {
 $xoopsTpl->assign('module_home', _PROFILE_MA_REGISTER);
 include 'footer.php';
 function postSaveProcess($newuser) {
-    global $icmsConfigUser, $xoopsConfig, $template_dir;
+    global $icmsConfigUser, $icmsConfig, $template_dir;
     $newid = $newuser->getVar('uid');
     $member_handler = xoops_gethandler('member');
     if (!$member_handler->addUserToGroup(ICMS_GROUP_USERS, $newid)) {
@@ -231,9 +229,9 @@ function postSaveProcess($newuser) {
         $xoopsMailer->useMail();
         $member_handler =& xoops_gethandler('member');
         $xoopsMailer->setToGroups($member_handler->getGroup($icmsConfigUser['new_user_notify_group']));
-        $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-        $xoopsMailer->setFromName($xoopsConfig['sitename']);
-        $xoopsMailer->setSubject(sprintf(_PROFILE_MA_NEWUSERREGAT,$xoopsConfig['sitename']));
+        $xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+        $xoopsMailer->setFromName($icmsConfig['sitename']);
+        $xoopsMailer->setSubject(sprintf(_PROFILE_MA_NEWUSERREGAT,$icmsConfig['sitename']));
         $xoopsMailer->setBody(sprintf(_PROFILE_MA_HASJUSTREG, $newuser->getVar('uname')));
         //xoops_debug('sending email');
         $xoopsMailer->send(true);
@@ -247,14 +245,14 @@ function postSaveProcess($newuser) {
         $xoopsMailer->useMail();
         $xoopsMailer->setTemplate('register.tpl');
         $xoopsMailer->setTemplateDir($template_dir);
-        $xoopsMailer->assign('X_SITENAME', $xoopsConfig['sitename']);
-        $xoopsMailer->assign('X_ADMINMAIL', $xoopsConfig['adminmail']);
+        $xoopsMailer->assign('X_SITENAME', $icmsConfig['sitename']);
+        $xoopsMailer->assign('X_ADMINMAIL', $icmsConfig['adminmail']);
         $xoopsMailer->assign('X_SITEURL', ICMS_URL.'/');
         $xoopsMailer->assign('X_USERPASSWORD', $_POST['vpass']);
         $xoopsMailer->assign('X_USERLOGINNAME', $_POST['login_name']);
         $xoopsMailer->setToUsers(new XoopsUser($newid));
-        $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-        $xoopsMailer->setFromName($xoopsConfig['sitename']);
+        $xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+        $xoopsMailer->setFromName($icmsConfig['sitename']);
         $xoopsMailer->setSubject(sprintf(_PROFILE_MA_USERKEYFOR, $newuser->getVar('uname')));
 
         //xoops_debug('sending email');
@@ -275,13 +273,13 @@ function postSaveProcess($newuser) {
         $actkey = ICMS_URL.'/user.php?op=actv&id='.$newid.'&actkey='.$newuser->getVar('actkey');
         $xoopsMailer->assign('USERACTLINK', $actkey);
 
-        $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-        $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+        $xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
+        $xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
         $xoopsMailer->assign('SITEURL', ICMS_URL.'/');
         $member_handler =& xoops_gethandler('member');
         $xoopsMailer->setToGroups($member_handler->getGroup($icmsConfigUser['activation_group']));
-        $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-        $xoopsMailer->setFromName($xoopsConfig['sitename']);
+        $xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+        $xoopsMailer->setFromName($icmsConfig['sitename']);
         $xoopsMailer->setSubject(sprintf(_PROFILE_MA_USERKEYFOR, $newuser->getVar('uname')));
        // xoops_debug('sending email');
         if ( !$xoopsMailer->send(true) ) {

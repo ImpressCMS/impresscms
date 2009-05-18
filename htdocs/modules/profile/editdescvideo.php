@@ -27,7 +27,7 @@ if($moduleConfig['profile_social']==0){
 $cod_img = intval($_POST['video_id']);
 $marker = (!empty($_POST['marker'])) ? intval($_POST['marker']) : 0;
 
-$uid = intval($xoopsUser->getVar('uid'));
+$uid = intval($icmsUser->getVar('uid'));
 
 if($marker==1) {
     if(!($GLOBALS['xoopsSecurity']->check())) {

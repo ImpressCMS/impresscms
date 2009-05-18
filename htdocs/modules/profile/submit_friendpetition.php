@@ -49,12 +49,12 @@ $petitioned_uid = intval($_POST['petitioned_uid']);
               
               //Verify if the user has already asked for friendship or if the user he s asking to be a friend has already asked him
 $criteria= new criteriaCompo (new criteria('petioned_uid',$petitioned_uid));
-$criteria->add(new criteria('petitioner_uid',$xoopsUser->getVar('uid')));
+$criteria->add(new criteria('petitioner_uid',$icmsUser->getVar('uid')));
 if ($friendpetition_factory->getCount($criteria)>0){
 redirect_header(ICMS_URL."/modules/".$modname."/index.php?uid=".$_POST['petitioned_uid'],3,_MD_PROFILE_ALREADY_PETITIONED);
 } else {
 $criteria2= new criteriaCompo (new criteria('petitioner_uid',$petitioned_uid));
-$criteria2->add(new criteria('petioned_uid',$xoopsUser->getVar('uid')));
+$criteria2->add(new criteria('petioned_uid',$icmsUser->getVar('uid')));
 if ($friendpetition_factory->getCount($criteria2)>0){
 redirect_header(ICMS_URL."/modules/".$modname."/index.php?uid=".$_POST['petitioned_uid'],3,_MD_PROFILE_ALREADY_PETITIONED);
 }	
@@ -63,18 +63,18 @@ redirect_header(ICMS_URL."/modules/".$modname."/index.php?uid=".$_POST['petition
               * create the petition in database
               */
               $newpetition = $friendpetition_factory->create(true);
-              $newpetition->setVar('petitioner_uid',$xoopsUser->getVar('uid'));
+              $newpetition->setVar('petitioner_uid',$icmsUser->getVar('uid'));
               $newpetition->setVar('petioned_uid',$_POST['petitioned_uid']);
 
               if ($friendpetition_factory->insert($newpetition)){
-              $extra_tags['X_OWNER_NAME'] = $xoopsUser->getVar('uname');
-              $extra_tags['X_OWNER_UID'] = $xoopsUser->getVar('uid');
+              $extra_tags['X_OWNER_NAME'] = $icmsUser->getVar('uname');
+              $extra_tags['X_OWNER_UID'] = $icmsUser->getVar('uid');
               $notification_handler =& xoops_gethandler('notification');
               $notification_handler->triggerEvent ("friendship", $_POST['petitioned_uid'] , "new_friendship",$extra_tags);       
                      
                      redirect_header(ICMS_URL."/modules/".$modname."/index.php?uid=".$_POST['petitioned_uid'],3,_MD_PROFILE_PETITIONED);
               } else {
-                     redirect_header(ICMS_URL."/modules/".$modname."/index.php?uid=".$xoopsUser->getVar('uid'),3,_MD_PROFILE_NOCACHACA);
+                     redirect_header(ICMS_URL."/modules/".$modname."/index.php?uid=".$icmsUser->getVar('uid'),3,_MD_PROFILE_NOCACHACA);
               }
 
 

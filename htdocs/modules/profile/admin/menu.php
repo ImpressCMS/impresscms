@@ -27,33 +27,33 @@ $adminmenu[4]['link'] = 'admin/regstep.php';
 $adminmenu[5]['title'] = _PROFILE_MI_PERMISSIONS;
 $adminmenu[5]['link'] = 'admin/permissions.php';
 $gperm =& xoops_gethandler ( 'groupperm' );
-$xoopsUser = $GLOBALS['xoopsUser'];
-$ugroups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+$icmsUser = $GLOBALS['xoopsUser'];
+$ugroups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 $agroups = $gperm->getGroupIds('system_admin',7); //ICMS_SYSTEM_BLOCK constant not available?
 if (array_intersect($ugroups, $agroups)) {
 $adminmenu[6]['title'] = _PROFILE_MI_FINDUSER;
 $adminmenu[6]['link'] = '../system/admin.php?fct=findusers';
 //$adminmenu[6]['link'] = 'admin/finduser.php'; // This one is removed because feature is at this stage incomplete.
 }
-global $xoopsModule;
-if (isset($xoopsModule)) {
+global $icmsModule;
+if (isset($icmsModule)) {
 
 	$i = -1;
 
 	$i++;
 	$headermenu[$i]['title'] = _PREFERENCES;
-	$headermenu[$i]['link'] = '../../system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $xoopsModule->getVar('mid');
+	$headermenu[$i]['link'] = '../../system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $icmsModule->getVar('mid');
 
 	$i++;
 	$headermenu[$i]['title'] = _CO_ICMS_GOTOMODULE;
-	$headermenu[$i]['link'] = ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname') . '/';
+	$headermenu[$i]['link'] = ICMS_URL.'/modules/'.$icmsModule->getVar('dirname') . '/';
 
 	$i++;
 	$headermenu[$i]['title'] = _CO_ICMS_UPDATE_MODULE;
-	$headermenu[$i]['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $xoopsModule->getVar('dirname');
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $icmsModule->getVar('dirname');
 
 	$i++;
 	$headermenu[$i]['title'] = _MODABOUT_ABOUT;
-	$headermenu[$i]['link'] = ICMS_URL . '/modules/'.$xoopsModule->getVar('dirname').'/admin/about.php';
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/'.$icmsModule->getVar('dirname').'/admin/about.php';
 }
 ?>

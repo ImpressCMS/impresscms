@@ -23,8 +23,8 @@ $modname = basename( dirname( __FILE__ ) );
 $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
-	if(is_object($xoopsUser)){
-		$uid = $xoopsUser->getVar('uid');
+	if(is_object($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
@@ -40,7 +40,7 @@ if($moduleConfig['profile_social']==0){
 * Factories of tribes  
 */
 $configs_factory = icms_getmodulehandler('configs', $modname, 'profile' );
-$controler = new ProfileControlerConfigs($xoopsDB,$xoopsUser);  
+$controler = new ProfileControlerConfigs($xoopsDB,$icmsUser);  
 $nbSections = $controler->getNumbersSections();
 
 //permissions
@@ -71,7 +71,7 @@ if (!empty($_POST['button'])) {
   if (!($GLOBALS['xoopsSecurity']->check())){
 	redirect_header($_SERVER['HTTP_REFERER'], 3, _MD_PROFILE_TOKENEXPIRED);
   }
-  $criteria = new Criteria('config_uid',$xoopsUser->getVar("uid"));
+  $criteria = new Criteria('config_uid',$icmsUser->getVar("uid"));
   if ($configs_factory->getCount($criteria)>0){
     $configs = $configs_factory->getObjects($criteria);
     $config = $configs[0];
@@ -80,7 +80,7 @@ if (!empty($_POST['button'])) {
     $config = $configs_factory->create();
   }
 
-  $config->setVar('config_uid',$xoopsUser->getVar("uid"));
+  $config->setVar('config_uid',$icmsUser->getVar("uid"));
   if (isset($_POST['pic']))  $config->setVar('pictures',$_POST['pic']);
   if (isset($_POST['aud'])) $config->setVar('audio',$_POST['aud']);
   if (isset($_POST['vid'])) $config->setVar('videos',$_POST['vid']);
@@ -93,7 +93,7 @@ if (!empty($_POST['button'])) {
   if (!$configs_factory->insert($config)) {
 
   }
-  redirect_header("configs.php?uid=".$xoopsUser->getVar("uid"),3,_MD_PROFILE_CONFIGSSAVE);
+  redirect_header("configs.php?uid=".$icmsUser->getVar("uid"),3,_MD_PROFILE_CONFIGSSAVE);
   exit();
 }
 

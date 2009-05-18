@@ -31,7 +31,7 @@ $op = isset($_POST['op']) ? trim(htmlspecialchars($_POST['op'])) : 'form';
 
 if(isset($_POST['op']) && $_POST['op'] == 'submit' ) {$op = 'submit';}
 include_once 'class/controler.php';
-$controler = new ProfileControlerIndex($xoopsDB,$xoopsUser);
+$controler = new ProfileControlerIndex($xoopsDB,$icmsUser);
 
 /**
 * Fecthing numbers of tribes friends videos pictures etc...
@@ -135,7 +135,7 @@ if($op == 'form'){
 if($op == 'submit'){
 	$xoopsOption['template_main'] = 'profile_searchresults.html';
 	include 'header.php';
-	$iamadmin = $xoopsUserIsAdmin;
+	$iamadmin = $icmsUserIsAdmin;
 	$myts =& MyTextSanitizer::getInstance();
 	$criteria = new CriteriaCompo();
 	if(!empty($_POST['user_uname']))
@@ -355,7 +355,7 @@ if($op == 'submit'){
 				$userdata['email'] = "<a href='mailto:".$foundusers[$j]->getVar('email')."'><img src='".ICMS_URL."/images/icons/email.gif' border='0' alt='".sprintf(_SENDEMAILTO,$foundusers[$j]->getVar('uname', "E"))."' /></a>";
 			}
 			else {$userdata['email'] = '&nbsp;';}
-			if($xoopsUser)
+			if($icmsUser)
 			{
 				$userdata['pmlink'] = "<a href='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send2=1&amp;to_userid=".$foundusers[$j]->getVar('uid')."\",\"pmlite\",450,370);'><img src='".ICMS_URL."/images/icons/pm.gif' border='0' alt='".sprintf(_SENDPMTO,$foundusers[$j]->getVar('uname', 'E'))."' /></a>";
 			}

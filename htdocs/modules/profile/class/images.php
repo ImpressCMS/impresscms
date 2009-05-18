@@ -164,7 +164,7 @@ class ProfileImagesHandler extends XoopsObjectHandler
 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
 */
 	function insert(&$profile_images, $force = false) {
-		Global $xoopsConfig;
+		Global $icmsConfig;
 		if (get_class($profile_images) != 'Images') {
 				return false;
 		}
@@ -177,7 +177,7 @@ class ProfileImagesHandler extends XoopsObjectHandler
 		foreach ($profile_images->cleanVars as $k => $v) {
 				${$k} = $v;
 		}
-		$now = "date_add(now(), interval ".$xoopsConfig['server_TZ']." hour)";
+		$now = "date_add(now(), interval ".$icmsConfig['server_TZ']." hour)";
 		if ($profile_images->isNew()) {
 			// ajout/modification d'un profile_images
 			$profile_images = new Images();
@@ -404,9 +404,9 @@ class ProfileImagesHandler extends XoopsObjectHandler
 	function receivePicture($title,$path_upload, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $maxfilebytes,$maxfilewidth,$maxfileheight)
 	{
 		
-		global $xoopsUser, $xoopsDB, $_POST, $_FILES;
+		global $icmsUser, $xoopsDB, $_POST, $_FILES;
 		//busca id do user logado
-		$uid = $xoopsUser->getVar('uid');
+		$uid = $icmsUser->getVar('uid');
 		//create a hash so it does not erase another file
 		//$hash1 = date();
 		//$hash = substr($hash1,0,4);
@@ -434,7 +434,7 @@ class ProfileImagesHandler extends XoopsObjectHandler
 			$picture->setVar("url",$url);
 			$picture->setVar("title",$title);
 			$picture->setVar("private",0);
-			$uid = $xoopsUser->getVar('uid');
+			$uid = $icmsUser->getVar('uid');
 			$picture->setVar("uid_owner",$uid);
 			$this->insert($picture);
 			$saved_destination = $uploader->getSavedDestination();

@@ -153,7 +153,7 @@ class ProfileAudioHandler extends XoopsObjectHandler
 * @return bool FALSE if failed, TRUE if already present and unchanged or successful
 */
 	function insert(&$profile_audio, $force = false) {
-		Global $xoopsConfig;
+		Global $icmsConfig;
 		if (get_class($profile_audio) != 'Audio') {
 				return false;
 		}
@@ -166,7 +166,7 @@ class ProfileAudioHandler extends XoopsObjectHandler
 		foreach ($profile_audio->cleanVars as $k => $v) {
 				${$k} = $v;
 		}
-		$now = "date_add(now(), interval ".$xoopsConfig['server_TZ']." hour)";
+		$now = "date_add(now(), interval ".$icmsConfig['server_TZ']." hour)";
 		if ($profile_audio->isNew()) {
 			// ajout/modification d'un profile_audio
 			$profile_audio = new Audio();
@@ -323,9 +323,9 @@ class ProfileAudioHandler extends XoopsObjectHandler
     function receiveAudio($title,$path_upload, $author, $maxfilebytes)
     {
         
-        global $xoopsUser, $xoopsDB, $_POST, $_FILES;
+        global $icmsUser, $xoopsDB, $_POST, $_FILES;
         //busca id do user logado
-        $uid = $xoopsUser->getVar('uid');
+        $uid = $icmsUser->getVar('uid');
         //create a hash so it does not erase another file
         //$hash1 = date();
         //$hash = substr($hash1,0,4);
@@ -353,7 +353,7 @@ class ProfileAudioHandler extends XoopsObjectHandler
             $audio->setVar("url",$url);
             $audio->setVar("title",$title);
             $audio->setVar("author",$author);
-            $uid = $xoopsUser->getVar('uid');
+            $uid = $icmsUser->getVar('uid');
             $audio->setVar("uid_owner",$uid);
             $this->insert($audio);
             $saved_destination = $uploader->getSavedDestination();

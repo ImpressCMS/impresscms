@@ -37,7 +37,7 @@ if(!($GLOBALS['xoopsSecurity']->check())) {redirect_header($_SERVER['HTTP_REFERE
 * Try to upload picture resize it insert in database and then redirect to index
 */
 $newvideo = $album_factory->create(true);
-$newvideo->setVar('uid_owner', intval($xoopsUser->getVar('uid')));
+$newvideo->setVar('uid_owner', intval($icmsUser->getVar('uid')));
 $newvideo->setVar('video_desc', trim(htmlspecialchars($_POST['caption'])));
 
 if(strlen($url)==11) {$code=$url;}
@@ -50,13 +50,13 @@ else
 $newvideo->setVar('youtube_code',$code);
 if($album_factory->insert($newvideo))
 {
-	$extra_tags['X_OWNER_NAME'] = $xoopsUser->getVar('uname');
-	$extra_tags['X_OWNER_UID'] = intval($xoopsUser->getVar('uid'));
+	$extra_tags['X_OWNER_NAME'] = $icmsUser->getVar('uname');
+	$extra_tags['X_OWNER_UID'] = intval($icmsUser->getVar('uid'));
 	$notification_handler =& xoops_gethandler('notification');
-	$notification_handler->triggerEvent('video', intval($xoopsUser->getVar('uid')), 'new_video',$extra_tags);
-	redirect_header(ICMS_URL.'/modules/'.$modname.'/video.php?uid='.intval($xoopsUser->getVar('uid')),2,_MD_PROFILE_VIDEOSAVED);
+	$notification_handler->triggerEvent('video', intval($icmsUser->getVar('uid')), 'new_video',$extra_tags);
+	redirect_header(ICMS_URL.'/modules/'.$modname.'/video.php?uid='.intval($icmsUser->getVar('uid')),2,_MD_PROFILE_VIDEOSAVED);
 }
-else {redirect_header(ICMS_URL.'/modules/'.$modname.'/video.php?uid='.intval($xoopsUser->getVar('uid')),2,_MD_PROFILE_NOCACHACA);}
+else {redirect_header(ICMS_URL.'/modules/'.$modname.'/video.php?uid='.intval($icmsUser->getVar('uid')),2,_MD_PROFILE_NOCACHACA);}
 
 include 'footer.php';
 ?>

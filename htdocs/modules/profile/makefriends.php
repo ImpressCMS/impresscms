@@ -33,7 +33,7 @@ $friendship_factory = icms_getmodulehandler('friendship', $modname, 'profile' );
 
 $petition_id = intval($_POST['petition_id']);
 $friendship_level = intval($_POST['level']);
-$uid = intval($xoopsUser->getVar('uid'));
+$uid = intval($icmsUser->getVar('uid'));
 
 if(!($GLOBALS['xoopsSecurity']->check())) {redirect_header($_SERVER['HTTP_REFERER'], 3, _MD_PROFILE_TOKENEXPIRED);}
 

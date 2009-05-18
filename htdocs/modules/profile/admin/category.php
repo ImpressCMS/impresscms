@@ -19,17 +19,17 @@
 */
 function editcategory($category_id = 0)
 {
-	global $profile_category_handler, $xoopsModule, $icmsAdminTpl;
+	global $profile_category_handler, $icmsModule, $icmsAdminTpl;
 
 	$categoryObj = $profile_category_handler->get($category_id);
 
 	if (!$categoryObj->isNew()){
-		$xoopsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORYS . " > " . _CO_ICMS_EDITING);
+		$icmsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORYS . " > " . _CO_ICMS_EDITING);
 		$sform = $categoryObj->getForm(_AM_PROFILE_CATEGORY_EDIT, 'addcategory');
 		$sform->assign($icmsAdminTpl);
 
 	} else {
-		$xoopsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORYS . " > " . _CO_ICMS_CREATINGNEW);
+		$icmsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORYS . " > " . _CO_ICMS_CREATINGNEW);
 		$sform = $categoryObj->getForm(_AM_PROFILE_CATEGORY_CREATE, 'addcategory');
 		$sform->assign($icmsAdminTpl);
 
@@ -86,7 +86,7 @@ if (in_array($clean_op,$valid_op,true)){
   		$categoryObj = $profile_category_handler->get($clean_category_id);
 
   		icms_cp_header();
-  		$xoopsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORY_VIEW . ' > ' . $categoryObj->getVar('category_name'));
+  		$icmsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORY_VIEW . ' > ' . $categoryObj->getVar('category_name'));
 
 //  		smart_collapsableBar('categoryview', $categoryObj->getVar('category_name') . $categoryObj->getEditCategoryLink(), _AM_IMPROFILE_CATEGORY_VIEW_DSC);
 
@@ -100,7 +100,7 @@ if (in_array($clean_op,$valid_op,true)){
 
   		icms_cp_header();
 
-  		$xoopsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORYS);
+  		$icmsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORYS);
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_category_handler);

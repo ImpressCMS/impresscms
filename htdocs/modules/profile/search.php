@@ -27,7 +27,7 @@ if($moduleConfig['profile_social']==1){
 }
 $myts =& MyTextSanitizer::getInstance();
 $op = isset($_REQUEST['op']) ? htmlspecialchars($_REQUEST['op']) : 'search';
-$groups = $xoopsUser ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+$groups = $icmsUser ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 switch ($op) {
     default:
     case "search":
@@ -41,7 +41,7 @@ switch ($op) {
         $fields =& $profile_handler->loadFields();
         // Get ids of fields that can be searched
         $gperm_handler =& xoops_gethandler('groupperm');
-        $searchable_fields =& $gperm_handler->getItemIds('smartprofile_search', $groups, $xoopsModule->getVar('mid'));
+        $searchable_fields =& $gperm_handler->getItemIds('smartprofile_search', $groups, $icmsModule->getVar('mid'));
 
         include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
         $searchform = new XoopsThemeForm("", "searchform", "search.php", "post");
@@ -160,7 +160,7 @@ switch ($op) {
         $fields =& $profile_handler->loadFields();
         // Get ids of fields that can be searched
         $gperm_handler =& xoops_gethandler('groupperm');
-        $searchable_fields =& $gperm_handler->getItemIds('smartprofile_search', $groups, $xoopsModule->getVar('mid'));
+        $searchable_fields =& $gperm_handler->getItemIds('smartprofile_search', $groups, $icmsModule->getVar('mid'));
         $searchvars = array();
 
         $criteria = new CriteriaCompo(new Criteria('level', 0, ">"));
@@ -382,7 +382,7 @@ switch ($op) {
         //Sort information
         foreach (array_keys($users) as $k) {
             $userarray["output"][] = "<a href='userinfo.php?uid=".intval($users[$k]->getVar('uid'))."'>".$users[$k]->getVar('uname')."</a>";
-            $userarray["output"][] = $users[$k]->getVar('user_viewemail') == 1 || $xoopsUser->isAdmin() ? $users[$k]->getVar('email') : "";
+            $userarray["output"][] = $users[$k]->getVar('user_viewemail') == 1 || $icmsUser->isAdmin() ? $users[$k]->getVar('email') : "";
 
             foreach (array_keys($fields) as $i) {
                 if (in_array($fields[$i]->getVar('fieldid'), $searchable_fields) && in_array($fields[$i]->getVar('field_type'), $searchable_types) && in_array($fields[$i]->getVar('field_name'), $searchvars)) {

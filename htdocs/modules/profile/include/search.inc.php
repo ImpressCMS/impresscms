@@ -62,7 +62,7 @@ function profile_search($queryarray, $andor, $limit, $offset, $userid)
 	}
 	$sql .= "ORDER BY cod_img DESC";
 	//echo $sql;
-	//printr($xoopsModules);
+	//printr($icmsModules);
 	$result = $xoopsDB->query($sql,$limit,$offset);
 	$i = 0;
 	$stringofimage = 'images/search.png" />';

@@ -21,8 +21,8 @@ include_once 'header.php';
 $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
-	if(is_object($xoopsUser)){
-		$uid = $xoopsUser->getVar('uid');
+	if(is_object($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
@@ -35,7 +35,7 @@ if($moduleConfig['profile_social']==0){
 	exit();
 }
 
-$controler = new ProfileVideoControler($xoopsDB,$xoopsUser);
+$controler = new ProfileVideoControler($xoopsDB,$icmsUser);
 $nbSections = $controler->getNumbersSections();
 
 $start = (isset($_GET['start']))? intval($_GET['start']) : 0;
@@ -45,7 +45,7 @@ $start = (isset($_GET['start']))? intval($_GET['start']) : 0;
 */
 $criteriaUidVideo  = new criteria('uid_owner',$controler->uidOwner);
 $criteriaUidVideo->setStart($start);
-$criteriaUidVideo->setLimit($xoopsModuleConfig['videosperpage']);
+$criteriaUidVideo->setLimit($icmsModuleConfig['videosperpage']);
 
 /**
 * Get all videos of this user and assign them to template
@@ -60,7 +60,7 @@ if(is_array($videos_array)) {
   $xoopsTpl->assign('lang_novideoyet',_MD_PROFILE_NOVIDEOSYET);
 }
 
-$pageNav = $controler->VideosNavBar($nbSections['nbVideos'], $xoopsModuleConfig['videosperpage'],$start,2);
+$pageNav = $controler->VideosNavBar($nbSections['nbVideos'], $icmsModuleConfig['videosperpage'],$start,2);
 
 //permissions
 $xoopsTpl->assign('allow_scraps',$controler->checkPrivilegeBySection('scraps'));
@@ -89,7 +89,7 @@ $xoopsTpl->assign('lang_mysection',_MD_PROFILE_MYVIDEOS);
 $xoopsTpl->assign('section_name',_MD_PROFILE_VIDEOS);
 
 //page atributes
-$xoopsTpl->assign('xoops_pagetitle',  sprintf(_MD_PROFILE_PAGETITLE,$xoopsModule->getVar('name'), $controler->nameOwner));
+$xoopsTpl->assign('xoops_pagetitle',  sprintf(_MD_PROFILE_PAGETITLE,$icmsModule->getVar('name'), $controler->nameOwner));
 
 //form actions
 $xoopsTpl->assign('lang_delete',_MD_PROFILE_DELETE );
@@ -104,8 +104,8 @@ $xoopsTpl->assign('lang_captionLabel',_MD_PROFILE_CAPTION);
 $xoopsTpl->assign('lang_submitValue',_MD_PROFILE_ADDVIDEO);
 
 
-$xoopsTpl->assign('width',$xoopsModuleConfig['width_tube']);
-$xoopsTpl->assign('height',$xoopsModuleConfig['height_tube']);
+$xoopsTpl->assign('width',$icmsModuleConfig['width_tube']);
+$xoopsTpl->assign('height',$icmsModuleConfig['height_tube']);
 $xoopsTpl->assign('lang_videohelp',_MD_PROFILE_ADDVIDEOSHELP);
 
 //Videos NAvBAr

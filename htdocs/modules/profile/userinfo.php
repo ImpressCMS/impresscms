@@ -21,8 +21,8 @@ include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
-	if(is_object($xoopsUser)){
-		$uid = $xoopsUser->getVar('uid');
+	if(is_object($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
@@ -30,18 +30,16 @@ if ($uid <= 0) {
 }
 
 $gperm_handler = & xoops_gethandler( 'groupperm' );
-$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
-$config_handler =& xoops_gethandler('config');
-$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-if (!$icmsConfigUser['allow_annon_view_prof'] && !is_object($xoopsUser)) {
+$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+if (!$icmsConfigUser['allow_annon_view_prof'] && !is_object($icmsUser)) {
 	redirect_header(ICMS_URL.'/user.php', 3, _NOPERM);
 	exit ();
 }
 
 
-if (is_object($xoopsUser) && $uid == $xoopsUser->getVar('uid')) {
+if (is_object($icmsUser) && $uid == $icmsUser->getVar('uid')) {
     //disable cache
-    $xoopsConfig['module_cache'][$xoopsModule->getVar('mid')] = 0;
+    $icmsConfig['module_cache'][$icmsModule->getVar('mid')] = 0;
     $xoopsOption['template_main'] = 'profile_userinfo.html';
     include ICMS_ROOT_PATH.'/header.php';
 
@@ -57,24 +55,24 @@ if (is_object($xoopsUser) && $uid == $xoopsUser->getVar('uid')) {
         $xoopsTpl->assign('user_candelete', false);
     }
     $xoopsTpl->assign('user_changeemail', $icmsConfigUser['allow_chgmail']);
-    $thisUser =& $xoopsUser;
+    $thisUser =& $icmsUser;
 } else {
     $member_handler =& xoops_gethandler('member');
     $thisUser =& $member_handler->getUser($uid);
-    if (!is_object($thisUser) || (!$thisUser->isActive() && (!$xoopsUser || !$xoopsUser->isAdmin()))) {
+    if (!is_object($thisUser) || (!$thisUser->isActive() && (!$icmsUser || !$icmsUser->isAdmin()))) {
         redirect_header(ICMS_URL."/modules/".basename( dirname( __FILE__ ) ),3,_PROFILE_MA_SELECTNG);
         exit();
     }
-    if ($xoopsUserIsAdmin) {
+    if ($icmsUserIsAdmin) {
         //disable cache
-        $xoopsConfig['module_cache'][$xoopsModule->getVar('mid')] = 0;
+        $icmsConfig['module_cache'][$icmsModule->getVar('mid')] = 0;
     }
     $xoopsOption['template_main'] = 'profile_userinfo.html';
     include(ICMS_ROOT_PATH.'/header.php');
     $xoopsTpl->assign('user_ownpage', false);
 }
 
-if ( is_object($xoopsUser) && $xoopsUser->isAdmin() ) {
+if ( is_object($icmsUser) && $icmsUser->isAdmin() ) {
     $xoopsTpl->assign('lang_editprofile', _PROFILE_MA_EDITPROFILE);
     $xoopsTpl->assign('lang_deleteaccount', _PROFILE_MA_DELACCOUNT);
     $xoopsTpl->assign('user_uid', $thisUser->getVar('uid'));
@@ -107,13 +105,13 @@ if($thisUser->getVar('user_avatar') && "blank.gif" != $thisUser->getVar('user_av
     $avatar = $thisUser->gravatar('G', $icmsConfigUser['avatar_width']);
 }
 
-if ($thisUser->getVar('user_viewemail') == 1 && is_object($xoopsUser)) { //MPB disallow anonymous viewing
+if ($thisUser->getVar('user_viewemail') == 1 && is_object($icmsUser)) { //MPB disallow anonymous viewing
     $email = $thisUser->getVar('email', 'E');
 } else {
     $email = _PROFILE_MA_SENDPM;
-    if (is_object($xoopsUser)) {
+    if (is_object($icmsUser)) {
         // Module admins will be allowed to see emails
-        if ($xoopsUser->isAdmin() || ($xoopsUser->getVar("uid") == $thisUser->getVar("uid"))) {
+        if ($icmsUser->isAdmin() || ($icmsUser->getVar("uid") == $thisUser->getVar("uid"))) {
             $email = $thisUser->getVar('email', 'E');
         }
     }
@@ -137,7 +135,7 @@ foreach (array_keys($fields) as $i) {
          if (is_array($value)) {
             $value = implode('<br />', array_values($value));
         }
-        if($xoopsModuleConfig['show_empty'] || $value){
+        if($icmsModuleConfig['show_empty'] || $value){
             $categories[$catid]['fields'][$fields[$i]->getVar('field_weight')."_".$i] = array('title' => $fields[$i]->getVar('field_title'), 'value' => $value);
            	ksort($categories[$catid]['fields']);
            	$weights[$catid][] = $fields[$i]->getVar('catid');
@@ -156,7 +154,7 @@ foreach (array_keys($categories) as $i) {
 $xoopsTpl->assign('categories', $categories);
 // Dynamic user profiles end
 
-if ($xoopsModuleConfig['profile_search']) {
+if ($icmsModuleConfig['profile_search']) {
     $module_handler =& xoops_gethandler('module');
     $criteria = new CriteriaCompo(new Criteria('hassearch', 1));
     $criteria->add(new Criteria('isactive', 1));

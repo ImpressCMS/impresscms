@@ -41,7 +41,7 @@ $isfriend =0;
 * If anonym and uid not set then redirect to admins profile
 * Else redirects to own profile
 */
-if(empty($xoopsUser)) {
+if(empty($icmsUser)) {
 	$isanonym = 1;
 	if(isset($_GET['uid'])) {
 	  $uid_owner = intval($_GET['uid']);
@@ -53,9 +53,9 @@ if(empty($xoopsUser)) {
     $isanonym = 0;
 	if( !empty($_GET['uid'])) {
 	  $uid_owner = intval($_GET['uid']);
-	  $isOwner = ($xoopsUser->getVar('uid')==$uid_owner) ? 1:0;
+	  $isOwner = ($icmsUser->getVar('uid')==$uid_owner) ? 1:0;
 	} else {
-	  $uid_owner = intval($xoopsUser->getVar('uid'));
+	  $uid_owner = intval($icmsUser->getVar('uid'));
 	  $isOwner = 1;
 	}
 	
@@ -64,16 +64,16 @@ $myts =& MyTextSanitizer::getInstance();
 if ($isanonym == 1 && $uid_owner==0) {
   $xoopsOption['template_main'] = 'profile_noindex.html';
   include_once(ICMS_ROOT_PATH."/header.php");
-  $xoopsTpl->assign('module_name',$xoopsModule->getVar('name'));
-  $xoopsTpl->assign('xoops_pagetitle',  sprintf(_MD_PROFILE_PAGETITLE,$xoopsModule->getVar("name"), _GUESTS));
-  $xoopsTpl->assign('profile_image','<img src="'.ICMS_URL.'/modules/'.$xoopsModule->getVar("dirname").'/images/profile-start.gif" alt="'.$xoopsModule->getVar('name').'"/>');
+  $xoopsTpl->assign('module_name',$icmsModule->getVar('name'));
+  $xoopsTpl->assign('xoops_pagetitle',  sprintf(_MD_PROFILE_PAGETITLE,$icmsModule->getVar("name"), _GUESTS));
+  $xoopsTpl->assign('profile_image','<img src="'.ICMS_URL.'/modules/'.$icmsModule->getVar("dirname").'/images/profile-start.gif" alt="'.$icmsModule->getVar('name').'"/>');
   $xoopsTpl->assign('profile_content',_MI_PROFILE_MODULEDESC);
 /**
 * Adding to the module js and css of the lightbox and new ones
 */
-$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/css/profile'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
-if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/css/tabs-ie.css');}
-$xoTheme->addScript(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/js/profile.js');
+$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$icmsModule->getVar('dirname').'/css/profile'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
+if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$icmsModule->getVar('dirname').'/css/tabs-ie.css');}
+$xoTheme->addScript(ICMS_URL.'/modules/'.$icmsModule->getVar('dirname').'/js/profile.js');
 $xoopsTpl->assign('lang_mysection',_MD_PROFILE_MYPROFILE);
 
     if($moduleConfig['profile_social']==1){
@@ -116,12 +116,12 @@ include_once(ICMS_ROOT_PATH."/header.php");
 /**
 * Adding to the module js and css of the lightbox and new ones
 */
-$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/css/profile'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
-if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/css/tabs-ie.css');}
-$xoTheme->addScript(ICMS_URL.'/modules/'.$xoopsModule->getVar('dirname').'/js/profile.js');
+$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$icmsModule->getVar('dirname').'/css/profile'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
+if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$icmsModule->getVar('dirname').'/css/tabs-ie.css');}
+$xoTheme->addScript(ICMS_URL.'/modules/'.$icmsModule->getVar('dirname').'/js/profile.js');
 
 //navbar
-$xoopsTpl->assign('module_name',$xoopsModule->getVar('name'));
+$xoopsTpl->assign('module_name',$icmsModule->getVar('name'));
     if($moduleConfig['profile_social']==1){
   $xoopsTpl->assign('module_is_socialmode', true);
     }

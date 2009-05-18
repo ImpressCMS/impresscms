@@ -21,8 +21,8 @@ include_once 'header.php';
 $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
-	if(is_object($xoopsUser)){
-		$uid = $xoopsUser->getVar('uid');
+	if(is_object($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
@@ -35,7 +35,7 @@ if($moduleConfig['profile_social']==0){
 	exit();
 }
 
-$controler = new ProfileControlerTribes($xoopsDB,$xoopsUser);
+$controler = new ProfileControlerTribes($xoopsDB,$icmsUser);
 $nbSections = $controler->getNumbersSections();
 
 $tribe_id = intval($_GET['tribe_id']);
@@ -52,13 +52,13 @@ foreach($tribe_members as $tribe_member) {
   $uids[]=intval($tribe_member['uid']);
 }
 
-$uid = intval($xoopsUser->getVar('uid'));
-if($xoopsUser) {
+$uid = intval($icmsUser->getVar('uid'));
+if($icmsUser) {
 	if(in_array($uid,$uids)) $xoopsTpl->assign('memberOfTribe', 1);
 	$xoopsTpl->assign('useruid', $uid);
 }
 $xoopsTpl->assign('tribe_members', $tribe_members );
-$maxfilebytes = $xoopsModuleConfig['maxfilesize'];
+$maxfilebytes = $icmsModuleConfig['maxfilesize'];
 $xoopsTpl->assign('lang_savetribe',_MD_PROFILE_UPLOADTRIBE);
 $xoopsTpl->assign('maxfilesize',$maxfilebytes);
 $xoopsTpl->assign('tribe_title', $tribe->getVar('tribe_title'));
@@ -102,9 +102,9 @@ $xoopsTpl->assign('lang_mysection',_MD_PROFILE_TRIBES.' :: '.$tribe->getVar('tri
 $xoopsTpl->assign('section_name',_MD_PROFILE_TRIBES.' > '.$tribe->getVar('tribe_title'));
 
 //page atributes
-$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$xoopsModule->getVar('name'), $controler->nameOwner));
+$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$icmsModule->getVar('name'), $controler->nameOwner));
 
-//$xoopsTpl->assign('path_profile_uploads',$xoopsModuleConfig['link_path_upload']);
+//$xoopsTpl->assign('path_profile_uploads',$icmsModuleConfig['link_path_upload']);
 $xoopsTpl->assign('lang_owner',_MD_PROFILE_TRIBEOWNER);
 
 include_once ICMS_ROOT_PATH.'/include/comment_view.php';

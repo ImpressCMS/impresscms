@@ -15,13 +15,11 @@
  */
 
 include 'header.php';
-if (!$xoopsUser) {
+if (!$icmsUser) {
     redirect_header(ICMS_URL, 2, _NOPERM);
 }
 $xoopsOption['template_main'] = 'profile_changepass.html';
 include ICMS_ROOT_PATH.'/header.php';
-$config_handler =& xoops_gethandler('config');
-$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 if($icmsConfigUser['pass_level']>20){
 icms_PasswordMeter();
 }
@@ -44,27 +42,27 @@ if (!isset($_POST['submit'])) {
 
 }
 else {
-    include_once ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/include/functions.php';
-    $stop = checkPassword($xoopsUser->getVar('login_name'), $_POST['oldpass'], $_POST['password'], $_POST['vpass']);
+    include_once ICMS_ROOT_PATH.'/modules/'.$icmsModule->getVar('dirname').'/include/functions.php';
+    $stop = checkPassword($icmsUser->getVar('login_name'), $_POST['oldpass'], $_POST['password'], $_POST['vpass']);
     if ($stop != '') {
-        redirect_header(ICMS_URL.'/modules/'.basename( dirname( __FILE__ ) ).'/userinfo.php?uid='.$xoopsUser->getVar('uid'), 2, $stop);
+        redirect_header(ICMS_URL.'/modules/'.basename( dirname( __FILE__ ) ).'/userinfo.php?uid='.$icmsUser->getVar('uid'), 2, $stop);
     }
     else {
         //update password
         $salt = icms_createSalt();
         $pass = icms_encryptPass($_POST['password'], $salt);
-        $xoopsUser->setVar('pass', $pass);
-        $xoopsUser->setVar('enc_type', $icmsConfigUser['enc_type']);
-        $xoopsUser->setVar('pass_expired', 0);
-        $xoopsUser->setVar('salt', $salt);
+        $icmsUser->setVar('pass', $pass);
+        $icmsUser->setVar('enc_type', $icmsConfigUser['enc_type']);
+        $icmsUser->setVar('pass_expired', 0);
+        $icmsUser->setVar('salt', $salt);
         // Now we are using salt so this is not required!!
-        //$xoopsUser->setVar('pass', md5($_POST['newpass']));
+        //$icmsUser->setVar('pass', md5($_POST['newpass']));
 
         $member_handler =& xoops_gethandler('member');
-        if ($member_handler->insertUser($xoopsUser)) {
-            redirect_header(ICMS_URL.'/modules/'.basename( dirname( __FILE__ ) ).'/userinfo.php?uid='.$xoopsUser->getVar('uid'), 2, _PROFILE_MA_PASSWORDCHANGED);
+        if ($member_handler->insertUser($icmsUser)) {
+            redirect_header(ICMS_URL.'/modules/'.basename( dirname( __FILE__ ) ).'/userinfo.php?uid='.$icmsUser->getVar('uid'), 2, _PROFILE_MA_PASSWORDCHANGED);
         }
-        redirect_header(ICMS_URL.'/modules/'.basename( dirname( __FILE__ ) ).'/userinfo.php?uid='.$xoopsUser->getVar('uid'), 2, _PROFILE_MA_ERRORDURINGSAVE);
+        redirect_header(ICMS_URL.'/modules/'.basename( dirname( __FILE__ ) ).'/userinfo.php?uid='.$icmsUser->getVar('uid'), 2, _PROFILE_MA_ERRORDURINGSAVE);
     }
 }
 

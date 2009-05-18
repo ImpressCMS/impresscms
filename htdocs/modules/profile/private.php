@@ -40,7 +40,7 @@ $picture->setVar('private', intval($_POST['private']));
 /**
 * Verifying who's the owner to allow changes
 */
-$uid = intval($xoopsUser->getVar('uid'));
+$uid = intval($icmsUser->getVar('uid'));
 if($uid == $picture->getVar('uid_owner')){
 	if($picture_factory->insert($picture))
 	{

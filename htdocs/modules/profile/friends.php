@@ -21,8 +21,8 @@ include_once 'header.php';
 $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
-	if(is_object($xoopsUser)){
-		$uid = $xoopsUser->getVar('uid');
+	if(is_object($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
@@ -35,7 +35,7 @@ if($moduleConfig['profile_social']==0){
 	exit();
 }
 
-$controler = new ProfileControlerFriends($xoopsDB,$xoopsUser);
+$controler = new ProfileControlerFriends($xoopsDB,$icmsUser);
 $nbSections = $controler->getNumbersSections();
 
 $start = (isset($_GET['start']))? intval($_GET['start']) : 0;
@@ -45,7 +45,7 @@ $start = (isset($_GET['start']))? intval($_GET['start']) : 0;
 */
 $criteria_friends = new criteria('friend1_uid', intval($controler->uidOwner));
 $nb_friends = $controler->friendships_factory->getCount($criteria_friends);
-$criteria_friends->setLimit($xoopsModuleConfig['friendsperpage']);
+$criteria_friends->setLimit($icmsModuleConfig['friendsperpage']);
 $criteria_friends->setStart($start);
 $vetor = $controler->friendships_factory->getFriends('',$criteria_friends,0);
 if($nb_friends ==0) {$xoopsTpl->assign('lang_nofriendsyet',_MD_PROFILE_NOFRIENDSYET);}
@@ -59,7 +59,7 @@ $identifier = $owner->getUnameFromId($controler->uidOwner);
 /**
 * Criando a barra de navegao caso tenha muitos amigos
 */
-$barra_navegacao = new XoopsPageNav($nbSections['nbFriends'],$xoopsModuleConfig['friendsperpage'],$start,'start','uid='.intval($controler->uidOwner));
+$barra_navegacao = new XoopsPageNav($nbSections['nbFriends'],$icmsModuleConfig['friendsperpage'],$start,'start','uid='.intval($controler->uidOwner));
 $navegacao = $barra_navegacao->renderImageNav(2);
 
 //permissions
@@ -92,10 +92,10 @@ $xoopsTpl->assign('section_name',_MD_PROFILE_FRIENDS);
 $xoopsTpl->assign('navegacao',$navegacao);  
 
 //page atributes
-$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$xoopsModule->getVar('name'), $controler->nameOwner));
+$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$icmsModule->getVar('name'), $controler->nameOwner));
 
 $xoopsTpl->assign('lang_friendstitle', sprintf(_MD_PROFILE_FRIENDSTITLE,$identifier));
-//$xoopsTpl->assign('path_profile_uploads',$xoopsModuleConfig['link_path_upload']);
+//$xoopsTpl->assign('path_profile_uploads',$icmsModuleConfig['link_path_upload']);
 
 $xoopsTpl->assign('friends',$vetor);
 

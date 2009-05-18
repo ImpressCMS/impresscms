@@ -24,7 +24,7 @@ if($moduleConfig['profile_social']==0){
 }
 
 
-$controler = new ProfileControlerTribes($xoopsDB,$xoopsUser);
+$controler = new ProfileControlerTribes($xoopsDB,$icmsUser);
 $nbSections = $controler->getNumbersSections();
 
 $tribe_id = intval($_POST['tribe_id']);
@@ -33,7 +33,7 @@ $criteria= new criteria('tribe_id',$tribe_id);
 $tribes = $controler->tribes_factory->getObjects($criteria);
 $tribe = $tribes[0];
 
-$uid = $xoopsUser->getVar('uid');
+$uid = $icmsUser->getVar('uid');
 
 if($marker==1 && $tribe->getVar('owner_uid')==$uid) {
 	$title = trim(htmlspecialchars($_POST['title']));
@@ -42,9 +42,9 @@ if($marker==1 && $tribe->getVar('owner_uid')==$uid) {
 	$updateImg = ($_POST['flag_oldimg']==1)?0:1;
 	
 	$path_upload = ICMS_ROOT_PATH.'/uploads';
-	$maxfilebytes = $xoopsModuleConfig['maxfilesize'];
-	$maxfileheight = $xoopsModuleConfig['max_original_height'];
-	$maxfilewidth = $xoopsModuleConfig['max_original_width'];
+	$maxfilebytes = $icmsModuleConfig['maxfilesize'];
+	$maxfileheight = $icmsModuleConfig['max_original_height'];
+	$maxfilewidth = $icmsModuleConfig['max_original_width'];
 	$controler->tribes_factory->receiveTribe($title,$desc,$img,$path_upload,$maxfilebytes,$maxfilewidth,$maxfileheight,$updateImg,$tribe);
 	redirect_header('tribes.php?uid='.$uid,3,_MD_PROFILE_TRIBEEDITED);
 } else {
@@ -53,7 +53,7 @@ if($marker==1 && $tribe->getVar('owner_uid')==$uid) {
 	*/
 	$tribe_members = $controler->reltribeusers_factory->getUsersFromTribe($tribe_id,0,50);
 	$xoopsTpl->assign('tribe_members', $tribe_members);
-	$maxfilebytes = $xoopsModuleConfig['maxfilesize'];
+	$maxfilebytes = $icmsModuleConfig['maxfilesize'];
 	$xoopsTpl->assign('lang_savetribe',_MD_PROFILE_UPLOADTRIBE);
 	$xoopsTpl->assign('maxfilesize',$maxfilebytes);
 	$xoopsTpl->assign('tribe_title', $tribe->getVar('tribe_title'));
@@ -96,9 +96,9 @@ if($marker==1 && $tribe->getVar('owner_uid')==$uid) {
 	$xoopsTpl->assign('section_name',_MD_PROFILE_TRIBES.' > '._MD_PROFILE_EDIT_TRIBE);
 	
 	//page atributes
-	$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$xoopsModule->getVar('name'), $controler->nameOwner));
+	$xoopsTpl->assign('xoops_pagetitle', sprintf(_MD_PROFILE_PAGETITLE,$icmsModule->getVar('name'), $controler->nameOwner));
 	
-	//$xoopsTpl->assign('path_profile_uploads',$xoopsModuleConfig['link_path_upload']);
+	//$xoopsTpl->assign('path_profile_uploads',$icmsModuleConfig['link_path_upload']);
 	$xoopsTpl->assign('lang_owner',_MD_PROFILE_TRIBEOWNER);
 	
 }

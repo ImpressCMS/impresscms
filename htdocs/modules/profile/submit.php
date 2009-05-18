@@ -44,13 +44,13 @@ $title = $myts->htmlSpecialChars($_POST['caption']);
  * Getting parameters defined in admin side  
  */
 $path_upload    = ICMS_ROOT_PATH."/uploads";
-$pictwidth      = $xoopsModuleConfig['resized_width'];
-$pictheight     = $xoopsModuleConfig['resized_height'];
-$thumbwidth     = $xoopsModuleConfig['thumb_width'];
-$thumbheight    = $xoopsModuleConfig['thumb_height'];
-$maxfilebytes   = $xoopsModuleConfig['maxfilesize'];
-$maxfileheight  = $xoopsModuleConfig['max_original_height'];
-$maxfilewidth   = $xoopsModuleConfig['max_original_width'];
+$pictwidth      = $icmsModuleConfig['resized_width'];
+$pictheight     = $icmsModuleConfig['resized_height'];
+$thumbwidth     = $icmsModuleConfig['thumb_width'];
+$thumbheight    = $icmsModuleConfig['thumb_height'];
+$maxfilebytes   = $icmsModuleConfig['maxfilesize'];
+$maxfileheight  = $icmsModuleConfig['max_original_height'];
+$maxfilewidth   = $icmsModuleConfig['max_original_width'];
 
 /**
  * If we are receiving a file  
@@ -68,14 +68,14 @@ if ($_POST['xoops_upload_file'][0]=='sel_photo'){
               * Try to upload picture resize it insert in database and then redirect to index
               */
               if ($album_factory->receivePicture($title,$path_upload, $thumbwidth, $thumbheight, $pictwidth, $pictheight, $maxfilebytes,$maxfilewidth,$maxfileheight)){
-                     $extra_tags['X_OWNER_NAME'] = $xoopsUser->getVar('uname');
-                     $extra_tags['X_OWNER_UID'] = $xoopsUser->getVar('uid');
+                     $extra_tags['X_OWNER_NAME'] = $icmsUser->getVar('uname');
+                     $extra_tags['X_OWNER_UID'] = $icmsUser->getVar('uid');
                      $notification_handler =& xoops_gethandler('notification');
-                     $notification_handler->triggerEvent ("picture", $xoopsUser->getVar('uid'), "new_picture",$extra_tags);
-                     //header("Location: ".ICMS_URL."/modules/".$modname."/index.php?uid=".$xoopsUser->getVar('uid'));
-                     redirect_header(ICMS_URL."/modules/".$modname."/album.php?uid=".$xoopsUser->getVar('uid'),3,_MD_PROFILE_UPLOADED);
+                     $notification_handler->triggerEvent ("picture", $icmsUser->getVar('uid'), "new_picture",$extra_tags);
+                     //header("Location: ".ICMS_URL."/modules/".$modname."/index.php?uid=".$icmsUser->getVar('uid'));
+                     redirect_header(ICMS_URL."/modules/".$modname."/album.php?uid=".$icmsUser->getVar('uid'),3,_MD_PROFILE_UPLOADED);
               } else {
-                     redirect_header(ICMS_URL."/modules/".$modname."/album.php?uid=".$xoopsUser->getVar('uid'),3,_MD_PROFILE_NOCACHACA);
+                     redirect_header(ICMS_URL."/modules/".$modname."/album.php?uid=".$icmsUser->getVar('uid'),3,_MD_PROFILE_NOCACHACA);
               }
 }
 

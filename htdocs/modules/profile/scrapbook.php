@@ -20,7 +20,7 @@ if ( !empty($_POST['mainscrap']) ) {
   if ( trim($_POST['mainscrap'])=='insert' ) {  //submit
      $profile_template = 'profile_scrapbook.html';
      include_once("header.php");
-	 $controler = new ProfileControlerScraps($xoopsDB,$xoopsUser);
+	 $controler = new ProfileControlerScraps($xoopsDB,$icmsUser);
      $nbSections = $controler->getNumbersSections();
      if (!($GLOBALS['xoopsSecurity']->check())){
 	   redirect_header($_SERVER['HTTP_REFERER'], 3, _MD_PROFILE_TOKENEXPIRED);
@@ -31,23 +31,23 @@ if ( !empty($_POST['mainscrap']) ) {
      $mainform	   		= (!empty($_POST['mainform'])) ? 1 : 0;
      $scrap = $scraps_factory->create();
      $scrap->setVar('scrap_text',$scrap_text);
-     $scrap->setVar('scrap_from',$xoopsUser->getVar('uid'));
+     $scrap->setVar('scrap_from',$icmsUser->getVar('uid'));
      $scrap->setVar('scrap_to',$scrapbook_uid);
      $scraps_factory->insert($scrap);
-     $extra_tags['X_OWNER_NAME'] =  $xoopsUser->getUnameFromId($scrapbook_uid);
+     $extra_tags['X_OWNER_NAME'] =  $icmsUser->getUnameFromId($scrapbook_uid);
      $extra_tags['X_OWNER_UID'] = $scrapbook_uid;
      $notification_handler =& xoops_gethandler('notification');
-     $notification_handler->triggerEvent ("scrap", $xoopsUser->getVar('uid'), "new_scrap",$extra_tags);
+     $notification_handler->triggerEvent ("scrap", $icmsUser->getVar('uid'), "new_scrap",$extra_tags);
      if ($mainform==1) {
 	   redirect_header("scrapbook.php?uid=".$scrapbook_uid,1,_MD_PROFILE_SCRAP_SENT);
      } else {
-	   redirect_header("scrapbook.php?uid=".$xoopsUser->getVar('uid'),1,_MD_PROFILE_SCRAP_SENT);
+	   redirect_header("scrapbook.php?uid=".$icmsUser->getVar('uid'),1,_MD_PROFILE_SCRAP_SENT);
      }
 	 exit();
   } elseif ( trim($_POST['mainscrap'])=='reply' ) {  //answer
      $profile_template = 'profile_scrapbook.html';
      include_once("header.php");
-	 $controler = new ProfileControlerScraps($xoopsDB,$xoopsUser);
+	 $controler = new ProfileControlerScraps($xoopsDB,$icmsUser);
      $nbSections = $controler->getNumbersSections();
      if (!($GLOBALS['xoopsSecurity']->check())){
 	   redirect_header($_SERVER['HTTP_REFERER'], 3, _MD_PROFILE_TOKENEXPIRED);
@@ -58,17 +58,17 @@ if ( !empty($_POST['mainscrap']) ) {
      $mainform	   		= (!empty($_POST['mainform'])) ? 1 : 0;
      $scrap = $scraps_factory->create();
      $scrap->setVar('scrap_text',$scrap_text);
-     $scrap->setVar('scrap_from',$xoopsUser->getVar('uid'));
+     $scrap->setVar('scrap_from',$icmsUser->getVar('uid'));
      $scrap->setVar('scrap_to',$scrapbook_uid);
      $scraps_factory->insert($scrap);
-     $extra_tags['X_OWNER_NAME'] =  $xoopsUser->getUnameFromId($scrapbook_uid);
+     $extra_tags['X_OWNER_NAME'] =  $icmsUser->getUnameFromId($scrapbook_uid);
      $extra_tags['X_OWNER_UID'] = $scrapbook_uid;
      $notification_handler =& xoops_gethandler('notification');
      $notification_handler->triggerEvent ("scrap", $scrapbook_uid, "new_scrap",$extra_tags);
      if ($mainform==1) {
 	   redirect_header("scrapbook.php?uid=".$scrapbook_uid,1,_MD_PROFILE_SCRAP_SENT);
      } else {
-	   redirect_header("scrapbook.php?uid=".$xoopsUser->getVar('uid'),1,_MD_PROFILE_SCRAP_SENT);
+	   redirect_header("scrapbook.php?uid=".$icmsUser->getVar('uid'),1,_MD_PROFILE_SCRAP_SENT);
      }
 	 exit();
   } elseif ( trim($_POST['mainscrap'])=='delete' ) {  //delete    
@@ -86,8 +86,8 @@ if ( !empty($_POST['mainscrap']) ) {
 $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
-	if(is_object($xoopsUser)){
-		$uid = $xoopsUser->getVar('uid');
+	if(is_object($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
@@ -100,14 +100,14 @@ if($moduleConfig['profile_social']==0){
 	exit();
 }
 
-	  $controler = new ProfileControlerScraps($xoopsDB,$xoopsUser);
+	  $controler = new ProfileControlerScraps($xoopsDB,$icmsUser);
       $nbSections = $controler->getNumbersSections();
 	  /**
 	  * Creating the factory  and the criteria to delete the picture
 	  * The user must be the owner
 	  */
 	  $criteria_scrap_id = new Criteria ('scrap_id',$scrap_id);
-	  $uid = intval($xoopsUser->getVar('uid'));
+	  $uid = intval($icmsUser->getVar('uid'));
 	  $criteria_uid = new Criteria ('scrap_to',$uid);
 	  $criteria = new CriteriaCompo ($criteria_scrap_id);
 	  $criteria->add($criteria_uid);	
@@ -128,7 +128,7 @@ if($moduleConfig['profile_social']==0){
 
 $profile_template = 'profile_scrapbook.html';
 include_once("header.php");
-$controler = new ProfileControlerScraps($xoopsDB,$xoopsUser);  
+$controler = new ProfileControlerScraps($xoopsDB,$icmsUser);  
 $nbSections = $controler->getNumbersSections();
 $criteria_uid = new Criteria('scrap_to',$controler->uidOwner);
 $criteria_uid->setOrder('DESC');

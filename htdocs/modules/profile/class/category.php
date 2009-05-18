@@ -23,7 +23,7 @@ class ProfileCategory extends IcmsPersistableObject {
 	 * @param object $handler ProfileCategoryHandler object
 	 */
 	public function __construct(& $handler) {
-		global $xoopsConfig;
+		global $icmsConfig;
 
 		$this->IcmsPersistableObject($handler);
 
