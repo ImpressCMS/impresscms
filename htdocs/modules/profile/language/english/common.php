@@ -10,7 +10,7 @@
 * @version		$Id$
 */
 
-if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
+if (!defined("ICMS_ROOT_PATH")) die("ImpressCMS root path not defined");
 
 // field
 define("_CO_PROFILE_FIELD_FIELDID", "Id");
@@ -69,6 +69,4 @@ define("_CO_PROFILE_CATEGORY_CAT_DESCRIPTION", "Description");
 define("_CO_PROFILE_CATEGORY_CAT_DESCRIPTION_DSC", " ");
 define("_CO_PROFILE_CATEGORY_CAT_WEIGHT", "Weight");
 define("_CO_PROFILE_CATEGORY_CAT_WEIGHT_DSC", " ");
-
-
 ?>
