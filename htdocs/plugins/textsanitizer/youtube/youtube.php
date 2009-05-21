@@ -23,7 +23,7 @@ function render_youtube($ele_name)
     if(isset($xoTheme)){
         $xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$dirname.'/'.$dirname.'.js', array('type' => 'text/javascript'));
     }
-        $code = "<img onclick='javascript:icmsCodeYoutube(\"".$ele_name."\", \"".htmlspecialchars(_ENTERYOUTUBEURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERHEIGHT, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERWIDTH, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/plugins/textsanitizer/".basename(dirname(__FILE__))."/youtube.gif' alt='hide' />&nbsp;";
+        $code = "<img onclick='javascript:icmsCodeYoutube(\"".$ele_name."\", \"".htmlspecialchars(_ENTERYOUTUBEURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERHEIGHT, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERWIDTH, ENT_QUOTES)."\");' onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/plugins/textsanitizer/".basename(dirname(__FILE__))."/youtube.gif' alt='hide' />&nbsp;";
 
         return array($code, $javascript);
 }

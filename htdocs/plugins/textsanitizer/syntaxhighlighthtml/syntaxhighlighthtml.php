@@ -43,7 +43,7 @@ function render_syntaxhighlighthtml($ele_name)
     if(isset($xoTheme)){
         $xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$dirname.'/'.$dirname.'.js', array('type' => 'text/javascript'));
     }
-        $code = "<img onclick='javascript:icmsCodeHTML(\"".$ele_name."\", \"".htmlspecialchars(_ENTERHTMLCODE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"hand\"' src='".ICMS_URL."/plugins/textsanitizer/".basename(dirname(__FILE__))."/html.png' alt='html' />&nbsp;";
+        $code = "<img onclick='javascript:icmsCodeHTML(\"".$ele_name."\", \"".htmlspecialchars(_ENTERHTMLCODE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/plugins/textsanitizer/".basename(dirname(__FILE__))."/html.png' alt='html' />&nbsp;";
         return array($code, $javascript);
 }
 function style_syntaxhighlighthtml(){

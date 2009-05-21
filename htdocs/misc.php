@@ -52,7 +52,7 @@ if($action == 'showpopups')
 					$rcolor = 'even';
 					for($i = 0; $i < $count; $i++)
 					{
-						echo "<tr class='$rcolor'><td>".$smiles[$i]['code']."</td><td>".$smiles[$i]['emotion']."</td><td><img onmouseover='style.cursor=\"hand\"' onclick='doSmilie(\" ".$smiles[$i]['code']." \");' src='".ICMS_UPLOAD_URL."/".$smiles[$i]['smile_url']."' alt='' /></td></tr>";
+						echo "<tr class='$rcolor'><td>".$smiles[$i]['code']."</td><td>".$smiles[$i]['emotion']."</td><td><img onmouseover='style.cursor=\"pointer\"' onclick='doSmilie(\" ".$smiles[$i]['code']." \");' src='".ICMS_UPLOAD_URL."/".$smiles[$i]['smile_url']."' alt='' /></td></tr>";
 						$rcolor = ($rcolor == 'even') ? 'odd' : 'even';
 					}
 				}
