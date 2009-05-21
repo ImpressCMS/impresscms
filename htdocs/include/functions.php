@@ -837,7 +837,7 @@ function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = f
 	if(!isset($module_dir))
 	{
 		//if a module is loaded
-		if(isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {$module_dir = $GLOBALS['xoopsModule']->getVar('dirname');}
+		if(isset($GLOBALS['icmsModule']) && is_object($GLOBALS['icmsModule'])) {$module_dir = $GLOBALS['icmsModule']->getVar('dirname');}
 		else {trigger_error(_CORE_NOMODULE, E_USER_ERROR);}
 	}
 	else {$module_dir = trim($module_dir);}
@@ -1262,7 +1262,7 @@ function &icms_getModuleConfig($moduleName = false)
 			return $icmsConfigs[$icmsModule->getVar('dirname')];
 		}
 	}
-	// if we still did not found the xoopsModule, this is because there is none
+	// if we still did not found the icmsModule, this is because there is none
 	if(!$moduleName)
 	{
 		$ret = false;
@@ -2429,10 +2429,11 @@ function &icms_getmodulehandler($name = null, $module_dir = null, $module_basena
 	if(!isset($module_dir))
 	{
 		//if a module is loaded
-		if(isset($GLOBALS['xoopsModule']) && is_object($GLOBALS['xoopsModule'])) {$module_dir = $GLOBALS['xoopsModule']->getVar('dirname');}
+		if(isset($GLOBALS['icmsModule']) && is_object($GLOBALS['icmsModule'])) {$module_dir = $GLOBALS['icmsModule']->getVar('dirname');}
 		else {trigger_error(_CORE_NOMODULE, E_USER_ERROR);}
 	}
 	else {$module_dir = trim($module_dir);}
+    $module_basename = isset($module_basename)?trim($module_basename):$module_dir;
 	$name = (!isset($name)) ? $module_dir : trim($name);
 	if(!isset($handlers[$module_dir][$name]))
 	{
