@@ -1204,10 +1204,10 @@ function icms_mkdir($target)
 function icms_chmod($target, $mode = 0777) {return @chmod($target, $mode);}
 
 /**
-* Get the XoopsModule object of a specified module
+* Get the icmsModule object of a specified module
 *
 * @param string $moduleName dirname of the module
-* @return object XoopsModule object of the specified module
+* @return object icmsModule object of the specified module
 */
 function &icms_getModuleInfo($moduleName = false)
 {
@@ -2615,9 +2615,9 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
 	if (!$withLink) {
 		return $icmsModule->getVar('name');
 	} else {
-/*		$seoMode = smart_getModuleModeSEO($moduleName);
+/*		$seoMode = icms_getModuleModeSEO($moduleName);
 		if ($seoMode == 'rewrite') {
-			$seoModuleName = smart_getModuleNameForSEO($moduleName);
+			$seoModuleName = icms_getModuleNameForSEO($moduleName);
 			$ret = ICMS_URL . '/' . $seoModuleName . '/';
 		} elseif ($seoMode == 'pathinfo') {
 			$ret = ICMS_URL . '/modules/' . $moduleName . '/seo.php/' . $seoModuleName . '/';
@@ -3045,5 +3045,74 @@ function mod_constant($name)
 }
 }
 
+function icms_collapsableBar($id = '', $title = '', $dsc = '') {
+	global $icmsModule;
+	echo "<h3 style=\"color: #2F5376; font-weight: bold; font-size: 14px; margin: 6px 0 0 0; \"><a href='javascript:;' onclick=\"togglecollapse('" . $id . "'); toggleIcon('" . $id . "_icon')\";>";
+	echo "<img id='" . $id . "_icon' src=" . ICMS_URL . "/images/close12.gif alt='' /></a>&nbsp;" . $title . "</h3>";
+	echo "<div id='" . $id . "'>";
+	if ($dsc != '') {
+		echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . $dsc . "</span>";
+	}
+}
+function icms_ajaxCollapsableBar($id = '', $title = '', $dsc = '') {
+	global $icmsModule;
+	$onClick = "ajaxtogglecollapse('$id')";
+	//$onClick = "togglecollapse('$id'); toggleIcon('" . $id . "_icon')";
+	echo '<h3 style="border: 1px solid; color: #2F5376; font-weight: bold; font-size: 14px; margin: 6px 0 0 0; " onclick="' . $onClick . '">';
+	echo "<img id='" . $id . "_icon' src=" . ICMS_URL . "/images/close12.gif alt='' /></a>&nbsp;" . $title . "</h3>";
+	echo "<div id='" . $id . "'>";
+	if ($dsc != '') {
+		echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . $dsc . "</span>";
+	}
+}
+/**
+ * Ajax testing......
+ */
+/*
+function icms_collapsableBar($id = '', $title = '', $dsc='')
+{
 
+	global $icmsModule;
+	//echo "<h3 style=\"color: #2F5376; font-weight: bold; font-size: 14px; margin: 6px 0 0 0; \"><a href='javascript:;' onclick=\"toggle('" . $id . "'); toggleIcon('" . $id . "_icon')\";>";
+
+?>
+<h3 class="icms_collapsable_title"><a href="javascript:Effect.Combo('<? echo $id ?>');"><? echo $title ?></a></h3>
+<?
+
+	echo "<img id='" . $id . "_icon' src=" . ICMS_URL . "/images/close12.gif alt='' /></a>&nbsp;" . $title . "</h3>";
+	echo "<div id='" . $id . "'>";
+	if ($dsc != '') {
+		echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . $dsc . "</span>";
+	}
+}
+*/
+function icms_openclose_collapsable($name) {
+	$urls = icms_getCurrentUrls();
+	$path = $urls['phpself'];
+	$cookie_name = $path . '_icms_collaps_' . $name;
+	$cookie_name = str_replace('.', '_', $cookie_name);
+	$cookie = icms_getCookieVar($cookie_name, '');
+	if ($cookie == 'none') {
+		echo '
+				<script type="text/javascript"><!--
+				togglecollapse("' . $name . '"); toggleIcon("' . $name . '_icon");
+					//-->
+				</script>
+				';
+	}
+	/*	if ($cookie == 'none') {
+			echo '
+			<script type="text/javascript"><!--
+				hideElement("' . $name . '");
+				//-->
+			</script>
+			';
+		}
+	*/
+}
+function icms_close_collapsable($name) {
+	echo "</div>";
+	icms_openclose_collapsable($name);
+	echo "<br />";
+}
 ?>
