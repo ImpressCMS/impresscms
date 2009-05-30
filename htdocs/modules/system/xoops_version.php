@@ -187,7 +187,7 @@ $modversion['templates'][$i]['description'] = 'Template of Admin RSS';
 
 $i++;
 $modversion['templates'][$i]['file'] = 'system_search.html';
-$modversion['templates'][$i]['description'] = 'Smarty template forsearch page';
+$modversion['templates'][$i]['description'] = 'Smarty template for search page';
 
 $i++;
 $modversion['templates'][$i]['file'] = 'system_persistable_singleview.html';
@@ -200,6 +200,10 @@ $modversion['templates'][$i]['description'] = 'Breadcrumb';
 $i++;
 $modversion['templates'][$i]['file'] = 'admin/adsense/system_adm_adsense.html';
 $modversion['templates'][$i]['description'] = 'Template of the Adsense admin';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_print.html';
+$modversion['templates'][$i]['description'] = 'Smarty template for printing page';
 
 ###
 

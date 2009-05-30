@@ -3148,4 +3148,12 @@ function icms_close_collapsable($name) {
 	icms_openclose_collapsable($name);
 	echo "<br />";
 }
+function icms_MakePrinterFriendly($content, $title=false, $description=false, $pagetitle=false, $width=680) {
+	require_once ICMS_ROOT_PATH . '/class/icmsprinterfriendly.php';
+	$PrintDataBuilder = new IcmsPrinterFriendly;
+	$PrintDataBuilder->IcmsPrinterFriendly($content, $title, $description);
+	$PrintDataBuilder->setPageTitle($pagetitle);
+	$PrintDataBuilder->setWidth($width);
+	$PrintDataBuilder->render();
+}
 ?>
