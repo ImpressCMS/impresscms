@@ -128,7 +128,7 @@ class SystemAdsenseHandler extends IcmsPersistableObjectHandler {
 	var $objects=false;
 	
 	function SystemAdsenseHandler($db) {
-		$this->IcmsPersistableObjectHandler ( $db, 'adsense', 'adsenseid', 'name', 'description', 'system' );
+		$this->IcmsPersistableObjectHandler ( $db, 'adsense', 'adsenseid', 'description', '', 'system' );
         $this->adFormats = array();
         $this->adFormatsList = array();
 
