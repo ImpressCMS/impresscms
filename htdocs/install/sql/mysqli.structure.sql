@@ -677,3 +677,22 @@ CREATE TABLE system_mimetypes (
   mime_user int(1) NOT NULL default '0',
   KEY mime_id (mime_id)
 ) TYPE=MyISAM;
+
+#
+# Table structure for table `system_adsense`
+#
+
+CREATE TABLE system_adsense (
+  adsenseid int(11) NOT NULL auto_increment,
+  format VARCHAR(100) NOT NULL,
+  description TEXT NOT NULL,
+  style TEXT NOT NULL,
+  border_color varchar(6) NOT NULL default '',
+  background_color varchar(6) NOT NULL default '',
+  link_color varchar(6) NOT NULL default '',
+  url_color varchar(6) NOT NULL default '',
+  text_color varchar(6) NOT NULL default '',
+  client_id varchar(100) NOT NULL default '',
+  tag varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`adsenseid`)
+) TYPE=MyISAM;

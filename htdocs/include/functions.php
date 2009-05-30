@@ -1766,6 +1766,39 @@ function icms_sanitizeCustomtags($text)
 }
 
 /**
+* Get URL of the page before the form to be able to redirect their after the form has been posted
+*
+* @param	array	$matches	Array of matches to sanitize
+* @return mixed The sanitized tag or empty string
+*/
+function icms_sanitizeAdsenses_callback($matches) {
+	global $icms_adsense_handler;
+	if (isset($icms_adsense_handler->objects[$matches[1]])){
+		$adsenseObj = $icms_adsense_handler->objects[$matches[1]];
+		$ret = $adsenseObj->render();
+		return $ret;
+	} else {
+		return '';
+	}
+}
+
+/**
+* Sanitizes Adsense
+*
+* @param string $text	Purifies passed text
+* @return string	$text The purified text
+*/
+function icms_sanitizeAdsenses($text) {
+
+	$patterns = array ();
+	$replacements = array ();
+
+	$patterns[] = "/\[adsense](.*)\[\/adsense\]/sU";
+	$text = preg_replace_callback($patterns, 'icms_sanitizeAdsenses_callback', $text);
+	return $text;
+}
+
+/**
 * Return a linked username or full name for a specific $userid
 *
 * @param integer $userid uid of the related user

@@ -144,5 +144,11 @@ $adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU21;
 $adminmenu[$i]['link'] = "admin.php?fct=customtag";
 $adminmenu[$i]['icon'] = "admin/customtag/images/customtag.png";
 $adminmenu[$i]['small'] = "admin/customtag/images/customtag_small.png";
-$adminmenu[$i]['id'] = XOOPS_SYSTEM_PAGES;
+$adminmenu[$i]['id'] = XOOPS_SYSTEM_CUSTOMTAGS;
+$i++;
+$adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU22;
+$adminmenu[$i]['link'] = "admin.php?fct=adsense";
+$adminmenu[$i]['icon'] = "admin/adsense/images/adsense.png";
+$adminmenu[$i]['small'] = "admin/adsense/images/adsense_small.png";
+$adminmenu[$i]['id'] = XOOPS_SYSTEM_ADSENSES;
 ?>
