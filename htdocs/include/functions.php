@@ -825,6 +825,7 @@ function &xoops_gethandler($name, $optional = false )
 
 /*
 * Gets module handler
+* For Backward Compatibility.
 *
 * @param	string  $name  The name of the module
 * @param	string	$module_dir		The module directory where to get the module class
@@ -832,31 +833,7 @@ function &xoops_gethandler($name, $optional = false )
 */
 function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = false)
 {
-	static $handlers;
-	// if $module_dir is not specified
-	if(!isset($module_dir))
-	{
-		//if a module is loaded
-		if(isset($GLOBALS['icmsModule']) && is_object($GLOBALS['icmsModule'])) {$module_dir = $GLOBALS['icmsModule']->getVar('dirname');}
-		else {trigger_error(_CORE_NOMODULE, E_USER_ERROR);}
-	}
-	else {$module_dir = trim($module_dir);}
-	$name = (!isset($name)) ? $module_dir : trim($name);
-	if(!isset($handlers[$module_dir][$name]))
-	{
-		if($module_dir != 'system') {$hnd_file = ICMS_ROOT_PATH."/modules/{$module_dir}/class/{$name}.php";}
-		else {$hnd_file = ICMS_ROOT_PATH."/modules/{$module_dir}/admin/{$name}/class/{$name}.php";}
-		if(file_exists($hnd_file)) {include_once $hnd_file;}
-		$class = ucfirst(strtolower($module_dir)).ucfirst($name).'Handler';
-		if(class_exists($class)) {$handlers[$module_dir][$name] =& new $class($GLOBALS['xoopsDB']);}
-	}
-	if(!isset($handlers[$module_dir][$name]) && !$optional)
-	{
-		trigger_error(sprintf(_CORE_MODULEHANDLER_NOTAVAILABLE, $module_dir, $name), E_USER_ERROR);
-	}
-	if(isset($handlers[$module_dir][$name])) {return $handlers[$module_dir][$name];}
-	$inst = false;
-	return $inst;
+	icms_getmodulehandler($name, $module_dir, $module_dir, $optional);
 }
 
 /*
@@ -2648,7 +2625,7 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
 	if (!$withLink) {
 		return $icmsModule->getVar('name');
 	} else {
-/*		$seoMode = icms_getModuleModeSEO($moduleName);
+		$seoMode = icms_getModuleModeSEO($moduleName);
 		if ($seoMode == 'rewrite') {
 			$seoModuleName = icms_getModuleNameForSEO($moduleName);
 			$ret = ICMS_URL . '/' . $seoModuleName . '/';
@@ -2657,8 +2634,6 @@ function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleNam
 		} else {
 			$ret = ICMS_URL . '/modules/' . $moduleName . '/';
 		}
-*/
-		$ret = ICMS_URL . '/modules/' . $moduleName . '/';
 		return '<a href="' . $ret . '">' . $icmsModule->getVar('name') . '</a>';
 	}
 }
@@ -2740,37 +2715,6 @@ function icms_getCurrentPage() {
 	$urls = icms_getCurrentUrls();
 	return $urls['full'];
 }
-
-/*function icms_getModuleName($withLink = true, $forBreadCrumb = false, $moduleName = false) {
-	if (!$moduleName) {
-		global $icmsModule;
-		$moduleName = $icmsModule->getVar('dirname');
-	}
-	$icmsModule = & icms_getModuleInfo($moduleName);
-	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
-	if (!isset ($icmsModule)) {
-		return '';
-	}
-
-	if ($forBreadCrumb && (isset ($icmsModuleConfig['show_mod_name_breadcrumb']) && !$icmsModuleConfig['show_mod_name_breadcrumb'])) {
-		return '';
-	}
-	if (!$withLink) {
-		return $icmsModule->getVar('name');
-	} else {
-		$seoMode = icms_getModuleModeSEO($moduleName);
-		if ($seoMode == 'rewrite') {
-			$seoModuleName = icms_getModuleNameForSEO($moduleName);
-			$ret = ICMS_URL . '/' . $seoModuleName . '/';
-		} elseif ($seoMode == 'pathinfo') {
-			$ret = ICMS_URL . '/modules/' . $moduleName . '/seo.php/' . $seoModuleName . '/';
-		} else {
-			$ret = ICMS_URL . '/modules/' . $moduleName . '/';
-		}
-
-		return '<a href="' . $ret . '">' . $icmsModule->getVar('name') . '</a>';
-	}
-}*/
 
 /**
  * Gets module name in SEO format
