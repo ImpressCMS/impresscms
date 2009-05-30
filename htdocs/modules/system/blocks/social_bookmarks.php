@@ -25,7 +25,7 @@ if (!defined("ICMS_ROOT_PATH")) {
 * @return array $block The block array
 */
 function b_social_bookmarks($options){
-	include_once ICMS_ROOT_PATH . '/kernel/icmsaddto.php';
+	include_once ICMS_ROOT_PATH . '/class/icmsaddto.php';
 	$icmsaddto = new IcmsAddTo($options[0]);
 	$block = $icmsaddto->renderForBlock();
 	return $block;
