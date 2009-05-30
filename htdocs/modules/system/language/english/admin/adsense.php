@@ -25,7 +25,7 @@ define('_CO_ICMS_ADSENSE_NOT_FOUND', 'The selected adsense ad was not found.');
 define('_CO_ICMS_ADSENSES_CREATED', 'The adsense add was successfully created.');
 define('_CO_ICMS_ADSENSES_MODIFIED', 'The adsense add was successfully modified.');
 
-define('_CO_ICMS_ADSENSE_TAG', 'IcmsCode');
+define('_CO_ICMS_ADSENSE_TAG_CODE', 'IcmsCode');
 
 define('_CO_ICMS_ADSENSE_BACKGROUND_COLOR', 'Background color');
 define('_CO_ICMS_ADSENSE_BACKGROUND_COLOR_DSC', '');

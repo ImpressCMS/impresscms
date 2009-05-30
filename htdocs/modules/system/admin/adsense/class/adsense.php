@@ -1,14 +1,14 @@
 <?php
 /**
- * ImpressCMS Adsenses
- *
- * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		Administration
- * @since		1.2
- * @author		stranger <stranger@impresscms.org>
- * @version		$Id: adsense.php 8716 2009-05-03 16:37:56Z sato $
- */
+* ImpressCMS Adsenses
+*
+* @copyright	The ImpressCMS Project http://www.impresscms.org/
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		Administration
+* @since		1.2
+* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @version		$Id$
+*/
 
 if (! defined ( "ICMS_ROOT_PATH" ))
 	die ( "ImpressCMS root path not defined" );
@@ -23,16 +23,16 @@ class SystemAdsense extends IcmsPersistableObject {
     	$this->IcmsPersistableObject($handler);
     	
         $this->quickInitVar('adsenseid', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('description', XOBJ_DTYPE_TXTAREA, true, _CO_SOBJECT_ADSENSE_DESCRIPTION, _CO_SOBJECT_ADSENSE_DESCRIPTION_DSC);
-		$this->quickInitVar('client_id', XOBJ_DTYPE_TXTBOX, true, _CO_SOBJECT_ADSENSE_CLIENT_ID, _CO_SOBJECT_ADSENSE_CLIENT_ID_DSC);
-		$this->quickInitVar('tag', XOBJ_DTYPE_TXTBOX, false, _CO_SOBJECT_ADSENSE_TAG, _CO_SOBJECT_ADSENSE_TAG_DSC);
-		$this->quickInitVar('format', XOBJ_DTYPE_TXTBOX, true, _CO_SOBJECT_ADSENSE_FORMAT, _CO_SOBJECT_ADSENSE_FORMAT_DSC);
-        $this->quickInitVar('border_color', XOBJ_DTYPE_TXTBOX, true, _CO_SOBJECT_ADSENSE_BORDER_COLOR, _CO_SOBJECT_ADSENSE_BORDER_COLOR_DSC);
-        $this->quickInitVar('background_color', XOBJ_DTYPE_TXTBOX, true, _CO_SOBJECT_ADSENSE_BACKGROUND_COLOR, _CO_SOBJECT_ADSENSE_BORDER_COLOR_DSC);
-        $this->quickInitVar('link_color', XOBJ_DTYPE_TXTBOX, true, _CO_SOBJECT_ADSENSE_LINK_COLOR, _CO_SOBJECT_ADSENSE_LINK_COLOR_DSC);
-        $this->quickInitVar('url_color', XOBJ_DTYPE_TXTBOX, true, _CO_SOBJECT_ADSENSE_URL_COLOR, _CO_SOBJECT_ADSENSE_URL_COLOR_DSC);
-        $this->quickInitVar('text_color', XOBJ_DTYPE_TXTBOX, true, _CO_SOBJECT_ADSENSE_TEXT_COLOR, _CO_SOBJECT_ADSENSE_TEXT_COLOR_DSC);
-		$this->quickInitVar('style', XOBJ_DTYPE_TXTAREA, false, _CO_SOBJECT_ADSENSE_STYLE, _CO_SOBJECT_ADSENSE_STYLE_DSC);
+		$this->quickInitVar('description', XOBJ_DTYPE_TXTAREA, true, _CO_ICMS_ADSENSE_DESCRIPTION, _CO_ICMS_ADSENSE_DESCRIPTION_DSC);
+		$this->quickInitVar('client_id', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_ADSENSE_CLIENT_ID, _CO_ICMS_ADSENSE_CLIENT_ID_DSC);
+		$this->quickInitVar('tag', XOBJ_DTYPE_TXTBOX, false, _CO_ICMS_ADSENSE_TAG, _CO_ICMS_ADSENSE_TAG_DSC);
+		$this->quickInitVar('format', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_ADSENSE_FORMAT, _CO_ICMS_ADSENSE_FORMAT_DSC);
+        $this->quickInitVar('border_color', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_ADSENSE_BORDER_COLOR, _CO_ICMS_ADSENSE_BORDER_COLOR_DSC);
+        $this->quickInitVar('background_color', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_ADSENSE_BACKGROUND_COLOR, _CO_ICMS_ADSENSE_BORDER_COLOR_DSC);
+        $this->quickInitVar('link_color', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_ADSENSE_LINK_COLOR, _CO_ICMS_ADSENSE_LINK_COLOR_DSC);
+        $this->quickInitVar('url_color', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_ADSENSE_URL_COLOR, _CO_ICMS_ADSENSE_URL_COLOR_DSC);
+        $this->quickInitVar('text_color', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_ADSENSE_TEXT_COLOR, _CO_ICMS_ADSENSE_TEXT_COLOR_DSC);
+		$this->quickInitVar('style', XOBJ_DTYPE_TXTAREA, false, _CO_ICMS_ADSENSE_STYLE, _CO_ICMS_ADSENSE_STYLE_DSC);
 
         $this->setControl('format', array('handler' => 'adsense','method' => 'getFormats'));
         $this->setControl('border_color', array('name' => 'text','size' => 6,'maxlength' => 6));
@@ -191,7 +191,7 @@ class SystemAdsenseHandler extends IcmsPersistableObjectHandler {
         $this->adFormats['125x125_as']['width'] = 125;
         $this->adFormats['125x125_as']['height'] = 125;
 		$this->adFormatsList['125x125_as'] = $this->adFormats['125x125_as']['caption'];
-		$this->addPermission ( 'view', _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW, _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW_DSC );
+		//$this->addPermission ( 'view', _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW, _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW_DSC );
 	}
 	
     function getFormats() {

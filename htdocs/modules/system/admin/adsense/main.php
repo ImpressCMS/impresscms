@@ -1,14 +1,15 @@
 <?php
 /**
-* ImpressCMS Customtags
+* ImpressCMS Adsenses
 *
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package		Administration
-* @since		1.1
-* @author		stranger <stranger@impresscms.org>
-* @version		$Id: main.php 8768 2009-05-16 22:48:26Z pesianstranger $
+* @since		1.2
+* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @version		$Id$
 */
+
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
     exit("Access Denied");
 }
@@ -90,8 +91,8 @@ switch ($op) {
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
 		
 		$objectTable = new IcmsPersistableTable($icms_adsense_handler);
-		$objectTable->addColumn(new SmartObjectColumn('description', _GLOBAL_LEFT));
-		$objectTable->addColumn(new SmartObjectColumn(_CO_ICMS_ADSENSE_TAG, 'center', 200, 'getXoopsCode'));
+		$objectTable->addColumn(new IcmsPersistableColumn('description', _GLOBAL_LEFT));
+		$objectTable->addColumn(new IcmsPersistableColumn(_CO_ICMS_ADSENSE_TAG_CODE, 'center', 200, 'getXoopsCode'));
 		//$objectTable->addColumn(new IcmsPersistableColumn('language', 'center', 150));
 
 		$objectTable->addIntroButton('addadsense', 'admin.php?fct=adsense&op=mod', _CO_ICMS_ADSENSES_CREATE);

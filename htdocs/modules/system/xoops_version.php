@@ -196,6 +196,11 @@ $modversion['templates'][$i]['description'] = 'Persistable Singel View';
 $i++;
 $modversion['templates'][$i]['file'] = 'system_breadcrumb.html';
 $modversion['templates'][$i]['description'] = 'Breadcrumb';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/adsense/system_adm_adsense.html';
+$modversion['templates'][$i]['description'] = 'Template of the Adsense admin';
+
 ###
 
 $i++;

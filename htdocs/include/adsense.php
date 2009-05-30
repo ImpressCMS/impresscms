@@ -21,7 +21,6 @@ function icms_adsense_initiate() {
 		foreach($icms_adsense_handler->objects as $k=>$v) {
 			$xoopsTpl->assign('adsense_' . $k, $v->render());
 		}
-		}
 	}
 }
 
