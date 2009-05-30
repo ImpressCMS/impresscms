@@ -6,8 +6,9 @@
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license	LICENSE.txt
 * @package	core
+* @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
+* @version	$Id: icmsaddto.php 8706 2009-05-03 10:11:14Z icmsunderdog $
 */
 
 
@@ -56,8 +57,8 @@ class IcmsAddTo {
 		$xoopsTpl->assign('icms_addto_method', $this->_method);
 		$xoopsTpl->assign('icms_addto_layout', $this->_layout);
 		
-		if(file_exists(ICMS_URL . '/language/'.$GLOBALS['xoopsConfig']['language'].'/addto')){
-		$xoopsTpl->assign('icms_addto_url', ICMS_URL . '/language/'.$GLOBALS['xoopsConfig']['language'].'/addto/');
+		if(file_exists(ICMS_URL . '/language/'.$GLOBALS['icmsConfig']['language'].'/addto')){
+		$xoopsTpl->assign('icms_addto_url', ICMS_URL . '/language/'.$GLOBALS['icmsConfig']['language'].'/addto/');
 		}else{
 		$xoopsTpl->assign('icms_addto_url', ICMS_URL . '/language/english/addto/');
 		}
@@ -83,8 +84,8 @@ class IcmsAddTo {
 		$block = array();
 		$block['icms_addto_method'] = $this->_method;
 		$block['icms_addto_layout'] = $this->_layout;
-		if(file_exists(ICMS_URL . '/language/'.$GLOBALS['xoopsConfig']['language'].'/addto')){
-		$block['icms_addto_url'] = ICMS_URL . '/language/'.$GLOBALS['xoopsConfig']['language'].'/addto/';
+		if(file_exists(ICMS_URL . '/language/'.$GLOBALS['icmsConfig']['language'].'/addto')){
+		$block['icms_addto_url'] = ICMS_URL . '/language/'.$GLOBALS['icmsConfig']['language'].'/addto/';
 		}else{
 		$block['icms_addto_url'] = ICMS_URL . '/language/english/addto/';
 		}
