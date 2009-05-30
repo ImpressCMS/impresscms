@@ -320,6 +320,16 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
         return $this->convertResultSet($result, $id_as_key, $as_object);
     }
 
+    /**
+     * query the database with the constructed $criteria object
+     *
+     * @param string $sql The SQL Query
+     * @param object $criteria {@link CriteriaElement} conditions to be met
+     * @param bool $force Force the query?
+     * @param bool $debug Turn Debug on?
+     *
+     * @return array
+     */
     function query($sql, $criteria, $force=false, $debug=false)
     {
     	$ret = array();
