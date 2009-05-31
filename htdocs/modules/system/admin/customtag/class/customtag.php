@@ -93,7 +93,7 @@ class SystemCustomtag extends IcmsPersistableObject {
 	}
 	
 	function getXoopsCode() {
-		$ret = '[customtag]' . $this->getVar ( 'tag', 'n' ) . '[/customtag]';
+		$ret = '[customtag]' . $this->getVar ( 'name', 'n' ) . '[/customtag]';
 		return $ret;
 	}
 	

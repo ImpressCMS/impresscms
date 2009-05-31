@@ -85,6 +85,7 @@ switch ($op) {
 		$objectTable = new IcmsPersistableTable($icms_customtag_handler);
 		$objectTable->addColumn(new IcmsPersistableColumn('name', _GLOBAL_LEFT, 150, 'getCustomtagName'));
 		$objectTable->addColumn(new IcmsPersistableColumn('description', _GLOBAL_LEFT));
+		$objectTable->addColumn(new IcmsPersistableColumn(_CO_ICMS_CUSTOMTAGS_TAG_CODE, 'center', 200, 'getXoopsCode'));
 		$objectTable->addColumn(new IcmsPersistableColumn('language', 'center', 150));
 
 		$objectTable->addIntroButton('addcustomtag', 'admin.php?fct=customtag&op=mod', _CO_ICMS_CUSTOMTAG_CREATE);

@@ -158,9 +158,9 @@ if (!window.console || !console.firebug) {
 <{/if}>
 
 <!-- Help Bar -->
-<{if $smarty.get.fct ne ''}><div id="helpbar"><a href="http://wiki.impresscms.org/index.php?title=admin_<{$smarty.get.fct}>"><{$smarty.get.fct}><img src="<{$icms_url}>/images/crystal/actions/help.png"></a></div>
+<{if $smarty.get.fct ne ''}><div id="helpbar"><a href="http://wiki.impresscms.org/index.php?title=admin_<{$smarty.get.fct}>/<{$icms_langcode}>"><{$smarty.get.fct}><img src="<{$icms_url}>/images/crystal/actions/help.png"></a></div>
 <{else}>
-<div id="helpbar"><a href="http://wiki.impresscms.org/index.php?title=Category:System">System<img src="<{$icms_url}>/images/crystal/actions/help.png"></a></div>
+<div id="helpbar"><a href="http://wiki.impresscms.org/index.php?title=Category:System/<{$icms_langcode}>">System<img src="<{$icms_url}>/images/crystal/actions/help.png"></a></div>
 <{/if}>
 
 	<!-- Content -->
