@@ -154,7 +154,7 @@ $adminmenu[$i]['id'] = XOOPS_SYSTEM_ADSENSES;
 $i++;
 $adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU23;
 $adminmenu[$i]['link'] = "admin.php?fct=rating";
-$adminmenu[$i]['icon'] = "admin/adsense/images/rating.png";
-$adminmenu[$i]['small'] = "admin/adsense/images/rating_small.png";
+$adminmenu[$i]['icon'] = "admin/rating/images/rating.png";
+$adminmenu[$i]['small'] = "admin/rating/images/rating_small.png";
 $adminmenu[$i]['id'] = XOOPS_SYSTEM_RATINGS;
 ?>
