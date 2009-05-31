@@ -833,7 +833,7 @@ function &xoops_gethandler($name, $optional = false )
 */
 function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = false)
 {
-	icms_getmodulehandler($name, $module_dir, $module_dir, $optional);
+	return icms_getmodulehandler($name, $module_dir, $module_dir, $optional);
 }
 
 /*

@@ -35,8 +35,8 @@ function xoops_module_list() {
 	$icmsAdminTpl->assign('lang_support',_MD_AM_MODULESADMIN_SUPPORT);
 	$icmsAdminTpl->assign('lang_submit',_MD_AM_SUBMIT);
 	$icmsAdminTpl->assign('lang_install',_MD_AM_INSTALL);
-    $icmsAdminTpl->assign('lang_installed',_MD_AM_INSTALLED);
-    $icmsAdminTpl->assign('lang_noninstall',_MD_AM_NONINSTALL);
+	$icmsAdminTpl->assign('lang_installed',_MD_AM_INSTALLED);
+	$icmsAdminTpl->assign('lang_noninstall',_MD_AM_NONINSTALL);
 
 	$module_handler =& xoops_gethandler('module');
 	$installed_mods =& $module_handler->getObjects();
