@@ -237,7 +237,7 @@ class XoopsLogger {
 	 * @return  string  $ret
 	 * @access protected
 	 */
-	protected function dump( $mode = '' ) {
+	public function dump( $mode = '' ) {
 		include ICMS_ROOT_PATH . '/class/logger_render.php';
 		return $ret;
 	}
