@@ -59,8 +59,8 @@ class SystemAdsense extends IcmsPersistableObject {
 
 		$ret .= '<script type="text/javascript"><!--
 google_ad_client = "' . $this->getVar('client_id', 'n') . '";
-google_ad_width = ' . $smartobject_adsense_handler->adFormats[$this->getVar('format', 'n')]['width'] . ';
-google_ad_height = ' . $smartobject_adsense_handler->adFormats[$this->getVar('format', 'n')]['height'] . ';
+google_ad_width = ' . $icms_adsense_handler->adFormats[$this->getVar('format', 'n')]['width'] . ';
+google_ad_height = ' . $icms_adsense_handler->adFormats[$this->getVar('format', 'n')]['height'] . ';
 google_ad_format = "' . $this->getVar('format', 'n') . '";
 google_ad_type = "text";
 google_ad_channel ="";
@@ -128,7 +128,7 @@ class SystemAdsenseHandler extends IcmsPersistableObjectHandler {
 	var $objects=false;
 	
 	function SystemAdsenseHandler($db) {
-		$this->IcmsPersistableObjectHandler ( $db, 'adsense', 'adsenseid', 'description', '', 'system' );
+		$this->IcmsPersistableObjectHandler ( $db, 'adsense', 'adsenseid', 'tag', 'description', 'system' );
         $this->adFormats = array();
         $this->adFormatsList = array();
 
