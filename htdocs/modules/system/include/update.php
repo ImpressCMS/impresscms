@@ -664,6 +664,56 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
           unset($table);
      }
 
+     $newDbVersion = 26;
+     
+     if($dbVersion < $newDbVersion)
+     {
+          $table = new IcmsDatabasetable('system_mimetypes');
+          if(!$table->exists()){
+              $table->setStructure("mime_id int(11) NOT NULL auto_increment,
+                  mime_name varchar(255) NOT NULL default '',
+                  mime_ext varchar(60) NOT NULL default '',
+                  mime_text varchar(60) NOT NULL default '',
+                  mime_admin int(1) NOT NULL default '1',
+                  mime_user int(1) NOT NULL default '0',
+                  KEY mime_id (mime_id)
+                  ");
+          }
+          unset($table);
+
+          $table = new IcmsDatabasetable('system_adsense');
+          if(!$table->exists()){
+              $table->setStructure("adsenseid int(11) NOT NULL auto_increment,
+                  format VARCHAR(100) NOT NULL,
+                  description TEXT NOT NULL,
+                  style TEXT NOT NULL,
+                  border_color varchar(6) NOT NULL default '',
+                  background_color varchar(6) NOT NULL default '',
+                  link_color varchar(6) NOT NULL default '',
+                  url_color varchar(6) NOT NULL default '',
+                  text_color varchar(6) NOT NULL default '',
+                  client_id varchar(100) NOT NULL default '',
+                  tag varchar(50) NOT NULL default '',
+                  PRIMARY KEY  (`adsenseid`)
+                  ");
+          }
+          unset($table);
+
+          $table = new IcmsDatabasetable('system_rating');
+          if(!$table->exists()){
+              $table->setStructure("ratingid int(11) NOT NULL auto_increment,
+                  dirname VARCHAR(255) NOT NULL,
+                  item VARCHAR(255) NOT NULL,
+                  itemid int(11) NOT NULL,
+                  uid int(11) NOT NULL,
+                  rate int(1) NOT NULL,
+                  date int(11) NOT NULL,
+                  PRIMARY KEY  (`ratingid`)
+                  ");
+          }
+          unset($table);
+     }
+
 	echo "</code>";
 
  /**
