@@ -487,3 +487,18 @@ div.pagination.default span.disabled {
 .strongPass span{
 	background:url(images/green.png) no-repeat top right;
 }
+#icms_rating_container {}
+#icms_rating_container .itemHead {
+	font-weight: bold;
+}
+#icms_rating_container .item {
+	width: 300px;
+	margin: auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+#icms_rating_container .odd {
+	padding: 6px;
+	height: auto;
+}
+

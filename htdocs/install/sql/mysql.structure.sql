@@ -696,3 +696,18 @@ CREATE TABLE system_adsense (
   tag varchar(50) NOT NULL default '',
   PRIMARY KEY  (`adsenseid`)
 ) TYPE=MyISAM;
+
+#
+# Table structure for table `system_rating`
+#
+
+CREATE TABLE system_rating (
+  ratingid int(11) NOT NULL auto_increment,
+  dirname VARCHAR(255) NOT NULL,
+  item VARCHAR(255) NOT NULL,
+  itemid int(11) NOT NULL,
+  uid int(11) NOT NULL,
+  rate int(1) NOT NULL,
+  date int(11) NOT NULL,
+  PRIMARY KEY  (`ratingid`)
+) TYPE=MyISAM;

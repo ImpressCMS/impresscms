@@ -205,6 +205,14 @@ $i++;
 $modversion['templates'][$i]['file'] = 'system_print.html';
 $modversion['templates'][$i]['description'] = 'Smarty template for printing page';
 
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/rating/system_adm_rating.html';
+$modversion['templates'][$i]['description'] = 'Template of the Ratings admin';
+
+$i++;
+$modversion['templates'][$i]['file'] = 'system_rating_form.html';
+$modversion['templates'][$i]['description'] = 'Smarty template for rating feature';
+
 ###
 
 $i++;
