@@ -56,6 +56,7 @@ define("_MI_SYSTEM_ADMENU21", "Custom Tags");
 define('_MI_SYSTEM_BNAME19', "Content Tags");
 define("_MI_SYSTEM_ADMENU22", "Adsense");
 define("_MI_SYSTEM_ADMENU23", "Ratings");
+define("_MI_SYSTEM_ADMENU24", "MimeTypes");
 
 define('_MI_SYSTEM_BNAME101', "System Warnings");
 define('_MI_SYSTEM_BNAME102', "Control Panel");

@@ -34,4 +34,5 @@ define('_MD_AM_PERMRESETNG','Could not reset group permission for module %s');
 define('_MD_AM_PERMADDNGP', 'All parent items must be selected.');
 define('_MD_AM_ADSENSES', 'Adsenses');
 define('_MD_AM_RATINGS', 'Ratings');
+define('_MD_AM_MIMETYPES', 'Mime Types');
 ?>

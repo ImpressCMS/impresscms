@@ -665,17 +665,15 @@ CREATE TABLE system_customtag (
 ) TYPE=MyISAM;
 
 #
-# Table structure for table `system_mimetypes`
+# Table structure for table `system_mimetype`
 #
 
-CREATE TABLE system_mimetypes (
-  mime_id int(11) NOT NULL auto_increment,
-  mime_name varchar(255) NOT NULL default '',
-  mime_ext varchar(60) NOT NULL default '',
-  mime_text varchar(60) NOT NULL default '',
-  mime_admin int(1) NOT NULL default '1',
-  mime_user int(1) NOT NULL default '0',
-  KEY mime_id (mime_id)
+CREATE TABLE system_mimetype (
+  mimetypeid int(11) NOT NULL auto_increment,
+  extension varchar(60) NOT NULL default '',
+  types text NOT NULL,
+  name varchar(255) NOT NULL default '',
+  KEY mimetypeid (mimetypeid)
 ) TYPE=MyISAM;
 
 #

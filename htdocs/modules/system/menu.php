@@ -157,4 +157,10 @@ $adminmenu[$i]['link'] = "admin.php?fct=rating";
 $adminmenu[$i]['icon'] = "admin/rating/images/rating.png";
 $adminmenu[$i]['small'] = "admin/rating/images/rating_small.png";
 $adminmenu[$i]['id'] = XOOPS_SYSTEM_RATINGS;
+$i++;
+$adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU24;
+$adminmenu[$i]['link'] = "admin.php?fct=mimetype";
+$adminmenu[$i]['icon'] = "admin/mimetype/images/mimetype.png";
+$adminmenu[$i]['small'] = "admin/mimetype/images/mimetype_small.png";
+$adminmenu[$i]['id'] = XOOPS_SYSTEM_MIMETYPES;
 ?>

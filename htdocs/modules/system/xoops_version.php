@@ -213,6 +213,10 @@ $i++;
 $modversion['templates'][$i]['file'] = 'system_rating_form.html';
 $modversion['templates'][$i]['description'] = 'Smarty template for rating feature';
 
+$i++;
+$modversion['templates'][$i]['file'] = 'admin/mimetype/system_adm_mimetype.html';
+$modversion['templates'][$i]['description'] = 'Template of the Mime Type admin';
+
 ###
 
 $i++;

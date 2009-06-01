@@ -668,17 +668,16 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
      
      if($dbVersion < $newDbVersion)
      {
-          $table = new IcmsDatabasetable('system_mimetypes');
+          $table = new IcmsDatabasetable('system_mimetype');
           if(!$table->exists()){
-              $table->setStructure("mime_id int(11) NOT NULL auto_increment,
-                  mime_name varchar(255) NOT NULL default '',
-                  mime_ext varchar(60) NOT NULL default '',
-                  mime_text varchar(60) NOT NULL default '',
-                  mime_admin int(1) NOT NULL default '1',
-                  mime_user int(1) NOT NULL default '0',
-                  KEY mime_id (mime_id)
+              $table->setStructure("mimetypeid int(11) NOT NULL auto_increment,
+                  extension varchar(60) NOT NULL default '',
+                  types text NOT NULL,
+                  name varchar(255) NOT NULL default '',
+                  KEY mimetypeid (mimetypeid)
                   ");
           }
+		    $xoopsDB->queryFromFile(ICMS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/include/upgrade.sql");
           unset($table);
 
           $table = new IcmsDatabasetable('system_adsense');
