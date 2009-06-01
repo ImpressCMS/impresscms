@@ -45,6 +45,14 @@ class SystemMimetype extends IcmsPersistableObject {
 		$ret = $this->getVar ( 'name' );
 		return $ret;
 	}
+	function getMimetypeType() {
+		$ret = $this->getVar ( 'types' );
+		return $ret;
+	}
+	function getMimetypeId() {
+		$ret = $this->getVar ( 'mimetypeid' );
+		return $ret;
+	}
 }
 
 class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
@@ -56,7 +64,22 @@ class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
 		$this->addPermission ( 'use_extension', _CO_ICMS_MIMETYPE_PERMISSION_VIEW, _CO_ICMS_MIMETYPE_PERMISSION_VIEW_DSC );
 	}
 	
-	
+	function UserCanUpload() {
+        $handler = new IcmsPersistablePermissionHandler($this);
+		return $handler->getGrantedItems('use_extension');
+	}
+    
+	function AllowedMimeTypes() {
+        $GrantedItems =  $this->UserCanUpload();
+        
+        foreach($GrantedItems as $grantedItemID=>$grantedItemValue){
+            
+            $sql = 'SELECT types ' .'FROM ' . $this->table . ' WHERE mimetypeid="'.$grantedItemValue.'"';
+            $values[] = $this->query($sql, false);
+        }
+		return $values;
+	}
+    
 }
 
 ?>
