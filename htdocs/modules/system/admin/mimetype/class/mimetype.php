@@ -14,14 +14,15 @@ if (! defined ( "ICMS_ROOT_PATH" ))
 	die ( "ImpressCMS root path not defined" );
 
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
+icms_loadLanguageFile('system', 'mimetype', true);
 
 class SystemMimetype extends IcmsPersistableObject {
 	
 	var $content = false;
 	
 	function SystemMimetype(&$handler) {
-    	$this->IcmsPersistableObject($handler);
-    	
+		$this->IcmsPersistableObject($handler);
+		
 		$this->quickInitVar ( 'mimetypeid', XOBJ_DTYPE_INT, true );
 		$this->quickInitVar ( 'extension', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_MIMETYPE_EXTENSION, _CO_ICMS_MIMETYPE_EXTENSION_DSC );
 		$this->quickInitVar ( 'types', XOBJ_DTYPE_TXTAREA, true, _CO_ICMS_MIMETYPE_TYPES, _CO_ICMS_MIMETYPE_TYPES_DSC );
@@ -65,31 +66,33 @@ class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
 	}
 	
 	function UserCanUpload() {
-        $handler = new IcmsPersistablePermissionHandler($this);
+		$handler = new IcmsPersistablePermissionHandler($this);
 		return $handler->getGrantedItems('use_extension');
 	}
-    
+	
 	function AllowedMimeTypes() {
-        $GrantedItems =  $this->UserCanUpload();
-        $array = array();
-        $grantedItemValues = array_values($GrantedItems);
-        $sql = "SELECT types " ."FROM " . $this->table . " WHERE (mimetypeid='";
-        if (count($grantedItemValues)>1){
-            foreach($grantedItemValues as $grantedItemValue){
-                $sql .= ($grantedItemValue != $grantedItemValues[0])?$grantedItemValue."' OR mimetypeid='":"";
-            }
-        }
-        $sql .= $grantedItemValues[0]."')";
-        $Qvalues = $this->query($sql, false);
-        for ($i = 0; $i < count($Qvalues); $i++) {
-            $values[]= explode(' ', $Qvalues[$i]['types']);
-        }
-        foreach($values as $item=>$value){
-            $array = array_merge($array, $value);
-        }
+		$GrantedItems =  $this->UserCanUpload();
+		$array = array();
+		$grantedItemValues = array_values($GrantedItems);
+		if(!empty($grantedItemValues)){
+			$sql = "SELECT types " ."FROM " . $this->table . " WHERE (mimetypeid='";
+			if (count($grantedItemValues)>1){
+				foreach($grantedItemValues as $grantedItemValue){
+					$sql .= ($grantedItemValue != $grantedItemValues[0])?$grantedItemValue."' OR mimetypeid='":"";
+				}
+			}
+			$sql .= $grantedItemValues[0]."')";
+			$Qvalues = $this->query($sql, false);
+			for ($i = 0; $i < count($Qvalues); $i++) {
+			$values[]= explode(' ', $Qvalues[$i]['types']);
+			}
+			foreach($values as $item=>$value){
+				$array = array_merge($array, $value);
+			}
+		}
 		return $array;
 	}
-    
+	
 }
 
 ?>
