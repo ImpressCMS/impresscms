@@ -24,7 +24,7 @@ class SystemMimetype extends IcmsPersistableObject {
     	
 		$this->quickInitVar ( 'mimetypeid', XOBJ_DTYPE_INT, true );
 		$this->quickInitVar ( 'extension', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_MIMETYPE_EXTENSION, _CO_ICMS_MIMETYPE_EXTENSION_DSC );
-		$this->quickInitVar ( 'types', XOBJ_DTYPE_TXTAREA, false, _CO_ICMS_MIMETYPE_TYPES, _CO_ICMS_MIMETYPE_TYPES_DSC );
+		$this->quickInitVar ( 'types', XOBJ_DTYPE_TXTAREA, true, _CO_ICMS_MIMETYPE_TYPES, _CO_ICMS_MIMETYPE_TYPES_DSC );
 		$this->quickInitVar ( 'name', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_MIMETYPE_NAME, _CO_ICMS_MIMETYPE_NAME_DSC );
 		
 	}
@@ -71,6 +71,7 @@ class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
     
 	function AllowedMimeTypes() {
         $GrantedItems =  $this->UserCanUpload();
+        $array = array();
         $grantedItemValues = array_values($GrantedItems);
         $sql = "SELECT types " ."FROM " . $this->table . " WHERE (mimetypeid='";
         if (count($grantedItemValues)>1){
@@ -79,8 +80,14 @@ class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
             }
         }
         $sql .= $grantedItemValues[0]."')";
-        $values = $this->query($sql, false);
-		return $values;
+        $Qvalues = $this->query($sql, false);
+        for ($i = 0; $i < count($Qvalues); $i++) {
+            $values[]= explode(' ', $Qvalues[$i]['types']);
+        }
+        foreach($values as $item=>$value){
+            $array = array_merge($array, $value);
+        }
+		return $array;
 	}
     
 }

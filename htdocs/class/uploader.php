@@ -459,12 +459,18 @@ class XoopsMediaUploader
    **/
   function checkMimeType()
   {
-    if ( empty( $this->mediaRealType ) && empty($this->allowUnknownTypes) ) {
+     $mimetypeHandler = icms_getModulehandler('mimetype','system');
+     
+   if ( empty( $this->mediaRealType ) && empty($this->allowUnknownTypes) ) {
     	$this->setErrors( _ER_UP_UNKNOWNFILETYPEREJECTED );
     	return false;
     }
 
 		if ( ( !empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes) ) 
+		     || ( !empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes) ) ) {
+            $this->setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
+            return false;
+		}elseif ( ( !empty($mimetypeHandler->AllowedMimeTypes()) && !in_array($this->mediaRealType, $mimetypeHandler->AllowedMimeTypes()) ) 
 		     || ( !empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes) ) ) {
             $this->setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
             return false;
