@@ -6,7 +6,7 @@ define('_AM_SYSTEM_BLOCKSPADMIN_CREATE',"Add New Block Position");
 define('_AM_SYSTEM_BLOCKSPADMIN_EDIT',"Edit Block Position");
 define('_AM_SYSTEM_BLOCKSPADMIN_INFO','To include the new block positions on the theme, put the code bellow in the place where it desires that the blocks appear.
 <div style="border: 1px dashed #AABBCC; padding:10px; width:86%;">
-<{foreach from=$xoBlocks.<b>name_of_position</b> item=block}><br /><{include file="<b>path_to_theme_folder/file_to_show_blocks</b>"}><br /><{/foreach}>
+<{foreach from=$xoBlocks.<b>name_of_position</b> item=block}><br /><{include file="<b>path_to_theme_folder/file_to_show_blocks.html</b>"}><br /><{/foreach}>
 </div>
 ');
 
