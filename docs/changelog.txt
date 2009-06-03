@@ -7,6 +7,7 @@
 
 '''Added'''
 * #580: Adding protector as a part of core modules. (stranger)
+* #253: The admin area should have an option to define what mime types the site on a whole or specific modules can use. (stranger)
 
 ===2009-05-05 : 1.2 Alpha===
 
