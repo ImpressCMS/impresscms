@@ -71,12 +71,15 @@ class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
     
 	function AllowedMimeTypes() {
         $GrantedItems =  $this->UserCanUpload();
-        
-        foreach($GrantedItems as $grantedItemID=>$grantedItemValue){
-            
-            $sql = 'SELECT types ' .'FROM ' . $this->table . ' WHERE mimetypeid="'.$grantedItemValue.'"';
-            $values[] = $this->query($sql, false);
+        $grantedItemValues = array_values($GrantedItems);
+        $sql = "SELECT types " ."FROM " . $this->table . " WHERE (mimetypeid='";
+        if (count($grantedItemValues)>1){
+            foreach($grantedItemValues as $grantedItemValue){
+                $sql .= ($grantedItemValue != $grantedItemValues[0])?$grantedItemValue."' OR mimetypeid='":"";
+            }
         }
+        $sql .= $grantedItemValues[0]."')";
+        $values = $this->query($sql, false);
 		return $values;
 	}
     
