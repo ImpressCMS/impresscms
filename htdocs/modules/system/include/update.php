@@ -21,13 +21,14 @@
 icms_loadLanguageFile('core', 'databaseupdater');
 function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = null) {
 
-	global $xoopsDB;
+	global $icmsConfig;
+	$icmsDB = $GLOBALS['xoopsDB'];
 	$oldversion  = $module->getVar('version');
 	if ($oldversion < 120) {
-		$result = $xoopsDB->query("SELECT t1.tpl_id FROM ".$xoopsDB->prefix('tplfile')." t1, ".$xoopsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
+		$result = $icmsDB->query("SELECT t1.tpl_id FROM ".$icmsDB->prefix('tplfile')." t1, ".$icmsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
 		
 		$tplids = array();
-		while (list($tplid) = $xoopsDB->fetchRow($result)) {
+		while (list($tplid) = $icmsDB->fetchRow($result)) {
 			$tplids[] = $tplid;
 		}
 
@@ -98,8 +99,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'welcome_msg', '_MD_AM_WELCOMEMSG', 0, '_MD_AM_WELCOMEMSGDSC', 'yesno', 'int', 3);
 	
 		// get the default content of the mail
-		global $xoopsConfig;
-		$default_msg_content_file = XOOPS_ROOT_PATH . '/language/' . $xoopsConfig['language'] . '/mail_template/' . 'welcome.tpl';
+		$default_msg_content_file = XOOPS_ROOT_PATH . '/language/' . $icmsConfig['language'] . '/mail_template/' . 'welcome.tpl';
 		if (!file_exists($default_msg_content_file)) {
 			$default_msg_content_file = XOOPS_ROOT_PATH . '/language/english/mail_template/' . 'welcome.tpl';
 		}
@@ -134,8 +134,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->insertConfig(IM_CONF_CONTENT, 'show_subs', '_MD_AM_CONT_SHOWSUBS', '1', '_MD_AM_CONT_SHOWSUBSDSC', 'yesno', 'int', 3);
 		$icmsDatabaseUpdater->insertConfig(IM_CONF_CONTENT, 'show_pinfo', '_MD_AM_CONT_SHOWPINFO', '1', '_MD_AM_CONT_SHOWPINFODSC', 'yesno', 'int', 4);
 	
-		global $xoopsConfig;
-		$default_login_content_file = XOOPS_ROOT_PATH . '/upgrade/language/' . $xoopsConfig['language'] . '/' . 'login.tpl';
+		$default_login_content_file = XOOPS_ROOT_PATH . '/upgrade/language/' . $icmsConfig['language'] . '/' . 'login.tpl';
 		if (!file_exists($default_login_content_file)) {
 			$default_login_content_file = XOOPS_ROOT_PATH . '/upgrade/language/english/' . 'login.tpl';
 		}
@@ -174,9 +173,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$table = new IcmsDatabasetable('imagecategory');
 		$icmsDatabaseUpdater->runQuery('INSERT INTO '.$table->name().' (imgcat_id, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype) VALUES (NULL, "Logos", 350000, 350, 80, 1, 0, "C", "file")','Successfully created Logos imagecategory','Problems when try to create Logos imagecategory');
 		unset($table);
-		global $xoopsDB;
-		$result = $xoopsDB->query("SELECT imgcat_id FROM ".$xoopsDB->prefix('imagecategory')." WHERE imgcat_name = 'Logos'");
-		list($categ_id) = $xoopsDB->fetchRow($result);
+		$result = $icmsDB->query("SELECT imgcat_id FROM ".$icmsDB->prefix('imagecategory')." WHERE imgcat_name = 'Logos'");
+		list($categ_id) = $icmsDB->fetchRow($result);
 		$table = new IcmsDatabasetable('image');
 		$icmsDatabaseUpdater->runQuery('INSERT INTO '.$table->name().' (image_id, image_name, image_nicename, image_mimetype, image_created, image_display, image_weight, imgcat_id) VALUES (NULL, "img482278e29e81c.png", "ImpressCMS", "image/png", '.time().', 1, 0, '.$categ_id.')','Successfully added default ImpressCMS admin logo','Problems when try to add ImpressCMS admin logo');
 		unset($table);
@@ -200,7 +198,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	}
 
    /**
-    * Changing $xoopsConfigPersona['rss_local'] from www.impresscms.org to community.impresscms.org
+    * Changing $icmsConfigPersona['rss_local'] from www.impresscms.org to community.impresscms.org
     */
 	$newDbVersion = 2;
 
@@ -284,8 +282,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	if($dbVersion < $newDbVersion) {
 		echo $action;
-		global $xoopsDB;
-		$xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('config') . "` WHERE conf_name='use_jsjalali'");
+		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='use_jsjalali'");
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23);
 		unset($table);
 	}
@@ -335,47 +332,46 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	if($dbVersion < $newDbVersion) {
 		echo "Database migrate to version " . $newDbVersion . "<br />";
 		
-		$db = $GLOBALS['xoopsDB'];
 		
-		if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_social_bookmarks"') == 0) {
-		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_social_bookmarks'";
-		$result = $db->query($sql);
-		list($new_block_id) = $db->FetchRow($result);
-		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 1);");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+		if (getDbValue($icmsDB, 'newblocks', 'show_func', 'show_func="b_social_bookmarks"') == 0) {
+		$sql = "SELECT bid FROM `".$icmsDB->prefix('newblocks')."` WHERE show_func='b_social_bookmarks'";
+		$result = $icmsDB->query($sql);
+		list($new_block_id) = $icmsDB->FetchRow($result);
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 1);");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
 		}
 		
-		if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_show"') == 0) {
-		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_show'";
-		$result = $db->query($sql);
-		list($new_block_id) = $db->FetchRow($result);
-		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+		if (getDbValue($icmsDB, 'newblocks', 'show_func', 'show_func="b_content_show"') == 0) {
+		$sql = "SELECT bid FROM `".$icmsDB->prefix('newblocks')."` WHERE show_func='b_content_show'";
+		$result = $icmsDB->query($sql);
+		list($new_block_id) = $icmsDB->FetchRow($result);
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
 		}
 		
-		if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_menu_show"') == 0) {
-		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_menu_show'";
-		$result = $db->query($sql);
-		list($new_block_id) = $db->FetchRow($result);
-		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+		if (getDbValue($icmsDB, 'newblocks', 'show_func', 'show_func="b_content_menu_show"') == 0) {
+		$sql = "SELECT bid FROM `".$icmsDB->prefix('newblocks')."` WHERE show_func='b_content_menu_show'";
+		$result = $icmsDB->query($sql);
+		list($new_block_id) = $icmsDB->FetchRow($result);
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
 		}
 		
-		if (getDbValue($db, 'newblocks', 'show_func', 'show_func="b_content_relmenu_show"') == 0) {
-		$sql = "SELECT bid FROM `".$db->prefix('newblocks')."` WHERE show_func='b_content_relmenu_show'";
-		$result = $db->query($sql);
-		list($new_block_id) = $db->FetchRow($result);
-		$db->queryF(" INSERT INTO " . $db->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
+		if (getDbValue($icmsDB, 'newblocks', 'show_func', 'show_func="b_content_relmenu_show"') == 0) {
+		$sql = "SELECT bid FROM `".$icmsDB->prefix('newblocks')."` WHERE show_func='b_content_relmenu_show'";
+		$result = $icmsDB->query($sql);
+		list($new_block_id) = $icmsDB->FetchRow($result);
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("block_module_link") . " VALUES (" . $new_block_id . ", 0, 0);");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("group_permission") . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');");
 		}
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 16, 1, 'system_admin');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 17, 1, 'system_admin');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 18, 1, 'system_admin');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 19, 1, 'system_admin');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 20, 1, 'system_admin');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 1, 1, 'content_admin');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 2, 1, 'group_manager');");
-		$db->queryF(" INSERT INTO " . $db->prefix("group_permission") . " VALUES ('', 1, 3, 1, 'group_manager');");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("group_permission") . " VALUES ('', 1, 16, 1, 'system_admin');");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("group_permission") . " VALUES ('', 1, 17, 1, 'system_admin');");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("group_permission") . " VALUES ('', 1, 18, 1, 'system_admin');");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("group_permission") . " VALUES ('', 1, 19, 1, 'system_admin');");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("group_permission") . " VALUES ('', 1, 20, 1, 'system_admin');");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("group_permission") . " VALUES ('', 1, 1, 1, 'content_admin');");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("group_permission") . " VALUES ('', 1, 2, 1, 'group_manager');");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("group_permission") . " VALUES ('', 1, 3, 1, 'group_manager');");
 		
 	}
 
@@ -400,21 +396,21 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	if ($dbVersion < $newDbVersion) {
 		echo $action;
-		$db = $GLOBALS['xoopsDB'];
-		if (getDbValue($db, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"') == 0) {
-			$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('11','_MD_AM_CAPTCHA')");
+		if (getDbValue($icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"') == 0) {
+			$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('11','_MD_AM_CAPTCHA')");
 		}
+		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE (conf_modid='1' AND conf_catid='11')");
 		// Adding new function of Captcha
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', 1);
-		$config_id = $db->getInsertId();
+		$config_id = $icmsDB->getInsertId();
 		
-		$sql = "INSERT INTO " . $db->prefix('configoption') .
+		$sql = "INSERT INTO " . $icmsDB->prefix('configoption') .
 		" (confop_id, confop_name, confop_value, conf_id)" .
 		" VALUES" .
 		" (NULL, '_MD_AM_CAPTCHA_OFF', 'none', {$config_id})," .
 		" (NULL, '_MD_AM_CAPTCHA_IMG', 'image', {$config_id})," .
 		" (NULL, '_MD_AM_CAPTCHA_TXT', 'text', {$config_id})";
-		if (!$db->queryF( $sql )) {
+		if (!$icmsDB->queryF( $sql )) {
 			return false;
 		}
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', 2);
@@ -425,9 +421,9 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_fontsize_min', '_MD_AM_CAPTCHA_FONTMIN', '10', '_MD_AM_CAPTCHA_FONTMINDSC', 'textbox', 'int', 7);
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_fontsize_max', '_MD_AM_CAPTCHA_FONTMAX', '12', '_MD_AM_CAPTCHA_FONTMAXDSC', 'textbox', 'int', 8);
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_background_type', '_MD_AM_CAPTCHA_BGTYPE', '100', '_MD_AM_CAPTCHA_BGTYPEDSC', 'select', 'text', 9);
-		$config_id = $db->getInsertId();
+		$config_id = $icmsDB->getInsertId();
 		
-		$sql2 = "INSERT INTO " . $db->prefix('configoption') .
+		$sql2 = "INSERT INTO " . $icmsDB->prefix('configoption') .
 		" (confop_id, confop_name, confop_value, conf_id)" .
 		" VALUES" .
 		" (NULL, '_MD_AM_BAR', '0', {$config_id})," .
@@ -437,7 +433,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		" (NULL, '_MD_AM_ELLIPSE', '4', {$config_id})," .
 		" (NULL, '_MD_AM_POLYGON', '5', {$config_id})," .
 		" (NULL, '_MD_AM_RANDOM', '100', {$config_id})";
-		if (!$db->queryF( $sql2 )) {
+		if (!$icmsDB->queryF( $sql2 )) {
 			return false;
 		}
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_CAPTCHA, 'captcha_background_num', '_MD_AM_CAPTCHA_BGNUM', '50', '_MD_AM_CAPTCHA_BGNUMDSC', 'textbox', 'int', 10);
@@ -449,7 +445,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	if ($dbVersion < $newDbVersion) {
 		echo $action;
 		
-		$db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'reg_disclaimer'");
+		$icmsDB->queryF("UPDATE `" . $icmsDB->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'reg_disclaimer'");
 		
 	}
 
@@ -467,13 +463,12 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	$newDbVersion = 15;
 	
 	if ($dbVersion < $newDbVersion) {
-		global $xoopsDB;
 		echo $action;
 		$table = new IcmsDatabasetable('users');
 		if (!$table->fieldExists('login_name')) {
 			$table->addNewField('login_name', "varchar(255) NOT NULL default ''");
 			$icmsDatabaseUpdater->updateTable($table);
-			$xoopsDB->queryF("UPDATE `" . $xoopsDB->prefix("users") . "` SET login_name=uname");
+			$icmsDB->queryF("UPDATE `" . $icmsDB->prefix("users") . "` SET login_name=uname");
 			$icmsDatabaseUpdater->runQuery("ALTER TABLE `" .$table->name()."` ADD INDEX login_name (login_name)",'Successfully altered the index login_name on table users','');
 		}
 		unset($table);
@@ -484,14 +479,13 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	
 	if ($dbVersion < $newDbVersion) {
 		echo $action;
-		$db = $GLOBALS['xoopsDB'];
-		$sql = "SELECT conf_id FROM `".$db->prefix('config')."` WHERE conf_name = 'email_protect'";
-		$result = $db->query($sql);
-		list($conf_id) = $db->FetchRow($result);
-		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " VALUES ('', '_MD_AM_NOMAILPROTECT', '0', " . $conf_id . ");");
-		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " VALUES ('', '_MD_AM_GDMAILPROTECT', '1', " . $conf_id . ");");
-		$db->queryF(" INSERT INTO " . $db->prefix("configoption") . " VALUES ('', '_MD_AM_REMAILPROTECT', '2', " . $conf_id . ");");
-		$db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_formtype = 'select', conf_valuetype = 'text' WHERE conf_name = 'email_protect'");
+		$sql = "SELECT conf_id FROM `".$icmsDB->prefix('config')."` WHERE conf_name = 'email_protect'";
+		$result = $icmsDB->query($sql);
+		list($conf_id) = $icmsDB->FetchRow($result);
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configoption") . " VALUES ('', '_MD_AM_NOMAILPROTECT', '0', " . $conf_id . ");");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configoption") . " VALUES ('', '_MD_AM_GDMAILPROTECT', '1', " . $conf_id . ");");
+		$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configoption") . " VALUES ('', '_MD_AM_REMAILPROTECT', '2', " . $conf_id . ");");
+		$icmsDB->queryF("UPDATE `" . $icmsDB->prefix('config') . "` SET conf_formtype = 'select', conf_valuetype = 'text' WHERE conf_name = 'email_protect'");
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'recprvkey', '_MD_AM_RECPRVKEY', '', '_MD_AM_RECPRVKEY_DESC', 'textbox', 'text', 17);
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'recpubkey', '_MD_AM_RECPUBKEY', '', '_MD_AM_RECPUBKEY_DESC', 'textbox', 'text', 17);
 	}
@@ -501,10 +495,9 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	
 	if ($dbVersion < $newDbVersion) {
 		echo $action;
-		$db = $GLOBALS['xoopsDB'];
 		//$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '90', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
-		if (getDbValue($db, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"') == 0) {
-			$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('12','_MD_AM_PLUGINS')");
+		if (getDbValue($icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"') == 0) {
+			$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('12','_MD_AM_PLUGINS')");
 		}
 		$pluginsvalue = '';
 		$config_handler = xoops_gethandler('config');
@@ -512,18 +505,18 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		if ($icmsConfigPersona['use_hidden'] == 1) {$pluginsvalue = 'hiddencontent';}
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS', addslashes(serialize(array($pluginsvalue))), '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', 1);
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'code_sanitizer', '_MD_AM_SELECTSHIGHLIGHT', 'none', '_MD_AM_SELECTSHIGHLIGHT_DESC', 'select', 'text', 2);
-		$config_id = $db->getInsertId();
-		$sql = "INSERT INTO " . $db->prefix('configoption') .
+		$config_id = $icmsDB->getInsertId();
+		$sql = "INSERT INTO " . $icmsDB->prefix('configoption') .
 		" (confop_id, confop_name, confop_value, conf_id)" .
 		" VALUES" .
 		" (NULL, '_MD_AM_HIGHLIGHTER_OFF', 'none', {$config_id})," .
 		" (NULL, '_MD_AM_HIGHLIGHTER_PHP', 'php', {$config_id})," .
 		" (NULL, '_MD_AM_HIGHLIGHTER_GESHI', 'geshi', {$config_id})";
-		if (!$db->queryF( $sql )) {
+		if (!$icmsDB->queryF( $sql )) {
 			return false;
 		}
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'geshi_default', '_MD_AM_GESHI_DEFAULT', 'php', '_MD_AM_GESHI_DEFAULT_DESC', 'select_geshi', 'text', 3);
-		$db->queryF("UPDATE `" . $db->prefix('config') . "` SET conf_valuetype = 'array' WHERE conf_name = 'startpage'");
+		$icmsDB->queryF("UPDATE `" . $icmsDB->prefix('config') . "` SET conf_valuetype = 'array' WHERE conf_name = 'startpage'");
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '30', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 6);
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'allow_chguname', '_MD_AM_ALLWCHGUNAME', '0', '_MD_AM_ALLWCHGUNAMEDSC', 'yesno', 'int', 11);
 		$icmsDatabaseUpdater->insertConfig(IM_CONF_CONTENT, 'num_pages', '_MD_AM_CONT_NUMPAGES', '10', '_MD_AM_CONT_NUMPAGESDSC', 'textbox', 'int', 5);
@@ -534,7 +527,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	$newDbVersion = 18;
 	
 	if ($dbVersion < $newDbVersion) {
-		global $xoopsDB;
 		echo $action;
 		$table = new IcmsDatabasetable('icmscontent');
 		if (!$table->fieldExists('content_tags')) {
@@ -569,25 +561,24 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	$newDbVersion = 19;
 
 	if ($dbVersion < $newDbVersion) {
-		global $xoopsDB;
 		echo $action;
 		$module_handler = xoops_gethandler('module');
 		$smartprofile_module = $module_handler->getByDirname('smartprofile');
 		$table = new IcmsDatabasetable('profile_category');
 		if($smartprofile_module && $smartprofile_module->getVar('isactive') && !$table->exists()){
-			$xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_category") . "` TO `" . $xoopsDB->prefix("profile_category") . "`");
-			$xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_field") . "` TO `" . $xoopsDB->prefix("profile_field") . "`");
-			$xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_visibility") . "` TO `" . $xoopsDB->prefix("profile_visibility") . "`");
-			$xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_profile") . "` TO `" . $xoopsDB->prefix("profile_profile") . "`");
-			$xoopsDB->queryF("RENAME TABLE `" . $xoopsDB->prefix("smartprofile_regstep") . "` TO `" . $xoopsDB->prefix("profile_regstep") . "`");
-			$command = array("ALTER TABLE `".$xoopsDB->prefix("profile_profile")."` ADD `newemail` varchar(255) NOT NULL default '' AFTER `profile_id`",
-			"ALTER TABLE `".$xoopsDB->prefix("profile_field")."` ADD `exportable` int unsigned NOT NULL default 0 AFTER `step_id`",
-			"UPDATE `" . $xoopsDB->prefix('modules') . "` SET dirname='profile' WHERE dirname='smartprofile'"
+			$icmsDB->queryF("RENAME TABLE `" . $icmsDB->prefix("smartprofile_category") . "` TO `" . $icmsDB->prefix("profile_category") . "`");
+			$icmsDB->queryF("RENAME TABLE `" . $icmsDB->prefix("smartprofile_field") . "` TO `" . $icmsDB->prefix("profile_field") . "`");
+			$icmsDB->queryF("RENAME TABLE `" . $icmsDB->prefix("smartprofile_visibility") . "` TO `" . $icmsDB->prefix("profile_visibility") . "`");
+			$icmsDB->queryF("RENAME TABLE `" . $icmsDB->prefix("smartprofile_profile") . "` TO `" . $icmsDB->prefix("profile_profile") . "`");
+			$icmsDB->queryF("RENAME TABLE `" . $icmsDB->prefix("smartprofile_regstep") . "` TO `" . $icmsDB->prefix("profile_regstep") . "`");
+			$command = array("ALTER TABLE `".$icmsDB->prefix("profile_profile")."` ADD `newemail` varchar(255) NOT NULL default '' AFTER `profile_id`",
+			"ALTER TABLE `".$icmsDB->prefix("profile_field")."` ADD `exportable` int unsigned NOT NULL default 0 AFTER `step_id`",
+			"UPDATE `" . $icmsDB->prefix('modules') . "` SET dirname='profile' WHERE dirname='smartprofile'"
 			);
 
 			foreach($command as $sql){
-				if (!$result = $xoopsDB->queryF($sql)) {
-					icms_debug('An error occurred while executing "' . $sql . '" - ' . $xoopsDB->error());
+				if (!$result = $icmsDB->queryF($sql)) {
+					icms_debug('An error occurred while executing "' . $sql . '" - ' . $icmsDB->error());
 					return false;
 				}
 			}
@@ -598,7 +589,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	$newDbVersion = 20;
 	
 	if ($dbVersion < $newDbVersion) {
-		global $xoopsDB;
 		echo $action;
 		// Adding configurations of search preferences
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_SEARCH, 'enable_deep_search', '_MD_AM_DODEEPSEARCH', '1', '_MD_AM_DODEEPSEARCHDSC', 'yesno', 'int', 2);
@@ -609,7 +599,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	$newDbVersion = 21;
 	
 	if ($dbVersion < $newDbVersion) {
-		global $xoopsDB;
 		echo $action;
 		// create extended date function's config option
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF, 'theme_admin_set', '_MD_AM_ADMIN_DTHEME', 'iTheme', '_MD_AM_ADMIN_DTHEME_DESC', 'theme_admin', 'other', 12);
@@ -619,19 +608,17 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	$newDbVersion = 22;
 	
 	if ($dbVersion < $newDbVersion) {
-		global $xoopsDB;
 		echo $action;
-		$xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('modules') . "` WHERE dirname='waiting'");
-		$xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('newblocks') . "` WHERE dirname='waiting'");
-		$xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('tplfile') . "` WHERE tpl_module='waiting'");
+		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('modules') . "` WHERE dirname='waiting'");
+		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('newblocks') . "` WHERE dirname='waiting'");
+		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('tplfile') . "` WHERE tpl_module='waiting'");
 	}
 
 /*	$newDbVersion = 23;
 	
 	if($dbVersion < $newDbVersion) {
 		echo $action;
-		global $xoopsDB;
-		$xoopsDB->queryF("DELETE FROM `" . $xoopsDB->prefix('config') . "` WHERE conf_name='pass_level'");
+		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='pass_level'");
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'pass_level', '_MD_AM_PASSLEVEL', '1', '_MD_AM_PASSLEVEL_DESC', 'yesno', 'int', 2);
 	}
 */
@@ -677,7 +664,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
                   KEY mimetypeid (mimetypeid)
                   ");
           }
-		    $xoopsDB->queryFromFile(ICMS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/include/upgrade.sql");
+		    $icmsDB->queryFromFile(ICMS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/include/upgrade.sql");
           unset($table);
 
           $table = new IcmsDatabasetable('system_adsense');
