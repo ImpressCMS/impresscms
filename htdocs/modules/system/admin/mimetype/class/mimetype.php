@@ -27,6 +27,8 @@ class SystemMimetype extends IcmsPersistableObject {
 		$this->quickInitVar ( 'extension', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_MIMETYPE_EXTENSION, _CO_ICMS_MIMETYPE_EXTENSION_DSC );
 		$this->quickInitVar ( 'types', XOBJ_DTYPE_TXTAREA, true, _CO_ICMS_MIMETYPE_TYPES, _CO_ICMS_MIMETYPE_TYPES_DSC );
 		$this->quickInitVar ( 'name', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_MIMETYPE_NAME, _CO_ICMS_MIMETYPE_NAME_DSC );
+		$this->quickInitVar ( 'dirname', XOBJ_DTYPE_SIMPLE_ARRAY, true, _CO_ICMS_MIMETYPE_DIRNAME );
+        $this->setControl ( 'dirname', array('name' => 'select_multi', 'handler' => 'mimetype', 'method' => 'getModuleList'));
 		
 	}
 	
@@ -85,6 +87,34 @@ class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
 			$Qvalues = $this->query($sql, false);
 			for ($i = 0; $i < count($Qvalues); $i++) {
 			$values[]= explode(' ', $Qvalues[$i]['types']);
+			}
+			foreach($values as $item=>$value){
+				$array = array_merge($array, $value);
+			}
+		}
+		return $array;
+	}
+	function getModuleList() {
+		include_once(XOOPS_ROOT_PATH . "/class/xoopslists.php");
+		$IcmsList = new IcmsLists;
+		return $IcmsList->getActiveModulesList();
+	}
+	
+	function AllowedModules() {
+		$GrantedItems =  $this->UserCanUpload();
+		$array = array();
+		$grantedItemValues = array_values($GrantedItems);
+		if(!empty($grantedItemValues)){
+			$sql = "SELECT dirname " ."FROM " . $this->table . " WHERE (mimetypeid='";
+			if (count($grantedItemValues)>1){
+				foreach($grantedItemValues as $grantedItemValue){
+					$sql .= ($grantedItemValue != $grantedItemValues[0])?$grantedItemValue."' OR mimetypeid='":"";
+				}
+			}
+			$sql .= $grantedItemValues[0]."')";
+			$Qvalues = $this->query($sql, false);
+			for ($i = 0; $i < count($Qvalues); $i++) {
+			$values[]= explode('|', $Qvalues[$i]['dirname']);
 			}
 			foreach($values as $item=>$value){
 				$array = array_merge($array, $value);

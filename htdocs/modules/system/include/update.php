@@ -661,6 +661,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
                   extension varchar(60) NOT NULL default '',
                   types text NOT NULL,
                   name varchar(255) NOT NULL default '',
+                  dirname VARCHAR(255) NOT NULL,
                   KEY mimetypeid (mimetypeid)
                   ");
           }

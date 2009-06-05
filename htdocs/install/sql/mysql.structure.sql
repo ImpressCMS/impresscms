@@ -673,6 +673,7 @@ CREATE TABLE system_mimetype (
   extension varchar(60) NOT NULL default '',
   types text NOT NULL,
   name varchar(255) NOT NULL default '',
+  dirname VARCHAR(255) NOT NULL,
   KEY mimetypeid (mimetypeid)
 ) TYPE=MyISAM;
 
