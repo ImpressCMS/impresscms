@@ -459,19 +459,17 @@ class XoopsMediaUploader
    **/
   function checkMimeType()
   {
+     global $icmsModule;
      $mimetypeHandler = icms_getModulehandler('mimetype','system');
-     
+		$modulename = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->getVar( 'dirname' ) : 'system';
    if ( empty( $this->mediaRealType ) && empty($this->allowUnknownTypes) ) {
     	$this->setErrors( _ER_UP_UNKNOWNFILETYPEREJECTED );
     	return false;
     }
 
 		if ( ( !empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes) ) 
-		     || ( !empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes) ) ) {
-            $this->setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
-            return false;
-		}elseif ( ( !empty($mimetypeHandler->AllowedMimeTypes()) && !in_array($this->mediaRealType, $mimetypeHandler->AllowedMimeTypes()) ) 
-		     || ( !empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes) ) ) {
+		     || ( !empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes) ) ) 
+             || ( empty($this->allowedMimeTypes) && (!empty($mimetypeHandler->AllowedMimeTypes()) && !in_array($this->mediaRealType, $mimetypeHandler->AllowedMimeTypes())) &&  !in_array($modulename, $mimetypeHandler->AllowedModules())) {
             $this->setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
             return false;
 		}
