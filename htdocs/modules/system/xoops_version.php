@@ -397,6 +397,13 @@ $modversion['blocks'][$i]['options'] = "";
 $modversion['blocks'][$i]['edit_func'] = "";
 $modversion['blocks'][$i]['template'] = 'system_admin_block_modules.html';
 
+$i++;
+$modversion['blocks'][$i]['file'] = "system_blocks.php";
+$modversion['blocks'][$i]['name'] = _MI_SYSTEM_BLOCK_BOOKMARKS;
+$modversion['blocks'][$i]['description'] = _MI_SYSTEM_BLOCK_BOOKMARKS_DESC;
+$modversion['blocks'][$i]['show_func'] = "b_system_bookmarks_show";
+$modversion['blocks'][$i]['template'] = 'system_block_bookmarks.html';
+
 // Menu
 $modversion['hasMain'] = 0;
 $modversion['hasSearch'] = 1;

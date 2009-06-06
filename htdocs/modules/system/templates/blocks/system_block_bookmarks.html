@@ -1,0 +1,9 @@
+<div class="bookmarks">
+<ul>
+<{foreach item=bookmark from=$block}>
+	<li>
+        <a href="<{$bookmark.url}>" title="<{$bookmark.module_name}> &raquo; <{$bookmark.name}>"><{$bookmark.name}></a>
+	</li>
+<{/foreach}>
+</ul>
+</div>
