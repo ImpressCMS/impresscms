@@ -614,7 +614,7 @@ function b_system_themes_edit($options)
 function b_system_bookmarks_show()
 {
     global $xoopsConfig, $xoopsUser;
-
+    $block = array();
     if ( file_exists( ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/notification.php" ) ) {
 		include_once ICMS_ROOT_PATH."/language/".$xoopsConfig['language']."/notification.php";
 	} else {
@@ -670,7 +670,7 @@ function b_system_bookmarks_show()
         }
 
 		if ($n->getVar('not_event') == 'bookmark') {
-	        $block[] = array ('name'=>$item_info['name'], 'url'=>$item_info['url'], 'module_name'=>$module_name);
+	        $block[$module_name][] = array ('name'=>$item_info['name'], 'url'=>$item_info['url']);
 	        }
     }
 
