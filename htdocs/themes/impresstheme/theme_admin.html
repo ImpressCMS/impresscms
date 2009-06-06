@@ -5,7 +5,7 @@
 	}
 <{/php}>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$xoops_langcode}>">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$icms_langcode}>">
 <head>
 <!-- Center block custom positioning -->
 	<{* Center blocks display order
@@ -79,7 +79,7 @@ if (!window.console || !console.firebug) {
 		    <{if  $adm_left_logo_url != ''}>
 			    <a href="<{$adm_left_logo_url}>" title="<{if $adm_left_logo_alt != ''}><{$adm_left_logo_alt}><{else}>ImpressCMS<{/if}>">
 			<{/if}>
-			<img src="<{$xoops_url}><{$adm_left_logo}>" alt="<{if $adm_left_logo_alt != ''}><{$adm_left_logo_alt}><{else}>ImpressCMS<{/if}>"/>
+			<img src="<{$icms_url}><{$adm_left_logo}>" alt="<{if $adm_left_logo_alt != ''}><{$adm_left_logo_alt}><{else}>ImpressCMS<{/if}>"/>
 		    <{if  $adm_left_logo_url != ''}>
 			    </a>
 			<{/if}>   
@@ -90,7 +90,7 @@ if (!window.console || !console.firebug) {
 		    <{if  $adm_right_logo_url != ''}>
 			    <a href="<{$adm_right_logo_url}>" title="<{if $adm_right_logo_alt != ''}><{$adm_right_logo_alt}><{else}>ImpressCMS<{/if}>">
 			<{/if}>
-			<img src="<{$xoops_url}><{$adm_right_logo}>" alt="<{if $adm_right_logo_alt != ''}><{$adm_right_logo_alt}><{else}>ImpressCMS<{/if}>"/>
+			<img src="<{$icms_url}><{$adm_right_logo}>" alt="<{if $adm_right_logo_alt != ''}><{$adm_right_logo_alt}><{else}>ImpressCMS<{/if}>"/>
 		    <{if  $adm_right_logo_url != ''}>
 			    </a>
 			<{/if}>   
@@ -103,13 +103,13 @@ if (!window.console || !console.firebug) {
     <{foreach item=item from=$navitems}>
       <{if ($systemadm || $item.id != 'opsystem') && ($item.id != 'news' || $show_impresscms_menu)}>
         <{if $modulesadm || $item.id != 'modules'}>
-	      <li><a href="<{$item.link}>"><img src="<{$xoops_url}>/modules/system/images/arrow1.gif" alt="arrow"/>&nbsp;<{$item.text}></a>
+	      <li><a href="<{$item.link}>"><img src="<{$icms_url}>/modules/system/images/arrow1.gif" alt="arrow"/>&nbsp;<{$item.text}></a>
 	        <ul>
 		      <{foreach item=sub from=$item.menu}>
                 <{if $item.id == 'cphome'}>
-		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{else}><{$xoops_url}>/modules/system/images/imagesarrow1.gif<{/if}>);"><{$sub.title}></a></li>
+		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$icms_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{else}><{$icms_url}>/modules/system/images/imagesarrow1.gif<{/if}>);"><{$sub.title}></a></li>
                 <{elseif $item.id == 'opsystem'}>
-		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$xoops_url}>/modules/system/<{$sub.small}><{/if}>);"><{$sub.title}></a>
+		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$icms_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$icms_url}>/modules/system/<{$sub.small}><{/if}>);"><{$sub.title}></a>
     		      <{if $sub.hassubs}>
 	    	        <ul>
 		              <{foreach item=subitem from=$sub.subs}>
@@ -119,7 +119,7 @@ if (!window.console || !console.firebug) {
 		          <{/if}>
 		          </li>
                 <{elseif $item.id == 'modules'}>
-		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{else}><{$xoops_url}>/modules/system/images/modulesitem.png<{/if}>);"><{$sub.title}></a>
+		          <li><a href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$icms_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{else}><{$icms_url}>/modules/system/images/modulesitem.png<{/if}>);"><{$sub.title}></a>
     		      <{if $sub.hassubs}>
 	    	        <ul>
 		              <{foreach item=subitem from=$sub.subs}>
@@ -129,7 +129,7 @@ if (!window.console || !console.firebug) {
 		          <{/if}>
 		          </li>
                 <{elseif $item.id == 'news' && $show_impresscms_menu}>
-    		      <li><a rel="external" href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$xoops_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{/if}>);"><{$sub.title}></a></li>
+    		      <li><a rel="external" href="<{if $sub.absolute==1}><{$sub.link}><{else}><{$icms_url}>/modules/<{$sub.dir}>/<{$sub.link}><{/if}>" style="background-image: url(<{if $sub.small!=''}><{$sub.small}><{/if}>);"><{$sub.title}></a></li>
                 <{/if}>
 		      <{/foreach}>
 		    </ul>
@@ -150,9 +150,9 @@ if (!window.console || !console.firebug) {
 	<{foreach item=op from=$mod_options}>
 	  <a href="<{$op.link}>" title="<{$op.title}>">
         <{if $op.title == $lang_prefs && $moddir!='system'}>
-          <img src="<{$xoops_url}>/modules/system/images/prefs.png" alt="<{$lang_preferences}>" />
+          <img src="<{$icms_url}>/modules/system/images/prefs.png" alt="<{$lang_preferences}>" />
         <{else}>  
-          <img src="<{if $op.icon==''}><{$xoops_url}>/images/icon_options.png<{else}><{$modpath}>/<{$op.icon}><{/if}>" alt="<{$op.title}>" />
+          <img src="<{if $op.icon==''}><{$icms_url}>/images/icon_options.png<{else}><{$modpath}>/<{$op.icon}><{/if}>" alt="<{$op.title}>" />
         <{/if}>
       </a>
 	<{/foreach}>
