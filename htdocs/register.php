@@ -19,7 +19,7 @@
  */
 /**
  *
- */       
+ */
 $xoopsOption['pagetype'] = 'user';
 
 include 'mainfile.php';
@@ -51,6 +51,8 @@ $agree_disc = (isset($_POST['agree_disc']) && intval($_POST['agree_disc'])) ? 1 
 $actkey = isset($_POST['actkey']) ? trim($myts->stripSlashesGPC($_POST['actkey'])) : '';
 $salt = isset($_POST['salt']) ? trim($myts->stripSlashesGPC($_POST['salt'])) : '';
 $enc_type = $icmsConfigUser['enc_type'];
+
+$thisuser = new XoopsUserHandler();
 switch ( $op ) {
 case 'newuser':
 	include 'header.php';
@@ -74,7 +76,6 @@ case 'newuser':
 			$stop .= _US_UNEEDAGREE.'<br />';
 		}
 	}
-	$thisuser = new XoopsUserHandler();
 	$stop .= $thisuser->userCheck($login_name, $uname, $email, $pass, $vpass);
 	if (empty($stop)) {
 		echo _US_LOGINNAME.": ".$myts->htmlSpecialChars($login_name)."<br />";
@@ -120,7 +121,7 @@ case 'finish':
             $icmsCaptcha = IcmsCaptcha::instance();
             if(! $icmsCaptcha->verify() ) {
                    $stop .= $icmsCaptcha->getMessage().'<br />';
-                    
+
             }
     }
 
@@ -173,9 +174,9 @@ case 'finish':
 
 		// Send notification about the new user register to the selected group if config is true on admin preferences
 		if ($icmsConfigUser['new_user_notify'] == 1) {
-			$newuser->newUserNotifyAdmin();	
+			$newuser->newUserNotifyAdmin();
 		}
-		
+
 		// update invite_code (if any)
 		if ($valid_actkey) {
 			update_invite_code($actkey, $newid);
