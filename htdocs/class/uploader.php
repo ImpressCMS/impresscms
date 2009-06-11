@@ -66,7 +66,7 @@ Example
  * @author      phppp
  * @copyright   The Xoops Project
  */
-class XoopsMediaUploader {
+class IcmsMediaUploader {
 	/**
 	* @var bool Flag indicating if unrecognized mimetypes should be allowed (use with precaution ! may lead to security issues )
 	**/
@@ -164,7 +164,6 @@ class XoopsMediaUploader {
 		15 => 'wbmp',
 		16 => 'xbm'
 	);
-
 	/**
 	 * Constructor
 	 *
@@ -174,7 +173,7 @@ class XoopsMediaUploader {
 	 * @param   int     $maxWidth
 	 * @param   int     $maxHeight
 	 **/
-	function XoopsMediaUploader($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null) {
+	function IcmsMediaUploader($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null) {
 		@ $this->extensionToMime = include (ICMS_ROOT_PATH . '/class/mimetypes.inc.php');
 		if (!is_array($this->extensionToMime)) {
 			$this->extensionToMime = array ();
@@ -194,6 +193,11 @@ class XoopsMediaUploader {
 
 		icms_loadLanguageFile('core', 'uploader');
 	}
+
+	/*
+	 * @deprecated 
+	*/
+	function XoopsMediaUploader($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null) { return $this->IcmsMediaUploader($uploadDir, $allowedMimeTypes, $maxFileSize, $maxWidth, $maxHeight);}
 
 	/**
 	 * Fetch the uploaded file
@@ -550,4 +554,17 @@ class XoopsMediaUploader {
 		}
 	}
 }
+	
+	/**
+	 * XoopsMediaUploader
+	 *
+	 * @copyright	The XOOPS Project <http://www.xoops.org/>
+	 * @copyright	XOOPS_copyrights.txt
+	 * @license		LICENSE.txt
+	 * @since		XOOPS
+	 * @author		The XOOPS Project Community <http://www.xoops.org>
+	 * 
+	 * @deprecated  
+	 */
+	class XoopsMediaUploader extends IcmsMediaUploader { /* For Backwards Compatibility */ }
 ?>
