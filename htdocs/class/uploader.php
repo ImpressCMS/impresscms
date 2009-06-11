@@ -36,7 +36,7 @@ Example
 
 /**
  * Upload Media files
- * 
+ *
  * Example of usage:
  * <code>
  * include_once 'uploader.php';
@@ -166,7 +166,7 @@ class XoopsMediaUploader
     if(isset($maxHeight)) {
         $this->maxHeight = intval($maxHeight);
     }
-    
+
     icms_loadLanguageFile('core', 'uploader');
   }
 
@@ -233,7 +233,7 @@ class XoopsMediaUploader
 
   /**
    * Set the target filename
-   * 
+   *
    * @param   string  $value
    **/
   function setTargetFileName($value){
@@ -255,8 +255,8 @@ class XoopsMediaUploader
 
   /**
    * Get the uploaded filename
-   * 
-   * @return  string 
+   *
+   * @return  string
    **/
   function getMediaName()
   {
@@ -265,8 +265,8 @@ class XoopsMediaUploader
 
   /**
    * Get the type of the uploaded file
-   * 
-   * @return  string 
+   *
+   * @return  string
    **/
   function getMediaType()
   {
@@ -275,8 +275,8 @@ class XoopsMediaUploader
 
   /**
    * Get the size of the uploaded file
-   * 
-   * @return  int 
+   *
+   * @return  int
    **/
   function getMediaSize()
   {
@@ -285,8 +285,8 @@ class XoopsMediaUploader
 
   /**
    * Get the temporary name that the uploaded file was stored under
-   * 
-   * @return  string 
+   *
+   * @return  string
    **/
   function getMediaTmpName()
   {
@@ -295,8 +295,8 @@ class XoopsMediaUploader
 
   /**
    * Get the saved filename
-   * 
-   * @return  string 
+   *
+   * @return  string
    **/
   function getSavedFileName(){
       return $this->savedFileName;
@@ -304,7 +304,7 @@ class XoopsMediaUploader
 
   /**
    * Get the destination the file is saved to
-   * 
+   *
    * @return  string
    **/
   function getSavedDestination(){
@@ -313,7 +313,7 @@ class XoopsMediaUploader
 
   /**
    * Check the file and copy it to the destination
-   * 
+   *
    * @return  bool
    **/
   function upload($chmod = 0644)
@@ -331,7 +331,7 @@ class XoopsMediaUploader
         return false;
     }
     $this->sanitizeMultipleExtensions();
-    
+
     if (!$this->checkMaxFileSize()) {
         return false;
     }
@@ -355,7 +355,7 @@ class XoopsMediaUploader
 
 	/**
 	* Copy the file to its destination
-	* @return  bool 
+	* @return  bool
 	**/
 	function _copyFile($chmod)
 	{
@@ -392,8 +392,8 @@ class XoopsMediaUploader
 
   /**
    * Is the file the right size?
-   * 
-   * @return  bool 
+   *
+   * @return  bool
    **/
   function checkMaxFileSize()
   {
@@ -409,8 +409,8 @@ class XoopsMediaUploader
 
   /**
    * Is the picture the right width?
-   * 
-   * @return  bool 
+   *
+   * @return  bool
    **/
   function checkMaxWidth()
   {
@@ -430,8 +430,8 @@ class XoopsMediaUploader
 
   /**
    * Is the picture the right height?
-   * 
-   * @return  bool 
+   *
+   * @return  bool
    **/
   function checkMaxHeight()
   {
@@ -467,13 +467,12 @@ class XoopsMediaUploader
     	return false;
     }
 
-		if ( ( !empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes) ) 
-		     || ( !empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes) ) ) 
-             || ( empty($this->allowedMimeTypes) && (!empty($mimetypeHandler->AllowedMimeTypes()) && !in_array($this->mediaRealType, $mimetypeHandler->AllowedMimeTypes())) &&  !in_array($modulename, $mimetypeHandler->AllowedModules())) {
+		if ( ( !empty($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes) )
+		     || ( !empty($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes) )
+             || ( empty($this->allowedMimeTypes) && (!empty($mimetypeHandler->AllowedMimeTypes()) && !in_array($this->mediaRealType, $mimetypeHandler->AllowedMimeTypes())) &&  !in_array($modulename, $mimetypeHandler->AllowedModules()))) {
             $this->setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
             return false;
 		}
-
 		return true;
 	}
 
@@ -488,7 +487,7 @@ class XoopsMediaUploader
   {
     if(empty($this->checkImageType)) return true;
 
-    if( ("image" == substr($this->mediaType, 0, strpos($this->mediaType, "/"))) || 
+    if( ("image" == substr($this->mediaType, 0, strpos($this->mediaType, "/"))) ||
       	(!empty($this->mediaRealType) && "image" == substr($this->mediaRealType, 0, strpos($this->mediaRealType, "/")))
     ){
 			if ( ! ( $info = @getimagesize( $this->mediaTmpName ) ) ) {
@@ -519,7 +518,7 @@ class XoopsMediaUploader
 
   /**
    * Add an error
-   * 
+   *
    * @param   string  $error
    **/
   function setErrors($error)
@@ -531,7 +530,7 @@ class XoopsMediaUploader
    * Get generated errors
    *
    * @param    bool    $ashtml Format using HTML?
-   * 
+   *
    * @return    array|string    Array of array messages OR HTML string
    */
   function &getErrors($ashtml = true)
