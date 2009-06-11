@@ -1833,7 +1833,8 @@ function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $w
 function icms_getTablesArray($moduleName, $items)
 {
 	$ret = array();
-	foreach($items as $item) {$ret[] = $moduleName.'_'.$item;}
+	if (is_array($items))
+		foreach($items as $item) {$ret[] = $moduleName.'_'.$item;}
 	return $ret;
 }
 
@@ -2991,7 +2992,7 @@ function mod_isModuleAction($dirname = "system")
 		// current dirname
 		($dirname == $_POST["dirname"] || $dirname == $_POST["module"])
 		&&
-		// current op 
+		// current op
 		("update_ok" == $_POST["op"] || "install_ok" == $_POST["op"] || "uninstall_ok" == $_POST["op"])
 		&&
 		// current action
@@ -3002,7 +3003,7 @@ function mod_isModuleAction($dirname = "system")
 
 
 /**
- * Get localized string if it is defined 
+ * Get localized string if it is defined
  *
  * @param	string	$name	string to be localized
  */
