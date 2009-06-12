@@ -52,6 +52,7 @@ if ($pluginObj) {
 			}
 */
 		}
+		$icmsTpl->display('db:system_rating_form.html');
 	 }
 }
 
