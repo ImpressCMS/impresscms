@@ -81,7 +81,7 @@ switch ($op) {
 	case "addrating":
         include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
         $controller = new IcmsPersistableController($icms_rating_handler);
-		$controller->storeFromDefaultForm(_CO_ICMS_RATINGS_CREATED, _CO_ICMS_RATINGS_MODIFIED, ICMS_URL . '/modules/system/admin/rating/main.php');
+		$controller->storeFromDefaultForm(_CO_ICMS_RATINGS_CREATED, _CO_ICMS_RATINGS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=rating');
 		break;
 
 	case "del":
@@ -98,7 +98,7 @@ switch ($op) {
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
 		
 		$objectTable = new IcmsPersistableTable($icms_rating_handler);
-		$objectTable->addColumn(new IcmsPersistableColumn('name', _GLOBAL_LEFT));
+		$objectTable->addColumn(new IcmsPersistableColumn('name', _GLOBAL_LEFT, false, 'getUnameValue'));
 		$objectTable->addColumn(new IcmsPersistableColumn('dirname', _GLOBAL_LEFT));
 		$objectTable->addColumn(new IcmsPersistableColumn('item', _GLOBAL_LEFT, false, 'getItemValue'));
 		$objectTable->addColumn(new IcmsPersistableColumn('date', 'center', 150));

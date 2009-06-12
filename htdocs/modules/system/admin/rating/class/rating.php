@@ -77,6 +77,9 @@ class SystemRating extends IcmsPersistableObject {
     function getRateValue() {
     	return $this->getVar('rate');
     }
+    function getUnameValue() {
+    	return icms_getLinkedUnameFromId($this->getVar('uid'));
+    }
 
     function getModulePlugin() {
 		if (!$this->_modulePlugin) {
