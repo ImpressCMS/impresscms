@@ -191,4 +191,5 @@ define('_CO_ICMS_WITH_SELECTED', "With selected: ");
 define('_CO_ICMS_UPDATE_DBVERSION', "Database migrate to version '<em>%s</em>' <br /> ");
 define('_CO_ICMS_ON', "On");
 define('_CO_ICMS_OFF', "Off");
+define('_CO_ICMS_WARNING_ALPHA', "This module comes as is, without any guarantees whatsoever. This module is ALPHA, meaning it is still under active development. This release is meant for <b>development and testing purposes only</b>, and we <b>strongly</b> recommend that you do not use it on a live website or in a production environment.");
 ?>

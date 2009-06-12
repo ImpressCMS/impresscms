@@ -2,14 +2,12 @@
 /**
 * Beginning of authorizing using openID
 *
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
+* @license	LICENSE.txt
 * @package	Users
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author		modified by UnderDog <underdog@impresscms.org>
+* @since	1.1
+* @author		marcan <marcan@impresscms.org>
+* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
 

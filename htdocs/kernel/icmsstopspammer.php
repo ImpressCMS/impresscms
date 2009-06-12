@@ -4,10 +4,12 @@
 *
 * This class is responsible for cross referencing register information with StopForumSpam.com API
 *
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		1.2
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	IcmsPersistableObject
+* @since	1.2
+* @author		marcan <marcan@impresscms.org>
+* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id
 */
 class IcmsStopSpammer {

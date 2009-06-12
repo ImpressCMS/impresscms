@@ -1,13 +1,17 @@
 <?php
 
 /**
-* $Id: rating.rate.php 159 2007-12-17 16:44:05Z malanciault $
-* Module: SmartRental
-* Author: The SmartFactory <www.icmsfactory.ca>
-* Licence: GNU
+* File included to initiate the ImpressCMS rating Feature
+*
+* @copyright	The ImpressCMS Project http://www.impresscms.org/
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		core
+* @since		1.2
+* @author		stranger <marcan@impresscms.org>
+* @version		$Id$
 */
-if (!defined("XOOPS_ROOT_PATH")) {
-	die("XOOPS root path not defined");
+if (!defined("ICMS_ROOT_PATH")) {
+	die("ImpressCMS root path not defined");
 }
 
 include_once(ICMS_ROOT_PATH . "/modules/system/admin/rating/class/rating.php");
@@ -44,7 +48,7 @@ if ($pluginObj) {
 				$xoTheme->addStylesheet(ICMS_URL . '/module.css');
 			}else{
 				//probleme d'inclusion de css apres le flashplayer. Style plac dans css du theme
-				//$icmsTpl->assign('icms_css',"<link rel='stylesheet' type='text/css' href='".XOOPS_URL."/modules/icms/module.css' />");
+				//$icmsTpl->assign('icms_css',"<link rel='stylesheet' type='text/css' href='".ICMS_URL."/modules/icms/module.css' />");
 			}
 */
 		}

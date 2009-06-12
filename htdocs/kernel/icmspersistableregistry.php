@@ -5,7 +5,7 @@
 * @copyright      http://www.impresscms.org/ The ImpressCMS Project
 * @license         LICENSE.txt
 * @package	IcmsPersistableObject
-* @since            1.0
+* @since            1.1
 * @author		marcan <marcan@impresscms.org>
 * @version		$Id$
 */
