@@ -7,7 +7,7 @@
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package		core
 * @since		1.2
-* @author		stranger <marcan@impresscms.org>
+* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id$
 */
 if (!defined("ICMS_ROOT_PATH")) {

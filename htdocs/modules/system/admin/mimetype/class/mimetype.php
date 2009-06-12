@@ -28,7 +28,7 @@ class SystemMimetype extends IcmsPersistableObject {
 		$this->quickInitVar ( 'types', XOBJ_DTYPE_TXTAREA, true, _CO_ICMS_MIMETYPE_TYPES, _CO_ICMS_MIMETYPE_TYPES_DSC );
 		$this->quickInitVar ( 'name', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_MIMETYPE_NAME, _CO_ICMS_MIMETYPE_NAME_DSC );
 		$this->quickInitVar ( 'dirname', XOBJ_DTYPE_SIMPLE_ARRAY, true, _CO_ICMS_MIMETYPE_DIRNAME );
-        $this->setControl ( 'dirname', array('name' => 'select_multi', 'handler' => 'mimetype', 'method' => 'getModuleList'));
+		$this->setControl ( 'dirname', array('name' => 'select_multi', 'handler' => 'mimetype', 'method' => 'getModuleList'));
 		
 	}
 	
@@ -100,27 +100,47 @@ class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
 		return $IcmsList->getActiveModulesList();
 	}
 	
-	function AllowedModules() {
+	function AllowedModules($mimetype, $module) {
+		$mimetypeid_allowed = $dirname_allowed = false;
 		$GrantedItems =  $this->UserCanUpload();
-		$array = array();
-		$grantedItemValues = array_values($GrantedItems);
-		if(!empty($grantedItemValues)){
-			$sql = "SELECT dirname " ."FROM " . $this->table . " WHERE (mimetypeid='";
-			if (count($grantedItemValues)>1){
-				foreach($grantedItemValues as $grantedItemValue){
-					$sql .= ($grantedItemValue != $grantedItemValues[0])?$grantedItemValue."' OR mimetypeid='":"";
+		$criteria = new CriteriaCompo();
+		$criteria->add(new Criteria('types', '%'.$mimetype.'%', 'LIKE'));
+
+		$sql = 'SELECT mimetypeid, dirname, types FROM ' . $this->table;
+		$rows = $this->query($sql, $criteria);
+		if(count($rows)>1){
+			for ($i = 0; $i < count($rows); $i++) {
+			$mimetypeids[]= $rows[$i]['mimetypeid'];
+			$dirname[]= explode('|', $rows[$i]['dirname']);
+			$types[]= $rows[$i]['types'];
+			}
+
+			foreach($mimetypeids as $mimetypeid){
+				if(in_array($mimetypeid, $GrantedItems)){
+					$mimetypeid_allowed = true;
 				}
 			}
-			$sql .= $grantedItemValues[0]."')";
-			$Qvalues = $this->query($sql, false);
-			for ($i = 0; $i < count($Qvalues); $i++) {
-			$values[]= explode('|', $Qvalues[$i]['dirname']);
+			foreach($dirname as $dir){
+				if(!empty($module) && in_array($module, $dir)){
+					$dirname_allowed = true;
+				}
 			}
-			foreach($values as $item=>$value){
-				$array = array_merge($array, $value);
+		}else{
+			$mimetypeid= $rows[0]['mimetypeid'];
+			$dirname= explode('|', $rows[0]['dirname']);
+			$types= $rows[0]['types'];
+			if(in_array($mimetypeid, $GrantedItems)){
+				$mimetypeid_allowed = true;
+			}
+			if(!empty($module) && in_array($module, $dirname)){
+				$dirname_allowed = true;
 			}
 		}
-		return $array;
+		if($mimetypeid_allowed && $dirname_allowed){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 }
