@@ -39,6 +39,9 @@ th {border-bottom: 4px solid #EE7733;}
 .xoopsCode { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; padding: 0 6px 6px 6px; max-height: 200px; overflow: auto;}
 .xoopsQuote { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; font-style:italic; padding: 0 6px 6px 6px;}
 
+/* Admin Help Nav */
+#helpbar a {float: right; width: 14px; height: 14px; padding: 1px; background: #fff7b2; color: #333333; border: 1px dotted #dddddd;}
+
 /* articles */
 .item {border: 1px solid #ccc;}
 .itemHead {padding-left: 3px; color: #639ACE; border-bottom: 1px solid #bbb; font-size: .8em;}
