@@ -1,7 +1,7 @@
 <?php
 /*
  * FCKeditor - The text editor for Internet - http://www.fckeditor.net
- * Copyright (C) 2003-2008 Frederico Caldeira Knabben
+ * Copyright (C) 2003-2009 Frederico Caldeira Knabben
  *
  * == BEGIN LICENSE ==
  *
@@ -24,36 +24,20 @@
 
 global $Config ;
 
-$file = "../../../../../../class/xoopseditor.inc.php";
-include $file;
-if(!defined("XOOPS_UPLOAD_PATH")){
-	die("Path error!");
-}
-
-if(!defined("XOOPS_FCK_FOLDER") || !$uploadPath = preg_replace("/[^a-z0-9_\-]/i", "", XOOPS_FCK_FOLDER) ){
-	$uploadPath = "fckeditor";
-}
-
-if(is_object($GLOBALS["xoopsLogger"])) {
-    $GLOBALS["xoopsLogger"]->activated = false;
-}
-
 // SECURITY: You must explicitly enable this "connector". (Set it to "true").
 // WARNING: don't just set "$Config['Enabled'] = true ;", you must be sure that only
 //		authenticated users can access this file or use some kind of session checking.
-$Config['Enabled'] = true ;
+$Config['Enabled'] = false ;
 
 
 // Path to user files relative to the document root.
-//$Config['UserFilesPath'] = '/userfiles/' ;
-$Config['UserFilesPath'] = XOOPS_UPLOAD_URL."/".$uploadPath."/" ;
+$Config['UserFilesPath'] = '/userfiles/' ;
 
 // Fill the following value it you prefer to specify the absolute path for the
 // user files directory. Useful if you are using a virtual directory, symbolic
 // link or alias. Examples: 'C:\\MySite\\userfiles\\' or '/root/mysite/userfiles/'.
 // Attention: The above 'UserFilesPath' must point to the same directory.
-//$Config['UserFilesAbsolutePath'] = '' ;
-$Config['UserFilesAbsolutePath'] = XOOPS_UPLOAD_PATH."/".$uploadPath."/" ;
+$Config['UserFilesAbsolutePath'] = '' ;
 
 // Due to security issues with Apache modules, it is recommended to leave the
 // following setting enabled.
@@ -66,10 +50,8 @@ $Config['SecureImageUploads'] = true;
 // What the user can do with this connector.
 $Config['ConfigAllowedCommands'] = array('QuickUpload', 'FileUpload', 'GetFolders', 'GetFoldersAndFiles', 'CreateFolder') ;
 
-
 // Allowed Resource Types.
-//$Config['ConfigAllowedTypes'] = array('File', 'Image', 'Flash', 'Media') ;
-$Config['ConfigAllowedTypes'] = array('File', 'Image', 'Media') ;
+$Config['ConfigAllowedTypes'] = array('File', 'Image', 'Flash', 'Media') ;
 
 // For security, HTML is allowed in the first Kb of data for files having the
 // following extensions only.
