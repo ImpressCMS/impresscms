@@ -25,6 +25,10 @@ $styles[$count]['name'] = 'Blue';
 $styles[$count]['fcss'] = 'blue';
 
 $count++;
+$styles[$count]['name'] = 'sato-orange';
+$styles[$count]['fcss'] = 'satoorange';
+
+$count++;
 $styles[$count]['name'] = 'Green-Black';
 $styles[$count]['fcss'] = 'greenblack';
 
