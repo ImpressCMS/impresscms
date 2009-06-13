@@ -1,13 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 2.11.9.2
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Jun 01, 2009 at 11:52 AM
--- Server version: 5.0.67
--- PHP Version: 5.2.6
-
-
 #
 # Dumping data for table `system_mimetype`
 #
