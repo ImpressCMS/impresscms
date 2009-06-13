@@ -1,4 +1,4 @@
-<?php
+	<?php
 /**
  * English language constants used in admin section of the module
  *
@@ -244,7 +244,7 @@ define("_MA_PROFILE_PHP5PRESENT","You have a compatible version of PHP:");
 define("_MA_PROFILE_PHP5NOTPRESENT","Your PHP version is compatible, but many details would work better on a php5 server and above.");
 define("_MA_PROFILE_MAXBYTESPHPINI","Your server limits the size of uploads to %s");
 define("_MA_PROFILE_MEMORYLIMIT","The Memory Limit of your server is:");
-define("_MA_PROFILE_MP3_IS_NOT_EXISTS","is not exists");
+define("_MA_PROFILE_MP3_IS_NOT_EXISTS","does not exist");
 define("_MA_PROFILE_MP3_IS_NOT_WRITABLE","is not writable");
 define("_MA_PROFILE_MP3_EXISTS_AND_WRITABLE","exists and writable");
 define("_MA_PROFILE_MYSQL4_OR_HIGHER","You must use a version higher than 4.1");
