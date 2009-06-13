@@ -39,6 +39,8 @@
 * #599: correcting variables in standard themes. (davidimpress)
 * #606: Warning: Invalid argument supplied for foreach() in file /include/functions.php line 1836. (malanciault)
 * #607: Parse error: syntax error, unexpected T_BOOLEAN_OR in /htdocs/class/uploader.php on line 472 (malanciault)
+* #608: Errors updating blocks reported when updating a module
+* #609: New system tables not being created when updating the system module
 
 ===2009-05-05 : 1.2 Alpha===
 
