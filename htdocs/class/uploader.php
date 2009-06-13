@@ -483,7 +483,7 @@ class IcmsMediaUploader {
 		}
 		$AllowedMimeTypes = $mimetypeHandler->AllowedModules($this->mediaRealType, $modulename);
 		if ((!empty ($this->allowedMimeTypes) && !in_array($this->mediaRealType, $this->allowedMimeTypes)) || (!empty ($this->deniedMimeTypes) && in_array($this->mediaRealType, $this->deniedMimeTypes)) || (empty ($this->allowedMimeTypes) && !$AllowedMimeTypes)) {
-			$this->setErrors(print_r($AllowedMimeTypes));
+			$this->setErrors(sprintf(_ER_UP_MIMETYPENOTALLOWED, $this->mediaType));
 			return false;
 		}
 		return true;
