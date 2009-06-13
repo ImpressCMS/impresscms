@@ -53,12 +53,8 @@ function Generate_PDF ($content, $doc_title, $doc_keywords){
 
 	$pdf->setLanguageArray($l); //set language items
 	// set font
-	if ( defined("_PDF_LOCAL_FONT") && _PDF_LOCAL_FONT && file_exists(ICMS_PDF_LIB_PATH.'/fonts/'._PDF_LOCAL_FONT.'.php')
-	) {
-		$pdf -> SetFont(_PDF_LOCAL_FONT);
-	}else{
-		$pdf -> SetFont("dejavusans");
-	}
+	$TextFont = (@_PDF_LOCAL_FONT && file_exists(ICMS_PDF_LIB_PATH.'/fonts/'._PDF_LOCAL_FONT.'.php')) ? _PDF_LOCAL_FONT : 'dejavusans';
+	$pdf -> SetFont($TextFont);
 
 	//initialize document
 	$pdf->AliasNbPages();
