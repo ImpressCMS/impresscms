@@ -312,7 +312,6 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		static public function getEditorsList() {
 			$editor_list = array();
 			$editor_list = IcmsLists::getDirListAsArray(XOOPS_EDITOR_PATH);
-			$editor_list = array_merge(array('default'=>'default'),$editor_list);
 			return $editor_list;
 		}
 

@@ -144,12 +144,12 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 					$dirlist = XoopsLists::getEditorsList ();
 					if (! empty ( $dirlist )) {
-						if ($config [$i]->getVar ( 'conf_formtype' ) != 'editor_multi') {
+						/*if ($config [$i]->getVar ( 'conf_formtype' ) != 'editor_multi') {
 							unset ( $dirlist ['default'] );
 						} else {
 							global $xoopsConfig;
 							unset ( $dirlist [$xoopsConfig ['editor_default']] );
-						}
+						}*/
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
 					}
