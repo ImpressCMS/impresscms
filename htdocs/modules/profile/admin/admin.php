@@ -33,10 +33,10 @@ $c = explode(".",$b);
 echo "<tr><td class='odd'>";
 if ($c[0]>4 || ($c[0]==4 && $c[1]>0)) {
   echo "<img src='../images/green.gif' align='baseline'> ";
-  echo "Mysql Version:<b>".$b;
+  echo "Mysql Version: <b>".$b;
 } else {
   echo "<img src='../images/red.gif'> ";
-  echo "Mysql Version:<b>".$b. "</b>. You must use a version higher than 4.1 </td></tr>";
+  echo "Mysql Version: <b>".$b. "</b> "._MA_PROFILE_MYSQL4_OR_HIGHER." </td></tr>";
 } 
 if (extension_loaded('gd')) {
 echo "        <tr>
@@ -69,15 +69,15 @@ if ( (str_replace('.', '', PHP_VERSION)) > 520 ){
 
 if (!is_dir(XOOPS_ROOT_PATH."/uploads/".basename(  dirname(  dirname( __FILE__ ) ) )."/mp3/")) {
   echo "<tr>
-          <td class='odd'><img src='../images/red.gif'> /uploads/".basename(  dirname(  dirname( __FILE__ ) ) )."/mp3/ is not exists</td>
+          <td class='odd'><img src='../images/red.gif'> /uploads/".basename(  dirname(  dirname( __FILE__ ) ) )."/mp3/ "._MA_PROFILE_MP3_IS_NOT_EXISTS."</td>
         </tr>";
 }elseif (!is_writable(XOOPS_ROOT_PATH."/uploads/".basename(  dirname(  dirname( __FILE__ ) ) )."/mp3/")) {
   echo "<tr>
-          <td class='odd'><img src='../images/red.gif'>".XOOPS_ROOT_PATH."/uploads/".basename(  dirname(  dirname( __FILE__ ) ) )."/mp3/ is not writable</td>
+          <td class='odd'><img src='../images/red.gif'>".XOOPS_ROOT_PATH."/uploads/".basename(  dirname(  dirname( __FILE__ ) ) )."/mp3/ "._MA_PROFILE_MP3_IS_NOT_WRITABLE."</td>
         </tr>";
 }else{
   echo "<tr>
-          <td class='odd'><img src='../images/green.gif' align='baseline'>".XOOPS_ROOT_PATH."/uploads/".basename(  dirname(  dirname( __FILE__ ) ) )."/mp3/ exists and writable</td>
+          <td class='odd'><img src='../images/green.gif' align='baseline'>".XOOPS_ROOT_PATH."/uploads/".basename(  dirname(  dirname( __FILE__ ) ) )."/mp3/ "._MA_PROFILE_MP3_EXISTS_AND_WRITABLE."</td>
         </tr>";
 }
 
