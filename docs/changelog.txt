@@ -17,6 +17,7 @@
 * The module installer in installer. (stranger)
 * Improved social bookmarks block. (stranger)
 * Updated TCPDF to version 4.6.015. (stranger)
+* Updated TinyMCE to Version 3.2.4.1. (stranger)
 
 '''Fixed'''
 * #554: Enhancements to the IcmsForms class. (Nekro)
