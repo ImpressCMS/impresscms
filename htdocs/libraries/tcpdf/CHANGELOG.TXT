@@ -1,3 +1,207 @@
+4.6.015 (2009-06-11)
+	- Bug #2804667 "word wrap bug" was fixed.
+
+4.6.014 (2009-06-04)
+	- Bug #2800931 "Table thead tag bug" was fixed.
+	- A bug related to <pre> tag was fixed.
+
+4.6.013 (2009-05-28)
+	- List bullets position was fixed for RTL languages.
+
+4.6.012 (2009-05-23)
+	- setUserRights() method doesn't work anymore unless you call the setSignature() method with the Adobe private key!
+
+4.6.011 (2009-05-18)
+	- Signature of the Image() method was changed to include the new $fitbox parameter (see source code documentation).
+
+4.6.010 (2009-05-17)
+	- Image() method was improved: now is possible to specify the maximum dimensions for a constraint box defined by $w and $h parameters, and setting the $resize parameter to null.
+	- <tcpdf> tag indent problem was fixed.
+	- $y parameter was added to checkPageBreak() method.
+	- Bug n. 2791773 "writeHTML" was fixed.
+
+4.6.009 (2009-05-13)
+	- xref table for embedded files was fixed.
+
+4.6.008 (2009-05-07)
+	- setSignature() method was improved (but is still experimental).
+	- Example n. 52 was added.
+
+4.6.007 (2009-05-05)
+	- Bug #2786685 "writeHtmlCell and <br /> in custom footer" was fixed.
+	- Table header repeating bug was fixed.
+	- Some newlines and tabs are now automatically removed from HTML strings.
+
+4.6.006 (2009-04-28)
+	- Support for "<a name="...">...</a>" was added.
+	- By default TCPDF requires PCRE Unicode support turned on but now works also without it (with limited ability to detect some Unicode blank spaces).
+
+4.6.005 (2009-04-25)
+	- Points (pt) conversion in getHTMLUnitToUnits() was fixed.
+	- Default tcpdf.pem certificate file was added.
+	- Experimental support for signing document was added but it is not yet completed (some help is needed - I think that the calculation of the ByteRange is OK and the problem is on the signature calculation).
+
+4.6.004 (2009-04-23)
+	- Method deletePage() was added to delete pages (see example n. 44).
+
+4.6.003 (2009-04-21)
+	- The caching mechanism of the UTF8StringToArray() method was fixed.
+
+4.6.002 (2009-04-20)
+	- Documentation of rollbackTransaction() method was fixed.
+	- The setImageScale() and getImageScale() methods now set and get the adjusting parameter used by pixelsToUnits() method.
+	- HTML images now support other units of measure than pixels (getHTMLUnitToUnits() is now used instead of pixelsToUnits()).
+	- WARNING: PDF_IMAGE_SCALE_RATIO has been changed by default to 1.
+
+4.6.001 (2009-04-17)
+	- Spaces between HTML block tags are now automatically removed.
+	- The bug related to cMargin changes between tables was fixed.
+
+4.6.000 (2009-04-16)
+	- WARNING: THIS VERSION CHANGES THE BEHAVIOUR OF $x and $y parameters for several TCPDF methods:
+		zero coordinates for $x and $y are now valid coordinates;
+		set $x and $y as empty strings to get the current value.
+	- Some error caused by 'empty' funtion were fixed.
+	- Default color for convertHTMLColorToDec() method was changed to white and the return value for invalid color is false.
+	- HTML on footer bug was fixed.
+	- The following examples were fixed: 5,7,10,17,19,20,21,33,42,43.
+
+4.5.043 (2009-04-15)
+	- Barcode class (barcode.php) was extended to include new linear barcode types (see example n. 27):
+		C39 : CODE 39 - ANSI MH10.8M-1983 - USD-3 - 3 of 9
+		C39+ : CODE 39 with checksum
+		C39E : CODE 39 EXTENDED
+		C39E+ : CODE 39 EXTENDED + CHECKSUM
+		C93 : CODE 93 - USS-93
+		S25 : Standard 2 of 5
+		S25+ : Standard 2 of 5 + CHECKSUM
+		I25 : Interleaved 2 of 5
+		I25+ : Interleaved 2 of 5 + CHECKSUM
+		C128A : CODE 128 A
+		C128B : CODE 128 B
+		C128C : CODE 128 C
+		EAN2 : 2-Digits UPC-Based Extention
+		EAN5 : 5-Digits UPC-Based Extention
+		EAN8 : EAN 8
+		EAN13 : EAN 13
+		UPCA : UPC-A
+		UPCE : UPC-E
+		MSI : MSI (Variation of Plessey code)
+		MSI+ : MSI + CHECKSUM (modulo 11)
+		POSTNET : POSTNET
+		PLANET : PLANET
+		RMS4CC : RMS4CC (Royal Mail 4-state Customer Code) - CBC (Customer Bar Code)
+		KIX : KIX (Klant index - Customer index)
+		IMB: Intelligent Mail Barcode - Onecode - USPS-B-3200 (NOTE: requires BCMath PHP extension)
+		CODABAR : CODABAR
+		CODE11 : CODE 11
+		PHARMA : PHARMACODE
+		PHARMA2T : PHARMACODE TWO-TRACKS
+
+4.5.042 (2009-04-15)
+	- Method Write() was fixed for the strings containing only zero value.
+
+4.5.041 (2009-04-14)
+	- Barcode methods were fixed.
+
+4.5.040 (2009-04-14)
+	- Method Write() was fixed to handle empty strings.
+
+4.5.039 (2009-04-11)
+	- Support for linear barcodes was extended (see example n. 27 and barcodes.php documentation).
+
+4.5.038 (2009-04-10)
+	- Write() method was improved to support separators for Japanese, Korean, Chinese Traditional and Chinese Simplified.
+
+4.5.037 (2009-04-09)
+	- General performances were improved.
+	- The signature of the method utf8Bidi() was changed.
+	- The method UniArrSubString() was added.
+	- Experimental support for 2D barcodes were added (see example n. 50 and 2dbarcodes.php class).
+
+4.5.036 (2009-04-03)
+	- TCPDF methods can be called inside the HTML code (see example n. 49).
+	- All tag attributes, such as <p align="center"> must be enclosed within double quotes.
+
+4.5.035 (2009-03-28)
+	- Bug #2717436 "writeHTML rowspan problem (continued)" was fixed.
+	- Bug #2719090 "writeHTML fix follow up" was fixed.
+	- The method _putuserrights() was changed to avoid Adobe Reader 9.1 crash. This broken the 'trick' that was used to display forms in Acrobat Reader.
+	
+4.5.034 (2009-03-27)
+	- Bug #2716914 "Bug writeHTML of a table in body and footer related with pb" was fixed.
+	- Bug #2717056 ] "writeHTML problem when setting tr style" was fixed.
+	- The signature of the Cell() method was changed.
+	
+4.5.033 (2009-03-27)
+	- The support for rowspan/colspan on HTML tables was improved (see example n. 48).
+	
+4.5.032 (2009-03-23)
+	- setPrintFooter(false) bug was fixed.
+	
+4.5.031 (2009-03-20)
+	- Table header support was extended to multiple pages.
+	
+4.5.030 (2009-03-20)
+	- thead tag is now supported on HTML tables (header rows are repeated after page breaks).
+	- The startTransaction() was improved to autocommit.
+	- List bullets now uses the foreground color (putHtmlListBullet()).
+	
+4.5.029 (2009-03-19)
+	- The following methods were added to UNDO commands (see example 47): startTransaction(), commitTransaction(), rollbackTransaction().
+	- All examples were updated.
+
+4.5.028 (2009-03-18)
+	- Bug #2690945 "List Bugs" was fixed.
+	- HTML text alignment on lists was fixed.
+	- The constant PDF_FONT_MONOSPACED was added to the configuration file to define the default monospaced font.
+	- The following methods were fixed: getPageWidth(), getPageHeight(), getBreakMargin().
+	- All examples were updated.
+
+4.5.027 (2009-03-16)
+	- Method getPageDimensions() was added to get page dimensions.
+	- The signature of the following methos were changed: getPageWidth(), getPageHeight(), getBreakMargin().
+	- _parsepng() method was fixed for PNG URL images (fread bug).
+
+4.5.026 (2009-03-11)
+	- Bug #2681793 affecting URL images with spaces was fixed.
+
+4.5.025 (2009-03-10)
+	- A small bug affecting hyphenation support was fixed.
+	- The method SetDefaultMonospacedFont() was added to define the default monospaced font.
+
+4.5.024 (2009-03-07)
+	- The bug #2666493 was fixed "Footer corrupts document".
+
+4.5.023 (2009-03-06)
+	- The bug #2666688 was fixed "Rowspan in tables".
+
+4.5.022 (2009-03-05)
+	- The bug #2659676 was fixed "refer to #2157099 test 4 < BR > problem still not fixed".
+	- addTOC() function bug was fixed.
+
+4.5.020 (2009-03-03)
+	- The following bug was fixed: "function removeSHY corrupts unicode".
+
+4.5.019 (2009-02-28)
+	- The problem of decimal separator using different locale was fixed.
+	- The text hyphenation is now supported (see example n. 46).
+	
+4.5.018 (2009-02-26)
+	- The _destroy() method was added to unset all class variables and frees memory.
+	- Now it's possible to call Output() method multiple times.
+	
+4.5.017 (2009-02-24)
+	- A minor bug that raises a PHP warning was fixed.
+	
+4.5.016 (2009-02-24)
+	- Bug item #2631200 "getNumLines() counts wrong" was fixed.
+	- Multiple attachments bug was fixed.
+	- All class variables are now cleared on Output() for memory otpimization.
+	
+4.5.015 (2009-02-18)
+	- Bug item #2612553 "function Write() must not break a line on &nbsp;  character" was fixed.
+	
 4.5.014 (2009-02-13)
 	- Bug item #2595015 "POSTNET Barcode Checksum Error" was fixed (on barcode.php).
 	- Pagebreak bug for barcode was fixed.

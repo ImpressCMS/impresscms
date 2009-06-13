@@ -8,8 +8,8 @@ http://sourceforge.net/donate/index.php?group_id=128076
 ------------------------------------------------------------
 
 Name: TCPDF
-Version: 4.5.014
-Release date: 2009-02-13
+Version: 4.6.015
+Release date: 2009-06-11
 Author:	Nicola Asuni 
 	
 Copyright (c) 2001-2009:
@@ -38,9 +38,9 @@ Main Features:
 // 	* includes methods to publish some XHTML code;
 // 	* includes graphic (geometric) and transformation methods;
 // 	* includes Javascript and forms support;
-// 	* includes a method to print various barcode formats (CODE 39, CODE 39 EXTENDED, Interleaved 2 of 5, CODE 128 A/B/C, EAN 13, UPC-A, POSTNET, CODABAR);
+// 	* includes a method to print various barcode formats: CODE 39, ANSI MH10.8M-1983, USD-3, 3 of 9, CODE 93, USS-93, Standard 2 of 5, Interleaved 2 of 5, CODE 128 A/B/C, 2 and 5 Digits UPC-Based Extention, EAN 8, EAN 13, UPC-A, UPC-E, MSI, POSTNET, PLANET, RMS4CC (Royal Mail 4-state Customer Code), CBC (Customer Bar Code), KIX (Klant index - Customer index), Intelligent Mail Barcode, Onecode, USPS-B-3200, CODABAR, CODE 11, PHARMACODE, PHARMACODE TWO-TRACKS;
 // 	* includes methods to set Bookmarks and print a Table of Content;
-// 	* includes a method to move pages;
+// 	* includes methods to move and delete pages;
 // 	* includes methods for automatic page header and footer management;
 // 	* supports automatic page break;
 // 	* supports automatic page numbering and page groups;
@@ -51,12 +51,13 @@ Main Features:
 // 	* supports Grayscale, RGB, CMYK, Spot Colors and Transparencies;
 // 	* supports several annotations, including links, text and file attachments;
 // 	* supports page compression (requires zlib extension);
-// 	* supports user rights management so Adobe Reader users can save filled-in copies of forms they complete.
+//  * supports text hyphenation.
+//  * supports transactions to UNDO commands.
 
 Installation (full instructions on http://www.tcpdf.org):
 	1. copy the folder on your Web server
-	2. set your installation path on the config/tcpdf_config.php
-	3. call the example/example_001.php page with your browser to see an example
+	2. set your installation path and other parameters on the config/tcpdf_config.php
+	3. call the examples/example_001.php page with your browser to see an example
 
 Source Code Documentation:
 	doc/index.html

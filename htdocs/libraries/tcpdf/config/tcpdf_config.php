@@ -2,7 +2,7 @@
 //============================================================+
 // File name   : tcpdf_config.php
 // Begin       : 2004-06-11
-// Last Update : 2008-11-17
+// Last Update : 2009-04-20
 //
 // Description : Configuration file for TCPDF.
 //
@@ -21,7 +21,7 @@
 /**
  * Configuration file for TCPDF.
  * @author Nicola Asuni
- * @copyright 2004-2009 Nicola Asuni - Tecnick.com S.r.l (www.tecnick.com) Via Della Pace, 11 - 09044 - Quartucciu (CA) - ITALY - www.tecnick.com - info@tecnick.com
+ * @copyright 2004-2008 Nicola Asuni - Tecnick.com S.r.l (www.tecnick.com) Via Della Pace, 11 - 09044 - Quartucciu (CA) - ITALY - www.tecnick.com - info@tecnick.com
  * @package com.tecnick.tcpdf
  * @version 4.0.014
  * @link http://tcpdf.sourceforge.net
@@ -70,7 +70,7 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	
 	/**
 	 * URL path to tcpdf installation folder (http://localhost/tcpdf/).
-	 * By default it is automatically calculated but you can also set it as a fixed string to improve performances..
+	 * By default it is automatically calculated but you can also set it as a fixed string to improve performances.
 	 */
 	define ('K_PATH_URL', $k_path_url);
 	
@@ -82,7 +82,6 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	
 	/**
 	 * cache directory for temporary files (full path)
-	 * This path has been changed to the cache folder in ImpressCMS
 	 */
 	define ('K_PATH_CACHE', ICMS_ROOT_PATH.'/cache/');
 	
@@ -129,12 +128,12 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * header description string
 	 */
-	define ('PDF_HEADER_STRING', 'by Nicola Asuni - Tecnick.com\nwww.tcpdf.org');
+	define ('PDF_HEADER_STRING', "by Nicola Asuni - Tecnick.com\nwww.tcpdf.org");
 	
 	/**
 	 * image logo
 	 */
-	define ('PDF_HEADER_LOGO', 'logo.gif');
+	define ('PDF_HEADER_LOGO', 'tcpdf_logo.jpg');
 	
 	/**
 	 * header logo image width [mm]
@@ -177,37 +176,34 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	define ('PDF_MARGIN_RIGHT', 15);
 	
 	/**
-	 * main font name
+	 * default main font name
 	 */
-	 // set font
-	if ( defined('_PDF_LOCAL_FONT') && _PDF_LOCAL_FONT && file_exists(ICMS_PDF_LIB_PATH.'/fonts/'._PDF_LOCAL_FONT.'.php')
-) {
-define('_PDF_FONT', _PDF_LOCAL_FONT);
-}else{
-define('_PDF_FONT', 'dejavusans');
-}
-
-	define ('PDF_FONT_NAME_MAIN', _PDF_FONT);
+	@define( 'PDF_FONT_NAME_MAIN' , (@_PDF_LOCAL_FONT && file_exists(ICMS_PDF_LIB_PATH.'/fonts/'._PDF_LOCAL_FONT.'.php')) ? _PDF_LOCAL_FONT : 'dejavusans' ) ;
 	
 	/**
-	 * main font size
+	 * default main font size
 	 */
 	define ('PDF_FONT_SIZE_MAIN', 10);
 	
 	/**
-	 * data font name
+	 * default data font name
 	 */
-	define ('PDF_FONT_NAME_DATA', _PDF_FONT);
+	@define( 'PDF_FONT_NAME_DATA' , (@_PDF_LOCAL_FONT && file_exists(ICMS_PDF_LIB_PATH.'/fonts/'._PDF_LOCAL_FONT.'.php')) ? _PDF_LOCAL_FONT : 'dejavusans' ) ;
 	
 	/**
-	 * data font size
+	 * default data font size
 	 */
 	define ('PDF_FONT_SIZE_DATA', 8);
 	
 	/**
-	 * Ratio used to scale the images
+	 * default monospaced font name
 	 */
-	define ('PDF_IMAGE_SCALE_RATIO', 4);
+	define ('PDF_FONT_MONOSPACED', 'courier');
+	
+	/**
+	 * ratio used to adjust the conversion of pixels to user units
+	 */
+	define ('PDF_IMAGE_SCALE_RATIO', 1);
 	
 	/**
 	 * magnification factor for titles

@@ -9,6 +9,30 @@
 * #580: Adding protector as a part of core modules. (stranger)
 * #253: The admin area should have an option to define what mime types the site on a whole or specific modules can use. (stranger)
 * #598 New block to display user's bookmarks (skenow)
+* Implementing Adsense manager into system admin. (stranger)
+* Implementing Rating manager into system admin. (stranger)
+* #580: * Added protector module to installer with automatic replacement of it to modules path. (stranger)
+
+'''Improved'''
+* The module installer in installer. (stranger)
+* Improved social bookmarks block. (stranger)
+* Updated TCPDF to version 4.6.015. (stranger)
+
+'''Fixed'''
+* #554: Enhancements to the IcmsForms class. (Nekro)
+* #556: failed to open stream to file include/jalali.php: No such file or directory. (stranger)
+* #557: Trying to get property of a non-object in icmspersistablecontroller.php on line 162. (stranger)
+* #561: After user logs in redirect to new profile if profile module is activated. (stranger)
+* #565: IPF is creating an upload folder for every item. (malanciault)
+* #566: improve icons. (davidimpress)
+* #567: change password doesn't work in improfile. (vaughan)
+* #568: Error on symlink ordering... (Nekro)
+* #582: Register New User Fails. (malanciault)
+* #584: Change block edition popup title. (Nekro)
+* #589: Fatal error: Call to a member function getGroups() on a non-object. (malanciault)
+* #599: correcting variables in standard themes. (davidimpress)
+* #606: Warning: Invalid argument supplied for foreach() in file /include/functions.php line 1836. (malanciault)
+* #607: Parse error: syntax error, unexpected T_BOOLEAN_OR in /htdocs/class/uploader.php on line 472 (malanciault)
 
 ===2009-05-05 : 1.2 Alpha===
 
