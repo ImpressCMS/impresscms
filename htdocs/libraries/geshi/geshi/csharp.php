@@ -4,7 +4,7 @@
  * ----------
  * Author: Alan Juden (alan@judenware.org)
  * Copyright: (c) 2004 Alan Juden, Nigel McNie (http://qbnz.com/highlighter/)
- * Release Version: 1\.0\.8
+ * Release Version: 1.0.8.4
  * Date Started: 2004/06/04
  *
  * C# language file for GeSHi.
@@ -52,7 +52,8 @@ $language_data = array (
     'CASE_KEYWORDS' => GESHI_CAPS_NO_CHANGE,
     'QUOTEMARKS' => array("'", '"'),
     'HARDQUOTE' => array('@"', '"'),
-    'HARDESCAPE' => array('""'),
+    'HARDESCAPE' => array('"'),
+    'HARDCHAR' => '"',
     'ESCAPE_CHAR' => '\\',
     'KEYWORDS' => array(
         1 => array(
@@ -60,9 +61,10 @@ $language_data = array (
             'default', 'do', 'else', 'event', 'explicit', 'extern', 'false',
             'finally', 'fixed', 'for', 'foreach', 'goto', 'if', 'implicit',
             'in', 'internal', 'lock', 'namespace', 'null', 'operator', 'out',
-            'override', 'params', 'private', 'protected', 'public', 'readonly',
-            'ref', 'return', 'sealed', 'stackalloc', 'static', 'switch', 'this',
-            'throw', 'true', 'try', 'unsafe', 'using', 'virtual', 'void', 'while'
+            'override', 'params', 'partial', 'private', 'protected', 'public',
+            'readonly', 'ref', 'return', 'sealed', 'stackalloc', 'static',
+            'switch', 'this', 'throw', 'true', 'try', 'unsafe', 'using',
+            'virtual', 'void', 'while'
             ),
         2 => array(
             '#elif', '#endif', '#endregion', '#else', '#error', '#define', '#if',

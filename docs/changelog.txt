@@ -19,6 +19,7 @@
 * Updated TCPDF to version 4.6.015. (stranger)
 * Updated TinyMCE to Version 3.2.4.1. (stranger)
 * Updated FCKEditor to Version 2.6.4. (stranger)
+* Updated GESHI to Version 1.0.8.4. (stranger)
 
 '''Fixed'''
 * #554: Enhancements to the IcmsForms class. (Nekro)
