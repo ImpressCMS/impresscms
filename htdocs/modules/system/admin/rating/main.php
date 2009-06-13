@@ -62,7 +62,7 @@ if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?trim(StopXSS($_GET['op'])):'');
 
 switch ($op) {
-	case "mod":
+/*	case "mod":
 	case "changedField";
 
 		$ratingid = isset($_GET['ratingid']) ? intval($_GET['ratingid']) : 0 ;
@@ -83,7 +83,7 @@ switch ($op) {
         $controller = new IcmsPersistableController($icms_rating_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_RATINGS_CREATED, _CO_ICMS_RATINGS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=rating');
 		break;
-
+*/
 	case "del":
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
 	    $controller = new IcmsPersistableController($icms_rating_handler);		
@@ -97,17 +97,16 @@ switch ($op) {
 		
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
 		
-		$objectTable = new IcmsPersistableTable($icms_rating_handler);
+		$objectTable = new IcmsPersistableTable($icms_rating_handler, false, array('delete'));
 		$objectTable->addColumn(new IcmsPersistableColumn('name', _GLOBAL_LEFT, false, 'getUnameValue'));
 		$objectTable->addColumn(new IcmsPersistableColumn('dirname', _GLOBAL_LEFT));
 		$objectTable->addColumn(new IcmsPersistableColumn('item', _GLOBAL_LEFT, false, 'getItemValue'));
 		$objectTable->addColumn(new IcmsPersistableColumn('date', 'center', 150));
 		$objectTable->addColumn(new IcmsPersistableColumn('rate', 'center', 40, 'getRateValue'));
-		$objectTable->addIntroButton('addrating', 'admin.php?fct=rating&op=mod', _CO_ICMS_RATINGS_CREATE);
+		//$objectTable->addIntroButton('addrating', 'admin.php?fct=rating&op=mod', _CO_ICMS_RATINGS_CREATE);
 
 		//$objectTable->addQuickSearch(array('title', 'summary', 'description'));
 
-		//$objectTable->addCustomAction('getCloneLink');
 
 		$icmsAdminTpl->assign('icms_rating_table', $objectTable->fetch());
 		
