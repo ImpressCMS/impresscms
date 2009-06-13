@@ -332,7 +332,7 @@ function getRegisterForm(&$user, $profile, $next_step = 0, $step) {
 
     if ($next_step == 0 && $icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] != '') {
         $disc_tray = new XoopsFormElementTray(_PROFILE_MA_DISCLAIMER, '<br />');
-        $disc_text = new XoopsFormLabel("", "<div style=\"padding: 5px;\">".$GLOBALS["myts"]->displayTarea($icmsConfigUser['reg_disclaimer'],1)."</div>");
+        $disc_text = new XoopsFormLabel("", "<div id=\"disclaimer\">".$GLOBALS["myts"]->displayTarea($icmsConfigUser['reg_disclaimer'],1)."</div>");
         $disc_tray->addElement($disc_text);
         $session_agreement = empty($_SESSION['profile']['agree_disc']) ? '':$_SESSION['profile']['agree_disc'];
         $agree_chk = new XoopsFormCheckBox('', 'agree_disc', $session_agreement);
