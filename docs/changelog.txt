@@ -42,6 +42,7 @@
 * #608: Errors updating blocks reported when updating a module
 * #609: New system tables not being created when updating the system module
 * #611: Mimetypes are now properly inserted to the table when updating the system module
+* #301: editors: FCKeditor is default, but works not. (stranger)
 
 ===2009-05-05 : 1.2 Alpha===
 

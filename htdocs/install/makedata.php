@@ -263,13 +263,13 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
   	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_set_allowed', '_MD_AM_THEMEOK', '".serialize(array('impresstheme', 'impresstheme_light', 'iTheme'))."', '_MD_AM_THEMEOKDSC', 'theme_multi', 'array', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'template_set', '_MD_AM_DTPLSET', 'dhtmltextarea', '_MD_AM_DTPLSETDSC', 'tplset', 'other', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'template_set', '_MD_AM_DTPLSET', 'default', '_MD_AM_DTPLSETDSC', 'tplset', 'other', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'default', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'dhtmltextarea', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', '".addslashes(serialize(array('default')))."', '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', '".addslashes(serialize(array('dhtmltextarea', 'FCKeditor', 'tinymce')))."', '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'anonymous', '_MD_AM_ANONNAME', '".addslashes(_INSTALL_ANON)."', '_MD_AM_ANONNAMEDSC', 'textbox', 'text', $p)");
