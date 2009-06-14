@@ -208,13 +208,15 @@ if ( $icmsConfig['gzip_compression'] == 1 && extension_loaded( 'zlib' ) && !ini_
 }
 
 // #################### Error reporting settings ##################
-if ( $icmsConfig['debug_mode'] == 1 || $icmsConfig['debug_mode'] == 2 ) {
-	error_reporting(E_ALL);
-  $xoopsLogger->enableRendering();
-  $xoopsLogger->usePopup = ( $icmsConfig['debug_mode'] == 2 );
-} else {
-	error_reporting(0);
-  $xoopsLogger->activated = false;
+if (!isset($xoopsOption['nodebug']) || !$xoopsOption['nodebug']){
+	if ( $icmsConfig['debug_mode'] == 1 || $icmsConfig['debug_mode'] == 2 ) {
+		error_reporting(E_ALL);
+  		$xoopsLogger->enableRendering();
+  		$xoopsLogger->usePopup = ( $icmsConfig['debug_mode'] == 2 );
+	} else {
+		error_reporting(0);
+  		$xoopsLogger->activated = false;
+	}
 }
 $xoopsSecurity->checkBadips();
 
