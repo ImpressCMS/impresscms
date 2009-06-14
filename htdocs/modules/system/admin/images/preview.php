@@ -17,6 +17,7 @@
 include('../../../../mainfile.php');
 include(ICMS_ROOT_PATH."/kernel/image.php");
 include(ICMS_ROOT_PATH."/kernel/imagecategory.php");
+include ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.inc.php';
 
 $file = $_GET['file'];
 $resize = isset($_GET['resize'])?$_GET['resize']:1;
