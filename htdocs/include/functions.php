@@ -2444,7 +2444,7 @@ function &icms_getmodulehandler($name = null, $module_dir = null, $module_basena
 		else {trigger_error(_CORE_NOMODULE, E_USER_ERROR);}
 	}
 	else {$module_dir = trim($module_dir);}
-    $module_basename = isset($module_basename)?trim($module_basename):$module_dir;
+	$module_basename = isset($module_basename)?trim($module_basename):$module_dir;
 	$name = (!isset($name)) ? $module_dir : trim($name);
 	if(!isset($handlers[$module_dir][$name]))
 	{

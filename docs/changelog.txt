@@ -44,6 +44,7 @@
 * #611: Mimetypes are now properly inserted to the table when updating the system module
 * #301: editors: FCKeditor is default, but works not. (stranger)
 * #605: Enable installation of Protector module during install wizard. (stranger)
+* #602: invite.php without captcha = could lead to a security problem. (stranger)
 
 ===2009-05-05 : 1.2 Alpha===
 
