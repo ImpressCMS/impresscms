@@ -355,6 +355,7 @@ class IcmsMediaUploader {
 		$this->sanitizeMultipleExtensions();
 
 		if (!$this->checkMaxFileSize()) {
+			$this->setErrors(_ER_UP_INVALIDFILESIZE);
 			return false;
 		}
 		if (!$this->checkMaxWidth()) {
@@ -364,9 +365,11 @@ class IcmsMediaUploader {
 			return false;
 		}
 		if (!$this->checkMimeType()) {
+			$this->setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
 			return false;
 		}
 		if (!$this->checkImageType()) {
+			$this->setErrors(_ER_UP_INVALIDIMAGEFILE);
 			return false;
 		}
 		if (count($this->errors) > 0) {

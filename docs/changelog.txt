@@ -46,6 +46,7 @@
 * #605: Enable installation of Protector module during install wizard. (stranger)
 * #602: invite.php without captcha = could lead to a security problem. (stranger)
 * #610: Multilanguage support for timestamp. (mcdonald/stranger)
+* #501: XoopsMediaUploader class not returning error on fail. (stranger)
 
 ===2009-05-05 : 1.2 Alpha===
 
