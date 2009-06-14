@@ -2311,7 +2311,7 @@ function ext_date($time)
 		array('Am', 'Pm', 'AM', 'PM', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'),
 		$string);
 */
-	$trans = array( 'am'	=> _CAL_AM
+	$trans = array( 'am'	=> _CAL_AM,
 					'pm'	=> _CAL_PM,
 					'AM'	=> _CAL_AM_CAPS,
 					'PM'	=> _CAL_PM_CAPS,

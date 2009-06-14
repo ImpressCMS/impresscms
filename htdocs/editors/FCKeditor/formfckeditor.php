@@ -102,21 +102,21 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 			if(defined("_XOOPS_EDITOR_FCKEDITOR_FONTLIST")){
 				$oFCKeditor->Config['FontNames'] = _XOOPS_EDITOR_FCKEDITOR_FONTLIST;
 			}
-			if (is_object($GLOBALS['xoopsModule'])){
-			if(!file_exists($config_file = XOOPS_ROOT_PATH."/cache/fckconfig.".$GLOBALS["xoopsModule"]->getVar("dirname", "n").".js")) {
+			if (is_object($GLOBALS['icmsModule'])){
+			if(!file_exists($config_file = XOOPS_ROOT_PATH."/cache/fckconfig.".$GLOBALS["icmsModule"]->getVar("dirname", "n").".js")) {
 				if ( $fp = fopen( $config_file , "wt" ) ) {
 					$fp_content = "/* FCKconfig module configuration */\n";
-					if(is_readable($config_mod = XOOPS_ROOT_PATH."/modules/".$GLOBALS["xoopsModule"]->getVar("dirname")."/fckeditor.config.js")) {
+					if(is_readable($config_mod = XOOPS_ROOT_PATH."/modules/".$GLOBALS["icmsModule"]->getVar("dirname")."/fckeditor.config.js")) {
 						$fp_content .= "/* Loaded from module local config file */\n".implode("", file($config_mod))."\n\n";
 					}
-					if(is_readable(XOOPS_ROOT_PATH."/modules/".$GLOBALS["xoopsModule"]->getVar("dirname")."/fckeditor.connector.php")) {
-						$fp_content .= "var browser_path = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Connector=".XOOPS_URL."/modules/".$GLOBALS["xoopsModule"]->getVar("dirname", "n")."/fckeditor.connector.php';\n";
+					if(is_readable(XOOPS_ROOT_PATH."/modules/".$GLOBALS["icmsModule"]->getVar("dirname")."/fckeditor.connector.php")) {
+						$fp_content .= "var browser_path = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Connector=".XOOPS_URL."/modules/".$GLOBALS["icmsModule"]->getVar("dirname", "n")."/fckeditor.connector.php';\n";
 						$fp_content .= "FCKConfig.LinkBrowserURL = browser_path ;\n";
 						$fp_content .= "FCKConfig.ImageBrowserURL = browser_path + '&Type=Image';\n";
 						$fp_content .= "FCKConfig.FlashBrowserURL = browser_path + '&Type=Flash';\n\n";
 					}
-					if(is_readable(XOOPS_ROOT_PATH."/modules/".$GLOBALS["xoopsModule"]->getVar("dirname")."/fckeditor.upload.php")) {
-						$fp_content .= "var uploader_path = '".XOOPS_URL."/modules/".$GLOBALS["xoopsModule"]->getVar("dirname", "n")."/fckeditor.upload.php';\n";
+					if(is_readable(XOOPS_ROOT_PATH."/modules/".$GLOBALS["icmsModule"]->getVar("dirname")."/fckeditor.upload.php")) {
+						$fp_content .= "var uploader_path = '".XOOPS_URL."/modules/".$GLOBALS["icmsModule"]->getVar("dirname", "n")."/fckeditor.upload.php';\n";
 						$fp_content .= "FCKConfig.LinkUploadURL = uploader_path;\n";
 						$fp_content .= "FCKConfig.ImageUploadURL = uploader_path + '?Type=Image';\n";
 						$fp_content .= "FCKConfig.FlashUploadURL = uploader_path + '?Type=Flash';\n\n";
@@ -134,8 +134,8 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 				}
 			}
 			
-			if(is_readable($config_file = XOOPS_ROOT_PATH."/cache/fckconfig.".$GLOBALS["xoopsModule"]->getVar("dirname").".js")) {
-				$oFCKeditor->Config['CustomConfigurationsPath'] = XOOPS_URL . "/cache/fckconfig.".$GLOBALS["xoopsModule"]->getVar("dirname", "n").".js";
+			if(is_readable($config_file = XOOPS_ROOT_PATH."/cache/fckconfig.".$GLOBALS["icmsModule"]->getVar("dirname").".js")) {
+				$oFCKeditor->Config['CustomConfigurationsPath'] = XOOPS_URL . "/cache/fckconfig.".$GLOBALS["icmsModule"]->getVar("dirname", "n").".js";
 			}
 			}
 			
