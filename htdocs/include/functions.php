@@ -442,7 +442,7 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
 		include_once ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/local.date.php';
 		return ucfirst(local_date($datestring,$usertimestamp));
 	}elseif ($basecheck && _CALENDAR_TYPE != "jalali" && $icmsConfig['language'] != 'english'){
-		return ucfirst(icms_conv_nr2local(ext_date($datestring,$usertimestamp)));
+		return ucfirst(icms_conv_nr2local(ext_date(date($datestring,$usertimestamp))));
 	}elseif ($basecheck && _CALENDAR_TYPE == "jalali"){
 		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
 	}else{
@@ -2303,125 +2303,59 @@ function Icms_getMonthNameById($month_id) {
  * @param string $maket	The date string type
  * @return mixed The converted date string
  */
-function ext_date($type,$maket='now')
+function ext_date($time)
 {
+	icms_loadLanguageFile('core', 'calendar');
 /*		$string = str_replace(
 		array(_CAL_AM, _CAL_PM, _CAL_AM_LONG, _CAL_PM_LONG, _CAL_SAT, _CAL_SUN, _CAL_MON, _CAL_TUE, _CAL_WED, _CAL_THU, _CAL_FRI, _CAL_SATURDAY, _CAL_SUNDAY, _CAL_MONDAY, _CAL_TUESDAY, _CAL_WEDNESDAY, _CAL_THURSDAY, _CAL_FRIDAY),
 		array('Am', 'Pm', 'AM', 'PM', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'),
 		$string);
 */
-	icms_loadLanguageFile('core', 'calendar');
-	$result='';
-	if($maket=='now'){
-		$year=date('Y');
-		$month=date('m');
-		$day=date('d');
-		$maket=mktime(date('H'), date('i'), date('s'), $month, $day, $year);;
-	}else{
-		$date=date('Y-m-d',$maket);
-		list( $year, $month, $day ) = preg_split ( '/-/', $date );
-		}
-	$i=0;
-	while($i<strlen($type))
-	{
-		$subtype=substr($type,$i,1);
-		switch ($subtype)
-		{
-
-			case 'A':
-				$result1=date('a',$maket);
-				if($result1=='pm') $result.=_CAL_PM_LONG;
-				else $result.=_CAL_AM_LONG;
-				break;
-
-			case 'a':
-				$result1=date('a',$maket);
-				if($result1=='pm') $result.=_CAL_PM;
-				else $result.=_CAL_AM;
-				break;
-			case 'd':
-				if($day<10) $result1='0'.$day;
-				else	$result1=$day;
-				$result.=$result1;
-				break;
-			case 'D':
-				$result1=date('D',$maket);
-				if($result1=='Sat') $result1=_CAL_SAT;
-				else if($result1=='Sun') $result1=_CAL_SUN;
-				else if($result1=='Mon') $result1=_CAL_MON;
-				else if($result1=='Tue') $result1=_CAL_TUE;
-				else if($result1=='Wed') $result1=_CAL_WED;
-				else if($result1=='Thu') $result1=_CAL_THU;
-				else if($result1=='Fri') $result1=_CAL_FRI;
-				$result.=$result1;
-				break;
-			case'F':
-				$result.=Icms_getMonthNameById($month);
-				break;
-			case 'g':
-				$result.=date('g',$maket);
-				break;
-			case 'G':
-				$result.=date('G',$maket);
-				break;
-				case 'h':
-				$result.=date('h',$maket);
-				break;
-			case 'H':
-				$result.=date('H',$maket);
-				break;
-			case 'i':
-				$result.=date('i',$maket);
-				break;
-			case 'j':
-				$result.=$day;
-				break;
-			case 'l':
-				$result1=date('l',$maket);
-				if($result1=='Saturday') $result1=_CAL_SATURDAY;
-				else if($result1=='Sunday') $result1=_CAL_SUNDAY;
-				else if($result1=='Monday') $result1=_CAL_MONDAY;
-				else if($result1=='Tuesday') $result1=_CAL_TUESDAY;
-				else if($result1=='Wednesday') $result1=_CAL_WEDNESDAY;
-				else if($result1=='Thursday') $result1=_CAL_THURSDAY;
-				else if($result1=='Friday') $result1=_CAL_FRIDAY;
-				$result.=$result1;
-				break;
-			case 'm':
-				if($month<10) $result1='0'.$month;
-				else	$result1=$month;
-				$result.=$result1;
-				break;
-			case 'M':
-				$result.=Icms_getMonthNameById($month);
-				break;
-			case 'n':
-				$result.= $month;
-				break;
-			case 's':
-				$result.=date('s',$maket);
-				break;
-			case 'S':
-				$result.=_CAL_SUFFIX;
-				break;
-			case 't':
-				$result.=date('t',$maket);
-				break;
-			case 'w':
-				$result.=date('w',$maket);
-				break;
-			case 'y':
-				$result.=substr($year,2,4);
-				break;
-			case 'Y':
-				$result.=$year;
-				break;
-			default:
-				$result.=$subtype;
-		}
-	$i++;
-	}
-	return $result;
+	$trans = array( 'am'	=> _CAL_AM
+					'pm'	=> _CAL_PM,
+					'AM'	=> _CAL_AM_CAPS,
+					'PM'	=> _CAL_PM_CAPS,
+					'Monday'	=> _CAL_MONDAY,
+					'Tuesday'   => _CAL_TUESDAY,
+					'Wednesday' => _CAL_WEDNESDAY,
+					'Thursday'  => _CAL_THURSDAY,
+					'Friday'	=> _CAL_FRIDAY,
+					'Saturday'  => _CAL_SATURDAY,
+					'Sunday'	=> _CAL_SUNDAY,
+					'Mon'		=> _CAL_MON,
+					'Tue'	   => _CAL_TUE,
+					'Wed'		 => _CAL_WED,
+					'Thu'		  => _CAL_THU,
+					'Fri'		=> _CAL_FRI,
+					'Sat'		  => _CAL_SAT,
+					'Sun'		=> _CAL_SUN,
+					'Januari'	=> _CAL_JANUARI,
+					'Februari'	=> _CAL_FEBRUARI,
+					'March'		=> _CAL_MARCH,
+					'April'		=> _CAL_APRIL,
+					'May'		=> _CAL_MAY,
+					'June'		=> _CAL_JUNE,
+					'July'		=> _CAL_JULY,
+					'August'	=> _CAL_AUGUST,
+					'September' => _CAL_SEPTEMBER,
+					'October'	=> _CAL_OCTOBER,
+					'November'	=> _CAL_NOVEMBER,
+					'December'	=> _CAL_DECEMBER,
+					'Jan'		=> _CAL_JAN,
+					'Feb'		=> _CAL_FEB,
+					'Mar'		=> _CAL_MAR,
+					'Apr'		=> _CAL_APR,
+					'May'		=> _CAL_MAY,
+					'Jun'		=> _CAL_JUN,
+					'Jul'		=> _CAL_JUL,
+					'Aug'		=> _CAL_AUG,
+					'Sep'		 => _CAL_SEP,
+					'Oct'		=> _CAL_OCT,
+					'Nov'		=> _CAL_NOV,
+					'Dec'		=> _CAL_DEC );
+	
+	$timestamp = strtr( $time, $trans );
+	return $timestamp; 
 }
 
 /**
