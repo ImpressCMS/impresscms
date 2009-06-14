@@ -27,6 +27,7 @@
  * @package kernel
  * @subpackage  database
  */
+ if(!class_exists('SqlUtility')){
 class SqlUtility
 {
 	/**
@@ -166,5 +167,5 @@ class SqlUtility
 		return false;
 	}
 }
-
+ }
 ?>

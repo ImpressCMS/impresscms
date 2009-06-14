@@ -63,16 +63,16 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		}
 		//Install protector module by default if found.
 		//TODO: Insert Protector installation - leads to blank page as it is now.
-        /*if (file_exists(XOOPS_ROOT_PATH.'/modules/protector/xoops_version.php')) {
+        if (file_exists(XOOPS_ROOT_PATH.'/modules/protector/xoops_version.php')) {
         	$content .= xoops_module_install('protector');
-        	include_once "./class/mainfilemanager.php";
+/*        	include_once "./class/mainfilemanager.php";
 		    $mm = new mainfile_manager("../mainfile.php");
 		    $mm->setRewrite('PROTECTOR1', 'include( XOOPS_TRUST_PATH.\'/modules/protector/include/precheck.inc.php\')');
 		    $mm->setRewrite('PROTECTOR2', 'include( XOOPS_TRUST_PATH.\'/modules/protector/include/postcheck.inc.php\')');
 
 		    $result = $mm->doRewrite();
-		    $mm->report();
-        }*/
+		    $mm->report();*/
+        }
 
 	    $tables = array();
 	    $content .= $dbm->report();
