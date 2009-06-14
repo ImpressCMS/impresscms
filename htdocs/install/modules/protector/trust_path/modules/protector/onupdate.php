@@ -82,6 +82,9 @@ function protector_onupdate_base( $module , $mydirname )
 		}
 		closedir( $handler ) ;
 	}
+if((defined(ICMS_PRELOAD_PATH) && !file_exists(ICMS_PRELOAD_PATH.'/protector.php')) && (! defined( 'PROTECTOR_POSTCHECK_INCLUDED' )||! defined( 'PROTECTOR_PRECHECK_INCLUDED' )) &&  && function_exists('icms_copyr')){
+	icms_copyr(ICMS_TRUST_PATH.'/modules/protector/patches/ImpressCMS1.1/preload_protector.php',ICMS_PRELOAD_PATH.'/protector.php');
+}
 	include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php' ;
 	include_once XOOPS_ROOT_PATH.'/class/template.php' ;
 	xoops_template_clear_module_cache( $mid ) ;

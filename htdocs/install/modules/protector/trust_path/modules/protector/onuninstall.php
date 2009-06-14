@@ -57,6 +57,9 @@ function protector_onuninstall_base( $module , $mydirname )
 	}
 	unset($templates); */
 
+if(defined(ICMS_PRELOAD_PATH) && file_exists(ICMS_PRELOAD_PATH.'/protector.php') && function_exists('icms_deleteFile')){
+	icms_deleteFile(ICMS_PRELOAD_PATH.'/protector.php');
+}
 
 	return true ;
 }
