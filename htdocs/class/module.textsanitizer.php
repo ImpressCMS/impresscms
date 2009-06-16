@@ -485,7 +485,8 @@ class MyTextSanitizer
 	 **/
 	function &censorString(&$text)
 	{
-		global $icmsConfigCensor;
+		$config_handler =& xoops_gethandler('config');
+		$icmsConfigCensor =& $config_handler->getConfigsByCat(XOOPS_CONF_CENSOR);
 		if($icmsConfigCensor['censor_enable'] == true)
 		{
 			$replacement = $icmsConfigCensor['censor_replace'];

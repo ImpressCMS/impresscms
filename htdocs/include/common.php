@@ -183,14 +183,10 @@ $config_handler =& xoops_gethandler('config');
 $xoopsConfig = $icmsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
 $xoopsConfigUser = $icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 $xoopsConfigMetaFooter = $icmsConfigMetaFooter =& $config_handler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
-$xoopsConfigCensor = $icmsConfigCensor =& $config_handler->getConfigsByCat(XOOPS_CONF_CENSOR);
-$xoopsConfigSearch = $icmsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 $xoopsConfigMailer = $icmsConfigMailer =& $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
 $xoopsConfigAuth = $icmsConfigAuth =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
 $im_multilanguageConfig = $icmsConfigMultilang =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
-//$xoopsConfigContent = $icmsConfigContent =& $config_handler->getConfigsByCat(IM_CONF_CONTENT);
 $xoopsConfigPersona = $icmsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-$icmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
 $icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
 
 // #################### Easiest ML by Gijoe #################

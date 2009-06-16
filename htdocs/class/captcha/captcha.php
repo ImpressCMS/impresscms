@@ -22,6 +22,8 @@
 
 
 icms_loadLanguageFile('core', 'captcha');
+$config_handler =& xoops_gethandler('config');
+$icmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
 class IcmsCaptcha {
 	var $active	= true;
 	var $mode 	= "text";	// potential values: image, text
