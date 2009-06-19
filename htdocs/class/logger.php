@@ -215,6 +215,8 @@ class XoopsLogger {
 	*/
 	function render( $output ) {
 		global $icmsUser,$icmsModule;
+		$this->addExtra( 'Included files', count ( get_included_files() ) . ' files' );
+		$this->addExtra( _CORE_MEMORYUSAGE, icms_conv_nr2local(icms_convert_size(memory_get_usage())) );
 		$groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 		$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->mid() : 1;
 		$gperm_handler =& xoops_gethandler('groupperm');

@@ -22,7 +22,7 @@
  * @author        Jan Pedersen     <mithrandir@xoops.org>
  * @copyright    (c) 2000-2005 The Xoops Project - www.xoops.org
  */
-class XoopsSecurity {
+class IcmsSecurity {
   var $errors = array();
   /**
    * Constructor
@@ -243,4 +243,17 @@ class XoopsSecurity {
     }
   }
 }
+	
+	/**
+	 * XoopsSecurity
+	 *
+	 * @copyright	The XOOPS Project <http://www.xoops.org/>
+	 * @copyright	XOOPS_copyrights.txt
+	 * @license		LICENSE.txt
+	 * @since		XOOPS
+	 * @author		The XOOPS Project Community <http://www.xoops.org>
+	 * 
+	 * @deprecated  
+	 */
+	class XoopsSecurity extends IcmsSecurity { /* For Backwards Compatibility */ }
 ?>

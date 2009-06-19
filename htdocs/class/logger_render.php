@@ -117,22 +117,6 @@ if ( empty($mode) || $mode == 'blocks' ) {
 }
 
 if ( empty($mode) || $mode == 'extra' ) {
-	$this->addExtra( 'Included files', count ( get_included_files() ) . ' files' );
-	$memory = 0;
-	if ( function_exists( 'memory_get_usage' ) ) {
-		$memory = memory_get_usage() . ' bytes';
-	} else {
-		$os = isset( $_ENV['OS'] ) ? $_ENV['OS'] : $_SERVER['OS'];
-		if ( strpos( strtolower( $os ), 'windows') !== false ) {
-			$out = array();
-			exec('tasklist /FI "PID eq ' . getmypid() . '" /FO LIST', $out );
-			$memory = substr( $out[5], strpos( $out[5], ':') + 1) . ' [Estimated]';
-		}
-	}
-	if ( $memory ) {
-		$this->addExtra( _CORE_MEMORYUSAGE, icms_conv_nr2local($memory) );
-	}
-
 	$class = 'even';
 	$ret .= '<table id="xo-logger-extra" class="outer"><tr><th colspan="2">'._EXTRA.'</th></tr>';
 	foreach ($this->extra as $ex) {

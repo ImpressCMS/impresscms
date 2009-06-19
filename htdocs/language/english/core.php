@@ -12,7 +12,7 @@
 * @version		$Id
 */
 
-define('_CORE_MEMORYUSAGE', 'Memory usage');
+define('_CORE_MEMORYUSAGE', 'Memory usage: %s');
 define('_CORE_BYTES', 'bytes');
 define('_CORE_KILOBYTES', 'Kilo Bytes');
 define('_CORE_MEGABYTES', 'Mega Bytes');

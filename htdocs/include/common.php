@@ -79,7 +79,7 @@ $xoops =& $impresscms;
 // Instantiate security object
 require_once ICMS_ROOT_PATH."/class/xoopssecurity.php";
 global $xoopsSecurity;
-$xoopsSecurity = new XoopsSecurity();
+$xoopsSecurity = $icmsSecurity = new IcmsSecurity();
 //Check super globals
 $xoopsSecurity->checkSuperglobals();
 
@@ -188,6 +188,13 @@ $xoopsConfigAuth = $icmsConfigAuth =& $config_handler->getConfigsByCat(XOOPS_CON
 $im_multilanguageConfig = $icmsConfigMultilang =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
 $xoopsConfigPersona = $icmsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
 $icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+
+// ################# Creation of the ImpressCMS Captcha object ##############
+
+// Instantiate Captcha object
+/*require_once (ICMS_ROOT_PATH ."/class/captcha/captcha.php");
+global $icmsCaptcha;
+$icmsCaptcha = IcmsCaptcha::instance();*/
 
 // #################### Easiest ML by Gijoe #################
 
