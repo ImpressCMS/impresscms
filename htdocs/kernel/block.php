@@ -15,7 +15,6 @@
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-icms_loadLanguageFile('system', 'blocksadmin', true);
 include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
 include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 

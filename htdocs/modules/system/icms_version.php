@@ -432,4 +432,8 @@ $modversion['templates'][] = array(
 	'description' => '');
 }
 
+$modversion['templates'][] = array(
+	'file' => 'admin/userrank/system_adm_userrank.html',
+	'description' => '');
+
 ?>

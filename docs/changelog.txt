@@ -11,7 +11,7 @@
 * #598 New block to display user's bookmarks (skenow)
 * Implementing Adsense manager into system admin. (stranger)
 * Implementing Rating manager into system admin. (stranger)
-* #580: * Added protector module to installer with automatic replacement of it to modules path. (stranger)
+* #580: Added protector module to installer with automatic replacement of it to modules path. (stranger)
 
 '''Improved'''
 * The module installer in installer. (stranger)
@@ -25,6 +25,7 @@
 * Groups forms can now use anonymous as well. (stranger)
 * Global Captcha Instance. (stranger)
 * Log renderer to show amount of included files and used memory. (stranger)
+* Ranks manager runs based on IPF. (stranger)
 
 '''Fixed'''
 * #554: Enhancements to the IcmsForms class. (Nekro)

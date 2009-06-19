@@ -16,6 +16,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 }
 include_once XOOPS_ROOT_PATH."/modules/system/admin/modulesadmin/modulesadmin.php";
 require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
+icms_loadLanguageFile('system', 'blocksadmin', true);
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
 if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
