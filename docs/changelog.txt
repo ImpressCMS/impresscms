@@ -24,6 +24,7 @@
 * Updated JalaliJSCalendar to Version 1.4. (stranger)
 * Groups forms can now use anonymous as well. (stranger)
 * Global Captcha Instance. (stranger)
+* Log renderer to show amount of included files and used memory. (stranger)
 
 '''Fixed'''
 * #554: Enhancements to the IcmsForms class. (Nekro)
