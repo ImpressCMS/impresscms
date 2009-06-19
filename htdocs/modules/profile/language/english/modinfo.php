@@ -17,6 +17,9 @@
 
 define("_MI_PROFILE_NUMBPICT_TITLE","Number of Pictures");
 define("_MI_PROFILE_NUMBPICT_DESC" ,"Number of pictures a user can have in their page");
+define("_AM_PROFILE_REGSTEPS", "Registration Steps");
+define("_AM_PROFILE_CATEGORYS", "Categories");
+define("_AM_PROFILE_FIELDS", "Fields");
 //define("_MI_PROFILE_ADMENU1","Home");
 //define("_MI_PROFILE_ADMENU2" ,"About");
 //define("_MI_PROFILE_SMNAME1" ,"Submit");

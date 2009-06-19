@@ -1,7 +1,7 @@
 <?php
 // $Id$
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
-define("_AM_DBUPDATED","Database Updated Successfully!");
+if(!defined('_AM_DBUPDATED')){define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 define("_AM_EDITADG","Edit Groups");
 define("_AM_MODIFY","Modify");

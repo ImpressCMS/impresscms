@@ -25,7 +25,7 @@ define("_AM_PROFILE_REQUIREMENTS_SUPPORT", "Should you have any question or conc
 define("_AM_PROFILE_FIRST_USE", "This is the first time you access this module. Please update the module in order to dynamically create the database scheme.");
 
 // Field
-define("_AM_PROFILE_FIELDS", "Fields");
+//define("_AM_PROFILE_FIELDS", "Fields");
 define("_AM_PROFILE_FIELDS_DSC", "All fields in the module");
 define("_AM_PROFILE_FIELD_CREATE", "Add a field");
 define("_AM_PROFILE_FIELD", "Field");
@@ -56,7 +56,7 @@ define("_AM_PROFILE_FIELD_TYPE_LONGDATE", "Long Date");
 define("_AM_PROFILE_FIELD_TYPE_IMAGE", "Image");
 
 // Regstep
-define("_AM_PROFILE_REGSTEPS", "Registration Steps");
+//define("_AM_PROFILE_REGSTEPS", "Registration Steps");
 define("_AM_PROFILE_REGSTEPS_DSC", "All Registration Steps in the module");
 define("_AM_PROFILE_REGSTEP_CREATE", "Add a Registration step");
 define("_AM_PROFILE_REGSTEP", "Registration Step");
@@ -69,7 +69,7 @@ define("_AM_PROFILE_REGSTEP_VIEW", "Registration Step info");
 define("_AM_PROFILE_REGSTEP_VIEW_DSC", "Here is the info about this Registration Step.");
 
 // Category
-define("_AM_PROFILE_CATEGORYS", "Categories");
+//define("_AM_PROFILE_CATEGORYS", "Categories");
 define("_AM_PROFILE_CATEGORYS_DSC", "All categories in the module");
 define("_AM_PROFILE_CATEGORY_CREATE", "Add a category");
 define("_AM_PROFILE_CATEGORY", "Category");

@@ -2,7 +2,7 @@
 // $Id$
 //%%%%%%	Admin Module Name  AdminGroup 	%%%%%
 // dont change
-define("_AM_DBUPDATED","Database Updated Successfully!");
+if(!defined('_AM_DBUPDATED')){define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 define("_MD_AM_SITEPREF","Site Preferences");
 define("_MD_AM_SITENAME","Site name");

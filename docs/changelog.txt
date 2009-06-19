@@ -49,6 +49,7 @@
 * #602: invite.php without captcha = could lead to a security problem. (stranger)
 * #610: Multilanguage support for timestamp. (mcdonald/stranger)
 * #501: XoopsMediaUploader class not returning error on fail. (stranger)
+* #618: errors while disabling & uninstalling modules. (stranger)
 
 ===2009-05-05 : 1.2 Alpha===
 

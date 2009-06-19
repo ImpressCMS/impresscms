@@ -1,7 +1,7 @@
 <?php
 // $Id$
 //%%%%%%	Admin Module Name  Blocks 	%%%%%
-define("_AM_DBUPDATED","Database Updated Successfully!");
+if(!defined('_AM_DBUPDATED')){if(!defined('_AM_DBUPDATED')){define("_AM_DBUPDATED","Database Updated Successfully!");}}
 
 //%%%%%%	blocks.php 	%%%%%
 define("_AM_BADMIN","Blocks Administration");

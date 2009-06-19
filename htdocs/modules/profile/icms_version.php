@@ -65,7 +65,30 @@ $modversion = array(
 	'13' => 'profile_field',
 	'14' => 'profile_visibility',
 	'15' => 'profile_regstep') );
-
+/**
+ *
+ * Method to be implemented by IPF as soon as module is working based on IPF!
+ *
+ */
+/*
+$modversion['object_items'][1] = 'images';
+$modversion['object_items'][2] = 'friendship';
+$modversion['object_items'][3] = 'visitors';
+$modversion['object_items'][4] = 'video';
+$modversion['object_items'][5] = 'friendpetition';
+$modversion['object_items'][6] = 'tribes';
+$modversion['object_items'][7] = 'reltribeuser';
+$modversion['object_items'][8] = 'scraps';
+$modversion['object_items'][9] = 'configs';
+$modversion['object_items'][10] = 'suspensions';
+$modversion['object_items'][11] = 'audio';
+$modversion['object_items'][12] = 'category';
+$modversion['object_items'][13] = 'profile';
+$modversion['object_items'][14] = 'field';
+$modversion['object_items'][15] = 'visibility';
+$modversion['object_items'][16] = 'regstep';
+$modversion["tables"] = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
+*/
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=168]marcan[/url] (Marc-Andr&eacute; Lanciault)";
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=392]stranger[/url] (Sina Asghari)";
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=69]vaughan[/url]";
