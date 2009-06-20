@@ -2,6 +2,9 @@
 
 == Impresscms 1.2==
 
+===2009-06-20 : 1.2 Alpha 2 ===
+'''Fixed'''
+* #619: When trying to install ImpressCMS (it occurs when installing protector). (UnderDog)
 
 ===2009-06-05 : 1.2 Alpha 2 ===
 
