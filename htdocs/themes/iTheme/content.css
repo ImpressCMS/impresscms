@@ -28,7 +28,7 @@ th {color: #0066CC; padding : 2px; vertical-align : middle;}
 .foot {background-color: #DDD; color: inherit; padding: 1px;}
 tr.even td {background-color: #e8e6e2; color:inherit; padding: 5px;}
 tr.odd td {background-color: #E9E9E9; color:inherit; padding: 5px;}
-th {border-bottom: 4px solid #EE7733;}
+th {border-bottom: 4px solid #F3AC03;}
 
 /* core messages */
 .errorMsg { background-color: #FFCCCC;  color:inherit; text-align: center; border-top: 1px solid #DDDDFF; border-left: 1px solid #DDDDFF; border-right: 1px solid #aaa; border-bottom: 1px solid #aaa;font-weight: bold; padding: 10px;}
@@ -40,7 +40,7 @@ th {border-bottom: 4px solid #EE7733;}
 .xoopsQuote { background-color: #fff; color:inherit; border: 1px inset #000080; font-family: "Courier New",Courier,monospace; font-style:italic; padding: 0 6px 6px 6px;}
 
 /* Admin Help Nav */
-#helpbar a {float: right; width: 14px; height: 14px; padding: 1px; background: #fff7b2; color: #333333; border: 1px dotted #dddddd;}
+#helpbar a {float: left; width: 14px; height: 14px; padding: 2px 0 4px 5px; background: #F3AC03; color: #333333; border: 1px dotted #dddddd;}
 
 /* articles */
 .item {border: 1px solid #ccc;}
