@@ -31,8 +31,4 @@ define('_CO_ICMS_USERRANK_RANK_IMAGE_DSC', '');
 
 define('_CO_ICMS_USERRANK_EXPLAIN_TITLE', 'What are User Ranks ?');
 define('_CO_ICMS_USERRANK_EXPLAIN', 'User ranks are picture, used to make difference between users in different levels of your site! Complete documentation of this feature can be found here: <a rel="external" href="http://wiki.impresscms.org/index.php?title=User_ranks">User ranks</a>.');
-
-define('_AM_RANKW','Max width %s pixels');
-define('_AM_RANKH','Max height %s pixels');
-define('_AM_RANKMAX','Max filesize %s bytes');
 ?>

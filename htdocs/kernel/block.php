@@ -659,7 +659,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			$obj->setVar('name', 'Custom Block');
 		}
 		$status = parent::insert( $obj, $force, $checkObject, $debug );
-		// TODO: Make something to no query here... implement IPF for block_module_link
+/*		// TODO: Make something to no query here... implement IPF for block_module_link
 		if(is_array($obj->getVar('visiblein', 'e'))){
 			foreach ($obj->getVar('visiblein', 'e') as $bmid) {
 				$page = explode('-', $bmid);
@@ -682,7 +682,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 				$sql = "INSERT INTO ".$this->db->prefix('group_permission')." (gperm_groupid, gperm_itemid, gperm_name, gperm_modid) VALUES ('".$groups[$i]."', '".intval($obj->getVar('bid'))."', 'block_read', '1')";
 				$this->db->query($sql);
 			}
-		}
+		}*/
 		return $status; 
 		
 	}
