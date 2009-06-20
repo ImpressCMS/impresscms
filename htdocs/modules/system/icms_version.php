@@ -102,7 +102,7 @@ $modversion['blocks'][] = array(
 	'template' => 'system_block_search.html');
 
 $modversion['blocks'][] = array(
-	'file' => 'system_blocks.php',
+	'file' => 'system_waiting.php',
 	'name' => _MI_SYSTEM_BNAME5,
 	'description' => '',
 	'show_func' => 'b_system_waiting_show',
