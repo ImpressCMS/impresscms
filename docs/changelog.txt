@@ -3,6 +3,11 @@
 == Impresscms 1.2==
 
 ===2009-06-20 : 1.2 Alpha 2 ===
+'''Fixed'''
+* #619: Parse error in /trust_path/modules/oninstall.php. (UnderDog)
+* #626: trying to edit the "waiting contents" block results in: Fatal error: Call to undefined function b_system_waiting_edit(). (UnderDog)
+
+===2009-06-05 : 1.2 Alpha === 
 
 '''Added'''
 * #580: Adding protector as a part of core modules. (stranger)
