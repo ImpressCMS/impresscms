@@ -46,7 +46,7 @@ class SystemUserrank extends IcmsPersistableObject {
 	}
 	
 	function getRankPicture() {
-		$ret = '<img src="' . ICMS_URL . '/uploads/' . $this->getVar ( 'rank_image' ) . '" />';
+		$ret = '<img src="' . ICMS_URL . '/uploads/system/userrank/' . $this->getVar ( 'rank_image' ) . '" />';
 		return $ret;
 	}
 	
@@ -68,7 +68,7 @@ class SystemUserrankHandler extends IcmsPersistableObjectHandler {
         global $icmsConfigUser;
 		$this->IcmsPersistableObjectHandler ( $db, 'userrank', 'rank_id', 'rank_title', '', 'system' );
 		$this->table = $this->db->prefix('ranks');
-        $this->setUploaderConfig(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), $icmsConfigUser['rank_maxsize'], $icmsConfigUser['rank_width'], $icmsConfigUser['rank_height']);
+        $this->setUploaderConfig(false, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), $icmsConfigUser['rank_maxsize'], $icmsConfigUser['rank_width'], $icmsConfigUser['rank_height']);
 	}
 	
 }
