@@ -2,8 +2,8 @@
 /**
 * Social Bookmarks
 *
-* System tool that allow's you to bookmark and share your interesting pageswith other people
-* Some parts of this tool is based on social_bookmarks module.
+* System tool that allows you to bookmark and share your interesting pages with other people
+* Some parts of this tool are based on social_bookmarks module.
 *
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
