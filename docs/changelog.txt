@@ -3,10 +3,6 @@
 == Impresscms 1.2==
 
 ===2009-06-20 : 1.2 Alpha 2 ===
-'''Fixed'''
-* #619: When trying to install ImpressCMS (it occurs when installing protector). (UnderDog)
-
-===2009-06-05 : 1.2 Alpha 2 ===
 
 '''Added'''
 * #580: Adding protector as a part of core modules. (stranger)
@@ -54,6 +50,7 @@
 * #610: Multilanguage support for timestamp. (mcdonald/stranger)
 * #501: XoopsMediaUploader class not returning error on fail. (stranger)
 * #618: errors while disabling & uninstalling modules. (stranger)
+* #619: When trying to install ImpressCMS (it occurs when installing protector). (UnderDog)
 
 ===2009-05-05 : 1.2 Alpha===
 
