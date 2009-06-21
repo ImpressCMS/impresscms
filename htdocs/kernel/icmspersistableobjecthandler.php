@@ -624,7 +624,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
         */
             if (!is_a($obj, $this->className)) {
-            	$obj->setError(get_class($obj)." Differs from ".$this->className);
+            	$obj->setErrors(get_class($obj)." Differs from ".$this->className);
                 return false;
             }
             if (!$obj->isDirty()) {

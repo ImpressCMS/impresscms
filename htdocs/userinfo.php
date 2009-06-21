@@ -133,7 +133,7 @@ icms_makeSmarty(array(
 	'lang_lastlogin' => _US_LASTLOGIN,
 	'lang_notregistered' => _US_NOTREGISTERED,
 	'user_pmlink' => is_object($icmsUser)?"<a href=\"javascript:openWithSelfMain('" . ICMS_URL . "/pmlite.php?send2=1&amp;to_userid=" . intval($thisUser->getVar('uid')) . "', 'pmlite', 800,680);\"><img src=\"" . ICMS_URL . "/images/icons/".$icmsConfig ['language']."/pm.gif\" alt=\"" . sprintf(_SENDPMTO, $thisUser->getVar('uname')) . "\" /></a>":'',
-	'user_rankimage' => $userrank['image']?'<img src="' . ICMS_UPLOAD_URL . '/' . $userrank['image'] . '" alt="" />':'',
+	'user_rankimage' => $userrank['image']?'<img src="' . ICMS_UPLOAD_URL . '/system/userrank/' . $userrank['image'] . '" alt="'.$userrank['title'].'" />':'',
 	'user_ranktitle' => $userrank['title'],
 	'user_lastlogin' => !empty ($date)?formatTimestamp($thisUser->getVar("last_login"), "m"):'',
 	'xoops_pagetitle' => sprintf(_US_ALLABOUT, $thisUser->getVar('uname')),

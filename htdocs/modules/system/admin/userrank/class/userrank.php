@@ -20,17 +20,17 @@ class SystemUserrank extends IcmsPersistableObject {
 	var $content = false;
 	
 	function SystemUserrank(&$handler) {
-    	$this->IcmsPersistableObject($handler);
-        
-        $this->quickInitVar('rank_id', XOBJ_DTYPE_INT, true);
+		$this->IcmsPersistableObject($handler);
+		
+		$this->quickInitVar('rank_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('rank_title', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_USERRANK_RANK_TITLE, _CO_ICMS_USERRANK_RANK_TITLE_DSC);
 		$this->quickInitVar('rank_min', XOBJ_DTYPE_INT, true, _CO_ICMS_USERRANK_RANK_MIN, _CO_ICMS_USERRANK_RANK_MIN_DSC);
 		$this->quickInitVar('rank_max', XOBJ_DTYPE_INT, true, _CO_ICMS_USERRANK_RANK_MAX, _CO_ICMS_USERRANK_RANK_MAX_DSC);
 		$this->quickInitVar('rank_special', XOBJ_DTYPE_INT, true, _CO_ICMS_USERRANK_RANK_SPECIAL, _CO_ICMS_USERRANK_RANK_SPECIAL_DSC);
-        $this->quickInitVar('rank_image', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_USERRANK_RANK_IMAGE, _CO_ICMS_USERRANK_RANK_IMAGE_DSC);
+		$this->quickInitVar('rank_image', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_USERRANK_RANK_IMAGE, _CO_ICMS_USERRANK_RANK_IMAGE_DSC);
 
-        $this->setControl('rank_special', 'yesno');
-        $this->setControl('rank_image', 'image');
+		$this->setControl('rank_special', 'yesno');
+		$this->setControl('rank_image', 'image');
 	}
 	
 	function getVar($key, $format = 's') {
@@ -65,10 +65,26 @@ class SystemUserrankHandler extends IcmsPersistableObjectHandler {
 	var $objects=false;
 	
 	function SystemUserrankHandler($db) {
-        global $icmsConfigUser;
+		global $icmsConfigUser;
 		$this->IcmsPersistableObjectHandler ( $db, 'userrank', 'rank_id', 'rank_title', '', 'system' );
 		$this->table = $this->db->prefix('ranks');
-        $this->setUploaderConfig(false, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), $icmsConfigUser['rank_maxsize'], $icmsConfigUser['rank_width'], $icmsConfigUser['rank_height']);
+		$this->setUploaderConfig(false, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), $icmsConfigUser['rank_maxsize'], $icmsConfigUser['rank_width'], $icmsConfigUser['rank_height']);
+	}
+	
+	function MoveAllRanksImagesToProperPath(){
+		$sql = 'SELECT rank_image FROM '. $this->table;
+		$Query = $this->query($sql, false, false, true);
+		for ($i = 0; $i < count($Query); $i++) {
+			$values[]= $Query[$i]['rank_image'];
+		}
+		
+		foreach($values as $value){
+			if(file_exists(ICMS_UPLOAD_PATH.'/'.$value)){
+				icms_copyr(ICMS_UPLOAD_PATH.'/'.$value, ICMS_UPLOAD_PATH.'/system/userrank/'.$value);
+			}
+		}
+		
+		return true;
 	}
 	
 }

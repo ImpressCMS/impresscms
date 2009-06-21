@@ -33,14 +33,14 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		}
 
 		if (count($tplids) > 0) {
-	    $tplfile_handler =& xoops_gethandler('tplfile');
-	    $duplicate_files = $tplfile_handler->getObjects(new Criteria('tpl_id', "(".implode(',', $tplids).")", "IN"));
+		$tplfile_handler =& xoops_gethandler('tplfile');
+		$duplicate_files = $tplfile_handler->getObjects(new Criteria('tpl_id', "(".implode(',', $tplids).")", "IN"));
 
-	    if (count($duplicate_files) > 0) {
+		if (count($duplicate_files) > 0) {
 				foreach (array_keys($duplicate_files) as $i) {
 					$tplfile_handler->delete($duplicate_files[$i]);
 				}
-	    }
+		}
 		}
   }
 
@@ -198,8 +198,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	}
 
    /**
-    * Changing $icmsConfigPersona['rss_local'] from www.impresscms.org to community.impresscms.org
-    */
+	* Changing $icmsConfigPersona['rss_local'] from www.impresscms.org to community.impresscms.org
+	*/
 	$newDbVersion = 2;
 
 	if ($dbVersion < $newDbVersion) {
@@ -630,79 +630,87 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_custom_redirection', '_MD_AM_CUSTOMRED', '0', '_MD_AM_CUSTOMREDDSC', 'yesno', 'int', 9);
 	}
 
-     $newDbVersion = 25;
+	 $newDbVersion = 25;
 
-     if($dbVersion < $newDbVersion)
-     {
-          $table = new IcmsDatabasetable('icmscontent');
-          if(!$table->fieldExists('content_seo_description'))
-          {
-               $table->addNewField('content_seo_description', "text");
-               $icmsDatabaseUpdater->updateTable($table);
-          }
-          unset($table);
+	 if($dbVersion < $newDbVersion)
+	 {
+		  $table = new IcmsDatabasetable('icmscontent');
+		  if(!$table->fieldExists('content_seo_description'))
+		  {
+			   $table->addNewField('content_seo_description', "text");
+			   $icmsDatabaseUpdater->updateTable($table);
+		  }
+		  unset($table);
 
-          $table = new IcmsDatabasetable('icmscontent');
-          if(!$table->fieldExists('content_seo_keywords'))
-          {
-               $table->addNewField('content_seo_keywords', "text");
-               $icmsDatabaseUpdater->updateTable($table);
-          }
-          unset($table);
-     }
+		  $table = new IcmsDatabasetable('icmscontent');
+		  if(!$table->fieldExists('content_seo_keywords'))
+		  {
+			   $table->addNewField('content_seo_keywords', "text");
+			   $icmsDatabaseUpdater->updateTable($table);
+		  }
+		  unset($table);
+	 }
 
-     $newDbVersion = 26;
+	 $newDbVersion = 26;
 
-     if($dbVersion < $newDbVersion)
-     {
-          $table = new IcmsDatabasetable('system_mimetype');
-          if(!$table->exists()){
-              $table->setStructure("mimetypeid int(11) NOT NULL auto_increment,
-                  extension varchar(60) NOT NULL default '',
-                  types text NOT NULL,
-                  name varchar(255) NOT NULL default '',
-                  dirname VARCHAR(255) NOT NULL,
-                  KEY mimetypeid (mimetypeid)
-                  ");
-              $table->createTable();
-          }
-		    $icmsDB->queryFromFile(ICMS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/include/upgrade.sql");
-          unset($table);
+	 if($dbVersion < $newDbVersion)
+	 {
+		  $table = new IcmsDatabasetable('system_mimetype');
+		  if(!$table->exists()){
+			  $table->setStructure("mimetypeid int(11) NOT NULL auto_increment,
+				  extension varchar(60) NOT NULL default '',
+				  types text NOT NULL,
+				  name varchar(255) NOT NULL default '',
+				  dirname VARCHAR(255) NOT NULL,
+				  KEY mimetypeid (mimetypeid)
+				  ");
+			  $table->createTable();
+		  }
+			$icmsDB->queryFromFile(ICMS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/include/upgrade.sql");
+		  unset($table);
 
-          $table = new IcmsDatabasetable('system_adsense');
-          if(!$table->exists()){
-              $table->setStructure("adsenseid int(11) NOT NULL auto_increment,
-                  format VARCHAR(100) NOT NULL,
-                  description TEXT NOT NULL,
-                  style TEXT NOT NULL,
-                  border_color varchar(6) NOT NULL default '',
-                  background_color varchar(6) NOT NULL default '',
-                  link_color varchar(6) NOT NULL default '',
-                  url_color varchar(6) NOT NULL default '',
-                  text_color varchar(6) NOT NULL default '',
-                  client_id varchar(100) NOT NULL default '',
-                  tag varchar(50) NOT NULL default '',
-                  PRIMARY KEY  (`adsenseid`)
-                  ");
-              $table->createTable();
-          }
-          unset($table);
+		  $table = new IcmsDatabasetable('system_adsense');
+		  if(!$table->exists()){
+			  $table->setStructure("adsenseid int(11) NOT NULL auto_increment,
+				  format VARCHAR(100) NOT NULL,
+				  description TEXT NOT NULL,
+				  style TEXT NOT NULL,
+				  border_color varchar(6) NOT NULL default '',
+				  background_color varchar(6) NOT NULL default '',
+				  link_color varchar(6) NOT NULL default '',
+				  url_color varchar(6) NOT NULL default '',
+				  text_color varchar(6) NOT NULL default '',
+				  client_id varchar(100) NOT NULL default '',
+				  tag varchar(50) NOT NULL default '',
+				  PRIMARY KEY  (`adsenseid`)
+				  ");
+			  $table->createTable();
+		  }
+		  unset($table);
 
-          $table = new IcmsDatabasetable('system_rating');
-          if(!$table->exists()){
-              $table->setStructure("ratingid int(11) NOT NULL auto_increment,
-                  dirname VARCHAR(255) NOT NULL,
-                  item VARCHAR(255) NOT NULL,
-                  itemid int(11) NOT NULL,
-                  uid int(11) NOT NULL,
-                  rate int(1) NOT NULL,
-                  date int(11) NOT NULL,
-                  PRIMARY KEY  (`ratingid`)
-                  ");
-              $table->createTable();
-          }
-          unset($table);
-     }
+		  $table = new IcmsDatabasetable('system_rating');
+		  if(!$table->exists()){
+			  $table->setStructure("ratingid int(11) NOT NULL auto_increment,
+				  dirname VARCHAR(255) NOT NULL,
+				  item VARCHAR(255) NOT NULL,
+				  itemid int(11) NOT NULL,
+				  uid int(11) NOT NULL,
+				  rate int(1) NOT NULL,
+				  date int(11) NOT NULL,
+				  PRIMARY KEY  (`ratingid`)
+				  ");
+			  $table->createTable();
+		  }
+		  unset($table);
+	 }
+
+	$newDbVersion = 27;
+
+	if($dbVersion < $newDbVersion) {
+		echo $action;
+		$handler = icms_getModulehandler('userrank', 'system');
+		$handler->MoveAllRanksImagesToProperPath();
+	}
 
 	echo "</code>";
 
