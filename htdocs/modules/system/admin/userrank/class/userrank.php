@@ -73,7 +73,7 @@ class SystemUserrankHandler extends IcmsPersistableObjectHandler {
 	
 	function MoveAllRanksImagesToProperPath(){
 		$sql = 'SELECT rank_image FROM '. $this->table;
-		$Query = $this->query($sql, false, false, true);
+		$Query = $this->query($sql);
 		for ($i = 0; $i < count($Query); $i++) {
 			$values[]= $Query[$i]['rank_image'];
 		}
