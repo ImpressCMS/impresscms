@@ -6,6 +6,7 @@
 '''Fixed'''
 * #619: Parse error in /trust_path/modules/oninstall.php. (UnderDog)
 * #626: trying to edit the "waiting contents" block results in: Fatal error: Call to undefined function b_system_waiting_edit(). (UnderDog)
+* #548: Errors with class/theme.php (TheRplima)
 
 ===2009-06-05 : 1.2 Alpha === 
 

@@ -492,7 +492,7 @@ class xos_opal_Theme {
     	$this->metas[$type] = array();
     }
 
-  	if ( isset($name) ) {
+  	if ( !empty($name) ) {
   	$this->metas[$type][$name] = $value;
     } else {
     	$this->metas[$type][] = 	$value;
