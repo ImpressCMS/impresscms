@@ -37,6 +37,12 @@ class XoopsFormSelectEditor extends XoopsFormElementTray
 	 */
 	function XoopsFormSelectEditor(&$form, $name="editor", $value=null, $noHtml=false)
 	{
+		global $icmsConfig;
+		
+		if (empty($value)){
+			$value = $icmsConfig['editor_default'];
+		}
+		
 		$this->XoopsFormElementTray(_SELECT);
 		$edtlist = XoopsLists::getEditorsList();
 		$option_select = new XoopsFormSelect("", $name, $value);
