@@ -9,6 +9,7 @@
 * #548: Errors with class/theme.php (TheRplima)
 * #636: search in the frontend works not (TheRplima)
 * #587: banners.php with fatal error (TheRplima)
+* #603: Filter for custom blocks in blocksadmin (TheRplima)
 
 ===2009-06-05 : 1.2 Alpha === 
 
