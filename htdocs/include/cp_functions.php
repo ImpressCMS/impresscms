@@ -33,7 +33,7 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
 function icms_cp_header(){
-  	global $icmsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule, $icmsUser, $xoopsOption, $xoTheme, $icmsConfigMultilang, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
+  	global $icmsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule, $xoopsModule, $icmsUser, $xoopsOption, $xoTheme, $icmsConfigMultilang, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
 	$xoopsLogger->stopTime( 'Module init' );
 	$xoopsLogger->startTime( 'ImpressCMS CP Output Init' );
 
@@ -327,7 +327,7 @@ function xoops_cp_header(){
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function icms_cp_footer(){
-	global $icmsConfig, $xoopsOption, $xoopsLogger, $icmsUser, $xoTheme, $icmsTpl ,$icmsConfigMultilang, $icmsLibrariesHandler, $icmsModule;
+	global $icmsConfig, $xoopsOption, $xoopsLogger, $icmsUser, $xoTheme, $icmsTpl ,$icmsConfigMultilang, $icmsLibrariesHandler, $xoopsModule, $icmsModule;
 	$xoopsLogger->stopTime( 'Module display' );
 
 	if (!headers_sent()) {

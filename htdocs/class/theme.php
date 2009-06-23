@@ -187,7 +187,7 @@ class xos_opal_Theme {
 		$this->template->currentTheme =& $this;
 		$this->template->assign_by_ref( 'xoTheme', $this );
 
-		global $icmsConfig, $icmsConfigMetaFooter, $icmsModule, $icmsUser;
+		global $icmsConfig, $icmsConfigMetaFooter, $icmsModule, $xoopsModule, $icmsUser;
 		$this->template->assign( array(
 			'icms_style' => ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css',
 	    	'icms_theme' => $this->folderName,
@@ -315,7 +315,7 @@ class xos_opal_Theme {
    * @return  bool
    */
 	function checkCache() {
-		global $icmsModule, $xoopsLogger;
+		global $xoopsModule, $icmsModule, $xoopsLogger;
 
 		if ( $_SERVER['REQUEST_METHOD'] != 'POST' && $this->contentCacheLifetime ) {
 			$template = $this->contentTemplate ? $this->contentTemplate : 'db:system_dummy.html';

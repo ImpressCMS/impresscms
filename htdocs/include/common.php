@@ -476,7 +476,8 @@ if ($icmsConfig['closesite'] == 1) {
 if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 	$url_arr = explode( '/', strstr( $_SERVER['PHP_SELF'],'/modules/') );
   $module_handler =& xoops_gethandler('module');
-  $xoopsModule = $icmsModule =& $module_handler->getByDirname($url_arr[2]);
+  $icmsModule =& $module_handler->getByDirname($url_arr[2]);
+  $xoopsModule =& $module_handler->getByDirname($url_arr[2]);
   unset($url_arr);
   if (!$icmsModule || !$icmsModule->getVar('isactive')) {
   	include_once ICMS_ROOT_PATH."/header.php";
@@ -498,6 +499,7 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 	icms_loadLanguageFile($icmsModule->getVar('dirname'), 'main');
   if ($icmsModule->getVar('hasconfig') == 1 || $icmsModule->getVar('hascomments') == 1 || $icmsModule->getVar( 'hasnotification' ) == 1) {
   	$icmsModuleConfig =& $config_handler->getConfigsByCat(0, $icmsModule->getVar('mid'));
+  	$xoopsModuleConfig =& $config_handler->getConfigsByCat(0, $icmsModule->getVar('mid'));
 	}
 } elseif($icmsUser) {
 	$xoopsUserIsAdmin = $icmsUserIsAdmin = $icmsUser->isAdmin(1);
