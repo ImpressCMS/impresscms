@@ -74,7 +74,7 @@ define('_MD_AM_COMPTEMPFILE','Template <b>%s</b> compiled.');
 define('_MD_AM_RECOMPTEMPFILE','Template <b>%s</b> recompiled.');
 define('_MD_AM_NOTRECOMPTEMPFILE','ERROR: Could not recompile template <b>%s</b>.');
 define('_MD_AM_TEMPINS','Template <b>%s</b> inserted to the database.');
-define('_MD_AM_MOD_DATA_UPDATED','Module data updated.');
+define('_MD_AM_MOD_DATA_UPDATED',' Module data updated.');
 define('_MD_AM_MOD_UP_TEM','Updating templates...');
 define('_MD_AM_MOD_REBUILD_BLOCKS','Rebuilding blocks...');
 define('_MD_AM_FUNCT_EXEC','Function <b>%s</b> is successfully executed.');
