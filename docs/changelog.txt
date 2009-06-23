@@ -1,17 +1,26 @@
 ﻿ImpressCMS ChangeLog
 
-== Impresscms 1.2==
+=== Impresscms 1.2 Beta ===
+Release date:
+Revision:
 
-===2009-06-20 : 1.2 Alpha 2 ===
+'''Added'''
+
+'''Improved'''
+
 '''Fixed'''
-* #619: Parse error in /trust_path/modules/oninstall.php. (UnderDog)
-* #626: trying to edit the "waiting contents" block results in: Fatal error: Call to undefined function b_system_waiting_edit(). (UnderDog)
 * #548: Errors with class/theme.php (TheRplima)
 * #636: search in the frontend works not (TheRplima)
 * #587: banners.php with fatal error (TheRplima)
 * #603: Filter for custom blocks in blocksadmin (TheRplima)
+* #640: Version checker blank page when version file is not available (skenow)
 
-===2009-06-05 : 1.2 Alpha === 
+===2009-06-20 : 1.2 Alpha 2.1 ===
+'''Fixed'''
+* #619: Parse error in /trust_path/modules/oninstall.php. (UnderDog)
+* #626: trying to edit the "waiting contents" block results in: Fatal error: Call to undefined function b_system_waiting_edit(). (UnderDog)
+
+===2009-06-05 : 1.2 Alpha 2 === 
 
 '''Added'''
 * #580: Adding protector as a part of core modules. (stranger)

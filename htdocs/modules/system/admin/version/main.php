@@ -34,16 +34,16 @@ if (isset($_GET['mid'])) {
 global $icmsAdminTpl, $xoTheme;
 require_once XOOPS_ROOT_PATH.'/class/icmsversionchecker.php';
 $icmsVersionChecker = IcmsVersionChecker::getInstance();
-
+icms_cp_header();
 if ($icmsVersionChecker->check()) {
 	$icmsAdminTpl->assign('update_available', true);
 	$icmsAdminTpl->assign('latest_changelog', $icmsVersionChecker->latest_changelog);
-
-	if (ICMS_VERSION_STATUS == 10 && $icmsVersionChecker->latest_status < 10) {
+    $icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name); 
+    $icmsAdminTpl->assign('latest_url', $icmsVersionChecker->latest_url);   
+    if (ICMS_VERSION_STATUS == 10 && $icmsVersionChecker->latest_status < 10) {
 		// I'm runing a final release so make sure to notify the user that the update is not a final
 		$icmsAdminTpl->assign('not_a_final_comment', true);
 	}
-	
 }
 else {
 	$checkerErrors = $icmsVersionChecker->getErrors(true);
@@ -52,11 +52,7 @@ else {
 	}
 }
 
-icms_cp_header();
-$xoTheme->addScript(ICMS_URL.'/libraries/jquery/jquery.js', array('type' => 'text/javascript'));
-$icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name);
 $icmsAdminTpl->assign('your_version', $icmsVersionChecker->installed_version_name);
-$icmsAdminTpl->assign('latest_url', $icmsVersionChecker->latest_url);	
 $icmsAdminTpl->assign('lang_php_vesion', PHP_VERSION);
 $icmsAdminTpl->assign('lang_mysql_version', mysql_get_server_info());
 $icmsAdminTpl->assign('lang_server_api', PHP_SAPI);
