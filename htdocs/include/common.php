@@ -189,6 +189,7 @@ $im_multilanguageConfig = $icmsConfigMultilang =& $config_handler->getConfigsByC
 $xoopsConfigPersona = $icmsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
 $icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
 $icmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
+$icmsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
 // ################# Creation of the ImpressCMS Captcha object ##############
 
