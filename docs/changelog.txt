@@ -8,6 +8,7 @@
 * #626: trying to edit the "waiting contents" block results in: Fatal error: Call to undefined function b_system_waiting_edit(). (UnderDog)
 * #548: Errors with class/theme.php (TheRplima)
 * #636: search in the frontend works not (TheRplima)
+* #587: banners.php with fatal error (TheRplima)
 
 ===2009-06-05 : 1.2 Alpha === 
 
