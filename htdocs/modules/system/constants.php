@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
 * Admin constants
 * 
@@ -12,7 +11,9 @@
 * @author		http://www.xoops.org The XOOPS Project
 * @version		$Id$
 */
-
+/**
+ * Separating page level doc block from elements
+ */
 define('XOOPS_SYSTEM_GROUP', 1);
 define('XOOPS_SYSTEM_USER', 2);
 define('XOOPS_SYSTEM_PREF', 3);
@@ -30,7 +31,7 @@ define('XOOPS_SYSTEM_COMMENT', 14);
 define('XOOPS_SYSTEM_TPLSET', 15);
 define('XOOPS_SYSTEM_VERSION', 16);
 if(is_dir(ICMS_ROOT_PATH.'/modules/system/admin/content')){
-define('XOOPS_SYSTEM_CONTENT', 17);
+    define('XOOPS_SYSTEM_CONTENT', 17);
 }
 define('XOOPS_SYSTEM_BLOCKP', 18);
 define('XOOPS_SYSTEM_PAGES', 19);
