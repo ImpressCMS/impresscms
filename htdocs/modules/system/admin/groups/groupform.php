@@ -116,7 +116,7 @@ foreach ($posarr as $k=>$v){
 		$n_blocks_array = $blocks_array;
 	}
 	foreach ($n_blocks_array as $key=>$value) {
-		$new_blocks_array[$key] = "<a href='".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&amp;op=edit&amp;bid=".$key."'>".$value." (ID: ".$key.")</a>";
+		$new_blocks_array[$key] = "<a href='".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=".$key."'>".$value." (ID: ".$key.")</a>";
 	}
 	$block_checkbox[$i]->addOptionArray($new_blocks_array);
 	$i++;
