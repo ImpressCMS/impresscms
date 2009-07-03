@@ -434,7 +434,7 @@ function getUserForm(&$user, $profile = false, $action = false) {
     }
     // Weight for uname element
     $weights[0][] = 0;
-    $email_tray->addElement($email_text);
+    $email_tray->addElement($email_text, true);
     $elements[0][] = array('element' => $email_tray, 'required' => 0);
     // Weight for email element
     $weights[0][] = 0;
