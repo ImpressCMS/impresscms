@@ -9,6 +9,7 @@ Revision:
 '''Improved'''
 
 '''Fixed'''
+* #657: Icons for adsense, rating and mime-types (sato-san)
 * #548: Errors with class/theme.php (TheRplima)
 * #636: search in the frontend works not (TheRplima)
 * #587: banners.php with fatal error (TheRplima)
