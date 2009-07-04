@@ -81,7 +81,6 @@ class ProfileField extends IcmsPersistableObject {
 		$this->setControl('step_id', array('itemHandler' => 'regstep',
                                           'method' => 'getList',
                                           'module' => 'profile'));
-        
     }
 
     /**
@@ -100,7 +99,7 @@ class ProfileField extends IcmsPersistableObject {
         $caption = $this->getVar('field_title');
         $caption = defined($caption) ? constant($caption) : $caption;
         $name = $this->getVar('field_name', 'e');
-        $options = $this->getVar('field_options');
+	$options = unserialize($this->getVar('field_options', 'n'));
         if ($this->getVar('field_type') != "image" && is_array($options)) {
             asort($options);
 
@@ -266,13 +265,13 @@ class ProfileField extends IcmsPersistableObject {
 
             case "select":
             case "radio":
-                $options = $this->getVar('field_options');
+                $options = unserialize($this->getVar('field_options', 'n'));
                 return isset($options[$value]) ? htmlspecialchars($options[$value]) : "";
                 break;
 
             case "select_multi":
             case "checkbox":
-                $options = $this->getVar('field_options');
+                $options = unserialize($this->getVar('field_options', 'n'));
                 $ret = array();
                 if (count($options) > 0) {
                     foreach (array_keys($options) as $key) {
@@ -398,7 +397,7 @@ class ProfileField extends IcmsPersistableObject {
                     return $oldvalue;
                 }
 
-                $options = $this->getVar('field_options');
+                $options = unserialize($this->getVar('field_options', 'n'));
                 $dirname = ICMS_UPLOAD_PATH."/".basename(  dirname(  dirname( __FILE__ ) ) );
                 if (!is_dir($dirname)) {
                     mkdir($dirname);
