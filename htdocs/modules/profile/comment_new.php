@@ -20,7 +20,7 @@
  */
 include_once("../../mainfile.php");
 include_once("../../header.php");
-include_once("class/profile_controler.php");
+include_once("class/controler.php");
 
 $controler = new ProfileControlerTribes($xoopsDB,$icmsUser);
 
