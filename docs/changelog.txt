@@ -18,6 +18,7 @@ Revision:
 * #242: email address isn't marked as required in the user form | ticket from addons (Phoenyx)
 * #167: Location shows a Google Maps locator image even if no location is provided | ticket from addons (Phoenyx)
 * #241: Fatal error: Class 'ProfileControlerTribes' not found when creating a comment on a tribe | ticket from addons (Phoenyx)
+* #244: login_name in edituser.php is always 'login_name' | ticket from addons (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''
