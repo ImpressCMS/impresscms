@@ -162,7 +162,7 @@
 <h2 class="profile-profile-title head"><{$lang_detailsinfo}> <{ if $isOwner==1 }> <a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" /></a> <{/if}></h2>
 <p class="odd"><img src="images/username.gif" /><span class="profile-profileinfo-label"><{$lang_uname}>:</span><span class="profile-profileinfo-value"><{$user_uname}></span></p>
 <p class="even"><img src="images/username.gif" /><span class="profile-profileinfo-label"><{$lang_realname}>:</span><span class="profile-profileinfo-value"><{$user_realname}></span></p>
-<p class="odd"> <img src="images/house.gif" /> <span class="profile-profileinfo-label"><{$lang_location}>:</span><span class="profile-profileinfo-value"><{$user_location}></span><a href="http://maps.google.com/?q=<{$user_location}>" target="_blank" ><img src="images/mapsgoogle.gif" /></a></p>
+<p class="odd"> <img src="images/house.gif" /> <span class="profile-profileinfo-label"><{$lang_location}>:</span><span class="profile-profileinfo-value"><{$user_location}></span><{if $user_location}><a href="http://maps.google.com/?q=<{$user_location}>" target="_blank" ><img src="images/mapsgoogle.gif" /></a><{/if}></p>
 <p class="even"> <img src="images/occ.gif" /> <span class="profile-profileinfo-label"><{$lang_occupation}>:</span><span class="profile-profileinfo-value"><{$user_occupation}></span></p>
 <p class="odd"> <img src="images/interests.gif" /> <span class="profile-profileinfo-label"><{$lang_interest}>:</span><span class="profile-profileinfo-value"><{$user_interest}></span></p>
 <p class="even"> <img src="images/bio.gif" /> <span class="profile-profileinfo-label"><{$lang_extrainfo}>:</span></p>

@@ -16,6 +16,7 @@ Revision:
 * #640: Version checker blank page when version file is not available (skenow)
 * #653: wrong url to edit a block in group manager (Phoenyx)
 * #242: email address isn't marked as required in the user form | ticket from addons (Phoenyx)
+* #167: Location shows a Google Maps locator image even if no location is provided | ticket from addons (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''
