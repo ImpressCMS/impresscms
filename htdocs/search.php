@@ -82,7 +82,11 @@ if ($action == 'search') {
 if ( $andor != "OR" && $andor != "exact" && $andor != "AND" ) {
 	$andor = "AND";
 }
-$xoopsTpl->assign("search_type", $andor);
+if ($andor == 'OR') $label_andor = _SR_ANY;
+if ($andor == 'AND') $label_andor = _SR_ALL;
+if ($andor == 'exact') $label_andor = _SR_EXACT;
+$xoopsTpl->assign("label_search_type", _SR_TYPE . ':');
+$xoopsTpl->assign("search_type", $label_andor);
 
 $myts =& MyTextSanitizer::getInstance();
 if ($action != 'showallbyuser') {
