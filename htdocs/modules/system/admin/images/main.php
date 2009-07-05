@@ -515,6 +515,10 @@ function imanager_addcat() {
 		if (!file_exists($categ_path)){
 			if (!mkdir($categ_path)){
 				redirect_header('admin.php?fct=images',1,_MD_FAILADDCAT);
+			} else {
+				if ($fh = @fopen($categ_path.'/index.html', 'w'))
+					fwrite($fh, '<script>history.go(-1);</script>');
+				@fclose($fh);
 			}
 		}
 	}
