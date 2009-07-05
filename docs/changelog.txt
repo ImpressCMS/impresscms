@@ -24,6 +24,7 @@ Revision:
 * #166: some strange values for "settings" | ticket from addons (Phoenyx)
 * #243: missing values for selection on comment and notification options | ticket from addons (Phoenyx)
 * #656: make sure filename length is no longer than 30 chars in case the prefix is set (Phoenyx)
+* #660: corrected typo in class/uploader.php (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''
