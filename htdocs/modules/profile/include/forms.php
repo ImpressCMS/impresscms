@@ -445,8 +445,8 @@ function getUserForm(&$user, $profile = false, $action = false) {
         $pwd_text = new XoopsFormPassword('', 'password', 10, 32, "", false, ($icmsConfigUser['pass_level']?'password_adv':''));
         $pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 32);
         $pwd_tray = new XoopsFormElementTray(_PROFILE_MA_PASSWORD.'<br />'._PROFILE_MA_TYPEPASSTWICE);
-        $pwd_tray->addElement($pwd_text,true);
-        $pwd_tray->addElement($pwd_text2,true);
+        $pwd_tray->addElement($pwd_text, $user->isNew());
+        $pwd_tray->addElement($pwd_text2, $user->isNew());
         $elements[0][] = array('element' => $pwd_tray, 'required' => 1); //cannot set an element tray required
         $weights[0][] = 0;
 
