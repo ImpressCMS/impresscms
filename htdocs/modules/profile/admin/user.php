@@ -82,6 +82,7 @@ switch($op) {
             $user =& $handler->createUser();
             $user->setVar('user_regdate', time());
             $user->setVar('level', 1);
+	    $user->setVar('user_avatar', 'blank.gif');
         }
         $errors = array();
         $myts =& MyTextSanitizer::getInstance();
