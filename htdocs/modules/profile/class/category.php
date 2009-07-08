@@ -27,7 +27,7 @@ class ProfileCategory extends IcmsPersistableObject {
 
 		$this->IcmsPersistableObject($handler);
 
-		$this->quickInitVar('catid', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('catid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('cat_title', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('cat_description', XOBJ_DTYPE_TXTAREA, false);
 		$this->quickInitVar('cat_weight', XOBJ_DTYPE_TXTBOX, false, false, false, 0);
@@ -56,7 +56,7 @@ class ProfileCategoryHandler extends IcmsPersistableObjectHandler {
 	 * Constructor
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'category', 'catid', '', '', 'profile');
+		$this->IcmsPersistableObjectHandler($db, 'category', 'catid', 'catid', 'cat_description', 'profile');
 	}
 }
 ?>
