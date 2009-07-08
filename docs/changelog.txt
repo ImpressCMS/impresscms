@@ -29,6 +29,7 @@ Revision:
 * #250: password is now marked as required in the user form | ticket from addons (Phoenyx)
 * #614: moved wording from search template to language file and reworked search results (Phoenyx)
 * #253: user_avatar for new users is now set to blank.gif using imProfile | ticket from addons (Phoenyx)
+* #641: display issue: new member block is too wide (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''
