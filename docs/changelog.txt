@@ -34,6 +34,7 @@ Revision:
 * #254: fields are now listed in imProfile adminstration | ticket from addons (Phoenyx)
 * #637: saving a block also saves the visible in positions now (Phoenyx)
 * #240: displaying the latest pictures block or friends block (imProfile) no longer results in an error | ticket from addons (Phoenyx)
+* #255: blocktemplates are now using profile as module dir name | ticket from addons (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''

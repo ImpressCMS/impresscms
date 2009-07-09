@@ -1,8 +1,7 @@
 <{section name=i loop=$block}>
-    <div style="width:80%; text-align: center; page-break-after: always; margin: auto; page-break-before: always;">
-    <a href="<{$xoops_url}>/modules/improfile/album.php?uid=<{$block[i].uid_voted}>" title="<{$block[i].caption}>"><img src="<{$xoops_upload_url}>/thumb_<{$block[i].img_filename}>" alt="<{$block[i].caption}>" /><br /><{$block[i].uname}> </a>
-   
-    </div>
+<div style="width:80%; text-align: center; page-break-after: always; margin: auto; page-break-before: always;">
+  <a href="<{$xoops_url}>/modules/profile/album.php?uid=<{$block[i].uid_voted}>" title="<{$block[i].caption}>">
+    <img src="<{$xoops_upload_url}>/thumb_<{$block[i].img_filename}>" alt="<{$block[i].caption}>" /><br /><{$block[i].uname}>
+  </a>
+</div>
 <{/section}>
-
-
