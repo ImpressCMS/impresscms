@@ -6,80 +6,51 @@
  *
  * @copyright       The ImpressCMS Project http://www.impresscms.org/
  * @license         LICENSE.txt
- * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license         GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @package         modules
  * @since           1.2
  * @author          Jan Pedersen
  * @author          Marcello Brandao <marcello.brandao@gmail.com>
- * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @author          Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version         $Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')){ exit(); }
+
 function b_profile_friends_show($options) {
-   global $xoopsDB, $icmsModule, $icmsModuleConfig, $icmsUser;
-   $myts =& MyTextSanitizer::getInstance();
-   $block = array(); 
+	global $icmsUser;
 
-if (!empty($icmsUser)){
+	if (!empty($icmsUser)){
+		// Filter for fetch votes ishot and isnothot
+		$criteria = new criteria('friend1_uid', $icmsUser->getVar('uid'));
+		// Creating factories of pictures and votes
+		$friends_factory = icms_getmodulehandler('friendship', basename(dirname(dirname( __FILE__ ))), 'profile');
 
-/**
- * Filter for fetch votes ishot and isnothot
- */
+		$block['friends'] = $friends_factory->getFriends($options[0], $criteria, 0);
+	}
 
+	$block['lang_allfriends'] = _MB_PROFILE_ALLFRIENDS;
 
-$criteria_2       = new criteria('friend1_uid',$icmsUser->getVar('uid'));
-
-
-/**
- * Creating factories of pictures and votes
- */  
-$friends_factory      = icms_getmodulehandler('friendship', $modname, 'profile' );
-
-$block['friends'] = $friends_factory->getFriends($options[0], $criteria_2,0);
+	return $block;
 }
-$block['lang_allfriends']=_MB_PROFILE_ALLFRIENDS;
-return $block;
 
+function b_profile_friends_edit($options) {
+	$form = _MB_PROFILE_NUMBER_FRIENDS.": <input type='text' value='".$options['0']."'id='options[]' name='options[]' />";
+
+	return $form;
 }
-function b_profile_friends_edit ($options) {
 
-$form ="<input type='text' value='".$options['0']."'id='options[]' name='options[]' />";
-
-return $form;
-   
-}
 function b_profile_lastpictures_show($options) {
-   global $xoopsDB, $icmsModule, $icmsModuleConfig;
-   $myts =& MyTextSanitizer::getInstance();
-   $block = array(); 
+	// Creating factories of pictures and votes
+	$pictures_factory = icms_getmodulehandler('images', basename(dirname(dirname( __FILE__ ))), 'profile');
+	$block = $pictures_factory->getLastPicturesForBlock($options[0]);
 
-
-
-/**
- * Filter for fetch votes ishot and isnothot
- */
-
-
-$criteria = new criteria('cod_img',0,">");
-$criteria->setSort("cod_img");
-$criteria->setOrder("DESC");
-$criteria->setLimit($options[0]);
-
-/**
- * Creating factories of pictures and votes
- */  
-//$album_factory      = new ProfileProfile_imagesHandler($xoopsDB);
-$pictures_factory      = icms_getmodulehandler('images', $modname, 'profile' );
-$block = $pictures_factory->getLastPicturesForBlock($options[0]);
-
-return $block;
+	return $block;
 }
 
-function b_profile_lastpictures_edit ($options) {
+function b_profile_lastpictures_edit($options) {
+	$form = _MB_PROFILE_NUMBER_PICTURES.": <input type='text' value='".$options['0']."'id='options[]' name='options[]' />";
 
-$form ="<input type='text' value='".$options['0']."'id='options[]' name='options[]' />";
-    
-return $form;
+	return $form;
 }
 ?>
