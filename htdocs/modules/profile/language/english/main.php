@@ -36,6 +36,7 @@ define('_PROFILE_MA_UNEEDAGREE', 'Sorry, you have to agree to our disclaimer to 
 define('_PROFILE_MA_NOREGISTER','Sorry, we are currently closed for new user registrations');
 define("_PROFILE_MA_NOSTEPSAVAILABLE", "No registration steps are defined");
 define("_PROFILE_MA_REQUIRED", "Required");
+define("_PROFILE_MA_REGISTER_FINISH", "Thanks for registering");
 
 // %s is username. This is a subject for email
 define('_PROFILE_MA_USERKEYFOR','User activation key for %s');

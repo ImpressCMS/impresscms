@@ -188,7 +188,7 @@ switch ( $op ) {
             }
             else {
                 // No errors and no more steps, finish
-                $xoopsTpl->append('confirm', 'Thanks for registering');
+                $xoopsTpl->append('confirm', _PROFILE_MA_REGISTER_FINISH);
             }
         } else {
             include_once 'include/forms.php';

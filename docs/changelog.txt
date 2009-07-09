@@ -35,6 +35,7 @@ Revision:
 * #637: saving a block also saves the visible in positions now (Phoenyx)
 * #240: displaying the latest pictures block or friends block (imProfile) no longer results in an error | ticket from addons (Phoenyx)
 * #255: blocktemplates are now using profile as module dir name | ticket from addons (Phoenyx)
+* #256: extracted language string from register.php in imProfile | ticket from addons (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''
