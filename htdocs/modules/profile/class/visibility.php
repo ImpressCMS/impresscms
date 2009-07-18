@@ -30,7 +30,7 @@ class ProfileVisibility extends IcmsPersistableObject  {
 class ProfileVisibilityHandler extends IcmsPersistableObjectHandler {
 
     function ProfileVisibilityHandler($db) {
-        parent::IcmsPersistableObjectHandler($db, 'visibility', array('fieldid', 'user_group', 'profile_group'), '', '', 'profile');
+        parent::IcmsPersistableObjectHandler($db, 'visibility', 'fieldid', '', '', 'profile');
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Classes responsible for managing profile friendpetition objects
+* Classes responsible for managing profile tribeuser objects
 *
 * @copyright	GNU General Public License (GPL)
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -17,7 +17,7 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 include_once ICMS_ROOT_PATH . '/kernel/icmspersistableobject.php';
 include_once(ICMS_ROOT_PATH . '/modules/profile/include/functions.php');
 
-class ProfileFriendpetition extends IcmsPersistableObject {
+class ProfileTribeuser extends IcmsPersistableObject {
 
 	/**
 	 * Constructor
@@ -29,10 +29,10 @@ class ProfileFriendpetition extends IcmsPersistableObject {
 
 		$this->IcmsPersistableObject($handler);
 
-		$this->quickInitVar('friendpetition_id', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('friendpet_id', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('petitioner_uid', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('petioned_uid', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('tribeuser_id', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('tb_id', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('tribe_id', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('user_id', XOBJ_DTYPE_INT, true);
 
 	}
 
@@ -51,13 +51,13 @@ class ProfileFriendpetition extends IcmsPersistableObject {
 		return parent :: getVar($key, $format);
 	}
 }
-class ProfileFriendpetitionHandler extends IcmsPersistableObjectHandler {
+class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 
 	/**
 	 * Constructor
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'friendpetition', 'friendpetition_id', '', '', 'profile');
+		$this->IcmsPersistableObjectHandler($db, 'tribeuser', 'tribeuser_id', '', '', 'profile');
 	}
 }
 ?>

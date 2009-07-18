@@ -47,37 +47,21 @@ $modversion = array(
 	'developer_email' => "contact@impresscms.org",
 
 /** Database information */
-	'sqlfile' => array('mysql' => 'sql/mysql.sql'),
-  	'tables' => array( 
-	'0' => 'profile_images',
-	'1' => 'profile_friendship',
-	'2' => 'profile_visitors',
-	'3' => 'profile_video',
-	'4' => 'profile_friendpetition',
-	'5' => 'profile_tribes',
-	'6' => 'profile_reltribeuser',
-	'7' => 'profile_scraps',
-	'8' => 'profile_configs',
-	'9' => 'profile_suspensions',
-	'10' => 'profile_audio',
-	'11' => 'profile_category',
-	'12' => 'profile_profile',
-	'13' => 'profile_field',
-	'14' => 'profile_visibility',
-	'15' => 'profile_regstep') );
+	//'sqlfile' => array('mysql' => 'sql/mysql.sql')
+);
 /**
  *
  * Method to be implemented by IPF as soon as module is working based on IPF!
  *
  */
-/*
-$modversion['object_items'][1] = 'images';
+
+$modversion['object_items'][1] = 'pictures';
 $modversion['object_items'][2] = 'friendship';
 $modversion['object_items'][3] = 'visitors';
 $modversion['object_items'][4] = 'video';
 $modversion['object_items'][5] = 'friendpetition';
 $modversion['object_items'][6] = 'tribes';
-$modversion['object_items'][7] = 'reltribeuser';
+$modversion['object_items'][7] = 'tribeuser';
 $modversion['object_items'][8] = 'scraps';
 $modversion['object_items'][9] = 'configs';
 $modversion['object_items'][10] = 'suspensions';
@@ -88,7 +72,7 @@ $modversion['object_items'][14] = 'field';
 $modversion['object_items'][15] = 'visibility';
 $modversion['object_items'][16] = 'regstep';
 $modversion["tables"] = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
-*/
+
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=168]marcan[/url] (Marc-Andr&eacute; Lanciault)";
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=392]stranger[/url] (Sina Asghari)";
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=69]vaughan[/url]";
