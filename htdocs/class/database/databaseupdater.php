@@ -183,7 +183,7 @@ class IcmsDatabasetable {
 	 *
 	 * Example :
 	 *
-	 *     	$table->setStructure("`transactionid` int(11) NOT NULL auto_increment,
+	 *	 	$table->setStructure("`transactionid` int(11) NOT NULL auto_increment,
 	 * 				  `date` int(11) NOT NULL default '0',
 	 * 				  `status` int(1) NOT NULL default '-1',
 	 * 				  `itemid` int(11) NOT NULL default '0',
@@ -527,20 +527,20 @@ class IcmsDatabasetable {
    	} else {
    		$set_clause .= $this->_db->quoteString( $fieldvalue );
    	}
-       $sql = 'UPDATE '.$this->name().' SET '.$set_clause;
-       if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-           $sql .= ' '.$criteria->renderWhere();
-       }
-       if ($this->force) {
-       	$ret = $this->_db->queryF($sql);
-       } else {
-       	$ret = $this->_db->query($sql);
-       }
-          if (!$ret) {
-       	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
-       } else {
-       	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE, $this->name()) . "<br />";
-       }
+	   $sql = 'UPDATE '.$this->name().' SET '.$set_clause;
+	   if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		   $sql .= ' '.$criteria->renderWhere();
+	   }
+	   if ($this->force) {
+	   	$ret = $this->_db->queryF($sql);
+	   } else {
+	   	$ret = $this->_db->query($sql);
+	   }
+		  if (!$ret) {
+	   	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
+	   } else {
+	   	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE, $this->name()) . "<br />";
+	   }
   	}
   	return $ret;
   }
@@ -554,24 +554,24 @@ class IcmsDatabasetable {
 
   function deleteAll()
   {
-    $ret = true;
+	$ret = true;
   	foreach ($this->getDeleteAll() as $item) {
   		$criteria = isset($item['criteria']) ? $item['criteria'] : null;
-       if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-           $sql = 'DELETE FROM '.$this->table;
-           $sql .= ' '.$criteria->renderWhere();
-           if ($this->force) {
-           	$result = $this->_db->queryF($sql);
-           } else {
-           	$result = $this->_db->query($sql);
-           }
-           if (!$result) {
-               echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
-           } else {
-           	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE, $this->name()) . " (" . $this->_db->error(). ")<br />";
-           }
-       }
-       $ret = $result && $ret;
+	   if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		   $sql = 'DELETE FROM '.$this->table;
+		   $sql .= ' '.$criteria->renderWhere();
+		   if ($this->force) {
+		   	$result = $this->_db->queryF($sql);
+		   } else {
+		   	$result = $this->_db->query($sql);
+		   }
+		   if (!$result) {
+			   echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
+		   } else {
+		   	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE, $this->name()) . " (" . $this->_db->error(). ")<br />";
+		   }
+	   }
+	   $ret = $result && $ret;
   	}
    return $ret;
  }
@@ -858,14 +858,23 @@ class IcmsDatabaseupdater {
 
 				}
 			}
-			$structure .= "PRIMARY KEY  (`" . $module_handler->keyName . "`)
-";
+			$ModKeyNames = $module_handler->keyName;
+			$structure .= "PRIMARY KEY  (";
+			if (is_array($ModKeyNames)){
+				$structure .= "`".$ModKeyNames[0]."`";
+				foreach( $ModKeyNames as $ModKeyName){
+					$structure .= ($ModKeyName != $ModKeyNames[0])?", `".$ModKeyName."`":"";
+				}
+			}else{
+				$structure .= "`".$ModKeyNames."`";
+			}
+			$structure .= ")";
 			$table->setStructure($structure);
 			if (!$this->updateTable($table)) {
-		        /**
-		         * @todo trap the errors
-		         */
-		    }
+				/**
+				 * @todo trap the errors
+				 */
+			}
 		} else {
 			$existingFieldsArray = $table->getExistingFieldsArray();
 			foreach($objectVars as $key=>$var) {
@@ -914,10 +923,10 @@ class IcmsDatabaseupdater {
 			}
 
 			if (!$this->updateTable($table)) {
-		        /**
-		         * @todo trap the errors
-		         */
-		    }
+				/**
+				 * @todo trap the errors
+				 */
+			}
 		}
 	}
 
@@ -935,23 +944,23 @@ class IcmsDatabaseupdater {
 	 * @param int $conf_order
 	 */
 	function insertConfig($conf_catid, $conf_name, $conf_title, $conf_value, $conf_desc, $conf_formtype, $conf_valuetype, $conf_order) {
-	    $configitem_handler = xoops_gethandler('configitem');
-	    $configitemObj = $configitem_handler->create();
-	    $configitemObj->setVar('conf_modid', 0);
-	    $configitemObj->setVar('conf_catid', $conf_catid);
-	    $configitemObj->setVar('conf_name', $conf_name);
-	    $configitemObj->setVar('conf_title', $conf_title);
-	    $configitemObj->setVar('conf_value', $conf_value);
-	    $configitemObj->setVar('conf_desc', $conf_desc);
-	    $configitemObj->setVar('conf_formtype', $conf_formtype);
-	    $configitemObj->setVar('conf_valuetype', $conf_valuetype);
-	    $configitemObj->setVar('conf_order', $conf_order);
-	    if (!$configitem_handler->insert($configitemObj)) {
-	    	$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_ERR, $dbVersion);
-	    } else{
-	    	$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_SCC, $dbVersion);
-	    }
-	    echo $querry_answer;
+		$configitem_handler = xoops_gethandler('configitem');
+		$configitemObj = $configitem_handler->create();
+		$configitemObj->setVar('conf_modid', 0);
+		$configitemObj->setVar('conf_catid', $conf_catid);
+		$configitemObj->setVar('conf_name', $conf_name);
+		$configitemObj->setVar('conf_title', $conf_title);
+		$configitemObj->setVar('conf_value', $conf_value);
+		$configitemObj->setVar('conf_desc', $conf_desc);
+		$configitemObj->setVar('conf_formtype', $conf_formtype);
+		$configitemObj->setVar('conf_valuetype', $conf_valuetype);
+		$configitemObj->setVar('conf_order', $conf_order);
+		if (!$configitem_handler->insert($configitemObj)) {
+			$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_ERR, $dbVersion);
+		} else{
+			$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_SCC, $dbVersion);
+		}
+		echo $querry_answer;
 	}
 
 
@@ -960,28 +969,28 @@ class IcmsDatabaseupdater {
    * @param object reference to Module Object
    * @return bool whether upgrade succeeded or not
    */
-	function moduleUpgrade(&$module) {
+	function moduleUpgrade(&$module, $tables_first=false) {
 		$dirname = $module->getVar('dirname');
 
-	    ob_start();
+		ob_start();
 
-	    $dbVersion  = $module->getDbversion();
+		$dbVersion  = $module->getDbversion();
 
-	    $newDbVersion = constant(strtoupper($dirname . '_db_version')) ? constant(strtoupper($dirname . '_db_version')) : 0;
-	    $textcurrentversion = sprintf(_DATABASEUPDATER_CURRENTVER, $dbVersion);
-	    $textlatestversion = sprintf(_DATABASEUPDATER_CURRENTVER, $newDbVersion);
+		$newDbVersion = constant(strtoupper($dirname . '_db_version')) ? constant(strtoupper($dirname . '_db_version')) : 0;
+		$textcurrentversion = sprintf(_DATABASEUPDATER_CURRENTVER, $dbVersion);
+		$textlatestversion = sprintf(_DATABASEUPDATER_CURRENTVER, $newDbVersion);
 		echo $textcurrentversion;
 		echo $textlatestversion;
-
-	    if ($newDbVersion > $dbVersion) {
-	    	for($i=$dbVersion+1;$i<=$newDbVersion; $i++) {
-				$upgrade_function = $dirname . '_db_upgrade_' . $i;
-				if (function_exists($upgrade_function)) {
-					$upgrade_function();
+        if(!$tables_first){
+			if ($newDbVersion > $dbVersion) {
+				for($i=$dbVersion+1;$i<=$newDbVersion; $i++) {
+					$upgrade_function = $dirname . '_db_upgrade_' . $i;
+					if (function_exists($upgrade_function)) {
+						$upgrade_function();
+					}
 				}
-	    	}
-	    }
-
+			}
+		}
 		echo "<code>" . _DATABASEUPDATER_UPDATE_UPDATING_DATABASE . "<br />";
 
 		// if there is a function to execute for this DB version, let's do it
@@ -992,14 +1001,25 @@ class IcmsDatabaseupdater {
 
 		echo "</code>";
 
-	    $feedback = ob_get_clean();
-	    if (method_exists($module, "setMessage")) {
-	        $module->setMessage($feedback);
-	    } else {
-	        echo $feedback;
-	    }
-	    $this->updateModuleDBVersion($newDbVersion, $dirname);
-	    return true;
+		$feedback = ob_get_clean();
+		if (method_exists($module, "setMessage")) {
+			$module->setMessage($feedback);
+		} else {
+			echo $feedback;
+		}
+        if($tables_first){
+			if ($newDbVersion > $dbVersion) {
+				for($i=$dbVersion+1;$i<=$newDbVersion; $i++) {
+					$upgrade_function = $dirname . '_db_upgrade_' . $i;
+					if (function_exists($upgrade_function)) {
+						$upgrade_function();
+					}
+				}
+			}
+		}
+
+		$this->updateModuleDBVersion($newDbVersion, $dirname);
+		return true;
 	}
 
 

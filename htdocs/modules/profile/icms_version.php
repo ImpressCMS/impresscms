@@ -44,11 +44,7 @@ $modversion = array(
 /** Contributors */
     'developer_website_url' => "http://www.impresscms.org",
 	'developer_website_name' => "ImpressCMS Core & Module developpers",
-	'developer_email' => "contact@impresscms.org",
-
-/** Database information */
-	//'sqlfile' => array('mysql' => 'sql/mysql.sql')
-);
+	'developer_email' => "contact@impresscms.org");
 /**
  *
  * Method to be implemented by IPF as soon as module is working based on IPF!
