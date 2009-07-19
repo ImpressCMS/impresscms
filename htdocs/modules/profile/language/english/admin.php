@@ -1,4 +1,4 @@
-	<?php
+<?php
 /**
  * English language constants used in admin section of the module
  *
