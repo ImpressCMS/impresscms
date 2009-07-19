@@ -6,7 +6,7 @@
 * @copyright	GNU General Public License (GPL)
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @since		1.3
-* @author		Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla <contact@impresscms.org>
+* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @package		profile
 * @version		$Id$
 */
@@ -36,13 +36,17 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 		$this->quickInitVar('user_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('url', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('private', XOBJ_DTYPE_TXTBOX, false);
-		$this->initCommonVar('counter');
-		$this->initCommonVar('dohtml');
-		$this->initCommonVar('dobr');
-		$this->initCommonVar('doimage');
-		$this->initCommonVar('dosmiley');
-		$this->initCommonVar('docxode');
+		$this->initCommonVar('counter', false);
+		$this->initCommonVar('dohtml', false, true);
+		$this->initCommonVar('dobr', false, true);
+		$this->initCommonVar('doimage', false, true);
+		$this->initCommonVar('dosmiley', false, true);
 
+		$this->setControl('user_id', 'user');
+		$this->setControl('url', 'image');
+		$this->setControl('private', 'yesno');
+		$this->hideFieldFromForm('creation_time');
+		$this->hideFieldFromForm('update_time');
 
 		$this->IcmsPersistableSeoObject();
 	}
@@ -61,6 +65,14 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 		}
 		return parent :: getVar($key, $format);
 	}
+	function getProfilePicture() {
+		$ret = '<img src="' . ICMS_URL . '/uploads/profile/pictures/' . $this->getVar ( 'url' ) . '" />';
+		return $ret;
+	}
+	
+	function getPictureSender() {
+		return icms_getLinkedUnameFromId($this->getVar('user_id', 'e'));
+	}
 }
 class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 
@@ -68,7 +80,9 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	 * Constructor
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'pictures', 'pictures_id', '', '', 'profile');
+		global $icmsModuleConfig;
+		$this->IcmsPersistableObjectHandler($db, 'pictures', 'pictures_id', 'title', '', 'profile');
+		$this->setUploaderConfig(false, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), $icmsModuleConfig['maxfilesize'], $icmsModuleConfig['max_original_width'], $icmsModuleConfig['max_original_height']);
 	}
 	
 	/**

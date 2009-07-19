@@ -46,7 +46,7 @@ class ProfileAudio extends IcmsPersistableSeoObject {
 
 		$this->hideFieldFromForm('data_creation');
 		$this->hideFieldFromForm('data_update');
-		$this->hideFieldFromForm('uid_owner');
+		$this->setControl('uid_owner', 'user');
 
 
 
@@ -68,6 +68,14 @@ class ProfileAudio extends IcmsPersistableSeoObject {
 		}
 		return parent :: getVar($key, $format);
 	}
+	function getAudioSender() {
+		return icms_getLinkedUnameFromId($this->getVar('uid_owner', 'e'));
+	}
+	function getVideoToDisplay() {
+		//$ret = '<object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/' . $this->getVar ( 'youtube_code' ) . '&hl='._LANGCODE.'&fs=1&color1=0x3a3a3a&color2=0x999999"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/' . $this->getVar ( 'youtube_code' ) . '&hl='._LANGCODE.'&fs=1&color1=0x3a3a3a&color2=0x999999" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="265"></embed></object>';
+		$ret = $this->getVar('url', 'e');
+		return $ret;
+	}
 }
 class ProfileAudioHandler extends IcmsPersistableObjectHandler {
 
@@ -76,7 +84,7 @@ class ProfileAudioHandler extends IcmsPersistableObjectHandler {
 	 */
 	public function __construct(& $db) {
 		global $icmsModuleConfig;
-		$this->IcmsPersistableObjectHandler($db, 'audio', 'audio_id', '', '', 'profile');
+		$this->IcmsPersistableObjectHandler($db, 'audio', 'audio_id', 'title', '', 'profile');
 		$this->setUploaderConfig(false, array("audio/mp3" , "audio/x-mp3", "audio/mpeg"), $icmsModuleConfig['maxfilesize']);
 	}
 

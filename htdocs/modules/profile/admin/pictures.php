@@ -6,8 +6,8 @@
 *
 * @copyright	GNU General Public License (GPL)
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.0
-* @author		Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla <contact@impresscms.org>
+* @since		1.3
+* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @package		profile
 * @version		$Id$
 */
@@ -68,31 +68,11 @@ if (in_array($clean_op,$valid_op,true)){
 
   		editpictures($clean_pictures_id);
   		break;
-  	case "addpictures":
-          include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-          $controller = new IcmsPersistableController($profile_pictures_handler);
-  		$controller->storeFromDefaultForm(_AM_PROFILE_PICTURES_CREATED, _AM_PROFILE_PICTURES_MODIFIED);
-
-  		break;
 
   	case "del":
   	    include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
           $controller = new IcmsPersistableController($profile_pictures_handler);
   		$controller->handleObjectDeletion();
-
-  		break;
-
-  	case "view" :
-  		$picturesObj = $profile_pictures_handler->get($clean_pictures_id);
-
-  		icms_cp_header();
-  		smart_adminMenu(1, _AM_PROFILE_PICTURES_VIEW . ' > ' . $picturesObj->getVar('pictures_name'));
-
-  		smart_collapsableBar('picturesview', $picturesObj->getVar('pictures_name') . $picturesObj->getEditPicturesLink(), _AM_PROFILE_PICTURES_VIEW_DSC);
-
-  		$picturesObj->displaySingleObject();
-
-  		smart_close_collapsable('picturesview');
 
   		break;
 
@@ -104,7 +84,12 @@ if (in_array($clean_op,$valid_op,true)){
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_pictures_handler);
-  		$objectTable->addColumn(new IcmsPersistableColumn(''));
+  		$objectTable->addColumn(new IcmsPersistableColumn('pictures_id'));
+  		$objectTable->addColumn(new IcmsPersistableColumn('user_id', false, false, 'getPictureSender'));
+  		$objectTable->addColumn(new IcmsPersistableColumn('title'));
+		$objectTable->addColumn(new IcmsPersistableColumn('url', 'center', 330, 'getProfilePicture'));
+
+		$objectTable->addQuickSearch(array('title'));
 
   		$icmsAdminTpl->assign('profile_pictures_table', $objectTable->fetch());
   		$icmsAdminTpl->display('db:profile_admin_pictures.html');
