@@ -6,8 +6,8 @@
 *
 * @copyright	GNU General Public License (GPL)
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.0
-* @author		Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla <contact@impresscms.org>
+* @since		1.3
+* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @package		profile
 * @version		$Id$
 */
@@ -68,31 +68,11 @@ if (in_array($clean_op,$valid_op,true)){
 
   		editvideos($clean_videos_id);
   		break;
-  	case "addvideos":
-          include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-          $controller = new IcmsPersistableController($profile_videos_handler);
-  		$controller->storeFromDefaultForm(_AM_PROFILE_VIDEOS_CREATED, _AM_PROFILE_VIDEOS_MODIFIED);
-
-  		break;
 
   	case "del":
   	    include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
           $controller = new IcmsPersistableController($profile_videos_handler);
   		$controller->handleObjectDeletion();
-
-  		break;
-
-  	case "view" :
-  		$videosObj = $profile_videos_handler->get($clean_videos_id);
-
-  		icms_cp_header();
-  		smart_adminMenu(1, _AM_PROFILE_VIDEOS_VIEW . ' > ' . $videosObj->getVar('videos_name'));
-
-  		smart_collapsableBar('videosview', $videosObj->getVar('videos_name') . $videosObj->getEditVideosLink(), _AM_PROFILE_VIDEOS_VIEW_DSC);
-
-  		$videosObj->displaySingleObject();
-
-  		smart_close_collapsable('videosview');
 
   		break;
 
@@ -104,8 +84,12 @@ if (in_array($clean_op,$valid_op,true)){
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_videos_handler);
-  		$objectTable->addColumn(new IcmsPersistableColumn(''));
+  		$objectTable->addColumn(new IcmsPersistableColumn('video_id'));
+  		$objectTable->addColumn(new IcmsPersistableColumn('uid_owner', false, false, 'getVideoSender'));
+  		$objectTable->addColumn(new IcmsPersistableColumn('video_desc'));
+		$objectTable->addColumn(new IcmsPersistableColumn('youtube_code', 'center', 330, 'getVideoToDisplay'));
 
+		$objectTable->addQuickSearch(array('video_desc', 'youtube_code'));
   		$icmsAdminTpl->assign('profile_videos_table', $objectTable->fetch());
   		$icmsAdminTpl->display('db:profile_admin_videos.html');
   		break;

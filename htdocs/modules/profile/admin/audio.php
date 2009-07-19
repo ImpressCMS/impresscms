@@ -68,34 +68,12 @@ if (in_array($clean_op,$valid_op,true)){
 
   		editaudio($clean_audio_id);
   		break;
-  	case "addaudio":
-          include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-          $controller = new IcmsPersistableController($profile_audio_handler);
-  		$controller->storeFromDefaultForm(_AM_PROFILE_AUDIO_CREATED, _AM_PROFILE_AUDIO_MODIFIED);
-
-  		break;
-
   	case "del":
   	    include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
           $controller = new IcmsPersistableController($profile_audio_handler);
   		$controller->handleObjectDeletion();
 
   		break;
-
-  	case "view" :
-  		$audioObj = $profile_audio_handler->get($clean_audio_id);
-
-  		icms_cp_header();
-  		smart_adminMenu(1, _AM_PROFILE_AUDIO_VIEW . ' > ' . $audioObj->getVar('audio_name'));
-
-  		smart_collapsableBar('audioview', $audioObj->getVar('audio_name') . $audioObj->getEditAudioLink(), _AM_PROFILE_AUDIO_VIEW_DSC);
-
-  		$audioObj->displaySingleObject();
-
-  		smart_close_collapsable('audioview');
-
-  		break;
-
   	default:
 
   		icms_cp_header();
@@ -106,7 +84,6 @@ if (in_array($clean_op,$valid_op,true)){
   		$objectTable = new IcmsPersistableTable($profile_audio_handler);
   		$objectTable->addColumn(new IcmsPersistableColumn(''));
 
-  		$objectTable->addIntroButton('addaudio', 'audio.php?op=mod', _AM_PROFILE_AUDIO_CREATE);
   		$icmsAdminTpl->assign('profile_audio_table', $objectTable->fetch());
   		$icmsAdminTpl->display('db:profile_admin_audio.html');
   		break;

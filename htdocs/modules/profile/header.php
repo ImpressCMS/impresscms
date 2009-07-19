@@ -29,8 +29,6 @@ include_once ICMS_ROOT_PATH."/header.php";
 include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/include/common.php';
 icms_loadLanguageFile('core', 'user');
 global $icmsModuleConfig;
-$controler = icms_getmodulehandler('controler', $dirname, 'profile' );
-$nrSections = $controler->getNumbersSections();
 $myts =& MyTextSanitizer::getInstance();
 $module_name = $icmsModule->getVar('name');
 $xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/css/profile'.(@_ADM_USE_RTL == 1 ? '_rtl':'').'.css');
@@ -54,20 +52,20 @@ icms_makeSmarty(array(
 	'lang_profile' => _MD_PROFILE_PROFILE,
 	'lang_tribes' => _MD_PROFILE_TRIBES,
 	'lang_configs' => _MD_PROFILE_CONFIGSTITLE,
-	'allow_scraps' => $controler->checkPrivilegeBySection('scraps'),
+	'uid_owner' => $isOwner,
+	'owner_uname' => $owner_uname,
+/*	'allow_scraps' => $controler->checkPrivilegeBySection('scraps'),
 	'allow_friends' => $controler->checkPrivilegeBySection('friends'),
 	'allow_tribes' => $controler->checkPrivilegeBySection('tribes'),
 	'allow_pictures' => $controler->checkPrivilegeBySection('pictures'),
 	'allow_videos' => $controler->checkPrivilegeBySection('videos'),
 	'allow_audios' => $controler->checkPrivilegeBySection('audio'),
-	'uid_owner' => $isOwner,
-	'owner_uname' => $owner_uname,
 	'nb_tribes' => $nrSections['nbTribes'],
 	'nb_photos' => $nrSections['nbPhotos'],
 	'nb_videos' => $nrSections['nbVideos'],
 	'nb_scraps' => $nrSections['nbScraps'],
 	'nb_friends' => $nrSections['nbFriends'],
-	'nb_audio' => $nrSections['nbAudio'])); 
+	'nb_audio' => $nrSections['nbAudio']*/)); 
 if ($isAnonym == true && $uid == 0) {
   include_once(ICMS_ROOT_PATH.'/modules/'.$dirname.'/footer.php');
   exit();
