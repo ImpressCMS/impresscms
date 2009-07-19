@@ -157,15 +157,15 @@ define("_CO_PROFILE_FRIENDSHIP_COOL_DSC", " ");
 define("_CO_PROFILE_FRIENDSHIP_FAN", "");
 define("_CO_PROFILE_FRIENDSHIP_FAN_DSC", " ");
 // scraps
-define("_CO_PROFILE_SCRAPS_SCRAP_ID", "Id");
-define("_CO_PROFILE_SCRAPS_SCRAP_ID_DSC", " ");
+define("_CO_PROFILE_SCRAPS_SCRAPS_ID", "Scrap ID");
+define("_CO_PROFILE_SCRAPS_SCRAPS_ID_DSC", " ");
 define("_CO_PROFILE_SCRAPS_SCRAP_TEXT", "Body of your text");
 define("_CO_PROFILE_SCRAPS_SCRAP_TEXT_DSC", " Please write your scrap down.");
-define("_CO_PROFILE_SCRAPS_SCRAP_FROM", "");
+define("_CO_PROFILE_SCRAPS_SCRAP_FROM", "Sender");
 define("_CO_PROFILE_SCRAPS_SCRAP_FROM_DSC", " ");
-define("_CO_PROFILE_SCRAPS_SCRAP_TO", "");
+define("_CO_PROFILE_SCRAPS_SCRAP_TO", "Receiver");
 define("_CO_PROFILE_SCRAPS_SCRAP_TO_DSC", " ");
-define("_CO_PROFILE_SCRAPS_PRIVATE", "");
+define("_CO_PROFILE_SCRAPS_PRIVATE", "Make This Scrap privet?");
 define("_CO_PROFILE_SCRAPS_PRIVATE_DSC", " ");
 // pictures
 define("_CO_PROFILE_PICTURES_PIC_ID", "Id");

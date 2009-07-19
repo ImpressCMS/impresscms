@@ -6,7 +6,7 @@
 * @copyright	GNU General Public License (GPL)
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @since		1.3
-* @author		Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla <contact@impresscms.org>
+* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @package		profile
 * @version		$Id$
 */
@@ -34,12 +34,17 @@ class ProfileScraps extends IcmsPersistableSeoObject {
 		$this->quickInitVar('scrap_from', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('scrap_to', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('private', XOBJ_DTYPE_INT, false);
-		$this->initCommonVar('counter');
-		$this->initCommonVar('dohtml');
+		$this->initCommonVar('counter', false);
+		$this->initCommonVar('dohtml', false, true);
 		$this->initCommonVar('dobr');
-		$this->initCommonVar('doimage');
-		$this->initCommonVar('dosmiley');
-		$this->initCommonVar('docxode');
+		$this->initCommonVar('doimage', false, true);
+		$this->initCommonVar('dosmiley', false, true);
+		$this->initCommonVar('doxcode', false, true);
+
+		$this->setControl('scrap_from', 'user');
+		$this->setControl('private', 'yesno');
+		$this->hideFieldFromForm('scrap_to');
+		$this->setControl('scrap_text', 'dhtmltextarea');
 
 
 		$this->IcmsPersistableSeoObject();
@@ -59,6 +64,19 @@ class ProfileScraps extends IcmsPersistableSeoObject {
 		}
 		return parent :: getVar($key, $format);
 	}
+	function getScrapSender() {
+		return icms_getLinkedUnameFromId($this->getVar('scrap_from', 'e'));
+	}
+
+	function getScrapReceiver() {
+		return icms_getLinkedUnameFromId($this->getVar('scrap_to', 'e'));
+	}
+
+	function getScrapShortenText() {
+		$ret = '<a href="' . ICMS_URL . '/modules/profile/scraps.php?scraps_id=' . $this->id () . '">'.icms_wordwrap($this->getVar('scrap_text', 'e'), 300, true).'</a>';
+		return $ret;
+	}
+
 }
 class ProfileScrapsHandler extends IcmsPersistableObjectHandler {
 
@@ -66,7 +84,7 @@ class ProfileScrapsHandler extends IcmsPersistableObjectHandler {
 	 * Constructor
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'scraps', 'scraps_id', '', '', 'profile');
+		$this->IcmsPersistableObjectHandler($db, 'scraps', 'scraps_id', 'scrap_text', '', 'profile');
 	}
 }
 ?>
