@@ -89,7 +89,7 @@ $modversion['warning'] = _CO_ICMS_WARNING_RC;
 
 /** Administrative information */
 $modversion['hasAdmin'] = 1;
-$modversion['adminindex'] = "admin/admin.php";
+$modversion['adminindex'] = "admin/user.php";
 $modversion['adminmenu'] = "admin/menu.php";
 
 /** Install and update informations */
@@ -310,6 +310,46 @@ $modversion['templates'][] = array(
 $modversion['templates'][] = array(
   'file' => 'profile_admin_category.html',
   'description' => '');
+
+$modversion['templates'][]= array(
+  'file' => 'profile_admin_tribes.html',
+  'description' => 'tribes Admin Index');
+
+$modversion['templates'][]= array(
+  'file' => 'profile_admin_audio.html',
+  'description' => 'audio Admin Index');
+
+$modversion['templates'][]= array(
+  'file' => 'profile_admin_suspensions.html',
+  'description' => 'suspensions Admin Index');
+
+$modversion['templates'][]= array(
+  'file' => 'profile_tribes.html',
+  'description' => 'tribes Index');
+
+$modversion['templates'][]= array(
+  'file' => 'profile_suspensions.html',
+  'description' => 'suspensions Index');
+
+$modversion['templates'][]= array(
+  'file' => 'profile_admin_scraps.html',
+  'description' => 'scraps Admin Index');
+
+$modversion['templates'][]= array(
+  'file' => 'profile_admin_pictures.html',
+  'description' => 'pictures Admin Index');
+
+$modversion['templates'][]= array(
+  'file' => 'profile_admin_videos.html',
+  'description' => 'videos Admin Index');
+
+$modversion['templates'][]= array(
+  'file' => 'profile_admin_tribeuser.html',
+  'description' => 'tribeuser Admin Index');
+
+$modversion['templates'][]= array(
+  'file' => 'profile_admin_friendpetition.html',
+  'description' => 'friendpetition Admin Index');
 
 /** Preferences categories */
 $modversion['configcat'][1] = array(

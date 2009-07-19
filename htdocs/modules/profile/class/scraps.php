@@ -30,7 +30,6 @@ class ProfileScraps extends IcmsPersistableSeoObject {
 		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('scraps_id', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('scrap_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('scrap_text', XOBJ_DTYPE_TXTAREA, true);
 		$this->quickInitVar('scrap_from', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('scrap_to', XOBJ_DTYPE_INT, false);

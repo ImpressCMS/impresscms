@@ -293,6 +293,14 @@ define("_PROFILE_MI_GROUP_VIEW_2", "Registered users can view");
 define("_PROFILE_MI_PROFILE_SOCIAL", "Social profile manager");
 define("_PROFILE_MI_PROFILE_SOCIAL_DESC", "Do you want to use this module as a social profile like facebook?");
 
+define("_MI_PROFILE_AUDIOS", "Audios");
+define("_MI_PROFILE_TRIBES", "Tribes");
+define("_MI_PROFILE_SUSPENSIONS", "Suspensions");
+define("_MI_PROFILE_SCRAPS", "Scraps");
+define("_MI_PROFILE_PICTURES", "Pictures");
+define("_MI_PROFILE_VIDEOS", "Videos");
+define("_MI_PROFILE_FRIENDPETITIONS", "Friendpetitions");
+define("_MI_PROFILE_TRIBEUSERS", "Tribeusers");
 $member_handler = &xoops_gethandler('member');
 $group_list = &$member_handler->getGroupList();
 foreach ($group_list as $key=>$group) {

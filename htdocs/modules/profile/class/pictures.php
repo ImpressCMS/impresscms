@@ -30,7 +30,6 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('pictures_id', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('pic_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('creation_time', XOBJ_DTYPE_TXTBOX, false);
 		$this->quickInitVar('update_time', XOBJ_DTYPE_TXTBOX, false);

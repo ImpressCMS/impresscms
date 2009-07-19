@@ -30,7 +30,6 @@ class ProfileFriendship extends IcmsPersistableObject {
 		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('friendship_id', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('friendship_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('friend1_uid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('friend2_uid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('level', XOBJ_DTYPE_INT, false);

@@ -248,4 +248,101 @@ define("_MA_PROFILE_MP3_IS_NOT_EXISTS","does not exist");
 define("_MA_PROFILE_MP3_IS_NOT_WRITABLE","is not writable");
 define("_MA_PROFILE_MP3_EXISTS_AND_WRITABLE","exists and writable");
 define("_MA_PROFILE_MYSQL4_OR_HIGHER","You must use a version higher than 4.1");
+    // Audio
+define("_AM_PROFILE_AUDIOS", "Audios");
+define("_AM_PROFILE_AUDIOS_DSC", "All audios in the module");
+define("_AM_PROFILE_AUDIO_CREATE", "Add a audio");
+define("_AM_PROFILE_AUDIO", "Audio");
+define("_AM_PROFILE_AUDIO_CREATE_INFO", "Fill-out the following form to create a new audio.");
+define("_AM_PROFILE_AUDIO_EDIT", "Edit this audio");
+define("_AM_PROFILE_AUDIO_EDIT_INFO", "Fill-out the following form in order to edit this audio.");
+define("_AM_PROFILE_AUDIO_MODIFIED", "The audio was successfully modified.");
+define("_AM_PROFILE_AUDIO_CREATED", "The audio has been successfully created.");
+define("_AM_PROFILE_AUDIO_VIEW", "Audio info");
+define("_AM_PROFILE_AUDIO_VIEW_DSC", "Here is the info about this audio.");
+    // Tribes
+define("_AM_PROFILE_TRIBES", "Tribes");
+define("_AM_PROFILE_TRIBES_DSC", "All tribes in the module");
+define("_AM_PROFILE_TRIBES_CREATE", "Add a tribes");
+define("_AM_PROFILE_TRIBE", "Tribe");
+define("_AM_PROFILE_TRIBES_CREATE_INFO", "Fill-out the following form to create a new tribes.");
+define("_AM_PROFILE_TRIBES_EDIT", "Edit this tribes");
+define("_AM_PROFILE_TRIBES_EDIT_INFO", "Fill-out the following form in order to edit this tribes.");
+define("_AM_PROFILE_TRIBES_MODIFIED", "The tribes was successfully modified.");
+define("_AM_PROFILE_TRIBES_CREATED", "The tribes has been successfully created.");
+define("_AM_PROFILE_TRIBES_VIEW", "Tribes info");
+define("_AM_PROFILE_TRIBES_VIEW_DSC", "Here is the info about this tribes.");
+    // Suspensions
+define("_AM_PROFILE_SUSPENSIONS", "Suspensions");
+define("_AM_PROFILE_SUSPENSIONS_DSC", "All suspensions in the module");
+define("_AM_PROFILE_SUSPENSIONS_CREATE", "Add a suspensions");
+define("_AM_PROFILE_SUSPENSION", "Suspension");
+define("_AM_PROFILE_SUSPENSIONS_CREATE_INFO", "Fill-out the following form to create a new suspensions.");
+define("_AM_PROFILE_SUSPENSIONS_EDIT", "Edit this suspensions");
+define("_AM_PROFILE_SUSPENSIONS_EDIT_INFO", "Fill-out the following form in order to edit this suspensions.");
+define("_AM_PROFILE_SUSPENSIONS_MODIFIED", "The suspensions was successfully modified.");
+define("_AM_PROFILE_SUSPENSIONS_CREATED", "The suspensions has been successfully created.");
+define("_AM_PROFILE_SUSPENSIONS_VIEW", "Suspensions info");
+define("_AM_PROFILE_SUSPENSIONS_VIEW_DSC", "Here is the info about this suspensions.");
+    // Scraps
+define("_AM_PROFILE_SCRAPS", "Scraps");
+define("_AM_PROFILE_SCRAPS_DSC", "All scraps in the module");
+define("_AM_PROFILE_SCRAPS_CREATE", "Add a scraps");
+define("_AM_PROFILE_SCRAP", "Scrap");
+define("_AM_PROFILE_SCRAPS_CREATE_INFO", "Fill-out the following form to create a new scraps.");
+define("_AM_PROFILE_SCRAPS_EDIT", "Edit this scraps");
+define("_AM_PROFILE_SCRAPS_EDIT_INFO", "Fill-out the following form in order to edit this scraps.");
+define("_AM_PROFILE_SCRAPS_MODIFIED", "The scraps was successfully modified.");
+define("_AM_PROFILE_SCRAPS_CREATED", "The scraps has been successfully created.");
+define("_AM_PROFILE_SCRAPS_VIEW", "Scraps info");
+define("_AM_PROFILE_SCRAPS_VIEW_DSC", "Here is the info about this scraps.");
+    // Pictures
+define("_AM_PROFILE_PICTURES", "Pictures");
+define("_AM_PROFILE_PICTURES_DSC", "All pictures in the module");
+define("_AM_PROFILE_PICTURES_CREATE", "Add a pictures");
+define("_AM_PROFILE_PICTURE", "Picture");
+define("_AM_PROFILE_PICTURES_CREATE_INFO", "Fill-out the following form to create a new pictures.");
+define("_AM_PROFILE_PICTURES_EDIT", "Edit this pictures");
+define("_AM_PROFILE_PICTURES_EDIT_INFO", "Fill-out the following form in order to edit this pictures.");
+define("_AM_PROFILE_PICTURES_MODIFIED", "The pictures was successfully modified.");
+define("_AM_PROFILE_PICTURES_CREATED", "The pictures has been successfully created.");
+define("_AM_PROFILE_PICTURES_VIEW", "Pictures info");
+define("_AM_PROFILE_PICTURES_VIEW_DSC", "Here is the info about this pictures.");
+    // Videos
+define("_AM_PROFILE_VIDEOS", "Videos");
+define("_AM_PROFILE_VIDEOS_DSC", "All videos in the module");
+define("_AM_PROFILE_VIDEOS_CREATE", "Add a videos");
+define("_AM_PROFILE_VIDEO", "Video");
+define("_AM_PROFILE_VIDEOS_CREATE_INFO", "Fill-out the following form to create a new videos.");
+define("_AM_PROFILE_VIDEOS_EDIT", "Edit this videos");
+define("_AM_PROFILE_VIDEOS_EDIT_INFO", "Fill-out the following form in order to edit this videos.");
+define("_AM_PROFILE_VIDEOS_MODIFIED", "The videos was successfully modified.");
+define("_AM_PROFILE_VIDEOS_CREATED", "The videos has been successfully created.");
+define("_AM_PROFILE_VIDEOS_VIEW", "Videos info");
+define("_AM_PROFILE_VIDEOS_VIEW_DSC", "Here is the info about this videos.");
+
+    // Tribeuser
+define("_AM_PROFILE_TRIBEUSERS", "Tribeusers");
+define("_AM_PROFILE_TRIBEUSERS_DSC", "All tribeusers in the module");
+define("_AM_PROFILE_TRIBEUSER_CREATE", "Add a tribeuser");
+define("_AM_PROFILE_TRIBEUSER", "Tribeuser");
+define("_AM_PROFILE_TRIBEUSER_CREATE_INFO", "Fill-out the following form to create a new tribeuser.");
+define("_AM_PROFILE_TRIBEUSER_EDIT", "Edit this tribeuser");
+define("_AM_PROFILE_TRIBEUSER_EDIT_INFO", "Fill-out the following form in order to edit this tribeuser.");
+define("_AM_PROFILE_TRIBEUSER_MODIFIED", "The tribeuser was successfully modified.");
+define("_AM_PROFILE_TRIBEUSER_CREATED", "The tribeuser has been successfully created.");
+define("_AM_PROFILE_TRIBEUSER_VIEW", "Tribeuser info");
+define("_AM_PROFILE_TRIBEUSER_VIEW_DSC", "Here is the info about this tribeuser.");
+    // Friendpetition
+define("_AM_PROFILE_FRIENDPETITIONS", "Friendpetitions");
+define("_AM_PROFILE_FRIENDPETITIONS_DSC", "All friendpetitions in the module");
+define("_AM_PROFILE_FRIENDPETITION_CREATE", "Add a friendpetition");
+define("_AM_PROFILE_FRIENDPETITION", "Friendpetition");
+define("_AM_PROFILE_FRIENDPETITION_CREATE_INFO", "Fill-out the following form to create a new friendpetition.");
+define("_AM_PROFILE_FRIENDPETITION_EDIT", "Edit this friendpetition");
+define("_AM_PROFILE_FRIENDPETITION_EDIT_INFO", "Fill-out the following form in order to edit this friendpetition.");
+define("_AM_PROFILE_FRIENDPETITION_MODIFIED", "The friendpetition was successfully modified.");
+define("_AM_PROFILE_FRIENDPETITION_CREATED", "The friendpetition has been successfully created.");
+define("_AM_PROFILE_FRIENDPETITION_VIEW", "Friendpetition info");
+define("_AM_PROFILE_FRIENDPETITION_VIEW_DSC", "Here is the info about this friendpetition.");
 ?>

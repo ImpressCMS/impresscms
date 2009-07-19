@@ -1,0 +1,14 @@
+<{if $profile_scraps_title}>
+	<h1><{$profile_scraps_title}></h1>
+<{/if}>
+<{if $profile_scraps_info}>
+	<p><{$profile_scraps_info}></p>
+<{/if}>
+
+<{if $profile_scraps_table}>
+	<{$profile_scraps_table}>
+<{/if}>
+
+<{if $addscraps}>
+	<{includeq file='db:system_common_form.html' form=$addscraps}>
+<{/if}>

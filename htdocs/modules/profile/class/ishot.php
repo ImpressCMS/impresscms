@@ -30,7 +30,6 @@ class ProfileIshot extends IcmsPersistableObject {
 		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('ishot_id', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('ishot_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('uid_voter', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('uid_vote', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('ishot', XOBJ_DTYPE_INT, false);

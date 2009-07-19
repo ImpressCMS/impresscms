@@ -14,26 +14,58 @@
  * @version         $Id$
  */
 
-$adminmenu[7]['title'] = _PROFILE_MI_INDEX;
-$adminmenu[7]['link'] = 'admin/admin.php';
-$adminmenu[1]['title'] = _PROFILE_MI_USERS;
-$adminmenu[1]['link'] = 'admin/user.php';
-$adminmenu[2]['title'] = _AM_PROFILE_CATEGORYS;
-$adminmenu[2]['link'] = 'admin/category.php';
-$adminmenu[3]['title'] = _AM_PROFILE_FIELDS;
-$adminmenu[3]['link'] = 'admin/field.php';
-$adminmenu[4]['title'] = _AM_PROFILE_REGSTEPS;
-$adminmenu[4]['link'] = 'admin/regstep.php';
-$adminmenu[5]['title'] = _PROFILE_MI_PERMISSIONS;
-$adminmenu[5]['link'] = 'admin/permissions.php';
+
+$i = 0;
+
+$i++;
+$adminmenu[$i]['title'] = _PROFILE_MI_USERS;
+$adminmenu[$i]['link'] = 'admin/user.php';
+$i++;
+$adminmenu[$i]['title'] = _AM_PROFILE_CATEGORYS;
+$adminmenu[$i]['link'] = 'admin/category.php';
+$i++;
+$adminmenu[$i]['title'] = _AM_PROFILE_FIELDS;
+$adminmenu[$i]['link'] = 'admin/field.php';
+$i++;
+$adminmenu[$i]['title'] = _AM_PROFILE_REGSTEPS;
+$adminmenu[$i]['link'] = 'admin/regstep.php';
+$i++;
+$adminmenu[$i]['title'] = _PROFILE_MI_PERMISSIONS;
+$adminmenu[$i]['link'] = 'admin/permissions.php';
+$i++;
+$adminmenu[$i]['title'] = _MI_PROFILE_AUDIOS;
+$adminmenu[$i]['link'] = 'admin/audio.php';
+$i++;
+$adminmenu[$i]['title'] = _MI_PROFILE_TRIBES;
+$adminmenu[$i]['link'] = 'admin/tribes.php';
+$i++;
+$adminmenu[$i]['title'] = _MI_PROFILE_SUSPENSIONS;
+$adminmenu[$i]['link'] = 'admin/suspensions.php';
+$i++;
+$adminmenu[$i]['title'] = _MI_PROFILE_SCRAPS;
+$adminmenu[$i]['link'] = 'admin/scraps.php';
+$i++;
+$adminmenu[$i]['title'] = _MI_PROFILE_PICTURES;
+$adminmenu[$i]['link'] = 'admin/pictures.php';
+$i++;
+$adminmenu[$i]['title'] = _MI_PROFILE_VIDEOS;
+$adminmenu[$i]['link'] = 'admin/videos.php';
+$i++;
+$adminmenu[$i]['title'] = _MI_PROFILE_TRIBEUSERS;
+$adminmenu[$i]['link'] = 'admin/tribeuser.php';
+$i++;
+$adminmenu[$i]['title'] = _MI_PROFILE_FRIENDPETITIONS;
+$adminmenu[$i]['link'] = 'admin/friendpetition.php';
+
+
 $gperm =& xoops_gethandler ( 'groupperm' );
 $icmsUser = $GLOBALS['xoopsUser'];
 $ugroups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 $agroups = $gperm->getGroupIds('system_admin',7); //ICMS_SYSTEM_BLOCK constant not available?
 if (array_intersect($ugroups, $agroups)) {
-$adminmenu[6]['title'] = _PROFILE_MI_FINDUSER;
-$adminmenu[6]['link'] = '../system/admin.php?fct=findusers';
-//$adminmenu[6]['link'] = 'admin/finduser.php'; // This one is removed because feature is at this stage incomplete.
+$i++;
+$adminmenu[$i]['title'] = _PROFILE_MI_FINDUSER;
+$adminmenu[$i]['link'] = '../system/admin.php?fct=findusers';
 }
 global $icmsModule;
 if (isset($icmsModule)) {

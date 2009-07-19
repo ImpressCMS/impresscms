@@ -30,7 +30,6 @@ class ProfileConfigs extends IcmsPersistableObject {
 		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('configs_id', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('config_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('config_uid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('pictures', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('audios', XOBJ_DTYPE_INT, false);

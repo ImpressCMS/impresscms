@@ -30,7 +30,6 @@ class ProfileFriendpetition extends IcmsPersistableObject {
 		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('friendpetition_id', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('friendpet_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('petitioner_uid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('petioned_uid', XOBJ_DTYPE_INT, true);
 
