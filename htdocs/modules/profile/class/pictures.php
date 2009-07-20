@@ -176,14 +176,14 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	* @param int $pictheight the height in pixels that the pic will have
 	* @return nothing
 	*/	
-	function makeAvatar($img) {
+	function makeAvatar($img, $uid) {
 		global $icmsConfigUser;
 		$path = pathinfo($img);
 		$prefix = date();
-		$picname = $prefix.'_'.$path['basename'];
-		$profile_user_handler = icms_getmoduleHandler('user');
+		$user_avatar = $prefix.'_'.$path['basename'];
 		imageResizer($img, $icmsConfigUser['avatar_width'], $icmsConfigUser['avatar_height'], false, $prefix);
-		$profile_user_handler->setVar('user_avatar', $picname);
+		$sql = sprintf("UPDATE %s SET user_avatar = %s WHERE uid = '%u'", $this->db->prefix('users'), $user_avatar, intval($uid));
+		$this->query($sql);
 	}
 	
 	
