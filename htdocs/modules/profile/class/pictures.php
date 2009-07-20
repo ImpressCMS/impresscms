@@ -23,7 +23,7 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 	/**
 	 * Constructor
 	 *
-	 * @param object $handler ProfilePostHandler object
+	 * @param object $handler ProfilePictureHandler object
 	 */
 	public function __construct(& $handler) {
 		global $icmsConfig;
@@ -76,6 +76,62 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 	function getPictureSender() {
 		return icms_getLinkedUnameFromId($this->getVar('user_id', 'e'));
 	}
+	function getPicturePrivate() {
+		return ;
+	}
+	/**
+	 * Check to see wether the current user can edit or delete this picture
+	 *
+	 * @return bool true if he can, false if not
+	 */
+	function userCanEditAndDelete() {
+		global $icmsUser, $profile_isAdmin;
+		if (!is_object($icmsUser)) {
+			return false;
+		}
+		if ($profile_isAdmin) {
+			return true;
+		}
+		return $this->getVar('user_id', 'e') == $icmsUser->uid();
+	}
+
+	/**
+	 * Check to see wether the current user can view this picture
+	 *
+	 * @return bool true if he can, false if not
+	 */
+	function userCanView() {
+		global $icmsUser, $profile_isAdmin;
+		if (!is_object($icmsUser)) {
+			return false;
+		}
+		if ($profile_isAdmin) {
+			return true;
+		}
+		if($this->getVar('private', 'e') == 0 ){
+			return true;
+		}
+		return $this->getVar('user_id', 'e') == $icmsUser->uid();
+	}
+
+	/**
+	 * Overridding IcmsPersistable::toArray() method to add a few info
+	 *
+	 * @return array of picture info
+	 */
+	function toArray() {
+		$ret = parent :: toArray();
+		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
+		$ret['picture_content'] = $this->getProfilePicture();
+		$ret['picture_title'] = $this->getVar('title','e');
+		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
+		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
+		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
+		$ret['userCanView'] = $this->userCanView();
+		$ret['picture_senderid'] = $this->getVar('user_id','e');
+		$ret['picture_sender_link'] = $this->getPictureSender();
+		return $ret;
+	}
 }
 class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 
@@ -88,6 +144,67 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		$this->setUploaderConfig(false, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), $icmsModuleConfig['maxfilesize'], $icmsModuleConfig['max_original_width'], $icmsModuleConfig['max_original_height']);
 	}
 	
+
+	/**
+	 * Create the criteria that will be used by getPictures and getPicturesCount
+	 *
+	 * @param int $start to which record to start
+	 * @param int $limit limit of pictures to return
+	 * @param int $user_id if specifid, only the pictures of this user will be returned
+	 * @param int $picture_id ID of a single picture to retrieve
+	 * @return CriteriaCompo $criteria
+	 */
+	function getPicturesCriteria($start = 0, $limit = 0, $user_id = false, $picture_id = false) {
+		global $icmsUser;
+
+		$criteria = new CriteriaCompo();
+		if ($start) {
+			$criteria->setStart($start);
+		}
+		if ($limit) {
+			$criteria->setLimit(intval($limit));
+		}
+		$criteria->setSort('creation_time');
+		$criteria->setOrder('DESC');
+
+		if (!is_object($icmsUser) || (is_object($icmsUser) && !$icmsUser->isAdmin())) {
+			$criteria->add(new Criteria('private', false));
+		}
+		if ($user_id) {
+			$criteria->add(new Criteria('user_id', $user_id));
+		}
+		if ($picture_id) {
+			$criteria->add(new Criteria('pictures_id', $picture_id));
+		}
+		return $criteria;
+	}
+
+	/**
+	 * Get single picture object
+	 *
+	 * @param int $pictures_id
+	 * @return object ProfilePicture object
+	 */
+	function getPicture($pictures_id) {
+		$ret = $this->getPictures(0, 0, false, $pictures_id);
+		return isset($ret[$pictures_id]) ? $ret[$pictures_id] : false;
+	}
+
+	/**
+	 * Get pictures as array, ordered by creation_time DESC
+	 *
+	 * @param int $start to which record to start
+	 * @param int $limit max pictures to display
+	 * @param int $user_id if specifid, only the picture of this user will be returned
+	 * @param int $pictures_id ID of a single picture to retrieve
+	 * @return array of pictures
+	 */
+	function getPictures($start = 0, $limit = 0, $user_id = false, $pictures_id = false) {
+		$criteria = $this->getPicturesCriteria($start, $limit, $user_id, $pictures_id);
+		$ret = $this->getObjects($criteria, true, false);
+		return $ret;
+	}
+
 	/**
 	* Resize a picture and save it to $path_upload
 	* 
@@ -189,6 +306,33 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		$this->query($sql);
 	}
 	
+	/**
+	 * Check wether the current user can submit a new picture or not
+	 *
+	 * @return bool true if he can false if not
+	 */
+	function userCanSubmit() {
+		global $icmsUser;
+		if (!is_object($icmsUser)) {
+			return false;
+		}
+		return true;
+	}
+
+
+	/**
+	 * Update the counter field of the post object
+	 *
+	 * @todo add this in directly in the IPF
+	 * @param int $post_id
+	 *
+	 * @return VOID
+	 */
+	function updateCounter($id) {
+		$sql = 'UPDATE ' . $this->table . ' SET counter = counter + 1 WHERE ' . $this->keyName . ' = ' . $id;
+		$this->query($sql, null, true);
+	}
+
 	/**
 	 * AfterSave event
 	 *

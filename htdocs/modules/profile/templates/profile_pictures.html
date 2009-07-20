@@ -1,0 +1,26 @@
+<{if $profile_picturesform}>
+	<div id="profile-album-form" class="outer">
+		<h2 class="head">
+      		<img src="images/toggle.gif" />&nbsp;
+      		<a href="#" onclick ="jQuery().find('div.profile-album-form').toggle(400);">
+				<{$lang_formtitle}>
+        	</a>
+		</h2>
+      <div class="profile-album-form" style="display: none">
+			<{includeq file='db:system_common_form.html' form=$profile_picturesform}>
+      </div>
+   </div>
+<{/if}>
+<{if $profile_pictures}>
+	<{includeq file='db:profile_single_picture.html'}>
+<{else}>
+	<{foreach item=profile_picture from=$profile_pictures}>
+		<{includeq file='db:profile_single_picture.html'}>
+	<{/foreach}>
+<{/if}>
+
+<{if $icmspersistable_delete_confirm}>
+	<{$icmspersistable_delete_confirm}>
+<{/if}>
+
+

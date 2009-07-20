@@ -248,10 +248,6 @@ $modversion['templates'][] = array(
   'description' => '');
 
 $modversion['templates'][] = array(
-  'file' => 'profile_album.html',
-  'description' => '');
-
-$modversion['templates'][] = array(
   'file' => 'profile_notifications.html',
   'description' => '');
 
@@ -338,6 +334,14 @@ $modversion['templates'][]= array(
 $modversion['templates'][]= array(
   'file' => 'profile_admin_pictures.html',
   'description' => 'pictures Admin Index');
+
+$modversion['templates'][]= array(
+  'file' => 'profile_single_picture.html',
+  'description' => 'picture Index');
+
+$modversion['templates'][]= array(
+  'file' => 'profile_pictures.html',
+  'description' => 'pictures Index');
 
 $modversion['templates'][]= array(
   'file' => 'profile_admin_videos.html',
