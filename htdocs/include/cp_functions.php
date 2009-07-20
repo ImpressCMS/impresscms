@@ -33,7 +33,7 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
 function icms_cp_header(){
-  	global $icmsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule, $xoopsModule, $icmsUser, $xoopsOption, $xoTheme, $icmsConfigMultilang, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
+  	global $icmsConfig, $xoopsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule, $xoopsModule, $icmsUser, $xoopsUser, $xoopsTpl, $xoopsOption, $xoTheme, $icmsConfigMultilang, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
 	$xoopsLogger->stopTime( 'Module init' );
 	$xoopsLogger->startTime( 'ImpressCMS CP Output Init' );
 
@@ -107,7 +107,12 @@ function icms_cp_header(){
 	$xoTheme->addScript( ICMS_URL.'/libraries/jquery/ui/ui.core.js', array( 'type' => 'text/javascript' ) );
 	$xoTheme->addScript( ICMS_URL.'/libraries/jquery/ui/ui.dialog.js', array( 'type' => 'text/javascript' ) );
 	$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/ui/themes/base/ui.all.css', array('media' => 'screen'));
-	
+	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
+	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom.css');
+	if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom-ie.css');}
+	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.js');
+	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/lightbox.js');
+
 /*	$jscript = '';
  	if(class_exists('XoopsFormDhtmlTextArea')){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
@@ -327,7 +332,7 @@ function xoops_cp_header(){
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function icms_cp_footer(){
-	global $icmsConfig, $xoopsOption, $xoopsLogger, $icmsUser, $xoTheme, $icmsTpl ,$icmsConfigMultilang, $icmsLibrariesHandler, $xoopsModule, $icmsModule;
+	global $icmsConfig, $xoopsConfig, $xoopsOption, $xoopsLogger, $icmsUser, $xoopsUser, $xoopsTpl, $xoTheme, $icmsTpl ,$icmsConfigMultilang, $icmsLibrariesHandler, $xoopsModule, $icmsModule;
 	$xoopsLogger->stopTime( 'Module display' );
 
 	if (!headers_sent()) {

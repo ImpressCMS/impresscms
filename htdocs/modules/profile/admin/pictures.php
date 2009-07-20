@@ -29,10 +29,7 @@ function editpictures($pictures_id = 0)
 		$sform->assign($icmsAdminTpl);
 
 	} else {
-		$icmsModule->displayAdminMenu(0, _AM_PROFILE_PICTURES . " > " . _CO_ICMS_CREATINGNEW);
-		$sform = $picturesObj->getForm(_AM_PROFILE_PICTURES_CREATE, 'addpictures');
-		$sform->assign($icmsAdminTpl);
-
+		redirect_header(PROFILE_ADMIN_URL.'pictures.php');
 	}
 	$icmsAdminTpl->display('db:profile_admin_pictures.html');
 }
@@ -67,6 +64,13 @@ if (in_array($clean_op,$valid_op,true)){
   		icms_cp_header();
 
   		editpictures($clean_pictures_id);
+  		break;
+
+  	case "addpictures":
+          include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+          $controller = new IcmsPersistableController($profile_pictures_handler);
+  		$controller->storeFromDefaultForm(_AM_PROFILE_PICTURES_CREATED, _AM_PROFILE_PICTURES_MODIFIED);
+
   		break;
 
   	case "del":

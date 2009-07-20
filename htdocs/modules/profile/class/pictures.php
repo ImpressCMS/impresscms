@@ -32,7 +32,7 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 
 		$this->quickInitVar('pictures_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX, true);
-		$this->quickInitVar('creation_time', XOBJ_DTYPE_TXTBOX, false);
+		$this->quickInitVar('creation_time', XOBJ_DTYPE_LTIME, false);
 		$this->quickInitVar('update_time', XOBJ_DTYPE_TXTBOX, false);
 		$this->quickInitVar('user_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('url', XOBJ_DTYPE_TXTBOX, true);
@@ -67,7 +67,9 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 		return parent :: getVar($key, $format);
 	}
 	function getProfilePicture() {
-		$ret = '<img src="' . ICMS_URL . '/uploads/profile/pictures/' . $this->getVar ( 'url' ) . '" />';
+		$ret = '<a href="' . ICMS_URL . '/uploads/profile/pictures/resized_' . $this->getVar ( 'url' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '">
+          <img class="thumb" src="' . ICMS_URL . '/uploads/profile/pictures/thumb_' . $this->getVar ( 'url' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '" />
+        </a>';
 		return $ret;
 	}
 	
@@ -96,7 +98,8 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	* @param text $prefix The prefix used to recognize files and avoid multiple files.
 	* @return nothing
 	*/	
-	function imageResizer($img, $width=320, $height=240, $path_upload=ICMS_UPLOAD_PATH, $prefix=time()) {
+	function imageResizer($img, $width=320, $height=240, $path_upload=ICMS_UPLOAD_PATH, $prefix='') {
+		$prefix = (isset($prefix) && $prefix != '')?$prefix:time();
 		$path = pathinfo($img);
 		$img = wiImage::load($img);
 		$img->resize($width, $height)->saveToFile($path_upload.'/'.$prefix.'_'.$path['basename']);
@@ -114,8 +117,8 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	* @return nothing
 	*/	
 	function resizeImage($img, $thumbwidth, $thumbheight, $pictwidth, $pictheight,$path_upload) {
-		imageResizer($img, $thumbwidth, $thumbheight, $path_upload, 'thumb');
-		imageResizer($img, $pictwidth, $pictheight, $path_upload, 'resized');
+		$this->imageResizer($img, $thumbwidth, $thumbheight, $path_upload, 'thumb');
+		$this->imageResizer($img, $pictwidth, $pictheight, $path_upload, 'resized');
 	}
 	
 	function getLastPictures($limit)
@@ -181,11 +184,27 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		$path = pathinfo($img);
 		$prefix = date();
 		$user_avatar = $prefix.'_'.$path['basename'];
-		imageResizer($img, $icmsConfigUser['avatar_width'], $icmsConfigUser['avatar_height'], false, $prefix);
+		$this->imageResizer($img, $icmsConfigUser['avatar_width'], $icmsConfigUser['avatar_height'], false, $prefix);
 		$sql = sprintf("UPDATE %s SET user_avatar = %s WHERE uid = '%u'", $this->db->prefix('users'), $user_avatar, intval($uid));
 		$this->query($sql);
 	}
 	
-	
+	/**
+	 * AfterSave event
+	 *
+	 * Event automatically triggered by IcmsPersistable Framework after the object is inserted or updated
+	 *
+	 * @param object $obj ProfilePictures object
+	 * @return true
+	 */
+	function afterSave(& $obj) {
+		global $icmsModuleConfig;
+		// Resizing Images!
+		$imgPath = ICMS_UPLOAD_PATH.'/profile/pictures/';
+		$img = $imgPath . $obj->getVar('url');
+		$this->resizeImage($img, $icmsModuleConfig['thumb_width'], $icmsModuleConfig['thumb_height'], $icmsModuleConfig['resized_width'], $icmsModuleConfig['resized_height'],$imgPath);
+		return true;
+	}
+
 }
 ?>
