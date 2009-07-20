@@ -16,6 +16,7 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 // including the IcmsPersistabelSeoObject
 include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
 include_once(ICMS_ROOT_PATH . '/modules/profile/include/functions.php');
+include ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.inc.php';
 
 class ProfilePictures extends IcmsPersistableSeoObject {
 
@@ -89,6 +90,22 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	* Resize a picture and save it to $path_upload
 	* 
 	* @param text $img the path to the file
+	* @param int $width the width in pixels that the pic will have
+	* @param int $height the height in pixels that the pic will have
+	* @param text $path_upload The path to where the files should be saved after resizing
+	* @param text $prefix The prefix used to recognize files and avoid multiple files.
+	* @return nothing
+	*/	
+	function imageResizer($img, $width=320, $height=240, $path_upload=ICMS_UPLOAD_PATH, $prefix=time()) {
+		$path = pathinfo($img);
+		$img = wiImage::load($img);
+		$img->resize($width, $height)->saveToFile($path_upload.'/'.$prefix.'_'.$path['basename']);
+	}
+	
+	/**
+	* Resize a picture and save it to $path_upload
+	* 
+	* @param text $img the path to the file
 	* @param text $path_upload The path to where the files should be saved after resizing
 	* @param int $thumbwidth the width in pixels that the thumbnail will have
 	* @param int $thumbheight the height in pixels that the thumbnail will have
@@ -97,71 +114,29 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	* @return nothing
 	*/	
 	function resizeImage($img, $thumbwidth, $thumbheight, $pictwidth, $pictheight,$path_upload) {
-		
-		
-		$img2 = $img;
-		$path = pathinfo($img);
-		$img=imagecreatefromjpeg($img);
-		$xratio = $thumbwidth/(imagesx($img));
-		$yratio = $thumbheight/(imagesy($img));
-
-		if($xratio < 1 || $yratio < 1) {
-			if($xratio < $yratio)
-				$resized = imagecreatetruecolor($thumbwidth,floor(imagesy($img)*$xratio));
-			else
-				$resized = imagecreatetruecolor(floor(imagesx($img)*$yratio), $thumbheight);
-				imagecopyresampled($resized, $img, 0, 0, 0, 0, imagesx($resized)+1,imagesy($resized)+1,imagesx($img),imagesy($img));
-				imagejpeg($resized,$path_upload."/thumb_".$path["basename"]);
-				imagedestroy($resized);
-			}               
-		else{
-			imagejpeg($img,$path_upload."/thumb_".$path["basename"]);
-		}
-		
-		imagedestroy($img);
-		$path2 = pathinfo($img2);
-		$img2=imagecreatefromjpeg($img2);
-		$xratio2 = $pictwidth/(imagesx($img2));
-		$yratio2 = $pictheight/(imagesy($img2));
-		if($xratio2 < 1 || $yratio2 < 1) {
-
-			if($xratio2 < $yratio2)
-				$resized2 = imagecreatetruecolor($pictwidth,floor(imagesy($img2)*$xratio2));
-			else
-				$resized2 = imagecreatetruecolor(floor(imagesx($img2)*$yratio2), $pictheight);
-		
-			imagecopyresampled($resized2, $img2, 0, 0, 0, 0, imagesx($resized2)+1,imagesy($resized2)+1,imagesx($img2),imagesy($img2));
-			imagejpeg($resized2,$path_upload."/resized_".$path2["basename"]);
-			imagedestroy($resized2);
-		}              
-		else
-		{
-		imagejpeg($img2,$path_upload."/resized_".$path2["basename"]);
-		}
-		imagedestroy($img2);/* 	*/	
+		imageResizer($img, $thumbwidth, $thumbheight, $path_upload, 'thumb');
+		imageResizer($img, $pictwidth, $pictheight, $path_upload, 'resized');
 	}
-	
-	
 	
 	function getLastPictures($limit)
 	{
 		$ret = array();
 		
-		$sql = 'SELECT uname, t.uid_owner, t.url FROM '.$this->db->prefix('profile_images').' AS t, '.$this->db->prefix('users');
+		$sql = 'SELECT uname, t.user_id, t.url FROM '.$this->table.' AS t, '.$this->db->prefix('users');
 		
 		$sql .= " WHERE uid_owner = uid AND private=0 ORDER BY cod_img DESC" ;
 		$result = $this->db->query($sql, $limit, 0);
-		$vetor = array();
+		$answer = array();
 		$i=0;
 		while ($myrow = $this->db->fetchArray($result)) {
 			
-			$vetor[$i]['uid_voted']= $myrow['uid_owner'];
-			$vetor[$i]['uname']= $myrow['uname'];
-			$vetor[$i]['user_avatar']= $myrow['url'];
+			$answer[$i]['uid_voted']= $myrow['uid_owner'];
+			$answer[$i]['uname']= $myrow['uname'];
+			$answer[$i]['user_avatar']= $myrow['url'];
 			$i++;
 		}
 				
-		return $vetor;
+		return $answer;
 
 	}
 	
@@ -169,23 +144,23 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	{
 		$ret = array();
 		
-		$sql = 'SELECT uname, t.uid_owner, t.url, t.title FROM '.$this->db->prefix('profile_images').' AS t, '.$this->db->prefix('users');
+		$sql = 'SELECT uname, t.user_id, t.url, t.title FROM '.$this->table.' AS t, '.$this->db->prefix('users');
 		
 		$sql .= " WHERE uid_owner = uid AND private=0 ORDER BY cod_img DESC" ;
 		$result = $this->db->query($sql, $limit, 0);
-		$vetor = array();
+		$answer = array();
 		$i=0;
 		while ($myrow = $this->db->fetchArray($result)) {
 			
-			$vetor[$i]['uid_voted']= $myrow['uid_owner'];
-			$vetor[$i]['uname']= $myrow['uname'];
-			$vetor[$i]['img_filename']= $myrow['url'];
-			$vetor[$i]['caption']= $myrow['title'];
+			$answer[$i]['uid_voted']= $myrow['uid_owner'];
+			$answer[$i]['uname']= $myrow['uname'];
+			$answer[$i]['img_filename']= $myrow['url'];
+			$answer[$i]['caption']= $myrow['title'];
 			
 			$i++;
 		}
 				
-		return $vetor;
+		return $answer;
 
 	}
 	
@@ -201,48 +176,14 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	* @param int $pictheight the height in pixels that the pic will have
 	* @return nothing
 	*/	
-	function makeAvatar($img, $width, $height,$path_upload) {
-	
-		$img2 = $img;
+	function makeAvatar($img) {
+		global $icmsConfigUser;
 		$path = pathinfo($img);
-		$img=imagecreatefromjpeg($img);
-		$xratio = $thumbwidth/(imagesx($img));
-		$yratio = $thumbheight/(imagesy($img));
-
-		if($xratio < 1 || $yratio < 1) {
-			if($xratio < $yratio)
-				$resized = imagecreatetruecolor($thumbwidth,floor(imagesy($img)*$xratio));
-			else
-				$resized = imagecreatetruecolor(floor(imagesx($img)*$yratio), $thumbheight);
-				imagecopyresampled($resized, $img, 0, 0, 0, 0, imagesx($resized)+1,imagesy($resized)+1,imagesx($img),imagesy($img));
-				imagejpeg($resized,$path_upload."/thumb_".$path["basename"]);
-				imagedestroy($resized);
-			}               
-		else{
-			imagejpeg($img,$path_upload."/thumb_".$path["basename"]);
-		}
-		
-		imagedestroy($img);
-		$path2 = pathinfo($img2);
-		$img2=imagecreatefromjpeg($img2);
-		$xratio2 = $pictwidth/(imagesx($img2));
-		$yratio2 = $pictheight/(imagesy($img2));
-		if($xratio2 < 1 || $yratio2 < 1) {
-
-			if($xratio2 < $yratio2)
-				$resized2 = imagecreatetruecolor($pictwidth,floor(imagesy($img2)*$xratio2));
-			else
-				$resized2 = imagecreatetruecolor(floor(imagesx($img2)*$yratio2), $pictheight);
-		
-			imagecopyresampled($resized2, $img2, 0, 0, 0, 0, imagesx($resized2)+1,imagesy($resized2)+1,imagesx($img2),imagesy($img2));
-			imagejpeg($resized2,$path_upload."/resized_".$path2["basename"]);
-			imagedestroy($resized2);
-		}              
-		else
-		{
-		imagejpeg($img2,$path_upload."/resized_".$path2["basename"]);
-		}
-		imagedestroy($img2);/* 	*/	
+		$prefix = date();
+		$picname = $prefix.'_'.$path['basename'];
+		$profile_user_handler = icms_getmoduleHandler('user');
+		imageResizer($img, $icmsConfigUser['avatar_width'], $icmsConfigUser['avatar_height'], false, $prefix);
+		$profile_user_handler->setVar('user_avatar', $picname);
 	}
 	
 	
