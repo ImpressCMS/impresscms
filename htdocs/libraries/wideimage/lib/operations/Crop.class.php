@@ -21,8 +21,41 @@
 	{
 		function execute($img, $left, $top, $width, $height)
 		{
+			$left = wiDimension::fix($img->getWidth(), $left);
+			$top = wiDimension::fix($img->getHeight(), $top);
+			
 			$width = wiDimension::fix($img->getWidth(), $width);
+			if ($width > $img->getWidth() - $left)
+				$width = $img->getWidth() - $left;
+			
 			$height = wiDimension::fix($img->getHeight(), $height);
+			if ($height > $img->getHeight() - $top)
+				$height = $img->getHeight() - $top;
+			
+			if ($left < 0)
+			{
+				$width = $left + $width;
+				$left = 0;
+			}
+			
+			if ($left + $width > $img->getWidth())
+				$width = $img->getWidth() - $left;
+			
+			if ($width < 0)
+				$width = 0;
+			
+			if ($top < 0)
+			{
+				$height = $top + $height;
+				$top = 0;
+			}
+			
+			if ($top + $height > $img->getHeight())
+				$top = $img->getHeight() - $top;
+			
+			if ($height < 0)
+				$height = 0;
+			
 			$new = wiTrueColorImage::create($width, $height);
 			
 			if ($img->isTransparent())

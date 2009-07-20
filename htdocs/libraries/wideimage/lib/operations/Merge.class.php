@@ -19,8 +19,11 @@
 	
 	class wioMerge
 	{
-		function execute($base, $overlay, $x, $y, $pct)
+		function execute($base, $overlay, $left, $top, $pct)
 		{
+			$x = wiDimension::fix($base->getWidth(), $left);
+			$y = wiDimension::fix($base->getHeight(), $top);
+			
 			$result = $base->asTrueColor();
 			$result->alphaBlending(true);
 			$result->saveAlpha(true);

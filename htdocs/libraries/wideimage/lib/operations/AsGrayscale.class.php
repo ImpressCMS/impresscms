@@ -21,8 +21,22 @@
 	{
 		function execute($image)
 		{
+			$palette = $image instanceof wiPaletteImage;
+			$transparent = $image->isTransparent();
+			
+			if ($palette && $transparent)
+				$tci = $image->getTransparentColor();
+			
 			$new = $image->asTrueColor();
 			imagefilter($new->getHandle(), IMG_FILTER_GRAYSCALE);
+			
+			if ($palette)
+			{
+				$new = $new->asPalette();
+				if ($transparent)
+					$new->setTransparentColor($tci);
+			}
+			
 			return $new;
 		}
 	}

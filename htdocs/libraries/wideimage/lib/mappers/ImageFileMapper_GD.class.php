@@ -21,7 +21,7 @@
 	{
 		function load($uri)
 		{
-			return imagecreatefromgd($uri);
+			return @imagecreatefromgd($uri);
 		}
 		
 		function save($handle, $uri = null)

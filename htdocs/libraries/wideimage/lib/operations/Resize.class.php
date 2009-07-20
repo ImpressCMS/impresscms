@@ -18,19 +18,19 @@
   **/
 	
 	class wiInvalidFitMethodException extends wiException {}
+	class wiInvalidResizeDimensionException extends wiException {}
 	
 	class wioResize
 	{
 		protected function prepareDimensions($img, $width, $height, $fit)
 		{
-			if ($width === null)
-				$width = $height;
+			list($width, $height) = wiDimension::fixForResize($img, $width, $height);
+			//echo "w={$img->getWidth()}, h={$img->getHeight()} ... rw=$width, rh=$height ";
+			if ($width === 0 || $height === 0)
+				return array('width' => 0, 'height' => 0);
 			
-			if ($height === null)
-				$height = $width;
-			
-			$width = wiDimension::fix($img->getWidth(), $width);
-			$height = wiDimension::fix($img->getHeight(), $height);
+			if ($fit == null)
+				$fit = 'inside';
 			
 			$dim = array();
 			if ($fit == 'fill')
@@ -57,12 +57,23 @@
 			return $dim;
 		}
 		
-		function execute($img, $width, $height, $fit)
+		/**
+		 *
+		 * @var string $scale 'up', 'down' or 'any'
+		 */
+		function execute($img, $width, $height, $fit, $scale = 'any')
 		{
 			if (!$img instanceof wiImage || !$img->isValid())
 				throw new wiInvalidImageException("Can't resize an invalid image.");
 			
 			$dim = $this->prepareDimensions($img, $width, $height, $fit);
+			if (($scale === 'down' && ($dim['width'] >= $img->getWidth() && $dim['height'] >= $img->getHeight())) ||
+				($scale === 'up' && ($dim['width'] <= $img->getWidth() && $dim['height'] <= $img->getHeight())))
+				$dim = array('width' => $img->getWidth(), 'height' => $img->getHeight());
+			
+			if ($dim['width'] <= 0 || $dim['height'] <= 0)
+				throw new wiInvalidResizeDimensionException("Both dimensions must be larger than 0.");
+			
 			$new = wiTrueColorImage::create($dim['width'], $dim['height']);
 			
 			if ($img->isTransparent())

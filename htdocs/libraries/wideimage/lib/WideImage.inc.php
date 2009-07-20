@@ -29,4 +29,5 @@
 	
 	require_once(WI_LIB_PATH . 'fonts/Font_TTF.class.php');
 	require_once(WI_LIB_PATH . 'fonts/Font_GDF.class.php');
+	require_once(WI_LIB_PATH . 'fonts/Font_PS.class.php');
 ?>

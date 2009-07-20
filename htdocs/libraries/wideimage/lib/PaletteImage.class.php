@@ -19,6 +19,13 @@
 	
 	class wiPaletteImage extends wiImage
 	{
+		/**
+		 * Create a palette image
+		 *
+		 * @param int $width
+		 * @param int $height
+		 * @return wiPaletteImage
+		 */
 		static function create($width, $height)
 		{
 			return new wiPaletteImage(imagecreate($width, $height));
@@ -34,7 +41,7 @@
 			return false;
 		}
 		
-		function asPalette()
+		function asPalette($nColors = 255, $dither = null, $matchPalette = true)
 		{
 			return $this->copy();
 		}

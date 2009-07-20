@@ -24,11 +24,11 @@
 		static protected $mappers = array();
 		
 		static protected $mimeTable = array(
-			'image/jpg' => 'jpeg', 
-			'image/jpeg' => 'jpeg', 
-			'image/pjpeg' => 'jpeg', 
-			'image/gif' => 'gif', 
-			'image/png' => 'png' 
+			'image/jpg' => 'JPEG', 
+			'image/jpeg' => 'JPEG', 
+			'image/pjpeg' => 'JPEG', 
+			'image/gif' => 'GIF', 
+			'image/png' => 'PNG' 
 			);
 		
 		static function selectMapper($uri, $format = null)
@@ -63,7 +63,9 @@
 			// mime-type match
 			if (preg_match('~[a-z]*/[a-z-]*~i', $format))
 				if (isset(self::$mimeTable[strtolower($format)]))
+				{
 					return self::$mimeTable[strtolower($format)];
+				}
 			
 			// clean the string
 			$format = strtoupper(preg_replace('/[^a-z0-9_-]/i', '', $format));

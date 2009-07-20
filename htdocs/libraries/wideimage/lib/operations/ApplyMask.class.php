@@ -21,6 +21,9 @@
 	{
 		function execute($image, $mask, $left = 0, $top = 0)
 		{
+			$left = wiDimension::fix($image->getWidth(), $left);
+			$top = wiDimension::fix($image->getHeight(), $top);
+			
 			$width = $image->getWidth();
 			if ($width > $mask->getWidth())
 				$width = $mask->getWidth();

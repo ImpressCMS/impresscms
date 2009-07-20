@@ -21,7 +21,7 @@
 	{
 		function load($uri)
 		{
-			return imagecreatefromjpeg($uri);
+			return @imagecreatefromjpeg($uri);
 		}
 		
 		function save($handle, $uri = null, $quality = 100)

@@ -26,6 +26,13 @@
 			$this->saveAlpha(true);
 		}
 		
+		/**
+		 * Create a true-color image
+		 *
+		 * @param int $width
+		 * @param int $height
+		 * @return wiTrueColorImage
+		 */
 		static function create($width, $height)
 		{
 			return new wiTrueColorImage(imagecreatetruecolor($width, $height));

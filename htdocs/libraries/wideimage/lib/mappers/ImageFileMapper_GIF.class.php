@@ -21,7 +21,7 @@
 	{
 		function load($uri)
 		{
-			return imagecreatefromgif($uri);
+			return @imagecreatefromgif($uri);
 		}
 		
 		function save($handle, $uri = null)

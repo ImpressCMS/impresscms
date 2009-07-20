@@ -17,23 +17,35 @@
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
   **/
 	
-	class wiFont_GDF
+	class wiFont_PS
 	{
-		protected $font;
-		protected $color;
+		public $size;
+		public $color;
+		public $handle;
 		
-		function __construct($face, $color)
+		function __construct($file, $size, $color, $bgcolor = null)
 		{
-			if (is_int($face) && $face >= 1 && $face <= 5)
-				$this->font = $face;
-			else
-				$this->font = imageloadfont($face);
+			$this->handle = imagepsloadfont($file);
+			$this->size = $size;
 			$this->color = $color;
+			if ($bgcolor === null)
+				$this->bgcolor = $color;
+			else
+				$this->color = $color;
 		}
 		
 		function writeText($image, $x, $y, $text, $angle = 0)
 		{
-			imagestring($image->getHandle(), $this->font, $x, $y, $text, $this->color);
+			if ($image->isTrueColor())
+				$image->alphaBlending(true);
+			
+			imagepstext($image->getHandle(), $text, $this->handle, $this->size, $this->color, $this->bgcolor, $x, $y, 0, 0, $angle, 4);
+		}
+		
+		function __destruct()
+		{
+			imagepsfreefont($this->handle);
+			$this->handle = null;
 		}
 	}
 	

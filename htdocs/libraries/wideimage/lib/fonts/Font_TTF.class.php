@@ -30,24 +30,6 @@
 			$this->color = $color;
 		}
 		
-		function getBoundsRect($text)
-		{
-			$box = imagettfbbox($this->size, 0, $this->face, $text);
-			
-			$rect = array(
-				'offset_x' => - $box[0] - 1,
-				'offset_y' => abs($box[7]) - 1,
-				'width' => abs($box[2] - $box[0]),
-				'height' => abs($box[1] - $box[7])
-				);
-			/**
-			print_r($box);
-			print_r($rect);
-			exit;
-			/**/
-			return $rect;
-		}
-		
 		function writeText($image, $x, $y, $text, $angle = 0)
 		{
 			if ($image->isTrueColor())
