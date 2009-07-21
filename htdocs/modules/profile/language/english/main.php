@@ -16,12 +16,8 @@
  */
 
 define("_PROFILE_MA_ERRORDURINGSAVE", "Error during save");
-//define('_PROFILE_MA_USERREG','User Registration');
-//define('_PROFILE_MA_NICKNAME','Username');
 define('_PROFILE_MA_REALNAME', 'Real Name');
 define('_PROFILE_MA_EMAIL','Email');
-//define('_PROFILE_MA_ALLOWVIEWEMAIL','Allow other users to view my email address');
-//define('_PROFILE_MA_TIMEZONE','Time Zone');
 define('_PROFILE_MA_AVATAR','Avatar');
 define('_PROFILE_MA_VERIFYPASS','Verify Password');
 define('_PROFILE_MA_SUBMIT','Submit');
@@ -29,7 +25,6 @@ define('_PROFILE_MA_USERNAME','Username');
 define('_PROFILE_MA_USERLOGINNAME','Login name');
 define('_PROFILE_MA_FINISH','Finish');
 define('_PROFILE_MA_REGISTERNG','Could not register new user.');
-//define('_PROFILE_MA_MAILOK','Receive occasional email notices <br />from administrators and moderators?');
 define('_PROFILE_MA_DISCLAIMER','Disclaimer');
 define('_PROFILE_MA_IAGREE','I agree to the above');
 define('_PROFILE_MA_UNEEDAGREE', 'Sorry, you have to agree to our disclaimer to get registered.');
@@ -37,8 +32,6 @@ define('_PROFILE_MA_NOREGISTER','Sorry, we are currently closed for new user reg
 define("_PROFILE_MA_NOSTEPSAVAILABLE", "No registration steps are defined");
 define("_PROFILE_MA_REQUIRED", "Required");
 define("_PROFILE_MA_REGISTER_FINISH", "Thanks for registering");
-
-// %s is username. This is a subject for email
 define('_PROFILE_MA_USERKEYFOR','User activation key for %s');
 define('_PROFILE_MA_ACTLOGIN','The account has been activated and can now login with the registered password.');
 define('_PROFILE_MA_ACTKEYNOT','Activation key not correct!');
@@ -48,24 +41,14 @@ define('_PROFILE_MA_YOURREGISTERED','An email containing an user activation key 
 define('_PROFILE_MA_YOURREGMAILNG','You are now registered. However, we were unable to send the activation mail to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please send the webmaster an email notifying him/her of the situation.');
 define('_PROFILE_MA_YOURREGISTERED2','You are now registered.  Please wait for your account to be activated by the adminstrators.  You will receive an email once you are activated.  This could take a while so please be patient.');
 
-// %s is your site name
 define('_PROFILE_MA_NEWUSERREGAT','New user registration at %s');
-// %s is a username
 define('_PROFILE_MA_HASJUSTREG','%s has just registered!');
 
 define('_PROFILE_MA_INVALIDMAIL','ERROR: Invalid email');
 define('_PROFILE_MA_EMAILNOSPACES','ERROR: Email addresses do not contain spaces.');
-//define('_PROFILE_MA_INVALIDNICKNAME','ERROR: Invalid Username');
-//define("_PROFILE_MA_INVALIDDISPLAYNAME", "ERROR: Invalid Displayname");
-//define('_PROFILE_MA_NICKNAMETOOLONG','Username is too long. It must be less than %s characters.');
 define('_PROFILE_MA_DISPLAYNAMETOOLONG','Displayname is too long. It must be less than %s characters.');
-//define('_PROFILE_MA_NICKNAMETOOSHORT','Username is too short. It must be more than %s characters.');
 define('_PROFILE_MA_DISPLAYNAMETOOSHORT','Displayname is too short. It must be more than %s characters.');
-//define('_PROFILE_MA_NAMERESERVED','ERROR: Name is reserved.');
 define('_PROFILE_MA_DISPLAYNAMERESERVED','ERROR: Displayname is reserved.');
-//define('_PROFILE_MA_NICKNAMENOSPACES','There cannot be any spaces in the Username.');
-//define('_PROFILE_MA_DISPLAYNAMENOSPACES','There cannot be any spaces in the Displayname.');
-//define('_PROFILE_MA_NICKNAMETAKEN','ERROR: Username taken.');
 define('_PROFILE_MA_DISPLAYNAMETAKEN','ERROR: Displayname taken.');
 define('_PROFILE_MA_LOGINNAMETAKEN','ERROR: Loginname taken.');
 define('_PROFILE_MA_EMAILTAKEN','ERROR: Email address already registered.');
@@ -85,23 +68,14 @@ define("_PROFILE_MA_DEFAULT", "Basic Information");
 
 //%%%%%%		File Name userinfo.php 		%%%%%
 define('_PROFILE_MA_SELECTNG','No User Selected! Please go back and try again.');
-//define('_PROFILE_MA_PM','PM');
 define('_PROFILE_MA_EDITPROFILE','Edit Profile');
 define('_PROFILE_MA_LOGOUT','Logout');
-//define('_PROFILE_MA_INBOX','Inbox');
 define('_PROFILE_MA_ALLABOUT','All about %s');
-//define('_PROFILE_MA_STATISTICS','Statistics');
-//define('_PROFILE_MA_MYINFO','My Info');
-//define('_PROFILE_MA_BASICINFO','Basic information');
-//define('_PROFILE_MA_MOREABOUT','More About Me');
 define('_PROFILE_MA_SHOWALL','Show All');
 
 //%%%%%%		File Name edituser.php 		%%%%%
 define('_PROFILE_MA_PROFILE','Profile');
 define('_PROFILE_MA_DISPLAYNAME','Displayname');
-//define('_PROFILE_MA_SHOWSIG','Always attach my signature');
-//define('_PROFILE_MA_CDISPLAYMODE','Comments Display Mode');
-//define('_PROFILE_MA_CSORTORDER','Comments Sort Order');
 define('_PROFILE_MA_PASSWORD','Password');
 define('_PROFILE_MA_TYPEPASSTWICE','(type a new password twice to change it)');
 define('_PROFILE_MA_SAVECHANGES','Save Changes');
@@ -110,22 +84,15 @@ define('_PROFILE_MA_PASSNOTSAME','Both passwords are different. They must be ide
 define('_PROFILE_MA_PWDTOOSHORT','Sorry, your password must be at least <b>%s</b> characters long.');
 define("_PROFILE_MA_NOPASSWORD", "Please input a password");
 define('_PROFILE_MA_PROFUPDATED','Your Profile Updated!');
-//define('_PROFILE_MA_USECOOKIE','Store my user name in a cookie for 1 year');
 define('_PROFILE_MA_NO','No');
 define('_PROFILE_MA_DELACCOUNT','Delete Account');
-//define('_PROFILE_MA_MYAVATAR', 'My Avatar');
 define('_PROFILE_MA_UPLOADMYAVATAR', 'Upload Avatar');
 define('_PROFILE_MA_MAXPIXEL','Max Pixels');
 define('_PROFILE_MA_MAXIMGSZ','Max Image Size (Bytes)');
 define('_PROFILE_MA_SELFILE','Select file');
 define('_PROFILE_MA_OLDDELETED','Your old avatar will be deleted!');
 define('_PROFILE_MA_CHOOSEAVT', 'Choose avatar from the available list');
-
-//define('_PROFILE_MA_PRESSLOGIN', 'Press the button below to login');
-
 define('_PROFILE_MA_ADMINNO', 'User in the webmasters group cannot be removed');
-//define('_PROFILE_MA_GROUPS', 'User\'s Groups');
-
 define('_PROFILE_MA_NOPERMISS','Sorry, you dont have the permission to perform this action!');
 define('_PROFILE_MA_SURETODEL','Are you sure you want to delete your account?');
 define('_PROFILE_MA_REMOVEINFO','This will remove all your info from our database.');
@@ -170,14 +137,10 @@ define("_PROFILE_MA_REGISTER","Registration form");
 define("_MD_PROFILE_DELETE", "Delete");
 define("_MD_PROFILE_EDITDESC", "Edit description");
 define("_MD_PROFILE_TOKENEXPIRED", "Your Security Token has Expired<br />Please Try Again");
-define("_MD_PROFILE_DESC_EDITED","The description was edited successfully");
-define("_MD_PROFILE_CAPTION","Caption");
 define("_MD_PROFILE_YOUCANUPLOAD","You can only upload jpg's files and up to %s KBytes in size");
-define("_MD_PROFILE_UPLOADPICTURE","Upload Picture");
 define("_MD_PROFILE_NOCACHACA","Problem found ... file to big?!<br />
 Unfortunately, this module has acted in an unexpected way. Hopefully it will return to its helpful self if you try again. ");//Funny general error message
 define("_MD_PROFILE_PAGETITLE","%s - %s's Social Network");
-define("_MD_PROFILE_SUBMIT","Submit");
 define("_MD_PROFILE_VIDEOS","Videos");
 define("_MD_PROFILE_SCRAPBOOK","Scraps");
 define("_MD_PROFILE_PHOTOS","Photos");
@@ -191,63 +154,27 @@ define("_MD_PROFILE_HOME","Home");
 define("_MD_PROFILE_CONFIGSTITLE","My settings");
 define("_MD_EXTENDED_PROFILE","Extra Info");
 
-##################################################### PICTURES #######################################################
-//submit.php (for pictures submission
-define("_MD_PROFILE_UPLOADED","Upload Successful");
-
-//delpicture.php
-define("_MD_PROFILE_ASKCONFIRMDELETION","Are you sure you want to delete this picture?");
-define("_MD_PROFILE_CONFIRMDELETION","Yes please delete it!");
-
 //album.php
 define("_MD_PROFILE_YOUHAVE", "You have %s picture(s) in your album.");
 define("_MD_PROFILE_YOUCANHAVE", "You can have up to %s picture(s).");
-define("_MD_PROFILE_DELETED","Image deleted successfully");
-define("_MD_PROFILE_SUBMIT_PIC_TITLE","Upload photo");
-define("_MD_PROFILE_SELECT_PHOTO","Select Photo");
-define("_MD_PROFILE_NOTHINGYET","No pictures in this album yet");
-define("_MD_PROFILE_AVATARCHANGE","Make this picture your new avatar");
-define("_MD_PROFILE_PRIVATIZE","Only you will see this image in your album");
-define("_MD_PROFILE_UNPRIVATIZE","Everyone will be able to see this image in your album");
-define("_MD_PROFILE_MYPHOTOS","My Photos");
 
 //avatar.php
 define("_MD_PROFILE_AVATAR_EDITED","You changed your avatar!");
 
-//private.php
-define("_MD_PROFILE_PRIVATIZED","From now on only you can see this image in your album");
-define("_MD_PROFILE_UNPRIVATIZED","From now everyone can see this image in your album");
-
-########################################################## FRIENDS ###################################################
 //friends.php
 define("_MD_PROFILE_FRIENDSTITLE","%s's Friends");
 define("_MD_PROFILE_NOFRIENDSYET","No friends yet");//also present in index.php
 define("_MD_PROFILE_MYFRIENDS","My Friends");
 define("_MD_PROFILE_FRIENDSHIPCONFIGS","Set the configs of this friendship. Evaluate your friend.");
 
-//class/profilefriendship.php
-define("_MD_PROFILE_EDITFRIENDSHIP","Your friendship with this member:");
-define("_MD_PROFILE_FRIENDNAME","Username");
-define("_MD_PROFILE_LEVEL","Friendship level:");
-define("_MD_PROFILE_UNKNOWNACCEPTED","Haven't met accepted");
 define("_MD_PROFILE_AQUAITANCE","Acquaintances");//also present in index.php
 define("_MD_PROFILE_FRIEND","Friend");//also present in index.php
 define("_MD_PROFILE_BESTFRIEND","Best Friend");//also present in index.php
 define("_MD_PROFILE_FAN","Fan");//also present in index.php
 define("_MD_PROFILE_SEXY","Sexy");//also present in index.php
-define("_MD_PROFILE_SEXYNO","Nope");
-define("_MD_PROFILE_SEXYYES","Yes");
-define("_MD_PROFILE_SEXYALOT","Very much!");
 define("_MD_PROFILE_TRUSTY","Trusty");
-define("_MD_PROFILE_TRUSTYNO","Nope");
-define("_MD_PROFILE_TRUSTYYES","Yes");
-define("_MD_PROFILE_TRUSTYALOT","Very much");
 define("_MD_PROFILE_COOL","Cool");
-define("_MD_PROFILE_COOLNO","Nope");
-define("_MD_PROFILE_COOLYES","Yes");
-define("_MD_PROFILE_COOLALOT","Very much");
 define("_MD_PROFILE_PHOTO","Friend's Photo");
-define("_MD_PROFILE_UPDATEFRIEND","Update Friendship");
 
 //editfriendship.php
 define("_MD_PROFILE_FRIENDSHIPUPDATED","Friendship Updated");
@@ -262,32 +189,6 @@ define("_MD_PROFILE_FRIENDMADE","Added as a friend!");
 //delfriendship.php
 define("_MD_PROFILE_FRIENDSHIPTERMINATED","You have broken your friendship with this user!");
 
-############################################ VIDEOS ############################################################
-//mainvideo.php
-define("_MD_PROFILE_SETMAINVIDEO","This video is selected on your front page from now on");
-
-//video.php
-define("_MD_PROFILE_YOUTUBECODE","YouTube code or URL");
-define("_MD_PROFILE_PLEASEYOUTUBECODE","Please enter YouTube code");
-define("_MD_PROFILE_ADDVIDEO","Add video");
-define("_MD_PROFILE_ADDFAVORITEVIDEOS","Add favourite videos");
-define("_MD_PROFILE_ADDVIDEOSHELP","If you want to upload your own video for sharing, then upload your videos to 
-<a href=http://www.youtube.com>YouTube</a> and then add the URL to here "); //The name of the site will show after this
-define("_MD_PROFILE_MYVIDEOS","My Videos");
-define("_MD_PROFILE_MAKEMAIN","Make this video your main video");
-define("_MD_PROFILE_NOVIDEOSYET","No videos yet!");
-
-//delvideo.php
-define("_MD_PROFILE_ASKCONFIRMVIDEODELETION","Are you sure you want to delete this video?");
-define("_MD_PROFILE_CONFIRMVIDEODELETION","Yes I am!");
-define("_MD_PROFILE_VIDEODELETED","Your video was deleted");
-
-//video_submited.php
-define("_MD_PROFILE_VIDEOSAVED","Your video was saved");
-
-############################## TRIBES ########################################################
-//class/profile_tribes.php
-define("_MD_PROFILE_SUBMIT_TRIBE","Create a new tribe");
 define("_MD_PROFILE_UPLOADTRIBE","Save Tribe");//also present in many ther tribes related
 define("_MD_PROFILE_TRIBE_IMAGE","Tribe Image");//also present in many ther tribes related
 define("_MD_PROFILE_TRIBE_TITLE","Title");//also present in many ther tribes related
@@ -349,32 +250,6 @@ define("_MD_PROFILE_SCRAP_SENT","Thanks for participating, Scrap sent");
 define("_MD_PROFILE_ASKCONFIRMSCRAPDELETION","Are you sure you want to delete this Scrap?");
 define("_MD_PROFILE_CONFIRMSCRAPDELETION","Yes please delete this Scrap.");
 define("_MD_PROFILE_SCRAPDELETED","The Scrap was deleted");
-
-############################ CONFIGS ##############################################
-//configs.php
-define("_MD_PROFILE_CONFIGSEVERYONE","Everyone");
-define("_MD_PROFILE_CONFIGSONLYEUSERS","Only Registered Members");
-define("_MD_PROFILE_CONFIGSONLYEFRIENDS","My friends.");
-define("_MD_PROFILE_CONFIGSONLYME","Only Me");
-define("_MD_PROFILE_CONFIGSPICTURES","See your Photos");      
-define("_MD_PROFILE_CONFIGSVIDEOS","See your Videos"); 
-define("_MD_PROFILE_CONFIGSTRIBES","See your Tribes"); 
-define("_MD_PROFILE_CONFIGSSCRAPS","See your Scraps"); 
-define("_MD_PROFILE_CONFIGSSCRAPSSEND","Send you Scraps");
-define("_MD_PROFILE_CONFIGSFRIENDS","See your Friends");
-define("_MD_PROFILE_CONFIGSPROFILECONTACT","See your contact info"); 
-define("_MD_PROFILE_CONFIGSPROFILEGENERAL","See your Info"); 
-define("_MD_PROFILE_CONFIGSPROFILESTATS","See your Stats");
-define("_MD_PROFILE_WHOCAN","Who can:");
-
-//submit_configs.php
-define("_MD_PROFILE_CONFIGSSAVE","Configuration saved!");
-
-//class/profile_controler.php
-define("_MD_PROFILE_NOPRIVILEGE","The owner of this profile has set the privileges to see it, <br />higher than you have now. <br />Login to become their friend. <br />If they haven't set it, so only they can see, <br />then you will be able to view it.");
-
-###################################### OTHERS ##############################
-
 //index.php
 define("_MD_PROFILE_VISITORS","Visitors (who visited your profile recently)");
 define("_MD_PROFILE_USERDETAILS","User details");
@@ -441,51 +316,12 @@ define("_MD_PROFILE_ASC","Ascending order");
 define("_MD_PROFILE_DESC","Descending order");
 define("_MD_PROFILE_LIMIT","Number of members per page");
 define("_MD_PROFILE_RESULTS", "Search results");
-
-//26/10/2007
-define("_MD_PROFILE_VIDEOSNOTENABLED", "The administrator of the site has disabled videos feature");
-define("_MD_PROFILE_FRIENDSNOTENABLED", "The administrator of the site has disabled friends feature");
-define("_MD_PROFILE_TRIBESNOTENABLED", "The administrator of the site has disabled tribes feature");
-define("_MD_PROFILE_PICTURESNOTENABLED", "The administrator of the site has disabled pictures feature");
-define("_MD_PROFILE_SCRAPSNOTENABLED", "The administrator of the site has disabled scraps feature");
-
-//26/01/2008
 define("_MD_PROFILE_ALLFRIENDS" , "View all friends");
-//define("_MD_PROFILE_ALLTRIBES" , "View all tribes");
-
-//31/01/2008
 define("_MD_PROFILE_FRIENDSHIPNOTACCEPTED" , "Friendship rejected");
 
-//07/04/2008
 define("_MD_PROFILE_USERDOESNTEXIST","This user doesn't exist or was deleted");
 define("_MD_PROFILE_FANSTITLE","%s's Fans");
 define("_MD_PROFILE_NOFANSYET","No fans yet");
-
-//17/04/2008
-define("_MD_PROFILE_AUDIONOTENABLED","The administrator of the site has disabled audio feature");
-define("_MD_PROFILE_NOAUDIOYET","This user hasn't uploaded any audio files yet");
 define("_MD_PROFILE_AUDIOS","Audio");
-define("_MD_PROFILE_CONFIGSAUDIOS","See your Audio files");
-define("_MD_PROFILE_UPLOADEDAUDIO","Audio file uploaded");
-
-define("_MD_PROFILE_SELECTAUDIO","Browse for your mp3 file");
-define("_MD_PROFILE_AUTHORAUDIO","Author/Singer");
-define("_MD_PROFILE_TITLEAUDIO","Title of file or song");
-define("_MD_PROFILE_ADDAUDIO","Add an mp3 file");
-define("_MD_PROFILE_SUBMITAUDIO","Upload file");
-define("_MD_PROFILE_ADDAUDIOHELP","Choose an mp3 file on your computer, max size %s ,<br /> Leave title and author fields blank if your file has metainfo already");
-
-//19/04/2008
-define("_MD_PROFILE_AUDIODELETED","Your mp3 file was deleted!");
-define("_MD_PROFILE_ASKCONFIRMAUDIODELETION","Do you really want to delete your audio file?");
-define("_MD_PROFILE_CONFIRMAUDIODELETION","Yes please delete it!");
-
-define("_MD_PROFILE_META","Meta Info");
-define("_MD_PROFILE_META_TITLE","Title");
-define("_MD_PROFILE_META_ALBUM","Album");
-define("_MD_PROFILE_META_ARTIST","Artist");
-define("_MD_PROFILE_META_YEAR","Year");
-
-// v3.3RC2
-define("_MD_PROFILE_PLAYER","Your audio player");
+define('_MD_PROFILE_ADMIN_PAGE', ':: Admin page ::');
 ?>

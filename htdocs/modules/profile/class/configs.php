@@ -23,7 +23,7 @@ include_once(ICMS_ROOT_PATH . '/modules/profile/include/functions.php');
 define('PROFILE_CONFIG_STATUS_EVERYBODY', 1);
 define('PROFILE_CONFIG_STATUS_MEMBERS', 2);
 define('PROFILE_CONFIG_STATUS_FRIENDS', 3);
-define('PROFILE_CONFIG_STATUS_ME', 4);
+define('PROFILE_CONFIG_STATUS_PRIVATE', 4);
 
 class ProfileConfigs extends IcmsPersistableObject {
 
@@ -214,7 +214,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 			$this->_config_statusArray[PROFILE_CONFIG_STATUS_EVERYBODY] = _CO_PROFILE_CONFIG_STATUS_EVERYBODY;
 			$this->_config_statusArray[PROFILE_CONFIG_STATUS_MEMBERS] = _CO_PROFILE_CONFIG_STATUS_MEMBERS;
 			$this->_config_statusArray[PROFILE_CONFIG_STATUS_FRIENDS] = _CO_PROFILE_CONFIG_STATUS_FRIENDS;
-			$this->_config_statusArray[PROFILE_CONFIG_STATUS_ME] = _CO_PROFILE_CONFIG_STATUS_ME;
+			$this->_config_statusArray[PROFILE_CONFIG_STATUS_PRIVATE] = _CO_PROFILE_CONFIG_STATUS_PRIVATE;
 		}
 		return $this->_config_statusArray;
 	
@@ -276,7 +276,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 			 */
 				return false;
 		}
-		if ($status == PROFILE_CONFIG_STATUS_ME) {
+		if ($status == PROFILE_CONFIG_STATUS_PRIVATE) {
 			return $obj->getVar('config_uid', 'e') == $icmsUser->uid();
 		}
 	}
