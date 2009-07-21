@@ -1,17 +1,18 @@
-<{if $profile_audioseditform}>
-	<div id="profile-album-form" class="outer">
-		<h2 class="head">
-      		<a href="#" onclick ="jQuery().find('div.profile-album-form').toggle(400);">
-      			<img src="images/toggle.gif" />&nbsp;
-        	</a>
-		</h2>
-      <div class="profile-album-form" style="display: none">
-			<{includeq file='db:system_common_form.html' form=$profile_audioseditform}>
-      </div>
-   </div>
-<{/if}>
-<{if $profile_audiosform}>
-	<{includeq file='db:system_common_form.html' form=$profile_audiosform}>
+<{if $profile_audioform}>
+	<{if $hideForm}>
+		<div id="profile-album-form" class="outer">
+			<h2 class="head">
+      			<a href="#" onclick ="jQuery().find('div.profile-album-form').toggle(400);">
+      				<img src="images/toggle.gif" />&nbsp;
+        		</a>
+			</h2>
+			<div class="profile-album-form" style="display: none">
+				<{includeq file='db:system_common_form.html' form=$profile_audioform}>
+			</div>
+		</div>
+	<{else}>
+		<{includeq file='db:system_common_form.html' form=$profile_audioform}>
+	<{/if}>
 <{/if}>
 <{if $profile_single_audio}>
 	<{if $profile_single_audio.userCanView}>
@@ -34,7 +35,7 @@
 				<h1 class="post-title"><{$profile_each_audio.title}></h1>
 			</div>
 			<div class="profile_each_audio_content">
-				<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="240" height="20" id="dewplayer" align="middle"><param name="wmode" value="transparent"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="<{$icms_url}>/modules/profile/audioplayers/dewplayer-multi.swf?mp3=<{$audio_list}>" /><param name="quality" value="high" /><param name="bgcolor" value="FFFFFF" /><embed src="<{$icms_url}>/modules/profile/audioplayers/dewplayer-multi.swf?mp3=<{$audio_list}>" quality="high" bgcolor="FFFFFF" width="240" height="20" name="dewplayer" wmode="transparent" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object>
+				<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="240" height="20" id="dewplayer" align="middle"><param name="wmode" value="transparent"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="<{$icms_url}>/modules/profile/audioplayers/dewplayer-multi.swf?mp3=<{$icms_url}>/uploads/profile/audio/<{$profile_each_audio.url}>" /><param name="quality" value="high" /><param name="bgcolor" value="FFFFFF" /><embed src="<{$icms_url}>/modules/profile/audioplayers/dewplayer-multi.swf?mp3=<{$icms_url}>/uploads/profile/audio/<{$profile_each_audio.url}>" quality="high" bgcolor="FFFFFF" width="240" height="20" name="dewplayer" wmode="transparent" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object>
 			</div>
 			<{if $profile_each_audio.userCanEditAndDelete}>
 					<div class="profile_admin_links"><{$profile_each_audio.editItemLink}><{$profile_each_audio.deleteItemLink}></div>

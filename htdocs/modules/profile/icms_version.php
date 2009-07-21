@@ -256,7 +256,7 @@ $modversion['templates'][] = array(
   'description' => '');
 
 $modversion['templates'][] = array(
-  'file' => 'profile_video.html',
+  'file' => 'profile_videos.html',
   'description' => '');
 
 $modversion['templates'][] = array(

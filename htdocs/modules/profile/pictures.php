@@ -15,10 +15,11 @@
  *
  * @param object $picturesObj ProfilePicture object to be edited
 */
-function editpictures($picturesObj)
+function editpictures($picturesObj, $hideForm=false)
 {
 	global $profile_pictures_handler, $xoTheme, $icmsTpl, $icmsUser;
 
+	$icmsTpl->assign('hideForm', $hideForm);
 	if (!$picturesObj->isNew()){
 		if (!$picturesObj->userCanEditAndDelete()) {
 			redirect_header($picturesObj->getItemLink(true), 3, _NOPERM);
@@ -110,19 +111,13 @@ if (in_array($clean_op,$valid_op,true)){
 		break;
 
 	default:
-		$values = array();
 		if($real_uid){
 			$picturesObj = $profile_pictures_handler->get($clean_pictures_id);
-			if ($clean_pictures_id > 0 && $picturesObj->isNew()) {
-				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
-			}
-			editpictures($picturesObj);
+			editpictures($picturesObj, true);
 		}
 		if($clean_pictures_id > 0){
-			$picturesArray = $profile_pictures_handler->getPicture($clean_pictures_id);
 			$profile_pictures_handler->updateCounter($clean_pictures_id);
 			$icmsTpl->assign('profile_single_picture', $picturesObj->toArray());
-			$icmsTpl->assign('profile_category_path', $picturesArray['title']);
 		}elseif($clean_uid > 0){
 			$picturesArray = $profile_pictures_handler->getPictures(false, false, $clean_uid);
 			$icmsTpl->assign('profile_allpictures', $picturesArray);

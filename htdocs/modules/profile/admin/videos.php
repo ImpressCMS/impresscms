@@ -84,7 +84,7 @@ if (in_array($clean_op,$valid_op,true)){
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_videos_handler);
-  		$objectTable->addColumn(new IcmsPersistableColumn('video_id'));
+  		$objectTable->addColumn(new IcmsPersistableColumn('videos_id'));
   		$objectTable->addColumn(new IcmsPersistableColumn('uid_owner', false, false, 'getVideoSender'));
   		$objectTable->addColumn(new IcmsPersistableColumn('video_desc'));
 		$objectTable->addColumn(new IcmsPersistableColumn('youtube_code', 'center', 330, 'getVideoToDisplay'));

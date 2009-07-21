@@ -15,23 +15,25 @@
  *
  * @param object $videosObj ProfileVideo object to be edited
 */
-function editvideos($videosObj)
+function editvideos($videosObj, $hideForm=false)
 {
 	global $profile_videos_handler, $xoTheme, $icmsTpl, $icmsUser;
 
+	$icmsTpl->assign('hideForm', $hideForm);
 	if (!$videosObj->isNew()){
 		if (!$videosObj->userCanEditAndDelete()) {
 			redirect_header($videosObj->getItemLink(true), 3, _NOPERM);
 		}
 		$videosObj->hideFieldFromForm(array('uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
 		$sform = $videosObj->getSecureForm(_MD_PROFILE_VIDEOS_EDIT, 'addvideos');
-		$sform->assign($icmsTpl, 'profile_videoseditform');
-		$icmsTpl->assign('profile_category_path', $videosObj->getVar('title') . ' > ' . _EDIT);
+		$sform->assign($icmsTpl, 'profile_videosform');
+		$icmsTpl->assign('profile_category_path', $videosObj->getVar('video_desc') . ' > ' . _EDIT);
 	} else {
 		if (!$profile_videos_handler->userCanSubmit()) {
 			redirect_header(PROFILE_URL, 3, _NOPERM);
 		}
 		$videosObj->setVar('uid_owner', $icmsUser->uid());
+		$videosObj->setVar('creation_time', time());
 		$videosObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
 		$sform = $videosObj->getSecureForm(_MD_PROFILE_VIDEOS_SUBMIT, 'addvideos');
 		$sform->assign($icmsTpl, 'profile_videosform');
@@ -98,24 +100,18 @@ if (in_array($clean_op,$valid_op,true)){
   	    include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
         $controller = new IcmsPersistableController($profile_videos_handler);
 		$controller->handleObjectDeletionFromUserSide();
-		$icmsTpl->assign('profile_category_path', $videosObj->getVar('title') . ' > ' . _DELETE);
+		$icmsTpl->assign('profile_category_path', $videosObj->getVar('video_desc') . ' > ' . _DELETE);
 
 		break;
 
 	default:
-		$values = array();
 		if($real_uid){
 			$videosObj = $profile_videos_handler->get($clean_videos_id);
-			if ($clean_videos_id > 0 && $videosObj->isNew()) {
-				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
-			}
-			editvideos($videosObj);
+			editvideos($videosObj, true);
 		}
 		if($clean_videos_id > 0){
-			$videosArray = $profile_videos_handler->getVideo($clean_videos_id);
 			$profile_videos_handler->updateCounter($clean_videos_id);
 			$icmsTpl->assign('profile_single_video', $videosObj->toArray());
-			$icmsTpl->assign('profile_category_path', $videosArray['title']);
 		}elseif($clean_uid > 0){
 			$videosArray = $profile_videos_handler->getVideos(false, false, $clean_uid);
 			$icmsTpl->assign('profile_allvideos', $videosArray);
@@ -130,7 +126,7 @@ if (in_array($clean_op,$valid_op,true)){
 		/**
 		 * Generating meta information for this page
 		 */
-		$icms_metagen = new IcmsMetagen($videosObj->getVar('title'), $videosObj->getVar('meta_keywords','n'), $videosObj->getVar('meta_description', 'n'));
+		$icms_metagen = new IcmsMetagen($videosObj->getVar('video_desc'), $videosObj->getVar('meta_keywords','n'), $videosObj->getVar('meta_description', 'n'));
 		$icms_metagen->createMetaTags();
 
 		break;

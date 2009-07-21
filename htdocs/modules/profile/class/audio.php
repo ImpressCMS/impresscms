@@ -115,7 +115,7 @@ class ProfileAudio extends IcmsPersistableSeoObject {
 	function toArray() {
 		$ret = parent :: toArray();
 		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
-		$ret['audio_content'] = $this->getProfileAudio();
+		$ret['audio_content'] = $this->getAudioToDisplay();
 		$ret['audio_title'] = $this->getVar('title','e');
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
@@ -160,9 +160,6 @@ class ProfileAudioHandler extends IcmsPersistableObjectHandler {
 		$criteria->setSort('creation_time');
 		$criteria->setOrder('DESC');
 
-		if (!is_object($icmsUser) || (is_object($icmsUser) && !$icmsUser->isAdmin())) {
-			$criteria->add(new Criteria('private', false));
-		}
 		if ($uid_owner) {
 			$criteria->add(new Criteria('uid_owner', $uid_owner));
 		}

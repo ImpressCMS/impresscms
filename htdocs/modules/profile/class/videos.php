@@ -29,7 +29,7 @@ class ProfileVideos extends IcmsPersistableSeoObject {
 
 		$this->IcmsPersistableObject($handler);
 
-		$this->quickInitVar('video_id', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('videos_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('uid_owner', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('video_desc', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('youtube_code', XOBJ_DTYPE_TXTBOX, true);
@@ -72,6 +72,11 @@ class ProfileVideos extends IcmsPersistableSeoObject {
 		return icms_getLinkedUnameFromId($this->getVar('uid_owner', 'e'));
 	}
 
+	function getVideoDescription() {
+		$ret = '<a href="' . ICMS_URL . '/modules/profile/videos.php?uid=' . $this->getVar('uid_owner', 'e') . '">'.$this->getVar('video_desc', 'e').'</a>';
+		return $ret;
+	}
+
 	/**
 	 * Check to see wether the current user can edit or delete this video
 	 *
@@ -112,8 +117,8 @@ class ProfileVideos extends IcmsPersistableSeoObject {
 	function toArray() {
 		$ret = parent :: toArray();
 		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
-		$ret['video_content'] = $this->getProfileVideo();
-		$ret['video_title'] = $this->getVar('title','e');
+		$ret['video_content'] = $this->getVideoToDisplay();
+		$ret['video_desc'] = $this->getVar('video_desc','e');
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
@@ -129,26 +134,91 @@ class ProfileVideosHandler extends IcmsPersistableObjectHandler {
 	 * Constructor
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'videos', 'video_id', 'video_desc', '', 'profile');
+		$this->IcmsPersistableObjectHandler($db, 'videos', 'videos_id', 'video_desc', '', 'profile');
 	}
 
 	/**
-	* delete profile_video matching a set of conditions
-	* 
-	* @param object $criteria {@link CriteriaElement} 
-	* @return bool FALSE if deletion failed
-	*/
-	function deleteAll($criteria = null)
-	{
-		$sql = 'DELETE FROM '.$this->table;
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-			$sql .= ' '.$criteria->renderWhere();
+	 * Create the criteria that will be used by getVideos and getVideosCount
+	 *
+	 * @param int $start to which record to start
+	 * @param int $limit limit of videos to return
+	 * @param int $uid_owner if specifid, only the videos of this user will be returned
+	 * @param int $video_id ID of a single video to retrieve
+	 * @return CriteriaCompo $criteria
+	 */
+	function getVideosCriteria($start = 0, $limit = 0, $uid_owner = false, $video_id = false) {
+		global $icmsUser;
+
+		$criteria = new CriteriaCompo();
+		if ($start) {
+			$criteria->setStart($start);
 		}
-		if (!$result = $this->db->query($sql)) {
+		if ($limit) {
+			$criteria->setLimit(intval($limit));
+		}
+		if ($uid_owner) {
+			$criteria->add(new Criteria('uid_owner', $uid_owner));
+		}
+		if ($video_id) {
+			$criteria->add(new Criteria('videos_id', $video_id));
+		}
+		return $criteria;
+	}
+
+	/**
+	 * Get single video object
+	 *
+	 * @param int $videos_id
+	 * @return object ProfileVideo object
+	 */
+	function getVideo($videos_id) {
+		$ret = $this->getVideos(0, 0, false, $videos_id);
+		return isset($ret[$videos_id]) ? $ret[$videos_id] : false;
+	}
+
+	/**
+	 * Get videos as array, ordered by creation_time DESC
+	 *
+	 * @param int $start to which record to start
+	 * @param int $limit max videos to display
+	 * @param int $uid_owner if specifid, only the video of this user will be returned
+	 * @param int $videos_id ID of a single video to retrieve
+	 * @return array of videos
+	 */
+	function getVideos($start = 0, $limit = 0, $uid_owner = false, $videos_id = false) {
+		$criteria = $this->getVideosCriteria($start, $limit, $uid_owner, $videos_id);
+		$ret = $this->getObjects($criteria, true, false);
+		return $ret;
+	}
+
+	
+	/**
+	 * Check wether the current user can submit a new video or not
+	 *
+	 * @return bool true if he can false if not
+	 */
+	function userCanSubmit() {
+		global $icmsUser;
+		if (!is_object($icmsUser)) {
 			return false;
 		}
 		return true;
 	}
+
+
+	/**
+	 * Update the counter field of the post object
+	 *
+	 * @todo add this in directly in the IPF
+	 * @param int $post_id
+	 *
+	 * @return VOID
+	 */
+	function updateCounter($id) {
+		$sql = 'UPDATE ' . $this->table . ' SET counter = counter + 1 WHERE ' . $this->keyName . ' = ' . $id;
+		$this->query($sql, null, true);
+	}
+
 	/**
 	 * Assign Video Content to Template
 	 * @param int $NbVideos the number of videos this user have
