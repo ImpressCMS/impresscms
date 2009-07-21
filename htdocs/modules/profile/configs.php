@@ -1,169 +1,125 @@
 <?php
 /**
- * Extended User Profile
- *
- *
- *
- * @copyright       The ImpressCMS Project http://www.impresscms.org/
- * @license         LICENSE.txt
- * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package         modules
- * @since           1.2
- * @author          Jan Pedersen
- * @author          Marcello Brandao <marcello.brandao@gmail.com>
- * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version         $Id$
- */
-
-$profile_template = 'profile_configs.html';
-include_once("header.php");
-$modname = basename( dirname( __FILE__ ) );
-
-
-$uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
-
-if ($uid <= 0) {
-	if(is_object($icmsUser)){
-		$uid = $icmsUser->getVar('uid');
-	}else{
-		header('location: '.ICMS_URL);
-		exit();
-	}
-}
-
-if($icmsModuleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/'.$modname.'/userinfo.php?uid='.$uid);
-	exit();
-}
+* configs page
+*
+* @copyright	GNU General Public License (GPL)
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @since		1.0
+* @author		Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla <contact@impresscms.org>
+* @package		profile
+* @version		$Id$
+*/
 
 /**
-* Factories of tribes  
+ * Edit a config
+ *
+ * @param object $configsObj Profileconfig object to be edited
 */
-$configs_factory = icms_getmodulehandler('configs', $modname, 'profile' );
-$controler = new ProfileControlerConfigs($xoopsDB,$icmsUser);  
-$nbSections = $controler->getNumbersSections();
+function editconfigs($configsObj, $admin=false, $uid=0, $unsuspend=false)
+{
+	global $profile_configs_handler, $xoTheme, $icmsTpl, $icmsUser;
 
-//permissions
-$xoopsTpl->assign('allow_scraps',$controler->checkPrivilegeBySection('scraps'));
-$xoopsTpl->assign('allow_friends',$controler->checkPrivilegeBySection('friends'));
-$xoopsTpl->assign('allow_tribes',$controler->checkPrivilegeBySection('tribes'));
-$xoopsTpl->assign('allow_pictures',$controler->checkPrivilegeBySection('pictures'));
-$xoopsTpl->assign('allow_videos',$controler->checkPrivilegeBySection('videos'));
-$xoopsTpl->assign('allow_audios',$controler->checkPrivilegeBySection('audio'));
+	if($admin && $uid != 0 && $unsuspend == true){
+	}elseif($admin && $uid != 0){
+		if (!$configsObj->userCanEditAndDelete()) {
+			redirect_header($configsObj->getItemLink(true), 3, _NOPERM);
+		}
+		$member_handler =& xoops_gethandler('member');
+		$processUser =& $member_handler->getUser($uid);
+		$configsObj->setVar('config_uid', $uid);
+		$configsObj->setVar('backup_email', $processUser->email());
+		$configsObj->setVar('backup_password', $processUser->pass());
+		$configsObj->hideFieldFromForm(array('status', 'backup_email', 'backup_password', 'pictures', 'audio', 'videos', 'scraps', 'friendship', 'tribes', 'profile_contact', 'profile_general', 'profile_stats'));
+		$sform = $configsObj->getSecureForm(_MD_PROFILE_PICTURES_EDIT, 'addconfigs');
+		$sform->assign($icmsTpl, 'profile_configsform');
+		$icmsTpl->assign('profile_category_path', $configsObj->getVar('title') . ' > ' . _EDIT);
+	}elseif ($configsObj->userCanEditAndDelete()){
+		$configsObj->hideFieldFromForm(array('status', 'backup_email', 'backup_password', 'suspension', 'end_suspension'));
+		$sform = $configsObj->getSecureForm(_MD_PROFILE_PICTURES_EDIT, 'addconfigs');
+		$sform->assign($icmsTpl, 'profile_configsform');
+		$icmsTpl->assign('profile_category_path', $configsObj->getVar('title') . ' > ' . _EDIT);
+	} else {
+		if (!$profile_configs_handler->userCanSubmit()) {
+			redirect_header(PROFILE_URL, 3, _NOPERM);
+		}
+		$configsObj->setVar('config_uid', $icmsUser->uid());
+		$configsObj->hideFieldFromForm(array('config_uid', 'status', 'backup_email', 'backup_password', 'suspension', 'end_suspension'));
+		$sform = $configsObj->getSecureForm(_MD_PROFILE_PICTURES_SUBMIT, 'addconfigs');
+		$sform->assign($icmsTpl, 'profile_configsform');
+		$icmsTpl->assign('profile_category_path', _SUBMIT);
+	}
 
-//Owner data
-$xoopsTpl->assign('uid_owner',$controler->uidOwner);
-$xoopsTpl->assign('owner_uname',$controler->nameOwner);
-$xoopsTpl->assign('isOwner',$controler->isOwner);
-$xoopsTpl->assign('isanonym',$controler->isAnonym);
-$xoopsTpl->assign('isfriend',$controler->isFriend);
-
-//numbers
-$xoopsTpl->assign('nb_tribes',$nbSections['nbTribes']);
-$xoopsTpl->assign('nb_photos',$nbSections['nbPhotos']);
-$xoopsTpl->assign('nb_videos',$nbSections['nbVideos']);
-$xoopsTpl->assign('nb_scraps',$nbSections['nbScraps']);
-$xoopsTpl->assign('nb_friends',$nbSections['nbFriends']);
-$xoopsTpl->assign('nb_audio',$nbSections['nbAudio']); 
-
-
-if (!empty($_POST['button'])) {
-  if (!($GLOBALS['xoopsSecurity']->check())){
-	redirect_header($_SERVER['HTTP_REFERER'], 3, _MD_PROFILE_TOKENEXPIRED);
-  }
-  $criteria = new Criteria('config_uid',$icmsUser->getVar("uid"));
-  if ($configs_factory->getCount($criteria)>0){
-    $configs = $configs_factory->getObjects($criteria);
-    $config = $configs[0];
-    $config->unsetNew();
-  } else {
-    $config = $configs_factory->create();
-  }
-
-  $config->setVar('config_uid',$icmsUser->getVar("uid"));
-  if (isset($_POST['pic']))  $config->setVar('pictures',$_POST['pic']);
-  if (isset($_POST['aud'])) $config->setVar('audio',$_POST['aud']);
-  if (isset($_POST['vid'])) $config->setVar('videos',$_POST['vid']);
-  if (isset($_POST['tribes'])) $config->setVar('tribes',$_POST['tribes']);
-  if (isset($_POST['scraps'])) $config->setVar('scraps',$_POST['scraps']);
-  if (isset($_POST['friends'])) $config->setVar('friends',$_POST['friends']);
-  if (isset($_POST['profileContact'])) $config->setVar('profile_contact',$_POST['profileContact']);
-  if (isset($_POST['gen'])) $config->setVar('profile_general',$_POST['gen']);
-  if (isset($_POST['stat'])) $config->setVar('profile_stats',$_POST['stat']);
-  if (!$configs_factory->insert($config)) {
-
-  }
-  redirect_header("configs.php?uid=".$icmsUser->getVar("uid"),3,_MD_PROFILE_CONFIGSSAVE);
-  exit();
+	$xoTheme->addStylesheet(ICMS_URL . '/modules/profile/module'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
 }
 
-$criteria = new Criteria('config_uid',$uid_owner);
-if($configs_factory->getCount($criteria)>0) {
-	$configs = $configs_factory->getObjects($criteria);
-	$config = $configs[0];
-	
-	$pic = $config->getVar('pictures');
-	$aud = $config->getVar('audio');
-	$vid = $config->getVar('videos');
-	$tri = $config->getVar('tribes');
-	$scr = $config->getVar('scraps');
-	$fri = $config->getVar('friends');
-	$pcon = $config->getVar('profile_contact');
-	$pgen = $config->getVar('profile_general');
-	$psta = $config->getVar('profile_stats');
-	
-	$xoopsTpl->assign('pic',$pic);
-	$xoopsTpl->assign('aud',$aud);
-	$xoopsTpl->assign('vid',$vid);
-	$xoopsTpl->assign('tri',$tri);
-	$xoopsTpl->assign('scr',$scr);
-	$xoopsTpl->assign('fri',$fri);
-	$xoopsTpl->assign('pcon',$pcon);
-	$xoopsTpl->assign('pgen',$pgen);
-	$xoopsTpl->assign('psta',$psta);
+
+$profile_template = 'profile_configs.html';
+include_once 'header.php';
+
+$profile_configs_handler = icms_getModuleHandler('configs');
+
+/** Use a naming convention that indicates the source of the content of the variable */
+$clean_op = '';
+
+if (isset($_GET['op'])) $clean_op = $_GET['op'];
+if (isset($_POST['op'])) $clean_op = $_POST['op'];
+
+/** Again, use a naming convention that indicates the source of the content of the variable */
+global $icmsUser, $profile_isAdmin;
+$clean_configs_id = isset($_GET['configs_id']) ? intval($_GET['configs_id']) : 0 ;
+$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0 ;
+$real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
+$configsObj = $profile_configs_handler->get($clean_configs_id);
+/** Create a whitelist of valid values, be sure to use appropriate types for each value
+ * Be sure to include a value for no parameter, if you have a default condition
+ */
+$valid_op = array ('mod','addconfigs','suspend','unsuspend');
+/**
+ * Only proceed if the supplied operation is a valid operation
+ */
+if (in_array($clean_op,$valid_op,true)){
+  switch ($clean_op) {
+	case "suspend":
+		$configsObj = $profile_configs_handler->get($clean_configs_id);
+		if ($clean_uid > 0 && !$profile_isAdmin) {
+			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+		}
+		editconfigs($configsObj, true, $clean_uid );
+		break;
+
+	case "unsuspend":
+		$configsObj = $profile_configs_handler->getConfig($clean_uid);
+		if ($clean_uid > 0 && !$profile_isAdmin) {
+			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+		}
+		editconfigs($configsObj, true, $clean_uid, true );
+		break;
+
+	default:
+	case "addconfigs":
+        if (!$xoopsSecurity->check()) {
+        	redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+        }
+         include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
+        $controller = new IcmsPersistableController($profile_configs_handler);
+		$controller->storeFromDefaultForm(_MD_PROFILE_PICTURES_CREATED, _MD_PROFILE_PICTURES_MODIFIED);
+		break;
+
+	case "mod":
+	default:
+		$configsObj = $profile_configs_handler->getConfig($real_uid);
+		if ($real_uid > 0) {
+			editconfigs($configsObj);
+		}elseif($profile_isAdmin && $clean_uid > 0){
+			$icmsTpl->assign('profile_unsuspend', $configsArray);
+		    redirect_header(POFILE_URL.'configs.php?op=suspend&uid='.$clean_uid, 3, _NOPERM);
+		}else{
+		    redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+		}
+		break;
+	}
 }
+$icmsTpl->assign('profile_module_home', icms_getModuleName(true, true));
 
-//Owner data
-$xoopsTpl->assign('uid_owner',$controler->uidOwner);
-$xoopsTpl->assign('owner_uname',$controler->nameOwner);
-$xoopsTpl->assign('isOwner',$controler->isOwner);
-$xoopsTpl->assign('isanonym',$controler->isAnonym);
-$xoopsTpl->assign('isfriend',$controler->isFriend);
-
-//form
-$xoopsTpl->assign('lang_whocan',_MD_PROFILE_WHOCAN);
-$xoopsTpl->assign('lang_configtitle',_MD_PROFILE_CONFIGSTITLE);
-$xoopsTpl->assign('lang_configprofilestats',_MD_PROFILE_CONFIGSPROFILESTATS);
-$xoopsTpl->assign('lang_configprofilegeneral',_MD_PROFILE_CONFIGSPROFILEGENERAL);
-$xoopsTpl->assign('lang_configprofilecontact',_MD_PROFILE_CONFIGSPROFILECONTACT);
-$xoopsTpl->assign('lang_configfriends',_MD_PROFILE_CONFIGSFRIENDS);
-$xoopsTpl->assign('lang_configscraps',_MD_PROFILE_CONFIGSSCRAPS);
-$xoopsTpl->assign('lang_configsendscraps',_MD_PROFILE_CONFIGSSCRAPSSEND);
-$xoopsTpl->assign('lang_configtribes',_MD_PROFILE_CONFIGSTRIBES);
-$xoopsTpl->assign('lang_configaudio',_MD_PROFILE_CONFIGSAUDIOS); 
-$xoopsTpl->assign('lang_configvideos',_MD_PROFILE_CONFIGSVIDEOS);
-$xoopsTpl->assign('lang_configpictures',_MD_PROFILE_CONFIGSPICTURES);
-$xoopsTpl->assign('lang_only_me',_MD_PROFILE_CONFIGSONLYME);
-$xoopsTpl->assign('lang_only_friends',_MD_PROFILE_CONFIGSONLYEFRIENDS);
-$xoopsTpl->assign('lang_only_users',_MD_PROFILE_CONFIGSONLYEUSERS);
-$xoopsTpl->assign('lang_everyone',_MD_PROFILE_CONFIGSEVERYONE);
-
-$xoopsTpl->assign('lang_cancel',_MD_PROFILE_CANCEL);
-
-//scraps
-//$xoopsTpl->assign('scraps',$scraps);
-$xoopsTpl->assign('lang_answerscrap',_MD_PROFILE_ANSWERSCRAP);
-
-//Owner data
-$xoopsTpl->assign('uid_owner',$controler->uidOwner);
-$xoopsTpl->assign('owner_uname',$controler->nameOwner);
-$xoopsTpl->assign('isOwner',$controler->isOwner);
-$xoopsTpl->assign('isanonym',$controler->isAnonym);
-
-
-//navbar
-$xoopsTpl->assign('lang_mysection',_MD_PROFILE_CONFIGSTITLE);
-$xoopsTpl->assign('section_name',_MD_PROFILE_CONFIGSTITLE);
-
-include 'footer.php';
+include_once 'footer.php';
 ?>
