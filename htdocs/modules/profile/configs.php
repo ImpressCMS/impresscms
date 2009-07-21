@@ -20,28 +20,28 @@ function editconfigs($configsObj, $admin=false, $uid=0, $unsuspend=false)
 	global $profile_configs_handler, $xoTheme, $icmsTpl, $icmsUser;
 
 	if($admin && $uid != 0 && $unsuspend == true){
-	}elseif($admin && $uid != 0){
+	}elseif($admin && $uid != 0 && $configsObj->isNew()){
 		$member_handler =& xoops_gethandler('member');
 		$processUser =& $member_handler->getUser($uid);
 		$configsObj->setVar('config_uid', $uid);
 		$configsObj->setVar('backup_email', $processUser->email());
 		$configsObj->setVar('backup_password', $processUser->pass());
 		$configsObj->hideFieldFromForm(array('status', 'backup_email', 'backup_password', 'pictures', 'audio', 'videos', 'scraps', 'friendship', 'tribes', 'profile_contact', 'profile_general', 'profile_stats'));
-		$sform = $configsObj->getSecureForm(_MD_PROFILE_PICTURES_EDIT, 'addconfigs');
+		$sform = $configsObj->getSecureForm(_MD_PROFILE_CONFIGS_EDIT, 'addconfigs');
 		$sform->assign($icmsTpl, 'profile_configsform');
-		$icmsTpl->assign('profile_category_path', $configsObj->getVar('title') . ' > ' . _EDIT);
-	}elseif ($configsObj->userCanEditAndDelete()){
+		$icmsTpl->assign('profile_category_path', icms_getLinkedUnameFromId($uid) . ' > ' . _EDIT);
+	}elseif ($configsObj->isNew()){
 		$configsObj->hideFieldFromForm(array('status', 'backup_email', 'backup_password', 'suspension', 'end_suspension'));
-		$sform = $configsObj->getSecureForm(_MD_PROFILE_PICTURES_EDIT, 'addconfigs');
+		$sform = $configsObj->getSecureForm(_MD_PROFILE_CONFIGS_EDIT, 'addconfigs');
 		$sform->assign($icmsTpl, 'profile_configsform');
-		$icmsTpl->assign('profile_category_path', $configsObj->getVar('title') . ' > ' . _EDIT);
+		$icmsTpl->assign('profile_category_path', icms_getLinkedUnameFromId($icmsUser->uid) . ' > ' . _EDIT);
 	} else {
 		if (!$profile_configs_handler->userCanSubmit()) {
 			redirect_header(PROFILE_URL, 3, _NOPERM);
 		}
 		$configsObj->setVar('config_uid', $icmsUser->uid());
 		$configsObj->hideFieldFromForm(array('config_uid', 'status', 'backup_email', 'backup_password', 'suspension', 'end_suspension'));
-		$sform = $configsObj->getSecureForm(_MD_PROFILE_PICTURES_SUBMIT, 'addconfigs');
+		$sform = $configsObj->getSecureForm(_MD_PROFILE_CONFIGS_SUBMIT, 'addconfigs');
 		$sform->assign($icmsTpl, 'profile_configsform');
 		$icmsTpl->assign('profile_category_path', _SUBMIT);
 	}
@@ -63,19 +63,28 @@ if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
 global $icmsUser, $profile_isAdmin;
-$clean_configs_id = isset($_GET['configs_id']) ? intval($_GET['configs_id']) : 0 ;
 $clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0 ;
 $real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
+$CheckID = !empty($clean_uid)?$clean_uid:$real_uid;
+$clean_configs_id = $profile_configs_handler->getConfigIdPerUser($CheckID);
 $configsObj = $profile_configs_handler->get($clean_configs_id);
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition
  */
-$valid_op = array ('mod','addconfigs','suspend','unsuspend');
+$valid_op = array ('mod','addconfigs','suspend','unsuspend', '');
 /**
  * Only proceed if the supplied operation is a valid operation
  */
 if (in_array($clean_op,$valid_op,true)){
   switch ($clean_op) {
+	case "mod":
+		$configsObj = $profile_configs_handler->get($clean_configs_id);
+		if ($clean_uid < 1 && !$profile_isAdmin) {
+			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+		}
+		editconfigs($configsObj, true, $clean_uid );
+		break;
+
 	case "suspend":
 		$configsObj = $profile_configs_handler->get($clean_configs_id);
 		if ($clean_uid < 1 && !$profile_isAdmin) {
@@ -92,25 +101,21 @@ if (in_array($clean_op,$valid_op,true)){
 		editconfigs($configsObj, true, $clean_uid, true );
 		break;
 
-	default:
 	case "addconfigs":
         if (!$xoopsSecurity->check()) {
         	redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
         }
          include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
         $controller = new IcmsPersistableController($profile_configs_handler);
-		$controller->storeFromDefaultForm(_MD_PROFILE_PICTURES_CREATED, _MD_PROFILE_PICTURES_MODIFIED);
+		$controller->storeFromDefaultForm(_MD_PROFILE_CONFIGS_CREATED, _MD_PROFILE_CONFIGS_MODIFIED);
 		break;
 
-	case "mod":
 	default:
-		$itemID = $profile_configs_handler->getConfigIdPerUser($uid);
-		$configsObj = $profile_configs_handler->get($itemID);
 		if ($real_uid > 0) {
 			editconfigs($configsObj);
 		}elseif($profile_isAdmin && $clean_uid > 0){
-			$icmsTpl->assign('profile_unsuspend', $configsArray);
-		    redirect_header(POFILE_URL.'configs.php?op=suspend&uid='.$clean_uid, 3, _NOPERM);
+			$configsObj = $profile_configs_handler->get($clean_configs_id);
+			editconfigs($configsObj, true, $clean_uid );
 		}else{
 		    redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 		}

@@ -56,6 +56,7 @@ class ProfileConfigs extends IcmsPersistableObject {
 
 		$this->hideFieldFromForm('status');
 		$this->hideFieldFromForm('backup_password');
+		$this->hideFieldFromForm('configs_id');
 		$this->hideFieldFromForm('backup_email');
 		$this->setControl('config_uid', 'user');
 		$this->setControl('suspension', 'yesno');
@@ -230,7 +231,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_configs').' WHERE user_id="$uid"';
 		$configs = $this->query($sql);
 		
-		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_friendship').' WHERE friend1_uid="$uid"';
+		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="$uid" OR friend2_uid="$uid")';
 		$friendship = $this->query($sql);
 		
 		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_scraps').' WHERE uid_owner="$uid"';

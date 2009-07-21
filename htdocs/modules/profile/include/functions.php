@@ -170,20 +170,20 @@ function checkPassword($uname, $oldpass, $newpass, $vpass) {
 	return $stop;
 }
 
-function getAllowedItems{$items, $uid){
+function getAllowedItems($items, $uid){
 	$array = array();
 	$profile_configs_handler = icms_getModuleHandler('configs');
 	if(is_array($items)){
 		foreach($items as $item){
 			$itemID = $profile_configs_handler->getConfigIdPerUser($uid);
 			$configsObj = $profile_configs_handler->get($itemID);
-			$accessability = $profile_configs_handler->userCanAcsessSection($configsObj, $item, $uid)
+			$accessability = $profile_configs_handler->userCanAcsessSection($configsObj, $item, $uid);
 			$array = array_merge($array, array($item => $accessability));
 		}
 	}else{
 		$itemID = $profile_configs_handler->getConfigIdPerUser($uid);
 		$configsObj = $profile_configs_handler->get($itemID);
-		$accessability = $profile_configs_handler->userCanAcsessSection($configsObj, $items, $uid)
+		$accessability = $profile_configs_handler->userCanAcsessSection($configsObj, $items, $uid);
 		$array = array_merge($array, array($items => $accessability));
 	}
 	
