@@ -134,7 +134,7 @@ $modversion['sub'][$i]['url'] = ($icmsModuleConfig['profile_social']? 'searchmem
 	  if ($icmsModuleConfig['enable_pictures']==1){
   $i++;
         $modversion['sub'][$i]['name'] = _MI_PROFILE_MYPICTURES;
-        $modversion['sub'][$i]['url'] = "album.php";
+        $modversion['sub'][$i]['url'] = "pictures.php";
       }
       if ($icmsModuleConfig['enable_audio']==1){
   $i++;
@@ -144,7 +144,7 @@ $modversion['sub'][$i]['url'] = ($icmsModuleConfig['profile_social']? 'searchmem
       if ($icmsModuleConfig['enable_videos']==1){ 
   $i++;
         $modversion['sub'][$i]['name'] = _MI_PROFILE_MYVIDEOS;
-        $modversion['sub'][$i]['url'] = "video.php";
+        $modversion['sub'][$i]['url'] = "videos.php";
       }
       if ($icmsModuleConfig['enable_friends']==1){ 
   $i++;

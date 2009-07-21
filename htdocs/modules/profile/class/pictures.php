@@ -34,7 +34,7 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('creation_time', XOBJ_DTYPE_LTIME, false);
 		$this->quickInitVar('update_time', XOBJ_DTYPE_TXTBOX, false);
-		$this->quickInitVar('user_id', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('uid_owner', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('url', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('private', XOBJ_DTYPE_TXTBOX, false);
 		$this->initCommonVar('counter', false);
@@ -43,7 +43,7 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 		$this->initCommonVar('doimage', false, true);
 		$this->initCommonVar('dosmiley', false, true);
 
-		$this->setControl('user_id', 'user');
+		$this->setControl('uid_owner', 'user');
 		$this->setControl('url', 'image');
 		$this->setControl('private', 'yesno');
 		$this->hideFieldFromForm('creation_time');
@@ -74,10 +74,7 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 	}
 	
 	function getPictureSender() {
-		return icms_getLinkedUnameFromId($this->getVar('user_id', 'e'));
-	}
-	function getPicturePrivate() {
-		return ;
+		return icms_getLinkedUnameFromId($this->getVar('uid_owner', 'e'));
 	}
 	/**
 	 * Check to see wether the current user can edit or delete this picture
@@ -92,7 +89,7 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 		if ($profile_isAdmin) {
 			return true;
 		}
-		return $this->getVar('user_id', 'e') == $icmsUser->uid();
+		return $this->getVar('uid_owner', 'e') == $icmsUser->uid();
 	}
 
 	/**
@@ -111,7 +108,7 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 		if($this->getVar('private', 'e') == 0 ){
 			return true;
 		}
-		return $this->getVar('user_id', 'e') == $icmsUser->uid();
+		return $this->getVar('uid_owner', 'e') == $icmsUser->uid();
 	}
 
 	/**
@@ -128,7 +125,7 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['userCanView'] = $this->userCanView();
-		$ret['picture_senderid'] = $this->getVar('user_id','e');
+		$ret['picture_senderid'] = $this->getVar('uid_owner','e');
 		$ret['picture_sender_link'] = $this->getPictureSender();
 		return $ret;
 	}
@@ -150,11 +147,11 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	 *
 	 * @param int $start to which record to start
 	 * @param int $limit limit of pictures to return
-	 * @param int $user_id if specifid, only the pictures of this user will be returned
+	 * @param int $uid_owner if specifid, only the pictures of this user will be returned
 	 * @param int $picture_id ID of a single picture to retrieve
 	 * @return CriteriaCompo $criteria
 	 */
-	function getPicturesCriteria($start = 0, $limit = 0, $user_id = false, $picture_id = false) {
+	function getPicturesCriteria($start = 0, $limit = 0, $uid_owner = false, $picture_id = false) {
 		global $icmsUser;
 
 		$criteria = new CriteriaCompo();
@@ -170,8 +167,8 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		if (!is_object($icmsUser) || (is_object($icmsUser) && !$icmsUser->isAdmin())) {
 			$criteria->add(new Criteria('private', false));
 		}
-		if ($user_id) {
-			$criteria->add(new Criteria('user_id', $user_id));
+		if ($uid_owner) {
+			$criteria->add(new Criteria('uid_owner', $uid_owner));
 		}
 		if ($picture_id) {
 			$criteria->add(new Criteria('pictures_id', $picture_id));
@@ -185,8 +182,8 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	 * @param int $pictures_id
 	 * @return object ProfilePicture object
 	 */
-	function getPicture($pictures_id=false, $user_id=false) {
-		$ret = $this->getPictures(0, 0, $user_id, $pictures_id);
+	function getPicture($pictures_id=false, $uid_owner=false) {
+		$ret = $this->getPictures(0, 0, $uid_owner, $pictures_id);
 		return isset($ret[$pictures_id]) ? $ret[$pictures_id] : false;
 	}
 
@@ -195,12 +192,12 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	 *
 	 * @param int $start to which record to start
 	 * @param int $limit max pictures to display
-	 * @param int $user_id if specifid, only the picture of this user will be returned
+	 * @param int $uid_owner if specifid, only the picture of this user will be returned
 	 * @param int $pictures_id ID of a single picture to retrieve
 	 * @return array of pictures
 	 */
-	function getPictures($start = 0, $limit = 0, $user_id = false, $pictures_id = false) {
-		$criteria = $this->getPicturesCriteria($start, $limit, $user_id, $pictures_id);
+	function getPictures($start = 0, $limit = 0, $uid_owner = false, $pictures_id = false) {
+		$criteria = $this->getPicturesCriteria($start, $limit, $uid_owner, $pictures_id);
 		$ret = $this->getObjects($criteria, true, false);
 		return $ret;
 	}
@@ -242,7 +239,7 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	{
 		$ret = array();
 		
-		$sql = 'SELECT uname, t.user_id, t.url FROM '.$this->table.' AS t, '.$this->db->prefix('users');
+		$sql = 'SELECT uname, t.uid_owner, t.url FROM '.$this->table.' AS t, '.$this->db->prefix('users');
 		
 		$sql .= " WHERE uid_owner = uid AND private=0 ORDER BY cod_img DESC" ;
 		$result = $this->db->query($sql, $limit, 0);
@@ -264,7 +261,7 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	{
 		$ret = array();
 		
-		$sql = 'SELECT uname, t.user_id, t.url, t.title FROM '.$this->table.' AS t, '.$this->db->prefix('users');
+		$sql = 'SELECT uname, t.uid_owner, t.url, t.title FROM '.$this->table.' AS t, '.$this->db->prefix('users');
 		
 		$sql .= " WHERE uid_owner = uid AND private=0 ORDER BY cod_img DESC" ;
 		$result = $this->db->query($sql, $limit, 0);

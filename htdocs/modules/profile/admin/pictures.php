@@ -89,7 +89,7 @@ if (in_array($clean_op,$valid_op,true)){
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_pictures_handler);
   		$objectTable->addColumn(new IcmsPersistableColumn('pictures_id'));
-  		$objectTable->addColumn(new IcmsPersistableColumn('user_id', false, false, 'getPictureSender'));
+  		$objectTable->addColumn(new IcmsPersistableColumn('uid_owner', false, false, 'getPictureSender'));
   		$objectTable->addColumn(new IcmsPersistableColumn('title'));
 		$objectTable->addColumn(new IcmsPersistableColumn('url', 'center', 330, 'getProfilePicture'));
 

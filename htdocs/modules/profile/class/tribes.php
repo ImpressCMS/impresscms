@@ -30,7 +30,7 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('tribes_id', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('owner_uid', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('uid_owner', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('tribe_title', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('tribe_desc', XOBJ_DTYPE_TXTAREA, true);
 		$this->quickInitVar('tribe_img', XOBJ_DTYPE_TXTBOX, false);

@@ -155,11 +155,11 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 *
 	 * @param int $start to which record to start
 	 * @param int $limit limit of configs to return
-	 * @param int $user_id if specifid, only the configs of this user will be returned
+	 * @param int $uid_owner if specifid, only the configs of this user will be returned
 	 * @param int $config_id ID of a single config to retrieve
 	 * @return CriteriaCompo $criteria
 	 */
-	function getConfigsCriteria($start = 0, $limit = 0, $user_id = false, $config_id = false) {
+	function getConfigsCriteria($start = 0, $limit = 0, $uid_owner = false, $config_id = false) {
 		global $icmsUser;
 
 		$criteria = new CriteriaCompo();
@@ -169,8 +169,8 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		if ($limit) {
 			$criteria->setLimit(intval($limit));
 		}
-		if ($user_id) {
-			$criteria->add(new Criteria('config_uid', $user_id));
+		if ($uid_owner) {
+			$criteria->add(new Criteria('config_uid', $uid_owner));
 		}
 		if ($config_id) {
 			$criteria->add(new Criteria('configs_id', $config_id));
@@ -184,9 +184,9 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 * @param int $configs_id
 	 * @return object ProfileConfig object
 	 */
-	function getConfig($user_id=false, $configs_id=false) {
-		$ret = $this->getConfigs(0, 0, $user_id, $configs_id);
-		return isset($ret[$configs_id]) ? $ret[$configs_id] : false;
+	function getConfig($uid_owner=false, $configs_id=false) {
+		$ret = $this->getConfigs(0, 0, $uid_owner, $configs_id);
+		return isset($ret[$uid_owner]) ? $ret[$uid_owner] : false;
 	}
 
 	/**
@@ -194,12 +194,12 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 *
 	 * @param int $start to which record to start
 	 * @param int $limit max configs to display
-	 * @param int $user_id if specifid, only the config of this user will be returned
+	 * @param int $uid_owner if specifid, only the config of this user will be returned
 	 * @param int $configs_id ID of a single config to retrieve
 	 * @return array of configs
 	 */
-	function getConfigs($start = 0, $limit = 0, $user_id = false, $configs_id = false) {
-		$criteria = $this->getConfigsCriteria($start, $limit, $user_id, $configs_id);
+	function getConfigs($start = 0, $limit = 0, $uid_owner = false, $configs_id = false) {
+		$criteria = $this->getConfigsCriteria($start, $limit, $uid_owner, $configs_id);
 		$ret = $this->getObjects($criteria, true, false);
 		return $ret;
 	}
@@ -225,22 +225,22 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 * @return array of amounts
 	 */
 	function geteachSectioncounts($uid){
-		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_audio').' WHERE uid_owner="$uid"';
+		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_audio').' WHERE uid_owner="'.$uid.'"';
 		$audio = $this->query($sql);
 		
-		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_configs').' WHERE user_id="$uid"';
+		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_pictures').' WHERE uid_owner="'.$uid.'"';
 		$configs = $this->query($sql);
 		
-		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="$uid" OR friend2_uid="$uid")';
+		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="'.$uid.'" OR friend2_uid="'.$uid.'")';
 		$friendship = $this->query($sql);
 		
-		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_scraps').' WHERE uid_owner="$uid"';
+		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_scraps').' WHERE uid_owner="'.$uid.'"';
 		$scraps = $this->query($sql);
 		
-		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_videos').' WHERE uid_owner="$uid"';
+		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_videos').' WHERE uid_owner="'.$uid.'"';
 		$videos = $this->query($sql);
 		
-		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_tribes').' WHERE owner_uid="$uid"';
+		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_tribes').' WHERE uid_owner="'.$uid.'"';
 		$tribes = $this->query($sql);
 		
 		return array(
@@ -300,7 +300,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 * @return array of amounts
 	 */
 	function getConfigIdPerUser($uid){
-		$sql = 'SELECT '.$this->keyName.' FROM'.$this->table.' WHERE config_uid="$uid"';
+		$sql = 'SELECT configs_id FROM '.$this->table.' WHERE config_uid="'.$uid.'"';
 		$ret = $this->query($sql, false);
 		return $ret;
 	}

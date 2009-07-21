@@ -1,101 +1,47 @@
-<{if $module_is_socialmode == true }>
-<{include file="db:profile_navbar.html"}>
+<{if $profile_audioseditform}>
+	<div id="profile-album-form" class="outer">
+		<h2 class="head">
+      		<a href="#" onclick ="jQuery().find('div.profile-album-form').toggle(400);">
+      			<img src="images/toggle.gif" />&nbsp;
+        	</a>
+		</h2>
+      <div class="profile-album-form" style="display: none">
+			<{includeq file='db:system_common_form.html' form=$profile_audioseditform}>
+      </div>
+   </div>
 <{/if}>
-<{ if $isOwner }>
-	<div id="profile-audio-form" class="outer">
-    
-		<h2 id="profile-audio-form-title" class="head">
-        	<img src="images/toggle.gif" />&nbsp;
-        	<a href="#" onclick ="jQuery().find('div.profile-audio-form').toggle(400);">
-			<{$lang_addaudios}>
-          	</a>
-		</h2>
-        <div class="profile-audio-form" style="display: none">
-		<form name="form_audios" id="form_audios" action="submitaudio.php" method="post" onsubmit="return xoopsFormValidate_form_audios();" enctype="multipart/form-data" >
-			<{$token}>
-			<p class="even">
-			<{$lang_audiohelp}></p>
-			<p class="odd">
-				<label for="title">
-					<{$lang_titleLabel}>
-					: 
-				</label>
-				<input type='text' name='title' id='title' size='50' maxlength='250' value='' />
-			</p>
-			<p class="even">
-				<label for="author">
-					<{$lang_authorLabel}>
-					: 
-				</label>
-<input type='text' name='author' id='author' size='50' maxlength='250' value='' />
-			</p>
-						 <p class="odd"><label class="profile-audio-label" for="sel_file"><{$lang_selectaudio}></label><input type='hidden' name='MAX_FILE_SIZE' value='<{$max_youcanupload}>' /><input type='file' name='sel_audio' id='sel_audio' /><input type='hidden' name='xoops_upload_file[]' id='xoops_upload_file[]' value='sel_audio' /> </p>
-			<p class="foot">
-				<input type='submit' class='formButton' name='submit_button'  id='submit_button' value='<{$lang_submitValue}>' />
-			</p>
-		</form>
-        </div>
-		
-	</div>
-<{ /if}>
-
-
-<div id="profile-audio-allaudiocontainer" class="outer">
-	<h2 id="profile-audio-allaudiotitle" class="head">
-	<{$player_from_list}>
-	</h2>
-
-<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="240" height="20" id="dewplayer" align="middle"><param name="wmode" value="transparent"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="audioplayers/dewplayer-multi.swf?mp3=<{$audio_list}>" /><param name="quality" value="high" /><param name="bgcolor" value="FFFFFF" /><embed src="audioplayers/dewplayer-multi.swf?mp3=<{$audio_list}>" quality="high" bgcolor="FFFFFF" width="240" height="20" name="dewplayer" wmode="transparent" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object>
-
-</div>
-
-<div id="profile-audio-container" class="outer">
-	<h2 id="profile-audio-title" class="head">
-		<a href="<{$icms_url}>/userinfo.php?uid=<{$owner_uid}>">
-			<{$lang_audios}>
-		</a>
-	</h2>
-	<{if $nb_audio<=0}>
-		<h2>	
-			<{$lang_noaudioyet}>
-		</h2>
+<{if $profile_audiosform}>
+	<{includeq file='db:system_common_form.html' form=$profile_audiosform}>
+<{/if}>
+<{if $profile_single_audio}>
+	<{if $profile_single_audio.userCanView}>
+		<div class="profile_single_audio_container">
+			<h1 class="audio-title"><{$profile_single_audio.audio_title}></h1>
+		<div class="profile_single_audio_content">
+			<{$profile_single_audio.audio_content}>
+		</div>
+		<{if $profile_single_audio.userCanEditAndDelete}>
+			<div class="profile_admin_links"><{$profile_single_audio.editItemLink}><{$profile_single_audio.deleteItemLink}></div>
+		<{/if}>
+		</div>
 	<{/if}>
-	
-		
-	
-	<{section name=i loop=$audios}>
-		<div class="profile-audio-container <{cycle values="odd,even"}>">
-			<div class="profile-audio">       
-				<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="200" height="20" id="dewplayer" align="middle">
-<param name="wmode" value="transparent"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="audioplayers/dewplayer.swf?mp3=<{$icms_url}>/uploads/<{$icms_dirname}>/mp3/<{$audios[i].url}>&amp;showtime=1" /><param name="quality" value="high" /><param name="bgcolor" value="FFFFFF" /><embed src="audioplayers/dewplayer.swf?mp3=<{$icms_url}>/uploads/<{$icms_dirname}>/mp3/<{$audios[i].url}>&amp;showtime=1" width="200" height="20" align="middle" quality="high" bgcolor="FFFFFF" name="dewplayer" wmode="transparent" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object>
+<{/if}>
+
+<{if $profile_allaudios}>
+	<{foreach item=profile_each_audio from=$profile_allaudios}>
+		<{if $profile_each_audio.userCanView}>
+			<div class="profile_each_audio_container">
+				<h1 class="post-title"><{$profile_each_audio.title}></h1>
 			</div>
-			<div class="profile-audio-details">
-				<p class="profile-audio-desc">
-					<{$audios[i].title}> <{$audios[i].author}> 
-					<div class="profile-audio-metainfocontainer">
-					<h4 class="profile-audio-metainfo"> <{$lang_meta}></h4>
-					<p class="profile-audio-meta-title"><span class="profile-audio-meta-label" > <{$lang_title}>:</span> <{$audios[i].meta.Title}></p>
-					<p class="profile-audio-meta-title"><span class="profile-audio-meta-label" > <{$lang_album}>:</span> <{$audios[i].meta.Album}></p>
-					<p class="profile-audio-meta-title"><span class="profile-audio-meta-label" > <{$lang_artist}>:</span> <{$audios[i].meta.Artist}></p>
-					<p class="profile-audio-meta-title"><span class="profile-audio-meta-label" > <{$lang_year}>:</span> <{$audios[i].meta.Year}></p>
-					</div>
-					 
-				</p> <{ if $isOwner==1 }>
-				<form action="delaudio.php" method="post" id="deleteform" class="profile-audio-forms">
-            		<input type="hidden" value="<{$audios[i].id}>" name="cod_audio" />
-                	<{$token}>
-					<input name="submit" type="image" alt="<{$lang_delete}>" title="<{$lang_delete}>" src="images/dele.gif"/>
-	            </form> 
-    	       
-	            
-           		<{ /if}>
-			</div> 
-		</div>          
-	<{/section}>
-</div>
-<div style="clear:both;width:100%"></div>
-<div id="profile-navegacao">
-	<{$pageNav}>
-</div>
-<div style="clear:both;width:100%"></div>
-<{include file="db:profile_footer.html"}>
+			<div class="profile_each_audio_content">
+				<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="240" height="20" id="dewplayer" align="middle"><param name="wmode" value="transparent"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="<{$icms_url}>/modules/profile/audioplayers/dewplayer-multi.swf?mp3=<{$audio_list}>" /><param name="quality" value="high" /><param name="bgcolor" value="FFFFFF" /><embed src="<{$icms_url}>/modules/profile/audioplayers/dewplayer-multi.swf?mp3=<{$audio_list}>" quality="high" bgcolor="FFFFFF" width="240" height="20" name="dewplayer" wmode="transparent" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object>
+			</div>
+			<{if $profile_each_audio.userCanEditAndDelete}>
+					<div class="profile_admin_links"><{$profile_each_audio.editItemLink}><{$profile_each_audio.deleteItemLink}></div>
+			<{/if}>
+		<{/if}>
+	<{/foreach}>
+<{/if}>
+<{if $icmspersistable_delete_confirm}>
+	<{$icmspersistable_delete_confirm}>
+<{/if}>

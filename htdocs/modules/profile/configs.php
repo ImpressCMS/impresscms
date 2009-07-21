@@ -34,7 +34,7 @@ function editconfigs($configsObj, $admin=false, $uid=0, $unsuspend=false)
 		$configsObj->hideFieldFromForm(array('status', 'backup_email', 'backup_password', 'suspension', 'end_suspension'));
 		$sform = $configsObj->getSecureForm(_MD_PROFILE_CONFIGS_EDIT, 'addconfigs');
 		$sform->assign($icmsTpl, 'profile_configsform');
-		$icmsTpl->assign('profile_category_path', icms_getLinkedUnameFromId($icmsUser->uid) . ' > ' . _EDIT);
+		$icmsTpl->assign('profile_category_path', icms_getLinkedUnameFromId($icmsUser->uid()) . ' > ' . _EDIT);
 	} else {
 		if (!$profile_configs_handler->userCanSubmit()) {
 			redirect_header(PROFILE_URL, 3, _NOPERM);

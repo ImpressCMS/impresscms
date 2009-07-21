@@ -16,6 +16,7 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 // including the IcmsPersistabelSeoObject
 include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
 include_once(ICMS_ROOT_PATH . '/modules/profile/include/functions.php');
+include_once(ICMS_ROOT_PATH . '/modules/profile/class/class.Id3v1.php');
 
 class ProfileAudio extends IcmsPersistableSeoObject {
 
@@ -34,7 +35,7 @@ class ProfileAudio extends IcmsPersistableSeoObject {
 		$this->quickInitVar('author', XOBJ_DTYPE_TXTBOX, false);
 		$this->quickInitVar('url', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('uid_owner', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('data_creation', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('creation_time', XOBJ_DTYPE_LTIME, false);
 		$this->quickInitVar('data_update', XOBJ_DTYPE_TXTBOX, false);
 		$this->initCommonVar('counter', false);
 		$this->initCommonVar('dohtml', false, true);
@@ -44,7 +45,6 @@ class ProfileAudio extends IcmsPersistableSeoObject {
 		$this->initCommonVar('doxcode', false, true);
 		$this->setControl('url', 'upload');
 
-		$this->hideFieldFromForm('data_creation');
 		$this->hideFieldFromForm('data_update');
 		$this->setControl('uid_owner', 'user');
 
@@ -71,9 +71,59 @@ class ProfileAudio extends IcmsPersistableSeoObject {
 	function getAudioSender() {
 		return icms_getLinkedUnameFromId($this->getVar('uid_owner', 'e'));
 	}
-	function getVideoToDisplay() {
-		//$ret = '<object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/' . $this->getVar ( 'youtube_code' ) . '&hl='._LANGCODE.'&fs=1&color1=0x3a3a3a&color2=0x999999"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/' . $this->getVar ( 'youtube_code' ) . '&hl='._LANGCODE.'&fs=1&color1=0x3a3a3a&color2=0x999999" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="265"></embed></object>';
-		$ret = $this->getVar('url', 'e');
+	function getAudioToDisplay() {
+		$ret = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="240" height="20" id="dewplayer" align="middle"><param name="wmode" value="transparent"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="'.ICMS_URL.'/modules/profile/audioplayers/dewplayer-multi.swf?mp3='.$this->handler->getPlaylist($this).'" /><param name="quality" value="high" /><param name="bgcolor" value="FFFFFF" /><embed src="'.ICMS_URL.'/modules/profile/audioplayers/dewplayer-multi.swf?mp3='.$this->handler->getPlaylist($this).'" quality="high" bgcolor="FFFFFF" width="240" height="20" name="dewplayer" wmode="transparent" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object>';
+		return $ret;
+	}
+
+	/**
+	 * Check to see wether the current user can edit or delete this audio
+	 *
+	 * @return bool true if he can, false if not
+	 */
+	function userCanEditAndDelete() {
+		global $icmsUser, $profile_isAdmin;
+		if (!is_object($icmsUser)) {
+			return false;
+		}
+		if ($profile_isAdmin) {
+			return true;
+		}
+		return $this->getVar('uid_owner', 'e') == $icmsUser->uid();
+	}
+
+	/**
+	 * Check to see wether the current user can view this audio
+	 *
+	 * @return bool true if he can, false if not
+	 */
+	function userCanView() {
+		global $icmsUser, $profile_isAdmin;
+		if (!is_object($icmsUser)) {
+			return false;
+		}
+		if ($profile_isAdmin) {
+			return true;
+		}
+		return $this->getVar('uid_owner', 'e') == $icmsUser->uid();
+	}
+
+	/**
+	 * Overridding IcmsPersistable::toArray() method to add a few info
+	 *
+	 * @return array of audio info
+	 */
+	function toArray() {
+		$ret = parent :: toArray();
+		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
+		$ret['audio_content'] = $this->getProfilePicture();
+		$ret['audio_title'] = $this->getVar('title','e');
+		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
+		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
+		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
+		$ret['userCanView'] = $this->userCanView();
+		$ret['audio_senderid'] = $this->getVar('uid_owner','e');
+		$ret['audio_sender_link'] = $this->getPictureSender();
 		return $ret;
 	}
 }
@@ -88,8 +138,69 @@ class ProfileAudioHandler extends IcmsPersistableObjectHandler {
 		$this->setUploaderConfig(false, array("audio/mp3" , "audio/x-mp3", "audio/mpeg"), $icmsModuleConfig['maxfilesize']);
 	}
 
+
 	/**
-	* delete profile_audios matching a set of conditions
+	 * Create the criteria that will be used by getAudio and getAudioCount
+	 *
+	 * @param int $start to which record to start
+	 * @param int $limit limit of audio to return
+	 * @param int $uid_owner if specifid, only the audio of this user will be returned
+	 * @param int $audio_id ID of a single audio to retrieve
+	 * @return CriteriaCompo $criteria
+	 */
+	function getAudioCriteria($start = 0, $limit = 0, $uid_owner = false, $audio_id = false) {
+		global $icmsUser;
+
+		$criteria = new CriteriaCompo();
+		if ($start) {
+			$criteria->setStart($start);
+		}
+		if ($limit) {
+			$criteria->setLimit(intval($limit));
+		}
+		$criteria->setSort('creation_time');
+		$criteria->setOrder('DESC');
+
+		if (!is_object($icmsUser) || (is_object($icmsUser) && !$icmsUser->isAdmin())) {
+			$criteria->add(new Criteria('private', false));
+		}
+		if ($uid_owner) {
+			$criteria->add(new Criteria('uid_owner', $uid_owner));
+		}
+		if ($audio_id) {
+			$criteria->add(new Criteria('audio_id', $audio_id));
+		}
+		return $criteria;
+	}
+
+	/**
+	 * Get single audio object
+	 *
+	 * @param int $audio_id
+	 * @return object ProfilePicture object
+	 */
+	function getPicture($audio_id=false, $uid_owner=false) {
+		$ret = $this->getAudio(0, 0, $uid_owner, $audio_id);
+		return isset($ret[$audio_id]) ? $ret[$audio_id] : false;
+	}
+
+	/**
+	 * Get audio as array, ordered by creation_time DESC
+	 *
+	 * @param int $start to which record to start
+	 * @param int $limit max audio to display
+	 * @param int $uid_owner if specifid, only the audio of this user will be returned
+	 * @param int $audio_id ID of a single audio to retrieve
+	 * @return array of audio
+	 */
+	function getAudio($start = 0, $limit = 0, $uid_owner = false, $audio_id = false) {
+		$criteria = $this->getAudioCriteria($start, $limit, $uid_owner, $audio_id);
+		$ret = $this->getObjects($criteria, true, false);
+		return $ret;
+	}
+
+	/**
+	* delete profile_audio matching a set of conditions
 	* 
 	* @param object $criteria {@link CriteriaElement} 
 	* @return bool FALSE if deletion failed
@@ -112,41 +223,52 @@ class ProfileAudioHandler extends IcmsPersistableObjectHandler {
      * @param array of objects 
      * @return void
      */    
-    function assignAudioContent($nbAudios, $audios)
-    {
-	
-        if ($nbAudios==0) {
-            return false;
-        } else {            
-          //audio info
-            /**
-             * Lets populate an array with the dati from the audio
-            */  
-            $i = 0;
-            foreach ($audios as $audio){
-                $audios_array[$i]['url']      = $audio->getVar("url","s");
-                $audios_array[$i]['title']    = $audio->getVar("title","s");
-                $audios_array[$i]['id']       = $audio->getVar("audio_id","s");
-                $audios_array[$i]['author']   = $audio->getVar("author","s");
-
-                if ( (str_replace('.', '', PHP_VERSION)) > 499 ){  
-                  $audio_path = ICMS_ROOT_PATH.'/uploads/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/mp3/'.$audio->getVar("url","s");
-                  // echo $audio_path;
-                  $mp3filemetainfo = new Id3v1($audio_path, true);
-                  $mp3filemetainfoarray = array();
-                  $mp3filemetainfoarray['Title'] = $mp3filemetainfo->getTitle();
-                  $mp3filemetainfoarray['Artist'] = $mp3filemetainfo->getArtist();
-                  $mp3filemetainfoarray['Album'] = $mp3filemetainfo->getAlbum();
-                  $mp3filemetainfoarray['Year'] =  $mp3filemetainfo->getYear();
-                  $audios_array[$i]['meta'] = $mp3filemetainfoarray;
-                } else {
-                  $audios_array[$i]['nometa'] = 1;
-                }                
-                $i++;
+    function getPlaylist($audios){
+        $i = 0;
+        foreach ($audios as $audio){
+            $audios_array[$i]['url']      = $audio->getVar("url","s");
+            $audios_array[$i]['title']    = $audio->getVar("title","s");
+            $audios_array[$i]['id']       = $audio->getVar("audio_id","s");
+            $audios_array[$i]['author']   = $audio->getVar("author","s");
+            $audio_path = ICMS_ROOT_PATH.'/uploads/profile/audio/'.$audio->getVar("url","s");
+            $mp3filemetainfo = new Id3v1($audio_path, true);
+            $mp3filemetainfoarray = array();
+            $mp3filemetainfoarray['Title'] = $mp3filemetainfo->getTitle();
+            $mp3filemetainfoarray['Artist'] = $mp3filemetainfo->getArtist();
+            $mp3filemetainfoarray['Album'] = $mp3filemetainfo->getAlbum();
+            $mp3filemetainfoarray['Year'] =  $mp3filemetainfo->getYear();
+            $audios_array[$i]['meta'] = $mp3filemetainfoarray;
+            $i++;
             }
         return $audios_array;
-        }
-
     }
+	
+	/**
+	 * Check wether the current user can submit a new audio or not
+	 *
+	 * @return bool true if he can false if not
+	 */
+	function userCanSubmit() {
+		global $icmsUser;
+		if (!is_object($icmsUser)) {
+			return false;
+		}
+		return true;
+	}
+
+
+	/**
+	 * Update the counter field of the post object
+	 *
+	 * @todo add this in directly in the IPF
+	 * @param int $post_id
+	 *
+	 * @return VOID
+	 */
+	function updateCounter($id) {
+		$sql = 'UPDATE ' . $this->table . ' SET counter = counter + 1 WHERE ' . $this->keyName . ' = ' . $id;
+		$this->query($sql, null, true);
+	}
+
 }
 ?>
