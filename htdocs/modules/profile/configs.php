@@ -15,23 +15,25 @@
  *
  * @param object $configsObj Profileconfig object to be edited
 */
-function editconfigs($configsObj, $admin=false, $uid=0, $unsuspend=false)
+function editconfigs($configsObj, $admin=false, $uid=0)
 {
 	global $profile_configs_handler, $xoTheme, $icmsTpl, $icmsUser;
 
-	if($admin && $uid != 0 && $unsuspend == true){
-	}elseif($admin && $uid != 0 && $configsObj->isNew()){
+		if($admin && $uid != 0){
 		$member_handler =& xoops_gethandler('member');
 		$processUser =& $member_handler->getUser($uid);
 		$configsObj->setVar('config_uid', $uid);
 		$configsObj->setVar('backup_email', $processUser->email());
 		$configsObj->setVar('backup_password', $processUser->pass());
-		$configsObj->hideFieldFromForm(array('status', 'backup_email', 'backup_password', 'pictures', 'audio', 'videos', 'scraps', 'friendship', 'tribes', 'profile_contact', 'profile_general', 'profile_stats'));
+		$configsObj->hideFieldFromForm(array('config_uid', 'status', 'backup_email', 'backup_password', 'pictures', 'audio', 'videos', 'scraps', 'friendship', 'tribes', 'profile_contact', 'profile_general', 'profile_stats'));
 		$sform = $configsObj->getSecureForm(_MD_PROFILE_CONFIGS_EDIT, 'addconfigs');
 		$sform->assign($icmsTpl, 'profile_configsform');
 		$icmsTpl->assign('profile_category_path', icms_getLinkedUnameFromId($uid) . ' > ' . _EDIT);
-	}elseif ($configsObj->isNew()){
-		$configsObj->hideFieldFromForm(array('status', 'backup_email', 'backup_password', 'suspension', 'end_suspension'));
+		}elseif (!$configsObj->isNew()){
+		if (!$configsObj->userCanEditAndDelete()) {
+			redirect_header($configsObj->getItemLink(true), 3, _NOPERM);
+		}
+		$configsObj->hideFieldFromForm(array('config_uid', 'status', 'backup_email', 'backup_password', 'suspension', 'end_suspension'));
 		$sform = $configsObj->getSecureForm(_MD_PROFILE_CONFIGS_EDIT, 'addconfigs');
 		$sform->assign($icmsTpl, 'profile_configsform');
 		$icmsTpl->assign('profile_category_path', icms_getLinkedUnameFromId($icmsUser->uid()) . ' > ' . _EDIT);
@@ -45,6 +47,7 @@ function editconfigs($configsObj, $admin=false, $uid=0, $unsuspend=false)
 		$sform->assign($icmsTpl, 'profile_configsform');
 		$icmsTpl->assign('profile_category_path', _SUBMIT);
 	}
+
 
 	$xoTheme->addStylesheet(ICMS_URL . '/modules/profile/module'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
 }
@@ -66,39 +69,25 @@ global $icmsUser, $profile_isAdmin;
 $clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0 ;
 $real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
 $CheckID = !empty($clean_uid)?$clean_uid:$real_uid;
-$clean_configs_id = $profile_configs_handler->getConfigIdPerUser($CheckID);
+$configs_id = $profile_configs_handler->getConfigIdPerUser($CheckID);
+$clean_configs_id = !empty($configs_id[0]['configs_id'])?$configs_id[0]['configs_id']:0;
 $configsObj = $profile_configs_handler->get($clean_configs_id);
+
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition
  */
-$valid_op = array ('mod','addconfigs','suspend','unsuspend', '');
+$valid_op = array ('addconfigs','suspend', '');
 /**
  * Only proceed if the supplied operation is a valid operation
  */
 if (in_array($clean_op,$valid_op,true)){
   switch ($clean_op) {
-	case "mod":
-		$configsObj = $profile_configs_handler->get($clean_configs_id);
-		if ($clean_uid < 1 && !$profile_isAdmin) {
-			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
-		}
-		editconfigs($configsObj, true, $clean_uid );
-		break;
-
 	case "suspend":
 		$configsObj = $profile_configs_handler->get($clean_configs_id);
-		if ($clean_uid < 1 && !$profile_isAdmin) {
+		if (empty($clean_uid) || !$profile_isAdmin) {
 			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 		}
 		editconfigs($configsObj, true, $clean_uid );
-		break;
-
-	case "unsuspend":
-		$configsObj = $profile_configs_handler->get($clean_uid);
-		if ($clean_uid > 0 && !$profile_isAdmin) {
-			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
-		}
-		editconfigs($configsObj, true, $clean_uid, true );
 		break;
 
 	case "addconfigs":
@@ -112,8 +101,11 @@ if (in_array($clean_op,$valid_op,true)){
 
 	default:
 		if ($real_uid > 0) {
+			$configsObj = $profile_configs_handler->get($clean_configs_id);
 			editconfigs($configsObj);
 		}elseif($profile_isAdmin && $clean_uid > 0){
+			$configs_id = $profile_configs_handler->getConfigIdPerUser($clean_uid);
+			$clean_configs_id = !empty($configs_id[0]['configs_id'])?$configs_id[0]['configs_id']:0;
 			$configsObj = $profile_configs_handler->get($clean_configs_id);
 			editconfigs($configsObj, true, $clean_uid );
 		}else{

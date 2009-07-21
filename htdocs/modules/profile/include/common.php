@@ -24,16 +24,16 @@ icms_loadLanguageFile('profile', 'common');
 include_once(PROFILE_ROOT_PATH . "include/functions.php");
 
 // Creating the module object to make it available throughout the module
-$improfileModule = icms_getModuleInfo(PROFILE_DIRNAME);
-if (is_object($improfileModule)){
-	$improfile_moduleName = $improfileModule->getVar('name');
+$profileModule = icms_getModuleInfo(PROFILE_DIRNAME);
+if (is_object($profileModule)){
+	$profile_moduleName = $profileModule->getVar('name');
 }
 
 // Find if the user is admin of the module and make this info available throughout the module
-$improfile_isAdmin = icms_userIsAdmin(PROFILE_DIRNAME);
+$profile_isAdmin = icms_userIsAdmin(PROFILE_DIRNAME);
 
 // Creating the module config array to make it available throughout the module
-$improfileConfig = icms_getModuleConfig(PROFILE_DIRNAME);
+$profileConfig = icms_getModuleConfig(PROFILE_DIRNAME);
 
 // creating the icmsPersistableRegistry to make it available throughout the module
 global $icmsPersistableRegistry;

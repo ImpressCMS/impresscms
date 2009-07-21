@@ -148,7 +148,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 * Constructor
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'configs', array('configs_id', 'config_uid'), '', '', 'profile');
+		$this->IcmsPersistableObjectHandler($db, 'configs', 'configs_id', '', '', 'profile');
 	}
 	/**
 	 * Create the criteria that will be used by getConfigs and getConfigsCount
