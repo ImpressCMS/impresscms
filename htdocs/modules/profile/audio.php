@@ -1,6 +1,6 @@
 <?php
 /**
-* Pictures page
+* Audios page
 *
 * @copyright	GNU General Public License (GPL)
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -11,9 +11,9 @@
 */
 
 /**
- * Edit a Picture
+ * Edit a Audio
  *
- * @param object $audioObj ProfilePicture object to be edited
+ * @param object $audioObj ProfileAudio object to be edited
 */
 function editaudio($audioObj)
 {
@@ -113,9 +113,9 @@ if (in_array($clean_op,$valid_op,true)){
 			editaudio($audioObj);
 		}
 		if($clean_audio_id > 0){
-			$audioArray = $profile_audio_handler->getPicture($clean_audio_id);
+			$audioArray = $profile_audio_handler->getAudio($clean_audio_id);
 			$profile_audio_handler->updateCounter($clean_audio_id);
-			$icmsTpl->assign('profile_single_picture', $audioObj->toArray());
+			$icmsTpl->assign('profile_single_audio', $audioObj->toArray());
 			$icmsTpl->assign('profile_category_path', $audioArray['title']);
 		}elseif($clean_uid > 0){
 			$audioArray = $profile_audio_handler->getAudio(false, false, $clean_uid);

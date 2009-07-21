@@ -16,7 +16,6 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 // including the IcmsPersistabelSeoObject
 include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
 include_once(ICMS_ROOT_PATH . '/modules/profile/include/functions.php');
-include_once(ICMS_ROOT_PATH . '/modules/profile/class/class.Id3v1.php');
 
 class ProfileAudio extends IcmsPersistableSeoObject {
 
@@ -72,7 +71,7 @@ class ProfileAudio extends IcmsPersistableSeoObject {
 		return icms_getLinkedUnameFromId($this->getVar('uid_owner', 'e'));
 	}
 	function getAudioToDisplay() {
-		$ret = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="240" height="20" id="dewplayer" align="middle"><param name="wmode" value="transparent"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="'.ICMS_URL.'/modules/profile/audioplayers/dewplayer-multi.swf?mp3='.$this->handler->getPlaylist($this).'" /><param name="quality" value="high" /><param name="bgcolor" value="FFFFFF" /><embed src="'.ICMS_URL.'/modules/profile/audioplayers/dewplayer-multi.swf?mp3='.$this->handler->getPlaylist($this).'" quality="high" bgcolor="FFFFFF" width="240" height="20" name="dewplayer" wmode="transparent" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object>';
+		$ret = '<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" width="240" height="20" id="dewplayer" align="middle"><param name="wmode" value="transparent"><param name="allowScriptAccess" value="sameDomain" /><param name="movie" value="'.ICMS_URL.'/modules/profile/audioplayers/dewplayer-multi.swf?mp3='.ICMS_URL.'/uploads/profile/audio/'.$this->getVar('url', 'e').'" /><param name="quality" value="high" /><param name="bgcolor" value="FFFFFF" /><embed src="'.ICMS_URL.'/modules/profile/audioplayers/dewplayer-multi.swf?mp3='.ICMS_URL.'/uploads/profile/audio/'.$this->getVar('url', 'e').'" quality="high" bgcolor="FFFFFF" width="240" height="20" name="dewplayer" wmode="transparent" align="middle" allowScriptAccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed></object>';
 		return $ret;
 	}
 
@@ -116,14 +115,14 @@ class ProfileAudio extends IcmsPersistableSeoObject {
 	function toArray() {
 		$ret = parent :: toArray();
 		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
-		$ret['audio_content'] = $this->getProfilePicture();
+		$ret['audio_content'] = $this->getProfileAudio();
 		$ret['audio_title'] = $this->getVar('title','e');
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['userCanView'] = $this->userCanView();
 		$ret['audio_senderid'] = $this->getVar('uid_owner','e');
-		$ret['audio_sender_link'] = $this->getPictureSender();
+		$ret['audio_sender_link'] = $this->getAudioSender();
 		return $ret;
 	}
 }
@@ -177,9 +176,9 @@ class ProfileAudioHandler extends IcmsPersistableObjectHandler {
 	 * Get single audio object
 	 *
 	 * @param int $audio_id
-	 * @return object ProfilePicture object
+	 * @return object ProfileAudio object
 	 */
-	function getPicture($audio_id=false, $uid_owner=false) {
+	function getAudio($audio_id=false, $uid_owner=false) {
 		$ret = $this->getAudio(0, 0, $uid_owner, $audio_id);
 		return isset($ret[$audio_id]) ? $ret[$audio_id] : false;
 	}
@@ -193,56 +192,12 @@ class ProfileAudioHandler extends IcmsPersistableObjectHandler {
 	 * @param int $audio_id ID of a single audio to retrieve
 	 * @return array of audio
 	 */
-	function getAudio($start = 0, $limit = 0, $uid_owner = false, $audio_id = false) {
+	function getAudios($start = 0, $limit = 0, $uid_owner = false, $audio_id = false) {
 		$criteria = $this->getAudioCriteria($start, $limit, $uid_owner, $audio_id);
 		$ret = $this->getObjects($criteria, true, false);
 		return $ret;
 	}
 
-	/**
-	* delete profile_audio matching a set of conditions
-	* 
-	* @param object $criteria {@link CriteriaElement} 
-	* @return bool FALSE if deletion failed
-	*/
-	function deleteAll($criteria = null)
-	{
-		$sql = 'DELETE FROM '.$this->table;
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-			$sql .= ' '.$criteria->renderWhere();
-		}
-		if (!$result = $this->db->query($sql)) {
-			return false;
-		}
-		return true;
-	}
-
-    /**
-     * Assign Audio Content to Template
-     * @param int $NbAudios the number of videos this user have
-     * @param array of objects 
-     * @return void
-     */    
-    function getPlaylist($audios){
-        $i = 0;
-        foreach ($audios as $audio){
-            $audios_array[$i]['url']      = $audio->getVar("url","s");
-            $audios_array[$i]['title']    = $audio->getVar("title","s");
-            $audios_array[$i]['id']       = $audio->getVar("audio_id","s");
-            $audios_array[$i]['author']   = $audio->getVar("author","s");
-            $audio_path = ICMS_ROOT_PATH.'/uploads/profile/audio/'.$audio->getVar("url","s");
-            $mp3filemetainfo = new Id3v1($audio_path, true);
-            $mp3filemetainfoarray = array();
-            $mp3filemetainfoarray['Title'] = $mp3filemetainfo->getTitle();
-            $mp3filemetainfoarray['Artist'] = $mp3filemetainfo->getArtist();
-            $mp3filemetainfoarray['Album'] = $mp3filemetainfo->getAlbum();
-            $mp3filemetainfoarray['Year'] =  $mp3filemetainfo->getYear();
-            $audios_array[$i]['meta'] = $mp3filemetainfoarray;
-            $i++;
-            }
-        return $audios_array;
-    }
-	
 	/**
 	 * Check wether the current user can submit a new audio or not
 	 *
