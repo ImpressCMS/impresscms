@@ -6,7 +6,7 @@
 * @copyright	GNU General Public License (GPL)
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @since		1.3
-* @author		Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla <contact@impresscms.org>
+* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @package		profile
 * @version		$Id$
 */
@@ -39,16 +39,15 @@ class ProfileConfigs extends IcmsPersistableObject {
 
 		$this->quickInitVar('configs_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('config_uid', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('configs', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('pictures', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('audio', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('videos', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('scraps', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('friendship', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('tribes', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('profile_contact', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('profile_general', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('profile_stats', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('pictures', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
+		$this->quickInitVar('audio', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
+		$this->quickInitVar('videos', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
+		$this->quickInitVar('scraps', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
+		$this->quickInitVar('friendship', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
+		$this->quickInitVar('tribes', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
+		$this->quickInitVar('profile_contact', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
+		$this->quickInitVar('profile_general', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
+		$this->quickInitVar('profile_stats', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
 		$this->quickInitVar('suspension', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('backup_password', XOBJ_DTYPE_TXTAREA, false);
 		$this->quickInitVar('backup_email', XOBJ_DTYPE_TXTBOX, false);
@@ -59,7 +58,8 @@ class ProfileConfigs extends IcmsPersistableObject {
 		$this->hideFieldFromForm('backup_password');
 		$this->hideFieldFromForm('backup_email');
 		$this->setControl('config_uid', 'user');
-		$this->setControl('configs', array (
+		$this->setControl('suspension', 'yesno');
+		$this->setControl('pictures', array (
 			'itemHandler' => 'configs',
 			'method' => 'getConfig_statusArray',
 			'module' => 'profile'
@@ -121,7 +121,7 @@ class ProfileConfigs extends IcmsPersistableObject {
 		return parent :: getVar($key, $format);
 	}
 	/**
-	 * Check to see wether the current user can edit or delete this picture
+	 * Check to see wether the current user can edit or delete this config
 	 *
 	 * @return bool true if he can, false if not
 	 */
@@ -147,7 +147,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 * Constructor
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'configs', 'configs_id', '', '', 'profile');
+		$this->IcmsPersistableObjectHandler($db, 'configs', array('configs_id', 'config_uid'), '', '', 'profile');
 	}
 	/**
 	 * Create the criteria that will be used by getConfigs and getConfigsCount
@@ -224,32 +224,85 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 * @return array of amounts
 	 */
 	function geteachSectioncounts($uid){
-	$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_audio').' WHERE uid_owner="$uid"';
-	$audio = $this->query($sql);
-	
-	$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_configs').' WHERE user_id="$uid"';
-	$configs = $this->query($sql);
-	
-	$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_friendship').' WHERE friend1_uid="$uid"';
-	$friendship = $this->query($sql);
-	
-	$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_scraps').' WHERE uid_owner="$uid"';
-	$scraps = $this->query($sql);
-	
-	$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_videos').' WHERE uid_owner="$uid"';
-	$videos = $this->query($sql);
-	
-	$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_tribes').' WHERE owner_uid="$uid"';
-	$tribes = $this->query($sql);
-	
-	return array(
-		'audio' => $audio,
-		'configs' => $configs,
-		'friendship' => $friendship,
-		'scraps' => $scraps,
-		'videos' => $videos,
-		'tribes' => $tribes
-		);
+		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_audio').' WHERE uid_owner="$uid"';
+		$audio = $this->query($sql);
+		
+		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_configs').' WHERE user_id="$uid"';
+		$configs = $this->query($sql);
+		
+		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_friendship').' WHERE friend1_uid="$uid"';
+		$friendship = $this->query($sql);
+		
+		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_scraps').' WHERE uid_owner="$uid"';
+		$scraps = $this->query($sql);
+		
+		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_videos').' WHERE uid_owner="$uid"';
+		$videos = $this->query($sql);
+		
+		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_tribes').' WHERE owner_uid="$uid"';
+		$tribes = $this->query($sql);
+		
+		return array(
+			'audio' => $audio,
+			'configs' => $configs,
+			'friendship' => $friendship,
+			'scraps' => $scraps,
+			'videos' => $videos,
+			'tribes' => $tribes
+			);
 	}
+
+	/**
+	 * Check wether the current user can access a section or not
+	 *
+	 * @return bool true if he can false if not
+	 */
+	function userCanAcsessSection(& $obj, $item, $uid=false) {
+		global $icmsUser, $profile_isAdmin;
+		$status = $obj->getVar($item, 'e');
+		if ($profile_isAdmin) {
+			return true;
+		}
+		if($status == PROFILE_CONFIG_STATUS_EVERYBODY){
+			return true;
+		}
+		if ($status == PROFILE_CONFIG_STATUS_MEMBERS && is_object($icmsUser)) {
+			return true;
+		}
+		if($status == PROFILE_CONFIG_STATUS_FRIENDS){
+			/*
+			 * TODO: Create a function to check if a user is a friend or not.
+			 */
+				return false;
+		}
+		if ($status == PROFILE_CONFIG_STATUS_ME) {
+			return $obj->getVar('config_uid', 'e') == $icmsUser->uid();
+		}
+	}
+
+	/**
+	 * Check wether the current user can submit a new config or not
+	 *
+	 * @return bool true if he can false if not
+	 */
+	function userCanSubmit() {
+		global $icmsUser;
+		if (!is_object($icmsUser)) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Retreive the config_id of user
+	 *
+	 * @return array of amounts
+	 */
+	function getConfigIdPerUser($uid){
+		$sql = 'SELECT '.$this->keyName.' FROM'.$this->table.' WHERE config_uid="$uid"';
+		$ret = $this->query($sql, false);
+		return $ret;
+	}
+
 }
 ?>

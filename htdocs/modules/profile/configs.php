@@ -4,8 +4,8 @@
 *
 * @copyright	GNU General Public License (GPL)
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.0
-* @author		Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla <contact@impresscms.org>
+* @since		1.3
+* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @package		profile
 * @version		$Id$
 */
@@ -21,9 +21,6 @@ function editconfigs($configsObj, $admin=false, $uid=0, $unsuspend=false)
 
 	if($admin && $uid != 0 && $unsuspend == true){
 	}elseif($admin && $uid != 0){
-		if (!$configsObj->userCanEditAndDelete()) {
-			redirect_header($configsObj->getItemLink(true), 3, _NOPERM);
-		}
 		$member_handler =& xoops_gethandler('member');
 		$processUser =& $member_handler->getUser($uid);
 		$configsObj->setVar('config_uid', $uid);
@@ -81,14 +78,14 @@ if (in_array($clean_op,$valid_op,true)){
   switch ($clean_op) {
 	case "suspend":
 		$configsObj = $profile_configs_handler->get($clean_configs_id);
-		if ($clean_uid > 0 && !$profile_isAdmin) {
+		if ($clean_uid < 1 && !$profile_isAdmin) {
 			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 		}
 		editconfigs($configsObj, true, $clean_uid );
 		break;
 
 	case "unsuspend":
-		$configsObj = $profile_configs_handler->getConfig($clean_uid);
+		$configsObj = $profile_configs_handler->get($clean_uid);
 		if ($clean_uid > 0 && !$profile_isAdmin) {
 			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 		}
@@ -107,7 +104,8 @@ if (in_array($clean_op,$valid_op,true)){
 
 	case "mod":
 	default:
-		$configsObj = $profile_configs_handler->getConfig($real_uid);
+		$itemID = $profile_configs_handler->getConfigIdPerUser($uid);
+		$configsObj = $profile_configs_handler->get($itemID);
 		if ($real_uid > 0) {
 			editconfigs($configsObj);
 		}elseif($profile_isAdmin && $clean_uid > 0){

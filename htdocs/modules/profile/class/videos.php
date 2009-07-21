@@ -33,6 +33,7 @@ class ProfileVideos extends IcmsPersistableSeoObject {
 		$this->quickInitVar('uid_owner', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('video_desc', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('youtube_code', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('creation_time', XOBJ_DTYPE_LTIME, false);
 		$this->quickInitVar('main_video', XOBJ_DTYPE_TXTBOX, false);
 		$this->initCommonVar('counter', false);
 		$this->initCommonVar('dohtml', false, true);
@@ -42,7 +43,7 @@ class ProfileVideos extends IcmsPersistableSeoObject {
 		$this->initCommonVar('doxcode', false, true);
 
 		$this->setControl('uid_owner', 'user');
-		$this->hideFieldFromForm('main_video');
+		//$this->hideFieldFromForm('main_video');
 
 
 		$this->IcmsPersistableSeoObject();
@@ -71,6 +72,56 @@ class ProfileVideos extends IcmsPersistableSeoObject {
 		return icms_getLinkedUnameFromId($this->getVar('uid_owner', 'e'));
 	}
 
+	/**
+	 * Check to see wether the current user can edit or delete this video
+	 *
+	 * @return bool true if he can, false if not
+	 */
+	function userCanEditAndDelete() {
+		global $icmsUser, $profile_isAdmin;
+		if (!is_object($icmsUser)) {
+			return false;
+		}
+		if ($profile_isAdmin) {
+			return true;
+		}
+		return $this->getVar('uid_owner', 'e') == $icmsUser->uid();
+	}
+
+	/**
+	 * Check to see wether the current user can view this video
+	 *
+	 * @return bool true if he can, false if not
+	 */
+	function userCanView() {
+		global $icmsUser, $profile_isAdmin;
+		if (!is_object($icmsUser)) {
+			return false;
+		}
+		if ($profile_isAdmin) {
+			return true;
+		}
+		return $this->getVar('uid_owner', 'e') == $icmsUser->uid();
+	}
+
+	/**
+	 * Overridding IcmsPersistable::toArray() method to add a few info
+	 *
+	 * @return array of video info
+	 */
+	function toArray() {
+		$ret = parent :: toArray();
+		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
+		$ret['video_content'] = $this->getProfileVideo();
+		$ret['video_title'] = $this->getVar('title','e');
+		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
+		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
+		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
+		$ret['userCanView'] = $this->userCanView();
+		$ret['video_senderid'] = $this->getVar('uid_owner','e');
+		$ret['video_sender_link'] = $this->getVideoSender();
+		return $ret;
+	}
 }
 class ProfileVideosHandler extends IcmsPersistableObjectHandler {
 
