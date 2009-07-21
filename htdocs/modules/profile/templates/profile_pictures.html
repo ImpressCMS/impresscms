@@ -10,14 +10,40 @@
       </div>
    </div>
 <{/if}>
-<{if $profile_pictures}>
-	<{includeq file='db:profile_single_picture.html'}>
-<{else}>
-	<{foreach item=profile_picture from=$profile_pictures}>
-		<{includeq file='db:profile_single_picture.html'}>
-	<{/foreach}>
+<{if $profile_pictureseditform}>
+	<{includeq file='db:system_common_form.html' form=$profile_pictureseditform}>
+<{/if}>
+<{if $profile_single_picture}>
+	<{if $profile_single_picture.userCanView}>
+		<div class="profile_single_picture_container">
+			<h1 class="picture-title"><{$profile_single_picture.picture_title}></h1>
+		<div class="profile_single_picture_content">
+			<{$profile_single_picture.picture_content}>
+		</div>
+		<{if $profile_single_picture.userCanEditAndDelete}>
+			<div class="profile_admin_links"><{$profile_single_picture.editItemLink}><{$profile_single_picture.deleteItemLink}></div>
+		<{/if}>
+		</div>
+	<{/if}>
 <{/if}>
 
+<{if $profile_allpictures}>
+	<{foreach item=profile_each_picture from=$profile_allpictures}>
+		<{if $profile_each_picture.userCanView}>
+			<div class="profile_each_picture_container">
+				<h1 class="post-title"><{$profile_each_picture.title}></h1>
+			</div>
+			<div class="profile_each_picture_content">
+				<a href="<{$icms_url}>/uploads/profile/pictures/resized_<{$profile_each_picture.url}>" rel="lightbox" title="<{$profile_each_picture.title}>">
+        			<img class="thumb" src="<{$icms_url}>/uploads/profile/pictures/thumb_<{$profile_each_picture.url}>" rel="lightbox" title="<{$profile_each_picture.title}>" />
+				</a>
+			</div>
+			<{if $profile_each_picture.userCanEditAndDelete}>
+					<div class="profile_admin_links"><{$profile_each_picture.editItemLink}><{$profile_each_picture.deleteItemLink}></div>
+			<{/if}>
+		<{/if}>
+	<{/foreach}>
+<{/if}>
 <{if $icmspersistable_delete_confirm}>
 	<{$icmspersistable_delete_confirm}>
 <{/if}>

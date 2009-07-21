@@ -336,10 +336,6 @@ $modversion['templates'][]= array(
   'description' => 'pictures Admin Index');
 
 $modversion['templates'][]= array(
-  'file' => 'profile_single_picture.html',
-  'description' => 'picture Index');
-
-$modversion['templates'][]= array(
   'file' => 'profile_pictures.html',
   'description' => 'pictures Index');
 
