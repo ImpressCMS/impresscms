@@ -61,11 +61,11 @@ if (isset($_GET['op'])) $clean_op = $_GET['op'];
 if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
+global $icmsUser;
 $clean_pictures_id = isset($_GET['pictures_id']) ? intval($_GET['pictures_id']) : 0 ;
 $clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0 ;
+$real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
 $picturesObj = $profile_pictures_handler->get($clean_pictures_id);
-
-
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition
  */
@@ -110,7 +110,15 @@ if (in_array($clean_op,$valid_op,true)){
 		break;
 
 	default:
-		$picturesArray = $profile_pictures_handler->getPicture($clean_pictures_id);
+		if($clean_pictures_id > 0){
+			$picturesArray = $profile_pictures_handler->getPicture($clean_pictures_id);
+		}elseif($clean_uid > 0){
+			$picturesArray = $profile_pictures_handler->getPicture(false, $clean_uid);
+		}elseif($real_uid > 0){
+			$picturesArray = $profile_pictures_handler->getPicture(false, $real_uid);
+		}else{
+			redirect_header(PROFILE_URL);
+		}
 		$profile_pictures_handler->updateCounter($clean_pictures_id);
 	    $icmsTpl->assign('profile_pictures', $picturesObj->toArray());
 		$icmsTpl->assign('profile_category_path', $picturesArray['title']);

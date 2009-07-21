@@ -185,8 +185,8 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	 * @param int $pictures_id
 	 * @return object ProfilePicture object
 	 */
-	function getPicture($pictures_id) {
-		$ret = $this->getPictures(0, 0, false, $pictures_id);
+	function getPicture($pictures_id=false, $user_id=false) {
+		$ret = $this->getPictures(0, 0, $user_id, $pictures_id);
 		return isset($ret[$pictures_id]) ? $ret[$pictures_id] : false;
 	}
 
