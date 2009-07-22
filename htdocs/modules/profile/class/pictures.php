@@ -99,17 +99,15 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 	 */
 	function userCanView() {
 		global $icmsUser, $profile_isAdmin;
-		
-		if (!is_object($icmsUser)) {
-			return false;
-		}
-		if ($profile_isAdmin) {
+		$uid = isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
+		$isAllowed = getAllowedItems('pictures', $uid);
+		if ($isAllowed['pictures']) {
 			return true;
 		}
 		if($this->getVar('private', 'e') == 0 ){
 			return true;
 		}
-		return $this->getVar('uid_owner', 'e') == $icmsUser->uid();
+		return false;
 	}
 
 	/**
@@ -165,9 +163,8 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		$criteria->setSort('creation_time');
 		$criteria->setOrder('DESC');
 
-		if (!is_object($icmsUser) || (is_object($icmsUser) && !$icmsUser->isAdmin())) {
-			$criteria->add(new Criteria('private', false));
-		}
+		$criteria->add(new Criteria('private', 0));
+		
 		if ($uid_owner) {
 			$criteria->add(new Criteria('uid_owner', $uid_owner));
 		}
