@@ -190,14 +190,6 @@ $modversion['templates'][] = array(
   'file' => 'profile_index.html',
   'description' => '');
 
-$modversion['templates'][]= array(
-  'file' => 'profile_friends.html',
-  'description' => '');
-
-$modversion['templates'][] = array(
-  'file' => 'profile_scrapbook.html',
-  'description' => '');
-
 $modversion['templates'][] = array(
   'file' => 'profile_audio.html',
   'description' => '');
@@ -217,27 +209,6 @@ $modversion['templates'][] = array(
 $modversion['templates'][] = array(
   'file' => 'profile_footer.html',
   'description' => '');
-
-$modversion['templates'][] = array(
-  'file' => 'profile_edittribe.html',
-  'description' => '');
-
-$modversion['templates'][] = array(
-  'file' => 'profile_tribes_results.html',
-  'description' => '');
-
-$modversion['templates'][] = array(
-  'file' => 'profile_tribe.html',
-  'description' => '');
-
-$modversion['templates'][] = array(
-  'file' => 'profile_searchform.html',
-  'description' => '');
-
-$modversion['templates'][] = array(
-  'file' => 'profile_searchresults.html',
-  'description' => '');
-
 $modversion['templates'][] = array(
   'file' => 'profile_search.html',
   'description' => '');
@@ -256,10 +227,6 @@ $modversion['templates'][] = array(
 
 $modversion['templates'][] = array(
   'file' => 'profile_videos.html',
-  'description' => '');
-
-$modversion['templates'][] = array(
-  'file' => 'profile_noindex.html',
   'description' => '');
 
 $modversion['templates'][] = array(
@@ -313,6 +280,7 @@ $modversion['templates'][]= array(
 $modversion['templates'][]= array(
   'file' => 'profile_admin_audio.html',
   'description' => 'audio Admin Index');
+
 $modversion['templates'][]= array(
   'file' => 'profile_tribes.html',
   'description' => 'tribes Index');
