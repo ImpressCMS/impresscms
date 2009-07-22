@@ -123,7 +123,7 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	 * Constructor
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'tribes', 'tribes_id', '', '', 'profile');
+		$this->IcmsPersistableObjectHandler($db, 'tribes', 'tribes_id', 'title', '', 'profile');
 	}
 
 	/**
