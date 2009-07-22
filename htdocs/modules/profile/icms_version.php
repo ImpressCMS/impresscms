@@ -669,8 +669,8 @@ $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['hasComments'] = 1;
 
 $modversion['comments'] = array(
-  'itemName' => 'tribe_id',
-  'pageName' => 'tribe.php'
+  'itemName' => 'tribes_id',
+  'pageName' => 'tribes.php'
     );
 
 /** Notification information */

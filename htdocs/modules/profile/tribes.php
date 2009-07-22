@@ -126,6 +126,7 @@ if (in_array($clean_op,$valid_op,true)){
 		if($clean_tribes_id > 0){
 			$profile_tribes_handler->updateCounter($clean_tribes_id);
 			$icmsTpl->assign('profile_single_tribe', $tribesObj->toArray());
+			include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 		}elseif($clean_uid > 0){
 			$tribesArray = $profile_tribes_handler->getTribes(false, false, $clean_uid);
 			$icmsTpl->assign('profile_alltribes', $tribesArray);

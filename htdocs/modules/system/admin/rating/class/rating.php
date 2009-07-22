@@ -150,8 +150,6 @@ class SystemRatingHandler extends IcmsPersistableObjectHandler {
 		}else{
 			return $ret[0];
 		}
-
-
 	}
 }
 

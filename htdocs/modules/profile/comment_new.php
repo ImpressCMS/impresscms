@@ -18,24 +18,19 @@
 /**
  * Xoops header
  */
-include_once("../../mainfile.php");
-include_once("../../header.php");
-include_once("class/controler.php");
-
-$controler = new ProfileControlerTribes($xoopsDB,$icmsUser);
-
-/**
- * Receiving info from get parameters  
- */ 
-$tribe_id = $_GET['com_itemid'];
-$criteria= new criteria('tribe_id',$tribe_id);
-$tribes = $controler->tribes_factory->getObjects($criteria);
-$tribe = $tribes[0];
-
+include_once 'header.php';
 $com_itemid = isset($_GET['com_itemid']) ? intval($_GET['com_itemid']) : 0;
 if ($com_itemid > 0) {
-
-    $com_replytitle = _MD_PROFILE_TRIBES.": ".$tribe->getVar('tribe_title');
-    include ICMS_ROOT_PATH.'/include/comment_new.php';
+	$imblogging_tribes_handler = icms_getModuleHandler('tribes');
+	$tribesObj = $imblogging_tribes_handler->get($com_itemid);
+	if ($tribesObj && !$tribesObj->isNew()) {
+		$com_replytext = 'test...';
+		$bodytext = $tribesObj->getPostLead();
+		if ($bodytext != '') {
+			$com_replytext .= '<br /><br />'.$bodytext.'';
+		}
+		$com_replytitle = $tribesObj->getVar('title');
+		include_once ICMS_ROOT_PATH .'/include/comment_new.php';
+	}
 }
 ?>
