@@ -14,7 +14,7 @@
  * @version         $Id$
  */
 
-include 'header.php';
+include 'admin_header.php';
 xoops_cp_header();
 
 icms_adminMenu(5, "");
