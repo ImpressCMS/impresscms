@@ -27,6 +27,7 @@ define('PROFILE_CONFIG_STATUS_PRIVATE', 4);
 
 class ProfileConfigs extends IcmsPersistableObject {
 
+	public 	$user_suspended = false;
 	/**
 	 * Constructor
 	 *
@@ -51,6 +52,7 @@ class ProfileConfigs extends IcmsPersistableObject {
 		$this->quickInitVar('suspension', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('backup_password', XOBJ_DTYPE_TXTAREA, false);
 		$this->quickInitVar('backup_email', XOBJ_DTYPE_TXTBOX, false);
+		$this->quickInitVar('backup_sig', XOBJ_DTYPE_TXTAREA, false);
 		$this->quickInitVar('end_suspension', XOBJ_DTYPE_LTIME, false);
 		$this->quickInitVar('status', XOBJ_DTYPE_TXTBOX, false);
 
@@ -58,6 +60,7 @@ class ProfileConfigs extends IcmsPersistableObject {
 		$this->hideFieldFromForm('backup_password');
 		$this->hideFieldFromForm('configs_id');
 		$this->hideFieldFromForm('backup_email');
+		$this->hideFieldFromForm('backup_sig');
 		$this->setControl('config_uid', 'user');
 		$this->setControl('suspension', 'yesno');
 		$this->setControl('pictures', array (
@@ -294,6 +297,50 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		global $icmsUser;
 		if (!is_object($icmsUser)) {
 			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * BeforeSave event
+	 *
+	 * Event automatically triggered by IcmsPersistable Framework before the object is inserted or updated.
+	 *
+	 * @param object $obj ImbloggingPost object
+	 * @return true
+	 */
+	function beforeSave(& $obj) {
+		$obj->user_suspended = $obj->getVar('suspension', 'e');
+		return true;
+	}
+
+	/**
+	 * AfterSave event
+	 *
+	 * Event automatically triggered by IcmsPersistable Framework after the object is inserted or updated
+	 *
+	 * @param object $obj ImbloggingPost object
+	 * @return true
+	 */
+	function afterSave(& $obj) {
+		$uid = $obj->getVar('config_uid', 'e');
+		$member_handler =& xoops_gethandler('member');
+		$processUser =& $member_handler->getUser($uid);
+		if ($obj->getVar('suspension', 'e') == true && $obj->user_suspended == false) {
+			$pass = substr ( md5 ( time () ), 0, 8 );
+			$processUser->setVar('pass', $pass, true);
+			$processUser->setVar('email', $icmsConfig['adminmail']);
+			$processUser->setVar('user_sig', '');
+		}elseif (($obj->getVar('suspension', 'e') == false && $obj->user_suspended == true) || time()>$obj->getVar('end_suspension', 'e')){
+			$pass = $obj->getVar('backup_password', 'e');
+			$email = $obj->getVar('backup_email', 'e');
+			$sig = $obj->getVar('backup_sig', 'e');
+			$processUser->setVar('pass', $pass, true);
+			$processUser->setVar('email', $email);
+			$processUser->setVar('user_sig', $sig);
+			if(time()>$obj->getVar('end_suspension', 'e')){
+				$obj->setVar('suspension', 0);
+			}
 		}
 		return true;
 	}
