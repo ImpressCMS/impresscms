@@ -6,8 +6,8 @@
 *
 * @copyright	GNU General Public License (GPL)
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.0
-* @author		Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla <contact@impresscms.org>
+* @since		1.3
+* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @package		profile
 * @version		$Id$
 */
@@ -29,10 +29,7 @@ function edittribes($tribes_id = 0)
 		$sform->assign($icmsAdminTpl);
 
 	} else {
-		$icmsModule->displayAdminMenu(0, _AM_PROFILE_TRIBES . " > " . _CO_ICMS_CREATINGNEW);
-		$sform = $tribesObj->getForm(_AM_PROFILE_TRIBES_CREATE, 'addtribes');
-		$sform->assign($icmsAdminTpl);
-
+		redirect_header(PROFILE_ADMIN_URL.'tribes.php');
 	}
 	$icmsAdminTpl->display('db:profile_admin_tribes.html');
 }
@@ -68,6 +65,7 @@ if (in_array($clean_op,$valid_op,true)){
 
   		edittribes($clean_tribes_id);
   		break;
+
   	case "addtribes":
           include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
           $controller = new IcmsPersistableController($profile_tribes_handler);
@@ -82,20 +80,6 @@ if (in_array($clean_op,$valid_op,true)){
 
   		break;
 
-  	case "view" :
-  		$tribesObj = $profile_tribes_handler->get($clean_tribes_id);
-
-  		icms_cp_header();
-  		smart_adminMenu(1, _AM_PROFILE_TRIBES_VIEW . ' > ' . $tribesObj->getVar('tribes_name'));
-
-  		smart_collapsableBar('tribesview', $tribesObj->getVar('tribes_name') . $tribesObj->getEditTribesLink(), _AM_PROFILE_TRIBES_VIEW_DSC);
-
-  		$tribesObj->displaySingleObject();
-
-  		smart_close_collapsable('tribesview');
-
-  		break;
-
   	default:
 
   		icms_cp_header();
@@ -104,7 +88,13 @@ if (in_array($clean_op,$valid_op,true)){
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_tribes_handler);
-  		$objectTable->addColumn(new IcmsPersistableColumn(''));
+  		$objectTable->addColumn(new IcmsPersistableColumn('tribes_id'));
+  		$objectTable->addColumn(new IcmsPersistableColumn('uid_owner', false, false, 'getTribeSender'));
+  		$objectTable->addColumn(new IcmsPersistableColumn('title'));
+  		$objectTable->addColumn(new IcmsPersistableColumn('tribe_desc', false, false, 'getTribeShortenDesc'));
+		$objectTable->addColumn(new IcmsPersistableColumn('tribe_img', 'center', 330, 'getProfileTribe'));
+
+		$objectTable->addQuickSearch(array('title'));
 
   		$icmsAdminTpl->assign('profile_tribes_table', $objectTable->fetch());
   		$icmsAdminTpl->display('db:profile_admin_tribes.html');

@@ -123,12 +123,12 @@ define("_CO_PROFILE_AUDIO_DATA_CREATION_DSC", " ");
 define("_CO_PROFILE_AUDIO_DATA_UPDATE", "");
 define("_CO_PROFILE_AUDIO_DATA_UPDATE_DSC", " ");
 // tribes
-define("_CO_PROFILE_TRIBES_TRIBE_ID", "Id");
-define("_CO_PROFILE_TRIBES_TRIBE_ID_DSC", " ");
+define("_CO_PROFILE_TRIBES_TRIBES_ID", "Tribe's ID");
+define("_CO_PROFILE_TRIBES_TRIBES_ID_DSC", " ");
 define("_CO_PROFILE_TRIBES_UID_OWNER", "User Id");
 define("_CO_PROFILE_TRIBES_UID_OWNER_DSC", " ");
-define("_CO_PROFILE_TRIBES_TRIBE_TITLE", "Name of the tribe");
-define("_CO_PROFILE_TRIBES_TRIBE_TITLE_DSC", " Please enter a desired name for the tribe.");
+define("_CO_PROFILE_TRIBES_TITLE", "Name of the tribe");
+define("_CO_PROFILE_TRIBES_TITLE_DSC", " Please enter a desired name for the tribe.");
 define("_CO_PROFILE_TRIBES_TRIBE_DESC", "Decription of the tribe");
 define("_CO_PROFILE_TRIBES_TRIBE_DESC_DSC", " Please write a little description about this tribe.");
 define("_CO_PROFILE_TRIBES_TRIBE_IMG", "Tribe's picture");

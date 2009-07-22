@@ -32,12 +32,6 @@ class ProfileFriendship extends IcmsPersistableObject {
 		$this->quickInitVar('friendship_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('friend1_uid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('friend2_uid', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('level', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('hot', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('trust', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('cool', XOBJ_DTYPE_INT, false);
-		$this->quickInitVar('fan', XOBJ_DTYPE_INT, false);
-
 	}
 
 	/**
@@ -63,79 +57,6 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 	public function __construct(& $db) {
 		$this->IcmsPersistableObjectHandler($db, 'friendship', 'friendship_id', '', '', 'profile');
 	}
-	
-	
-	function getFriends($nbfriends, $criteria = null, $shuffle=1)
-	{
-		$ret = array();
-		$limit = $start = 0;
-		$sql = 'SELECT uname, user_avatar, friend2_uid FROM '.$this->db->prefix('profile_friendship').', '.$this->db->prefix('users');
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-			$sql .= ' '.$criteria->renderWhere();
-		//attention here this is kind of a hack
-		$sql .= " AND uid = friend2_uid " ;
-		if ($criteria->getSort() != '') {
-			$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
-		}
-		
-		$limit = $criteria->getLimit();
-		$start = $criteria->getStart();
-		
-		$result = $this->db->query($sql, $limit, $start);
-		$vetor = array();
-		$i=0;
-		
-		while ($myrow = $this->db->fetchArray($result)) {
-			
-			$vetor[$i]['uid']= $myrow['friend2_uid'];
-			$vetor[$i]['uname']= $myrow['uname'];
-			$vetor[$i]['user_avatar']= $myrow['user_avatar'];
-			$i++;
-		}
-		if ($shuffle==1){
-		shuffle($vetor);
-		$vetor = array_slice($vetor,0,$nbfriends);
-		}
-		return $vetor;
-
-		}
-	}
-	
-function getFans($nbfriends, $criteria = null, $shuffle=1)
-    {
-        $ret = array();
-        $limit = $start = 0;
-        $sql = 'SELECT uname, user_avatar, friend1_uid FROM '.$this->db->prefix('profile_friendship').', '.$this->db->prefix('users');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' '.$criteria->renderWhere();
-        //attention here this is kind of a hack
-        $sql .= " AND uid = friend1_uid " ;
-        if ($criteria->getSort() != '') {
-            $sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
-        }
-        
-        $limit = $criteria->getLimit();
-        $start = $criteria->getStart();
-        
-        $result = $this->db->query($sql, $limit, $start);
-        $vetor = array();
-        $i=0;
-        
-        while ($myrow = $this->db->fetchArray($result)) {
-            
-            $vetor[$i]['uid']= $myrow['friend1_uid'];
-            $vetor[$i]['uname']= $myrow['uname'];
-            $vetor[$i]['user_avatar']= $myrow['user_avatar'];
-            $i++;
-        }
-        if ($shuffle==1){
-        shuffle($vetor);
-        $vetor = array_slice($vetor,0,$nbfriends);
-        }
-        return $vetor;
-
-        }
-    }	
 	
 	
 	/**

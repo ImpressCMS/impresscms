@@ -31,8 +31,7 @@ class ProfileIshot extends IcmsPersistableObject {
 
 		$this->quickInitVar('ishot_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('uid_voter', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('uid_vote', XOBJ_DTYPE_TXTBOX, true);
-		$this->quickInitVar('ishot', XOBJ_DTYPE_INT, false);
+		$this->quickInitVar('vote', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('time', XOBJ_DTYPE_TXTBOX, true);
 
 	}
@@ -59,72 +58,6 @@ class ProfileIshotHandler extends IcmsPersistableObjectHandler {
 	 */
 	public function __construct(& $db) {
 		$this->IcmsPersistableObjectHandler($db, 'ishot', 'ishot_id', '', '', 'profile');
-	}
-	function getHottest($criteria = null)
-	{
-
-
-		$sql = 'SELECT DISTINCTROW uname, user_avatar, uid_voted, COUNT(cod_ishot) AS qtd FROM '.$this->db->prefix('profile_ishot').', '.$this->db->prefix('users');
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-			$sql .= ' '.$criteria->renderWhere();
-		}
-		//attention here this is kind of a hack
-		$sql .= " AND uid = uid_voted";
-		if ($criteria->getGroupby() != '') {
-			$sql .= $criteria->getGroupby();
-		}
-		if ($criteria->getSort() != '') {
-			$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
-		}
-		$limit = $criteria->getLimit();
-		$start = $criteria->getStart();
-		
-		$result = $this->db->query($sql, $limit, $start);
-		$vetor = array();
-		$i=0;
-		while ($myrow = $this->db->fetchArray($result)) {
-			
-			$vetor[$i]['qtd']= $myrow['qtd'];
-			$vetor[$i]['uid_voted']= $myrow['uid_voted'];
-			$vetor[$i]['uname']= $myrow['uname'];
-			$vetor[$i]['user_avatar']= $myrow['user_avatar'];
-			$i++;
-		}
-		
-		
-		return $vetor;
-	} 
-
-function getHotFriends($criteria = null, $id_as_key = false)
-	{
-		$ret = array();
-		$limit = $start = 0;
-		$sql = 'SELECT uname, user_avatar, uid_voted FROM '.$this->db->prefix('profile_ishot').', '.$this->db->prefix('users');;
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-			$sql .= ' '.$criteria->renderWhere();
-		//attention here this is kind of a hack
-		$sql .= " AND uid = uid_voted AND ishot=1" ;
-		if ($criteria->getSort() != '') {
-			$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
-		}
-		$limit = $criteria->getLimit();
-		$start = $criteria->getStart();
-		
-		$result = $this->db->query($sql, $limit, $start);
-		$vetor = array();
-		$i=0;
-		while ($myrow = $this->db->fetchArray($result)) {
-			
-			$vetor[$i]['uid_voted']= $myrow['uid_voted'];
-			$vetor[$i]['uname']= $myrow['uname'];
-			$vetor[$i]['user_avatar']= $myrow['user_avatar'];
-			$i++;
-		}
-		
-		
-		return $vetor;
-
-		}
 	}
 }
 ?>
