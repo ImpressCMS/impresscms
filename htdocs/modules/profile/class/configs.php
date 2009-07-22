@@ -261,11 +261,11 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 *
 	 * @return bool true if he can false if not
 	 */
-	function userCanAcsessSection($item, $uid=false) {
+	function userCanAccessSection($item, $uid=false) {
 		global $icmsUser, $profile_isAdmin;
 		$sql = 'SELECT '.$item.' FROM '.$this->table.' WHERE config_uid="'.$uid.'"';
 		$result = $this->query($sql, false);
-		$status = $result[0][$item];
+		$status = is_object($icmsUser)?$result:$result[0][$item];
 		if ($profile_isAdmin) {
 			return true;
 		}

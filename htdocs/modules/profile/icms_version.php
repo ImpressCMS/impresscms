@@ -684,7 +684,7 @@ $modversion['notification']['category'][1] = array (
   'name' => 'picture',
   'title' => _MI_PROFILE_PICTURE_NOTIFYTIT,
   'description' => _MI_PROFILE_PICTURE_NOTIFYDSC,
-  'subscribe_from' => 'album.php',
+  'subscribe_from' => 'pictures.php',
   'item_name' => 'uid',
   'allow_bookmark' => 1 );
 
@@ -698,23 +698,23 @@ $modversion['notification']['event'][1] = array(
   'mail_subject'=> _MI_PROFILE_PICTURE_NEWPIC_NOTIFYSBJ);
 
 $modversion['notification']['category'][2] = array (
-  'name' => 'video',
+  'name' => 'videos',
   'title' => _MI_PROFILE_VIDEO_NOTIFYTIT,
   'description' => _MI_PROFILE_VIDEO_NOTIFYDSC,
-  'subscribe_from' => 'video.php',
+  'subscribe_from' => 'videos.php',
   'item_name' => 'uid',
   'allow_bookmark' => 1 );
 
 $modversion['notification']['event'][2] = array(
   'name' => 'new_video',
-  'category'=> 'video',
+  'category'=> 'videos',
   'title'=> _MI_PROFILE_VIDEO_NEWVIDEO_NOTIFY,
   'caption'=> _MI_PROFILE_VIDEO_NEWVIDEO_NOTIFYCAP,
   'description'=> _MI_PROFILE_VIDEO_NEWVIDEO_NOTIFYDSC,
   'mail_template'=> 'video_newvideo_notify',
   'mail_subject'=> _MI_PROFILE_VIDEO_NEWVIDEO_NOTIFYSBJ);
 
-$modversion['notification']['category'][3] = array (
+/*$modversion['notification']['category'][3] = array (
   'name' => 'scrap',
   'title' => _MI_PROFILE_SCRAP_NOTIFYTIT,
   'description' => _MI_PROFILE_SCRAP_NOTIFYDSC,
@@ -747,6 +747,6 @@ $modversion['notification']['event'][4] = array(
   'description'=> _MI_PROFILE_FRIEND_NEWPETITION_NOTIFYDSC,
   'mail_template'=> 'friendship_newpetition_notify',
   'mail_subject'=> _MI_PROFILE_FRIEND_NEWPETITION_NOTIFYSBJ);
-
+*/
 icms_mkdir(ICMS_ROOT_PATH.'/uploads/'.basename( dirname( __FILE__ ) ).'/mp3');
 ?>

@@ -43,8 +43,7 @@ class ProfileVideos extends IcmsPersistableSeoObject {
 		$this->initCommonVar('doxcode', false, true);
 
 		$this->setControl('uid_owner', 'user');
-		//$this->hideFieldFromForm('main_video');
-
+		$this->setControl('main_video', 'yesno');
 
 		$this->IcmsPersistableSeoObject();
 	}

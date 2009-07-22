@@ -175,11 +175,11 @@ function getAllowedItems($items, $uid){
 	$profile_configs_handler = icms_getModuleHandler('configs');
 	if(is_array($items)){
 		foreach($items as $item){
-			$accessability = $profile_configs_handler->userCanAcsessSection($item, $uid);
+			$accessability = $profile_configs_handler->userCanAccessSection($item, $uid);
 			$array = array_merge($array, array($item => $accessability));
 		}
 	}else{
-		$accessability = $profile_configs_handler->userCanAcsessSection($items, $uid);
+		$accessability = $profile_configs_handler->userCanAccessSection($items, $uid);
 		$array = array_merge($array, array($items => $accessability));
 	}
 	

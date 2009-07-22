@@ -62,7 +62,7 @@ if (isset($_GET['op'])) $clean_op = $_GET['op'];
 if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
-global $icmsUser;
+global $icmsUser, $icmsModuleConfig;
 $clean_pictures_id = isset($_GET['pictures_id']) ? intval($_GET['pictures_id']) : 0 ;
 $clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0 ;
 $real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
@@ -75,6 +75,13 @@ $valid_op = array ('mod','addpictures','del','');
 /**
  * Only proceed if the supplied operation is a valid operation
  */
+
+$isAllowed = getAllowedItems('pictures', $uid);
+if (!$isAllowed['pictures'] || $icmsModuleConfig['profile_social'] == false) {
+	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+}
+
+
 if (in_array($clean_op,$valid_op,true)){
   switch ($clean_op) {
 	case "mod":

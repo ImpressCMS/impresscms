@@ -98,12 +98,6 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 	 * @return bool true if he can, false if not
 	 */
 	function userCanView() {
-		global $icmsUser, $profile_isAdmin;
-		$uid = isset($_REQUEST['uid']) ? intval($_REQUEST['uid']) : 0;
-		$isAllowed = getAllowedItems('pictures', $uid);
-		if ($isAllowed['pictures']) {
-			return true;
-		}
 		if($this->getVar('private', 'e') == 0 ){
 			return true;
 		}
