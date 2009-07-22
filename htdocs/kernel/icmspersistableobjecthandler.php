@@ -140,8 +140,14 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
     	$this->XoopsObjectHandler($db);
 
         $this->_itemname = $itemname;
-        $this->_moduleName = $modulename;
-        $this->table = $db->prefix($modulename . "_" . $itemname);
+		// Todo: Autodect module        
+		if ($modulename == '') {
+			$this->_moduleName = 'system';
+	        $this->table = $db->prefix($itemname);
+		} else {
+			$this->_moduleName = $modulename;
+			$this->table = $db->prefix($modulename . "_" . $itemname);
+		}
         $this->keyName = $keyname;
         $this->className = ucfirst($modulename) . ucfirst($itemname);
         $this->identifierName = $idenfierName;

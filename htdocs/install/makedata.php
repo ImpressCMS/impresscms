@@ -272,7 +272,10 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', '".addslashes(serialize(array('dhtmltextarea', 'FCKeditor', 'tinymce')))."', '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'anonymous', '_MD_AM_ANONNAME', '".addslashes(_INSTALL_ANON)."', '_MD_AM_ANONNAMEDSC', 'textbox', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'sourceeditor_default', '_MD_AM_SRCEDITOR_DEFAULT', 'editarea', '_MD_AM_SRCEDITOR_DEFAULT_DESC', 'editor_source', 'text', $p)");
+	$i++;
+	$p++;
+    $dbm->insert('config', " VALUES ($i, 0, $c, 'anonymous', '_MD_AM_ANONNAME', '".addslashes(_INSTALL_ANON)."', '_MD_AM_ANONNAMEDSC', 'textbox', 'text', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'gzip_compression', '_MD_AM_USEGZIP', '0', '_MD_AM_USEGZIPDSC', 'yesno', 'int', $p)");
@@ -888,6 +891,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'pagstyle', '_MD_AM_PAGISTYLE', 'default', '_MD_AM_PAGISTYLE_DESC', 'select_paginati', 'text', $p)");
 
+
 	// Data for Config Category 11 (CAPTCHA Settings)
 	$c=11; // sets config category id
 	$i++;
@@ -967,6 +971,19 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'geshi_default', '_MD_AM_GESHI_DEFAULT', 'php', '_MD_AM_GESHI_DEFAULT_DESC', 'select_geshi', 'text', $p)");
+
+
+	//Autotasks
+	$c=13;
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'autotasks_system', '_MD_AM_AUTOTASKS_SYSTEM', 'internal', '_MD_AM_AUTOTASKS_SYSTEMDSC', 'autotasksystem', 'text', $p)");
+	$i++; $p++; $dbm->insert('config', " VALUES ($i, 0, $c, 'autotasks_helper', '_MD_AM_AUTOTASKS_HELPER', 'wget %url%', '_MD_AM_AUTOTASKS_HELPERDSC', 'select', 'text', $p)");
+	$ci++;  $dbm->insert('configoption', " VALUES ($ci, 'PHP-CGI', 'php -f %path%', $i)");
+	$ci++;  $dbm->insert('configoption', " VALUES ($ci, 'wget', 'wget %url%', $i)");
+	$ci++;  $dbm->insert('configoption', " VALUES ($ci, 'Lynx', 'lynx --dump %url%', $i)");
+	$i++; $p++; $dbm->insert('config', " VALUES ($i, 0, $c, 'autotasks_helper_path', '_MD_AM_AUTOTASKS_HELPER_PATH', '/usr/bin/', '_MD_AM_AUTOTASKS_HELPER_PATHDSC', 'text', 'text', $p)");
+	$i++; $p++; $dbm->insert('config', " VALUES ($i, 0, $c, 'autotasks_user', '_MD_AM_AUTOTASKS_USER', '', '_MD_AM_AUTOTASKS_USERDSC', 'text', 'text', $p)");
 
     return $gruops;
 }

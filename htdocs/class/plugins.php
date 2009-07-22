@@ -57,8 +57,8 @@ class IcmsPluginsHandler {
 
 	var $pluginPatterns = false;
 
-	function getPlugin($dirname) {
-		$pluginName = ICMS_ROOT_PATH . '/plugins/modules/' . $dirname . '.php';
+	function getPlugin($path, $dirname) {
+		$pluginName = ICMS_ROOT_PATH . '/plugins/'.$path.'/' . $dirname . '.php';
 		if (file_exists($pluginName)) {
 			include_once($pluginName);
 			$function = 'icms_plugin_' . $dirname;
@@ -71,7 +71,7 @@ class IcmsPluginsHandler {
 		return false;
 	}
 
-	function getPluginsArray() {
+	function getPluginsArray($path) {
 		include_once(XOOPS_ROOT_PATH . "/class/xoopslists.php");
 
 		$module_handler = xoops_gethandler('module');
@@ -83,7 +83,7 @@ class IcmsPluginsHandler {
 			$modulesObj[$moduleObj->getVar('dirname')] = $moduleObj;
 		}
 
-		$aFiles = XoopsLists::getPhpListAsArray(ICMS_ROOT_PATH . '/plugins/modules/');
+		$aFiles = XoopsLists::getPhpListAsArray(ICMS_ROOT_PATH . '/plugins/'.$path.'/');
 		$ret = array();
 		foreach($aFiles as $pluginName) {
 				$module_xoops_version_file = XOOPS_ROOT_PATH . "/modules/$pluginName/xoops_version.php";

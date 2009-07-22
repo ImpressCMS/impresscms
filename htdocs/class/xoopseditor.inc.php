@@ -11,7 +11,7 @@
  */
 
 if(!function_exists("xoopseditor_get_rootpath")){
-	function xoopseditor_get_rootpath()
+	function xoopseditor_get_rootpath($type = '')
 	{
 /*		static $rootpath;
 		if(isset($rootpath)) return $rootpath;
@@ -20,7 +20,11 @@ if(!function_exists("xoopseditor_get_rootpath")){
 		$rootpath = dirname($current_path);
 		icms_debug('editor path' . $rootpath);
 		return $rootpath;*/
-		return XOOPS_EDITOR_PATH;
+		if ($type == '') {
+			return XOOPS_EDITOR_PATH;
+		} else {
+			return ICMS_PLUGINS_PATH . '/' . strtolower($type) . 'editors/';
+		}
 	}
 }
 

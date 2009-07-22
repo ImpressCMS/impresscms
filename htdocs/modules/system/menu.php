@@ -163,4 +163,10 @@ $adminmenu[$i]['link'] = "admin.php?fct=mimetype";
 $adminmenu[$i]['icon'] = "admin/mimetype/images/mimetype.png";
 $adminmenu[$i]['small'] = "admin/mimetype/images/mimetype_small.png";
 $adminmenu[$i]['id'] = XOOPS_SYSTEM_MIMETYPES;
+$i++;
+$adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU25;
+$adminmenu[$i]['link'] = "admin.php?fct=autotasks";
+$adminmenu[$i]['icon'] = "admin/autotasks/images/autotasks.png";
+$adminmenu[$i]['small'] = "admin/autotasks/images/autotasks_small.png";
+$adminmenu[$i]['id'] = XOOPS_SYSTEM_AUTOTASKS;
 ?>

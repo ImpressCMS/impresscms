@@ -634,74 +634,74 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	 if($dbVersion < $newDbVersion)
 	 {
-		  $table = new IcmsDatabasetable('icmscontent');
-		  if(!$table->fieldExists('content_seo_description'))
-		  {
-			   $table->addNewField('content_seo_description', "text");
-			   $icmsDatabaseUpdater->updateTable($table);
-		  }
-		  unset($table);
+			$table = new IcmsDatabasetable('icmscontent');
+			if(!$table->fieldExists('content_seo_description'))
+			{
+				 $table->addNewField('content_seo_description', "text");
+				 $icmsDatabaseUpdater->updateTable($table);
+			}
+			unset($table);
 
-		  $table = new IcmsDatabasetable('icmscontent');
-		  if(!$table->fieldExists('content_seo_keywords'))
-		  {
-			   $table->addNewField('content_seo_keywords', "text");
-			   $icmsDatabaseUpdater->updateTable($table);
-		  }
-		  unset($table);
+			$table = new IcmsDatabasetable('icmscontent');
+			if(!$table->fieldExists('content_seo_keywords'))
+			{
+				 $table->addNewField('content_seo_keywords', "text");
+				 $icmsDatabaseUpdater->updateTable($table);
+			}
+			unset($table);
 	 }
 
 	 $newDbVersion = 26;
 
 	 if($dbVersion < $newDbVersion)
 	 {
-		  $table = new IcmsDatabasetable('system_mimetype');
-		  if(!$table->exists()){
-			  $table->setStructure("mimetypeid int(11) NOT NULL auto_increment,
-				  extension varchar(60) NOT NULL default '',
-				  types text NOT NULL,
-				  name varchar(255) NOT NULL default '',
-				  dirname VARCHAR(255) NOT NULL,
-				  KEY mimetypeid (mimetypeid)
-				  ");
-			  $table->createTable();
-		  }
+			$table = new IcmsDatabasetable('system_mimetype');
+			if(!$table->exists()){
+				$table->setStructure("mimetypeid int(11) NOT NULL auto_increment,
+					extension varchar(60) NOT NULL default '',
+					types text NOT NULL,
+					name varchar(255) NOT NULL default '',
+					dirname VARCHAR(255) NOT NULL,
+					KEY mimetypeid (mimetypeid)
+					");
+				$table->createTable();
+			}
 			$icmsDB->queryFromFile(ICMS_ROOT_PATH . "/modules/" . $module->getVar('dirname', 'n') . "/include/upgrade.sql");
-		  unset($table);
+			unset($table);
 
-		  $table = new IcmsDatabasetable('system_adsense');
-		  if(!$table->exists()){
-			  $table->setStructure("adsenseid int(11) NOT NULL auto_increment,
-				  format VARCHAR(100) NOT NULL,
-				  description TEXT NOT NULL,
-				  style TEXT NOT NULL,
-				  border_color varchar(6) NOT NULL default '',
-				  background_color varchar(6) NOT NULL default '',
-				  link_color varchar(6) NOT NULL default '',
-				  url_color varchar(6) NOT NULL default '',
-				  text_color varchar(6) NOT NULL default '',
-				  client_id varchar(100) NOT NULL default '',
-				  tag varchar(50) NOT NULL default '',
-				  PRIMARY KEY  (`adsenseid`)
-				  ");
-			  $table->createTable();
-		  }
-		  unset($table);
+			$table = new IcmsDatabasetable('system_adsense');
+			if(!$table->exists()){
+				$table->setStructure("adsenseid int(11) NOT NULL auto_increment,
+					format VARCHAR(100) NOT NULL,
+					description TEXT NOT NULL,
+					style TEXT NOT NULL,
+					border_color varchar(6) NOT NULL default '',
+					background_color varchar(6) NOT NULL default '',
+					link_color varchar(6) NOT NULL default '',
+					url_color varchar(6) NOT NULL default '',
+					text_color varchar(6) NOT NULL default '',
+					client_id varchar(100) NOT NULL default '',
+					tag varchar(50) NOT NULL default '',
+					PRIMARY KEY  (`adsenseid`)
+					");
+				$table->createTable();
+			}
+			unset($table);
 
-		  $table = new IcmsDatabasetable('system_rating');
-		  if(!$table->exists()){
-			  $table->setStructure("ratingid int(11) NOT NULL auto_increment,
-				  dirname VARCHAR(255) NOT NULL,
-				  item VARCHAR(255) NOT NULL,
-				  itemid int(11) NOT NULL,
-				  uid int(11) NOT NULL,
-				  rate int(1) NOT NULL,
-				  date int(11) NOT NULL,
-				  PRIMARY KEY  (`ratingid`)
-				  ");
-			  $table->createTable();
-		  }
-		  unset($table);
+			$table = new IcmsDatabasetable('system_rating');
+			if(!$table->exists()){
+				$table->setStructure("ratingid int(11) NOT NULL auto_increment,
+					dirname VARCHAR(255) NOT NULL,
+					item VARCHAR(255) NOT NULL,
+					itemid int(11) NOT NULL,
+					uid int(11) NOT NULL,
+					rate int(1) NOT NULL,
+					date int(11) NOT NULL,
+					PRIMARY KEY  (`ratingid`)
+					");
+				$table->createTable();
+			}
+			unset($table);
 	 }
 
 	$newDbVersion = 27;
@@ -711,6 +711,52 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$handler = icms_getModulehandler('userrank', 'system');
 		$handler->MoveAllRanksImagesToProperPath();
 	}
+
+	 $newDbVersion = 28;
+
+	 if($dbVersion < $newDbVersion)
+	 {
+			$table = new IcmsDatabasetable('system_autotasks');
+			if(!$table->exists()){
+				$table->setStructure("sat_id int(10) unsigned NOT NULL AUTO_INCREMENT,
+					sat_name varchar(255) NOT NULL,
+					sat_code text NOT NULL,
+					sat_repeat int(11) NOT NULL,
+					sat_interval int(11) NOT NULL,
+					sat_onfinish smallint(2) NOT NULL,
+					sat_enabled INT(1) NOT NULL,
+					sat_lastruntime int(15) unsigned NOT NULL,
+					sat_type varchar(100) NOT NULL DEFAULT 'custom',
+					sat_addon_id int(2) unsigned zerofill DEFAULT NULL,
+					PRIMARY KEY (sat_id),
+					KEY sat_interval (sat_interval),
+					KEY sat_lastruntime (sat_lastruntime),
+					KEY sat_type (sat_type)
+					");
+				$table->createTable();
+			}
+			unset($table);
+
+		if (getDbValue($icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_AUTOTASKS"') == 0) {
+			$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configcategory") . " (confcat_id,confcat_name) VALUES (13, '_MD_AM_AUTOTASKS')");
+		}
+		
+		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF, 'sourceeditor_default', '_MD_AM_SRCEDITOR_DEFAULT', 'editarea', '_MD_AM_SRCEDITOR_DEFAULT_DESC', 'editor_source', 'text', 16);
+		$icmsDatabaseUpdater->insertConfig(IM_CONF_AUTOTASKS, 'autotasks_system', '_MD_AM_AUTOTASKS_SYSTEM', 'internal', '_MD_AM_AUTOTASKS_SYSTEMDSC', 'autotasksystem', 'text', 1);
+		$icmsDatabaseUpdater->insertConfig(IM_CONF_AUTOTASKS, 'autotasks_helper', '_MD_AM_AUTOTASKS_HELPER', 'wget %url%', '_MD_AM_AUTOTASKS_HELPERDSC', 'select', 'text', 2);
+		$config_id = $icmsDB->getInsertId();
+		$sql = "INSERT INTO " . $icmsDB->prefix('configoption') .
+		" (confop_id, confop_name, confop_value, conf_id)" .
+		" VALUES" .
+		" (NULL, 'PHP-CGI', 'php -f %path%', {$config_id})," .
+		" (NULL, 'wget', 'wget %url%', {$config_id})," .
+		" (NULL, 'Lynx', 'lynx --dump %url%', {$config_id})";
+		if (!$icmsDB->queryF( $sql )) {
+			return false;
+		}
+		$icmsDatabaseUpdater->insertConfig(IM_CONF_AUTOTASKS, 'autotasks_helper_path', '_MD_AM_AUTOTASKS_HELPER_PATH', '/usr/bin/', '_MD_AM_AUTOTASKS_HELPER_PATHDSC', 'text', 'text', 3);
+		$icmsDatabaseUpdater->insertConfig(IM_CONF_AUTOTASKS, 'autotasks_user', '_MD_AM_AUTOTASKS_USER', '', '_MD_AM_AUTOTASKS_USERDSC', 'text', 'text', 4);
+	 }
 
 	echo "</code>";
 

@@ -84,7 +84,7 @@ class SystemRating extends IcmsPersistableObject {
     function getModulePlugin() {
 		if (!$this->_modulePlugin) {
 			global $icms_rating_handler;
-			$this->_modulePlugin = $icms_rating_handler->pluginsObject->getPlugin($this->getVar('dirname', 'n'));
+			$this->_modulePlugin = $icms_rating_handler->pluginsObject->getPlugin('rating', $this->getVar('dirname', 'n'));
 		}
 		return $this->_modulePlugin;
     }
@@ -111,7 +111,7 @@ class SystemRatingHandler extends IcmsPersistableObjectHandler {
 	
 	function getModuleList() {
 		if (!$this->_moduleList) {
-			$moduleArray = $this->pluginsObject->getPluginsArray();
+			$moduleArray = $this->pluginsObject->getPluginsArray('rating');
 			$this->_moduleList[0] = _CO_ICMS_MAKE_SELECTION;
 			foreach ($moduleArray as $k=>$v) {
 				$this->_moduleList[$k] = $v;

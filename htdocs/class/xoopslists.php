@@ -307,11 +307,17 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		/**
 		 * Gets list of editors folders inside editors directory
 	 	 * 
+		 * @param	string	 $type			type of editor	
 	 	 * @return  array	 $editor_list   list of files in the directory
 	 	 */
-		static public function getEditorsList() {
+		static public function getEditorsList($type='') {
 			$editor_list = array();
-			$editor_list = IcmsLists::getDirListAsArray(XOOPS_EDITOR_PATH);
+			if ($type == '') {
+				$path = XOOPS_EDITOR_PATH;
+			} else {
+				$path = ICMS_PLUGINS_PATH . '/' . strtolower($type) . 'editors/';
+			}
+			$editor_list = IcmsLists::getDirListAsArray($path);
 			return $editor_list;
 		}
 

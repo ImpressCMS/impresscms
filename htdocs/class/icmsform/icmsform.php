@@ -273,7 +273,9 @@ class IcmsForm extends XoopsThemeForm {
 							// TODO : To come...
 							break;
 						case XOBJ_DTYPE_SOURCE:
-							// TODO : To come...
+							$form_source_editor = $this->getControl('source', $key);							
+							$this->addElement($form_source_editor, $key, $var);
+							unset($form_source_editor);
 							break;
 						case XOBJ_DTYPE_FORM_SECTION:
 							$section_control = new IcmsFormSection($key, $var['value']);
@@ -470,6 +472,12 @@ class IcmsForm extends XoopsThemeForm {
 				return new IcmsFormRichFileElement($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getFileObj($key));
 				break;
 
+			case 'source':
+			case 'sourceeditor':
+				include_once(ICMS_ROOT_PATH."/class/icmsform/elements/icmsformsourceeditor.php");
+				return new IcmsFormSourceEditor($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'));
+			break;
+
 
 			default:
 				$classname = "IcmsForm".ucfirst($controlName)."Element";
@@ -612,7 +620,7 @@ class IcmsForm extends XoopsThemeForm {
 			}
 			$i++;
 		}
-		$js = $this->renderValidationJS2();
+		$js = $this->renderValidationJS();
 		if (!$smartyName) {
 			$smartyName = $this->getName();
 		}
@@ -706,20 +714,20 @@ class IcmsForm extends XoopsThemeForm {
 		}
 		return $js;
 	}
-	
+
 	function renderValidationJS2( $withtags = true ) {
 		global $xoTheme;
         $rules = $titles = '';
 		$elements = $this->getRequired();
 		foreach ( $elements as $elt ) {
-			if(isset($rules))
+			if(!empty($rules))
 				$rules .= ",";
-			$rules .= $elt->getName().': { required: true }';
-			if(isset($titles))
+			$rules .= '\''.$elt->getName().'\': { required: true }';
+			if(!empty($titles))
 				$titles .= ",";
-			$titles .= $elt->getName().': "'._REQUIRED.'"'; 
+			$titles .= $elt->getName().': "'._REQUIRED.'"';
 		}
-		$xoTheme->addScript('', array('type' => 'text/javascript'), '$().ready(function() { $("#'.$this->getName().'").validate({
+		$xoTheme->addScript('', array('type' => 'text/javascript'), 'alert($());$().ready(function() { $("#'.$this->getName().'").validate({
 		rules: {
 			'.$rules.'
 		},

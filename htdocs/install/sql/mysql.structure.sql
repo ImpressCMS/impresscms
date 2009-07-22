@@ -710,3 +710,23 @@ CREATE TABLE system_rating (
   date int(11) NOT NULL,
   PRIMARY KEY  (`ratingid`)
 ) TYPE=MyISAM;
+
+#
+# Table structure for table `system_autotasks`
+#
+CREATE TABLE system_autotasks (
+  sat_id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  sat_name varchar(255) NOT NULL,
+  sat_code text NOT NULL,
+  sat_repeat int(11) NOT NULL,
+  sat_interval int(11) NOT NULL,
+  sat_onfinish smallint(2) NOT NULL,
+  sat_enabled INT(1) NOT NULL,
+  sat_lastruntime int(15) unsigned NOT NULL,
+  sat_type varchar(100) NOT NULL DEFAULT 'custom',
+  sat_addon_id int(2) unsigned zerofill DEFAULT NULL,
+  PRIMARY KEY (sat_id),
+  KEY sat_interval (sat_interval),
+  KEY sat_lastruntime (sat_lastruntime),
+  KEY sat_type (sat_type)
+);

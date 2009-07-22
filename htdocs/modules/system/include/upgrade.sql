@@ -151,3 +151,11 @@ INSERT INTO `group_permission` (`gperm_id`, `gperm_groupid`, `gperm_itemid`, `gp
 (NULL, 1, 100, 1, 'use_extension'),
 (NULL, 2, 101, 1, 'use_extension'),
 (NULL, 1, 101, 1, 'use_extension');
+INSERT INTO `block_positions` VALUES (NULL,'canvas_left_admin','_AM_SBLEFT_ADMIN',NULL,1,'L');
+INSERT INTO `block_positions` VALUES (NULL,'canvas_right_admin','_AM_SBRIGHT_ADMIN',NULL,1,'L');
+INSERT INTO `block_positions` VALUES (NULL,'page_topleft_admin','_AM_CBLEFT_ADMIN',NULL,1,'C');
+INSERT INTO `block_positions` VALUES (NULL,'page_topcenter_admin','_AM_CBCENTER_ADMIN',NULL,1,'C');
+INSERT INTO `block_positions` VALUES (NULL,'page_topright_admin','_AM_CBRIGHT_ADMIN',NULL,1,'C');
+INSERT INTO `block_positions` VALUES (NULL,'page_bottomleft_admin','_AM_CBBOTTOMLEFT_ADMIN',NULL,1,'C');
+INSERT INTO `block_positions` VALUES (NULL,'page_bottomcenter_admin','_AM_CBBOTTOM_ADMIN',NULL,1,'C');
+INSERT INTO `block_positions` VALUES (NULL,'page_bottomright_admin','_AM_CBBOTTOMRIGHT_ADMIN',NULL,1,'C');

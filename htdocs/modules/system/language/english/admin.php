@@ -26,6 +26,7 @@ define('_MD_AM_CONTENT', 'Content Manager');
 define('_MD_AM_BKPOSAD','Block Positions');
 define('_MD_AM_PAGES','Symlink Manager');
 define('_MD_AM_CUSTOMTAGS', 'Custom Tags');
+define('_MD_AM_AUTOTASKS', 'Auto Tasks');
 
 // Group permission phrases
 define('_MD_AM_PERMADDNG', 'Could not add %s permission to %s for group %s');

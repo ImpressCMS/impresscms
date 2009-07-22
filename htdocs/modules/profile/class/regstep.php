@@ -55,9 +55,9 @@ class ProfileRegstep extends IcmsPersistableObject {
 	
 	public function getCustomStepSave(){
 		if($this->getVar('step_save') == 1)
-			$rtn = '<img src="'.ICMS_IMAGES_SET_URL.'/images/crystal/actions/button_ok.png" alt="1"/>';
+			$rtn = '<img src="'.ICMS_IMAGES_SET_URL.'/actions/button_ok.png" alt="1"/>';
 		else
-			$rtn = '<img src="'.ICMS_IMAGES_SET_URL.'/images/crystal/actions/button_cancel.png" alt="0"/>';
+			$rtn = '<img src="'.ICMS_IMAGES_SET_URL.'/actions/button_cancel.png" alt="0"/>';
 		return $rtn;
 	}
 	

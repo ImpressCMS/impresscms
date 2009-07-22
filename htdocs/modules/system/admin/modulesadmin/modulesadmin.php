@@ -427,6 +427,27 @@ function xoops_module_install($dirname) {
 			}
 			unset($blocks);
 			unset($groups);
+			
+			// add module specific tasks to system autotasks list
+            $atasks = $module->getInfo('autotasks');
+            $atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
+            foreach ($atasks as $taskID => $taskData) {
+				$task = &$atasks_handler->create();
+				if (isset($taskData['enabled'])) $task->setVar('sat_enabled', $taskData['enabled']);
+				if (isset($taskData['repeat'])) $task->setVar('sat_repeat', $taskData['repeat']);
+				if (isset($taskData['interval'])) $task->setVar('sat_interval', $taskData['interval']);
+				if (isset($taskData['onfinish'])) $task->setVar('sat_onfinish', $taskData['onfinish']);
+				$task->setVar('sat_name', $taskData['name']);
+				$task->setVar('sat_code', $taskData['code']);
+				$task->setVar('sat_type', 'addon/'.$module->getInfo('dirname'));
+				$task->setVar('sat_addon_id', intval($taskID));
+				if (!($atasks_handler->insert($task))) {
+					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert autotask to db. Name: <b>'.$taskData['name'].'</b></span>';
+				} else {
+					$msgs[] = '&nbsp;&nbsp;Added task to autotasks list. Task Name: <b>'.$taskData['name'].'</b>';
+				}
+            }
+            unset($atasks, $atasks_handler, $task, $taskData, $criteria, $items, $taskID);
 
 			// execute module specific install script if any
 			$install_script = $module->getInfo('onInstall');
@@ -663,6 +684,14 @@ function xoops_module_uninstall($dirname) {
 					}
 				}
 			}
+			
+			$msgs[] = 'Deleting autotasks...';
+            $atasks = $module->getInfo('autotasks');
+            $atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
+            $criteria = new CriteriaCompo();
+            $criteria->add( new Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname') ) );
+            $atasks_handler->deleteAll($criteria);
+            unset($atasks,$atasks_handler,$criteria,$taskData);
 
 			// execute module specific install script if any
 			$uninstall_script = $module->getInfo('onUninstall');

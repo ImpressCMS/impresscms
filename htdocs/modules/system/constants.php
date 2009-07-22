@@ -1,7 +1,7 @@
 <?php
 /**
 * Admin constants
-* 
+*
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
@@ -39,4 +39,5 @@ define('XOOPS_SYSTEM_CUSTOMTAGS', 20);
 define('XOOPS_SYSTEM_ADSENSES', 21);
 define('XOOPS_SYSTEM_RATINGS', 22);
 define('XOOPS_SYSTEM_MIMETYPES', 23);
+define('XOOPS_SYSTEM_AUTOTASKS', 24);
 ?>

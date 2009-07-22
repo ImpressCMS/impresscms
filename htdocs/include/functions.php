@@ -10,7 +10,7 @@
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author		modified by marcan <marcan@impresscms.org>
-* @version	$Id$
+* @version	$Id: functions.php 8806 2009-05-31 22:28:54Z pesianstranger $
 */
 
 // ############## Include jalali functions file ##############
@@ -126,7 +126,7 @@ function xoops_footer()
  * ImpressCMS Error Message Function
  *
  * @since ImpressCMS 1.2
- * @version $Id$
+ * @version $Id: functions.php 8806 2009-05-31 22:28:54Z pesianstranger $
  *
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  *
@@ -155,7 +155,7 @@ function icms_error_msg($msg, $title='', $render = true){
  * Backwards Compatibility Function
  *
  * @since XOOPS
- * @version $Id$
+ * @version $Id: functions.php 8806 2009-05-31 22:28:54Z pesianstranger $
  * @deprecated
  * @see icms_error_msg
  *
@@ -171,7 +171,7 @@ function xoops_error($msg, $title=''){ icms_error_msg($msg, $title, true); }
  * ImpressCMS Warning Message Function
  *
  * @since ImpressCMS 1.2
- * @version $Id$
+ * @version $Id: functions.php 8806 2009-05-31 22:28:54Z pesianstranger $
  *
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  *

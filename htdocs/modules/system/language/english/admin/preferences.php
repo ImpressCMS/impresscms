@@ -491,4 +491,20 @@ define('_MD_AM_ADMIN_DTHEME_DESC', '');
 define('_MD_AM_CUSTOMRED', 'Use Ajaxed redirection method?');
 define('_MD_AM_CUSTOMREDDSC', '');
 define('_MD_AM_DTHEMEDSC','Default theme used to show your site.');
+
+// Autotasks
+define('_MD_AM_AUTOTASKS_SYSTEM', 'Processing system');
+define('_MD_AM_AUTOTASKS_HELPER', 'Helper aplication');
+define('_MD_AM_AUTOTASKS_HELPER_PATH', 'Path for helper aplication');
+
+define('_MD_AM_AUTOTASKS_SYSTEMDSC', 'Select what tasks system will be used for processing tasks.');
+define('_MD_AM_AUTOTASKS_HELPERDSC', 'If have selected not \'Internal\' processing system, than you need to have one of these aplications. However only one aplication will be used, so make choice carefully...');
+define('_MD_AM_AUTOTASKS_HELPER_PATHDSC', 'If your helper aplication is not in system default path, you will need to write here your helper application\'s path.' );
+define('_MD_AM_AUTOTASKS_USER', 'System user');
+define('_MD_AM_AUTOTASKS_USERDSC', 'On what system user will run tasks?');
+
+//source editedit
+define("_MD_AM_SRCEDITOR_DEFAULT","Default Source Code Editor");
+define("_MD_AM_SRCEDITOR_DEFAULT_DESC","Select the default Editor for editing source codes.");
+
 ?>

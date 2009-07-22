@@ -34,7 +34,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		 * Allow easely change the order of Preferences.
 		 * $order = 1; Alphabetically order;
 		 * $order = 0; Weight order;
-		 * 
+		 *
 		 * @todo: Create a preference option to set this value and improve the way to change the order.
 		 */
 		$order = 1;
@@ -52,7 +52,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		if ($order == 1) {
 			array_multisort ( $column, SORT_ASC, $ccats );
 		}
-		
+
 		xoops_cp_header ();
 		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_URL . '/modules/system/admin/preferences/images/preferences_big.png)">' . _MD_AM_SITEPREF . '</div><br /><ul>';
 		foreach ( $ccats as $confcat ) {
@@ -102,8 +102,18 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						$ele = new XoopsFormDhtmlTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 					}
 				break;
+				case 'autotasksystem':
+					$handler = xoops_getmodulehandler('autotasks', 'system');
+					$options = &$handler->getSystemHandlersList(true);
+					echo $config [$i]->getVar ( 'conf_value' );
+					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 1, false );
+					foreach ($options as $option) {
+						$ele->addOption ( $option, $option );
+					}
+					unset($handler, $options, $option);
+				break;
 				case 'select' :
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ),  $config [$i]->getConfValueForOutput () );
 					$options = $config_handler->getConfigOptions ( new Criteria ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
 					$opcount = count ( $options );
 					for($j = 0; $j < $opcount; $j ++) {
@@ -139,10 +149,21 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'editor' :
 				case 'editor_multi' :
-					$ele = ($config [$i]->getVar ( 'conf_formtype' ) != 'editor_multi') ? new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () ) : new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
+				case 'editor_source' :
+					$type = explode('_', $config [$i]->getVar ( 'conf_formtype' ));
+					$count = count($type);
+					$isMulti = $type[$count-1] == 'multi';					
+					if ($isMulti) {
+						$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
+						$type = $type[$count-2];
+					} else {
+						$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+						$type = $type[$count-1];
+					}
+					if ($type == 'editor') $type = '';
 					//$ele->addOption ( "default" );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = XoopsLists::getEditorsList ();
+					$dirlist = XoopsLists::getEditorsList ($type);
 					if (! empty ( $dirlist )) {
 						/*if ($config [$i]->getVar ( 'conf_formtype' ) != 'editor_multi') {
 							unset ( $dirlist ['default'] );
@@ -153,6 +174,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
 					}
+					unset($type, $count, $isMulti);
 				break;
 				case 'select_font' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
@@ -194,7 +216,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'startpage' :
 					$member_handler = & xoops_gethandler ( 'member' );
 					$grps = $member_handler->getGroupList ();
-					
+
 					$value = $config [$i]->getConfValueForOutput ();
 					if (! is_array ( $value )) {
 						$value = array ( );
@@ -202,22 +224,22 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 							$value [$k] = $config [$i]->getConfValueForOutput ();
 						}
 					}
-					
+
 					$module_handler = & xoops_gethandler ( 'module' );
 					$criteria = new CriteriaCompo ( new Criteria ( 'hasmain', 1 ) );
 					$criteria->add ( new Criteria ( 'isactive', 1 ) );
 					$moduleslist = $module_handler->getList ( $criteria, true );
 					$moduleslist ['--'] = _MD_AM_NONE;
-					
+
 					//Adding support to select custom links to be the start page
 					$page_handler = & xoops_gethandler ( 'page' );
 					$criteria = new CriteriaCompo ( new Criteria ( 'page_status', 1 ) );
 					$criteria->add ( new Criteria ( 'page_url', '%*', 'NOT LIKE' ) );
 					$pagelist = $page_handler->getList ( $criteria );
-					
+
 					$list = array_merge ( $moduleslist, $pagelist );
 					asort ( $list );
-					
+
 					$ele = new XoopsFormElementTray ( $title, '<br />' );
 					$hv = '';
 					foreach ( $grps as $k => $v ) {
@@ -288,7 +310,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$ele->addOptionArray ( $content_handler->getContentList () );
 				break;
 				##############################################################################################
-				# Added by Fábio Egas in XTXM version
+				# Added by FĆ�bio Egas in XTXM version
 				##############################################################################################
 				case 'select_image' :
 					include_once ICMS_ROOT_PATH . '/class/xoopsform/formimage.php';
@@ -362,7 +384,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		if ($module->getVar ( 'hasnotification' ) == 1) {
 			icms_loadLanguageFile('core', 'notification');
 		}
-		
+
 		$modname = $module->getVar ( 'name' );
 		if ($module->getInfo ( 'adminindex' )) {
 			$form->addElement ( new XoopsFormHidden ( 'redirect', ICMS_URL . '/modules/' . $module->getVar ( 'dirname' ) . '/' . $module->getInfo ( 'adminindex' ) ) );
@@ -390,6 +412,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'select' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+
 					$options = & $config_handler->getConfigOptions ( new Criteria ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
 					$opcount = count ( $options );
 					for($j = 0; $j < $opcount; $j ++) {
@@ -467,8 +490,8 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		$iconbig = $module->getInfo('iconbig');
 		if ( isset( $iconbig ) && $iconbig == false ) {
 			echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/preferences/images/preferences_big.png);">'.$modname.' &raquo; '._PREFERENCES.'</div>';
-			
-		} 
+
+		}
 		if ( isset( $iconbig ) && $iconbig == true ) {
 			echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/'.$module->getVar('dirname').'/'.$iconbig.')">'.$modname.' &raquo; '._PREFERENCES.'</div>';
 		}
@@ -488,10 +511,13 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		$theme_updated = false;
 		$startmod_updated = false;
 		$lang_updated = false;
+		$saved_config_items = array();
 		if ($count > 0) {
 			for($i = 0; $i < $count; $i ++) {
 				$config = & $config_handler->getConfig ( $conf_ids [$i] );
 				$new_value = & ${$config->getVar ( 'conf_name' )};
+				$old_value = $config->getVar('conf_value');
+				$icmsPreloadHandler->triggerEvent ( 'savingSystemAdminPreferencesItem', array((int)$config->getVar ( 'conf_catid' ), $config->getVar ( 'conf_name' ), $config->getVar ( 'conf_value' )));
 				if (is_array ( $new_value ) || $new_value != $config->getVar ( 'conf_value' )) {
 					// if language has been changed
 					if (! $lang_updated && $config->getVar ( 'conf_catid' ) == XOOPS_CONF && $config->getVar ( 'conf_name' ) == 'language') {
@@ -517,7 +543,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 							redirect_header('admin.php?fct=preferences', 2, _MD_AM_UNABLEENCCLOSED);
 						}
 					}
-					
+
 					// if default template set has been changed
 					if (! $tpl_updated && $config->getVar ( 'conf_catid' ) == XOOPS_CONF && $config->getVar ( 'conf_name' ) == 'template_set') {
 						// clear cached/compiled files and regenerate them if default theme has been changed
@@ -530,10 +556,10 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 							$tplfile_handler = & xoops_gethandler ( 'tplfile' );
 							$dtemplates = & $tplfile_handler->find ( 'default', 'block' );
 							$dcount = count ( $dtemplates );
-							
+
 							// need to do this to pass to xoops_template_touch function
 							$GLOBALS ['xoopsConfig'] ['template_set'] = $newtplset;
-							
+
 							for($i = 0; $i < $dcount; $i ++) {
 								$found = & $tplfile_handler->find ( $newtplset, 'block', $dtemplates [$i]->getVar ( 'tpl_refid' ), null );
 								if (count ( $found ) > 0) {
@@ -544,7 +570,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 									xoops_template_touch ( $dtemplates [$i]->getVar ( 'tpl_id' ) );
 								}
 							}
-							
+
 							// generate image cache files from image binary data, save them under cache/
 							$image_handler = & xoops_gethandler ( 'imagesetimg' );
 							$imagefiles = & $image_handler->getObjects ( new Criteria ( 'tplset_name', $newtplset ), true );
@@ -558,12 +584,12 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						}
 						$tpl_updated = true;
 					}
-					
+
 					// add read permission for the start module to all groups
 					if (! $startmod_updated && $new_value != '--' && $config->getVar ( 'conf_catid' ) == XOOPS_CONF && $config->getVar ( 'conf_name' ) == 'startpage') {
 						$moduleperm_handler = & xoops_gethandler ( 'groupperm' );
 						$module_handler = & xoops_gethandler ( 'module' );
-						
+
 						foreach ( $new_value as $k => $v ) {
 							$arr = explode ( '-', $v );
 							if (count ( $arr ) > 1) {
@@ -585,23 +611,32 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						}
 						$startmod_updated = true;
 					}
-					
+
 					$config->setConfValueForInput ( $new_value );
 					$config_handler->insertConfig ( $config );
 				}
 				unset ( $new_value );
+
+				if (!isset($saved_config_items[$config->getVar ( 'conf_catid' )])) {
+					$saved_config_items[$config->getVar ( 'conf_catid' )] = array();
+				}
+				$saved_config_items[$config->getVar ( 'conf_catid' )][$config->getVar ( 'conf_name' )] = array($old_value, $config->getVar ( 'conf_value' ));
+
 			}
 		}
-		
+
+		$icmsPreloadHandler->triggerEvent ( 'afterSaveSystemAdminPreferencesItems', $saved_config_items);
+		unset($saved_config_items);
+
 		if (! empty ( $use_mysession ) && $xoopsConfig ['use_mysession'] == 0 && $session_name != '') {
 			setcookie ( $session_name, session_id (), time () + (60 * intval ( $session_expire )), '/', '', 0 );
 		}
-		
+
 		// Clean cached files, may take long time
 		// User reigister_shutdown_function to keep running after connection closes so that cleaning cached files can be finished
 		// Cache management should be performed on a separate page
 		register_shutdown_function ( array (&$xoopsTpl, 'clear_all_cache' ) );
-		
+
 		// If language is changed, leave the admin menu file to be regenerated upon next request,
 		// otherwise regenerate admin menu file for now
 		if (! $lang_updated) {
@@ -610,7 +645,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		} else {
 			$redirect = ICMS_URL . '/admin.php';
 		}
-		
+
 		if (isset ( $redirect ) && $redirect != '') {
 			redirect_header ( $redirect, 2, _MD_AM_DBUPDATED );
 		} else {

@@ -15,27 +15,32 @@ class XoopsEditorHandler
 	var $nohtml = false;
 	var $allowed_editors = array();
 
-  function XoopsEditorHandler()
+  /**
+   * Constructor
+   *
+   * @param	string	type
+   */
+  function XoopsEditorHandler($type = '')
   {
     include_once dirname(__FILE__)."/xoopseditor.inc.php";
-    $this->root_path = xoopseditor_get_rootpath();
+    $this->root_path = xoopseditor_get_rootpath($type);
   }
 
 	/**
 	 * Access the only instance of this class
    *
+   * @param	    string	type
    * @return	object
-   *
    * @static
    * @staticvar   object
 	 */
-	function &getInstance()
+	static function &getInstance($type = '')
 	{
-		static $instance;
-		if (!isset($instance)) {
-			$instance = new XoopsEditorHandler();
+		static $instances = array();
+		if (!isset($instances[$type])) {
+			$instances[$type] = new XoopsEditorHandler($type);
 		}
-		return $instance;
+		return $instances[$type];
 	}
 
 	/**
@@ -165,7 +170,7 @@ class XoopsEditorHandler
     if(empty($config['order'])) {
       return null;
     }
-    include_once $config['file'];
+    require_once $config['file'];
     $editor =& new $config['class']($options);
     return $editor;
   }
