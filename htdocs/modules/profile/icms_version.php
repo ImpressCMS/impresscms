@@ -60,13 +60,12 @@ $modversion['object_items'][6] = 'tribes';
 $modversion['object_items'][7] = 'tribeuser';
 $modversion['object_items'][8] = 'scraps';
 $modversion['object_items'][9] = 'configs';
-$modversion['object_items'][10] = 'suspensions';
-$modversion['object_items'][11] = 'audio';
-$modversion['object_items'][12] = 'category';
-$modversion['object_items'][13] = 'profile';
-$modversion['object_items'][14] = 'field';
-$modversion['object_items'][15] = 'visibility';
-$modversion['object_items'][16] = 'regstep';
+$modversion['object_items'][10] = 'audio';
+$modversion['object_items'][11] = 'category';
+$modversion['object_items'][12] = 'profile';
+$modversion['object_items'][13] = 'field';
+$modversion['object_items'][14] = 'visibility';
+$modversion['object_items'][15] = 'regstep';
 $modversion["tables"] = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
 
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=168]marcan[/url] (Marc-Andr&eacute; Lanciault)";
@@ -314,18 +313,9 @@ $modversion['templates'][]= array(
 $modversion['templates'][]= array(
   'file' => 'profile_admin_audio.html',
   'description' => 'audio Admin Index');
-
-$modversion['templates'][]= array(
-  'file' => 'profile_admin_suspensions.html',
-  'description' => 'suspensions Admin Index');
-
 $modversion['templates'][]= array(
   'file' => 'profile_tribes.html',
   'description' => 'tribes Index');
-
-$modversion['templates'][]= array(
-  'file' => 'profile_suspensions.html',
-  'description' => 'suspensions Index');
 
 $modversion['templates'][]= array(
   'file' => 'profile_admin_scraps.html',
