@@ -26,7 +26,7 @@ function editpictures($picturesObj, $hideForm=false)
 		}
 		$picturesObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
 		$sform = $picturesObj->getSecureForm(_MD_PROFILE_PICTURES_EDIT, 'addpictures');
-		$sform->assign($icmsTpl, 'profile_pictureseditform');
+		$sform->assign($icmsTpl, 'profile_picturesform');
 		$icmsTpl->assign('profile_category_path', $picturesObj->getVar('title') . ' > ' . _EDIT);
 	} else {
 		if (!$profile_pictures_handler->userCanSubmit()) {

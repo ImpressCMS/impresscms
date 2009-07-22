@@ -26,7 +26,7 @@ function edittribes($tribesObj, $hideForm=false)
 		}
 		$tribesObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
 		$sform = $tribesObj->getSecureForm(_MD_PROFILE_TRIBES_EDIT, 'addtribes');
-		$sform->assign($icmsTpl, 'profile_tribeseditform');
+		$sform->assign($icmsTpl, 'profile_tribesform');
 		$icmsTpl->assign('profile_category_path', $tribesObj->getVar('title') . ' > ' . _EDIT);
 	} else {
 		if (!$profile_tribes_handler->userCanSubmit()) {
