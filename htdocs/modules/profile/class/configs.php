@@ -225,31 +225,31 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 * @return array of amounts
 	 */
 	function geteachSectioncounts($uid){
-		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_audio').' WHERE uid_owner="'.$uid.'"';
-		$audio = $this->query($sql);
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_audio').' WHERE uid_owner="'.$uid.'"';
+		$audio = $this->query($sql, false);
 		
-		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_pictures').' WHERE uid_owner="'.$uid.'"';
-		$configs = $this->query($sql);
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_pictures').' WHERE uid_owner="'.$uid.'"';
+		$pictures = $this->query($sql, false);
 		
-		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="'.$uid.'" OR friend2_uid="'.$uid.'")';
-		$friendship = $this->query($sql);
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="'.$uid.'" OR friend2_uid="'.$uid.'")';
+		$friendship = $this->query($sql, false);
 		
-		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_scraps').' WHERE uid_owner="'.$uid.'"';
-		$scraps = $this->query($sql);
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_scraps').' WHERE scrap_to="'.$uid.'"';
+		$scraps = $this->query($sql, false);
 		
-		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_videos').' WHERE uid_owner="'.$uid.'"';
-		$videos = $this->query($sql);
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_videos').' WHERE uid_owner="'.$uid.'"';
+		$videos = $this->query($sql, false);
 		
-		$sql = 'SELECT COUNT(*) FROM'.$this->db->prefix('profile_tribes').' WHERE uid_owner="'.$uid.'"';
-		$tribes = $this->query($sql);
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_tribes').' WHERE uid_owner="'.$uid.'"';
+		$tribes = $this->query($sql, false);
 		
 		return array(
-			'audio' => $audio,
-			'configs' => $configs,
-			'friendship' => $friendship,
-			'scraps' => $scraps,
-			'videos' => $videos,
-			'tribes' => $tribes
+			'audio' => $audio[0]['amount'],
+			'pictures' => $pictures[0]['amount'],
+			'friendship' => $friendship[0]['amount'],
+			'scraps' => $scraps[0]['amount'],
+			'videos' => $videos[0]['amount'],
+			'tribes' => $tribes[0]['amount']
 			);
 	}
 
@@ -258,9 +258,11 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 *
 	 * @return bool true if he can false if not
 	 */
-	function userCanAcsessSection(& $obj, $item, $uid=false) {
+	function userCanAcsessSection($item, $uid=false) {
 		global $icmsUser, $profile_isAdmin;
-		$status = $obj->getVar($item, 'e');
+		$sql = 'SELECT '.$item.' FROM '.$this->table.' WHERE config_uid="'.$uid.'"';
+		$result = $this->query($sql, false);
+		$status = $result[0][$item];
 		if ($profile_isAdmin) {
 			return true;
 		}
@@ -270,14 +272,16 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		if ($status == PROFILE_CONFIG_STATUS_MEMBERS && is_object($icmsUser)) {
 			return true;
 		}
-		if($status == PROFILE_CONFIG_STATUS_FRIENDS){
+		if($status == PROFILE_CONFIG_STATUS_FRIENDS && is_object($icmsUser)){
 			/*
 			 * TODO: Create a function to check if a user is a friend or not.
 			 */
 				return false;
 		}
 		if ($status == PROFILE_CONFIG_STATUS_PRIVATE) {
-			return $obj->getVar('config_uid', 'e') == $icmsUser->uid();
+			$sql = 'SELECT '.$item.' FROM '.$this->table.' WHERE config_uid="'.$uid.'"';
+			$result = $this->query($sql, false);
+			return $result == $icmsUser->uid();
 		}
 	}
 

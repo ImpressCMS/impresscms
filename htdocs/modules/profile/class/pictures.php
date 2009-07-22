@@ -99,6 +99,7 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 	 */
 	function userCanView() {
 		global $icmsUser, $profile_isAdmin;
+		
 		if (!is_object($icmsUser)) {
 			return false;
 		}
