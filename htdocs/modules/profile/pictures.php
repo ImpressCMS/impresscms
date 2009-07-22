@@ -76,7 +76,7 @@ $valid_op = array ('mod','addpictures','del','');
  * Only proceed if the supplied operation is a valid operation
  */
 
-$isAllowed = getAllowedItems('pictures', $uid);
+$isAllowed = getAllowedItems('pictures', $clean_uid);
 if (!$isAllowed['pictures'] || $icmsModuleConfig['profile_social'] == false) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
