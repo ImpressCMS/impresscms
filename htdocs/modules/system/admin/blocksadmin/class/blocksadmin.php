@@ -226,7 +226,7 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
     public function getVisibleStatusArray(){
     	$rtn = array();
     	$rtn[1] = _VISIBLE;
-    	$rtn[0] = _UNVISIBLE;
+    	$rtn[0] = _INVISIBLE;
     	return $rtn;
     }
     
