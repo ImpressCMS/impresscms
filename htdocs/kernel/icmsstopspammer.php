@@ -38,7 +38,7 @@ class IcmsStopSpammer {
 			$output = '';
 			$ch=curl_init();
 			if (!curl_setopt($ch, CURLOPT_URL, "$url")) {
-				icms_debug($this->api_url . $field . '=' . $value); exit;
+				icms_debug($this->api_url . $field . '=' . $value);
 				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
 			}
 >			curl_setopt($ch, CURLOPT_URL, "$url");
@@ -53,7 +53,7 @@ class IcmsStopSpammer {
 		} else {
 			$file = fopen($url, "r");
 			if (!$file) {
-				icms_debug($this->api_url . $field . '=' . $value); exit;
+				icms_debug($this->api_url . $field . '=' . $value);
 				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
 			}
 			while (!feof($file)) {
