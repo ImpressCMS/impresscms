@@ -5,10 +5,35 @@ Release date:
 Revision:
 
 '''Added'''
+* Added plugins/autotasks folder for storring autotasks systems (currently there is at.php, cron.php and internal.php handlers) (mekdrop)
+* Added plugins/sourceeditors folder for Code Sources Editors (mekdrop)
+* Added editarea source editor (mekdrop)
+* Added autotasks preload (mekdrop)
+* Added class/autotasks folder with base classes and interfaces for autotasks (iautotasksystem.php and icmsautotaskssystem.php) (mekdrop)
+* Edited xoopseditor.inc.php and xoopseditor.php files in class folder. Added editor type support. For Example: if you specify source editor type, then source editor will be used. (mekdrop)
+* Added modules/system/admin/autotasks - autotasks items administration (mekdrop)
+* Added to modules/system/admin/preferences/main.php support for autotasksystem config field type (this form field show supported autotasks and installed system on current server)  (mekdrop)
+* Added savingSystemAdminPreferencesItem preload event when saving system preferences items (params: array(conf_catid, conf_name, conf_value)  (mekdrop)
+* Added afterSaveSystemAdminPreferencesItems preload event after saving config (param - array of old and new values) (mekdrop)
+* Added define('_MD_AM_AUTOTASKS', 'Auto Tasks'); to modules/system/language/english/admin.php (mekdrop)
+* Added define('XOOPS_SYSTEM_AUTOTASKS', 24); to modules/system/constants.php (mekdrop)
+* Added some language constants to modules/system/language/english/admin/preferences.php (mekdrop)
+* Added include/autotasks.php file (mekdrop)
+* Added some lines to modules/system/admin/modulesadmin/main.php and to modules/system/admin/modulesadmin/modulesadmin.php for handling autotasks variables in xoops_version.php  (mekdrop)
+* added to modules/system/language/english/admin/preferences.php new constants _MD_AM_SRCEDITOR_DEFAULT and _MD_AM_SRCEDITOR_DEFAULT_DESC  (mekdrop)
+* added preferences option for selecting default sourceeditor (mekdrop)
+* added editor_source form field type to preferences and modified editor type field displaying method (mekdrop)
+* added source edit support for xoopslist class (mekdrop)
+* added XOOPS_SYSTEM_AUTOTASKS to modules/system/constants.php (mekdrop)
+* added _MI_SYSTEM_ADMENU25 to modules/system/language/english/modinfo.php (mekdrop)
 
 '''Improved'''
+* Modified IcmsPersistableObjectHandler: if no module specified system think it's not a module (mekdrop)
+* #666: Update HTMLPurifier Library to 4.0.0. (vaughan)
+* #652: icmsStopSpammer causes blank page when the stopforumspam.org site is unavailable. (vaughan)
 
 '''Fixed'''
+* fixed class/icmsform/icmsform.php 723-728 lines (????) (mekdrop)
 * #249: Path to ICMS_IMAGES_SET_URL corrected (sato-san)
 * #657: Icons for adsense, rating and mime-types (sato-san)
 * #548: Errors with class/theme.php (TheRplima)
