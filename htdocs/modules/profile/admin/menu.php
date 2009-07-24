@@ -53,9 +53,6 @@ $adminmenu[$i]['link'] = 'admin/videos.php';
 $i++;
 $adminmenu[$i]['title'] = _MI_PROFILE_TRIBEUSERS;
 $adminmenu[$i]['link'] = 'admin/tribeuser.php';
-$i++;
-$adminmenu[$i]['title'] = _MI_PROFILE_FRIENDPETITIONS;
-$adminmenu[$i]['link'] = 'admin/friendpetition.php';
 
 
 $gperm =& xoops_gethandler ( 'groupperm' );

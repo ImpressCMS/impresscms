@@ -222,6 +222,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		return $this->_config_statusArray;
 	
 	}
+
 	/**
 	 * Retreive the number of each item submitted by user in each section
 	 *

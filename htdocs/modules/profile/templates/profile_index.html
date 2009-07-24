@@ -6,25 +6,25 @@
 <div id="profile-profile-petition" class="confirmMsg">
 <h4><{$lang_youhavexpetitions}></h4>
 <img width="30" src="<{$petitioner_avatar}>" />
-<form action="makefriends.php" method="post">
+<form action="ajax-requests.php" method="post">
 <{$lang_askingfriend}>
 <ul>
 	<li>
-		<input name="level" type="radio" value="0" />
+		<input name="level" type="radio" value="4" />
 		<{$lang_rejected}>
 	</li>
 	<li>
-		<input name="level" type="radio" value="1" />
+		<input name="level" type="radio" value="2" />
 		<{$lang_accepted}>
 	</li>
 	
 	<li>
-		<input name="level" type="radio" value="3" />
+		<input name="level" type="radio" value="2" />
 		<{$lang_acquaintance}>
 	</li>
 	
 	<li>
-		<input name="level" type="radio" value="5" />
+		<input name="level" type="radio" value="2" />
 		<{$lang_friend}>
 	</li>
 </ul>
@@ -37,8 +37,8 @@
 
 <{if (($isfriend!=1) && ($isOwner==0) && ($isanonym!=1))}>
 <div id="profile-profile-petition">
-<form action=submit_friendpetition.php method="post">
-<{$lang_askusertobefriend}><input type="hidden" name="petitioned_uid" id="petitioned_uid" value="<{$uid_owner}>" />
+<form action=ajax-requests.php method="post">
+<{$lang_askusertobefriend}><input type="hidden" name="friend2_uid" id="friend2_uid" value="<{$uid_owner}>" />
 <input name="" type="image" src="images/<{$icms_langname}>/addfriend.jpg"/><{$token}>
 </form>
 </div>

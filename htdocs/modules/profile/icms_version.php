@@ -51,21 +51,36 @@ $modversion = array(
  *
  */
 
-$modversion['object_items'][1] = 'pictures';
-$modversion['object_items'][2] = 'friendship';
-$modversion['object_items'][3] = 'visitors';
-$modversion['object_items'][4] = 'videos';
-$modversion['object_items'][5] = 'friendpetition';
-$modversion['object_items'][6] = 'tribes';
-$modversion['object_items'][7] = 'tribeuser';
-$modversion['object_items'][8] = 'scraps';
-$modversion['object_items'][9] = 'configs';
-$modversion['object_items'][10] = 'audio';
-$modversion['object_items'][11] = 'category';
-$modversion['object_items'][12] = 'profile';
-$modversion['object_items'][13] = 'field';
-$modversion['object_items'][14] = 'visibility';
-$modversion['object_items'][15] = 'regstep';
+$i = 0;
+
+$i++;
+$modversion['object_items'][$i] = 'pictures';
+$i++;
+$modversion['object_items'][$i] = 'friendship';
+$i++;
+$modversion['object_items'][$i] = 'visitors';
+$i++;
+$modversion['object_items'][$i] = 'videos';
+$i++;
+$modversion['object_items'][$i] = 'tribes';
+$i++;
+$modversion['object_items'][$i] = 'tribeuser';
+$i++;
+$modversion['object_items'][$i] = 'scraps';
+$i++;
+$modversion['object_items'][$i] = 'configs';
+$i++;
+$modversion['object_items'][$i] = 'audio';
+$i++;
+$modversion['object_items'][$i] = 'category';
+$i++;
+$modversion['object_items'][$i] = 'profile';
+$i++;
+$modversion['object_items'][$i] = 'field';
+$i++;
+$modversion['object_items'][$i] = 'visibility';
+$i++;
+$modversion['object_items'][$i] = 'regstep';
 $modversion["tables"] = icms_getTablesArray($modversion['dirname'], $modversion['object_items']);
 
 $modversion['people']['developers'][] = "[url=http://community.impresscms.org/userinfo.php?uid=168]marcan[/url] (Marc-Andr&eacute; Lanciault)";
