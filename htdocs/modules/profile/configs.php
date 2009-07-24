@@ -77,6 +77,11 @@ $configsObj = $profile_configs_handler->get($clean_configs_id);
  * Be sure to include a value for no parameter, if you have a default condition
  */
 $valid_op = array ('addconfigs','suspend', '');
+
+if (!is_object($icmsUser) || $icmsModuleConfig['profile_social'] == false) {
+	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+}
+
 /**
  * Only proceed if the supplied operation is a valid operation
  */
