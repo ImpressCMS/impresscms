@@ -2,8 +2,6 @@
 /**
  * Extended User Profile
  *
- *
- *
  * @copyright       The ImpressCMS Project http://www.impresscms.org/
  * @license         LICENSE.txt
  * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -11,7 +9,7 @@
  * @since           1.3
  * @author          Marcello Brandao <marcello.brandao@gmail.com>
  * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version         $Id$
+ * @version         $Id: $
  */
 
 include_once "../../mainfile.php";
@@ -31,13 +29,13 @@ icms_loadLanguageFile('core', 'user');
 global $icmsModuleConfig;
 $myts =& MyTextSanitizer::getInstance();
 $module_name = $icmsModule->getVar('name');
-$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/css/profile'.(@_ADM_USE_RTL == 1 ? '_rtl':'').'.css');
-if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/css/tabs-ie.css');}
-$xoTheme->addScript(ICMS_URL.'/modules/'.$dirname.'/js/profile.js');
+$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/profile'.(@_ADM_USE_RTL == 1 ? '_rtl':'').'.css');
+if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/tabs-ie.css');}
+$xoTheme->addScript(ICMS_URL.'/modules/'.$dirname.'/assets/js/profile.js');
 icms_makeSmarty(array(
 	'module_name',$module_name,
 	'xoops_pagetitle',  sprintf(_MD_PROFILE_PAGETITLE,$module_name, $owner_uname ),
-	'profile_image','<img src="'.ICMS_URL.'/modules/'.$dirname.'/images/profile-start.gif" alt="'.$module_name.'"/>',
+	'profile_image','<img src="'.ICMS_URL.'/modules/'.$dirname.'/assets/images/profile-start.gif" alt="'.$module_name.'"/>',
 	'profile_content',_MI_PROFILE_MODULEDESC,
 	'module_is_socialmode', $icmsModuleConfig['profile_social']));
 icms_makeSmarty(array(
@@ -65,13 +63,12 @@ icms_makeSmarty(array(
 	'nb_videos' => $nrSections['nbVideos'],
 	'nb_scraps' => $nrSections['nbScraps'],
 	'nb_friends' => $nrSections['nbFriends'],
-	'nb_audio' => $nrSections['nbAudio']*/)); 
+	'nb_audio' => $nrSections['nbAudio']*/));
 if ($isAnonym == true && $uid == 0) {
   include_once(ICMS_ROOT_PATH.'/modules/'.$dirname.'/footer.php');
   exit();
 }
 //Token
 $icmsTpl->assign('token',$GLOBALS['xoopsSecurity']->getTokenHTML());
-
 
 ?>
