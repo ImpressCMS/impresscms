@@ -72,16 +72,15 @@ $picturesObj = $profile_pictures_handler->get($clean_pictures_id);
  * Be sure to include a value for no parameter, if you have a default condition
  */
 $valid_op = array ('mod','addpictures','del','');
-/**
- * Only proceed if the supplied operation is a valid operation
- */
 
 $isAllowed = getAllowedItems('pictures', $clean_uid);
 if (!$isAllowed['pictures'] || $icmsModuleConfig['profile_social'] == false) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
 
-
+/**
+ * Only proceed if the supplied operation is a valid operation
+ */
 if (in_array($clean_op,$valid_op,true)){
   switch ($clean_op) {
 	case "mod":

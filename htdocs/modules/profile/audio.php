@@ -65,6 +65,12 @@ $audioObj = $profile_audio_handler->get($clean_audio_id);
  * Be sure to include a value for no parameter, if you have a default condition
  */
 $valid_op = array ('mod','addaudio','del','');
+
+$isAllowed = getAllowedItems('audio', $clean_uid);
+if (!$isAllowed['audio'] || $icmsModuleConfig['profile_social'] == false) {
+	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+}
+
 /**
  * Only proceed if the supplied operation is a valid operation
  */

@@ -65,6 +65,12 @@ $videosObj = $profile_videos_handler->get($clean_videos_id);
  * Be sure to include a value for no parameter, if you have a default condition
  */
 $valid_op = array ('mod','addvideos','del','');
+
+$isAllowed = getAllowedItems('videos', $clean_uid);
+if (!$isAllowed['videos'] || $icmsModuleConfig['profile_social'] == false) {
+	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+}
+
 /**
  * Only proceed if the supplied operation is a valid operation
  */

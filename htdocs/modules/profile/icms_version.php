@@ -230,6 +230,10 @@ $modversion['templates'][] = array(
   'description' => '');
 
 $modversion['templates'][] = array(
+  'file' => 'profile_scraps.html',
+  'description' => '');
+
+$modversion['templates'][] = array(
   'file' => 'profile_editprofile.html',
   'description' => '');
 

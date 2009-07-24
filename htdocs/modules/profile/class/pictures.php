@@ -308,7 +308,6 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		return true;
 	}
 
-
 	/**
 	 * Update the counter field of the post object
 	 *
