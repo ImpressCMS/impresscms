@@ -7,7 +7,7 @@
  * 1 If mode is set through IcmsFormCaptcha::setMode(), take it
  * 2 Elseif mode is set though captcha/config.php, take it
  * 3 Else, take "text"
- * 
+ *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
@@ -17,22 +17,22 @@
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		$Id: formcaptcha.php 8685 2009-05-02 15:00:58Z pesianstranger $
 */
- 
+
 if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 
 require_once ICMS_ROOT_PATH."/class/xoopsform/formelement.php";
- 
+
 /*
  * Usage
  *
  * For form creation:
  * 1 Add [include_once ICMS_ROOT_PATH."/class/captcha/formcaptcha.php";] to class/xoopsformloader.php, OR add to the file that uses CAPTCHA before calling IcmsFormCaptcha
  * 2 Add form element where proper: $xoopsform->addElement(new IcmsFormCaptcha($caption, $name, $skipmember, ...);
- * 
+ *
  * For verification:
  *   if(@include_once ICMS_ROOT_PATH."/class/captcha/captcha.php") {
  *	    $icmsCaptcha = IcmsCaptcha::instance();
@@ -47,7 +47,7 @@ require_once ICMS_ROOT_PATH."/class/xoopsform/formelement.php";
 class IcmsFormCaptcha extends XoopsFormElement {
 
 	var $_captchaHandler;
-	
+
 	/**
 	 * @param string	$caption	Caption of the form element, default value is defined in captcha/language/
 	 * @param string	$name		Name for the input box
@@ -63,7 +63,7 @@ class IcmsFormCaptcha extends XoopsFormElement {
 		if(!class_exists("IcmsCaptcha")) {
 			require_once ICMS_ROOT_PATH."/class/captcha/captcha.php";
 		}
-		
+
 		$this->_captchaHandler =& IcmsCaptcha::instance();
 		$this->_captchaHandler->init($name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum);
 		if(!$this->_captchaHandler->active) {
@@ -85,7 +85,7 @@ class IcmsFormCaptcha extends XoopsFormElement {
 	{
 		return $this->_captchaHandler->setConfig($name, $val);
 	}
-	
+
 	function render()
 	{
 		if(!$this->isHidden()) {
@@ -93,6 +93,7 @@ class IcmsFormCaptcha extends XoopsFormElement {
 		}
 	}
 }
+
 class XoopsFormCaptcha extends IcmsFormCaptcha { /* For backwards compatibility */ }
 
 ?>
