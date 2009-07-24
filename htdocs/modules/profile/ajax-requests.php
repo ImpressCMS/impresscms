@@ -18,7 +18,7 @@ $friendship_level = isset($_POST['level'])?intval($_POST['level']):0;
 $friend2_uid = isset($_POST['friend2_uid'])?intval($_POST['friend2_uid']):0;
 $profile_friendship_handler = icms_getModuleHandler('friendship');
 $uid = intval($icmsUser->getVar('uid'));
-if($friend2_uid != 0 $$ is_object($icmsUser)){
+if($friend2_uid != 0 && $uid != $friend2_uid && is_object($icmsUser)){
 	$friendship_id = $profile_friendship_handler->getFriendshipIdPerUser($uid, $friend2_uid);
 	$clean_friendship_id = !empty($friendship_id[0]['friendship_id'])?$friendship_id[0]['friendship_id']:0;
 	if($clean_friendship_id == 0){
@@ -28,8 +28,8 @@ if($friend2_uid != 0 $$ is_object($icmsUser)){
 	}
 }
 
-if($friendship_level != 0 $$ is_object($icmsUser)){
-	$friendship_id = $profile_friendship_handler->getFriendshipIdPerUser($CheckID);
+if($friendship_level != 0 && is_object($icmsUser)){
+	$friendship_id = $profile_friendship_handler->getFriendshipIdPerUser($uid);
 	$clean_friendship_id = !empty($friendship_id[0]['friendship_id'])?$friendship_id[0]['friendship_id']:0;
 	if($clean_friendship_id > 0){
 	$friendshipObj = $profile_friendship_handler->get($clean_friendship_id);

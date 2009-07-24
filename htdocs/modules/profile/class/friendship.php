@@ -146,8 +146,13 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 	 *
 	 * @return array of amounts
 	 */
-	function getFriendshipIdPerUser($uid1, $uid2){
-		$sql = 'SELECT friendship_id FROM '.$this->table.' WHERE ((friend1_uid="'.$uid1.'" AND friend2_uid="'.$uid2.'") OR (friend1_uid="'.$uid2.'" AND friend2_uid="'.$uid1.'"))';
+	function getFriendshipIdPerUser($uid1, $uid2=false){
+		$sql = 'SELECT friendship_id FROM '.$this->table.' WHERE ';
+		if($uid2){
+			$sql .= '((friend1_uid="'.$uid1.'" AND friend2_uid="'.$uid2.'") OR (friend1_uid="'.$uid2.'" AND friend2_uid="'.$uid1.'"))';
+		}else{
+			$sql .= '(friend1_uid="'.$uid1.'" OR friend2_uid="'.$uid1.'")';
+		}
 		$ret = $this->query($sql, false);
 		return $ret;
 	}
