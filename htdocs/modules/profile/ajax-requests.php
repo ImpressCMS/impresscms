@@ -12,30 +12,19 @@
  * @version         $Id$
  */
 
-include_once '../../mainfile.php';
+include_once 'header.php';
 global $icmsUser;
 $friendship_level = isset($_POST['level'])?intval($_POST['level']):0;
 $friend2_uid = isset($_POST['friend2_uid'])?intval($_POST['friend2_uid']):0;
 $profile_friendship_handler = icms_getModuleHandler('friendship');
-$uid = intval($icmsUser->getVar('uid'));
-if($friend2_uid != 0 && $uid != $friend2_uid && is_object($icmsUser)){
-	$friendship_id = $profile_friendship_handler->getFriendshipIdPerUser($uid, $friend2_uid);
-	$clean_friendship_id = !empty($friendship_id[0]['friendship_id'])?$friendship_id[0]['friendship_id']:0;
-	if($GLOBALS['xoopsSecurity']->check() && $clean_friendship_id == 0){
-	$friendshipObj = $profile_friendship_handler->get($clean_friendship_id);
-		$friendshipObj->setVar('friend2_uid', $friend2_uid);
-		$profile_friendship_handler->insert($friendshipObj, false, true, $debug=true);
-	}
+$uid = is_object($icmsUser)?intval($icmsUser->getVar('uid')):0;
+if($friend2_uid > 0 && $uid > 0 && $uid != $friend2_uid){
+	addFriendshipRequest($uid, $friend2_uid);
 }
 
-if($friendship_level != 0 && is_object($icmsUser)){
-	$friendship_id = $profile_friendship_handler->getFriendshipIdPerUser($uid);
-	$clean_friendship_id = !empty($friendship_id[0]['friendship_id'])?$friendship_id[0]['friendship_id']:0;
-	if($GLOBALS['xoopsSecurity']->check() && $clean_friendship_id > 0){
-	$friendshipObj = $profile_friendship_handler->get($clean_friendship_id);
-		$friendshipObj->setVar('situation', $friendship_level);
-		$profile_friendship_handler->insert($friendshipObj, false, true, $debug=true);
-	}
+if($friendship_level != 0 && $uid > 0){
+	respontFriendshipRequest($uid, $friendship_level);
 }
 
+include_once 'footer.php';
 ?>

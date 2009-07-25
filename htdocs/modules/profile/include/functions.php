@@ -192,10 +192,31 @@ function getAllowedItems($item, $uid){
 	}
 
 	$profile_configs_handler = icms_getModuleHandler('configs');
-	$configs_id = $profile_configs_handler->getConfigIdPerUser($clean_uid);
+	$configs_id = $profile_configs_handler->getConfigIdPerUser($uid);
 	$clean_configs_id = !empty($configs_id[0]['configs_id'])?$configs_id[0]['configs_id']:0;
 	$configsObj = $profile_configs_handler->get($clean_configs_id);
 	$accessability = $profile_configs_handler->userCanAccessSection($configsObj, $item, $uid);
 	return $accessability;
 }
+
+function addFriendshipRequest($uid, $friend2_uid){
+	$friendship_id = $profile_friendship_handler->getFriendshipIdPerUser($uid, $friend2_uid);
+	$clean_friendship_id = !empty($friendship_id[0]['friendship_id'])?$friendship_id[0]['friendship_id']:0;
+	if($GLOBALS['xoopsSecurity']->check() && $clean_friendship_id == 0){
+	$friendshipObj = $profile_friendship_handler->get($clean_friendship_id);
+		$friendshipObj->setVar('friend2_uid', $friend2_uid);
+		$profile_friendship_handler->insert($friendshipObj, false, true, $debug=true);
+	}
+}
+
+function respontFriendshipRequest($uid, $friendship_level){
+	$friendship_id = $profile_friendship_handler->getFriendshipIdPerUser($uid);
+	$clean_friendship_id = !empty($friendship_id[0]['friendship_id'])?$friendship_id[0]['friendship_id']:0;
+	if($GLOBALS['xoopsSecurity']->check() && $clean_friendship_id > 0){
+	$friendshipObj = $profile_friendship_handler->get($clean_friendship_id);
+		$friendshipObj->setVar('situation', $friendship_level);
+		$profile_friendship_handler->insert($friendshipObj, false, true, $debug=true);
+	}
+}
+
 ?>
