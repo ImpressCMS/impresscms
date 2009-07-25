@@ -350,7 +350,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	function getConfigIdPerUser($uid){
 		$sql = 'SELECT configs_id FROM '.$this->table.' WHERE config_uid="'.$uid.'"';
 		$ret = $this->query($sql, false);
-		return $ret;
+		return $ret[0]['configs_id'];
 	}
 
 }

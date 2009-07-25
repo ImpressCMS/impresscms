@@ -181,6 +181,7 @@ function getAllowedItems($item, $uid){
 
 	if ($icmsModuleConfig['profile_social'] == false){
 		redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+		exit();
 	}
 	
 	$sql = sprintf('SELECT COUNT(*) FROM %s WHERE config_uid = %u', $xoopsDB->prefix('profile_configs'), intval($uid));
@@ -197,6 +198,18 @@ function getAllowedItems($item, $uid){
 	$configsObj = $profile_configs_handler->get($clean_configs_id);
 	$accessability = $profile_configs_handler->userCanAccessSection($configsObj, $item, $uid);
 	return $accessability;
+}
+
+function getFriendship($uid1, $uid2){
+	global $xoopsDB;
+	$count = 0;
+	$sql = sprintf('SELECT COUNT(*) FROM %s WHERE ((friend1_uid = %u AND friend2_uid = %u) OR (friend2_uid = %u AND friend1_uid = %u))', $xoopsDB->prefix('profile_friendship'), intval($uid1), intval($uid2), intval($uid1), intval($uid2));
+	$result = $xoopsDB->query($sql);
+	list($count) = $xoopsDB->fetchRow($result);
+	if ( $count > 0 ) {
+		return true;
+	}
+	return false;
 }
 
 function addFriendshipRequest($uid, $friend2_uid){

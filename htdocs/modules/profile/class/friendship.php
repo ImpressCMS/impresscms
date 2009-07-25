@@ -37,7 +37,11 @@ class ProfileFriendship extends IcmsPersistableObject {
 		$this->quickInitVar('friendship_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('friend1_uid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('friend2_uid', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('creation_time', XOBJ_DTYPE_LTIME, false);
 		$this->quickInitVar('situation', XOBJ_DTYPE_INT, true, false, false, PROFILE_FRIENDSHIP_STATUS_PENDING);
+		$this->setControl('friend1_uid', 'user');
+		$this->hideFieldFromForm('friend2_uid');
+		$this->hideFieldFromForm('creation_time');
 		$this->setControl('situation', array (
 			'itemHandler' => 'friendship',
 			'method' => 'getFriendship_statusArray',
@@ -59,6 +63,22 @@ class ProfileFriendship extends IcmsPersistableObject {
 		}
 		return parent :: getVar($key, $format);
 	}
+	/**
+	 * Check to see wether the current user can edit or delete this picture
+	 *
+	 * @return bool true if he can, false if not
+	 */
+	function userCanEditAndDelete() {
+		global $icmsUser, $profile_isAdmin;
+		if (!is_object($icmsUser)) {
+			return false;
+		}
+		if($this->getVar('friend2_uid', 'e') == $icmsUser->uid()){
+			return true;
+		}
+		return false;
+	}
+
 }
 class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 
@@ -75,11 +95,51 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
+	 * Create the criteria that will be used by getFriendship and getFriendshipCount
+	 *
+	 * @param int $start to which record to start
+	 * @param int $limit limit of friendships to return
+	 * @param int $friend1_uid if specifid, only the friendship of this user will be returned
+	 * @return CriteriaCompo $criteria
+	 */
+	function getFriendshipCriteria($start = 0, $limit = 0, $friend1_uid) {
+		global $icmsUser;
+
+		$criteria = new CriteriaCompo();
+		if ($start) {
+			$criteria->setStart($start);
+		}
+		if ($limit) {
+			$criteria->setLimit(intval($limit));
+		}
+		$criteria->setSort('creation_time');
+		$criteria->setOrder('DESC');
+		$criteria->add(new Criteria('friend1_uid', $friend1_uid), 'OR');
+		$criteria->add(new Criteria('friend2_uid', $friend1_uid));
+		return $criteria;
+	}
+
+	/**
+	 * Get friendships as array, ordered by creation_time DESC
+	 *
+	 * @param int $start to which record to start
+	 * @param int $limit max friendships to display
+	 * @param int $friend1_uid only the friendship of this user will be returned
+	 * @param int $friend2_uid if specifid, the friendship of these two users will be returned.
+	 * @return array of friendships
+	 */
+	function getFriendship($start = 0, $limit = 0, $friend1_uid) {
+		$criteria = $this->getFriendshipCriteria($start, $limit, $friend1_uid);
+		$ret = $this->getObjects($criteria, true, false);
+		return $ret;
+	}
+
+	/**
 	 * Retreive the possible status of a friendship object
 	 *
 	 * @return array of status
 	 */
-	function getConfig_statusArray() {
+	function getFriendship_statusArray() {
 		if (!$this->_friendship_statusArray) {
 			$this->_friendship_statusArray[PROFILE_FRIENDSHIP_STATUS_PENDING] = _CO_PROFILE_FRIENDSHIP_STATUS_PENDING;
 			$this->_friendship_statusArray[PROFILE_FRIENDSHIP_STATUS_ACQUAINTANCE] = _CO_PROFILE_FRIENDSHIP_STATUS_ACQUAINTANCE;
@@ -90,6 +150,19 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 	
 	}
 	
+	/**
+	 * Check wether the current user can submit a new picture or not
+	 *
+	 * @return bool true if he can false if not
+	 */
+	function userCanSubmit() {
+		global $icmsUser;
+		if (!is_object($icmsUser)) {
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	* Get the averages of each evaluation hot trusty etc...
 	* 
@@ -146,15 +219,30 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 	 *
 	 * @return array of amounts
 	 */
-	function getFriendshipIdPerUser($uid1, $uid2=false){
+	function getFriendshipIdPerUser($uid1, $uid2){
 		$sql = 'SELECT friendship_id FROM '.$this->table.' WHERE ';
-		if($uid2){
-			$sql .= '((friend1_uid="'.$uid1.'" AND friend2_uid="'.$uid2.'") OR (friend1_uid="'.$uid2.'" AND friend2_uid="'.$uid1.'"))';
-		}else{
-			$sql .= '(friend1_uid="'.$uid1.'" OR friend2_uid="'.$uid1.'")';
-		}
+		$sql .= '((friend1_uid="'.$uid1.'" AND friend2_uid="'.$uid2.'") OR (friend1_uid="'.$uid2.'" AND friend2_uid="'.$uid1.'"))';
 		$ret = $this->query($sql, false);
-		return $ret;
+		return $ret[0]['friendship_id'];
+	}
+
+
+	/**
+	 * Retreive the friendship_id of users
+	 *
+	 * @return array of amounts
+	 */
+	function getFriendshipIdsWaiting($uid){
+		$array = array();
+		$sql = 'SELECT friendship_id FROM '.$this->table.' WHERE ';
+		$sql .= '(friend2_uid="'.$uid.'" AND situation = 1)';
+		$ret = $this->query($sql, false);
+		if(count($ret)>0){
+			for ($i = 0; $i < count($ret); $i++) {
+			$array[] = $ret[$i]['friendship_id'];
+			}
+		}
+		return $array;
 	}
 
 }

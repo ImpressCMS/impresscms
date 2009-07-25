@@ -108,8 +108,7 @@ if (in_array($clean_op,$valid_op,true)){
 			$configsObj = $profile_configs_handler->get($clean_configs_id);
 			editconfigs($configsObj);
 		}elseif($profile_isAdmin && $clean_uid > 0){
-			$configs_id = $profile_configs_handler->getConfigIdPerUser($clean_uid);
-			$clean_configs_id = !empty($configs_id[0]['configs_id'])?$configs_id[0]['configs_id']:0;
+			$clean_configs_id = $profile_configs_handler->getConfigIdPerUser($clean_uid);
 			$configsObj = $profile_configs_handler->get($clean_configs_id);
 			editconfigs($configsObj, true, $clean_uid );
 		}else{
