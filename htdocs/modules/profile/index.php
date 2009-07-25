@@ -26,7 +26,7 @@ function editfriendship($friendshipObj, $uid=false, $hideForm=false)
 	global $profile_friendship_handler, $xoTheme, $icmsTpl, $icmsUser;
 
 	$icmsTpl->assign('hideForm', $hideForm);
-	$friend = ($icmsUser->uid()==$friendshipObj->getVar('friend1_uid'))?$friendshipObj->getVar('friend1_uid'):$friendshipObj->getVar('friend2_uid');
+	$friend = ($icmsUser->uid()==$friendshipObj->getVar('friend2_uid'))?$friendshipObj->getVar('friend1_uid'):$friendshipObj->getVar('friend2_uid');
 	if (!$friendshipObj->isNew()){
 		if ($friendshipObj->userCanEditAndDelete()) {
 			$friendshipObj->hideFieldFromForm(array('creation_time', 'friend2_uid', 'friend1_uid'));

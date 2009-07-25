@@ -233,6 +233,10 @@ $modversion['templates'][] = array(
   'description' => '');
 
 $modversion['templates'][] = array(
+  'file' => 'profile_friendship.html',
+  'description' => '');
+
+$modversion['templates'][] = array(
   'file' => 'profile_notifications.html',
   'description' => '');
 

@@ -69,7 +69,7 @@ global $icmsUser, $profile_isAdmin;
 $real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
 $clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
 $configs_id = $profile_configs_handler->getConfigIdPerUser($clean_uid);
-$clean_configs_id = !empty($configs_id[0]['configs_id'])?$configs_id[0]['configs_id']:0;
+$clean_configs_id = !empty($configs_id)?$configs_id:0;
 $configsObj = $profile_configs_handler->get($clean_configs_id);
 
 /** Create a whitelist of valid values, be sure to use appropriate types for each value

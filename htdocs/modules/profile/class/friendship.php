@@ -63,8 +63,25 @@ class ProfileFriendship extends IcmsPersistableObject {
 		}
 		return parent :: getVar($key, $format);
 	}
+	
+	function getFriend() {
+		global $icmsUser;
+		$uid = isset($_REQUEST['uid'])?intval($_REQUEST['uid']):$icmsUser->uid();
+		$friend = ($uid==$friendshipObj->getVar('friend2_uid'))?$friendshipObj->getVar('friend1_uid'):$friendshipObj->getVar('friend2_uid');
+		return icms_getLinkedUnameFromId($friend);
+	}
+
+	function getAvatar() {
+		global $icmsUser;
+		$uid = isset($_REQUEST['uid'])?intval($_REQUEST['uid']):$icmsUser->uid();
+		$friend = ($uid==$friendshipObj->getVar('friend2_uid'))?$friendshipObj->getVar('friend1_uid'):$friendshipObj->getVar('friend2_uid');
+		$member_handler =& xoops_gethandler('member');
+		$processUser =& $member_handler->getUser($friend);
+		return $processUser->gravatar();
+	}
+
 	/**
-	 * Check to see wether the current user can edit or delete this picture
+	 * Check to see wether the current user can edit or delete this friendship
 	 *
 	 * @return bool true if he can, false if not
 	 */
@@ -79,6 +96,23 @@ class ProfileFriendship extends IcmsPersistableObject {
 		return false;
 	}
 
+	/**
+	 * Overridding IcmsPersistable::toArray() method to add a few info
+	 *
+	 * @return array of friendship info
+	 */
+	function toArray() {
+		$ret = parent :: toArray();
+		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
+		$ret['friendship_avatar'] = $this->getAvatar();
+		$ret['friendship_content'] = $this->getFriend();
+		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
+		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
+		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
+		$ret['friendship_senderid'] = $this->getVar('uid_owner','e');
+		$ret['friendship_sender_link'] = $this->getPictureSender();
+		return $ret;
+	}
 }
 class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 
@@ -151,7 +185,7 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 	}
 	
 	/**
-	 * Check wether the current user can submit a new picture or not
+	 * Check wether the current user can submit a new friendship or not
 	 *
 	 * @return bool true if he can false if not
 	 */
