@@ -13,6 +13,7 @@
  */
 
 include_once '../../mainfile.php';
+global $icmsUser;
 $friendship_level = isset($_POST['level'])?intval($_POST['level']):0;
 $friend2_uid = isset($_POST['friend2_uid'])?intval($_POST['friend2_uid']):0;
 $profile_friendship_handler = icms_getModuleHandler('friendship');

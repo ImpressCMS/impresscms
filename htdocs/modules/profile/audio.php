@@ -58,8 +58,8 @@ if (isset($_POST['op'])) $clean_op = $_POST['op'];
 /** Again, use a naming convention that indicates the source of the content of the variable */
 global $icmsUser;
 $clean_audio_id = isset($_GET['audio_id']) ? intval($_GET['audio_id']) : 0 ;
-$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0 ;
 $real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
+$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
 $audioObj = $profile_audio_handler->get($clean_audio_id);
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition
@@ -67,7 +67,7 @@ $audioObj = $profile_audio_handler->get($clean_audio_id);
 $valid_op = array ('mod','addaudio','del','');
 
 $isAllowed = getAllowedItems('audio', $clean_uid);
-if (!$isAllowed['audio'] || $icmsModuleConfig['profile_social'] == false) {
+if (!$isAllowed) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
 

@@ -170,19 +170,32 @@ function checkPassword($uname, $oldpass, $newpass, $vpass) {
 	return $stop;
 }
 
-function getAllowedItems($items, $uid){
+function getAllowedItems($item, $uid){
+	global $xoopsDB, $icmsUser, $profile_isAdmin, $icmsModuleConfig;
 	$array = array();
-	$profile_configs_handler = icms_getModuleHandler('configs');
-	if(is_array($items)){
-		foreach($items as $item){
-			$accessability = $profile_configs_handler->userCanAccessSection($item, $uid);
-			$array = array_merge($array, array($item => $accessability));
-		}
-	}else{
-		$accessability = $profile_configs_handler->userCanAccessSection($items, $uid);
-		$array = array_merge($array, array($items => $accessability));
+	$count = 0;
+	
+	if ($profile_isAdmin) {
+		return true;
+	}
+
+	if ($icmsModuleConfig['profile_social'] == false){
+		redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 	}
 	
-	return $array;
+	$sql = sprintf('SELECT COUNT(*) FROM %s WHERE config_uid = %u', $xoopsDB->prefix('profile_configs'), intval($uid));
+	$result = $xoopsDB->query($sql);
+	list($count) = $xoopsDB->fetchRow($result);
+	if ( $count <= 0 ) {
+		redirect_header(PROFILE_URL.'configs.php', 3, _MAKECONFIGSFIRST);
+		exit();
+	}
+
+	$profile_configs_handler = icms_getModuleHandler('configs');
+	$configs_id = $profile_configs_handler->getConfigIdPerUser($clean_uid);
+	$clean_configs_id = !empty($configs_id[0]['configs_id'])?$configs_id[0]['configs_id']:0;
+	$configsObj = $profile_configs_handler->get($clean_configs_id);
+	$accessability = $profile_configs_handler->userCanAccessSection($configsObj, $item, $uid);
+	return $accessability;
 }
 ?>

@@ -62,10 +62,10 @@ if (isset($_GET['op'])) $clean_op = $_GET['op'];
 if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
-global $icmsUser, $icmsModuleConfig;
+global $icmsUser;
 $clean_pictures_id = isset($_GET['pictures_id']) ? intval($_GET['pictures_id']) : 0 ;
-$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0 ;
 $real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
+$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
 $picturesObj = $profile_pictures_handler->get($clean_pictures_id);
 
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
@@ -74,7 +74,9 @@ $picturesObj = $profile_pictures_handler->get($clean_pictures_id);
 $valid_op = array ('mod','addpictures','del','');
 
 $isAllowed = getAllowedItems('pictures', $clean_uid);
-if (!$isAllowed['pictures'] || $icmsModuleConfig['profile_social'] == false) {
+print_r($isAllowed);
+print_r($isAllowed['pictures']);
+if (!$isAllowed['pictures']) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
 

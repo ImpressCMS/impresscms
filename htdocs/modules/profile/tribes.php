@@ -62,10 +62,10 @@ if (isset($_GET['op'])) $clean_op = $_GET['op'];
 if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
-global $icmsUser, $icmsModuleConfig;
+global $icmsUser;
 $clean_tribes_id = isset($_GET['tribes_id']) ? intval($_GET['tribes_id']) : 0 ;
-$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0 ;
 $real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
+$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
 $tribesObj = $profile_tribes_handler->get($clean_tribes_id);
 
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
@@ -77,7 +77,7 @@ $valid_op = array ('mod','addtribes','del','');
  */
 
 $isAllowed = getAllowedItems('tribes', $clean_uid);
-if (!$isAllowed['tribes'] || $icmsModuleConfig['profile_social'] == false) {
+if (!$isAllowed) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
 

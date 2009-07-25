@@ -262,11 +262,9 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 *
 	 * @return bool true if he can false if not
 	 */
-	function userCanAccessSection($item, $uid=false) {
+	function userCanAccessSection(& $obj, $item, $uid=false) {
 		global $icmsUser, $profile_isAdmin;
-		$sql = 'SELECT '.$item.' FROM '.$this->table.' WHERE config_uid="'.$uid.'"';
-		$result = $this->query($sql, false);
-		$status = is_object($icmsUser)?$result:$result[0][$item];
+		$status = $obj->getVar($item, 'e');
 		if ($profile_isAdmin) {
 			return true;
 		}
@@ -283,9 +281,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 				return false;
 		}
 		if ($status == PROFILE_CONFIG_STATUS_PRIVATE) {
-			$sql = 'SELECT '.$item.' FROM '.$this->table.' WHERE config_uid="'.$uid.'"';
-			$result = $this->query($sql, false);
-			return $result == $icmsUser->uid();
+			return $uid == $icmsUser->uid();
 		}
 	}
 
