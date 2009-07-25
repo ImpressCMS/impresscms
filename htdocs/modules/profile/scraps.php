@@ -71,6 +71,7 @@ $isAllowed = getAllowedItems('scraps', $clean_uid);
 if (!$isAllowed) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
+$xoopsTpl->assign('uid_owner',$uid);
 
 /**
  * Only proceed if the supplied operation is a valid operation

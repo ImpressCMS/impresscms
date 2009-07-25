@@ -2,14 +2,14 @@
 /**
  * Extended User Profile
  *
- * @copyright       The ImpressCMS Project http://www.impresscms.org/
- * @license         LICENSE.txt
+ * @copyright	   The ImpressCMS Project http://www.impresscms.org/
+ * @license		 LICENSE.txt
  * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package         modules
- * @since           1.3
- * @author          Marcello Brandao <marcello.brandao@gmail.com>
+ * @package		 modules
+ * @since		   1.3
+ * @author		  Marcello Brandao <marcello.brandao@gmail.com>
  * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version         $Id: $
+ * @version		 $Id: $
  */
 
 include_once "../../mainfile.php";
@@ -38,35 +38,39 @@ icms_makeSmarty(array(
 	'profile_image','<img src="'.ICMS_URL.'/modules/'.$dirname.'/assets/images/profile-start.gif" alt="'.$module_name.'"/>',
 	'profile_content',_MI_PROFILE_MODULEDESC,
 	'module_is_socialmode', $icmsModuleConfig['profile_social']));
-icms_makeSmarty(array(
-	'lang_mysection' => _MD_PROFILE_MYPROFILE,
-	'lang_home' => _MD_PROFILE_HOME,
-	'lang_exprofile' => _MD_EXTENDED_PROFILE,
-	'lang_photos' => _MD_PROFILE_PHOTOS,
-	'lang_friends' => _MD_PROFILE_FRIENDS,
-	'lang_audio' => _MD_PROFILE_AUDIOS,
-	'lang_videos' => _MD_PROFILE_VIDEOS,
-	'lang_scrapbook' => _MD_PROFILE_SCRAPBOOK,
-	'lang_profile' => _MD_PROFILE_PROFILE,
-	'lang_tribes' => _MD_PROFILE_TRIBES,
-	'lang_configs' => _MD_PROFILE_CONFIGSTITLE,
-	'uid_owner' => $isOwner,
-	'owner_uname' => $owner_uname,
-/*	'allow_scraps' => $controler->checkPrivilegeBySection('scraps'),
-	'allow_friends' => $controler->checkPrivilegeBySection('friends'),
-	'allow_tribes' => $controler->checkPrivilegeBySection('tribes'),
-	'allow_pictures' => $controler->checkPrivilegeBySection('pictures'),
-	'allow_videos' => $controler->checkPrivilegeBySection('videos'),
-	'allow_audios' => $controler->checkPrivilegeBySection('audio'),
-	'nb_tribes' => $nrSections['nbTribes'],
-	'nb_photos' => $nrSections['nbPhotos'],
-	'nb_videos' => $nrSections['nbVideos'],
-	'nb_scraps' => $nrSections['nbScraps'],
-	'nb_friends' => $nrSections['nbFriends'],
-	'nb_audio' => $nrSections['nbAudio']*/));
+
+if($icmsModuleConfig['profile_social']){
+	$profile_configs_handler = icms_getModuleHandler('configs');
+	$nbSections = $profile_configs_handler->geteachSectioncounts($uid);
+	$permissions = array();
+	$items = array('audio', 'pictures', 'friendship', 'scraps', 'videos', 'tribes', 'profile_contact', 'profile_stats', 'profile_general');
+	foreach($items as $item){
+		$permissions = array_merge($permissions, array($item => getAllowedItems($item, $uid)));
+	}
+	foreach($permissions as $permission => $value){
+		$xoopsTpl->assign('allow_'.$permission, $value);
+	}
+	foreach($nbSections as $nbSection => $value){
+		$xoopsTpl->assign('nb_'.$nbSection, $value);
+	}
+	icms_makeSmarty(array(
+		'lang_mysection' => _MD_PROFILE_MYPROFILE,
+		'lang_home' => _MD_PROFILE_HOME,
+		'lang_exprofile' => _MD_EXTENDED_PROFILE,
+		'lang_photos' => _MD_PROFILE_PHOTOS,
+		'lang_friends' => _MD_PROFILE_FRIENDS,
+		'lang_audio' => _MD_PROFILE_AUDIOS,
+		'lang_videos' => _MD_PROFILE_VIDEOS,
+		'lang_scrapbook' => _MD_PROFILE_SCRAPBOOK,
+		'lang_profile' => _MD_PROFILE_PROFILE,
+		'lang_tribes' => _MD_PROFILE_TRIBES,
+		'lang_configs' => _MD_PROFILE_CONFIGSTITLE,
+		'uid_owner' => $isOwner,
+		'owner_uname' => $owner_uname));
+}
 if ($isAnonym == true && $uid == 0) {
-  include_once(ICMS_ROOT_PATH.'/modules/'.$dirname.'/footer.php');
-  exit();
+	include_once(ICMS_ROOT_PATH.'/modules/'.$dirname.'/footer.php');
+	exit();
 }
 //Token
 $icmsTpl->assign('token',$GLOBALS['xoopsSecurity']->getTokenHTML());

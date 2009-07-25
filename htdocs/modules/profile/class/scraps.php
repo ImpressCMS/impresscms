@@ -72,6 +72,10 @@ class ProfileScraps extends IcmsPersistableSeoObject {
 	function getScrapReceiver() {
 		return icms_getLinkedUnameFromId($this->getVar('scrap_to', 'e'));
 	}
+	function getScrapText() {
+		$ret = $this->getVar('scrap_text', 'e');
+		return $ret;
+	}
 
 	function getScrapShortenText() {
 		$ret = '<a href="' . ICMS_URL . '/modules/profile/scraps.php?scraps_id=' . $this->id () . '">'.icms_wordwrap($this->getVar('scrap_text', 'e'), 300, true).'</a>';
@@ -115,7 +119,6 @@ class ProfileScraps extends IcmsPersistableSeoObject {
 	function toArray() {
 		$ret = parent :: toArray();
 		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
-		$ret['scrap_content'] = $this->getVar('scrap_text','e');
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
@@ -123,6 +126,7 @@ class ProfileScraps extends IcmsPersistableSeoObject {
 		$ret['scrap_senderid'] = $this->getVar('scrap_from','e');
 		$ret['scrap_receiverid'] = $this->getVar('scrap_to','e');
 		$ret['scrap_sender_link'] = $this->getScrapSender();
+		$ret['scrap_content'] = $this->getScrapText();
 		$ret['scrap_receiver_link'] = $this->getScrapReceiver();
 		return $ret;
 	}

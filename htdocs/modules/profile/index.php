@@ -34,15 +34,7 @@ if($icmsModuleConfig['profile_social']==0){
 	header('Location: '.ICMS_URL.'/modules/'.$modname.'/userinfo.php?uid='.$uid);
 	exit();
 }
-$profile_configs_handler = icms_getModuleHandler('configs');
-$nbSections = $profile_configs_handler->geteachSectioncounts($uid);
-$permissions = getAllowedItems(array('audio', 'pictures', 'friendship', 'scraps', 'videos', 'tribes', 'profile_contact', 'profile_stats', 'profile_general'), $uid);
-foreach($permissions as $permission => $value){
-    $xoopsTpl->assign('allow_'.$permission, $value);
-}
-foreach($nbSections as $nbSection => $value){
-    $xoopsTpl->assign('nb_'.$nbSection, $value);
-}
+$xoopsTpl->assign('uid_owner',$uid);
 $xoopsTpl->assign('lang_mysection',_MD_PROFILE_MYPROFILE);
 $xoopsTpl->assign('section_name',_MD_PROFILE_PROFILE);
 $member_handler =& xoops_gethandler('member');

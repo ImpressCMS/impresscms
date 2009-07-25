@@ -81,6 +81,7 @@ if (!$isAllowed) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
 
+$xoopsTpl->assign('uid_owner',$uid);
 
 if (in_array($clean_op,$valid_op,true)){
   switch ($clean_op) {

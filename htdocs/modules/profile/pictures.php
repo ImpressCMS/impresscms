@@ -74,11 +74,10 @@ $picturesObj = $profile_pictures_handler->get($clean_pictures_id);
 $valid_op = array ('mod','addpictures','del','');
 
 $isAllowed = getAllowedItems('pictures', $clean_uid);
-print_r($isAllowed);
-print_r($isAllowed['pictures']);
-if (!$isAllowed['pictures']) {
+if (!$isAllowed) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
+$xoopsTpl->assign('uid_owner',$uid);
 
 /**
  * Only proceed if the supplied operation is a valid operation

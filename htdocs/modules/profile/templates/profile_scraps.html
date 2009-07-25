@@ -1,3 +1,4 @@
+<{include file="db:profile_navbar.html"}>
 <{if $profile_scrapsform}>
 	<{if $hideForm}>
 		<div id="profile-album-form" class="outer">
@@ -32,10 +33,10 @@
 	<{foreach item=profile_each_scrap from=$profile_allscraps}>
 		<{if $profile_each_scrap.userCanView}>
 			<div class="profile_each_scrap_container">
-				<h1 class="post-title"><{$profile_each_scrap.scrap_receiver_link}></h1>
+				<h1 class="post-title"><{$profile_each_scrap.scrap_sender_link}></h1>
 			</div>
 			<div class="profile_single_scrap_content">
-				<{$profile_single_scrap.scrap_text}>
+				<{$profile_each_scrap.scrap_content}>
 			</div>
 			<{if $profile_each_scrap.userCanEditAndDelete}>
 					<div class="profile_admin_links"><{$profile_each_scrap.editItemLink}><{$profile_each_scrap.deleteItemLink}></div>
