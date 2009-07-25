@@ -191,8 +191,23 @@ class IcmsModuleAbout
 	        fclose($handle);
 	    }
 		
+	    $filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/changelog.txt';
+	    if(is_file($filename)){
+
+	        $filesize = filesize($filename);
+	        $handle = fopen($filename, 'r');
+	        $this->_tpl->assign('module_version_history', $myts->displayTarea(fread($handle, $filesize), true));
+	        fclose($handle);
+	    }
+		
 		// For license thanks to 3Dev
-		if ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt' ) ) {
+		if ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt' ) ) {
+			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt';
+		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt' ) ) {
+			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt';
+		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt' ) ) {
+			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
+		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt' ) ) {
 			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt';
 		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt' ) ) {
 			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
