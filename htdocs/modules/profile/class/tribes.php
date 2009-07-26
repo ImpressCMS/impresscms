@@ -71,7 +71,6 @@ class ProfileTribes extends IcmsPersistableSeoObject {
         </a>';
 		return $ret;
 	}
-	
 
 	function getTribeShortenDesc() {
 		$ret = '<a href="' . ICMS_URL . '/modules/profile/tribes.php?tribes_id=' . $this->id () . '">'.icms_wordwrap($this->getVar('tribe_desc', 'e'), 300, true).'</a>';
@@ -106,7 +105,7 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 		$ret = parent :: toArray();
 		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
 		$ret['tribe_title'] = $this->getVar('title','e');
-		$ret['tribe_content'] = $this->getVar('tribe_desc','e');
+		$ret['tribe_content'] = $this->getTribeShortenDesc();
 		$ret['tribe_picture'] = $this->getProfileTribe();
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
@@ -150,8 +149,6 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 		$criteria->setSort('creation_time');
 		$criteria->setOrder('DESC');
 
-		$criteria->add(new Criteria('private', 0));
-		
 		if ($uid_owner) {
 			$criteria->add(new Criteria('uid_owner', $uid_owner));
 		}

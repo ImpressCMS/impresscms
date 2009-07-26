@@ -30,7 +30,6 @@ class ProfileVisitors extends IcmsPersistableObject {
 		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('visitors_id', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('visit_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('uid_owner', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('uid_visitor', XOBJ_DTYPE_INT, true);
 

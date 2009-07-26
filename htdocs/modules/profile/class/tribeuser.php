@@ -30,9 +30,10 @@ class ProfileTribeuser extends IcmsPersistableObject {
 		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('tribeuser_id', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('tb_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('tribe_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('user_id', XOBJ_DTYPE_INT, true);
+		$this->hideFieldFromForm('tribe_id');
+		$this->hideFieldFromForm('user_id');
 
 	}
 
@@ -57,7 +58,7 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	 * Constructor
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'tribeuser', 'tribeuser_id', '', '', 'profile');
+		$this->IcmsPersistableObjectHandler($db, 'tribeuser', 'tribeuser_id', 'tribe_id', '', 'profile');
 	}
 }
 ?>

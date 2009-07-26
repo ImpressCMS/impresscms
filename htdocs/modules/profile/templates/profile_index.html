@@ -15,10 +15,6 @@
 		<{includeq file='db:system_common_form.html' form=$profile_friendshipform}>
 	<{/if}>
 <{/if}>
-
-
-
-
 <div class="profile-profile-group1">
 <{ if $allow_pictures || $allow_videos }>
 <div id="profile-profile-visual" class="outer">
@@ -126,7 +122,7 @@
 
 
 
-<{ if $allow_profile_general==1}>
+<{ if $allow_profile_general}>
 <div id="profile-profile-details" class="outer">
 <h2 class="profile-profile-title head"><{$lang_detailsinfo}> <{ if $isOwner==1 }> <a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" /></a> <{/if}></h2>
 <p class="odd"><img src="images/username.gif" /><span class="profile-profileinfo-label"><{$lang_uname}>:</span><span class="profile-profileinfo-value"><{$user_uname}></span></p>
@@ -138,7 +134,7 @@
 <p  class="profile-profileinfo-valuebigtext odd"><{$user_extrainfo}></p>
 </div>
 <{ /if }>
-<{ if $allow_profile_contact==1}>
+<{ if $allow_profile_contact}>
 <div id="profile-profile-details" class="outer">
 <h2 class="profile-profile-title head"><{$lang_contactinfo}> <{ if $isOwner==1 }> <a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" /></a> <{/if}></h2>
 <p class="even"> <img src="images/url.gif" /> <span class="profile-profileinfo-label"><{$lang_website}>:</span><span class="profile-profileinfo-value"><{$user_websiteurl}></span></p>

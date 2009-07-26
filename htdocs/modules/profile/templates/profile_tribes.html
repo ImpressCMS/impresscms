@@ -29,8 +29,6 @@
 	<{/if}>
 	</div>
 <{/if}>
-
-<{if $profile_alltribes}>
 	<{foreach item=profile_each_tribe from=$profile_alltribes}>
 		<div class="profile_each_tribe_container">
 			<h1 class="post-title"><{$profile_each_tribe.title}></h1>
@@ -41,13 +39,12 @@
        				<img class="thumb" src="<{$icms_url}>/uploads/profile/tribes/thumb_<{$profile_each_tribe.tribe_img}>" rel="lightbox" title="<{$profile_each_tribe.title}>" />
 				</a>
 			</div>
-			<{$profile_single_tribe.tribe_content}>
+			<{$profile_each_tribe.tribe_content}>
 		</div>
 		<{if $profile_each_tribe.userCanEditAndDelete}>
 				<div class="profile_admin_links"><{$profile_each_tribe.editItemLink}><{$profile_each_tribe.deleteItemLink}></div>
 		<{/if}>
 	<{/foreach}>
-<{/if}>
 <{if $icmspersistable_delete_confirm}>
 	<{$icmspersistable_delete_confirm}>
 <{/if}>
