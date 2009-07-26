@@ -24,6 +24,15 @@
 		</div>
 		<{$profile_single_tribe.tribe_content}>
 	</div>
+		<div class="profile_single_tribe_members">
+		count = (<{$profile_single_tribe.tribe_members_count}>)
+			<{foreach item=profile_single_tribeuser from=$profile_single_tribe.tribe_members_link}>
+				<div class="profile_single_tribe_user_avatar">
+   					<{$profile_single_tribeuser.tribeuser_avatar}><br />
+					<{$profile_single_tribeuser.tribeuser_sender_link}>
+				</div>
+			<{/foreach}>
+		</div>
 	<{if $profile_single_tribe.userCanEditAndDelete}>
 		<div class="profile_admin_links"><{$profile_single_tribe.editItemLink}><{$profile_single_tribe.deleteItemLink}></div>
 	<{/if}>
@@ -40,6 +49,16 @@
 				</a>
 			</div>
 			<{$profile_each_tribe.tribe_content}>
+		</div>
+		<div class="profile_each_tribe_members">
+		count = (<{$profile_each_tribe.tribe_members_count}>)
+			<{foreach item=profile_each_tribeuser from=$profile_each_tribe.tribe_members_link}>
+				<div class="profile_single_tribe_user_avatar">
+					<a href="<{$profile_each_tribeuser.tribeuser_sender_link}>">
+       					<{$profile_each_tribeuser.tribeuser_avatar}>
+					</a>
+				</div>
+			<{/foreach}>
 		</div>
 		<{if $profile_each_tribe.userCanEditAndDelete}>
 				<div class="profile_admin_links"><{$profile_each_tribe.editItemLink}><{$profile_each_tribe.deleteItemLink}></div>

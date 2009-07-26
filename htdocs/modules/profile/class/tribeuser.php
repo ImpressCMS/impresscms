@@ -86,8 +86,6 @@ class ProfileTribeuser extends IcmsPersistableObject {
 	 */
 	function toArray() {
 		$ret = parent :: toArray();
-		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
-		$ret['tribeuser_title'] = $this->getVar('title','e');
 		$ret['tribeuser_avatar'] = $this->getProfileTribeuser();
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
@@ -115,7 +113,7 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	 * @param int $tribeuser_id ID of a single tribeuser to retrieve
 	 * @return CriteriaCompo $criteria
 	 */
-	function getTribeusersCriteria($start = 0, $limit = 0, $user_id = false, $tribeuser_id = false, $tribe_id = false) {
+	function getTribeusersCriteria($start = 0, $limit = 0, $user_id = false, $tribeuser_id = false, $tribe_id = false, $condition = '=') {
 		global $icmsUser;
 
 		$criteria = new CriteriaCompo();
@@ -127,9 +125,9 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 		}
 
 		if ($user_id) {
-			$criteria->add(new Criteria('user_id', $user_id));
+			$criteria->add(new Criteria('user_id', $user_id, $condition));
 		}
-		if ($tribeuser_id) {
+		if ($tribe_id) {
 			$criteria->add(new Criteria('tribe_id', $tribe_id));
 		}
 		if ($tribeuser_id) {
@@ -144,9 +142,9 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	 * @param int $tribeusers_id
 	 * @return object ProfileTribeuser object
 	 */
-	function getTribeuser($tribeusers_id=false, $user_id=false, $tribe_id = false) {
-		$ret = $this->getTribeusers(0, 0, $user_id, $tribeusers_id, $tribe_id);
-		return isset($ret[$user_id]) ? $ret[$user_id] : false;
+	function getTribeuser($tribe_id, $uid = false, $condition = '!=') {
+		$ret = $this->getTribeusers(0, 0, $uid, false, $tribe_id, $condition);
+		return $ret;
 	}
 
 	/**
@@ -158,8 +156,8 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	 * @param int $tribeusers_id ID of a single tribeuser to retrieve
 	 * @return array of tribeusers
 	 */
-	function getTribeusers($start = 0, $limit = 0, $user_id = false, $tribeusers_id = false, $tribe_id = false) {
-		$criteria = $this->getTribeusersCriteria($start, $limit, $user_id, $tribeusers_id, $tribe_id);
+	function getTribeusers($start = 0, $limit = 0, $user_id = false, $tribeusers_id = false, $tribe_id = false, $condition = '=') {
+		$criteria = $this->getTribeusersCriteria($start, $limit, $user_id, $tribeusers_id, $tribe_id, $condition);
 		$ret = $this->getObjects($criteria, true, false);
 		return $ret;
 	}
@@ -209,7 +207,7 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	function getTribeuserCounts($tribe_id){
 		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->table.' WHERE tribe_id="'.$tribe_id.'"';
 		$tribe_id = $this->query($sql, false);
-		return $tribe_id[0]['amount'];
+		return ($tribe_id[0]['amount'] + 1);
 	}
 
 }

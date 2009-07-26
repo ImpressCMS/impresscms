@@ -77,6 +77,13 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 		return $ret;
 	}
 
+	function getProfileTribeSenderAvatar() {
+		global $icmsUser;
+		$friend = $this->getVar('uid_owner', 'e');
+		$member_handler =& xoops_gethandler('member');
+		$processUser =& $member_handler->getUser($friend);
+		return '<img src="'.$processUser->gravatar().'" />';
+	}
 	function getTribeSender() {
 		return icms_getLinkedUnameFromId($this->getVar('uid_owner', 'e'));
 	}
@@ -103,18 +110,21 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 	 */
 	function toArray() {
 		$profile_tribeuser_handler = icms_getModuleHandler('tribeuser');
+		$tribe_members_count = $profile_tribeuser_handler->getTribeuserCounts($this->getVar('tribes_id', 'e'));
+		$tribe_members_link = $profile_tribeuser_handler->getTribeuser($this->getVar('tribes_id', 'e'), $this->getVar('uid_owner', 'e'));
 		$ret = parent :: toArray();
 		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
 		$ret['tribe_title'] = $this->getVar('title','e');
 		$ret['tribe_content'] = $this->getTribeShortenDesc();
 		$ret['tribe_picture'] = $this->getProfileTribe();
-		$ret['tribe_members_count'] = $profile_tribeuser_handler->getTribeuserCounts($this->id ());
-		$ret['tribe_members_link'] = $profile_tribeuser_handler-> getTribeusers(false, false, $this->id ());
+		$ret['tribe_members_count'] = $tribe_members_count;
+		$ret['tribe_members_link'] = $tribe_members_link;
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['tribe_senderid'] = $this->getVar('uid_owner','e');
 		$ret['tribe_sender_link'] = $this->getTribeSender();
+		$ret['tribe_sender_avatar'] = $this->getProfileTribeSenderAvatar();
 		return $ret;
 	}
 }

@@ -16,7 +16,7 @@
  *
  * @param object $tribeuserObj ProfileTribeuser object to be edited
 */
-function edittribeuser($tribeuserObj, $hideForm=false)
+function edittribeuser($tribeuserObj, $clean_tribes_id, $hideForm=false)
 {
 	global $profile_tribeuser_handler, $xoTheme, $icmsTpl, $icmsUser;
 
@@ -32,7 +32,7 @@ function edittribeuser($tribeuserObj, $hideForm=false)
 		if (!$profile_tribeuser_handler->userCanSubmit()) {
 			redirect_header(PROFILE_URL, 3, _NOPERM);
 		}
-		$tribeuserObj->setVar('tribe_id', $icmsUser->uid());
+		$tribeuserObj->setVar('tribe_id', $clean_tribes_id);
 		$tribeuserObj->setVar('user_id', $icmsUser->uid());
 		$sform = $tribeuserObj->getSecureForm(_MD_PROFILE_TRIBEUSER_SUBMIT, 'addtribeuser');
 		$sform->assign($icmsTpl, 'profile_tribesform');
