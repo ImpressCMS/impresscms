@@ -6,7 +6,7 @@
 * @copyright	GNU General Public License (GPL)
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @since		1.3
-* @author		Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla <contact@impresscms.org>
+* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @package		profile
 * @version		$Id$
 */
@@ -102,11 +102,14 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 	 * @return array of tribe info
 	 */
 	function toArray() {
+		$profile_tribeuser_handler = icms_getModuleHandler('tribeuser');
 		$ret = parent :: toArray();
 		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
 		$ret['tribe_title'] = $this->getVar('title','e');
 		$ret['tribe_content'] = $this->getTribeShortenDesc();
 		$ret['tribe_picture'] = $this->getProfileTribe();
+		$ret['tribe_members_count'] = $profile_tribeuser_handler->getTribeuserCounts($this->id ());
+		$ret['tribe_members_link'] = $profile_tribeuser_handler-> getTribeusers(false, false, $this->id ());
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();

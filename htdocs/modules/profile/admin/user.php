@@ -70,7 +70,7 @@ switch($op) {
             include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/english/main.php');
         }
         if (!$GLOBALS['xoopsSecurity']->check()) {
-            redirect_header('admin.php',3,_PROFILE_MA_NOEDITRIGHT.'<br />'.implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+            redirect_header('user.php',3,_PROFILE_MA_NOEDITRIGHT.'<br />'.implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
             exit;
         }
         $uid = 0;
