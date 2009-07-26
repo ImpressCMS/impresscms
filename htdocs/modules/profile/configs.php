@@ -15,16 +15,12 @@
  *
  * @param object $configsObj Profileconfig object to be edited
 */
-function editconfigs($configsObj, $admin=false, $uid=0)
+function editconfigs($configsObj, $uid=0)
 {
-	global $profile_configs_handler, $xoTheme, $icmsTpl, $icmsUser;
+	global $profile_configs_handler, $xoTheme, $icmsTpl, $icmsUser, $profile_isAdmin;
 
-		if($admin && $uid != 0){
-		$member_handler =& xoops_gethandler('member');
-		$processUser =& $member_handler->getUser($uid);
+		if($profile_isAdmin && $uid > 0 && $icmsUser->uid() != $uid){
 		$configsObj->setVar('config_uid', $uid);
-		$configsObj->setVar('backup_email', $processUser->email());
-		$configsObj->setVar('backup_password', $processUser->pass());
 		$configsObj->hideFieldFromForm(array('config_uid', 'status', 'backup_email', 'backup_password', 'pictures', 'audio', 'videos', 'scraps', 'friendship', 'tribes', 'profile_contact', 'profile_general', 'profile_stats'));
 		$sform = $configsObj->getSecureForm(_MD_PROFILE_CONFIGS_EDIT, 'addconfigs');
 		$sform->assign($icmsTpl, 'profile_configsform');
@@ -91,7 +87,7 @@ if (in_array($clean_op,$valid_op,true)){
 		if (empty($clean_uid) || !$profile_isAdmin) {
 			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 		}
-		editconfigs($configsObj, true, $clean_uid );
+		editconfigs($configsObj, $clean_uid );
 		break;
 
 	case "addconfigs":
@@ -104,13 +100,13 @@ if (in_array($clean_op,$valid_op,true)){
 		break;
 
 	default:
-		if ($real_uid > 0) {
+		if ($real_uid > 0 &&  $icmsUser->uid() == $clean_uid) {
 			$configsObj = $profile_configs_handler->get($clean_configs_id);
 			editconfigs($configsObj);
 		}elseif($profile_isAdmin && $clean_uid > 0){
 			$clean_configs_id = $profile_configs_handler->getConfigIdPerUser($clean_uid);
 			$configsObj = $profile_configs_handler->get($clean_configs_id);
-			editconfigs($configsObj, true, $clean_uid );
+			editconfigs($configsObj, $clean_uid );
 		}else{
 		    redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 		}

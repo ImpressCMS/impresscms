@@ -27,7 +27,9 @@ define('PROFILE_CONFIG_STATUS_PRIVATE', 4);
 
 class ProfileConfigs extends IcmsPersistableObject {
 
-	public 	$user_suspended = false;
+	public $_user_suspended = false;
+	public $_user_status = false;
+
 	/**
 	 * Constructor
 	 *
@@ -306,7 +308,15 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 * @return true
 	 */
 	function beforeSave(& $obj) {
-		$obj->user_suspended = $obj->getVar('suspension', 'e');
+		$obj->_user_suspended = $obj->getVar('suspension', 'e');
+		$obj->_user_status = $obj->getVar('status', 'e');
+		return true;
+	}
+
+
+	function afterUpdate(& $obj) {
+		$obj->_user_suspended = false;
+		$obj->_user_status = false;
 		return true;
 	}
 
@@ -319,28 +329,39 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 * @return true
 	 */
 	function afterSave(& $obj) {
+		global $icmsConfig;
 		$uid = $obj->getVar('config_uid', 'e');
 		$member_handler =& xoops_gethandler('member');
 		$processUser =& $member_handler->getUser($uid);
-		if ($obj->getVar('suspension', 'e') == true && $obj->user_suspended == false) {
+		if ($obj->_user_suspended == 1 && $obj->_user_status == 0) {
+			$obj->setVar('status', 1);
+			$obj->setVar('backup_email', $processUser->email());
+			$obj->setVar('backup_password', $processUser->pass());
 			$pass = substr ( md5 ( time () ), 0, 8 );
 			$processUser->setVar('pass', $pass, true);
 			$processUser->setVar('email', $icmsConfig['adminmail']);
 			$processUser->setVar('user_sig', '');
-		}elseif (($obj->getVar('suspension', 'e') == false && $obj->user_suspended == true) || time()>$obj->getVar('end_suspension', 'e')){
+			if(!$member_handler->insertUser($processUser)){
+				echo $processUser->getHtmlErrors();
+			}
+			$this->insert($obj);
+		}
+		if ($obj->_user_suspended == 0 &&  $obj->_user_status == 1){
 			$pass = $obj->getVar('backup_password', 'e');
 			$email = $obj->getVar('backup_email', 'e');
 			$sig = $obj->getVar('backup_sig', 'e');
 			$processUser->setVar('pass', $pass, true);
 			$processUser->setVar('email', $email);
 			$processUser->setVar('user_sig', $sig);
-			if(time()>$obj->getVar('end_suspension', 'e')){
-				$obj->setVar('suspension', 0);
+			if(!$member_handler->insertUser($processUser)){
+			echo $processUser->getHtmlErrors();
 			}
+			$obj->setVar('suspension', 0);
+			$obj->setVar('status', 0);
+			$this->insert($obj);
 		}
 		return true;
 	}
-
 	/**
 	 * Retreive the config_id of user
 	 *
