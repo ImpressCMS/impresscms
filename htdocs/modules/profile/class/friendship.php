@@ -251,7 +251,7 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 	/**
 	 * Retreive the friendship_id of users
 	 *
-	 * @return array of amounts
+	 * @return amount
 	 */
 	function getFriendshipIdPerUser($uid1, $uid2){
 		$sql = 'SELECT friendship_id FROM '.$this->table.' WHERE ';

@@ -265,6 +265,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	function userCanAccessSection(& $obj, $item, $uid=false) {
 		global $icmsUser, $profile_isAdmin;
 		$status = $obj->getVar($item, 'e');
+		$uid = isset($_REQUEST['uid'])?intval($_REQUEST['uid']):0;
 		if ($profile_isAdmin) {
 			return true;
 		}
@@ -274,11 +275,9 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		if ($status == PROFILE_CONFIG_STATUS_MEMBERS && is_object($icmsUser)) {
 			return true;
 		}
-		if($status == PROFILE_CONFIG_STATUS_FRIENDS && is_object($icmsUser)){
-			/*
-			 * TODO: Create a function to check if a user is a friend or not.
-			 */
-				return false;
+		if($status == PROFILE_CONFIG_STATUS_FRIENDS && is_object($icmsUser) && $icmsUser->uid() !=$uid){
+			$result = getFriendship($icmsUser->uid(), $uid);
+			return $result;
 		}
 		if ($status == PROFILE_CONFIG_STATUS_PRIVATE) {
 			return $uid == $icmsUser->uid();
