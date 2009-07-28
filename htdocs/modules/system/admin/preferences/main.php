@@ -105,7 +105,6 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'autotasksystem':
 					$handler = xoops_getmodulehandler('autotasks', 'system');
 					$options = &$handler->getSystemHandlersList(true);
-					echo $config [$i]->getVar ( 'conf_value' );
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 1, false );
 					foreach ($options as $option) {
 						$ele->addOption ( $option, $option );
