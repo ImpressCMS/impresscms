@@ -190,25 +190,29 @@ class xos_opal_Theme {
 		global $icmsConfig, $icmsConfigMetaFooter, $icmsModule, $xoopsModule, $icmsUser;
 		$this->template->assign( array(
 			'icms_style' => ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css',
-	    	'icms_theme' => $this->folderName,
-	    	'icms_imageurl' => (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName.'/'))?ICMS_MODULES_URL.'/system/themes/'.$this->folderName.'/':XOOPS_THEME_URL . '/'.$this->folderName.'/',
-	    	'icms_themecss'=> xoops_getcss($this->folderName),
-	    	'icms_requesturi' => htmlspecialchars( $_SERVER['REQUEST_URI'], ENT_QUOTES),
-	    	'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
-	    	'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
-	    	'icms_dirname' => @$icmsModule ? $icmsModule->getVar( 'dirname' ) : 'system',
-	    	'icms_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-	    	'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule) ? $icmsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES ),
-	    	'xoops_theme' => $this->folderName,
-	    	'xoops_imageurl' => (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName.'/'))?ICMS_MODULES_URL.'/system/themes/'.$this->folderName.'/':XOOPS_THEME_URL . '/'.$this->folderName.'/',
-	    	'xoops_themecss'=> xoops_getcss($this->folderName),
-	    	'xoops_requesturi' => htmlspecialchars( $_SERVER['REQUEST_URI'], ENT_QUOTES),
-	    	'xoops_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
-	    	'xoops_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
-	    	'xoops_dirname' => @$icmsModule ? $icmsModule->getVar( 'dirname' ) : 'system',
-	    	'xoops_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-	    	'xoops_pagetitle' => isset($icmsModule) && is_object($icmsModule) ? $icmsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES ),
-	    ) );
+			'icms_theme' => $this->folderName,
+			'icms_imageurl' => (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName.'/'))?ICMS_MODULES_URL.'/system/themes/'.$this->folderName.'/':XOOPS_THEME_URL . '/'.$this->folderName.'/',
+			'icms_themecss'=> xoops_getcss($this->folderName),
+			'icms_requesturi' => htmlspecialchars( $_SERVER['REQUEST_URI'], ENT_QUOTES),
+			'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
+			'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
+			'icms_dirname' => @$icmsModule ? $icmsModule->getVar( 'dirname' ) : 'system',
+			'icms_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
+			'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule) ? $icmsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES )
+		));
+
+		// this is for backward compatibility only!
+		$this->template->assign(array(
+			'xoops_theme' => $this->template->get_template_vars('icms_theme'),
+			'xoops_imageurl' => $this->template->get_template_vars('icms_imageurl'),
+			'xoops_themecss'=> $this->template->get_template_vars('icms_themecss'),
+			'xoops_requesturi' => $this->template->get_template_vars('icms_requesturi'),
+			'xoops_sitename' => $this->template->get_template_vars('icms_sitename'),
+			'xoops_slogan' => $this->template->get_template_vars('icms_slogan'),
+			'xoops_dirname' => $this->template->get_template_vars('icms_dirname'),
+			'xoops_banner' => $this->template->get_template_vars('icms_banner'),
+			'xoops_pagetitle' => $this->template->get_template_vars('icms_pagetitle')
+		));
 	    if ( isset($icmsUser) && is_object($icmsUser) ) {
 	        $this->template->assign( array(
 	        	'icms_isuser' => true,

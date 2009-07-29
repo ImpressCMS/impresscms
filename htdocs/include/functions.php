@@ -672,16 +672,20 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 		'icms_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
 		'icms_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
 		'icms_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule) ? $icmsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES),
-		'xoops_theme' => $theme,
-		'xoops_imageurl' => ICMS_THEME_URL.'/'.$theme.'/',
-		'xoops_themecss'=> xoops_getcss($theme),
-		'xoops_requesturi' => htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES),
-		'xoops_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),
-		'xoops_slogan' => htmlspecialchars($icmsConfig['slogan'], ENT_QUOTES),
-		'xoops_dirname' => @$icmsModule ? $icmsModule->getVar('dirname') : 'system',
-		'xoops_banner' => $icmsConfig['banners'] ? xoops_getbanner() : '&nbsp;',
-		'xoops_pagetitle' => isset($icmsModule) && is_object($icmsModule) ? $icmsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES),
+		'icms_pagetitle' => isset($icmsModule) && is_object($icmsModule) ? $icmsModule->getVar('name') : htmlspecialchars( $icmsConfig['slogan'], ENT_QUOTES)
+	));
+
+	// this is for backward compatibility only!
+	$xoopsTpl->assign(array(
+		'xoops_theme' => $xoopsTpl->get_template_vars('icms_theme'),
+		'xoops_imageurl' => $xoopsTpl->get_template_vars('icms_imageurl'),
+		'xoops_themecss'=> $xoopsTpl->get_template_vars('icms_themecss'),
+		'xoops_requesturi' => $xoopsTpl->get_template_vars('icms_requesturi'),
+		'xoops_sitename' => $xoopsTpl->get_template_vars('icms_sitename'),
+		'xoops_slogan' => $xoopsTpl->get_template_vars('icms_slogan'),
+		'xoops_dirname' => $xoopsTpl->get_template_vars('icms_dirname'),
+		'xoops_banner' => $xoopsTpl->get_template_vars('icms_banner'),
+		'xoops_pagetitle' => $xoopsTpl->get_template_vars('icms_pagetitle')
 	));
 
 	if($icmsConfig['debug_mode'] == 2 && $icmsUserIsAdmin)
