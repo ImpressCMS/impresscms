@@ -17,7 +17,7 @@
 include_once("admin_header.php");
 xoops_cp_header();
 
-icms_adminMenu(5, "");
+icms_adminMenu(6, "");
 $op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : "edit";
 switch ($op) {
     case "visibility":

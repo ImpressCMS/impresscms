@@ -24,12 +24,12 @@ function editvideos($videos_id = 0)
 	$videosObj = $profile_videos_handler->get($videos_id);
 
 	if (!$videosObj->isNew()){
-		$icmsModule->displayAdminMenu(0, _AM_PROFILE_VIDEOS . " > " . _CO_ICMS_EDITING);
+		$icmsModule->displayAdminMenu(11, _AM_PROFILE_VIDEOS . " > " . _CO_ICMS_EDITING);
 		$sform = $videosObj->getForm(_AM_PROFILE_VIDEOS_EDIT, 'addvideos');
 		$sform->assign($icmsAdminTpl);
 
 	} else {
-		$icmsModule->displayAdminMenu(0, _AM_PROFILE_VIDEOS . " > " . _CO_ICMS_CREATINGNEW);
+		$icmsModule->displayAdminMenu(11, _AM_PROFILE_VIDEOS . " > " . _CO_ICMS_CREATINGNEW);
 		$sform = $videosObj->getForm(_AM_PROFILE_VIDEOS_CREATE, 'addvideos');
 		$sform->assign($icmsAdminTpl);
 
@@ -80,7 +80,7 @@ if (in_array($clean_op,$valid_op,true)){
 
   		icms_cp_header();
 
-  		$icmsModule->displayAdminMenu(0, _AM_PROFILE_VIDEOS);
+  		$icmsModule->displayAdminMenu(11, _AM_PROFILE_VIDEOS);
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_videos_handler);

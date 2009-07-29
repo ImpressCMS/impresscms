@@ -24,12 +24,12 @@ function editaudio($audio_id = 0)
 	$audioObj = $profile_audio_handler->get($audio_id);
 
 	if (!$audioObj->isNew()){
-		$icmsModule->displayAdminMenu(0, _AM_PROFILE_AUDIOS . " > " . _CO_ICMS_EDITING);
+		$icmsModule->displayAdminMenu(7, _AM_PROFILE_AUDIOS . " > " . _CO_ICMS_EDITING);
 		$sform = $audioObj->getForm(_AM_PROFILE_AUDIO_EDIT, 'addaudio');
 		$sform->assign($icmsAdminTpl);
 
 	} else {
-		$icmsModule->displayAdminMenu(0, _AM_PROFILE_AUDIOS . " > " . _CO_ICMS_CREATINGNEW);
+		$icmsModule->displayAdminMenu(7, _AM_PROFILE_AUDIOS . " > " . _CO_ICMS_CREATINGNEW);
 		$sform = $audioObj->getForm(_AM_PROFILE_AUDIO_CREATE, 'addaudio');
 		$sform->assign($icmsAdminTpl);
 
@@ -78,7 +78,7 @@ if (in_array($clean_op,$valid_op,true)){
 
   		icms_cp_header();
 
-  		$icmsModule->displayAdminMenu(0, _AM_PROFILE_AUDIOS);
+  		$icmsModule->displayAdminMenu(7, _AM_PROFILE_AUDIOS);
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_audio_handler);

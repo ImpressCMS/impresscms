@@ -24,12 +24,12 @@ function editscraps($scraps_id = 0)
 	$scrapsObj = $profile_scraps_handler->get($scraps_id);
 
 	if (!$scrapsObj->isNew()){
-		$icmsModule->displayAdminMenu(0, _AM_PROFILE_SCRAPS . " > " . _CO_ICMS_EDITING);
+		$icmsModule->displayAdminMenu(9, _AM_PROFILE_SCRAPS . " > " . _CO_ICMS_EDITING);
 		$sform = $scrapsObj->getForm(_AM_PROFILE_SCRAPS_EDIT, 'addscraps');
 		$sform->assign($icmsAdminTpl);
 
 	} else {
-		$icmsModule->displayAdminMenu(0, _AM_PROFILE_SCRAPS . " > " . _CO_ICMS_CREATINGNEW);
+		$icmsModule->displayAdminMenu(9, _AM_PROFILE_SCRAPS . " > " . _CO_ICMS_CREATINGNEW);
 		$sform = $scrapsObj->getForm(_AM_PROFILE_SCRAPS_CREATE, 'addscraps');
 		$sform->assign($icmsAdminTpl);
 
@@ -80,7 +80,7 @@ if (in_array($clean_op,$valid_op,true)){
 
   		icms_cp_header();
 
-  		$icmsModule->displayAdminMenu(0, _AM_PROFILE_SCRAPS);
+  		$icmsModule->displayAdminMenu(9, _AM_PROFILE_SCRAPS);
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_scraps_handler);

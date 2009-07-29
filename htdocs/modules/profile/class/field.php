@@ -449,7 +449,7 @@ class ProfileFieldHandler extends IcmsPersistableObjectHandler {
 	 * @param unknown_type $db
 	 */
 	public function __construct( & $db ) {
-        parent::IcmsPersistableObjectHandler($db, 'field', "fieldid", 'fieldid', 'field_description', 'profile');
+        parent::IcmsPersistableObjectHandler($db, 'field', "fieldid", 'field_name', 'field_description', 'profile');
     }
 
     /**

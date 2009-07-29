@@ -149,7 +149,7 @@ if (in_array($clean_op,$valid_op,true)){
 		}
 		if (isset($_POST['confirm'])) {
 		    if (!$xoopsSecurity->check()) {
-		    	redirect_header($impresscms->urls['previouspage'], 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+		    	redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
 		    }
 		}
   	    include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
@@ -175,7 +175,7 @@ if (in_array($clean_op,$valid_op,true)){
 		}
 		if (isset($_POST['confirm'])) {
 		    if (!$xoopsSecurity->check()) {
-		    	redirect_header($impresscms->urls['previouspage'], 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+		    	redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
 		    }
 		}
   	    include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';

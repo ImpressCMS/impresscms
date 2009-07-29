@@ -170,7 +170,9 @@ define("_CO_PROFILE_SCRAPS_SCRAP_FROM", "Sender");
 define("_CO_PROFILE_SCRAPS_SCRAP_FROM_DSC", " ");
 define("_CO_PROFILE_SCRAPS_SCRAP_TO", "Receiver");
 define("_CO_PROFILE_SCRAPS_SCRAP_TO_DSC", " ");
-define("_CO_PROFILE_SCRAPS_PRIVATE", "Make This Scrap privet?");
+define("_CO_PROFILE_SCRAPS_CREATION_TIME", "Creation time");
+define("_CO_PROFILE_SCRAPS_CREATION_TIME_DSC", " ");
+define("_CO_PROFILE_SCRAPS_PRIVATE", "Make This Scrap private?");
 define("_CO_PROFILE_SCRAPS_PRIVATE_DSC", " ");
 // pictures
 define("_CO_PROFILE_PICTURES_PICTURES_ID", "Picture ID");

@@ -154,13 +154,6 @@ define("_MD_PROFILE_HOME","Home");
 define("_MD_PROFILE_CONFIGSTITLE","My settings");
 define("_MD_EXTENDED_PROFILE","Extra Info");
 
-//album.php
-define("_MD_PROFILE_YOUHAVE", "You have %s picture(s) in your album.");
-define("_MD_PROFILE_YOUCANHAVE", "You can have up to %s picture(s).");
-
-//avatar.php
-define("_MD_PROFILE_AVATAR_EDITED","You changed your avatar!");
-
 //friends.php
 define("_MD_PROFILE_FRIENDSTITLE","%s's Friends");
 define("_MD_PROFILE_NOFRIENDSYET","No friends yet");//also present in index.php
@@ -224,32 +217,36 @@ define("_MD_PROFILE_CONFIRMKICK","Yes kick him out!");
 define("_MD_PROFILE_ASKCONFIRMKICKFROMTRIBE","Are you sure you want to kick this person out of the Tribe?");
 define("_MD_PROFILE_TRIBEKICKED","You've banished this user from the Tribe, but who knows when he'll try and comeback!");
 
-//Tribes.php
-define("_MD_PROFILE_TRIBE_ABANDON","Leave this Tribe");
-define("_MD_PROFILE_TRIBE_JOIN","Join this Tribe and show everyone who you are!");
-define("_MD_PROFILE_TRIBE_SEARCH","Search a Tribe");
-define("_MD_PROFILE_TRIBE_SEARCHKEYWORD","Keyword");
+//audio.php
+define("_MD_PROFILE_AUDIOS_SUBMIT", "Submit new audio file");
+define("_MD_PROFILE_AUDIOS_EDIT", "Edit existing audio file");
+define("_MD_PROFILE_AUDIOS_CREATED", "Audio file successfully added");
+define("_MD_PROFILE_AUDIOS_MODIFIED", "Audio file successfully modified");
 
-######################################### SCRAPS #####################################################
-//scrapbook.php
-define('_MD_PROFILE_ENTERTEXTSCRAP',"Enter Text or BB-Codes");
-define("_MD_PROFILE_SENDSCRAP","post Scrap");
-define("_MD_PROFILE_ANSWERSCRAP","Reply");//also present in configs.php
-define("_MD_PROFILE_MYSCRAPBOOK","My Scrapbook");
-define("_MD_PROFILE_CANCEL","Cancel");//also present in configs.php
-define("_MD_PROFILE_SCRAPTIPS","Scrap tips");
-define("_MD_PROFILE_BOLD","bold");
-define("_MD_PROFILE_ITALIC","italic");
-define("_MD_PROFILE_UNDERLINE","underline");
-define("_MD_PROFILE_NOSCRAPSYET","No Scraps created in this Scrapbook yet");
+//pictures.php
+define("_MD_PROFILE_PICTURES_SUBMIT", "Submit new photo");
+define("_MD_PROFILE_PICTURES_EDIT", "Edit existing photo");
+define("_MD_PROFILE_PICTURES_CREATED", "Photo successfully added");
+define("_MD_PROFILE_PICTURES_MODIFIED", "Photo successfully modified");
 
-//submit_scrap.php
-define("_MD_PROFILE_SCRAP_SENT","Thanks for participating, Scrap sent");
+//scraps.php
+define("_MD_PROFILE_SCRAPS_SUBMIT", "Submit new scrap");
+define("_MD_PROFILE_SCRAPS_EDIT", "Edit existing scrap");
+define("_MD_PROFILE_SCRAPS_CREATED", "Scrap successfully created");
+define("_MD_PROFILE_SCRAPS_MODIFIED", "Scrap successfully modified");
 
-//delete_scrap.php
-define("_MD_PROFILE_ASKCONFIRMSCRAPDELETION","Are you sure you want to delete this Scrap?");
-define("_MD_PROFILE_CONFIRMSCRAPDELETION","Yes please delete this Scrap.");
-define("_MD_PROFILE_SCRAPDELETED","The Scrap was deleted");
+//tribes.php
+define("_MD_PROFILE_TRIBES_SUBMIT", "Create new tribe");
+define("_MD_PROFILE_TRIBES_EDIT", "Edit existing tribe");
+define("_MD_PROFILE_TRIBES_CREATED", "Tribe successfully created");
+define("_MD_PROFILE_TRIBES_MODIFIED", "Tribe successfully modified");
+
+//videos.php
+define("_MD_PROFILE_VIDEOS_SUBMIT", "Submit new video");
+define("_MD_PROFILE_VIDEOS_EDIT", "Edit existing video");
+define("_MD_PROFILE_VIDEOS_CREATED", "Video successfully added");
+define("_MD_PROFILE_VIDEOS_MODIFIED", "Video successfully modified");
+
 //index.php
 define("_MD_PROFILE_VISITORS","Visitors (who visited your profile recently)");
 define("_MD_PROFILE_USERDETAILS","User details");
@@ -271,6 +268,7 @@ define("_MD_PROFILE_SUSPENDUSER","Suspend user");
 define("_MD_PROFILE_SUSPENDTIME","Time of suspension(in secs)");
 define("_MD_PROFILE_UNSUSPEND","Unsuspend User");
 define("_MD_PROFILE_SUSPENSIONADMIN","Suspension Admin Tools");
+define("_MD_PROFILE_SECURITY_CHECK_FAILED", "");
 
 //suspend.php
 define("_MD_PROFILE_SUSPENDED","User under suspension until %s");

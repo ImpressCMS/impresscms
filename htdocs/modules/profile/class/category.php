@@ -56,7 +56,7 @@ class ProfileCategoryHandler extends IcmsPersistableObjectHandler {
 	 * Constructor
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'category', 'catid', 'catid', 'cat_description', 'profile');
+		$this->IcmsPersistableObjectHandler($db, 'category', 'catid', 'cat_title', 'cat_description', 'profile');
 	}
 }
 ?>

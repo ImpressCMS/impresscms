@@ -24,7 +24,7 @@ function edittribes($tribes_id = 0)
 	$tribesObj = $profile_tribes_handler->get($tribes_id);
 
 	if (!$tribesObj->isNew()){
-		$icmsModule->displayAdminMenu(0, _AM_PROFILE_TRIBES . " > " . _CO_ICMS_EDITING);
+		$icmsModule->displayAdminMenu(8, _AM_PROFILE_TRIBES . " > " . _CO_ICMS_EDITING);
 		$sform = $tribesObj->getForm(_AM_PROFILE_TRIBES_EDIT, 'addtribes');
 		$sform->assign($icmsAdminTpl);
 
@@ -84,7 +84,7 @@ if (in_array($clean_op,$valid_op,true)){
 
   		icms_cp_header();
 
-  		$icmsModule->displayAdminMenu(0, _AM_PROFILE_TRIBES);
+  		$icmsModule->displayAdminMenu(8, _AM_PROFILE_TRIBES);
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_tribes_handler);

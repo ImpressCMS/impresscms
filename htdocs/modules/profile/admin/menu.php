@@ -30,7 +30,7 @@ $i++;
 $adminmenu[$i]['title'] = _AM_PROFILE_REGSTEPS;
 $adminmenu[$i]['link'] = 'admin/regstep.php';
 $i++;
-$adminmenu[$i]['title'] = _PROFILE_MI_VISIBILITY;
+$adminmenu[$i]['title'] = _MI_PROFILE_VISIBILITY;
 $adminmenu[$i]['link'] = 'admin/visibility.php';
 $i++;
 $adminmenu[$i]['title'] = _PROFILE_MI_PERMISSIONS;

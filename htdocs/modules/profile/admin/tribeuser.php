@@ -24,12 +24,12 @@ function edittribeuser($tribeuser_id = 0)
 	$tribeuserObj = $profile_tribeuser_handler->get($tribeuser_id);
 
 	if (!$tribeuserObj->isNew()){
-		$icmsModule->displayAdminMenu(0, _AM_PROFILE_TRIBEUSERS . " > " . _CO_ICMS_EDITING);
+		$icmsModule->displayAdminMenu(12, _AM_PROFILE_TRIBEUSERS . " > " . _CO_ICMS_EDITING);
 		$sform = $tribeuserObj->getForm(_AM_PROFILE_TRIBEUSER_EDIT, 'addtribeuser');
 		$sform->assign($icmsAdminTpl);
 
 	} else {
-		$icmsModule->displayAdminMenu(0, _AM_PROFILE_TRIBEUSERS . " > " . _CO_ICMS_CREATINGNEW);
+		$icmsModule->displayAdminMenu(12, _AM_PROFILE_TRIBEUSERS . " > " . _CO_ICMS_CREATINGNEW);
 		$sform = $tribeuserObj->getForm(_AM_PROFILE_TRIBEUSER_CREATE, 'addtribeuser');
 		$sform->assign($icmsAdminTpl);
 
@@ -100,7 +100,7 @@ if (in_array($clean_op,$valid_op,true)){
 
   		icms_cp_header();
 
-  		$icmsModule->displayAdminMenu(0, _AM_PROFILE_TRIBEUSERS);
+  		$icmsModule->displayAdminMenu(12, _AM_PROFILE_TRIBEUSERS);
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_tribeuser_handler);
