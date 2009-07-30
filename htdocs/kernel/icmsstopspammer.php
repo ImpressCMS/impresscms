@@ -41,7 +41,7 @@ class IcmsStopSpammer {
 				icms_debug($this->api_url . $field . '=' . $value);
 				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
 			}
->			curl_setopt($ch, CURLOPT_URL, "$url");
+			curl_setopt($ch, CURLOPT_URL, "$url");
 			curl_setopt($ch, CURLOPT_HEADER,0);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			$output .=curl_exec($ch);
