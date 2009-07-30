@@ -123,7 +123,7 @@ $i = 1;
 global $icmsModule, $icmsModuleConfig, $icmsUser;
 if (is_object($icmsModule) && $icmsModule->dirname() == $modversion['dirname']) {
 $modversion['sub'][$i]['name'] = _MI_PROFILE_SEARCH;
-$modversion['sub'][$i]['url'] = ($icmsModuleConfig['profile_social']? 'searchmembers.php':'search.php');
+$modversion['sub'][$i]['url'] = "search.php";
   if ($icmsUser) {
   $i++;
       $modversion['sub'][$i]['name'] = _MI_PROFILE_MYPROFILE;

@@ -17,8 +17,8 @@
 
 include '../../mainfile.php';
 $modname = basename( dirname( __FILE__ ) );
-if($icmsModuleConfig['profile_social']==1){
-	header('Location: '.ICMS_URL.'/modules/'.$modname.'/searchmembers.php');
+if($icmsModuleConfig['profile_social']!=1){
+	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 	exit();
 }
 $myts =& MyTextSanitizer::getInstance();
@@ -37,7 +37,7 @@ switch ($op) {
         $fields =& $profile_handler->loadFields();
         // Get ids of fields that can be searched
         $gperm_handler =& xoops_gethandler('groupperm');
-        $searchable_fields =& $gperm_handler->getItemIds('smartprofile_search', $groups, $icmsModule->getVar('mid'));
+        $searchable_fields =& $gperm_handler->getItemIds('profile_search', $groups, $icmsModule->getVar('mid'));
 
         include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
         $searchform = new XoopsThemeForm("", "searchform", "search.php", "post");
@@ -156,7 +156,7 @@ switch ($op) {
         $fields =& $profile_handler->loadFields();
         // Get ids of fields that can be searched
         $gperm_handler =& xoops_gethandler('groupperm');
-        $searchable_fields =& $gperm_handler->getItemIds('smartprofile_search', $groups, $icmsModule->getVar('mid'));
+        $searchable_fields =& $gperm_handler->getItemIds('profile_search', $groups, $icmsModule->getVar('mid'));
         $searchvars = array();
 
         $criteria = new CriteriaCompo(new Criteria('level', 0, ">"));
