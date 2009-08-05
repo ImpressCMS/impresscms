@@ -130,8 +130,8 @@ class XoopsContentHandler extends XoopsObjectHandler
 			intval($content_weight),
 			intval($content_reads),
 			intval($content_status),
-               $this->db->quoteString($content_seo_description),
-               $this->db->quoteString($content_seo_keywords));
+			$this->db->quoteString($content_seo_description),
+			$this->db->quoteString($content_seo_keywords));
 		} else {
 			$sql = sprintf("UPDATE %s SET content_catid=%u, content_supid=%u, content_uid=%u, content_title=%s, content_menu=%s, content_body=%s, content_css=%s, content_tags=%s, content_visibility=%u, content_updated=%u, content_weight=%u, content_reads=%u, content_status=%u, content_seo_description=%s, content_seo_keywords=%s WHERE content_id=%u",
 			$this->db->prefix('icmscontent'),
@@ -148,9 +148,9 @@ class XoopsContentHandler extends XoopsObjectHandler
 			intval($content_weight),
 			intval($content_reads),
 			intval($content_status),
-			intval($content_id),
-               $this->db->quoteString($content_seo_description),
-               $this->db->quoteString($content_seo_keywords));
+			$this->db->quoteString($content_seo_description),
+			$this->db->quoteString($content_seo_keywords),
+			intval($content_id));
 		}
 		if (!$result = $this->db->queryF($sql)) {
 			return false;
