@@ -42,9 +42,13 @@ class IcmsAutoTasksCron
     * @return bool
     */
    function canRun() {
-   	   $crons = null; $return = null;
-	   exec( $this->getCronCommandLine()." -l 2>&1", $crons, $return);
-	   return (intval($return) === 0);
+	   static $canRun = null;
+	   if ($canRun === null) {
+		   $crons = null; $return = null;
+		   exec( 'ps -ef | grep cron | grep -v grep', $crons, $return);
+		   $canRun = is_array($crons) && (count($crons) > 0) && (intval($return) === 0);
+	   }   	
+	   return $canRun;
    }
 
    /**
@@ -67,9 +71,9 @@ class IcmsAutoTasksCron
    function start(int $interval) {
 	   $id = $this->getProcessId();
 	   if ($id < 0) {
-		$this->_line_id = count($this->_lines);
-	   } else {
-		if ($this->getInterval() == $interval) return false;
+			$this->_line_id = count($this->_lines);
+	   } else {			
+			//if ($this->getInterval() == $interval) return false;
 	   }
 	   $arx = &$this->getIntervalArray($interval);
 	   $arx['command'] = $this->getCommandLine();
@@ -145,7 +149,7 @@ class IcmsAutoTasksCron
     * @return bool
 	*/
 	function isEnabled() {
-		return ($this->getProcessId()>0);
+		return ($this->getProcessId()>-1);
 	}
 
 	/**
@@ -153,17 +157,14 @@ class IcmsAutoTasksCron
 	 * @return string
 	 */
 	function getCommandLine() {
-		static $autotasks_helper_path = null;
-		if ($autotasks_helper_path === null) {
-			$atasks_handler = &xoops_getmodulehandler('autotasks', 'system');
-			$config = &$atasks_handler->getConfig();
-			if ( ($config_atasks['autotasks_helper_path'] = trim($config_atasks['autotasks_helper_path'])) != '') {
-				if (substr($config_atasks['autotasks_helper_path'], -1) != '/') {
-					$config_atasks['autotasks_helper_path'] .= '/';
-				}
+		$atasks_handler = &xoops_getmodulehandler('autotasks', 'system');
+		$config_atasks = &$atasks_handler->getConfig();
+		if ( ($config_atasks['autotasks_helper_path'] = trim($config_atasks['autotasks_helper_path'])) != '') {
+			if (substr($config_atasks['autotasks_helper_path'], -1) != '/') {
+				$config_atasks['autotasks_helper_path'] .= '/';
 			}
-			$autotasks_helper_path = $config_atasks['autotasks_helper_path'].str_replace(array('%path%','%url%'),array(XOOPS_ROOT_PATH,XOOPS_URL),$config_atasks['autotasks_helper']).'/include/autotasks.php > /dev/null';
 		}
+		$autotasks_helper_path = $config_atasks['autotasks_helper_path'].str_replace(array('%path%','%url%'),array(ICMS_ROOT_PATH, ICMS_URL),trim($config_atasks['autotasks_helper']))  . '/include/autotasks.php > /dev/null';
 		return $autotasks_helper_path;
 	}
 
@@ -172,18 +173,25 @@ class IcmsAutoTasksCron
 	 *
 	 * @return int
 	 */
-	function getProcessId() {
-		if ($this->_line_id > 0) return $this->_line_id;
-		if (empty($this->_lines)) $this->readCronTab();
+	function getProcessId() {	
+		$this->_lines = array();
+		$this->readCronTab();
 		$cmd = $this->getCommandLine();
+		$this->_line_id = -1;
 		foreach ($this->_lines as $id => $line) {
 			if ($line[1] != 4) continue;
-			if ($line[0]['command'] == $cmd) {
-				$this->_line_id = $id;
-				return $this->_line_id;
+			if (isset($line[0]['command'])) {
+				$line = $line[0];
+			}
+			if (strpos($line['command'], ICMS_ROOT_PATH . '/include/autotasks.php')!==false) {
+				$this->_line_id = (int)$id;
+				break;
+			}
+			if (strpos($line['command'], ICMS_URL . '/include/autotasks.php')!==false) {
+				$this->_line_id = (int)$id;
+				break;
 			}
 		}
-		$this->_line_id = -1;
 		return $this->_line_id;
 	}
 

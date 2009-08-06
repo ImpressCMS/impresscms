@@ -19,8 +19,11 @@ abstract class IcmsAutoTasksSystem
 	}
 
 	public function needExecution() {
-		global $xoopsOption;
-		return isset($xoopsOption['automatedTaskExeciotionMode']) && ((bool)$xoopsOption['automatedTaskExeciotionMode']);
+		static $execMode = null;
+		if ($execMode === null) {
+			$execMode = defined('ICMS_AUTOTASKS_EXECMODE') && ICMS_AUTOTASKS_EXECMODE;
+		}
+		return $execMode;
 	}
 
 	public function needExit() {
