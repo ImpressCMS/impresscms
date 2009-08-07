@@ -22,7 +22,8 @@ define ( 'ICMS_CUSTOMTAG_TYPE_PHP', 3 );
 class SystemCustomtag extends IcmsPersistableObject {
 	
 	var $content = false;
-	
+	var $evaluated = false;
+
 	function SystemCustomtag(&$handler) {
     	$this->IcmsPersistableObject($handler);
     	
@@ -73,21 +74,19 @@ class SystemCustomtag extends IcmsPersistableObject {
 	}
 	
 	function renderWithPhp() {
-		if (! $this->content) {
+		if (! $this->content && ! $this->evaluated) {
 			$ret = $this->getVar ( 'content', 'N' );
+
+			// check for PHP if we are not on admin side
+			if (! defined ( 'XOOPS_CPFUNC_LOADED' ) && $this->getVar ( 'customtag_type' ) == ICMS_CUSTOMTAG_TYPE_PHP) {
+				// we have PHP code, let's evaluate
+				ob_start ();
+				echo eval ( $ret );
+				$ret = ob_get_contents ();
+				ob_end_clean ();
+				$this->evaluated = true;
+			}
 			$this->content = $ret;
-		} else {
-			$ret = $this->content;
-		}
-		
-		// check for PHP if we are not on admin side
-		if (! defined ( 'XOOPS_CPFUNC_LOADED' ) && $this->getVar ( 'customtag_type' ) == ICMS_CUSTOMTAG_TYPE_PHP) {
-			// we have PHP code, let's evaluate
-			ob_start ();
-			echo eval ( $ret );
-			$content = ob_get_contents ();
-			ob_end_clean ();
-			return $content;
 		}
 		return $this->content;
 	}

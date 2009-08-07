@@ -65,6 +65,7 @@ Revision:
 * #696: fixed parse error in icmsstopspammer.php (Phoenyx)
 * #643: content can now be edited again (Phoenyx)
 * #574: fixed xoopsCheckAll, xoopsCheckGroup, xoopsCheckAllElements using jQuery (Phoenyx)
+* #645: fixed fatal error while parsing valid customtag php code (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''
