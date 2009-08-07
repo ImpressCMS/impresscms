@@ -133,45 +133,29 @@ function disableElement(target){
 }
 
 function xoopsCheckAll( form, switchId ) {
-	var eltForm = $(form);
-	var eltSwitch = $(switchId);
-	// You MUST NOT specify names, it's just kept for BC with the old lame crappy code
-	if ( !eltForm && document.forms[form] )		eltForm = document.forms[form];
-	if ( !eltSwitch && eltForm.elements[switchId] )	eltSwitch=eltForm.elements[switchId];
-	
-	var i;
-	for (i=0;i!=eltForm.elements.length;i++) {
-		if ( eltForm.elements[i] != eltSwitch && eltForm.elements[i].type == 'checkbox' ) {
-			eltForm.elements[i].checked = eltSwitch.checked;
-		}
-	}
+	$("[id='" + form + "'] input[type='checkbox'], [name='" + form + "'] input[type='checkbox']").attr(
+			'checked',
+			$('#' + switchId + ", input[type='checkbox'][name='" + switchId + "']"
+		).is(':checked')
+	);
 }
-	
+
 
 function xoopsCheckGroup( form, switchId, groupName ) {
-	var eltForm = $(form);
-	var eltSwitch = $(switchId);
-	// You MUST NOT specify names, it's just kept for BC with the old lame crappy code
-	if ( !eltForm && document.forms[form] )		eltForm = document.forms[form];
-	if ( !eltSwitch && eltForm.elements[switchId] )	eltSwitch=eltForm.elements[switchId];
-
-	var i;
-	for (i=0;i!=eltForm.elements.length;i++) {
-		var e=eltForm.elements[i];
-		if ( (e.type == 'checkbox') && ( e.name == groupName ) ) {
-			e.checked = eltSwitch.checked;
-			e.click(); e.click();  // Click to activate subgroups twice so we don't reverse effect
-		}
-	}
+	$("[id='" + form + "'] input[type='checkbox'][id='" + groupName + "'], [name='" + form + "'] input[type='checkbox'][id='" + groupName + "']").attr(
+			'checked',
+			$('#' + switchId + ", input[type='checkbox'][name='" + switchId + "']"
+		).is(':checked')
+	);
 }
 
 function xoopsCheckAllElements(elementIds, switchId) {
-	var switch_cbox = xoopsGetElementById(switchId);
 	for (var i = 0; i < elementIds.length; i++) {
-		var e = xoopsGetElementById(elementIds[i]);
-		if ((e.name != switch_cbox.name) && (e.type == 'checkbox')) {
-			e.checked = switch_cbox.checked;
-		}
+		$("input[type='checkbox'][id='" + elementIds[i] + "'], input[type='checkbox'][name='" + elementIds[i] + "']").attr(
+				'checked',
+				$("input[type='checkbox'][id='" + switchId + "'], input[type='checkbox'][name='" + switchId + "']"
+			).is(":checked")
+		);
 	}
 }
 
