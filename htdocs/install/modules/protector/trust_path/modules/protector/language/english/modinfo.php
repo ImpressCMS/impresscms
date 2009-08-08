@@ -102,7 +102,9 @@ define($constpref.'_BIP_EXCEPTDSC','A user who belongs to the group specified he
 define($constpref.'_DISABLES','Disable dangerous features in XOOPS');
 
 define($constpref.'_DBLAYERTRAP','Enable DB Layer trapping anti-SQL-Injection');
-define($constpref.'_DBLAYERTRAPDSC','Almost SQL Injection attacks will be canceled by this feature. This feature is required a support from databasefactory. You can check it on Security Advisory page.');
+define($constpref.'_DBLAYERTRAPDSC','Almost SQL Injection attacks will be canceled by this feature. This feature is required a support from databasefactory. You can check it on Security Advisory page. This setting must be on. Never turn it off casually.');
+define($constpref.'_DBTRAPWOSRV','Never checking _SERVER for anti-SQL-Injection');
+define($constpref.'_DBTRAPWOSRVDSC','Some servers always enable DB Layer trapping. It causes wrong detections as SQL Injection attack. If you got such errors, turn this option on. You should know this option weakens the security of DB Layer trapping anti-SQL-Injection.');
 
 define($constpref.'_BIGUMBRELLA','enable anti-XSS (BigUmbrella)');
 define($constpref.'_BIGUMBRELLADSC','This protects you from almost attacks via XSS vulnerabilities. But it is not 100%');

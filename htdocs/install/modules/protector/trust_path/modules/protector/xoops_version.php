@@ -282,6 +282,15 @@ $modversion['config'][] = array(
 	'options'		=> array()
 ) ;
 $modversion['config'][] = array(
+	'name'			=> 'dblayertrap_wo_server' ,
+	'title'			=> $constpref.'_DBTRAPWOSRV' ,
+	'description'	=> $constpref.'_DBTRAPWOSRVDSC' ,
+	'formtype'		=> 'yesno' ,
+	'valuetype'		=> 'int' ,
+	'default'		=> 0 ,
+	'options'		=> array()
+) ;
+$modversion['config'][] = array(
 	'name'			=> 'enable_bigumbrella' ,
 	'title'			=> $constpref.'_BIGUMBRELLA' ,
 	'description'	=> $constpref.'_BIGUMBRELLADSC' ,

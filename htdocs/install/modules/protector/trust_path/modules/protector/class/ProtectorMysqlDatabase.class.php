@@ -138,7 +138,10 @@ function checkSql( $sql )
 
 	// stage3: comment exists or not without quoted strings (too sensitive?)
 	if( preg_match( '/(\/\*|\-\-|\#)/' , $sql_wo_strings ) ) {
-		$this->injectionFound( $sql ) ;
+		list( , $sql_after_mark ) = preg_split( '/(\/\*|\-\-|\#)/' , $sql_wo_strings , 2 ) ;
+		if( preg_match( '/(ORDER |WHERE |LIMIT |AND )/i' , $sql_after_mark ) ) {
+			$this->injectionFound( $sql ) ;
+		}
 	}
 }
 

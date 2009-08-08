@@ -463,7 +463,9 @@ function dblayertrap_init( $force_override = false )
 	$this->_dblayertrap_check_recursive( $_GET ) ;
 	$this->_dblayertrap_check_recursive( $_POST ) ;
 	$this->_dblayertrap_check_recursive( $_COOKIE ) ;
-	$this->_dblayertrap_check_recursive( $_SERVER ) ;
+	if( empty( $this->_conf['dblayertrap_wo_server'] ) ) {
+		$this->_dblayertrap_check_recursive( $_SERVER ) ;
+	}
 
 	if( ! empty( $this->_dblayertrap_doubtfuls ) || $force_override ) {
 		@define( 'XOOPS_DB_ALTERNATIVE' , 'ProtectorMysqlDatabase' ) ;
