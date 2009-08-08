@@ -281,7 +281,7 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
     function execTasks()
     {
         $rez = array('all' => 0, 'ok' => 0);
-        if(!($tasks = $this->getTasks())) return $i;
+        if(!($tasks = $this->getTasks())) return $rez;
         foreach($tasks as $task)
         {
             if($task->exec())
