@@ -1,24 +1,28 @@
 if ( typeof window.$ != 'function' ) {
-function $() {
-  var elements = new Array();
+	function $() {
+		var elements = new Array();
 
-  for (var i = 0; i < arguments.length; i++) {
-	var element = arguments[i];
-	if (typeof element == 'string')
-	  element = document.getElementById(element);
+		for (var i = 0; i < arguments.length; i++) {
+			var element = arguments[i];
+			if (typeof element == 'string')
+				element = document.getElementById(element);
 
-	if (arguments.length == 1)
-	  return element;
+			if (arguments.length == 1)
+				return element;
 
-	elements.push(element);
-  }
+			elements.push(element);
+		}
 
-  return elements;
+		return elements;
+	}
 }
-}
 
-function xoopsGetElementById(id){
-	return $(id);
+function xoopsGetElementById(id) {
+	if (typeof jQuery == 'function') {
+		return $("[id='" + id + "']")[0];
+	} else {
+		return $(id);
+	}
 }
 
 function xoopsSetElementProp(name, prop, val) {
@@ -133,29 +137,44 @@ function disableElement(target){
 }
 
 function xoopsCheckAll( form, switchId ) {
-	$("[id='" + form + "'] input[type='checkbox'], [name='" + form + "'] input[type='checkbox']").attr(
-			'checked',
-			$('#' + switchId + ", input[type='checkbox'][name='" + switchId + "']"
-		).is(':checked')
-	);
+	var eltForm = xoopsGetElementById(form);
+	var eltSwitch = xoopsGetElementById(switchId);
+	// You MUST NOT specify names, it's just kept for BC with the old lame crappy code
+	if ( !eltForm && document.forms[form] )		eltForm = document.forms[form];
+	if ( !eltSwitch && eltForm.elements[switchId] )	eltSwitch=eltForm.elements[switchId];
+
+	var i;
+	for (i=0;i!=eltForm.elements.length;i++) {
+		if ( eltForm.elements[i] != eltSwitch && eltForm.elements[i].type == 'checkbox' ) {
+			eltForm.elements[i].checked = eltSwitch.checked;
+		}
+	}
 }
 
-
 function xoopsCheckGroup( form, switchId, groupName ) {
-	$("[id='" + form + "'] input[type='checkbox'][id='" + groupName + "'], [name='" + form + "'] input[type='checkbox'][id='" + groupName + "']").attr(
-			'checked',
-			$('#' + switchId + ", input[type='checkbox'][name='" + switchId + "']"
-		).is(':checked')
-	);
+	var eltForm = xoopsGetElementById(form);
+	var eltSwitch = xoopsGetElementById(switchId);
+	// You MUST NOT specify names, it's just kept for BC with the old lame crappy code
+	if ( !eltForm && document.forms[form] )		eltForm = document.forms[form];
+	if ( !eltSwitch && eltForm.elements[switchId] )	eltSwitch=eltForm.elements[switchId];
+
+	var i;
+	for (i=0;i!=eltForm.elements.length;i++) {
+		var e=eltForm.elements[i];
+		if ( (e.type == 'checkbox') && ( e.name == groupName ) ) {
+			e.checked = eltSwitch.checked;
+			e.click(); e.click();  // Click to activate subgroups twice so we don't reverse effect
+		}
+	}
 }
 
 function xoopsCheckAllElements(elementIds, switchId) {
+	var switch_cbox = xoopsGetElementById(switchId);
 	for (var i = 0; i < elementIds.length; i++) {
-		$("input[type='checkbox'][id='" + elementIds[i] + "'], input[type='checkbox'][name='" + elementIds[i] + "']").attr(
-				'checked',
-				$("input[type='checkbox'][id='" + switchId + "'], input[type='checkbox'][name='" + switchId + "']"
-			).is(":checked")
-		);
+		var e = xoopsGetElementById(elementIds[i]);
+		if ((e.name != switch_cbox.name) && (e.type == 'checkbox')) {
+			e.checked = switch_cbox.checked;
+		}
 	}
 }
 
