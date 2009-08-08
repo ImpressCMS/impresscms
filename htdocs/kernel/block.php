@@ -1,14 +1,14 @@
 <?php
 /**
  * ImpressCMS Block Persistable Class
- * 
+ *
  * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
  * @copyright 	The XOOPS Project <http://www.xoops.org>
  * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
- * 
+ *
  * @version		$Id$
  * @since 		XOOPS
- * 
+ *
  * @author		The XOOPS Project Community <http://www.xoops.org>
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
@@ -20,14 +20,14 @@ include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 
 /**
  * ImpressCMS Core Block Object Class
- * 
+ *
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 class IcmsBlock extends IcmsPersistableObject {
-	
+
 	public function __construct(& $handler) {
-		
+
 		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('name', XOBJ_DTYPE_TXTBOX);
@@ -50,11 +50,11 @@ class IcmsBlock extends IcmsPersistableObject {
 		$this->quickInitVar('template', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('bcachetime', XOBJ_DTYPE_INT);
 		$this->quickInitVar('last_modified', XOBJ_DTYPE_INT);
-		
+
 	}
-	
+
 	// The next Methods are for backward Compatibility
-	
+
 	public function getContent($format = 'S', $c_type = 'T'){
 		switch ( $format ) {
 			case 'S':
@@ -108,11 +108,11 @@ class IcmsBlock extends IcmsPersistableObject {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * For backward compatibility
-	 * 
-	 * @deprecated 
+	 *
+	 * @deprecated
 	 * @return unknown
 	 */
 	public function isCustom(){
@@ -121,12 +121,12 @@ class IcmsBlock extends IcmsPersistableObject {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Builds the block
 	 *
 	 * @return array $block the block information array
-	 * 
+	 *
 	 * @deprecated
 	 */
 	public function buildBlock(){
@@ -172,8 +172,8 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * before the original content
 	 * If position is 1, content in DB is positioned
 	 * after the original content
-	 * 
-	 * @deprecated 
+	 *
+	 * @deprecated
 	 */
 	public function buildContent($position,$content="",$contentdb=""){
 		if ( $position == 0 ) {
@@ -183,15 +183,15 @@ class IcmsBlock extends IcmsPersistableObject {
 		}
 		return $ret;
 	}
-	
+
 	/**
 	 * Build Block Title
 	 *
 	 * @param string $originaltitle
 	 * @param string $newtitle
 	 * @return string
-	 * 
-	 * @deprecated 
+	 *
+	 * @deprecated
 	 */
 	public function buildTitle($originaltitle, $newtitle=""){
 		if ($newtitle != "") {
@@ -207,7 +207,7 @@ class IcmsBlock extends IcmsPersistableObject {
 	 *
 	 * @param boolean $full
 	 * @return array
-	 * 
+	 *
 	 * @deprecated
 	 */
 	public function getBlockPositions($full=false){
@@ -218,39 +218,39 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * Load a Block
 	 *
 	 * @param integer $id
-	 * 
-	 * @deprecated 
+	 *
+	 * @deprecated
 	 */
 	public function load($id){
 		$this->$this->handler->getObject($id);
 	}
-	
+
 	/**
 	 * Save this block
 	 *
 	 * @return integer
-	 * 
+	 *
 	 * @deprecated
 	 */
 	public function store(){
 		$this->handler->insert( $this );
 		return $this->getVar('bid');
 	}
-	
+
 	/**
 	 * Delete this block
 	 *
 	 * @return boolean
-	 * 
-	 * @deprecated 
+	 *
+	 * @deprecated
 	 */
-	public function delete(){		
+	public function delete(){
 		return $this->handler->delete( $this );
 	}
- 
+
 	/**
 	 * Get all the blocks that match the supplied parameters
-	 * 
+	 *
 	 * @param $side   0: sideblock - left
 	 *		1: sideblock - right
 	 *		2: sideblock - left and right
@@ -262,8 +262,8 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * @param $visible   0: not visible 1: visible
 	 * @param $orderby   order of the blocks
 	 * @return array of block objects
-	 * 
-	 * @deprecated 
+	 *
+	 * @deprecated
 	 */
 	public function getAllBlocksByGroup($groupid, $asobject=true, $side=null, $visible=null, $orderby="b.weight,b.bid", $isactive=1){
 		return $this->handler->getAllBlocksByGroup( $groupid, $asobject, $side, $visible, $orderby, $isactive );
@@ -273,40 +273,40 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * Get All Blocks
 	 *
 	 * @since XOOPS
-	 * 
+	 *
 	 * @param unknown_type $rettype
 	 * @param unknown_type $side
 	 * @param unknown_type $visible
 	 * @param unknown_type $orderby
 	 * @param unknown_type $isactive
 	 * @return unknown
-	 * 
-	 * @deprecated 
+	 *
+	 * @deprecated
 	 */
 	public function getAllBlocks( $rettype = "object", $side = null, $visible = null, $orderby = "side,weight,bid", $isactive = 1 ){
 		return $this->handler->getAllBlocks( $rettype, $side, $visible, $orderby, $isactive );
 	}
-	
+
 	/**
 	 * Get Block By Module ID (mid)
 	 *
 	 * @since XOOPS
-	 * 
+	 *
 	 * @param integer $moduleid
 	 * @param boolean $asobject
 	 * @return unknown
-	 * 
-	 * @deprecated 
+	 *
+	 * @deprecated
 	 */
 	public function getByModule($moduleid, $asobject=true){
 		return $this->handler->getByModule( $moduleid, $asobject );
 	}
-	
+
 	/**
 	 * Get All Blocks By Group and Module
-	 * 
+	 *
 	 * @since XOOPS
-	 * 
+	 *
 	 * @param integer $groupid
 	 * @param integer $module_id
 	 * @param boolean $toponlyblock
@@ -314,15 +314,15 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * @param string $orderby
 	 * @param booelan $isactive
 	 * @return unknown
-	 * 
+	 *
 	 * @deprecated
-	 * 
+	 *
 	 * @todo Check if is still used, probably it was only used in the core block admin, and this has been rewrited.
 	 */
 	public function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
 		return $this->handler->getAllByGroupModule( $groupid, $module_id, $toponlyblock, $visible, $orderby, $isactive );
 	}
-	
+
 	/**
 	 * Get Non Grouped Blocks
 	 *
@@ -332,57 +332,57 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * @param string $orderby
 	 * @param boolean $isactive
 	 * @return array
-	 * 
+	 *
 	 * @todo Rewrite this method under the ImpressCMS Pessitable Framework
-	 * 
-	 * @deprecated 
+	 *
+	 * @deprecated
 	 */
 	public function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
 		return $this->hanler->getNonGroupedBlocks( $module_id, $toponlyblock, $visible, $orderby, $isactive );
 	}
-	
+
 	/**
 	 * Count Similar Blocks
-	 * 
+	 *
 	 * This method has been implemented in the block handler, because is was thought as usefull.
 	 *
 	 * @since XOOPS
-	 *  
+	 *
 	 * @param integer $moduleId
 	 * @param integer $funcNum
 	 * @param string $showFunc
-	 * 
+	 *
 	 * @return integer
-	 * 
-	 * @deprecated 
+	 *
+	 * @deprecated
 	 */
 	public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
-   		return $this->handler->getCountSimilarBlocks( $moduleId, $funcNum, $showFunc );	   
+   		return $this->handler->getCountSimilarBlocks( $moduleId, $funcNum, $showFunc );
 	}
-	
+
 }
 
 /**
  * ImpressCMS Core Block Object Handler Class
- * 
+ *
  * @copyright The ImpressCMS Project <http://www.impresscms.org>
  * @license GNU GPL v2
- * 
+ *
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 class IcmsBlockHandler extends IcmsPersistableObjectHandler {
-	
+
 	private $block_positions;
 	private $modules_name;
-	
+
 	public function __construct(& $db) {
 		$this->IcmsPersistableObjectHandler($db, 'block', 'bid', 'title', 'content', 'icms');
 		$this->table = $this->db->prefix('newblocks');
 	}
 
 	// The next methods are for backwards compatibility
-	
+
 	/**
 	 * getBlockPositions
 	 *
@@ -392,12 +392,12 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	public function getBlockPositions($full=false){
 		if( !count($this->block_positions ) ){
 			// TODO: Implement IPF for block_positions
-			$icms_blockposition_handler = xoops_gethandler('blockposition'); 
+			$icms_blockposition_handler = xoops_gethandler('blockposition');
 //			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
 //			$result = $this->db->query($sql);
 //			while ($row = $this->db->fetchArray($result)) {
 			$block_positions = $icms_blockposition_handler->getObjects();
-			foreach( $block_positions as $bp){				
+			foreach( $block_positions as $bp){
 				$this->block_positions[$bp->getVar('id')]['pname'] = $bp->getVar('pname');
 				$this->block_positions[$bp->getVar('id')]['title'] = $bp->getVar('title');
 				$this->block_positions[$bp->getVar('id')]['description'] = $bp->getVar('description');
@@ -408,23 +408,23 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		if (!$full)
 			foreach($this->block_positions as $k => $block_position)
 				$rtn[ $k ] = $block_position['pname'];
-		else 
+		else
 			$rtn = $this->block_positions;
 		return $rtn;
 	}
-	
-	
+
+
    /**
 	* getByModule
 	*
 	* @param unknown_type $mid
 	* @param boolean $asObject
 	* @return array
-	* 
-	* @deprecated 
+	*
+	* @deprecated
 	* @see $this->getObjects($criteria, false, $asObject);
 	* @todo Rewrite all the core to dont use any more this method.
-	*/ 
+	*/
 	public function getByModule($mid, $asObject = true){
 		$mid = intval($mid);
 		$criteria = new CriteriaCompo();
@@ -432,7 +432,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		$ret = $this->getObjects($criteria, false, $asObject);
 		return $ret;
 	}
-	
+
 	/**
 	 * getAllBlocks
 	 *
@@ -442,9 +442,9 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	 * @param string $orderby
 	 * @param bool $isactive
 	 * @return array
-	 * 
+	 *
 	 * @deprecated
-	 * 
+	 *
 	 * @todo Implement IPF for block_positions.
 	 * @todo Rewrite all the core to dont use any more this method.
 	 */
@@ -504,7 +504,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		//echo $sql;
 		return $ret;
 	}
-	
+
 	/**
 	 * getAllByGroupModule
 	 *
@@ -515,12 +515,12 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	 * @param unknown_type $orderby
 	 * @param unknown_type $isactive
 	 * @return unknown
-	 * 
-	 * @deprecated 
+	 *
+	 * @deprecated
 	 */
 	function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1) {
 		// TODO: use $this->getObjects($criteria);
-		
+
 		$isactive = intval($isactive);
 		$ret = array();
 		$sql = "SELECT DISTINCT gperm_itemid FROM ".$this->db->prefix('group_permission')." WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
@@ -584,8 +584,8 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	 * @param unknown_type $orderby
 	 * @param unknown_type $isactive
 	 * @return unknown
-	 * 
-	 * @deprecated 
+	 *
+	 * @deprecated
 	 */
 	function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1) {
 		$ret = array();
@@ -635,12 +635,12 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		}
 		return $ret;
 	}
-	
+
 	/**
 	 * Save a IcmsBlock Object
 	 *
 	 * Overwrited Method
-	 * 
+	 *
 	 * @param unknown_type $obj
 	 * @param unknown_type $force
 	 * @param unknown_type $checkObject
@@ -655,8 +655,25 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			$sql = sprintf("DELETE FROM %s WHERE block_id = '%u'", $this->db->prefix('block_module_link'), intval($obj->getVar('bid')));
 			$this->db->query($sql);
 		}else{
-			// TODO: Set diferents name depending the block c_type
-			$obj->setVar('name', 'Custom Block');
+			icms_loadLanguageFile('system', 'blocksadmin', true);
+			if ($obj->getVar('block_type') == 'K'){
+				$obj->setVar('name', _AM_CLONE);
+			} else {
+				switch ($obj->getVar('c_type')) {
+					case 'H':
+						$obj->setVar('name', _AM_CUSTOMHTML);
+						break;
+					case 'P':
+						$obj->setVar('name', _AM_CUSTOMPHP);
+						break;
+					case 'S':
+						$obj->setVar('name', _AM_CUSTOMSMILE);
+						break;
+					case 'T':
+						$obj->setVar('name', _AM_CUSTOMNOSMILE);
+						break;
+				}
+			}
 		}
 		$status = parent::insert( $obj, $force, $checkObject, $debug );
 		// TODO: Make something to no query here... implement IPF for block_module_link
@@ -683,10 +700,10 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 				$this->db->query($sql);
 			}
 		}*/
-		return $status; 
-		
+		return $status;
+
 	}
-	
+
 	public function &get($id, $as_object = true, $debug=false, $criteria=false) {
 		$obj = parent::get($id, $as_object, $debug, $criteria);
 		$sql = "SELECT module_id,page_id FROM ".$this->db->prefix('block_module_link')." WHERE block_id='".intval($obj->getVar('bid'))."'";
@@ -698,7 +715,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		$obj->setVar('visiblein', $modules);
 		return $obj;
 	}
-	
+
 	public function getCountSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
 		$funcNum = intval($funcNum);
 		$moduleId = intval($moduleId);
@@ -710,41 +727,41 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			// showFunc is set for more strict comparison
 			$criteria->add( new Criteria( 'mid', $moduleId ) );
 			$criteria->add( new Criteria( 'func_num', $funcNum ) );
-			$criteria->add( new Criteria( 'show_func', $showFunc ) );	
+			$criteria->add( new Criteria( 'show_func', $showFunc ) );
 		} else {
 			$criteria->add( new Criteria( 'mid', $moduleId ) );
 			$criteria->add( new Criteria( 'func_num', $funcNum ) );
 		}
 		$count = $this->handler->getCount($criteria);
 		return $count;
-		
+
 	}
-	
+
 }
 
 /**
  * XoopsBlock
- * 
+ *
  * @since XOOPS
  * @copyright The XOOPS Project <http://www.xoops.org>
  * @author The XOOPS Project Community <http://www.xoops.org>
- * 
+ *
  * @see IcmsBlock
- * 
- * @deprecated 
+ *
+ * @deprecated
  */
 class XoopsBlock extends IcmsBlock { /* For backwards compatibility */ }
 
 /**
  * XoopsBlockHandler
- * 
+ *
  * @since XOOPS
  * @copyright The XOOPS Project <http://www.xoops.org>
  * @author The XOOPS Project Community <http://www.xoops.org>
- * 
+ *
  * @see IcmsBlockHandler
- * 
- * @deprecated 
+ *
+ * @deprecated
  */
 class XoopsBlockHandler extends IcmsBlockHandler { /* For backwards compatibility */ }
 ?>

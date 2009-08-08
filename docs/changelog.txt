@@ -67,6 +67,7 @@ Revision:
 * #574: fixed xoopsCheckAll, xoopsCheckGroup, xoopsCheckAllElements using jQuery (Phoenyx)
 * #645: fixed fatal error while parsing valid customtag php code (Phoenyx)
 * #642: dhtmltextarea functions (bold, italic, smileys) are now working with and without jQuery (Phoenyx)
+* #697: fixed issues in blocks admin (cloning blocks is working now) (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''
