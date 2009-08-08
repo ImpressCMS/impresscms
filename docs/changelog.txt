@@ -26,11 +26,15 @@ Revision:
 * added source edit support for xoopslist class (mekdrop)
 * added XOOPS_SYSTEM_AUTOTASKS to modules/system/constants.php (mekdrop)
 * added _MI_SYSTEM_ADMENU25 to modules/system/language/english/modinfo.php (mekdrop)
+* added Admin Config Preferences for HTMLPurifier Library. (vaughan)
+* added New static protected class for uniquely dealing with Password related functions. (vaughan)
 
 '''Improved'''
 * Modified IcmsPersistableObjectHandler: if no module specified system think it's not a module (mekdrop)
 * #666: Update HTMLPurifier Library to 4.0.0. (vaughan)
 * #652: icmsStopSpammer causes blank page when the stopforumspam.org site is unavailable. (vaughan)
+* #562 as part of 562, created new class icms.class.password.php, removed old password functions from functions.php (vaughan)
+* Updated Protector module to 3.34 (Gijoe, Vaughan)
 
 '''Fixed'''
 * fixed class/icmsform/icmsform.php 723-728 lines (????) (mekdrop)
