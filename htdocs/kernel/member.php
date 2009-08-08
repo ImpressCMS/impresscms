@@ -291,13 +291,16 @@ class XoopsMemberHandler {
      */
      function loginUser($uname, $pwd)
      {
-          $is_expired = icms_PassExpired($uname);
+          include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+          $icmspass = new icms_Password();
+
+          $is_expired = $icmspass->icms_passExpired($uname);
           if($is_expired == 1)
           {
                redirect_header(ICMS_URL.'/user.php?op=resetpass&uname='.$uname, 5, _US_PASSEXPIRED, false);
           }
-          $salt = icms_getUserSaltFromUname($uname);
-          $pwd = icms_encryptPass($pwd, $salt);
+          $salt = $icmspass->icms_getUserSaltFromUname($uname);
+          $pwd = $icmspass->icms_encryptPass($pwd, $salt);
           include_once ICMS_ROOT_PATH.'/class/database/databaseupdater.php';
           $table = new IcmsDatabasetable('users');
           if($table->fieldExists('loginname'))

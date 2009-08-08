@@ -188,9 +188,11 @@ switch ($op)
 						xoops_cp_footer();
 						exit();
 					}
+                         include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+                         $icmspass = new icms_Password();
 					$newuser->setVar('salt', $salt);
 					$newuser->setVar('enc_type', $enc_type);
-					$password = icms_encryptPass($password, $salt);
+					$password = $icmspass->icms_encryptPass($password, $salt);
 					$newuser->setVar('pass', $password);
 				}
 				$newuser->setVar('timezone_offset', $timezone_offset);

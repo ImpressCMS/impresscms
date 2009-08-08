@@ -138,8 +138,10 @@ else {
 		$group_select[] = new XoopsFormHidden('groups[' . $key . ']', $group);
 	}
 }
+include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+$icmspass = new icms_Password();
 
-$salt_hidden = new XoopsFormHidden('salt', icms_createSalt());
+$salt_hidden = new XoopsFormHidden('salt', $icmspass->icms_createSalt());
 
 $enc_type_hidden = new XoopsFormHidden('enc_type', $xoopsConfigUser['enc_type']);
 $pass_expired_hidden = new XoopsFormHidden('pass_expired', 0);

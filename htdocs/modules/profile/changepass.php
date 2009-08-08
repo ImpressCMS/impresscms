@@ -49,13 +49,15 @@ else {
     }
     else {
         //update password
-        $salt = icms_createSalt();
-        $pass = icms_encryptPass($_POST['password'], $salt);
-        $icmsUser->setVar('pass', $pass);
-        $icmsUser->setVar('enc_type', $icmsConfigUser['enc_type']);
-        $icmsUser->setVar('pass_expired', 0);
-        $icmsUser->setVar('salt', $salt);
-        // Now we are using salt so this is not required!!
+          include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+          $icmspass = new icms_Password();
+          $salt = $icmspass->icms_createSalt();
+          $pass = $icmspass->icms_encryptPass(filter_input(INPUT_POST, $_POST['password'], FILTER_SANITIZE_URL), $salt);
+          $icmsUser->setVar('pass', $pass);
+          $icmsUser->setVar('enc_type', $icmsConfigUser['enc_type']);
+          $icmsUser->setVar('pass_expired', 0);
+          $icmsUser->setVar('salt', $salt);
+          // Now we are using salt so this is not required!!
         //$icmsUser->setVar('pass', md5($_POST['newpass']));
 
         $member_handler =& xoops_gethandler('member');

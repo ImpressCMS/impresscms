@@ -309,7 +309,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$ele->addOptionArray ( $content_handler->getContentList () );
 				break;
 				##############################################################################################
-				# Added by FĆ�bio Egas in XTXM version
+				# Added by Fábio Egas in XTXM version
 				##############################################################################################
 				case 'select_image' :
 					include_once ICMS_ROOT_PATH . '/class/xoopsform/formimage.php';

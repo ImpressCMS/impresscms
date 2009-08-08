@@ -758,6 +758,178 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->insertConfig(IM_CONF_AUTOTASKS, 'autotasks_user', '_MD_AM_AUTOTASKS_USER', '', '_MD_AM_AUTOTASKS_USERDSC', 'text', 'text', 4);
 	 }
 
+     $newDbVersion = 29;
+     
+     if($dbVersion < $newDbVersion)
+     {
+          if(getDbValue($icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PURIFIER"') == 0)
+          {
+               $icmsDB->queryF("INSERT INTO ".$icmsDB->prefix('configcategory')." (confcat_id,confcat_name) VALUES ('14', '_MD_AM_PURIFIER')");
+          }
+
+          echo $action;
+          $table = new IcmsDatabasetable('config');
+          $icmsDatabaseUpdater->runQuery("ALTER TABLE `".$table->name()."` MODIFY conf_name VARCHAR(75) NOT NULL default = ''",'Successfully altered field conf_name in config','');
+          unset($table);
+
+          include_once ICMS_ROOT_PATH.'/include/functions.php';
+          $host_domain = icms_get_base_domain(ICMS_URL);
+          $host_base = icms_get_url_domain(ICMS_URL);
+
+          // Allowed Elements in HTML
+          $HTML_Allowed_Elms = 'a, abbr, acronym, b, blockquote, br, caption, cite, code, dd, del, dfn, div, dl, dt, em, font, h1, h2, h3, h4, h5, h6, i, img, ins, kbd, li, ol, p, pre, s, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var';
+
+          // Allowed Element Attributes in HTML, element must also be allowed in Allowed Elements for these attributes to work.
+          $HTML_Allowed_Attr = 'a.class, a.href, a.id, a.rev, a.style, a.title, a.target, a.rel, abbr.title, acronym.title, blockquote.cite, div.align, div.style, div.class, div.id, font.size, font.color, h1.style, h2.style, h3.style, h4.style, h5.style, h6.style, img.src, img.alt, img.title, img.class, img.align, img.style, img.height, img.width, ol.style, p.style, span.style, span.class, span.id, table.class, table.id, table.border, table.cellpadding, table.cellspacing, table.style, table.width, td.abbr, td.align, td.class, td.id, td.colspan, td.rowspan, td.style, td.valign, tr.align, tr.class, tr.id, tr.style, tr.valign, th.abbr, th.align, th.class, th.id, th.colspan, th.rowspan, th.style, th.valign, ul.style';
+
+          $p = 0;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'enable_purifier', '_MD_AM_PURIFIER_ENABLE', '1', '_MD_AM_PURIFIER_ENABLEDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_Host', '_MD_AM_PURIFIER_URI_HOST', addslashes($host_domain), '_MD_AM_PURIFIER_URI_HOSTDSC', 'textbox', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_Base', '_MD_AM_PURIFIER_URI_BASE', addslashes($host_base), '_MD_AM_PURIFIER_URI_BASEDSC', 'textbox', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_Disable', '_MD_AM_PURIFIER_URI_DISABLE', '0', '_MD_AM_PURIFIER_URI_DISABLEDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DisableExternal', '_MD_AM_PURIFIER_URI_DISABLEEXT', '0', '_MD_AM_PURIFIER_URI_DISABLEEXTDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DisableExternalResources', '_MD_AM_PURIFIER_URI_DISABLEEXTRES', '0', '_MD_AM_PURIFIER_URI_DISABLEEXTRESDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DisableResources', '_MD_AM_PURIFIER_URI_DISABLERES', '0', '_MD_AM_PURIFIER_URI_DISABLERESDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_MakeAbsolute', '_MD_AM_PURIFIER_URI_MAKEABS', '0', '_MD_AM_PURIFIER_URI_MAKEABSDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_HostBlacklist', '_MD_AM_PURIFIER_URI_BLACKLIST', '0', '_MD_AM_PURIFIER_URI_BLACKLISTDSC', 'textsarea', 'array', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_AllowedSchemes', '_MD_AM_PURIFIER_URI_ALLOWSCHEME', addslashes(serialize(array('http','https','mailto','ftp','nntp','news'))), '_MD_AM_PURIFIER_URI_ALLOWSCHEMEDSC', 'textsarea', 'array', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_DefinitionID', '_MD_AM_PURIFIER_HTML_DEFID', 'system', '_MD_AM_PURIFIER_HTML_DEFIDDSC', 'textbox', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_DefinitionRev', '_MD_AM_PURIFIER_HTML_DEFREV', '1', '_MD_AM_PURIFIER_HTML_DEFREVDSC', 'textbox', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_Doctype', '_MD_AM_PURIFIER_HTML_DOCTYPE', 'XHTML 1.0 Transitional', '_MD_AM_PURIFIER_HTML_DOCTYPEDSC', 'select', 'text', $p);
+          $p++;
+
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_TidyLevel', '_MD_AM_PURIFIER_HTML_TIDYLEVEL', 'medium', '_MD_AM_PURIFIER_HTML_TIDYLEVELDSC', 'select', 'text', $p);
+          $p++;
+          $config_id = $icmsDB->getInsertId();
+          $sql = "INSERT INTO " . $icmsDB->prefix('configoption') .
+          " (confop_id, confop_name, confop_value, conf_id)" .
+          " VALUES" .
+          " (NULL, '_MD_AM_PURIFIER_NONE', 'none', {$config_id})," .
+          " (NULL, '_MD_AM_PURIFIER_LIGHT', 'light', {$config_id})," .
+          " (NULL, '_MD_AM_PURIFIER_MEDIUM', 'medium', {$config_id})," .
+          " (NULL, '_MD_AM_PURIFIER_HEAVY', 'heavy', {$config_id})";
+          if (!$icmsDB->queryF( $sql )) {
+               return false;
+          }
+
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_AllowedElements', '_MD_AM_PURIFIER_HTML_ALLOWELE', $HTML_Allowed_Elms, '_MD_AM_PURIFIER_HTML_ALLOWELEDSC', 'textsarea', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_AllowedAttributes', '_MD_AM_PURIFIER_HTML_ALLOWATTR', $HTML_Allowed_Attr, '_MD_AM_PURIFIER_HTML_ALLOWATTRDSC', 'textsarea', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_ForbiddenElements', '_MD_AM_PURIFIER_HTML_FORBIDELE', '', '_MD_AM_PURIFIER_HTML_FORBIDELEDSC', 'textsarea', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_ForbiddenAttributes', '_MD_AM_PURIFIER_HTML_FORBIDATTR', '', '_MD_AM_PURIFIER_HTML_FORBIDATTRDSC', 'textsarea', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_MaxImgLength', '_MD_AM_PURIFIER_HTML_MAXIMGLENGTH', '1200', '_MD_AM_PURIFIER_HTML_MAXIMGLENGTHDSC', 'textbox', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_SafeEmbed', '_MD_AM_PURIFIER_HTML_SAFEEMBED', '1', '_MD_AM_PURIFIER_HTML_SAFEEMBEDDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_SafeObject', '_MD_AM_PURIFIER_HTML_SAFEOBJECT', '1', '_MD_AM_PURIFIER_HTML_SAFEOBJECTDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_AttrNameUseCDATA', '_MD_AM_PURIFIER_HTML_ATTRNAMEUSECDATA', '0', '_MD_AM_PURIFIER_HTML_ATTRNAMEUSECDATADSC', 'yesno', 'int', $p);
+          $p++;
+
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_ExtractStyleBlocks_Escaping', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEESC', '1', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEESCDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_ExtractStyleBlocks_Scope', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEBLKSCOPE', 'cssuser_', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEBLKSCOPEDSC', 'textsarea', 'text', $p);
+          $p++;
+
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_YouTube', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBE', '1', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBEDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_ExtractStyleBlocks', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLK', '1', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKDSC', 'yesno', 'int', $p);
+          $p++;
+
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_Custom', '_MD_AM_PURIFIER_FILTER_CUSTOM', '1', '_MD_AM_PURIFIER_FILTER_CUSTOMDSC', 'select_multi', 'text', $p);
+          $p++;
+          $config_id = $icmsDB->getInsertId();
+          $sql = "INSERT INTO ".$icmsDB->prefix('configoption').
+          " (confop_id, confop_name, confop_value, conf_id)".
+          " VALUES".
+          " (NULL, '_MD_AM_PURIFIER_WEGAME', 'new HTMLPurifier_Filter_WeGame()', {$config_id}),".
+          " (NULL, '_MD_AM_PURIFIER_VIMEO', 'new HTMLPurifier_Filter_Vimeo()', {$config_id}),".
+          " (NULL, '_MD_AM_PURIFIER_LOCALMOVIE', 'new HTMLPurifier_Filter_LocalMovie()', {$config_id}),".
+          " (NULL, '_MD_AM_PURIFIER_GOOGLEVID', 'new HTMLPurifier_Filter_GoogleVideo()', {$config_id}),".
+          " (NULL, '_MD_AM_PURIFIER_LIVELEAK', 'new HTMLPurifier_Filter_LiveLeak()', {$config_id})";
+          if(!$icmsDB->queryF($sql))
+          {
+               return false;
+          }
+
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_EscapeInvalidTags', '_MD_AM_PURIFIER_CORE_ESCINVALIDTAGS', '1', '_MD_AM_PURIFIER_CORE_ESCINVALIDTAGSDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_EscapeNonASCIICharacters', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARS', '1', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARSDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_HiddenElements', '_MD_AM_PURIFIER_CORE_HIDDENELE', addslashes(serialize(array('script','style'))), '_MD_AM_PURIFIER_CORE_HIDDENELEDSC', 'textsarea', 'array', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_RemoveInvalidImg', '_MD_AM_PURIFIER_CORE_REMINVIMG', '1', '_MD_AM_PURIFIER_CORE_REMINVIMGDSC', 'yesno', 'int', $p);
+          $p++;
+
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_AutoParagraph', '_MD_AM_PURIFIER_AUTO_AUTOPARA', '0', '_MD_AM_PURIFIER_AUTO_AUTOPARADSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_DisplayLinkURI', '_MD_AM_PURIFIER_AUTO_DISPLINKURI', '0', '_MD_AM_PURIFIER_AUTO_DISPLINKURIDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_Linkify', '_MD_AM_PURIFIER_AUTO_LINKIFY', '1', '_MD_AM_PURIFIER_AUTO_LINKIFYDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_PurifierLinkify', '_MD_AM_PURIFIER_AUTO_PURILINKIFY', '0', '_MD_AM_PURIFIER_AUTO_PURILINKIFYDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_Custom', '_MD_AM_PURIFIER_AUTO_CUSTOM', '', '_MD_AM_PURIFIER_AUTO_CUSTOMDSC', 'textsarea', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_RemoveEmpty', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTY', '0', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_RemoveEmptyNbsp', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSP', '0', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_AutoFormat_RemoveEmptyNbspExceptions', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPT', addslashes(serialize(array('td','th'))), '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPTDSC', 'textsarea', 'array', $p);
+          $p++;
+
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedFrameTargets', '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGET', addslashes(serialize(array('_blank','_parent','_self','_top'))), '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGETDSC', 'textsarea', 'array', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedRel', '_MD_AM_PURIFIER_ATTR_ALLOWREL', addslashes(serialize(array('external','nofollow','external nofollow','lightbox'))), '_MD_AM_PURIFIER_ATTR_ALLOWRELDSC', 'textsarea', 'array', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedClasses', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSES', '', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSESDSC', 'textsarea', 'array', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_DefaultInvalidImage', '_MD_AM_PURIFIER_ATTR_DEFINVIMG', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGDSC', 'textbox', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_DefaultInvalidImageAlt', '_MD_AM_PURIFIER_ATTR_DEFINVIMGALT', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGALTDSC', 'textbox', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_DefaultImageAlt', '_MD_AM_PURIFIER_ATTR_DEFIMGALT', '', '_MD_AM_PURIFIER_ATTR_DEFIMGALTDSC', 'textbox', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_ClassUseCDATA', '_MD_AM_PURIFIER_ATTR_CLASSUSECDATA', '1', '_MD_AM_PURIFIER_ATTR_CLASSUSECDATADSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_EnableID', '_MD_AM_PURIFIER_ATTR_ENABLEID', '0', '_MD_AM_PURIFIER_ATTR_ENABLEIDDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_IDPrefix', '_MD_AM_PURIFIER_ATTR_IDPREFIX', 'cssuser_', '_MD_AM_PURIFIER_ATTR_IDPREFIXDSC', 'textbox', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_IDPrefixLocal', '_MD_AM_PURIFIER_ATTR_IDPREFIXLOCAL', '001_', '_MD_AM_PURIFIER_ATTR_IDPREFIXLOCALDSC', 'textbox', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_IDBlacklist', '_MD_AM_PURIFIER_ATTR_IDBLACKLIST', '', '_MD_AM_PURIFIER_ATTR_IDBLACKLISTDSC', 'textsarea', 'text', $p);
+          $p++;
+
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_DefinitionRev', '_MD_AM_PURIFIER_CSS_DEFREV', '1', '_MD_AM_PURIFIER_CSS_DEFREVDSC', 'textbox', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_AllowImportant', '_MD_AM_PURIFIER_CSS_ALLOWIMPORTANT', '1', '_MD_AM_PURIFIER_CSS_ALLOWIMPORTANTDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_AllowTricky', '_MD_AM_PURIFIER_CSS_ALLOWTRICKY', '1', '_MD_AM_PURIFIER_CSS_ALLOWTRICKYDSC', 'yesno', 'int', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_AllowedProperties', '_MD_AM_PURIFIER_CSS_ALLOWPROP', '', '_MD_AM_PURIFIER_CSS_ALLOWPROPDSC', 'textsarea', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_MaxImgLength', '_MD_AM_PURIFIER_CSS_MAXIMGLEN', '1200px', '_MD_AM_PURIFIER_CSS_MAXIMGLENDSC', 'textbox', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_Proprietary', '_MD_AM_PURIFIER_CSS_PROPRIETARY', '1', '_MD_AM_PURIFIER_CSS_PROPRIETARYDSC', 'yesno', 'int', $p);
+
+     }
+
 	echo "</code>";
 
  /**

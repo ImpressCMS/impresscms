@@ -1515,7 +1515,7 @@ function icms_html2text($document)
 *
 * @return int	returns 1 if password is expired, 0 if password is ot expired.
 */
-function icms_passExpired($uname = '')
+/*function icms_passExpired($uname = '')
 {
 	$db =& Database::getInstance();
 	if($uname !== '')
@@ -1525,7 +1525,7 @@ function icms_passExpired($uname = '')
 	}
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 	return $pass_expired;
-}
+}*/
 /**
 * This Function creates a unique random Salt Key for use with password encryptions
 * It can also be used to generate a random AlphaNumeric key sequence of any given length.
@@ -1537,7 +1537,7 @@ function icms_passExpired($uname = '')
 *
 * @return string	returns the generated random key.
 */
-function icms_createSalt($slength=64)
+/*function icms_createSalt($slength=64)
 {
 	$salt= '';
 	$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -1546,7 +1546,7 @@ function icms_createSalt($slength=64)
 		for($i=0; $i<=$slength; $i++)
 		$salt.= substr($base, rand() % strlen($base), 1);
 		return $salt;
-}
+}*/
 
 /**
 * This Function returns the User Salt key belonging to username.
@@ -1558,7 +1558,7 @@ function icms_createSalt($slength=64)
 *
 * @return string	returns the Salt key of the user.
 */
-function icms_getUserSaltFromUname($uname = '')
+/*function icms_getUserSaltFromUname($uname = '')
 {
 	$db =& Database::getInstance();
 	if($uname !== '')
@@ -1578,7 +1578,7 @@ function icms_getUserSaltFromUname($uname = '')
 	}
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 	return $salt;
-}
+}*/
 
 /**
 * This Function returns the Username of the account linked to the inputted email address
@@ -1590,7 +1590,7 @@ function icms_getUserSaltFromUname($uname = '')
 *
 * @return string	returns the username of the account linked to supplied email.
 */
-function icms_getUnameFromUserEmail($email = '')
+/*function icms_getUnameFromUserEmail($email = '')
 {
 	$db =& Database::getInstance();
 	if($email !== '')
@@ -1607,7 +1607,7 @@ function icms_getUnameFromUserEmail($email = '')
 	}
 	else	{redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 	return $uname;
-}
+}*/
 
 /**
 * This Function is used to Encrypt User Passwords
@@ -1623,7 +1623,7 @@ function icms_getUnameFromUserEmail($email = '')
 *
 * @return string	returns the final encrypted hash of users password.
 */
-function icms_encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
+/*function icms_encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
 {
 	global $icmsConfigUser;
 	$mainSalt = XOOPS_DB_SALT;
@@ -1652,7 +1652,7 @@ function icms_encryptPass($pass, $salt, $enc_type = 0, $reset = 0)
 	elseif(!function_exists('hash')) {$pass = md5($pass);} // no salt used for compatibility with external scripts such as ipb/phpbb etc. no idea why this was requested though, but not recommended to use.
 	unset($mainSalt);
 	return $pass;
-}
+}*/
 // ----- End New Password System
 
 /**

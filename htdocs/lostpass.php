@@ -38,14 +38,17 @@ if(empty($getuser))
 }
 else
 {
+	include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+        $icmspass = new icms_Password();
+
 	$code = isset($_GET['code']) ? trim(StopXSS($_GET['code'])) : '';
 	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
 	$enc_type = intval($icmsConfigUser['enc_type']);
 	if($code != '' && $areyou == $code)
 	{
-		$newpass = xoops_makepass();
-		$salt = icms_createSalt();
-		$pass = icms_encryptPass($newpass, $salt);
+		$newpass = $icmspass->icms_createSalt(8);
+		$salt = $icmspass->icms_createSalt();
+		$pass = $icmspass->icms_encryptPass($newpass, $salt);
 		$xoopsMailer =& getMailer();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('lostpass2.tpl');

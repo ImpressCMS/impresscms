@@ -59,7 +59,7 @@ class MyTextSanitizer
 	 */
 	function html_purifier($text, $config = 'system-global')
 	{
-		include_once ICMS_ROOT_PATH.'/class/icms.htmlpurifier.php';
+		include_once ICMS_ROOT_PATH.'/class/icms.class.htmlpurifier.php';
 		$html_purifier = &icms_HTMLPurifier::getPurifierInstance();
 
 		if($config = 'system-global')
@@ -372,7 +372,7 @@ class MyTextSanitizer
 	function &displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1, $config = 'display')
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
-		global $icmsPreloadHandler;
+		global $icmsPreloadHandler, $icmsConfigPurifier;
 		// FIXME: Review this fix, is not the best. I dont found the problem, it really should never worked in the admin side!
 		// Maybe the preload handler should be in the install kernel.
 		if(!is_object($icmsPreloadHandler)){
@@ -409,7 +409,7 @@ class MyTextSanitizer
 			$text = $this->nl2Br($text);
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
-		if($html != 0)
+		if($html != 0 && $icmsConfigPurifier['enable_purifier'] !== 0)
 		{
 			$text = $this->html_purifier($text, $config);
 		}
@@ -433,7 +433,7 @@ class MyTextSanitizer
 	function &previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1, $config = 'preview')
 	{
 		// ################# Preload Trigger beforePreviewTarea ##############
-		global $icmsPreloadHandler;
+		global $icmsPreloadHandler, $icmsConfigPurifier;
 		$icmsPreloadHandler->triggerEvent('beforePreviewTarea', array(&$text, $html, $smiley, $xcode, $image, $br));
 
 		$text = $this->stripSlashesGPC($text);
@@ -464,7 +464,7 @@ class MyTextSanitizer
 			$text = $this->nl2Br($text);
 		}
 		$text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
-		if($html != 0)
+		if($html != 0 && $icmsConfigPurifier['enable_purifier'] !== 0)
 		{
 			$text = $this->html_purifier($text, $config);
 		}

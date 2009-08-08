@@ -242,10 +242,12 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 				xoops_cp_footer();
 				exit();
 			}
+               include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+               $icmspass = new icms_Password();
 			$edituser->setVar('salt', $salt);
 			$edituser->setVar('enc_type', $enc_type);
 			$edituser->setVar('pass_expired', $pass_expired);
-			$pass = icms_encryptPass($pass, $salt);
+			$pass = $icmspass->icms_encryptPass($pass, $salt);
 			$edituser->setVar('pass', $pass);
 		}
 		if(!$member_handler->insertUser($edituser))

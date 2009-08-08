@@ -14,9 +14,9 @@
  * @version         $Id$
  */
 
-if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
+if (!defined('ICMS_ROOT_PATH')) die('ICMS root path not defined');
 
-require_once( ICMS_KERNEL_PATH."icmspersistableobject.php" );
+require_once(ICMS_KERNEL_PATH.'icmspersistableobject.php');
 
 /**
  * Profile Module Field Class

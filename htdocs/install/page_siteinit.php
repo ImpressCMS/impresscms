@@ -28,8 +28,13 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
 	$error =& $_SESSION['error'];
 
+function createSalt() {
+    include_once './include/functions.php';
+    return imcms_createSalt();
+}
+
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-	$vars['adminsalt'] = $_POST['adminsalt'];
+	$vars['adminsalt'] = createSalt();
 	$vars['adminname'] = $_POST['adminname'];
 	$vars['adminlogin_name'] = $_POST['adminlogin_name'];
 	$vars['adminmail'] = $_POST['adminmail'];
@@ -56,13 +61,6 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     ob_start();
 ?>
 <?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
-<?php
-function createSalt() {
-	include_once './include/functions.php';
-	return imcms_createSalt(64);
-}
-$adminsalt = createSalt();
-?>
 	<script type="text/javascript" src="../libraries/jquery/jquery.js"></script>
 	<script type="text/javascript" src="../libraries/jquery/password_strength_plugin.js"></script>
 	<script type="text/javascript">
@@ -96,7 +94,6 @@ $adminsalt = createSalt();
 	<input class="password_adv" type="password" name="adminpass" id="adminpass" maxlength="255" value="" />
 	<label for="adminpass2"><?php echo ADMIN_CONFIRMPASS_LABEL; ?></label>
 	<input type="password" name="adminpass2" id="adminpass2" maxlength="255" value="" />
-	<input type="hidden" name="adminsalt" id="adminsalt" maxlength="255" value="<?php echo $adminsalt; ?>" />
 </fieldset>
 <?php
 	$content = ob_get_contents();

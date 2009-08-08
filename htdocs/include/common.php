@@ -170,10 +170,7 @@ require_once ICMS_ROOT_PATH.'/kernel/object.php';
 require_once ICMS_ROOT_PATH.'/class/criteria.php';
 
 // #################### Include text sanitizer ##################
-include_once ICMS_ROOT_PATH."/class/module.textsanitizer.php";
-
-// #################### Include html purifier ##################
-include_once ICMS_ROOT_PATH."/class/icms.htmlpurifier.php";
+include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 
 // #################### Including debuging functions ##################
 include_once ICMS_ROOT_PATH . "/include/debug_functions.php";

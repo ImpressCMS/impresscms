@@ -220,10 +220,10 @@ CREATE TABLE config (
   conf_id smallint(5) unsigned NOT NULL auto_increment,
   conf_modid smallint(5) unsigned NOT NULL default '0',
   conf_catid smallint(5) unsigned NOT NULL default '0',
-  conf_name varchar(25) NOT NULL default '',
-  conf_title varchar(30) NOT NULL default '',
+  conf_name varchar(75) NOT NULL default '',
+  conf_title varchar(255) NOT NULL default '',
   conf_value text NOT NULL,
-  conf_desc varchar(100) NOT NULL default '',
+  conf_desc varchar(255) NOT NULL default '',
   conf_formtype varchar(15) NOT NULL default '',
   conf_valuetype varchar(10) NOT NULL default '',
   conf_order smallint(5) unsigned NOT NULL default '0',
@@ -238,7 +238,7 @@ CREATE TABLE config (
 
 CREATE TABLE configcategory (
   confcat_id smallint(5) unsigned NOT NULL auto_increment,
-  confcat_name varchar(25) NOT NULL default '',
+  confcat_name varchar(255) NOT NULL default '',
   confcat_order smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (confcat_id)
 ) TYPE=MyISAM;

@@ -146,10 +146,14 @@ case 'finish':
 		include_once 'include/checkinvite.php';
 		$valid_actkey = check_invite_code($actkey);
 		$newuser->setVar('actkey', $valid_actkey ? $actkey : substr(md5(uniqid(mt_rand(), 1)), 0, 8), true);
-		$salt = icms_createSalt();
+
+        include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+        $icmspass = new icms_Password();
+
+		$salt = $icmspass->icms_createSalt();
 		$newuser->setVar('salt', $salt, true);
-		$pass = icms_encryptPass($pass, $salt);
-		$newuser->setVar('pass', $pass, true);
+		$pass1 = $icmspass->icms_encryptPass($pass, $salt);
+		$newuser->setVar('pass', $pass1, true);
 		$newuser->setVar('timezone_offset', $timezone_offset, true);
 		$newuser->setVar('user_regdate', time(), true);
 		$newuser->setVar('uorder',$icmsConfig['com_order'], true);

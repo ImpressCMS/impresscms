@@ -220,10 +220,12 @@ $errors[] .= _US_NICKNAMENOSPACES."<br />";
 		$edituser->setVar('user_msnm', $_POST['user_msnm']);
 		if($password != '')
 		{
-			$salt = icms_createSalt();
-			$edituser->setVar('salt', $salt, true);
+                        include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+                        $icmspass = new icms_Password();
+                        $salt = $icmspass->icms_createSalt();
+                        $edituser->setVar('salt', $salt, true);
 			$edituser->setVar('enc_type', $icmsConfigUser['enc_type'], true);
-			$pass = icms_encryptPass($password, $salt);
+			$pass = $icmspass->icms_encryptPass($password, $salt);
 			$edituser->setVar('pass', $pass, true);
 		}
 

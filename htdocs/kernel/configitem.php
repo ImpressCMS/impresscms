@@ -36,6 +36,7 @@ define('XOOPS_CONF_PERSONA', 10);
 define('ICMS_CONF_CAPTCHA', 11);
 define('ICMS_CONF_PLUGINS', 12);
 define('IM_CONF_AUTOTASKS', 13);
+define('ICMS_CONF_PURIFIER', 14);
 /**#@-*/
 
 /**
