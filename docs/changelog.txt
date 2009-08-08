@@ -68,6 +68,7 @@ Revision:
 * #645: fixed fatal error while parsing valid customtag php code (Phoenyx)
 * #642: dhtmltextarea functions (bold, italic, smileys) are now working with and without jQuery (Phoenyx)
 * #697: fixed issues in blocks admin (cloning blocks is working now) (Phoenyx)
+* #698: we are now using the default system editor to edit the content for blocks (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''

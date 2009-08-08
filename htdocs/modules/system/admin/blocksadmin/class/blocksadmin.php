@@ -67,7 +67,7 @@ class SystemBlocksadmin extends IcmsBlock {
 		));
 
 		$this->setControl('visiblein','page');
-
+		$this->setControl('content', 'dhtmltextarea');
 	}
 
 	public function getVar($key, $format = 's') {
