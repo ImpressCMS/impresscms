@@ -662,5 +662,4 @@ define("_MD_AM_AUTOTASKS_USERDSC", "System user to be used for task execution.")
 //source editedit
 define("_MD_AM_SRCEDITOR_DEFAULT","Default Source Code Editor");
 define("_MD_AM_SRCEDITOR_DEFAULT_DESC","Select the default Editor for editing source codes.");
-
 ?>
