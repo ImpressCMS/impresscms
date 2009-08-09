@@ -36,6 +36,7 @@ Revision:
 * #562 as part of 562, created new class icms.class.password.php, removed old password functions from functions.php (vaughan)
 * Updated Protector module to 3.34 (Gijoe, Vaughan)
 * #698: we are now using the default system editor to edit the content for blocks (Phoenyx)
+* #570: changed th font color in impresstheme and impresstheme_light from white to black to make it readable (Phoenyx)
 
 '''Fixed'''
 * fixed class/icmsform/icmsform.php 723-728 lines (????) (mekdrop)

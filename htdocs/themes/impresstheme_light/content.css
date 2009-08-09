@@ -20,7 +20,7 @@
 /* tables and cells */
 table {	width: 100%;}
 table td {padding: 0; border-width: 0;	vertical-align: top;}
-th {background-color: #f3ac03; color: #fff; padding : 2px; vertical-align : middle;}
+th {background-color: #f3ac03; color: #000; padding : 2px; vertical-align : middle;}
 .outer {border: 1px solid #ccc;}
 .head {background-color: #f5e9cd; color:inherit; padding: 5px; font-weight: bold;}
 .even {background-color: #e8e6e2; color:inherit; padding: 5px;}

@@ -1,4 +1,4 @@
-/* ------ Left column / Right column content------ */
+th/* ------ Left column / Right column content------ */
 #icms-canvas-leftcolumn .icms-block, #icms-canvas-rightcolumn .icms-block {
 	margin-bottom:	10px;
 }
@@ -33,7 +33,7 @@
 /* ------ Center column content ------ */
 #icms-page th {
 	background-color: #f3ac03;
-	color: #fff;
+	color: #000;
 }
 
 #icms-page .icms-block {
