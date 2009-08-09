@@ -122,14 +122,13 @@ if (in_array($clean_op,$valid_op,true) && is_object($icmsUser)){
 		break;
 	}
 }
-$xoopsTpl->assign('uid_owner',$uid);
-$xoopsTpl->assign('lang_mysection',_MD_PROFILE_MYPROFILE);
-$xoopsTpl->assign('section_name',_MD_PROFILE_PROFILE);
 $member_handler =& xoops_gethandler('member');
 $thisUser =& $member_handler->getUser($uid);
-
+$xoopsTpl->assign('uid_owner',$uid);
+$xoopsTpl->assign('owner_uname', $thisUser->getVar('uname'));
+$xoopsTpl->assign('lang_mysection',_MD_PROFILE_MYPROFILE);
+$xoopsTpl->assign('section_name',_MD_PROFILE_PROFILE);
 $xoopsTpl->assign('lang_viewallfriends',_MD_PROFILE_ALLFRIENDS);
-
 $xoopsTpl->assign('lang_nofriendsyet',_MD_PROFILE_NOFRIENDSYET);
 
 //search
@@ -145,7 +144,7 @@ $xoopsTpl->assign('user_realname', $thisUser->getVar('name'));
 $xoopsTpl->assign('lang_uname', _US_NICKNAME);
 $xoopsTpl->assign('lang_website', _US_WEBSITE);
 $userwebsite = ($thisUser->getVar('url', 'E')!='') ? $myts->makeClickable(formatURL($thisUser->getVar('url', 'E'))) : '';
-$xoopsTpl->assign('user_websiteurl',$userwebsite );
+$xoopsTpl->assign('user_websiteurl', $userwebsite);
 $xoopsTpl->assign('lang_email', _US_EMAIL);
 $xoopsTpl->assign('lang_privmsg', _US_PM);
 $xoopsTpl->assign('lang_icq', _US_ICQ);
@@ -163,8 +162,7 @@ $xoopsTpl->assign('user_occupation', $thisUser->getVar('user_occ'));
 $xoopsTpl->assign('lang_interest', _US_INTEREST);
 $xoopsTpl->assign('user_interest', $thisUser->getVar('user_intrest'));
 $xoopsTpl->assign('lang_extrainfo', _US_EXTRAINFO);
-$var = $thisUser->getVar('bio', 'N');
-$xoopsTpl->assign('user_extrainfo', $myts->displayTarea( $var,0,1,1) );
+$xoopsTpl->assign('user_extrainfo', trim($thisUser->getVar('bio')) ? $myts->displayTarea($thisUser->getVar('bio', 'N'),0,1,1) : '');
 $xoopsTpl->assign('lang_statistics', _US_STATISTICS);
 $xoopsTpl->assign('lang_membersince', _US_MEMBERSINCE);
 $var = $thisUser->getVar('user_regdate');
@@ -182,14 +180,11 @@ if (!empty($date)) {
 }
 $xoopsTpl->assign('lang_notregistered', _US_NOTREGISTERED);
 $xoopsTpl->assign('lang_signature', _US_SIGNATURE);
-$var = $thisUser->getVar('user_sig', 'N');
-$xoopsTpl->assign('user_signature', $myts->displayTarea( $var, 1, 1, 1 ) );
+$xoopsTpl->assign('user_signature', trim($thisUser->getVar('user_sig')) ? $myts->displayTarea($thisUser->getVar('user_sig', 'N'), 1, 1, 1) : '');
 
 if ($thisUser->getVar('user_viewemail') == 1) {
   $xoopsTpl->assign('user_email', $thisUser->getVar('email', 'E'));
-} else {
-  $xoopsTpl->assign('user_email', '&nbsp;');
-}  
+}
 
 $xoopsTpl->assign('uname',$thisUser->getVar('uname'));
 $xoopsTpl->assign('lang_realname', _US_REALNAME);
@@ -201,7 +196,6 @@ $module_handler =& xoops_gethandler('module');
 $criteria = new CriteriaCompo(new Criteria('hassearch', 1));
 $criteria->add(new Criteria('isactive', 1));
 $mids = array_keys($module_handler->getList($criteria));
-
 
 //userrank
 $userrank = $thisUser->rank();

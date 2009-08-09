@@ -65,8 +65,7 @@ if($icmsModuleConfig['profile_social']){
 		'lang_profile' => _MD_PROFILE_PROFILE,
 		'lang_tribes' => _MD_PROFILE_TRIBES,
 		'lang_configs' => _MD_PROFILE_CONFIGSTITLE,
-		'uid_owner' => $isOwner,
-		'owner_uname' => $owner_uname));
+		'isOwner' => $isOwner));
 }
 if ($isAnonym == true && $uid == 0) {
 	include_once(ICMS_ROOT_PATH.'/modules/'.$dirname.'/footer.php');
