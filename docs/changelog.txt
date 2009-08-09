@@ -74,6 +74,7 @@ Revision:
 * #642: dhtmltextarea functions (bold, italic, smileys) are now working with and without jQuery (Phoenyx)
 * #697: fixed issues in blocks admin (cloning blocks is working now) (Phoenyx)
 * #622: fixed column width for column rate in ratings administration (Phoenyx)
+* #462: all smilies are rendered properly now (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''

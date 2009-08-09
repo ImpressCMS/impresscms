@@ -128,7 +128,7 @@ class MyTextSanitizer
    */
   function smiley($message)
 	{
-		$smileys = $this->getSmileys();
+		$smileys = $this->getSmileys(true);
 		foreach($smileys as $smile)
 		{
 			$message = str_replace($smile['code'], '<img src="'.ICMS_UPLOAD_URL.'/'.htmlspecialchars($smile['smile_url']).'" alt="" />', $message);
