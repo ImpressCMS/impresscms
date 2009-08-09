@@ -1,8 +1,8 @@
 <?php
 
 // language file (modinfo.php)
-if( file_exists( dirname(__FILE__).'/language/'.@$xoopsConfig['language'].'/modinfo.php' ) ) {
-	include dirname(__FILE__).'/language/'.@$xoopsConfig['language'].'/modinfo.php' ;
+if( file_exists( dirname(__FILE__).'/language/'.@$GLOBALS['xoopsConfig']['language'].'/modinfo.php' ) ) {
+	include dirname(__FILE__).'/language/'.@$GLOBALS['xoopsConfig']['language'].'/modinfo.php' ;
 } else if( file_exists( dirname(__FILE__).'/language/english/modinfo.php' ) ) {
 	include dirname(__FILE__).'/language/english/modinfo.php' ;
 }
