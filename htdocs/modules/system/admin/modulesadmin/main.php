@@ -257,9 +257,9 @@ if ($op == 'update_ok') {
 		$deltpl =& $tplfile_handler->find('default', 'module', $module->getVar('mid'));
 		$delng = array();
 		if (is_array($deltpl)) {
-			$xoopsTpl = new XoopsTpl();
+			$xoopsDelTpl = new XoopsTpl();
 			// clear cache files
-			$xoopsTpl->clear_cache(null, 'mod_'.$dirname);
+			$xoopsDelTpl->clear_cache(null, 'mod_'.$dirname);
 			// delete template file entry in db
 			$dcount = count($deltpl);
 			for ($i = 0; $i < $dcount; $i++) {
