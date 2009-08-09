@@ -35,6 +35,7 @@ Revision:
 * #652: icmsStopSpammer causes blank page when the stopforumspam.org site is unavailable. (vaughan)
 * #562 as part of 562, created new class icms.class.password.php, removed old password functions from functions.php (vaughan)
 * Updated Protector module to 3.34 (Gijoe, Vaughan)
+* #698: we are now using the default system editor to edit the content for blocks (Phoenyx)
 
 '''Fixed'''
 * fixed class/icmsform/icmsform.php 723-728 lines (????) (mekdrop)
@@ -72,7 +73,7 @@ Revision:
 * #645: fixed fatal error while parsing valid customtag php code (Phoenyx)
 * #642: dhtmltextarea functions (bold, italic, smileys) are now working with and without jQuery (Phoenyx)
 * #697: fixed issues in blocks admin (cloning blocks is working now) (Phoenyx)
-* #698: we are now using the default system editor to edit the content for blocks (Phoenyx)
+* #622: fixed column width for column rate in ratings administration (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''

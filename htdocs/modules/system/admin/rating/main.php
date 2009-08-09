@@ -102,7 +102,7 @@ switch ($op) {
 		$objectTable->addColumn(new IcmsPersistableColumn('dirname', _GLOBAL_LEFT));
 		$objectTable->addColumn(new IcmsPersistableColumn('item', _GLOBAL_LEFT, false, 'getItemValue'));
 		$objectTable->addColumn(new IcmsPersistableColumn('date', 'center', 150));
-		$objectTable->addColumn(new IcmsPersistableColumn('rate', 'center', 40, 'getRateValue'));
+		$objectTable->addColumn(new IcmsPersistableColumn('rate', 'center', 60, 'getRateValue'));
 		//$objectTable->addIntroButton('addrating', 'admin.php?fct=rating&op=mod', _CO_ICMS_RATINGS_CREATE);
 
 		//$objectTable->addQuickSearch(array('title', 'summary', 'description'));
