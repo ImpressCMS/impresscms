@@ -30,7 +30,11 @@ class MyTextSanitizer
 	/**
 	* @var	array
 	*/
-	var $smileys = array();
+	var $displaySmileys = array();
+	/**
+	* @var	array
+	*/
+	var $allSmileys = array();
 	/**
 	*
 	*/
@@ -101,36 +105,36 @@ class MyTextSanitizer
 	}
 
 	/**
-   * Get the smileys
-   *
-   * @return	array
-   */
-	function getSmileys($all=0)
+	 * Get the smileys
+	 *
+	 * @param	bool	$all
+	 * @return	array
+	 */
+	function getSmileys($all = false)
 	{
-		if(count($this->smileys) == 0)
-		{
-			if($getsmiles = $GLOBALS["xoopsDB"]->query("SELECT * FROM ".$GLOBALS["xoopsDB"]->prefix("smiles").(!$all?" WHERE display='1'":'')))
-			{
-				while($smiles = $GLOBALS["xoopsDB"]->fetchArray($getsmiles))
-				{
-					array_push($this->smileys, $smiles);
+		global $xoopsDB;
+
+		if(count($this->allSmileys) == 0) {
+			if ($result = $xoopsDB->query("SELECT * FROM ".$xoopsDB->prefix("smiles"))) {
+				while($smiley = $GLOBALS["xoopsDB"]->fetchArray($result)) {
+					if ($smiley['display']) array_push($this->displaySmileys, $smiley);
+					array_push($this->allSmileys, $smiley);
 				}
 			}
 		}
-		return $this->smileys;
+		return $all ? $this->allSmileys : $this->displaySmileys;
 	}
 
-  /**
-   * Replace emoticons in the message with smiley images
-   *
-   * @param	string  $message
-   * @return	string
-   */
-  function smiley($message)
+	/**
+	* Replace emoticons in the message with smiley images
+	*
+	* @param	string  $message
+	* @return	string
+	*/
+	function smiley($message)
 	{
 		$smileys = $this->getSmileys(true);
-		foreach($smileys as $smile)
-		{
+		foreach($smileys as $smile) {
 			$message = str_replace($smile['code'], '<img src="'.ICMS_UPLOAD_URL.'/'.htmlspecialchars($smile['smile_url']).'" alt="" />', $message);
 		}
 		return $message;
