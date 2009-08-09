@@ -37,6 +37,7 @@ Revision:
 * Updated Protector module to 3.34 (Gijoe, Vaughan)
 * #698: we are now using the default system editor to edit the content for blocks (Phoenyx)
 * #570: changed th font color in impresstheme and impresstheme_light from white to black to make it readable (Phoenyx)
+* #576: templates will no longer be checked for modifications by default for performance reasons (Phoenyx)
 
 '''Fixed'''
 * fixed class/icmsform/icmsform.php 723-728 lines (????) (mekdrop)

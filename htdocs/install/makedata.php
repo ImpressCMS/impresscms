@@ -257,7 +257,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_admin_set', '_MD_AM_ADMIN_DTHEME', 'iTheme', '_MD_AM_ADMIN_DTHEME_DESC', 'theme_admin', 'other', $p)");
 	$i++;
 	$p++;
-    $dbm->insert('config', " VALUES ($i, 0, $c, 'theme_fromfile', '_MD_AM_THEMEFILE', '1', '_MD_AM_THEMEFILEDSC', 'yesno', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_fromfile', '_MD_AM_THEMEFILE', '0', '_MD_AM_THEMEFILEDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
   	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_set_allowed', '_MD_AM_THEMEOK', '".serialize(array('impresstheme', 'impresstheme_light', 'iTheme'))."', '_MD_AM_THEMEOKDSC', 'theme_multi', 'array', $p)");
