@@ -241,8 +241,27 @@ class ProfileProfileHandler extends IcmsPersistableObjectHandler {
      * @return array
      */
     function search($criteria, $searchvars) {
-        $sql = "SELECT uid, uname, user_viewemail, email, ".implode(',', $searchvars)."
-                FROM ".$this->db->prefix("users")." LEFT JOIN ".$this->table." ON uid=profileid";
+		$searchvars2 = array_flip(array_merge(array_flip(array('uid', 'uname', 'email', 'user_viewemail')), array_flip($searchvars)));
+		$sql = 'SELECT ';
+        $user_handler = xoops_gethandler('user');
+		global $icmsUser;
+		$vars = &$icmsUser->getVars();
+		$b = false;
+		foreach ($searchvars2 as $field) {
+			if ($b) {
+				$sql .= ', ';
+			} else {
+				$b = true;
+			}
+			if (isset($vars[$field])) {
+				$sql .= 'users.'; 
+			} else {
+				$sql .= 'profiles.';
+			}
+			$sql .= $field.' '.$field;
+		}
+		unset($searchvars2, $field, $b);
+		$sql .= ' FROM '.$this->db->prefix("users").' users LEFT JOIN '.$this->table.' profiles ON users.uid=profiles.profileid';
         $sql .= ' '.$criteria->renderWhere();
         if ($criteria->getSort() != '') {
             $sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
@@ -257,7 +276,6 @@ class ProfileProfileHandler extends IcmsPersistableObjectHandler {
         if (!$result) {
             return array(array(), array(), 0);
         }
-        $user_handler = xoops_gethandler('user');
         $uservars = $this->getUserVars();
         while ($myrow = $this->db->fetchArray($result)) {
         	$profile = $this->create(false);
