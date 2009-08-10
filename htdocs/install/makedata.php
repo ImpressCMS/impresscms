@@ -1103,6 +1103,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
      $i++;
      $p++;
 
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Filter_ExtractStyleBlocks', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLK', '1', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
      $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Filter_ExtractStyleBlocks_Escaping', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC', '1', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESCDSC', 'yesno', 'int', $p)");
      $i++;
      $p++;
@@ -1110,9 +1113,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
      $i++;
      $p++;
      $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Filter_YouTube', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBE', '1', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBEDSC', 'yesno', 'int', $p)");
-     $i++;
-     $p++;
-     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Filter_ExtractStyleBlocks', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLK', '1', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKDSC', 'yesno', 'int', $p)");
      $i++;
      $p++;
      $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Core_EscapeInvalidTags', '_MD_AM_PURIFIER_CORE_ESCINVALIDTAGS', '1', '_MD_AM_PURIFIER_CORE_ESCINVALIDTAGSDSC', 'yesno', 'int', $p)");

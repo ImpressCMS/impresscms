@@ -841,6 +841,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
           $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_AttrNameUseCDATA', '_MD_AM_PURIFIER_HTML_ATTRNAMEUSECDATA', '0', '_MD_AM_PURIFIER_HTML_ATTRNAMEUSECDATADSC', 'yesno', 'int', $p);
           $p++;
 
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_ExtractStyleBlocks', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLK', '1', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKDSC', 'yesno', 'int', $p);
+          $p++;
           $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_ExtractStyleBlocks_Escaping', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEESC', '1', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEESCDSC', 'yesno', 'int', $p);
           $p++;
           $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_ExtractStyleBlocks_Scope', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEBLKSCOPE', 'cssuser_', '_MD_AM_PURIFIER_FILTERPARAM_EXTRACTSTYLEBLKSCOPEDSC', 'textsarea', 'text', $p);
@@ -848,25 +850,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
           $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_YouTube', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBE', '1', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBEDSC', 'yesno', 'int', $p);
           $p++;
-          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_ExtractStyleBlocks', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLK', '1', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKDSC', 'yesno', 'int', $p);
-          $p++;
-
-          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Filter_Custom', '_MD_AM_PURIFIER_FILTER_CUSTOM', '1', '_MD_AM_PURIFIER_FILTER_CUSTOMDSC', 'select_multi', 'text', $p);
-          $p++;
-          $config_id = $icmsDB->getInsertId();
-          $sql = "INSERT INTO ".$icmsDB->prefix('configoption').
-          " (confop_id, confop_name, confop_value, conf_id)".
-          " VALUES".
-          " (NULL, '_MD_AM_PURIFIER_WEGAME', 'new HTMLPurifier_Filter_WeGame()', {$config_id}),".
-          " (NULL, '_MD_AM_PURIFIER_VIMEO', 'new HTMLPurifier_Filter_Vimeo()', {$config_id}),".
-          " (NULL, '_MD_AM_PURIFIER_LOCALMOVIE', 'new HTMLPurifier_Filter_LocalMovie()', {$config_id}),".
-          " (NULL, '_MD_AM_PURIFIER_GOOGLEVID', 'new HTMLPurifier_Filter_GoogleVideo()', {$config_id}),".
-          " (NULL, '_MD_AM_PURIFIER_LIVELEAK', 'new HTMLPurifier_Filter_LiveLeak()', {$config_id})";
-          if(!$icmsDB->queryF($sql))
-          {
-               return false;
-          }
-
           $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_EscapeInvalidTags', '_MD_AM_PURIFIER_CORE_ESCINVALIDTAGS', '1', '_MD_AM_PURIFIER_CORE_ESCINVALIDTAGSDSC', 'yesno', 'int', $p);
           $p++;
           $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Core_EscapeNonASCIICharacters', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARS', '1', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARSDSC', 'yesno', 'int', $p);
