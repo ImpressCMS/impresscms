@@ -41,15 +41,16 @@ icms_makeSmarty(array(
 
 if($icmsModuleConfig['profile_social']){
 	$profile_configs_handler = icms_getModuleHandler('configs');
-	$nbSections = $profile_configs_handler->geteachSectioncounts($uid);
 	$permissions = array();
-	$items = array('audio', 'pictures', 'friendship', 'scraps', 'videos', 'tribes', 'profile_contact', 'profile_stats', 'profile_general');
+	
+	$items = array('audio', 'pictures', 'friendship', 'scraps', 'videos', 'tribes', 'profile_contact', 'profile_stats', 'profile_general', 'profile_usercontributions');
 	foreach($items as $item){
 		$permissions = array_merge($permissions, array($item => getAllowedItems($item, $uid)));
 	}
 	foreach($permissions as $permission => $value){
 		$xoopsTpl->assign('allow_'.$permission, $value);
 	}
+	$nbSections = $profile_configs_handler->geteachSectioncounts($uid);
 	foreach($nbSections as $nbSection => $value){
 		$xoopsTpl->assign('nb_'.$nbSection, $value);
 	}
@@ -64,7 +65,6 @@ if($icmsModuleConfig['profile_social']){
 		'lang_scrapbook' => _MD_PROFILE_SCRAPBOOK,
 		'lang_profile' => _MD_PROFILE_PROFILE,
 		'lang_tribes' => _MD_PROFILE_TRIBES,
-		'lang_configs' => _MD_PROFILE_CONFIGSTITLE,
 		'isOwner' => $isOwner));
 }
 if ($isAnonym == true && $uid == 0) {

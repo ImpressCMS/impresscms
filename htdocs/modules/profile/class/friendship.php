@@ -212,8 +212,7 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 	$vetor['mediahot']=0;
 	$vetor['mediatrust']=0;	
 	$vetor['mediacool']=0;		
-	$vetor['sumfan']=0;
-	
+
 	//Calculating avg(hot)	
 	$sql ="SELECT friend2_uid, Avg(hot) AS mediahot FROM ".$this->db->prefix('profile_friendship');
 	$sql .=" WHERE  (hot>0) GROUP BY friend2_uid HAVING (friend2_uid=".$user_uid.") ";
@@ -235,14 +234,6 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 	$result = $this->db->query($sql);
 	while ($myrow = $this->db->fetchArray($result)) {
 		$vetor['mediacool']= $myrow['mediacool']*16;
-	}	
-
-	//Calculating sum(fans)
-	$sql ="SELECT friend2_uid, Sum(fan) AS sumfan FROM ".$this->db->prefix('profile_friendship');
-	$sql .=" GROUP BY friend2_uid HAVING (friend2_uid=".$user_uid.") ";
-	$result = $this->db->query($sql);
-	while ($myrow = $this->db->fetchArray($result)) {
-		$vetor['sumfan']= $myrow['sumfan'];
 	}
 	
 	return $vetor;

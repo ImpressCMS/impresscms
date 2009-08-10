@@ -102,13 +102,13 @@ General properties
 
 div.profile-profile-group1{
 float:right;
-width:60%;
+width:50%;
 
 }
 
 div.profile-profile-group2{
 float:right;
-width:40%;
+width:50%;
 }
 
 div#profile-suspension {
@@ -271,16 +271,6 @@ margin:1px 5px;
 p.profile-profileinfo-valuebigtext {
 text-align:justify;
 margin:1px 5px;
-}
-
-
-p#profile-profile-friend-viewall
-{
-margin:1px;
-float:right;
-padding:1px;
-width:100%;
-overflow:hidden;
 }
 
 div#profile-profile-tribes h2, div#profile-profile-search-results p, div#profile-profile-statistics p, div#profile-profile-details p, div#profile-profile-search-results h2, div#profile-profile-search-results h4, div#profile-profile-friends h2, div#profile-profile-visual h2, div#profile-profile-statistics h2, div#profile-profile-details h2 {
@@ -540,11 +530,6 @@ span#sexycolor {
 width:32px;
 background-image:url(../images/sexycolor.gif);
 background-repeat:no-repeat;
-}
-
-p#profile-profile-fans {
-display:inline;
-height:18px;
 }
 /*************************************************************************************************************************************** 
 album

@@ -1,11 +1,11 @@
 <div id="profile-nav-bar">
-    <ul class="tabs-nav">
-		<li <{if $section_name==$lang_profile}>class="tabs-selected" <{/if}>><a href="index.php?uid=<{$uid_owner}>"> <span><img class="profile-nav-bar-icon" src="images/profile.gif"  /><{$lang_profile}></span></a> </li>
-	     <{ if $allow_scraps}> <li class="tabs-<{if $section_name==$lang_scraps}>selected<{else}>disabled<{/if}>"><a href="scraps.php?uid=<{$uid_owner}>"><span><img class="profile-nav-bar-icon" src="images/scrapbook.gif"  /><{$lang_scrapbook}> (<{$nb_scraps}>)</span></a> </li><{/if}>
-         <{ if $allow_pictures}><li class="tabs-<{if $section_name==$lang_pictures}>selected<{else}>disabled<{/if}>"><a href="pictures.php?uid=<{$uid_owner}>"><span><img class="profile-nav-bar-icon" src="images/lphoto.gif"  /><{$lang_photos}> (<{$nb_pictures}>)</span></a> </li><{/if}>
- 		 <{ if $allow_audio}><li class="tabs-<{if $section_name==$lang_audio}>selected<{else}>disabled<{/if}>"> <a href="audio.php?uid=<{$uid_owner}>"><span><img class="profile-nav-bar-icon" src="images/audio.gif"  /><{$lang_audio}> (<{$nb_audio}>)</span></a> </li><{/if}>
- 		 <{ if $allow_friendship}><li class="tabs-<{if $section_name==$lang_friendship}>selected<{else}>disabled<{/if}>"> <a href="friendship.php?uid=<{$uid_owner}>"><span><img class="profile-nav-bar-icon" src="images/friendship.gif"  /><{$lang_friendship}> (<{$nb_friendship}>)</span></a> </li><{/if}>
-         <{ if $allow_videos}><li class="tabs-<{if $section_name==$lang_videos}>selected<{else}>disabled<{/if}>"><a href="videos.php?uid=<{$uid_owner}>"><span><img class="profile-nav-bar-icon" src="images/video.gif"  /><{$lang_videos}> (<{$nb_videos}>)</span></a> </li><{/if}>
- 		 <{ if $allow_tribes}><li class="tabs-<{if $section_name==$lang_tribes}>selected<{else}>disabled<{/if}>"> <a href="tribes.php?uid=<{$uid_owner}>"><span><img class="profile-nav-bar-icon" src="images/tribes.gif"  /><{$lang_tribes}> (<{$nb_tribes}>)</span></a> </li><{/if}>
- 	</ul>
+  <ul class="tabs-nav">
+    <li <{if $section_name==$lang_profile}>class="tabs-selected" <{/if}>><a href="index.php?uid=<{$uid_owner}>"> <span><img class="profile-nav-bar-icon" src="images/profile.gif"  /><{$lang_profile}></span></a> </li>
+    <{if $allow_scraps}><li class="tabs-<{if $section_name==$lang_scraps}>selected<{else}>disabled<{/if}>"><a href="scraps.php?uid=<{$uid_owner}>"><span><img class="profile-nav-bar-icon" src="images/scrapbook.gif"  /><{$lang_scrapbook}> (<{$nb_scraps}>)</span></a></li><{/if}>
+    <{if $allow_pictures}><li class="tabs-<{if $section_name==$lang_pictures}>selected<{else}>disabled<{/if}>"><a href="pictures.php?uid=<{$uid_owner}>"><span><img class="profile-nav-bar-icon" src="images/lphoto.gif"  /><{$lang_photos}> (<{$nb_pictures}>)</span></a></li><{/if}>
+    <{if $allow_audio}><li class="tabs-<{if $section_name==$lang_audio}>selected<{else}>disabled<{/if}>"> <a href="audio.php?uid=<{$uid_owner}>"><span><img class="profile-nav-bar-icon" src="images/audio.gif"  /><{$lang_audio}> (<{$nb_audio}>)</span></a></li><{/if}>
+    <{if $allow_friendship}><li class="tabs-<{if $section_name==$lang_friends}>selected<{else}>disabled<{/if}>"> <a href="friendship.php?uid=<{$uid_owner}>"><span><img class="profile-nav-bar-icon" src="images/friends.gif"  /><{$lang_friends}> (<{$nb_friendship}>)</span></a></li><{/if}>
+    <{if $allow_videos}><li class="tabs-<{if $section_name==$lang_videos}>selected<{else}>disabled<{/if}>"><a href="videos.php?uid=<{$uid_owner}>"><span><img class="profile-nav-bar-icon" src="images/video.gif"  /><{$lang_videos}> (<{$nb_videos}>)</span></a></li><{/if}>
+    <{if $allow_tribes}><li class="tabs-<{if $section_name==$lang_tribes}>selected<{else}>disabled<{/if}>"> <a href="tribes.php?uid=<{$uid_owner}>"><span><img class="profile-nav-bar-icon" src="images/tribes.gif"  /><{$lang_tribes}> (<{$nb_tribes}>)</span></a></li><{/if}>
+  </ul>
 </div>

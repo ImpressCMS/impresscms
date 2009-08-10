@@ -14,9 +14,9 @@
 <{/if}>
 <{/if}>
 <div class="profile-profile-group1">
-<{if $allow_pictures || $allow_videos}>
+<{if $allow_pictures || $allow_friendship}>
 <div id="profile-profile-visual" class="outer">
-  <h2 class="profile-profile-title head"><{$owner_uname}></h2>
+  <h2 class="profile-profile-title head"><{if $isOwner}><a href="configs.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/configs.gif"  /></a>&nbsp;<{/if}><{$owner_uname}></h2>
   <{if $allow_pictures}>
   <div id="profile-profile-avatar">
     <{if $avatar_url!="" && $avatar_url!="blank.gif" }>
@@ -31,13 +31,9 @@
     <{/if}>
   </div>
   <{/if}>
-  <{if $allow_friendship || $isOwner}>
+  <{if $allow_friendship || $isOwner || $profile_isAdmin}>
   <div id="profile-profile-atribs">
     <{if $allow_friendship}>
-    <p id="profile-profile-fans">
-      <a href="fans.php?uid=<{$uid_owner}>" title="<{$lang_fans}>" ><{$lang_fans}></a>
-      <img src="images/fans.gif" alt="<{$lang_fans}>" />( <{$nb_fans}> )<br /><{$lang_trusty}>
-    </p>
     <p id="trustybw">
       <span id="trustycolor">&nbsp;&nbsp;<img width="<{$trusty}>" height="0" src="images/transparent.gif" /></span>&nbsp;
       <img width="<{$trusty_rest}>" height="0" src="images/transparent.gif" />
@@ -56,15 +52,10 @@
       <a href="userinfo.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/profile.gif"  /><{$lang_exprofile}></a>
     </p>
     <{/if}>
-    <{if $isOwner}>
-    <p id="profil-settings">
-      <a href="configs.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/configs.gif"  /><{$lang_configs}></a>
-    </p>
     <{if $profile_isAdmin}>
     <p id="profil-settings">
       <{$profile_adminpage}>
     </p>
-    <{/if}>
     <{/if}>
   </div>
   <{/if}>
@@ -83,7 +74,7 @@
 <{/if}>
 <{if $allow_profile_general}>
 <div id="profile-profile-details" class="outer">
-  <h2 class="profile-profile-title head"><{$lang_detailsinfo}><{if $isOwner}>&nbsp;<a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" /></a><{/if}></h2>
+  <h2 class="profile-profile-title head"><{if $isOwner}><a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" /></a>&nbsp;<{/if}><{$lang_detailsinfo}></h2>
   <{if $user_uname}><p class="<{cycle values='even,odd'}>"><img src="images/username.gif" /><span class="profile-profileinfo-label"><{$lang_uname}>:</span><span class="profile-profileinfo-value"><{$user_uname}></span></p><{/if}>
   <{if $user_realname}><p class="<{cycle values='even,odd'}>"><img src="images/username.gif" /><span class="profile-profileinfo-label"><{$lang_realname}>:</span><span class="profile-profileinfo-value"><{$user_realname}></span></p><{/if}>
   <{if $user_location}><p class="<{cycle values='even,odd'}>"><img src="images/house.gif" /><span class="profile-profileinfo-label"><{$lang_location}>:</span><span class="profile-profileinfo-value"><{$user_location}></span><a href="http://maps.google.com/?q=<{$user_location}>" target="_blank" ><img src="images/mapsgoogle.gif" /></a></p><{/if}>
@@ -96,7 +87,7 @@
 <{if $allow_profile_contact}>
 <div id="profile-profile-details" class="outer">
   <{cycle values='even,odd' print=false reset=true advance=false}>
-  <h2 class="profile-profile-title head"><{$lang_contactinfo}><{if $isOwner}>&nbsp;<a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" /></a><{/if}></h2>
+  <h2 class="profile-profile-title head"><{if $isOwner}><a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" /></a>&nbsp;<{/if}><{$lang_contactinfo}></h2>
   <{if $user_websiteurl}><p class="<{cycle values='even,odd'}>"><img src="images/url.gif" /><span class="profile-profileinfo-label"><{$lang_website}>:</span><span class="profile-profileinfo-value"><{$user_websiteurl}></span></p><{/if}>
   <{if $user_email}><p class="<{cycle values='even,odd'}>"><img src="images/email.gif" /><span class="profile-profileinfo-label"><{$lang_email}>:</span><span class="profile-profileinfo-value"><{mailto address=$user_email encode="javascript"}></span></p><{/if}>
   <{if $isanonym!=1 && $isOwner!=1}><p class="<{cycle values='even,odd'}>"><img src="images/email.gif" /> <span class="profile-profileinfo-label"><{$lang_privmsg}>:</span><span class="profile-profileinfo-value"><a href="javascript:openWithSelfMain('<{$icms_url}>/pmlite.php?send2=1&amp;to_userid=<{$uid_owner}>', 'pmlite', 450, 380);"><img src="<{$icms_url}>/images/icons/pm.gif" alt="Send Private Message to suico" /></a></span></p><{/if}>
@@ -119,103 +110,96 @@
 </div>
 <{/if}>
 
-<{ if $allow_profile_usercontributions}>
+<{if $allow_profile_usercontributions}>
 <div id="profile-profile-search-results" class="outer">
-<h2 class="profile-profiletitle head"><{$lang_usercontributions}></h2>
-<!-- start module search results loop -->
-<{foreach item=module from=$modules name="search_results"}>
-<div class="profile-profile-search-module" id="profile-profile-search-module-<{$smarty.foreach.search_results.iteration}>" >
+  <h2 class="profile-profiletitle head"><{$lang_usercontributions}></h2>
+  <{foreach item=module from=$modules name="search_results"}>
+  <div class="profile-profile-search-module" id="profile-profile-search-module-<{$smarty.foreach.search_results.iteration}>" >
     <h4 class="profile-profiletitle head"> 
-        <a class="profile-profile-search-module-title" id="profile-profile-search-module-title-<{$smarty.foreach.search_results.iteration}>" > 
-            <img src="images/toggle.gif" />
-        </a> 
-        <{$module.name}>
+      <a class="profile-profile-search-module-title" id="profile-profile-search-module-title-<{$smarty.foreach.search_results.iteration}>" onclick ="$('#profile-profile-search-module-results-<{$smarty.foreach.search_results.iteration}>').toggle(400);" style="cursor:pointer;"><img src="images/toggle.gif" /></a>
+      <{$module.name}>
     </h4>
 
     <div class="profile-profile-search-module-results" id="profile-profile-search-module-results-<{$smarty.foreach.search_results.iteration}>">
-        <!-- start results item loop -->
-        <{foreach item=result from=$module.results}>
-
-        <p class="<{ cycle values="odd,even"}>">  
-            <img src="<{$icms_url}>/<{$result.image}>" alt="<{$module.name}>" />
-                <b>
-                    <a href="<{$icms_url}>/<{$result.link}>">
-                        <{$result.title}>
-                    </a>
-                </b><br />
-            <small>(<{$result.time}>)</small>
-        </p>
-
-        <{/foreach}>
-        <!-- end results item loop -->
-        <p>
-            <{$module.showall_link}>
-        </p>
+      <{cycle values='even,odd' print=false reset=true advance=false}>
+      <{foreach item=result from=$module.results}>
+      <p class="<{cycle values='even,odd'}>">
+        <img src="<{$icms_url}>/<{$result.image}>" alt="<{$module.name}>" />
+        <strong><a href="<{$icms_url}>/<{$result.link}>"><{$result.title}></a></strong>
+        <small>(<{$result.time}>)</small>
+      </p>
+      <{/foreach}>
+      <p><{$module.showall_link}></p>
     </div>
-</div>
-<{/foreach}>
-<!-- end module search results loop -->
-<{ /if }>
-</div>
-
-</div><!-- end of div of group1 -->
-
-<div class="profile-profile-group2">
-<{ if $allow_videos == 1 }>
-  <div id="profile-profile-friends" class="outer">
-	        <h2 id="titulo-friends" class="head"><{$lang_videos}> (<{$nb_videos}>)</h2>		
-			<div id="profile-profile-tribe">
-			    <{if $mainvideocode!="" }>
-			        <object width="200" height="150">
-			            <param name="movie" value="http://www.youtube.com/v/<{$mainvideocode}>" />
-			            <param name="wmode" value="transparent" />
-			            <embed src="http://www.youtube.com/v/<{$mainvideocode}>" type="application/x-shockwave-flash" wmode="transparent" width="200" height="150" />
-			        </object>
-			        <p id="profile-profile-mainvideo-desc">
-			            <{$mainvideodesc}>
-			        </p>
-			    <{ else }>
-			        <img src="images/novideo.gif" />
-			        <{if $isOwner}>
-			            <p>
-			                <{$lang_selectmainvideo}>
-			            </p>
-			        <{else}>	
-			            <p>
-			                <{$lang_nomainvideo}>
-			            </p>
-			        <{/if}>
-			    <{ /if }>
-			</div>
-            
   </div>
+  <{/foreach}>
+</div>
 <{/if}>
+</div>
 
-<{ if $allow_friendship==1 }>
-<div id="profile-profile-friends" class="outer">
-<h2 id="titulo-friends" class="head"><{$lang_friendstitle}> ( <{$nb_friends}> )</h2>
-<{if $nb_friends==0}><p id="nofriends"><{$lang_nofriendsyet}></p><{ /if }>       
-<{section name=i loop=$friends}>
-<div class="profile-profile-friend <{cycle values="odd,even"}>">    	
-<a href="<{$icms_url}>/modules/<{$icms_dirname}>/index.php?uid=<{$friends[i].uid}>" alt="<{$friends[i].uname}>" title="<{$friends[i].uname}>"><{ if $friends[i].user_avatar=="blank.gif"}><img class="profile-profile-friend-photo" src="images/noavatar.gif" /><{ else }><img class="profile-profile-friend-photo" src="<{$icms_upload_url}>/<{$friends[i].user_avatar}>" /><{/if}><{$friends[i].uname}> </a>
+<{if $allow_videos || $allow_friendship || $allow_tribes}>
+<div class="profile-profile-group2">
+  <{if $allow_videos}>
+  <div id="profile-profile-friends" class="outer">
+    <h2 id="titulo-friends" class="head"><{$lang_videos}> (<{$nb_videos}>)</h2>
+    <div id="profile-profile-tribe">
+      <{if $mainvideocode!="" }>
+      <object width="200" height="150">
+        <param name="movie" value="http://www.youtube.com/v/<{$mainvideocode}>" />
+        <param name="wmode" value="transparent" />
+        <embed src="http://www.youtube.com/v/<{$mainvideocode}>" type="application/x-shockwave-flash" wmode="transparent" width="200" height="150" />
+      </object>
+      <p id="profile-profile-mainvideo-desc"><{$mainvideodesc}></p>
+      <{else}>
+      <{if $isOwner}>
+      <p><{$lang_selectmainvideo}></p>
+      <{else}>
+      <p><{$lang_nomainvideo}></p>
+      <{/if}>
+      <{/if}>
+    </div>
+  </div>
+  <{/if}>
+  <{if $allow_friendship}>
+  <div id="profile-profile-friends" class="outer">
+    <h2 id="titulo-friends" class="head"><{$lang_friends}> (<{$nb_friendship}>)</h2>
+    <{if $nb_friendship==0}>
+    <p id="nofriends"><{$lang_nofriendsyet}></p>
+    <{else}>
+    <{section name=i loop=$friends}>
+    <div class="profile-profile-friend <{cycle values="odd,even"}>">
+      <a href="<{$icms_url}>/modules/<{$icms_dirname}>/index.php?uid=<{$friends[i].uid}>" alt="<{$friends[i].uname}>" title="<{$friends[i].uname}>">
+        <{if $friends[i].user_avatar=="blank.gif"}>
+        <img class="profile-profile-friend-photo" src="images/noavatar.gif" />
+        <{else}>
+        <img class="profile-profile-friend-photo" src="<{$icms_upload_url}>/<{$friends[i].user_avatar}>" />
+        <{/if}>
+        <{$friends[i].uname}>
+      </a>
+    </div>
+    <{/section}>
+    <p class="foot"><a href="friendship.php?uid=<{$uid_owner}>"><{$lang_viewallfriends}></a></p>
+    <{/if}>
+  </div>
+  <{/if}>
+  <{if $allow_tribes}>
+  <div id="profile-profile-tribes" class="outer">
+    <h2 class="profile-profiletitle head"><{$lang_tribes}> (<{$nb_tribes}>)</h2>
+    <{if $nb_tribes==0}>
+    <p id="notribes"><{$lang_notribesyet}></p>
+    <{else}>
+    <{section name=i loop=$tribes}>
+    <div class="profile-profile-tribe <{cycle values="odd,even"}>">
+      <a href="tribe.php?tribe_id=<{$tribes[i].tribe_id}>">
+        <img alt="<{$tribes[i].title}>" title="<{$tribes[i].title}>" class="profile-profile-tribes-img" src="<{$icms_upload_url}>/<{$tribes[i].img}>" />
+      </a>
+      <h4><{$tribes[i].title}></h4><p><{$tribes[i].desc}></p>
+    </div>
+    <{/section}>
+    <p class="foot"><a href="tribes.php?uid=<{$uid_owner}>"><{$lang_viewalltribes}></a></p>
+    <{/if}>
+  </div>
+  <{/if}>
 </div>
-<{/section}>
-<p id="profile-profile-friend-viewall" class="foot">
-<a href="friends.php?uid=<{$uid_owner}>"><{$lang_viewallfriends}></a>
-</p>
-</div>
-<{ /if }>
-<{ if $allow_tribes==1}>
-<div id="profile-profile-tribes" class="outer">
-<h2 class="profile-profiletitle head"><{$lang_tribes}> (<{$nb_tribes}>)</h2>
-<{if $nb_tribes==0}><p id="notribes"><{$lang_notribesyet}></p><{ /if }>       
-<{section name=i loop=$tribes}>
-<div class="profile-profile-tribe <{cycle values="odd,even"}>">    	
-<a href="tribe.php?tribe_id=<{$tribes[i].tribe_id}>"><img alt="<{$tribes[i].title}>" title="<{$tribes[i].title}>" class="profile-profile-tribes-img" src="<{$icms_upload_url}>/<{$tribes[i].img}>" /></a> <h4> <{$tribes[i].title}> </h4><p><{$tribes[i].desc}></p>
-</div>
-<{/section}>
-<p id="profile-profile-friend-viewall" class="foot">
-<a href="tribes.php?uid=<{$uid_owner}>"><{$lang_viewalltribes}></a>
-</p>
-</div>
-<{ /if }>
+<{/if}>
+<br style="clear:both;" />

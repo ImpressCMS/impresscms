@@ -130,6 +130,8 @@ $xoopsTpl->assign('lang_mysection',_MD_PROFILE_MYPROFILE);
 $xoopsTpl->assign('section_name',_MD_PROFILE_PROFILE);
 $xoopsTpl->assign('lang_viewallfriends',_MD_PROFILE_ALLFRIENDS);
 $xoopsTpl->assign('lang_nofriendsyet',_MD_PROFILE_NOFRIENDSYET);
+$xoopsTpl->assign('lang_viewalltribes', _MD_PROFILE_ALLTRIBES);
+$xoopsTpl->assign('lang_notribesyet', _MD_PROFILE_NOTRIBESYET);
 
 //search
 $xoopsTpl->assign('lang_usercontributions',_MD_PROFILE_USERCONTRIBUTIONS);

@@ -237,7 +237,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_pictures').' WHERE uid_owner="'.$uid.'"';
 		$pictures = $this->query($sql, false);
 		
-		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="'.$uid.'" OR friend2_uid="'.$uid.'")';
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="'.$uid.'" OR friend2_uid="'.$uid.'") AND situation!=1';
 		$friendship = $this->query($sql, false);
 		
 		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_scraps').' WHERE scrap_to="'.$uid.'"';

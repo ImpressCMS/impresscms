@@ -142,28 +142,28 @@ define("_MD_PROFILE_NOCACHACA","Problem found ... file to big?!<br />
 Unfortunately, this module has acted in an unexpected way. Hopefully it will return to its helpful self if you try again. ");//Funny general error message
 define("_MD_PROFILE_PAGETITLE","%s - %s's Social Network");
 define("_MD_PROFILE_VIDEOS","Videos");
+
 define("_MD_PROFILE_SCRAPBOOK","Scraps");
 define("_MD_PROFILE_PHOTOS","Photos");
 define("_MD_PROFILE_FRIENDS","Friends");
+define("_MD_PROFILE_NOFRIENDSYET","No Friends yet");//also present in index.php
 define("_MD_PROFILE_TRIBES","Tribes");
+define("_MD_PROFILE_ALLTRIBES", "All Tribes");
 define("_MD_PROFILE_NOTRIBESYET","No Tribes yet");
 define("_MD_PROFILE_MYTRIBES","My Tribes");
 define("_MD_PROFILE_ALLTRIBES","All Tribes");
 define("_MD_PROFILE_PROFILE","Profile");
 define("_MD_PROFILE_HOME","Home");
-define("_MD_PROFILE_CONFIGSTITLE","My settings");
 define("_MD_EXTENDED_PROFILE","Extra Info");
 
 //friends.php
 define("_MD_PROFILE_FRIENDSTITLE","%s's Friends");
-define("_MD_PROFILE_NOFRIENDSYET","No friends yet");//also present in index.php
 define("_MD_PROFILE_MYFRIENDS","My Friends");
 define("_MD_PROFILE_FRIENDSHIPCONFIGS","Set the configs of this friendship. Evaluate your friend.");
 
 define("_MD_PROFILE_AQUAITANCE","Acquaintances");//also present in index.php
 define("_MD_PROFILE_FRIEND","Friend");//also present in index.php
 define("_MD_PROFILE_BESTFRIEND","Best Friend");//also present in index.php
-define("_MD_PROFILE_FAN","Fan");//also present in index.php
 define("_MD_PROFILE_SEXY","Sexy");//also present in index.php
 define("_MD_PROFILE_TRUSTY","Trusty");
 define("_MD_PROFILE_COOL","Cool");
@@ -251,7 +251,6 @@ define("_MD_PROFILE_VIDEOS_MODIFIED", "Video successfully modified");
 define("_MD_PROFILE_VISITORS","Visitors (who visited your profile recently)");
 define("_MD_PROFILE_USERDETAILS","User details");
 define("_MD_PROFILE_USERCONTRIBUTIONS","User contributions");
-define("_MD_PROFILE_FANS","Fans");
 define("_MD_PROFILE_UNKNOWNREJECTING","I don't know this person, Do not add them to my friends list");
 define("_MD_PROFILE_UNKNOWNACCEPTING","I don't know this person, Yet add them to my friends list");
 define("_MD_PROFILE_ASKINGFRIEND","Is %s your friend?");
@@ -314,12 +313,10 @@ define("_MD_PROFILE_ASC","Ascending order");
 define("_MD_PROFILE_DESC","Descending order");
 define("_MD_PROFILE_LIMIT","Number of members per page");
 define("_MD_PROFILE_RESULTS", "Search results");
-define("_MD_PROFILE_ALLFRIENDS" , "View all friends");
+define("_MD_PROFILE_ALLFRIENDS" , "All Friends");
 define("_MD_PROFILE_FRIENDSHIPNOTACCEPTED" , "Friendship rejected");
 
 define("_MD_PROFILE_USERDOESNTEXIST","This user doesn't exist or was deleted");
-define("_MD_PROFILE_FANSTITLE","%s's Fans");
-define("_MD_PROFILE_NOFANSYET","No fans yet");
 define("_MD_PROFILE_AUDIOS","Audio");
 define('_MD_PROFILE_ADMIN_PAGE', ':: Admin page ::');
 ?>
