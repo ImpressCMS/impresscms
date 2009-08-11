@@ -896,10 +896,10 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 
     function enableUpload($allowedMimeTypes=false, $maxFileSize=false, $maxWidth=false, $maxHeight=false) {
     	$this->uploadEnabled = true;
-    	$this->_allowedMimeTypes = $allowedMimeTypes ? $allowedMimeTypes : $this->allowedMimeTypes;
-    	$this->_maxFileSize = $maxFileSize ? $maxFileSize : $this->maxFileSize;
-    	$this->_maxWidth = $maxWidth ? $maxWidth : $this->maxWidth;
-    	$this->_maxHeight = $maxHeight ? $maxHeight : $this->maxHeight;
+    	$this->_allowedMimeTypes = $allowedMimeTypes ? $allowedMimeTypes : $this->_allowedMimeTypes;
+    	$this->_maxFileSize = $maxFileSize ? $maxFileSize : $this->_maxFileSize;
+    	$this->_maxWidth = $maxWidth ? $maxWidth : $this->_maxWidth;
+    	$this->_maxHeight = $maxHeight ? $maxHeight : $this->_maxHeight;
     }
 
 /********** Deprecated ***************/

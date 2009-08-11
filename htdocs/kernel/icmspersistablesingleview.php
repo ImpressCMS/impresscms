@@ -103,10 +103,10 @@ class IcmsPersistableSingleView {
 		}
 		$action_row = '';
 		if (in_array('edit', $this->_actions)) {
-			$action_row .= $this->_object->getEditItemLink(false, true, true);
+			$action_row .= $this->_object->getEditItemLink(false, true, $this->_userSide);
 		}
 		if (in_array('delete', $this->_actions)) {
-			$action_row .= $this->_object->getDeleteItemLink(false, true, true);
+			$action_row .= $this->_object->getDeleteItemLink(false, true, $this->_userSide);
 		}
 		if ($action_row) {
 			$icms_object_array['zaction']['value'] = $action_row;
