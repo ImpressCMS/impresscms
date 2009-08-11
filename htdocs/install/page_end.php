@@ -32,7 +32,6 @@ $success = isset($_GET['success'])?trim($_GET['success']):false;
 if ($success){
 	if(is_dir(ICMS_ROOT_PATH.'/install')){
 		unlinkRecursive(ICMS_ROOT_PATH.'/install', true);
-	}else{
 		header('Location: '.ICMS_URL.'/index.php');
 	}
 }
