@@ -20,14 +20,6 @@
 require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
-	$wizard->setPage( 'end' );
-	$pageHasForm = false;
-
-	$content = "";
-	include "./language/$wizard->language/finish.php";
-	
-	include 'install_tpl.php';
-
 $success = isset($_GET['success'])?trim($_GET['success']):false;
 if ($success){
 	if(is_dir(ICMS_ROOT_PATH.'/install')){
@@ -35,4 +27,12 @@ if ($success){
 		header('Location: '.ICMS_URL.'/index.php');
 	}
 }
+
+	$wizard->setPage( 'end' );
+	$pageHasForm = false;
+
+	$content = "";
+	include "./language/$wizard->language/finish.php";
+	
+	include 'install_tpl.php';
 ?>
