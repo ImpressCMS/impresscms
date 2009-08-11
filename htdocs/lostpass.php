@@ -29,7 +29,10 @@ if($email == '') {redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 
 $myts =& MyTextSanitizer::getInstance();
 $member_handler =& xoops_gethandler('member');
-$getuser =& $member_handler->getUsers(new Criteria('email', $myts->addSlashes($email)));
+$criteria = new CriteriaCompo();
+$criteria->add(new Criteria('email', $myts->addSlashes($email)));
+$criteria->add(new Criteria('level', '-1', '!='));
+$getuser =& $member_handler->getUsers($criteria);
 
 if(empty($getuser))
 {

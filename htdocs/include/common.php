@@ -437,14 +437,6 @@ icms_loadLanguageFile('core', 'core');
 icms_loadLanguageFile('system', 'common');
 @define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;
 @define( '_GLOBAL_RIGHT' , @_ADM_USE_RTL == 1 ? 'left' : 'right' ) ;
-/*
-* Here comes the part for removing inactive users after X days.
-* I used to ad it here, because it is always loaded within core loading.
-* I also made a condition to run the function, only when system is not doing a GET action!
-*/
-if ($_SERVER['REQUEST_METHOD'] != 'GET'){
-  remove_usersxdays();
-}
 
 // ################ Include page-specific lang file ################
 if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {

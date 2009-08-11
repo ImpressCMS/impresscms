@@ -92,7 +92,7 @@ class XoopsUser extends XoopsObject
 		$this->initVar('language', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('openid', XOBJ_DTYPE_TXTBOX, '', false, 255);
 		$this->initVar('salt', XOBJ_DTYPE_TXTBOX, null, false, 255);
-        	$this->initVar('user_viewoid', XOBJ_DTYPE_INT, 0, false);
+			$this->initVar('user_viewoid', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('pass_expired', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('enc_type', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('login_name', XOBJ_DTYPE_TXTBOX, null, true, 255);
@@ -174,7 +174,7 @@ class XoopsUser extends XoopsObject
 	function incrementPost()
 	{
 		$member_handler =& xoops_gethandler('member');
-        	return $member_handler->updateUserByField($this, 'posts', $this->getVar('posts') + 1);
+			return $member_handler->updateUserByField($this, 'posts', $this->getVar('posts') + 1);
 	}
 
 	/**
@@ -506,7 +506,7 @@ class XoopsUser extends XoopsObject
 	function openid()
 	{
 		return $this->getVar('openid');
-	}    
+	}	
 	function salt()
 	{
 		return $this->getVar('salt');
@@ -647,7 +647,7 @@ class XoopsUserHandler extends XoopsObjectHandler
 		}
 		else
 		{
-			$sql = sprintf("UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s, user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s, user_yim = %s, user_msnm = %s, posts = %d,  pass = %s, attachsig = '%u', rank = '%u', level= '%u', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u', uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s, user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s, user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s WHERE uid = '%u'", $this->db->prefix('users'), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), $user_viewemail, $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), intval($posts), $this->db->quoteString($pass), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), $this->db->quoteString($umode), intval($last_login), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), $this->db->quoteString($language), $this->db->quoteString($openid), $this->db->quoteString($salt), intval($user_viewoid), intval($pass_expired), intval($enc_type), $this->db->quoteString($login_name), intval($uid));
+			$sql = sprintf("UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s, user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s, user_yim = %s, user_msnm = %s, posts = %d, pass = %s, attachsig = '%u', rank = '%u', level= '%u', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u', uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s, user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s, user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s WHERE uid = '%u'", $this->db->prefix('users'), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), $user_viewemail, $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), intval($posts), $this->db->quoteString($pass), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), $this->db->quoteString($umode), intval($last_login), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), $this->db->quoteString($language), $this->db->quoteString($openid), $this->db->quoteString($salt), intval($user_viewoid), intval($pass_expired), intval($enc_type), $this->db->quoteString($login_name), intval($uid));
 		}
 		if(false != $force)
 		{
@@ -679,7 +679,9 @@ class XoopsUserHandler extends XoopsObjectHandler
 		* @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		*/
 		if(!is_a($user, 'xoopsuser')) {return false;}
-		$sql = sprintf("UPDATE %s SET level= '-1' WHERE uid = '%u'", $this->db->prefix('users'), intval($user->getVar('uid')));
+		$pass = substr ( md5 ( time () ), 0, 8 );
+		$salt = substr ( md5 ( time () * 2 ), 0, 12 );
+		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s, salt = %s WHERE uid = '%u'", $this->db->prefix('users'), $pass, $salt, intval($user->getVar('uid')));
 		if(false != $force)
 		{
 			$result = $this->db->queryF($sql);
@@ -748,9 +750,11 @@ class XoopsUserHandler extends XoopsObjectHandler
 	*/
 	function deleteAll($criteria = null)
 	{
-		$sql = "UPDATE ".$this->db->prefix('users')." SET level= '-1'";
+		$pass = substr ( md5 ( time () ), 0, 8 );
+		$salt = substr ( md5 ( time () * 2 ), 0, 12 );
+		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s, salt = %s", $this->db->prefix('users'), $pass, $salt);
 		if(isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {$sql .= " ".$criteria->renderWhere();}
-        	if(!$result = $this->db->query($sql)) {return false;}
+			if(!$result = $this->db->query($sql)) {return false;}
 		return true;
 	}
 
@@ -783,7 +787,7 @@ class XoopsUserHandler extends XoopsObjectHandler
 	 *  @param string $pass Password entered by the user
 	 *  @param string $vpass Password verification entered by the user
 	 *  @return string of errors encountered while validating the user information, will be blank if successful 
-	 */     
+	 */	 
 	function userCheck($login_name, $uname, $email, $pass, $vpass)
 	{
 		global $icmsConfigUser, $xoopsDB;
