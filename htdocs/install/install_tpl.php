@@ -79,7 +79,7 @@ echo '<link rel="stylesheet" type="text/css" media="all" href="style.css" />';
 				</button>
 				<?php } ?>
 				<?php if ( $wizard->currentPage == 11 ) { ?>
-				<button type="button" onclick="location.href='../index.php'">
+				<button type="button" onclick="location.href='<?php echo $wizard->pageURI('11'); ?>?success=true'">
 					<?php echo BUTTON_SHOW_SITE; ?>
 				</button>
 				<?php } ?>
