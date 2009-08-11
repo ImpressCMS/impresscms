@@ -26,7 +26,7 @@ function resetForm(){
 }
 </script>
 <div class="CPbigTitle" style="background-image: url(<{$xoops_url}>/modules/system/admin/content/images/content_big.png)"><{$lang_cont_manager}></div><br />
-<div style="margin-top:0; float: <{$smarty.const._GLOBAL_RIGHT}>; width:350px;" align="<{$smarty.const._GLOBAL_RIGHT}>">
+<div style="margin-top:0; float: <{$smarty.const._GLOBAL_RIGHT}>; " align="<{$smarty.const._GLOBAL_RIGHT}>">
   <form action="admin.php?fct=content&op=list&content_supid=<{$content_supid}>" method="POST">
     <div style="float:left;"><{$tags}><input type="text" name="query" id="query" size="30" value="<{$query}>"<{if $bytags == 1}> style="display:none;"<{/if}> /></div>
     <input type="submit" name="btn" value="<{$lang_search}>" />
