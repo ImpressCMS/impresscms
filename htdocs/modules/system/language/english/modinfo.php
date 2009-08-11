@@ -65,4 +65,5 @@ define('_MI_SYSTEM_BLOCK_BOOKMARKS','My Bookmarks');
 define('_MI_SYSTEM_BLOCK_BOOKMARKS_DESC','Things I have bookmarked');
 
 define("_MI_SYSTEM_ADMENU25", "Autotasks");
+define('_MI_SYSTEM_REMOVEUSERS','Inactivating users');
 ?>

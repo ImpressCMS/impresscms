@@ -57,6 +57,14 @@ $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/u
 $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/userinfo.php?uid=54]Skenow[/url]";
 //$modversion['people']['other'][] = "";
 
+// Autotasks
+$modversion['autotasks'][] = array(
+	'enabled' => true,
+	'name' => _MI_SYSTEM_REMOVEUSERS,
+	'code' => 'autotask.php',
+	'interval' => 1
+);
+
 /** Manual */
 $modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=Extended_Profile/"._LANGCODE."' target='_blank'>"._LANGNAME."</a>";
 

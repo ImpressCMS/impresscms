@@ -679,7 +679,7 @@ class XoopsUserHandler extends XoopsObjectHandler
 		* @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		*/
 		if(!is_a($user, 'xoopsuser')) {return false;}
-		$sql = sprintf("DELETE FROM %s WHERE uid = '%u'", $this->db->prefix('users'), intval($user->getVar('uid')));
+		$sql = sprintf("UPDATE %s SET level= '-1' WHERE uid = '%u'", $this->db->prefix('users'), intval($user->getVar('uid')));
 		if(false != $force)
 		{
 			$result = $this->db->queryF($sql);
@@ -748,7 +748,7 @@ class XoopsUserHandler extends XoopsObjectHandler
 	*/
 	function deleteAll($criteria = null)
 	{
-		$sql = "DELETE FROM ".$this->db->prefix('users');
+		$sql = "UPDATE ".$this->db->prefix('users')." SET level= '-1'";
 		if(isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {$sql .= " ".$criteria->renderWhere();}
         	if(!$result = $this->db->query($sql)) {return false;}
 		return true;
