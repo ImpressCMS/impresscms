@@ -15,7 +15,7 @@
 
 if (!defined("ICMS_ROOT_PATH"))  die("ICMS root path not defined");
 
-include_once(ICMS_KERNEL_PATH."icmspersistableobject.php");
+include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
 
 class ProfileRegstep extends IcmsPersistableObject {
 
