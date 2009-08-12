@@ -18,8 +18,9 @@
  *
  */ 
 icms_loadLanguageFile('system', 'modulesadmin', true);
+
 function xoops_module_install($dirname) {
-	global $xoopsUser, $xoopsConfig;
+	global $icmsUser, $xoopsConfig;
 	$dirname = trim($dirname);
 	$db =& Database::getInstance();
 	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
@@ -87,6 +88,7 @@ function xoops_module_install($dirname) {
 						break;
 					}
 				}
+
 				// if there was an error, delete the tables created so far, so the next installation will not fail
 				if ($error == true) {
 					foreach ($created_tables as $ct) {
@@ -96,6 +98,7 @@ function xoops_module_install($dirname) {
 				}
 			}
 		}
+
 		// if no error, save the module info and blocks info associated with it
 		if ($error == false) {
 			if (!$module_handler->insert($module)) {
@@ -139,7 +142,7 @@ function xoops_module_install($dirname) {
 						} else {
 							$newtplid = $tplfile->getVar('tpl_id');
 							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_INSTEMPFILE, $tpl['file'], $newtplid);
-							
+
 							// generate compiled file
 							include_once XOOPS_ROOT_PATH.'/class/template.php';
 							if (!xoops_template_touch($newtplid)) {
@@ -232,6 +235,7 @@ function xoops_module_install($dirname) {
 						$configs[] = array('name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0);
 					}
 				}
+
 				// RMV-NOTIFY
 				if ($module->getVar('hasnotification') != 0) {
 					if (empty($configs)) {
@@ -304,14 +308,16 @@ function xoops_module_install($dirname) {
 					unset($configs);
 				}
 			}
-				if ($module->getInfo('hasMain')) {
-					$groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
-				} else {
-					$groups = array(XOOPS_GROUP_ADMIN);
-				}
+
+			if ($module->getInfo('hasMain')) {
+				$groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
+			} else {
+				$groups = array(XOOPS_GROUP_ADMIN);
+			}
+
 			// retrieve all block ids for this module
 			$icms_block_handler = xoops_gethandler('block');
-			$blocks = $icms_block_handler->getByModule($newmid, false);
+			$blocks =& $icms_block_handler->getByModule($newmid, false);
 			$msgs[] = 'Setting group rights...';
 			$gperm_handler =& xoops_gethandler('groupperm');
 			foreach ($groups as $mygroup) {
@@ -355,14 +361,35 @@ function xoops_module_install($dirname) {
 			}
 			unset($blocks);
 			unset($groups);
+			
+			// add module specific tasks to system autotasks list
+			$atasks = $module->getInfo('autotasks');
+			$atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
+			foreach ($atasks as $taskID => $taskData) {
+				$task = &$atasks_handler->create();
+				if (isset($taskData['enabled'])) $task->setVar('sat_enabled', $taskData['enabled']);
+				if (isset($taskData['repeat'])) $task->setVar('sat_repeat', $taskData['repeat']);
+				if (isset($taskData['interval'])) $task->setVar('sat_interval', $taskData['interval']);
+				if (isset($taskData['onfinish'])) $task->setVar('sat_onfinish', $taskData['onfinish']);
+				$task->setVar('sat_name', $taskData['name']);
+				$task->setVar('sat_code', $taskData['code']);
+				$task->setVar('sat_type', 'addon/'.$module->getInfo('dirname'));
+				$task->setVar('sat_addon_id', intval($taskID));
+				if (!($atasks_handler->insert($task))) {
+					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert autotask to db. Name: <b>'.$taskData['name'].'</b></span>';
+				} else {
+					$msgs[] = '&nbsp;&nbsp;Added task to autotasks list. Task Name: <b>'.$taskData['name'].'</b>';
+				}
+			}
+			unset($atasks, $atasks_handler, $task, $taskData, $criteria, $items, $taskID);
 
 			// execute module specific install script if any
 			$install_script = $module->getInfo('onInstall');
 			$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
 			if (false != $install_script && trim($install_script) != '') {
 				include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($install_script);
-				if (function_exists('xoops_module_install_'.$dirname)) {
-					$func = 'xoops_module_install_'.$dirname;
+				if (function_exists('xoops_module_install_'.$ModName)) {
+					$func = 'xoops_module_install_'.$ModName;
 					if ( !( $lastmsg = $func($module) ) ) {
 						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
 					} else {

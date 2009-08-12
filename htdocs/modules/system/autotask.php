@@ -23,8 +23,5 @@ function remove_usersxdays (){
 * I used to ad it here, because it is always loaded within core loading.
 * I also made a condition to run the function, only when system is not doing a GET action!
 */
-if ($_SERVER['REQUEST_METHOD'] != 'GET'){
-  remove_usersxdays();
-}
-
+	remove_usersxdays();
 ?>
