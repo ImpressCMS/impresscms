@@ -681,7 +681,7 @@ class XoopsUserHandler extends XoopsObjectHandler
 		if(!is_a($user, 'xoopsuser')) {return false;}
 		$pass = substr ( md5 ( time () ), 0, 8 );
 		$salt = substr ( md5 ( time () * 2 ), 0, 12 );
-		$sql = sprintf("UPDATE %s SET level= '-1', pass = %s, salt = %s WHERE uid = '%u'", $this->db->prefix('users'), $pass, $salt, intval($user->getVar('uid')));
+		$sql = sprintf("UPDATE %s SET level = '-1', pass = '%s', salt = '%s' WHERE uid = '%u'", $this->db->prefix('users'), $pass, $salt, intval($user->getVar('uid')));
 		if(false != $force)
 		{
 			$result = $this->db->queryF($sql);
