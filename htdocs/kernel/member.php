@@ -283,47 +283,47 @@ class XoopsMemberHandler {
 		}
 	}
 	
-     /**
-     * log in a user
-     * @param string $uname username as entered in the login form
-     * @param string $pwd password entered in the login form
-     * @return object XoopsUser {@link XoopsUser} reference to the logged in user. FALSE if failed to log in
-     */
-     function loginUser($uname, $pwd)
-     {
-          include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
-          $icmspass = new icms_Password();
+	 /**
+	 * log in a user
+	 * @param string $uname username as entered in the login form
+	 * @param string $pwd password entered in the login form
+	 * @return object XoopsUser {@link XoopsUser} reference to the logged in user. FALSE if failed to log in
+	 */
+	 function loginUser($uname, $pwd)
+	 {
+		  include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+		  $icmspass = new icms_Password();
 
-          $is_expired = $icmspass->icms_passExpired($uname);
-          if($is_expired == 1)
-          {
-               redirect_header(ICMS_URL.'/user.php?op=resetpass&uname='.$uname, 5, _US_PASSEXPIRED, false);
-          }
-          $salt = $icmspass->icms_getUserSaltFromUname($uname);
-          $pwd = $icmspass->icms_encryptPass($pwd, $salt);
-          include_once ICMS_ROOT_PATH.'/class/database/databaseupdater.php';
-          $table = new IcmsDatabasetable('users');
-          if($table->fieldExists('loginname'))
-          {
-               $criteria = new CriteriaCompo(new Criteria('loginname', $uname));
-          }
-          elseif($table->fieldExists('login_name'))
-          {
-               $criteria = new CriteriaCompo(new Criteria('login_name', $uname));
-          }
-          else
-          {
-               $criteria = new CriteriaCompo(new Criteria('uname', $uname));
-          }
-          $criteria->add(new Criteria('pass', $pwd));
-          $user = $this->_uHandler->getObjects($criteria, false);
-          if(!$user || count($user) != 1)
-          {
-               $user = false;
-               return $user;
-          }
-          return $user[0];
-     }
+		  $is_expired = $icmspass->icms_passExpired($uname);
+		  if($is_expired == 1)
+		  {
+			   redirect_header(ICMS_URL.'/user.php?op=resetpass&uname='.$uname, 5, _US_PASSEXPIRED, false);
+		  }
+		  $salt = $icmspass->icms_getUserSaltFromUname($uname);
+		  $pwd = $icmspass->icms_encryptPass($pwd, $salt);
+		  include_once ICMS_ROOT_PATH.'/class/database/databaseupdater.php';
+		  $table = new IcmsDatabasetable('users');
+		  if($table->fieldExists('loginname'))
+		  {
+			   $criteria = new CriteriaCompo(new Criteria('loginname', $uname));
+		  }
+		  elseif($table->fieldExists('login_name'))
+		  {
+			   $criteria = new CriteriaCompo(new Criteria('login_name', $uname));
+		  }
+		  else
+		  {
+			   $criteria = new CriteriaCompo(new Criteria('uname', $uname));
+		  }
+		  $criteria->add(new Criteria('pass', $pwd));
+		  $user = $this->_uHandler->getObjects($criteria, false);
+		  if(!$user || count($user) != 1)
+		  {
+			   $user = false;
+			   return $user;
+		  }
+		  return $user[0];
+	 }
 	
 	/**
 	 * logs in a user with an md5 encrypted password
@@ -335,13 +335,13 @@ class XoopsMemberHandler {
 /*	function &loginUserMd5($uname, $md5pwd) {
  		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
  		$table = new IcmsDatabasetable('users');
-	    if ($table->fieldExists('loginname')) {
+		if ($table->fieldExists('loginname')) {
 		$criteria = new CriteriaCompo ( new Criteria ( 'loginname', $uname ) );
-	    }elseif ($table->fieldExists('login_name')) {
+		}elseif ($table->fieldExists('login_name')) {
 		$criteria = new CriteriaCompo ( new Criteria ( 'login_name', $uname ) );
-	    }else{
+		}else{
 		$criteria = new CriteriaCompo ( new Criteria ( 'uname', $uname ) );
-	    }
+		}
 		$criteria->add ( new Criteria ( 'pass', $md5pwd ) );
 		$user = $this->_uHandler->getObjects ( $criteria, false );
 		if (! $user || count ( $user ) != 1) {

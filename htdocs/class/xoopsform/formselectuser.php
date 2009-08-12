@@ -57,7 +57,7 @@ class XoopsFormSelectUser extends XoopsFormElementTray
 	 * @param	int		$size			Number or rows. "1" makes a drop-down-list.
    * @param	bool	$multiple	   Allow multiple selections?
 	 */
-	function XoopsFormSelectUser($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false, $showremovedusers = false)
+	function XoopsFormSelectUser($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false, $showremovedusers = false, $justremovedusers = false)
 	{
 		$limit = 200;
 		$select_element = new XoopsFormSelect('', $name, $value, $size, $multiple);
@@ -76,6 +76,8 @@ class XoopsFormSelectUser extends XoopsFormElementTray
 		$criteria->setSort('uname');
 		if(!$showremovedusers){
 			$criteria->add(new Criteria('level', '-1', '!='));
+		}elseif($showremovedusers && $justremovedusers){
+			$criteria->add(new Criteria('level', '-1'));
 		}
 		$criteria->setOrder('ASC');
 			$users = $member_handler->getUserList($criteria);

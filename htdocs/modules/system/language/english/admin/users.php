@@ -64,4 +64,5 @@ define('_AM_BADPWD','Bad Password, Password can not contain username.');
 
 ######################## Added in 1.2 ###################################
 define("_AM_LOGINNAME","Loginname");
+define("_AM_REMOVED_USERS","Removed Users");
 ?>

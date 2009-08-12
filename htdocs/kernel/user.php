@@ -75,7 +75,7 @@ class XoopsUser extends XoopsObject
 		$this->initVar('posts', XOBJ_DTYPE_INT, null, false);
 		$this->initVar('attachsig', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('rank', XOBJ_DTYPE_INT, 0, false);
-		$this->initVar('level', XOBJ_DTYPE_INT, 0, false);
+		$this->initVar('level', XOBJ_DTYPE_TXTBOX, 0, false);
 		$this->initVar('theme', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('timezone_offset', XOBJ_DTYPE_OTHER, null, false);
 		$this->initVar('last_login', XOBJ_DTYPE_INT, 0, false);
@@ -323,7 +323,7 @@ class XoopsUser extends XoopsObject
 	*/
 	function isActive()
 	{
-		if($this->getVar('level') == 0) {return false;}
+		if($this->getVar('level') <= 0) {return false;}
 		return true;
 	}
 
@@ -647,7 +647,7 @@ class XoopsUserHandler extends XoopsObjectHandler
 		}
 		else
 		{
-			$sql = sprintf("UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s, user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s, user_yim = %s, user_msnm = %s, posts = %d, pass = %s, attachsig = '%u', rank = '%u', level= '%u', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u', uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s, user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s, user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s WHERE uid = '%u'", $this->db->prefix('users'), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), $user_viewemail, $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), intval($posts), $this->db->quoteString($pass), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), $this->db->quoteString($umode), intval($last_login), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), $this->db->quoteString($language), $this->db->quoteString($openid), $this->db->quoteString($salt), intval($user_viewoid), intval($pass_expired), intval($enc_type), $this->db->quoteString($login_name), intval($uid));
+			$sql = sprintf("UPDATE %s SET uname = %s, name = %s, email = %s, url = %s, user_avatar = %s, user_icq = %s, user_from = %s, user_sig = %s, user_viewemail = '%u', user_aim = %s, user_yim = %s, user_msnm = %s, posts = %d, pass = %s, attachsig = '%u', rank = '%u', level= '%s', theme = %s, timezone_offset = %s, umode = %s, last_login = '%u', uorder = '%u', notify_method = '%u', notify_mode = '%u', user_occ = %s, bio = %s, user_intrest = %s, user_mailok = '%u', language = %s, openid = %s, salt = %s, user_viewoid = '%u', pass_expired = '%u', enc_type = '%u', login_name = %s WHERE uid = '%u'", $this->db->prefix('users'), $this->db->quoteString($uname), $this->db->quoteString($name), $this->db->quoteString($email), $this->db->quoteString($url), $this->db->quoteString($user_avatar), $this->db->quoteString($user_icq), $this->db->quoteString($user_from), $this->db->quoteString($user_sig), $user_viewemail, $this->db->quoteString($user_aim), $this->db->quoteString($user_yim), $this->db->quoteString($user_msnm), intval($posts), $this->db->quoteString($pass), intval($attachsig), intval($rank), intval($level), $this->db->quoteString($theme), $this->db->quoteString(floatval($timezone_offset)), $this->db->quoteString($umode), intval($last_login), intval($uorder), intval($notify_method), intval($notify_mode), $this->db->quoteString($user_occ), $this->db->quoteString($bio), $this->db->quoteString($user_intrest), intval($user_mailok), $this->db->quoteString($language), $this->db->quoteString($openid), $this->db->quoteString($salt), intval($user_viewoid), intval($pass_expired), intval($enc_type), $this->db->quoteString($login_name), intval($uid));
 		}
 		if(false != $force)
 		{

@@ -14,7 +14,7 @@
 */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
-    exit("Access Denied");
+	exit("Access Denied");
 }
 
 $config_handler =& xoops_gethandler('config');
@@ -188,8 +188,8 @@ switch ($op)
 						xoops_cp_footer();
 						exit();
 					}
-                         include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
-                         $icmspass = new icms_Password();
+						 include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+						 $icmspass = new icms_Password();
 					$newuser->setVar('salt', $salt);
 					$newuser->setVar('enc_type', $enc_type);
 					$password = $icmspass->icms_encryptPass($password, $salt);

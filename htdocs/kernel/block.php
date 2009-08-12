@@ -677,29 +677,24 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		}
 		$status = parent::insert( $obj, $force, $checkObject, $debug );
 		// TODO: Make something to no query here... implement IPF for block_module_link
-		if(is_array($obj->getVar('visiblein', 'e'))){
-			foreach ($obj->getVar('visiblein', 'e') as $bmid) {
-				$page = explode('-', $bmid);
+		$page = $obj->getVar('visiblein', 'e');
+		if(!empty($page)){
+			if(is_array($obj->getVar('visiblein', 'e'))){
+				foreach ($obj->getVar('visiblein', 'e') as $bmid) {
+					$page = explode('-', $bmid);
+					$mid = $page[0];
+					$pageid = $page[1];
+					$sql = "INSERT INTO ".$this->db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($obj->getVar("bid"))."', '".intval($mid)."', '".intval($pageid)."')";
+					$this->db->query($sql);
+				}
+			}else{
+				$page = explode('-', $obj->getVar('visiblein', 'e'));
 				$mid = $page[0];
 				$pageid = $page[1];
 				$sql = "INSERT INTO ".$this->db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($obj->getVar("bid"))."', '".intval($mid)."', '".intval($pageid)."')";
 				$this->db->query($sql);
 			}
-		}else{
-			$page = explode('-', $obj->getVar('visiblein', 'e'));
-			$mid = $page[0];
-			$pageid = $page[1];
-			$sql = "INSERT INTO ".$this->db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($obj->getVar("bid"))."', '".intval($mid)."', '".intval($pageid)."')";
-			$this->db->query($sql);
 		}
-/*		if($new){
-			$groups = array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS);
-			$count = count($groups);
-			for ($i = 0; $i < $count; $i++) {
-				$sql = "INSERT INTO ".$this->db->prefix('group_permission')." (gperm_groupid, gperm_itemid, gperm_name, gperm_modid) VALUES ('".$groups[$i]."', '".intval($obj->getVar('bid'))."', 'block_read', '1')";
-				$this->db->query($sql);
-			}
-		}*/
 		return $status;
 
 	}

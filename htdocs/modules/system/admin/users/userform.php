@@ -46,20 +46,20 @@ $url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
 //  $a_count = $a_count + count($avatar_array);
 //  $a_dir_labels[] = new XoopsFormLabel("", $a_dir_link);
 //  foreach ($a_dirlist as $a_dir) {
-//      if ( $a_dir == "users" ) {
-//          continue;
-//      }
-//      $avatars_array = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/".$a_dir."/", $a_dir."/");
-//      $avatar_select->addOptionArray($avatars_array);
-//      $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;subdir=".$a_dir."&amp;start=".$a_count."','avatars',600,400);\">".$a_dir."</a>";
-//      $a_dir_labels[] = new XoopsFormLabel("", $a_dir_link);
-//      $a_count = $a_count + count($avatars_array);
+//	  if ( $a_dir == "users" ) {
+//		  continue;
+//	  }
+//	  $avatars_array = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/".$a_dir."/", $a_dir."/");
+//	  $avatar_select->addOptionArray($avatars_array);
+//	  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;subdir=".$a_dir."&amp;start=".$a_count."','avatars',600,400);\">".$a_dir."</a>";
+//	  $a_dir_labels[] = new XoopsFormLabel("", $a_dir_link);
+//	  $a_count = $a_count + count($avatars_array);
 //  }
 //  if (!empty($uid_value)) {
-//      $myavatar = avatarExists($uid_value);
-//      if ( $myavatar != false ) {
-//          $avatar_select->addOption($myavatar, _US_MYAVATAR);
-//      }
+//	  $myavatar = avatarExists($uid_value);
+//	  if ( $myavatar != false ) {
+//		  $avatar_select->addOption($myavatar, _US_MYAVATAR);
+//	  }
 //  }
 //  $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"images/avatar\", \"\", \"".XOOPS_URL."\")'");
 //  $avatar_label = new XoopsFormLabel("", "<img src='".XOOPS_URL."/images/avatar/".$avatar_value."' name='avatar' id='avatar' alt='' />");
@@ -67,7 +67,7 @@ $url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
 //  $avatar_tray->addElement($avatar_select);
 //  $avatar_tray->addElement($avatar_label);
 //  foreach ($a_dir_labels as $a_dir_label) {
-//      $avatar_tray->addElement($a_dir_label);
+//	  $avatar_tray->addElement($a_dir_label);
 //  }
 //  $theme_select = new XoopsFormSelectTheme(_AM_THEME, "theme", $theme_value);
 $timezone_select = new XoopsFormSelectTimezone(_US_TIMEZONE, "timezone_offset", $timezone_value);

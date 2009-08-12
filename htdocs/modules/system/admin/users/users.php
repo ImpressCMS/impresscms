@@ -29,11 +29,12 @@ function displayUsers()
 	xoops_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
 	$member_handler =& xoops_gethandler('member');
-	$usercount = $member_handler->getUserCount();
+	$usercount = $member_handler->getUserCount(new Criteria('level', '-1', '!='));
 	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
 	$editform = new XoopsThemeForm(_AM_EDEUSER, 'edituser', 'admin.php');
 	$user_select = new XoopsFormSelect('', 'uid');
 	$criteria = new CriteriaCompo();
+	$criteria->add(new Criteria('level', '-1', '!='));
 	$criteria->setSort('uname');
 	$criteria->setOrder('ASC');
 	$criteria->setLimit(200);
@@ -45,6 +46,32 @@ function displayUsers()
 	$user_select_tray->addElement($user_select_nav);
 	$op_select = new XoopsFormSelect('', 'op');
 	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER, 'delUser'=>_AM_DELUSER));
+	$submit_button = new XoopsFormButton('', 'submit', _AM_GO, 'submit');
+	$fct_hidden = new XoopsFormHidden('fct', 'users');
+	$editform->addElement($user_select_tray);
+	$editform->addElement($op_select);
+	$editform->addElement($submit_button);
+	$editform->addElement($fct_hidden);
+	$editform->display();
+	
+	echo "<br />\n";
+	$usercount = $member_handler->getUserCount(new Criteria('level', '-1'));
+	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
+	$editform = new XoopsThemeForm(_AM_REMOVED_USERS, 'edituser', 'admin.php');
+	$user_select = new XoopsFormSelect('', 'uid');
+	$criteria = new CriteriaCompo();
+	$criteria->add(new Criteria('level', '-1'));
+	$criteria->setSort('uname');
+	$criteria->setOrder('ASC');
+	$criteria->setLimit(200);
+	$criteria->setStart($userstart);
+	$user_select->addOptionArray($member_handler->getUserList($criteria));
+	$user_select_tray = new XoopsFormElementTray(_AM_NICKNAME, '<br />');
+	$user_select_tray->addElement($user_select);
+	$user_select_nav = new XoopsFormLabel('', $nav->renderNav(4));
+	$user_select_tray->addElement($user_select_nav);
+	$op_select = new XoopsFormSelect('', 'op');
+	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER));
 	$submit_button = new XoopsFormButton('', 'submit', _AM_GO, 'submit');
 	$fct_hidden = new XoopsFormHidden('fct', 'users');
 	$editform->addElement($user_select_tray);
@@ -120,7 +147,7 @@ function modifyUser($user)
 		$openid_value = $user->getVar('openid', 'E');
 		$openid_cbox_value = $user->getVar('user_viewoid') ? 1 : 0;
 		$url_value = $user->getVar('url', 'E');
-		//      $avatar_value = $user->getVar('user_avatar');
+		//	  $avatar_value = $user->getVar('user_avatar');
 		$temp = $user->getVar('theme');
 		//$theme_value = empty($temp) ? $xoopsConfig['default_theme'] : $temp;
 		$timezone_value = $user->getVar('timezone_offset');
@@ -242,8 +269,8 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 				xoops_cp_footer();
 				exit();
 			}
-               include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
-               $icmspass = new icms_Password();
+			   include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+			   $icmspass = new icms_Password();
 			$edituser->setVar('salt', $salt);
 			$edituser->setVar('enc_type', $enc_type);
 			$edituser->setVar('pass_expired', $pass_expired);

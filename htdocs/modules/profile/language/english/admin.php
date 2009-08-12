@@ -5,8 +5,8 @@
  * @copyright	The ImpressCMS Project <http://www.impresscms.org>
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since		1.0
- * @author      Jan Pedersen
- * @author      Marcello Brandao <marcello.brandao@gmail.com>
+ * @author	  Jan Pedersen
+ * @author	  Marcello Brandao <marcello.brandao@gmail.com>
  * @author	   	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @package		profile
@@ -111,6 +111,7 @@ define("_PROFILE_AM_VALUE", "Value");
 
 // User management
 define("_PROFILE_AM_EDITUSER", "Edit User");
+define("_PROFILE_AM_REMOVEDUSERS", "Banned/removed Users");
 define("_PROFILE_AM_SELECTUSER", "Select User");
 define("_PROFILE_AM_ADDUSER","Add User");
 define("_PROFILE_AM_USERDONEXIT","User doesn't exist!");
@@ -149,12 +150,12 @@ define("_AM_SPROFILE_UID", "Userid");
 define("_AM_SPROFILE_EMAIL", "Email");
 define("_AM_SPROFILE_BACK_TO_FORM", "<< Back to search form");
 define("_AM_SPROFILE_EXPORT_ALL", "Export all matching users");
-    // Audio
+	// Audio
 define("_AM_PROFILE_AUDIOS", "Audios");
 define("_AM_PROFILE_AUDIO_CREATE", "Add a audio");
 define("_AM_PROFILE_AUDIO", "Audio");
 define("_AM_PROFILE_AUDIO_EDIT", "Edit this audio");
-    // Tribes
+	// Tribes
 define("_AM_PROFILE_TRIBES", "Tribes");
 define("_AM_PROFILE_TRIBES_CREATE", "Add a tribes");
 define("_AM_PROFILE_TRIBE", "Tribe");
@@ -163,7 +164,7 @@ define("_AM_PROFILE_TRIBES_MODIFIED", "The tribes was successfully modified.");
 define("_AM_PROFILE_TRIBES_CREATED", "The tribes has been successfully created.");
 define("_AM_PROFILE_TRIBES_VIEW", "Tribes info");
 define("_AM_PROFILE_TRIBES_VIEW_DSC", "Here is the info about this tribes.");
-    // Suspensions
+	// Suspensions
 define("_AM_PROFILE_SUSPENSIONS", "Suspensions");
 define("_AM_PROFILE_SUSPENSIONS_CREATE", "Add a suspensions");
 define("_AM_PROFILE_SUSPENSION", "Suspension");
@@ -172,24 +173,24 @@ define("_AM_PROFILE_SUSPENSIONS_MODIFIED", "The suspensions was successfully mod
 define("_AM_PROFILE_SUSPENSIONS_CREATED", "The suspensions has been successfully created.");
 define("_AM_PROFILE_SUSPENSIONS_VIEW", "Suspensions info");
 define("_AM_PROFILE_SUSPENSIONS_VIEW_DSC", "Here is the info about this suspensions.");
-    // Scraps
+	// Scraps
 define("_AM_PROFILE_SCRAPS", "Scraps");
 define("_AM_PROFILE_SCRAPS_CREATE", "Add a scraps");
 define("_AM_PROFILE_SCRAP", "Scrap");
 define("_AM_PROFILE_SCRAPS_EDIT", "Edit this scraps");
-    // Pictures
+	// Pictures
 define("_AM_PROFILE_PICTURES", "Pictures");
 define("_AM_PROFILE_PICTURES_CREATE", "Add a pictures");
 define("_AM_PROFILE_PICTURE", "Picture");
 define("_AM_PROFILE_PICTURES_EDIT", "Edit this pictures");
 define("_AM_PROFILE_PICTURES_MODIFIED", "The pictures was successfully modified.");
 define("_AM_PROFILE_PICTURES_CREATED", "The pictures has been successfully created.");
-    // Videos
+	// Videos
 define("_AM_PROFILE_VIDEOS", "Videos");
 define("_AM_PROFILE_VIDEOS_CREATE", "Add a videos");
 define("_AM_PROFILE_VIDEO", "Video");
 define("_AM_PROFILE_VIDEOS_EDIT", "Edit this videos");
-    // Tribeuser
+	// Tribeuser
 define("_AM_PROFILE_TRIBEUSERS", "Tribeusers");
 define("_AM_PROFILE_TRIBEUSER_CREATE", "Add a tribeuser");
 define("_AM_PROFILE_TRIBEUSER", "Tribeuser");
@@ -198,7 +199,7 @@ define("_AM_PROFILE_TRIBEUSER_MODIFIED", "The tribeuser was successfully modifie
 define("_AM_PROFILE_TRIBEUSER_CREATED", "The tribeuser has been successfully created.");
 define("_AM_PROFILE_TRIBEUSER_VIEW", "Tribeuser info");
 define("_AM_PROFILE_TRIBEUSER_VIEW_DSC", "Here is the info about this tribeuser.");
-    // Friendpetition
+	// Friendpetition
 define("_AM_PROFILE_FRIENDPETITIONS", "Friendpetitions");
 define("_AM_PROFILE_FRIENDPETITION_CREATE", "Add a friendpetition");
 define("_AM_PROFILE_FRIENDPETITION", "Friendpetition");
