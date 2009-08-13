@@ -384,17 +384,21 @@ class IcmsPersistableController {
 		}
     	return $ret;
     }
-
-    function getViewItemLink($icmsObj, $onlyUrl=false, $withimage=true, $userSide=false)
-    {
+	
+    /**
+     * This method returns a view link of the Object
+     * 
+     * @param IcmsPersistableObject $icmsObj
+     * @param boolean $onlyUrl
+     * @param boolean $withimage
+     * @param boolean $userSide
+     * @return string
+     */
+    public function getViewItemLink($icmsObj, $onlyUrl=false, $withimage=true, $userSide=false) {
 		if ($this->handler->_moduleName != 'system') {
 			$admin_side = $userSide ? '' : 'admin/';
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		} else {
-			/**
-			 * @todo: to be implemented...
-			 */
-			//$admin_side = $userSide ? '' : 'admin/';
 			$admin_side = '';
 			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct=' . $this->handler->_itemname . "&op=view&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		}

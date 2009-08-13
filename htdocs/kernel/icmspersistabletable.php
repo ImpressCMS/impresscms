@@ -318,9 +318,9 @@ class IcmsPersistableTable {
 						 * If the column is the identifier, then put a link on it
 						 */
 						if ($column->getKeyName() == $this->_objectHandler->identifierName) {
-							$value = $object->getItemLink();
+							$value = $object->getViewItemLink( false, false, $this->_userSide );
 						} else {
-							$value = $object->getVar($column->getKeyName());
+							$value = $object->getVar( $column->getKeyName() );
 						}
 					}
 
