@@ -19,9 +19,9 @@ class icms_HTMLPurifier
     */
     function icms_HTMLPurifier()
     {
-        require_once ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.standalone.php';
-        require_once ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.autoload.php';
-        require_once ICMS_ROOT_PATH.'/plugins/csstidy/class.csstidy.php';
+        require_once ICMS_ROOT_PATH . '/libraries/htmlpurifier/HTMLPurifier.standalone.php';
+        require_once ICMS_ROOT_PATH . '/libraries/htmlpurifier/HTMLPurifier.autoload.php';
+        require_once ICMS_ROOT_PATH . '/plugins/csstidy/class.csstidy.php';
     }
 
     /**
@@ -47,9 +47,9 @@ class icms_HTMLPurifier
     **/
     public function icms_arrayFilterRecursive($array)
     {
-        foreach($array as &$value)
+        foreach($array as $value)
         {
-            if(is_array($value))
+            if(is_array(&$value))
             {
                 $value = $this->icms_arrayFilterRecursive($value);
             }
@@ -128,8 +128,6 @@ class icms_HTMLPurifier
                                     'Filter.ExtractStyleBlocks.Scope' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks_Scope'],
                                     'Filter.ExtractStyleBlocks' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'],
                                     'Filter.YouTube' => $icmsConfigPurifier['purifier_Filter_YouTube'],
-                                    'Filter.Custom' => array(new HTMLPurifier_Filter_WeGame(), new HTMLPurifier_Filter_Vimeo(), new HTMLPurifier_Filter_LocalMovie(),
-                                                        new HTMLPurifier_Filter_GoogleVideo(), new HTMLPurifier_Filter_LiveLeak())
                                 );
         return $icmsPurifierConf;
     }
@@ -155,9 +153,9 @@ class icms_HTMLPurifier
         }
 
         $icmsPurifyConf = $this->icms_getPurifierConfig(); // gets the Config Data
-        $icmsPurifyConf = $this->icms_arrayFilterRecursive($icmsPurifyConf); // removes keys from array that contain empty $values
+        //$icmsPurifyConf = $this->icms_arrayFilterRecursive($icmsPurifyConf); // removes keys from array that contain empty $values
 
-//        $this->icms_debug_info('icmsPurifyConf', $icmsPurifyConf); // uncomment for specific config debug info
+        $this->icms_debug_info('icmsPurifyConf', $icmsPurifyConf); // uncomment for specific config debug info
 
         $this->purifier = new HTMLPurifier($icmsPurifyConf);
         $html = $this->purifier->purify($html);
