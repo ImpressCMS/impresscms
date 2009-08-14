@@ -648,6 +648,8 @@ define("_MD_AM_PURIFIER_LOCALMOVIE","Local Movies");
 define("_MD_AM_PURIFIER_GOOGLEVID","Google Video");
 define("_MD_AM_PURIFIER_LIVELEAK","LiveLeak Movies");
 
+define("_MD_AM_UNABLECSSTIDY", "CSSTidy Plugin is not found, Please copy the make sure you have CSSTidy located in your plugins folder.");
+
 // Autotasks
 define("_MD_AM_AUTOTASKS", "Auto Tasks");
 define("_MD_AM_AUTOTASKS_SYSTEM", "Processing system");

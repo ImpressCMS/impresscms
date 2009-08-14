@@ -522,31 +522,47 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				$new_value = & ${$config->getVar ( 'conf_name' )};
 				$old_value = $config->getVar('conf_value');
 				$icmsPreloadHandler->triggerEvent ( 'savingSystemAdminPreferencesItem', array((int)$config->getVar ( 'conf_catid' ), $config->getVar ( 'conf_name' ), $config->getVar ( 'conf_value' )));
-				if (is_array ( $new_value ) || $new_value != $config->getVar ( 'conf_value' )) {
-					// if language has been changed
-					if (! $lang_updated && $config->getVar ( 'conf_catid' ) == XOOPS_CONF && $config->getVar ( 'conf_name' ) == 'language') {
-						$xoopsConfig ['language'] = ${$config->getVar ( 'conf_name' )};
-						$lang_updated = true;
-					}
-					// if default theme has been changed
-					if (! $theme_updated && $config->getVar ( 'conf_catid' ) == XOOPS_CONF && $config->getVar ( 'conf_name' ) == 'theme_set') {
-						$member_handler = & xoops_gethandler ( 'member' );
-						$member_handler->updateUsersByField ( 'theme', ${$config->getVar ( 'conf_name' )} );
-						$theme_updated = true;
-					}
-					// if password encryption has been changed
-					if($config->getVar('conf_catid') == XOOPS_CONF_USER && $config->getVar('conf_name') == 'enc_type')
-					{
-						if($config->getVar('closesite') !== 1)
-						{
-							$member_handler = & xoops_gethandler('member');
-							$member_handler->updateUsersByField('pass_expired', 1);
-						}
-						else
-						{
-							redirect_header('admin.php?fct=preferences', 2, _MD_AM_UNABLEENCCLOSED);
-						}
-					}
+
+                if(is_array($new_value) || $new_value != $config->getVar('conf_value'))
+                {
+                    // if language has been changed
+                    if(!$lang_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') == 'language')
+                    {
+                        $xoopsConfig['language'] = ${$config->getVar('conf_name')};
+                        $lang_updated = true;
+                    }
+                    // if default theme has been changed
+                    if(!$theme_updated && $config->getVar('conf_catid') == XOOPS_CONF && $config->getVar('conf_name') == 'theme_set')
+                    {
+                        $member_handler = xoops_gethandler('member');
+                        $member_handler->updateUsersByField('theme', ${$config->getVar('conf_name')});
+                        $theme_updated = true;
+                    }
+                    // if password encryption has been changed
+                    if($config->getVar('conf_catid') == XOOPS_CONF_USER && $config->getVar('conf_name') == 'enc_type')
+                    {
+                        if($config->getVar('closesite') !== 1)
+                        {
+                            $member_handler = xoops_gethandler('member');
+                            $member_handler->updateUsersByField('pass_expired', 1);
+                        }
+                        else
+                        {
+                            redirect_header('admin.php?fct=preferences', 2, _MD_AM_UNABLEENCCLOSED);
+                        }
+                    }
+
+                    if($config->getVar('conf_catid') == ICMS_CONF_PURIFIER &&
+                        $config->getVar('conf_name') == 'purifier_Filter_ExtractStyleBlocks')
+                    {
+                        if($config->getVar('purifier_Filter_ExtractStyleBlocks') == 1)
+                        {
+                            if(!file_exists(ICMS_ROOT_PATH . '/plugins/csstidy/class.csstidy.php'))
+                            {
+                                redirect_header('admin.php?fct=preferences', 5, _MD_AM_UNABLECSSTIDY);
+                            }
+                        }
+                    }
 
 					// if default template set has been changed
 					if (! $tpl_updated && $config->getVar ( 'conf_catid' ) == XOOPS_CONF && $config->getVar ( 'conf_name' ) == 'template_set') {
