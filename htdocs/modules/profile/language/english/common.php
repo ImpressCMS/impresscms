@@ -80,8 +80,6 @@ define("_CO_PROFILE_CONFIGS_AUDIO", "Show my audio files to:");
 define("_CO_PROFILE_CONFIGS_AUDIO_DSC", " ");
 define("_CO_PROFILE_CONFIGS_VIDEOS", "Show my videos to:");
 define("_CO_PROFILE_CONFIGS_VIDEOS_DSC", " ");
-define("_CO_PROFILE_CONFIGS_SCRAPS", "Show my scrapbook to:");
-define("_CO_PROFILE_CONFIGS_SCRAPS_DSC", " ");
 define("_CO_PROFILE_CONFIGS_FRIENDSHIP", "Show my friends to:");
 define("_CO_PROFILE_CONFIGS_FRIENDSSHIP_DSC", " ");
 define("_CO_PROFILE_CONFIGS_TRIBES", "Show my tribes to:");
@@ -159,19 +157,6 @@ define("_CO_PROFILE_FRIENDSHIP_TRUST", "");
 define("_CO_PROFILE_FRIENDSHIP_TRUST_DSC", " ");
 define("_CO_PROFILE_FRIENDSHIP_COOL", "");
 define("_CO_PROFILE_FRIENDSHIP_COOL_DSC", " ");
-// scraps
-define("_CO_PROFILE_SCRAPS_SCRAPS_ID", "Scrap ID");
-define("_CO_PROFILE_SCRAPS_SCRAPS_ID_DSC", " ");
-define("_CO_PROFILE_SCRAPS_SCRAP_TEXT", "Body of your text");
-define("_CO_PROFILE_SCRAPS_SCRAP_TEXT_DSC", " Please write your scrap down.");
-define("_CO_PROFILE_SCRAPS_SCRAP_FROM", "Sender");
-define("_CO_PROFILE_SCRAPS_SCRAP_FROM_DSC", " ");
-define("_CO_PROFILE_SCRAPS_SCRAP_TO", "Receiver");
-define("_CO_PROFILE_SCRAPS_SCRAP_TO_DSC", " ");
-define("_CO_PROFILE_SCRAPS_CREATION_TIME", "Creation time");
-define("_CO_PROFILE_SCRAPS_CREATION_TIME_DSC", " ");
-define("_CO_PROFILE_SCRAPS_PRIVATE", "Make This Scrap private?");
-define("_CO_PROFILE_SCRAPS_PRIVATE_DSC", " ");
 // pictures
 define("_CO_PROFILE_PICTURES_PICTURES_ID", "Picture ID");
 define("_CO_PROFILE_PICTURES_PICTURES_ID_DSC", " ");

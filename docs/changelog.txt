@@ -39,6 +39,7 @@ Revision:
 * #570: changed th font color in impresstheme and impresstheme_light from white to black to make it readable (Phoenyx)
 * #576: templates will no longer be checked for modifications by default for performance reasons (Phoenyx)
 * #705: Module name in module preferences breadcrumb is linked to module administration now (Phoenyx)
+* #294: replaced scraps with system comment function in imProfile | ticket from addons (Phoenyx)
 
 '''Fixed'''
 * fixed class/icmsform/icmsform.php 723-728 lines (????) (mekdrop)

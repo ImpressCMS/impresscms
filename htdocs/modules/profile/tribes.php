@@ -193,7 +193,6 @@ if (in_array($clean_op,$valid_op,true)){
 		if($clean_tribes_id > 0){
 			$profile_tribes_handler->updateCounter($clean_tribes_id);
 			$icmsTpl->assign('profile_single_tribe', $tribesObj->toArray());
-			include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 			if($real_uid && $tribeuserObj->isNew()){
 				edittribeuser($tribeuserObj, $clean_tribes_id, true);
 			}

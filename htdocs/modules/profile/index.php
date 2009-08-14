@@ -59,6 +59,8 @@ $uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 if ($uid <= 0) {
 	if(is_object($icmsUser)){
 		$uid = $icmsUser->getVar('uid');
+		header('location: '.ICMS_URL.'/modules/profile/index.php?uid='.$uid);
+		exit();
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
@@ -237,6 +239,9 @@ foreach ($mids as $mid) {
 	unset($module);
   }
 }
+
+// Comments
+include ICMS_ROOT_PATH.'/include/comment_view.php';
 
 /**
  * Closing the page

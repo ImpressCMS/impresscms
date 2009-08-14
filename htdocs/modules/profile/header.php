@@ -43,7 +43,7 @@ if($icmsModuleConfig['profile_social']){
 	$profile_configs_handler = icms_getModuleHandler('configs');
 	$permissions = array();
 	
-	$items = array('audio', 'pictures', 'friendship', 'scraps', 'videos', 'tribes', 'profile_contact', 'profile_stats', 'profile_general', 'profile_usercontributions');
+	$items = array('audio', 'pictures', 'friendship', 'videos', 'tribes', 'profile_contact', 'profile_stats', 'profile_general', 'profile_usercontributions');
 	foreach($items as $item){
 		$permissions = array_merge($permissions, array($item => getAllowedItems($item, $uid)));
 	}
@@ -62,7 +62,6 @@ if($icmsModuleConfig['profile_social']){
 		'lang_friends' => _MD_PROFILE_FRIENDS,
 		'lang_audio' => _MD_PROFILE_AUDIOS,
 		'lang_videos' => _MD_PROFILE_VIDEOS,
-		'lang_scrapbook' => _MD_PROFILE_SCRAPBOOK,
 		'lang_profile' => _MD_PROFILE_PROFILE,
 		'lang_tribes' => _MD_PROFILE_TRIBES,
 		'isOwner' => $isOwner));

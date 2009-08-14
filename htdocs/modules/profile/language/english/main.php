@@ -143,7 +143,6 @@ Unfortunately, this module has acted in an unexpected way. Hopefully it will ret
 define("_MD_PROFILE_PAGETITLE","%s - %s's Social Network");
 define("_MD_PROFILE_VIDEOS","Videos");
 
-define("_MD_PROFILE_SCRAPBOOK","Scraps");
 define("_MD_PROFILE_PHOTOS","Photos");
 define("_MD_PROFILE_FRIENDS","Friends");
 define("_MD_PROFILE_NOFRIENDSYET","No Friends yet");//also present in index.php
@@ -228,12 +227,6 @@ define("_MD_PROFILE_PICTURES_SUBMIT", "Submit new photo");
 define("_MD_PROFILE_PICTURES_EDIT", "Edit existing photo");
 define("_MD_PROFILE_PICTURES_CREATED", "Photo successfully added");
 define("_MD_PROFILE_PICTURES_MODIFIED", "Photo successfully modified");
-
-//scraps.php
-define("_MD_PROFILE_SCRAPS_SUBMIT", "Submit new scrap");
-define("_MD_PROFILE_SCRAPS_EDIT", "Edit existing scrap");
-define("_MD_PROFILE_SCRAPS_CREATED", "Scrap successfully created");
-define("_MD_PROFILE_SCRAPS_MODIFIED", "Scrap successfully modified");
 
 //tribes.php
 define("_MD_PROFILE_TRIBES_SUBMIT", "Create new tribe");

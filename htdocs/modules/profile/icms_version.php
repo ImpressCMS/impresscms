@@ -66,8 +66,6 @@ $modversion['object_items'][$i] = 'tribes';
 $i++;
 $modversion['object_items'][$i] = 'tribeuser';
 $i++;
-$modversion['object_items'][$i] = 'scraps';
-$i++;
 $modversion['object_items'][$i] = 'configs';
 $i++;
 $modversion['object_items'][$i] = 'audio';
@@ -140,11 +138,6 @@ $modversion['sub'][$i]['url'] = "search.php";
         $modversion['sub'][$i]['url'] = "changemail.php";
     }
     if($icmsModuleConfig['profile_social']==1){
-	  if ($icmsModuleConfig['enable_scraps']==1){ 
-  $i++;
-        $modversion['sub'][$i]['name'] = _MI_PROFILE_MYSCRAPS;
-        $modversion['sub'][$i]['url'] = "scrapbook.php";
-      }
 	  if ($icmsModuleConfig['enable_pictures']==1){
   $i++;
         $modversion['sub'][$i]['name'] = _MI_PROFILE_MYPICTURES;
@@ -245,10 +238,6 @@ $modversion['templates'][] = array(
   'description' => '');
 
 $modversion['templates'][] = array(
-  'file' => 'profile_scraps.html',
-  'description' => '');
-
-$modversion['templates'][] = array(
   'file' => 'profile_editprofile.html',
   'description' => '');
 
@@ -303,10 +292,6 @@ $modversion['templates'][]= array(
 $modversion['templates'][]= array(
   'file' => 'profile_tribes.html',
   'description' => 'tribes Index');
-
-$modversion['templates'][]= array(
-  'file' => 'profile_admin_scraps.html',
-  'description' => 'scraps Admin Index');
 
 $modversion['templates'][]= array(
   'file' => 'profile_admin_pictures.html',
@@ -667,30 +652,11 @@ $modversion['config'][$i]['description'] = '_MI_PROFILE_TRIBESPERPAGE_DESC';
 $modversion['config'][$i]['default'] = 6;
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'int';
-$i++;
-$modversion['config'][$i]['name'] = 'enable_scraps';
-$modversion['config'][$i]['title'] = '_MI_PROFILE_ENABLESCRAPS_TITLE';
-$modversion['config'][$i]['description'] = '_MI_PROFILE_ENABLESCRAPS_DESC';
-$modversion['config'][$i]['default'] = 1;
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$i++;
-$modversion['config'][$i]['name'] = 'scrapsperpage';
-$modversion['config'][$i]['title'] = '_MI_PROFILE_SCRAPSPERPAGE_TITLE';
-$modversion['config'][$i]['description'] = '_MI_PROFILE_SCRAPSPERPAGE_DESC';
-$modversion['config'][$i]['default'] = 20;
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'int';
 
-
-
-/** Comments information */
+// Comments
 $modversion['hasComments'] = 1;
-
-$modversion['comments'] = array(
-  'itemName' => 'tribes_id',
-  'pageName' => 'tribes.php'
-    );
+$modversion['comments']['itemName'] = 'uid';
+$modversion['comments']['pageName'] = 'index.php';
 
 /** Notification information */
 $modversion['hasNotification'] = 1;
@@ -733,23 +699,7 @@ $modversion['notification']['event'][2] = array(
   'mail_template'=> 'video_newvideo_notify',
   'mail_subject'=> _MI_PROFILE_VIDEO_NEWVIDEO_NOTIFYSBJ);
 
-/*$modversion['notification']['category'][3] = array (
-  'name' => 'scrap',
-  'title' => _MI_PROFILE_SCRAP_NOTIFYTIT,
-  'description' => _MI_PROFILE_SCRAP_NOTIFYDSC,
-  'subscribe_from' => 'scrapbook.php',
-  'item_name' => 'uid',
-  'allow_bookmark' => 1 );
-
-$modversion['notification']['event'][3] = array(
-  'name' => 'new_scrap',
-  'category'=> 'scrap',
-  'title'=> _MI_PROFILE_SCRAP_NEWSCRAP_NOTIFY,
-  'caption'=> _MI_PROFILE_SCRAP_NEWSCRAP_NOTIFYCAP,
-  'description'=> _MI_PROFILE_SCRAP_NEWSCRAP_NOTIFYDSC,
-  'mail_template'=> 'scrap_newscrap_notify',
-  'mail_subject'=> _MI_PROFILE_SCRAP_NEWSCRAP_NOTIFYSBJ);
-
+/*
 $modversion['notification']['category'][4] = array (
   'name' => 'friendship',
   'title' => _MI_PROFILE_FRIENDSHIP_NOTIFYTIT,

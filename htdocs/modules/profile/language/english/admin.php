@@ -173,11 +173,6 @@ define("_AM_PROFILE_SUSPENSIONS_MODIFIED", "The suspensions was successfully mod
 define("_AM_PROFILE_SUSPENSIONS_CREATED", "The suspensions has been successfully created.");
 define("_AM_PROFILE_SUSPENSIONS_VIEW", "Suspensions info");
 define("_AM_PROFILE_SUSPENSIONS_VIEW_DSC", "Here is the info about this suspensions.");
-	// Scraps
-define("_AM_PROFILE_SCRAPS", "Scraps");
-define("_AM_PROFILE_SCRAPS_CREATE", "Add a scraps");
-define("_AM_PROFILE_SCRAP", "Scrap");
-define("_AM_PROFILE_SCRAPS_EDIT", "Edit this scraps");
 	// Pictures
 define("_AM_PROFILE_PICTURES", "Pictures");
 define("_AM_PROFILE_PICTURES_CREATE", "Add a pictures");

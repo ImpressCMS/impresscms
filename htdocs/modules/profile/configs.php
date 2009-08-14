@@ -21,7 +21,7 @@ function editconfigs($configsObj, $uid=0)
 
 		if($profile_isAdmin && $uid > 0 && $icmsUser->uid() != $uid){
 		$configsObj->setVar('config_uid', $uid);
-		$configsObj->hideFieldFromForm(array('config_uid', 'status', 'backup_email', 'backup_password', 'pictures', 'audio', 'videos', 'scraps', 'friendship', 'tribes', 'profile_contact', 'profile_general', 'profile_stats'));
+		$configsObj->hideFieldFromForm(array('config_uid', 'status', 'backup_email', 'backup_password', 'pictures', 'audio', 'videos', 'friendship', 'tribes', 'profile_contact', 'profile_general', 'profile_stats'));
 		$sform = $configsObj->getSecureForm(_MD_PROFILE_CONFIGS_EDIT, 'addconfigs');
 		$sform->assign($icmsTpl, 'profile_configsform');
 		$icmsTpl->assign('profile_category_path', icms_getLinkedUnameFromId($uid) . ' > ' . _EDIT);

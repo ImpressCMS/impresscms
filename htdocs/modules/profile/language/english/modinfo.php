@@ -62,7 +62,6 @@ define("_MI_PROFILE_TUBEW_TITLE","Width of the YouTube videos");
 define("_MI_PROFILE_TUBEW_DESC","The width in pixels of the YouTube video player");
 define("_MI_PROFILE_TUBEH_TITLE","Height of the YouTube videos");
 define("_MI_PROFILE_TUBEH_DESC","The height in pixels of the YouTube video player");
-define("_MI_PROFILE_MYSCRAPS","My Scraps");
 define("_MI_PROFILE_MYTRIBES","My Tribes");
 
 define("_MI_PROFILE_VIDEOSPERPAGE_TITLE","Videos per Page");
@@ -72,13 +71,6 @@ define("_MI_PROFILE_VIDEO_NEWVIDEO_NOTIFY","New video");
 define("_MI_PROFILE_VIDEO_NEWVIDEO_NOTIFYCAP","Notify me when a new video is submitted by this user");
 define("_MI_PROFILE_VIDEO_NEWVIDEO_NOTIFYDSC","New video notify description");
 define("_MI_PROFILE_VIDEO_NEWVIDEO_NOTIFYSBJ","{X_OWNER_NAME} has submitted a new video to their profile");
-
-define("_MI_PROFILE_SCRAP_NOTIFYTIT","Scraps");
-define("_MI_PROFILE_SCRAP_NOTIFYDSC","Scrapbook notifications");
-define("_MI_PROFILE_SCRAP_NEWSCRAP_NOTIFY","New scrap");
-define("_MI_PROFILE_SCRAP_NEWSCRAP_NOTIFYCAP","Notify me when a new Scrap is sent to this Scrapbook");
-define("_MI_PROFILE_SCRAP_NEWSCRAP_NOTIFYDSC","New scrap notification description");
-define("_MI_PROFILE_SCRAP_NEWSCRAP_NOTIFYSBJ","{X_OWNER_NAME} has received a new Scrap into their Scrapbook");
 
 define("_MI_PROFILE_MAINTUBEW_TITLE","Main Video width");
 define("_MI_PROFILE_MAINTUBEW_DESC","Width of the video, which shows in the front page of the module");
@@ -96,12 +88,8 @@ define("_MI_PROFILE_ENABLEFRIENDS_TITLE","Enable friends section");
 define("_MI_PROFILE_ENABLEFRIENDS_DESC","Enabling friends section for the users, will enable friends agenda");
 define("_MI_PROFILE_ENABLEVIDEOS_TITLE","Enable videos section");
 define("_MI_PROFILE_ENABLEVIDEOS_DESC","Enabling videos section for the users, will enable the video gallery");
-define("_MI_PROFILE_ENABLESCRAPS_TITLE","Enable Scraps section");
-define("_MI_PROFILE_ENABLESCRAPS_DESC","Enabling Scraps section, will enable members to leave public messages to other users. This feature is like the Wall on Facebook");
 define("_MI_PROFILE_ENABLETRIBES_TITLE","Enable Tribes section");
 define("_MI_PROFILE_ENABLETRIBES_DESC","Enabling Tribes section for the users, will enable them to create Tribes, which group users that have similar interests");
-define("_MI_PROFILE_SCRAPSPERPAGE_TITLE","Number of Scraps per page");
-define("_MI_PROFILE_SCRAPSPERPAGE_DESC","Number of Scraps in a page before the page navigation shows ");
 
 define("_MI_PROFILE_FRIENDS","My Friends");
 define("_MI_PROFILE_FRIENDS_DESC","This block shows the user friends");
@@ -194,7 +182,6 @@ define("_MI_PROFILE_VISIBILITY", "Visibility");
 define("_MI_PROFILE_AUDIOS", "Audios");
 define("_MI_PROFILE_TRIBES", "Tribes");
 define("_MI_PROFILE_SUSPENSIONS", "Suspensions");
-define("_MI_PROFILE_SCRAPS", "Scraps");
 define("_MI_PROFILE_PICTURES", "Pictures");
 define("_MI_PROFILE_VIDEOS", "Videos");
 define("_MI_PROFILE_FRIENDPETITIONS", "Friendpetitions");

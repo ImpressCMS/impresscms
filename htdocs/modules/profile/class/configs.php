@@ -45,7 +45,6 @@ class ProfileConfigs extends IcmsPersistableObject {
 		$this->quickInitVar('pictures', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
 		$this->quickInitVar('audio', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
 		$this->quickInitVar('videos', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
-		$this->quickInitVar('scraps', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
 		$this->quickInitVar('friendship', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
 		$this->quickInitVar('tribes', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
 		$this->quickInitVar('profile_contact', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
@@ -76,11 +75,6 @@ class ProfileConfigs extends IcmsPersistableObject {
 			'module' => 'profile'
 		));
 		$this->setControl('videos', array (
-			'itemHandler' => 'configs',
-			'method' => 'getConfig_statusArray',
-			'module' => 'profile'
-		));
-		$this->setControl('scraps', array (
 			'itemHandler' => 'configs',
 			'method' => 'getConfig_statusArray',
 			'module' => 'profile'
@@ -240,9 +234,6 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="'.$uid.'" OR friend2_uid="'.$uid.'") AND situation!=1';
 		$friendship = $this->query($sql, false);
 		
-		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_scraps').' WHERE scrap_to="'.$uid.'"';
-		$scraps = $this->query($sql, false);
-		
 		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_videos').' WHERE uid_owner="'.$uid.'"';
 		$videos = $this->query($sql, false);
 		
@@ -253,7 +244,6 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 			'audio' => $audio[0]['amount'],
 			'pictures' => $pictures[0]['amount'],
 			'friendship' => $friendship[0]['amount'],
-			'scraps' => $scraps[0]['amount'],
 			'videos' => $videos[0]['amount'],
 			'tribes' => $tribes[0]['amount']
 			);

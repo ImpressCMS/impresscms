@@ -63,23 +63,5 @@ function profile_iteminfo($category, $item_id)
 		$item['url'] = ICMS_URL . '/modules/' . $icmsModule->getVar('dirname') . '/video.php?uid=' . $result_array['uid_owner'];
 		return $item;
 	}
-	
-		if ($category=='scrap') {
-
-		$sql = 'SELECT scrap_id, scrap_from, scrap_to, scrap_text FROM ' . $xoopsDB->prefix('profile_scraps') . ' WHERE scrap_from = ' . $item_id . ' LIMIT 1';
-		$result = $xoopsDB->query($sql);
-		$result_array = $xoopsDB->fetchArray($result);
-		/**
-		 * Let's get the user name of the owner of the album
-		 */ 
-		$owner = new XoopsUser();
-		$identifier = $owner->getUnameFromId($result_array['scrap_from']);
-		$item['name'] = $identifier."'s Scraps";
-		$item['url'] = ICMS_URL . '/modules/' . $icmsModule->getVar('dirname') . '/scrapbook.php?uid=' . $result_array['scrap_from'];
-		return $item;
-	}
-	
-	
 }
-
 ?>

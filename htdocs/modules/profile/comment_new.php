@@ -11,26 +11,10 @@
  * @since           1.2
  * @author          Jan Pedersen
  * @author          Marcello Brandao <marcello.brandao@gmail.com>
- * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @author          Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version         $Id$
  */
 
-/**
- * Xoops header
- */
-include_once 'header.php';
-$com_itemid = isset($_GET['com_itemid']) ? intval($_GET['com_itemid']) : 0;
-if ($com_itemid > 0) {
-	$imblogging_tribes_handler = icms_getModuleHandler('tribes');
-	$tribesObj = $imblogging_tribes_handler->get($com_itemid);
-	if ($tribesObj && !$tribesObj->isNew()) {
-		$com_replytext = 'test...';
-		$bodytext = $tribesObj->getPostLead();
-		if ($bodytext != '') {
-			$com_replytext .= '<br /><br />'.$bodytext.'';
-		}
-		$com_replytitle = $tribesObj->getVar('title');
-		include_once ICMS_ROOT_PATH .'/include/comment_new.php';
-	}
-}
+include '../../mainfile.php';
+include ICMS_ROOT_PATH.'/include/comment_new.php';
 ?>
