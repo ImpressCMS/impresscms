@@ -292,7 +292,34 @@ class XoopsModule extends XoopsObject
 		$inst = & $modhandler->getByDirname($dirname);
 		return $inst;
 	}
-/**#@-*/
+
+	/**
+	 * Modules Message Function
+	 *
+	 * @since ImpressCMS 1.2
+	 * @author Sina Asghari (aka stranger) <stranger@impresscms.org>
+	 *
+	 * @param string $msg	The Error Message
+	 * @param string $title	The Error Message title
+	 * @param	bool	$render	Whether to echo (render) or return the HTML string
+	 *
+	 * @todo Make this work with templates ;)
+	 */
+	function setMessage($msg, $title='', $render = false){
+		$ret = '<div class="moduleMsg">';
+		if($title != '') {$ret .= '<h4>'.$title.'</h4>';}
+		if(is_array($msg))
+		{
+			foreach($msg as $m) {$ret .= $m.'<br />';}
+		}
+		else {$ret .= $msg;}
+		$ret .= '</div>';
+		if($render){
+			echo $ret;
+		}else{
+			return $ret;
+		}
+	}
 }
 
 /**
