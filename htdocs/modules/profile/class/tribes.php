@@ -66,9 +66,7 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 		return parent :: getVar($key, $format);
 	}
 	function getProfileTribe() {
-		$ret = '<a href="' . ICMS_URL . '/uploads/profile/tribes/resized_' . $this->getVar ( 'tribe_img' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '">
-          <img class="thumb" src="' . ICMS_URL . '/uploads/profile/tribes/thumb_' . $this->getVar ( 'tribe_img' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '" />
-        </a>';
+		$ret = '<img class="thumb" src="' . ICMS_URL . '/uploads/profile/tribes/thumb_' . $this->getVar ( 'tribe_img' ) . '"  title="' . $this->getVar ( 'title' ) . '" />';
 		return $ret;
 	}
 

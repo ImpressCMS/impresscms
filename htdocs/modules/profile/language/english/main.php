@@ -140,19 +140,14 @@ define("_MD_PROFILE_TOKENEXPIRED", "Your Security Token has Expired<br />Please 
 define("_MD_PROFILE_YOUCANUPLOAD","You can only upload jpg's files and up to %s KBytes in size");
 define("_MD_PROFILE_NOCACHACA","Problem found ... file to big?!<br />
 Unfortunately, this module has acted in an unexpected way. Hopefully it will return to its helpful self if you try again. ");//Funny general error message
-define("_MD_PROFILE_PAGETITLE","%s - %s's Social Network");
+define("_MD_PROFILE_PAGETITLE","%s's Profile");
 define("_MD_PROFILE_VIDEOS","Videos");
 
 define("_MD_PROFILE_PHOTOS","Photos");
 define("_MD_PROFILE_FRIENDS","Friends");
-define("_MD_PROFILE_NOFRIENDSYET","No Friends yet");//also present in index.php
 define("_MD_PROFILE_TRIBES","Tribes");
-define("_MD_PROFILE_ALLTRIBES", "All Tribes");
-define("_MD_PROFILE_NOTRIBESYET","No Tribes yet");
 define("_MD_PROFILE_MYTRIBES","My Tribes");
-define("_MD_PROFILE_ALLTRIBES","All Tribes");
 define("_MD_PROFILE_PROFILE","Profile");
-define("_MD_PROFILE_HOME","Home");
 define("_MD_EXTENDED_PROFILE","Extra Info");
 
 //friends.php

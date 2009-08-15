@@ -14,14 +14,26 @@
 
 include_once "../../mainfile.php";
 $dirname = basename( dirname( __FILE__ ) );
-$uid = isset($_GET['uid'])?intval($_GET['uid']):(!empty($icmsUser)?intval($icmsUser->getVar('uid')):0);
-$isOwner = $isFriend = false ;
-$isAnonym = true;
-$owner_uname = !empty($icmsUser)?trim($icmsUser->getVar('uname')):_GUESTS;
-if($uid > 0) {
-	$isAnonym = empty($icmsUser)?true:false;
-	$isOwner = (!empty($icmsUser) && $icmsUser->getVar('uid') == $uid)?true:false;
+$uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0;
+if ($uid == 0) {
+	if(!empty($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
+		header('location: '.ICMS_URL.'/modules/profile/index.php?uid='.$uid);
+		exit();
+	} else {
+		header('location: '.ICMS_URL);
+		exit();
+	}
 }
+
+$member_handler =& xoops_gethandler('member');
+$thisUser =& $member_handler->getUser($uid);
+
+$isOwner = $isFriend = false ;
+$isAnonym = empty($icmsUser) ? true : false;
+$isOwner = (!empty($icmsUser) && $icmsUser->getVar('uid') == $uid) ? true: false;
+$owner_uname = !empty($thisUser) ? trim($thisUser->getVar('uname')) : _GUESTS;
+
 $xoopsOption['template_main'] = ($isAnonym == false && $uid > 0 && !empty($profile_template))?$profile_template:'profile_noindex.html';
 include_once ICMS_ROOT_PATH."/header.php";
 include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/include/common.php';
@@ -33,11 +45,12 @@ $xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/profile'.(@_A
 if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/tabs-ie.css');}
 $xoTheme->addScript(ICMS_URL.'/modules/'.$dirname.'/assets/js/profile.js');
 icms_makeSmarty(array(
-	'module_name',$module_name,
-	'xoops_pagetitle',  sprintf(_MD_PROFILE_PAGETITLE,$module_name, $owner_uname ),
-	'profile_image','<img src="'.ICMS_URL.'/modules/'.$dirname.'/assets/images/profile-start.gif" alt="'.$module_name.'"/>',
-	'profile_content',_MI_PROFILE_MODULEDESC,
-	'module_is_socialmode', $icmsModuleConfig['profile_social']));
+	'module_name' => $module_name,
+	'xoops_pagetitle' => sprintf(_MD_PROFILE_PAGETITLE, $owner_uname),
+	'profile_image' => '<img src="'.ICMS_URL.'/modules/'.$dirname.'/assets/images/profile-start.gif" alt="'.$module_name.'"/>',
+	'profile_content' => _MI_PROFILE_MODULEDESC,
+	'module_is_socialmode' => $icmsModuleConfig['profile_social'],
+	'profile_module_home' => '<a href="'.ICMS_URL.'/modules/'.$dirname.'/index.php?uid='.$uid.'">'.sprintf(_MD_PROFILE_PAGETITLE, $owner_uname).'</a>'));
 
 if($icmsModuleConfig['profile_social']){
 	$profile_configs_handler = icms_getModuleHandler('configs');
@@ -56,8 +69,6 @@ if($icmsModuleConfig['profile_social']){
 	}
 	icms_makeSmarty(array(
 		'lang_mysection' => _MD_PROFILE_MYPROFILE,
-		'lang_home' => _MD_PROFILE_HOME,
-		'lang_exprofile' => _MD_EXTENDED_PROFILE,
 		'lang_photos' => _MD_PROFILE_PHOTOS,
 		'lang_friends' => _MD_PROFILE_FRIENDS,
 		'lang_audio' => _MD_PROFILE_AUDIOS,

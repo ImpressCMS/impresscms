@@ -32,6 +32,7 @@ class ProfileVisitors extends IcmsPersistableObject {
 		$this->quickInitVar('visitors_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('uid_owner', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('uid_visitor', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('creation_time', XOBJ_DTYPE_LTIME, false);
 
 	}
 
@@ -57,6 +58,47 @@ class ProfileVisitorsHandler extends IcmsPersistableObjectHandler {
 	 */
 	public function __construct(& $db) {
 		$this->IcmsPersistableObjectHandler($db, 'visitors', 'visitors_id', '', '', 'profile');
+	}
+
+	/**
+	 * Create the criteria that will be used by getVisitors
+	 *
+	 * @param int $start to which record to start
+	 * @param int $limit limit of tribes to return
+	 * @param int $uid_owner if specifid, only the tribes of this user will be returned
+	 * @return CriteriaCompo $criteria
+	 */
+	function getVisitorsCriteria($start = 0, $limit = 0, $uid_owner = false) {
+		global $icmsUser;
+
+		$criteria = new CriteriaCompo();
+		if ($start) {
+			$criteria->setStart($start);
+		}
+		if ($limit) {
+			$criteria->setLimit(intval($limit));
+		}
+		//$criteria->setSort('visit_time');
+		//$criteria->setOrder('DESC');
+
+		if ($uid_owner) {
+			$criteria->add(new Criteria('uid_owner', $uid_owner));
+		}
+		return $criteria;
+	}
+
+	/**
+	 * Get visitors as array, ordered by visit_time DESC
+	 *
+	 * @param int $start to which record to start
+	 * @param int $limit max tribes to display
+	 * @param int $uid_owner if specifid, only the tribe of this user will be returned
+	 * @return array of tribes
+	 */
+	function getVisitors($start = 0, $limit = 0, $uid_owner = false) {
+		$criteria = $this->getVisitorsCriteria($start, $limit, $uid_owner);
+		$ret = $this->getObjects($criteria, true, false);
+		return $ret;
 	}
 }
 ?>

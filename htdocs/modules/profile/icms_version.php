@@ -190,10 +190,6 @@ $modversion['blocks'][] = array(
   'template' => 'profile_block_lastpictures.html');
 
 /** Templates information */
-$modversion['templates'][1] = array(
-  'file' => 'profile_navbar.html',
-  'description' => '');
-
 $modversion['templates'][] = array(
   'file' => 'profile_index.html',
   'description' => '');
@@ -235,10 +231,6 @@ $modversion['templates'][] = array(
 
 $modversion['templates'][] = array(
   'file' => 'profile_videos.html',
-  'description' => '');
-
-$modversion['templates'][] = array(
-  'file' => 'profile_editprofile.html',
   'description' => '');
 
 $modversion['templates'][] = array(

@@ -86,11 +86,11 @@ if (in_array($clean_op,$valid_op,true)){
 		break;
 
 	case "addaudio":
-        if (!$xoopsSecurity->check()) {
-        	redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
-        }
-         include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
-        $controller = new IcmsPersistableController($profile_audio_handler);
+		if (!$xoopsSecurity->check()) {
+			redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+		}
+		include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
+		$controller = new IcmsPersistableController($profile_audio_handler);
 		$controller->storeFromDefaultForm(_MD_PROFILE_AUDIOS_CREATED, _MD_PROFILE_AUDIOS_MODIFIED);
 		break;
 
@@ -105,7 +105,7 @@ if (in_array($clean_op,$valid_op,true)){
 		    }
 		}
   	    include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
-        $controller = new IcmsPersistableController($profile_audio_handler);
+		$controller = new IcmsPersistableController($profile_audio_handler);
 		$controller->handleObjectDeletionFromUserSide();
 		$icmsTpl->assign('profile_category_path', $audioObj->getVar('title') . ' > ' . _DELETE);
 
@@ -139,7 +139,7 @@ if (in_array($clean_op,$valid_op,true)){
 		break;
 	}
 }
-$icmsTpl->assign('profile_module_home', icms_getModuleName(true, true));
+$icmsTpl->assign('profile_category_path', _MD_PROFILE_AUDIOS);
 
 include_once 'footer.php';
 ?>

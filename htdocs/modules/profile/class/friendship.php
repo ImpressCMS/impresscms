@@ -67,14 +67,14 @@ class ProfileFriendship extends IcmsPersistableObject {
 	function getFriend() {
 		global $icmsUser;
 		$uid = isset($_REQUEST['uid'])?intval($_REQUEST['uid']):$icmsUser->uid();
-		$friend = ($uid==$friendshipObj->getVar('friend2_uid'))?$friendshipObj->getVar('friend1_uid'):$friendshipObj->getVar('friend2_uid');
+		$friend = ($uid==$this->getVar('friend2_uid')) ? $this->getVar('friend1_uid') : $this->getVar('friend2_uid');
 		return icms_getLinkedUnameFromId($friend);
 	}
 
 	function getAvatar() {
 		global $icmsUser;
 		$uid = isset($_REQUEST['uid'])?intval($_REQUEST['uid']):$icmsUser->uid();
-		$friend = ($uid==$friendshipObj->getVar('friend2_uid'))?$friendshipObj->getVar('friend1_uid'):$friendshipObj->getVar('friend2_uid');
+		$friend = ($uid==$this->getVar('friend2_uid')) ? $this->getVar('friend1_uid') : $this->getVar('friend2_uid');
 		$member_handler =& xoops_gethandler('member');
 		$processUser =& $member_handler->getUser($friend);
 		return $processUser->gravatar();
@@ -109,8 +109,8 @@ class ProfileFriendship extends IcmsPersistableObject {
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
-		$ret['friendship_senderid'] = $this->getVar('uid_owner','e');
-		$ret['friendship_sender_link'] = $this->getPictureSender();
+		$ret['friendship_senderid'] = $this->getVar('friend1_uid','e');
+		//$ret['friendship_sender_link'] = $this->getPictureSender();
 		return $ret;
 	}
 }
@@ -148,8 +148,8 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 		}
 		$criteria->setSort('creation_time');
 		$criteria->setOrder('DESC');
-		$criteria->add(new Criteria('friend1_uid', $friend1_uid), 'OR');
-		$criteria->add(new Criteria('friend2_uid', $friend1_uid));
+		$criteria->add(new Criteria('friend1_uid', $friend1_uid));
+		$criteria->add(new Criteria('friend2_uid', $friend1_uid), 'OR');
 		return $criteria;
 	}
 

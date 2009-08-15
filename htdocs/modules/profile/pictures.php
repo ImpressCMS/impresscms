@@ -146,7 +146,7 @@ if (in_array($clean_op,$valid_op,true)){
 		break;
 	}
 }
-$icmsTpl->assign('profile_module_home', icms_getModuleName(true, true));
+$icmsTpl->assign('profile_category_path', _MD_PROFILE_PHOTOS);
 
 include_once 'footer.php';
 ?>

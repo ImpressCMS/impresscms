@@ -204,8 +204,7 @@ $xoopsTpl->assign('user_pmlink_imgsrc_alttxt', sprintf(_SENDPMTO, $thisUser->get
 $xoopsTpl->assign('uname', $thisUser->getVar('uname'));
 $xoopsTpl->assign('email', $email);
 $xoopsTpl->assign('avatar', $avatar);
-$xoopsTpl->assign('module_home', _PROFILE_MA_PROFILE);
-//$xoopsTpl->assign('categoryPath', _PROFILE_MA_USERINFO);
+//$xoopsTpl->assign('profile_category', _PROFILE_MA_USERINFO);
 
 include 'footer.php';
 ?>
