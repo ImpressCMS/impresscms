@@ -36,8 +36,10 @@ define("_MI_PROFILE_PATHUPLOAD_TITLE" , "Path Uploads");
 define("_MI_PROFILE_PATHUPLOAD_DESC" , "Path to the uploads directory<br />in Linux it should look like this /var/www/uploads<br />in Windows like this C:/Program Files/www");
 define("_MI_PROFILE_LINKPATHUPLOAD_TITLE","Link to your uploads directory");
 define("_MI_PROFILE_LINKPATHUPLOAD_DESC","This is the address of the root path to uploads <br />like http://www.yoursite.com/uploads");
-define("_MI_PROFILE_MAXFILEBYTES_TITLE","Max size in bytes");
-define("_MI_PROFILE_MAXFILEBYTES_DESC","This is the maximum size a picture file can be<br /> You can set it in bytes like this: 512000 for 500 KB<br /> Be careful that the maximum size is also set in the php.ini file. The server is currently set to ".ini_get('post_max_size'));
+define("_MI_PROFILE_MAXFILEBYTES_PICTURE_TITLE","Max size in bytes per picture");
+define("_MI_PROFILE_MAXFILEBYTES_PICTURE_DESC","This is the maximum size a picture file can be<br /> You can set it in bytes like this: 512000 for 500 KB<br /> Be careful that the maximum size is also set in the php.ini file. The server is currently set to ".ini_get('post_max_size'));
+define("_MI_PROFILE_MAXFILEBYTES_AUDIO_TITLE","Max size in bytes per audio");
+define("_MI_PROFILE_MAXFILEBYTES_AUDIO_DESC","This is the maximum size a audio file can be<br /> You can set it in bytes like this: 5242880 for 5 MB<br /> Be careful that the maximum size is also set in the php.ini file. The server is currently set to ".ini_get('post_max_size'));
 
 define("_MI_PROFILE_PICTURE_NOTIFYTIT","Album");
 define("_MI_PROFILE_PICTURE_NOTIFYDSC","Notifications related to user's album");

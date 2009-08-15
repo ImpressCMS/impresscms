@@ -134,7 +134,7 @@ class ProfileAudioHandler extends IcmsPersistableObjectHandler {
 	public function __construct(& $db) {
 		global $icmsModuleConfig;
 		$this->IcmsPersistableObjectHandler($db, 'audio', 'audio_id', 'title', '', 'profile');
-		$this->setUploaderConfig(false, array("audio/mp3" , "audio/x-mp3", "audio/mpeg"), $icmsModuleConfig['maxfilesize']);
+		$this->enableUpload(array("audio/mp3" , "audio/x-mp3", "audio/mpeg"), $icmsModuleConfig['maxfilesize_audio']);
 	}
 
 
@@ -222,5 +222,31 @@ class ProfileAudioHandler extends IcmsPersistableObjectHandler {
 		$this->query($sql, null, true);
 	}
 
+	/**
+	 * insert a new object in the database
+	 *
+	 * @param	object	$obj reference to the object
+	 * @param	bool	$force whether to force the query execution despite security settings
+	 * @param	bool	$checkObject check if the object is dirty and clean the attributes
+	 * @param	bool	$debug debug switch
+	 * @return	bool FALSE if failed, TRUE if already present and unchanged or successful
+	 */
+	function insert(&$obj, $force = false, $checkObject = true, $debug=false) {
+		if (count($obj->getErrors()) > 0) return false;
+		return parent::insert($obj, $force, $checkObject, $debug);
+	}
+
+	/**
+	 * insert a new object in the database and output debug message
+	 *
+	 * @param	object	$obj reference to the object
+	 * @param	bool	$force whether to force the query execution despite security settings
+	 * @param	bool	$checkObject check if the object is dirty and clean the attributes
+	 * @param	bool	$debug debug switch
+	 * @return	bool FALSE if failed, TRUE if already present and unchanged or successful
+	 */
+	function insertD(&$obj, $force = false, $checkObject = true, $debug=false) {
+		return $this->insert($obj, $force, $checkObject, true);
+	}
 }
 ?>
