@@ -40,7 +40,7 @@
   <{if $visitors}>
   <{cycle values='even,odd' print=false reset=true advance=false}>
   <{section name=i loop=$visitors}>
-  <p class="<{cycle values='even,odd'}>">&raquo;&nbsp;<a href=index.php?uid=<{$visitors[i].uid}>><{$visitors[i].uname}></a></p>
+  <p class="<{cycle values='even,odd'}>">&raquo; <a href=index.php?uid=<{$visitors[i].uid}>><{$visitors[i].uname}></a> <small>(<{$visitors[i].time}>)</small></p>
   <{/section}>
   <{/if}>
 </div>

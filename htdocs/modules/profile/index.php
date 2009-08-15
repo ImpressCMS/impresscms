@@ -52,6 +52,10 @@ if($icmsModuleConfig['profile_social']==0){
 	exit();
 }
 
+// log visitor
+$profile_visitors_handler = icms_getModuleHandler('visitors');
+$profile_visitors_handler->logVisitor($uid);
+
 // Use a naming convention that indicates the source of the content of the variable
 $clean_op = '';
 if (isset($_GET['op'])) $clean_op = $_GET['op'];
@@ -157,7 +161,6 @@ if ($userrank['image']) {
 }
 
 // visitors
-$profile_visitors_handler = icms_getModuleHandler('visitors');
 $visitors = $profile_visitors_handler->getVisitors(0, 5, $uid);
 $rtn = array();
 $i = 0;
@@ -165,6 +168,7 @@ foreach($visitors as $visitor) {
 	$visitorUser =& $member_handler->getUser($visitor['uid_visitor']);
 	$rtn[$i]['uid'] = $visitor['uid_visitor'];
 	$rtn[$i]['uname'] = $visitorUser->getVar('uname');
+	$rtn[$i]['time'] = $visitor['visit_time'];
 	$i++;
 }
 $icmsTpl->assign('visitors', $rtn);
