@@ -83,6 +83,7 @@ Revision:
 * #706: other languages than english are working for protector preferences now as well (Phoenyx)
 * #269: audio files can now be added properly | ticket from addons (Phoenyx)
 * #720: in case there is an error in doStoreFromDefaultForm, the correct message is shown to the user (Phoenyx)
+* #301: removed creation of /uploads/profile/mp3 in imProfile | ticket from addons (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''

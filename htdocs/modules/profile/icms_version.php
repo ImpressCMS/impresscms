@@ -716,5 +716,4 @@ $modversion['notification']['event'][4] = array(
   'mail_template'=> 'friendship_newpetition_notify',
   'mail_subject'=> _MI_PROFILE_FRIEND_NEWPETITION_NOTIFYSBJ);
 */
-icms_mkdir(ICMS_ROOT_PATH.'/uploads/'.basename( dirname( __FILE__ ) ).'/mp3');
 ?>
