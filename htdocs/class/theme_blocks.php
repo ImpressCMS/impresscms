@@ -186,7 +186,7 @@ class xos_logos_PageBuilder {
 				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=up&bid=" . $xobject->getVar ( 'bid' ) . "&rtn=$url'> <img src=" . ICMS_IMAGES_SET_URL . "/actions/up.png" . " title=" . _UP . " alt=" . _UP . "  /> " . _UP . "</a><br />";
 				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=down&bid=" . $xobject->getVar ( 'bid' ) . "&rtn=$url'> <img src=" . ICMS_IMAGES_SET_URL . "/actions/down.png" . " title=" . _DOWN . " alt=" . _DOWN . "  /> " . _DOWN . "</a>";
 				if ($xobject->getVar ( 'dirname' ) == '') {
-					$titlebtns .= "<br /><a href=" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=delete&bid=" . $xobject->getVar ( 'bid' ) . "> <img src=" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png" . " title=" . _DELETE . " alt=" . _DELETE . "  /> " . _DELETE . "</a>";
+					$titlebtns .= "<br /><a href=" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&op=del&bid=" . $xobject->getVar ( 'bid' ) . "> <img src=" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png" . " title=" . _DELETE . " alt=" . _DELETE . "  /> " . _DELETE . "</a>";
 				}
 				$titlebtns .= '</div>';
 				$titlebtns .= '<script type="text/javascript">
