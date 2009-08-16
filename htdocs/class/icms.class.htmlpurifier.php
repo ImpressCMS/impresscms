@@ -153,7 +153,7 @@ class icms_HTMLPurifier
         }
 
         $icmsPurifyConf = $this->icms_getPurifierConfig(); // gets the Config Data
-        //$icmsPurifyConf = $this->icms_arrayFilterRecursive($icmsPurifyConf); // removes keys from array that contain empty $values
+        $icmsPurifyConf = $this->icms_arrayFilterRecursive($icmsPurifyConf); // removes keys from array that contain empty $values
 
         //$this->icms_debug_info('icmsPurifyConf', $icmsPurifyConf); // uncomment for specific config debug info
 
