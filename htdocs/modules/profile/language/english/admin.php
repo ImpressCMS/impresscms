@@ -157,34 +157,34 @@ define("_AM_PROFILE_AUDIO", "Audio");
 define("_AM_PROFILE_AUDIO_EDIT", "Edit this audio");
 	// Tribes
 define("_AM_PROFILE_TRIBES", "Tribes");
-define("_AM_PROFILE_TRIBES_CREATE", "Add a tribes");
+define("_AM_PROFILE_TRIBES_CREATE", "Add a tribe");
 define("_AM_PROFILE_TRIBE", "Tribe");
-define("_AM_PROFILE_TRIBES_EDIT", "Edit this tribes");
-define("_AM_PROFILE_TRIBES_MODIFIED", "The tribes was successfully modified.");
-define("_AM_PROFILE_TRIBES_CREATED", "The tribes has been successfully created.");
-define("_AM_PROFILE_TRIBES_VIEW", "Tribes info");
-define("_AM_PROFILE_TRIBES_VIEW_DSC", "Here is the info about this tribes.");
+define("_AM_PROFILE_TRIBES_EDIT", "Edit this tribe");
+define("_AM_PROFILE_TRIBES_MODIFIED", "The tribe was successfully modified.");
+define("_AM_PROFILE_TRIBES_CREATED", "The tribe has been successfully created.");
+define("_AM_PROFILE_TRIBES_VIEW", "Tribe info");
+define("_AM_PROFILE_TRIBES_VIEW_DSC", "Here is the info about this tribe.");
 	// Suspensions
 define("_AM_PROFILE_SUSPENSIONS", "Suspensions");
-define("_AM_PROFILE_SUSPENSIONS_CREATE", "Add a suspensions");
+define("_AM_PROFILE_SUSPENSIONS_CREATE", "Add a suspension");
 define("_AM_PROFILE_SUSPENSION", "Suspension");
-define("_AM_PROFILE_SUSPENSIONS_EDIT", "Edit this suspensions");
-define("_AM_PROFILE_SUSPENSIONS_MODIFIED", "The suspensions was successfully modified.");
-define("_AM_PROFILE_SUSPENSIONS_CREATED", "The suspensions has been successfully created.");
-define("_AM_PROFILE_SUSPENSIONS_VIEW", "Suspensions info");
-define("_AM_PROFILE_SUSPENSIONS_VIEW_DSC", "Here is the info about this suspensions.");
+define("_AM_PROFILE_SUSPENSIONS_EDIT", "Edit this suspension");
+define("_AM_PROFILE_SUSPENSIONS_MODIFIED", "The suspension was successfully modified.");
+define("_AM_PROFILE_SUSPENSIONS_CREATED", "The suspension has been successfully created.");
+define("_AM_PROFILE_SUSPENSIONS_VIEW", "Suspension info");
+define("_AM_PROFILE_SUSPENSIONS_VIEW_DSC", "Here is the info about this suspension.");
 	// Pictures
 define("_AM_PROFILE_PICTURES", "Pictures");
-define("_AM_PROFILE_PICTURES_CREATE", "Add a pictures");
+define("_AM_PROFILE_PICTURES_CREATE", "Add a picture");
 define("_AM_PROFILE_PICTURE", "Picture");
-define("_AM_PROFILE_PICTURES_EDIT", "Edit this pictures");
-define("_AM_PROFILE_PICTURES_MODIFIED", "The pictures was successfully modified.");
-define("_AM_PROFILE_PICTURES_CREATED", "The pictures has been successfully created.");
+define("_AM_PROFILE_PICTURES_EDIT", "Edit this picture");
+define("_AM_PROFILE_PICTURES_MODIFIED", "The picture was successfully modified.");
+define("_AM_PROFILE_PICTURES_CREATED", "The picture has been successfully created.");
 	// Videos
 define("_AM_PROFILE_VIDEOS", "Videos");
-define("_AM_PROFILE_VIDEOS_CREATE", "Add a videos");
+define("_AM_PROFILE_VIDEOS_CREATE", "Add a video");
 define("_AM_PROFILE_VIDEO", "Video");
-define("_AM_PROFILE_VIDEOS_EDIT", "Edit this videos");
+define("_AM_PROFILE_VIDEOS_EDIT", "Edit this video");
 	// Tribeuser
 define("_AM_PROFILE_TRIBEUSERS", "Tribeusers");
 define("_AM_PROFILE_TRIBEUSER_CREATE", "Add a tribeuser");

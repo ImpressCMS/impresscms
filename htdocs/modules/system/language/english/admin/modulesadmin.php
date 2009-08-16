@@ -81,7 +81,7 @@ define('_MD_AM_FUNCT_EXEC','Function <b>%s</b> is successfully executed.');
 define('_MD_AM_FAIL_EXEC','Failed to execute <b>%s</b>.');
 ######################## Added in 1.2 ###################################
 define('_MD_AM_INSTALLED', 'Installed Modules');
-define('_MD_AM_NONINSTALL', 'Non-Install Modules');
+define('_MD_AM_NONINSTALL', 'UnInstalled Modules');
 define('_MD_AM_NOTDELTEMPFILE', 'ERROR: Could not delete old template <b>%s</b>. Aborting update of this file.');
 define('_MD_AM_COULDNOTUPDATE', 'ERROR: Could not update <b>%s</b>.');
 define('_MD_AM_BLOCKUPDATED', 'Block <b>%s</b> updated. Block ID: <b>%s</b>.');

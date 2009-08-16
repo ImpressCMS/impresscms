@@ -2,7 +2,7 @@
 define("_CO_ICMS_AUTOTASKS_NAME", "Task Name");
 define("_CO_ICMS_AUTOTASKS_NAME_DSC", "Enter the task name.");
 define("_CO_ICMS_AUTOTASKS_CODE", "Source Code");
-define("_CO_ICMS_AUTOTASKS_CODE_DSC", "Here you can write PHP code to be executed as a task.<br /><br />mainfile.php will already be included.<br />Use <i>global \$xoopsDB</i> to make use of the database object.");
+define("_CO_ICMS_AUTOTASKS_CODE_DSC", "Here you can write PHP code to be executed as a task.<p style='color:red'>Without &lt;?php and ?&gt;</p><br /><br />mainfile.php will already be included.<br />Use <i>global \$xoopsDB</i> to make use of the database object.");
 define("_CO_ICMS_AUTOTASKS_REPEAT", "Repeat");
 define("_CO_ICMS_AUTOTASKS_REPEAT_DSC", "How often do you want this task to be repeated? Enter '0' if you want to create a forever running task.");
 define("_CO_ICMS_AUTOTASKS_INTERVAL", "Interval");
@@ -28,4 +28,6 @@ define("_CO_ICMS_AUTOTASKS_TYPE_ADDON", "System");
 define("_CO_ICMS_AUTOTASKS_FOREVER", "forever");
 
 define("_CO_ICMS_AUTOTASKS_INIT_ERROR", "Error: Can't  initialize selected auto tasks subsystem.");
+
+define("_CO_ICMS_AUTOTASKS_SOURCECODE_ERROR", "Error in Autotask SourceCode: Can't execute Autotask");
 ?>

@@ -101,7 +101,7 @@ define("_CO_PROFILE_CONFIGS_END_SUSPENSION_DSC", " ");
 define("_CO_PROFILE_CONFIGS_STATUS", "What's in your mind?");
 define("_CO_PROFILE_CONFIGS_STATUS_DSC", " ");
 define('_CO_PROFILE_CONFIG_STATUS_EVERYBODY', "Anybody can see this");
-define('_CO_PROFILE_CONFIG_STATUS_MEMBERS', "Only registere users can see this");
+define('_CO_PROFILE_CONFIG_STATUS_MEMBERS', "Only registered users can see this");
 define('_CO_PROFILE_CONFIG_STATUS_FRIENDS', "Only friends can see this");
 define('_CO_PROFILE_CONFIG_STATUS_PRIVATE', "Only I can see this");
 
@@ -181,7 +181,7 @@ define("_CO_PROFILE_VIDEOS_VIDEO_DESC", "Video description");
 define("_CO_PROFILE_VIDEOS_VIDEO_DESC_DSC", " ");
 define("_CO_PROFILE_VIDEOS_YOUTUBE_CODE", "Youtube's code");
 define("_CO_PROFILE_VIDEOS_YOUTUBE_CODE_DSC", " Please enter the code of your clip in you tube.");
-define("_CO_PROFILE_VIDEOS_MAIN_VIDEO", "");
+define("_CO_PROFILE_VIDEOS_MAIN_VIDEO", "Is this a main video");
 define("_CO_PROFILE_VIDEOS_MAIN_VIDEO_DSC", " ");
 // visitors
 define("_CO_PROFILE_VISITORS_VISIT_ID", "Id");
