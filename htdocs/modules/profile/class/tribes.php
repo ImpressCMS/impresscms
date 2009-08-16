@@ -34,7 +34,7 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 		$this->quickInitVar('uid_owner', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('tribe_desc', XOBJ_DTYPE_TXTAREA, true);
-		$this->quickInitVar('tribe_img', XOBJ_DTYPE_TXTBOX, false);
+		$this->quickInitVar('tribe_img', XOBJ_DTYPE_IMAGE, false);
 		$this->quickInitVar('creation_time', XOBJ_DTYPE_LTIME, false);
 		$this->initCommonVar('counter', false);
 		$this->initCommonVar('dohtml', false, true);
@@ -264,9 +264,14 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	 */
 	function afterSave(& $obj) {
 		global $icmsModuleConfig;
+
+		// only resize images if image is provided
+		$imgName = $obj->getVar('tribe_img');
+		if (empty($imgName)) return true;
+
 		// Resizing Images!
 		$imgPath = ICMS_UPLOAD_PATH.'/profile/tribes/';
-		$img = $imgPath . $obj->getVar('tribe_img');
+		$img = $imgPath.$imgName;
 		$this->resizeImage($img, $icmsModuleConfig['thumb_width'], $icmsModuleConfig['thumb_height'], $icmsModuleConfig['resized_width'], $icmsModuleConfig['resized_height'],$imgPath);
 		return true;
 	}
