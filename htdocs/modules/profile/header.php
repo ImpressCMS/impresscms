@@ -29,7 +29,7 @@ if (is_object($icmsModule) && $icmsModule->dirname() == $dirname) {
 
 $uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0;
 if ($uid == 0) {
-	if(!empty($icmsUser)){
+	if(is_object($icmsUser)){
 		$uid = $icmsUser->getVar('uid');
 		// this is necessary to make comments work on index.php (comments require $_GET['uid'] here)
 		if (isset($profile_current_page) && $profile_current_page == 'index.php') {
@@ -46,7 +46,7 @@ $member_handler =& xoops_gethandler('member');
 $thisUser =& $member_handler->getUser($uid);
 
 if (!is_object($thisUser)) {
-	if (!empty($icmsUser)) {
+	if (is_object($icmsUser)) {
 		redirect_header(ICMS_URL.'/modules/profile/index.php?uid='.$icmsUser->getVar('uid'), 3, _PROFILE_MA_USER_NOT_FOUND);
 	} else {
 		redirect_header(ICMS_URL.'/modules/profile/index.php', 3, _PROFILE_MA_USER_NOT_FOUND);
@@ -55,9 +55,9 @@ if (!is_object($thisUser)) {
 }
 
 $isOwner = $isFriend = false ;
-$isAnonym = empty($icmsUser) ? true : false;
-$isOwner = (!empty($icmsUser) && $icmsUser->getVar('uid') == $uid) ? true: false;
-$owner_uname = !empty($thisUser) ? trim($thisUser->getVar('uname')) : _GUESTS;
+$isAnonym = is_object($icmsUser) ? false : true;
+$isOwner = (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid) ? true: false;
+$owner_uname = is_object($thisUser) ? trim($thisUser->getVar('uname')) : _GUESTS;
 
 $xoopsOption['template_main'] = ($isAnonym == false && $uid > 0 && !empty($profile_template))?$profile_template:'profile_noindex.html';
 include_once ICMS_ROOT_PATH."/header.php";

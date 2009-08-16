@@ -14,6 +14,7 @@
  */
 
 define('_PROFILE_MA_FIRST_USE', 'Profile is not yet ready to use. Please contact an administrator.');
+define('_PROFILE_MA_MAKE_CONFIG_FIRST', 'This is the first time you open your Profile. Please specify your Profile Settings first.');
 define('_PROFILE_MA_USER_NOT_FOUND', 'User not found.');
 define("_PROFILE_MA_ERRORDURINGSAVE", "Error during save");
 define('_PROFILE_MA_REALNAME', 'Real Name');
@@ -312,6 +313,7 @@ define('_MD_PROFILE_ADMIN_PAGE', ':: Admin page ::');
 
 //configs
 define('_MD_PROFILE_CONFIGS_SUBMIT', 'Change Profile Settings');
+define('_MD_PROFILE_CONFIGS_EDIT', 'Edit Profile Settings');
 define('_MD_PROFILE_CONFIGS_CREATED', 'The Profile Settings were created');
 
 

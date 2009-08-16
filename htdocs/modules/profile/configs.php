@@ -50,6 +50,7 @@ function editconfigs($configsObj, $uid=0)
 
 
 $profile_template = 'profile_configs.html';
+$profile_current_page = basename(__FILE__);
 include_once 'header.php';
 
 $profile_configs_handler = icms_getModuleHandler('configs');
