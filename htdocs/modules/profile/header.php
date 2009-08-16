@@ -37,7 +37,7 @@ if ($uid == 0) {
 			exit();
 		}
 	} else {
-		redirect_header(ICMS_URL, 3, _PROFILE_MA_LOGIN_REQUIRED);
+		header('location: '.ICMS_URL.'/modules/profile/search.php');
 		exit();
 	}
 }
