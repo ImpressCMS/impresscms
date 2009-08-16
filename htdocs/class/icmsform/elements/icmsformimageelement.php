@@ -37,7 +37,7 @@ class IcmsFormImageElement extends XoopsFormElementTray {
     include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformfileuploadelement.php";
     $this->addElement(new IcmsFormFileUploadElement($object, $key));
 
-    $this->addElement(new XoopsFormLabel( '<div style="height: 10px; padding-top: 8px; font-size: 80%;">'._CO_ICMS_URL_FILE_DSC.'</div>', ''));
+    $this->addElement(new XoopsFormLabel( '<div style="padding-top: 8px; font-size: 80%;">'._CO_ICMS_URL_FILE_DSC.'</div>', ''));
     include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformtextelement.php";
     include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformcheckelement.php";
 
