@@ -158,10 +158,12 @@ switch ($op) {
         $gperm_handler =& xoops_gethandler('groupperm');
         $searchable_fields =& $gperm_handler->getItemIds('profile_search', $groups, $icmsModule->getVar('mid'));
         $searchvars = array();
+	    $search_url = array();
 
         $criteria = new CriteriaCompo(new Criteria('level', 0, ">"));
         if (isset($_REQUEST['uname']) && $_REQUEST['uname'] != "") {
             $string = $myts->addSlashes(trim($_REQUEST['uname']));
+		    $search_url[] = 'uname='. $string;
             switch ($_REQUEST['uname_match']) {
                 case XOOPS_MATCH_START:
                     $string .= "%";
@@ -180,6 +182,7 @@ switch ($op) {
         }
         if (isset($_REQUEST['email']) && $_REQUEST['email'] != "") {
             $string = $myts->addSlashes(trim($_REQUEST['email']));
+		    $search_url[] = 'email='. $string;
             switch ($_REQUEST['email_match']) {
                 case XOOPS_MATCH_START:
                     $string .= "%";
@@ -347,7 +350,7 @@ switch ($op) {
         }
 
         if ($searchvars == array()) {
-            break;
+            $searchvars[] = 'uname';
         }
 
         if ($_REQUEST['sortby'] == "name") {
@@ -404,9 +407,7 @@ switch ($op) {
             $search_url[] = "order=".$order;
             $search_url[] = "sortby=".$_REQUEST['sortby'];
             $search_url[] = "limit=".$limit;
-            if (isset($search_url)) {
-                $args = implode("&amp;", $search_url);
-            }
+            $args = implode("&amp;", $search_url);
             include_once ICMS_ROOT_PATH."/class/pagenav.php";
             $nav = new XoopsPageNav($total_users, $limit, $start, "start", $args);
             $xoopsTpl->assign('nav', $nav->renderNav(5));

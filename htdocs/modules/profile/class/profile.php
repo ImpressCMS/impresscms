@@ -240,12 +240,22 @@ class ProfileProfileHandler extends IcmsPersistableObjectHandler {
      *
      * @return array
      */
-    function search($criteria, $searchvars) {
-		$searchvars2 = array_flip(array_merge(array_flip(array('uid', 'uname', 'email', 'user_viewemail')), array_flip($searchvars)));
+  function search($criteria, $searchvars) {
+		$searchvars2 = array('uid' => false, 'uname' => false, 'email' => false, 'user_viewemail' => false);
+		global $icmsUser;
+		if (is_object($icmsUser)) {
+			foreach ($searchvars as $value) {
+				$searchvars2[$value] = false;
+			}
+		} else {
+			unset($searchvars2['email'], $searchvars2['user_viewemail']);
+			if (isset($searchvars['email'])) unset($searchvars['email']);
+		}
+		$searchvars2 = array_keys($searchvars2);
 		$sql = 'SELECT ';
         $user_handler = xoops_gethandler('user');
-		global $icmsUser;
-		$vars = &$icmsUser->getVars();
+		$user = $user_handler->create(false);
+		$vars = &$user->getVars();
 		$b = false;
 		foreach ($searchvars2 as $field) {
 			if ($b) {
@@ -260,12 +270,12 @@ class ProfileProfileHandler extends IcmsPersistableObjectHandler {
 			}
 			$sql .= $field.' '.$field;
 		}
-		unset($searchvars2, $field, $b);
+		unset($searchvars2, $field, $b, $value);
 		$sql .= ' FROM '.$this->db->prefix("users").' users LEFT JOIN '.$this->table.' profiles ON users.uid=profiles.profileid';
         $sql .= ' '.$criteria->renderWhere();
         if ($criteria->getSort() != '') {
             $sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
-        }
+        }				
         $users = '';
         $profiles = '';
         $limit = $criteria->getLimit();
@@ -283,9 +293,8 @@ class ProfileProfileHandler extends IcmsPersistableObjectHandler {
 
         	foreach ($myrow as $name => $value) {
         	    if (in_array($name, $uservars)) {
-        	       $user->assignVar($name, $value);
-        	    }
-        	    else {
+        	        $user->assignVar($name, $value);
+        	    } else {
         	        $profile->assignVar($name, $value);
         	    }
         	}
@@ -295,10 +304,11 @@ class ProfileProfileHandler extends IcmsPersistableObjectHandler {
 
         $sql_count  = "SELECT count(*) FROM ".$this->db->prefix("users")." LEFT JOIN ".$this->table." ON uid=profileid";
         $sql_count .= ' '.$criteria->renderWhere();
-        $count_res = $this->db->query($sql_count, $limit, $start);
+        $count_res = $this->db->query($sql_count);
         list($count) = $this->db->fetchRow($count_res);
 
         return array($users, $profiles, $count);
     }
+
 }
 ?>
