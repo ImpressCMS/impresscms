@@ -96,11 +96,11 @@ switch ($op)
 			$delgroups = $deluser->getGroups();
 			if(in_array(XOOPS_GROUP_ADMIN, $delgroups))
 			{
-				$output .= sprintf(''._AM_ADMIN_CAN_NOT_BE_DELETEED.' ('._AM_NICKNAME.': %s)', $deluser->getVar('uname')).'<br />';
+				$output .= sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED.' ('._AM_NICKNAME.': %s)', $deluser->getVar('uname')).'<br />';
 			}
 			else
 			{
-				if(!$member_handler->deleteUser($deluser)) {$output .= ''._AM_COULD_NOT_DELETE.' '.$deluser->getVar('uname').'<br />';}
+				if(!$member_handler->deleteUser($deluser)) {$output .= _AM_COULD_NOT_DELETE.' '.$deluser->getVar('uname').'<br />';}
 				else {$output .= $deluser->getVar('uname').' '._AM_USERS_DELETEED.'<br />';}
 				// RMV-NOTIFY
 				xoops_notification_deletebyuser($deluser->getVar('uid'));
@@ -119,13 +119,13 @@ switch ($op)
 		if(in_array(XOOPS_GROUP_ADMIN, $groups))
 		{
 			xoops_cp_header();
-			echo sprintf(''._AM_ADMIN_CAN_NOT_BE_DELETEED.'. ('._AM_NICKNAME.': %s)', $user->getVar('uname'));
+			echo sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED.'. ('._AM_NICKNAME.': %s)', $user->getVar('uname'));
 			xoops_cp_footer();
 		}
 		elseif(!$member_handler->deleteUser($user))
 		{
 			xoops_cp_header();
-			echo ''._AM_ADMIN_CAN_NOT_BE_DELETEED. ''.$deluser->getVar('uname');
+			echo _AM_ADMIN_CAN_NOT_BE_DELETEED.$deluser->getVar('uname');
 			xoops_cp_footer();
 		}
 		else
@@ -150,9 +150,9 @@ switch ($op)
 			// make sure the username doesnt exist yet
 			if($member_handler->getUserCount(new Criteria('uname', $username)) > 0 || $member_handler->getUserCount(new Criteria('login_name', $login_name)) > 0 )
 			{
-				$adduser_errormsg = ''._AM_NICKNAME.' '.$username.' '._AM_ALREADY_EXISTS.'';
+				$adduser_errormsg = _AM_NICKNAME.' '.$username.' '._AM_ALREADY_EXISTS;
 			}elseif($member_handler->getUserCount(new Criteria('email', $email)) > 0){
-				$adduser_errormsg = ''._AM_A_USER_WITH_THIS_EMAIL_ADDRESS.' "'.$email.'" '._AM_ALREADY_EXISTS.'';
+				$adduser_errormsg = _AM_A_USER_WITH_THIS_EMAIL_ADDRESS.' "'.$email.'" '._AM_ALREADY_EXISTS;
 			}
 			else
 			{
