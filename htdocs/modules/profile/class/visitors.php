@@ -120,6 +120,8 @@ class ProfileVisitorsHandler extends IcmsPersistableObjectHandler {
 	function logVisitor($uid_owner) {
 		global $icmsUser;
 
+		if (!is_object($icmsUser)) return true;
+
 		$timestamp = mktime(0, 0, 1, date('n'), date('j'), date('Y'));
 		$visitors = $this->getVisitors(false, false, $uid_owner, $icmsUser->getVar('uid'), $timestamp);
 
