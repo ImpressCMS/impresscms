@@ -2,18 +2,31 @@
 /**
  * Extended User Profile
  *
- * @copyright	   The ImpressCMS Project http://www.impresscms.org/
- * @license		 LICENSE.txt
- * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package		 modules
- * @since		   1.3
- * @author		  Marcello Brandao <marcello.brandao@gmail.com>
- * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		 $Id: $
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license	LICENSE.txt
+ * @license	GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @package	modules
+ * @since	1.3
+ * @author	Marcello Brandao <marcello.brandao@gmail.com>
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version	$Id:$
  */
 
 include_once "../../mainfile.php";
+
 $dirname = basename( dirname( __FILE__ ) );
+
+/* First use page of the module. Since imProfile is IPF based we have to make sure that the module
+ * was updated before. In case it wasen't there are no tables in the database and therefore we have
+ * to stop loading imProfile
+ */
+if (is_object($icmsModule) && $icmsModule->dirname() == $dirname) {
+	if (!$icmsModule->getDBVersion()) {
+		redirect_header(ICMS_URL, 3, _PROFILE_MA_FIRST_USE);
+		exit;
+	}
+}
+
 $uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0;
 if ($uid == 0) {
 	if(!empty($icmsUser)){
