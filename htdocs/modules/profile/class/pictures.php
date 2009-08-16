@@ -35,7 +35,7 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 		$this->quickInitVar('creation_time', XOBJ_DTYPE_LTIME, false);
 		$this->quickInitVar('update_time', XOBJ_DTYPE_TXTBOX, false);
 		$this->quickInitVar('uid_owner', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('url', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('url', XOBJ_DTYPE_IMAGE, true);
 		$this->quickInitVar('private', XOBJ_DTYPE_TXTBOX, false);
 		$this->initCommonVar('counter', false);
 		$this->initCommonVar('dohtml', false, true);
@@ -338,5 +338,25 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		return true;
 	}
 
+	/*
+	 * afterDelete event
+	 *
+	 * Event automatically triggered by IcmsPersistable Framework after the object is deleted
+	 *
+	 * @param object $obj ProfilePictures object
+	 * @return bool
+	 */
+	function afterDelete(&$obj) {
+		$imgPath = ICMS_UPLOAD_PATH.'/profile/pictures/';
+		$imgUrl = $obj->getVar('url');
+
+		if (!empty($imgUrl)) {
+			unlink($imgPath.$imgUrl);
+			unlink($imgPath.'thumb_'.$imgUrl);
+			unlink($imgPath.'resized_'.$imgUrl);
+		}
+
+		return true;
+	}
 }
 ?>

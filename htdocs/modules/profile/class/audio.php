@@ -248,5 +248,23 @@ class ProfileAudioHandler extends IcmsPersistableObjectHandler {
 	function insertD(&$obj, $force = false, $checkObject = true, $debug=false) {
 		return $this->insert($obj, $force, $checkObject, true);
 	}
+
+	/*
+	 * afterDelete event
+	 *
+	 * Event automatically triggered by IcmsPersistable Framework after the object is deleted
+	 *
+	 * @param object $obj ProfileAudio object
+	 * @return bool
+	 */
+	function afterDelete(&$obj) {
+		$url = $obj->getVar('url');
+
+		if (!empty($url)) {
+			unlink(ICMS_UPLOAD_PATH.'/profile/audio/'.$url);
+		}
+		
+		return true;
+	}
 }
 ?>

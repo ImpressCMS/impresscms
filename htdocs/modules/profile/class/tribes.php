@@ -276,5 +276,25 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 		return true;
 	}
 
+	/*
+	 * afterDelete event
+	 *
+	 * Event automatically triggered by IcmsPersistable Framework after the object is deleted
+	 *
+	 * @param object $obj ProfileTribes object
+	 * @return bool
+	 */
+	function afterDelete(&$obj) {
+		$imgPath = ICMS_UPLOAD_PATH.'/profile/tribes/';
+		$imgUrl = $obj->getVar('tribe_img');
+
+		if (!empty($imgUrl)) {
+			unlink($imgPath.$imgUrl);
+			unlink($imgPath.'thumb_'.$imgUrl);
+			unlink($imgPath.'resized_'.$imgUrl);
+		}
+
+		return true;
+	}
 }
 ?>
