@@ -120,54 +120,26 @@ $modversion['hasMain'] = 1;
 $i = 1;
 global $icmsModule, $icmsModuleConfig, $icmsUser;
 if (is_object($icmsModule) && $icmsModule->dirname() == $modversion['dirname']) {
-$modversion['sub'][$i]['name'] = _MI_PROFILE_SEARCH;
-$modversion['sub'][$i]['url'] = "search.php";
-  if ($icmsUser) {
-  $i++;
-      $modversion['sub'][$i]['name'] = _MI_PROFILE_MYPROFILE;
-      $modversion['sub'][$i]['url'] = $icmsModuleConfig['profile_social']? 'index.php':'userinfo.php';
-  $i++;
-      $modversion['sub'][$i]['name'] = _PROFILE_MI_EDITACCOUNT;
-      $modversion['sub'][$i]['url'] = "edituser.php";
-  $i++;
-      $modversion['sub'][$i]['name'] = _PROFILE_MI_CHANGEPASS;
-      $modversion['sub'][$i]['url'] = "changepass.php";
-    if (isset($icmsModuleConfig) && isset($icmsModuleConfig['allow_chgmail']) && $icmsModuleConfig['allow_chgmail'] == 1) {
-  $i++;
-        $modversion['sub'][$i]['name'] = _PROFILE_MI_CHANGEMAIL;
-        $modversion['sub'][$i]['url'] = "changemail.php";
-    }
-    if($icmsModuleConfig['profile_social']==1){
-	  if ($icmsModuleConfig['enable_pictures']==1){
-  $i++;
-        $modversion['sub'][$i]['name'] = _MI_PROFILE_MYPICTURES;
-        $modversion['sub'][$i]['url'] = "pictures.php";
-      }
-      if ($icmsModuleConfig['enable_audio']==1){
-  $i++;
-        $modversion['sub'][$i]['name'] = _MI_PROFILE_MYAUDIOS;
-        $modversion['sub'][$i]['url'] = "audio.php";
-      }
-      if ($icmsModuleConfig['enable_videos']==1){ 
-  $i++;
-        $modversion['sub'][$i]['name'] = _MI_PROFILE_MYVIDEOS;
-        $modversion['sub'][$i]['url'] = "videos.php";
-      }
-      if ($icmsModuleConfig['enable_friends']==1){ 
-  $i++;
-        $modversion['sub'][$i]['name'] = _MI_PROFILE_MYFRIENDS;
-        $modversion['sub'][$i]['url'] = "friends.php";
-      }
-      if ($icmsModuleConfig['enable_tribes']==1){ 
-  $i++;
-        $modversion['sub'][$i]['name'] = _MI_PROFILE_MYTRIBES;
-        $modversion['sub'][$i]['url'] = "tribes.php";
-      }
-  $i++;
-        $modversion['sub'][$i]['name'] = _MI_PROFILE_MYCONFIGS;
-  		$modversion['sub'][$i]['url'] = "configs.php";
-  	}
-  }
+	$modversion['sub'][$i]['name'] = _MI_PROFILE_SEARCH;
+	$modversion['sub'][$i]['url'] = "search.php";
+	if ($icmsUser) {
+		$i++;
+		$modversion['sub'][$i]['name'] = _PROFILE_MI_EDITACCOUNT;
+		$modversion['sub'][$i]['url'] = "edituser.php";
+		$i++;
+		$modversion['sub'][$i]['name'] = _PROFILE_MI_CHANGEPASS;
+		$modversion['sub'][$i]['url'] = "changepass.php";
+		if (isset($icmsModuleConfig) && isset($icmsModuleConfig['allow_chgmail']) && $icmsModuleConfig['allow_chgmail'] == 1) {
+			$i++;
+			$modversion['sub'][$i]['name'] = _PROFILE_MI_CHANGEMAIL;
+			$modversion['sub'][$i]['url'] = "changemail.php";
+		}
+		if($icmsModuleConfig['profile_social']==1){
+			$i++;
+			$modversion['sub'][$i]['name'] = _MI_PROFILE_MYCONFIGS;
+			$modversion['sub'][$i]['url'] = "configs.php";
+		}
+	}
 }
 
 /** Blocks information */

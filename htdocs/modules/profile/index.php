@@ -45,6 +45,7 @@ function editfriendship($friendshipObj, $uid=false, $hideForm=false) {
 }
 
 $profile_template = 'profile_index.html';
+$profile_current_page = basename(__FILE__);
 include_once 'header.php';
 
 if($icmsModuleConfig['profile_social']==0){

@@ -31,8 +31,11 @@ $uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0;
 if ($uid == 0) {
 	if(!empty($icmsUser)){
 		$uid = $icmsUser->getVar('uid');
-		header('location: '.ICMS_URL.'/modules/profile/index.php?uid='.$uid);
-		exit();
+		// this is necessary to make comments work on index.php (comments require $_GET['uid'] here)
+		if (isset($profile_current_page) && $profile_current_page == 'index.php') {
+			header('location: '.ICMS_URL.'/modules/profile/index.php?uid='.$uid);
+			exit();
+		}
 	} else {
 		redirect_header(ICMS_URL, 3, _PROFILE_MA_LOGIN_REQUIRED);
 		exit();
