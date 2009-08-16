@@ -2873,13 +2873,16 @@ function icms_MakePrinterFriendly($content, $title=false, $description=false, $p
 }
 function icms_getUnameFromUserEmail($email = '')
 {
-    $db =& Database::getInstance();
+    $db = Database::getInstance();
     if($email !== '')
     {
-            $sql = $db->query("SELECT uname, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
+        $sql = $db->query("SELECT login_name, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
         list($uname, $email) = $db->fetchRow($sql);
     }
-    else    {redirect_header('user.php',2,_US_SORRYNOTFOUND);}
+    else
+    {
+        redirect_header('user.php',2,_US_SORRYNOTFOUND);
+    }
     return $uname;
 }
 

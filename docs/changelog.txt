@@ -42,6 +42,7 @@ Revision:
 * #294: replaced scraps with system comment function in imProfile | ticket from addons (Phoenyx)
 
 '''Fixed'''
+* #: Unable to login with email address, function getUnameFromUserEmail() was getting $uname & not $login_name. (vaughan)
 * fixed class/icmsform/icmsform.php 723-728 lines (????) (mekdrop)
 * #249: Path to ICMS_IMAGES_SET_URL corrected (sato-san)
 * #657: Icons for adsense, rating and mime-types (sato-san)
