@@ -216,7 +216,6 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 			$this->_config_statusArray[PROFILE_CONFIG_STATUS_PRIVATE] = _CO_PROFILE_CONFIG_STATUS_PRIVATE;
 		}
 		return $this->_config_statusArray;
-	
 	}
 
 	/**

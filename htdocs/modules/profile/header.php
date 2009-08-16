@@ -21,7 +21,7 @@ if ($uid == 0) {
 		header('location: '.ICMS_URL.'/modules/profile/index.php?uid='.$uid);
 		exit();
 	} else {
-		header('location: '.ICMS_URL);
+		redirect_header(ICMS_URL, 3, _PROFILE_MA_LOGIN_REQUIRED);
 		exit();
 	}
 }

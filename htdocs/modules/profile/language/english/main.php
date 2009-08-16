@@ -36,6 +36,7 @@ define('_PROFILE_MA_USERKEYFOR','User activation key for %s');
 define('_PROFILE_MA_ACTLOGIN','The account has been activated and can now login with the registered password.');
 define('_PROFILE_MA_ACTKEYNOT','Activation key not correct!');
 define('_PROFILE_MA_ACONTACT','Selected account is already activated!');
+define('_PROFILE_MA_LOGIN_REQUIRED', 'Please login to view profiles.');
 
 define('_PROFILE_MA_YOURREGISTERED','An email containing an user activation key has been sent to the email account you provided. Please follow the instructions in the mail to activate your account. ');
 define('_PROFILE_MA_YOURREGMAILNG','You are now registered. However, we were unable to send the activation mail to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please send the webmaster an email notifying him/her of the situation.');
