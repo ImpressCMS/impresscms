@@ -134,8 +134,6 @@ function profile_db_upgrade_1() {
 
 function icms_module_update_profile(&$module, $oldversion = null, $dbversion = null) 
 {
-	$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
-	$icmsDatabaseUpdater->moduleUpgrade($module, true);
 	return true;
 }
 ?>

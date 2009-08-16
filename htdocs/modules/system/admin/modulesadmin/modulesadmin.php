@@ -1184,7 +1184,7 @@ function icms_module_update($dirname) {
 				if (isset($taskData['interval'])) $task->setVar('sat_interval', $taskData['interval']);
 				if (isset($taskData['onfinish'])) $task->setVar('sat_onfinish', $taskData['onfinish']);
 				$task->setVar('sat_name', $taskData['name']);
-				$task->setVar('sat_code', sprintf("require(XOOPS_ROOT_PATH . \"/modules/%s/%s\");", $module->getInfo('dirname') , addslashes($taskData['code'])));
+				$task->setVar('sat_code', $taskData['code']);
 				$task->setVar('sat_type', 'addon/'.$module->getInfo('dirname'));
 				$task->setVar('sat_addon_id', intval($taskID));
 				if (!($atasks_handler->insert($task))) {
@@ -1201,6 +1201,14 @@ function icms_module_update($dirname) {
 		$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
 		if (false != $update_script && trim($update_script) != '') {
 			include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($update_script);
+
+			$is_IPF = $module->getInfo('object_items');
+			if(!empty($is_IPF)){
+				$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
+				$icmsDatabaseUpdater->moduleUpgrade($module, true);
+				$msgs[] = array_merge($icmsDatabaseUpdater->_messages, $msgs);
+			}
+
 			if (function_exists('xoops_module_update_'.$ModName)) {
 				$func = 'xoops_module_update_'.$ModName;
 				if (!$func($module, $prev_version, $prev_dbversion)) {
@@ -1217,7 +1225,6 @@ function icms_module_update($dirname) {
 				}
 			}
 		}
-
 
 			$msgs[] = '</code><p>'.sprintf(_MD_AM_OKUPD, '<b>'.$module->getVar('name').'</b>').'</p>';
 		}

@@ -39,17 +39,20 @@ switch($op) {
 		$form->addElement($button_tray);
 		//$form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
 		$form->display();
-
-	echo "<br />\n";
-		$form = new XoopsThemeForm(_PROFILE_AM_REMOVEDUSERS, 'form', 'user.php');
-		$form->addElement(new XoopsFormSelectUser(_PROFILE_AM_SELECTUSER, 'id', false, false, false, false, true, true));
-		$form->addElement(new XoopsFormHidden('op', 'editordelete'));
-		$button_tray = new XoopsFormElementTray('');
-		$button_tray->addElement(new XoopsFormButton('', 'edit', _EDIT, 'submit'));
-		$form->addElement($button_tray);
-		$form->display();
-	echo "<br />\n";
-
+		echo "<br />\n";
+		$member_handler =& xoops_gethandler('member');
+		$user_count = $member_handler->getUserCount(new Criteria('level', '-1'));
+			if(count($user_count)>1){
+				$form = new XoopsThemeForm(_PROFILE_AM_REMOVEDUSERS, 'form', 'user.php');
+				$form->addElement(new XoopsFormSelectUser(_PROFILE_AM_SELECTUSER, 'id', false, false, false, false, true, true));
+				$form->addElement(new XoopsFormHidden('op', 'editordelete'));
+				$button_tray = new XoopsFormElementTray('');
+				$button_tray->addElement(new XoopsFormButton('', 'edit', _EDIT, 'submit'));
+				$form->addElement($button_tray);
+				$form->display();
+				echo "<br />\n";
+			}
+	
 	case 'new':
 		if (@!include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/'.$icmsConfig['language'].'/main.php')) {
 			include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/english/main.php');

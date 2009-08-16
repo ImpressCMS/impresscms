@@ -977,7 +977,7 @@ class IcmsDatabaseupdater {
 	function moduleUpgrade(&$module, $tables_first=false) {
 		$dirname = $module->getVar('dirname');
 
-		ob_start();
+//		ob_start();
 
 		$dbVersion  = $module->getDbversion();
 
@@ -1005,7 +1005,7 @@ class IcmsDatabaseupdater {
 		$this->automaticUpgrade($dirname, $module_info->modinfo['object_items']);
 
 		$this->_messages[] =  "</code>";
-
+/*
 		if (method_exists($module, "setMessage")) {
 			$module->setMessage($this->_messages);
 		} else {
@@ -1013,6 +1013,7 @@ class IcmsDatabaseupdater {
 				echo $feedback;
 			}
 		}
+*/
 		if($tables_first){
 			if ($newDbVersion > $dbVersion) {
 				for($i=$dbVersion+1;$i<=$newDbVersion; $i++) {
@@ -1027,7 +1028,6 @@ class IcmsDatabaseupdater {
 		$this->updateModuleDBVersion($newDbVersion, $dirname);
 		return true;
 	}
-
 
 
 

@@ -151,10 +151,10 @@ class SystemAutoTasks extends IcmsPersistableObject {
             if($module == '') return false;
             $module = ICMS_MODULES_PATH.'/'.$module;
             $module = $module.'/'.$code;
-            $code = 'require "'.$module.'";';
+            $code = 'require ("'.$module.'");';
         }
         ignore_user_abort(true);
-        $is_bug = !(@eval($code.' return true;'));
+        $is_bug = !(@eval($code.' return true; '));
         if($is_bug)
         {
             trigger_error(sprintf(_CO_ICMS_AUTOTASKS_SOURCECODE_ERROR, $code));
