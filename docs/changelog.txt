@@ -86,6 +86,7 @@ Revision:
 * #301: removed creation of /uploads/profile/mp3 in imProfile | ticket from addons (Phoenyx)
 * #300: a visit to a profile of another user is now loged | ticket from addons (Phoenyx)
 * #303: links in the imProfile submenu are working properly now | ticket from addons (Phoenyx)
+* #304: you are now redirected to your profile page in case a user isn't found | ticket from addons (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''

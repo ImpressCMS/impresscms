@@ -14,6 +14,7 @@
  */
 
 define('_PROFILE_MA_FIRST_USE', 'Profile is not yet ready to use. Please contact an administrator.');
+define('_PROFILE_MA_USER_NOT_FOUND', 'User not found.');
 define("_PROFILE_MA_ERRORDURINGSAVE", "Error during save");
 define('_PROFILE_MA_REALNAME', 'Real Name');
 define('_PROFILE_MA_EMAIL','Email');

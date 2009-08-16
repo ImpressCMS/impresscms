@@ -45,6 +45,15 @@ if ($uid == 0) {
 $member_handler =& xoops_gethandler('member');
 $thisUser =& $member_handler->getUser($uid);
 
+if (!is_object($thisUser)) {
+	if (!empty($icmsUser)) {
+		redirect_header(ICMS_URL.'/modules/profile/index.php?uid='.$icmsUser->getVar('uid'), 3, _PROFILE_MA_USER_NOT_FOUND);
+	} else {
+		redirect_header(ICMS_URL.'/modules/profile/index.php', 3, _PROFILE_MA_USER_NOT_FOUND);
+	}
+	exit();
+}
+
 $isOwner = $isFriend = false ;
 $isAnonym = empty($icmsUser) ? true : false;
 $isOwner = (!empty($icmsUser) && $icmsUser->getVar('uid') == $uid) ? true: false;
