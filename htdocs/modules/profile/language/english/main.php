@@ -310,11 +310,9 @@ define("_MD_PROFILE_USERDOESNTEXIST","This user doesn't exist or was deleted");
 define("_MD_PROFILE_AUDIOS","Audio");
 define('_MD_PROFILE_ADMIN_PAGE', ':: Admin page ::');
 
-
-//configs
+// configs.php
 define('_MD_PROFILE_CONFIGS_SUBMIT', 'Change Profile Settings');
 define('_MD_PROFILE_CONFIGS_EDIT', 'Edit Profile Settings');
 define('_MD_PROFILE_CONFIGS_CREATED', 'The Profile Settings were created');
-
-
+define('_MD_PROFILE_CONFIGS_MODIFIED', 'The Profile Settings were updated');
 ?>
