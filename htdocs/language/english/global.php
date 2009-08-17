@@ -60,7 +60,7 @@ define('_CLOSE','Close');  // Close window
 define('_QUOTEC','Quote:');
 
 //%%%%%%	File Name admin.php 	%%%%%
-define("_NOPERM","Sorry, you don't have the permission to access this area.");
+define("_NOPERM","Sorry, you don't have permission to access this area.");
 
 //%%%%%		Common Phrases		%%%%%
 define("_NO","No");

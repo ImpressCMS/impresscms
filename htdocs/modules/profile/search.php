@@ -379,9 +379,14 @@ switch ($op) {
         list($users, $profiles, $total_users) = $profile_handler->search($criteria, $searchvars);
 
         //Sort information
+        if (is_object($icmsUser)) {
+        	$isAdmin = $icmsUser->isAdmin();
+        } else {
+        	$isAdmin = false;
+        }
         foreach (array_keys($users) as $k) {
             $userarray["output"][] = "<a href='userinfo.php?uid=".intval($users[$k]->getVar('uid'))."'>".$users[$k]->getVar('uname')."</a>";
-            $userarray["output"][] = $users[$k]->getVar('user_viewemail') == 1 || $icmsUser->isAdmin() ? $users[$k]->getVar('email') : "";
+            $userarray["output"][] = $users[$k]->getVar('user_viewemail') == 1 || $isAdmin ? $users[$k]->getVar('email') : "";
 
             foreach (array_keys($fields) as $i) {
                 if (in_array($fields[$i]->getVar('fieldid'), $searchable_fields) && in_array($fields[$i]->getVar('field_type'), $searchable_types) && in_array($fields[$i]->getVar('field_name'), $searchvars)) {
