@@ -24,7 +24,7 @@ function editvideos($videosObj, $hideForm=false)
 		if (!$videosObj->userCanEditAndDelete()) {
 			redirect_header($videosObj->getItemLink(true), 3, _NOPERM);
 		}
-		$videosObj->hideFieldFromForm(array('uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
+		$videosObj->hideFieldFromForm(array('uid_owner', 'creation_time', 'meta_keywords', 'meta_description', 'short_url'));
 		$sform = $videosObj->getSecureForm(_MD_PROFILE_VIDEOS_EDIT, 'addvideos');
 		$sform->assign($icmsTpl, 'profile_videosform');
 		$icmsTpl->assign('profile_category_path', $videosObj->getVar('video_desc') . ' > ' . _EDIT);

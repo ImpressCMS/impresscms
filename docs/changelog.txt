@@ -100,6 +100,7 @@ Revision:
 * #309: imProfile: all tabs are highlighted according to the current page again | ticket from addons (Phoenyx)
 * #737: $sortable for IcmsPersistableColumn is working now (Phoenyx)
 * #310: imProfile: removed sort option from audio file, picture, tribe picture and youtube video | ticket from addons (Phoenyx)
+* #311: imProfile: added some field descriptions for pictures and videos | tickets from addons (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''
