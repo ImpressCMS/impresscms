@@ -2752,21 +2752,21 @@ function icms_makeSmarty($items) {
  * @param	string	$dirname	dirname of current module
  * @return	bool
  */
-function mod_isModuleAction($dirname = "system")
+function icms_moduleAction($dirname = 'system')
 {
 	global $icmsModule;
 	$ret = @(
-		// action module "system"
-		!empty($icmsModule) && "system" == $icmsModule->getVar("dirname", "n")
+		// action module 'system'
+		!empty($icmsModule) && 'system' == $icmsModule->getVar('dirname', 'n')
 		&&
 		// current dirname
-		($dirname == $_POST["dirname"] || $dirname == $_POST["module"])
+		($dirname == $_POST['dirname'] || $dirname == $_POST['module'])
 		&&
 		// current op
-		("update_ok" == $_POST["op"] || "install_ok" == $_POST["op"] || "uninstall_ok" == $_POST["op"])
+		('update_ok' == $_POST['op'] || 'install_ok' == $_POST['op'] || 'uninstall_ok' == $_POST['op'])
 		&&
 		// current action
-		"modulesadmin" == $_POST["fct"]
+		'modulesadmin' == $_POST['fct']
 		);
 	return $ret;
 }
