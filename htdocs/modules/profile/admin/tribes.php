@@ -92,7 +92,7 @@ if (in_array($clean_op,$valid_op,true)){
   		$objectTable->addColumn(new IcmsPersistableColumn('uid_owner', false, false, 'getTribeSender'));
   		$objectTable->addColumn(new IcmsPersistableColumn('title'));
   		$objectTable->addColumn(new IcmsPersistableColumn('tribe_desc', false, false, 'getTribeShortenDesc'));
-		$objectTable->addColumn(new IcmsPersistableColumn('tribe_img', 'center', 330, 'getProfileTribe'));
+		$objectTable->addColumn(new IcmsPersistableColumn('tribe_img', 'center', 330, 'getProfileTribe', false, false, false));
 
 		$objectTable->addQuickSearch(array('title'));
 

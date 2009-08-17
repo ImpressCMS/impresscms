@@ -85,7 +85,7 @@ if (in_array($clean_op,$valid_op,true)){
   		$objectTable->addColumn(new IcmsPersistableColumn('audio_id'));
   		$objectTable->addColumn(new IcmsPersistableColumn('uid_owner', false, false, 'getAudioSender'));
   		$objectTable->addColumn(new IcmsPersistableColumn('title'));
-		$objectTable->addColumn(new IcmsPersistableColumn('url', 'center', 330, 'getAudioToDisplay'));
+		$objectTable->addColumn(new IcmsPersistableColumn('url', 'center', 330, 'getAudioToDisplay', false, false, false));
 
 		$objectTable->addQuickSearch(array('title', 'author'));
 
