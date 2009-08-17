@@ -674,7 +674,7 @@ class IcmsPersistableTable {
 			} else {
 				$qs_param = '';
 			}
-			if (!$this->_enableColumnsSorting || $column->_keyname == 'checked') {
+			if (!$this->_enableColumnsSorting || $column->_keyname == 'checked' || !$column->_sortable) {
 				$aColumn['caption'] =  $aColumn['caption'];
 			} elseif ($getSort) {
 				$aColumn['caption'] =  '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&' . $this->_objectHandler->_itemname . '_' . 'ordersel=' . $orderArray[$order]['neworder'].$qs_param . '&' . $new_query_string . '">' . $aColumn['caption'] . ' <img src="' . ICMS_IMAGES_SET_URL .'/actions/' . $orderArray[$order]['image'] . '" alt="ASC" /></a>';
