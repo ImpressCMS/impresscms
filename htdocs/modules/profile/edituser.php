@@ -62,24 +62,26 @@ if ($op == 'save') {
     $profile_handler =& icms_getmodulehandler( 'profile', basename( dirname( __FILE__ ) ), 'profile' );
     // Get fields
     $fields =& $profile_handler->loadFields();
-    // Get ids of fields that can be edited
+    // Get ids of all available fields for the user groups $icmsUser is a member of.
     $gperm_handler =& xoops_gethandler('groupperm');
     $editable_fields =& $gperm_handler->getItemIds('profile_edit', $icmsUser->getGroups(), $icmsModule->getVar('mid'));
 
     $profile = $profile_handler->get($edituser->getVar('uid'));
 
     foreach (array_keys($fields) as $i) {
-        $fieldname = $fields[$i]->getVar('field_name');
-        if (in_array($fields[$i]->getVar('fieldid'), $editable_fields) && ($fields[$i]->getvar('field_type') == "image" || isset($_REQUEST[$fieldname]))) {
-            if (in_array($fieldname, $profile_handler->getUserVars())) {
-                $value = $fields[$i]->getValueForSave($_REQUEST[$fieldname], $edituser->getVar($fieldname, 'n'));
-                $edituser->setVar($fieldname, $value);
-            }
-            else {
-                $value = $fields[$i]->getValueForSave((isset($_REQUEST[$fieldname]) ? $_REQUEST[$fieldname] : ""), $profile->getVar($fieldname, 'n'));
-                $profile->setVar($fieldname, $value);
-            }
-        }
+        if ($fields[$i]->getVar('field_edit') == 1) {
+			$fieldname = $fields[$i]->getVar('field_name');
+	        if (in_array($fields[$i]->getVar('fieldid'), $editable_fields) && ($fields[$i]->getvar('field_type') == "image" || isset($_REQUEST[$fieldname]))) {
+	            if (in_array($fieldname, $profile_handler->getUserVars())) {
+	                $value = $fields[$i]->getValueForSave($_REQUEST[$fieldname], $edituser->getVar($fieldname, 'n'));
+	                $edituser->setVar($fieldname, $value);
+	            }
+	            else {
+	                $value = $fields[$i]->getValueForSave((isset($_REQUEST[$fieldname]) ? $_REQUEST[$fieldname] : ""), $profile->getVar($fieldname, 'n'));
+	                $profile->setVar($fieldname, $value);
+	            }
+	        }
+	    }
     }
     if (!$member_handler->insertUser($edituser)) {
         include ICMS_ROOT_PATH.'/header.php';

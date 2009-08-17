@@ -470,16 +470,18 @@ function getUserForm(&$user, $profile = false, $action = false) {
 
     foreach (array_keys($fields) as $i) {
         if (in_array($fields[$i]->getVar('fieldid'), $editable_fields)) {
-            $fieldinfo['element'] = $fields[$i]->getEditElement($user, $profile);
-            $fieldinfo['required'] = $fields[$i]->getVar('field_required');
-
-            $key = $fields[$i]->getVar('catid');
-            $elements[$key][] = $fieldinfo;
-            $weights[$key][] = $fields[$i]->getVar('field_weight');
-
-            // Image upload
-            if ($fields[$i]->getVar('field_type') == "image") {
-                $form->setExtra('enctype="multipart/form-data"');
+			if ($fields[$i]->getVar('field_edit') == 1) {
+				$fieldinfo['element'] = $fields[$i]->getEditElement($user, $profile);
+	            $fieldinfo['required'] = $fields[$i]->getVar('field_required');
+	
+	            $key = $fields[$i]->getVar('catid');
+	            $elements[$key][] = $fieldinfo;
+	            $weights[$key][] = $fields[$i]->getVar('field_weight');
+	
+	            // Image upload
+	            if ($fields[$i]->getVar('field_type') == "image") {
+	                $form->setExtra('enctype="multipart/form-data"');
+	            }
             }
         }
     }
