@@ -183,8 +183,9 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	 */
 	function getTribeuserIdPerTribe($tribe_id){
 		$sql = 'SELECT tribeuser_id FROM '.$this->table.' WHERE tribe_id="'.$tribe_id.'"';
-		$ret = $this->query($sql, false);
-		return $ret[0]['tribeuser_id'];
+		$result = $this->query($sql, false);
+		list($ret) = $this->db->fetchRow($result);
+		return $ret;
 	}
 
 	/**
@@ -194,8 +195,9 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	 */
 	function getTribeuserIdPerUser($user_id){
 		$sql = 'SELECT tribeuser_id FROM '.$this->table.' WHERE user_id="'.$user_id.'"';
-		$ret = $this->query($sql, false);
-		return $ret[0]['tribeuser_id'];
+		$result = $this->query($sql, false);
+		list($ret) = $this->db->fetchRow($result);
+		return $ret;
 	}
 
 
@@ -205,9 +207,10 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	 * @return array of amounts
 	 */
 	function getTribeuserCounts($tribe_id){
-		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->table.' WHERE tribe_id="'.$tribe_id.'"';
-		$tribe_id = $this->query($sql, false);
-		return ($tribe_id[0]['amount'] + 1);
+		$sql = 'SELECT COUNT(*) FROM '.$this->table.' WHERE tribe_id="'.$tribe_id.'"';
+		$result = $this->query($sql, false);
+		list($ret) = $this->db->fetchRow($result);
+		return ($ret + 1);
 	}
 
 }
