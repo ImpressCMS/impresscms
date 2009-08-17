@@ -224,32 +224,27 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 * @return array of amounts
 	 */
 	function geteachSectioncounts($uid){
-		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('profile_audio').' WHERE uid_owner="'.$uid.'"';
-		$result = $this->query($sql, false);
-		list($audio) = $this->db->fetchRow($result);
-
-		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('profile_pictures').' WHERE uid_owner="'.$uid.'"';
-		$result = $this->query($sql, false);
-		list($pictures) = $this->db->fetchRow($result);
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_audio').' WHERE uid_owner="'.$uid.'"';
+		$audio = $this->query($sql, false);
 		
-		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="'.$uid.'" OR friend2_uid="'.$uid.'") AND situation!=1';
-		$result = $this->query($sql, false);
-		list($friendship) = $this->db->fetchRow($result);
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_pictures').' WHERE uid_owner="'.$uid.'"';
+		$pictures = $this->query($sql, false);
 		
-		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('profile_videos').' WHERE uid_owner="'.$uid.'"';
-		$result = $this->query($sql, false);
-		list($videos) = $this->db->fetchRow($result);
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="'.$uid.'" OR friend2_uid="'.$uid.'") AND situation!=1';
+		$friendship = $this->query($sql, false);
 		
-		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('profile_tribes').' WHERE uid_owner="'.$uid.'"';
-		$result = $this->query($sql, false);
-		list($tribes) = $this->db->fetchRow($result);
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_videos').' WHERE uid_owner="'.$uid.'"';
+		$videos = $this->query($sql, false);
+		
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_tribes').' WHERE uid_owner="'.$uid.'"';
+		$tribes = $this->query($sql, false);
 		
 		return array(
-			'audio' => $audio,
-			'pictures' => $pictures,
-			'friendship' => $friendship,
-			'videos' => $videos,
-			'tribes' => $tribes
+			'audio' => (!$audio[0]['amount'])?0:$audio[0]['amount'],
+			'pictures' => (!$pictures[0]['amount'])?0:$pictures[0]['amount'],
+			'friendship' => (!$friendship[0]['amount'])?0:$friendship[0]['amount'],
+			'videos' => (!$videos[0]['amount'])?0:$videos[0]['amount'],
+			'tribes' => (!$tribes[0]['amount'])?0:$tribes[0]['amount'],
 			);
 	}
 
