@@ -19,7 +19,7 @@ function addtribeuser() {
 	global $profile_tribeuser_handler, $icmsModule, $icmsAdminTpl;
 
 	$tribeuserObj = $profile_tribeuser_handler->get(0);
-	$icmsModule->displayAdminMenu(11, _AM_PROFILE_TRIBEUSERS . " > " . _CO_ICMS_CREATINGNEW);
+	$icmsModule->displayAdminMenu(9, _AM_PROFILE_TRIBEUSERS . " > " . _CO_ICMS_CREATINGNEW);
 	$sform = $tribeuserObj->getForm(_AM_PROFILE_TRIBEUSER_CREATE, 'addtribeuser');
 	$sform->assign($icmsAdminTpl);
 
@@ -76,7 +76,7 @@ if (in_array($clean_op,$valid_op,true)) {
 		default:
 			icms_cp_header();
 
-			$icmsModule->displayAdminMenu(11, _AM_PROFILE_TRIBEUSERS);
+			$icmsModule->displayAdminMenu(9, _AM_PROFILE_TRIBEUSERS);
 
 			include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
 			$objectTable = new IcmsPersistableTable($profile_tribeuser_handler, false, array('delete'));

@@ -24,7 +24,7 @@ function editpictures($pictures_id = 0)
 	$picturesObj = $profile_pictures_handler->get($pictures_id);
 
 	if (!$picturesObj->isNew()){
-		$icmsModule->displayAdminMenu(9, _AM_PROFILE_PICTURES . " > " . _CO_ICMS_EDITING);
+		$icmsModule->displayAdminMenu(7, _AM_PROFILE_PICTURES . " > " . _CO_ICMS_EDITING);
 		$sform = $picturesObj->getForm(_AM_PROFILE_PICTURES_EDIT, 'addpictures');
 		$sform->assign($icmsAdminTpl);
 
@@ -84,7 +84,7 @@ if (in_array($clean_op,$valid_op,true)){
 
   		icms_cp_header();
 
-  		$icmsModule->displayAdminMenu(9, _AM_PROFILE_PICTURES);
+  		$icmsModule->displayAdminMenu(7, _AM_PROFILE_PICTURES);
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_pictures_handler);

@@ -36,21 +36,20 @@ $i++;
 $adminmenu[$i]['title'] = _PROFILE_MI_PERMISSIONS;
 $adminmenu[$i]['link'] = 'admin/permissions.php';
 $i++;
-$adminmenu[$i]['title'] = _MI_PROFILE_AUDIOS;
-$adminmenu[$i]['link'] = 'admin/audio.php';
+$adminmenu[$i]['title'] = _MI_PROFILE_PICTURES;
+$adminmenu[$i]['link'] = 'admin/pictures.php';
 $i++;
 $adminmenu[$i]['title'] = _MI_PROFILE_TRIBES;
 $adminmenu[$i]['link'] = 'admin/tribes.php';
 $i++;
-$adminmenu[$i]['title'] = _MI_PROFILE_PICTURES;
-$adminmenu[$i]['link'] = 'admin/pictures.php';
+$adminmenu[$i]['title'] = _MI_PROFILE_TRIBEUSERS;
+$adminmenu[$i]['link'] = 'admin/tribeuser.php';
+$i++;
+$adminmenu[$i]['title'] = _MI_PROFILE_AUDIOS;
+$adminmenu[$i]['link'] = 'admin/audio.php';
 $i++;
 $adminmenu[$i]['title'] = _MI_PROFILE_VIDEOS;
 $adminmenu[$i]['link'] = 'admin/videos.php';
-$i++;
-$adminmenu[$i]['title'] = _MI_PROFILE_TRIBEUSERS;
-$adminmenu[$i]['link'] = 'admin/tribeuser.php';
-
 
 $gperm =& xoops_gethandler ( 'groupperm' );
 $icmsUser = $GLOBALS['xoopsUser'];
