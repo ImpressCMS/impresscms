@@ -4,11 +4,11 @@
 * Classes responsible for managing profile tribeuser objects
 *
 * @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package		profile
-* @version		$Id$
+* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @since	1.3
+* @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @package	profile
+* @version	$Id$
 */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
@@ -32,9 +32,9 @@ class ProfileTribeuser extends IcmsPersistableObject {
 		$this->quickInitVar('tribeuser_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('tribe_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('user_id', XOBJ_DTYPE_INT, true);
-		$this->hideFieldFromForm('tribe_id');
-		$this->hideFieldFromForm('user_id');
 
+		$this->setControl('tribe_id', array('itemHandler' => 'Tribes', 'method' => 'getAllTribes', 'module' => 'Profile'));
+		$this->setControl('user_id', 'user');
 	}
 
 	/**
@@ -68,12 +68,18 @@ class ProfileTribeuser extends IcmsPersistableObject {
 		return $this->getVar('user_id', 'e') == $icmsUser->uid();
 	}
 
-	function getProfileTribeuser() {
-		global $icmsUser;
-		$friend = $this->getVar('user_id', 'e');
+	function getTribeuserAvatar() {
+		$tribeUserId = $this->getVar('user_id', 'e');
 		$member_handler =& xoops_gethandler('member');
-		$processUser =& $member_handler->getUser($friend);
-		return '<img src="'.$processUser->gravatar().'" />';
+		$thisUser =& $member_handler->getUser($tribeUserId);
+		return '<img src="'.$thisUser->gravatar().'" />';
+	}
+
+	function getTribeName() {
+		$profile_tribes_handler = icms_getModuleHandler('tribes');
+		$tribes = $profile_tribes_handler->getTribes(0, 1, false, $this->getVar('tribe_id'));
+		if (count($tribes) == 1) return $tribes[$this->getVar('tribe_id')]['itemLink'];
+		return $this->getVar('tribe_id');
 	}
 
 	function getTribeuserSender() {
@@ -86,7 +92,7 @@ class ProfileTribeuser extends IcmsPersistableObject {
 	 */
 	function toArray() {
 		$ret = parent :: toArray();
-		$ret['tribeuser_avatar'] = $this->getProfileTribeuser();
+		$ret['tribeuser_avatar'] = $this->getTribeuserAvatar();
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
@@ -101,7 +107,7 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	 * Constructor
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'tribeuser', 'tribeuser_id', 'tribe_id', '', 'profile');
+		$this->IcmsPersistableObjectHandler($db, 'tribeuser', 'tribeuser_id', 'tribeuser_id', '', 'profile');
 	}
 
 	/**
@@ -189,19 +195,6 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
-	 * Retreive the config_id of user
-	 *
-	 * @return array of amounts
-	 */
-	function getTribeuserIdPerUser($user_id){
-		$sql = 'SELECT tribeuser_id FROM '.$this->table.' WHERE user_id="'.$user_id.'"';
-		$result = $this->query($sql, false);
-		list($ret) = $this->db->fetchRow($result);
-		return $ret;
-	}
-
-
-	/**
 	 * Retreive the number of each item submitted by user in each section
 	 *
 	 * @return array of amounts
@@ -213,5 +206,45 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 		return ($ret + 1);
 	}
 
+	/**
+	 * insert a new object in the database
+	 *
+	 * @param	object	$obj reference to the object
+	 * @param	bool	$force whether to force the query execution despite security settings
+	 * @param	bool	$checkObject check if the object is dirty and clean the attributes
+	 * @param	bool	$debug debug switch
+	 * @return	bool FALSE if failed, TRUE if already present and unchanged or successful
+	 */
+	function insert(&$obj, $force = false, $checkObject = true, $debug=false) {
+		// check if the specified user already is a member of this tribe
+		$tribeUsers = $this->getTribeusers(0, 0, $obj->getVar('user_id'), false, $obj->getVar('tribe_id'));
+		if (count($tribeUsers) != 0) {
+			$obj->setErrors(_AM_PROFILE_TRIBEUSER_DUPLICATE);
+			return false;
+		}
+		
+		// check if the specified user is the owner of this tribe
+		$profile_tribes_handler = icms_getModuleHandler('tribes');
+		$tribe = $profile_tribes_handler->getTribe($obj->getVar('tribe_id'), $obj->getVar('user_id'));
+		if ($tribe != false) {
+			$obj->setErrors(_AM_PROFILE_TRIBEUSER_OWNER);
+			return false;
+		}
+
+		return parent::insert($obj, $force, $checkObject, $debug);
+	}
+
+	/**
+	 * insert a new object in the database and output debug message
+	 *
+	 * @param	object	$obj reference to the object
+	 * @param	bool	$force whether to force the query execution despite security settings
+	 * @param	bool	$checkObject check if the object is dirty and clean the attributes
+	 * @param	bool	$debug debug switch
+	 * @return	bool FALSE if failed, TRUE if already present and unchanged or successful
+	 */
+	function insertD(&$obj, $force = false, $checkObject = true, $debug=false) {
+		return $this->insert($obj, $force, $checkObject, true);
+	}
 }
 ?>

@@ -197,9 +197,11 @@ define("_CO_PROFILE_VISITORS_UID_VISITOR_DSC", " ");
 // tribeuser
 define("_CO_PROFILE_TRIBEUSER_TB_ID", "Id");
 define("_CO_PROFILE_TRIBEUSER_TB_ID_DSC", " ");
-define("_CO_PROFILE_TRIBEUSER_TRIBE_ID", "Id");
+define("_CO_PROFILE_TRIBEUSER_TRIBEUSER_ID", "Id");
+define("_CO_PROFILE_TRIBEUSER_TRIBEUSER_ID_DSC", " ");
+define("_CO_PROFILE_TRIBEUSER_TRIBE_ID", "Name of the tribe");
 define("_CO_PROFILE_TRIBEUSER_TRIBE_ID_DSC", " ");
-define("_CO_PROFILE_TRIBEUSER_USER_ID", "Id");
+define("_CO_PROFILE_TRIBEUSER_USER_ID", "Username");
 define("_CO_PROFILE_TRIBEUSER_USER_ID_DSC", " ");
 // ishot
 define("_CO_PROFILE_ISHOT_ISHOT_ID", "Id");

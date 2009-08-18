@@ -129,6 +129,8 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 
 class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 
+	var $_allTribes;
+
 	/**
 	 * Constructor
 	 */
@@ -193,6 +195,25 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 		$criteria = $this->getTribesCriteria($start, $limit, $uid_owner, $tribes_id);
 		$ret = $this->getObjects($criteria, true, false);
 		return $ret;
+	}
+
+	/**
+	 * Get all Tribes ordered by title
+	 *
+	 * @return array of all tribes orderd by title
+	 */
+	function getAllTribes() {
+		if (is_array($this->_allTribes)) return $this->_allTribes;
+
+		$this->_allTribes = array();
+		$criteria = new CriteriaCompo();
+		$criteria->setSort('title');
+		$criteria->setOrder('ASC');
+		$tribes = $this->getObjects($criteria, true, false);
+		foreach($tribes as $tribe) {
+			$this->_allTribes[$tribe['tribes_id']] = $tribe['title'];
+		}
+		return $this->_allTribes;
 	}
 
 	/**
