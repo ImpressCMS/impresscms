@@ -298,6 +298,22 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/*
+	 * beforeDelete event
+	 * 
+	 * Event automatically triggered by IcmsPersistable Framework before the object is deleted
+	 * 
+	 * @param object $obj ProfileTribes object
+	 * @return bool
+	 */
+	function beforeDelete(&$obj) {
+		$profile_tribeuser_handler = icms_getModuleHandler('tribeuser');
+		$criteria = new CriteriaCompo();
+		$criteria->add(new Criteria('tribe_id', $obj->getVar('tribes_id')));
+		$rtn = $profile_tribeuser_handler->deleteAll($criteria);
+		return ($rtn != false ? true : false);
+	}
+
+	/*
 	 * afterDelete event
 	 *
 	 * Event automatically triggered by IcmsPersistable Framework after the object is deleted
