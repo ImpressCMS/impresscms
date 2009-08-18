@@ -381,7 +381,7 @@ define("_MD_AM_EDITREMOVEBLOCK","Edit and Remove blocks from user side?");
 define("_MD_AM_EDITREMOVEBLOCKDSC","By enabling this option, you'll see two icons on block titles with a direct access to remove or edit your block.");
 
 define("_MD_AM_EMAILPROTECT","Protect email addresses against SPAM?");
-define("_MD_AM_EMAILPROTECTDSC","Enabling this option will ensure everytime an email address is dislpayed on the site, it will be protected agains SPAM robots.<br /><i>To use reCAPTCHA Mailhide, you need to have the mcrypt php module installed.</ii>");
+define("_MD_AM_EMAILPROTECTDSC","Enabling this option will ensure everytime an email address is dislpayed on the site, it will be protected agains SPAM robots.<br /><i>To use reCAPTCHA Mailhide, you need to have the mcrypt php module installed.</i>");
 define("_MD_AM_MULTLOGINPREVENT","Prevent multiple login from same user?");
 define("_MD_AM_MULTLOGINPREVENTDSC","With this option enabled, if a user is already logged in on your site, the same username will not be  able to log another time until the first session is closed.");
 define("_MD_AM_MULTLOGINMSG","Multilogin redirection message:");
