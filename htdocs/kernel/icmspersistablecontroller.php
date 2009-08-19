@@ -105,6 +105,7 @@ class IcmsPersistableController {
 		}
 
 		// Check if there were uploaded files
+		$uploaderResult = true;
 		if (isset($_POST['icms_upload_image']) || isset($_POST['icms_upload_file'])) {
 		include_once ICMS_ROOT_PATH.'/class/uploader.php';	
 		$uploaderObj = new XoopsMediaUploader($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
@@ -113,6 +114,7 @@ class IcmsPersistableController {
 					if ($uploaderObj->fetchMedia($name)) {
 						$uploaderObj->setTargetFileName(time()."_". $uploaderObj->getMediaName());
 						if ($uploaderObj->upload()) {
+							$uploaderResult = $uploaderResult && true;
 							// Find the related field in the IcmsPersistableObject
 							$related_field = str_replace('upload_', '', $name);
 							$uploadedArray[] = $related_field;
@@ -134,19 +136,25 @@ class IcmsPersistableController {
 							}
 						} else {
 							$icmsObj->setErrors($uploaderObj->getErrors(false));
+							$uploaderResult = $uploaderResult && false;
 						}
 					} else {
 						$icmsObj->setErrors($uploaderObj->getErrors(false));
+						$uploaderResult = $uploaderResult && false;
 					}
 				}
 
 			}
 		}
 
-		if ($debug) {
-			$storeResult = $this->handler->insertD($icmsObj);
+		if ($uploaderResult) {
+			if ($debug) {
+				$storeResult = $this->handler->insertD($icmsObj);
+			} else {
+				$storeResult = $this->handler->insert($icmsObj);
+			}
 		} else {
-			$storeResult = $this->handler->insert($icmsObj);
+			$storeResult = false;
 		}
 
 		if ($storeResult) {
