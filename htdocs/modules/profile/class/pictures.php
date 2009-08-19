@@ -208,7 +208,7 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		$prefix = (isset($prefix) && $prefix != '')?$prefix:time();
 		$path = pathinfo($img);
 		$img = wiImage::load($img);
-		$img->resize($width, $height)->saveToFile($path_upload.'/'.$prefix.'_'.$path['basename']);
+		$img->resizeDown($width, $height)->saveToFile($path_upload.'/'.$prefix.'_'.$path['basename']);
 	}
 	
 	/**
