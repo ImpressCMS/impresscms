@@ -45,16 +45,30 @@ class icms_HTMLPurifier
     * @param       array     $array       Array to be filtered
     * @return      array     $array
     **/
-    public function icms_arrayFilterRecursive($array)
+    public function icms_purifyCleanArray($arr)
     {
-        foreach($array as $value)
+        $rtn = array();
+
+        foreach($arr as $key => $a)
         {
-            if(is_array(&$value))
+            if(!is_array($a) && (!empty($a) || $a === 0))
             {
-                $value = $this->icms_arrayFilterRecursive($value);
+                $rtn[$key] = $a;
+            }
+            elseif(is_array($a))
+            {
+                if(count($a) > 0)
+                {
+                    $a = $this->icms_purifyCleanArray($a);
+                    $rtn[$key] = $a;
+                    if(count($a) == 0)
+                    {
+                        unset($rtn[$key]);
+                    }
+                }
             }
         }
-        return array_filter($array);
+        return $rtn;
     }
 
     /**
@@ -72,8 +86,8 @@ class icms_HTMLPurifier
                                     'HTML.Doctype' => $icmsConfigPurifier['purifier_HTML_Doctype'],
                                     'HTML.AllowedElements' => $icmsConfigPurifier['purifier_HTML_AllowedElements'],
                                     'HTML.AllowedAttributes' => $icmsConfigPurifier['purifier_HTML_AllowedAttributes'],
-                                    //'HTML.ForbiddenElements' => $icmsConfigPurifier['purifier_HTML_ForbiddenElements'],
-                                    //'HTML.ForbiddenAttributes' => $icmsConfigPurifier['purifier_HTML_ForbiddenAttributes'],
+                                    'HTML.ForbiddenElements' => $icmsConfigPurifier['purifier_HTML_ForbiddenElements'],
+                                    'HTML.ForbiddenAttributes' => $icmsConfigPurifier['purifier_HTML_ForbiddenAttributes'],
                                     'HTML.MaxImgLength' => $icmsConfigPurifier['purifier_HTML_MaxImgLength'],
                                     'HTML.TidyLevel' => $icmsConfigPurifier['purifier_HTML_TidyLevel'],
                                     'HTML.SafeEmbed' => $icmsConfigPurifier['purifier_HTML_SafeEmbed'],
@@ -82,14 +96,14 @@ class icms_HTMLPurifier
                                     'CSS.DefinitionRev' => $icmsConfigPurifier['purifier_CSS_DefinitionRev'],
                                     'CSS.AllowImportant' => $icmsConfigPurifier['purifier_CSS_AllowImportant'],
                                     'CSS.AllowTricky' => $icmsConfigPurifier['purifier_CSS_AllowTricky'],
-                                    //'CSS.AllowedProperties' => $icmsConfigPurifier['purifier_CSS_AllowedProperties'],
+                                    'CSS.AllowedProperties' => $icmsConfigPurifier['purifier_CSS_AllowedProperties'],
                                     'CSS.MaxImgLength' => $icmsConfigPurifier['purifier_CSS_MaxImgLength'],
                                     'CSS.Proprietary' => $icmsConfigPurifier['purifier_CSS_Proprietary'],
                                     'AutoFormat.AutoParagraph' => $icmsConfigPurifier['purifier_AutoFormat_AutoParagraph'],
                                     'AutoFormat.DisplayLinkURI' => $icmsConfigPurifier['purifier_AutoFormat_DisplayLinkURI'],
                                     'AutoFormat.Linkify' => $icmsConfigPurifier['purifier_AutoFormat_Linkify'],
                                     'AutoFormat.PurifierLinkify' => $icmsConfigPurifier['purifier_AutoFormat_PurifierLinkify'],
-                                    //'AutoFormat.Custom' => $icmsConfigPurifier['purifier_AutoFormat_Custom'],
+                                    'AutoFormat.Custom' => $icmsConfigPurifier['purifier_AutoFormat_Custom'],
                                     'AutoFormat.RemoveEmpty' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmpty'],
                                     'AutoFormat.RemoveEmpty.RemoveNbsp' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmptyNbsp'],
                                     'AutoFormat.RemoveEmpty.RemoveNbsp.Exceptions' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmptyNbspExceptions'],
@@ -107,15 +121,15 @@ class icms_HTMLPurifier
                                     'URI.DisableExternalResources' => $icmsConfigPurifier['purifier_URI_DisableExternalResources'],
                                     'URI.DisableResources' => $icmsConfigPurifier['purifier_URI_DisableResources'],
                                     'URI.MakeAbsolute' => $icmsConfigPurifier['purifier_URI_MakeAbsolute'],
-                                    //'URI.HostBlacklist' => $icmsConfigPurifier['purifier_URI_HostBlacklist'],
+                                    'URI.HostBlacklist' => $icmsConfigPurifier['purifier_URI_HostBlacklist'],
                                     'URI.AllowedSchemes' => $icmsConfigPurifier['purifier_URI_AllowedSchemes'],
                                     'URI.DefinitionID' => $icmsConfigPurifier['purifier_URI_DefinitionID'],
                                     'URI.DefinitionRev' => $icmsConfigPurifier['purifier_URI_DefinitionRev'],
                                     'URI.AllowedSchemes' => $icmsConfigPurifier['purifier_URI_AllowedSchemes'],
                                     'Attr.AllowedFrameTargets' => $icmsConfigPurifier['purifier_Attr_AllowedFrameTargets'],
                                     'Attr.AllowedRel' => $icmsConfigPurifier['purifier_Attr_AllowedRel'],
-                                    //'Attr.AllowedClasses' => $icmsConfigPurifier['purifier_Attr_AllowedClasses'],
-                                    //'Attr.ForbiddenClasses' => $icmsConfigPurifier['purifier_Attr_ForbiddenClasses'],
+                                    'Attr.AllowedClasses' => $icmsConfigPurifier['purifier_Attr_AllowedClasses'],
+                                    'Attr.ForbiddenClasses' => $icmsConfigPurifier['purifier_Attr_ForbiddenClasses'],
                                     'Attr.DefaultInvalidImage' => $icmsConfigPurifier['purifier_Attr_DefaultInvalidImage'],
                                     'Attr.DefaultInvalidImageAlt' => $icmsConfigPurifier['purifier_Attr_DefaultInvalidImageAlt'],
                                     'Attr.DefaultImageAlt' => $icmsConfigPurifier['purifier_Attr_DefaultImageAlt'],
@@ -123,16 +137,16 @@ class icms_HTMLPurifier
                                     'Attr.IDPrefix' => $icmsConfigPurifier['purifier_Attr_IDPrefix'],
                                     'Attr.EnableID' => $icmsConfigPurifier['purifier_Attr_EnableID'],
                                     'Attr.IDPrefixLocal' => $icmsConfigPurifier['purifier_Attr_IDPrefixLocal'],
-                                    //'Attr.IDBlacklist' => $icmsConfigPurifier['purifier_Attr_IDBlacklist'],
+                                    'Attr.IDBlacklist' => $icmsConfigPurifier['purifier_Attr_IDBlacklist'],
                                     'Filter.ExtractStyleBlocks.Escaping' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks_Escaping'],
                                     'Filter.ExtractStyleBlocks.Scope' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks_Scope'],
                                     'Filter.ExtractStyleBlocks' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'],
                                     'Filter.YouTube' => $icmsConfigPurifier['purifier_Filter_YouTube'],
                                 );
-        return $icmsPurifierConf;
+        return $this->icms_purifyCleanArray($icmsPurifierConf);
     }
 
-    public function icms_debug_info($text, $msg)
+    public function icms_purify_debug_info($text, $msg)
     {
         echo "<div style='padding: 5px; color: red; font-weight: bold'>$text</div>";
         echo "<div><pre>";
@@ -153,8 +167,6 @@ class icms_HTMLPurifier
         }
 
         $icmsPurifyConf = $this->icms_getPurifierConfig(); // gets the Config Data
-        $icmsPurifyConf = $this->icms_arrayFilterRecursive($icmsPurifyConf); // removes keys from array that contain empty $values
-
         //$this->icms_debug_info('icmsPurifyConf', $icmsPurifyConf); // uncomment for specific config debug info
 
         $this->purifier = new HTMLPurifier($icmsPurifyConf);
