@@ -43,10 +43,13 @@ class IcmsFormImageElement extends XoopsFormElementTray {
 
     $this->addElement(new XoopsFormLabel( '', '<br />' . _CO_ICMS_URL_FILE));
     $this->addElement(new IcmsFormTextElement($object, 'url_'.$key));
-    $this->addElement(new XoopsFormLabel( '', '<br /><br />'));
-    $delete_check = new IcmsFormCheckElement('', 'delete_'.$key);
-    $delete_check->addOption(1, '<span style="color:red;">'._CO_ICMS_DELETE.'</span>');
-    $this->addElement($delete_check);
+
+    if (!$object->isNew()) {
+	    $this->addElement(new XoopsFormLabel( '', '<br /><br />'));
+	    $delete_check = new IcmsFormCheckElement('', 'delete_'.$key);
+	    $delete_check->addOption(1, '<span style="color:red;">'._CO_ICMS_DELETE.'</span>');
+	    $this->addElement($delete_check);
+    }
   }
 }
 
