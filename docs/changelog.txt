@@ -107,6 +107,7 @@ Revision:
 * #315: imProfile: when deleting a tribe, all tribeusers for this tribe are also deleted | ticket from addons (Phoenyx)
 * #738: don't show Delete checkbox in IcmsFormImageElement if object is new (Phoenyx)
 * #317: imProfile: only downsize images (pictures and tribes) | ticket from addons (Phoenyx)
+* #739: changed the order of checks in IcmsMediaUploader::upload to check mimetype and imagetype before checking image resolution (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''

@@ -402,25 +402,22 @@ class IcmsMediaUploader
 
         if(!$this->checkMaxFileSize())
         {
-            $this->setErrors(_ER_UP_INVALIDFILESIZE);
             return false;
         }
-        if(!$this->checkMaxWidth())
+        if(!$this->checkMimeType())
+        {
+            return false;
+        }
+	if(!$this->checkImageType())
+        {
+            return false;
+        }
+	if(!$this->checkMaxWidth())
         {
             return false;
         }
         if(!$this->checkMaxHeight())
         {
-            return false;
-        }
-        if(!$this->checkMimeType())
-        {
-            $this->setErrors(_ER_UP_UNKNOWNFILETYPEREJECTED);
-            return false;
-        }
-        if(!$this->checkImageType())
-        {
-            $this->setErrors(_ER_UP_INVALIDIMAGEFILE);
             return false;
         }
         if(count($this->errors) > 0)
