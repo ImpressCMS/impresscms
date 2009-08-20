@@ -95,6 +95,8 @@ if (in_array($clean_op,$valid_op,true)){
 		$objectTable->addColumn(new IcmsPersistableColumn('tribe_img', 'center', 330, 'getProfileTribe', false, false, false));
 
 		$objectTable->addQuickSearch(array('title'));
+		$objectTable->setDefaultSort('tribes_id');
+		$objectTable->setDefaultOrder('DESC');
 
   		$icmsAdminTpl->assign('profile_tribes_table', $objectTable->fetch());
   		$icmsAdminTpl->display('db:profile_admin_tribes.html');

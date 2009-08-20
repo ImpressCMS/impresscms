@@ -88,6 +88,8 @@ if (in_array($clean_op,$valid_op,true)){
 		$objectTable->addColumn(new IcmsPersistableColumn('url', 'center', 330, 'getAudioToDisplay', false, false, false));
 
 		$objectTable->addQuickSearch(array('title', 'author'));
+		$objectTable->setDefaultSort('audio_id');
+		$objectTable->setDefaultOrder('DESC');
 
   		$icmsAdminTpl->assign('profile_audio_table', $objectTable->fetch());
   		$icmsAdminTpl->display('db:profile_admin_audio.html');

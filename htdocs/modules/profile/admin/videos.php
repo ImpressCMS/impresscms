@@ -90,6 +90,9 @@ if (in_array($clean_op,$valid_op,true)){
 		$objectTable->addColumn(new IcmsPersistableColumn('youtube_code', 'center', 330, 'getVideoToDisplay', false, false, false));
 
 		$objectTable->addQuickSearch(array('video_desc', 'youtube_code'));
+		$objectTable->setDefaultSort('videos_id');
+		$objectTable->setDefaultOrder('DESC');
+
   		$icmsAdminTpl->assign('profile_videos_table', $objectTable->fetch());
   		$icmsAdminTpl->display('db:profile_admin_videos.html');
   		break;

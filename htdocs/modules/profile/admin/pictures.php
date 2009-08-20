@@ -94,6 +94,8 @@ if (in_array($clean_op,$valid_op,true)){
 		$objectTable->addColumn(new IcmsPersistableColumn('url', 'center', 330, 'getProfilePicture', false, false, false));
 
 		$objectTable->addQuickSearch(array('title'));
+		$objectTable->setDefaultSort('pictures_id');
+		$objectTable->setDefaultOrder('DESC');
 
   		$icmsAdminTpl->assign('profile_pictures_table', $objectTable->fetch());
   		$icmsAdminTpl->display('db:profile_admin_pictures.html');
