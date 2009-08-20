@@ -113,6 +113,7 @@ Revision:
 * #713: fixed invalid argument warning in modulesadmin (installer and cp) (Phoenyx)
 * #743: use XoopsFormText instead of IcmsFormTextElement in IcmsFormImageElement to build the url textfield (Phoenyx)
 * #319: imProfile: sorting pictures, tribes, audio and video content by id descending by default | ticket from addons (Phoenyx)
+* #745: make icms_mkdir create an index.html file (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''

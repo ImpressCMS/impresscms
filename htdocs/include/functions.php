@@ -1167,6 +1167,10 @@ function icms_mkdir($target)
 		{
 			$res = mkdir($target, 0777); // crawl back up & create dir tree
 			icms_chmod($target);
+			// create an index.html file in this directory
+			if ($fh = @fopen($target.'/index.html', 'w'))
+				fwrite($fh, '<script>history.go(-1);</script>');
+			@fclose($fh); 
 			return $res;
 		}
 	}
