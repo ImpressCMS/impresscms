@@ -1115,9 +1115,6 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
      $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Filter_YouTube', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBE', '1', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBEDSC', 'yesno', 'int', $p)");
      $i++;
      $p++;
-     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Core_EscapeInvalidTags', '_MD_AM_PURIFIER_CORE_ESCINVALIDTAGS', '0', '_MD_AM_PURIFIER_CORE_ESCINVALIDTAGSDSC', 'yesno', 'int', $p)");
-     $i++;
-     $p++;
      $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Core_EscapeNonASCIICharacters', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARS', '1', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARSDSC', 'yesno', 'int', $p)");
      $i++;
      $p++;

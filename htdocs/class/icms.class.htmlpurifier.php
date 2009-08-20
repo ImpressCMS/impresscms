@@ -107,7 +107,6 @@ class icms_HTMLPurifier
                                     'AutoFormat.RemoveEmpty' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmpty'],
                                     'AutoFormat.RemoveEmpty.RemoveNbsp' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmptyNbsp'],
                                     'AutoFormat.RemoveEmpty.RemoveNbsp.Exceptions' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmptyNbspExceptions'],
-                                    'Core.EscapeInvalidTags' => $icmsConfigPurifier['purifier_Core_EscapeInvalidTags'],
                                     'Core.EscapeNonASCIICharacters' => $icmsConfigPurifier['purifier_Core_EscapeNonASCIICharacters'],
                                     'Core.HiddenElements' => $icmsConfigPurifier['purifier_Core_HiddenElements'],
                                     'Core.RemoveInvalidImg' => $icmsConfigPurifier['purifier_Core_RemoveInvalidImg'],
