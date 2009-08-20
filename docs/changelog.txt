@@ -111,6 +111,7 @@ Revision:
 * #740: consider uploader result in doStoreFromDefaultForm to handle possible errors (Phoenyx)
 * #328: imProfile: png's are now working for pictures and tribes | ticket from addons (Phoenyx)
 * #713: fixed invalid argument warning in modulesadmin (installer and cp) (Phoenyx)
+* #743: use XoopsFormText instead of IcmsFormTextElement in IcmsFormImageElement to build the url textfield (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''

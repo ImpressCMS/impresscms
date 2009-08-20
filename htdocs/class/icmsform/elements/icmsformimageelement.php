@@ -42,7 +42,7 @@ class IcmsFormImageElement extends XoopsFormElementTray {
     include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformcheckelement.php";
 
     $this->addElement(new XoopsFormLabel( '', '<br />' . _CO_ICMS_URL_FILE));
-    $this->addElement(new IcmsFormTextElement($object, 'url_'.$key));
+    $this->addElement(new XoopsFormText('', 'url_'.$key, 50, 500));
 
     if (!$object->isNew()) {
 	    $this->addElement(new XoopsFormLabel( '', '<br /><br />'));
