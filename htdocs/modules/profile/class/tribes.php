@@ -137,7 +137,7 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	public function __construct(& $db) {
 		global $icmsModuleConfig;
 		$this->IcmsPersistableObjectHandler($db, 'tribes', 'tribes_id', 'title', '', 'profile');
-		$this->setUploaderConfig(false, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), $icmsModuleConfig['maxfilesize_picture'], $icmsModuleConfig['max_original_width'], $icmsModuleConfig['max_original_height']);
+		$this->enableUpload(array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/png'), $icmsModuleConfig['maxfilesize_picture'], $icmsModuleConfig['max_original_width'], $icmsModuleConfig['max_original_height']);
 	}
 
 	/**
