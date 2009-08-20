@@ -1176,21 +1176,23 @@ function icms_module_update($dirname) {
 				$atasks[$taskID]['name'] = $task->getVar('sat_name');
 			}
 			$atasks_handler->deleteAll($criteria);
-			foreach ($atasks as $taskID => $taskData) {
-				if (!isset($taskData['code']) || trim($taskData['code']) == '') continue;
-				$task = &$atasks_handler->create();
-				if (isset($taskData['enabled'])) $task->setVar('sat_enabled', $taskData['enabled']);
-				if (isset($taskData['repeat'])) $task->setVar('sat_repeat', $taskData['repeat']);
-				if (isset($taskData['interval'])) $task->setVar('sat_interval', $taskData['interval']);
-				if (isset($taskData['onfinish'])) $task->setVar('sat_onfinish', $taskData['onfinish']);
-				$task->setVar('sat_name', $taskData['name']);
-				$task->setVar('sat_code', $taskData['code']);
-				$task->setVar('sat_type', 'addon/'.$module->getInfo('dirname'));
-				$task->setVar('sat_addon_id', intval($taskID));
-				if (!($atasks_handler->insert($task))) {
-					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert autotask to db. Name: <b>'.$taskData['name'].'</b></span>';
-				} else {
-					$msgs[] = '&nbsp;&nbsp;Updated task from autotasks list. Task Name: <b>'.$taskData['name'].'</b>';
+			if (is_array($atasks)) {
+				foreach ($atasks as $taskID => $taskData) {
+					if (!isset($taskData['code']) || trim($taskData['code']) == '') continue;
+					$task = &$atasks_handler->create();
+					if (isset($taskData['enabled'])) $task->setVar('sat_enabled', $taskData['enabled']);
+					if (isset($taskData['repeat'])) $task->setVar('sat_repeat', $taskData['repeat']);
+					if (isset($taskData['interval'])) $task->setVar('sat_interval', $taskData['interval']);
+					if (isset($taskData['onfinish'])) $task->setVar('sat_onfinish', $taskData['onfinish']);
+					$task->setVar('sat_name', $taskData['name']);
+					$task->setVar('sat_code', $taskData['code']);
+					$task->setVar('sat_type', 'addon/'.$module->getInfo('dirname'));
+					$task->setVar('sat_addon_id', intval($taskID));
+					if (!($atasks_handler->insert($task))) {
+						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert autotask to db. Name: <b>'.$taskData['name'].'</b></span>';
+					} else {
+						$msgs[] = '&nbsp;&nbsp;Updated task from autotasks list. Task Name: <b>'.$taskData['name'].'</b>';
+					}
 				}
 			}
 			unset($atasks, $atasks_handler, $task, $taskData, $criteria, $items, $taskID);
