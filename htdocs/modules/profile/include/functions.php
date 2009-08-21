@@ -171,20 +171,7 @@ function checkPassword($uname, $oldpass, $newpass, $vpass) {
 }
 
 function getAllowedItems($item, $uid){
-	global $xoopsDB, $icmsUser, $profile_isAdmin, $icmsModuleConfig, $profile_current_page;
-	$array = array();
-	$count = 0;
-
-	// all registrated users (administrators included) have to set their profile settings first
-	if (is_object($icmsUser) && $profile_current_page != 'configs.php' && $icmsUser->getVar('uid') == $uid) {
-		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE config_uid = %u', $xoopsDB->prefix('profile_configs'), intval($uid));
-		$result = $xoopsDB->query($sql);
-		list($count) = $xoopsDB->fetchRow($result);
-		if ( $count <= 0 ) {
-			redirect_header(PROFILE_URL.'configs.php', 3, _PROFILE_MA_MAKE_CONFIG_FIRST);
-			exit();
-		}
-	}
+	global $profile_isAdmin, $icmsModuleConfig;
 
 	if ($profile_isAdmin) {
 		return true;
