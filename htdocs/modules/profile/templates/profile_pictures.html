@@ -1,53 +1,48 @@
 <{include file="db:profile_header.html"}>
 <{if $profile_picturesform}>
-	<{if $hideForm}>
-		<div id="profile-album-form" class="outer">
-			<h2 class="head">
-      			<a href="#" onclick ="jQuery().find('div.profile-album-form').toggle(400);">
-      				<img src="images/toggle.gif" />&nbsp;
-        		</a>
-			</h2>
-			<div class="profile-album-form" style="display: none">
-				<{includeq file='db:system_common_form.html' form=$profile_picturesform}>
-			</div>
-		</div>
-	<{else}>
-		<{includeq file='db:system_common_form.html' form=$profile_picturesform}>
-	<{/if}>
+<{if $hideForm}>
+<div id="profile-form" class="outer">
+  <h2 class="head">
+    <a href="#" onclick ="jQuery().find('div.profile-pictures-form').toggle(400);">
+      <img src="images/toggle.gif" />&nbsp;
+    </a>
+  </h2>
+  <div class="profile-pictures-form" style="display: none">
+    <{includeq file='db:system_common_form.html' form=$profile_picturesform}>
+  </div>
+</div>
+<{else}>
+<{includeq file='db:system_common_form.html' form=$profile_picturesform}>
+<{/if}>
 <{/if}>
 <{if $profile_single_picture}>
-	<{if $profile_single_picture.userCanView}>
-		<div class="profile_single_picture_container">
-			<h1 class="picture-title"><{$profile_single_picture.picture_title}></h1>
-		<div class="profile_single_picture_content">
-			<{$profile_single_picture.picture_content}>
-		</div>
-		<{if $profile_single_picture.userCanEditAndDelete}>
-			<div class="profile_admin_links"><{$profile_single_picture.editItemLink}><{$profile_single_picture.deleteItemLink}></div>
-		<{/if}>
-		</div>
-	<{/if}>
+<div class="profile_single_picture_container">
+  <h1 class="picture-title"><{$profile_single_picture.picture_title}></h1>
+  <div class="profile_single_picture_content"><{$profile_single_picture.picture_content}></div>
+  <{if $profile_single_picture.userCanEditAndDelete}>
+  <div class="profile_admin_links"><{$profile_single_picture.editItemLink}><{$profile_single_picture.deleteItemLink}></div>
+  <{/if}>
+</div>
 <{/if}>
-
 <{if $profile_allpictures}>
-	<{foreach item=profile_each_picture from=$profile_allpictures}>
-		<{if $profile_each_picture.userCanView}>
-			<div class="profile_each_picture_container">
-				<h1 class="post-title"><{$profile_each_picture.title}></h1>
-			</div>
-			<div class="profile_each_picture_content">
-				<a href="<{$icms_url}>/uploads/profile/pictures/resized_<{$profile_each_picture.url}>" rel="lightbox" title="<{$profile_each_picture.title}>">
-        			<img class="thumb" src="<{$icms_url}>/uploads/profile/pictures/thumb_<{$profile_each_picture.url}>" rel="lightbox" title="<{$profile_each_picture.title}>" />
-				</a>
-			</div>
-			<{if $profile_each_picture.userCanEditAndDelete}>
-					<div class="profile_admin_links"><{$profile_each_picture.editItemLink}><{$profile_each_picture.deleteItemLink}></div>
-			<{/if}>
-		<{/if}>
-	<{/foreach}>
+<div id="profile-pictures-container">
+<{foreach name=pictures item=picture from=$profile_allpictures}>
+<div class="profile-pictures-picture">
+  <a href="<{$icms_url}>/uploads/profile/pictures/resized_<{$picture.url}>" rel="lightbox" title="<{$picture.title}>">
+    <img class="thumb" src="<{$icms_url}>/uploads/profile/pictures/thumb_<{$picture.url}>" rel="lightbox" title="<{$picture.title}>" />
+  </a>
+  <br /><{$picture.title}><br />
+  <{if $picture.userCanEditAndDelete}>
+  <{$picture.editItemLink}><{$picture.deleteItemLink}>
+  <{/if}>
+  <{if $picture.private}><img src="<{$icms_url}>/modules/profile/images/lock.gif" style="vertical-align:middle" /><{/if}>
+</div>
+<{if $smarty.foreach.pictures.iteration is div by 4 || $smarty.foreach.pictures.last == TRUE}>
+<div class="clear"></div>
+<{/if}>
+<{/foreach}>
+</div>
 <{/if}>
 <{if $icmspersistable_delete_confirm}>
-	<{$icmspersistable_delete_confirm}>
+<{$icmspersistable_delete_confirm}>
 <{/if}>
-
-

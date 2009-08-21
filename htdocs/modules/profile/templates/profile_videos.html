@@ -1,7 +1,7 @@
 <{include file="db:profile_header.html"}>
 <{if $profile_videosform}>
 	<{if $hideForm}>
-		<div id="profile-album-form" class="outer">
+		<div id="profile-form" class="outer">
 			<h2 class="head">
       			<a href="#" onclick ="jQuery().find('div.profile-album-form').toggle(400);">
       				<img src="images/toggle.gif" />&nbsp;
@@ -16,7 +16,6 @@
 	<{/if}>
 <{/if}>
 <{if $profile_single_video}>
-	<{if $profile_single_video.userCanView}>
 		<div class="profile_single_video_container">
 			<h1 class="video-title"><{$profile_single_video.video_desc}></h1>
 		<div class="profile_single_video_content">
@@ -26,12 +25,10 @@
 			<div class="profile_admin_links"><{$profile_single_video.editItemLink}><{$profile_single_video.deleteItemLink}></div>
 		<{/if}>
 		</div>
-	<{/if}>
 <{/if}>
 
 <{if $profile_allvideos}>
 	<{foreach item=profile_each_video from=$profile_allvideos}>
-		<{if $profile_each_video.userCanView}>
 			<div class="profile_each_video_container">
 				<h1 class="post-title"><{$profile_each_video.title}></h1>
 			</div>
@@ -41,7 +38,6 @@
 			<{if $profile_each_video.userCanEditAndDelete}>
 					<div class="profile_admin_links"><{$profile_each_video.editItemLink}><{$profile_each_video.deleteItemLink}></div>
 			<{/if}>
-		<{/if}>
 	<{/foreach}>
 <{/if}>
 <{if $icmspersistable_delete_confirm}>

@@ -93,18 +93,6 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 	}
 
 	/**
-	 * Check to see wether the current user can view this picture
-	 *
-	 * @return bool true if he can, false if not
-	 */
-	function userCanView() {
-		if($this->getVar('private', 'e') == 0 ){
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * Overridding IcmsPersistable::toArray() method to add a few info
 	 *
 	 * @return array of picture info
@@ -117,7 +105,6 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
-		$ret['userCanView'] = $this->userCanView();
 		$ret['picture_senderid'] = $this->getVar('uid_owner','e');
 		$ret['picture_sender_link'] = $this->getPictureSender();
 		return $ret;
@@ -157,7 +144,13 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		$criteria->setSort('creation_time');
 		$criteria->setOrder('DESC');
 
-		$criteria->add(new Criteria('private', 0));
+		if (is_object($icmsUser)) {
+			if ($icmsUser->getVar('uid') != $uid_owner && !$icmsUser->isAdmin()) {
+				$criteria->add(new Criteria('private', 0));
+			}
+		} else {
+			$criteria->add(new Criteria('private', 0));
+		}
 		
 		if ($uid_owner) {
 			$criteria->add(new Criteria('uid_owner', $uid_owner));

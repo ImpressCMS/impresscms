@@ -224,10 +224,21 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 * @return array of amounts
 	 */
 	function geteachSectioncounts($uid){
+		global $icmsUser;
+
+		$private = '';
+		if (is_object($icmsUser)) {
+			if ($icmsUser->getVar('uid') != $uid && !$icmsUser->isAdmin()) {
+				$private = ' AND private=0';
+			}
+		} else {
+			$private = ' AND private=0';
+		}
+
 		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_audio').' WHERE uid_owner="'.$uid.'"';
 		$audio = $this->query($sql, false);
 		
-		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_pictures').' WHERE uid_owner="'.$uid.'"';
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_pictures').' WHERE uid_owner="'.$uid.'"'.$private;
 		$pictures = $this->query($sql, false);
 		
 		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="'.$uid.'" OR friend2_uid="'.$uid.'") AND situation!=1';

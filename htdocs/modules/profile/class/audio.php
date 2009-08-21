@@ -92,22 +92,6 @@ class ProfileAudio extends IcmsPersistableSeoObject {
 	}
 
 	/**
-	 * Check to see wether the current user can view this audio
-	 *
-	 * @return bool true if he can, false if not
-	 */
-	function userCanView() {
-		global $icmsUser, $profile_isAdmin;
-		if (!is_object($icmsUser)) {
-			return false;
-		}
-		if ($profile_isAdmin) {
-			return true;
-		}
-		return $this->getVar('uid_owner', 'e') == $icmsUser->uid();
-	}
-
-	/**
 	 * Overridding IcmsPersistable::toArray() method to add a few info
 	 *
 	 * @return array of audio info
@@ -120,7 +104,6 @@ class ProfileAudio extends IcmsPersistableSeoObject {
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
-		$ret['userCanView'] = $this->userCanView();
 		$ret['audio_senderid'] = $this->getVar('uid_owner','e');
 		$ret['audio_sender_link'] = $this->getAudioSender();
 		return $ret;

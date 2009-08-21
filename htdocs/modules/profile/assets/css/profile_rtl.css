@@ -156,20 +156,8 @@ p#breadcrumbs {
 	padding:2px;
 }
 
-/*
-Search
-*/
-
-div.search-element {
+div.clear {
 clear:both;
-}
-div.search-element-label {
-float:right;
-width:300px;
-}
-div.search-element-body {
-float:right;
-
 }
 
 /*
@@ -263,7 +251,7 @@ text-align:justify;
 margin:1px 5px;
 }
 
-div#profile-friendship-form h3, div#profile-profile-pictures h3, div#profile-profile-audio h3, div#profile-profile-visitors h3, div#profile-profile-tribes h3, div#profile-profile-search-results p, div#profile-profile-statistics p, div#profile-profile-details p, div#profile-profile-search-results h3, div#profile-profile-search-results h4, div#profile-profile-friends h3, div#profile-profile-visual h3, div#profile-profile-statistics h3, div#profile-profile-details h3 {
+div#profile-form h2, div#profile-profile-pictures h3, div#profile-profile-audio h3, div#profile-profile-visitors h3, div#profile-profile-tribes h3, div#profile-profile-search-results p, div#profile-profile-statistics p, div#profile-profile-details p, div#profile-profile-search-results h3, div#profile-profile-search-results h4, div#profile-profile-friends h3, div#profile-profile-visual h3, div#profile-profile-statistics h3, div#profile-profile-details h3 {
 margin:0px;
 }
 
@@ -428,54 +416,31 @@ width:32px;
 background-image:url(../images/sexycolor.gif);
 background-repeat:no-repeat;
 }
-/*************************************************************************************************************************************** 
-album
-***************************************************************************************************************************************/
 
-div#profile-album-form{
-margin:3px;
-padding:1px;
-float:right;
-width:95%;
-overflow:hidden;
+/*****************************************************************************************************************
+Pictures
+*/
+div#profile-pictures-form{
+width:100%
 }
 
-div#profile-album-visitors h2, div#profile-album-container h2, div#profile-album-form h2,div#profile-album-form p {
+div#profile-pictures-form h2 {
+margin: 0px;
+}
+
+div#profile-pictures-container{
+padding:0px;
 margin:0px;
+width:100%;
 }
 
-div#profile-album-container{
-padding:1px;
-margin:3px;
-float:right;
-width:95%;
-overflow:hidden;
-}
-
-div.profile-album-picture {
-margin:0px;
-width:31%;
-height:250px;
+div.profile-pictures-picture {
+margin-top:15px;
+margin-bottom: 10px;
+width:25%;
 float:right;
 text-align:center;
-
 }
-
-div.profile-album-picture img{
-border:3px solid;
-padding:3px;
-}
-
-div.class {
-margin:10px;
-}
-
-form.profile-album-formquick {
-display:inline;
-}
-
-
-
 
 /*********************************************************************************************************
 tribes

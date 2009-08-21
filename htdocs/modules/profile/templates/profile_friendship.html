@@ -1,7 +1,7 @@
 <{include file="db:profile_header.html"}>
 <{if $profile_friendshipform}>
 	<{if $hideForm}>
-		<div id="profile-album-form" class="outer">
+		<div id="profile-form" class="outer">
 			<h2 class="head">
       			<a href="#" onclick ="jQuery().find('div.profile-album-form').toggle(400);">
       				<img src="images/toggle.gif" />&nbsp;
@@ -17,7 +17,6 @@
 <{/if}>
 <{if $profile_allfriendships}>
 	<{foreach item=profile_each_friendship from=$profile_allfriendships}>
-		<{if $profile_each_friendship.userCanView}>
 			<div class="profile_each_friendship_content">
 				<img src="<{$profile_each_friendship.friendship_avatar}>" />
 			</div>
@@ -27,7 +26,6 @@
 			<{if $profile_each_friendship.userCanEditAndDelete}>
 					<div class="profile_admin_links"><{$profile_each_friendship.editItemLink}><{$profile_each_friendship.deleteItemLink}></div>
 			<{/if}>
-		<{/if}>
 	<{/foreach}>
 <{/if}>
 <{if $icmspersistable_delete_confirm}>
