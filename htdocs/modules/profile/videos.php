@@ -112,7 +112,7 @@ if (in_array($clean_op,$valid_op,true)){
 		break;
 
 	default:
-		if($real_uid){
+		if($real_uid && $real_uid == $uid){
 			$videosObj = $profile_videos_handler->get($clean_videos_id);
 			editvideos($videosObj, true);
 		}
