@@ -79,7 +79,8 @@ icms_makeSmarty(array(
 
 if($icmsModuleConfig['profile_social']){
 	// all registrated users (administrators included) have to set their profile settings first
-	if (is_object($icmsUser) && $profile_current_page != 'configs.php' && $icmsUser->getVar('uid') == $uid) {
+	if (!isset($profile_current_page)) $profile_current_page = basename(__FILE__);
+	if (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid && $profile_current_page != 'configs.php') {
 		$sql = sprintf('SELECT COUNT(*) FROM %s WHERE config_uid = %u', $xoopsDB->prefix('profile_configs'), intval($uid));
 		$result = $xoopsDB->query($sql);
 		list($count) = $xoopsDB->fetchRow($result);
