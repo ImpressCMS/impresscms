@@ -116,7 +116,7 @@ if (in_array($clean_op,$valid_op,true)){
 		break;
 
 	default:
-		if($real_uid){
+		if($real_uid && $real_uid == $uid){
 			$audioObj = $profile_audio_handler->get($clean_audio_id);
 			editaudio($audioObj, true);
 		}

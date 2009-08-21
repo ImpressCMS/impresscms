@@ -119,7 +119,7 @@ if (in_array($clean_op,$valid_op,true)){
 		break;
 
 	default:
-		if($real_uid){
+		if($real_uid && $real_uid == $uid){
 			$picturesObj = $profile_pictures_handler->get($clean_pictures_id);
 			editpictures($picturesObj, true);
 		}
