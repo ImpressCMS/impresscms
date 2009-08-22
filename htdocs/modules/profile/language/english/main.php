@@ -224,6 +224,11 @@ define("_MD_PROFILE_PICTURES_SUBMIT", "Submit new photo");
 define("_MD_PROFILE_PICTURES_EDIT", "Edit existing photo");
 define("_MD_PROFILE_PICTURES_CREATED", "Photo successfully added");
 define("_MD_PROFILE_PICTURES_MODIFIED", "Photo successfully modified");
+define("_MD_PROFILE_PICTURES_AVATAR_EDITED", "Avatar successfully modified");
+define("_MD_PROFILE_PICTURES_AVATAR_NOCOPY", "Error while trying to copy the avatar");
+define("_MD_PROFILE_PICTURES_AVATAR_NOTEDITED", "There was an error while updating your avatar");
+define("_MD_PROFILE_PICTURES_AVATAR_DELETED", "Avatar successfully deleted");
+define("_MD_PROFILE_PICTURES_AVATAR_NOTDELETED", "There was an error while deleting your avatar");
 
 //tribes.php
 define("_MD_PROFILE_TRIBES_SUBMIT", "Create new tribe");
