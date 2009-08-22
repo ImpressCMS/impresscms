@@ -168,6 +168,8 @@ if ($thisUser->getVar('user_avatar') && $thisUser->getVar('user_avatar') != 'bla
 	$icmsTpl->assign('user_avatar', $thisUser->gravatar('G', $icmsConfigUser['avatar_width']));
 	$icmsTpl->assign('gravatar', true);
 }
+$allow_avatar_upload = ($isOwner && is_object($icmsUser) && $icmsConfigUser['avatar_allow_upload'] == 1 && $icmsUser->getVar('posts') >= $icmsConfigUser['avatar_minposts']);
+$icmsTpl->assign('allow_avatar_upload', $allow_avatar_upload);
 
 // visitors
 $visitors = $profile_visitors_handler->getVisitors(0, 5, $uid);

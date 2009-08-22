@@ -229,6 +229,7 @@ define("_MD_PROFILE_PICTURES_AVATAR_NOCOPY", "Error while trying to copy the ava
 define("_MD_PROFILE_PICTURES_AVATAR_NOTEDITED", "There was an error while updating your avatar");
 define("_MD_PROFILE_PICTURES_AVATAR_DELETED", "Avatar successfully deleted");
 define("_MD_PROFILE_PICTURES_AVATAR_NOTDELETED", "There was an error while deleting your avatar");
+define("_MD_PROFILE_PICTURES_AVATAR_SET", "Set this picture as avatar");
 
 //tribes.php
 define("_MD_PROFILE_TRIBES_SUBMIT", "Create new tribe");

@@ -28,7 +28,7 @@
       <{$token}>
       <input name="submit" type="image" alt="<{$lang_delete}>" title="<{$lang_delete}>" src="<{$icms_url}>/images/crystal/actions/editdelete.png" style="vertical-align:middle" />
     </form>
-    <{elseif $gravatar}>
+    <{elseif $gravatar && $allow_avatar_upload}>
     <p><{$lang_selectavatar}></p>
     <{/if}>
     <{else}>

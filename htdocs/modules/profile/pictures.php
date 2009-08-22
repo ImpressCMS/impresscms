@@ -180,8 +180,9 @@ if (in_array($clean_op,$valid_op,true)){
 				redirect_header(PROFILE_URL);
 			}
 
-			$allow_avatar_upload = ($real_uid == $uid && is_object($icmsUser) && $icmsConfigUser['avatar_allow_upload'] == 1 && $icmsUser->getVar('posts') >= $icmsConfigUser['avatar_minposts']);
+			$allow_avatar_upload = ($isOwner && is_object($icmsUser) && $icmsConfigUser['avatar_allow_upload'] == 1 && $icmsUser->getVar('posts') >= $icmsConfigUser['avatar_minposts']);
 			$icmsTpl->assign('allow_avatar_upload', $allow_avatar_upload);
+			$icmsTpl->assign('lang_avatar', _MD_PROFILE_PICTURES_AVATAR_SET);
 
 			/**
 			 * Generating meta information for this page
