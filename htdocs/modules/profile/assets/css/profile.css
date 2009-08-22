@@ -163,6 +163,10 @@ div.clear {
 clear:both;
 }
 
+form.profile-quickform {
+display: inline;
+}
+
 /*
 CONFIGS
 */
@@ -222,9 +226,9 @@ td.profile-profile-picture, td.profile-profile-friend, td.profile-profile-tribe 
 }
 
 div#profile-profile-avatar {
-margin:1px;
-width:45%;
-float:left;
+margin-top:5px;
+margin-bottom:5px;
+width:100%;
 text-align:center;
 }
 
@@ -345,10 +349,6 @@ background-repeat:no-repeat;
 
 
 /*************************************************/
-
-div#profile-profile-avatar img{
-border:2px solid black;
-}
 
 div#profile-profile-mainvideo{
 margin:1px;

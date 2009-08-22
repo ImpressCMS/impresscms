@@ -268,24 +268,83 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	
 	
 	/**
-	* Resize a picture and save it to $path_upload
-	* 
-	* @param text $img the path to the file
-	* @param text $path_upload The path to where the files should be saved after resizing
-	* @param int $thumbwidth the width in pixels that the thumbnail will have
-	* @param int $thumbheight the height in pixels that the thumbnail will have
-	* @param int $pictwidth the width in pixels that the pic will have
-	* @param int $pictheight the height in pixels that the pic will have
-	* @return nothing
-	*/	
-	function makeAvatar($img, $uid) {
-		global $icmsConfigUser;
-		$path = pathinfo($img);
-		$prefix = date();
-		$user_avatar = $prefix.'_'.$path['basename'];
-		$this->imageResizer($img, $icmsConfigUser['avatar_width'], $icmsConfigUser['avatar_height'], false, $prefix);
-		$sql = sprintf("UPDATE %s SET user_avatar = %s WHERE uid = '%u'", $this->db->prefix('users'), $user_avatar, intval($uid));
-		$this->query($sql);
+	 * Resize a picture and save it to $path_upload
+	 *
+	 * @param int $pictures_id the id of the picture to set as avatar
+	 * @return nothing
+	 */
+	function makeAvatar($pictures_id) {
+		global $icmsUser, $icmsConfigUser;
+
+		$picturesObj = $this->get($pictures_id);
+
+		// check if picture exists
+		if ($picturesObj->isNew()) {
+			redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_PICTURES_AVATAR_NOTEDITED);
+			exit();
+		}
+
+		// the current user must be the owner of this picture, users must be allowed to upload avatars and we check for user posts
+		if (!is_object($icmsUser) || $icmsUser->getVar('uid') != $picturesObj->getVar('uid_owner')  || $icmsConfigUser['avatar_allow_upload'] == 0 || $icmsUser->getVar('posts') < $icmsConfigUser['avatar_minposts']) {
+			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+			exit();
+		}
+		$image = $picturesObj->_image_path.'thumb_'.$picturesObj->getVar('url');
+		if (($ext = strrpos($picturesObj->getVar('url'), '.')) !== false) {
+			$ext = strtolower(substr($picturesObj->getVar('url'), $ext +1));
+		} else {
+			$ext = 'jpg';
+		}
+		$avatar = 'cavt_'.time().'.'.$ext;
+		$imageAvatar = ICMS_UPLOAD_PATH.'/'.$avatar;
+
+		// resize picture and store as avatar
+		$imgObj = wiImage::load($image);
+		$imgObj->resizeDown($icmsConfigUser['avatar_width'], $icmsConfigUser['avatar_height'])->saveToFile($imageAvatar);
+
+		// retrieve the mime type for the avatar
+		if (function_exists('exif_imagetype')) {
+			$avatar_mimetype = image_type_to_mime_type(exif_imagetype($imageAvatar));
+		} else {
+			$size = getimagesize($imageAvatar);
+			$avatar_mimetype = isset($size['mime']) ? $size['mime'] : image_type_to_mime_type($size[2]);
+		}
+
+		// create new avatar object and delete the old one
+		$avt_handler =& xoops_gethandler('avatar');
+		$avatarObj =& $avt_handler->create();
+		$avatarObj->setVar('avatar_file', $avatar);
+		$avatarObj->setVar('avatar_name', $icmsUser->getVar('uname'));
+		$avatarObj->setVar('avatar_mimetype', $avatar_mimetype);
+		$avatarObj->setVar('avatar_display', 1);
+		$avatarObj->setVar('avatar_type', 'C');
+		if(!$avt_handler->insert($avatarObj)) {
+			unlink($imageAvatar);
+			redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_PICTURES_AVATAR_NOTEDITED);
+			exit();
+		} else {
+			$oldavatar = $icmsUser->getVar('user_avatar');
+			if(!empty($oldavatar) && preg_match("/^cavt/", strtolower($oldavatar))) {
+				$avatars =& $avt_handler->getObjects(new Criteria('avatar_file', $oldavatar));
+				if(!empty($avatars) && count($avatars) == 1 && is_object($avatars[0])) {
+					$avt_handler->delete($avatars[0]);
+					$oldavatar_path = str_replace("\\", "/", realpath(ICMS_UPLOAD_PATH.'/'.$oldavatar));
+					if(0 === strpos($oldavatar_path, ICMS_UPLOAD_PATH) && is_file($oldavatar_path)) {
+						unlink($oldavatar_path);
+					}
+				}
+			}
+
+			$icmsUser->setVar('user_avatar', $avatar);
+			$user_handler =& xoops_gethandler('user');
+
+			if($user_handler->insert($icmsUser)) {
+				$avt_handler->addUser($avatarObj->getVar('avatar_id'), intval($icmsUser->getVar('uid')));
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_PICTURES_AVATAR_EDITED);
+			} else {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_PICTURES_AVATAR_NOTEDITED);
+			}
+		}
 	}
 	
 	/**

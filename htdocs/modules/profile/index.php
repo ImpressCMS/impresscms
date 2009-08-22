@@ -122,12 +122,14 @@ icms_makeSmarty(array(
 	'lang_more'              => _US_MOREABOUT,
 	'lang_msnm'              => _US_MSNM,
 	'lang_myinfo'            => _US_MYINFO,
+	'lang_noavatar'          => _MD_PROFILE_NOAVATARYET,
 	'lang_notregistered'     => _US_NOTREGISTERED,
 	'lang_occupation'        => _US_OCCUPATION,
 	'lang_posts'             => _US_POSTS,
 	'lang_privmsg'           => _US_PM,
 	'lang_rank'              => _US_RANK,
 	'lang_realname'          => _US_REALNAME,
+	'lang_selectavatar'      => _MD_PROFILE_SELECTAVATAR,
 	'lang_signature'         => _US_SIGNATURE,
 	'lang_statistics'        => _US_STATISTICS,
 	'lang_uname'             => _US_NICKNAME,
@@ -159,6 +161,12 @@ $userrank = $thisUser->rank();
 $icmsTpl->assign('user_ranktitle', $userrank['title']);
 if ($userrank['image']) {
 	$icmsTpl->assign('user_rankimage', '<img src="'.ICMS_UPLOAD_URL.'/'.$userrank['image'].'" alt="" />');
+}
+if ($thisUser->getVar('user_avatar') && $thisUser->getVar('user_avatar') != 'blank.gif' && $thisUser->getVar('user_avatar') != ''){
+	$icmsTpl->assign('user_avatar', ICMS_UPLOAD_URL.'/'.$thisUser->getVar('user_avatar'));
+} elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
+	$icmsTpl->assign('user_avatar', $thisUser->gravatar('G', $icmsConfigUser['avatar_width']));
+	$icmsTpl->assign('gravatar', true);
 }
 
 // visitors

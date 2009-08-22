@@ -35,6 +35,14 @@
   <{if $picture.userCanEditAndDelete}>
   <{$picture.editItemLink}><{$picture.deleteItemLink}>
   <{/if}>
+  <{if $allow_avatar_upload}>
+  <form action="<{$icms_url}>/modules/profile/pictures.php" method="post" id="avatarform" class="profile-quickform">
+    <input type="hidden" value="<{$picture.pictures_id}>" name="pictures_id" />
+    <input type="hidden" value="setavatar" name="op" />
+    <{$token}>
+    <input name="submit" type="image" alt="<{$lang_delete}>" title="<{$lang_delete}>" src="<{$icms_url}>/modules/profile/images/avatar.gif" style="vertical-align:middle" />
+  </form>
+  <{/if}>
   <{if $picture.private}><img src="<{$icms_url}>/modules/profile/images/lock.gif" style="vertical-align:middle" /><{/if}>
 </div>
 <{if $smarty.foreach.pictures.iteration is div by 4 || $smarty.foreach.pictures.last == TRUE}>

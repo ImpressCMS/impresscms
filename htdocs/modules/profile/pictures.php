@@ -14,6 +14,7 @@
  * Edit a Picture
  *
  * @param object $picturesObj ProfilePicture object to be edited
+ * @param bool   $hideForm
 */
 function editpictures($picturesObj, $hideForm=false)
 {
@@ -62,8 +63,10 @@ if (isset($_GET['op'])) $clean_op = $_GET['op'];
 if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
-global $icmsUser;
-$clean_pictures_id = isset($_GET['pictures_id']) ? intval($_GET['pictures_id']) : 0 ;
+$clean_pictures_id = 0;
+if (isset($_GET['pictures_id'])) $clean_pictures_id = intval($_GET['pictures_id']);
+if (isset($_POST['pictures_id'])) $clean_pictures_id = intval($_POST['pictures_id']);
+
 $real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
 $clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
 $picturesObj = $profile_pictures_handler->get($clean_pictures_id);
@@ -71,11 +74,12 @@ $picturesObj = $profile_pictures_handler->get($clean_pictures_id);
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition
  */
-$valid_op = array ('mod','addpictures','del','');
+$valid_op = array ('setavatar', 'delavatar', 'mod','addpictures','del','');
 
 $isAllowed = getAllowedItems('pictures', $clean_uid);
 if (!$isAllowed) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+	exit();
 }
 $xoopsTpl->assign('uid_owner',$uid);
 
@@ -83,67 +87,110 @@ $xoopsTpl->assign('uid_owner',$uid);
  * Only proceed if the supplied operation is a valid operation
  */
 if (in_array($clean_op,$valid_op,true)){
-  switch ($clean_op) {
-	case "mod":
-		$picturesObj = $profile_pictures_handler->get($clean_pictures_id);
-		if ($clean_pictures_id > 0 && $picturesObj->isNew()) {
-			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
-		}
-		editpictures($picturesObj);
-		break;
+	switch ($clean_op) {
+		case "setavatar":
+			if(!$xoopsSecurity->check()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+				exit();
+			}
+			$profile_pictures_handler->makeAvatar($clean_pictures_id);
 
-	case "addpictures":
-        if (!$xoopsSecurity->check()) {
-        	redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
-        }
-         include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
-        $controller = new IcmsPersistableController($profile_pictures_handler);
-		$controller->storeFromDefaultForm(_MD_PROFILE_PICTURES_CREATED, _MD_PROFILE_PICTURES_MODIFIED);
-		break;
+			break;
+		case "delavatar":
+			if(!$xoopsSecurity->check()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+				exit();
+			}
+			if ($uid != $real_uid || !is_object($icmsUser)) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+				exit();
+			}
 
-	case "del":
-		$picturesObj = $profile_pictures_handler->get($clean_pictures_id);
-		if (!$picturesObj->userCanEditAndDelete()) {
-			redirect_header($picturesObj->getItemLink(true), 3, _NOPERM);
-		}
-		if (isset($_POST['confirm'])) {
-		    if (!$xoopsSecurity->check()) {
-		    	redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
-		    }
-		}
-  	    include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
-        $controller = new IcmsPersistableController($profile_pictures_handler);
-		$controller->handleObjectDeletionFromUserSide();
-		$icmsTpl->assign('profile_category_path', $picturesObj->getVar('title') . ' > ' . _DELETE);
+			$avt_handler =& xoops_gethandler('avatar');
+			$oldavatar = $icmsUser->getVar('user_avatar');
+			if(!empty($oldavatar) && preg_match("/^cavt/", strtolower($oldavatar))) {
+				$avatars =& $avt_handler->getObjects(new Criteria('avatar_file', $oldavatar));
+				if(!empty($avatars) && count($avatars) == 1 && is_object($avatars[0])) {
+					$avt_handler->delete($avatars[0]);
+					$oldavatar_path = str_replace("\\", "/", realpath(ICMS_UPLOAD_PATH.'/'.$oldavatar));
+					if(0 === strpos($oldavatar_path, ICMS_UPLOAD_PATH) && is_file($oldavatar_path)) {
+						unlink($oldavatar_path);
+					}
+				}
+			}
 
-		break;
+			$icmsUser->setVar('user_avatar', 'blank.gif');
+			$user_handler =& xoops_gethandler('user');
 
-	default:
-		if($real_uid && $real_uid == $uid){
+			if($user_handler->insert($icmsUser)) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_PICTURES_AVATAR_DELETED);
+			} else {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_PICTURES_AVATAR_NOTDELETED);
+			}
+
+			break;
+
+		case "mod":
 			$picturesObj = $profile_pictures_handler->get($clean_pictures_id);
-			editpictures($picturesObj, true);
-		}
-		if($clean_pictures_id > 0){
-			$profile_pictures_handler->updateCounter($clean_pictures_id);
-			$icmsTpl->assign('profile_single_picture', $picturesObj->toArray());
-		}elseif($clean_uid > 0){
-			$picturesArray = $profile_pictures_handler->getPictures(false, false, $clean_uid);
-			$icmsTpl->assign('profile_allpictures', $picturesArray);
-		}elseif($real_uid > 0){
-			$picturesArray = $profile_pictures_handler->getPictures(false, false, $real_uid);
-			$icmsTpl->assign('profile_allpictures', $picturesArray);
-		}else{
-			redirect_header(PROFILE_URL);
-		}
+			if ($clean_pictures_id > 0 && $picturesObj->isNew()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+			}
+			editpictures($picturesObj);
+			break;
 
+		case "addpictures":
+			if (!$xoopsSecurity->check()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+			}
+			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
+			$controller = new IcmsPersistableController($profile_pictures_handler);
+			$controller->storeFromDefaultForm(_MD_PROFILE_PICTURES_CREATED, _MD_PROFILE_PICTURES_MODIFIED);
+			break;
 
-		/**
-		 * Generating meta information for this page
-		 */
-		$icms_metagen = new IcmsMetagen($picturesObj->getVar('title'), $picturesObj->getVar('meta_keywords','n'), $picturesObj->getVar('meta_description', 'n'));
-		$icms_metagen->createMetaTags();
+		case "del":
+			$picturesObj = $profile_pictures_handler->get($clean_pictures_id);
+			if (!$picturesObj->userCanEditAndDelete()) {
+				redirect_header($picturesObj->getItemLink(true), 3, _NOPERM);
+			}
+			if (isset($_POST['confirm'])) {
+				if (!$xoopsSecurity->check()) {
+					redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+				}
+			}
+			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
+			$controller = new IcmsPersistableController($profile_pictures_handler);
+			$controller->handleObjectDeletionFromUserSide();
+			$icmsTpl->assign('profile_category_path', $picturesObj->getVar('title') . ' > ' . _DELETE);
+			break;
 
-		break;
+		default:
+			if($real_uid && $real_uid == $uid){
+				$picturesObj = $profile_pictures_handler->get($clean_pictures_id);
+				editpictures($picturesObj, true);
+			}
+			if ($clean_pictures_id > 0) {
+				$profile_pictures_handler->updateCounter($clean_pictures_id);
+				$icmsTpl->assign('profile_single_picture', $picturesObj->toArray());
+			} elseif($clean_uid > 0) {
+				$picturesArray = $profile_pictures_handler->getPictures(false, false, $clean_uid);
+				$icmsTpl->assign('profile_allpictures', $picturesArray);
+			} elseif($real_uid > 0) {
+				$picturesArray = $profile_pictures_handler->getPictures(false, false, $real_uid);
+				$icmsTpl->assign('profile_allpictures', $picturesArray);
+			} else {
+				redirect_header(PROFILE_URL);
+			}
+
+			$allow_avatar_upload = ($real_uid == $uid && is_object($icmsUser) && $icmsConfigUser['avatar_allow_upload'] == 1 && $icmsUser->getVar('posts') >= $icmsConfigUser['avatar_minposts']);
+			$icmsTpl->assign('allow_avatar_upload', $allow_avatar_upload);
+
+			/**
+			 * Generating meta information for this page
+			 */
+			$icms_metagen = new IcmsMetagen($picturesObj->getVar('title'), $picturesObj->getVar('meta_keywords','n'), $picturesObj->getVar('meta_description', 'n'));
+			$icms_metagen->createMetaTags();
+
+			break;
 	}
 }
 $icmsTpl->assign('profile_category_path', _MD_PROFILE_PHOTOS);
