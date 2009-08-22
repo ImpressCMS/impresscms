@@ -90,6 +90,8 @@ define("_CO_PROFILE_CONFIGS_PROFILE_GENERAL", "Show my profile general informati
 define("_CO_PROFILE_CONFIGS_PROFILE_GENERAL_DSC", " ");
 define("_CO_PROFILE_CONFIGS_PROFILE_STATS", "Show my profile stats information to:");
 define("_CO_PROFILE_CONFIGS_PROFILE_STATS_DSC", " ");
+define("_CO_PROFILE_CONFIGS_PROFILE_USERCONTRIBUTIONS", "Show my contributions to:");
+define("_CO_PROFILE_CONFIGS_PROFILE_USERCONTRIBUTIONS_DSC", " ");
 define("_CO_PROFILE_CONFIGS_SUSPENSION", "Suspend user");
 define("_CO_PROFILE_CONFIGS_SUSPENSION_DSC", "You can revoke a users access for a period of time.");
 define("_CO_PROFILE_CONFIGS_BACKUP_PASSWORD", "");

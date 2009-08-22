@@ -50,6 +50,7 @@ class ProfileConfigs extends IcmsPersistableObject {
 		$this->quickInitVar('profile_contact', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
 		$this->quickInitVar('profile_general', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
 		$this->quickInitVar('profile_stats', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
+		$this->quickInitVar('profile_usercontributions', XOBJ_DTYPE_INT, false, false, false, PROFILE_CONFIG_STATUS_MEMBERS);
 		$this->quickInitVar('suspension', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('backup_password', XOBJ_DTYPE_TXTAREA, false);
 		$this->quickInitVar('backup_email', XOBJ_DTYPE_TXTBOX, false);
@@ -100,6 +101,11 @@ class ProfileConfigs extends IcmsPersistableObject {
 			'module' => 'profile'
 		));
 		$this->setControl('profile_stats', array (
+			'itemHandler' => 'configs',
+			'method' => 'getConfig_statusArray',
+			'module' => 'profile'
+		));
+		$this->setControl('profile_usercontributions', array (
 			'itemHandler' => 'configs',
 			'method' => 'getConfig_statusArray',
 			'module' => 'profile'
@@ -277,11 +283,11 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		if ($status == PROFILE_CONFIG_STATUS_MEMBERS && is_object($icmsUser)) {
 			return true;
 		}
-		if($status == PROFILE_CONFIG_STATUS_FRIENDS && is_object($icmsUser) && $icmsUser->uid() !=$uid){
+		if($status == PROFILE_CONFIG_STATUS_FRIENDS && is_object($icmsUser) && $icmsUser->uid() != $uid){
 			$result = getFriendship($icmsUser->uid(), $uid);
 			return $result;
 		}
-		if ($status == PROFILE_CONFIG_STATUS_PRIVATE) {
+		if ($status == PROFILE_CONFIG_STATUS_PRIVATE && is_object($icmsUser)) {
 			return $uid == $icmsUser->uid();
 		}
 	}
@@ -368,10 +374,14 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	 * @return array of amounts
 	 */
 	function getConfigIdPerUser($uid){
-		$sql = 'SELECT configs_id FROM '.$this->table.' WHERE config_uid="'.$uid.'"';
-		$result = $this->query($sql, false);
-		list($ret) = $this->db->fetchRow($result);
-		return $ret;
+		$configs_id = 0;
+		$configs = $this->getConfigs(0, 0, $uid);
+		foreach($configs as $key => $config) {
+			if ($config['config_uid'] == $uid) {
+				$configs_id = $key;
+			}
+		}
+		return $configs_id;
 	}
 
 }

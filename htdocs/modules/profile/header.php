@@ -27,6 +27,12 @@ if (is_object($icmsModule) && $icmsModule->dirname() == $dirname) {
 	}
 }
 
+// check if anonymous users can access profiles
+if (!is_object($icmsUser) && !$icmsConfigUser['allow_annon_view_prof']) {
+	redirect_header(ICMS_URL, 3, _NOPERM);
+	exit();
+}
+
 $uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0;
 if ($uid == 0) {
 	if(is_object($icmsUser)){
@@ -49,7 +55,7 @@ if (!is_object($thisUser)) {
 	if (is_object($icmsUser)) {
 		redirect_header(ICMS_URL.'/modules/profile/index.php?uid='.$icmsUser->getVar('uid'), 3, _PROFILE_MA_USER_NOT_FOUND);
 	} else {
-		redirect_header(ICMS_URL.'/modules/profile/index.php', 3, _PROFILE_MA_USER_NOT_FOUND);
+		redirect_header(ICMS_URL.'/modules/profile/search.php', 3, _PROFILE_MA_USER_NOT_FOUND);
 	}
 	exit();
 }
@@ -59,7 +65,7 @@ $isAnonym = is_object($icmsUser) ? false : true;
 $isOwner = (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid) ? true: false;
 $owner_uname = is_object($thisUser) ? trim($thisUser->getVar('uname')) : _GUESTS;
 
-$xoopsOption['template_main'] = ($isAnonym == false && $uid > 0 && !empty($profile_template))?$profile_template:'profile_noindex.html';
+$xoopsOption['template_main'] = $profile_template;
 include_once ICMS_ROOT_PATH."/header.php";
 include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/include/common.php';
 icms_loadLanguageFile('core', 'user');
@@ -112,7 +118,8 @@ if($icmsModuleConfig['profile_social']){
 		'lang_videos' => _MD_PROFILE_VIDEOS,
 		'lang_profile' => _MD_PROFILE_PROFILE,
 		'lang_tribes' => _MD_PROFILE_TRIBES,
-		'isOwner' => $isOwner));
+		'isOwner' => $isOwner,
+	        'isAnonym' => $isAnonym));
 }
 if ($isAnonym == true && $uid == 0) {
 	include_once(ICMS_ROOT_PATH.'/modules/'.$dirname.'/footer.php');
@@ -120,5 +127,4 @@ if ($isAnonym == true && $uid == 0) {
 }
 //Token
 $icmsTpl->assign('token',$GLOBALS['xoopsSecurity']->getTokenHTML());
-
 ?>

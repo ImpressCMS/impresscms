@@ -79,7 +79,6 @@ $valid_op = array ('setavatar', 'delavatar', 'mod','addpictures','del','');
 $isAllowed = getAllowedItems('pictures', $clean_uid);
 if (!$isAllowed) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
-	exit();
 }
 $xoopsTpl->assign('uid_owner',$uid);
 

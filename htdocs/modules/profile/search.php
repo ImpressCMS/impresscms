@@ -384,9 +384,10 @@ switch ($op) {
         } else {
         	$isAdmin = false;
         }
+	$link_target = $icmsModuleConfig['profile_social'] ? 'index.php' : 'userinfo.php';
         foreach (array_keys($users) as $k) {
-            $userarray["output"][] = "<a href='userinfo.php?uid=".intval($users[$k]->getVar('uid'))."'>".$users[$k]->getVar('uname')."</a>";
-            $userarray["output"][] = $users[$k]->getVar('user_viewemail') == 1 || $isAdmin ? $users[$k]->getVar('email') : "";
+            $userarray["output"][] = "<a href='".$link_target."?uid=".intval($users[$k]->getVar('uid'))."'>".$users[$k]->getVar('uname')."</a>";
+            if (is_object($icmsUser)) $userarray["output"][] = $users[$k]->getVar('user_viewemail') || $isAdmin ? $users[$k]->getVar('email') : "";
 
             foreach (array_keys($fields) as $i) {
                 if (in_array($fields[$i]->getVar('fieldid'), $searchable_fields) && in_array($fields[$i]->getVar('field_type'), $searchable_types) && in_array($fields[$i]->getVar('field_name'), $searchvars)) {
@@ -399,7 +400,7 @@ switch ($op) {
 
         //Get captions
         $captions[] = _PROFILE_MA_DISPLAYNAME;
-        $captions[] = _PROFILE_MA_EMAIL;
+        if (is_object($icmsUser)) $captions[] = _PROFILE_MA_EMAIL;
         foreach (array_keys($fields) as $i) {
             if (in_array($fields[$i]->getVar('fieldid'), $searchable_fields) && in_array($fields[$i]->getVar('field_type'), $searchable_types) && in_array($fields[$i]->getVar('field_name'), $searchvars)) {
                 $captions[] = $fields[$i]->getVar('field_title');
