@@ -155,12 +155,12 @@ $modversion['blocks'][1] = array(
 
 $modversion['blocks'][] = array(
   'file' => 'blocks.php',
-  'name' => _MI_PROFILE_LAST,
-  'description' => _MI_PROFILE_LAST_DESC,
-  'show_func' => 'b_profile_lastpictures_show',
-  'edit_func' => 'b_profile_lastpictures_edit',
+  'name' => _MI_PROFILE_LATEST,
+  'description' => _MI_PROFILE_LATEST_DESC,
+  'show_func' => 'b_profile_latestpictures_show',
+  'edit_func' => 'b_profile_latestpictures_edit',
   'options' => '5',
-  'template' => 'profile_block_lastpictures.html');
+  'template' => 'profile_block_latestpictures.html');
 
 /** Templates information */
 $modversion['templates'][] = array(

@@ -51,8 +51,8 @@ define("_MI_PROFILE_FRIENDSPERPAGE_TITLE" , "Friends per page");
 define("_MI_PROFILE_FRIENDSPERPAGE_DESC" , "Set the number of friends to show per page<br />In the my Friends page");
 define("_MI_PROFILE_PICTURESPERPAGE_TITLE","Pictures showing per page before pagination");
 
-define("_MI_PROFILE_LAST","Last pictures block");
-define("_MI_PROFILE_LAST_DESC","Last pictures sent independently of the album");
+define("_MI_PROFILE_LATEST","Lastest pictures");
+define("_MI_PROFILE_LATEST_DESC","Lastest pictures in user profiles");
 define("_MI_PROFILE_DELETEPHYSICAL_TITLE","Delete files from the upload folder too");
 define("_MI_PROFILE_DELETEPHYSICAL_DESC","Confirming yes here, will allow the script to delete the files from the uploaded data in the database as well.<br /> Be careful about this feature, if you exclude the files from the folder and not only in the database, some people who may have linked to the image directly in another part of the site may also lose their content;<br /> at the same time if you don't exclude them, you may use to much space in the server hard disk.<br />Configure this item well for your needs.");
 

@@ -219,53 +219,23 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		$this->imageResizer($img, $thumbwidth, $thumbheight, $path_upload, 'thumb');
 		$this->imageResizer($img, $pictwidth, $pictheight, $path_upload, 'resized');
 	}
-	
-	function getLastPictures($limit)
-	{
-		$ret = array();
-		
-		$sql = 'SELECT uname, t.uid_owner, t.url FROM '.$this->table.' AS t, '.$this->db->prefix('users');
-		
-		$sql .= " WHERE uid_owner = uid AND private=0 ORDER BY cod_img DESC" ;
-		$result = $this->db->query($sql, $limit, 0);
-		$answer = array();
-		$i=0;
-		while ($myrow = $this->db->fetchArray($result)) {
-			
-			$answer[$i]['uid_voted']= $myrow['uid_owner'];
-			$answer[$i]['uname']= $myrow['uname'];
-			$answer[$i]['user_avatar']= $myrow['url'];
-			$i++;
-		}
-				
-		return $answer;
 
-	}
-	
-		function getLastPicturesForBlock($limit)
-	{
-		$ret = array();
-		
-		$sql = 'SELECT uname, t.uid_owner, t.url, t.title FROM '.$this->table.' AS t, '.$this->db->prefix('users');
-		
-		$sql .= " WHERE uid_owner = uid AND private=0 ORDER BY cod_img DESC" ;
-		$result = $this->db->query($sql, $limit, 0);
-		$answer = array();
-		$i=0;
-		while ($myrow = $this->db->fetchArray($result)) {
-			
-			$answer[$i]['uid_voted']= $myrow['uid_owner'];
-			$answer[$i]['uname']= $myrow['uname'];
-			$answer[$i]['img_filename']= $myrow['url'];
-			$answer[$i]['caption']= $myrow['title'];
-			
-			$i++;
+	/**
+	 * Built the array for latest block pictures
+	 *
+	 * @param $limit limits the amount of pictures to show in the block
+	 * @return array
+	 */
+	function getLatestPicturesForBlock($limit) {
+		$pictures = $this->getPictures(0, $limit);
+		foreach($pictures as $picture) {
+			$ret[] = array(
+			  'image' => $picture['picture_content'],
+			  'user'  => $picture['picture_sender_link']
+			);
 		}
-				
-		return $answer;
-
-	}
-	
+		return $ret;
+	}	
 	
 	/**
 	 * Resize a picture and save it to $path_upload

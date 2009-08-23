@@ -2,8 +2,6 @@
 /**
  * Extended User Profile
  *
- *
- *
  * @copyright       The ImpressCMS Project http://www.impresscms.org/
  * @license         LICENSE.txt
  * @license         GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -40,15 +38,14 @@ function b_profile_friends_edit($options) {
 	return $form;
 }
 
-function b_profile_lastpictures_show($options) {
-	// Creating factories of pictures and votes
-	$pictures_factory = icms_getmodulehandler('images', basename(dirname(dirname( __FILE__ ))), 'profile');
-	$block = $pictures_factory->getLastPicturesForBlock($options[0]);
+function b_profile_latestpictures_show($options) {
+	$pictures_factory = icms_getmodulehandler('pictures', basename(dirname(dirname( __FILE__ ))), 'profile');
+	$block = $pictures_factory->getLatestPicturesForBlock($options[0]);
 
 	return $block;
 }
 
-function b_profile_lastpictures_edit($options) {
+function b_profile_latestpictures_edit($options) {
 	$form = _MB_PROFILE_NUMBER_PICTURES.": <input type='text' value='".$options['0']."'id='options[]' name='options[]' />";
 
 	return $form;
