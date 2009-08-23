@@ -74,7 +74,6 @@ $myts =& MyTextSanitizer::getInstance();
 $module_name = $icmsModule->getVar('name');
 $xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/profile'.(@_ADM_USE_RTL == 1 ? '_rtl':'').'.css');
 if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/tabs-ie.css');}
-$xoTheme->addScript(ICMS_URL.'/modules/'.$dirname.'/assets/js/profile.js');
 icms_makeSmarty(array(
 	'module_name' => $module_name,
 	'xoops_pagetitle' => sprintf(_MD_PROFILE_PAGETITLE, $owner_uname),
