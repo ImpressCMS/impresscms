@@ -118,6 +118,7 @@ Revision:
 * #263: imProfile: users can select a picture as their avatar | ticket from addons (Phoenyx)
 * #331: imProfile: make imProfile work for guests | ticket from addons (Phoenyx)
 * #332: imProfile: removing duplicate and unnecessary js and css includes | ticket from addons (Phoenyx)
+* #749: IPF: corrected wrong constructor name in IcmsFormUploadElement and caption (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''
