@@ -40,8 +40,6 @@ function editfriendship($friendshipObj, $uid=false, $hideForm=false) {
 		$sform = $friendshipObj->getSecureForm(_MD_PROFILE_FRIENDSHIP_ADD, 'addfriendship');
 		$sform->assign($icmsTpl, 'profile_friendshipform');
 	}
-
-	$xoTheme->addStylesheet(ICMS_URL . '/modules/profile/module'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
 }
 
 $profile_template = 'profile_index.html';

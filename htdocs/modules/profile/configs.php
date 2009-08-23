@@ -43,11 +43,7 @@ function editconfigs($configsObj, $uid=0)
 		$sform->assign($icmsTpl, 'profile_configsform');
 		$icmsTpl->assign('profile_category_path', _SUBMIT);
 	}
-
-
-	$xoTheme->addStylesheet(ICMS_URL . '/modules/profile/module'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
 }
-
 
 $profile_template = 'profile_configs.html';
 $profile_current_page = basename(__FILE__);

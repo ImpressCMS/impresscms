@@ -39,8 +39,6 @@ function editaudio($audioObj, $hideForm=false)
 		$sform->assign($icmsTpl, 'profile_audioform');
 		$icmsTpl->assign('profile_category_path', _SUBMIT);
 	}
-
-	$xoTheme->addStylesheet(ICMS_URL . '/modules/profile/module'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
 }
 
 

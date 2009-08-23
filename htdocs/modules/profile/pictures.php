@@ -40,19 +40,11 @@ function editpictures($picturesObj, $hideForm=false)
 		$sform->assign($icmsTpl, 'profile_picturesform');
 		$icmsTpl->assign('profile_category_path', _SUBMIT);
 	}
-
-	$xoTheme->addStylesheet(ICMS_URL . '/modules/profile/module'.(( defined("_ADM_USE_RTL") && _ADM_USE_RTL )?'_rtl':'').'.css');
 }
 
 
 $profile_template = 'profile_pictures.html';
 include_once 'header.php';
-
-$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
-$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom.css');
-if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom-ie.css');}
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.js');
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/lightbox.js');
 
 $profile_pictures_handler = icms_getModuleHandler('pictures');
 
