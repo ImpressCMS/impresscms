@@ -33,7 +33,7 @@
 				<h1 class="post-title"><{$profile_each_video.title}></h1>
 			</div>
 			<div class="profile_each_video_content">
-				<object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/<{$profile_each_video.youtube_code}>&hl=<{$icms_langcode}>&fs=1&color1=0x3a3a3a&color2=0x999999"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/<{$profile_each_video.youtube_code}>&hl=<{$icms_langcode}>&fs=1&color1=0x3a3a3a&color2=0x999999" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="265"></embed></object>
+				<object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/<{$profile_each_video.youtube_code}>&hl=<{$icms_langcode}>&fs=1&color1=0x3a3a3a&color2=0x999999"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/<{$profile_each_video.youtube_code}>&hl=<{$icms_langcode}>&fs=1&color1=0x3a3a3a&color2=0x999999" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="320" height="265"></embed></object>
 			</div>
 			<{if $profile_each_video.userCanEditAndDelete}>
 					<div class="profile_admin_links"><{$profile_each_video.editItemLink}><{$profile_each_video.deleteItemLink}></div>

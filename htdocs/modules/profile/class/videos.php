@@ -63,7 +63,7 @@ class ProfileVideos extends IcmsPersistableSeoObject {
 		return parent :: getVar($key, $format);
 	}
 	function getVideoToDisplay() {
-		$ret = '<object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/' . $this->getVar ( 'youtube_code' ) . '&hl='._LANGCODE.'&fs=1&color1=0x3a3a3a&color2=0x999999"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/' . $this->getVar ( 'youtube_code' ) . '&hl='._LANGCODE.'&fs=1&color1=0x3a3a3a&color2=0x999999" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="320" height="265"></embed></object>';
+		$ret = '<object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/' . $this->getVar ( 'youtube_code' ) . '&hl='._LANGCODE.'&fs=1&color1=0x3a3a3a&color2=0x999999"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/' . $this->getVar ( 'youtube_code' ) . '&hl='._LANGCODE.'&fs=1&color1=0x3a3a3a&color2=0x999999" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="320" height="265"></embed></object>';
 		return $ret;
 	}
 	
