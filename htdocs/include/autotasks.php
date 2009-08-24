@@ -10,9 +10,13 @@
  * @internal	This file is used for executing sheduled tasks
  */
 
-$xoopsOption['automatedTaskExeciotionMode'] = true;
+ob_start();
+
+define('ICMS_AUTOTASKS_EXECMODE', true);
 
 chdir(dirname(__FILE__));
 require_once '../mainfile.php';
+
+ob_end_clean();
 
 ?>
