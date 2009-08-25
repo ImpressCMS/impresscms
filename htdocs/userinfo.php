@@ -23,10 +23,21 @@ $xoopsOption['pagetype'] = 'user';
 include 'mainfile.php';
 $uid = intval($_GET['uid']);
 
-if(icms_get_module_status('profile') && file_exists(ICMS_ROOT_PATH.'/modules/profile/userinfo.php'))
+if(icms_get_module_status('profile'))
 {
-	header('Location: '.ICMS_URL.'/modules/profile/userinfo.php?uid='.$uid);
-	exit();
+	$module_handler =& xoops_gethandler('module');
+	$config_handler =& xoops_gethandler('config');
+	$icmsModule =& $module_handler->getByDirname('profile');
+	$icmsModuleConfig =& $config_handler->getConfigsByCat(0, $icmsModule->getVar('mid'));
+	
+	if ($icmsModuleConfig['profile_social'] && file_exists(ICMS_ROOT_PATH.'/modules/profile/index.php')) {
+		header('Location: '.ICMS_URL.'/modules/profile/index.php?uid='.$uid);
+		exit();
+	} elseif (!$icmsModuleConfig['profile_social'] && file_exists(ICMS_ROOT_PATH.'/modules/profile/userinfo.php')) {
+		header('Location: '.ICMS_URL.'/modules/profile/userinfo.php?uid='.$uid);
+		exit();
+	}
+	unset($icmsModuleConfig, $icmsModule, $config_handler, $member_handler);
 }
 
 include_once ICMS_ROOT_PATH . '/class/module.textsanitizer.php';
