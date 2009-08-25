@@ -318,18 +318,26 @@ overflow:hidden;
 Audio
 */
 
-div#profile-audio-form p, div#profile-audio-form h2, div#profile-audio-allaudiocontainer p, div#profile-audio-allaudiocontainer h2, h2#profile-audio-title{
+div#profile-audio-form p, div#profile-audio-form h2 {
 margin:0px;
 }
 
-
-div#profile-audio-form, div#profile-audio-container, div#profile-audio-allaudiocontainer{
+div#profile-audio-form {
 margin:3px;
 float:right;
 padding:1px;
 width:95%;
 overflow:hidden;
 }
+
+div#profile-audio-container {
+margin-top:15px;
+}
+
+div#profile-audio-container td {
+vertical-align:middle;
+}
+
 /***************************************************************************************************************** 
 Friends
 */
@@ -430,11 +438,12 @@ margin: 0px;
 div#profile-pictures-container{
 padding:0px;
 margin:0px;
+margin-top:15px;
 width:100%;
 }
 
 div.profile-pictures-picture {
-margin-top:15px;
+margin:0px;
 margin-bottom: 10px;
 width:25%;
 float:right;

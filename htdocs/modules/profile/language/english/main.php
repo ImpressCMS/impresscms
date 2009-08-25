@@ -218,6 +218,10 @@ define("_MD_PROFILE_AUDIOS_SUBMIT", "Submit new audio file");
 define("_MD_PROFILE_AUDIOS_EDIT", "Edit existing audio file");
 define("_MD_PROFILE_AUDIOS_CREATED", "Audio file successfully added");
 define("_MD_PROFILE_AUDIOS_MODIFIED", "Audio file successfully modified");
+define("_MD_PROFILE_AUDIOS_PLAYER", "Player");
+define("_MD_PROFILE_AUDIOS_AUTHOR", "Author");
+define("_MD_PROFILE_AUDIOS_TITLE", "Title");
+define("_MD_PROFILE_AUDIOS_ACTIONS", "Actions");
 
 //pictures.php
 define("_MD_PROFILE_PICTURES_SUBMIT", "Submit new photo");

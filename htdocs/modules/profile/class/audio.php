@@ -30,8 +30,8 @@ class ProfileAudio extends IcmsPersistableSeoObject {
 		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('audio_id', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('author', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX, true);
-		$this->quickInitVar('author', XOBJ_DTYPE_TXTBOX, false);
 		$this->quickInitVar('url', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('uid_owner', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('creation_time', XOBJ_DTYPE_LTIME, false);

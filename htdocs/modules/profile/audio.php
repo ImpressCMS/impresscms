@@ -24,7 +24,7 @@ function editaudio($audioObj, $hideForm=false)
 		if (!$audioObj->userCanEditAndDelete()) {
 			redirect_header($audioObj->getItemLink(true), 3, _NOPERM);
 		}
-		$audioObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
+		$audioObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url', 'url'));
 		$sform = $audioObj->getSecureForm(_MD_PROFILE_AUDIOS_EDIT, 'addaudio');
 		$sform->assign($icmsTpl, 'profile_audioform');
 		$icmsTpl->assign('profile_category_path', $audioObj->getVar('title') . ' > ' . _EDIT);
@@ -131,6 +131,14 @@ if (in_array($clean_op,$valid_op,true)){
 			redirect_header(PROFILE_URL);
 		}
 
+		icms_makeSmarty(array(
+			'lang_player'  => _MD_PROFILE_AUDIOS_PLAYER,
+			'lang_author'  => _MD_PROFILE_AUDIOS_AUTHOR,
+			'lang_title'   => _MD_PROFILE_AUDIOS_TITLE,
+			'lang_actions' => _MD_PROFILE_AUDIOS_ACTIONS,
+			'actions'      => is_object($icmsUser) && ($profile_isAdmin || $real_uid == $uid)
+
+		));
 
 		/**
 		 * Generating meta information for this page
