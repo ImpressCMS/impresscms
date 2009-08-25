@@ -2,16 +2,15 @@
 /**
  * Extended User Profile
  *
- *
- * @copyright       The ImpressCMS Project http://www.impresscms.org/
- * @license         LICENSE.txt
- * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package         modules
- * @since           1.2
- * @author          Jan Pedersen
- * @author          The SmartFactory <www.smartfactory.ca>
- * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version         $Id$
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license	LICENSE.txt
+ * @license	GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @package	modules
+ * @since	1.2
+ * @author	Jan Pedersen
+ * @author	The SmartFactory <www.smartfactory.ca>
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version	$Id$
  */
 
 include '../../mainfile.php';
@@ -27,6 +26,11 @@ if ($uid <= 0) {
 		header('location: '.ICMS_URL);
 		exit();
 	}
+}
+
+if($icmsModuleConfig['profile_social']==1){
+	header('Location: '.ICMS_URL.'/modules/profile/index.php?uid='.$uid);
+	exit();
 }
 
 $gperm_handler = & xoops_gethandler( 'groupperm' );

@@ -82,7 +82,7 @@
 <{if $allow_profile_stats}>
 <div id="profile-profile-statistics" class="outer">
   <{cycle values='even,odd' print=false reset=true advance=false}>
-  <h3 class="profile-profiletitle head"><a href="userinfo.php?uid=<{$uid_owner}>"><{$lang_statistics}></a></h3>
+  <h3 class="profile-profiletitle head"><{$lang_statistics}></h3>
   <p class="<{cycle values='even,odd' reset=true}>"><img src="images/birthday.gif" /><span class="profile-profileinfo-label"><{$lang_membersince}>:</span><span class="profile-profileinfo-value"><{$user_joindate}></span></p>
   <p class="<{cycle values='even,odd'}>"><img src="images/rank.gif" /><span class="profile-profileinfo-label"><{$lang_rank}>:</span><span class="profile-profileinfo-value"><{$user_rankimage}> <{$user_ranktitle}></span></p>
   <p class="<{cycle values='even,odd'}>"><img src="images/comments.gif" /><span class="profile-profileinfo-label"><{$lang_posts}>:</span><span class="profile-profileinfo-value"><{$user_posts}></span></p>

@@ -47,7 +47,7 @@ $profile_current_page = basename(__FILE__);
 include_once 'header.php';
 
 if($icmsModuleConfig['profile_social']==0){
-	header('Location: '.ICMS_URL.'/modules/'.$module_name.'/userinfo.php?uid='.$uid);
+	header('Location: '.ICMS_URL.'/modules/profile/userinfo.php?uid='.$uid);
 	exit();
 }
 
