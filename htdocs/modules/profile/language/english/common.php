@@ -185,8 +185,8 @@ define("_CO_PROFILE_VIDEOS_VIDEO_DESC", "Video description");
 define("_CO_PROFILE_VIDEOS_VIDEO_DESC_DSC", " ");
 define("_CO_PROFILE_VIDEOS_YOUTUBE_CODE", "Youtube's code");
 define("_CO_PROFILE_VIDEOS_YOUTUBE_CODE_DSC", " Please enter the code of your clip in you tube.<br /><b>Example:</b> 3UkPhvse8JA");
-define("_CO_PROFILE_VIDEOS_MAIN_VIDEO", "Make this the main video");
-define("_CO_PROFILE_VIDEOS_MAIN_VIDEO_DSC", " ");
+define("_CO_PROFILE_VIDEOS_VIDEO_TITLE", "Video title");
+define("_CO_PROFILE_VIDEOS_VIDEO_TITLE_DSC", " ");
 define("_CO_PROFILE_VIDEOS_CREATION_TIME", "Creation time");
 define("_CO_PROFILE_VIDEOS_CREATION_TIME_DSC", " ");
 // visitors

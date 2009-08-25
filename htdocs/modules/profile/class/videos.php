@@ -31,10 +31,10 @@ class ProfileVideos extends IcmsPersistableSeoObject {
 
 		$this->quickInitVar('videos_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('uid_owner', XOBJ_DTYPE_INT, true);
-		$this->quickInitVar('video_desc', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('video_title', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('youtube_code', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('video_desc', XOBJ_DTYPE_TXTAREA, true);
 		$this->quickInitVar('creation_time', XOBJ_DTYPE_LTIME, false);
-		$this->quickInitVar('main_video', XOBJ_DTYPE_TXTBOX, false);
 		$this->initCommonVar('counter', false);
 		$this->initCommonVar('dohtml', false, true);
 		$this->initCommonVar('dobr', false, true);
@@ -43,7 +43,7 @@ class ProfileVideos extends IcmsPersistableSeoObject {
 		$this->initCommonVar('doxcode', false, true);
 
 		$this->setControl('uid_owner', 'user');
-		$this->setControl('main_video', 'yesno');
+		$this->setControl('video_desc', 'dhtmltextarea');
 
 		$this->IcmsPersistableSeoObject();
 	}
@@ -101,7 +101,7 @@ class ProfileVideos extends IcmsPersistableSeoObject {
 		$ret = parent :: toArray();
 		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
 		$ret['video_content'] = $this->getVideoToDisplay();
-		$ret['video_desc'] = $this->getVar('video_desc','e');
+		$ret['video_desc'] = $this->getVar('video_desc','show');
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
@@ -116,7 +116,7 @@ class ProfileVideosHandler extends IcmsPersistableObjectHandler {
 	 * Constructor
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'videos', 'videos_id', 'video_desc', '', 'profile');
+		$this->IcmsPersistableObjectHandler($db, 'videos', 'videos_id', 'video_title', '', 'profile');
 	}
 
 	/**
@@ -138,6 +138,9 @@ class ProfileVideosHandler extends IcmsPersistableObjectHandler {
 		if ($limit) {
 			$criteria->setLimit(intval($limit));
 		}
+		$criteria->setSort('creation_time');
+		$criteria->setOrder('DESC');
+		
 		if ($uid_owner) {
 			$criteria->add(new Criteria('uid_owner', $uid_owner));
 		}
@@ -200,31 +203,5 @@ class ProfileVideosHandler extends IcmsPersistableObjectHandler {
 		$sql = 'UPDATE ' . $this->table . ' SET counter = counter + 1 WHERE ' . $this->keyName . ' = ' . $id;
 		$this->query($sql, null, true);
 	}
-
-	/**
-	 * Assign Video Content to Template
-	 * @param int $NbVideos the number of videos this user have
-	 * @param array of objects 
-	 * @return void
-	 */	
-	function assignVideoContent($nbVideos, $videos)	{
-		if ($nbVideos==0){
-			return false;
-		} else {
-			/**
-     * Lets populate an array with the dati from the videos
-     */  
-			$i = 0;
-			foreach ($videos as $video){
-				$videos_array[$i]['url']      = $video->getVar("youtube_code","s");
-				$videos_array[$i]['desc']     = $video->getVar("video_desc","s");
-				$videos_array[$i]['id']  	  = $video->getVar("video_id","s");
-				
-				$i++;
-			}
-		   return $videos_array;
-		}
-    }
-
 }
 ?>

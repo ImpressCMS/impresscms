@@ -84,6 +84,7 @@ if (in_array($clean_op,$valid_op,true)){
   		$objectTable = new IcmsPersistableTable($profile_audio_handler);
   		$objectTable->addColumn(new IcmsPersistableColumn('audio_id'));
   		$objectTable->addColumn(new IcmsPersistableColumn('uid_owner', false, false, 'getAudioSender'));
+		$objectTable->addColumn(new IcmsPersistableColumn('author'));
   		$objectTable->addColumn(new IcmsPersistableColumn('title'));
 		$objectTable->addColumn(new IcmsPersistableColumn('url', 'center', 330, 'getAudioToDisplay', false, false, false));
 

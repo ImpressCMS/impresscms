@@ -26,27 +26,27 @@
 <{/if}>
 <{if $profile_allaudios}>
 <div id="profile-audio-container" class="outer">
-<table width="100%" cellspacing="1" cellpadding="4">
-  <tbody>
-    <tr align="center">
-      <th width="250px"><{$lang_player}></th>
-      <th><{$lang_author}></th>
-      <th><{$lang_title}></th>
-      <{if $actions}><th width="130px"><{$lang_actions}></th><{/if}>
-    </tr>
-    <{foreach item=audio from=$profile_allaudios}>
-    <{cycle values='even,odd' assign=class}>
-    <tr class="<{$class}>">
-      <td width="250px"><{$audio.audio_content}></td>
-      <td><{$audio.author}></td>
-      <td><{$audio.title}></td>
-      <{if $audio.userCanEditAndDelete}>
-      <td width="130px" align="center"><{$audio.editItemLink}><{$audio.deleteItemLink}></td>
-      <{/if}>
-    </tr>
-    <{/foreach}>
-  </tbody>
-</table>
+  <table width="100%" cellspacing="1" cellpadding="4">
+    <tbody>
+      <tr align="center">
+        <th width="250px"><{$lang_player}></th>
+        <th><{$lang_author}></th>
+        <th><{$lang_title}></th>
+        <{if $actions}><th width="130px"><{$lang_actions}></th><{/if}>
+      </tr>
+      <{foreach item=audio from=$profile_allaudios}>
+      <{cycle values='even,odd' assign=class}>
+      <tr class="<{$class}>">
+        <td width="250px"><{$audio.audio_content}></td>
+        <td><{$audio.author}></td>
+        <td><{$audio.title}></td>
+        <{if $audio.userCanEditAndDelete}>
+        <td width="130px" align="center"><{$audio.editItemLink}><{$audio.deleteItemLink}></td>
+        <{/if}>
+      </tr>
+      <{/foreach}>
+    </tbody>
+  </table>
 </div>
 <{/if}>
 <{if $icmspersistable_delete_confirm}>

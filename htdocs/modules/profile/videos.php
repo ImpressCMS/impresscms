@@ -127,6 +127,13 @@ if (in_array($clean_op,$valid_op,true)){
 			redirect_header(PROFILE_URL);
 		}
 
+		icms_makeSmarty(array(
+			'lang_video'       => _MD_PROFILE_VIDEOS_VIDEO,
+			'lang_title'       => _MD_PROFILE_VIDEOS_TITLE,
+			'lang_description' => _MD_PROFILE_VIDEOS_DESCRIPTION,
+			'lang_actions'     => _MD_PROFILE_VIDEOS_ACTIONS,
+			'actions'          => is_object($icmsUser) && ($profile_isAdmin || $real_uid == $uid)
+		));
 
 		/**
 		 * Generating meta information for this page

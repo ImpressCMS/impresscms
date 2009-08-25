@@ -258,77 +258,18 @@ margin:0px;
 Videos
 */
 
-div#profile-videos-container {
-margin:3px;
-float:right;
-padding:1px;
-width:95%;
-overflow:hidden;
-}
-div.profile-video-container {
-margin:1px;
-float:right;
-padding:1px;
-width:95%;
-overflow:hidden;
+div#profile-video-container {
+margin-top:15px;
 }
 
-div.profile-video {
-margin:3px;
-float:right;
-overflow:hidden;
-text-align:center;
-vertical-align:bottom;
-}
-
-div.profile-video embed{
-margin:auto;
-}
-
-div.profile-video-details form {
-display:inline;
-}
-
-div.profile-video-details {
-text-align:right;
-margin:3px;
-float:right;
-width:50%;
-}
-
-
-h2#profile-videos-title {
-margin:0px;
-}
-
-
-div#profile-video-form p, div#profile-video-form h2{
-margin:0px;
-}
-div#profile-video-form{
-margin:3px;
-float:right;
-padding:1px;
-width:95%;
-overflow:hidden;
+div#profile-video-container td {
+vertical-align:middle;
 }
 
 
 /***************************************************************************************************************** 
 Audio
 */
-
-div#profile-audio-form p, div#profile-audio-form h2 {
-margin:0px;
-}
-
-div#profile-audio-form {
-margin:3px;
-float:right;
-padding:1px;
-width:95%;
-overflow:hidden;
-}
 
 div#profile-audio-container {
 margin-top:15px;
