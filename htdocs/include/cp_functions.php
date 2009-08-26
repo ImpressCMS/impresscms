@@ -106,6 +106,7 @@ function icms_cp_header(){
 	$xoTheme->addScript( ICMS_URL.'/libraries/jquery/jquery.js', array( 'type' => 'text/javascript' ) );
 	$xoTheme->addScript( ICMS_URL.'/libraries/jquery/ui/ui.core.js', array( 'type' => 'text/javascript' ) );
 	$xoTheme->addScript( ICMS_URL.'/libraries/jquery/ui/ui.dialog.js', array( 'type' => 'text/javascript' ) );
+	$xoTheme->addScript( ICMS_URL.'/libraries/jquery/helptip.js', array( 'type' => 'text/javascript' ) );
 	$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/ui/themes/base/ui.all.css', array('media' => 'screen'));
 	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
 	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom.css');

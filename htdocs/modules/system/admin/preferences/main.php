@@ -82,7 +82,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		$config = $config_handler->getConfigs ( $criteria );
 		$confcount = count ( $config );
 		for($i = 0; $i < $confcount; $i ++) {
-			$title = (! defined ( $config [$i]->getVar ( 'conf_desc' ) ) || constant ( $config [$i]->getVar ( 'conf_desc' ) ) == '') ? constant ( $config [$i]->getVar ( 'conf_title' ) ) : constant ( $config [$i]->getVar ( 'conf_title' ) ) . '<br /><br /><span style="font-weight:normal;">' . constant ( $config [$i]->getVar ( 'conf_desc' ) ) . '</span>';
+			$title = (! defined ( $config [$i]->getVar ( 'conf_desc' ) ) || constant ( $config [$i]->getVar ( 'conf_desc' ) ) == '') ? constant ( $config [$i]->getVar ( 'conf_title' ) ) : constant ( $config [$i]->getVar ( 'conf_title' ) ) . '<img class="helptip" src="./images/view_off.png" alt="Vew help text" /><span class="helptext">' . constant ( $config [$i]->getVar ( 'conf_desc' ) ) . '</span>';
 			switch ( $config [$i]->getVar ( 'conf_formtype' )) {
 				case 'textsarea' :
 					$myts = & MyTextSanitizer::getInstance ();
