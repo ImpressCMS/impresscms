@@ -123,6 +123,7 @@ Revision:
 * #749: IPF: corrected wrong constructor name in IcmsFormUploadElement and caption (Phoenyx)
 * #750: redirecting to index.php if social_mode of imProfile is on / to userinfo.php if social_mode is off (Phoenyx)
 * #302: imProfile: redirecting from userinfo.php to index.php if social_mode is on | ticket from addons (Phoenyx)
+* #752: SQL syntax error when upgrading to 1.1 (skenow)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''
