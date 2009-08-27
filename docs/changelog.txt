@@ -41,6 +41,7 @@ Revision:
 * #576: templates will no longer be checked for modifications by default for performance reasons (Phoenyx)
 * #705: Module name in module preferences breadcrumb is linked to module administration now (Phoenyx)
 * #294: replaced scraps with system comment function in imProfile | ticket from addons (Phoenyx)
+* #725: Update FCKeditor to version 2.6.4.1 (skenow)
 
 '''Fixed'''
 * #661: Uploader setPrefix may incorrectly assign filenames. (vaughan)
