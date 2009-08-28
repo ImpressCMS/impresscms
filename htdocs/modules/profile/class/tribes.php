@@ -279,7 +279,7 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 		if (count($tribe_ids) > 0) {
 			return $this->getTribes(0, 0, false, $tribe_ids);
 		} else {
-			return false;
+			return array();
 		}
 	}
 

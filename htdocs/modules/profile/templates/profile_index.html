@@ -126,7 +126,7 @@
       <a href="pictures.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/lphoto.gif"  /></a>
       <{$lang_photos}> (<{$nb_pictures}>)
     </h3>
-    <{if $pictures|count > 0}>
+    <{if $pictures|@count > 0}>
     <{cycle values='even,odd' print=false reset=true advance=false}>
     <table cellspacing="1" cellpadding="0"><tr>
     <{section name=i loop=$pictures}>
@@ -145,7 +145,7 @@
       <a href="tribes.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/tribes.gif"  /></a>
       <{$lang_tribes}> (<{$nb_tribes}>)
     </h3>
-    <{if $tribes|count > 0}>
+    <{if $tribes|@count > 0}>
     <ul>
       <{section name=i loop=$tribes}>
       <li><{$tribes[i].itemLink}></li>
@@ -160,7 +160,7 @@
       <a href="friendship.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/friends.gif"  /></a>
       <{$lang_friends}> (<{$nb_friendship}>)
     </h3>
-    <{if $friends|count > 0}>
+    <{if $friends|@count > 0}>
     <{cycle values='even,odd' print=false reset=true advance=false}>
     <table cellspacing="1" cellpadding="0"><tr>
     <{section name=i loop=$friends}>
