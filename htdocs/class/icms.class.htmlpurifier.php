@@ -19,9 +19,15 @@ class icms_HTMLPurifier
     */
     function icms_HTMLPurifier()
     {
-        require_once ICMS_ROOT_PATH . '/libraries/htmlpurifier/HTMLPurifier.standalone.php';
-        require_once ICMS_ROOT_PATH . '/libraries/htmlpurifier/HTMLPurifier.autoload.php';
-        require_once ICMS_ROOT_PATH . '/plugins/csstidy/class.csstidy.php';
+        $config_handler = xoops_gethandler('config');
+        $icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
+
+        require_once ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.standalone.php';
+        require_once ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.autoload.php';
+        if($icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'] !== 0)
+        {
+            require_once ICMS_ROOT_PATH.'/plugins/csstidy/class.csstidy.php';
+        }
     }
 
     /**
@@ -77,7 +83,6 @@ class icms_HTMLPurifier
     **/
     protected function icms_getPurifierConfig()
     {
-        global $icmsConfigPurifier;
         $config_handler = xoops_gethandler('config');
         $icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
 
@@ -200,6 +205,11 @@ class icms_HTMLPurifier
     {
         // ################# Preload Trigger beforeDisplayTarea ##############
         global $icmsPreloadHandler;
+        if(!is_object($icmsPreloadHandler))
+        {
+            include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
+            $icmsPreloadHandler = IcmsPreloadHandler::getInstance();
+        }
         $icmsPreloadHandler->triggerEvent('beforedisplayHTMLarea', array(&$html));
 
         $html = $this->icms_html_purifier($html);
@@ -219,13 +229,19 @@ class icms_HTMLPurifier
     {
         // ################# Preload Trigger beforeDisplayTarea ##############
         global $icmsPreloadHandler;
+
+        if(!is_object($icmsPreloadHandler))
+        {
+            include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
+            $icmsPreloadHandler = IcmsPreloadHandler::getInstance();
+        }
         $icmsPreloadHandler->triggerEvent('beforepreviewHTMLarea', array(&$html));
 
         $html = $this->icms_html_purifier($html);
 
         // ################# Preload Trigger afterDisplayTarea ##############
-        global $icmsPreloadHandler;
         $icmsPreloadHandler->triggerEvent('afterpreviewHTMLarea', array(&$html));
+
         return $html;
     }
 }
