@@ -268,15 +268,26 @@ $icmsTpl->assign('video', $rtn);
 unset($videos);
 
 // tribes
+// get tribes where the user is the owner
 $profile_tribes_handler = icms_getModuleHandler('tribes');
-$tribes = $profile_tribes_handler->getTribes(0, 3, $uid);
+$tribes = $profile_tribes_handler->getTribes(0, 0, $uid, false, true);
 $rtn = array();
 $i = 0;
 foreach($tribes as $tribe) {
+	$rtn[$i]['title'] = $tribe['title'];
 	$rtn[$i]['itemLink'] = $tribe['itemLink'];
-	$rtn[$i]['tribe_picture'] = $tribe['tribe_picture'];
 	$i++;
 }
+unset($tribes);
+// get tribes where the user is a member
+$tribes = $profile_tribes_handler->getMembershipTribes($uid);
+foreach($tribes as $tribe) {
+	$rtn[$i]['title'] = $tribe['title'];
+	$rtn[$i]['itemLink'] = $tribe['itemLink'];
+	$i++;
+}
+// finally sort the array
+usort($rtn, 'sortList');
 $icmsTpl->assign('tribes', $rtn);
 unset($tribes);
 
@@ -284,4 +295,10 @@ unset($tribes);
 include ICMS_ROOT_PATH.'/include/comment_view.php';
 // Closing the page
 include("footer.php");
+
+function sortList($a, $b) {
+	$a = strtolower($a['title']);
+	$b = strtolower($b['title']);
+	return ($a == $b) ? 0 : ($a < $b) ? -1 : +1;
+}
 ?>

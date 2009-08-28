@@ -15,22 +15,14 @@
 <{includeq file='db:system_common_form.html' form=$profile_picturesform}>
 <{/if}>
 <{/if}>
-<{if $profile_single_picture}>
-<div class="profile_single_picture_container">
-  <h1 class="picture-title"><{$profile_single_picture.picture_title}></h1>
-  <div class="profile_single_picture_content"><{$profile_single_picture.picture_content}></div>
-  <{if $profile_single_picture.userCanEditAndDelete}>
-  <div class="profile_admin_links"><{$profile_single_picture.editItemLink}><{$profile_single_picture.deleteItemLink}></div>
-  <{/if}>
-</div>
+<{if $profile_picture}>
+
 <{/if}>
-<{if $profile_allpictures}>
+<{if $profile_pictures}>
 <div id="profile-pictures-container">
-<{foreach name=pictures item=picture from=$profile_allpictures}>
+<{foreach name=pictures item=picture from=$profile_pictures}>
 <div class="profile-pictures-picture">
-  <a href="<{$icms_url}>/uploads/profile/pictures/resized_<{$picture.url}>" rel="lightbox" title="<{$picture.title}>">
-    <img class="thumb" src="<{$icms_url}>/uploads/profile/pictures/thumb_<{$picture.url}>" rel="lightbox" title="<{$picture.title}>" />
-  </a>
+  <{$picture.picture_content}>
   <br /><{$picture.title}><br />
   <{if $picture.userCanEditAndDelete}>
   <{$picture.editItemLink}><{$picture.deleteItemLink}>

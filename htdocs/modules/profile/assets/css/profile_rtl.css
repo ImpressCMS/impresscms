@@ -215,9 +215,13 @@ text-align:center;
 width:100%;
 }
 
-td.profile-profile-picture, td.profile-profile-friend, td.profile-profile-tribe {
-	vertical-align:middle;
-	border-bottom: none;
+div#profile-profile-tribes ul {
+margin-left: 30px;
+}
+
+td.profile-profile-picture, td.profile-profile-friend {
+vertical-align:middle;
+border-bottom: none;
 }
 
 div#profile-profile-avatar {
@@ -395,46 +399,31 @@ text-align:center;
 tribes
 */
 
-div#profile-tribe-edit-members, form#profile-tribe-edit-form, form#form_tribe_search, form#form_tribe, div#profile-tribe-container, div#profile-tribes-container, div#profile-mytribes-container{
-margin:3px;
-float:right;
-padding:1px;
-width:95%;
-overflow:hidden;
+div#profile-tribes-form{
+width:100%
 }
 
-div#profile-tribe-edit-members h2, div.profile-tribe-edit-member h2, form#profile-tribe-edit-form h2, form#form_tribe_search h2, form#form_tribe h2, div#profile-tribes-container h2, div#profile-mytribes-container h2, div#profile-tribe-container p,div#profile-tribe-container h2{
+div#profile-tribes-form h2, div.profile-tribes-container h2 {
+margin: 0px;
+}
+
+div.profile-tribes-container{
+padding:0px;
 margin:0px;
+margin-top:15px;
+width:100%;
 }
 
-
-
-div.profile-tribe-edit-member, div.profile-tribe-my{
-margin:1px;
-width:23%;
-height:250px;
+div.profile-tribes-tribe {
+margin:0px;
+margin-top:15px;
+margin-bottom:20px;
+width:25%;
 float:right;
 text-align:center;
 }
 
-div.profile-tribe-all{
-min-height:100px;
-}
-
-div.profile-tribe-all img{
-float:right;
-margin:3px;
-}
-
-form#form_tribe_search p, form#profile-tribe-edit-form p, form#form_tribe p, div.profile-tribe-all h4, div.profile-tribe-all p{
-margin:1px;
-}
-
-form.profile-tribes-form-becomemember,form.profile-tribes-form-delete,form.profile-tribes-form-edit {
-display:inline;
-}
-
-/* 
+/*********************************************************************************************************
 Others
 */
 

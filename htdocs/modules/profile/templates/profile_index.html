@@ -146,14 +146,11 @@
       <{$lang_tribes}> (<{$nb_tribes}>)
     </h3>
     <{if $tribes|count > 0}>
-    <table cellspacing="1" cellpadding="0"><tr>
-    <{cycle values='even,odd' print=false reset=true advance=false}>
-    <{section name=i loop=$tribes}>
-    <td class="profile-profile-tribe <{cycle values="even,odd"}>">
-      <{$tribes[i].tribe_picture}><br /><{$tribes[i].itemLink}>
-    </td>
-    <{/section}>
-    </tr/></table>
+    <ul>
+      <{section name=i loop=$tribes}>
+      <li><{$tribes[i].itemLink}></li>
+      <{/section}>
+    </ul>
     <{/if}>
   </div>
   <{/if}>

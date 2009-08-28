@@ -1,71 +1,57 @@
 <{include file="db:profile_header.html"}>
 <{if $profile_tribesform}>
-	<{if $hideForm}>
-		<div id="profile-form" class="outer">
-			<h2 class="head">
-      			<a href="#" onclick ="jQuery().find('div.profile-album-form').toggle(400);">
-      				<img src="images/toggle.gif" />&nbsp;
-        		</a>
-			</h2>
-			<div class="profile-album-form" style="display: none">
-				<{includeq file='db:system_common_form.html' form=$profile_tribesform}>
-			</div>
-		</div>
-	<{else}>
-		<{includeq file='db:system_common_form.html' form=$profile_tribesform}>
-	<{/if}>
+<{if $hideForm}>
+<div id="profile-form" class="outer">
+  <h2 class="head">
+    <a href="#" onclick ="jQuery().find('div.profile-album-form').toggle(400);">
+      <img src="images/toggle.gif" />&nbsp;
+    </a>
+  </h2>
+  <div class="profile-album-form" style="display: none">
+    <{includeq file='db:system_common_form.html' form=$profile_tribesform}>
+  </div>
+</div>
+<{else}>
+<{includeq file='db:system_common_form.html' form=$profile_tribesform}>
 <{/if}>
-<{if $profile_single_tribe}>
-	<div class="profile_single_tribe_container">
-		<h1 class="tribe-title"><{$profile_single_tribe.tribe_title}></h1>
-	<div class="profile_single_tribe_content">
-		<div class="profile_single_tribe_picture">
-			<{$profile_single_tribe.tribe_picture}>
-		</div>
-		<{$profile_single_tribe.tribe_content}>
-	</div>
-		<div class="profile_single_tribe_members">
-		count = (<{$profile_single_tribe.tribe_members_count}>)
-			<{foreach item=profile_single_tribeuser from=$profile_single_tribe.tribe_members_link}>
-				<div class="profile_single_tribe_user_avatar">
-   					<{$profile_single_tribeuser.tribeuser_avatar}><br />
-					<{$profile_single_tribeuser.tribeuser_sender_link}>
-				</div>
-			<{/foreach}>
-		</div>
-	<{if $profile_single_tribe.userCanEditAndDelete}>
-		<div class="profile_admin_links"><{$profile_single_tribe.editItemLink}><{$profile_single_tribe.deleteItemLink}></div>
-	<{/if}>
-	</div>
 <{/if}>
-	<{foreach item=profile_each_tribe from=$profile_alltribes}>
-		<div class="profile_each_tribe_container">
-			<h1 class="post-title"><{$profile_each_tribe.title}></h1>
-		</div>
-		<div class="profile_each_tribe_content">
-			<div class="profile_single_tribe_picture">
-				<a href="<{$icms_url}>/uploads/profile/tribes/resized_<{$profile_each_tribe.tribe_img}>" rel="lightbox" title="<{$profile_each_tribe.title}>">
-       				<img class="thumb" src="<{$icms_url}>/uploads/profile/tribes/thumb_<{$profile_each_tribe.tribe_img}>" rel="lightbox" title="<{$profile_each_tribe.title}>" />
-				</a>
-			</div>
-			<{$profile_each_tribe.tribe_content}>
-		</div>
-		<div class="profile_each_tribe_members">
-		count = (<{$profile_each_tribe.tribe_members_count}>)
-			<{foreach item=profile_each_tribeuser from=$profile_each_tribe.tribe_members_link}>
-				<div class="profile_single_tribe_user_avatar">
-					<a href="<{$profile_each_tribeuser.tribeuser_sender_link}>">
-       					<{$profile_each_tribeuser.tribeuser_avatar}>
-					</a>
-				</div>
-			<{/foreach}>
-		</div>
-		<{if $profile_each_tribe.userCanEditAndDelete}>
-				<div class="profile_admin_links"><{$profile_each_tribe.editItemLink}><{$profile_each_tribe.deleteItemLink}></div>
-		<{/if}>
-	<{/foreach}>
+<{if $profile_tribe}>
+
+<{/if}>
+<{if $profile_tribes.own}>
+<div class="profile-tribes-container outer">
+<h2 class="head"><{$lang_tribes_own}></h2>
+<{foreach name=tribes item=tribe from=$profile_tribes.own}>
+<div class="profile-tribes-tribe">
+  <{$tribe.picture_link}>
+  <br /><{$tribe.title}><br />
+  <{if $tribe.userCanEditAndDelete}>
+  <{$tribe.editItemLink}><{$tribe.deleteItemLink}>
+  <{/if}>
+</div>
+<{if $smarty.foreach.tribes.iteration is div by 4 || $smarty.foreach.tribes.last == TRUE}>
+<div class="clear"></div>
+<{/if}>
+<{/foreach}>
+</div>
+<{/if}>
+<{if $profile_tribes.member}>
+<div class="profile-tribes-container outer">
+<h2 class="head"><{$lang_tribes_membership}></h2>
+<{foreach name=tribes item=tribe from=$profile_tribes.member}>
+<div class="profile-tribes-tribe">
+  <{$tribe.picture_link}>
+  <br /><{$tribe.title}><br />
+  <{if $tribe.userCanEditAndDelete}>
+  <{$tribe.editItemLink}><{$tribe.deleteItemLink}>
+  <{/if}>
+</div>
+<{if $smarty.foreach.tribes.iteration is div by 4 || $smarty.foreach.tribes.last == TRUE}>
+<div class="clear"></div>
+<{/if}>
+<{/foreach}>
+</div>
+<{/if}>
 <{if $icmspersistable_delete_confirm}>
-	<{$icmspersistable_delete_confirm}>
+<{$icmspersistable_delete_confirm}>
 <{/if}>
-
-

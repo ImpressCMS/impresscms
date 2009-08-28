@@ -143,17 +143,6 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
-	 * Get single tribeuser object
-	 *
-	 * @param int $tribeusers_id
-	 * @return object ProfileTribeuser object
-	 */
-	function getTribeuser($tribe_id, $uid = false, $condition = '!=') {
-		$ret = $this->getTribeusers(0, 0, $uid, false, $tribe_id, $condition);
-		return $ret;
-	}
-
-	/**
 	 * Get tribeusers as array, ordered by creation_time DESC
 	 *
 	 * @param int $start to which record to start
@@ -167,7 +156,6 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 		$ret = $this->getObjects($criteria, true, false);
 		return $ret;
 	}
-
 	
 	/**
 	 * Check wether the current user can submit a new tribeuser or not

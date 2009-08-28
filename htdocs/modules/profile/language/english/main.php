@@ -240,6 +240,8 @@ define("_MD_PROFILE_TRIBES_SUBMIT", "Create new tribe");
 define("_MD_PROFILE_TRIBES_EDIT", "Edit existing tribe");
 define("_MD_PROFILE_TRIBES_CREATED", "Tribe successfully created");
 define("_MD_PROFILE_TRIBES_MODIFIED", "Tribe successfully modified");
+define("_MD_PROFILE_TRIBES_OWN", "Own Tribes");
+define("_MD_PROFILE_TRIBES_MEMBERSHIPS", "Memberships");
 
 //videos.php
 define("_MD_PROFILE_VIDEOS_SUBMIT", "Submit new video");

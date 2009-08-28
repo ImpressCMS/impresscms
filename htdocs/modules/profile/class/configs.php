@@ -254,14 +254,18 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		$videos = $this->query($sql, false);
 		
 		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_tribes').' WHERE uid_owner="'.$uid.'"';
-		$tribes = $this->query($sql, false);
+		$ownTribes = $this->query($sql, false);
+		$ownTribes = (!$ownTribes[0]['amount']) ? 0 : $ownTribes[0]['amount'];
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_tribeuser').' WHERE user_id="'.$uid.'"';
+		$membershipTribes = $this->query($sql, false);
+		$membershipTribes = (!$membershipTribes[0]['amount']) ? 0 : $membershipTribes[0]['amount'];
 		
 		return array(
 			'audio' => (!$audio[0]['amount'])?0:$audio[0]['amount'],
 			'pictures' => (!$pictures[0]['amount'])?0:$pictures[0]['amount'],
 			'friendship' => (!$friendship[0]['amount'])?0:$friendship[0]['amount'],
 			'videos' => (!$videos[0]['amount'])?0:$videos[0]['amount'],
-			'tribes' => (!$tribes[0]['amount'])?0:$tribes[0]['amount'],
+			'tribes' => $ownTribes  + $membershipTribes,
 			);
 	}
 

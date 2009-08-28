@@ -161,13 +161,13 @@ if (in_array($clean_op,$valid_op,true)){
 			}
 			if ($clean_pictures_id > 0) {
 				$profile_pictures_handler->updateCounter($clean_pictures_id);
-				$icmsTpl->assign('profile_single_picture', $picturesObj->toArray());
+				$icmsTpl->assign('profile_picture', $picturesObj->toArray());
 			} elseif($clean_uid > 0) {
 				$picturesArray = $profile_pictures_handler->getPictures(false, false, $clean_uid);
-				$icmsTpl->assign('profile_allpictures', $picturesArray);
+				$icmsTpl->assign('profile_pictures', $picturesArray);
 			} elseif($real_uid > 0) {
 				$picturesArray = $profile_pictures_handler->getPictures(false, false, $real_uid);
-				$icmsTpl->assign('profile_allpictures', $picturesArray);
+				$icmsTpl->assign('profile_pictures', $picturesArray);
 			} else {
 				redirect_header(PROFILE_URL);
 			}

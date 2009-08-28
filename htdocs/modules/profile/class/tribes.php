@@ -65,16 +65,46 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 		}
 		return parent :: getVar($key, $format);
 	}
-	function getProfileTribe() {
-		$ret = '<img class="thumb" src="' . ICMS_URL . '/uploads/profile/tribes/thumb_' . $this->getVar ( 'tribe_img' ) . '"  title="' . $this->getVar ( 'title' ) . '" />';
+
+	/**
+	 * get the colorboxed tribe picture
+	 *
+	 * @return string colorboxed image of the tribe
+	 */
+	function getTribePicture() {
+		if ($this->getVar('tribe_img')) {
+			$ret = '<a href="' . ICMS_URL . '/uploads/profile/tribes/resized_' . $this->getVar ( 'tribe_img' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '">
+			        <img class="thumb" src="' . ICMS_URL . '/uploads/profile/tribes/thumb_' . $this->getVar ( 'tribe_img' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '" />
+			        </a>';
+		} else {
+			$ret = '';
+		}
 		return $ret;
 	}
 
-	function getTribeShortenDesc() {
-		$ret = '<a href="' . ICMS_URL . '/modules/profile/tribes.php?tribes_id=' . $this->id () . '">'.icms_wordwrap($this->getVar('tribe_desc', 'e'), 300, true).'</a>';
+	/**
+	 * get the linked tribe picture
+	 *
+	 * @param string $itemUrl link to the tribe
+	 * @return string linked image or title of the tribe
+	 */
+	function getTribePictureLink($itemUrl) {
+		if ($this->getVar('tribe_img')) {
+			$ret = '<a href="'.$itemUrl.'">
+			        <img class="thumb" src="' . ICMS_URL . '/uploads/profile/tribes/thumb_' . $this->getVar ( 'tribe_img' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '" />
+			        </a>';
+		} else {
+			$ret = '<a href="'.$itemUrl.'">'.$this->getVar('title').'</a>';
+		}
 		return $ret;
 	}
 
+	/**
+	 * Get the avatar for the tribe owner
+	 *
+	 * @global object $icmsUser user object
+	 * @return string html image tag for the avatar of the user
+	 */
 	function getProfileTribeSenderAvatar() {
 		global $icmsUser;
 		$friend = $this->getVar('uid_owner', 'e');
@@ -82,9 +112,16 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 		$processUser =& $member_handler->getUser($friend);
 		return '<img src="'.$processUser->gravatar().'" />';
 	}
+
+	/**
+	 * Generate the linked user name
+	 *
+	 * @return string linked username
+	 */
 	function getTribeSender() {
 		return icms_getLinkedUnameFromId($this->getVar('uid_owner', 'e'));
 	}
+	
 	/**
 	 * Check to see wether the current user can edit or delete this tribe
 	 *
@@ -109,14 +146,14 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 	function toArray() {
 		$profile_tribeuser_handler = icms_getModuleHandler('tribeuser');
 		$tribe_members_count = $profile_tribeuser_handler->getTribeuserCounts($this->getVar('tribes_id', 'e'));
-		$tribe_members_link = $profile_tribeuser_handler->getTribeuser($this->getVar('tribes_id', 'e'), $this->getVar('uid_owner', 'e'));
+		$tribe_members = $profile_tribeuser_handler->getTribeusers(0, 0, $this->getVar('uid_owner', 'e'), false, $this->getVar('tribes_id', 'e'));
 		$ret = parent :: toArray();
 		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
 		$ret['tribe_title'] = $this->getVar('title','e');
-		$ret['tribe_content'] = $this->getTribeShortenDesc();
-		$ret['tribe_picture'] = $this->getProfileTribe();
+		$ret['tribe_content'] = $this->getTribePicture();
+		$ret['picture_link'] = $this->getTribePictureLink($ret['itemUrl']);
 		$ret['tribe_members_count'] = $tribe_members_count;
-		$ret['tribe_members_link'] = $tribe_members_link;
+		$ret['tribe_members_link'] = $tribe_members;
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
@@ -146,10 +183,11 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	 * @param int $start to which record to start
 	 * @param int $limit limit of tribes to return
 	 * @param int $uid_owner if specifid, only the tribes of this user will be returned
-	 * @param int $tribe_id ID of a single tribe to retrieve
+	 * @param int $tribes_id ID of a single tribe to retrieve, may also be an array of tribe IDs
+	 * @param bool $title true to sort by title ascending
 	 * @return CriteriaCompo $criteria
 	 */
-	function getTribesCriteria($start = 0, $limit = 0, $uid_owner = false, $tribe_id = false) {
+	function getTribesCriteria($start = 0, $limit = 0, $uid_owner = false, $tribes_id = false, $title = false) {
 		global $icmsUser;
 
 		$criteria = new CriteriaCompo();
@@ -159,14 +197,20 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 		if ($limit) {
 			$criteria->setLimit(intval($limit));
 		}
-		$criteria->setSort('creation_time');
-		$criteria->setOrder('DESC');
+		if ($title) {
+			$criteria->setSort('title');
+		} else {
+			$criteria->setSort('creation_time');
+			$criteria->setOrder('DESC');
+		}
 
 		if ($uid_owner) {
 			$criteria->add(new Criteria('uid_owner', $uid_owner));
 		}
-		if ($tribe_id) {
-			$criteria->add(new Criteria('tribes_id', $tribe_id));
+		if ($tribes_id) {
+			if (!is_array($tribes_id)) $tribes_id = array($tribes_id);
+			$tribes_id = '('.implode(',', $tribes_id).')';
+			$criteria->add(new Criteria('tribes_id', $tribes_id, 'IN'));
 		}
 		return $criteria;
 	}
@@ -188,11 +232,12 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	 * @param int $start to which record to start
 	 * @param int $limit max tribes to display
 	 * @param int $uid_owner if specifid, only the tribe of this user will be returned
-	 * @param int $tribes_id ID of a single tribe to retrieve
+	 * @param int $tribes_id ID of a single tribe to retrieve, may also be an array of tribe IDs
+	 * @param bool $title true to sort by title ascending
 	 * @return array of tribes
 	 */
-	function getTribes($start = 0, $limit = 0, $uid_owner = false, $tribes_id = false) {
-		$criteria = $this->getTribesCriteria($start, $limit, $uid_owner, $tribes_id);
+	function getTribes($start = 0, $limit = 0, $uid_owner = false, $tribes_id = false, $title = false) {
+		$criteria = $this->getTribesCriteria($start, $limit, $uid_owner, $tribes_id, $title);
 		$ret = $this->getObjects($criteria, true, false);
 		return $ret;
 	}
@@ -214,6 +259,28 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 			$this->_allTribes[$tribe['tribes_id']] = $tribe['title'];
 		}
 		return $this->_allTribes;
+	}
+
+	/**
+	 * Get all tribes where the specified user is a member
+	 *
+	 * @param int $uid_owner
+	 * @return array of all tribes where the specified user is a member
+	 */
+	function getMembershipTribes($uid) {
+		$profile_tribeuser_handler = icms_getModuleHandler('tribeuser');
+		$tribe_users = $profile_tribeuser_handler->getTribeusers(0, 0, $uid);
+
+		$tribe_ids = array();
+		foreach ($tribe_users as $tribe_user) {
+			$tribe_ids[] = $tribe_user['tribe_id'];
+		}
+
+		if (count($tribe_ids) > 0) {
+			return $this->getTribes(0, 0, false, $tribe_ids);
+		} else {
+			return false;
+		}
 	}
 
 	/**

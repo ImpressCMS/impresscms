@@ -88,7 +88,7 @@ if (isset($_POST['op'])) $clean_op = $_POST['op'];
 /** Again, use a naming convention that indicates the source of the content of the variable */
 global $icmsUser;
 $clean_tribes_id = isset($_GET['tribes_id']) ? intval($_GET['tribes_id']) : 0 ;
-$real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
+$real_uid = is_object($icmsUser) ? intval($icmsUser->uid()) : 0;
 $clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
 $tribesObj = $profile_tribes_handler->get($clean_tribes_id);
 if($clean_tribes_id){
@@ -108,102 +108,114 @@ $valid_op = array ('mod','addtribeuser','deltribeuser','addtribes','del','');
 $isAllowed = getAllowedItems('tribes', $clean_uid);
 if (!$isAllowed) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+	exit();
 }
 
 $xoopsTpl->assign('uid_owner',$uid);
 
 if (in_array($clean_op,$valid_op,true)){
-  switch ($clean_op) {
-	case "mod":
-		$tribesObj = $profile_tribes_handler->get($clean_tribes_id);
-		if ($clean_tribes_id > 0 && $tribesObj->isNew()) {
-			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
-		}
-		edittribes($tribesObj);
-		break;
-
-	case "addtribeuser":
-        if (!$xoopsSecurity->check()) {
-        	redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
-        }
-         include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
-        $controller = new IcmsPersistableController($profile_tribeuser_handler);
-		$controller->storeFromDefaultForm(_MD_PROFILE_TRIBEUSER_CREATED, _MD_PROFILE_TRIBEUSER_MODIFIED);
-		break;
-
-	case "deltribeuser":
-		$tribeuserObj = $profile_tribeuser_handler->get($clean_tribeuser_id);
-		$tribesObj = $profile_tribes_handler->get($clean_tribes_id);
-		if (!$tribeuserObj->userCanEditAndDelete()) {
-			redirect_header($tribeuserObj->getItemLink(true), 3, _NOPERM);
-		}
-		if (isset($_POST['confirm'])) {
-		    if (!$xoopsSecurity->check()) {
-		    	redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
-		    }
-		}
-  	    include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
-        $controller = new IcmsPersistableController($profile_tribeuser_handler);
-		$controller->handleObjectDeletionFromUserSide();
-		$icmsTpl->assign('profile_category_path', ' > ' . _DELETE);
-
-		break;
-
-	case "addtribes":
-        if (!$xoopsSecurity->check()) {
-        	redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
-        }
-         include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
-        $controller = new IcmsPersistableController($profile_tribes_handler);
-		$controller->storeFromDefaultForm(_MD_PROFILE_TRIBES_CREATED, _MD_PROFILE_TRIBES_MODIFIED);
-		break;
-
-	case "del":
-		$tribesObj = $profile_tribes_handler->get($clean_tribes_id);
-		if (!$tribesObj->userCanEditAndDelete()) {
-			redirect_header($tribesObj->getItemLink(true), 3, _NOPERM);
-		}
-		if (isset($_POST['confirm'])) {
-		    if (!$xoopsSecurity->check()) {
-		    	redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
-		    }
-		}
-  	    include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
-        $controller = new IcmsPersistableController($profile_tribes_handler);
-		$controller->handleObjectDeletionFromUserSide();
-		$icmsTpl->assign('profile_category_path', $tribesObj->getVar('title') . ' > ' . _DELETE);
-
-		break;
-
-	default:
-		if($real_uid && $real_uid == $uid){
+	switch ($clean_op) {
+		case "mod":
 			$tribesObj = $profile_tribes_handler->get($clean_tribes_id);
-			edittribes($tribesObj, true);
-		}
-		if($clean_tribes_id > 0){
-			$profile_tribes_handler->updateCounter($clean_tribes_id);
-			$icmsTpl->assign('profile_single_tribe', $tribesObj->toArray());
-			if($real_uid && $tribeuserObj->isNew()){
-				edittribeuser($tribeuserObj, $clean_tribes_id, true);
+			if ($clean_tribes_id > 0 && $tribesObj->isNew()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+				exit();
 			}
-		}elseif($clean_uid > 0){
-			$tribesArray = $profile_tribes_handler->getTribes(false, false, $clean_uid);
-			$icmsTpl->assign('profile_alltribes', $tribesArray);
-		}elseif($real_uid > 0){
-			$tribesArray = $profile_tribes_handler->getTribes(false, false, $real_uid);
-			$icmsTpl->assign('profile_alltribes', $tribesArray);
-		}else{
-			redirect_header(PROFILE_URL);
-		}
+			edittribes($tribesObj);
+			break;
 
+		case "addtribeuser":
+			if (!$xoopsSecurity->check()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+				exit();
+			}
+			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
+			$controller = new IcmsPersistableController($profile_tribeuser_handler);
+			$controller->storeFromDefaultForm(_MD_PROFILE_TRIBEUSER_CREATED, _MD_PROFILE_TRIBEUSER_MODIFIED);
+			break;
 
-		/**
-		 * Generating meta information for this page
-		 */
-		$icms_metagen = new IcmsMetagen($tribesObj->getVar('title'), $tribesObj->getVar('meta_keywords','n'), $tribesObj->getVar('meta_description', 'n'));
-		$icms_metagen->createMetaTags();
+		case "deltribeuser":
+			$tribeuserObj = $profile_tribeuser_handler->get($clean_tribeuser_id);
+			$tribesObj = $profile_tribes_handler->get($clean_tribes_id);
+			if (!$tribeuserObj->userCanEditAndDelete()) {
+				redirect_header($tribeuserObj->getItemLink(true), 3, _NOPERM);
+			}
+			if (isset($_POST['confirm'])) {
+			    if (!$xoopsSecurity->check()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+				exit();
+			    }
+			}
+			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
+			$controller = new IcmsPersistableController($profile_tribeuser_handler);
+			$controller->handleObjectDeletionFromUserSide();
+			$icmsTpl->assign('profile_category_path', ' > ' . _DELETE);
 
-		break;
+			break;
+
+		case "addtribes":
+			if (!$xoopsSecurity->check()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+				exit();
+			}
+			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
+			$controller = new IcmsPersistableController($profile_tribes_handler);
+			$controller->storeFromDefaultForm(_MD_PROFILE_TRIBES_CREATED, _MD_PROFILE_TRIBES_MODIFIED);
+			break;
+
+		case "del":
+			$tribesObj = $profile_tribes_handler->get($clean_tribes_id);
+			if (!$tribesObj->userCanEditAndDelete()) {
+				redirect_header($tribesObj->getItemLink(true), 3, _NOPERM);
+				exit();
+			}
+			if (isset($_POST['confirm'])) {
+			    if (!$xoopsSecurity->check()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+				exit();
+			    }
+			}
+			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
+			$controller = new IcmsPersistableController($profile_tribes_handler);
+			$controller->handleObjectDeletionFromUserSide();
+			$icmsTpl->assign('profile_category_path', $tribesObj->getVar('title') . ' > ' . _DELETE);
+
+			break;
+
+		default:
+			$tribesObj = $profile_tribes_handler->get($clean_tribes_id);
+			if ($real_uid && (($clean_tribes_id && $real_uid == $tribesObj->getVar('uid_owner')) || (!$clean_tribes_id && $real_uid == $uid))) {
+				edittribes($tribesObj, true);
+			}
+			if ($clean_tribes_id > 0) {
+				$profile_tribes_handler->updateCounter($clean_tribes_id);
+				$icmsTpl->assign('profile_tribe', $tribesObj->toArray());
+			} elseif ($clean_uid > 0) {
+				$tribes = array();
+				$tribes['own'] = $profile_tribes_handler->getTribes(false, false, $clean_uid);
+				$tribes['member'] = $profile_tribes_handler->getMembershipTribes($clean_uid);
+				$icmsTpl->assign('profile_tribes', $tribes);
+			} elseif ($real_uid > 0) {
+				$tribes = array();
+				$tribes['own'] = $profile_tribes_handler->getTribes(false, false, $real_uid);
+				$tribes['member'] = $profile_tribes_handler->getMembershipTribes($real_uid);
+				$icmsTpl->assign('profile_tribes', $tribes);
+			} else {
+				redirect_header(PROFILE_URL);
+			}
+
+			icms_makeSmarty(array(
+				'lang_tribes_own'        => sprintf(_MD_PROFILE_TRIBES_OWN),
+				'lang_tribes_membership' => sprintf(_MD_PROFILE_TRIBES_MEMBERSHIPS)
+			));
+
+			/**
+			 * Generating meta information for this page
+			 */
+			$icms_metagen = new IcmsMetagen($tribesObj->getVar('title'), $tribesObj->getVar('meta_keywords','n'), $tribesObj->getVar('meta_description', 'n'));
+			$icms_metagen->createMetaTags();
+
+			break;
 	}
 }
 $icmsTpl->assign('profile_category_path', _MD_PROFILE_TRIBES);
