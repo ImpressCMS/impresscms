@@ -62,7 +62,7 @@ class MyTextSanitizer
     */
     function html_purifier($text)
     {
-        include_once ICMS_ROOT_PATH.'/class/icms.class.htmlpurifier.php';
+        include_once ICMS_ROOT_PATH.'/class/icms_HTMLPurifier.php';
         $html_purifier = &icms_HTMLPurifier::getPurifierInstance();
 
         $text = $html_purifier->icms_html_purifier($text);
