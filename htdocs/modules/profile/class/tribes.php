@@ -18,6 +18,10 @@ include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
 include_once(ICMS_ROOT_PATH . '/modules/profile/include/functions.php');
 include ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.inc.php';
 
+define('PROFILE_TRIBES_SECURITY_EVERYBODY', 1);
+define('PROFILE_TRIBES_SECURITY_APPROVAL', 2);
+define('PROFILE_TRIBES_SECURITY_INVITATION', 3);
+
 class ProfileTribes extends IcmsPersistableSeoObject {
 
 	/**
@@ -36,17 +40,24 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 		$this->quickInitVar('tribe_desc', XOBJ_DTYPE_TXTAREA, true);
 		$this->quickInitVar('tribe_img', XOBJ_DTYPE_IMAGE, false);
 		$this->quickInitVar('creation_time', XOBJ_DTYPE_LTIME, false);
+		$this->quickInitVar('security', XOBJ_DTYPE_INT, false, false, false, PROFILE_TRIBES_SECURITY_EVERYBODY);
 		$this->initCommonVar('counter', false);
 		$this->initCommonVar('dohtml', false, true);
 		$this->initCommonVar('dobr', false, true);
 		$this->initCommonVar('doimage', false, true);
 		$this->initCommonVar('dosmiley', false, true);
 		$this->initCommonVar('docxode', false, true);
+
 		$this->setControl('uid_owner', 'user');
 		$this->setControl('tribe_img', 'image');
-		$this->hideFieldFromForm('creation_time');
 		$this->setControl('tribe_desc', 'dhtmltextarea');
+		$this->setControl('security', array (
+			'itemHandler' => 'tribes',
+			'method' => 'getTribes_securityArray',
+			'module' => 'profile'
+		));
 
+		$this->hideFieldFromForm('creation_time');
 
 		$this->IcmsPersistableSeoObject();
 	}
@@ -144,16 +155,12 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 	 * @return array of tribe info
 	 */
 	function toArray() {
-		$profile_tribeuser_handler = icms_getModuleHandler('tribeuser');
-		$tribe_members_count = $profile_tribeuser_handler->getTribeuserCounts($this->getVar('tribes_id', 'e'));
-		$tribe_members = $profile_tribeuser_handler->getTribeusers(0, 0, $this->getVar('uid_owner', 'e'), false, $this->getVar('tribes_id', 'e'));
 		$ret = parent :: toArray();
 		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
+		$ret['creation_time_short'] = formatTimestamp($this->getVar('creation_time', 'e'), 's');
 		$ret['tribe_title'] = $this->getVar('title','e');
 		$ret['tribe_content'] = $this->getTribePicture();
 		$ret['picture_link'] = $this->getTribePictureLink($ret['itemUrl']);
-		$ret['tribe_members_count'] = $tribe_members_count;
-		$ret['tribe_members_link'] = $tribe_members;
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
@@ -167,6 +174,7 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 
 	var $_allTribes;
+	var $_tribes_security = array();
 
 	/**
 	 * Constructor
@@ -269,7 +277,7 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	 */
 	function getMembershipTribes($uid) {
 		$profile_tribeuser_handler = icms_getModuleHandler('tribeuser');
-		$tribe_users = $profile_tribeuser_handler->getTribeusers(0, 0, $uid);
+		$tribe_users = $profile_tribeuser_handler->getTribeusers(0, 0, $uid, false, false, '=', 1, 1);
 
 		$tribe_ids = array();
 		foreach ($tribe_users as $tribe_user) {
@@ -281,6 +289,15 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 		} else {
 			return array();
 		}
+	}
+
+	function getTribes_securityArray() {
+		if (!$this->_tribes_security) {
+			$this->_tribes_security[PROFILE_TRIBES_SECURITY_EVERYBODY] = _CO_PROFILE_TRIBES_SECURITY_EVERYBODY;
+			$this->_tribes_security[PROFILE_TRIBES_SECURITY_APPROVAL] = _CO_PROFILE_TRIBES_SECURITY_APPROVAL;
+			$this->_tribes_security[PROFILE_TRIBES_SECURITY_INVITATION] = _CO_PROFILE_TRIBES_SECURITY_INVITATION;
+		}
+		return $this->_tribes_security;
 	}
 
 	/**

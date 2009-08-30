@@ -141,7 +141,7 @@
   <{/if}>
   <{if $allow_tribes}>
   <div id="profile-profile-tribes" class="outer">
-    <h3 class="profile-profiletitle head">
+    <h3 class="head">
       <a href="tribes.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/tribes.gif"  /></a>
       <{$lang_tribes}> (<{$nb_tribes}>)
     </h3>
@@ -152,11 +152,63 @@
       <{/section}>
     </ul>
     <{/if}>
+    <{if $tribes_approvals|@count > 0}>
+    <h3 class="head"><{$lang_approvals}></h3>
+    <ul>
+      <{section name=i loop=$tribes_approvals}>
+      <li>
+	<form action="<{$icms_url}>/modules/profile/tribes.php?tribes_id=<{$tribes_approvals[i].tribes_id}>" method="post" class="profile-quickform">
+	  <input type="hidden" value="<{$tribes_approvals[i].tribeuser_id}>" name="tribeuser_id" />
+	  <input type="hidden" value="approved" name="action" />
+	  <input type="hidden" value="1" name="store" />
+          <input type="hidden" value="edittribeuser" name="op" />
+          <{$token}>
+          <input class="image" name="submit" type="image" alt="<{$lang_approve}>" title="<{$lang_approve}>" src="<{$image_ok}>" style="vertical-align:middle" />
+        </form>
+        <form action="<{$icms_url}>/modules/profile/tribes.php?tribes_id=<{$tribes_approvals[i].tribes_id}>" method="post" class="profile-quickform">
+          <input type="hidden" value="<{$tribes_approvals[i].tribeuser_id}>" name="tribeuser_id" />
+	  <input type="hidden" value="approved" name="action" />
+          <input type="hidden" value="0" name="store" />
+          <input type="hidden" value="edittribeuser" name="op" />
+          <{$token}>
+          <input class="image" name="submit" type="image" alt="<{$lang_delete}>" title="<{$lang_delete}>" src="<{$image_cancel}>" style="vertical-align:middle" />
+        </form>
+        <{$tribes_approvals[i].uname}> (<{$tribes_approvals[i].tribe_itemLink}>)
+      </li>
+      <{/section}>
+    </ul>
+    <{/if}>
+    <{if $tribes_invitations|@count > 0}>
+    <h3 class="head"><{$lang_invitations}></h3>
+    <ul>
+      <{section name=i loop=$tribes_invitations}>
+      <li>
+	<form action="<{$icms_url}>/modules/profile/tribes.php?tribes_id=<{$tribes_invitations[i].tribes_id}>" method="post" class="profile-quickform">
+	  <input type="hidden" value="<{$tribes_invitations[i].tribeuser_id}>" name="tribeuser_id" />
+	  <input type="hidden" value="accepted" name="action" />
+	  <input type="hidden" value="1" name="store" />
+          <input type="hidden" value="edittribeuser" name="op" />
+          <{$token}>
+          <input class="image" name="submit" type="image" alt="<{$lang_accept}>" title="<{$lang_accept}>" src="<{$image_ok}>" style="vertical-align:middle" />
+        </form>
+        <form action="<{$icms_url}>/modules/profile/tribes.php?tribes_id=<{$tribes_invitations[i].tribes_id}>" method="post" class="profile-quickform">
+          <input type="hidden" value="<{$tribes_invitations[i].tribeuser_id}>" name="tribeuser_id" />
+	  <input type="hidden" value="accepted" name="action" />
+          <input type="hidden" value="0" name="store" />
+          <input type="hidden" value="edittribeuser" name="op" />
+          <{$token}>
+          <input class="image" name="submit" type="image" alt="<{$lang_delete}>" title="<{$lang_delete}>" src="<{$image_cancel}>" style="vertical-align:middle" />
+        </form>
+        <{$tribes_invitations[i].itemLink}>
+      </li>
+      <{/section}>
+    </ul>
+    <{/if}>
   </div>
   <{/if}>
   <{if $allow_friendship}>
   <div id="profile-profile-friends" class="outer">
-    <h3 class="profile-profiletitle head">
+    <h3 class="head">
       <a href="friendship.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/friends.gif"  /></a>
       <{$lang_friends}> (<{$nb_friendship}>)
     </h3>
@@ -178,7 +230,7 @@
   <{/if}>
   <{if $allow_audio}>
   <div id="profile-profile-audio" class="outer">
-    <h3 class="profile-profiletitle head">
+    <h3 class="head">
       <a href="audio.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/audio.gif"  /></a>
       <{$lang_audio}> (<{$nb_audio}>)
     </h3>
@@ -191,7 +243,7 @@
   <{/if}>
   <{if $allow_videos}>
   <div id="profile-profile-friends" class="outer">
-    <h3 class="profile-profiletitle head">
+    <h3 class="head">
       <a href="videos.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/video.gif"  /></a>
       <{$lang_videos}> (<{$nb_videos}>)
     </h3>

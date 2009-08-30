@@ -272,10 +272,12 @@ unset($videos);
 $profile_tribes_handler = icms_getModuleHandler('tribes');
 $tribes = $profile_tribes_handler->getTribes(0, 0, $uid, false, true);
 $rtn = array();
+$ownTribes = array();
 $i = 0;
 foreach($tribes as $tribe) {
 	$rtn[$i]['title'] = $tribe['title'];
 	$rtn[$i]['itemLink'] = $tribe['itemLink'];
+	$ownTribes[] = $tribe['tribes_id'];
 	$i++;
 }
 unset($tribes);
@@ -290,6 +292,43 @@ foreach($tribes as $tribe) {
 usort($rtn, 'sortList');
 $icmsTpl->assign('tribes', $rtn);
 unset($tribes);
+// get awaiting approvals
+if ($isOwner) {
+	$profile_tribeuser_handler = icms_getmodulehandler('tribeuser');
+	$tribeusers = $profile_tribeuser_handler->getApprovals($ownTribes);
+	$rtn = array();
+	$i = 0;
+	foreach ($tribeusers as $tribeuser) {
+		$rtn[$i]['tribeuser_id'] = $tribeuser['tribeuser_id'];
+		$rtn[$i]['uid'] = $tribeuser['user_id'];
+		$rtn[$i]['uname'] = icms_getLinkedUnameFromId($tribeuser['user_id']);
+		$rtn[$i]['tribes_id'] = $tribeuser['tribe_id'];
+		$rtn[$i]['tribe_itemLink'] = $tribeuser['tribe_itemLink'];
+		$i++;
+	}
+	$icmsTpl->assign('tribes_approvals', $rtn);
+	$icmsTpl->assign('lang_approvals', _MD_PROFILE_TRIBES_APPROVALS);
+	$icmsTpl->assign('lang_approve', _MD_PROFILE_TRIBEUSER_APPROVE);
+	unset($tribeusers);
+}
+// get invitations
+if ($isOwner) {
+	$tribeusers = $profile_tribeuser_handler->getInvitations($uid);
+	$rtn = array();
+	$i = 0;
+	foreach ($tribeusers as $tribeuser) {
+		$rtn[$i]['tribeuser_id'] = $tribeuser['tribeuser_id'];
+		$rtn[$i]['tribes_id'] = $tribeuser['tribe_id'];
+		$rtn[$i]['itemLink'] = $tribeuser['tribe_itemLink'];
+		$i++;
+	}
+	$icmsTpl->assign('tribes_invitations', $rtn);
+	$icmsTpl->assign('lang_invitations', _MD_PROFILE_TRIBES_INVITATIONS);
+	$icmsTpl->assign('lang_accept', _MD_PROFILE_TRIBEUSER_ACCEPT);
+	unset($tribeusers);
+}
+$icmsTpl->assign('image_ok', ICMS_IMAGES_SET_URL."/actions/button_ok.png");
+$icmsTpl->assign('image_cancel', ICMS_IMAGES_SET_URL."/actions/button_cancel.png");
 
 // Comments
 include ICMS_ROOT_PATH.'/include/comment_view.php';

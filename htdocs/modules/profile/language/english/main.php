@@ -242,6 +242,19 @@ define("_MD_PROFILE_TRIBES_CREATED", "Tribe successfully created");
 define("_MD_PROFILE_TRIBES_MODIFIED", "Tribe successfully modified");
 define("_MD_PROFILE_TRIBES_OWN", "Own Tribes");
 define("_MD_PROFILE_TRIBES_MEMBERSHIPS", "Memberships");
+define("_MD_PROFILE_TRIBEUSER_SUBMIT", "Add a tribeuser");
+define("_MD_PROFILE_TRIBEUSER_JOIN", "Join this tribe");
+define("_MD_PROFILE_TRIBEUSER_CREATED", "The tribeuser has been successfully created.");
+define("_MD_PROFILE_TRIBEUSER_MODIFIED", "The tribeuser has been successfully modified.");
+define("_PROFILE_TRIBEUSER_DUPLICATE", "The specified user is already a member of this tribe.");
+define("_PROFILE_TRIBEUSER_OWNER", "The specified user is already the owner of this tribe and therefore cannot be a member.");
+define("_MD_PROFILE_TRIBES_MEMBERS", "Members");
+define("_MD_PROFILE_TRIBES_DISCUSSIONS", "Discussions");
+define("_MD_PROFILE_TRIBES_STATISTICS", "Statistics");
+define("_MD_PROFILE_TRIBES_CREATION_TIME", "Since");
+define("_MD_PROFILE_TRIBES_CLICKS", "Clicks");
+define("_MD_PROFILE_TRIBES_OWNER", "Owner");
+define("_MD_PROFILE_TRIBES_NOTFOUND", "Tribe not found.");
 
 //videos.php
 define("_MD_PROFILE_VIDEOS_SUBMIT", "Submit new video");
@@ -274,6 +287,12 @@ define("_MD_PROFILE_SUSPENDTIME","Time of suspension(in secs)");
 define("_MD_PROFILE_UNSUSPEND","Unsuspend User");
 define("_MD_PROFILE_SUSPENSIONADMIN","Suspension Admin Tools");
 define("_MD_PROFILE_SECURITY_CHECK_FAILED", "");
+define("_MD_PROFILE_TRIBES_INVITATIONS", "You've been invited to join the following groups");
+define("_MD_PROFILE_TRIBES_APPROVALS", "The following users want to be approved to join your group");
+define("_MD_PROFILE_TRIBEUSER_NOTFOUND", "Tribeuser not found.");
+define("_MD_PROFILE_TRIBEUSER_APPROVE", "Approve this user");
+define("_MD_PROFILE_TRIBEUSER_ACCEPT", "Accept invitation to this group");
+define("_MD_PROFILE_TRIBEUSER_OP_SUCCESS", "Operation successfully performed");
 
 //suspend.php
 define("_MD_PROFILE_SUSPENDED","User under suspension until %s");

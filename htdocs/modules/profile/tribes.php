@@ -16,39 +16,51 @@
  *
  * @param object $tribeuserObj ProfileTribeuser object to be edited
 */
-function edittribeuser($tribeuserObj, $clean_tribes_id, $hideForm=false)
-{
-	global $profile_tribeuser_handler, $xoTheme, $icmsTpl, $icmsUser;
+function edittribeuser($tribesObj, $hideForm=false) {
+	global $profile_tribeuser_handler, $icmsTpl, $icmsUser, $real_uid;
 
-	$icmsTpl->assign('hideForm', $hideForm);
-	if (!$tribeuserObj->isNew()){
-		if (!$tribeuserObj->userCanEditAndDelete()) {
-			redirect_header($tribeuserObj->getItemLink(true), 3, _NOPERM);
+	// general check
+	if (!$profile_tribeuser_handler->userCanSubmit()) return;
+
+	$tribeuserObj = $profile_tribeuser_handler->get(0);
+	// check tribe security level
+	if ($tribesObj->getVar('security') == PROFILE_TRIBES_SECURITY_EVERYBODY || $tribesObj->getVar('security') == PROFILE_TRIBES_SECURITY_APPROVAL) {
+		// don't show the form if the current user is the owner of this tribe
+		if ($real_uid == $tribesObj->getVar('uid_owner')) return;
+		// don't show the form if the user is already a member of this tribe
+		$tribeuser_id = $profile_tribeuser_handler->getTribeuserId($tribesObj->getVar('tribes_id'), $icmsUser->getVar('uid'));
+		if ($tribeuser_id > 0) return;
+		$tribeuserObj->hideFieldFromForm('user_id');
+		if ($tribesObj->getVar('security') == PROFILE_TRIBES_SECURITY_APPROVAL) {
+			$tribeuserObj->setVar('approved', 0);
 		}
-		$sform = $tribeuserObj->getSecureForm(_MD_PROFILE_TRIBEUSER_EDIT, 'addtribeuser');
-		$sform->assign($icmsTpl, 'profile_tribesform');
-		$icmsTpl->assign('profile_category_path', ' > ' . _EDIT);
+	} elseif ($tribesObj->getVar('security') == PROFILE_TRIBES_SECURITY_INVITATION) {
+		// don't show the form if the user isn't the owner of the tribe
+		if ($real_uid != $tribesObj->getVar('uid_owner')) return;
+		$tribeuserObj->setVar('accepted', 0);
 	} else {
-		if (!$profile_tribeuser_handler->userCanSubmit()) {
-			redirect_header(PROFILE_URL, 3, _NOPERM);
-		}
-		$tribeuserObj->setVar('tribe_id', $clean_tribes_id);
-		$tribeuserObj->setVar('user_id', $icmsUser->uid());
-		$sform = $tribeuserObj->getSecureForm(_MD_PROFILE_TRIBEUSER_SUBMIT, 'addtribeuser');
-		$sform->assign($icmsTpl, 'profile_tribesform');
-		$icmsTpl->assign('profile_category_path', _SUBMIT);
+		return;
 	}
-}
 
+	$tribeuserObj->hideFieldFromForm('tribe_id');
+	$tribeuserObj->hideFieldFromForm('approved');
+	$tribeuserObj->hideFieldFromForm('accepted');
+
+	$tribeuserObj->setVar('tribe_id', $tribesObj->getVar('tribes_id'));
+	$tribeuserObj->setVar('user_id', $icmsUser->getVar('uid'));
+
+	$sform = $tribeuserObj->getSecureForm($real_uid == $tribesObj->getVar('uid_owner') ? _MD_PROFILE_TRIBEUSER_SUBMIT : _MD_PROFILE_TRIBEUSER_JOIN, 'addtribeuser');
+	$sform->assign($icmsTpl, 'profile_tribeuserform');
+	$icmsTpl->assign('hideForm', $hideForm);
+}
 
 /**
  * Edit a Tribe
  *
  * @param object $tribesObj ProfileTribe object to be edited
 */
-function edittribes($tribesObj, $hideForm=false)
-{
-	global $profile_tribes_handler, $xoTheme, $icmsTpl, $icmsUser;
+function edittribes($tribesObj, $hideForm=false) {
+	global $profile_tribes_handler, $icmsTpl, $icmsUser;
 
 	$icmsTpl->assign('hideForm', $hideForm);
 	if (!$tribesObj->isNew()){
@@ -58,7 +70,6 @@ function edittribes($tribesObj, $hideForm=false)
 		$tribesObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
 		$sform = $tribesObj->getSecureForm(_MD_PROFILE_TRIBES_EDIT, 'addtribes');
 		$sform->assign($icmsTpl, 'profile_tribesform');
-		$icmsTpl->assign('profile_category_path', $tribesObj->getVar('title') . ' > ' . _EDIT);
 	} else {
 		if (!$profile_tribes_handler->userCanSubmit()) {
 			redirect_header(PROFILE_URL, 3, _NOPERM);
@@ -68,7 +79,6 @@ function edittribes($tribesObj, $hideForm=false)
 		$tribesObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
 		$sform = $tribesObj->getSecureForm(_MD_PROFILE_TRIBES_SUBMIT, 'addtribes');
 		$sform->assign($icmsTpl, 'profile_tribesform');
-		$icmsTpl->assign('profile_category_path', _SUBMIT);
 	}
 }
 
@@ -91,19 +101,12 @@ $clean_tribes_id = isset($_GET['tribes_id']) ? intval($_GET['tribes_id']) : 0 ;
 $real_uid = is_object($icmsUser) ? intval($icmsUser->uid()) : 0;
 $clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
 $tribesObj = $profile_tribes_handler->get($clean_tribes_id);
-if($clean_tribes_id){
-    $tribeuser_id = $profile_tribeuser_handler->getTribeuserIdPerTribe($clean_tribes_id);
-    $clean_tribeuser_id = !empty($tribeuser_id)?$tribeuser_id:0;
-    $tribeuserObj = $profile_tribeuser_handler->get($clean_tribeuser_id);
+$userCanEditAndDelete = $real_uid && (($clean_tribes_id && $real_uid == $tribesObj->getVar('uid_owner')) || (!$clean_tribes_id && $real_uid == $uid));
 
-}
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition
  */
-$valid_op = array ('mod','addtribeuser','deltribeuser','addtribes','del','');
-/**
- * Only proceed if the supplied operation is a valid operation
- */
+$valid_op = array ('mod','addtribeuser','edittribeuser','deltribeuser','addtribes','del','');
 
 $isAllowed = getAllowedItems('tribes', $clean_uid);
 if (!$isAllowed) {
@@ -111,12 +114,12 @@ if (!$isAllowed) {
 	exit();
 }
 
-$xoopsTpl->assign('uid_owner',$uid);
+$xoopsTpl->assign('uid_owner', $uid);
 
+/** Only proceed if the supplied operation is a valid operation */
 if (in_array($clean_op,$valid_op,true)){
 	switch ($clean_op) {
 		case "mod":
-			$tribesObj = $profile_tribes_handler->get($clean_tribes_id);
 			if ($clean_tribes_id > 0 && $tribesObj->isNew()) {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 				exit();
@@ -134,23 +137,56 @@ if (in_array($clean_op,$valid_op,true)){
 			$controller->storeFromDefaultForm(_MD_PROFILE_TRIBEUSER_CREATED, _MD_PROFILE_TRIBEUSER_MODIFIED);
 			break;
 
-		case "deltribeuser":
-			$tribeuserObj = $profile_tribeuser_handler->get($clean_tribeuser_id);
-			$tribesObj = $profile_tribes_handler->get($clean_tribes_id);
-			if (!$tribeuserObj->userCanEditAndDelete()) {
-				redirect_header($tribeuserObj->getItemLink(true), 3, _NOPERM);
-			}
-			if (isset($_POST['confirm'])) {
-			    if (!$xoopsSecurity->check()) {
+		case "edittribeuser":
+			if (!$xoopsSecurity->check()) {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
 				exit();
-			    }
+			}
+			if ($tribesObj->isNew()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+				exit();
+			}
+			$clean_tribeuser_id = isset($_POST['tribeuser_id']) ? intval($_POST['tribeuser_id']) : 0;
+			$tribeuserObj = $profile_tribeuser_handler->get($clean_tribeuser_id);
+			if ($tribeuserObj->isNew()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_TRIBEUSER_NOTFOUND);
+				exit();
+			}
+			$store = isset($_POST['store']) ? intval($_POST['store']) : 0;
+			$clean_action = isset($_POST['action']) ? $_POST['action'] : '';
+			$valid_action = array ('approved', 'accepted');
+			if (in_array($clean_action, $valid_action, true)) {
+				if (($clean_action == 'approved' && $real_uid != $tribesObj->getVar('uid_owner')) || ($clean_action == 'accepted' && $real_uid != $tribeuserObj->getVar('user_id'))) {
+					redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+					exit();
+				}
+				if ($store == 1) {
+					$tribeuserObj->setVar($clean_action, 1);
+					$profile_tribeuser_handler->insert($tribeuserObj);
+				} else {
+					// delete this tribeuser object
+					$profile_tribeuser_handler->delete($tribeuserObj);
+				}
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_TRIBEUSER_OP_SUCCESS);
+			} else {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+				exit();
+			}
+			break;
+
+		case "deltribeuser":
+			$clean_tribeuser_id = isset($_POST['tribeuser_id']) ? intval($_POST['tribeuser_id']) : 0;
+			$tribeuserObj = $profile_tribeuser_handler->get($clean_tribeuser_id);
+			if (!$tribeuserObj->userCanEditAndDelete() && !$userCanEditAndDelete) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+				exit();
+			}
+			if (!$xoopsSecurity->check()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
 			}
 			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
 			$controller = new IcmsPersistableController($profile_tribeuser_handler);
 			$controller->handleObjectDeletionFromUserSide();
-			$icmsTpl->assign('profile_category_path', ' > ' . _DELETE);
-
 			break;
 
 		case "addtribes":
@@ -164,7 +200,6 @@ if (in_array($clean_op,$valid_op,true)){
 			break;
 
 		case "del":
-			$tribesObj = $profile_tribes_handler->get($clean_tribes_id);
 			if (!$tribesObj->userCanEditAndDelete()) {
 				redirect_header($tribesObj->getItemLink(true), 3, _NOPERM);
 				exit();
@@ -178,18 +213,43 @@ if (in_array($clean_op,$valid_op,true)){
 			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
 			$controller = new IcmsPersistableController($profile_tribes_handler);
 			$controller->handleObjectDeletionFromUserSide();
-			$icmsTpl->assign('profile_category_path', $tribesObj->getVar('title') . ' > ' . _DELETE);
-
 			break;
 
 		default:
-			$tribesObj = $profile_tribes_handler->get($clean_tribes_id);
-			if ($real_uid && (($clean_tribes_id && $real_uid == $tribesObj->getVar('uid_owner')) || (!$clean_tribes_id && $real_uid == $uid))) {
-				edittribes($tribesObj, true);
-			}
+			if ($userCanEditAndDelete) edittribes($tribesObj, true);
 			if ($clean_tribes_id > 0) {
+				if ($tribesObj->isNew()) {
+					redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_TRIBES_NOTFOUND);
+					exit();
+				}
+				edittribeuser($tribesObj, true);
 				$profile_tribes_handler->updateCounter($clean_tribes_id);
 				$icmsTpl->assign('profile_tribe', $tribesObj->toArray());
+				$profile_tribeuser_handler = icms_getModuleHandler('tribeuser');
+				$icmsTpl->assign('profile_tribe_members', $profile_tribeuser_handler->getTribeusers(0, 0, false, false, $clean_tribes_id, '=', 1, 1));
+				$icmsTpl->assign('userCanEditAndDelete', $userCanEditAndDelete);
+				$icmsTpl->assign('delete_image', ICMS_IMAGES_SET_URL."/actions/editdelete.png");
+				if (is_object($icmsUser)) {
+					$tribeusers = array();
+					if ($tribesObj->getVar('security') == PROFILE_TRIBES_SECURITY_EVERYBODY) {
+						$tribeusers = $profile_tribeuser_handler->getTribeusers(0, 1, $icmsUser->getVar('uid'), false, $clean_tribes_id);
+					} elseif ($tribesObj->getVar('security') == PROFILE_TRIBES_SECURITY_APPROVAL) {
+						$tribeusers = $profile_tribeuser_handler->getTribeusers(0, 1, $icmsUser->getVar('uid'), false, $clean_tribes_id, '=', 1);
+					} elseif ($tribesObj->getVar('security') == PROFILE_TRIBES_SECURITY_INVITATION) {
+						$tribeusers = $profile_tribeuser_handler->getTribeusers(0, 1, $icmsUser->getVar('uid'), false, $clean_tribes_id, '=', false, 1);
+					}
+					if (count($tribeusers) == 1 || $profile_isAdmin || $real_uid == $tribesObj->getVar('uid_owner')) $icmsTpl->assign('showContent', true);
+				}
+
+				icms_makeSmarty(array(
+					'lang_members'       => _MD_PROFILE_TRIBES_MEMBERS,
+					'lang_discussions'   => _MD_PROFILE_TRIBES_DISCUSSIONS,
+					'lang_statistics'    => _MD_PROFILE_TRIBES_STATISTICS,
+					'lang_creation_time' => _MD_PROFILE_TRIBES_CREATION_TIME,
+					'lang_clicks'        => _MD_PROFILE_TRIBES_CLICKS,
+					'lang_owner'         => _MD_PROFILE_TRIBES_OWNER,
+					'lang_delete'        => _DELETE
+				));
 			} elseif ($clean_uid > 0) {
 				$tribes = array();
 				$tribes['own'] = $profile_tribes_handler->getTribes(false, false, $clean_uid);

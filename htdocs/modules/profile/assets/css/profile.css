@@ -224,6 +224,11 @@ div#profile-profile-tribes ul {
 margin-left: 30px;
 }
 
+div#profile-profile-tribes ul input.image {
+width:12px;
+height:12px;
+}
+
 td.profile-profile-picture, td.profile-profile-friend {
 vertical-align:middle;
 border-bottom: none;
@@ -464,7 +469,7 @@ text-align:center;
 tribes
 */
 
-div.profile-tribes-container h2 {
+div.profile-tribes-container h2, div#profile-tribes-container-single h2 {
 margin: 0px;
 }
 
@@ -482,6 +487,42 @@ margin-bottom:20px;
 width:25%;
 float:left;
 text-align:center;
+}
+
+div#profile-tribes-container-single {
+margin-right:240px;
+margin-top:15px;
+}
+
+div#profile-tribes-left {
+width:100%;
+float:left;
+}
+
+div.profile-tribes-members-member {
+width:25%;
+float:left;
+text-align:center;
+margin:0px;
+margin-top:10px;
+margin-bottom:5px;
+}
+
+div#profile-tribes-right {
+position:relative;
+width:230px;
+float:right;
+margin-right:-239px;
+right:-1px
+}
+
+div#profile-tribes-picture {
+text-align:center;
+margin-bottom:15px;
+}
+
+div#profile-tribes-description, div#profile-tribes-members, div#profile-tribes-discussions {
+margin-bottom:15px;
 }
 
 /*********************************************************************************************************

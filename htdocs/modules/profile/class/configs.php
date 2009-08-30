@@ -256,7 +256,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_tribes').' WHERE uid_owner="'.$uid.'"';
 		$ownTribes = $this->query($sql, false);
 		$ownTribes = (!$ownTribes[0]['amount']) ? 0 : $ownTribes[0]['amount'];
-		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_tribeuser').' WHERE user_id="'.$uid.'"';
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_tribeuser').' WHERE user_id="'.$uid.'" AND approved=1 AND accepted=1';
 		$membershipTribes = $this->query($sql, false);
 		$membershipTribes = (!$membershipTribes[0]['amount']) ? 0 : $membershipTribes[0]['amount'];
 		

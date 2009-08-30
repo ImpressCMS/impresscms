@@ -28,6 +28,7 @@ Revision:
 * added _MI_SYSTEM_ADMENU25 to modules/system/language/english/modinfo.php (mekdrop)
 * added Admin Config Preferences for HTMLPurifier Library. (vaughan)
 * added New static protected class for uniquely dealing with Password related functions. (vaughan)
+* #338: imProfile: added security level for tribes | ticket from addons (Phoenyx)
 
 '''Improved'''
 * #751: cleanup admin preference pages, use tooltip boxes for form field descriptions. (vaughan/MrTheme)

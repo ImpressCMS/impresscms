@@ -13,14 +13,22 @@
 */
 
 /**
- * Add a Tribeuser
+ * Add/Edit a Tribeuser
  */
-function addtribeuser() {
+function edittribeuser($tribeuser_id) {
 	global $profile_tribeuser_handler, $icmsModule, $icmsAdminTpl;
 
-	$tribeuserObj = $profile_tribeuser_handler->get(0);
-	$icmsModule->displayAdminMenu(9, _AM_PROFILE_TRIBEUSERS . " > " . _CO_ICMS_CREATINGNEW);
-	$sform = $tribeuserObj->getForm(_AM_PROFILE_TRIBEUSER_CREATE, 'addtribeuser');
+	$tribeuserObj = $profile_tribeuser_handler->get($tribeuser_id);
+	if (!$tribeuserObj->isNew()) {
+		$tribeuserObj->hideFieldFromForm('tribe_id');
+		$tribeuserObj->hideFieldFromForm('user_id');
+		$icmsModule->displayAdminMenu(9, _AM_PROFILE_TRIBEUSERS . " > " . _CO_ICMS_EDITING);
+		$sform = $tribeuserObj->getForm(_AM_PROFILE_TRIBEUSER_MODIFY, 'addtribeuser');
+	} else {
+		$icmsModule->displayAdminMenu(9, _AM_PROFILE_TRIBEUSERS . " > " . _CO_ICMS_CREATINGNEW);
+		$sform = $tribeuserObj->getForm(_AM_PROFILE_TRIBEUSER_CREATE, 'addtribeuser');
+	}
+	
 	$sform->assign($icmsAdminTpl);
 
 	$icmsAdminTpl->display('db:profile_admin_tribeuser.html');
@@ -58,7 +66,7 @@ if (in_array($clean_op,$valid_op,true)) {
 				exit();
 			}
 	  		icms_cp_header();
-			addtribeuser();
+			edittribeuser($clean_tribeuser_id);
 			break;
 
 		case "addtribeuser":
@@ -79,7 +87,7 @@ if (in_array($clean_op,$valid_op,true)) {
 			$icmsModule->displayAdminMenu(9, _AM_PROFILE_TRIBEUSERS);
 
 			include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-			$objectTable = new IcmsPersistableTable($profile_tribeuser_handler, false, array('delete'));
+			$objectTable = new IcmsPersistableTable($profile_tribeuser_handler);
 			$objectTable->addColumn(new IcmsPersistableColumn('tribeuser_id'));
 			$objectTable->addColumn(new IcmsPersistableColumn('tribe_id', _GLOBAL_LEFT, false, 'getTribeName', false, false, false));
 			$objectTable->addColumn(new IcmsPersistableColumn('user_id', _GLOBAL_LEFT, false, 'getTribeuserSender', false, false, false));

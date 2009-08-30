@@ -32,9 +32,13 @@ class ProfileTribeuser extends IcmsPersistableObject {
 		$this->quickInitVar('tribeuser_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('tribe_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('user_id', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('approved', XOBJ_DTYPE_INT, false, false, false, 1);
+		$this->quickInitVar('accepted', XOBJ_DTYPE_INT, false, false, false, 1);
 
 		$this->setControl('tribe_id', array('itemHandler' => 'Tribes', 'method' => 'getAllTribes', 'module' => 'Profile'));
 		$this->setControl('user_id', 'user');
+		$this->setControl('approved', 'yesno');
+		$this->setControl('accepted', 'yesno');
 	}
 
 	/**
@@ -92,6 +96,11 @@ class ProfileTribeuser extends IcmsPersistableObject {
 	 */
 	function toArray() {
 		$ret = parent :: toArray();
+
+		$profile_tribes_handler = icms_getmodulehandler('tribes');
+		$tribe = $profile_tribes_handler->get($this->getVar('tribe_id'))->toArray();
+		$ret['tribe_itemLink'] = $tribe['itemLink'];
+		unset($profile_tribes_handler, $tribe);
 		$ret['tribeuser_avatar'] = $this->getTribeuserAvatar();
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
@@ -119,7 +128,7 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	 * @param int $tribeuser_id ID of a single tribeuser to retrieve
 	 * @return CriteriaCompo $criteria
 	 */
-	function getTribeusersCriteria($start = 0, $limit = 0, $user_id = false, $tribeuser_id = false, $tribe_id = false, $condition = '=') {
+	function getTribeusersCriteria($start = 0, $limit = 0, $user_id = false, $tribeuser_id = false, $tribe_id = false, $condition = '=', $approved = false, $accepted = false) {
 		global $icmsUser;
 
 		$criteria = new CriteriaCompo();
@@ -130,14 +139,22 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 			$criteria->setLimit(intval($limit));
 		}
 
+		if ($tribeuser_id) {
+			$criteria->add(new Criteria('tribeusers_id', $tribeuser_id));
+		}
+		if ($tribe_id) {
+			if (!is_array($tribe_id)) $tribe_id = array($tribe_id);
+			$tribe_id = '('.implode(',', $tribe_id).')';
+			$criteria->add(new Criteria('tribe_id', $tribe_id, 'IN'));
+		}
 		if ($user_id) {
 			$criteria->add(new Criteria('user_id', $user_id, $condition));
 		}
-		if ($tribe_id) {
-			$criteria->add(new Criteria('tribe_id', $tribe_id));
+		if ($approved !== false) {
+			$criteria->add(new Criteria('approved', $approved));
 		}
-		if ($tribeuser_id) {
-			$criteria->add(new Criteria('tribeusers_id', $tribeuser_id));
+		if ($accepted !== false) {
+			$criteria->add(new Criteria('accepted', $accepted));
 		}
 		return $criteria;
 	}
@@ -149,12 +166,33 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	 * @param int $limit max tribeusers to display
 	 * @param int $user_id if specifid, only the tribeuser of this user will be returned
 	 * @param int $tribeusers_id ID of a single tribeuser to retrieve
+	 * @param int $tribe_id ID of the tribe
 	 * @return array of tribeusers
 	 */
-	function getTribeusers($start = 0, $limit = 0, $user_id = false, $tribeusers_id = false, $tribe_id = false, $condition = '=') {
-		$criteria = $this->getTribeusersCriteria($start, $limit, $user_id, $tribeusers_id, $tribe_id, $condition);
+	function getTribeusers($start = 0, $limit = 0, $user_id = false, $tribeusers_id = false, $tribe_id = false, $condition = '=', $approved = false, $accepted = false) {
+		$criteria = $this->getTribeusersCriteria($start, $limit, $user_id, $tribeusers_id, $tribe_id, $condition, $approved, $accepted);
 		$ret = $this->getObjects($criteria, true, false);
 		return $ret;
+	}
+
+	/**
+	 * Get all tribeuser objects where the user has not yet accepted the invitation
+	 *
+	 * @param int $uid user ID
+	 * @return array all tribes where this user has not yet accepted the invitation
+	 */
+	function getInvitations($uid) {
+		return $this->getTribeusers(0, 0, $uid, false, false, '=', false, 0);
+	}
+
+	/**
+	 * Get all users for a tribe which want to be approved by the owner
+	 *
+	 * @param int $tribes_id tribe ID (might be an array)
+	 * @return array all users that want to be approved by the owner of the tribe
+	 */
+	function getApprovals($tribes_id = false) {
+		return $this->getTribeusers(0, 0, false, false, $tribes_id, '=', 0);
 	}
 	
 	/**
@@ -173,13 +211,15 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	/**
 	 * Retreive the config_id of user
 	 *
-	 * @return array of amounts
+	 * @param int $tribe_id ID of the tribe
+	 * @param int $user_id ID of the user
+	 * @return int tribeuser ID
 	 */
-	function getTribeuserIdPerTribe($tribe_id){
-		$sql = 'SELECT tribeuser_id FROM '.$this->table.' WHERE tribe_id="'.$tribe_id.'"';
-		$result = $this->query($sql, false);
-		list($ret) = $this->db->fetchRow($result);
-		return $ret;
+	function getTribeuserId($tribe_id, $user_id){
+		$tribeuser = $this->getTribeusers(0, 1, $user_id, false, $tribe_id);
+		if (count($tribeuser) == 0) return false;
+		$keys = array_keys($tribeuser);
+		return $keys[0];
 	}
 
 	/**
@@ -189,9 +229,9 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	 */
 	function getTribeuserCounts($tribe_id){
 		$sql = 'SELECT COUNT(*) FROM '.$this->table.' WHERE tribe_id="'.$tribe_id.'"';
-		$result = $this->query($sql, false);
+		$result = $this->db->query($sql, false);
 		list($ret) = $this->db->fetchRow($result);
-		return ($ret + 1);
+		return ($ret);
 	}
 
 	/**
@@ -204,19 +244,21 @@ class ProfileTribeuserHandler extends IcmsPersistableObjectHandler {
 	 * @return	bool FALSE if failed, TRUE if already present and unchanged or successful
 	 */
 	function insert(&$obj, $force = false, $checkObject = true, $debug=false) {
-		// check if the specified user already is a member of this tribe
-		$tribeUsers = $this->getTribeusers(0, 0, $obj->getVar('user_id'), false, $obj->getVar('tribe_id'));
-		if (count($tribeUsers) != 0) {
-			$obj->setErrors(_AM_PROFILE_TRIBEUSER_DUPLICATE);
-			return false;
-		}
-		
-		// check if the specified user is the owner of this tribe
-		$profile_tribes_handler = icms_getModuleHandler('tribes');
-		$tribe = $profile_tribes_handler->getTribe($obj->getVar('tribe_id'), $obj->getVar('user_id'));
-		if ($tribe != false) {
-			$obj->setErrors(_AM_PROFILE_TRIBEUSER_OWNER);
-			return false;
+		if ($obj->isNew()) {
+			// check if the specified user already is a member of this tribe
+			$tribeUsers = $this->getTribeusers(0, 0, $obj->getVar('user_id'), false, $obj->getVar('tribe_id'));
+			if (count($tribeUsers) != 0) {
+				$obj->setErrors(_PROFILE_TRIBEUSER_DUPLICATE);
+				return false;
+			}
+
+			// check if the specified user is the owner of this tribe
+			$profile_tribes_handler = icms_getModuleHandler('tribes');
+			$tribe = $profile_tribes_handler->getTribe($obj->getVar('tribe_id'), $obj->getVar('user_id'));
+			if ($tribe != false) {
+				$obj->setErrors(_PROFILE_TRIBEUSER_OWNER);
+				return false;
+			}
 		}
 
 		return parent::insert($obj, $force, $checkObject, $debug);

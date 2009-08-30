@@ -13,6 +13,8 @@
  */
 
 include_once "../../mainfile.php";
+$xoopsOption['template_main'] = $profile_template;
+include_once ICMS_ROOT_PATH."/header.php";
 
 $dirname = basename( dirname( __FILE__ ) );
 
@@ -65,8 +67,6 @@ $isAnonym = is_object($icmsUser) ? false : true;
 $isOwner = (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid) ? true: false;
 $owner_uname = is_object($thisUser) ? trim($thisUser->getVar('uname')) : _GUESTS;
 
-$xoopsOption['template_main'] = $profile_template;
-include_once ICMS_ROOT_PATH."/header.php";
 include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/include/common.php';
 icms_loadLanguageFile('core', 'user');
 global $icmsModuleConfig;

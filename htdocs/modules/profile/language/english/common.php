@@ -135,6 +135,11 @@ define("_CO_PROFILE_TRIBES_TRIBE_DESC", "Decription of the tribe");
 define("_CO_PROFILE_TRIBES_TRIBE_DESC_DSC", " Please write a little description about this tribe.");
 define("_CO_PROFILE_TRIBES_TRIBE_IMG", "Tribe's picture");
 define("_CO_PROFILE_TRIBES_TRIBE_IMG_DSC", " Select a picture for your tribe.");
+define("_CO_PROFILE_TRIBES_SECURITY", "Security level");
+define("_CO_PROFILE_TRIBES_SECURITY_DSC", " Select the security level for this tribe.");
+define("_CO_PROFILE_TRIBES_SECURITY_EVERYBODY", "Anybody can join this tribe");
+define("_CO_PROFILE_TRIBES_SECURITY_APPROVAL", "Anybody can join this tribe (approval by the owner required)");
+define("_CO_PROFILE_TRIBES_SECURITY_INVITATION", "Access by invitation only");
 // suspensions
 define("_CO_PROFILE_SUSPENSIONS_UID", "User Id");
 define("_CO_PROFILE_SUSPENSIONS_UID_DSC", " ");
@@ -205,6 +210,10 @@ define("_CO_PROFILE_TRIBEUSER_TRIBE_ID", "Name of the tribe");
 define("_CO_PROFILE_TRIBEUSER_TRIBE_ID_DSC", " ");
 define("_CO_PROFILE_TRIBEUSER_USER_ID", "Username");
 define("_CO_PROFILE_TRIBEUSER_USER_ID_DSC", " ");
+define("_CO_PROFILE_TRIBEUSER_APPROVED", "Approved");
+define("_CO_PROFILE_TRIBEUSER_APPROVED_DSC", " Yes if membership for the tribe is approved by the owner.");
+define("_CO_PROFILE_TRIBEUSER_ACCEPTED", "Accepted");
+define("_CO_PROFILE_TRIBEUSER_ACCEPTED_DSC", " Yes if user accepted the invitation to this tribe.");
 // ishot
 define("_CO_PROFILE_ISHOT_ISHOT_ID", "Id");
 define("_CO_PROFILE_ISHOT_ISHOT_ID_DSC", " ");

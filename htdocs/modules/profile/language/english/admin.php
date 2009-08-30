@@ -188,11 +188,12 @@ define("_AM_PROFILE_VIDEOS_EDIT", "Edit this video");
 	// Tribeuser
 define("_AM_PROFILE_TRIBEUSERS", "Tribeusers");
 define("_AM_PROFILE_TRIBEUSER_CREATE", "Add a tribeuser");
+define("_AM_PROFILE_TRIBEUSER_MODIFY", "Modify a tribeuser");
 define("_AM_PROFILE_TRIBEUSER", "Tribeuser");
 define("_AM_PROFILE_TRIBEUSER_CREATED", "The tribeuser has been successfully created.");
 define("_AM_PROFILE_TRIBEUSER_MODIFIED", "The tribeuser has been successfully modified.");
-define("_AM_PROFILE_TRIBEUSER_DUPLICATE", "The specified user is already a member of this tribe.");
-define("_AM_PROFILE_TRIBEUSER_OWNER", "The specified user is already the owner of this tribe and therefore cannot be a member.");
+define("_PROFILE_TRIBEUSER_DUPLICATE", "The specified user is already a member of this tribe.");
+define("_PROFILE_TRIBEUSER_OWNER", "The specified user is already the owner of this tribe and therefore cannot be a member.");
 define("_AM_PROFILE_TRIBEUSER_NOTTRIBESYET", "There are no tribes yet.");
 	// Friendpetition
 define("_AM_PROFILE_FRIENDPETITIONS", "Friendpetitions");
