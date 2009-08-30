@@ -17,7 +17,7 @@ class icms_HTMLPurifier
     /**
     * Constructor
     */
-    function icms_HTMLPurifier()
+    public function icms_HTMLPurifier()
     {
         $config_handler = xoops_gethandler('config');
         $icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
@@ -86,67 +86,69 @@ class icms_HTMLPurifier
         $config_handler = xoops_gethandler('config');
         $icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
 
-        $icmsPurifierConf = array(  'HTML.DefinitionID' => $icmsConfigPurifier['purifier_HTML_DefinitionID'],
-                                    'HTML.DefinitionRev' => $icmsConfigPurifier['purifier_HTML_DefinitionRev'],
-                                    'HTML.Doctype' => $icmsConfigPurifier['purifier_HTML_Doctype'],
-                                    'HTML.AllowedElements' => $icmsConfigPurifier['purifier_HTML_AllowedElements'],
-                                    'HTML.AllowedAttributes' => $icmsConfigPurifier['purifier_HTML_AllowedAttributes'],
-                                    'HTML.ForbiddenElements' => $icmsConfigPurifier['purifier_HTML_ForbiddenElements'],
-                                    'HTML.ForbiddenAttributes' => $icmsConfigPurifier['purifier_HTML_ForbiddenAttributes'],
-                                    'HTML.MaxImgLength' => $icmsConfigPurifier['purifier_HTML_MaxImgLength'],
-                                    'HTML.TidyLevel' => $icmsConfigPurifier['purifier_HTML_TidyLevel'],
-                                    'HTML.SafeEmbed' => $icmsConfigPurifier['purifier_HTML_SafeEmbed'],
-                                    'HTML.SafeObject' => $icmsConfigPurifier['purifier_HTML_SafeObject'],
-                                    'HTML.Attr.Name.UseCDATA' => $icmsConfigPurifier['purifier_HTML_AttrNameUseCDATA'],
-                                    'CSS.DefinitionRev' => $icmsConfigPurifier['purifier_CSS_DefinitionRev'],
-                                    'CSS.AllowImportant' => $icmsConfigPurifier['purifier_CSS_AllowImportant'],
-                                    'CSS.AllowTricky' => $icmsConfigPurifier['purifier_CSS_AllowTricky'],
-                                    'CSS.AllowedProperties' => $icmsConfigPurifier['purifier_CSS_AllowedProperties'],
-                                    'CSS.MaxImgLength' => $icmsConfigPurifier['purifier_CSS_MaxImgLength'],
-                                    'CSS.Proprietary' => $icmsConfigPurifier['purifier_CSS_Proprietary'],
-                                    'AutoFormat.AutoParagraph' => $icmsConfigPurifier['purifier_AutoFormat_AutoParagraph'],
-                                    'AutoFormat.DisplayLinkURI' => $icmsConfigPurifier['purifier_AutoFormat_DisplayLinkURI'],
-                                    'AutoFormat.Linkify' => $icmsConfigPurifier['purifier_AutoFormat_Linkify'],
-                                    'AutoFormat.PurifierLinkify' => $icmsConfigPurifier['purifier_AutoFormat_PurifierLinkify'],
-                                    'AutoFormat.Custom' => $icmsConfigPurifier['purifier_AutoFormat_Custom'],
-                                    'AutoFormat.RemoveEmpty' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmpty'],
-                                    'AutoFormat.RemoveEmpty.RemoveNbsp' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmptyNbsp'],
-                                    'AutoFormat.RemoveEmpty.RemoveNbsp.Exceptions' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmptyNbspExceptions'],
-                                    'Core.EscapeNonASCIICharacters' => $icmsConfigPurifier['purifier_Core_EscapeNonASCIICharacters'],
-                                    'Core.HiddenElements' => $icmsConfigPurifier['purifier_Core_HiddenElements'],
-                                    'Core.RemoveInvalidImg' => $icmsConfigPurifier['purifier_Core_RemoveInvalidImg'],
-                                    'Core.Encoding' => _CHARSET,
-                                    'Cache.DefinitionImpl' => 'Serializer',
-                                    'Cache.SerializerPath' => ICMS_TRUST_PATH.'/cache/htmlpurifier',
-                                    'URI.Host' => $icmsConfigPurifier['purifier_URI_Host'],
-                                    'URI.Base' => $icmsConfigPurifier['purifier_URI_Base'],
-                                    'URI.Disable' => $icmsConfigPurifier['purifier_URI_Disable'],
-                                    'URI.DisableExternal' => $icmsConfigPurifier['purifier_URI_DisableExternal'],
-                                    'URI.DisableExternalResources' => $icmsConfigPurifier['purifier_URI_DisableExternalResources'],
-                                    'URI.DisableResources' => $icmsConfigPurifier['purifier_URI_DisableResources'],
-                                    'URI.MakeAbsolute' => $icmsConfigPurifier['purifier_URI_MakeAbsolute'],
-                                    'URI.HostBlacklist' => $icmsConfigPurifier['purifier_URI_HostBlacklist'],
-                                    'URI.AllowedSchemes' => $icmsConfigPurifier['purifier_URI_AllowedSchemes'],
-                                    'URI.DefinitionID' => $icmsConfigPurifier['purifier_URI_DefinitionID'],
-                                    'URI.DefinitionRev' => $icmsConfigPurifier['purifier_URI_DefinitionRev'],
-                                    'URI.AllowedSchemes' => $icmsConfigPurifier['purifier_URI_AllowedSchemes'],
-                                    'Attr.AllowedFrameTargets' => $icmsConfigPurifier['purifier_Attr_AllowedFrameTargets'],
-                                    'Attr.AllowedRel' => $icmsConfigPurifier['purifier_Attr_AllowedRel'],
-                                    'Attr.AllowedClasses' => $icmsConfigPurifier['purifier_Attr_AllowedClasses'],
-                                    'Attr.ForbiddenClasses' => $icmsConfigPurifier['purifier_Attr_ForbiddenClasses'],
-                                    'Attr.DefaultInvalidImage' => $icmsConfigPurifier['purifier_Attr_DefaultInvalidImage'],
-                                    'Attr.DefaultInvalidImageAlt' => $icmsConfigPurifier['purifier_Attr_DefaultInvalidImageAlt'],
-                                    'Attr.DefaultImageAlt' => $icmsConfigPurifier['purifier_Attr_DefaultImageAlt'],
-                                    'Attr.ClassUseCDATA' => $icmsConfigPurifier['purifier_Attr_ClassUseCDATA'],
-                                    'Attr.IDPrefix' => $icmsConfigPurifier['purifier_Attr_IDPrefix'],
-                                    'Attr.EnableID' => $icmsConfigPurifier['purifier_Attr_EnableID'],
-                                    'Attr.IDPrefixLocal' => $icmsConfigPurifier['purifier_Attr_IDPrefixLocal'],
-                                    'Attr.IDBlacklist' => $icmsConfigPurifier['purifier_Attr_IDBlacklist'],
-                                    'Filter.ExtractStyleBlocks.Escaping' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks_Escaping'],
-                                    'Filter.ExtractStyleBlocks.Scope' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks_Scope'],
-                                    'Filter.ExtractStyleBlocks' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'],
-                                    'Filter.YouTube' => $icmsConfigPurifier['purifier_Filter_YouTube'],
-                                );
+        $icmsPurifierConf = array(
+            'HTML.DefinitionID' => $icmsConfigPurifier['purifier_HTML_DefinitionID'],
+            'HTML.DefinitionRev' => $icmsConfigPurifier['purifier_HTML_DefinitionRev'],
+            'HTML.Doctype' => $icmsConfigPurifier['purifier_HTML_Doctype'],
+            'HTML.AllowedElements' => $icmsConfigPurifier['purifier_HTML_AllowedElements'],
+            'HTML.AllowedAttributes' => $icmsConfigPurifier['purifier_HTML_AllowedAttributes'],
+            'HTML.ForbiddenElements' => $icmsConfigPurifier['purifier_HTML_ForbiddenElements'],
+            'HTML.ForbiddenAttributes' => $icmsConfigPurifier['purifier_HTML_ForbiddenAttributes'],
+            'HTML.MaxImgLength' => $icmsConfigPurifier['purifier_HTML_MaxImgLength'],
+            'HTML.TidyLevel' => $icmsConfigPurifier['purifier_HTML_TidyLevel'],
+            'HTML.SafeEmbed' => $icmsConfigPurifier['purifier_HTML_SafeEmbed'],
+            'HTML.SafeObject' => $icmsConfigPurifier['purifier_HTML_SafeObject'],
+            'HTML.Attr.Name.UseCDATA' => $icmsConfigPurifier['purifier_HTML_AttrNameUseCDATA'],
+            'CSS.DefinitionRev' => $icmsConfigPurifier['purifier_CSS_DefinitionRev'],
+            'CSS.AllowImportant' => $icmsConfigPurifier['purifier_CSS_AllowImportant'],
+            'CSS.AllowTricky' => $icmsConfigPurifier['purifier_CSS_AllowTricky'],
+            'CSS.AllowedProperties' => $icmsConfigPurifier['purifier_CSS_AllowedProperties'],
+            'CSS.MaxImgLength' => $icmsConfigPurifier['purifier_CSS_MaxImgLength'],
+            'CSS.Proprietary' => $icmsConfigPurifier['purifier_CSS_Proprietary'],
+            'AutoFormat.AutoParagraph' => $icmsConfigPurifier['purifier_AutoFormat_AutoParagraph'],
+            'AutoFormat.DisplayLinkURI' => $icmsConfigPurifier['purifier_AutoFormat_DisplayLinkURI'],
+            'AutoFormat.Linkify' => $icmsConfigPurifier['purifier_AutoFormat_Linkify'],
+            'AutoFormat.PurifierLinkify' => $icmsConfigPurifier['purifier_AutoFormat_PurifierLinkify'],
+            'AutoFormat.Custom' => $icmsConfigPurifier['purifier_AutoFormat_Custom'],
+            'AutoFormat.RemoveEmpty' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmpty'],
+            'AutoFormat.RemoveEmpty.RemoveNbsp' => $icmsConfigPurifier['purifier_AutoFormat_RemoveEmptyNbsp'],
+            'AutoFormat.RemoveEmpty.RemoveNbsp.Exceptions' =>
+                $icmsConfigPurifier['purifier_AutoFormat_RemoveEmptyNbspExceptions'],
+            'Core.EscapeNonASCIICharacters' => $icmsConfigPurifier['purifier_Core_EscapeNonASCIICharacters'],
+            'Core.HiddenElements' => $icmsConfigPurifier['purifier_Core_HiddenElements'],
+            'Core.RemoveInvalidImg' => $icmsConfigPurifier['purifier_Core_RemoveInvalidImg'],
+            'Core.Encoding' => _CHARSET,
+            'Cache.DefinitionImpl' => 'Serializer',
+            'Cache.SerializerPath' => ICMS_TRUST_PATH.'/cache/htmlpurifier',
+            'URI.Host' => $icmsConfigPurifier['purifier_URI_Host'],
+            'URI.Base' => $icmsConfigPurifier['purifier_URI_Base'],
+            'URI.Disable' => $icmsConfigPurifier['purifier_URI_Disable'],
+            'URI.DisableExternal' => $icmsConfigPurifier['purifier_URI_DisableExternal'],
+            'URI.DisableExternalResources' => $icmsConfigPurifier['purifier_URI_DisableExternalResources'],
+            'URI.DisableResources' => $icmsConfigPurifier['purifier_URI_DisableResources'],
+            'URI.MakeAbsolute' => $icmsConfigPurifier['purifier_URI_MakeAbsolute'],
+            'URI.HostBlacklist' => $icmsConfigPurifier['purifier_URI_HostBlacklist'],
+            'URI.AllowedSchemes' => $icmsConfigPurifier['purifier_URI_AllowedSchemes'],
+            'URI.DefinitionID' => $icmsConfigPurifier['purifier_URI_DefinitionID'],
+            'URI.DefinitionRev' => $icmsConfigPurifier['purifier_URI_DefinitionRev'],
+            'URI.AllowedSchemes' => $icmsConfigPurifier['purifier_URI_AllowedSchemes'],
+            'Attr.AllowedFrameTargets' => $icmsConfigPurifier['purifier_Attr_AllowedFrameTargets'],
+            'Attr.AllowedRel' => $icmsConfigPurifier['purifier_Attr_AllowedRel'],
+            'Attr.AllowedClasses' => $icmsConfigPurifier['purifier_Attr_AllowedClasses'],
+            'Attr.ForbiddenClasses' => $icmsConfigPurifier['purifier_Attr_ForbiddenClasses'],
+            'Attr.DefaultInvalidImage' => $icmsConfigPurifier['purifier_Attr_DefaultInvalidImage'],
+            'Attr.DefaultInvalidImageAlt' => $icmsConfigPurifier['purifier_Attr_DefaultInvalidImageAlt'],
+            'Attr.DefaultImageAlt' => $icmsConfigPurifier['purifier_Attr_DefaultImageAlt'],
+            'Attr.ClassUseCDATA' => $icmsConfigPurifier['purifier_Attr_ClassUseCDATA'],
+            'Attr.IDPrefix' => $icmsConfigPurifier['purifier_Attr_IDPrefix'],
+            'Attr.EnableID' => $icmsConfigPurifier['purifier_Attr_EnableID'],
+            'Attr.IDPrefixLocal' => $icmsConfigPurifier['purifier_Attr_IDPrefixLocal'],
+            'Attr.IDBlacklist' => $icmsConfigPurifier['purifier_Attr_IDBlacklist'],
+            'Filter.ExtractStyleBlocks.Escaping' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks_Escaping'],
+            'Filter.ExtractStyleBlocks.Scope' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks_Scope'],
+            'Filter.ExtractStyleBlocks' => $icmsConfigPurifier['purifier_Filter_ExtractStyleBlocks'],
+            'Filter.YouTube' => $icmsConfigPurifier['purifier_Filter_YouTube'],
+        );
         return $this->icms_purifyCleanArray($icmsPurifierConf);
     }
 
@@ -160,8 +162,8 @@ class icms_HTMLPurifier
 
     /**
     * Allows HTML Purifier library to be called when required
-    * @param   string  $html input to be cleaned
-    * @return  string
+    * @param    string  $html    input to be cleaned
+    * @return   string
     **/
     public function icms_html_purifier($html)
     {
@@ -181,8 +183,8 @@ class icms_HTMLPurifier
 
     /**
     * Purifies $data recursively
-    * @param       array   $data   data array to purify
-    * @return      string  $data   purified data array
+    * @param    array   $data   data array to purify
+    * @return   string  $data   purified data array
     */
     function icms_purify_recursive($data)
     {
@@ -201,7 +203,7 @@ class icms_HTMLPurifier
     * @param   string  $html
     * @return  string
     **/
-    function displayHTMLarea($html)
+    public function displayHTMLarea($html)
     {
         // ################# Preload Trigger beforeDisplayTarea ##############
         global $icmsPreloadHandler;
@@ -225,7 +227,7 @@ class icms_HTMLPurifier
     * @param   string  $html
     * @return  string
     **/
-    function previewHTMLarea($html)
+    public function previewHTMLarea($html)
     {
         // ################# Preload Trigger beforeDisplayTarea ##############
         global $icmsPreloadHandler;
