@@ -269,7 +269,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 				xoops_cp_footer();
 				exit();
 			}
-			   include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+			   include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
 			   $icmspass = new icms_Password();
 			$edituser->setVar('salt', $salt);
 			$edituser->setVar('enc_type', $enc_type);

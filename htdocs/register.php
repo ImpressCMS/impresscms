@@ -147,7 +147,7 @@ case 'finish':
 		$valid_actkey = check_invite_code($actkey);
 		$newuser->setVar('actkey', $valid_actkey ? $actkey : substr(md5(uniqid(mt_rand(), 1)), 0, 8), true);
 
-        include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+        include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
         $icmspass = new icms_Password();
 
 		$salt = $icmspass->icms_createSalt();

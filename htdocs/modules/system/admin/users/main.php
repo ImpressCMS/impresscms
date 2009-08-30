@@ -188,7 +188,7 @@ switch ($op)
 						xoops_cp_footer();
 						exit();
 					}
-						 include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+						 include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
 						 $icmspass = new icms_Password();
 					$newuser->setVar('salt', $salt);
 					$newuser->setVar('enc_type', $enc_type);

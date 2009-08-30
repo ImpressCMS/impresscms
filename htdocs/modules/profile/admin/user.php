@@ -118,7 +118,7 @@ switch($op) {
 				if ($password != $vpass) {
 					$errors[] = _PROFILE_MA_PASSNOTSAME;
 				}
-				include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+				include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
 				$icmspass = new icms_Password();
 				$salt = $icmspass->icms_createSalt();
 				$pass = $icmspass->icms_encryptPass($password, $salt);

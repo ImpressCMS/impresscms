@@ -220,7 +220,7 @@ $errors[] .= _US_NICKNAMENOSPACES."<br />";
 		$edituser->setVar('user_msnm', $_POST['user_msnm']);
 		if($password != '')
 		{
-                        include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+                        include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
                         $icmspass = new icms_Password();
                         $salt = $icmspass->icms_createSalt();
                         $edituser->setVar('salt', $salt, true);

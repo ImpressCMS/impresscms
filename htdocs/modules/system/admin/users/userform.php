@@ -138,7 +138,7 @@ else {
 		$group_select[] = new XoopsFormHidden('groups[' . $key . ']', $group);
 	}
 }
-include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
 $icmspass = new icms_Password();
 
 $salt_hidden = new XoopsFormHidden('salt', $icmspass->icms_createSalt());

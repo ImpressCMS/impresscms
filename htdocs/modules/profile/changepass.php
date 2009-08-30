@@ -49,7 +49,7 @@ else {
     }
     else {
         //update password
-          include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+          include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
           $icmspass = new icms_Password();
           $salt = $icmspass->icms_createSalt();
           $pass = $icmspass->icms_encryptPass(filter_input(INPUT_POST, $_POST['password'], FILTER_SANITIZE_URL), $salt);

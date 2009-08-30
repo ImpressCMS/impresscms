@@ -91,7 +91,7 @@ switch ( $op ) {
 		}
 		// if first step was previous step, check user data as they will always be at first step
 		if ($current_step == 0) {
-			include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+			include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
 			$icmspass = new icms_Password();
 			$newuser->setVar('login_name', isset($_POST['login_name']) ? trim($_POST['login_name']) : '');
 			$newuser->setVar('uname', isset($_POST['uname']) ? trim($_POST['uname']) : '');

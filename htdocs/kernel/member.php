@@ -291,7 +291,7 @@ class XoopsMemberHandler {
 	 */
 	 function loginUser($uname, $pwd)
 	 {
-		  include_once ICMS_ROOT_PATH.'/class/icms.class.password.php';
+		  include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
 		  $icmspass = new icms_Password();
 
 		  $is_expired = $icmspass->icms_passExpired($uname);
