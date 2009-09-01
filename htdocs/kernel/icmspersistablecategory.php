@@ -15,11 +15,23 @@
 if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
+/** Make sure the IcmsPersistableOject class is loaded */
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableseoobject.php";
+/**
+ * Persistble category object
+ * @package 	IcmsPersistableObject
+ * @subpackage 	IcmsPersistableCategory
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since 		1.1
+ */
 class IcmsPersistableCategory extends IcmsPersistableSeoObject {
-
+	/** Path that corresponds to the category */
 	var $_categoryPath;
-
+	/**
+	 * Constructor for IcmsPersistableCategory
+	 * @return IcmsPersistableCategory
+	 */
 	function IcmsPersistableCategory() {
 	    $this->initVar('categoryid', XOBJ_DTYPE_INT, '', true);
     	$this->initVar('parentid', XOBJ_DTYPE_INT, '', false, null, '', false, _CO_ICMS_CATEGORY_PARENTID, _CO_ICMS_CATEGORY_PARENTID_DSC);
@@ -55,11 +67,19 @@ class IcmsPersistableCategory extends IcmsPersistableSeoObject {
         }
         return parent::getVar($key, $format);
     }
-
+	/**
+	 * Returns the description for the category
+	 * @see 	IcmsPersistableObject::getValueFor()
+	 * @return 	string	Text to display as the description
+	 */
     function description() {
     	return $this->getValueFor('description', false);
     }
-
+	/**
+	 * Returns the image for the category
+	 *
+	 * @return 	mixed	Returns false if there is no image, or the image, if it exists
+	 */
     function image() {
     	$ret = $this->getVar('image', 'e');
     	if ($ret == '-1') {
@@ -68,7 +88,11 @@ class IcmsPersistableCategory extends IcmsPersistableSeoObject {
     		return $ret;
     	}
     }
-
+	/**
+	 * Create an array of the category's properties
+	 *
+	 * @return 	array An array of the category's properties
+	 */
     function toArray() {
     	$this->setVar('doxcode', true);
     	global $myts;
@@ -113,16 +137,38 @@ class IcmsPersistableCategory extends IcmsPersistableSeoObject {
 	}
 
 }
-
+/**
+ * Provides data access mechanisms to the IcmsPersistableCategory object
+ * @copyright 	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since 		1.1
+ */
 class IcmsPersistableCategoryHandler extends IcmsPersistableObjectHandler {
-
+	/** */
 	var $allCategoriesObj = false;
+	/** */
 	var $_allCategoriesId = false;
 
+	/**
+	 * Constructor for the object handler
+	 *
+	 * @param object $db A database object
+	 * @param string $modulename The directory name for the module
+	 * @return IcmsPersistableCategoryHandler
+	 */
     function IcmsPersistableCategoryHandler($db, $modulename) {
         $this->IcmsPersistableObjectHandler($db, 'category', 'categoryid', 'name', 'description', $modulename);
     }
 
+    /**
+     * Return all categories in an array
+     *
+     * @param int $parentid
+     * @param string $perm_name
+     * @param string $sort
+     * @param string $order
+     * @return array
+     */
 	function getAllCategoriesArray($parentid=0, $perm_name=false, $sort = 'parentid', $order='ASC') {
 
 		if (!$this->allCategoriesObj) {
