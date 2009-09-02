@@ -51,6 +51,7 @@ Revision:
 * #661: Uploader setPrefix may incorrectly assign filenames. (vaughan)
 * #: Unable to login with email address, function getUnameFromUserEmail() was getting $uname & not $login_name. (vaughan)
 * fixed class/icmsform/icmsform.php 723-728 lines (????) (mekdrop)
+* #759: icmsform fixed (sato-san)
 * #334: Videolayer is over the jQuery pictures (sato-san)
 * #249: Path to ICMS_IMAGES_SET_URL corrected (sato-san)
 * #657: Icons for adsense, rating and mime-types (sato-san)

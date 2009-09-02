@@ -68,8 +68,7 @@ class IcmsForm extends XoopsThemeForm {
 			$form_action = xoops_getenv('PHP_SELF');
 		}
 
-		$theme_form = new XoopsThemeForm();
-		$theme_form ( $form_caption , $form_name, $form_action);
+		$this->XoopsThemeForm( $form_caption , $form_name, $form_action);
 		$this->setExtra('enctype="multipart/form-data"');
 
 		$this->createElements();
