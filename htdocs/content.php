@@ -240,7 +240,7 @@ function filter_bytags($tags){
 	$ret = '';
 	if (count($tags_arr) > 0){
 		foreach ($tags_arr as $tag){
-			$ret .= '<a href="'.ICMS_URL.'/content.php?tag='.$tag.'">'.$tag.'</a>, ';
+			$ret .= '<a href="'.ICMS_URL.'/content.php?tag='.trim($tag).'">'.$tag.'</a>, ';
 		}
 		$ret = substr($ret,0,strlen($ret)-2);
 	}

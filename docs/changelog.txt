@@ -129,6 +129,7 @@ Revision:
 * #752: SQL syntax error when upgrading to 1.1 (skenow)
 * #337: imProfile: setting umode and uorder for new users according to system settings | ticket from addons (Phoenyx)
 * #755: fixed wrong parameter handling in IcmsSecureForm (Phoenyx)
+* #727: Incorrect URL for tags in content manager (skenow)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''
