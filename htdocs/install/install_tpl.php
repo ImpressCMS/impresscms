@@ -19,40 +19,66 @@
  */
 	defined( 'XOOPS_INSTALL' ) or die();
 
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-	<title>
-		<?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION); ?>
-		(<?php echo ($wizard->currentPage+1) . '/' . count($wizard->pages); ?>)
-	</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo _INSTALL_CHARSET ?>" />
+<title><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION); ?>(<?php echo ($wizard->currentPage+1) . '/' . count($wizard->pages); ?>)</title>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo _INSTALL_CHARSET ?>" />
 <?php
-	if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-echo '<link rel="stylesheet" type="text/css" media="all" href="style_rtl.css" />';
-	   } else {
-echo '<link rel="stylesheet" type="text/css" media="all" href="style.css" />';
-           }
+if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+ echo '<link rel="stylesheet" type="text/css" media="all" href="style_rtl.css" />';
+} else {
+ echo '<link rel="stylesheet" type="text/css" media="all" href="style.css" />';
+ echo '<link rel="stylesheet" type="text/css" media="all" href="style.css" title="darkstyle" />';
+ echo '<link rel="stylesheet" type="text/css" media="all" href="stylelight.css" title="lightstyle" />';
+}
 ?>
-		<script type="text/javascript" src="../libraries/prototype/prototype.js"></script>
-	<script type="text/javascript">
-	function showHideHelp( butt ) {
-		butt.className = ( butt.className == 'on' ) ? 'off': 'on';
-		document.body.className = ( butt.className == 'on' ) ? 'show-help': '';
+
+<script type="text/javascript" src="../libraries/jquery/jquery.js"></script>
+<script type="text/javascript" src="stylesheetToggle.js"></script>
+<script type="text/javascript" src="jquery.scrollTo.js"></script>
+<script type="text/javascript">
+     $(document).ready(function() {
+	$.stylesheetInit();
+	$('#toggler').bind('click',function(e){
+	 $.stylesheetToggle();
+	 return false;
 	}
-	</script>
+	);
+        $('#help_button').click(function() {
+         if ($('div.xoform-help').is(":hidden"))
+         {
+          $('div.xoform-help').slideDown("slow");
+         } else {
+          $('div.xoform-help').slideUp("slow");
+         }
+        });
+	$('#pagedown').click(function(){
+	 $.scrollTo('max', 1500);
+	});
+     });
+</script>
 </head>
-<body>
-<div id="xo-banner"><img src="img/header-logo.png" alt="ImpressCMS" /></div>
-<div id="xo-content">
-	<div class="tagsoup1">
-	<div class="tagsoup2">
-		<div id="wizard">
-		<form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post'>
-			<h1>
-				<span id="title"><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION)."&nbsp;-&nbsp;".INSTALL_STEP; ?>&nbsp;<?php echo ($wizard->currentPage+1) . INSTALL_OUTOF . count($wizard->pages); ?></span>
-			</h1>
-			<ul id="pageslist" class="x2-navigation">
+<?php
+if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+echo '<body dir="rtl">';
+} else {
+echo '<body>';
+}
+?>
+<div id="wrapper">
+<div id="header">
+<div id="logo"><img src="img/logo.png" alt="ImpressCMS" /></div>
+<div id="info"><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION)."<br />".INSTALL_STEP; ?>&nbsp;<?php echo ($wizard->currentPage+1) . INSTALL_OUTOF . count($wizard->pages); ?></div>
+</div>
+
+<div id="page_top">&nbsp;</div>
+
+<div id="page">
+	<form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post'>
+	<div id="leftside">
+			<h3>Steps</h3>
+			<ul>
 			<?php foreach ( $wizard->pages as $k => $page ) {
 				$class = '';
 				if ( $k == $wizard->currentPage )	$class = ' class="current"';
@@ -65,32 +91,43 @@ echo '<link rel="stylesheet" type="text/css" media="all" href="style.css" />';
 				echo "<li$class>$li</li>\n";
 			} ?>
 			</ul>
+	<div class="clear">&nbsp;</div>
+	</div>
+	<div id="rightside">
 			<div class="page" id="<?php echo $wizard->currentPageName; ?>">
 				<?php if ( $pageHasHelp ) { ?>
-					<button type="button" id="help_button" onclick="showHideHelp(this)"> <?php echo SHOW_HIDE_HELP; ?></button>
+						<button type="button" onclick="javascript:void(0);" id="help_button">
+						<img src="img/help2.png" alt="<?php echo SHOW_HIDE_HELP; ?>" />
+						</button>
 				<?php } ?>
+						<button type="button" onclick="javascript:void(0);" id="pagedown">
+						<img src="img/down.png" alt="<?php echo SHOW_HIDE_HELP; ?>" />
+						</button>
+						<button type="button" onclick="javascript:void(0);" id="toggler">
+						<img src="img/toggler.png" alt="<?php echo SHOW_HIDE_HELP; ?>" />
+						</button>
 				<h2><?php echo $wizard->pagesTitles[ $wizard->currentPage ]; ?></h2>
 				<?php echo $content; ?>
 			</div>
 			<div id="buttons">
 				<?php if ( $wizard->currentPage != 0  && ( $wizard->currentPage != 11 )) { ?>
-				<button type="button" onclick="location.href='<?php echo $wizard->pageURI('-1'); ?>'">
-					<?php echo BUTTON_PREVIOUS; ?>
+				<button type="button" onclick="location.href='<?php echo $wizard->pageURI('-1'); ?>'" class="prev">
+					<img src="../images/crystal/actions/back1.png" alt="<?php echo BUTTON_PREVIOUS; ?>" width="16" />
 				</button>
 				<?php } ?>
 				<?php if ( $wizard->currentPage == 11 ) { ?>
-				<button type="button" onclick="location.href='<?php echo $wizard->pageURI('11'); ?>?success=true'">
-					<?php echo BUTTON_SHOW_SITE; ?>
+				<button type="button" onclick="location.href='<?php echo $wizard->pageURI('11'); ?>?success=true'" class="finish">
+					<img src="../images/crystal/actions/run.png" alt="<?php echo BUTTON_SHOW_SITE; ?>" width="16" />
 				</button>
 				<?php } ?>
 				<?php if ( $wizard->pages[$wizard->currentPage] == $wizard->secondlastpage) { ?>
 					<?php if ( @$pageHasForm) { ?>
 					<button type="submit">
 					<?php } else { ?>
-					<button type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'">
+					<button type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'" class="next">
 					<?php } ?>
 					<?php if ( $_POST['mod'] != 1 ) { ?>
-						<?php echo BUTTON_NEXT; ?>
+						<img src="../images/crystal/actions/forward1.png" alt="<?php echo BUTTON_NEXT; ?>" width="16" />
 					<?php } else { ?>
 						<?php echo BUTTON_FINISH; ?>
 					<?php } ?>
@@ -99,20 +136,22 @@ echo '<link rel="stylesheet" type="text/css" media="all" href="style.css" />';
 					<?php if ( @$pageHasForm) { ?>
 					<button type="submit">
 					<?php } else { ?>
-					<button type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'">
+					<button type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'" class="next">
 					<?php } ?>
-					<?php echo BUTTON_NEXT; ?>
+						<img src="../images/crystal/actions/forward1.png" alt="<?php echo BUTTON_NEXT; ?>" width="16" />
 					</button>
 				<?php } ?>
 			</div>
-		</form>
-		</div>
+	<div class="clear">&nbsp;</div>
+	</div>
+	</form>
+<div class="clear">&nbsp;</div>
+</div>
+<div id="page_bot">&nbsp;</div>
 
-	</div>
-	</div>
-	<div class="footerbar">
-		<?php echo INSTALL_COPYRIGHT; ?>
-	</div>
+<div id="footer">
+	<?php echo INSTALL_COPYRIGHT; ?>
+</div>
 </div>
 </body>
 </html>

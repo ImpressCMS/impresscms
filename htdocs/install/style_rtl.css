@@ -1,575 +1,105 @@
-/**
-* ImpressCMS styles for RTL languages
-*
-* Main system style sheet information are rendered from here (installer).
-* System tool to make ImpressCMS work under RTL (Right To Left).
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package	installer
-* @since	1.1
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version	$Id$
-*/
-BODY
-{
-	direction:rtl;
-    BORDER-RIGHT: #000000 1px solid;
-    PADDING-RIGHT: 0px;
-    PADDING-LEFT: 0px;
-    MIN-HEIGHT: 100%;
-    BACKGROUND: url(img/background.png) #fcfcfc repeat-x 0px 85px;
-    PADDING-BOTTOM: 0px;
-    MARGIN: 0px;
-    FONT: 10pt tahoma, osaka,taipei,verdana, arial, helvetica, sans-serif;
-    BORDER-LEFT: #000000 1px solid;
-    COLOR: #000;
-    PADDING-TOP: 0px
-	font-family: Tahoma;
-}
-* HTML BODY
-{
-    HEIGHT: 100%
-}
-#xo-banner
-{
-	direction:rtl;
-    BACKGROUND: url(img/top_bg.png) repeat-x left top;
-    BORDER-BOTTOM: #ffb500 5px solid;
-    HEIGHT: 80px
-    FLOAT: right;
-}
-#xo-content
-{
-	direction:rtl;
-    PADDING-RIGHT: 3em;
-    PADDING-LEFT: 3em;
-    PADDING-BOTTOM: 2em;
-    PADDING-TOP: 2em;
-    TEXT-ALIGN: center
-}
-#wizard
-{	
-	direction:rtl;
-    TEXT-ALIGN: right;
-    BORDER-TOP: #e3e3e3 1px solid;
-    BACKGROUND-COLOR: #f0f0f0;
-}
-#pageslist
-{
-	direction:rtl;
-    BORDER-RIGHT: #e4e4e4 1px solid;
-    BORDER-TOP: #e4e4e4 1px solid;
-	BORDER-LEFT: #e4e4e4 1px solid;
-    PADDING-LEFT: 0.5em;
-	PADDING-RIGHT: 0.8em;
-	PADDING-TOP: 0.5em;
-	PADDING-BOTTOM: 0.5em;
-    BORDER-BOTTOM: #e4e4e4 1px solid;
-    BACKGROUND: url(img/ffffff-25.png);
-    FLOAT: right;
-	MARGIN: 0px;
-    WIDTH: 13em;
-    LIST-STYLE-TYPE: none
-}
-.page
-{
-	direction:rtl;
-    BORDER-RIGHT: #eeeeee 3px solid;
-    PADDING-RIGHT: 0.5em;
-    BORDER-TOP: #eeeeee 3px solid;
-    PADDING-LEFT: 0.5em;
-    MIN-HEIGHT: 350px;
-    BACKGROUND: url(img/ffffff-75.png);
-    PADDING-BOTTOM: 0.5em;
-    MARGIN-RIGHT: 14.5em;
-    BORDER-LEFT: #eeeeee 3px solid;
-    PADDING-TOP: 0.5em;
-    BORDER-BOTTOM: #eeeeee 3px solid;
-    -moz-border-top-colors: #d0d0d0 #e8e8e8 #f4f4f4;
-    -moz-border-right-colors: #d0d0d0 #e8e8e8 #f4f4f4;
-    -moz-border-bottom-colors: #d0d0d0 #e8e8e8 #f4f4f4;
-    -moz-border-left-colors: #d0d0d0 #e8e8e8 #f4f4f4
-    FLOAT: right;
-}
-* HTML .page
-{
-	direction:rtl;
-    HEIGHT: 350px
-}
-H1
-{
-    FONT-SIZE: 150%;
-    MARGIN: 0px;
-    COLOR: #fff;
-    FONT-FAMILY: Tahoma, Lucida Grande, Trebuchet MS, sans-serif;
-    BACKGROUND-COLOR: #ffb500
-}
-H1:unknown
-{
-    DISPLAY: block;
-    BACKGROUND: url(img/title-tr.png) no-repeat right top;
-    MARGIN-BOTTOM: -4px;
-    LINE-HEIGHT: 0;
-    HEIGHT: 9px;
-    content: url(img/title-tl.png)
-}
-H1:unknown
-{
-    MARGIN-TOP: -2px;
-    DISPLAY: block;
-    BACKGROUND: url(img/title-br.png) no-repeat right top;
-    LINE-HEIGHT: 0;
-    HEIGHT: 13px;
-    content: url(img/title-bl.png)
-}
-#title
-{
-	direction:rtl;
-    PADDING-LEFT: 1em
-}
-#pageslist LI
-{
-    PADDING-RIGHT: 15px;
-    BACKGROUND: url(img/yes.png) no-repeat right center;
-    PADDING-BOTTOM: 2px;
-    PADDING-TOP: 1px
-}
-#pageslist LI.current
-{
-    BACKGROUND-IMAGE: url(img/yes-current.png)
-}
-#pageslist LI.disabled
-{
-    BACKGROUND-IMAGE: url(img/yes-disabled.png)
-}
-#buttons
-{
-    CLEAR: both;
-    PADDING-RIGHT: 0.5em;
-    PADDING-LEFT: 0.5em;
-    PADDING-BOTTOM: 0.5em;
-    PADDING-TOP: 0.5em;
-    TEXT-ALIGN: left;
+* html, body {background: #afbcc3 url(img/bgimg.jpg) top left repeat; height: 100%; font-family: arial; font-size: 13px; direction: rtl;}
 
-}
+#wrapper {width: 859px; height: 100%; margin: 0 auto;}
+#header {width: 859px; height: 81px; margin: 0 auto; clear: both; background: transparent;}
+#logo {width: 335px; height: 67px; margin-top: 10px; margin-left: 0px; float: right;}
+#info {width: 400px; margin-top: 40px; margin-right: 0px; float: left; text-align: left; font-size: 14px; color: #fff;}
 
-FORM
-{
-    MARGIN: 0px
-}
-H1
-{
-    FONT-FAMILY: Tahoma, Lucida Grande, Trebuchet MS, sans-serif
-}
-H2
-{
-    FONT-FAMILY: Tahoma, Lucida Grande, Trebuchet MS, sans-serif
-}
-H2
-{
-    MARGIN-TOP: 0px;
-    PADDING-LEFT: 0.5em;
-    BORDER-BOTTOM: #cccccc 1px solid;
-    TEXT-ALIGN: RIGHT
-}
-H3
-{
-    FONT-WEIGHT: bold;
-    FONT-SIZE: 110%;
-    MARGIN: 1em 0.5em 0.5em
-}
-P
-{
-    MARGIN: 0.5em
-}
-A
-{
-    FONT-WEIGHT: bold;
-    COLOR: #666666;
-    BACKGROUND-COLOR: transparent;
-    TEXT-DECORATION: none
-}
-A:hover
-{
-    FONT-WEIGHT: bold;
-    COLOR: #ff9966;
-    BACKGROUND-COLOR: transparent;
-    TEXT-DECORATION: none
-}
-SELECT
-{
-    BORDER: 1px solid #D0D0D0;
-    BACKGROUND: #fcfcfc;
-    FONT: 8pt verdana, arial, helvetica;
-    COLOR: #000000;
-}
-TABLE
-{
-    MARGIN-BOTTOM: 1em;
-    WIDTH: 99%;
-    BORDER-COLLAPSE: collapse;
-    border-spacing: 0px
-}
-TABLE.modules
-{
-	BORDER:0px;
-	MARGIN-LEFT:auto;
-	MARGIN-RIGHT:auto;
-	width:600px;
-}
-CAPTION
-{
-    PADDING-RIGHT: 0.25em;
-    PADDING-LEFT: 0.25em;
-    BACKGROUND: url(img/table-caption-grey.png) repeat-x;
-    PADDING-BOTTOM: 2px;
-    COLOR: #000;
-    PADDING-TOP: 2px
-}
-TABLE THEAD TH
-{
-    BACKGROUND: #f4f4f4
-}
-TD
-{
-    BORDER-RIGHT: #efefef 1px solid;
-    PADDING-RIGHT: 0.25em;
-    BORDER-TOP: #efefef 1px solid;
-    PADDING-LEFT: 0.25em;
-    BACKGROUND: #fcfcfc;
-    PADDING-BOTTOM: 2px;
-    BORDER-LEFT: #efefef 1px solid;
-    PADDING-TOP: 2px;
-    BORDER-BOTTOM: #efefef 1px solid
-}
-TH
-{
-    BORDER-RIGHT: #efefef 1px solid;
-    PADDING-RIGHT: 0.25em;
-    BORDER-TOP: #efefef 1px solid;
-    PADDING-LEFT: 0.25em;
-    BACKGROUND: #fcfcfc;
-    PADDING-BOTTOM: 2px;
-    BORDER-LEFT: #efefef 1px solid;
-    PADDING-TOP: 2px;
-    BORDER-BOTTOM: #efefef 1px solid
-}
-FIELDSET
-{
-    BORDER-RIGHT: transparent 0px;
-    PADDING-RIGHT: 1em;
-    BORDER-TOP: #e8e8e8 1px solid;
-    PADDING-LEFT: 1em;
-    MARGIN-BOTTOM: 1em;
-    PADDING-BOTTOM: 0.5em;
-    BORDER-LEFT: transparent 0px;
-    PADDING-TOP: 0.5em;
-    BORDER-BOTTOM: transparent 0px
-}
-LEGEND
-{
-    PADDING-RIGHT: .5em;
-    DISPLAY: block;
-    PADDING-LEFT: .5em;
-    FONT-WEIGHT: bold;
-    FONT-SIZE: 105%;
-    MARGIN: 0px;
-}
-LABEL
-{
-    DISPLAY: block
-}
-#help_button
-{
-    FLOAT: left;
-    CURSOR: pointer;
-}
-.xoform-help
-{
-    DISPLAY: none;
-    BORDER: #eee 1px solid;
-    BORDER-LEFT: #e2e2e2 3px solid;
-    PADDING:0px;
-    BACKGROUND: #fff8dc;
-    MARGIN: .5em;
-}
-BODY.show-help .xoform-help
-{
-    DISPLAY: block
-}
-INPUT[type=text]
-{
-    PADDING-RIGHT: 0.25em;
-    MIN-WIDTH: 60%;
-    PADDING-LEFT: 0.25em;
-    BACKGROUND: url(img/form-input.png) #fff no-repeat left top;
-    PADDING-BOTTOM: 1px;
-    MARGIN: 0.25em 0px;
-    PADDING-TOP: 1px;
-    BORDER: 1px solid #D0D0D0;
-}
-INPUT[type=password]
-{
-    PADDING-RIGHT: 0.25em;
-    MIN-WIDTH: 60%;
-    PADDING-LEFT: 0.25em;
-    BACKGROUND: url(img/form-input.png) #fff no-repeat left top;
-    PADDING-BOTTOM: 1px;
-    MARGIN: 0.25em 0px;
-    PADDING-TOP: 1px;
-    BORDER: 1px solid #D0D0D0;
-}
-INPUT
-{
-}
-SELECT
-{
-    WIDTH: 15em;
-	HEIGHT:11em;
-	FONT-SIZE:130%;
-}
-BUTTON
-{
-    PADDING-RIGHT: 0.5em;
-    PADDING-LEFT: 0.5em;
-    PADDING-BOTTOM: 2px;
-    PADDING-TOP: 2px;
-    BACKGROUND-IMAGE: url(img/table-caption-grey.png);
-    BACKGROUND-POSITION: bottom;
-    BACKGROUND-REPEAT: repeat-x;
-    COLOR: #444;
-    FONT-WEIGHT: bold;
-    CURSOR: pointer;
-    BORDER: outset 1px #ccc;
-}
-.page#langselect
-{
-    TEXT-ALIGN: center
-}
-.page#dbsettings SELECT
-{
-	WIDTH: 20em;
-	HEIGHT: 1.5em;
-	FONT-SIZE:100%;
-	direction:ltr;
-}
-.error
-{
-    FONT-WEIGHT: bold;
-    COLOR: #f33
-}
-.footerbar
-{
-	MARGIN-TOP: 5px;
-}
-.warning
-{
-    COLOR: #c80
-}
-.success
-{
-    COLOR: #090
-}
-.x2-note
-{
-    BORDER: #eee 1px solid;
-    PADDING-RIGHT: 0.5em;
-    PADDING-LEFT: 0.5em;
-    BACKGROUND: #f8f8f8;
-    PADDING-BOTTOM: 0.5em;
-    MARGIN: 1em 4em;
-    PADDING-TOP: 0.5em;
-    TEXT-ALIGN: center
-}
-.error
-{
-    BACKGROUND-POSITION: right 2px;
-    BACKGROUND-IMAGE: url(img/warning.png);
-    BACKGROUND-REPEAT: no-repeat
-}
-UL.diags
-{
-	PADDING-RIGHT: 1em;
-    PADDING-LEFT: 1em;
-    PADDING-BOTTOM: 0px;
-    MARGIN: 0.5em 0px 0px 2em;
-    PADDING-TOP: 0px;
-    LIST-STYLE-TYPE: none;
-}
-UL.log
-{
-    PADDING-RIGHT: 1em;
-    PADDING-LEFT: 1em;
-    PADDING-BOTTOM: 0px;
-    MARGIN: 0.5em 0px 0px 2em;
-    PADDING-TOP: 0px;
-    LIST-STYLE-TYPE: none
-}
-UL.diags LI
-{
-    PADDING-LEFT: 20px;
-    BACKGROUND: no-repeat left center;
-    COLOR: #333
-}
-UL.log LI
-{
-    PADDING-LEFT: 20px;
-    BACKGROUND: no-repeat left center;
-    COLOR: #333
-}
-UL.diags LI.success
-{
-    BACKGROUND-IMAGE: url(img/yes.png)
-}
-UL.log LI.success
-{
-    BACKGROUND-IMAGE: url(img/yes.png)
-}
-UL.diags LI.failure
-{
-    FONT-WEIGHT: bold;
-    BACKGROUND-IMAGE: url(img/no.png);
-    COLOR: #f66
-}
-UL.log LI.failure
-{
-    FONT-WEIGHT: bold;
-    BACKGROUND-IMAGE: url(img/no.png);
-    COLOR: #f66
-}
-HTML > BODY .tagsoup1
-{
-    DISPLAY: block;
-    BACKGROUND: url(img/shadow.png) no-repeat right bottom;
-    MARGIN: 12px -12px -12px 12px;
-    POSITION: relative
-}
-HTML > BODY .tagsoup1:unknown
-{
-    DISPLAY: block;
-    BACKGROUND: none transparent scroll repeat 0% 0%;
-    WIDTH: 12px;
-    HEIGHT: 12px;
-    content: " "
-}
-HTML > BODY .tagsoup1:unknown
-{
-    DISPLAY: block;
-    BACKGROUND: none transparent scroll repeat 0% 0%;
-    WIDTH: 12px;
-    HEIGHT: 12px;
-    content: " "
-}
-HTML > BODY .tagsoup1:unknown
-{
-    BACKGROUND-POSITION: right top;
-    RIGHT: 0px;
-    MARGIN: -12px 0px 0px auto;
-    POSITION: absolute;
-    TOP: 0px
-}
-HTML > BODY .tagsoup1:unknown
-{
-    BACKGROUND-POSITION: left bottom;
-    MARGIN: -12px 0px 0px -12px
-}
-HTML > BODY .tagsoup1 .tagsoup2
-{
-    DISPLAY: block;
-    LEFT: -12px;
-    MARGIN: 0px;
-    OVERFLOW: hidden;
-    POSITION: relative;
-    TOP: -12px
-}
+#page_top {width: 859px; height: 7px; margin: 0 auto; background: transparent url(img/pagetop.jpg) top left no-repeat; clear: both;}
+#page {float: left; width: 859px; height: 100%; margin: 0 auto; background: transparent url(img/page_bg.jpg) top left repeat-y;}
+#page_bot {width: 859px; height: 7px; margin: 0 auto; background: transparent url(img/pagebot.jpg) top left no-repeat; clear: both;}
+
+
+#leftside {width: 197px; float: left; background: transparent; margin-left: 1px; text-align: left;}
+	#leftside h3 {margin: 0; padding:0; padding-left: 10px; padding-top: 10px; color: #fff; border-bottom: 1px solid #fff; margin-bottom: 4px; margin-right: 20px;}
+	#leftside ul {list-style-type: none; padding: 0; margin: 0; font-size: 14px; color: #fff;}
+	#leftside ul li {padding-bottom: 5px; padding-left: 5px; margin-bottom: 5px;}
+	#leftside ul li.current {color: #fff; font-weight: bold; background: transparent url(img/activestep.jpg) top left no-repeat; padding-top: 2px; padding-left: 5px; padding-bottom: 2px;}
+	#leftside ul li a {width: 160px; padding-right: 20px; color: #ccc; font-weight: normal; font-style: italic; text-decoration: none; background: url(img/yes.png) top right no-repeat;}
+	#leftside ul li a:hover {color: #fff;}
+
+#rightside {width: 660px; float: right; background: transparent; margin-right: 1px;}
+	#rightside a {color: #7c7b7b; text-decoration: underline;}
+	#rightside a:hover {color: #000;}
+	#rightside ul {list-style-type: none; padding: 0; margin: 0; padding: 1px;}
+	#rightside ul li {}
+	#rightside .page {margin-left: 5px; margin-right: 5px; margin-top: 8px; background: #fff; padding: 5px;}
+	#rightside .page h2, #rightside .page h3 {color: #000; font-size: 16px; border-bottom: 1px solid #aeaeae;}
+	#rightside .page h4 {color: #000; font-size: 12px; border-bottom: 1px solid #aeaeae;}
+
+	select#modinstall, select#modperms {margin-left: 25%; text-align: center; width: 50%; height: 125px; font-size: 12px; text-transform: uppercase; margin-bottom: 10px;}
+	.langselect {margin: 3px; font-family: Arial, Helvetica, sans-serif; text-align: center; text-decoration: none; font-size: 11px; display: inline-block;}
+	.langselect a {display: inline-block; height: 70px !important; height: 70px; width: 70px !important; width: 70px; vertical-align: middle; text-decoration: none; text-transform: uppercase; border: 1px solid #CCCCCC; padding: 2px 5px 1px 5px; margin: 0; margin-bottom:4px; color: #666666;}
+	.langselect a input {text-align: center; float: left; margin-left: 45%;}
+	.langselect a:hover{background-color: #FFF6C1; border: 1px solid #FF9900; color: #1E90FF;}
+	.langselect a img {text-align: center; text-decoration: none; border: 0px; margin: 5px 0px;}
+
+
+	.diags {border-bottom: 1px solid #f2f2f2; padding-bottom: 5px; margin-bottom: 5px; width: 100%;}
+	.diags caption {width: 100%; color: #414040; text-align: left;}
+	.diags .head {width: 25%; background: #f2f2f2; color: #000; border-right: 1px solid #7c7b7b; border-bottom: 1px solid #7c7b7b; text-align: center; padding: 2px; font-weight: bold;}
+	.diags .success {width: 100%; background: #c4fbbd; color: #000; border: 2px solid #17b402; padding: 4px; margin-bottom: 2px;}
+	.diags .warning, .diags .failure {width: 100%; background: #fbc1bd; color: #000; border: 2px solid #c60f01; padding: 4px; margin-bottom: 2px;}
+	.diags th#recs {margin-bottom: 15px; border: 1px solid #f2f2f2;}
+
+	.xoform-help {display: none; border: orange 2px solid; padding: 5px; background: #fff8dc; margin: .5em; text-align: center;}
+	.diags button, #trustperms button {float: right; margin-right: 10px; margin-top: 4px;}
+
+	#pathsettings label {clear: both; width: 100%;}
+	input#rootpath, input#trustpath, input#url, input#DB_HOST, input#DB_USER, input#DB_PASS, input#DB_NAME, input#DB_PREFIX, input#DB_SALT {width: 60%; margin-left: 5px;}
+	input, select {float: right; clear: both; margin-bottom: 5px;}
+	#trustpathimg, #rootpathimg {padding-right: 5px;}
+	#rootpathimg .rootimg {padding-right: 5px;}
+
+	#rootperms, #trustperms {margin-top: 8px; padding-top: 8px; border-top: 1px solid #f2f2f2; clear: both;}
+
+	.dbconn_line {border-bottom: 1px solid #f2f2f2; padding-bottom: 5px; margin-bottom: 5px; clear: both;}
+
+	#configsave ul {background: #fbfbfb; border: 1px solid #f2f2f2; margin: 5px;}
+	.x2-note {background: #cafbc2; border: 1px solid #7c7b7b; margin: 5px; text-align: center;}
+	.errorMsg {background: #fbd1c2; border: 1px solid #7c7b7b; margin: 5px; text-align: center;}
+
+	#modinstall {width: 100%;}
+
+	#end ul {width: 99%; border: none; background: transparent;}	
+	#end ul li {background: transparent;}
+
+.clear {width: 100%; height: 1px; background: transparent;} 
+
+#buttons, #help_button, #pagedown, #toggler {float: right; margin-right: 10px; margin-top: 4px; outline: none; direction: ltr;}
+#help_button, #pagedown, #toggler {float: left;}
+button, button:focus {outline: none;}
+button::-moz-focus-inner {border: 0;}
+
+#footer {width: 859px; margin: 0 auto; background: transparent; text-align: right; font-size: 12px; color: #fff;}
+#footer a {color: #d28c03;}
+#footer a:hover {color: #f3ac03;}
+
+/*  FIELDSET STYLES */
+form fieldset{background: transparent; border: 0; border-top:2px solid #657887; display:block;}
+form fieldset legend{ float: right; padding: 2px 5px; margin-right: 10px; border-left: 1px solid #657887; border-right: 1px solid #657887; font-weight:bold; text-transform:uppercase; letter-spacing:2px; position:relative; top: -12px;}
+form label {float: right;}
+
 /*  ADVANCED STYLES */
-.top_testresult{
-	font-weight: bold;
-	font-size:13px;
-	font-family: arail,helvetica,san-serif;
-	color:#666;
-	padding:0;
-	margin:0 0 2px 0;
-}
-.top_testresult span{
-	padding:6px ;
-	margin:0;
-}
-.top_shortPass{
-	background:#edabab;
-	border:1px solid #bc0000;
-	display:block;
-}
-.top_shortPass span{
-	
-}
-.top_badPass{
-	background:#edabab;
-	border:1px solid #bc0000;
-	display:block;
-}
-.top_badPass span{
-	
-}
-.top_goodPass{
-	background:#ede3ab;
-	border:1px solid #bc9f00;
-	display:block;
-}
-.top_goodPass span{
+.top_testresult {font-weight: bold; font-size:13px; font-family: arail,helvetica,san-serif; color:#666; padding:0; margin:0 0 2px 0;}
+.top_testresult span {padding:6px; margin: 0;}
+.top_shortPass {background:#edabab; border:1px solid #bc0000; display:block;}
+.top_shortPass span {}
+.top_badPass {background:#edabab; border:1px solid #bc0000; display:block;}
+.top_badPass span {}
+.top_goodPass {background:#ede3ab; border:1px solid #bc9f00; display:block;}
+.top_goodPass span {}
+.top_strongPass {background:#d3edab; border:1px solid #73bc00; display:block;}
+.top_strongPass span {}
 
-}
-.top_strongPass{
-	background:#d3edab;
-	border:1px solid #73bc00;
-	display:block;
-}
-.top_strongPass span{
-
-}
-
-
-/* 	RESULT STYLE  */
-.testresult{
-	font-weight: bold;
-	font-size:13px;
-	font-family: Tahoma,arial,helvetica,san-serif;
-	color:#666;
-	padding:0px 0px 12px 10px;
-	margin-left:10px;
-	display: block;
-	height:28px;
-	float:right;
-}
-.testresult span{
-	padding:10px 20px 12px 10px;
-	margin: 0px 0px 0px 20px;
-	display:block;
-	float:left;
-	white-space: nowrap;
-}
-.shortPass{
-	background:url(img/red.png) no-repeat 0 0;
-}
-.shortPass span{
-	background:url(img/red.png) no-repeat top right;
-}
-.badPass{
-	background:url(img/red.png) no-repeat 0 0;
-}
-.badPass span{
-	background:url(img/red.png) no-repeat top right;
-}
-.goodPass{
-	background:url(img/yellow.png) no-repeat 0 0;
-}
-.goodPass span{
-	background:url(img/yellow.png) no-repeat top right;
-}
-.strongPass{
-	background:url(img/green.png) no-repeat 0 0;
-}
-.strongPass span{
-	background:url(img/green.png) no-repeat top right;
-}
+/*  RESULT STYLES  */
+.testresult {font-weight: bold; font-size:13px; font-family: arial,helvetica,san-serif; color:#666; padding:0px 0px 12px 10px; margin-left:10px;	display: block; height:28px; float:left;}
+.testresult span {padding:10px 20px 12px 10px; margin: 0px 0px 0px 20px; display:block; float:right; white-space: nowrap;}
+.shortPass {background:url(img/red.png) no-repeat 0 0;}
+.shortPass span {background:url(img/red.png) no-repeat bottom right;}
+.badPass {background:url(img/red.png) no-repeat 0 0;}
+.badPass span {background:url(img/red.png) no-repeat bottom right;}
+.goodPass {background:url(img/yellow.png) no-repeat 0 0;}
+.goodPass span {background:url(img/yellow.png) no-repeat bottom right;}
+.strongPass {background:url(img/green.png) no-repeat 0 0;}
+.strongPass span {background:url(img/green.png) no-repeat bottom right;}

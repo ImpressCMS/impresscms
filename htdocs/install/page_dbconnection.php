@@ -77,7 +77,7 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
     if ( $help ) {
         $field .= '<div class="xoform-help">' . $help . "</div>\n";
     }
-    $field .= "<input type='$type' name='$name' id='$name' value='$value' />";
+    $field .= "<div class='clear'>&nbsp;</div><input type='$type' name='$name' id='$name' value='$value' />";
 
     return $field;
 }
@@ -88,6 +88,7 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
 <?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
 <fieldset>
     <legend><?php echo LEGEND_CONNECTION; ?></legend>
+  <div class="dbconn_line">
     <label>
         <?php echo LEGEND_DATABASE; ?><br />
 		<select size="2" name="DB_TYPE" class="db_select">
@@ -95,9 +96,17 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
 			<!-- <option value="mysqli">mysqli</option> //-->
 		</select>
     </label>
+  <div class='clear'>&nbsp;</div>
+  </div>
+  <div class="dbconn_line">
     <?php echo xoFormField( 'DB_HOST',    $vars['DB_HOST'],        DB_HOST_LABEL, DB_HOST_HELP ); ?>
+  </div>
+  <div class="dbconn_line">
     <?php echo xoFormField( 'DB_USER',    $vars['DB_USER'],        DB_USER_LABEL, DB_USER_HELP ); ?>
-	<?php echo xoFormField( 'DB_PASS',	$vars['DB_PASS'],		DB_PASS_LABEL, DB_PASS_HELP, 'password' ); ?>
+  </div>
+  <div class="dbconn_line">
+    <?php echo xoFormField( 'DB_PASS',	$vars['DB_PASS'],		DB_PASS_LABEL, DB_PASS_HELP, 'password' ); ?>
+  </div>
 
     <label>
         <?php echo htmlspecialchars( DB_PCONNECT_LABEL ); ?>

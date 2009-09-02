@@ -164,11 +164,10 @@ define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS 
 
 
 //
-define("_INSTALL_SELECT_MODS_INTRO", "In the selection box on the left side, please select the modules that
-you wish to install on this site.
-All the installed modules are accessible by the admin group and the registered users.
-In case you would like to give visitors to the site (unregistered users or users who are not logged in) access to one or more of the
-installed modules please select these modules in the selection box on the right.");
+define("_INSTALL_SELECT_MODS_INTRO", 'From the list below, please select the modules that you wish to install on this site. <br /><br />
+All the installed modules are accessible by the Administrators group and the Registered Users group by default. <br /><br />
+If you need to set permissions for Anonymous Users please do so in the Administration Panel after you complete this installer. <br /><br />
+For more information regarding Group Administration, please visit the <a href="http://wiki.impresscms.org/index.php?title=Permissions" rel="external">wiki</a>.');
 
 define("_INSTALL_SELECT_MODULES", 'Select modules to be installed');
 define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Select modules visible to visitors');

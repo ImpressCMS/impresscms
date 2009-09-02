@@ -30,7 +30,6 @@ if ($success){
 
 	$wizard->setPage( 'end' );
 	$pageHasForm = false;
-
 	$content = "";
 	include "./language/$wizard->language/finish.php";
 	

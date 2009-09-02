@@ -17,10 +17,10 @@ class protector_postcommon_post_htmlpurify4guest extends ProtectorFilterAbstract
 			return true ;
 		}
 
-		if( file_exists( XOOPS_ROOT_PATH.'/class/icms_HTMLPurifier.php' ) ) {
+		if( file_exists( XOOPS_ROOT_PATH.'/class/icms.class.htmlpurifier.php' ) ) {
 			// use HTMLPurifier inside ImpressCMS
 			if( ! class_exists( 'icms_HTMLPurifier' ) ) {
-				require_once ICMS_ROOT_PATH.'/class/icms_HTMLPurifier.php' ;
+				require_once ICMS_ROOT_PATH.'/class/icms.class.htmlpurifier.php' ;
 			}
 //			$pure =& icms_HTMLPurifier::getPurifierInstance() ;
 //			$_POST = $pure->icms_html_purifier( $_POST , 'protector' ) ;

@@ -28,10 +28,10 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
 	$error =& $_SESSION['error'];
 
-function createSalt() {
-    include_once './include/functions.php';
-    return imcms_createSalt();
-}
+	function createSalt() { 
+ 	    include_once './include/functions.php'; 
+ 	    return imcms_createSalt(); 
+ 	}
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$vars['adminsalt'] = createSalt();
@@ -61,7 +61,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     ob_start();
 ?>
 <?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
-	<script type="text/javascript" src="../libraries/jquery/jquery.js"></script>
+
 	<script type="text/javascript" src="../libraries/jquery/password_strength_plugin.js"></script>
 	<script type="text/javascript">
                 $(document).ready( function() {
@@ -84,16 +84,31 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	</script>
 <fieldset>
 	<legend><?php echo LEGEND_ADMIN_ACCOUNT; ?></legend>
+	<div class="dbconn_line">
 	<label for="adminname"><?php echo ADMIN_DISPLAY_LABEL; ?></label>
+	<div class="clear">&nbsp;</div>
 	<input type="text" name="adminname" id="adminname" maxlength="25" value="<?php echo htmlspecialchars( $vars['adminname'], ENT_QUOTES ); ?>" />
+	</div>
+	<div class="dbconn_line">
 	<label for="adminlogin_name"><?php echo ADMIN_LOGIN_LABEL; ?></label>
+	<div class="clear">&nbsp;</div>
 	<input type="text" name="adminlogin_name" id="adminlogin_name" maxlength="25" value="<?php echo htmlspecialchars( $vars['adminlogin_name'], ENT_QUOTES ); ?>" />
+	</div>
+	<div class="dbconn_line">
 	<label for="adminmail"><?php echo ADMIN_EMAIL_LABEL; ?></label>
+	<div class="clear">&nbsp;</div>
 	<input type="text" name="adminmail" id="adminmail" maxlength="255" value="<?php echo htmlspecialchars( $vars['adminmail'], ENT_QUOTES ); ?>" />
+	</div>
+	<div class="dbconn_line">
 	<label for="adminpass"><?php echo ADMIN_PASS_LABEL; ?></label>
+	<div class="clear">&nbsp;</div>
 	<input class="password_adv" type="password" name="adminpass" id="adminpass" maxlength="255" value="" />
+	</div>
+	<div class="dbconn_line">
 	<label for="adminpass2"><?php echo ADMIN_CONFIRMPASS_LABEL; ?></label>
+	<div class="clear">&nbsp;</div>
 	<input type="password" name="adminpass2" id="adminpass2" maxlength="255" value="" />
+	</div>
 </fieldset>
 <?php
 	$content = ob_get_contents();

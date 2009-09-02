@@ -55,15 +55,27 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 }
 	$_SESSION = array();
 	$pageHasForm = true;
+	$pageHasHelp = true;
 	$title = LANGUAGE_SELECTION;
-	$content = '<select name="lang" size="10" style="min-width:10em">';
+	$content = "";
 
 	$languages = getDirList( "./language/" );
 	foreach ( $languages as $lang ) {
-		$sel = ( $lang == $wizard->language ) ? ' selected="selected"' : '';
-		$content .= "<option value=\"$lang\"$sel>$lang</option>\n";
+		$sel = ( $lang == $wizard->language ) ? ' checked="checked"' : '';
+		$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../images/flags/$lang.gif\" alt=\"$lang\" /><br />$lang<br /> <input type=\"checkbox\" name=\"lang\" value=\"$lang\"$sel /></a></div><br /><br />\n";
 	}
-	$content .= "</select>";
-
+	$content .= '<fieldset style="text-align: center;">';
+	$content .= '<legend>Select an Alternative Language Pack to Download</legend>';
+	$content .= '<div class="xoform-help">Languages may or may not be available if this is a development release.</div>';
+	$content .= '<div class="langselect" style="text-decoration: none;"><a href="http://addons.impresscms.org/modules/wfdownloads/viewcat.php?cid=241" target="_blank" style="text-decoration: none;"><img src="../images/flags/portuguesebr.gif" alt="Portuguese/BR Language Pack" /><br />Portuguese<br />&lt;BR&gt;<br /></a></div>';
+	$content .= '<div class="langselect" style="text-decoration: none;"><a href="http://addons.impresscms.org/modules/wfdownloads/viewcat.php?cid=243" target="_blank" style="text-decoration: none;"><img src="../images/flags/nederlands.gif" alt="Dutch Language Pack" /><br />Dutch<br /></a></div>';
+	$content .= '<div class="langselect" style="text-decoration: none;"><a href="http://addons.impresscms.org/modules/wfdownloads/viewcat.php?cid=236" target="_blank" style="text-decoration: none;"><img src="../images/flags/french.gif" alt="French Language Pack" /><br />French<br /></a></div>';
+	$content .= '<div class="langselect" style="text-decoration: none;"><a href="http://addons.impresscms.org/modules/wfdownloads/viewcat.php?cid=239" target="_blank" style="text-decoration: none;"><img src="../images/flags/german.gif" alt="German Language Pack" /><br />German<br /></a></div>';
+	$content .= '<div class="langselect" style="text-decoration: none;"><a href="http://addons.impresscms.org/modules/wfdownloads/viewcat.php?cid=247" target="_blank" style="text-decoration: none;"><img src="../images/flags/italian.gif" alt="Italian Language Pack" /><br />Italian<br /></a></div>';
+	$content .= '<div class="langselect" style="text-decoration: none;"><a href="http://addons.impresscms.org/modules/wfdownloads/viewcat.php?cid=237" target="_blank" style="text-decoration: none;"><img src="../images/flags/persian.gif" alt="Persian Language Pack" /><br />Persian<br /></a></div>';
+	$content .= '<div class="langselect" style="text-decoration: none;"><a href="http://addons.impresscms.org/modules/wfdownloads/viewcat.php?cid=240" target="_blank" style="text-decoration: none;"><img src="../images/flags/spanish.gif" alt="Spanish Language Pack" /><br />Spanish<br /></a></div>';
+	$content .= '<div style="text-align: center; margin-top: 5px;"><a href="http://addons.impresscms.org/modules/wfdownloads/viewcat.php?cid=11" target="_blank">Select another language not listed here.</a></div>';
+	$content .= '</fieldset>';
+       
 	include 'install_tpl.php';
 ?>

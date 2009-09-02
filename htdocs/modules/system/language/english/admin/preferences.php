@@ -651,7 +651,7 @@ define("_MD_AM_PURIFIER_LIVELEAK","LiveLeak Movies");
 define("_MD_AM_UNABLECSSTIDY", "CSSTidy Plugin is not found, Please copy the make sure you have CSSTidy located in your plugins folder.");
 
 // Autotasks
-//define("_MD_AM_AUTOTASKS", "Auto Tasks");
+if(!defined('_MD_AM_AUTOTASKS')){define('_MD_AM_AUTOTASKS', 'Auto Tasks');}
 define("_MD_AM_AUTOTASKS_SYSTEM", "Processing system");
 define("_MD_AM_AUTOTASKS_HELPER", "Helper application");
 define("_MD_AM_AUTOTASKS_HELPER_PATH", "Path for helper application");

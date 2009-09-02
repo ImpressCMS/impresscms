@@ -29,6 +29,7 @@ Revision:
 * added Admin Config Preferences for HTMLPurifier Library. (vaughan)
 * added New static protected class for uniquely dealing with Password related functions. (vaughan)
 * #338: imProfile: added security level for tribes | ticket from addons (Phoenyx)
+* added New installer. (MrTheme)
 
 '''Improved'''
 * #751: cleanup admin preference pages, use tooltip boxes for form field descriptions. (vaughan/MrTheme)
@@ -131,6 +132,15 @@ Revision:
 * #755: fixed wrong parameter handling in IcmsSecureForm (Phoenyx)
 * #727: Incorrect URL for tags in content manager (skenow)
 * #758: IPF improvements to userrank admin
+* #707: installer ... selection box on the right (MrTheme)
+* #715: installer error - stage 11 (stranger)
+* #715: installer error - stage 11 (stranger)
+* #610: errors while disabling & uninstalling modules. (stranger)
+* #652: icmsStopSpammer causes blank page when the stopforumspam.org site is unavailable (stranger)
+* #664: installer error - stage 12 (stranger)
+* #607: Fatal error - function declaration problem if Frameworks is present (stranger)
+* #710: IPF issue: icmsformtextelement.php, icmsformtextelement.php, icmsformcheckelement.php (stranger)
+* #733: Fatal error: Class 'IcmsPersistableObject' not found in G:\xampp\htdocs\trunk\modules\system\admin\autotasks\class\autotasks.php on line 21 (stranger)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''

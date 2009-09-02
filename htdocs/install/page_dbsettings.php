@@ -117,7 +117,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset
 	
 	$field = "<label for='$name'>$label</label>\n";
 	if ($help) {
-		$field .= '<div class="xoform-help">' . $help . "</div>\n";
+		$field .= '<div class="xoform-help">' . $help . "</div><div class='clear'>&nbsp;</div>\n";
 	}
 	$field .= "<select name='$name' id='$name'\">";
 	
@@ -200,11 +200,11 @@ function xoFormField($name, $value, $label, $maxlength, $help = '') {
 	$value = htmlspecialchars ( $value, ENT_QUOTES );
 	$maxlength = intval ( $maxlength );
 	
-	$field = "<label for='$name'>$label</label>\n";
+	$field = "<div class='dbconn_line'><label for='$name'>$label</label>\n";
 	if ($help) {
-		$field .= '<div class="xoform-help">' . $help . "</div>\n";
+		$field .= '<div class="xoform-help">' . $help . "</div><div class='clear'>&nbsp;</div>\n";
 	}
-	$field .= "<input type='text' name='$name' id='$name' value='$value' />";
+	$field .= "<input type='text' name='$name' id='$name' value='$value' /></div>";
 	
 	return $field;
 }
@@ -229,16 +229,16 @@ function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
 	$name = htmlspecialchars ( $name, ENT_QUOTES );
 	$value = htmlspecialchars ( $value, ENT_QUOTES );
 	
-	$field = "<label for='$name'>$label</label>\n";
+	$field = "<div class='dbconn_line'><label for='$name'>$label</label>\n";
 	if ($help) {
-		$field .= '<div class="xoform-help">' . $help . "</div>\n";
+		$field .= '<div class="xoform-help">' . $help . "</div><div class='clear'>&nbsp;</div>\n";
 	}
 	$field .= "<select name='$name' id='$name' onchange=\"setFormFieldCollation('DB_COLLATION_div', this.value)\">";
 	$field .= "<option value=''>None</option>";
 	foreach ( $charsets as $key => $desc ) {
 		$field .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : "") . ">{$key} - {$desc}</option>";
 	}
-	$field .= "</select>";
+	$field .= "</select></div>";
 	
 	return $field;
 }

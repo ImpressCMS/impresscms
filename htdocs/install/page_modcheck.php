@@ -34,7 +34,7 @@ function xoDiag( $status = -1, $str = '' ) {
 	if ( empty($str) ) {
 		$str = $strings[$status];
 	}
-	return '<span class="' . $classes[$status] . '">' . $str . '</span>';
+	return '<td class="' . $classes[$status] . '">' . $str . '</td>';
 }
 function xoDiagBoolSetting( $name, $wanted = false, $severe = false ) {
 	$setting = strtolower( ini_get( $name ) );
@@ -64,15 +64,15 @@ function xoDiagIfWritable( $path ) {
 
 	ob_start();
 ?>
-	<table class="diags">
-	<caption><?php echo REQUIREMENTS; ?></caption>
-    <tr>
-      <td><?php echo SERVER_API; ?></td>
-      <td><?php echo php_sapi_name(); ?></td>
-    </tr>
-    <tr>
-        <td><?php echo _PHP_VERSION; ?></td>
-        <td><?php
+<fieldset>
+  <legend><?php echo REQUIREMENTS; ?></legend>
+     <h4><?php echo SERVER_API; ?>:&nbsp;
+     <?php echo php_sapi_name(); ?>
+     <img src="img/yes.png" alt="Success" class="rootimg" />
+     </h4>
+    <div class="clear">&nbsp;</div>
+     <h4><?php echo _PHP_VERSION; ?>:&nbsp;
+        <?php
             if ( version_compare( phpversion(), '5.2', '>=') ) {
             	echo xoDiag( 1, phpversion() );
             } elseif ( version_compare( phpversion(), '5.1', '>=') ) {
@@ -80,75 +80,80 @@ function xoDiagIfWritable( $path ) {
             } else {
             	echo xoDiag( -1, phpversion() );
             }
-     		?></td>
-    </tr>
-    <tr>
-        <td><?php printf( PHP_EXTENSION, 'MySQL' ); ?></td>
-        <td><?php echo xoDiag( function_exists( 'mysql_connect' ) ? 1 : -1 ); ?></td>
-    </tr>
-    <tr>
-        <td><?php printf( PHP_EXTENSION, 'Session' ); ?></td>
-        <td><?php echo xoDiag( extension_loaded( 'session' ) ? 1 : -1 ); ?></td>
-    </tr>
-    <tr>
-        <td><?php printf( PHP_EXTENSION, 'PCRE' ); ?></td>
-        <td><?php echo xoDiag( extension_loaded( 'pcre' ) ? 1 : -1 ); ?></td>
-    </tr>
-    <tr>
-		<td scope="row">file_uploads</td>
-		<td><?php echo xoDiagBoolSetting( 'file_uploads', true ); ?></td>
-    </tr>
-	</table>
+     		?>
+    <img src="img/yes.png" alt="Success" class="rootimg" />
+    </h4>
+    <div class="clear">&nbsp;</div>
+    <h4><?php printf( PHP_EXTENSION, 'MySQL' ); ?>:&nbsp;
+        <?php echo xoDiag( function_exists( 'mysql_connect' ) ? 1 : -1 ); ?>
+     <img src="img/yes.png" alt="Success" class="rootimg" />
+    </h4>
+    <div class="clear">&nbsp;</div>
+    <h4><?php printf( PHP_EXTENSION, 'Session' ); ?>:&nbsp;
+        <?php echo xoDiag( extension_loaded( 'session' ) ? 1 : -1 ); ?>
+     <img src="img/yes.png" alt="Success" class="rootimg" />
+    </h4>
+    <div class="clear">&nbsp;</div>
+    <h4><?php printf( PHP_EXTENSION, 'PCRE' ); ?>:&nbsp;
+        <?php echo xoDiag( extension_loaded( 'pcre' ) ? 1 : -1 ); ?>
+     <img src="img/yes.png" alt="Success" class="rootimg" />
+    </h4>
+    <div class="clear">&nbsp;</div>
+    <h4>file_uploads:&nbsp;
+	<?php echo xoDiagBoolSetting( 'file_uploads', true ); ?>
+     <img src="img/yes.png" alt="Success" class="rootimg" />
+    </h4>
+    <div class="clear">&nbsp;</div>
+</fieldset>
 
-	<table class="diags">
-	<caption><?php echo RECOMMENDED_EXTENSIONS; ?></caption>
-    <thead>
-    	<tr><th colspan="2"><p><?php echo RECOMMENDED_EXTENSIONS_MSG; ?></p></th></tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td><?php printf( PHP_EXTENSION, CHAR_ENCODING ); ?></td>
-        <td><?php
-				$ext = array();
-				if ( extension_loaded( 'iconv' ) )		$ext[] = 'Iconv';
-				if ( extension_loaded( 'mb_string' ) )	$ext[] = 'MBString';
-				if ( empty($ext) ) {
-					echo xoDiag( 0, NONE );
-				} else {
-					echo xoDiag( 1, implode( ',', $ext ) );
-				}
-			?></td>
-    </tr>
-    <tr>
-        <td><?php printf( PHP_EXTENSION, XML_PARSING ); ?></td>
-        <td><?php
-				$ext = array();
-				if ( extension_loaded( 'xml' ) )		$ext[] = 'XML';
-				//if ( extension_loaded( 'dom' ) )		$ext[] = 'DOM';
-				if ( empty($ext) ) {
-					echo xoDiag( 0, NONE );
-				} else {
-					echo xoDiag( 1, implode( ',', $ext ) );
-				}
-			?></td>
-    </tr>
-    <tr>
-        <td><?php printf( PHP_EXTENSION, OPEN_ID ); ?></td>
-        <td><?php
-				$ext = array();
-				if ( extension_loaded( 'curl' ) )		$ext[] = 'Curl';
-				if ( extension_loaded( 'bcmath' ) )		$ext[] = 'Math Support';
-				if ( extension_loaded( 'openssl' ) )	$ext[] = 'OpenSSL';
-				if ( empty($ext) ) {
-					echo xoDiag( 0, NONE );
-				} else {
-					echo xoDiag( 1, implode( ',', $ext ) );
-				}
-			?></td>
-    </tr>
-
-    </tbody>
-	</table>
+<fieldset>
+  <legend><?php echo RECOMMENDED_EXTENSIONS; ?></legend>
+    <p><?php echo RECOMMENDED_EXTENSIONS_MSG; ?></p>
+    <div class="clear">&nbsp;</div>
+   
+    <h4><?php printf( PHP_EXTENSION, CHAR_ENCODING ); ?>:&nbsp;
+        <?php
+		$ext = array();
+		if ( extension_loaded( 'iconv' ) )		$ext[] = 'Iconv';
+		if ( extension_loaded( 'mb_string' ) )	$ext[] = 'MBString';
+		if ( empty($ext) ) {
+			echo xoDiag( 0, NONE );
+		} else {
+			echo xoDiag( 1, implode( ',', $ext ) );
+		}
+	?>
+     <img src="img/yes.png" alt="Success" class="rootimg" />
+    </h4>
+    <div class="clear">&nbsp;</div>
+    <h4><?php printf( PHP_EXTENSION, XML_PARSING ); ?>:&nbsp;
+        <?php
+		$ext = array();
+		if ( extension_loaded( 'xml' ) )		$ext[] = 'XML';
+		//if ( extension_loaded( 'dom' ) )		$ext[] = 'DOM';
+		if ( empty($ext) ) {
+			echo xoDiag( 0, NONE );
+		} else {
+			echo xoDiag( 1, implode( ',', $ext ) );
+		}
+	?>
+     <img src="img/yes.png" alt="Success" class="rootimg" />
+    </h4>
+    <div class="clear">&nbsp;</div>
+    <h4><?php printf( PHP_EXTENSION, OPEN_ID ); ?>:&nbsp;
+        <?php
+		$ext = array();
+		if ( extension_loaded( 'curl' ) )		$ext[] = 'Curl  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
+		if ( extension_loaded( 'bcmath' ) )		$ext[] = ' Math Support  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
+		if ( extension_loaded( 'openssl' ) )	$ext[] = ' OpenSSL  <img src="img/yes.png" alt="Success" class="rootimg" />';
+		if ( empty($ext) ) {
+			echo xoDiag( 0, NONE );
+		} else {
+			echo xoDiag( 1, implode( ' ', $ext ) );
+		}
+	?>
+    </h4>
+    <div class="clear">&nbsp;</div>
+</fieldset>
 	<!--
 	<table class="diags">
 	<caption><?php echo FILE_PERMISSIONS; ?></caption>
