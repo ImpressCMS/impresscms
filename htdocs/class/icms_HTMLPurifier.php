@@ -12,7 +12,7 @@ class icms_HTMLPurifier
     /**
     * variable used by HTMLPurifier Library
     **/
-    var $purifier;
+    public $purifier;
 
     /**
     * Constructor

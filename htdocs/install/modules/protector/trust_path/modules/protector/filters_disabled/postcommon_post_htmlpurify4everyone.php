@@ -11,10 +11,10 @@ class protector_postcommon_post_htmlpurify4everyone extends ProtectorFilterAbstr
 			die( 'Turn postcommon_post_htmlpurify4everyone.php off because this filter cannot run with PHP4' ) ;
 		}
 
-		if( file_exists( XOOPS_ROOT_PATH.'/class/icms.htmlpurifier.php' ) ) {
+		if( file_exists( XOOPS_ROOT_PATH.'/class/icms_HTMLPurifier.php' ) ) {
 			// use HTMLPurifier inside ImpressCMS
 			if( ! class_exists( 'icms_HTMLPurifier' ) ) {
-				require_once ICMS_ROOT_PATH.'/class/icms.htmlpurifier.php' ;
+				require_once ICMS_ROOT_PATH.'/class/icms_HTMLPurifier.php' ;
 			}
 //			$pure =& icms_HTMLPurifier::getPurifierInstance() ;
 //			$_POST = $pure->icms_html_purifier( $_POST , 'protector' ) ;
