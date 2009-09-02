@@ -3,6 +3,10 @@
 require_once dirname(dirname(__FILE__)).'/class/gtickets.php' ;
 $db =& Database::getInstance() ;
 
+	// for RTL users
+	@define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;
+	@define( '_GLOBAL_RIGHT' , @_ADM_USE_RTL == 1 ? 'left' : 'right' ) ;
+
 // COPY TABLES
 if( ! empty( $_POST['copy'] ) && ! empty( $_POST['old_prefix'] ) ) {
 
@@ -236,8 +240,8 @@ foreach( $prefixes as $prefix ) {
 	echo "
 	<tr>
 		<td class='odd' style='$style_append;'>$prefix4disp</td>
-		<td class='odd' style='text-align:right;$style_append;'>$table_count</td>
-		<td class='odd' style='text-align:right;$style_append;'>{$prefix['updated']}</td>
+		<td class='odd' style='text-align:"._GLOBAL_RIGHT.";$style_append;'>$table_count</td>
+		<td class='odd' style='text-align:"._GLOBAL_RIGHT.";$style_append;'>{$prefix['updated']}</td>
 		<td class='odd' style='text-align:center;$style_append;' nowrap='nowrap'>
 			<form action='?page=prefix_manager' method='POST' style='margin:0px;'>
 				$ticket_input

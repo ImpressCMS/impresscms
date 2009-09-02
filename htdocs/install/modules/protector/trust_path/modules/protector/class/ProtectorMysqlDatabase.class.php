@@ -137,10 +137,11 @@ function checkSql( $sql )
 	}
 
 	// stage3: comment exists or not without quoted strings (too sensitive?)
-	if( preg_match( '/(\/\*|\-\-|\#)/' , $sql_wo_strings ) ) {
-		list( , $sql_after_mark ) = preg_split( '/(\/\*|\-\-|\#)/' , $sql_wo_strings , 2 ) ;
-		if( preg_match( '/(ORDER |WHERE |LIMIT |AND )/i' , $sql_after_mark ) ) {
-			$this->injectionFound( $sql ) ;
+	if( preg_match( '/(\/\*|\-\-|\#)/' , $sql_wo_strings , $regs ) ) {
+		foreach( $this->doubtful_requests as $request ) {
+			if( strstr( $request , $regs[1] ) ) {
+				$this->injectionFound( $sql ) ;
+			}
 		}
 	}
 }

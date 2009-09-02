@@ -9,6 +9,10 @@ $db =& Database::getInstance() ;
 $pos = empty( $_GET[ 'pos' ] ) ? 0 : intval( $_GET[ 'pos' ] ) ;
 $num = empty( $_GET[ 'num' ] ) ? 20 : intval( $_GET[ 'num' ] ) ;
 
+	// for RTL users
+	@define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;
+	@define( '_GLOBAL_RIGHT' , @_ADM_USE_RTL == 1 ? 'left' : 'right' ) ;
+
 // Table Name
 $log_table = $db->prefix( $mydirname."_log" ) ;
 
@@ -124,7 +128,7 @@ xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 
 // title
-echo "<h3 style='text-align:left;'>".$xoopsModule->name()."</h3>\n" ;
+echo "<h3 style='text-align:"._GLOBAL_LEFT.";'>".$xoopsModule->name()."</h3>\n" ;
 
 // configs writable check
 if( ! is_writable( dirname(dirname(__FILE__)).'/configs' ) ) {
@@ -152,7 +156,7 @@ echo "
 ".$xoopsGTicket->getTicketHtml(__LINE__,1800,'protector_admin')."
 <input type='hidden' name='action' value='update_ips' />
 <table width='95%' class='outer' cellpadding='4' cellspacing='1'>
-  <tr valign='top' align='left'>
+  <tr valign='top' align='"._GLOBAL_LEFT."'>
     <td class='head'>
       "._AM_TH_BADIPS."
     </td>
@@ -162,7 +166,7 @@ echo "
       ".htmlspecialchars($protector->get_filepath4badips())."
     </td>
   </tr>
-  <tr valign='top' align='left'>
+  <tr valign='top' align='"._GLOBAL_LEFT."'>
     <td class='head'>
       "._AM_TH_GROUP1IPS."
     </td>
@@ -172,7 +176,7 @@ echo "
       ".htmlspecialchars($protector->get_filepath4group1ips())."
     </td>
   </tr>
-  <tr valign='top' align='left'>
+  <tr valign='top' align='"._GLOBAL_LEFT."'>
     <td class='head'>
     </td>
     <td class='even'>
@@ -190,11 +194,11 @@ echo "
 <form action='' method='GET' style='margin-bottom:0px;'>
   <table width='95%' border='0' cellpadding='4' cellspacing='0'>
     <tr>
-      <td align='left'>
+      <td align='"._GLOBAL_LEFT."'>
         <select name='num' onchange='submit();'>$num_options</select>
         <input type='submit' value='"._SUBMIT."'>
       </td>
-      <td align='right'>
+      <td align='"._GLOBAL_RIGHT."'>
         $nav_html
       </td>
     </tr>
@@ -249,14 +253,14 @@ while( list( $lid , $uid , $ip , $agent , $type , $description , $timestamp , $u
 // footer of log listing
 echo "
   <tr>
-    <td colspan='8' align='left'>"._AM_LABEL_REMOVE."<input type='button' value='"._AM_BUTTON_REMOVE."' onclick='if(confirm(\""._AM_JS_REMOVECONFIRM."\")){document.MainForm.action.value=\"delete\"; submit();}' /></td>
+    <td colspan='8' align='"._GLOBAL_LEFT."'>"._AM_LABEL_REMOVE."<input type='button' value='"._AM_BUTTON_REMOVE."' onclick='if(confirm(\""._AM_JS_REMOVECONFIRM."\")){document.MainForm.action.value=\"delete\"; submit();}' /></td>
   </tr>
 </table>
-<div align='right'>
+<div align='"._GLOBAL_RIGHT."'>
   $nav_html
 </div>
 <div style='clear:both;'><br /><br /></div>
-<div align='right'>
+<div align='"._GLOBAL_RIGHT."'>
 "._AM_LABEL_COMPACTLOG."<input type='button' value='"._AM_BUTTON_COMPACTLOG."' onclick='if(confirm(\""._AM_JS_COMPACTLOGCONFIRM."\")){document.MainForm.action.value=\"compactlog\"; submit();}' />
 &nbsp;
 "._AM_LABEL_REMOVEALL."<input type='button' value='"._AM_BUTTON_REMOVEALL."' onclick='if(confirm(\""._AM_JS_REMOVEALLCONFIRM."\")){document.MainForm.action.value=\"deleteall\"; submit();}' />

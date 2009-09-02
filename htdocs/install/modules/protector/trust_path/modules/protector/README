@@ -168,6 +168,26 @@ minahito, marcan, and phppp BEST REGARDS!
 
 = CHANGES =
 
+3.36 beta (2009/08/27)
+- updated HTMLPurifier into 4.0.0
+- added a filter postcommon_post_htmlpurify4everyone.php
+- added a filter postcommon_post_register_moratorium.php 3.36a
+- updated language files
+-- persian (thx voltan) 3.36a
+
+3.35 beta (2009/08/13)
+- fixed english modinfo.php is always loaded. (thx Phoenyx)
+- modified comment attacking detection of DBL anti-SQL-Injection again
+- defined some constants for detecting Protector's mode for module maintainers
+-- PROTECTOR_ENABLED_ANTI_SQL_INJECTION
+-- PROTECTOR_ENABLED_ANTI_XSS
+- updated language files
+-- arabic (thx Onasre) 3.35a
+
+3.34 beta (2009/07/06)
+- modified comment attacking detection of DBL anti-SQL-Injection
+- added an option for some environment always enables DBL trapping
+
 3.33 beta (2009/04/03)
 - stopped to force rewriting PHP_SELF and PATH_INFO (thx nao-pon)
 - added checking PHP_SELF into bigumbrella anti-XSS
@@ -501,6 +521,27 @@ minahitoさん、marcanさん、phpppさん、よろしく！
 
 
 ●変更履歴
+
+3.36 beta (2009/08/27)
+- HTMLPurifier を 4.0.0 に更新
+- フィルター追加
+-- postcommon_post_htmlpurify4everyone.php (POSTが常にHTMLPurifierを通過する)
+-- postcommon_post_register_moratorium.php (登録直後のURL付投稿を禁止する) 3.36a
+- 言語ファイル更新
+-- persian (thx voltan) 3.36a
+
+3.35 beta (2009/08/13)
+- ImpressCMS等でmodinfo.phpが常に英語になっていたのを修正 (thx Phoenyx)
+- DBLT-ASIのコメントに対する動作をリクエストから判断するように修正した
+- モジュールメンテナーのために、Protectorの動作モードを知るための定数を定義した
+-- PROTECTOR_ENABLED_ANTI_SQL_INJECTION
+-- PROTECTOR_ENABLED_ANTI_XSS
+- 言語ファイル更新
+-- arabic (thx Onasre) 3.35a
+
+3.34 beta (2009/07/06)
+- DBレイヤートラップanti-SQL-Injection(DBLT-ASI)のコメントに対する動作を緩和した
+- DBレイヤートラップが常にONになってしまう環境に対応するオプションの追加
 
 3.33 beta (2009/04/03)
 - PHP_SELFやPATH_INFOの特殊文字強制変換をやめた (thx nao-pon)

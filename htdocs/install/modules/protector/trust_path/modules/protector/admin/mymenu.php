@@ -6,6 +6,10 @@ if( defined( 'XOOPS_ORETEKI' ) ) return ;
 global $xoopsModule ;
 if( ! is_object( $xoopsModule ) ) die( '$xoopsModule is not set' )  ;
 
+	// for RTL users
+	@define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;
+	@define( '_GLOBAL_RIGHT' , @_ADM_USE_RTL == 1 ? 'left' : 'right' ) ;
+
 // language files (modinfo.php)
 $language = empty( $xoopsConfig['language'] ) ? 'english' : $xoopsConfig['language'] ;
 if( file_exists( "$mydirpath/language/$language/modinfo.php" ) ) {
@@ -79,10 +83,10 @@ foreach( array_keys( $adminmenu ) as $i ) {
 }
 
 // display (you can customize htmls)
-echo "<div style='text-align:left;width:98%;'>" ;
+echo "<div style='text-align:"._GLOBAL_LEFT.";width:98%;'>" ;
 foreach( $adminmenu as $menuitem ) {
-	echo "<div style='float:left;height:1.5em;'><nobr><a href='".htmlspecialchars($menuitem['link'],ENT_QUOTES)."' style='background-color:{$menuitem['color']};font:normal normal bold 9pt/12pt;'>".htmlspecialchars($menuitem['title'],ENT_QUOTES)."</a> | </nobr></div>\n" ;
+	echo "<div style='float:"._GLOBAL_LEFT.";height:1.5em;'><nobr><a href='".htmlspecialchars($menuitem['link'],ENT_QUOTES)."' style='background-color:{$menuitem['color']};font:normal normal bold 9pt/12pt;'>".htmlspecialchars($menuitem['title'],ENT_QUOTES)."</a> | </nobr></div>\n" ;
 }
-echo "</div>\n<hr style='clear:left;display:block;' />\n" ;
+echo "</div>\n<hr style='clear:"._GLOBAL_LEFT.";display:block;' />\n" ;
 
 ?>

@@ -48,10 +48,16 @@ function protector_prepare()
 	// "DB Layer Trapper"
 	$force_override = strstr( @$_SERVER['REQUEST_URI'] , 'protector/admin/index.php?page=advisory' ) ? true : false ;
 	// $force_override = true ;
-	if( $force_override || ! empty( $conf['enable_dblayertrap'] ) ) $protector->dblayertrap_init( $force_override ) ;
+	if( $force_override || ! empty( $conf['enable_dblayertrap'] ) ) {
+		@define( 'PROTECTOR_ENABLED_ANTI_SQL_INJECTION' , 1 ) ;
+		$protector->dblayertrap_init( $force_override ) ;
+	}
 
 	// "Big Umbrella" subset version
-	if( ! empty( $conf['enable_bigumbrella'] ) ) $protector->bigumbrella_init() ;
+	if( ! empty( $conf['enable_bigumbrella'] ) ) {
+		@define( 'PROTECTOR_ENABLED_ANTI_XSS' , 1 ) ;
+		$protector->bigumbrella_init() ;
+	}
 
 	// force intval variables whose name is *id
 	if( ! empty( $conf['id_forceintval'] ) ) $protector->intval_allrequestsendid() ;

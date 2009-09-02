@@ -6,8 +6,12 @@ $db =& Database::getInstance() ;
 xoops_cp_header();
 include dirname(__FILE__).'/mymenu.php' ;
 
+	// for RTL users
+	@define( '_GLOBAL_LEFT' , @_ADM_USE_RTL == 1 ? 'right' : 'left' ) ;
+	@define( '_GLOBAL_RIGHT' , @_ADM_USE_RTL == 1 ? 'left' : 'right' ) ;
+
 // open table for ADVISORY
-echo "<style>dd {margin-left: 32px;}</style>\n" ;
+echo "<style>dd {margin-"._GLOBAL_LEFT.": 32px;}</style>\n" ;
 echo "<br />\n<div style='border: 2px solid #2F5376;padding:8px;width:95%;' class='bg4'>\n" ;
 
 // calculate the relative path between XOOPS_ROOT_PATH and XOOPS_TRUST_PATH
@@ -74,9 +78,6 @@ if( $safe ) {
 echo "<a href='index.php?page=prefix_manager'>"._AM_ADV_LINK_TO_PREFIXMAN."</a></dd>" ;
 echo "</dl>\n" ;
 
-if((defined(ICMS_PRELOAD_PATH) && !file_exists(ICMS_PRELOAD_PATH.'/protector.php')) && (! defined( 'PROTECTOR_POSTCHECK_INCLUDED' )||! defined( 'PROTECTOR_PRECHECK_INCLUDED' ))){
-    icms_copyr(ICMS_TRUST_PATH.'/modules/protector/patches/ImpressCMS1.1/preload_protector.php',ICMS_PRELOAD_PATH.'/protector.php');
-}
 
 // patch to mainfile.php
 echo "<dl><dt>'mainfile.php' : " ;

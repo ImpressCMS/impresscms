@@ -44,6 +44,7 @@ Revision:
 * #705: Module name in module preferences breadcrumb is linked to module administration now (Phoenyx)
 * #294: replaced scraps with system comment function in imProfile | ticket from addons (Phoenyx)
 * #725: Update FCKeditor to version 2.6.4.1 (skenow)
+* Update protector to version 3.36a beta (stranger)
 
 '''Fixed'''
 * #754: removed deprecated html purifier leftovers that are no longer used with new system. (vaughan/phoenyx)
