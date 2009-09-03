@@ -716,6 +716,12 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 		exit();
 	}else{
 		$xoopsTpl->display('db:system_redirect.html');
+		if (defined('XOOPS_CPFUNC_LOADED')) {
+			icms_cp_footer();
+		} else {
+			include ICMS_ROOT_PATH.'/footer.php';
+		}
+		exit();
 	}
 	// GIJ end
 }

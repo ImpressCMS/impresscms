@@ -6,12 +6,12 @@
 * @copyright	http://www.xoops.org/ The XOOPS Project
 * @copyright	XOOPS_copyrights.txt
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package	core
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author		modified by underdog <underdog@impresscms.org>
-* @version		$Id$
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by underdog <underdog@impresscms.org>
+* @version	$Id$
 */
 //error_reporting(0);
 include_once '../../../mainfile.php';
@@ -25,10 +25,10 @@ if ( $icmsUser ) {
   unset($url_arr);
 
   if ( !$moduleperm_handler->checkRight( 'module_admin', $icmsModule->getVar( 'mid' ), $icmsUser->getGroups() ) ) {
-	  redirect_header( XOOPS_URL . "/user.php", 1, _NOPERM );
+	  redirect_header( XOOPS_URL . "/user.php", 1, _NOPERM, false );
   }
 } else {
-  redirect_header( XOOPS_URL . "/user.php", 1, _NOPERM );
+  redirect_header( XOOPS_URL . "/user.php", 1, _NOPERM, false );
 }
 
 // set config values for this module

@@ -144,6 +144,7 @@ Revision:
 * #607: Fatal error - function declaration problem if Frameworks is present (stranger)
 * #710: IPF issue: icmsformtextelement.php, icmsformtextelement.php, icmsformcheckelement.php (stranger)
 * #733: Fatal error: Class 'IcmsPersistableObject' not found in G:\xampp\htdocs\trunk\modules\system\admin\autotasks\class\autotasks.php on line 21 (stranger)
+* #761: exiting redirect_header properly now (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''
