@@ -32,6 +32,22 @@
 <{includeq file='db:system_common_form.html' form=$profile_tribeuserform}>
 <{/if}>
 <{/if}>
+<{if $profile_editpostform}>
+<{if $hideForm}>
+<div id="profile-form" class="outer">
+  <h2 class="head">
+    <a href="#" onclick ="$('#profile-post-form').toggle(400);">
+      <img src="images/toggle.gif" />&nbsp;
+    </a>
+  </h2>
+  <div id="profile-post-form" class="profile-album-form" style="display: none">
+    <{includeq file='db:system_common_form.html' form=$profile_editpostform}>
+  </div>
+</div>
+<{else}>
+<{includeq file='db:system_common_form.html' form=$profile_editpostform}>
+<{/if}>
+<{/if}>
 <{if $profile_tribe}>
 <div id="profile-tribes-container-single">
   <div id="profile-tribes-left">
@@ -39,21 +55,23 @@
       <h2 class="head"><{$profile_tribe.title}></h2>
       <p class="even"><{$profile_tribe.tribe_desc}></p>
     </div>
-    <{if $showContent && $profile_tribe_members|@count > 0}>
+    <{if $showContent && $profile_tribe_members|@count > 0 && !$profile_tribe_posts}>
     <div id="profile-tribes-members" class="outer">
       <h2 class="head"><{$lang_members}></h2>
       <{foreach name=members item=member from=$profile_tribe_members}>
       <div class="profile-tribes-members-member">
         <{$member.tribeuser_avatar}><br /><{$member.tribeuser_sender_link}>
-	<{if $member.userCanEditAndDelete || $userCanEditAndDelete}>
-	<form action="<{$icms_url}>/modules/profile/tribes.php?tribes_id=<{$profile_tribe.tribes_id}>" method="post">
+        <{if $member.userCanEditAndDelete || $userCanEditAndDelete}>
+        <form action="<{$icms_url}>/modules/profile/tribes.php" method="post">
+          <input type="hidden" value="<{$profile_tribe.tribes_id}>" name="tribes_id" />
+          <input type="hidden" value="<{xoAppUrl /modules/profile/tribes.php}>?tribes_id=<{$profile_tribe.tribes_id}>" name="redirect_page" />
           <input type="hidden" value="<{$member.tribeuser_id}>" name="tribeuser_id" />
-	  <input type="hidden" value="1" name="confirm" />
+          <input type="hidden" value="1" name="confirm" />
           <input type="hidden" value="deltribeuser" name="op" />
           <{$token}>
           <input name="submit" type="image" alt="<{$lang_delete}>" title="<{$lang_delete}>" src="<{$delete_image}>" style="vertical-align:middle" />
         </form>
-	<{/if}>
+        <{/if}>
       </div>
       <{if $smarty.foreach.members.iteration is div by 4 || $smarty.foreach.members.last == TRUE}>
       <div class="clear"></div>
@@ -61,10 +79,88 @@
       <{/foreach}>
     </div>
     <{/if}>
-    <{if $showContent && $profile_tribe_discussions|@count > 0}>
+    <{if $showContent && $profile_tribe_topics|@count > 0}>
     <div id="profile-tribes-discussions" class="outer">
       <h2 class="head"><{$lang_discussions}></h2>
+      <table width="100%" cellspacing="1" cellpadding="4">
+        <tbody>
+          <tr align="center">
+            <th><{$lang_topic_title}></th>
+            <th><{$lang_topic_author}></th>
+            <th><{$lang_topic_replies}></th>
+            <th><{$lang_topic_views}></th>
+            <th><{$lang_topic_last_post_time}></th>
+          </tr>
+          <{foreach item=topic from=$profile_tribe_topics}>
+          <{cycle values='even,odd' assign=class}>
+          <tr class="<{$class}>">
+            <td><{if $topic.closedIcon}><{$topic.closedIcon}> <{/if}><{$topic.itemLink}></td>
+            <td align="center"><{$topic.poster_uname}></td>
+            <td align="center"><{$topic.replies}></td>
+            <td align="center"><{$topic.views}></td>
+            <td align="right"><{$topic.last_post_time}> <{$topic.lastItemLink}></td>
+          </tr>
+          <{/foreach}>
+          <{if $profile_tribe_topics_pagenav}>
+          <tr>
+            <td colspan="5" align="right"><{$profile_tribe_topics_pagenav}></td>
+          </tr>
+	  <{/if}>
+        </tbody>
+      </table>
     </div>
+    <{/if}>
+    <{if $showContent && $profile_tribe_posts|@count > 0}>
+    <div id="profile-tribes-discussions" class="outer">
+      <h2 class="head"><{$lang_discussions}> - <{$profile_tribe_topic.title}><{if $profile_tribe_topic.closed}> (<{$lang_closed}>)<{/if}></h2>
+      <table width="100%" cellspacing="1" cellpadding="4">
+        <tbody>
+          <{foreach item=post from=$profile_tribe_posts}>
+          <{cycle values='even,odd' assign=class}>
+          <tr class="<{$class}>">
+            <td width="220px">
+              <{if $post.poster_avatar}><{$post.poster_avatar}><br /><{/if}>
+              <{$post.poster_uname}><br />
+	      <{$post.post_time}>
+	      <{if $isOwner || $post.userCanEditAndDelete}>
+	      <br /><{$post.editItemLink}><{$post.deleteItemLink}>
+	      <{/if}>
+	      <{if $post.post_id == $profile_tribe_topic.post_id && ($isOwner || $profile_tribe_topic.userCanEditAndDelete)}>
+	      <{$profile_tribe_topic.toggleCloseLink}>
+	      <{/if}>
+            </td>
+            <td>
+              <a name="post<{$post.post_id}>"></a>
+              <{if $post.title}><strong><{$post.title}></strong><br /><br /><{/if}>
+              <{$post.body}>
+	      <{if $post.poster_signature}><br /><br />--------------------<br /><{$post.poster_signature}><{/if}>
+            </td>
+	  </tr>
+          <{/foreach}>
+          <{if $profile_tribe_posts_pagenav}>
+          <tr>
+            <td colspan="5" align="right"><{$profile_tribe_posts_pagenav}></td>
+          </tr>
+	  <{/if}>
+        </tbody>
+      </table>
+    </div>
+    <{/if}>
+    <{if $profile_addpostform}>
+    <{if $hideForm}>
+    <div id="profile-form" class="outer">
+      <h2 class="head">
+        <a href="#" onclick ="$('#profile-post-form').toggle(400);">
+          <img src="images/toggle.gif" />&nbsp;
+        </a>
+      </h2>
+      <div id="profile-post-form" class="profile-album-form" style="display: none">
+        <{includeq file='db:system_common_form.html' form=$profile_addpostform}>
+      </div>
+    </div>
+    <{else}>
+    <{includeq file='db:system_common_form.html' form=$profile_addpostform}>
+    <{/if}>
     <{/if}>
   </div>
   <div id="profile-tribes-right">
@@ -76,7 +172,8 @@
       <p class="even"><strong><{$lang_clicks}>:</strong> <{$profile_tribe.counter}></p>
       <p class="odd"><strong><{$lang_members}>:</strong> <{$profile_tribe_members|@count}></p>
       <p class="even"><strong><{$lang_creation_time}>:</strong> <{$profile_tribe.creation_time_short}></p>
-      <p class="odd"><strong><{$lang_owner}></strong></p>
+      <p class="odd"><strong><{$lang_topics}>:</strong> <{$profile_tribe_topics_count}></p>
+      <p class="even"><strong><{$lang_owner}></strong></p>
       <p class="even" style="text-align:center;"><{$profile_tribe.tribe_sender_avatar}><br /><{$profile_tribe.tribe_sender_link}></p>
     </div>
   </div>

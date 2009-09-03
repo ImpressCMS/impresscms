@@ -249,12 +249,31 @@ define("_MD_PROFILE_TRIBEUSER_MODIFIED", "The tribeuser has been successfully mo
 define("_PROFILE_TRIBEUSER_DUPLICATE", "The specified user is already a member of this tribe.");
 define("_PROFILE_TRIBEUSER_OWNER", "The specified user is already the owner of this tribe and therefore cannot be a member.");
 define("_MD_PROFILE_TRIBES_MEMBERS", "Members");
+define("_MD_PROFILE_TRIBES_TOPICS", "Topics");
 define("_MD_PROFILE_TRIBES_DISCUSSIONS", "Discussions");
 define("_MD_PROFILE_TRIBES_STATISTICS", "Statistics");
 define("_MD_PROFILE_TRIBES_CREATION_TIME", "Since");
 define("_MD_PROFILE_TRIBES_CLICKS", "Clicks");
 define("_MD_PROFILE_TRIBES_OWNER", "Owner");
 define("_MD_PROFILE_TRIBES_NOTFOUND", "Tribe not found.");
+define("_MD_PROFILE_TRIBETOPIC_SUBMIT", "Submit new topic");
+define("_MD_PROFILE_TRIBETOPIC_CREATED", "Topic successfully created");
+define("_MD_PROFILE_TRIBETOPIC_MODIFIED", "Topic successfully modified");
+define("_MD_PROFILE_TRIBEPOST_SUBMIT", "Submit new post");
+define("_MD_PROFILE_TRIBEPOST_CREATED", "Post successfully created");
+define("_MD_PROFILE_TRIBEPOST_MODIFIED", "Post successfully modified");
+define("_MD_PROFILE_TRIBETOPIC_TITLE", "Title");
+define("_MD_PROFILE_TRIBETOPIC_AUTHOR", "Author");
+define("_MD_PROFILE_TRIBETOPIC_REPLIES", "Replies");
+define("_MD_PROFILE_TRIBETOPIC_VIEWS", "Views");
+define("_MD_PROFILE_TRIBETOPIC_LAST_POST_TIME", "Last post");
+define("_MD_PROFILE_TRIBETOPIC_NOTFOUND", "Topic not found.");
+define("_MD_PROFILE_TRIBETOPIC_EDIT", "Edit Topic");
+define("_MD_PROFILE_TRIBEPOST_EDIT", "Edit Post");
+define("_MD_PROFILE_TRIBETOPIC_SHOW_LAST_POST", "Show last post");
+define("_MD_PROFILE_TRIBETOPIC_CLOSE", "Close");
+define("_MD_PROFILE_TRIBETOPIC_CLOSED", "Closed");
+define("_MD_PROFILE_TRIBETOPIC_REOPEN", "Reopen");
 
 //videos.php
 define("_MD_PROFILE_VIDEOS_SUBMIT", "Submit new video");

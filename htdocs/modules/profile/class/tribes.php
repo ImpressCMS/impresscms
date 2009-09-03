@@ -150,6 +150,30 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 	}
 
 	/**
+	 * check if a user is a member of the tribe
+	 *
+	 * @param int $uid user ID
+	 * @return bool true if $uid is a member of this tribe
+	 */
+	function isMember($uid) {
+		global $icmsUser, $profile_isAdmin;
+
+		if (!is_object($icmsUser)) return false;
+
+		$profile_tribeuser_handler = icms_getmodulehandler('tribeuser');
+		if ($this->getVar('security') == PROFILE_TRIBES_SECURITY_EVERYBODY) {
+			$tribeusers = $profile_tribeuser_handler->getTribeusers(0, 1, $icmsUser->getVar('uid'), false, $this->getVar('tribes_id'));
+		} elseif ($this->getVar('security') == PROFILE_TRIBES_SECURITY_APPROVAL) {
+			$tribeusers = $profile_tribeuser_handler->getTribeusers(0, 1, $icmsUser->getVar('uid'), false, $this->getVar('tribes_id'), '=', 1);
+		} elseif ($this->getVar('security') == PROFILE_TRIBES_SECURITY_INVITATION) {
+			$tribeusers = $profile_tribeuser_handler->getTribeusers(0, 1, $icmsUser->getVar('uid'), false, $this->getVar('tribes_id'), '=', false, 1);
+		}
+		if (is_array($tribeusers) && (count($tribeusers) == 1 || $profile_isAdmin || $uid == $this->getVar('uid_owner'))) return true;
+
+		return false;
+	}
+
+	/**
 	 * Overridding IcmsPersistable::toArray() method to add a few info
 	 *
 	 * @return array of tribe info
@@ -390,10 +414,15 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	 * @return bool
 	 */
 	function beforeDelete(&$obj) {
+		// delete all tribe users
 		$profile_tribeuser_handler = icms_getModuleHandler('tribeuser');
-		$criteria = new CriteriaCompo();
-		$criteria->add(new Criteria('tribe_id', $obj->getVar('tribes_id')));
-		$rtn = $profile_tribeuser_handler->deleteAll($criteria);
+		$rtn = $profile_tribeuser_handler->deleteAll(new CriteriaCompo(new Criteria('tribe_id', $obj->getVar('tribes_id'))));
+		// delete all tribe topics (not triggering beforeDelete or afterDelete events in tribetopic object)
+		$profile_tribetopic_handler = icms_getModuleHandler('tribetopic');
+		$rtn = $rtn && $profile_tribetopic_handler->deleteAll(new CriteriaCompo(new Criteria('tribes_id', $obj->getVar('tribes_id'))));
+		// delete all tribe posts (not triggering beforeDelete or afterDelete events in tribepost object)
+		$profile_tribepost_handler = icms_getModuleHandler('tribepost');
+		return $rtn && $profile_tribepost_handler->deleteAll(new CriteriaCompo(new Criteria('topic_id', $obj->getVar('topic_id'))));
 		return ($rtn != false ? true : false);
 	}
 

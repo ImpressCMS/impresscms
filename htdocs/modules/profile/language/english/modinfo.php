@@ -78,6 +78,10 @@ define("_MI_PROFILE_MAINTUBEH_DESC","Height of the video, that shows in the fron
 define("_MI_PROFILE_MYCONFIGS","My Settings");
 define("_MI_PROFILE_TRIBESPERPAGE_TITLE","Tribes per page");
 define("_MI_PROFILE_TRIBESPERPAGE_DESC","Tribes per page before pagination show up");
+define("_MI_PROFILE_TRIBETOPICSPERPAGE_TITLE","Tribe Topics per page");
+define("_MI_PROFILE_TRIBETOPICSPERPAGE_DESC","Tribe Topics per page before pagination show up");
+define("_MI_PROFILE_TRIBEPOSTSPERPAGE_TITLE","Tribe Posts per page");
+define("_MI_PROFILE_TRIBEPOSTSPERPAGE_DESC","Tribe Posts per page before pagination show up");
 define("_MI_PROFILE_SEARCH","Search Members");
 define("_MI_PROFILE_ENABLEPICT_TITLE","Enable pictures section");
 define("_MI_PROFILE_ENABLEPICT_DESC","Enabling the pictures section for the users, will enable the pictures gallery");

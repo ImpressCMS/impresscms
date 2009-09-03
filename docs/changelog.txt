@@ -30,6 +30,7 @@ Revision:
 * added New static protected class for uniquely dealing with Password related functions. (vaughan)
 * #338: imProfile: added security level for tribes | ticket from addons (Phoenyx)
 * added New installer. (MrTheme)
+* #340: imProfile: added discussion feature to tribes | ticket from addons (Phoenyx)
 
 '''Improved'''
 * #751: cleanup admin preference pages, use tooltip boxes for form field descriptions. (vaughan/MrTheme)

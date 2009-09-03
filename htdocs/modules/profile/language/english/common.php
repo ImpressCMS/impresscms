@@ -140,6 +140,38 @@ define("_CO_PROFILE_TRIBES_SECURITY_DSC", " Select the security level for this t
 define("_CO_PROFILE_TRIBES_SECURITY_EVERYBODY", "Anybody can join this tribe");
 define("_CO_PROFILE_TRIBES_SECURITY_APPROVAL", "Anybody can join this tribe (approval by the owner required)");
 define("_CO_PROFILE_TRIBES_SECURITY_INVITATION", "Access by invitation only");
+// tribetopic
+define("_CO_PROFILE_TRIBETOPIC_TOPIC_ID", "Topic ID");
+define("_CO_PROFILE_TRIBETOPIC_TOPIC_ID_DSC", " ");
+define("_CO_PROFILE_TRIBETOPIC_TRIBES_ID", "Tribe ID");
+define("_CO_PROFILE_TRIBETOPIC_TRIBES_ID_DSC", " ");
+define("_CO_PROFILE_TRIBETOPIC_POSTER_UID", "Poster ID");
+define("_CO_PROFILE_TRIBETOPIC_POSTER_UID_DSC", " ");
+define("_CO_PROFILE_TRIBETOPIC_TITLE", "Title");
+define("_CO_PROFILE_TRIBETOPIC_TITLE_DSC", " ");
+define("_CO_PROFILE_TRIBETOPIC_CLOSED", "Closed");
+define("_CO_PROFILE_TRIBETOPIC_CLOSED_DSC", " Yes to close the topic");
+define("_CO_PROFILE_TRIBETOPIC_LAST_POST_ID", "Last post ID");
+define("_CO_PROFILE_TRIBETOPIC_LAST_POST_ID_DSC", " ");
+define("_CO_PROFILE_TRIBETOPIC_LAST_POST_TIME", "Last post time");
+define("_CO_PROFILE_TRIBETOPIC_LAST_POST_TIME_DSC", " ");
+// tribepost
+define("_CO_PROFILE_TRIBEPOST_POST_ID", "Post ID");
+define("_CO_PROFILE_TRIBEPOST_POST_ID_DSC", " ");
+define("_CO_PROFILE_TRIBEPOST_TOPIC_ID", "Topic ID");
+define("_CO_PROFILE_TRIBEPOST_TOPIC_ID_DSC", " ");
+define("_CO_PROFILE_TRIBEPOST_TRIBES_ID", "Tribe ID");
+define("_CO_PROFILE_TRIBEPOST_TRIBES_ID_DSC", " ");
+define("_CO_PROFILE_TRIBEPOST_POSTER_UID", "Poster ID");
+define("_CO_PROFILE_TRIBEPOST_POSTER_UID_DSC", " ");
+define("_CO_PROFILE_TRIBEPOST_TITLE", "Title");
+define("_CO_PROFILE_TRIBEPOST_TITLE_DSC", " Subject of the post");
+define("_CO_PROFILE_TRIBEPOST_BODY", "Body");
+define("_CO_PROFILE_TRIBEPOST_BODY_DSC", " Body text for the post");
+define("_CO_PROFILE_TRIBEPOST_ATTACHSIG", "Attach Signature");
+define("_CO_PROFILE_TRIBEPOST_ATTACHSIG_DSC", " Yes to attach signature to the post");
+define("_CO_PROFILE_TRIBEPOST_POST_TIME", "Post Time");
+define("_CO_PROFILE_TRIBEPOST_POST_TIME_DSC", " ");
 // suspensions
 define("_CO_PROFILE_SUSPENSIONS_UID", "User Id");
 define("_CO_PROFILE_SUSPENSIONS_UID_DSC", " ");

@@ -4,15 +4,15 @@
  *
  * This file holds the configuration information of this module
  *
- * @copyright       The ImpressCMS Project http://www.impresscms.org/
- * @license         LICENSE.txt
- * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package         modules
- * @since           1.2
- * @author          Jan Pedersen
- * @author          Marcello Brandao <marcello.brandao@gmail.com>
- * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version         $Id$
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license	LICENSE.txt
+ * @license	GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @package	modules
+ * @since	1.2
+ * @author	Jan Pedersen
+ * @author	Marcello Brandao <marcello.brandao@gmail.com>
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version	$Id$
  */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
@@ -36,13 +36,13 @@ $modversion = array(
 	'image'=> "images/icon_big.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "Alpha",
-	'status'=> "Alpha",
+	'status_version'=> "Beta",
+	'status'=> "Beta",
 	'date'=> "",
 	'author_word'=> "",
 
 /** Contributors */
-    'developer_website_url' => "http://www.impresscms.org",
+	'developer_website_url' => "http://www.impresscms.org",
 	'developer_website_name' => "ImpressCMS Core & Module developpers",
 	'developer_email' => "contact@impresscms.org");
 /**
@@ -65,6 +65,10 @@ $i++;
 $modversion['object_items'][$i] = 'tribes';
 $i++;
 $modversion['object_items'][$i] = 'tribeuser';
+$i++;
+$modversion['object_items'][$i] = 'tribetopic';
+$i++;
+$modversion['object_items'][$i] = 'tribepost';
 $i++;
 $modversion['object_items'][$i] = 'configs';
 $i++;
@@ -622,6 +626,20 @@ $modversion['config'][$i]['name'] = 'tribesperpage';
 $modversion['config'][$i]['title'] = '_MI_PROFILE_TRIBESPERPAGE_TITLE';
 $modversion['config'][$i]['description'] = '_MI_PROFILE_TRIBESPERPAGE_DESC';
 $modversion['config'][$i]['default'] = 6;
+$modversion['config'][$i]['formtype'] = 'textbox';
+$modversion['config'][$i]['valuetype'] = 'int';
+$i++;
+$modversion['config'][$i]['name'] = 'tribetopicsperpage';
+$modversion['config'][$i]['title'] = '_MI_PROFILE_TRIBETOPICSPERPAGE_TITLE';
+$modversion['config'][$i]['description'] = '_MI_PROFILE_TRIBETOPICSPERPAGE_DESC';
+$modversion['config'][$i]['default'] = 10;
+$modversion['config'][$i]['formtype'] = 'textbox';
+$modversion['config'][$i]['valuetype'] = 'int';
+$i++;
+$modversion['config'][$i]['name'] = 'tribepostsperpage';
+$modversion['config'][$i]['title'] = '_MI_PROFILE_TRIBEPOSTSPERPAGE_TITLE';
+$modversion['config'][$i]['description'] = '_MI_PROFILE_TRIBEPOSTSPERPAGE_DESC';
+$modversion['config'][$i]['default'] = 10;
 $modversion['config'][$i]['formtype'] = 'textbox';
 $modversion['config'][$i]['valuetype'] = 'int';
 
