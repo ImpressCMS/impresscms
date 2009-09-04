@@ -1,4 +1,4 @@
-﻿ImpressCMS ChangeLog
+ImpressCMS ChangeLog
 
 === Impresscms 1.2 Beta ===
 Release date:
@@ -33,6 +33,7 @@ Revision:
 * #340: imProfile: added discussion feature to tribes | ticket from addons (Phoenyx)
 
 '''Improved'''
+* #714: Updated Smarty library to 2.6.26 (MrTheme)
 * #751: cleanup admin preference pages, use tooltip boxes for form field descriptions. (vaughan/MrTheme)
 * Modified IcmsPersistableObjectHandler: if no module specified system think it's not a module (mekdrop)
 * #666: Update HTMLPurifier Library to 4.0.0. (vaughan)
