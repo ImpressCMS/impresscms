@@ -239,10 +239,10 @@ function icms_module_update_content($module) {
 			icms_deleteFile ( ICMS_ROOT_PATH . '/kernel/content.php' );
 			echo '<code>File removed successfully.</code><br />';
 		}
-		if (is_file ( ICMS_ROOT_PATH . '/content.php' )) {
+		/*if (is_file ( ICMS_ROOT_PATH . '/content.php' )) {
 			icms_deleteFile ( ICMS_ROOT_PATH . '/content.php' );
 			echo '<code>File removed successfully.</code><br />';
-		}
+		}*/
 		if (is_file ( ICMS_ROOT_PATH . '/modules/system/templates/system_content.html' )) {
 			icms_deleteFile ( ICMS_ROOT_PATH . '/modules/system/templates/system_content.html' );
 			echo '<code>File removed successfully.</code><br />';
