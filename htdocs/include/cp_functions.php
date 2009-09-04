@@ -495,31 +495,22 @@ function impresscms_get_adminmenu() {
 			$rtn ['iconbig'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconbig'];
 		}
 		$rtn ['absolute'] = 1;
-		$module->loadAdminMenu ();
-		if (is_array ( $module->adminmenu ) && count ( $module->adminmenu ) > 0) {
-			$rtn ['hassubs'] = 1;
-			$rtn ['subs'] = array ( );
+		$rtn ['subs'] = array ( );
+		$module->loadAdminMenu ();		
+		if (is_array ( $module->adminmenu ) && count ( $module->adminmenu ) > 0) {			
 			foreach ( $module->adminmenu as $item ) {
 				$item ['link'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $item ['link'];
 				$rtn ['subs'] [] = $item;
 			}
-		} else {
-			$rtn ['hassubs'] = 0;
-			unset ( $rtn ['subs'] );
-		}
+		} 
 		$hasconfig = $module->getVar ( 'hasconfig' );
 		$hascomments = $module->getVar ( 'hascomments' );
 		if ((isset ( $hasconfig ) && $hasconfig == 1) || (isset ( $hascomments ) && $hascomments == 1)) {
-			$rtn ['hassubs'] = 1;
-			if (! isset ( $rtn ['subs'] )) {
-				$rtn ['subs'] = array ( );
-			}
 			$subs = array ('title' => _PREFERENCES, 'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $module->mid () );
 			$rtn ['subs'] [] = $subs;
-		} else {
-			$rtn ['hassubs'] = 0;
-			unset ( $rtn ['subs'] );
 		}
+		$rtn ['hassubs'] = (count($rtn ['subs']) > 0)?1:0;
+		if ($rtn['hassubs'] == 0) unset($rtn ['subs']);
 		if ($module->dirname () == 'system') {
 			$systemadm = true;
 		}
