@@ -191,36 +191,39 @@ $modversion['blocks'][] = array(
 /**
  * @todo Remove this blocks on future versions. When 1.1.2 isn't supported anymore.
  */
-$icms_modules_handler = xoops_gethandler('module');
-$module = $icms_modules_handler->getByDirname('content');
-if (!is_object($module)){
-//Content Manager
-$modversion['blocks'][] = array(
-	'file' => 'content_blocks.php',
-	'name' => _MI_SYSTEM_BNAME15,
-	'description' => '',
-	'show_func' => 'b_content_show',
-	'edit_func' => 'b_content_edit',
-	'options' => '1|1|1|1',
-	'template' => 'system_block_content.html');
+if (function_exists('xoops_gethandler')){
+	$icms_modules_handler = xoops_gethandler('module');
+	$module = $icms_modules_handler->getByDirname('content');
 
-$modversion['blocks'][] = array(
-	'file' => 'content_blocks.php',
-	'name' => _MI_SYSTEM_BNAME16,
-	'description' => '',
-	'show_func' => 'b_content_menu_show',
-	'edit_func' => 'b_content_menu_edit',
-	'options' => 'content_weight|ASC|1|#F2E2A0|0',
-	'template' => 'system_block_contentmenu.html');
+	if (!is_object($module)){
+	//Content Manager
+	$modversion['blocks'][] = array(
+		'file' => 'content_blocks.php',
+		'name' => _MI_SYSTEM_BNAME15,
+		'description' => '',
+		'show_func' => 'b_content_show',
+		'edit_func' => 'b_content_edit',
+		'options' => '1|1|1|1',
+		'template' => 'system_block_content.html');
 
-$modversion['blocks'][] = array(
-	'file' => 'content_blocks.php',
-	'name' => _MI_SYSTEM_BNAME17,
-	'description' => '',
-	'show_func' => 'b_content_relmenu_show',
-	'edit_func' => 'b_content_relmenu_edit',
-	'options' => 'content_weight|ASC|1',
-	'template' => 'system_block_contentmenu.html');
+	$modversion['blocks'][] = array(
+		'file' => 'content_blocks.php',
+		'name' => _MI_SYSTEM_BNAME16,
+		'description' => '',
+		'show_func' => 'b_content_menu_show',
+		'edit_func' => 'b_content_menu_edit',
+		'options' => 'content_weight|ASC|1|#F2E2A0|0',
+		'template' => 'system_block_contentmenu.html');
+	
+	$modversion['blocks'][] = array(
+		'file' => 'content_blocks.php',
+		'name' => _MI_SYSTEM_BNAME17,
+		'description' => '',
+		'show_func' => 'b_content_relmenu_show',
+		'edit_func' => 'b_content_relmenu_edit',
+		'options' => 'content_weight|ASC|1',
+		'template' => 'system_block_contentmenu.html');
+	}
 }
 /**/
 $modversion['blocks'][] = array(

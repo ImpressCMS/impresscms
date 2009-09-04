@@ -239,7 +239,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'language', '_MD_AM_LANGUAGE', '".addslashes($language)."', '_MD_AM_LANGUAGEDSC', 'language', 'other', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'startpage', '_MD_AM_STARTPAGE', 'a:3:{i:1;s:3:\"1-1\";i:2;s:3:\"1-1\";i:3;s:3:\"1-1\";}', '_MD_AM_STARTPAGEDSC', 'startpage', 'array', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'startpage', '_MD_AM_STARTPAGE', 'a:3:{i:1;s:2:\"--\";i:2;s:2:\"--\";i:3;s:2:\"--\";}', '_MD_AM_STARTPAGEDSC', 'startpage', 'array', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'server_TZ', '_MD_AM_SERVERTZ', '0', '_MD_AM_SERVERTZDSC', 'timezone', 'float', $p)");

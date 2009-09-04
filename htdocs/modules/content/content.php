@@ -58,10 +58,9 @@ if (!$page){
 			$page = $params[0];
 		}
 	}
+	/** Decoding the parameter to certify that is the correct value **/
+	$page = (!empty($page))?urlencode($page):null;
 }
-
-/** Decoding the parameter to certify that is the correct value **/
-$page = (!empty($page))?urldecode($page):null;
 
 if(!empty($page)){
 	$page = (is_int($page)) ? intval($page) : $page;
