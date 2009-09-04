@@ -22,7 +22,7 @@
  * object and adds it to the id_res response:
  *
  *   $sreg_req = Auth_OpenID_SRegRequest::fromOpenIDRequest(
- *                                  $checkid_request->message);
+ *                                  $checkid_request);
  *   // [ get the user's approval and data, informing the user that
  *   //   the fields in sreg_response were requested ]
  *   $sreg_resp = Auth_OpenID_SRegResponse::extractResponse(
@@ -226,7 +226,7 @@ class Auth_OpenID_SRegRequest extends Auth_OpenID_SRegBase {
         $obj->ns_uri = $obj->_getSRegNS($m);
         $args = $m->getArgs($obj->ns_uri);
 
-        if ($args === null) {
+        if ($args === null || Auth_OpenID::isFailure($args)) {
             return null;
         }
 
@@ -484,7 +484,7 @@ class Auth_OpenID_SRegResponse extends Auth_OpenID_SRegBase {
             $args = $success_response->message->getArgs($obj->ns_uri);
         }
 
-        if ($args === null) {
+        if ($args === null || Auth_OpenID::isFailure($args)) {
             return null;
         }
 

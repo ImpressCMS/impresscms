@@ -66,7 +66,7 @@ function &getStore() {
 
     if (!file_exists($store_path) &&
         !mkdir($store_path)) {
-        print "Could not create the FileStore directory - ".
+        print "Could not create the FileStore directory '$store_path'. ".
             " Please check the effective permissions.";
         exit(0);
     }
@@ -116,7 +116,7 @@ function getTrustRoot() {
 $store_path = XOOPS_TRUST_PATH . "/_php_consumer";
 if (!file_exists($store_path) &&
     !mkdir($store_path)) {
-    print "Could not create the FileStore directory - ".
+    print "Could not create the FileStore directory '$store_path'. ".
         " Please check the effective permissions.";
     exit(0);
 }
