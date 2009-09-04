@@ -44,19 +44,6 @@ define("_MB_SYSTEM_THWIDTH", "Screenshot image width");
 define('_MB_SYSTEM_REMEMBERME', 'Remember me');
 define("_MB_SYSTEM_PRIVPOLICY", "Privacy Policy");
 
-//Content Manager
-define("_MB_SYSTEM_SHOWSUBS", "Show sub-pages?");
-define("_MB_SYSTEM_SHOWNAV", "Show navigation menu?");
-define("_MB_SYSTEM_SHOWPINFO", "Show poster and published infos?");
-define("_MB_SYSTEM_SORT", "Sort");
-define("_MB_SYSTEM_ORDER", "Order");
-define("_MB_SYSTEM_SELCOLOR", "Background color of the selected item: ");
-define("_MB_SYSTEM_PAGE", "Page to show");
-if (!defined('_CT_EDIT_CONTENT')){define('_CT_EDIT_CONTENT','Edit Content');}
-if (!defined('_CT_DELETE_CONTENT')){define('_CT_DELETE_CONTENT','Delete Content');}
-if (!defined('_CT_PUBLISHEDBY')){define('_CT_PUBLISHEDBY','Published by');}
-if (!defined('_CT_READS')){define('_CT_READS','reads');}
-if (!defined('_CT_ON')){define('_CT_ON','on');}
 /*
  * Added in 1.2
  */

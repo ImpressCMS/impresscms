@@ -49,7 +49,6 @@ INSERT INTO configcategory VALUES (5, '_MD_AM_SEARCH', 0);
 INSERT INTO configcategory VALUES (6, '_MD_AM_MAILER', 0);
 INSERT INTO configcategory VALUES (7, '_MD_AM_AUTHENTICATION', 0);
 INSERT INTO configcategory VALUES (8, '_MD_AM_MULTILANGUAGE', 0);
-INSERT INTO configcategory VALUES (9, '_MD_AM_CONTMANAGER', 0);
 INSERT INTO configcategory VALUES (10, '_MD_AM_PERSON', 0);
 INSERT INTO configcategory VALUES (11, '_MD_AM_CAPTCHA', 0);
 INSERT INTO configcategory VALUES (12, '_MD_AM_PLUGINS', 0);

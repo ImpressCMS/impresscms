@@ -1,249 +1,99 @@
 <?php
 /**
-* Content Manager
-*
-* System tool that allow create and manage content pages
-* Some parts of this tool was based on mastop publish and smartcontent modules
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package	core
-* @since	1.1
-* @author	Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
-* @version	$Id$
-*/
+ * Content page
+ *
+ * @copyright	The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.0
+ * @author		Rodrigo P Lima aka TheRplima <therplima@impresscms.org>
+ * @package		content
+ * @version		$Id$
+ */
 
-$xoopsOption['pagetype'] = 'content';
-/** Including mainfile.php is required */
-include 'mainfile.php';
-/** Include the textsanitizer class*/
-include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
-/** Include the system constants definitions */
-include_once ICMS_ROOT_PATH.'/modules/system/constants.php';
+include_once 'mainfile.php';
 
-$im_contentConfig =& $config_handler->getConfigsByCat(IM_CONF_CONTENT);
-$page = (isset($_GET['page']))?trim(StopXSS($_GET['page'])):((isset($_POST['page']))?trim(StopXSS($_POST['page'])):0);
+define ( "CONTENT_DIRNAME", 'content' );
+define ( "CONTENT_URL", ICMS_URL . '/modules/' . CONTENT_DIRNAME . '/' );
+define ( "CONTENT_ROOT_PATH", ICMS_ROOT_PATH . '/modules/' . CONTENT_DIRNAME . '/' );
+define ( "CONTENT_IMAGES_URL", CONTENT_URL . 'images/' );
+define ( "CONTENT_ADMIN_URL", CONTENT_URL . 'admin/' );
 
-$gperm_handler = & xoops_gethandler('groupperm');
-$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-$agroups = $gperm_handler->getGroupIds('system_admin',XOOPS_SYSTEM_CONTENT);
-$allowed_groups = array_intersect($groups, $agroups);
-$uid = is_object($icmsUser) ? intval($icmsUser->getVar('uid')) : 0;
-$content_handler =& xoops_gethandler('content');
+$mhandler = xoops_gethandler('module');
+$xoopsModule = $mhandler->getByDirname(CONTENT_DIRNAME);
+include_once ICMS_ROOT_PATH . '/modules/content/include/common.php';
+$icmsModule = $xoopsModule;
+icms_loadLanguageFile('content', 'common');
+icms_loadLanguageFile('content', 'main');
+$icmsModuleConfig = $contentConfig;
 
-$tag = (isset($_GET['tag']))?trim(StopXSS($_GET['tag'])):((isset($_POST['tag']))?trim(StopXSS($_POST['tag'])):null);
-$start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
-if (!$page){
-	$path = (isset($_SERVER['PATH_INFO']) && substr($_SERVER['PATH_INFO'],0,1) == '/')?substr($_SERVER['PATH_INFO'],1,strlen($_SERVER['PATH_INFO'])):((isset($_SERVER['PATH_INFO']))?$_SERVER['PATH_INFO']:'');
-	$path = trim(StopXSS($path));
-	$params = explode('/',$path);
-	if (count($params) > 0){
-		if ($params[0] == 'page'){
-			$page = (isset($params[1]))?$params[1]:0;
-		}elseif ($params[0] == 'tag'){
-			$tag = (isset($params[1]))?$params[1]:null;
-			$start = (isset($params[2]))?$params[2]:0;
-		}else{
-			$page = $params[0];
+$content_content_handler = xoops_getModuleHandler ( 'content', 'content' );
+
+/** Again, use a naming convention that indicates the source of the content of the variable */
+$clean_content_id = isset ( $_GET ['content_id'] ) ? intval ( $_GET ['content_id'] ) : 0;
+$page = (isset ( $_GET ['page'] )) ? trim ( StopXSS ( $_GET ['page'] ) ) : ((isset ( $_POST ['page'] )) ? trim ( StopXSS ( $_POST ['page'] ) ) : $clean_content_id);
+
+if (! $page) {
+	$path = (isset ( $_SERVER ['PATH_INFO'] ) && substr ( $_SERVER ['PATH_INFO'], 0, 1 ) == '/') ? substr ( $_SERVER ['PATH_INFO'], 1, strlen ( $_SERVER ['PATH_INFO'] ) ) : ((isset ( $_SERVER ['PATH_INFO'] )) ? $_SERVER ['PATH_INFO'] : '');
+	$path = trim ( StopXSS ( $path ) );
+	$params = explode ( '/', $path );
+	if (count ( $params ) > 0) {
+		if ($params [0] == 'page') {
+			$page = (isset ( $params [1] )) ? $params [1] : 0;
+		} else {
+			$page = $params [0];
 		}
 	}
 }
 
-if (!is_null($tag)){
-  /** Include the header that starts page rendering */
-	include ICMS_ROOT_PATH.'/header.php';
-	echo list_by_tag($tag,$start);
-	/** Include the footer that completes page rendering */
-	include ICMS_ROOT_PATH.'/footer.php';
-	exit;
-}
+/** Decoding the parameter to certify that is the correct value **/
+$page = (! empty ( $page )) ? urlencode ( $page ) : null;
 
-if(!$page)
-{
-	if($im_contentConfig['default_page'] != 0)
-	{
-		$criteria = new CriteriaCompo(new Criteria('content_id', $im_contentConfig['default_page']));
+if (! empty ( $page )) {
+	$page = (is_int ( $page )) ? intval ( $page ) : $page;
+	$criteria = $content_content_handler->getContentsCriteria ( 0, 1, false, false, $page, false, 'content_id', 'DESC' );
+	$content = $content_content_handler->getObjects ( $criteria );
+	$contentObj = false;
+	foreach ( $content as $content ) {
+		$contentObj = $content;
+		break;
 	}
-	else
-	{
-		$criteria = new CriteriaCompo(new Criteria('content_status', 1));
-		$criteria->setSort('content_id');
-		$criteria->setOrder('DESC');
+	$clean_content_id = $contentObj->getVar ( 'content_id' );
+}
+
+$xoopsOption['template_main'] = 'content_content.html';
+include_once ICMS_ROOT_PATH . '/header.php';
+
+if (is_object ( $contentObj ) && $contentObj->accessGranted ()) {
+	$content_content_handler->updateCounter ( $clean_content_id );
+	$content = $contentObj->toArray ();
+	$icmsTpl->assign ( 'content_content', $content );
+	$icmsTpl->assign ( 'showInfo', $contentConfig ['show_contentinfo'] );
+	$showSubs = ($contentConfig ['show_relateds'] && $content ['content_showsubs']) ? true : false;
+	$icmsTpl->assign ( 'showSubs', $showSubs );
+	if ($contentConfig ['show_breadcrumb']) {
+		$icmsTpl->assign ( 'content_category_path', $content_content_handler->getBreadcrumbForPid ( $contentObj->getVar ( 'content_id', 'e' ), 1 ) );
+	} else {
+		$icmsTpl->assign ( 'content_category_path', false );
 	}
-	$impress_content = $content_handler->getObjects($criteria);
-	$impress_content = (isset($impress_content[0]))?$impress_content[0]:null;
+} else {
+	redirect_header ( CONTENT_URL, 3, _NOPERM );
 }
-else
-{
-	$page = (is_int($page)) ? intval($page) : str_replace("-"," ", $page);
-	$criteria = new CriteriaCompo(new Criteria('content_status', 1));
-	$criteria->add(new Criteria('content_menu', $page,'LIKE'));
-	$criteria->add(new Criteria('content_id', $page),'OR');
-	$impress_content = $content_handler->getObjects($criteria);
-	$impress_content = (isset($impress_content[0]))?$impress_content[0]:null;
-}
-if(!is_object($impress_content)) {redirect_header('index.php', 2, _CT_SELECTNG);}
-$content_id = $impress_content->getVar('content_id');
-$viewperm  = $gperm_handler->checkRight('content_read', $content_id, $groups); // $viewperm is true if user has permision to see this page
-$adminperm = $gperm_handler->checkRight('content_admin', $content_id, $uid) || (is_object($icmsUser) && count($allowed_groups) > 0); // $adminperm is true if user has permision to admin this page
-if(!$viewperm) {redirect_header('index.php', 2, _NOPERM);}
-$myts =& MyTextSanitizer::getInstance();
-$xoopsOption['template_main'] = 'system_content.html';
-/** Include the header file to start page rendering */
-include ICMS_ROOT_PATH.'/header.php';
 
-$xoTheme->addMeta('meta', 'description', $impress_content->getVar('content_seo_description'));
-$xoTheme->addMeta('meta', 'keywords', $impress_content->getVar('content_seo_keywords'));
-
-$xoopsTpl->assign("content_title", $impress_content->getVar('content_title'));
-$xoopsTpl->assign("isAdmin", $adminperm);
-$options = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&amp;op=editcontent&amp;content_id='.$impress_content->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/edit_big.png" title="'._CT_EDIT_CONTENT.'" alt="'._CT_EDIT_CONTENT.'" /></a>';
-$options .= '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&amp;op=delcontent&amp;content_id='.$impress_content->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/delete_big.png" title="'._CT_DELETE_CONTENT.'" alt="'._CT_DELETE_CONTENT.'" /></a>';
-$xoopsTpl->assign("content_admlinks", $options);
-$member_handler =& xoops_gethandler('member');
-$autor =& $member_handler->getUser($impress_content->getVar('content_uid'));
-$xoopsTpl->assign("show_pinfo",$im_contentConfig['show_pinfo']);
-$xoopsTpl->assign("content_tinfo", sprintf(_CT_PUBLISHEDBY.' <a href="'.ICMS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%s '._CT_READS.')',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($impress_content->getVar('content_created'),"s"),icms_conv_nr2local($impress_content->getReads())));
-$xoopsTpl->assign("content_body", $myts->displayTarea($impress_content->getVar('content_body', "n"),1,1,1,1,0));
-$xoopsTpl->assign("content_css", icms_sanitizeContentCss($impress_content->getVar('content_css')));
-$xoopsTpl->assign("content_tags", filter_bytags($impress_content->getVar('content_tags')));
-$xoopsTpl->assign("lang_tags", _CT_TAGS);
-
-if($im_contentConfig['show_subs'])
-{
-	$criteria = new Criteria('content_supid', $content_id);
-	$subs = $content_handler->getCount($criteria);
-	if($subs > 0)
-	{
-		$criteria = new CriteriaCompo(new Criteria('content_status', 1));
-		$criteria->add(new Criteria('content_supid', $content_id));
-		$crit = new CriteriaCompo(new Criteria('content_visibility', 2));
-		$crit->add(new Criteria('content_visibility', 3),'OR');
-		$criteria->add($crit);
-		$subs = $content_handler->getObjects($criteria);
-		foreach($subs as $sub)
-		{
-			$content_subs = array();
-			$content_subs['titulo'] = $sub->getVar("content_title");
-			$content_subs['teaser'] = icms_substr(icms_cleanTags($sub->getVar("content_body",'n'),array()),0,300);
-			$seo = urlencode(str_replace(" ", "-",$sub->getVar('content_menu')));
-			$content_subs['link'] = ICMS_URL.'/content.php?page='.$seo;
-			$xoopsTpl->append("content_subs", $content_subs);
-		}
-		$xoopsTpl->assign('showSubs', 1);
-		$xoopsTpl->assign('subs_label', _CT_RELATEDS);
-	}
-}
-else
-{
-	$xoopsTpl->assign('showSubs', 0);
-}
-$xoopsTpl->assign('showNav',$im_contentConfig['show_nav']);
-$xoopsTpl->assign('nav', showNav($content_id));
-$xoopsTpl->assign("xoops_pagetitle", $impress_content->getVar('content_title'));
-//$xoopsTpl->assign("xoops_module_header", '<link rel="stylesheet" type="text/css" media="all" title="Style sheet" href="'.ICMS_URL.'/modules/system/admin/content/style.css" />');
-$xoTheme->addStylesheet('/modules/system/admin/content/style'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css');
-
-if(!is_object($icmsUser))
-{
-	$impress_content->setReads();
-}
-else
-{
-	if($icmsUser->getVar('uid') != $autor->getVar('uid')) {$impress_content->setReads();}
-}
-$content_handler->insert($impress_content);
-/** Include the footer file to complete page rendering */
-include ICMS_ROOT_PATH.'/footer.php';
-
-/**
-* List content items by tag
-* 
-* @param string  $tag  The tag to list the content items of
-* @param int  $start  When the list contains more than 1 page, this is where to start the next pages
-* 
-* @return string  the generated list
-*/
-function list_by_tag($tag,$start=0){
-	global $im_contentConfig,$groups,$uid,$xoopsTpl,$xoTheme;
-	
-	$myts =& MyTextSanitizer::getInstance();
-	
-	$gperm_handler   =& xoops_gethandler('groupperm');
-	$content_handler =& xoops_gethandler('content');
-	
-	$criteria = new CriteriaCompo(new Criteria('content_status', 1));
-	$criteria->add(new Criteria('content_tags', '%'.$tag.'%','LIKE'));
-	$pagecount = $content_handler->getCount($criteria);
-	$criteria->setLimit($im_contentConfig['num_pages']);
-	$criteria->setStart($start);
-	$pages = $content_handler->getObjects($criteria);
-
-	foreach ($pages as $page){
-		if ($gperm_handler->checkRight('content_read', $page->getVar('content_id'), $groups)){
-			$adminperm = $gperm_handler->checkRight('content_admin', $page->getVar('content_id'), $uid);
-			$cont = array();
-			$cont['title'] = $page->getVar('content_title');
-			$cont['url'] = ICMS_URL.'/content.php?page='.$content_handler->makeLink($page);
-			$cont['isAdmin'] = $adminperm;
-			$options = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&amp;op=editcontent&amp;content_id='.$page->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/edit_big.png" title="'._CT_EDIT_CONTENT.'" alt="'._CT_EDIT_CONTENT.'" /></a>';
-			$options .= '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=content&amp;op=delcontent&amp;content_id='.$page->getVar('content_id').'"><img src="'.ICMS_URL.'/modules/system/images/delete_big.png" title="'._CT_DELETE_CONTENT.'" alt="'._CT_DELETE_CONTENT.'" /></a>';
-			$cont['admlinks'] = $options;
-			$member_handler =& xoops_gethandler('member');
-			$autor =& $member_handler->getUser($page->getVar('content_uid'));
-			$cont['tinfo'] = sprintf(_CT_PUBLISHEDBY.' <a href="'.ICMS_URL.'/userinfo.php?uid=%u">%s</a> '._CT_ON.' %s (%u '._CT_READS.')',$autor->getVar('uid'),$autor->getVar('uname'),formatTimestamp($page->getVar('content_created'),"s"),$page->getReads());
-			if ($im_contentConfig['teaser_length'] > 0){
-				$cont['body'] = icms_substr(icms_cleanTags($page->getVar("content_body",'n'),array()),0,$im_contentConfig['teaser_length']);
-			}else{
-				$cont['body'] = $myts->previewTarea($page->getVar('content_body', "n"),1,1,1,1,0);
-			}
-			$cont['tags'] = filter_bytags($page->getVar('content_tags'));
-			$xoopsTpl->append('contents',$cont);
-		}
-	}
-	
-	if ($pagecount > 0){
-		if ($pagecount > $im_contentConfig['num_pages']) {
-			/** Include the page navigation class for rendering */
-      include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-			$nav = new XoopsPageNav($pagecount, $im_contentConfig['num_pages'], $start, 'start','tag='.$tag);
-			$xoopsTpl->assign('pag',$nav->renderNav());
-		}else{
-			$xoopsTpl->assign('pag','');
-		}
-	}else{
-		$xoopsTpl->assign('pag','');
-	}
-	
-    $xoopsTpl->assign("lang_tags", _CT_TAGS);
-	$xoopsTpl->assign("show_pinfo",$im_contentConfig['show_pinfo']);
-    
-	$xoTheme->addStylesheet(ICMS_URL.'/modules/system/admin/content/style.css');
-	
-	return $xoopsTpl->fetch('db:system_content_list.html');
+if ($contentConfig ['com_rule'] && $contentObj->getVar ( 'content_cancomment' )) {
+	$icmsTpl->assign ( 'content_content_comment', true );
+	include_once ICMS_ROOT_PATH . '/include/comment_view.php';
 }
 
 /**
-* Filter the list by tag
-* 
-* @param string  $tag  the tag to filter the list on
-* 
-* @return string  the filtered list
-*/
-function filter_bytags($tags){
-	if (!empty($tags)){
-		$tags_arr = explode(',',$tags);
-	}else{
-		$tags_arr = array();
-	}
+ * Generating meta information for this page
+ */
+$icms_metagen = new IcmsMetagen ( $contentObj->getVar ( 'content_title' ), $contentObj->getVar ( 'meta_keywords', 'n' ), $contentObj->getVar ( 'meta_description', 'n' ) );
+$icms_metagen->createMetaTags ();
 
-	$ret = '';
-	if (count($tags_arr) > 0){
-		foreach ($tags_arr as $tag){
-			$ret .= '<a href="'.ICMS_URL.'/content.php?tag='.trim($tag).'">'.$tag.'</a>, ';
-		}
-		$ret = substr($ret,0,strlen($ret)-2);
-	}
-	return $ret;
-}
+$xoTheme->addStylesheet ( ICMS_URL . '/modules/content/include/content.css' );
+$icmsTpl->assign ( 'content_module_home', content_getModuleName ( true, true ) );
+
+
+
+include_once CONTENT_ROOT_PATH.'footer.php';
 ?>

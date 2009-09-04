@@ -159,8 +159,11 @@ if ($op == 'install') {
 		$msgs ='<img src="'.XOOPS_URL.'/modules/'.$mod->getVar('dirname').'/'.trim($mod->getInfo('image')).'" alt="" />';
 	}
 	$msgs .= '<br /><span style="font-size:smaller;">'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREINS;
+	if (empty($from_112)){
+		$from_112 = false;
+	}
 	xoops_cp_header();
-	xoops_confirm(array('module' => $module, 'op' => 'install_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _MD_AM_INSTALL);
+	xoops_confirm(array('module' => $module, 'op' => 'install_ok', 'fct' => 'modulesadmin', 'from_112' => $from_112), 'admin.php', $msgs, _MD_AM_INSTALL);
 	xoops_cp_footer();
 	exit();
 }
@@ -168,6 +171,9 @@ if ($op == 'install') {
 if ($op == 'install_ok') {
 	$ret = array();
 	$ret[] = xoops_module_install($module);
+	if ($from_112){
+		$ret[] = icms_module_update($module);
+	}
 	$contents = xoops_module_get_admin_menu();
 	if (!xoops_module_write_admin_menu($contents)) {
 		$ret[] = "<p>"._MD_AM_FAILWRITE."</p>";

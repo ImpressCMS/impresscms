@@ -79,10 +79,7 @@ $modversion['adminmenu'] = "menu.php";
 $modversion['onUpdate'] = "include/update.php";
 
 /** Search information */
-$modversion['hasSearch'] = true;
-$modversion['search'] = array (
-	'file' => "include/search.inc.php",
-	'func' => "search_content");
+$modversion['hasSearch'] = false;
 
 /** Menu information */
 $modversion['hasMain'] = false;
@@ -191,6 +188,13 @@ $modversion['blocks'][] = array(
 	'show_func' => 'b_system_multilanguage_show',
 	'template' => 'system_block_multilanguage.html');
 
+/**
+ * @todo Remove this blocks on future versions. When 1.1.2 isn't supported anymore.
+ */
+$icms_modules_handler = xoops_gethandler('module');
+$module = $icms_modules_handler->getByDirname('content');
+if (!is_object($module)){
+//Content Manager
 $modversion['blocks'][] = array(
 	'file' => 'content_blocks.php',
 	'name' => _MI_SYSTEM_BNAME15,
@@ -217,7 +221,8 @@ $modversion['blocks'][] = array(
 	'edit_func' => 'b_content_relmenu_edit',
 	'options' => 'content_weight|ASC|1',
 	'template' => 'system_block_contentmenu.html');
-
+}
+/**/
 $modversion['blocks'][] = array(
 	'file' => 'social_bookmarks.php',
 	'name' => _MI_SYSTEM_BNAME18,
@@ -225,13 +230,6 @@ $modversion['blocks'][] = array(
 	'show_func' => 'b_social_bookmarks',
 	'edit_func' => 'b_social_bookmarks_edit',
 	'template' => 'system_block_socialbookmark.html');
-
-$modversion['blocks'][] = array(
-	'file' => 'content_blocks.php',
-	'name' => _MI_SYSTEM_BNAME19,
-	'description' => '',
-	'show_func' => 'b_content_tagmenu_show',
-	'template' => 'system_block_contenttags.html');
 
 $modversion['blocks'][] = array(
 	'file' => 'system_admin_blocks.php',
@@ -421,24 +419,6 @@ $modversion['templates'][] = array(
 $modversion['templates'][] = array(
 	'file' => 'admin/mimetype/system_adm_mimetype.html',
 	'description' => '');
-
-if(is_dir(ICMS_ROOT_PATH.'/modules/system/admin/content')){
-$modversion['templates'][] = array(
-	'file' => 'blocks/system_block_contentmenu_structure.html',
-	'description' => '');
-
-$modversion['templates'][] = array(
-	'file' => 'admin/content/system_adm_contentmanager_index.html',
-	'description' => '');
-
-$modversion['templates'][] = array(
-	'file' => 'system_content_list.html',
-	'description' => '');
-
-$modversion['templates'][] = array(
-	'file' => 'system_content.html',
-	'description' => '');
-}
 
 $modversion['templates'][] = array(
 	'file' => 'admin/userrank/system_adm_userrank.html',

@@ -949,6 +949,7 @@ class IcmsDatabaseupdater {
 	 * @param int $conf_order
 	 */
 	function insertConfig($conf_catid, $conf_name, $conf_title, $conf_value, $conf_desc, $conf_formtype, $conf_valuetype, $conf_order) {
+		global $dbVersion;
 		$configitem_handler = xoops_gethandler('configitem');
 		$configitemObj = $configitem_handler->create();
 		$configitemObj->setVar('conf_modid', 0);

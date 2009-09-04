@@ -21,8 +21,11 @@
 icms_loadLanguageFile('core', 'databaseupdater');
 function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = null) {
 
-	global $icmsConfig;
+	global $icmsConfig, $xoTheme;
 	$icmsDB = $GLOBALS['xoopsDB'];
+	
+	$from_112 = false;
+	
 	$oldversion  = $module->getVar('version');
 	if ($oldversion < 120) {
 		$result = $icmsDB->query("SELECT t1.tpl_id FROM ".$icmsDB->prefix('tplfile')." t1, ".$icmsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
@@ -395,6 +398,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	$newDbVersion = 12;
 
 	if ($dbVersion < $newDbVersion) {
+		$from_112 = true;
 		echo $action;
 		if (getDbValue($icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"') == 0) {
 			$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('11','_MD_AM_CAPTCHA')");
@@ -528,12 +532,14 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	if ($dbVersion < $newDbVersion) {
 		echo $action;
+		/*
 		$table = new IcmsDatabasetable('icmscontent');
 		if (!$table->fieldExists('content_tags')) {
 		$table->addNewField('content_tags', "text");
 		$icmsDatabaseUpdater->updateTable($table);
 		}
 		unset($table);
+        */
 		$table = new IcmsDatabasetable('imagecategory');
 		if (!$table->fieldExists('imgcat_foldername')) {
 		$table->addNewField('imgcat_pid', "varchar(100) default ''");
@@ -934,7 +940,14 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
     }
 
 	echo "</code>";
-
+	
+	if ($from_112){	
+		/**
+		 * @todo create a language constant for this text
+		 */
+		echo "<code><h3>You have updated your site from ImpressCMS 1.1.2 to ImpressCMS 1.2 so you need to install the new Content module to update the core content manager. You will be redirected to the installation process in 10 seconds. If this does not happen click <a href='".ICMS_URL."/modules/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1'>here</a>.</h3></code>";
+		echo '<script>setTimeout("window.location.href=\''.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&op=install&module=content&from_112=1\'",10000);</script>';
+	}
  /**
   * DEVELOPPER, PLEASE NOTE !!!
   *
@@ -943,10 +956,9 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
   * in htdocs/include/version.php
   */
 
-
 	$feedback = ob_get_clean();
 	if (method_exists($module, "setMessage")) {
-		$module->setMessage($feedback);
+		$module->messages = $module->setMessage($feedback);
 	} else {
 		echo $feedback;
 	}

@@ -1,5 +1,5 @@
 <?php
-// $Id$  //
+// $Id: jalali.php 8786 2009-05-28 21:06:30Z realtherplima $  //
 /**
 * Handles all jalali calendar functions within ImpressCMS
 *
@@ -17,7 +17,7 @@
 * @author		jalali Date function by Milad Rastian (miladmovie AT yahoo DOT com)
 * @author		FARSI PROJECTS GROUP
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version	$Id$
+* @version	$Id: jalali.php 8786 2009-05-28 21:06:30Z realtherplima $
 */
 //																		   //
 // The main function which convert Gregorian to Jalali calendars is:		 //

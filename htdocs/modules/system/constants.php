@@ -30,9 +30,6 @@ define('XOOPS_SYSTEM_BANNER', 13);
 define('XOOPS_SYSTEM_COMMENT', 14);
 define('XOOPS_SYSTEM_TPLSET', 15);
 define('XOOPS_SYSTEM_VERSION', 16);
-if(is_dir(ICMS_ROOT_PATH.'/modules/system/admin/content')){
-    define('XOOPS_SYSTEM_CONTENT', 17);
-}
 define('XOOPS_SYSTEM_BLOCKP', 18);
 define('XOOPS_SYSTEM_PAGES', 19);
 define('XOOPS_SYSTEM_CUSTOMTAGS', 20);

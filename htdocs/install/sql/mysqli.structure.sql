@@ -154,31 +154,6 @@ CREATE TABLE xoopscomments (
 # --------------------------------------------------------
 
 #
-# Table structure for table icmscontent
-#
-CREATE TABLE icmscontent (
-  content_id mediumint(8) unsigned NOT NULL auto_increment,
-  content_catid mediumint(8) unsigned NOT NULL default '1',
-  content_supid mediumint(8) unsigned NOT NULL default '0',
-  content_uid mediumint(5) NOT NULL default '1',
-  content_title varchar(255) NOT NULL default '',
-  content_menu varchar(100) default NULL,
-  content_body text,
-  content_css text,
-  content_tags text,
-  content_visibility int(10) NOT NULL default '3',
-  content_created int(10) NOT NULL default '0',
-  content_updated int(10) NOT NULL default '0',
-  content_weight smallint(5) unsigned NOT NULL default '0',
-  content_reads int(11) NOT NULL default '0',
-  content_status tinyint(1) unsigned NOT NULL default '0',
-  content_seo_description text,
-  content_seo_keywords text,
-  PRIMARY KEY  (content_id)
-) TYPE=MyISAM;
-# --------------------------------------------------------
-
-#
 # Table structure for table icmspage
 #
 CREATE TABLE icmspage (

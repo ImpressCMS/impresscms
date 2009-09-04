@@ -459,6 +459,7 @@ function xoops_module_install($dirname) {
 					if ( !( $lastmsg = $func($module) ) ) {
 						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
 					} else {
+						$msgs[] = $module->messages;
 						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
 						if ( is_string( $lastmsg ) ) {
 							$msgs[] = $lastmsg;
@@ -469,6 +470,7 @@ function xoops_module_install($dirname) {
 					if ( !( $lastmsg = $func($module) ) ) {
 						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
 					} else {
+						$msgs[] = $module->messages;
 						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
 						if ( is_string( $lastmsg ) ) {
 							$msgs[] = $lastmsg;
@@ -703,6 +705,7 @@ function xoops_module_uninstall($dirname) {
 					if (!$func($module)) {
 						$msgs[] = 'Failed to execute <b>'.$func.'</b>';
 					} else {
+						$msgs[] = $module->messages;
 						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
 					}
 				}elseif (function_exists('icms_module_uninstall_'.$ModName)) {
@@ -710,6 +713,7 @@ function xoops_module_uninstall($dirname) {
 					if (!$func($module)) {
 						$msgs[] = 'Failed to execute <b>'.$func.'</b>';
 					} else {
+						$msgs[] = $module->messages;
 						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
 					}
 				}
@@ -1216,6 +1220,7 @@ function icms_module_update($dirname) {
 				if (!$func($module, $prev_version, $prev_dbversion)) {
 					$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
 				} else {
+					$msgs[] = $module->messages;
 					$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
 				}
 			}elseif (function_exists('icms_module_update_'.$ModName)) {
@@ -1223,6 +1228,7 @@ function icms_module_update($dirname) {
 				if (!$func($module, $prev_version, $prev_dbversion)) {
 					$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
 				} else {
+					$msgs[] = $module->messages;
 					$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
 				}
 			}
