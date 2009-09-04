@@ -41,10 +41,6 @@ class XoopsAuthXoops extends XoopsAuth
     function authenticate($uname, $pwd = null)
     {
         $member_handler = xoops_gethandler('member');
-        if(strstr($uname, '@'))
-        {
-            $uname = icms_getUnameFromUserEmail($uname);
-        }
         $user = $member_handler->loginUser($uname, $pwd);
         $sess_handler = xoops_gethandler('session');
         $sess_handler->securityLevel = 3;

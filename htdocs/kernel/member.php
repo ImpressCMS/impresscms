@@ -283,6 +283,33 @@ class XoopsMemberHandler {
 		}
 	}
 	
+    function icms_getLoginFromUserEmail($email = '')
+    {
+        $db = Database::getInstance();
+        include_once ICMS_ROOT_PATH.'/class/database/databaseupdater.php';
+        $table = new IcmsDatabasetable('users');
+
+        if($email !== '')
+        {
+            if($table->fieldExists('loginname'))
+            {
+                $sql = $db->query("SELECT loginname, email FROM ".$db->prefix('users')." WHERE email =
+                    '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
+            }
+            elseif($table->fieldExists('login_name'))
+            {
+                $sql = $db->query("SELECT login_name, email FROM ".$db->prefix('users')." WHERE email =
+                '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
+            }
+            list($uname, $email) = $db->fetchRow($sql);
+        }
+        else
+        {
+            redirect_header('user.php',2,_US_SORRYNOTFOUND);
+        }
+        return $uname;
+    }
+
 	 /**
 	 * log in a user
 	 * @param string $uname username as entered in the login form
@@ -293,6 +320,11 @@ class XoopsMemberHandler {
 	 {
 		  include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
 		  $icmspass = new icms_Password();
+
+        if(strstr($uname, '@'))
+        {
+            $uname = $this->icms_getLoginFromUserEmail($uname);
+        }
 
 		  $is_expired = $icmspass->icms_passExpired($uname);
 		  if($is_expired == 1)

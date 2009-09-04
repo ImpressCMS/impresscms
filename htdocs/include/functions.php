@@ -2881,12 +2881,14 @@ function icms_MakePrinterFriendly($content, $title=false, $description=false, $p
 	$PrintDataBuilder->setWidth($width);
 	$PrintDataBuilder->render();
 }
+
 function icms_getUnameFromUserEmail($email = '')
 {
     $db = Database::getInstance();
     if($email !== '')
     {
-        $sql = $db->query("SELECT login_name, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email, ENT_QUOTES, _CHARSET)."'");
+        $sql = $db->query("SELECT uname, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email,
+ENT_QUOTES, _CHARSET)."'");
         list($uname, $email) = $db->fetchRow($sql);
     }
     else

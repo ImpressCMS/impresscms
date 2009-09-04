@@ -52,7 +52,7 @@ Revision:
 '''Fixed'''
 * #754: removed deprecated html purifier leftovers that are no longer used with new system. (vaughan/phoenyx)
 * #661: Uploader setPrefix may incorrectly assign filenames. (vaughan)
-* #: Unable to login with email address, function getUnameFromUserEmail() was getting $uname & not $login_name. (vaughan)
+* #763: Unable to login with email address, function getLoginFromUserEmail created to retrieve login name from email. (vaughan)
 * fixed class/icmsform/icmsform.php 723-728 lines (????) (mekdrop)
 * #759: icmsform fixed (sato-san)
 * #334: Videolayer is over the jQuery pictures (sato-san)
