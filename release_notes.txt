@@ -1,9 +1,9 @@
-ImpressCMS 1.2 Alpha 1 release notes
+ImpressCMS 1.2 Beta 1 release notes
 ==================================
 
 The ImpressCMS Project is very proud to announce a new version in the 1.2 series. ImpressCMS 1.2 introduce a few improvments motivated by our constant desire of developing the best easy to use open source CMS.
 
-Please note that as an alpha, this release if testing purposes only and should not be installed on production servers.
+Please note that as a beta, this release if testing purposes only and should not be installed on production servers.
 
 
 Please see the full [[Change Log]] for details in docs/changelog.txt.
@@ -25,14 +25,14 @@ This release can be downloaded from the [https://sourceforge.net/project/showfil
 
 This release can be downloaded directly on your server using the WGET command (providing you have SSH access to your server). To download it, simply use this code:
 
-wget http://www.impresscms.org/download/1.2_alpha1/
+wget http://www.impresscms.org/download/1.2_beta/
 
 ==Checking out ImpressCMS from the SVN==
 
 You can easily get ImpressCMS using SVN. Instructions about this can be found here: [[Install_and_update_using_SVN]].
 
 The path for this release is the following:
-https://svn.impresscms.org/core/releases/impresscms_1.2_alpha1/
+https://svn.impresscms.org/core/releases/impresscms_1.2_beta/
 
 If you feel like getting the latest "edge" version, you can checkout the core trunk at :
 
