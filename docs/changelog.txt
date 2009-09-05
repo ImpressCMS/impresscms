@@ -153,6 +153,7 @@ Revision:
 * #733: Fatal error: Class 'IcmsPersistableObject' not found in G:\xampp\htdocs\trunk\modules\system\admin\autotasks\class\autotasks.php on line 21 (stranger)
 * #761: exiting redirect_header properly now (Phoenyx)
 * #647: fixed module menu is not displayed on the admin page (mekdrop)
+* #746: After the installation you dont have an autotask (stranger)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''

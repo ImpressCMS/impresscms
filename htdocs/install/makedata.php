@@ -1202,6 +1202,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
      $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_CSS_Proprietary', '_MD_AM_PURIFIER_CSS_PROPRIETARY', '1', '_MD_AM_PURIFIER_CSS_PROPRIETARYDSC', 'yesno', 'int', $p)");
      // <<<<< End of Purifier Category >>>>>
 
+	$dbm->insert('system_autotasks', " VALUES (0, 'Inactivating users', 'autotask.php', 0, 1, 0, 1, ".time().", 'addon/system', 00)");
 
 	
     return $gruops;
