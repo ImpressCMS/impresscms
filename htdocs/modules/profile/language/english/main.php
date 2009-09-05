@@ -13,7 +13,6 @@
  * @version	$Id$
  */
 
-define('_PROFILE_MA_FIRST_USE', 'Profile is not yet ready to use. Please contact an administrator.');
 define('_PROFILE_MA_MAKE_CONFIG_FIRST', 'This is the first time you open your Profile. Please specify your Profile Settings first.');
 define('_PROFILE_MA_USER_NOT_FOUND', 'User not found.');
 define("_PROFILE_MA_ERRORDURINGSAVE", "Error during save");
@@ -165,7 +164,7 @@ define("_MD_PROFILE_PICTURES_EDIT", "Edit existing photo");
 define("_MD_PROFILE_PICTURES_CREATED", "Photo successfully added");
 define("_MD_PROFILE_PICTURES_MODIFIED", "Photo successfully modified");
 define("_MD_PROFILE_PICTURES_AVATAR_EDITED", "Avatar successfully modified");
-//define("_MD_PROFILE_PICTURES_AVATAR_NOCOPY", "Error while trying to copy the avatar");
+define("_MD_PROFILE_PICTURES_AVATAR_NOCOPY", "Error while trying to copy the avatar");
 define("_MD_PROFILE_PICTURES_AVATAR_NOTEDITED", "There was an error while updating your avatar");
 define("_MD_PROFILE_PICTURES_AVATAR_DELETED", "Avatar successfully deleted");
 define("_MD_PROFILE_PICTURES_AVATAR_NOTDELETED", "There was an error while deleting your avatar");

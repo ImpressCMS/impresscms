@@ -110,7 +110,7 @@ $modversion['adminindex'] = "admin/user.php";
 $modversion['adminmenu'] = "admin/menu.php";
 
 /** Install and update informations */
-$modversion['onInstall'] = "include/oninstall.inc.php";
+$modversion['onInstall'] = "include/onupdate.inc.php";
 $modversion['onUpdate'] = "include/onupdate.inc.php";
 
 /** Search information */

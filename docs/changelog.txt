@@ -52,6 +52,7 @@ Revision:
 * Update simplepie to version 1.2 (stranger)
 * Update PHPMailer to version 5.0.2 (stranger)
 * Update tcpdf to version 4.7.003 (stranger)
+* #766: IPF based module do no longer need to be updated after the installation (Phoenyx)
 
 '''Fixed'''
 * #754: removed deprecated html purifier leftovers that are no longer used with new system. (vaughan/phoenyx)

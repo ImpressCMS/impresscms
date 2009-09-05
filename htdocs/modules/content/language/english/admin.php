@@ -19,7 +19,6 @@ define("_AM_CONTENT_REQUIREMENTS_SUPPORT", "Should you have any question or conc
 
 // general
 define("_AM_CONTENT_CONTENTS", "Contents");
-define("_AM_CONTENT_FIRST_USE", "This is the first time you access this module. Please update the module in order to dynamically create the database scheme.");
 
 // Content
 define("_AM_CONTENT_CONTENT_CREATE", "Add a content");

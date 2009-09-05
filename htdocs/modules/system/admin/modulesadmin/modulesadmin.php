@@ -431,20 +431,22 @@ function xoops_module_install($dirname) {
 			// add module specific tasks to system autotasks list
 			$atasks = $module->getInfo('autotasks');
 			$atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
-			foreach ($atasks as $taskID => $taskData) {
-				$task = &$atasks_handler->create();
-				if (isset($taskData['enabled'])) $task->setVar('sat_enabled', $taskData['enabled']);
-				if (isset($taskData['repeat'])) $task->setVar('sat_repeat', $taskData['repeat']);
-				if (isset($taskData['interval'])) $task->setVar('sat_interval', $taskData['interval']);
-				if (isset($taskData['onfinish'])) $task->setVar('sat_onfinish', $taskData['onfinish']);
-				$task->setVar('sat_name', $taskData['name']);
-				$task->setVar('sat_code', $taskData['code']);
-				$task->setVar('sat_type', 'addon/'.$module->getInfo('dirname'));
-				$task->setVar('sat_addon_id', intval($taskID));
-				if (!($atasks_handler->insert($task))) {
-					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert autotask to db. Name: <b>'.$taskData['name'].'</b></span>';
-				} else {
-					$msgs[] = '&nbsp;&nbsp;Added task to autotasks list. Task Name: <b>'.$taskData['name'].'</b>';
+			if (isset($atasks) && is_array($atasks)) {
+				foreach ($atasks as $taskID => $taskData) {
+					$task = &$atasks_handler->create();
+					if (isset($taskData['enabled'])) $task->setVar('sat_enabled', $taskData['enabled']);
+					if (isset($taskData['repeat'])) $task->setVar('sat_repeat', $taskData['repeat']);
+					if (isset($taskData['interval'])) $task->setVar('sat_interval', $taskData['interval']);
+					if (isset($taskData['onfinish'])) $task->setVar('sat_onfinish', $taskData['onfinish']);
+					$task->setVar('sat_name', $taskData['name']);
+					$task->setVar('sat_code', $taskData['code']);
+					$task->setVar('sat_type', 'addon/'.$module->getInfo('dirname'));
+					$task->setVar('sat_addon_id', intval($taskID));
+					if (!($atasks_handler->insert($task))) {
+						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert autotask to db. Name: <b>'.$taskData['name'].'</b></span>';
+					} else {
+						$msgs[] = '&nbsp;&nbsp;Added task to autotasks list. Task Name: <b>'.$taskData['name'].'</b>';
+					}
 				}
 			}
 			unset($atasks, $atasks_handler, $task, $taskData, $criteria, $items, $taskID);
@@ -454,6 +456,16 @@ function xoops_module_install($dirname) {
 			$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
 			if (false != $install_script && trim($install_script) != '') {
 				include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($install_script);
+
+				$is_IPF = $module->getInfo('object_items');
+				if(!empty($is_IPF)){
+					$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
+					$icmsDatabaseUpdater->moduleUpgrade($module, true);
+					foreach ($icmsDatabaseUpdater->_messages as $msg) {
+						$msgs[] = $msg;
+					}
+				}
+
 				if (function_exists('xoops_module_install_'.$ModName)) {
 					$func = 'xoops_module_install_'.$ModName;
 					if ( !( $lastmsg = $func($module) ) ) {
@@ -1212,7 +1224,9 @@ function icms_module_update($dirname) {
 			if(!empty($is_IPF)){
 				$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
 				$icmsDatabaseUpdater->moduleUpgrade($module, true);
-				$msgs[] = array_merge($icmsDatabaseUpdater->_messages, $msgs);
+				foreach ($icmsDatabaseUpdater->_messages as $msg) {
+					$msgs[] = $msg;
+				}
 			}
 
 			if (function_exists('xoops_module_update_'.$ModName)) {

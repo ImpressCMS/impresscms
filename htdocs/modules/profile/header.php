@@ -18,17 +18,6 @@ include_once ICMS_ROOT_PATH."/header.php";
 
 $dirname = basename( dirname( __FILE__ ) );
 
-/* First use page of the module. Since imProfile is IPF based we have to make sure that the module
- * was updated before. In case it wasen't there are no tables in the database and therefore we have
- * to stop loading imProfile
- */
-if (is_object($icmsModule) && $icmsModule->dirname() == $dirname) {
-	if (!$icmsModule->getDBVersion()) {
-		redirect_header(ICMS_URL, 3, _PROFILE_MA_FIRST_USE);
-		exit;
-	}
-}
-
 // check if anonymous users can access profiles
 if (!is_object($icmsUser) && !$icmsConfigUser['allow_annon_view_prof']) {
 	redirect_header(ICMS_URL, 3, _NOPERM);

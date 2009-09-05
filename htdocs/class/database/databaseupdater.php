@@ -252,9 +252,9 @@ class IcmsDatabasetable {
 				$ret = $this->_db->query($query);
 			}
 			if (!$ret) {
-				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA_ERR, $this->name()) . "<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA_ERR, $this->name());
 			} else {
-				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA, $this->name()) . "<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA, $this->name());
 			}
 		}
 		return $ret;
@@ -415,10 +415,10 @@ class IcmsDatabasetable {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")";
 
 		} else {
-			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE, $this->name()) . "<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE, $this->name());
 		}
 		return $ret;
 	}
@@ -438,10 +438,10 @@ class IcmsDatabasetable {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")";
 			return false;
 		} else {
-			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE, $this->name()) . "<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE, $this->name());
 			return true;
 		}
 	}
@@ -470,9 +470,9 @@ class IcmsDatabasetable {
 
 			if ($alteredField['showerror']) {
 				if (!$ret) {
-				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD_ERR, $alteredField['name'], $this->name()) . " (" . $this->_db->error(). ")<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD_ERR, $alteredField['name'], $this->name()) . " (" . $this->_db->error(). ")";
 				} else {
-					$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD, $alteredField['name'], $this->name()) . "<br />";
+					$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD, $alteredField['name'], $this->name());
 				}
 			}
 		}
@@ -499,9 +499,9 @@ class IcmsDatabasetable {
 			}
 
 			if (!$ret) {
-				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD_ERR, $newField['name'], $this->name()) . "<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD_ERR, $newField['name'], $this->name());
 			} else {
-				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD, $newField['name'], $this->name()) . "<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD, $newField['name'], $this->name());
 			}
 		}
 		return $ret;
@@ -542,9 +542,9 @@ class IcmsDatabasetable {
 	   	$ret = $this->_db->query($sql);
 	   }
 		  if (!$ret) {
-	   	$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
+	   	$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")";
 	   } else {
-	   	$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE, $this->name()) . "<br />";
+	   	$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE, $this->name());
 	   }
   	}
   	return $ret;
@@ -571,9 +571,9 @@ class IcmsDatabasetable {
 		   	$result = $this->_db->query($sql);
 		   }
 		   if (!$result) {
-			   $this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
+			   $this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")";
 		   } else {
-		   	$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE, $this->name()) . " (" . $this->_db->error(). ")<br />";
+		   	$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE, $this->name()) . " (" . $this->_db->error(). ")";
 		   }
 	   }
 	   $ret = $result && $ret;
@@ -599,9 +599,9 @@ class IcmsDatabasetable {
 			}
 
 			if (!$ret) {
-				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD_ERR, $dropedField, $this->name()) . " (" . $this->_db->error(). ")<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD_ERR, $dropedField, $this->name()) . " (" . $this->_db->error(). ")";
 			} else {
-				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD, $dropedField, $this->name()) . "<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD, $dropedField, $this->name());
 			}
 		}
 		return $ret;
@@ -630,6 +630,12 @@ class IcmsDatabaseupdater {
 	 */
 	var $_db;
 	var $db;
+
+	/**
+	 *
+	 * @var array of messages
+	 */
+	var $_messages = array();
 
 	function IcmsDatabaseupdater() {
 		global $xoopsDB;
@@ -678,10 +684,10 @@ class IcmsDatabaseupdater {
 		}
 
 		if (!$ret) {
-			$this->_messages[] =  "&nbsp;&nbsp;$badmsg<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;$badmsg";
 			return false;
 		} else {
-			$this->_messages[] =  "&nbsp;&nbsp;$goodmsg<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;$goodmsg";
 			return true;
 		}
 	}
@@ -706,10 +712,10 @@ class IcmsDatabaseupdater {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE_ERR, $from) . "<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE_ERR, $from);
 			return false;
 		} else {
-			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE, $from, $to) . "<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE, $from, $to);
 			return true;
 		}
 	}
@@ -880,6 +886,9 @@ class IcmsDatabaseupdater {
 				 * @todo trap the errors
 				 */
 			}
+			foreach ($table->_messages as $msg) {
+				$this->_messages[] = $msg;
+			}
 		} else {
 			$existingFieldsArray = $table->getExistingFieldsArray();
 			foreach($objectVars as $key=>$var) {
@@ -984,7 +993,7 @@ class IcmsDatabaseupdater {
 
 		$newDbVersion = constant(strtoupper($dirname . '_db_version')) ? constant(strtoupper($dirname . '_db_version')) : 0;
 		$textcurrentversion = sprintf(_DATABASEUPDATER_CURRENTVER, $dbVersion);
-		$textlatestversion = sprintf(_DATABASEUPDATER_CURRENTVER, $newDbVersion);
+		$textlatestversion = sprintf(_DATABASEUPDATER_LATESTVER, $newDbVersion);
 		$this->_messages[] =  $textcurrentversion;
 		$this->_messages[] =  $textlatestversion;
 		if(!$tables_first){
@@ -997,15 +1006,12 @@ class IcmsDatabaseupdater {
 				}
 			}
 		}
-		$this->_messages[] =  "<code>" . _DATABASEUPDATER_UPDATE_UPDATING_DATABASE . "<br />";
+		$this->_messages[] =  _DATABASEUPDATER_UPDATE_UPDATING_DATABASE;
 
 		// if there is a function to execute for this DB version, let's do it
 		//$function_
 
-		$module_info = XoopsModuleHandler::getByDirname($dirname);
-		$this->automaticUpgrade($dirname, $module_info->modinfo['object_items']);
-
-		$this->_messages[] =  "</code>";
+		$this->automaticUpgrade($dirname, $module->modinfo['object_items']);
 /*
 		if (method_exists($module, "setMessage")) {
 			$module->setMessage($this->_messages);

@@ -45,6 +45,12 @@ class XoopsModule extends XoopsObject
 	* @var array
 	*/
 	var $adminheadermenu;
+	/**
+	 * array for messages
+	 *
+	 * @var array
+	 */
+	var $messages;
 	
 	/**
 	* Constructor

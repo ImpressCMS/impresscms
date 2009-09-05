@@ -2,14 +2,14 @@
 /**
 * Import script of profile module from xoops 2.2.* until 2.3.*
 *
-* @copyright   The XOOPS project http://www.xoops.org/
+* @copyright	The XOOPS project http://www.xoops.org/
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		modules
-* @since		1.2
-* @author	   Sina Asghari <pesian_stranger@users.sourceforge.net>
-* @author	  Taiwen Jiang <phppp@users.sourceforge.net>
-* @version		$Id$
+* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package	modules
+* @since	1.2
+* @author	Sina Asghari <pesian_stranger@users.sourceforge.net>
+* @author	Taiwen Jiang <phppp@users.sourceforge.net>
+* @version	$Id$
 */
 
 define('PROFILE_DB_VERSION', 1);
@@ -134,6 +134,10 @@ function profile_db_upgrade_1() {
 
 function icms_module_update_profile(&$module, $oldversion = null, $dbversion = null) 
 {
+	return true;
+}
+
+function icms_module_install_profile($module) {
 	return true;
 }
 ?>

@@ -390,6 +390,16 @@ function xoops_module_install($dirname) {
 			$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
 			if (false != $install_script && trim($install_script) != '') {
 				include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($install_script);
+				
+				$is_IPF = $module->getInfo('object_items');
+				if(!empty($is_IPF)){
+					$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
+					$icmsDatabaseUpdater->moduleUpgrade($module, true);
+					foreach ($icmsDatabaseUpdater->_messages as $msg) {
+						$msgs[] = $msg;
+					}
+				}
+
 				if (function_exists('xoops_module_install_'.$ModName)) {
 					$func = 'xoops_module_install_'.$ModName;
 					if ( !( $lastmsg = $func($module) ) ) {
@@ -866,6 +876,16 @@ function icms_module_update($dirname) {
 		$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
 		if (false != $update_script && trim($update_script) != '') {
 			include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($update_script);
+			
+			$is_IPF = $module->getInfo('object_items');
+			if(!empty($is_IPF)){
+				$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
+				$icmsDatabaseUpdater->moduleUpgrade($module, true);
+				foreach ($icmsDatabaseUpdater->_messages as $msg) {
+					$msgs[] = $msg;
+				}
+			}
+
 			if (function_exists('xoops_module_update_'.$ModName)) {
 				$func = 'xoops_module_update_'.$ModName;
 				if (!$func($module, $prev_version, $prev_dbversion)) {

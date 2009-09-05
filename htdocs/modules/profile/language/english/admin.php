@@ -15,9 +15,6 @@
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
-// General
-define("_AM_PROFILE_FIRST_USE", "This is the first time you access this module. Please update the module in order to dynamically create the database scheme.");
-
 // Field
 define("_AM_PROFILE_FIELD_CREATE", "Add a field");
 define("_AM_PROFILE_FIELD", "Field");
