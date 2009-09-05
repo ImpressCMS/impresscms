@@ -1,8 +1,11 @@
 ImpressCMS ChangeLog
+=== ImpressCMS 1.2 RC 1 ===
+Release date:
+Revision: 
 
 === Impresscms 1.2 Beta ===
-Release date:
-Revision:
+Release date: 5 Sep 2009
+Revision: 9336
 
 '''Added'''
 * Added plugins/autotasks folder for storring autotasks systems (currently there is at.php, cron.php and internal.php handlers) (mekdrop)
