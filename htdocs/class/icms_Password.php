@@ -21,9 +21,9 @@ final class icms_Password
 
     /**
     * Access the only instance of this class
-    * @return object
-    * @static	  $purify_instance
-    * @staticvar		object
+    * @return       object
+    * @static       $purify_instance
+    * @staticvar    object
     **/
     public static function getInstance()
     {
@@ -35,7 +35,7 @@ final class icms_Password
         return $instance;
     }
 
-// ***** Private Functions *****
+    // ***** Private Functions *****
     /**
     * This Private Function checks whether a users password has been expired
     * @copyright (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
@@ -190,7 +190,7 @@ final class icms_Password
         return $pass_hash;
     }
 
-// ***** Public Functions *****
+    // ***** Public Functions *****
     /**
     * This Function creates a unique random Salt Key for use with password encryptions
     * It can also be used to generate a random AlphaNumeric key sequence of any given length.
