@@ -181,10 +181,10 @@ define("_PROFILE_MI_PROFILE_SOCIAL_DESC", "Do you want to use this module as a s
 define("_MI_PROFILE_VISIBILITY", "Visibility");
 define("_MI_PROFILE_AUDIOS", "Audios");
 define("_MI_PROFILE_TRIBES", "Tribes");
-define("_MI_PROFILE_SUSPENSIONS", "Suspensions");
+//define("_MI_PROFILE_SUSPENSIONS", "Suspensions");
 define("_MI_PROFILE_PICTURES", "Pictures");
 define("_MI_PROFILE_VIDEOS", "Videos");
-define("_MI_PROFILE_FRIENDPETITIONS", "Friendpetitions");
+//define("_MI_PROFILE_FRIENDPETITIONS", "Friendpetitions");
 define("_MI_PROFILE_TRIBEUSERS", "Tribeusers");
 $member_handler = &xoops_gethandler('member');
 $group_list = &$member_handler->getGroupList();

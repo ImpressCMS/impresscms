@@ -18,7 +18,4 @@
 define("_MB_PROFILE_ALLFRIENDS" , "View all friends");
 define("_MB_PROFILE_NUMBER_FRIENDS", "Number of friends to display");
 define("_MB_PROFILE_NUMBER_PICTURES", "Number of pictures to display");
-
-define("_MB_SPROFILE_DISPLAY", "Display %s members");
-define("_MB_SPROFILE_DISPLAYA", "Display member avatars");
 ?>

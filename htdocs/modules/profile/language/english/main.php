@@ -37,7 +37,6 @@ define('_PROFILE_MA_USERKEYFOR','User activation key for %s');
 define('_PROFILE_MA_ACTLOGIN','The account has been activated and can now login with the registered password.');
 define('_PROFILE_MA_ACTKEYNOT','Activation key not correct!');
 define('_PROFILE_MA_ACONTACT','Selected account is already activated!');
-define('_PROFILE_MA_LOGIN_REQUIRED', 'Please login to view profiles.');
 
 define('_PROFILE_MA_YOURREGISTERED','An email containing an user activation key has been sent to the email account you provided. Please follow the instructions in the mail to activate your account. ');
 define('_PROFILE_MA_YOURREGMAILNG','You are now registered. However, we were unable to send the activation mail to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please send the webmaster an email notifying him/her of the situation.');
@@ -138,80 +137,17 @@ define("_PROFILE_MA_REGISTER","Registration form");
 //Present in many files (videos pictures etc...)
 define("_MD_PROFILE_DELETE", "Delete");
 define("_MD_PROFILE_EDITDESC", "Edit description");
-define("_MD_PROFILE_TOKENEXPIRED", "Your Security Token has Expired<br />Please Try Again");
-define("_MD_PROFILE_YOUCANUPLOAD","You can only upload jpg's files and up to %s KBytes in size");
-define("_MD_PROFILE_NOCACHACA","Problem found ... file to big?!<br />
-Unfortunately, this module has acted in an unexpected way. Hopefully it will return to its helpful self if you try again. ");//Funny general error message
 define("_MD_PROFILE_PAGETITLE","%s's Profile");
 define("_MD_PROFILE_VIDEOS","Videos");
 
 define("_MD_PROFILE_PHOTOS","Photos");
 define("_MD_PROFILE_FRIENDS","Friends");
 define("_MD_PROFILE_TRIBES","Tribes");
-define("_MD_PROFILE_MYTRIBES","My Tribes");
 define("_MD_PROFILE_PROFILE","Profile");
-define("_MD_EXTENDED_PROFILE","Extra Info");
 
 //friends.php
-define("_MD_PROFILE_FRIENDSTITLE","%s's Friends");
-define("_MD_PROFILE_MYFRIENDS","My Friends");
-define("_MD_PROFILE_FRIENDSHIPCONFIGS","Set the configs of this friendship. Evaluate your friend.");
-
-define("_MD_PROFILE_AQUAITANCE","Acquaintances");//also present in index.php
 define("_MD_PROFILE_FRIEND","Friend");//also present in index.php
-define("_MD_PROFILE_BESTFRIEND","Best Friend");//also present in index.php
-define("_MD_PROFILE_SEXY","Sexy");//also present in index.php
-define("_MD_PROFILE_TRUSTY","Trusty");
-define("_MD_PROFILE_COOL","Cool");
 define("_MD_PROFILE_PHOTO","Friend's Photo");
-
-//editfriendship.php
-define("_MD_PROFILE_FRIENDSHIPUPDATED","Friendship Updated");
-
-//submitfriendpetition.php
-define("_MD_PROFILE_PETITIONED","A friend request has been sent to this user, Wait until he accepts to have him in your friends list.");
-define("_MD_PROFILE_ALREADY_PETITIONED","You have already sent a friendship request to this user or vice-versa <br />, Wait untill he accepts or rejects it or check if he has asked you as a friend visiting your profile page.");
-
-//makefriends.php
-define("_MD_PROFILE_FRIENDMADE","Added as a friend!");
-
-//delfriendship.php
-define("_MD_PROFILE_FRIENDSHIPTERMINATED","You have broken your friendship with this user!");
-
-define("_MD_PROFILE_UPLOADTRIBE","Save Tribe");//also present in many ther tribes related
-define("_MD_PROFILE_TRIBE_IMAGE","Tribe Image");//also present in many ther tribes related
-define("_MD_PROFILE_TRIBE_TITLE","Title");//also present in many ther tribes related
-define("_MD_PROFILE_TRIBE_DESC","Description");//also present in many ther tribes related
-define("_MD_PROFILECREATEYOURTRIBE","Create your own Tribe!");//also present in many ther tribes related
-
-//abandontribe.php
-define("_MD_PROFILE_ASKCONFIRMABANDONTRIBE","Are you sure you want to leave this Tribe?");
-define("_MD_PROFILE_CONFIRMABANDON","Yes please remove me from this Tribe!");
-define("_MD_PROFILE_TRIBEABANDONED","You don't belong to this Tribe anymore.");
-
-//becomemembertribe.php
-define("_MD_PROFILE_YOUAREMEMBERNOW","You are now member of this community");
-define("_MD_PROFILE_YOUAREMEMBERALREADY","You are already a member of this Tribe");
-
-//delete_tribe.php
-define("_MD_PROFILE_ASKCONFIRMTRIBEDELETION","Are you sure you want to delete this Tribe permanently?");
-define("_MD_PROFILE_CONFIRMTRIBEDELETION","Yes, please delete this Tribe!");
-define("_MD_PROFILE_TRIBEDELETED","Tribe deleted!");
-
-//edit_tribe.php
-define("_MD_PROFILE_MAINTAINOLDIMAGE","Keep this image");//also present in other tribes related
-define("_MD_PROFILE_TRIBEEDITED","Tribe edited");
-define("_MD_PROFILE_EDIT_TRIBE","Edit your Tribe");//also present in other tribes related
-define("_MD_PROFILE_TRIBEOWNER","You are the owner of this Tribe!");//also present in other tribes related
-define("_MD_PROFILE_MEMBERSDOFTRIBE","Members of Tribe");//also present in other tribes related
-
-//submit_tribe.php
-define("_MD_PROFILE_TRIBE_CREATED","Your Tribe was created");
-
-//kickfromtribe.php
-define("_MD_PROFILE_CONFIRMKICK","Yes kick him out!");
-define("_MD_PROFILE_ASKCONFIRMKICKFROMTRIBE","Are you sure you want to kick this person out of the Tribe?");
-define("_MD_PROFILE_TRIBEKICKED","You've banished this user from the Tribe, but who knows when he'll try and comeback!");
 
 //audio.php
 define("_MD_PROFILE_AUDIOS_SUBMIT", "Submit new audio file");
@@ -229,7 +165,7 @@ define("_MD_PROFILE_PICTURES_EDIT", "Edit existing photo");
 define("_MD_PROFILE_PICTURES_CREATED", "Photo successfully added");
 define("_MD_PROFILE_PICTURES_MODIFIED", "Photo successfully modified");
 define("_MD_PROFILE_PICTURES_AVATAR_EDITED", "Avatar successfully modified");
-define("_MD_PROFILE_PICTURES_AVATAR_NOCOPY", "Error while trying to copy the avatar");
+//define("_MD_PROFILE_PICTURES_AVATAR_NOCOPY", "Error while trying to copy the avatar");
 define("_MD_PROFILE_PICTURES_AVATAR_NOTEDITED", "There was an error while updating your avatar");
 define("_MD_PROFILE_PICTURES_AVATAR_DELETED", "Avatar successfully deleted");
 define("_MD_PROFILE_PICTURES_AVATAR_NOTDELETED", "There was an error while deleting your avatar");
@@ -289,22 +225,11 @@ define("_MD_PROFILE_VIDEOS_ACTIONS", "Actions");
 define("_MD_PROFILE_VISITORS","Visitors (who visited your profile recently)");
 define("_MD_PROFILE_USERDETAILS","User details");
 define("_MD_PROFILE_USERCONTRIBUTIONS","User contributions");
-define("_MD_PROFILE_UNKNOWNREJECTING","I don't know this person, Do not add them to my friends list");
-define("_MD_PROFILE_UNKNOWNACCEPTING","I don't know this person, Yet add them to my friends list");
-define("_MD_PROFILE_ASKINGFRIEND","Is %s your friend?");
-define("_MD_PROFILE_ASKBEFRIEND","Ask this user to be your friend?");
 define("_MD_PROFILE_EDITPROFILE","Edit your profile");
 define("_MD_PROFILE_SELECTAVATAR","Upload pictures to your album and select one as your avatar.");
-define("_MD_PROFILE_SELECTMAINVIDEO","Add a video to your videos album and then select it as your main video");
 define("_MD_PROFILE_NOAVATARYET","No avatar yet");
-define("_MD_PROFILE_NOMAINVIDEOYET","No main video yet");
 define("_MD_PROFILE_MYPROFILE","My Profile");
-define("_MD_PROFILE_YOUHAVEXPETITIONS","You have %u requests for friendship.");
 define("_MD_PROFILE_CONTACTINFO","Contact Info");
-define("_MD_PROFILE_SUSPENDUSER","Suspend user");
-define("_MD_PROFILE_SUSPENDTIME","Time of suspension(in secs)");
-define("_MD_PROFILE_UNSUSPEND","Unsuspend User");
-define("_MD_PROFILE_SUSPENSIONADMIN","Suspension Admin Tools");
 define("_MD_PROFILE_SECURITY_CHECK_FAILED", "");
 define("_MD_PROFILE_TRIBES_INVITATIONS", "You've been invited to join the following groups");
 define("_MD_PROFILE_TRIBES_APPROVALS", "The following users want to be approved to join your group");
@@ -312,57 +237,7 @@ define("_MD_PROFILE_TRIBEUSER_NOTFOUND", "Tribeuser not found.");
 define("_MD_PROFILE_TRIBEUSER_APPROVE", "Approve this user");
 define("_MD_PROFILE_TRIBEUSER_ACCEPT", "Accept invitation to this group");
 define("_MD_PROFILE_TRIBEUSER_OP_SUCCESS", "Operation successfully performed");
-
-//suspend.php
-define("_MD_PROFILE_SUSPENDED","User under suspension until %s");
-define("_MD_PROFILE_USERSUSPENDED","User suspended!");//als0 present in index.php
-
-//unsuspend.php
-define("_MD_PROFILE_USERUNSUSPENDED","User Unsuspended");
-
-//searchmembers.php
-define("_MD_PROFILE_SEARCH","Search Members");
-define("_MD_PROFILE_AVATAR","Avatar");
-define("_MD_PROFILE_REALNAME","Real Name");
-define("_MD_PROFILE_REGDATE","Joined Date");
-define("_MD_PROFILE_EMAIL","Email");
-define("_MD_PROFILE_PM","PM");
-define("_MD_PROFILE_URL","URL");
-define("_MD_PROFILE_ADMIN","ADMIN");
-define("_MD_PROFILE_PREVIOUS","Previous");
-define("_MD_PROFILE_NEXT","Next");
-define("_MD_PROFILE_USERSFOUND","%s member(s) found");
-define("_MD_PROFILE_TOTALUSERS", "Total: %s members");
-define("_MD_PROFILE_NOFOUND","No Members Found");
-define("_MD_PROFILE_UNAME","User Name");
-define("_MD_PROFILE_ICQ","ICQ Number");
-define("_MD_PROFILE_AIM","AIM Handle");
-define("_MD_PROFILE_YIM","YIM Handle");
-define("_MD_PROFILE_MSNM","MSNM Handle");
-define("_MD_PROFILE_LOCATION","Location contains");
-define("_MD_PROFILE_OCCUPATION","Occupation contains");
-define("_MD_PROFILE_INTEREST","Interest contains");
-define("_MD_PROFILE_URLC","URL contains");
-define("_MD_PROFILE_LASTLOGMORE","Last login is more than <span style='color:#ff0000;'>X</span> days ago");
-define("_MD_PROFILE_LASTLOGLESS","Last login is less than <span style='color:#ff0000;'>X</span> days ago");
-define("_MD_PROFILE_REGMORE","Joined date is more than <span style='color:#ff0000;'>X</span> days ago");
-define("_MD_PROFILE_REGLESS","Joined date is less than <span style='color:#ff0000;'>X</span> days ago");
-define("_MD_PROFILE_POSTSMORE","Number of Posts is greater than <span style='color:#ff0000;'>X</span>");
-define("_MD_PROFILE_POSTSLESS","Number of Posts is less than <span style='color:#ff0000;'>X</span>");
-define("_MD_PROFILE_SORT","Sort by");
-define("_MD_PROFILE_ORDER","Order");
-define("_MD_PROFILE_LASTLOGIN","Last login");
-define("_MD_PROFILE_POSTS","Number of posts");
-define("_MD_PROFILE_ASC","Ascending order");
-define("_MD_PROFILE_DESC","Descending order");
-define("_MD_PROFILE_LIMIT","Number of members per page");
-define("_MD_PROFILE_RESULTS", "Search results");
-define("_MD_PROFILE_ALLFRIENDS" , "All Friends");
-define("_MD_PROFILE_FRIENDSHIPNOTACCEPTED" , "Friendship rejected");
-
-define("_MD_PROFILE_USERDOESNTEXIST","This user doesn't exist or was deleted");
 define("_MD_PROFILE_AUDIOS","Audio");
-define('_MD_PROFILE_ADMIN_PAGE', ':: Admin page ::');
 
 // configs.php
 define('_MD_PROFILE_CONFIGS_SUBMIT', 'Change Profile Settings');

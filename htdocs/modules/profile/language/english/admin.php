@@ -162,17 +162,6 @@ define("_AM_PROFILE_TRIBE", "Tribe");
 define("_AM_PROFILE_TRIBES_EDIT", "Edit this tribe");
 define("_AM_PROFILE_TRIBES_MODIFIED", "The tribe was successfully modified.");
 define("_AM_PROFILE_TRIBES_CREATED", "The tribe has been successfully created.");
-define("_AM_PROFILE_TRIBES_VIEW", "Tribe info");
-define("_AM_PROFILE_TRIBES_VIEW_DSC", "Here is the info about this tribe.");
-	// Suspensions
-define("_AM_PROFILE_SUSPENSIONS", "Suspensions");
-define("_AM_PROFILE_SUSPENSIONS_CREATE", "Add a suspension");
-define("_AM_PROFILE_SUSPENSION", "Suspension");
-define("_AM_PROFILE_SUSPENSIONS_EDIT", "Edit this suspension");
-define("_AM_PROFILE_SUSPENSIONS_MODIFIED", "The suspension was successfully modified.");
-define("_AM_PROFILE_SUSPENSIONS_CREATED", "The suspension has been successfully created.");
-define("_AM_PROFILE_SUSPENSIONS_VIEW", "Suspension info");
-define("_AM_PROFILE_SUSPENSIONS_VIEW_DSC", "Here is the info about this suspension.");
 	// Pictures
 define("_AM_PROFILE_PICTURES", "Pictures");
 define("_AM_PROFILE_PICTURES_CREATE", "Add a picture");
@@ -195,13 +184,4 @@ define("_AM_PROFILE_TRIBEUSER_MODIFIED", "The tribeuser has been successfully mo
 define("_PROFILE_TRIBEUSER_DUPLICATE", "The specified user is already a member of this tribe.");
 define("_PROFILE_TRIBEUSER_OWNER", "The specified user is already the owner of this tribe and therefore cannot be a member.");
 define("_AM_PROFILE_TRIBEUSER_NOTTRIBESYET", "There are no tribes yet.");
-	// Friendpetition
-define("_AM_PROFILE_FRIENDPETITIONS", "Friendpetitions");
-define("_AM_PROFILE_FRIENDPETITION_CREATE", "Add a friendpetition");
-define("_AM_PROFILE_FRIENDPETITION", "Friendpetition");
-define("_AM_PROFILE_FRIENDPETITION_EDIT", "Edit this friendpetition");
-define("_AM_PROFILE_FRIENDPETITION_MODIFIED", "The friendpetition was successfully modified.");
-define("_AM_PROFILE_FRIENDPETITION_CREATED", "The friendpetition has been successfully created.");
-define("_AM_PROFILE_FRIENDPETITION_VIEW", "Friendpetition info");
-define("_AM_PROFILE_FRIENDPETITION_VIEW_DSC", "Here is the info about this friendpetition.");
 ?>
