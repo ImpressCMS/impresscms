@@ -22,18 +22,12 @@ define("_AM_CONTENT_CONTENTS", "Contents");
 define("_AM_CONTENT_FIRST_USE", "This is the first time you access this module. Please update the module in order to dynamically create the database scheme.");
 
 // Content
-define("_AM_CONTENT_CONTENTS_DSC", "All contents in the module");
 define("_AM_CONTENT_CONTENT_CREATE", "Add a content");
 define("_AM_CONTENT_CONTENT", "Content");
-define("_AM_CONTENT_CONTENT_CREATE_INFO", "Fill-out the following form to create a new content.");
 define("_AM_CONTENT_CONTENT_EDIT", "Edit this content");
-define("_AM_CONTENT_CONTENT_EDIT_INFO", "Fill-out the following form in order to edit this content.");
 define("_AM_CONTENT_CONTENT_MODIFIED", "The content was successfully modified.");
 define("_AM_CONTENT_CONTENT_CREATED", "The content has been successfully created.");
-define("_AM_CONTENT_CONTENT_VIEW", "Content info");
-define("_AM_CONTENT_CONTENT_VIEW_DSC", "Here is the info about this content.");
 define("_AM_CONTENT_CONTENT_CLONE", "Clone this content");
-define("_AM_CONTENT_CONTENT_CLONE_INFO", "Fill-out the following form to clone this content.");
 define("_AM_CONTENT_PREVIEW", "Preview Content");
 define("_AM_CONTENT_VIEW", "View Full Content Info");
 
