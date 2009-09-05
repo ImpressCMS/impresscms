@@ -17,40 +17,40 @@ class IcmsVersionChecker {
 
 	/*
 	 * errors
-	 * @var $errors array
+	 * @public $errors array
 	 */
-	var $errors = array();
+	public $errors = array();
 
 	/*
 	 * URL of the XML containing version information
-	 * @var $version_xml string
+	 * @public $version_xml string
 	 */
-	var $version_xml = "http://www.impresscms.org/impresscms_version.xml";
+	public $version_xml = "http://www.impresscms.org/impresscms_version.xml";
 
 	/*
 	 * Time before fetching the $version_xml again and store it in $cache_version_xml
-	 * @var $cache_time integer
+	 * @public $cache_time integer
 	 * @todo set this to a day at least or make it configurable in System Admin > Preferences
 	 */
-	var $cache_time=1;
+	public $cache_time=1;
 
 	/*
 	 * Name of the latest version
-	 * @var $latest_version_name string
+	 * @public $latest_version_name string
 	 */
-	var $latest_version_name;
+	public $latest_version_name;
 
 	/*
 	 * Name of installed version
-	 * @var $installed_version_name string
+	 * @private $installed_version_name string
 	 */
-	var $installed_version_name;
+	private $installed_version_name;
 
 	/*
 	 * Number of the latest build
-	 * @var $latest_build integer
+	 * @public $latest_build integer
 	 */
-	var $latest_build;
+	public $latest_build;
 
 	/*
 	 * Status of the latest build
@@ -60,21 +60,21 @@ class IcmsVersionChecker {
  	 * 3  = RC
  	 * 10 = Final
 	 *
-	 * @var $latest_status integer
+	 * @public $latest_status integer
 	 */
-	var $latest_status;
+	public $latest_status;
 
 	/*
 	 * URL of the latest release
-	 * @var $latest_url string
+	 * @public $latest_url string
 	 */
-	var $latest_url;
+	public $latest_url;
 
 	/*
 	 * Changelog of the latest release
-	 * @var $latest_changelog string
+	 * @public $latest_changelog string
 	 */
-	var $latest_changelog;
+	public $latest_changelog;
 
 	/**
 	 * Constructor

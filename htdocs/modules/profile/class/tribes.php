@@ -85,8 +85,8 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 	function getTribePicture() {
 		if ($this->getVar('tribe_img')) {
 			$ret = '<a href="' . ICMS_URL . '/uploads/profile/tribes/resized_' . $this->getVar ( 'tribe_img' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '">
-			        <img class="thumb" src="' . ICMS_URL . '/uploads/profile/tribes/thumb_' . $this->getVar ( 'tribe_img' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '" />
-			        </a>';
+					<img class="thumb" src="' . ICMS_URL . '/uploads/profile/tribes/thumb_' . $this->getVar ( 'tribe_img' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '" />
+					</a>';
 		} else {
 			$ret = '';
 		}
@@ -102,8 +102,8 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 	function getTribePictureLink($itemUrl) {
 		if ($this->getVar('tribe_img')) {
 			$ret = '<a href="'.$itemUrl.'">
-			        <img class="thumb" src="' . ICMS_URL . '/uploads/profile/tribes/thumb_' . $this->getVar ( 'tribe_img' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '" />
-			        </a>';
+					<img class="thumb" src="' . ICMS_URL . '/uploads/profile/tribes/thumb_' . $this->getVar ( 'tribe_img' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '" />
+					</a>';
 		} else {
 			$ret = '<a href="'.$itemUrl.'">'.$this->getVar('title').'</a>';
 		}
@@ -197,8 +197,8 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 
 class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 
-	var $_allTribes;
-	var $_tribes_security = array();
+	public $_allTribes;
+	public $_tribes_security = array();
 
 	/**
 	 * Constructor

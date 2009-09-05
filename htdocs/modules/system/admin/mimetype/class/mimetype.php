@@ -18,7 +18,7 @@ icms_loadLanguageFile('system', 'mimetype', true);
 
 class SystemMimetype extends IcmsPersistableObject {
 	
-	var $content = false;
+	public $content = false;
 	
 	function SystemMimetype(&$handler) {
 		$this->IcmsPersistableObject($handler);
@@ -60,7 +60,7 @@ class SystemMimetype extends IcmsPersistableObject {
 
 class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
 	
-	var $objects = false;
+	public $objects = false;
 	
 	function SystemMimetypeHandler($db) {
 		$this->IcmsPersistableObjectHandler ( $db, 'mimetype', 'mimetypeid', 'mimetypeid', 'name', 'system' );

@@ -2,8 +2,8 @@
 /**
  * Blocks position admin classes
  *
- * @copyright      	The ImpressCMS Project <http://www.impresscms.org/>
- * @license         LICENSE.txt
+ * @copyright	  	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license		 LICENSE.txt
  * @package			Administration
  * @since			ImpressCMS 1.2
  * @author			Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
@@ -18,8 +18,8 @@ require_once(ICMS_ROOT_PATH.'/kernel/blockposition.php');
 /**
  * System Blockspadmin Class
  * 
- * @copyright      	The ImpressCMS Project <http://www.impresscms.org/>
- * @license         LICENSE.txt
+ * @copyright	  	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license		 LICENSE.txt
  * @since 			ImpressCMS 1.2
  * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org> 
  */
@@ -87,8 +87,8 @@ class SystemBlockspadmin extends IcmsBlockposition {
 /**
  * System Blockspadmin Class
  * 
- * @copyright      	The ImpressCMS Project <http://www.impresscms.org/>
- * @license         LICENSE.txt
+ * @copyright	  	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license		 LICENSE.txt
  * @since 			ImpressCMS 1.2
  * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org> 
  */

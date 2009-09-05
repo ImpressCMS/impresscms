@@ -216,8 +216,8 @@ class ContentContent extends IcmsPersistableSeoObject {
 	 * Check is user has access to view this content page
 	 *
 	 * User will be able to view the page if
-	 *    - the status of the page is Published OR
-	 *    - he is an admin OR
+	 *	- the status of the page is Published OR
+	 *	- he is an admin OR
 	 * 	  - he is the poster of this page
 	 *
 	 * @return bool true if user can view this page, false if not
@@ -437,19 +437,19 @@ class ContentContent extends IcmsPersistableSeoObject {
 class ContentContentHandler extends IcmsPersistableObjectHandler {
 	
 	/**
-	 * @var array of status
+	 * @public array of status
 	 */
-	var $_content_statusArray = array ( );
+	public $_content_statusArray = array ( );
 	
 	/**
-	 * @var array of status
+	 * @public array of status
 	 */
-	var $_content_visibleArray = array ( );
+	public $_content_visibleArray = array ( );
 	
 	/**
-	 * @var array of tags
+	 * @public array of tags
 	 */
-	var $_content_tagsArray = array ( );
+	public $_content_tagsArray = array ( );
 	
 	public function __construct(& $db) {
 		$this->IcmsPersistableObjectHandler ( $db, 'content', 'content_id', 'content_title', 'content_body', 'content' );
@@ -496,33 +496,33 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 	 */
 	function getContent_tagsArray() {
 		if (! $this->_content_tagsArray) {
-		    $ret = array();
+			$ret = array();
 			$contents = $this->getObjects();
 			foreach($contents as $content){
-			    $tags = $content->getVar('content_tags','e');
-			    $tag_arr = explode(",",$tags);
-        	    foreach ($tag_arr as $tag){
-        		    $tag = trim($tag);
-        		    if (isset($ret[$tag])){
-        			    $ret[$tag]++;
-        		    }else{
-        			    $ret[$tag] = 1;
-        		    }
-        	    }
+				$tags = $content->getVar('content_tags','e');
+				$tag_arr = explode(",",$tags);
+				foreach ($tag_arr as $tag){
+					$tag = trim($tag);
+					if (isset($ret[$tag])){
+						$ret[$tag]++;
+					}else{
+						$ret[$tag] = 1;
+					}
+				}
 			}
 			foreach($ret as $k=>$v){
-			    if ($k != ''){
-			        $ret[$k] = $k.'('.$v.')';
-			    }else{
-			        unset($ret[$k]);
-			    }
+				if ($k != ''){
+					$ret[$k] = $k.'('.$v.')';
+				}else{
+					unset($ret[$k]);
+				}
 			}
 			$this->_content_tagsArray = $ret;
 		}
 		return $this->_content_tagsArray;
 	}
 	
-    /**
+	/**
 	 * Create the criteria that will be used by getContents and getContentsCount
 	 *
 	 * @param int $start to which record to start
@@ -554,7 +554,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		}
 		
 		if ($content_tags){
-		    $criteria->add ( new Criteria ( 'content_tags', '%'.$content_tags.'%', 'LIKE' ) );
+			$criteria->add ( new Criteria ( 'content_tags', '%'.$content_tags.'%', 'LIKE' ) );
 		}
 		
 		if ($content_id) {
@@ -564,7 +564,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		}
 		
 		if ($content_pid !== false){
-		    $criteria->add ( new Criteria ( 'content_pid', $content_pid ) );
+			$criteria->add ( new Criteria ( 'content_pid', $content_pid ) );
 		}
 		return $criteria;
 	}
@@ -728,22 +728,22 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 	 * @return array of contents
 	 */
 	function getContentSubs($content_id = 0, $toarray=false) {
-	    $criteria = $this->getContentsCriteria();
-	    $criteria->add( new Criteria ( 'content_pid', $content_id ) );
+		$criteria = $this->getContentsCriteria();
+		$criteria->add( new Criteria ( 'content_pid', $content_id ) );
 		$crit = new CriteriaCompo(new Criteria('content_visibility', 2));
 		$crit->add(new Criteria('content_visibility', 3),'OR');
 		$criteria->add($crit);
 		$contents = $this->getObjects($criteria);
 		if (!$toarray){
-		    return $contents;
+			return $contents;
 		}
 		$ret = array();
 		foreach ( array_keys ( $contents ) as $i ) {
-		    if ($contents[$i]->accessGranted()){
-		        $ret[$i] = $contents[$i]->toArray();
-		        $ret[$i]['content_body'] = icms_substr(icms_cleanTags($contents[$i]->getVar('content_body','n'),array()),0,300);
-		        $ret[$i]['content_url'] = $contents[$i]->getItemLink();
-		    }
+			if ($contents[$i]->accessGranted()){
+				$ret[$i] = $contents[$i]->toArray();
+				$ret[$i]['content_body'] = icms_substr(icms_cleanTags($contents[$i]->getVar('content_body','n'),array()),0,300);
+				$ret[$i]['content_url'] = $contents[$i]->getItemLink();
+			}
 		}
 		return $ret;
 	}
@@ -839,14 +839,14 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 	}
 
 	function getLastestCreated($asObj=true){
-	    $criteria = $this->getContentsCriteria (0,1);
+		$criteria = $this->getContentsCriteria (0,1);
 		$criteria->setSort ( 'content_id' );
 		$criteria->setOrder ( 'DESC' );
 		$ret = $this->getObjects ( $criteria, false, $asObj );
 		if ($asObj){
-		    return $ret[0];
+			return $ret[0];
 		}else{
-		    return $ret[0]['content_id'];
+			return $ret[0]['content_id'];
 		}
 	}
 
@@ -867,17 +867,17 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 			if ($content_id > 0) {
 				$content = $this->get($content_id);
 				if ($content->getVar('content_id','e') > 0) {
-				    if (!$userside){
-					    $ret = "<a href='".$url."?content_pid=".$content->getVar('content_id','e')."'>".$content->getVar('content_title','e')."</a>";
-				    }else{
-				        $ret = "<a href='".$url."?page=".$this->makeLink($content)."'>".$content->getVar('content_title','e')."</a>";
-				    }
+					if (!$userside){
+						$ret = "<a href='".$url."?content_pid=".$content->getVar('content_id','e')."'>".$content->getVar('content_title','e')."</a>";
+					}else{
+						$ret = "<a href='".$url."?page=".$this->makeLink($content)."'>".$content->getVar('content_title','e')."</a>";
+					}
 					if ($content->getVar('content_pid','e') == 0) {
-					    if (!$userside){
-					        return "<a href='".$url."?content_pid=0'>"._MI_CONTENT_CONTENTS."</a> &gt; ".$ret;
-					    }else{
-					        return $ret;
-					    }
+						if (!$userside){
+							return "<a href='".$url."?content_pid=0'>"._MI_CONTENT_CONTENTS."</a> &gt; ".$ret;
+						}else{
+							return $ret;
+						}
 					}elseif ($content->getVar('content_pid','e') > 0){
 						$ret = $this->getBreadcrumbForPid($content->getVar('content_pid','e'), $userside)." &gt; ". $ret;
 					}
@@ -923,7 +923,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		
 		//Prevent that the page is defined as parent page of yourself.
 		if ($obj->getVar('content_pid','e') == $obj->getVar('content_id','e')){
-		    $obj->setVar('content_pid', 0);
+			$obj->setVar('content_pid', 0);
 		}
 		
 		return true;
@@ -949,9 +949,9 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 			
 		if ($obj->getVar('content_makesymlink') == 1){
 			$module_handler = xoops_gethandler('module');
-		    $module = $module_handler->getByDirname('content');
+			$module = $module_handler->getByDirname('content');
 			
-		    $seo = $obj->handler->makelink($obj);
+			$seo = $obj->handler->makelink($obj);
 			$url = str_replace(ICMS_URL.'/','',$obj->handler->_moduleUrl.$obj->handler->_itemname.'.php?page='.$seo);
 			
 			$symlink_handler = xoops_getmodulehandler('pages','system');
@@ -979,12 +979,12 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 	 * @return true
 	 */
 	function afterDelete(& $obj) {
-	    $seo = $obj->handler->makelink($obj);
-	    $url = str_replace(ICMS_URL.'/','',$obj->handler->_moduleUrl.$obj->handler->_itemname.'.php?page='.$seo);
+		$seo = $obj->handler->makelink($obj);
+		$url = str_replace(ICMS_URL.'/','',$obj->handler->_moduleUrl.$obj->handler->_itemname.'.php?page='.$seo);
 		$module_handler = xoops_gethandler('module');
 		$module = $module_handler->getByDirname('content');
-	    
-	    $symlink_handler = xoops_getmodulehandler('pages','system');
+		
+		$symlink_handler = xoops_getmodulehandler('pages','system');
 		$criteria = new CriteriaCompo(new Criteria('page_url',$url));
 		$criteria->add(new Criteria('page_moduleid',$module->mid()));
 		$symlink_handler->deleteAll($criteria);

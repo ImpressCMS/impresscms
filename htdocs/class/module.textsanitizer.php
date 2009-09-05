@@ -28,17 +28,17 @@
 class MyTextSanitizer
 {
     /**
-    * @var	array
+    * @public	array
     */
-    var $displaySmileys = array();
+    public $displaySmileys = array();
     /**
-    * @var	array
+    * @public	array
     */
-    var $allSmileys = array();
+    public $allSmileys = array();
     /**
     *
     */
-    var $censorConf;
+    public $censorConf;
     /**
     * Constructor of this class
     * Gets allowed html tags from admin config settings

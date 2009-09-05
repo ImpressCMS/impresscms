@@ -68,8 +68,8 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 	}
 	function getProfilePicture() {
 		$ret = '<a href="' . ICMS_URL . '/uploads/profile/pictures/resized_' . $this->getVar ( 'url' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '">
-          <img class="thumb" src="' . ICMS_URL . '/uploads/profile/pictures/thumb_' . $this->getVar ( 'url' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '" />
-        </a>';
+		  <img class="thumb" src="' . ICMS_URL . '/uploads/profile/pictures/thumb_' . $this->getVar ( 'url' ) . '" rel="lightbox" title="' . $this->getVar ( 'title' ) . '" />
+		</a>';
 		return $ret;
 	}
 	

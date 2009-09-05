@@ -18,8 +18,8 @@ if (!defined("ICMS_ROOT_PATH")) {
 
 class IcmsAddTo {
 
-	var $_layout;
-	var $_method;
+	public $_layout;
+	public $_method;
 
 	/**
 	 * Constructor of IcmsAddTo

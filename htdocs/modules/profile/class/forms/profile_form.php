@@ -3,15 +3,15 @@
  * Extended User Profile
  *
  *
- * @copyright       The ImpressCMS Project http://www.impresscms.org/
- * @license         LICENSE.txt
+ * @copyright	   The ImpressCMS Project http://www.impresscms.org/
+ * @license		 LICENSE.txt
  * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package         modules
- * @since           1.2
- * @author          Jan Pedersen
- * @author          The SmartFactory <www.smartfactory.ca>
+ * @package		 modules
+ * @since		   1.2
+ * @author		  Jan Pedersen
+ * @author		  The SmartFactory <www.smartfactory.ca>
  * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version         $Id$
+ * @version		 $Id$
  */
 
 include_once ICMS_ROOT_PATH.'/class/xoopsform/themeform.php';
@@ -29,7 +29,7 @@ class ProfileForm extends XoopsThemeForm{
 		// First, output code to check required elements
 		$elements = $this->getRequired();
 		foreach ( $elements as $elt ) {
-			$eltname    = $elt->getName();
+			$eltname	= $elt->getName();
 			$eltcaption = trim( $elt->getCaption() );
 			$eltmsg = empty($eltcaption) ? sprintf( _FORM_ENTER, $eltname ) : sprintf( _FORM_ENTER, $eltcaption );
 			$eltmsg = str_replace('"', '\"', stripslashes( $eltmsg ) );

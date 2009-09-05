@@ -5,8 +5,8 @@
  * @copyright	The ImpressCMS Project <http://www.impresscms.org>
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  * @since		1.0
- * @author      Jan Pedersen
- * @author      The SmartFactory <www.smartfactory.ca>
+ * @author	  Jan Pedersen
+ * @author	  The SmartFactory <www.smartfactory.ca>
  * @author	   	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @package		profile
@@ -69,50 +69,50 @@ class ProfileRegstep extends IcmsPersistableObject {
 }
 
 class ProfileRegstepHandler extends IcmsPersistableObjectHandler {
-    
+	
 	/**
 	 * Constructor
 	 *
 	 * @param IcmsDatabase $db
 	 */
 	public function __construct( & $db) {
-        $this->IcmsPersistableObjectHandler($db, 'regstep', 'step_id', 'step_name', 'step_name', 'profile');
-    }
+		$this->IcmsPersistableObjectHandler($db, 'regstep', 'step_id', 'step_name', 'step_name', 'profile');
+	}
 
-    /**
-     * Insert a new object
-     * @see IcmsPersistableObjectHandler::insert()
-     *
-     * @param ProfileRegstep $obj
-     * @param bool $force
-     *
-     * @return bool
-     */
-    public function insert($obj, $force = false) {
-        if (parent::insert($obj, $force)) {
-            if ($obj->getVar('step_save') == 1) {
-                return $this->updateAll('step_save', 0, new Criteria('step_id', $obj->getVar('step_id'), "!="));
-            }
-            return true;
-        }
-        return false;
-    }
+	/**
+	 * Insert a new object
+	 * @see IcmsPersistableObjectHandler::insert()
+	 *
+	 * @param ProfileRegstep $obj
+	 * @param bool $force
+	 *
+	 * @return bool
+	 */
+	public function insert($obj, $force = false) {
+		if (parent::insert($obj, $force)) {
+			if ($obj->getVar('step_save') == 1) {
+				return $this->updateAll('step_save', 0, new Criteria('step_id', $obj->getVar('step_id'), "!="));
+			}
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * Delete an object from the database
-     * @see IcmsPersistableObjectHandler::delete()
-     *
-     * @param ProfileRegstep $obj
-     * @param bool $force
-     *
-     * @return bool
-     */
-    public function delete($obj, $force = false) {
-        if (parent::delete($obj, $force)) {
-            $field_handler = icms_getmodulehandler( 'field', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
-            return $field_handler->updateAll('step_id', 0, new Criteria('step_id', $obj->getVar('step_id')));
-        }
-        return false;
-    }
+	/**
+	 * Delete an object from the database
+	 * @see IcmsPersistableObjectHandler::delete()
+	 *
+	 * @param ProfileRegstep $obj
+	 * @param bool $force
+	 *
+	 * @return bool
+	 */
+	public function delete($obj, $force = false) {
+		if (parent::delete($obj, $force)) {
+			$field_handler = icms_getmodulehandler( 'field', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
+			return $field_handler->updateAll('step_id', 0, new Criteria('step_id', $obj->getVar('step_id')));
+		}
+		return false;
+	}
 }
 ?>

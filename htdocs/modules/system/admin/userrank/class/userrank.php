@@ -17,7 +17,7 @@ include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
 
 class SystemUserrank extends IcmsPersistableObject {
 	
-	var $content = false;
+	public $content = false;
 	
 	function SystemUserrank(&$handler) {
 		$this->IcmsPersistableObject($handler);
@@ -62,7 +62,7 @@ class SystemUserrank extends IcmsPersistableObject {
 
 class SystemUserrankHandler extends IcmsPersistableObjectHandler {
 	
-	var $objects=false;
+	public $objects=false;
 	
 	function SystemUserrankHandler($db) {
 		global $icmsConfigUser;

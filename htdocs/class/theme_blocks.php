@@ -31,9 +31,9 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
  */
 class xos_logos_PageBuilder {
 
-	var $theme = false;
+	public $theme = false;
 
-	var $blocks = array ( );
+	public $blocks = array ( );
 
 	public function xoInit($options = array()) {
 		$this->retrieveBlocks ();

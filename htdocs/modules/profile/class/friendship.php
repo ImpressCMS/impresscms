@@ -118,9 +118,9 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 
 
 	/**
-	 * @var array of status
+	 * @public array of status
 	 */
-	var $_friendship_statusArray = array ();
+	public $_friendship_statusArray = array ();
 	/**
 	 * Constructor
 	 */

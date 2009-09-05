@@ -23,12 +23,12 @@ die("ICMS root path not defined");
 
 class IcmsPrinterFriendly
 {
-	var $_title;
-	var $_dsc;
-	var $_content;
-	var $_tpl;
-	var $_pageTitle = false;
-	var $_width = 680;
+	public $_title;
+	public $_dsc;
+	public $_content;
+	public $_tpl;
+	public $_pageTitle = false;
+	public $_width = 680;
 
 	function IcmsPrinterFriendly($content, $title=false, $dsc=false)
 	{

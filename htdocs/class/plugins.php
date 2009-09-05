@@ -14,7 +14,7 @@
 
 class IcmsPlugins {
 
-	var $_infoArray;
+	public $_infoArray;
 
 	function IcmsPlugins($array) {
 		$this->_infoArray = $array;
@@ -55,7 +55,7 @@ class IcmsPlugins {
 
 class IcmsPluginsHandler {
 
-	var $pluginPatterns = false;
+	public $pluginPatterns = false;
 
 	function getPlugin($path, $dirname) {
 		$pluginName = ICMS_ROOT_PATH . '/plugins/'.$path.'/' . $dirname . '.php';

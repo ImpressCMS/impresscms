@@ -33,12 +33,12 @@ require_once SMARTY_DIR.'Smarty.class.php';
  */
 class XoopsTpl extends Smarty {
 
-	var $left_delimiter = '<{';
-	var $right_delimiter = '}>';
+	public $left_delimiter = '<{';
+	public $right_delimiter = '}>';
 
-	var $template_dir = XOOPS_THEME_PATH;
-	var $cache_dir = XOOPS_CACHE_PATH;
-	var $compile_dir = XOOPS_COMPILE_PATH;
+	private $template_dir = XOOPS_THEME_PATH;
+	private $cache_dir = XOOPS_CACHE_PATH;
+	private $compile_dir = XOOPS_COMPILE_PATH;
 
 	function XoopsTpl() {
 		global $icmsConfig;

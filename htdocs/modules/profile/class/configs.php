@@ -146,9 +146,9 @@ class ProfileConfigs extends IcmsPersistableObject {
 class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 
 	/**
-	 * @var array of status
+	 * @public array of status
 	 */
-	var $_config_statusArray = array ();
+	public $_config_statusArray = array ();
 	/**
 	 * Constructor
 	 */

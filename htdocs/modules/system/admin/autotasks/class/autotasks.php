@@ -19,7 +19,7 @@ icms_loadLanguageFile('system', 'autotasks', true);
 
 class SystemAutoTasks extends IcmsPersistableObject {
 
-	var $content = false;
+	public $content = false;
 
 	function __construct(&$handler) {
 		$this->IcmsPersistableObject($handler);

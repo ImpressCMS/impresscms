@@ -223,12 +223,12 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
 		$this->addPermission ( 'block_read', _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS, _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC );
 	}
 
-    public function getVisibleStatusArray(){
-    	$rtn = array();
-    	$rtn[1] = _VISIBLE;
-    	$rtn[0] = _INVISIBLE;
-    	return $rtn;
-    }
+	public function getVisibleStatusArray(){
+		$rtn = array();
+		$rtn[1] = _VISIBLE;
+		$rtn[0] = _INVISIBLE;
+		return $rtn;
+	}
 
 
 //	public function getVisibleInArray(){

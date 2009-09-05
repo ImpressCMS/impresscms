@@ -21,12 +21,12 @@ define ( 'ICMS_CUSTOMTAG_TYPE_PHP', 3 );
 
 class SystemCustomtag extends IcmsPersistableObject {
 	
-	var $content = false;
-	var $evaluated = false;
+	public $content = false;
+	public $evaluated = false;
 
 	function SystemCustomtag(&$handler) {
-    	$this->IcmsPersistableObject($handler);
-    	
+		$this->IcmsPersistableObject($handler);
+		
 		$this->quickInitVar ( 'customtagid', XOBJ_DTYPE_INT, true );
 		$this->quickInitVar ( 'name', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_CUSTOMTAG_NAME, _CO_ICMS_CUSTOMTAG_NAME_DSC );
 		$this->quickInitVar ( 'description', XOBJ_DTYPE_TXTAREA, false, _CO_ICMS_CUSTOMTAG_DESCRIPTION, _CO_ICMS_CUSTOMTAG_DESCRIPTION_DSC );
@@ -109,13 +109,13 @@ class SystemCustomtag extends IcmsPersistableObject {
 		$title = rawurlencode ( strtolower ( $this->getVar ( 'description', 'e' ) ) );
 		$title = xoops_substr ( $title, 0, 10, '' );
 		// Transformation des ponctuations
-		//                 Tab     Space      !        "        #        %        &        '        (        )        ,        /        :        ;        <        =        >        ?        @        [        \        ]        ^        {        |        }        ~       .
+		//				 Tab	 Space	  !		"		#		%		&		'		(		)		,		/		:		;		<		=		>		?		@		[		\		]		^		{		|		}		~	   .
 		$pattern = array ("/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/", "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/", "/%7C/", "/%7D/", "/%7E/", "/\./" );
 		$rep_pat = array ("-", "-", "-", "-", "-", "-100", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-at-", "-", "-", "-", "-", "-", "-", "-", "-", "-" );
 		$title = preg_replace ( $pattern, $rep_pat, $title );
 		
 		// Transformation des caract�res accentu�s
-		//                  �        �        �        �        �        �        �        �        �        �        �        �        �        �        �        �		$pattern = array ("/%B0/", "/%E8/", "/%E9/", "/%EA/", "/%EB/", "/%E7/", "/%E0/", "/%E2/", "/%E4/", "/%EE/", "/%EF/", "/%F9/", "/%FC/", "/%FB/", "/%F4/", "/%F6/" );
+		//				  �		�		�		�		�		�		�		�		�		�		�		�		�		�		�		�		$pattern = array ("/%B0/", "/%E8/", "/%E9/", "/%EA/", "/%EB/", "/%E7/", "/%E0/", "/%E2/", "/%E4/", "/%EE/", "/%EF/", "/%F9/", "/%FC/", "/%FB/", "/%F4/", "/%F6/" );
 		$rep_pat = array ("-", "e", "e", "e", "e", "c", "a", "a", "a", "i", "i", "u", "u", "u", "o", "o" );
 		$title = preg_replace ( $pattern, $rep_pat, $title );
 		
@@ -137,7 +137,7 @@ class SystemCustomtag extends IcmsPersistableObject {
 
 class SystemCustomtagHandler extends IcmsPersistableObjectHandler {
 	
-	var $objects = false;
+	public $objects = false;
 	
 	function SystemCustomtagHandler($db) {
 		$this->IcmsPersistableObjectHandler ( $db, 'customtag', 'customtagid', 'name', 'description', 'system' );

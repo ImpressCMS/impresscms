@@ -19,22 +19,22 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
 
 class IcmsFeed {
 
-  var $title;
-  var $url;
-  var $description;
-  var $language;
-  var $charset;
-  var $category;
-  var $pubDate;
-  var $webMaster;
-  var $generator;
-  var $copyright;
-  var $lastbuild;
-  var $channelEditor;
-  var $width;
-  var $height;
-  var $ttl;
-  var $image = array ();
+  public $title;
+  public $url;
+  public $description;
+  public $language;
+  public $charset;
+  public $category;
+  public $pubDate;
+  public $webMaster;
+  public $generator;
+  public $copyright;
+  public $lastbuild;
+  public $channelEditor;
+  public $width;
+  public $height;
+  public $ttl;
+  public $image = array ();
 
 	/**
 	 * Constructor

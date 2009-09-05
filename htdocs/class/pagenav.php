@@ -29,24 +29,24 @@ class XoopsPageNav
 	 */
 
   /**
-   * @var int $total  Total of pages to show
+   * @public int $total  Total of pages to show
    */
-	var $total;
+	public $total;
 
   /**
-   * @var int $perpage  Total of items to show per page
+   * @public int $perpage  Total of items to show per page
    */
-	var $perpage;
+	public $perpage;
 
   /**
-   * @var int $current  What is the current page
+   * @public int $current  What is the current page
    */
-	var $current;
+	public $current;
 
   /**
-   * @var string $url   What is the current url
+   * @public string $url   What is the current url
    */
-	var $url;
+	public $url;
 	/**#@-*/
 
 	/**

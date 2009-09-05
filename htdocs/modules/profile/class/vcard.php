@@ -9,8 +9,8 @@
  * License.
  *
  * All copies of the Covered Code must include on each user interface screen:
- *    (i) the "Powered by SugarCRM" logo and
- *    (ii) the SugarCRM copyright notice
+ *	(i) the "Powered by SugarCRM" logo and
+ *	(ii) the SugarCRM copyright notice
  * in the same form as they appear in the distribution.  See full license for
  * requirements.
  *
@@ -25,12 +25,12 @@
  * Description:
  ********************************************************************************/
 if (!defined("ICMS_ROOT_PATH")) {
-    die("ICMS root path not defined");
+	die("ICMS root path not defined");
 }
 class ProfileVcard {
 
-	var $properties = array ();
-	var $name = 'no_name';
+	public $properties = array ();
+	public $name = 'no_name';
 
 	function clear()
 	{
@@ -57,25 +57,25 @@ class ProfileVcard {
 
 		// Add dynamic fields
 		foreach (array_keys($fields) as $i) {
-		    //If field should be shown
-		    if (in_array($fields[$i]->getVar('fieldid'), $fieldids)) {
-		        $catid = $fields[$i]->getVar('catid');
-		        $value = $fields[$i]->getOutputValue($user, $profile);
-		        if (is_array($value)) {
-		            $value = implode('<br />', array_values($value));
-		        }
-		        if($value){
-		            $categories[$catid]['fields'][] = array('name' => $fields[$i]->getVar('field_name'), 'value' => $value);
-		            $weights[$catid][] = $fields[$i]->getVar('catid');
-		        }
-		    }
+			//If field should be shown
+			if (in_array($fields[$i]->getVar('fieldid'), $fieldids)) {
+				$catid = $fields[$i]->getVar('catid');
+				$value = $fields[$i]->getOutputValue($user, $profile);
+				if (is_array($value)) {
+					$value = implode('<br />', array_values($value));
+				}
+				if($value){
+					$categories[$catid]['fields'][] = array('name' => $fields[$i]->getVar('field_name'), 'value' => $value);
+					$weights[$catid][] = $fields[$i]->getVar('catid');
+				}
+			}
 		}
 
 		//sort fields order in categories
 		foreach (array_keys($categories) as $i) {
-		    if (isset($categories[$i]['fields'])) {
-		        array_multisort($weights[$i], SORT_ASC, array_keys($categories[$i]['fields']), SORT_ASC, $categories[$i]['fields']);
-		    }
+			if (isset($categories[$i]['fields'])) {
+				array_multisort($weights[$i], SORT_ASC, array_keys($categories[$i]['fields']), SORT_ASC, $categories[$i]['fields']);
+			}
 		}
 		foreach($categories as $catid=>$fieldsArray) {
 			foreach($fieldsArray['fields'] as $key=>$value) {

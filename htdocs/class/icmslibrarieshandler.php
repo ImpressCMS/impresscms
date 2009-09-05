@@ -33,9 +33,9 @@ include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 class IcmsLibrariesHandler {
 
 	/**
-	 * @var array $_librariesArray array containing a list of all available third party libraries
+	 * @public array $_librariesArray array containing a list of all available third party libraries
 	 */
-	var $_librariesArray=array();
+	public $_librariesArray=array();
 
 	/**
 	 * Constructor
