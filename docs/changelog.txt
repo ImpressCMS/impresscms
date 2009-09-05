@@ -155,6 +155,7 @@ Revision:
 * #761: exiting redirect_header properly now (Phoenyx)
 * #647: fixed module menu is not displayed on the admin page (mekdrop)
 * #746: After the installation you dont have an autotask (stranger)
+* #730: blocks can now be moved up an down correctly (Phoenyx)
 
 ===2009-06-20 : 1.2 Alpha 2.1 ===
 '''Fixed'''

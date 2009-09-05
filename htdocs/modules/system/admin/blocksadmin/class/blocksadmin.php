@@ -289,16 +289,32 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
 
 	public function upWeight( $bid ){
 		$blockObj = $this->get($bid);
-		$weight = $blockObj->getVar('weight','n') - 1;
+		$criteria = new CriteriaCompo();
+		$criteria->setLimit(1);
+		$criteria->setSort('bid');
+		$criteria->setOrder('ASC');
+		$criteria->add(new Criteria('side', $blockObj->vars['side']['value']));
+		$criteria->add(new Criteria('weight', $blockObj->getVar('weight'), '<'));
+		$sideBlocks = $this->getObjects($criteria);
+		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1) ? $sideBlocks[0]->getVar('weight') - 1 : $blockObj->getVar('weight') - 1;
+		if ($weight < 0) $weight = 0;
 		$blockObj->setVar('weight', $weight);
 		$this->insert($blockObj, true);
 	}
 
 	public function downWeight( $bid ){
 		$blockObj = $this->get($bid);
-		$weight = $blockObj->getVar('weight' ,'n') + 1;
+		$criteria = new CriteriaCompo();
+		$criteria->setLimit(1);
+		$criteria->setSort('bid');
+		$criteria->setOrder('ASC');
+		$criteria->add(new Criteria('side', $blockObj->vars['side']['value']));
+		$criteria->add(new Criteria('weight', $blockObj->getVar('weight'), '>'));
+		$sideBlocks = $this->getObjects($criteria);
+		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1) ? $sideBlocks[0]->getVar('weight') + 1 : $blockObj->getVar('weight') + 1;
 		$blockObj->setVar('weight', $weight);
 		$this->insert($blockObj, true);
+		
 	}
 
 	public function changeVisible( $bid ){

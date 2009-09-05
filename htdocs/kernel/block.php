@@ -653,7 +653,11 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		$obj->setVar('isactive', true);
 		if(!$new){
 			$sql = sprintf("DELETE FROM %s WHERE block_id = '%u'", $this->db->prefix('block_module_link'), intval($obj->getVar('bid')));
-			$this->db->query($sql);
+			if (false != $force) {
+				$this->db->queryF($sql);
+			} else {
+				$this->db->query($sql);
+			}
 		}else{
 			icms_loadLanguageFile('system', 'blocksadmin', true);
 			if ($obj->getVar('block_type') == 'K'){
@@ -685,14 +689,22 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 					$mid = $page[0];
 					$pageid = $page[1];
 					$sql = "INSERT INTO ".$this->db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($obj->getVar("bid"))."', '".intval($mid)."', '".intval($pageid)."')";
-					$this->db->query($sql);
+					if (false != $force) {
+						$this->db->queryF($sql);
+					} else {
+						$this->db->query($sql);
+					}
 				}
 			}else{
 				$page = explode('-', $obj->getVar('visiblein', 'e'));
 				$mid = $page[0];
 				$pageid = $page[1];
 				$sql = "INSERT INTO ".$this->db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($obj->getVar("bid"))."', '".intval($mid)."', '".intval($pageid)."')";
-				$this->db->query($sql);
+				if (false != $force) {
+					$this->db->queryF($sql);
+				} else {
+					$this->db->query($sql);
+				}
 			}
 		}
 		return $status;
