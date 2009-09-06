@@ -113,7 +113,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     $time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
-    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 120, ".$time.", 0, 1, 'system', 0, 1, 1, 0, 0, 0, " . ICMS_SYSTEM_DBVERSION . ")");
+    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 120, ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, " . ICMS_SYSTEM_DBVERSION . ")");
 
     foreach ($modversion['templates'] as $tplfile) {
         if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
