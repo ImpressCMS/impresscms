@@ -44,7 +44,7 @@ class IcmsVersionChecker {
 	 * Name of installed version
 	 * @private $installed_version_name string
 	 */
-	private $installed_version_name;
+	public $installed_version_name;
 
 	/*
 	 * Number of the latest build
