@@ -180,6 +180,8 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 	 */
 	function toArray() {
 		$ret = parent :: toArray();
+		$ret['itemLink'] = str_replace($this->handler->_itemname.'.php?', $this->handler->_itemname.'.php?uid='.$this->getVar('uid_owner').'&', $ret['itemLink']);
+		$ret['itemUrl'] = str_replace($this->handler->_itemname.'.php?', $this->handler->_itemname.'.php?uid='.$this->getVar('uid_owner').'&', $ret['itemUrl']);
 		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
 		$ret['creation_time_short'] = formatTimestamp($this->getVar('creation_time', 'e'), 's');
 		$ret['tribe_title'] = $this->getVar('title','e');

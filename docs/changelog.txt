@@ -1,7 +1,10 @@
 ImpressCMS ChangeLog
 === ImpressCMS 1.2 RC 1 ===
 Release date:
-Revision: 
+Revision:
+
+'''Fixed'''
+* #341: imProfile: don't show profile for inactive users | tickets from addons (Phoenyx)
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009

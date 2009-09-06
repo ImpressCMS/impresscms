@@ -49,6 +49,9 @@ if (!is_object($thisUser)) {
 		redirect_header(ICMS_URL.'/modules/profile/search.php', 3, _PROFILE_MA_USER_NOT_FOUND);
 	}
 	exit();
+} else {
+	// don't show profile for inactive users
+	if ($thisUser->getVar('level') == 0) redirect_header(icms_getPreviousPage('index.php'), 3, _PROFILE_MA_USER_NOT_FOUND);
 }
 
 $isOwner = $isFriend = false ;

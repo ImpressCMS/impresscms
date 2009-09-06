@@ -94,7 +94,6 @@ switch($op) {
 		else {
 			$user =& $handler->createUser();
 			$user->setVar('user_regdate', time());
-			$user->setVar('level', 1);
 			$user->setVar('user_avatar', 'blank.gif');
 			$user->setVar('uorder', $icmsConfig['com_order']);
 			$user->setVar('umode', $icmsConfig['com_mode']);

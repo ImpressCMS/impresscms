@@ -103,6 +103,9 @@ switch ( $op ) {
 			$newuser->setVar('pass', isset($_POST['pass']) ? $pass : '');
 			$newuser->setVar('enc_type', $icmsConfigUser['enc_type']);
 			$newuser->setVar('salt', $salt);
+			$newuser->setVar('user_avatar', 'blank.gif');
+			$newuser->setVar('uorder', $icmsConfig['com_order']);
+			$newuser->setVar('umode', $icmsConfig['com_mode']);
 
 			$stop = '';
 			if ($icmsConfigUser['use_captcha'] == 1) {
