@@ -166,11 +166,6 @@ define('_CO_ICMS_CLONE', "Clone this object");
 
 define('_CO_ICMS_CATEGORY_VIEW', "Category view");
 
-define('_CO_ICMS_BLOCKS_ADDTO_LAYOUT', "Layout: ");
-define('_CO_ICMS_BLOCKS_ADDTO_LAYOUT_OPTION0', "Horizontal 1 row");
-define('_CO_ICMS_BLOCKS_ADDTO_LAYOUT_OPTION1', "Horizontal 2 rows");
-define('_CO_ICMS_BLOCKS_ADDTO_LAYOUT_OPTION2', "Vertical with icons");
-define('_CO_ICMS_BLOCKS_ADDTO_LAYOUT_OPTION3', "Vertical no icon");
 define('_CO_ICMS_CURRENT_FILE', "Current file: ");
 define('_CO_ICMS_URL_FILE_DSC', "Alternatively, you can use an URL. If you select a file via 'Browse' button, URL will be ignored. You can use the tag {ICMS_URL} to print ".ICMS_URL);
 define('_CO_ICMS_URL_FILE', "URL: ");

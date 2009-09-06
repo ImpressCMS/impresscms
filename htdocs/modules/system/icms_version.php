@@ -227,11 +227,12 @@ if (function_exists('xoops_gethandler')){
 }
 /**/
 $modversion['blocks'][] = array(
-	'file' => 'social_bookmarks.php',
+	'file' => 'system_blocks.php',
 	'name' => _MI_SYSTEM_BNAME18,
 	'description' => '',
-	'show_func' => 'b_social_bookmarks',
-	'edit_func' => 'b_social_bookmarks_edit',
+	'show_func' => 'b_system_social_show',
+	'edit_func' => 'b_system_social_edit',
+	'options' => '0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0',
 	'template' => 'system_block_socialbookmark.html');
 
 $modversion['blocks'][] = array(

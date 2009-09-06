@@ -672,4 +672,224 @@ function b_system_bookmarks_show()
 
 	return $block;
 }
+
+/**
+ * @param array $options block config options
+ */
+function b_system_social_show($options) {
+	$block = array();
+	
+	$i = 0;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://twitter.com/home?status='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "twitter.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.facebook.com/sharer.php?u='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "facebook.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.myspace.com/Modules/PostTo/Pages/?t='+encodeURIComponent(document.title)+'&amp;c='+encodeURIComponent(document.title)+'&amp;u='+encodeURIComponent(location.href)+'&amp;popup=yes'",
+		'image' => "myspace.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://del.icio.us/post?v=2&amp;url='+encodeURIComponent(location.href)+'&amp;notes=&amp;tags=&amp;title='+encodeURIComponent(document.title)",
+		'image' => "del.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://myjeeves.ask.com/mysearch/BookmarkIt?v=1.2&t=webpages&url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "ask.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.mister-wong.de/index.php?action=addurl&amp;bm_url='+encodeURIComponent(location.href)+'&amp;bm_notice=&amp;bm_description='+encodeURIComponent(document.title)+'&amp;bm_tags='",
+		'image' => "wong.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.webnews.de/einstellen?url='+encodeURIComponent(document.location)+'&amp;title='+encodeURIComponent(document.title)",
+		'image' => "webnews.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.icio.de/add.php?url='+encodeURIComponent(location.href)",
+		'image' => "icio.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://beta.oneview.de/quickadd/neu/addBookmark.jsf?URL='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
+		'image' => "oneview.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.newsider.de/submit.php?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
+		'image' => "newsider.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.folkd.com/submit/'+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
+		'image' => "folkd.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://yigg.de/neu?exturl='+encodeURIComponent(location.href)",
+		'image' => "yigg.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://linkarena.com/bookmarks/addlink/?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;desc=&amp;tags='",
+		'image' => "linkarena.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://digg.com/submit?phase=2&amp;url='+encodeURIComponent(location.href)+'&amp;bodytext=&amp;tags=&amp;title='+encodeURIComponent(document.title)",
+		'image' => "digg.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://reddit.com/submit?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
+		'image' => "reddit.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.simpy.com/simpy/LinkAdd.do?title='+encodeURIComponent(document.title)+'&amp;tags=&amp;note=&amp;href='+encodeURIComponent(location.href)",
+		'image' => "simpy.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.stumbleupon.com/submit?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
+		'image' => "stumbleupon.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://slashdot.org/bookmark.pl?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
+		'image' => "slashdot.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://myweb2.search.yahoo.com/myresults/bookmarklet?t='+encodeURIComponent(document.title)+'&amp;d=&amp;tag=&amp;u='+encodeURIComponent(location.href)",
+		'image' => "yahoo.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.spurl.net/spurl.php?v=3&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;url='+encodeURIComponent(document.location.href)",
+		'image' => "spurl.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.google.com/bookmarks/mark?op=add&amp;hl=de&amp;bkmk='+encodeURIComponent(location.href)+'&amp;annotation=&amp;labels=&amp;title='+encodeURIComponent(document.title)",
+		'image' => "google.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.blinklist.com/index.php?Action=Blink/addblink.php&amp;Description=&amp;Tag=&amp;Url='+encodeURIComponent(location.href)+'&amp;Title='+encodeURIComponent(document.title)",
+		'image' => "blinklist.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://blogmarks.net/my/new.php?mini=1&amp;simple=1&amp;url='+encodeURIComponent(location.href)+'&amp;content=&amp;public-tags=&amp;title='+encodeURIComponent(document.title)",
+		'image' => "blogmarks.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.diigo.com/post?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;tag=&amp;comments='",
+		'image' => "diigo.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://technorati.com/faves?add='+encodeURIComponent(location.href)+'&amp;tag='",
+		'image' => "technorati.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.newsvine.com/_wine/save?popoff=1&amp;u='+encodeURIComponent(location.href)+'&amp;tags=&amp;blurb='+encodeURIComponent(document.title)",
+		'image' => "newsvine.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.blinkbits.com/bookmarklets/save.php?v=1&amp;title='+encodeURIComponent(document.title)+'&amp;source_url='+encodeURIComponent(location.href)+'&amp;source_image_url=&amp;rss_feed_url=&amp;rss_feed_url=&amp;rss2member=&amp;body='",
+		'image' => "blinkbits.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.netvouz.com/action/submitBookmark?url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "netvouz.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.propeller.com/submit/?url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "propeller.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://buzz.yahoo.com/submit/?submitUrl='+encodeURIComponent(location.href)+'&amp;submitHeadline='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "buzz.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://sphinn.com/submit.php?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "sphinn.gif"
+	);
+	$i++;
+	if ($options[$i]) $block[$i] = array(
+		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
+		'link'  => "'http://www.jumptags.com/add/?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'image' => "jumptags.gif"
+	);
+
+	$block['imagepath'] = ICMS_IMAGES_URL.'/icons/social/';
+	return $block;
+}
+
+/**
+ * @param array $options block config options
+ * @return string $form The edit social bookmarks form HTML string
+ */
+function b_system_social_edit($options) {
+	$form = '<strong>'._MB_SYSTEM_SOCIAL_PROVIDER_SELECT.':</strong><br /><br />';
+	$form .= '<table width="100%">';
+
+	for ($i = 0; $i < count($options); $i++) {
+		$yesno = new XoopsFormRadioYN('', 'options['.$i.']', $options[$i]);
+		$form .= '<tr><td width="25%">'.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i).'</td><td>'.$yesno->render().'</td></tr>';
+	}
+	$form .= '</table>';
+
+	return $form;
+}
 ?>

@@ -6,6 +6,7 @@ Revision:
 '''Fixed'''
 * #341: imProfile: don't show profile for inactive users | tickets from addons (Phoenyx)
 * #776: fixed some issues with the search functionallity (Phoenyx)
+* #621: fixed layout issue with social bookmark block and removed addto library (Phoenyx)
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009
