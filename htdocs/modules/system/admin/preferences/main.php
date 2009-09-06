@@ -74,6 +74,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		}
 		include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 		include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
+		global $icmsConfigUser;
 		$form = new XoopsThemeForm ( constant ( $confcat->getVar ( 'confcat_name' ) ), 'pref_form', 'admin.php?fct=preferences', 'post', true );
 		$config_handler = & xoops_gethandler ( 'config' );
 		$criteria = new CriteriaCompo ( );
@@ -288,7 +289,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'password' :
 					$myts = & MyTextSanitizer::getInstance ();
-					$ele = new XoopsFormPassword ( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
+					$ele = new XoopsFormPassword ( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ), false, ($icmsConfigUser['pass_level']?'password_adv':'') );
 				break;
 				case 'color' :
 					$myts = & MyTextSanitizer::getInstance ();

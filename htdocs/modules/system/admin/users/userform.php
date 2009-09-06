@@ -106,7 +106,8 @@ if ( count($ranklist) > 0 ) {
 } else {
 	$rank_select->addOption(0, _AM_NSRID);
 }
-$pwd_text = new XoopsFormPassword(_AM_PASSWORD, "password", 10, 255);
+global $icmsConfigUser;
+$pwd_text = new XoopsFormPassword(_AM_PASSWORD, "password", 10, 255, '', false, ($icmsConfigUser['pass_level']?'password_adv':''));
 $pwd_text2 = new XoopsFormPassword(_AM_RETYPEPD, "pass2", 10, 255);
 $mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', intval($mailok_value));
 

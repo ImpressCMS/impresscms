@@ -284,172 +284,6 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 	return $usertimestamp;
 }
 
-
-/*
- * Function to display formatted times in user timezone
- *
- * @param string  $time  String with time
- * @param string  $format  The time format based on PHP function format parameters
- * @param string  $timeoffset  The time offset string
- * @return string  $usertimestamp  The generated user timestamp
- */
-function formatTimestamp($time, $format = "l", $timeoffset = null)
-{
-	global $icmsConfig, $icmsUser;
-
-	$format_copy = $format;
-	$format = strtolower($format);
-
-	if ($format == "rss" || $format == "r"){
-		$TIME_ZONE = "";
-		if (!empty($GLOBALS['xoopsConfig']['server_TZ'])){
-			$server_TZ = abs(intval($GLOBALS['xoopsConfig']['server_TZ'] * 3600.0));
-			$prefix = ($GLOBALS['xoopsConfig']['server_TZ'] < 0) ?  " -" : " +";
-			$TIME_ZONE = $prefix.date("Hi", $server_TZ);
-		}
-		$date = gmdate("D, d M Y H:i:s", intval($time)) . $TIME_ZONE;
-		return $date;
-	}
-
-	if ( ($format == "elapse" || $format == "e") && $time < time() ) {
-		$elapse = time() - $time;
-		if ( $days = floor( $elapse / (24 * 3600) ) ) {
-			$num = $days > 1 ? sprintf(_DAYS, $days) : _DAY;
-		} elseif ( $hours = floor( ( $elapse % (24 * 3600) ) / 3600 ) ) {
-			$num = $hours > 1 ? sprintf(_HOURS, $hours) : _HOUR;
-		} elseif ( $minutes = floor( ( $elapse % 3600 ) / 60 ) ) {
-			$num = $minutes > 1 ? sprintf(_MINUTES, $minutes) : _MINUTE;
-		} else {
-			$seconds = $elapse % 60;
-			$num = $seconds > 1 ? sprintf(_SECONDS, $seconds) : _SECOND;
-		}
-		$ret = sprintf(_ELAPSE, icms_conv_nr2local($num));
-		return $ret;
-	}
-
-	// disable user timezone calculation and use default timezone,
-	// for cache consideration
-	if ($timeoffset === null) {
-		$timeoffset = ($icmsConfig['default_TZ'] == '') ? '0.0' : $icmsConfig['default_TZ'];
-	}
-
-	$usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
-
-	switch ($format) {
-		case 'daynumber':
-		$datestring = 'd';
-		break;
-		case 'D':
-		$datestring = 'D';
-		break;
-		case 'F':
-		$datestring = 'F';
-		break;
-		case 'hs':
-		$datestring = 'h';
-		break;
-		case 'H':
-		$datestring = 'H';
-		break;
-		case 'gg':
-		$datestring = 'g';
-		break;
-		case 'G':
-		$datestring = 'G';
-		break;
-		case 'i':
-		$datestring = 'i';
-		break;
-		case 'j':
-		$datestring = 'j';
-		break;
-		case 'l':
-		$datestring = _DATESTRING;
-		break;
-		case 'm':
-		$datestring = _MEDIUMDATESTRING;
-		break;
-		case 'monthnr':
-		$datestring = 'm';
-		break;
-		case 'mysql':
-		$datestring = 'Y-m-d H:i:s';
-		break;
-		case 'month':
-		$datestring = 'M';
-		break;
-		case 'n':
-		$datestring = 'n';
-		break;
-		case 's':
-		$datestring = _SHORTDATESTRING;
-		break;
-		case 'seconds':
-		$datestring = 's';
-		break;
-		case 'suffix':
-		$datestring = 'S';
-		break;
-		case 't':
-		$datestring = 't';
-		break;
-		case 'w':
-		$datestring = 'w';
-		break;
-		case 'shortyear':
-		$datestring = 'y';
-		break;
-		case 'Y':
-		$datestring = 'Y';
-		break;
-		case 'c':
-		case 'custom':
-		static $current_timestamp, $today_timestamp, $monthy_timestamp;
-		if (!isset($current_timestamp)) {
-			$current_timestamp = xoops_getUserTimestamp(time(), $timeoffset);
-		}
-		if (!isset($today_timestamp)) {
-			$today_timestamp = mktime(0, 0, 0, date("m", $current_timestamp), date("d", $current_timestamp), date("Y", $current_timestamp));
-		}
-
-		if ( abs($elapse_today = $usertimestamp - $today_timestamp) < 24*60*60) {
-			$datestring = ($elapse_today > 0) ? _TODAY : _YESTERDAY;
-		} else {
-			if (!isset($monthy_timestamp)) {
-				$monthy_timestamp[0] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp));
-				$monthy_timestamp[1] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp) + 1);
-			}
-			if ($usertimestamp >= $monthy_timestamp[0] && $usertimestamp < $monthy_timestamp[1]) {
-				$datestring = _MONTHDAY;
-			} else{
-				$datestring = _YEARMONTHDAY;
-			}
-		}
-		break;
-
-		default:
-			if ($format != '') {
-				$datestring = $format_copy;
-			} else {
-				$datestring = _DATESTRING;
-			}
-		break;
-	}
-
-	$basecheck = $icmsConfig['use_ext_date'] == true && defined ('_CALENDAR_TYPE') && $format != 'mysql';
-	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/local.date.php'))
-	{
-		include_once ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/local.date.php';
-		return ucfirst(local_date($datestring,$usertimestamp));
-	}elseif ($basecheck && _CALENDAR_TYPE != "jalali" && $icmsConfig['language'] != 'english'){
-		return ucfirst(icms_conv_nr2local(ext_date(date($datestring,$usertimestamp))));
-	}elseif ($basecheck && _CALENDAR_TYPE == "jalali"){
-		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
-	}else{
-		return ucfirst(date($datestring,$usertimestamp));
-	}
-}
-
 /*
  * Function to calculate server timestamp from user entered time (timestamp)
  *
@@ -831,19 +665,6 @@ function &xoops_gethandler($name, $optional = false )
 	if(isset($handlers[$name])) {return $handlers[$name];}
 	$inst = false;
 	return $inst;
-}
-
-/*
-* Gets module handler
-* For Backward Compatibility.
-*
-* @param	string  $name  The name of the module
-* @param	string	$module_dir		The module directory where to get the module class
-* @return	object  $inst	The reference to the generated object
-*/
-function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = false)
-{
-	return icms_getmodulehandler($name, $module_dir, $module_dir, $optional);
 }
 
 /*
@@ -2016,14 +1837,6 @@ function icms_escapeValue($value, $quotes = true)
 }
 
 /**
- * Clean up all the writeable folders
- * @param bool
- */
-function icms_cleaning_write_folders() {
-	return icms_clean_folders(array('templates_c' => ICMS_ROOT_PATH."/templates_c/", 'cache' => ICMS_ROOT_PATH."/cache/"));
-}
-
-/**
 * Get a number value in other languages
 *
 * @param int $string Content to be transported into another language
@@ -2221,6 +2034,172 @@ function ext_date($time)
 	return $timestamp; 
 }
 
+
+/*
+ * Function to display formatted times in user timezone
+ *
+ * @param string  $time  String with time
+ * @param string  $format  The time format based on PHP function format parameters
+ * @param string  $timeoffset  The time offset string
+ * @return string  $usertimestamp  The generated user timestamp
+ */
+function formatTimestamp($time, $format = "l", $timeoffset = null)
+{
+	global $icmsConfig, $icmsUser;
+
+	$format_copy = $format;
+	$format = strtolower($format);
+
+	if ($format == "rss" || $format == "r"){
+		$TIME_ZONE = "";
+		if (!empty($GLOBALS['xoopsConfig']['server_TZ'])){
+			$server_TZ = abs(intval($GLOBALS['xoopsConfig']['server_TZ'] * 3600.0));
+			$prefix = ($GLOBALS['xoopsConfig']['server_TZ'] < 0) ?  " -" : " +";
+			$TIME_ZONE = $prefix.date("Hi", $server_TZ);
+		}
+		$date = gmdate("D, d M Y H:i:s", intval($time)) . $TIME_ZONE;
+		return $date;
+	}
+
+	if ( ($format == "elapse" || $format == "e") && $time < time() ) {
+		$elapse = time() - $time;
+		if ( $days = floor( $elapse / (24 * 3600) ) ) {
+			$num = $days > 1 ? sprintf(_DAYS, $days) : _DAY;
+		} elseif ( $hours = floor( ( $elapse % (24 * 3600) ) / 3600 ) ) {
+			$num = $hours > 1 ? sprintf(_HOURS, $hours) : _HOUR;
+		} elseif ( $minutes = floor( ( $elapse % 3600 ) / 60 ) ) {
+			$num = $minutes > 1 ? sprintf(_MINUTES, $minutes) : _MINUTE;
+		} else {
+			$seconds = $elapse % 60;
+			$num = $seconds > 1 ? sprintf(_SECONDS, $seconds) : _SECOND;
+		}
+		$ret = sprintf(_ELAPSE, icms_conv_nr2local($num));
+		return $ret;
+	}
+
+	// disable user timezone calculation and use default timezone,
+	// for cache consideration
+	if ($timeoffset === null) {
+		$timeoffset = ($icmsConfig['default_TZ'] == '') ? '0.0' : $icmsConfig['default_TZ'];
+	}
+
+	$usertimestamp = xoops_getUserTimestamp($time, $timeoffset);
+
+	switch ($format) {
+		case 'daynumber':
+		$datestring = 'd';
+		break;
+		case 'D':
+		$datestring = 'D';
+		break;
+		case 'F':
+		$datestring = 'F';
+		break;
+		case 'hs':
+		$datestring = 'h';
+		break;
+		case 'H':
+		$datestring = 'H';
+		break;
+		case 'gg':
+		$datestring = 'g';
+		break;
+		case 'G':
+		$datestring = 'G';
+		break;
+		case 'i':
+		$datestring = 'i';
+		break;
+		case 'j':
+		$datestring = 'j';
+		break;
+		case 'l':
+		$datestring = _DATESTRING;
+		break;
+		case 'm':
+		$datestring = _MEDIUMDATESTRING;
+		break;
+		case 'monthnr':
+		$datestring = 'm';
+		break;
+		case 'mysql':
+		$datestring = 'Y-m-d H:i:s';
+		break;
+		case 'month':
+		$datestring = 'M';
+		break;
+		case 'n':
+		$datestring = 'n';
+		break;
+		case 's':
+		$datestring = _SHORTDATESTRING;
+		break;
+		case 'seconds':
+		$datestring = 's';
+		break;
+		case 'suffix':
+		$datestring = 'S';
+		break;
+		case 't':
+		$datestring = 't';
+		break;
+		case 'w':
+		$datestring = 'w';
+		break;
+		case 'shortyear':
+		$datestring = 'y';
+		break;
+		case 'Y':
+		$datestring = 'Y';
+		break;
+		case 'c':
+		case 'custom':
+		static $current_timestamp, $today_timestamp, $monthy_timestamp;
+		if (!isset($current_timestamp)) {
+			$current_timestamp = xoops_getUserTimestamp(time(), $timeoffset);
+		}
+		if (!isset($today_timestamp)) {
+			$today_timestamp = mktime(0, 0, 0, date("m", $current_timestamp), date("d", $current_timestamp), date("Y", $current_timestamp));
+		}
+
+		if ( abs($elapse_today = $usertimestamp - $today_timestamp) < 24*60*60) {
+			$datestring = ($elapse_today > 0) ? _TODAY : _YESTERDAY;
+		} else {
+			if (!isset($monthy_timestamp)) {
+				$monthy_timestamp[0] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp));
+				$monthy_timestamp[1] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp) + 1);
+			}
+			if ($usertimestamp >= $monthy_timestamp[0] && $usertimestamp < $monthy_timestamp[1]) {
+				$datestring = _MONTHDAY;
+			} else{
+				$datestring = _YEARMONTHDAY;
+			}
+		}
+		break;
+
+		default:
+			if ($format != '') {
+				$datestring = $format_copy;
+			} else {
+				$datestring = _DATESTRING;
+			}
+		break;
+	}
+
+	$basecheck = $icmsConfig['use_ext_date'] == true && defined ('_CALENDAR_TYPE') && $format != 'mysql';
+	if($basecheck && file_exists(ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/local.date.php'))
+	{
+		include_once ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/local.date.php';
+		return ucfirst(local_date($datestring,$usertimestamp));
+	}elseif ($basecheck && _CALENDAR_TYPE != "jalali" && $icmsConfig['language'] != 'english'){
+		return ucfirst(icms_conv_nr2local(ext_date(date($datestring,$usertimestamp))));
+	}elseif ($basecheck && _CALENDAR_TYPE == "jalali"){
+		return ucfirst(icms_conv_nr2local(jdate($datestring,$usertimestamp)));
+	}else{
+		return ucfirst(date($datestring,$usertimestamp));
+	}
+}
+
 /**
  * Gets module handler instance
  *
@@ -2258,6 +2237,19 @@ function &icms_getmodulehandler($name = null, $module_dir = null, $module_basena
 	if(isset($handlers[$module_dir][$name])) {return $handlers[$module_dir][$name];}
 	$inst = false;
 	return $inst;
+}
+
+/*
+* Gets module handler
+* For Backward Compatibility.
+*
+* @param	string  $name  The name of the module
+* @param	string	$module_dir		The module directory where to get the module class
+* @return	object  $inst	The reference to the generated object
+*/
+function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = false)
+{
+	return icms_getmodulehandler($name, $module_dir, $module_dir, $optional);
 }
 
 /**
@@ -2610,6 +2602,14 @@ function icms_clean_folders($dir, $remove_admin_cache=false) {
 		closedir($dd);
 	}
 	return true;
+}
+
+/**
+ * Clean up all the writeable folders
+ * @param bool
+ */
+function icms_cleaning_write_folders() {
+	return icms_clean_folders(array('templates_c' => ICMS_ROOT_PATH."/templates_c/", 'cache' => ICMS_ROOT_PATH."/cache/"));
 }
 
 /**
