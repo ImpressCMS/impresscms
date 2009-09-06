@@ -95,7 +95,7 @@ else
         redirect_header('index.php', 3, _US_SELECTNG);
     }
     $xoopsOption['template_main'] = 'system_userinfo.html';
-    include (ICMS_ROOT_PATH.'/header.php');
+    include ICMS_ROOT_PATH.'/header.php';
     $xoopsTpl->assign('user_ownpage', false);
 }
 

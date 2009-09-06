@@ -10,7 +10,7 @@
 * @version      $Id$
 */
 define('ICMS_INCLUDE_OPENID', true);
-include_once('mainfile.php');
+include_once 'mainfile.php';
 
 $_SESSION['frompage'] = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER']
     : (isset($_ENV['HTTP_REFERER']) ? $_ENV['HTTP_REFERER'] : '');
