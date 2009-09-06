@@ -206,7 +206,7 @@ foreach ($mids as $mid) {
 			}
 			
 			if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-				$results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
+				$results[$i]['link'] = ICMS_URL."/modules/".$module->getVar('dirname')."/".$results[$i]['link'];
 			}
 
 			$results[$i]['title'] = $myts->displayTarea($results[$i]['title']);

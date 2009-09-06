@@ -106,7 +106,7 @@
       <{foreach item=result from=$module.results}>
       <p class="<{cycle values='even,odd'}>">
         <img src="<{$icms_url}>/<{$result.image}>" alt="<{$module.name}>" />
-        <strong><a href="<{$icms_url}>/<{$result.link}>"><{$result.title}></a></strong>
+        <strong><a href="<{$result.link}>"><{$result.title}></a></strong>
         <small>(<{$result.time}>)</small>
       </p>
       <{/foreach}>
