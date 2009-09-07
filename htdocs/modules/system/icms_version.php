@@ -232,7 +232,7 @@ $modversion['blocks'][] = array(
 	'description' => '',
 	'show_func' => 'b_system_social_show',
 	'edit_func' => 'b_system_social_edit',
-	'options' => '0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0',
+	'options' => '1|1|1|1|0|0|0|0|0|0|0|0|0|1|0|0|0|0|1|0|1|0|0|1|0|0|0|0|0|0|0|0',
 	'template' => 'system_block_socialbookmark.html');
 
 $modversion['blocks'][] = array(
