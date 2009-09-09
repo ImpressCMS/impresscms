@@ -217,14 +217,33 @@
     <table cellspacing="1" cellpadding="0"><tr>
     <{section name=i loop=$friends}>
     <td class="profile-profile-friend <{cycle values="even,odd"}>">
-      <{if $friends[i].user_avatar=="blank.gif"}>
-      <img class="profile-profile-friend-photo" src="images/noavatar.gif" />
-      <{else}>
-      <img class="profile-profile-friend-photo" src="<{$friends[i].user_avatar}>" />
-      <{/if}>
-      <br /><{$friends[i].uname}>
+      <{$friends[i].user_avatar}><br /><{$friends[i].uname}>
     <{/section}>
     </tr></table>
+    <{/if}>
+    <{if $friends_pending|@count > 0}>
+    <h3 class="head"><{$lang_friends_pending}></h3>
+    <ul>
+      <{section name=i loop=$friends_pending}>
+      <li>
+	<form action="<{$icms_url}>/modules/profile/index.php?uid=<{$uid}>" method="post" class="profile-quickform">
+          <input type="hidden" value="<{$friends_pending[i].friendship_id}>" name="friendship_id" />
+          <input type="hidden" value="2" name="status" />
+          <input type="hidden" value="editfriendship" name="op" />
+          <{$token}>
+          <input class="image" name="submit" type="image" alt="<{$lang_friendship_accept}>" title="<{$lang_friendship_accept}>" src="<{$image_ok}>" style="vertical-align:middle" />
+        </form>
+        <form action="<{$icms_url}>/modules/profile/index.php?uid=<{$uid}>" method="post" class="profile-quickform">
+          <input type="hidden" value="<{$friends_pending[i].friendship_id}>" name="friendship_id" />
+          <input type="hidden" value="3" name="status" />
+          <input type="hidden" value="editfriendship" name="op" />
+          <{$token}>
+          <input class="image" name="submit" type="image" alt="<{$lang_friendship_reject}>" title="<{$lang_friendship_reject}>" src="<{$image_cancel}>" style="vertical-align:middle" />
+        </form>
+        <{$friends_pending[i].uname}>
+      </li>
+      <{/section}>
+    </ul>
     <{/if}>
   </div>
   <{/if}>

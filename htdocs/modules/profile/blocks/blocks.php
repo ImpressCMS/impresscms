@@ -19,15 +19,16 @@ function b_profile_friends_show($options) {
 	global $icmsUser;
 
 	if (!empty($icmsUser)){
-		// Filter for fetch votes ishot and isnothot
-		$criteria = new criteria('friend1_uid', $icmsUser->getVar('uid'));
-		// Creating factories of pictures and votes
-		$friends_factory = icms_getmodulehandler('friendship', basename(dirname(dirname( __FILE__ ))), 'profile');
-
-		$block['friends'] = $friends_factory->getFriends($options[0], $criteria, 0);
+		$profile_friendship_handler = icms_getModuleHandler('friendship', 'profile');
+		$friends = $profile_friendship_handler->getFriendships(0, 0, $icmsUser->getVar('uid'), 0, PROFILE_FRIENDSHIP_STATUS_ACCEPTED);
+		$block = array();
+		$i = 0;
+		foreach($friends as $friend) {
+			$block['friends'][$i]['uname'] = $friend['friendship_content'];
+			$block['friends'][$i]['friend_uid']  = $friend['friend_uid'];
+			$i++;
+		}
 	}
-
-	$block['lang_allfriends'] = _MB_PROFILE_ALLFRIENDS;
 
 	return $block;
 }

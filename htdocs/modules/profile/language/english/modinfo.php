@@ -184,7 +184,6 @@ define("_MI_PROFILE_TRIBES", "Tribes");
 //define("_MI_PROFILE_SUSPENSIONS", "Suspensions");
 define("_MI_PROFILE_PICTURES", "Pictures");
 define("_MI_PROFILE_VIDEOS", "Videos");
-//define("_MI_PROFILE_FRIENDPETITIONS", "Friendpetitions");
 define("_MI_PROFILE_TRIBEUSERS", "Tribeusers");
 $member_handler = &xoops_gethandler('member');
 $group_list = &$member_handler->getGroupList();

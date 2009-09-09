@@ -15,12 +15,11 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
 // including the IcmsPersistabelSeoObject
 include_once ICMS_ROOT_PATH . '/kernel/icmspersistableobject.php';
-include_once(ICMS_ROOT_PATH . '/modules/profile/include/functions.php');
+include_once ICMS_ROOT_PATH . '/modules/profile/include/functions.php';
 
 define('PROFILE_FRIENDSHIP_STATUS_PENDING', 1);
-define('PROFILE_FRIENDSHIP_STATUS_ACQUAINTANCE', 2);
-define('PROFILE_FRIENDSHIP_STATUS_ACCEPTED', 3);
-define('PROFILE_FRIENDSHIP_STATUS_REJECTED', 4);
+define('PROFILE_FRIENDSHIP_STATUS_ACCEPTED', 2);
+define('PROFILE_FRIENDSHIP_STATUS_REJECTED', 3);
 
 class ProfileFriendship extends IcmsPersistableObject {
 
@@ -38,15 +37,17 @@ class ProfileFriendship extends IcmsPersistableObject {
 		$this->quickInitVar('friend1_uid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('friend2_uid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('creation_time', XOBJ_DTYPE_LTIME, false);
-		$this->quickInitVar('situation', XOBJ_DTYPE_INT, true, false, false, PROFILE_FRIENDSHIP_STATUS_PENDING);
+		$this->quickInitVar('status', XOBJ_DTYPE_INT, true, false, false, PROFILE_FRIENDSHIP_STATUS_PENDING);
+		
 		$this->setControl('friend1_uid', 'user');
+		$this->setControl('status', array(
+				'itemHandler' => 'friendship',
+				'method' => 'getFriendship_statusArray',
+				'module' => 'profile'
+		));
+
 		$this->hideFieldFromForm('friend2_uid');
 		$this->hideFieldFromForm('creation_time');
-		$this->setControl('situation', array (
-			'itemHandler' => 'friendship',
-			'method' => 'getFriendship_statusArray',
-			'module' => 'profile'
-		));
 	}
 
 	/**
@@ -63,12 +64,31 @@ class ProfileFriendship extends IcmsPersistableObject {
 		}
 		return parent :: getVar($key, $format);
 	}
-	
-	function getFriend() {
+
+	/**
+	 * get linked user name for this friend
+	 *
+	 * @global object $icmsUser current user object
+	 * @return string linked user name
+	 */
+	function getFriendLinkedUname() {
 		global $icmsUser;
 		$uid = isset($_REQUEST['uid'])?intval($_REQUEST['uid']):$icmsUser->uid();
-		$friend = ($uid==$this->getVar('friend2_uid')) ? $this->getVar('friend1_uid') : $this->getVar('friend2_uid');
-		return icms_getLinkedUnameFromId($friend);
+		$friend_uid = ($uid==$this->getVar('friend2_uid')) ? $this->getVar('friend1_uid') : $this->getVar('friend2_uid');
+		return icms_getLinkedUnameFromId($friend_uid);
+	}
+
+	/**
+	 * get user id for current friend
+	 *
+	 * @global object $icmsUser current user object
+	 * @return int user id for current friend
+	 */
+	function getFriendUid() {
+		global $icmsUser;
+		$uid = isset($_REQUEST['uid'])?intval($_REQUEST['uid']):$icmsUser->uid();
+		$friend_uid = ($uid==$this->getVar('friend2_uid')) ? $this->getVar('friend1_uid') : $this->getVar('friend2_uid');
+		return $friend_uid;
 	}
 
 	function getAvatar() {
@@ -76,8 +96,8 @@ class ProfileFriendship extends IcmsPersistableObject {
 		$uid = isset($_REQUEST['uid'])?intval($_REQUEST['uid']):$icmsUser->uid();
 		$friend = ($uid==$this->getVar('friend2_uid')) ? $this->getVar('friend1_uid') : $this->getVar('friend2_uid');
 		$member_handler =& xoops_gethandler('member');
-		$processUser =& $member_handler->getUser($friend);
-		return $processUser->gravatar();
+		$thisUser =& $member_handler->getUser($friend);
+		return '<img src="'.$thisUser->gravatar().'" />';
 	}
 
 	/**
@@ -87,12 +107,15 @@ class ProfileFriendship extends IcmsPersistableObject {
 	 */
 	function userCanEditAndDelete() {
 		global $icmsUser, $profile_isAdmin;
-		if (!is_object($icmsUser)) {
-			return false;
+		
+		if ($profile_isAdmin) return true;
+		if (!is_object($icmsUser)) return false;
+		if ($this->getVar('status') == PROFILE_FRIENDSHIP_STATUS_ACCEPTED) {
+			return $this->getVar('friend1_uid', 'e') == $icmsUser->getVar('uid') || $this->getVar('friend2_uid', 'e') == $icmsUser->getVar('uid');
+		} else {
+			return $this->getVar('friend2_uid', 'e') == $icmsUser->getVar('uid');
 		}
-		if($this->getVar('friend2_uid', 'e') == $icmsUser->uid()){
-			return true;
-		}
+
 		return false;
 	}
 
@@ -105,51 +128,62 @@ class ProfileFriendship extends IcmsPersistableObject {
 		$ret = parent :: toArray();
 		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
 		$ret['friendship_avatar'] = $this->getAvatar();
-		$ret['friendship_content'] = $this->getFriend();
+		$ret['friendship_content'] = $this->getFriendLinkedUname();
+		$ret['friend_uid'] = $this->getFriendUid();
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['friendship_senderid'] = $this->getVar('friend1_uid','e');
-		//$ret['friendship_sender_link'] = $this->getPictureSender();
 		return $ret;
 	}
 }
 class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
-
-
 	/**
 	 * @public array of status
 	 */
 	public $_friendship_statusArray = array ();
+
 	/**
 	 * Constructor
 	 */
-	public function __construct(& $db) {
+	public function __construct(&$db) {
 		$this->IcmsPersistableObjectHandler($db, 'friendship', 'friendship_id', 'friend1_uid', '', 'profile');
 	}
 
 	/**
-	 * Create the criteria that will be used by getFriendship and getFriendshipCount
+	 * Create the criteria that will be used by getFriendships
 	 *
 	 * @param int $start to which record to start
-	 * @param int $limit limit of friendships to return
-	 * @param int $friend1_uid if specifid, only the friendship of this user will be returned
+	 * @param int $limit max friendships to display
+	 * @param int $friend1_uid only the friendship of this user will be returned
+	 * @param int $friend2_uid if specifid, the friendship of these two users will be returned.
+	 * @param int $status only get friendships with the specified status
 	 * @return CriteriaCompo $criteria
 	 */
-	function getFriendshipCriteria($start = 0, $limit = 0, $friend1_uid) {
-		global $icmsUser;
-
+	function getFriendshipsCriteria($start = 0, $limit = 0, $friend1_uid = 0, $friend2_uid = 0, $status = 0) {
 		$criteria = new CriteriaCompo();
-		if ($start) {
-			$criteria->setStart($start);
-		}
-		if ($limit) {
-			$criteria->setLimit(intval($limit));
-		}
+		if ($start) $criteria->setStart($start);
+		if ($limit) $criteria->setLimit(intval($limit));
 		$criteria->setSort('creation_time');
 		$criteria->setOrder('DESC');
-		$criteria->add(new Criteria('friend1_uid', $friend1_uid));
-		$criteria->add(new Criteria('friend2_uid', $friend1_uid), 'OR');
+
+		if ($status == PROFILE_FRIENDSHIP_STATUS_PENDING && $friend2_uid) {
+			$criteria->add(new Criteria('status', $status));
+			$criteria->add(new Criteria('friend2_uid', $friend2_uid));
+		} else {
+			if ($status) $criteria->add(new Criteria('status', $status));
+			if ($friend2_uid > 0) {
+				$criteria->add(new Criteria('friend1_uid', $friend1_uid));
+				$criteria->add(new Criteria('friend2_uid', $friend2_uid));
+				$criteria->add(new Criteria('friend1_uid', $friend2_uid), 'OR');
+				$criteria->add(new Criteria('friend2_uid', $friend1_uid));
+			} elseif ($friend1_uid > 0) {
+				$criteria->add(new Criteria('friend1_uid', $friend1_uid));
+				$criteria->add(new Criteria('friend2_uid', $friend1_uid), 'OR');
+			}
+			if ($status) $criteria->add(new Criteria('status', $status));
+		}
+
 		return $criteria;
 	}
 
@@ -160,11 +194,33 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 	 * @param int $limit max friendships to display
 	 * @param int $friend1_uid only the friendship of this user will be returned
 	 * @param int $friend2_uid if specifid, the friendship of these two users will be returned.
+	 * @param int $status only get friendships with the specified status
 	 * @return array of friendships
 	 */
-	function getFriendship($start = 0, $limit = 0, $friend1_uid) {
-		$criteria = $this->getFriendshipCriteria($start, $limit, $friend1_uid);
+	function getFriendships($start = 0, $limit = 0, $friend1_uid = 0, $friend2_uid = 0, $status = 0) {
+		$criteria = $this->getFriendshipsCriteria($start, $limit, $friend1_uid, $friend2_uid, $status);
 		$ret = $this->getObjects($criteria, true, false);
+		return $ret;
+	}
+
+	/**
+	 * Get friendships and sort them according to their status
+	 *
+	 * @param int $friend1_uid user id to get friendships for
+	 * @param boolean $isOwner true if the user is on it's own profile
+	 * @return array of friendships sorted by status
+	 */
+	function getFriendshipsSorted($friend1_uid, $isOwner) {
+		$friendshipsArray = $this->getFriendships(false, false, $friend1_uid);
+		$ret = array();
+		$ret[PROFILE_FRIENDSHIP_STATUS_PENDING] = array();
+		$ret[PROFILE_FRIENDSHIP_STATUS_ACCEPTED] = array();
+		$ret[PROFILE_FRIENDSHIP_STATUS_REJECTED] = array();
+		foreach ($friendshipsArray as $key => $friendship) {
+			if ($friendship['status'] == PROFILE_FRIENDSHIP_STATUS_ACCEPTED || (($friendship['status'] == PROFILE_FRIENDSHIP_STATUS_PENDING || $friendship['status'] == PROFILE_FRIENDSHIP_STATUS_REJECTED) && $friendship['friend2_uid'] == $friend1_uid && $isOwner)) {
+				$ret[$friendship['status']][$key] = $friendship;
+			}
+		}
 		return $ret;
 	}
 
@@ -176,7 +232,6 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 	function getFriendship_statusArray() {
 		if (!$this->_friendship_statusArray) {
 			$this->_friendship_statusArray[PROFILE_FRIENDSHIP_STATUS_PENDING] = _CO_PROFILE_FRIENDSHIP_STATUS_PENDING;
-			$this->_friendship_statusArray[PROFILE_FRIENDSHIP_STATUS_ACQUAINTANCE] = _CO_PROFILE_FRIENDSHIP_STATUS_ACQUAINTANCE;
 			$this->_friendship_statusArray[PROFILE_FRIENDSHIP_STATUS_ACCEPTED] = _CO_PROFILE_FRIENDSHIP_STATUS_ACCEPTED;
 			$this->_friendship_statusArray[PROFILE_FRIENDSHIP_STATUS_REJECTED] = _CO_PROFILE_FRIENDSHIP_STATUS_REJECTED;
 		}
@@ -191,85 +246,9 @@ class ProfileFriendshipHandler extends IcmsPersistableObjectHandler {
 	 */
 	function userCanSubmit() {
 		global $icmsUser;
-		if (!is_object($icmsUser)) {
-			return false;
-		}
+		if (!is_object($icmsUser)) return false;
+
 		return true;
 	}
-
-	/**
-	* Get the averages of each evaluation hot trusty etc...
-	* 
-	* @param int $user_uid
-	* @return array $vetor with averages
-	*/
-	
-	function getMoyennes($user_uid){
-	
-	global $icmsUser;
-	
-	$vetor = array();
-	$vetor['mediahot']=0;
-	$vetor['mediatrust']=0;	
-	$vetor['mediacool']=0;		
-
-	//Calculating avg(hot)	
-	$sql ="SELECT friend2_uid, Avg(hot) AS mediahot FROM ".$this->db->prefix('profile_friendship');
-	$sql .=" WHERE  (hot>0) GROUP BY friend2_uid HAVING (friend2_uid=".$user_uid.") ";
-	$result = $this->db->query($sql);
-	while ($myrow = $this->db->fetchArray($result)) {
-		$vetor['mediahot']= $myrow['mediahot']*16;
-	}
-	
-	//Calculating avg(trust)
-	$sql ="SELECT friend2_uid, Avg(trust) AS mediatrust FROM ".$this->db->prefix('profile_friendship');
-	$sql .=" WHERE  (trust>0) GROUP BY friend2_uid HAVING (friend2_uid=".$user_uid.") ";
-	$result = $this->db->query($sql);
-	while ($myrow = $this->db->fetchArray($result)) {
-		$vetor['mediatrust']= $myrow['mediatrust']*16;
-	}
-	//Calculating avg(cool)
-	$sql  = "SELECT friend2_uid, Avg(cool) AS mediacool FROM ".$this->db->prefix('profile_friendship');
-	$sql .= " WHERE  (cool>0) GROUP BY friend2_uid HAVING (friend2_uid=".$user_uid.") ";
-	$result = $this->db->query($sql);
-	while ($myrow = $this->db->fetchArray($result)) {
-		$vetor['mediacool']= $myrow['mediacool']*16;
-	}
-	
-	return $vetor;
-	}
-
-	/**
-	 * Retreive the friendship_id of users
-	 *
-	 * @return amount
-	 */
-	function getFriendshipIdPerUser($uid1, $uid2){
-		$sql = 'SELECT friendship_id FROM '.$this->table.' WHERE ';
-		$sql .= '((friend1_uid="'.$uid1.'" AND friend2_uid="'.$uid2.'") OR (friend1_uid="'.$uid2.'" AND friend2_uid="'.$uid1.'"))';
-		$result = $this->query($sql, false);
-		list($ret) = $this->db->fetchRow($result);
-		return $ret;
-	}
-
-
-	/**
-	 * Retreive the friendship_id of users
-	 *
-	 * @return array of amounts
-	 */
-	function getFriendshipIdsWaiting($uid){
-		$array = array();
-		$sql = 'SELECT friendship_id FROM '.$this->table.' WHERE ';
-		$sql .= '(friend2_uid="'.$uid.'" AND situation = 1)';
-		$ret = $this->query($sql, false);
-		if(count($ret)>0){
-			for ($i = 0; $i < count($ret); $i++) {
-			$array[] = $ret[$i]['friendship_id'];
-			}
-		}
-		return $array;
-	}
-
 }
 ?>

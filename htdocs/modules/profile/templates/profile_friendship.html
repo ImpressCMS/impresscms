@@ -1,33 +1,105 @@
 <{include file="db:profile_header.html"}>
 <{if $profile_friendshipform}>
-	<{if $hideForm}>
-		<div id="profile-form" class="outer">
-			<h2 class="head">
-      			<a href="#" onclick ="jQuery().find('div.profile-album-form').toggle(400);">
-      				<img src="images/toggle.gif" />&nbsp;
-        		</a>
-			</h2>
-			<div class="profile-album-form" style="display: none">
-				<{includeq file='db:system_common_form.html' form=$profile_friendshipform}>
-			</div>
-		</div>
-	<{else}>
-		<{includeq file='db:system_common_form.html' form=$profile_friendshipform}>
-	<{/if}>
+<{if $hideForm}>
+<div id="profile-form" class="outer">
+  <h2 class="head">
+    <a href="#" onclick ="jQuery().find('div.profile-friendship-form').toggle(400);">
+      <img src="images/toggle.gif" />&nbsp;
+    </a>
+  </h2>
+  <div class="profile-friendship-form" style="display: none">
+    <{includeq file='db:system_common_form.html' form=$profile_friendshipform}>
+  </div>
+</div>
+<{else}>
+<{includeq file='db:system_common_form.html' form=$profile_friendshipform}>
 <{/if}>
-<{if $profile_allfriendships}>
-	<{foreach item=profile_each_friendship from=$profile_allfriendships}>
-			<div class="profile_each_friendship_content">
-				<img src="<{$profile_each_friendship.friendship_avatar}>" />
-			</div>
-			<div class="profile_each_friendship_container">
-				<h1 class="friendship-title"><{$profile_each_friendship.friendship_content}></h1>
-			</div>
-			<{if $profile_each_friendship.userCanEditAndDelete}>
-					<div class="profile_admin_links"><{$profile_each_friendship.editItemLink}><{$profile_each_friendship.deleteItemLink}></div>
-			<{/if}>
-	<{/foreach}>
+<{/if}>
+<{if $profile_friendships[2]}>
+<div class="profile-friendships-container outer">
+  <h2 class="head">
+    <a href="#" onclick ="jQuery().find('div#profile-friendships-accepted').toggle(400);">
+      <img src="images/toggle.gif" />&nbsp;
+    </a>
+    <{$lang_friendships_accepted}>
+  </h2>
+  <div id="profile-friendships-accepted">
+    <{foreach name=friends item=friend from=$profile_friendships[2]}>
+    <div class="profile-friendships-friend">
+      <{$friend.friendship_avatar}>
+      <br /><{$friend.friendship_content}><br />
+      <{if $friend.userCanEditAndDelete}>
+      <{$friend.deleteItemLink}>
+      <{/if}>
+    </div>
+    <{if $smarty.foreach.friends.iteration is div by 5 || $smarty.foreach.friends.last == TRUE}>
+    <div class="clear"></div>
+    <{/if}>
+    <{/foreach}>
+  </div>
+</div>
+<{/if}>
+<{if $profile_friendships[1]}>
+<div class="profile-friendships-container outer">
+  <h2 class="head">
+    <a href="#" onclick ="jQuery().find('div#profile-friendships-pending').toggle(400);">
+      <img src="images/toggle.gif" />&nbsp;
+    </a>
+    <{$lang_friendships_pending}>
+  </h2>
+  <div id="profile-friendships-pending" style="display: none">
+    <{foreach name=friends item=friend from=$profile_friendships[1]}>
+    <div class="profile-friendships-friend">
+      <{$friend.friendship_avatar}>
+      <br /><{$friend.friendship_content}><br />
+      <{if $friend.userCanEditAndDelete}>
+      <form action="<{$icms_url}>/modules/profile/index.php?uid=<{$uid}>" method="post" class="profile-quickform">
+        <input type="hidden" value="<{$friend.friendship_id}>" name="friendship_id" />
+        <input type="hidden" value="2" name="status" />
+        <input type="hidden" value="editfriendship" name="op" />
+        <{$token}>
+        <input class="image" name="submit" type="image" alt="<{$lang_friendship_accept}>" title="<{$lang_friendship_accept}>" src="<{$image_ok}>" style="vertical-align:middle" />
+      </form>
+      <form action="<{$icms_url}>/modules/profile/index.php?uid=<{$uid}>" method="post" class="profile-quickform">
+        <input type="hidden" value="<{$friend.friendship_id}>" name="friendship_id" />
+        <input type="hidden" value="3" name="status" />
+        <input type="hidden" value="editfriendship" name="op" />
+        <{$token}>
+        <input class="image" name="submit" type="image" alt="<{$lang_friendship_reject}>" title="<{$lang_friendship_reject}>" src="<{$image_cancel}>" style="vertical-align:middle" />
+      </form>
+      <{/if}>
+    </div>
+    <{if $smarty.foreach.friends.iteration is div by 5 || $smarty.foreach.friends.last == TRUE}>
+    <div class="clear"></div>
+    <{/if}>
+    <{/foreach}>
+  </div>
+</div>
+<{/if}>
+<{if $profile_friendships[3]}>
+<div class="profile-friendships-container outer">
+  <h2 class="head">
+    <a href="#" onclick ="jQuery().find('div#profile-friendships-rejected').toggle(400);">
+      <img src="images/toggle.gif" />&nbsp;
+    </a>
+    <{$lang_friendships_rejected}>
+  </h2>
+  <div id="profile-friendships-rejected" style="display: none">
+    <{foreach name=friends item=friend from=$profile_friendships[3]}>
+    <div class="profile-friendships-friend">
+      <{$friend.friendship_avatar}>
+      <br /><{$friend.friendship_content}><br />
+      <{if $friend.userCanEditAndDelete}>
+      <{$friend.deleteItemLink}>
+      <{/if}>
+    </div>
+    <{if $smarty.foreach.friends.iteration is div by 5 || $smarty.foreach.friends.last == TRUE}>
+    <div class="clear"></div>
+    <{/if}>
+    <{/foreach}>
+  </div>
+</div>
 <{/if}>
 <{if $icmspersistable_delete_confirm}>
-	<{$icmspersistable_delete_confirm}>
+<{$icmspersistable_delete_confirm}>
 <{/if}>

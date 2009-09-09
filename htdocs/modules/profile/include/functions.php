@@ -188,37 +188,4 @@ function getAllowedItems($item, $uid){
 	$accessability = $profile_configs_handler->userCanAccessSection($configsObj, $item, $uid);
 	return $accessability;
 }
-
-function getFriendship($uid1, $uid2){
-	global $xoopsDB;
-	$count = 0;
-	$sql = sprintf('SELECT COUNT(*) FROM %s WHERE ((friend1_uid = %u AND friend2_uid = %u) OR (friend2_uid = %u AND friend1_uid = %u))', $xoopsDB->prefix('profile_friendship'), intval($uid1), intval($uid2), intval($uid1), intval($uid2));
-	$result = $xoopsDB->query($sql);
-	list($count) = $xoopsDB->fetchRow($result);
-	if ( $count > 0 ) {
-		return true;
-	}
-	return false;
-}
-
-function addFriendshipRequest($uid, $friend2_uid){
-	$friendship_id = $profile_friendship_handler->getFriendshipIdPerUser($uid, $friend2_uid);
-	$clean_friendship_id = !empty($friendship_id[0]['friendship_id'])?$friendship_id[0]['friendship_id']:0;
-	if($GLOBALS['xoopsSecurity']->check() && $clean_friendship_id == 0){
-	$friendshipObj = $profile_friendship_handler->get($clean_friendship_id);
-		$friendshipObj->setVar('friend2_uid', $friend2_uid);
-		$profile_friendship_handler->insert($friendshipObj, false, true, $debug=true);
-	}
-}
-
-function respontFriendshipRequest($uid, $friendship_level){
-	$friendship_id = $profile_friendship_handler->getFriendshipIdPerUser($uid);
-	$clean_friendship_id = !empty($friendship_id[0]['friendship_id'])?$friendship_id[0]['friendship_id']:0;
-	if($GLOBALS['xoopsSecurity']->check() && $clean_friendship_id > 0){
-	$friendshipObj = $profile_friendship_handler->get($clean_friendship_id);
-		$friendshipObj->setVar('situation', $friendship_level);
-		$profile_friendship_handler->insert($friendshipObj, false, true, $debug=true);
-	}
-}
-
 ?>

@@ -247,7 +247,7 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_pictures').' WHERE uid_owner="'.$uid.'"'.$private;
 		$pictures = $this->query($sql, false);
 		
-		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="'.$uid.'" OR friend2_uid="'.$uid.'") AND situation!=1';
+		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="'.$uid.'" OR friend2_uid="'.$uid.'") AND status=2';
 		$friendship = $this->query($sql, false);
 		
 		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_videos').' WHERE uid_owner="'.$uid.'"';
@@ -278,22 +278,20 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 		global $icmsUser, $profile_isAdmin;
 		$status = $obj->getVar($item, 'e');
 		$uid = isset($_REQUEST['uid'])?intval($_REQUEST['uid']):0;
-		if ($profile_isAdmin) {
-			return true;
+		if ($profile_isAdmin) return true;
+		if (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid) return true;
+		if ($status == PROFILE_CONFIG_STATUS_EVERYBODY) return true;
+		if ($status == PROFILE_CONFIG_STATUS_MEMBERS && is_object($icmsUser)) return true;
+		if ($status == PROFILE_CONFIG_STATUS_FRIENDS && is_object($icmsUser) && $icmsUser->uid() != $uid){
+			$profile_friendship_handler = icms_getModuleHandler('friendship');
+			$friendships = $profile_friendship_handler->getFriendships(0, 1, $icmsUser->getVar('uid'), $uid, PROFILE_FRIENDSHIP_STATUS_ACCEPTED);
+			if (count($friendships) == 0) {
+				return false;
+			} else {
+				return true;
+			}
 		}
-		if($status == PROFILE_CONFIG_STATUS_EVERYBODY){
-			return true;
-		}
-		if ($status == PROFILE_CONFIG_STATUS_MEMBERS && is_object($icmsUser)) {
-			return true;
-		}
-		if($status == PROFILE_CONFIG_STATUS_FRIENDS && is_object($icmsUser) && $icmsUser->uid() != $uid){
-			$result = getFriendship($icmsUser->uid(), $uid);
-			return $result;
-		}
-		if ($status == PROFILE_CONFIG_STATUS_PRIVATE && is_object($icmsUser)) {
-			return $uid == $icmsUser->uid();
-		}
+		if ($status == PROFILE_CONFIG_STATUS_PRIVATE && is_object($icmsUser)) return $uid == $icmsUser->uid();
 	}
 
 	/**

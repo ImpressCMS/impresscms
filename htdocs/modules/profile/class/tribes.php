@@ -117,11 +117,9 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 	 * @return string html image tag for the avatar of the user
 	 */
 	function getProfileTribeSenderAvatar() {
-		global $icmsUser;
-		$friend = $this->getVar('uid_owner', 'e');
 		$member_handler =& xoops_gethandler('member');
-		$processUser =& $member_handler->getUser($friend);
-		return '<img src="'.$processUser->gravatar().'" />';
+		$thisUser =& $member_handler->getUser($this->getVar('uid_owner', 'e'));
+		return '<img src="'.$thisUser->gravatar().'" />';
 	}
 
 	/**

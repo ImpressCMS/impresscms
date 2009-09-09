@@ -278,10 +278,6 @@ $modversion['templates'][]= array(
   'file' => 'profile_admin_tribeuser.html',
   'description' => 'tribeuser Admin Index');
 
-$modversion['templates'][]= array(
-  'file' => 'profile_admin_friendpetition.html',
-  'description' => 'friendpetition Admin Index');
-
 /** Preferences categories */
 $modversion['configcat'][1] = array(
   'nameid' => 'settings',

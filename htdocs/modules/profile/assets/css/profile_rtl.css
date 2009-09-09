@@ -215,11 +215,11 @@ text-align:center;
 width:100%;
 }
 
-div#profile-profile-tribes ul {
+div#profile-profile-tribes ul, div#profile-profile-friends ul {
 margin-left: 30px;
 }
 
-div#profile-profile-tribes ul input.image {
+div#profile-profile-tribes ul input.image, div#profile-profile-friends ul input.image {
 width:12px;
 height:12px;
 }
@@ -259,7 +259,20 @@ text-align:justify;
 margin:1px 5px;
 }
 
-div#profile-form h2, div#profile-profile-pictures h3, div#profile-profile-audio h3, div#profile-profile-visitors h3, div#profile-profile-tribes h3, div#profile-profile-search-results p, div#profile-profile-statistics p, div#profile-profile-details p, div#profile-profile-search-results h3, div#profile-profile-search-results h4, div#profile-profile-friends h3, div#profile-profile-visual h3, div#profile-profile-statistics h3, div#profile-profile-details h3 {
+div#profile-form h2,
+div#profile-profile-pictures h3,
+div#profile-profile-audio h3,
+div#profile-profile-visitors h3,
+div#profile-profile-tribes h3,
+div#profile-profile-search-results p,
+div#profile-profile-statistics p,
+div#profile-profile-details p,
+div#profile-profile-search-results h3,
+div#profile-profile-search-results h4,
+div#profile-profile-friends h3,
+div#profile-profile-visual h3,
+div#profile-profile-statistics h3,
+ div#profile-profile-details h3 {
 margin:0px;
 }
 
@@ -292,86 +305,24 @@ vertical-align:middle;
 Friends
 */
 
-div#profile-friends-container {
-margin:3px;
-float:right;
-padding:1px;
-width:95%;
-overflow:hidden;
-}
-
-div#profile-friends-container h2{
+div.profile-friendships-container {
+padding:0px;
 margin:0px;
+margin-top:15px;
+width:100%;
 }
 
-div.profile-friend {
-margin:1px;
-width:23%;
-height:250px;
+div.profile-friendships-friend {
+margin:0px;
+margin-top:15px;
+margin-bottom:25px;
+width:20%;
 float:right;
 text-align:center;
 }
 
-div.profile-friend img{
-margin:auto;
-display:block;
-}
-
-form.profile-friends-evaluateform, form.profile-friends-deleteform {
-
-display:inline;
-}
-
-/* 
-NAVEGACAO MAIS
-*/
-div#profile-navegacao {
-margin:auto;
-float:right;
-width:300px;
-overflow:hidden;
-}
-
-p#trustybw{
-display:inline;
-height:18px;
-background-image:url(../images/trustybw.gif); 
-background-repeat:no-repeat;
-width:48px;
-}
-
-span#trustycolor {
-width:32px;
-background-image:url(../images/trustycolor.gif);
-background-repeat:no-repeat;
-}
-
-p#coolbw{
-display:inline;
-height:18px;
-background-image:url(../images/coolbw.gif); 
-background-repeat:no-repeat;
-width:48px;
-}
-
-span#coolcolor {
-width:32px;
-background-image:url(../images/coolcolor.gif);
-background-repeat:no-repeat;
-}
-
-p#sexybw{
-display:inline;
-height:18px;
-background-image:url(../images/sexybw.gif); 
-background-repeat:no-repeat;
-width:48px;
-}
-
-span#sexycolor {
-width:32px;
-background-image:url(../images/sexycolor.gif);
-background-repeat:no-repeat;
+div.profile-friendships-container h2 {
+margin: 0px;
 }
 
 /*****************************************************************************************************************
@@ -492,31 +443,4 @@ div#nav{
 	
 	
 	}
-div#titulo-friends div {
-	float:right;
-	margin-left: auto;
-	margin-right: auto;
-	page-break-after: always;
-}
-
-div#wrapper-titulo-ishot div {
-	float:right;
-	margin-bottom: 10px;
-}
-div#titulo {
-	width: 35%;
-}
-div#titulo h2 {
-	font-size: 1.5em;
-}
-div#ishot {
-	width: 60%;
-}
-div#ishot form {
-	display: inline;
-}
-div#ishot p#ishot-result {
-	font-size: 0.5em;
-}
-
 #profile_header {padding: 0; margin: 0; margin-bottom: 10px;font-size:20px;font-weight: bold;text-align:right;}

@@ -22,21 +22,14 @@ function editfriendship($friendshipObj, $uid=false, $hideForm=false) {
 	global $profile_friendship_handler, $xoTheme, $icmsTpl, $icmsUser;
 
 	$icmsTpl->assign('hideForm', $hideForm);
-	$friend = ($icmsUser->uid()==$friendshipObj->getVar('friend2_uid'))?$friendshipObj->getVar('friend1_uid'):$friendshipObj->getVar('friend2_uid');
-	if (!$friendshipObj->isNew()){
-		if ($friendshipObj->userCanEditAndDelete()) {
-			$friendshipObj->hideFieldFromForm(array('creation_time', 'friend2_uid', 'friend1_uid'));
-			$sform = $friendshipObj->getSecureForm(_MD_PROFILE_FRIENDSHIP_EDIT, 'addfriendship');
-			$sform->assign($icmsTpl, 'profile_friendshipform');
-		}
-	} else {
+	if ($friendshipObj->isNew()){
 		if (!$profile_friendship_handler->userCanSubmit() || !$uid) {
 			redirect_header(PROFILE_URL, 3, _NOPERM);
 		}
 		$friendshipObj->setVar('friend1_uid', $icmsUser->uid());
 		$friendshipObj->setVar('friend2_uid', $uid);
 		$friendshipObj->setVar('creation_time', time());
-		$friendshipObj->hideFieldFromForm(array('creation_time', 'friend2_uid', 'friend1_uid', 'situation'));
+		$friendshipObj->hideFieldFromForm(array('creation_time', 'friend2_uid', 'friend1_uid', 'status'));
 		$sform = $friendshipObj->getSecureForm(_MD_PROFILE_FRIENDSHIP_ADD, 'addfriendship');
 		$sform->assign($icmsTpl, 'profile_friendshipform');
 	}
@@ -63,11 +56,10 @@ if (isset($_POST['op'])) $clean_op = $_POST['op'];
 // Again, use a naming convention that indicates the source of the content of the variable
 $clean_friendship_id = isset($_GET['friendship_id']) ? intval($_GET['friendship_id']) : 0 ;
 $profile_friendship_handler = icms_getModuleHandler('friendship');
-$friendshipObj = $profile_friendship_handler->get($clean_friendship_id);
-/** Create a whitelist of valid values, be sure to use appropriate types for each value
- * Be sure to include a value for no parameter, if you have a default condition
- */
-$valid_op = array ('addfriendship', '');
+
+/*  Create a whitelist of valid values, be sure to use appropriate types for each value
+ * Be sure to include a value for no parameter, if you have a default condition */
+$valid_op = array ('addfriendship','editfriendship', '');
 
 // Only proceed if the supplied operation is a valid operation
 if (in_array($clean_op,$valid_op,true) && is_object($icmsUser)){
@@ -75,26 +67,40 @@ if (in_array($clean_op,$valid_op,true) && is_object($icmsUser)){
 		case "addfriendship":
 			if (!$xoopsSecurity->check()) {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+				exit();
 			}
 			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
 			$controller = new IcmsPersistableController($profile_friendship_handler);
 			$controller->storeFromDefaultForm(_MD_PROFILE_FRIENDSHIP_CREATED, _MD_PROFILE_FRIENDSHIP_MODIFIED);
 			break;
-		default:
-			if($icmsUser->uid() != $uid) {
-				if (!getFriendship($icmsUser->uid(), $uid)) {
-					$friendshipObj = $profile_friendship_handler->get($clean_friendship_id);
-					editfriendship($friendshipObj, $uid, true);
-				} else {
-					$clean_friendship_id = $profile_friendship_handler->getFriendshipIdPerUser($icmsUser->uid(), $uid);
-					$friendshipObj = $profile_friendship_handler->get($clean_friendship_id);
-					editfriendship($friendshipObj, $uid, true);
+		case "editfriendship":
+			if (!$xoopsSecurity->check()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+				exit();
+			}
+			$clean_friendship_id = isset($_POST['friendship_id']) ? intval($_POST['friendship_id']) : 0;
+			$friendshipObj = $profile_friendship_handler->get($clean_friendship_id);
+
+			if (!$friendshipObj->isNew() && $friendshipObj->getVar('friend2_uid') == $uid) {
+				$clean_status = isset($_POST['status']) ? intval($_POST['status']) : '';
+				$valid_status = array (PROFILE_FRIENDSHIP_STATUS_ACCEPTED, PROFILE_FRIENDSHIP_STATUS_REJECTED);
+				if (in_array($clean_status, $valid_status, true)) {
+					$friendshipObj->setVar('status', $clean_status);
+					if ($friendshipObj->store(true) && $clean_status == PROFILE_FRIENDSHIP_STATUS_ACCEPTED) {
+						// we need to add one to the number of friends if status was set to ACCEPTED
+						$icmsTpl->assign('nb_friendship', $nbSections['friendship'] + 1);
+					}
+					if (strpos(icms_getPreviousPage(), $friendshipObj->handler->_moduleUrl.$friendshipObj->handler->_page) !== false) {
+						header('Location: '.$friendshipObj->handler->_moduleUrl.$friendshipObj->handler->_page.'?uid='.$uid);
+					}
 				}
-			} else {
-				$clean_friendship_ids = $profile_friendship_handler->getFriendshipIdsWaiting($uid);
-				foreach($clean_friendship_ids as $clean_friendship_id){
+			}
+		default:
+			if($icmsUser->getVar('uid') != $uid) {
+				$friendships = $profile_friendship_handler->getFriendships(0, 1, $icmsUser->getVar('uid'), $uid);
+				if (count($friendships) == 0) {
 					$friendshipObj = $profile_friendship_handler->get($clean_friendship_id);
-					editfriendship($friendshipObj, false, true);
+					editfriendship($friendshipObj, $uid, true);
 				}
 			}
 		break;
@@ -246,7 +252,7 @@ $icmsTpl->assign('audio', $rtn);
 unset($audios);
 
 // friends
-$friends = $profile_friendship_handler->getFriendship(0, 3, $uid);
+$friends = $profile_friendship_handler->getFriendships(0, 3, $uid, 0, PROFILE_FRIENDSHIP_STATUS_ACCEPTED);
 $rtn = array();
 $i = 0;
 foreach($friends as $friend) {
@@ -256,6 +262,22 @@ foreach($friends as $friend) {
 }
 $icmsTpl->assign('friends', $rtn);
 unset($friends);
+// get waiting friendships
+if (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid) {
+	$friends = $profile_friendship_handler->getFriendships(0, 0, 0, $uid, PROFILE_FRIENDSHIP_STATUS_PENDING);
+	$rtn = array();
+	$i = 0;
+	foreach($friends as $friend) {
+		$rtn[$i]['friendship_id'] = $friend['friendship_id'];
+		$rtn[$i]['uname'] = $friend['friendship_content'];
+		$i++;
+	}
+	$icmsTpl->assign('friends_pending', $rtn);
+	$icmsTpl->assign('lang_friends_pending', _MD_PROFILE_FRIENDSHIP_PENDING);
+	$icmsTpl->assign('lang_friendship_accept', _MD_PROFILE_FRIENDSHIP_ACCEPT);
+	$icmsTpl->assign('lang_friendship_reject', _MD_PROFILE_FRIENDSHIP_REJECT);
+	unset($friends);
+}
 
 // video
 $profile_videos_handler = icms_getModuleHandler('videos');

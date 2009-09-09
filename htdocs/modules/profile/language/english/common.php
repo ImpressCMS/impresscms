@@ -190,14 +190,11 @@ define("_CO_PROFILE_FRIENDSHIP_FRIEND1_UID", "User Id");
 define("_CO_PROFILE_FRIENDSHIP_FRIEND1_UID_DSC", " ");
 define("_CO_PROFILE_FRIENDSHIP_FRIEND2_UID", "User Id");
 define("_CO_PROFILE_FRIENDSHIP_FRIEND2_UID_DSC", " ");
-define("_CO_PROFILE_FRIENDSHIP_LEVEL", "");
-define("_CO_PROFILE_FRIENDSHIP_LEVEL_DSC", " ");
-define("_CO_PROFILE_FRIENDSHIP_HOT", "");
-define("_CO_PROFILE_FRIENDSHIP_HOT_DSC", " ");
-define("_CO_PROFILE_FRIENDSHIP_TRUST", "");
-define("_CO_PROFILE_FRIENDSHIP_TRUST_DSC", " ");
-define("_CO_PROFILE_FRIENDSHIP_COOL", "");
-define("_CO_PROFILE_FRIENDSHIP_COOL_DSC", " ");
+define("_CO_PROFILE_FRIENDSHIP_STATUS", "");
+define("_CO_PROFILE_FRIENDSHIP_STATUS_DSC", " ");
+define("_CO_PROFILE_FRIENDSHIP_STATUS_PENDING", "Pending");
+define("_CO_PROFILE_FRIENDSHIP_STATUS_ACCEPTED", "Accepted");
+define("_CO_PROFILE_FRIENDSHIP_STATUS_REJECTED", "Rejected");
 // pictures
 define("_CO_PROFILE_PICTURES_PICTURES_ID", "Picture ID");
 define("_CO_PROFILE_PICTURES_PICTURES_ID_DSC", " ");
@@ -246,22 +243,4 @@ define("_CO_PROFILE_TRIBEUSER_APPROVED", "Approved");
 define("_CO_PROFILE_TRIBEUSER_APPROVED_DSC", " Yes if membership for the tribe is approved by the owner.");
 define("_CO_PROFILE_TRIBEUSER_ACCEPTED", "Accepted");
 define("_CO_PROFILE_TRIBEUSER_ACCEPTED_DSC", " Yes if user accepted the invitation to this tribe.");
-// ishot
-define("_CO_PROFILE_ISHOT_ISHOT_ID", "Id");
-define("_CO_PROFILE_ISHOT_ISHOT_ID_DSC", " ");
-define("_CO_PROFILE_ISHOT_UID_VOTER", "");
-define("_CO_PROFILE_ISHOT_UID_VOTER_DSC", " ");
-define("_CO_PROFILE_ISHOT_UID_VOTE", "");
-define("_CO_PROFILE_ISHOT_UID_VOTE_DSC", " ");
-define("_CO_PROFILE_ISHOT_ISHOT", "");
-define("_CO_PROFILE_ISHOT_ISHOT_DSC", " ");
-define("_CO_PROFILE_ISHOT_TIME", "");
-define("_CO_PROFILE_ISHOT_TIME_DSC", " ");
-// friendpetition
-define("_CO_PROFILE_FRIENDPETITION_FRIENDPET_ID", "Id");
-define("_CO_PROFILE_FRIENDPETITION_FRIENDPET_ID_DSC", " ");
-define("_CO_PROFILE_FRIENDPETITION_PETITIONER_UID", "User Id");
-define("_CO_PROFILE_FRIENDPETITION_PETITIONER_UID_DSC", " ");
-define("_CO_PROFILE_FRIENDPETITION_PETIONED_UID", "User Id");
-define("_CO_PROFILE_FRIENDPETITION_PETIONED_UID_DSC", " ");
 ?>

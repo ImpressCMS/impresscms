@@ -230,13 +230,21 @@ define("_MD_PROFILE_NOAVATARYET","No avatar yet");
 define("_MD_PROFILE_MYPROFILE","My Profile");
 define("_MD_PROFILE_CONTACTINFO","Contact Info");
 define("_MD_PROFILE_SECURITY_CHECK_FAILED", "");
-define("_MD_PROFILE_TRIBES_INVITATIONS", "You've been invited to join the following groups");
-define("_MD_PROFILE_TRIBES_APPROVALS", "The following users want to be approved to join your group");
+define("_MD_PROFILE_TRIBES_INVITATIONS", "You've been invited to join the following tribes");
+define("_MD_PROFILE_TRIBES_APPROVALS", "The following users want to be approved to join your tribe");
 define("_MD_PROFILE_TRIBEUSER_NOTFOUND", "Tribeuser not found.");
 define("_MD_PROFILE_TRIBEUSER_APPROVE", "Approve this user");
-define("_MD_PROFILE_TRIBEUSER_ACCEPT", "Accept invitation to this group");
+define("_MD_PROFILE_TRIBEUSER_ACCEPT", "Accept invitation to this tribe");
 define("_MD_PROFILE_TRIBEUSER_OP_SUCCESS", "Operation successfully performed");
 define("_MD_PROFILE_AUDIOS","Audio");
+define("_MD_PROFILE_FRIENDSHIP_ADD", "Add this user as a friend");
+define("_MD_PROFILE_FRIENDSHIP_CREATED", "This user has been added to your friendlist! They will appear once they approve your request.");
+define("_MD_PROFILE_FRIENDSHIP_MODIFIED", "The friendship was successfully modified.");
+define("_MD_PROFILE_FRIENDSHIP_PENDING", "Pending friendships (only you can see this)");
+define("_MD_PROFILE_FRIENDSHIP_ACCEPTED", "Accepted friendships");
+define("_MD_PROFILE_FRIENDSHIP_REJECTED", "Rejected friendships (only you can see this)");
+define("_MD_PROFILE_FRIENDSHIP_ACCEPT", "Accept friendship");
+define("_MD_PROFILE_FRIENDSHIP_REJECT", "Reject friendship");
 
 // configs.php
 define('_MD_PROFILE_CONFIGS_SUBMIT', 'Change Profile Settings');

@@ -110,7 +110,8 @@ if($icmsModuleConfig['profile_social']){
 		'lang_profile' => _MD_PROFILE_PROFILE,
 		'lang_tribes' => _MD_PROFILE_TRIBES,
 		'isOwner' => $isOwner,
-	        'isAnonym' => $isAnonym));
+	        'isAnonym' => $isAnonym,
+		'uid' => $uid));
 }
 if ($isAnonym == true && $uid == 0) {
 	include_once(ICMS_ROOT_PATH.'/modules/'.$dirname.'/footer.php');

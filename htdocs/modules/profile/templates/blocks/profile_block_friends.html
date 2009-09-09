@@ -1,13 +1,5 @@
 <{section name=i loop=$block.friends}>
-<div style="width:80%; text-align: center; page-break-after: always; margin: auto; page-break-before: always;">
-  <a href="<{$xoops_url}>/modules/profile/index.php?uid=<{$block.friends[i].uid}>"  title="<{$block.friends[i].uname}>">
-    <{if $block.friends[i].user_avatar=="blank.gif" }>
-    <img src="<{$xoops_url}>/modules/profile/images/noavatar.gif" alt="<{$block.friends[i].uname}>" />
-    <{else}>
-    <img src="<{$xoops_upload_url}>/<{$block.friends[i].user_avatar}>" alt="<{$block.friends[i].uname}>" />
-    <{/if}><br />
-    <{$block.friends[i].uname}></a>
-    <br /><a href='javascript:openWithSelfMain("<{$xoops_url}>/pmlite.php?send2=1&to_userid=<{$block.friends[i].uid}>","pmlite",500,450);'><img src="<{$xoops_url}>/images/icons/pm.gif" alt="" /></a>
-    </div><br />
+<a href='javascript:openWithSelfMain("<{$icms_url}>/pmlite.php?send2=1&to_userid=<{$block.friends[i].uid}>","pmlite",500,450);'><img src="<{$icms_url}>/images/icons/pm.gif" alt="" /></a>
+<a href="<{$icms_url}>/modules/profile/index.php?uid=<{$block.friends[i].friend_uid}>"  title="<{$block.friends[i].uname}>"><{$block.friends[i].uname}></a>
+<br />
 <{/section}>
-<a href="<{$xoops_url}>/modules/profile/friends.php"><{$block.lang_allfriends}></a>
