@@ -971,9 +971,9 @@ class IcmsDatabaseupdater {
 		$configitemObj->setVar('conf_valuetype', $conf_valuetype);
 		$configitemObj->setVar('conf_order', $conf_order);
 		if (!$configitem_handler->insert($configitemObj)) {
-			$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_ERR, $dbVersion);
+			$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_ERR, $conf_title);
 		} else{
-			$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_SCC, $dbVersion);
+			$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_SCC, $conf_title);
 		}
 		$this->_messages[] =  $querry_answer;
 	}

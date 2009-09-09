@@ -394,7 +394,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'smtphost'");
 		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'multi_login_msg'");
 	}
-
+/* 1.1.2 released */
+	
 	$newDbVersion = 12;
 
 	if ($dbVersion < $newDbVersion) {
@@ -936,7 +937,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
           $HTML_Allowed_Attr = 'a.class, a.href, a.id, a.name, a.rev, a.style, a.title, a.target, a.rel, abbr.title, acronym.title, blockquote.cite, div.align, div.style, div.class, div.id, font.size, font.color, h1.style, h2.style, h3.style, h4.style, h5.style, h6.style, img.src, img.alt, img.title, img.class, img.align, img.style, img.height, img.width, li.style, ol.style, p.style, span.style, span.class, span.id, table.class, table.id, table.border, table.cellpadding, table.cellspacing, table.style, table.width, td.abbr, td.align, td.class, td.id, td.colspan, td.rowspan, td.style, td.valign, tr.align, tr.class, tr.id, tr.style, tr.valign, th.abbr, th.align, th.class, th.id, th.colspan, th.rowspan, th.style, th.valign, ul.style';
         echo $action;
 
-        $icmsDB->queryF("UPDATE `".$icmsDB->prefix('config')."` SET conf_value = `".addslashes(serialize(array($HTML_Allowed_Attr)))."` WHERE conf_name = 'purifier_HTML_AllowedAttributes'");
+        $icmsDB->queryF("UPDATE `".$icmsDB->prefix('config')."` SET conf_value = '".addslashes(serialize(array($HTML_Allowed_Attr)))."' WHERE conf_name = 'purifier_HTML_AllowedAttributes'");
     }
 
 	echo "</code>";
