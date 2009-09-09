@@ -30,13 +30,18 @@ if($icmsUser)
 else {redirect_header('index.php',2,_AD_NORIGHT);}
 // end Admin Authentication
 
+// test to see if the system module should be updated, added in 1.2
+if ( icms_getModuleInfo('system')->getDBVersion() < ICMS_SYSTEM_DBVERSION ) {
+    redirect_header('modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system', 1, _CO_ICMS_UPDATE_NEEDED);
+}
+
 $op = isset($_GET['rssnews']) ? intval($_GET['rssnews']) : 0;
 if(!empty($_GET['op'])) {$op = intval($_GET['op']);}
 if(!empty($_POST['op'])) {$op = intval($_POST['op']);}
 
 if(!file_exists(ICMS_CACHE_PATH.'/adminmenu_'.$icmsConfig['language'].'.php'))
 {
-xoops_module_write_admin_menu(impresscms_get_adminmenu());
+    xoops_module_write_admin_menu(impresscms_get_adminmenu());
 }
 
 switch($op)
