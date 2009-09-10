@@ -99,6 +99,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 		case 'do_config' :
 			$blockObj = $icms_block_handler->get ( $_POST ['bid'] );
 			$options = "";
+			ksort( $_POST ['options'] );
 			foreach ( $_POST ['options'] as $opt ) {
 				if ($options != "")
 					$options .= '|';
