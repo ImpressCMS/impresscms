@@ -17,7 +17,11 @@
 if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
-
+/**
+ * Persistable Object Handlder
+ * @package IcmsPersistableobject
+ * @since   1.1
+ */
 class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 
 	var $_itemname;
@@ -125,16 +129,16 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
     var $_disabledEvents=array();
 
     /**
-    * Constructor - called from child classes
-    *
-    * @param object $db {@link XoopsDatabase} object
-    * @param string $tablename Name of the table use to store this {@link IcmsPersistableObject}
-    * @param string Name of the class derived from {@link IcmsPersistableObject} and which this handler is handling
-    * @param string $keyname Name of the table key that uniquely identify each {@link IcmsPersistableObject}
-    * @param string $idenfierName Name of the field which properly identify the {@link IcmsPersistableObject}
-    * @param string $page Page name use to basically manage and display the {@link IcmsPersistableObject}
-    * @param string $moduleName name of the module
-    */
+     * Constructor - called from child classes
+     * 
+     * @param object $db Database object {@link XoopsDatabase}
+     * @param string $itemname Object to be managed
+     * @param string $keyname Name of the table key that uniquely identify each {@link IcmsPersistableObject}
+     * @param string $idenfierName Name of the field which properly identify the {@link IcmsPersistableObject}
+     * @param string $summaryName Name of the field which will be use as a summary for the object
+     * @param string $modulename Name of the module controlling this object
+     * @return object
+     */
     function IcmsPersistableObjectHandler(&$db, $itemname, $keyname, $idenfierName, $summaryName, $modulename) {
 
     	$this->XoopsObjectHandler($db);
@@ -437,7 +441,13 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 
         return $ret;
     }
-
+    /**
+     * 
+     * @param object    $criteria
+     * @param int       $limit
+     * @param int       $start
+     * @return array
+     */
  	function getListD($criteria = null, $limit = 0, $start = 0) {
  		return $this->getList($criteria, $limit, $start, true);
  	}
