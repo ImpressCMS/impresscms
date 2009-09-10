@@ -1,6 +1,6 @@
 $(function() {
    $("span.helptext").hide();
-   $("img.helptip").click(function() {
+   $("img.helptip").hover(function() {
      $(this).nextAll().each( function() {
     if ($(this).filter('span.helptext').is(":visible")) {
      $(this).filter('span.helptext').toggle("slow");
