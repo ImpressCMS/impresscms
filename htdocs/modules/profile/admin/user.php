@@ -2,33 +2,31 @@
 /**
  * Extended User Profile
  *
- *
- * @copyright		The ImpressCMS Project http://www.impresscms.org/
- * @license		 LICENSE.txt
- * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package		 modules
- * @since			1.2
- * @author		  Jan Pedersen
- * @author		  The SmartFactory <www.smartfactory.ca>
- * @author				Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		 $Id$
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license	LICENSE.txt
+ * @license	GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @package	modules
+ * @since	1.2
+ * @author	Jan Pedersen
+ * @author	The SmartFactory <www.smartfactory.ca>
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version	$Id$
  */
 
 include_once("admin_header.php");
 xoops_cp_header();
 
-icms_adminMenu(1, '');
-//$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : (isset($_REQUEST['id']) ? 'edit' : 'list');
 $op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : 'list';
-if($op == 'editordelete') {
-	$op = isset($_REQUEST['delete'])?'delete':'edit';
-}
-$handler =& xoops_gethandler('member');
+if($op == 'editordelete') $op = isset($_REQUEST['delete'])?'delete':'edit';
+$adminMenuIncluded = false;
 /* @var $handler XoopsMemberHandler */
+$handler =& xoops_gethandler('member');
 global $icmsConfigUser;
 switch($op) {
 	default:
 	case 'list':
+		icms_adminMenu(1, '');
+		$adminMenuIncluded = true;
 		include_once(ICMS_ROOT_PATH.'/class/xoopsformloader.php');
 		$form = new XoopsThemeForm(_PROFILE_AM_EDITUSER, 'form', 'user.php');
 		$form->addElement(new XoopsFormSelectUser(_PROFILE_AM_SELECTUSER, 'id'));
@@ -57,6 +55,7 @@ switch($op) {
 		if (@!include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/'.$icmsConfig['language'].'/main.php')) {
 			include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/english/main.php');
 		}
+		if (!$adminMenuIncluded) icms_adminMenu(1, '');
 		include_once('../include/forms.php');
 		$obj =& $handler->createUser();
 		$obj->setGroups(array(ICMS_GROUP_USERS));
@@ -73,6 +72,7 @@ switch($op) {
 			// If not webmaster trying to edit a webmaster - disallow
 			redirect_header('user.php', 3, _PROFILE_AM_CANNOTEDITWEBMASTERS);
 		}
+		icms_adminMenu(1, '');
 		include_once('../include/forms.php');
 		$form =& getUserForm($obj, false, false, true);
 		$form->display();
@@ -203,6 +203,8 @@ switch($op) {
 			}
 		}
 		$user->setGroups($new_groups);
+
+		icms_adminMenu(1, '');
 		include_once('../include/forms.php');
 		echo $user->getHtmlErrors();
 		$form =& getUserForm($user, $profile);
@@ -222,19 +224,16 @@ switch($op) {
 			$profile = $profile_handler->get($obj->getVar('uid'));
 			if ($profile->isNew() || $profile_handler->delete($profile)) {
 				if ($handler->deleteUser($obj)) {
-
 					redirect_header('user.php', 3, sprintf(_PROFILE_AM_DELETEDSUCCESS, $obj->getVar('uname').' ('.$obj->getVar('email').')'), false);
-				}
-				else {
+				} else {
+					icms_adminMenu(1, '');
 					echo $obj->getHtmlErrors();
 				}
-			}
-			else {
+			} else {
+				icms_adminMenu(1, '');
 				echo $profile->getHtmlErrors();
 			}
-
-		}
-		else {
+		} else {
 			xoops_confirm(array('ok' => 1, 'id' => intval($_REQUEST['id']), 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('uname').' ('.$obj->getVar('email').')'));
 		}
 		break;

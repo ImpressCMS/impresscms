@@ -11,6 +11,7 @@ Revision:
 * #327: imProfile: fixed block My Friends | ticket from addons (Phoenyx)
 * #325: imProfile: only accepted friendships are on the index view now | ticket from addons (Phoenyx)
 * #347: imProfile: videos can now be deleted from the frontend | ticket from addons (Phoenyx)
+* #252: imProfile: fixed display issue in user adminstration | ticket from addons (Phoenyx)
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009
