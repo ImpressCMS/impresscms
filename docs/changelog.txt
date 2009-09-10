@@ -9,7 +9,8 @@ Revision:
 * #621: fixed layout issue with social bookmark block and removed addto library (Phoenyx)
 * #275: imProfile: restored friendship handling | ticket from addons (Phoenyx)
 * #327: imProfile: fixed block My Friends | ticket from addons (Phoenyx)
-* #325: imProfile: only accepted friendships are on the index view now | tickets from addons (Phoenyx)
+* #325: imProfile: only accepted friendships are on the index view now | ticket from addons (Phoenyx)
+* #347: imProfile: videos can now be deleted from the frontend | ticket from addons (Phoenyx)
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009
