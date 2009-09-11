@@ -129,6 +129,7 @@ icms_makeSmarty(array(
 	'lang_noavatar'          => _MD_PROFILE_NOAVATARYET,
 	'lang_notregistered'     => _US_NOTREGISTERED,
 	'lang_occupation'        => _US_OCCUPATION,
+	'lang_openid'            => _US_OPENID_FORM_CAPTION,
 	'lang_posts'             => _US_POSTS,
 	'lang_privmsg'           => _US_PM,
 	'lang_rank'              => _US_RANK,
@@ -159,7 +160,7 @@ $icmsTpl->assign('user_extrainfo', trim($thisUser->getVar('bio')) ? $myts->displ
 $icmsTpl->assign('user_joindate', formatTimestamp($thisUser->getVar('user_regdate'), 's'));
 $icmsTpl->assign('user_posts', $thisUser->getVar('posts'));
 $icmsTpl->assign('user_signature', trim($thisUser->getVar('user_sig')) ? $myts->displayTarea($thisUser->getVar('user_sig', 'N'), 1, 1, 1) : '');
-$icmsTpl->assign('user_email', ($thisUser->getVar('user_viewemail') == 1) ? $thisUser->getVar('email', 'E') : '');
+$icmsTpl->assign('user_email', ($thisUser->getVar('user_viewemail') == 1 || $profile_isAdmin || $isOwner) ? $thisUser->getVar('email', 'E') : '');
 $icmsTpl->assign('user_lastlogin', ($thisUser->getVar("last_login") != 0) ? formatTimestamp($thisUser->getVar("last_login"), "m") : '');
 $userrank = $thisUser->rank();
 $icmsTpl->assign('user_ranktitle', $userrank['title']);
@@ -174,6 +175,9 @@ if ($thisUser->getVar('user_avatar') && $thisUser->getVar('user_avatar') != 'bla
 }
 $allow_avatar_upload = ($isOwner && is_object($icmsUser) && $icmsConfigUser['avatar_allow_upload'] == 1 && $icmsUser->getVar('posts') >= $icmsConfigUser['avatar_minposts']);
 $icmsTpl->assign('allow_avatar_upload', $allow_avatar_upload);
+if ($icmsConfigAuth['auth_openid'] == 1 && ($thisUser->getVar('user_viewoid') == 1 || $profile_isAdmin || $isOwner)) {
+	$icmsTpl->assign('openid', $thisUser->getVar('openid'));
+}
 
 // visitors
 $visitors = $profile_visitors_handler->getVisitors(0, 5, $uid);

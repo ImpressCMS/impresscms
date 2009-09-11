@@ -45,11 +45,16 @@ if ($op == 'save') {
     $member_handler =& xoops_gethandler('member');
     $edituser =& $member_handler->getUser($uid);
     if ($icmsUser->isAdmin()) {
-    $edituser->setVar('login_name', $myts->stripSlashesGPC(trim($_POST['login_name'])));
-    $edituser->setVar('uname', $myts->stripSlashesGPC(trim($_POST['uname'])));
-    $edituser->setVar('email', $myts->stripSlashesGPC(trim($_POST['email'])));
-    }elseif($icmsConfigUser['allow_chguname'] == 1){
-    $edituser->setVar('uname', $myts->stripSlashesGPC(trim($_POST['uname'])));
+        $edituser->setVar('login_name', $myts->stripSlashesGPC(trim($_POST['login_name'])));
+        $edituser->setVar('uname', $myts->stripSlashesGPC(trim($_POST['uname'])));
+        $edituser->setVar('email', $myts->stripSlashesGPC(trim($_POST['email'])));
+    } else {
+        if ($icmsConfigUser['allow_chguname'] == 1) $edituser->setVar('uname', $myts->stripSlashesGPC(trim($_POST['uname'])));
+        if ($icmsConfigUser['allow_chgmail'] == 1) $edituser->setVar('email', $myts->stripSlashesGPC(trim($_POST['email'])));
+    }
+    if ($icmsConfigAuth['auth_openid'] == 1) {
+        $edituser->setVar('openid', $myts->stripSlashesGPC(trim($_POST['openid'])));
+        $edituser->setVar('user_viewoid', isset($_POST['user_viewoid']) ? intval($_POST['user_viewoid']) : 0);
     }
 	
     $stop = userCheck($edituser);

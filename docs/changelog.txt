@@ -16,6 +16,7 @@ Revision:
 * #347: imProfile: videos can now be deleted from the frontend | ticket from addons (Phoenyx)
 * #252: imProfile: fixed display issue in user adminstration | ticket from addons (Phoenyx)
 * #290: imProfile: added missing field types rank and theme to fields class | ticket from addons (Phoenyx)
+* #320: imProfile: OpenID is editable now | ticket from addons (Phoenyx)
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009

@@ -56,9 +56,11 @@
 <{/if}>
 <{if $allow_profile_general}>
 <div id="profile-profile-details" class="outer">
+  <{cycle values='even,odd' print=false reset=true advance=false}>
   <h3 class="profile-profile-title head"><{if $isOwner}><a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" /></a>&nbsp;<{/if}><{$lang_detailsinfo}></h3>
   <{if $user_uname}><p class="<{cycle values='even,odd'}>"><img src="images/username.gif" /><span class="profile-profileinfo-label"><{$lang_uname}>:</span><span class="profile-profileinfo-value"><{$user_uname}></span></p><{/if}>
   <{if $user_realname}><p class="<{cycle values='even,odd'}>"><img src="images/username.gif" /><span class="profile-profileinfo-label"><{$lang_realname}>:</span><span class="profile-profileinfo-value"><{$user_realname}></span></p><{/if}>
+  <{if $openid}><p class="<{cycle values='even,odd'}>"><img src="images/openid.gif" /><span class="profile-profileinfo-label"><{$lang_openid}>:</span><span class="profile-profileinfo-value"><{$openid}></span></p><{/if}>
   <{if $user_location}><p class="<{cycle values='even,odd'}>"><img src="images/house.gif" /><span class="profile-profileinfo-label"><{$lang_location}>:</span><span class="profile-profileinfo-value"><{$user_location}></span><a href="http://maps.google.com/?q=<{$user_location}>" target="_blank" ><img src="images/mapsgoogle.gif" /></a></p><{/if}>
   <{if $user_occupation}><p class="<{cycle values='even,odd'}>"><img src="images/occ.gif" /><span class="profile-profileinfo-label"><{$lang_occupation}>:</span><span class="profile-profileinfo-value"><{$user_occupation}></span></p><{/if}>
   <{if $user_interest}><p class="<{cycle values='even,odd'}>"><img src="images/interests.gif" /><span class="profile-profileinfo-label"><{$lang_interest}>:</span><span class="profile-profileinfo-value"><{$user_interest}></span></p><{/if}>

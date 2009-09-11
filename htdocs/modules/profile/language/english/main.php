@@ -18,6 +18,8 @@ define('_PROFILE_MA_USER_NOT_FOUND', 'User not found.');
 define("_PROFILE_MA_ERRORDURINGSAVE", "Error during save");
 define('_PROFILE_MA_REALNAME', 'Real Name');
 define('_PROFILE_MA_EMAIL','Email');
+define('_PROFILE_MA_OPENID', 'OpenID');
+define('_PROFILE_MA_OPENID_VIEW', 'Allow other users to view my OpenID');
 define('_PROFILE_MA_AVATAR','Avatar');
 define('_PROFILE_MA_VERIFYPASS','Verify Password');
 define('_PROFILE_MA_SUBMIT','Submit');

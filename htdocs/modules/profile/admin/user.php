@@ -132,6 +132,10 @@ switch($op) {
 		}
 		$user->setVar('uname', trim($_POST['uname']));
 		$user->setVar('login_name', trim($_POST['login_name']));
+		if ($icmsConfigAuth['auth_openid'] == 1) {
+			$user->setVar('openid', trim($_POST['openid']));
+			$user->setVar('user_viewoid', isset($_POST['user_viewoid']) ? intval($_POST['user_viewoid']) : 0);
+		}
 		include_once('../include/functions.php');
 		$stop = userCheck($user);
 		if ($stop != '') {
