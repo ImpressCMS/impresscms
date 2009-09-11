@@ -76,6 +76,15 @@ class ProfileAudio extends IcmsPersistableSeoObject {
 	}
 
 	/**
+	 * return audio title
+	 *
+	 * @return string audio title
+	 */
+	function getAudioTitle() {
+		return $this->getVar('title');
+	}
+
+	/**
 	 * Check to see wether the current user can edit or delete this audio
 	 *
 	 * @return bool true if he can, false if not

@@ -104,7 +104,7 @@ if (in_array($clean_op,$valid_op,true)){
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_field_handler);
-  		$objectTable->addColumn(new IcmsPersistableColumn('field_name'));
+  		$objectTable->addColumn(new IcmsPersistableColumn('field_name', _GLOBAL_LEFT, false, 'getFieldName'));
   		$objectTable->addColumn(new IcmsPersistableColumn('field_title'));
   		$objectTable->addColumn(new IcmsPersistableColumn('field_description'));
 

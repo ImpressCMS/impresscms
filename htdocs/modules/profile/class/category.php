@@ -48,6 +48,15 @@ class ProfileCategory extends IcmsPersistableObject {
 		}
 		return parent :: getVar($key, $format);
 	}
+
+	/**
+	 * return the category title
+	 *
+	 * @return string category title
+	 */
+	function getCatTitle() {
+		return $this->getVar('cat_title');
+	}
 }
 
 class ProfileCategoryHandler extends IcmsPersistableObjectHandler {

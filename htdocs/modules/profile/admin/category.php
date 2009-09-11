@@ -104,7 +104,7 @@ if (in_array($clean_op,$valid_op,true)){
 
   		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
   		$objectTable = new IcmsPersistableTable($profile_category_handler);
-  		$objectTable->addColumn(new IcmsPersistableColumn('cat_title'));
+		$objectTable->addColumn(new IcmsPersistableColumn('cat_title', _GLOBAL_LEFT, false, 'getCatTitle'));
   		$objectTable->addColumn(new IcmsPersistableColumn('cat_description'));
 
   		$objectTable->addIntroButton('addcategory', 'category.php?op=mod', _AM_PROFILE_CATEGORY_CREATE);

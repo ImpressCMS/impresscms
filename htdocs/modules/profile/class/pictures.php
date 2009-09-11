@@ -76,6 +76,16 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 	function getPictureSender() {
 		return icms_getLinkedUnameFromId($this->getVar('uid_owner', 'e'));
 	}
+
+	/**
+	 * return the picture title
+	 *
+	 * @return string picture title
+	 */
+	function getPictureTitle() {
+		return $this->getVar('title');
+	}
+
 	/**
 	 * Check to see wether the current user can edit or delete this picture
 	 *

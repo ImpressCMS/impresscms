@@ -90,7 +90,7 @@ if (in_array($clean_op,$valid_op,true)){
   		$objectTable = new IcmsPersistableTable($profile_pictures_handler);
   		$objectTable->addColumn(new IcmsPersistableColumn('pictures_id'));
   		$objectTable->addColumn(new IcmsPersistableColumn('uid_owner', false, false, 'getPictureSender'));
-  		$objectTable->addColumn(new IcmsPersistableColumn('title'));
+  		$objectTable->addColumn(new IcmsPersistableColumn('title', _GLOBAL_LEFT, false, 'getPictureTitle'));
 		$objectTable->addColumn(new IcmsPersistableColumn('url', 'center', 330, 'getProfilePicture', false, false, false));
 
 		$objectTable->addQuickSearch(array('title'));

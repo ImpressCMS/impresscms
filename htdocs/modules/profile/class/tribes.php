@@ -130,6 +130,16 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 	function getTribeSender() {
 		return icms_getLinkedUnameFromId($this->getVar('uid_owner', 'e'));
 	}
+
+	/**
+	 * return linked tribe title
+	 *
+	 * return string linked tribe title
+	 */
+	function getLinkedTribeTitle() {
+		$link = $this->handler->_moduleUrl.$this->handler->_page.'?uid='.$this->getVar('uid_owner').'&tribes_id='.$this->getVar('tribes_id');
+		return '<a href="'.$link.'">'.$this->getVar('title').'</a>';
+	}
 	
 	/**
 	 * Check to see wether the current user can edit or delete this tribe

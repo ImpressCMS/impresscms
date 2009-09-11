@@ -432,6 +432,15 @@ class ProfileField extends IcmsPersistableObject {
 		$profile_handler = icms_getmodulehandler( 'profile', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
 		return $profile_handler->getUserVars();
 	}
+
+	/**
+	 * return the field name
+	 *
+	 * @return string field name
+	 */
+	function getFieldName() {
+		return $this->getVar('field_name');
+	}
 }
 
 /**

@@ -77,6 +77,15 @@ class ProfileVideos extends IcmsPersistableSeoObject {
 	}
 
 	/**
+	 * return video title
+	 *
+	 * @return string video title
+	 */
+	function getVideoTitle() {
+		return $this->getVar('video_title');
+	}
+
+	/**
 	 * Check to see wether the current user can edit or delete this video
 	 *
 	 * @return bool true if he can, false if not

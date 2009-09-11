@@ -17,6 +17,7 @@ Revision:
 * #252: imProfile: fixed display issue in user adminstration | ticket from addons (Phoenyx)
 * #290: imProfile: added missing field types rank and theme to fields class | ticket from addons (Phoenyx)
 * #320: imProfile: OpenID is editable now | ticket from addons (Phoenyx)
+* #273: imProfile: fixed several wrong column value links in CP view | tickets from addons (Phoenyx)
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009
