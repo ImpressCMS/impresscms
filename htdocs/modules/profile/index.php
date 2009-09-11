@@ -261,7 +261,7 @@ $rtn = array();
 $i = 0;
 foreach($friends as $friend) {
 	$rtn[$i]['user_avatar'] = $friend['friendship_avatar'];
-	$rtn[$i]['uname'] = $friend['friendship_content'];
+	$rtn[$i]['uname'] = $friend['friendship_linkedUname'];
 	$i++;
 }
 $icmsTpl->assign('friends', $rtn);
@@ -273,7 +273,7 @@ if (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid) {
 	$i = 0;
 	foreach($friends as $friend) {
 		$rtn[$i]['friendship_id'] = $friend['friendship_id'];
-		$rtn[$i]['uname'] = $friend['friendship_content'];
+		$rtn[$i]['uname'] = $friend['friendship_linkedUname'];
 		$i++;
 	}
 	$icmsTpl->assign('friends_pending', $rtn);

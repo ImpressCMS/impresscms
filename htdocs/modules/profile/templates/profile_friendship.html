@@ -27,7 +27,7 @@
     <{foreach name=friends item=friend from=$profile_friendships[2]}>
     <div class="profile-friendships-friend">
       <{$friend.friendship_avatar}>
-      <br /><{$friend.friendship_content}><br />
+      <br /><{$friend.friendship_linkedUname}><br />
       <{if $friend.userCanEditAndDelete}>
       <{$friend.deleteItemLink}>
       <{/if}>
@@ -51,7 +51,7 @@
     <{foreach name=friends item=friend from=$profile_friendships[1]}>
     <div class="profile-friendships-friend">
       <{$friend.friendship_avatar}>
-      <br /><{$friend.friendship_content}><br />
+      <br /><{$friend.friendship_linkedUname}><br />
       <{if $friend.userCanEditAndDelete}>
       <form action="<{$icms_url}>/modules/profile/index.php?uid=<{$uid}>" method="post" class="profile-quickform">
         <input type="hidden" value="<{$friend.friendship_id}>" name="friendship_id" />
@@ -88,7 +88,7 @@
     <{foreach name=friends item=friend from=$profile_friendships[3]}>
     <div class="profile-friendships-friend">
       <{$friend.friendship_avatar}>
-      <br /><{$friend.friendship_content}><br />
+      <br /><{$friend.friendship_linkedUname}><br />
       <{if $friend.userCanEditAndDelete}>
       <{$friend.deleteItemLink}>
       <{/if}>

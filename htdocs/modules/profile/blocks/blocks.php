@@ -24,12 +24,14 @@ function b_profile_friends_show($options) {
 		$block = array();
 		$i = 0;
 		foreach($friends as $friend) {
-			$block['friends'][$i]['uname'] = $friend['friendship_content'];
+			$block['friends'][$i]['uname'] = $friend['friendship_linkedUname'];
 			$block['friends'][$i]['friend_uid']  = $friend['friend_uid'];
+			$block['friends'][$i]['sort'] = $friend['friendship_uname'];
 			$i++;
 		}
 	}
 
+	usort($block['friends'], 'sortFriendsArray');
 	return $block;
 }
 
@@ -37,5 +39,11 @@ function b_profile_friends_edit($options) {
 	$form = _MB_PROFILE_NUMBER_FRIENDS.": <input type='text' value='".$options['0']."'id='options[]' name='options[]' />";
 
 	return $form;
+}
+
+function sortFriendsArray($a, $b) {
+	$a = strtolower($a['sort']);
+	$b = strtolower($b['sort']);
+	return ($a == $b) ? 0 : ($a < $b) ? -1 : +1;
 }
 ?>

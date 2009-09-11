@@ -79,6 +79,19 @@ class ProfileFriendship extends IcmsPersistableObject {
 	}
 
 	/**
+	 * get user name of the friend
+	 *
+	 * @global object $icmsUser user obect
+	 * @return string user name
+	 */
+	function getFriendUname() {
+		global $icmsUser;
+		$uid = isset($_REQUEST['uid'])?intval($_REQUEST['uid']):$icmsUser->uid();
+		$friend_uid = ($uid==$this->getVar('friend2_uid')) ? $this->getVar('friend1_uid') : $this->getVar('friend2_uid');
+		return XoopsUser::getUnameFromId($friend_uid);
+	}
+
+	/**
 	 * get user id for current friend
 	 *
 	 * @global object $icmsUser current user object
@@ -128,7 +141,8 @@ class ProfileFriendship extends IcmsPersistableObject {
 		$ret = parent :: toArray();
 		$ret['creation_time'] = formatTimestamp($this->getVar('creation_time', 'e'), 'm');
 		$ret['friendship_avatar'] = $this->getAvatar();
-		$ret['friendship_content'] = $this->getFriendLinkedUname();
+		$ret['friendship_linkedUname'] = $this->getFriendLinkedUname();
+		$ret['friendship_uname'] = $this->getFriendUname();
 		$ret['friend_uid'] = $this->getFriendUid();
 		$ret['editItemLink'] = $this->getEditItemLink(false, true, true);
 		$ret['deleteItemLink'] = $this->getDeleteItemLink(false, true, true);
