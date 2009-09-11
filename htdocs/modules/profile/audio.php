@@ -124,9 +124,11 @@ if (in_array($clean_op,$valid_op,true)){
 		}elseif($clean_uid > 0){
 			$audiosArray = $profile_audio_handler->getAudios(false, false, $clean_uid);
 			$icmsTpl->assign('profile_allaudios', $audiosArray);
+			if (count($audiosArray) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_AUDIOS_NOCONTENT);
 		}elseif($real_uid > 0){
 			$audiosArray = $profile_audio_handler->getAudios(false, false, $real_uid);
 			$icmsTpl->assign('profile_allaudios', $audiosArray);
+			if (count($audiosArray) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_AUDIOS_NOCONTENT);
 		}else{
 			redirect_header(PROFILE_URL);
 		}

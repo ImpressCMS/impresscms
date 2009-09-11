@@ -560,3 +560,5 @@ div#nav{
 	
 	}
 #profile_header {padding: 0; margin: 0; margin-bottom: 10px;font-size:20px;font-weight: bold;}
+div#profile-nocontent {margin-top:15px;width:100%;text-align:center;font-weight:bold;}
+div#profile-nocontent p {border-bottom:none;padding:15px;}

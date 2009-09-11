@@ -146,11 +146,11 @@ define("_MD_PROFILE_FRIENDS","Friends");
 define("_MD_PROFILE_TRIBES","Tribes");
 define("_MD_PROFILE_PROFILE","Profile");
 
-//friends.php
-define("_MD_PROFILE_FRIEND","Friend");//also present in index.php
-define("_MD_PROFILE_PHOTO","Friend's Photo");
+//friendship.php
+define("_MD_PROFILE_FRIENDSHIPS_NOCONTENT", "There are no friends yet");
 
 //audio.php
+define("_MD_PROFILE_AUDIOS_NOCONTENT", "There is no audio content yet");
 define("_MD_PROFILE_AUDIOS_SUBMIT", "Submit new audio file");
 define("_MD_PROFILE_AUDIOS_EDIT", "Edit existing audio file");
 define("_MD_PROFILE_AUDIOS_CREATED", "Audio file successfully added");
@@ -161,6 +161,7 @@ define("_MD_PROFILE_AUDIOS_TITLE", "Title");
 define("_MD_PROFILE_AUDIOS_ACTIONS", "Actions");
 
 //pictures.php
+define("_MD_PROFILE_PICTURES_NOCONTENT", "There are no pictures in this album yet");
 define("_MD_PROFILE_PICTURES_SUBMIT", "Submit new photo");
 define("_MD_PROFILE_PICTURES_EDIT", "Edit existing photo");
 define("_MD_PROFILE_PICTURES_CREATED", "Photo successfully added");
@@ -173,6 +174,7 @@ define("_MD_PROFILE_PICTURES_AVATAR_NOTDELETED", "There was an error while delet
 define("_MD_PROFILE_PICTURES_AVATAR_SET", "Set this picture as avatar");
 
 //tribes.php
+define("_MD_PROFILE_TRIBES_NOCONTENT", "There are no tribes or tribe memberships yet");
 define("_MD_PROFILE_TRIBES_SUBMIT", "Create new tribe");
 define("_MD_PROFILE_TRIBES_EDIT", "Edit existing tribe");
 define("_MD_PROFILE_TRIBES_CREATED", "Tribe successfully created");
@@ -213,6 +215,7 @@ define("_MD_PROFILE_TRIBETOPIC_CLOSED", "Closed");
 define("_MD_PROFILE_TRIBETOPIC_REOPEN", "Reopen");
 
 //videos.php
+define("_MD_PROFILE_VIDEOS_NOCONTENT", "There are no videos yet");
 define("_MD_PROFILE_VIDEOS_SUBMIT", "Submit new video");
 define("_MD_PROFILE_VIDEOS_EDIT", "Edit existing video");
 define("_MD_PROFILE_VIDEOS_CREATED", "Video successfully added");

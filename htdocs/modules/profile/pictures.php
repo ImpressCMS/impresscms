@@ -165,9 +165,11 @@ if (in_array($clean_op,$valid_op,true)){
 			} elseif($clean_uid > 0) {
 				$picturesArray = $profile_pictures_handler->getPictures(false, false, $clean_uid);
 				$icmsTpl->assign('profile_pictures', $picturesArray);
+				if (count($picturesArray) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_PICTURES_NOCONTENT);
 			} elseif($real_uid > 0) {
 				$picturesArray = $profile_pictures_handler->getPictures(false, false, $real_uid);
 				$icmsTpl->assign('profile_pictures', $picturesArray);
+				if (count($picturesArray) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_PICTURES_NOCONTENT);
 			} else {
 				redirect_header(PROFILE_URL);
 			}

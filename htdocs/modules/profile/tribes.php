@@ -466,11 +466,13 @@ if (in_array($clean_op,$valid_op,true)){
 				$tribes['own'] = $profile_tribes_handler->getTribes(false, false, $clean_uid);
 				$tribes['member'] = $profile_tribes_handler->getMembershipTribes($clean_uid);
 				$icmsTpl->assign('profile_tribes', $tribes);
+				if ((count($tribes['own']) + count($tribes['member'])) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_TRIBES_NOCONTENT);
 			} elseif ($real_uid > 0) {
 				$tribes = array();
 				$tribes['own'] = $profile_tribes_handler->getTribes(false, false, $real_uid);
 				$tribes['member'] = $profile_tribes_handler->getMembershipTribes($real_uid);
 				$icmsTpl->assign('profile_tribes', $tribes);
+				if ((count($tribes['own']) + count($tribes['member'])) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_TRIBES_NOCONTENT);
 			} else {
 				redirect_header(PROFILE_URL);
 			}

@@ -111,9 +111,11 @@ if (in_array($clean_op,$valid_op,true)){
 			} elseif ($clean_uid > 0) {
 				$videosArray = $profile_videos_handler->getVideos(false, false, $clean_uid);
 				$icmsTpl->assign('profile_allvideos', $videosArray);
+				if (count($videosArray) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_VIDEOS_NOCONTENT);
 			} elseif ($real_uid > 0) {
 				$videosArray = $profile_videos_handler->getVideos(false, false, $real_uid);
 				$icmsTpl->assign('profile_allvideos', $videosArray);
+				if (count($videosArray) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_VIDEOS_NOCONTENT);
 			} else {
 				redirect_header(PROFILE_URL);
 			}

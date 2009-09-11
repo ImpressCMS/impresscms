@@ -60,9 +60,11 @@ if (in_array($clean_op,$valid_op,true)){
 			if ($clean_uid > 0) {
 				$friendshipsArray = $profile_friendship_handler->getFriendshipsSorted($clean_uid, $isOwner);
 				$icmsTpl->assign('profile_friendships', $friendshipsArray);
+				if ((count($friendshipsArray[PROFILE_FRIENDSHIP_STATUS_PENDING]) + count($friendshipsArray[PROFILE_FRIENDSHIP_STATUS_ACCEPTED]) + count($friendshipsArray[PROFILE_FRIENDSHIP_STATUS_REJECTED])) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_FRIENDSHIPS_NOCONTENT);
 			} elseif ($real_uid > 0) {
 				$friendshipsArray = $profile_friendship_handler->getFriendshipsSorted($real_uid, $isOwner);
 				$icmsTpl->assign('profile_friendships', $friendshipsArray);
+				if ((count($friendshipsArray[PROFILE_FRIENDSHIP_STATUS_PENDING]) + count($friendshipsArray[PROFILE_FRIENDSHIP_STATUS_ACCEPTED]) + count($friendshipsArray[PROFILE_FRIENDSHIP_STATUS_REJECTED])) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_FRIENDSHIPS_NOCONTENT);
 			} else {
 				redirect_header(PROFILE_URL);
 			}

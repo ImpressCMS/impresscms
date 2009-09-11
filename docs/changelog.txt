@@ -5,6 +5,7 @@ Revision:
 
 '''Improved'''
 * #333: imProfile: added information on upload_max_size to upload config value descriptions | ticket from addons (Phoenyx)
+* #322: imProfile: added "no content" messages to all content views | ticket from addons (Phoenyx)
 
 '''Fixed'''
 * #341: imProfile: don't show profile for inactive users | tickets from addons (Phoenyx)
