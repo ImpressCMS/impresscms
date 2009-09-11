@@ -31,6 +31,7 @@ define("_AM_PROFILE_FIELD_TYPE_RADIO", "Radio Buttons");
 define("_AM_PROFILE_FIELD_TYPE_SELECT", "Select");
 define("_AM_PROFILE_FIELD_TYPE_SELECTMULTI", "Multi Select");
 define("_AM_PROFILE_FIELD_TYPE_TEXTAREA", "Text Area");
+define("_AM_PROFILE_FIELD_TYPE_TEXTBOX", "Text Box");
 define("_AM_PROFILE_FIELD_TYPE_DHTMLTEXTAREA", "DHTML Text Area");
 define("_AM_PROFILE_FIELD_TYPE_TIMEZONE", "Timezone");
 define("_AM_PROFILE_FIELD_TYPE_YESNO", "Radio Yes/No");
@@ -38,6 +39,8 @@ define("_AM_PROFILE_FIELD_TYPE_DATE", "Date");
 define("_AM_PROFILE_FIELD_TYPE_DATETIME", "Date and Time");
 define("_AM_PROFILE_FIELD_TYPE_LONGDATE", "Long Date");
 define("_AM_PROFILE_FIELD_TYPE_IMAGE", "Image");
+define("_AM_PROFILE_FIELD_TYPE_RANK", "Rank");
+define("_AM_PROFILE_FIELD_TYPE_THEME", "Theme");
 
 define("_AM_PROFILE_REGSTEP_CREATE", "Add a Registration step");
 define("_AM_PROFILE_REGSTEP", "Registration Step");

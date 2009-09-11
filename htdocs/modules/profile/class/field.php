@@ -687,10 +687,12 @@ class ProfileFieldHandler extends IcmsPersistableObjectHandler {
 			$this->_fieldTypeArray["select_multi"] = _AM_PROFILE_FIELD_TYPE_SELECTMULTI;
 			$this->_fieldTypeArray["textarea"] = _AM_PROFILE_FIELD_TYPE_TEXTAREA;
 			$this->_fieldTypeArray["dhtml"] = _AM_PROFILE_FIELD_TYPE_DHTMLTEXTAREA;
-			$this->_fieldTypeArray["textbox"] = _AM_PROFILE_FIELD_TYPE_TEXTAREA;
+			$this->_fieldTypeArray["textbox"] = _AM_PROFILE_FIELD_TYPE_TEXTBOX;
 			$this->_fieldTypeArray["timezone"] = _AM_PROFILE_FIELD_TYPE_TIMEZONE;
 			$this->_fieldTypeArray["image"] = _AM_PROFILE_FIELD_TYPE_IMAGE;
 			$this->_fieldTypeArray["yesno"] = _AM_PROFILE_FIELD_TYPE_YESNO;
+			$this->_fieldTypeArray["rank"] = _AM_PROFILE_FIELD_TYPE_RANK;
+			$this->_fieldTypeArray["theme"] = _AM_PROFILE_FIELD_TYPE_THEME;
 			asort($this->_fieldTypeArray);
 		}
 		return $this->_fieldTypeArray;
