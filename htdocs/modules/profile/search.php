@@ -82,9 +82,9 @@ switch ($op) {
 
                     case "radio":
                     case "select":
-                        $size = count($fields[$i]->getVar('field_options')) > 10 ? 10 : count($fields[$i]->getVar('field_options'));
+                        $options = unserialize($fields[$i]->getVar('field_options', 'n'));
+                        $size = count($options) > 10 ? 10 : count($options);
                         $element = new XoopsFormSelect($fields[$i]->getVar('field_title'), $fields[$i]->getVar('field_name'), null, $size, true);
-                        $options = $fields[$i]->getVar('field_options');
                         asort($options);
                         $element->addOptionArray($options);
                         $searchform->addElement($element);
@@ -104,11 +104,6 @@ switch ($op) {
                         $searchform->addElement(new XoopsFormTextDateSelect(sprintf(_PROFILE_MA_LATERTHAN, $fields[$i]->getVar('field_title')), $fields[$i]->getVar('field_name')."_larger", 15, 0));
                         $searchform->addElement(new XoopsFormTextDateSelect(sprintf(_PROFILE_MA_EARLIERTHAN, $fields[$i]->getVar('field_title')), $fields[$i]->getVar('field_name')."_smaller", 15, time()));
                         break;
-
-//                    case "datetime":
-//                        $searchform->addElement(new XoopsFormDateTime(sprintf(_PROFILE_MA_LATERTHAN, $fields[$i]->getVar('field_title')), $fields[$i]->getVar('field_name')."_larger", 15, 1));
-//                        $searchform->addElement(new XoopsFormDateTime(sprintf(_PROFILE_MA_EARLIERTHAN, $fields[$i]->getVar('field_title')), $fields[$i]->getVar('field_name')."_smaller", 15, 0));
-//                        break;
 
                     case "timezone":
                         $element = new XoopsFormSelect($fields[$i]->getVar('field_title'), $fields[$i]->getVar('field_name'), null, 6, true);

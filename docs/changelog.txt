@@ -24,6 +24,7 @@ Revision:
 * #308: imProfile: when editing a picture you can no longer delete or replace it | ticket from addons (Phoenyx)
 * #783: fixed OpenID Login switcher (Phoenyx)
 * #787: Properly modifies the imagecategory table during an upgrade from previous versions (skenow)
+* #351: imProfile: fixed field option handling on search form | ticket from addons (Phoenyx)
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009
