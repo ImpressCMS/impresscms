@@ -25,7 +25,7 @@ function editpictures($picturesObj, $hideForm=false)
 		if (!$picturesObj->userCanEditAndDelete()) {
 			redirect_header($picturesObj->getItemLink(true), 3, _NOPERM);
 		}
-		$picturesObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
+		$picturesObj->hideFieldFromForm(array('url', 'creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
 		$sform = $picturesObj->getSecureForm(_MD_PROFILE_PICTURES_EDIT, 'addpictures');
 		$sform->assign($icmsTpl, 'profile_picturesform');
 		$icmsTpl->assign('profile_category_path', $picturesObj->getVar('title') . ' > ' . _EDIT);
@@ -133,6 +133,12 @@ if (in_array($clean_op,$valid_op,true)){
 			if (!$xoopsSecurity->check()) {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
 			}
+
+			// we need to check whether the user has modified the url for an existing picture (NOT ALLOWED!)
+			if (!$picturesObj->isNew() && isset($_POST['url']) && $picturesObj->getVar('url') != $_POST['url']) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+			}
+
 			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
 			$controller = new IcmsPersistableController($profile_pictures_handler);
 			$controller->storeFromDefaultForm(_MD_PROFILE_PICTURES_CREATED, _MD_PROFILE_PICTURES_MODIFIED);

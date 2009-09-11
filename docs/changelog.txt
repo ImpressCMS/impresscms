@@ -21,6 +21,7 @@ Revision:
 * #320: imProfile: OpenID is editable now | ticket from addons (Phoenyx)
 * #273: imProfile: fixed several wrong column value links in CP view | tickets from addons (Phoenyx)
 * #307: imProfile: thumb and resized pictures are deleted when deleting or replacing the tribe image | ticket from addons (Phoenyx)
+* #308: imProfile: when editing a picture you can no longer delete or replace it | ticket from addons (Phoenyx)
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009
