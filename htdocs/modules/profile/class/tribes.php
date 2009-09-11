@@ -209,6 +209,7 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 
 	public $_allTribes;
 	public $_tribes_security = array();
+	private $_tribesImgBeforeUnlink = '';
 
 	/**
 	 * Constructor
@@ -432,8 +433,7 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 		$rtn = $rtn && $profile_tribetopic_handler->deleteAll(new CriteriaCompo(new Criteria('tribes_id', $obj->getVar('tribes_id'))));
 		// delete all tribe posts (not triggering beforeDelete or afterDelete events in tribepost object)
 		$profile_tribepost_handler = icms_getModuleHandler('tribepost');
-		return $rtn && $profile_tribepost_handler->deleteAll(new CriteriaCompo(new Criteria('topic_id', $obj->getVar('topic_id'))));
-		return ($rtn != false ? true : false);
+		return $rtn && $profile_tribepost_handler->deleteAll(new CriteriaCompo(new Criteria('tribes_id', $obj->getVar('tribes_id'))));
 	}
 
 	/*
@@ -453,6 +453,43 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 			unlink($imgPath.'thumb_'.$imgUrl);
 			unlink($imgPath.'resized_'.$imgUrl);
 		}
+
+		return true;
+	}
+
+	/*
+	 * beforeFileUnlink event
+	 *
+	 * Event automatically triggered by IcmsPersistable Framework before an Image (field type XOBJ_DTYPE_IMAGE) is unlinked
+	 *
+	 * @param object $obj ProfileTribes object
+	 * @return bool
+	 */
+	function beforeFileUnlink(&$obj) {
+		$this->_tribesImgBeforeUnlink = $obj->getVar('tribe_img');icms_debug($this->_tribesImgBeforeUnlink);
+		return true;
+	}
+
+	/*
+	 * afterFileUnlink event
+	 *
+	 * Event automatically triggered by IcmsPersistable Framework after an Image (field type XOBJ_DTYPE_IMAGE) is unlinked
+	 *
+	 * @param object $obj ProfileTribes object
+	 * @return bool
+	 */
+	function afterFileUnlink(&$obj) {icms_debug($obj->getVar('tribe_img'));
+		if ($this->_tribesImgBeforeUnlink == $obj->getVar('tribe_img')) return true;
+		
+		$imgPath = ICMS_UPLOAD_PATH.'/profile/tribes/';
+		$imgUrl = $this->_tribesImgBeforeUnlink;
+
+		if (!empty($imgUrl)) {
+			unlink($imgPath.'thumb_'.$imgUrl);
+			unlink($imgPath.'resized_'.$imgUrl);
+		}
+
+		$this->_tribesImgBeforeUnlink = $obj->getVar('tribe_img');
 
 		return true;
 	}

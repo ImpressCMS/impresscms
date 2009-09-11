@@ -28,17 +28,33 @@ class IcmsPersistableController {
 			switch ($icmsObj->vars[$key]['data_type']) {
 				case XOBJ_DTYPE_IMAGE:
 					if(isset($_POST['url_'.$key]) && $_POST['url_'.$key] !=''){
+						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
+						if (!$eventResult) {
+							$icmsObj->setErrors("An error occured during the beforeFileUnlink event");
+						}
 						$oldFile = $icmsObj->getUploadDir(true).$icmsObj->getVar($key, 'e');
 						$icmsObj->setVar($key, $_POST['url_'.$key]);
 						if(file_exists($oldFile)){
 							unlink($oldFile);
 						}
+						$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
+						if (!$eventResult) {
+							$icmsObj->setErrors("An error occured during the afterFileUnlink event");
+						}
 					}
 					if(isset($_POST['delete_'.$key]) && $_POST['delete_'.$key] == '1'){
+						$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
+						if (!$eventResult) {
+							$icmsObj->setErrors("An error occured during the beforeFileUnlink event");
+						}
 						$oldFile = $icmsObj->getUploadDir(true).$icmsObj->getVar($key, 'e');
 						$icmsObj->setVar($key, '');
 						if(file_exists($oldFile)){
 							unlink($oldFile);
+						}
+						$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
+						if (!$eventResult) {
+							$icmsObj->setErrors("An error occured during the afterFileUnlink event");
 						}
 					}
 				break;
@@ -130,9 +146,21 @@ class IcmsPersistableController {
 								$icmsObj->setVar($related_field, $fileObj->getVar('fileid'));
 
 							}else{
+								$eventResult = $this->handler->executeEvent('beforeFileUnlink', $icmsObj);
+								if (!$eventResult) {
+									$icmsObj->setErrors("An error occured during the beforeFileUnlink event");
+									$uploaderResult = $uploaderResult && false;
+								}
+
 								$old_file = $icmsObj->getUploadDir(true).$icmsObj->getVar($related_field);
 								unlink($old_file);
 								$icmsObj->setVar($related_field, $uploaderObj->getSavedFileName());
+
+								$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
+								if (!$eventResult) {
+									$icmsObj->setErrors("An error occured during the afterFileUnlink event");
+									$uploaderResult = $uploaderResult && false;
+								}
 							}
 						} else {
 							$icmsObj->setErrors($uploaderObj->getErrors(false));

@@ -6,6 +6,7 @@ Revision:
 '''Improved'''
 * #333: imProfile: added information on upload_max_size to upload config value descriptions | ticket from addons (Phoenyx)
 * #322: imProfile: added "no content" messages to all content views | ticket from addons (Phoenyx)
+* #---: introducing new IPF events beforeFileUnlink and afterFileUnlink (Phoenyx)
 
 '''Fixed'''
 * #341: imProfile: don't show profile for inactive users | tickets from addons (Phoenyx)
@@ -19,6 +20,7 @@ Revision:
 * #290: imProfile: added missing field types rank and theme to fields class | ticket from addons (Phoenyx)
 * #320: imProfile: OpenID is editable now | ticket from addons (Phoenyx)
 * #273: imProfile: fixed several wrong column value links in CP view | tickets from addons (Phoenyx)
+* #307: imProfile: thumb and resized pictures are deleted when deleting or replacing the tribe image | ticket from addons (Phoenyx)
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009
