@@ -157,15 +157,6 @@ $modversion['blocks'][1] = array(
   'options' => '5',
   'template' => 'profile_block_friends.html');
 
-$modversion['blocks'][] = array(
-  'file' => 'blocks.php',
-  'name' => _MI_PROFILE_LATEST,
-  'description' => _MI_PROFILE_LATEST_DESC,
-  'show_func' => 'b_profile_latestpictures_show',
-  'edit_func' => 'b_profile_latestpictures_edit',
-  'options' => '5',
-  'template' => 'profile_block_latestpictures.html');
-
 /** Templates information */
 $modversion['templates'][] = array(
   'file' => 'profile_index.html',

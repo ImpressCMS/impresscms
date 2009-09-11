@@ -229,23 +229,6 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		$this->imageResizer($img, $thumbwidth, $thumbheight, $path_upload, 'thumb');
 		$this->imageResizer($img, $pictwidth, $pictheight, $path_upload, 'resized');
 	}
-
-	/**
-	 * Built the array for latest block pictures
-	 *
-	 * @param $limit limits the amount of pictures to show in the block
-	 * @return array
-	 */
-	function getLatestPicturesForBlock($limit) {
-		$pictures = $this->getPictures(0, $limit);
-		foreach($pictures as $picture) {
-			$ret[] = array(
-			  'image' => $picture['picture_content'],
-			  'user'  => $picture['picture_sender_link']
-			);
-		}
-		return $ret;
-	}	
 	
 	/**
 	 * Resize a picture and save it to $path_upload

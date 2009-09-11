@@ -38,17 +38,4 @@ function b_profile_friends_edit($options) {
 
 	return $form;
 }
-
-function b_profile_latestpictures_show($options) {
-	$pictures_factory = icms_getmodulehandler('pictures', basename(dirname(dirname( __FILE__ ))), 'profile');
-	$block = $pictures_factory->getLatestPicturesForBlock($options[0]);
-
-	return $block;
-}
-
-function b_profile_latestpictures_edit($options) {
-	$form = _MB_PROFILE_NUMBER_PICTURES.": <input type='text' value='".$options['0']."'id='options[]' name='options[]' />";
-
-	return $form;
-}
 ?>
