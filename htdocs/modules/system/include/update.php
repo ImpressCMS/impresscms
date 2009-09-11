@@ -530,40 +530,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	}
 
 	$newDbVersion = 18;
-
-	if ($dbVersion < $newDbVersion) {
-		echo $action;
-		/*
-		$table = new IcmsDatabasetable('icmscontent');
-		if (!$table->fieldExists('content_tags')) {
-		$table->addNewField('content_tags', "text");
-		$icmsDatabaseUpdater->updateTable($table);
-		}
-		unset($table);
-        */
-		$table = new IcmsDatabasetable('imagecategory');
-		if (!$table->fieldExists('imgcat_foldername')) {
-		$table->addNewField('imgcat_pid', "varchar(100) default ''");
-		$icmsDatabaseUpdater->updateTable($table);
-		}
-		if (!$table->fieldExists('imgcat_pid')) {
-		$table->addNewField('imgcat_pid', "smallint(5) unsigned NOT NULL default '0'");
-		$icmsDatabaseUpdater->updateTable($table);
-		}
-		unset($table);
-
-		/**
-		* DEVELOPPER, PLEASE NOTE !!!
-		*
-		* Everytime we add a new modules to system, the cache folders must get cleaned up so,
-		* set a value for '$CleanWritingFolders' in each upgrade block here, if there is a cache
-		* cleaning required please add $CleanWritingFolders = 1 and otherwise $CleanWritingFolders = 0
-		* Like this bellow:
-		*/
-		$CleanWritingFolders = true;
-	}
-
-
+/* errors discovered after 1.2 beta release (dbversion 31) moved to dbversion 32 */
 
 	$newDbVersion = 19;
 
@@ -940,6 +907,50 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
         $icmsDB->queryF("UPDATE `".$icmsDB->prefix('config')."` SET conf_value = '".addslashes(serialize(array($HTML_Allowed_Attr)))."' WHERE conf_name = 'purifier_HTML_AllowedAttributes'");
     }
 
+/* 1.2 beta release */
+    $newDbVersion = 32;
+    /* this was in dbversion 18, but there were errors discovered after 1.2 beta relase */
+    if ($dbVersion < $newDbVersion) {
+        echo $action;
+        /*
+        $table = new IcmsDatabasetable('icmscontent');
+        if (!$table->fieldExists('content_tags')) {
+        $table->addNewField('content_tags', "text");
+        $icmsDatabaseUpdater->updateTable($table);
+        }
+        unset($table);
+        */
+        $table = new IcmsDatabasetable('imagecategory');
+        if (!$table->fieldExists('imgcat_foldername')) {
+	        $table->addNewField('imgcat_pid', "varchar(100) default ''");
+	        $icmsDatabaseUpdater->updateTable($table);
+        }
+        if (!$table->fieldExists('imgcat_pid')) {
+	        $table->addNewField('imgcat_pid', "smallint(5) unsigned NOT NULL default '0'");
+	        $icmsDatabaseUpdater->updateTable($table);
+        }
+        unset($table);
+                
+        /**
+        * DEVELOPER, PLEASE NOTE !!!
+        *
+        * Everytime we add a new modules to system, the cache folders must get cleaned up so,
+        * set a value for '$CleanWritingFolders' in each upgrade block here, if there is a cache
+        * cleaning required please add $CleanWritingFolders = 1 and otherwise $CleanWritingFolders = 0
+        * Like this below:
+        */
+        $CleanWritingFolders = true;
+        /* end of dbversion 18 update */
+            
+    }
+    $newDbVersion = 33;
+        /* The admin control panel now consists of blocks - these need to be set as visible
+         * Control Panel, System Warnings, Modules Installed 
+         */
+    if ($dbVersion < $newDbVersion) {
+    
+    }
+    
 	echo "</code>";
 	
 	if ($from_112){	
