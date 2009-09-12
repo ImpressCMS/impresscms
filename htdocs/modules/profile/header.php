@@ -97,10 +97,6 @@ if($icmsModuleConfig['profile_social']){
 	foreach($permissions as $permission => $value){
 		$xoopsTpl->assign('allow_'.$permission, $value);
 	}
-	$nbSections = $profile_configs_handler->geteachSectioncounts($uid);
-	foreach($nbSections as $nbSection => $value){
-		$xoopsTpl->assign('nb_'.$nbSection, $value);
-	}
 	icms_makeSmarty(array(
 		'lang_mysection' => _MD_PROFILE_MYPROFILE,
 		'lang_photos' => _MD_PROFILE_PHOTOS,

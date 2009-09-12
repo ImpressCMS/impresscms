@@ -225,51 +225,6 @@ class ProfileConfigsHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
-	 * Retreive the number of each item submitted by user in each section
-	 *
-	 * @return array of amounts
-	 */
-	function geteachSectioncounts($uid){
-		global $icmsUser;
-
-		$private = '';
-		if (is_object($icmsUser)) {
-			if ($icmsUser->getVar('uid') != $uid && !$icmsUser->isAdmin()) {
-				$private = ' AND private=0';
-			}
-		} else {
-			$private = ' AND private=0';
-		}
-
-		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_audio').' WHERE uid_owner="'.$uid.'"';
-		$audio = $this->query($sql, false);
-		
-		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_pictures').' WHERE uid_owner="'.$uid.'"'.$private;
-		$pictures = $this->query($sql, false);
-		
-		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_friendship').' WHERE (friend1_uid="'.$uid.'" OR friend2_uid="'.$uid.'") AND status=2';
-		$friendship = $this->query($sql, false);
-		
-		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_videos').' WHERE uid_owner="'.$uid.'"';
-		$videos = $this->query($sql, false);
-		
-		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_tribes').' WHERE uid_owner="'.$uid.'"';
-		$ownTribes = $this->query($sql, false);
-		$ownTribes = (!$ownTribes[0]['amount']) ? 0 : $ownTribes[0]['amount'];
-		$sql = 'SELECT COUNT(*) AS amount FROM '.$this->db->prefix('profile_tribeuser').' WHERE user_id="'.$uid.'" AND approved=1 AND accepted=1';
-		$membershipTribes = $this->query($sql, false);
-		$membershipTribes = (!$membershipTribes[0]['amount']) ? 0 : $membershipTribes[0]['amount'];
-		
-		return array(
-			'audio' => (!$audio[0]['amount'])?0:$audio[0]['amount'],
-			'pictures' => (!$pictures[0]['amount'])?0:$pictures[0]['amount'],
-			'friendship' => (!$friendship[0]['amount'])?0:$friendship[0]['amount'],
-			'videos' => (!$videos[0]['amount'])?0:$videos[0]['amount'],
-			'tribes' => $ownTribes  + $membershipTribes,
-			);
-	}
-
-	/**
 	 * Check wether the current user can access a section or not
 	 *
 	 * @return bool true if he can false if not

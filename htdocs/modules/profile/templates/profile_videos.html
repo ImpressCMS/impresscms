@@ -1,11 +1,9 @@
 <{include file="db:profile_header.html"}>
 <{if $profile_videosform}>
 <{if $hideForm}>
-<div id="profile-form" class="outer">
+<div class="profile-form outer">
   <h2 class="head">
-    <a href="#" onclick ="jQuery().find('div.profile-album-form').toggle(400);">
-      <img src="images/toggle.gif" />&nbsp;
-    </a>
+    <a href="#" onclick ="jQuery().find('div.profile-album-form').toggle(400);"><img src="images/toggle.gif" /></a>&nbsp;<{$lang_videosform_title}>
   </h2>
   <div class="profile-album-form" style="display: none">
     <{includeq file='db:system_common_form.html' form=$profile_videosform}>

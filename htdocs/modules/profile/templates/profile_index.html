@@ -1,9 +1,9 @@
 <{include file="db:profile_header.html"}>
 <{if $profile_friendshipform}>
 <{if $hideForm}>
-<div id="profile-form" class="outer">
+<div class="profile-form outer">
   <h2 class="head">
-    <a href="#" onclick ="jQuery().find('div.profile-friendship-form').toggle(400);"><img src="images/toggle.gif" />&nbsp;</a>
+    <a href="#" onclick ="jQuery().find('div.profile-friendship-form').toggle(400);"><img src="images/toggle.gif" /></a>&nbsp;<{$lang_friendshipform_title}>
   </h2>
   <div class="profile-friendship-form" style="display: none">
     <{includeq file='db:system_common_form.html' form=$profile_friendshipform}>
@@ -33,11 +33,7 @@
     <{/if}>
     <{else}>
     <img src="images/noavatar.gif" />
-    <{if $isOwner}>
-    <p><{$lang_selectavatar}></p>
-    <{else}>
-    <p><{$lang_noavatar}></p>
-    <{/if}>
+    <{if $isOwner && $allow_avatar_upload}><p><{$lang_selectavatar}></p><{/if}>
     <{/if}>
   </div>
   <{/if}>
@@ -74,7 +70,7 @@
   <h3 class="profile-profile-title head"><{if $isOwner}><a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" /></a>&nbsp;<{/if}><{$lang_contactinfo}></h3>
   <{if $user_websiteurl}><p class="<{cycle values='even,odd'}>"><img src="images/url.gif" /><span class="profile-profileinfo-label"><{$lang_website}>:</span><span class="profile-profileinfo-value"><{$user_websiteurl}></span></p><{/if}>
   <{if $isAnonym!=1 && $user_email}><p class="<{cycle values='even,odd'}>"><img src="images/email.gif" /><span class="profile-profileinfo-label"><{$lang_email}>:</span><span class="profile-profileinfo-value"><{mailto address=$user_email encode="javascript"}></span></p><{/if}>
-  <{if $isAnonym!=1 && $isOwner!=1}><p class="<{cycle values='even,odd'}>"><img src="images/email.gif" /> <span class="profile-profileinfo-label"><{$lang_privmsg}>:</span><span class="profile-profileinfo-value"><a href="javascript:openWithSelfMain('<{$icms_url}>/pmlite.php?send2=1&amp;to_userid=<{$uid_owner}>', 'pmlite', 450, 380);"><img src="<{$icms_url}>/images/icons/pm.gif" alt="Send Private Message to suico" /></a></span></p><{/if}>
+  <{if $isAnonym!=1 && $isOwner!=1}><p class="<{cycle values='even,odd'}>"><img src="images/email.gif" /><span class="profile-profileinfo-label"><{$lang_privmsg}>:</span><span class="profile-profileinfo-value"><a href="javascript:openWithSelfMain('<{$icms_url}>/pmlite.php?send2=1&amp;to_userid=<{$uid_owner}>', 'pmlite', 450, 380);"><img src="<{$icms_url}>/images/icons/pm.gif" alt="Send Private Message to suico" /></a></span></p><{/if}>
   <{if $user_icq}><p class="<{cycle values='even,odd'}>"><img src="images/icq.gif" /><span class="profile-profileinfo-label"><{$lang_icq}>:</span><span class="profile-profileinfo-value"><{$user_icq}></span><img src="http://status.icq.com/online.gif?icq=<{$user_icq}>&img=21" /></p><{/if}>
   <{if $user_aim}><p class="<{cycle values='even,odd'}>"><img src="images/aim.gif" /> <span class="profile-profileinfo-label"><{$lang_aim}>:</span><span class="profile-profileinfo-value"><{$user_aim}></span></p><{/if}>
   <{if $user_yim}><p class="<{cycle values='even,odd'}>"><img src="images/ym.gif" /> <span class="profile-profileinfo-label"><{$lang_yim}>:</span><span class="profile-profileinfo-value"><{$user_yim}></span></p><{/if}>
@@ -125,8 +121,8 @@
   <{if $allow_pictures}>
   <div id="profile-profile-pictures" class="outer">
     <h3 class="profile-profiletitle head">
-      <a href="pictures.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/lphoto.gif"  /></a>
-      <{$lang_photos}> (<{$nb_pictures}>)
+      <a href="pictures.php?uid=<{$uid_owner}>"><img src="images/lphoto.gif"  /></a>
+      <{$lang_photos}>
     </h3>
     <{if $pictures|@count > 0}>
     <{cycle values='even,odd' print=false reset=true advance=false}>
@@ -144,8 +140,8 @@
   <{if $allow_tribes}>
   <div id="profile-profile-tribes" class="outer">
     <h3 class="head">
-      <a href="tribes.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/tribes.gif"  /></a>
-      <{$lang_tribes}> (<{$nb_tribes}>)
+      <a href="tribes.php?uid=<{$uid_owner}>"><img src="images/tribes.gif"  /></a>
+      <{$lang_tribes}>
     </h3>
     <{if $tribes|@count > 0}>
     <ul>
@@ -211,15 +207,15 @@
   <{if $allow_friendship}>
   <div id="profile-profile-friends" class="outer">
     <h3 class="head">
-      <a href="friendship.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/friends.gif"  /></a>
-      <{$lang_friends}> (<{$nb_friendship}>)
+      <a href="friendship.php?uid=<{$uid_owner}>"><img src="images/friends.gif"  /></a>
+      <{$lang_friends}>
     </h3>
     <{if $friends|@count > 0}>
     <{cycle values='even,odd' print=false reset=true advance=false}>
     <table cellspacing="1" cellpadding="0"><tr>
     <{section name=i loop=$friends}>
     <td class="profile-profile-friend <{cycle values="even,odd"}>">
-      <{$friends[i].user_avatar}><br /><{$friends[i].uname}>
+      <{if $friends[i].user_avatar}><{$friends[i].user_avatar}><br /><{/if}><{$friends[i].uname}>
     <{/section}>
     </tr></table>
     <{/if}>
@@ -252,8 +248,8 @@
   <{if $allow_audio}>
   <div id="profile-profile-audio" class="outer">
     <h3 class="head">
-      <a href="audio.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/audio.gif"  /></a>
-      <{$lang_audio}> (<{$nb_audio}>)
+      <a href="audio.php?uid=<{$uid_owner}>"><img src="images/audio.gif"  /></a>
+      <{$lang_audio}>
     </h3>
     <{if $audio}>
     <div class="profile-profile-audio even">
@@ -263,10 +259,10 @@
   </div>
   <{/if}>
   <{if $allow_videos}>
-  <div id="profile-profile-friends" class="outer">
+  <div id="profile-profile-videos" class="outer">
     <h3 class="head">
-      <a href="videos.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/video.gif"  /></a>
-      <{$lang_videos}> (<{$nb_videos}>)
+      <a href="videos.php?uid=<{$uid_owner}>"><img src="images/video.gif"  /></a>
+      <{$lang_videos}>
     </h3>
     <div id="profile-profile-video">
     <{if $video}>

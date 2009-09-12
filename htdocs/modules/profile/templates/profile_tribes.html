@@ -1,11 +1,9 @@
 <{include file="db:profile_header.html"}>
 <{if $profile_tribesform}>
 <{if $hideForm}>
-<div id="profile-form" class="outer">
+<div class="profile-form outer">
   <h2 class="head">
-    <a href="#" onclick ="$('#profile-tribes-form').toggle(400);">
-      <img src="images/toggle.gif" />&nbsp;
-    </a>
+    <a href="#" onclick ="$('#profile-tribes-form').toggle(400);"><img src="images/toggle.gif" /></a>&nbsp;<{$lang_tribesform_title}>
   </h2>
   <div id="profile-tribes-form" class="profile-album-form" style="display: none">
     <{includeq file='db:system_common_form.html' form=$profile_tribesform}>
@@ -18,11 +16,9 @@
 <{if $profile_tribeuserform}>
 <{if $profile_tribesform}>&nbsp;<{/if}>
 <{if $hideForm}>
-<div id="profile-form" class="outer">
+<div class="profile-form outer">
   <h2 class="head">
-    <a href="#" onclick ="$('#profile-tribeuser-form').toggle(400);">
-      <img src="images/toggle.gif" />&nbsp;
-    </a>
+    <a href="#" onclick ="$('#profile-tribeuser-form').toggle(400);"><img src="images/toggle.gif" /></a>&nbsp;<{$lang_tribeuserform_title}>
   </h2>
   <div id="profile-tribeuser-form" class="profile-album-form" style="display: none">
     <{includeq file='db:system_common_form.html' form=$profile_tribeuserform}>
@@ -34,11 +30,9 @@
 <{/if}>
 <{if $profile_editpostform}>
 <{if $hideForm}>
-<div id="profile-form" class="outer">
+<div class="profile-form outer">
   <h2 class="head">
-    <a href="#" onclick ="$('#profile-post-form').toggle(400);">
-      <img src="images/toggle.gif" />&nbsp;
-    </a>
+    <a href="#" onclick ="$('#profile-post-form').toggle(400);"><img src="images/toggle.gif" /></a>&nbsp;<{$lang_editpostform_title}>
   </h2>
   <div id="profile-post-form" class="profile-album-form" style="display: none">
     <{includeq file='db:system_common_form.html' form=$profile_editpostform}>
@@ -60,7 +54,7 @@
       <h2 class="head"><{$lang_members}></h2>
       <{foreach name=members item=member from=$profile_tribe_members}>
       <div class="profile-tribes-members-member">
-        <{$member.tribeuser_avatar}><br /><{$member.tribeuser_sender_link}>
+        <{if $member.tribeuser_avatar}><{$member.tribeuser_avatar}><br /><{/if}><{$member.tribeuser_sender_link}>
         <{if $member.userCanEditAndDelete || $userCanEditAndDelete}>
         <form action="<{$icms_url}>/modules/profile/tribes.php" method="post">
           <input type="hidden" value="<{$profile_tribe.tribes_id}>" name="tribes_id" />
@@ -148,11 +142,9 @@
     <{/if}>
     <{if $profile_addpostform}>
     <{if $hideForm}>
-    <div id="profile-form" class="outer">
+    <div class="profile-form outer">
       <h2 class="head">
-        <a href="#" onclick ="$('#profile-post-form').toggle(400);">
-          <img src="images/toggle.gif" />&nbsp;
-        </a>
+        <a href="#" onclick ="$('#profile-post-form').toggle(400);"><img src="images/toggle.gif" /></a>&nbsp;<{$lang_addpostform_title}>
       </h2>
       <div id="profile-post-form" class="profile-album-form" style="display: none">
         <{includeq file='db:system_common_form.html' form=$profile_addpostform}>
@@ -174,7 +166,7 @@
       <p class="even"><strong><{$lang_creation_time}>:</strong> <{$profile_tribe.creation_time_short}></p>
       <p class="odd"><strong><{$lang_topics}>:</strong> <{$profile_tribe_topics_count}></p>
       <p class="even"><strong><{$lang_owner}></strong></p>
-      <p class="even" style="text-align:center;"><{$profile_tribe.tribe_sender_avatar}><br /><{$profile_tribe.tribe_sender_link}></p>
+      <p class="even" style="text-align:center;"><{if $profile_tribe.tribe_sender_avatar}><{$profile_tribe.tribe_sender_avatar}><br /><{/if}><{$profile_tribe.tribe_sender_link}></p>
     </div>
   </div>
 </div>

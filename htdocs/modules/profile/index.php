@@ -30,8 +30,9 @@ function editfriendship($friendshipObj, $uid=false, $hideForm=false) {
 		$friendshipObj->setVar('friend2_uid', $uid);
 		$friendshipObj->setVar('creation_time', time());
 		$friendshipObj->hideFieldFromForm(array('creation_time', 'friend2_uid', 'friend1_uid', 'status'));
-		$sform = $friendshipObj->getSecureForm(_MD_PROFILE_FRIENDSHIP_ADD, 'addfriendship');
+		$sform = $friendshipObj->getSecureForm($hideForm ? '' : _MD_PROFILE_FRIENDSHIP_ADD, 'addfriendship');
 		$sform->assign($icmsTpl, 'profile_friendshipform');
+		$icmsTpl->assign('lang_friendshipform_title', _MD_PROFILE_FRIENDSHIP_ADD);
 	}
 }
 
@@ -86,10 +87,6 @@ if (in_array($clean_op,$valid_op,true) && is_object($icmsUser)){
 				$valid_status = array (PROFILE_FRIENDSHIP_STATUS_ACCEPTED, PROFILE_FRIENDSHIP_STATUS_REJECTED);
 				if (in_array($clean_status, $valid_status, true)) {
 					$friendshipObj->setVar('status', $clean_status);
-					if ($friendshipObj->store(true) && $clean_status == PROFILE_FRIENDSHIP_STATUS_ACCEPTED) {
-						// we need to add one to the number of friends if status was set to ACCEPTED
-						$icmsTpl->assign('nb_friendship', $nbSections['friendship'] + 1);
-					}
 					if (strpos(icms_getPreviousPage(), $friendshipObj->handler->_moduleUrl.$friendshipObj->handler->_page) !== false) {
 						header('Location: '.$friendshipObj->handler->_moduleUrl.$friendshipObj->handler->_page.'?uid='.$uid);
 					}
@@ -126,7 +123,6 @@ icms_makeSmarty(array(
 	'lang_more'              => _US_MOREABOUT,
 	'lang_msnm'              => _US_MSNM,
 	'lang_myinfo'            => _US_MYINFO,
-	'lang_noavatar'          => _MD_PROFILE_NOAVATARYET,
 	'lang_notregistered'     => _US_NOTREGISTERED,
 	'lang_occupation'        => _US_OCCUPATION,
 	'lang_openid'            => _US_OPENID_FORM_CAPTION,
@@ -194,165 +190,178 @@ $icmsTpl->assign('visitors', $rtn);
 unset($visitors);
 
 // getting user contributions
-$gperm_handler = & xoops_gethandler('groupperm');
-$groups = is_object($icmsUser) ? $icmsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
-$module_handler =& xoops_gethandler('module');
-$criteria = new CriteriaCompo(new Criteria('hassearch', 1));
-$criteria->add(new Criteria('isactive', 1));
-$mids = array_keys($module_handler->getList($criteria));
+if ($permissions['profile_usercontributions']) {
+	$gperm_handler = & xoops_gethandler('groupperm');
+	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
+	$module_handler =& xoops_gethandler('module');
+	$criteria = new CriteriaCompo(new Criteria('hassearch', 1));
+	$criteria->add(new Criteria('isactive', 1));
+	$mids = array_keys($module_handler->getList($criteria));
 
-foreach ($mids as $mid) {
-  if ( $gperm_handler->checkRight('module_read', $mid, $groups)) {
-	$module =& $module_handler->get($mid);
-	$user_uid =$thisUser->getVar('uid');
-	$results = $module->search('', '', 5, 0, $user_uid);
-	$count = count($results);
-	if (is_array($results) && $count > 0) {
-		for ($i = 0; $i < $count; $i++) {
-			if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
-				$results[$i]['image'] = 'modules/'.$module->getVar('dirname').'/'.$results[$i]['image'];
-			} else {
-				$results[$i]['image'] = 'images/icons/posticon2.gif';
-			}
-			
-			if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
-				$results[$i]['link'] = ICMS_URL."/modules/".$module->getVar('dirname')."/".$results[$i]['link'];
-			}
+	foreach ($mids as $mid) {
+		if ($gperm_handler->checkRight('module_read', $mid, $groups)) {
+			$module =& $module_handler->get($mid);
+			$user_uid =$thisUser->getVar('uid');
+			$results = $module->search('', '', 5, 0, $user_uid);
+			$count = count($results);
+			if (is_array($results) && $count > 0) {
+				for ($i = 0; $i < $count; $i++) {
+					if (isset($results[$i]['image']) && $results[$i]['image'] != '') {
+						$results[$i]['image'] = 'modules/'.$module->getVar('dirname').'/'.$results[$i]['image'];
+					} else {
+						$results[$i]['image'] = 'images/icons/posticon2.gif';
+					}
 
-			$results[$i]['title'] = $myts->displayTarea($results[$i]['title']);
-			$results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
+					if (!preg_match("/^http[s]*:\/\//i", $results[$i]['link'])) {
+						$results[$i]['link'] = ICMS_URL."/modules/".$module->getVar('dirname')."/".$results[$i]['link'];
+					}
+
+					$results[$i]['title'] = $myts->displayTarea($results[$i]['title']);
+					$results[$i]['time'] = $results[$i]['time'] ? formatTimestamp($results[$i]['time']) : '';
+				}
+				if ($count == 5) {
+					$showall_link = '<a href="'.ICMS_URL.'/search.php?action=showallbyuser&amp;mid='.$mid.'&amp;uid='.$thisUser->getVar('uid').'">'._US_SHOWALL.'</a>';
+				} else {
+					$showall_link = '';
+				}
+				$icmsTpl->append('modules', array('name' => $module->getVar('name'), 'results' => $results, 'showall_link' => $showall_link));
+			}
+			unset($module);
 		}
-		if ($count == 5) {
-			$showall_link = '<a href="'.ICMS_URL.'/search.php?action=showallbyuser&amp;mid='.$mid.'&amp;uid='.$thisUser->getVar('uid').'">'._US_SHOWALL.'</a>';
-		} else {
-			$showall_link = '';
-		}
-		$icmsTpl->append('modules', array('name' => $module->getVar('name'), 'results' => $results, 'showall_link' => $showall_link));
 	}
-	unset($module);
-  }
 }
 
 // getting social content
 // pictures
-$profile_pictures_handler = icms_getModuleHandler('pictures');
-$pictures = $profile_pictures_handler->getPictures(0, 3, $uid);
-$rtn = array();
-$i = 0;
-foreach($pictures as $picture) {
-	$rtn[$i++]['content'] = $picture['picture_content'];
+if ($permissions['pictures']) {
+	$profile_pictures_handler = icms_getModuleHandler('pictures');
+	$pictures = $profile_pictures_handler->getPictures(0, 3, $uid);
+	$rtn = array();
+	$i = 0;
+	foreach($pictures as $picture) {
+		$rtn[$i++]['content'] = $picture['picture_content'];
+	}
+	$icmsTpl->assign('pictures', $rtn);
+	unset($pictures);
 }
-$icmsTpl->assign('pictures', $rtn);
-unset($pictures);
 
 // audio
-$profile_audio_handler = icms_getModuleHandler('audio');
-$audios = $profile_audio_handler->getAudios(0, 1, $uid);
-$rtn = array();
-foreach($audios as $audio) {
-	$rtn['content'] = $audio['audio_content'];
+if ($permissions['audio']) {
+	$profile_audio_handler = icms_getModuleHandler('audio');
+	$audios = $profile_audio_handler->getAudios(0, 1, $uid);
+	$rtn = array();
+	foreach($audios as $audio) {
+		$rtn['content'] = $audio['audio_content'];
+	}
+	$icmsTpl->assign('audio', $rtn);
+	unset($audios);
 }
-$icmsTpl->assign('audio', $rtn);
-unset($audios);
 
 // friends
-$friends = $profile_friendship_handler->getFriendships(0, 3, $uid, 0, PROFILE_FRIENDSHIP_STATUS_ACCEPTED);
-$rtn = array();
-$i = 0;
-foreach($friends as $friend) {
-	$rtn[$i]['user_avatar'] = $friend['friendship_avatar'];
-	$rtn[$i]['uname'] = $friend['friendship_linkedUname'];
-	$i++;
-}
-$icmsTpl->assign('friends', $rtn);
-unset($friends);
-// get waiting friendships
-if (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid) {
-	$friends = $profile_friendship_handler->getFriendships(0, 0, 0, $uid, PROFILE_FRIENDSHIP_STATUS_PENDING);
+if ($permissions['friendship']) {
+	$friends = $profile_friendship_handler->getFriendships(0, 3, $uid, 0, PROFILE_FRIENDSHIP_STATUS_ACCEPTED);
 	$rtn = array();
 	$i = 0;
 	foreach($friends as $friend) {
-		$rtn[$i]['friendship_id'] = $friend['friendship_id'];
+		$rtn[$i]['user_avatar'] = $friend['friendship_avatar'];
 		$rtn[$i]['uname'] = $friend['friendship_linkedUname'];
 		$i++;
 	}
-	$icmsTpl->assign('friends_pending', $rtn);
-	$icmsTpl->assign('lang_friends_pending', _MD_PROFILE_FRIENDSHIP_PENDING);
-	$icmsTpl->assign('lang_friendship_accept', _MD_PROFILE_FRIENDSHIP_ACCEPT);
-	$icmsTpl->assign('lang_friendship_reject', _MD_PROFILE_FRIENDSHIP_REJECT);
+	$icmsTpl->assign('friends', $rtn);
 	unset($friends);
+	// get waiting friendships
+	if (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid) {
+		$friends = $profile_friendship_handler->getFriendships(0, 0, 0, $uid, PROFILE_FRIENDSHIP_STATUS_PENDING);
+		$rtn = array();
+		$i = 0;
+		foreach($friends as $friend) {
+			$rtn[$i]['friendship_id'] = $friend['friendship_id'];
+			$rtn[$i]['uname'] = $friend['friendship_linkedUname'];
+			$i++;
+		}
+		$icmsTpl->assign('friends_pending', $rtn);
+		$icmsTpl->assign('lang_friends_pending', _MD_PROFILE_FRIENDSHIP_PENDING);
+		$icmsTpl->assign('lang_friendship_accept', _MD_PROFILE_FRIENDSHIP_ACCEPT);
+		$icmsTpl->assign('lang_friendship_reject', _MD_PROFILE_FRIENDSHIP_REJECT);
+		unset($friends);
+	}
 }
 
 // video
-$profile_videos_handler = icms_getModuleHandler('videos');
-$videos = $profile_videos_handler->getVideos(0, 1, $uid);
-$rtn = array();
-foreach($videos as $video) {
-	$rtn['content'] = $video['video_content'];
+if ($permissions['videos']) {
+	$profile_videos_handler = icms_getModuleHandler('videos');
+	$videos = $profile_videos_handler->getVideos(0, 1, $uid);
+	$rtn = array();
+	foreach($videos as $video) {
+		$rtn['content'] = $video['video_content'];
+	}
+	$icmsTpl->assign('video', $rtn);
+	unset($videos);
 }
-$icmsTpl->assign('video', $rtn);
-unset($videos);
 
 // tribes
-// get tribes where the user is the owner
-$profile_tribes_handler = icms_getModuleHandler('tribes');
-$tribes = $profile_tribes_handler->getTribes(0, 0, $uid, false, true);
-$rtn = array();
-$ownTribes = array();
-$i = 0;
-foreach($tribes as $tribe) {
-	$rtn[$i]['title'] = $tribe['title'];
-	$rtn[$i]['itemLink'] = $tribe['itemLink'];
-	$ownTribes[] = $tribe['tribes_id'];
-	$i++;
-}
-unset($tribes);
-// get tribes where the user is a member
-$tribes = $profile_tribes_handler->getMembershipTribes($uid);
-foreach($tribes as $tribe) {
-	$rtn[$i]['title'] = $tribe['title'];
-	$rtn[$i]['itemLink'] = $tribe['itemLink'];
-	$i++;
-}
-// finally sort the array
-usort($rtn, 'sortList');
-$icmsTpl->assign('tribes', $rtn);
-unset($tribes);
-// get awaiting approvals
-if ($isOwner) {
-	$profile_tribeuser_handler = icms_getmodulehandler('tribeuser');
-	$tribeusers = $profile_tribeuser_handler->getApprovals($ownTribes);
+if ($permissions['tribes']) {
+	// get tribes where the user is the owner
+	$profile_tribes_handler = icms_getModuleHandler('tribes');
+	$tribes = $profile_tribes_handler->getTribes(0, 0, $uid, false, true);
 	$rtn = array();
+	$ownTribes = array();
 	$i = 0;
-	foreach ($tribeusers as $tribeuser) {
-		$rtn[$i]['tribeuser_id'] = $tribeuser['tribeuser_id'];
-		$rtn[$i]['uid'] = $tribeuser['user_id'];
-		$rtn[$i]['uname'] = icms_getLinkedUnameFromId($tribeuser['user_id']);
-		$rtn[$i]['tribes_id'] = $tribeuser['tribe_id'];
-		$rtn[$i]['tribe_itemLink'] = $tribeuser['tribe_itemLink'];
+	foreach($tribes as $tribe) {
+		$rtn[$i]['title'] = $tribe['title'];
+		$rtn[$i]['itemLink'] = $tribe['itemLink'];
+		$ownTribes[] = $tribe['tribes_id'];
 		$i++;
 	}
-	$icmsTpl->assign('tribes_approvals', $rtn);
-	$icmsTpl->assign('lang_approvals', _MD_PROFILE_TRIBES_APPROVALS);
-	$icmsTpl->assign('lang_approve', _MD_PROFILE_TRIBEUSER_APPROVE);
-	unset($tribeusers);
-}
-// get invitations
-if ($isOwner) {
-	$tribeusers = $profile_tribeuser_handler->getInvitations($uid);
-	$rtn = array();
-	$i = 0;
-	foreach ($tribeusers as $tribeuser) {
-		$rtn[$i]['tribeuser_id'] = $tribeuser['tribeuser_id'];
-		$rtn[$i]['tribes_id'] = $tribeuser['tribe_id'];
-		$rtn[$i]['itemLink'] = $tribeuser['tribe_itemLink'];
+	unset($tribes);
+	// get tribes where the user is a member
+	$tribes = $profile_tribes_handler->getMembershipTribes($uid);
+	foreach($tribes as $tribe) {
+		$rtn[$i]['title'] = $tribe['title'];
+		$rtn[$i]['itemLink'] = $tribe['itemLink'];
 		$i++;
 	}
-	$icmsTpl->assign('tribes_invitations', $rtn);
-	$icmsTpl->assign('lang_invitations', _MD_PROFILE_TRIBES_INVITATIONS);
-	$icmsTpl->assign('lang_accept', _MD_PROFILE_TRIBEUSER_ACCEPT);
-	unset($tribeusers);
+	// finally sort the array
+	usort($rtn, 'sortList');
+	$icmsTpl->assign('tribes', $rtn);
+	unset($tribes);
+	// get awaiting approvals
+	if ($isOwner) {
+		$profile_tribeuser_handler = icms_getmodulehandler('tribeuser');
+		$tribeusers = $profile_tribeuser_handler->getApprovals($ownTribes);
+		$rtn = array();
+		$i = 0;
+		foreach ($tribeusers as $tribeuser) {
+			$rtn[$i]['tribeuser_id'] = $tribeuser['tribeuser_id'];
+			$rtn[$i]['uid'] = $tribeuser['user_id'];
+			$rtn[$i]['uname'] = icms_getLinkedUnameFromId($tribeuser['user_id']);
+			$rtn[$i]['tribes_id'] = $tribeuser['tribe_id'];
+			$rtn[$i]['tribe_itemLink'] = $tribeuser['tribe_itemLink'];
+			$i++;
+		}
+		$icmsTpl->assign('tribes_approvals', $rtn);
+		$icmsTpl->assign('lang_approvals', _MD_PROFILE_TRIBES_APPROVALS);
+		$icmsTpl->assign('lang_approve', _MD_PROFILE_TRIBEUSER_APPROVE);
+		unset($tribeusers);
+	}
+	// get invitations
+	if ($isOwner) {
+		$tribeusers = $profile_tribeuser_handler->getInvitations($uid);
+		$rtn = array();
+		$i = 0;
+		foreach ($tribeusers as $tribeuser) {
+			$rtn[$i]['tribeuser_id'] = $tribeuser['tribeuser_id'];
+			$rtn[$i]['tribes_id'] = $tribeuser['tribe_id'];
+			$rtn[$i]['itemLink'] = $tribeuser['tribe_itemLink'];
+			$i++;
+		}
+		$icmsTpl->assign('tribes_invitations', $rtn);
+		$icmsTpl->assign('lang_invitations', _MD_PROFILE_TRIBES_INVITATIONS);
+		$icmsTpl->assign('lang_accept', _MD_PROFILE_TRIBEUSER_ACCEPT);
+		unset($tribeusers);
+	}
 }
+
 $icmsTpl->assign('image_ok', ICMS_IMAGES_SET_URL."/actions/button_ok.png");
 $icmsTpl->assign('image_cancel', ICMS_IMAGES_SET_URL."/actions/button_cancel.png");
 

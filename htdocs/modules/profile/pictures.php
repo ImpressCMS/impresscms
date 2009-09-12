@@ -26,9 +26,9 @@ function editpictures($picturesObj, $hideForm=false)
 			redirect_header($picturesObj->getItemLink(true), 3, _NOPERM);
 		}
 		$picturesObj->hideFieldFromForm(array('url', 'creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
-		$sform = $picturesObj->getSecureForm(_MD_PROFILE_PICTURES_EDIT, 'addpictures');
+		$sform = $picturesObj->getSecureForm($hideForm ? '' : _MD_PROFILE_PICTURES_EDIT, 'addpictures');
 		$sform->assign($icmsTpl, 'profile_picturesform');
-		$icmsTpl->assign('profile_category_path', $picturesObj->getVar('title') . ' > ' . _EDIT);
+		$icmsTpl->assign('lang_picturesform_title', _MD_PROFILE_PICTURES_EDIT);
 	} else {
 		if (!$profile_pictures_handler->userCanSubmit()) {
 			redirect_header(PROFILE_URL, 3, _NOPERM);
@@ -36,9 +36,9 @@ function editpictures($picturesObj, $hideForm=false)
 		$picturesObj->setVar('uid_owner', $icmsUser->uid());
 		$picturesObj->setVar('creation_time', time());
 		$picturesObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
-		$sform = $picturesObj->getSecureForm(_MD_PROFILE_PICTURES_SUBMIT, 'addpictures');
+		$sform = $picturesObj->getSecureForm($hideForm ? '' : _MD_PROFILE_PICTURES_SUBMIT, 'addpictures');
 		$sform->assign($icmsTpl, 'profile_picturesform');
-		$icmsTpl->assign('profile_category_path', _SUBMIT);
+		$icmsTpl->assign('lang_picturesform_title', _MD_PROFILE_PICTURES_SUBMIT);
 	}
 }
 

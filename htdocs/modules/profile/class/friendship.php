@@ -105,11 +105,13 @@ class ProfileFriendship extends IcmsPersistableObject {
 	}
 
 	function getAvatar() {
-		global $icmsUser;
+		global $icmsUser, $icmsConfigUser;
 		$uid = isset($_REQUEST['uid'])?intval($_REQUEST['uid']):$icmsUser->uid();
 		$friend = ($uid==$this->getVar('friend2_uid')) ? $this->getVar('friend1_uid') : $this->getVar('friend2_uid');
 		$member_handler =& xoops_gethandler('member');
 		$thisUser =& $member_handler->getUser($friend);
+		$avatar = $thisUser->gravatar();
+		if (!$icmsConfigUser['avatar_allow_gravatar'] && strpos($avatar, 'http://www.gravatar.com/avatar/') !== false) return false;
 		return '<img src="'.$thisUser->gravatar().'" />';
 	}
 

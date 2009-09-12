@@ -65,10 +65,12 @@ class ProfileTribepost extends IcmsPersistableSeoObject {
 	/**
 	 * Overridding IcmsPersistable::toArray() method to add a few info
 	 *
+	 * @global object $icmsUser current user object
+	 * @global array $icmsConfigUser user configuration
 	 * @return array of tribetopic info
 	 */
 	function toArray() {
-		global $icmsUser;
+		global $icmsUser, $icmsConfigUser;
 
 		$ret = parent :: toArray();
 		$ret['post_time'] = formatTimestamp($this->getVar('post_time', 'e'), 'm');
@@ -77,7 +79,8 @@ class ProfileTribepost extends IcmsPersistableSeoObject {
 		// get poster avatar
 		$member_handler =& xoops_gethandler('member');
 		$thisUser =& $member_handler->getUser($this->getVar('poster_uid'));
-		$ret['poster_avatar'] =  '<img src="'.$thisUser->gravatar().'" />';
+		$avatar = $thisUser->gravatar();
+		if ($icmsConfigUser['avatar_allow_gravatar'] || strpos($avatar, 'http://www.gravatar.com/avatar/') === false) $ret['poster_avatar'] =  '<img src="'.$thisUser->gravatar().'" />';
 		// get poster signature
 		if (trim($thisUser->getVar('user_sig')) && $this->getVar('attachsig')) {
 			$myts =& MyTextSanitizer::getInstance();

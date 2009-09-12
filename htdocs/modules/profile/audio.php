@@ -25,9 +25,9 @@ function editaudio($audioObj, $hideForm=false)
 			redirect_header($audioObj->getItemLink(true), 3, _NOPERM);
 		}
 		$audioObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url', 'url'));
-		$sform = $audioObj->getSecureForm(_MD_PROFILE_AUDIOS_EDIT, 'addaudio');
+		$sform = $audioObj->getSecureForm($hideForm ? '' : _MD_PROFILE_AUDIOS_EDIT, 'addaudio');
 		$sform->assign($icmsTpl, 'profile_audioform');
-		$icmsTpl->assign('profile_category_path', $audioObj->getVar('title') . ' > ' . _EDIT);
+		$icmsTpl->assign('lang_audioform_title', _MD_PROFILE_AUDIOS_EDIT);
 	} else {
 		if (!$profile_audio_handler->userCanSubmit()) {
 			redirect_header(PROFILE_URL, 3, _NOPERM);
@@ -35,9 +35,9 @@ function editaudio($audioObj, $hideForm=false)
 		$audioObj->setVar('uid_owner', $icmsUser->uid());
 		$audioObj->setVar('creation_time', time());
 		$audioObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
-		$sform = $audioObj->getSecureForm(_MD_PROFILE_AUDIOS_SUBMIT, 'addaudio');
+		$sform = $audioObj->getSecureForm($hideForm ? '' : _MD_PROFILE_AUDIOS_SUBMIT, 'addaudio');
 		$sform->assign($icmsTpl, 'profile_audioform');
-		$icmsTpl->assign('profile_category_path', _SUBMIT);
+		$icmsTpl->assign('lang_audioform_title', _MD_PROFILE_AUDIOS_SUBMIT);
 	}
 }
 

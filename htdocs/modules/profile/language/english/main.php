@@ -231,7 +231,6 @@ define("_MD_PROFILE_USERDETAILS","User details");
 define("_MD_PROFILE_USERCONTRIBUTIONS","User contributions");
 define("_MD_PROFILE_EDITPROFILE","Edit your profile");
 define("_MD_PROFILE_SELECTAVATAR","Upload pictures to your album and select one as your avatar.");
-define("_MD_PROFILE_NOAVATARYET","No avatar yet");
 define("_MD_PROFILE_MYPROFILE","My Profile");
 define("_MD_PROFILE_CONTACTINFO","Contact Info");
 define("_MD_PROFILE_SECURITY_CHECK_FAILED", "");

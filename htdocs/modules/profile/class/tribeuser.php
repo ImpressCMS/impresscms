@@ -72,10 +72,20 @@ class ProfileTribeuser extends IcmsPersistableObject {
 		return $this->getVar('user_id', 'e') == $icmsUser->uid();
 	}
 
+	/**
+	 * get avatar of the tribeuser
+	 *
+	 * @global array $icmsConfigUser user configuration
+	 * @return string tribeuser avatar
+	 */
 	function getTribeuserAvatar() {
+		global $icmsConfigUser;
+
 		$tribeUserId = $this->getVar('user_id', 'e');
 		$member_handler =& xoops_gethandler('member');
 		$thisUser =& $member_handler->getUser($tribeUserId);
+		$avatar = $thisUser->gravatar();
+		if (!$icmsConfigUser['avatar_allow_gravatar'] && strpos($avatar, 'http://www.gravatar.com/avatar/') !== false) return false;
 		return '<img src="'.$thisUser->gravatar().'" />';
 	}
 

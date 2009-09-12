@@ -1,9 +1,7 @@
 <{$form.javascript}>
 <form name="<{$form.name}>" id="<{$form.name}>" action="<{$form.action}>" method="<{$form.method}>" <{$form.extra}>>
   <table style="width: 100%" class="outer" cellspacing="1">
-    <tr>
-    <th colspan="2"><{$form.title}></th>
-    </tr>
+    <{if $form.title}><tr><th colspan="2"><{$form.title}></th></tr><{/if}>
     <!-- start of form elements loop -->
     <{foreach item=element from=$form.elements}>
       <{if $element.hidden != true}>

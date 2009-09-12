@@ -48,9 +48,11 @@ function edittribeuser($tribesObj, $hideForm=false) {
 	$tribeuserObj->setVar('tribe_id', $tribesObj->getVar('tribes_id'));
 	$tribeuserObj->setVar('user_id', $icmsUser->getVar('uid'));
 
-	$sform = $tribeuserObj->getSecureForm($real_uid == $tribesObj->getVar('uid_owner') ? _MD_PROFILE_TRIBEUSER_SUBMIT : _MD_PROFILE_TRIBEUSER_JOIN, 'addtribeuser');
+	$formtitle = $real_uid == $tribesObj->getVar('uid_owner') ? _MD_PROFILE_TRIBEUSER_SUBMIT : _MD_PROFILE_TRIBEUSER_JOIN;
+	$sform = $tribeuserObj->getSecureForm($hideForm ? '' : $formtitle, 'addtribeuser');
 	$sform->assign($icmsTpl, 'profile_tribeuserform');
 	$icmsTpl->assign('hideForm', $hideForm);
+	$icmsTpl->assign('lang_tribeuserform_title', $formtitle);
 }
 
 /**
@@ -67,8 +69,9 @@ function edittribes($tribesObj, $hideForm=false) {
 			redirect_header($tribesObj->getItemLink(true), 3, _NOPERM);
 		}
 		$tribesObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
-		$sform = $tribesObj->getSecureForm(_MD_PROFILE_TRIBES_EDIT, 'addtribes');
+		$sform = $tribesObj->getSecureForm($hideForm ? '' : _MD_PROFILE_TRIBES_EDIT, 'addtribes');
 		$sform->assign($icmsTpl, 'profile_tribesform');
+		$icmsTpl->assign('lang_tribesform_title', _MD_PROFILE_TRIBES_EDIT);
 	} else {
 		if (!$profile_tribes_handler->userCanSubmit()) {
 			redirect_header(PROFILE_URL, 3, _NOPERM);
@@ -76,8 +79,9 @@ function edittribes($tribesObj, $hideForm=false) {
 		$tribesObj->setVar('uid_owner', $icmsUser->uid());
 		$tribesObj->setVar('creation_time', time());
 		$tribesObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
-		$sform = $tribesObj->getSecureForm(_MD_PROFILE_TRIBES_SUBMIT, 'addtribes');
+		$sform = $tribesObj->getSecureForm($hideForm ? '' : _MD_PROFILE_TRIBES_SUBMIT, 'addtribes');
 		$sform->assign($icmsTpl, 'profile_tribesform');
+		$icmsTpl->assign('lang_tribesform_title', _MD_PROFILE_TRIBES_SUBMIT);
 	}
 }
 
@@ -115,8 +119,9 @@ function edittribepost($tribetopic_id, $tribepost_id, $tribesObj, $hideForm = fa
 			$tribepostObj->setVar('attachsig', 0);
 		}
 
-		$sform = $tribepostObj->getSecureForm($formtitle, 'addtribepost');
+		$sform = $tribepostObj->getSecureForm($hideForm ? '' : $formtitle, 'addtribepost');
 		$sform->assign($icmsTpl, 'profile_addpostform');
+		$icmsTpl->assign('lang_addpostform_title', $formtitle);
 	} else {
 		$tribetopicObj = $profile_tribetopic_handler->get($tribetopic_id);
 		// check permissions
@@ -139,8 +144,9 @@ function edittribepost($tribetopic_id, $tribepost_id, $tribesObj, $hideForm = fa
 		} else {
 			$tribepostObj->setVar('attachsig', 0);
 		}
-		$sform = $tribepostObj->getSecureForm($formtitle, 'addtribepost');
+		$sform = $tribepostObj->getSecureForm($hideForm ? '' : $formtitle, 'addtribepost');
 		$sform->assign($icmsTpl, 'profile_editpostform');
+		$icmsTpl->assign('lang_editpostform', $formtitle);
 	}
 }
 

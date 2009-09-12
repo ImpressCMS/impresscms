@@ -25,8 +25,9 @@ function editvideos($videosObj, $hideForm=false)
 			redirect_header($videosObj->getItemLink(true), 3, _NOPERM);
 		}
 		$videosObj->hideFieldFromForm(array('uid_owner', 'creation_time', 'meta_keywords', 'meta_description', 'short_url'));
-		$sform = $videosObj->getSecureForm(_MD_PROFILE_VIDEOS_EDIT, 'addvideos');
+		$sform = $videosObj->getSecureForm($hideForm ? '' : _MD_PROFILE_VIDEOS_EDIT, 'addvideos');
 		$sform->assign($icmsTpl, 'profile_videosform');
+		$icmsTpl->assign('lang_videosform_title', _MD_PROFILE_VIDEOS_EDIT);
 	} else {
 		if (!$profile_videos_handler->userCanSubmit()) {
 			redirect_header(PROFILE_URL, 3, _NOPERM);
@@ -34,8 +35,9 @@ function editvideos($videosObj, $hideForm=false)
 		$videosObj->setVar('uid_owner', $icmsUser->uid());
 		$videosObj->setVar('creation_time', time());
 		$videosObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
-		$sform = $videosObj->getSecureForm(_MD_PROFILE_VIDEOS_SUBMIT, 'addvideos');
+		$sform = $videosObj->getSecureForm($hideForm ? '' : _MD_PROFILE_VIDEOS_SUBMIT, 'addvideos');
 		$sform->assign($icmsTpl, 'profile_videosform');
+		$icmsTpl->assign('lang_videosform_title', _MD_PROFILE_VIDEOS_SUBMIT);
 	}
 }
 
