@@ -121,7 +121,7 @@
   <{if $allow_pictures}>
   <div id="profile-profile-pictures" class="outer">
     <h3 class="profile-profiletitle head">
-      <a href="pictures.php?uid=<{$uid_owner}>"><img src="images/lphoto.gif"  /></a>
+      <a href="pictures.php?uid=<{$uid_owner}>"><img src="images/lphoto.gif" title="<{$lang_pictures_goto}>" /></a>
       <{$lang_photos}>
     </h3>
     <{if $pictures|@count > 0}>
@@ -140,7 +140,7 @@
   <{if $allow_tribes}>
   <div id="profile-profile-tribes" class="outer">
     <h3 class="head">
-      <a href="tribes.php?uid=<{$uid_owner}>"><img src="images/tribes.gif"  /></a>
+      <a href="tribes.php?uid=<{$uid_owner}>"><img src="images/tribes.gif" title="<{$lang_tribes_goto}>" /></a>
       <{$lang_tribes}>
     </h3>
     <{if $tribes|@count > 0}>
@@ -207,7 +207,7 @@
   <{if $allow_friendship}>
   <div id="profile-profile-friends" class="outer">
     <h3 class="head">
-      <a href="friendship.php?uid=<{$uid_owner}>"><img src="images/friends.gif"  /></a>
+      <a href="friendship.php?uid=<{$uid_owner}>"><img src="images/friends.gif" title="<{$lang_friends_goto}>" /></a>
       <{$lang_friends}>
     </h3>
     <{if $friends|@count > 0}>
@@ -248,7 +248,7 @@
   <{if $allow_audio}>
   <div id="profile-profile-audio" class="outer">
     <h3 class="head">
-      <a href="audio.php?uid=<{$uid_owner}>"><img src="images/audio.gif"  /></a>
+      <a href="audio.php?uid=<{$uid_owner}>"><img src="images/audio.gif" title="<{$lang_audio_goto}>" /></a>
       <{$lang_audio}>
     </h3>
     <{if $audio}>
@@ -261,7 +261,7 @@
   <{if $allow_videos}>
   <div id="profile-profile-videos" class="outer">
     <h3 class="head">
-      <a href="videos.php?uid=<{$uid_owner}>"><img src="images/video.gif"  /></a>
+      <a href="videos.php?uid=<{$uid_owner}>"><img src="images/video.gif" title="<{$lang_video_goto}>" /></a>
       <{$lang_videos}>
     </h3>
     <div id="profile-profile-video">

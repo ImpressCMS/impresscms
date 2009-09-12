@@ -249,6 +249,7 @@ define("_MD_PROFILE_FRIENDSHIP_ACCEPTED", "Accepted friendships");
 define("_MD_PROFILE_FRIENDSHIP_REJECTED", "Rejected friendships (only you can see this)");
 define("_MD_PROFILE_FRIENDSHIP_ACCEPT", "Accept friendship");
 define("_MD_PROFILE_FRIENDSHIP_REJECT", "Reject friendship");
+define("_MD_PROFILE_GOTO", "goto: ");
 
 // configs.php
 define('_MD_PROFILE_CONFIGS_SUBMIT', 'Change Profile Settings');

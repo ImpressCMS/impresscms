@@ -87,6 +87,7 @@ if (in_array($clean_op,$valid_op,true) && is_object($icmsUser)){
 				$valid_status = array (PROFILE_FRIENDSHIP_STATUS_ACCEPTED, PROFILE_FRIENDSHIP_STATUS_REJECTED);
 				if (in_array($clean_status, $valid_status, true)) {
 					$friendshipObj->setVar('status', $clean_status);
+					$friendshipObj->store(true);
 					if (strpos(icms_getPreviousPage(), $friendshipObj->handler->_moduleUrl.$friendshipObj->handler->_page) !== false) {
 						header('Location: '.$friendshipObj->handler->_moduleUrl.$friendshipObj->handler->_page.'?uid='.$uid);
 					}
@@ -243,6 +244,7 @@ if ($permissions['pictures']) {
 	}
 	$icmsTpl->assign('pictures', $rtn);
 	unset($pictures);
+	$icmsTpl->assign('lang_pictures_goto', _MD_PROFILE_GOTO._MD_PROFILE_PHOTOS);
 }
 
 // audio
@@ -255,6 +257,7 @@ if ($permissions['audio']) {
 	}
 	$icmsTpl->assign('audio', $rtn);
 	unset($audios);
+	$icmsTpl->assign('lang_audio_goto', _MD_PROFILE_GOTO._MD_PROFILE_AUDIOS);
 }
 
 // friends
@@ -285,6 +288,7 @@ if ($permissions['friendship']) {
 		$icmsTpl->assign('lang_friendship_reject', _MD_PROFILE_FRIENDSHIP_REJECT);
 		unset($friends);
 	}
+	$icmsTpl->assign('lang_friends_goto', _MD_PROFILE_GOTO._MD_PROFILE_FRIENDS);
 }
 
 // video
@@ -297,6 +301,7 @@ if ($permissions['videos']) {
 	}
 	$icmsTpl->assign('video', $rtn);
 	unset($videos);
+	$icmsTpl->assign('lang_video_goto', _MD_PROFILE_GOTO._MD_PROFILE_VIDEOS);
 }
 
 // tribes
@@ -360,6 +365,7 @@ if ($permissions['tribes']) {
 		$icmsTpl->assign('lang_accept', _MD_PROFILE_TRIBEUSER_ACCEPT);
 		unset($tribeusers);
 	}
+	$icmsTpl->assign('lang_tribes_goto', _MD_PROFILE_GOTO._MD_PROFILE_TRIBES);
 }
 
 $icmsTpl->assign('image_ok', ICMS_IMAGES_SET_URL."/actions/button_ok.png");
