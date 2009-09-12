@@ -923,7 +923,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
         */
         $table = new IcmsDatabasetable('imagecategory');
         if (!$table->fieldExists('imgcat_foldername')) {
-	        $table->addNewField('imgcat_pid', "varchar(100) default ''");
+	        $table->addNewField('imgcat_foldername', "varchar(100) default ''");
 	        $icmsDatabaseUpdater->updateTable($table);
         }
         if (!$table->fieldExists('imgcat_pid')) {
