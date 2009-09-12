@@ -29,6 +29,7 @@ Revision:
 * #788: Setting control panel blocks to visible (skenow)
 * #791: Error during upgrade (dbversion 29) - alter table conf (skenow)
 * #794: HTMLPurifier options missing after upgrade
+* #543: Block positions don't sort by title
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009

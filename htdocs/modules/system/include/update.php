@@ -733,7 +733,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	 }
 
 	 $newDbVersion = 29;
-	 
+    	 
 	 if($dbVersion < $newDbVersion)
 	 {
 		  if(getDbValue($icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PURIFIER"') == 0)
@@ -888,10 +888,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_MaxImgLength', '_MD_AM_PURIFIER_CSS_MAXIMGLEN', '1200px', '_MD_AM_PURIFIER_CSS_MAXIMGLENDSC', 'textbox', 'text', $p);
 		  $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_Proprietary', '_MD_AM_PURIFIER_CSS_PROPRIETARY', '1', '_MD_AM_PURIFIER_CSS_PROPRIETARYDSC', 'yesno', 'int', $p);
-/* These options were missing 
- * @todo Insert these in the proper order to match a full install
- */
-/* End of missing options */          
 		  
 	 }
 
