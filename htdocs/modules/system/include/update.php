@@ -1026,6 +1026,12 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
             $icmsDatabaseUpdater->runQuery($sql_page_update, $goodmsg, $badmsg, true);
         }
     }
+    $newDbVersion = 35;
+
+    if ($dbVersion < $newDbVersion) {
+        echo $action;
+        $icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('newblocks') . "` WHERE show_func='b_system_waiting_show' AND block_type='S'");
+    }
     
 	echo "</code>";
 	
