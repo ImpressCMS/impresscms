@@ -1,3 +1,3 @@
-<{foreach item=provider from=$block}>
+<{foreach item=provider from=$block.provider}>
 <a href="#" onclick="window.open(<{$provider.link}>);return false;" rel="nofollow"><img src="<{$block.imagepath}><{$provider.image}>" title="<{$provider.title}>"/></a>
 <{/foreach}>
