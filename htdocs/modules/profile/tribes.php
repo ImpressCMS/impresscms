@@ -466,26 +466,40 @@ if (in_array($clean_op,$valid_op,true)){
 							'lang_closed' => _MD_PROFILE_TRIBETOPIC_CLOSED,
 						));
 					}
+				} else {
+					$icmsTpl->assign('lang_joinfirst', _MD_PROFILE_TRIBES_JOINFIRST);
 				}
+			} elseif (isset($_POST['search_title'])) {
+				$clean_tribes_title = trim(StopXSS($_POST['search_title']));
+				$tribes = array();
+				$tribes['search'] = $profile_tribes_handler->searchTribes($clean_tribes_title);
+				$icmsTpl->assign('profile_tribes', $tribes);
+				$icmsTpl->assign('lang_tribes_search_title', sprintf(_MD_PROFILE_TRIBES_SEARCH_TITLE, $clean_tribes_title));
+				if (count($tribes['search']) == 0) $icmsTpl->assign('lang_search_noresults', sprintf(_MD_PROFILE_TRIBES_SEARCH_NORESULTS, $clean_tribes_title));
+				$icmsTpl->assign('profile_tribes_search', true);
 			} elseif ($clean_uid > 0) {
 				$tribes = array();
 				$tribes['own'] = $profile_tribes_handler->getTribes(false, false, $clean_uid);
 				$tribes['member'] = $profile_tribes_handler->getMembershipTribes($clean_uid);
 				$icmsTpl->assign('profile_tribes', $tribes);
 				if ((count($tribes['own']) + count($tribes['member'])) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_TRIBES_NOCONTENT);
+				$icmsTpl->assign('profile_tribes_search', true);
 			} elseif ($real_uid > 0) {
 				$tribes = array();
 				$tribes['own'] = $profile_tribes_handler->getTribes(false, false, $real_uid);
 				$tribes['member'] = $profile_tribes_handler->getMembershipTribes($real_uid);
 				$icmsTpl->assign('profile_tribes', $tribes);
 				if ((count($tribes['own']) + count($tribes['member'])) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_TRIBES_NOCONTENT);
+				$icmsTpl->assign('profile_tribes_search', true);
 			} else {
 				redirect_header(PROFILE_URL);
 			}
 
 			icms_makeSmarty(array(
-				'lang_tribes_own'        => sprintf(_MD_PROFILE_TRIBES_OWN),
-				'lang_tribes_membership' => sprintf(_MD_PROFILE_TRIBES_MEMBERSHIPS)
+				'lang_tribes_own'           => _MD_PROFILE_TRIBES_OWN,
+				'lang_tribes_membership'    => _MD_PROFILE_TRIBES_MEMBERSHIPS,
+				'lang_tribes_search'        => _MD_PROFILE_TRIBES_SEARCH,
+				'lang_tribes_search_submit' => _SEARCH
 			));
 
 			/**

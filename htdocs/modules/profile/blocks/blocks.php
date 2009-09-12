@@ -29,9 +29,9 @@ function b_profile_friends_show($options) {
 			$block['friends'][$i]['sort'] = $friend['friendship_uname'];
 			$i++;
 		}
+		if (count($block['friends']) > 0) usort($block['friends'], 'sortFriendsArray');
 	}
 
-	usort($block['friends'], 'sortFriendsArray');
 	return $block;
 }
 

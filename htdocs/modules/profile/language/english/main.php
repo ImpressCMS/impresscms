@@ -213,6 +213,10 @@ define("_MD_PROFILE_TRIBETOPIC_SHOW_LAST_POST", "Show last post");
 define("_MD_PROFILE_TRIBETOPIC_CLOSE", "Close");
 define("_MD_PROFILE_TRIBETOPIC_CLOSED", "Closed");
 define("_MD_PROFILE_TRIBETOPIC_REOPEN", "Reopen");
+define("_MD_PROFILE_TRIBES_JOINFIRST", "You have to be a member of this tribe to see all others members and disucssions.");
+define("_MD_PROFILE_TRIBES_SEARCH", "Search a tribe");
+define("_MD_PROFILE_TRIBES_SEARCH_TITLE", "Search results for: %s");
+define("_MD_PROFILE_TRIBES_SEARCH_NORESULTS", "No tribes found for: %s");
 
 //videos.php
 define("_MD_PROFILE_VIDEOS_NOCONTENT", "There are no videos yet");

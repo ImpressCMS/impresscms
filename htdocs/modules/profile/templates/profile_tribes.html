@@ -154,6 +154,7 @@
     <{includeq file='db:system_common_form.html' form=$profile_addpostform}>
     <{/if}>
     <{/if}>
+    <{if !$showContent}><div id="profile-nocontent" class="outer"><p class="odd"><{$lang_joinfirst}></p></div><{/if}>
   </div>
   <div id="profile-tribes-right">
     <{if $profile_tribe.tribe_img}>
@@ -171,6 +172,32 @@
   </div>
 </div>
 <div class="clear"></div>
+<{/if}>
+<{if $profile_tribes_search}>
+<div id="profile-tribes-search" class="odd outer">
+  <form method="post" action="tribes.php" id="searchtribes" name="searchttribes">
+    <strong><{$lang_tribes_search}>:</strong>
+    <input type="text" maxlength="255" size="20" name="search_title" id="search_title" />
+    <input type="submit" value="<{$lang_tribes_search_submit}>" name="search_submit" />
+  </form>
+</div>
+<div class="clear"></div>
+<{/if}>
+<{if $profile_tribes.search}>
+<div class="profile-tribes-container outer">
+<h2 class="head"><{$lang_tribes_search_title}></h2>
+<{foreach name=tribes item=tribe from=$profile_tribes.search}>
+<div class="profile-tribes-tribe">
+  <{$tribe.picture_link}>
+  <br /><{$tribe.title}><br />
+</div>
+<{if $smarty.foreach.tribes.iteration is div by 4 || $smarty.foreach.tribes.last == TRUE}>
+<div class="clear"></div>
+<{/if}>
+<{/foreach}>
+</div>
+<{elseif $lang_search_noresults}>
+<div id="profile-nocontent" class="outer"><p class="odd"><{$lang_search_noresults}></p></div>
 <{/if}>
 <{if $profile_tribes.own}>
 <div class="profile-tribes-container outer">

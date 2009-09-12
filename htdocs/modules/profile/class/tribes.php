@@ -231,10 +231,10 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	 * @param int $limit limit of tribes to return
 	 * @param int $uid_owner if specifid, only the tribes of this user will be returned
 	 * @param int $tribes_id ID of a single tribe to retrieve, may also be an array of tribe IDs
-	 * @param bool $title true to sort by title ascending
+	 * @param bool $sortByTitle true to sort by title ascending
 	 * @return CriteriaCompo $criteria
 	 */
-	function getTribesCriteria($start = 0, $limit = 0, $uid_owner = false, $tribes_id = false, $title = false) {
+	function getTribesCriteria($start = 0, $limit = 0, $uid_owner = false, $tribes_id = false, $sortByTitle = false) {
 		global $icmsUser;
 
 		$criteria = new CriteriaCompo();
@@ -244,7 +244,7 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 		if ($limit) {
 			$criteria->setLimit(intval($limit));
 		}
-		if ($title) {
+		if ($sortByTitle) {
 			$criteria->setSort('title');
 		} else {
 			$criteria->setSort('creation_time');
@@ -280,11 +280,11 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	 * @param int $limit max tribes to display
 	 * @param int $uid_owner if specifid, only the tribe of this user will be returned
 	 * @param int $tribes_id ID of a single tribe to retrieve, may also be an array of tribe IDs
-	 * @param bool $title true to sort by title ascending
+	 * @param bool $sortByTitle true to sort by title ascending
 	 * @return array of tribes
 	 */
-	function getTribes($start = 0, $limit = 0, $uid_owner = false, $tribes_id = false, $title = false) {
-		$criteria = $this->getTribesCriteria($start, $limit, $uid_owner, $tribes_id, $title);
+	function getTribes($start = 0, $limit = 0, $uid_owner = false, $tribes_id = false, $sortByTitle = false) {
+		$criteria = $this->getTribesCriteria($start, $limit, $uid_owner, $tribes_id, $sortByTitle);
 		$ret = $this->getObjects($criteria, true, false);
 		return $ret;
 	}
@@ -328,6 +328,15 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 		} else {
 			return array();
 		}
+	}
+
+	function searchTribes($title) {
+		$criteria = new CriteriaCompo();
+		$criteria->setSort('title');
+		$criteria->add(new Criteria('title', '%'.$title.'%', 'LIKE'));
+		$criteria->add(new Criteria('tribe_desc', '%'.$title.'%', 'LIKE'), 'OR');
+		$ret = $this->getObjects($criteria, true, false);
+		return $ret;
 	}
 
 	function getTribes_securityArray() {
@@ -470,7 +479,7 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	 * @return bool
 	 */
 	function beforeFileUnlink(&$obj) {
-		$this->_tribesImgBeforeUnlink = $obj->getVar('tribe_img');icms_debug($this->_tribesImgBeforeUnlink);
+		$this->_tribesImgBeforeUnlink = $obj->getVar('tribe_img');
 		return true;
 	}
 
@@ -482,7 +491,7 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	 * @param object $obj ProfileTribes object
 	 * @return bool
 	 */
-	function afterFileUnlink(&$obj) {icms_debug($obj->getVar('tribe_img'));
+	function afterFileUnlink(&$obj) {
 		if ($this->_tribesImgBeforeUnlink == $obj->getVar('tribe_img')) return true;
 		
 		$imgPath = ICMS_UPLOAD_PATH.'/profile/tribes/';
