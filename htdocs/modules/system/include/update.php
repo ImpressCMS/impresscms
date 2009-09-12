@@ -743,7 +743,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 		  echo $action;
 		  $table = new IcmsDatabasetable('config');
-		  $icmsDatabaseUpdater->runQuery("ALTER TABLE `".$table->name()."` MODIFY conf_name VARCHAR(75) NOT NULL default = ''",'Successfully altered field conf_name in config','');
+		  $icmsDatabaseUpdater->runQuery("ALTER TABLE `".$table->name()."` MODIFY conf_name VARCHAR(75) NOT NULL default ''",'Successfully altered field conf_name in config','');
 		  unset($table);
 
 		  include_once ICMS_ROOT_PATH.'/include/functions.php';
