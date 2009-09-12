@@ -908,6 +908,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
     }
 
 /* 1.2 beta release */
+
     $newDbVersion = 32;
     /* this was in dbversion 18, but there were errors discovered after 1.2 beta relase */
     if ($dbVersion < $newDbVersion) {
@@ -944,13 +945,40 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
             
     }
     $newDbVersion = 33;
-        /* The admin control panel now consists of blocks - these need to be set as visible
-         * Control Panel, System Warnings, Modules Installed 
-         */
+    /* 
+     * New symlinks need to be added to the db 
+     * @todo Create language constants for the page names
+     */
     if ($dbVersion < $newDbVersion) {
-    
+        $table = new IcmsDatabasetable('icmspage');
+        $new_pages = array(
+            "NULL, 1, 'Admin Control Panel', 'admin.php', 1",
+            "NULL, 1, 'Avatars', 'modules/system/admin.php?fct=avatars*', 1",
+            "NULL, 1, 'Banners', 'modules/system/admin.php?fct=banners*', 1",
+            "NULL, 1, 'Blocks Admin', 'modules/system/admin.php?fct=blocksadmin*', 1",
+            "NULL, 1, 'Block Positions', 'modules/system/admin.php?fct=blockspadmin*', 1",
+            "NULL, 1, 'Comments', 'modules/system/admin.php?fct=comments*', 1",
+            "NULL, 1, 'Find Users', 'modules/system/admin.php?fct=findusers*', 1",
+            "NULL, 1, 'Custom Tag', 'modules/system/admin.php?fct=customtag*', 1",
+            "NULL, 1, 'Groups', 'modules/system/admin.php?fct=groups*', 1",
+            "NULL, 1, 'Image Manager', 'modules/system/admin.php?fct=images*', 1",
+            "NULL, 1, 'Mail Users', 'modules/system/admin.php?fct=mailusers*', 1",
+            "NULL, 1, 'Modules Admin', 'modules/system/admin.php?fct=modulesadmin*', 1",
+            "NULL, 1, 'Symlink Manager', 'modules/system/admin.php?fct=pages*', 1",
+            "NULL, 1, 'Preferences', 'modules/system/admin.php?fct=preferences*', 1",
+            "NULL, 1, 'Smilies', 'modules/system/admin.php?fct=smilies*', 1",
+            "NULL, 1, 'Templates', 'modules/system/admin.php?fct=tplsets*', 1",
+            "NULL, 1, 'User Ranks', 'modules/system/admin.php?fct=userrank*', 1",
+            "NULL, 1, 'User Edit', 'modules/system/admin.php?fct=users*', 1",
+            "NULL, 1, 'Version Checker', 'modules/system/admin.php?fct=version*', 1"
+        );
+        foreach( $new_pages as $new_page) {
+            $table->setData($new_page);
+        }
+        $table->addData();
+        unset($table);
     }
-    
+        
 	echo "</code>";
 	
 	if ($from_112){	
