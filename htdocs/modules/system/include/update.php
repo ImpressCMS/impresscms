@@ -758,7 +758,11 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 		  $p = 0;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'enable_purifier', '_MD_AM_PURIFIER_ENABLE', '1', '_MD_AM_PURIFIER_ENABLEDSC', 'yesno', 'int', $p);
-		  $p++;
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DefinitionID', '_MD_AM_PURIFIER_URI_DEFID', '1', '_MD_AM_PURIFIER_URI_DEFIDDSC', 'textbox', 'text', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DefinitionRev', '_MD_AM_PURIFIER_URI_DEFREV', '1', '_MD_AM_PURIFIER_URI_DEFREVDSC', 'textbox', 'int', $p);
+          $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_Host', '_MD_AM_PURIFIER_URI_HOST', addslashes($host_domain), '_MD_AM_PURIFIER_URI_HOSTDSC', 'textbox', 'text', $p);
 		  $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_Base', '_MD_AM_PURIFIER_URI_BASE', addslashes($host_base), '_MD_AM_PURIFIER_URI_BASEDSC', 'textbox', 'text', $p);
@@ -853,6 +857,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedRel', '_MD_AM_PURIFIER_ATTR_ALLOWREL', addslashes(serialize(array('external','nofollow','external nofollow','lightbox'))), '_MD_AM_PURIFIER_ATTR_ALLOWRELDSC', 'textsarea', 'array', $p);
 		  $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedClasses', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSES', '', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSESDSC', 'textsarea', 'array', $p);
+          $p++;
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_ForbiddenClasses', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSES', '1', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSESDSC', 'textsarea', 'array', $p);
 		  $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_DefaultInvalidImage', '_MD_AM_PURIFIER_ATTR_DEFINVIMG', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGDSC', 'textbox', 'text', $p);
 		  $p++;
@@ -882,7 +888,11 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_MaxImgLength', '_MD_AM_PURIFIER_CSS_MAXIMGLEN', '1200px', '_MD_AM_PURIFIER_CSS_MAXIMGLENDSC', 'textbox', 'text', $p);
 		  $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_Proprietary', '_MD_AM_PURIFIER_CSS_PROPRIETARY', '1', '_MD_AM_PURIFIER_CSS_PROPRIETARYDSC', 'yesno', 'int', $p);
-
+/* These options were missing 
+ * @todo Insert these in the proper order to match a full install
+ */
+/* End of missing options */          
+		  
 	 }
 
 	$newDbVersion = 30;
