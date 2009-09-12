@@ -26,6 +26,7 @@ Revision:
 * #787: Properly modifies the imagecategory table during an upgrade from previous versions (skenow)
 * #351: imProfile: fixed field option handling on search form | ticket from addons (Phoenyx)
 * #790: Adding new symlinks during upgrade (skenow)
+* #788: Setting control panel blocks to visible
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009

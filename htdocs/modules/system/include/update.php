@@ -978,7 +978,49 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
         $table->addData();
         unset($table);
     }
+    
+    $newDbVersion = 34;
+        /* The admin control panel now consists of blocks - these need to be set as visible
+         * Control Panel, System Warnings, Modules Installed 
+         */
+    if ($dbVersion < $newDbVersion) {
+        $admin_blocks = array(
+            array( 'b_system_admin_cp_show', 'page_topleft_admin' ),
+            array( 'b_system_admin_modules_show','page_topright_admin' ),
+            array( 'b_system_admin_warnings_show', 'page_topcenter_admin' )
+        );
+        /* Get block positions */
+        $sql = 'SELECT id, pname FROM ' . $icmsDB->prefix('block_positions')
+            . ' WHERE pname = "page_topleft_admin"'
+            . ' OR pname = "page_topright_admin"'
+            . ' OR pname = "page_topcenter_admin"';
+        $result = $icmsDB->query($sql);
+        while ($row = $icmsDB->fetchArray($result)) {
+            $block_positions[$row['pname']] = $row['id'];
+        }
+        /* Get symlink id for Admin Control Panel */
+        $page_id = getDbValue($icmsDB, 'icmspage', 'page_id', 'page_url="admin.php"');
         
+        foreach( $admin_blocks as $admin_block ) {
+        /* Get block ids for Control Panel, System Warnings, Installed Modules */
+            $sql_find = 'SELECT bid FROM `' . $icmsDB->prefix('newblocks') 
+                . '` WHERE show_func="' . $admin_block[0] . '"';
+            $goodmsg = $admin_block[0] . ' updated';
+            $badmsg = $admin_block[0] . ' failed';
+            $result = $icmsDB->query($sql_find);
+            list($block_id) = $icmsDB->fetchRow($result);
+        /* Modify the visible, side and visiblein properties of the blocks */
+            $sql_update = 'UPDATE `' . $icmsDB->prefix('newblocks')
+                . '` SET `visible`=1, `side`=' . $block_positions[$admin_block[1]]
+                . ' WHERE `bid`=' . $block_id;
+            $icmsDatabaseUpdater->runQuery($sql_update, $goodmsg, $badmsg, true);
+            $sql_page_update = 'UPDATE `' . $icmsDB->prefix('block_module_link')
+                . '` SET `module_id`=1, `page_id`=' . $page_id
+                . ' WHERE `block_id`='. $block_id;
+            $icmsDatabaseUpdater->runQuery($sql_page_update, $goodmsg, $badmsg, true);
+        }
+    }
+    
 	echo "</code>";
 	
 	if ($from_112){	
