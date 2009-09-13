@@ -64,7 +64,6 @@ if (!$page){
 
 if(!empty($page)){
 	$page = (is_int($page)) ? intval($page) : $page;
-	$page = str_replace('-',' ',$page);
 	$criteria = $content_content_handler->getContentsCriteria(0,1,false,false,$page,false,'content_id','DESC');
 	$content = $content_content_handler->getObjects($criteria);
 	$contentObj = false;
