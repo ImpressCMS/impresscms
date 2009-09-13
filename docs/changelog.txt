@@ -8,6 +8,7 @@ Revision:
 * #322: imProfile: added "no content" messages to all content views | ticket from addons (Phoenyx)
 * #---: introducing new IPF events beforeFileUnlink and afterFileUnlink (Phoenyx)
 * #353: imProfile: tribes can be searched again | ticket from addons (Phoenyx)
+* #360: content: Nicer templates + icons for the content module. close (sato-san)
 
 '''Fixed'''
 * #341: imProfile: don't show profile for inactive users | tickets from addons (Phoenyx)

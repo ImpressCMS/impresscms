@@ -3,18 +3,19 @@
 }
 
 .content_content_title, a.content_content_title {
-    padding: 0;
-    padding-bottom:2px;
-    margin:0;
+	background: url(../images/00-title.gif) no-repeat left center;
+    padding: 0 0 0 18px;
+    margin:5px 0 0 0;
     font-size: 18px;
     border-bottom: 1px solid #333333;
 }
 
 .content_content_info {
+	background: url(../images/00-time.gif) no-repeat right center;
+	background-color: #efefef;
     height: 15px;
-    padding: 2px;
+    padding: 2px 22px 2px 2px;
     margin: 0;
-    background: #efefef;
     font-size: 11px;
     font-style:italic;
     font-weight:normal;
