@@ -58,10 +58,10 @@ function profile_db_upgrade_1() {
 	$notify_method_options = array( XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE,
 									XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM,
 									XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL);
-	addField('user_icq', _PROFILE_MI_ICQ_TITLE, _PROFILE_MI_ICQ_DESCRIPTION, 1, 'textbox', 1, 1, 1, array(), 2, 255);
-	addField('user_aim', _PROFILE_MI_AIM_TITLE, _PROFILE_MI_AIM_DESCRIPTION, 1, 'textbox', 1, 2, 1, array(), 2, 255);
-	addField('user_yim', _PROFILE_MI_YIM_TITLE, _PROFILE_MI_YIM_DESCRIPTION, 1, 'textbox', 1, 3, 1, array(), 2, 255);
-	addField('user_msnm', _PROFILE_MI_MSN_TITLE, _PROFILE_MI_MSN_DESCRIPTION, 1, 'textbox', 1, 4, 1, array(), 2, 255);
+	addField('user_aim', _PROFILE_MI_AIM_TITLE, _PROFILE_MI_AIM_DESCRIPTION, 1, 'textbox', 1, 1, 1, array(), 2, 255);
+	addField('user_icq', _PROFILE_MI_ICQ_TITLE, _PROFILE_MI_ICQ_DESCRIPTION, 1, 'textbox', 1, 2, 1, array(), 2, 255);
+	addField('user_msnm', _PROFILE_MI_MSN_TITLE, _PROFILE_MI_MSN_DESCRIPTION, 1, 'textbox', 1, 3, 1, array(), 2, 255);
+	addField('user_yim', _PROFILE_MI_YIM_TITLE, _PROFILE_MI_YIM_DESCRIPTION, 1, 'textbox', 1, 4, 1, array(), 2, 255);
 	addField('name', _US_REALNAME, '', 2, 'textbox', 1, 1, 1, array(), 1, 255);
 	addField('user_from', _PROFILE_MI_FROM_TITLE, _PROFILE_MI_FROM_DESCRIPTION, 2, 'textbox', 1, 2, 1, array(), 2, 255);
 	addField('timezone_offset', _US_TIMEZONE, '', 2, 'timezone', 1, 3, 1, array(), 2, 0);

@@ -89,6 +89,11 @@ class ProfileTribeuser extends IcmsPersistableObject {
 		return '<img src="'.$thisUser->gravatar().'" />';
 	}
 
+	/**
+	 * get linked tribe name
+	 *
+	 * @return mixed itemLink of tribe or tribe_id if no tribe was found
+	 */
 	function getTribeName() {
 		$profile_tribes_handler = icms_getModuleHandler('tribes');
 		$tribes = $profile_tribes_handler->getTribes(0, 1, false, $this->getVar('tribe_id'));
@@ -96,9 +101,24 @@ class ProfileTribeuser extends IcmsPersistableObject {
 		return $this->getVar('tribe_id');
 	}
 
+	/**
+	 * get linked tribeuser user name from id
+	 *
+	 * @return string linked user name
+	 */
 	function getTribeuserSender() {
 		return icms_getLinkedUnameFromId($this->getVar('user_id', 'e'));
 	}
+
+	/**
+	 * get id of the tribeuser
+	 *
+	 * @return int tribeuser id
+	 */
+	function getTribeuserId() {
+		return $this->getVar('tribeuser_id');
+	}
+
 	/**
 	 * Overridding IcmsPersistable::toArray() method to add a few info
 	 *

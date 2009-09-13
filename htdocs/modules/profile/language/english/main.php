@@ -225,7 +225,6 @@ define("_MD_PROFILE_VIDEOS_EDIT", "Edit existing video");
 define("_MD_PROFILE_VIDEOS_CREATED", "Video successfully added");
 define("_MD_PROFILE_VIDEOS_MODIFIED", "Video successfully modified");
 define("_MD_PROFILE_VIDEOS_VIDEO", "Video");
-define("_MD_PROFILE_VIDEOS_TITLE", "Video title");
 define("_MD_PROFILE_VIDEOS_DESCRIPTION", "Video description");
 define("_MD_PROFILE_VIDEOS_ACTIONS", "Actions");
 

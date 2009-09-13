@@ -71,10 +71,10 @@
   <{if $user_websiteurl}><p class="<{cycle values='even,odd'}>"><img src="images/url.gif" /><span class="profile-profileinfo-label"><{$lang_website}>:</span><span class="profile-profileinfo-value"><{$user_websiteurl}></span></p><{/if}>
   <{if $isAnonym!=1 && $user_email}><p class="<{cycle values='even,odd'}>"><img src="images/email.gif" /><span class="profile-profileinfo-label"><{$lang_email}>:</span><span class="profile-profileinfo-value"><{mailto address=$user_email encode="javascript"}></span></p><{/if}>
   <{if $isAnonym!=1 && $isOwner!=1}><p class="<{cycle values='even,odd'}>"><img src="images/email.gif" /><span class="profile-profileinfo-label"><{$lang_privmsg}>:</span><span class="profile-profileinfo-value"><a href="javascript:openWithSelfMain('<{$icms_url}>/pmlite.php?send2=1&amp;to_userid=<{$uid_owner}>', 'pmlite', 450, 380);"><img src="<{$icms_url}>/images/icons/pm.gif" alt="Send Private Message to suico" /></a></span></p><{/if}>
-  <{if $user_aim}><p class="<{cycle values='even,odd'}>"><img src="images/aim.gif" /> <span class="profile-profileinfo-label"><{$lang_aim}>:</span><span class="profile-profileinfo-value"><{$user_aim}></span></p><{/if}>
+  <{if $user_aim}><p class="<{cycle values='even,odd'}>"><img src="images/aim.gif" /><span class="profile-profileinfo-label"><{$lang_aim}>:</span><span class="profile-profileinfo-value"><{$user_aim}></span></p><{/if}>
   <{if $user_icq}><p class="<{cycle values='even,odd'}>"><img src="images/icq.gif" /><span class="profile-profileinfo-label"><{$lang_icq}>:</span><span class="profile-profileinfo-value"><{$user_icq}></span><img src="http://status.icq.com/online.gif?icq=<{$user_icq}>&img=21" /></p><{/if}>
-  <{if $user_msnm}><p class="<{cycle values='even,odd'}>n"><img src="images/amsn.gif" /> <span class="profile-profileinfo-label"><{$lang_msnm}>:</span><span class="profile-profileinfo-value"><{$user_msnm}></span></p><{/if}>
-  <{if $user_yim}><p class="<{cycle values='even,odd'}>"><img src="images/ym.gif" /> <span class="profile-profileinfo-label"><{$lang_yim}>:</span><span class="profile-profileinfo-value"><{$user_yim}></span></p><{/if}>
+  <{if $user_msnm}><p class="<{cycle values='even,odd'}>"><img src="images/amsn.gif" /><span class="profile-profileinfo-label"><{$lang_msnm}>:</span><span class="profile-profileinfo-value"><{$user_msnm}></span></p><{/if}>
+  <{if $user_yim}><p class="<{cycle values='even,odd'}>"><img src="images/ym.gif" /><span class="profile-profileinfo-label"><{$lang_yim}>:</span><span class="profile-profileinfo-value"><{$user_yim}></span></p><{/if}>
 </div>
 <{/if}>
 <{if $allow_profile_stats}>

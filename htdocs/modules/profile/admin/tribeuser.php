@@ -88,7 +88,7 @@ if (in_array($clean_op,$valid_op,true)) {
 
 			include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
 			$objectTable = new IcmsPersistableTable($profile_tribeuser_handler);
-			$objectTable->addColumn(new IcmsPersistableColumn('tribeuser_id'));
+			$objectTable->addColumn(new IcmsPersistableColumn('tribeuser_id', _GLOBAL_LEFT, false, 'getTribeuserId'));
 			$objectTable->addColumn(new IcmsPersistableColumn('tribe_id', _GLOBAL_LEFT, false, 'getTribeName', false, false, false));
 			$objectTable->addColumn(new IcmsPersistableColumn('user_id', _GLOBAL_LEFT, false, 'getTribeuserSender', false, false, false));
 
