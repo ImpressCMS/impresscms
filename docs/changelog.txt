@@ -32,6 +32,7 @@ Revision:
 * #794: HTMLPurifier options missing after upgrade (skenow)
 * #543: Block positions don't sort by title (skenow)
 * #792: Old system waiting block not deleted (skenow)
+* #795: removing clear text password from mail template (skenow)
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009
