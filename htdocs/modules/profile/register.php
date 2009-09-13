@@ -206,7 +206,7 @@ switch ( $op ) {
 	default:
 		include_once 'include/forms.php';
 		$reg_form =& getRegisterForm($newuser, $profile, 0, $steps[0]);
-		assign($reg_form, &$xoopsTpl);
+		assign($reg_form, $xoopsTpl);
 		$xoopsTpl->assign('current_step', 0);
 		break;
 }
@@ -289,7 +289,7 @@ function postSaveProcess($newuser) {
 	return '';
 }
 
-function assign($form, $tpl) {
+function assign($form, &$tpl) {
 	$i = 0;
 	$req_elements = $form->getRequired();
 	$required = array();
