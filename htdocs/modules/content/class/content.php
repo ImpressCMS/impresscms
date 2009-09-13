@@ -559,6 +559,8 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		
 		if ($content_id) {
 			$crit = new CriteriaCompo(new Criteria('short_url', $content_id,'LIKE'));
+			$alt_content_id = str_replace('-',' ',$content_id);
+			$crit->add(new Criteria('short_url', $alt_content_id),'OR'); //Added for backward compatiblity in case short_url contains spaces instead of dashes.
 			$crit->add(new Criteria('content_id', $content_id),'OR');
 			$criteria->add($crit);	
 		}
