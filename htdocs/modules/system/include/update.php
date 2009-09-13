@@ -23,9 +23,9 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	global $icmsConfig, $xoTheme;
 	$icmsDB = $GLOBALS['xoopsDB'];
-	
+
 	$from_112 = false;
-	
+
 	$oldversion  = $module->getVar('version');
 	if ($oldversion < 120) {
 		$result = $icmsDB->query("SELECT t1.tpl_id FROM ".$icmsDB->prefix('tplfile')." t1, ".$icmsDB->prefix('tplfile')." t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id");
@@ -395,7 +395,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->db->queryF("UPDATE `" . $icmsDatabaseUpdater->db->prefix('config') . "` SET conf_formtype = 'textsarea', conf_valuetype = 'text' WHERE conf_name = 'multi_login_msg'");
 	}
 /* 1.1.2 released */
-	
+
 	$newDbVersion = 12;
 
 	if ($dbVersion < $newDbVersion) {
@@ -714,7 +714,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		if (getDbValue($icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_AUTOTASKS"') == 0) {
 			$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configcategory") . " (confcat_id,confcat_name) VALUES (13, '_MD_AM_AUTOTASKS')");
 		}
-		
+
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF, 'sourceeditor_default', '_MD_AM_SRCEDITOR_DEFAULT', 'editarea', '_MD_AM_SRCEDITOR_DEFAULT_DESC', 'editor_source', 'text', 16);
 		$icmsDatabaseUpdater->insertConfig(IM_CONF_AUTOTASKS, 'autotasks_system', '_MD_AM_AUTOTASKS_SYSTEM', 'internal', '_MD_AM_AUTOTASKS_SYSTEMDSC', 'autotasksystem', 'text', 1);
 		$icmsDatabaseUpdater->insertConfig(IM_CONF_AUTOTASKS, 'autotasks_helper', '_MD_AM_AUTOTASKS_HELPER', 'wget %url%', '_MD_AM_AUTOTASKS_HELPERDSC', 'select', 'text', 2);
@@ -733,7 +733,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	 }
 
 	 $newDbVersion = 29;
-    	 
+
 	 if($dbVersion < $newDbVersion)
 	 {
 		  if(getDbValue($icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PURIFIER"') == 0)
@@ -759,7 +759,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		  $p = 0;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'enable_purifier', '_MD_AM_PURIFIER_ENABLE', '1', '_MD_AM_PURIFIER_ENABLEDSC', 'yesno', 'int', $p);
           $p++;
-          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DefinitionID', '_MD_AM_PURIFIER_URI_DEFID', '1', '_MD_AM_PURIFIER_URI_DEFIDDSC', 'textbox', 'text', $p);
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DefinitionID', '_MD_AM_PURIFIER_URI_DEFID', 'system', '_MD_AM_PURIFIER_URI_DEFIDDSC', 'textbox', 'text', $p);
           $p++;
           $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DefinitionRev', '_MD_AM_PURIFIER_URI_DEFREV', '1', '_MD_AM_PURIFIER_URI_DEFREVDSC', 'textbox', 'int', $p);
           $p++;
@@ -858,7 +858,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		  $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedClasses', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSES', '', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSESDSC', 'textsarea', 'array', $p);
           $p++;
-          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_ForbiddenClasses', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSES', '1', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSESDSC', 'textsarea', 'array', $p);
+          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_ForbiddenClasses', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSES', '', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSESDSC', 'textsarea', 'array', $p);
 		  $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_DefaultInvalidImage', '_MD_AM_PURIFIER_ATTR_DEFINVIMG', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGDSC', 'textbox', 'text', $p);
 		  $p++;
@@ -888,7 +888,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_MaxImgLength', '_MD_AM_PURIFIER_CSS_MAXIMGLEN', '1200px', '_MD_AM_PURIFIER_CSS_MAXIMGLENDSC', 'textbox', 'text', $p);
 		  $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_CSS_Proprietary', '_MD_AM_PURIFIER_CSS_PROPRIETARY', '1', '_MD_AM_PURIFIER_CSS_PROPRIETARYDSC', 'yesno', 'int', $p);
-		  
+
 	 }
 
 	$newDbVersion = 30;
@@ -902,16 +902,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		}
 		unset($table);
 	}
-
-    $newDbVersion = 31;
-
-    if($dbVersion < $newDbVersion) {
-          // Allowed Element Attributes in HTML, element must also be allowed in Allowed Elements for these attributes to work.
-          $HTML_Allowed_Attr = 'a.class, a.href, a.id, a.name, a.rev, a.style, a.title, a.target, a.rel, abbr.title, acronym.title, blockquote.cite, div.align, div.style, div.class, div.id, font.size, font.color, h1.style, h2.style, h3.style, h4.style, h5.style, h6.style, img.src, img.alt, img.title, img.class, img.align, img.style, img.height, img.width, li.style, ol.style, p.style, span.style, span.class, span.id, table.class, table.id, table.border, table.cellpadding, table.cellspacing, table.style, table.width, td.abbr, td.align, td.class, td.id, td.colspan, td.rowspan, td.style, td.valign, tr.align, tr.class, tr.id, tr.style, tr.valign, th.abbr, th.align, th.class, th.id, th.colspan, th.rowspan, th.style, th.valign, ul.style';
-        echo $action;
-
-        $icmsDB->queryF("UPDATE `".$icmsDB->prefix('config')."` SET conf_value = '".addslashes(serialize(array($HTML_Allowed_Attr)))."' WHERE conf_name = 'purifier_HTML_AllowedAttributes'");
-    }
 
 /* 1.2 beta release */
 
@@ -937,7 +927,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	        $icmsDatabaseUpdater->updateTable($table);
         }
         unset($table);
-                
+
         /**
         * DEVELOPER, PLEASE NOTE !!!
         *
@@ -948,11 +938,11 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
         */
         $CleanWritingFolders = true;
         /* end of dbversion 18 update */
-            
+
     }
     $newDbVersion = 33;
-    /* 
-     * New symlinks need to be added to the db 
+    /*
+     * New symlinks need to be added to the db
      * @todo Create language constants for the page names
      */
     if ($dbVersion < $newDbVersion) {
@@ -984,10 +974,10 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
         $table->addData();
         unset($table);
     }
-    
+
     $newDbVersion = 34;
         /* The admin control panel now consists of blocks - these need to be set as visible
-         * Control Panel, System Warnings, Modules Installed 
+         * Control Panel, System Warnings, Modules Installed
          */
     if ($dbVersion < $newDbVersion) {
         $admin_blocks = array(
@@ -1006,10 +996,10 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
         }
         /* Get symlink id for Admin Control Panel */
         $page_id = getDbValue($icmsDB, 'icmspage', 'page_id', 'page_url="admin.php"');
-        
+
         foreach( $admin_blocks as $admin_block ) {
         /* Get block ids for Control Panel, System Warnings, Installed Modules */
-            $sql_find = 'SELECT bid FROM `' . $icmsDB->prefix('newblocks') 
+            $sql_find = 'SELECT bid FROM `' . $icmsDB->prefix('newblocks')
                 . '` WHERE show_func="' . $admin_block[0] . '"';
             $goodmsg = $admin_block[0] . ' updated';
             $badmsg = $admin_block[0] . ' failed';
@@ -1032,10 +1022,10 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
         echo $action;
         $icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('newblocks') . "` WHERE show_func='b_system_waiting_show' AND block_type='S'");
     }
-    
+
 	echo "</code>";
-	
-	if ($from_112){	
+
+	if ($from_112){
 		/**
 		 * @todo create a language constant for this text
 		 */
