@@ -349,7 +349,7 @@ class IcmsPersistableTable {
 						$actions[] = $object->$action();
 					}
 				}
-				
+
 				if ((!is_array($this->_actions)) || in_array('edit', $this->_actions)) {
 					$actions[] = $object->getEditItemLink(false, true, $this->_userSide);
 				}
@@ -670,16 +670,16 @@ class IcmsPersistableTable {
 			$order = isset($_GET[$this->_objectHandler->_itemname . '_' . 'ordersel']) ? $_GET[$this->_objectHandler->_itemname . '_' . 'ordersel'] : 'DESC';
 
 			if (isset($_REQUEST['quicksearch_' . $this->_id]) && $_REQUEST['quicksearch_' . $this->_id] != '') {
-				$qs_param = "&quicksearch_".$this->_id."=".$_REQUEST['quicksearch_' . $this->_id];
+				$qs_param = "&amp;quicksearch_".$this->_id."=".$_REQUEST['quicksearch_' . $this->_id];
 			} else {
 				$qs_param = '';
 			}
 			if (!$this->_enableColumnsSorting || $column->_keyname == 'checked' || !$column->_sortable) {
 				$aColumn['caption'] =  $aColumn['caption'];
 			} elseif ($getSort) {
-				$aColumn['caption'] =  '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&' . $this->_objectHandler->_itemname . '_' . 'ordersel=' . $orderArray[$order]['neworder'].$qs_param . '&' . $new_query_string . '">' . $aColumn['caption'] . ' <img src="' . ICMS_IMAGES_SET_URL .'/actions/' . $orderArray[$order]['image'] . '" alt="ASC" /></a>';
+				$aColumn['caption'] =  '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->_itemname . '_' . 'ordersel=' . $orderArray[$order]['neworder'].$qs_param . '&amp;' . $new_query_string . '">' . $aColumn['caption'] . ' <img src="' . ICMS_IMAGES_SET_URL .'/actions/' . $orderArray[$order]['image'] . '" alt="ASC" /></a>';
 			} else {
-				$aColumn['caption'] =  '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&' . $this->_objectHandler->_itemname . '_' . 'ordersel=ASC'.$qs_param.'&' . $new_query_string . '">' . $aColumn['caption'] . '</a>';
+				$aColumn['caption'] =  '<a href="' . $current_url . '?' . $this->_objectHandler->_itemname . '_' . 'sortsel=' . $column->getKeyName() . '&amp;' . $this->_objectHandler->_itemname . '_' . 'ordersel=ASC'.$qs_param.'&amp;' . $new_query_string . '">' . $aColumn['caption'] . '</a>';
 			}
 			$aColumns[] = $aColumn;
 		}
@@ -718,7 +718,7 @@ class IcmsPersistableTable {
 	function disableColumnsSorting() {
 		$this->_enableColumnsSorting = false;
 	}
-	
+
 	function fetch($debug=false) {
 		return $this->render(true, $debug);
 	}

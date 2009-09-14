@@ -6,13 +6,13 @@
 * @copyright	XOOPS_copyrights.txt
 * @copyright	The XOOPS Project <http://www.xoops.org/>
 * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
-* 
+*
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* 
+*
 * @package		core
 * @since		XOOPS
 * @version		$Id$
-* 
+*
 * @author		The XOOPS Project <http://www.xoops.org>
 * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @author 		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
@@ -25,10 +25,10 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
 
 /**
  * Function icms_cp_header
- * 
+ *
  * @since ImpressCMS 1.2
  * @version $Id$
- * 
+ *
  * @author rowd (from the XOOPS Community)
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
@@ -80,7 +80,7 @@ function icms_cp_header(){
 
 	// ################# Preload Trigger startOutputInit ##############
 	$icmsPreloadHandler->triggerEvent('adminHeader');
-	
+
 	$xoTheme->addScript( ICMS_URL.'/include/xoops.js', array( 'type' => 'text/javascript' ) );
 	$xoTheme->addScript( '' ,array( 'type' => 'text/javascript' ) , 'startList = function() {
 						if (document.all&&document.getElementById) {
@@ -101,7 +101,7 @@ function icms_cp_header(){
 					window.onload=startList;');
 
 	$xoTheme->addStylesheet(ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css', array('media' => 'screen'));
-	
+
 	// JQuery UI Dialog
 	$xoTheme->addScript( ICMS_URL.'/libraries/jquery/jquery.js', array( 'type' => 'text/javascript' ) );
 	$xoTheme->addScript( ICMS_URL.'/libraries/jquery/ui/ui.core.js', array( 'type' => 'text/javascript' ) );
@@ -117,7 +117,7 @@ function icms_cp_header(){
 /*	$jscript = '';
  	if(class_exists('XoopsFormDhtmlTextArea')){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-		 	if( empty( $key ) ) 
+		 	if( empty( $key ) )
 		 		continue;
 		 	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
 		 		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
@@ -140,7 +140,7 @@ function icms_cp_header(){
 */
 	$style_info = '';
 	foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-	   	if( empty( $key ) ) 
+	   	if( empty( $key ) )
 	   		continue;
 	   	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
 	   		$xoTheme->addStylesheet(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
@@ -196,13 +196,13 @@ function icms_cp_header(){
 				$all_ok = true;
 			}
 			$perm_itens = array ( );
-			
+
 			/**
 			 * Allow easely change the order of system dropdown menu.
 			 * $adminmenuorder = 1; Alphabetically order;
 			 * $adminmenuorder = 0; Indice key order;
 			 * To change the order when using Indice key order just change the order of the array in the file modules/system/menu.php and after update the system module
-			 * 
+			 *
 			 * @todo: Create a preference option to set this value and improve the way to change the order.
 			 */
 			$adminmenuorder = 1;
@@ -299,7 +299,7 @@ function icms_cp_header(){
 		 */
 		$icmsAdminTpl->assign ( 'lang_prefs', _PREFERENCES );
 		$icmsAdminTpl->assign ( 'ml_is_enabled', $icmsConfigMultilang ['ml_enable'] );
-		$icmsAdminTpl->assign( 'adm_left_logo', $icmsConfigPersona['adm_left_logo'] );		
+		$icmsAdminTpl->assign( 'adm_left_logo', $icmsConfigPersona['adm_left_logo'] );
 		$icmsAdminTpl->assign( 'adm_left_logo_url', $icmsConfigPersona['adm_left_logo_url'] );
 		$icmsAdminTpl->assign( 'adm_left_logo_alt', $icmsConfigPersona['adm_left_logo_alt'] );
 		$icmsAdminTpl->assign( 'adm_right_logo', $icmsConfigPersona['adm_right_logo'] );
@@ -312,13 +312,13 @@ function icms_cp_header(){
 
 /**
  * Backwards compatibility function.
- * 
+ *
  * @since XOOPS
  * @version $Id$
- * @deprecated 
+ * @deprecated
  *
  * @author The Xoops Project <http://www.xoops.org>
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org> 
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function xoops_cp_header(){
 	icms_cp_header();
@@ -326,7 +326,7 @@ function xoops_cp_header(){
 
 /**
  * Function icms_cp_footer
- * 
+ *
  * @since ImpressCMS 1.2
  * @version $Id$
  * @author rowd (from XOOPS Community)
@@ -362,15 +362,15 @@ function icms_cp_footer(){
 
 /**
  * Backwars compatibility function
- * 
+ *
  * @version $Id$
  * @deprecated
- * 
+ *
  * @author The XOOPS Project <http://www.xoops.org>
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org> 
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function xoops_cp_footer(){
-	icms_cp_footer();	
+	icms_cp_footer();
 }
 
 // We need these because theme files will not be included
@@ -394,33 +394,33 @@ function xoopsfwrite() {
 	if ($_SERVER ['REQUEST_METHOD'] != 'POST') {
 		return false;
 	} else {
-	
+
 	}
 	if (! xoops_refcheck ()) {
 		return false;
 	} else {
-	
+
 	}
 	return true;
 }
 
 /**
  * Creates a multidimensional array with items of the dropdown menus of the admin panel.
- * This array will be saved, by the function xoops_module_write_admin_menu, in a cache file 
+ * This array will be saved, by the function xoops_module_write_admin_menu, in a cache file
  * to preserve resources of the server and to maintain compatibility with some modules Xoops.
- * 
+ *
  * @author TheRplima
- * 
+ *
  * @return array (content of admin panel dropdown menus)
  */
 function impresscms_get_adminmenu() {
 	global $icmsUser;
-	
+
 	$admin_menu = array ( );
 	$modules_menu = array ( );
 	$systemadm = false;
 	$cont = 0;
-	
+
 	#########################################################################
 	# Control Panel Home menu
 	#########################################################################
@@ -430,18 +430,18 @@ function impresscms_get_adminmenu() {
 	$menu [$i] ['absolute'] = 1;
 	$menu [$i] ['small'] = ICMS_URL . "/modules/system/images/mini_cp.png";
 	$i ++;
-	
+
 	$menu [$i] ['link'] = ICMS_URL;
 	$menu [$i] ['title'] = _YOURHOME;
 	$menu [$i] ['absolute'] = 1;
 	$menu [$i] ['small'] = ICMS_URL . "/modules/system/images/home.png";
 	$i ++;
-	
+
 	$menu [$i] ['link'] = ICMS_URL . "/user.php?op=logout";
 	$menu [$i] ['title'] = _LOGOUT;
 	$menu [$i] ['absolute'] = 1;
 	$menu [$i] ['small'] = ICMS_URL . '/images/logout.png';
-	
+
 	$admin_menu [$cont] ['id'] = 'cphome';
 	$admin_menu [$cont] ['text'] = _CPHOME;
 	$admin_menu [$cont] ['link'] = '#';
@@ -450,7 +450,7 @@ function impresscms_get_adminmenu() {
 	#########################################################################
 	# end
 	#########################################################################
-	
+
 
 	#########################################################################
 	# System Preferences menu
@@ -462,7 +462,7 @@ function impresscms_get_adminmenu() {
 		$lkn ['dir'] = 'system';
 		$menu [] = $lkn;
 	}
-	
+
 	$admin_menu [$cont] ['id'] = 'opsystem';
 	$admin_menu [$cont] ['text'] = _SYSTEM;
 	$admin_menu [$cont] ['link'] = ICMS_URL . '/modules/system/admin.php';
@@ -471,7 +471,7 @@ function impresscms_get_adminmenu() {
 	#########################################################################
 	# end
 	#########################################################################
-	
+
 
 	#########################################################################
 	# Modules menu
@@ -496,17 +496,17 @@ function impresscms_get_adminmenu() {
 		}
 		$rtn ['absolute'] = 1;
 		$rtn ['subs'] = array ( );
-		$module->loadAdminMenu ();		
-		if (is_array ( $module->adminmenu ) && count ( $module->adminmenu ) > 0) {			
+		$module->loadAdminMenu ();
+		if (is_array ( $module->adminmenu ) && count ( $module->adminmenu ) > 0) {
 			foreach ( $module->adminmenu as $item ) {
 				$item ['link'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $item ['link'];
 				$rtn ['subs'] [] = $item;
 			}
-		} 
+		}
 		$hasconfig = $module->getVar ( 'hasconfig' );
 		$hascomments = $module->getVar ( 'hascomments' );
 		if ((isset ( $hasconfig ) && $hasconfig == 1) || (isset ( $hascomments ) && $hascomments == 1)) {
-			$subs = array ('title' => _PREFERENCES, 'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $module->mid () );
+			$subs = array ('title' => _PREFERENCES, 'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $module->mid () );
 			$rtn ['subs'] [] = $subs;
 		}
 		$rtn ['hassubs'] = (count($rtn ['subs']) > 0)?1:0;
@@ -516,7 +516,7 @@ function impresscms_get_adminmenu() {
 		}
 		$modules_menu [] = $rtn;
 	}
-	
+
 	$admin_menu [$cont] ['id'] = 'modules';
 	$admin_menu [$cont] ['text'] = _MODULES;
 	$admin_menu [$cont] ['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin';
@@ -525,20 +525,20 @@ function impresscms_get_adminmenu() {
 	#########################################################################
 	# end
 	#########################################################################
-	
+
 
 	#########################################################################
 	# ImpressCMS News Feed menu
 	#########################################################################
 	$i = 0;
 	$menu = array ( );
-	
+
 	$menu [$i] ['link'] = 'http://www.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_HOME;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
-	
+
 	if ( _LANGCODE != 'en' ){
 	$menu [$i] ['link'] = _IMPRESSCMS_LOCAL_SUPPORT;
 	$menu [$i] ['title'] = _IMPRESSCMS_LOCAL_SUPPORT_TITLE;
@@ -552,43 +552,43 @@ function impresscms_get_adminmenu() {
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
-	
+
 	$menu [$i] ['link'] = 'http://addons.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_ADDONS;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
-	
+
 	$menu [$i] ['link'] = 'http://wiki.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_WIKI;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
-	
+
 	$menu [$i] ['link'] = 'http://blog.impresscms.org';
 	$menu [$i] ['title'] = _IMPRESSCMS_BLOG;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
-	
+
 	$menu [$i] ['link'] = 'http://sourceforge.net/projects/impresscms/';
 	$menu [$i] ['title'] = _IMPRESSCMS_SOURCEFORGE;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
-	
+
 	$menu [$i] ['link'] = 'http://www.impresscms.org/donations/';
 	$menu [$i] ['title'] = _IMPRESSCMS_DONATE;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
-	
+
 	$menu [$i] ['link'] = ICMS_URL . "/admin.php?rssnews=1";
 	$menu [$i] ['title'] = _IMPRESSCMS_NEWS;
 	$menu [$i] ['absolute'] = 1;
 	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
 	$i ++;
-	
+
 	$admin_menu [$cont] ['id'] = 'news';
 	$admin_menu [$cont] ['text'] = _ABOUT;
 	$admin_menu [$cont] ['link'] = '#';
@@ -597,7 +597,7 @@ function impresscms_get_adminmenu() {
 	#########################################################################
 	# end
 	#########################################################################
-	
+
 
 	return $admin_menu;
 }
@@ -631,7 +631,7 @@ function xoops_module_write_admin_menu($content) {
 		return false;
 	}
 	fclose ( $file );
-	
+
 	// write index.html file in cache folder
 	// file is delete after clear_cache (smarty)
 	xoops_write_index_file ( ICMS_CACHE_PATH );
