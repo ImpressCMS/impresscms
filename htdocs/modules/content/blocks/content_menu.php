@@ -101,12 +101,8 @@ function getPages($showsubs = true, $sort='content_weight', $order='ASC', $conte
 	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 	$uid = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;
 	$content_handler =& xoops_getmodulehandler('content','content');
-	$info =  dirname(__FILE__);
-	$split = split("[\]",$info);
-	$count = count($split) - 2;
-	$moddir = $split[$count];
 	$module_handler = xoops_gethandler('module');
-	$module = $module_handler->getByDirname($moddir);
+	$module = $module_handler->getByDirname('content');
 	$mid = $module->mid();
 	$criteria = new CriteriaCompo(new Criteria('content_status', 1));
 	if (!$relateds){
@@ -124,7 +120,7 @@ function getPages($showsubs = true, $sort='content_weight', $order='ASC', $conte
 	$i = 0;
 	$pages = array();
 	foreach ($impress_content as $content){
-		if ($gperm_handler->checkRight('content_read', $content->getVar('content_id'), $groups)){
+		if ($gperm_handler->checkRight('content_read', $content->getVar('content_id'), $groups, $mid)){
 			$pages[$i]['title'] = $content->getVar('content_title');
 			$pages[$i]['menu'] = $content_handler->makeLink($content);
 			if ($showsubs){
