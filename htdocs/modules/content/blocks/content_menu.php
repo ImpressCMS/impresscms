@@ -101,7 +101,13 @@ function getPages($showsubs = true, $sort='content_weight', $order='ASC', $conte
 	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 	$uid = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;
 	$content_handler =& xoops_getmodulehandler('content','content');
-	
+	$info =  dirname(__FILE__);
+	$split = split("[\]",$info);
+	$count = count($split) - 2;
+	$moddir = $split[$count];
+	$module_handler = xoops_gethandler('module');
+	$module = $module_handler->getByDirname($moddir);
+	$mid = $module->mid();
 	$criteria = new CriteriaCompo(new Criteria('content_status', 1));
 	if (!$relateds){
 		$criteria->add(new Criteria('content_pid', $content_id));
