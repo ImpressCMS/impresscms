@@ -15,7 +15,7 @@
 <div style="margin-bottom: 12px;">
 	<{if $icms_introButtons}>
 		<div style="float: <{$smarty.const._GLOBAL_LEFT}>;">
-			<form>
+			<form action =''>
 				<{foreach from=$icms_introButtons item=introButton}>
 					<input type="button" name="<{$introButton.name}>" onclick="location='<{$introButton.location}>'" value="<{$introButton.value}>" />
 				<{/foreach}>
@@ -24,10 +24,10 @@
 	<{/if}>
 
 <{if $icms_showFilterAndLimit || $icms_quicksearch}>
-<form name="pick" id="pick" action="<{$icms_optionssel_action}>" method="POST" style="margin: 0;">
+<form id="pick" action="<{$icms_optionssel_action}>" method="post" style="margin: 0;">
 	<{if $icms_quicksearch}>
 		<div style="vertical-align: middle; float: <{$smarty.const._GLOBAL_RIGHT}>; border: 2px solid #C2CDD6; padding: 5px; background-color: #E6E6E6;">
-			<b><{$icms_quicksearch}> :</b> <input style="min-width: 10px; vertical-align: middle;" type="text" id="quicksearch_<{$icms_id}>" name="quicksearch_<{$icms_id}>" size="15" maxlength="255"/>
+			<strong><{$icms_quicksearch}> :</strong> <input style="min-width: 10px; vertical-align: middle;" type="text" id="quicksearch_<{$icms_id}>" name="quicksearch_<{$icms_id}>" size="15" maxlength="255"/>
 			<input style="vertical-align: middle;" type="submit" name="button_quicksearch_<{$icms_id}>" value="<{$smarty.const._SEARCH}>" />
 		</div>
 	<{/if}>
@@ -85,7 +85,7 @@
 				<{if !$icms_isTree}>
 					<{$smarty.const._CO_ICMS_SHOW_ONLY}> <select name='limitsel' onchange='submit()'>
 						<{foreach from=$icms_optionssel_limitsArray key=key item=field}>
-							<option value='<{$key}>' <{$field.selected}> > <{$field.caption}></option>
+							<option value= '<{$key}>' <{$field.selected}> > <{$field.caption}></option>
 						<{/foreach}>
 					</select>
 				<{/if}>
@@ -98,17 +98,17 @@
 <{/if}>
 
 <{if $icms_actionButtons || $icms_withSelectedActions}>
-	<form name="form_<{$icms_id}>" id="form_<{$icms_id}>" method="POST">
+	<form id="form_<{$icms_id}>" method="post">
 <{/if}>
-<table width='100%' cellspacing=1 cellpadding=3 border=0 class = outer>
+<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>
 	<tr>
 	 <{foreach from=$icms_columns item=column}>
-	 	<th width="<{$column.width}>" align='<{$column.align}>'><b><{$column.caption}></b></th>
+	 	<th width="<{$column.width}>" align='<{$column.align}>'><strong><{$column.caption}></strong></th>
 	 <{/foreach}>
 	 <{if $icms_has_actions}>
 	 	<th width='<{$icms_actions_column_width}>' align='center'>
 	 		<{if $icms_show_action_column_title}>
-	 			<b><{$smarty.const._CO_ICMS_ACTIONS}></b>
+	 			<strong><{$smarty.const._CO_ICMS_ACTIONS}></strong>
 	 		<{/if}>
 	 	</th>
 	 <{/if}>
@@ -146,7 +146,7 @@
 		<select name='selected_action'>
 			<option value = ''>---</option>
 			<{foreach from=$icms_withSelectedActions key=key item=action}>
-				<option value = <{$key}>><{$action}></option>
+				<option value = '<{$key}>'><{$action}></option>
 			<{/foreach}>
 		</select>
 		<input type="submit" name="<{$actionButton.op}>" onclick="this.form.elements.op.value='with_selected_actions'" value="<{$smarty.const._CO_ICMS_SUBMIT}>" />
@@ -167,7 +167,7 @@
 
 <{if $icms_introButtons}>
 	<div style="padding-top:15px; padding-bottom: 5px;">
-		<form>
+		<form action=''>
 			<{foreach from=$icms_introButtons item=introButton}>
 				<input type="button" name="<{$introButton.name}>" onclick="location='<{$introButton.location}>'" value="<{$introButton.value}>" />
 			<{/foreach}>
