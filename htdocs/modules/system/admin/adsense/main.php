@@ -15,17 +15,17 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 }
 
 function editadsense($showmenu = false, $adsenseid = 0, $clone=false)
-{	
+{
 	global $icms_adsense_handler, $icmsAdminTpl;
 
 	icms_cp_header();
-	
+
 	$adsenseObj = $icms_adsense_handler->get($adsenseid);
 
 	if (!$clone && !$adsenseObj->isNew()){
 
 		$sform = $adsenseObj->getForm(_CO_ICMS_ADSENSES_EDIT, 'addadsense');
-		
+
 		$sform->assign($icmsAdminTpl);
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_EDIT_INFO);
 		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
@@ -37,7 +37,7 @@ function editadsense($showmenu = false, $adsenseid = 0, $clone=false)
 		$sform->assign($icmsAdminTpl);
 
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_CREATE_INFO);
-		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');		
+		$icmsAdminTpl->display('db:admin/adsense/system_adm_adsense.html');
 	}
 }
 icms_loadLanguageFile('system', 'common');
@@ -54,7 +54,7 @@ switch ($op) {
 		$adsenseid = isset($_GET['adsenseid']) ? intval($_GET['adsenseid']) : 0 ;
 
 		editadsense(true, $adsenseid);
-		
+
 		break;
 
 	case "clone":
@@ -79,7 +79,7 @@ switch ($op) {
 
 	case "del":
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-	    $controller = new IcmsPersistableController($icms_adsense_handler);		
+	    $controller = new IcmsPersistableController($icms_adsense_handler);
 		$controller->handleObjectDeletion();
 
 		break;
@@ -87,22 +87,22 @@ switch ($op) {
 	default:
 
 		icms_cp_header();
-		
+
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-		
+
 		$objectTable = new IcmsPersistableTable($icms_adsense_handler);
 		$objectTable->addColumn(new IcmsPersistableColumn('description', _GLOBAL_LEFT));
 		$objectTable->addColumn(new IcmsPersistableColumn(_CO_ICMS_ADSENSE_TAG_CODE, 'center', 200, 'getXoopsCode'));
 		//$objectTable->addColumn(new IcmsPersistableColumn('language', 'center', 150));
 
-		$objectTable->addIntroButton('addadsense', 'admin.php?fct=adsense&op=mod', _CO_ICMS_ADSENSES_CREATE);
+		$objectTable->addIntroButton('addadsense', 'admin.php?fct=adsense&amp;op=mod', _CO_ICMS_ADSENSES_CREATE);
 
 		$objectTable->addQuickSearch(array('title', 'summary', 'description'));
 
 		$objectTable->addCustomAction('getCloneLink');
 
 		$icmsAdminTpl->assign('icms_adsense_table', $objectTable->fetch());
-		
+
 		$icmsAdminTpl->assign('icms_adsense_explain', true);
 		$icmsAdminTpl->assign('icms_adsense_title', _CO_ICMS_ADSENSES_DSC);
 

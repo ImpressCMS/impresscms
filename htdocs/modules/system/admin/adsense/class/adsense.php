@@ -16,12 +16,12 @@ if (! defined ( "ICMS_ROOT_PATH" ))
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
 
 class SystemAdsense extends IcmsPersistableObject {
-	
+
 	public $content = false;
-	
+
 	function SystemAdsense(&$handler) {
 		$this->IcmsPersistableObject($handler);
-		
+
 		$this->quickInitVar('adsenseid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('description', XOBJ_DTYPE_TXTAREA, true, _CO_ICMS_ADSENSE_DESCRIPTION, _CO_ICMS_ADSENSE_DESCRIPTION_DSC);
 		$this->quickInitVar('client_id', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_ADSENSE_CLIENT_ID, _CO_ICMS_ADSENSE_CLIENT_ID_DSC);
@@ -41,14 +41,14 @@ class SystemAdsense extends IcmsPersistableObject {
 		$this->setControl('url_color', array('name' => 'text','size' => 6,'maxlength' => 6));
 		$this->setControl('text_color', array('name' => 'text','size' => 6,'maxlength' => 6));
 	}
-	
+
 	function getVar($key, $format = 's') {
 		if ($format == 's' && in_array ( $key, array ( ) )) {
 			return call_user_func ( array ($this, $key ) );
 		}
 		return parent::getVar ( $key, $format );
 	}
-	
+
 	function render() {
 		global $icms_adsense_handler;
 		if ($this->getVar('style', 'n') != '') {
@@ -76,21 +76,21 @@ google_color_text = "' . $this->getVar('text_color', 'n') . '";
 </div>';
 		return $ret;
 	}
-	
+
 	function getXoopsCode() {
 		$ret = '[adsense]' . $this->getVar ( 'tag', 'n' ) . '[/adsense]';
 		return $ret;
 	}
-	
+
 	function getCloneLink() {
-		$ret = '<a href="' . ICMS_URL . '/modules/system/admin.php?fct=adsense&op=clone&adsenseid=' . $this->id () . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="' . _CO_ICMS_CUSTOMTAG_CLONE . '" title="' . _CO_ICMS_CUSTOMTAG_CLONE . '" /></a>';
+		$ret = '<a href="' . ICMS_URL . '/modules/system/admin.php?fct=adsense&amp;op=clone&amp;adsenseid=' . $this->id () . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/editcopy.png" style="vertical-align: middle;" alt="' . _CO_ICMS_CUSTOMTAG_CLONE . '" title="' . _CO_ICMS_CUSTOMTAG_CLONE . '" /></a>';
 		return $ret;
 	}
-	
+
 	function emptyString($var) {
 		return (strlen ( $var ) > 0);
 	}
-	
+
 	function generateTag() {
 		$title = rawurlencode ( strtolower ( $this->getVar ( 'description', 'e' ) ) );
 		$title = xoops_substr ( $title, 0, 10, '' );
@@ -99,34 +99,34 @@ google_color_text = "' . $this->getVar('text_color', 'n') . '";
 		$pattern = array ("/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/", "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/", "/%7C/", "/%7D/", "/%7E/", "/\./" );
 		$rep_pat = array ("-", "-", "-", "-", "-", "-100", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-at-", "-", "-", "-", "-", "-", "-", "-", "-", "-" );
 		$title = preg_replace ( $pattern, $rep_pat, $title );
-		
+
 		// Transformation des caract�res accentu�s
 		//				  �		�		�		�		�		�		�		�		�		�		�		�		�		�		�		�		$pattern = array ("/%B0/", "/%E8/", "/%E9/", "/%EA/", "/%EB/", "/%E7/", "/%E0/", "/%E2/", "/%E4/", "/%EE/", "/%EF/", "/%F9/", "/%FC/", "/%FB/", "/%F4/", "/%F6/" );
 		$rep_pat = array ("-", "e", "e", "e", "e", "c", "a", "a", "a", "i", "i", "u", "u", "u", "o", "o" );
 		$title = preg_replace ( $pattern, $rep_pat, $title );
-		
+
 		$tableau = explode ( "-", $title ); // Transforme la chaine de caract�res en tableau
 		$tableau = array_filter ( $tableau, array ($this, "emptyString" ) ); // Supprime les chaines vides du tableau
 		$title = implode ( "-", $tableau ); // Transforme un tableau en chaine de caract�res s�par� par un tiret
-		
+
 
 		$title = $title . time ();
 		$title = md5 ( $title );
 		return $title;
 	}
-	
+
 	function getAdsenseName() {
 		$ret = $this->getVar ( 'description' );
 		return $ret;
 	}
 }
-	
+
 class SystemAdsenseHandler extends IcmsPersistableObjectHandler {
-	
+
 	public $adFormats;
 	public $adFormatsList;
 	public $objects=false;
-	
+
 	function SystemAdsenseHandler($db) {
 		$this->IcmsPersistableObjectHandler ( $db, 'adsense', 'adsenseid', 'tag', 'description', 'system' );
 		$this->adFormats = array();
@@ -193,7 +193,7 @@ class SystemAdsenseHandler extends IcmsPersistableObjectHandler {
 		$this->adFormatsList['125x125_as'] = $this->adFormats['125x125_as']['caption'];
 		//$this->addPermission ( 'view', _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW, _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW_DSC );
 	}
-	
+
 	function getFormats() {
 		return $this->adFormatsList;
 	}
