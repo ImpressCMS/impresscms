@@ -7,7 +7,7 @@
 
 html, body {
 	color: #000;
-	background: #eae0b7;
+	background: #FFF;
 	margin: 0;
 	padding: 0;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
@@ -15,10 +15,8 @@ html, body {
 }
 
 #icms-canvas {
-	border-top: 2px solid #DDDDFF;
-	border-left: 2px solid #DDDDFF;
-	border-right: 2px solid #DDDDFF;
-	background: #FFF;
+	margin:0;
+	padding:0;
 }
 
 table {
@@ -56,9 +54,11 @@ h6 {font-size: .8em;}
 
 #icms-header {
 	clear: both;
-	height: 80px;
+	height: 78px;
 	position: relative;
-	background: url(img/bghead.png) repeat-x;
+	background: url(img/header_bg.jpg) repeat-x;
+	margin-left: 35px;
+	margin-right: 35px;
 }
 
 #icms-headerlogo {

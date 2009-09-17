@@ -1,11 +1,11 @@
 
-<{if $lcr=='l'}><{assign var=lcr value='left'}>
-<{elseif $lcr=='r'}><{assign var=lcr value='right'}>
-<{else}><{assign var=lcr value='center'}>
+<{if $lcr=='l'}><{assign var=lcr value='left_admin'}>
+<{elseif $lcr=='r'}><{assign var=lcr value='right_admin'}>
+<{else}><{assign var=lcr value='center_admin'}>
 <{/if}>
 
 <{assign var=zone value="page_$topbottom$lcr"}>
-	
+
 <{if $xoBlocks[$zone]}>
 	<div class="icms-blockszone x2-secondary" id="icms-page-<{$topbottom}><{$lcr}>blocks">
 	<{foreach from=$xoBlocks[$zone] item=block}>
