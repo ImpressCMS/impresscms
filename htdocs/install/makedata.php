@@ -829,7 +829,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     $dbm->insert('config', " VALUES ($i, 0, $c, 'multi_login', '_MD_AM_MULTLOGINPREVENT', '0', '_MD_AM_MULTLOGINPREVENTDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'multi_login_msg', '_MD_AM_MULTLOGINMSG', '"._MD_AM_MULTLOGINMSG_TXT."', '_MD_AM_MULTLOGINMSG_DESC', 'texstarea', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'multi_login_msg', '_MD_AM_MULTLOGINMSG', '"._MD_AM_MULTLOGINMSG_TXT."', '_MD_AM_MULTLOGINMSG_DESC', 'textsarea', 'text', $p)");
 	// ----------
 	$i++;
 	$p++;
@@ -1204,7 +1204,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
 	$dbm->insert('system_autotasks', " VALUES (0, 'Inactivating users', 'autotask.php', 0, 1, 0, 1, ".time().", 'addon/system', 00)");
 
-	
+
     return $gruops;
 }
 
