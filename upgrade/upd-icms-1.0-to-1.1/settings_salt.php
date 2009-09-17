@@ -22,13 +22,13 @@ function xoFormField( $name, $value, $label, $maxlength, $help = '' )
     $name = htmlspecialchars( $name, ENT_QUOTES );
     $value = htmlspecialchars( $value, ENT_QUOTES );
     $maxlength = intval($maxlength);
-   
+
     $field = "<label for='$name'>$label</label>\n";
     if ( $help ) {
         $field .= '<div class="xoform-help1">' . $help . "</div>\n";
     }
     $field .= "<input type='text' name='$name' id='$name' value='$value' />";
-    
+
     return $field;
 }
 
@@ -38,12 +38,15 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'salt' ) {
 	foreach ( $params as $name ) {
 		$vars[$name] = isset($_POST[$name]) ? $_POST[$name] : "";
 	}
-	
+
 	return $vars;
 }
 
-if ( !isset( $vars['DB_SALT'] ) ) {
-    $vars['DB_SALT'] = icms_createSalt();
+if(!isset($vars['DB_SALT']))
+{
+    require_once ICMS_ROOT_PATH.'/class/icms_Password.php' ;
+    $icmspass = new icms_Password();
+    $vars['DB_SALT'] = $icmspass->icms_createSalt();
 }
 
 
@@ -54,11 +57,11 @@ if ( !isset( $vars['DB_SALT'] ) ) {
 <fieldset>
 	<legend><?php echo DB_SALT_LABEL; ?></legend>
 	<?php echo xoFormField( 'DB_SALT',	$vars['DB_SALT'],	DB_SALT_LABEL, 255, DB_SALT_HELP ); ?>
-	
+
 </fieldset>
 <input type="hidden" name="action" value="next" />
 <input type="hidden" name="task" value="salt" />
-    
+
 <div class="xo-formbuttons">
     <button type="submit"><?php echo _SUBMIT; ?></button>
 </div>
