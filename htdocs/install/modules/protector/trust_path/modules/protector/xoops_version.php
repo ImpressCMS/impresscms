@@ -9,7 +9,7 @@ if( file_exists( dirname(__FILE__).'/language/'.@$GLOBALS['xoopsConfig']['langua
 $constpref = '_MI_' . strtoupper( $mydirname ) ;
 
 
-$modversion['name'] = $mydirname ;
+$modversion['name'] = constant($constpref.'_NAME') ;
 $modversion['description'] = constant($constpref.'_DESC') ;
 $modversion['version'] = file_get_contents( dirname(__FILE__).'/include/version.txt' ) ;
 $modversion['credits'] = "PEAK Corp." ;
@@ -18,6 +18,8 @@ $modversion['help'] = "" ;
 $modversion['license'] = "GPL" ;
 $modversion['official'] = 0 ;
 $modversion['image'] = file_exists( $mydirpath.'/module_icon.png' ) ? 'module_icon.png' : 'module_icon.php' ;
+$modversion['iconbig'] = 'module_icon.php?file=iconbig' ;
+$modversion['iconsmall'] = 'module_icon.php?file=iconsmall' ;
 $modversion['dirname'] = $mydirname ;
 
 // Any tables can't be touched by modulesadmin.
