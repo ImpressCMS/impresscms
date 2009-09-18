@@ -17,9 +17,10 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 }
 
 /**
- * Edit a Blog Post
+ * Edit a block
  *
- * @param int $post_id Postid to be edited
+ * @param int $bid ID of block to be edited
+ * @param bool $clone Set to 'true' if the block is being cloned
  */
 function editblock($bid = 0, $clone = false) {
 	global $icms_block_handler, $icmsAdminTpl;
@@ -115,7 +116,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			$icms_block_handler->changeVisible ( $bid );
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset ( $_GET ['sortsel'] ))
-				$rtn .= '&sortsel=' . $_GET ['sortsel'] . '&ordersel=' . $_GET ['ordersel'] . '&limitsel=' . $_GET ['limitsel'] . '&startbid=' . $_GET ['startbid'];
+				$rtn .= '&amp;sortsel=' . $_GET ['sortsel'] . '&amp;ordersel=' . $_GET ['ordersel'] . '&amp;limitsel=' . $_GET ['limitsel'] . '&amp;startbid=' . $_GET ['startbid'];
 			if (isset ( $_GET ['rtn'] ))
 				redirect_header ( ICMS_URL . base64_decode ( $_GET ['rtn'] ) ); else
 				redirect_header ( ICMS_URL . $rtn );
@@ -125,7 +126,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			$icms_block_handler->upWeight ( $bid );
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset ( $_GET ['sortsel'] ))
-				$rtn .= '&sortsel=' . $_GET ['sortsel'] . '&ordersel=' . $_GET ['ordersel'] . '&limitsel=' . $_GET ['limitsel'] . '&startbid=' . $_GET ['startbid'];
+				$rtn .= '&amp;sortsel=' . $_GET ['sortsel'] . '&amp;ordersel=' . $_GET ['ordersel'] . '&amp;limitsel=' . $_GET ['limitsel'] . '&amp;startbid=' . $_GET ['startbid'];
 			if (isset ( $_GET ['rtn'] ))
 				redirect_header ( ICMS_URL . base64_decode ( $_GET ['rtn'] ) ); else
 				redirect_header ( ICMS_URL . $rtn );
@@ -135,7 +136,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			$icms_block_handler->downWeight ( $bid );
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset ( $_GET ['sortsel'] ))
-				$rtn .= '&sortsel=' . $_GET ['sortsel'] . '&ordersel=' . $_GET ['ordersel'] . '&limitsel=' . $_GET ['limitsel'] . '&startbid=' . $_GET ['startbid'];
+				$rtn .= '&amp;sortsel=' . $_GET ['sortsel'] . '&amp;ordersel=' . $_GET ['ordersel'] . '&amp;limitsel=' . $_GET ['limitsel'] . '&amp;startbid=' . $_GET ['startbid'];
 			if (isset ( $_GET ['rtn'] ))
 				redirect_header ( ICMS_URL . base64_decode ( $_GET ['rtn'] ) ); else
 				redirect_header ( ICMS_URL . $rtn );
@@ -185,7 +186,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
 			if (isset ( $_GET ['sortsel'] ))
-				$rtn .= '&sortsel=' . $_GET ['sortsel'] . '&ordersel=' . $_GET ['ordersel'] . '&limitsel=' . $_GET ['limitsel'] . '&startbid=' . $_GET ['startbid'];
+				$rtn .= '&amp;sortsel=' . $_GET ['sortsel'] . '&amp;ordersel=' . $_GET ['ordersel'] . '&amp;limitsel=' . $_GET ['limitsel'] . '&amp;startbid=' . $_GET ['startbid'];
 			if (isset ( $_GET ['rtn'] ))
 				redirect_header ( ICMS_URL . base64_decode ( $_GET ['rtn'] ), 2, _AM_SYSTEM_BLOCKSADMIN_MODIFIED ); else
 				redirect_header ( ICMS_URL . $rtn, 2, _AM_SYSTEM_BLOCKSADMIN_MODIFIED );
@@ -205,7 +206,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'side', 'center', false, 'getSideControl' ) );
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'weight', 'center', false, 'getWeightControl' ) );
 
-			$objectTable->addIntroButton ( 'addpost', 'admin.php?fct=blocksadmin&op=mod', _AM_SYSTEM_BLOCKSADMIN_CREATE );
+			$objectTable->addIntroButton ( 'addpost', 'admin.php?fct=blocksadmin&amp;op=mod', _AM_SYSTEM_BLOCKSADMIN_CREATE );
 			$objectTable->addQuickSearch ( array ('title', 'name' ) );
 
 			$objectTable->addFilter ( 'mid', 'getModulesArray' );

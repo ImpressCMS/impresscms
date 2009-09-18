@@ -20,7 +20,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 function editblockposition($id = 0)
 {
 	global $icms_blockposition_handler, $icmsAdminTpl;
-	
+
 	$blockObj = $icms_blockposition_handler->get($id);
 
 	if (!$blockObj->isNew()){
@@ -82,14 +82,14 @@ if (in_array($clean_op,$valid_op,true)){
 			$objectTable->addColumn(new IcmsPersistableColumn('title', false, false, 'getCustomTitle', false, false, false));
 			$objectTable->addColumn(new IcmsPersistableColumn('description'));
 
-  		$objectTable->addIntroButton('addblockposition', 'admin.php?fct=blockspadmin&op=mod', _AM_SYSTEM_BLOCKSPADMIN_CREATE);
+  		$objectTable->addIntroButton('addblockposition', 'admin.php?fct=blockspadmin&amp;op=mod', _AM_SYSTEM_BLOCKSPADMIN_CREATE);
   		$objectTable->addQuickSearch(array('pname','title', 'description'));
-  		
+
   		$icmsAdminTpl->assign('icms_blockposition_table', $objectTable->fetch());
-  		
+
   		$icmsAdminTpl->assign('lang_badmin', _AM_SYSTEM_BLOCKSPADMIN_TITLE);
   		$icmsAdminTpl->assign('icms_blockposition_info', _AM_SYSTEM_BLOCKSPADMIN_INFO);
-  		
+
   		$icmsAdminTpl->display('db:admin/blockspadmin/system_adm_blockspadmin.html');
  		break;
   }

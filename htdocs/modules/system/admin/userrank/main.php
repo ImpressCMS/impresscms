@@ -87,7 +87,7 @@ switch ($op) {
         $objectTable->addColumn(new IcmsPersistableColumn('rank_max', _GLOBAL_LEFT));
         $objectTable->addColumn(new IcmsPersistableColumn('rank_image', 'center', 200, 'getRankPicture', false, false, false));
 
-        $objectTable->addIntroButton('adduserrank', 'admin.php?fct=userrank&op=mod', _CO_ICMS_USERRANKS_CREATE);
+        $objectTable->addIntroButton('adduserrank', 'admin.php?fct=userrank&amp;op=mod', _CO_ICMS_USERRANKS_CREATE);
 
         $objectTable->addQuickSearch( array('rank_title') );
 

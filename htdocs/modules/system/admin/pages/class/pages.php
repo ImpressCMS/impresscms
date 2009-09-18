@@ -16,10 +16,10 @@
 require_once(ICMS_ROOT_PATH."/kernel/page.php");
 
 class SystemPages extends IcmsPage {
-	
+
 	public function __construct( & $handler ){
 		parent::__construct( $handler );
-		
+
 		$this->setControl('page_status', 'yesno');
 		$this->setControl('page_moduleid', array (
 			'itemHandler' => 'pages',
@@ -30,9 +30,9 @@ class SystemPages extends IcmsPage {
 
 	public function getCustomPageStatus(){
 		if($this->getVar('page_status') == 1)
-			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=pages&op=status&page_id='.$this->getVar('page_id').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_ok.png" alt="'._VISIBLE.'"/></a>';
+			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=pages&amp;op=status&amp;page_id='.$this->getVar('page_id').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_ok.png" alt="'._VISIBLE.'"/></a>';
 		else
-			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=pages&op=status&page_id='.$this->getVar('page_id').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_cancel.png" alt="'._VISIBLE.'"/></a>';
+			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=pages&amp;op=status&amp;page_id='.$this->getVar('page_id').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_cancel.png" alt="'._VISIBLE.'"/></a>';
 		return $rtn;
 	}
 

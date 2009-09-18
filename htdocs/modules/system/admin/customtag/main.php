@@ -14,17 +14,17 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 }
 
 function editcustomtag($showmenu = false, $customtagid = 0, $clone=false)
-{	
+{
 	global $icms_customtag_handler, $icmsAdminTpl;
 
 	xoops_cp_header();
-	
+
 	$customtagObj = $icms_customtag_handler->get($customtagid);
 
 	if (!$clone && !$customtagObj->isNew()){
 
 		$sform = $customtagObj->getForm(_CO_ICMS_CUSTOMTAG_EDIT, 'addcustomtag');
-		
+
 		$sform->assign($icmsAdminTpl);
 		$icmsAdminTpl->assign('icms_custom_tag_title', _CO_ICMS_CUSTOMTAG_EDIT_INFO);
 		$icmsAdminTpl->display('db:admin/customtag/system_adm_customtag.html');
@@ -36,7 +36,7 @@ function editcustomtag($showmenu = false, $customtagid = 0, $clone=false)
 		$sform->assign($icmsAdminTpl);
 
 		$icmsAdminTpl->assign('icms_custom_tag_title', _CO_ICMS_CUSTOMTAG_CREATE_INFO);
-		$icmsAdminTpl->display('db:admin/customtag/system_adm_customtag.html');		
+		$icmsAdminTpl->display('db:admin/customtag/system_adm_customtag.html');
 	}
 }
 icms_loadLanguageFile('system', 'common');
@@ -53,7 +53,7 @@ switch ($op) {
 		$customtagid = isset($_GET['customtagid']) ? intval($_GET['customtagid']) : 0 ;
 
 		editcustomtag(true, $customtagid);
-		
+
 		break;
 
 	case "clone":
@@ -71,7 +71,7 @@ switch ($op) {
 
 	case "del":
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-	    $controller = new IcmsPersistableController($icms_customtag_handler);		
+	    $controller = new IcmsPersistableController($icms_customtag_handler);
 		$controller->handleObjectDeletion();
 
 		break;
@@ -79,23 +79,23 @@ switch ($op) {
 	default:
 
 		xoops_cp_header();
-		
+
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-		
+
 		$objectTable = new IcmsPersistableTable($icms_customtag_handler);
 		$objectTable->addColumn(new IcmsPersistableColumn('name', _GLOBAL_LEFT, 150, 'getCustomtagName'));
 		$objectTable->addColumn(new IcmsPersistableColumn('description', _GLOBAL_LEFT));
 		$objectTable->addColumn(new IcmsPersistableColumn(_CO_ICMS_CUSTOMTAGS_TAG_CODE, 'center', 200, 'getXoopsCode'));
 		$objectTable->addColumn(new IcmsPersistableColumn('language', 'center', 150));
 
-		$objectTable->addIntroButton('addcustomtag', 'admin.php?fct=customtag&op=mod', _CO_ICMS_CUSTOMTAG_CREATE);
+		$objectTable->addIntroButton('addcustomtag', 'admin.php?fct=customtag&amp;op=mod', _CO_ICMS_CUSTOMTAG_CREATE);
 
 		$objectTable->addQuickSearch(array('title', 'summary', 'description'));
 
 		$objectTable->addCustomAction('getCloneLink');
 
 		$icmsAdminTpl->assign('icms_customtag_table', $objectTable->fetch());
-		
+
 		$icmsAdminTpl->assign('icms_custom_tag_explain', true);
 		$icmsAdminTpl->assign('icms_custom_tag_title', _CO_ICMS_CUSTOMTAGS_DSC);
 

@@ -87,7 +87,7 @@ switch ($op) {
 		$objectTable->addColumn(new IcmsPersistableColumn('sat_type', 'center', 120, 'getTypeForDisplay'));
 		$objectTable->addColumn(new IcmsPersistableColumn('sat_lastruntime', 'center', 180, 'getLastRunTimeForDisplay'));
 
-		$objectTable->addIntroButton('addautotasks', 'admin.php?fct=autotasks&op=mod', _CO_ICMS_AUTOTASKS_CREATE);
+		$objectTable->addIntroButton('addautotasks', 'admin.php?fct=autotasks&amp;op=mod', _CO_ICMS_AUTOTASKS_CREATE);
 
 		$objectTable->addQuickSearch(array('title', 'summary', 'description'));
 
