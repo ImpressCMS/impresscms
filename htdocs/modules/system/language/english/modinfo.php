@@ -62,7 +62,7 @@ define("_MI_SYSTEM_ADMENU24", "MimeTypes");
 
 define('_MI_SYSTEM_BNAME101', "System Warnings");
 define('_MI_SYSTEM_BNAME102', "Control Panel");
-define('_MI_SYSTEM_BNAME103', "Modules Installed");
+define('_MI_SYSTEM_BNAME103', "Installed Modules");
 define('_MI_SYSTEM_BLOCK_BOOKMARKS','My Bookmarks');
 define('_MI_SYSTEM_BLOCK_BOOKMARKS_DESC','Things I have bookmarked');
 
