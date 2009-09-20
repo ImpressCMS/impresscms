@@ -105,7 +105,7 @@ define("_MI_PROFILE_ENABLEAUDIO_TITLE","Enable audio section");
 define("_MI_PROFILE_ENABLEAUDIO_DESC","Enabling audio section for the users, will enable the audio playlist");
 define("_MI_PROFILE_NUMBAUDIO_TITLE","Max number of audio for a user");
 define("_MI_PROFILE_AUDIOSPERPAGE_TITLE","Number of mp3 files per page");
-define("_PROFILE_MI_NAME", "imProfile");
+define("_PROFILE_MI_NAME", "Profile");
 define("_PROFILE_MI_DESC", "Module for managing custom user profile fields");
 define("_PROFILE_MI_EDITACCOUNT", "Edit Account");
 define("_PROFILE_MI_CHANGEPASS", "Change Password");
