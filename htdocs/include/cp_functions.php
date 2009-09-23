@@ -74,7 +74,8 @@ function icms_cp_header(){
 	$xoTheme =& $xoopsThemeFactory->createInstance( array(
 		'contentTemplate'	=> @$xoopsOption['template_main'],
 		'canvasTemplate'	=> 'theme'.(( file_exists(ICMS_THEME_PATH.'/'.$icmsConfig['theme_admin_set'].'/theme_admin.html') || file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme_admin.html') ) ?'_admin':'').'.html',
-		'plugins' 			=> array('xos_logos_PageBuilder')
+		'plugins' 			=> array('xos_logos_PageBuilder'),
+		'folderName'		=> $icmsConfig['theme_admin_set']
 	) );
 	$icmsAdminTpl = $xoTheme->template;
 
