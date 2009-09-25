@@ -1,8 +1,7 @@
-WideImage, a PHP5 object-oriented image library
-
-For documentation, please visit http://wideimage.sourceforge.net/
-For author's blog, visit http://kozak.si/widethoughts/
-
+<?php
+	/**
+ * @author Gasper Kozak
+ * @copyright 2007, 2008, 2009
 
     This file is part of WideImage.
 		
@@ -19,3 +18,33 @@ For author's blog, visit http://kozak.si/widethoughts/
     You should have received a copy of the GNU Lesser General Public License
     along with WideImage; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+    * @package Internal/Mappers
+  **/
+	
+	include_once(WideImage::path() . '/vendor/JPEXS/bmp.php');
+	
+	/**
+	 * Mapper support for BMP
+	 * 
+	 * Code used with permission from JPEXS
+	 * http://www.jpexs.com/php.html
+	 * 
+	 * @package Internal/Mappers
+	 */
+	class WideImage_Mapper_BMP
+	{
+		function load($uri)
+		{
+			return imagecreatefrombmp($uri);
+		}
+		
+		function save($handle, $uri = null)
+		{
+			if ($uri == null)
+				imagebmp($handle);
+			else
+				imagebmp($handle, $uri);
+		}
+	}
+?>

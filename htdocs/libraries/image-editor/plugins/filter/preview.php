@@ -8,7 +8,7 @@ if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
 if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
 if (file_exists('../mainfile.php')) include_once '../mainfile.php';
 if (!defined('XOOPS_ROOT_PATH')) exit();
-include(ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.inc.php");
+include(ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.php");
 
 $file = $_GET['file'];
 $resize = isset($_GET['resize'])?$_GET['resize']:1;
@@ -24,7 +24,7 @@ if (isset($_GET['arg3'])){
 	$args[] = $_GET['arg3'];
 }
 
-$img = wiImage::load($file);
+$img = WideImage::load($file);
 
 $width = $img->getWidth();
 $height = $img->getHeight();

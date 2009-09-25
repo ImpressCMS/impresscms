@@ -31,7 +31,7 @@ if (! defined ( 'XOOPS_ROOT_PATH' ))
 
 include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 include_once ICMS_ROOT_PATH . '/class/template.php';
-include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.inc.php';
+include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 
 global $xoopsConfig;
@@ -215,17 +215,17 @@ $temp_img_name = 'temp_' . $uniq . '_' . $original_image->getVar ( 'image_name' 
 $orig_img_name = 'orig_' . $uniq . '_' . $original_image->getVar ( 'image_name' );
 if (! file_exists ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $temp_img_name )) {
 	if ($imagecategory->getVar ( 'imgcat_storetype' ) == 'db') {
-		$temp_img = wiImage::loadFromString ( $original_image->getVar ( 'image_body' ) );
-		$orig_img = wiImage::loadFromString ( $original_image->getVar ( 'image_body' ) );
+		$temp_img = WideImage::loadFromString ( $original_image->getVar ( 'image_body' ) );
+		$orig_img = WideImage::loadFromString ( $original_image->getVar ( 'image_body' ) );
 	} else {
-		$temp_img = wiImage::load ( $categ_path . $original_image->getVar ( 'image_name' ) );
-		$orig_img = wiImage::load ( $categ_path . $original_image->getVar ( 'image_name' ) );
+		$temp_img = WideImage::load ( $categ_path . $original_image->getVar ( 'image_name' ) );
+		$orig_img = WideImage::load ( $categ_path . $original_image->getVar ( 'image_name' ) );
 	}
 	$temp_img->saveToFile ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $temp_img_name );
 	$orig_img->saveToFile ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $orig_img_name );
 } else {
-	$temp_img = wiImage::load ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $temp_img_name );
-	$orig_img = wiImage::load ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $orig_img_name );
+	$temp_img = WideImage::load ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $temp_img_name );
+	$orig_img = WideImage::load ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $orig_img_name );
 }
 $img = array ( );
 $img ['name'] = $temp_img_name;

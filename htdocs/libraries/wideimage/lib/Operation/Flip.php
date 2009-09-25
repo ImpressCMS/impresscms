@@ -1,8 +1,7 @@
-WideImage, a PHP5 object-oriented image library
-
-For documentation, please visit http://wideimage.sourceforge.net/
-For author's blog, visit http://kozak.si/widethoughts/
-
+<?php
+	/**
+ * @author Gasper Kozak
+ * @copyright 2007, 2008, 2009
 
     This file is part of WideImage.
 		
@@ -19,3 +18,37 @@ For author's blog, visit http://kozak.si/widethoughts/
     You should have received a copy of the GNU Lesser General Public License
     along with WideImage; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+    * @package Internal/Operations
+  **/
+	
+	/**
+	 * Flip operation class
+	 * 
+	 * @package Internal/Operations
+	 */
+	class WideImage_Operation_Flip
+	{
+		/**
+		 * Returns a flipped image
+		 *
+		 * @param WideImage_Image $image
+		 * @return WideImage_Image
+		 */
+		function execute($image)
+		{
+			$new = $image->copy();
+			
+			$width = $image->getWidth();
+			$height = $image->getHeight();
+			for ($y = 0; $y < $height; $y++)
+				imagecopy(
+					$new->getHandle(), 
+					$image->getHandle(), 
+					0, $y, 0, $height - $y - 1, 
+					$width, 1 
+				);
+			return $new;
+		}
+	}
+?>

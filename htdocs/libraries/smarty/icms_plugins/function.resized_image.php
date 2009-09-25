@@ -21,9 +21,9 @@
  *                     is environment variable DOCUMENT_ROOT
  *         - path_prefix = prefix for path output (optional, default empty)
  *		   - fit = The way the image is resized. Possible values:
-			· inside (the image will fit inside the new dimensions while maintaining the aspect ratio)
-			· fill (the image will completely fit inside the new dimensions)
-			· outside (the image will be resized to completely fill the specified rectangle, while still maintaining aspect ratio)
+			ï¿½ inside (the image will fit inside the new dimensions while maintaining the aspect ratio)
+			ï¿½ fill (the image will completely fit inside the new dimensions)
+			ï¿½ outside (the image will be resized to completely fill the specified rectangle, while still maintaining aspect ratio)
  *
  * Examples: {resized_image file="/images/image.jpg" height=70 width=120 fit="inside"}
  * You can add extra parameters to the tag, such as class, alt or id.
@@ -162,8 +162,8 @@ function smarty_function_resized_image($params, &$smarty)
 			mkdir ($resized['dir'], 0755, true);
 		}
 		// Resize image using WideImage library
-		include_once ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.inc.php';
-		$resized_img = wiImage::load($original['path'], 'jpg');
+		include_once ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
+		$resized_img = WideImage::load($original['path'], 'jpg');
 		$resized_img->resize($resized['width'], $resized['height'], $fit)->saveToFile($resized['path']);
 	}
 

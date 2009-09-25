@@ -16,7 +16,7 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 // including the IcmsPersistabelSeoObject
 include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
 include_once(ICMS_ROOT_PATH . '/modules/profile/include/functions.php');
-include ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.inc.php';
+include ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
 
 define('PROFILE_TRIBES_SECURITY_EVERYBODY', 1);
 define('PROFILE_TRIBES_SECURITY_APPROVAL', 2);
@@ -361,7 +361,7 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	function imageResizer($img, $width=320, $height=240, $path_upload=ICMS_UPLOAD_PATH, $prefix='') {
 		$prefix = (isset($prefix) && $prefix != '')?$prefix:time();
 		$path = pathinfo($img);
-		$img = wiImage::load($img);
+		$img = WideImage::load($img);
 		$img->resizeDown($width, $height)->saveToFile($path_upload.'/'.$prefix.'_'.$path['basename']);
 	}
 	

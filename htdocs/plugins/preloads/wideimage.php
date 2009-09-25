@@ -16,11 +16,11 @@ class IcmsPreloadWideimage extends IcmsPreloadItem
 {
 	function eventStartOutputInit() {
 		// just including the file... more to come
-		include ( ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.inc.php" );
+		include ( ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.php" );
 	}
 	
 	function eventAdminHeader() {
-		include ( ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.inc.php" );
+		include ( ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.php" );
 	}
 }
 ?>

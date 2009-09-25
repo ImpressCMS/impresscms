@@ -1,8 +1,7 @@
-WideImage, a PHP5 object-oriented image library
-
-For documentation, please visit http://wideimage.sourceforge.net/
-For author's blog, visit http://kozak.si/widethoughts/
-
+<?php
+	/**
+ * @author Gasper Kozak
+ * @copyright 2007, 2008, 2009
 
     This file is part of WideImage.
 		
@@ -19,3 +18,30 @@ For author's blog, visit http://kozak.si/widethoughts/
     You should have received a copy of the GNU Lesser General Public License
     along with WideImage; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+    * @package Internal/Operations
+  **/
+	
+	/**
+	 * CorrectGamma operation class
+	 * 
+	 * @package Internal/Operations
+	 */
+	class WideImage_Operation_CorrectGamma
+	{
+		/**
+		 * Executes imagegammacorrect()
+		 *
+		 * @param WideImage_Image $image
+		 * @param numeric $input_gamma
+		 * @param numeric $output_gamma
+		 * @return WideImage_TrueColorImage
+		 */
+		function execute($image, $input_gamma, $output_gamma)
+		{
+			$new = $image->copy();
+			imagegammacorrect($new->getHandle(), $input_gamma, $output_gamma);
+			return $new;
+		}
+	}
+?>

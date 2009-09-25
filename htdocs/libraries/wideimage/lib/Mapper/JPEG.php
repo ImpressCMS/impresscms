@@ -1,8 +1,7 @@
-WideImage, a PHP5 object-oriented image library
-
-For documentation, please visit http://wideimage.sourceforge.net/
-For author's blog, visit http://kozak.si/widethoughts/
-
+<?php
+	/**
+ * @author Gasper Kozak
+ * @copyright 2007, 2008, 2009
 
     This file is part of WideImage.
 		
@@ -19,3 +18,25 @@ For author's blog, visit http://kozak.si/widethoughts/
     You should have received a copy of the GNU Lesser General Public License
     along with WideImage; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+    * @package Internal/Mappers
+  **/
+	
+	/**
+	 * Mapper class for JPEG files
+	 * 
+	 * @package Internal/Mappers
+	 */
+	class WideImage_Mapper_JPEG
+	{
+		function load($uri)
+		{
+			return imagecreatefromjpeg($uri);
+		}
+		
+		function save($handle, $uri = null, $quality = 100)
+		{
+			imagejpeg($handle, $uri, $quality);
+		}
+	}
+?>

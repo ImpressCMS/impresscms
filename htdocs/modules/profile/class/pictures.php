@@ -16,7 +16,7 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 // including the IcmsPersistabelSeoObject
 include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
 include_once(ICMS_ROOT_PATH . '/modules/profile/include/functions.php');
-include ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.inc.php';
+include ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
 
 class ProfilePictures extends IcmsPersistableSeoObject {
 
@@ -210,7 +210,7 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	function imageResizer($img, $width=320, $height=240, $path_upload=ICMS_UPLOAD_PATH, $prefix='') {
 		$prefix = (isset($prefix) && $prefix != '')?$prefix:time();
 		$path = pathinfo($img);
-		$img = wiImage::load($img);
+		$img = WideImage::load($img);
 		$img->resizeDown($width, $height)->saveToFile($path_upload.'/'.$prefix.'_'.$path['basename']);
 	}
 	
@@ -262,7 +262,7 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		$imageAvatar = ICMS_UPLOAD_PATH.'/'.$avatar;
 
 		// resize picture and store as avatar
-		$imgObj = wiImage::load($image);
+		$imgObj = WideImage::load($image);
 		$imgObj->resizeDown($icmsConfigUser['avatar_width'], $icmsConfigUser['avatar_height'])->saveToFile($imageAvatar);
 
 		// retrieve the mime type for the avatar
