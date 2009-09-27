@@ -412,14 +412,14 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
                 $text = $this->xoopsCodeDecode($text, 0);
             }
         }
-        if($br != 0)
+        $config_handler = xoops_gethandler('config');
+        $icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
+        if($br !== 0 || ($html !== 0 && $icmsConfigPurifier['enable_purifier'] !== 1))
         {
             $text = $this->nl2Br($text);
         }
         $text = $this->codeConv($text, $xcode, $image);	// Ryuji_edit(2003-11-18)
 
-        $config_handler = xoops_gethandler('config');
-        $icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
         if($html != 0 && $icmsConfigPurifier['enable_purifier'] !== 0)
         {
             $text = $this->html_purifier($text);
@@ -476,14 +476,14 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
                 $text = $this->xoopsCodeDecode($text, 0);
             }
         }
-        if($br != 0)
+        $config_handler = xoops_gethandler('config');
+        $icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
+        if($br !== 0 || ($html !== 0 && $icmsConfigPurifier['enable_purifier'] !== 1))
         {
             $text = $this->nl2Br($text);
         }
         $text = $this->codeConv($text, $xcode, $image); // Ryuji_edit(2003-11-18)
 
-        $config_handler = xoops_gethandler('config');
-        $icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
         if($html != 0 && $icmsConfigPurifier['enable_purifier'] !== 0)
         {
             $text = $this->html_purifier($text);
