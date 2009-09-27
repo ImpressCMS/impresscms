@@ -104,7 +104,7 @@ class TinyMCE
 		$configured[] = "language";
 		$configured[] = "theme";
 		$configured[] = "mode";
-		$this->setting["plugins"] = "icmsmlcontent,xoopsimagemanager,xoopsquotecode,xoopsemotions,table,advimage,advlink,emotions,insertdatetime,preview,media,contextmenu,paste,fullscreen,visualchars,nonbreaking" ;
+		$this->setting["plugins"] = "bbcode,icmsmlcontent,xoopsimagemanager,xoopsquotecode,xoopsemotions,table,advimage,advlink,emotions,insertdatetime,preview,media,contextmenu,paste,fullscreen,visualchars,nonbreaking" ;
 		$this->setting["plugins"] .= !empty($this->config["plugins"]) ? ",".$this->config["plugins"] : "";
 		$configured[] = "plugins";
 
