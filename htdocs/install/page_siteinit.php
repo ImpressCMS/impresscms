@@ -77,6 +77,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 					goodPass:		"top_goodPass",
 					strongPass:		"top_strongPass",
 					baseStyle:		"top_testresult",
+					userid:			"#adminlogin_name",
 					messageloc:		0
 
 				});
@@ -92,7 +93,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	<div class="dbconn_line">
 	<label for="adminlogin_name"><?php echo ADMIN_LOGIN_LABEL; ?></label>
 	<div class="clear">&nbsp;</div>
-	<input type="text" name="adminlogin_name" id="adminlogin_name" maxlength="25" value="<?php echo htmlspecialchars( $vars['adminlogin_name'], ENT_QUOTES ); ?>" />
+	<input class="adminlogin_name" type="text" name="adminlogin_name" id="adminlogin_name" maxlength="25" value="<?php echo htmlspecialchars( $vars['adminlogin_name'], ENT_QUOTES ); ?>" />
 	</div>
 	<div class="dbconn_line">
 	<label for="adminmail"><?php echo ADMIN_EMAIL_LABEL; ?></label>

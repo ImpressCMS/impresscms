@@ -13,7 +13,7 @@
  */
 
 include_once "../../mainfile.php";
-$xoopsOption['template_main'] = $profile_template;
+$xoopsOption['template_main'] = isset($profile_template)?$profile_template:'';
 include_once ICMS_ROOT_PATH."/header.php";
 
 $dirname = basename( dirname( __FILE__ ) );

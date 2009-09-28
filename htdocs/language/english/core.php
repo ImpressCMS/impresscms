@@ -56,4 +56,5 @@ define('_CORE_PASSLEVEL1','Too short');
 define('_CORE_PASSLEVEL2','Weak');
 define('_CORE_PASSLEVEL3','Good');
 define('_CORE_PASSLEVEL4','Strong');
+define('_CORE_UNAMEPASS_IDENTIC','Username and Password identical.');
 ?>

@@ -2661,7 +2661,7 @@ function icms_PasswordMeter(){
 					$.fn.badPass = "'._CORE_PASSLEVEL2.'";
 					$.fn.goodPass = "'._CORE_PASSLEVEL3.'";
 					$.fn.strongPass = "'._CORE_PASSLEVEL4.'";
-					$.fn.samePassword = "Username and Password identical.";
+					$.fn.samePassword = "'._CORE_UNAMEPASS_IDENTIC.'";
 					$.fn.resultStyle = "";
 				$(".password_adv").passStrength({
 					minPass: '.$icmsConfigUser['minpass'].',
@@ -2671,6 +2671,7 @@ function icms_PasswordMeter(){
 					goodPass:		"top_goodPass",
 					strongPass:		"top_strongPass",
 					baseStyle:		"top_testresult",
+					userid:			"#uname",
 					messageloc:		0
 				});
 			});

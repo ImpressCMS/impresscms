@@ -36,10 +36,10 @@ function getRegisterForm(&$user, $profile, $next_step = 0, $step) {
     if ($next_step == 0) {
         $uname_size = $icmsConfigUser['maxuname'] < 75 ? $icmsConfigUser['maxuname'] : 75;
 
-        $elements[0][] = array('element' => new XoopsFormText(_PROFILE_MA_USERLOGINNAME."", "login_name", $uname_size, 75, $user->getVar('login_name', 'e')), 'required' => true);
+        $elements[0][] = array('element' => new XoopsFormText(_PROFILE_MA_USERLOGINNAME, "login_name", $uname_size, 75, $user->getVar('login_name', 'e')), 'required' => true);
         $weights[0][] = 0;
 
-        $elements[0][] = array('element' => new XoopsFormText(_PROFILE_MA_USERNAME."", "uname", $uname_size, 75, $user->getVar('uname', 'e')), 'required' => true);
+        $elements[0][] = array('element' => new XoopsFormText(_PROFILE_MA_USERNAME, "uname", $uname_size, 75, $user->getVar('uname', 'e')), 'required' => true);
         $weights[0][] = 0;
 
         $elements[0][] = array('element' => new XoopsFormText(_PROFILE_MA_EMAIL, "email", $uname_size, 60, $user->getVar('email', 'e')), 'required' => true);

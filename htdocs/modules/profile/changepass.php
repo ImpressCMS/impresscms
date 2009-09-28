@@ -20,13 +20,11 @@ if (!$icmsUser) {
 }
 $xoopsOption['template_main'] = 'profile_changepass.html';
 include ICMS_ROOT_PATH.'/header.php';
-if($icmsConfigUser['pass_level']>20){
-icms_PasswordMeter();
-}
 if (!isset($_POST['submit'])) {
     //show change password form
     include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
     $form = new XoopsThemeForm(_PROFILE_MA_CHANGEPASSWORD, 'form', $_SERVER['REQUEST_URI'], 'post', true);
+    //$form->addElement(new XoopsFormLabel(_PROFILE_MA_USERLOGINNAME, $icmsUser->getVar('login_name', 'e'), "uname"), true);
     $form->addElement(new XoopsFormPassword(_PROFILE_MA_OLDPASSWORD, 'oldpass', 10, 50), true);
     $pwd_text = new XoopsFormPassword('', 'password', 10, 255, '', false, ($icmsConfigUser['pass_level']?'password_adv':''));
     $pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 255);
