@@ -44,6 +44,8 @@ $(function() {
       data: "action=createtrustpath&path=" + $('input#trustpath').val(),
       dataType: "html",
       success: function(data) {
+        $("input#trustpath").change();
+        $("#trustpathimg").html(data).fadeIn("slow");
         $("#trustperms").html(data).fadeIn("slow");
       }
     });
