@@ -16,7 +16,6 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 // including the IcmsPersistabelSeoObject
 include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
 include_once(ICMS_ROOT_PATH . '/modules/profile/include/functions.php');
-include ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
 
 define('PROFILE_TRIBES_SECURITY_EVERYBODY', 1);
 define('PROFILE_TRIBES_SECURITY_APPROVAL', 2);
