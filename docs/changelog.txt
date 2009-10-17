@@ -37,7 +37,8 @@ Revision:
 * #795: removing clear text password from mail template (skenow)
 * #769: Autotasks: crontab can't start but it displayed as avaible (mekdrop)
 * #779: try add/remove autotasks for module when module has no autotasks items (mekdrop)
-* #810: autotasks doesn't works when site is turned off
+* #810: autotasks doesn't works when site is turned off (mekdrop)
+* #811: autotasks not allways execute oldest task that needs execution (mekdrop)
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009

@@ -52,7 +52,7 @@ class SystemAutoTasks extends IcmsPersistableObject {
 		}
 		else
 		{
-			return date(_DATESTRING, $this->getVar('sat_lastruntime'));
+			return formatTimestamp($this->getVar('sat_lastruntime'));
 		}
 	}
 
@@ -142,23 +142,25 @@ class SystemAutoTasks extends IcmsPersistableObject {
 	function exec()
 	{
 		if(!$this->getVar('sat_enabled')) return false;
-		if(($this->getVar('sat_lastruntime') + $this->getVar('sat_interval') * 60) > time()) return false;
+		if(((int)$this->getVar('sat_lastruntime') + (int)$this->getVar('sat_interval') * 60) > time()) return false;
 		$code = $this->getVar('sat_code');
+		ignore_user_abort(true);
 		if(substr($this->getVar('sat_type'), 0, 6) == 'addon/')
 		{
 			$module = substr($this->getVar('sat_type'), 6);
 			if($module == '') return false;
 			$module = ICMS_MODULES_PATH.'/'.$module;
 			$module = $module.'/'.$code;
-			$code = 'require ("'.$module.'");';
+			$code = ' require ("'.$module.'");';;
+			$is_bug = !(@highlight_string(file_get_contents($module), true));
+		} else {
+			$is_bug = !(@highlight_string('<?'.'php '. $code.' return true; ?'.'>', true));
 		}
-		ignore_user_abort(true);
-		$is_bug = !(@eval($code.' return true; '));
-		if($is_bug)
-		{
+		if($is_bug) {
 			trigger_error(sprintf(_CO_ICMS_AUTOTASKS_SOURCECODE_ERROR, $code));
 			return false;
 		}
+		eval($code);
 		$count = $this->getVar('sat_repeat');
 		if($count > 0)
 		{
@@ -263,10 +265,10 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
 	function getTasks()
 	{
 		$criteria = new CriteriaCompo();
-		$criteria->setSort('sat_id');
+		$criteria->setSort('sat_lastruntime');
 		$criteria->setOrder('ASC');
-		$criteria->add( new Criteria('(sat_lastruntime + sat_interval)', time(), '<', null, "%s" ));
-		$criteria->add( new Criteria('sat_repeat', 0, '>', null, "'%s'"));
+		$criteria->add( new Criteria('(sat_lastruntime + sat_interval)', time(), '<=', null, "%s" ));
+		$criteria->add( new Criteria('sat_repeat', 0, '>=', null, "'%s'"));
 		$criteria->add( new Criteria('sat_enabled', 1));
 		$rez = $this->getObjects($criteria, false);
 		return $rez;
