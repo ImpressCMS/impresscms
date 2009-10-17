@@ -430,8 +430,8 @@ function xoops_module_install($dirname) {
 			
 			// add module specific tasks to system autotasks list
 			$atasks = $module->getInfo('autotasks');
-			$atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
-			if (isset($atasks) && is_array($atasks)) {
+			if (isset($atasks) && is_array($atasks) && (count($atasks) > 0)) {
+				$atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
 				foreach ($atasks as $taskID => $taskData) {
 					$task = &$atasks_handler->create();
 					if (isset($taskData['enabled'])) $task->setVar('sat_enabled', $taskData['enabled']);
@@ -448,8 +448,9 @@ function xoops_module_install($dirname) {
 						$msgs[] = '&nbsp;&nbsp;Added task to autotasks list. Task Name: <b>'.$taskData['name'].'</b>';
 					}
 				}
+				unset($atasks_handler, $task, $taskData, $criteria, $items, $taskID);
 			}
-			unset($atasks, $atasks_handler, $task, $taskData, $criteria, $items, $taskID);
+			unset($atasks);
 
 			// execute module specific install script if any
 			$install_script = $module->getInfo('onInstall');
@@ -699,13 +700,16 @@ function xoops_module_uninstall($dirname) {
 				}
 			}
 			
-			$msgs[] = 'Deleting autotasks...';
 			$atasks = $module->getInfo('autotasks');
-			$atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
-			$criteria = new CriteriaCompo();
-			$criteria->add( new Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname') ) );
-			$atasks_handler->deleteAll($criteria);
-			unset($atasks,$atasks_handler,$criteria,$taskData);
+			if (isset($atasks) && is_array($atasks) && (count($atasks) > 0)) {
+				$msgs[] = 'Deleting autotasks...';
+				$atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
+				$criteria = new CriteriaCompo();
+				$criteria->add( new Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname') ) );
+				$atasks_handler->deleteAll($criteria);
+				unset($atasks_handler,$criteria,$taskData);
+			} 
+			unset($atasks);
 
 			// execute module specific install script if any
 			$uninstall_script = $module->getInfo('onUninstall');
@@ -1179,7 +1183,7 @@ function icms_module_update($dirname) {
 		// add module specific tasks to system autotasks list
 		$atasks = $module->getInfo('autotasks');
 		$atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
-		if (count($atasks) > 0) {
+		if (isset($atasks) && is_array($atasks) && (count($atasks) > 0)) {
 			$msgs[] = 'Updating autotasks...';
 	  	  	$criteria = new CriteriaCompo();
 			$criteria->add( new Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname')));

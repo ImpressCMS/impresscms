@@ -35,6 +35,8 @@ Revision:
 * #543: Block positions don't sort by title (skenow)
 * #792: Old system waiting block not deleted (skenow)
 * #795: removing clear text password from mail template (skenow)
+* #769: Autotasks: crontab can't start but it displayed as avaible (mekdrop)
+* #779: try add/remove autotasks for module when module has no autotasks items (mekdrop)
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009
