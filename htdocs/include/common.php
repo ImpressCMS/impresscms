@@ -443,7 +443,9 @@ if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype']
   icms_loadLanguageFile('core', $xoopsOption['pagetype']);
 }
 
-$xoopsOption = array();
+if (!isset($xoopsOption)) {
+	$xoopsOption = array();
+}
 
 if ( !defined("XOOPS_USE_MULTIBYTES") ) {
 	define("XOOPS_USE_MULTIBYTES",0);
