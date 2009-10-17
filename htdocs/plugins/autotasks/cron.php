@@ -45,8 +45,15 @@ class IcmsAutoTasksCron
 	   static $canRun = null;
 	   if ($canRun === null) {
 		   $crons = null; $return = null;
+		   // checking if cron servise is active
 		   exec( 'ps -ef | grep cron | grep -v grep', $crons, $return);
 		   $canRun = is_array($crons) && (count($crons) > 0) && (intval($return) === 0);
+		   if ($canRun) {
+			   // checking if we have access to use cron
+			   exec( 'crontab -l', $crons, $return);
+			   $crons = @implode("\r\n", $crons);
+			   $canRun = (strpos($crons, 'not allowed to use this program (crontab)') === false);
+		   }
 	   }   	
 	   return $canRun;
    }
