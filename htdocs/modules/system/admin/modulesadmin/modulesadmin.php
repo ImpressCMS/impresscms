@@ -427,7 +427,7 @@ function xoops_module_install($dirname) {
 			}
 			unset($blocks);
 			unset($groups);
-			
+
 			// add module specific tasks to system autotasks list
 			$atasks = $module->getInfo('autotasks');
 			if (isset($atasks) && is_array($atasks) && (count($atasks) > 0)) {
@@ -552,9 +552,9 @@ function xoops_module_uninstall($dirname) {
 		return "<p>".sprintf(_MD_AM_FAILUNINS, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_SYSNO."</p>";
 	} elseif ($module->getVar('dirname') == $xoopsConfig['startpage']) {
 		return "<p>".sprintf(_MD_AM_FAILUNINS, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
-	} else {	
+	} else {
 		$msgs = array();
-		
+
 		$member_handler = & xoops_gethandler ( 'member' );
 		$grps = $member_handler->getGroupList ();
 		foreach ( $grps as $k => $v ) {
@@ -584,7 +584,7 @@ function xoops_module_uninstall($dirname) {
 				}
 			}
 		}
-		
+
 		if (!$module_handler->delete($module)) {
 			$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete '.$module->getVar('name').'</span>';
 		} else {
@@ -699,7 +699,7 @@ function xoops_module_uninstall($dirname) {
 					}
 				}
 			}
-			
+
 			$atasks = $module->getInfo('autotasks');
 			if (isset($atasks) && is_array($atasks) && (count($atasks) > 0)) {
 				$msgs[] = 'Deleting autotasks...';
@@ -708,7 +708,7 @@ function xoops_module_uninstall($dirname) {
 				$criteria->add( new Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname') ) );
 				$atasks_handler->deleteAll($criteria);
 				unset($atasks_handler,$criteria,$taskData);
-			} 
+			}
 			unset($atasks);
 
 			// execute module specific install script if any
@@ -975,6 +975,7 @@ function icms_module_update($dirname) {
 					if ($fcount == 0) {
 						$newbid = $xoopsDB->genId($xoopsDB->prefix('newblocks').'_bid_seq');
 						$block_name = addslashes($blocks[$i]['name']);
+						/* @todo properly handle the block_type when updating the system module */
 						$sql = "INSERT INTO ".$xoopsDB->prefix("newblocks")." (bid, mid, func_num, options, name, title, content, side, weight, visible, block_type, c_type, isactive, dirname, func_file, show_func, edit_func, template, bcachetime, last_modified) VALUES ('".intval($newbid)."', '".intval($module->getVar('mid'))."', '".intval($i)."','".addslashes($options)."','".$block_name."', '".$block_name."', '', '1', '0', '0', 'M', 'H', '1', '".addslashes($dirname)."', '".addslashes($blocks[$i]['file'])."', '".addslashes($blocks[$i]['show_func'])."', '".addslashes($editfunc)."', '".$template."', '0', '".time()."')";
 						$result = $xoopsDB->query($sql);
 						if (!$result) {
