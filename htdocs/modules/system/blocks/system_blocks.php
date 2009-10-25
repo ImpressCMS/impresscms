@@ -250,6 +250,8 @@ function b_system_info_show($options)
 */
 function b_system_newmembers_show($options)
 {
+	global $icmsConfigUser;
+
 	$block = array();
 	$criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
 	$limit = (!empty($options[0])) ? $options[0] : 10;
@@ -261,7 +263,13 @@ function b_system_newmembers_show($options)
 	$count = count($newmembers);
 	for ($i = 0; $i < $count; $i++) {
 		if ( $options[1] == 1 ) {
-			$block['users'][$i]['avatar'] = $newmembers[$i]->getVar('user_avatar') != 'blank.gif' ? XOOPS_UPLOAD_URL.'/'.$newmembers[$i]->getVar('user_avatar') : '';
+			if ($newmembers[$i]->getVar('user_avatar') && $newmembers[$i]->getVar('user_avatar') != 'blank.gif' && $newmembers[$i]->getVar('user_avatar') != ''){
+				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL.'/'.$newmembers[$i]->getVar('user_avatar');
+			} elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
+				$block['users'][$i]['avatar'] = $newmembers[$i]->gravatar('G', $icmsConfigUser['avatar_width']);
+			} else {
+				$block['users'][$i]['avatar'] = '';
+			}
 		} else {
 			$block['users'][$i]['avatar'] = '';
 		}
@@ -290,6 +298,8 @@ function b_system_newmembers_show($options)
 */
 function b_system_topposters_show($options)
 {
+	global $icmsConfigUser;
+
 	$block = array();
 	$criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
 	$limit = (!empty($options[0])) ? $options[0] : 10;
@@ -304,9 +314,14 @@ function b_system_topposters_show($options)
 	$topposters =& $member_handler->getUsers($criteria);
 	$count = count($topposters);
 	for ($i = 0; $i < $count; $i++) {
-		$block['users'][$i]['rank'] = $i+1;
 		if ( $options[1] == 1 ) {
-			$block['users'][$i]['avatar'] = $topposters[$i]->getVar('user_avatar') != 'blank.gif' ? XOOPS_UPLOAD_URL.'/'.$topposters[$i]->getVar('user_avatar') : '';
+			if ($topposters[$i]->getVar('user_avatar') && $topposters[$i]->getVar('user_avatar') != 'blank.gif' && $topposters[$i]->getVar('user_avatar') != ''){
+				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL.'/'.$topposters[$i]->getVar('user_avatar');
+			} elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
+				$block['users'][$i]['avatar'] = $topposters[$i]->gravatar('G', $icmsConfigUser['avatar_width']);
+			} else {
+				$block['users'][$i]['avatar'] = '';
+			}
 		} else {
 			$block['users'][$i]['avatar'] = '';
 		}

@@ -10,6 +10,7 @@ Revision:
 * #353: imProfile: tribes can be searched again | ticket from addons (Phoenyx)
 * #360: content: Nicer templates + icons for the content module. close (sato-san)
 * #---: activating bbcode by default in TinyMCE (MrTheme/David)
+* #793: showing gravatar in blocks: New Members + Top Posters (Phoenyx)
 
 '''Fixed'''
 * #341: imProfile: don't show profile for inactive users | tickets from addons (Phoenyx)
