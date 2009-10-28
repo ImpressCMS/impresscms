@@ -62,8 +62,8 @@ else
 		}
 	}
 	if (isset($icmsConfigMetaFooter['google_meta']) && $icmsConfigMetaFooter['google_meta'] != ''){
-		$arr_google_meta=explode('"', '<meta name="verify-v1" content="'.$icmsConfigMetaFooter['google_meta'].'" />');
-		$xoTheme->addMeta('meta',$arr_google_meta[1],$arr_google_meta[3]);
+		$xoTheme->addMeta('meta','verify-v1',$icmsConfigMetaFooter['google_meta']);
+		$xoTheme->addMeta('meta','google-site-verification',$icmsConfigMetaFooter['google_meta']);
 	}
 	// ################# Preload Trigger startOutputInit ##############
 	$icmsPreloadHandler->triggerEvent('startOutputInit');
@@ -73,7 +73,7 @@ else
 	/** 
 	 * Now system first checks for RTL, if it is enabled it'll just load it, otherwise it will load the normal (LTR) styles
 	 */
-	$xoTheme->addStylesheet(ICMS_URL."/icms".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css", array("media" => "screen"));
+	$xoTheme->addStylesheet(ICMS_URL.'/icms'.(@_ADM_USE_RTL == true?'_rtl':'').'.css', array('media' => 'screen'));
 
 	/**
 	 * Weird, but need extra <script> tags for 2.0.x themes
