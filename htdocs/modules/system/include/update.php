@@ -1043,6 +1043,12 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	    $icmsDB->queryF('UPDATE `' . $icmsDB->prefix('newblocks')
 	        . '` SET `block_type`="S"'
 	        . ' WHERE `dirname`="system" AND `block_type`="M"');
+
+	    /* Change the field type of welcome_msg_content to textsarea */
+	    $sql_welcome_msg_content = 'UPDATE ' . $icmsDB->prefix('config')
+	    . ' SET `conf_formtype` = "textsarea"'
+	    . ' WHERE `conf_name`="welcome_msg_content"';
+	    $icmsDatabaseUpdater->runQuery($sql_welcome_msg_content, 'Welcome message form type successfully updated', 'Unable to update the welcome message form type', true);
     }
 
 	echo "</code>";
