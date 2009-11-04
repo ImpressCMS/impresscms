@@ -84,9 +84,9 @@ class SystemBlocksadmin extends IcmsBlock {
 
 	private function visible(){
 		if($this->getVar('visible','n') == 1)
-			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid='.$this->getVar('bid').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_ok.png" alt="'._VISIBLE.'"/></a>';
+			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=visible&bid='.$this->getVar('bid').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_ok.png" alt="'._VISIBLE.'"/></a>';
 		else
-			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid='.$this->getVar('bid').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_cancel.png" alt="'._VISIBLE.'"/></a>';
+			$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=visible&bid='.$this->getVar('bid').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_cancel.png" alt="'._VISIBLE.'"/></a>';
 		return $rtn;
 	}
 
@@ -109,29 +109,31 @@ class SystemBlocksadmin extends IcmsBlock {
 	// Render Methods for Action Buttons
 
 	public function getUpActionLink(){
-		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&amp;op=up&amp;bid='.$this->getVar('bid').'" title="'._UP.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/up.png" alt="'._UP.'"/></a>';
+		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=up&bid='.$this->getVar('bid').'" title="'._UP.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/up.png" alt="'._UP.'"/></a>';
 		return $rtn;
 	}
 
 	public function getDownActionLink(){
-		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&amp;op=down&amp;bid='.$this->getVar('bid').'" title="'._DOWN.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/down.png" alt="'._DOWN.'"/></a>';
+		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=down&bid='.$this->getVar('bid').'" title="'._DOWN.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/down.png" alt="'._DOWN.'"/></a>';
 		return $rtn;
 	}
 
 	public function getConfigureActionLink(){
-		if($this->getVar('edit_func') == "")
-			return "";
-		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&amp;op=config&amp;bid='.$this->getVar('bid').'" title="'._CONFIGURE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/configure.png" alt="'._CONFIGURE.'"/></a>';
+		if($this->getVar('edit_func') == "") {
+		$rtn = '<a href="javascript: void(0);"><img src="'.ICMS_URL.'/images/blank.gif" width="16" alt=""/></a>';
+		} else {
+		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=config&bid='.$this->getVar('bid').'" title="'._CONFIGURE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/configure.png" alt="'._CONFIGURE.'"/></a>';
+		}
 		return $rtn;
 	}
 
 	public function getCloneActionLink(){
-		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid='.$this->getVar('bid').'" title="'._CLONE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/editcopy.png" alt="'._CLONE.'"/></a>';
+		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=clone&bid='.$this->getVar('bid').'" title="'._CLONE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/editcopy.png" alt="'._CLONE.'"/></a>';
 		return $rtn;
 	}
 
 	public function getEditActionLink(){
-		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid='.$this->getVar('bid').'" title="'._EDIT.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/edit.png" alt="'._EDIT.'"/></a>';
+		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=mod&bid='.$this->getVar('bid').'" title="'._EDIT.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/edit.png" alt="'._EDIT.'"/></a>';
 		return $rtn;
 	}
 
@@ -151,14 +153,19 @@ class SystemBlocksadmin extends IcmsBlock {
 	* @return string
 	*/
 	public function getDeleteItemLink($onlyUrl=false, $withimage=true, $userSide=false){
-		if($this->getVar('block_type') != 'C' && $this->getVar('block_type') != 'K')
-			return "";
-
-		$ret = ICMS_URL. "/modules/system/admin.php?fct=blocksadmin&amp;op=del&amp;" . $this->handler->keyName . "=" . $this->getVar($this->handler->keyName);
+		$ret = ICMS_URL. "/modules/system/admin.php?fct=blocksadmin&op=del&" . $this->handler->keyName . "=" . $this->getVar($this->handler->keyName);
 		if ($onlyUrl) {
+		  if($this->getVar('block_type') != 'C' && $this->getVar('block_type') != 'K') {
+			return "";
+		  } else {
 			return $ret;
+		  }
 		} elseif($withimage) {
-			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' style='vertical-align: middle;' alt='" . _CO_ICMS_DELETE . "'  title='" . _CO_ICMS_DELETE . "'/></a>";
+		  if($this->getVar('block_type') != 'C' && $this->getVar('block_type') != 'K') {
+			return "<a href='javascript: void(0);'><img src='" . ICMS_URL . "/images/blank.gif' width='22' alt=''  title='' /></a>";
+		  } else {
+			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' style='vertical-align: middle;' alt='" . _CO_ICMS_DELETE . "'  title='" . _CO_ICMS_DELETE . "' /></a>";
+		  }
 		}
 
 		return "<a href='" . $ret . "'>" . $this->getVar($this->handler->identifierName) . "</a>";
