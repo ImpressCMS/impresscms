@@ -130,7 +130,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
 
     /**
      * Constructor - called from child classes
-     *
+     * 
      * @param object $db Database object {@link XoopsDatabase}
      * @param string $itemname Object to be managed
      * @param string $keyname Name of the table key that uniquely identify each {@link IcmsPersistableObject}
@@ -144,7 +144,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
     	$this->XoopsObjectHandler($db);
 
         $this->_itemname = $itemname;
-		// Todo: Autodect module
+		// Todo: Autodect module        
 		if ($modulename == '') {
 			$this->_moduleName = 'system';
 	        $this->table = $db->prefix($itemname);
@@ -442,7 +442,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
         return $ret;
     }
     /**
-     *
+     * 
      * @param object    $criteria
      * @param int       $limit
      * @param int       $start
@@ -904,13 +904,13 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
     	}
     }
 
-	function enableUpload($allowedMimeTypes=false, $maxFileSize=false, $maxWidth=-1, $maxHeight=-1) {
-	    $this->uploadEnabled = true;
-	    $this->_allowedMimeTypes = $allowedMimeTypes ? $allowedMimeTypes : $this->_allowedMimeTypes;
-	    $this->_maxFileSize = $maxFileSize ? $maxFileSize : $this->_maxFileSize;
-	    $this->_maxWidth = ($maxWidth != -1) ? $maxWidth : $this->_maxWidth;
-	    $this->_maxHeight = ($maxHeight != -1) ? $maxHeight : $this->_maxHeight;
-	}
+    function enableUpload($allowedMimeTypes=false, $maxFileSize=false, $maxWidth=false, $maxHeight=false) {
+    	$this->uploadEnabled = true;
+    	$this->_allowedMimeTypes = $allowedMimeTypes ? $allowedMimeTypes : $this->_allowedMimeTypes;
+    	$this->_maxFileSize = $maxFileSize ? $maxFileSize : $this->_maxFileSize;
+    	$this->_maxWidth = $maxWidth ? $maxWidth : $this->_maxWidth;
+    	$this->_maxHeight = $maxHeight ? $maxHeight : $this->_maxHeight;
+    }
 
 /********** Deprecated ***************/
     /**
