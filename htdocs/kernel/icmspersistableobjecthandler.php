@@ -930,7 +930,6 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
     	$this->_maxFileSize = $_maxFileSize ? $_maxFileSize : $this->_maxFileSize;
     	$this->_maxWidth = $_maxWidth ? $_maxWidth : $this->_maxWidth;
     	$this->_maxHeight = $_maxHeight ? $_maxHeight : $this->_maxHeight;
-
     }
 }
 ?>
