@@ -28,8 +28,8 @@ function editblock($bid = 0, $clone = false) {
 
 	$blockObj = $icms_block_handler->get($bid);
 
-	if (!$clone && !$blockObj->isNew()) {
-		$blockObj->showFieldOnForm('options');
+	if (!$blockObj->isNew() && $blockObj->getVar('edit_func') != '') $blockObj->showFieldOnForm('options');
+	if (!$clone && !$blockObj->isNew()) {	
 		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKSADMIN_EDIT, 'addblock');
 		$sform->assign($icmsAdminTpl);
 	} else {
@@ -63,7 +63,6 @@ $valid_op = array (
 	'addblock',
 	'del',
 	'clone',
-	'config',
 	'up',
 	'down',
 	'visible',
@@ -88,11 +87,6 @@ $clean_bid = isset ($_POST['bid']) ? ( int ) $_POST['bid'] : $clean_bid;
  */
 if (in_array($clean_op, $valid_op, true)) {
 	switch ($clean_op) {
-		case 'config' :
-			xoops_cp_header();
-			editblock($bid);
-			break;
-
 		case 'visible' :
 			$icms_block_handler->changeVisible($bid);
 			$rtn = '/modules/system/admin.php?fct=blocksadmin';
@@ -200,7 +194,7 @@ if (in_array($clean_op, $valid_op, true)) {
 			$objectTable->addFilter('visible', 'getVisibleStatusArray');
 			$objectTable->addFilter('side', 'getBlockPositionArray');
 
-			$objectTable->addCustomAction('getConfigureActionLink');
+			$objectTable->addCustomAction('getBlankLink');
 			$objectTable->addCustomAction('getUpActionLink');
 			$objectTable->addCustomAction('getDownActionLink');
 			$objectTable->addCustomAction('getCloneActionLink');

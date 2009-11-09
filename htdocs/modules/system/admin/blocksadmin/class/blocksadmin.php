@@ -108,6 +108,9 @@ class SystemBlocksadmin extends IcmsBlock {
 	}
 
 	// Render Methods for Action Buttons
+	public function getBlankLink() {
+		return "<img src='" . ICMS_URL . "/images/blank.gif' width='22' alt=''  title='' />";
+	}
 
 	public function getUpActionLink(){
 		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=up&bid='.$this->getVar('bid').'" title="'._UP.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/up.png" alt="'._UP.'"/></a>';
@@ -116,15 +119,6 @@ class SystemBlocksadmin extends IcmsBlock {
 
 	public function getDownActionLink(){
 		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=down&bid='.$this->getVar('bid').'" title="'._DOWN.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/down.png" alt="'._DOWN.'"/></a>';
-		return $rtn;
-	}
-
-	public function getConfigureActionLink(){
-		if($this->getVar('edit_func') == "") {
-		$rtn = '<a href="javascript: void(0);"><img src="'.ICMS_URL.'/images/blank.gif" width="16" alt=""/></a>';
-		} else {
-		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=config&bid='.$this->getVar('bid').'" title="'._CONFIGURE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/configure.png" alt="'._CONFIGURE.'"/></a>';
-		}
 		return $rtn;
 	}
 
@@ -163,7 +157,7 @@ class SystemBlocksadmin extends IcmsBlock {
 		  }
 		} elseif($withimage) {
 		  if($this->getVar('block_type') != 'C' && $this->getVar('block_type') != 'K') {
-			return "<a href='javascript: void(0);'><img src='" . ICMS_URL . "/images/blank.gif' width='22' alt=''  title='' /></a>";
+			return "<img src='" . ICMS_URL . "/images/blank.gif' width='22' alt=''  title='' />";
 		  } else {
 			return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' style='vertical-align: middle;' alt='" . _CO_ICMS_DELETE . "'  title='" . _CO_ICMS_DELETE . "' /></a>";
 		  }
@@ -229,18 +223,6 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
 		$this->table = $this->db->prefix('newblocks');
 
 		$this->addPermission ( 'block_read', _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS, _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC );
-	}
-
-	public function beforeUpdate(&$obj) {
-		$options = "";
-		ksort($_POST['options']);
-		foreach ($_POST['options'] as $opt) {
-			if ($options != "")
-				$options .= '|';
-			$options .= $opt;
-		}
-		$obj->setVar('options', $options);
-		return true;
 	}
 
 	public function getVisibleStatusArray(){
@@ -343,6 +325,28 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
 		else
 		$blockObj->setVar('visible', 1);
 		$this->insert($blockObj, true);
+	}
+
+	/**
+	 * BeforeSave event
+	 *
+	 * Event automatically triggered by IcmsPersistable Framework before the object is inserted or updated
+	 * We also need to do the transformation in case of an insert to handle cloned blocks with options
+	 *
+	 * @param object $obj SystemBlocksadmin object
+	 * @return true
+	 */
+	public function beforeSave(&$obj) {
+		if (empty($_POST['options'])) return true;
+
+		$options = "";
+		ksort($_POST['options']);
+		foreach ($_POST['options'] as $opt) {
+			if ($options != "")	$options .= '|';
+			$options .= $opt;
+		}
+		$obj->setVar('options', $options);
+		return true;
 	}
 }
 ?>
