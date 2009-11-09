@@ -34,7 +34,6 @@ class IcmsBlock extends IcmsPersistableObject {
 		$this->quickInitVar('bid', XOBJ_DTYPE_INT);
 		$this->quickInitVar('mid', XOBJ_DTYPE_INT);
 		$this->quickInitVar('func_num', XOBJ_DTYPE_INT);
-		$this->quickInitVar('options', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('content', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar('side', XOBJ_DTYPE_INT);
@@ -50,7 +49,7 @@ class IcmsBlock extends IcmsPersistableObject {
 		$this->quickInitVar('template', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('bcachetime', XOBJ_DTYPE_INT);
 		$this->quickInitVar('last_modified', XOBJ_DTYPE_INT);
-
+		$this->quickInitVar('options', XOBJ_DTYPE_TXTBOX);
 	}
 
 	// The next Methods are for backward Compatibility
