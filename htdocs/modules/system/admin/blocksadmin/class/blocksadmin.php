@@ -68,6 +68,7 @@ class SystemBlocksadmin extends IcmsBlock {
 
 		$this->setControl('visiblein','page');
 		$this->setControl('content', 'dhtmltextarea');
+		$this->setControl('options','blockoptions');
 	}
 
 	public function getVar($key, $format = 's') {
@@ -228,6 +229,18 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
 		$this->table = $this->db->prefix('newblocks');
 
 		$this->addPermission ( 'block_read', _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS, _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC );
+	}
+
+	public function beforeUpdate(&$obj) {
+		$options = "";
+		ksort($_POST['options']);
+		foreach ($_POST['options'] as $opt) {
+			if ($options != "")
+				$options .= '|';
+			$options .= $opt;
+		}
+		$obj->setVar('options', $options);
+		return true;
 	}
 
 	public function getVisibleStatusArray(){

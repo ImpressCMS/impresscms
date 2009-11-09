@@ -29,9 +29,9 @@ function editblock($bid = 0, $clone = false) {
 	$blockObj = $icms_block_handler->get($bid);
 
 	if (!$clone && !$blockObj->isNew()) {
+		$blockObj->showFieldOnForm('options');
 		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKSADMIN_EDIT, 'addblock');
 		$sform->assign($icmsAdminTpl);
-
 	} else {
 		if ($clone) {
 			if ($blockObj->getVar('block_type') != 'C') {
@@ -44,10 +44,8 @@ function editblock($bid = 0, $clone = false) {
 		} else {
 			$blockObj->setVar('block_type', 'C');
 		}
-
 		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKSADMIN_CREATE, 'addblock');
 		$sform->assign($icmsAdminTpl);
-
 	}
 	$icmsAdminTpl->assign('bid', $bid);
 	$icmsAdminTpl->display('db:admin/blocksadmin/system_adm_blocksadmin.html');
@@ -66,7 +64,6 @@ $valid_op = array (
 	'del',
 	'clone',
 	'config',
-	'do_config',
 	'up',
 	'down',
 	'visible',
@@ -92,38 +89,8 @@ $clean_bid = isset ($_POST['bid']) ? ( int ) $_POST['bid'] : $clean_bid;
 if (in_array($clean_op, $valid_op, true)) {
 	switch ($clean_op) {
 		case 'config' :
-			$blockObj = $icms_block_handler->get($bid);
-			$func = $blockObj->getVar('edit_func');
-			require_once (ICMS_ROOT_PATH . "/modules/" . $icms_block_handler->getModuleDirname($blockObj->getVar('mid', 'e')) . "/blocks/" . $blockObj->getVar('func_file'));
-			include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
-			icms_loadLanguageFile($icms_block_handler->getModuleDirname($blockObj->getVar('mid', 'e')), 'blocks');
-			icms_cp_header();
-			$action = ICMS_URL . "/modules/system/admin.php?fct=blocksadmin";
-			$form = new XoopsThemeForm(_AM_SYSTEM_BLOCKSADMIN_EDIT, "blockoptions", $action, "post", true);
-			$elementTray = new XoopsFormElementTray(_CO_SYSTEM_BLOCKSADMIN_OPTIONS, ' ', 'options' . '_password_tray');
-			$visible_label = new XoopsFormLabel('', $func (explode('|', $blockObj->getVar('options'))));
-
-			$elementTray->addElement($visible_label);
-			$form->addElement($elementTray);
-			$form->addElement(new XoopsFormHidden("bid", $blockObj->getVar('bid')));
-			$form->addElement(new XoopsFormHidden("op", "do_config"));
-			$form->addElement(new XoopsFormButton("", "submit", _SUBMIT, "submit"));
-			$form->display();
-			break;
-
-		case 'do_config' :
-			$blockObj = $icms_block_handler->get($_POST['bid']);
-			$options = "";
-			ksort($_POST['options']);
-			foreach ($_POST['options'] as $opt) {
-				if ($options != "")
-					$options .= '|';
-				$options .= $opt;
-			}
-			$blockObj->setVar('options', $options);
-			$icms_block_handler->insert($blockObj);
-			$action = ICMS_URL . "/modules/system/admin.php?fct=blocksadmin";
-			redirect_header($action);
+			xoops_cp_header();
+			editblock($bid);
 			break;
 
 		case 'visible' :
