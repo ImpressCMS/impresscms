@@ -459,9 +459,12 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	if ($dbVersion < $newDbVersion) {
 		echo sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
-		icms_copyr(ICMS_ROOT_PATH.'/preload', ICMS_ROOT_PATH.'/plugins/preloads');
-		if (is_file(ICMS_ROOT_PATH.'/plugins/preloads')){
-		icms_deleteFile(ICMS_ROOT_PATH.'/preload');
+		if (is_dir(ICMS_ROOT_PATH.'/preload') && !is_dir(ICMS_ROOT_PATH.'/plugins/preloads')){
+			icms_copyr(ICMS_ROOT_PATH.'/preload', ICMS_ROOT_PATH.'/plugins/preloads');
+			icms_unlinkRecursive(ICMS_ROOT_PATH.'/preload');
+		}
+		if (is_dir(ICMS_ROOT_PATH.'/plugins/preloads')){
+			icms_unlinkRecursive(ICMS_ROOT_PATH.'/preload');
 		}
 	}
 
