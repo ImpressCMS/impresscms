@@ -42,7 +42,7 @@ class IcmsPageHandler extends IcmsPersistableObjectHandler {
 	
     public function getList( $criteria = null, $limit = 0, $start = 0, $debug=false){
     	$rtn = array();
-        $pages =& $this->getObjects( $criteria, true );
+        $pages = $this->getObjects( $criteria, true );
         foreach( $pages as $page ) {
             $rtn[$page->getVar('page_moduleid').'-'.$page->getVar('page_id')] = $page->getVar('page_title');
         }
@@ -53,16 +53,16 @@ class IcmsPageHandler extends IcmsPersistableObjectHandler {
     	if (!is_array($value)){
     		$value = array($value);
     	}
-    	$module_handler =& xoops_gethandler('module');
+    	$module_handler = xoops_gethandler('module');
     	$criteria = new CriteriaCompo(new Criteria('hasmain', 1));
     	$criteria->add(new Criteria('isactive', 1));
-    	$module_list =& $module_handler->getObjects($criteria);
+    	$module_list = $module_handler->getObjects($criteria);
     	$mods = '';
     	foreach ($module_list as $module){
     		$mods .= '<optgroup label="'.$module->getVar('name').'">';
     		$criteria = new CriteriaCompo(new Criteria('page_moduleid', $module->getVar('mid')));
     		$criteria->add(new Criteria('page_status', 1));
-    		$pages =& $this->getObjects($criteria);
+    		$pages = $this->getObjects($criteria);
     		$sel = '';
     		if (in_array($module->getVar('mid').'-0',$value)){
     			$sel = ' selected=selected';
@@ -81,7 +81,7 @@ class IcmsPageHandler extends IcmsPersistableObjectHandler {
     	$module = $module_handler->get(1);
     	$criteria = new CriteriaCompo(new Criteria('page_moduleid', 1));
     	$criteria->add(new Criteria('page_status', 1));
-    	$pages =& $this->getObjects($criteria);
+    	$pages = $this->getObjects($criteria);
     	$cont = '';
     	if (count($pages) > 0){
     		$cont = '<optgroup label="'.$module->getVar('name').'">';

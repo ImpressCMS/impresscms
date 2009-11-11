@@ -400,7 +400,7 @@ class IcmsPersistableObject extends XoopsObject {
 
 		if($highlight && isset($_GET['keywords']))
 		{
-			$myts =& MyTextSanitizer::getInstance();
+			$myts = MyTextSanitizer::getInstance();
 			$keywords=$myts->htmlSpecialChars(trim(urldecode($_GET['keywords'])));
 			$h= new SmartHighlighter ($keywords, true , 'smart_highlighter');
 			foreach($this->handler->highlightFields as $field) {
@@ -676,7 +676,7 @@ class IcmsPersistableObject extends XoopsObject {
      */
     function cleanVars()
     {
-        $ts =& MyTextSanitizer::getInstance();
+        $ts = MyTextSanitizer::getInstance();
         $existing_errors = $this->getErrors();
         $this->_errors = array();
         foreach ($this->vars as $k => $v) {
@@ -752,7 +752,7 @@ class IcmsPersistableObject extends XoopsObject {
                         $cleanv = 'http://' . $cleanv;
                     }
                     if (!$v['not_gpc']) {
-                        $cleanv =& $ts->stripSlashesGPC($cleanv);
+                        $cleanv = $ts->stripSlashesGPC($cleanv);
                     }
                     break;
                 case XOBJ_DTYPE_SIMPLE_ARRAY:
@@ -773,7 +773,7 @@ class IcmsPersistableObject extends XoopsObject {
                     break;
                 }
             }
-            $this->cleanVars[$k] =& $cleanv;
+            $this->cleanVars[$k] = $cleanv;
             unset($cleanv);
         }
         if (count($this->_errors) > 0) {
@@ -810,7 +810,7 @@ class IcmsPersistableObject extends XoopsObject {
             case 's':
             case 'show':
             	// ML Hack by marcan
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 $ret = $ts->htmlSpecialChars($ret);
 
                 if (method_exists($myts, 'formatForML')) {
@@ -822,7 +822,7 @@ class IcmsPersistableObject extends XoopsObject {
             	// End of ML Hack by marcan
 
             case 'clean':
-				$ts =& MyTextSanitizer::getInstance();
+				$ts = MyTextSanitizer::getInstance();
 
 				$ret = icms_html2text($ret);
 				$ret = icms_purifyText($ret);
@@ -833,14 +833,14 @@ class IcmsPersistableObject extends XoopsObject {
 
             case 'e':
             case 'edit':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 return $ts->htmlSpecialChars($ret);
                 break 1;
             case 'p':
             case 'preview':
             case 'f':
             case 'formpreview':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 return $ts->htmlSpecialChars($ts->stripSlashesGPC($ret));
                 break 1;
             case 'n':
@@ -978,10 +978,10 @@ class IcmsPersistableObject extends XoopsObject {
             }
             break;
         case XOBJ_DTYPE_SIMPLE_ARRAY:
-            $ret =& explode('|', $ret);
+            $ret = explode('|', $ret);
             break;
         case XOBJ_DTYPE_ARRAY:
-            $ret =& unserialize($ret);
+            $ret = unserialize($ret);
             break;
         case XOBJ_DTYPE_SOURCE:
             switch (strtolower($format)) {

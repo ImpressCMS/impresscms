@@ -191,7 +191,7 @@ class XoopsObject
     function assignVar($key, $value)
     {
         if (isset($value) && isset($this->vars[$key])) {
-            $this->vars[$key]['value'] =& $value;
+            $this->vars[$key]['value'] = $value;
         }
     }
 
@@ -221,7 +221,7 @@ class XoopsObject
     function setVar($key, $value, $not_gpc = false)
     {
         if (!empty($key) && isset($value) && isset($this->vars[$key])) {
-            $this->vars[$key]['value'] =& $value;
+            $this->vars[$key]['value'] = $value;
             $this->vars[$key]['not_gpc'] = $not_gpc;
             $this->vars[$key]['changed'] = true;
             $this->setDirty();
@@ -325,14 +325,14 @@ class XoopsObject
             case 'show':
             case 'e':
             case 'edit':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 return $ts->htmlSpecialChars($ret);
                 break 1;
             case 'p':
             case 'preview':
             case 'f':
             case 'formpreview':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 return $ts->htmlSpecialChars($ts->stripSlashesGPC($ret));
                 break 1;
             case 'n':
@@ -345,7 +345,7 @@ class XoopsObject
             switch (strtolower($format)) {
             case 's':
             case 'show':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 $html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
                 $xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
                 $smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
@@ -359,7 +359,7 @@ class XoopsObject
                 break 1;
             case 'p':
             case 'preview':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 $html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
                 $xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
                 $smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
@@ -369,7 +369,7 @@ class XoopsObject
                 break 1;
             case 'f':
             case 'formpreview':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
                 break 1;
             case 'n':
@@ -379,7 +379,7 @@ class XoopsObject
             }
             break;
         case XOBJ_DTYPE_ARRAY:
-            $ret =& unserialize($ret);
+            $ret = unserialize($ret);
             break;
         case XOBJ_DTYPE_SOURCE:
             switch (strtolower($format)) {
@@ -392,12 +392,12 @@ class XoopsObject
                 break 1;
             case 'p':
             case 'preview':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 return $ts->stripSlashesGPC($ret);
                 break 1;
             case 'f':
             case 'formpreview':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
                 break 1;
             case 'n':
@@ -450,7 +450,7 @@ class XoopsObject
      */
     function cleanVars()
     {
-        $ts =& MyTextSanitizer::getInstance();
+        $ts = MyTextSanitizer::getInstance();
         $existing_errors = $this->getErrors();
         $this->_errors = array();
         foreach ($this->vars as $k => $v) {
@@ -517,7 +517,7 @@ class XoopsObject
                         $cleanv = 'http://' . $cleanv;
                     }
                     if (!$v['not_gpc']) {
-                        $cleanv =& $ts->stripSlashesGPC($cleanv);
+                        $cleanv = $ts->stripSlashesGPC($cleanv);
                     }
                     break;
                 case XOBJ_DTYPE_ARRAY:
@@ -532,7 +532,7 @@ class XoopsObject
                     break;
                 }
             }
-            $this->cleanVars[$k] =& $cleanv;
+            $this->cleanVars[$k] = $cleanv;
             unset($cleanv);
         }
         if (count($this->_errors) > 0) {
@@ -581,7 +581,7 @@ class XoopsObject
     function &xoopsClone()
     {
         $class = get_class($this);
-        $clone =& new $class();
+        $clone = new $class();
         foreach ($this->vars as $k => $v) {
             $clone->assignVar($k, $v['value']);
         }
@@ -667,7 +667,7 @@ class XoopsObjectHandler
      */
     function XoopsObjectHandler(&$db)
     {
-        $this->db =& $db;
+        $this->db = $db;
     }
 
     /**

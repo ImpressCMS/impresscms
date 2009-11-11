@@ -89,8 +89,8 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 
 		global $icmsConfig;
 
-		$config_handler = & xoops_gethandler('config');
-		$icmsConfigUser = & $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+		$config_handler = xoops_gethandler('config');
+		$icmsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 		switch ($icmsConfigUser['activation_type']) {
 			case 0 :
 				$level = 0;
@@ -135,7 +135,7 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 
 		if ($notifyUser) {
 			// send some notifications
-			$xoopsMailer = & getMailer();
+			$xoopsMailer = getMailer();
 			$xoopsMailer->useMail();
 			$xoopsMailer->setTemplateDir(ICMS_ROOT_PATH . 'language/' . $icmsConfig['language'] . '/mail_template');
 			$xoopsMailer->setTemplate('smartobject_notify_user_added_by_admin.tpl');

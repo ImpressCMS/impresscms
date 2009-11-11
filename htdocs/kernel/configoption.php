@@ -183,9 +183,9 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
 			$confoption = new XoopsConfigOption();
 			$confoption->assignVars($myrow);
 			if (!$id_as_key) {
-				$ret[] =& $confoption;
+				$ret[] = $confoption;
 			} else {
-				$ret[$myrow['confop_id']] =& $confoption;
+				$ret[$myrow['confop_id']] = $confoption;
 			}
 			unset($confoption);
 		}

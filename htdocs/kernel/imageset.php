@@ -198,9 +198,9 @@ class XoopsImagesetHandler extends XoopsObjectHandler
             $imgset = new XoopsImageset();
             $imgset->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] =& $imgset;
+                $ret[] = $imgset;
             } else {
-                $ret[$myrow['imgset_id']] =& $imgset;
+                $ret[$myrow['imgset_id']] = $imgset;
             }
             unset($imgset);
         }
@@ -275,7 +275,7 @@ class XoopsImagesetHandler extends XoopsObjectHandler
         if (isset($tplset)) {
             $criteria->add(new Criteria('tplset_name', $tplset));
         }
-        $imgsets =& $this->getObjects($criteria, true);
+        $imgsets = $this->getObjects($criteria, true);
         $ret = array();
         foreach (array_keys($imgsets) as $i) {
             $ret[$i] = $imgsets[$i]->getVar('imgset_name');

@@ -106,8 +106,8 @@ class XoopsUser extends XoopsObject
 			}
 			else
 			{
-				$member_handler =& xoops_gethandler('member');
-				$user =& $member_handler->getUser($id);
+				$member_handler = xoops_gethandler('member');
+				$user = $member_handler->getUser($id);
 				foreach($user->vars as $k => $v)
 				{
 					$this->assignVar($k, $v['value']);
@@ -140,11 +140,11 @@ class XoopsUser extends XoopsObject
 		$usereal = intval($usereal);
 		if($userid > 0)
 		{
-			$member_handler =& xoops_gethandler('member');
-			$user =& $member_handler->getUser($userid);
+			$member_handler = xoops_gethandler('member');
+			$user = $member_handler->getUser($userid);
 			if(is_object($user))
 			{
-				$ts =& MyTextSanitizer::getInstance();
+				$ts = MyTextSanitizer::getInstance();
 				if($usereal)
 				{
 					$name = $user->getVar('name');
@@ -173,7 +173,7 @@ class XoopsUser extends XoopsObject
 	*/
 	function incrementPost()
 	{
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = xoops_gethandler('member');
 			return $member_handler->updateUserByField($this, 'posts', $this->getVar('posts') + 1);
 	}
 
@@ -186,7 +186,7 @@ class XoopsUser extends XoopsObject
 	{
 		if(is_array($groupsArr))
 		{
-			$this->_groups =& $groupsArr;
+			$this->_groups = $groupsArr;
 		}
 	}
 
@@ -199,11 +199,11 @@ class XoopsUser extends XoopsObject
 	{
 		global $icmsConfig, $icmsConfigUser;
 
-		$myts =& MyTextSanitizer::getInstance();
+		$myts = MyTextSanitizer::getInstance();
 
 		if(!$icmsConfigUser['welcome_msg']) {return true;}
 
-		$xoopsMailer =& getMailer();
+		$xoopsMailer = getMailer();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setBody($icmsConfigUser['welcome_msg_content']);
 		$xoopsMailer->assign('UNAME', $this->getVar('uname'));
@@ -236,7 +236,7 @@ class XoopsUser extends XoopsObject
 		if($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group']))
 		{
 			$member_handler = xoops_getHandler('member');
-			$xoopsMailer =& getMailer();
+			$xoopsMailer = getMailer();
 			$xoopsMailer->useMail();
 			$xoopsMailer->setTemplate('newuser_notify.tpl');
 			$xoopsMailer->assign('UNAME', $this->getVar('uname'));
@@ -264,8 +264,8 @@ class XoopsUser extends XoopsObject
 	{
 		if(empty($this->_groups))
 		{
-			$member_handler =& xoops_gethandler('member');
-			$this->_groups =& $member_handler->getGroupsByUser($this->getVar('uid'));
+			$member_handler = xoops_gethandler('member');
+			$this->_groups = $member_handler->getGroupsByUser($this->getVar('uid'));
 		}
 		return $this->_groups;
 	}
@@ -278,7 +278,7 @@ class XoopsUser extends XoopsObject
 	*/
 	function &groups()
 	{
-		$groups =& $this->getGroups();
+		$groups = $this->getGroups();
 		return $groups;
 	}
 
@@ -300,7 +300,7 @@ class XoopsUser extends XoopsObject
 		}
 		elseif(intval($module_id) < 1) {$module_id = 0;}
 
-		$moduleperm_handler =& xoops_gethandler('groupperm');
+		$moduleperm_handler = xoops_gethandler('groupperm');
 		return $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
 	}
 
@@ -335,7 +335,7 @@ class XoopsUser extends XoopsObject
 	{
 		if(!isset($this->_isOnline))
 		{
-			$onlinehandler =& xoops_gethandler('online');
+			$onlinehandler = xoops_gethandler('online');
 			$this->_isOnline = ($onlinehandler->getCount(new Criteria('online_uid', $this->getVar('uid'))) > 0) ? true : false;
 		}
 		return $this->_isOnline;
@@ -718,9 +718,9 @@ class XoopsUserHandler extends XoopsObjectHandler
 			$user->assignVars($myrow);
 			if(!$id_as_key)
 			{
-				$ret[] =& $user;
+				$ret[] = $user;
 			}
-			else {$ret[$myrow['uid']] =& $user;}
+			else {$ret[$myrow['uid']] = $user;}
 			unset($user);
 		}
 		return $ret;
@@ -791,7 +791,7 @@ class XoopsUserHandler extends XoopsObjectHandler
 	function userCheck($login_name, $uname, $email, $pass, $vpass)
 	{
 		global $icmsConfigUser, $xoopsDB;
-		$myts =& MyTextSanitizer::getInstance();
+		$myts = MyTextSanitizer::getInstance();
 		include_once ICMS_ROOT_PATH . '/kernel/icmsstopspammer.php';
 		$stop = '';
 		if (!checkEmail($email)) {

@@ -72,8 +72,8 @@ $icmsPreloadHandler->triggerEvent('startCoreBoot');
 include_once(ICMS_ROOT_PATH . '/kernel/icmskernel.php');
 
 global $impresscms, $xoops;
-$impresscms = new IcmsKernel();
-$xoops = $impresscms;
+$xoops = $impresscms = new IcmsKernel();
+
 // ################# Creation of the ImpressCMS Kernel object ##############
 
 // Instantiate security object
@@ -367,7 +367,7 @@ if(empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isse
 // end of autologin hack GIJ
 
 if (!empty($_SESSION['xoopsUserId'])) {
-	$xoopsUser = $icmsUser = $member_handler->getUser($_SESSION['xoopsUserId']);
+	$xoopsUser = $icmsUser =& $member_handler->getUser($_SESSION['xoopsUserId']);
   if (!is_object($icmsUser)) {
   	$xoopsUser = $icmsUser = '';
 		// Regenrate a new session id and destroy old session

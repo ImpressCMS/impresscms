@@ -210,9 +210,9 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             $pm = new XoopsPrivmessage();
             $pm->assignVars($myrow);
 			if (!$id_as_key) {
-            	$ret[] =& $pm;
+            	$ret[] = $pm;
 			} else {
-				$ret[$myrow['msg_id']] =& $pm;
+				$ret[$myrow['msg_id']] = $pm;
 			}
             unset($pm);
         }

@@ -123,7 +123,7 @@ class IcmsPersistableCategory extends IcmsPersistableSeoObject {
 			}
 			$parentid = $this->getVar('parentid');
 			if ($parentid != 0) {
-				$parentObj =& $this->handler->get($parentid);
+				$parentObj = $this->handler->get($parentid);
 				if ($parentObj->isNew()) {
 					exit;
 				}
@@ -184,15 +184,15 @@ class IcmsPersistableCategoryHandler extends IcmsPersistableObjectHandler {
 				}
 			}
 
-			$this->allCategoriesObj =& $this->getObjects($criteria, 'parentid');
+			$this->allCategoriesObj = $this->getObjects($criteria, 'parentid');
 		}
 
 		$ret = array();
 		if (isset($this->allCategoriesObj[$parentid])) {
 			foreach($this->allCategoriesObj[$parentid] as $categoryid=>$categoryObj) {
-				$ret[$categoryid]['self'] =& $categoryObj->toArray();
+				$ret[$categoryid]['self'] = $categoryObj->toArray();
 				if (isset($this->allCategoriesObj[$categoryid])) {
-					$ret[$categoryid]['sub'] =& $this->getAllCategoriesArray($categoryid);
+					$ret[$categoryid]['sub'] = $this->getAllCategoriesArray($categoryid);
 					$ret[$categoryid]['subcatscount'] = count($ret[$categoryid]['sub']);
 				}
 			}

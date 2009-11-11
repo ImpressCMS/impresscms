@@ -66,11 +66,11 @@ class IcmsBlock extends IcmsPersistableObject {
 					ob_end_clean();
 					return str_replace('{X_SITEURL}', XOOPS_URL.'/', $content);
 				} elseif ( $c_type == 'S' ) {
-					$myts =& MyTextSanitizer::getInstance();
+					$myts = MyTextSanitizer::getInstance();
 					$content = str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'n'));
 					return $myts->displayTarea($content, 1, 1);
 				} else {
-					$myts =& MyTextSanitizer::getInstance();
+					$myts = MyTextSanitizer::getInstance();
 					$content = str_replace('{X_SITEURL}', XOOPS_URL.'/', $this->getVar('content', 'n'));
 					return $myts->displayTarea($content, 0, 0);
 				}
@@ -565,8 +565,8 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			$sql .= " ORDER BY ".$orderby;
 			$result = $this->db->query($sql);
 			while ( $myrow = $this->db->fetchArray($result) ) {
-				$block =& $this->get($myrow['bid']);
-				$ret[$myrow['bid']] =& $block;
+				$block = $this->get($myrow['bid']);
+				$ret[$myrow['bid']] = $block;
 				unset($block);
 			}
 		}
@@ -627,8 +627,8 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			$sql .= " ORDER BY ".$orderby;
 			$result = $this->db->query($sql);
 			while ( $myrow = $this->db->fetchArray($result) ) {
-				$block =& $this->get($myrow['bid']);
-				$ret[$myrow['bid']] =& $block;
+				$block = $this->get($myrow['bid']);
+				$ret[$myrow['bid']] = $block;
 				unset($block);
 			}
 		}

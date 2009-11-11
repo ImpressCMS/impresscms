@@ -181,9 +181,9 @@ class XoopsGroupHandler extends XoopsObjectHandler
 			$group = new XoopsGroup();
 			$group->assignVars($myrow);
 			if (!$id_as_key) {
-				$ret[] =& $group;
+				$ret[] = $group;
 			} else {
-				$ret[$myrow['groupid']] =& $group;
+				$ret[$myrow['groupid']] = $group;
 			}
 			unset($group);
 		}
@@ -355,9 +355,9 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 			$mship = new XoopsMembership();
 			$mship->assignVars($myrow);
 			if (!$id_as_key) {
-				$ret[] =& $mship;
+				$ret[] = $mship;
 			} else {
-				$ret[$myrow['linkid']] =& $mship;
+				$ret[$myrow['linkid']] = $mship;
 			}
 			unset($mship);
 		}

@@ -109,7 +109,7 @@ class XoopsConfigItem extends XoopsObject
         if($this->getVar('conf_formtype') == 'textarea')
         {
             // include_once XOOPS_ROOT_PATH.'/class/module.textsanitizer.php';
-            $myts =& MyTextSanitizer::getInstance();
+            $myts = MyTextSanitizer::getInstance();
             $value = $myts->displayTarea($value, 1);
         }
         elseif($this->getVar('conf_formtype') == 'password')
@@ -150,7 +150,7 @@ class XoopsConfigItem extends XoopsObject
             }
         } else {
             if(is_object($option)) {
-                $this->_confOptions[] =& $option;
+                $this->_confOptions[] = $option;
             }
         }
     }
@@ -307,9 +307,9 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
             $config = new XoopsConfigItem();
             $config->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] =& $config;
+                $ret[] = $config;
             } else {
-                $ret[$myrow['conf_id']] =& $config;
+                $ret[$myrow['conf_id']] = $config;
             }
             unset($config);
         }
@@ -330,7 +330,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' '.$criteria->renderWhere();
         }
-        $result =& $this->db->query($sql);
+        $result = $this->db->query($sql);
         if (!$result) {
             return false;
         }

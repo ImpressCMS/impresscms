@@ -79,14 +79,14 @@ class XoopsNotification extends XoopsObject
         global $icmsConfigMailer;
 		// Check the user's notification preference.
 
-		$member_handler =& xoops_gethandler('member');
-		$user =& $member_handler->getUser($this->getVar('not_uid'));
+		$member_handler = xoops_gethandler('member');
+		$user = $member_handler->getUser($this->getVar('not_uid'));
 		if (!is_object($user)) {
 			return true;
 		}
 		$method = $user->getVar('notify_method');
 
-		$xoopsMailer =& getMailer();
+		$xoopsMailer = getMailer();
 		include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
 		switch($method) {
 		case XOOPS_NOTIFICATION_METHOD_PM:
@@ -121,7 +121,7 @@ class XoopsNotification extends XoopsObject
 		// If send-once-then-wait, disable notification
 
 		include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
-		$notification_handler =& xoops_gethandler('notification');
+		$notification_handler = xoops_gethandler('notification');
 
 		if ($this->getVar('not_mode') == XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE) {
 			$notification_handler->delete($this);
@@ -288,9 +288,9 @@ class XoopsNotificationHandler extends XoopsObjectHandler
             $notification = new XoopsNotification();
             $notification->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] =& $notification;
+                $ret[] = $notification;
             } else {
-                $ret[$myrow['not_id']] =& $notification;
+                $ret[$myrow['not_id']] = $notification;
             }
             unset($notification);
         }
@@ -311,7 +311,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' '.$criteria->renderWhere();
         }
-        if (!$result =& $this->db->query($sql)) {
+        if (!$result = $this->db->query($sql)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
@@ -464,12 +464,12 @@ class XoopsNotificationHandler extends XoopsObjectHandler
 
         if (!is_array($events)) $events = array($events);
         foreach ($events as $event) {
-            if ($notification =& $this->getNotification($module_id, $category, $item_id, $event, $user_id)) {
+            if ($notification = $this->getNotification($module_id, $category, $item_id, $event, $user_id)) {
                 if ($notification->getVar('not_mode') != $mode) {
                     $this->updateByField($notification, 'not_mode', $mode);
             	}
             } else {
-                $notification =& $this->create();
+                $notification = $this->create();
                 $notification->setVar('not_modid', $module_id);
                 $notification->setVar('not_category', $category);
                 $notification->setVar('not_itemid', $item_id);
@@ -611,22 +611,22 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     {
         if (!isset($module_id)) {
             global $icmsModule;
-            $module =& $icmsModule;
+            $module = $icmsModule;
             $module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
         } else {
-            $module_handler =& xoops_gethandler('module');
-            $module =& $module_handler->get($module_id);
+            $module_handler = xoops_gethandler('module');
+            $module = $module_handler->get($module_id);
         }
 
 
     		// Check if event is enabled
-    		$config_handler =& xoops_gethandler('config');
-    		$mod_config =& $config_handler->getConfigsByCat(0,$module->getVar('mid'));
+    		$config_handler = xoops_gethandler('config');
+    		$mod_config = $config_handler->getConfigsByCat(0,$module->getVar('mid'));
     		if (empty($mod_config['notification_enabled'])) {
     			return false;
     		}
-    		$category_info =& notificationCategoryInfo ($category, $module_id);
-    		$event_info =& notificationEventInfo ($category, $event, $module_id);
+    		$category_info = notificationCategoryInfo ($category, $module_id);
+    		$event_info = notificationEventInfo ($category, $event, $module_id);
     		if (!in_array(notificationGenerateConfig($category_info,$event_info,'option_name'),$mod_config['notification_events']) && empty($event_info['invisible'])) {
     			return false;
     		}
@@ -656,7 +656,7 @@ class XoopsNotificationHandler extends XoopsObjectHandler
     			}
     			$criteria->add($user_criteria);
     		}
-        $notifications =& $this->getObjects($criteria);
+        $notifications = $this->getObjects($criteria);
         if (empty($notifications)) {
             return;
         }
