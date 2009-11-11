@@ -63,7 +63,7 @@ $user_id = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;
 // FIXME: right now I just ignore database errors (e.g. if already
 //  subscribed)... deal with this more gracefully?
 
-$notification_handler =& xoops_gethandler('notification');
+$notification_handler = xoops_gethandler('notification');
 
 foreach ($update_list as $update_item) {
 
@@ -91,7 +91,7 @@ include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 $redirect_args = array();
 foreach ($update_list as $update_item) {
 	list($category,$item_id,$event) = split(',',$update_item['params']);
-	$category_info =& notificationCategoryInfo($category);
+	$category_info = notificationCategoryInfo($category);
 	if (!empty($category_info['item_name'])) {
 		$redirect_args[$category_info['item_name']] = $item_id;
 	}

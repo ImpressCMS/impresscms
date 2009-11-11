@@ -72,8 +72,8 @@ $icmsPreloadHandler->triggerEvent('startCoreBoot');
 include_once(ICMS_ROOT_PATH . '/kernel/icmskernel.php');
 
 global $impresscms, $xoops;
-$impresscms =& new IcmsKernel();
-$xoops =& $impresscms;
+$impresscms = new IcmsKernel();
+$xoops = $impresscms;
 // ################# Creation of the ImpressCMS Kernel object ##############
 
 // Instantiate security object
@@ -87,8 +87,8 @@ $xoopsSecurity->checkSuperglobals();
 global $xoopsLogger, $xoopsErrorHandler;
 
 include_once ICMS_ROOT_PATH . '/class/logger.php';
-$xoopsLogger =& XoopsLogger::instance();
-$xoopsErrorHandler =& $xoopsLogger;
+$xoopsLogger = XoopsLogger::instance();
+$xoopsErrorHandler = $xoopsLogger;
 $xoopsLogger->startTime('ICMS');
 $xoopsLogger->startTime( 'ICMS Boot' );
 
@@ -163,7 +163,7 @@ require_once ICMS_ROOT_PATH.'/class/database/databasefactory.php';
 if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$xoopsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
 	define('XOOPS_DB_PROXY', 1);
 }
-$xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
+$xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
 
 // ################# Include required files ##############
 require_once ICMS_ROOT_PATH.'/kernel/object.php';
@@ -176,17 +176,17 @@ include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 include_once ICMS_ROOT_PATH . "/include/debug_functions.php";
 
 // ################# Load Config Settings ##############
-$config_handler =& xoops_gethandler('config');
-$xoopsConfig = $icmsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
-$xoopsConfigUser = $icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-$xoopsConfigMetaFooter = $icmsConfigMetaFooter =& $config_handler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
-$xoopsConfigMailer = $icmsConfigMailer =& $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
-$xoopsConfigAuth = $icmsConfigAuth =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
-$im_multilanguageConfig = $icmsConfigMultilang =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
-$xoopsConfigPersona = $icmsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
-$icmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-$icmsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
+$config_handler = xoops_gethandler('config');
+$xoopsConfig = $icmsConfig = $config_handler->getConfigsByCat(XOOPS_CONF);
+$xoopsConfigUser = $icmsConfigUser = $config_handler->getConfigsByCat(XOOPS_CONF_USER);
+$xoopsConfigMetaFooter = $icmsConfigMetaFooter = $config_handler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
+$xoopsConfigMailer = $icmsConfigMailer = $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
+$xoopsConfigAuth = $icmsConfigAuth = $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
+$im_multilanguageConfig = $icmsConfigMultilang = $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
+$xoopsConfigPersona = $icmsConfigPersona = $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+$icmsConfigPlugins = $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
+$icmsConfigCaptcha = $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
+$icmsConfigSearch = $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
 // ################# Creation of the ImpressCMS Captcha object ##############
 
@@ -233,9 +233,9 @@ $icmsConfig['root_path'] = ICMS_ROOT_PATH."/";
  * Host abstraction layer
  */
 if ( !isset($_SERVER['PATH_TRANSLATED']) && isset($_SERVER['SCRIPT_FILENAME']) ) {
-	$_SERVER['PATH_TRANSLATED'] =& $_SERVER['SCRIPT_FILENAME'];	 // For Apache CGI
+	$_SERVER['PATH_TRANSLATED'] = $_SERVER['SCRIPT_FILENAME'];	 // For Apache CGI
 } elseif ( isset($_SERVER['PATH_TRANSLATED']) && !isset($_SERVER['SCRIPT_FILENAME']) ) {
-	$_SERVER['SCRIPT_FILENAME'] =& $_SERVER['PATH_TRANSLATED'];	 // For IIS/2K now I think :-(
+	$_SERVER['SCRIPT_FILENAME'] = $_SERVER['PATH_TRANSLATED'];	 // For IIS/2K now I think :-(
 }
 
 if ( empty( $_SERVER[ 'REQUEST_URI' ] ) ) {		 // Not defined by IIS
@@ -258,9 +258,9 @@ $xoopsRequestUri = $_SERVER[ 'REQUEST_URI' ];	   // Deprecated (use the correcte
 // ############## Login a user with a valid session ##############
 $xoopsUser = $icmsUser = '';
 $xoopsUserIsAdmin = $icmsUserIsAdmin = false;
-$member_handler =& xoops_gethandler('member');
+$member_handler = xoops_gethandler('member');
 global $sess_handler;
-$sess_handler =& xoops_gethandler('session');
+$sess_handler = xoops_gethandler('session');
 if($icmsConfig['use_ssl'] && isset($_POST[$icmsConfig['sslpost_name']]) && $_POST[$icmsConfig['sslpost_name']] != '')
 {
 	session_id($_POST[$icmsConfig['sslpost_name']]);
@@ -313,7 +313,7 @@ if(empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isse
   	exit ;
   }*/
   
-  $myts =& MyTextSanitizer::getInstance();
+  $myts = MyTextSanitizer::getInstance();
   $uname = $myts->stripSlashesGPC($_COOKIE['autologin_uname']);
   $pass = $myts->stripSlashesGPC($_COOKIE['autologin_pass']);
   if( empty( $uname ) || is_numeric( $pass ) ) $user = false ;
@@ -321,8 +321,8 @@ if(empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isse
   	// V3
   	$uname4sql = addslashes( $uname ) ;
   	$criteria = new CriteriaCompo(new Criteria('uname', $uname4sql ));
-  	$user_handler =& xoops_gethandler('user');
-  	$users =& $user_handler->getObjects($criteria, false);
+  	$user_handler = xoops_gethandler('user');
+  	$users = $user_handler->getObjects($criteria, false);
   	if( empty( $users ) || count( $users ) != 1 ) $user = false ;
   	else {
   		// V3.1 begin
@@ -367,7 +367,7 @@ if(empty($_SESSION['xoopsUserId']) && isset($_COOKIE['autologin_uname']) && isse
 // end of autologin hack GIJ
 
 if (!empty($_SESSION['xoopsUserId'])) {
-	$xoopsUser = $icmsUser =& $member_handler->getUser($_SESSION['xoopsUserId']);
+	$xoopsUser = $icmsUser = $member_handler->getUser($_SESSION['xoopsUserId']);
   if (!is_object($icmsUser)) {
   	$xoopsUser = $icmsUser = '';
 		// Regenrate a new session id and destroy old session
@@ -467,9 +467,9 @@ if ($icmsConfig['closesite'] == 1) {
 
 if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 	$url_arr = explode( '/', strstr( $_SERVER['PHP_SELF'],'/modules/') );
-  $module_handler =& xoops_gethandler('module');
-  $icmsModule =& $module_handler->getByDirname($url_arr[2]);
-  $xoopsModule =& $module_handler->getByDirname($url_arr[2]);
+  $module_handler = xoops_gethandler('module');
+  $icmsModule = $module_handler->getByDirname($url_arr[2]);
+  $xoopsModule = $module_handler->getByDirname($url_arr[2]);
   unset($url_arr);
   if (!$icmsModule || !$icmsModule->getVar('isactive')) {
   	include_once ICMS_ROOT_PATH."/header.php";
@@ -477,7 +477,7 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 	include_once ICMS_ROOT_PATH."/footer.php";
 	exit();
 	}
-  $moduleperm_handler =& xoops_gethandler('groupperm');
+  $moduleperm_handler = xoops_gethandler('groupperm');
   if ($icmsUser) {
   	if (!$moduleperm_handler->checkRight('module_read', $icmsModule->getVar('mid'), $icmsUser->getGroups())) {
 		redirect_header(ICMS_URL."/user.php",1,_NOPERM, false);
@@ -490,8 +490,8 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 	}
 	icms_loadLanguageFile($icmsModule->getVar('dirname'), 'main');
   if ($icmsModule->getVar('hasconfig') == 1 || $icmsModule->getVar('hascomments') == 1 || $icmsModule->getVar( 'hasnotification' ) == 1) {
-  	$icmsModuleConfig =& $config_handler->getConfigsByCat(0, $icmsModule->getVar('mid'));
-  	$xoopsModuleConfig =& $config_handler->getConfigsByCat(0, $icmsModule->getVar('mid'));
+  	$icmsModuleConfig = $config_handler->getConfigsByCat(0, $icmsModule->getVar('mid'));
+  	$xoopsModuleConfig = $config_handler->getConfigsByCat(0, $icmsModule->getVar('mid'));
 	}
 } elseif($icmsUser) {
 	$xoopsUserIsAdmin = $icmsUserIsAdmin = $icmsUser->isAdmin(1);
@@ -499,7 +499,7 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 
 if ($icmsConfigPersona['multi_login']){
   if( is_object( $icmsUser ) ) {
-  	$online_handler =& xoops_gethandler('online');
+  	$online_handler = xoops_gethandler('online');
   	$online_handler->write($icmsUser->uid(), $icmsUser->uname(),
   	time(),0,$_SERVER['REMOTE_ADDR']);
   }

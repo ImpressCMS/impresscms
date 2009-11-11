@@ -20,8 +20,8 @@ if (!defined("ICMS_ROOT_PATH")) {
 }
 
 include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
-$config_handler =& xoops_gethandler('config');
-$xoopsConfigSearch = $icmsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
+$config_handler = xoops_gethandler('config');
+$xoopsConfigSearch = $icmsConfigSearch = $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
 
 // create form
 $search_form = new XoopsThemeForm(_SR_SEARCH, "search", "search.php", 'get');
@@ -45,7 +45,7 @@ if (empty($modules)) {
 	if (!empty($available_modules)) {
 		$criteria->add(new Criteria('mid', "(".implode(',', $available_modules).")", 'IN'));
 	}
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = xoops_gethandler('module');
 	$mods_checkbox->addOptionArray($module_handler->getList($criteria));
 }
 else {

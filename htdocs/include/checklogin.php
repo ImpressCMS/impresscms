@@ -26,12 +26,12 @@ $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
 	redirect_header(ICMS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
 	exit();
 }*/
-$member_handler =& xoops_gethandler('member');
-$myts =& MyTextsanitizer::getInstance();
+$member_handler = xoops_gethandler('member');
+$myts = MyTextsanitizer::getInstance();
 
 include_once ICMS_ROOT_PATH.'/class/auth/authfactory.php';
 icms_loadLanguageFile('core', 'auth');
-$xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
+$xoopsAuth = XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
 //$user = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlashes($pass));
 // uname&email hack GIJ
 $uname4sql = addslashes( $myts->stripSlashesGPC($uname) ) ;
@@ -40,13 +40,13 @@ $pass4sql = addslashes( $myts->stripSlashesGPC($pass) ) ;
 	// check by email if uname includes '@'
 	$criteria = new CriteriaCompo(new Criteria('email', $uname4sql ));
 	$criteria->add(new Criteria('pass', $pass4sql));
-	$user_handler =& xoops_gethandler('user');
-	$users =& $user_handler->getObjects($criteria, false);
+	$user_handler = xoops_gethandler('user');
+	$users = $user_handler->getObjects($criteria, false);
 	if( empty( $users ) || count( $users ) != 1 ) $user = false ;
 	else $user = $users[0] ;
 	unset( $users ) ;
 } */
-if(empty($user) || !is_object($user)) {$user =& $xoopsAuth->authenticate($uname4sql, $pass4sql);}
+if(empty($user) || !is_object($user)) {$user = $xoopsAuth->authenticate($uname4sql, $pass4sql);}
 // end of uname&email hack GIJ
 
 if (false != $user) {
@@ -56,9 +56,9 @@ if (false != $user) {
 	}
 	if ($icmsConfigPersona['multi_login']){
 		if( is_object( $user ) ) {
-			$online_handler =& xoops_gethandler('online');
+			$online_handler = xoops_gethandler('online');
 			$online_handler->gc(300);
-			$onlines =& $online_handler->getAll();
+			$onlines = $online_handler->getAll();
 			foreach( $onlines as $online ) {
 				if( $online['online_uid'] == $user->uid() ) {
 					$user = false;
@@ -149,7 +149,7 @@ if (false != $user) {
 
 	// RMV-NOTIFY
 	// Perform some maintenance of notification records
-	$notification_handler =& xoops_gethandler('notification');
+	$notification_handler = xoops_gethandler('notification');
 	$notification_handler->doLoginMaintenance($user->getVar('uid'));
 
 	redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);

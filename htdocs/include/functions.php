@@ -27,7 +27,7 @@ include_once 'jalali.php';
 function xoops_header($closehead=true)
 {
 	global $icmsConfig, $xoopsTheme, $icmsConfigPlugins, $icmsConfigMetaFooter;
-	$myts =& MyTextSanitizer::getInstance();
+	$myts = MyTextSanitizer::getInstance();
 
 	if(!headers_sent())
 	{
@@ -419,7 +419,7 @@ function showbanner() {echo xoops_getbanner();}
 function xoops_getbanner()
 {
 	global $icmsConfig;
-	$db =& Database::getInstance();
+	$db = Database::getInstance();
 	$bresult = $db->query("SELECT COUNT(*) FROM ".$db->prefix('banner'));
 	list($numrows) = $db->fetchRow($bresult);
 	if($numrows > 1)
@@ -491,11 +491,11 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	require_once ICMS_ROOT_PATH.'/class/template.php';
    	require_once ICMS_ROOT_PATH.'/class/theme.php';
 
-	$xoopsThemeFactory =& new xos_opal_ThemeFactory();
+	$xoopsThemeFactory = new xos_opal_ThemeFactory();
 	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 	$xoopsThemeFactory->defaultTheme = $theme;
-	$icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array("plugins" => array()));
-	$xoopsTpl = $icmsTpl =& $xoTheme->template;
+	$icmsTheme = $xoTheme = $xoopsThemeFactory->createInstance(array("plugins" => array()));
+	$xoopsTpl = $icmsTpl = $xoTheme->template;
 	$xoopsTpl->assign(array(
 		'icms_style' => ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css',
 		'icms_theme' => $theme,
@@ -630,8 +630,8 @@ function &getMailer()
 	$inst = false;
 	include_once ICMS_ROOT_PATH.'/class/xoopsmailer.php';
 	icms_loadLanguageFile('core', 'xoopsmailerlocal');
-	if(class_exists('XoopsMailerLocal')) {$inst =& new XoopsMailerLocal();}
-	if(!$inst) {$inst =& new XoopsMailer();}
+	if(class_exists('XoopsMailerLocal')) {$inst = new XoopsMailerLocal();}
+	if(!$inst) {$inst = new XoopsMailer();}
 	return $inst;
 }
 
@@ -654,11 +654,11 @@ function &xoops_gethandler($name, $optional = false )
 			if(file_exists($hnd_file = ICMS_ROOT_PATH.'/class/'.$name.'.php')) {require_once $hnd_file;}
 		}
 		$class = 'Xoops'.ucfirst($name).'Handler';
-		if(class_exists($class)) {$handlers[$name] =& new $class($GLOBALS['xoopsDB']);}
+		if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
 		else
 		{
 			$class = 'Icms'.ucfirst($name).'Handler';
-			if(class_exists($class)) {$handlers[$name] =& new $class($GLOBALS['xoopsDB']);}
+			if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
 		}
 	}
 	if(!isset($handlers[$name]) && !$optional) {trigger_error(sprintf(_CORE_COREHANDLER_NOTAVAILABLE, $class, $name), E_USER_ERROR);}
@@ -676,8 +676,8 @@ function &xoops_gethandler($name, $optional = false )
 */
 function xoops_getrank($rank_id =0, $posts = 0)
 {
-	$db =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	$db = Database::getInstance();
+	$myts = MyTextSanitizer::getInstance();
 	$rank_id = intval($rank_id);
 	$posts = intval($posts);
 	if($rank_id != 0)
@@ -787,7 +787,7 @@ function icms_substr($str, $start, $length, $trimmarker = '...')
 */
 function xoops_notification_deletebymodule ($module_id)
 {
-	$notification_handler =& xoops_gethandler('notification');
+	$notification_handler = xoops_gethandler('notification');
 	return $notification_handler->unsubscribeByModule ($module_id);
 }
 
@@ -799,7 +799,7 @@ function xoops_notification_deletebymodule ($module_id)
 */
 function xoops_notification_deletebyuser ($user_id)
 {
-	$notification_handler =& xoops_gethandler('notification');
+	$notification_handler = xoops_gethandler('notification');
 	return $notification_handler->unsubscribeByUser ($user_id);
 }
 
@@ -813,7 +813,7 @@ function xoops_notification_deletebyuser ($user_id)
 */
 function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 {
-	$notification_handler =& xoops_gethandler('notification');
+	$notification_handler = xoops_gethandler('notification');
 	return $notification_handler->unsubscribeByItem ($module_id, $category, $item_id);
 }
 
@@ -827,7 +827,7 @@ function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 */
 function xoops_comment_count($module_id, $item_id = null)
 {
-	$comment_handler =& xoops_gethandler('comment');
+	$comment_handler = xoops_gethandler('comment');
 	$criteria = new CriteriaCompo(new Criteria('com_modid', intval($module_id)));
 	if(isset($item_id)) {$criteria->add(new Criteria('com_itemid', intval($item_id)));}
 	return $comment_handler->getCount($criteria);
@@ -844,8 +844,8 @@ function xoops_comment_delete($module_id, $item_id)
 {
 	if(intval($module_id) > 0 && intval($item_id) > 0)
 	{
-		$comment_handler =& xoops_gethandler('comment');
-		$comments =& $comment_handler->getByItemId($module_id, $item_id);
+		$comment_handler = xoops_gethandler('comment');
+		$comments = $comment_handler->getByItemId($module_id, $item_id);
 		if(is_array($comments))
 		{
 			$count = count($comments);
@@ -859,7 +859,7 @@ function xoops_comment_delete($module_id, $item_id)
 					if($poster_id != 0) {$deleted_num[$poster_id] = !isset($deleted_num[$poster_id]) ? 1 : ($deleted_num[$poster_id] + 1);}
 				}
 			}
-			$member_handler =& xoops_gethandler('member');
+			$member_handler = xoops_gethandler('member');
 			foreach($deleted_num as $user_id => $post_num)
 			{
 				// update user posts
@@ -885,7 +885,7 @@ function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null
 {
 	// do not allow system permissions to be deleted
 	if(intval($module_id) <= 1) {return false;}
-	$gperm_handler =& xoops_gethandler('groupperm');
+	$gperm_handler = xoops_gethandler('groupperm');
 	return $gperm_handler->deleteByModule($module_id, $perm_name, $item_id);
 }
 
@@ -922,8 +922,8 @@ function xoops_getLinkedUnameFromId($userid)
 	$userid = intval($userid);
 	if($userid > 0)
 	{
-		$member_handler =& xoops_gethandler('member');
-		$user =& $member_handler->getUser($userid);
+		$member_handler = xoops_gethandler('member');
+		$user = $member_handler->getUser($userid);
 		if(is_object($user))
 		{
 			$linkeduser = '<a href="'.ICMS_URL.'/userinfo.php?uid='.$userid.'">'.$user->getVar('uname').'</a>';
@@ -1026,7 +1026,7 @@ function &icms_getModuleInfo($moduleName = false)
 	static $icmsModules;
 	if(isset($icmsModules[$moduleName]))
 	{
-		$ret =& $icmsModules[$moduleName];
+		$ret = $icmsModules[$moduleName];
 		return $ret;
 	}
 	global $icmsModule;
@@ -1034,18 +1034,18 @@ function &icms_getModuleInfo($moduleName = false)
 	{
 		if(isset($icmsModule) && is_object($icmsModule))
 		{
-			$icmsModules[$icmsModule->getVar('dirname')] = & $icmsModule;
+			$icmsModules[$icmsModule->getVar('dirname')] = $icmsModule;
 			return $icmsModules[$icmsModule->getVar('dirname')];
 		}
 	}
 	if(!isset($icmsModules[$moduleName]))
 	{
-		if(isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {$icmsModules[$moduleName] = & $icmsModule;}
+		if(isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {$icmsModules[$moduleName] = $icmsModule;}
 		else
 		{
-			$hModule = & xoops_gethandler('module');
-			if($moduleName != 'icms') {$icmsModules[$moduleName] = & $hModule->getByDirname($moduleName);}
-			else {$icmsModules[$moduleName] = & $hModule->getByDirname('system');}
+			$hModule = xoops_gethandler('module');
+			if($moduleName != 'icms') {$icmsModules[$moduleName] = $hModule->getByDirname($moduleName);}
+			else {$icmsModules[$moduleName] = $hModule->getByDirname('system');}
 		}
 	}
 	return $icmsModules[$moduleName];
@@ -1062,7 +1062,7 @@ function &icms_getModuleConfig($moduleName = false)
 	static $icmsConfigs;
 	if(isset ($icmsConfigs[$moduleName]))
 	{
-		$ret = & $icmsConfigs[$moduleName];
+		$ret = $icmsConfigs[$moduleName];
 		return $ret;
 	}
 	global $icmsModule, $icmsModuleConfig;
@@ -1070,7 +1070,7 @@ function &icms_getModuleConfig($moduleName = false)
 	{
 		if(isset($icmsModule) && is_object($icmsModule))
 		{
-			$icmsConfigs[$icmsModule->getVar('dirname')] = & $icmsModuleConfig;
+			$icmsConfigs[$icmsModule->getVar('dirname')] = $icmsModuleConfig;
 			return $icmsConfigs[$icmsModule->getVar('dirname')];
 		}
 	}
@@ -1080,17 +1080,17 @@ function &icms_getModuleConfig($moduleName = false)
 		$ret = false;
 		return $ret;
 	}
-	if(isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {$icmsConfigs[$moduleName] = & $icmsModuleConfig;}
+	if(isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {$icmsConfigs[$moduleName] = $icmsModuleConfig;}
 	else
 	{
-		$module = & icms_getModuleInfo($moduleName);
+		$module = icms_getModuleInfo($moduleName);
 		if(!is_object($module))
 		{
 			$ret = false;
 			return $ret;
 		}
-		$hModConfig = & xoops_gethandler('config');
-		$icmsConfigs[$moduleName] = & $hModConfig->getConfigsByCat(0, $module->getVar('mid'));
+		$hModConfig = xoops_gethandler('config');
+		$icmsConfigs[$moduleName] = $hModConfig->getConfigsByCat(0, $module->getVar('mid'));
 	}
 	return $icmsConfigs[$moduleName];
 }
@@ -1477,17 +1477,17 @@ function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $w
 		if($users == array())
 		{
 			//fetching users
-			$member_handler = & xoops_gethandler('member');
-			$user = & $member_handler->getUser($userid);
+			$member_handler = xoops_gethandler('member');
+			$user = $member_handler->getUser($userid);
 		}
 		else
 		{
 			if(!isset($users[$userid])) {return $GLOBALS['xoopsConfig']['anonymous'];}
-			$user = & $users[$userid];
+			$user = $users[$userid];
 		}
 		if(is_object($user))
 		{
-			$ts = & MyTextSanitizer::getInstance();
+			$ts = MyTextSanitizer::getInstance();
 			$username = $user->getVar('uname');
 			$fullname = '';
 			$fullname2 = $user->getVar('name');
@@ -1539,7 +1539,7 @@ function showNav($id = null, $separador = '/', $style="style='font-weight:bold'"
 	{
 		if($id > 0)
 		{
-			$content_handler =& xoops_gethandler('content');
+			$content_handler = xoops_gethandler('content');
 			$cont = $content_handler->get($id);
 			if($cont->getVar('content_id') > 0)
 			{
@@ -2228,7 +2228,7 @@ function &icms_getmodulehandler($name = null, $module_dir = null, $module_basena
 		else {$hnd_file = ICMS_ROOT_PATH."/modules/{$module_dir}/admin/{$name}/class/{$name}.php";}
 		if(file_exists($hnd_file)) {include_once $hnd_file;}
 		$class = ucfirst(strtolower($module_basename)).ucfirst($name).'Handler';
-		if(class_exists($class)) {$handlers[$module_dir][$name] =& new $class($GLOBALS['xoopsDB']);}
+		if(class_exists($class)) {$handlers[$module_dir][$name] = new $class($GLOBALS['xoopsDB']);}
 	}
 	if(!isset($handlers[$module_dir][$name]) && !$optional)
 	{
@@ -2496,8 +2496,8 @@ function icms_getCurrentPage() {
  * @return string The modulename in SEO format
  */
 function icms_getModuleNameForSEO($moduleName = false) {
-	$icmsModule = & icms_getModuleInfo($moduleName);
-	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
+	$icmsModule = icms_getModuleInfo($moduleName);
+	$icmsModuleConfig = icms_getModuleConfig($moduleName);
 	if (isset ($icmsModuleConfig['seo_module_name'])) {
 		return $icmsModuleConfig['seo_module_name'];
 	}
@@ -2512,8 +2512,8 @@ function icms_getModuleNameForSEO($moduleName = false) {
  * @return bool Is the module in SEO format?
  */
 function icms_getModuleModeSEO($moduleName = false) {
-	$icmsModule = & icms_getModuleInfo($moduleName);
-	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
+	$icmsModule = icms_getModuleInfo($moduleName);
+	$icmsModuleConfig = icms_getModuleConfig($moduleName);
 	return isset ($icmsModuleConfig['seo_mode']) ? $icmsModuleConfig['seo_mode'] : false;
 }
 
@@ -2524,8 +2524,8 @@ function icms_getModuleModeSEO($moduleName = false) {
  * @return mixed The module include ID otherwise nothing
  */
 function icms_getModuleIncludeIdSEO($moduleName = false) {
-	$icmsModule = & icms_getModuleInfo($moduleName);
-	$icmsModuleConfig = & icms_getModuleConfig($moduleName);
+	$icmsModule = icms_getModuleInfo($moduleName);
+	$icmsModuleConfig = icms_getModuleConfig($moduleName);
 	return !empty ($icmsModuleConfig['seo_inc_id']);
 }
 

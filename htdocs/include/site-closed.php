@@ -36,18 +36,18 @@ if (! $allowed) {
 	require_once ICMS_ROOT_PATH . '/class/template.php';
 	require_once ICMS_ROOT_PATH . '/class/theme.php';
 
-	$xoopsThemeFactory = & new xos_opal_ThemeFactory ( );
+	$xoopsThemeFactory = new xos_opal_ThemeFactory ( );
 	$xoopsThemeFactory->allowedThemes = $icmsConfig ['theme_set_allowed'];
 	$xoopsThemeFactory->defaultTheme = $icmsConfig ['theme_set'];
-	$xoTheme = & $xoopsThemeFactory->createInstance ( array ("plugins" => array ( ) ) );
+	$xoTheme = $xoopsThemeFactory->createInstance ( array ("plugins" => array ( ) ) );
 	$xoTheme->addScript ( '/include/xoops.js', array ('type' => 'text/javascript' ) );
 	$xoTheme->addStylesheet(ICMS_URL."/icms".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css", array("media" => "screen"));
-	$xoopsTpl = & $xoTheme->template;
+	$xoopsTpl = $xoTheme->template;
 
 	$xoopsTpl->assign ( array ('xoops_theme' => $icmsConfig ['theme_set'], 'xoops_imageurl' => ICMS_THEME_URL . '/' . $icmsConfig ['theme_set'] . '/', 'xoops_themecss' => xoops_getcss ( $icmsConfig ['theme_set'] ), 'xoops_requesturi' => htmlspecialchars ( $_SERVER ['REQUEST_URI'], ENT_QUOTES ), 'xoops_sitename' => htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ), 'xoops_slogan' => htmlspecialchars ( $icmsConfig ['slogan'], ENT_QUOTES ), 'xoops_dirname' => @$icmsModule ? $icmsModule->getVar ( 'dirname' ) : 'system', 'xoops_banner' => $icmsConfig ['banners'] ? xoops_getbanner () : '&nbsp;', 'xoops_pagetitle' => isset ( $icmsModule ) && is_object ( $icmsModule ) ? $icmsModule->getVar ( 'name' ) : htmlspecialchars ( $icmsConfig ['slogan'], ENT_QUOTES ), 'lang_login' => _LOGIN, 'lang_username' => _USERNAME, 'lang_password' => _PASSWORD, 'lang_siteclosemsg' => $icmsConfig ['closesite_text'] )
 	 );
 
-	$config_handler = & xoops_gethandler ( 'config' );
+	$config_handler = xoops_gethandler ( 'config' );
 	$criteria = new CriteriaCompo ( new Criteria ( 'conf_modid', 0 ) );
 	$criteria->add ( new Criteria ( 'conf_catid', XOOPS_CONF_METAFOOTER ) );
 	$config = $config_handler->getConfigs ( $criteria, true );

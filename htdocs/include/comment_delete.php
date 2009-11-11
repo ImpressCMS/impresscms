@@ -31,10 +31,10 @@ if (!empty($_POST)) {
 }
 
 if ('system' == $icmsModule->getVar('dirname')) {
-	$comment_handler =& xoops_gethandler('comment');
-	$comment =& $comment_handler->get($com_id);
-	$module_handler =& xoops_gethandler('module');
-	$module =& $module_handler->get($comment->getVar('com_modid'));
+	$comment_handler = xoops_gethandler('comment');
+	$comment = $comment_handler->get($com_id);
+	$module_handler = xoops_gethandler('module');
+	$module = $module_handler->get($comment->getVar('com_modid'));
 	$comment_config = $module->getInfo('comments');
 	$com_modid = $module->getVar('mid');
 	$redirect_page = ICMS_URL.'/modules/system/admin.php?fct=comments&amp;com_modid='.$com_modid.'&amp;com_itemid';
@@ -72,7 +72,7 @@ if (!is_object($icmsUser)) {
 	$accesserror = true;
 } else {
 	if (!$icmsUser->isAdmin($com_modid)) {
-			$sysperm_handler =& xoops_gethandler('groupperm');
+			$sysperm_handler = xoops_gethandler('groupperm');
 			if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 				$accesserror = true;
 			}
@@ -94,7 +94,7 @@ icms_loadLanguageFile('core', 'comment');
 switch ($op) {
 case 'delete_one':
 	$comment_handler = xoops_gethandler('comment');
-	$comment =& $comment_handler->get($com_id);
+	$comment = $comment_handler->get($com_id);
 	if (!$comment_handler->delete($comment)) {
 		include ICMS_ROOT_PATH.'/header.php';
 		xoops_error(_CM_COMDELETENG.' (ID: '.$comment->getVar('com_id').')');
@@ -131,20 +131,20 @@ case 'delete_one':
 
 	// update user posts if its not an anonymous post
 	if ($comment->getVar('com_uid') != 0) {
-		$member_handler =& xoops_gethandler('member');
-		$com_poster =& $member_handler->getUser($comment->getVar('com_uid'));
+		$member_handler = xoops_gethandler('member');
+		$com_poster = $member_handler->getUser($comment->getVar('com_uid'));
 		if (is_object($com_poster)) {
 			$member_handler->updateUserByField($com_poster, 'posts', $com_poster->getVar('posts') - 1);
 		}
 	}
 
 	// get all comments posted later within the same thread
-	$thread_comments =& $comment_handler->getThread($comment->getVar('com_rootid'), $com_id);
+	$thread_comments = $comment_handler->getThread($comment->getVar('com_rootid'), $com_id);
 	
 	include_once ICMS_ROOT_PATH.'/class/tree.php';
 	$xot = new XoopsObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
 
-	$child_comments =& $xot->getFirstChild($com_id);
+	$child_comments = $xot->getFirstChild($com_id);
 
 	// now set new parent ID for direct child comments
 	$new_pid = $comment->getVar('com_pid');
@@ -159,7 +159,7 @@ case 'delete_one':
 				$errs[] = sprintf(_CM_COULDNOTCHANGEPIDTOID, icms_conv_nr2local($com_id), icms_conv_nr2local($new_pid), icms_conv_nr2local($new_rootid));
 			} else {
 				// need to change root id for all its child comments as well
-				$c_child_comments =& $xot->getAllChild($new_rootid);
+				$c_child_comments = $xot->getAllChild($new_rootid);
 				$cc_count = count($c_child_comments);
 				foreach (array_keys($c_child_comments) as $j) {
 					$c_child_comments[$j]->setVar('com_rootid', $new_rootid);
@@ -185,21 +185,21 @@ case 'delete_one':
 
 case 'delete_all':
 	$comment_handler = xoops_gethandler('comment');
-	$comment =& $comment_handler->get($com_id);
+	$comment = $comment_handler->get($com_id);
 	$com_rootid = $comment->getVar('com_rootid');
 
 	// get all comments posted later within the same thread
-	$thread_comments =& $comment_handler->getThread($com_rootid, $com_id);
+	$thread_comments = $comment_handler->getThread($com_rootid, $com_id);
 
 	// construct a comment tree
 	include_once ICMS_ROOT_PATH.'/class/tree.php';
 	$xot = new XoopsObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
-	$child_comments =& $xot->getAllChild($com_id);
+	$child_comments = $xot->getAllChild($com_id);
 	// add itself here
-	$child_comments[$com_id] =& $comment;
+	$child_comments[$com_id] = $comment;
 	$msgs = array();
 	$deleted_num = array();
-	$member_handler =& xoops_gethandler('member');
+	$member_handler = xoops_gethandler('member');
 	foreach (array_keys($child_comments) as $i) {
 		if (!$comment_handler->delete($child_comments[$i])) {
 			$msgs[] = _CM_COMDELETENG.' (ID: '.icms_conv_nr2local($child_comments[$i]->getVar('com_id')).')';

@@ -23,10 +23,10 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	if (empty($com_id)) {
 		exit();
 	}
-	$comment_handler =& xoops_gethandler('comment');
-	$comment =& $comment_handler->get($com_id);
-	$module_handler =& xoops_gethandler('module');
-	$module =& $module_handler->get($comment->getVar('com_modid'));
+	$comment_handler = xoops_gethandler('comment');
+	$comment = $comment_handler->get($com_id);
+	$module_handler = xoops_gethandler('module');
+	$module = $module_handler->get($comment->getVar('com_modid'));
 	$comment_config = $module->getInfo('comments');
 	$com_modid = $module->getVar('mid');
 	$redirect_page = ICMS_URL.'/modules/system/admin.php?fct=comments&amp;com_modid='.$com_modid.'&amp;com_itemid';
@@ -43,7 +43,7 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
 		$extra_params = '';
 		foreach ($comment_config['extraParams'] as $extra_param) {
-			$extra_params .= isset($_POST[$extra_param]) ? $extra_param.'='.htmlspecialchars($_POST[$extra_param]).'&amp;' : $extra_param.'=&amp;';
+			$extra_params .= isset($_POST[$extra_param]) ? $extra_param.'='.htmlspecialchars($_POST[$extra_param]).'&amp;' : $extra_param.'=amp;';
 		}
 		$redirect_page .= $extra_params;
 	}
@@ -91,13 +91,13 @@ switch ( $op ) {
 	include ICMS_ROOT_PATH.'/include/comment_delete.php';
 	break;
   case "preview":
-	$myts =& MyTextSanitizer::getInstance();
+	$myts = MyTextSanitizer::getInstance();
 	$doimage = 1;
 	$com_title = $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['com_title']));
 	if ($dohtml != 0) {
 	  if (is_object($icmsUser)) {
 		if (!$icmsUser->isAdmin($com_modid)) {
-		  $sysperm_handler =& xoops_gethandler('groupperm');
+		  $sysperm_handler = xoops_gethandler('groupperm');
 		  if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 			$dohtml = 0;
 		  }
@@ -106,7 +106,7 @@ switch ( $op ) {
 		  $dohtml = 0;
 	  }
 	}
-	$p_comment =& $myts->previewTarea($_POST['com_text'], $dohtml, $dosmiley, $doxcode, $doimage, $dobr);
+	$p_comment = $myts->previewTarea($_POST['com_text'], $dohtml, $dosmiley, $doxcode, $doimage, $dobr);
 	$noname = isset($noname) ? intval($noname) : 0;
 	$com_text = $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['com_text']));
 	if ($icmsModule->getVar('dirname') != 'system') {
@@ -133,18 +133,18 @@ switch ( $op ) {
 	}
 	// Captcha Hack
 	$doimage = 1;
-	$comment_handler =& xoops_gethandler('comment');
+	$comment_handler = xoops_gethandler('comment');
 	$add_userpost = false;
 	$call_approvefunc = false;
 	$call_updatefunc = false;
 	// RMV-NOTIFY - this can be set to 'comment' or 'comment_submit'
 	$notify_event = false;
 	if (!empty($com_id)) {
-	  $comment =& $comment_handler->get($com_id);
+	  $comment = $comment_handler->get($com_id);
 	  $accesserror = false;
 
 	  if (is_object($icmsUser)) {
-		$sysperm_handler =& xoops_gethandler('groupperm');
+		$sysperm_handler = xoops_gethandler('groupperm');
 		if ($icmsUser->isAdmin($com_modid) || $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 		  if (!empty($com_status) && $com_status != XOOPS_COMMENT_PENDING) {
 			$old_com_status = $comment->getVar('com_status');
@@ -188,7 +188,7 @@ switch ( $op ) {
 	  $comment->setVar('com_rootid', $com_rootid);
 	  $comment->setVar('com_ip', xoops_getenv('REMOTE_ADDR'));
 	  if (is_object($icmsUser)) {
-		$sysperm_handler =& xoops_gethandler('groupperm');
+		$sysperm_handler = xoops_gethandler('groupperm');
 		if ($icmsUser->isAdmin($com_modid) || $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 		  $comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
 		  $add_userpost = true;
@@ -330,8 +330,8 @@ switch ( $op ) {
 	  // increment user post if needed
 	  $uid = $comment->getVar('com_uid');
 	  if ($uid > 0 && false != $add_userpost) {
-		$member_handler =& xoops_gethandler('member');
-		$poster =& $member_handler->getUser($uid);
+		$member_handler = xoops_gethandler('member');
+		$poster = $member_handler->getUser($uid);
 		if (is_object($poster)) {
 		  $member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') + 1);
 		}
@@ -342,7 +342,7 @@ switch ( $op ) {
 	  if ($notify_event) {
 		$not_modid = $com_modid;
 		include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
-		$not_catinfo =& notificationCommentCategoryInfo($not_modid);
+		$not_catinfo = notificationCommentCategoryInfo($not_modid);
 		$not_category = $not_catinfo['name'];
 		$not_itemid = $com_itemid;
 		$not_event = $notify_event;
@@ -351,26 +351,26 @@ switch ( $op ) {
 		// module).
 		$comment_tags = array();
 		if ('system' == $icmsModule->getVar('dirname')) {
-		  $module_handler =& xoops_gethandler('module');
-		  $not_module =& $module_handler->get($not_modid);
+		  $module_handler = xoops_gethandler('module');
+		  $not_module = $module_handler->get($not_modid);
 		} else {
-		  $not_module =& $icmsModule;
+		  $not_module = $icmsModule;
 		}
 		if (!isset($comment_url)) {
-		  $com_config =& $not_module->getInfo('comments');
+		  $com_config = $not_module->getInfo('comments');
 		  $comment_url = $com_config['pageName'] . '?';
 		  if (isset($com_config['extraParams']) && is_array($com_config['extraParams'])) {
 			$extra_params = '';
 			foreach ($com_config['extraParams'] as $extra_param) {
-			  $extra_params .= isset($_POST[$extra_param]) ? $extra_param.'='.htmlspecialchars($_POST[$extra_param]).'&amp;' : $extra_param.'=&amp;';
-			  //$extra_params .= isset($_GET[$extra_param]) ? $extra_param.'='.$_GET[$extra_param].'&amp;' : $extra_param.'=&amp;';
+			  $extra_params .= isset($_POST[$extra_param]) ? $extra_param.'='.htmlspecialchars($_POST[$extra_param]).'&amp;' : $extra_param.'=amp;';
+			  //$extra_params .= isset($_GET[$extra_param]) ? $extra_param.'='.$_GET[$extra_param].'&amp;' : $extra_param.'=amp;';
 			}
 			$comment_url .= $extra_params;
 		  }
 		  $comment_url .= $com_config['itemName'];
 		}
 		$comment_tags['X_COMMENT_URL'] = ICMS_URL . '/modules/' . $not_module->getVar('dirname') . '/' .$comment_url . '=' . $com_itemid.'&amp;com_id='.$newcid.'&amp;com_rootid='.$com_rootid.'&amp;com_mode='.$com_mode.'&amp;com_order='.$com_order.'#comment'.$newcid;
-		$notification_handler =& xoops_gethandler('notification');
+		$notification_handler = xoops_gethandler('notification');
 		$notification_handler->triggerEvent ($not_category, $not_itemid, $not_event, $comment_tags, false, $not_modid);
 	  }
 
