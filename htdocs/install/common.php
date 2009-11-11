@@ -47,7 +47,16 @@ define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH.'/cache/htmlpurifier');
 // ImpressCMS Modules path & url
 define( 'ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules' );
 define( 'ICMS_MODULES_URL', ICMS_URL . '/modules' );
-
+// ################# Creation of the ImpressCMS Libraries ##############
+/**
+ * @todo The definition of the library path needs to be in mainfile
+ */
+// ImpressCMS Third Party Libraries folder
+define( 'ICMS_LIBRARIES_PATH', ICMS_ROOT_PATH . '/libraries' );
+define( 'ICMS_LIBRARIES_URL', ICMS_URL . '/libraries' );
+// ImpressCMS Third Party Library for PDF generator
+define( 'ICMS_PDF_LIB_PATH', ICMS_ROOT_PATH . '/libraries/tcpdf' );
+define( 'ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf' );
 
 /**
  * Extremely reduced kernel class
