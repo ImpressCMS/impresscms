@@ -35,7 +35,7 @@ class IcmsPersistableTree {
 	 **/
 	function IcmsPersistableTree(&$objectArr, $myId, $parentId, $rootId = null)
 	{
-		$this->_objects = $objectArr;
+		$this->_objects =& $objectArr;
 		$this->_myId = $myId;
 		$this->_parentId = $parentId;
 		if (isset($rootId)) {
@@ -53,7 +53,7 @@ class IcmsPersistableTree {
 	{
 		foreach (array_keys($this->_objects) as $i) {
             $key1 = $this->_objects[$i]->getVar($this->_myId);
-            $this->_tree[$key1]['obj'] = $this->_objects[$i];
+            $this->_tree[$key1]['obj'] =& $this->_objects[$i];
             $key2 = $this->_objects[$i]->getVar($this->_parentId, 'e');
             $this->_tree[$key1]['parent'] = $key2;
             $this->_tree[$key2]['child'][] = $key1;
@@ -95,7 +95,7 @@ class IcmsPersistableTree {
 		$ret = array();
 		if (isset($this->_tree[$key]['child'])) {
 			foreach ($this->_tree[$key]['child'] as $childkey) {
-				$ret[$childkey] = $this->_tree[$childkey]['obj'];
+				$ret[$childkey] =& $this->_tree[$childkey]['obj'];
 			}
 		}
 		return $ret;
@@ -112,10 +112,10 @@ class IcmsPersistableTree {
 	{
 		if (isset($this->_tree[$key]['child'])) {
 			foreach ($this->_tree[$key]['child'] as $childkey) {
-				$ret[$childkey] = $this->_tree[$childkey]['obj'];
-				$children = $this->getAllChild($childkey, $ret);
+				$ret[$childkey] =& $this->_tree[$childkey]['obj'];
+				$children =& $this->getAllChild($childkey, $ret);
 				foreach (array_keys($children) as $newkey) {
-					$ret[$newkey] = $children[$newkey];
+					$ret[$newkey] =& $children[$newkey];
 				}
 			}
 		}
@@ -134,10 +134,10 @@ class IcmsPersistableTree {
 	function getAllParent($key, $ret = array(), $uplevel = 1)
 	{
 		if (isset($this->_tree[$key]['parent']) && isset($this->_tree[$this->_tree[$key]['parent']]['obj'])) {
-			$ret[$uplevel] = $this->_tree[$this->_tree[$key]['parent']]['obj'];
-			$parents = $this->getAllParent($this->_tree[$key]['parent'], $ret, $uplevel+1);
+			$ret[$uplevel] =& $this->_tree[$this->_tree[$key]['parent']]['obj'];
+			$parents =& $this->getAllParent($this->_tree[$key]['parent'], $ret, $uplevel+1);
 			foreach (array_keys($parents) as $newkey) {
-				$ret[$newkey] = $parents[$newkey];
+				$ret[$newkey] =& $parents[$newkey];
 			}
 		}
 		return $ret;

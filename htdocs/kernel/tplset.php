@@ -238,9 +238,9 @@ class XoopsTplsetHandler extends XoopsObjectHandler
             $tplset = new XoopsTplset();
             $tplset->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] = $tplset;
+                $ret[] =& $tplset;
             } else {
-                $ret[$myrow['tplset_id']] = $tplset;
+                $ret[$myrow['tplset_id']] =& $tplset;
             }
             unset($tplset);
         }
@@ -262,7 +262,7 @@ class XoopsTplsetHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' '.$criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result =& $this->db->query($sql)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);

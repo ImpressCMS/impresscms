@@ -51,7 +51,7 @@ function icms_cp_header(){
 	require_once ICMS_ROOT_PATH . '/class/theme.php';
 	require_once ICMS_ROOT_PATH . '/class/theme_blocks.php';
 	if( !isset($icmsPreloadHandler) )
-		$icmsPreloadHandler = $GLOBALS['icmsPreloadHandler'];
+		$icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];
 
 	$icmsAdminTpl = new XoopsTpl();
 
@@ -71,7 +71,7 @@ function icms_cp_header(){
 	// TODO: Remove all this after a few versions!!
 	if(isset($icmsConfig['theme_admin_set']))
 		$xoopsThemeFactory->defaultTheme = $icmsConfig['theme_admin_set'];
-	$xoTheme = $xoopsThemeFactory->createInstance( array(
+	$xoTheme =& $xoopsThemeFactory->createInstance( array(
 		'contentTemplate'	=> @$xoopsOption['template_main'],
 		'canvasTemplate'	=> 'theme'.(( file_exists(ICMS_THEME_PATH.'/'.$icmsConfig['theme_admin_set'].'/theme_admin.html') || file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme_admin.html') ) ?'_admin':'').'.html',
 		'plugins' 			=> array('xos_logos_PageBuilder'),
@@ -171,8 +171,8 @@ function icms_cp_header(){
 	$file = file_get_contents ( ICMS_CACHE_PATH . "/adminmenu_" . $icmsConfig ['language'] . ".php" );
 	$admin_menu = eval ( 'return ' . $file . ';' );
 
-	$moduleperm_handler = xoops_gethandler ( 'groupperm' );
-	$module_handler = xoops_gethandler ( 'module' );
+	$moduleperm_handler = & xoops_gethandler ( 'groupperm' );
+	$module_handler = & xoops_gethandler ( 'module' );
 	foreach ( $admin_menu as $k => $navitem ) {
 		if ($navitem ['id'] == 'modules') { //Getting array of allowed modules to use in admin home
 			$perm_itens = array ( );
@@ -191,8 +191,8 @@ function icms_cp_header(){
 			$groups = $icmsUser->getGroups ();
 			$all_ok = false;
 			if (! in_array ( ICMS_GROUP_ADMIN, $groups )) {
-				$sysperm_handler = xoops_gethandler ( 'groupperm' );
-				$ok_syscats = $sysperm_handler->getItemIds ( 'system_admin', $groups );
+				$sysperm_handler = & xoops_gethandler ( 'groupperm' );
+				$ok_syscats = & $sysperm_handler->getItemIds ( 'system_admin', $groups );
 			} else {
 				$all_ok = true;
 			}
@@ -280,7 +280,7 @@ function icms_cp_header(){
 	}
 
 	if ( @is_object( $xoTheme->plugins['xos_logos_PageBuilder'] ) ) {
-		$aggreg = $xoTheme->plugins['xos_logos_PageBuilder'];
+		$aggreg =& $xoTheme->plugins['xos_logos_PageBuilder'];
 
 	$icmsAdminTpl->assign_by_ref( 'xoAdminBlocks', $aggreg->blocks );
 
@@ -457,7 +457,7 @@ function impresscms_get_adminmenu() {
 	# System Preferences menu
 	#########################################################################
 	$module_handler = xoops_gethandler ( 'module' );
-	$mod = $module_handler->getByDirname ( 'system' );
+	$mod = & $module_handler->getByDirname ( 'system' );
 	$menu = array ( );
 	foreach ( $mod->getAdminMenu () as $lkn ) {
 		$lkn ['dir'] = 'system';
@@ -477,7 +477,7 @@ function impresscms_get_adminmenu() {
 	#########################################################################
 	# Modules menu
 	#########################################################################
-	$module_handler = xoops_gethandler ( 'module' );
+	$module_handler = & xoops_gethandler ( 'module' );
 	$criteria = new CriteriaCompo ( );
 	$criteria->add ( new Criteria ( 'hasadmin', 1 ) );
 	$criteria->add ( new Criteria ( 'isactive', 1 ) );
@@ -485,7 +485,7 @@ function impresscms_get_adminmenu() {
 	$modules = $module_handler->getObjects ( $criteria );
 	foreach ( $modules as $module ) {
 		$rtn = array ( );
-		$inf = $module->getInfo ();
+		$inf = & $module->getInfo ();
 		$rtn ['link'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . (isset ( $inf ['adminindex'] ) ? $inf ['adminindex'] : '');
 		$rtn ['title'] = $module->name ();
 		$rtn ['dir'] = $module->dirname ();

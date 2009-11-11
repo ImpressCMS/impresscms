@@ -232,9 +232,9 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             $imgcat = new XoopsImagecategory();
             $imgcat->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] = $imgcat;
+                $ret[] =& $imgcat;
             } else {
-                $ret[$myrow['imgcat_id']] = $imgcat;
+                $ret[$myrow['imgcat_id']] =& $imgcat;
             }
             unset($imgcat);
         }
@@ -255,7 +255,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
             $where = $criteria->render();
             $sql .= ($where != '') ? ' AND '.$where : '';
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result =& $this->db->query($sql)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
@@ -288,7 +288,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
         if (isset($storetype)) {
             $criteria->add(new Criteria('imgcat_storetype', $storetype));
         }
-        $categories = $this->getObjects($criteria, true);
+        $categories =& $this->getObjects($criteria, true);
         $ret = array();
         foreach (array_keys($categories) as $i) {
                 $ret[$i] = $categories[$i]->getVar('imgcat_name');
@@ -329,7 +329,7 @@ class XoopsImagecategoryHandler extends XoopsObjectHandler
     	}
     	if (is_null($imgcat_id))$imgcat_id = 0;
     	$criteria->add(new Criteria('imgcat_pid', $imgcat_id));
-    	$categories = $this->getObjects($criteria, true);
+    	$categories =& $this->getObjects($criteria, true);
     	$ret = array();
     	foreach (array_keys($categories) as $i) {
     		$ret[$i] = $categories[$i]->getVar('imgcat_name');

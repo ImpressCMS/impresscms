@@ -203,9 +203,9 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
      * @return object {@link IcmsPersistableObject}
      */
     function &create($isNew = true) {
-    	$obj = new $this->className($this);
+    	$obj =& new $this->className($this);
 		if (!$obj->handler) {
-			$obj->handler = $this;
+			$obj->handler =& $this;
 		}
 
         if ($isNew === true) {
@@ -414,24 +414,24 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
     	$ret = array();
         while ($myrow = $this->db->fetchArray($result)) {
 
-        	$obj = $this->create(false);
+        	$obj =& $this->create(false);
             $obj->assignVars($myrow);
             if (!$id_as_key) {
                 if ($as_object) {
-                    $ret[] = $obj;
+                    $ret[] =& $obj;
                 }
                 else {
 					$ret[] = $obj->toArray();
                 }
             } else {
                 if ($as_object) {
-                    $value = $obj;
+                    $value =& $obj;
                 }
                 else {
                     $value = $obj->toArray();
                 }
                 if ($id_as_key === 'parentid') {
-					$ret[$obj->getVar($obj->handler->parentName, 'e')][$obj->getVar($this->keyName)] = $value;
+					$ret[$obj->getVar($obj->handler->parentName, 'e')][$obj->getVar($this->keyName)] =& $value;
                 } else {
                 	$ret[$obj->getVar($this->keyName)] = $value;
                 }
@@ -494,7 +494,7 @@ class IcmsPersistableObjectHandler extends XoopsObjectHandler {
             return $ret;
         }
 
-        $myts = MyTextSanitizer::getInstance();
+        $myts =& MyTextSanitizer::getInstance();
         while ($myrow = $this->db->fetchArray($result)) {
             //identifiers should be textboxes, so sanitize them like that
             $ret[$myrow[$this->keyName]] = empty($this->identifierName)?1:$myts->displayTarea($myrow[$this->identifierName]);

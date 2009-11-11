@@ -80,7 +80,7 @@ class IcmsPersistableSingleView {
 	{
 		include_once ICMS_ROOT_PATH . '/class/template.php';
 
-		$this->_tpl = new XoopsTpl();
+		$this->_tpl =& new XoopsTpl();
 		$vars = $this->_object->vars;
 		$icms_object_array = array();
 

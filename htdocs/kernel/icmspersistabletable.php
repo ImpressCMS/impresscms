@@ -524,7 +524,7 @@ class IcmsPersistableTable {
 		 * Since we may not have an IcmsPersistableObject to look into now, let's create one for this purpose
 		 * and we will free it after
 		 */
-		$this->_tempObject = $this->_objectHandler->create();
+		$this->_tempObject =& $this->_objectHandler->create();
 
 		$this->_criteria->setStart(isset($_GET['start' . $this->_objectHandler->keyName]) ? intval($_GET['start' . $this->_objectHandler->keyName]) : 0);
 

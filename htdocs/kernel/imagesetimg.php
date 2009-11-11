@@ -197,9 +197,9 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
             $imgsetimg = new XoopsImagesetimg();
             $imgsetimg->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] = $imgsetimg;
+                $ret[] =& $imgsetimg;
             } else {
-                $ret[$myrow['imgsetimg_id']] = $imgsetimg;
+                $ret[$myrow['imgsetimg_id']] =& $imgsetimg;
             }
             unset($imgsetimg);
         }
@@ -219,7 +219,7 @@ class XoopsImagesetimgHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' '.$criteria->renderWhere().' GROUP BY i.imgsetimg_id';
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result =& $this->db->query($sql)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);

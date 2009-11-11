@@ -107,20 +107,20 @@ class IcmsModuleAbout
 		 * @todo make the output XHTML compliant
 		 */
 
-		$myts = MyTextSanitizer::getInstance();
+		$myts = &MyTextSanitizer::getInstance();
 
 		global $icmsModule, $icmsConfig;
 
 		xoops_cp_header();
 
-		$module_handler = xoops_gethandler('module');
-		$versioninfo = $module_handler->get($icmsModule->getVar('mid'));
+		$module_handler = &xoops_gethandler('module');
+		$versioninfo = &$module_handler->get($icmsModule->getVar('mid'));
 
 		$icmsModule->displayAdminMenu(-1, $this->_aboutTitle . " " . $versioninfo->getInfo('name'));
 
 		include_once ICMS_ROOT_PATH . '/class/template.php';
 
-		$this->_tpl = new XoopsTpl();
+		$this->_tpl =& new XoopsTpl();
 
 		$this->_tpl->assign('module_url', ICMS_URL . "/modules/" . $icmsModule->getVar('dirname') . "/");
 		$this->_tpl->assign('module_image', $versioninfo->getInfo('image'));

@@ -84,7 +84,7 @@ class XoopsRankHandler extends XoopsObjectHandler
 	* @return  object	reference to the (@link XoopsRank) object
 	**/
 	function &create($isNew = true) {
-		$obj = new XoopsRank();
+		$obj =& new XoopsRank();
 		if ($isNew === true) {
 			$obj->setNew();
 		}
@@ -99,7 +99,7 @@ class XoopsRankHandler extends XoopsObjectHandler
 	**/
 	function &get($id = 0)
 	{
-		$object = $this->create(false);
+		$object =& $this->create(false);
 		$sql = "SELECT * FROM " . $this->db->prefix('ranks') . " WHERE rank_id = '" . $this->db->quoteString($id)."'";
 		if (!$result = $this->db->query($sql)) {
 			$ret = null;
@@ -142,7 +142,7 @@ class XoopsRankHandler extends XoopsObjectHandler
 			return $ret;
 		}
 
-		$myts = MyTextSanitizer::getInstance();
+		$myts =& MyTextSanitizer::getInstance();
 		while ($myrow = $this->db->fetchArray($result)) {
 			$ret[$myrow["rank_id"]] = $myts->htmlSpecialChars($myrow["rank_title"]);
 		}
@@ -202,7 +202,7 @@ class XoUserHandler extends XoopsObjectHandler
 	* @return  object	reference to the (@link XoopsUser) object
 	**/
 	function &create($isNew = true) {
-		$obj = new XoUser();
+		$obj =& new XoUser();
 		if ($isNew === true) {
 		$obj->setNew();
 		}
@@ -285,7 +285,7 @@ class XoUserHandler extends XoopsObjectHandler
 		$result = $this->db->query($sql, $limit, $start);
 		$ret = array();
 		while ($myrow = $this->db->fetchArray($result)) {
-			$object = $this->create(false);
+			$object =& $this->create(false);
 			$object->assignVars($myrow);
 			$ret[$myrow["uid"]] = $object;
 			unset($object);
@@ -370,7 +370,7 @@ if ( empty($_POST["user_submit"]) ) {
 			$levels = array( 0 => _ALL, 1 => _MA_USER_LEVEL_ACTIVE, 2 => _MA_USER_LEVEL_INACTIVE , 3 => _MA_USER_LEVEL_DISABLED);
 			$level_radio->addOptionArray($levels);
 			
-			$member_handler = xoops_gethandler('member');
+			$member_handler =& xoops_gethandler('member');
 			$groups = $member_handler->getGroupList();
 			$groups[0] = _ALL;
 			$group_select = new XoopsFormSelect(_MA_USER_GROUP, 'groups', @$_POST['groups'], 3, true);
@@ -438,7 +438,7 @@ if ( empty($_POST["user_submit"]) ) {
 
 } else {
 
-	$myts = MyTextSanitizer::getInstance();
+	$myts =& MyTextSanitizer::getInstance();
 	
 	$limit = empty($_POST['limit']) ? 50 : intval( $_POST['limit'] );
 	$start = intval( @$_POST['start'] );
@@ -579,7 +579,7 @@ if ( empty($_POST["user_submit"]) ) {
 		$result = $xoopsDB->query($query, $limit, $start);
 		$foundusers = array();
 		while ($myrow = $xoopsDB->fetchArray($result)) {
-			$object = $user_handler->create(false);
+			$object =& $user_handler->create(false);
 			$object->assignVars($myrow);
 			$foundusers[$myrow["uid"]] = $object;
 			unset($object);

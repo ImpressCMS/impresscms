@@ -70,7 +70,7 @@ class XoopsMemberHandler {
     * @return object XoopsGroup {@link XoopsGroup} reference to the new group
     */
     function &createGroup() {
-        $inst = $this->_gHandler->create ();
+        $inst = & $this->_gHandler->create ();
         return $inst;
     }
     
@@ -80,7 +80,7 @@ class XoopsMemberHandler {
     * @return object XoopsUser {@link XoopsUser} reference to the new user
     */
     function &createUser() {
-        $inst = $this->_uHandler->create ();
+        $inst = & $this->_uHandler->create ();
         return $inst;
     }
     
@@ -102,7 +102,7 @@ class XoopsMemberHandler {
     */
     function &getUser($id) {
         if (! isset ( $this->_members [$id] )) {
-            $this->_members [$id] = $this->_uHandler->get ( $id );
+            $this->_members [$id] = & $this->_uHandler->get ( $id );
         }
         return $this->_members [$id];
     }
@@ -213,7 +213,7 @@ class XoopsMemberHandler {
     * @return object XoopsMembership {@link XoopsMembership}
     */
     function addUserToGroup($group_id, $user_id) {
-        $mship = $this->_mHandler->create ();
+        $mship = & $this->_mHandler->create ();
         $mship->setVar ( 'groupid', $group_id );
         $mship->setVar ( 'uid', $user_id );
         return $this->_mHandler->insert ( $mship );
@@ -254,9 +254,9 @@ class XoopsMemberHandler {
         } else {
             $ret = array ( );
             foreach ( $user_ids as $u_id ) {
-                $user = $this->getUser ( $u_id );
+                $user = & $this->getUser ( $u_id );
                 if (is_object ( $user )) {
-                    $ret [] = $user;
+                    $ret [] = & $user;
                 }
                 unset ( $user );
             }
@@ -277,7 +277,7 @@ class XoopsMemberHandler {
             return $group_ids;
         } else {
             foreach ( $group_ids as $g_id ) {
-                $ret [] = $this->getGroup ( $g_id );
+                $ret [] = & $this->getGroup ( $g_id );
             }
             return $ret;
         }
@@ -483,9 +483,9 @@ LEFT JOIN " . $this->_mHandler->db->prefix ( "groups_users_link" ) . " AS m ON m
                 $user = new XoopsUser ( );
                 $user->assignVars ( $myrow );
                 if (! $id_as_key) {
-                    $ret [] = $user;
+                    $ret [] = & $user;
                 } else {
-                    $ret [$myrow ['uid']] = $user;
+                    $ret [$myrow ['uid']] = & $user;
                 }
                 unset ( $user );
             } else {

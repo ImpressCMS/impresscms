@@ -220,9 +220,9 @@ class XoopsCommentHandler extends XoopsObjectHandler
 			$comment = new XoopsComment();
 			$comment->assignVars($myrow);
 			if (!$id_as_key) {
-				$ret[] = $comment;
+				$ret[] =& $comment;
 			} else {
-				$ret[$myrow['com_id']] = $comment;
+				$ret[$myrow['com_id']] =& $comment;
 			}
 			unset($comment);
 		}
@@ -242,7 +242,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
 			$sql .= ' '.$criteria->renderWhere();
 		}
-		if (!$result = $this->db->query($sql)) {
+		if (!$result =& $this->db->query($sql)) {
 			return 0;
 		}
 		list($count) = $this->db->fetchRow($result);

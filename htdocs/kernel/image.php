@@ -260,9 +260,9 @@ class XoopsImageHandler extends XoopsObjectHandler
             $image = new XoopsImage();
             $image->assignVars($myrow);
             if (!$id_as_key) {
-                $ret[] = $image;
+                $ret[] =& $image;
             } else {
-                $ret[$myrow['image_id']] = $image;
+                $ret[$myrow['image_id']] =& $image;
             }
             unset($image);
         }
@@ -281,7 +281,7 @@ class XoopsImageHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' '.$criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result =& $this->db->query($sql)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
@@ -301,7 +301,7 @@ class XoopsImageHandler extends XoopsObjectHandler
         if (isset($image_display)) {
             $criteria->add(new Criteria('image_display', intval($image_display)));
         }
-        $images = $this->getObjects($criteria, false, true);
+        $images =& $this->getObjects($criteria, false, true);
         $ret = array();
         foreach (array_keys($images) as $i) {
             $ret[$images[$i]->getVar('image_name')] = $images[$i]->getVar('image_nicename');

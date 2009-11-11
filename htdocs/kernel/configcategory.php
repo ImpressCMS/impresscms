@@ -193,9 +193,9 @@ class XoopsConfigCategoryHandler extends XoopsObjectHandler
 			$confcat = new XoopsConfigCategory();
 			$confcat->assignVars($myrow, false);
 			if (!$id_as_key) {
-				$ret[] = $confcat;
+				$ret[] =& $confcat;
 			} else {
-				$ret[$myrow['confcat_id']] = $confcat;
+				$ret[$myrow['confcat_id']] =& $confcat;
 			}
 			unset($confcat);
 		}

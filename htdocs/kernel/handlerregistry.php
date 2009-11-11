@@ -67,7 +67,7 @@ class XoopsHandlerRegistry
 	 */
 	function setHandler($name, &$handler)
 	{
-		$this->_handlers['kernel'][$name] = $handler;
+		$this->_handlers['kernel'][$name] =& $handler;
 	}
 
 	/**
@@ -104,7 +104,7 @@ class XoopsHandlerRegistry
 	 */
 	function setModuleHandler($module, $name, &$handler)
 	{
-		$this->_handlers['module'][$module][$name] = $handler;
+		$this->_handlers['module'][$module][$name] =& $handler;
 	}
 
 	/**

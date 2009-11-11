@@ -80,7 +80,7 @@ class XoopsConfigHandler
 	 */
 	function &createConfig()
 	{
-		$instance = $this->_cHandler->create();
+		$instance =& $this->_cHandler->create();
 		return $instance;
 	}
 
@@ -93,7 +93,7 @@ class XoopsConfigHandler
 	 */
 	function &getConfig($id, $withoptions = false)
 	{
-		$config = $this->_cHandler->get($id);
+		$config =& $this->_cHandler->get($id);
 		if ($withoptions == true) {
 			$config->setConfOptions($this->getConfigOptions(new Criteria('conf_id', $id)));
 		}
@@ -111,7 +111,7 @@ class XoopsConfigHandler
 		if (!$this->_cHandler->insert($config)) {
 			return false;
 		}
-		$options = $config->getConfOptions();
+		$options =& $config->getConfOptions();
 		$count = count($options);
 		$conf_id = $config->getVar('conf_id');
 		for ($i = 0; $i < $count; $i++) {
@@ -140,7 +140,7 @@ class XoopsConfigHandler
 		if (!$this->_cHandler->delete($config)) {
 			return false;
 		}
-		$options = $config->getConfOptions();
+		$options =& $config->getConfOptions();
 		$count = count($options);
 		if ($count == 0) {
 			$options = $this->getConfigOptions(new Criteria('conf_id', $config->getVar('conf_id')));
@@ -218,7 +218,7 @@ class XoopsConfigHandler
 	 * @return	object  {@link XoopsConfigOption}
 	 */
 	function &createConfigOption() {
-		$inst = $this->_oHandler->create();
+		$inst =& $this->_oHandler->create();
 		return $inst;
 	}
 
@@ -230,7 +230,7 @@ class XoopsConfigHandler
 	 * @return	object  {@link XoopsConfigOption}
 	 */
 	function &getConfigOption($id) {
-		$inst = $this->_oHandler->get($id);
+		$inst =& $this->_oHandler->get($id);
 		return $inst;
 	}
 
@@ -276,13 +276,13 @@ class XoopsConfigHandler
 			if (empty($conf_catid)) {
 				$criteria->add(new Criteria('conf_catid', $conf_catid));
 			}
-			$configs = $this->_cHandler->getObjects($criteria);
+			$configs =& $this->_cHandler->getObjects($criteria);
 			$confcount = count($configs);
 			$ret = array();
 			for ($i = 0; $i < $confcount; $i++) {
 				$ret[$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
 			}
-			$this->_cachedConfigs[$conf_modid][$conf_catid] = $ret;
+			$this->_cachedConfigs[$conf_modid][$conf_catid] =& $ret;
 			return $ret;
 		}
 	}

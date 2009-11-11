@@ -244,7 +244,7 @@ class IcmsPersistableController {
 				// This is a new object. We need to store the meta data and then the language data
 				// First, we will get rid of the multilanguage data to only store the meta data
 				$icmsObj->stripMultilanguageFields();
-				$newObject = $this->doStoreFromDefaultForm($icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page, $debug);
+				$newObject =& $this->doStoreFromDefaultForm($icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page, $debug);
 				/**
 				 * @todo we need to trap potential errors here
 				 */
@@ -257,7 +257,7 @@ class IcmsPersistableController {
 
 				$icmsObj->setVar($this->handler->keyName, $newObject->getVar($this->handler->keyName));
 				$this->handler->changeTableNameForML();
-				$ret = $this->doStoreFromDefaultForm($icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page, $debug);
+				$ret =& $this->doStoreFromDefaultForm($icmsObj, $objectid, $created_success_msg, $modified_success_msg, $redirect_page, $debug);
 
 				return $ret;
 			}
@@ -272,7 +272,7 @@ class IcmsPersistableController {
 
 	function &storeIcmsPersistableObject($debug=false, $xparam = false)
 	{
-		$ret = $this->storeFromDefaultForm('', '', null, $debug, $xparam);
+		$ret =& $this->storeFromDefaultForm('', '', null, $debug, $xparam);
 
 		return $ret;
 	}

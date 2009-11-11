@@ -189,9 +189,9 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 			$perm = new XoopsGroupPerm();
 			$perm->assignVars($myrow);
 			if (!$id_as_key) {
-				$ret[] = $perm;
+				$ret[] =& $perm;
 			} else {
-				$ret[$myrow['gperm_id']] = $perm;
+				$ret[$myrow['gperm_id']] =& $perm;
 			}
 			unset($perm);
 		}
@@ -328,7 +328,7 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	 */
 	function addRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid = 1)
 	{
-		$perm = $this->create();
+		$perm =& $this->create();
 		$perm->setVar('gperm_name', $gperm_name);
 		$perm->setVar('gperm_groupid', $gperm_groupid);
 		$perm->setVar('gperm_itemid', $gperm_itemid);

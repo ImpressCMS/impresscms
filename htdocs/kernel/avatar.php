@@ -203,9 +203,9 @@ class XoopsAvatarHandler extends XoopsObjectHandler
             $avatar->assignVars($myrow);
             $avatar->setUserCount($myrow['count']);
             if (!$id_as_key) {
-                $ret[] = $avatar;
+                $ret[] =& $avatar;
             } else {
-                $ret[$myrow['avatar_id']] = $avatar;
+                $ret[$myrow['avatar_id']] =& $avatar;
             }
             unset($avatar);
         }
@@ -223,7 +223,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' '.$criteria->renderWhere();
         }
-        if (!$result = $this->db->query($sql)) {
+        if (!$result =& $this->db->query($sql)) {
             return 0;
         }
         list($count) = $this->db->fetchRow($result);
@@ -245,7 +245,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         $sql = sprintf("DELETE FROM %s WHERE user_id = '%u'", $this->db->prefix('avatar_user_link'), $user_id);
         $this->db->query($sql);
         $sql = sprintf("INSERT INTO %s (avatar_id, user_id) VALUES ('%u', '%u')", $this->db->prefix('avatar_user_link'), $avatar_id, $user_id);
-        if (!$result = $this->db->query($sql)) {
+        if (!$result =& $this->db->query($sql)) {
             return false;
         }
         return true;
@@ -271,7 +271,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
             return $ret;
         }
         while ($myrow = $this->db->fetchArray($result)) {
-            $ret[] = $myrow['user_id'];
+            $ret[] =& $myrow['user_id'];
         }
         return $ret;
     }
@@ -292,7 +292,7 @@ class XoopsAvatarHandler extends XoopsObjectHandler
         if (isset($avatar_display)) {
             $criteria->add(new Criteria('avatar_display', intval($avatar_display)));
         }
-        $avatars = $this->getObjects($criteria, true);
+        $avatars =& $this->getObjects($criteria, true);
         $ret = array('blank.gif' => _NONE);
         foreach (array_keys($avatars) as $i) {
             $ret[$avatars[$i]->getVar('avatar_file')] = $avatars[$i]->getVar('avatar_name');

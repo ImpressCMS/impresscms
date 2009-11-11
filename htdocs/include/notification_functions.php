@@ -34,10 +34,10 @@ function notificationEnabled($style, $module_id=null)
 		if (!isset($module_id)) {
 			return false;
 		}
-		$module_handler = xoops_gethandler('module');
-		$module = $module_handler->get($module_id);
+		$module_handler =& xoops_gethandler('module');
+		$module =& $module_handler->get($module_id);
 		if (!empty($module) && $module->getVar('hasnotification') == 1) {
-			$config_handler = xoops_gethandler('config');
+			$config_handler =& xoops_gethandler('config');
 			$config = $config_handler->getConfigsByCat(0,$module_id);
 			$status = $config['notification_enabled'];
 		} else {
@@ -71,12 +71,12 @@ function &notificationCategoryInfo($category_name='', $module_id=null)
 	if (!isset($module_id)) {
 		global $icmsModule;
 		$module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
-		$module = $icmsModule;
+		$module =& $icmsModule;
 	} else {
-		$module_handler = xoops_gethandler('module');
-		$module = $module_handler->get($module_id);
+		$module_handler =& xoops_gethandler('module');
+		$module =& $module_handler->get($module_id);
 	}
-	$not_config = $module->getInfo('notification');
+	$not_config =& $module->getInfo('notification');
 	if (empty($category_name)) {
 		return $not_config['category'];
 	}
@@ -105,12 +105,12 @@ function &notificationCategoryInfo($category_name='', $module_id=null)
 function &notificationCommentCategoryInfo($module_id=null)
 {
 	$ret = false;
-	$all_categories = notificationCategoryInfo('', $module_id);
+	$all_categories =& notificationCategoryInfo('', $module_id);
 	if (empty($all_categories)) {
 		return $ret;
 	}
 	foreach ($all_categories as $category) {
-		$all_events = notificationEvents ($category['name'], false, $module_id);
+		$all_events =& notificationEvents ($category['name'], false, $module_id);
 		if (empty($all_events)) {
 			continue;
 		}
@@ -139,16 +139,16 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 	if (!isset($module_id)) {
 		global $icmsModule;
 		$module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
-		$module = $icmsModule;
+		$module =& $icmsModule;
 	} else {
-		$module_handler = xoops_gethandler('module');
-		$module = $module_handler->get($module_id);
+		$module_handler =& xoops_gethandler('module');
+		$module =& $module_handler->get($module_id);
 	}
-	$not_config = $module->getInfo('notification');
-	$config_handler = xoops_gethandler('config');
+	$not_config =& $module->getInfo('notification');
+	$config_handler =& xoops_gethandler('config');
 	$mod_config = $config_handler->getConfigsByCat(0,$module_id);
 
-	$category = notificationCategoryInfo($category_name, $module_id);
+	$category =& notificationCategoryInfo($category_name, $module_id);
 
 	global $icmsConfig;
 	$event_array = array();
@@ -184,7 +184,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 		if (!empty($category['item_name']) && $category['item_name'] == $com_config['itemName']) {
 			$mail_template_dir = ICMS_ROOT_PATH . '/language/' . $icmsConfig['language'] . '/mail_template/';
 			include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
-			$config_handler = xoops_gethandler('config');
+			$config_handler =& xoops_gethandler('config');
 			$com_config = $config_handler->getConfigsByCat(0,$module_id);
 			if (!$enabled_only) {
 				$insert_comment = true;
@@ -261,7 +261,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
  **/
 function notificationEventEnabled(&$category, &$event, &$module)
 {
-	$config_handler = xoops_gethandler('config');
+	$config_handler =& xoops_gethandler('config');
 	$mod_config = $config_handler->getConfigsByCat(0,$module->getVar('mid'));
 
 	if (is_array($mod_config['notification_events']) && $mod_config['notification_events'] != array()) {
@@ -269,7 +269,7 @@ function notificationEventEnabled(&$category, &$event, &$module)
 		if (in_array($option_name, $mod_config['notification_events'])) {
 			return true;
 		}
-		$notification_handler = xoops_gethandler('notification');
+		$notification_handler =& xoops_gethandler('notification');
 	}
 	return false;
 }
@@ -286,7 +286,7 @@ function notificationEventEnabled(&$category, &$event, &$module)
  */
 function &notificationEventInfo($category_name, $event_name, $module_id=null)
 {
-	$all_events = notificationEvents($category_name, false, $module_id);
+	$all_events =& notificationEvents($category_name, false, $module_id);
 	foreach ($all_events as $event) {
 		if ($event['name'] == $event_name) {
 			return $event;
@@ -306,7 +306,7 @@ function &notificationEventInfo($category_name, $event_name, $module_id=null)
  */
 function &notificationSubscribableCategoryInfo($module_id=null)
 {
-	$all_categories = notificationCategoryInfo('', $module_id);
+	$all_categories =& notificationCategoryInfo('', $module_id);
 
 	// FIXME: better or more standardized way to do this?
 	$script_url = explode('/', $_SERVER['PHP_SELF']);

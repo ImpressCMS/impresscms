@@ -40,8 +40,8 @@ if (!isset($_GET['com_order'])) {
 } else {
 	$com_order = intval($_GET['com_order']);
 }
-$comment_handler = xoops_gethandler('comment');
-$comment = $comment_handler->get($com_id);
+$comment_handler =& xoops_gethandler('comment');
+$comment =& $comment_handler->get($com_id);
 $r_name = XoopsUser::getUnameFromId($comment->getVar('com_uid'));
 $r_text = _CM_POSTER.': <b>'.$r_name.'</b>&nbsp;&nbsp;'._CM_POSTED.': <b>'.formatTimestamp($comment->getVar('com_created')).'</b><br /><br />'.$comment->getVar('com_text');$com_title = $comment->getVar('com_title', 'E');
 if (!preg_match("/^(Re|"._CM_RE."):/i", $com_title)) {
@@ -52,7 +52,7 @@ $com_text = '';
 $com_id = 0;
 $dosmiley = 1;
 $groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
-$gperm_handler = xoops_gethandler('groupperm');
+$gperm_handler =& xoops_gethandler('groupperm');
 if ($icmsConfig ['editor_default'] != 'dhtmltextarea' && $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
   $dohtml = 1;
   $dobr = 0;

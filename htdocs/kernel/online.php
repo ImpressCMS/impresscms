@@ -45,7 +45,7 @@ class XoopsOnlineHandler
      */
     function XoopsOnlineHandler(&$db)
     {
-        $this->db = $db;
+        $this->db =& $db;
     }
 
     /**

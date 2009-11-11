@@ -16,12 +16,12 @@
 //error_reporting(0);
 include_once '../../../mainfile.php';
 include_once XOOPS_ROOT_PATH . "/include/cp_functions.php";
-$moduleperm_handler = xoops_gethandler( 'groupperm' );
+$moduleperm_handler = & xoops_gethandler( 'groupperm' );
 if ( $icmsUser ) {
   $url_arr = explode('/',strstr($xoopsRequestUri,'/modules/'));
-  $module_handler = xoops_gethandler('module');
-  $icmsModule = $module_handler->getByDirname($url_arr[2]);
-  $xoopsModule = $module_handler->getByDirname($url_arr[2]);
+  $module_handler =& xoops_gethandler('module');
+  $icmsModule =& $module_handler->getByDirname($url_arr[2]);
+  $xoopsModule =& $module_handler->getByDirname($url_arr[2]);
   unset($url_arr);
 
   if ( !$moduleperm_handler->checkRight( 'module_admin', $icmsModule->getVar( 'mid' ), $icmsUser->getGroups() ) ) {
@@ -33,9 +33,9 @@ if ( $icmsUser ) {
 
 // set config values for this module
 if ( $icmsModule->getVar( 'hasconfig' ) == 1 || $icmsModule->getVar( 'hascomments' ) == 1 ) {
-  $config_handler = xoops_gethandler( 'config' );
-  $icmsModuleConfig = $config_handler->getConfigsByCat( 0, $icmsModule->getVar( 'mid' ) );
-  $xoopsModuleConfig = $config_handler->getConfigsByCat( 0, $icmsModule->getVar( 'mid' ) );
+  $config_handler = & xoops_gethandler( 'config' );
+  $icmsModuleConfig =& $config_handler->getConfigsByCat( 0, $icmsModule->getVar( 'mid' ) );
+  $xoopsModuleConfig =& $config_handler->getConfigsByCat( 0, $icmsModule->getVar( 'mid' ) );
 }
 
 // include the default language file for the admin interface

@@ -58,7 +58,7 @@ class XoopsSessionHandler
 	*/
 	function XoopsSessionHandler(&$db)
      {
-          $this->db = $db;
+          $this->db =& $db;
      }
 
 	/**

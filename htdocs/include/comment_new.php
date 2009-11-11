@@ -30,7 +30,7 @@ if ($com_itemid > 0) {
 		if (isset($com_replytext)) {
 			themecenterposts($com_replytitle, $com_replytext);
 		}
-		$myts = MyTextSanitizer::getInstance();
+		$myts =& MyTextSanitizer::getInstance();
 		$com_title = $myts->htmlSpecialChars($com_replytitle);
 		if (!preg_match("/^(Re|"._CM_RE."):/i", $com_title)) {
 			$com_title = _CM_RE.": ".xoops_substr($com_title, 0, 56);
@@ -60,7 +60,7 @@ if ($com_itemid > 0) {
 	$noname = 0;
 	$dosmiley = 1;
 	$groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
-	$gperm_handler = xoops_gethandler('groupperm');
+	$gperm_handler =& xoops_gethandler('groupperm');
 	if ($icmsConfig ['editor_default'] != 'dhtmltextarea' && $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
 		$dohtml = 1;
 		$dobr = 0;

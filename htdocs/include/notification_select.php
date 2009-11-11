@@ -22,10 +22,10 @@ $xoops_notification = array();
 $xoops_notification['show'] = isset($icmsModule) && is_object($icmsUser) && notificationEnabled('inline') ? 1 : 0;
 if ($xoops_notification['show']) {
 	icms_loadLanguageFile('core', 'notification');
-	$categories = notificationSubscribableCategoryInfo();
+	$categories =& notificationSubscribableCategoryInfo();
 	$event_count = 0;
 	if (!empty($categories)) {
-		$notification_handler = xoops_gethandler('notification');
+		$notification_handler =& xoops_gethandler('notification');
 		foreach ($categories as $category) {
 			$section['name'] = $category['name'];
 			$section['title'] = $category['title'];
