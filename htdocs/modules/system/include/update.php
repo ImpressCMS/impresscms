@@ -534,7 +534,10 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 18;
 /* errors discovered after 1.2 beta release (dbversion 31) moved to dbversion 32 */
-	echo sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+	if ($dbVersion < $newDbVersion) {
+		echo sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+	}
+
 	$newDbVersion = 19;
 
 	if ($dbVersion < $newDbVersion) {
@@ -1052,6 +1055,19 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	    . ' SET `conf_formtype` = "textsarea"'
 	    . ' WHERE `conf_name`="welcome_msg_content"';
 	    $icmsDatabaseUpdater->runQuery($sql_welcome_msg_content, 'Welcome message form type successfully updated', 'Unable to update the welcome message form type', true);
+
+	    /* Set the start page for each group, so they don't default to Admin Control Panel */
+	    $groups = xoops_gethandler('group')->getObjects(NULL, true);
+	    $start_page = getDbValue($icmsDB, 'config', 'conf_value', 'conf_name="startpage"');
+	    foreach ($groups as $groupid=>$group ) {
+	    	$start_pages[$groupid] = $start_page;
+	    }
+	    $icmsDB->queryF( 'UPDATE `' . $icmsDB->prefix('config') . '`'
+	    	. ' SET `conf_value`="' . addslashes(serialize($start_pages)) . '"'
+	    	. ' WHERE `conf_name`="startpage"');
+
+	    /* Check for HTMLPurifier cache path and create, if needed */
+	    $purifier_path = icms_mkdir( ICMS_TRUST_PATH . '/cache/htmlpurifier');
     }
 
 	echo "</code>";
