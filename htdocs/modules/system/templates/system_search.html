@@ -19,9 +19,14 @@
  <td style="background-image: url(images/search/bodyHeader.<{$smarty.const._GLOBAL_LEFT}>.gif);"></td>
  <td style="background-image: url(images/search/bodyHeader.background.gif);">
  	<div style="padding-top: 5px; padding-bottom: 5px;"><b><{$sort_key}></b>: (<{$sort_value}> <{$smarty.const._SR_HITSRETURNED}>)</div>
-	<{if $search_results[$sort_key].search_more_url != ''}>
-	  <div style="padding-bottom: 5px;"><a href="<{$search_results[$sort_key].search_more_url}>"><img src="images/search/search.more_results.gif" alt="<{$search_results[$sort_key].search_more_title}>" /></a></div>
+<{if $search_results[$sort_key].search_more_url != ''}>
+	  <span style="margin: 10px; padding: 2px 0.5em 3px 0.5em; background-image: url(images/search/backgnd.png); background-repeat: repeat-x; height:30px;border: outset 1px #ccc;">
+	  <a href="<{$search_results[$sort_key].search_more_url}>">
+	  <img style="vertical-align: middle;" src="images/search/blue_view.png" alt="<{$search_results[$sort_key].search_more_title}>" /> <{$smarty.const._SR_SHOWALLR}>
+	  </a>
+	  </span>
 	<{/if}>
+
 	<{if $search_results[$sort_key].page_nav != ''}>
 		<div style="padding-bottom: 5px; text-align: <{$smarty.const._GLOBAL_RIGHT}>"><{$search_results[$sort_key].page_nav}></div>
 	<{/if}>
