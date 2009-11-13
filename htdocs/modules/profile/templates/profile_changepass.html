@@ -11,7 +11,7 @@
       <tr>
         <td class="head"><{$element.caption}>
         <{if $element.description}>
-        	<div style="font-weight: normal"><{$element.description}></div>
+          <div style="font-weight: normal"><{$element.description}></div>
         <{/if}>
         </td>
         <td class="<{cycle values="even,odd"}>"><{$element.body}></td>
@@ -23,4 +23,3 @@
     <!-- end of form elements loop -->
   </table>
 </form>
-<{include file="db:profile_footer.html"}>

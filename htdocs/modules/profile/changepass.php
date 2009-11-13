@@ -14,12 +14,10 @@
  * @version         $Id$
  */
 
+$profile_template = 'profile_changepass.html';
 include 'header.php';
-if (!$icmsUser) {
-    redirect_header(ICMS_URL, 2, _NOPERM);
-}
-$xoopsOption['template_main'] = 'profile_changepass.html';
-include ICMS_ROOT_PATH.'/header.php';
+
+if (!$icmsUser) redirect_header(ICMS_URL, 2, _NOPERM);
 if (!isset($_POST['submit'])) {
     //show change password form
     include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
@@ -38,8 +36,7 @@ if (!isset($_POST['submit'])) {
 	$xoopsTpl->assign('module_home', icms_getModuleName(true));
 	$xoopsTpl->assign('categoryPath', _PROFILE_MA_CHANGEPASSWORD);
 
-}
-else {
+} else {
     include_once ICMS_ROOT_PATH.'/modules/'.$icmsModule->getVar('dirname').'/include/functions.php';
     $stop = checkPassword($icmsUser->getVar('login_name'), $_POST['oldpass'], $_POST['password'], $_POST['vpass']);
     if ($stop != '') {

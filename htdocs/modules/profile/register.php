@@ -15,7 +15,8 @@
  */
 
 include_once '../../mainfile.php';
-include_once '../../header.php';
+$xoopsOption['template_main'] = 'profile_register.html';
+include ICMS_ROOT_PATH.'/header.php';
 include_once 'include/functions.php';
 $myts =& MyTextSanitizer::getInstance();
 if ($icmsUser) {
@@ -25,8 +26,6 @@ if (empty($icmsConfigUser['allow_register'])) {
 	redirect_header(ICMS_URL.'/', 6, _PROFILE_MA_NOREGISTER);
 	exit();
 }
-$xoopsOption['template_main'] = 'profile_register.html';
-include ICMS_ROOT_PATH.'/header.php';
 if($icmsConfigUser['pass_level']>20){
 icms_PasswordMeter();
 }
