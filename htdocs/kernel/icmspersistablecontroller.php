@@ -34,9 +34,7 @@ class IcmsPersistableController {
 						}
 						$oldFile = $icmsObj->getUploadDir(true).$icmsObj->getVar($key, 'e');
 						$icmsObj->setVar($key, $_POST['url_'.$key]);
-						if(file_exists($oldFile)){
-							unlink($oldFile);
-						}
+						if(is_file($oldFile)) unlink($oldFile);
 						$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
 						if (!$eventResult) {
 							$icmsObj->setErrors("An error occured during the afterFileUnlink event");
@@ -49,9 +47,7 @@ class IcmsPersistableController {
 						}
 						$oldFile = $icmsObj->getUploadDir(true).$icmsObj->getVar($key, 'e');
 						$icmsObj->setVar($key, '');
-						if(file_exists($oldFile)){
-							unlink($oldFile);
-						}
+						if(is_file($oldFile)) unlink($oldFile);
 						$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
 						if (!$eventResult) {
 							$icmsObj->setErrors("An error occured during the afterFileUnlink event");
@@ -153,7 +149,7 @@ class IcmsPersistableController {
 								}
 
 								$old_file = $icmsObj->getUploadDir(true).$icmsObj->getVar($related_field);
-								unlink($old_file);
+								if (is_file($old_file)) unlink($old_file);
 								$icmsObj->setVar($related_field, $uploaderObj->getSavedFileName());
 
 								$eventResult = $this->handler->executeEvent('afterFileUnlink', $icmsObj);
