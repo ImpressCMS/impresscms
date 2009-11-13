@@ -12,7 +12,7 @@
 	<{assign var=theme_name value=$xoTheme->folderName}>
 
 <!-- Title and meta -->
-	<title><{if $xoops_pagetitle !=''}><{$icms_pagetitle}> : <{/if}><{$icms_sitename}></title>
+	<title><{if $icms_pagetitle !=''}><{$icms_pagetitle}> : <{/if}><{$icms_sitename}></title>
 	<meta http-equiv="content-type" content="text/html; charset=<{$icms_charset}>" />	
 	<meta name="robots" content="<{$icms_meta_robots}>" />
 	<meta name="keywords" content="<{$icms_meta_keywords}>" />
@@ -104,7 +104,7 @@
 				</div>
 				<{/if}>
 				<!-- Module content -->
-				<{if $xoops_contents}>
+				<{if $icms_contents}>
 				<div id="xo-content"><{$icms_contents}></div>
 				<{/if}>
 				<!-- Bottom blocks -->
