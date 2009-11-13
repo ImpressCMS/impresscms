@@ -141,6 +141,8 @@ icms_makeSmarty(array(
 	'lang_yim'               => _US_YIM));
 
 // passing user information to smarty
+$icmsTpl->assign('show_empty', $icmsModuleConfig['show_empty']);
+$icmsTpl->assign('user_name_header', $owner_name);
 $icmsTpl->assign('uid_owner',$uid);
 $icmsTpl->assign('section_name', _MD_PROFILE_PROFILE);
 $icmsTpl->assign('user_uname', $thisUser->getVar('uname'));
@@ -191,7 +193,7 @@ $icmsTpl->assign('visitors', $rtn);
 unset($visitors);
 
 // getting user contributions
-if ($permissions['profile_usercontributions']) {
+if ($icmsModuleConfig['profile_search'] && $permissions['profile_usercontributions']) {
 	$gperm_handler = & xoops_gethandler('groupperm');
 	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
 	$module_handler =& xoops_gethandler('module');

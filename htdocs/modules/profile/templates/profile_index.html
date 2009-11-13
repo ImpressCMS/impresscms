@@ -16,7 +16,7 @@
 <div class="profile-profile-group1">
 <{if $allow_pictures || $allow_friendship}>
 <div id="profile-profile-visual" class="outer">
-  <h3 class="profile-profile-title head"><{if $isOwner}><a href="configs.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/configs.gif"  /></a>&nbsp;<{/if}><{$user_uname}></h3>
+  <h3 class="profile-profile-title head"><{if $isOwner}><a href="configs.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/configs.gif"  /></a>&nbsp;<{/if}><{$user_name_header}></h3>
   <{if $allow_pictures}>
   <div id="profile-profile-avatar">
     <{if $user_avatar}>
@@ -54,27 +54,27 @@
 <div id="profile-profile-details" class="outer">
   <{cycle values='even,odd' print=false reset=true advance=false}>
   <h3 class="profile-profile-title head"><{if $isOwner}><a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" /></a>&nbsp;<{/if}><{$lang_detailsinfo}></h3>
-  <{if $user_uname}><p class="<{cycle values='even,odd'}>"><img src="images/username.gif" /><span class="profile-profileinfo-label"><{$lang_uname}>:</span><span class="profile-profileinfo-value"><{$user_uname}></span></p><{/if}>
-  <{if $user_realname}><p class="<{cycle values='even,odd'}>"><img src="images/username.gif" /><span class="profile-profileinfo-label"><{$lang_realname}>:</span><span class="profile-profileinfo-value"><{$user_realname}></span></p><{/if}>
-  <{if $openid}><p class="<{cycle values='even,odd'}>"><img src="images/openid.gif" /><span class="profile-profileinfo-label"><{$lang_openid}>:</span><span class="profile-profileinfo-value"><{$openid}></span></p><{/if}>
-  <{if $user_location}><p class="<{cycle values='even,odd'}>"><img src="images/house.gif" /><span class="profile-profileinfo-label"><{$lang_location}>:</span><span class="profile-profileinfo-value"><{$user_location}></span><a href="http://maps.google.com/?q=<{$user_location}>" target="_blank" ><img src="images/mapsgoogle.gif" /></a></p><{/if}>
-  <{if $user_occupation}><p class="<{cycle values='even,odd'}>"><img src="images/occ.gif" /><span class="profile-profileinfo-label"><{$lang_occupation}>:</span><span class="profile-profileinfo-value"><{$user_occupation}></span></p><{/if}>
-  <{if $user_interest}><p class="<{cycle values='even,odd'}>"><img src="images/interests.gif" /><span class="profile-profileinfo-label"><{$lang_interest}>:</span><span class="profile-profileinfo-value"><{$user_interest}></span></p><{/if}>
-  <{if $user_extrainfo}><p class="<{cycle values='even,odd'}>"><img src="images/bio.gif" /><span class="profile-profileinfo-label"><{$lang_extrainfo}>:</span></p>
-  <p class="profile-profileinfo-valuebigtext <{cycle values='even,odd'}>"><{$user_extrainfo}></p><{/if}>
+  <{if $show_empty || $user_uname}><p class="<{cycle values='even,odd'}>"><img src="images/username.gif" /><span class="profile-profileinfo-label"><{$lang_uname}>:</span><span class="profile-profileinfo-value"><{$user_uname}></span></p><{/if}>
+  <{if $show_empty || $user_realname}><p class="<{cycle values='even,odd'}>"><img src="images/username.gif" /><span class="profile-profileinfo-label"><{$lang_realname}>:</span><span class="profile-profileinfo-value"><{$user_realname}></span></p><{/if}>
+  <{if $show_empty || $openid}><p class="<{cycle values='even,odd'}>"><img src="images/openid.gif" /><span class="profile-profileinfo-label"><{$lang_openid}>:</span><span class="profile-profileinfo-value"><{$openid}></span></p><{/if}>
+  <{if $show_empty || $user_location}><p class="<{cycle values='even,odd'}>"><img src="images/house.gif" /><span class="profile-profileinfo-label"><{$lang_location}>:</span><span class="profile-profileinfo-value"><{$user_location}></span><a href="http://maps.google.com/?q=<{$user_location}>" target="_blank" ><img src="images/mapsgoogle.gif" /></a></p><{/if}>
+  <{if $show_empty || $user_occupation}><p class="<{cycle values='even,odd'}>"><img src="images/occ.gif" /><span class="profile-profileinfo-label"><{$lang_occupation}>:</span><span class="profile-profileinfo-value"><{$user_occupation}></span></p><{/if}>
+  <{if $show_empty || $user_interest}><p class="<{cycle values='even,odd'}>"><img src="images/interests.gif" /><span class="profile-profileinfo-label"><{$lang_interest}>:</span><span class="profile-profileinfo-value"><{$user_interest}></span></p><{/if}>
+  <{if $show_empty || $user_extrainfo}><p class="<{cycle values='even,odd'}>"><img src="images/bio.gif" /><span class="profile-profileinfo-label"><{$lang_extrainfo}>:</span></p><{/if}>
+  <{if $user_extrainfo}><p class="profile-profileinfo-valuebigtext <{cycle values='even,odd'}>"><{$user_extrainfo}></p><{/if}>
 </div>
 <{/if}>
 <{if $allow_profile_contact}>
 <div id="profile-profile-details" class="outer">
   <{cycle values='even,odd' print=false reset=true advance=false}>
   <h3 class="profile-profile-title head"><{if $isOwner}><a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" /></a>&nbsp;<{/if}><{$lang_contactinfo}></h3>
-  <{if $user_websiteurl}><p class="<{cycle values='even,odd'}>"><img src="images/url.gif" /><span class="profile-profileinfo-label"><{$lang_website}>:</span><span class="profile-profileinfo-value"><{$user_websiteurl}></span></p><{/if}>
+  <{if $show_empty || $user_websiteurl}><p class="<{cycle values='even,odd'}>"><img src="images/url.gif" /><span class="profile-profileinfo-label"><{$lang_website}>:</span><span class="profile-profileinfo-value"><{$user_websiteurl}></span></p><{/if}>
   <{if $isAnonym!=1 && $user_email}><p class="<{cycle values='even,odd'}>"><img src="images/email.gif" /><span class="profile-profileinfo-label"><{$lang_email}>:</span><span class="profile-profileinfo-value"><{mailto address=$user_email encode="javascript"}></span></p><{/if}>
   <{if $isAnonym!=1 && $isOwner!=1}><p class="<{cycle values='even,odd'}>"><img src="images/email.gif" /><span class="profile-profileinfo-label"><{$lang_privmsg}>:</span><span class="profile-profileinfo-value"><a href="javascript:openWithSelfMain('<{$icms_url}>/pmlite.php?send2=1&amp;to_userid=<{$uid_owner}>', 'pmlite', 450, 380);"><img src="<{$icms_url}>/images/icons/pm.gif" alt="Send Private Message to suico" /></a></span></p><{/if}>
-  <{if $user_aim}><p class="<{cycle values='even,odd'}>"><img src="images/aim.gif" /><span class="profile-profileinfo-label"><{$lang_aim}>:</span><span class="profile-profileinfo-value"><{$user_aim}></span></p><{/if}>
-  <{if $user_icq}><p class="<{cycle values='even,odd'}>"><img src="images/icq.gif" /><span class="profile-profileinfo-label"><{$lang_icq}>:</span><span class="profile-profileinfo-value"><{$user_icq}></span><img src="http://status.icq.com/online.gif?icq=<{$user_icq}>&img=21" /></p><{/if}>
-  <{if $user_msnm}><p class="<{cycle values='even,odd'}>"><img src="images/amsn.gif" /><span class="profile-profileinfo-label"><{$lang_msnm}>:</span><span class="profile-profileinfo-value"><{$user_msnm}></span></p><{/if}>
-  <{if $user_yim}><p class="<{cycle values='even,odd'}>"><img src="images/ym.gif" /><span class="profile-profileinfo-label"><{$lang_yim}>:</span><span class="profile-profileinfo-value"><{$user_yim}></span></p><{/if}>
+  <{if $show_empty || $user_aim}><p class="<{cycle values='even,odd'}>"><img src="images/aim.gif" /><span class="profile-profileinfo-label"><{$lang_aim}>:</span><span class="profile-profileinfo-value"><{$user_aim}></span></p><{/if}>
+  <{if $show_empty || $user_icq}><p class="<{cycle values='even,odd'}>"><img src="images/icq.gif" /><span class="profile-profileinfo-label"><{$lang_icq}>:</span><span class="profile-profileinfo-value"><{$user_icq}></span><img src="http://status.icq.com/online.gif?icq=<{$user_icq}>&img=21" /></p><{/if}>
+  <{if $show_empty || $user_msnm}><p class="<{cycle values='even,odd'}>"><img src="images/amsn.gif" /><span class="profile-profileinfo-label"><{$lang_msnm}>:</span><span class="profile-profileinfo-value"><{$user_msnm}></span></p><{/if}>
+  <{if $show_empty || $user_yim}><p class="<{cycle values='even,odd'}>"><img src="images/ym.gif" /><span class="profile-profileinfo-label"><{$lang_yim}>:</span><span class="profile-profileinfo-value"><{$user_yim}></span></p><{/if}>
 </div>
 <{/if}>
 <{if $allow_profile_stats}>
@@ -84,12 +84,12 @@
   <p class="<{cycle values='even,odd' reset=true}>"><img src="images/birthday.gif" /><span class="profile-profileinfo-label"><{$lang_membersince}>:</span><span class="profile-profileinfo-value"><{$user_joindate}></span></p>
   <p class="<{cycle values='even,odd'}>"><img src="images/rank.gif" /><span class="profile-profileinfo-label"><{$lang_rank}>:</span><span class="profile-profileinfo-value"><{$user_rankimage}> <{$user_ranktitle}></span></p>
   <p class="<{cycle values='even,odd'}>"><img src="images/comments.gif" /><span class="profile-profileinfo-label"><{$lang_posts}>:</span><span class="profile-profileinfo-value"><{$user_posts}></span></p>
-  <{if $user_lastlogin}><p class="<{cycle values='even,odd'}>"><img src="images/clock.gif" /><span class="profile-profileinfo-label"><{$lang_lastlogin}>:</span><span class="profile-profileinfo-value"><{$user_lastlogin}></span></p><{/if}>
-  <{if $user_signature}><p class="<{cycle values='even,odd'}>"> <img src="images/signature.gif" /> <span class="profile-profileinfo-label"><{$lang_signature}>:</span></p>
-  <p class="profile-profileinfo-valuebigtext <{cycle values='even,odd'}>"><{$user_signature}></p><{/if}>
+  <{if $show_empty || $user_lastlogin}><p class="<{cycle values='even,odd'}>"><img src="images/clock.gif" /><span class="profile-profileinfo-label"><{$lang_lastlogin}>:</span><span class="profile-profileinfo-value"><{$user_lastlogin}></span></p><{/if}>
+  <{if $show_empty || $user_signature}><p class="<{cycle values='even,odd'}>"><img src="images/signature.gif" /><span class="profile-profileinfo-label"><{$lang_signature}>:</span></p><{/if}>
+  <{if $user_signature}><p class="profile-profileinfo-valuebigtext <{cycle values='even,odd'}>"><{$user_signature}></p><{/if}>
 </div>
 <{/if}>
-<{if $allow_profile_usercontributions}>
+<{if $allow_profile_usercontributions && $modules|count > 0}>
 <div id="profile-profile-search-results" class="outer">
   <h3 class="profile-profiletitle head"><{$lang_usercontributions}></h3>
   <{foreach item=module from=$modules name="search_results"}>

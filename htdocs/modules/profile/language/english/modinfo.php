@@ -153,22 +153,12 @@ define("_PROFILE_MI_CAT_USER_DSC", "");
 define("_PROFILE_MI_PROFILE_SEARCH", "Show latest submissions by user on user profile");
 define("_PROFILE_MI_SHOWEMPTY", "Show empty fields");
 define("_PROFILE_MI_SHOWEMPTY_DESC", "If set to 'no', fields without a value will not show up on user profiles");
-define("_MI_SPROFILE_PERPAGE", "Users Per Page");
-define("_MI_SPROFILE_PERPAGE_DSC", "");
-define("_MI_SPROFILE_ALL", "All");
 
 define("_PROFILE_MI_DISPNAME", "Name to display on index page");
 define("_PROFILE_MI_DISPNAME_DESC", "");
 define("_PROFILE_MI_NICKNAME", "User name");
 define("_PROFILE_MI_REALNAME", "Real name");
 define("_PROFILE_MI_BOTH", "Both");
-
-define("_PROFILE_MI_AVATAR_INDEX", "Display Avatar in users list");
-define("_PROFILE_MI_AVATAR_INDEX_DESC", "");
-define("_PROFILE_MI_AVATAR_HEIGHT", "Avatar height in users list");
-define("_PROFILE_MI_AVATAR_HEIGHT_DESC", "");
-define("_PROFILE_MI_AVATAR_WIDTH", "Avatar width in users list");
-define("_PROFILE_MI_AVATAR_WIDTH_DESC", "");
 
 define("_PROFILE_MI_GROUP_VIEW_3", "Anonymous users can view");
 define("_PROFILE_MI_GROUP_VIEW_DSC", "");

@@ -40,7 +40,6 @@ if (!$icmsConfigUser['allow_annon_view_prof'] && !is_object($icmsUser)) {
 	exit ();
 }
 
-
 if (is_object($icmsUser) && $uid == $icmsUser->getVar('uid')) {
     //disable cache
     $icmsConfig['module_cache'][$icmsModule->getVar('mid')] = 0;
@@ -72,9 +71,14 @@ if (is_object($icmsUser) && $uid == $icmsUser->getVar('uid')) {
         $icmsConfig['module_cache'][$icmsModule->getVar('mid')] = 0;
     }
     $xoopsOption['template_main'] = 'profile_userinfo.html';
-    include(ICMS_ROOT_PATH.'/header.php');
+    include ICMS_ROOT_PATH.'/header.php';
     $xoopsTpl->assign('user_ownpage', false);
 }
+
+// adding profile stylesheet
+$dirname = basename( dirname( __FILE__ ) );
+$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/profile'.(@_ADM_USE_RTL == 1 ? '_rtl':'').'.css');
+if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/tabs-ie.css');}
 
 if ( is_object($icmsUser) && $icmsUser->isAdmin() ) {
     $xoopsTpl->assign('lang_editprofile', _PROFILE_MA_EDITPROFILE);
@@ -198,6 +202,15 @@ if ($icmsModuleConfig['profile_search']) {
     }
 }
 
+//get username for display
+if ($icmsModuleConfig['index_real_name'] == 'real' && trim($thisUser->getVar('name'))) {
+	$owner_name = is_object($thisUser) ? trim($thisUser->getVar('name')) : _GUESTS;
+} elseif ($icmsModuleConfig['index_real_name'] == 'both' && trim($thisUser->getVar('name'))) {
+	$owner_name = is_object($thisUser) ? trim($thisUser->getVar('name')).' ('.trim($thisUser->getVar('uname')).')' : _GUESTS;
+} else {
+	$owner_name = is_object($thisUser) ? trim($thisUser->getVar('uname')) : _GUESTS;
+}
+$xoopsTpl->assign('user_name_header', $owner_name);
 //User info
 $xoopsTpl->assign('uname', $thisUser->getVar('uname'));
 // MPB - ADD - START

@@ -15,7 +15,7 @@
 include_once "../../mainfile.php";
 $xoopsOption['template_main'] = isset($profile_template)?$profile_template:'';
 include_once ICMS_ROOT_PATH."/header.php";
-
+global $icmsModuleConfig;
 $dirname = basename( dirname( __FILE__ ) );
 
 // check if anonymous users can access profiles
@@ -56,23 +56,28 @@ if (!is_object($thisUser)) {
 
 $isOwner = $isFriend = false ;
 $isAnonym = is_object($icmsUser) ? false : true;
-$isOwner = (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid) ? true: false;
-$owner_uname = is_object($thisUser) ? trim($thisUser->getVar('uname')) : _GUESTS;
+$isOwner = (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid) ? true : false;
+if ($icmsModuleConfig['index_real_name'] == 'real' && trim($thisUser->getVar('name'))) {
+	$owner_name = is_object($thisUser) ? trim($thisUser->getVar('name')) : _GUESTS;
+} elseif ($icmsModuleConfig['index_real_name'] == 'both' && trim($thisUser->getVar('name'))) {
+	$owner_name = is_object($thisUser) ? trim($thisUser->getVar('name')).' ('.trim($thisUser->getVar('uname')).')' : _GUESTS;
+} else {
+	$owner_name = is_object($thisUser) ? trim($thisUser->getVar('uname')) : _GUESTS;
+}
 
 include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/include/common.php';
 icms_loadLanguageFile('core', 'user');
-global $icmsModuleConfig;
 $myts =& MyTextSanitizer::getInstance();
 $module_name = $icmsModule->getVar('name');
 $xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/profile'.(@_ADM_USE_RTL == 1 ? '_rtl':'').'.css');
 if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/tabs-ie.css');}
 icms_makeSmarty(array(
 	'module_name' => $module_name,
-	'xoops_pagetitle' => sprintf(_MD_PROFILE_PAGETITLE, $owner_uname),
+	'icms_pagetitle' => sprintf(_MD_PROFILE_PAGETITLE, $owner_name),
 	'profile_image' => '<img src="'.ICMS_URL.'/modules/'.$dirname.'/assets/images/profile-start.gif" alt="'.$module_name.'"/>',
 	'profile_content' => _MI_PROFILE_MODULEDESC,
 	'module_is_socialmode' => $icmsModuleConfig['profile_social'],
-	'profile_module_home' => '<a href="'.ICMS_URL.'/modules/'.$dirname.'/index.php?uid='.$uid.'">'.sprintf(_MD_PROFILE_PAGETITLE, $owner_uname).'</a>'));
+	'profile_module_home' => '<a href="'.ICMS_URL.'/modules/'.$dirname.'/index.php?uid='.$uid.'">'.sprintf(_MD_PROFILE_PAGETITLE, $owner_name).'</a>'));
 
 if($icmsModuleConfig['profile_social']){
 	// all registrated users (administrators included) have to set their profile settings first

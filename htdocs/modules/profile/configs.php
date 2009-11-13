@@ -15,17 +15,19 @@
  *
  * @param object $configsObj Profileconfig object to be edited
 */
-function editconfigs($configsObj, $uid=0)
-{
-	global $profile_configs_handler, $xoTheme, $icmsTpl, $icmsUser, $profile_isAdmin;
+function editconfigs($configsObj, $uid=0) {
+	global $profile_configs_handler, $xoTheme, $icmsTpl, $icmsUser, $profile_isAdmin, $icmsModuleConfig;
 
-		if($profile_isAdmin && $uid > 0 && $icmsUser->uid() != $uid){
+	// hide fields in regard to module preferences
+	if (!$icmsModuleConfig['profile_search']) $configsObj->hideFieldFromForm('profile_usercontributions');
+
+	if($profile_isAdmin && $uid > 0 && $icmsUser->uid() != $uid) {
 		$configsObj->setVar('config_uid', $uid);
 		$configsObj->hideFieldFromForm(array('config_uid', 'status', 'backup_email', 'backup_password', 'pictures', 'audio', 'videos', 'friendship', 'tribes', 'profile_contact', 'profile_general', 'profile_stats'));
 		$sform = $configsObj->getSecureForm(_MD_PROFILE_CONFIGS_EDIT, 'addconfigs');
 		$sform->assign($icmsTpl, 'profile_configsform');
 		$icmsTpl->assign('profile_category_path', icms_getLinkedUnameFromId($uid) . ' > ' . _EDIT);
-		}elseif (!$configsObj->isNew()){
+	} elseif (!$configsObj->isNew()) {
 		if (!$configsObj->userCanEditAndDelete()) {
 			redirect_header($configsObj->getItemLink(true), 3, _NOPERM);
 		}

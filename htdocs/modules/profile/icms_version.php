@@ -315,22 +315,7 @@ $modversion['config'][$i]['formtype'] = 'yesno';
 $modversion['config'][$i]['valuetype'] = 'int';
 $modversion['config'][$i]['default'] = 0;
 $modversion['config'][$i]['category'] = 'settings';
-/*
-$i++;
-$modversion['config'][$i]['name'] = 'perpage';
-$modversion['config'][$i]['title'] = '_MI_SPROFILE_PERPAGE';
-$modversion['config'][$i]['description'] = '_MI_SPROFILE_PERPAGE_DSC';
-$modversion['config'][$i]['formtype'] = 'select';
-$modversion['config'][$i]['valuetype'] = 'text';
-$modversion['config'][$i]['default'] = '5';
-$modversion['config'][$i]['category'] = 'settings';
-$modversion['config'][$i]['options'] = array(5  => '5',
-										10  => '10',
-										15  => '15',
-                                   		25   => '25',
-                                   		50  => '50',
-                                   		100   => '100',
-                                  		 _MI_SPROFILE_ALL => 'all');*/
+
 //real name disp
 $i++;
 $modversion['config'][$i]['name'] = 'index_real_name';
@@ -343,36 +328,6 @@ $modversion['config'][$i]['category'] = 'settings';
 $modversion['config'][$i]['options'] = array(_PROFILE_MI_NICKNAME  => 'nick',
 										_PROFILE_MI_REALNAME  => 'real',
 										_PROFILE_MI_BOTH  => 'both');
-
-//avatar disp
-$i++;
-$modversion['config'][$i]['name'] = 'index_avatar';
-$modversion['config'][$i]['title'] = '_PROFILE_MI_AVATAR_INDEX';
-$modversion['config'][$i]['description'] = '_PROFILE_MI_AVATAR_INDEX_DESC';
-$modversion['config'][$i]['formtype'] = 'yesno';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 1;
-$modversion['config'][$i]['category'] = 'settings';
-
-//avatar height
-$i++;
-$modversion['config'][$i]['name'] = 'index_avatar_height';
-$modversion['config'][$i]['title'] = '_PROFILE_MI_AVATAR_HEIGHT';
-$modversion['config'][$i]['description'] = '_PROFILE_MI_AVATAR_HEIGHT_DESC';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 0;
-$modversion['config'][$i]['category'] = 'settings';
-
-//avatar width
-$i++;
-$modversion['config'][$i]['name'] = 'index_avatar_width';
-$modversion['config'][$i]['title'] = '_PROFILE_MI_AVATAR_WIDTH';
-$modversion['config'][$i]['description'] = '_PROFILE_MI_AVATAR_WIDTH_DESC';
-$modversion['config'][$i]['formtype'] = 'textbox';
-$modversion['config'][$i]['valuetype'] = 'int';
-$modversion['config'][$i]['default'] = 0;
-$modversion['config'][$i]['category'] = 'settings';
 
 $member_handler = &xoops_gethandler('member');
 $criteria = new CriteriaCompo();
