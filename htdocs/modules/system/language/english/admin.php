@@ -1,8 +1,6 @@
 <?php
 // $Id$
 //%%%%%%	File Name  admin.php 	%%%%%
-define('_MD_AM_DBUPDATED',_ICMS_DBUPDATED);
-
 //define('_MD_AM_CONFIG','System Configuration');
 define('_INVALID_ADMIN_FUNCTION', 'Invalid Admin Function');
 

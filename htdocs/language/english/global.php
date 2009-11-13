@@ -273,6 +273,7 @@ define('_LCL_NUM9','9');
 // change 0 to 1 if your language has a different numbering than latin`s alphabet
 define("_USE_LOCAL_NUM","0");
 define("_ICMS_DBUPDATED","Database Updated Successfully!");
+define('_MD_AM_DBUPDATED',_ICMS_DBUPDATED);
 
 define('_TOGGLETINY','Toggle Editor');
 define("_ENTERHTMLCODE","Enter the HTML codes that you want to add.");
