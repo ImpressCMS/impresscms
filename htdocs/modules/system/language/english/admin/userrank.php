@@ -1,9 +1,7 @@
 <?php
 // $Id$
 
-
-
-
+######################## Added in 1.2 ###################################
 define('_CO_ICMS_USERRANKS','User Ranks Settings');
 define('_CO_ICMS_USERRANKS_DSC', 'Here is a list of the user ranks available in the system.');
 define('_CO_ICMS_USERRANK', 'User rank');

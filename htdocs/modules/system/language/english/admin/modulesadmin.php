@@ -62,6 +62,7 @@ define('_MD_AM_MODULESADMIN_SUPPORT', 'Module Support Site');
 define('_MD_AM_MODULESADMIN_STATUS', 'Status');
 define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
 define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
+######################## Added in 1.2 ###################################
 define('_MD_AM_FAILINSTEMP','ERROR: Could not insert template <b>%s</b> to the database.');
 define('_MD_AM_FAILUPDTEMP','ERROR: Could not update template <b>%s</b>.');
 define('_MD_AM_INSTEMP','Template <b>%s</b> added to the database. (ID: <b>%s</b>)');
@@ -79,7 +80,6 @@ define('_MD_AM_MOD_UP_TEM','Updating templates...');
 define('_MD_AM_MOD_REBUILD_BLOCKS','Rebuilding blocks...');
 define('_MD_AM_FUNCT_EXEC','Function <b>%s</b> is successfully executed.');
 define('_MD_AM_FAIL_EXEC','Failed to execute <b>%s</b>.');
-######################## Added in 1.2 ###################################
 define('_MD_AM_INSTALLED', 'Installed Modules');
 define('_MD_AM_NONINSTALL', 'UnInstalled Modules');
 define('_MD_AM_NOTDELTEMPFILE', 'ERROR: Could not delete old template <b>%s</b>. Aborting update of this file.');

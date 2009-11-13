@@ -404,10 +404,7 @@ define("_MD_AM_HIDDENCONTENT","Use Hide content tag?");
 define("_MD_AM_HIDDENCONTENTDSC","Set this option to Yes if you want use a tag to hide some content of your site for Anonymous users.<br /> Anonymous users will need to register to be able to see that content.<br /><i>If you disable this option, all contents between this tag will show as usual</i>");
 define("_MD_AM_SIGMAXLENGTH","Maximum amount of characters in users signatures?");
 define("_MD_AM_SIGMAXLENGTHDSC","Here you can choose the length of your users signatures.<br /> any character longer than this amount will be ignored.<br /><i>Be careful, long signatures can often break the design...</i>");
-/*
-define("_MD_AM_AUTORESIZE","Auto resize larger avatars?");
-define("_MD_AM_AUTORESIZE_DESC","If YES, if the avatar sent have the width or height greater than that set will be automatically resized (keeping the ratio of the image) and the upload will be allowed. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.");
-*/
+
 define("_MD_AM_AUTHOPENID","Enable OpenID authentication");
 define("_MD_AM_AUTHOPENIDDSC","Select Yes to enable OpenID authentication. This will allow users to login on the site using their OpenID account. For complete information about the OpenID Integration in ImpressCMS, please visit <a href='http://wiki.impresscms.org/index.php?title=ImpressCMS_OpenID'>our wiki</a>.");
 define("_MD_AM_USE_GOOGLE_ANA"," Enable Google Analytics?");

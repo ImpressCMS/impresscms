@@ -21,7 +21,6 @@ define('_THREADED','Threaded');
 define('_OLDESTFIRST','Oldest First');
 define('_NEWESTFIRST','Newest First');
 define('_MORE','more...');
-//define('_MULTIPAGE','To have your article span multiple pages, insert the word <font color=red>[pagebreak]</font> (with brackets) in the article.');
 define('_IFNOTRELOAD','If the page does not automatically reload, please click <a href="%s">here</a>');
 define('_WARNINSTALL2','WARNING: Directory %s exists on your server. <br />Please remove this directory for security reasons.');
 define('_WARNINWRITEABLE','WARNING: File %s is writeable by the server. <br />Please change the permission of this file for security reasons.<br /> in Unix (444), in Win32 (read-only)');
@@ -84,7 +83,6 @@ define("_ERRORS", "Errors");
 define("_NONE", "None");
 define('_ON','on');
 define('_READS','reads');
-//define('_WELCOMETO','Welcome to %s');
 define('_SEARCH','Search');
 define('_ALL', 'All');
 define('_TITLE', 'Title');
@@ -123,10 +121,6 @@ define('_FAILSAVEIMG', 'Failed storing image %s into the database');
 define('_NOCACHE', 'No Cache');
 define('_CLONE', 'Clone');
 define('_INVISIBLE', 'Invisible');
-define('_VISIBLE', 'Visible');
-define('_UP', 'Up');
-define('_DOWN', 'Down');
-define('_CONFIGURE', 'Configure');
 
 //%%%%%	File Name class/xoopsform/formmatchoption.php 	%%%%%
 define("_STARTSWITH", "Starts with");
@@ -153,10 +147,6 @@ define("_ENTERCODE","Enter the codes that you want to add.");
 define("_ENTERQUOTE","Enter the text that you want to be quoted.");
 define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
 define("_ENTERTEXTBOX","Please input text into the textbox.");
-//define("_ALLOWEDCHAR","Allowed max chars length: ");
-//define("_CURRCHAR","Current chars length: ");
-//define("_PLZCOMPLETE","Please complete the subject and message fields.");
-//define("_MESSAGETOOLONG","Your message is too long.");
 
 //%%%%%		TIME FORMAT SETTINGS   %%%%%
 define('_SECOND', '1 second');
@@ -173,13 +163,6 @@ define('_MONTH', '1 month');
 define("_DATESTRING","Y/n/j G:i:s");
 define("_MEDIUMDATESTRING","Y/n/j G:i");
 define("_SHORTDATESTRING","Y/n/j");
-// !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"	
-// insert double '\' before 't', 'r', 'n'
-define("_TODAY", "\T\o\d\a\y G:i");
-define("_YESTERDAY", "\Y\e\s\\t\e\\r\d\a\y G:i");
-define("_MONTHDAY", "n/j G:i");
-define("_YEARMONTHDAY", "Y/n/j G:i");
-define("_ELAPSE", "%s ago");
 /*
 The following characters are recognized in the format string:
 a - "am" or "pm"
@@ -232,7 +215,6 @@ define('_IMPRESSCMS_BLOG','Blog');
 define('_IMPRESSCMS_DONATE','Donate!');
 define("_IMPRESSCMS_Support","Support the project !");
 define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
-//define('_RECREATE_ADMINMENU_FILE', 'This is your first time to enter the administration section. Press the button below to proceed.');
 define('_IMPRESSCMS_ADMIN','Administration of');
 /** The default separator used in XoopsTree::getNicePathFromId */
 define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
@@ -240,13 +222,7 @@ define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
 define('_CT_NAV','Home');
 define('_CT_RELATEDS','Related pages');
 //Security image (captcha)
-//define("_SECURITYIMAGE_CODE","Security code");
 define("_SECURITYIMAGE_GETCODE","Enter the security code");
-/*
-define("_SECURITYIMAGE_ERROR","Invalid security code");
-define("_SECURITYIMAGE_GDERROR","<b><font color='#CC0000'>Library GD not installed</font> : <a target='php' href='http://fr2.php.net/manual/fr/ref.image.php'>Manual PHP</a></b><br>");
-define("_SECURITYIMAGE_FONTERROR","<b><font color='#CC0000'>No true type fonts found</font>, verify your installation</b><br>");
-*/
 define("_QUERIES", "Queries");
 define("_BLOCKS", "Blocks");
 define("_EXTRA", "Extra");
@@ -310,4 +286,15 @@ define('_ENTERYOUTUBEURL', 'Enter YouTube url:');
 define('_ENTERHEIGHT', 'Enter frame\'s height');
 define('_ENTERWIDTH', 'Enter frame\'s width');
 define('_ENTERMEDIAURL', 'Enter media url:');
+// !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"	
+// insert double '\' before 't', 'r', 'n'
+define("_TODAY", "\T\o\d\a\y G:i");
+define("_YESTERDAY", "\Y\e\s\\t\e\\r\d\a\y G:i");
+define("_MONTHDAY", "n/j G:i");
+define("_YEARMONTHDAY", "Y/n/j G:i");
+define("_ELAPSE", "%s ago");
+define('_VISIBLE', 'Visible');
+define('_UP', 'Up');
+define('_DOWN', 'Down');
+define('_CONFIGURE', 'Configure');
 ?>

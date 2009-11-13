@@ -33,6 +33,7 @@ define("_DATABASEUPDATER_MSG_UPDATE_TABLE", "Records of table %s were successful
 define("_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR", "An error occured while updating records in table %s");
 define("_DATABASEUPDATER_MSG_DELETE_TABLE", "Specified records of table %s were successfully deleted");
 define("_DATABASEUPDATER_MSG_DELETE_TABLE_ERR", "An error occured while deleting specified records in table %s");
+############# added since 1.2 #############
 define("_DATABASEUPDATER_MSG_DB_VERSION_ERR", "Unable to update module dbversion");
 define("_DATABASEUPDATER_LATESTVER", "Latest database version : <span class='currentVer'>%s</span>");
 define("_DATABASEUPDATER_MSG_CONFIG_ERR", "Unable to insert config %s");

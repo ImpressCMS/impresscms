@@ -32,7 +32,6 @@ define('_US_REMEMBERME', 'Remember me');
 
 //%%%%%%		File Name register.php 		%%%%%
 define('_US_USERREG','User Registration');
-define('_US_NICKNAME','Display Name');
 define('_US_EMAIL','Email');
 define('_US_ALLOWVIEWEMAIL','Allow other users to view my email address');
 define('_US_WEBSITE','Website');
@@ -198,15 +197,20 @@ define('_US_ALREADY_LOGED_IN', 'You already are logged in, we are sorry but, you
 define('_US_ALLOWVIEWEMAILOPENID','Allow other users to view my OpenID');
 define('_US_SERVER_PROBLEM_OCCURRED','There was an issue while checking for spammers list!');
 define('_US_INVALIDIP','ERROR: This IP adress is not allowed to register');
-define("_US_OPENID_LOGIN", "Login with your OpenID");
-define("_US_OPENID_URL", "Your OpenID URL:");
-define("_US_OPENID_NORMAL_LOGIN", "Go back to normal login");
-
-/* define('_US_AUTORESIZE_ATV', 'Automatic resizing enabled'); */
-/* define('_US_AUTORESIZE_ATV_DESC', 'Images larger than %u x %u will be automatically resized, keeping the aspect ratio, so that it is within the maximum pixels set. The function accepts images JPG, PNG and GIF (including animated gif), but yet does not function satisfactorily for animated gifs with transparent background.'); */
-define('_US_MULTLOGIN', 'You are already logged in on the site. Or someone else logged in and using your username and password.<br />Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
 
 ######################## Added in 1.2 ###################################
 define('_US_LOGIN_NAME', "Loginname");
 define('_US_OLD_PASSWORD', "Old Password");
+define('_US_NICKNAME','Display Name');
+define('_US_MULTLOGIN', 'It was not possible to login on the site!! <br />
+        <p align="left" style="color:red;">
+        Possible causes:<br />
+         - You are already logged in on the site.<br />
+         - Someone else logged in on the site using your username and password.<br />
+         - You left the site or close the browser window without clicking the logout button.<br />
+        </p>
+        Wait a few minutes and try again later. If the problems still persists contact the site administrator.');
+define("_US_OPENID_LOGIN", "Login with your OpenID");
+define("_US_OPENID_URL", "Your OpenID URL:");
+define("_US_OPENID_NORMAL_LOGIN", "Go back to normal login");
 ?>

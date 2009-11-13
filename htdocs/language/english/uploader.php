@@ -12,7 +12,6 @@ define("_ER_UP_FILESIZETOOLARGE", "File size too large (Maximum %u bytes): %u by
 define("_ER_UP_FILEWIDTHTOOLARGE", "File width too large (Maximum %u px): %u px");
 define("_ER_UP_FILEHEIGHTTOOLARGE", "File height too large (Maximum %u px): %u px");
 define("_ER_UP_MIMETYPENOTALLOWED", "MIME type not allowed: %s");
-//define("_ER_UP_FAILEDUPLOADFILE", "Failed uploading file: %s");
 define("_ER_UP_FAILEDFETCHIMAGESIZE", "Failed fetching image size of %s, skipping max dimension check..");
 define("_ER_UP_UNKNOWNFILETYPEREJECTED", "Unknown filetype rejected");
 define("_ER_UP_ERRORSRETURNED", "Errors Returned While Uploading");

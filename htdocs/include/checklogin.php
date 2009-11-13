@@ -62,7 +62,7 @@ if (false != $user) {
 			foreach( $onlines as $online ) {
 				if( $online['online_uid'] == $user->uid() ) {
 					$user = false;
-					redirect_header(ICMS_URL.'/index.php',3,$icmsConfigPersona['multi_login_msg']);
+					redirect_header(ICMS_URL.'/index.php',3,_US_MULTLOGIN);
 				}
 			}
 			if( is_object( $user ) ) {

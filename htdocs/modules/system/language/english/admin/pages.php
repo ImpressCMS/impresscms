@@ -1,4 +1,5 @@
 <?php
+######################## Added in 1.2 ###################################
 define('_AM_SYSTEM_PAGES_TITLE','Symlink Manager');
 
 define('_AM_SYSTEM_PAGES_CREATE','Add new Symlink');

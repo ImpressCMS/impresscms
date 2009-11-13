@@ -25,13 +25,14 @@ define('_MD_AM_COMMENTS', 'Comments');
 define('_MD_AM_BKPOSAD','Block Positions');
 define('_MD_AM_PAGES','Symlink Manager');
 define('_MD_AM_CUSTOMTAGS', 'Custom Tags');
-if(!defined('_MD_AM_AUTOTASKS')){define('_MD_AM_AUTOTASKS', 'Auto Tasks');}
 
 // Group permission phrases
 define('_MD_AM_PERMADDNG', 'Could not add %s permission to %s for group %s');
 define('_MD_AM_PERMADDOK','Added %s permission to %s for group %s');
 define('_MD_AM_PERMRESETNG','Could not reset group permission for module %s');
 define('_MD_AM_PERMADDNGP', 'All parent items must be selected.');
+######################## Added in 1.2 ###################################
+if(!defined('_MD_AM_AUTOTASKS')){define('_MD_AM_AUTOTASKS', 'Auto Tasks');}
 define('_MD_AM_ADSENSES', 'Adsenses');
 define('_MD_AM_RATINGS', 'Ratings');
 define('_MD_AM_MIMETYPES', 'Mime Types');
