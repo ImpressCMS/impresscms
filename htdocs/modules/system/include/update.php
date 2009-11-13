@@ -169,7 +169,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'pre_chars_left', '_MD_AM_PRECHARS', '35', '_MD_AM_PRECHARS_DESC', 'textbox', 'int', 20);
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'last_chars_left', '_MD_AM_LASTCHARS', '10', '_MD_AM_LASTCHARS_DESC', 'textbox', 'int', 21);
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'show_impresscms_menu', '_MD_AM_SHOW_ICMSMENU', '1', '_MD_AM_SHOW_ICMSMENU_DESC', 'yesno', 'int', 22);
-		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', 23);
+		//$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', 23);
 		// Adding new function of authentication
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_AUTH, 'auth_openid', '_MD_AM_AUTHOPENID', '0', '_MD_AM_AUTHOPENIDDSC', 'yesno', 'int', 1);
 
@@ -763,15 +763,15 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		  $HTML_Allowed_Elms = 'a, abbr, acronym, b, blockquote, br, caption, cite, code, dd, del, dfn, div, dl, dt, em, font, h1, h2, h3, h4, h5, h6, i, img, ins, kbd, li, ol, p, pre, s, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var';
 
 		  // Allowed Element Attributes in HTML, element must also be allowed in Allowed Elements for these attributes to work.
-          $HTML_Allowed_Attr = 'a.class, a.href, a.id, a.name, a.rev, a.style, a.title, a.target, a.rel, abbr.title, acronym.title, blockquote.cite, div.align, div.style, div.class, div.id, font.size, font.color, h1.style, h2.style, h3.style, h4.style, h5.style, h6.style, img.src, img.alt, img.title, img.class, img.align, img.style, img.height, img.width, li.style, ol.style, p.style, span.style, span.class, span.id, table.class, table.id, table.border, table.cellpadding, table.cellspacing, table.style, table.width, td.abbr, td.align, td.class, td.id, td.colspan, td.rowspan, td.style, td.valign, tr.align, tr.class, tr.id, tr.style, tr.valign, th.abbr, th.align, th.class, th.id, th.colspan, th.rowspan, th.style, th.valign, ul.style';
+		  $HTML_Allowed_Attr = 'a.class, a.href, a.id, a.name, a.rev, a.style, a.title, a.target, a.rel, abbr.title, acronym.title, blockquote.cite, div.align, div.style, div.class, div.id, font.size, font.color, h1.style, h2.style, h3.style, h4.style, h5.style, h6.style, img.src, img.alt, img.title, img.class, img.align, img.style, img.height, img.width, li.style, ol.style, p.style, span.style, span.class, span.id, table.class, table.id, table.border, table.cellpadding, table.cellspacing, table.style, table.width, td.abbr, td.align, td.class, td.id, td.colspan, td.rowspan, td.style, td.valign, tr.align, tr.class, tr.id, tr.style, tr.valign, th.abbr, th.align, th.class, th.id, th.colspan, th.rowspan, th.style, th.valign, ul.style';
 
 		  $p = 0;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'enable_purifier', '_MD_AM_PURIFIER_ENABLE', '1', '_MD_AM_PURIFIER_ENABLEDSC', 'yesno', 'int', $p);
-          $p++;
-          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DefinitionID', '_MD_AM_PURIFIER_URI_DEFID', 'system', '_MD_AM_PURIFIER_URI_DEFIDDSC', 'textbox', 'text', $p);
-          $p++;
-          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DefinitionRev', '_MD_AM_PURIFIER_URI_DEFREV', '1', '_MD_AM_PURIFIER_URI_DEFREVDSC', 'textbox', 'int', $p);
-          $p++;
+		  $p++;
+		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DefinitionID', '_MD_AM_PURIFIER_URI_DEFID', 'system', '_MD_AM_PURIFIER_URI_DEFIDDSC', 'textbox', 'text', $p);
+		  $p++;
+		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_DefinitionRev', '_MD_AM_PURIFIER_URI_DEFREV', '1', '_MD_AM_PURIFIER_URI_DEFREVDSC', 'textbox', 'int', $p);
+		  $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_Host', '_MD_AM_PURIFIER_URI_HOST', addslashes($host_domain), '_MD_AM_PURIFIER_URI_HOSTDSC', 'textbox', 'text', $p);
 		  $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_URI_Base', '_MD_AM_PURIFIER_URI_BASE', addslashes($host_base), '_MD_AM_PURIFIER_URI_BASEDSC', 'textbox', 'text', $p);
@@ -866,8 +866,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedRel', '_MD_AM_PURIFIER_ATTR_ALLOWREL', addslashes(serialize(array('external','nofollow','external nofollow','lightbox'))), '_MD_AM_PURIFIER_ATTR_ALLOWRELDSC', 'textsarea', 'array', $p);
 		  $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_AllowedClasses', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSES', '', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSESDSC', 'textsarea', 'array', $p);
-          $p++;
-          $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_ForbiddenClasses', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSES', '', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSESDSC', 'textsarea', 'array', $p);
+		  $p++;
+		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_ForbiddenClasses', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSES', '', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSESDSC', 'textsarea', 'array', $p);
 		  $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_Attr_DefaultInvalidImage', '_MD_AM_PURIFIER_ATTR_DEFINVIMG', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGDSC', 'textbox', 'text', $p);
 		  $p++;
@@ -914,164 +914,164 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 /* 1.2 beta release */
 
-    $newDbVersion = 32;
-    /* this was in dbversion 18, but there were errors discovered after 1.2 beta relase */
-    if ($dbVersion < $newDbVersion) {
-        echo sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
-        /*
-        $table = new IcmsDatabasetable('icmscontent');
-        if (!$table->fieldExists('content_tags')) {
-        $table->addNewField('content_tags', "text");
-        $icmsDatabaseUpdater->updateTable($table);
-        }
-        unset($table);
-        */
-        $table = new IcmsDatabasetable('imagecategory');
-        if (!$table->fieldExists('imgcat_foldername')) {
-	        $table->addNewField('imgcat_foldername', "varchar(100) default ''");
-        }
-        if (!$table->fieldExists('imgcat_pid')) {
-	        $table->addNewField('imgcat_pid', "smallint(5) unsigned NOT NULL default '0'");
-        }
-        $icmsDatabaseUpdater->updateTable($table);
-        unset($table);
+	$newDbVersion = 32;
+	/* this was in dbversion 18, but there were errors discovered after 1.2 beta relase */
+	if ($dbVersion < $newDbVersion) {
+		echo sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+		/*
+		$table = new IcmsDatabasetable('icmscontent');
+		if (!$table->fieldExists('content_tags')) {
+		$table->addNewField('content_tags', "text");
+		$icmsDatabaseUpdater->updateTable($table);
+		}
+		unset($table);
+		*/
+		$table = new IcmsDatabasetable('imagecategory');
+		if (!$table->fieldExists('imgcat_foldername')) {
+			$table->addNewField('imgcat_foldername', "varchar(100) default ''");
+		}
+		if (!$table->fieldExists('imgcat_pid')) {
+			$table->addNewField('imgcat_pid', "smallint(5) unsigned NOT NULL default '0'");
+		}
+		$icmsDatabaseUpdater->updateTable($table);
+		unset($table);
 
-        /**
-        * DEVELOPER, PLEASE NOTE !!!
-        *
-        * Everytime we add a new modules to system, the cache folders must get cleaned up so,
-        * set a value for '$CleanWritingFolders' in each upgrade block here, if there is a cache
-        * cleaning required please add $CleanWritingFolders = 1 and otherwise $CleanWritingFolders = 0
-        * Like this below:
-        */
-        $CleanWritingFolders = true;
-        /* end of dbversion 18 update */
+		/**
+		* DEVELOPER, PLEASE NOTE !!!
+		*
+		* Everytime we add a new modules to system, the cache folders must get cleaned up so,
+		* set a value for '$CleanWritingFolders' in each upgrade block here, if there is a cache
+		* cleaning required please add $CleanWritingFolders = 1 and otherwise $CleanWritingFolders = 0
+		* Like this below:
+		*/
+		$CleanWritingFolders = true;
+		/* end of dbversion 18 update */
 
-    }
-    $newDbVersion = 33;
-    /*
-     * New symlinks need to be added to the db
-     * @todo Create language constants for the page names
-     */
-    if ($dbVersion < $newDbVersion) {
-    	echo sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
-        $table = new IcmsDatabasetable('icmspage');
-        $new_pages = array(
-            "NULL, 1, 'Admin Control Panel', 'admin.php', 1",
-            "NULL, 1, 'Avatars', 'modules/system/admin.php?fct=avatars*', 1",
-            "NULL, 1, 'Banners', 'modules/system/admin.php?fct=banners*', 1",
-            "NULL, 1, 'Blocks Admin', 'modules/system/admin.php?fct=blocksadmin*', 1",
-            "NULL, 1, 'Block Positions', 'modules/system/admin.php?fct=blockspadmin*', 1",
-            "NULL, 1, 'Comments', 'modules/system/admin.php?fct=comments*', 1",
-            "NULL, 1, 'Find Users', 'modules/system/admin.php?fct=findusers*', 1",
-            "NULL, 1, 'Custom Tag', 'modules/system/admin.php?fct=customtag*', 1",
-            "NULL, 1, 'Groups', 'modules/system/admin.php?fct=groups*', 1",
-            "NULL, 1, 'Image Manager', 'modules/system/admin.php?fct=images*', 1",
-            "NULL, 1, 'Mail Users', 'modules/system/admin.php?fct=mailusers*', 1",
-            "NULL, 1, 'Modules Admin', 'modules/system/admin.php?fct=modulesadmin*', 1",
-            "NULL, 1, 'Symlink Manager', 'modules/system/admin.php?fct=pages*', 1",
-            "NULL, 1, 'Preferences', 'modules/system/admin.php?fct=preferences*', 1",
-            "NULL, 1, 'Smilies', 'modules/system/admin.php?fct=smilies*', 1",
-            "NULL, 1, 'Templates', 'modules/system/admin.php?fct=tplsets*', 1",
-            "NULL, 1, 'User Ranks', 'modules/system/admin.php?fct=userrank*', 1",
-            "NULL, 1, 'User Edit', 'modules/system/admin.php?fct=users*', 1",
-            "NULL, 1, 'Version Checker', 'modules/system/admin.php?fct=version*', 1"
-        );
-        foreach( $new_pages as $new_page) {
-            $table->setData($new_page);
-        }
-        $table->addData();
-        unset($table);
-    }
-
-    $newDbVersion = 34;
-        /* The admin control panel now consists of blocks - these need to be set as visible
-         * Control Panel, System Warnings, Modules Installed
-         */
-    if ($dbVersion < $newDbVersion) {
-    	echo sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
-        $admin_blocks = array(
-            array( 'b_system_admin_cp_show', 'page_topleft_admin' ),
-            array( 'b_system_admin_modules_show','page_topright_admin' ),
-            array( 'b_system_admin_warnings_show', 'page_topcenter_admin' )
-        );
-        /* Get block positions */
-        $sql = 'SELECT id, pname FROM ' . $icmsDB->prefix('block_positions')
-            . ' WHERE pname = "page_topleft_admin"'
-            . ' OR pname = "page_topright_admin"'
-            . ' OR pname = "page_topcenter_admin"';
-        $result = $icmsDB->query($sql);
-        while ($row = $icmsDB->fetchArray($result)) {
-            $block_positions[$row['pname']] = $row['id'];
-        }
-        /* Get symlink id for Admin Control Panel */
-        $page_id = getDbValue($icmsDB, 'icmspage', 'page_id', 'page_url="admin.php"');
-
-        foreach( $admin_blocks as $admin_block ) {
-        /* Get block ids for Control Panel, System Warnings, Installed Modules */
-            $sql_find = 'SELECT bid FROM `' . $icmsDB->prefix('newblocks')
-                . '` WHERE show_func="' . $admin_block[0] . '"';
-            $goodmsg = $admin_block[0] . ' updated';
-            $badmsg = $admin_block[0] . ' failed';
-            $result = $icmsDB->query($sql_find);
-            list($block_id) = $icmsDB->fetchRow($result);
-        /* Modify the visible, side and visiblein properties of the blocks */
-            $sql_update = 'UPDATE `' . $icmsDB->prefix('newblocks')
-                . '` SET `visible`=1, `side`=' . $block_positions[$admin_block[1]]
-                . ' WHERE `bid`=' . $block_id;
-            $icmsDatabaseUpdater->runQuery($sql_update, $goodmsg, $badmsg, true);
-            $sql_page_update = 'UPDATE `' . $icmsDB->prefix('block_module_link')
-                . '` SET `module_id`=1, `page_id`=' . $page_id
-                . ' WHERE `block_id`='. $block_id;
-            $icmsDatabaseUpdater->runQuery($sql_page_update, $goodmsg, $badmsg, true);
-        }
-    }
-    $newDbVersion = 35;
-    /* copy settings for the old waiting contents block to the new block
-     * and set the block_type correctly for new system blocks -
-     * blocks added during a module update default to block_type 'M', which
-     * is not correct for the system module, adding todo in modulesadmin
+	}
+	$newDbVersion = 33;
+	/*
+	 * New symlinks need to be added to the db
+	 * @todo Create language constants for the page names
 	 */
-    if ($dbVersion < $newDbVersion) {
-        echo sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
-        $result = $icmsDB->query('SELECT title, side, weight, visible, bcachetime, bid'
-        	. ' FROM `' . $icmsDB->prefix('newblocks')
-        	. '` WHERE `show_func`="b_system_waiting_show" AND `func_file`="system_blocks.php"');
-        list($title, $side, $weight, $visible, $bcachetime, $bid) = $icmsDB->fetchRow($result);
-        $icmsDB->queryF('UPDATE `' . $icmsDB->prefix('newblocks')
-	        . '` SET `title`="' . $title . '", `side`=' . $side . ', `weight`=' . $weight
-	        . ', `visible`=' . $visible . ', `bcachetime`=' . $bcachetime
-	        . ' WHERE `show_func`="b_system_waiting_show" AND `func_file`="system_waiting.php"');
-	    $icmsDB->queryF('DELETE FROM `' . $icmsDB->prefix('newblocks')
-	    	. '` WHERE `bid`=' .$bid);
-	    $icmsDB->queryF('DELETE FROM `' . $icmsDB->prefix('block_module_link')
-	    	. '` WHERE `block_id`=' .$bid);
-	    $icmsDB->queryF('UPDATE `' . $icmsDB->prefix('newblocks')
-	        . '` SET `block_type`="S"'
-	        . ' WHERE `dirname`="system" AND `block_type`="M"');
+	if ($dbVersion < $newDbVersion) {
+		echo sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+		$table = new IcmsDatabasetable('icmspage');
+		$new_pages = array(
+			"NULL, 1, 'Admin Control Panel', 'admin.php', 1",
+			"NULL, 1, 'Avatars', 'modules/system/admin.php?fct=avatars*', 1",
+			"NULL, 1, 'Banners', 'modules/system/admin.php?fct=banners*', 1",
+			"NULL, 1, 'Blocks Admin', 'modules/system/admin.php?fct=blocksadmin*', 1",
+			"NULL, 1, 'Block Positions', 'modules/system/admin.php?fct=blockspadmin*', 1",
+			"NULL, 1, 'Comments', 'modules/system/admin.php?fct=comments*', 1",
+			"NULL, 1, 'Find Users', 'modules/system/admin.php?fct=findusers*', 1",
+			"NULL, 1, 'Custom Tag', 'modules/system/admin.php?fct=customtag*', 1",
+			"NULL, 1, 'Groups', 'modules/system/admin.php?fct=groups*', 1",
+			"NULL, 1, 'Image Manager', 'modules/system/admin.php?fct=images*', 1",
+			"NULL, 1, 'Mail Users', 'modules/system/admin.php?fct=mailusers*', 1",
+			"NULL, 1, 'Modules Admin', 'modules/system/admin.php?fct=modulesadmin*', 1",
+			"NULL, 1, 'Symlink Manager', 'modules/system/admin.php?fct=pages*', 1",
+			"NULL, 1, 'Preferences', 'modules/system/admin.php?fct=preferences*', 1",
+			"NULL, 1, 'Smilies', 'modules/system/admin.php?fct=smilies*', 1",
+			"NULL, 1, 'Templates', 'modules/system/admin.php?fct=tplsets*', 1",
+			"NULL, 1, 'User Ranks', 'modules/system/admin.php?fct=userrank*', 1",
+			"NULL, 1, 'User Edit', 'modules/system/admin.php?fct=users*', 1",
+			"NULL, 1, 'Version Checker', 'modules/system/admin.php?fct=version*', 1"
+		);
+		foreach( $new_pages as $new_page) {
+			$table->setData($new_page);
+		}
+		$table->addData();
+		unset($table);
+	}
 
-	    /* Change the field type of welcome_msg_content to textsarea */
-	    $sql_welcome_msg_content = 'UPDATE ' . $icmsDB->prefix('config')
-	    . ' SET `conf_formtype` = "textsarea"'
-	    . ' WHERE `conf_name`="welcome_msg_content"';
-	    $icmsDatabaseUpdater->runQuery($sql_welcome_msg_content, 'Welcome message form type successfully updated', 'Unable to update the welcome message form type', true);
+	$newDbVersion = 34;
+		/* The admin control panel now consists of blocks - these need to be set as visible
+		 * Control Panel, System Warnings, Modules Installed
+		 */
+	if ($dbVersion < $newDbVersion) {
+		echo sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+		$admin_blocks = array(
+			array( 'b_system_admin_cp_show', 'page_topleft_admin' ),
+			array( 'b_system_admin_modules_show','page_topright_admin' ),
+			array( 'b_system_admin_warnings_show', 'page_topcenter_admin' )
+		);
+		/* Get block positions */
+		$sql = 'SELECT id, pname FROM ' . $icmsDB->prefix('block_positions')
+			. ' WHERE pname = "page_topleft_admin"'
+			. ' OR pname = "page_topright_admin"'
+			. ' OR pname = "page_topcenter_admin"';
+		$result = $icmsDB->query($sql);
+		while ($row = $icmsDB->fetchArray($result)) {
+			$block_positions[$row['pname']] = $row['id'];
+		}
+		/* Get symlink id for Admin Control Panel */
+		$page_id = getDbValue($icmsDB, 'icmspage', 'page_id', 'page_url="admin.php"');
 
-	    /* Set the start page for each group, so they don't default to Admin Control Panel */
-	    $groups = xoops_gethandler('group')->getObjects(NULL, true);
-	    $start_page = getDbValue($icmsDB, 'config', 'conf_value', 'conf_name="startpage"');
-	    foreach ($groups as $groupid=>$group ) {
-	    	$start_pages[$groupid] = $start_page;
-	    }
-	    $icmsDB->queryF( 'UPDATE `' . $icmsDB->prefix('config') . '`'
-	    	. ' SET `conf_value`="' . addslashes(serialize($start_pages)) . '"'
-	    	. ' WHERE `conf_name`="startpage"');
+		foreach( $admin_blocks as $admin_block ) {
+		/* Get block ids for Control Panel, System Warnings, Installed Modules */
+			$sql_find = 'SELECT bid FROM `' . $icmsDB->prefix('newblocks')
+				. '` WHERE show_func="' . $admin_block[0] . '"';
+			$goodmsg = $admin_block[0] . ' updated';
+			$badmsg = $admin_block[0] . ' failed';
+			$result = $icmsDB->query($sql_find);
+			list($block_id) = $icmsDB->fetchRow($result);
+		/* Modify the visible, side and visiblein properties of the blocks */
+			$sql_update = 'UPDATE `' . $icmsDB->prefix('newblocks')
+				. '` SET `visible`=1, `side`=' . $block_positions[$admin_block[1]]
+				. ' WHERE `bid`=' . $block_id;
+			$icmsDatabaseUpdater->runQuery($sql_update, $goodmsg, $badmsg, true);
+			$sql_page_update = 'UPDATE `' . $icmsDB->prefix('block_module_link')
+				. '` SET `module_id`=1, `page_id`=' . $page_id
+				. ' WHERE `block_id`='. $block_id;
+			$icmsDatabaseUpdater->runQuery($sql_page_update, $goodmsg, $badmsg, true);
+		}
+	}
+	$newDbVersion = 35;
+	/* copy settings for the old waiting contents block to the new block
+	 * and set the block_type correctly for new system blocks -
+	 * blocks added during a module update default to block_type 'M', which
+	 * is not correct for the system module, adding todo in modulesadmin
+	 */
+	if ($dbVersion < $newDbVersion) {
+		echo sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
+		$result = $icmsDB->query('SELECT title, side, weight, visible, bcachetime, bid'
+			. ' FROM `' . $icmsDB->prefix('newblocks')
+			. '` WHERE `show_func`="b_system_waiting_show" AND `func_file`="system_blocks.php"');
+		list($title, $side, $weight, $visible, $bcachetime, $bid) = $icmsDB->fetchRow($result);
+		$icmsDB->queryF('UPDATE `' . $icmsDB->prefix('newblocks')
+			. '` SET `title`="' . $title . '", `side`=' . $side . ', `weight`=' . $weight
+			. ', `visible`=' . $visible . ', `bcachetime`=' . $bcachetime
+			. ' WHERE `show_func`="b_system_waiting_show" AND `func_file`="system_waiting.php"');
+		$icmsDB->queryF('DELETE FROM `' . $icmsDB->prefix('newblocks')
+			. '` WHERE `bid`=' .$bid);
+		$icmsDB->queryF('DELETE FROM `' . $icmsDB->prefix('block_module_link')
+			. '` WHERE `block_id`=' .$bid);
+		$icmsDB->queryF('UPDATE `' . $icmsDB->prefix('newblocks')
+			. '` SET `block_type`="S"'
+			. ' WHERE `dirname`="system" AND `block_type`="M"');
 
-	    /* Check for HTMLPurifier cache path and create, if needed */
-	    $purifier_path = icms_mkdir( ICMS_TRUST_PATH . '/cache/htmlpurifier');
-	    /* Removing the option for multilogin text, as we're using a constant for it */
+		/* Change the field type of welcome_msg_content to textsarea */
+		$sql_welcome_msg_content = 'UPDATE ' . $icmsDB->prefix('config')
+		. ' SET `conf_formtype` = "textsarea"'
+		. ' WHERE `conf_name`="welcome_msg_content"';
+		$icmsDatabaseUpdater->runQuery($sql_welcome_msg_content, 'Welcome message form type successfully updated', 'Unable to update the welcome message form type', true);
+
+		/* Set the start page for each group, so they don't default to Admin Control Panel */
+		$groups = xoops_gethandler('group')->getObjects(NULL, true);
+		$start_page = getDbValue($icmsDB, 'config', 'conf_value', 'conf_name="startpage"');
+		foreach ($groups as $groupid=>$group ) {
+			$start_pages[$groupid] = $start_page;
+		}
+		$icmsDB->queryF( 'UPDATE `' . $icmsDB->prefix('config') . '`'
+			. ' SET `conf_value`="' . addslashes(serialize($start_pages)) . '"'
+			. ' WHERE `conf_name`="startpage"');
+
+		/* Check for HTMLPurifier cache path and create, if needed */
+		$purifier_path = icms_mkdir( ICMS_TRUST_PATH . '/cache/htmlpurifier');
+		/* Removing the option for multilogin text, as we're using a constant for it */
 		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='multi_login_msg'");
-
-    }
+		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='use_hidden'");
+	}
 
 	echo "</code>";
 
