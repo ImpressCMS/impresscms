@@ -278,7 +278,7 @@ function b_system_newmembers_show($options)
 		$block['users'][$i]['joindate'] = formatTimestamp($newmembers[$i]->getVar('user_regdate'), 's');
 		$block['users'][$i]['login_name'] = $newmembers[$i]->getVar('login_name');
 	}
-		if ( $options[2] == 1 ) {
+		if ( !empty($options[2]) && $options[2] == 1 ) {
 			$block['index_enabled'] = true;
 			$block['registered'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level')));
 			$block['inactive'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0)));
