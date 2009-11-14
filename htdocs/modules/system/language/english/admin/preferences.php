@@ -400,8 +400,6 @@ define("_MD_AM_PRECHARS","Amount of starting characters");
 define("_MD_AM_PRECHARS_DESC","How many characters should be displayed at the begining of an URL ?<br /><i>This option only applies if 'Truncate long URLs ?' is set to Yes.</i>");
 define("_MD_AM_LASTCHARS","Amount of ending characters");
 define("_MD_AM_LASTCHARS_DESC","How many characters should be displayed at the end of an URL ?<br /><i>This option only applies if 'Truncate long URLs ?' is set to Yes.</i>");
-define("_MD_AM_HIDDENCONTENT","Use Hide content tag?");
-define("_MD_AM_HIDDENCONTENTDSC","Set this option to Yes if you want use a tag to hide some content of your site for Anonymous users.<br /> Anonymous users will need to register to be able to see that content.<br /><i>If you disable this option, all contents between this tag will show as usual</i>");
 define("_MD_AM_SIGMAXLENGTH","Maximum amount of characters in users signatures?");
 define("_MD_AM_SIGMAXLENGTHDSC","Here you can choose the length of your users signatures.<br /> any character longer than this amount will be ignored.<br /><i>Be careful, long signatures can often break the design...</i>");
 

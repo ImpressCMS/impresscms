@@ -115,7 +115,7 @@ class TinyMCE
 		$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == true && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
 		if( $this->setting["theme"] == "advanced" ) {
 			$this->setting["theme_advanced_buttons1"] = "bold,italic,underline,strikethrough,sub,sup,separator,justify"._GLOBAL_LEFT.",justifycenter,justify"._GLOBAL_RIGHT.",justifyfull,formatselect,fontselect,fontsizeselect";
-			$this->setting["theme_advanced_buttons2"] = "".(($icmsConfigPersona['use_hidden'] == true)?"icmshide,":"")."xoopsquote,xoopscode,".(($easiestml_exist)?"icmsmlcontent,":"")."separator,bullist,numlist,separator,outdent,indent,separator,undo,redo,removeformat,separator,link,unlink,anchor,xoopsimagemanager,media,separator,charmap,nonbreaking,hr,xoopsemotions,separator,pastetext,pasteword,separator,forecolor,backcolor";
+			$this->setting["theme_advanced_buttons2"] = "xoopsquote,xoopscode,".(($easiestml_exist)?"icmsmlcontent,":"")."separator,bullist,numlist,separator,outdent,indent,separator,undo,redo,removeformat,separator,link,unlink,anchor,xoopsimagemanager,media,separator,charmap,nonbreaking,hr,xoopsemotions,separator,pastetext,pasteword,separator,forecolor,backcolor";
 			$this->setting["theme_advanced_buttons3"] = "tablecontrols,separator,cleanup,visualaid,visualchars,separator,insertdate,inserttime,separator,preview,fullscreen,help,code";
 		}
 

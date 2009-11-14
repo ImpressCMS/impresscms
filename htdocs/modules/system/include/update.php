@@ -169,7 +169,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'pre_chars_left', '_MD_AM_PRECHARS', '35', '_MD_AM_PRECHARS_DESC', 'textbox', 'int', 20);
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'last_chars_left', '_MD_AM_LASTCHARS', '10', '_MD_AM_LASTCHARS_DESC', 'textbox', 'int', 21);
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'show_impresscms_menu', '_MD_AM_SHOW_ICMSMENU', '1', '_MD_AM_SHOW_ICMSMENU_DESC', 'yesno', 'int', 22);
-		//$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', 23);
 		// Adding new function of authentication
 		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_AUTH, 'auth_openid', '_MD_AM_AUTHOPENID', '0', '_MD_AM_AUTHOPENIDDSC', 'yesno', 'int', 1);
 
@@ -507,11 +506,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		if (getDbValue($icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"') == 0) {
 			$icmsDB->queryF(" INSERT INTO " . $icmsDB->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('12','_MD_AM_PLUGINS')");
 		}
-		$pluginsvalue = '';
-		$config_handler = xoops_gethandler('config');
-		$icmsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-		if ($icmsConfigPersona['use_hidden'] == 1) {$pluginsvalue = 'hiddencontent';}
-		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS', addslashes(serialize(array($pluginsvalue))), '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', 1);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS', addslashes(serialize(array(''))), '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', 1);
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PLUGINS, 'code_sanitizer', '_MD_AM_SELECTSHIGHLIGHT', 'none', '_MD_AM_SELECTSHIGHLIGHT_DESC', 'select', 'text', 2);
 		$config_id = $icmsDB->getInsertId();
 		$sql = "INSERT INTO " . $icmsDB->prefix('configoption') .
