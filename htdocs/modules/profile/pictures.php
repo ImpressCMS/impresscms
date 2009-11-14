@@ -22,17 +22,14 @@ function editpictures($picturesObj, $hideForm=false)
 
 	$icmsTpl->assign('hideForm', $hideForm);
 	if (!$picturesObj->isNew()){
-		if (!$picturesObj->userCanEditAndDelete()) {
-			redirect_header($picturesObj->getItemLink(true), 3, _NOPERM);
-		}
+		if (!$picturesObj->userCanEditAndDelete()) redirect_header($picturesObj->getItemLink(true), 3, _NOPERM);
 		$picturesObj->hideFieldFromForm(array('url', 'creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
 		$sform = $picturesObj->getSecureForm($hideForm ? '' : _MD_PROFILE_PICTURES_EDIT, 'addpictures');
 		$sform->assign($icmsTpl, 'profile_picturesform');
 		$icmsTpl->assign('lang_picturesform_title', _MD_PROFILE_PICTURES_EDIT);
 	} else {
-		if (!$profile_pictures_handler->userCanSubmit()) {
-			redirect_header(PROFILE_URL, 3, _NOPERM);
-		}
+		if (!$profile_pictures_handler->userCanSubmit()) redirect_header(PROFILE_URL, 3, _NOPERM);
+		if (!$profile_pictures_handler->checkUploadLimit()) return;
 		$picturesObj->setVar('uid_owner', $icmsUser->uid());
 		$picturesObj->setVar('creation_time', time());
 		$picturesObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
@@ -69,7 +66,7 @@ $picturesObj = $profile_pictures_handler->get($clean_pictures_id);
 $valid_op = array ('setavatar', 'delavatar', 'mod','addpictures','del','');
 
 $isAllowed = getAllowedItems('pictures', $clean_uid);
-if (!$isAllowed) {
+if (!$isAllowed || !$icmsModuleConfig['enable_pictures']) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
 $xoopsTpl->assign('uid_owner',$uid);
@@ -137,6 +134,11 @@ if (in_array($clean_op,$valid_op,true)){
 			// we need to check whether the user has modified the url for an existing picture (NOT ALLOWED!)
 			if (!$picturesObj->isNew() && isset($_POST['url']) && $picturesObj->getVar('url') != $_POST['url']) {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+			}
+
+			// check upload limit for this user
+			if ($picturesObj->isNew() && !$profile_pictures_handler->checkUploadLimit()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, sprintf(_MD_PROFILE_PICTURES_LIMIT, $icmsModuleConfig['nb_pict']));
 			}
 
 			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';

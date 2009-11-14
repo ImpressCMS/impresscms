@@ -33,7 +33,7 @@ if (isset($_POST['friendship_id'])) $clean_friendship_id = intval($_POST['friend
 $valid_op = array ('del','');
 
 $isAllowed = getAllowedItems('friendship', $clean_uid);
-if (!$isAllowed) {
+if (!$isAllowed || !$icmsModuleConfig['enable_friendship']) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 	exit();
 }

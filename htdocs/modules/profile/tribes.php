@@ -179,7 +179,7 @@ $userCanEditAndDelete = $real_uid && (($clean_tribes_id && $real_uid == $tribesO
 $valid_op = array ('mod','addtribeuser','edittribeuser','deltribeuser','addtribepost','edittribepost','deltribepost','toggleclose','addtribes','del','');
 
 $isAllowed = getAllowedItems('tribes', $clean_uid);
-if (!$isAllowed) {
+if (!$isAllowed || !$icmsModuleConfig['enable_tribes']) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 	exit();
 }

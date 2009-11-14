@@ -65,7 +65,7 @@ $audioObj = $profile_audio_handler->get($clean_audio_id);
 $valid_op = array ('mod','addaudio','del','');
 
 $isAllowed = getAllowedItems('audio', $clean_uid);
-if (!$isAllowed) {
+if (!$isAllowed || !$icmsModuleConfig['enable_audio']) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
 $xoopsTpl->assign('uid_owner',$uid);

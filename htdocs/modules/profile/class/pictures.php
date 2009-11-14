@@ -141,7 +141,7 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	 * @return CriteriaCompo $criteria
 	 */
 	function getPicturesCriteria($start = 0, $limit = 0, $uid_owner = false, $picture_id = false) {
-		global $icmsUser;
+		global $icmsUser, $icmsModuleConfig;
 
 		$criteria = new CriteriaCompo();
 		if ($start) {
@@ -151,7 +151,7 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 			$criteria->setLimit(intval($limit));
 		}
 		$criteria->setSort('creation_time');
-		$criteria->setOrder('DESC');
+		if ($icmsModuleConfig['images_order']) $criteria->setOrder('DESC');
 
 		if (is_object($icmsUser)) {
 			if ($icmsUser->getVar('uid') != $uid_owner && !$icmsUser->isAdmin()) {
@@ -316,10 +316,24 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	 */
 	function userCanSubmit() {
 		global $icmsUser;
-		if (!is_object($icmsUser)) {
-			return false;
-		}
+
+		if (!is_object($icmsUser)) return false;
 		return true;
+	}
+
+	/**
+	 * Check whether the user has already reached the upload limit
+	 *
+	 * @global array $icmsModuleConfig module configuration
+	 * @return int number of pictures for the current user (icmsUser)
+	 */
+	function checkUploadLimit() {
+		global $icmsUser, $icmsModuleConfig;
+
+		if (!is_object($icmsUser)) return false;
+		if ($icmsModuleConfig['nb_pict'] == 0) return true;
+		$count = $this->getCount(new CriteriaCompo(new Criteria('uid_owner', $icmsUser->getVar('uid'))));
+		return ($count < $icmsModuleConfig['nb_pict']);
 	}
 
 	/**
@@ -361,10 +375,12 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	 * @return bool
 	 */
 	function afterDelete(&$obj) {
+		global $icmsModuleConfig;
+
 		$imgPath = ICMS_UPLOAD_PATH.'/profile/pictures/';
 		$imgUrl = $obj->getVar('url');
 
-		if (!empty($imgUrl)) {
+		if (!empty($imgUrl) && $icmsModuleConfig['physical_delete']) {
 			unlink($imgPath.$imgUrl);
 			unlink($imgPath.'thumb_'.$imgUrl);
 			unlink($imgPath.'resized_'.$imgUrl);

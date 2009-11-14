@@ -236,7 +236,7 @@ if ($icmsModuleConfig['profile_search'] && $permissions['profile_usercontributio
 
 // getting social content
 // pictures
-if ($permissions['pictures']) {
+if ($icmsModuleConfig['enable_pictures'] && $permissions['pictures']) {
 	$profile_pictures_handler = icms_getModuleHandler('pictures');
 	$pictures = $profile_pictures_handler->getPictures(0, 3, $uid);
 	$rtn = array();
@@ -250,7 +250,7 @@ if ($permissions['pictures']) {
 }
 
 // audio
-if ($permissions['audio']) {
+if ($icmsModuleConfig['enable_audio'] && $permissions['audio']) {
 	$profile_audio_handler = icms_getModuleHandler('audio');
 	$audios = $profile_audio_handler->getAudios(0, 1, $uid);
 	$rtn = array();
@@ -263,7 +263,7 @@ if ($permissions['audio']) {
 }
 
 // friends
-if ($permissions['friendship']) {
+if ($icmsModuleConfig['enable_friendship'] && $permissions['friendship']) {
 	$friends = $profile_friendship_handler->getFriendships(0, 3, $uid, 0, PROFILE_FRIENDSHIP_STATUS_ACCEPTED);
 	$rtn = array();
 	$i = 0;
@@ -294,7 +294,7 @@ if ($permissions['friendship']) {
 }
 
 // video
-if ($permissions['videos']) {
+if ($icmsModuleConfig['enable_videos'] && $permissions['videos']) {
 	$profile_videos_handler = icms_getModuleHandler('videos');
 	$videos = $profile_videos_handler->getVideos(0, 1, $uid);
 	$rtn = array();
@@ -307,7 +307,7 @@ if ($permissions['videos']) {
 }
 
 // tribes
-if ($permissions['tribes']) {
+if ($icmsModuleConfig['enable_tribes'] && $permissions['tribes']) {
 	// get tribes where the user is the owner
 	$profile_tribes_handler = icms_getModuleHandler('tribes');
 	$tribes = $profile_tribes_handler->getTribes(0, 0, $uid, false, true);

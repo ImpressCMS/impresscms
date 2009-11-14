@@ -15,8 +15,8 @@
  * @version         $Id$
  */
 
-define("_MI_PROFILE_NUMBPICT_TITLE","Number of Pictures");
-define("_MI_PROFILE_NUMBPICT_DESC" ,"Number of pictures a user can have in their page");
+define("_MI_PROFILE_NUMBPICT_TITLE", "Number of Pictures");
+define("_MI_PROFILE_NUMBPICT_DESC", "Number of pictures a user can have in their page. '0' to deactivate check (not recommended).");
 define("_AM_PROFILE_REGSTEPS", "Registration Steps");
 define("_AM_PROFILE_CATEGORYS", "Categories");
 define("_AM_PROFILE_FIELDS", "Fields");
@@ -93,8 +93,8 @@ define("_MI_PROFILE_ENABLETRIBES_DESC","Enabling Tribes section for the users, w
 define("_MI_PROFILE_FRIENDS","My Friends");
 define("_MI_PROFILE_FRIENDS_DESC","This block shows the user friends");
 
-define("_MI_PROFILE_IMGORDER_TITLE", "Pictures Order");
-define("_MI_PROFILE_IMGORDER_DESC", "Show the newest pictures first?");
+define("_MI_PROFILE_IMGORDER_TITLE", "Show latest pictures first?");
+define("_MI_PROFILE_IMGORDER_DESC", "");
 define("_MI_PROFILE_FRIENDSHIP_NOTIFYTIT","Friendships");
 define("_MI_PROFILE_FRIENDSHIP_NOTIFYDSC","Petitions of friendship");
 define("_MI_PROFILE_FRIEND_NEWPETITION_NOTIFY","Petition");

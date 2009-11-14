@@ -96,12 +96,15 @@ if($icmsModuleConfig['profile_social']){
 	$permissions = array();
 	
 	$items = array('audio', 'pictures', 'friendship', 'videos', 'tribes', 'profile_contact', 'profile_stats', 'profile_general', 'profile_usercontributions');
-	foreach($items as $item){
-		$permissions = array_merge($permissions, array($item => getAllowedItems($item, $uid)));
+	foreach ($items as $item) $permissions = array_merge($permissions, array($item => getAllowedItems($item, $uid)));
+	foreach ($permissions as $permission => $value) {
+		if (in_array($permission, array('audio', 'pictures', 'friendship', 'videos', 'tribes'))) {
+			$icmsTpl->assign('allow_'.$permission, $icmsModuleConfig['enable_'.$permission] && $value);
+		} else {
+			$icmsTpl->assign('allow_'.$permission, $value);
+		}
 	}
-	foreach($permissions as $permission => $value){
-		$xoopsTpl->assign('allow_'.$permission, $value);
-	}
+
 	icms_makeSmarty(array(
 		'lang_mysection' => _MD_PROFILE_MYPROFILE,
 		'lang_photos' => _MD_PROFILE_PHOTOS,

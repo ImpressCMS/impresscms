@@ -65,7 +65,7 @@ $videosObj = $profile_videos_handler->get($clean_videos_id);
 $valid_op = array ('mod','addvideos','del','');
 
 $isAllowed = getAllowedItems('videos', $clean_uid);
-if (!$isAllowed) {
+if (!$isAllowed || !$icmsModuleConfig['enable_videos']) {
 	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
 $xoopsTpl->assign('uid_owner',$uid);

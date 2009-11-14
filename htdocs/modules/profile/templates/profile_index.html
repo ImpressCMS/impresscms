@@ -14,7 +14,6 @@
 <{/if}>
 <{/if}>
 <div class="profile-profile-group1">
-<{if $allow_pictures || $allow_friendship}>
 <div id="profile-profile-visual" class="outer">
   <h3 class="profile-profile-title head"><{if $isOwner}><a href="configs.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/configs.gif"  /></a>&nbsp;<{/if}><{$user_name_header}></h3>
   <{if $allow_pictures}>
@@ -38,7 +37,6 @@
   </div>
   <{/if}>
 </div>
-<{/if}>
 <{if $isOwner}>
 <div id="profile-profile-visitors" class="outer">
   <h3 class="head"><{$lang_visitors}></h3>
