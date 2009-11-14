@@ -1066,7 +1066,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='multi_login_msg'");
 		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='use_hidden'");
 		
-		/* HTML purifier options saved incorrectly during upgrade
 	}
 
 	echo "</code>";
