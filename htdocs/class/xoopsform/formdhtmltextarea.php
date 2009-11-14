@@ -21,10 +21,10 @@ if (!defined('ICMS_ROOT_PATH')) {
 /**
  *
  *
- * @package     kernel
+ * @package	 kernel
  * @subpackage  form
  *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @author		Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 /**
@@ -40,7 +40,7 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formtextarea.php";
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  *
- * @package     kernel
+ * @package	 kernel
  * @subpackage  form
  */
 class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
@@ -70,11 +70,11 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	/**
 	 * Constructor
 	 *
-   * @param	string  $caption    Caption
-   * @param	string  $name       "name" attribute
-   * @param	string  $value      Initial text
-   * @param	int     $rows       Number of rows
-   * @param	int     $cols       Number of columns
+   * @param	string  $caption	Caption
+   * @param	string  $name	   "name" attribute
+   * @param	string  $value	  Initial text
+   * @param	int	 $rows	   Number of rows
+   * @param	int	 $cols	   Number of columns
    * @param	string  $hiddentext Hidden Text
 	 */
 	function XoopsFormDhtmlTextArea($caption, $name, $value, $rows=5, $cols=50, $hiddentext="xoopsHiddenText", $options = array() )
@@ -138,38 +138,38 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		}
 		$ele_name = $this->getName();
 		$ret = "<a name='moresmiley'></a>".
-		        "<img onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/url.gif' alt='url' onclick='xoopsCodeUrl(\"".$ele_name."\", \"".htmlspecialchars(_ENTERURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES)."\");' />&nbsp;".
-		        "<img onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/email.gif' alt='email' onclick='javascript:xoopsCodeEmail(\"".$ele_name."\", \"".htmlspecialchars(_ENTEREMAIL, ENT_QUOTES)."\");' />&nbsp;".
-		        "<img onclick='javascript:xoopsCodeImg(\"".$ele_name."\", \"".htmlspecialchars(_ENTERIMGURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES)."\", \"".htmlspecialchars(_IMGPOSRORL, ENT_QUOTES)."\", \"".htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES)."\");' onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/imgsrc.gif' alt='imgsrc' />&nbsp;".
-		        "<img onmouseover='style.cursor=\"pointer\"' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/class/xoopsform/formimage_browse.php?target=".$ele_name."&type=iman\",\"imgmanager\",985,470);' src='".ICMS_URL."/images/image.gif' alt='image' />&nbsp;";
- 			  	$jscript = '';
-	        foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-	        	$extension = $myts->icmsloadExtension($key);
-	        	$func = "render_{$key}";
-	        	if ( function_exists($func) ) {
-	        		@list($encode, $js) = $func($ele_name);
-	        		if (empty($encode)) continue;
-	        		$ret .= $encode;
-	        	}
-	        }
-          $ret .= "<img src='".ICMS_URL."/images/code.gif' onmouseover='style.cursor=\"pointer\"' alt='code' onclick='javascript:xoopsCodeCode(\"".$ele_name."\", \"".htmlspecialchars(_ENTERCODE, ENT_QUOTES)."\");' />&nbsp;".
-          "<img onclick='javascript:xoopsCodeQuote(\"".$ele_name."\", \"".htmlspecialchars(_ENTERQUOTE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/quote.gif' alt='quote' /><br />\n";
-  				$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
-          if ($easiestml_exist) {
-            $easiestml_langs = explode( ',' , EASIESTML_LANGS ) ;
-            $langlocalnames = explode( ',' , EASIESTML_LANGNAMES ) ;
-       			$langnames = explode( ',' , $icmsConfigMultilang['ml_names'] ) ;
+				"<img onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/url.gif' alt='url' onclick='xoopsCodeUrl(\"".$ele_name."\", \"".htmlspecialchars(_ENTERURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERWEBTITLE, ENT_QUOTES)."\");' />&nbsp;".
+				"<img onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/email.gif' alt='email' onclick='javascript:xoopsCodeEmail(\"".$ele_name."\", \"".htmlspecialchars(_ENTEREMAIL, ENT_QUOTES)."\");' />&nbsp;".
+				"<img onclick='javascript:xoopsCodeImg(\"".$ele_name."\", \"".htmlspecialchars(_ENTERIMGURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES)."\", \"".htmlspecialchars(_IMGPOSRORL, ENT_QUOTES)."\", \"".htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES)."\");' onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/imgsrc.gif' alt='imgsrc' />&nbsp;".
+				"<img onmouseover='style.cursor=\"pointer\"' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/class/xoopsform/formimage_browse.php?target=".$ele_name."&type=iman\",\"imgmanager\",985,470);' src='".ICMS_URL."/images/image.gif' alt='image' />&nbsp;";
+				$jscript = '';
+			foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+				$extension = $myts->icmsloadExtension($key);
+				$func = "render_{$key}";
+				if ( function_exists($func) ) {
+					@list($encode, $js) = $func($ele_name);
+					if (empty($encode)) continue;
+					$ret .= $encode;
+				}
+			}
+		  $ret .= "<img src='".ICMS_URL."/images/code.gif' onmouseover='style.cursor=\"pointer\"' alt='code' onclick='javascript:xoopsCodeCode(\"".$ele_name."\", \"".htmlspecialchars(_ENTERCODE, ENT_QUOTES)."\");' />&nbsp;".
+		  "<img onclick='javascript:xoopsCodeQuote(\"".$ele_name."\", \"".htmlspecialchars(_ENTERQUOTE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/quote.gif' alt='quote' /><br />\n";
+				$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
+		  if ($easiestml_exist) {
+			$easiestml_langs = explode( ',' , EASIESTML_LANGS ) ;
+			$langlocalnames = explode( ',' , EASIESTML_LANGNAMES ) ;
+				$langnames = explode( ',' , $icmsConfigMultilang['ml_names'] ) ;
 
-            $code = '' ;
-            $javascript = '' ;
+			$code = '' ;
+			$javascript = '' ;
 
-            foreach( $easiestml_langs as $l => $lang ){
-                $ret .= "<img onclick='javascript:icmsCode_languages(\"".$ele_name."\", \"".htmlspecialchars(sprintf(_ENTERLANGCONTENT, $langlocalnames[$l]), ENT_QUOTES)."\", \"".$lang."\");' onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/flags/".$langnames[$l].".gif' alt='".$langlocalnames[$l]."' />&nbsp;";
-      			}
-      			$ret .= "<br />\n";
-          }
+			foreach( $easiestml_langs as $l => $lang ){
+				$ret .= "<img onclick='javascript:icmsCode_languages(\"".$ele_name."\", \"".htmlspecialchars(sprintf(_ENTERLANGCONTENT, $langlocalnames[$l]), ENT_QUOTES)."\", \"".$lang."\");' onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/flags/".$langnames[$l].".gif' alt='".$langlocalnames[$l]."' />&nbsp;";
+				}
+				$ret .= "<br />\n";
+		  }
 
-    $sizearray = array("xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large");
+	$sizearray = array("xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large");
 		$ret .= "<select id='".$ele_name."Size' onchange='setVisible(\"".$this->_hiddenText."\");setElementSize(\"".$this->_hiddenText."\",this.options[this.selectedIndex].value);'>\n";
 		$ret .= "<option value='SIZE'>"._SIZE."</option>\n";
 		foreach ( $sizearray as $size ) {

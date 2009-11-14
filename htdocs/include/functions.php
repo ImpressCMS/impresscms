@@ -54,7 +54,7 @@ function xoops_header($closehead=true)
 	<script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script>
 	<script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
-	$jscript = '';
+/*	$jscript = '';
 	if(class_exists('XoopsFormDhtmlTextArea')){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 			if(empty($key)) continue;
@@ -76,24 +76,27 @@ function xoops_header($closehead=true)
 			}
 		}
 	}
-
+*/
 	$style_info = '';
-	foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-		if(empty($key)) continue;
-		if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
-			echo '<link rel="stylesheet" media="screen" href="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css" type="text/css" />';
-		}else{
-			$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-			$func = 'style_'.$key;
-			if ( function_exists($func) ) {
-				$style_info = $func();
-				if (!empty($style_info)) {
-					if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
-						echo '<style media="screen" type="text/css">
-						'.$style_info.'
-						</style>';
-					}else{
-						echo '<link rel="stylesheet" media="screen" href="'.$style_info.'" type="text/css" />';
+	if(!empty($icmsConfigPlugins['sanitizer_plugins'])){
+		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+			if( empty( $key ) )
+				continue;
+			if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
+				echo '<link rel="stylesheet" media="screen" href="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css" type="text/css" />';
+			}else{
+				$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+				$func = 'style_'.$key;
+				if ( function_exists($func) ) {
+					$style_info = $func();
+				 	if (!empty($style_info)) {
+			 			if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
+							echo '<style media="screen" type="text/css">
+							'.$style_info.'
+							</style>';
+						}else{
+							echo '<link rel="stylesheet" media="screen" href="'.$style_info.'" type="text/css" />';
+						}
 					}
 				}
 			}

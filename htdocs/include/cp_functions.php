@@ -140,26 +140,28 @@ function icms_cp_header(){
  	}
 */
 	$style_info = '';
-	foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-	   	if( empty( $key ) )
-	   		continue;
-	   	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
-	   		$xoTheme->addStylesheet(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
-	   	}else{
-	   		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-	   		$func = 'style_'.$key;
-	   		if ( function_exists($func) ) {
-	   			$style_info = $func();
-	   		 	if (!empty($style_info)) {
-	   		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
-	   					$xoTheme->addStylesheet('', array('media' => 'screen'), $style_info);
-	   				}else{
-	   					$xoTheme->addStylesheet($style_info, array('media' => 'screen'));
-	   				}
-	   			}
-	   		}
-	   	}
-	  }
+	if(!empty($icmsConfigPlugins['sanitizer_plugins'])){
+		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+			if( empty( $key ) )
+				continue;
+			if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
+				$xoTheme->addStylesheet(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
+			}else{
+				$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+				$func = 'style_'.$key;
+				if ( function_exists($func) ) {
+					$style_info = $func();
+				 	if (!empty($style_info)) {
+			 			if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
+							$xoTheme->addStylesheet('', array('media' => 'screen'), $style_info);
+						}else{
+							$xoTheme->addStylesheet($style_info, array('media' => 'screen'));
+						}
+					}
+				}
+			}
+		}
+	}
 
 	/**
 	 * Loading admin dropdown menus
