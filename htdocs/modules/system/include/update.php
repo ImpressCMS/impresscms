@@ -755,10 +755,10 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		  $host_base = icms_get_url_domain(ICMS_URL);
 
 		  // Allowed Elements in HTML
-		  $HTML_Allowed_Elms = 'a, abbr, acronym, b, blockquote, br, caption, cite, code, dd, del, dfn, div, dl, dt, em, font, h1, h2, h3, h4, h5, h6, i, img, ins, kbd, li, ol, p, pre, s, span, strike, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, tt, u, ul, var';
+		  $HTML_Allowed_Elms = array('a', 'abbr', 'acronym', 'b', 'blockquote', 'br', 'caption', 'cite', 'code', 'dd', 'del', 'dfn', 'div', 'dl', 'dt', 'em', 'font', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'img', 'ins', 'kbd', 'li', 'ol', 'p', 'pre', 's', 'span', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'u', 'ul', 'var');
 
-		  // Allowed Element Attributes in HTML, element must also be allowed in Allowed Elements for these attributes to work.
-		  $HTML_Allowed_Attr = 'a.class, a.href, a.id, a.name, a.rev, a.style, a.title, a.target, a.rel, abbr.title, acronym.title, blockquote.cite, div.align, div.style, div.class, div.id, font.size, font.color, h1.style, h2.style, h3.style, h4.style, h5.style, h6.style, img.src, img.alt, img.title, img.class, img.align, img.style, img.height, img.width, li.style, ol.style, p.style, span.style, span.class, span.id, table.class, table.id, table.border, table.cellpadding, table.cellspacing, table.style, table.width, td.abbr, td.align, td.class, td.id, td.colspan, td.rowspan, td.style, td.valign, tr.align, tr.class, tr.id, tr.style, tr.valign, th.abbr, th.align, th.class, th.id, th.colspan, th.rowspan, th.style, th.valign, ul.style';
+		  // Allowed Element Attributes in HTML', 'element must also be allowed in Allowed Elements for these attributes to work.
+		  $HTML_Allowed_Attr = array('a.class', 'a.href', 'a.id', 'a.name', 'a.rev', 'a.style', 'a.title', 'a.target', 'a.rel', 'abbr.title', 'acronym.title', 'blockquote.cite', 'div.align', 'div.style', 'div.class', 'div.id', 'font.size', 'font.color', 'h1.style', 'h2.style', 'h3.style', 'h4.style', 'h5.style', 'h6.style', 'img.src', 'img.alt', 'img.title', 'img.class', 'img.align', 'img.style', 'img.height', 'img.width', 'li.style', 'ol.style', 'p.style', 'span.style', 'span.class', 'span.id', 'table.class', 'table.id', 'table.border', 'table.cellpadding', 'table.cellspacing', 'table.style', 'table.width', 'td.abbr', 'td.align', 'td.class', 'td.id', 'td.colspan', 'td.rowspan', 'td.style', 'td.valign', 'tr.align', 'tr.class', 'tr.id', 'tr.style', 'tr.valign', 'th.abbr', 'th.align', 'th.class', 'th.id', 'th.colspan', 'th.rowspan', 'th.style', 'th.valign', 'ul.style');
 
 		  $p = 0;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'enable_purifier', '_MD_AM_PURIFIER_ENABLE', '1', '_MD_AM_PURIFIER_ENABLEDSC', 'yesno', 'int', $p);
@@ -806,9 +806,9 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			   return false;
 		  }
 
-		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_AllowedElements', '_MD_AM_PURIFIER_HTML_ALLOWELE', addslashes(serialize(array($HTML_Allowed_Elms))), '_MD_AM_PURIFIER_HTML_ALLOWELEDSC', 'textsarea', 'array', $p);
+		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_AllowedElements', '_MD_AM_PURIFIER_HTML_ALLOWELE', addslashes(serialize($HTML_Allowed_Elms)), '_MD_AM_PURIFIER_HTML_ALLOWELEDSC', 'textsarea', 'array', $p);
 		  $p++;
-		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_AllowedAttributes', '_MD_AM_PURIFIER_HTML_ALLOWATTR', addslashes(serialize(array($HTML_Allowed_Attr))), '_MD_AM_PURIFIER_HTML_ALLOWATTRDSC', 'textsarea', 'array', $p);
+		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_AllowedAttributes', '_MD_AM_PURIFIER_HTML_ALLOWATTR', addslashes(serialize($HTML_Allowed_Attr)), '_MD_AM_PURIFIER_HTML_ALLOWATTRDSC', 'textsarea', 'array', $p);
 		  $p++;
 		  $icmsDatabaseUpdater->insertConfig(ICMS_CONF_PURIFIER, 'purifier_HTML_ForbiddenElements', '_MD_AM_PURIFIER_HTML_FORBIDELE', '', '_MD_AM_PURIFIER_HTML_FORBIDELEDSC', 'textsarea', 'array', $p);
 		  $p++;
@@ -946,7 +946,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	$newDbVersion = 33;
 	/*
 	 * New symlinks need to be added to the db
-	 * @todo Create language constants for the page names
 	 */
 	if ($dbVersion < $newDbVersion) {
 		echo sprintf (_CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local($newDbVersion));
@@ -1066,6 +1065,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		/* Removing the option for multilogin text, as we're using a constant for it */
 		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='multi_login_msg'");
 		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='use_hidden'");
+		
+		/* HTML purifier options saved incorrectly during upgrade
 	}
 
 	echo "</code>";
