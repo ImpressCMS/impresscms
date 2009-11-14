@@ -8,7 +8,7 @@ define('_INVALID_ADMIN_FUNCTION', 'Invalid Admin Function');
 define('_MD_AM_ADGS','Groups');
 define('_MD_AM_BANS','Banners');
 define('_MD_AM_BKAD','Blocks');
-define('_MD_AM_MDAD','Modules');
+define('_MD_AM_MDAD','Modules Admin');
 define('_MD_AM_SMLS','Smilies');
 define('_MD_AM_RANK','User Ranks');
 define('_MD_AM_USER','Edit Users');
