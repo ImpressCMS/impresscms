@@ -1312,7 +1312,7 @@ class Smarty
 							$patterns [] = '/' . $email . '/';
 							$replacements [] = "<img src='" . XOOPS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
 							} // uses gd protection methode.
-							elseif($protection_type == 2 && isset($xoopsConfigPersona['recprvkey']) && $xoopsConfigPersona['recprvkey'] != '' && isset($xoopsConfigPersona['recpubkey']) && $xoopsConfigPersona['recpubkey'] != ''){
+							elseif($protection_type == 2 && function_exists ('mcrypt_encrypt') && isset($xoopsConfigPersona['recprvkey']) && $xoopsConfigPersona['recprvkey'] != '' && isset($xoopsConfigPersona['recpubkey']) && $xoopsConfigPersona['recpubkey'] != ''){
 							require_once ICMS_LIBRARIES_PATH.'/recaptcha/recaptchalib.php';
 							$patterns [] = '/' . $email . '/';
 							$replacements [] = recaptcha_mailhide_html ($xoopsConfigPersona['recpubkey'], $xoopsConfigPersona['recprvkey'], $email);;
@@ -1358,7 +1358,7 @@ class Smarty
 							$patterns [] = '/' . $email . '/';
 							$replacements [] = "<img src='" . XOOPS_URL . "/include/protection.php?p=" . base64_encode ( urlencode ( $email ) ) . "'>";
 							} // uses gd protection methode.
-							elseif($protection_type == 2 && isset($xoopsConfigPersona['recprvkey']) && $xoopsConfigPersona['recprvkey'] != '' && isset($xoopsConfigPersona['recpubkey']) && $xoopsConfigPersona['recpubkey'] != ''){
+							elseif($protection_type == 2 && function_exists ('mcrypt_encrypt') && isset($xoopsConfigPersona['recprvkey']) && $xoopsConfigPersona['recprvkey'] != '' && isset($xoopsConfigPersona['recpubkey']) && $xoopsConfigPersona['recpubkey'] != ''){
 							require_once ICMS_LIBRARIES_PATH.'/recaptcha/recaptchalib.php';
 							$patterns [] = '/' . $email . '/';
 							$replacements [] = recaptcha_mailhide_html ($xoopsConfigPersona['recpubkey'], $xoopsConfigPersona['recprvkey'], $email);;
