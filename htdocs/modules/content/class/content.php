@@ -453,7 +453,8 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 	
 	public function __construct(& $db) {
 		$this->IcmsPersistableObjectHandler ( $db, 'content', 'content_id', 'content_title', 'content_body', 'content' );
-		
+
+		icms_loadLanguageFile('content', 'common');
 		$this->addPermission ( 'content_read', _CO_CONTENT_CONTENT_READ, _CO_CONTENT_CONTENT_READ_DSC );
 	}
 	
