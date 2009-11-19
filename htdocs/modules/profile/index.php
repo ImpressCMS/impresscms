@@ -143,7 +143,7 @@ icms_makeSmarty(array(
 // passing user information to smarty
 $icmsTpl->assign('show_empty', $icmsModuleConfig['show_empty']);
 $icmsTpl->assign('user_name_header', $owner_name);
-$icmsTpl->assign('uid_owner',$uid);
+$icmsTpl->assign('uid_owner', $uid);
 $icmsTpl->assign('section_name', _MD_PROFILE_PROFILE);
 $icmsTpl->assign('user_uname', $thisUser->getVar('uname'));
 $icmsTpl->assign('user_realname', $thisUser->getVar('name'));
