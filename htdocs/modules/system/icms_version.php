@@ -34,8 +34,8 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "RC1",
-	'status'=> "RC1",
+	'status_version'=> "Final",
+	'status'=> "Final",
 	'date'=> "",
 	'author_word'=> "",
 
@@ -214,7 +214,7 @@ if (function_exists('xoops_gethandler')){
 		'edit_func' => 'b_content_menu_edit',
 		'options' => 'content_weight|ASC|1|#F2E2A0|0',
 		'template' => 'system_block_contentmenu.html');
-	
+
 	$modversion['blocks'][] = array(
 		'file' => 'content_blocks.php',
 		'name' => _MI_SYSTEM_BNAME17,

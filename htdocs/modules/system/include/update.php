@@ -1065,8 +1065,10 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		/* Removing the option for multilogin text, as we're using a constant for it */
 		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='multi_login_msg'");
 		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='use_hidden'");
-		
+
 	}
+
+/* 1.2 RC1 release */
 
 	echo "</code>";
 

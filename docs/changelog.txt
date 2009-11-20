@@ -1,7 +1,11 @@
 ImpressCMS ChangeLog
+=== ImpressCMS 1.2 Final ===
+Release date:
+Revision:
+
 === ImpressCMS 1.2 RC 1 ===
 Release date: 20 Nov 2009
-Revision:
+Revision: 9581
 
 * #48: unserialize() [function.unserialize]: Error (Phoenyx/skenow/Stranger)
 * #824: Profile Blank Page after perms (phoenyx)
