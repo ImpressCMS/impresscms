@@ -17,6 +17,22 @@ Please see the full [[Change Log]] for details in docs/changelog.txt.
 *Web server
 **    Any server supporting the required PHP version (Apache highly recommended)
 
+==Changes==
+
+'''Added'''
+* #793: blocks do not consider the gravatar (Phoenyx)
+
+'''Improved'''
+* #805: system search template not ML compliant (Stranger/Underdog/Davidl2/Fiammybe)
+* #621: the layout of the social bookmark block should be changed as it is too wide (Phoenyx)	Phoenyx
+* #802: Updating Protector in trunk to 3.4 (m0nty)
+* #751: cleanup admin preferences pages (Vaughan/Phoenyx)
+* #776: search: system module (hassearch, installer) + hide modules if no results are there (phoenyx)
+* #751: cleanup admin preferences pages (Vaughan/Phoenyx)
+
+'''Fixed'''
+* #48: unserialize() [function.unserialize]: Error (Phoenyx/Skenow/Stranger)
+
 ==Downloading ImpressCMS==
 
 This release can be downloaded from the [https://sourceforge.net/project/showfiles.php?group_id=205633&package_id=245707&release_id=667407 ImpressCMS SourceForge project page].
