@@ -1,45 +1,53 @@
 ImpressCMS ChangeLog
 === ImpressCMS 1.2 RC 1 ===
-Release date:
+Release date: 20 Nov 2009
 Revision:
 
-'''Improved'''
-* #333: imProfile: added information on upload_max_size to upload config value descriptions | ticket from addons (Phoenyx)
-* #322: imProfile: added "no content" messages to all content views | ticket from addons (Phoenyx)
-* #---: introducing new IPF events beforeFileUnlink and afterFileUnlink (Phoenyx)
-* #353: imProfile: tribes can be searched again | ticket from addons (Phoenyx)
-* #360: content: Nicer templates + icons for the content module. close (sato-san)
-* #---: activating bbcode by default in TinyMCE (MrTheme/David)
-* #793: showing gravatar in blocks: New Members + Top Posters (Phoenyx)
-
-'''Fixed'''
-* #341: imProfile: don't show profile for inactive users | tickets from addons (Phoenyx)
-* #776: fixed some issues with the search functionality (Phoenyx)
-* #621: fixed layout issue with social bookmark block and removed addto library (Phoenyx)
-* #275: imProfile: restored friendship handling | ticket from addons (Phoenyx)
-* #327: imProfile: fixed block My Friends | ticket from addons (Phoenyx)
-* #325: imProfile: only accepted friendships are on the index view now | ticket from addons (Phoenyx)
-* #347: imProfile: videos can now be deleted from the frontend | ticket from addons (Phoenyx)
-* #252: imProfile: fixed display issue in user administration | ticket from addons (Phoenyx)
-* #290: imProfile: added missing field types rank and theme to fields class | ticket from addons (Phoenyx)
-* #320: imProfile: OpenID is editable now | ticket from addons (Phoenyx)
-* #273: imProfile: fixed several wrong column value links in CP view | tickets from addons (Phoenyx)
-* #307: imProfile: thumb and resized pictures are deleted when deleting or replacing the tribe image | ticket from addons (Phoenyx)
-* #308: imProfile: when editing a picture you can no longer delete or replace it | ticket from addons (Phoenyx)
-* #783: fixed OpenID Login switcher (Phoenyx)
-* #787: Properly modifies the imagecategory table during an upgrade from previous versions (skenow)
-* #351: imProfile: fixed field option handling on search form | ticket from addons (Phoenyx)
-* #790: Adding new symlinks during upgrade (skenow)
-* #788: Setting control panel blocks to visible (skenow)
-* #791: Error during upgrade (dbversion 29) - alter table conf (skenow)
-* #794: HTMLPurifier options missing after upgrade (skenow)
-* #543: Block positions don't sort by title (skenow)
-* #792: Old system waiting block not deleted (skenow)
-* #795: removing clear text password from mail template (skenow)
-* #769: Autotasks: crontab can't start but it displayed as avaible (mekdrop)
+* #48: unserialize() [function.unserialize]: Error (Phoenyx/Skenow/Stranger)
+* #824: Profile Blank Page after perms (phoenyx)
+* #826: HTML Purifier options created incorrectly during upgrade (skenow)
+* #820: ACP assigned as start page for all groups during upgrade (skenow/Stranger)
+* #527: reCAPTCHA Mailhide (pesianstranger)
+* #596: Plugin hiddencontent = problem with: Preferences Main »» Personalization »» Hide content tag (Phoenyx/Stranger/Sato)
+* #805: system search template not ML compliant (Stranger/Underdog/Davidl2/Fiammybe)
+* #646: missing language definition _MD_AM_DBUPDATED (image manager) (Stranger/Underdog)
+* #823: Organizing language files (pesianstranger)
+* #719: IPF: initial settings for uploader (mime other than image type) (phoenyx/Skenow/Marcan)
+* #821: HTMLpurifier cache path is not created during an upgrade (skenow)
+* #789: installer + icmsConfig (Skeno/Stranger/fiammybe)
+* #784: Block admin - options are not available to edit (malanciault/Phoenyx/Skenow/underdog/wtravel)
+* #621: the layout of the social bookmark block should be changed as it is too wide (Phoenyx)
+* #579: New block files causes modules not to function correctly (skenow)
+* #747: I can not create a new category in the image Manager (Skenow/Underdog)
+* #748: Preferences: User Settings > Welcome Message is converted to HTML (underdog/Skenow)
+* #558: Make image manager use jQuery instead of prototype! (Skenow/MrTheme)
+* #404: Permission issues with image manager. (Underdog)
+* #625: dhtml editor shows line breaks as html (maybe same as #624) (Skenow/Underdog)
+* #650: Image manager cannot handle bitmaps (skenow/Phoenyx)
+* #803: installer do not copy the ".htaccess" from protector (Vaughan/Underdog)
+* #793: blocks do not consider the gravatar (Phoenyx)
+* #792: Old waiting content block is not properly deleted during upgrade (skenow)
+* #811: Autotasks not allways execute oldest task that needs execution + autotask code check not working (mekdrop)
+* #810: Autotasks doesn't work when site is turned off (mekdrop)
 * #779: try add/remove autotasks for module when module has no autotasks items (mekdrop)
-* #810: autotasks doesn't work when site is turned off (mekdrop)
-* #811: autotasks not always execute oldest task that needs execution (mekdrop)
+* #769: AUTOTASKS: crontab can't start but it displayed as avaible (mekdrop)
+* #712: admin-theme: Warnung: Smarty error: unable to read resource (skenow)
+* #802: Updating Protector in trunk to 3.4 (m0nty)
+* #718: Upgrader: needs update to 1.2 (phoenyx/Skenow/Stranger)
+* #801: content menu does not show all items to anonymous users (wtravel)
+* #795: Never, ever send clear text passwords in an email (skenow)
+* #543: Block position bug - sort by title (nekro/Skenow)
+* #794: Missing HTMLPurifier options in upgrade (skenow)
+* #758: Userrank - IPF improvements needed (skenow)
+* #791: Error modifying table conf during upgrade (Phoenyx)
+* #790: Admin Symlinks are not added during an upgrade (Phoenyx)
+* #788: Admin Control Panel is empty after upgrade (Phoenyx)
+* #787: Upgrade does not properly modify the imagecategory table (skenow)
+* #783: OpenID + Content-Manager (Phoenyx)
+* #751: cleanup admin preferences pages (Vaughan/Phoenyx)
+* #777: debug not active unless guest access allowed (Vaughan)
+* #776: search: system module (hassearch, installer) + hide modules if no results are there (phoenyx)
+
 
 === Impresscms 1.2 Beta ===
 Release date: 5 Sep 2009
@@ -203,7 +211,7 @@ Revision: 9336
 * #619: Parse error in /trust_path/modules/oninstall.php. (UnderDog)
 * #626: trying to edit the "waiting contents" block results in: Fatal error: Call to undefined function b_system_waiting_edit(). (UnderDog)
 
-===2009-06-05 : 1.2 Alpha 2 === 
+===2009-06-05 : 1.2 Alpha 2 ===
 
 '''Added'''
 * #580: Adding protector as a part of core modules. (stranger)
