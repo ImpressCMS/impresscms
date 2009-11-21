@@ -25,8 +25,9 @@ Download latest version here: http://xoops.peak.ne.jp/modules/mydownloads/single
 Installation
 ----------------------------------
 
-Overwrite the file /path/of/your/site/preload/protector.php with the protector.php file in this extra/preload/
+Overwrite the file /path/of/your/site/plugins/preload/protector.php with the protector.php file in this extra/preload/
 
+!!!DO NOT UPLOAD THIS README FILE - IT WILL CAUSE YOUR SITE TO ENCOUNTER ERRORS!!!
 ==================================
 The ImpressCMS Project
 http://www.impresscms.org
