@@ -50,7 +50,7 @@ define("_AM_ADV_ALLOWURLFOPEN","This setting allows attackers to execute arbitra
 define("_AM_ADV_USETRANSSID","Your Session ID will be diplayed in anchor tags etc.<br />For preventing from session hi-jacking, add a line into .htaccess in XOOPS_ROOT_PATH.<br /><b>php_flag session.use_trans_sid off</b>");
 define("_AM_ADV_DBPREFIX","This setting invites 'SQL Injections'.<br />Don't forget turning 'Force sanitizing *' on in this module's preferences.");
 define("_AM_ADV_LINK_TO_PREFIXMAN","Go to prefix manager");
-define("_AM_ADV_MAINUNPATCHED","You should edit your mainfile.php like written in README.");
+define("_AM_ADV_MAINUNPATCHED","Please upload the protector.php file located in the <strong>extras</strong> folder of the ImpressCMS package to ".XOOPS_URL."/plugins/preloads/.");
 define("_AM_ADV_DBFACTORYPATCHED","Your databasefactory is ready for DBLayer Trapping anti-SQL-Injection");
 define("_AM_ADV_DBFACTORYUNPATCHED","Your databasefactory is not ready for DBLayer Trapping anti-SQL-Injection. Some patches are required.");
 
