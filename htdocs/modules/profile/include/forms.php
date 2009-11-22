@@ -85,7 +85,7 @@ function getRegisterForm(&$user, $profile, $next_step = 0, $step) {
         $title = isset($categories[$k]) ? $categories[$k]['cat_title'] : _PROFILE_MA_DEFAULT;
         $desc = isset($categories[$k]) ? $categories[$k]['cat_description'] : "";
           $reg_form->insertBreak($title, 'head');
-        $reg_form->addElement(new XoopsFormLabel("<h2>".$title."</h2>", $desc), false);
+        $reg_form->addElement(new XoopsFormLabel($title, $desc), false);
         foreach (array_keys($elements[$k]) as $i) {
             $reg_form->addElement($elements[$k][$i]['element'], $elements[$k][$i]['required']);
         }
@@ -279,7 +279,7 @@ function getUserForm(&$user, $profile = false, $action = false) {
         array_multisort($weights[$k], SORT_ASC, array_keys($elements[$k]), SORT_ASC, $elements[$k]);
         $title = isset($categories[$k]) ? $categories[$k]['cat_title'] : _PROFILE_MA_DEFAULT;
         $desc = isset($categories[$k]) ? $categories[$k]['cat_description'] : "";
-        $form->addElement(new XoopsFormLabel("<h2>".$title."</h2>", $desc), false);
+        $form->addElement(new XoopsFormLabel($title, $desc), false);
         foreach (array_keys($elements[$k]) as $i) {
             $form->addElement($elements[$k][$i]['element'], $elements[$k][$i]['required']);
         }

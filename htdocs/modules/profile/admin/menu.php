@@ -75,7 +75,7 @@ if (isset($icmsModule)) {
 
 	$i++;
 	$headermenu[$i]['title'] = _CO_ICMS_UPDATE_MODULE;
-	$headermenu[$i]['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $icmsModule->getVar('dirname');
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=' . $icmsModule->getVar('dirname');
 
 	$i++;
 	$headermenu[$i]['title'] = _MODABOUT_ABOUT;

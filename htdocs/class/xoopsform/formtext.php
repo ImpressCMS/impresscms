@@ -115,7 +115,7 @@ class XoopsFormText extends XoopsFormElement
 	*/
 	function render()
 	{
-		return "<input type='text' name='".$this->getName()."' id='".$this->getName()."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".$this->getValue()."'".$this->getExtra()." ".($this->autoComplete ? "" : "autocomplete='off' ")."/>";
+		return "<input type='text' name='".$this->getName()."' id='".$this->getName()."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".$this->getValue()."'".$this->getExtra()." />";
 	}
 }
 

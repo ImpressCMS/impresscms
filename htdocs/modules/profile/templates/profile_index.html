@@ -3,7 +3,7 @@
 <{if $hideForm}>
 <div class="profile-form outer">
   <h2 class="head">
-    <a href="#" onclick ="jQuery().find('div.profile-friendship-form').toggle(400);"><img src="images/toggle.gif" /></a>&nbsp;<{$lang_friendshipform_title}>
+    <a href="#" onclick ="jQuery().find('div.profile-friendship-form').toggle(400);"><img src="images/toggle.gif" alt="" /></a>&nbsp;<{$lang_friendshipform_title}>
   </h2>
   <div class="profile-friendship-form" style="display: none">
     <{includeq file='db:system_common_form.html' form=$profile_friendshipform}>
@@ -17,11 +17,11 @@
 <div class="profile-profile-group1">
   <{if $user_name_header}>
   <div id="profile-profile-visual" class="outer">
-    <h3 class="profile-profile-title head"><{if $isOwner}><a href="configs.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/configs.gif"  /></a>&nbsp;<{/if}><{$user_name_header}></h3>
+    <h3 class="profile-profile-title head"><{if $isOwner}><a href="configs.php?uid=<{$uid_owner}>"><img class="profile-nav-bar-icon" src="images/configs.gif" alt="" /></a>&nbsp;<{/if}><{$user_name_header}></h3>
     <{if $allow_pictures}>
     <div id="profile-profile-avatar">
       <{if $user_avatar}>
-      <img src="<{$user_avatar}>" />
+      <img src="<{$user_avatar}>" alt="" />
       <{if $isOwner && !$gravatar}>
       <br />
       <form action="<{$icms_url}>/modules/profile/pictures.php" method="post" id="avatarform" class="profile-quickform">
@@ -33,7 +33,7 @@
       <p><{$lang_selectavatar}></p>
       <{/if}>
       <{else}>
-      <img src="images/noavatar.gif" />
+      <img src="images/noavatar.gif" alt="" />
       <{if $isOwner && $allow_avatar_upload}><p><{$lang_selectavatar}></p><{/if}>
       <{/if}>
     </div>
@@ -52,41 +52,41 @@
   </div>
   <{/if}>
   <{if $allow_profile_general}>
-  <div id="profile-profile-details" class="outer">
+  <div class="profile-profile-details outer">
     <{cycle values='even,odd' print=false reset=true advance=false}>
-    <h3 class="profile-profile-title head"><{if $isOwner}><a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" /></a>&nbsp;<{/if}><{$lang_detailsinfo}></h3>
-    <{if $show_empty || $user_uname}><p class="<{cycle values='even,odd'}>"><img src="images/username.gif" /><span class="profile-profileinfo-label"><{$lang_uname}>:</span><span class="profile-profileinfo-value"><{$user_uname}></span></p><{/if}>
-    <{if $show_empty || $user_realname}><p class="<{cycle values='even,odd'}>"><img src="images/username.gif" /><span class="profile-profileinfo-label"><{$lang_realname}>:</span><span class="profile-profileinfo-value"><{$user_realname}></span></p><{/if}>
-    <{if $show_empty || $openid}><p class="<{cycle values='even,odd'}>"><img src="images/openid.gif" /><span class="profile-profileinfo-label"><{$lang_openid}>:</span><span class="profile-profileinfo-value"><{$openid}></span></p><{/if}>
-    <{if $show_empty || $user_location}><p class="<{cycle values='even,odd'}>"><img src="images/house.gif" /><span class="profile-profileinfo-label"><{$lang_location}>:</span><span class="profile-profileinfo-value"><{$user_location}></span><a href="http://maps.google.com/?q=<{$user_location}>" target="_blank" ><img src="images/mapsgoogle.gif" /></a></p><{/if}>
-    <{if $show_empty || $user_occupation}><p class="<{cycle values='even,odd'}>"><img src="images/occ.gif" /><span class="profile-profileinfo-label"><{$lang_occupation}>:</span><span class="profile-profileinfo-value"><{$user_occupation}></span></p><{/if}>
-    <{if $show_empty || $user_interest}><p class="<{cycle values='even,odd'}>"><img src="images/interests.gif" /><span class="profile-profileinfo-label"><{$lang_interest}>:</span><span class="profile-profileinfo-value"><{$user_interest}></span></p><{/if}>
-    <{if $show_empty || $user_extrainfo}><p class="<{cycle values='even,odd'}>"><img src="images/bio.gif" /><span class="profile-profileinfo-label"><{$lang_extrainfo}>:</span></p><{/if}>
+    <h3 class="profile-profile-title head"><{if $isOwner}><a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" alt="" /></a>&nbsp;<{/if}><{$lang_detailsinfo}></h3>
+    <{if $show_empty || $user_uname}><p class="<{cycle values='even,odd'}>"><img src="images/username.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_uname}>:</span><span class="profile-profileinfo-value"><{$user_uname}></span></p><{/if}>
+    <{if $show_empty || $user_realname}><p class="<{cycle values='even,odd'}>"><img src="images/username.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_realname}>:</span><span class="profile-profileinfo-value"><{$user_realname}></span></p><{/if}>
+    <{if $show_empty || $openid}><p class="<{cycle values='even,odd'}>"><img src="images/openid.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_openid}>:</span><span class="profile-profileinfo-value"><{$openid}></span></p><{/if}>
+    <{if $show_empty || $user_location}><p class="<{cycle values='even,odd'}>"><img src="images/house.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_location}>:</span><span class="profile-profileinfo-value"><{$user_location}></span><a href="http://maps.google.com/?q=<{$user_location}>" target="_blank" ><img src="images/mapsgoogle.gif" alt="" /></a></p><{/if}>
+    <{if $show_empty || $user_occupation}><p class="<{cycle values='even,odd'}>"><img src="images/occ.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_occupation}>:</span><span class="profile-profileinfo-value"><{$user_occupation}></span></p><{/if}>
+    <{if $show_empty || $user_interest}><p class="<{cycle values='even,odd'}>"><img src="images/interests.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_interest}>:</span><span class="profile-profileinfo-value"><{$user_interest}></span></p><{/if}>
+    <{if $show_empty || $user_extrainfo}><p class="<{cycle values='even,odd'}>"><img src="images/bio.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_extrainfo}>:</span></p><{/if}>
     <{if $user_extrainfo}><p class="profile-profileinfo-valuebigtext <{cycle values='even,odd'}>"><{$user_extrainfo}></p><{/if}>
   </div>
   <{/if}>
   <{if $allow_profile_contact}>
-  <div id="profile-profile-details" class="outer">
+  <div class="profile-profile-details outer">
     <{cycle values='even,odd' print=false reset=true advance=false}>
-    <h3 class="profile-profile-title head"><{if $isOwner}><a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" /></a>&nbsp;<{/if}><{$lang_contactinfo}></h3>
-    <{if $show_empty || $user_websiteurl}><p class="<{cycle values='even,odd'}>"><img src="images/url.gif" /><span class="profile-profileinfo-label"><{$lang_website}>:</span><span class="profile-profileinfo-value"><{$user_websiteurl}></span></p><{/if}>
-    <{if $isAnonym!=1 && $user_email}><p class="<{cycle values='even,odd'}>"><img src="images/email.gif" /><span class="profile-profileinfo-label"><{$lang_email}>:</span><span class="profile-profileinfo-value"><{mailto address=$user_email encode="javascript"}></span></p><{/if}>
-    <{if $isAnonym!=1 && $isOwner!=1}><p class="<{cycle values='even,odd'}>"><img src="images/email.gif" /><span class="profile-profileinfo-label"><{$lang_privmsg}>:</span><span class="profile-profileinfo-value"><a href="javascript:openWithSelfMain('<{$icms_url}>/pmlite.php?send2=1&amp;to_userid=<{$uid_owner}>', 'pmlite', 450, 380);"><img src="<{$icms_url}>/images/icons/pm.gif" alt="Send Private Message to suico" /></a></span></p><{/if}>
-    <{if $show_empty || $user_aim}><p class="<{cycle values='even,odd'}>"><img src="images/aim.gif" /><span class="profile-profileinfo-label"><{$lang_aim}>:</span><span class="profile-profileinfo-value"><{$user_aim}></span></p><{/if}>
-    <{if $show_empty || $user_icq}><p class="<{cycle values='even,odd'}>"><img src="images/icq.gif" /><span class="profile-profileinfo-label"><{$lang_icq}>:</span><span class="profile-profileinfo-value"><{$user_icq}></span><img src="http://status.icq.com/online.gif?icq=<{$user_icq}>&img=21" /></p><{/if}>
-    <{if $show_empty || $user_msnm}><p class="<{cycle values='even,odd'}>"><img src="images/amsn.gif" /><span class="profile-profileinfo-label"><{$lang_msnm}>:</span><span class="profile-profileinfo-value"><{$user_msnm}></span></p><{/if}>
-    <{if $show_empty || $user_yim}><p class="<{cycle values='even,odd'}>"><img src="images/ym.gif" /><span class="profile-profileinfo-label"><{$lang_yim}>:</span><span class="profile-profileinfo-value"><{$user_yim}></span></p><{/if}>
+    <h3 class="profile-profile-title head"><{if $isOwner}><a href="edituser.php" title="<{$lang_editprofile}>" ><img src="images/edit.gif" alt="" /></a>&nbsp;<{/if}><{$lang_contactinfo}></h3>
+    <{if $show_empty || $user_websiteurl}><p class="<{cycle values='even,odd'}>"><img src="images/url.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_website}>:</span><span class="profile-profileinfo-value"><{$user_websiteurl}></span></p><{/if}>
+    <{if $isAnonym!=1 && $user_email}><p class="<{cycle values='even,odd'}>"><img src="images/email.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_email}>:</span><span class="profile-profileinfo-value"><{mailto address=$user_email encode="javascript"}></span></p><{/if}>
+    <{if $isAnonym!=1 && $isOwner!=1}><p class="<{cycle values='even,odd'}>"><img src="images/email.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_privmsg}>:</span><span class="profile-profileinfo-value"><a href="javascript:openWithSelfMain('<{$icms_url}>/pmlite.php?send2=1&amp;to_userid=<{$uid_owner}>', 'pmlite', 450, 380);"><img src="<{$icms_url}>/images/icons/pm.gif" alt="Send Private Message" /></a></span></p><{/if}>
+    <{if $show_empty || $user_aim}><p class="<{cycle values='even,odd'}>"><img src="images/aim.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_aim}>:</span><span class="profile-profileinfo-value"><{$user_aim}></span></p><{/if}>
+    <{if $show_empty || $user_icq}><p class="<{cycle values='even,odd'}>"><img src="images/icq.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_icq}>:</span><span class="profile-profileinfo-value"><{$user_icq}></span><img src="http://status.icq.com/online.gif?icq=<{$user_icq}>&img=21" alt="" /></p><{/if}>
+    <{if $show_empty || $user_msnm}><p class="<{cycle values='even,odd'}>"><img src="images/amsn.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_msnm}>:</span><span class="profile-profileinfo-value"><{$user_msnm}></span></p><{/if}>
+    <{if $show_empty || $user_yim}><p class="<{cycle values='even,odd'}>"><img src="images/ym.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_yim}>:</span><span class="profile-profileinfo-value"><{$user_yim}></span></p><{/if}>
   </div>
   <{/if}>
   <{if $allow_profile_stats}>
   <div id="profile-profile-statistics" class="outer">
     <{cycle values='even,odd' print=false reset=true advance=false}>
     <h3 class="profile-profiletitle head"><{$lang_statistics}></h3>
-    <p class="<{cycle values='even,odd' reset=true}>"><img src="images/birthday.gif" /><span class="profile-profileinfo-label"><{$lang_membersince}>:</span><span class="profile-profileinfo-value"><{$user_joindate}></span></p>
-    <p class="<{cycle values='even,odd'}>"><img src="images/rank.gif" /><span class="profile-profileinfo-label"><{$lang_rank}>:</span><span class="profile-profileinfo-value"><{$user_rankimage}> <{$user_ranktitle}></span></p>
-    <p class="<{cycle values='even,odd'}>"><img src="images/comments.gif" /><span class="profile-profileinfo-label"><{$lang_posts}>:</span><span class="profile-profileinfo-value"><{$user_posts}></span></p>
-    <{if $show_empty || $user_lastlogin}><p class="<{cycle values='even,odd'}>"><img src="images/clock.gif" /><span class="profile-profileinfo-label"><{$lang_lastlogin}>:</span><span class="profile-profileinfo-value"><{$user_lastlogin}></span></p><{/if}>
-    <{if $show_empty || $user_signature}><p class="<{cycle values='even,odd'}>"><img src="images/signature.gif" /><span class="profile-profileinfo-label"><{$lang_signature}>:</span></p><{/if}>
+    <p class="<{cycle values='even,odd' reset=true}>"><img src="images/birthday.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_membersince}>:</span><span class="profile-profileinfo-value"><{$user_joindate}></span></p>
+    <p class="<{cycle values='even,odd'}>"><img src="images/rank.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_rank}>:</span><span class="profile-profileinfo-value"><{$user_rankimage}> <{$user_ranktitle}></span></p>
+    <p class="<{cycle values='even,odd'}>"><img src="images/comments.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_posts}>:</span><span class="profile-profileinfo-value"><{$user_posts}></span></p>
+    <{if $show_empty || $user_lastlogin}><p class="<{cycle values='even,odd'}>"><img src="images/clock.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_lastlogin}>:</span><span class="profile-profileinfo-value"><{$user_lastlogin}></span></p><{/if}>
+    <{if $show_empty || $user_signature}><p class="<{cycle values='even,odd'}>"><img src="images/signature.gif" alt="" /><span class="profile-profileinfo-label"><{$lang_signature}>:</span></p><{/if}>
     <{if $user_signature}><p class="profile-profileinfo-valuebigtext <{cycle values='even,odd'}>"><{$user_signature}></p><{/if}>
   </div>
   <{/if}>
@@ -96,7 +96,7 @@
     <{foreach item=module from=$modules name="search_results"}>
     <div class="profile-profile-search-module" id="profile-profile-search-module-<{$smarty.foreach.search_results.iteration}>" >
       <h4 class="profile-profiletitle head">
-        <a class="profile-profile-search-module-title" id="profile-profile-search-module-title-<{$smarty.foreach.search_results.iteration}>" onclick ="$('#profile-profile-search-module-results-<{$smarty.foreach.search_results.iteration}>').toggle(400);" style="cursor:pointer;"><img src="images/toggle.gif" /></a>
+        <a class="profile-profile-search-module-title" id="profile-profile-search-module-title-<{$smarty.foreach.search_results.iteration}>" onclick ="$('#profile-profile-search-module-results-<{$smarty.foreach.search_results.iteration}>').toggle(400);" style="cursor:pointer;"><img src="images/toggle.gif" alt="" /></a>
         <{$module.name}>
       </h4>
       <div class="profile-profile-search-module-results" id="profile-profile-search-module-results-<{$smarty.foreach.search_results.iteration}>">
@@ -121,7 +121,7 @@
   <{if $allow_pictures}>
   <div id="profile-profile-pictures" class="outer">
     <h3 class="profile-profiletitle head">
-      <a href="pictures.php?uid=<{$uid_owner}>"><img src="images/lphoto.gif" title="<{$lang_pictures_goto}>" /></a>
+      <a href="pictures.php?uid=<{$uid_owner}>"><img src="images/lphoto.gif" alt="<{$lang_pictures_goto}>" /></a>
       <{$lang_photos}>
     </h3>
     <{if $pictures|@count > 0}>
@@ -140,7 +140,7 @@
   <{if $allow_tribes}>
   <div id="profile-profile-tribes" class="outer">
     <h3 class="head">
-      <a href="tribes.php?uid=<{$uid_owner}>"><img src="images/tribes.gif" title="<{$lang_tribes_goto}>" /></a>
+      <a href="tribes.php?uid=<{$uid_owner}>"><img src="images/tribes.gif" alt="<{$lang_tribes_goto}>" /></a>
       <{$lang_tribes}>
     </h3>
     <{if $tribes|@count > 0}>
@@ -207,7 +207,7 @@
   <{if $allow_friendship}>
   <div id="profile-profile-friends" class="outer">
     <h3 class="head">
-      <a href="friendship.php?uid=<{$uid_owner}>"><img src="images/friends.gif" title="<{$lang_friends_goto}>" /></a>
+      <a href="friendship.php?uid=<{$uid_owner}>"><img src="images/friends.gif" alt="<{$lang_friends_goto}>" /></a>
       <{$lang_friends}>
     </h3>
     <{if $friends|@count > 0}>
@@ -248,7 +248,7 @@
   <{if $allow_audio}>
   <div id="profile-profile-audio" class="outer">
     <h3 class="head">
-      <a href="audio.php?uid=<{$uid_owner}>"><img src="images/audio.gif" title="<{$lang_audio_goto}>" /></a>
+      <a href="audio.php?uid=<{$uid_owner}>"><img src="images/audio.gif" alt="<{$lang_audio_goto}>" /></a>
       <{$lang_audio}>
     </h3>
     <{if $audio}>
@@ -261,7 +261,7 @@
   <{if $allow_videos}>
   <div id="profile-profile-videos" class="outer">
     <h3 class="head">
-      <a href="videos.php?uid=<{$uid_owner}>"><img src="images/video.gif" title="<{$lang_video_goto}>" /></a>
+      <a href="videos.php?uid=<{$uid_owner}>"><img src="images/video.gif" alt="<{$lang_video_goto}>" /></a>
       <{$lang_videos}>
     </h3>
     <div id="profile-profile-video">

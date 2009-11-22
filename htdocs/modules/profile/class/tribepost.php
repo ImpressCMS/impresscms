@@ -87,8 +87,8 @@ class ProfileTribepost extends IcmsPersistableSeoObject {
 			$ret['poster_signature'] = $myts->displayTarea($thisUser->getVar('user_sig', 'N'), 1, 1, 1);
 		}
 		// rewrite edit and delete item links to work with tribes.php
-		$ret['editItemLink'] = str_replace($this->handler->_itemname.'.php?op=mod', 'tribes.php?tribes_id='.$this->getVar('tribes_id').'&topic_id='.$this->getVar('topic_id').'&op=edittribepost', $this->getEditItemLink(false, true, true));
-		$ret['deleteItemLink'] = str_replace($this->handler->_itemname.'.php?op=del', 'tribes.php?tribes_id='.$this->getVar('tribes_id').'&topic_id='.$this->getVar('topic_id').'&op=deltribepost', $this->getDeleteItemLink(false, true, true));
+		$ret['editItemLink'] = str_replace($this->handler->_itemname.'.php?op=mod', 'tribes.php?tribes_id='.$this->getVar('tribes_id').'&amp;topic_id='.$this->getVar('topic_id').'&amp;op=edittribepost', $this->getEditItemLink(false, true, true));
+		$ret['deleteItemLink'] = str_replace($this->handler->_itemname.'.php?op=del', 'tribes.php?tribes_id='.$this->getVar('tribes_id').'&amp;topic_id='.$this->getVar('topic_id').'&amp;op=deltribepost', $this->getDeleteItemLink(false, true, true));
 		return $ret;
 	}
 }

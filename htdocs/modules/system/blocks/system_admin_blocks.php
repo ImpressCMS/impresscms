@@ -34,7 +34,7 @@ function b_system_admin_warnings_show(){
 		array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/'), '', false));
 	}
 	if(getDbValue($xoopsDB, 'modules', 'version', 'version="120"') == 0 AND getDbValue($xoopsDB, 'modules', 'mid', 'mid="1"') == 1){
-		array_push($block['msg'], icms_error_msg('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">'._WARNINGUPDATESYSTEM.'</a>'));
+		array_push($block['msg'], icms_error_msg('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">'._WARNINGUPDATESYSTEM.'</a>'));
 	}
 	if(is_writable(ICMS_ROOT_PATH.'/mainfile.php')){
 		array_push($block['msg'], icms_error_msg(sprintf(_WARNINWRITEABLE,ICMS_ROOT_PATH.'/mainfile.php'), '', false));
@@ -184,7 +184,7 @@ function b_system_admin_modules_show(){
 			if (! isset ( $rtn ['subs'] )) {
 				$rtn ['subs'] = array ( );
 			}
-			$subs = array ('title' => _PREFERENCES, 'link' => XOOPS_URL . '/modules/system/admin.php?fct=preferences&op=showmod&mod=' . $module->mid () );
+			$subs = array ('title' => _PREFERENCES, 'link' => XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $module->mid () );
 			$rtn ['subs'] [] = $subs;
 		} else {
 			$rtn ['hassubs'] = 0;

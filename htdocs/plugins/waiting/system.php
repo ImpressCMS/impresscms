@@ -7,7 +7,7 @@ function b_waiting_system(){
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("xoopscomments")." WHERE com_status=1");
 	if ( $result ) {
-		$block['adminlink'] = XOOPS_URL."/modules/system/admin.php?module=0&status=1&fct=comments" ;
+		$block['adminlink'] = XOOPS_URL."/modules/system/admin.php?module=0&amp;status=1&amp;fct=comments" ;
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_COMMENTS ;
 	}

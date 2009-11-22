@@ -311,19 +311,19 @@ class ContentContent extends IcmsPersistableSeoObject {
 	
 	function getPreviewItemLink() {
 		$seo = $this->handler->makelink ( $this );
-		$ret = '<a href="' . $this->handler->_moduleUrl . $this->handler->_itemname . '.php?page=' . $seo . '" alt="' . _AM_CONTENT_PREVIEW . '" title="' . _AM_CONTENT_PREVIEW . '" target="_blank">' . $this->getVar ( 'content_title' ) . '</a>';
+		$ret = '<a href="' . $this->handler->_moduleUrl . $this->handler->_itemname . '.php?page=' . $seo . '" title="' . _AM_CONTENT_PREVIEW . '" target="_blank">' . $this->getVar ( 'content_title' ) . '</a>';
 		
 		return $ret;
 	}
 	
 	function getCloneItemLink() {
-		$ret = '<a href="' . $this->handler->_moduleUrl . 'admin/' . $this->handler->_itemname . '.php?op=clone&content_id=' . $this->getVar ( 'content_id', 'e' ) . '" alt="' . _AM_CONTENT_CONTENT_CLONE . '" title="' . _AM_CONTENT_CONTENT_CLONE . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/filesaveas2.png" /></a>';
+		$ret = '<a href="' . $this->handler->_moduleUrl . 'admin/' . $this->handler->_itemname . '.php?op=clone&amp;content_id=' . $this->getVar ( 'content_id', 'e' ) . '" title="' . _AM_CONTENT_CONTENT_CLONE . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/filesaveas2.png" /></a>';
 		
 		return $ret;
 	}
 	
 	function getViewItemLink() {
-		$ret = '<a href="' . $this->handler->_moduleUrl . 'admin/' . $this->handler->_itemname . '.php?op=view&content_id=' . $this->getVar ( 'content_id', 'e' ) . '" alt="' . _AM_CONTENT_VIEW . '" title="' . _AM_CONTENT_VIEW . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
+		$ret = '<a href="' . $this->handler->_moduleUrl . 'admin/' . $this->handler->_itemname . '.php?op=view&amp;content_id=' . $this->getVar ( 'content_id', 'e' ) . '" title="' . _AM_CONTENT_VIEW . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
 		
 		return $ret;
 	}
@@ -395,7 +395,7 @@ class ContentContent extends IcmsPersistableSeoObject {
 	
 	function getItemLink() {
 		$seo = $this->handler->makelink ( $this );
-		$ret = '<a href="' . $this->handler->_moduleUrl . $this->handler->_itemname . '.php?page=' . $seo . '" alt="" title="">' . $this->getVar ( 'content_title' ) . '</a>';
+		$ret = '<a href="' . $this->handler->_moduleUrl . $this->handler->_itemname . '.php?page=' . $seo . '" title="">' . $this->getVar ( 'content_title' ) . '</a>';
 		
 		return $ret;
 	}

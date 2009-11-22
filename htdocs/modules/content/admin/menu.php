@@ -32,7 +32,7 @@ if (isset($xoopsModule)) {
 
 	$i++;
 	$headermenu[$i]['title'] = _CO_ICMS_UPDATE_MODULE;
-	$headermenu[$i]['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&module=' . $xoopsModule->getVar('dirname');
+	$headermenu[$i]['link'] = ICMS_URL . '/modules/system/admin.php?fct=modulesadmin&op=update&amp;module=' . $xoopsModule->getVar('dirname');
 
 	$i++;
 	$headermenu[$i]['title'] = _MODABOUT_ABOUT;

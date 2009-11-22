@@ -368,7 +368,7 @@ class IcmsPersistableController {
 	 */
 	function getAdminViewItemLink($icmsObj, $onlyUrl=false, $withimage=false)
 	{
-		$ret = $this->handler->_moduleUrl . "admin/" . $this->handler->_page . "?op=view&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+		$ret = $this->handler->_moduleUrl . "admin/" . $this->handler->_page . "?op=view&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		if ($onlyUrl) {
 			return $ret;
 		}
@@ -431,7 +431,7 @@ class IcmsPersistableController {
 			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		} else {
 			$admin_side = '';
-			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct=' . $this->handler->_itemname . "&op=view&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct=' . $this->handler->_itemname . "&amp;op=view&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		}
 		if ($onlyUrl) {
 			return $ret;
@@ -445,7 +445,7 @@ class IcmsPersistableController {
 	
 	function getEditLanguageLink($icmsObj, $onlyUrl=false, $withimage=true)
 	{
-		$ret = $this->handler->_moduleUrl . "admin/" . $this->handler->_page . "?op=mod&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName) . "&language=" . $icmsObj->getVar('language');
+		$ret = $this->handler->_moduleUrl . "admin/" . $this->handler->_page . "?op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName) . "&amp;language=" . $icmsObj->getVar('language');
 		if ($onlyUrl) {
 			return $ret;
 		}
@@ -460,14 +460,14 @@ class IcmsPersistableController {
 	{
 		if ($this->handler->_moduleName != 'system') {
 			$admin_side = $userSide ? '' : 'admin/';
-			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?op=mod&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		} else {
 			/**
 			 * @todo: to be implemented...
 			 */
 			//$admin_side = $userSide ? '' : 'admin/';
 			$admin_side = '';
-			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct=' . $this->handler->_itemname . "&op=mod&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct=' . $this->handler->_itemname . "&amp;op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		}
 		if ($onlyUrl) {
 			return $ret;
@@ -483,14 +483,14 @@ class IcmsPersistableController {
 	{
 		if ($this->handler->_moduleName != 'system') {
 			$admin_side = $userSide ? '' : 'admin/';
-			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?op=del&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+			$ret = $this->handler->_moduleUrl . $admin_side . $this->handler->_page . "?op=del&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		} else {
 			/**
 			 * @todo: to be implemented...
 			 */
 			//$admin_side = $userSide ? '' : 'admin/';
 			$admin_side = '';
-			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct=' . $this->handler->_itemname . "&op=del&" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+			$ret = $this->handler->_moduleUrl . $admin_side . 'admin.php?fct=' . $this->handler->_itemname . "&amp;op=del&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		}
 		if ($onlyUrl) {
 			return $ret;

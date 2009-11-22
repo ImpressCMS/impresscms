@@ -158,7 +158,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			$objectTable->addCustomAction('getViewItemLink');
 			$objectTable->addCustomAction('getCloneItemLink');
 			
-			$objectTable->addIntroButton ( 'addcontent', 'content.php?op=mod'.($clean_content_pid?'&content_pid='.$clean_content_pid:''), _AM_CONTENT_CONTENT_CREATE );
+			$objectTable->addIntroButton ( 'addcontent', 'content.php?op=mod'.($clean_content_pid?'&amp;content_pid='.$clean_content_pid:''), _AM_CONTENT_CONTENT_CREATE );
 			
 			$objectTable->addQuickSearch ( array ('content_title', 'content_body' ) );
   			

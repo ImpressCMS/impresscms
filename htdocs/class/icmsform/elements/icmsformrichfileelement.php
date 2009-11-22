@@ -31,7 +31,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
     if($object->getVar('url') != '' ){
     	$caption = $object->getVar('caption') != '' ? $object->getVar('caption') : $object->getVar('url');
     	$this->addElement( new XoopsFormLabel( '', _CO_ICMS_CURRENT_FILE."<a href='" . str_replace('{ICMS_URL}', ICMS_URL ,$object->getVar('url')) . "' target='_blank' >". $caption."</a><br/><br/>" ) );
-    	//$this->addElement( new XoopsFormLabel( '', "<br/><a href = '".SMARTOBJECT_URL."admin/file.php?op=del&fileid=".$object->id()."'>"._CO_ICMS_DELETE_FILE."</a>"));
+    	//$this->addElement( new XoopsFormLabel( '', "<br/><a href = '".SMARTOBJECT_URL."admin/file.php?op=del&amp;fileid=".$object->id()."'>"._CO_ICMS_DELETE_FILE."</a>"));
     }
 
     include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformfileuploadelement.php";

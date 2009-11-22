@@ -7,7 +7,7 @@
 
   <!-- start group member loop -->
   <{foreach item=user from=$group.users}>
-  <div class="<{cycle values="even,odd"}>" style="margin-left: auto; margin-right: auto; text-align:center;"><img src="<{$user.avatar}>" alt="<{$user.name}>'s avatar" width="32px" /><br /><a href="<{$xoops_url}>/userinfo.php?uid=<{$user.id}>" title="<{$user.name}>"><{$user.name}></a>&nbsp;<{$user.msglink}></div>
+  <div class="<{cycle values="even,odd"}>" style="margin: 0 auto; text-align:center;"><img src="<{$user.avatar}>" alt="<{$user.name}>'s avatar" width="32px" /><br /><a href="<{$xoops_url}>/userinfo.php?uid=<{$user.id}>" title="<{$user.name}>"><{$user.name}></a>&nbsp;<{$user.msglink}></div>
    <div class="clear"></div>
   <{/foreach}>
   <!-- end group member loop -->

@@ -46,7 +46,7 @@ if( count( $config_handler->getConfigs( new Criteria( 'conf_modid' , $xoopsModul
 		array_push( $adminmenu , array( 'title' => $title , 'link' => 'admin/index.php?mode=admin&lib=altsys&page=mypreferences' ) ) ;
 	} else {
 		// system->preferences
-		array_push( $adminmenu , array( 'title' => _PREFERENCES , 'link' => XOOPS_URL.'/modules/system/admin.php?fct=preferences&op=showmod&mod='.$xoopsModule->mid() ) ) ;
+		array_push( $adminmenu , array( 'title' => _PREFERENCES , 'link' => XOOPS_URL.'/modules/system/admin.php?fct=preferences&op=showmod&amp;mod='.$xoopsModule->mid() ) ) ;
 	}
 }
 

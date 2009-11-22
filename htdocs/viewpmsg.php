@@ -55,12 +55,12 @@ else
     echo "<h4 style='text-align:center;'>"._PM_PRIVATEMESSAGE."</h4><br />
         <a href='userinfo.php?uid=".intval($icmsUser->getVar('uid'))."'>". _PM_PROFILE ."</a>&nbsp;
         <span style='font-weight:bold;'>&raquo;&raquo;</span>&nbsp;"._PM_INBOX."<br /><br />";
-    echo "<form name='prvmsg' method='post' action='viewpmsg.php'>";
+    echo "<form id='prvmsg' method='post' action='viewpmsg.php'>";
     echo "<table border='0' cellspacing='1' cellpadding='4' width='100%' class='outer'>\n";
     echo "<tr align='center' valign='middle'><th>
         <input name='allbox' id='allbox' onclick='xoopsCheckAll(\"prvmsg\", \"allbox\");'
         type='checkbox' value='Check All' /></th><th>
-        <img src='images/download.gif' alt='' border='0' /></th><th>&nbsp;</th><th>
+        <img src='images/download.gif' alt='' /></th><th>&nbsp;</th><th>
         "._PM_FROM."</th><th>"._PM_SUBJECT."</th><th align='center'>"._PM_DATE."</th></tr>\n";
     $total_messages = count($pm_arr);
     if($total_messages == 0)
@@ -76,21 +76,21 @@ else
     for($i = 0; $i < $total_messages; $i++)
     {
         $class = ($i % 2 == 0) ? 'even' : 'odd';
-        echo "<tr align='"._GLOBAL_LEFT."' class='$class'><td valign='top' width='2%' align='center'>
-            <input type='checkbox' id='msg_id[]' name='msg_id[]' value='".$pm_arr[$i]->getVar('msg_id')."' /></td>\n";
+        echo "<tr align='"._GLOBAL_LEFT."' class='$class'><td style='vertical-align: top; width: 2%; text-align: center;'>
+            <input type='checkbox' id='message_".$pm_arr[$i]->getVar('msg_id')."' name='".$pm_arr[$i]->getVar('msg_id')."' value='".$pm_arr[$i]->getVar('msg_id')."' /></td>\n";
         if($pm_arr[$i]->getVar('read_msg') == 1)
         {
-            echo "<td valign='top' width='5%' align='center'>&nbsp;</td>\n";
+            echo "<td style='vertical-align: top; width: 5%; text-align: center;'>&nbsp;</td>\n";
         }
         else
         {
-            echo "<td valign='top' width='5%' align='center'>
+            echo "<td style='vertical-align: top; width: 5%; text-align: center;'>
                 <img src='images/read.gif' alt='"._PM_NOTREAD."' /></td>\n";
         }
-        echo "<td valign='top' width='5%' align='center'>
+        echo "<td style='vertical-align: top; width: 5%; text-align: center;'>
             <img src='images/subject/".$pm_arr[$i]->getVar('msg_image', 'E')."' alt='' /></td>\n";
         $postername = XoopsUser::getUnameFromId($pm_arr[$i]->getVar('from_userid'));
-        echo "<td valign='middle' width='10%'>";
+        echo "<td style='vertical-align: middle; width: 10%; text-align: center;'>";
         // no need to show deleted users
         if($postername)
         {
@@ -104,7 +104,7 @@ else
         echo "<td valign='middle'>
             <a href='readpmsg.php?start=".intval(($total_messages-$i-1))."&amp;
             total_messages=".intval($total_messages)."'>".$pm_arr[$i]->getVar('subject')."</a></td>";
-        echo "<td valign='middle' align='center' width='20%'>"
+        echo "<td style='vertical-align: middle; width: 20%; text-align: center;'>"
             .formatTimestamp($pm_arr[$i]->getVar('msg_time'))."</td></tr>";
     }
 

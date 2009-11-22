@@ -92,8 +92,8 @@ class ProfileTribetopic extends IcmsPersistableSeoObject {
 		$ret['userCanEditAndDelete'] = $this->userCanEditAndDelete();
 		$ret['itemLink'] = str_replace($this->handler->_itemname.'.php?', 'tribes.php?tribes_id='.$this->getVar('tribes_id').'&', $ret['itemLink']);
 		$ret['itemUrl'] = str_replace($this->handler->_itemname.'.php?', 'tribes.php?tribes_id='.$this->getVar('tribes_id').'&', $ret['itemUrl']);
-		$ret['editItemLink'] = str_replace($this->handler->_itemname.'.php?op=mod', 'tribes.php?tribes_id='.$this->getVar('tribes_id').'&op=modtribetopic', $this->getEditItemLink(false, true, true));
-		$ret['deleteItemLink'] = str_replace($this->handler->_itemname.'.php?op=del', 'tribes.php?tribes_id='.$this->getVar('tribes_id').'&op=deltribetopic', $this->getDeleteItemLink(false, true, true));
+		$ret['editItemLink'] = str_replace($this->handler->_itemname.'.php?op=mod', 'tribes.php?tribes_id='.$this->getVar('tribes_id').'&amp;op=modtribetopic', $this->getEditItemLink(false, true, true));
+		$ret['deleteItemLink'] = str_replace($this->handler->_itemname.'.php?op=del', 'tribes.php?tribes_id='.$this->getVar('tribes_id').'&amp;op=deltribetopic', $this->getDeleteItemLink(false, true, true));
 		// build last post link
 		$start = '';
 		if ($this->getVar('replies') + 1 > $icmsModuleConfig['tribepostsperpage']) {
@@ -104,10 +104,10 @@ class ProfileTribetopic extends IcmsPersistableSeoObject {
 		if ($this->getVar('closed')) {
 			// link to reopen the topic
 			$ret['closedIcon'] = '<img src="'.$this->handler->_moduleUrl.'/images/lock.gif" title="'._MD_PROFILE_TRIBETOPIC_CLOSE.'" style="vertical-align:middle;" />';
-			$ret['toggleCloseLink'] = '<a href="'.$ret['itemUrl'].'&op=toggleclose"><img src="'.$this->handler->_moduleUrl.'/images/unlock.gif" title="'._MD_PROFILE_TRIBETOPIC_REOPEN.'" style="vertical-align:middle;" /></a>';
+			$ret['toggleCloseLink'] = '<a href="'.$ret['itemUrl'].'&amp;op=toggleclose"><img src="'.$this->handler->_moduleUrl.'/images/unlock.gif" title="'._MD_PROFILE_TRIBETOPIC_REOPEN.'" style="vertical-align:middle;" /></a>';
 		} else {
 			// link to close the topic
-			$ret['toggleCloseLink'] = '<a href="'.$ret['itemUrl'].'&op=toggleclose"><img src="'.$this->handler->_moduleUrl.'/images/lock.gif" title="'._MD_PROFILE_TRIBETOPIC_CLOSE.'" style="vertical-align:middle;" /></a>';
+			$ret['toggleCloseLink'] = '<a href="'.$ret['itemUrl'].'&amp;op=toggleclose"><img src="'.$this->handler->_moduleUrl.'/images/lock.gif" title="'._MD_PROFILE_TRIBETOPIC_CLOSE.'" style="vertical-align:middle;" /></a>';
 		}
 		
 		return $ret;

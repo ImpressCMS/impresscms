@@ -1,10 +1,8 @@
 <{if $user_ownpage == true}>
 
-<form name="usernav" action="user.php" method="post">
+<form id="usernav" action="user.php" method="post">
 
-<br /><br />
-
-<table width="70%" align="center" border="0">
+<table width="70%" style="margin: 0 auto;" border="0">
   <tr align="center">
     <td><input type="button" value="<{$lang_editprofile}>" onclick="location='edituser.php'" />
     <input type="button" value="<{$lang_avatar}>" onclick="location='edituser.php?op=avatarform'" />
@@ -19,12 +17,10 @@
 </table>
 </form>
 
-<br /><br />
 <{elseif $xoops_isadmin != false}>
 
-<br /><br />
 
-<table width="70%" align="center" border="0">
+<table width="70%" style="margin: 0 auto;" border="0">
   <tr align="center">
     <td><input type="button" value="<{$lang_editprofile}>" onclick="location='<{$xoops_url}>/modules/system/admin.php?fct=users&uid=<{$user_uid}>&op=modifyUser'" />
     <input type="button" value="<{$lang_deleteaccount}>" onclick="location='<{$xoops_url}>/modules/system/admin.php?fct=users&op=delUser&uid=<{$user_uid}>'" />
@@ -32,7 +28,6 @@
   </tr>
 </table>
 
-<br /><br />
 <{/if}>
 
 <table width="100%" border="0" cellspacing="5px">

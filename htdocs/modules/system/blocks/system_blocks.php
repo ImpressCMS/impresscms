@@ -223,10 +223,10 @@ function b_system_info_show($options)
 					$block['groups'][$i]['name'] = $myts->htmlSpecialChars($userinfo['groupname']);
 				}
 				if (isset($icmsUser) && is_object($icmsUser)) {
-					$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".$userinfo['uid']."','pmlite',800,680);\"><img src=\"".XOOPS_URL."/images/icons/".$GLOBALS["icmsConfig"]["language"]."/pm_small.gif\" border=\"0\" width=\"27px\" height=\"17px\" alt=\"\" /></a>", 'avatar' => XOOPS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
+					$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".$userinfo['uid']."','pmlite',800,680);\"><img src=\"".XOOPS_URL."/images/icons/".$GLOBALS["icmsConfig"]["language"]."/pm_small.gif\" width=\"27px\" height=\"17px\" alt=\"\" /></a>", 'avatar' => XOOPS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
 				} else {
 					if ($userinfo['user_viewemail']) {
-						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => '<a href="mailto:'.$userinfo['email'].'"><img src="'.XOOPS_URL.'/images/icons/'.$GLOBALS["icmsConfig"]["language"].'/em_small.gif" border="0" width="16px" height="14px" alt="" /></a>', 'avatar' => XOOPS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
+						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => '<a href="mailto:'.$userinfo['email'].'"><img src="'.XOOPS_URL.'/images/icons/'.$GLOBALS["icmsConfig"]["language"].'/em_small.gif" width="16px" height="14px" alt="" /></a>', 'avatar' => XOOPS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
 					} else {
 						$block['groups'][$i]['users'][] = array('id' => $userinfo['uid'], 'name' => $myts->htmlspecialchars($userinfo['uname']), 'msglink' => '&nbsp;', 'avatar' => XOOPS_UPLOAD_URL.'/'.$userinfo['user_avatar']);
 					}
@@ -722,7 +722,7 @@ function b_system_social_show($options) {
 	$i++;
 	if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
-		'link'  => "'http://myjeeves.ask.com/mysearch/BookmarkIt?v=1.2&t=webpages&url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
+		'link'  => "'http://myjeeves.ask.com/mysearch/BookmarkIt?v=1.2&amp;t=webpages&amp;url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
 		'image' => "ask.gif"
 	);
 	$i++;

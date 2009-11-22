@@ -201,7 +201,7 @@ div#profile-profile-petition li{
 	list-style: none;
 	}
 
-div#profile-profile-visitors, div#profile-profile-search-results, div#profile-profile-visual, div#profile-profile-statistics, div#profile-profile-details {
+div#profile-profile-visitors, div#profile-profile-search-results, div#profile-profile-visual, div#profile-profile-statistics, div.profile-profile-details {
 margin:3px 0px 3px;
 float:left;
 padding:1px;
@@ -391,13 +391,13 @@ div#profile-profile-visitors h3,
 div#profile-profile-tribes h3,
 div#profile-profile-search-results p,
 div#profile-profile-statistics p,
-div#profile-profile-details p,
+div.profile-profile-details p,
 div#profile-profile-search-results h3,
 div#profile-profile-search-results h4,
 div#profile-profile-friends h3,
 div#profile-profile-visual h3,
 div#profile-profile-statistics h3,
-div#profile-profile-details h3,
+div.profile-profile-details h3,
 div#profile-profile-videos h3 {
 margin:0px;
 }

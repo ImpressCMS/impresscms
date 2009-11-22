@@ -175,7 +175,7 @@ if (! is_null ( $op ) && $op == 'save') {
 	}
 	
 	if (isset ( $_SESSION ['icms_imanager'] )) { //Image Editor open by some editor
-		$params = '?op=save_edit_ok&imgcat_id=' . $simage->getVar ( 'imgcat_id' ) . '&msg=' . urlencode ( $msg );
+		$params = '?op=save_edit_ok&amp;imgcat_id=' . $simage->getVar ( 'imgcat_id' ) . '&amp;msg=' . urlencode ( $msg );
 		if (isset ( $_SESSION ['icms_imanager'] ['imedit_target'] )) {
 			$params .= '&target=' . $_SESSION ['icms_imanager'] ['imedit_target'];
 		}
@@ -184,7 +184,7 @@ if (! is_null ( $op ) && $op == 'save') {
 		}
 		unset ( $_SESSION ['icms_imanager'] );
 	} else { //Image Editor used inside the Image Manager
-		$params = '?fct=images&op=save_edit_ok&imgcat_id=' . $simage->getVar ( 'imgcat_id' ) . '&msg=' . urlencode ( $msg );
+		$params = '?fct=images&op=save_edit_ok&amp;imgcat_id=' . $simage->getVar ( 'imgcat_id' ) . '&amp;msg=' . urlencode ( $msg );
 	}
 	echo 'cancel_edit();';
 	echo 'var url = getOpenerUrl()+"' . $params . '";';
