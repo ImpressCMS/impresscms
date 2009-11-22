@@ -157,6 +157,10 @@ div.clear {
 clear:both;
 }
 
+div.pagination {
+text-align:right;
+}
+
 form.profile-quickform {
 display: inline;
 }

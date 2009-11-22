@@ -56,7 +56,7 @@ $clean_pictures_id = 0;
 if (isset($_GET['pictures_id'])) $clean_pictures_id = intval($_GET['pictures_id']);
 if (isset($_POST['pictures_id'])) $clean_pictures_id = intval($_POST['pictures_id']);
 
-$real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
+$real_uid = is_object($icmsUser) ? intval($icmsUser->uid()) : 0;
 $clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
 $picturesObj = $profile_pictures_handler->get($clean_pictures_id);
 
@@ -138,7 +138,7 @@ if (in_array($clean_op,$valid_op,true)){
 
 			// check upload limit for this user
 			if ($picturesObj->isNew() && !$profile_pictures_handler->checkUploadLimit()) {
-				redirect_header(icms_getPreviousPage('index.php'), 3, sprintf(_MD_PROFILE_PICTURES_LIMIT, $icmsModuleConfig['nb_pict']));
+				redirect_header(icms_getPreviousPage('index.php'), 3, sprintf(_MD_PROFILE_UPLOADLIMIT, $icmsModuleConfig['nb_pict']));
 			}
 
 			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
@@ -163,6 +163,8 @@ if (in_array($clean_op,$valid_op,true)){
 			break;
 
 		default:
+			$clean_start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+			
 			if($real_uid && $real_uid == $uid){
 				$picturesObj = $profile_pictures_handler->get($clean_pictures_id);
 				editpictures($picturesObj, true);
@@ -170,14 +172,22 @@ if (in_array($clean_op,$valid_op,true)){
 			if ($clean_pictures_id > 0) {
 				$profile_pictures_handler->updateCounter($clean_pictures_id);
 				$icmsTpl->assign('profile_picture', $picturesObj->toArray());
-			} elseif($clean_uid > 0) {
-				$picturesArray = $profile_pictures_handler->getPictures(false, false, $clean_uid);
-				$icmsTpl->assign('profile_pictures', $picturesArray);
-				if (count($picturesArray) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_PICTURES_NOCONTENT);
-			} elseif($real_uid > 0) {
-				$picturesArray = $profile_pictures_handler->getPictures(false, false, $real_uid);
-				$icmsTpl->assign('profile_pictures', $picturesArray);
-				if (count($picturesArray) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_PICTURES_NOCONTENT);
+			} elseif ($clean_uid > 0 || $real_uid > 0) {
+				$uid = ($clean_uid > 0) ? $clean_uid : $real_uid;
+
+				$picturesArray = $profile_pictures_handler->getPictures($clean_start, $icmsModuleConfig['picturesperpage'], $uid);
+				if (count($picturesArray) == 0) {
+					$icmsTpl->assign('lang_nocontent', _MD_PROFILE_PICTURES_NOCONTENT);
+				} else {
+					$total_pictures_count = $profile_pictures_handler->getCount(new CriteriaCompo(new Criteria('uid_owner', $uid)));
+
+					include_once ICMS_ROOT_PATH.'/class/pagenav.php';
+					$pagenav = new XoopsPageNav($total_pictures_count, $icmsModuleConfig['picturesperpage'], $clean_start, 'start', 'uid='.$uid);
+
+					$icmsTpl->assign('profile_pictures_pagenav', $pagenav->renderNav());
+					$icmsTpl->assign('profile_pictures', $picturesArray);
+					unset($total_pictures_count, $pagenav);
+				}
 			} else {
 				redirect_header(PROFILE_URL);
 			}

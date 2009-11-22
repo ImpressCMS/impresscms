@@ -20,6 +20,11 @@ function editconfigs($configsObj, $uid=0) {
 
 	// hide fields in regard to module preferences
 	if (!$icmsModuleConfig['profile_search']) $configsObj->hideFieldFromForm('profile_usercontributions');
+	if (!$icmsModuleConfig['enable_pictures']) $configsObj->hideFieldFromForm('pictures');
+	if (!$icmsModuleConfig['enable_videos']) $configsObj->hideFieldFromForm('videos');
+	if (!$icmsModuleConfig['enable_audio']) $configsObj->hideFieldFromForm('audio');
+	if (!$icmsModuleConfig['enable_friendship']) $configsObj->hideFieldFromForm('friendship');
+	if (!$icmsModuleConfig['enable_tribes']) $configsObj->hideFieldFromForm('tribes');
 
 	if($profile_isAdmin && $uid > 0 && $icmsUser->uid() != $uid) {
 		$configsObj->setVar('config_uid', $uid);

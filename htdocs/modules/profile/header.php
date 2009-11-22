@@ -68,7 +68,7 @@ if ($icmsModuleConfig['profile_social']) {
 	}
 }
 
-$isOwner = $isFriend = false ;
+$isOwner = false ;
 $isAnonym = is_object($icmsUser) ? false : true;
 $isOwner = (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid) ? true : false;
 if ($icmsModuleConfig['index_real_name'] == 'real' && trim($thisUser->getVar('name'))) {
@@ -77,6 +77,15 @@ if ($icmsModuleConfig['index_real_name'] == 'real' && trim($thisUser->getVar('na
 	$owner_name = is_object($thisUser) ? trim($thisUser->getVar('name')).' ('.trim($thisUser->getVar('uname')).')' : _GUESTS;
 } else {
 	$owner_name = is_object($thisUser) ? trim($thisUser->getVar('uname')) : _GUESTS;
+}
+
+// check whether icmsUser is allowed to view profile of thisUser
+if ($isAnonym) {
+	if (array_intersect($thisUser->getGroups(), $icmsModuleConfig['view_group_anonymous']) != $thisUser->getGroups())
+		redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+} elseif (!$icmsUser->isAdmin(0)) {
+	if (array_intersect($thisUser->getGroups(), $icmsModuleConfig['view_group_registered']) != $thisUser->getGroups())
+		redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
 
 include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/include/common.php';

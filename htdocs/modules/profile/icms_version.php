@@ -331,16 +331,13 @@ $modversion['config'][$i]['options'] = array(_PROFILE_MI_NICKNAME  => 'nick',
 
 $member_handler = &xoops_gethandler('member');
 $criteria = new CriteriaCompo();
-$criteria->add(new Criteria('groupid', 3, '!='));
+$criteria->add(new Criteria('groupid', ICMS_GROUP_ANONYMOUS, '!='));
 $group_list = &$member_handler->getGroupList($criteria);
-
-foreach ($group_list as $key=>$group) {
-	$groups[$group] = $key;
-}
+foreach ($group_list as $key=>$group) $groups[$group] = $key;
 
 $i++;
-$modversion['config'][$i]['name'] = 'view_group_3';
-$modversion['config'][$i]['title'] = '_PROFILE_MI_GROUP_VIEW_3';
+$modversion['config'][$i]['name'] = 'view_group_anonymous';
+$modversion['config'][$i]['title'] = '_PROFILE_MI_GROUP_VIEW_ANONYMOUS';
 $modversion['config'][$i]['description'] = '_PROFILE_MI_GROUP_VIEW_DSC';
 $modversion['config'][$i]['formtype'] = 'select_multi';
 $modversion['config'][$i]['valuetype'] = 'array';
@@ -349,8 +346,8 @@ $modversion['config'][$i]['default'] = $groups;
 $modversion['config'][$i]['category'] = 'other';
 
 $i++;
-$modversion['config'][$i]['name'] = 'view_group_2';
-$modversion['config'][$i]['title'] = '_PROFILE_MI_GROUP_VIEW_2';
+$modversion['config'][$i]['name'] = 'view_group_registered';
+$modversion['config'][$i]['title'] = '_PROFILE_MI_GROUP_VIEW_REGISTERED';
 $modversion['config'][$i]['description'] = '_PROFILE_MI_GROUP_VIEW_DSC';
 $modversion['config'][$i]['formtype'] = 'select_multi';
 $modversion['config'][$i]['valuetype'] = 'array';

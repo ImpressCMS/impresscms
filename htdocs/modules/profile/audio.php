@@ -21,17 +21,14 @@ function editaudio($audioObj, $hideForm=false)
 
 	$icmsTpl->assign('hideForm', $hideForm);
 	if (!$audioObj->isNew()){
-		if (!$audioObj->userCanEditAndDelete()) {
-			redirect_header($audioObj->getItemLink(true), 3, _NOPERM);
-		}
+		if (!$audioObj->userCanEditAndDelete()) redirect_header($audioObj->getItemLink(true), 3, _NOPERM);
 		$audioObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url', 'url'));
 		$sform = $audioObj->getSecureForm($hideForm ? '' : _MD_PROFILE_AUDIOS_EDIT, 'addaudio');
 		$sform->assign($icmsTpl, 'profile_audioform');
 		$icmsTpl->assign('lang_audioform_title', _MD_PROFILE_AUDIOS_EDIT);
 	} else {
-		if (!$profile_audio_handler->userCanSubmit()) {
-			redirect_header(PROFILE_URL, 3, _NOPERM);
-		}
+		if (!$profile_audio_handler->userCanSubmit()) redirect_header(PROFILE_URL, 3, _NOPERM);
+		if (!$profile_audio_handler->checkUploadLimit()) return;
 		$audioObj->setVar('uid_owner', $icmsUser->uid());
 		$audioObj->setVar('creation_time', time());
 		$audioObj->hideFieldFromForm(array('creation_time', 'uid_owner', 'meta_keywords', 'meta_description', 'short_url'));
@@ -89,6 +86,12 @@ if (in_array($clean_op,$valid_op,true)){
 			redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
 			exit();
 		}
+
+		// check upload limit for this user
+		if ($audioObj->isNew() && !$profile_audio_handler->checkUploadLimit()) {
+			redirect_header(icms_getPreviousPage('index.php'), 3, sprintf(_MD_PROFILE_UPLOADLIMIT, $icmsModuleConfig['nb_audio']));
+		}
+
 		include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
 		$controller = new IcmsPersistableController($profile_audio_handler);
 		$controller->storeFromDefaultForm(_MD_PROFILE_AUDIOS_CREATED, _MD_PROFILE_AUDIOS_MODIFIED);
@@ -114,22 +117,32 @@ if (in_array($clean_op,$valid_op,true)){
 		break;
 
 	default:
+		$clean_start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+
 		if($real_uid && $real_uid == $uid){
 			$audioObj = $profile_audio_handler->get($clean_audio_id);
 			editaudio($audioObj, true);
 		}
-		if($clean_audio_id > 0){
+		if ($clean_audio_id > 0) {
 			$profile_audio_handler->updateCounter($clean_audio_id);
 			$icmsTpl->assign('profile_single_audio', $audioObj->toArray());
-		}elseif($clean_uid > 0){
-			$audiosArray = $profile_audio_handler->getAudios(false, false, $clean_uid);
-			$icmsTpl->assign('profile_allaudios', $audiosArray);
-			if (count($audiosArray) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_AUDIOS_NOCONTENT);
-		}elseif($real_uid > 0){
-			$audiosArray = $profile_audio_handler->getAudios(false, false, $real_uid);
-			$icmsTpl->assign('profile_allaudios', $audiosArray);
-			if (count($audiosArray) == 0) $icmsTpl->assign('lang_nocontent', _MD_PROFILE_AUDIOS_NOCONTENT);
-		}else{
+		} elseif ($clean_uid > 0 || $real_uid > 0) {
+			$uid = ($clean_uid > 0) ? $clean_uid : $real_uid;
+
+			$audiosArray = $profile_audio_handler->getAudios($clean_start, $icmsModuleConfig['audiosperpage'], $uid);
+			if (count($audiosArray) == 0) {
+				$icmsTpl->assign('lang_nocontent', _MD_PROFILE_AUDIOS_NOCONTENT);
+			} else {
+				$total_audios_count = $profile_audio_handler->getCount(new CriteriaCompo(new Criteria('uid_owner', $uid)));
+
+				include_once ICMS_ROOT_PATH.'/class/pagenav.php';
+				$pagenav = new XoopsPageNav($total_audios_count, $icmsModuleConfig['audiosperpage'], $clean_start, 'start', 'uid='.$uid);
+
+				$icmsTpl->assign('profile_audios_pagenav', $pagenav->renderNav());
+				$icmsTpl->assign('profile_audios', $audiosArray);
+				unset($total_audios_count, $pagenav);
+			}
+		} else {
 			redirect_header(PROFILE_URL);
 		}
 

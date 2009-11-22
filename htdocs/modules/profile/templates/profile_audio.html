@@ -22,7 +22,7 @@
   <{/if}>
 </div>
 <{/if}>
-<{if $profile_allaudios}>
+<{if $profile_audios}>
 <div id="profile-audio-container" class="outer">
   <table width="100%" cellspacing="1" cellpadding="4">
     <tbody>
@@ -32,7 +32,7 @@
         <th><{$lang_title}></th>
         <{if $actions}><th width="130px"><{$lang_actions}></th><{/if}>
       </tr>
-      <{foreach item=audio from=$profile_allaudios}>
+      <{foreach item=audio from=$profile_audios}>
       <{cycle values='even,odd' assign=class}>
       <tr class="<{$class}>">
         <td width="250px"><{$audio.audio_content}></td>
@@ -46,6 +46,9 @@
     </tbody>
   </table>
 </div>
+<{if $profile_audios_pagenav}>
+<div class="pagination"><{$profile_audios_pagenav}></div>
+<{/if}>
 <{/if}>
 <{if $icmspersistable_delete_confirm}>
 <{$icmspersistable_delete_confirm}>

@@ -146,6 +146,8 @@ define("_MD_PROFILE_FRIENDS","Friends");
 define("_MD_PROFILE_TRIBES","Tribes");
 define("_MD_PROFILE_PROFILE","Profile");
 
+define("_MD_PROFILE_UPLOADLIMIT", "You have already reached your upload limit of %s file(s).");
+
 //friendship.php
 define("_MD_PROFILE_FRIENDSHIPS_NOCONTENT", "There are no friends yet");
 
@@ -172,7 +174,6 @@ define("_MD_PROFILE_PICTURES_AVATAR_NOTEDITED", "There was an error while updati
 define("_MD_PROFILE_PICTURES_AVATAR_DELETED", "Avatar successfully deleted");
 define("_MD_PROFILE_PICTURES_AVATAR_NOTDELETED", "There was an error while deleting your avatar");
 define("_MD_PROFILE_PICTURES_AVATAR_SET", "Set this picture as avatar");
-define("_MD_PROFILE_PICTURES_LIMIT", "You have already reached your upload limit of %s picture(s).");
 
 //tribes.php
 define("_MD_PROFILE_TRIBES_NOCONTENT", "There are no tribes or tribe memberships yet");

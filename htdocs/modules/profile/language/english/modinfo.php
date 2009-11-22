@@ -49,7 +49,8 @@ define("_MI_PROFILE_PICTURE_NEWPOST_NOTIFYDSC","Tell me when this user submits a
 define("_MI_PROFILE_PICTURE_NEWPIC_NOTIFYSBJ","{X_OWNER_NAME} has submitted a new picture to their album");
 define("_MI_PROFILE_FRIENDSPERPAGE_TITLE" , "Friends per page");
 define("_MI_PROFILE_FRIENDSPERPAGE_DESC" , "Set the number of friends to show per page<br />In the my Friends page");
-define("_MI_PROFILE_PICTURESPERPAGE_TITLE","Pictures showing per page before pagination");
+define("_MI_PROFILE_PICTURESPERPAGE_TITLE", "Pictures per page");
+define("_MI_PROFILE_PICTURESPERPAGE_DESC", "Pictures showing per page before pagination");
 
 define("_MI_PROFILE_DELETEPHYSICAL_TITLE","Delete files from the upload folder too");
 define("_MI_PROFILE_DELETEPHYSICAL_DESC","Confirming yes here, will allow the script to delete the files from the uploaded data in the database as well.<br /> Be careful about this feature, if you exclude the files from the folder and not only in the database, some people who may have linked to the image directly in another part of the site may also lose their content;<br /> at the same time if you don't exclude them, you may use to much space in the server hard disk.<br />Configure this item well for your needs.");
@@ -103,8 +104,9 @@ define("_MI_PROFILE_FRIEND_NEWPETITION_NOTIFYDSC","Notify me when someone ask fo
 define("_MI_PROFILE_FRIEND_NEWPETITION_NOTIFYSBJ","Someone has just asked to be your friend");
 define("_MI_PROFILE_ENABLEAUDIO_TITLE","Enable audio section");
 define("_MI_PROFILE_ENABLEAUDIO_DESC","Enabling audio section for the users, will enable the audio playlist");
-define("_MI_PROFILE_NUMBAUDIO_TITLE","Max number of audio for a user");
-define("_MI_PROFILE_AUDIOSPERPAGE_TITLE","Number of mp3 files per page");
+define("_MI_PROFILE_NUMBAUDIO_TITLE", "Number of audios");
+define("_MI_PROFILE_NUMBAUDIO_DESC", "Number of audio files a user can have in their page. '0' to deactivate check (not recommended).");
+define("_MI_PROFILE_AUDIOSPERPAGE_TITLE", "Number of audio files per page");
 define("_PROFILE_MI_NAME", "Profile");
 define("_PROFILE_MI_DESC", "Module for managing custom user profile fields");
 define("_PROFILE_MI_EDITACCOUNT", "Edit Account");
@@ -160,9 +162,9 @@ define("_PROFILE_MI_NICKNAME", "User name");
 define("_PROFILE_MI_REALNAME", "Real name");
 define("_PROFILE_MI_BOTH", "Both");
 
-define("_PROFILE_MI_GROUP_VIEW_3", "Anonymous users can view");
+define("_PROFILE_MI_GROUP_VIEW_ANONYMOUS", "Anonymous users can view");
+define("_PROFILE_MI_GROUP_VIEW_REGISTERED", "Registered users can view");
 define("_PROFILE_MI_GROUP_VIEW_DSC", "");
-define("_PROFILE_MI_GROUP_VIEW_2", "Registered users can view");
 define("_PROFILE_MI_PROFILE_SOCIAL", "Social profile manager");
 define("_PROFILE_MI_PROFILE_SOCIAL_DESC", "Do you want to use this module as a social profile like facebook?");
 

@@ -200,6 +200,20 @@ class ProfileAudioHandler extends IcmsPersistableObjectHandler {
 		return true;
 	}
 
+	/**
+	 * Check whether the user has already reached the upload limit
+	 *
+	 * @global array $icmsModuleConfig module configuration
+	 * @return int number of audios for the current user (icmsUser)
+	 */
+	function checkUploadLimit() {
+		global $icmsUser, $icmsModuleConfig;
+
+		if (!is_object($icmsUser)) return false;
+		if ($icmsModuleConfig['nb_audio'] == 0) return true;
+		$count = $this->getCount(new CriteriaCompo(new Criteria('uid_owner', $icmsUser->getVar('uid'))));
+		return ($count < $icmsModuleConfig['nb_audio']);
+	}
 
 	/**
 	 * Update the counter field of the post object
