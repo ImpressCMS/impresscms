@@ -1,5 +1,4 @@
 <?php
-
 if( defined( 'FOR_XOOPS_LANG_CHECKER' ) ) $mydirname = 'protector' ;
 $constpref = '_MI_' . strtoupper( $mydirname ) ;
 
@@ -113,7 +112,5 @@ define($constpref.'_SPAMURI4U','anti-SPAM: URLs for normal users');
 define($constpref.'_SPAMURI4UDSC','If this number of URLs are found in POST data from users other than admin, the POST is considered as SPAM. 0 means disabling this feature.');
 define($constpref.'_SPAMURI4G','anti-SPAM: URLs for guests');
 define($constpref.'_SPAMURI4GDSC','If this number of URLs are found in POST data from guests, the POST is considered as SPAM. 0 means disabling this feature.');
-
 }
-
 ?>
