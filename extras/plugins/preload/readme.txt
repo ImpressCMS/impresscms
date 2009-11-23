@@ -9,7 +9,7 @@
 * @version		$Id: readme.txt 429 2008-01-02 22:21:41Z malanciault $
 */
 
-Protetor.php
+Protector.php
 ==================================
 
 What is this ?
