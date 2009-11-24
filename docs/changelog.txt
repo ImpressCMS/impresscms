@@ -3,6 +3,10 @@ ImpressCMS ChangeLog
 Release date:
 Revision:
 
+'''Fixed'''
+
+* #833: Reference to smartobject module (skenow)
+
 === ImpressCMS 1.2 RC 1 ===
 Release date: 20 Nov 2009
 Revision: 9581
