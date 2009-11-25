@@ -440,13 +440,20 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	$newDbVersion = 14;
 	
 	if ($dbVersion < $newDbVersion) {
-		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
-		if (is_dir ( ICMS_ROOT_PATH . '/preload' ) && ! is_dir ( ICMS_ROOT_PATH . '/plugins/preloads' )) {
-			icms_copyr ( ICMS_ROOT_PATH . '/preload', ICMS_ROOT_PATH . '/plugins/preloads' );
-			icms_unlinkRecursive ( ICMS_ROOT_PATH . '/preload' );
-		}
-		if (is_dir ( ICMS_ROOT_PATH . '/plugins/preloads' )) {
-			icms_unlinkRecursive ( ICMS_ROOT_PATH . '/preload' );
+		if (is_writable ( ICMS_PLUGINS_PATH ) || (is_dir(ICMS_ROOT_PATH . '/plugins/preloads') && is_writable ( ICMS_ROOT_PATH . '/plugins/preloads' ))) {
+			echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
+			if (is_dir ( ICMS_ROOT_PATH . '/preload' )) {
+				icms_copyr ( ICMS_ROOT_PATH . '/preload', ICMS_ROOT_PATH . '/plugins/preloads' );
+				icms_unlinkRecursive ( ICMS_ROOT_PATH . '/preload' );
+			}
+			if (is_dir ( ICMS_ROOT_PATH . '/plugins/preloads' )) {
+				icms_unlinkRecursive ( ICMS_ROOT_PATH . '/preload' );
+			}
+		} else {
+			$newDbVersion = 13;
+			echo '<br />The new version of ImpressCMS changed the storage location of the preloads. This update will try to move your preloads to the right place, but this requires that the storage folder for plugins and preloads has write permission. Set the correct permission in the folder and update the system module again.<br />';
+			echo '<b>Plugins folder</b>: ' . ICMS_PLUGINS_PATH . '<br />';
+			echo '<b>Preloads folder</b>: ' . ICMS_PRELOAD_PATH . '<br />';
 		}
 	}
 	
@@ -1040,10 +1047,10 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 				$new_conf_value = str_replace ( ICMS_ROOT_PATH, '', ICMS_IMANAGER_FOLDER_PATH ) . '/' . $imgcat_foldername . '/' . $img;
 				$icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'config' ) . '` SET conf_value="' . $new_conf_value . '" WHERE conf_id=' . $conf_id );
 			}
-		}else{
+		} else {
 			$newDbVersion = 36;
 			echo '<br />The new version of the Image Manager changed the storage location of your images. This update will try to move your images to the right place, but this requires that the storage folder has write permission. Set the correct permission in the folder and update the system module again.<br />';
-			echo '<b>Image Manager folder</b>: '.ICMS_IMANAGER_FOLDER_PATH.'<br />';
+			echo '<b>Image Manager folder</b>: ' . ICMS_IMANAGER_FOLDER_PATH . '<br />';
 		}
 	}
 	
