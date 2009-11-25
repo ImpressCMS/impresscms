@@ -1068,6 +1068,36 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	}
 
+/* 1.2 RC2 release */
+
+    $newDbVersion = 36;
+    if($dbVersion < $newDbVersion)
+    {
+        /* Change the the constant name for extractsyleblock_escape & styleblocks */
+        $sql_extract_esc = 'UPDATE ' . $icmsDB->prefix('config')
+        . ' SET `conf_title` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC"'
+        . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Escaping"';
+        $icmsDatabaseUpdater->runQuery($sql_extract_esc, 'Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC Updated', 'Unable to update Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC', true);
+
+        /* Change the the constant name for extractsyleblock_escape & styleblocks Descriptions*/
+        $sql_extract_escdsc = 'UPDATE ' . $icmsDB->prefix('config')
+        . ' SET `conf_desc` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESCDSC"'
+        . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Escaping"';
+        $icmsDatabaseUpdater->runQuery($sql_extract_escdsc, 'Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESCDSC Updated', 'Unable to update Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESCDSC', true);
+
+        /* Change the the constant name for extractsyleblock_scope */
+        $sql_extract_scope = 'UPDATE ' . $icmsDB->prefix('config')
+        . ' SET `conf_title` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPE"'
+        . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Scope"';
+        $icmsDatabaseUpdater->runQuery($sql_extract_scope, 'Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPE Updated', 'Unable to update Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPE', true);
+
+        /* Change the the constant name for extractsyleblock_scope Descriptions*/
+        $sql_extract_scopedsc = 'UPDATE ' . $icmsDB->prefix('config')
+        . ' SET `conf_desc` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPEDSC"'
+        . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Scope"';
+        $icmsDatabaseUpdater->runQuery($sql_extract_scopedsc, 'Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPEDSC Updated', 'Unable to update Constant _MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPEDSC', true);
+    }
+
 /* 1.2 RC1 release */
 
 	echo "</code>";
