@@ -454,6 +454,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			echo '<br />The new version of ImpressCMS changed the storage location of the preloads. This update will try to move your preloads to the right place, but this requires that the storage folder for plugins and preloads has write permission. Set the correct permission in the folder and update the system module again.<br />';
 			echo '<b>Plugins folder</b>: ' . ICMS_PLUGINS_PATH . '<br />';
 			echo '<b>Preloads folder</b>: ' . ICMS_PRELOAD_PATH . '<br />';
+			$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
+			exit();
 		}
 	}
 	
@@ -1051,6 +1053,8 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			$newDbVersion = 36;
 			echo '<br />The new version of the Image Manager changed the storage location of your images. This update will try to move your images to the right place, but this requires that the storage folder has write permission. Set the correct permission in the folder and update the system module again.<br />';
 			echo '<b>Image Manager folder</b>: ' . ICMS_IMANAGER_FOLDER_PATH . '<br />';
+			$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
+			exit();
 		}
 	}
 	
