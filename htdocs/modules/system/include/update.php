@@ -455,7 +455,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			echo '<b>Plugins folder</b>: ' . ICMS_PLUGINS_PATH . '<br />';
 			echo '<b>Preloads folder</b>: ' . ICMS_PRELOAD_PATH . '<br />';
 			$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-			exit();
+			return false;
 		}
 	}
 	
@@ -1054,7 +1054,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			echo '<br />The new version of the Image Manager changed the storage location of your images. This update will try to move your images to the right place, but this requires that the storage folder has write permission. Set the correct permission in the folder and update the system module again.<br />';
 			echo '<b>Image Manager folder</b>: ' . ICMS_IMANAGER_FOLDER_PATH . '<br />';
 			$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-			exit();
+			return false;
 		}
 	}
 	
