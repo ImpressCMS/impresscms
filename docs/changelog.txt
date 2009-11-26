@@ -1,11 +1,16 @@
 ImpressCMS ChangeLog
-=== ImpressCMS 1.2 Final ===
+=== ImpressCMS 1.2 RC2 ===
 Release date:
 Revision:
 
 '''Fixed'''
-
-* #833: Reference to smartobject module (skenow)
+* #833 Reference to smartobject module (skenow)
+* #830 ImpressCMS-specific Protector Instructions (mrtheme)
+* #798 Core Revalidated as W3C compliant (mrtheme)
+* #839 incorrect language constants for Purifier (m0nty)
+* #838 Imagemanager: problems in update sites when there are images categories (realtherplima)
+* #842 relocating preload folder (realtherplima)
+* #829 Missing Spanish languages files (debianus)
 
 === ImpressCMS 1.2 RC 1 ===
 Release date: 20 Nov 2009

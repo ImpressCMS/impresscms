@@ -34,8 +34,8 @@ $modversion = array(
 	'image'=> "images/system_slogo.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "Final",
-	'status'=> "Final",
+	'status_version'=> "RC2",
+	'status'=> "RC",
 	'date'=> "",
 	'author_word'=> "",
 
