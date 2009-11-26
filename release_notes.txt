@@ -11,12 +11,12 @@ Please see the full [[Change Log]] for details in docs/changelog.txt.
 ==System requirements==
 
 *PHP
-** PHP 5.1 or higher (5.2 or higher recommended)
-** 16MB memory
+    ** PHP 5.1 or higher (5.2 or higher recommended, 5.3 will be supported in ImpressCMS 1.3)
+    ** 16MB memory
 *MySQL
-** MySQL 4.1.0 or higher
+    ** MySQL 4.1.0 or higher
 *Web server
-** Any server supporting the required PHP version (Apache highly recommended)
+    ** Any server supporting the required PHP version (Apache highly recommended)
 
 ==Changes in this release==
 
@@ -55,37 +55,41 @@ The ImpressCMS trunk is always the latest as-stable-as-possible development code
 # Ensure mainfile.php, cache, templates_c and uploads are writable by the webserver
 # Using your web browser, access <your.site.url>/folder, "folder" being where you uploaded the htdocs/ files to launch the installation wizard
 
-For a complete installation documentation, please refer to /docs/install.html in the ImpressCMS package or the [[Installation Guide]].
+For complete installation documentation, please refer to the Installation Guide - http://wiki.impresscms.org/index.php?title=Installation_Guide
 
 ==Upgrading from a previous version==
 
 If you are upgrading from a previous version of ImpressCMS or XOOPS, please follow these instructions:
 
-# Get the xoops-or-impresscms_1.0-to-impresscms-1.1 package from the sourceforge file repository.
-# Copy the content of htdocs/ over your existing files.
-# On your server, delete the file cache/adminmenu.php
-# Access <your.site.url>/upgrade/ with a browser.
-# Follow the instructions to update your database.
-# You will then be asked to enter the admin area will see a message saying you are entering the admin area for the first time, click on the Submit button.
-# You will then be asked to Update the System module. Follow the instructions.
-# Flush your browsers cache (on windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox).
-# A few folders were moved to other place in ImpressCMS structure to introduce more logic in the structure. Thus, you will need to remove these folders and files from your server:
-## htdocs/class/smarty
-## htdocs/class/phpmailer
-## htdocs/class/xoopseditor/dhtmltext
-## htdocs/class/xoopseditor/dhtmltextarea
-## htdocs/class/xoopseditor/textarea
-## htdocs/class/xoopseditor/readme.txt
-## htdocs/class/xoopseditor/sampleform.inc.php
-## htdocs/class/xoopseditor/xoopseditor.inc.php
-## htdocs/class/xoopseditor/xoops_version.php
-## htdocs/include/calendar-blue.css
-## htdocs/include/calendar.js
-## htdocs/modules/system/blocksadmin/blockspadmin.php
-## htdocs/modules/system/blocksadmin/pblockform.php
-## htdocs/themes/impresstheme_light/css
-## htdocs/themes/impresstheme_light/xotpl
-# Enjoy !
+* Download an upgrade package (tar.gz or zip formats are available) http://www.impresscms.org/modules/mastop_publish/?tac=Download
+* Extract the package to your local computer
+* Login to your site
+* Upload the contents of the htdocs/ folder to your webserver, overwriting your existing files
+* Clear the contents of your cache/ and templates_c/ folders
+* If you are upgrading from XOOPS or ImpressCMS 1.0, access <your.site.url>/upgrade/ with your browser
+      ** Follow the upgrade instructions
+* If you are upgrading from ImpressCMS 1.1, go to the administration area of your site - <your.site.url>/admin.php
+      ** Follow the instructions to upgrade your system module
+* Flush your browsers cache (on Windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox)
+* Delete the upgrade/ folder from your server
+* If you are upgrading from XOOPS or ImpressCMS 1.0, you can also delete the following files/folders - 
+    ** htdocs/class/smarty
+    ** htdocs/class/phpmailer
+    ** htdocs/class/xoopseditor/dhtmltext
+    ** htdocs/class/xoopseditor/dhtmltextarea
+    ** htdocs/class/xoopseditor/textarea
+    ** htdocs/class/xoopseditor/readme.txt
+    ** htdocs/class/xoopseditor/sampleform.inc.php
+    ** htdocs/class/xoopseditor/xoopseditor.inc.php
+    ** htdocs/class/xoopseditor/xoops_version.php
+    ** htdocs/include/calendar-blue.css
+    ** htdocs/include/calendar.js
+    ** htdocs/modules/system/blocksadmin/blockspadmin.php
+    ** htdocs/modules/system/blocksadmin/pblockform.php
+    ** htdocs/themes/impresstheme_light/css
+    ** htdocs/themes/impresstheme_light/xotpl
+    
+* Enjoy !
 
 ==Revealing the blank page backtrace log==
 
