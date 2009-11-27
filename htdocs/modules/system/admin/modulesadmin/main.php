@@ -232,6 +232,14 @@ if ($op == 'update') {
 	}
 	$msgs .= '<br /><span style="font-size:smaller;">'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREUPD;
 	xoops_cp_header();
+
+
+	/** if system dbversion < 37 */
+	/** @todo use a language constant */
+	if (icms_getModuleInfo('system')->getDBVersion() < 37) {
+		  icms_error_msg(sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, ICMS_IMANAGER_FOLDER_PATH), _MD_AM_IMAGESFOLDER_UPDATE_TITLE, true);
+	}
+
 	xoops_confirm(array('module' => $module, 'op' => 'update_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _MD_AM_UPDATE);
 	xoops_cp_footer();
 	exit();

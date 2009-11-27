@@ -51,7 +51,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	//$dbVersion  = $module->getDBVersion();
 	//$oldversion  = $module->getVar('version');
 
-
 	ob_start ();
 
 	$dbVersion = $module->getDBVersion ();
@@ -986,8 +985,14 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	/* 1.2 RC1 released */
 
+	/**
+	 * set to true if a specific update fails and need to stop the update process
+	 * this is only used starting here...
+	 * */
+	$abortUpdate = false;
+
 	$newDbVersion = 36;
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		/* Change the the constant name for extractsyleblock_escape & styleblocks */
 		$sql_extract_esc = 'UPDATE ' . $icmsDB->prefix ( 'config' ) . ' SET `conf_title` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC"' . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Escaping"';
@@ -1009,7 +1014,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	$newDbVersion = 37;
 	/* moving the images of the image manager from uploads to the new for
 	 */
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		if (is_writable ( ICMS_IMANAGER_FOLDER_PATH )) {
 			echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 
@@ -1053,8 +1058,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			$newDbVersion = 36;
 			echo '<br />The new version of the Image Manager changed the storage location of your images. This update will try to move your images to the right place, but this requires that the storage folder has write permission. Set the correct permission in the folder and update the system module again.<br />';
 			echo '<b>Image Manager folder</b>: ' . ICMS_IMANAGER_FOLDER_PATH . '<br />';
-			$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-			return false;
+			$abortUpdate = true;
 		}
 	}
 

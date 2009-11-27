@@ -86,4 +86,6 @@ define('_MD_AM_NOTDELTEMPFILE', 'ERROR: Could not delete old template <b>%s</b>.
 define('_MD_AM_COULDNOTUPDATE', 'ERROR: Could not update <b>%s</b>.');
 define('_MD_AM_BLOCKUPDATED', 'Block <b>%s</b> updated. Block ID: <b>%s</b>.');
 define('_MD_AM_BLOCKCREATED', 'Block <b>%s</b> created. Block ID: <b>%s</b>.');
+define('_MD_AM_IMAGESFOLDER_UPDATE_TITLE', 'Image Manager folder needs to be writable');
+define('_MD_AM_IMAGESFOLDER_UPDATE_TEXT', 'The new version of the Image Manager changed the storage location of your images. This update will try to move your images to the right place, but this requires that the storage folder has write permission. Please set the correct permission in the folder before cicking on the Update button below.<br /><b>Image Manager folder</b>: %s');
 ?>
