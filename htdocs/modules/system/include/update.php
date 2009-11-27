@@ -24,7 +24,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	global $icmsConfig, $xoTheme;
 	$icmsDB = $GLOBALS ['xoopsDB'];
 
-	$from_112 = $stoped = false;
+	$from_112 = $abortUpdate = false;
 
 	$oldversion = $module->getVar ( 'version' );
 	if ($oldversion < 120) {
@@ -78,7 +78,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	$newDbVersion = 1;
 
 	$action = sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
-	if ($dbVersion <= $newDbVersion) {
+	if (!$abortUpdate && $dbVersion <= $newDbVersion) {
 		echo $action;
 
 		// Now, first, let's increment the conf_order of user option starting at new_user_notify
