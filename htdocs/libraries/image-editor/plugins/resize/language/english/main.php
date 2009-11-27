@@ -4,5 +4,4 @@ define('_RESIZE_PLUGDESC', 'Plugin to allow the DHTML Image Editor resize images
 
 define('_RESIZE_PREVIEW', 'Preview');
 define('_RESIZE_EXECUTE', 'Resize');
-
 ?>
