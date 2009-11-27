@@ -234,9 +234,11 @@ if ($op == 'update') {
 	xoops_cp_header();
 
 
-	/** if system dbversion < 37 */
 	/** @todo use a language constant */
-	if (icms_getModuleInfo('system')->getDBVersion() < 37) {
+	if (!is_writable ( ICMS_PLUGINS_PATH ) || !is_dir(ICMS_ROOT_PATH . '/plugins/preloads') || !is_writable ( ICMS_ROOT_PATH . '/plugins/preloads' )) {
+		  icms_error_msg(sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH,ICMS_ROOT_PATH . '/plugins/preloads'), _MD_AM_PLUGINSFOLDER_UPDATE_TITLE, true);
+	}
+	if (!is_writable ( ICMS_IMANAGER_FOLDER_PATH )) {
 		  icms_error_msg(sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, ICMS_IMANAGER_FOLDER_PATH), _MD_AM_IMAGESFOLDER_UPDATE_TITLE, true);
 	}
 

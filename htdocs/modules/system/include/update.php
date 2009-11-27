@@ -24,7 +24,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	global $icmsConfig, $xoTheme;
 	$icmsDB = $GLOBALS ['xoopsDB'];
 
-	$from_112 = false;
+	$from_112 = $stoped = false;
 
 	$oldversion = $module->getVar ( 'version' );
 	if ($oldversion < 120) {
@@ -204,7 +204,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	 */
 	$newDbVersion = 2;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$configitem_handler = xoops_getHandler ( 'configitem' );
 		// fetch the rss_local configitem
@@ -226,7 +226,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	 */
 	$newDbVersion = 3;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$table = new IcmsDatabasetable ( 'users' );
 		if (! $table->fieldExists ( 'openid' )) {
@@ -259,7 +259,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 4;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 
 		$table = new IcmsDatabasetable ( 'users' );
@@ -272,7 +272,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 5;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23 );
 		unset ( $table );
@@ -281,7 +281,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	//Some users had used a copy of working branch and they got multiple option, this is to remove all those re-created options and make a single option
 	$newDbVersion = 6;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE conf_name='use_jsjalali'" );
 		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23 );
@@ -290,7 +290,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 7;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$configitem_handler = xoops_getHandler ( 'configitem' );
 		// fetch the rss_local configitem
@@ -307,7 +307,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 8;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 
 		$table = new IcmsDatabasetable ( 'modules' );
@@ -320,7 +320,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 9;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$table = new IcmsDatabasetable ( 'users' );
 		$icmsDatabaseUpdater->runQuery ( "ALTER TABLE `" . $table->name () . "` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))", 'Successfully altered the index unamepass on table users', '' );
@@ -329,7 +329,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	}
 
 	$newDbVersion = 10;
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 
 		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_social_bookmarks"' ) == 0) {
@@ -376,7 +376,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 11;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$icmsDatabaseUpdater->db->queryF ( "UPDATE `" . $icmsDatabaseUpdater->db->prefix ( 'config' ) . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_unames'" );
 		$icmsDatabaseUpdater->db->queryF ( "UPDATE `" . $icmsDatabaseUpdater->db->prefix ( 'config' ) . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_emails'" );
@@ -394,7 +394,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 12;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		$from_112 = true;
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"' ) == 0) {
@@ -429,7 +429,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 13;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 
 		$icmsDB->queryF ( "UPDATE `" . $icmsDB->prefix ( 'config' ) . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'reg_disclaimer'" );
@@ -438,7 +438,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 14;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		if (is_writable ( ICMS_PLUGINS_PATH ) || (is_dir(ICMS_ROOT_PATH . '/plugins/preloads') && is_writable ( ICMS_ROOT_PATH . '/plugins/preloads' ))) {
 			echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 			if (is_dir ( ICMS_ROOT_PATH . '/preload' )) {
@@ -450,17 +450,14 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			}
 		} else {
 			$newDbVersion = 13;
-			echo '<br />The new version of ImpressCMS changed the storage location of the preloads. This update will try to move your preloads to the right place, but this requires that the storage folder for plugins and preloads has write permission. Set the correct permission in the folder and update the system module again.<br />';
-			echo '<b>Plugins folder</b>: ' . ICMS_PLUGINS_PATH . '<br />';
-			echo '<b>Preloads folder</b>: ' . ICMS_PRELOAD_PATH . '<br />';
-			$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
-			return false;
+			echo '<br />'.sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH,ICMS_ROOT_PATH . '/plugins/preloads');
+			$abortUpdate = true;
 		}
 	}
 
 	$newDbVersion = 15;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$table = new IcmsDatabasetable ( 'users' );
 		if (! $table->fieldExists ( 'login_name' )) {
@@ -474,7 +471,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 16;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$sql = "SELECT conf_id FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE conf_name = 'email_protect'";
 		$result = $icmsDB->query ( $sql );
@@ -489,7 +486,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 17;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		//$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '90', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
 		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"' ) == 0) {
@@ -513,13 +510,13 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 18;
 	/* errors discovered after 1.2 beta release (dbversion 31) moved to dbversion 32 */
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 	}
 
 	$newDbVersion = 19;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$module_handler = xoops_gethandler ( 'module' );
 		$smartprofile_module = $module_handler->getByDirname ( 'smartprofile' );
@@ -543,7 +540,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 20;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		// Adding configurations of search preferences
 		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_SEARCH, 'enable_deep_search', '_MD_AM_DODEEPSEARCH', '1', '_MD_AM_DODEEPSEARCHDSC', 'yesno', 'int', 2 );
@@ -552,7 +549,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 21;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		// create extended date function's config option
 		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF, 'theme_admin_set', '_MD_AM_ADMIN_DTHEME', 'iTheme', '_MD_AM_ADMIN_DTHEME_DESC', 'theme_admin', 'other', 12 );
@@ -560,7 +557,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 22;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'modules' ) . "` WHERE dirname='waiting'" );
 		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE dirname='waiting'" );
@@ -578,14 +575,14 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 24;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'use_custom_redirection', '_MD_AM_CUSTOMRED', '0', '_MD_AM_CUSTOMREDDSC', 'yesno', 'int', 9 );
 	}
 
 	$newDbVersion = 25;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$table = new IcmsDatabasetable ( 'icmscontent' );
 		if (! $table->fieldExists ( 'content_seo_description' )) {
@@ -604,7 +601,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 26;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$table = new IcmsDatabasetable ( 'system_mimetype' );
 		if (! $table->exists ()) {
@@ -657,7 +654,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 27;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$handler = icms_getModulehandler ( 'userrank', 'system' );
 		$handler->MoveAllRanksImagesToProperPath ();
@@ -665,7 +662,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 28;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$table = new IcmsDatabasetable ( 'system_autotasks' );
 		if (! $table->exists ()) {
@@ -706,7 +703,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 29;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PURIFIER"' ) == 0) {
 			$icmsDB->queryF ( "INSERT INTO " . $icmsDB->prefix ( 'configcategory' ) . " (confcat_id,confcat_name) VALUES ('14', '_MD_AM_PURIFIER')" );
 		}
@@ -857,7 +854,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 30;
 
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 
 		$table = new IcmsDatabasetable ( 'users' );
@@ -871,7 +868,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$newDbVersion = 32;
 	/* this was in dbversion 18, but there were errors discovered after 1.2 beta relase */
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		/*
 		$table = new IcmsDatabasetable('icmscontent');
@@ -907,7 +904,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	/*
 	 * New symlinks need to be added to the db
 	 */
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$table = new IcmsDatabasetable ( 'icmspage' );
 		$new_pages = array ("NULL, 1, '" . _CPHOME . "', 'admin.php', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU14 . "', 'modules/system/admin.php?fct=avatars*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU1 . "', 'modules/system/admin.php?fct=banners*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU . "', 'modules/system/admin.php?fct=blocksadmin*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU19 . "', 'modules/system/admin.php?fct=blockspadmin*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU16 . "', 'modules/system/admin.php?fct=comments*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU12 . "', 'modules/system/admin.php?fct=findusers*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU21 . "', 'modules/system/admin.php?fct=customtag*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU3 . "', 'modules/system/admin.php?fct=groups*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU13 . "', 'modules/system/admin.php?fct=images*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU11 . "', 'modules/system/admin.php?fct=mailusers*', 1", "NULL, 1, '" . _MD_AM_MDAD . "', 'modules/system/admin.php?fct=modulesadmin*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU20 . "', 'modules/system/admin.php?fct=pages*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU6 . "', 'modules/system/admin.php?fct=preferences*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU7 . "', 'modules/system/admin.php?fct=smilies*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU15 . "', 'modules/system/admin.php?fct=tplsets*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU9 . "', 'modules/system/admin.php?fct=userrank*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU10 . "', 'modules/system/admin.php?fct=users*', 1", "NULL, 1, '" . _MD_AM_VRSN . "', 'modules/system/admin.php?fct=version*', 1" );
@@ -922,7 +919,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	/* The admin control panel now consists of blocks - these need to be set as visible
 		 * Control Panel, System Warnings, Modules Installed
 		 */
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$admin_blocks = array (array ('b_system_admin_cp_show', 'page_topleft_admin' ), array ('b_system_admin_modules_show', 'page_topright_admin' ), array ('b_system_admin_warnings_show', 'page_topcenter_admin' ) );
 		/* Get block positions */
@@ -954,7 +951,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	 * blocks added during a module update default to block_type 'M', which
 	 * is not correct for the system module, adding todo in modulesadmin
 	 */
-	if ($dbVersion < $newDbVersion) {
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$result = $icmsDB->query ( 'SELECT title, side, weight, visible, bcachetime, bid' . ' FROM `' . $icmsDB->prefix ( 'newblocks' ) . '` WHERE `show_func`="b_system_waiting_show" AND `func_file`="system_blocks.php"' );
 		list ( $title, $side, $weight, $visible, $bcachetime, $bid ) = $icmsDB->fetchRow ( $result );
@@ -1056,8 +1053,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			}
 		} else {
 			$newDbVersion = 36;
-			echo '<br />The new version of the Image Manager changed the storage location of your images. This update will try to move your images to the right place, but this requires that the storage folder has write permission. Set the correct permission in the folder and update the system module again.<br />';
-			echo '<b>Image Manager folder</b>: ' . ICMS_IMANAGER_FOLDER_PATH . '<br />';
+			echo '<br />'.sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, ICMS_IMANAGER_FOLDER_PATH);
 			$abortUpdate = true;
 		}
 	}
