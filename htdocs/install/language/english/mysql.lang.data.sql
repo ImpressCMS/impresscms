@@ -36,7 +36,6 @@ INSERT INTO smiles VALUES (17, ':idea:', 'smil3dbd4e7853679.gif', 'I have an ide
 # Dumping data for table `icmspage`
 #
 
-INSERT INTO icmspage VALUES (1, 1, 'Welcome to ImpressCMS', 'content.php?page=What_is_ImpressCMS?', 1);
 INSERT INTO icmspage VALUES (2, 1, 'Admin Control Panel', 'admin.php', 1);
 INSERT INTO icmspage VALUES (3, 1, 'Avatars', 'modules/system/admin.php?fct=avatars*', 1);
 INSERT INTO icmspage VALUES (4, 1, 'Banners', 'modules/system/admin.php?fct=banners*', 1);
