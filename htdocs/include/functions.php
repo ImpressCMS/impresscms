@@ -1000,7 +1000,7 @@ function icms_mkdir($target)
 			// create an index.html file in this directory
 			if ($fh = @fopen($target.'/index.html', 'w'))
 				fwrite($fh, '<script>history.go(-1);</script>');
-			@fclose($fh); 
+			@fclose($fh);
 			return $res;
 		}
 	}
@@ -2032,9 +2032,9 @@ function ext_date($time)
 					'Oct'		=> _CAL_OCT,
 					'Nov'		=> _CAL_NOV,
 					'Dec'		=> _CAL_DEC );
-	
+
 	$timestamp = strtr( $time, $trans );
-	return $timestamp; 
+	return $timestamp;
 }
 
 
@@ -2902,4 +2902,30 @@ ENT_QUOTES, _CHARSET)."'");
     return $uname;
 }
 
+/**
+ * Check if the module currently uses WYSIWYG and decied wether to do_br or not
+ *
+* @return bool true | false
+ */
+function icms_need_do_br($moduleName=false) {
+	global $icmsConfig, $icmsUser, $icmsModule;
+
+	if (!$moduleName) {
+		global $icmsModule;
+		$theModule = $icmsModule;
+		$moduleName = $theModule->getVar('dirname');
+	} else {
+		$theModule = icms_getModuleInfo($moduleName);
+	}
+
+	$groups = $icmsUser->getGroups();
+
+	$editor_default = $icmsConfig['editor_default'];
+	$gperm_handler = xoops_getHandler('groupperm');
+	if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $theModule->mid(), $groups)) {
+		return false;
+	} else {
+		return true;
+	}
+}
 ?>
