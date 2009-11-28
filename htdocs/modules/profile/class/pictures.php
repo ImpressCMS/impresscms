@@ -43,7 +43,7 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 		$this->initCommonVar('dosmiley', false, true);
 
 		$this->setControl('uid_owner', 'user');
-		$this->setControl('url', 'image');
+		$this->setControl('url', array('name' => 'image', 'nourl' => true));
 		$this->setControl('private', 'yesno');
 		$this->hideFieldFromForm('creation_time');
 		$this->hideFieldFromForm('update_time');
