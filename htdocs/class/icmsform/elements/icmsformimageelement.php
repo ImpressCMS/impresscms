@@ -21,6 +21,8 @@ class IcmsFormImageElement extends XoopsFormElementTray {
 	 */
   function IcmsFormImageElement($object, $key) {
   	$var = $object->vars[$key];
+  	$control = $object->getControl($key);
+
     $object_imageurl = $object->getImageDir();
     $this->XoopsFormElementTray( $var['form_caption'], ' ' );
 
@@ -37,13 +39,14 @@ class IcmsFormImageElement extends XoopsFormElementTray {
     include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformfileuploadelement.php";
     $this->addElement(new IcmsFormFileUploadElement($object, $key));
 
-    $this->addElement(new XoopsFormLabel( '<div style="padding-top: 8px; font-size: 80%;">'._CO_ICMS_URL_FILE_DSC.'</div>', ''));
-    include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformtextelement.php";
-    include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformcheckelement.php";
+	if (!isset($control['nourl']) || !$control['nourl']) {
+	    $this->addElement(new XoopsFormLabel( '<div style="padding-top: 8px; font-size: 80%;">'._CO_ICMS_URL_FILE_DSC.'</div>', ''));
+	    include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformtextelement.php";
+	    include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformcheckelement.php";
 
-    $this->addElement(new XoopsFormLabel( '', '<br />' . _CO_ICMS_URL_FILE));
-    $this->addElement(new XoopsFormText('', 'url_'.$key, 50, 500));
-
+	    $this->addElement(new XoopsFormLabel( '', '<br />' . _CO_ICMS_URL_FILE));
+	    $this->addElement(new XoopsFormText('', 'url_'.$key, 50, 500));
+	}
     if (!$object->isNew()) {
 	    $this->addElement(new XoopsFormLabel( '', '<br /><br />'));
 	    $delete_check = new IcmsFormCheckElement('', 'delete_'.$key);
