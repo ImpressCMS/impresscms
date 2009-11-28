@@ -982,12 +982,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	/* 1.2 RC1 released */
 
-	/**
-	 * set to true if a specific update fails and need to stop the update process
-	 * this is only used starting here...
-	 * */
-	$abortUpdate = false;
-
 	$newDbVersion = 36;
 	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
