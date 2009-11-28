@@ -39,21 +39,19 @@ class IcmsFormImageElement extends XoopsFormElementTray {
     include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformfileuploadelement.php";
     $this->addElement(new IcmsFormFileUploadElement($object, $key));
 
-	if (!isset($control['nourl']) || !$control['nourl']) {
-	    $this->addElement(new XoopsFormLabel( '<div style="padding-top: 8px; font-size: 80%;">'._CO_ICMS_URL_FILE_DSC.'</div>', ''));
-	    include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformtextelement.php";
-	    include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformcheckelement.php";
-
-	    $this->addElement(new XoopsFormLabel( '', '<br />' . _CO_ICMS_URL_FILE));
-	    $this->addElement(new XoopsFormText('', 'url_'.$key, 50, 500));
-	}
+    if (!isset($control['nourl']) || !$control['nourl']) {
+        include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformtextelement.php";
+		$this->addElement(new XoopsFormLabel( '<div style="padding-top: 8px; font-size: 80%;">'._CO_ICMS_URL_FILE_DSC.'</div>', ''));
+        $this->addElement(new XoopsFormLabel( '', '<br />' . _CO_ICMS_URL_FILE));
+        $this->addElement(new XoopsFormText('', 'url_'.$key, 50, 500));
+    }
     if (!$object->isNew()) {
-	    $this->addElement(new XoopsFormLabel( '', '<br /><br />'));
-	    $delete_check = new IcmsFormCheckElement('', 'delete_'.$key);
-	    $delete_check->addOption(1, '<span style="color:red;">'._CO_ICMS_DELETE.'</span>');
-	    $this->addElement($delete_check);
+    	include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformcheckelement.php";
+        $this->addElement(new XoopsFormLabel( '', '<br /><br />'));
+        $delete_check = new IcmsFormCheckElement('', 'delete_'.$key);
+        $delete_check->addOption(1, '<span style="color:red;">'._CO_ICMS_DELETE.'</span>');
+        $this->addElement($delete_check);
     }
   }
 }
-
 ?>
