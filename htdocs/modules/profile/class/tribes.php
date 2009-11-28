@@ -48,7 +48,7 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 		$this->initCommonVar('docxode', false, true);
 
 		$this->setControl('uid_owner', 'user');
-		$this->setControl('tribe_img', 'image');
+		$this->setControl('tribe_img', array('name'=>'image', 'nourl' => true));
 		$this->setControl('tribe_desc', 'dhtmltextarea');
 		$this->setControl('security', array (
 			'itemHandler' => 'tribes',
@@ -143,7 +143,7 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 		$link = $this->handler->_moduleUrl.$this->handler->_page.'?uid='.$this->getVar('uid_owner').'&tribes_id='.$this->getVar('tribes_id');
 		return '<a href="'.$link.'">'.$this->getVar('title').'</a>';
 	}
-	
+
 	/**
 	 * Check to see wether the current user can edit or delete this tribe
 	 *
@@ -349,24 +349,24 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 
 	/**
 	* Resize a tribe and save it to $path_upload
-	* 
+	*
 	* @param text $img the path to the file
 	* @param int $width the width in pixels that the pic will have
 	* @param int $height the height in pixels that the pic will have
 	* @param text $path_upload The path to where the files should be saved after resizing
 	* @param text $prefix The prefix used to recognize files and avoid multiple files.
 	* @return nothing
-	*/	
+	*/
 	function imageResizer($img, $width=320, $height=240, $path_upload=ICMS_UPLOAD_PATH, $prefix='') {
 		$prefix = (isset($prefix) && $prefix != '')?$prefix:time();
 		$path = pathinfo($img);
 		$img = WideImage::load($img);
 		$img->resizeDown($width, $height)->saveToFile($path_upload.'/'.$prefix.'_'.$path['basename']);
 	}
-	
+
 	/**
 	* Resize a tribe and save it to $path_upload
-	* 
+	*
 	* @param text $img the path to the file
 	* @param text $path_upload The path to where the files should be saved after resizing
 	* @param int $thumbwidth the width in pixels that the thumbnail will have
@@ -374,12 +374,12 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	* @param int $pictwidth the width in pixels that the pic will have
 	* @param int $pictheight the height in pixels that the pic will have
 	* @return nothing
-	*/	
+	*/
 	function resizeImage($img, $thumbwidth, $thumbheight, $pictwidth, $pictheight,$path_upload) {
 		$this->imageResizer($img, $thumbwidth, $thumbheight, $path_upload, 'thumb');
 		$this->imageResizer($img, $pictwidth, $pictheight, $path_upload, 'resized');
 	}
-	
+
 	/**
 	 * Check wether the current user can submit a new tribe or not
 	 *
@@ -430,9 +430,9 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 
 	/*
 	 * beforeDelete event
-	 * 
+	 *
 	 * Event automatically triggered by IcmsPersistable Framework before the object is deleted
-	 * 
+	 *
 	 * @param object $obj ProfileTribes object
 	 * @return bool
 	 */
@@ -492,7 +492,7 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	 */
 	function afterFileUnlink(&$obj) {
 		if ($this->_tribesImgBeforeUnlink == $obj->getVar('tribe_img')) return true;
-		
+
 		$imgPath = ICMS_UPLOAD_PATH.'/profile/tribes/';
 		$imgUrl = $this->_tribesImgBeforeUnlink;
 
