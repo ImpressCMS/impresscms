@@ -1054,6 +1054,14 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	/* 1.2 RC2 released */
 
+	$newDbVersion = 38;
+	if (!$abortUpdate && $dbVersion < $newDbVersion) {
+		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
+		/* Change the system preference with textarea control to textsarea */
+		$sql_extract_esc = 'UPDATE ' . $icmsDB->prefix ( 'config' ) . ' SET `conf_formtype` = "textsarea"' . ' WHERE  `conf_modid` =0 AND `conf_formtype` = "textarea"';
+		$icmsDatabaseUpdater->runQuery ( $sql_extract_esc, 'System Preferences textarea controls set to textsarea', true );
+	}
+
 	echo "</code>";
 
 	if ($from_112) {
