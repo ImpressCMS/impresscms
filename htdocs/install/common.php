@@ -225,7 +225,8 @@ define("SMARTY_DIR", ICMS_LIBRARIES_PATH."/smarty/");
     // ################# Load Config Settings ##############
     $config_handler =& xoops_gethandler('config');
     $xoopsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
-
+	$icmsConfig =& $xoopsConfig;
+	
     // #################### Error reporting settings ##################
     if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 ) {
         error_reporting(E_ALL);

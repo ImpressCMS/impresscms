@@ -13,6 +13,7 @@ Revision:
 * #829 Missing Spanish languages files (debianus)
 * #841 Use of undefined constant _CO_CONTENT_CONTENT_READ (phoenyx)
 * #844 Removed Symlink to old content page (realtherplima)
+* #845 loading selected language files during module installation (iCMS installer) (Phoenyx)
 
 === ImpressCMS 1.2 RC 1 ===
 Release date: 20 Nov 2009
