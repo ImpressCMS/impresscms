@@ -39,7 +39,7 @@ define('_PROFILE_MA_ACTLOGIN','The account has been activated and can now login 
 define('_PROFILE_MA_ACTKEYNOT','Activation key not correct!');
 define('_PROFILE_MA_ACONTACT','Selected account is already activated!');
 
-define('_PROFILE_MA_YOURREGISTERED','An email containing an user activation key has been sent to the email account you provided. Please follow the instructions in the mail to activate your account. ');
+define('_PROFILE_MA_YOURREGISTERED','An email containing a user activation key has been sent to the email account you provided. Please follow the instructions in the mail to activate your account. ');
 define('_PROFILE_MA_YOURREGMAILNG','You are now registered. However, we were unable to send the activation mail to your email account due to an internal error that had occurred on our server. We are sorry for the inconvenience, please send the webmaster an email notifying him/her of the situation.');
 define('_PROFILE_MA_YOURREGISTERED2','You are now registered.  Please wait for your account to be activated by the adminstrators.  You will receive an email once you are activated.  This could take a while so please be patient.');
 
@@ -95,7 +95,7 @@ define('_PROFILE_MA_SELFILE','Select file');
 define('_PROFILE_MA_OLDDELETED','Your old avatar will be deleted!');
 define('_PROFILE_MA_CHOOSEAVT', 'Choose avatar from the available list');
 define('_PROFILE_MA_ADMINNO', 'User in the webmasters group cannot be removed');
-define('_PROFILE_MA_NOPERMISS','Sorry, you dont have the permission to perform this action!');
+define('_PROFILE_MA_NOPERMISS',"Sorry, you don't have the permission to perform this action!");
 define('_PROFILE_MA_SURETODEL','Are you sure you want to delete your account?');
 define('_PROFILE_MA_REMOVEINFO','This will remove all your info from our database.');
 define('_PROFILE_MA_BEENDELED','Your account has been deleted.');

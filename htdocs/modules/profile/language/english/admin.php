@@ -152,7 +152,7 @@ define("_AM_SPROFILE_BACK_TO_FORM", "<< Back to search form");
 define("_AM_SPROFILE_EXPORT_ALL", "Export all matching users");
 	// Audio
 define("_AM_PROFILE_AUDIOS", "Audios");
-define("_AM_PROFILE_AUDIO_CREATE", "Add a audio");
+define("_AM_PROFILE_AUDIO_CREATE", "Add an audio");
 define("_AM_PROFILE_AUDIO", "Audio");
 define("_AM_PROFILE_AUDIO_EDIT", "Edit this audio");
 	// Tribes
