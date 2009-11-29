@@ -45,7 +45,7 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 		$this->initCommonVar('dobr', false, true);
 		$this->initCommonVar('doimage', false, true);
 		$this->initCommonVar('dosmiley', false, true);
-		$this->initCommonVar('docxode', false, true);
+		$this->initCommonVar('doxcode', false, true);
 
 		$this->setControl('uid_owner', 'user');
 		$this->setControl('tribe_img', array('name' => 'image', 'nourl' => true));
