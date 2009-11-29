@@ -56,7 +56,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	$dbVersion = $module->getDBVersion ();
 	$action = sprintf ( _DATABASEUPDATER_CURRENTVER, icms_conv_nr2local ( $dbVersion ) );
 	echo "<code>" . _DATABASEUPDATER_UPDATE_UPDATING_DATABASE . "<br />";
-	echo $action;
+	echo $action . '<br />';
 
 	/**
 	 * Migrate the db with new changes from 1.1 since 1.0

@@ -11,6 +11,8 @@ Revision:
 * #838 Imagemanager: problems in update sites when there are images categories (realtherplima)
 * #842 relocating preload folder (realtherplima)
 * #829 Missing Spanish languages files (debianus)
+* #841 Use of undefined constant _CO_CONTENT_CONTENT_READ (phoenyx)
+* #844 Removed Symlink to old content page (realtherplima)
 
 === ImpressCMS 1.2 RC 1 ===
 Release date: 20 Nov 2009
