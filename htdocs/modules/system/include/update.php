@@ -907,7 +907,27 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$table = new IcmsDatabasetable ( 'icmspage' );
-		$new_pages = array ("NULL, 1, '" . _CPHOME . "', 'admin.php', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU14 . "', 'modules/system/admin.php?fct=avatars*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU1 . "', 'modules/system/admin.php?fct=banners*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU . "', 'modules/system/admin.php?fct=blocksadmin*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU19 . "', 'modules/system/admin.php?fct=blockspadmin*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU16 . "', 'modules/system/admin.php?fct=comments*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU12 . "', 'modules/system/admin.php?fct=findusers*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU21 . "', 'modules/system/admin.php?fct=customtag*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU3 . "', 'modules/system/admin.php?fct=groups*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU13 . "', 'modules/system/admin.php?fct=images*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU11 . "', 'modules/system/admin.php?fct=mailusers*', 1", "NULL, 1, '" . _MD_AM_MDAD . "', 'modules/system/admin.php?fct=modulesadmin*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU20 . "', 'modules/system/admin.php?fct=pages*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU6 . "', 'modules/system/admin.php?fct=preferences*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU7 . "', 'modules/system/admin.php?fct=smilies*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU15 . "', 'modules/system/admin.php?fct=tplsets*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU9 . "', 'modules/system/admin.php?fct=userrank*', 1", "NULL, 1, '" . _MI_SYSTEM_ADMENU10 . "', 'modules/system/admin.php?fct=users*', 1", "NULL, 1, '" . _MD_AM_VRSN . "', 'modules/system/admin.php?fct=version*', 1" );
+		$new_pages = array (
+			"NULL, 1, '" . _CPHOME . "', 'admin.php', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU14 . "', 'modules/system/admin.php?fct=avatars*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU1 . "', 'modules/system/admin.php?fct=banners*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU2 . "', 'modules/system/admin.php?fct=blocksadmin*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU19 . "', 'modules/system/admin.php?fct=blockspadmin*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU16 . "', 'modules/system/admin.php?fct=comments*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU12 . "', 'modules/system/admin.php?fct=findusers*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU21 . "', 'modules/system/admin.php?fct=customtag*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU3 . "', 'modules/system/admin.php?fct=groups*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU13 . "', 'modules/system/admin.php?fct=images*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU11 . "', 'modules/system/admin.php?fct=mailusers*', 1",
+			"NULL, 1, '" . _MD_AM_MDAD . "', 'modules/system/admin.php?fct=modulesadmin*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU20 . "', 'modules/system/admin.php?fct=pages*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU6 . "', 'modules/system/admin.php?fct=preferences*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU7 . "', 'modules/system/admin.php?fct=smilies*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU15 . "', 'modules/system/admin.php?fct=tplsets*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU9 . "', 'modules/system/admin.php?fct=userrank*', 1",
+			"NULL, 1, '" . _MI_SYSTEM_ADMENU10 . "', 'modules/system/admin.php?fct=users*', 1",
+			"NULL, 1, '" . _MD_AM_VRSN . "', 'modules/system/admin.php?fct=version*', 1"
+			);
 		foreach ( $new_pages as $new_page ) {
 			$table->setData ( $new_page );
 		}

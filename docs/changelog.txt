@@ -14,6 +14,7 @@ Revision:
 * #841 Use of undefined constant _CO_CONTENT_CONTENT_READ (phoenyx)
 * #844 Removed Symlink to old content page (realtherplima)
 * #845 loading selected language files during module installation (iCMS installer) (Phoenyx)
+* #848 assign correct language constant in upgrade for blocksadmin symlink (skenow)
 
 === ImpressCMS 1.2 RC 1 ===
 Release date: 20 Nov 2009
