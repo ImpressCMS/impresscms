@@ -1003,25 +1003,21 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	}
 
 	$newDbVersion = 37;
-	/* moving the images of the image manager from uploads to the new for
+	/* moving the images of the image manager from uploads to the new folder
 	 */
 	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		if (is_writable ( ICMS_IMANAGER_FOLDER_PATH )) {
 			echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 
-			$letters = 'abcefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
-
 			$result = $icmsDB->query ( 'SELECT * FROM `' . $icmsDB->prefix ( 'imagecategory' ) . '`' );
 			while ( $row = $icmsDB->fetchArray ( $result ) ) {
-				if (empty ( $row ['imgcat_foldername '] )) {
-					$new_folder = substr ( str_shuffle ( $letters ), 0, 8 );
+				if (empty ( $row ['imgcat_foldername ']) && $row[ 'imgcat_storetype' ] = 'file' ) {
+					$new_folder =  preg_replace( '/[:?".<>\/\\]/', '_', strtolower ( $row[ 'imgcat_name' ] ));
 					$icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'imagecategory' ) . '` SET imgcat_foldername="' . $new_folder . '" WHERE imgcat_id=' . $row ['imgcat_id'] );
 				} else {
 					$new_folder = $row ['imgcat_foldername '];
 				}
-				if (! is_dir ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder )) {
-					icms_mkdir ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder );
-				}
+				icms_mkdir ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder );
 
 				$result1 = $icmsDB->query ( 'SELECT * FROM `' . $icmsDB->prefix ( 'image' ) . '` WHERE imgcat_id=' . $row ['imgcat_id'] );
 				while ( $row1 = $icmsDB->fetchArray ( $result1 ) ) {
