@@ -1032,7 +1032,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			$result = $icmsDB->query ( 'SELECT * FROM `' . $icmsDB->prefix ( 'imagecategory' ) . '`' );
 			while ( $row = $icmsDB->fetchArray ( $result ) ) {
 				if (empty ( $row ['imgcat_foldername ']) && $row[ 'imgcat_storetype' ] = 'file' ) {
-					$new_folder =  preg_replace( '/[:?".<>\/\\]/', '_', strtolower ( $row[ 'imgcat_name' ] ));
+					$new_folder =  preg_replace( '/[:?".<>\/\\\|\s]/', '_', strtolower ( $row[ 'imgcat_name' ] ));
 					$icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'imagecategory' ) . '` SET imgcat_foldername="' . $new_folder . '" WHERE imgcat_id=' . $row ['imgcat_id'] );
 				} else {
 					$new_folder = $row ['imgcat_foldername '];
