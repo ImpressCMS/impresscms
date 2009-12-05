@@ -989,6 +989,11 @@ function icms_mkdir($target)
 	// http://www.php.net/manual/en/function.mkdir.php
 	// saint at corenova.com
 	// bart at cdasites dot com
+	/* can't (but should) remove colons because of Windows path
+	 * also, because this is recursive, you can't remove slash or backslash
+	 * @todo improve this to split on directory separator, then build path (skenow 5 Dec 2009)
+	 */
+	$target = preg_replace( '/[?".<>\|\s]/', '_', strtolower ( $target ));
 	if(is_dir($target) || empty($target)) {return true;}
 	if(file_exists($target) && !is_dir($target)) {return false;}
 	if(icms_mkdir(substr($target, 0, strrpos($target, '/'))))
