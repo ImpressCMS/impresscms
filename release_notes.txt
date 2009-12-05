@@ -29,6 +29,15 @@ Please see the full [[Change Log]] for details in docs/changelog.txt.
 * #829 Missing Spanish languages files (debianus)
 * #841 Use of undefined constant _CO_CONTENT_CONTENT_READ (phoenyx)
 * #844 Removed Symlink to old content page (realtherplima)
+* #845 loading selected language files during module installation (iCMS installer) (Phoenyx)
+* #848 assign correct language constant in upgrade for blocksadmin symlink (skenow)
+* #851 using the admin footer for all admin themes (Phoenyx)
+* #624 TinyMCE editor, add text, linebreaks, etc, switch back to dhtmleditor: the input field is full of html-tags (m0nty/achong71/malanciault)
+* #623 Problems with tinyMCE : adding linebreaks again and again (m0nty/achong71/malanciault)
+* #45 Debugger stops icmsfeed (malanciault)
+* #594 Problem with short URLs on TinyMCE (m0nty/achong71/malanciault)
+* #843 Created a language constant for the update process (malanciault)
+* #856 sanitized folder names in imagemanager (skenow)
 
 ==Downloading ImpressCMS==
 
@@ -73,7 +82,7 @@ If you are upgrading from a previous version of ImpressCMS or XOOPS, please foll
 * If you are upgrading from XOOPS or ImpressCMS 1.0, access <your.site.url>/upgrade/ with your browser
       ** Follow the upgrade instructions
 * If you are upgrading from ImpressCMS 1.1, go to the administration area of your site - <your.site.url>/admin.php
-      ** Follow the instructions to upgrade your system module
+      ** Follow the instructions to upgrade your system module and install the Content Module
 * Flush your browsers cache (on Windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox)
 * Delete the upgrade/ folder from your server
 * If you are upgrading from XOOPS or ImpressCMS 1.0, you can also delete the following files/folders - 
@@ -92,7 +101,9 @@ If you are upgrading from a previous version of ImpressCMS or XOOPS, please foll
     ** htdocs/modules/system/blocksadmin/pblockform.php
     ** htdocs/themes/impresstheme_light/css
     ** htdocs/themes/impresstheme_light/xotpl
-    
+* Content migrated from the previous core content manager to the Content module must have their short urls checked
+  and any Symlinks for those pages must also be checked for validity 
+   
 * Enjoy !
 
 ==Revealing the blank page backtrace log==

@@ -16,6 +16,12 @@ Revision:
 * #845 loading selected language files during module installation (iCMS installer) (Phoenyx)
 * #848 assign correct language constant in upgrade for blocksadmin symlink (skenow)
 * #851 using the admin footer for all admin themes (Phoenyx)
+* #624 TinyMCE editor, add text, linebreaks, etc, switch back to dhtmleditor: the input field is full of html-tags (m0nty/achong71/malanciault)
+* #623 Problems with tinyMCE : adding linebreaks again and again (m0nty/achong71/malanciault)
+* #45 Debugger stops icmsfeed (malanciault)
+* #594 Problem with short URLs on TinyMCE (m0nty/achong71/malanciault)
+* #843 Created a language constant for the update process (malanciault)
+* #856 sanitized folder names in imagemanager (skenow)
 
 === ImpressCMS 1.2 RC 1 ===
 Release date: 20 Nov 2009
