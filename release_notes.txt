@@ -41,7 +41,7 @@ Please see the full [[Change Log]] for details in docs/changelog.txt.
 
 ==Downloading ImpressCMS==
 
-This release can be downloaded from the [https://sourceforge.net/project/showfiles.php?group_id=205633&package_id=245707&release_id=667407 ImpressCMS SourceForge project page].
+This release can be downloaded from the [https://sourceforge.net/projects/impresscms/files/ImpressCMS%20Official%20Releases/ImpressCMS%201.2%20RC2/ ImpressCMS SourceForge project page].
 
 ==Using wget command to download the .tar.gz full package==
 
@@ -85,7 +85,7 @@ If you are upgrading from a previous version of ImpressCMS or XOOPS, please foll
       ** Follow the instructions to upgrade your system module and install the Content Module
 * Flush your browsers cache (on Windows IE & Firefox you can do this by pressing CTRL+F5. MAC & Safari users can press CTRL+R, Linux Users can also press CTRL+R or CTRL+F5 when using Firefox)
 * Delete the upgrade/ folder from your server
-* If you are upgrading from XOOPS or ImpressCMS 1.0, you can also delete the following files/folders - 
+* If you are upgrading from XOOPS or ImpressCMS 1.0, you can also delete the following files/folders -
     ** htdocs/class/smarty
     ** htdocs/class/phpmailer
     ** htdocs/class/xoopseditor/dhtmltext
@@ -102,8 +102,8 @@ If you are upgrading from a previous version of ImpressCMS or XOOPS, please foll
     ** htdocs/themes/impresstheme_light/css
     ** htdocs/themes/impresstheme_light/xotpl
 * Content migrated from the previous core content manager to the Content module must have their short urls checked
-  and any Symlinks for those pages must also be checked for validity 
-   
+  and any Symlinks for those pages must also be checked for validity
+
 * Enjoy !
 
 ==Revealing the blank page backtrace log==
