@@ -1,27 +1,33 @@
 ImpressCMS ChangeLog
 === ImpressCMS 1.2 RC2 ===
-Release date:
+Release date: 6 Dec 2009
 Revision:
 
-'''Fixed'''
-* #833 Reference to smartobject module (skenow)
-* #830 ImpressCMS-specific Protector Instructions (mrtheme)
-* #798 Core Revalidated as W3C compliant (mrtheme)
-* #839 incorrect language constants for Purifier (m0nty)
-* #838 Imagemanager: problems in update sites when there are images categories (realtherplima)
-* #842 relocating preload folder (realtherplima)
-* #829 Missing Spanish languages files (debianus)
-* #841 Use of undefined constant _CO_CONTENT_CONTENT_READ (phoenyx)
-* #844 Removed Symlink to old content page (realtherplima)
-* #845 loading selected language files during module installation (iCMS installer) (Phoenyx)
-* #848 assign correct language constant in upgrade for blocksadmin symlink (skenow)
-* #851 using the admin footer for all admin themes (Phoenyx)
-* #624 TinyMCE editor, add text, linebreaks, etc, switch back to dhtmleditor: the input field is full of html-tags (m0nty/achong71/malanciault)
-* #623 Problems with tinyMCE : adding linebreaks again and again (m0nty/achong71/malanciault)
-* #45 Debugger stops icmsfeed (malanciault)
-* #594 Problem with short URLs on TinyMCE (m0nty/achong71/malanciault)
-* #843 Created a language constant for the update process (malanciault)
-* #856 sanitized folder names in imagemanager (skenow)
+* #856: image manager allows illegal characters in the folder name of a new category (skenow)
+* #843: Create a language constant for the update process (about permission for Plugins and Preload folders) (malanciault)
+* #594: Problem with short URLs on TinyMCE (m0nty)
+* #45: Debugger stops icmsfeed (malanciault)
+* #623: Problems with tinyMCE : adding linebreaks again and again (malanciault)
+* #624: TinyMCE editor, add text, linebreaks, etc, switch back to dhtmleditor: the input filed is full of html-tags (malanciault)
+* #851: Wrong footer in ACP Themes (phoenyx)
+* #838: Imagemanager: problems in update sites when there are images categories (realtherplima/skenow)
+* #773: Installer images + text need updating (malanciault)
+* #7: Built in Scheduled Task (cron tab) (MekDrop)
+* #590: global rating tool (stranger)
+* #812: Mangled e-mail in welcome message (malanciault)
+* #848: Symlink for blocksadmin is created with the wrong language constant (skenow)
+* #845: installer writes not language values correct (phoenyx)
+* #834: Installation images and document need updating (davidimpress)
+* #844: symlink to content not available (realtherplima)
+* #829: Installer: Spanish language link points to an old package (debianus)
+* #827: Issues Discovered on RC Release Day (phoenyx)
+* #837: Fix two language constants for HTMLPurifier (m0nty)
+* #839: incorrect language constants for Purifier (m0nty)
+* #835: Installation images and document need updating (malanciault)
+* #833: SmartObject refferenes (skenow)
+* #830: Protector Instructions (mrtheme)
+* #828: Problem with Trunk rev 9567 (phoenyx)
+
 
 === ImpressCMS 1.2 RC 1 ===
 Release date: 20 Nov 2009

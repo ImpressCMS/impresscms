@@ -19,7 +19,7 @@ Please see the full [[Change Log]] for details in docs/changelog.txt.
     ** Any server supporting the required PHP version (Apache highly recommended)
 
 ==Changes in this release==
-'''Fixed'''
+
 * #833 Reference to smartobject module (skenow)
 * #830 ImpressCMS-specific Protector Instructions (mrtheme)
 * #798 Core Revalidated as W3C compliant (mrtheme)
