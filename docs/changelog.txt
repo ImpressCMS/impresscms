@@ -1,7 +1,9 @@
 ImpressCMS ChangeLog
 === ImpressCMS 1.2 RC2 ===
 Release date: 6 Dec 2009
-Revision:
+Revision: 9635
+DB Version: 38
+Build Version: 31 
 
 * #856: image manager allows illegal characters in the folder name of a new category (skenow)
 * #843: Create a language constant for the update process (about permission for Plugins and Preload folders) (malanciault)
