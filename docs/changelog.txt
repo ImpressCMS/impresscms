@@ -6,6 +6,8 @@ Revision:
 DB Version: 38
 Build Version: 32
 
+* #862: Removing inclusion to deprecated sqlutility classes (malanciault)
+
 === ImpressCMS 1.2 RC2 ===
 Release date: 6 Dec 2009
 Revision: 9635
