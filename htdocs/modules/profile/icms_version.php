@@ -36,8 +36,8 @@ $modversion = array(
 	'image'=> "images/icon_big.png", /* for backward compatibility */
 
 /**  Development information */
-	'status_version'=> "RC1",
-	'status'=> "RC1",
+	'status_version'=> "Final",
+	'status'=> "Final",
 	'date'=> "",
 	'author_word'=> "",
 
@@ -102,7 +102,7 @@ $modversion['people']['documenters'][] = "[url=http://community.impresscms.org/u
 /** Manual */
 $modversion['manual']['wiki'][] = "<a href='http://wiki.impresscms.org/index.php?title=Extended_Profile/"._LANGCODE."' target='_blank'>"._LANGNAME."</a>";
 
-$modversion['warning'] = _CO_ICMS_WARNING_RC;
+$modversion['warning'] = _CO_ICMS_WARNING_FINAL;
 
 /** Administrative information */
 $modversion['hasAdmin'] = 1;
