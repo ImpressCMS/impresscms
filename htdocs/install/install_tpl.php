@@ -99,49 +99,49 @@ echo '<body>';
 	<div id="rightside">
 			<div class="page" id="<?php echo $wizard->currentPageName; ?>">
 				<?php if ( $pageHasHelp ) { ?>
-						<button type="button" onclick="javascript:void(0);" id="help_button">
-						<img src="img/help2.png" alt="<?php echo SHOW_HIDE_HELP; ?>" />
+						<button type="button" onclick="javascript:void(0);" id="help_button" title="<?php echo SHOW_HIDE_HELP; ?>">
+						<img src="img/help2.png" alt="<?php echo SHOW_HIDE_HELP; ?>"  title="<?php echo SHOW_HIDE_HELP; ?>" />
 						</button>
 				<?php } ?>
 						<button type="button" onclick="javascript:void(0);" id="pagedown">
-						<img src="img/down.png" alt="<?php echo SHOW_HIDE_HELP; ?>" />
+						<img src="img/down.png" alt="<?php echo SHOW_HIDE_HELP; ?>"  title="<?php echo SHOW_HIDE_HELP; ?>" />
 						</button>
-						<button type="button" onclick="javascript:void(0);" id="toggler">
-						<img src="img/toggler.png" alt="<?php echo SHOW_HIDE_HELP; ?>" />
+						<button type="button" onclick="javascript:void(0);" id="toggler" >
+						<img src="img/toggler.png" alt="<?php echo SHOW_HIDE_HELP; ?>"/>
 						</button>
 				<h2><?php echo $wizard->pagesTitles[ $wizard->currentPage ]; ?></h2>
 				<?php echo $content; ?>
 			</div>
 			<div id="buttons">
 				<?php if ( $wizard->currentPage != 0  && ( $wizard->currentPage != 11 )) { ?>
-				<button type="button" onclick="location.href='<?php echo $wizard->pageURI('-1'); ?>'" class="prev">
-					<img src="../images/crystal/actions/back1.png" alt="<?php echo BUTTON_PREVIOUS; ?>" width="16" />
+				<button type="button" title="<?php echo BUTTON_PREVIOUS; ?>" onclick="location.href='<?php echo $wizard->pageURI('-1'); ?>'" class="prev">
+					<img src="img/left-arr.png" alt="<?php echo BUTTON_PREVIOUS; ?>"  title="<?php echo BUTTON_PREVIOUS; ?>" width="16" />
 				</button>
 				<?php } ?>
 				<?php if ( $wizard->currentPage == 11 ) { ?>
-				<button type="button" onclick="location.href='<?php echo $wizard->pageURI('11'); ?>?success=true'" class="finish">
-					<img src="../images/crystal/actions/run.png" alt="<?php echo BUTTON_SHOW_SITE; ?>" width="16" />
+				<button  id="hmo" title="<?php echo BUTTON_SHOW_SITE; ?>" type="button" onclick="location.href='<?php echo $wizard->pageURI('11'); ?>?success=true'" class="finish">
+					<img src="img/Home.png" alt="<?php echo BUTTON_SHOW_SITE; ?>" title="<?php echo BUTTON_SHOW_SITE; ?>" width="32" />
 				</button>
 				<?php } ?>
 				<?php if ( $wizard->pages[$wizard->currentPage] == $wizard->secondlastpage) { ?>
 					<?php if ( @$pageHasForm) { ?>
 					<button type="submit">
 					<?php } else { ?>
-					<button type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'" class="next">
+					<button type="button"  title="<?php echo BUTTON_NEXT; ?>"  accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'" class="next">
 					<?php } ?>
 					<?php if ( $_POST['mod'] != 1 ) { ?>
-						<img src="../images/crystal/actions/forward1.png" alt="<?php echo BUTTON_NEXT; ?>" width="16" />
+						<img src="img/right-arr.png" alt="<?php echo BUTTON_NEXT; ?>" width="16" />
 					<?php } else { ?>
 						<?php echo BUTTON_FINISH; ?>
 					<?php } ?>
 					</button>
 				<?php } else if ( $wizard->pages[$wizard->currentPage] != $wizard->lastpage) { ?>
 					<?php if ( @$pageHasForm) { ?>
-					<button type="submit">
+					<button type="submit"  title="<?php echo BUTTON_NEXT; ?>" >
 					<?php } else { ?>
-					<button type="button" accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'" class="next">
+					<button type="button"  title="<?php echo BUTTON_NEXT; ?>"  accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'" class="next">
 					<?php } ?>
-						<img src="../images/crystal/actions/forward1.png" alt="<?php echo BUTTON_NEXT; ?>" width="16" />
+						<img src="img/right-arr.png" alt="<?php echo BUTTON_NEXT; ?>"width="16" />
 					</button>
 				<?php } ?>
 			</div>

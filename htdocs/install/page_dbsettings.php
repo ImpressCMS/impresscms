@@ -265,9 +265,9 @@ function setFormFieldCollation(id, val) {
     );
 }
 </script>
-<fieldset><legend><?php
-echo LEGEND_DATABASE;
-?></legend>
+<div class="blokSQL">
+<fieldset>
+<h3><?php echo LEGEND_DATABASE;?></h3>
 	<?php
 	echo xoFormField ( 'DB_NAME', $vars ['DB_NAME'], DB_NAME_LABEL, 255, DB_NAME_HELP );
 	?>
@@ -285,6 +285,7 @@ echo LEGEND_DATABASE;
 				?>
     
 </fieldset>
+</div>
 <?php
 $content = ob_get_contents ();
 ob_end_clean ();
