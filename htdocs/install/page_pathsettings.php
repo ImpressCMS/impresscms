@@ -330,19 +330,16 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 ?>
 <script type="text/javascript" src="pathsettings.js"></script>
 
-<div class="blokz">
 <fieldset>
-	<h3><?php echo _INSTALL_WEB_LOCATIONS; ?></h3>
+	<legend><?php echo _INSTALL_WEB_LOCATIONS; ?></legend>
 	<label for="url"><?php echo _INSTALL_WEB_LOCATIONS_LABEL; ?></label>
 	<div class="xoform-help"><?php echo XOOPS_URL_HELP; ?></div>
 	<div class="clear">&nbsp;</div>
 	<input type="text" name="URL" id="url" value="<?php echo $ctrl->xoopsUrl; ?>" />
 </fieldset>
 <br />
-</div>
-<div class="bloky">
 <fieldset>
-	<h3><?php echo _INSTALL_PHYSICAL_PATH; ?></h3>
+	<legend><?php echo _INSTALL_PHYSICAL_PATH; ?></legend>
 	<label for="rootpath"><?php echo XOOPS_ROOT_PATH_LABEL; ?></label>
 	<div class="xoform-help"><?php echo XOOPS_ROOT_PATH_HELP; ?></div>
 	<div class="clear">&nbsp;</div>
@@ -364,10 +361,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 <?php } else { echo '<div id="rootperms">'.CHECKING_PERMISSIONS .'<br /><ul class="diags"><li class="success">'.ALL_PERM_OK.'</li></ul></div>';} ?>
 </fieldset>
 <br />
-</div>
-<div class="blokx">
 <fieldset>
-	<h3><?php echo _INSTALL_TRUST_PATH; ?></h3>
+	<legend><?php echo _INSTALL_TRUST_PATH; ?></legend>
 	<label for="trustpath"><?php echo _INSTALL_TRUST_PATH_LABEL; ?></label>
 	<div class="xoform-help"><?php echo _INSTALL_TRUST_PATH_HELP; ?></div>
 	<div class="clear">&nbsp;</div>
@@ -382,7 +377,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 }?>
 
 </fieldset>
-</div>
+
 <?php
 	$content = ob_get_contents();
 	ob_end_clean();

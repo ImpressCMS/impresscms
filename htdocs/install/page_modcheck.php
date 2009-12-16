@@ -65,7 +65,7 @@ function xoDiagIfWritable( $path ) {
 	ob_start();
 ?>
 <fieldset>
-  <h3><?php echo REQUIREMENTS; ?></h3>
+  <legend><?php echo REQUIREMENTS; ?></legend>
      <h4><?php echo SERVER_API; ?>:&nbsp;
      <?php echo php_sapi_name(); ?>
      <img src="img/yes.png" alt="Success" class="rootimg" />
@@ -107,7 +107,7 @@ function xoDiagIfWritable( $path ) {
 </fieldset>
 
 <fieldset>
-  <h3><?php echo RECOMMENDED_EXTENSIONS; ?></h3>
+  <legend><?php echo RECOMMENDED_EXTENSIONS; ?></legend>
     <p><?php echo RECOMMENDED_EXTENSIONS_MSG; ?></p>
     <div class="clear">&nbsp;</div>
    

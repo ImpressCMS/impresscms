@@ -86,8 +86,8 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
     ob_start();
 ?>
 <?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
-   <h3><?php echo LEGEND_CONNECTION; ?></h3>
- <div class="blokSQL">
+<fieldset>
+    <legend><?php echo LEGEND_CONNECTION; ?></legend>
   <div class="dbconn_line">
     <label>
         <?php echo LEGEND_DATABASE; ?><br />
@@ -107,13 +107,13 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
   <div class="dbconn_line">
     <?php echo xoFormField( 'DB_PASS',	$vars['DB_PASS'],		DB_PASS_LABEL, DB_PASS_HELP, 'password' ); ?>
   </div>
-</div>
 
     <label>
         <?php echo htmlspecialchars( DB_PCONNECT_LABEL ); ?>
         <input class="checkbox" type="checkbox" name="DB_PCONNECT" value="1" onclick ="alert('<?php echo htmlspecialchars( DB_PCONNECT_HELPS ); ?>');" <?php echo $vars['DB_PCONNECT'] ? "'checked'" : ""; ?>/>
         <div class="xoform-help"><?php echo htmlspecialchars( DB_PCONNECT_HELP ); ?></div>
     </label>
+</fieldset>
 <?php
     $content = ob_get_contents();
     ob_end_clean();
