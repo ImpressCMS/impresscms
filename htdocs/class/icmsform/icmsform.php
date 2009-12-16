@@ -487,7 +487,7 @@ class IcmsForm extends XoopsThemeForm {
 					} else {
 						// perhaps this is a control created by the module
 						$moduleName = $this->targetObject->handler->_moduleName;
-						if($moduleName != 'system')
+						if($module_dir != 'system')
 							$moduleFormElementsPath = $this->targetObject->handler->_modulePath.'/class/form/elements/';
 						else
 							$moduleFormElementsPath = $this->targetObject->handler->_modulePath.'/admin/{$name}/class/form/elements/';
