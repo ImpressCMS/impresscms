@@ -47,13 +47,7 @@ if (! $allowed) {
 	$xoopsTpl->assign ( array ('xoops_theme' => $icmsConfig ['theme_set'], 'xoops_imageurl' => ICMS_THEME_URL . '/' . $icmsConfig ['theme_set'] . '/', 'xoops_themecss' => xoops_getcss ( $icmsConfig ['theme_set'] ), 'xoops_requesturi' => htmlspecialchars ( $_SERVER ['REQUEST_URI'], ENT_QUOTES ), 'xoops_sitename' => htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ), 'xoops_slogan' => htmlspecialchars ( $icmsConfig ['slogan'], ENT_QUOTES ), 'xoops_dirname' => @$icmsModule ? $icmsModule->getVar ( 'dirname' ) : 'system', 'xoops_banner' => $icmsConfig ['banners'] ? xoops_getbanner () : '&nbsp;', 'xoops_pagetitle' => isset ( $icmsModule ) && is_object ( $icmsModule ) ? $icmsModule->getVar ( 'name' ) : htmlspecialchars ( $icmsConfig ['slogan'], ENT_QUOTES ), 'lang_login' => _LOGIN, 'lang_username' => _USERNAME, 'lang_password' => _PASSWORD, 'lang_siteclosemsg' => $icmsConfig ['closesite_text'] )
 	 );
 
-	$config_handler = & xoops_gethandler ( 'config' );
-	$criteria = new CriteriaCompo ( new Criteria ( 'conf_modid', 0 ) );
-	$criteria->add ( new Criteria ( 'conf_catid', XOOPS_CONF_METAFOOTER ) );
-	$config = $config_handler->getConfigs ( $criteria, true );
-	foreach ( array_keys ( $config ) as $i ) {
-		$name = $config [$i]->getVar ( 'conf_name', 'n' );
-		$value = $config [$i]->getVar ( 'conf_value', 'n' );
+	foreach ( $icmsConfigMetaFooter as $name => $value ) {
 		if (substr ( $name, 0, 5 ) == 'meta_') {
 			$xoopsTpl->assign ( "xoops_$name", htmlspecialchars ( $value, ENT_QUOTES ) );
 		} else {

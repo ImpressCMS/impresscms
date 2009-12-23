@@ -34,10 +34,10 @@ class IcmsPreloadAutotasks
 	 * @param array config array
 	 */
 	function eventAfterSaveSystemAdminPreferencesItems($array) {
-		if (!isset($array[IM_CONF_AUTOTASKS])) return;
+		if (!isset($array[ICMS_CONF_AUTOTASKS])) return;
 		$handler = xoops_getmodulehandler('autotasks', 'system');
 		$handler->virtual_config = array();
-		$array = &$array[IM_CONF_AUTOTASKS];
+		$array = &$array[ICMS_CONF_AUTOTASKS];
 		$vconfig1 = array();
 		$vconfig2 = array();
 		foreach ($array as $key => $values) {

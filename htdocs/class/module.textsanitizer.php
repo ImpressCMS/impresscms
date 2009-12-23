@@ -506,7 +506,7 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	function censorString(&$text)
 	{
 		$config_handler = xoops_gethandler('config');
-		$icmsConfigCensor =& $config_handler->getConfigsByCat(XOOPS_CONF_CENSOR);
+		$icmsConfigCensor =& $config_handler->getConfigsByCat(ICMS_CONF_CENSOR);
 		if($icmsConfigCensor['censor_enable'] == true)
 		{
 			$replacement = $icmsConfigCensor['censor_replace'];

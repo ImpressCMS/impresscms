@@ -193,10 +193,23 @@ class XoopsConfigHandler
 	function &getConfigsByCat($category, $module = 0)
 	{
 		static $_cachedConfigs;
-		if (!empty($_cachedConfigs[$module][$category])) {
-			return $_cachedConfigs[$module][$category];
+
+		if (is_array($category)) {
+			$criteria = new CriteriaCompo(new Criteria('conf_modid', intval($module)));
+			$criteria->add(new Criteria('conf_catid', '('.implode(',', $category).')', 'IN'));
+			$configs = $this->getConfigs($criteria, true);
+			if (is_array($configs)) {
+				foreach (array_keys($configs) as $i) {
+					$ret[$configs[$i]->getVar('conf_catid')][$configs[$i]->getVar('conf_name')] = $configs[$i]->getConfValueForOutput();
+				}
+				foreach ($ret as $key => $value) {
+					$_cachedConfigs[$module][$key] = $value;
+				}
+				return $ret;
+			}
 		} else {
-			$ret = array();
+			if (!empty($_cachedConfigs[$module][$category])) return $_cachedConfigs[$module][$category];
+
 			$criteria = new CriteriaCompo(new Criteria('conf_modid', intval($module)));
 			if (!empty($category)) {
 				$criteria->add(new Criteria('conf_catid', intval($category)));

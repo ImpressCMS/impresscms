@@ -176,17 +176,19 @@ include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 include_once ICMS_ROOT_PATH . "/include/debug_functions.php";
 
 // ################# Load Config Settings ##############
-$config_handler =& xoops_gethandler('config');
-$xoopsConfig = $icmsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
-$xoopsConfigUser = $icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-$xoopsConfigMetaFooter = $icmsConfigMetaFooter =& $config_handler->getConfigsByCat(XOOPS_CONF_METAFOOTER);
-$xoopsConfigMailer = $icmsConfigMailer =& $config_handler->getConfigsByCat(XOOPS_CONF_MAILER);
-$xoopsConfigAuth = $icmsConfigAuth =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
-$im_multilanguageConfig = $icmsConfigMultilang =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
-$xoopsConfigPersona = $icmsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-$icmsConfigPlugins =& $config_handler->getConfigsByCat(ICMS_CONF_PLUGINS);
-$icmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-$icmsConfigSearch =& $config_handler->getConfigsByCat(XOOPS_CONF_SEARCH);
+$config_handler = xoops_gethandler('config');
+$configs = $config_handler->getConfigsByCat(array(ICMS_CONF, ICMS_CONF_USER, ICMS_CONF_METAFOOTER, ICMS_CONF_MAILER, ICMS_CONF_AUTH, ICMS_CONF_MULILANGUAGE, ICMS_CONF_PERSONA, ICMS_CONF_PLUGINS, ICMS_CONF_CAPTCHA, ICMS_CONF_SEARCH));
+$xoopsConfig = $icmsConfig = $configs[ICMS_CONF];
+$icmsConfigUser       = $configs[ICMS_CONF_USER];
+$icmsConfigMetaFooter = $configs[ICMS_CONF_METAFOOTER];
+$icmsConfigMailer     = $configs[ICMS_CONF_MAILER];
+$icmsConfigAuth       = $configs[ICMS_CONF_AUTH];
+$icmsConfigMultilang  = $configs[ICMS_CONF_MULILANGUAGE];
+$icmsConfigPersona    = $configs[ICMS_CONF_PERSONA];
+$icmsConfigPlugins    = $configs[ICMS_CONF_PLUGINS];
+$icmsConfigCaptcha    = $configs[ICMS_CONF_CAPTCHA];
+$icmsConfigSearch     = $configs[ICMS_CONF_SEARCH];
+unset($configs);
 
 // ################# Creation of the ImpressCMS Captcha object ##############
 

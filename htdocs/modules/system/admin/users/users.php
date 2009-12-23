@@ -21,10 +21,8 @@ include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 
 function displayUsers()
 {
-	global $xoopsDB, $xoopsConfig, $icmsModule;
+	global $xoopsDB, $xoopsConfig, $icmsModule, $icmsConfigUser;
 	$userstart = isset($_GET['userstart']) ? intval($_GET['userstart']) : 0;
-	$config_handler =& xoops_gethandler('config');
-	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
 	xoops_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
@@ -112,7 +110,7 @@ function displayUsers()
 	$rank_value = 0;
 	$mailok_value = 0;
 	$pass_expired_value = 0;
-	$enc_type_value = $xoopsConfigUser['enc_type'];
+	$enc_type_value = $icmsConfigUser['enc_type'];
 	$op_value = 'addUser';
 	$form_title = _AM_ADDUSER;
 	$form_isedit = false;
@@ -202,11 +200,9 @@ function modifyUser($user)
 // RMV-NOTIFY
 function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups = array())
 {
-	global $xoopsConfig, $xoopsDB, $icmsModule;
+	global $xoopsConfig, $xoopsDB, $icmsModule, $icmsConfigUser;
 	$member_handler =& xoops_gethandler('member');
 	$edituser =& $member_handler->getUser($uid);
-	$config_handler =& xoops_gethandler('config');
-	$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 	if($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new Criteria('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new Criteria('login_name', $login_name)) > 0)
 	{
 		xoops_cp_header();
@@ -230,15 +226,15 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		//$edituser->setVar('user_avatar', $user_avatar);
 		$edituser->setVar('user_icq', $user_icq);
 		$edituser->setVar('user_from', $user_from);
-		if($xoopsConfigUser['allow_htsig'] == 0)
+		if($icmsConfigUser['allow_htsig'] == 0)
 		{
 			$signature = strip_tags($myts->xoopsCodeDecode($user_sig, 1));
-			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($xoopsConfigUser['sig_max_length'])));
+			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($icmsConfigUser['sig_max_length'])));
 		}
 		else
 		{
 			$signature = $myts->displayTarea($user_sig, 1, 1, 1, 1, 1, 'display');
-			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($xoopsConfigUser['sig_max_length'])));
+			$edituser->setVar('user_sig', xoops_substr($signature, 0, intval($icmsConfigUser['sig_max_length'])));
 		}
 		$user_viewemail = (isset($user_viewemail) && $user_viewemail == 1) ? 1 : 0;
 		$edituser->setVar('user_viewemail', $user_viewemail);

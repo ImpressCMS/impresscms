@@ -76,7 +76,7 @@ function b_system_online_show()
 */
 function b_system_login_show()
 {
-	global $icmsUser, $icmsConfig;
+	global $icmsUser, $icmsConfig, $icmsConfigAuth, $icmsConfigUser;
 	if (!$icmsUser) {
 		$block = array();
 		$block['lang_username'] = _USERNAME;
@@ -96,9 +96,6 @@ function b_system_login_show()
 			$block['sslloginlink'] = "<a href=\"javascript:openWithSelfMain('".$icmsConfig['sslloginlink']."', 'ssllogin', 300, 200);\">"._MB_SYSTEM_SECURE."</a>";
 		}
 
-		$config_handler =& xoops_gethandler('config');
-		$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-
 		if ($icmsConfigUser['allow_register'] == 1) {
 			$block['registration'] = $icmsConfigUser['allow_register'];
 		}
@@ -107,8 +104,7 @@ function b_system_login_show()
 			$block['rememberme'] = $icmsConfigUser['remember_me'];
 		}
 
-		$xoopsAuthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
-		if ($xoopsAuthConfig['auth_openid']) {
+		if ($icmshConfigAuth['auth_openid']) {
 			$block['auth_openid'] = true;
 		}
 		return $block;
@@ -123,10 +119,7 @@ function b_system_login_show()
 */
 function b_system_main_show()
 {
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-
-	global $icmsUser,$icmsModule;
+	global $icmsUser, $icmsModule, $icmsConfigUser;
 	$block = array();
 	$block['lang_home'] = _MB_SYSTEM_HOME;
 	if ($icmsConfigUser['priv_dpolicy'] == 1)

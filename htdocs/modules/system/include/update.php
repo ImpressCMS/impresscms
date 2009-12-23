@@ -90,16 +90,16 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		unset ( $table );
 
 		// create extended date function's config option
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF, 'use_ext_date', '_MD_AM_EXT_DATE', 0, '_MD_AM_EXT_DATEDSC', 'yesno', 'int', 12 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF, 'use_ext_date', '_MD_AM_EXT_DATE', 0, '_MD_AM_EXT_DATEDSC', 'yesno', 'int', 12 );
 		// create editors config option
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'default', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', 16 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', ".addslashes(serialize(array('default'))).", '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', 16 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'default', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', 16 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', ".addslashes(serialize(array('default'))).", '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', 16 );
 		// create captcha options
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF, 'use_captchaf', '_MD_AM_USECAPTCHAFORM', 1, '_MD_AM_USECAPTCHAFORMDSC', 'yesno', 'int', 37 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF, 'use_captchaf', '_MD_AM_USECAPTCHAFORM', 1, '_MD_AM_USECAPTCHAFORMDSC', 'yesno', 'int', 37 );
 
 		// create 4 new user config options
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_USER, 'use_captcha', '_MD_AM_USECAPTCHA', 1, '_MD_AM_USECAPTCHADSC', 'yesno', 'int', 3 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_USER, 'welcome_msg', '_MD_AM_WELCOMEMSG', 0, '_MD_AM_WELCOMEMSGDSC', 'yesno', 'int', 3 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_USER, 'use_captcha', '_MD_AM_USECAPTCHA', 1, '_MD_AM_USECAPTCHADSC', 'yesno', 'int', 3 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_USER, 'welcome_msg', '_MD_AM_WELCOMEMSG', 0, '_MD_AM_WELCOMEMSGDSC', 'yesno', 'int', 3 );
 
 		// get the default content of the mail
 		$default_msg_content_file = XOOPS_ROOT_PATH . '/language/' . $icmsConfig ['language'] . '/mail_template/' . 'welcome.tpl';
@@ -110,18 +110,18 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		if ($fp) {
 			$default_msg_content = fread ( $fp, filesize ( $default_msg_content_file ) );
 		}
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_USER, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', $default_msg_content, '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textarea', 'text', 3 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_USER, 'allwshow_sig', '_MD_AM_ALLWSHOWSIG', 1, '_MD_AM_ALLWSHOWSIGDSC', 'yesno', 'int', 4 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_USER, 'allow_htsig', '_MD_AM_ALLWHTSIG', 1, '_MD_AM_ALLWHTSIGDSC', 'yesno', 'int', 4 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_USER, 'sig_max_length', '_MD_AM_SIGMAXLENGTH', '255', '_MD_AM_SIGMAXLENGTHDSC', 'textbox', 'int', 4 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_USER, 'avatar_allow_gravatar', '_MD_AM_GRAVATARALLOW', '1', '_MD_AM_GRAVATARALWDSC', 'yesno', 'int', 15 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_USER, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '1', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', 36 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_USER, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', $default_msg_content, '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textarea', 'text', 3 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_USER, 'allwshow_sig', '_MD_AM_ALLWSHOWSIG', 1, '_MD_AM_ALLWSHOWSIGDSC', 'yesno', 'int', 4 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_USER, 'allow_htsig', '_MD_AM_ALLWHTSIG', 1, '_MD_AM_ALLWHTSIGDSC', 'yesno', 'int', 4 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_USER, 'sig_max_length', '_MD_AM_SIGMAXLENGTH', '255', '_MD_AM_SIGMAXLENGTHDSC', 'textbox', 'int', 4 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_USER, 'avatar_allow_gravatar', '_MD_AM_GRAVATARALLOW', '1', '_MD_AM_GRAVATARALWDSC', 'yesno', 'int', 15 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_USER, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '1', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', 36 );
 
 		// Adding configurations of meta tag&footer
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_METAFOOTER, 'google_meta', '_MD_AM_METAGOOGLE', '', '_MD_AM_METAGOOGLE_DESC', 'textbox', 'text', 9 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_METAFOOTER, 'use_google_analytics', '_MD_AM_USE_GOOGLE_ANA', 0, '_MD_AM_USE_GOOGLE_ANA_DESC', 'yesno', 'int', 21 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_METAFOOTER, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textbox', 'text', 21 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_METAFOOTER, 'footadm', '_MD_AM_FOOTADM', 'Powered by ImpressCMS &copy; 2007-' . date ( "Y", time () ) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>', '_MD_AM_FOOTADM_DESC', 'textarea', 'text', 22 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_METAFOOTER, 'google_meta', '_MD_AM_METAGOOGLE', '', '_MD_AM_METAGOOGLE_DESC', 'textbox', 'text', 9 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_METAFOOTER, 'use_google_analytics', '_MD_AM_USE_GOOGLE_ANA', 0, '_MD_AM_USE_GOOGLE_ANA_DESC', 'yesno', 'int', 21 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_METAFOOTER, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textbox', 'text', 21 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_METAFOOTER, 'footadm', '_MD_AM_FOOTADM', 'Powered by ImpressCMS &copy; 2007-' . date ( "Y", time () ) . ' <a href=\"http://www.impresscms.org/\" rel=\"external\">The ImpressCMS Project</a>', '_MD_AM_FOOTADM_DESC', 'textarea', 'text', 22 );
 
 		// Adding configurations of search preferences
 		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_SEARCH, 'search_user_date', '_MD_AM_SEARCH_USERDATE', '1', '_MD_AM_SEARCH_USERDATE', 'yesno', 'int', 2 );
@@ -129,13 +129,13 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_SEARCH, 'search_per_page', '_MD_AM_SEARCH_PER_PAGE', '20', '_MD_AM_SEARCH_PER_PAGEDSC', 'textbox', 'int', 4 );
 
 		// Adding new cofigurations added for multi language
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_MULILANGUAGE, 'ml_autoselect_enabled', '_MD_AM_ML_AUTOSELECT_ENABLED', '0', '_MD_AM_ML_AUTOSELECT_ENABLED_DESC', 'yesno', 'int', 1 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_MULILANGUAGE, 'ml_autoselect_enabled', '_MD_AM_ML_AUTOSELECT_ENABLED', '0', '_MD_AM_ML_AUTOSELECT_ENABLED_DESC', 'yesno', 'int', 1 );
 
 		// Adding new function of content manager
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_CONTENT, 'default_page', '_MD_AM_DEFAULT_CONTPAGE', '0', '_MD_AM_DEFAULT_CONTPAGEDSC', 'select_pages', 'int', 1 );
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_CONTENT, 'show_nav', '_MD_AM_CONT_SHOWNAV', '1', '_MD_AM_CONT_SHOWNAVDSC', 'yesno', 'int', 2 );
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_CONTENT, 'show_subs', '_MD_AM_CONT_SHOWSUBS', '1', '_MD_AM_CONT_SHOWSUBSDSC', 'yesno', 'int', 3 );
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_CONTENT, 'show_pinfo', '_MD_AM_CONT_SHOWPINFO', '1', '_MD_AM_CONT_SHOWPINFODSC', 'yesno', 'int', 4 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CONTENT, 'default_page', '_MD_AM_DEFAULT_CONTPAGE', '0', '_MD_AM_DEFAULT_CONTPAGEDSC', 'select_pages', 'int', 1 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CONTENT, 'show_nav', '_MD_AM_CONT_SHOWNAV', '1', '_MD_AM_CONT_SHOWNAVDSC', 'yesno', 'int', 2 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CONTENT, 'show_subs', '_MD_AM_CONT_SHOWSUBS', '1', '_MD_AM_CONT_SHOWSUBSDSC', 'yesno', 'int', 3 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CONTENT, 'show_pinfo', '_MD_AM_CONT_SHOWPINFO', '1', '_MD_AM_CONT_SHOWPINFODSC', 'yesno', 'int', 4 );
 		/*
 		$default_login_content_file = XOOPS_ROOT_PATH . '/upgrade/language/' . $icmsConfig['language'] . '/' . 'login.tpl';
 		if (!file_exists($default_login_content_file)) {
@@ -147,30 +147,30 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		}
 */
 		// Adding new function of Personalization
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', 1 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '' . XOOPS_URL . '/index.php', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', 2 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'adm_left_logo_alt', '_MD_AM_LLOGOADM_ALT', 'ImpressCMS', '_MD_AM_LLOGOADM_ALT_DESC', 'textbox', 'text', 3 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'adm_right_logo', '_MD_AM_RLOGOADM', '', '_MD_AM_RLOGOADM_DESC', 'select_image', 'text', 4 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'adm_right_logo_url', '_MD_AM_RLOGOADM_URL', '', '_MD_AM_RLOGOADM_URL_DESC', 'textbox', 'text', 5 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'adm_right_logo_alt', '_MD_AM_RLOGOADM_ALT', '', '_MD_AM_RLOGOADM_ALT_DESC', 'textbox', 'text', 6 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'rss_local', '_MD_AM_RSSLOCAL', 'http://www.impresscms.org/modules/smartsection/backend.php', '_MD_AM_RSSLOCAL_DESC', 'textbox', 'text', 7 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'editre_block', '_MD_AM_EDITREMOVEBLOCK', '1', '_MD_AM_EDITREMOVEBLOCKDSC', 'yesno', 'int', 8 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'multi_login', '_MD_AM_MULTLOGINPREVENT', '0', '_MD_AM_MULTLOGINPREVENTDSC', 'yesno', 'int', 9 );
-		//$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_PERSONA, 'multi_login_msg', '_MD_AM_MULTLOGINMSG', $default_login_content, '_MD_AM_MULTLOGINMSG_DESC', 'textarea', 'text', 10);
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'email_protect', '_MD_AM_EMAILPROTECT', '0', '_MD_AM_EMAILPROTECTDSC', 'yesno', 'int', 11 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'email_font', '_MD_AM_EMAILTTF', 'arial.ttf', '_MD_AM_EMAILTTF_DESC', 'select_font', 'text', 12 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'email_font_len', '_MD_AM_EMAILLEN', '12', '_MD_AM_EMAILLEN_DESC', 'textbox', 'int', 13 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'email_cor', '_MD_AM_EMAILCOLOR', '#000000', '_MD_AM_EMAILCOLOR_DESC', 'color', 'text', 14 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'email_shadow', '_MD_AM_EMAILSHADOW', '#cccccc', '_MD_AM_EMAILSHADOW_DESC', 'color', 'text', 15 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'shadow_x', '_MD_AM_SHADOWX', '2', '_MD_AM_SHADOWX_DESC', 'textbox', 'int', 16 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'shadow_y', '_MD_AM_SHADOWY', '2', '_MD_AM_SHADOWY_DESC', 'textbox', 'int', 17 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'shorten_url', '_MD_AM_SHORTURL', '0', '_MD_AM_SHORTURLDSC', 'yesno', 'int', 18 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'max_url_long', '_MD_AM_URLLEN', '50', '_MD_AM_URLLEN_DESC', 'textbox', 'int', 19 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'pre_chars_left', '_MD_AM_PRECHARS', '35', '_MD_AM_PRECHARS_DESC', 'textbox', 'int', 20 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'last_chars_left', '_MD_AM_LASTCHARS', '10', '_MD_AM_LASTCHARS_DESC', 'textbox', 'int', 21 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'show_impresscms_menu', '_MD_AM_SHOW_ICMSMENU', '1', '_MD_AM_SHOW_ICMSMENU_DESC', 'yesno', 'int', 22 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'adm_left_logo', '_MD_AM_LLOGOADM', '/uploads/img482278e29e81c.png', '_MD_AM_LLOGOADM_DESC', 'select_image', 'text', 1 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'adm_left_logo_url', '_MD_AM_LLOGOADM_URL', '' . XOOPS_URL . '/index.php', '_MD_AM_LLOGOADM_URL_DESC', 'textbox', 'text', 2 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'adm_left_logo_alt', '_MD_AM_LLOGOADM_ALT', 'ImpressCMS', '_MD_AM_LLOGOADM_ALT_DESC', 'textbox', 'text', 3 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'adm_right_logo', '_MD_AM_RLOGOADM', '', '_MD_AM_RLOGOADM_DESC', 'select_image', 'text', 4 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'adm_right_logo_url', '_MD_AM_RLOGOADM_URL', '', '_MD_AM_RLOGOADM_URL_DESC', 'textbox', 'text', 5 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'adm_right_logo_alt', '_MD_AM_RLOGOADM_ALT', '', '_MD_AM_RLOGOADM_ALT_DESC', 'textbox', 'text', 6 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'rss_local', '_MD_AM_RSSLOCAL', 'http://www.impresscms.org/modules/smartsection/backend.php', '_MD_AM_RSSLOCAL_DESC', 'textbox', 'text', 7 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'editre_block', '_MD_AM_EDITREMOVEBLOCK', '1', '_MD_AM_EDITREMOVEBLOCKDSC', 'yesno', 'int', 8 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'multi_login', '_MD_AM_MULTLOGINPREVENT', '0', '_MD_AM_MULTLOGINPREVENTDSC', 'yesno', 'int', 9 );
+		//$icmsDatabaseUpdater->insertConfig(ICMS_CONF_PERSONA, 'multi_login_msg', '_MD_AM_MULTLOGINMSG', $default_login_content, '_MD_AM_MULTLOGINMSG_DESC', 'textarea', 'text', 10);
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'email_protect', '_MD_AM_EMAILPROTECT', '0', '_MD_AM_EMAILPROTECTDSC', 'yesno', 'int', 11 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'email_font', '_MD_AM_EMAILTTF', 'arial.ttf', '_MD_AM_EMAILTTF_DESC', 'select_font', 'text', 12 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'email_font_len', '_MD_AM_EMAILLEN', '12', '_MD_AM_EMAILLEN_DESC', 'textbox', 'int', 13 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'email_cor', '_MD_AM_EMAILCOLOR', '#000000', '_MD_AM_EMAILCOLOR_DESC', 'color', 'text', 14 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'email_shadow', '_MD_AM_EMAILSHADOW', '#cccccc', '_MD_AM_EMAILSHADOW_DESC', 'color', 'text', 15 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'shadow_x', '_MD_AM_SHADOWX', '2', '_MD_AM_SHADOWX_DESC', 'textbox', 'int', 16 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'shadow_y', '_MD_AM_SHADOWY', '2', '_MD_AM_SHADOWY_DESC', 'textbox', 'int', 17 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'shorten_url', '_MD_AM_SHORTURL', '0', '_MD_AM_SHORTURLDSC', 'yesno', 'int', 18 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'max_url_long', '_MD_AM_URLLEN', '50', '_MD_AM_URLLEN_DESC', 'textbox', 'int', 19 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'pre_chars_left', '_MD_AM_PRECHARS', '35', '_MD_AM_PRECHARS_DESC', 'textbox', 'int', 20 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'last_chars_left', '_MD_AM_LASTCHARS', '10', '_MD_AM_LASTCHARS_DESC', 'textbox', 'int', 21 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'show_impresscms_menu', '_MD_AM_SHOW_ICMSMENU', '1', '_MD_AM_SHOW_ICMSMENU_DESC', 'yesno', 'int', 22 );
 		// Adding new function of authentication
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_AUTH, 'auth_openid', '_MD_AM_AUTHOPENID', '0', '_MD_AM_AUTHOPENIDDSC', 'yesno', 'int', 1 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_AUTH, 'auth_openid', '_MD_AM_AUTHOPENID', '0', '_MD_AM_AUTHOPENIDDSC', 'yesno', 'int', 1 );
 
 		$table = new IcmsDatabasetable ( 'imagecategory' );
 		$icmsDatabaseUpdater->runQuery ( 'INSERT INTO ' . $table->name () . ' (imgcat_id, imgcat_name, imgcat_maxsize, imgcat_maxwidth, imgcat_maxheight, imgcat_display, imgcat_weight, imgcat_type, imgcat_storetype) VALUES (NULL, "Logos", 350000, 350, 80, 1, 0, "C", "file")', 'Successfully created Logos imagecategory', 'Problems when try to create Logos imagecategory' );
@@ -210,7 +210,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		// fetch the rss_local configitem
 		$criteria = new CriteriaCompo ( );
 		$criteria->add ( new Criteria ( 'conf_name', 'rss_local' ) );
-		$criteria->add ( new Criteria ( 'conf_catid', XOOPS_CONF_PERSONA ) );
+		$criteria->add ( new Criteria ( 'conf_catid', ICMS_CONF_PERSONA ) );
 		$configitemsObj = $configitem_handler->getObjects ( $criteria );
 		if (isset ( $configitemsObj [0] ) && $configitemsObj [0]->getVar ( 'conf_value', 'n' ) == 'http://www.impresscms.org/modules/smartsection/backend.php') {
 			$configitemsObj [0]->setVar ( 'conf_value', 'http://community.impresscms.org/modules/smartsection/backend.php' );
@@ -274,7 +274,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23 );
 		unset ( $table );
 	}
 
@@ -284,7 +284,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE conf_name='use_jsjalali'" );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23 );
 		unset ( $table );
 	}
 
@@ -296,7 +296,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		// fetch the rss_local configitem
 		$criteria = new CriteriaCompo ( );
 		$criteria->add ( new Criteria ( 'conf_name', 'google_analytics' ) );
-		$criteria->add ( new Criteria ( 'conf_catid', XOOPS_CONF_METAFOOTER ) );
+		$criteria->add ( new Criteria ( 'conf_catid', ICMS_CONF_METAFOOTER ) );
 		$configitemsObj = $configitem_handler->getObjects ( $criteria );
 		if (isset ( $configitemsObj [0] ) && $configitemsObj [0]->getVar ( 'conf_formtype', 'n' ) == 'textarea') {
 			$configitemsObj [0]->setVar ( 'conf_formtype', 'textbox' );
@@ -480,15 +480,15 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configoption" ) . " VALUES ('', '_MD_AM_GDMAILPROTECT', '1', " . $conf_id . ");" );
 		$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configoption" ) . " VALUES ('', '_MD_AM_REMAILPROTECT', '2', " . $conf_id . ");" );
 		$icmsDB->queryF ( "UPDATE `" . $icmsDB->prefix ( 'config' ) . "` SET conf_formtype = 'select', conf_valuetype = 'text' WHERE conf_name = 'email_protect'" );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'recprvkey', '_MD_AM_RECPRVKEY', '', '_MD_AM_RECPRVKEY_DESC', 'textbox', 'text', 17 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'recpubkey', '_MD_AM_RECPUBKEY', '', '_MD_AM_RECPUBKEY_DESC', 'textbox', 'text', 17 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'recprvkey', '_MD_AM_RECPRVKEY', '', '_MD_AM_RECPRVKEY_DESC', 'textbox', 'text', 17 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'recpubkey', '_MD_AM_RECPUBKEY', '', '_MD_AM_RECPUBKEY_DESC', 'textbox', 'text', 17 );
 	}
 
 	$newDbVersion = 17;
 
 	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
-		//$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '90', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
+		//$icmsDatabaseUpdater->insertConfig(ICMS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '90', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
 		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"' ) == 0) {
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configcategory" ) . " (confcat_id,confcat_name) VALUES ('12','_MD_AM_PLUGINS')" );
 		}
@@ -501,11 +501,11 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		}
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PLUGINS, 'geshi_default', '_MD_AM_GESHI_DEFAULT', 'php', '_MD_AM_GESHI_DEFAULT_DESC', 'select_geshi', 'text', 3 );
 		$icmsDB->queryF ( "UPDATE `" . $icmsDB->prefix ( 'config' ) . "` SET conf_valuetype = 'array' WHERE conf_name = 'startpage'" );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '30', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 6 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_USER, 'allow_chguname', '_MD_AM_ALLWCHGUNAME', '0', '_MD_AM_ALLWCHGUNAMEDSC', 'yesno', 'int', 11 );
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_CONTENT, 'num_pages', '_MD_AM_CONT_NUMPAGES', '10', '_MD_AM_CONT_NUMPAGESDSC', 'textbox', 'int', 5 );
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_CONTENT, 'teaser_length', '_MD_AM_CONT_TEASERLENGTH', '500', '_MD_AM_CONT_TEASERLENGTHDSC', 'textbox', 'int', 6 );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'pagstyle', '_MD_AM_PAGISTYLE', 'default', '_MD_AM_PAGISTYLE_DESC', 'select_paginati', 'text', 24 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '30', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 6 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_USER, 'allow_chguname', '_MD_AM_ALLWCHGUNAME', '0', '_MD_AM_ALLWCHGUNAMEDSC', 'yesno', 'int', 11 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CONTENT, 'num_pages', '_MD_AM_CONT_NUMPAGES', '10', '_MD_AM_CONT_NUMPAGESDSC', 'textbox', 'int', 5 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CONTENT, 'teaser_length', '_MD_AM_CONT_TEASERLENGTH', '500', '_MD_AM_CONT_TEASERLENGTHDSC', 'textbox', 'int', 6 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'pagstyle', '_MD_AM_PAGISTYLE', 'default', '_MD_AM_PAGISTYLE_DESC', 'select_paginati', 'text', 24 );
 	}
 
 	$newDbVersion = 18;
@@ -552,7 +552,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		// create extended date function's config option
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF, 'theme_admin_set', '_MD_AM_ADMIN_DTHEME', 'iTheme', '_MD_AM_ADMIN_DTHEME_DESC', 'theme_admin', 'other', 12 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF, 'theme_admin_set', '_MD_AM_ADMIN_DTHEME', 'iTheme', '_MD_AM_ADMIN_DTHEME_DESC', 'theme_admin', 'other', 12 );
 	}
 
 	$newDbVersion = 22;
@@ -569,7 +569,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	if($dbVersion < $newDbVersion) {
 		echo $action;
 		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='pass_level'");
-		$icmsDatabaseUpdater->insertConfig(XOOPS_CONF_USER, 'pass_level', '_MD_AM_PASSLEVEL', '1', '_MD_AM_PASSLEVEL_DESC', 'yesno', 'int', 2);
+		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_USER, 'pass_level', '_MD_AM_PASSLEVEL', '1', '_MD_AM_PASSLEVEL_DESC', 'yesno', 'int', 2);
 	}
 */
 
@@ -577,7 +577,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	if (!$abortUpdate && $dbVersion < $newDbVersion) {
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF_PERSONA, 'use_custom_redirection', '_MD_AM_CUSTOMRED', '0', '_MD_AM_CUSTOMREDDSC', 'yesno', 'int', 9 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'use_custom_redirection', '_MD_AM_CUSTOMRED', '0', '_MD_AM_CUSTOMREDDSC', 'yesno', 'int', 9 );
 	}
 
 	$newDbVersion = 25;
@@ -689,16 +689,16 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configcategory" ) . " (confcat_id,confcat_name) VALUES (13, '_MD_AM_AUTOTASKS')" );
 		}
 
-		$icmsDatabaseUpdater->insertConfig ( XOOPS_CONF, 'sourceeditor_default', '_MD_AM_SRCEDITOR_DEFAULT', 'editarea', '_MD_AM_SRCEDITOR_DEFAULT_DESC', 'editor_source', 'text', 16 );
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_AUTOTASKS, 'autotasks_system', '_MD_AM_AUTOTASKS_SYSTEM', 'internal', '_MD_AM_AUTOTASKS_SYSTEMDSC', 'autotasksystem', 'text', 1 );
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_AUTOTASKS, 'autotasks_helper', '_MD_AM_AUTOTASKS_HELPER', 'wget %url%', '_MD_AM_AUTOTASKS_HELPERDSC', 'select', 'text', 2 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF, 'sourceeditor_default', '_MD_AM_SRCEDITOR_DEFAULT', 'editarea', '_MD_AM_SRCEDITOR_DEFAULT_DESC', 'editor_source', 'text', 16 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_AUTOTASKS, 'autotasks_system', '_MD_AM_AUTOTASKS_SYSTEM', 'internal', '_MD_AM_AUTOTASKS_SYSTEMDSC', 'autotasksystem', 'text', 1 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_AUTOTASKS, 'autotasks_helper', '_MD_AM_AUTOTASKS_HELPER', 'wget %url%', '_MD_AM_AUTOTASKS_HELPERDSC', 'select', 'text', 2 );
 		$config_id = $icmsDB->getInsertId ();
 		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, 'PHP-CGI', 'php -f %path%', {$config_id})," . " (NULL, 'wget', 'wget %url%', {$config_id})," . " (NULL, 'Lynx', 'lynx --dump %url%', {$config_id})";
 		if (! $icmsDB->queryF ( $sql )) {
 			return false;
 		}
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_AUTOTASKS, 'autotasks_helper_path', '_MD_AM_AUTOTASKS_HELPER_PATH', '/usr/bin/', '_MD_AM_AUTOTASKS_HELPER_PATHDSC', 'text', 'text', 3 );
-		$icmsDatabaseUpdater->insertConfig ( IM_CONF_AUTOTASKS, 'autotasks_user', '_MD_AM_AUTOTASKS_USER', '', '_MD_AM_AUTOTASKS_USERDSC', 'text', 'text', 4 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_AUTOTASKS, 'autotasks_helper_path', '_MD_AM_AUTOTASKS_HELPER_PATH', '/usr/bin/', '_MD_AM_AUTOTASKS_HELPER_PATHDSC', 'text', 'text', 3 );
+		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_AUTOTASKS, 'autotasks_user', '_MD_AM_AUTOTASKS_USER', '', '_MD_AM_AUTOTASKS_USERDSC', 'text', 'text', 4 );
 	}
 
 	$newDbVersion = 29;

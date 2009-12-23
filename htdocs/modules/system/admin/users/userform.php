@@ -13,7 +13,7 @@
 * @version	$Id$
 */
 
-global $xoopsConfigUser;
+global $icmsConfigUser, $icmsConfigAuth;
 
 $uid_label = new XoopsFormLabel(_AM_USERID, $uid_value);
 $uname_text = new XoopsFormText(_AM_NICKNAME, "username", 25, 25, $uname_value);
@@ -25,9 +25,7 @@ $email_tray->addElement($email_text, true);
 $email_cbox = new XoopsFormCheckBox("", "user_viewemail", $email_cbox_value);
 $email_cbox->addOption(1, _AM_AOUTVTEAD);
 $email_tray->addElement($email_cbox);
-$config_handler =& xoops_gethandler('config');
-$icmsauthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
-if ($icmsauthConfig['auth_openid'] == 1) {
+if ($icmsConfigAuth['auth_openid'] == 1) {
 	$openid_tray = new XoopsFormElementTray(_AM_OPENID, "<br />");
 	$openid_text = new XoopsFormText("", "openid", 30, 255, $openid_value);
 	$openid_tray->addElement($openid_text);
@@ -79,7 +77,7 @@ $location_text = new XoopsFormText(_AM_LOCATION, "user_from", 30, 100, $location
 $occupation_text = new XoopsFormText(_AM_OCCUPATION, "user_occ", 30, 100, $occ_value);
 $interest_text = new XoopsFormText(_AM_INTEREST, "user_intrest", 30, 150, $interest_value);
 $sig_tray = new XoopsFormElementTray(_AM_SIGNATURE, "<br />");
-if($xoopsConfigUser['allow_htsig'] == 0) {$sig_tarea = new XoopsFormTextArea("", "user_sig", $sig_value);}
+if($icmsConfigUser['allow_htsig'] == 0) {$sig_tarea = new XoopsFormTextArea("", "user_sig", $sig_value);}
 else {$sig_tarea = new XoopsFormDhtmlTextArea("", "user_sig", $sig_value);}
 $sig_tray->addElement($sig_tarea);
 $sig_cbox = new XoopsFormCheckBox("", "attachsig", $sig_cbox_value);
@@ -144,7 +142,7 @@ $icmspass = new icms_Password();
 
 $salt_hidden = new XoopsFormHidden('salt', $icmspass->icms_createSalt());
 
-$enc_type_hidden = new XoopsFormHidden('enc_type', $xoopsConfigUser['enc_type']);
+$enc_type_hidden = new XoopsFormHidden('enc_type', $icmsConfigUser['enc_type']);
 $pass_expired_hidden = new XoopsFormHidden('pass_expired', 0);
 $fct_hidden = new XoopsFormHidden("fct", "users");
 $op_hidden = new XoopsFormHidden("op", $op_value);

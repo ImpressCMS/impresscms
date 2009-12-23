@@ -228,13 +228,7 @@ class xos_opal_Theme {
 	        $this->template->assign( array( 'icms_isuser' => false, 'icms_isadmin' => false, 'xoops_isuser' => false, 'xoops_isadmin' => false  ) );
 	    }
 		// Meta tags
-	    $config_handler =& xoops_gethandler('config');
-	    $criteria = new CriteriaCompo(new Criteria('conf_modid', 0));
-	    $criteria->add(new Criteria('conf_catid', XOOPS_CONF_METAFOOTER));
-	    $config = $config_handler->getConfigs($criteria, true);
-	    foreach ( array_keys($config) as $i ) {
-	    	$name = $config[$i]->getVar( 'conf_name', 'n' );
-	    	$value = $config[$i]->getVar( 'conf_value', 'n' );
+	    foreach ( $icmsConfigMetaFooter as $name => $value ) {
 	    	if ( substr( $name, 0, 5 ) == 'meta_' ) {
 	    		$this->addMeta( 'meta', substr( $name, 5 ), $value );
 	    	} elseif ( substr( $name, 0, 6 ) == 'footer' ) {

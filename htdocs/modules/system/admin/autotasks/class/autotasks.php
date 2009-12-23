@@ -414,7 +414,7 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
 		}
 		//$old_handler_name = get_class($handler);
 		$config_handler = xoops_gethandler('config');
-		$config_atasks = $config_handler->getConfigsByCat(IM_CONF_AUTOTASKS);
+		$config_atasks = $config_handler->getConfigsByCat(ICMS_CONF_AUTOTASKS);
 		return $config_atasks;
 	}
 

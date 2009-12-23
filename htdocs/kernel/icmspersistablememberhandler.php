@@ -87,10 +87,8 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 		    }
 		}
 
-		global $icmsConfig;
+		global $icmsConfig, $icmsConfigUser;
 
-		$config_handler = & xoops_gethandler('config');
-		$icmsConfigUser = & $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 		switch ($icmsConfigUser['activation_type']) {
 			case 0 :
 				$level = 0;

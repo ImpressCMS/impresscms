@@ -21,19 +21,19 @@ if (!defined('XOOPS_ROOT_PATH')) {
 /**#@+
  * Config type
  */
-define('XOOPS_CONF', 1);
-define('XOOPS_CONF_USER', 2);
-define('XOOPS_CONF_METAFOOTER', 3);
-define('XOOPS_CONF_CENSOR', 4);
-define('XOOPS_CONF_SEARCH', 5);
-define('XOOPS_CONF_MAILER', 6);
-define('XOOPS_CONF_AUTH', 7);
-define('IM_CONF_MULILANGUAGE', 8);
-define('IM_CONF_CONTENT', 9);
-define('XOOPS_CONF_PERSONA', 10);
+define('ICMS_CONF', 1);
+define('ICMS_CONF_USER', 2);
+define('ICMS_CONF_METAFOOTER', 3);
+define('ICMS_CONF_CENSOR', 4);
+define('ICMS_CONF_SEARCH', 5);
+define('ICMS_CONF_MAILER', 6);
+define('ICMS_CONF_AUTH', 7);
+define('ICMS_CONF_MULILANGUAGE', 8);
+define('ICMS_CONF_CONTENT', 9);
+define('ICMS_CONF_PERSONA', 10);
 define('ICMS_CONF_CAPTCHA', 11);
 define('ICMS_CONF_PLUGINS', 12);
-define('IM_CONF_AUTOTASKS', 13);
+define('ICMS_CONF_AUTOTASKS', 13);
 define('ICMS_CONF_PURIFIER', 14);
 /**#@-*/
 
