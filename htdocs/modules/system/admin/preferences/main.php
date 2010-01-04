@@ -338,6 +338,15 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						$ele->addOptionArray ( $dirlist );
 					}
 				break;
+				case 'select_captcha' :
+					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
+					$dirlist = XoopsLists::getPhpListAsArray ( ICMS_ROOT_PATH.'/class/captcha/plugins/' );
+					if (! empty ( $dirlist )) {
+						asort ( $dirlist );
+						$ele->addOptionArray ( $dirlist );
+					}
+				break;
 				case 'textbox' :
 				default :
 					$myts = & MyTextSanitizer::getInstance ();

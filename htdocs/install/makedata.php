@@ -890,15 +890,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$c=11; // sets config category id
 	$i++;
 	$p=0;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', $p)");
-	// Insert data for Config Options in selection field. (must be placed before $i++)
-    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CAPTCHA_OFF', 'none', $i)");
-	$ci++;
-    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CAPTCHA_IMG', 'image', $i)");
-	$ci++;
-    	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_CAPTCHA_TXT', 'text', $i)");
-	$ci++;
-	// ----------
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select_captcha', 'text', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '".addslashes(serialize(array('2')))."', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', $p)");

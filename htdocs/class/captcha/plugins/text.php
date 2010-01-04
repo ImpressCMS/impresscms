@@ -11,12 +11,11 @@
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
+ * @version		$Id: text.php 8662 2009-05-01 09:04:30Z pesianstranger $
 */
 
 class IcmsCaptchaText {
-	var $config	= array();
-	var $code;
+	private $code;
 
 
 	/**
@@ -39,19 +38,6 @@ class IcmsCaptchaText {
 			$instance =& new IcmsCaptchaText();
 		}
 		return $instance;
-	}
-
-
-
-
-	/**
-	 * Loading configs from CAPTCHA class
-	 * @param string	$config	the config array
-	 */
-	function loadConfig($config = array())
-	{
-		// Loading default preferences
-		$this->config =& $config;
 	}
 
 

@@ -23,11 +23,10 @@
 
 icms_loadLanguageFile('core', 'captcha');
 class IcmsCaptcha {
-	var $active	= true;
-	var $mode 	= "text";	// potential values: image, text
-	var $config	= array();
-
-	var $message = array(); // Logging error messages
+	public $active	= true;
+	public $mode 	= "text";	// potential values: image, text
+	public $message = array(); // Logging error messages
+	public $config = array();
 
 
 	/**
@@ -36,10 +35,9 @@ class IcmsCaptcha {
 	function IcmsCaptcha()
 	{
 		// Loading default preferences
-		$this->config = @include dirname(__FILE__)."/config.php";
-
+		$this->config = array('name' => 'icmscaptcha');
 		global $icmsConfigCaptcha;
-		$this->setMode($icmsConfigCaptcha['captcha_mode']);
+		$this->setMode(str_replace('.php', '', $icmsConfigCaptcha['captcha_mode']));
 	}
 
 
@@ -88,32 +86,30 @@ class IcmsCaptcha {
 	 */
 	function setMode($mode = null)
 	{
-		if( !empty($mode) && in_array($mode, array("text", "image")) ) {
+		if( !empty($mode) && in_array($mode, array("text", "image", "recaptcha")) ) {
 			$this->mode = $mode;
 
-			if($this->mode != "image") {
+			if($this->mode != "image" || $this->mode != "recaptcha") {
 				return;
 			}
 		}
 
 		// Disable image mode
-		if(!extension_loaded('gd')) {
-			$this->mode = "text";
-		}else{
-			$required_functions = array("imagecreatetruecolor", "imagecolorallocate", "imagefilledrectangle", "imagejpeg", "imagedestroy", "imageftbbox");
+		global $icmsConfigPersona;
+		if($mode == "image"){
+			$required_functions = array("gd", "imagecreatetruecolor", "imagecolorallocate", "imagefilledrectangle", "imagejpeg", "imagedestroy", "imageftbbox");
 			foreach($required_functions as $func) {
 				if(!function_exists($func)) {
 					$this->mode = "text";
 					break;
 				}
 			}
+		}elseif($mode == "recaptcha" && extension_loaded('mcrypt_encrypt') && isset($icmsConfigPersona['recprvkey']) && $icmsConfigPersona['recprvkey'] != '' && isset($icmsConfigPersona['recpubkey']) && $icmsConfigPersona['recpubkey'] != ''){
+			$this->mode = $mode;
+		}else{
+			$this->mode = "text";
 		}
-
 	}
-
-
-
-
 
 	/**
 	 * Initializing the CAPTCHA class
@@ -140,18 +136,24 @@ class IcmsCaptcha {
 		//$gperm_handler = & xoops_gethandler( 'groupperm' );
 		$icmsUser = $GLOBALS["icmsUser"];
 		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {
+		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["icmsUser"])) {
 			$this->active = false;
 		}elseif($icmsConfigCaptcha['captcha_mode'] =='none'){
 			$this->active = false;
 		}
 	}
 
-
-
-
-
-
+	/**
+	 * Destory historical stuff
+	 * @param bool	$clearSession	also clear session variables?
+   * @return bool True if destroying succeeded
+	 */
+	function destroyGarbage($clearSession = false){
+		$_SESSION['IcmsCaptcha_name'] = null;
+		$_SESSION['IcmsCaptcha_skipmember'] = null;
+		$_SESSION['IcmsCaptcha_sessioncode'] = null;
+		$_SESSION['IcmsCaptcha_maxattempts'] = null;
+	}
 
 	/**
 	 * Verify user submission
@@ -167,14 +169,14 @@ class IcmsCaptcha {
 		$is_valid = false;
 
 		// Skip CAPTCHA for member if set & Kept for backward compatibilities
-/*		if( is_object($GLOBALS["xoopsUser"]) && !empty($skipMember) ) {
+/*		if( is_object($GLOBALS["icmsUser"]) && !empty($skipMember) ) {
 			$is_valid = true;
 */
 		// Kill too many attempts
 		/*}else*/
         include_once ICMS_ROOT_PATH . '/kernel/icmsstopspammer.php';
         $icmsStopSpammers = new IcmsStopSpammer();
-		$icmsUser = $GLOBALS["xoopsUser"];
+		$icmsUser = $GLOBALS["icmsUser"];
 		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($icmsUser)) {
 			$is_valid = true;
@@ -191,9 +193,17 @@ class IcmsCaptcha {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 
 		// Verify the code
-		}elseif(!empty($_SESSION['IcmsCaptcha_sessioncode'])){
+		}elseif(!empty($_SESSION['IcmsCaptcha_sessioncode']) && $this->mode != 'recaptcha'){
 			$func = ($icmsConfigCaptcha['captcha_casesensitive']) ? "strcmp" : "strcasecmp";
 			$is_valid = ! $func( trim(@$_POST[$sessionName]), $_SESSION['IcmsCaptcha_sessioncode']);
+		}elseif($this->mode == 'recaptcha'){
+			global $icmsConfigPersona;
+			require_once(ICMS_LIBRARIES_PATH.'/recaptcha/recaptchalib.php');
+			$resp = recaptcha_check_answer ($icmsConfigPersona['recprvkey'],
+								$_SERVER["REMOTE_ADDR"],
+								$_POST["recaptcha_challenge_field"],
+								$_POST["recaptcha_response_field"]);
+			$is_valid = $resp->is_valid;
 		}
 
 		if(!empty($maxAttempts)) {
@@ -209,7 +219,7 @@ class IcmsCaptcha {
 			}
 		}
 
-		$this->destroyGarbage(true);
+		$this->destroyGarbage();
 
 		return $is_valid;
 	}
@@ -234,39 +244,6 @@ class IcmsCaptcha {
 	{
 		return implode("<br />", $this->message);
 	}
-
-
-
-
-
-	/**
-	 * Destory historical stuff
-	 * @param bool	$clearSession	also clear session variables?
-   * @return bool True if destroying succeeded
-	 */
-	function destroyGarbage($clearSession = false)
-	{
-		require_once dirname(__FILE__)."/".$this->mode.".php";
-		$class = "IcmsCaptcha".ucfirst($this->mode);
-		$captcha_handler =& new $class();
-		if(method_exists($captcha_handler, "destroyGarbage")) {
-			$captcha_handler->loadConfig($this->config);
-			$captcha_handler->destroyGarbage();
-		}
-
-		if($clearSession) {
-			$_SESSION['IcmsCaptcha_name'] = null;
-			$_SESSION['IcmsCaptcha_skipmember'] = null;
-			$_SESSION['IcmsCaptcha_sessioncode'] = null;
-			$_SESSION['IcmsCaptcha_maxattempts'] = null;
-		}
-
-		return true;
-	}
-
-
-
-
 
 	/**
 	 * Render
@@ -312,10 +289,9 @@ class IcmsCaptcha {
 	 */
 	function loadForm()
 	{
-		require_once dirname(__FILE__)."/".$this->mode.".php";
+		require_once dirname(__FILE__)."/plugins/".$this->mode.".php";
 		$class = "IcmsCaptcha".ucfirst($this->mode);
 		$captcha_handler =& new $class();
-		$captcha_handler->loadConfig($this->config);
 
 		$form = $captcha_handler->render();
 		return $form;
