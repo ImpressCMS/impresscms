@@ -11,10 +11,11 @@
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: image.php 8662 2009-05-01 09:04:30Z pesianstranger $
+ * @version		$Id$
 */
 
 class IcmsCaptchaImage {
+	//var $config	= array();
 
 
 	/**
@@ -22,6 +23,7 @@ class IcmsCaptchaImage {
 	 */
 	function IcmsCaptchaImage()
 	{
+		//$this->name = md5( session_id() );
 	}
 
 
@@ -37,6 +39,21 @@ class IcmsCaptchaImage {
 		}
 		return $instance;
 	}
+
+
+
+
+	/**
+	 * Loading configs from CAPTCHA class
+   * @param   array $config the configuration array
+	 */
+	function loadConfig($config = array())
+	{
+		// Loading default preferences
+		$this->config =& $config;
+	}
+
+
 
 	/**
 	 * Renders the Captcha image Returns form with image in it

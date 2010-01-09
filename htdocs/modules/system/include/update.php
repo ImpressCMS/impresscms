@@ -403,12 +403,12 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE (conf_modid='1' AND conf_catid='11')" );
 		// Adding new function of Captcha
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', 1 );
-		//$config_id = $icmsDB->getInsertId ();
+		$config_id = $icmsDB->getInsertId ();
 
-/*		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_CAPTCHA_OFF', 'none', {$config_id})," . " (NULL, '_MD_AM_CAPTCHA_IMG', 'image', {$config_id})," . " (NULL, '_MD_AM_CAPTCHA_TXT', 'text', {$config_id})";
+		$sql = "INSERT INTO " . $icmsDB->prefix ( 'configoption' ) . " (confop_id, confop_name, confop_value, conf_id)" . " VALUES" . " (NULL, '_MD_AM_CAPTCHA_OFF', 'none', {$config_id})," . " (NULL, '_MD_AM_CAPTCHA_IMG', 'image', {$config_id})," . " (NULL, '_MD_AM_CAPTCHA_TXT', 'text', {$config_id})";
 		if (! $icmsDB->queryF ( $sql )) {
 			return false;
-		}*/
+		}
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', 2 );
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', 3 );
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_CAPTCHA, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', '', '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textarea', 'array', 4 );
@@ -1075,14 +1075,6 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
 		/* Change the system preference with textarea control to textsarea */
 		$sql_extract_esc = 'UPDATE ' . $icmsDB->prefix ( 'config' ) . ' SET `conf_formtype` = "textsarea"' . ' WHERE  `conf_modid` =0 AND `conf_formtype` = "textarea"';
-		$icmsDatabaseUpdater->runQuery ( $sql_extract_esc, 'System Preferences textarea controls set to textsarea', true );
-	}
-
-	$newDbVersion = 39;
-	if (!$abortUpdate && $dbVersion < $newDbVersion) {
-		echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
-		/* Change the system preference with textarea control to textsarea */
-		$sql_extract_esc = 'UPDATE ' . $icmsDB->prefix ( 'config' ) . ' SET `conf_formtype` = "select_captcha" WHERE `conf_name` = "captcha_mode"';
 		$icmsDatabaseUpdater->runQuery ( $sql_extract_esc, 'System Preferences textarea controls set to textsarea', true );
 	}
 
