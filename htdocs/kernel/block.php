@@ -548,9 +548,10 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 				}
 			}
 
-			$sql .= " AND b.bid IN (".implode(',', $blockids).")";
+			$sql .= " AND b.bid IN (".implode(',', $bid).")";
 			$sql .= " ORDER BY ".$orderby;
 			$result = $this->db->query($sql);
+			$bid = array();
 			while ( $myrow = $this->db->fetchArray($result) ) {
 				$bid[] =$myrow['bid'];
 			}
