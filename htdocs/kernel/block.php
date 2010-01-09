@@ -521,7 +521,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		// TODO: use $this->getObjects($criteria);
 
 		$isactive = intval($isactive);
-		$ret = array();
+		$bid = array();
 		$sql = "SELECT DISTINCT gperm_itemid FROM ".$this->db->prefix('group_permission')." WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
 		if ( is_array($groupid) ) {
 			$gid = array_map(create_function('$a', '$r = "\'" . intval($a) . "\'"; return($r);'), $groupid);
@@ -565,10 +565,11 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			$sql .= " ORDER BY ".$orderby;
 			$result = $this->db->query($sql);
 			while ( $myrow = $this->db->fetchArray($result) ) {
-				$block =& $this->get($myrow['bid']);
-				$ret[$myrow['bid']] =& $block;
-				unset($block);
+				$bid[] =$myrow['bid'];
 			}
+			$criteria = new CriteriaCompo();
+			$criteria->add(new Criteria('bid' , '('.implode(',', $bid).')', 'IN'));
+			$ret = $this->getObjects($criteria);
 		}
 		return $ret;
 
