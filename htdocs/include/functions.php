@@ -494,7 +494,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	require_once ICMS_ROOT_PATH.'/class/template.php';
    	require_once ICMS_ROOT_PATH.'/class/theme.php';
 
-	$xoopsThemeFactory =& new xos_opal_ThemeFactory();
+	$xoopsThemeFactory = new xos_opal_ThemeFactory();
 	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 	$xoopsThemeFactory->defaultTheme = $theme;
 	$icmsTheme = $xoTheme =& $xoopsThemeFactory->createInstance(array("plugins" => array()));
@@ -633,17 +633,17 @@ function &getMailer()
 	$inst = false;
 	include_once ICMS_ROOT_PATH.'/class/xoopsmailer.php';
 	icms_loadLanguageFile('core', 'xoopsmailerlocal');
-	if(class_exists('XoopsMailerLocal')) {$inst =& new XoopsMailerLocal();}
-	if(!$inst) {$inst =& new XoopsMailer();}
+	if(class_exists('XoopsMailerLocal')) {$inst = new XoopsMailerLocal();}
+	if(!$inst) {$inst = new XoopsMailer();}
 	return $inst;
 }
 
 /*
 * Gets the handler for a class
 *
-* @param string  $name  The name of the handler to get
-* @param bool  $optional	Is the handler optional?
-* @return		object		$inst		The instance of the object that was created
+* @param	string  $name		The name of the handler to get
+* @param	bool  	$optional	Is the handler optional?
+* @return	object	$inst		The instance of the object that was created
 */
 function &xoops_gethandler($name, $optional = false )
 {
@@ -657,11 +657,11 @@ function &xoops_gethandler($name, $optional = false )
 			if(file_exists($hnd_file = ICMS_ROOT_PATH.'/class/'.$name.'.php')) {require_once $hnd_file;}
 		}
 		$class = 'Xoops'.ucfirst($name).'Handler';
-		if(class_exists($class)) {$handlers[$name] =& new $class($GLOBALS['xoopsDB']);}
+		if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
 		else
 		{
 			$class = 'Icms'.ucfirst($name).'Handler';
-			if(class_exists($class)) {$handlers[$name] =& new $class($GLOBALS['xoopsDB']);}
+			if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
 		}
 	}
 	if(!isset($handlers[$name]) && !$optional) {trigger_error(sprintf(_CORE_COREHANDLER_NOTAVAILABLE, $class, $name), E_USER_ERROR);}
@@ -2236,7 +2236,7 @@ function &icms_getmodulehandler($name = null, $module_dir = null, $module_basena
 		else {$hnd_file = ICMS_ROOT_PATH."/modules/{$module_dir}/admin/{$name}/class/{$name}.php";}
 		if(file_exists($hnd_file)) {include_once $hnd_file;}
 		$class = ucfirst(strtolower($module_basename)).ucfirst($name).'Handler';
-		if(class_exists($class)) {$handlers[$module_dir][$name] =& new $class($GLOBALS['xoopsDB']);}
+		if(class_exists($class)) {$handlers[$module_dir][$name] = new $class($GLOBALS['xoopsDB']);}
 	}
 	if(!isset($handlers[$module_dir][$name]) && !$optional)
 	{
