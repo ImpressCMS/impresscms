@@ -7,14 +7,14 @@
  * @copyright	The XOOPS Project <http://www.xoops.org/>
  * @copyright	XOOPS_copyrights.txt
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
- * @license		LICENSE.txt
- * @package		database
- * @since		XOOPS
- * @version		$Id$
- * @author		The XOOPS Project Community <http://www.xoops.org>
+ * @license	LICENSE.txt
+ * @package	database
+ * @since	XOOPS
+ * @version	$Id$
+ * @author	The XOOPS Project Community <http://www.xoops.org>
  * @author      Kazumi Ono  <onokazu@xoops.org>
- * @author		modified by UnderDog <underdog@impresscms.org>
- * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
 
 /**
@@ -84,11 +84,11 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
 	
 		/**
 		 * attach the prefix.'_' to a given tablename
-	     *
-	     * if tablename is empty, only prefix will be returned
 		 *
-	     * @param string $tablename tablename
-	     * @return string prefixed tablename, just prefix if tablename is empty
+		 * if tablename is empty, only prefix will be returned
+		 *
+		 * @param string $tablename tablename
+		 * @return string prefixed tablename, just prefix if tablename is empty
 		 */
 		public function prefix($tablename='') {
 			if ( $tablename != '' ) {
@@ -96,6 +96,17 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
 			} else {
 				return $this->prefix;
 			}
+		}
+		
+		/**
+		 * 
+		 *
+		 * @since	ImpressCMS 1.3
+		 * @param	string 	$tablename	tablename
+		 */
+		public function wildcard($tablename=''){
+			$wildcard = 'a'.substr( md5( $tablename ) , 0, 4);
+			return $wildcard;
 		}
 	} 
 	
