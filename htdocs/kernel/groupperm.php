@@ -1,22 +1,24 @@
 <?php
 /**
-* Manage groups and memberships
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package		core
-* @subpackage	member
-* @since		XOOPS
-* @author		Kazumi Ono (aka onokazo)
-* @author		http://www.xoops.org The XOOPS Project
-* @version		$Id$
-*/
+ * Manage groups and memberships
+ *
+ * @copyright	The XOOPS Project <http://www.xoops.org/>
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license	LICENSE.txt
+ * @since	XOOPS
+ *
+ * @author	Kazumi Ono (aka onokazo)
+ * @author	The XOOPS Project Community <http://www.xoops.org>
+ * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nube.com.ar>
+ *
+ * @package	core
+ * @subpackage	groupperm
+ * @version	$Id$
+ */
 
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('XOOPS_ROOT_PATH'))
 	exit();
-}
 
 /**
  * A group permission
@@ -25,7 +27,7 @@ if (!defined('XOOPS_ROOT_PATH')) {
  *
  * @package     kernel
  * @subpackage	member
- * @author	    Kazumi Ono	<onokazu@xoops.org>
+ * @author	Kazumi Ono <onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class XoopsGroupPerm extends XoopsObject
@@ -58,6 +60,8 @@ class XoopsGroupPerm extends XoopsObject
  */
 class XoopsGroupPermHandler extends XoopsObjectHandler
 {
+	public static $_cachedRights;
+	
 	/**
 	 * Create a new {@link XoopsGroupPerm}
 	 *
@@ -378,13 +382,19 @@ class XoopsGroupPermHandler extends XoopsObjectHandler
 	function getGroupIds($gperm_name, $gperm_itemid, $gperm_modid = 1)
 	{
 		$ret = array();
-		$criteria = new CriteriaCompo(new Criteria('gperm_name', $gperm_name));
-		$criteria->add(new Criteria('gperm_itemid', intval($gperm_itemid)));
-		$criteria->add(new Criteria('gperm_modid', intval($gperm_modid)));
-		$perms = $this->getObjects($criteria, true);
-		foreach (array_keys($perms) as $i) {
+		$perms = array();
+		if(isset( $this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid] ))
+  			$perms = array($this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid]);
+  		else{
+			$criteria = new CriteriaCompo(new Criteria('gperm_name', $gperm_name));
+			$criteria->add(new Criteria('gperm_itemid', intval($gperm_itemid)));
+			$criteria->add(new Criteria('gperm_modid', intval($gperm_modid)));
+			$perms = $this->getObjects($criteria, true);
+			foreach($perms as $perm)
+		  		$this->_cachedRights[$gperm_name][$gperm_itemid][$gperm_modid] = $perm;
+	  	}
+		foreach (array_keys($perms) as $i)
 			$ret[] = $perms[$i]->getVar('gperm_groupid');
-		}
 		return $ret;
 	}
 }
