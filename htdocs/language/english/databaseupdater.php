@@ -28,7 +28,7 @@ define("_DATABASEUPDATER_UPDATE_NOW", "Update Now!");
 define("_DATABASEUPDATER_UPDATE_OK", "Successfully updated to version %s");
 define("_DATABASEUPDATER_UPDATE_TO", "Updating to version %s");
 define("_DATABASEUPDATER_UPDATE_UPDATING_DATABASE", "Updating database...");
-define("_DATABASEUPDATER_MSG_DROPFIELD", "Succesffuly droped field %s");
+define("_DATABASEUPDATER_MSG_DROPFIELD", "Successfully dropped field %s");
 define("_DATABASEUPDATER_MSG_UPDATE_TABLE", "Records of table %s were successfully updated");
 define("_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR", "An error occured while updating records in table %s");
 define("_DATABASEUPDATER_MSG_DELETE_TABLE", "Specified records of table %s were successfully deleted");

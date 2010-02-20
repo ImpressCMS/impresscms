@@ -165,7 +165,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 		if (empty($com_id)) {
 			$com_id = $this->db->getInsertId();
 		}
-		$comment->assignVar('com_id', $com_id);
+		$comment->assignVar('com_id', (int)$com_id);
 		return true;
 	}
 

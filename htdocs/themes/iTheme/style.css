@@ -106,7 +106,7 @@ h6 {font-size: .8em;}
 	font-weight: bold;
 	padding-bottom: 3px;
 	border-bottom: 1px dashed #8DBDE1;
-	
+
 }
 
 /* ---------- Column left/right rules ---------- */
@@ -121,7 +121,7 @@ h6 {font-size: .8em;}
 
 /* ------ Main content ------ */
 
-#xo-canvas-content {	
+#xo-canvas-content {
 	line-height: 1.3em;
 }
 
@@ -156,42 +156,34 @@ h6 {font-size: .8em;}
 /* ---------- Site close ------------ */
 #xo-siteclose-login {
 	width: 270px;
-	margin-left: auto;
-	margin-right: auto; 	
-	border:1px solid #DDDDFF;	
-	margin-top: 40px;
-	margin-bottom: 20px;
+	margin: 0 auto;
 }
 #xo-siteclose-login h2 {
 	background-color: #f2f2f2;
 	font-weight: bold;
-	font-size: 1em; 
-	color: white;
-	padding: 2px;	
-	margin-top: 0px;
-	margin-bottom: 0px;
-	text-align: center;	
+	font-size: 1em;
+	color: #999;
+	padding: 2px;
+	margin: 0px;
+	text-align: center;
+	border: 1px solid #DDDDFF;
 }
 #xo-siteclose-login form {
-	padding: 0px;
-	margin: 0px;	
+	padding: 5px 0;
+	margin: 0;
+	border: 1px solid #DDDDFF;
+	text-align: center;
 }
-#xo-siteclose-login div{
-	padding: 6px;
-}
-#xo-siteclose-login span.left {
-	float: left;
-	padding-bottom: 3px;
-}
-#xo-siteclose-login span.right {
-	float: right;
-	padding-right: 3px;
-	padding-bottom: 3px;
+#xo-siteclose-login input {
+	width: 90%;
 }
 #xo-siteclose-login div.button {
-	text-align: right;
-	clear: both;	
-	padding-right: 0px;
+	clear: both;
+	margin-top: 10px;
+	text-align: center;
+}
+#xo-siteclose-login div.button input {
+	width: 95%;
 }
 /* ---------- Footer rules ---------- */
 #xo-footer {

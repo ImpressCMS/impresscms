@@ -1,20 +1,21 @@
-* html, body {background: #fff url(img/bgimg.jpg) top left repeat; height: 100%; font-family: arial; font-size: 13px;}
+* html, body {background: #2a2a2d url(img/dotted_bg2.png) top left repeat-x; height: 100%; font-family: arial; font-size: 13px;}
 
-#wrapper {width: 859px; height: 100%; margin: 0 auto;}
+
+#wrapper {width: 859px; height: 100%; margin: 0 auto;padding-top: 2%}
 #header {width: 859px; height: 81px; margin: 0 auto; clear: both; background: transparent;}
 #logo {width: 335px; height: 67px; margin-top: 10px; margin-left: 0px; float: left;}
 #info {width: 400px; margin-top: 40px; margin-right: 0px; float: right; text-align: right; font-size: 14px; color: #fff;}
 
-#page_top {width: 859px; height: 7px; margin: 0 auto; background: transparent url(img/pagetop.jpg) top left no-repeat; clear: both;}
-#page {float: left; width: 859px; height: 100%; margin: 0 auto; background: transparent url(img/page_bg.jpg) top left repeat-y;}
-#page_bot {width: 859px; height: 7px; margin: 0 auto; background: transparent url(img/pagebot.jpg) top left no-repeat; clear: both;}
+#page_top {width: 859px; height: 7px; margin: 0 auto; background: transparent url(img/instl_01.png) top left no-repeat; clear: both;}
+#page {float: left; width: 859px; height: 100%; margin: 0 auto; background: transparent url(img/instl_02.png) top left repeat-y;}
+#page_bot {width: 859px; height: 7px; margin: 0 auto; background: transparent url(img/instl_03.png) no-repeat; clear: both;height: 20px;}
 
 
 #leftside {width: 197px; float: left; background: transparent; margin-left: 1px;}
-	#leftside h3 {margin: 0; padding:0; padding-left: 10px; padding-top: 10px; color: #fff; border-bottom: 1px solid #fff; margin-bottom: 4px; margin-right: 20px;}
+	#leftside h3 {margin: 0; padding:0; padding-left: 10px; padding-top: 10px; color: #fff; text-shadow: black 0 2px 2px; margin-bottom: 4px; margin-right: 20px;font-size: 25px;letter-spacing:1.5px}
 	#leftside ul {list-style-type: none; padding: 0; margin: 0; font-size: 14px; color: #fff;}
 	#leftside ul li {padding-bottom: 5px; padding-left: 5px; margin-bottom: 5px;}
-	#leftside ul li.current {color: #fff; font-weight: bold; background: transparent url(img/activestep.jpg) top left no-repeat; padding-top: 2px; padding-left: 5px; padding-bottom: 2px;}
+	#leftside ul li.current {color: #fff;text-shadow: #4b4e51 0 2px 2px;font-weight: bold; background: transparent url(img/prgrs.png) top left no-repeat; padding-top: 1px; padding-left: 5px; padding-bottom: 3px;}
 	#leftside ul li a {width: 160px; padding-right: 20px; color: #ccc; font-weight: normal; font-style: italic; text-decoration: none; background: url(img/yes.png) top right no-repeat;}
 	#leftside ul li a:hover {color: #fff;}
 
@@ -45,6 +46,7 @@
 	.xoform-help {display: none; border: orange 2px solid; padding: 5px; background: #fff8dc; margin: .5em; text-align: center;}
 	.diags button, #trustperms button {float: right; margin-right: 10px; margin-top: 4px;}
 
+#hmo {border: none;background: transparent;cursor:pointer}
 	#pathsettings label {clear: both; width: 100%;}
 	input#rootpath, input#trustpath, input#url, input#DB_HOST, input#DB_USER, input#DB_PASS, input#DB_NAME, input#DB_PREFIX, input#DB_SALT {width: 60%;}
 	#rootpathimg {padding-left: 5px;}
@@ -69,7 +71,7 @@
 button, button:focus {outline: none;}
 button::-moz-focus-inner {border: 0;}
 
-#footer {width: 859px; margin: 0 auto; background: transparent; text-align: right; font-size: 12px; color: #fff;}
+#footer {width: 859px; margin: 0 auto;padding-top: 2px; background: transparent; text-align: left; font-size: 12px; color: #fff;}
 #footer a {color: #d28c03;}
 #footer a:hover {color: #f3ac03;}
 
@@ -100,3 +102,10 @@ form fieldset legend{padding: 2px 5px; margin-left: 10px; border-left: 1px solid
 .goodPass span {background:url(img/yellow.png) no-repeat bottom right;}
 .strongPass {background:url(img/green.png) no-repeat 0 0;}
 .strongPass span {background:url(img/green.png) no-repeat bottom right;}
+
+/* TRANS ICONS */
+.blokz {padding-left:20px;margin-right: 10px;padding-top: 20px;padding-bottom: 20px;background-image: url(img/webpath.png);background-repeat: no-repeat;background-position: right center}
+.bloky {padding-left:20px;margin-right: 10px;padding-top: 20px;padding-bottom: 20px;background-image: url(img/physpath.png);background-repeat: no-repeat;background-position: right center}
+.blokx {padding-left:20px;margin-right: 10px;padding-top: 20px;padding-bottom: 20px;background-image: url(img/trustpath.png);background-repeat: no-repeat;background-position: right center}
+.blokSQL {padding-left:20px;margin-right: 10px;padding-top: 20px;padding-bottom: 20px;background-image: url(img/mySQLpath.png);background-repeat: no-repeat;background-position: right center}
+.blokinit {padding-left:20px;margin-right: 10px;padding-top: 20px;padding-bottom: 20px;background-image: url(img/adminpath.png);background-repeat: no-repeat;background-position: right center}

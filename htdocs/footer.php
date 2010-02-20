@@ -32,7 +32,7 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 	$icmsPreloadHandler->triggerEvent('beforeFooter');
 
 	$xoopsLogger->stopTime('Module display');
-	if($xoopsOption['theme_use_smarty'] == 0)
+	if(isset($xoopsOption['theme_use_smarty']) && $xoopsOption['theme_use_smarty'] == 0)
 	{
 		// the old way
 		$footer = htmlspecialchars($icmsConfigMetaFooter['footer']).'<br /><div style="text-align:center">Powered by ImpressCMS &copy; 2007-'.date('Y').' <a href="http://www.impresscms.org/" rel="external">ImpressCMS</a></div>';

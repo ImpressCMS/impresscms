@@ -1,31 +1,31 @@
 <?php
 /**
-* System admin blocks
-*
-* @copyright      http://www.impresscms.org/ The ImpressCMS Project
-* @license         LICENSE.txt
-* @package	Systemblocks
-* @since            1.3
-* @version		$Id$
-*/
+ * System Admin Blocks File
+ *
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license	LICENSE.txt
+ * @package	SystemBlocks
+ * @since	ImpressCMS 1.2
+ * @version	$Id$
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ */
 
 /**
  * Admin Warnings Block
- * 
- * @copyright The ImpressCMS Project <http://www.impresscms.org> 
+ *
+ * @copyright The ImpressCMS Project <http://www.impresscms.org>
  * @license GNU GPL v2
- * 
- * @since ImpressCMS 1.3
- * @version $Id: $
- * 
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ *
+ * @since ImpressCMS 1.2
+ *
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  *
  * @return array
- * 
+ *
  * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
  */
 function b_system_admin_warnings_show(){
-	
+
 	global $xoopsDB;
 	$block = array();
 	$block['msg'] = array();
@@ -33,7 +33,8 @@ function b_system_admin_warnings_show(){
 	if(is_dir(ICMS_ROOT_PATH.'/install/')){
 		array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/'), '', false));
 	}
-	if(getDbValue($xoopsDB, 'modules', 'version', 'version="120"') == 0 AND getDbValue($xoopsDB, 'modules', 'mid', 'mid="1"') == 1){
+	/** @todo make this dynamic, so the value is updated automatically */
+	if(getDbValue($xoopsDB, 'modules', 'version', 'version="120" AND mid="1"') !== FALSE ){
 		array_push($block['msg'], icms_error_msg('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">'._WARNINGUPDATESYSTEM.'</a>'));
 	}
 	if(is_writable(ICMS_ROOT_PATH.'/mainfile.php')){
@@ -59,41 +60,43 @@ function b_system_admin_warnings_show(){
 		array_push($block['msg'], icms_error_msg(_PROTECTOR_NOT_FOUND, '', false));
 		echo '<br />';
 	}
-	
+
 	// ###### Output warn messages for correct functionality  ######
 	if(!is_writable(ICMS_CACHE_PATH))
-			array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH)), '', false);
+		array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH)), '', false);
 	if(!is_writable(ICMS_UPLOAD_PATH))
 		array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_UPLOAD_PATH)), '', false);
 	if(!is_writable(ICMS_COMPILE_PATH))
 		array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_COMPILE_PATH)), '', false);
-	
+
 	if(count($block['msg'] ) > 0){
-		return $block;	
+		return $block;
 	}
-	
+
 }
 
 /**
  * Admin Control Panel Block
- * 
- * @since ImpressCMS 1.3
- * @version $Id: $
- * 
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ *
+ * @since ImpressCMS 1.2
+ *
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  *
  * @return array
- * 
+ *
  * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
  */
 function b_system_admin_cp_show(){
 	global $icmsTpl, $xoopsConfig, $icmsUser;
-	
+
 	$block['lang_cp']= _CPHOME;
 	$block['lang_insmodules'] = _AD_INSTALLEDMODULES;
-	
+
 	// Loading System Configuration Links
-	$groups = $icmsUser->getGroups();
+	if( is_object( $icmsUser ) )
+		$groups = $icmsUser->getGroups();
+	else
+		$groups = array();
 	$all_ok = false;
 	if(!in_array(XOOPS_GROUP_ADMIN, $groups))
 	{
@@ -132,14 +135,13 @@ function b_system_admin_cp_show(){
 
 /**
  * System Admin Modules Block Show Fuction
- * 
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- * 
- * @since ImpressCMS 1.3
- * @version $Id: $
- * 
+ *
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ *
+ * @since ImpressCMS 1.2
+ *
  * @return array
- * 
+ *
  * @todo Maybe it can be improved a little, is just a copy of the generate menu function.
  */
 function b_system_admin_modules_show(){
@@ -193,15 +195,16 @@ function b_system_admin_modules_show(){
 		if ($module->dirname () == 'system') {
 			$systemadm = true;
 		}
-		$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->mid (), $icmsUser->getGroups () );
+		if( is_object( $icmsUser ) )
+			$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->mid (), $icmsUser->getGroups () );
 		if ($admin_perm) {
 			if ($rtn ['dir'] != 'system') {
 				$block['mods'][] = $rtn;
 			}
 		}
-		
+
 	}
-	
+	// If there is any module listed, then show the block.
 	if(count($block['mods'] > 0))
 		return $block;
 }

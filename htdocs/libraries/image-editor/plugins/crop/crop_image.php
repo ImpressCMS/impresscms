@@ -1,12 +1,6 @@
 <?
 $xoopsOption['nodebug'] = 1;
-if (file_exists('../../../../../../../mainfile.php')) include_once '../../../../../../../mainfile.php';
-if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../../mainfile.php';
-if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
 if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
-if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
-if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
-if (file_exists('../mainfile.php')) include_once '../mainfile.php';
 if (!defined('XOOPS_ROOT_PATH')) exit();
 include_once ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
 
@@ -42,7 +36,7 @@ if(isset($_GET['image_path']) && isset($_GET['image_url'])){
 		@unlink($temp_img_path);
 		exit;
 	}
-	
+
 	if(strlen($x) && strlen($y) && $width && $height && $percentSize){
 
 		if($percentSize!="100"){

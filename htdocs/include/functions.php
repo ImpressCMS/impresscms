@@ -978,39 +978,39 @@ function icms_copyr($source, $dest)
 }
 
 /**
-* Create a folder
-*
-* @author	Newbb2 developpement team
-* @param	string	$target	folder being created
-* @return   bool	Returns true on success, false on failure
-*/
-function icms_mkdir($target)
-{
-	// http://www.php.net/manual/en/function.mkdir.php
-	// saint at corenova.com
-	// bart at cdasites dot com
-	/* can't (but should) remove colons because of Windows path
-	 * also, because this is recursive, you can't remove slash or backslash
-	 * @todo improve this to split on directory separator, then build path (skenow 5 Dec 2009)
-	 */
-	$target = preg_replace( '/[?".<>\|\s]/', '_', strtolower ( $target ));
-	if(is_dir($target) || empty($target)) {return true;}
-	if(file_exists($target) && !is_dir($target)) {return false;}
-	if(icms_mkdir(substr($target, 0, strrpos($target, '/'))))
-	{
-		if(!file_exists($target))
-		{
-			$res = mkdir($target, 0777); // crawl back up & create dir tree
-			icms_chmod($target);
-			// create an index.html file in this directory
-			if ($fh = @fopen($target.'/index.html', 'w'))
-				fwrite($fh, '<script>history.go(-1);</script>');
+ * Safely create a folder
+ *
+ * @since 1.2.1
+ * @copyright ImpressCMS
+ *
+ * @param string $target path to the folder to be created
+ * @param integer $mode permissions to set on the folder. This is affected by umask in effect
+ * @param string $base root location for the folder, ICMS_ROOT_PATH or ICMS_TRUST_PATH, for example
+ * @return boolean True if folder is created, False if it is not
+ */
+function icms_mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH ) {
+
+	if( is_dir( $target )) return TRUE;
+
+	$metachars = array('[', '?', '"', '.', '<', '>', '|', ' ', ':' );
+
+	$base = preg_replace ( '/[\\|\/]/', DIRECTORY_SEPARATOR, $base);
+	$target = preg_replace ( '/[\\|\/]/', DIRECTORY_SEPARATOR, $target);
+	$target = str_ireplace( $base . DIRECTORY_SEPARATOR, '', $target );
+	$target = $base . DIRECTORY_SEPARATOR . str_replace( $metachars , '_', $target );
+
+	if( mkdir($target, $mode, TRUE) ) {
+		// create an index.html file in this directory
+		if ($fh = @fopen($target.'/index.html', 'w')) {
+			fwrite($fh, '<script>history.go(-1);</script>');
 			@fclose($fh);
-			return $res;
 		}
+
+	  	if( substr( decoct( fileperms( $target ) ),2) != $mode ) {
+	  		chmod($target, $mode);
+	  	}
 	}
-	$res = is_dir($target);
-	return $res;
+	return is_dir( $target );
 }
 
 /**

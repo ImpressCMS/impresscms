@@ -84,7 +84,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			});
 	</script>
 <fieldset>
-	<legend><?php echo LEGEND_ADMIN_ACCOUNT; ?></legend>
+	<h3><?php echo LEGEND_ADMIN_ACCOUNT; ?></h3>
+ <div class="blokinit">
 	<div class="dbconn_line">
 	<label for="adminname"><?php echo ADMIN_DISPLAY_LABEL; ?></label>
 	<div class="clear">&nbsp;</div>
@@ -110,6 +111,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	<div class="clear">&nbsp;</div>
 	<input type="password" name="adminpass2" id="adminpass2" maxlength="255" value="" />
 	</div>
+</div>
 </fieldset>
 <?php
 	$content = ob_get_contents();

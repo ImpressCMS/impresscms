@@ -408,7 +408,7 @@ define("_MD_AM_AUTHOPENIDDSC","Select Yes to enable OpenID authentication. This 
 define("_MD_AM_USE_GOOGLE_ANA"," Enable Google Analytics?");
 define("_MD_AM_USE_GOOGLE_ANA_DESC","");
 
-// added in 1.1.2 
+// added in 1.1.2
 define("_MD_AM_UNABLEENCCLOSED","Database Update Failed, You can't change password encryption whilst the site is closed");
 
 ######################## Added in 1.2 ###################################
@@ -660,4 +660,11 @@ define("_MD_AM_AUTOTASKS_USERDSC", "System user to be used for task execution.")
 //source editedit
 define("_MD_AM_SRCEDITOR_DEFAULT","Default Source Code Editor");
 define("_MD_AM_SRCEDITOR_DEFAULT_DESC","Select the default Editor for editing source codes.");
+
+// added in 1.2.1
+define("_MD_AM_SMTPSECURE","SMTP Secure Method");
+define("_MD_AM_SMTPSECUREDESC","Authentication Method used for SMTPAuthentication. (default is ssl)");
+define("_MD_AM_SMTPAUTHPORT","SMTP Port");
+define("_MD_AM_SMTPAUTHPORTDESC","The Port use by your SMTP Mail server (default is 465)");
+
 ?>

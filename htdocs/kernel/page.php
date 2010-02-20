@@ -1,22 +1,26 @@
 <?php
 /**
- * Manage of content pages
+ * Classes responsible for managing core page objects
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
  * @license	LICENSE.txt
  * @package	core
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project 
+ * @since	ImpressCMS 1.1
  * @author	modified by UnderDog <underdog@impresscms.org>
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  * @version	$Id$
  */
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
+include_once ICMS_ROOT_PATH . '/kernel/icmspersistableobject.php';
 
+/**
+ * ImpressCMS page class.
+ *
+ * @since	ImpressCMS 1.2
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ */
 class IcmsPage extends IcmsPersistableObject {
 	
 	public function __construct( & $handler ){
@@ -24,15 +28,21 @@ class IcmsPage extends IcmsPersistableObject {
 		$this->IcmsPersistableObject( $handler );
 		
 		$this->quickInitVar('page_id', XOBJ_DTYPE_INT);
-        $this->quickInitVar('page_moduleid', XOBJ_DTYPE_INT);
-        $this->quickInitVar('page_title', XOBJ_DTYPE_TXTBOX);
-        $this->quickInitVar('page_url', XOBJ_DTYPE_TXTBOX);
-        $this->quickInitVar('page_status', XOBJ_DTYPE_INT);
+	        $this->quickInitVar('page_moduleid', XOBJ_DTYPE_INT, true);
+        	$this->quickInitVar('page_title', XOBJ_DTYPE_TXTBOX, true);
+	        $this->quickInitVar('page_url', XOBJ_DTYPE_TXTBOX, true);
+	        $this->quickInitVar('page_status', XOBJ_DTYPE_INT, true);
 
 	}
 	
 }
 
+/**
+ * ImpressCMS page handler class.
+ *
+ * @since	ImpressCMS 1.2
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ */
 class IcmsPageHandler extends IcmsPersistableObjectHandler {
 	
 	public function __construct( & $db ){
@@ -40,14 +50,14 @@ class IcmsPageHandler extends IcmsPersistableObjectHandler {
 		$this->table = $db->prefix('icmspage');
 	}
 	
-    public function getList( $criteria = null, $limit = 0, $start = 0, $debug=false){
-    	$rtn = array();
-        $pages =& $this->getObjects( $criteria, true );
-        foreach( $pages as $page ) {
-            $rtn[$page->getVar('page_moduleid').'-'.$page->getVar('page_id')] = $page->getVar('page_title');
-        }
-        return $rtn;
-    }
+	public function getList( $criteria = null, $limit = 0, $start = 0, $debug=false){
+    		$rtn = array();
+        	$pages =& $this->getObjects( $criteria, true );
+        	foreach( $pages as $page ) {
+			$rtn[$page->getVar('page_moduleid').'-'.$page->getVar('page_id')] = $page->getVar('page_title');
+		}
+		return $rtn;
+	}
 	
 	public function getPageSelOptions($value=null){
     	if (!is_array($value)){
@@ -114,8 +124,20 @@ class IcmsPageHandler extends IcmsPersistableObjectHandler {
     	
 }
 
+/**
+ * XOOPS page handler class.
+ *
+ * @todo 	Remove this class after ImpressCMS 1.5
+ * @deprecated 
+ */
 class XoopsPage extends IcmsPage { /* For backwards compatibility */ }
 
+/**
+ * XOOPS page handler class.
+ * 
+ * @todo 	Remove this class after ImpressCMS 1.5
+ * @deprecated 
+ */
 class XoopsPageHandler extends IcmsPageHandler { /* For backwards compatibility */ }
 
 ?>

@@ -172,21 +172,10 @@ class IcmsCaptcha {
 */
 		// Kill too many attempts
 		/*}else*/
-        include_once ICMS_ROOT_PATH . '/kernel/icmsstopspammer.php';
-        $icmsStopSpammers = new IcmsStopSpammer();
 		$icmsUser = $GLOBALS["xoopsUser"];
 		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($icmsUser)) {
 			$is_valid = true;
-		}elseif($icmsConfig['enable_badips']){
-			foreach ($icmsConfig['bad_ips'] as $bi) {
-				if (!empty($bi) && preg_match("/".$bi."/", $_SERVER['REMOTE_ADDR'])) {
-					$is_valid = false;
-				}
-			}
-			unset($bi);
-        }elseif($icmsStopSpammers->badIP($_SERVER['REMOTE_ADDR'])){
-            $is_valid = false;
 		}elseif(!empty($maxAttempts) && $_SESSION['IcmsCaptcha_attempt_'.$sessionName] > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 

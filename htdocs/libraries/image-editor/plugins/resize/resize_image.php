@@ -1,12 +1,6 @@
 <?
 $xoopsOption['nodebug'] = 1;
-if (file_exists('../../../../../../../mainfile.php')) include_once '../../../../../../../mainfile.php';
-if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../../mainfile.php';
-if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
 if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
-if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
-if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
-if (file_exists('../mainfile.php')) include_once '../mainfile.php';
 if (!defined('XOOPS_ROOT_PATH')) exit();
 include_once ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
 
@@ -21,10 +15,10 @@ if(isset($_GET['image_path']) && isset($_GET['image_url'])){
 	}else{
 		$fit = 'inside';
 	}
-	
+
 	$save = isset($_GET['save'])?$_GET['save']:0;
 	$del  = isset($_GET['delprev'])?$_GET['delprev']:0;
-	
+
 	$img = WideImage::load($image_path);
 	$arr = explode('/',$image_path);
 	$arr[count($arr)-1] = 'resize_'.$arr[count($arr)-1];
@@ -37,10 +31,10 @@ if(isset($_GET['image_path']) && isset($_GET['image_url'])){
 		@unlink($temp_img_path);
 		exit;
 	}
-	
+
 	$img->resize($width, $height, $fit)->saveToFile($temp_img_path);
 
-		
+
 	if ($save){
 		if (!@unlink($image_path)){
 			echo "alert('"._ERROR."');";

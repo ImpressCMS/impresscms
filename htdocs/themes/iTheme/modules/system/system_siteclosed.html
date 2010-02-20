@@ -18,27 +18,28 @@
 	    <div id="xo-headerlogo"><a href="<{xoAppUrl /}>" title=""><img src="<{xoImgUrl img/logo.png}>" alt="<{$xoops_sitename}>" /></a></div>
     </div>
 <!-- End header -->
-  
+
+<!-- Start Main Content Area -->
 <!-- Start Main Content Area -->
 <div id="xo-canvas-content">
 
 <div id="xo-redirect"><{$lang_siteclosemsg}></div>
 
 <div id="xo-siteclose-login">
- <h2><{$lang_login}></h2>
- <div>
-  <form action="<{$xoops_url}>/user.php" method="post">
-   <div>
-   <span class="left"><{$lang_username}></span>
-   <span class="right"><input type="text" name="uname" size="21" maxlength="25" value="" /></span>
-   <span class="left"><{$lang_password}></span>
-   <span class="right"><input type="password" name="pass" size="21" maxlength="32" /></span>
-   <input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>" />
-   <input type="hidden" name="xoops_login" value="1" />
-   <div class="button"><input type="submit" value="<{$lang_login}>" /></div>
-   </div>
-  </form>
- </div>
+    <h2><{$lang_login}></h2>
+        <form action="<{$xoops_url}>/user.php" method="post">
+            <div>
+                <label for="uname"><{$lang_username}></label>
+                <input type="text" name="uname" maxlength="25" value="" />
+                <label for="pass"><{$lang_password}></label>
+                <input type="password" name="pass" maxlength="32" />
+                <input type="hidden" name="xoops_redirect" value="<{$xoops_requesturi}>" />
+                <input type="hidden" name="xoops_login" value="1" />
+                <div class="button">
+                    <input type="submit" value="<{$lang_login}>" />
+                </div>
+            </div>
+        </form>
 </div>
 
 </div>

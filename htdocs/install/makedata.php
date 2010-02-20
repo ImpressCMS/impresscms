@@ -113,7 +113,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     $time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
-    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 120, ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, " . ICMS_SYSTEM_DBVERSION . ")");
+    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."'," . $modversion['version'] * 100 . ", ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, " . ICMS_SYSTEM_DBVERSION . ")");
 
     foreach ($modversion['templates'] as $tplfile) {
         if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
@@ -676,6 +676,20 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES ($i,0,$c,'smtppass','_MD_AM_SMTPPASS','','_MD_AM_SMTPPASSDESC','password','text', $p)");
 	$i++;
 	$p++;
+	$dbm->insert('config', " VALUES ($i,0,$c,'smtpsecure','_MD_AM_SMTPSECURE','ssl','_MD_AM_SMTPSECUREDESC','select','text', $p)");
+	// Insert data for Config Options in selection field. (must be placed before $i++)
+    	$dbm->insert('configoption', " VALUES ($ci, 'None','', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, 'SSL','ssl', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, 'TLS','tls', $i)");
+	$ci++;
+	// ----------
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i,0,$c,'smtpauthport','_MD_AM_SMTPAUTHPORT','465','_MD_AM_SMTPAUTHPORTDESC','textbox','int', $p)");
+	$i++;
+	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'sendmailpath','_MD_AM_SENDMAILPATH','/usr/sbin/sendmail','_MD_AM_SENDMAILPATHDESC','textbox','text', $p)");
 
 	// Data for Config Category 7 (Authentication Settings)
@@ -777,6 +791,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$c=9; // sets config category id
 	$i++;
 	$p=0;
+	/* These have been deprecated in 1.2 and should not be inserted. They are part of the content module now
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'default_page', '_MD_AM_DEFAULT_CONTPAGE', '0', '_MD_AM_DEFAULT_CONTPAGEDSC', 'select_pages', 'int', $p)");
 	$i++;
 	$p++;
@@ -793,7 +808,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'teaser_length', '_MD_AM_CONT_TEASERLENGTH', '500', '_MD_AM_CONT_TEASERLENGTHDSC', 'textbox', 'int', $p)");
-
+	*/
 
 	// Data for Config Category 10 (Personalization Settings)
 	$c=10; // sets config category id

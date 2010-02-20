@@ -68,7 +68,7 @@ class SystemUserrankHandler extends IcmsPersistableObjectHandler {
 		global $icmsConfigUser;
 		$this->IcmsPersistableObjectHandler ( $db, 'userrank', 'rank_id', 'rank_title', '', 'system' );
 		$this->table = $this->db->prefix('ranks');
-		$this->setUploaderConfig(false, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), $icmsConfigUser['rank_maxsize'], $icmsConfigUser['rank_width'], $icmsConfigUser['rank_height']);
+		$this->setUploaderConfig(false, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), $icmsConfigUser['rank_maxsize'], $icmsConfigUser['rank_width'], $icmsConfigUser['rank_height']);
 	}
 
 	function MoveAllRanksImagesToProperPath(){

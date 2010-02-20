@@ -16,7 +16,7 @@
 */
 /**
  *
- */ 
+ */
 require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
@@ -53,7 +53,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
 			foreach( $sdata_rewrite as $key => $val ) {
 				if( preg_match( "/(define\()([\"'])(SDATA_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content ) ) {
-					$val = addslashes( $val );
+					$val = addcslashes( $val, '\+*?[^]($)&#@"\'' );
 					$content = preg_replace( "/(define\()([\"'])(SDATA_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/",
 						"define( 'SDATA_$key', '$val' )", $content );
 				} else {
@@ -134,7 +134,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	        }
         }
 	}
-	
+
 	if(ini_get('safe_mode') == 0 || strtolower(ini_get('safe_mode')) == 'off')
 	{
 		// creating the required folders in trust_path
@@ -153,7 +153,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			}
 		}
 	}
-	
+
 	if ( empty( $error ) ) {
 		$wizard->redirectToPage( '+1' );
 		exit();

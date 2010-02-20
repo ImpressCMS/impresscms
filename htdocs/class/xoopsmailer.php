@@ -283,7 +283,8 @@ class XoopsMailer
 		foreach ( $this->toUsers as $user ) {
 			// set some user specific variables
 			$subject = str_replace("{X_UNAME}", $user->getVar("uname"), $this->subject );
-			$text = str_replace("{X_UID}", $user->getVar("uid"), $this->body );
+			$text = str_replace("{X_USERLOGINNAME}", $user->getVar("login_name"), $this->body );
+			$text = str_replace("{X_UID}", $user->getVar("uid"), $text );
 			$text = str_replace("{X_UEMAIL}", $user->getVar("email"), $text );
 			$text = str_replace("{X_UNAME}", $user->getVar("uname"), $text );
 			$text = str_replace("{X_UACTLINK}", ICMS_URL."/user.php?op=actv&id=".$user->getVar("uid")."&actkey=".$user->getVar('actkey'), $text );

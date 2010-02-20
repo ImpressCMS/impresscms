@@ -1,7 +1,7 @@
-ImpressCMS 1.2 Final release notes
+ImpressCMS 1.2.1 Beta release notes
 ==================================
 
-The ImpressCMS Project is very proud to announce the Final version of its 1.2 release! ImpressCMS 1.2 introduce a few improvments motivated by our constant desire of developing the best easy to use open source CMS.
+The ImpressCMS Project is very proud to announce a Beta version of its 1.2.1 release! ImpressCMS 1.2.1 Beta is a bugfix release and is not intended for production sites.
 
 Please see the full [[Change Log]] for details in docs/changelog.txt.
 
@@ -17,24 +17,35 @@ Please see the full [[Change Log]] for details in docs/changelog.txt.
 
 ==Changes in this release==
 
-* #833 Reference to smartobject module (skenow)
-* #830 ImpressCMS-specific Protector Instructions (mrtheme)
-* #798 Core Revalidated as W3C compliant (mrtheme)
-* #839 incorrect language constants for Purifier (m0nty)
-* #838 Imagemanager: problems in update sites when there are images categories (realtherplima)
-* #842 relocating preload folder (realtherplima)
-* #829 Missing Spanish languages files (debianus)
-* #841 Use of undefined constant _CO_CONTENT_CONTENT_READ (phoenyx)
-* #844 Removed Symlink to old content page (realtherplima)
-* #845 loading selected language files during module installation (iCMS installer) (Phoenyx)
-* #848 assign correct language constant in upgrade for blocksadmin symlink (skenow)
-* #851 using the admin footer for all admin themes (Phoenyx)
-* #624 TinyMCE editor, add text, linebreaks, etc, switch back to dhtmleditor: the input field is full of html-tags (m0nty/achong71/malanciault)
-* #623 Problems with tinyMCE : adding linebreaks again and again (m0nty/achong71/malanciault)
-* #45 Debugger stops icmsfeed (malanciault)
-* #594 Problem with short URLs on TinyMCE (m0nty/achong71/malanciault)
-* #843 Created a language constant for the update process (malanciault)
-* #856 sanitized folder names in imagemanager (skenow)
+* #865: Registration disclaimer value type set to array instead of text (skenow)
+* #874: Bug on Admin Installed Modules Block (nekro)
+* #875: Bug on Admin CP Block (nekro)
+* #876: Weight default value is missing in block creation (nekro)
+* #879: Rank images are in 2 folders (skenow/nekro)
+* #867: Installer - fails to check for 5.3.0 (davidimpress/phoenyx)
+* #878: Welcome email template has incorrect variable (skenow/phoenyx)
+* #662: function: themefooter + $xoopsOption['theme_use_smarty'] undefined (phoenyx)
+* #895: expired password accts don't get redirected to resetpass (profile) (m0nty)
+* #905: wrong handling for XOBJ_DTYPE_[S|M|L]TIME (phoenyx)
+* #907: Image editor does not work when there is an install also in a subfolder (skenow/fiammybe)
+* #893: Registration disclaimer will not be accepted if captcha is off (skenow/malanciault)
+* #921: captcha options for skipped characters and skipped groups not added during an upgrade (skenow)
+* #869: Database password screwed up during installation (phoenyx/skenow/malanciault)
+* #911: Step 7 - script can not find the tmp-path (sato/malanciault)
+* #881: SQL syntax error in update (skenow/fiammybe)
+* #892: Enabling IP bans in Preferences > General settings causes CAPTCHA validation to fail (skenow/malanciault)
+* #923: fatal error (xoops_cp_header) in image manager (formimage_browse.php) (phoenyx/skenow)
+* #922: double slashes in iTheme admin theme (aphex)
+* #914: uploader.php works not with module (sato/skenow/malanciault)
+* #819: Login block needs formating in Site Close template (malanciault/fiammybe)
+* #894: Several config items are not inserted during an upgrade to 1.2 (skenow/malanciault)
+* #880: abortUpdate is not being honored (skenow/fiammybe)
+* #929: Trust path generated folder name needs to be totally random (malanciault)
+* #864: Ranks: PNG Not allowed? (davidimpress/skenow/malanciault)
+* #917: Tag [img] with command "center" works not (sato/fiammybe)
+* #931: Undefined index: language in file /class/mail/xoopsmultimailer.php line 171 (malanciault)
+* #932: XoopsMultiMailer is using xoopsConfigPersona instead of xoopsConfig (malanciault)
+* #871: XoopsMultiMailer class broken for SMTP and SMTPAuth (phoenyx/m0nty)
 
 ==Downloading ImpressCMS==
 

@@ -31,16 +31,16 @@ class IcmsBlock extends IcmsPersistableObject {
 		$this->IcmsPersistableObject($handler);
 
 		$this->quickInitVar('name', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('bid', XOBJ_DTYPE_INT);
-		$this->quickInitVar('mid', XOBJ_DTYPE_INT);
+		$this->quickInitVar('bid', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('mid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('func_num', XOBJ_DTYPE_INT);
-		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('content', XOBJ_DTYPE_TXTAREA);
-		$this->quickInitVar('side', XOBJ_DTYPE_INT);
-		$this->quickInitVar('weight', XOBJ_DTYPE_INT);
-		$this->quickInitVar('visible', XOBJ_DTYPE_INT);
+		$this->quickInitVar('side', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('weight', XOBJ_DTYPE_INT, true, false, false, 0);
+		$this->quickInitVar('visible', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('block_type', XOBJ_DTYPE_TXTBOX);
-		$this->quickInitVar('c_type', XOBJ_DTYPE_TXTBOX);
+		$this->quickInitVar('c_type', XOBJ_DTYPE_TXTBOX, true);
 		$this->quickInitVar('isactive', XOBJ_DTYPE_INT);
 		$this->quickInitVar('dirname', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('func_file', XOBJ_DTYPE_TXTBOX);
@@ -450,25 +450,25 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	public function getAllBlocks($rettype="object", $side=null, $visible=null, $orderby="side,weight,bid", $isactive=1)
 	{
 		$ret = array();
-		$where_query = " WHERE isactive='".intval($isactive)."'";
+		$where_query = " WHERE isactive='". (int) $isactive . "'";
 
 		if ( isset($side) ) {
 			// get both sides in sidebox? (some themes need this)
 			$tp = ($side == -2)?'L':($side == -6)?'C':'';
 			if ( $tp != '') {
-			 	$side = "";
+			 	$q_side = "";
 			 	$icms_blockposition_handler = xoops_gethandler('blockposition');
 			 	$criteria = new CriteriaCompo();
 			 	$criteria->add( new Criteria('block_type', $tp) );
 			 	$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach( $blockpositions as $bp ){
-				$side .= "side='".intval( $bp->getVar('id') )."' OR ";
+					$q_side .= "side='". (int) $bp->getVar('id') . "' OR ";
 				}
-				$side = "('".substr($side,0,strlen($side)-4)."')";
+				$q_side = "('".substr($q_side,0,strlen($q_side)-4)."')";
 			} else {
-				$side = "side='".intval($side)."'";
+				$q_side = "side='". (int) $side . "'";
 			}
-			$where_query .= " AND ".$side;
+			$where_query .= " AND ". $q_side;
 		}
 
 		if ( isset($visible) ) {

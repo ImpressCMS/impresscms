@@ -32,7 +32,7 @@ function textsanitizer_geshi_css_highlight( $source )
 
     // Parse the code
     $code = $geshi->parse_code();
-	$code = "<div class=\"icmsCodeCss\"><code><pre>".$code."</pre></code></div>";
+	$code = "<div class=\"icmsCodeCss\"><code>".$code."</code></div>";
     return $code;
 }
 function render_syntaxhighlightcss($ele_name)

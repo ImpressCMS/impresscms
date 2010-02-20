@@ -400,7 +400,7 @@ class IcmsMediaUploader {
 		if (isset ($this->targetFileName)) {
 			$this->savedFileName = $this->targetFileName;
 		}
-		elseif (isset ($this->prefix) || $this->prefix !== '') {
+		elseif (isset ($this->prefix) && $this->prefix !== '') {
 			$this->savedFileName = $this->prefix . '.' . strtolower($matched[1]);
 		} else {
 			$this->savedFileName = strtolower($this->mediaName);

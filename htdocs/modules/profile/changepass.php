@@ -47,7 +47,7 @@ if (!isset($_POST['submit'])) {
           include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
           $icmspass = new icms_Password();
           $salt = $icmspass->icms_createSalt();
-          $pass = $icmspass->icms_encryptPass(filter_input(INPUT_POST, $_POST['password'], FILTER_SANITIZE_URL), $salt);
+          $pass = $icmspass->icms_encryptPass($_POST['password'], $salt);
           $icmsUser->setVar('pass', $pass);
           $icmsUser->setVar('enc_type', $icmsConfigUser['enc_type']);
           $icmsUser->setVar('pass_expired', 0);

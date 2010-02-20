@@ -76,6 +76,9 @@ switch ($op){
 		$msg = isset($_GET['msg'])?urldecode($_GET['msg']):null;
 		redir($imgcat_id,$msg);
 		break;
+	case 'addcat':
+		imanager_addcat();
+		break;
 }
 
 /**
@@ -411,7 +414,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 			@unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
 			$path = ICMS_IMANAGER_FOLDER_PATH.'/';
 			$arrimg[$i]['lcode'] = '[img align=left id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
-			$arrimg[$i]['code'] = '[img id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
+			$arrimg[$i]['code'] = '[img align=center id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
 			$arrimg[$i]['rcode'] = '[img align=right id='.$images[$i]->getVar('image_id').']'.$images[$i]->getVar('image_nicename').'[/img]';
 		} else {
 			$url = (substr($categ_url,-1) != '/')?$categ_url.'/':$categ_url;
@@ -422,7 +425,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 			$arrimg[$i]['width'] = $img_info->getWidth();
 			$arrimg[$i]['height'] = $img_info->getHeight();
 			$arrimg[$i]['lcode'] = '[img align=left]'.$url.$images[$i]->getVar('image_name').'[/img]';
-			$arrimg[$i]['code'] = '[img]'.$url.$images[$i]->getVar('image_name').'[/img]';
+			$arrimg[$i]['code'] = '[img align=center]'.$url.$images[$i]->getVar('image_name').'[/img]';
 			$arrimg[$i]['rcode'] = '[img align=right]'.$url.$images[$i]->getVar('image_name').'[/img]';
 		}
 		$arrimg[$i]['src'] = $src.'?'.time();
@@ -609,9 +612,9 @@ function imanager_addfile() {
 		}
 	}
 	if (count($err) > 0) {
-		xoops_cp_header();
+		icmsPopupHeader();
 		xoops_error($err);
-		xoops_cp_footer();
+		icmsPopupFooter();
 		exit();
 	}
 	if (isset($imgcat_id)){
@@ -671,11 +674,11 @@ function imanager_updateimage() {
 			}
 		}
 		if (count($error) > 0) {
-			xoops_cp_header();
+			icmsPopupHeader();
 			foreach ($error as $err) {
 				echo $err.'<br />';
 			}
-			xoops_cp_footer();
+			icmsPopupFooter();
 			exit();
 		}
 	}
@@ -710,9 +713,9 @@ function imanager_delfileok($image_id,$redir=null) {
 	$imagecategory  =& $imgcat_handler->get(intval($image->getVar('imgcat_id')));
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	if (!$image_handler->delete($image)) {
-		xoops_cp_header();
+		icmsPopupHeader();
 		xoops_error(sprintf(_MD_FAILDEL, $image->getVar('image_id')));
-		xoops_cp_footer();
+		icmsPopupFooter();
 		exit();
 	}
 	@unlink($categ_path.'/'.$image->getVar('image_name'));

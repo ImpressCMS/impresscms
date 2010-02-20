@@ -15,32 +15,38 @@
 */
 
 /**
-* Create a folder
-*
-* @author	Newbb2 developpement team
-* @param	string	$target	folder being created
-* @return   bool	Returns true on success, false on failure
-*/
-function imcms_install_mkdir($target) {
-	// http://www.php.net/manual/en/function.mkdir.php
-	// saint at corenova.com
-	// bart at cdasites dot com
-	if (is_dir($target) || empty ($target)) {
-		return true; // best case check first
-	}
-	if (file_exists($target) && !is_dir($target)) {
-		return false;
-	}
-	if (imcms_install_mkdir(substr($target, 0, strrpos($target, '/')))) {
-		if (!file_exists($target)) {
-			$res = mkdir($target, 0777); // crawl back up & create dir tree
-			imcms_install_chmod($target);
-			return $res;
+ * Safely create a folder
+ *
+ * @since 1.2.1
+ * @copyright ImpressCMS
+ *
+ * @param string $target path to the folder to be created
+ * @param integer $mode permissions to set on the folder. This is affected by umask in effect
+ * @param string $base root location for the folder, ICMS_ROOT_PATH or ICMS_TRUST_PATH, for example
+ * @return boolean True if folder is created, False if it is not
+ */
+function imcms_install_mkdir($target, $mode = 0777 ) {
+
+	if( is_dir( $target ) ) return TRUE;
+
+	$metachars = array('[', '?', '"', '<', '>', '|', ' ' ); // Need to exclude . and : because they may occur in the root path
+	$target = str_replace( $metachars , '_', $target );
+
+	if( mkdir($target, $mode, TRUE) ) {
+		// create an index.html file in this directory
+		if ($fh = @fopen($target.'/index.html', 'w')) {
+			fwrite($fh, '<script>history.go(-1);</script>');
+			@fclose($fh);
 		}
-	}
-	$res = is_dir($target);
-	return $res;
+  	}
+
+  	if( substr( decoct( fileperms( $target ) ),2) != $mode ) {
+  		chmod($target, $mode);
+  	}
+
+	return is_dir( $target );
 }
+
 /**
 * Change the permission of a file or folder
 *
@@ -96,14 +102,14 @@ function unlinkRecursive($dir, $deleteRootToo=true)
     }
 
     closedir($dh);
-   
+
     if ($deleteRootToo)
     {
         @rmdir($dir);
     }
-   
+
     return;
-} 
+}
 
 /**
 * Copy a file, or a folder and its contents

@@ -37,6 +37,7 @@ define( "FAILED", "Failed" );
 // Titles (main and pages)
 define( "XOOPS_INSTALL_WIZARD", " %s - Installation Wizard" );
 define( "INSTALL_STEP", "Step" );
+define( "INSTALL_H3_STEPS", "Steps" );
 define( "INSTALL_OUTOF", " out of " );
 define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"http://www.impresscms.org\" target=\"_blank\">The ImpressCMS Project</a>" );
 

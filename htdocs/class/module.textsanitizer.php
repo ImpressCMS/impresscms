@@ -204,27 +204,27 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 		$patterns[] = "/\[email]([^;<>\*\(\)\"']*)\[\/email\]/sU";
 		$replacements[] = '<a href="mailto:\\1">\\1</a>';
 		$patterns[] = "/\[b](.*)\[\/b\]/sU";
-		$replacements[] = '<b>\\1</b>';
+		$replacements[] = '<strong>\\1</strong>';
 		$patterns[] = "/\[i](.*)\[\/i\]/sU";
-		$replacements[] = '<i>\\1</i>';
+		$replacements[] = '<em>\\1</em>';
 		$patterns[] = "/\[u](.*)\[\/u\]/sU";
 		$replacements[] = '<u>\\1</u>';
 		$patterns[] = "/\[d](.*)\[\/d\]/sU";
 		$replacements[] = '<del>\\1</del>';
 		$patterns[] = "/\[center](.*)\[\/center\]/sU";
-		$replacements[] = '<div align=center>\\1</div>';
+		$replacements[] = '<div align="center">\\1</div>';
 		$patterns[] = "/\[left](.*)\[\/left\]/sU";
-		$replacements[] = '<div align=left>\\1</div>';
+		$replacements[] = '<div align="left">\\1</div>';
 		$patterns[] = "/\[right](.*)\[\/right\]/sU";
-		$replacements[] = '<div align=right>\\1</div>';
+		$replacements[] = '<div align="right">\\1</div>';
 		$patterns[] = "/\[img align=center](.*)\[\/img\]/sU";
 		if($allowimage != 1)
 		{
-			$replacements[] = '<div align=center><a href="\\1" rel="external">\\1</a></div>';
+			$replacements[] = '<div style="margin: 0 auto; text-align: center;"><a href="\\1" rel="external">\\1</a></div>';
 		}
 		else
 		{
-			$replacements[] = '<div align=center><img src="\\1" alt="" /></div>';
+			$replacements[] = '<div style="margin: 0 auto; text-align: center;"><img src="\\1" alt="" /></div>';
 		}
 		$patterns[] = "/\[img align=(['\"]?)(left|right)\\1]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
 		$patterns[] = "/\[img]([^\"\(\)\?\&'<>]*)\[\/img\]/sU";
@@ -356,7 +356,7 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	**/
 	function undoHtmlSpecialChars($text)
 	{
-		return htmlspecialchars_decode($text, ENT_NOQUOTES);
+		return htmlspecialchars_decode($text, ENT_QUOTES);
 	}
 
 	function icms_htmlEntities($text)
@@ -561,19 +561,14 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 			$patterns = "/\[code](.*)\[\/code\]/esU";
 			if($image != 0)
 			{
-				$replacements = "'<div
-class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1')).'<
-/pre></code></div>'";
+				$replacements = "'<div class=\"xoopsCode\">'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1')).'</div>'";
 			}
 			else
 			{
-				$replacements = "'<div
-class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1',
-0)).'</pre></code></div>'";
+				$replacements = "'<div class=\"xoopsCode\">'.MyTextSanitizer::textsanitizer_syntaxhighlight(MyTextSanitizer::codeSanitizer('$1',0)).'</div>'";
 			}
 			$text = preg_replace($patterns, $replacements, $text);
 		}
-		return $text;
 		return $text;
 	}
 
@@ -587,7 +582,7 @@ class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(
 	*/
 	function codeSanitizer($str, $image = 1)
 	{
-		$str = str_replace('\"', '"', base64_decode($str));
+		$str = $this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str)));
 		$str = $this->xoopsCodeDecode($str, $image);
 		return $str;
 	}
@@ -790,19 +785,18 @@ class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(
 	* @param	 string	$text	 purifies (lightly) and then syntax highlights the text
 	* @return	string	$text	 the syntax highlighted text
 	*/
-	function textsanitizer_syntaxhighlight(&$text)
-	{
+	function textsanitizer_syntaxhighlight(&$text) {
 		global $icmsConfigPlugins;
-		$text = $this->undoHtmlSpecialChars($text);
-		if($icmsConfigPlugins['code_sanitizer'] == 'php')
-		{
+		if( $icmsConfigPlugins['code_sanitizer'] == 'php' ) {
+			$text = $this->undoHtmlSpecialChars($text);
 			$text = $this->textsanitizer_php_highlight($text);
+		} elseif($icmsConfigPlugins['code_sanitizer'] == 'geshi' ) {
+			$text = $this->undoHtmlSpecialChars($text);
+			$text = '<code>' . $this->textsanitizer_geshi_highlight($text) . '</code>';
+		} else {
+			$text = '<pre><code>' . $text . '</code></pre>';
 		}
-		elseif($icmsConfigPlugins['code_sanitizer'] == 'geshi' )
-		{
-			$text = $this->textsanitizer_geshi_highlight($text);
-		}
-		return $text;
+	    return $text;
 	}
 
 	/**
@@ -817,7 +811,7 @@ class=\"xoopsCode\"><code><pre>'.MyTextSanitizer::textsanitizer_syntaxhighlight(
 		$addedtag_open = 0;
 		if(!strpos($text, '<?php') and (substr($text, 0, 5) != '<?php'))
 		{
-			$text = '<?php\n' . $text;
+			$text = "<?php\n" . $text;
 			$addedtag_open = 1;
 		}
 		$addedtag_close = 0;
