@@ -1,435 +1,681 @@
 <?php
-// $Id: xoopsstory.php 1099 2007-10-19 01:08:14Z dugris $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
-if (!defined('XOOPS_ROOT_PATH')) {
-	exit();
+/**
+* Old class for generating news items
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
+if(!defined('ICMS_ROOT_PATH'))
+{
+    exit();
 }
-include_once XOOPS_ROOT_PATH."/class/xoopstopic.php";
-include_once XOOPS_ROOT_PATH."/class/xoopsuser.php";
+include_once ICMS_ROOT_PATH.'/class/xoopstopic.php';
+include_once ICMS_ROOT_PATH.'/kernel/user.php';
 
 class XoopsStory
 {
     var $table;
-	var $storyid;
-	var $topicid;
-	var $uid;
-	var $title;
-	var $hometext;
-	var $bodytext="";
-	var $counter;
-	var $created;
-	var $published;
-	var $expired;
-	var $hostname;
-	var $nohtml=0;
-	var $nosmiley=0;
-	var $ihome=0;
-	var $notifypub=0;
-	var $type;
-	var $approved;
-	var $topicdisplay;
-	var $topicalign;
-	var $db;
-	var $topicstable;
-	var $comments;
+    var $storyid;
+    var $topicid;
+    var $uid;
+    var $title;
+    var $hometext;
+    var $bodytext='';
+    var $counter;
+    var $created;
+    var $published;
+    var $expired;
+    var $hostname;
+    var $nohtml=0;
+    var $nosmiley=0;
+    var $ihome=0;
+    var $notifypub=0;
+    var $type;
+    var $approved;
+    var $topicdisplay;
+    var $topicalign;
+    var $db;
+    var $topicstable;
+    var $comments;
 
-	function Story($storyid=-1)
-	{
-		$this->db =& Database::getInstance();
-		$this->table = "";
-		$this->topicstable = "";
-		if ( is_array($storyid) ) {
-			$this->makeStory($storyid);
-		} elseif ( $storyid != -1 ) {
-			$this->getStory(intval($storyid));
-		}
-	}
+    /**
+    * Contstructor
+    *
+    * @param   int      $storyid
+    **/
+    function Story($storyid=-1)
+    {
+        $this->db = Database::getInstance();
+        $this->table = '';
+        $this->topicstable = '';
+        if(is_array($storyid))
+        {
+            $this->makeStory($storyid);
+        }
+        elseif($storyid != -1)
+        {
+            $this->getStory(intval($storyid));
+        }
+    }
 
-	function setStoryId($value)
-	{
-		$this->storyid = intval($value);
-	}
+    /**
+    * Sets current storyid
+    *
+    * @param   int      $value
+    **/
+    function setStoryId($value)
+    {
+        $this->storyid = intval($value);
+    }
 
-	function setTopicId($value)
-	{
-		$this->topicid = intval($value);
-	}
+    /**
+    * Sets current topicid
+    *
+    * @param   int      $value
+    **/
+    function setTopicId($value)
+    {
+        $this->topicid = intval($value);
+    }
 
-	function setUid($value)
-	{
-		$this->uid = intval($value);
-	}
+    /**
+    * Sets current userid
+    *
+    * @param   int      $value
+    **/
+    function setUid($value)
+    {
+        $this->uid = intval($value);
+    }
 
-	function setTitle($value)
-	{
-		$this->title = $value;
-	}
+    /**
+    * Sets current title
+    *
+    * @param   string   $value
+    **/
+    function setTitle($value)
+    {
+        $this->title = $value;
+    }
 
-	function setHometext($value)
-	{
-		$this->hometext = $value;
-	}
+    /**
+    * Sets current hometext (intro text)
+    *
+    * @param   string   $value
+    **/
+    function setHometext($value)
+    {
+        $this->hometext = $value;
+    }
 
-	function setBodytext($value)
-	{
-		$this->bodytext = $value;
-	}
+    /**
+    * Sets current body (body text)
+    *
+    * @param   string   $value
+    **/
+    function setBodytext($value)
+    {
+        $this->bodytext = $value;
+    }
 
-	function setPublished($value)
-	{
-		$this->published = intval($value);
-	}
+    /**
+    * Sets current date published
+    *
+    * @param   int      $value
+    **/
+    function setPublished($value)
+    {
+        $this->published = intval($value);
+    }
 
-	function setExpired($value)
-	{
-		$this->expired = intval($value);
-	}
+    /**
+    * Sets current date expired
+    *
+    * @param   int      $value
+    **/
+    function setExpired($value)
+    {
+        $this->expired = intval($value);
+    }
 
-	function setHostname($value)
-	{
-		$this->hostname = $value;
-	}
+    /**
+    * Sets current hostname
+    *
+    * @param   string      $value
+    **/
+    function setHostname($value)
+    {
+        $this->hostname = $value;
+    }
 
-	function setNohtml($value=0)
-	{
-		$this->nohtml = $value;
-	}
+    /**
+    * Sets value of nohtml
+    *
+    * @param   int      $value
+    **/
+    function setNohtml($value=0)
+    {
+        $this->nohtml = $value;
+    }
 
-	function setNosmiley($value=0)
-	{
-		$this->nosmiley = $value;
-	}
+    /**
+    * Sets value of nosmiley
+    *
+    * @param   int      $value
+    **/
+    function setNosmiley($value=0)
+    {
+        $this->nosmiley = $value;
+    }
 
-	function setIhome($value)
-	{
-		$this->ihome = $value;
-	}
+    /**
+    * Sets current value of ihome
+    *
+    * @param   string      $value
+    **/
+    function setIhome($value)
+    {
+        $this->ihome = $value;
+    }
 
-	function setNotifyPub($value)
-	{
-		$this->notifypub = $value;
-	}
+    /**
+    * Sets current value of notifypub
+    *
+    * @param   string      $value
+    **/
+    function setNotifyPub($value)
+    {
+        $this->notifypub = $value;
+    }
 
-	function setType($value)
-	{
-		$this->type = $value;
-	}
+    /**
+    * Sets type
+    *
+    * @param   string      $value
+    **/
+    function setType($value)
+    {
+        $this->type = $value;
+    }
 
-	function setApproved($value)
-	{
-		$this->approved = intval($value);
-	}
+    /**
+    * Sets current value of approved
+    *
+    * @param   int        $value
+    **/
+    function setApproved($value)
+    {
+        $this->approved = intval($value);
+    }
 
-	function setTopicdisplay($value)
-	{
-		$this->topicdisplay = $value;
-	}
+    /**
+    * Sets current value of topicdisplay
+    *
+    * @param   string      $value
+    **/
+    function setTopicdisplay($value)
+    {
+        $this->topicdisplay = $value;
+    }
 
-	function setTopicalign($value)
-	{
-		$this->topicalign = $value;
-	}
+    /**
+    * Sets current value of topicalign
+    *
+    * @param   string      $value
+    **/
+    function setTopicalign($value)
+    {
+        $this->topicalign = $value;
+    }
 
-	function setComments($value)
-	{
-		$this->comments = intval($value);
-	}
+    /**
+    * Sets current value of comments
+    *
+    * @param   int      $value
+    **/
+    function setComments($value)
+    {
+        $this->comments = intval($value);
+    }
 
-	function store($approved=false)
-	{
-		//$newpost = 0;
-		$myts =& MyTextSanitizer::getInstance();
-		$title =$myts->censorString($this->title);
-		$hometext =$myts->censorString($this->hometext);
-		$bodytext =$myts->censorString($this->bodytext);
-		$title = $myts->makeTboxData4Save($title);
-		$hometext = $myts->makeTareaData4Save($hometext);
-		$bodytext = $myts->makeTareaData4Save($bodytext);
-		if ( !isset($this->nohtml) || $this->nohtml != 1 ) {
-			$this->nohtml = 0;
-		}
-		if ( !isset($this->nosmiley) || $this->nosmiley != 1 ) {
-			$this->nosmiley = 0;
-		}
-		if ( !isset($this->notifypub) || $this->notifypub != 1 ) {
-			$this->notifypub = 0;
-		}
-		if( !isset($this->topicdisplay) || $this->topicdisplay != 0 ) {
-			$this->topicdisplay = 1;
-		}
-		$expired = !empty($this->expired) ? $this->expired : 0;
-		if ( !isset($this->storyid) ) {
-			//$newpost = 1;
-			$newstoryid = $this->db->genId($this->table."_storyid_seq");
-			$created = time();
-			$published = ( $this->approved ) ? $this->published : 0;
+    /**
+    * Stores the story. Don't set to published when not approved
+    *
+    * @param   bool      $approved
+    **/
+    function store($approved=false)
+    {
+        //$newpost = 0;
+        $myts = MyTextSanitizer::getInstance();
+        $title = $myts->censorString($this->title);
+        $hometext = $myts->censorString($this->hometext);
+        $bodytext = $myts->censorString($this->bodytext);
+        $title = $myts->makeTboxData4Save($title);
+        $hometext = $myts->displayTarea($hometext);
+        $bodytext = $myts->displayTarea($bodytext);
+        if(!isset($this->nohtml) || $this->nohtml != 1)
+        {
+            $this->nohtml = 0;
+        }
+        if(!isset($this->nosmiley) || $this->nosmiley != 1)
+        {
+            $this->nosmiley = 0;
+        }
+        if(!isset($this->notifypub) || $this->notifypub != 1)
+        {
+            $this->notifypub = 0;
+        }
+        if(!isset($this->topicdisplay) || $this->topicdisplay != 0)
+        {
+            $this->topicdisplay = 1;
+        }
+        $expired = !empty($this->expired) ? $this->expired : 0;
+        if(!isset($this->storyid))
+        {
+            //$newpost = 1;
+            $newstoryid = $this->db->genId($this->table."_storyid_seq");
+            $created = time();
+            $published = ($this->approved) ? $this->published : 0;
 
-			$sql = sprintf("INSERT INTO %s (storyid, uid, title, created, published, expired, hostname, nohtml, nosmiley, hometext, bodytext, counter, topicid, ihome, notifypub, story_type, topicdisplay, topicalign, comments) VALUES ('%u', '%u', '%s', '%u', '%u', '%u', '%s', '%u', '%u', '%s', '%s', '%u', '%u', '%u', '%u', '%s', '%u', '%s', '%u')", $this->table, intval($newstoryid), intval($this->uid), $title, intval($created), intval($published), intval($expired), $this->hostname, intval($this->nohtml), intval($this->nosmiley), $hometext, $bodytext, 0, intval($this->topicid), intval($this->ihome), intval($this->notifypub), $this->type, intval($this->topicdisplay), $this->topicalign, intval($this->comments));
-		} else {
-			if ( $this->approved ) {
-				$sql = sprintf("UPDATE %s SET title = '%s', published = '%u', expired = '%u', nohtml = '%u', nosmiley = '%u', hometext = '%s', bodytext = '%s', topicid = '%u', ihome = '%u', topicdisplay = '%u', topicalign = '%s', comments = '%u' WHERE storyid = '%u'", $this->table, $title, intval($this->published), intval($expired), intval($this->nohtml), intval($this->nosmiley), $hometext, $bodytext, intval($this->topicid), intval($this->ihome), intval($this->topicdisplay), $this->topicalign, intval($this->comments), intval($this->storyid));
-			} else {
-				$sql = sprintf("UPDATE %s SET title = '%s', expired = '%u', nohtml = '%u', nosmiley = '%u', hometext = '%s', bodytext = '%s', topicid = '%u', ihome = '%u', topicdisplay = '%u', topicalign = '%s', comments = '%u' WHERE storyid = '%u'", $this->table, $title, intval($expired), intval($this->nohtml), intval($this->nosmiley), $hometext, $bodytext, intval($this->topicid), intval($this->ihome), intval($this->topicdisplay), intval($this->topicalign), intval($this->comments), intval($this->storyid));
-			}
-			$newstoryid = $this->storyid;
-		}
-		if (!$result = $this->db->query($sql)) {
-			return false;
-		}
-		if ( empty($newstoryid) ) {
-			$newstoryid = $this->db->getInsertId();
-			$this->storyid = $newstoryid;
-		}
-		return $newstoryid;
-	}
+            $sql = sprintf("INSERT INTO %s (storyid, uid, title, created, published, expired, hostname, nohtml, nosmiley, hometext, bodytext, counter, topicid, ihome, notifypub, story_type, topicdisplay, topicalign, comments) VALUES ('%u', '%u', '%s', '%u', '%u', '%u', '%s', '%u', '%u', '%s', '%s', '%u', '%u', '%u', '%u', '%s', '%u', '%s', '%u')", $this->table, intval($newstoryid), intval($this->uid), $title, intval($created), intval($published), intval($expired), $this->hostname, intval($this->nohtml), intval($this->nosmiley), $hometext, $bodytext, 0, intval($this->topicid), intval($this->ihome), intval($this->notifypub), $this->type, intval($this->topicdisplay), $this->topicalign, intval($this->comments));
+        }
+        else
+        {
+            if($this->approved)
+            {
+                $sql = sprintf("UPDATE %s SET title = '%s', published = '%u', expired = '%u', nohtml = '%u', nosmiley = '%u', hometext = '%s', bodytext = '%s', topicid = '%u', ihome = '%u', topicdisplay = '%u', topicalign = '%s', comments = '%u' WHERE storyid = '%u'", $this->table, $title, intval($this->published), intval($expired), intval($this->nohtml), intval($this->nosmiley), $hometext, $bodytext, intval($this->topicid), intval($this->ihome), intval($this->topicdisplay), $this->topicalign, intval($this->comments), intval($this->storyid));
+            }
+            else
+            {
+                $sql = sprintf("UPDATE %s SET title = '%s', expired = '%u', nohtml = '%u', nosmiley = '%u', hometext = '%s', bodytext = '%s', topicid = '%u', ihome = '%u', topicdisplay = '%u', topicalign = '%s', comments = '%u' WHERE storyid = '%u'", $this->table, $title, intval($expired), intval($this->nohtml), intval($this->nosmiley), $hometext, $bodytext, intval($this->topicid), intval($this->ihome), intval($this->topicdisplay), intval($this->topicalign), intval($this->comments), intval($this->storyid));
+            }
+            $newstoryid = $this->storyid;
+        }
+        if(!$result = $this->db->query($sql))
+        {
+            return false;
+        }
+        if(empty($newstoryid))
+        {
+            $newstoryid = $this->db->getInsertId();
+            $this->storyid = $newstoryid;
+        }
+        return $newstoryid;
+    }
 
-	function getStory($storyid)
-	{
-		$storyid = intval($storyid);
-		$sql = "SELECT * FROM ".$this->table." WHERE storyid='".$storyid."'";
-		$array = $this->db->fetchArray($this->db->query($sql));
-		$this->makeStory($array);
-	}
+    /**
+    * Gets story by ID
+    *
+    * @param   int      $storyid
+    **/
+    function getStory($storyid)
+    {
+        $storyid = intval($storyid);
+        $sql = "SELECT * FROM ".$this->table." WHERE storyid='".$storyid."'";
+        $array = $this->db->fetchArray($this->db->query($sql));
+        $this->makeStory($array);
+    }
 
-	function makeStory($array)
-	{
-		foreach ( $array as $key=>$value ){
-			$this->$key = $value;
-		}
-	}
+    /**
+    * Makes the story
+    *
+    * @param   array      $array
+    **/
+    function makeStory($array)
+    {
+        foreach($array as $key=>$value)
+        {
+            $this->$key = $value;
+        }
+    }
 
-	function delete()
-	{
-		$sql = sprintf("DELETE FROM %s WHERE storyid = '%u'", $this->table, intval($this->storyid));
-		if( !$result = $this->db->query($sql) ) {
-			return false;
-		}
-		return true;
-	}
+    /**
+    * Deletes the story by ID
+    *
+    * @return   bool
+    **/
+    function delete()
+    {
+        $sql = sprintf("DELETE FROM %s WHERE storyid = '%u'", $this->table, intval($this->storyid));
+        if(!$result = $this->db->query($sql))
+        {
+            return false;
+        }
+        return true;
+    }
 
-	function updateCounter()
-	{
-		$sql = sprintf("UPDATE %s SET counter = counter+1 WHERE storyid = '%u'", $this->table, intval($this->storyid));
-		if ( !$result = $this->db->queryF($sql) ) {
-			return false;
-		}
-		return true;
-	}
+    /**
+    * Updates the counter
+    *
+    * @param   bool
+    **/
+    function updateCounter()
+    {
+        $sql = sprintf("UPDATE %s SET counter = counter+1 WHERE storyid = '%u'", $this->table, intval($this->storyid));
+        if(!$result = $this->db->queryF($sql))
+        {
+            return false;
+        }
+        return true;
+    }
 
-	function updateComments($total)
-	{
-		$sql = sprintf("UPDATE %s SET comments = '%u' WHERE storyid = '%u'", $this->table, intval($total), intval($this->storyid));
-		if ( !$result = $this->db->queryF($sql) ) {
-			return false;
-		}
-		return true;
-	}
+    /**
+    * Updates the number of comments
+    *
+    * @param   bool
+    **/
+        function updateComments($total)
+        {
+            $sql = sprintf("UPDATE %s SET comments = '%u' WHERE storyid = '%u'", $this->table, intval($total), intval($this->storyid));
+            if(!$result = $this->db->queryF($sql))
+            {
+                return false;
+            }
+            return true;
+        }
 
-	function topicid()
-	{
-		return $this->topicid;
-	}
+    /**
+    * Returns the current topicid
+    *
+    * @return   int
+    **/
+    function topicid()
+    {
+        return $this->topicid;
+    }
 
-	function topic()
-	{
-		return new XoopsTopic($this->topicstable, $this->topicid);
-	}
+    /**
+    * Returns the current topic (@link XoopsTopic) object
+    *
+    * @param   object
+    **/
+    function topic()
+    {
+        return new XoopsTopic($this->topicstable, $this->topicid);
+    }
 
-	function uid()
-	{
-		return $this->uid;
-	}
+    function uid()
+    {
+        return $this->uid;
+    }
 
-	function uname()
-	{
-		return XoopsUser::getUnameFromId($this->uid);
-	}
+    /**
+    * Returns the current username from (@link XoopsUser)
+    *
+    * @return   string
+    **/
+    function uname()
+    {
+        return XoopsUser::getUnameFromId($this->uid);
+    }
 
-	function title($format="Show")
-	{
-		$myts =& MyTextSanitizer::getInstance();
-		$smiley = 1;
-		if ( $this->nosmiley() ) {
-			$smiley = 0;
-		}
-		switch ( $format ) {
-		case "Show":
-			$title = $myts->makeTboxData4Show($this->title,$smiley);
-			break;
-		case "Edit":
-			$title = $myts->makeTboxData4Edit($this->title);
-			break;
-		case "Preview":
-			$title = $myts->makeTboxData4Preview($this->title,$smiley);
-			break;
-		case "InForm":
-			$title = $myts->makeTboxData4PreviewInForm($this->title);
-			break;
-		}
-		return $title;
-	}
+    /**
+    * Returns the title in a certain format
+    *
+    * @param    string    $format
+    * @return   string    $title
+    **/
+    function title($format='Show')
+    {
+        $myts = MyTextSanitizer::getInstance();
+        $smiley = 1;
+        if($this->nosmiley())
+        {
+            $smiley = 0;
+        }
+        switch($format)
+        {
+            case 'Show':
+                $title = $myts->makeTboxData4Show($this->title, $smiley);
+            break;
+            case 'Edit':
+                $title = $myts->makeTboxData4Edit($this->title);
+            break;
+            case 'Preview':
+                $title = $myts->makeTboxData4Preview($this->title, $smiley);
+            break;
+            case 'InForm':
+                $title = $myts->makeTboxData4PreviewInForm($this->title);
+            break;
+        }
+        return $title;
+    }
 
-	function hometext($format="Show")
-	{
-		$myts =& MyTextSanitizer::getInstance();
-		$html = 1;
-		$smiley = 1;
-		$xcodes = 1;
-		if ( $this->nohtml() ) {
-			$html = 0;
-		}
-		if ( $this->nosmiley() ) {
-			$smiley = 0;
-		}
-		switch ( $format ) {
-		case "Show":
-			$hometext = $myts->makeTareaData4Show($this->hometext,$html,$smiley,$xcodes);
-			break;
-		case "Edit":
-			$hometext = $myts->makeTareaData4Edit($this->hometext);
-			break;
-		case "Preview":
-			$hometext = $myts->makeTareaData4Preview($this->hometext,$html,$smiley,$xcodes);
-			break;
-		case "InForm":
-			$hometext = $myts->makeTareaData4PreviewInForm($this->hometext);
-			break;
-		}
-		return $hometext;
-	}
+    /**
+    * Returns the hometext in a certain format
+    *
+    * @param    string    $format
+    * @return   string    $hometext
+    **/
+    function hometext($format='Show')
+    {
+        $myts = MyTextSanitizer::getInstance();
+        $html = 1;
+        $smiley = 1;
+        $xcodes = 1;
+        if($this->nohtml())
+        {
+            $html = 0;
+        }
+        if($this->nosmiley())
+        {
+            $smiley = 0;
+        }
+        switch($format)
+        {
+            case 'Show':
+                $hometext = $myts->displayTarea($this->hometext, $html, $smiley, $xcodes);
+            break;
+            case 'Edit':
+                $hometext = $myts->displayTarea($this->hometext);
+            break;
+            case 'Preview':
+                $hometext = $myts->previewTarea($this->hometext, $html, $smiley, $xcodes);
+            break;
+            case 'InForm':
+                $hometext = $myts->makeTareaData4PreviewInForm($this->hometext);
+            break;
+        }
+        return $hometext;
+    }
 
-	function bodytext($format="Show")
-	{
-		$myts =& MyTextSanitizer::getInstance();
-		$html = 1;
-		$smiley = 1;
-		$xcodes = 1;
-		if ( $this->nohtml() ) {
-			$html = 0;
-		}
-		if ( $this->nosmiley() ) {
-			$smiley = 0;
-		}
-		switch ( $format ) {
-		case "Show":
-			$bodytext = $myts->makeTareaData4Show($this->bodytext,$html,$smiley,$xcodes);
-			break;
-		case "Edit":
-			$bodytext = $myts->makeTareaData4Edit($this->bodytext);
-			break;
-		case "Preview":
-			$bodytext = $myts->makeTareaData4Preview($this->bodytext,$html,$smiley, $xcodes);
-			break;
-		case "InForm":
-			$bodytext = $myts->makeTareaData4PreviewInForm($this->bodytext);
-			break;
-		}
-		return $bodytext;
-	}
+    /**
+    * Returns the bodytext in a certain format
+    *
+    * @param    string    $format
+    * @return   string    $bodytext
+    **/
+    function bodytext($format='Show')
+    {
+        $myts =& MyTextSanitizer::getInstance();
+        $html = 1;
+        $smiley = 1;
+        $xcodes = 1;
+        if($this->nohtml())
+        {
+            $html = 0;
+        }
+        if($this->nosmiley())
+        {
+            $smiley = 0;
+        }
+        switch($format)
+        {
+            case 'Show':
+                $bodytext = $myts->displayTarea($this->bodytext, $html, $smiley, $xcodes);
+            break;
+            case 'Edit':
+                $bodytext = $myts-previewTarea($this->bodytext);
+            break;
+            case 'Preview':
+                $bodytext = $myts->previewTarea($this->bodytext, $html, $smiley, $xcodes);
+            break;
+            case 'InForm':
+                $bodytext = $myts->makeTareaData4PreviewInForm($this->bodytext);
+            break;
+        }
+        return $bodytext;
+    }
 
-	function counter()
-	{
-		return $this->counter;
-	}
+    /**
+    * Returns the counter
+    *
+    * @return   int
+    **/
+    function counter()
+    {
+        return $this->counter;
+    }
 
-	function created()
-	{
-		return $this->created;
-	}
+    /**
+    * Returns date created
+    *
+    * @return   int
+    **/
+    function created()
+    {
+        return $this->created;
+    }
 
-	function published()
-	{
-		return $this->published;
-	}
+    /**
+    * Returns date published
+    *
+    * @return   int
+    **/
+    function published()
+    {
+        return $this->published;
+    }
 
-	function expired()
-	{
-		return $this->expired;
-	}
+    /**
+    * Returns date expired
+    *
+    * @return   int
+    **/
+    function expired()
+    {
+        return $this->expired;
+    }
 
-	function hostname()
-	{
-		return $this->hostname;
-	}
+    /**
+    * Returns hostname
+    *
+    * @return   string
+    **/
+    function hostname()
+    {
+        return $this->hostname;
+    }
 
-	function storyid()
-	{
-		return $this->storyid;
-	}
+    /**
+    * Returns storyid
+    *
+    * @return   int
+    **/
+    function storyid()
+    {
+        return $this->storyid;
+    }
 
-	function nohtml()
-	{
-		return $this->nohtml;
-	}
+    /**
+    * Returns value for nohtml
+    *
+    * @return   int
+    **/
+    function nohtml()
+    {
+        return $this->nohtml;
+    }
 
-	function nosmiley()
-	{
-		return $this->nosmiley;
-	}
+    /**
+    * Returns value for nosmiley
+    *
+    * @return   int
+    **/
+    function nosmiley()
+    {
+        return $this->nosmiley;
+    }
 
-	function notifypub()
-	{
-		return $this->notifypub;
-	}
+    /**
+    * Returns value for notifypub
+    *
+    * @return   int
+    **/
+    function notifypub()
+    {
+        return $this->notifypub;
+    }
 
-	function type()
-	{
-		return $this->type;
-	}
+    /**
+    * Returns the type
+    *
+    * @return   string
+    **/
+    function type()
+    {
+        return $this->type;
+    }
 
-	function ihome()
-	{
-		return $this->ihome;
-	}
+    /**
+    * Returns value for ihome
+    *
+    * @return   string
+    **/
+    function ihome()
+    {
+        return $this->ihome;
+    }
 
-	function topicdisplay()
-	{
-		return $this->topicdisplay;
-	}
+    /**
+    * Returns value for topicdisplay
+    *
+    * @return   string
+    **/
+    function topicdisplay()
+    {
+        return $this->topicdisplay;
+    }
 
-	function topicalign($astext=true)
-	{
-		if ( $astext ) {
-			if ( $this->topicalign == "R" ) {
-				$ret = "right";
-			} else {
-				$ret = "left";
-			}
-			return $ret;
-		}
-		return $this->topicalign;
-	}
+    /**
+    * Returns value for topicalign
+    *
+    * @param    bool      $astext   Align the topic as text
+    * @return   string
+    **/
+    function topicalign($astext=true)
+    {
+        if($astext)
+        {
+            if($this->topicalign == 'R')
+            {
+                $ret = 'right';
+            }
+            else
+            {
+                $ret = 'left';
+            }
+            return $ret;
+        }
+        return $this->topicalign;
+    }
 
-	function comments()
-	{
-		return $this->comments;
-	}
+    /**
+    * Returns the number of comments
+    *
+    * @return   int
+    **/
+    function comments()
+    {
+        return $this->comments;
+    }
 }
 ?>

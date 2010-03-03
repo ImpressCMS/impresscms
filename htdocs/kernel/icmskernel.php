@@ -1,16 +1,33 @@
 <?php
 /**
+* ICMS kernel Base Class
+*
+* @copyright      http://www.impresscms.org/ The ImpressCMS Project
+* @license         LICENSE.txt
+* @package	kernel
+* @since            1.1
+* @version		$Id$
+*/
+
+/**
  * Extremely reduced kernel class
  * Few notes:
  * - modules should use this class methods to generate physical paths/URIs (the ones which do not conform
  * will perform badly when true URL rewriting is implemented)
+ * @package		kernel
+ * @since 		1.1
  */
 class IcmsKernel {
+	/** @var array */
 	var $paths = array(
 		'www' => array(), 'modules' => array(), 'themes' => array(),
 	);
+	/** @var array */
 	var $urls=false;
 	
+	/**
+	 * Constructor for IcmsKernel, initiating all properties of the class
+	 */
 	function IcmsKernel() {
 		$this->paths['www'] = array( ICMS_ROOT_PATH, ICMS_URL );
 		$this->paths['modules'] = array( ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules' );
@@ -19,6 +36,9 @@ class IcmsKernel {
 	}
 	/**
 	 * Convert a ImpressCMS path to a physical one
+	 * @param	string	$url URL string to convert to a physical path
+	 * @param 	boolean	$virtual
+	 * @return 	string	
 	 */
 	function path( $url, $virtual = false ) {
 		$path = '';
@@ -33,12 +53,17 @@ class IcmsKernel {
 	}
 	/**
 	* Convert a ImpressCMS path to an URL
+	* @param 	string	$url
+	* @return 	string
 	*/
 	function url( $url ) {
 		return ( false !== strpos( $url, '://' ) ? $url : $this->path( $url, true ) );
 	}
 	/**
 	* Build an URL with the specified request params
+	* @param 	string 	$url
+	* @param 	array	$params
+	* @return 	string
 	*/
 	function buildUrl( $url, $params = array() ) {
 		if ( $url == '.' ) {
@@ -61,6 +86,7 @@ class IcmsKernel {
 	
 	/**
 	 * Build URLs for global use throughout the application
+	 * @return 	array
 	 */ 
 	function _buildRelevantUrls() {
 
@@ -92,4 +118,5 @@ class IcmsKernel {
 	
 
 }
+
 ?>

@@ -1,33 +1,18 @@
 <?php
-// $Id: commentrenderer.php 2 2005-11-02 18:23:29Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.xoops.org/ http://jp.xoops.org/  http://www.myweb.ne.jp/  //
-// Project: The XOOPS Project (http://www.xoops.org/)                        //
-// ------------------------------------------------------------------------- //
+/**
+* Renders the comments
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
 /**
  * Display comments
  *
@@ -99,7 +84,7 @@ class XoopsCommentRenderer {
 	/**
 	 * Render the comments in flat view
 	 *
-	 * @param boolean $admin_view
+	 * @param bool  $admin_view
 	 **/
 	function renderFlatView($admin_view = false)
 	{
@@ -127,8 +112,8 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Render the comments in thread view
-     *
-     * This method calls itself recursively
+   *
+   * This method calls itself recursively
 	 *
 	 * @param integer $comment_id   Should be "0" when called by client
 	 * @param boolean $admin_view
@@ -136,7 +121,7 @@ class XoopsCommentRenderer {
 	 **/
 	function renderThreadView($comment_id = 0, $admin_view = false, $show_nav = true)
 	{
-		include_once XOOPS_ROOT_PATH.'/class/tree.php';
+		include_once ICMS_ROOT_PATH.'/class/tree.php';
 		// construct comment tree
 		$xot = new XoopsObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
@@ -186,8 +171,8 @@ class XoopsCommentRenderer {
 	 * @param   bool    $admin_view
 	 * @param   integer $depth
 	 * @param   string  $current_prefix
-     *
-     * @access	private
+   *
+   * @access	private
 	 **/
 	function _renderThreadReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0, $current_prefix = '')
 	{
@@ -221,15 +206,15 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Render comments in nested view
-     *
-     * Danger: Recursive!
+   *
+   * Danger: Recursive!
 	 *
 	 * @param integer $comment_id   Always "0" when called by client.
 	 * @param boolean $admin_view
 	 **/
 	function renderNestView($comment_id = 0, $admin_view = false)
 	{
-		include_once XOOPS_ROOT_PATH.'/class/tree.php';
+		include_once ICMS_ROOT_PATH.'/class/tree.php';
 		$xot = new XoopsObjectTree($this->_comments, 'com_id', 'com_pid', 'com_rootid');
 		$tree =& $xot->getTree();
 		if (false != $this->_useIcons) {
@@ -267,8 +252,8 @@ class XoopsCommentRenderer {
 	 * @param   string  $prefix
 	 * @param   bool    $admin_view
 	 * @param   integer $depth
-     *
-     * @access	private
+   *
+   * @access	private
 	 **/
 	function _renderNestReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0)
 	{
@@ -284,7 +269,7 @@ class XoopsCommentRenderer {
             $prefix = $prefix + 25;
         }
         if (isset($thread[$key]['child']) && !empty($thread[$key]['child'])) {
-			$depth++;
+      			$depth++;
             foreach ($thread[$key]['child'] as $childkey) {
                 if (!$admin_view && $thread[$childkey]['obj']->getVar('com_status') != XOOPS_COMMENT_ACTIVE) {
                     // skip this comment if it is not active and continue on processing its child comments instead
@@ -306,8 +291,8 @@ class XoopsCommentRenderer {
 	 *
 	 * @param   int $poster_id
 	 * @return  string
-     *
-     * @access	private
+   *
+   * @access	private
 	 **/
 	function _getPosterName($poster_id)
 	{
@@ -315,7 +300,7 @@ class XoopsCommentRenderer {
 		if ($poster['id'] > 0) {
 			$com_poster =& $this->_memberHandler->getUser($poster_id);
 			if (is_object($com_poster)) {
-				$poster['uname'] = '<a href="'.XOOPS_URL.'/userinfo.php?uid='.$poster['id'].'">'.$com_poster->getVar('uname').'</a>';
+				$poster['uname'] = '<a href="'.ICMS_URL.'/userinfo.php?uid='.$poster['id'].'">'.$com_poster->getVar('uname').'</a>';
 				return $poster;
 			}
 		}
@@ -329,8 +314,8 @@ class XoopsCommentRenderer {
 	 *
 	 * @param   int $poster_id
 	 * @return  array
-     *
-     * @access	private
+   *
+   * @access	private
 	 **/
 	function _getPosterArray($poster_id)
 	{
@@ -338,7 +323,7 @@ class XoopsCommentRenderer {
 		if ($poster['id'] > 0) {
 			$com_poster =& $this->_memberHandler->getUser($poster['id']);
 			if (is_object($com_poster)) {
-				$poster['uname'] = '<a href="'.XOOPS_URL.'/userinfo.php?uid='.$poster['id'].'">'.$com_poster->getVar('uname').'</a>';
+				$poster['uname'] = '<a href="'.ICMS_URL.'/userinfo.php?uid='.$poster['id'].'">'.$com_poster->getVar('uname').'</a>';
 				$poster_rank = $com_poster->rank();
 				$poster['rank_image'] = ($poster_rank['image'] != '') ? $poster_rank['image'] : 'blank.gif';
 				$poster['rank_title'] = $poster_rank['title'];
@@ -374,16 +359,16 @@ class XoopsCommentRenderer {
 		$icon_image = htmlspecialchars( trim( $icon_image ) );
 		if ($icon_image != '') {
 			if (false != $this->_doIconCheck) {
-				if (!file_exists(XOOPS_URL.'/images/subject/'.$icon_image)) {
-					return '<img src="'.XOOPS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/no_posticon.gif" alt="" />';
+				if (!file_exists(ICMS_URL.'/images/subject/'.$icon_image)) {
+					return '<img src="'.ICMS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/no_posticon.gif" alt="" />';
 				} else {
-					return '<img src="'.XOOPS_URL.'/images/subject/'.$icon_image.'" alt="" />';
+					return '<img src="'.ICMS_URL.'/images/subject/'.$icon_image.'" alt="" />';
 				}
 			} else {
-				return '<img src="'.XOOPS_URL.'/images/subject/'.$icon_image.'" alt="" />';
+				return '<img src="'.ICMS_URL.'/images/subject/'.$icon_image.'" alt="" />';
 			}
 		}
-		return '<img src="'.XOOPS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/no_posticon.gif" alt="" />';
+		return '<img src="'.ICMS_URL.'/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/no_posticon.gif" alt="" />';
 	}
 }
 ?>

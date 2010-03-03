@@ -9,8 +9,8 @@
 /**
  * Smarty cat modifier plugin
  *
- * Type:     modifier
- * Name:     cat
+ * Type:     modifier<br>
+ * Name:     cat<br>
  * Date:     Feb 24, 2003
  * Purpose:  catenate a value to a variable
  * Input:    string to catenate

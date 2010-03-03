@@ -1,15 +1,13 @@
 <?php
 /**
-* Links Manager
-*
-* System tool that allow create and manage custom links to show blocks or define as start page
+* Administration of content pages, versionfile
 *
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
+* @package		Administration
 * @since		1.1
 * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
-* @version		$Id: xoops_version.php 1244 2008-03-18 17:09:11Z TheRplima $
+* @version		$Id$
 */
 
 $modversion['name'] = _MD_AM_PAGES;

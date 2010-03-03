@@ -43,7 +43,10 @@
 <?php } ?>
 </table>
 <?php
-	if ( !$needUpgrade ) {
+	if ( (str_replace('.', '', PHP_VERSION)) < 520 ){
+		echo '<div class="x2-note"><td><img src="img/no.png" alt="'._NO.'" />' . ERR_NO_PHP5_CONTENT . '<br /></td><br /></div>';
+		return;
+	}elseif ( !$needUpgrade ) {
 		echo '<div class="x2-note">' . _NO_NEED_UPGRADE . '<br /><br /><a id="link-next" href="'. XOOPS_URL .'/modules/system/admin.php?fct=modulesadmin&op=update&module=system">' . _SYS_NEED_UPGRADE . "</a></div>";
 		return;
 	} else {

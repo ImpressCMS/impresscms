@@ -9,8 +9,8 @@
 /**
  * Smarty escape modifier plugin
  *
- * Type:     modifier
- * Name:     escape
+ * Type:     modifier<br>
+ * Name:     escape<br>
  * Purpose:  Escape the string according to escapement type
  * @link http://smarty.php.net/manual/en/language.modifier.escape.php
  *          escape (Smarty online manual)
@@ -19,7 +19,7 @@
  * @param html|htmlall|url|quotes|hex|hexentity|javascript
  * @return string
  */
-function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'utf-8')
+function smarty_modifier_escape($string, $esc_type = 'html', $char_set = 'ISO-8859-1')
 {
     switch ($esc_type) {
         case 'html':

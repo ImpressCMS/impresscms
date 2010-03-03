@@ -3,22 +3,27 @@
  * Extended User Profile
  *
  *
+ *
  * @copyright       The ImpressCMS Project http://www.impresscms.org/
  * @license         LICENSE.txt
  * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  * @package         modules
  * @since           1.2
  * @author          Jan Pedersen
- * @author          The SmartFactory <www.smartfactory.ca>
+ * @author          Marcello Brandao <marcello.brandao@gmail.com>
  * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version         $Id$
  */
 
-
 include '../../mainfile.php';
+$modname = basename( dirname( __FILE__ ) );
+if($icmsModuleConfig['profile_social']!=1){
+	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+	exit();
+}
 $myts =& MyTextSanitizer::getInstance();
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : "search";
-$groups = $xoopsUser ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+$op = isset($_REQUEST['op']) ? htmlspecialchars($_REQUEST['op']) : 'search';
+$groups = $icmsUser ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 switch ($op) {
     default:
     case "search":
@@ -27,12 +32,12 @@ switch ($op) {
         include ICMS_ROOT_PATH."/header.php";
 
         // Dynamic fields
-        $profile_handler =& icms_getmodulehandler( 'profile', basename( dirname( __FILE__ ) ), 'profile' );
+        $profile_handler =& xoops_getmodulehandler('profile');
         // Get fields
         $fields =& $profile_handler->loadFields();
         // Get ids of fields that can be searched
         $gperm_handler =& xoops_gethandler('groupperm');
-        $searchable_fields =& $gperm_handler->getItemIds('profile_search', $groups, $xoopsModule->getVar('mid'));
+        $searchable_fields =& $gperm_handler->getItemIds('profile_search', $groups, $icmsModule->getVar('mid'));
 
         include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
         $searchform = new XoopsThemeForm("", "searchform", "search.php", "post");
@@ -77,9 +82,9 @@ switch ($op) {
 
                     case "radio":
                     case "select":
-                        $size = count($fields[$i]->getVar('field_options')) > 10 ? 10 : count($fields[$i]->getVar('field_options'));
+                        $options = unserialize($fields[$i]->getVar('field_options', 'n'));
+                        $size = count($options) > 10 ? 10 : count($options);
                         $element = new XoopsFormSelect($fields[$i]->getVar('field_title'), $fields[$i]->getVar('field_name'), null, $size, true);
-                        $options = $fields[$i]->getVar('field_options');
                         asort($options);
                         $element->addOptionArray($options);
                         $searchform->addElement($element);
@@ -99,11 +104,6 @@ switch ($op) {
                         $searchform->addElement(new XoopsFormTextDateSelect(sprintf(_PROFILE_MA_LATERTHAN, $fields[$i]->getVar('field_title')), $fields[$i]->getVar('field_name')."_larger", 15, 0));
                         $searchform->addElement(new XoopsFormTextDateSelect(sprintf(_PROFILE_MA_EARLIERTHAN, $fields[$i]->getVar('field_title')), $fields[$i]->getVar('field_name')."_smaller", 15, time()));
                         break;
-
-//                    case "datetime":
-//                        $searchform->addElement(new XoopsFormDateTime(sprintf(_PROFILE_MA_LATERTHAN, $fields[$i]->getVar('field_title')), $fields[$i]->getVar('field_name')."_larger", 15, 1));
-//                        $searchform->addElement(new XoopsFormDateTime(sprintf(_PROFILE_MA_EARLIERTHAN, $fields[$i]->getVar('field_title')), $fields[$i]->getVar('field_name')."_smaller", 15, 0));
-//                        break;
 
                     case "timezone":
                         $element = new XoopsFormSelect($fields[$i]->getVar('field_title'), $fields[$i]->getVar('field_name'), null, 6, true);
@@ -146,17 +146,19 @@ switch ($op) {
 
         $member_handler =& xoops_gethandler('member');
         // Dynamic fields
-        $profile_handler =& icms_getmodulehandler( 'profile', basename( dirname( __FILE__ ) ), 'profile' );
+        $profile_handler =& xoops_getmodulehandler('profile');
         // Get fields
         $fields =& $profile_handler->loadFields();
         // Get ids of fields that can be searched
         $gperm_handler =& xoops_gethandler('groupperm');
-        $searchable_fields =& $gperm_handler->getItemIds('profile_search', $groups, $xoopsModule->getVar('mid'));
+        $searchable_fields =& $gperm_handler->getItemIds('profile_search', $groups, $icmsModule->getVar('mid'));
         $searchvars = array();
+	    $search_url = array();
 
         $criteria = new CriteriaCompo(new Criteria('level', 0, ">"));
         if (isset($_REQUEST['uname']) && $_REQUEST['uname'] != "") {
             $string = $myts->addSlashes(trim($_REQUEST['uname']));
+		    $search_url[] = 'uname='. $string;
             switch ($_REQUEST['uname_match']) {
                 case XOOPS_MATCH_START:
                     $string .= "%";
@@ -175,6 +177,7 @@ switch ($op) {
         }
         if (isset($_REQUEST['email']) && $_REQUEST['email'] != "") {
             $string = $myts->addSlashes(trim($_REQUEST['email']));
+		    $search_url[] = 'email='. $string;
             switch ($_REQUEST['email_match']) {
                 case XOOPS_MATCH_START:
                     $string .= "%";
@@ -342,7 +345,7 @@ switch ($op) {
         }
 
         if ($searchvars == array()) {
-            break;
+            $searchvars[] = 'uname';
         }
 
         if ($_REQUEST['sortby'] == "name") {
@@ -367,13 +370,19 @@ switch ($op) {
         $criteria->setStart($start);
 
         //Get users based on criteria
-        $profile_handler = icms_getmodulehandler( 'profile', basename( dirname( __FILE__ ) ), 'profile' );
+        $profile_handler = xoops_getmodulehandler('profile');
         list($users, $profiles, $total_users) = $profile_handler->search($criteria, $searchvars);
 
         //Sort information
+        if (is_object($icmsUser)) {
+        	$isAdmin = $icmsUser->isAdmin();
+        } else {
+        	$isAdmin = false;
+        }
+	$link_target = $icmsModuleConfig['profile_social'] ? 'index.php' : 'userinfo.php';
         foreach (array_keys($users) as $k) {
-            $userarray["output"][] = "<a href='userinfo.php?uid=".$users[$k]->getVar('uid')."'>".$users[$k]->getVar('uname')."</a>";
-            $userarray["output"][] = $users[$k]->getVar('user_viewemail') == 1 || $xoopsUser->isAdmin() ? $users[$k]->getVar('email') : "";
+            $userarray["output"][] = "<a href='".$link_target."?uid=".intval($users[$k]->getVar('uid'))."'>".$users[$k]->getVar('uname')."</a>";
+            if (is_object($icmsUser)) $userarray["output"][] = $users[$k]->getVar('user_viewemail') || $isAdmin ? $users[$k]->getVar('email') : "";
 
             foreach (array_keys($fields) as $i) {
                 if (in_array($fields[$i]->getVar('fieldid'), $searchable_fields) && in_array($fields[$i]->getVar('field_type'), $searchable_types) && in_array($fields[$i]->getVar('field_name'), $searchvars)) {
@@ -386,7 +395,7 @@ switch ($op) {
 
         //Get captions
         $captions[] = _PROFILE_MA_DISPLAYNAME;
-        $captions[] = _PROFILE_MA_EMAIL;
+        if (is_object($icmsUser)) $captions[] = _PROFILE_MA_EMAIL;
         foreach (array_keys($fields) as $i) {
             if (in_array($fields[$i]->getVar('fieldid'), $searchable_fields) && in_array($fields[$i]->getVar('field_type'), $searchable_types) && in_array($fields[$i]->getVar('field_name'), $searchvars)) {
                 $captions[] = $fields[$i]->getVar('field_title');
@@ -399,9 +408,7 @@ switch ($op) {
             $search_url[] = "order=".$order;
             $search_url[] = "sortby=".$_REQUEST['sortby'];
             $search_url[] = "limit=".$limit;
-            if (isset($search_url)) {
-                $args = implode("&amp;", $search_url);
-            }
+            $args = implode("&amp;", $search_url);
             include_once ICMS_ROOT_PATH."/class/pagenav.php";
             $nav = new XoopsPageNav($total_users, $limit, $start, "start", $args);
             $xoopsTpl->assign('nav', $nav->renderNav(5));

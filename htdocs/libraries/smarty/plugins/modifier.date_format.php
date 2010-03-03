@@ -12,10 +12,10 @@ require_once $smarty->_get_plugin_filepath('shared', 'make_timestamp');
 /**
  * Smarty date_format modifier plugin
  *
- * Type:     modifier
- * Name:     date_format
- * Purpose:  format datestamps via strftime
- * Input:
+ * Type:     modifier<br>
+ * Name:     date_format<br>
+ * Purpose:  format datestamps via strftime<br>
+ * Input:<br>
  *         - string: input date string
  *         - format: strftime format for output
  *         - default_date: default date if $string is empty

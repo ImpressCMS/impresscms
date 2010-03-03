@@ -6,7 +6,7 @@
  * @author marcan <marcan@smartfactory.ca>
  * @version $Id$
  * @link http://www.smartfactory.ca The SmartFactory
- * @package SmartObject
+ * @package database
  */
 /**
  * IcmsDatabasetable class
@@ -17,19 +17,15 @@
  * @author marcan <marcan@smartfactory.ca>
  * @link http://www.smartfactory.ca The SmartFactory
  */
-if (!defined("XOOPS_ROOT_PATH")) {
+if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
 
 /**
  * Include the language constants for the IcmsDatabaseupdater
  */
-global $xoopsConfig;
-$common_file = XOOPS_ROOT_PATH . "/language/" . $xoopsConfig['language'] . "/databaseupdater.php";
-if (!file_exists($common_file)) {
-	$common_file = XOOPS_ROOT_PATH . "/language/" . $xoopsConfig['language'] . "/databaseupdater.php";
-}
-include ($common_file);
+global $icmsConfigPersona;
+icms_loadLanguageFile('core', 'databaseupdater');
 
 class IcmsDatabasetable {
 	/**
@@ -83,12 +79,20 @@ class IcmsDatabasetable {
 	 */
 	var $force=false;
 
+	/** For backward compat */
+	var $_db;
+
 	/**
 	 * xoopsDB database object
 	 *
 	 * @var @link XoopsDatabase object
 	 */
-	var $_db;
+	var $db;
+
+	/**
+	 * @var array $_messages containing messages to be shown
+	 */
+	var $_messages = array();
 
 	/**
 	 * Constructor
@@ -99,7 +103,10 @@ class IcmsDatabasetable {
 	function IcmsDatabasetable($name) {
 		global $xoopsDB;
 
+		$this->db = $xoopsDB;
+		/** For backward compat */
 		$this->_db = $xoopsDB;
+
 		$this->_name = $name;
 		$this->_data = array ();
 	}
@@ -139,6 +146,11 @@ class IcmsDatabasetable {
 		return ($bRetVal);
 	}
 
+
+   /*
+   * Gets the field array from one table name
+   * @return array array of fields
+   */
 	function getExistingFieldsArray() {
 		$sql = "SHOW COLUMNS FROM " . $this->name();
 		$result = $this->_db->queryF($sql);
@@ -156,16 +168,27 @@ class IcmsDatabasetable {
 		}
 		return $fields;
 	}
+
+
+
+   /*
+   * Checks whether the field exists or not
+   * @param string $field does the field exist in the database
+   * @return bool whether the field exists or not
+   */
 	function fieldExists($field) {
 		$existingFields = $this->getExistingFieldsArray();
-		return isset ($existingFields[$field]);
+		return isset($existingFields[$field]);
 	}
+
+
+
 	/**
 	 * Set the table structure
 	 *
 	 * Example :
 	 *
-	 *     	$table->setStructure("`transactionid` int(11) NOT NULL auto_increment,
+	 *	 	$table->setStructure("`transactionid` int(11) NOT NULL auto_increment,
 	 * 				  `date` int(11) NOT NULL default '0',
 	 * 				  `status` int(1) NOT NULL default '-1',
 	 * 				  `itemid` int(11) NOT NULL default '0',
@@ -180,8 +203,10 @@ class IcmsDatabasetable {
 	function setStructure($structure) {
 		$this->_structure = $structure;
 	}
+
+
 	/**
-	* Return the table structure
+	* Returns the table structure
 	*
 	* @return string table structure
 	*
@@ -189,6 +214,8 @@ class IcmsDatabasetable {
 	function getStructure() {
 		return sprintf($this->_structure, $this->name());
 	}
+
+
 	/**
 	 * Add values of a record to be added
 	 *
@@ -208,6 +235,8 @@ class IcmsDatabasetable {
 	function getData() {
 		return $this->_data;
 	}
+
+
 	/**
 	 * Use to insert data in a table
 	 *
@@ -223,13 +252,15 @@ class IcmsDatabasetable {
 				$ret = $this->_db->query($query);
 			}
 			if (!$ret) {
-				echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA_ERR, $this->name()) . "<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA_ERR, $this->name());
 			} else {
-				echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA, $this->name()) . "<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA, $this->name());
 			}
 		}
 		return $ret;
 	}
+
+
 	/**
 	 * Add a field to be added
 	 *
@@ -257,6 +288,8 @@ class IcmsDatabasetable {
 		$field['properties'] = $properties;
 		$this->_newFields[] = $field;
 	}
+
+
 	/**
 	 * Get fields that need to be altered
 	 *
@@ -266,15 +299,17 @@ class IcmsDatabasetable {
 	function getAlteredFields() {
 		return $this->_alteredFields;
 	}
+
+
 	/**
 	 * Add item to be updated on the the table via the UpdateAll method
 	 *
-     * @param   string  $fieldname  Name of the field
-     * @param   string  $fieldvalue Value to write
-     * @param   object  $criteria   {@link CriteriaElement}
-     * @param 	bool	$fieldvalueIsOperation TRUE if fieldvalue is an operation, for example, conf_order+1
+   * @param   string  $fieldname  Name of the field
+   * @param   string  $fieldvalue Value to write
+   * @param   object  $criteria   {@link CriteriaElement}
+   * @param 	bool	$fieldvalueIsOperation TRUE if fieldvalue is an operation, for example, conf_order+1
 	 *
-     * @return  bool
+   * @return  bool
 	 */
 	function addUpdateAll($fieldname, $fieldvalue, $criteria, $fieldvalueIsOperation) {
 		$item['fieldname'] = $fieldname;
@@ -283,19 +318,23 @@ class IcmsDatabasetable {
 		$item['fieldvalueIsOperation'] = $fieldvalueIsOperation;
 		$this->_updateAll[] = $item;
 	}
+
+
 	/**
 	 * Add item to be updated on the the table via the UpdateAll method
 	 *
-     * @param   string  $fieldname  Name of the field
-     * @param   string  $fieldvalue Value to write
-     * @param   object  $criteria   {@link CriteriaElement}
+   * @param   string  $fieldname  Name of the field
+   * @param   string  $fieldvalue Value to write
+   * @param   object  $criteria   {@link CriteriaElement}
 	 *
-     * @return  bool
+   * @return  bool
 	 */
 	function addDeleteAll($criteria) {
 		$item['criteria'] = $criteria;
 		$this->_deleteAll[] = $item;
 	}
+
+
 	/**
 	 * Get new fields to be added
 	 *
@@ -305,6 +344,8 @@ class IcmsDatabasetable {
 	function getNewFields() {
 		return $this->_newFields;
 	}
+
+
 	/**
 	 * Get items to be updated
 	 *
@@ -314,6 +355,8 @@ class IcmsDatabasetable {
 	function getUpdateAll() {
 		return $this->_updateAll;
 	}
+
+
 	/**
 	 * Get items to be deleted
 	 *
@@ -323,6 +366,8 @@ class IcmsDatabasetable {
 	function getDeleteAll() {
 		return $this->_deleteAll;
 	}
+
+
 	/**
 	 * Add values of a record to be added
 	 *
@@ -332,6 +377,8 @@ class IcmsDatabasetable {
 	function addDropedField($name) {
 		$this->_dropedFields[] = $name;
 	}
+
+
 	/**
 	 * Get fields that need to be droped
 	 *
@@ -341,6 +388,8 @@ class IcmsDatabasetable {
 	function getDropedFields() {
 		return $this->_dropedFields;
 	}
+
+
 	/**
 	 * Set the flag to drop the table
 	 *
@@ -348,6 +397,8 @@ class IcmsDatabasetable {
 	function setFlagForDrop() {
 		$this->_flagForDrop = true;
 	}
+
+
 	/**
 	 * Use to create a table
 	 *
@@ -364,13 +415,15 @@ class IcmsDatabasetable {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")";
 
 		} else {
-			echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE, $this->name()) . "<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CREATE_TABLE, $this->name());
 		}
 		return $ret;
 	}
+
+
 	/**
 	 * Use to drop a table
 	 *
@@ -385,13 +438,15 @@ class IcmsDatabasetable {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")";
 			return false;
 		} else {
-			echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE, $this->name()) . "<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROP_TABLE, $this->name());
 			return true;
 		}
 	}
+
+
 	/**
 	 * Use to alter a table
 	 *
@@ -415,15 +470,17 @@ class IcmsDatabasetable {
 
 			if ($alteredField['showerror']) {
 				if (!$ret) {
-				echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD_ERR, $alteredField['name'], $this->name()) . " (" . $this->_db->error(). ")<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD_ERR, $alteredField['name'], $this->name()) . " (" . $this->_db->error(). ")";
 				} else {
-					echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD, $alteredField['name'], $this->name()) . "<br />";
+					$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD, $alteredField['name'], $this->name());
 				}
 			}
 		}
 
 		return $ret;
 	}
+
+
 	/**
 	 * Use to add new fileds in the table
 	 *
@@ -442,87 +499,87 @@ class IcmsDatabasetable {
 			}
 
 			if (!$ret) {
-				echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD_ERR, $newField['name'], $this->name()) . "<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD_ERR, $newField['name'], $this->name());
 			} else {
-				echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD, $newField['name'], $this->name()) . "<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD, $newField['name'], $this->name());
 			}
 		}
 		return $ret;
 	}
 
-    /**
-     * Change a value for objects with a certain criteria
-     *
-     * @param   string  $fieldname  Name of the field
-     * @param   string  $fieldvalue Value to write
-     * @param   object  $criteria   {@link CriteriaElement}
-     *
-     * @return  bool
-     **/
-    function updateAll()
-    {
-    	$ret = true;
-    	foreach ($this->getUpdateAll() as $item) {
-    		$fieldname = $item['fieldname'];
-    		$fieldvalue = $item['fieldvalue'];
-    		$criteria = isset($item['criteria']) ? $item['criteria'] : null;
+  /**
+   * Change a value for objects with a certain criteria
+   *
+   * @param   string  $fieldname  Name of the field
+   * @param   string  $fieldvalue Value to write
+   * @param   object  $criteria   {@link CriteriaElement}
+   *
+   * @return  bool
+   **/
+  function updateAll()
+  {
+  	$ret = true;
+  	foreach ($this->getUpdateAll() as $item) {
+  		$fieldname = $item['fieldname'];
+  		$fieldvalue = $item['fieldvalue'];
+  		$criteria = isset($item['criteria']) ? $item['criteria'] : null;
 
-    		$set_clause = $fieldname . ' = ';
-	    	if ( is_numeric( $fieldvalue ) || $item['fieldvalueIsOperation']) {
-	    		$set_clause .=  $fieldvalue;
-	    	} elseif ( is_array( $fieldvalue ) ) {
-	    		$set_clause .= $this->_db->quoteString( implode( ',', $fieldvalue ) );
-	    	} else {
-	    		$set_clause .= $this->_db->quoteString( $fieldvalue );
-	    	}
-	        $sql = 'UPDATE '.$this->name().' SET '.$set_clause;
-	        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-	            $sql .= ' '.$criteria->renderWhere();
-	        }
-	        if ($this->force) {
-	        	$ret = $this->_db->queryF($sql);
-	        } else {
-	        	$ret = $this->_db->query($sql);
-	        }
-            if (!$ret) {
-	        	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
-	        } else {
-	        	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE, $this->name()) . "<br />";
-	        }
-    	}
-    	return $ret;
-    }
+  		$set_clause = $fieldname . ' = ';
+   	if ( is_numeric( $fieldvalue ) || $item['fieldvalueIsOperation']) {
+   		$set_clause .=  $fieldvalue;
+   	} elseif ( is_array( $fieldvalue ) ) {
+   		$set_clause .= $this->_db->quoteString( implode( ',', $fieldvalue ) );
+   	} else {
+   		$set_clause .= $this->_db->quoteString( $fieldvalue );
+   	}
+	   $sql = 'UPDATE '.$this->name().' SET '.$set_clause;
+	   if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		   $sql .= ' '.$criteria->renderWhere();
+	   }
+	   if ($this->force) {
+	   	$ret = $this->_db->queryF($sql);
+	   } else {
+	   	$ret = $this->_db->query($sql);
+	   }
+		  if (!$ret) {
+	   	$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")";
+	   } else {
+	   	$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_UPDATE_TABLE, $this->name());
+	   }
+  	}
+  	return $ret;
+  }
 
-    /**
-     * delete all objects meeting the conditions
-     *
-     * @param object $criteria {@link CriteriaElement} with conditions to meet
-     * @return bool
-     */
+  /**
+   * delete all objects meeting the conditions
+   *
+   * @param object $criteria {@link CriteriaElement} with conditions to meet
+   * @return bool
+   */
 
-    function deleteAll()
-    {
-		$ret = true;
-    	foreach ($this->getDeleteAll() as $item) {
-    		$criteria = isset($item['criteria']) ? $item['criteria'] : null;
-	        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-	            $sql = 'DELETE FROM '.$this->table;
-	            $sql .= ' '.$criteria->renderWhere();
-	            if ($this->force) {
-	            	$result = $this->_db->queryF($sql);
-	            } else {
-	            	$result = $this->_db->query($sql);
-	            }
-	            if (!$result) {
-	                echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")<br />";
-	            } else {
-	            	echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE, $this->name()) . " (" . $this->_db->error(). ")<br />";
-	            }
-	        }
-	        $ret = $result && $ret;
-    	}
-	    return $ret;
-       }
+  function deleteAll()
+  {
+	$ret = true;
+  	foreach ($this->getDeleteAll() as $item) {
+  		$criteria = isset($item['criteria']) ? $item['criteria'] : null;
+	   if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+		   $sql = 'DELETE FROM '.$this->table;
+		   $sql .= ' '.$criteria->renderWhere();
+		   if ($this->force) {
+		   	$result = $this->_db->queryF($sql);
+		   } else {
+		   	$result = $this->_db->query($sql);
+		   }
+		   if (!$result) {
+			   $this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE_ERR, $this->name()) . " (" . $this->_db->error(). ")";
+		   } else {
+		   	$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DELETE_TABLE, $this->name()) . " (" . $this->_db->error(). ")";
+		   }
+	   }
+	   $ret = $result && $ret;
+  	}
+   return $ret;
+ }
 
 
 	/**
@@ -542,14 +599,17 @@ class IcmsDatabasetable {
 			}
 
 			if (!$ret) {
-				echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD_ERR, $dropedField, $this->name()) . " (" . $this->_db->error(). ")<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD_ERR, $dropedField, $this->name()) . " (" . $this->_db->error(). ")";
 			} else {
-				echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD, $dropedField, $this->name()) . "<br />";
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD, $dropedField, $this->name());
 			}
 		}
 		return $ret;
 	}
 }
+
+
+
 /**
  * IcmsDatabaseupdater class
  *
@@ -571,12 +631,17 @@ class IcmsDatabaseupdater {
 	var $_db;
 	var $db;
 
+	/**
+	 *
+	 * @var array of messages
+	 */
+	var $_messages = array();
+
 	function IcmsDatabaseupdater() {
 		global $xoopsDB;
 
 		// backward compat
 		$this->_db = $xoopsDB;
-
 		$this->db = $xoopsDB;
 
 		$this->_dbTypesArray[XOBJ_DTYPE_TXTBOX] = 'varchar(255)';
@@ -598,6 +663,8 @@ class IcmsDatabaseupdater {
 		$this->_dbTypesArray[XOBJ_DTYPE_FILE] = 'int(11)';
 		$this->_dbTypesArray[XOBJ_DTYPE_IMAGE] = 'varchar(255)';
 	}
+
+
 	/**
 	 * Use to execute a general query
 	 *
@@ -617,13 +684,15 @@ class IcmsDatabaseupdater {
 		}
 
 		if (!$ret) {
-			echo "&nbsp;&nbsp;$badmsg<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;$badmsg";
 			return false;
 		} else {
-			echo "&nbsp;&nbsp;$goodmsg<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;$goodmsg";
 			return true;
 		}
 	}
+
+
 	/**
 	 * Use to rename a table
 	 *
@@ -643,13 +712,15 @@ class IcmsDatabaseupdater {
 			$ret = $this->_db->query($query);
 		}
 		if (!$ret) {
-			echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE_ERR, $from) . "<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE_ERR, $from);
 			return false;
 		} else {
-			echo "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE, $from, $to) . "<br />";
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_RENAME_TABLE, $from, $to);
 			return true;
 		}
 	}
+
+
 	/**
 	 * Use to update a table
 	 *
@@ -755,6 +826,12 @@ class IcmsDatabaseupdater {
 		}
 	}
 
+
+
+   /*
+   * Upgrades the object
+   * @param string $dirname
+   */
 	function upgradeObjectItem($dirname, $item) {
 		$module_handler = xoops_getModuleHandler($item, $dirname);
 		if (!$module_handler) {
@@ -792,14 +869,26 @@ class IcmsDatabaseupdater {
 
 				}
 			}
-			$structure .= "PRIMARY KEY  (`" . $module_handler->keyName . "`)
-";
+			$ModKeyNames = $module_handler->keyName;
+			$structure .= "PRIMARY KEY  (";
+			if (is_array($ModKeyNames)){
+				$structure .= "`".$ModKeyNames[0]."`";
+				foreach( $ModKeyNames as $ModKeyName){
+					$structure .= ($ModKeyName != $ModKeyNames[0])?", `".$ModKeyName."`":"";
+				}
+			}else{
+				$structure .= "`".$ModKeyNames."`";
+			}
+			$structure .= ")";
 			$table->setStructure($structure);
 			if (!$this->updateTable($table)) {
-		        /**
-		         * @todo trap the errors
-		         */
-		    }
+				/**
+				 * @todo trap the errors
+				 */
+			}
+			foreach ($table->_messages as $msg) {
+				$this->_messages[] = $msg;
+			}
 		} else {
 			$existingFieldsArray = $table->getExistingFieldsArray();
 			foreach($objectVars as $key=>$var) {
@@ -848,12 +937,14 @@ class IcmsDatabaseupdater {
 			}
 
 			if (!$this->updateTable($table)) {
-		        /**
-		         * @todo trap the errors
-		         */
-		    }
+				/**
+				 * @todo trap the errors
+				 */
+			}
 		}
 	}
+
+
 	/**
 	 * Insert a config in System Preferences
 	 *
@@ -867,62 +958,86 @@ class IcmsDatabaseupdater {
 	 * @param int $conf_order
 	 */
 	function insertConfig($conf_catid, $conf_name, $conf_title, $conf_value, $conf_desc, $conf_formtype, $conf_valuetype, $conf_order) {
-	    $configitem_handler = xoops_gethandler('configitem');
-	    $configitemObj = $configitem_handler->create();
-	    $configitemObj->setVar('conf_modid', 0);
-	    $configitemObj->setVar('conf_catid', $conf_catid);
-	    $configitemObj->setVar('conf_name', $conf_name);
-	    $configitemObj->setVar('conf_title', $conf_title);
-	    $configitemObj->setVar('conf_value', $conf_value);
-	    $configitemObj->setVar('conf_desc', $conf_desc);
-	    $configitemObj->setVar('conf_formtype', $conf_formtype);
-	    $configitemObj->setVar('conf_valuetype', $conf_valuetype);
-	    $configitemObj->setVar('conf_order', $conf_order);
-	    if (!$configitem_handler->insert($configitemObj)) {
-	    	echo "Unable to insert config $conf_name'<br />";
-	    } else{
-			echo "Successfully inserted '$conf_name' config<br />";
-	    }
+		global $dbVersion;
+		$configitem_handler = xoops_gethandler('configitem');
+		$configitemObj = $configitem_handler->create();
+		$configitemObj->setVar('conf_modid', 0);
+		$configitemObj->setVar('conf_catid', $conf_catid);
+		$configitemObj->setVar('conf_name', $conf_name);
+		$configitemObj->setVar('conf_title', $conf_title);
+		$configitemObj->setVar('conf_value', $conf_value);
+		$configitemObj->setVar('conf_desc', $conf_desc);
+		$configitemObj->setVar('conf_formtype', $conf_formtype);
+		$configitemObj->setVar('conf_valuetype', $conf_valuetype);
+		$configitemObj->setVar('conf_order', $conf_order);
+		if (!$configitem_handler->insert($configitemObj)) {
+			$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_ERR, $conf_title);
+		} else{
+			$querry_answer = sprintf(_DATABASEUPDATER_MSG_CONFIG_SCC, $conf_title);
+		}
+		$this->_messages[] =  $querry_answer;
 	}
-	function moduleUpgrade(&$module) {
+
+
+   /*
+   * Module Upgrade
+   * @param object reference to Module Object
+   * @return bool whether upgrade succeeded or not
+   */
+	function moduleUpgrade(&$module, $tables_first=false) {
 		$dirname = $module->getVar('dirname');
 
-	    ob_start();
+//		ob_start();
 
-	    $dbVersion  = $module->getDbversion();
+		$dbVersion  = $module->getDbversion();
 
-	    $newDbVersion = constant(strtoupper($dirname . '_db_version')) ? constant(strtoupper($dirname . '_db_version')) : 0;
-		echo 'Current database version : ' . $dbVersion . '<br />';
-		echo '&nbsp;&nbsp;Latest database version : ' . $newDbVersion . '<br />';
-
-	    if ($newDbVersion > $dbVersion) {
-	    	for($i=$dbVersion+1;$i<=$newDbVersion; $i++) {
-				$upgrade_function = $dirname . '_db_upgrade_' . $i;
-				if (function_exists($upgrade_function)) {
-					$upgrade_function();
+		$newDbVersion = constant(strtoupper($dirname . '_db_version')) ? constant(strtoupper($dirname . '_db_version')) : 0;
+		$textcurrentversion = sprintf(_DATABASEUPDATER_CURRENTVER, $dbVersion);
+		$textlatestversion = sprintf(_DATABASEUPDATER_LATESTVER, $newDbVersion);
+		$this->_messages[] =  $textcurrentversion;
+		$this->_messages[] =  $textlatestversion;
+		if(!$tables_first){
+			if ($newDbVersion > $dbVersion) {
+				for($i=$dbVersion+1;$i<=$newDbVersion; $i++) {
+					$upgrade_function = $dirname . '_db_upgrade_' . $i;
+					if (function_exists($upgrade_function)) {
+						$upgrade_function();
+					}
 				}
-	    	}
-	    }
-
-		echo "<code>" . _DATABASEUPDATER_UPDATE_UPDATING_DATABASE . "<br />";
+			}
+		}
+		$this->_messages[] =  _DATABASEUPDATER_UPDATE_UPDATING_DATABASE;
 
 		// if there is a function to execute for this DB version, let's do it
 		//$function_
 
-		$module_info = XoopsModuleHandler::getByDirname($dirname);
-		$this->automaticUpgrade($dirname, $module_info->modinfo['object_items']);
+		$this->automaticUpgrade($dirname, $module->modinfo['object_items']);
+/*
+		if (method_exists($module, "setMessage")) {
+			$module->setMessage($this->_messages);
+		} else {
+			foreach($this->_messages as $feedback){
+				echo $feedback;
+			}
+		}
+*/
+		if($tables_first){
+			if ($newDbVersion > $dbVersion) {
+				for($i=$dbVersion+1;$i<=$newDbVersion; $i++) {
+					$upgrade_function = $dirname . '_db_upgrade_' . $i;
+					if (function_exists($upgrade_function)) {
+						$upgrade_function();
+					}
+				}
+			}
+		}
 
-		echo "</code>";
-
-	    $feedback = ob_get_clean();
-	    if (method_exists($module, "setMessage")) {
-	        $module->setMessage($feedback);
-	    } else {
-	        echo $feedback;
-	    }
-	    $this->updateModuleDBVersion($newDbVersion, $dirname);
-	    return true;
+		$this->updateModuleDBVersion($newDbVersion, $dirname);
+		return true;
 	}
+
+
+
 
 	/**
 	 * Update the DBVersion of a module
@@ -930,7 +1045,7 @@ class IcmsDatabaseupdater {
 	 * @param int $newDVersion new database version
 	 * @param string $dirname dirname of the module
 	 *
-	 * @return TRUE if success FALSE if not
+	 * @return bool TRUE if success FALSE if not
 	 */
 	function updateModuleDBVersion($newDBVersion, $dirname) {
 		if (!$dirname) {
@@ -941,11 +1056,13 @@ class IcmsDatabaseupdater {
 		$module_handler = xoops_getHandler('module');
 
 		if (!$module_handler->insert($module)) {
-			$module->setErrors('Unable to update module dbversion');
+			$module->setErrors(_DATABASEUPDATER_MSG_DB_VERSION_ERR);
 			return false;
 		}
 		return true;
 
 	}
 }
+
+
 ?>

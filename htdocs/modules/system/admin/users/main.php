@@ -1,40 +1,21 @@
 <?php
-// $Id: main.php 1029 2007-09-09 03:49:25Z phppp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+* Administration of users, main file
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	Administration
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
 
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
-    exit("Access Denied");
+if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+	exit("Access Denied");
 }
-
-$config_handler =& xoops_gethandler('config');
-$xoopsConfigUser =& $config_handler->getConfigsByCat(XOOPS_CONF_USER);
 
 include_once XOOPS_ROOT_PATH."/modules/system/admin/users/users.php";
 $allowedHTML = array('user_sig','bio');
@@ -51,6 +32,7 @@ switch ($op)
 	case 'modifyUser':
 		modifyUser($uid);
 	break;
+
 	case 'updateUser':
 		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
 		// RMV-NOTIFY
@@ -65,6 +47,7 @@ switch ($op)
 		}
 		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups);
 	break;
+
 	case 'delUser':
 		xoops_cp_header();
 		$member_handler =& xoops_gethandler('member');
@@ -72,6 +55,7 @@ switch ($op)
 		xoops_confirm(array('fct' => 'users', 'op' => 'delUserConf', 'del_uid' => $userdata->getVar('uid')), 'admin.php', sprintf(_AM_AYSYWTDU,$userdata->getVar('uname')));
 		xoops_cp_footer();
 	break;
+
 	case 'delete_many':
 		xoops_cp_header();
 		$count = count($memberslist_id);
@@ -81,7 +65,7 @@ switch ($op)
 			$hidden = "<input type='hidden' name='memberslist_id[]' value='".$memberslist_id[0]."' />\n";
 			for($i = 1; $i < $count; $i++)
 			{
-				$list .= ", <a href='".XOOPS_URL."/userinfo.php?uid=".$memberslist_id[$i]."' rel='external'>".$memberslist_uname[$memberslist_id[$i]]."</a>";
+				$list .= ", <a href='".ICMS_URL."/userinfo.php?uid=".$memberslist_id[$i]."' rel='external'>".$memberslist_uname[$memberslist_id[$i]]."</a>";
 				$hidden .= "<input type='hidden' name='memberslist_id[]' value='".$memberslist_id[$i]."' />\n";
 			}
 			echo "<div><h4>".sprintf(_AM_AYSYWTDU," ".$list." ")."</h4>";
@@ -97,6 +81,7 @@ switch ($op)
 		} else {echo _AM_NOUSERS;}
 		xoops_cp_footer();
 	break;
+
 	case 'delete_many_ok':
 		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
 		$count = count($memberslist_id);
@@ -108,12 +93,12 @@ switch ($op)
 			$delgroups = $deluser->getGroups();
 			if(in_array(XOOPS_GROUP_ADMIN, $delgroups))
 			{
-				$output .= sprintf('Admin user cannot be deleted. (User: %s)', $deluser->getVar('uname')).'<br />';
+				$output .= sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED.' ('._AM_NICKNAME.': %s)', $deluser->getVar('uname')).'<br />';
 			}
 			else
 			{
-				if(!$member_handler->deleteUser($deluser)) {$output .= 'Could not delete '.$deluser->getVar('uname').'<br />';}
-				else {$output .= $deluser->getVar('uname').' deleted<br />';}
+				if(!$member_handler->deleteUser($deluser)) {$output .= _AM_COULD_NOT_DELETE.' '.$deluser->getVar('uname').'<br />';}
+				else {$output .= $deluser->getVar('uname').' '._AM_USERS_DELETEED.'<br />';}
 				// RMV-NOTIFY
 				xoops_notification_deletebyuser($deluser->getVar('uid'));
 			}
@@ -122,6 +107,7 @@ switch ($op)
 		echo $output;
 		xoops_cp_footer();
 	break;
+
 	case 'delUserConf':
 		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
 		$member_handler =& xoops_gethandler('member');
@@ -130,13 +116,13 @@ switch ($op)
 		if(in_array(XOOPS_GROUP_ADMIN, $groups))
 		{
 			xoops_cp_header();
-			echo sprintf('Admin user cannot be deleted. (User: %s)', $user->getVar('uname'));
+			echo sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED.'. ('._AM_NICKNAME.': %s)', $user->getVar('uname'));
 			xoops_cp_footer();
 		}
 		elseif(!$member_handler->deleteUser($user))
 		{
 			xoops_cp_header();
-			echo 'Could not delete '.$deluser->getVar('uname');
+			echo _AM_ADMIN_CAN_NOT_BE_DELETEED.$deluser->getVar('uname');
 			xoops_cp_footer();
 		}
 		else
@@ -148,6 +134,7 @@ switch ($op)
 			redirect_header('admin.php?fct=users',1,_AM_DBUPDATED);
 		}
 	break;
+
 	case 'addUser':
 		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
 		if(!$username || !$email || !$password || !$login_name)
@@ -160,9 +147,9 @@ switch ($op)
 			// make sure the username doesnt exist yet
 			if($member_handler->getUserCount(new Criteria('uname', $username)) > 0 || $member_handler->getUserCount(new Criteria('login_name', $login_name)) > 0 )
 			{
-				$adduser_errormsg = 'User name '.$username.' already exists';
+				$adduser_errormsg = _AM_NICKNAME.' '.$username.' '._AM_ALREADY_EXISTS;
 			}elseif($member_handler->getUserCount(new Criteria('email', $email)) > 0){
-				$adduser_errormsg = 'A user with this this e-mail address "'.$email.'" already exists';
+				$adduser_errormsg = _AM_A_USER_WITH_THIS_EMAIL_ADDRESS.' "'.$email.'" '._AM_ALREADY_EXISTS;
 			}
 			else
 			{
@@ -198,9 +185,11 @@ switch ($op)
 						xoops_cp_footer();
 						exit();
 					}
+						 include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
+						 $icmspass = new icms_Password();
 					$newuser->setVar('salt', $salt);
 					$newuser->setVar('enc_type', $enc_type);
-					$password = icms_encryptPass($password, $salt);
+					$password = $icmspass->icms_encryptPass($password, $salt);
 					$newuser->setVar('pass', $password);
 				}
 				$newuser->setVar('timezone_offset', $timezone_offset);
@@ -216,9 +205,8 @@ switch ($op)
 				$newuser->setVar('user_intrest', $user_intrest);
 				$newuser->setVar('user_mailok', $user_mailok);
 				$newuser->setVar('language', $language);
-				$config_handler =& xoops_gethandler('config');
-				$icmsauthConfig =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
-				if ($icmsauthConfig['auth_openid'] == 1) {
+
+				if ($icmsConfigAuth['auth_openid'] == 1) {
 				$newuser->setVar('openid', $openid);}
 				if(!$member_handler->insertUser($newuser))
 				{
@@ -271,19 +259,23 @@ switch ($op)
 		xoops_error($adduser_errormsg);
 		xoops_cp_footer();
 	break;
+
 	case 'synchronize':
 		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
 		synchronize($id, $type);
 	break;
+
 	case 'reactivate':
 		$result=$xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET level='1' WHERE uid='".intval($uid)."'");
 		if(!$result) {exit();}
 		redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid='.intval($uid),1,_AM_DBUPDATED);
 	break;
+
 	case 'mod_users':
 		default:
 			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
 			displayUsers();
 	break;
 }
+
 ?>

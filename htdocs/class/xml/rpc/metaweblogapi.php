@@ -1,37 +1,22 @@
 <?php
-// $Id: metaweblogapi.php 2 2005-11-02 18:23:29Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
-if (!defined('XOOPS_ROOT_PATH')) {
+/**
+* XML Parser Meta Weblog Api
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	XML
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
+if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
-require_once XOOPS_ROOT_PATH.'/class/xml/rpc/xmlrpcapi.php';
+require_once ICMS_ROOT_PATH.'/class/xml/rpc/xmlrpcapi.php';
 
 class MetaWeblogApi extends XoopsXmlRpcApi
 {
@@ -176,8 +161,8 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                         break;
                     case 'postid':
                         $struct->add('postid', new XoopsXmlRpcString($value));
-                        $struct->add('link', new XoopsXmlRpcString(XOOPS_URL.'/modules/xoopssections/item.php?item='.$value));
-                        $struct->add('permaLink', new XoopsXmlRpcString(XOOPS_URL.'/modules/xoopssections/item.php?item='.$value));
+                        $struct->add('link', new XoopsXmlRpcString(ICMS_URL.'/modules/xoopssections/item.php?item='.$value));
+                        $struct->add('permaLink', new XoopsXmlRpcString(ICMS_URL.'/modules/xoopssections/item.php?item='.$value));
                         break;
                     case 'title':
                         $struct->add('title', new XoopsXmlRpcString($value));
@@ -223,8 +208,8 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                                 break;
                             case 'postid':
                                 $struct->add('postid', new XoopsXmlRpcString($value));
-                                $struct->add('link', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/article.php?item_id='.$value));
-                                $struct->add('permaLink', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/article.php?item_id='.$value));
+                                $struct->add('link', new XoopsXmlRpcString(ICMS_URL.'/modules/news/article.php?item_id='.$value));
+                                $struct->add('permaLink', new XoopsXmlRpcString(ICMS_URL.'/modules/news/article.php?item_id='.$value));
                                 break;
                             case 'title':
                                 $struct->add('title', new XoopsXmlRpcString($value));
@@ -259,7 +244,7 @@ class MetaWeblogApi extends XoopsXmlRpcApi
                 foreach ($ret as $id => $detail) {
                     $struct = new XoopsXmlRpcStruct();
                     $struct->add('description', new XoopsXmlRpcString($detail));
-                    $struct->add('htmlUrl', new XoopsXmlRpcString(XOOPS_URL.'/modules/news/index.php?storytopic='.$id));
+                    $struct->add('htmlUrl', new XoopsXmlRpcString(ICMS_URL.'/modules/news/index.php?storytopic='.$id));
                     $struct->add('rssUrl', new XoopsXmlRpcString(''));
                     $catstruct = new XoopsXmlRpcStruct();
                     $catstruct->add($detail['title'], $struct);

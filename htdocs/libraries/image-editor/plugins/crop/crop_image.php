@@ -1,14 +1,8 @@
 <?
 $xoopsOption['nodebug'] = 1;
-if (file_exists('../../../../../../../mainfile.php')) include_once '../../../../../../../mainfile.php';
-if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../../mainfile.php';
-if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
 if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
-if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
-if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
-if (file_exists('../mainfile.php')) include_once '../mainfile.php';
 if (!defined('XOOPS_ROOT_PATH')) exit();
-include_once ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.inc.php';
+include_once ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
 
 if(isset($_GET['image_path']) && isset($_GET['image_url'])){
 	$x = $_GET['x'];
@@ -30,7 +24,7 @@ if(isset($_GET['image_path']) && isset($_GET['image_url'])){
 	if($percentSize>200)$percentSize = 200;
 
 
-	$img = wiImage::load($image_path);
+	$img = WideImage::load($image_path);
 	$arr = explode('/',$image_path);
 	$arr[count($arr)-1] = 'crop_'.$arr[count($arr)-1];
 	$temp_img_path = implode('/',$arr);
@@ -42,7 +36,7 @@ if(isset($_GET['image_path']) && isset($_GET['image_url'])){
 		@unlink($temp_img_path);
 		exit;
 	}
-	
+
 	if(strlen($x) && strlen($y) && $width && $height && $percentSize){
 
 		if($percentSize!="100"){

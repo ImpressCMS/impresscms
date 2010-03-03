@@ -21,14 +21,13 @@ require_once XOOPS_ROOT_PATH."/class/xoopsform/formdhtmltextarea.php";
  * @author	    phppp (D.J.)
  * @copyright	copyright (c) 2005 XOOPS.org
  */
-
 class FormDhtmlTextArea extends XoopsFormDhtmlTextArea
 {
 	/**
 	 * Constructor
 	 *
-     * @param	array   $configs  Editor Options
-     * @param	binary 	$checkCompatible  true - return false on failure
+   * @param	array   $configs  Editor Options
+   * @param	binary 	$checkCompatible  true - return false on failure
 	 */
 	function FormDhtmlTextArea($configs, $checkCompatible = false)
 	{

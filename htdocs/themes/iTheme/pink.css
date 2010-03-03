@@ -98,11 +98,11 @@ h6 {font-size: .8em;}
 
 #xo-globalnav a:hover {
 	color: #000;
-	border-top: 4px solid #EE7733;
+	border-top: 4px solid #F3AC03;
 }
 
 #controlbar {
-	color: #EE7733;
+	color: #F3AC03;
 	font-weight: bold;
 	padding-bottom: 3px;
 	border-bottom: 1px dashed #8DBDE1;

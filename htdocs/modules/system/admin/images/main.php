@@ -6,97 +6,98 @@
 *
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
+* @package		Administration
 * @since		1.2
 * @author		Rodrigo Pereira Lima (AKA TheRplima) <therplima@impresscms.org>
-* @version		$Id: main.php 1244 2008-03-18 17:09:11Z real_therplima $
+* @version		$Id$
 */
 
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
-    exit(_CT_ACCESS_DENIED);
+if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+	exit(_CT_ACCESS_DENIED);
 } else {
-	
+	include(ICMS_ROOT_PATH."/kernel/image.php");
+	include(ICMS_ROOT_PATH."/kernel/imagecategory.php");
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
 	if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
-    $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
-    $image_id = (isset($_GET['image_id']))?intval($_GET['image_id']):((isset($_POST['image_id']))?intval($_POST['image_id']):null);
-    $imgcat_id = (isset($_GET['imgcat_id']))?intval($_GET['imgcat_id']):((isset($_POST['imgcat_id']))?intval($_POST['imgcat_id']):null);
-    $limit = (isset($_GET['limit']))?intval($_GET['limit']):((isset($_POST['limit']))?intval($_POST['limit']):15);
-    $start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
-	
-    switch ($op){
-    	case 'list':
-    		xoops_cp_header();
-    		echo imanager_index($imgcat_id);
-    		xoops_cp_footer();
-    		break;
-    	case 'listimg':
-    		xoops_cp_header();
-    		echo imanager_listimg($imgcat_id,$start);
-    		xoops_cp_footer();
-    		break;
-    	case 'addcat':
-    		imanager_addcat();
-    		break;
-    	case 'editcat':
-    		imanager_editcat($imgcat_id);
-    		xoops_cp_footer();
-    		break;
-    	case 'updatecat':
-    		imanager_updatecat();
-    		break;
-    	case 'delcat':
-    		xoops_cp_header();
-    		xoops_confirm(array('op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _MD_RUDELIMGCAT);
-    		xoops_cp_footer();
-    		break;
-    	case 'delcatok':
-    		imanager_delcatok($imgcat_id);
-    		break;
-    	case 'reordercateg':
-    		imanager_reordercateg();
-    		break;
-    	case 'addfile':
-    		imanager_addfile();
-    		break;
-    	case 'save':
-    		imanager_updateimage();
-    		break;
-    	case 'delfile':
-    		xoops_cp_header();
-    		$image_handler = xoops_gethandler('image');
-    		$image =& $image_handler->get($image_id);
-    		$imgcat_handler = xoops_gethandler('imagecategory');
-    		$imagecategory =& $imgcat_handler->get($image->getVar('imgcat_id'));
-    		$src = '<img src="'.XOOPS_URL."/modules/system/admin/images/preview.php?file=".$image->getVar('image_name').'" title="'.$image->getVar('image_nicename').'" /><br />';
-    		echo '<div style="margin:5px;" align="center">'.$src.'</div>';
-    		xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _MD_RUDELIMG);
-    		xoops_cp_footer();
-    		break;
-    	case 'delfileok':
-    		imanager_delfileok($image_id,$imgcat_id);
-    		break;
-    	case 'cloneimg':
-    		imanager_clone();
-    		break;
-    	case 'save_edit_ok':
-    		$msg = isset($_GET['msg'])?urldecode($_GET['msg']):null;
-    		redir($imgcat_id,$msg);
-    		break;
-    }
+	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
+	$image_id = (isset($_GET['image_id']))?intval($_GET['image_id']):((isset($_POST['image_id']))?intval($_POST['image_id']):null);
+	$imgcat_id = (isset($_GET['imgcat_id']))?intval($_GET['imgcat_id']):((isset($_POST['imgcat_id']))?intval($_POST['imgcat_id']):null);
+	$limit = (isset($_GET['limit']))?intval($_GET['limit']):((isset($_POST['limit']))?intval($_POST['limit']):15);
+	$start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
+
+	switch ($op){
+		case 'list':
+			xoops_cp_header();
+			echo imanager_index($imgcat_id);
+			xoops_cp_footer();
+			break;
+		case 'listimg':
+			xoops_cp_header();
+			echo imanager_listimg($imgcat_id,$start);
+			xoops_cp_footer();
+			break;
+		case 'addcat':
+			imanager_addcat();
+			break;
+		case 'editcat':
+			imanager_editcat($imgcat_id);
+			xoops_cp_footer();
+			break;
+		case 'updatecat':
+			imanager_updatecat();
+			break;
+		case 'delcat':
+			xoops_cp_header();
+			xoops_confirm(array('op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _MD_RUDELIMGCAT);
+			xoops_cp_footer();
+			break;
+		case 'delcatok':
+			imanager_delcatok($imgcat_id);
+			break;
+		case 'reordercateg':
+			imanager_reordercateg();
+			break;
+		case 'addfile':
+			imanager_addfile();
+			break;
+		case 'save':
+			imanager_updateimage();
+			break;
+		case 'delfile':
+			xoops_cp_header();
+			$image_handler = xoops_gethandler('image');
+			$image =& $image_handler->get($image_id);
+			$imgcat_handler = xoops_gethandler('imagecategory');
+			$imagecategory =& $imgcat_handler->get($image->getVar('imgcat_id'));
+			$src = '<img src="'.XOOPS_URL."/modules/system/admin/images/preview.php?file=".$image->getVar('image_name').'" title="'.$image->getVar('image_nicename').'" /><br />';
+			echo '<div style="margin:5px;" align="center">'.$src.'</div>';
+			xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _MD_RUDELIMG);
+			xoops_cp_footer();
+			break;
+		case 'delfileok':
+			imanager_delfileok($image_id,$imgcat_id);
+			break;
+		case 'cloneimg':
+			imanager_clone();
+			break;
+		case 'save_edit_ok':
+			$msg = isset($_GET['msg'])?urldecode($_GET['msg']):null;
+			redir($imgcat_id,$msg);
+			break;
+	}
 }
 
 
 
 function imanager_index($imgcat_id=null){
-	global $icmsAdminTpl,$xoopsUser,$xoopsConfig,$limit;
+	global $icmsAdminTpl,$icmsUser,$xoopsConfig,$limit;
 
-	if (!is_object($xoopsUser)) {
+	if (!is_object($icmsUser)) {
 		$groups = array(XOOPS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
-		$groups =& $xoopsUser->getGroups();
-		$admin = (!$xoopsUser->isAdmin(1)) ? false : true;
+		$groups =& $icmsUser->getGroups();
+		$admin = (!$icmsUser->isAdmin(1)) ? false : true;
 	}
 
 	if(!is_writable(ICMS_IMANAGER_FOLDER_PATH))
@@ -104,9 +105,9 @@ function imanager_index($imgcat_id=null){
 		xoops_warning(sprintf(_WARNINNOTWRITEABLE,ICMS_IMANAGER_FOLDER_PATH));
 		echo '<br />';
 	}
-	
+
 	$imgcat_handler = xoops_gethandler('imagecategory');
-	
+
 	$criteriaRead = new CriteriaCompo();
 	if (is_array($groups) && !empty($groups)) {
 		$criteriaTray = new CriteriaCompo();
@@ -147,11 +148,12 @@ function imanager_index($imgcat_id=null){
 	$icmsAdminTpl->assign('lang_imanager_cat_del',_DELETE);
 	$icmsAdminTpl->assign('lang_imanager_cat_listimg',_LIST);
 	$icmsAdminTpl->assign('lang_imanager_cat_submit',_SUBMIT);
-	
+	$icmsAdminTpl->assign('lang_imanager_folder_not_writable',IMANAGER_FOLDER_NOT_WRITABLE);
+
 	$icmsAdminTpl->assign('lang_imanager_cat_addnewcat',_MD_ADDIMGCATBTN);
 	$icmsAdminTpl->assign('lang_imanager_cat_addnewimg',_MD_ADDIMGBTN);
 	$icmsAdminTpl->assign('lang_imanager_viewsubs',_MD_IMAGE_VIEWSUBS);
-	
+
 	$icmsAdminTpl->assign('token',$GLOBALS['xoopsSecurity']->getTokenHTML());
 	$icmsAdminTpl->assign('catcount',count($imagecategorys));
 	$icmsAdminTpl->assign('writecatcount',count($imagecategorysWrite));
@@ -277,16 +279,16 @@ function imanager_index($imgcat_id=null){
 }
 
 function imanager_listimg($imgcat_id,$start=0) {
-	global $icmsAdminTpl,$xoopsUser;
+	global $icmsAdminTpl,$icmsUser;
 
-	if (!is_object($xoopsUser)) {
+	if (!is_object($icmsUser)) {
 		$groups = array(XOOPS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
-		$groups =& $xoopsUser->getGroups();
-		$admin = (!$xoopsUser->isAdmin(1)) ? false : true;
+		$groups =& $icmsUser->getGroups();
+		$admin = (!$icmsUser->isAdmin(1)) ? false : true;
 	}
-	
+
 	$query = isset($_POST['query']) ? $_POST['query'] : null;
 
 	if ($imgcat_id <= 0) {
@@ -299,8 +301,8 @@ function imanager_listimg($imgcat_id,$start=0) {
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images',1,'');
 	}
-	
-    $icmsAdminTpl->assign('admnav',adminNav($imgcat_id,'/',1));
+
+	   $icmsAdminTpl->assign('admnav',adminNav($imgcat_id,'/',1));
 	$icmsAdminTpl->assign('lang_imanager_title',_IMGMANAGER);
 	$icmsAdminTpl->assign('lang_imanager_catmsize',_MD_IMAGECATMSIZE);
 	$icmsAdminTpl->assign('lang_imanager_catmwidth',_MD_IMAGECATMWIDTH);
@@ -316,9 +318,10 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('lang_imanager_cat_del',_DELETE);
 	$icmsAdminTpl->assign('lang_imanager_cat_listimg',_LIST);
 	$icmsAdminTpl->assign('lang_imanager_cat_submit',_SUBMIT);
+	$icmsAdminTpl->assign('lang_imanager_folder_not_writable',IMANAGER_FOLDER_NOT_WRITABLE);
 	$icmsAdminTpl->assign('lang_imanager_cat_back',_BACK);
 	$icmsAdminTpl->assign('lang_imanager_cat_addimg',_ADDIMAGE);
-	
+
 	$icmsAdminTpl->assign('lang_imanager_cat_addnewcat',_MD_ADDIMGCATBTN);
 	$icmsAdminTpl->assign('lang_imanager_cat_addnewimg',_MD_ADDIMGBTN);
 
@@ -345,7 +348,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('cat_subs',$subs);
 
 	$image_handler = xoops_gethandler('image');
-	
+
 	$criteriaRead = new CriteriaCompo();
 	if (is_array($groups) && !empty($groups)) {
 		$criteriaTray = new CriteriaCompo();
@@ -365,9 +368,9 @@ function imanager_listimg($imgcat_id,$start=0) {
 	}
 	$scount = $sc;
 	$icmsAdminTpl->assign('simgcount',$scount);
-	
+
 	$icmsAdminTpl->assign('lang_imanager_img_preview',_PREVIEW);
-	
+
 	$icmsAdminTpl->assign('lang_image_name',_IMAGENAME);
 	$icmsAdminTpl->assign('lang_image_mimetype',_IMAGEMIME);
 	$icmsAdminTpl->assign('lang_image_cat',_IMAGECAT);
@@ -379,14 +382,14 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('lang_no',_NO);
 	$icmsAdminTpl->assign('lang_search',_SEARCH);
 	$icmsAdminTpl->assign('lang_search_title',_QSEARCH);
-	
+
 	$icmsAdminTpl->assign('lang_imanager_img_editor',_MD_IMAGE_EDITORTITLE);
-	
+
 	$icmsAdminTpl->assign('lang_imanager_copyof',_MD_IMAGE_COPYOF);
-	
+
 	$icmsAdminTpl->assign('xoops_root_path',ICMS_ROOT_PATH);
 	$icmsAdminTpl->assign('query',$query);
-	
+
 	$criteria = new CriteriaCompo(new Criteria('imgcat_id', $imgcat_id));
 	if (!is_null($query)){
 		$criteria->add(new Criteria('image_nicename', $query.'%','LIKE'));
@@ -401,7 +404,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('imgcount',$imgcount);
 
 	$arrimg = array();
-    foreach (array_keys($images) as $i) {
+	   foreach (array_keys($images) as $i) {
 		$arrimg[$i]['id'] = $images[$i]->getVar('image_id');
 		$arrimg[$i]['name'] = $images[$i]->getVar('image_name');
 		$arrimg[$i]['nicename'] = $images[$i]->getVar('image_nicename');
@@ -412,12 +415,12 @@ function imanager_listimg($imgcat_id,$start=0) {
 		$arrimg[$i]['display_nicename'] = xoops_substr($images[$i]->getVar('image_nicename'),0,20);
 
 		$uniq = icms_random_str(5);
-		
+
 		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 			$src = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$images[$i]->getVar('image_name').'&resize=0';
-			$img = wiImage::load($images[$i]->getVar('image_body'))->saveToFile(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
+			$img = WideImage::load($images[$i]->getVar('image_body'))->saveToFile(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
 			$arrimg[$i]['size'] = icms_convert_size(filesize(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name')));
-			$img_info = wiImage::load(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
+			$img_info = WideImage::load(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
 			$arrimg[$i]['width'] = $img_info->getWidth();
 			$arrimg[$i]['height'] = $img_info->getHeight();
 			@unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
@@ -426,8 +429,8 @@ function imanager_listimg($imgcat_id,$start=0) {
 			$url = (substr($categ_url,-1) != '/')?$categ_url.'/':$categ_url;
 			$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
 			$src = $url.$images[$i]->getVar('image_name');
-			$arrimg[$i]['size'] = icms_convert_size(filesize($path.$images[$i]->getVar('image_name')));			
-			$img_info = wiImage::load($path.$images[$i]->getVar('image_name'));
+			$arrimg[$i]['size'] = icms_convert_size(filesize($path.$images[$i]->getVar('image_name')));
+			$img_info = WideImage::load($path.$images[$i]->getVar('image_name'));
 			$arrimg[$i]['width'] = $img_info->getWidth();
 			$arrimg[$i]['height'] = $img_info->getHeight();
 		}
@@ -447,8 +450,8 @@ function imanager_listimg($imgcat_id,$start=0) {
 		}else{
 			$arrimg[$i]['hasextra_link'] = 0;
 		}
-		
-    	$list =& $imgcat_handler->getList(array(), null, null, $imagecategory->getVar('imgcat_storetype'));
+
+	   	$list =& $imgcat_handler->getList(array(), null, null, $imagecategory->getVar('imgcat_storetype'));
 		$div = '';
 		foreach ($list as $value => $name) {
 			$sel = '';
@@ -458,11 +461,11 @@ function imanager_listimg($imgcat_id,$start=0) {
 			$div .= '<option value="'.$value.'"'.$sel.'>'.$name.'</option>';
 		}
 		$arrimg[$i]['ed_selcat_options'] = $div;
-		
+
 		$arrimg[$i]['ed_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
 		$arrimg[$i]['clone_token'] = $GLOBALS['xoopsSecurity']->getTokenHTML();
-    }
-    
+	   }
+
 	$icmsAdminTpl->assign('images',$arrimg);
 	if ($imgcount > 0) {
 		if ($imgcount > 15) {
@@ -476,16 +479,18 @@ function imanager_listimg($imgcat_id,$start=0) {
 		$icmsAdminTpl->assign('pag','');
 	}
 	$icmsAdminTpl->assign('addimgform',showAddImgForm($imgcat_id));
-	
+
 	return $icmsAdminTpl->fetch('db:admin/images/system_adm_imagemanager_imglist.html');
 }
 
 function imanager_addcat() {
-    if (isset($_POST)) {
-        foreach ( $_POST as $k => $v ) {
-            ${$k} = $v;
-        }
-    }
+	if (isset($_POST)) {
+		foreach ( $_POST as $k => $v ) {
+			${$k} = $v;
+		}
+	}
+	$imgcat_foldername = preg_replace( '/[?".<>\|\s]/', '_', $imgcat_foldername);
+
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
@@ -504,27 +509,35 @@ function imanager_addcat() {
 		$imagecategory->setVar('imgcat_foldername', $imgcat_foldername);
 		$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	}
+
 	$imagecategory->setVar('imgcat_type', 'C');
-	
+
 	if ($imgcat_storetype == 'file'){
 		if (!file_exists($categ_path)){
-			if (!mkdir($categ_path)){
+			if (!icms_mkdir($categ_path)){
 				redirect_header('admin.php?fct=images',1,_MD_FAILADDCAT);
+			} else {
+				if ($fh = @fopen($categ_path.'/index.html', 'w'))
+					fwrite($fh, '<script>history.go(-1);</script>');
+				@fclose($fh);
 			}
 		}
 	}
-	
+
 	if (!$imgcat_handler->insert($imagecategory)) {
 		redirect_header('admin.php?fct=images',1,_MD_FAILADDCAT);
 	}
+
 	$newid = $imagecategory->getVar('imgcat_id');
 	$imagecategoryperm_handler =& xoops_gethandler('groupperm');
 	if (!isset($readgroup)) {
 		$readgroup = array();
 	}
+
 	if (!in_array(XOOPS_GROUP_ADMIN, $readgroup)) {
 		array_push($readgroup, XOOPS_GROUP_ADMIN);
 	}
+
 	foreach ($readgroup as $rgroup) {
 		$imagecategoryperm =& $imagecategoryperm_handler->create();
 		$imagecategoryperm->setVar('gperm_groupid', $rgroup);
@@ -534,12 +547,15 @@ function imanager_addcat() {
 		$imagecategoryperm_handler->insert($imagecategoryperm);
 		unset($imagecategoryperm);
 	}
+
 	if (!isset($writegroup)) {
 		$writegroup = array();
 	}
+
 	if (!in_array(XOOPS_GROUP_ADMIN, $writegroup)) {
 		array_push($writegroup, XOOPS_GROUP_ADMIN);
 	}
+
 	foreach ($writegroup as $wgroup) {
 		$imagecategoryperm =& $imagecategoryperm_handler->create();
 		$imagecategoryperm->setVar('gperm_groupid', $wgroup);
@@ -551,6 +567,7 @@ function imanager_addcat() {
 	}
 	redirect_header('admin.php?fct=images',2,_MD_AM_DBUPDATED);
 }
+
 
 function imanager_editcat($imgcat_id){
 	if ($imgcat_id <= 0) {
@@ -584,12 +601,12 @@ function imanager_editcat($imgcat_id){
 }
 
 function imanager_updatecat() {
-    if (isset($_POST)) {
-        foreach ( $_POST as $k => $v ) {
-            ${$k} = $v;
-        }
-    }
-	
+	if (isset($_POST)) {
+		foreach ( $_POST as $k => $v ) {
+			${$k} = $v;
+		}
+	}
+
 	if (!$GLOBALS['xoopsSecurity']->check() || $imgcat_id <= 0) {
 		redirect_header('admin.php?fct=images',1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
@@ -659,7 +676,7 @@ function imanager_delcatok($imgcat_id) {
 	}
 	$imgcat_handler = xoops_gethandler('imagecategory');
 	$imagecategory =& $imgcat_handler->get($imgcat_id);
-	
+
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images',1,'2');
 	}
@@ -668,12 +685,12 @@ function imanager_delcatok($imgcat_id) {
 	if ($imagecategory->getVar('imgcat_type') != 'C') {
 		redirect_header('admin.php?fct=images',1,_MD_SCATDELNG);
 	}
-	
+
 	$image_handler =& xoops_gethandler('image');
 	$images =& $image_handler->getObjects(new Criteria('imgcat_id', $imgcat_id), true, false);
-	
+
 	$errors = array();
-	
+
 	if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 		foreach (array_keys($images) as $i) {
 			if (!$image_handler->delete($images[$i])) {
@@ -692,7 +709,8 @@ function imanager_delcatok($imgcat_id) {
 				}
 			}
 		}
-	}	
+		unlink( $categ_path . 'index.html');
+	}
 
 	if (!$imgcat_handler->delete($imagecategory)) {
 		$errors[] = sprintf(_MD_FAILDELCAT, $imagecategory->getVar('imgcat_name'));
@@ -737,11 +755,11 @@ function imanager_reordercateg() {
 }
 
 function imanager_addfile() {
-    if (isset($_POST)) {
-        foreach ( $_POST as $k => $v ) {
-            ${$k} = $v;
-        }
-    }
+	if (isset($_POST)) {
+		foreach ( $_POST as $k => $v ) {
+			${$k} = $v;
+		}
+	}
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
@@ -808,11 +826,11 @@ function imanager_addfile() {
 }
 
 function imanager_updateimage() {
-    if (isset($_POST)) {
-        foreach ( $_POST as $k => $v ) {
-            ${$k} = $v;
-        }
-    }
+	if (isset($_POST)) {
+		foreach ( $_POST as $k => $v ) {
+			${$k} = $v;
+		}
+	}
 	if (!$GLOBALS['xoopsSecurity']->check()) {
 		redirect_header('admin.php?fct=images', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 	}
@@ -844,7 +862,7 @@ function imanager_updateimage() {
 				$imgcat_handler =& xoops_gethandler('imagecategory');
 				$imagecategory  =& $imgcat_handler->get(intval($imgcat_id[$i]));
 				$dest_categ_path = $imgcat_handler->getCategFolder($imagecategory);
-				if ($imagecategory->getVar('imgcat_storetype') != 'db') { 
+				if ($imagecategory->getVar('imgcat_storetype') != 'db') {
 					$oldimgcategory =& $imgcat_handler->get(intval($oldcat));
 					$src_categ_path = $imgcat_handler->getCategFolder($oldimgcategory);
 					$src = $src_categ_path.'/'.$image->getVar('image_name');
@@ -854,7 +872,7 @@ function imanager_updateimage() {
 					}
 					if (!@unlink($src)) {
 						$error[] = sprintf(_MD_FAILUNLINK, $i);
-					}					
+					}
 				}
 			}
 		}
@@ -962,7 +980,7 @@ function imanager_clone() {
 	$newimg->setVar('imgcat_id', $imgcat_id);
 	if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 		$src = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$image->getVar('image_name').'&resize=0';
-		$img = wiImage::load($image->getVar('image_body'))->saveToFile(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name'));
+		$img = WideImage::load($image->getVar('image_body'))->saveToFile(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name'));
 		$fp = @fopen(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name'), 'rb');
 		$fbinary = @fread($fp, filesize(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name')));
 		@fclose($fp);
@@ -990,7 +1008,7 @@ function imanager_clone() {
 /**
  * Function to create a navigation menu in content pages.
  * This function was based on the function that do the same in mastop publish module
- * 
+ *
  * @param integer $id
  * @param string $separador
  * @param string $style

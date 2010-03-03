@@ -6,12 +6,12 @@
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		4.00
- * @version		$Id: xoopseditor.inc.php,v 1.1 2007/06/05 14:43:48 marcan Exp $
+ * @version		$Id$
  * @package		xoopseditor
  */
 
 if(!function_exists("xoopseditor_get_rootpath")){
-	function xoopseditor_get_rootpath()
+	function xoopseditor_get_rootpath($type = '')
 	{
 /*		static $rootpath;
 		if(isset($rootpath)) return $rootpath;
@@ -20,11 +20,15 @@ if(!function_exists("xoopseditor_get_rootpath")){
 		$rootpath = dirname($current_path);
 		icms_debug('editor path' . $rootpath);
 		return $rootpath;*/
-		return XOOPS_EDITOR_PATH;
+		if ($type == '') {
+			return XOOPS_EDITOR_PATH;
+		} else {
+			return ICMS_PLUGINS_PATH . '/' . strtolower($type) . 'editors/';
+		}
 	}
 }
 
-if(defined("XOOPS_ROOT_PATH")) {
+if(defined("ICMS_ROOT_PATH")) {
 	return true;
 }
 
@@ -32,5 +36,5 @@ $mainfile = dirname(dirname(__FILE__))."/mainfile.php";
 if ( DIRECTORY_SEPARATOR != "/" ) $mainfile = str_replace( DIRECTORY_SEPARATOR, "/", $mainfile);
 
 include $mainfile;
-return defined("XOOPS_ROOT_PATH");
+return defined("ICMS_ROOT_PATH");
 ?>

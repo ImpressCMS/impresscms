@@ -14,22 +14,11 @@
  * @version         $Id$
  */
 
-include 'header.php';
+include_once("admin_header.php");
 xoops_cp_header();
 
-icms_adminMenu(5, "");
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : "edit";
-
-include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
-$opform = new XoopsSimpleForm('', 'opform', 'permissions.php', "get");
-$op_select = new XoopsFormSelect("", 'op', $op);
-$op_select->setExtra('onchange="document.forms.opform.submit()"');
-$op_select->addOption('visibility', _PROFILE_AM_PROF_VISIBLE);
-$op_select->addOption('edit', _PROFILE_AM_PROF_EDITABLE);
-$op_select->addOption('search', _PROFILE_AM_PROF_SEARCH);
-$opform->addElement($op_select);
-$opform->display();
-
+icms_adminMenu(6, "");
+$op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : "edit";
 switch ($op) {
     case "visibility":
     header("Location: visibility.php");
@@ -49,7 +38,18 @@ switch ($op) {
     $anonymous = true;
     break;
 }
-$module_id = $xoopsModule->getVar('mid');
+
+include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
+$opform = new XoopsSimpleForm('', 'opform', 'permissions.php', "get");
+$op_select = new XoopsFormSelect("", 'op', $op);
+$op_select->setExtra('onchange="document.forms.opform.submit()"');
+$op_select->addOption('visibility', _PROFILE_AM_PROF_VISIBLE);
+$op_select->addOption('edit', _PROFILE_AM_PROF_EDITABLE);
+$op_select->addOption('search', _PROFILE_AM_PROF_SEARCH);
+$opform->addElement($op_select);
+$opform->display();
+
+$module_id = $icmsModule->getVar('mid');
 $perm_desc = "";
 include_once ICMS_ROOT_PATH . '/class/xoopsform/grouppermform.php';
 $form = new XoopsGroupPermForm($title_of_form, $module_id, $perm_name, $perm_desc, 'admin/permissions.php', $anonymous);

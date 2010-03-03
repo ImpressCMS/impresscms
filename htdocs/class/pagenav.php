@@ -1,33 +1,17 @@
 <?php
-// $Id: pagenav.php 1057 2007-09-17 07:05:32Z dugris $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+* Generates pagination
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
 
 /**
  * Class to facilitate navigation in a multi page document/list
@@ -43,20 +27,36 @@ class XoopsPageNav
 	/**#@+
 	 * @access	private
 	 */
-	var $total;
-	var $perpage;
-	var $current;
-	var $url;
-    /**#@-*/
+
+  /**
+   * @public int $total  Total of pages to show
+   */
+	public $total;
+
+  /**
+   * @public int $perpage  Total of items to show per page
+   */
+	public $perpage;
+
+  /**
+   * @public int $current  What is the current page
+   */
+	public $current;
+
+  /**
+   * @public string $url   What is the current url
+   */
+	public $url;
+	/**#@-*/
 
 	/**
 	 * Constructor
 	 *
-	 * @param   int     $total_items    Total number of items
-	 * @param   int     $items_perpage  Number of items per page
-	 * @param   int     $current_start  First item on the current page
-	 * @param   string  $start_name     Name for "start" or "offset"
-	 * @param   string  $extra_arg      Additional arguments to pass in the URL
+	 * @param   int	 $total_items	Total number of items
+	 * @param   int	 $items_perpage  Number of items per page
+	 * @param   int	 $current_start  First item on the current page
+	 * @param   string  $start_name	 Name for "start" or "offset"
+	 * @param   string  $extra_arg	  Additional arguments to pass in the URL
 	 **/
 	function XoopsPageNav($total_items, $items_perpage, $current_start, $start_name="start", $extra_arg="")
 	{
@@ -77,15 +77,15 @@ class XoopsPageNav
 	 **/
 	function renderNav($offset = 4)
 	{	
-		$config_handler =& xoops_gethandler('config');
-		$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
+		global $icmsConfigPersona, $xoTheme;
 		
-		if (isset($xoopsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php')){
-			$style = $xoopsConfigPersona['pagstyle'];
-		}else{
-			$style = 'default';
-		}
+		$style = (isset($icmsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php'))?$icmsConfigPersona['pagstyle']:'default';
 		$ret = '';
+		if(isset($xoTheme)){
+		$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css', array("media" => "all"));
+		}else{
+			echo'<link rel="stylesheet" type="text/css" href="'.ICMS_LIBRARIES_URL . '/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css" />';
+		} 
 		if ( $this->total <= $this->perpage ) {
 			return $ret;
 		}
@@ -126,7 +126,7 @@ class XoopsPageNav
 	/**
 	 * Create a navigational dropdown list
 	 *
-	 * @param   boolean     $showbutton Show the "Go" button?
+	 * @param   boolean	 $showbutton Show the "Go" button?
 	 * @return  string
 	 **/
 	function renderSelect($showbutton = false)
@@ -161,7 +161,7 @@ class XoopsPageNav
 	/**
 	 * Create navigation with images
 	 *
-	 * @param   integer     $offset
+	 * @param   integer	 $offset
 	 * @return  string
 	 **/
 	function renderImageNav($offset = 4)
@@ -175,9 +175,9 @@ class XoopsPageNav
    			$ret = '<table><tr>';
 			$prev = $this->current - $this->perpage;
 			if ( $prev >= 0 ) {
-				$ret .= '<td class="pagneutral"><a href="'.$this->url.$prev.'">&lt;</a></td><td><img src="'.XOOPS_URL.'/images/blank.gif" width="6" alt="" /></td>';
+				$ret .= '<td class="pagneutral"><a href="'.$this->url.$prev.'">&lt;</a></td><td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td>';
 			} else {
-				$ret .= '<td class="pagno"></a></td><td><img src="'.XOOPS_URL.'/images/blank.gif" width="6" alt="" /></td>';
+				$ret .= '<td class="pagno"></a></td><td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td>';
 			}
 			$counter = 1;
 			$current_page = intval(floor(($this->current + $this->perpage) / $this->perpage));
@@ -197,9 +197,9 @@ class XoopsPageNav
 			}
 			$next = $this->current + $this->perpage;
 			if ( $this->total > $next ) {
-				$ret .= '<td><img src="'.XOOPS_URL.'/images/blank.gif" width="6" alt="" /></td><td class="pagneutral"><a href="'.$this->url.$next.'">&gt;</a></td>';
+				$ret .= '<td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td><td class="pagneutral"><a href="'.$this->url.$next.'">&gt;</a></td>';
 			} else {
-				$ret .= '<td><img src="'.XOOPS_URL.'/images/blank.gif" width="6" alt="" /></td><td class="pagno"></td>';
+				$ret .= '<td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td><td class="pagno"></td>';
 			}
 			$ret .= '</tr></table>';
 		}

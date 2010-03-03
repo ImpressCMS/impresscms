@@ -1,5 +1,5 @@
 <?php
-// $Id: smilies.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id$
 //%%%%%%	Admin Module Name  Smilies 	%%%%%
 define('_AM_DBUPDATED','Database Updated Successfully!');
 

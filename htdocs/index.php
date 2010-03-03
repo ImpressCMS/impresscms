@@ -18,11 +18,11 @@
 include "mainfile.php";
 
 $member_handler = & xoops_gethandler ( 'member' );
-$group = $member_handler->getUserBestGroup((@is_object($xoopsUser)?$xoopsUser->uid():0));
-$xoopsConfig ['startpage'] = $xoopsConfig ['startpage'] [$group];
+$group = $member_handler->getUserBestGroup((@is_object($icmsUser)?$icmsUser->uid():0));
+$icmsConfig ['startpage'] = $icmsConfig ['startpage'] [$group];
 
-if (isset ( $xoopsConfig ['startpage'] ) && $xoopsConfig ['startpage'] != "" && $xoopsConfig ['startpage'] != "--") {
-	$arr = explode ( '-', $xoopsConfig ['startpage'] );
+if (isset ( $icmsConfig ['startpage'] ) && $icmsConfig ['startpage'] != "" && $icmsConfig ['startpage'] != "--") {
+	$arr = explode ( '-', $icmsConfig ['startpage'] );
 	if (count ( $arr ) > 1) {
 		$page_handler = & xoops_gethandler ( 'page' );
 		$page = $page_handler->get ( $arr [1] );
@@ -30,7 +30,7 @@ if (isset ( $xoopsConfig ['startpage'] ) && $xoopsConfig ['startpage'] != "" && 
 			$url = (substr ( $page->getVar ( 'page_url' ), 0, 7 ) == 'http://') ? $page->getVar ( 'page_url' ) : ICMS_URL . '/' . $page->getVar ( 'page_url' );
 			header ( 'Location: ' . $url );
 		} else {
-			$xoopsConfig ['startpage'] = '--';
+			$icmsConfig ['startpage'] = '--';
 			$xoopsOption ['show_cblock'] = 1;
 			/** Included to start page rendering */
 			include "header.php";
@@ -38,7 +38,7 @@ if (isset ( $xoopsConfig ['startpage'] ) && $xoopsConfig ['startpage'] != "" && 
 			include "footer.php";
 		}
 	} else {
-		header ( 'Location: ' . ICMS_URL . '/modules/' . $xoopsConfig ['startpage'] . '/' );
+		header ( 'Location: ' . ICMS_URL . '/modules/' . $icmsConfig ['startpage'] . '/' );
 	}
 	exit ();
 } else {

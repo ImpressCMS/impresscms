@@ -1,15 +1,21 @@
 <?php
 /**
- * Form for setting group options
- * @package Administration
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
- * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		XOOPS
- * @author		Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/
- * @version		$Id$
- */
+* Form for setting group options
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	Administration
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author		Kazumi Ono (AKA onokazu) http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
+
+
 /** include the general form class */
 include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
 
@@ -25,15 +31,15 @@ require_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
 $admin_dir = XOOPS_ROOT_PATH.'/modules/system/admin/';
 $dirlist = XoopsLists::getDirListAsArray($admin_dir);
 /* changes to only allow permission admins you already have */
-global $xoopsUser;
+global $icmsUser;
 $gperm =& xoops_gethandler ( 'groupperm' );
-$groups = $xoopsUser->getGroups ();
+$groups = $icmsUser->getGroups ();
 foreach($dirlist as $file){
-    include XOOPS_ROOT_PATH.'/modules/system/admin/'.$file.'/xoops_version.php';
-    if (!empty($modversion['category']) && count(array_intersect($groups, $gperm->getGroupIds('system_admin', $modversion['category'])))>0) {
-        $s_cat_checkbox->addOption($modversion['category'], $modversion['name']);
-    }
-    unset($modversion);
+	include XOOPS_ROOT_PATH.'/modules/system/admin/'.$file.'/xoops_version.php';
+	if (!empty($modversion['category']) && count(array_intersect($groups, $gperm->getGroupIds('system_admin', $modversion['category'])))>0) {
+		$s_cat_checkbox->addOption($modversion['category'], $modversion['name']);
+	}
+	unset($modversion);
 }
 unset($dirlist);
 
@@ -85,37 +91,39 @@ $group_manager_checkbox = new XoopsFormCheckBox(_AM_GROUPMANAGER_PERM, "groupman
 $criteria = new CriteriaCompo(new Criteria('isactive', 1));
 $groups = $member_handler->getGroups();
 $gperm_handler =& xoops_gethandler('groupperm');
-//global $xoopsUser; // already declared above
+
+//global $icmsUser; // already declared above
 foreach($groups as $group){
-	if($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), $xoopsUser->getGroups()))
+	if($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), $icmsUser->getGroups()))
 		$group_manager_checkbox->addOption($group->getVar('groupid'),$group->getVar('name'));
 }
-
-$posarr = XoopsBlock::getBlockPositions(true);
+$icms_block_handler = xoops_gethandler('block');
+$posarr = $icms_block_handler->getBlockPositions(true);
 $block_checkbox = array();
 $i = 0;
-$groups = $xoopsUser->getGroups();
+$groups = $icmsUser->getGroups();
 foreach ($posarr as $k=>$v){
-  $tit = (defined($posarr[$k]['title']))?constant($posarr[$k]['title']):$posarr[$k]['title'];
-  $block_checkbox[$i] = new XoopsFormCheckBox('<b>'.$tit.'</b><br />', "read_bids[]", $r_block_value);
-  $new_blocks_array = array();
-  $blocks_array = XoopsBlock::getAllBlocks("list", $k);
-  /* compare to list of blocks the group can read, do not filter for administrator group */
-  if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
-	  $r_blocks = $gperm->getItemIds('block_read', $groups);
-	  $n_blocks_array = array_intersect_key($blocks_array, array_flip($r_blocks));
-  } else {
-	  $n_blocks_array = $blocks_array;
-  }
-  foreach ($n_blocks_array as $key=>$value) {
-  	$new_blocks_array[$key] = "<a href='".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&amp;op=edit&amp;bid=".$key."'>".$value." (ID: ".$key.")</a>";
-  }
-  $block_checkbox[$i]->addOptionArray($new_blocks_array);
-  $i++;
+	$tit = (defined($posarr[$k]['title'])) ? constant($posarr[$k]['title']) : $posarr[$k]['title'];
+	$block_checkbox[$i] = new XoopsFormCheckBox('<b>'.$tit.'</b><br />', "read_bids[]", $r_block_value);
+	$new_blocks_array = array();
+	$blocks_array = $icms_block_handler->getAllBlocks("list", $k);
+
+	/* compare to list of blocks the group can read, do not filter for administrator group */
+	if (!in_array(XOOPS_GROUP_ADMIN, $groups)){
+		$r_blocks = $gperm->getItemIds('block_read', $groups);
+		$n_blocks_array = array_intersect_key($blocks_array, array_flip($r_blocks));
+	} else {
+		$n_blocks_array = $blocks_array;
+	}
+	foreach ($n_blocks_array as $key=>$value) {
+		$new_blocks_array[$key] = "<a href='".XOOPS_URL."/modules/system/admin.php?fct=blocksadmin&amp;op=mod&amp;bid=".$key."'>".$value." (ID: ".$key.")</a>";
+	}
+	$block_checkbox[$i]->addOptionArray($new_blocks_array);
+	$i++;
 }
 $r_block_tray = new XoopsFormElementTray(_AM_BLOCKRIGHTS, "<br /><br />");
 foreach ($block_checkbox as $k=>$v){
-  $r_block_tray->addElement($block_checkbox[$k]);
+	$r_block_tray->addElement($block_checkbox[$k]);
 }
 
 
@@ -135,7 +143,7 @@ if (!isset($g_id) || ($g_id != 1 && $g_id != 3)){
 $form->addElement($a_mod_checkbox);
 $form->addElement($r_mod_checkbox);
 if (!isset($g_id) || $g_id != 3){
-    $form->addElement($ed_mod_checkbox);
+	$form->addElement($ed_mod_checkbox);
 }
 /**
  * @todo: use constants instead of hard values
@@ -149,10 +157,11 @@ $form->addElement($r_block_tray);
 $form->addElement($op_hidden);
 $form->addElement($fct_hidden);
 if ( !empty($g_id_value) ) {
-    $g_id_hidden = new XoopsFormHidden("g_id", $g_id_value);
-    $form->addElement($g_id_hidden);
+	$g_id_hidden = new XoopsFormHidden("g_id", $g_id_value);
+	$form->addElement($g_id_hidden);
 }
 $form->addElement($submit_button);
 $form->setRequired($name_text);
 $form->display();
+
 ?>

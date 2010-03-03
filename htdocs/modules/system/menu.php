@@ -1,33 +1,18 @@
 <?php
 // $Id: menu.php,v 1.2 2007/08/25 14:37:47 marcan Exp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+* Contains links to admin options and images for those admin options
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		LICENSE.txt
+* @package	Administration
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @version		$Id$
+*/
+
 include_once(XOOPS_ROOT_PATH."/modules/system/constants.php");
 
 $i=0;
@@ -68,7 +53,7 @@ $adminmenu[$i]['small'] = "admin/preferences/images/preferences_small.png";
 $adminmenu[$i]['id'] = XOOPS_SYSTEM_PREF;
 //Getting categories of preferences to include in dropdownmenu
 global $xoopsConfig;
-include_once(XOOPS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin/preferences.php");
+icms_loadLanguageFile('system', 'preferences', true);
 $confcat_handler = xoops_gethandler('configcategory');
 $confcats = $confcat_handler->getObjects();
 $catcount = count($confcats);
@@ -135,12 +120,6 @@ $adminmenu[$i]['icon'] = "admin/version/images/version.png";
 $adminmenu[$i]['small'] = "admin/version/images/version_small.png";
 $adminmenu[$i]['id'] = XOOPS_SYSTEM_VERSION;
 $i++;
-$adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU18;
-$adminmenu[$i]['link'] = "admin.php?fct=content";
-$adminmenu[$i]['icon'] = "admin/content/images/content.png";
-$adminmenu[$i]['small'] = "admin/content/images/content_small.png";
-$adminmenu[$i]['id'] = XOOPS_SYSTEM_CONTENT;
-$i++;
 $adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU19;
 $adminmenu[$i]['link'] = "admin.php?fct=blockspadmin";
 $adminmenu[$i]['icon'] = "admin/blockspadmin/images/blockspadmin.png";
@@ -157,5 +136,29 @@ $adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU21;
 $adminmenu[$i]['link'] = "admin.php?fct=customtag";
 $adminmenu[$i]['icon'] = "admin/customtag/images/customtag.png";
 $adminmenu[$i]['small'] = "admin/customtag/images/customtag_small.png";
-$adminmenu[$i]['id'] = XOOPS_SYSTEM_PAGES;
+$adminmenu[$i]['id'] = XOOPS_SYSTEM_CUSTOMTAGS;
+$i++;
+$adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU22;
+$adminmenu[$i]['link'] = "admin.php?fct=adsense";
+$adminmenu[$i]['icon'] = "admin/adsense/images/adsense.png";
+$adminmenu[$i]['small'] = "admin/adsense/images/adsense_small.png";
+$adminmenu[$i]['id'] = XOOPS_SYSTEM_ADSENSES;
+$i++;
+$adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU23;
+$adminmenu[$i]['link'] = "admin.php?fct=rating";
+$adminmenu[$i]['icon'] = "admin/rating/images/rating.png";
+$adminmenu[$i]['small'] = "admin/rating/images/rating_small.png";
+$adminmenu[$i]['id'] = XOOPS_SYSTEM_RATINGS;
+$i++;
+$adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU24;
+$adminmenu[$i]['link'] = "admin.php?fct=mimetype";
+$adminmenu[$i]['icon'] = "admin/mimetype/images/mimetype.png";
+$adminmenu[$i]['small'] = "admin/mimetype/images/mimetype_small.png";
+$adminmenu[$i]['id'] = XOOPS_SYSTEM_MIMETYPES;
+$i++;
+$adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU25;
+$adminmenu[$i]['link'] = "admin.php?fct=autotasks";
+$adminmenu[$i]['icon'] = "admin/autotasks/images/autotasks.png";
+$adminmenu[$i]['small'] = "admin/autotasks/images/autotasks_small.png";
+$adminmenu[$i]['id'] = XOOPS_SYSTEM_AUTOTASKS;
 ?>

@@ -13,7 +13,7 @@
 **/
 
 include 'mainfile.php';
-include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/misc.php';
+icms_loadLanguageFile('core', 'misc');
 $action = isset($_GET['action']) ? trim(StopXSS($_GET['action'])) : '';
 $action = isset($_POST['action']) ? trim(StopXSS($_POST['action'])) : $action;
 $type = isset($_GET['type']) ? trim(StopXSS($_GET['type'])) : '';
@@ -52,7 +52,7 @@ if($action == 'showpopups')
 					$rcolor = 'even';
 					for($i = 0; $i < $count; $i++)
 					{
-						echo "<tr class='$rcolor'><td>".$smiles[$i]['code']."</td><td>".$smiles[$i]['emotion']."</td><td><img onmouseover='style.cursor=\"hand\"' onclick='doSmilie(\" ".$smiles[$i]['code']." \");' src='".ICMS_UPLOAD_URL."/".$smiles[$i]['smile_url']."' alt='' /></td></tr>";
+						echo "<tr class='$rcolor'><td>".$smiles[$i]['code']."</td><td>".$smiles[$i]['emotion']."</td><td><img onmouseover='style.cursor=\"pointer\"' onclick='doSmilie(\" ".$smiles[$i]['code']." \");' src='".ICMS_UPLOAD_URL."/".$smiles[$i]['smile_url']."' alt='' /></td></tr>";
 						$rcolor = ($rcolor == 'even') ? 'odd' : 'even';
 					}
 				}
@@ -99,10 +99,10 @@ if($action == 'showpopups')
 		break;
 		case 'friend':
 			if(!$GLOBALS['xoopsSecurity']->check() || !isset($_POST['op']) || StopXSS($_POST['op']) == 'sendform') {
-				if($xoopsUser)
+				if($icmsUser)
 				{
-					$yname = $xoopsUser->getVar('uname', 'e');
-					$ymail = $xoopsUser->getVar('email', 'e');
+					$yname = $icmsUser->getVar('uname', 'e');
+					$ymail = $icmsUser->getVar('email', 'e');
 					$fname = '';
 					$fmail = '';
 				}
@@ -132,7 +132,7 @@ if($action == 'showpopups')
 			elseif(StopXSS($_POST['op']) == 'sendsite')
 			{
 				$myts =& MyTextsanitizer::getInstance();
-				if($xoopsUser) {$ymail = $xoopsUser->getVar('email');}
+				if($icmsUser) {$ymail = $icmsUser->getVar('email');}
 				else {$ymail = isset($_POST['ymail']) ? $myts->stripSlashesGPC(trim($_POST['ymail'])) : '';}
 				if(!isset($_POST['yname']) || trim($_POST['yname']) == '' || $ymail == '' || !isset($_POST['fname']) || trim($_POST['fname']) == ''  || !isset($_POST['fmail']) || trim($_POST['fmail']) == '')
 				{
@@ -148,15 +148,15 @@ if($action == 'showpopups')
 				}
 				$xoopsMailer =& getMailer();
 				$xoopsMailer->setTemplate('tellfriend.tpl');
-				$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-				$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+				$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
+				$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
 				$xoopsMailer->assign('SITEURL', ICMS_URL.'/');
 				$xoopsMailer->assign('YOUR_NAME', $yname);
 				$xoopsMailer->assign('FRIEND_NAME', $fname);
 				$xoopsMailer->setToEmails($fmail);
 				$xoopsMailer->setFromEmail($ymail);
 				$xoopsMailer->setFromName($yname);
-				$xoopsMailer->setSubject(sprintf(_MSC_INTSITE,$xoopsConfig['sitename']));
+				$xoopsMailer->setSubject(sprintf(_MSC_INTSITE,$icmsConfig['sitename']));
 				//OpenTable();
 				if(!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
 				else {echo '<div><h4>'._MSC_REFERENCESENT.'</h4></div>';}
@@ -164,7 +164,7 @@ if($action == 'showpopups')
 			}
 		break;
 		case 'online':
-			$isadmin = $xoopsUserIsAdmin;
+			$isadmin = $icmsUserIsAdmin;
 			echo '<table  width="100%" cellspacing="1" class="outer"><tr><th colspan="3">'._WHOSONLINE.'</th></tr>';
 			$start = isset($_GET['start']) ? intval($_GET['start']) : 0;
 			$online_handler =& xoops_gethandler('online');
@@ -195,7 +195,7 @@ if($action == 'showpopups')
 					$avatar = $onlineUsers[$i]['user']->getVar('user_avatar') ? '<img src="'.ICMS_UPLOAD_URL.'/'.$onlineUsers[$i]['user']->getVar('user_avatar').'" alt="" />' : '&nbsp;';
 					echo '<td>'.$avatar."</td><td><a href=\"javascript:window.opener.location='".ICMS_URL."/userinfo.php?uid=".$onlineUsers[$i]['user']->getVar('uid')."';window.close();\">".$onlineUsers[$i]['user']->getVar('uname')."</a>";
 				}
-				else {echo '<td>&nbsp;</td><td>'.$xoopsConfig['anonymous'];}
+				else {echo '<td>&nbsp;</td><td>'.$icmsConfig['anonymous'];}
 				if($isadmin == 1) {echo '<br />('.$onlineUsers[$i]['ip'].')';}
 				echo '</td><td>'.$onlineUsers[$i]['module'].'</td></tr>';
 			}
@@ -208,10 +208,10 @@ if($action == 'showpopups')
 			}
 		break;
 		case 'ssllogin':
-			if($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && is_object($xoopsUser))
+			if($icmsConfig['use_ssl'] && isset($_POST[$icmsConfig['sslpost_name']]) && is_object($icmsUser))
 			{
-				include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/user.php';
-				echo sprintf(_US_LOGGINGU, $xoopsUser->getVar('uname'));
+				icms_loadLanguageFile('core', 'user');
+				echo sprintf(_US_LOGGINGU, $icmsUser->getVar('uname'));
 				echo '<div style="text-align:center;"><input class="formButton" value="'._CLOSE.'" type="button" onclick="window.opener.location.reload();window.close();" /></div>';
 				$closebutton = false;
 			}

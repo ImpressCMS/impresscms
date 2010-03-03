@@ -8,7 +8,7 @@
 * @copyright    The XOOPS project http://www.xoops.org/
 * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
 * @package		installer
-* @since        2.3.0
+* @since        Xoops 2.3.0
 * @author		Haruki Setoyama  <haruki@planewave.org>
 * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
 * @author		Skalpa Keo <skalpa@xoops.org>
@@ -28,8 +28,13 @@ if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
 	$error =& $_SESSION['error'];
 
+	function createSalt() { 
+ 	    include_once './include/functions.php'; 
+ 	    return imcms_createSalt(); 
+ 	}
+
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-	$vars['adminsalt'] = $_POST['adminsalt'];
+	$vars['adminsalt'] = createSalt();
 	$vars['adminname'] = $_POST['adminname'];
 	$vars['adminlogin_name'] = $_POST['adminlogin_name'];
 	$vars['adminmail'] = $_POST['adminmail'];
@@ -56,69 +61,57 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
     ob_start();
 ?>
 <?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
-<?php
-function createSalt() {
-	include_once './include/functions.php';
-	return icms_createSalt(64);
-}
-$adminsalt = createSalt();
-?>
 
-<?php
-include_once XOOPS_ROOT_PATH."/modules/system/language/".$wizard->language."/admin/preferences.php";
-?>
-<script type="text/javascript" src="include/passwordquality.js"></script>
-<script type="text/javascript">
-var qualityName1 = "<?php echo _MD_AM_PASSLEVEL1;?>";
-var qualityName2 = "<?php echo _MD_AM_PASSLEVEL2;?>";
-var qualityName3 = "<?php echo _MD_AM_PASSLEVEL3;?>";
-var qualityName4 = "<?php echo _MD_AM_PASSLEVEL4;?>";
-var qualityName5 = "<?php echo _MD_AM_PASSLEVEL5;?>";
-var qualityName6 = "<?php echo _MD_AM_PASSLEVEL6;?>";
+	<script type="text/javascript" src="../libraries/jquery/password_strength_plugin.js"></script>
+	<script type="text/javascript">
+                $(document).ready( function() {
+                    $.fn.shortPass = "<?php echo _CORE_PASSLEVEL1;?>";
+                    $.fn.badPass = "<?php echo _CORE_PASSLEVEL2;?>";
+                    $.fn.goodPass = "<?php echo _CORE_PASSLEVEL3;?>";
+                    $.fn.strongPass = "<?php echo _CORE_PASSLEVEL4;?>";
+                    $.fn.samePassword = "Username and Password identical.";
+                    $.fn.resultStyle = "";
+				$(".password_adv").passStrength({
+					shortPass: 		"top_shortPass",
+					badPass:		"top_badPass",
+					goodPass:		"top_goodPass",
+					strongPass:		"top_strongPass",
+					baseStyle:		"top_testresult",
+					userid:			"#adminlogin_name",
+					messageloc:		0
 
-var minpass = "8";
-var pass_level = "60";
-</script>
-<fieldset>
-    <input type="hidden" name="regex"  id="regex" value="[^0-9]" />
-    <input type="hidden" name="regex1" id="regex1" value="[0-9a-zA-Z]" />
-    <input type="hidden" name="regex2" id="regex2" value="[^A-Z]" />
-    <input type="hidden" name="regex3" id="regex3" value="([0-9])\1+" />
-    <input type="hidden" name="regex4" id="regex4" value="(\W)\1+" />
-    <input type="hidden" name="regex5" id="regex5" value="([A-Z])\1+" />
-    
-	<legend><?php echo LEGEND_ADMIN_ACCOUNT; ?></legend>
-	<label for="adminname"><?php echo ADMIN_DISPLAY_LABEL; ?></label>
-	<input type="text" name="adminname" id="adminname" maxlength="25" value="<?php echo htmlspecialchars( $vars['adminname'], ENT_QUOTES ); ?>" />
-	<label for="adminlogin_name"><?php echo ADMIN_LOGIN_LABEL; ?></label>
-	<input type="text" name="adminlogin_name" id="adminlogin_name" maxlength="25" value="<?php echo htmlspecialchars( $vars['adminlogin_name'], ENT_QUOTES ); ?>" />
-	<label for="adminmail"><?php echo ADMIN_EMAIL_LABEL; ?></label>
-	<input type="text" name="adminmail" id="adminmail" maxlength="255" value="<?php echo htmlspecialchars( $vars['adminmail'], ENT_QUOTES ); ?>" />
-	<label for="adminpass"><?php echo ADMIN_PASS_LABEL; ?></label>
-	<input type="password" name="adminpass" id="adminpass" maxlength="255" value="" />
-	<script language="javascript">
-<?php if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-echo 'document.getElementById("adminpass").style.minWidth = "60%";
-	  document.getElementById("adminpass").style.cssFloat = "right";
-	  document.getElementById("adminpass").style.styleFloat = "right";';
-	   } else {
-echo 'document.getElementById("adminpass").style.minWidth = "60%";
-	  document.getElementById("adminpass").style.cssFloat = "left";
-	  document.getElementById("adminpass").style.styleFloat = "left";';
-           }
-?>
+				});
+			});
 	</script>
-	 <script language="javascript" src="<?php echo XOOPS_URL;?>/install/include/<?php if(defined('_ADM_USE_RTL') && _ADM_USE_RTL){echo 'percent_bar_rtl.js';}else{echo 'percent_bar.js';}?>
-"></script>
-	<?php if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-echo '<br style="clear:right;" />';
-	   } else {
-echo '<br style="clear:left;" />';
-           }
-?>
-<label for="adminpass2"><?php echo ADMIN_CONFIRMPASS_LABEL; ?></label>
+<fieldset>
+	<h3><?php echo LEGEND_ADMIN_ACCOUNT; ?></h3>
+ <div class="blokinit">
+	<div class="dbconn_line">
+	<label for="adminname"><?php echo ADMIN_DISPLAY_LABEL; ?></label>
+	<div class="clear">&nbsp;</div>
+	<input type="text" name="adminname" id="adminname" maxlength="25" value="<?php echo htmlspecialchars( $vars['adminname'], ENT_QUOTES ); ?>" />
+	</div>
+	<div class="dbconn_line">
+	<label for="adminlogin_name"><?php echo ADMIN_LOGIN_LABEL; ?></label>
+	<div class="clear">&nbsp;</div>
+	<input class="adminlogin_name" type="text" name="adminlogin_name" id="adminlogin_name" maxlength="25" value="<?php echo htmlspecialchars( $vars['adminlogin_name'], ENT_QUOTES ); ?>" />
+	</div>
+	<div class="dbconn_line">
+	<label for="adminmail"><?php echo ADMIN_EMAIL_LABEL; ?></label>
+	<div class="clear">&nbsp;</div>
+	<input type="text" name="adminmail" id="adminmail" maxlength="255" value="<?php echo htmlspecialchars( $vars['adminmail'], ENT_QUOTES ); ?>" />
+	</div>
+	<div class="dbconn_line">
+	<label for="adminpass"><?php echo ADMIN_PASS_LABEL; ?></label>
+	<div class="clear">&nbsp;</div>
+	<input class="password_adv" type="password" name="adminpass" id="adminpass" maxlength="255" value="" />
+	</div>
+	<div class="dbconn_line">
+	<label for="adminpass2"><?php echo ADMIN_CONFIRMPASS_LABEL; ?></label>
+	<div class="clear">&nbsp;</div>
 	<input type="password" name="adminpass2" id="adminpass2" maxlength="255" value="" />
-	<input type="hidden" name="adminsalt" id="adminsalt" maxlength="255" value="<?php echo $adminsalt; ?>" />
+	</div>
+</div>
 </fieldset>
 <?php
 	$content = ob_get_contents();

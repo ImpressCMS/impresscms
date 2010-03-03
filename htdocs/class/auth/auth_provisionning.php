@@ -1,29 +1,18 @@
 <?php
-// $Id: auth_provisionning.php 1029 2007-09-09 03:49:25Z phppp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+// $Id$
+/**
+* Authorization classes, provisionning class file
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	Authorization
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
 
 /**
  * Authentification provisionning class. This class is responsible to
@@ -40,8 +29,8 @@ class XoopsAuthProvisionning {
 
     /**
      * Gets instance of {@link XoopsAuthProvisionning}
-  	 * @param object $auth_instance
-  	 * @return object $provis_instance {@link XoopsAuthProvisionning}
+  	 * @param   object $auth_instance
+  	 * @return  object $provis_instance {@link XoopsAuthProvisionning}
      **/
   	function &getInstance(&$auth_instance)
   	{
@@ -58,22 +47,20 @@ class XoopsAuthProvisionning {
      **/
     function XoopsAuthProvisionning(&$auth_instance) {
         $this->_auth_instance = &$auth_instance;        
-        $config_handler =& xoops_gethandler('config');    
-        $config =& $config_handler->getConfigsByCat(XOOPS_CONF_AUTH);
-        foreach ($config as $key => $val) {
+        global $icmsConfig, $icmsConfigAuth;
+        foreach ($icmsConfigAuth as $key => $val) {
             $this->$key = $val;
         }
-        $config_gen =& $config_handler->getConfigsByCat(XOOPS_CONF);
-        $this->default_TZ = $config_gen['default_TZ'];
-        $this->theme_set = $config_gen['theme_set'];
-        $this->com_mode = $config_gen['com_mode'];
-        $this->com_order = $config_gen['com_order'];
+        $this->default_TZ = $icmsConfig['default_TZ'];
+        $this->theme_set = $icmsConfig['theme_set'];
+        $this->com_mode = $icmsConfig['com_mode'];
+        $this->com_order = $icmsConfig['com_order'];
     }
 
     /**
   	 * Return a Xoops User Object 
-     * @param string $uname Username of the user
-  	 * @return mixed XoopsUser {@link XoopsUser} or false if failed
+     * @param   string $uname Username of the user
+  	 * @return  mixed XoopsUser {@link XoopsUser} or false if failed
   	 */	
   	function getXoopsUser($uname) {
   		$member_handler =& xoops_gethandler('member');
@@ -92,17 +79,17 @@ class XoopsAuthProvisionning {
   	 * @return object XoopsUser {@link XoopsUser}
   	 */
   	function sync($datas, $uname, $pwd = null) {
-  		$xoopsUser = $this->getXoopsUser($uname);		
-  		if (!$xoopsUser) { // Xoops User Database not exists
+  		$icmsUser = $this->getXoopsUser($uname);		
+  		if (!$icmsUser) { // Xoops User Database not exists
   			if ($this->ldap_provisionning) { 
-  				$xoopsUser = $this->add($datas, $uname, $pwd);
+  				$icmsUser = $this->add($datas, $uname, $pwd);
   			} else $this->_auth_instance->setErrors(0, sprintf(_AUTH_LDAP_XOOPS_USER_NOTFOUND, $uname));
   		} else { // Xoops User Database exists
   			if ($this->ldap_provisionning && $this->ldap_provisionning_upd) { 
-  				$xoopsUser = $this->change($xoopsUser, $datas, $uname, $pwd);
+  				$icmsUser = $this->change($icmsUser, $datas, $uname, $pwd);
   			}
   		}
-  		return $xoopsUser;
+  		return $icmsUser;
   	}
 
     /**
@@ -139,33 +126,33 @@ class XoopsAuthProvisionning {
           	$newuser->unsetNew();
           	return $newuser;
           } else {
-      			redirect_header(XOOPS_URL.'/user.php', 5, $newuser->getHtmlErrors());
+      			redirect_header(ICMS_URL.'/user.php', 5, $newuser->getHtmlErrors());
   		}
       	return $ret;
   	}
 
     /**
   	 * Modify user information
-     * @param object {@link XoopsUser} reference to Xoops User Object
+     * @param object {@link XoopsUser} reference to XoopsUser Object
      * @param array $datas Some Data
      * @param string $uname Username of the user
      * @param string $pwd Password of the user
   	 * @return object XoopsUser {@link XoopsUser}
   	 */
-  	function change(&$xoopsUser, $datas, $uname, $pwd = null) {	
+  	function change(&$icmsUser, $datas, $uname, $pwd = null) {	
   		$ret = false;
   		$member_handler =& xoops_gethandler('member');
-  		$xoopsUser->setVar('pass', md5(stripslashes($pwd)));
+  		$icmsUser->setVar('pass', md5(stripslashes($pwd)));
           $tab_mapping = explode('|', $this->ldap_field_mapping);
           foreach ($tab_mapping as $mapping) {
   			$fields = explode('=', trim($mapping));
   			if ($fields[0] && $fields[1])
-  				$xoopsUser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
+  				$icmsUser->setVar(trim($fields[0]), utf8_decode($datas[trim($fields[1])][0]));
           }
-  		if ($member_handler->insertUser($xoopsUser)) {
-          	return $xoopsUser;
+  		if ($member_handler->insertUser($icmsUser)) {
+          	return $icmsUser;
           } else {
-  			redirect_header(XOOPS_URL.'/user.php', 5, $xoopsUser->getHtmlErrors());
+  			redirect_header(ICMS_URL.'/user.php', 5, $icmsUser->getHtmlErrors());
   		}         
       	return $ret;
   	}

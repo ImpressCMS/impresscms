@@ -1,6 +1,6 @@
 <?php
-// $Id: xoopsobject.php 2 2005-11-02 18:23:29Z skalpa $
-if (!defined('XOOPS_ROOT_PATH')) {
+// $Id$
+if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
 /**
@@ -10,5 +10,5 @@ if (!defined('XOOPS_ROOT_PATH')) {
 /**
  * Load the new object class 
  **/
-require_once XOOPS_ROOT_PATH.'/kernel/object.php';
+require_once ICMS_ROOT_PATH.'/kernel/object.php';
 ?>

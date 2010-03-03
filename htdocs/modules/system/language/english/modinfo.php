@@ -1,5 +1,5 @@
 <?php
-// $Id: modinfo.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id$
 // Module Info
 
 // The name of this module
@@ -24,10 +24,14 @@ define('_MI_SYSTEM_BNAME12', "Notification Options");
 define('_MI_SYSTEM_BNAME13', "Themes");
 define('_MI_SYSTEM_BNAME14', "Language Selection");
 
-//Content Manager
+/**
+ * @todo Remove this blocks on future versions. When 1.1.2 isn't supported anymore.
+ */
 define('_MI_SYSTEM_BNAME15', "Content");
 define('_MI_SYSTEM_BNAME16', "Content Menu");
 define('_MI_SYSTEM_BNAME17', "Related Content");
+/**/
+
 define('_MI_SYSTEM_BNAME18', "Share this page!");
 
 // Names of admin menu items
@@ -45,13 +49,23 @@ define("_MI_SYSTEM_ADMENU13", "Images Manager");
 define("_MI_SYSTEM_ADMENU14", "Avatars");
 define("_MI_SYSTEM_ADMENU15", "Templates");
 define("_MI_SYSTEM_ADMENU16", "Comments");
-// Version Added 
+// Version Added
 define("_MI_SYSTEM_ADMENU17", "Version");
-define("_MI_SYSTEM_ADMENU18", "Content Manager");
 define("_MI_SYSTEM_ADMENU19", "Block Positions");
 define("_MI_SYSTEM_ADMENU20", "Symlink Manager");
 define("_MI_SYSTEM_ADMENU21", "Custom Tags");
 
 ######################## Added in 1.2 ###################################
-define('_MI_SYSTEM_BNAME19', "Content Tags");
+define("_MI_SYSTEM_ADMENU22", "Adsense");
+define("_MI_SYSTEM_ADMENU23", "Ratings");
+define("_MI_SYSTEM_ADMENU24", "MimeTypes");
+
+define('_MI_SYSTEM_BNAME101', "System Warnings");
+define('_MI_SYSTEM_BNAME102', "Control Panel");
+define('_MI_SYSTEM_BNAME103', "Installed Modules");
+define('_MI_SYSTEM_BLOCK_BOOKMARKS','My Bookmarks');
+define('_MI_SYSTEM_BLOCK_BOOKMARKS_DESC','Things I have bookmarked');
+
+define("_MI_SYSTEM_ADMENU25", "Autotasks");
+define('_MI_SYSTEM_REMOVEUSERS','Inactivating users');
 ?>

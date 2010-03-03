@@ -1,18 +1,22 @@
 <?php
+/**
+* IcmsPersistableObjects Registry
+*
+* The IcmsPersistableObjects Registry is an object containing IcmsPersistableObject objects that will be reused in the same process
+*
+* @copyright	The ImpressCMS Project http://www.impresscms.org/
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @package		IcmsPersistableObject
+* @since		1.2
+* @author		marcan <marcan@impresscms.org>
+* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @version		$Id$
+*/
 
 if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
 
-/**
- * SmartObjects Registry
- *
- * The SmartObjects Registry is an object containing SmartObject objects that will be reused in the same process
- *
- * @package SmartObject
- * @author marcan <marcan@smartfactory.ca>
- * @link http://smartfactory.ca The SmartFactory
- */
 class IcmsPersistableObjectsRegistry {
 
 	var $_registryArray;
@@ -64,11 +68,11 @@ class IcmsPersistableObjectsRegistry {
     */
 	function addObjectsFromItemName($item, $modulename=false, $criteria=false) {
 		if (!$modulename) {
-			global $xoopsModule;
-			if (!is_object($xoopsModule)) {
+			global $icmsModule;
+			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $xoopsModule->dirname();
+				$modulename = $icmsModule->dirname();
 			}
 		}
 		$object_handler = xoops_getModuleHandler($item, $modulename);
@@ -92,11 +96,11 @@ class IcmsPersistableObjectsRegistry {
     */
 	function getObjects($itemname, $modulename) {
 		if (!$modulename) {
-			global $xoopsModule;
-			if (!is_object($xoopsModule)) {
+			global $icmsModule;
+			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $xoopsModule->dirname();
+				$modulename = $icmsModule->dirname();
 			}
 		}
 		if (isset($this->_registryArray['objects'][$modulename][$itemname])) {
@@ -122,11 +126,11 @@ class IcmsPersistableObjectsRegistry {
     */
 	function getList($itemname, $modulename) {
 		if (!$modulename) {
-			global $xoopsModule;
-			if (!is_object($xoopsModule)) {
+			global $icmsModule;
+			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $xoopsModule->dirname();
+				$modulename = $icmsModule->dirname();
 			}
 		}
 		if (isset($this->_registryArray['list'][$modulename][$itemname])) {
@@ -152,11 +156,11 @@ class IcmsPersistableObjectsRegistry {
     */
 	function getSingleObject($itemname, $key, $modulename=false) {
 		if (!$modulename) {
-			global $xoopsModule;
-			if (!is_object($xoopsModule)) {
+			global $icmsModule;
+			if (!is_object($icmsModule)) {
 				return false;
 			} else {
-				$modulename = $xoopsModule->dirname();
+				$modulename = $icmsModule->dirname();
 			}
 		}
 		if (isset($this->_registryArray['objects'][$modulename][$itemname][$key])) {

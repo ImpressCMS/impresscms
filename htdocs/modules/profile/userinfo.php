@@ -2,39 +2,47 @@
 /**
  * Extended User Profile
  *
- *
- * @copyright       The ImpressCMS Project http://www.impresscms.org/
- * @license         LICENSE.txt
- * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package         modules
- * @since           1.2
- * @author          Jan Pedersen
- * @author          The SmartFactory <www.smartfactory.ca>
- * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version         $Id$
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license	LICENSE.txt
+ * @license	GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @package	modules
+ * @since	1.2
+ * @author	Jan Pedersen
+ * @author	The SmartFactory <www.smartfactory.ca>
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version	$Id$
  */
 
-include 'header.php';
+include '../../mainfile.php';
 
 include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 
-$uid = intval($_GET['uid']);
+$uid = !empty($_GET['uid'])?intval($_GET['uid']):'';
 
 if ($uid <= 0) {
-	if(is_object($xoopsUser)){
-		$uid = $xoopsUser->getVar('uid');
+	if(is_object($icmsUser)){
+		$uid = $icmsUser->getVar('uid');
 	}else{
 		header('location: '.ICMS_URL);
 		exit();
 	}
 }
 
-$gperm_handler = & xoops_gethandler( 'groupperm' );
-$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+if($icmsModuleConfig['profile_social']==1){
+	header('Location: '.ICMS_URL.'/modules/profile/index.php?uid='.$uid);
+	exit();
+}
 
-if (is_object($xoopsUser) && $uid == $xoopsUser->getVar('uid')) {
+$gperm_handler = & xoops_gethandler( 'groupperm' );
+$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
+if (!$icmsConfigUser['allow_annon_view_prof'] && !is_object($icmsUser)) {
+	redirect_header(ICMS_URL.'/user.php', 3, _NOPERM);
+	exit ();
+}
+
+if (is_object($icmsUser) && $uid == $icmsUser->getVar('uid')) {
     //disable cache
-    $xoopsConfig['module_cache'][$xoopsModule->getVar('mid')] = 0;
+    $icmsConfig['module_cache'][$icmsModule->getVar('mid')] = 0;
     $xoopsOption['template_main'] = 'profile_userinfo.html';
     include ICMS_ROOT_PATH.'/header.php';
 
@@ -43,31 +51,36 @@ if (is_object($xoopsUser) && $uid == $xoopsUser->getVar('uid')) {
     $xoopsTpl->assign('lang_changepassword', _PROFILE_MA_CHANGEPASSWORD);
     $xoopsTpl->assign('lang_avatar', _PROFILE_MA_AVATAR);
     $xoopsTpl->assign('lang_logout', _PROFILE_MA_LOGOUT);
-    if ($xoopsModuleConfig['self_delete'] == 1) {
+    if ($icmsConfigUser['self_delete'] == 1) {
         $xoopsTpl->assign('user_candelete', true);
         $xoopsTpl->assign('lang_deleteaccount', _PROFILE_MA_DELACCOUNT);
     } else {
         $xoopsTpl->assign('user_candelete', false);
     }
-    $xoopsTpl->assign('user_changeemail', $xoopsModuleConfig['allow_chgmail']);
-    $thisUser =& $xoopsUser;
+    $xoopsTpl->assign('user_changeemail', $icmsConfigUser['allow_chgmail']);
+    $thisUser =& $icmsUser;
 } else {
     $member_handler =& xoops_gethandler('member');
     $thisUser =& $member_handler->getUser($uid);
-    if (!is_object($thisUser) || (!$thisUser->isActive() && (!$xoopsUser || !$xoopsUser->isAdmin()))) {
+    if (!is_object($thisUser) || (!$thisUser->isActive() && (!$icmsUser || !$icmsUser->isAdmin()))) {
         redirect_header(ICMS_URL."/modules/".basename( dirname( __FILE__ ) ),3,_PROFILE_MA_SELECTNG);
         exit();
     }
-    if ($xoopsUserIsAdmin) {
+    if ($icmsUserIsAdmin) {
         //disable cache
-        $xoopsConfig['module_cache'][$xoopsModule->getVar('mid')] = 0;
+        $icmsConfig['module_cache'][$icmsModule->getVar('mid')] = 0;
     }
     $xoopsOption['template_main'] = 'profile_userinfo.html';
-    include(ICMS_ROOT_PATH.'/header.php');
+    include ICMS_ROOT_PATH.'/header.php';
     $xoopsTpl->assign('user_ownpage', false);
 }
 
-if ( is_object($xoopsUser) && $xoopsUser->isAdmin() ) {
+// adding profile stylesheet
+$dirname = basename( dirname( __FILE__ ) );
+$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/profile'.(@_ADM_USE_RTL == 1 ? '_rtl':'').'.css');
+if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_URL.'/modules/'.$dirname.'/assets/css/tabs-ie.css');}
+
+if ( is_object($icmsUser) && $icmsUser->isAdmin() ) {
     $xoopsTpl->assign('lang_editprofile', _PROFILE_MA_EDITPROFILE);
     $xoopsTpl->assign('lang_deleteaccount', _PROFILE_MA_DELACCOUNT);
     $xoopsTpl->assign('user_uid', $thisUser->getVar('uid'));
@@ -93,18 +106,20 @@ unset($cat_crit);
 //    $categories[0]['fields'][] = array('title' => _PROFILE_MA_REALNAME, 'value' => $thisUser->getVar('name'));
 //    $weights[0][] = 0;
 //}
-$avatar = "";
+$avatar = '';
 if($thisUser->getVar('user_avatar') && "blank.gif" != $thisUser->getVar('user_avatar')){
     $avatar = ICMS_UPLOAD_URL."/".$thisUser->getVar('user_avatar');
+}elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
+    $avatar = $thisUser->gravatar('G', $icmsConfigUser['avatar_width']);
 }
 
-if ($thisUser->getVar('user_viewemail') == 1) {
+if ($thisUser->getVar('user_viewemail') == 1 && is_object($icmsUser)) { //MPB disallow anonymous viewing
     $email = $thisUser->getVar('email', 'E');
 } else {
-    $email = "";
-    if (is_object($xoopsUser)) {
+    $email = _PROFILE_MA_SENDPM;
+    if (is_object($icmsUser)) {
         // Module admins will be allowed to see emails
-        if ($xoopsUser->isAdmin() || ($xoopsUser->getVar("uid") == $thisUser->getVar("uid"))) {
+        if ($icmsUser->isAdmin() || ($icmsUser->getVar("uid") == $thisUser->getVar("uid"))) {
             $email = $thisUser->getVar('email', 'E');
         }
     }
@@ -128,7 +143,7 @@ foreach (array_keys($fields) as $i) {
          if (is_array($value)) {
             $value = implode('<br />', array_values($value));
         }
-        if($xoopsModuleConfig['show_empty'] || $value){
+        if($icmsModuleConfig['show_empty'] || $value){
             $categories[$catid]['fields'][$fields[$i]->getVar('field_weight')."_".$i] = array('title' => $fields[$i]->getVar('field_title'), 'value' => $value);
            	ksort($categories[$catid]['fields']);
            	$weights[$catid][] = $fields[$i]->getVar('catid');
@@ -147,7 +162,7 @@ foreach (array_keys($categories) as $i) {
 $xoopsTpl->assign('categories', $categories);
 // Dynamic user profiles end
 
-if ($xoopsModuleConfig['profile_search']) {
+if ($icmsModuleConfig['profile_search']) {
     $module_handler =& xoops_gethandler('module');
     $criteria = new CriteriaCompo(new Criteria('hassearch', 1));
     $criteria->add(new Criteria('isactive', 1));
@@ -187,12 +202,26 @@ if ($xoopsModuleConfig['profile_search']) {
     }
 }
 
+//get username for display
+if ($icmsModuleConfig['index_real_name'] == 'real' && trim($thisUser->getVar('name'))) {
+	$owner_name = is_object($thisUser) ? trim($thisUser->getVar('name')) : _GUESTS;
+} elseif ($icmsModuleConfig['index_real_name'] == 'both' && trim($thisUser->getVar('name'))) {
+	$owner_name = is_object($thisUser) ? trim($thisUser->getVar('name')).' ('.trim($thisUser->getVar('uname')).')' : _GUESTS;
+} else {
+	$owner_name = is_object($thisUser) ? trim($thisUser->getVar('uname')) : _GUESTS;
+}
+$xoopsTpl->assign('user_name_header', $owner_name);
 //User info
+$xoopsTpl->assign('uname', $thisUser->getVar('uname'));
+// MPB - ADD - START
+$xoopsTpl->assign('name', $thisUser->getVar('name'));
+$xoopsTpl->assign('user_pmlink', "javascript:openWithSelfMain('".ICMS_URL."/pmlite.php?send2=1&amp;to_userid=".$thisUser->getVar('uid')."', 'pmlite', 450, 380);");
+$xoopsTpl->assign('user_pmlink_imgsrc_alttxt', sprintf(_SENDPMTO, $thisUser->getVar('uname')));
+// MPB - ADD - END
 $xoopsTpl->assign('uname', $thisUser->getVar('uname'));
 $xoopsTpl->assign('email', $email);
 $xoopsTpl->assign('avatar', $avatar);
-$xoopsTpl->assign('module_home', _PROFILE_MA_PROFILE);
-//$xoopsTpl->assign('categoryPath', _PROFILE_MA_USERINFO);
+//$xoopsTpl->assign('profile_category', _PROFILE_MA_USERINFO);
 
 include 'footer.php';
 ?>

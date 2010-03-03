@@ -4,14 +4,11 @@
 *
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
+* @package		Administration
 * @since		1.1
 * @author		marcan <marcan@impresscms.org>
 * @version		$Id$
 */
-
-
-
 
 $modversion['name'] = _MD_AM_CUSTOMTAGS;
 $modversion['version'] = "1.0";
@@ -25,4 +22,5 @@ $modversion['image'] = "banners.gif";
 $modversion['hasAdmin'] = 1;
 $modversion['adminpath'] = "admin.php?fct=customtag";
 $modversion['category'] = XOOPS_SYSTEM_CUSTOMTAGS;
+
 ?>

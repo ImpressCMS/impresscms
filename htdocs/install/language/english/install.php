@@ -6,7 +6,7 @@
 * @author       Skalpa Keo <skalpa@xoops.org>
 * @author       Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
 * @since        1.0
-* @version		$Id: install.php 607 2006-07-03 00:23:48Z skalpa $
+* @version		$Id$
 * @package 		installer
 */
 
@@ -37,8 +37,9 @@ define( "FAILED", "Failed" );
 // Titles (main and pages)
 define( "XOOPS_INSTALL_WIZARD", " %s - Installation Wizard" );
 define( "INSTALL_STEP", "Step" );
+define( "INSTALL_H3_STEPS", "Steps" );
 define( "INSTALL_OUTOF", " out of " );
-define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"http://www.impresscms.org\">The ImpressCMS Project</a>" );
+define( "INSTALL_COPYRIGHT", "Copyright &copy; 2007-" . date('Y', time()) . " <a href=\"http://www.impresscms.org\" target=\"_blank\">The ImpressCMS Project</a>" );
 
 define( "LANGUAGE_SELECTION", "Language selection" );
 define( "LANGUAGE_SELECTION_TITLE", "Choose your language");		// L128
@@ -66,7 +67,7 @@ define( "WELCOME_TITLE", "Installation of ImpressCMS completed" );		// L0
 define( "MODULES_INSTALL", "Install modules" );
 define( "MODULES_INSTALL_TITLE", "Installation of modules " );
 define( "NO_PHP5_TITLE", "No PHP 5" );
-define( "NO_PHP5_CONTENT","PHP 5 is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to PHP5 before attempting to install again. For more information, read <a href='http://community.impresscms.org/modules/smartsection/item.php?itemid=122' >ImpressCMS on PHP5 </a>.");
+define( "NO_PHP5_CONTENT","PHP 5.2.0 minimum is required for ImpressCMS to function properly - your installation cannot continue. Please work with your hosting provider to upgrade your environment to a version of PHP that is newer than 5.2.0 (5.2.8 + is recommended) before attempting to install again. For more information, read <a href='http://community.impresscms.org/modules/smartsection/item.php?itemid=122' >ImpressCMS on PHP5 </a>.");
 define( "SAFE_MODE", "Safe Mode On" );
 define( "SAFE_MODE_TITLE", "Safe Mode On" );
 define( "SAFE_MODE_CONTENT", "ImpressCMS has detected PHP is running in Safe Mode. Because of this, your installation cannot continue. Please work with your hosting provider to change your environment before attempting to install again." );
@@ -97,7 +98,6 @@ define( "DB_COLLATION_HELP",  "A collation is a set of rules for comparing chara
 define( "DB_PREFIX_LABEL", "Table prefix" );	// L30
 define( "DB_PREFIX_HELP",  "This prefix will be added to all new tables created to avoid name conflicts in the database. If you are unsure, just keep the default"); // L63
 define( "DB_PCONNECT_LABEL", "Use persistent connection" );	// L54
-define( "DB_PCONNECT_HELP",  "Persistent connections are useful with slower internet connections. They are not generally required for most installations. Default is 'NO'. Choose 'NO' if you are unsure"); // L69
 
 define( "DB_SALT_LABEL", "Password Salt Key" );	// L98
 define( "DB_SALT_HELP",  "This salt key will be appended to passwords in function icms_encryptPass(), and is used to create a totally unique secure password. Do Not change this key once your site is live, doing so will render ALL passwords invalid. If you are unsure, just keep the default"); // L97
@@ -165,11 +165,10 @@ define( "ERR_CHARSET_NOT_SET", "Default character set is not set for ImpressCMS 
 
 
 //
-define("_INSTALL_SELECT_MODS_INTRO", "In the selection box on the left side, please select the modules that
-you wish to install on this site.
-All the installed modules are accessible by the admin group and the registered users.
-In case you would like to give visitors to the site (unregistered users or users who are not logged in) access to one or more of the
-installed modules please select these modules in the selection box on the right.");
+define("_INSTALL_SELECT_MODS_INTRO", 'From the list below, please select the modules that you wish to install on this site. <br /><br />
+All the installed modules are accessible by the Administrators group and the Registered Users group by default. <br /><br />
+If you need to set permissions for Anonymous Users please do so in the Administration Panel after you complete this installer. <br /><br />
+For more information regarding Group Administration, please visit the <a href="http://wiki.impresscms.org/index.php?title=Permissions" rel="external">wiki</a>.');
 
 define("_INSTALL_SELECT_MODULES", 'Select modules to be installed');
 define("_INSTALL_SELECT_MODULES_ANON_VISIBLE", 'Select modules visible to visitors');
@@ -224,5 +223,13 @@ define("_DEF_LANG_TAGS",'en,fr'); //Add local translation
 define("_DEF_LANG_NAMES",'english,french'); //Add local translation
 define("_LOCAL_LANG_NAMES",'English,Français'); //Add local translation
 define("_EXT_DATE_FUNC","0"); // change 0 to 1 if this language has an extended date function
+
+######################## Added in 1.2 ###################################
 define( "ADMIN_DISPLAY_LABEL", "Admin Display Name" ); // L37
+define('_CORE_PASSLEVEL1','Too short');
+define('_CORE_PASSLEVEL2','Weak');
+define('_CORE_PASSLEVEL3','Good');
+define('_CORE_PASSLEVEL4','Strong');
+define('DB_PCONNECT_HELP', "Persistent connections are useful with slower internet connections. They are not generally required for most installations. Default is 'NO'. Choose 'NO' if you are unsure"); // L69
+define( "DB_PCONNECT_HELPS",  "Persistent connections are useful with slower internet connections. They are not generally required for most installations."); // L69
 ?>

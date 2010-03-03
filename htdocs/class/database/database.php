@@ -1,128 +1,132 @@
-<?php
-// $Id: database.php 506 2006-05-26 23:10:37Z skalpa $
-// database.php - defines abstract database wrapper class
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
+<?php 
 /**
- * @package database
- * @subpackage  main
- * @since XOOPS
- * @version $Id: $
+ * Database Base Class
  *
+ * Defines abstract database wrapper class
+ * 
+ * @copyright	The XOOPS Project <http://www.xoops.org/>
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license	LICENSE.txt
+ * @package	database
+ * @since	XOOPS
+ * @version	$Id$
+ * @author	The XOOPS Project Community <http://www.xoops.org>
  * @author      Kazumi Ono  <onokazu@xoops.org>
- * @copyright   copyright (c) 2000-2003 XOOPS.org
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @author	Gustavo Alejandro Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
  */
 
 /**
- * make sure this is only included once!
+ * Make sure this is only included once!
  */
 if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
 	define("XOOPS_C_DATABASE_INCLUDED",1);
 
-/**
- * Abstract base class for Database access classes
- *
- * @abstract
- *
- * @package database
- * @subpackage  main
- * @since XOOPS
- *
- * @author      Kazumi Ono  <onokazu@xoops.org>
- * @copyright   copyright (c) 2000-2003 XOOPS.org
- * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- */
-class XoopsDatabase
-	{
+	/**
+	 * Abstract base class for Database access classes
+	 *
+	 * @abstract
+	 *
+	 * @package database
+	 * @subpackage  main
+	 *
+	 * @author      Gustavo Pilla  (aka nekro) <nekro@impresscms.org>
+	 * @copyright   copyright (c) 2000-2003 XOOPS.org
+	 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+	 */
+  	abstract class IcmsDatabase {
+		
 		/**
 		 * Prefix for tables in the database
 		 * @var string
 		 */
-		var $prefix = '';
+		public $prefix = '';
+		
 		/**
 		 * reference to a {@link XoopsLogger} object
-         * @see XoopsLogger
+		 * @see XoopsLogger
 		 * @var object XoopsLogger
 		 */
-		var $logger;
+		public $logger;
 		
-    	/**
-    	 * If statements that modify the database are selected
-    	 * @var boolean
-    	 */
-    	var $allowWebChanges = false;
-
 		/**
-		 * constructor
-         *
-         * will always fail, because this is an abstract class!
+		 * If statements that modify the database are selected
+		 * @var boolean
 		 */
-		function XoopsDatabase()
-		{
-			// exit("Cannot instantiate this class directly");
-		}
-
+	 	public $allowWebChanges = false;
+	   
+	    /**
+	     * Constructor
+	     *
+	     * Will always fail, because this is an abstract class!
+	     */
+		public function __construct() { /* exit("Cannot instantiate this class directly"); */ }
+		
 		/**
 		 * assign a {@link XoopsLogger} object to the database
 		 *
-         * @see XoopsLogger
-         * @param object $logger reference to a {@link XoopsLogger} object
+		 * @see XoopsLogger
+		 * @param object $logger reference to a {@link XoopsLogger} object
 		 */
-		function setLogger(&$logger)
-		{
+		public function setLogger(&$logger) {
 			$this->logger =& $logger;
 		}
-
+	 
 		/**
 		 * set the prefix for tables in the database
 		 *
-         * @param string $value table prefix
+		 * @param string $value table prefix
 		 */
-		function setPrefix($value)
-		{
-			$this->prefix = $value;
-		}
-
+	   	public function setPrefix($value) {
+	   		$this->prefix = $value;
+	   	}
+	
 		/**
 		 * attach the prefix.'_' to a given tablename
-         *
-         * if tablename is empty, only prefix will be returned
 		 *
-         * @param string $tablename tablename
-         * @return string prefixed tablename, just prefix if tablename is empty
+		 * if tablename is empty, only prefix will be returned
+		 *
+		 * @param string $tablename tablename
+		 * @return string prefixed tablename, just prefix if tablename is empty
 		 */
-		function prefix($tablename='')
-		{
+		public function prefix($tablename='') {
 			if ( $tablename != '' ) {
 				return $this->prefix .'_'. $tablename;
 			} else {
 				return $this->prefix;
 			}
 		}
-	}
+		
+		/**
+		 * 
+		 *
+		 * @since	ImpressCMS 1.3
+		 * @param	string 	$tablename	tablename
+		 */
+		public function wildcard($tablename=''){
+			$wildcard = 'a'.substr( md5( $tablename ) , 0, 4);
+			return $wildcard;
+		}
+	} 
+	
+	/**
+	 * Abstract base class for Database access classes
+	 *
+	 * @abstract
+	 *
+	 * @package database
+	 * @subpackage  main
+	 * @since XOOPS
+	 *
+	 * @author      Kazumi Ono  <onokazu@xoops.org>
+	 * @copyright   copyright (c) 2000-2003 XOOPS.org
+	 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+	 * 
+	 * @deprecated
+	 */
+	abstract class XoopsDatabase extends IcmsDatabase { /* For Backwards compatibility */ }
+	
 }
 
 
@@ -139,12 +143,9 @@ class XoopsDatabase
  *
  * @deprecated
  */
-class Database
-{
-
-	function &getInstance() {
-		$inst =& XoopsDatabaseFactory::getDatabaseConnection();
-		return $inst;
+class Database {
+	static public function &getInstance() {
+		return XoopsDatabaseFactory::getDatabaseConnection();
 	}
 }
 

@@ -1,36 +1,21 @@
 <?php
-// $Id: main.php 1029 2007-09-09 03:49:25Z phppp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+// $Id$
+/**
+* Administration of preferences, main file
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	Administration
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
 
 
-if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->isAdmin ( $xoopsModule->mid () )) {
+if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isAdmin ( $icmsModule->mid () )) {
 	exit ( "Access Denied" );
 } else {
 	if (isset ( $_POST )) {
@@ -39,16 +24,17 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		}
 	}
 	$op = (isset ( $_GET ['op'] )) ? trim ( StopXSS ( $_GET ['op'] ) ) : ((isset ( $_POST ['op'] )) ? trim ( StopXSS ( $_POST ['op'] ) ) : 'list');
-	
+
 	if (isset ( $_GET ['confcat_id'] )) {
 		$confcat_id = intval ( $_GET ['confcat_id'] );
 	}
+
 	if ($op == 'list') {
 		/**
 		 * Allow easely change the order of Preferences.
 		 * $order = 1; Alphabetically order;
 		 * $order = 0; Weight order;
-		 * 
+		 *
 		 * @todo: Create a preference option to set this value and improve the way to change the order.
 		 */
 		$order = 1;
@@ -66,7 +52,7 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		if ($order == 1) {
 			array_multisort ( $column, SORT_ASC, $ccats );
 		}
-		
+
 		xoops_cp_header ();
 		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_URL . '/modules/system/admin/preferences/images/preferences_big.png)">' . _MD_AM_SITEPREF . '</div><br /><ul>';
 		foreach ( $ccats as $confcat ) {
@@ -76,7 +62,7 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		xoops_cp_footer ();
 		exit ();
 	}
-	
+
 	if ($op == 'show') {
 		if (empty ( $confcat_id )) {
 			$confcat_id = 1;
@@ -88,6 +74,7 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		}
 		include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 		include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
+		global $icmsConfigUser;
 		$form = new XoopsThemeForm ( constant ( $confcat->getVar ( 'confcat_name' ) ), 'pref_form', 'admin.php?fct=preferences', 'post', true );
 		$config_handler = & xoops_gethandler ( 'config' );
 		$criteria = new CriteriaCompo ( );
@@ -96,7 +83,7 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		$config = $config_handler->getConfigs ( $criteria );
 		$confcount = count ( $config );
 		for($i = 0; $i < $confcount; $i ++) {
-			$title = (! defined ( $config [$i]->getVar ( 'conf_desc' ) ) || constant ( $config [$i]->getVar ( 'conf_desc' ) ) == '') ? constant ( $config [$i]->getVar ( 'conf_title' ) ) : constant ( $config [$i]->getVar ( 'conf_title' ) ) . '<br /><br /><span style="font-weight:normal;">' . constant ( $config [$i]->getVar ( 'conf_desc' ) ) . '</span>';
+			$title = (! defined ( $config [$i]->getVar ( 'conf_desc' ) ) || constant ( $config [$i]->getVar ( 'conf_desc' ) ) == '') ? constant ( $config [$i]->getVar ( 'conf_title' ) ) : constant ( $config [$i]->getVar ( 'conf_title' ) ) . '<img class="helptip" src="./images/view_off.png" alt="Vew help text" /><span class="helptext">' . constant ( $config [$i]->getVar ( 'conf_desc' ) ) . '</span>';
 			switch ( $config [$i]->getVar ( 'conf_formtype' )) {
 				case 'textsarea' :
 					$myts = & MyTextSanitizer::getInstance ();
@@ -116,8 +103,17 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 						$ele = new XoopsFormDhtmlTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 					}
 				break;
+				case 'autotasksystem':
+					$handler = xoops_getmodulehandler('autotasks', 'system');
+					$options = &$handler->getSystemHandlersList(true);
+					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 1, false );
+					foreach ($options as $option) {
+						$ele->addOption ( $option, $option );
+					}
+					unset($handler, $options, $option);
+				break;
 				case 'select' :
-					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ),  $config [$i]->getConfValueForOutput () );
 					$options = $config_handler->getConfigOptions ( new Criteria ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
 					$opcount = count ( $options );
 					for($j = 0; $j < $opcount; $j ++) {
@@ -141,38 +137,44 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				break;
 				case 'theme' :
 				case 'theme_multi' :
+				case 'theme_admin' :
 					$ele = ($config [$i]->getVar ( 'conf_formtype' ) != 'theme_multi') ? new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () ) : new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = XoopsLists::getThemesList ();
+					$dirlist = ($config [$i]->getVar ( 'conf_formtype' ) != 'theme_admin') ? XoopsLists::getThemesList () : XoopsLists::getAdminThemesList ();
 					if (! empty ( $dirlist )) {
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
 					}
-					//$themeset_handler =& xoops_gethandler('themeset');
-					//$themesetlist =& $themeset_handler->getList();
-					//asort($themesetlist);
-					//foreach ($themesetlist as $key => $name) {
-					//  $ele->addOption($key, $name.' ('._MD_AM_THEMESET.')');
-					//}
-					// old theme value is used to determine whether to update cache or not. kind of dirty way
 					$form->addElement ( new XoopsFormHidden ( '_old_theme', $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'editor' :
 				case 'editor_multi' :
-					$ele = ($config [$i]->getVar ( 'conf_formtype' ) != 'editor_multi') ? new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () ) : new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
+				case 'editor_source' :
+					$type = explode('_', $config [$i]->getVar ( 'conf_formtype' ));
+					$count = count($type);
+					$isMulti = $type[$count-1] == 'multi';
+					if ($isMulti) {
+						$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 5, true );
+						$type = $type[$count-2];
+					} else {
+						$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+						$type = $type[$count-1];
+					}
+					if ($type == 'editor') $type = '';
 					//$ele->addOption ( "default" );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = XoopsLists::getEditorsList ();
+					$dirlist = XoopsLists::getEditorsList ($type);
 					if (! empty ( $dirlist )) {
-						if ($config [$i]->getVar ( 'conf_formtype' ) != 'editor_multi') {
+						/*if ($config [$i]->getVar ( 'conf_formtype' ) != 'editor_multi') {
 							unset ( $dirlist ['default'] );
 						} else {
 							global $xoopsConfig;
 							unset ( $dirlist [$xoopsConfig ['editor_default']] );
-						}
+						}*/
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
 					}
+					unset($type, $count, $isMulti);
 				break;
 				case 'select_font' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
@@ -187,7 +189,7 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				case 'select_plugin' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 8, true );
 					require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$dirlist = XoopsLists::getPhpListAsArray ( ICMS_ROOT_PATH.'/plugins/textsanitizer/' );
+					$dirlist = XoopsLists::getDirListAsArray ( ICMS_ROOT_PATH.'/plugins/textsanitizer/' );
 					if (! empty ( $dirlist )) {
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
@@ -214,7 +216,7 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				case 'startpage' :
 					$member_handler = & xoops_gethandler ( 'member' );
 					$grps = $member_handler->getGroupList ();
-					
+
 					$value = $config [$i]->getConfValueForOutput ();
 					if (! is_array ( $value )) {
 						$value = array ( );
@@ -222,22 +224,22 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 							$value [$k] = $config [$i]->getConfValueForOutput ();
 						}
 					}
-					
+
 					$module_handler = & xoops_gethandler ( 'module' );
 					$criteria = new CriteriaCompo ( new Criteria ( 'hasmain', 1 ) );
 					$criteria->add ( new Criteria ( 'isactive', 1 ) );
 					$moduleslist = $module_handler->getList ( $criteria, true );
 					$moduleslist ['--'] = _MD_AM_NONE;
-					
+
 					//Adding support to select custom links to be the start page
 					$page_handler = & xoops_gethandler ( 'page' );
 					$criteria = new CriteriaCompo ( new Criteria ( 'page_status', 1 ) );
 					$criteria->add ( new Criteria ( 'page_url', '%*', 'NOT LIKE' ) );
 					$pagelist = $page_handler->getList ( $criteria );
-					
+
 					$list = array_merge ( $moduleslist, $pagelist );
 					asort ( $list );
-					
+
 					$ele = new XoopsFormElementTray ( $title, '<br />' );
 					$hv = '';
 					foreach ( $grps as $k => $v ) {
@@ -251,10 +253,10 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 					}
 				break;
 				case 'group' :
-					$ele = new XoopsFormSelectGroup ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 1, false );
+					$ele = new XoopsFormSelectGroup ( $title, $config [$i]->getVar ( 'conf_name' ), true, $config [$i]->getConfValueForOutput (), 1, false );
 				break;
 				case 'group_multi' :
-					$ele = new XoopsFormSelectGroup ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 5, true );
+					$ele = new XoopsFormSelectGroup ( $title, $config [$i]->getVar ( 'conf_name' ), true, $config [$i]->getConfValueForOutput (), 5, true );
 				break;
 				// RMV-NOTIFY - added 'user' and 'user_multi'
 				case 'user' :
@@ -287,7 +289,7 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				break;
 				case 'password' :
 					$myts = & MyTextSanitizer::getInstance ();
-					$ele = new XoopsFormPassword ( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
+					$ele = new XoopsFormPassword ( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ), false, ($icmsConfigUser['pass_level']?'password_adv':'') );
 				break;
 				case 'color' :
 					$myts = & MyTextSanitizer::getInstance ();
@@ -299,7 +301,11 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				break;
 				case 'select_pages' :
 					$myts = & MyTextSanitizer::getInstance ();
-					$content_handler = & xoops_gethandler ( 'content' );
+					if (!file_exists(ICMS_ROOT_PATH.'/kernel/content.php')){
+						$content_handler = & xoops_getmodulehandler ( 'content', 'content' );
+					}else{
+						$content_handler = & xoops_gethandler ( 'content' );
+					}
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 					$ele->addOptionArray ( $content_handler->getContentList () );
 				break;
@@ -351,7 +357,7 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		xoops_cp_footer ();
 		exit ();
 	}
-	
+
 	if ($op == 'showmod') {
 		$config_handler = & xoops_gethandler ( 'config' );
 		$mod = isset ( $_GET ['mod'] ) ? intval ( $_GET ['mod'] ) : 0;
@@ -368,25 +374,23 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		$form = new XoopsThemeForm ( _MD_AM_MODCONFIG, 'pref_form', 'admin.php?fct=preferences', 'post', true );
 		$module_handler = & xoops_gethandler ( 'module' );
 		$module = & $module_handler->get ( $mod );
-		if (file_exists ( ICMS_ROOT_PATH . '/modules/' . $module->getVar ( 'dirname' ) . '/language/' . $xoopsConfig ['language'] . '/modinfo.php' )) {
-			include_once ICMS_ROOT_PATH . '/modules/' . $module->getVar ( 'dirname' ) . '/language/' . $xoopsConfig ['language'] . '/modinfo.php';
-		}
+		icms_loadLanguageFile($module->getVar ( 'dirname' ), 'modinfo');
 		// if has comments feature, need comment lang file
 		if ($module->getVar ( 'hascomments' ) == 1) {
-			include_once ICMS_ROOT_PATH . '/language/' . $xoopsConfig ['language'] . '/comment.php';
+			icms_loadLanguageFile('core', 'comment');
 		}
 		// RMV-NOTIFY
 		// if has notification feature, need notification lang file
 		if ($module->getVar ( 'hasnotification' ) == 1) {
-			include_once ICMS_ROOT_PATH . '/language/' . $xoopsConfig ['language'] . '/notification.php';
+			icms_loadLanguageFile('core', 'notification');
 		}
-		
+
 		$modname = $module->getVar ( 'name' );
 		if ($module->getInfo ( 'adminindex' )) {
 			$form->addElement ( new XoopsFormHidden ( 'redirect', ICMS_URL . '/modules/' . $module->getVar ( 'dirname' ) . '/' . $module->getInfo ( 'adminindex' ) ) );
 		}
 		for($i = 0; $i < $count; $i ++) {
-			$title = (! defined ( $config [$i]->getVar ( 'conf_desc' ) ) || constant ( $config [$i]->getVar ( 'conf_desc' ) ) == '') ? constant ( $config [$i]->getVar ( 'conf_title' ) ) : constant ( $config [$i]->getVar ( 'conf_title' ) ) . '<br /><br /><span style="font-weight:normal;">' . constant ( $config [$i]->getVar ( 'conf_desc' ) ) . '</span>';
+			$title = (! defined ( $config [$i]->getVar ( 'conf_desc' ) ) || constant ( $config [$i]->getVar ( 'conf_desc' ) ) == '') ? constant ( $config [$i]->getVar ( 'conf_title' ) ) : constant ( $config [$i]->getVar ( 'conf_title' ) ) . '<img class="helptip" src="./images/view_off.png" alt="Vew help text" /><span class="helptext">' . constant ( $config [$i]->getVar ( 'conf_desc' ) ) . '</span>';
 			switch ( $config [$i]->getVar ( 'conf_formtype' )) {
 				case 'textsarea' :
 					$myts = & MyTextSanitizer::getInstance ();
@@ -408,6 +412,7 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				break;
 				case 'select' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+
 					$options = & $config_handler->getConfigOptions ( new Criteria ( 'conf_id', $config [$i]->getVar ( 'conf_id' ) ) );
 					$opcount = count ( $options );
 					for($j = 0; $j < $opcount; $j ++) {
@@ -431,11 +436,11 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				break;
 				case 'group' :
 					include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$ele = new XoopsFormSelectGroup ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 1, false );
+					$ele = new XoopsFormSelectGroup ( $title, $config [$i]->getVar ( 'conf_name' ), true, $config [$i]->getConfValueForOutput (), 1, false );
 				break;
 				case 'group_multi' :
 					include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$ele = new XoopsFormSelectGroup ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 5, true );
+					$ele = new XoopsFormSelectGroup ( $title, $config [$i]->getVar ( 'conf_name' ), true, $config [$i]->getConfValueForOutput (), 5, true );
 				break;
 				// RMV-NOTIFY: added 'user' and 'user_multi'
 				case 'user' :
@@ -460,7 +465,11 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 				break;
 				case 'select_pages' :
 					$myts = & MyTextSanitizer::getInstance ();
-					$content_handler = & xoops_gethandler ( 'content' );
+					if (!file_exists(ICMS_ROOT_PATH.'/kernel/content.php')){
+						$content_handler = & xoops_getmodulehandler ( 'content', 'content' );
+					}else{
+						$content_handler = & xoops_gethandler ( 'content' );
+					}
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 					$ele->addOptionArray ( $content_handler->getContentList () );
 				break;
@@ -478,19 +487,24 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		$form->addElement ( new XoopsFormHidden ( 'op', 'save' ) );
 		$form->addElement ( new XoopsFormButton ( '', 'button', _GO, 'submit' ) );
 		xoops_cp_header ();
+		if ($module->getInfo('hasAdmin') == true) {
+			$modlink = '<a href="'.ICMS_URL.'/modules/'.$module->getVar('dirname').'/'.$module->getInfo('adminindex').'">'.$modname.'</a>';
+		} else {
+			$modlink = $modname;
+		}
 		$iconbig = $module->getInfo('iconbig');
 		if ( isset( $iconbig ) && $iconbig == false ) {
-			echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/preferences/images/preferences_big.png);">'.$modname.' &raquo; '._PREFERENCES.'</div>';
-			
-		} 
+			echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/preferences/images/preferences_big.png);">'.$modlink.' &raquo; '._PREFERENCES.'</div>';
+
+		}
 		if ( isset( $iconbig ) && $iconbig == true ) {
-			echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/'.$module->getVar('dirname').'/'.$iconbig.')">'.$modname.' &raquo; '._PREFERENCES.'</div>';
+			echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/'.$module->getVar('dirname').'/'.$iconbig.')">'.$modlink.' &raquo; '._PREFERENCES.'</div>';
 		}
 		$form->display ();
 		xoops_cp_footer ();
 		exit ();
 	}
-	
+
 	if ($op == 'save') {
 		if (! $GLOBALS ['xoopsSecurity']->check ()) {
 			redirect_header ( 'admin.php?fct=preferences', 3, implode ( '<br />', $GLOBALS ['xoopsSecurity']->getErrors () ) );
@@ -502,38 +516,61 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		$theme_updated = false;
 		$startmod_updated = false;
 		$lang_updated = false;
+		$encryption_updated = false;
+		$purifier_style_updated = false;
+		$saved_config_items = array();
 		if ($count > 0) {
 			for($i = 0; $i < $count; $i ++) {
 				$config = & $config_handler->getConfig ( $conf_ids [$i] );
 				$new_value = & ${$config->getVar ( 'conf_name' )};
-				if (is_array ( $new_value ) || $new_value != $config->getVar ( 'conf_value' )) {
-					// if language has been changed
-					if (! $lang_updated && $config->getVar ( 'conf_catid' ) == XOOPS_CONF && $config->getVar ( 'conf_name' ) == 'language') {
-						$xoopsConfig ['language'] = ${$config->getVar ( 'conf_name' )};
-						$lang_updated = true;
-					}
-					// if default theme has been changed
-					if (! $theme_updated && $config->getVar ( 'conf_catid' ) == XOOPS_CONF && $config->getVar ( 'conf_name' ) == 'theme_set') {
-						$member_handler = & xoops_gethandler ( 'member' );
-						$member_handler->updateUsersByField ( 'theme', ${$config->getVar ( 'conf_name' )} );
-						$theme_updated = true;
-					}
-					// if password encryption has been changed
-					if($config->getVar('conf_catid') == XOOPS_CONF_USER && $config->getVar('conf_name') == 'enc_type')
-					{
-						if($config->getVar('closesite') !== 1)
-						{
-							$member_handler = & xoops_gethandler('member');
-							$member_handler->updateUsersByField('pass_expired', 1);
-						}
-						else
-						{
-							redirect_header('admin.php?fct=preferences', 2, _MD_AM_UNABLEENCCLOSED);
-						}
-					}
-					
+				$old_value = $config->getVar('conf_value');
+				$icmsPreloadHandler->triggerEvent ( 'savingSystemAdminPreferencesItem', array((int)$config->getVar ( 'conf_catid' ), $config->getVar ( 'conf_name' ), $config->getVar ( 'conf_value' )));
+
+                if(is_array($new_value) || $new_value != $config->getVar('conf_value'))
+                {
+                    // if language has been changed
+                    if(!$lang_updated && $config->getVar('conf_catid') == ICMS_CONF && $config->getVar('conf_name') == 'language')
+                    {
+                        $xoopsConfig['language'] = ${$config->getVar('conf_name')};
+                        $lang_updated = true;
+                    }
+                    // if default theme has been changed
+                    if(!$theme_updated && $config->getVar('conf_catid') == ICMS_CONF && $config->getVar('conf_name') == 'theme_set')
+                    {
+                        $member_handler = xoops_gethandler('member');
+                        $member_handler->updateUsersByField('theme', ${$config->getVar('conf_name')});
+                        $theme_updated = true;
+                    }
+                    // if password encryption has been changed
+                    if(!$encryption_updated && $config->getVar('conf_catid') == ICMS_CONF_USER && $config->getVar('conf_name') == 'enc_type')
+                    {
+                        if($config->getVar('closesite') !== 1)
+                        {
+                            $member_handler = xoops_gethandler('member');
+                            $member_handler->updateUsersByField('pass_expired', 1);
+							$encryption_updated = true;
+                        }
+                        else
+                        {
+                            redirect_header('admin.php?fct=preferences', 2, _MD_AM_UNABLEENCCLOSED);
+                        }
+                    }
+
+                    if(!$purifier_style_updated && $config->getVar('conf_catid') == ICMS_CONF_PURIFIER &&
+                        $config->getVar('conf_name') == 'purifier_Filter_ExtractStyleBlocks')
+                    {
+                        if($config->getVar('purifier_Filter_ExtractStyleBlocks') == 1)
+                        {
+                            if(!file_exists(ICMS_ROOT_PATH . '/plugins/csstidy/class.csstidy.php'))
+                            {
+                                redirect_header('admin.php?fct=preferences', 5, _MD_AM_UNABLECSSTIDY);
+                            }
+							$purifier_style_updated = true;
+                        }
+                    }
+
 					// if default template set has been changed
-					if (! $tpl_updated && $config->getVar ( 'conf_catid' ) == XOOPS_CONF && $config->getVar ( 'conf_name' ) == 'template_set') {
+					if (! $tpl_updated && $config->getVar ( 'conf_catid' ) == ICMS_CONF && $config->getVar ( 'conf_name' ) == 'template_set') {
 						// clear cached/compiled files and regenerate them if default theme has been changed
 						if ($xoopsConfig ['template_set'] != ${$config->getVar ( 'conf_name' )}) {
 							$newtplset = ${$config->getVar ( 'conf_name' )};
@@ -544,10 +581,10 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 							$tplfile_handler = & xoops_gethandler ( 'tplfile' );
 							$dtemplates = & $tplfile_handler->find ( 'default', 'block' );
 							$dcount = count ( $dtemplates );
-							
+
 							// need to do this to pass to xoops_template_touch function
 							$GLOBALS ['xoopsConfig'] ['template_set'] = $newtplset;
-							
+
 							for($i = 0; $i < $dcount; $i ++) {
 								$found = & $tplfile_handler->find ( $newtplset, 'block', $dtemplates [$i]->getVar ( 'tpl_refid' ), null );
 								if (count ( $found ) > 0) {
@@ -558,7 +595,7 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 									xoops_template_touch ( $dtemplates [$i]->getVar ( 'tpl_id' ) );
 								}
 							}
-							
+
 							// generate image cache files from image binary data, save them under cache/
 							$image_handler = & xoops_gethandler ( 'imagesetimg' );
 							$imagefiles = & $image_handler->getObjects ( new Criteria ( 'tplset_name', $newtplset ), true );
@@ -572,12 +609,12 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 						}
 						$tpl_updated = true;
 					}
-					
+
 					// add read permission for the start module to all groups
-					if (! $startmod_updated && $new_value != '--' && $config->getVar ( 'conf_catid' ) == XOOPS_CONF && $config->getVar ( 'conf_name' ) == 'startpage') {
+					if (! $startmod_updated && $new_value != '--' && $config->getVar ( 'conf_catid' ) == ICMS_CONF && $config->getVar ( 'conf_name' ) == 'startpage') {
 						$moduleperm_handler = & xoops_gethandler ( 'groupperm' );
 						$module_handler = & xoops_gethandler ( 'module' );
-						
+
 						foreach ( $new_value as $k => $v ) {
 							$arr = explode ( '-', $v );
 							if (count ( $arr ) > 1) {
@@ -599,23 +636,32 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 						}
 						$startmod_updated = true;
 					}
-					
+
 					$config->setConfValueForInput ( $new_value );
 					$config_handler->insertConfig ( $config );
 				}
 				unset ( $new_value );
+
+				if (!isset($saved_config_items[$config->getVar ( 'conf_catid' )])) {
+					$saved_config_items[$config->getVar ( 'conf_catid' )] = array();
+				}
+				$saved_config_items[$config->getVar ( 'conf_catid' )][$config->getVar ( 'conf_name' )] = array($old_value, $config->getVar ( 'conf_value' ));
+
 			}
 		}
-		
+
+		$icmsPreloadHandler->triggerEvent ( 'afterSaveSystemAdminPreferencesItems', $saved_config_items);
+		unset($saved_config_items);
+
 		if (! empty ( $use_mysession ) && $xoopsConfig ['use_mysession'] == 0 && $session_name != '') {
 			setcookie ( $session_name, session_id (), time () + (60 * intval ( $session_expire )), '/', '', 0 );
 		}
-		
+
 		// Clean cached files, may take long time
 		// User reigister_shutdown_function to keep running after connection closes so that cleaning cached files can be finished
 		// Cache management should be performed on a separate page
 		register_shutdown_function ( array (&$xoopsTpl, 'clear_all_cache' ) );
-		
+
 		// If language is changed, leave the admin menu file to be regenerated upon next request,
 		// otherwise regenerate admin menu file for now
 		if (! $lang_updated) {
@@ -624,7 +670,7 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		} else {
 			$redirect = ICMS_URL . '/admin.php';
 		}
-		
+
 		if (isset ( $redirect ) && $redirect != '') {
 			redirect_header ( $redirect, 2, _MD_AM_DBUPDATED );
 		} else {
@@ -632,4 +678,5 @@ if (! is_object ( $xoopsUser ) || ! is_object ( $xoopsModule ) || ! $xoopsUser->
 		}
 	}
 }
+
 ?>

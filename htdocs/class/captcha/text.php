@@ -6,22 +6,32 @@
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		installer
+ * @package		FormCaptcha
  * @since		XOOPS
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id:$
+ * @version		$Id$
 */
 
 class IcmsCaptchaText {
 	var $config	= array();
 	var $code;
-	
+
+
+	/**
+	 * Constructor
+	 */
 	function IcmsCaptchaText()
 	{
 	}
-	
+
+
+
+	/**
+	 * Creates IcmsCaptchaText object
+	 * @return object	reference to IcmsCaptchaText (@link IcmsCaptchaText) Object
+	 */
 	function &instance()
 	{
 		static $instance;
@@ -30,9 +40,13 @@ class IcmsCaptchaText {
 		}
 		return $instance;
 	}
-	
+
+
+
+
 	/**
 	 * Loading configs from CAPTCHA class
+	 * @param string	$config	the config array
 	 */
 	function loadConfig($config = array())
 	{
@@ -40,16 +54,25 @@ class IcmsCaptchaText {
 		$this->config =& $config;
 	}
 
+
+	/**
+	 * Sets CAPTCHA code
+	 */
 	function setCode()
 	{
 		$_SESSION['IcmsCaptcha_sessioncode'] = strval( $this->code );
 	}
-	
+
+
+
+	/**
+	 * Render the form
+	 * @return string	$form the Captcha Form
+	 */
 	function render()
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		$form = $this->loadText()  . "&nbsp;&nbsp; <input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $IcmsConfigCaptcha['captcha_num_chars'] . "' maxlength='" . $IcmsConfigCaptcha['captcha_num_chars'] . "' value='' />";
+		global $icmsConfigCaptcha;
+		$form = $this->loadText()  . "&nbsp;&nbsp; <input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $icmsConfigCaptcha['captcha_num_chars'] . "' maxlength='" . $icmsConfigCaptcha['captcha_num_chars'] . "' value='' />";
 		$rule = constant("ICMS_CAPTCHA_RULE_TEXT");
 		if(!empty($rule)) {
 			$form .= "&nbsp;&nbsp;<small>{$rule}</small>";
@@ -60,6 +83,11 @@ class IcmsCaptchaText {
 		return $form;
 	}
 
+
+	/**
+	 * Load the ICMS Captcha Text
+	 * @return string	The Captcha Expression
+	 */
 	function loadText()
 	{
 		$val_a = rand(0, 9);
@@ -76,4 +104,6 @@ class IcmsCaptchaText {
 	}
 
 }
+
+
 ?>

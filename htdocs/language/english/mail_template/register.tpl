@@ -1,4 +1,4 @@
-Hello {X_UNAME},
+Hello {X_USERLOGINNAME},
 
 Thanks for subscribing to {X_SITENAME}. As a registered member your can:
 - Send private messages among members
@@ -13,15 +13,6 @@ To become a member of {X_SITENAME}, please confirm your
 request by clicking on the link below:
 
 {X_UACTLINK}
-
-To be able to login the site:
-
-Your username:
-{X_USERNAME}
-Your display name:
-{X_USERLOGINNAME}
-Your password:
-{X_USERPASSWORD}
 
 -----------
 Best Regards

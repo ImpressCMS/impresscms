@@ -8,7 +8,7 @@
 * @copyright    The XOOPS project http://www.xoops.org/
 * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
 * @package		installer
-* @since        2.0.14
+* @since        Xoops 2.0.14
 * @author		Skalpa Keo <skalpa@xoops.org>
 * @version		$Id$
 */
@@ -105,6 +105,7 @@ class XoopsInstallWizard {
 			$this->pages[]= 'tablescreate';
 			$this->pages[]= 'siteinit';
 			$this->pages[]= 'tablesfill';
+            $this->pages[]= 'modulesinstall';
 			$this->pages[]= 'end';
 		}
 
@@ -125,6 +126,7 @@ class XoopsInstallWizard {
 			$this->pagesNames[] = TABLES_CREATION;
 			$this->pagesNames[] = INITIAL_SETTINGS;
 			$this->pagesNames[] = DATA_INSERTION;
+			$this->pagesNames[] = MODULES_INSTALL;
 			$this->pagesNames[] = WELCOME;
 		}
 
@@ -143,6 +145,7 @@ class XoopsInstallWizard {
 			$this->pagesTitles[] = TABLES_CREATION_TITLE;
 			$this->pagesTitles[] = INITIAL_SETTINGS_TITLE;
 			$this->pagesTitles[] = DATA_INSERTION_TITLE;
+			$this->pagesTitles[] = MODULES_INSTALL_TITLE;
 			$this->pagesTitles[] = WELCOME_TITLE;
 		}
 

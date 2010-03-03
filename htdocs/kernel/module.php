@@ -1,33 +1,18 @@
 <?php
-// $Id: module.php 1102 2007-10-19 02:55:52Z dugris $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+* Manage of modules
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
 if(!defined('ICMS_ROOT_PATH')){exit();}
 
 /**
@@ -60,6 +45,12 @@ class XoopsModule extends XoopsObject
 	* @var array
 	*/
 	var $adminheadermenu;
+	/**
+	 * array for messages
+	 *
+	 * @var array
+	 */
+	var $messages;
 	
 	/**
 	* Constructor
@@ -219,21 +210,14 @@ class XoopsModule extends XoopsObject
 	*/
 	function loadInfo($dirname, $verbose = true)
 	{
-		global $xoopsConfig;
-		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/language/'.$xoopsConfig['language'].'/modinfo.php'))
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/language/'.$xoopsConfig['language'].'/modinfo.php';
-		}
-		elseif(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/language/english/modinfo.php'))
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/language/english/modinfo.php';
-		}
-		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/xoops_version.php'))
-		{
-			include ICMS_ROOT_PATH.'/modules/'.$dirname.'/xoops_version.php';
-		}elseif(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/icms_version.php'))
+		global $icmsConfig;
+		icms_loadLanguageFile($dirname, 'modinfo');
+		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/icms_version.php'))
 		{
 			include ICMS_ROOT_PATH.'/modules/'.$dirname.'/icms_version.php';
+		}elseif(file_exists(ICMS_ROOT_PATH.'/modules/'.$dirname.'/xoops_version.php'))
+		{
+			include ICMS_ROOT_PATH.'/modules/'.$dirname.'/xoops_version.php';
 		}
 		else
 		{
@@ -277,33 +261,30 @@ class XoopsModule extends XoopsObject
 		}
 		return false;
 	}
-	
+
+
+	/**
+	* Displays the (good old) adminmenu
+	* 
+	* @param int  $currentoption  The current option of the admin menu
+	* @param string  $breadcrumb  The breadcrumb trail
+	* @param bool  $submenus  Show the submenus!
+	* @param int  $currentsub  The current submenu
+	* 
+	* @return datatype  description
+	*/
 	function displayAdminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1)
 	{
-		global $xoopsModule, $xoopsConfig;
+		global $icmsModule, $icmsConfig;
 		include_once ICMS_ROOT_PATH.'/class/template.php';
-		
-		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/language/'.$xoopsConfig['language'].'/modinfo.php'))
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/language/'.$xoopsConfig['language'].'/modinfo.php';
-		}
-		else
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/language/english/modinfo.php';
-		}
-		if(file_exists(ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/language/'.$xoopsConfig['language'].'/admin.php'))
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/language/'.$xoopsConfig['language'].'/admin.php';
-		}
-		else
-		{
-			include_once ICMS_ROOT_PATH.'/modules/'.$xoopsModule->getVar('dirname').'/language/english/admin.php';
-		}
-		$tpl = & new XoopsTpl();
+		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'modinfo');
+		icms_loadLanguageFile($icmsModule->getVar('dirname'), 'admin');
+		$tpl = new XoopsTpl();
 		$tpl->assign(array('headermenu' => $this->getAdminHeaderMenu(), 'adminmenu' => $this->getAdminMenu(), 'current' => $currentoption, 'breadcrumb' => $breadcrumb, 'headermenucount' => count($this->getAdminHeaderMenu()), 'submenus' => $submenus, 'currentsub' => $currentsub, 'submenuscount' => count($submenus)));
 		$tpl->display(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_adm_modulemenu.html');
 	}
-	
+
+
 	/**#@+
 	* For backward compatibility only!
 	* @deprecated
@@ -317,7 +298,34 @@ class XoopsModule extends XoopsObject
 		$inst = & $modhandler->getByDirname($dirname);
 		return $inst;
 	}
-/**#@-*/
+
+	/**
+	 * Modules Message Function
+	 *
+	 * @since ImpressCMS 1.2
+	 * @author Sina Asghari (aka stranger) <stranger@impresscms.org>
+	 *
+	 * @param string $msg	The Error Message
+	 * @param string $title	The Error Message title
+	 * @param	bool	$render	Whether to echo (render) or return the HTML string
+	 *
+	 * @todo Make this work with templates ;)
+	 */
+	function setMessage($msg, $title='', $render = false){
+		$ret = '<div class="moduleMsg">';
+		if($title != '') {$ret .= '<h4>'.$title.'</h4>';}
+		if(is_array($msg))
+		{
+			foreach($msg as $m) {$ret .= $m.'<br />';}
+		}
+		else {$ret .= $msg;}
+		$ret .= '</div>';
+		if($render){
+			echo $ret;
+		}else{
+			return $ret;
+		}
+	}
 }
 
 /**
@@ -625,4 +633,5 @@ class XoopsModuleHandler extends XoopsObjectHandler
 		return $ret;
 	}
 }
+
 ?>

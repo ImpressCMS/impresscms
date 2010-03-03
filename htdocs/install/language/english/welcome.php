@@ -1,5 +1,5 @@
 <?php
-// $Id: welcome.php 565 2006-06-23 06:39:22Z skalpa $
+// $Id$
 $content .= '
 <p>
 	ImpressCMS is a Web publishing system written in PHP. It is an ideal tool for
@@ -14,7 +14,7 @@ $content .= '
 <h3>Requirements</h3>
 <ul>
 	<li>WWW Server (<a href="http://www.apache.org/" rel="external">Apache</a>, IIS, Roxen, etc)</li>
-	<li><a href="http://www.php.net/" rel="external">PHP</a> 5.1 or higher (5.2 or higher recommended)</li>
+	<li><a href="http://www.php.net/" rel="external">PHP</a> 5.2 or higher (5.2.8 or higher recommended, <strong>5.3 not yet suppored</strong>) and 16mb minimum memory allocation</li>
 	<li><a href="http://www.mysql.com/" rel="external">MySQL</a> 4.1.0 or higher</li>
 </ul>
 <h3>Before you install</h3>
@@ -22,7 +22,7 @@ $content .= '
 	<li>Setup the web server, PHP and database server properly.</li>
 	<li>Prepare a database for ImpressCMS. This can be an existing database as well as a newly created one.</li>
 	<li>Prepare a user account and grant this user access to the database (all rights).</li>
-	<li>Make the directories of uploads/, cache/, templates_c/, writable (chmod 777 or 755 - depending on servers).</li>
+	<li>Make the directories of uploads/, cache/, templates_c/, modules/ writable (chmod 777 or 755 - depending on servers).</li>
 	<li>Make the file mainfile.php writable (chmod 666 depending on server).</li>
 	<li>In your internet browser settings turn on the allowance of cookies and JavaScript.</li>
 </ul>

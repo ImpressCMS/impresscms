@@ -33,10 +33,10 @@ $limit = (isset($_GET['limit']))?intval($_GET['limit']):((isset($_POST['limit'])
 $start = (isset($_GET['start']))?intval($_GET['start']):((isset($_POST['start']))?intval($_POST['start']):0);
 $type = (isset($_GET['type']))?$_GET['type']:((isset($_POST['type']))?$_POST['type']:'ibrow');
 
-global $xoopsConfig;
+global $icmsConfig;
 #Adding language files
-if (file_exists(ICMS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin/images.php")) {
-	include ICMS_ROOT_PATH."/modules/system/language/".$xoopsConfig['language']."/admin/images.php";
+if (file_exists(ICMS_ROOT_PATH."/modules/system/language/".$icmsConfig['language']."/admin/images.php")) {
+	include ICMS_ROOT_PATH."/modules/system/language/".$icmsConfig['language']."/admin/images.php";
 } elseif (file_exists(ICMS_ROOT_PATH."/modules/system/language/english/admin/images.php")) {
 	include ICMS_ROOT_PATH."/modules/system/language/english/admin/images.php";
 }
@@ -82,14 +82,14 @@ switch ($op){
 }
 
 function imanager_index($imgcat_id=null){
-	global $icmsTpl,$xoopsUser,$xoopsConfig,$target,$type;
+	global $icmsTpl,$icmsUser,$icmsConfig,$target,$type;
 
-	if (!is_object($xoopsUser)) {
+	if (!is_object($icmsUser)) {
 		$groups = array(XOOPS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
-		$groups =& $xoopsUser->getGroups();
-		$admin = (!$xoopsUser->isAdmin(1)) ? false : true;
+		$groups =& $icmsUser->getGroups();
+		$admin = (!$icmsUser->isAdmin(1)) ? false : true;
 	}
 
 	$imgcat_handler = xoops_gethandler('imagecategory');
@@ -255,14 +255,14 @@ function imanager_index($imgcat_id=null){
 }
 
 function imanager_listimg($imgcat_id,$start=0) {
-	global $icmsTpl,$target,$type,$xoopsUser;
+	global $icmsTpl,$target,$type,$icmsUser;
 
-	if (!is_object($xoopsUser)) {
+	if (!is_object($icmsUser)) {
 		$groups = array(XOOPS_GROUP_ANONYMOUS);
 		$admin = false;
 	} else {
-		$groups =& $xoopsUser->getGroups();
-		$admin = (!$xoopsUser->isAdmin(1)) ? false : true;
+		$groups =& $icmsUser->getGroups();
+		$admin = (!$icmsUser->isAdmin(1)) ? false : true;
 	}
 	
 	$query = isset($_POST['query']) ? $_POST['query'] : null;
@@ -393,9 +393,9 @@ function imanager_listimg($imgcat_id,$start=0) {
 
 		if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 			$src = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$images[$i]->getVar('image_name').'&resize=0';
-			$img = wiImage::load($images[$i]->getVar('image_body'))->saveToFile(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
+			$img = WideImage::load($images[$i]->getVar('image_body'))->saveToFile(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
 			$arrimg[$i]['size'] = icms_convert_size(filesize(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name')));
-			$img_info = wiImage::load(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
+			$img_info = WideImage::load(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
 			$arrimg[$i]['width'] = $img_info->getWidth();
 			$arrimg[$i]['height'] = $img_info->getHeight();
 			@unlink(ICMS_IMANAGER_FOLDER_PATH.'/'.$images[$i]->getVar('image_name'));
@@ -407,7 +407,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 			$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
 			$src = $url.$images[$i]->getVar('image_name');
 			$arrimg[$i]['size'] = icms_convert_size(filesize($path.$images[$i]->getVar('image_name')));			
-			$img_info = wiImage::load($path.$images[$i]->getVar('image_name'));
+			$img_info = WideImage::load($path.$images[$i]->getVar('image_name'));
 			$arrimg[$i]['width'] = $img_info->getWidth();
 			$arrimg[$i]['height'] = $img_info->getHeight();
 			$arrimg[$i]['lcode'] = '[img align=left]'.$url.$images[$i]->getVar('image_name').'[/img]';
@@ -725,7 +725,7 @@ function imanager_clone() {
 	$newimg->setVar('imgcat_id', $imgcat_id);
 	if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 		$src = XOOPS_URL."/modules/system/admin/images/preview.php?file=".$image->getVar('image_name').'&resize=0';
-		$img = wiImage::load($image->getVar('image_body'))->saveToFile(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name'));
+		$img = WideImage::load($image->getVar('image_body'))->saveToFile(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name'));
 		$fp = @fopen(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name'), 'rb');
 		$fbinary = @fread($fp, filesize(ICMS_IMANAGER_FOLDER_PATH.'/'.$image->getVar('image_name')));
 		@fclose($fp);
@@ -751,7 +751,7 @@ function imanager_clone() {
 }
 
 function icmsPopupHeader(){
-	global $xoopsConfig,$icmsPreloadHandler;
+	global $icmsConfig,$icmsPreloadHandler;
 	if (! headers_sent ()) {
 		header ( 'Content-Type:text/html; charset=' . _CHARSET );
 		header ( 'Expires: Mon, 26 Jul 1997 05:00:00 GMT' );
@@ -765,7 +765,7 @@ function icmsPopupHeader(){
 	<head>
 	<meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" />
 	<meta http-equiv="content-language" content="' . _LANGCODE . '" />
-	<title>' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . ' - ' . _IMGMANAGER . '</title>
+	<title>' . htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ) . ' - ' . _IMGMANAGER . '</title>
 	<script type="text/javascript" src="' . XOOPS_URL . '/include/xoops.js"></script>' . '<link rel="shortcut icon" type="image/ico" href="' . XOOPS_URL . '/favicon.ico" />
 	<link rel="icon" type="image/png" href="' . XOOPS_URL . '/favicon.ico" />
 	';

@@ -1,4 +1,16 @@
 <?php
+/**
+* ICMS Preload Handler
+*
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	IcmsPersistableObject
+* @since	1.1
+* @author		marcan <marcan@impresscms.org>
+* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+* @version	$Id$
+*/
+
 if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }

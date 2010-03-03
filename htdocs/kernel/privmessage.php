@@ -1,40 +1,25 @@
 <?php
-// $Id: privmessage.php 1102 2007-10-19 02:55:52Z dugris $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+* Manage of private messages
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
 }
 
 /**
  * @package     kernel
- * 
+ *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
@@ -93,7 +78,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
     /**
      * Create a new {@link XoopsPrivmessage} object
      * @param 	bool 	$isNew 	Flag as "new"?
-     * @return 	object {@link XoopsPrivmessage} 
+     * @return 	object {@link XoopsPrivmessage}
      **/
     function &create($isNew = true)
     {
@@ -107,12 +92,12 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
     /**
      * Load a {@link XoopsPrivmessage} object
      * @param 	int 	$id ID of the message
-     * @return 	object {@link XoopsPrivmessage} 
+     * @return 	object {@link XoopsPrivmessage}
      **/
     function &get($id)
     {
         $pm = false;
-    	$id = intval($id);
+    	$id = (int)$id;
         if ($id > 0) {
             $sql = "SELECT * FROM ".$this->db->prefix('priv_msgs')." WHERE msg_id='".$id."'";
             if (!$result = $this->db->query($sql)) {
@@ -156,9 +141,9 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         }
         if ($pm->isNew()) {
             $msg_id = $this->db->genId('priv_msgs_msg_id_seq');
-            $sql = sprintf("INSERT INTO %s (msg_id, msg_image, subject, from_userid, to_userid, msg_time, msg_text, read_msg) VALUES ('%u', %s, %s, '%u', '%u', '%u', %s, '%u')", $this->db->prefix('priv_msgs'), intval($msg_id), $this->db->quoteString($msg_image), $this->db->quoteString($subject), intval($from_userid), intval($to_userid), time(), $this->db->quoteString($msg_text), 0);
+            $sql = sprintf("INSERT INTO %s (msg_id, msg_image, subject, from_userid, to_userid, msg_time, msg_text, read_msg) VALUES ('%u', %s, %s, '%u', '%u', '%u', %s, '%u')", $this->db->prefix('priv_msgs'), (int)$msg_id, $this->db->quoteString($msg_image), $this->db->quoteString($subject), (int)$from_userid, (int)$to_userid, time(), $this->db->quoteString($msg_text), 0);
         } else {
-            $sql = sprintf("UPDATE %s SET msg_image = %s, subject = %s, from_userid = '%u', to_userid = '%u', msg_text = %s, read_msg = '%u' WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), $this->db->quoteString($msg_image), $this->db->quoteString($subject), intval($from_userid), intval($to_userid), $this->db->quoteString($msg_text), intval($read_msg), intval($msg_id));
+            $sql = sprintf("UPDATE %s SET msg_image = %s, subject = %s, from_userid = '%u', to_userid = '%u', msg_text = %s, read_msg = '%u' WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), $this->db->quoteString($msg_image), $this->db->quoteString($subject), (int)$from_userid, (int)$to_userid, $this->db->quoteString($msg_text), (int)$read_msg, (int)$msg_id);
         }
         $queryFunc = empty($force)?"query":"queryF";
     		if (!$result = $this->db->{$queryFunc}($sql)) {
@@ -167,7 +152,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
         if (empty($msg_id)) {
             $msg_id = $this->db->getInsertId();
         }
-    		$pm->assignVar('msg_id', $msg_id);
+    		$pm->assignVar('msg_id', (int)$msg_id);
         return true;
     }
 
@@ -189,7 +174,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             return false;
         }
 
-        if (!$result = $this->db->query(sprintf("DELETE FROM %s WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), intval($pm->getVar('msg_id'))))) {
+        if (!$result = $this->db->query(sprintf("DELETE FROM %s WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), (int)$pm->getVar('msg_id')))) {
             return false;
         }
         return true;
@@ -270,7 +255,7 @@ class XoopsPrivmessageHandler extends XoopsObjectHandler
             return false;
         }
 
-    		$sql = sprintf("UPDATE %s SET read_msg = '1' WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), intval($pm->getVar('msg_id')));
+    		$sql = sprintf("UPDATE %s SET read_msg = '1' WHERE msg_id = '%u'", $this->db->prefix('priv_msgs'), (int)$pm->getVar('msg_id'));
         if (!$this->db->queryF($sql)) {
             return false;
         }

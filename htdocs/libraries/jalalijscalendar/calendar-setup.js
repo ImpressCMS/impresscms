@@ -1,5 +1,5 @@
 /* JalaliJSCalendar - Setup Script
- * Copyright (c) 2008 Ali Farhadi (http://farhadi.ir/)
+ * Copyright (c) 2008-2009 Ali Farhadi (http://farhadi.ir/)
  * 
  * Released under the terms of the GNU General Public License.
  * See the GPL for details (http://www.gnu.org/licenses/gpl.html).
@@ -54,6 +54,7 @@
  *   ifDateType       | date type that will be stored in the input field (by default it is same as dateType)
  *   langNumbers      | if "true" it will use number characters specified in language file. 
  *   autoShowOnFocus  | if "true", popup calendars will also be shown when their input field gets focus
+ *   autoFillAtStart  | if "true", inputField and displayArea will be filled on initialize.
  *
  *  None of them is required, they all have default values.  However, if you
  *  pass none of "inputField", "displayArea" or "button" you'll get a warning
@@ -93,6 +94,7 @@ Calendar.setup = function (params) {
 	param_default("ifDateType",      null);
 	param_default("langNumbers",     false);
 	param_default("autoShowOnFocus", false);
+	param_default("autoFillAtStart", false);
 
 	var tmp = ["inputField", "displayArea", "button"];
 	for (var i in tmp) {
@@ -105,6 +107,13 @@ Calendar.setup = function (params) {
 		return false;
 	}
 
+	if (params.autoFillAtStart) {
+		if (params.inputField && !params.inputField.value)
+			params.inputField.value = new Date(params.date).print(params.ifFormat, params.ifDateType || params.dateType, params.langNumbers);
+		if (params.displayArea && !params.displayArea.innerHTML)
+			params.displayArea.innerHTML = new Date(params.date).print(params.ifFormat, params.ifDateType || params.dateType, params.langNumbers);
+	}
+	
 	function onSelect(cal) {
 		var p = cal.params;
 		var update = (cal.dateClicked || p.electric);
@@ -125,7 +134,13 @@ Calendar.setup = function (params) {
 			cal.callCloseHandler();
 	};
 
-	if (params.flat != null) {
+	if (!params.flat) {
+		var cal = new Calendar(params.firstDay,
+									params.date,
+									params.onSelect || onSelect,
+									params.onClose || function(cal) { cal.hide(); });
+
+	} else {
 		if (typeof params.flat == "string")
 			params.flat = document.getElementById(params.flat);
 		if (!params.flat) {
@@ -133,32 +148,11 @@ Calendar.setup = function (params) {
 			return false;
 		}
 		var cal = new Calendar(params.firstDay, params.date, params.onSelect || onSelect);
-		cal.showsOtherMonths = params.showOthers;
-		cal.showsTime = params.showsTime;
-		cal.time24 = (params.timeFormat == "24");
-		cal.params = params;
-		cal.weekNumbers = params.weekNumbers;
-		cal.setRange(params.range[0], params.range[1]);
-		cal.setDateStatusHandler(params.dateStatusFunc);
-		cal.getDateText = params.dateText;
-		cal.dateType = params.dateType;
-		cal.langNumbers = params.langNumbers;
-		if (params.ifFormat) {
-			cal.setDateFormat(params.ifFormat);
-		}
-		cal.create(params.flat);
-		if (params.inputField && typeof params.inputField.value == "string") {
+
+		if (params.inputField && typeof params.inputField.value == "string" && params.inputField.value) {
 			cal.parseDate(params.inputField.value, null, params.ifDateType || cal.dateType);
 		}
-		cal.show();
-		return cal;
 	}
-	
-	var cal = new Calendar(params.firstDay,
-							     params.date,
-							     params.onSelect || onSelect,
-							     params.onClose || function(cal) { cal.hide(); });
-
 	cal.showsTime = params.showsTime;
 	cal.time24 = (params.timeFormat == "24");
 	cal.weekNumbers = params.weekNumbers;
@@ -172,32 +166,36 @@ Calendar.setup = function (params) {
 	cal.getDateText = params.dateText;
 	cal.setDateFormat(params.inputField ? params.ifFormat : params.daFormat);
 	if (params.multiple) {
-			cal.multiple = {};
-			for (var i = params.multiple.length; --i >= 0;) {
-				var d = params.multiple[i];
-				var ds = d.print("%Y%m%d", cal.dateType, cal.langNumbers);
-				cal.multiple[ds] = d;
-			}
+		cal.multiple = {};
+		for (var i = params.multiple.length; --i >= 0;) {
+			var d = params.multiple[i];
+			var ds = d.print("%Y%m%d", cal.dateType, cal.langNumbers);
+			cal.multiple[ds] = d;
 		}
-		
-	var triggerEl = params.button || params.displayArea || params.inputField;
-	triggerEl["on" + params.eventName] = function() {
-		if (!cal.element) cal.create();
-		var dateEl = params.inputField || params.displayArea;
-		var dateType = params.inputField ? params.ifDateType || cal.dateType : cal.dateType;
-		if (dateEl) params.date = Date.parseDate(dateEl.value || dateEl.innerHTML, cal.dateFormat, dateType);
-		if (params.date) cal.setDate(params.date);
-		cal.refresh();
-		if (!params.position)
-			cal.showAtElement(params.button || params.displayArea || params.inputField, params.align);
-		else
-			cal.showAt(params.position[0], params.position[1]);
-		return false;
-	};
+	}
 	
-	if (params.autoShowOnFocus && params.inputField) {
- 		params.inputField["onfocus"] = triggerEl["on" + params.eventName];
- 	};
+	if (!params.flat) {
+		var triggerEl = params.button || params.displayArea || params.inputField;
+		triggerEl["on" + params.eventName] = function() {
+			if (!cal.element) cal.create();
+			var dateEl = params.inputField || params.displayArea;
+			var dateType = params.inputField ? params.ifDateType || cal.dateType : cal.dateType;
+			if (dateEl && (dateEl.value || dateEl.innerHTML)) params.date = Date.parseDate(dateEl.value || dateEl.innerHTML, cal.dateFormat, dateType);
+			if (params.date) cal.setDate(params.date);
+			cal.refresh();
+			if (!params.position)
+				cal.showAtElement(params.button || params.displayArea || params.inputField, params.align);
+			else
+				cal.showAt(params.position[0], params.position[1]);
+			return false;
+		};
 
+		if (params.autoShowOnFocus && params.inputField) {
+			params.inputField["onfocus"] = triggerEl["on" + params.eventName];
+		};
+	} else {
+		cal.create(params.flat);
+		cal.show();
+	}
 	return cal;
 };

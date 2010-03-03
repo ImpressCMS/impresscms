@@ -3,7 +3,7 @@
 // Version: 1.1
 // Date: 06/26/2003 (mm/dd/yyyy)
 // Note: Permission given to use this script in ANY kind of applications if
-//    header lines are left unchanged.
+//	header lines are left unchanged.
 // Note: Script consists of two files: picker.js and picker.html
 
 var TCP = new TColorPicker();
@@ -134,11 +134,11 @@ function TColorPicker(field) {
 		function (div) { this.divs[div].visibility = 'hide' } :
 		function (div) { this.divs[div].visibility = 'hidden' };
 	// event handlers
-	this.C       = TCChgMode;
-	this.S       = TCSelect;
-	this.P       = TCPaint;
+	this.C	   = TCChgMode;
+	this.S	   = TCSelect;
+	this.P	   = TCPaint;
 	this.popup   = TCPopup;
-	this.draw    = TCDraw;
+	this.draw	= TCDraw;
 	this.dec2hex = TCDec2Hex;
 	this.bldCell = TCBuildCell;
 	this.divs = [];

@@ -12,6 +12,7 @@
 * @version	$Id$
 */
 
+@import url(modules/system/admin/content/menu_rtl.css);
 body,table,table.toptable,table.maintable,table.footertable,table td,body td,p,div,a:link,a:active,a:visited,a:hover,h1,h2,h3,h4,h5,h6,ul,input,select,textarea,.formButton,.item,.itemHead,.itemInfo,.itemTitle,.itemTitle a,.itemPoster,.itemPostDate,.itemStats,.itemBody,.itemText,.itemFoot,th,th a:link,th a:active,th a:visited,.outer,.head,.even,.odd,.foot,div.confirmMsg,div.xoopsCode,div.xoopsQuote,.comTitle,.comText,.comUserStat,.comUserName,.comDate,.sCommentThread,.sCommentRank,.admin_menu,.admin_menu a,.admin_menu_thumb a,.admin_menu a:hover,.admin_menu_thumb a:hover,.alblink a:hover,.catlink a:hover,.user_thumb_infobox a:hover,.admin_menu_thumb,.button,.checkbox,.listbox,.sortorder_options,td#mainmenu a,td#mainmenu a.menuSub,td#usermenu a,.headerlogo,.blockTitle,.blockContent,.footerbar,form,tr.even td,tr.odd td,th,div#content,div#forum_header,p.desc,tr.head td,td.sideboxcontent,td#content,div#xo-logger-output,div#xo-logger-tabs {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
 table,input,select,textarea,.formButton,.itemTitle,.even,.odd,div.confirmMsg,div.xoopsQuote,.comTitle,.comUserName,.sCommentThread,.sCommentRank,td#mainmenu a,td#usermenu a,tr.even td,tr.odd td,th,div#content,div#forum_header,p.desc,tr.head td,td#content,div#xo-logger-output,div#xo-logger-tabs {text-align : right;}
 h1,h2,h3,h4,h5,h6,.itemBody,.itemText,.comText {text-align: Justify;}
@@ -20,7 +21,7 @@ td#mainmenu a.menuSub {padding-right: 10px;}
 .footerbar {text-align:center;}
 
 
-#xo-logger-tabs hr{border: solid 2px; margin-top: 5px; margin-left: auto; margin-right: auto; margin-bottom:3 px; width: 100%;}
+#xo-logger-tabs hr{border: solid 2px; margin-top: 5px; margin-left: auto; margin-right: auto; margin-bottom: 3px; width: 100%;}
 table.outer {
 
     width:      100%;
@@ -238,7 +239,8 @@ acronym, abbr, dfn {
 
 	border-bottom: 3px solid #1E90FF;
 
-	font-family : Tahoma, verdana, arial, helvetica, sans-serif; }
+	font-family : Tahoma, verdana, arial, helvetica, sans-serif;
+ }
 .CPindexOptions{
 
 	padding: 4px;
@@ -259,7 +261,7 @@ div.cpicon{
 
 	margin: 3px;
 
-	font-family : Tahoma, verdana, arial, helvetica, sans-serif;
+	font-family : Tahoma, verdana, arial, helvetica, sans-serif;
 	text-align: center;
 
 }
@@ -340,7 +342,12 @@ div.cpicon span.unor{
 
 }
 
-#http_error_title {padding-top: 5px; padding-bottom: 5px; font-size: 20px; font-weight: bold;}#http_error_text {padding-top: 5px; padding-bottom: 5px; text-align: right;}#http_error_searchform{padding-top: 5px; line-height: 5px; padding-bottom: 0px;}#http_error li{color: black; padding-top: 5px; padding-bottom: 5px;}.ed_block_box {
+#http_error_title {padding-top: 5px; padding-bottom: 5px; font-size: 20px; font-weight: bold;}
+#http_error_text {padding-top: 5px; padding-bottom: 5px; text-align: right;}
+#http_error_searchform{padding-top: 5px; line-height: 5px; padding-bottom: 0px;}
+#http_error li{color: black; padding-top: 5px; padding-bottom: 5px;}
+
+.ed_block_box {
 	position:absolute;
 	display:none;
 	padding: 5px;
@@ -351,7 +358,9 @@ div.cpicon span.unor{
 	font-size: 11px;
 	font-weight: normal;
 	color: #000;
-	min-width: 100px;	width: auto;	z-index:100 !important;
+	min-width: 100px;
+	width: auto;
+	z-index:100 !important;
 }
 .ed_block_box img{
     vertical-align: middle;
@@ -368,7 +377,8 @@ div#disclaimer{
 	height: 8em; 
 	overflow: auto; 
 	font-size: 1em; 
-	font-family: Tahoma, verdana,arial, helvetica, sans-serif;}
+	font-family: Tahoma, verdana,arial, helvetica, sans-serif;
+}
 .openid_url {
 	background-image: url(images/openid-inputicon.gif);
 	background-repeat: no-repeat;
@@ -396,3 +406,108 @@ div.pagination.default span.current {
 div.pagination.default span.disabled {
     display: none;
 }
+/*  ADVANCED STYLES */
+.top_testresult{
+	font-weight: bold;
+	font-size:13px;
+	font-family: arail,helvetica,san-serif;
+	color:#666;
+	padding:0;
+	margin:0 0 2px 0;
+}
+.top_testresult span{
+	padding:6px ;
+	margin:0;
+}
+.top_shortPass{
+	background:#edabab;
+	border:1px solid #bc0000;
+	display:block;
+}
+.top_shortPass span{
+	
+}
+.top_badPass{
+	background:#edabab;
+	border:1px solid #bc0000;
+	display:block;
+}
+.top_badPass span{
+	
+}
+.top_goodPass{
+	background:#ede3ab;
+	border:1px solid #bc9f00;
+	display:block;
+}
+.top_goodPass span{
+
+}
+.top_strongPass{
+	background:#d3edab;
+	border:1px solid #73bc00;
+	display:block;
+}
+.top_strongPass span{
+
+}
+
+
+/* 	RESULT STYLE  */
+.testresult{
+	font-weight: bold;
+	font-size:13px;
+	font-family: Tahoma,arial,helvetica,san-serif;
+	color:#666;
+	padding:0px 0px 12px 10px;
+	margin-left:10px;
+	display: block;
+	height:28px;
+	float:right;
+}
+.testresult span{
+	padding:10px 20px 12px 10px;
+	margin: 0px 0px 0px 20px;
+	display:block;
+	float:left;
+	white-space: nowrap;
+}
+.shortPass{
+	background:url(images/red.png) no-repeat 0 0;
+}
+.shortPass span{
+	background:url(images/red.png) no-repeat top right;
+}
+.badPass{
+	background:url(images/red.png) no-repeat 0 0;
+}
+.badPass span{
+	background:url(images/red.png) no-repeat top right;
+}
+.goodPass{
+	background:url(images/yellow.png) no-repeat 0 0;
+}
+.goodPass span{
+	background:url(images/yellow.png) no-repeat top right;
+}
+.strongPass{
+	background:url(images/green.png) no-repeat 0 0;
+}
+.strongPass span{
+	background:url(images/green.png) no-repeat top right;
+}
+#icms_rating_container {}
+#icms_rating_container .itemHead {
+	font-weight: bold;
+}
+#icms_rating_container .item {
+	width: 300px;
+	margin: auto;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+#icms_rating_container .odd {
+	padding: 6px;
+	height: auto;
+}
+

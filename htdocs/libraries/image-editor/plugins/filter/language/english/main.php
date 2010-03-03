@@ -20,7 +20,7 @@ define('_FILTER_BRIGHTNESS_ARG_DESC', '-255 = min brightness, 0 = no change, +25
 define('_FILTER_CONTRAST', 'Contrast');
 define('_FILTER_CONTRAST_DESC', 'Changes the contrast of the image.');
 define('_FILTER_CONTRAST_ARG_TITLE', 'Level');
-define('_FILTER_CONTRAST_ARG_DESC', '-100 = max contrast, 0 = no change, +100 = min contrast');
+define('_FILTER_CONTRAST_ARG_DESC', '-100 = mix contrast, 0 = no change, +100 = max contrast');
 
 define('_FILTER_COLORIZE', 'Colorize');
 define('_FILTER_COLORIZE_DESC', 'Adds (subtracts) specified RGB values to each pixel.');

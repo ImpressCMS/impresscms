@@ -1,36 +1,42 @@
 <?php
 /**
- * Extended User Profile
- *
- *
- * @copyright       The ImpressCMS Project http://www.impresscms.org/
- * @license         LICENSE.txt
- * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package         modules
- * @since           1.2
- * @author          Jan Pedersen
- * @author          The SmartFactory <www.smartfactory.ca>
- * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version         $Id$
- */
+* Common file of the module included on all pages of the module
+*
+* @copyright	The ImpressCMS Project
+* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+* @since		1.0
+* @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+* @package		improfile
+* @version		$Id$
+*/
 
-if (!defined("ICMS_ROOT_PATH")) {
- 	die("XOOPS root path not defined");
+if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
+
+if(!defined("PROFILE_DIRNAME"))		define("PROFILE_DIRNAME", $modversion['dirname'] = basename(dirname(dirname(__FILE__))));
+if(!defined("PROFILE_URL"))			define("PROFILE_URL", ICMS_URL.'/modules/'.PROFILE_DIRNAME.'/');
+if(!defined("PROFILE_ROOT_PATH"))	define("PROFILE_ROOT_PATH", ICMS_ROOT_PATH.'/modules/'.PROFILE_DIRNAME.'/');
+if(!defined("PROFILE_IMAGES_URL"))	define("PROFILE_IMAGES_URL", PROFILE_URL.'images/');
+if(!defined("PROFILE_ADMIN_URL"))	define("PROFILE_ADMIN_URL", PROFILE_URL.'admin/');
+
+// Include the common language file of the module
+icms_loadLanguageFile('profile', 'common');
+
+include_once(PROFILE_ROOT_PATH . "include/functions.php");
+
+// Creating the module object to make it available throughout the module
+$profileModule = icms_getModuleInfo(PROFILE_DIRNAME);
+if (is_object($profileModule)){
+	$profile_moduleName = $profileModule->getVar('name');
 }
 
-if( !defined("SMARTPROFILE_DIRNAME") ){
-	define("SMARTPROFILE_DIRNAME", basename(  dirname(  dirname( __FILE__ ) ) ));
-}
+// Find if the user is admin of the module and make this info available throughout the module
+$profile_isAdmin = icms_userIsAdmin(PROFILE_DIRNAME);
 
-if( !defined("SMARTPROFILE_URL") ){
-	define("SMARTPROFILE_URL", ICMS_URL.'/modules/'.SMARTPROFILE_DIRNAME.'/');
-}
-if( !defined("SMARTPROFILE_ROOT_PATH") ){
-	define("SMARTPROFILE_ROOT_PATH", ICMS_ROOT_PATH.'/modules/'.SMARTPROFILE_DIRNAME.'/');
-}
+// Creating the module config array to make it available throughout the module
+$profileConfig = icms_getModuleConfig(PROFILE_DIRNAME);
 
-if( !defined("SMARTPROFILE_IMAGES_URL") ){
-	define("SMARTPROFILE_IMAGES_URL", SMARTPROFILE_URL.'/images/');
-}
-$profile_isAdmin = icms_userIsAdmin();
+// creating the icmsPersistableRegistry to make it available throughout the module
+global $icmsPersistableRegistry;
+$icmsPersistableRegistry = IcmsPersistableRegistry::getInstance();
+
 ?>

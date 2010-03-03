@@ -1,11 +1,26 @@
 <?php
-// $Id: groupperm.php 506 2006-05-26 23:10:37Z skalpa $
+// $Id$
+/**
+* Short summary of the purpose of this file
+*
+* Longer description about this page
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		LICENSE.txt
+* @package	Administration
+* @since		XOOPS
+* @author		http://www.xoops.org The XOOPS Project
+* @author		modified by UnderDog <underdog@impresscms.org>
+* @version		$Id$
+*/
 
 include '../../../include/cp_header.php';
 $modid = isset($_POST['modid']) ? intval($_POST['modid']) : 0;
 
 // we dont want system module permissions to be changed here
-if ($modid <= 1 || !is_object($xoopsUser) || !$xoopsUser->isAdmin($modid)) {
+if ($modid <= 1 || !is_object($icmsUser) || !$icmsUser->isAdmin($modid)) {
 	redirect_header(XOOPS_URL.'/index.php', 1, _NOPERM);
 	exit();
 }
@@ -68,4 +83,5 @@ if ($module->getVar('hasadmin')) {
 $backlink = ($backlink)?$backlink:XOOPS_URL.'/admin.php';
 
 redirect_header($backlink, 2, implode("<br />", $msg));
+
 ?>

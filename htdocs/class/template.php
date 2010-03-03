@@ -1,33 +1,18 @@
 <?php
-// $Id: template.php 1029 2007-09-09 03:49:25Z phppp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+* The templates class that extends Smarty
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @subpackage Templates
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
 
 if (!defined('SMARTY_DIR')) {
 	exit();
@@ -48,19 +33,19 @@ require_once SMARTY_DIR.'Smarty.class.php';
  */
 class XoopsTpl extends Smarty {
 
-	var $left_delimiter = '<{';
-	var $right_delimiter = '}>';
+	public $left_delimiter = '<{';
+	public $right_delimiter = '}>';
 
-	var $template_dir = XOOPS_THEME_PATH;
-	var $cache_dir = XOOPS_CACHE_PATH;
-	var $compile_dir = XOOPS_COMPILE_PATH;
+	public $template_dir = XOOPS_THEME_PATH;
+	public $cache_dir = XOOPS_CACHE_PATH;
+	public $compile_dir = XOOPS_COMPILE_PATH;
 
 	function XoopsTpl() {
-		global $xoopsConfig;
+		global $icmsConfig;
 
-		$this->compile_id = $xoopsConfig['template_set'] . '-' . $xoopsConfig['theme_set'];
+		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
 		$this->_compile_id = $this->compile_id;
-		$this->compile_check = ( $xoopsConfig['theme_fromfile'] == 1 );
+		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
 		$this->plugins_dir = array(
 			SMARTY_DIR . 'icms_plugins',
 			SMARTY_DIR . 'plugins',
@@ -75,9 +60,9 @@ class XoopsTpl extends Smarty {
 			$this->plugins_dir[] = ICMS_ROOT_PATH.'/class/smarty/xoops_plugins';	
 		}
 		
-		if ( $xoopsConfig['debug_mode'] ) {
+		if ( $icmsConfig['debug_mode'] ) {
 			$this->debugging_ctrl = 'URL';
-		    if ( $xoopsConfig['debug_mode'] == 3 ) {
+		    if ( $icmsConfig['debug_mode'] == 3 ) {
 		    	$this->debugging = true;
 		    }
 		}
@@ -87,8 +72,8 @@ class XoopsTpl extends Smarty {
     }
 
 		$this->assign( array(
-			'icms_url' => XOOPS_URL,
-			'icms_rootpath' => XOOPS_ROOT_PATH,
+			'icms_url' => ICMS_URL,
+			'icms_rootpath' => ICMS_ROOT_PATH,
 			'modules_url' => ICMS_MODULES_URL,
 			'modules_rootpath' => ICMS_MODULES_PATH,
 			'icms_langcode' => _LANGCODE,
@@ -96,8 +81,8 @@ class XoopsTpl extends Smarty {
 			'icms_charset' => _CHARSET,
 			'icms_version' => XOOPS_VERSION,
 			'icms_upload_url' => XOOPS_UPLOAD_URL,
-			'xoops_url' => XOOPS_URL,
-			'xoops_rootpath' => XOOPS_ROOT_PATH,
+			'xoops_url' => ICMS_URL,
+			'xoops_rootpath' => ICMS_ROOT_PATH,
 			'xoops_langcode' => _LANGCODE,
 			'xoops_charset' => _CHARSET,
 			'xoops_version' => XOOPS_VERSION,
@@ -126,6 +111,13 @@ class XoopsTpl extends Smarty {
         return smarty_function_eval( array('var' => $tplSource), $this );
     }
 
+
+	/**
+	 * Touch the resource (file) which means get it to recompile the resource
+	 *
+	 * @param   string  $resourcename		Resourcename to touch
+	 * @return  string  $result         Was the resource recompiled
+	 **/
     function touch( $resourceName ) {
     	$isForced = $this->force_compile;
     	$this->force_compile = true;
@@ -135,9 +127,9 @@ class XoopsTpl extends Smarty {
     	return $result;
 	}
 
-    /**
-     * @deprecated DO NOT USE THESE METHODS, ACCESS THE CORRESPONDING PROPERTIES INSTEAD
-     */
+  /**
+   * @deprecated DO NOT USE THESE METHODS, ACCESS THE CORRESPONDING PROPERTIES INSTEAD
+   */
 	function xoops_setTemplateDir($dirname) {		$this->template_dir = $dirname;			}
 	function xoops_getTemplateDir() {				return $this->template_dir;				}
 	function xoops_setDebugging($flag=false) {		$this->debugging = is_bool($flag) ? $flag : false;	}
@@ -154,6 +146,10 @@ class XoopsTpl extends Smarty {
 		}
 	}
 }
+
+
+
+
 
 /**
  * function to update compiled template file in templates_c folder
@@ -181,8 +177,9 @@ function xoops_template_touch($tpl_id, $clear_old = true) {
  * @return
  **/
 function xoops_template_clear_module_cache($mid)
-{
-	$block_arr = XoopsBlock::getByModule($mid);
+{	
+	$icms_block_handler = xoops_gethandler('block');
+	$block_arr = $icms_block_handler->getByModule($mid);
 	$count = count($block_arr);
 	if ($count > 0) {
 		$xoopsTpl = new XoopsTpl();

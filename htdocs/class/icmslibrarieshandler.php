@@ -1,4 +1,17 @@
 <?php
+/**
+* Handles all functions related to 3rd party libraries within ImpressCMS
+*
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @package		libraries
+* @since		  1.1
+* @author		  marcan <marcan@impresscms.org>
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
 if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
@@ -13,21 +26,21 @@ include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 * @copyright	The ImpressCMS Project http://www.impresscms.org/
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package		libraries
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
+* @since		  1.1
+* @author		  marcan <marcan@impresscms.org>
 * @version		$Id$
 */
 class IcmsLibrariesHandler {
 
 	/**
-	 * @var array $_librariesArray array containing a list of all available third party libraries
+	 * @public array $_librariesArray array containing a list of all available third party libraries
 	 */
-	var $_librariesArray=array();
+	public $_librariesArray=array();
 
 	/**
 	 * Constructor
-     *
-     * @return	void
+   *
+   * @return	void
 	 */
 	function IcmsLibrariesHandler() {
 		$librariesArray = XoopsLists::getDirListAsArray(ICMS_LIBRARIES_PATH);
@@ -42,13 +55,13 @@ class IcmsLibrariesHandler {
 
 	/**
 	 * Access the only instance of this class
-     *
-     * @static
-     * @staticvar   object
-     *
-     * @return	object
-     *
-     */
+   *
+   * @static
+   * @staticvar   object
+   *
+   * @return	object
+   *
+   */
 	function &getInstance()
 	{
 		static $instance;
@@ -96,13 +109,13 @@ class IcmsLibrariesHandler {
 
 	/**
 	 * Construct the name of the function which would be call on a specific event for a specific library
-     *
-     * @param $event string name of the event
-     * @param $library string name of the library
-     *
-     * @return	string name of the function
-     *
-     */
+   *
+   * @param $event string name of the event
+   * @param $library string name of the library
+   *
+   * @return	string name of the function
+   *
+   */
 	function getFunctionName($event, $library) {
 		$ret = 'icmsLibrary' . ucfirst($library) . '_' . $event;
 		return $ret;

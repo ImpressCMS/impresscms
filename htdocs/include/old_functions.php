@@ -1,18 +1,34 @@
 <?php
+/**
+* Really old functions within ImpressCMS
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
+
 // #################### Block functions from here ##################
 
 /*
  * Purpose : Builds the blocks on both sides
  * Input   : $side = On wich side should the block are displayed?
- *             0, l, left : On the left side
- *             1, r, right: On the right side
- *             other:   Only on one side (
- *                          Call from theme.php makes all blocks on the left side
- *                          and from theme.php for the right site)
+ *			 0, l, left : On the left side
+ *			 1, r, right: On the right side
+ *			 other:   Only on one side (
+ *						  Call from theme.php makes all blocks on the left side
+ *						  and from theme.php for the right site)
+ * @param	string	$side	Which side will the sidebar be on?
  */
 function make_sidebar($side)
 {
-	global $xoopsUser;
+	global $icmsUser;
 	$xoopsblock = new XoopsBlock();
 	if ($side == "left") {
 		$side = XOOPS_SIDEBLOCK_LEFT;
@@ -21,15 +37,15 @@ function make_sidebar($side)
 	} else {
 		$side = XOOPS_SIDEBLOCK_BOTH;
 	}
-	if (is_object($xoopsUser)) {
-		$block_arr =& $xoopsblock->getAllBlocksByGroup($xoopsUser->getGroups(), true, $side, XOOPS_BLOCK_VISIBLE);
+	if (is_object($icmsUser)) {
+		$block_arr =& $xoopsblock->getAllBlocksByGroup($icmsUser->getGroups(), true, $side, XOOPS_BLOCK_VISIBLE);
 	} else {
-		$block_arr =& $xoopsblock->getAllBlocksByGroup(XOOPS_GROUP_ANONYMOUS, true, $side, XOOPS_BLOCK_VISIBLE);
+		$block_arr =& $xoopsblock->getAllBlocksByGroup(ICMS_GROUP_ANONYMOUS, true, $side, XOOPS_BLOCK_VISIBLE);
 	}
 
 	$block_count = count($block_arr);
 	if (!isset($GLOBALS['xoopsTpl']) || !is_object($GLOBALS['xoopsTpl'])) {
-		include_once XOOPS_ROOT_PATH.'/class/template.php';
+		include_once ICMS_ROOT_PATH.'/class/template.php';
 		$xoopsTpl = new XoopsTpl();
 	} else {
 		$xoopsTpl =& $GLOBALS['xoopsTpl'];
@@ -91,25 +107,26 @@ function make_sidebar($side)
 }
 
 /*
- * Function to display center block
- */
+* Function to display center block
+* Renders the block to echoes it (no return string)
+*/
 function make_cblock()
 {
-	global $xoopsUser, $xoopsOption;
+	global $icmsUser, $xoopsOption;
 	$xoopsblock = new XoopsBlock();
 	$cc_block = $cl_block = $cr_block = "";
 	$arr = array();
 	if ($xoopsOption['theme_use_smarty'] == 0) {
 		if (!isset($GLOBALS['xoopsTpl']) || !is_object($GLOBALS['xoopsTpl'])) {
-			include_once XOOPS_ROOT_PATH.'/class/template.php';
+			include_once ICMS_ROOT_PATH.'/class/template.php';
 			$xoopsTpl = new XoopsTpl();
 		} else {
 			$xoopsTpl =& $GLOBALS['xoopsTpl'];
 		}
-		if (is_object($xoopsUser)) {
-			$block_arr =& $xoopsblock->getAllBlocksByGroup($xoopsUser->getGroups(), true, XOOPS_CENTERBLOCK_ALL, XOOPS_BLOCK_VISIBLE);
+		if (is_object($icmsUser)) {
+			$block_arr =& $xoopsblock->getAllBlocksByGroup($icmsUser->getGroups(), true, XOOPS_CENTERBLOCK_ALL, XOOPS_BLOCK_VISIBLE);
 		} else {
-			$block_arr =& $xoopsblock->getAllBlocksByGroup(XOOPS_GROUP_ANONYMOUS, true, XOOPS_CENTERBLOCK_ALL, XOOPS_BLOCK_VISIBLE);
+			$block_arr =& $xoopsblock->getAllBlocksByGroup(ICMS_GROUP_ANONYMOUS, true, XOOPS_CENTERBLOCK_ALL, XOOPS_BLOCK_VISIBLE);
 		}
 		$block_count = count($block_arr);
 		$xoopsLogger =& XoopsLogger::instance();
@@ -184,11 +201,20 @@ function make_cblock()
 	}
 }
 
+/**
+* Opens table with forum thread
+*
+* @param string $width Width of the table
+*/
 function openThread($width="100%")
 {
 	echo "<table border='0' cellpadding='0' cellspacing='0' align='center' width='$width'><tr><td class='bg2'><table border='0' cellpadding='4' cellspacing='1' width='100%'><tr class='bg3' align='"._GLOBAL_LEFT."'><td class='bg3' width='20%'>". _CM_POSTER ."</td><td class='bg3'>". _CM_THREAD ."</td></tr>";
 }
 
+/**
+* Shows thread
+*
+*/
 function showThread($color_number, $subject_image, $subject, $text, $post_date, $ip_image, $reply_image, $edit_image, $delete_image, $username="", $rank_title="", $rank_image="", $avatar_image="", $reg_date="", $posts="", $user_from="", $online_image="", $profile_image="", $pm_image="", $email_image="", $www_image="", $icq_image="", $aim_image="", $yim_image="", $msnm_image="")
 {
 	if ( $color_number == 1 ) {
@@ -202,6 +228,10 @@ function showThread($color_number, $subject_image, $subject, $text, $post_date, 
 	echo "<tr align='"._GLOBAL_LEFT."'><td class='$bg' valign='middle'>$post_date</td><td class='$bg' valign='middle'>".$profile_image."".$pm_image."".$email_image."".$www_image."".$icq_image."".$aim_image."".$yim_image."".$msnm_image."</td></tr>";
 }
 
+/**
+* Closes table with forum thread
+*
+*/
 function closeThread()
 {
 	echo '</table></td></tr></table>';

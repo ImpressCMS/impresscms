@@ -1,47 +1,27 @@
 <?php
-// $Id: xoopsmailer.php 1029 2007-09-09 03:49:25Z phppp $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
-if (!defined("XOOPS_ROOT_PATH")) {
+/**
+* Handles all mailer functions within ImpressCMS
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
+if (!defined("ICMS_ROOT_PATH")) {
     die("ImpressCMS root path not defined");
 }
-if (isset($GLOBALS['xoopsConfig']['language']) && file_exists(XOOPS_ROOT_PATH.'/language/'.$GLOBALS['xoopsConfig']['language'].'/mail.php')) {
-	include_once XOOPS_ROOT_PATH.'/language/'.$GLOBALS['xoopsConfig']['language'].'/mail.php';
-} else {
-	include_once XOOPS_ROOT_PATH.'/language/english/mail.php';
-}
-
+icms_loadLanguageFile('core', 'mail');
 /**
  * The new Multimailer class that will carry out the actual sending and will later replace this class. 
  * If you're writing new code, please use that class instead.
  */
-include_once(XOOPS_ROOT_PATH."/class/mail/xoopsmultimailer.php");
+include_once(ICMS_ROOT_PATH."/class/mail/xoopsmultimailer.php");
 
 
 /**
@@ -125,7 +105,7 @@ class XoopsMailer
 	var $templatedir;
 
 	// protected
-	var $charSet = 'iso-8859-1';
+	var $charSet = 'utf-8';
 
 	// protected
 	var $encoding = '8bit';
@@ -231,14 +211,14 @@ class XoopsMailer
 	// public
 	function send($debug = false)
 	{
-		global $xoopsConfig;
+		global $icmsConfig;
 		if ( $this->body == "" && $this->template == "" ) {
 			if ($debug) {
 				$this->errors[] = _MAIL_MSGBODY;
 			}
 			return false;
 		} elseif ( $this->template != "" ) {
-			$path = ( $this->templatedir != "" ) ? $this->templatedir."".$this->template : (XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/mail_template/".$this->template);
+			$path = ( $this->templatedir != "" ) ? $this->templatedir."".$this->template : (ICMS_ROOT_PATH."/language/".$icmsConfig['language']."/mail_template/".$this->template);
 			if ( !($fd = @fopen($path, 'r')) ) {
 				if ($debug) {
 					$this->errors[] = _MAIL_FAILOPTPL;
@@ -264,10 +244,10 @@ class XoopsMailer
 // give good instructions in the message.
 
 		// add some standard tags (user-dependent tags are included later)
-		global $xoopsConfig;
-		$this->assign ('X_ADMINMAIL', $xoopsConfig['adminmail']);
-		$this->assign ('X_SITENAME', $xoopsConfig['sitename']);
-		$this->assign ('X_SITEURL', XOOPS_URL);
+		global $icmsConfig;
+		$this->assign ('X_ADMINMAIL', $icmsConfig['adminmail']);
+		$this->assign ('X_SITENAME', $icmsConfig['sitename']);
+		$this->assign ('X_SITEURL', ICMS_URL);
 		// TODO: also X_ADMINNAME??
 		// TODO: X_SIGNATURE, X_DISCLAIMER ?? - these are probably best
 		//  done as includes if mail templates ever get this sophisticated
@@ -303,10 +283,11 @@ class XoopsMailer
 		foreach ( $this->toUsers as $user ) {
 			// set some user specific variables
 			$subject = str_replace("{X_UNAME}", $user->getVar("uname"), $this->subject );
-			$text = str_replace("{X_UID}", $user->getVar("uid"), $this->body );
+			$text = str_replace("{X_USERLOGINNAME}", $user->getVar("login_name"), $this->body );
+			$text = str_replace("{X_UID}", $user->getVar("uid"), $text );
 			$text = str_replace("{X_UEMAIL}", $user->getVar("email"), $text );
 			$text = str_replace("{X_UNAME}", $user->getVar("uname"), $text );
-			$text = str_replace("{X_UACTLINK}", XOOPS_URL."/user.php?op=actv&id=".$user->getVar("uid")."&actkey=".$user->getVar('actkey'), $text );
+			$text = str_replace("{X_UACTLINK}", ICMS_URL."/user.php?op=actv&id=".$user->getVar("uid")."&actkey=".$user->getVar('actkey'), $text );
 			// send mail
 			if ( $this->isMail ) {
 				if ( !$this->sendMail($user->getVar("email"), $subject, $text, $headers) ) {
@@ -342,12 +323,12 @@ class XoopsMailer
 	// private
 	function sendPM($uid, $subject, $body)
 	{
-		global $xoopsUser;
+		global $icmsUser;
 		$pm_handler =& xoops_gethandler('privmessage');
 		$pm =& $pm_handler->create();
 		$pm->setVar("subject", $subject);
 		// RMV-NOTIFY
-		$pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : $xoopsUser->getVar('uid'));
+		$pm->setVar('from_userid', !empty($this->fromUser) ? $this->fromUser->getVar('uid') : $icmsUser->getVar('uid'));
 		$pm->setVar("msg_text", $body);
 		$pm->setVar("to_userid", $uid);
 		if (!$pm_handler->insert($pm)) {

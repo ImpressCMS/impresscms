@@ -1,71 +1,51 @@
 <?php
-// $Id: configitem.php 1121 2007-10-23 01:17:53Z dugris $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
+/**
+ * Manage configuration items
+ *
+ * @copyright    http://www.xoops.org/ The XOOPS Project
+ * @copyright    XOOPS_copyrights.txt
+ * @copyright    http://www.impresscms.org/ The ImpressCMS Project
+ * @license      LICENSE.txt
+ * @package      core
+ * @subpackage   config
+ * @since        XOOPS
+ * @author       Kazumi Ono (aka onokazo)
+ * @author       http://www.xoops.org The XOOPS Project
+ * @version      $Id$
+ */
 
 if (!defined('XOOPS_ROOT_PATH')) {
-	exit();
+    exit();
 }
-
-/**
- * @package     kernel
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
 
 /**#@+
  * Config type
  */
-define('XOOPS_CONF', 1);
-define('XOOPS_CONF_USER', 2);
-define('XOOPS_CONF_METAFOOTER', 3);
-define('XOOPS_CONF_CENSOR', 4);
-define('XOOPS_CONF_SEARCH', 5);
-define('XOOPS_CONF_MAILER', 6);
-define('XOOPS_CONF_AUTH', 7);
-define('IM_CONF_MULILANGUAGE', 8);
-define('IM_CONF_CONTENT', 9);
-define('XOOPS_CONF_PERSONA', 10);
+define('ICMS_CONF', 1);
+define('ICMS_CONF_USER', 2);
+define('ICMS_CONF_METAFOOTER', 3);
+define('ICMS_CONF_CENSOR', 4);
+define('ICMS_CONF_SEARCH', 5);
+define('ICMS_CONF_MAILER', 6);
+define('ICMS_CONF_AUTH', 7);
+define('ICMS_CONF_MULILANGUAGE', 8);
+define('ICMS_CONF_CONTENT', 9);
+define('ICMS_CONF_PERSONA', 10);
 define('ICMS_CONF_CAPTCHA', 11);
 define('ICMS_CONF_PLUGINS', 12);
+define('ICMS_CONF_AUTOTASKS', 13);
+define('ICMS_CONF_PURIFIER', 14);
 /**#@-*/
 
 /**
  *
- *
+ * @package		kernel
+ * @subpackage	config
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class XoopsConfigItem extends XoopsObject
 {
-
     /**
      * Config options
      *
@@ -99,26 +79,23 @@ class XoopsConfigItem extends XoopsObject
     function getConfValueForOutput()
     {
         switch ($this->getVar('conf_valuetype')) {
-        case 'int':
-            return intval($this->getVar('conf_value', 'N'));
-            break;
-        case 'array':
-            return unserialize($this->getVar('conf_value', 'N'));
-        case 'float':
-            $value = $this->getVar('conf_value', 'N');
-            return (float)$value;
-            break;
-        case 'textarea':
-            return $this->getVar('conf_value');
-        default:
-            return $this->getVar('conf_value', 'N');
-            break;
+            case 'int':
+                return intval($this->getVar('conf_value', 'N'));
+                break;
+            case 'array':
+                $value = @ unserialize($this->getVar('conf_value', 'N'));
+                return $value ? $value : array();
+            case 'float':
+                $value = $this->getVar('conf_value', 'N');
+                return (float)$value;
+                break;
+            case 'textarea':
+                return $this->getVar('conf_value');
+            default:
+                return $this->getVar('conf_value', 'N');
+                break;
         }
     }
-
-
-
-
 
     /**
      * Set a config value
@@ -128,32 +105,35 @@ class XoopsConfigItem extends XoopsObject
      */
     function setConfValueForInput(&$value, $force_slash = false)
     {
-		if($this->getVar('conf_formtype') == 'textarea')
-		{
-//			include_once XOOPS_ROOT_PATH.'/class/module.textsanitizer.php';
-			$myts =& MyTextSanitizer::getInstance();
-			$value = $myts->displayTarea($value, 1);
-		}
-		else {$value = StopXSS($value);}
+        if($this->getVar('conf_formtype') == 'textarea')
+        {
+            // include_once XOOPS_ROOT_PATH.'/class/module.textsanitizer.php';
+            $myts =& MyTextSanitizer::getInstance();
+            $value = $myts->displayTarea($value, 1);
+        }
+        elseif($this->getVar('conf_formtype') == 'password')
+        {
+            $value = filter_var($value, FILTER_SANITIZE_URL);
+        }
+        else
+        {
+            $value = StopXSS($value);
+        }
         switch($this->getVar('conf_valuetype')) {
-        case 'array':
-            if (!is_array($value)) {
-                $value = explode('|', trim($value));
-            }
-            $this->setVar('conf_value', serialize($value), $force_slash);
-            break;
-        case 'text':
-            $this->setVar('conf_value', trim($value), $force_slash);
-            break;
-        default:
-            $this->setVar('conf_value', $value, $force_slash);
-            break;
+            case 'array':
+                if (!is_array($value)) {
+                    $value = explode('|', trim($value));
+                }
+                $this->setVar('conf_value', serialize($value), $force_slash);
+                break;
+            case 'text':
+                $this->setVar('conf_value', trim($value), $force_slash);
+                break;
+            default:
+                $this->setVar('conf_value', $value, $force_slash);
+                break;
         }
     }
-
-
-
-
 
     /**
      * Assign one or more {@link XoopsConfigItemOption}s
@@ -174,10 +154,6 @@ class XoopsConfigItem extends XoopsObject
         }
     }
 
-
-
-
-
     /**
      * Get the {@link XoopsConfigItemOption}s of this Config
      *
@@ -189,21 +165,17 @@ class XoopsConfigItem extends XoopsObject
     }
 }
 
-
-
-
-
 /**
-* XOOPS configuration handler class.
-*
-* This class is responsible for providing data access mechanisms to the data source
-* of XOOPS configuration class objects.
-*
-* @author       Kazumi Ono <onokazu@xoops.org>
-* @copyright    copyright (c) 2000-2003 XOOPS.org
-* @package     kernel
-* @subpackage  config
-*/
+ * XOOPS configuration handler class.
+ *
+ * This class is responsible for providing data access mechanisms to the data source
+ * of XOOPS configuration class objects.
+ *
+ * @author       Kazumi Ono <onokazu@xoops.org>
+ * @copyright    copyright (c) 2000-2003 XOOPS.org
+ * @package     kernel
+ * @subpackage  config
+ */
 class XoopsConfigItemHandler extends XoopsObjectHandler
 {
 
@@ -223,9 +195,6 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         return $config;
     }
 
-
-
-
     /**
      * Load a config from the database
      *
@@ -235,7 +204,7 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     function &get($id)
     {
         $config = false;
-    	$id = intval($id);
+        $id = intval($id);
         if ($id > 0) {
             $sql = "SELECT * FROM ".$this->db->prefix('config')." WHERE conf_id='".$id."'";
             if (!$result = $this->db->query($sql)) {
@@ -251,9 +220,6 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         return $config;
     }
 
-
-
-
     /**
      * Insert a config to the database
      *
@@ -263,8 +229,8 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     function insert(&$config)
     {
         /**
-        * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-        */
+         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
+         */
         if (!is_a($config, 'xoopsconfigitem')) {
             return false;
         }
@@ -293,9 +259,6 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         return true;
     }
 
-
-
-
     /**
      * Delete a config from the database
      *
@@ -305,8 +268,8 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
     function delete(&$config)
     {
         /**
-        * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-        */
+         * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
+         */
         if (!is_a($config, 'xoopsconfigitem')) {
             return false;
         }
@@ -316,9 +279,6 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         }
         return true;
     }
-
-
-
 
     /**
      * Get configs from the database
@@ -355,9 +315,6 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         return $ret;
     }
 
-
-
-
     /**
      * Count configs
      *
@@ -380,5 +337,4 @@ class XoopsConfigItemHandler extends XoopsObjectHandler
         return $count;
     }
 }
-
 ?>

@@ -8,7 +8,7 @@
 	text-align: left;
 }
 #xo-canvas-leftcolumn .xo-blocktitle h3 {
-	color: #EE7733;
+	color: #F3AC03;
 	font-weight: bold;
 	margin: 0;
 	padding: 0;
@@ -20,7 +20,7 @@
 	text-align: right;
 }
 #xo-canvas-rightcolumn .xo-blocktitle h3 {
-	color: #EE7733;
+	color: #F3AC03;
 	font-weight: bold;
 	margin: 0;
 	padding: 0;
@@ -36,7 +36,7 @@
 }
 
 #xo-canvas-leftcolumn th, #xo-canvas-rightcolumn th {
-	color: #EE7733;
+	color: #F3AC03;
 	font-size: 90%;
 }
 
@@ -65,5 +65,5 @@
 #xo-page .xo-blockcontent {
 	padding: .5em;
 	background-color: #F2F2F2;
-	border-top: 4px solid #EE7733;
+	border-top: 4px solid #F3AC03;
 }

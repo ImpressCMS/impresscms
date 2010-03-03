@@ -12,34 +12,18 @@
  * @version		$Id: image-edit.php 1244 2008-03-18 17:09:11Z real_therplima $
  */
 $xoopsOption ['nodebug'] = 1;
-if (file_exists ( '../../../../../../../mainfile.php' ))
-	include_once '../../../../../../../mainfile.php';
-if (file_exists ( '../../../../../../mainfile.php' ))
-	include_once '../../../../../../mainfile.php';
-if (file_exists ( '../../../../../mainfile.php' ))
-	include_once '../../../../../mainfile.php';
-if (file_exists ( '../../../../mainfile.php' ))
-	include_once '../../../../mainfile.php';
-if (file_exists ( '../../../mainfile.php' ))
-	include_once '../../../mainfile.php';
 if (file_exists ( '../../mainfile.php' ))
 	include_once '../../mainfile.php';
-if (file_exists ( '../mainfile.php' ))
-	include_once '../mainfile.php';
 if (! defined ( 'XOOPS_ROOT_PATH' ))
 	exit ();
 
 include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 include_once ICMS_ROOT_PATH . '/class/template.php';
-include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.inc.php';
+include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 
 global $xoopsConfig;
-if (file_exists ( XOOPS_ROOT_PATH . "/modules/system/language/" . $xoopsConfig ['language'] . "/admin/images.php" )) {
-	include_once XOOPS_ROOT_PATH . "/modules/system/language/" . $xoopsConfig ['language'] . "/admin/images.php";
-} else {
-	include_once XOOPS_ROOT_PATH . "/modules/system/language/english/admin/images.php";
-}
+icms_loadLanguageFile('system', 'images', true);
 
 $icmsTpl = new XoopsTpl ( );
 
@@ -78,19 +62,19 @@ if (! is_null ( $target ) && ! is_null ( $type )) {
 
 if (! is_null ( $op ) && $op == 'cancel') {
 	$image_path = isset ( $_GET ['image_path'] ) ? $_GET ['image_path'] : null;
-	
+
 	if (file_exists ( $image_path )) {
 		@unlink ( $image_path );
 	}
-	
+
 	$arr = explode ( '/', $image_path );
 	$arr [count ( $arr ) - 1] = 'orig_' . substr ( $arr [count ( $arr ) - 1], 5, strlen ( $arr [count ( $arr ) - 1] ) );
 	$orig_img_path = implode ( '/', $arr );
-	
+
 	if (file_exists ( $orig_img_path )) {
 		@unlink ( $orig_img_path );
 	}
-	
+
 	$plugins_arr = XoopsLists::getDirListAsArray ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
 	foreach ( $plugins_arr as $plugin_folder ) {
 		if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/icms_plugin_version.php' )) {
@@ -113,17 +97,17 @@ if (! is_null ( $op ) && $op == 'save') {
 	$simage_display = isset ( $_GET ['image_display'] ) ? $_GET ['image_display'] : null;
 	$simage_temp = isset ( $_GET ['image_temp'] ) ? $_GET ['image_temp'] : null;
 	$soverwrite = isset ( $_GET ['overwrite'] ) ? $_GET ['overwrite'] : 1;
-	
+
 	$image_handler = & xoops_gethandler ( 'image' );
 	$simage = & $image_handler->get ( $simage_id );
 	$imgcat_handler = xoops_gethandler ( 'imagecategory' );
 	$imagecategory = & $imgcat_handler->get ( $simage->getVar ( 'imgcat_id' ) );
-	
+
 	$categ_path = $imgcat_handler->getCategFolder ( $imagecategory );
 	$categ_path = (substr ( $categ_path, - 1 ) != '/') ? $categ_path . '/' : $categ_path;
 	$categ_url = $imgcat_handler->getCategFolder ( $imagecategory, 1, 'url' );
 	$categ_url = (substr ( $categ_url, - 1 ) != '/') ? $categ_url . '/' : $categ_url;
-	
+
 	if ($soverwrite) {
 		if ($imagecategory->getVar ( 'imgcat_storetype' ) == 'db') {
 			$fp = @fopen ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $simage_temp, 'rb' );
@@ -177,9 +161,9 @@ if (! is_null ( $op ) && $op == 'save') {
 			$msg = _MD_AM_DBUPDATED;
 		}
 	}
-	
+
 	if (isset ( $_SESSION ['icms_imanager'] )) { //Image Editor open by some editor
-		$params = '?op=save_edit_ok&imgcat_id=' . $simage->getVar ( 'imgcat_id' ) . '&msg=' . urlencode ( $msg );
+		$params = '?op=save_edit_ok&amp;imgcat_id=' . $simage->getVar ( 'imgcat_id' ) . '&amp;msg=' . urlencode ( $msg );
 		if (isset ( $_SESSION ['icms_imanager'] ['imedit_target'] )) {
 			$params .= '&target=' . $_SESSION ['icms_imanager'] ['imedit_target'];
 		}
@@ -188,7 +172,7 @@ if (! is_null ( $op ) && $op == 'save') {
 		}
 		unset ( $_SESSION ['icms_imanager'] );
 	} else { //Image Editor used inside the Image Manager
-		$params = '?fct=images&op=save_edit_ok&imgcat_id=' . $simage->getVar ( 'imgcat_id' ) . '&msg=' . urlencode ( $msg );
+		$params = '?fct=images&op=save_edit_ok&amp;imgcat_id=' . $simage->getVar ( 'imgcat_id' ) . '&amp;msg=' . urlencode ( $msg );
 	}
 	echo 'cancel_edit();';
 	echo 'var url = getOpenerUrl()+"' . $params . '";';
@@ -219,17 +203,17 @@ $temp_img_name = 'temp_' . $uniq . '_' . $original_image->getVar ( 'image_name' 
 $orig_img_name = 'orig_' . $uniq . '_' . $original_image->getVar ( 'image_name' );
 if (! file_exists ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $temp_img_name )) {
 	if ($imagecategory->getVar ( 'imgcat_storetype' ) == 'db') {
-		$temp_img = wiImage::loadFromString ( $original_image->getVar ( 'image_body' ) );
-		$orig_img = wiImage::loadFromString ( $original_image->getVar ( 'image_body' ) );
+		$temp_img = WideImage::loadFromString ( $original_image->getVar ( 'image_body' ) );
+		$orig_img = WideImage::loadFromString ( $original_image->getVar ( 'image_body' ) );
 	} else {
-		$temp_img = wiImage::load ( $categ_path . $original_image->getVar ( 'image_name' ) );
-		$orig_img = wiImage::load ( $categ_path . $original_image->getVar ( 'image_name' ) );
+		$temp_img = WideImage::load ( $categ_path . $original_image->getVar ( 'image_name' ) );
+		$orig_img = WideImage::load ( $categ_path . $original_image->getVar ( 'image_name' ) );
 	}
 	$temp_img->saveToFile ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $temp_img_name );
 	$orig_img->saveToFile ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $orig_img_name );
 } else {
-	$temp_img = wiImage::load ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $temp_img_name );
-	$orig_img = wiImage::load ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $orig_img_name );
+	$temp_img = WideImage::load ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $temp_img_name );
+	$orig_img = WideImage::load ( ICMS_IMANAGER_FOLDER_PATH . '/temp/' . $orig_img_name );
 }
 $img = array ( );
 $img ['name'] = $temp_img_name;

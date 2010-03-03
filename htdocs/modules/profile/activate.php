@@ -19,11 +19,7 @@ include "../../mainfile.php";
 include ICMS_ROOT_PATH.'/header.php';
 
 if (isset($_REQUEST['op']) && $_REQUEST['op'] == "actv") {
-	if ( file_exists(ICMS_ROOT_PATH."/language/".$GLOBALS['xoopsConfig']['language']."/user.php") ) {
-	    include_once ICMS_ROOT_PATH."/language/".$GLOBALS['xoopsConfig']['language']."/user.php";
-	} else {
-	    include_once ICMS_ROOT_PATH."/language/english/user.php";
-	}
+icms_loadLanguageFile('core', 'user');
     $id = intval($_GET['id']);
     $actkey = trim($_GET['actkey']);
     if (empty($id)) {
@@ -43,19 +39,19 @@ if (isset($_REQUEST['op']) && $_REQUEST['op'] == "actv") {
         } else {
             if (false != $member_handler->activateUser($thisuser)) {
                 $config_handler =& xoops_gethandler('config');
-                if ($xoopsModuleConfig['activation_type'] == 2) {
+                if ($icmsModuleConfig['activation_type'] == 2) {
                     $myts =& MyTextSanitizer::getInstance();
                     $xoopsMailer =& getMailer();
                     $xoopsMailer->useMail();
-                    $xoopsMailer->setTemplateDir(ICMS_ROOT_PATH."/modules/".basename( dirname( __FILE__ ) )."/language/".$xoopsConfig['language']."/mail_template");
+                    $xoopsMailer->setTemplateDir(ICMS_ROOT_PATH."/modules/".basename( dirname( __FILE__ ) )."/language/".$icmsConfig['language']."/mail_template");
                     $xoopsMailer->setTemplate('activated.tpl');
-                    $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-                    $xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+                    $xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
+                    $xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
                     $xoopsMailer->assign('SITEURL', ICMS_URL."/");
                     $xoopsMailer->setToUsers($thisuser);
-                    $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-                    $xoopsMailer->setFromName($xoopsConfig['sitename']);
-                    $xoopsMailer->setSubject(sprintf(_PROFILE_MA_YOURACCOUNT,$xoopsConfig['sitename']));
+                    $xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+                    $xoopsMailer->setFromName($icmsConfig['sitename']);
+                    $xoopsMailer->setSubject(sprintf(_PROFILE_MA_YOURACCOUNT,$icmsConfig['sitename']));
                     include ICMS_ROOT_PATH.'/header.php';
                     if ( !$xoopsMailer->send() ) {
                         printf(_PROFILE_MA_ACTVMAILNG, $thisuser->getVar('uname'));
@@ -95,14 +91,14 @@ elseif (!isset($_REQUEST['submit']) || !isset($_REQUEST['email']) || trim($_REQU
     $xoopsMailer =& getMailer();
     $xoopsMailer->useMail();
     $xoopsMailer->setTemplate('register.tpl');
-    $xoopsMailer->setTemplateDir(ICMS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/language/".$xoopsConfig['language']."/mail_template/");
-    $xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
+    $xoopsMailer->setTemplateDir(ICMS_ROOT_PATH."/modules/".$icmsModule->getVar('dirname')."/language/".$icmsConfig['language']."/mail_template/");
+    $xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
     $xoopsMailer->assign('ADMINMAIL',
-    $xoopsConfig['adminmail']);
+    $icmsConfig['adminmail']);
     $xoopsMailer->assign('SITEURL', ICMS_URL."/");
     $xoopsMailer->setToUsers($getuser[0]);
-    $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-    $xoopsMailer->setFromName($xoopsConfig['sitename']);
+    $xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+    $xoopsMailer->setFromName($icmsConfig['sitename']);
     $xoopsMailer->setSubject($xoopsMailer->setSubject(sprintf(_PROFILE_MA_USERKEYFOR, $getuser[0]->getVar('uname'))));
     if ( !$xoopsMailer->send() ) {
         echo _PROFILE_MA_YOURREGMAILNG;

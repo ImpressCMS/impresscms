@@ -9,9 +9,9 @@
 /**
  * Smarty {math} function plugin
  *
- * Type:     function
- * Name:     math
- * Purpose:  handle math computations in template
+ * Type:     function<br>
+ * Name:     math<br>
+ * Purpose:  handle math computations in template<br>
  * @link http://smarty.php.net/manual/en/language.function.math.php {math}
  *          (Smarty online manual)
  * @author   Monte Ohrt <monte at ohrt dot com>
@@ -27,7 +27,8 @@ function smarty_function_math($params, &$smarty)
         return;
     }
 
-    $equation = $params['equation'];
+    // strip out backticks, not necessary for math
+    $equation = str_replace('`','',$params['equation']);
 
     // make sure parenthesis are balanced
     if (substr_count($equation,"(") != substr_count($equation,")")) {

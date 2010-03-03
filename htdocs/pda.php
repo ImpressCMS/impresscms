@@ -16,7 +16,7 @@
 include "mainfile.php";
 header("Content-Type: text/html");
 
-echo "<html><head><title>". htmlspecialchars($xoopsConfig['sitename'])."</title>
+echo "<html><head><title>". htmlspecialchars($icmsConfig['sitename'])."</title>
       <meta name='HandheldFriendly' content='True' />
       <meta name='PalmComputingPlatform' content='True' />
       </head>
@@ -29,8 +29,8 @@ $result = $xoopsDB->query($sql,10,0);
 if (!$result) {
     echo "An error occured";
 } else {
-    echo "<img src='images/logo.gif' alt='".htmlspecialchars($xoopsConfig['sitename'], ENT_QUOTES)."' border='0' /><br />";
-    echo "<h2>".htmlspecialchars($xoopsConfig['slogan'])."</h2>";
+    echo "<img src='images/logo.gif' alt='".htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES)."' border='0' /><br />";
+    echo "<h2>".htmlspecialchars($icmsConfig['slogan'])."</h2>";
     echo "<div>";
     while (list($storyid, $title) = $xoopsDB->fetchRow($result)) {
         echo "<a href='".ICMS_URL."/modules/news/print.php?storyid=$storyid'>".htmlspecialchars($title)."</a><br />";

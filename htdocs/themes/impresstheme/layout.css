@@ -48,26 +48,28 @@
 
 /* ------- Top and bottom zones (2 columns) ------- */
 
-#icms-page-topleftblocks, #icms-page-bottomleftblocks {
+#icms-page-topleftblocks, #icms-page-bottomleftblocks, #icms-page-topleft_adminblocks, #icms-page-bottomleft_adminblocks {
 	float:			left;
 	width:			48%;
 	margin-left:	1%;
 	margin-right:	1%;
 	padding:			0px;
 }
-#icms-page-toprightblocks, #icms-page-bottomrightblocks {
+#icms-page-toprightblocks, #icms-page-bottomrightblocks, #icms-page-topright_adminblocks, #icms-page-bottomright_adminblocks {
 	float:			right;
 	width:			48%;
 	margin-left:	1%;
 	margin-right:	1%;
 }
 * html #icms-page-topleftblocks, * html #icms-page-bottomleftblocks,
-* html #icms-page-toprightblocks, * html #icms-page-bottomrightblocks
+* html #icms-page-toprightblocks, * html #icms-page-bottomrightblocks, 
+* html #icms-page-topleft_adminblocks, * html #icms-page-bottomleft_adminblocks,
+* html #icms-page-topright_adminblocks, * html #icms-page-bottomright_adminblocks
 {
 	width:			47%;
 }
 
-#icms-page-topcenterblocks, #icms-page-bottomcenterblocks {
+#icms-page-topcenterblocks, #icms-page-bottomcenterblocks, #icms-page-topcenter_adminblocks, #icms-page-bottomcenter_adminblocks {
 	clear:			both;
 	margin-left:	1%;
 	margin-right:	1%;

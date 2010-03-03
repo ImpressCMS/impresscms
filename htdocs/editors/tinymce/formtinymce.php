@@ -6,7 +6,7 @@
  * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @since		4.00
- * @version		$Id: formtinymce.php 1522 2008-04-10 19:54:49Z wtravel $
+ * @version		$Id$
  * @package		xoopseditor
  */
 if (! defined ( "XOOPS_ROOT_PATH" )) {
@@ -28,13 +28,13 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 	 * Constructor
 	 *
 	 * @param	array   $configs  Editor Options
-	 * @param	binary 	$checkCompatible  true - return false on failure
+	 * @param	bool 	  $checkCompatible  true - return false on failure
 	 */
 	function XoopsFormTinymce($configs, $checkCompatible = false) {
 		$current_path = __FILE__;
 		if (DIRECTORY_SEPARATOR != "/")
 			$current_path = str_replace ( strpos ( $current_path, "\\\\", 2 ) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path );
-		$this->rootpath = substr ( strstr ( dirname ( $current_path ), XOOPS_ROOT_PATH) , strlen ( XOOPS_ROOT_PATH ) );
+		$this->rootpath = substr(strstr(dirname($current_path), XOOPS_ROOT_PATH), strlen(XOOPS_ROOT_PATH));
 
 		if (is_array ( $configs )) {
 			$vars = array_keys ( get_object_vars ( $this ) );
@@ -57,6 +57,9 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		$this->initTinymce ();
 	}
 
+  /**
+  * Initializes tinyMCE
+  **/
 	function initTinymce() {
 		$this->config ["elements"] = $this->getName ();
 		$this->config ["language"] = $this->getLanguage ();
@@ -109,7 +112,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		}';*/
 
 		require_once dirname ( __FILE__ ) . "/tinymce.php";
-		$this->tinymce = TinyMCE::instance ( $this->config );
+		$this->tinymce = TinyMCE::instance( $this->config );
 	}
 
 	/**
@@ -125,6 +128,9 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		return $language;
 	}
 
+  /**
+  * Gets the fonts for tinymce
+  **/
 	function getFonts() {
 		if (empty ( $this->config ["fonts"] ) && defined ( "_XOOPS_EDITOR_TINYMCE_FONTS" )) {
 			$this->config ["fonts"] = constant ( "_XOOPS_EDITOR_TINYMCE_FONTS" );
@@ -135,14 +141,13 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 
 	/**
 	 * prepare HTML for output
-	 *
-	 * @return	sting HTML
+	 * @return	string    $ret    HTML
 	 */
 	function render() {
 		$ret = $this->tinymce->render ();
 		$ret .= parent::render ();
 
-		$ret .= '<a href="#" id="switchtinymce" title="'._TOGGLETINY.'" onclick="showMCE(\''.$this->_name.'\'); return false;" style="float:right; display:box; background:#F0F0EE; padding:3px; margin-right:2px; border: 1px solid #ccc; border-top: none;">'._TOGGLETINY.'</a>';
+		$ret .= '<a href="#" id="switchtinymce" title="'._TOGGLETINY.'" onclick="showMCE(\''.$this->_name.'\'); return false;" style="float:'._GLOBAL_RIGHT.'; display:box; background:#F0F0EE; padding:3px; margin-right:2px; border: 1px solid #ccc; border-top: none;">'._TOGGLETINY.'</a>';
 		$ret .= '<br clear="'._GLOBAL_RIGHT.'" />';
 
 		return $ret;
@@ -151,10 +156,10 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 	/**
 	 * Check if compatible
 	 *
-	 * @return
+	 * @return  bool
 	 */
 	function isCompatible() {
-		return is_readable ( XOOPS_ROOT_PATH . $this->rootpath . "/tinymce.php" );
+		return is_readable( XOOPS_ROOT_PATH . $this->rootpath . "/tinymce.php" );
 	}
 }
 ?>

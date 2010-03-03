@@ -1,66 +1,65 @@
 <?php
-// $Id: global.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id$
 //%%%%%%	File Name mainfile.php 	%%%%%
-define("_PLEASEWAIT","Please Wait");
-define("_FETCHING","Loading...");
-define("_TAKINGBACK","Taking you back to where you were....");
-define("_LOGOUT","Logout");
-define("_SUBJECT","Subject");
-define("_MESSAGEICON","Message Icon");
-define("_COMMENTS","Comments");
-define("_POSTANON","Post Anonymously");
-define("_DISABLESMILEY","Disable smiley");
-define("_DISABLEHTML","Disable html");
-define("_PREVIEW","Preview");
+define('_PLEASEWAIT','Please Wait');
+define('_FETCHING','Loading...');
+define('_TAKINGBACK','Taking you back to where you were....');
+define('_LOGOUT','Logout');
+define('_SUBJECT','Subject');
+define('_MESSAGEICON','Message Icon');
+define('_COMMENTS','Comments');
+define('_POSTANON','Post Anonymously');
+define('_DISABLESMILEY','Disable smiley');
+define('_DISABLEHTML','Disable html');
+define('_PREVIEW','Preview');
 
-define("_GO","Go!");
-define("_NESTED","Nested");
-define("_NOCOMMENTS","No Comments");
-define("_FLAT","Flat");
-define("_THREADED","Threaded");
-define("_OLDESTFIRST","Oldest First");
-define("_NEWESTFIRST","Newest First");
-define("_MORE","more...");
-define("_MULTIPAGE","To have your article span multiple pages, insert the word <font color=red>[pagebreak]</font> (with brackets) in the article.");
-define("_IFNOTRELOAD","If the page does not automatically reload, please click <a href='%s'>here</a>");
-define("_WARNINSTALL2","WARNING: Directory %s exists on your server. <br />Please remove this directory for security reasons.");
-define("_WARNINWRITEABLE","WARNING: File %s is writeable by the server. <br />Please change the permission of this file for security reasons.<br /> in Unix (444), in Win32 (read-only)");
-define("_WARNINNOTWRITEABLE","WARNING: File %s is not writeable by the server. <br />Please change the permission of this file for functionality reasons.<br /> in Unix (777), in Win32 (writeable)");
+define('_GO','Go!');
+define('_NESTED','Nested');
+define('_NOCOMMENTS','No Comments');
+define('_FLAT','Flat');
+define('_THREADED','Threaded');
+define('_OLDESTFIRST','Oldest First');
+define('_NEWESTFIRST','Newest First');
+define('_MORE','more...');
+define('_IFNOTRELOAD','If the page does not automatically reload, please click <a href="%s">here</a>');
+define('_WARNINSTALL2','WARNING: Directory %s exists on your server. <br />Please remove this directory for security reasons.');
+define('_WARNINWRITEABLE','WARNING: File %s is writeable by the server. <br />Please change the permission of this file for security reasons.<br /> in Unix (444), in Win32 (read-only)');
+define('_WARNINNOTWRITEABLE','WARNING: File %s is not writeable by the server. <br />Please change the permission of this file for functionality reasons.<br /> in Unix (777), in Win32 (writeable)');
 
 // Error messages issued by XoopsObject::cleanVars()
-define( "_XOBJ_ERR_REQUIRED", "%s is required" );
-define( "_XOBJ_ERR_SHORTERTHAN", "%s must be shorter than %d characters." );
+define( '_XOBJ_ERR_REQUIRED', '%s is required' );
+define( '_XOBJ_ERR_SHORTERTHAN', '%s must be shorter than %d characters.' );
 
 //%%%%%%	File Name themeuserpost.php 	%%%%%
-define("_PROFILE","Profile");
-define("_POSTEDBY","Posted by");
-define("_VISITWEBSITE","Visit Website");
-define("_SENDPMTO","Send Private Message to %s");
-define("_SENDEMAILTO","Send Email to %s");
-define("_ADD","Add");
-define("_REPLY","Reply");
-define("_DATE","Date");   // Posted date
+define('_PROFILE','Profile');
+define('_POSTEDBY','Posted by');
+define('_VISITWEBSITE','Visit Website');
+define('_SENDPMTO','Send Private Message to %s');
+define('_SENDEMAILTO','Send Email to %s');
+define('_ADD','Add');
+define('_REPLY','Reply');
+define('_DATE','Date');   // Posted date
 
 //%%%%%%	File Name admin_functions.php 	%%%%%
-define("_MAIN","Main");
-define("_MANUAL","Manual");
-define("_INFO","Info");
-define("_CPHOME","Control Panel Home");
-define("_YOURHOME","Home Page");
+define('_MAIN','Main');
+define('_MANUAL','Manual');
+define('_INFO','Info');
+define('_CPHOME','Control Panel Home');
+define('_YOURHOME','Home Page');
 
 //%%%%%%	File Name misc.php (who's-online popup)	%%%%%
-define("_WHOSONLINE","Who's Online");
+define('_WHOSONLINE','Who\'s Online');
 define('_GUESTS', 'Guests');
 define('_MEMBERS', 'Members');
-define("_ONLINEPHRASE","<b>%s</b> user(s) are online");
-define("_ONLINEPHRASEX","<b>%s</b> user(s) are browsing <b>%s</b>");
-define("_CLOSE","Close");  // Close window
+define('_ONLINEPHRASE','<b>%s</b> user(s) are online');
+define('_ONLINEPHRASEX','<b>%s</b> user(s) are browsing <b>%s</b>');
+define('_CLOSE','Close');  // Close window
 
 //%%%%%%	File Name module.textsanitizer.php 	%%%%%
-define("_QUOTEC","Quote:");
+define('_QUOTEC','Quote:');
 
 //%%%%%%	File Name admin.php 	%%%%%
-define("_NOPERM","Sorry, you don't have the permission to access this area.");
+define("_NOPERM","Sorry, you don't have permission to access this area.");
 
 //%%%%%		Common Phrases		%%%%%
 define("_NO","No");
@@ -84,14 +83,13 @@ define("_ERRORS", "Errors");
 define("_NONE", "None");
 define('_ON','on');
 define('_READS','reads');
-define('_WELCOMETO','Welcome to %s');
 define('_SEARCH','Search');
 define('_ALL', 'All');
 define('_TITLE', 'Title');
 define('_OPTIONS', 'Options');
 define('_QUOTE', 'Quote');
 define('_HIDDENC', 'Hidden Content:');
-define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registeration at ' . htmlspecialchars ( $xoopsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
+define('_HIDDENTEXT', 'This content is hidden for anonymous users, please <a href="'.ICMS_URL.'/register.php" title="Registeration at ' . htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ) . '">register</a> to be able to see it.');
 define('_LIST', 'List');
 define('_LOGIN','User Login');
 define('_USERNAME','Username: ');
@@ -149,10 +147,6 @@ define("_ENTERCODE","Enter the codes that you want to add.");
 define("_ENTERQUOTE","Enter the text that you want to be quoted.");
 define("_ENTERHIDDEN","Enter the text that you want to be hidden for anonymous users.");
 define("_ENTERTEXTBOX","Please input text into the textbox.");
-define("_ALLOWEDCHAR","Allowed max chars length: ");
-define("_CURRCHAR","Current chars length: ");
-define("_PLZCOMPLETE","Please complete the subject and message fields.");
-define("_MESSAGETOOLONG","Your message is too long.");
 
 //%%%%%		TIME FORMAT SETTINGS   %%%%%
 define('_SECOND', '1 second');
@@ -169,13 +163,6 @@ define('_MONTH', '1 month');
 define("_DATESTRING","Y/n/j G:i:s");
 define("_MEDIUMDATESTRING","Y/n/j G:i");
 define("_SHORTDATESTRING","Y/n/j");
-// !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"	
-// insert double '\' before 't', 'r', 'n'
-define("_TODAY", "\T\o\d\a\y G:i");
-define("_YESTERDAY", "\Y\e\s\\t\e\\r\d\a\y G:i");
-define("_MONTHDAY", "n/j G:i");
-define("_YEARMONTHDAY", "Y/n/j G:i");
-define("_ELAPSE", "%s ago");
 /*
 The following characters are recognized in the format string:
 a - "am" or "pm"
@@ -217,7 +204,6 @@ define("XOOPS_USE_MULTIBYTES", "0");
 define("_ADM_USE_RTL","0");
 
 define('_MODULES','Modules');
-define('_IMPRESSCMS_PREFS','Preferences');
 define('_SYSTEM','System');
 define('_IMPRESSCMS_NEWS','News');
 define('_ABOUT','The ImpressCMS Project');
@@ -229,7 +215,6 @@ define('_IMPRESSCMS_BLOG','Blog');
 define('_IMPRESSCMS_DONATE','Donate!');
 define("_IMPRESSCMS_Support","Support the project !");
 define('_IMPRESSCMS_SOURCEFORGE','SourceForge Project');
-define('_RECREATE_ADMINMENU_FILE', 'This is your first time to enter the administration section. Press the button below to proceed.');
 define('_IMPRESSCMS_ADMIN','Administration of');
 /** The default separator used in XoopsTree::getNicePathFromId */
 define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
@@ -237,14 +222,7 @@ define('_BRDCRMB_SEP','&nbsp;:&nbsp;');
 define('_CT_NAV','Home');
 define('_CT_RELATEDS','Related pages');
 //Security image (captcha)
-define("_SECURITYIMAGE_CODE","Security code");
 define("_SECURITYIMAGE_GETCODE","Enter the security code");
-/*
-define("_SECURITYIMAGE_ERROR","Invalid security code");
-define("_SECURITYIMAGE_GDERROR","<b><font color='#CC0000'>Library GD not installed</font> : <a target='php' href='http://fr2.php.net/manual/fr/ref.image.php'>Manual PHP</a></b><br>");
-define("_SECURITYIMAGE_FONTERROR","<b><font color='#CC0000'>No true type fonts found</font>, verify your installation</b><br>");
-*/
-define("_NONE_LOGGER", "None");
 define("_QUERIES", "Queries");
 define("_BLOCKS", "Blocks");
 define("_EXTRA", "Extra");
@@ -257,7 +235,7 @@ define("_ERR_MSG", "Error message:");
 define("_NOTICE", "Notice");
 define("_WARNING", "Warning");
 define("_STRICT", "Strict");
-define("_ERROR", "Error");
+define("_ERROR", "Error(s)");
 define("_TOOKXLONG", " took %s seconds to load.");
 define("_BLOCK", "Block(s)");
 define("_WARNINGUPDATESYSTEM","Congratulations, you have just successfully upgraded your site to the latest version of ImpressCMS!<br />Therefor to finish the upgrade process you'll need to click here and update your system module.<br />Click here to process the upgrade.");
@@ -295,6 +273,29 @@ define('_LCL_NUM9','9');
 // change 0 to 1 if your language has a different numbering than latin`s alphabet
 define("_USE_LOCAL_NUM","0");
 define("_ICMS_DBUPDATED","Database Updated Successfully!");
+define('_MD_AM_DBUPDATED',_ICMS_DBUPDATED);
 
 define('_TOGGLETINY','Toggle Editor');
+define("_ENTERHTMLCODE","Enter the HTML codes that you want to add.");
+define("_ENTERPHPCODE","Enter the PHP codes that you want to add.");
+define("_ENTERCSSCODE","Enter the CSS codes that you want to add.");
+define("_ENTERJSCODE","Enter the JavaScript codes that you want to add.");
+define("_ENTERWIKICODE","Enter the wiki term that you want to add.");
+define("_ENTERLANGCONTENT","Enter the text that you want to be in %s.");
+define('_LANGNAME', 'English');
+define('_ENTERYOUTUBEURL', 'Enter YouTube url:');
+define('_ENTERHEIGHT', 'Enter frame\'s height');
+define('_ENTERWIDTH', 'Enter frame\'s width');
+define('_ENTERMEDIAURL', 'Enter media url:');
+// !!IMPORTANT!! insert '\' before any char among reserved chars: "a", "A", "B", "c", "d", "D", "F", "g", "G", "h", "H", "i", "I", "j", "l", "L", "m", "M", "n", "O", "r", "s", "S", "t", "T", "U", "w", "W", "Y", "y", "z", "Z"	
+// insert double '\' before 't', 'r', 'n'
+define("_TODAY", "\T\o\d\a\y G:i");
+define("_YESTERDAY", "\Y\e\s\\t\e\\r\d\a\y G:i");
+define("_MONTHDAY", "n/j G:i");
+define("_YEARMONTHDAY", "Y/n/j G:i");
+define("_ELAPSE", "%s ago");
+define('_VISIBLE', 'Visible');
+define('_UP', 'Up');
+define('_DOWN', 'Down');
+define('_CONFIGURE', 'Configure');
 ?>

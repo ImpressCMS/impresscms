@@ -1,41 +1,33 @@
 <?php
-// $Id: zipdownloader.php 2 2005-11-02 18:23:29Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
-if (!defined('XOOPS_ROOT_PATH')) {
+/**
+* Handles all functions related to downloading zipfiles within ImpressCMS
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
+if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
-include_once XOOPS_ROOT_PATH.'/class/downloader.php';
-include_once XOOPS_ROOT_PATH.'/class/class.zipfile.php';
+include_once ICMS_ROOT_PATH.'/class/downloader.php';
+include_once ICMS_ROOT_PATH.'/class/class.zipfile.php';
 
 class XoopsZipDownloader extends XoopsDownloader
 {
+
+	/**
+	 * Constructor
+	 *
+	 * @param	string     $ext             extension of the file
+	 * @param	string    $mimyType    the mimytype (mimetype) of the file
+	 */
 	function XoopsZipDownloader($ext = '.zip', $mimyType = 'application/x-zip')
 	{
 		$this->archiver = new zipfile();
@@ -43,6 +35,13 @@ class XoopsZipDownloader extends XoopsDownloader
 		$this->mimeType = trim($mimyType);
 	}
 
+
+	/**
+	 * Adds file to the zip file
+	 *
+	 * @param	string    $filepath      path of the file to add
+	 * @param	string    $newfilename    name of the newly created file
+	 */
 	function addFile($filepath, $newfilename=null)
 	{
 		// Read in the file's contents
@@ -53,6 +52,12 @@ class XoopsZipDownloader extends XoopsDownloader
 		$this->archiver->addFile($data, $filename, filemtime($filename));
 	}
 
+	/**
+	 * Adds binary file to the zip file
+	 *
+	 * @param	string    $filepath      path of the file to add
+	 * @param	string    $newfilename    name of the newly created file
+	 */
 	function addBinaryFile($filepath, $newfilename=null)
 	{
 		// Read in the file's contents
@@ -63,16 +68,39 @@ class XoopsZipDownloader extends XoopsDownloader
 		$this->archiver->addFile($data, $filename, filemtime($filename));
 	}
 
+
+	/**
+	 * Adds file data to the zip file
+	 *
+	 * @param	string    &$data        data array
+	 * @param	string    $filename     filename to add the data to
+	 * @param	string    $time         timestamp
+	 */
 	function addFileData(&$data, $filename, $time=0)
 	{
 		$this->archiver->addFile($data, $filename, $time);
 	}
 
+
+	/**
+	 * Adds binary file data to the zip file
+	 *
+	 * @param	string    &$data        data array
+	 * @param	string    $filename     filename to add the data to
+	 * @param	string    $time         timestamp
+	 */
 	function addBinaryFileData(&$data, $filename, $time=0)
 	{
 		$this->addFileData($data, $filename, $time);
 	}
 
+
+	/**
+	 * downloads the file
+	 *
+	 * @param   string  $name     filename to download
+	 * @param   bool    $gzip     turn on gzip compression
+	 */
 	function download($name, $gzip = true)
 	{
 		$this->_header($name.$this->ext);

@@ -1,15 +1,9 @@
-<!-- Thank you for keeping this line in the template :-) //-->
-<div style="display: none;"><{$ref_smartfactory}></div>
-
-<div class="profile_headertable">
-	<{if $module_home}>
-		<span class="profile_modulename"><{$module_home}></span>
-	<{/if}>
-	<{if $categoryPath}>
-		<span class="profile_breadcrumb">
-		<{if $module_home}>
-			&gt;
-		<{/if}>
-	  	<{$categoryPath}></span>
-	<{/if}>
+<{if $profile_module_home || $profile_category_path}>
+<div id="profile_header">
+  <{if $profile_module_home}><{$profile_module_home}><{/if}>
+  <{if $profile_category_path}>
+  <{if $profile_module_home}>&raquo;&raquo;<{/if}>
+  <{$profile_category_path}>
+  <{/if}>
 </div>
+<{/if}>

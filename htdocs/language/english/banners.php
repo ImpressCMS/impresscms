@@ -1,5 +1,5 @@
 <?php
-// $Id: $
+// $Id$
 //%%%%%%		File Name banners.php 		%%%%%
 define('_BANNERS_LOGIN_TITLE',"Advertising Statistics");
 define('_BANNERS_LOGIN_LOGIN',"Login :");

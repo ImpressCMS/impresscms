@@ -1,7 +1,7 @@
 <?php
-// $Id: banners.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id$
 //%%%%%%        Admin Module Name  Banners         %%%%%
-define("_AM_DBUPDATED","Database Updated Successfully!");
+if(!defined('_AM_DBUPDATED')){define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 define("_AM_CURACTBNR","Current Active Banners");
 define("_AM_BANNERID","Banner ID");

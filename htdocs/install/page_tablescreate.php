@@ -8,7 +8,7 @@
 * @copyright    The XOOPS project http://www.xoops.org/
 * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
 * @package		installer
-* @since        2.3.0
+* @since        Xoops 2.3.0
 * @author		Haruki Setoyama  <haruki@planewave.org>
 * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
 * @author		Skalpa Keo <skalpa@xoops.org>
@@ -20,6 +20,23 @@
 require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
+    imcms_install_chmod("../mainfile.php", 0444);
+    if(defined('XOOPS_TRUST_PATH') && XOOPS_TRUST_PATH != ''){
+        imcms_install_chmod(XOOPS_TRUST_PATH, 0777);
+        imcms_install_chmod(XOOPS_ROOT_PATH.'/modules', 0777);
+        imcms_install_chmod("/modules/protector/root/modules/protector", 0777);
+        imcms_install_chmod("/modules/protector/trust_path/modules", 0777);
+        if(!is_dir(XOOPS_ROOT_PATH.'/modules/protector')){
+        imcms_copyr(XOOPS_ROOT_PATH.'/install/modules/protector/root/modules/protector',XOOPS_ROOT_PATH.'/modules/protector');
+        }
+        if(!is_dir(XOOPS_TRUST_PATH.'/modules')){
+        imcms_copyr(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules',XOOPS_TRUST_PATH.'/modules');
+        }
+        if(!is_dir(XOOPS_TRUST_PATH.'/modules/protector')){
+        imcms_copyr(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules/protector',XOOPS_TRUST_PATH.'/modules/protector');
+        }
+        imcms_install_chmod(XOOPS_ROOT_PATH.'/modules', 0755);
+    }
 	$wizard->setPage( 'tablescreate' );
 	$pageHasForm = true;
 	$pageHasHelp = false;

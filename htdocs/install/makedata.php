@@ -113,7 +113,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     $time = time();
 
 	// RMV-NOTIFY (updated for extra column in table)
-    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."', 120, ".$time.", 0, 1, 'system', 0, 1, 1, 0, 0, 0, " . ICMS_SYSTEM_DBVERSION . ")");
+    $dbm->insert("modules", " VALUES (1, '"._MI_SYSTEM_NAME."'," . $modversion['version'] * 100 . ", ".$time.", 0, 1, 'system', 0, 1, 0, 0, 0, 0, " . ICMS_SYSTEM_DBVERSION . ")");
 
     foreach ($modversion['templates'] as $tplfile) {
         if ($fp = fopen('../modules/system/templates/'.$tplfile['file'], 'r')) {
@@ -127,17 +127,27 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
     foreach ($modversion['blocks'] as $func_num => $newblock) {
         if ($fp = fopen('../modules/system/templates/blocks/'.$newblock['template'], 'r')) {
-            if (in_array($newblock['template'], array('system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html', 'system_block_socialbookmark.html', 'system_block_themes.html', 'system_block_search.html'))) {
+            if (in_array($newblock['template'], array('system_block_user.html', 'system_block_login.html', 'system_block_mainmenu.html', 'system_block_socialbookmark.html', 'system_block_themes.html', 'system_block_search.html','system_admin_block_warnings.html','system_admin_block_cp.html','system_admin_block_modules.html','system_block_newusers.html','system_block_online.html','system_block_waiting.html','system_block_topusers.html'))) {
                 $visible = 1;
             } else {
                 $visible = 0;
             }
             if (in_array($newblock['template'], array('system_block_search.html'))) {
-            $canvaspos = 2;
+            	$canvaspos = 2;
             } elseif (in_array($newblock['template'], array('system_block_socialbookmark.html'))) {
-            $canvaspos = 7;
+            	$canvaspos = 7;
+            } elseif (in_array($newblock['template'], array('system_admin_block_warnings.html'))) {
+             	$canvaspos = 12;
+            } elseif (in_array($newblock['template'], array('system_admin_block_cp.html'))) {
+            	$canvaspos = 11;
+            } elseif (in_array($newblock['template'], array('system_admin_block_modules.html'))) {
+            	$canvaspos = 13;
+            } elseif (in_array($newblock['template'], array('system_block_online.html','system_block_waiting.html'))) {
+            	$canvaspos = 9;
+            } elseif (in_array($newblock['template'], array('system_block_newusers.html','system_block_topusers.html'))) {
+            	$canvaspos = 10;
             } else {
-            $canvaspos = 1;
+            	$canvaspos = 1;
             }
             $options = !isset($newblock['options']) ? '' : trim($newblock['options']);
             $edit_func = !isset($newblock['edit_func']) ? '' : trim($newblock['edit_func']);
@@ -184,16 +194,16 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
     // data for table 'users'
     $mainSalt = XOOPS_DB_SALT;
-    $temp = icms_encryptPass($adminpass, $adminsalt, $mainSalt);
+    $temp = imcms_encryptPass($adminpass, $adminsalt, $mainSalt);
     $regdate = time();
     //$dbadminname= addslashes($adminname);
 	// RMV-NOTIFY (updated for extra columns in user table)
-    $dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'impresstheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '', '".addslashes($adminsalt)."', 0, 0, 1, '".addslashes($adminlogin_name)."')");
+    $dbm->insert('users', " VALUES (1,'','".addslashes($adminname)."','".addslashes($adminmail)."','".XOOPS_URL."/','blank.gif','".$regdate."','','','',0,'','','','','".$temp."',0,0,7,5,'iTheme','0.0',".time().",'thread',0,1,0,'','','','0','".addslashes($language)."', '', '".addslashes($adminsalt)."', 0, 0, 1, '".addslashes($adminlogin_name)."')");
 
 
     // data for table 'block_module_link'
 
-    $sql = 'SELECT bid, side FROM '.$dbm->prefix('newblocks');
+    $sql = 'SELECT bid, side, template FROM '.$dbm->prefix('newblocks');
     $result = $dbm->query($sql);
 
     while ($myrow = $dbm->fetchArray($result)) {
@@ -201,6 +211,8 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     	#if ($myrow['side'] == 0) {
         if ($myrow['side'] == 1 OR $myrow['side'] == 2 OR $myrow['side'] == 7) {
             $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0, 0)");
+        }elseif(in_array($myrow['template'],array('system_admin_block_warnings.html','system_admin_block_cp.html','system_admin_block_modules.html','system_block_newusers.html','system_block_online.html','system_block_waiting.html','system_block_topusers.html'))){
+            $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 1, 2)");
         } else {
             $dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0, 1)");
         }
@@ -227,7 +239,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'language', '_MD_AM_LANGUAGE', '".addslashes($language)."', '_MD_AM_LANGUAGEDSC', 'language', 'other', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'startpage', '_MD_AM_STARTPAGE', 'a:3:{i:1;s:3:\"1-1\";i:2;s:3:\"1-1\";i:3;s:3:\"1-1\";}', '_MD_AM_STARTPAGEDSC', 'startpage', 'array', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'startpage', '_MD_AM_STARTPAGE', 'a:3:{i:1;s:2:\"--\";i:2;s:2:\"--\";i:3;s:2:\"--\";}', '_MD_AM_STARTPAGEDSC', 'startpage', 'array', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'server_TZ', '_MD_AM_SERVERTZ', '0', '_MD_AM_SERVERTZDSC', 'timezone', 'float', $p)");
@@ -239,10 +251,13 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_ext_date', '_MD_AM_EXT_DATE', '"._EXT_DATE_FUNC."', '_MD_AM_EXT_DATEDSC', 'yesno', 'int', $p)");
  	$i++;
 	$p++;
-   	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_set', '_MD_AM_DTHEME', 'impresstheme', '_MD_AM_DTHEMEDSC', 'theme', 'other', $p)");
+   	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_set', '_MD_AM_DTHEME', 'iTheme', '_MD_AM_DTHEMEDSC', 'theme', 'other', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_fromfile', '_MD_AM_THEMEFILE', '0', '_MD_AM_THEMEFILEDSC', 'yesno', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_admin_set', '_MD_AM_ADMIN_DTHEME', 'iTheme', '_MD_AM_ADMIN_DTHEME_DESC', 'theme_admin', 'other', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_fromfile', '_MD_AM_THEMEFILE', '0', '_MD_AM_THEMEFILEDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
   	$dbm->insert('config', " VALUES ($i, 0, $c, 'theme_set_allowed', '_MD_AM_THEMEOK', '".serialize(array('impresstheme', 'impresstheme_light', 'iTheme'))."', '_MD_AM_THEMEOKDSC', 'theme_multi', 'array', $p)");
@@ -251,13 +266,16 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'template_set', '_MD_AM_DTPLSET', 'default', '_MD_AM_DTPLSETDSC', 'tplset', 'other', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'default', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'editor_default', '_MD_AM_EDITOR_DEFAULT', 'dhtmltextarea', '_MD_AM_EDITOR_DEFAULT_DESC', 'editor', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', '".addslashes(serialize(array('default')))."', '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'editor_enabled_list', '_MD_AM_EDITOR_ENABLED_LIST', '".addslashes(serialize(array('dhtmltextarea', 'FCKeditor', 'tinymce')))."', '_MD_AM_EDITOR_ENABLED_LIST_DESC', 'editor_multi', 'array', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'anonymous', '_MD_AM_ANONNAME', '".addslashes(_INSTALL_ANON)."', '_MD_AM_ANONNAMEDSC', 'textbox', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'sourceeditor_default', '_MD_AM_SRCEDITOR_DEFAULT', 'editarea', '_MD_AM_SRCEDITOR_DEFAULT_DESC', 'editor_source', 'text', $p)");
+	$i++;
+	$p++;
+    $dbm->insert('config', " VALUES ($i, 0, $c, 'anonymous', '_MD_AM_ANONNAME', '".addslashes(_INSTALL_ANON)."', '_MD_AM_ANONNAMEDSC', 'textbox', 'text', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'gzip_compression', '_MD_AM_USEGZIP', '0', '_MD_AM_USEGZIPDSC', 'yesno', 'int', $p)");
@@ -297,7 +315,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'closesite_okgrp', '_MD_AM_CLOSESITEOK', '".addslashes(serialize(array('1')))."', '_MD_AM_CLOSESITEOKDSC', 'group_multi', 'array', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'closesite_text', '_MD_AM_CLOSESITETXT', '"._INSTALL_L165."', '_MD_AM_CLOSESITETXTDSC', 'textarea', 'text', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'closesite_text', '_MD_AM_CLOSESITETXT', '"._INSTALL_L165."', '_MD_AM_CLOSESITETXTDSC', 'textsarea', 'text', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'my_ip', '_MD_AM_MYIP', '127.0.0.1', '_MD_AM_MYIPDSC', 'textbox', 'text', $p)");
@@ -337,7 +355,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'enable_badips', '_MD_AM_DOBADIPS', '0', '_MD_AM_DOBADIPSDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'bad_ips', '_MD_AM_BADIPS', '".addslashes(serialize(array('127.0.0.1')))."', '_MD_AM_BADIPSDSC', 'textarea', 'array', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'bad_ips', '_MD_AM_BADIPS', '".addslashes(serialize(array('127.0.0.1')))."', '_MD_AM_BADIPSDSC', 'textsarea', 'array', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'module_cache', '_MD_AM_MODCACHE', '', '_MD_AM_MODCACHEDSC', 'module_cache', 'array', $p)");
@@ -352,7 +370,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'minpass', '_MD_AM_MINPASS', '5', '_MD_AM_MINPASSDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'pass_level', '_MD_AM_PASSLEVEL', '20', '_MD_AM_PASSLEVEL_DESC', 'select', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'pass_level', '_MD_AM_PASSLEVEL', '40', '_MD_AM_PASSLEVEL_DESC', 'select', 'int', $p)");
 		// Insert data for Config Options in selection field. (must be placed before $i++)
     	$dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PASSLEVEL1', '20', $i)");
 	$ci++;
@@ -373,7 +391,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'maxuname', '_MD_AM_MAXUNAME', '20', '_MD_AM_MAXUNAMEDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'delusers', '_MD_AM_DELUSRES', '0', '_MD_AM_DELUSRESDSC', 'textbox', 'int', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'delusers', '_MD_AM_DELUSRES', '30', '_MD_AM_DELUSRESDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_captcha', '_MD_AM_USECAPTCHA', 1, '_MD_AM_USECAPTCHADSC', 'yesno', 'int', $p)");
@@ -382,7 +400,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'welcome_msg', '_MD_AM_WELCOMEMSG', '0', '_MD_AM_WELCOMEMSGDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', '".addslashes(_WELCOME_MSG_CONTENT)."', '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textarea', 'text', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'welcome_msg_content', '_MD_AM_WELCOMEMSG_CONTENT', '".addslashes(_WELCOME_MSG_CONTENT)."', '_MD_AM_WELCOMEMSG_CONTENTDSC', 'textsarea', 'text', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'allow_chgmail', '_MD_AM_ALLWCHGMAIL', '0', '_MD_AM_ALLWCHGMAILDSC', 'yesno', 'int', $p)");
@@ -486,7 +504,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'priv_dpolicy', '_MD_AM_PRIVDPOLICY', 0, '_MD_AM_PRIVDPOLICYDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
-    	$dbm->insert('config', " VALUES ($i, 0, $c, 'priv_policy', '_MD_AM_PRIVPOLICY', '".addslashes(_INSTALL_PRIVPOLICY)."', '_MD_AM_PRIVPOLICYDSC', 'textarea', 'text', $p)");
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'priv_policy', '_MD_AM_PRIVPOLICY', '".addslashes(_INSTALL_PRIVPOLICY)."', '_MD_AM_PRIVPOLICYDSC', 'textsarea', 'text', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '0', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', $p)");
@@ -575,7 +593,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'google_meta', '_MD_AM_METAGOOGLE', '', '_MD_AM_METAGOOGLE_DESC', 'textbox', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'footer', '_MD_AM_FOOTER', '"._LOCAL_FOOTER."', '_MD_AM_FOOTERDSC', 'textarea', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'footer', '_MD_AM_FOOTER', '"._LOCAL_FOOTER."', '_MD_AM_FOOTERDSC', 'textsarea', 'text', $p)");
 	$i++;
 	$p++;
     $dbm->insert('config', " VALUES ($i, 0, $c, 'use_google_analytics', '_MD_AM_USE_GOOGLE_ANA', 0, '_MD_AM_USE_GOOGLE_ANA_DESC', 'yesno', 'int', $p)");
@@ -584,7 +602,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     $dbm->insert('config', " VALUES ($i, 0, $c, 'google_analytics', '_MD_AM_GOOGLE_ANA', '', '_MD_AM_GOOGLE_ANA_DESC', 'textbox', 'text', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'footadm', '_MD_AM_FOOTADM', '"._LOCAL_FOOTER."', '_MD_AM_FOOTADM_DESC', 'textarea', 'text', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'footadm', '_MD_AM_FOOTADM', '"._LOCAL_FOOTER."', '_MD_AM_FOOTADM_DESC', 'textsarea', 'text', $p)");
 
 	// Data for Config Category 4 (Badword Preferences)
 	$c=4; // sets config category id
@@ -602,13 +620,19 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$c=5; // sets config category id
 	$i++;
 	$p=0; // reset position increment to 0 for new category id
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'enable_search', '_MD_AM_DOSEARCH', '1', '_MD_AM_DOSEARCHDSC', 'yesno', 'int', $p)");
+		$dbm->insert('config', " VALUES ($i, 0, $c, 'enable_search', '_MD_AM_DOSEARCH', '1', '_MD_AM_DOSEARCHDSC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'enable_deep_search', '_MD_AM_DODEEPSEARCH', '1', '_MD_AM_DODEEPSEARCHDSC', 'yesno', 'int', $p)");
+	$i++;
+	$p++;
+    	$dbm->insert('config', " VALUES ($i, 0, $c, 'num_shallow_search', '_MD_AM_NUMINITSRCHRSLTS', '5', '_MD_AM_NUMINITSRCHRSLTSDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'keyword_min', '_MD_AM_MINSEARCH', '5', '_MD_AM_MINSEARCHDSC', 'textbox', 'int', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'search_user_date', '_MD_AM_SEARCH_USERDATE', '1', '_MD_AM_SEARCH_USERDATE', 'yesno', 'int', $p)");
+		$dbm->insert('config', " VALUES ($i, 0, $c, 'search_user_date', '_MD_AM_SEARCH_USERDATE', '1', '_MD_AM_SEARCH_USERDATE', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
     	$dbm->insert('config', " VALUES ($i, 0, $c, 'search_no_res_mod', '_MD_AM_SEARCH_NO_RES_MOD', '1', '_MD_AM_SEARCH_NO_RES_MODDSC', 'yesno', 'int', $p)");
@@ -643,13 +667,27 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// ----------
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i,0,$c,'smtphost','_MD_AM_SMTPHOST','a:1:{i:0;s:0:\"\";}', '_MD_AM_SMTPHOSTDESC','textarea','array', $p)");
+	$dbm->insert('config', " VALUES ($i,0,$c,'smtphost','_MD_AM_SMTPHOST','a:1:{i:0;s:0:\"\";}', '_MD_AM_SMTPHOSTDESC','textsarea','array', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'smtpuser','_MD_AM_SMTPUSER','','_MD_AM_SMTPUSERDESC','textbox','text', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'smtppass','_MD_AM_SMTPPASS','','_MD_AM_SMTPPASSDESC','password','text', $p)");
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i,0,$c,'smtpsecure','_MD_AM_SMTPSECURE','ssl','_MD_AM_SMTPSECUREDESC','select','text', $p)");
+	// Insert data for Config Options in selection field. (must be placed before $i++)
+    	$dbm->insert('configoption', " VALUES ($ci, 'None','', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, 'SSL','ssl', $i)");
+	$ci++;
+    	$dbm->insert('configoption', " VALUES ($ci, 'TLS','tls', $i)");
+	$ci++;
+	// ----------
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i,0,$c,'smtpauthport','_MD_AM_SMTPAUTHPORT','465','_MD_AM_SMTPAUTHPORTDESC','textbox','int', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i,0,$c,'sendmailpath','_MD_AM_SENDMAILPATH','/usr/sbin/sendmail','_MD_AM_SENDMAILPATHDESC','textbox','text', $p)");
@@ -753,6 +791,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$c=9; // sets config category id
 	$i++;
 	$p=0;
+	/* These have been deprecated in 1.2 and should not be inserted. They are part of the content module now
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'default_page', '_MD_AM_DEFAULT_CONTPAGE', '0', '_MD_AM_DEFAULT_CONTPAGEDSC', 'select_pages', 'int', $p)");
 	$i++;
 	$p++;
@@ -769,7 +808,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'teaser_length', '_MD_AM_CONT_TEASERLENGTH', '500', '_MD_AM_CONT_TEASERLENGTHDSC', 'textbox', 'int', $p)");
-
+	*/
 
 	// Data for Config Category 10 (Personalization Settings)
 	$c=10; // sets config category id
@@ -799,10 +838,10 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
     $dbm->insert('config', " VALUES ($i, 0, $c, 'editre_block', '_MD_AM_EDITREMOVEBLOCK', '1', '_MD_AM_EDITREMOVEBLOCKDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
-    $dbm->insert('config', " VALUES ($i, 0, $c, 'multi_login', '_MD_AM_MULTLOGINPREVENT', '0', '_MD_AM_MULTLOGINPREVENTDSC', 'yesno', 'int', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_custom_redirection', '_MD_AM_CUSTOMRED', '1', '_MD_AM_CUSTOMREDDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'multi_login_msg', '_MD_AM_MULTLOGINMSG', '"._MD_AM_MULTLOGINMSG_TXT."', '_MD_AM_MULTLOGINMSG_DESC', 'textarea', 'text', $p)");
+    $dbm->insert('config', " VALUES ($i, 0, $c, 'multi_login', '_MD_AM_MULTLOGINPREVENT', '0', '_MD_AM_MULTLOGINPREVENTDSC', 'yesno', 'int', $p)");
 	// ----------
 	$i++;
 	$p++;
@@ -856,13 +895,11 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'show_impresscms_menu', '_MD_AM_SHOW_ICMSMENU', '1', '_MD_AM_SHOW_ICMSMENU_DESC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_hidden', '_MD_AM_HIDDENCONTENT', '0', '_MD_AM_HIDDENCONTENTDSC', 'yesno', 'int', $p)");
-	$i++;
-	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'pagstyle', '_MD_AM_PAGISTYLE', 'default', '_MD_AM_PAGISTYLE_DESC', 'select_paginati', 'text', $p)");
+
 
 	// Data for Config Category 11 (CAPTCHA Settings)
 	$c=11; // sets config category id
@@ -885,7 +922,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', $p)");
 	$i++;
 	$p++;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', '".addslashes(serialize(array('o', '0', 'i', 'l', '1')))."', '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textarea', 'array', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_skip_characters', '_MD_AM_CAPTCHA_SKIPCHAR', '".addslashes(serialize(array('o', '0', 'i', 'l', '1')))."', '_MD_AM_CAPTCHA_SKIPCHARDSC', 'textsarea', 'array', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'captcha_maxattempt', '_MD_AM_CAPTCHA_MAXATTEMP', '8', '_MD_AM_CAPTCHA_MAXATTEMPDSC', 'textbox', 'int', $p)");
@@ -928,7 +965,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$c=12; // sets config category id
 	$i++;
 	$p=0;
-	$dbm->insert('config', " VALUES ($i, 0, $c, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS', '".addslashes(serialize(array('syntaxhighlightphp.php', 'hiddencontent.php')))."', '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', $p)");
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS', '".addslashes(serialize(array('syntaxhighlightphp', 'hiddencontent')))."', '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', $p)");
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'code_sanitizer', '_MD_AM_SELECTSHIGHLIGHT', 'none', '_MD_AM_SELECTSHIGHLIGHT_DESC', 'select', 'text', $p)");
@@ -943,6 +980,239 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$i++;
 	$p++;
 	$dbm->insert('config', " VALUES ($i, 0, $c, 'geshi_default', '_MD_AM_GESHI_DEFAULT', 'php', '_MD_AM_GESHI_DEFAULT_DESC', 'select_geshi', 'text', $p)");
+
+    // Data for Config Category 13 (AutoTasks)
+	$c=13;
+	$i++;
+	$p++;
+	$dbm->insert('config', " VALUES ($i, 0, $c, 'autotasks_system', '_MD_AM_AUTOTASKS_SYSTEM', 'internal', '_MD_AM_AUTOTASKS_SYSTEMDSC', 'autotasksystem', 'text', $p)");
+	$i++;
+    $p++;
+    $dbm->insert('config', " VALUES ($i, 0, $c, 'autotasks_helper', '_MD_AM_AUTOTASKS_HELPER', 'wget %url%', '_MD_AM_AUTOTASKS_HELPERDSC', 'select', 'text', $p)");
+    $dbm->insert('configoption', " VALUES ($ci, 'PHP-CGI', 'php -f %path%', $i)");
+	$ci++;
+    $dbm->insert('configoption', " VALUES ($ci, 'wget', 'wget %url%', $i)");
+	$ci++;
+    $dbm->insert('configoption', " VALUES ($ci, 'Lynx', 'lynx --dump %url%', $i)");
+    $ci++;
+	$i++;
+    $p++;
+    $dbm->insert('config', " VALUES ($i, 0, $c, 'autotasks_helper_path', '_MD_AM_AUTOTASKS_HELPER_PATH', '/usr/bin/', '_MD_AM_AUTOTASKS_HELPER_PATHDSC', 'text', 'text', $p)");
+	$i++;
+    $p++;
+    $dbm->insert('config', " VALUES ($i, 0, $c, 'autotasks_user', '_MD_AM_AUTOTASKS_USER', '', '_MD_AM_AUTOTASKS_USERDSC', 'text', 'text', $p)");
+
+     // Data for Config Category 14 (HTMLPurifier Settings)
+
+     $host_domain = imcms_get_base_domain(XOOPS_URL);
+     $host_base = imcms_get_url_domain(XOOPS_URL);
+
+     $c=14; // sets config category id
+     $i++;
+     $p=0;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'enable_purifier', '_MD_AM_PURIFIER_ENABLE', '1', '_MD_AM_PURIFIER_ENABLEDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_URI_DefinitionID', '_MD_AM_PURIFIER_URI_DEFID', 'system', '_MD_AM_PURIFIER_URI_DEFIDDSC', 'textbox', 'text', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_URI_DefinitionRev', '_MD_AM_PURIFIER_URI_DEFREV', '1', '_MD_AM_PURIFIER_URI_DEFREVDSC', 'textbox', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_URI_Host', '_MD_AM_PURIFIER_URI_HOST', '".addslashes($host_domain)."', '_MD_AM_PURIFIER_URI_HOSTDSC', 'textbox', 'text', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_URI_Base', '_MD_AM_PURIFIER_URI_BASE', '".addslashes($host_base)."', '_MD_AM_PURIFIER_URI_BASEDSC', 'textbox', 'text', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_URI_Disable', '_MD_AM_PURIFIER_URI_DISABLE', '0', '_MD_AM_PURIFIER_URI_DISABLEDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_URI_DisableExternal', '_MD_AM_PURIFIER_URI_DISABLEEXT', '0', '_MD_AM_PURIFIER_URI_DISABLEEXTDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_URI_DisableExternalResources', '_MD_AM_PURIFIER_URI_DISABLEEXTRES', '0', '_MD_AM_PURIFIER_URI_DISABLEEXTRESDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_URI_DisableResources', '_MD_AM_PURIFIER_URI_DISABLERES', '0', '_MD_AM_PURIFIER_URI_DISABLERESDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_URI_MakeAbsolute', '_MD_AM_PURIFIER_URI_MAKEABS', '0', '_MD_AM_PURIFIER_URI_MAKEABSDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_URI_HostBlacklist', '_MD_AM_PURIFIER_URI_BLACKLIST', '', '_MD_AM_PURIFIER_URI_BLACKLISTDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_URI_AllowedSchemes', '_MD_AM_PURIFIER_URI_ALLOWSCHEME', '".addslashes(serialize(array('http','https','mailto','ftp','nntp','news')))."', '_MD_AM_PURIFIER_URI_ALLOWSCHEMEDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_HTML_DefinitionID', '_MD_AM_PURIFIER_HTML_DEFID', 'system', '_MD_AM_PURIFIER_HTML_DEFIDDSC', 'textbox', 'text', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_HTML_DefinitionRev', '_MD_AM_PURIFIER_HTML_DEFREV', '1', '_MD_AM_PURIFIER_HTML_DEFREVDSC', 'textbox', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_HTML_Doctype', '_MD_AM_PURIFIER_HTML_DOCTYPE', 'XHTML 1.0 Transitional', '_MD_AM_PURIFIER_HTML_DOCTYPEDSC', 'select', 'text', $p)");
+     // Insert data for Config Options in selection field. (must be placed before $i++)
+     $dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PURIFIER_401T', 'HTML 4.01 Transitional', $i)");
+     $ci++;
+     $dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PURIFIER_401S', 'HTML 4.01 Strict', $i)");
+     $ci++;
+     $dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PURIFIER_X10T', 'XHTML 1.0 Transitional', $i)");
+     $ci++;
+     $dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PURIFIER_X10S', 'XHTML 1.0 Strict', $i)");
+     $ci++;
+     $dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PURIFIER_X11', 'XHTML 1.1', $i)");
+     $ci++;
+     // ----------
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_HTML_TidyLevel', '_MD_AM_PURIFIER_HTML_TIDYLEVEL', 'medium', '_MD_AM_PURIFIER_HTML_TIDYLEVELDSC', 'select', 'text', $p)");
+     // Insert data for Config Options in selection field. (must be placed before $i++)
+     $dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PURIFIER_NONE', 'none', $i)");
+     $ci++;
+     $dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PURIFIER_LIGHT', 'light', $i)");
+     $ci++;
+     $dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PURIFIER_MEDIUM', 'medium', $i)");
+     $ci++;
+     $dbm->insert('configoption', " VALUES ($ci, '_MD_AM_PURIFIER_HEAVY', 'heavy', $i)");
+     $ci++;
+     // ----------
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_HTML_AllowedElements', '_MD_AM_PURIFIER_HTML_ALLOWELE',
+     '".addslashes(serialize(array('a', 'abbr', 'acronym', 'b', 'blockquote', 'br', 'caption', 'cite', 'code', 'dd', 'del', 'dfn', 'div', 'dl',
+                                   'dt', 'em', 'font', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'i', 'img', 'ins', 'kbd', 'li', 'ol', 'p', 'pre', 's',
+                                   'span', 'strike', 'strong', 'sub', 'sup', 'table', 'tbody', 'td', 'tfoot', 'th', 'thead', 'tr', 'tt', 'u', 'ul', 'var')))."',
+     '_MD_AM_PURIFIER_HTML_ALLOWELEDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_HTML_AllowedAttributes', '_MD_AM_PURIFIER_HTML_ALLOWATTR',
+     '".addslashes(serialize(array('a.class', 'a.href', 'a.id', 'a.name', 'a.rev', 'a.style', 'a.title', 'a.target', 'a.rel', 'abbr.title', 'acronym.title',
+                                   'blockquote.cite', 'div.align', 'div.style', 'div.class', 'div.id', 'font.size', 'font.color', 'h1.style', 'h2.style', 'h3.style', 'h4.style', 'h5.style', 'h6.style', 'img.src', 'img.alt', 'img.title', 'img.class', 'img.align', 'img.style', 'img.height', 'img.width', 'li.style', 'ol.style', 'p.style', 'span.style', 'span.class', 'span.id', 'table.class', 'table.id', 'table.border', 'table.cellpadding', 'table.cellspacing', 'table.style', 'table.width', 'td.abbr', 'td.align', 'td.class', 'td.id', 'td.colspan', 'td.rowspan', 'td.style', 'td.valign', 'tr.align', 'tr.class', 'tr.id', 'tr.style', 'tr.valign', 'th.abbr', 'th.align', 'th.class', 'th.id', 'th.colspan', 'th.rowspan', 'th.style', 'th.valign', 'ul.style')))."',
+     '_MD_AM_PURIFIER_HTML_ALLOWATTRDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_HTML_ForbiddenElements', '_MD_AM_PURIFIER_HTML_FORBIDELE', '', '_MD_AM_PURIFIER_HTML_FORBIDELEDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_HTML_ForbiddenAttributes', '_MD_AM_PURIFIER_HTML_FORBIDATTR', '', '_MD_AM_PURIFIER_HTML_FORBIDATTRDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_HTML_MaxImgLength', '_MD_AM_PURIFIER_HTML_MAXIMGLENGTH', '1200', '_MD_AM_PURIFIER_HTML_MAXIMGLENGTHDSC', 'textbox', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_HTML_SafeEmbed', '_MD_AM_PURIFIER_HTML_SAFEEMBED', '0', '_MD_AM_PURIFIER_HTML_SAFEEMBEDDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_HTML_SafeObject', '_MD_AM_PURIFIER_HTML_SAFEOBJECT', '0', '_MD_AM_PURIFIER_HTML_SAFEOBJECTDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_HTML_AttrNameUseCDATA', '_MD_AM_PURIFIER_HTML_ATTRNAMEUSECDATA', '0', '_MD_AM_PURIFIER_HTML_ATTRNAMEUSECDATADSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Filter_ExtractStyleBlocks', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLK', '1', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Filter_ExtractStyleBlocks_Escaping', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC', '1', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESCDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Filter_ExtractStyleBlocks_Scope', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPE', '', '_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEBLKSCOPEDSC', 'textsarea', 'text', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Filter_YouTube', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBE', '1', '_MD_AM_PURIFIER_FILTER_ENABLEYOUTUBEDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Core_EscapeNonASCIICharacters', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARS', '1', '_MD_AM_PURIFIER_CORE_ESCNONASCIICHARSDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Core_HiddenElements', '_MD_AM_PURIFIER_CORE_HIDDENELE', '".addslashes(serialize(array('script','style')))."', '_MD_AM_PURIFIER_CORE_HIDDENELEDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Core_RemoveInvalidImg', '_MD_AM_PURIFIER_CORE_REMINVIMG', '1', '_MD_AM_PURIFIER_CORE_REMINVIMGDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_AutoFormat_AutoParagraph', '_MD_AM_PURIFIER_AUTO_AUTOPARA', '0', '_MD_AM_PURIFIER_AUTO_AUTOPARADSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_AutoFormat_DisplayLinkURI', '_MD_AM_PURIFIER_AUTO_DISPLINKURI', '0', '_MD_AM_PURIFIER_AUTO_DISPLINKURIDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_AutoFormat_Linkify', '_MD_AM_PURIFIER_AUTO_LINKIFY', '1', '_MD_AM_PURIFIER_AUTO_LINKIFYDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_AutoFormat_PurifierLinkify', '_MD_AM_PURIFIER_AUTO_PURILINKIFY', '0', '_MD_AM_PURIFIER_AUTO_PURILINKIFYDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_AutoFormat_Custom', '_MD_AM_PURIFIER_AUTO_CUSTOM', '', '_MD_AM_PURIFIER_AUTO_CUSTOMDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_AutoFormat_RemoveEmpty', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTY', '0', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_AutoFormat_RemoveEmptyNbsp', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSP', '0', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_AutoFormat_RemoveEmptyNbspExceptions', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPT', '".addslashes(serialize(array('td','th')))."', '_MD_AM_PURIFIER_AUTO_REMOVEEMPTYNBSPEXCEPTDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Attr_AllowedFrameTargets', '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGET', '".addslashes(serialize(array('_blank','_parent','_self','_top')))."', '_MD_AM_PURIFIER_ATTR_ALLOWFRAMETARGETDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Attr_AllowedRel', '_MD_AM_PURIFIER_ATTR_ALLOWREL', '".addslashes(serialize(array('external','nofollow','external nofollow','lightbox')))."', '_MD_AM_PURIFIER_ATTR_ALLOWRELDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Attr_AllowedClasses', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSES', '', '_MD_AM_PURIFIER_ATTR_ALLOWCLASSESDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Attr_ForbiddenClasses', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSES', '', '_MD_AM_PURIFIER_ATTR_FORBIDDENCLASSESDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Attr_DefaultInvalidImage', '_MD_AM_PURIFIER_ATTR_DEFINVIMG', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGDSC', 'textbox', 'text', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Attr_DefaultInvalidImageAlt', '_MD_AM_PURIFIER_ATTR_DEFINVIMGALT', '', '_MD_AM_PURIFIER_ATTR_DEFINVIMGALTDSC', 'textbox', 'text', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Attr_DefaultImageAlt', '_MD_AM_PURIFIER_ATTR_DEFIMGALT', '', '_MD_AM_PURIFIER_ATTR_DEFIMGALTDSC', 'textbox', 'text', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Attr_ClassUseCDATA', '_MD_AM_PURIFIER_ATTR_CLASSUSECDATA', '1', '_MD_AM_PURIFIER_ATTR_CLASSUSECDATADSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Attr_EnableID', '_MD_AM_PURIFIER_ATTR_ENABLEID', '1', '_MD_AM_PURIFIER_ATTR_ENABLEIDDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Attr_IDPrefix', '_MD_AM_PURIFIER_ATTR_IDPREFIX', '', '_MD_AM_PURIFIER_ATTR_IDPREFIXDSC', 'textbox', 'text', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Attr_IDPrefixLocal', '_MD_AM_PURIFIER_ATTR_IDPREFIXLOCAL', '', '_MD_AM_PURIFIER_ATTR_IDPREFIXLOCALDSC', 'textbox', 'text', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_Attr_IDBlacklist', '_MD_AM_PURIFIER_ATTR_IDBLACKLIST', '', '_MD_AM_PURIFIER_ATTR_IDBLACKLISTDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_CSS_DefinitionRev', '_MD_AM_PURIFIER_CSS_DEFREV', '1', '_MD_AM_PURIFIER_CSS_DEFREVDSC', 'textbox', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_CSS_AllowImportant', '_MD_AM_PURIFIER_CSS_ALLOWIMPORTANT', '1', '_MD_AM_PURIFIER_CSS_ALLOWIMPORTANTDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_CSS_AllowTricky', '_MD_AM_PURIFIER_CSS_ALLOWTRICKY', '1', '_MD_AM_PURIFIER_CSS_ALLOWTRICKYDSC', 'yesno', 'int', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_CSS_AllowedProperties', '_MD_AM_PURIFIER_CSS_ALLOWPROP', '', '_MD_AM_PURIFIER_CSS_ALLOWPROPDSC', 'textsarea', 'array', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_CSS_MaxImgLength', '_MD_AM_PURIFIER_CSS_MAXIMGLEN', '1200px', '_MD_AM_PURIFIER_CSS_MAXIMGLENDSC', 'textbox', 'text', $p)");
+     $i++;
+     $p++;
+     $dbm->insert('config', " VALUES ($i, 0, $c, 'purifier_CSS_Proprietary', '_MD_AM_PURIFIER_CSS_PROPRIETARY', '1', '_MD_AM_PURIFIER_CSS_PROPRIETARYDSC', 'yesno', 'int', $p)");
+     // <<<<< End of Purifier Category >>>>>
+
+	$dbm->insert('system_autotasks', " VALUES (0, 'Inactivating users', 'autotask.php', 0, 1, 0, 1, ".time().", 'addon/system', 00)");
+
 
     return $gruops;
 }

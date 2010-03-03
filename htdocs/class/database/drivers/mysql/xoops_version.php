@@ -5,7 +5,7 @@
  * @package database
  * @subpackage mysql
  * @since ImpressCMS 1.0
- * @version $Id: $
+ * @version $Id$
  *
  * @author Gustavo Pilla <nekro@impresscms.org>
  * @copyright Copyright (c) 2008, ImpressCMS <http://www.impresscms.org>
@@ -23,4 +23,5 @@ $classversion['dirname'] = "system";
 
 $classversion['require']['php_version'] = "4.1.0";
 $classversion['require']['php_extension'] = "mysql";
+
 ?>

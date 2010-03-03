@@ -1,14 +1,20 @@
 <?php 
-
-/* Config emailprotection.php */
-/* written by Kuba Zygmunt (kuba.zygmunt@gmail.com) */
+/**
+* Config emailprotection.php
+*
+* @author	Kuba Zygmunt (kuba.zygmunt@gmail.com)
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license		LICENSE.txt
+* @package	core
+* @since		1.2
+* @version		$Id$
+*/
 
 include '../mainfile.php';
-$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-$font = ICMS_ROOT_PATH.'/class/captcha/fonts/'.$xoopsConfigPersona['email_font'];
+$font = ICMS_ROOT_PATH.'/class/captcha/fonts/'.$icmsConfigPersona['email_font'];
 // If you use TTF fontLength = 8
 // If you don't you may put 7 :-)
-$fontSize = intval($xoopsConfigPersona['email_font_len']);
+$fontSize = intval($icmsConfigPersona['email_font_len']);
 $height = $fontSize*1.2+14; // height of image
 $emailAddress = urldecode(base64_decode($_GET['p']));
 
@@ -21,7 +27,7 @@ $image = imagecreate($width,$height);
 
 
 /********* COLORS ************/
-$fg = $xoopsConfigPersona['email_cor'];
+$fg = $icmsConfigPersona['email_cor'];
 $red = 100;
 $green = 100;
 $blue = 100;
@@ -31,8 +37,8 @@ if( eregi( "[#]?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})", $fg, $ret ) )
 	$green = hexdec( $ret[2] );
 	$blue = hexdec( $ret[3] );
 }
-if ($xoopsConfigPersona['email_shadow']!=""){
-	$fg = $xoopsConfigPersona['email_shadow'];
+if ($icmsConfigPersona['email_shadow']!=""){
+	$fg = $icmsConfigPersona['email_shadow'];
 	$sred = 100;
 	$sgreen = 100;
 	$sblue = 100;
@@ -55,8 +61,8 @@ ImageFilledRectangle($image,0,0,$width,$height,$white);
 
 
 // Add the text using TTF
-if ($xoopsConfigPersona['email_shadow']!=""){
-	imagettftext($image, $fontSize, 0, intval($xoopsConfigPersona['shadow_y']), $height-intval($xoopsConfigPersona['shadow_x'])-10, $shadow , $font, $emailAddress);
+if ($icmsConfigPersona['email_shadow']!=""){
+	imagettftext($image, $fontSize, 0, intval($icmsConfigPersona['shadow_y']), $height-intval($icmsConfigPersona['shadow_x'])-10, $shadow , $font, $emailAddress);
 }
 imagettftext($image, $fontSize, 0, 0, $height-10, $frente, $font, $emailAddress);
 
@@ -68,4 +74,5 @@ imagettftext($image, $fontSize, 0, 0, $height-10, $frente, $font, $emailAddress)
 ImagePNG($image);
 
 ImageDestroy($image);
+
 ?>

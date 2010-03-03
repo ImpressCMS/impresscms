@@ -1,5 +1,5 @@
 <?php
-// $Id: timezone.php 1138 2007-11-02 09:01:58Z dugris $
+// $Id$
 //%%%%%		Time Zone	%%%%
 define("_TZ_GMTM12", "(GMT-12:00) Eniwetok, Kwajalein");
 define("_TZ_GMTM11", "(GMT-11:00) Midway Island, Samoa");

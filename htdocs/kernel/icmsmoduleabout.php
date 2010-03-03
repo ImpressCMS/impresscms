@@ -1,4 +1,14 @@
 <?php
+/**
+* Information about a module
+*
+* @copyright      http://www.impresscms.org/ The ImpressCMS Project
+* @license         LICENSE.txt
+* @package	core
+* @since            1.1
+* @author		marcan <marcan@impresscms.org>
+* @version		$Id$
+*/
 
 if (!defined("ICMS_ROOT_PATH")) {
 die("ImpressCMS root path not defined");
@@ -14,7 +24,6 @@ die("ImpressCMS root path not defined");
 * @package		core
 * @since		1.0
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id$
 */
 
 class IcmsModuleAbout
@@ -44,7 +53,7 @@ class IcmsModuleAbout
 	/**
 	 * Constructor
 	 *
-	 * Initiate the object, based on $xoopsModule
+	 * Initiate the object, based on $icmsModule
 	 * 
 	 * @param string $aboutTitle text used in the extreme right caption of the menu
 	 * @return IcmsModuleAbout
@@ -52,9 +61,9 @@ class IcmsModuleAbout
 	
 	function IcmsModuleAbout($aboutTitle = _MODABOUT_ABOUT)
 	{
-		global $xoopsModule, $xoopsConfig;
+		global $icmsModule, $icmsConfig;
 
-		icms_loadLanguageFile($xoopsModule->dirname(), 'modinfo');
+		icms_loadLanguageFile($icmsModule->dirname(), 'modinfo');
 		icms_loadLanguageFile('core', 'moduleabout');
 		
 		$this->_aboutTitle = $aboutTitle;
@@ -78,10 +87,10 @@ class IcmsModuleAbout
 	}
 
 	/**
-	 * Santizie a value 
+	 * Sanitize a value 
 	 *
 	 * @param string $value to be sanitized
-	 * @return string santizied value
+	 * @return string sanitized value
 	 */
 	function sanitize($value) {
 		$myts = MyTextSanitizer::getInstance();
@@ -100,20 +109,20 @@ class IcmsModuleAbout
 
 		$myts = &MyTextSanitizer::getInstance();
 
-		global $xoopsModule, $xoopsConfig;
+		global $icmsModule, $icmsConfig;
 
 		xoops_cp_header();
 
 		$module_handler = &xoops_gethandler('module');
-		$versioninfo = &$module_handler->get($xoopsModule->getVar('mid'));
+		$versioninfo = &$module_handler->get($icmsModule->getVar('mid'));
 
-		$xoopsModule->displayAdminMenu(-1, $this->_aboutTitle . " " . $versioninfo->getInfo('name'));
+		$icmsModule->displayAdminMenu(-1, $this->_aboutTitle . " " . $versioninfo->getInfo('name'));
 
 		include_once ICMS_ROOT_PATH . '/class/template.php';
 
 		$this->_tpl =& new XoopsTpl();
 
-		$this->_tpl->assign('module_url', ICMS_URL . "/modules/" . $xoopsModule->getVar('dirname') . "/");
+		$this->_tpl->assign('module_url', ICMS_URL . "/modules/" . $icmsModule->getVar('dirname') . "/");
 		$this->_tpl->assign('module_image', $versioninfo->getInfo('image'));
 		$this->_tpl->assign('module_name', $versioninfo->getInfo('name'));
 		$this->_tpl->assign('module_version', $versioninfo->getInfo('version'));
@@ -172,8 +181,17 @@ class IcmsModuleAbout
 		$this->_tpl->assign('module_author_word', $versioninfo->getInfo('author_word'));
 
 	    // For changelog thanks to 3Dev
-	    //global $xoopsModule;
-	    $filename = ICMS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/changelog.txt';
+	    //global $icmsModule;
+	    $filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/changelog.txt';
+	    if(is_file($filename)){
+
+	        $filesize = filesize($filename);
+	        $handle = fopen($filename, 'r');
+	        $this->_tpl->assign('module_version_history', $myts->displayTarea(fread($handle, $filesize), true));
+	        fclose($handle);
+	    }
+		
+	    $filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/changelog.txt';
 	    if(is_file($filename)){
 
 	        $filesize = filesize($filename);
@@ -183,10 +201,16 @@ class IcmsModuleAbout
 	    }
 		
 		// For license thanks to 3Dev
-		if ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license/' . $xoopsConfig['language'] . '_license.txt' ) ) {
-			$filename = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license/' . $xoopsConfig['language'] . '_license.txt';
-		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license.txt' ) ) {
-			$filename = XOOPS_ROOT_PATH . '/modules/' . $xoopsModule->getVar('dirname') . '/license.txt';
+		if ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt' ) ) {
+			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt';
+		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt' ) ) {
+			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt';
+		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt' ) ) {
+			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
+		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt' ) ) {
+			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt';
+		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt' ) ) {
+			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
 		}
 	    if(is_file($filename)){
 	        $filesize = filesize($filename);

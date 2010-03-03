@@ -1,5 +1,5 @@
 <?php
-// $Id: notification.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id$
 
 // RMV-NOTIFY
 
@@ -36,7 +36,6 @@ define ('_NOT_NOACCESS', 'You do not have permission to access this page.');
 
 // Text for module config options
 
-define ('_NOT_ENABLE', 'Enable');
 define ('_NOT_NOTIFICATION', 'Notification');
 
 define ('_NOT_CONFIG_ENABLED', 'Enable Notification');

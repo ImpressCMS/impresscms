@@ -1,82 +1,118 @@
 <?php
 /**
- * Extended User Profile
+ * Classes responsible for managing profile regstep objects
  *
- *
- * @copyright       The ImpressCMS Project http://www.impresscms.org/
- * @license         LICENSE.txt
- * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package         modules
- * @since           1.2
- * @author          Jan Pedersen
- * @author          The SmartFactory <www.smartfactory.ca>
- * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version         $Id$
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org>
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.0
+ * @author	  Jan Pedersen
+ * @author	  The SmartFactory <www.smartfactory.ca>
+ * @author	   	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @package		profile
+ * @version		$Id$
  */
 
-include_once(ICMS_KERNEL_PATH."icmspersistableobject.php");
+if (!defined("ICMS_ROOT_PATH"))  die("ICMS root path not defined");
 
-class ProfileRegstep extends IcmsPersistableObject  {
-    function ProfileRegstep() {
-        $this->initVar('step_id', XOBJ_DTYPE_INT);
-        $this->initVar('step_name', XOBJ_DTYPE_TXTBOX);
-        $this->initVar('step_intro', XOBJ_DTYPE_TXTAREA);
-        $this->initVar('step_order', XOBJ_DTYPE_INT, 1);
-        $this->initVar('step_save', XOBJ_DTYPE_INT, 0);
-    }
+include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
 
-    /**
-     * Get add/edit form for a ProfileRegstep
-     *
-     * @return RegistrationStepForm
-     */
-    function getForm() {
-        include_once(ICMS_ROOT_PATH."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/class/forms/step.php");
-        $form = new RegistrationStepForm(_PROFILE_AM_STEP, 'stepform', 'step.php');
-        $form->createElements($this);
-        return $form;
-    }
+class ProfileRegstep extends IcmsPersistableObject {
+
+	/**
+	 * Constructor
+	 *
+	 * @param object $handler ProfileRegstepHandler object
+	 */
+	public function __construct(& $handler) {
+		global $icmsConfig;
+
+		$this->IcmsPersistableObject($handler);
+
+		$this->quickInitVar('step_id', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('step_name', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('step_intro', XOBJ_DTYPE_TXTAREA, false);
+		$this->quickInitVar('step_order', XOBJ_DTYPE_TXTBOX, false);
+		$this->quickInitVar('step_save', XOBJ_DTYPE_TXTBOX, false);
+		
+		$this->setControl('step_save', 'yesno');
+	}
+
+	/**
+	 * Overriding the IcmsPersistableObject::getVar method to assign a custom method on some
+	 * specific fields to handle the value before returning it
+	 *
+	 * @param str $key key of the field
+	 * @param str $format format that is requested
+	 * @return mixed value of the field that is requested
+	 */
+	public function getVar($key, $format = 's') {
+		if ($format == 's' && in_array($key, array ())) {
+			return call_user_func(array ($this,	$key));
+		}
+		return parent :: getVar($key, $format);
+	}
+	
+	public function getCustomStepSave(){
+		if($this->getVar('step_save') == 1)
+			$rtn = '<img src="'.ICMS_IMAGES_SET_URL.'/actions/button_ok.png" alt="1"/>';
+		else
+			$rtn = '<img src="'.ICMS_IMAGES_SET_URL.'/actions/button_cancel.png" alt="0"/>';
+		return $rtn;
+	}
+	
+	public function getCustomStepName(){
+		$rtn = $this->getVar('step_name');
+		return $rtn;	
+	}
+	
 }
 
 class ProfileRegstepHandler extends IcmsPersistableObjectHandler {
-    function ProfileRegstepHandler($db) {
-        parent::IcmsPersistableObjectHandler($db, 'regstep', 'step_id', 'step_name', '', 'profile');
-    }
+	
+	/**
+	 * Constructor
+	 *
+	 * @param IcmsDatabase $db
+	 */
+	public function __construct( & $db) {
+		$this->IcmsPersistableObjectHandler($db, 'regstep', 'step_id', 'step_name', 'step_name', 'profile');
+	}
 
-    /**
-     * Insert a new object
-     * @see IcmsPersistableObjectHandler
-     *
-     * @param ProfileRegstep $obj
-     * @param bool $force
-     *
-     * @return bool
-     */
-    function insert($obj, $force = false) {
-        if (parent::insert($obj, $force)) {
-            if ($obj->getVar('step_save') == 1) {
-                return $this->updateAll('step_save', 0, new Criteria('step_id', $obj->getVar('step_id'), "!="));
-            }
-            return true;
-        }
-        return false;
-    }
+	/**
+	 * Insert a new object
+	 * @see IcmsPersistableObjectHandler::insert()
+	 *
+	 * @param ProfileRegstep $obj
+	 * @param bool $force
+	 *
+	 * @return bool
+	 */
+	public function insert($obj, $force = false) {
+		if (parent::insert($obj, $force)) {
+			if ($obj->getVar('step_save') == 1) {
+				return $this->updateAll('step_save', 0, new Criteria('step_id', $obj->getVar('step_id'), "!="));
+			}
+			return true;
+		}
+		return false;
+	}
 
-    /**
-     * Delete an object from the database
-     * @see IcmsPersistableObjectHandler
-     *
-     * @param ProfileRegstep $obj
-     * @param bool $force
-     *
-     * @return bool
-     */
-    function delete($obj, $force = false) {
-        if (parent::delete($obj, $force)) {
-            $field_handler = icms_getmodulehandler( 'field', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
-            return $field_handler->updateAll('step_id', 0, new Criteria('step_id', $obj->getVar('step_id')));
-        }
-        return false;
-    }
+	/**
+	 * Delete an object from the database
+	 * @see IcmsPersistableObjectHandler::delete()
+	 *
+	 * @param ProfileRegstep $obj
+	 * @param bool $force
+	 *
+	 * @return bool
+	 */
+	public function delete($obj, $force = false) {
+		if (parent::delete($obj, $force)) {
+			$field_handler = icms_getmodulehandler( 'field', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
+			return $field_handler->updateAll('step_id', 0, new Criteria('step_id', $obj->getVar('step_id')));
+		}
+		return false;
+	}
 }
 ?>

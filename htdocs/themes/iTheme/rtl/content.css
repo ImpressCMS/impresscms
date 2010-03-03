@@ -28,7 +28,7 @@ th {color: #0066CC; padding : 2px; vertical-align : middle;}
 .foot {background-color: #f5e9cd; color:inherit; padding: 5px; font-weight: bold;}
 tr.even td {background-color: #e8e6e2; color:inherit; padding: 5px;}
 tr.odd td {background-color: #E9E9E9; color:inherit; padding: 5px;}
-th {border-bottom: 4px solid #EE7733;}
+th {border-bottom: 4px solid #F3AC03;}
 
 /* core messages */
 .errorMsg { background-color: #FFCCCC;  color:inherit; text-align: center; border-top: 1px solid #DDDDFF; border-left: 1px solid #DDDDFF; border-right: 1px solid #aaa; border-bottom: 1px solid #aaa;font-weight: bold; padding: 10px;}

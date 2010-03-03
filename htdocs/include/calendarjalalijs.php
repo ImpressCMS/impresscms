@@ -2,31 +2,26 @@
 /**
 * Function to use timepicker
 *
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 * @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
+* @since	1.1
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version	$Id$
 **/
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
-	$config_handler =& xoops_gethandler('config');
-	$xoopsConfig =& $config_handler->getConfigsByCat(XOOPS_CONF);
-	include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/calendar.php';
-		echo'<link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/libraries/jalalijscalendar/aqua/style.css" />
-<script type="text/javascript" src="'.XOOPS_URL.'/libraries/jalalijscalendar/calendar.js"></script>
-<script type="text/javascript" src="'.XOOPS_URL.'/libraries/jalalijscalendar/calendar-setup.js"></script>
+	icms_loadLanguageFile('core', 'calendar');
+		echo'<link rel="stylesheet" type="text/css" media="all" href="'.ICMS_URL.'/libraries/jalalijscalendar/aqua/style.css" />
+<script type="text/javascript" src="'.ICMS_URL.'/libraries/jalalijscalendar/calendar.js"></script>
+<script type="text/javascript" src="'.ICMS_URL.'/libraries/jalalijscalendar/calendar-setup.js"></script>
 ';
-	if ( $xoopsConfig['use_ext_date'] == 1 && defined ('_CALENDAR_TYPE') && _CALENDAR_TYPE == "jalali"){
-		echo'<script type="text/javascript" src="'.XOOPS_URL.'/libraries/jalalijscalendar/jalali.js"></script>';
+	if ( $icmsConfig['use_ext_date'] == true && defined ('_CALENDAR_TYPE') && _CALENDAR_TYPE == "jalali"){
+		echo'<script type="text/javascript" src="'.ICMS_URL.'/libraries/jalalijscalendar/jalali.js"></script>';
 }
-	if ( $xoopsConfig['use_ext_date'] == 1 && file_exists(ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/local.date.js')){
-		echo'<script type="text/javascript" src="'.XOOPS_URL.'/language/'.$xoopsConfig['language'].'/local.date.js"></script>';
+	if ( $icmsConfig['use_ext_date'] == true && file_exists(ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/local.date.js')){
+		echo'<script type="text/javascript" src="'.ICMS_URL.'/language/'.$icmsConfig['language'].'/local.date.js"></script>';
 }
 ?>
 <script type="text/javascript">

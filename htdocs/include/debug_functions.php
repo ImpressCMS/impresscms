@@ -1,12 +1,14 @@
 <?php
 /**
- * Debugging functions
- *
- * @license GNU
- * @author marcan <marcan@smartfactory.ca>
- * @version		$Id: page_pathsettings.php 345 2007-12-24 16:17:22Z malanciault $
- * @link http://impresscms.org ImpressCMS
- */
+* Debugging functions
+*
+* @license GNU
+* @author marcan <marcan@smartfactory.ca>
+* @link http://impresscms.org ImpressCMS
+* @package core
+* @subpackage Debugging
+* @version	$Id$
+*/
 
 /**
  * Output a line of debug

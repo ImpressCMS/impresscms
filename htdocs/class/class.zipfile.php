@@ -1,5 +1,18 @@
 <?php
-// $Id: class.zipfile.php 2 2005-11-02 18:23:29Z skalpa $
+/**
+* Creates Zipfiles
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
 /*
 	package::i.tools
 
@@ -71,7 +84,7 @@ class zipfile
      * @access private
      */
     function unix2DosTime($unixtime = 0)
-	{
+  	{
         $timearray = ($unixtime == 0) ? getdate() : getdate($unixtime);
 
         if ($timearray['year'] < 1980) {

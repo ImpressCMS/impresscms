@@ -3,7 +3,7 @@
  * @package     database
  * @subpackage  mysqli
  * @since XOOPS
- *	@version $Id: sqlutility.php 2 2005-11-02 18:23:29Z skalpa $
+ *	@version $Id$
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
@@ -140,10 +140,10 @@ class SqlUtility
 	}
 
 	/**
-	 * add a prefix.'_' to all tablenames in a query
-     *
-     * @param   string  $query  valid SQL query string
-     * @param   string  $prefix prefix to add to all table names
+	 * Adds a prefix.'_' to all tablenames in a query
+   *
+   * @param   string  $query  valid SQL query string
+   * @param   string  $prefix prefix to add to all table names
 	 * @return  mixed   FALSE on failure
 	 */
 	function prefixQuery($query, $prefix)
@@ -158,4 +158,5 @@ class SqlUtility
 		return false;
 	}
 }
+
 ?>

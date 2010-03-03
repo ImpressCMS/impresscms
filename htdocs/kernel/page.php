@@ -1,209 +1,65 @@
 <?php
-// $Id: page.php 1102 2007-12-22 12:08:52Z TheRplima $
-//  ------------------------------------------------------------------------ //
-//                ImpressCMS - PHP Content Management System                 //
-//                    Copyright (c) 2000 ImpressCMS.org                      //
-//                       <http://www.impresscms.org/>                        //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Rodrigo Pereira Lima (AKA TheRplima)                              //
-// URL: http://www.impresscms.org/                                           //
-// Project: The ImpressCMS Project                                           //
-// ------------------------------------------------------------------------- //
+/**
+ * Classes responsible for managing core page objects
+ *
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	ImpressCMS 1.1
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ * @version	$Id$
+ */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-	exit();
-}
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-class XoopsPage extends XoopsObject
-{
-
-    function XoopsPage()
-    {
-        $this->XoopsObject();
-        $this->initVar('page_id', XOBJ_DTYPE_INT, null, false);
-        $this->initVar('page_moduleid', XOBJ_DTYPE_INT, 0, true);
-        $this->initVar('page_title', XOBJ_DTYPE_TXTBOX, null, true, 255);
-        $this->initVar('page_url', XOBJ_DTYPE_TXTBOX, null, true, 255);
-        $this->initVar('page_status', XOBJ_DTYPE_INT, 1, false);
-    }
-}
-
+include_once ICMS_ROOT_PATH . '/kernel/icmspersistableobject.php';
 
 /**
-* ICMS page handler class.
-* This class is responsible for providing data access mechanisms to the data source
-* of ICMS page class objects.
-*
-*
-* @author  TheRplima <therplima@impresscms.org>
-*/
+ * ImpressCMS page class.
+ *
+ * @since	ImpressCMS 1.2
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ */
+class IcmsPage extends IcmsPersistableObject {
+	
+	public function __construct( & $handler ){
 
-class XoopsPageHandler extends XoopsObjectHandler
-{
+		$this->IcmsPersistableObject( $handler );
+		
+		$this->quickInitVar('page_id', XOBJ_DTYPE_INT);
+	        $this->quickInitVar('page_moduleid', XOBJ_DTYPE_INT, true);
+        	$this->quickInitVar('page_title', XOBJ_DTYPE_TXTBOX, true);
+	        $this->quickInitVar('page_url', XOBJ_DTYPE_TXTBOX, true);
+	        $this->quickInitVar('page_status', XOBJ_DTYPE_INT, true);
 
-    function &create($isNew = true)
-    {
-        $page = new XoopsPage();
-        if ($isNew) {
-            $page->setNew();
-        }
-        return $page;
-    }
+	}
+	
+}
 
-    function &get($id)
-    {
-        $page = false;
-    	$id = intval($id);
-        if ($id > 0) {
-            $sql = "SELECT * FROM ".$this->db->prefix('icmspage')." WHERE page_id='".$id."'";
-            if (!$result = $this->db->query($sql)) {
-                return false;
-            }
-            $numrows = $this->db->getRowsNum($result);
-            if ($numrows == 1) {
-                $page = new XoopsPage();
-                $page->assignVars($this->db->fetchArray($result));
-                return $page;
-            }
-        }
-        return $page;
-    }
-
-    function insert(&$page)
-    {
-        /**
-        * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-        */
-        if (strtolower(get_class($page)) != 'xoopspage') {
-            return false;
-        }
-        if (!$page->isDirty()) {
-            return true;
-        }
-        if (!$page->cleanVars()) {
-            return false;
-        }
-        foreach ($page->cleanVars as $k => $v) {
-            ${$k} = $v;
-        }
-        if ($page->isNew()) {
-            $page_id = $this->db->genId('page_page_id_seq');
-            $sql = sprintf("INSERT INTO %s (page_id, page_moduleid, page_title, page_url, page_status) VALUES (%u, %u, %s, %s, %u)", 
-            $this->db->prefix('icmspage'), 
-            intval($page_id), 
-            intval($page_moduleid), 
-            $this->db->quoteString($page_title),
-            $this->db->quoteString($page_url), 
-            intval($page_status));
-        } else {
-        	$sql = sprintf("UPDATE %s SET page_moduleid=%u, page_title=%s, page_url=%s, page_status=%u WHERE page_id=%u", 
-        	$this->db->prefix('icmspage'), 
-        	intval($page_moduleid), 
-        	$this->db->quoteString($page_title),
-        	$this->db->quoteString($page_url), 
-        	intval($page_status), 
-        	intval($page_id));
-        }
-        if (!$result = $this->db->queryF($sql)) {
-            return false;
-        }
-        if (empty($page_id)) {
-            $page_id = $this->db->getInsertId();
-        }
-        $page->assignVar('page_id', $page_id);
-        return true;
-    }
-
-    function delete(&$page)
-    {
-        /**
-        * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-        */
-        if (strtolower(get_class($page)) != 'xoopspage') {
-            return false;
-        }
-
-        $id = intval($page->getVar('page_id'));
-        $sql = sprintf("DELETE FROM %s WHERE page_id = '%u'", $this->db->prefix('icmspage'), $id);
-        if (!$result = $this->db->queryF($sql)) {
-            return false;
-        }
-        
-        return true;
-    }
-
-    function &getObjects($criteria = null, $id_as_key = false)
-    {
-        $ret = array();
-        $limit = $start = 0;
-        $sql = "SELECT * FROM ".$this->db->prefix('icmspage');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= " ".$criteria->renderWhere();
-            $sql .= " ORDER BY ".($criteria->getSort()?$criteria->getSort():'page_moduleid,page_title')." ".($criteria->getOrder()?$criteria->getOrder():'ASC');
-            $limit = $criteria->getLimit();
-            $start = $criteria->getStart();
-        }
-        $result = $this->db->query($sql, $limit, $start);
-        if (!$result) {
-            return $ret;
-        }
-        while ($myrow = $this->db->fetchArray($result)) {
-            $page = new XoopsPage();
-            $page->assignVars($myrow);
-            if (!$id_as_key) {
-                $ret[] =& $page;
-            } else {
-                $ret[$myrow['page_id']] =& $page;
-            }
-            unset($page);
-        }
-        return $ret;
-    }
-
-    function getCount($criteria = null)
-    {
-        $sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('icmspage');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-            $sql .= ' '.$criteria->renderWhere();
-        }
-        if (!$result =& $this->db->query($sql)) {
-            return 0;
-        }
-        list($count) = $this->db->fetchRow($result);
-        return $count;
-    }
-
-    function getList($criteria = null)
-    {
-    	$ret = array();
-        $pages =& $this->getObjects($criteria, true);
-        foreach (array_keys($pages) as $i) {
-            $ret[$pages[$i]->getVar('page_moduleid').'-'.$pages[$i]->getVar('page_id')] = $pages[$i]->getVar('page_title');
-        }
-        return $ret;
-    }
-    
-    function getPageSelOptions($value=null)
-    {
+/**
+ * ImpressCMS page handler class.
+ *
+ * @since	ImpressCMS 1.2
+ * @author	Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ */
+class IcmsPageHandler extends IcmsPersistableObjectHandler {
+	
+	public function __construct( & $db ){
+		$this->IcmsPersistableObjectHandler($db, 'page' ,'page_id' ,'page_title', '' , 'icms');
+		$this->table = $db->prefix('icmspage');
+	}
+	
+	public function getList( $criteria = null, $limit = 0, $start = 0, $debug=false){
+    		$rtn = array();
+        	$pages =& $this->getObjects( $criteria, true );
+        	foreach( $pages as $page ) {
+			$rtn[$page->getVar('page_moduleid').'-'.$page->getVar('page_id')] = $page->getVar('page_title');
+		}
+		return $rtn;
+	}
+	
+	public function getPageSelOptions($value=null){
     	if (!is_array($value)){
     		$value = array($value);
     	}
@@ -265,26 +121,23 @@ class XoopsPageHandler extends XoopsObjectHandler
     	
         return $ret;
     }
-    
-    function changestatus(&$page)
-    {
-        /**
-        * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-        */
-        if (strtolower(get_class($page)) != 'xoopspage') {
-            return false;
-        }
-
-        $id = intval($page->getVar('page_id'));
-        
-        $sts = !$page->getVar('page_status');
-        
-        $sql = sprintf("UPDATE %s SET page_status='%u' WHERE page_id = '%u'", $this->db->prefix('icmspage'), $sts, $id);
-        if (!$result = $this->db->queryF($sql)) {
-            return false;
-        }
-        
-        return true;
-    }
+    	
 }
+
+/**
+ * XOOPS page handler class.
+ *
+ * @todo 	Remove this class after ImpressCMS 1.5
+ * @deprecated 
+ */
+class XoopsPage extends IcmsPage { /* For backwards compatibility */ }
+
+/**
+ * XOOPS page handler class.
+ * 
+ * @todo 	Remove this class after ImpressCMS 1.5
+ * @deprecated 
+ */
+class XoopsPageHandler extends IcmsPageHandler { /* For backwards compatibility */ }
+
 ?>

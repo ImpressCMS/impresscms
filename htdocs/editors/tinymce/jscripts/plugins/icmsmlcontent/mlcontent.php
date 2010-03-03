@@ -11,17 +11,13 @@ if (!defined('XOOPS_ROOT_PATH')) exit();
 
 //only site users can access this file or if multilanguage is enabled
         //$easiestml_exist = false;
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigMultiLanguage =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
-        $easiestml_exist = ($icmsConfigMultiLanguage['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
-if (is_object($xoopsUser) && $easiestml_exist) {
+        $easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
+if (is_object($icmsUser) && $easiestml_exist) {
     function langDropdown()
     {
         // check THE EASIEST MULTILANGUAGE HACK
         $easiestml_exist = false;
-	$config_handler =& xoops_gethandler('config');
-	$icmsConfigMultiLanguage =& $config_handler->getConfigsByCat(IM_CONF_MULILANGUAGE);
-        $easiestml_exist = ($icmsConfigMultiLanguage['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
+        $easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
 
 
         // if "THE EASIEST MULTILANGUAGE HACK" by GIJOE is applied... (The hack can be found at http://www.peak.ne.jp/xoops/)

@@ -1,37 +1,52 @@
 <?PHP
+/**
+* Creates a form attribute which is able to select an image
+*
 ### =============================================================
 ### Mastop InfoDigital - Paixão por Internet
 ### =============================================================
 ### Classe para Colocar as imagens da biblioteca em um Select
 ### =============================================================
-### Developer: Fernando Santos (topet05), fernando@mastop.com.br
-### Copyright: Mastop InfoDigital � 2003-2007
+### @author Developer: Fernando Santos (topet05), fernando@mastop.com.br
+### @Copyright: Mastop InfoDigital � 2003-2007
 ### -------------------------------------------------------------
 ### www.mastop.com.br
 ### =============================================================
-### $Id: formimage.php,v 1.1.1.1 2007/04/30 23:18:58 topet05 Exp $
-### =============================================================
-if (!defined('XOOPS_ROOT_PATH')) {
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	XoopsForms
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
+
+if (!defined('ICMS_ROOT_PATH')) {
 	die("Oooops!!");
 }
-include_once XOOPS_ROOT_PATH."/class/xoopsform/formselect.php";
+
+include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
+
 class MastopFormSelectImage extends XoopsFormSelect
 {
 	/**
-     * OptGroup
+   * OptGroup
 	 * @var array
 	 * @access	private
 	 */
 	var $_optgroups = array();
 	var $_optgroupsID = array();
+
 	/**
 	 * Construtor
 	 *
 	 * @param	string	$caption
 	 * @param	string	$name
-	 * @param	mixed	$value	Valor pré-selecionado (ou array de valores).
-	 * @param	int		$size	Número de Linhas. "1" dá um Select List normal de 1 opção.
-	 * @param	string	$cat	Nome da Categoria da biblioteca. Se vazio ou n�o definido, retorna todas as bibliotecas que o cara pode acessar.
+	 * @param	mixed	  $value	Value for the Select attribute
+	 * @param	string	$cat    Name of the Category
 	 */
 	function MastopFormSelectImage($caption, $name, $value=null, $cat = null)
 	{
@@ -41,9 +56,9 @@ class MastopFormSelectImage extends XoopsFormSelect
 
 	/**
 	 * Adiciona um Optgroup
-     *
+   *
 	 * @param	string  $value  opções do Grupo
-     * @param	string  $name   Nome do Grupo de opções
+   * @param	string  $name   Nome do Grupo de opções
 	 */
 	function addOptGroup($value=array(), $name="&nbsp;"){
 		$this->_optgroups[$name] = $value;
@@ -52,7 +67,7 @@ class MastopFormSelectImage extends XoopsFormSelect
 	/**
 	 * Adiciona m�ltiplos Optgroups
 	 *
-     * @param	array   $options    Array com nome->opções
+   * @param	array   $options    Array com nome->opções
 	 */
 	function addOptGroupArray($options){
 		if ( is_array($options) ) {
@@ -62,14 +77,20 @@ class MastopFormSelectImage extends XoopsFormSelect
 		}
 	}
 
+  /**
+  * Gets the image list
+  *
+  * @param    mixed     $cat    category number or array of categories
+  * @return   string    $ret    The imagelist string
+  */
 	function getImageList($cat = null)
 	{
-		global $xoopsUser;
+		global $icmsUser;
 		$ret = array();
-		if (!is_object($xoopsUser)) {
+		if (!is_object($icmsUser)) {
 			$group = array(XOOPS_GROUP_ANONYMOUS);
 		} else {
-			$group =& $xoopsUser->getGroups();
+			$group =& $icmsUser->getGroups();
 		}
 		$imgcat_handler =& xoops_gethandler('imagecategory');
 		$catlist =& $imgcat_handler->getList($group, 'imgcat_read', 1);
@@ -82,67 +103,74 @@ class MastopFormSelectImage extends XoopsFormSelect
 		}elseif (is_int($cat)){
 			$catlist = array_key_exists($cat, $catlist) ? array($cat=>$catlist[$cat]) : array();
 		}
-			$image_handler = xoops_gethandler('image');
-			foreach ($catlist as $k=>$v) {
-				$this->_optgroupsID[$v] = $k;
-				$criteria = new CriteriaCompo(new Criteria('imgcat_id', $k));
-				$criteria->add(new Criteria('image_display', 1));
-				$total = $image_handler->getCount($criteria);
-				if ($total > 0) {
-					$imgcat =& $imgcat_handler->get($k);
-					$storetype = $imgcat->getVar('imgcat_storetype');
-					if ($storetype == 'db') {
-						$images =& $image_handler->getObjects($criteria, false, true);
-					} else {
-						$images =& $image_handler->getObjects($criteria, false, false);
-					}
-					foreach ($images as $i) {
-						if($storetype == "db"){
-							$ret[$v]["/image.php?id=".$i->getVar('image_id')] = $i->getVar('image_nicename');
-						}else{
-							$categ_path = $imgcat_handler->getCategFolder($imgcat);
-							$categ_path = str_replace(ICMS_ROOT_PATH,'',$categ_path);
-							$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
-							$ret[$v][$path.$i->getVar('image_name')] = $i->getVar('image_nicename');
-						}
-					}
-				}else{
-					$ret[$v] = "";
-				}
-			}
+
+  	$image_handler = xoops_gethandler('image');
+  	foreach ($catlist as $k=>$v) {
+  		$this->_optgroupsID[$v] = $k;
+  		$criteria = new CriteriaCompo(new Criteria('imgcat_id', $k));
+  		$criteria->add(new Criteria('image_display', 1));
+  		$total = $image_handler->getCount($criteria);
+  		if ($total > 0) {
+  			$imgcat =& $imgcat_handler->get($k);
+  			$storetype = $imgcat->getVar('imgcat_storetype');
+  			if ($storetype == 'db') {
+  				$images =& $image_handler->getObjects($criteria, false, true);
+  			} else {
+  				$images =& $image_handler->getObjects($criteria, false, false);
+  			}
+  			foreach ($images as $i) {
+  				if($storetype == "db"){
+  					$ret[$v]["/image.php?id=".$i->getVar('image_id')] = $i->getVar('image_nicename');
+  				}else{
+  					$categ_path = $imgcat_handler->getCategFolder($imgcat);
+  					$categ_path = str_replace(ICMS_ROOT_PATH,'',$categ_path);
+  					$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
+  					$ret[$v][$path.$i->getVar('image_name')] = $i->getVar('image_nicename');
+  				}
+  			}
+  		}else{
+  			$ret[$v] = "";
+  		}
+  	}
 		return $ret;
 	}
 
+
+
 	/**
-	 * Pega todos os Optgroups
+	 * Get Optgroups
 	 *
-     * @return	array   Array com nome->opções
+   * @return	array   Array of optgroups
 	 */
 	function getOptGroups(){
 		return $this->_optgroups;
 	}
 
 	/**
-	 * Pega todos os IDs dos Optgroups
+	 * Get OptgroupIDs
 	 *
-     * @return	array   Array com nome->ids
-	 */
+   * @return	array   Array of optgroupids
+   */
 	function getOptGroupsID(){
 		return $this->_optgroupsID;
 	}
 
+  /**
+  * Renders the HTML for the select form attribute
+  * @return   string    $ret    the constructed select form attribute HTML
+  */
 	function render(){
-		global $xoopsUser;
-		if (!is_object($xoopsUser)) {
+		global $icmsUser;
+		if (!is_object($icmsUser)) {
 			$group = array(XOOPS_GROUP_ANONYMOUS);
 		} else {
-			$group =& $xoopsUser->getGroups();
+			$group =& $icmsUser->getGroups();
 		}
 		$imgcat_handler =& xoops_gethandler('imagecategory');
 		$catlist =& $imgcat_handler->getList($group, 'imgcat_write', 1);
 		$catlist_total = count($catlist);
 		$optIds = $this->getOptGroupsID();
-		$ret = "<select onchange='if(this.options[this.selectedIndex].value != \"\"){ document.getElementById(\"".$this->getName()."_img\").src=\"".XOOPS_URL."\"+this.options[this.selectedIndex].value;}else{document.getElementById(\"".$this->getName()."_img\").src=\"".XOOPS_URL."/images/blank.gif\";}'  size='".$this->getSize()."'".$this->getExtra()."";
+		$ret = "<select onchange='if(this.options[this.selectedIndex].value != \"\"){ document.getElementById(\"".$this->getName()."_img\").src=\"".ICMS_URL."\"+this.options[this.selectedIndex].value;}else{document.getElementById(\"".$this->getName()."_img\").src=\"".ICMS_URL."/images/blank.gif\";}'  size='".$this->getSize()."'".$this->getExtra()."";
 		if ($this->isMultiple() != false) {
 			$ret .= " name='".$this->getName()."[]' id='".$this->getName()."[]' multiple='multiple'>\n";
 		} else {
@@ -163,11 +191,12 @@ class MastopFormSelectImage extends XoopsFormSelect
 			}
 			$ret .= '</optgroup>\n';
 		}
-		$browse_url = XOOPS_URL."/class/xoopsform/formimage_browse.php";
+		$browse_url = ICMS_URL."/class/xoopsform/formimage_browse.php";
 		$ret .= "</select>";
 		$ret .= ($catlist_total > 0) ? " <input type='button' value='"._ADDIMAGE."' onclick=\"window.open('$browse_url?target=".$this->getName()."','formImage','resizable=yes,scrollbars=yes,width=985,height=470,left='+(screen.availWidth/2-492)+',top='+(screen.availHeight/2-235)+'');return false;\">":"" ;
-		$ret .= "<br /><img id='".$this->getName()."_img' src='".((!empty($imagem)) ? XOOPS_URL.$imagem : XOOPS_URL."/images/blank.gif")."'>";
+		$ret .= "<br /><img id='".$this->getName()."_img' src='".((!empty($imagem)) ? ICMS_URL.$imagem : ICMS_URL."/images/blank.gif")."'>";
 		return $ret;
 	}
 }
+
 ?>

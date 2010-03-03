@@ -1,185 +1,215 @@
 <?php
-// $Id: main.php 2 2005-11-02 18:23:29Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
 
-if(!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {exit('Access Denied');}
-include_once ICMS_ROOT_PATH.'/class/xoopsblock.php';
-include ICMS_ROOT_PATH.'/modules/system/admin/blocksadmin/blocksadmin.php';
+/**
+* Admin ImpressCMS Blocks
+*
+* List, add, edit and delete block objects
+*
+* @copyright	The ImpressCMS Project <http://www.impresscms.org>
+* @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+* @since		ImpressCMS 1.2
+* @package Administration
+* @version		$Id$
+* @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+*/
 
-$allowedHTML = array('bcontent');
-
-if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
-if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
-
-$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
-if($op == 'edit' || $op == 'delete' || $op == 'delete_ok' || $op == 'clone' || $op == 'changestatus')
-{
-  $bid = (isset($_GET['bid']))?intval($_GET['bid']):((isset($_POST['bid']))?intval($_POST['bid']):0);
-  $sts = (isset($_GET['sts']))?intval($_GET['sts']):((isset($_POST['sts']))?intval($_POST['sts']):0);
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
+	exit ("Access Denied");
 }
 
-if(isset($previewblock))
-{
-	if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header("admin.php?fct=blocksadmin", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
-	xoops_cp_header();
-	include_once ICMS_ROOT_PATH.'/class/template.php';
-	$xoopsTpl = new XoopsTpl();
-	$xoopsTpl->xoops_setCaching(0);
-	if(isset($bid))
-	{
-		$block['bid'] = $bid;
-		$block['form_title'] = _AM_EDITBLOCK;
-		$myblock = new XoopsBlock($bid);
-		$block['name'] = $myblock->getVar('name');
-	}
-	else
-	{
-		if($op == 'save') {$block['form_title'] = _AM_ADDBLOCK;}
-		else {$block['form_title'] = _AM_CLONEBLOCK;}
-		$myblock = new XoopsBlock();
-		$myblock->setVar('block_type', 'C');
-	}
-	$myts =& MyTextSanitizer::getInstance();
-	$myblock->setVar('title', $myts->stripSlashesGPC($btitle));
-	$myblock->setVar('content', $myts->stripSlashesGPC($bcontent));
-	$dummyhtml = '<html><head><meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" /><meta http-equiv="content-language" content="'._LANGCODE.'" /><title>'.$xoopsConfig['sitename'].'</title><link rel="stylesheet" type="text/css" media="all" href="'.getcss($xoopsConfig['theme_set']).'" /></head><body><table><tr><th>'.$myblock->getVar('title').'</th></tr><tr><td>'.$myblock->getContent('S', $bctype).'</td></tr></table></body></html>';
+/**
+ * Edit a block
+ *
+ * @param int $bid ID of block to be edited
+ * @param bool $clone Set to 'true' if the block is being cloned
+ */
+function editblock($bid = 0, $clone = false) {
+	global $icms_block_handler, $icmsAdminTpl;
 
-	$block['edit_form'] = false;
-	$block['template'] = '';
-	$block['op'] = $op;
-	$block['side'] = $bside;
-	$block['weight'] = $bweight;
-	$block['visible'] = $bvisible;
-	$block['title'] = $myblock->getVar('title', 'E');
-	$block['content'] = $myblock->getVar('content', 'E');
-	$block['modules'] =& $bmodule;
-	$block['ctype'] = isset($bctype) ? $bctype : $myblock->getVar('c_type');
-	$block['is_custom'] = true;
-	$block['cachetime'] = intval($bcachetime);
-        $db =& Database::getInstance();
-        $sql = "SELECT gperm_groupid FROM ".$db->prefix('group_permission')." WHERE gperm_itemid='".intval($block['bid'])."'";
-        $result = $db->query($sql);
-        $groups_ids = array();
-        while ($row = $db->fetchArray($result)) {
-            $groups_ids[] = intval($row['gperm_groupid']);
-        }
-        $block['groups'] = $groups_ids;
-	echo '<a href="admin.php?fct=blocksadmin">'. _AM_BADMIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$block['form_title'].'<br /><br />';
-	include ICMS_ROOT_PATH.'/modules/system/admin/blocksadmin/blockform.php';
-	$form->display();
+	$blockObj = $icms_block_handler->get($bid);
+
+	if (!$blockObj->isNew() && $blockObj->getVar('edit_func') != '') $blockObj->showFieldOnForm('options');
+	if (!$clone && !$blockObj->isNew()) {	
+		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKSADMIN_EDIT, 'addblock');
+		$sform->assign($icmsAdminTpl);
+	} else {
+		if ($clone) {
+			if ($blockObj->getVar('block_type') != 'C') {
+				$blockObj->setVar('block_type', 'K');
+				$blockObj->hideFieldFromForm('content');
+				$blockObj->hideFieldFromForm('c_type');
+			}
+			$blockObj->setVar('bid', '0');
+			$blockObj->setNew();
+		} else {
+			$blockObj->setVar('block_type', 'C');
+		}
+		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKSADMIN_CREATE, 'addblock');
+		$sform->assign($icmsAdminTpl);
+	}
+	$icmsAdminTpl->assign('bid', $bid);
+	$icmsAdminTpl->display('db:admin/blocksadmin/system_adm_blocksadmin.html');
+}
+
+$icms_block_handler = xoops_getmodulehandler('blocksadmin');
+/** Use a naming convention that indicates the source of the content of the variable */
+$clean_op = '';
+/** Create a whitelist of valid values, be sure to use appropriate types for each value
+ * Be sure to include a value for no parameter, if you have a default condition
+ */
+$valid_op = array (
+	'mod',
+	'changedField',
+	'addblock',
+	'del',
+	'clone',
+	'up',
+	'down',
+	'visible',
+	'change_blocks',
+	''
+);
+
+if (isset ($_GET['op']))
+	$clean_op = htmlentities($_GET['op']);
+if (isset ($_POST['op']))
+	$clean_op = htmlentities($_POST['op']);
+
+/** Again, use a naming convention that indicates the source of the content of the variable */
+$clean_bid = isset ($_GET['bid']) ? ( int ) $_GET['bid'] : 0;
+$clean_bid = isset ($_POST['bid']) ? ( int ) $_POST['bid'] : $clean_bid;
+
+/**
+ * in_array() is a native PHP function that will determine if the value of the
+ * first argument is found in the array listed in the second argument. Strings
+ * are case sensitive and the 3rd argument determines whether type matching is
+ * required
+ */
+if (in_array($clean_op, $valid_op, true)) {
+	switch ($clean_op) {
+		case 'visible' :
+			$icms_block_handler->changeVisible($bid);
+			$rtn = '/modules/system/admin.php?fct=blocksadmin';
+			if (isset ($_GET['sortsel']))
+				$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
+			if (isset ($_GET['rtn']))
+				redirect_header(ICMS_URL . base64_decode($_GET['rtn']));
+			else
+				redirect_header(ICMS_URL . $rtn);
+			break;
+
+		case "up" :
+			$icms_block_handler->upWeight($bid);
+			$rtn = '/modules/system/admin.php?fct=blocksadmin';
+			if (isset ($_GET['sortsel']))
+				$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
+			if (isset ($_GET['rtn']))
+				redirect_header(ICMS_URL . base64_decode($_GET['rtn']));
+			else
+				redirect_header(ICMS_URL . $rtn);
+			break;
+
+		case "down" :
+			$icms_block_handler->downWeight($bid);
+			$rtn = '/modules/system/admin.php?fct=blocksadmin';
+			if (isset ($_GET['sortsel']))
+				$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
+			if (isset ($_GET['rtn']))
+				redirect_header(ICMS_URL . base64_decode($_GET['rtn']));
+			else
+				redirect_header(ICMS_URL . $rtn);
+			break;
+
+		case "clone" :
+			xoops_cp_header();
+			editblock($clean_bid, true);
+			break;
+
+		case "mod" :
+		case "changedField" :
+			icms_cp_header();
+			editblock($clean_bid);
+			break;
+
+		case "addblock" :
+			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController($icms_block_handler);
+			$controller->storeFromDefaultForm(_AM_SYSTEM_BLOCKSADMIN_CREATED, _AM_SYSTEM_BLOCKSADMIN_MODIFIED);
+			break;
+
+		case "del" :
+			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController($icms_block_handler);
+			$controller->handleObjectDeletion();
+
+			break;
+
+		case "change_blocks" :
+			foreach ($_POST['SystemBlocksadmin_objects'] as $k => $v) {
+				$changed = false;
+				$obj = $icms_block_handler->get($v);
+
+				if ($obj->getVar('side', 'e') != $_POST['block_side'][$k]) {
+					$obj->setVar('side', intval($_POST['block_side'][$k]));
+					$changed = true;
+				}
+				if ($obj->getVar('weight', 'e') != $_POST['block_weight'][$k]) {
+					$obj->setVar('weight', intval($_POST['block_weight'][$k]));
+					$changed = true;
+				}
+				if ($changed) {
+					$icms_block_handler->insert($obj);
+				}
+			}
+
+			$rtn = '/modules/system/admin.php?fct=blocksadmin';
+			if (isset ($_GET['sortsel']))
+				$rtn .= '&amp;sortsel=' . $_GET['sortsel'] . '&amp;ordersel=' . $_GET['ordersel'] . '&amp;limitsel=' . $_GET['limitsel'] . '&amp;startbid=' . $_GET['startbid'];
+			if (isset ($_GET['rtn']))
+				redirect_header(ICMS_URL . base64_decode($_GET['rtn']), 2, _AM_SYSTEM_BLOCKSADMIN_MODIFIED);
+			else
+				redirect_header(ICMS_URL . $rtn, 2, _AM_SYSTEM_BLOCKSADMIN_MODIFIED);
+
+			break;
+
+		default :
+
+			icms_cp_header();
+			include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php";
+			$objectTable = new IcmsPersistableTable($icms_block_handler);
+			$objectTable->addColumn(new IcmsPersistableColumn('visible', 'center'));
+			$objectTable->addColumn(new IcmsPersistableColumn('name'));
+			$objectTable->addColumn(new IcmsPersistableColumn('title', _GLOBAL_LEFT, false, 'getAdminViewItemLink'));
+			$objectTable->addColumn(new IcmsPersistableColumn('mid'));
+			$objectTable->addColumn(new IcmsPersistableColumn('side', 'center', false, 'getSideControl'));
+			$objectTable->addColumn(new IcmsPersistableColumn('weight', 'center', false, 'getWeightControl'));
+
+			$objectTable->addIntroButton('addpost', 'admin.php?fct=blocksadmin&amp;op=mod', _AM_SYSTEM_BLOCKSADMIN_CREATE);
+			$objectTable->addQuickSearch(array (
+				'title',
+				'name'
+			));
+
+			$objectTable->addFilter('mid', 'getModulesArray');
+			$objectTable->addFilter('visible', 'getVisibleStatusArray');
+			$objectTable->addFilter('side', 'getBlockPositionArray');
+
+			$objectTable->addCustomAction('getBlankLink');
+			$objectTable->addCustomAction('getUpActionLink');
+			$objectTable->addCustomAction('getDownActionLink');
+			$objectTable->addCustomAction('getCloneActionLink');
+
+			$objectTable->addActionButton('change_blocks', false, _SUBMIT);
+
+			$icmsAdminTpl->assign('icms_block_table', $objectTable->fetch());
+
+			$icmsAdminTpl->display('db:admin/blocksadmin/system_adm_blocksadmin.html');
+			break;
+	}
 	xoops_cp_footer();
-	echo '<script type="text/javascript">
-    <!--//
-    win = openWithSelfMain("", "popup", 250, 200, true);
-    win.document.clear();
-    ';
-	$lines = preg_split("/(\r\n|\r|\n)( *)/", $dummyhtml);
-	foreach($lines as $line) {echo 'win.document.writeln("'.str_replace('"', '\"', $line).'");';}
-	echo 'win.focus();
-	win.document.close();
-	//-->
-	</script>';
-	exit();
 }
-
-if($op == 'list')
-{
-	xoops_cp_header();
-	echo list_blocks();
-	xoops_cp_footer();
-	exit();
-}
-if($op == 'order')
-{
-	if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=blocksadmin', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
-	foreach(array_keys($bid) as $i)
-	{
-		if($oldweight[$i] != $weight[$i] || $oldside[$i] != $side[$i]) order_block($bid[$i], $weight[$i], $side[$i]);
-	}
-	redirect_header('admin.php?fct=blocksadmin',1,_AM_DBUPDATED);
-}
-if($op == 'changestatus')
-{
-	changests_block($bid,$sts);
-	redirect_header('admin.php?fct=blocksadmin',1,_AM_DBUPDATED);
-}
-if($op == 'save')
-{
-	if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=blocksadmin', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
-        $bgroups = isset($bgroups) ? $bgroups : array();
-        $gperm_handler =& xoops_gethandler('groupperm');
-        $groups = $_POST['bgroups'];
-        $count = count($groups);
-	save_block($bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bmodule, $bcachetime, $bgroups);
-	exit();
-}
-if($op == 'update')
-{
-    if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=blocksadmin', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
-    $bcachetime = isset($bcachetime) ? intval($bcachetime) : 0;
-    $options = isset($options) ? $options : array();
-    $bcontent = isset($bcontent) ? $bcontent : '';
-    $bctype = isset($bctype) ? $bctype : '';
-    $bgroups = isset($bgroups) ? $bgroups : array();
-    $gperm_handler =& xoops_gethandler('groupperm');
-    $groups = array();
-    if (isset($_POST['bgroups'])) { $groups = $_POST['bgroups']; }
-    $count = count($groups);
-    update_block($bid, $bside, $bweight, $bvisible, $btitle, $bcontent, $bctype, $bcachetime, $bmodule, $options, $bgroups);
-}
-if($op == 'delete_ok')
-{
-    if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=blocksadmin', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
-    delete_block_ok($bid);
-    exit();
-}
-if($op == 'delete')
-{
-    xoops_cp_header();
-    delete_block($bid);
-    xoops_cp_footer();
-    exit();
-}
-if($op == 'edit')
-{
-    xoops_cp_header();
-    edit_block($bid);
-    xoops_cp_footer();
-    exit();
-}
-if($op == 'clone') {clone_block($bid);}
-if($op == 'clone_ok')
-{
-	$bcachetime = isset($bcachetime) ? intval($bcachetime) : 0;
-	$options = isset($options) ? $options : array();
-	$bcontent = isset($bcontent) ? $bcontent : '';
-	clone_block_ok($bid,$bside,$bweight,$bvisible,$btitle,$bcontent,$bcachetime,$bmodule,$options);
-}
+/**
+ * If you want to have a specific action taken because the user input was invalid,
+ * place it at this point. Otherwise, a blank page will be displayed
+ */
 ?>

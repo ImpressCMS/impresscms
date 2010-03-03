@@ -9,9 +9,9 @@
 /**
  * Smarty {html_options} function plugin
  *
- * Type:     function
- * Name:     html_options
- * Input:
+ * Type:     function<br>
+ * Name:     html_options<br>
+ * Input:<br>
  *           - name       (optional) - string default "select"
  *           - values     (required if no options supplied) - array
  *           - options    (required if no values supplied) - associative array

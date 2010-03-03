@@ -1,20 +1,14 @@
 <?
 $xoopsOption['nodebug'] = 1;
-if (file_exists('../../../../../../../mainfile.php')) include_once '../../../../../../../mainfile.php';
-if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../../mainfile.php';
-if (file_exists('../../../../../mainfile.php')) include_once '../../../../../mainfile.php';
 if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
-if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
-if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
-if (file_exists('../mainfile.php')) include_once '../mainfile.php';
 if (!defined('XOOPS_ROOT_PATH')) exit();
-include_once ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.inc.php';
+include_once ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
 
 if(isset($_GET['image_path']) && isset($_GET['image_url'])){
 	$image_path = isset($_GET['image_path'])?$_GET['image_path']:null;
 	$image_url = isset($_GET['image_url'])?$_GET['image_url']:null;
 	$filter = isset($_GET['filter'])?$_GET['filter']:null;
-	
+
 	$args = array();
 	if (isset($_GET['arg1'])){
 		$args[] = $_GET['arg1'];
@@ -27,12 +21,12 @@ if(isset($_GET['image_path']) && isset($_GET['image_url'])){
 	}
 	$save = isset($_GET['save'])?$_GET['save']:0;
 	$del  = isset($_GET['delprev'])?$_GET['delprev']:0;
-	
+
 	if (is_null($filter) || $filter == ''){
 		exit;
 	}
-	
-	$img = wiImage::load($image_path);
+
+	$img = WideImage::load($image_path);
 	$arr = explode('/',$image_path);
 	$arr[count($arr)-1] = 'filter_'.$arr[count($arr)-1];
 	$temp_img_path = implode('/',$arr);
@@ -44,7 +38,7 @@ if(isset($_GET['image_path']) && isset($_GET['image_url'])){
 		@unlink($temp_img_path);
 		exit;
 	}
-	
+
 	if (!is_null($filter)){
 		if ($filter == 'IMG_FILTER_SEPIA'){
 			$img->applyFilter(IMG_FILTER_GRAYSCALE)->applyFilter(IMG_FILTER_COLORIZE, 90, 60, 30)->saveToFile($temp_img_path);
@@ -52,7 +46,7 @@ if(isset($_GET['image_path']) && isset($_GET['image_url'])){
 			$img->applyFilter(constant($filter),implode(',',$args))->saveToFile($temp_img_path);
 		}
 	}
-		
+
 	if ($save){
 		if (!@unlink($image_path)){
 			echo "alert('"._ERROR."');";

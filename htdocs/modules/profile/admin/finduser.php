@@ -13,12 +13,12 @@
  * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version         $Id$
  */
-
+die('Sorry, this feature is not active yet.');
 include 'header.php';
-$op = isset($_REQUEST['op']) ? $_REQUEST['op'] : '';
+$op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : '';
 $profile_smartuser_handler =& icms_getmodulehandler( 'smartuser', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
-$hidden_fields_form = array('last_login', 'posts', 'notify_method', 'notify_mode', 'uorder', 'umode', 'theme', 'user_mailok', 'attachsig', 'user_viewemail', 'user_regdate', 'timezone_offset');
-$hidden_fields_results = array('notify_method', 'notify_mode', 'uorder', 'umode', 'theme', 'user_mailok', 'attachsig', 'user_viewemail', 'timezone_offset', 'user_sig', 'user_regdate', 'last_login');
+$hidden_fields_form = array('last_login', 'posts', 'notify_method', 'notify_mode', 'uorder', 'umode', 'theme', 'user_mailok', 'attachsig', 'user_viewemail', 'user_regdate', 'timezone_offset', 'openid', 'user_viewoid');
+$hidden_fields_results = array('notify_method', 'notify_mode', 'uorder', 'umode', 'theme', 'user_mailok', 'attachsig', 'user_viewemail', 'timezone_offset', 'user_sig', 'user_regdate', 'last_login', 'openid', 'user_viewoid');
 switch ($op) {
 	case "post" :
 		include_once ICMS_ROOT_PATH."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/class/smartuser.php";
@@ -69,7 +69,7 @@ switch ($op) {
 		if($_POST["selected_action"] == 'delete_sel'){
 
 			if ($_POST['confirm']) {
-				if($smartshop_transaction_handler->batchDelete(explode('|', $_POST['ids']))){
+				if($smartshop_transaction_handler->batchDelete(explode('|', intval($_POST['ids'])))){
 					redirect_header("transaction.php", 2, _AM_SSHOP_TRANSDELETED);
 					exit();
 				}else{
@@ -81,7 +81,7 @@ switch ($op) {
 				icms_adminMenu(2, _AM_SSHOP_TRANSACTIONS);
 
 				// no confirm: show deletion condition
-				xoops_confirm(array('op' => 'with_selected_actions', 'selected_action'=>'delete_sel', 'ids' => implode('|', $_POST['selected_smartobjects']), 'confirm' => 1), 'transaction.php', _AM_SSSHOP_DELETETHOSETRANS . " <br />'" .implode(', ', $_POST['selected_smartobjects']). "'. <br /> <br />", _AM_SSHOP_DELETE);
+				xoops_confirm(array('op' => 'with_selected_actions', 'selected_action'=>'delete_sel', 'ids' => implode('|', intval($_POST['selected_smartobjects'])), 'confirm' => 1), 'transaction.php', _AM_SSSHOP_DELETETHOSETRANS . " <br />'" .implode(', ', $_POST['selected_smartobjects']). "'. <br /> <br />", _AM_SSHOP_DELETE);
 			}
 
 

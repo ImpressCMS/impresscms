@@ -12,18 +12,16 @@
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		installer
+ * @package		FormCaptcha
  * @since		XOOPS
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id:$
+ * @version		$Id$
 */
 
 
-if(! @include_once ICMS_ROOT_PATH."/language/".$GLOBALS["xoopsConfig"]["language"]."/captcha.php") {
-	require_once ICMS_ROOT_PATH."/language/english/captcha.php";
-}
+icms_loadLanguageFile('core', 'captcha');
 class IcmsCaptcha {
 	var $active	= true;
 	var $mode 	= "text";	// potential values: image, text
@@ -31,16 +29,24 @@ class IcmsCaptcha {
 
 	var $message = array(); // Logging error messages
 
+
+	/**
+	 * Constructor
+	 */
 	function IcmsCaptcha()
 	{
 		// Loading default preferences
 		$this->config = @include dirname(__FILE__)."/config.php";
 
-	$config_handler =& xoops_gethandler('config');
-	$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
-		$this->setMode($IcmsConfigCaptcha['captcha_mode']);
+		global $icmsConfigCaptcha;
+		$this->setMode($icmsConfigCaptcha['captcha_mode']);
 	}
 
+
+	/**
+	 * Creates instance of IcmsCaptcha Object
+   * @return  object Reference to the IcmsCaptcha Object
+	 */
 	function &instance()
 	{
 		static $instance;
@@ -50,6 +56,13 @@ class IcmsCaptcha {
 		return $instance;
 	}
 
+
+	/**
+	 * Sets the Captcha Config
+   * @param   string $name Config Name
+   * @param   string $val Config Value
+   * @return  bool  Always returns true if the setting of the config has succeeded
+	 */
 	function setConfig($name, $val)
 	{
 		if($name == "mode") {
@@ -61,6 +74,10 @@ class IcmsCaptcha {
 		}
 		return true;
 	}
+
+
+
+
 
 	/**
 	 * Set CAPTCHA mode
@@ -94,13 +111,23 @@ class IcmsCaptcha {
 
 	}
 
+
+
+
+
 	/**
 	 * Initializing the CAPTCHA class
+   * @param   string  $name			 name of the instance
+   * @param   string  $skipmember	   Skip the captcha because the user is member / logged in
+   * @param   string  $num_chars		comes from config, just initializes the variable
+   * @param   string  $fontsize_min	 comes from config, just initializes the variable
+   * @param   string  $fontsize_max	 comes from config, just initializes the variable
+   * @param   string  $background_type  comes from config, just initializes the variable
+   * @param   string  $background_num   comes from config, just initializes the variable
 	 */
 	function init($name = 'icmscaptcha', $skipmember = null, $num_chars = null, $fontsize_min = null, $fontsize_max = null, $background_type = null, $background_num = null)
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
+		global $icmsConfigCaptcha;
 		// Loading RUN-TIME settings
 		foreach(array_keys($this->config) as $key) {
 			if(isset(${$key}) && ${$key} !== null) {
@@ -110,40 +137,51 @@ class IcmsCaptcha {
 		$this->config["name"] = $name;
 
 		// Skip CAPTCHA for group
-		$gperm_handler = & xoops_gethandler( 'groupperm' );
-		$xoopsUser = $GLOBALS["xoopsUser"];
-		$groups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-		if(array_intersect($groups, $IcmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {
+		//$gperm_handler = & xoops_gethandler( 'groupperm' );
+		$icmsUser = $GLOBALS["icmsUser"];
+		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($GLOBALS["xoopsUser"])) {
 			$this->active = false;
-		}elseif($IcmsConfigCaptcha['captcha_mode'] =='none'){
+		}elseif($icmsConfigCaptcha['captcha_mode'] =='none'){
 			$this->active = false;
 		}
 	}
 
+
+
+
+
+
+
 	/**
 	 * Verify user submission
+	 * @param bool	$skipMember	Skip Captcha because user is member / logged in
 	 */
 	function verify($skipMember = null)
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
+		global $icmsConfig, $icmsConfigCaptcha;
 		$sessionName	= @$_SESSION['IcmsCaptcha_name'];
 		$skipMember		= ($skipMember === null) ? @$_SESSION['IcmsCaptcha_skipmember'] : $skipMember;
 		$maxAttempts	= intval( @$_SESSION['IcmsCaptcha_maxattempts'] );
 
 		$is_valid = false;
 
-		// Skip CAPTCHA for member if set
-		if( is_object($GLOBALS["xoopsUser"]) && !empty($skipMember) ) {
+		// Skip CAPTCHA for member if set & Kept for backward compatibilities
+/*		if( is_object($GLOBALS["xoopsUser"]) && !empty($skipMember) ) {
 			$is_valid = true;
-
+*/
 		// Kill too many attempts
+		/*}else*/
+		$icmsUser = $GLOBALS["xoopsUser"];
+		$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+		if(array_intersect($groups, $icmsConfigCaptcha['captcha_skipmember']) && is_object($icmsUser)) {
+			$is_valid = true;
 		}elseif(!empty($maxAttempts) && $_SESSION['IcmsCaptcha_attempt_'.$sessionName] > $maxAttempts) {
 			$this->message[] = ICMS_CAPTCHA_TOOMANYATTEMPTS;
 
 		// Verify the code
 		}elseif(!empty($_SESSION['IcmsCaptcha_sessioncode'])){
-			$func = ($IcmsConfigCaptcha['captcha_casesensitive']) ? "strcmp" : "strcasecmp";
+			$func = ($icmsConfigCaptcha['captcha_casesensitive']) ? "strcmp" : "strcasecmp";
 			$is_valid = ! $func( trim(@$_POST[$sessionName]), $_SESSION['IcmsCaptcha_sessioncode']);
 		}
 
@@ -165,18 +203,35 @@ class IcmsCaptcha {
 		return $is_valid;
 	}
 
+
+
+	/**
+	 * Get Caption
+	 * @return string	The Caption Constant
+	 */
 	function getCaption()
 	{
 		return defined("ICMS_CAPTCHA_CAPTION") ? constant("ICMS_CAPTCHA_CAPTION") : "";
 	}
 
+
+	/**
+	 * Set Message
+	 * @return string	The message
+	 */
 	function getMessage()
 	{
 		return implode("<br />", $this->message);
 	}
 
+
+
+
+
 	/**
 	 * Destory historical stuff
+	 * @param bool	$clearSession	also clear session variables?
+   * @return bool True if destroying succeeded
 	 */
 	function destroyGarbage($clearSession = false)
 	{
@@ -198,10 +253,17 @@ class IcmsCaptcha {
 		return true;
 	}
 
+
+
+
+
+	/**
+	 * Render
+   * @return  string  the rendered form
+	 */
 	function render()
 	{
-		$config_handler =& xoops_gethandler('config');
-		$IcmsConfigCaptcha =& $config_handler->getConfigsByCat(ICMS_CONF_CAPTCHA);
+		global $icmsConfigCaptcha;
 		$form = "";
 
 		if( !$this->active || empty($this->config["name"]) ) {
@@ -209,8 +271,8 @@ class IcmsCaptcha {
 		}
 
 		$_SESSION['IcmsCaptcha_name'] = $this->config["name"];
-		$_SESSION['IcmsCaptcha_skipmember'] = $IcmsConfigCaptcha['captcha_skipmember'];
-		$maxAttempts = $IcmsConfigCaptcha['captcha_maxattempt'];
+		$_SESSION['IcmsCaptcha_skipmember'] = $icmsConfigCaptcha['captcha_skipmember'];
+		$maxAttempts = $icmsConfigCaptcha['captcha_maxattempt'];
 		$_SESSION['IcmsCaptcha_maxattempts'] = $maxAttempts;
 		/*
 		if(!empty($maxAttempts)) {
@@ -229,6 +291,14 @@ class IcmsCaptcha {
 		return $form;
 	}
 
+
+
+
+
+	/**
+	 * Load Form
+	 * @return string	The Loaded Captcha Form
+	 */
 	function loadForm()
 	{
 		require_once dirname(__FILE__)."/".$this->mode.".php";
@@ -240,4 +310,5 @@ class IcmsCaptcha {
 		return $form;
 	}
 }
+class XoopsCaptcha extends IcmsCaptcha { /* For backwards compatibility */ }
 ?>

@@ -1,25 +1,23 @@
   <{if $block.showgroups == true}>
-    <table class="outer" cellspacing="0">
+    <div class="outer">
   <!-- start group loop -->
   <{foreach item=group from=$block.groups}>
-  <tr>
-    <th colspan="2"><{$group.name}></th>
-  </tr>
+  <div style="text-align:center;"><strong><{$group.name}></strong></div>
+  <div class="clear"></div>
 
   <!-- start group member loop -->
   <{foreach item=user from=$group.users}>
-  <tr>
-    <td class="even" valign="middle" align="center"><img src="<{$user.avatar}>" alt="<{$user.name}>'s avatar" width="32px" /><br /><a href="<{$xoops_url}>/userinfo.php?uid=<{$user.id}>" title="<{$user.name}>"><{$user.name}></a></td><td class="odd" width="20%" align="<{$smarty.const._GLOBAL_RIGHT}>" valign="middle"><{$user.msglink}></td>
-  </tr>
+  <div class="<{cycle values="even,odd"}>" style="margin: 0 auto; text-align:center;"><img src="<{$user.avatar}>" alt="<{$user.name}>'s avatar" width="32px" /><br /><a href="<{$xoops_url}>/userinfo.php?uid=<{$user.id}>" title="<{$user.name}>"><{$user.name}></a>&nbsp;<{$user.msglink}></div>
+   <div class="clear"></div>
   <{/foreach}>
   <!-- end group member loop -->
 
   <{/foreach}>
   <!-- end group loop -->
-</table>
+</div>
 <{/if}>
-<br />
+  <div class="clear"></div>
 
 <div style="margin: 3px; text-align:center;">
-  <img src="<{$block.logourl}>" alt="<{$xoops_sitename}>" border="0" /><br /><{$block.recommendlink}>
+  <img src="<{$block.logourl}>" alt="<{$xoops_sitename}>" /><br /><{$block.recommendlink}>
 </div>

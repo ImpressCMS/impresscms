@@ -9,8 +9,8 @@
 /**
  * Smarty upper modifier plugin
  *
- * Type:     modifier
- * Name:     upper
+ * Type:     modifier<br>
+ * Name:     upper<br>
  * Purpose:  convert string to uppercase
  * @link http://smarty.php.net/manual/en/language.modifier.upper.php
  *          upper (Smarty online manual)

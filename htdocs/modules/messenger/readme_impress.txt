@@ -1,1 +1,0 @@
-Please note: This release is slightly changed from the original version, with the Smarty plugin directory changed from the xoops release.

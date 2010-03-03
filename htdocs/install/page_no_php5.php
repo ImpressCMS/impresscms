@@ -8,9 +8,9 @@
 * @copyright    The XOOPS project http://www.xoops.org/
 * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
 * @package		installer
-* @since        2.3.0
+* @since        Xoops 2.3.0
 * @author		marcan <marcan@impresscms.org>
-* @version		$Id: page_modcheck.php 4797 2008-09-12 02:51:14Z malanciault $
+* @version		$Id$
 */
 /**
  *

@@ -6,13 +6,13 @@
 * @copyright	XOOPS_copyrights.txt
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package	core
+* @package	XoopsForms
 * @since	XOOPS
 * @author	http://www.xoops.org The XOOPS Project
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version	$Id$
 **/
-if (!defined('XOOPS_ROOT_PATH')) {
+if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 
@@ -53,17 +53,16 @@ class XoopsFormTextDateSelect extends XoopsFormText
 	 */
 	function render()
 	{
-	   	$ele_name = $this->getName();
+		global $icmsConfigPersona;
+		$ele_name = $this->getName();
 		$ele_value = $this->getValue(false);
 		$jstime = formatTimestamp( $ele_value, 'Y-m-d' );
-		$config_handler =& xoops_gethandler('config');
-		$xoopsConfigPersona =& $config_handler->getConfigsByCat(XOOPS_CONF_PERSONA);
-        	if($xoopsConfigPersona['use_jsjalali'] == 1)
+		global $icmsConfigPersona;
+		include_once ICMS_ROOT_PATH.'/include/calendar'.($icmsConfigPersona['use_jsjalali'] == true ?'jalali':'').'js.php';
+		$result = "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $ele_value)."'".$this->getExtra()." />&nbsp;&nbsp;<img src='" . ICMS_URL . "/images/calendar.png' alt='"._CALENDAR."' title='"._CALENDAR."' onclick='return showCalendar(\"".$ele_name."\");'>";
+        	if($icmsConfigPersona['use_jsjalali'] == true)
 		{
-		include_once XOOPS_ROOT_PATH.'/include/calendarjalalijs.php';
-//		return "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $ele_value)."'".$this->getExtra()." /><input type='reset' value=' ... ' onclick='return showCalendar(\"".$ele_name."\");'>";
-// Now it is time to let users use their own calendars.
-		return "<input id='tmp_".$ele_name."' readonly='readonly' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".(_CALENDAR_TYPE=='jalali' ? icms_conv_nr2local(jdate("Y-m-d", $ele_value)) : date("Y-m-d", $ele_value))."' /><input type='hidden' name='".$ele_name."' id='".$ele_name."' value='".date("Y-m-d", $ele_value)."' ".$this->getExtra()." />&nbsp;&nbsp;<img src='" . ICMS_URL . "/images/calendar.png' alt='"._CALENDAR."' title='"._CALENDAR."' id='btn_".$ele_name."'><script type='text/javascript'>
+		$result = "<input id='tmp_".$ele_name."' readonly='readonly' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".(_CALENDAR_TYPE=='jalali' ? icms_conv_nr2local(jdate("Y-m-d", $ele_value)) : date("Y-m-d", $ele_value))."' /><input type='hidden' name='".$ele_name."' id='".$ele_name."' value='".date("Y-m-d", $ele_value)."' ".$this->getExtra()." />&nbsp;&nbsp;<img src='" . ICMS_URL . "/images/calendar.png' alt='"._CALENDAR."' title='"._CALENDAR."' id='btn_".$ele_name."'><script type='text/javascript'>
 				Calendar.setup({
 				inputField  : 'tmp_".$ele_name."',   // id of the input field
 		       		ifFormat    : '%Y-%m-%d',       // format of the input field
@@ -72,10 +71,9 @@ class XoopsFormTextDateSelect extends XoopsFormText
         			dateType	: '"._CALENDAR_TYPE."',
 				onUpdate	: function(cal){document.getElementById('".$ele_name."').value = cal.date.print('%Y-%m-%d');}
 				});
-			</script>";}else{
-		include_once XOOPS_ROOT_PATH.'/include/calendarjs.php';
-		return "<input type='text' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".date("Y-m-d", $ele_value)."'".$this->getExtra()." />&nbsp;&nbsp;<img src='" . ICMS_URL . "/images/calendar.png' alt='"._CALENDAR."' title='"._CALENDAR."' onclick='return showCalendar(\"".$ele_name."\");'>";
+			</script>";
 		}
+		return $result;
 	}
 }
 

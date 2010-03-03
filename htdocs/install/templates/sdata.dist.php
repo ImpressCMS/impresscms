@@ -8,7 +8,7 @@
 * @copyright	XOOPS_copyrights.txt
 * @copyright	http://www.impresscms.org/ The ImpressCMS Project
 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		Installer
+* @package		installer
 * @since		1.0
 * @author		marcan <marcan@impresscms.org>
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>

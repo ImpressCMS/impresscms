@@ -1,5 +1,5 @@
 <?php
-// $Id: findusers.php 1029 2007-09-09 03:49:25Z phppp $
+// $Id$
 //%%%%%%	File Name findusers.php 	%%%%%
 
 define("_AM_FINDUS","Find Users");
@@ -48,6 +48,8 @@ define("_AM_INACTIVE","Only inactive users");
 define("_AM_BOTH", "All users");
 define("_AM_SENDMAIL", "Send mail");
 define("_AM_ADD2GROUP", "Add users to %s group");
-
 define("_AM_GROUPS", "Groups");
+
+######################## Added in 1.2 ###################################
+define("_AM_LOGINNAME","Login Name");
 ?>

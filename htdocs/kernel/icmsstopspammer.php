@@ -4,10 +4,12 @@
 *
 * This class is responsible for cross referencing register information with StopForumSpam.com API
 *
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		1.2
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	IcmsPersistableObject
+* @since	1.2
+* @author		marcan <marcan@impresscms.org>
+* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
 * @version		$Id
 */
 class IcmsStopSpammer {
@@ -35,6 +37,10 @@ class IcmsStopSpammer {
 		if (!ini_get('allow_url_fopen')) {
 			$output = '';
 			$ch=curl_init();
+			if (!curl_setopt($ch, CURLOPT_URL, "$url")) {
+				icms_debug($this->api_url . $field . '=' . $value);
+				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
+			}
 			curl_setopt($ch, CURLOPT_URL, "$url");
 			curl_setopt($ch, CURLOPT_HEADER,0);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -47,8 +53,7 @@ class IcmsStopSpammer {
 		} else {
 			$file = fopen($url, "r");
 			if (!$file) {
-			icms_debug(1111);
-			icms_debug($this->api_url . $field . '=' . $value); exit;
+				icms_debug($this->api_url . $field . '=' . $value);
 				echo "<script> alert('" . _US_SERVER_PROBLEM_OCCURRED . "'); window.history.go(-1); </script>\n";
 			}
 			while (!feof($file)) {

@@ -57,4 +57,5 @@ class IcmsSimpleRss extends SimplePie {
 		}
 	}
 }
+
 ?>

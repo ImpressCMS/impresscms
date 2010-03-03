@@ -154,29 +154,6 @@ CREATE TABLE xoopscomments (
 # --------------------------------------------------------
 
 #
-# Table structure for table icmscontent
-#
-CREATE TABLE icmscontent (
-  content_id mediumint(8) unsigned NOT NULL auto_increment,
-  content_catid mediumint(8) unsigned NOT NULL default '1',
-  content_supid mediumint(8) unsigned NOT NULL default '0',
-  content_uid mediumint(5) NOT NULL default '1',
-  content_title varchar(255) NOT NULL default '',
-  content_menu varchar(100) default NULL,
-  content_body text,
-  content_css text,
-  content_tags text,
-  content_visibility int(10) NOT NULL default '3',
-  content_created int(10) NOT NULL default '0',
-  content_updated int(10) NOT NULL default '0',
-  content_weight smallint(5) unsigned NOT NULL default '0',
-  content_reads int(11) NOT NULL default '0',
-  content_status tinyint(1) unsigned NOT NULL default '0',
-  PRIMARY KEY  (content_id)
-) TYPE=MyISAM;
-# --------------------------------------------------------
-
-#
 # Table structure for table icmspage
 #
 CREATE TABLE icmspage (
@@ -218,10 +195,10 @@ CREATE TABLE config (
   conf_id smallint(5) unsigned NOT NULL auto_increment,
   conf_modid smallint(5) unsigned NOT NULL default '0',
   conf_catid smallint(5) unsigned NOT NULL default '0',
-  conf_name varchar(25) NOT NULL default '',
-  conf_title varchar(30) NOT NULL default '',
+  conf_name varchar(75) NOT NULL default '',
+  conf_title varchar(255) NOT NULL default '',
   conf_value text NOT NULL,
-  conf_desc varchar(100) NOT NULL default '',
+  conf_desc varchar(255) NOT NULL default '',
   conf_formtype varchar(15) NOT NULL default '',
   conf_valuetype varchar(10) NOT NULL default '',
   conf_order smallint(5) unsigned NOT NULL default '0',
@@ -236,7 +213,7 @@ CREATE TABLE config (
 
 CREATE TABLE configcategory (
   confcat_id smallint(5) unsigned NOT NULL auto_increment,
-  confcat_name varchar(25) NOT NULL default '',
+  confcat_name varchar(255) NOT NULL default '',
   confcat_order smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (confcat_id)
 ) TYPE=MyISAM;
@@ -603,7 +580,7 @@ CREATE TABLE users (
   posts mediumint(8) unsigned NOT NULL default '0',
   attachsig tinyint(1) unsigned NOT NULL default '0',
   rank smallint(5) unsigned NOT NULL default '0',
-  level tinyint(3) unsigned NOT NULL default '1',
+  level varchar(3) NOT NULL default '1',
   theme varchar(100) NOT NULL default '',
   timezone_offset float(3,1) NOT NULL default '0.0',
   last_login int(10) unsigned NOT NULL default '0',
@@ -661,3 +638,70 @@ CREATE TABLE system_customtag (
   customtag_type tinyint(1) NOT NULL default 0,
   PRIMARY KEY (customtagid)
 ) TYPE=MyISAM;
+
+#
+# Table structure for table `system_mimetype`
+#
+
+CREATE TABLE system_mimetype (
+  mimetypeid int(11) NOT NULL auto_increment,
+  extension varchar(60) NOT NULL default '',
+  types text NOT NULL,
+  name varchar(255) NOT NULL default '',
+  dirname VARCHAR(255) NOT NULL,
+  KEY mimetypeid (mimetypeid)
+) TYPE=MyISAM;
+
+#
+# Table structure for table `system_adsense`
+#
+
+CREATE TABLE system_adsense (
+  adsenseid int(11) NOT NULL auto_increment,
+  format VARCHAR(100) NOT NULL,
+  description TEXT NOT NULL,
+  style TEXT NOT NULL,
+  border_color varchar(6) NOT NULL default '',
+  background_color varchar(6) NOT NULL default '',
+  link_color varchar(6) NOT NULL default '',
+  url_color varchar(6) NOT NULL default '',
+  text_color varchar(6) NOT NULL default '',
+  client_id varchar(100) NOT NULL default '',
+  tag varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`adsenseid`)
+) TYPE=MyISAM;
+
+#
+# Table structure for table `system_rating`
+#
+
+CREATE TABLE system_rating (
+  ratingid int(11) NOT NULL auto_increment,
+  dirname VARCHAR(255) NOT NULL,
+  item VARCHAR(255) NOT NULL,
+  itemid int(11) NOT NULL,
+  uid int(11) NOT NULL,
+  rate int(1) NOT NULL,
+  date int(11) NOT NULL,
+  PRIMARY KEY  (`ratingid`)
+) TYPE=MyISAM;
+
+#
+# Table structure for table `system_autotasks`
+#
+CREATE TABLE system_autotasks (
+  sat_id int(10) unsigned NOT NULL AUTO_INCREMENT,
+  sat_name varchar(255) NOT NULL,
+  sat_code text NOT NULL,
+  sat_repeat int(11) NOT NULL,
+  sat_interval int(11) NOT NULL,
+  sat_onfinish smallint(2) NOT NULL,
+  sat_enabled INT(1) NOT NULL,
+  sat_lastruntime int(15) unsigned NOT NULL,
+  sat_type varchar(100) NOT NULL DEFAULT 'custom',
+  sat_addon_id int(2) unsigned zerofill DEFAULT NULL,
+  PRIMARY KEY (sat_id),
+  KEY sat_interval (sat_interval),
+  KEY sat_lastruntime (sat_lastruntime),
+  KEY sat_type (sat_type)
+);

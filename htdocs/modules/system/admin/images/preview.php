@@ -1,8 +1,23 @@
 <?php
+/**
+* Administration of images, preview file
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	Administration
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
+
 include('../../../../mainfile.php');
-include(ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.inc.php");
 include(ICMS_ROOT_PATH."/kernel/image.php");
 include(ICMS_ROOT_PATH."/kernel/imagecategory.php");
+include ICMS_LIBRARIES_PATH.'/wideimage/lib/WideImage.php';
 
 $file = $_GET['file'];
 $resize = isset($_GET['resize'])?$_GET['resize']:1;
@@ -28,10 +43,10 @@ $categ_path = $imgcat_handler->getCategFolder($imagecategory);
 $categ_url  = $imgcat_handler->getCategFolder($imagecategory,1,'url');
 
 if ($imagecategory->getVar('imgcat_storetype') == 'db') {
-	$img = wiImage::loadFromString($image[0]->getVar('image_body'));
+	$img = WideImage::loadFromString($image[0]->getVar('image_body'));
 }else{
 	$path = (substr($categ_path,-1) != '/')?$categ_path.'/':$categ_path;
-	$img = wiImage::load($path.$file);
+	$img = WideImage::load($path.$file);
 }
 $width = $img->getWidth();
 $height = $img->getHeight();
@@ -58,4 +73,5 @@ if (!is_null($filter)){
 		echo $img->asString('png');
 	}
 }
+
 ?>

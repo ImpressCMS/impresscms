@@ -1,5 +1,4 @@
 <?php
-
 /**
 *
 * Module RSS Feed Class
@@ -20,36 +19,39 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
 
 class IcmsFeed {
 
-		var $title;
-		var $url;
-		var $description;
-		var $language;
-		var $charset;
-		var $category;
-		var $pubDate;
-		var $webMaster;
-		var $generator;
-		var $copyright;
-		var $lastbuild;
-		var $channelEditor;
-		var $width;
-		var $height;
-		var $ttl;
-		var $image = array ();
+  public $title;
+  public $url;
+  public $description;
+  public $language;
+  public $charset;
+  public $category;
+  public $pubDate;
+  public $webMaster;
+  public $generator;
+  public $copyright;
+  public $lastbuild;
+  public $channelEditor;
+  public $width;
+  public $height;
+  public $ttl;
+  public $image = array ();
 
+	/**
+	 * Constructor
+	 */
 	function IcmsFeed () {
-		global $xoopsConfig;
-		$this->title = $xoopsConfig['sitename'];
+		global $icmsConfig;
+		$this->title = $icmsConfig['sitename'];
 		$this->url = ICMS_URL;
-		$this->description = $xoopsConfig['slogan'];
+		$this->description = $icmsConfig['slogan'];
 		$this->language = _LANGCODE;
 		$this->charset = _CHARSET;
 		$this->pubDate = date(_DATESTRING, time());
 		$this->lastbuild = formatTimestamp( time(), 'D, d M Y H:i:s' );
-		$this->webMaster = $xoopsConfig['adminmail'];
-		$this->channelEditor = $xoopsConfig['adminmail'];
+		$this->webMaster = $icmsConfig['adminmail'];
+		$this->channelEditor = $icmsConfig['adminmail'];
 		$this->generator = XOOPS_VERSION;
-		$this-> copyright = 'Copyright ' . formatTimestamp( time(), 'Y' ) . ' ' . $xoopsConfig['sitename'];
+		$this-> copyright = 'Copyright ' . formatTimestamp( time(), 'Y' ) . ' ' . $icmsConfig['sitename'];
 		$this->width  = 200;
 		$this->height = 50;
 		$this->ttl    = 60;
@@ -60,7 +62,10 @@ class IcmsFeed {
 		$this->feeds = array ();
 	}
 
-	function render () {
+	/**
+	 * Render the feed and display it directly
+	 */
+	function render() {
 		global $xoopsLogger;
 		$xoopsLogger->disableLogger();
 
@@ -79,7 +84,7 @@ class IcmsFeed {
 		$tpl->assign('channel_lastbuild', $this->lastbuild);
 		$tpl->assign('channel_copyright', $this->copyright);
 		$tpl->assign('channel_width', $this->width); 
-        $tpl->assign('channel_height', $this->height);
+    $tpl->assign('channel_height', $this->height);
 		$tpl->assign('channel_ttl', $this->ttl);
 		$tpl->assign('image_url', $this->image['url']);
 		foreach ($this->feeds as $feed) {

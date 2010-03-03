@@ -132,6 +132,7 @@ class IcmsPersistableObject extends XoopsObject {
     function initNonPersistableVar($key, $data_type, $itemName=false, $form_caption='', $sortby=false, $value='', $displayOnForm=false, $required=false) {
 		$this->initVar($key, $data_type, $value, $required, null, '', false, $form_caption, '', $sortby, false, $displayOnForm);
 		$this->vars[$key]['itemName'] = $itemName;
+		$this->vars[$key]['displayOnSingleView'] = false;
     }
 
 	/**
@@ -301,7 +302,7 @@ class IcmsPersistableObject extends XoopsObject {
      *
      * In this example, IcmsPersistableObject will create a TextArea for the variable 'body'. And it will use
      * the 'default' editor, providing it is defined in the module
-     * preferences : $xoopsModuleConfig['default_editor']
+     * preferences : $icmsModuleConfig['default_editor']
      *
      * Of course, you can force the use of a specific editor :
      *
@@ -467,7 +468,7 @@ class IcmsPersistableObject extends XoopsObject {
      */
 	function getGroupPerm($group_perm) {
 		if (!$this->handler->getPermissions()) {
-			$this->setError("Trying to access a permission that does not exists for thisobject's handler");
+			$this->setError("Trying to access a permission that does not exists for this object's handler");
 			return false;
 		}
 
@@ -615,8 +616,18 @@ class IcmsPersistableObject extends XoopsObject {
 		$this->vars[$key][$info] = $value;
 	}
 
+	/**
+	 * store object
+	 *
+	 * @param bool $force
+	 * @return bool true if successful, false if not
+	 */
+	function store($force=false) {
+		return $this->handler->insert($this, $force);
+	}
+
 	function getValueFor($key, $editor=true) {
-    	global $xoopsModuleConfig;
+    	global $icmsModuleConfig;
 
     	$ret = $this->getVar($key, 'n');
     	$myts = MyTextSanitizer::getInstance();
@@ -632,8 +643,8 @@ class IcmsPersistableObject extends XoopsObject {
 		$formatML = true;
 
     	if ($form_editor == 'default') {
-			global $xoopsModuleConfig;
-			$form_editor = isset($xoopsModuleConfig['default_editor']) ? $xoopsModuleConfig['default_editor'] : 'textarea';
+			global $icmsModuleConfig;
+			$form_editor = isset($icmsModuleConfig['default_editor']) ? $icmsModuleConfig['default_editor'] : 'textarea';
 		}
 
 		if ($editor) {
@@ -918,7 +929,7 @@ class IcmsPersistableObject extends XoopsObject {
             switch (strtolower($format)) {
             case 's':
             case 'show':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 $html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
 
                 $xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
@@ -947,7 +958,7 @@ class IcmsPersistableObject extends XoopsObject {
                 break 1;
             case 'p':
             case 'preview':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 $html = !empty($this->vars['dohtml']['value']) ? 1 : 0;
                 $xcode = (!isset($this->vars['doxcode']['value']) || $this->vars['doxcode']['value'] == 1) ? 1 : 0;
                 $smiley = (!isset($this->vars['dosmiley']['value']) || $this->vars['dosmiley']['value'] == 1) ? 1 : 0;
@@ -957,7 +968,7 @@ class IcmsPersistableObject extends XoopsObject {
                 break 1;
             case 'f':
             case 'formpreview':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
                 break 1;
             case 'n':
@@ -983,12 +994,12 @@ class IcmsPersistableObject extends XoopsObject {
                 break 1;
             case 'p':
             case 'preview':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 return $ts->stripSlashesGPC($ret);
                 break 1;
             case 'f':
             case 'formpreview':
-                $ts =& MyTextSanitizer::getInstance();
+                $ts = MyTextSanitizer::getInstance();
                 return htmlspecialchars($ts->stripSlashesGPC($ret), ENT_QUOTES);
                 break 1;
             case 'n':
@@ -1130,6 +1141,16 @@ class IcmsPersistableObject extends XoopsObject {
 		} else {
 			$this->doShowFieldOnForm($key);
 		}
+	}
+
+	/**
+	 * delete object
+	 *
+	 * @param bool $force
+	 * @return bool true if successful, false if not
+	 */
+	function delete($force=false) {
+		return $this->handler->delete($this, $force);
 	}
 
 	function displayFieldOnSingleView($key) {

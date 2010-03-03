@@ -1,40 +1,26 @@
 <?php
-// $Id: mysqldatabase.php 694 2006-09-04 11:33:22Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://www.xoops.org/, http://jp.xoops.org/ //
-// Project: The XOOPS Project                                                //
-// ------------------------------------------------------------------------- //
-if (!defined("XOOPS_ROOT_PATH")) {
+// $Id$
+/**
+* DataBase Base class file for MySQL driver
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	database
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
+
+if (!defined("ICMS_ROOT_PATH")) {
     die("ImpressCMS root path not defined");
 }
 /**
  * @package    database
  * @subpackage  mysql
- * @version $Id: $
+ * @version $Id$
  * @since XOOPS
  *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
@@ -45,7 +31,7 @@ if (!defined("XOOPS_ROOT_PATH")) {
 /**
  * base class
  */
-include_once XOOPS_ROOT_PATH."/class/database/database.php";
+include_once ICMS_ROOT_PATH."/class/database/database.php";
 
 /**
  * connection to a mysql database
@@ -71,8 +57,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
 	/**
 	 * connect to the database
 	 *
-     * @param bool $selectdb select the database now?
-     * @return bool successful?
+   * @param bool $selectdb select the database now?
+   * @return bool successful?
 	 */
 	function connect($selectdb = true)
 	{
@@ -81,7 +67,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
 		$this->allowWebChanges = ( $_SERVER['REQUEST_METHOD'] != 'GET' );
 		
 		if ( !extension_loaded( 'mysql' ) ) {
-			trigger_error( 'notrace:mysql extension not loaded', E_USER_ERROR );
+			trigger_error( _CORE_DB_NOTRACE, E_USER_ERROR );
 			return false;
 		}
 		
@@ -112,12 +98,12 @@ class XoopsMySQLDatabase extends XoopsDatabase
 
 	/**
 	 * generate an ID for a new row
-     *
-     * This is for compatibility only. Will always return 0, because MySQL supports
-     * autoincrement for primary keys.
-     *
-     * @param string $sequence name of the sequence from which to get the next ID
-     * @return int always 0, because mysql has support for autoincrement
+   *
+   * This is for compatibility only. Will always return 0, because MySQL supports
+   * autoincrement for primary keys.
+   *
+   * @param string $sequence name of the sequence from which to get the next ID
+   * @return int always 0, because mysql has support for autoincrement
 	 */
 	function genId($sequence)
 	{
@@ -127,8 +113,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
 	/**
 	 * Get a result row as an enumerated array
 	 *
-     * @param resource $result
-     * @return array
+   * @param resource $result
+   * @return array the fetched rows
 	 */
 	function fetchRow($result)
 	{
@@ -138,22 +124,22 @@ class XoopsMySQLDatabase extends XoopsDatabase
 	/**
 	 * Fetch a result row as an associative array
 	 *
-     * @return array
+   * @return array the fetched associative array
 	 */
 	function fetchArray($result)
-    {
-        return @mysql_fetch_assoc( $result );
-    }
+  {
+    return @mysql_fetch_assoc( $result );
+  }
 
-    /**
-     * Fetch a result row as an associative array
-     *
-     * @return array
-     */
-    function fetchBoth($result)
-    {
-        return @mysql_fetch_array( $result, MYSQL_BOTH );
-    }
+  /**
+   * Fetch a result row as an associative array and numerical array
+   *
+   * @return array the associative and numerical array
+   */
+  function fetchBoth($result)
+  {
+    return @mysql_fetch_array( $result, MYSQL_BOTH );
+  }
 
 	/**
 	 * Get the ID generated from the previous INSERT operation
@@ -168,8 +154,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
 	/**
 	 * Get number of rows in result
 	 *
-     * @param resource query result
-     * @return int
+   * @param resource query result
+   * @return int the number of rows in the resultset
 	 */
 	function getRowsNum($result)
 	{
@@ -179,7 +165,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
 	/**
 	 * Get number of affected rows
 	 *
-     * @return int
+   * @return int number of affected rows
 	 */
 	function getAffectedRows()
 	{
@@ -187,7 +173,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
 	}
 
 	/**
-	 * Close MySQL connection
+	 * Closes MySQL connection
 	 *
 	 */
 	function close()
@@ -198,8 +184,8 @@ class XoopsMySQLDatabase extends XoopsDatabase
 	/**
 	 * will free all memory associated with the result identifier result.
 	 *
-     * @param resource query result
-     * @return bool TRUE on success or FALSE on failure.
+   * @param resource query result
+   * @return bool TRUE on success or FALSE on failure.
 	 */
 	function freeRecordSet($result)
 	{
@@ -209,7 +195,7 @@ class XoopsMySQLDatabase extends XoopsDatabase
 	/**
 	 * Returns the text of the error message from previous MySQL operation
 	 *
-     * @return bool Returns the error text from the last MySQL function, or '' (the empty string) if no error occurred.
+   * @return string Returns the error text from the last MySQL function, or '' (the empty string) if no error occurred.
 	 */
 	function error()
 	{
@@ -219,45 +205,49 @@ class XoopsMySQLDatabase extends XoopsDatabase
 	/**
 	 * Returns the numerical value of the error message from previous MySQL operation
 	 *
-     * @return int Returns the error number from the last MySQL function, or 0 (zero) if no error occurred.
+   * @return int Returns the error number from the last MySQL function, or 0 (zero) if no error occurred.
 	 */
 	function errno()
 	{
 		return @mysql_errno();
 	}
 
-    /**
-     * Returns escaped string text with single quotes around it to be safely stored in database
-     *
-     * @param string $str unescaped string text
-     * @return string escaped string text with single quotes around
-     */
-    function quoteString($str)
-    {
-        return $this->quote($str);
-        $str = "'".str_replace('\\"', '"', addslashes($str))."'";
-        return $str;
-    }
-    
+  /**
+   * Returns escaped string text with single quotes around it to be safely stored in database
+   *
+   * @param string $str unescaped string text
+   * @return string escaped string text with single quotes around
+   */
+  function quoteString($str)
+  {
+      return $this->quote($str);
+      $str = "'".str_replace('\\"', '"', addslashes($str))."'";
+      return $str;
+  }
+
+
+
 	/**
-	 * Quotes a string for use in a query.
-	 * 
-	 */
+	 * Quotes a string for use in a query using mysql_real_escape_string.
+   *
+   * @param string $str unescaped string text
+   * @return string escaped string text using mysql_real_escape_string
+   */
 	function quote( $string )
 	{
-        return "'" . mysql_real_escape_string( $string, $this->conn ) . "'";
+    return "'" . mysql_real_escape_string( $string, $this->conn ) . "'";
 	}
 
-    /**
-     * perform a query on the database
-     *
-     * @param string $sql a valid MySQL query
-     * @param int $limit number of records to return
-     * @param int $start offset of first record to return
-     * @return resource query result or FALSE if successful
-     * or TRUE if successful and no result
-     */
-    function queryF($sql, $limit=0, $start=0)
+  /**
+   * perform a query on the database
+   *
+   * @param string $sql a valid MySQL query
+   * @param int $limit number of records to return
+   * @param int $start offset of first record to return
+   * @return resource query result or FALSE if successful
+   * or TRUE if successful and no result
+   */
+  function queryF($sql, $limit=0, $start=0)
 	{
 		if ( !empty($limit) ) {
 			if (empty($start)) {
@@ -269,89 +259,99 @@ class XoopsMySQLDatabase extends XoopsDatabase
 		if ( $result ) {
 			$this->logger->addQuery($sql);
 			return $result;
-        } else {
+    } else {
 			$this->logger->addQuery($sql, $this->error(), $this->errno());
 			return false;
-        }
     }
+  }
 
 	/**
 	 * perform a query
-     *
-     * This method is empty and does nothing! It should therefore only be
-     * used if nothing is exactly what you want done! ;-)
+   *
+   * This method is empty and does nothing! It should therefore only be
+   * used if nothing is exactly what you want done! ;-)
 	 *
-     * @param string $sql a valid MySQL query
-     * @param int $limit number of records to return
-     * @param int $start offset of first record to return
-     *
-     * @abstract
+   * @param string $sql a valid MySQL query
+   * @param int $limit number of records to return
+   * @param int $start offset of first record to return
+   *
+   * @abstract
 	 */
 	function query($sql, $limit=0, $start=0)
 	{
 
-    }
+  }
 
-    /**
+  /**
 	 * perform queries from SQL dump file in a batch
 	 *
-     * @param string $file file path to an SQL dump file
-     *
-     * @return bool FALSE if failed reading SQL file or TRUE if the file has been read and queries executed
+   * @param string $file file path to an SQL dump file
+   *
+   * @return bool FALSE if failed reading SQL file or TRUE if the file has been read and queries executed
 	 */
 	function queryFromFile($file){
-        if (false !== ($fp = fopen($file, 'r'))) {
-			include_once XOOPS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/sqlutility.php';
-            $sql_queries = trim(fread($fp, filesize($file)));
-            SqlUtility::splitMySqlFile($pieces, $sql_queries);
-            foreach ($pieces as $query) {
-                // [0] contains the prefixed query
-                // [4] contains unprefixed table name
-                $prefixed_query = SqlUtility::prefixQuery(trim($query), $this->prefix());
-                if ($prefixed_query != false) {
-                    $this->query($prefixed_query[0]);
-                }
-            }
-            return true;
+    if (false !== ($fp = fopen($file, 'r'))) {
+  	include_once ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/sqlutility.php';
+      $sql_queries = trim(fread($fp, filesize($file)));
+      SqlUtility::splitMySqlFile($pieces, $sql_queries);
+      foreach ($pieces as $query) {
+        // [0] contains the prefixed query
+        // [4] contains unprefixed table name
+        $prefixed_query = SqlUtility::prefixQuery(trim($query), $this->prefix());
+        if ($prefixed_query != false) {
+            $this->query($prefixed_query[0]);
         }
-        return false;
+      }
+      return true;
     }
+    return false;
+  }
 
-    /**
+
+  /**
 	 * Get field name
 	 *
-     * @param resource $result query result
-     * @param int numerical field index
-     * @return string
+   * @param resource $result query result
+   * @param int numerical field index
+   * @return string the fieldname
 	 */
 	function getFieldName($result, $offset)
 	{
 		return mysql_field_name($result, $offset);
 	}
 
+
+
+
 	/**
 	 * Get field type
 	 *
-     * @param resource $result query result
-     * @param int $offset numerical field index
-     * @return string
+   * @param resource $result query result
+   * @param int $offset numerical field index
+   * @return string the fieldtype
 	 */
-    function getFieldType($result, $offset)
+  function getFieldType($result, $offset)
 	{
 		return mysql_field_type($result, $offset);
 	}
 
+
+
+
 	/**
 	 * Get number of fields in result
 	 *
-     * @param resource $result query result
-     * @return int
+   * @param resource $result query result
+   * @return int number of fields in the resultset
 	 */
 	function getFieldsNum($result)
 	{
 		return mysql_num_fields($result);
 	}
 }
+
+
+
 
 /**
  * Safe Connection to a MySQL database.
@@ -367,15 +367,15 @@ class XoopsMySQLDatabase extends XoopsDatabase
 class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
 {
 
-    /**
-     * perform a query on the database
-     *
-     * @param string $sql a valid MySQL query
-     * @param int $limit number of records to return
-     * @param int $start offset of first record to return
-     * @return resource query result or FALSE if successful
-     * or TRUE if successful and no result
-     */
+  /**
+   * perform a query on the database
+   *
+   * @param string $sql a valid MySQL query
+   * @param int $limit number of records to return
+   * @param int $start offset of first record to return
+   * @return resource query result or FALSE if successful
+   * or TRUE if successful and no result
+   */
 	function query($sql, $limit=0, $start=0)
 	{
 		return $this->queryF($sql, $limit, $start);
@@ -399,16 +399,16 @@ class XoopsMySQLDatabaseSafe extends XoopsMySQLDatabase
 class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
 {
 
-    /**
-     * perform a query on the database
-     *
-     * this method allows only SELECT queries for safety.
-     *
-     * @param string $sql a valid MySQL query
-     * @param int $limit number of records to return
-     * @param int $start offset of first record to return
-     * @return resource query result or FALSE if unsuccessful
-     */
+  /**
+   * perform a query on the database
+   *
+   * this method allows only SELECT queries for safety.
+   *
+   * @param string $sql a valid MySQL query
+   * @param int $limit number of records to return
+   * @param int $start offset of first record to return
+   * @return resource query result or FALSE if unsuccessful
+   */
 	function query($sql, $limit=0, $start=0)
 	{
 		// Hack by marcan to track query count
@@ -419,7 +419,7 @@ class XoopsMySQLDatabaseProxy extends XoopsMySQLDatabase
 		// End of Hack by marcan to track query count
 	    $sql = ltrim($sql);
 		if ( !$this->allowWebChanges && strtolower( substr($sql, 0, 6) ) != 'select' )  {
-			trigger_error( 'Database updates are not allowed during processing of a GET request', E_USER_WARNING );
+			trigger_error( _CORE_DB_NOTALLOWEDINGET, E_USER_WARNING );
 			return false;
 		}
     	

@@ -1,74 +1,71 @@
 <?php
 /**
- * Extended User Profile
+ * Classes responsible for managing profile category objects
  *
- *
- * @copyright       The ImpressCMS Project http://www.impresscms.org/
- * @license         LICENSE.txt
- * @license			GNU General Public License (GPL) http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
- * @package         modules
- * @since           1.2
- * @author          Jan Pedersen
- * @author          The SmartFactory <www.smartfactory.ca>
- * @author	   		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version         $Id$
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org>
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.0
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @package		profile
+ * @version		$Id$
  */
 
-if (!defined("ICMS_ROOT_PATH")) {
-    die("XOOPS root path not defined");
-}
-include_once(ICMS_KERNEL_PATH."icmspersistableobject.php");
-/**
- * @package kernel
- * @copyright copyright &copy; 2000 XOOPS.org
- */
+if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
+
+// including the IcmsPersistabelSeoObject
+include_once ICMS_ROOT_PATH . '/kernel/icmspersistableobject.php';
+
 class ProfileCategory extends IcmsPersistableObject {
-    function ProfileCategory() {
-        $this->initVar('catid', XOBJ_DTYPE_INT, null, true);
-        $this->initVar('cat_title', XOBJ_DTYPE_TXTBOX);
-        $this->initVar('cat_description', XOBJ_DTYPE_TXTAREA);
-        $this->initVar('cat_weight', XOBJ_DTYPE_INT);
-        //$this->initVar('cat_moduleid', XOBJ_DTYPE_INT);
-    }
 
-    /**
-    * Get {@link XoopsThemeForm} for adding/editing categories
-    *
-    * @param mixed $action URL to submit to or false for $_SERVER['REQUEST_URI']
-    *
-    * @return object
-    */
-    function getForm($action = false) {
-        if ($action === false) {
-            $action = $_SERVER['REQUEST_URI'];
-        }
-        $title = $this->isNew() ? sprintf(_PROFILE_AM_ADD, _PROFILE_AM_CATEGORY) : sprintf(_PROFILE_AM_EDIT, _PROFILE_AM_CATEGORY);
+	/**
+	 * Constructor
+	 *
+	 * @param object $handler ProfileCategoryHandler object
+	 */
+	public function __construct(& $handler) {
+		global $icmsConfig;
 
-        include_once(ICMS_ROOT_PATH."/class/xoopsformloader.php");
+		$this->IcmsPersistableObject($handler);
 
-        $form = new XoopsThemeForm($title, 'form', $action, 'post', true);
-        $form->addElement(new XoopsFormText(sprintf(_PROFILE_AM_TITLE, _PROFILE_AM_CATEGORY), 'cat_title', 35, 255, $this->getVar('cat_title')));
-        if (!$this->isNew()) {
-            //Load groups
-            $form->addElement(new XoopsFormHidden('id', $this->getVar('catid')));
-        }
-        $form->addElement(new XoopsFormTextArea(_PROFILE_AM_DESCRIPTION, 'cat_description', $this->getVar('cat_description', 'e')));
-        $form->addElement(new XoopsFormText(_PROFILE_AM_CATEGORY." "._PROFILE_AM_WEIGHT, 'cat_weight', 35, 35, $this->getVar('cat_weight', 'e')));
+		$this->quickInitVar('catid', XOBJ_DTYPE_INT, true);
+		$this->quickInitVar('cat_title', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('cat_description', XOBJ_DTYPE_TXTAREA, false);
+		$this->quickInitVar('cat_weight', XOBJ_DTYPE_TXTBOX, false, false, false, 0);
 
-        $form->addElement(new XoopsFormHidden('op', 'save'));
-        $form->addElement(new XoopsFormButton('', 'submit', _SUBMIT, 'submit'));
+	}
 
-        return $form;
-    }
+	/**
+	 * Overriding the IcmsPersistableObject::getVar method to assign a custom method on some
+	 * specific fields to handle the value before returning it
+	 *
+	 * @param str $key key of the field
+	 * @param str $format format that is requested
+	 * @return mixed value of the field that is requested
+	 */
+	function getVar($key, $format = 's') {
+		if ($format == 's' && in_array($key, array ())) {
+			return call_user_func(array ($this,	$key));
+		}
+		return parent :: getVar($key, $format);
+	}
+
+	/**
+	 * return the category title
+	 *
+	 * @return string category title
+	 */
+	function getCatTitle() {
+		return $this->getVar('cat_title');
+	}
 }
 
-/**
- * @package kernel
- * @copyright copyright &copy; 2000 XOOPS.org
- */
 class ProfileCategoryHandler extends IcmsPersistableObjectHandler {
-    function ProfileCategoryHandler(&$db) {
-        parent::IcmsPersistableObjectHandler($db, "category", "catid", 'cat_title', 'cat_description', 'profile');
-    }
+
+	/**
+	 * Constructor
+	 */
+	public function __construct(& $db) {
+		$this->IcmsPersistableObjectHandler($db, 'category', 'catid', 'cat_title', 'cat_description', 'profile');
+	}
 }
 ?>

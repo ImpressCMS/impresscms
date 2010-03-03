@@ -1,5 +1,5 @@
 <?php
-// $Id: install2.php 595 2006-06-30 02:43:38Z skalpa $
+// $Id$
 define("_INSTALL_WEBMASTER","Webmasters");
 define("_INSTALL_WEBMASTERD","Webmasters of this site");
 define("_INSTALL_REGUSERS","Registered Users");

@@ -1,5 +1,5 @@
 <?php
-// $Id: $
+// $Id$
 //%%%%%%		File Name auth.php 		%%%%%
 
 define('_AUTH_MSG_AUTH_METHOD',"using %s authentication method.");

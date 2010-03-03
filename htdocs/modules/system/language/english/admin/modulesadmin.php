@@ -1,5 +1,5 @@
 <?php
-// $Id: modulesadmin.php 2 2005-11-02 18:23:29Z skalpa $
+// $Id$
 //%%%%%%	File Name  modulesadmin.php 	%%%%%
 define("_MD_AM_MODADMIN","Modules Administration");
 define("_MD_AM_MODULE","Module");
@@ -62,7 +62,9 @@ define('_MD_AM_MODULESADMIN_SUPPORT', 'Module Support Site');
 define('_MD_AM_MODULESADMIN_STATUS', 'Status');
 define('_MD_AM_MODULESADMIN_MODULENAME', 'Module Name');
 define('_MD_AM_MODULESADMIN_MODULETITLE', 'Module Title');
+######################## Added in 1.2 ###################################
 define('_MD_AM_FAILINSTEMP','ERROR: Could not insert template <b>%s</b> to the database.');
+define('_MD_AM_FAILUPDTEMP','ERROR: Could not update template <b>%s</b>.');
 define('_MD_AM_INSTEMP','Template <b>%s</b> added to the database. (ID: <b>%s</b>)');
 define('_MD_AM_FAILCOMPTEMP','ERROR: Failed compiling template <b>%s</b>.');
 define('_MD_AM_COMPTEMP','Template <b>%s</b> compiled.');
@@ -71,10 +73,21 @@ define('_MD_AM_INSTEMPFILE','Template <b>%s</b> added to the database. (ID: <b>%
 define('_MD_AM_FAILCOMPTEMPFILE','ERROR: Failed compiling template <b>%s</b>.');
 define('_MD_AM_COMPTEMPFILE','Template <b>%s</b> compiled.');
 define('_MD_AM_RECOMPTEMPFILE','Template <b>%s</b> recompiled.');
+define('_MD_AM_NOTRECOMPTEMPFILE','ERROR: Could not recompile template <b>%s</b>.');
 define('_MD_AM_TEMPINS','Template <b>%s</b> inserted to the database.');
-define('_MD_AM_MOD_DATA_UPDATED','Module data updated.');
+define('_MD_AM_MOD_DATA_UPDATED',' Module data updated.');
 define('_MD_AM_MOD_UP_TEM','Updating templates...');
 define('_MD_AM_MOD_REBUILD_BLOCKS','Rebuilding blocks...');
 define('_MD_AM_FUNCT_EXEC','Function <b>%s</b> is successfully executed.');
 define('_MD_AM_FAIL_EXEC','Failed to execute <b>%s</b>.');
+define('_MD_AM_INSTALLED', 'Installed Modules');
+define('_MD_AM_NONINSTALL', 'UnInstalled Modules');
+define('_MD_AM_NOTDELTEMPFILE', 'ERROR: Could not delete old template <b>%s</b>. Aborting update of this file.');
+define('_MD_AM_COULDNOTUPDATE', 'ERROR: Could not update <b>%s</b>.');
+define('_MD_AM_BLOCKUPDATED', 'Block <b>%s</b> updated. Block ID: <b>%s</b>.');
+define('_MD_AM_BLOCKCREATED', 'Block <b>%s</b> created. Block ID: <b>%s</b>.');
+define('_MD_AM_IMAGESFOLDER_UPDATE_TITLE', 'Image Manager folder needs to be writable');
+define('_MD_AM_IMAGESFOLDER_UPDATE_TEXT', 'The new version of the Image Manager changed the storage location of your images. This update will try to move your images to the right place, but this requires that the storage folder has write permission. Please set the correct permission in the folder <strong>and refresh this page</strong> before clicking on the Update button below.<br /><b>Image Manager folder</b>: %s');
+define('_MD_AM_PLUGINSFOLDER_UPDATE_TITLE', 'Plugins/Preloads folder needs to be writable');
+define('_MD_AM_PLUGINSFOLDER_UPDATE_TEXT', 'The new version of ImpressCMS changed the storage location of the preloads. This update will try to move your preloads to the right place, but this requires that the storage folder for plugins and preloads has write permission. Please set the correct permission in the folder <strong>and refresh this page</strong> before clicking on the Update button below.<br /><b>Plugins folder</b>: %s<br /><b>Preloads folder</b>: %s');
 ?>

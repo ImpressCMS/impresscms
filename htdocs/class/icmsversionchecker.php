@@ -1,10 +1,5 @@
 <?php
-if (!defined('XOOPS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
-}
-
-require_once XOOPS_ROOT_PATH.'/class/snoopy.php';
-include_once XOOPS_ROOT_PATH.'/class/xml/rss/xmlrss2parser.php';
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
 * IcmsVersionChecker
@@ -22,46 +17,40 @@ class IcmsVersionChecker {
 
 	/*
 	 * errors
-	 * @var $errors array
+	 * @public $errors array
 	 */
-	var $errors = array();
+	public $errors = array();
 
 	/*
 	 * URL of the XML containing version information
-	 * @var $version_xml string
+	 * @public $version_xml string
 	 */
-	var $version_xml = "http://www.impresscms.org/impresscms_version.xml";
-
-	/*
-	 * Path of the file containing the cached version of the $version_xml content
-	 * @var cache_version_xml string
-	 */
-	var $cache_version_xml = "impresscms_version.xml";
+	public $version_xml = "http://www.impresscms.org/impresscms_version.xml";
 
 	/*
 	 * Time before fetching the $version_xml again and store it in $cache_version_xml
-	 * @var $cache_time integer
+	 * @public $cache_time integer
 	 * @todo set this to a day at least or make it configurable in System Admin > Preferences
 	 */
-	var $cache_time=1;
+	public $cache_time=1;
 
 	/*
 	 * Name of the latest version
-	 * @var $latest_version_name string
+	 * @public $latest_version_name string
 	 */
-	var $latest_version_name;
+	public $latest_version_name;
 
 	/*
 	 * Name of installed version
-	 * @var $installed_version_name string
+	 * @private $installed_version_name string
 	 */
-	var $installed_version_name;
+	public $installed_version_name;
 
 	/*
 	 * Number of the latest build
-	 * @var $latest_build integer
+	 * @public $latest_build integer
 	 */
-	var $latest_build;
+	public $latest_build;
 
 	/*
 	 * Status of the latest build
@@ -71,43 +60,41 @@ class IcmsVersionChecker {
  	 * 3  = RC
  	 * 10 = Final
 	 *
-	 * @var $latest_status integer
+	 * @public $latest_status integer
 	 */
-	var $latest_status;
+	public $latest_status;
 
 	/*
 	 * URL of the latest release
-	 * @var $latest_url string
+	 * @public $latest_url string
 	 */
-	var $latest_url;
+	public $latest_url;
 
 	/*
 	 * Changelog of the latest release
-	 * @var $latest_changelog string
+	 * @public $latest_changelog string
 	 */
-	var $latest_changelog;
+	public $latest_changelog;
 
 	/**
 	 * Constructor
-     *
-     * @return	void
-     *
-     */
+   *
+   * @return	void
+   *
+   */
 	function IcmsVersionChecker() {
 		$this->installed_version_name = ICMS_VERSION_NAME;
-
-		$this->cache_version_xml = XOOPS_CACHE_PATH . '/' . $this->cache_version_xml;
 	}
 
 	/**
 	 * Access the only instance of this class
-     *
-     * @static
-     * @staticvar object
-     *
-     * @return	object
-     *
-     */
+   *
+   * @static
+   * @staticvar object
+   *
+   * @return	object
+   *
+   */
 	function &getInstance()
 	{
 		static $instance;
@@ -119,16 +106,22 @@ class IcmsVersionChecker {
 
 	/**
 	 * Check for a newer version of ImpressCMS
-     *
-     * @return	TRUE if there is an update, FALSE if no update OR errors occuered
-     *
-     */
+   *
+   * @return	TRUE if there is an update, FALSE if no update OR errors occured
+   *
+   */
 	function check() {
 
 		// Create a new instance of the SimplePie object
 		include_once(ICMS_ROOT_PATH . '/class/icmssimplerss.php');
-		$feed = new IcmsSimpleRss($this->version_xml, 0);
-		if ($feed) {
+		$feed = new IcmsSimpleRss();
+		$feed->set_feed_url($this->version_xml);
+		$feed->set_cache_duration(0);
+		$feed->set_autodiscovery_level(SIMPLEPIE_LOCATOR_NONE);
+		$feed->init();
+		$feed->handle_content_type();
+
+		if (!$feed->error) {
 			$versionInfo['title'] = $feed->get_title();
 			$versionInfo['link'] = $feed->get_link();
 			$versionInfo['image_url'] = $feed->get_image_url();
@@ -166,17 +159,17 @@ class IcmsVersionChecker {
 	 * @return	mixed
 	 */
 	function getErrors($ashtml=true) {
-	    if (!$ashtml) {
-            return $this->errors;
-        } else {
-        	$ret = '';
-        	if (count($this->errors) > 0) {
-            	foreach ($this->errors as $error) {
-            	    $ret .= $error.'<br />';
-            	}
-        	}
-        	return $ret;
-        }
-	}
+    if (!$ashtml) {
+        return $this->errors;
+    } else {
+    	$ret = '';
+    	if (count($this->errors) > 0) {
+      	foreach ($this->errors as $error) {
+    	    $ret .= $error.'<br />';
+      	}
+    	}
+    	return $ret;
+    }
+  }
 }
 ?>

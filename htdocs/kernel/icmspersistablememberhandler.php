@@ -10,7 +10,7 @@
 * @author		Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
 * @author		marcan <marcan@impresscms.org>
 * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id: icmspersistablememberhandler.php 7264 2008-11-29 05:08:31Z pesian_stranger $
+* @version		$Id$
 */
 
 
@@ -20,6 +20,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 require_once ICMS_ROOT_PATH.'/kernel/user.php';
 require_once ICMS_ROOT_PATH.'/kernel/group.php';
 require_once ICMS_ROOT_PATH.'/kernel/member.php';
+require_once ICMS_ROOT_PATH.'/kernel/icmspersistableuserhandler.php';
 
 /**
 * XOOPS member handler class.
@@ -41,14 +42,15 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
     function IcmsPersistableMemberHandler(&$db)
     {
         $this->XoopsMemberHandler($db);
-        $this->_uHandler = xoops_getModuleHandler('user', 'smartobject');
+        $this->_uHandler = new IcmsPersistableUserHandler($db);
     }
 
-	function addAndActivateUser(&$userObj, $groups=false, $notifyUser=true, &$password=false)
+// This function here below needs some changes to work under 1.2 Final. it's temporarily disabled.
+/*	function addAndActivateUser(&$userObj, $groups=false, $notifyUser=true, &$password=false)
 	{
 	    $email = $userObj->getVar('email');
 	    if (!$userObj->getVar('email') || $email == '') {
-	    	$userObj->setErrors(_CO_SOBJECT_USER_NEED_EMAIL);
+	    	$userObj->setErrors(_CO_ICMS_USER_NEED_EMAIL);
 	    	return false;
 	    }
 
@@ -85,11 +87,9 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 		    }
 		}
 
-		global $xoopsConfig;
+		global $icmsConfig, $icmsConfigUser;
 
-		$config_handler = & xoops_gethandler('config');
-		$xoopsConfigUser = & $config_handler->getConfigsByCat(XOOPS_CONF_USER);
-		switch ($xoopsConfigUser['activation_type']) {
+		switch ($icmsConfigUser['activation_type']) {
 			case 0 :
 				$level = 0;
 				$mailtemplate = 'smartmail_activate_user.tpl';
@@ -110,7 +110,7 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 	    $userObj->setVar('uname',$usernames[$i]);
 	    $userObj->setVar('user_avatar','blank.gif');
 	    $userObj->setVar('user_regdate', time());
-	    $userObj->setVar('timezone_offset', $xoopsConfig['default_TZ']);
+	    $userObj->setVar('timezone_offset', $icmsConfig['default_TZ']);
 	    $actkey = substr(md5(uniqid(mt_rand(), 1)), 0, 8);
 	    $userObj->setVar('actkey', $actkey);
 	    $userObj->setVar('email',$email);
@@ -135,29 +135,32 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 			// send some notifications
 			$xoopsMailer = & getMailer();
 			$xoopsMailer->useMail();
-			$xoopsMailer->setTemplateDir(SMARTOBJECT_ROOT_PATH . 'language/' . $xoopsConfig['language'] . '/mail_template');
+			$xoopsMailer->setTemplateDir(ICMS_ROOT_PATH . 'language/' . $icmsConfig['language'] . '/mail_template');
 			$xoopsMailer->setTemplate('smartobject_notify_user_added_by_admin.tpl');
 			$xoopsMailer->assign('XOOPS_USER_PASSWORD', $password);
-			$xoopsMailer->assign('SITENAME', $xoopsConfig['sitename']);
-			$xoopsMailer->assign('ADMINMAIL', $xoopsConfig['adminmail']);
+			$xoopsMailer->assign('SITENAME', $icmsConfig['sitename']);
+			$xoopsMailer->assign('ADMINMAIL', $icmsConfig['adminmail']);
 			$xoopsMailer->assign('SITEURL', ICMS_URL . "/");
 			$xoopsMailer->assign('NAME', $userObj->getVar('name'));
 			$xoopsMailer->assign('UNAME', $userObj->getVar('uname'));
 			$xoopsMailer->setToUsers($userObj);
-			$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-			$xoopsMailer->setFromName($xoopsConfig['sitename']);
-			$xoopsMailer->setSubject(sprintf(_CO_SOBJECT_NEW_USER_NOTIFICATION_SUBJECT, $xoopsConfig['sitename']));
+			$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
+			$xoopsMailer->setFromName($icmsConfig['sitename']);
+			$xoopsMailer->setSubject(sprintf(_CO_ICMS_NEW_USER_NOTIFICATION_SUBJECT, $icmsConfig['sitename']));
 
 			if (!$xoopsMailer->send(true)) {
 				/**
 				 * @todo trap error if email was not sent
-				 */
+				 *	/
 				$xoopsMailer->getErrors(true);
 			}
 		}
 
 	    return true;
 	}
+*/
+// This function here below needs some changes to work under 1.2 Final. it's temporarily disabled.
+
 
 	/**
 	 * Generates an array of usernames
@@ -254,4 +257,5 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 	   }
 	}
 }
+
 ?>

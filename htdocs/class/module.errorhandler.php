@@ -1,31 +1,17 @@
 <?php
-// $Id: module.errorhandler.php 2 2005-11-02 18:23:29Z skalpa $
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                    Copyright (c) 2000 XOOPS.org                           //
-//                       <http://www.xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author of File: Goghs (http://www.eqiao.com/)                             //
-################################################################################
+/**
+* Error Handler class
+*
+* @copyright	http://www.xoops.org/ The XOOPS Project
+* @copyright	XOOPS_copyrights.txt
+* @copyright	http://www.impresscms.org/ The ImpressCMS Project
+* @license	LICENSE.txt
+* @package	core
+* @since	XOOPS
+* @author	http://www.xoops.org The XOOPS Project
+* @author	modified by UnderDog <underdog@impresscms.org>
+* @version	$Id$
+*/
 
 if ( !defined("XOOPS_C_ERRORHANDLER_INCLUDED") ) {
 	define("XOOPS_C_ERRORHANDLER_INCLUDED",1);
@@ -47,11 +33,11 @@ if ( !defined("XOOPS_C_ERRORHANDLER_INCLUDED") ) {
 		 * @param   string  $e_code Errorcode
 		 * @param   integer $pages  How many pages should the link take you back?
          * 
-         * @global  $xoopsConfig
+         * @global  $icmsConfig
 		 **/
 		function show($e_code, $pages=1)
 		{
-			global $xoopsConfig, $xoopsUser, $xoopsRequestUri, $xoopsModule, $xoopsLogger;
+			global $icmsConfig, $icmsUser, $xoopsRequestUri, $icmsModule, $xoopsLogger;
 			$errmsg = array(
 			"0001" =>"Could not connect to the forums database.",
 			"0002" => "The forum you selected does not exist. Please go back and try again.",
@@ -108,14 +94,14 @@ if ( !defined("XOOPS_C_ERRORHANDLER_INCLUDED") ) {
 			if (!in_array($e_code, $errorno)) {
 				$e_code = '9999';
 			}
-			include_once XOOPS_ROOT_PATH."/header.php";
+			include_once ICMS_ROOT_PATH."/header.php";
 			//OpenTable();
-			echo "<div><b>".$xoopsConfig['sitename']." Error</b><br /><br />";
+			echo "<div><b>".$icmsConfig['sitename']." Error</b><br /><br />";
 			echo "Error Code: $e_code<br /><br /><br />";
 			echo "<b>ERROR:</b> $errmsg[$e_code]<br /><br /><br />";
 			echo "[ <a href='javascript:history.go(-".$pages.")'>Go Back</a> ]</div>";
 			//CloseTable();
-			include_once XOOPS_ROOT_PATH."/footer.php";
+			include_once ICMS_ROOT_PATH."/footer.php";
 			exit();
 		}
 	}

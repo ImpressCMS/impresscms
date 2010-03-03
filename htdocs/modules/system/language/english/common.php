@@ -89,7 +89,7 @@ define('_CO_ICMS_LINK_LINK_DSC', "");
 define('_CO_ICMS_LINK_MID', "Module ID");
 define('_CO_ICMS_LINK_MID_DSC', "");
 define('_CO_ICMS_LINK_MID_NAME', "Module name");
-define('_CO_ICMS_LINK_MID_NAME_DSC', "Name of the module from where the request orignated");
+define('_CO_ICMS_LINK_MID_NAME_DSC', "Name of the module from where the request originated");
 define('_CO_ICMS_LINK_SUBJECT', "Subject");
 define('_CO_ICMS_LINK_SUBJECT_DSC', "");
 define('_CO_ICMS_LINK_TO_EMAIL', "To email");
@@ -108,7 +108,7 @@ define('_CO_ICMS_MODULE_BUG', 'Report a bug for this module');
 define('_CO_ICMS_MODULE_DEMO', 'Demo Site');
 define('_CO_ICMS_MODULE_DISCLAIMER', 'Disclaimer');
 define('_CO_ICMS_MODULE_FEATURE', 'Suggest a new feature for this module');
-define('_CO_ICMS_MODULE_INFO', 'Module Developpment Informations');
+define('_CO_ICMS_MODULE_INFO', 'Module Development Informations');
 define('_CO_ICMS_MODULE_RELEASE_DATE', 'Release date');
 define('_CO_ICMS_MODULE_STATUS', 'Status');
 define('_CO_ICMS_MODULE_SUBMIT_BUG', 'Submit a bug');
@@ -166,11 +166,6 @@ define('_CO_ICMS_CLONE', "Clone this object");
 
 define('_CO_ICMS_CATEGORY_VIEW', "Category view");
 
-define('_CO_ICMS_BLOCKS_ADDTO_LAYOUT', "Layout: ");
-define('_CO_ICMS_BLOCKS_ADDTO_LAYOUT_OPTION0', "Horizontal 1 row");
-define('_CO_ICMS_BLOCKS_ADDTO_LAYOUT_OPTION1', "Horizontal 2 rows");
-define('_CO_ICMS_BLOCKS_ADDTO_LAYOUT_OPTION2', "Vertical with icons");
-define('_CO_ICMS_BLOCKS_ADDTO_LAYOUT_OPTION3', "Vertical no icon");
 define('_CO_ICMS_CURRENT_FILE', "Current file: ");
 define('_CO_ICMS_URL_FILE_DSC', "Alternatively, you can use an URL. If you select a file via 'Browse' button, URL will be ignored. You can use the tag {ICMS_URL} to print ".ICMS_URL);
 define('_CO_ICMS_URL_FILE', "URL: ");
@@ -187,4 +182,10 @@ define('_CO_ICMS_URLLINK_BLANK', "new window");
 define('_CO_ICMS_ANY', "Any");
 define('_CO_ICMS_EDITOR', "Prefered text editor");
 define('_CO_ICMS_WITH_SELECTED', "With selected: ");
+// Added Since ImpressCMS 1.2
+define('_CO_ICMS_UPDATE_DBVERSION', "Database migrate to version '<em>%s</em>' <br /> ");
+define('_CO_ICMS_ON', "On");
+define('_CO_ICMS_OFF', "Off");
+define('_CO_ICMS_WARNING_ALPHA', "This module comes as is, without any guarantees whatsoever. This module is ALPHA, meaning it is still under active development. This release is meant for <b>development and testing purposes only</b>, and we <b>strongly</b> recommend that you do not use it on a live website or in a production environment.");
+define('_CO_ICMS_UPDATE_NEEDED','Your system module needs updating');
 ?>
