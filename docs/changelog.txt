@@ -1,9 +1,17 @@
 ImpressCMS ChangeLog
 
+=== ImpressCMS 1.2.1 RC ===
+Release date: 1 Mar 2010
+Revision: 9881
+DB Version: 39
+Build Version: 34
+
+http://trac.impresscms.org/core/query?status=closed&group=resolution&milestone=ImpressCMS+1.2.1
+
 === ImpressCMS 1.2.1 Beta ===
-Release date: Not Released
-Revision:
-DB Version: 
+Release date: 11 Feb 2010
+Revision: 9841
+DB Version: 39
 Build Version: 33
 
 * #913: Fixing isue with Code / Pre tag (thomas)
