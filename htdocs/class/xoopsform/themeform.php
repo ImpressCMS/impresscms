@@ -75,7 +75,7 @@ class XoopsThemeForm extends XoopsForm
 	{
     	$ele_name = $this->getName();
 		$ret = "
-			<form id='".$ele_name."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$ele_name."();'".$this->getExtra().">
+			<form name='".$ele_name."' action='".$this->getAction()."' method='".$this->getMethod()."' onsubmit='return xoopsFormValidate_".$ele_name."();'".$this->getExtra().">
 			<div class='xo-theme-form'>
 			<table width='100%' class='outer' cellspacing='1'>
 			<tr><th colspan='2'>".$this->getTitle()."</th></tr>

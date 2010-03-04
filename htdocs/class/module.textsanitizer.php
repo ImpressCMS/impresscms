@@ -10,7 +10,7 @@
 * @since		XOOPS
 * @author		http://www.xoops.org The XOOPS Project
 * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id: module.textsanitizer.php 8565 2009-04-11 12:44:10Z icmsunderdog $
+* @version		$Id$
 */
 
 /**
@@ -142,12 +142,18 @@ class MyTextSanitizer
 	{
 	global $icmsConfigPersona;
 	$text = ' '.$text;
-	$patterns = array("/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i",
-"/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i", "/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^,
-\r\n\"\(\)'<>]+)/i"/*, "/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i"*/);
-	$replacements = array("\\1<a href=\"\\2://\\3\" rel=\"external\">\\2://\\3</a>", "\\1<a href=\"http://www.\\2.\\3\"
-rel=\"external\">www.\\2.\\3</a>", "\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"external\">ftp.\\2.\\3</a>"/*, "\\1<a
-href=\"mailto:\\2@\\3\">\\2@\\3</a>"*/);
+		$patterns = array(
+			"/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i",
+			"/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i",
+			"/(^|[^]_a-z0-9-=\"'\/])ftp\.([a-z0-9\-]+)\.([^,\r\n\"\(\)'<>]+)/i"
+			/*,	"/(^|[^]_a-z0-9-=\"'\/:\.])([a-z0-9\-_\.]+?)@([^, \r\n\"\(\)'<>\[\]]+)/i"*/
+		);
+		$replacements = array(
+			"\\1<a href=\"\\2://\\3\" rel=\"external\">\\2://\\3</a>",
+			"\\1<a href=\"http://www.\\2.\\3\" rel=\"external\">www.\\2.\\3</a>",
+			"\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"external\">ftp.\\2.\\3</a>"
+			/*,	"\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>"*/
+		);
 	$text = preg_replace($patterns, $replacements, $text);
 	if($icmsConfigPersona['shorten_url'] == 1)
 		{

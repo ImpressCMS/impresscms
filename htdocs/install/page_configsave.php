@@ -53,7 +53,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
 			foreach( $sdata_rewrite as $key => $val ) {
 				if( preg_match( "/(define\()([\"'])(SDATA_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content ) ) {
-					$val = addcslashes( $val, '\+*?[^]($)&#@"\'' );
+					$val = addcslashes( $val, '\$"\'' );
 					$content = preg_replace( "/(define\()([\"'])(SDATA_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/",
 						"define( 'SDATA_$key', '$val' )", $content );
 				} else {
