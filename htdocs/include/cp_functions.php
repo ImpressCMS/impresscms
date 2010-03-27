@@ -1,22 +1,22 @@
 <?php
 /**
-* All control panel functions and forming goes from here.
-* Be careful while editing this file!
-*
-* @copyright	XOOPS_copyrights.txt
-* @copyright	The XOOPS Project <http://www.xoops.org/>
-* @copyright	The ImpressCMS Project <http://www.impresscms.org/>
-*
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-*
-* @package		core
-* @since		XOOPS
-* @version		$Id$
-*
-* @author		The XOOPS Project <http://www.xoops.org>
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @author 		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
-*/
+ * All control panel functions and forming goes from here.
+ * Be careful while editing this file!
+ *
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	The XOOPS Project <http://www.xoops.org/>
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ *
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ *
+ * @package		core
+ * @since		XOOPS
+ * @version		$Id$
+ *
+ * @author		The XOOPS Project <http://www.xoops.org>
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @author 		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ */
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 define ( 'XOOPS_CPFUNC_LOADED', 1 );
@@ -33,7 +33,7 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
  * @author nekro (aka Gustavo Pilla)<nekro@impresscms.org>
  */
 function icms_cp_header(){
-  	global $icmsConfig, $xoopsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule, $xoopsModule, $icmsUser, $xoopsUser, $xoopsTpl, $xoopsOption, $xoTheme, $icmsConfigMultilang, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
+	global $icmsConfig, $xoopsConfig, $icmsConfigPlugins, $icmsConfigPersona, $icmsModule, $xoopsModule, $icmsUser, $xoopsUser, $xoopsTpl, $xoopsOption, $xoTheme, $icmsConfigMultilang, $xoopsLogger, $icmsAdminTpl, $icmsPreloadHandler;
 	$xoopsLogger->stopTime( 'Module init' );
 	$xoopsLogger->startTime( 'ImpressCMS CP Output Init' );
 
@@ -44,14 +44,14 @@ function icms_cp_header(){
 		header('Cache-Control: no-store, no-cache, must-revalidate');
 		header("Cache-Control: post-check=0, pre-check=0", false);
 		header("Pragma: no-cache");
-  	}
+	}
 
 	require_once ICMS_ROOT_PATH . '/class/template.php';
 	//require_once ICMS_ROOT_PATH . '/class/theme'.(( file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme_admin.html' ) || file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme.html' )) ?'_admin':'').'.php';
 	require_once ICMS_ROOT_PATH . '/class/theme.php';
 	require_once ICMS_ROOT_PATH . '/class/theme_blocks.php';
 	if( !isset($icmsPreloadHandler) )
-		$icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];
+	$icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];
 
 	$icmsAdminTpl = new XoopsTpl();
 
@@ -70,7 +70,7 @@ function icms_cp_header(){
 	// The next 2 lines are for compatibility only... to implement the admin theme ;)
 	// TODO: Remove all this after a few versions!!
 	if(isset($icmsConfig['theme_admin_set']))
-		$xoopsThemeFactory->defaultTheme = $icmsConfig['theme_admin_set'];
+	$xoopsThemeFactory->defaultTheme = $icmsConfig['theme_admin_set'];
 	$xoTheme =& $xoopsThemeFactory->createInstance( array(
 		'contentTemplate'	=> @$xoopsOption['template_main'],
 		'canvasTemplate'	=> 'theme'.(( file_exists(ICMS_THEME_PATH.'/'.$icmsConfig['theme_admin_set'].'/theme_admin.html') || file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme_admin.html') ) ?'_admin':'').'.html',
@@ -111,39 +111,39 @@ function icms_cp_header(){
 	$xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/ui/themes/base/ui.all.css', array('media' => 'screen'));
 	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
 	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom.css');
-	if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom-ie.css');}
+	if(strpos( strtolower($_SERVER['HTTP_USER_AGENT']), 'msie' ) ) { $xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom-ie.css' ) ; }
 	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.js');
 	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/lightbox.js');
 
-/*	$jscript = '';
- 	if(class_exists('XoopsFormDhtmlTextArea')){
+	/*	$jscript = '';
+	 if(class_exists('XoopsFormDhtmlTextArea')){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-		 	if( empty( $key ) )
-		 		continue;
-		 	if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
-		 		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
-		 	}else{
-		 		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-		 		$func = 'render_'.$key;
-		 		if ( function_exists($func) ) {
-		 			@list($encode, $jscript) = $func($ele_name);
-		 		 	if (!empty($jscript)) {
-		 		 		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
-		 					$xoTheme->addScript('', array('type' => 'text/javascript'), $jscript);
-		 				}else{
-		 					$xoTheme->addScript($jscript, array('type' => 'text/javascript'));
-		 				}
-		 			}
-		 		}
-		 	}
+		if( empty( $key ) )
+		continue;
+		if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
+		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
+		}else{
+		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+		$func = 'render_'.$key;
+		if ( function_exists($func) ) {
+		@list($encode, $jscript) = $func($ele_name);
+		if (!empty($jscript)) {
+		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
+		$xoTheme->addScript('', array('type' => 'text/javascript'), $jscript);
+		}else{
+		$xoTheme->addScript($jscript, array('type' => 'text/javascript'));
 		}
- 	}
-*/
+		}
+		}
+		}
+		}
+		}
+		*/
 	$style_info = '';
 	if(!empty($icmsConfigPlugins['sanitizer_plugins'])){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 			if( empty( $key ) )
-				continue;
+			continue;
 			if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
 				$xoTheme->addStylesheet(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
 			}else{
@@ -151,8 +151,8 @@ function icms_cp_header(){
 				$func = 'style_'.$key;
 				if ( function_exists($func) ) {
 					$style_info = $func();
-				 	if (!empty($style_info)) {
-			 			if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
+					if (!empty($style_info)) {
+						if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
 							$xoTheme->addStylesheet('', array('media' => 'screen'), $style_info);
 						}else{
 							$xoTheme->addStylesheet($style_info, array('media' => 'screen'));
@@ -284,9 +284,9 @@ function icms_cp_header(){
 	if ( @is_object( $xoTheme->plugins['xos_logos_PageBuilder'] ) ) {
 		$aggreg =& $xoTheme->plugins['xos_logos_PageBuilder'];
 
-	$icmsAdminTpl->assign_by_ref( 'xoAdminBlocks', $aggreg->blocks );
+		$icmsAdminTpl->assign_by_ref( 'xoAdminBlocks', $aggreg->blocks );
 
-	// Backward compatibility code for pre 2.0.14 themes
+		// Backward compatibility code for pre 2.0.14 themes
 		$icmsAdminTpl->assign_by_ref( 'xoops_lblocks', $aggreg->blocks['canvas_left'] );
 		$icmsAdminTpl->assign_by_ref( 'xoops_rblocks', $aggreg->blocks['canvas_right'] );
 		$icmsAdminTpl->assign_by_ref( 'xoops_ccblocks', $aggreg->blocks['page_topcenter'] );
@@ -340,10 +340,10 @@ function icms_cp_footer(){
 	$xoopsLogger->stopTime( 'Module display' );
 
 	if (!headers_sent()) {
-	header('Content-Type:text/html; charset='._CHARSET);
-	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
-	header('Cache-Control: private, no-cache');
-	header('Pragma: no-cache');
+		header('Content-Type:text/html; charset='._CHARSET);
+		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+		header('Cache-Control: private, no-cache');
+		header('Pragma: no-cache');
 	}
 	if ( isset( $xoopsOption['template_main'] ) && $xoopsOption['template_main'] != $xoTheme->contentTemplate ) {
 		trigger_error( "xoopsOption[template_main] should be defined before including header.php", E_USER_WARNING );
@@ -454,7 +454,6 @@ function impresscms_get_adminmenu() {
 	# end
 	#########################################################################
 
-
 	#########################################################################
 	# System Preferences menu
 	#########################################################################
@@ -474,7 +473,6 @@ function impresscms_get_adminmenu() {
 	#########################################################################
 	# end
 	#########################################################################
-
 
 	#########################################################################
 	# Modules menu
@@ -529,7 +527,6 @@ function impresscms_get_adminmenu() {
 	# end
 	#########################################################################
 
-
 	#########################################################################
 	# ImpressCMS News Feed menu
 	#########################################################################
@@ -543,11 +540,11 @@ function impresscms_get_adminmenu() {
 	$i ++;
 
 	if ( _LANGCODE != 'en' ){
-	$menu [$i] ['link'] = _IMPRESSCMS_LOCAL_SUPPORT;
-	$menu [$i] ['title'] = _IMPRESSCMS_LOCAL_SUPPORT_TITLE;
-	$menu [$i] ['absolute'] = 1;
-	//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
-	$i ++;
+		$menu [$i] ['link'] = _IMPRESSCMS_LOCAL_SUPPORT;
+		$menu [$i] ['title'] = _IMPRESSCMS_LOCAL_SUPPORT_TITLE;
+		$menu [$i] ['absolute'] = 1;
+		//$menu[$i]['small'] = ICMS_URL.'/images/impresscms.png';
+		$i ++;
 	}
 
 	$menu [$i] ['link'] = 'http://community.impresscms.org';
@@ -601,7 +598,6 @@ function impresscms_get_adminmenu() {
 	# end
 	#########################################################################
 
-
 	return $admin_menu;
 }
 
@@ -618,10 +614,10 @@ function xoops_module_get_admin_menu() {
 }
 
 /**
-* Writes entire admin menu into cache
-* @param string  $content  content to write to the admin menu file
-* @return true
-*/
+ * Writes entire admin menu into cache
+ * @param string  $content  content to write to the admin menu file
+ * @return true
+ */
 function xoops_module_write_admin_menu($content) {
 	global $icmsConfig;
 	$filename = ICMS_CACHE_PATH . '/adminmenu_' . $icmsConfig ['language'] . '.php';
@@ -642,10 +638,10 @@ function xoops_module_write_admin_menu($content) {
 }
 
 /**
-* Writes index file
-* @param string  $path  path to the file to write
-* @return bool
-*/
+ * Writes index file
+ * @param string  $path  path to the file to write
+ * @return bool
+ */
 function xoops_write_index_file($path = '') {
 	if (empty ( $path )) {
 		return false;

@@ -1,21 +1,21 @@
 <?php
 /**
-* Class handling RSS feeds, using SimplePie class
-*
-* SimplePie is a very fast and easy-to-use class, written in PHP, that puts the ?simple? back into ?really simple syndication?.
-* Flexible enough to suit beginners and veterans alike, SimplePie is focused on speed, ease of use, compatibility and
-* standards compliance.
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		1.2
-* @author		malanciault <marcan@impresscms.org)
-* @version		$Id$
-*/
+ * Class handling RSS feeds, using SimplePie class
+ *
+ * SimplePie is a very fast and easy-to-use class, written in PHP, that puts the ?simple? back into ?really simple syndication?.
+ * Flexible enough to suit beginners and veterans alike, SimplePie is focused on speed, ease of use, compatibility and
+ * standards compliance.
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		1.2
+ * @author		malanciault <marcan@impresscms.org)
+ * @version		$Id$
+ */
 
-include_once(ICMS_LIBRARIES_PATH . '/simplepie/simplepie.inc');
-include_once(ICMS_LIBRARIES_PATH . '/simplepie/idn/idna_convert.class.php');
+include_once ICMS_LIBRARIES_PATH . '/simplepie/simplepie.inc' ;
+include_once ICMS_LIBRARIES_PATH . '/simplepie/idn/idna_convert.class.php' ;
 
 class IcmsSimpleRss extends SimplePie {
 
@@ -40,7 +40,7 @@ class IcmsSimpleRss extends SimplePie {
 	function IcmsSimpleRss($feed_url = null, $cache_duration = null)
 	{
 		// Other objects, instances created here so we can set options on them
-		$this->sanitize =& new SimplePie_Sanitize;
+		$this->sanitize = new SimplePie_Sanitize;
 
 		$this->set_cache_location(ICMS_CACHE_PATH);
 

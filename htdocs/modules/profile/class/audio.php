@@ -1,15 +1,15 @@
 <?php
 
 /**
-* Classes responsible for managing profile audio objects
-*
-* @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package		profile
-* @version		$Id$
-*/
+ * Classes responsible for managing profile audio objects
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package		profile
+ * @version		$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
@@ -46,9 +46,6 @@ class ProfileAudio extends IcmsPersistableSeoObject {
 
 		$this->hideFieldFromForm('data_update');
 		$this->setControl('uid_owner', 'user');
-
-
-
 
 		$this->IcmsPersistableSeoObject();
 	}
@@ -129,7 +126,6 @@ class ProfileAudioHandler extends IcmsPersistableObjectHandler {
 		$this->enableUpload(array("audio/mp3" , "audio/x-mp3", "audio/mpeg"), $icmsModuleConfig['maxfilesize_audio']);
 	}
 
-
 	/**
 	 * Create the criteria that will be used by getAudio and getAudioCount
 	 *
@@ -147,7 +143,7 @@ class ProfileAudioHandler extends IcmsPersistableObjectHandler {
 			$criteria->setStart($start);
 		}
 		if ($limit) {
-			$criteria->setLimit(intval($limit));
+			$criteria->setLimit( (int) ($limit));
 		}
 		$criteria->setSort('creation_time');
 		$criteria->setOrder('DESC');
@@ -269,7 +265,7 @@ class ProfileAudioHandler extends IcmsPersistableObjectHandler {
 		if (!empty($url)) {
 			unlink(ICMS_UPLOAD_PATH.'/profile/audio/'.$url);
 		}
-		
+
 		return true;
 	}
 }

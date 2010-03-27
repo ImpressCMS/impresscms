@@ -1,18 +1,18 @@
 <?php
 /**
-* All functions for Password Expiry & Reset Password generator are going through here.
-*
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package	core
-* @since	ImpressCMS 1.1
-* @author	Vaughan Montgomery <vaughan@impresscms.org>
-* @author	The ImpressCMS Project
-* @version	$Id$
-*/
+ * All functions for Password Expiry & Reset Password generator are going through here.
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	core
+ * @since	ImpressCMS 1.1
+ * @author	Vaughan Montgomery <vaughan@impresscms.org>
+ * @author	The ImpressCMS Project
+ * @version	$Id$
+ */
 /**
  * Form and process for resetting password and sending to user
- * @package kernel 
+ * @package kernel
  * @subpackage users
  */
 $xoopsOption['pagetype'] = 'user';
@@ -47,8 +47,8 @@ else
 		$current_salt = $getuser[0]->getVar('salt');
 		$enc_type = $getuser[0]->getVar('enc_type');
 
-          include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
-          $icmspass = new icms_Password();
+		include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
+		$icmspass = new icms_Password();
 
 		$c_pass = $icmspass->icms_encryptPass($c_password, $current_salt, $enc_type, 1);
 
@@ -68,8 +68,8 @@ else
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
 		$xoopsMailer->setSubject(sprintf(_US_PWDRESET,ICMS_URL));
 		if(!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
-	
-		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', pass_expired = '%u', enc_type = '%u' WHERE uid = '%u'", $xoopsDB->prefix('users'), $pass, $salt, 0, intval($icmsConfigUser['enc_type']), intval($getuser[0]->getVar('uid')));
+
+		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', pass_expired = '%u', enc_type = '%u' WHERE uid = '%u'", $xoopsDB->prefix('users'), $pass, $salt, 0, (int) ($icmsConfigUser['enc_type']), (int) ($getuser[0]->getVar('uid')));
 		if(!$xoopsDB->queryF($sql))
 		{
 			include 'header.php';

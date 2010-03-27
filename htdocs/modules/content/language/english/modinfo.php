@@ -1,14 +1,14 @@
 <?php
 /**
-* English language constants related to module information
-*
-* @copyright	The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.0
-* @author		Rodrigo P Lima aka TheRplima <therplima@impresscms.org>
-* @package		content
-* @version		$Id$
-*/
+ * English language constants related to module information
+ *
+ * @copyright	The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.0
+ * @author		Rodrigo P Lima aka TheRplima <therplima@impresscms.org>
+ * @package		content
+ * @version		$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
@@ -51,6 +51,5 @@ define("_MI_CONTENT_GLOBAL_CONTENT_PUBLISHED_NOTIFY_DSC", "Receive notification 
 define("_MI_CONTENT_GLOBAL_CONTENT_PUBLISHED_NOTIFY_SBJ", "[{X_SITENAME}] {X_MODULE} auto-notify : New content published");
 define("_MI_CONTENT_CONTPAGE", "Default Page");
 define("_MI_CONTENT_CONTPAGEDSC", "Select the default page to be displayed to the user in Content Manager. Leave blank to have Content Manager default to the most recently created page.");
-
 
 ?>

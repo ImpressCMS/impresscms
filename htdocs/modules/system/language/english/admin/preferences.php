@@ -49,7 +49,6 @@ define("_MD_AM_DONTCHNG","Don't change!");
 define("_MD_AM_REMEMBER","Remember to chmod 666 this file in order to let the system write to it properly.");
 define("_MD_AM_IFUCANT","If you can't change the permissions you can edit the rest of this file by hand.");
 
-
 define("_MD_AM_COMMODE","Default Comment Display Mode");
 define("_MD_AM_COMORDER","Default Comments Display Order");
 define("_MD_AM_ALLOWHTML","Allow HTML tags in user comments?");
@@ -180,7 +179,6 @@ define("_MD_AM_SENDMAILPATH","Path to sendmail");
 define("_MD_AM_SENDMAILPATHDESC","Path to the sendmail program (or substitute) on the webserver.");
 define("_MD_AM_THEMEOK","Selectable themes");
 define("_MD_AM_THEMEOKDSC","Choose themes that users can select as the default theme");
-
 
 // Xoops Authentication constants
 define("_MD_AM_AUTH_CONFOPTION_XOOPS", "ImpressCMS Database");

@@ -132,7 +132,6 @@ define("_PROFILE_MA_ACTIVATE", "Activate");
 define("_PROFILE_MA_CONFCODEMISSING", "Confirmation Code Missing");
 define("_PROFILE_MA_SITEDEFAULT", "Site default");
 
-
 define("_PROFILE_MA_USERINFO","User profile");
 define("_PROFILE_MA_REGISTER","Registration form");
 //Present in many files (videos pictures etc...)

@@ -27,7 +27,7 @@ if (empty($icmsConfigUser['allow_register'])) {
 	exit();
 }
 if($icmsConfigUser['pass_level']>20){
-icms_PasswordMeter();
+	icms_PasswordMeter();
 }
 
 $member_handler =& xoops_gethandler('member');
@@ -36,7 +36,6 @@ $template_dir = ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/mail_templ
 if (!file_exists($template_dir)) {
 	$template_dir = ICMS_ROOT_PATH.'/language/english/mail_template';
 }
-
 
 /**
  * Debugging purpose
@@ -96,7 +95,7 @@ switch ( $op ) {
 			$newuser->setVar('uname', isset($_POST['uname']) ? trim($_POST['uname']) : '');
 			$newuser->setVar('email', isset($_POST['email']) ? trim($_POST['email']) : '');
 			$vpass = isset($_POST['vpass']) ? $myts->stripSlashesGPC($_POST['vpass']) : '';
-			$agree_disc = (isset($_POST['agree_disc']) && intval($_POST['agree_disc'])) ? 1 : 0;
+			$agree_disc = (isset($_POST['agree_disc']) && (int) ($_POST['agree_disc'])) ? 1 : 0;
 			$salt = $icmspass->icms_createSalt();
 			$pass = $icmspass->icms_encryptPass(trim($_POST['pass']), $salt);
 			$newuser->setVar('pass', isset($_POST['pass']) ? $pass : '');
@@ -230,7 +229,7 @@ function postSaveProcess($newuser) {
 		$xoopsMailer->setBody(sprintf(_PROFILE_MA_HASJUSTREG, $newuser->getVar('uname')));
 		//xoops_debug('sending email');
 		$xoopsMailer->send(true);
-	   // xoops_debug($xoopsMailer->getErrors(true));
+		// xoops_debug($xoopsMailer->getErrors(true));
 	}
 	if ($icmsConfigUser['activation_type'] == 1) {
 		return '';
@@ -276,7 +275,7 @@ function postSaveProcess($newuser) {
 		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
 		$xoopsMailer->setSubject(sprintf(_PROFILE_MA_USERKEYFOR, $newuser->getVar('uname')));
-	   // xoops_debug('sending email');
+		// xoops_debug('sending email');
 		if ( !$xoopsMailer->send(true) ) {
 			xoops_debug($xoopsMailer->getErrors(true));
 			return _PROFILE_MA_YOURREGMAILNG;

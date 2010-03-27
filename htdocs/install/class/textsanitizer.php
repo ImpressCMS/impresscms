@@ -1,17 +1,17 @@
 <?php
 /**
-* Textsanitizer Class
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	installer
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Textsanitizer Class
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	installer
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 // This is subset and modified version of module.textsanitizer.php
 @set_magic_quotes_runtime(0);
 
@@ -19,11 +19,11 @@ class TextSanitizer
 {
 
 	/*
-	* Constructor of this class
-	* Gets allowed html tags from admin config settings
-	* <br> should not be allowed since nl2br will be used
-	* when storing data
-	*/
+	 * Constructor of this class
+	 * Gets allowed html tags from admin config settings
+	 * <br> should not be allowed since nl2br will be used
+	 * when storing data
+	 */
 	function TextSanitizer()
 	{
 
@@ -62,8 +62,8 @@ class TextSanitizer
 	}
 
 	/*
-	* if magic_quotes_gpc is on, stirip back slashes
-	*/
+	 * if magic_quotes_gpc is on, stirip back slashes
+	 */
 	function &stripSlashesGPC($text)
 	{
 		if (get_magic_quotes_gpc()) {
@@ -73,8 +73,8 @@ class TextSanitizer
 	}
 
 	/*
-	*  for displaying data in html textbox forms
-	*/
+	 *  for displaying data in html textbox forms
+	 */
 	function htmlSpecialChars($text)
 	{
 		return preg_replace("/&amp;/i", '&', htmlspecialchars($text, ENT_QUOTES));
@@ -86,8 +86,8 @@ class TextSanitizer
 	}
 
 	/*
-	*  Filters textarea form data in DB for display
-	*/
+	 *  Filters textarea form data in DB for display
+	 */
 	function &displayText($text, $html=false)
 	{
 		if (! $html) {
@@ -100,15 +100,15 @@ class TextSanitizer
 	}
 
 	/*
-	*  Filters textarea form data submitted for preview
-	*/
+	 *  Filters textarea form data submitted for preview
+	 */
 	function &previewText($text, $html=false)
 	{
 		$text =& $this->stripSlashesGPC($text);
 		return $this->displayText($text, $html);
 	}
 
-##################### Deprecated Methods ######################
+	##################### Deprecated Methods ######################
 
 	function sanitizeForDisplay($text, $allowhtml = 0, $smiley = 1, $bbcode = 1)
 	{

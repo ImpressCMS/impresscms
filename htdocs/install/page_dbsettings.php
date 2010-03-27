@@ -20,7 +20,7 @@
  */
 require_once 'common.inc.php';
 if (! defined ( 'XOOPS_INSTALL' ))
-	exit ();
+exit ();
 
 $wizard->setPage ( 'dbsettings' );
 $pageHasForm = true;
@@ -46,8 +46,8 @@ if (! isset ( $vars ['DB_NAME'] ) || false !== @strpos ( $_SERVER ['HTTP_CACHE_C
 function getDbCharsets($link) {
 	static $charsets = array ( );
 	if ($charsets)
-		return $charsets;
-	
+	return $charsets;
+
 	$charsets ["utf8"] = "UTF-8 Unicode";
 	$ut8_available = false;
 	if ($result = mysql_query ( "SHOW CHARSET", $link )) {
@@ -61,25 +61,25 @@ function getDbCharsets($link) {
 	if (! $ut8_available) {
 		unset ( $charsets ["utf8"] );
 	}
-	
+
 	return $charsets;
 }
 
 function getDbCollations($link, $charset) {
 	static $collations = array ( );
-	
+
 	if ($result = mysql_query ( "SHOW COLLATION LIKE '" . mysql_real_escape_string ( $charset ) . "%'", $link )) {
 		while ( $row = mysql_fetch_assoc ( $result ) ) {
 			$collations [$charset] [$row ["Collation"]] = $row ["Default"] ? 1 : 0;
 		}
 	}
-	
+
 	return $collations [$charset];
 }
 
 function validateDbCharset($link, &$charset, &$collation) {
 	$error = null;
-	
+
 	if (empty ( $charset )) {
 		$collation = "";
 	}
@@ -89,7 +89,7 @@ function validateDbCharset($link, &$charset, &$collation) {
 	if (empty ( $charset ) && empty ( $collation )) {
 		return $error;
 	}
-	
+
 	$charsets = getDbCharsets ( $link );
 	if (! isset ( $charsets [$charset] )) {
 		$error = sprintf ( ERR_INVALID_DBCHARSET, $charset );
@@ -99,7 +99,7 @@ function validateDbCharset($link, &$charset, &$collation) {
 			$error = sprintf ( ERR_INVALID_DBCOLLATION, $collation );
 		}
 	}
-	
+
 	return $error;
 }
 
@@ -110,17 +110,17 @@ function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset
 	if (empty ( $charset ) || ! $collations = getDbCollations ( $link, $charset )) {
 		return "";
 	}
-	
+
 	$label = htmlspecialchars ( $label );
 	$name = htmlspecialchars ( $name, ENT_QUOTES );
 	$value = htmlspecialchars ( $value, ENT_QUOTES );
-	
+
 	$field = "<label for='$name'>$label</label>\n";
 	if ($help) {
 		$field .= '<div class="xoform-help">' . $help . "</div><div class='clear'>&nbsp;</div>\n";
 	}
 	$field .= "<select name='$name' id='$name'\">";
-	
+
 	$collation_default = "";
 	$options = "";
 	foreach ( $collations as $key => $isDefault ) {
@@ -135,7 +135,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset
 	}
 	$field .= $options;
 	$field .= "</select>";
-	
+
 	return $field;
 }
 
@@ -143,7 +143,7 @@ function xoFormBlockCollation($name, $value, $label, $help = '', $link, $charset
 	$block = '<div id="' . $name . '_div">';
 	$block .= xoFormFieldCollation ( $name, $value, $label, $help, $link, $charset );
 	$block .= '</div>';
-	
+
 	return $block;
 }
 
@@ -174,7 +174,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && ! empty ( $vars ['DB_NAME'] )) {
 				$db_exist = true;
 			}
 		}else{
-		    $db_exist = true;
+			$db_exist = true;
 		}
 		if ($db_exist && $vars ['DB_CHARSET']) {
 			$sql = "ALTER DATABASE `" . $vars ['DB_NAME'] . "` DEFAULT CHARACTER SET " . mysql_real_escape_string ( $vars ['DB_CHARSET'] ) . ($vars ['DB_COLLATION'] ? " COLLATE " . mysql_real_escape_string ( $vars ['DB_COLLATION'] ) : "");
@@ -198,14 +198,14 @@ function xoFormField($name, $value, $label, $maxlength, $help = '') {
 	$label = htmlspecialchars ( $label );
 	$name = htmlspecialchars ( $name, ENT_QUOTES );
 	$value = htmlspecialchars ( $value, ENT_QUOTES );
-	$maxlength = intval ( $maxlength );
-	
+	$maxlength = (int) ( $maxlength );
+
 	$field = "<div class='dbconn_line'><label for='$name'>$label</label>\n";
 	if ($help) {
 		$field .= '<div class="xoform-help">' . $help . "</div><div class='clear'>&nbsp;</div>\n";
 	}
 	$field .= "<input type='text' name='$name' id='$name' value='$value' /></div>";
-	
+
 	return $field;
 }
 
@@ -216,7 +216,7 @@ function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
 	if (! $chars = getDbCharsets ( $link )) {
 		return "";
 	}
-	
+
 	$charsets = array ( );
 	if (isset ( $chars ["utf8"] )) {
 		$charsets ["utf8"] = $chars ["utf8"];
@@ -224,11 +224,11 @@ function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
 	}
 	ksort ( $chars );
 	$charsets = array_merge ( $charsets, $chars );
-	
+
 	$label = htmlspecialchars ( $label );
 	$name = htmlspecialchars ( $name, ENT_QUOTES );
 	$value = htmlspecialchars ( $value, ENT_QUOTES );
-	
+
 	$field = "<div class='dbconn_line'><label for='$name'>$label</label>\n";
 	if ($help) {
 		$field .= '<div class="xoform-help">' . $help . "</div><div class='clear'>&nbsp;</div>\n";
@@ -239,7 +239,7 @@ function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
 		$field .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : "") . ">{$key} - {$desc}</option>";
 	}
 	$field .= "</select></div>";
-	
+
 	return $field;
 }
 
@@ -248,7 +248,7 @@ ob_start ();
 
 <?php
 if (! empty ( $error ))
-	echo '<div class="x2-note error">' . $error . "</div>\n";
+echo '<div class="x2-note error">' . $error . "</div>\n";
 ?>
 <script type="text/javascript">
 function setFormFieldCollation(id, val) {
@@ -268,26 +268,20 @@ function setFormFieldCollation(id, val) {
 <div class="blokSQL">
 <fieldset>
 <h3><?php echo LEGEND_DATABASE;?></h3>
-	<?php
-	echo xoFormField ( 'DB_NAME', $vars ['DB_NAME'], DB_NAME_LABEL, 255, DB_NAME_HELP );
-	?>
-	<?php
-	echo xoFormField ( 'DB_PREFIX', $vars ['DB_PREFIX'], DB_PREFIX_LABEL, 10, DB_PREFIX_HELP );
-	?>
-	<?php
-	echo xoFormField ( 'DB_SALT', $vars ['DB_SALT'], DB_SALT_LABEL, 255, DB_SALT_HELP );
-	?>
-    <?php
-				echo xoFormFieldCharset ( 'DB_CHARSET', $vars ['DB_CHARSET'], DB_CHARSET_LABEL, DB_CHARSET_HELP, $link );
-				?>
-    <?php
-				echo xoFormBlockCollation ( 'DB_COLLATION', $vars ['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP, $link, $vars ['DB_CHARSET'] );
-				?>
-    
-</fieldset>
+								<?php
+								echo xoFormField ( 'DB_NAME', $vars ['DB_NAME'], DB_NAME_LABEL, 255, DB_NAME_HELP );
+								?> <?php
+								echo xoFormField ( 'DB_PREFIX', $vars ['DB_PREFIX'], DB_PREFIX_LABEL, 10, DB_PREFIX_HELP );
+								?> <?php
+								echo xoFormField ( 'DB_SALT', $vars ['DB_SALT'], DB_SALT_LABEL, 255, DB_SALT_HELP );
+								?> <?php
+								echo xoFormFieldCharset ( 'DB_CHARSET', $vars ['DB_CHARSET'], DB_CHARSET_LABEL, DB_CHARSET_HELP, $link );
+								?> <?php
+								echo xoFormBlockCollation ( 'DB_COLLATION', $vars ['DB_COLLATION'], DB_COLLATION_LABEL, DB_COLLATION_HELP, $link, $vars ['DB_CHARSET'] );
+								?></fieldset>
 </div>
-<?php
-$content = ob_get_contents ();
-ob_end_clean ();
-include 'install_tpl.php';
+								<?php
+								$content = ob_get_contents ();
+								ob_end_clean ();
+								include 'install_tpl.php';
 ?>

@@ -1,15 +1,15 @@
 <?php
 /**
-*
-* Module RSS Feed Class
-*
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package	    core
-* @since		1.1
-* @author		Ignacio Segura, "Nachenko"
-* @version		$Id$
-*/
+ *
+ * Module RSS Feed Class
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	    core
+ * @since		1.1
+ * @author		Ignacio Segura, "Nachenko"
+ * @version		$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
@@ -19,22 +19,22 @@ include_once ICMS_ROOT_PATH . '/class/template.php';
 
 class IcmsFeed {
 
-  public $title;
-  public $url;
-  public $description;
-  public $language;
-  public $charset;
-  public $category;
-  public $pubDate;
-  public $webMaster;
-  public $generator;
-  public $copyright;
-  public $lastbuild;
-  public $channelEditor;
-  public $width;
-  public $height;
-  public $ttl;
-  public $image = array ();
+	public $title;
+	public $url;
+	public $description;
+	public $language;
+	public $charset;
+	public $category;
+	public $pubDate;
+	public $webMaster;
+	public $generator;
+	public $copyright;
+	public $lastbuild;
+	public $channelEditor;
+	public $width;
+	public $height;
+	public $ttl;
+	public $image = array ();
 
 	/**
 	 * Constructor
@@ -83,8 +83,8 @@ class IcmsFeed {
 		$tpl->assign('channel_language', $this->language);
 		$tpl->assign('channel_lastbuild', $this->lastbuild);
 		$tpl->assign('channel_copyright', $this->copyright);
-		$tpl->assign('channel_width', $this->width); 
-    $tpl->assign('channel_height', $this->height);
+		$tpl->assign('channel_width', $this->width);
+		$tpl->assign('channel_height', $this->height);
 		$tpl->assign('channel_ttl', $this->ttl);
 		$tpl->assign('image_url', $this->image['url']);
 		foreach ($this->feeds as $feed) {

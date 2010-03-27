@@ -1,20 +1,20 @@
 <?php
 /**
-* Installer tables creation page
-*
-* See the enclosed file license.txt for licensing information.
-* If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
-*
-* @copyright    The ImpressCMS project http://www.impresscms.org/
-* @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
-* @package		installer
-* @since        1.0
-* @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
-* @version		$Id$
-*/
+ * Installer tables creation page
+ *
+ * See the enclosed file license.txt for licensing information.
+ * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ *
+ * @copyright    The ImpressCMS project http://www.impresscms.org/
+ * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package		installer
+ * @since        1.0
+ * @author		Martijn Hertog (AKA wtravel) <martin@efqconsultancy.com>
+ * @version		$Id$
+ */
 /**
  *
- */ 
+ */
 require_once 'common.inc.php';
 
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
@@ -33,7 +33,7 @@ include_once "../include/cp_functions.php";
 include_once './class/dbmanager.php';
 require_once "../class/xoopslists.php";
 include "modulesadmin.php";
-$dbm =& new db_manager();
+$dbm = new db_manager();
 
 if ( !$dbm->isConnectable() ) {
 	$wizard->redirectToPage( '-3' );
@@ -58,25 +58,25 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 				$content .= xoops_module_install($install_mods[$i]);
 				//$content .= icms_module_update($install_mods[$i]);
 				xoops_module_get_admin_menu();
-	        }
+			}
 		} else {
 			$content .= _INSTALL_NO_PLUS_MOD;
 		}
 		//Install protector module by default if found.
 		//TODO: Insert Protector installation - leads to blank page as it is now.
-        if (file_exists(XOOPS_ROOT_PATH.'/modules/protector/xoops_version.php')) {
-        	$content .= xoops_module_install('protector');
-/*        	include_once "./class/mainfilemanager.php";
-		    $mm = new mainfile_manager("../mainfile.php");
-		    $mm->setRewrite('PROTECTOR1', 'include( XOOPS_TRUST_PATH.\'/modules/protector/include/precheck.inc.php\')');
-		    $mm->setRewrite('PROTECTOR2', 'include( XOOPS_TRUST_PATH.\'/modules/protector/include/postcheck.inc.php\')');
+		if (file_exists(XOOPS_ROOT_PATH.'/modules/protector/xoops_version.php')) {
+			$content .= xoops_module_install('protector');
+			/*        	include_once "./class/mainfilemanager.php";
+			 $mm = new mainfile_manager("../mainfile.php");
+			 $mm->setRewrite('PROTECTOR1', 'include  XOOPS_TRUST_PATH.\'/modules/protector/include/precheck.inc.php\')' ;
+			 $mm->setRewrite('PROTECTOR2', 'include  XOOPS_TRUST_PATH.\'/modules/protector/include/postcheck.inc.php\')' ;
 
-		    $result = $mm->doRewrite();
-		    $mm->report();*/
-        }
+			 $result = $mm->doRewrite();
+			 $mm->report();*/
+		}
 
-	    $tables = array();
-	    $content .= "<div style='height: 400px; overflow: auto;'>$dbm->report()</div>";
+		$tables = array();
+		$content .= "<div style='height: 400px; overflow: auto;'>$dbm->report()</div>";
 	} else {
 		$wizard->redirectToPage( '+1' );
 		exit();
@@ -96,20 +96,20 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	}
 	$content .= "</div><div class='clear'>&nbsp;</div>";
 	/*$content .= '<td>';
-	$content .= _INSTALL_SELECT_MODULES_ANON_VISIBLE.'<br />';
-	$content .= '<select id="modperms" name="anon_accessible_mods[]"  multiple>';
-	$langarr = getDirList("../modules/");
-	foreach ($langarr as $lang) {
+	 $content .= _INSTALL_SELECT_MODULES_ANON_VISIBLE.'<br />';
+	 $content .= '<select id="modperms" name="anon_accessible_mods[]"  multiple>';
+	 $langarr = getDirList("../modules/");
+	 foreach ($langarr as $lang) {
 		if ($lang == 'system' || $lang == 'protector'){
-			continue;
+		continue;
 		}
 		$content .= "<option value='".$lang."'";
 		if ($lang == 'contact' || $lang == 'news'){
-			$content .= ' selected="selected"';
+		$content .= ' selected="selected"';
 		}
 		$content .= ">".$lang."</option>";
-	}
-	$content .= "</select>";*/
+		}
+		$content .= "</select>";*/
 	$content .= '</div>';
 	$content .= '<input type="hidden" name="mod" value="1" />';
 }

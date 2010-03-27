@@ -86,14 +86,14 @@ class ProfileVcard {
 		$this->setName($user->name(), $user->name(), "");
 
 		/*$this->setBirthDate(from_html($user->birthdate));
-		$this->setPhoneNumber(from_html($user->phone_fax), 'FAX');
-		$this->setPhoneNumber(from_html($user->phone_home), 'HOME');
-		$this->setPhoneNumber(from_html($user->phone_mobile), 'CELL');
-		$this->setPhoneNumber(from_html($user->phone_work), 'WORK');*/
+		 $this->setPhoneNumber(from_html($user->phone_fax), 'FAX');
+		 $this->setPhoneNumber(from_html($user->phone_home), 'HOME');
+		 $this->setPhoneNumber(from_html($user->phone_mobile), 'CELL');
+		 $this->setPhoneNumber(from_html($user->phone_work), 'WORK');*/
 		$this->setEmail($user->email());
 		/*$this->setAddress(from_html($user->primary_address_street), from_html($user->primary_address_city), from_html($user->primary_address_state), from_html($user->primary_address_postalcode), from_html($user->primary_address_country), 'WORK');
-		$this->setORG(from_html($user->account_name), from_html($user->department));
-		$this->setTitle(from_html($user->title));*/
+		 $this->setORG(from_html($user->account_name), from_html($user->department));
+		 $this->setTitle(from_html($user->title));*/
 	}
 
 	function setTitle($title)
@@ -137,7 +137,7 @@ class ProfileVcard {
 	function getProperty($name)
 	{
 		if (isset ($this->properties[$name]))
-			return $this->properties[$name];
+		return $this->properties[$name];
 		return null;
 	}
 
@@ -239,9 +239,9 @@ class ProfileVcard {
 					}
 					if ($keys[0] == 'N') {
 						if (sizeof($values) > 0)
-							$contact->last_name = $values[0];
+						$contact->last_name = $values[0];
 						if (sizeof($values) > 1)
-							$contact->first_name = $values[1];
+						$contact->first_name = $values[1];
 					}
 					if ($keys[0] == 'FN') {
 						$fullname = $value;
@@ -273,9 +273,9 @@ class ProfileVcard {
 					if (!isset ($contact->email1)) {
 						$contact->email1 = $value;
 					} else
-						if (!isset ($contact->email2)) {
-							$contact->email2 = $value;
-						}
+					if (!isset ($contact->email2)) {
+						$contact->email2 = $value;
+					}
 				}
 				if ($keys[0] == 'ORG') {
 					if (sizeof($values) > 1) {

@@ -1,20 +1,20 @@
 <?php
 // $Id$
 /**
-* Search Form
-*
-* Shows form with options where to search in ImpressCMS
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package	core
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author		modified by author <email@domain.tld>
-* @version		$Id$
-*/
+ * Search Form
+ *
+ * Shows form with options where to search in ImpressCMS
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package	core
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author		modified by author <email@domain.tld>
+ * @version		$Id$
+ */
 if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }

@@ -1,23 +1,23 @@
 <?php
 // $Id$
 /**
-* Short summary of the purpose of this file
-*
-* Longer description about this page
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package	Administration
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author		modified by UnderDog <underdog@impresscms.org>
-* @version		$Id$
-*/
+ * Short summary of the purpose of this file
+ *
+ * Longer description about this page
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package	Administration
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author		modified by UnderDog <underdog@impresscms.org>
+ * @version		$Id$
+ */
 
 include '../../../include/cp_header.php';
-$modid = isset($_POST['modid']) ? intval($_POST['modid']) : 0;
+$modid = isset($_POST['modid']) ? (int) ($_POST['modid']) : 0;
 
 // we dont want system module permissions to be changed here
 if ($modid <= 1 || !is_object($icmsUser) || !$icmsUser->isAdmin($modid)) {
@@ -75,7 +75,7 @@ if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
 
 $backlink = xoops_getenv("HTTP_REFERER");
 if ($module->getVar('hasadmin')) {
-    $adminindex = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : $module->getInfo('adminindex');
+	$adminindex = isset($_POST['redirect_url']) ? $_POST['redirect_url'] : $module->getInfo('adminindex');
 	if ($adminindex) {
 		$backlink = XOOPS_URL.'/modules/'.$module->getVar('dirname').'/'.$adminindex;
 	}

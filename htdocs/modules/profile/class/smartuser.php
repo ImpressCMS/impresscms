@@ -21,7 +21,7 @@ include_once ICMS_KERNEL_PATH."icmspersistableobject.php";
 
 class ProfileSmartuser extends IcmsPersistableObject {
 
-	  function ProfileSmartuser(&$handler) {
+	function ProfileSmartuser(&$handler) {
 		//ini_set('memory_limit','32M');
 		$this->initNonPersistableVar('uid', XOBJ_DTYPE_INT, false, "_AM_SPROFILE_UID");
 		$this->initNonPersistableVar('uname', XOBJ_DTYPE_TXTBOX, false, "_AM_SPROFILE_UNAME");
@@ -48,19 +48,18 @@ class ProfileSmartuser extends IcmsPersistableObject {
 class ProfileSmartuserHandler extends IcmsPersistableObjectHandler {
 
 	function ProfileSmartuserHandler($db) {
-		 $this->IcmsPersistableObjectHandler($db, 'smartuser', 'uid', 'uname', 'uname', 'profile');
-		 $this->generalSQL = 'SELECT * FROM '.$this->db->prefix('users') . " AS " . $this->_itemname . ' JOIN ' . $this->db->prefix('profile_profile') . ' AS profile ON profileid='.$this->_itemname.'.uid ';
+		$this->IcmsPersistableObjectHandler($db, 'smartuser', 'uid', 'uname', 'uname', 'profile');
+		$this->generalSQL = 'SELECT * FROM '.$this->db->prefix('users') . " AS " . $this->_itemname . ' JOIN ' . $this->db->prefix('profile_profile') . ' AS profile ON profileid='.$this->_itemname.'.uid ';
 
 	}
-	 function getFields(){
+	function getFields(){
 		static $fields_array;
 		if (!isset($fields_array)) {
-		  	$profile_handler =& icms_getmodulehandler( 'profile', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
+			$profile_handler =& icms_getmodulehandler( 'profile', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
 			$fields_array =& $profile_handler->loadFields();
 		}
 		return $fields_array;
 	}
 }
-
 
 ?>

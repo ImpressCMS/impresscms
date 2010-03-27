@@ -1,18 +1,18 @@
 <?php
 // $Id$
 /**
-* Administration of usergroups, main file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Administration
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Administration of usergroups, main file
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	Administration
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 $gperm_handler =& xoops_gethandler('groupperm');
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) || ( isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], $icmsUser->getGroups() ) )) {
@@ -30,15 +30,15 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 
 // from finduser section
 if ( !empty($memberslist_id) && is_array($memberslist_id) ) {
-    $op = "addUser";
-    $uids =& $memberslist_id;
+	$op = "addUser";
+	$uids =& $memberslist_id;
 }
 
 switch ($op) {
 	case "modify":
-	    include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-	    modifyGroup($g_id);
-	    break;
+		include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+		modifyGroup($g_id);
+		break;
 
 	case "update":
 		if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -144,15 +144,15 @@ switch ($op) {
 				$modperm->setVar('gperm_modid', 1);
 				$gperm_handler->insert($modperm);
 			}
-		   foreach ($read_bids as $r_bid) {
+			foreach ($read_bids as $r_bid) {
 				$blockperm =& $gperm_handler->create();
 				$blockperm->setVar('gperm_groupid', $groupid);
 				$blockperm->setVar('gperm_itemid', $r_bid);
 				$blockperm->setVar('gperm_name', 'block_read');
 				$blockperm->setVar('gperm_modid', 1);
 				$gperm_handler->insert($blockperm);
-		   }
-		   redirect_header("admin.php?fct=groups&amp;op=adminMain",1,_AM_DBUPDATED);
+			}
+			redirect_header("admin.php?fct=groups&amp;op=adminMain",1,_AM_DBUPDATED);
 		}
 		break;
 
@@ -253,54 +253,54 @@ switch ($op) {
 		break;
 
 	case "del":
-	    xoops_cp_header();
-	    xoops_confirm(array('fct' => 'groups', 'op' => 'delConf', 'g_id' => $g_id), 'admin.php', _AM_AREUSUREDEL);
-	    xoops_cp_footer();
-	    break;
+		xoops_cp_header();
+		xoops_confirm(array('fct' => 'groups', 'op' => 'delConf', 'g_id' => $g_id), 'admin.php', _AM_AREUSUREDEL);
+		xoops_cp_footer();
+		break;
 
 	case "delConf":
-	    if (!$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-	    }
-	    if (intval($g_id) > 0 && !in_array($g_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
-				$member_handler =& xoops_gethandler('member');
-				$group =& $member_handler->getGroup($g_id);
-				$member_handler->deleteGroup($group);
-				$gperm_handler =& xoops_gethandler('groupperm');
-				$gperm_handler->deleteByGroup($g_id);
-	    }
-	    redirect_header("admin.php?fct=groups&amp;op=adminMain",1,_AM_DBUPDATED);
-	    break;
+		if (!$GLOBALS['xoopsSecurity']->check()) {
+			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		}
+		if ( (int) ($g_id) > 0 && !in_array($g_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
+			$member_handler =& xoops_gethandler('member');
+			$group =& $member_handler->getGroup($g_id);
+			$member_handler->deleteGroup($group);
+			$gperm_handler =& xoops_gethandler('groupperm');
+			$gperm_handler->deleteByGroup($g_id);
+		}
+		redirect_header("admin.php?fct=groups&amp;op=adminMain",1,_AM_DBUPDATED);
+		break;
 
 	case "addUser":
-	    if (!$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-	    }
-	    $member_handler =& xoops_gethandler('member');
-	    $size = count($uids);
-	    for ( $i = 0; $i < $size; $i++ ) {
-				$member_handler->addUserToGroup($groupid, $uids[$i]);
-	    }
-	    redirect_header("admin.php?fct=groups&amp;op=modify&amp;g_id=".$groupid."",0,_AM_DBUPDATED);
-	    break;
+		if (!$GLOBALS['xoopsSecurity']->check()) {
+			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		}
+		$member_handler =& xoops_gethandler('member');
+		$size = count($uids);
+		for ( $i = 0; $i < $size; $i++ ) {
+			$member_handler->addUserToGroup($groupid, $uids[$i]);
+		}
+		redirect_header("admin.php?fct=groups&amp;op=modify&amp;g_id=".$groupid."",0,_AM_DBUPDATED);
+		break;
 
 	case "delUser":
-	    if (!$GLOBALS['xoopsSecurity']->check()) {
-				redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-	    }
-	    if (intval($groupid) > 0) {
-				$member_handler =& xoops_gethandler('member');
-				$memstart = isset($memstart) ? intval($memstart) : 0;
-				if ($groupid == XOOPS_GROUP_ADMIN) {
-					if ($member_handler->getUserCountByGroup($groupid) > count($uids)){
-						$member_handler->removeUsersFromGroup($groupid, $uids);
-					}
-				} else {
+		if (!$GLOBALS['xoopsSecurity']->check()) {
+			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+		}
+		if ( (int) ($groupid) > 0) {
+			$member_handler =& xoops_gethandler('member');
+			$memstart = isset($memstart) ? (int) ($memstart) : 0;
+			if ($groupid == XOOPS_GROUP_ADMIN) {
+				if ($member_handler->getUserCountByGroup($groupid) > count($uids)){
 					$member_handler->removeUsersFromGroup($groupid, $uids);
 				}
-				redirect_header('admin.php?fct=groups&amp;op=modify&amp;g_id='.$groupid.'&amp;memstart='.$memstart,0,_AM_DBUPDATED);
-	    }
-	    break;
+			} else {
+				$member_handler->removeUsersFromGroup($groupid, $uids);
+			}
+			redirect_header('admin.php?fct=groups&amp;op=modify&amp;g_id='.$groupid.'&amp;memstart='.$memstart,0,_AM_DBUPDATED);
+		}
+		break;
 	case "display":
 	default:
 		displayGroups();

@@ -1,9 +1,9 @@
-<?php 
+<?php
 /**
  * Database Base Class
  *
  * Defines abstract database wrapper class
- * 
+ *
  * @copyright	The XOOPS Project <http://www.xoops.org/>
  * @copyright	XOOPS_copyrights.txt
  * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
@@ -35,34 +35,34 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
 	 * @copyright   copyright (c) 2000-2003 XOOPS.org
 	 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
 	 */
-  	abstract class IcmsDatabase {
-		
+	abstract class IcmsDatabase {
+
 		/**
 		 * Prefix for tables in the database
 		 * @var string
 		 */
 		public $prefix = '';
-		
+
 		/**
 		 * reference to a {@link XoopsLogger} object
 		 * @see XoopsLogger
 		 * @var object XoopsLogger
 		 */
 		public $logger;
-		
+
 		/**
 		 * If statements that modify the database are selected
 		 * @var boolean
 		 */
-	 	public $allowWebChanges = false;
-	   
-	    /**
-	     * Constructor
-	     *
-	     * Will always fail, because this is an abstract class!
-	     */
+		public $allowWebChanges = false;
+
+		/**
+		 * Constructor
+		 *
+		 * Will always fail, because this is an abstract class!
+		 */
 		public function __construct() { /* exit("Cannot instantiate this class directly"); */ }
-		
+
 		/**
 		 * assign a {@link XoopsLogger} object to the database
 		 *
@@ -72,16 +72,16 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
 		public function setLogger(&$logger) {
 			$this->logger =& $logger;
 		}
-	 
+
 		/**
 		 * set the prefix for tables in the database
 		 *
 		 * @param string $value table prefix
 		 */
-	   	public function setPrefix($value) {
-	   		$this->prefix = $value;
-	   	}
-	
+		public function setPrefix($value) {
+			$this->prefix = $value;
+		}
+
 		/**
 		 * attach the prefix.'_' to a given tablename
 		 *
@@ -97,19 +97,8 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
 				return $this->prefix;
 			}
 		}
-		
-		/**
-		 * 
-		 *
-		 * @since	ImpressCMS 1.3
-		 * @param	string 	$tablename	tablename
-		 */
-		public function wildcard($tablename=''){
-			$wildcard = 'a'.substr( md5( $tablename ) , 0, 4);
-			return $wildcard;
-		}
-	} 
-	
+	}
+
 	/**
 	 * Abstract base class for Database access classes
 	 *
@@ -122,13 +111,12 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
 	 * @author      Kazumi Ono  <onokazu@xoops.org>
 	 * @copyright   copyright (c) 2000-2003 XOOPS.org
 	 * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-	 * 
+	 *
 	 * @deprecated
 	 */
 	abstract class XoopsDatabase extends IcmsDatabase { /* For Backwards compatibility */ }
-	
-}
 
+}
 
 /**
  * Only for backward compatibility

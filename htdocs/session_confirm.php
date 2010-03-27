@@ -1,16 +1,16 @@
 <?php
 /**
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 
 include "mainfile.php";
 
@@ -22,7 +22,6 @@ $url = $_SESSION['AUTOLOGIN_REQUEST_URI'] ;
 unset( $_SESSION['AUTOLOGIN_REQUEST_URI'] ) ;
 if( preg_match('/javascript:/si', $url) ) exit ; // black list of url
 $url4disp = preg_replace("/&amp;/i", '&', htmlspecialchars($url, ENT_QUOTES));
-
 
 if( isset( $_SESSION['AUTOLOGIN_POST'] ) ) {
 

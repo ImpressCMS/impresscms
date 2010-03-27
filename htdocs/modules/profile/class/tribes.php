@@ -1,15 +1,15 @@
 <?php
 
 /**
-* Classes responsible for managing profile tribes objects
-*
-* @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package		profile
-* @version		$Id$
-*/
+ * Classes responsible for managing profile tribes objects
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package		profile
+ * @version		$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
@@ -54,11 +54,11 @@ class ProfileTribes extends IcmsPersistableSeoObject {
 			'itemHandler' => 'tribes',
 			'method' => 'getTribes_securityArray',
 			'module' => 'profile'
-		));
+			));
 
-		$this->hideFieldFromForm('creation_time');
+			$this->hideFieldFromForm('creation_time');
 
-		$this->IcmsPersistableSeoObject();
+			$this->IcmsPersistableSeoObject();
 	}
 
 	/**
@@ -241,7 +241,7 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 			$criteria->setStart($start);
 		}
 		if ($limit) {
-			$criteria->setLimit(intval($limit));
+			$criteria->setLimit( (int) ($limit));
 		}
 		if ($sortByTitle) {
 			$criteria->setSort('title');
@@ -348,15 +348,15 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
-	* Resize a tribe and save it to $path_upload
-	*
-	* @param text $img the path to the file
-	* @param int $width the width in pixels that the pic will have
-	* @param int $height the height in pixels that the pic will have
-	* @param text $path_upload The path to where the files should be saved after resizing
-	* @param text $prefix The prefix used to recognize files and avoid multiple files.
-	* @return nothing
-	*/
+	 * Resize a tribe and save it to $path_upload
+	 *
+	 * @param text $img the path to the file
+	 * @param int $width the width in pixels that the pic will have
+	 * @param int $height the height in pixels that the pic will have
+	 * @param text $path_upload The path to where the files should be saved after resizing
+	 * @param text $prefix The prefix used to recognize files and avoid multiple files.
+	 * @return nothing
+	 */
 	function imageResizer($img, $width=320, $height=240, $path_upload=ICMS_UPLOAD_PATH, $prefix='') {
 		$prefix = (isset($prefix) && $prefix != '')?$prefix:time();
 		$path = pathinfo($img);
@@ -365,16 +365,16 @@ class ProfileTribesHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
-	* Resize a tribe and save it to $path_upload
-	*
-	* @param text $img the path to the file
-	* @param text $path_upload The path to where the files should be saved after resizing
-	* @param int $thumbwidth the width in pixels that the thumbnail will have
-	* @param int $thumbheight the height in pixels that the thumbnail will have
-	* @param int $pictwidth the width in pixels that the pic will have
-	* @param int $pictheight the height in pixels that the pic will have
-	* @return nothing
-	*/
+	 * Resize a tribe and save it to $path_upload
+	 *
+	 * @param text $img the path to the file
+	 * @param text $path_upload The path to where the files should be saved after resizing
+	 * @param int $thumbwidth the width in pixels that the thumbnail will have
+	 * @param int $thumbheight the height in pixels that the thumbnail will have
+	 * @param int $pictwidth the width in pixels that the pic will have
+	 * @param int $pictheight the height in pixels that the pic will have
+	 * @return nothing
+	 */
 	function resizeImage($img, $thumbwidth, $thumbheight, $pictwidth, $pictheight,$path_upload) {
 		$this->imageResizer($img, $thumbwidth, $thumbheight, $path_upload, 'thumb');
 		$this->imageResizer($img, $pictwidth, $pictheight, $path_upload, 'resized');

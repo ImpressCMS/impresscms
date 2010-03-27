@@ -2,17 +2,17 @@
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
-* IcmsVersionChecker
-*
-* Class used to check if the ImpressCMS install is up to date
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		1.0
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * IcmsVersionChecker
+ *
+ * Class used to check if the ImpressCMS install is up to date
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		1.0
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 class IcmsVersionChecker {
 
 	/*
@@ -55,10 +55,10 @@ class IcmsVersionChecker {
 	/*
 	 * Status of the latest build
 	 *
- 	 * 1  = Alpha
- 	 * 2  = Beta
- 	 * 3  = RC
- 	 * 10 = Final
+	 * 1  = Alpha
+	 * 2  = Beta
+	 * 3  = RC
+	 * 10 = Final
 	 *
 	 * @public $latest_status integer
 	 */
@@ -78,23 +78,23 @@ class IcmsVersionChecker {
 
 	/**
 	 * Constructor
-   *
-   * @return	void
-   *
-   */
+	 *
+	 * @return	void
+	 *
+	 */
 	function IcmsVersionChecker() {
 		$this->installed_version_name = ICMS_VERSION_NAME;
 	}
 
 	/**
 	 * Access the only instance of this class
-   *
-   * @static
-   * @staticvar object
-   *
-   * @return	object
-   *
-   */
+	 *
+	 * @static
+	 * @staticvar object
+	 *
+	 * @return	object
+	 *
+	 */
 	function &getInstance()
 	{
 		static $instance;
@@ -106,14 +106,14 @@ class IcmsVersionChecker {
 
 	/**
 	 * Check for a newer version of ImpressCMS
-   *
-   * @return	TRUE if there is an update, FALSE if no update OR errors occured
-   *
-   */
+	 *
+	 * @return	TRUE if there is an update, FALSE if no update OR errors occured
+	 *
+	 */
 	function check() {
 
 		// Create a new instance of the SimplePie object
-		include_once(ICMS_ROOT_PATH . '/class/icmssimplerss.php');
+		include_once ICMS_ROOT_PATH . '/class/icmssimplerss.php' ;
 		$feed = new IcmsSimpleRss();
 		$feed->set_feed_url($this->version_xml);
 		$feed->set_cache_duration(0);
@@ -159,17 +159,17 @@ class IcmsVersionChecker {
 	 * @return	mixed
 	 */
 	function getErrors($ashtml=true) {
-    if (!$ashtml) {
-        return $this->errors;
-    } else {
-    	$ret = '';
-    	if (count($this->errors) > 0) {
-      	foreach ($this->errors as $error) {
-    	    $ret .= $error.'<br />';
-      	}
-    	}
-    	return $ret;
-    }
-  }
+		if (!$ashtml) {
+			return $this->errors;
+		} else {
+			$ret = '';
+			if (count($this->errors) > 0) {
+				foreach ($this->errors as $error) {
+					$ret .= $error.'<br />';
+				}
+			}
+			return $ret;
+		}
+	}
 }
 ?>

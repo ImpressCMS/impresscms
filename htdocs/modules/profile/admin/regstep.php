@@ -19,8 +19,8 @@
  * Edit a Regstep
  *
  * @param int $regstep_id Regstepid to be edited
-*/
-function editregstep($regstep_id = 0) { 
+ */
+function editregstep($regstep_id = 0) {
 	global $profile_regstep_handler, $icmsModule, $icmsAdminTpl;
 
 	$regstepObj = $profile_regstep_handler->get($regstep_id);
@@ -60,63 +60,63 @@ $clean_regstep_id = isset($_GET['step_id']) ? (int) $_GET['step_id'] : 0 ;
  * first argument is found in the array listed in the second argument. Strings
  * are case sensitive and the 3rd argument determines whether type matching is
  * required
-*/
+ */
 if (in_array($clean_op,$valid_op,true)){
-  switch ($clean_op) {
-  	case "mod":
-  	case "changedField":
+	switch ($clean_op) {
+		case "mod":
+		case "changedField":
 
-  		icms_cp_header();
+			icms_cp_header();
 
-  		editregstep($clean_regstep_id);
-  		break;
-  	case "addregstep":
-          include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-          $controller = new IcmsPersistableController($profile_regstep_handler);
-  		$controller->storeFromDefaultForm(_AM_PROFILE_REGSTEP_CREATED, _AM_PROFILE_REGSTEP_MODIFIED);
+			editregstep($clean_regstep_id);
+			break;
+		case "addregstep":
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController($profile_regstep_handler);
+			$controller->storeFromDefaultForm(_AM_PROFILE_REGSTEP_CREATED, _AM_PROFILE_REGSTEP_MODIFIED);
 
-  		break;
+			break;
 
-  	case "del":
-  	    include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-        $controller = new IcmsPersistableController($profile_regstep_handler);
-  		$controller->handleObjectDeletion();
+		case "del":
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController($profile_regstep_handler);
+			$controller->handleObjectDeletion();
 
-  		break;
+			break;
 
-  	case "view" :
-  		$regstepObj = $profile_regstep_handler->get($clean_regstep_id);
+		case "view" :
+			$regstepObj = $profile_regstep_handler->get($clean_regstep_id);
 
-  		icms_cp_header();
-  		$icmsModule->displayAdminMenu(4, _AM_IMPROFILE_REGSTEP_VIEW . ' > ' . $regstepObj->getVar('regstep_name'));
+			icms_cp_header();
+			$icmsModule->displayAdminMenu(4, _AM_IMPROFILE_REGSTEP_VIEW . ' > ' . $regstepObj->getVar('regstep_name'));
 
-//  		icms_collapsableBar('regstepview', $regstepObj->getVar('regstep_name') . $regstepObj->getEditRegstepLink(), _AM_IMPROFILE_REGSTEP_VIEW_DSC);
+			//  		icms_collapsableBar('regstepview', $regstepObj->getVar('regstep_name') . $regstepObj->getEditRegstepLink(), _AM_IMPROFILE_REGSTEP_VIEW_DSC);
 
-  		$regstepObj->displaySingleObject();
+			$regstepObj->displaySingleObject();
 
-//  		icms_close_collapsable('regstepview');
+			//  		icms_close_collapsable('regstepview');
 
-  		break;
+			break;
 
-  	default:
+		default:
 
-  		icms_cp_header();
+			icms_cp_header();
 
-  		$icmsModule->displayAdminMenu(4, _AM_PROFILE_REGSTEPS);
+			$icmsModule->displayAdminMenu(4, _AM_PROFILE_REGSTEPS);
 
-  		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-  		$objectTable = new IcmsPersistableTable($profile_regstep_handler);
-  		$objectTable->addColumn(new IcmsPersistableColumn('step_order'));
-  		$objectTable->addColumn(new IcmsPersistableColumn('step_name', false, false, 'getCustomStepName'));
-  		$objectTable->addColumn(new IcmsPersistableColumn('step_save', 'center', false, 'getCustomStepSave'));
-  		$objectTable->addColumn(new IcmsPersistableColumn('step_intro'));
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
+			$objectTable = new IcmsPersistableTable($profile_regstep_handler);
+			$objectTable->addColumn(new IcmsPersistableColumn('step_order'));
+			$objectTable->addColumn(new IcmsPersistableColumn('step_name', false, false, 'getCustomStepName'));
+			$objectTable->addColumn(new IcmsPersistableColumn('step_save', 'center', false, 'getCustomStepSave'));
+			$objectTable->addColumn(new IcmsPersistableColumn('step_intro'));
 
-  		$objectTable->addIntroButton('addregstep', 'regstep.php?op=mod', _AM_PROFILE_REGSTEP_CREATE);
-  		$icmsAdminTpl->assign('profile_regstep_table', $objectTable->fetch());
-  		$icmsAdminTpl->display('db:profile_admin_regstep.html');
-  		break;
-  }
-  icms_cp_footer();
+			$objectTable->addIntroButton('addregstep', 'regstep.php?op=mod', _AM_PROFILE_REGSTEP_CREATE);
+			$icmsAdminTpl->assign('profile_regstep_table', $objectTable->fetch());
+			$icmsAdminTpl->display('db:profile_admin_regstep.html');
+			break;
+	}
+	icms_cp_footer();
 }
 /**
  * If you want to have a specific action taken because the user input was invalid,

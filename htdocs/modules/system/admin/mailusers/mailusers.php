@@ -1,18 +1,18 @@
 <?php
 // $Id$
 /**
-* Administration of mailusers, main mailusers file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Administration
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Administration of mailusers, main mailusers file
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	Administration
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
@@ -54,26 +54,26 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				$f_mail_lastlog_min = trim($_POST['mail_lastlog_min']);
 				$time = mktime(0,0,0,substr($f_mail_lastlog_min,5,2),substr($f_mail_lastlog_min,8,2),substr($f_mail_lastlog_min,0,4));
 				if ( $time > 0 ) {
-				    $criteria[] = "last_login > $time";
+					$criteria[] = "last_login > $time";
 				}
 			}
 			if ( !empty($_POST['mail_lastlog_max']) ) {
 				$f_mail_lastlog_max = trim($_POST['mail_lastlog_max']);
 				$time = mktime(0,0,0,substr($f_mail_lastlog_max,5,2),substr($f_mail_lastlog_max,8,2),substr($f_mail_lastlog_max,0,4));
 				if ( $time > 0 ) {
-				    $criteria[] = "last_login < $time";
+					$criteria[] = "last_login < $time";
 				}
 			}
 			if ( !empty($_POST['mail_idle_more']) && is_numeric($_POST['mail_idle_more']) ) {
-				$f_mail_idle_more = intval(trim($_POST['mail_idle_more']));
+				$f_mail_idle_more = (int) (trim($_POST['mail_idle_more']));
 				$time = 60 * 60 * 24 * $f_mail_idle_more;
 				$time = time() - $time;
 				if ( $time > 0 ) {
-				    $criteria[] = "last_login < $time";
+					$criteria[] = "last_login < $time";
 				}
 			}
 			if ( !empty($_POST['mail_idle_less']) && is_numeric($_POST['mail_idle_less']) ) {
-				$f_mail_idle_less = intval(trim($_POST['mail_idle_less']));
+				$f_mail_idle_less = (int) (trim($_POST['mail_idle_less']));
 				$time = 60 * 60 * 24 * $f_mail_idle_less;
 				$time = time() - $time;
 				if ( $time > 0 ) {
@@ -103,13 +103,13 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$criteria_object->setStart( @$_POST['mail_start'] );
 			$criteria_object->setLimit( $limit );
 			foreach ($criteria as $c) {
-				list ($field, $op, $value) = split(' ', $c);
+				list ($field, $op, $value) = explode( ' ', $c );
 				$crit = new Criteria($field, $value, $op);
 				$crit->prefix = "u";
 				$criteria_object->add($crit, 'AND');
 			}
 			$member_handler =& xoops_gethandler('member');
-			$groups = empty($_POST['mail_to_group']) ? array() : array_map("intval", $_POST['mail_to_group']);
+			$groups = empty($_POST['mail_to_group']) ? array() : array_map( 'intval', $_POST['mail_to_group'] );
 			$getusers = $member_handler->getUsersByGroupLink($groups, $criteria_object, true);
 			$count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
 			foreach ($getusers as $getuser) {

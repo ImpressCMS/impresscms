@@ -1,19 +1,18 @@
 <?php
 // $Id$
 /**
-* Administration of comments, mainfile
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Administration
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
-
+ * Administration of comments, mainfile
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	Administration
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->getVar('mid')) ) {
 	exit("Access Denied");
@@ -33,8 +32,8 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$limit = 0;
 			$otherorder = 'DESC';
 			$comments = array();
-			$status = (!isset($_GET['status']) || !in_array(intval($_GET['status']), array_keys($status_array))) ? 0 : intval($_GET['status']);
-			$module = !isset($_GET['module']) ? 0 : intval($_GET['module']);
+			$status = (!isset($_GET['status']) || !in_array( (int) ($_GET['status']), array_keys($status_array))) ? 0 : (int) ($_GET['status']);
+			$module = !isset($_GET['module']) ? 0 : (int) ($_GET['module']);
 			$module_handler =& xoops_gethandler('module');
 			$module_array =& $module_handler->getList(new Criteria('hascomments', 1));
 			$comment_handler =& xoops_gethandler('comment');
@@ -47,8 +46,8 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			}
 			$total = $comment_handler->getCount($criteria);
 			if ($total > 0) {
-				$start = isset($_GET['start']) ? intval($_GET['start']) : 0;
-				$limit = isset($_GET['limit']) ? intval($_GET['limit']) : 0;
+				$start = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
+				$limit = isset($_GET['limit']) ? (int) ($_GET['limit']) : 0;
 				if (!in_array($limit, $limit_array)) {
 					$limit = 50;
 				}
@@ -94,7 +93,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				$form .= '<option value="'.$k.'"'.$sel.'>'.icms_conv_nr2local($k).'</option>';
 			}
 			$form .= '</select>&nbsp;<input type="hidden" name="fct" value="comments" /><input type="submit" value="'._GO.'" name="selsubmit" /></form>';
-	
+
 			xoops_cp_header();
 			echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/comments/images/comments_big.png)">'._MD_AM_COMMMAN.'</div><br />';
 			echo $form."<br />";
@@ -112,7 +111,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				$icon = $comments[$i]->getVar('com_icon');
 				$icon = empty( $icon ) ? '/images/icons/'.$GLOBALS["xoopsConfig"]["language"].'/no_posticon.gif' : ( '/images/subject/' . htmlspecialchars( $icon, ENT_QUOTES ) );
 				$icon = '<img src="' . XOOPS_URL . $icon  . '" alt="" />';
-				
+
 				echo '<tr align="center"><td class="'.$class.'">'.$icon.'</td><td class="'.$class.'" align="'._GLOBAL_LEFT.'"><a href="admin.php?fct=comments&amp;op=jump&amp;com_id='.$i.'">'. $comments[$i]->getVar('com_title').'</a></td><td class="'.$class.'">'.formatTimestamp($comments[$i]->getVar('com_created'), 'm').'</td><td class="'.$class.'">'.$poster_uname.'</td><td class="'.$class.'">'.icms_conv_nr2local($comments[$i]->getVar('com_ip')).'</td><td class="'.$class.'">'.$module_array[$comments[$i]->getVar('com_modid')].'</td><td class="'.$class.'">'.$status_array2[$comments[$i]->getVar('com_status')].'</td><td class="'.$class.'" align="'._GLOBAL_RIGHT.'"><a href="admin/comments/comment_edit.php?com_id='.$i.'">'._EDIT.'</a> <a href="admin/comments/comment_delete.php?com_id='.$i.'">'._DELETE.'</a></td></tr>';
 			}
 			echo '</table>';
@@ -124,10 +123,10 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			}
 			echo '</td></tr></table>';
 			xoops_cp_footer();
-		break;
-	
+			break;
+
 		case 'jump':
-			$com_id = (isset($_GET['com_id'])) ? intval($_GET['com_id']) : 0;
+			$com_id = (isset($_GET['com_id'])) ? (int) ($_GET['com_id']) : 0;
 			if ($com_id > 0) {
 				$comment_handler =& xoops_gethandler('comment');
 				$comment =& $comment_handler->get($com_id);
@@ -140,7 +139,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				}
 			}
 			redirect_header('admin.php?fct=comments', 1);
-		break;
+			break;
 
 		default:
 	  break;

@@ -1,17 +1,17 @@
 <?php
 /**
-* IcmsPersistableObjects Registry
-*
-* The IcmsPersistableObjects Registry is an object containing IcmsPersistableObject objects that will be reused in the same process
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		1.2
-* @author		marcan <marcan@impresscms.org>
-* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ * IcmsPersistableObjects Registry
+ *
+ * The IcmsPersistableObjects Registry is an object containing IcmsPersistableObject objects that will be reused in the same process
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsPersistableObject
+ * @since		1.2
+ * @author		marcan <marcan@impresscms.org>
+ * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
@@ -23,11 +23,11 @@ class IcmsPersistableObjectsRegistry {
 
 	/**
 	 * Access the only instance of this class
-     *
-     * @return	object
-     *
-     * @static
-     * @staticvar   object
+	 *
+	 * @return	object
+	 *
+	 * @static
+	 * @staticvar   object
 	 */
 	function &getInstance()
 	{
@@ -39,13 +39,13 @@ class IcmsPersistableObjectsRegistry {
 	}
 
 	/**
-    * Adding objects to the registry
-    *
-    * @param SmartPersistableObjectHandler $handler of the objects to add
-    * @param CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
-    *
-    * @return FALSE if an error occured
-    */
+	 * Adding objects to the registry
+	 *
+	 * @param SmartPersistableObjectHandler $handler of the objects to add
+	 * @param CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 *
+	 * @return FALSE if an error occured
+	 */
 	function addObjectsFromHandler(&$handler, $criteria=false) {
 		if (method_exists($handler, 'getObjects')) {
 			$objects = $handler->getObjects($criteria, true);
@@ -57,15 +57,15 @@ class IcmsPersistableObjectsRegistry {
 	}
 
 	/**
-    * Adding objects to the registry from an item name
-    * This method will fetch the handler of the item / module and call the addObjectsFromHandler
-    *
-    * @param string $item name of the item
-    * @param string $modulename name of the module
-    * @param CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
-    *
-    * @return FALSE if an error occured
-    */
+	 * Adding objects to the registry from an item name
+	 * This method will fetch the handler of the item / module and call the addObjectsFromHandler
+	 *
+	 * @param string $item name of the item
+	 * @param string $modulename name of the module
+	 * @param CriteriaCompo $criteria to pass to the getObjects method of the handler (with id_as_key)
+	 *
+	 * @return FALSE if an error occured
+	 */
 	function addObjectsFromItemName($item, $modulename=false, $criteria=false) {
 		if (!$modulename) {
 			global $icmsModule;
@@ -87,13 +87,13 @@ class IcmsPersistableObjectsRegistry {
 	}
 
 	/**
-    * Fetching objects from the registry
-    *
-    * @param string $itemname
-    * @param string $modulename
-    *
-    * @return the requested objects or FALSE if they don't exists in the registry
-    */
+	 * Fetching objects from the registry
+	 *
+	 * @param string $itemname
+	 * @param string $modulename
+	 *
+	 * @return the requested objects or FALSE if they don't exists in the registry
+	 */
 	function getObjects($itemname, $modulename) {
 		if (!$modulename) {
 			global $icmsModule;
@@ -117,13 +117,13 @@ class IcmsPersistableObjectsRegistry {
 	}
 
 	/**
-    * Fetching objects from the registry, as a list : objectid => identifier
-    *
-    * @param string $itemname
-    * @param string $modulename
-    *
-    * @return the requested objects or FALSE if they don't exists in the registry
-    */
+	 * Fetching objects from the registry, as a list : objectid => identifier
+	 *
+	 * @param string $itemname
+	 * @param string $modulename
+	 *
+	 * @return the requested objects or FALSE if they don't exists in the registry
+	 */
 	function getList($itemname, $modulename) {
 		if (!$modulename) {
 			global $icmsModule;
@@ -147,13 +147,13 @@ class IcmsPersistableObjectsRegistry {
 	}
 
 	/**
-    * Retreive a single object
-    *
-    * @param string $itemname
-    * @param string $key
-    *
-    * @return the requestd object or FALSE if they don't exists in the registry
-    */
+	 * Retreive a single object
+	 *
+	 * @param string $itemname
+	 * @param string $key
+	 *
+	 * @return the requestd object or FALSE if they don't exists in the registry
+	 */
 	function getSingleObject($itemname, $key, $modulename=false) {
 		if (!$modulename) {
 			global $icmsModule;

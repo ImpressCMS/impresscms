@@ -1,15 +1,15 @@
 <?php
 
 /**
-* Classes responsible for managing profile visitors objects
-*
-* @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla <contact@impresscms.org>
-* @package		profile
-* @version		$Id$
-*/
+ * Classes responsible for managing profile visitors objects
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Jan Pedersen, Marcello Brandao, Sina Asghari, Gustavo Pilla <contact@impresscms.org>
+ * @package		profile
+ * @version		$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
@@ -78,7 +78,7 @@ class ProfileVisitorsHandler extends IcmsPersistableObjectHandler {
 			$criteria->setStart($start);
 		}
 		if ($limit) {
-			$criteria->setLimit(intval($limit));
+			$criteria->setLimit( (int) ($limit));
 		}
 		$criteria->setSort('visit_time');
 		$criteria->setOrder('DESC');

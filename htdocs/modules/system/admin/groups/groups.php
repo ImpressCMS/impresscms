@@ -1,18 +1,18 @@
 <?php
 // $Id$
 /**
-* Administration of usergroups, functionfile
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Administration
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Administration of usergroups, functionfile
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	Administration
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
@@ -68,14 +68,14 @@ function modifyGroup($g_id)
 {
 	$userstart = $memstart = 0;
 	if ( !empty($_POST['userstart']) ) {
-		$userstart = intval($_POST['userstart']);
+		$userstart = (int) ($_POST['userstart']);
 	} elseif (!empty($_GET['userstart'])) {
-		$userstart = intval($_GET['userstart']);
+		$userstart = (int) ($_GET['userstart']);
 	}
 	if ( !empty($_POST['memstart']) ) {
-		$memstart = intval($_POST['memstart']);
+		$memstart = (int) ($_POST['memstart']);
 	} elseif (!empty($_GET['memstart'])) {
-		$memstart = intval($_GET['memstart']);
+		$memstart = (int) ($_GET['memstart']);
 	}
 	xoops_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/groups/images/groups_big.png)"><a href="admin.php?fct=groups">'. _AM_GROUPSMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _AM_MODIFYADG.'</div><br />';
@@ -99,7 +99,7 @@ function modifyGroup($g_id)
 	if (XOOPS_GROUP_ADMIN == $g_id) {
 		$s_cat_disable = true;
 	}
-	
+
 	$sysperm_handler =& xoops_gethandler('groupperm');
 	$s_cat_value =& $sysperm_handler->getItemIds('system_admin', $g_id);
 
@@ -123,7 +123,7 @@ function modifyGroup($g_id)
 		$users =& array_diff($userslist, $mlist);
 		echo '<table class="outer">
 		<tr><th align="center">'._AM_NONMEMBERS.'<br />';
-		
+
 		echo '</th><th></th><th align="center">'._AM_MEMBERS.'<br />';
 		echo '</th></tr>
 		<tr><td class="even">

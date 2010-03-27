@@ -1,14 +1,14 @@
 <?php
 /**
-* Contains the basis classes for displaying a single IcmsPersistableObject
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * Contains the basis classes for displaying a single IcmsPersistableObject
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsPersistableObject
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 
 /**
  * IcmsPersistableRow class
@@ -62,8 +62,8 @@ class IcmsPersistableSingleView {
 	var $_headerAsRow=true;
 
 	/**
-    * Constructor
-    */
+	 * Constructor
+	 */
 	function IcmsPersistableSingleView(&$object, $userSide=false, $actions=array(), $headerAsRow=true)
 	{
 		$this->_object = $object;
@@ -80,7 +80,7 @@ class IcmsPersistableSingleView {
 	{
 		include_once ICMS_ROOT_PATH . '/class/template.php';
 
-		$this->_tpl =& new XoopsTpl();
+		$this->_tpl = new XoopsTpl();
 		$vars = $this->_object->vars;
 		$icms_object_array = array();
 

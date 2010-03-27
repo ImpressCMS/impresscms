@@ -11,7 +11,7 @@
  */
 
 if (! defined ( "ICMS_ROOT_PATH" ))
-	die ( "ImpressCMS root path not defined" );
+die ( "ImpressCMS root path not defined" );
 
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
 
@@ -58,15 +58,15 @@ class SystemCustomtag extends IcmsPersistableObject {
 				case ICMS_CUSTOMTAG_TYPE_XCODES :
 					$ret = $this->getVar ( 'content', 'N' );
 					$ret = $myts->displayTarea ( $ret, 1, 1, 1, 1, 1, 'system-basic' );
-				break;
+					break;
 				case ICMS_CUSTOMTAG_TYPE_HTML :
 					$ret = $this->getVar ( 'content', 'N' );
 					$ret = $myts->displayTarea ( $ret, 1, 1, 1, 1, 0, 'system-basic' );
-				break;
+					break;
 
 				case ICMS_CUSTOMTAG_TYPE_PHP :
 					$ret = $this->renderWithPhp ();
-				break;
+					break;
 			}
 			$this->content = $ret;
 		}
@@ -122,7 +122,6 @@ class SystemCustomtag extends IcmsPersistableObject {
 		$tableau = explode ( "-", $title ); // Transforme la chaine de caract�res en tableau
 		$tableau = array_filter ( $tableau, array ($this, "emptyString" ) ); // Supprime les chaines vides du tableau
 		$title = implode ( "-", $tableau ); // Transforme un tableau en chaine de caract�res s�par� par un tiret
-
 
 		$title = $title . time ();
 		$title = md5 ( $title );

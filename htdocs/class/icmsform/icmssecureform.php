@@ -1,14 +1,14 @@
 <?php
 /**
-* Form control creating a secure form
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package	IcmsPersistableObject
-* @since	1.1
-* @author	marcan <marcan@impresscms.org>
-* @version	$Id$
-*/
+ * Form control creating a secure form
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	IcmsPersistableObject
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
@@ -18,15 +18,15 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 include_once ICMS_ROOT_PATH . '/class/icmsform/icmsform.php';
 
 /**
-* IcmsSecureForm extending IcmsForm with the addition of the Security Token
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package	IcmsPersistableObject
-* @since	1.1
-* @author	marcan <marcan@impresscms.org>
-* @version	$Id$
-*/
+ * IcmsSecureForm extending IcmsForm with the addition of the Security Token
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	IcmsPersistableObject
+ * @since	1.1
+ * @author	marcan <marcan@impresscms.org>
+ * @version	$Id$
+ */
 class IcmsSecureForm extends IcmsForm {
 
 	/**

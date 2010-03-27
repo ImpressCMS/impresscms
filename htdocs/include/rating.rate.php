@@ -1,20 +1,20 @@
 <?php
 
 /**
-* File included to initiate the ImpressCMS rating Feature
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		1.2
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ * File included to initiate the ImpressCMS rating Feature
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		1.2
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
 
-include_once(ICMS_ROOT_PATH . "/modules/system/admin/rating/class/rating.php");
+include_once ICMS_ROOT_PATH . "/modules/system/admin/rating/class/rating.php" ;
 
 icms_loadLanguageFile('system', 'rating', true);
 
@@ -26,7 +26,7 @@ $icms_plugin_handler = new IcmsPluginsHandler();
 $pluginObj = $icms_plugin_handler->getPlugin($module_dirname);
 if ($pluginObj) {
 	$rating_item = $pluginObj->getItem();
-	 if ($rating_item) {
+	if ($rating_item) {
 		$rating_itemid = $pluginObj->getItemIdForItem($rating_item);
 		$stats = $icms_rating_handler->getRatingAverageByItemId($rating_itemid, $module_dirname, $rating_item);
 		$icmsTpl->assign('icms_rating_stats_total', $stats['sum']);
@@ -44,16 +44,16 @@ if ($pluginObj) {
 			$icmsTpl->assign('icms_rating_itemid', $rating_itemid);
 			$urls = icms_getCurrentUrls();
 			$icmsTpl->assign('icms_rating_current_page', $urls['full']);
-/*			if(isset($xoTheme) && is_object($xoTheme)){
+			/*			if(isset($xoTheme) && is_object($xoTheme)){
 				$xoTheme->addStylesheet(ICMS_URL . '/module.css');
-			}else{
+				}else{
 				//probleme d'inclusion de css apres le flashplayer. Style plac dans css du theme
 				//$icmsTpl->assign('icms_css',"<link rel='stylesheet' type='text/css' href='".ICMS_URL."/modules/icms/module.css' />");
-			}
-*/
+				}
+				*/
 		}
 		$icmsTpl->display('db:system_rating_form.html');
-	 }
+	}
 }
 
 if (isset($_POST['icms_rating_submit'])) {

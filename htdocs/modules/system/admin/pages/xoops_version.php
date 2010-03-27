@@ -10,17 +10,16 @@
 * @version		$Id$
 */
 
-$modversion['name'] = _MD_AM_PAGES;
-$modversion['version'] = "1";
-$modversion['description'] = "ImpressCMS Content Manager";
-$modversion['author'] = "Rodrigo Pereira Lima aka TheRplima";
-$modversion['credits'] = "The ImpressCMS Project";
-$modversion['help'] = "pages.html";
-$modversion['license'] = "GPL see LICENSE";
-$modversion['official'] = 1;
-$modversion['image'] = "pages.gif";
-
-$modversion['hasAdmin'] = 1;
-$modversion['adminpath'] = "admin.php?fct=pages";
-$modversion['category'] = XOOPS_SYSTEM_PAGES;
+$modversion = array( 'name' => _MD_AM_PAGES,
+	'version' => "1",
+	'description' => "ImpressCMS Content Manager",
+	'author' => "Rodrigo Pereira Lima aka TheRplima",
+	'credits' => "The ImpressCMS Project",
+	'help' => "pages.html",
+	'license' => "GPL see LICENSE",
+	'official' => 1,
+	'image' => "pages.gif",
+	'hasAdmin' => 1,
+	'adminpath' => "admin.php?fct=pages",
+	'category' => XOOPS_SYSTEM_PAGES );
 ?>

@@ -117,8 +117,8 @@ class ProfileTribepostHandler extends IcmsPersistableObjectHandler {
 	 */
 	function getPostCriteria($start = 0, $limit = 0, $post_id = false, $topic_id = false, $tribes_id = false, $order = 'ASC') {
 		$criteria = new CriteriaCompo();
-		if ($start) $criteria->setStart(intval($start));
-		if ($limit) $criteria->setLimit(intval($limit));
+		if ($start) $criteria->setStart( (int) ($start));
+		if ($limit) $criteria->setLimit( (int) ($limit));
 
 		$criteria->setSort('post_id');
 		$criteria->setOrder($order);
@@ -221,7 +221,7 @@ class ProfileTribepostHandler extends IcmsPersistableObjectHandler {
 	function afterDelete(&$obj) {
 		$profile_tribetopic_handler = icms_getModuleHandler('tribetopic');
 		$tribetopicObj = $profile_tribetopic_handler->get($obj->getVar('topic_id'));
-		
+
 		if ($tribetopicObj->getVar('post_id') == $obj->getVar('post_id')) {
 			// delete everything if the post is the topic main post
 			$ret = $tribetopicObj->delete();

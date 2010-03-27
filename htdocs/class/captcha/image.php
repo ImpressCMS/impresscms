@@ -10,13 +10,12 @@
  * @since		XOOPS
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
-*/
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id: image.php 9864 2010-02-26 17:44:26Z skenow $
+ */
 
 class IcmsCaptchaImage {
 	//var $config	= array();
-
 
 	/**
 	 * Constructor
@@ -26,26 +25,22 @@ class IcmsCaptchaImage {
 		//$this->name = md5( session_id() );
 	}
 
-
 	/**
 	 * Creates instance of icmsCaptchaImage
-   * @return  object the IcmsCaptchaImage object
+	 * @return  object the IcmsCaptchaImage object
 	 */
 	function &instance()
 	{
 		static $instance;
 		if(!isset($instance)) {
-			$instance =& new IcmsCaptchaImage();
+			$instance = new IcmsCaptchaImage();
 		}
 		return $instance;
 	}
 
-
-
-
 	/**
 	 * Loading configs from CAPTCHA class
-   * @param   array $config the configuration array
+	 * @param   array $config the configuration array
 	 */
 	function loadConfig($config = array())
 	{
@@ -53,11 +48,9 @@ class IcmsCaptchaImage {
 		$this->config =& $config;
 	}
 
-
-
 	/**
 	 * Renders the Captcha image Returns form with image in it
-   * @return  string String that contains the Captcha Image form
+	 * @return  string String that contains the Captcha Image form
 	 */
 	function render()
 	{
@@ -68,14 +61,13 @@ class IcmsCaptchaImage {
 			$rule .=  " | ". sprintf( constant("ICMS_CAPTCHA_MAXATTEMPTS"), $icmsConfigCaptcha['captcha_maxattempt'] );
 		}
 		$form .= "&nbsp;&nbsp;<small>{$rule}</small>";
-		
+
 		return $form;
 	}
 
-
 	/**
 	 * Loads the Captcha Image
-   * @return  string String that contains the Captcha image
+	 * @return  string String that contains the Captcha image
 	 */
 	function loadImage()
 	{
@@ -84,7 +76,5 @@ class IcmsCaptchaImage {
 		$ret = "<img id='captcha' src='" . ICMS_URL. "/class/captcha/scripts/img.php' onclick=\"this.src='" . ICMS_URL. "/class/captcha/scripts/img.php?refresh='+Math.random()"."\" style='cursor: pointer;margin-left: auto;margin-right: auto;text-align:center;' alt='".htmlspecialchars($rule, ENT_QUOTES)."' />";
 		return $ret;
 	}
-
 }
-
 ?>

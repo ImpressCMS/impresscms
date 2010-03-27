@@ -1,38 +1,38 @@
 <?php
 /**
-* Creates a form datatime object
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	XoopsForms
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Creates a form datatime object
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	XoopsForms
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 
 /**
- * 
- * 
+ *
+ *
  * @package     kernel
  * @subpackage  form
- * 
+ *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
- 
+
 /**
  * Date and time selection field
- * 
+ *
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * 
+ *
  * @package     kernel
  * @subpackage  form
  */
@@ -41,15 +41,15 @@ class XoopsFormDateTime extends XoopsFormElementTray
 
 	/**
 	 * Constructor
-   * @param	string  $caption    Caption of the element
-   * @param	string  $name       Name of the element
-   * @param	string  $size       Size of the element
-   * @param	string  $value      Value of the element
+	 * @param	string  $caption    Caption of the element
+	 * @param	string  $name       Name of the element
+	 * @param	string  $size       Size of the element
+	 * @param	string  $value      Value of the element
 	 */
 	function XoopsFormDateTime($caption, $name, $size = 15, $value=0)
 	{
 		$this->XoopsFormElementTray($caption, '&nbsp;');
-		$value = intval($value);
+		$value = (int) ($value);
 		$value = ($value > 0) ? $value : time();
 		$datetime = getDate($value);
 		$this->addElement(new XoopsFormTextDateSelect('', $name.'[date]', $size, $value));

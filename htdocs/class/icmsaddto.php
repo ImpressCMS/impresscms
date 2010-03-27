@@ -1,19 +1,18 @@
 <?php
 /**
-* IcmsAddTo class to easily add content to social networking/bookmarking site
-*
-* @credit http://addtobookmarks.com/, James Morris and the XoopsInfo team
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	1.2
-* @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version	$Id: icmsaddto.php 8706 2009-05-03 10:11:14Z icmsunderdog $
-*/
-
+ * IcmsAddTo class to easily add content to social networking/bookmarking site
+ *
+ * @credit http://addtobookmarks.com/, James Morris and the XoopsInfo team
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	1.2
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version	$Id: icmsaddto.php 8706 2009-05-03 10:11:14Z icmsunderdog $
+ */
 
 if (!defined("ICMS_ROOT_PATH")) {
-    die("ICMS root path not defined");
+	die("ICMS root path not defined");
 }
 
 class IcmsAddTo {
@@ -28,13 +27,13 @@ class IcmsAddTo {
 	 * @param int $method 0=directpage, 1=popup
 	 */
 	function IcmsAddTo($layout=0, $method=1) {
-		$layout = intval($layout);
+		$layout = (int) ($layout);
 		if ($layout < 0 || $layout > 3) {
 			$layout = 0;
 		}
 		$this->_layout = $layout;
 
-		$method = intval($method);
+		$method = (int) ($method);
 		if ($method < 0 || $method > 1) {
 			$method = 1;
 		}
@@ -42,12 +41,12 @@ class IcmsAddTo {
 	}
 
 	/**
-	* Render the social bookmark block
-	* 
-	* @param bool  $fetchonly  only fetch the information and don't display it yet
-	* 
-	* @return string  the rendered social bookmark block or none if displayed immediately
-	*/
+	 * Render the social bookmark block
+	 *
+	 * @param bool  $fetchonly  only fetch the information and don't display it yet
+	 *
+	 * @return string  the rendered social bookmark block or none if displayed immediately
+	 */
 	function render($fetchOnly=false)
 	{
 		global $xoTheme, $xoopsTpl;
@@ -56,11 +55,11 @@ class IcmsAddTo {
 
 		$xoopsTpl->assign('icms_addto_method', $this->_method);
 		$xoopsTpl->assign('icms_addto_layout', $this->_layout);
-		
+
 		if(file_exists(ICMS_URL . '/language/'.$GLOBALS['icmsConfig']['language'].'/addto')){
-		$xoopsTpl->assign('icms_addto_url', ICMS_URL . '/language/'.$GLOBALS['icmsConfig']['language'].'/addto/');
+			$xoopsTpl->assign('icms_addto_url', ICMS_URL . '/language/'.$GLOBALS['icmsConfig']['language'].'/addto/');
 		}else{
-		$xoopsTpl->assign('icms_addto_url', ICMS_URL . '/language/english/addto/');
+			$xoopsTpl->assign('icms_addto_url', ICMS_URL . '/language/english/addto/');
 		}
 
 		if ($fetchOnly) {
@@ -71,10 +70,10 @@ class IcmsAddTo {
 	}
 
 	/**
-	* Renders the social bookmarks for a block
-	* 
-	* @return array  The rendered block array
-	*/
+	 * Renders the social bookmarks for a block
+	 *
+	 * @return array  The rendered block array
+	 */
 	function renderForBlock()
 	{
 		global $xoTheme;
@@ -85,9 +84,9 @@ class IcmsAddTo {
 		$block['icms_addto_method'] = $this->_method;
 		$block['icms_addto_layout'] = $this->_layout;
 		if(file_exists(ICMS_URL . '/language/'.$GLOBALS['icmsConfig']['language'].'/addto')){
-		$block['icms_addto_url'] = ICMS_URL . '/language/'.$GLOBALS['icmsConfig']['language'].'/addto/';
+			$block['icms_addto_url'] = ICMS_URL . '/language/'.$GLOBALS['icmsConfig']['language'].'/addto/';
 		}else{
-		$block['icms_addto_url'] = ICMS_URL . '/language/english/addto/';
+			$block['icms_addto_url'] = ICMS_URL . '/language/english/addto/';
 		}
 
 		return $block;

@@ -17,12 +17,12 @@
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	  Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
-*/
+ * @version		$Id: config.php 19090 2010-03-13 17:41:42Z skenow $
+ */
 
 $config = array(
 	"name"				=> 'icmscaptcha', 
-	);
-	
+);
+
 return $config;
 ?>

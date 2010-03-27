@@ -7,10 +7,10 @@
  * @license     http://www.fsf.org/copyleft/gpl.html GNU public license
  * @package     core
  * @subpackage	template
- * 
+ *
  * @since       XOOPS
  * @version		$Id: theme_blocks.php 8565 2009-04-11 12:44:10Z icmsunderdog $
- * 
+ *
  * @author      Skalpa Keo <skalpa@xoops.org>
  * @author      Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
@@ -45,18 +45,18 @@ class xos_logos_PageBuilder {
 
 	/**
 	 * Called before a specific zone is rendered
-	 * 
+	 *
 	 * @param string $zone
 	 */
 	public function preRender($zone = '') { /* Empty! */ }
-	
+
 	/**
 	 * Called after a specific zone is rendered
 	 *
 	 * @param string $zone
 	 */
 	public function postRender($zone = '') { /* Empty! */ }
-	
+
 	/**
 	 * Retrieve Blocks
 	 *
@@ -65,15 +65,15 @@ class xos_logos_PageBuilder {
 		global $xoops, $icmsUser, $icmsModule, $icmsConfig;
 
 		$groups = @is_object ( $icmsUser ) ? $icmsUser->getGroups () : array (XOOPS_GROUP_ANONYMOUS );
-		
+
 		//Getting the start module and page configured in the admin panel
 		if (is_array ( $icmsConfig ['startpage'] )) {
 			$member_handler = & xoops_gethandler ( 'member' );
 			$group = $member_handler->getUserBestGroup ( (@is_object ( $icmsUser ) ? $icmsUser->uid () : 0) );
 			$icmsConfig ['startpage'] = $icmsConfig ['startpage'] [$group];
 		}
-		
-		$startMod = ( $icmsConfig['startpage'] == '--' ) ? 'system' : $icmsConfig ['startpage'];		
+
+		$startMod = ( $icmsConfig['startpage'] == '--' ) ? 'system' : $icmsConfig ['startpage'];
 
 		//Setting the full and relative url of the actual page
 		$fullurl = urldecode ( "http://" . $_SERVER ["SERVER_NAME"] . $_SERVER ["REQUEST_URI"] );
@@ -82,7 +82,7 @@ class xos_logos_PageBuilder {
 		$icms_page_handler =& xoops_gethandler ( 'page' );
 		$criteria = new CriteriaCompo( new Criteria( 'page_url', $fullurl ) );
 		if (! empty ( $url ))
-			$criteria->add( new Criteria( 'page_url', $url ), 'OR' );
+		$criteria->add( new Criteria( 'page_url', $url ), 'OR' );
 		$pages = $icms_page_handler->getCount ( $criteria );
 
 		if ($pages > 0) { //We have a sym-link defined for this page
@@ -160,7 +160,7 @@ class xos_logos_PageBuilder {
 		}
 		return $cache_id;
 	}
-	
+
 	/**
 	 * The lame type workaround will change
 	 * bid is added temporarily as workaround for specific block manipulation
@@ -211,15 +211,15 @@ class xos_logos_PageBuilder {
 		    'id' => $xobject->getVar ( 'bid' ),
 		    'module' => $xobject->getVar ( 'dirname' ),
 		    'title' => $xobject->getVar ( 'title' ) . $titlebtns,
-		    //'name' => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
+		//'name' => strtolower( preg_replace( '/[^0-9a-zA-Z_]/', '', str_replace( ' ', '_', $xobject->getVar( 'name' ) ) ) ),
 		    'weight' => $xobject->getVar ( 'weight' ),
 		    'lastmod' => $xobject->getVar ( 'last_modified' )
 		);
 
 		$xoopsLogger = & XoopsLogger::instance ();
 
-		$bcachetime = intval ( $xobject->getVar ( 'bcachetime' ) );
-		//$template =& new XoopsTpl();
+		$bcachetime = (int) ( $xobject->getVar ( 'bcachetime' ) );
+		//$template = new XoopsTpl();
 		if (empty ( $bcachetime )) {
 			$template->caching = 0;
 		} else {

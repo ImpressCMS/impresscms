@@ -8,7 +8,7 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @package kernel
  **/
 /**
- * Load the new object class 
+ * Load the new object class
  **/
 require_once ICMS_ROOT_PATH.'/kernel/object.php';
 ?>

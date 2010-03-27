@@ -1,22 +1,22 @@
 <?php
 /**
-* Admin page to manage categorys
-*
-* List, add, edit and delete category objects
-*
-* @copyright	The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
-* @package		improfile
-* @version		$Id$
-*/
+ * Admin page to manage categorys
+ *
+ * List, add, edit and delete category objects
+ *
+ * @copyright	The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @package		improfile
+ * @version		$Id$
+ */
 
 /**
  * Edit a Category
  *
  * @param int $category_id Categoryid to be edited
-*/
+ */
 function editcategory($category_id = 0)
 {
 	global $profile_category_handler, $icmsModule, $icmsAdminTpl;
@@ -58,61 +58,61 @@ $clean_category_id = isset($_GET['catid']) ? (int) $_GET['catid'] : 0 ;
  * first argument is found in the array listed in the second argument. Strings
  * are case sensitive and the 3rd argument determines whether type matching is
  * required
-*/
+ */
 if (in_array($clean_op,$valid_op,true)){
-  switch ($clean_op) {
-  	case "mod":
-  	case "changedField":
+	switch ($clean_op) {
+		case "mod":
+		case "changedField":
 
-  		xoops_cp_header();
+			xoops_cp_header();
 
-  		editcategory($clean_category_id);
-  		break;
-  	case "addcategory":
-          include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-          $controller = new IcmsPersistableController($profile_category_handler);
-  		  $controller->storeFromDefaultForm(_AM_PROFILE_CATEGORY_CREATED, _AM_PROFILE_CATEGORY_MODIFIED);
+			editcategory($clean_category_id);
+			break;
+		case "addcategory":
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController($profile_category_handler);
+			$controller->storeFromDefaultForm(_AM_PROFILE_CATEGORY_CREATED, _AM_PROFILE_CATEGORY_MODIFIED);
 
-  		break;
+			break;
 
-  	case "del":
-  	    include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-          $controller = new IcmsPersistableController($profile_category_handler);
-  		$controller->handleObjectDeletion();
+		case "del":
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController($profile_category_handler);
+			$controller->handleObjectDeletion();
 
-  		break;
+			break;
 
-  	case "view" :
-  		$categoryObj = $profile_category_handler->get($clean_category_id);
+		case "view" :
+			$categoryObj = $profile_category_handler->get($clean_category_id);
 
-  		icms_cp_header();
-  		$icmsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORY_VIEW . ' > ' . $categoryObj->getVar('category_name'));
+			icms_cp_header();
+			$icmsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORY_VIEW . ' > ' . $categoryObj->getVar('category_name'));
 
-//  		smart_collapsableBar('categoryview', $categoryObj->getVar('category_name') . $categoryObj->getEditCategoryLink(), _AM_IMPROFILE_CATEGORY_VIEW_DSC);
+			//  		smart_collapsableBar('categoryview', $categoryObj->getVar('category_name') . $categoryObj->getEditCategoryLink(), _AM_IMPROFILE_CATEGORY_VIEW_DSC);
 
-  		$categoryObj->displaySingleObject();
+			$categoryObj->displaySingleObject();
 
-//  		smart_close_collapsable('categoryview');
+			//  		smart_close_collapsable('categoryview');
 
-  		break;
+			break;
 
-  	default:
+		default:
 
-  		icms_cp_header();
+			icms_cp_header();
 
-  		$icmsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORYS);
+			$icmsModule->displayAdminMenu(2, _AM_PROFILE_CATEGORYS);
 
-  		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-  		$objectTable = new IcmsPersistableTable($profile_category_handler);
-		$objectTable->addColumn(new IcmsPersistableColumn('cat_title', _GLOBAL_LEFT, false, 'getCatTitle'));
-  		$objectTable->addColumn(new IcmsPersistableColumn('cat_description'));
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
+			$objectTable = new IcmsPersistableTable($profile_category_handler);
+			$objectTable->addColumn(new IcmsPersistableColumn('cat_title', _GLOBAL_LEFT, false, 'getCatTitle'));
+			$objectTable->addColumn(new IcmsPersistableColumn('cat_description'));
 
-  		$objectTable->addIntroButton('addcategory', 'category.php?op=mod', _AM_PROFILE_CATEGORY_CREATE);
-  		$icmsAdminTpl->assign('profile_category_table', $objectTable->fetch());
-  		$icmsAdminTpl->display('db:profile_admin_category.html');
-  		break;
-  }
-  icms_cp_footer();
+			$objectTable->addIntroButton('addcategory', 'category.php?op=mod', _AM_PROFILE_CATEGORY_CREATE);
+			$icmsAdminTpl->assign('profile_category_table', $objectTable->fetch());
+			$icmsAdminTpl->display('db:profile_admin_category.html');
+			break;
+	}
+	icms_cp_footer();
 }
 /**
  * If you want to have a specific action taken because the user input was invalid,

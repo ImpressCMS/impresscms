@@ -1,17 +1,17 @@
 <?php
 /**
-* Handles all notification select functions within ImpressCMS
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Handles all notification select functions within ImpressCMS
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
@@ -50,15 +50,15 @@ if ($xoops_notification['show']) {
 		$xoops_notification['redirect_script'] = xoops_getenv('PHP_SELF');
 		$xoopsTpl->assign(array('lang_activenotifications' => _NOT_ACTIVENOTIFICATIONS, 'lang_notificationoptions' => _NOT_NOTIFICATIONOPTIONS, 'lang_updateoptions' => _NOT_UPDATEOPTIONS, 'lang_updatenow' => _NOT_UPDATENOW, 'lang_category' => _NOT_CATEGORY, 'lang_event' => _NOT_EVENT, 'lang_events' => _NOT_EVENTS, 'lang_checkall' => _NOT_CHECKALL, 'lang_notificationmethodis' => _NOT_NOTIFICATIONMETHODIS, 'lang_change' => _NOT_CHANGE, 'editprofile_url' => ICMS_URL . '/edituser.php?uid=' . $icmsUser->getVar('uid')));
 		switch ($icmsUser->getVar('notify_method')) {
-		case XOOPS_NOTIFICATION_METHOD_DISABLE:
-			$xoopsTpl->assign('user_method', _NOT_DISABLE);
-			break;
-		case XOOPS_NOTIFICATION_METHOD_PM:
-			$xoopsTpl->assign('user_method', _NOT_PM);
-			break;
-		case XOOPS_NOTIFICATION_METHOD_EMAIL:
-			$xoopsTpl->assign('user_method', _NOT_EMAIL);
-			break;
+			case XOOPS_NOTIFICATION_METHOD_DISABLE:
+				$xoopsTpl->assign('user_method', _NOT_DISABLE);
+				break;
+			case XOOPS_NOTIFICATION_METHOD_PM:
+				$xoopsTpl->assign('user_method', _NOT_PM);
+				break;
+			case XOOPS_NOTIFICATION_METHOD_EMAIL:
+				$xoopsTpl->assign('user_method', _NOT_EMAIL);
+				break;
 		}
 	} else {
 		$xoops_notification['show'] = 0;

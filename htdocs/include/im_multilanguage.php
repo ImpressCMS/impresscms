@@ -43,7 +43,6 @@ define('EASIESTML_DEFAULT_LANG',0);
 
 // CONFIGURATIONS END
 
-
 // Patch check
 //if( ! defined( 'ICMS_ROOT_PATH' ) || ! defined( 'ICMS_URL' ) || defined( 'XOOPS_SIDEBLOCK_LEFT' ) ) die( "You should patch just after define('ICMS_URL', ... ) in mainfile.php" ) ;
 // moving the inclusing of easiest ml just after the xoopsDB creation because we need the db...
@@ -106,11 +105,11 @@ if( ! preg_match( '?'.preg_quote(ICMS_ROOT_PATH,'?').'(/common/)?' , $_SERVER['S
 }
 
 /**
-* The multilanguage function
-*
-* @param string $s The passed string
-* @return string $s	The (translated?) string
-*/
+ * The multilanguage function
+ *
+ * @param string $s The passed string
+ * @return string $s	The (translated?) string
+ */
 function easiestml( $s )
 {
 	global $easiestml_lang , $icmsUser, $icmsConfigMultilang;
@@ -168,7 +167,6 @@ function easiestml( $s )
 		$s = preg_replace_callback( '/\['.preg_quote($lang).'\].*\[\/'.preg_quote($lang).'(?:\]\<br \/\>|\])/isU' , 'easiestml_check_nevercross' , $s ) ;
 	}
 
-
 	// simple pattern to strip selected lang_tags (remove all tags)
 	$s = preg_replace( '/\[\/?'.preg_quote($easiestml_lang).'\](\<br \/\>)?/i' , '' , $s ) ;
 
@@ -178,19 +176,18 @@ function easiestml( $s )
 	// $s = preg_replace( '/(\['.preg_quote($easiestml_lang).'\])('.$mid_pattern.')(\[\/'.preg_quote($easiestml_lang).'\])/isU' , '$2' , $s ) ;
 
 	/* list($usec, $sec) = explode(" ",microtime());
-	$GIJ_end_time = ((float)$sec + (float)$usec);
-	error_log( ($GIJ_end_time - $GLOBALS['GIJ_start_time']) . "(sec)\n" , 3 , "/tmp/error_log" ) ; */
+	 $GIJ_end_time = ((float)$sec + (float)$usec);
+	 error_log( ($GIJ_end_time - $GLOBALS['GIJ_start_time']) . "(sec)\n" , 3 , "/tmp/error_log" ) ; */
 
 	return $s ;
 }
 
-
 /**
-* Escape textbox function for MultiLanguage
-*
-* @param array $matches Matches array to escape
-* @return array
-*/
+ * Escape textbox function for MultiLanguage
+ *
+ * @param array $matches Matches array to escape
+ * @return array
+ */
 function easiestml_escape_bracket_textbox( $matches )
 {
 	if( preg_match( '/type=["\']?text["\']?/i' , $matches[2] ) ) {
@@ -201,22 +198,22 @@ function easiestml_escape_bracket_textbox( $matches )
 }
 
 /**
-* Escape textarea function for MultiLanguage
-*
-* @param array $matches Matches array to escape
-* @return array
-*/
+ * Escape textarea function for MultiLanguage
+ *
+ * @param array $matches Matches array to escape
+ * @return array
+ */
 function easiestml_escape_bracket_textarea( $matches )
 {
 	return $matches[1].str_replace('[','&#91;',$matches[2]).$matches[3] ;
 }
 
 /**
-* Escape regex function for MultiLanguage
-*
-* @param array $matches Matches array to escape
-* @return array
-*/
+ * Escape regex function for MultiLanguage
+ *
+ * @param array $matches Matches array to escape
+ * @return array
+ */
 function easiestml_check_nevercross( $matches )
 {
 	$answer = '' ;
@@ -226,13 +223,12 @@ function easiestml_check_nevercross( $matches )
 	return $answer;
 }
 
-
 /**
-* Fix for bug #1905485 in tracker
-*
-* @param array $matches Matches array to escape
-* @return array
-*/
+ * Fix for bug #1905485 in tracker
+ *
+ * @param array $matches Matches array to escape
+ * @return array
+ */
 function easiestml_escape_bracket_input( $matches )
 {
 	return str_replace('[','&#91;',$matches[1]) ;

@@ -4,11 +4,11 @@
  *
  * @copyright	The XOOPS Project <http://www.xoops.org/>
  * @copyright	XOOPS_copyrights.txt
- * @copyright	The ImpressCMS Project <http://www.impresscms.org/> 
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
  * @license		LICENSE.txt
  * @package		misc
  * @since		XOOPS
- * @author		The XOOPS Project Community <http://www.xoops.org> 
+ * @author		The XOOPS Project Community <http://www.xoops.org>
  * @author		modified by UnderDog <underdog@impresscms.org>
  * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  * @version		$Id$
@@ -16,11 +16,11 @@
 
 if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 	define("XOOPS_LISTS_INCLUDED",1);
-	
+
 	/**
 	 * Handles all list functions within ImpressCMS
 	 *
-	 * @copyright	The ImpressCMS Project <http://www.impresscms.org/> 
+	 * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
 	 * @license		LICENSE.txt
 	 * @package		misc
 	 * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
@@ -30,7 +30,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of name of directories inside a directory
-		 * 
+		 *
 		 * @param   string	$dirname	name of the directory to scan
 		 * @return  array	 $list	   list of directories in the directory
 		 */
@@ -56,7 +56,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of all files in a directory
-		 * 
+		 *
 		 * @param   string	$dirname	name of the directory to scan for files
 		 * @param   string	$prefix	 prefix to put in front of the file
 		 * @return  array	 $filelist   list of files in the directory
@@ -82,7 +82,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of image file names in a directory
-		 * 
+		 *
 		 * @param   string	$dirname	name of the directory to scan for image files
 		 * @param   string	$prefix	 prefix to put in front of the image file
 		 * @return  array	 $filelist   list of files in the directory
@@ -103,10 +103,9 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			return $filelist;
 		}
 
-
 		/**
 		 * Gets list of font file names in a directory
-		 * 
+		 *
 		 * @param   string	$dirname	name of the directory to scan for font files
 		 * @param   string	$prefix	 prefix to put in front of the font file
 		 * @return  array	 $filelist   list of font files in the directory
@@ -127,10 +126,9 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			return $filelist;
 		}
 
-
 		/**
 		 * Gets list of php file names in a directory
-		 * 
+		 *
 		 * @param   string	$dirname	name of the directory to scan for PHP files
 		 * @param   string	$prefix	 prefix to put in front of the PHP file
 		 * @return  array	 $filelist   list of PHP files in the directory
@@ -181,7 +179,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of administration themes folder from themes directory, excluding any directories that do not have theme_admin.html
-		 * @return	array   
+		 * @return	array
 		 */
 		static public function getAdminThemesList(){
 			$dirtyList1 = $cleanList1 = Array();
@@ -190,27 +188,27 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			$dirtyList2 = IcmsLists::getDirListAsArray(ICMS_MODULES_PATH.'/system/themes/');
 			foreach($dirtyList1 as $item1){
 				if(file_exists(ICMS_THEME_PATH.'/'.$item1.'/theme_admin.html'))
-					$cleanList1[$item1] = $item1;
+				$cleanList1[$item1] = $item1;
 			}
 			foreach($dirtyList2 as $item2){
 				if(file_exists(ICMS_MODULES_PATH.'/system/themes/'.$item2.'/theme.html') || file_exists(ICMS_MODULES_PATH.'/system/themes/'.$item2.'/theme_admin.html'))
-					 $cleanList2[$item2] = $item2;
+				$cleanList2[$item2] = $item2;
 			}
-		  	$cleanList = array_merge($cleanList1, $cleanList2);
+			$cleanList = array_merge($cleanList1, $cleanList2);
 			return $cleanList;
 		}
 
 		/**
 		 * Gets list of themes folder from themes directory, excluding any directories that do not have theme.html
-		 * @return	array   
+		 * @return	array
 		 */
 		static public function getThemesList(){
-		  	$dirtyList = $cleanList = Array();
-		  	$dirtyList = IcmsLists::getDirListAsArray(ICMS_THEME_PATH.'/');
-		  	foreach($dirtyList as $item){
+			$dirtyList = $cleanList = Array();
+			$dirtyList = IcmsLists::getDirListAsArray(ICMS_THEME_PATH.'/');
+			foreach($dirtyList as $item){
 				if(file_exists(ICMS_THEME_PATH.'/'.$item.'/theme.html'))
-		   			$cleanList[$item] = $item;
-	  		}
+				$cleanList[$item] = $item;
+			}
 			return $cleanList;
 		}
 
@@ -222,13 +220,13 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			$dirtyList = IcmsLists::getDirListAsArray(ICMS_ROOT_PATH.'/modules/');
 			foreach($dirtyList as $item){
 				if(file_exists(ICMS_ROOT_PATH.'/modules/'.$item.'/icms_version.php'))
-					$cleanList[$item] = $item;
+				$cleanList[$item] = $item;
 				elseif(file_exists(ICMS_ROOT_PATH.'/modules/'.$item.'/xoops_version.php'))
-					$cleanList[$item] = $item;
+				$cleanList[$item] = $item;
 			}
 			return $cleanList;
 		}
-		
+
 		/**
 		 * Gets a list of active module folders from database
 		 */
@@ -242,26 +240,26 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			}
 			return $cleanList;
 		}
-		
+
 		/**
 		 * Gets list of avatar file names in a certain directory
 		 * if directory is not specified, default directory will be searched
-		 * 
+		 *
 		 * @param   string	$avatar_dir name of the directory to scan for files
 		 * @return  array	 $avatars	list of avatars in the directory
 		 */
 		static public function getAvatarsList($avatar_dir="") {
 			$avatars = array();
 			if ( $avatar_dir != "" )
-				$avatars = IcmsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/avatar/".$avatar_dir."/", $avatar_dir."/");
+			$avatars = IcmsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/avatar/".$avatar_dir."/", $avatar_dir."/");
 			else
-				$avatars = IcmsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/avatar/");
+			$avatars = IcmsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/avatar/");
 			return $avatars;
 		}
 
 		/**
 		 * Gets list of all avatar image files inside default avatars directory
-		 * 
+		 *
 		 * @return  mixed	 $avatars|false  list of avatar files in the directory or false if no avatars
 		 */
 		static public function getAllAvatarsList() {
@@ -269,35 +267,35 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			$dirlist = array();
 			$dirlist = IcmsLists::getDirListAsArray(ICMS_ROOT_PATH."/images/avatar/");
 			if ( count($dirlist) > 0 )
-				foreach ( $dirlist as $dir )
-					$avatars[$dir] =& IcmsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/avatar/".$dir."/", $dir."/");
+			foreach ( $dirlist as $dir )
+			$avatars[$dir] =& IcmsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/avatar/".$dir."/", $dir."/");
 			else
-				return false;
+			return false;
 			return $avatars;
 		}
 
 		/**
-	  	 * Gets list of subject icon image file names in a certain directory
-	  	 * 
-	  	 * If directory is not specified, default directory will be searched.
-	  	 * 
+		 * Gets list of subject icon image file names in a certain directory
+		 *
+		 * If directory is not specified, default directory will be searched.
+		 *
 		 * @param   string	$sub_dir	name of the directory to scan for files
 		 * @return  array	 $subjects   list of subject files in the directory
 		 */
 		static public function getSubjectsList($sub_dir="") {
 			$subjects = array();
 			if($sub_dir != "")
-				$subjects = IcmsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/subject/".$sub_dir, $sub_dir."/");
+			$subjects = IcmsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/subject/".$sub_dir, $sub_dir."/");
 			else
-				$subjects = IcmsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/subject/");
+			$subjects = IcmsLists::getImgListAsArray(ICMS_ROOT_PATH."/images/subject/");
 			return $subjects;
 		}
 
 		/**
 		 * Gets list of language folders inside default language directory
-	 	 * 
-	 	 * @return  array	 $lang_list   list of language files in the directory
-	 	 */
+		 *
+		 * @return  array	 $lang_list   list of language files in the directory
+		 */
 		static public function getLangList() {
 			$lang_list = array();
 			$lang_list = XoopsLists::getDirListAsArray(ICMS_ROOT_PATH."/language/");
@@ -306,10 +304,10 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of editors folders inside editors directory
-	 	 * 
-		 * @param	string	 $type			type of editor	
-	 	 * @return  array	 $editor_list   list of files in the directory
-	 	 */
+		 *
+		 * @param	string	 $type			type of editor
+		 * @return  array	 $editor_list   list of files in the directory
+		 */
 		static public function getEditorsList($type='') {
 			$editor_list = array();
 			if ($type == '') {
@@ -323,21 +321,20 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 
 		/**
 		 * Gets list of enabled editors folders inside editors directory
-		 * 
-	 	 * @return array
-	 	 */
+		 *
+		 * @return array
+		 */
 		static public function getEnabledEditorsList() {
 			global $icmsConfig;
 			return $icmsConfig['editor_enabled'];
 		}
 
-
 		/**
 		 * Gets list of countries
-		 * 
-	 	 * @return  array	 $country_list   list of countries
+		 *
+		 * @return  array	 $country_list   list of countries
 		 */
-		static public function getCountryList() {	
+		static public function getCountryList() {
 			global $icmsConfig;
 			icms_loadLanguageFile('core', 'countries');
 			$country_list = array (
@@ -601,12 +598,11 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			return $country_list;
 		}
 
-
 		/**
 		 * Gets list HTML tags
-		 * 
-	 	 * @return  array	 $html_list
-	 	 */
+		 *
+		 * @return  array	 $html_list
+		 */
 		static public function getHtmlList() {
 			$html_list = array (
 				"a" => "&lt;a&gt;",
@@ -660,16 +656,16 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 				"tt" => "&lt;tt&gt;",
 				"ul" => "&lt;ul&gt;",
 				"var" => "&lt;var&gt;"
-			);
-			asort($html_list);
-			reset($html_list);
-			return $html_list;
+				);
+				asort($html_list);
+				reset($html_list);
+				return $html_list;
 		}
 
 		/**
 		 * Gets list of all user ranks in the database
-		 * 
-	 	 * @return  array	 $ret   list of user ranks
+		 *
+		 * @return  array	 $ret   list of user ranks
 		 */
 		static public function getUserRankList() {
 			$db = Database::getInstance();
@@ -683,7 +679,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 			return $ret;
 		}
 	}
-	
+
 	/**
 	 * XoopsLists
 	 *
@@ -692,8 +688,8 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 	 * @license		LICENSE.txt
 	 * @since		XOOPS
 	 * @author		The XOOPS Project Community <http://www.xoops.org>
-	 * 
-	 * @deprecated  
+	 *
+	 * @deprecated
 	 */
 	class XoopsLists extends IcmsLists { /* For Backwards Compatibility */ }
 }

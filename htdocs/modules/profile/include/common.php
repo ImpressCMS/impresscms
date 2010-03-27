@@ -1,14 +1,14 @@
 <?php
 /**
-* Common file of the module included on all pages of the module
-*
-* @copyright	The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.0
-* @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
-* @package		improfile
-* @version		$Id$
-*/
+ * Common file of the module included on all pages of the module
+ *
+ * @copyright	The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.0
+ * @author		Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * @package		improfile
+ * @version		$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 

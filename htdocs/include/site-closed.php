@@ -36,7 +36,7 @@ if (! $allowed) {
 	require_once ICMS_ROOT_PATH . '/class/template.php';
 	require_once ICMS_ROOT_PATH . '/class/theme.php';
 
-	$xoopsThemeFactory = & new xos_opal_ThemeFactory ( );
+	$xoopsThemeFactory = new xos_opal_ThemeFactory ( );
 	$xoopsThemeFactory->allowedThemes = $icmsConfig ['theme_set_allowed'];
 	$xoopsThemeFactory->defaultTheme = $icmsConfig ['theme_set'];
 	$xoTheme = & $xoopsThemeFactory->createInstance ( array ("plugins" => array ( ) ) );
@@ -45,7 +45,7 @@ if (! $allowed) {
 	$xoopsTpl = & $xoTheme->template;
 
 	$xoopsTpl->assign ( array ('xoops_theme' => $icmsConfig ['theme_set'], 'xoops_imageurl' => ICMS_THEME_URL . '/' . $icmsConfig ['theme_set'] . '/', 'xoops_themecss' => xoops_getcss ( $icmsConfig ['theme_set'] ), 'xoops_requesturi' => htmlspecialchars ( $_SERVER ['REQUEST_URI'], ENT_QUOTES ), 'xoops_sitename' => htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ), 'xoops_slogan' => htmlspecialchars ( $icmsConfig ['slogan'], ENT_QUOTES ), 'xoops_dirname' => @$icmsModule ? $icmsModule->getVar ( 'dirname' ) : 'system', 'xoops_banner' => $icmsConfig ['banners'] ? xoops_getbanner () : '&nbsp;', 'xoops_pagetitle' => isset ( $icmsModule ) && is_object ( $icmsModule ) ? $icmsModule->getVar ( 'name' ) : htmlspecialchars ( $icmsConfig ['slogan'], ENT_QUOTES ), 'lang_login' => _LOGIN, 'lang_username' => _USERNAME, 'lang_password' => _PASSWORD, 'lang_siteclosemsg' => $icmsConfig ['closesite_text'] )
-	 );
+	);
 
 	foreach ( $icmsConfigMetaFooter as $name => $value ) {
 		if (substr ( $name, 0, 5 ) == 'meta_') {
@@ -68,7 +68,7 @@ if (! $allowed) {
 		}
 		$xoopsTpl->assign ( 'icmsCustomtags', $customtags_array );
 	}
-	
+
 	$xoopsTpl->display ( 'db:system_siteclosed.html' );
 	exit ();
 }

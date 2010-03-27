@@ -21,8 +21,8 @@
  */
 
 if (! defined ( "ICMS_ROOT_PATH" ))
-	die ( "ICMS root path not defined" );
-	
+die ( "ICMS root path not defined" );
+
 // this needs to be the latest db version
 define ( 'CONTENT_DB_VERSION', 1 );
 
@@ -31,21 +31,21 @@ define ( 'CONTENT_DB_VERSION', 1 );
  * correct time in update incrementation. Simpy define a function named <direname_db_upgrade_db_version>
  */
 /*function content_db_upgrade_1() {
-}
-function content_db_upgrade_2() {
-}*/
+ }
+ function content_db_upgrade_2() {
+ }*/
 
 function icms_module_update_content($module) {
 	$table = new IcmsDatabasetable ( 'icmscontent' );
 	$db = $GLOBALS ['xoopsDB'];
-	
+
 	$content_handler = xoops_getmodulehandler ( 'content', 'content' );
 	$gperm_handler = & xoops_gethandler ( 'groupperm' );
-	
+
 	if ($table->exists ()) {
-		
+
 		echo '<code><b>Importing data from the core content manager</b></code><br />';
-		
+
 		$sql = "SELECT * FROM " . $db->prefix ( 'icmscontent' );
 		$result = $db->query ( $sql );
 		echo '<code>';
@@ -64,7 +64,7 @@ function icms_module_update_content($module) {
 			$obj->setVar ( 'short_url', $row ['content_menu'] );
 			$obj->setVar ( 'counter', $row ['content_reads'] );
 			$obj->setVar ( 'content_status', $row ['content_status'] );
-			
+				
 			$obj->setVar ( 'content_makesymlink', 1 );
 			$obj->setVar ( 'content_showsubs', 1 );
 			$obj->setVar ( 'content_cancomment', 1 );
@@ -73,9 +73,9 @@ function icms_module_update_content($module) {
 			$obj->setVar ( 'doimage', 1 );
 			$obj->setVar ( 'dosmiley', 1 );
 			$obj->setVar ( 'doxcode', 1 );
-			
+				
 			$content_handler->insert ( $obj, true );
-			
+				
 			/**
 			 * Importing the permissions from the old page to add to the new one and deleting the old permissions
 			 */
@@ -93,19 +93,19 @@ function icms_module_update_content($module) {
 			foreach ( $groups as $group ) {
 				$gperm_handler->addRight ( 'content_read', $obj->getVar ( 'content_id' ), $group, $module->mid () );
 			}
-			
+				
 			/**
 			 * Deleting the symlinks from the old page
 			 */
 			$seo = $obj->handler->makelink ( $obj );
 			$url = str_replace ( ICMS_URL . '/', '', $obj->handler->_moduleUrl . $obj->handler->_itemname . '.php?page=' . $seo );
 			$old_seo = str_replace ( "-", "_", $seo );
-			
+				
 			$symlink_handler = xoops_getmodulehandler ( 'pages', 'system' );
 			$criteria = new CriteriaCompo ( new Criteria ( 'page_url', '%' . $old_seo, 'LIKE' ) );
 			$criteria->add ( new Criteria ( 'page_moduleid', 1 ) );
 			$symlinks_remove = $symlink_handler->getObjects ( $criteria );
-			
+				
 			$criteria = new CriteriaCompo ( new Criteria ( 'page_url', '%' . $url, 'LIKE' ) );
 			$criteria->add ( new Criteria ( 'page_moduleid', $module->mid () ) );
 			$symlinks_added = $symlink_handler->getObjects ( $criteria );
@@ -113,7 +113,7 @@ function icms_module_update_content($module) {
 				$symlinks_added = $symlink;
 				break;
 			}
-			
+				
 			/**
 			 * If needed, changing the startpage to use the new symlink created
 			 */
@@ -140,7 +140,7 @@ function icms_module_update_content($module) {
 		echo '</code>';
 		echo '<code><b>Core Content Manager table successfully dropped.</b></code><br />';
 		$table->dropTable ();
-		
+
 		/**
 		 * Importing the core content manager blocks
 		 */
@@ -150,7 +150,7 @@ function icms_module_update_content($module) {
 		$criteria = new CriteriaCompo ( new Criteria ( 'show_func', 'content_content_display_show' ) );
 		$content_content_block = $icms_block_handler->getObjects ( $criteria, false, true );
 		$content_content_block = $content_content_block [0] ? $content_content_block [0] : false;
-		
+
 		$criteria = new CriteriaCompo ( new Criteria ( 'show_func', 'b_content_show' ) );
 		$content_blocks = $icms_block_handler->getObjects ( $criteria, true, true );
 		foreach ( $content_blocks as $block ) {
@@ -183,16 +183,16 @@ function icms_module_update_content($module) {
 			}
 			$icms_block_handler->delete ( $block, true );
 		}
-		
+
 		//Content Menu Block
 		$criteria = new CriteriaCompo ( new Criteria ( 'show_func', 'content_content_menu_show' ) );
 		$content_menu_block = $icms_block_handler->getObjects ( $criteria, false, true );
 		$content_menu_block = $content_menu_block [0] ? $content_menu_block [0] : false;
-		
+
 		$criteria = new CriteriaCompo ( new Criteria ( 'show_func', 'b_content_menu_show' ) );
 		$criteria->add ( new Criteria ( 'show_func', 'b_content_relmenu_show' ), 'OR' );
 		$content_menu_blocks = $icms_block_handler->getObjects ( $criteria, true, true );
-		
+
 		foreach ( $content_menu_blocks as $block ) {
 			$nb = $content_menu_block;
 			$nb->setVar ( 'visiblein', $block->getVar ( 'visiblein', 'e' ) );
@@ -223,7 +223,7 @@ function icms_module_update_content($module) {
 			}
 			$icms_block_handler->delete ( $block, true );
 		}
-		
+
 		if (is_dir ( ICMS_ROOT_PATH . '/modules/system/admin/content' )) {
 			icms_unlinkRecursive ( ICMS_ROOT_PATH . '/modules/system/admin/content' );
 			echo '<code>Folder removed successfully.</code><br />';
@@ -235,7 +235,7 @@ function icms_module_update_content($module) {
 		/*if (is_file ( ICMS_ROOT_PATH . '/content.php' )) {
 			icms_deleteFile ( ICMS_ROOT_PATH . '/content.php' );
 			echo '<code>File removed successfully.</code><br />';
-		}*/
+			}*/
 		if (is_file ( ICMS_ROOT_PATH . '/modules/system/templates/system_content.html' )) {
 			icms_deleteFile ( ICMS_ROOT_PATH . '/modules/system/templates/system_content.html' );
 			echo '<code>File removed successfully.</code><br />';
@@ -253,23 +253,23 @@ function icms_module_update_content($module) {
 		if (! $result = $db->queryF ( $sql )) {
 			echo 'Error while removing category items.';
 		}
-		
+
 		echo '<code>Data from Core Content Manager successfully imported.</code><br />';
 	}
 	unset ( $table );
-	
+
 	$feedback = ob_get_clean();
 	if (method_exists($module, "setMessage")) {
 		$module->messages = $module->setMessage($feedback);
 	} else {
 		echo $feedback;
 	}
-	
+
 	return true;
 }
 
 function icms_module_install_content($module) {
-	
+
 	return true;
 }
 

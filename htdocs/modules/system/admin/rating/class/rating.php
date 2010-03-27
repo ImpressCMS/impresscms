@@ -1,28 +1,28 @@
 <?php
 /**
-* ImpressCMS Ratings
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		Administration
-* @since		1.2
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ * ImpressCMS Ratings
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		Administration
+ * @since		1.2
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 
 if (! defined ( "ICMS_ROOT_PATH" ))
-	die ( "ImpressCMS root path not defined" );
+die ( "ImpressCMS root path not defined" );
 
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
 include_once ICMS_ROOT_PATH . "/class/plugins.php";
 
 class SystemRating extends IcmsPersistableObject {
-	
+
 	public $_modulePlugin=false;
-	
+
 	function SystemRating(&$handler) {
 		$this->IcmsPersistableObject($handler);
-		
+
 		$this->quickInitVar('ratingid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('dirname', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_RATING_DIRNAME);
 		$this->quickInitVar('item', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_RATING_ITEM);
@@ -37,14 +37,14 @@ class SystemRating extends IcmsPersistableObject {
 		$this->setControl('uid', 'user');
 		$this->setControl('rate', array( 'handler' => 'rating', 'method' => 'getRateList'));
 	}
-	
+
 	function getVar($key, $format = 's') {
 		if ($format == 's' && in_array ( $key, array ( ) )) {
 			return call_user_func ( array ($this, $key ) );
 		}
 		return parent::getVar ( $key, $format );
 	}
-	
+
 	function name() {
 		$ret = icms_getLinkedUnameFromId($this->getVar('uid', 'e'), true, array());
 
@@ -91,11 +91,11 @@ class SystemRating extends IcmsPersistableObject {
 }
 
 class SystemRatingHandler extends IcmsPersistableObjectHandler {
-	
+
 	public $_rateOptions=array();
 	public $_moduleList=false;
 	public $pluginsObject;
-	
+
 	function SystemRatingHandler($db) {
 		$this->IcmsPersistableObjectHandler ( $db, 'rating', 'ratingid', 'rate', '', 'system' );
 		$this->generalSQL = 'SELECT * FROM ' . $this->table . ' AS ' . $this->_itemname . ' INNER JOIN ' . $this->db->prefix('users') . ' AS user ON ' . $this->_itemname . '.uid=user.uid';
@@ -108,7 +108,7 @@ class SystemRatingHandler extends IcmsPersistableObjectHandler {
 
 		$this->pluginsObject = new IcmsPluginsHandler();
 	}
-	
+
 	function getModuleList() {
 		if (!$this->_moduleList) {
 			$moduleArray = $this->pluginsObject->getPluginsArray('rating');

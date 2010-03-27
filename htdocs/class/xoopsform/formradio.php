@@ -1,66 +1,66 @@
 <?php
 /**
-* Creates a form radiobutton attribute (base class)
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	XoopsForms
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Creates a form radiobutton attribute (base class)
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	XoopsForms
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 
 /**
- * 
- * 
+ *
+ *
  * @package     kernel
  * @subpackage  form
- * 
+ *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 /**
  * A Group of radiobuttons
- * 
+ *
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- * 
+ *
  * @package		kernel
  * @subpackage	form
  */
 class XoopsFormRadio extends XoopsFormElement {
 
 	/**
-   * Array of Options
-	 * @var	array	
+	 * Array of Options
+	 * @var	array
 	 * @access	private
 	 */
 	var $_options = array();
 
 	/**
-   * Pre-selected value
-	 * @var	string	
+	 * Pre-selected value
+	 * @var	string
 	 * @access	private
 	 */
 	var $_value = null;
 
 	/**
-   * HTML to separate the elements
-	 * @var	string  
+	 * HTML to separate the elements
+	 * @var	string
 	 * @access  private
 	 */
 	var $_delimeter;
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param	string	$caption	Caption
 	 * @param	string	$name		"name" attribute
 	 * @param	string	$value		Pre-selected value
@@ -76,7 +76,7 @@ class XoopsFormRadio extends XoopsFormElement {
 
 	/**
 	 * Get the "value" attribute
-	 * 
+	 *
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
@@ -86,7 +86,7 @@ class XoopsFormRadio extends XoopsFormElement {
 
 	/**
 	 * Set the pre-selected value
-	 * 
+	 *
 	 * @param	$value	string
 	 */
 	function setValue($value){
@@ -95,7 +95,7 @@ class XoopsFormRadio extends XoopsFormElement {
 
 	/**
 	 * Add an option
-	 * 
+	 *
 	 * @param	string	$value	"value" attribute - This gets submitted as form-data.
 	 * @param	string	$name	"name" attribute - This is displayed. If empty, we use the "value" instead.
 	 */
@@ -109,7 +109,7 @@ class XoopsFormRadio extends XoopsFormElement {
 
 	/**
 	 * Adds multiple options
-	 * 
+	 *
 	 * @param	array	$options	Associative array of value->name pairs.
 	 */
 	function addOptionArray($options){
@@ -124,24 +124,24 @@ class XoopsFormRadio extends XoopsFormElement {
 	 * Get an array with all the options
 	 *
 	 * @param	int     $encode     To sanitizer the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
-   * @return	array   Associative array of value->name pairs
+	 * @return	array   Associative array of value->name pairs
 	 */
 	function getOptions($encode = false) {
-    	if (!$encode) {
-        	return $this->_options;
-    	}
-    	$value = array();
-    	foreach ($this->_options as $val => $name) {
-		    $value[ $encode ? htmlspecialchars($val, ENT_QUOTES) : $val ] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
-    	}
-    	return $value;
+		if (!$encode) {
+			return $this->_options;
+		}
+		$value = array();
+		foreach ($this->_options as $val => $name) {
+			$value[ $encode ? htmlspecialchars($val, ENT_QUOTES) : $val ] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
+		}
+		return $value;
 	}
 
 	/**
 	 * Get the delimiter of this group
-	 * 
+	 *
 	 * @param	bool    $encode To sanitizer the text?
-   * @return	string  The delimiter
+	 * @return	string  The delimiter
 	 */
 	function getDelimeter($encode = false) {
 		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
@@ -149,7 +149,7 @@ class XoopsFormRadio extends XoopsFormElement {
 
 	/**
 	 * Prepare HTML for output
-	 * 
+	 *
 	 * @return	string	HTML
 	 */
 	function render() {

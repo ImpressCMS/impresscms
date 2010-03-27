@@ -1,22 +1,22 @@
 <?php
 /**
-* Admin control panel entry page
-*
-* This page is responsible for
-* - displaying the home of the Control Panel
-* - checking for cache/adminmenu.php
-* - displaying RSS feed of the ImpressCMS Project
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author		modified by marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * Admin control panel entry page
+ *
+ * This page is responsible for
+ * - displaying the home of the Control Panel
+ * - checking for cache/adminmenu.php
+ * - displaying RSS feed of the ImpressCMS Project
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author		modified by marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 
 $xoopsOption['pagetype'] = 'admin';
 include 'mainfile.php';
@@ -32,32 +32,32 @@ else {redirect_header('index.php',2,_AD_NORIGHT);}
 
 // test to see if the system module should be updated, added in 1.2
 if ( icms_getModuleInfo('system')->getDBVersion() < ICMS_SYSTEM_DBVERSION ) {
-    redirect_header('modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system', 1, _CO_ICMS_UPDATE_NEEDED);
+	redirect_header('modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system', 1, _CO_ICMS_UPDATE_NEEDED);
 }
 
-$op = isset($_GET['rssnews']) ? intval($_GET['rssnews']) : 0;
-if(!empty($_GET['op'])) {$op = intval($_GET['op']);}
-if(!empty($_POST['op'])) {$op = intval($_POST['op']);}
+$op = isset($_GET['rssnews']) ? (int) ($_GET['rssnews']) : 0;
+if(!empty($_GET['op'])) {$op = (int) ($_GET['op']);}
+if(!empty($_POST['op'])) {$op = (int) ($_POST['op']);}
 
 if(!file_exists(ICMS_CACHE_PATH.'/adminmenu_'.$icmsConfig['language'].'.php'))
 {
-    xoops_module_write_admin_menu(impresscms_get_adminmenu());
+	xoops_module_write_admin_menu(impresscms_get_adminmenu());
 }
 
 switch($op)
 {
 	case 1:
-		 icms_cp_header();
-		 showRSS();
-	break;
-/*	case 2:
-		xoops_module_write_admin_menu(impresscms_get_adminmenu());
-		redirect_header('javascript:history.go(-1)', 1, _AD_LOGINADMIN);
-	break;*/
+		icms_cp_header();
+		showRSS();
+		break;
+		/*	case 2:
+		 xoops_module_write_admin_menu(impresscms_get_adminmenu());
+		 redirect_header('javascript:history.go(-1)', 1, _AD_LOGINADMIN);
+		 break;*/
 
 	default:
 		icms_cp_header();
-	break;
+		break;
 }
 
 function showRSS()
@@ -67,7 +67,7 @@ function showRSS()
 	$rssurl = $icmsConfigPersona['rss_local'];
 	$rssfile = ICMS_CACHE_PATH.'/adminnews_'._LANGCODE.'.xml';
 
-	include_once(ICMS_ROOT_PATH . '/class/icmssimplerss.php');
+	include_once ICMS_ROOT_PATH . '/class/icmssimplerss.php' ;
 
 	// Create a new instance of the SimplePie object
 	$feed = new IcmsSimpleRss();

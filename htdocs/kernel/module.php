@@ -1,49 +1,49 @@
 <?php
 /**
-* Manage of modules
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Manage of modules
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if(!defined('ICMS_ROOT_PATH')){exit();}
 
 /**
-* @package 	kernel
-* @copyright 	copyright &copy; 2000 XOOPS.org
-**/
+ * @package 	kernel
+ * @copyright 	copyright &copy; 2000 XOOPS.org
+ **/
 
 /**
-* A Module
-*
-* @package	kernel
-* @author	Kazumi Ono 	<onokazu@xoops.org>
-* @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
-**/
+ * A Module
+ *
+ * @package	kernel
+ * @author	Kazumi Ono 	<onokazu@xoops.org>
+ * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
+ **/
 class XoopsModule extends XoopsObject
 {
 	/**
-	* @var string
-	*/
+	 * @var string
+	 */
 	var $modinfo;
 	/**
-	* AdminMenu of the module
-	*
-	* @var array
-	*/
+	 * AdminMenu of the module
+	 *
+	 * @var array
+	 */
 	var $adminmenu;
 	/**
-	* Header menu on admin of the module
-	*
-	* @var array
-	*/
+	 * Header menu on admin of the module
+	 *
+	 * @var array
+	 */
 	var $adminheadermenu;
 	/**
 	 * array for messages
@@ -51,10 +51,10 @@ class XoopsModule extends XoopsObject
 	 * @var array
 	 */
 	var $messages;
-	
+
 	/**
-	* Constructor
-	*/
+	 * Constructor
+	 */
 	function XoopsModule()
 	{
 		$this->XoopsObject();
@@ -74,18 +74,18 @@ class XoopsModule extends XoopsObject
 		$this->initVar('hasnotification', XOBJ_DTYPE_INT, 0, false);
 		$this->initVar('dbversion', XOBJ_DTYPE_INT, 0, false);
 	}
-	
+
 	/**
-	* Load module info
-	*
-	* @param   string  $dirname    Directory Name
-	* @param   boolean $verbose
-	**/
+	 * Load module info
+	 *
+	 * @param   string  $dirname    Directory Name
+	 * @param   boolean $verbose
+	 **/
 	function loadInfoAsVar($dirname, $verbose = true)
 	{
 		if(!isset($this->modinfo)) {$this->loadInfo($dirname, $verbose);}
 		$this->setVar('name', $this->modinfo['name'], true);
-		$this->setVar('version', intval(100 * ($this->modinfo['version'] + 0.001)), true);
+		$this->setVar('version', (int) (100 * ($this->modinfo['version'] + 0.001)), true);
 		$this->setVar('dirname', $this->modinfo['dirname'], true);
 		$hasmain = (isset($this->modinfo['hasMain']) && $this->modinfo['hasMain'] == 1) ? 1 : 0;
 		$hasadmin = (isset($this->modinfo['hasAdmin']) && $this->modinfo['hasAdmin'] == 1) ? 1 : 0;
@@ -102,14 +102,14 @@ class XoopsModule extends XoopsObject
 		// RMV-NOTIFY
 		$this->setVar('hasnotification', $hasnotification);
 	}
-	
+
 	/**
-	* Get module info
-	*
-	* @param   string  	$name
-	* @return  array|string	Array of module information.
-	* If {@link $name} is set, returns a single module information item as string.
-	**/
+	 * Get module info
+	 *
+	 * @param   string  	$name
+	 * @return  array|string	Array of module information.
+	 * If {@link $name} is set, returns a single module information item as string.
+	 **/
 	function &getInfo($name = null)
 	{
 		if(!isset($this->modinfo)) {$this->loadInfo($this->getVar('dirname'));}
@@ -121,23 +121,23 @@ class XoopsModule extends XoopsObject
 		}
 		return $this->modinfo;
 	}
-	
+
 	/**
-	* Retreive the database version of this module
-	*
-	* @return int dbversion
-	**/
+	 * Retreive the database version of this module
+	 *
+	 * @return int dbversion
+	 **/
 	function getDBVersion()
 	{
 		$ret = $this->getVar('dbversion');
 		return $ret;
 	}
-	
+
 	/**
-	* Get a link to the modules main page
-	*
-	* @return	string $ret or FALSE on fail
-	*/
+	 * Get a link to the modules main page
+	 *
+	 * @return	string $ret or FALSE on fail
+	 */
 	function mainLink()
 	{
 		if($this->getVar('hasmain') == 1)
@@ -147,12 +147,12 @@ class XoopsModule extends XoopsObject
 		}
 		return false;
 	}
-	
+
 	/**
-	* Get links to the subpages
-	*
-	* @return	string $ret
-	*/
+	 * Get links to the subpages
+	 *
+	 * @return	string $ret
+	 */
 	function subLink()
 	{
 		$ret = array();
@@ -165,10 +165,10 @@ class XoopsModule extends XoopsObject
 		}
 		return $ret;
 	}
-	
+
 	/**
-	* Load the admin menu for the module
-	*/
+	 * Load the admin menu for the module
+	 */
 	function loadAdminMenu()
 	{
 		if($this->getInfo('adminmenu') && $this->getInfo('adminmenu') != '' && file_exists(ICMS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/'.$this->getInfo('adminmenu')))
@@ -178,36 +178,36 @@ class XoopsModule extends XoopsObject
 			if(isset($headermenu)) {$this->adminheadermenu = & $headermenu;}
 		}
 	}
-	
+
 	/**
-	* Get the admin menu for the module
-	* 
-	* @return	string $this->adminmenu
-	*/
+	 * Get the admin menu for the module
+	 *
+	 * @return	string $this->adminmenu
+	 */
 	function &getAdminMenu()
 	{
 		if(!isset($this->adminmenu)) {$this->loadAdminMenu();}
 		return $this->adminmenu;
 	}
-	
+
 	/**
-	* Get the admin header menu for the module
-	* 
-	* @return	string $this->adminmenu
-	*/
+	 * Get the admin header menu for the module
+	 *
+	 * @return	string $this->adminmenu
+	 */
 	function &getAdminHeaderMenu()
 	{
 		if(!isset($this->adminheadermenu)) {$this->loadAdminMenu();}
 		return $this->adminheadermenu;
 	}
-	
+
 	/**
-	* Load the module info for this module
-	*
-	* @param   string  $dirname    Module directory
-	* @param   bool    $verbose    Give an error on fail?
-	* @return  bool   TRUE if success, FALSE if fail.
-	*/
+	 * Load the module info for this module
+	 *
+	 * @param   string  $dirname    Module directory
+	 * @param   bool    $verbose    Give an error on fail?
+	 * @return  bool   TRUE if success, FALSE if fail.
+	 */
 	function loadInfo($dirname, $verbose = true)
 	{
 		global $icmsConfig;
@@ -227,17 +227,17 @@ class XoopsModule extends XoopsObject
 		$this->modinfo = & $modversion;
 		return true;
 	}
-	
+
 	/**
-	* Search contents within a module
-	*
-	* @param   string  $term
-	* @param   string  $andor  'AND' or 'OR'
-	* @param   integer $limit
-	* @param   integer $offset
-	* @param   integer $userid
-	* @return  mixed   Search result or False if fail.
-	**/
+	 * Search contents within a module
+	 *
+	 * @param   string  $term
+	 * @param   string  $andor  'AND' or 'OR'
+	 * @param   integer $limit
+	 * @param   integer $offset
+	 * @param   integer $userid
+	 * @return  mixed   Search result or False if fail.
+	 **/
 	function search($term = '', $andor = 'AND', $limit = 0, $offset = 0, $userid = 0)
 	{
 		if($this->getVar('hassearch') != 1) {return false;}
@@ -262,17 +262,16 @@ class XoopsModule extends XoopsObject
 		return false;
 	}
 
-
 	/**
-	* Displays the (good old) adminmenu
-	* 
-	* @param int  $currentoption  The current option of the admin menu
-	* @param string  $breadcrumb  The breadcrumb trail
-	* @param bool  $submenus  Show the submenus!
-	* @param int  $currentsub  The current submenu
-	* 
-	* @return datatype  description
-	*/
+	 * Displays the (good old) adminmenu
+	 *
+	 * @param int  $currentoption  The current option of the admin menu
+	 * @param string  $breadcrumb  The breadcrumb trail
+	 * @param bool  $submenus  Show the submenus!
+	 * @param int  $currentsub  The current submenu
+	 *
+	 * @return datatype  description
+	 */
 	function displayAdminMenu($currentoption = 0, $breadcrumb = '', $submenus = false, $currentsub = -1)
 	{
 		global $icmsModule, $icmsConfig;
@@ -284,11 +283,10 @@ class XoopsModule extends XoopsObject
 		$tpl->display(ICMS_ROOT_PATH.'/modules/system/templates/admin/system_adm_modulemenu.html');
 	}
 
-
 	/**#@+
-	* For backward compatibility only!
-	* @deprecated
-	*/
+	 * For backward compatibility only!
+	 * @deprecated
+	 */
 	function mid() {return $this->getVar('mid');}
 	function dirname() {return $this->getVar('dirname');}
 	function name() {return $this->getVar('name');}
@@ -329,56 +327,56 @@ class XoopsModule extends XoopsObject
 }
 
 /**
-* XOOPS module handler class.
-*
-* This class is responsible for providing data access mechanisms to the data source
-* of XOOPS module class objects.
-*
-* @package	kernel
-* @author	Kazumi Ono 	<onokazu@xoops.org>
-* @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
-**/
+ * XOOPS module handler class.
+ *
+ * This class is responsible for providing data access mechanisms to the data source
+ * of XOOPS module class objects.
+ *
+ * @package	kernel
+ * @author	Kazumi Ono 	<onokazu@xoops.org>
+ * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
+ **/
 class XoopsModuleHandler extends XoopsObjectHandler
 {
 	/**
-	* holds an array of cached module references, indexed by module id
-	*
-	* @var    array
-	* @access private
-	**/
+	 * holds an array of cached module references, indexed by module id
+	 *
+	 * @var    array
+	 * @access private
+	 **/
 	var $_cachedModule_mid = array();
 	/**
-	* holds an array of cached module references, indexed by module dirname
-	*
-	* @var    array
-	* @access private
-	*/
+	 * holds an array of cached module references, indexed by module dirname
+	 *
+	 * @var    array
+	 * @access private
+	 */
 	var $_cachedModule_dirname = array();
-	
+
 	/**
-	* Create a new {@link XoopsModule} object
-	*
-	* @param   boolean     $isNew   Flag the new object as "new"
-	* @return  object      {@link XoopsModule} 
-	**/
+	 * Create a new {@link XoopsModule} object
+	 *
+	 * @param   boolean     $isNew   Flag the new object as "new"
+	 * @return  object      {@link XoopsModule}
+	 **/
 	function &create($isNew = true)
 	{
 		$module = new XoopsModule();
 		if($isNew) {$module->setNew();}
 		return $module;
 	}
-	
+
 	/**
-	* Load a module from the database
-	*
-	* @param  	int     $id     ID of the module
-	* @return	object  {@link XoopsModule} FALSE on fail
-	**/
+	 * Load a module from the database
+	 *
+	 * @param  	int     $id     ID of the module
+	 * @return	object  {@link XoopsModule} FALSE on fail
+	 **/
 	function &get($id)
 	{
 		static $_cachedModule_dirname;
 		static $_cachedModule_mid;
-		$id = intval($id);
+		$id = (int) ($id);
 		$module = false;
 		if($id > 0)
 		{
@@ -404,13 +402,13 @@ class XoopsModuleHandler extends XoopsObjectHandler
 		}
 		return $module;
 	}
-	
+
 	/**
-	* Load a module by its dirname
-	*
-	* @param	string    $dirname
-	* @return	object  {@link XoopsModule} FALSE on fail
-	**/
+	 * Load a module by its dirname
+	 *
+	 * @param	string    $dirname
+	 * @return	object  {@link XoopsModule} FALSE on fail
+	 **/
 	function &getByDirname($dirname)
 	{
 		static $_cachedModule_mid;
@@ -436,30 +434,30 @@ class XoopsModuleHandler extends XoopsObjectHandler
 			return $module;
 		}
 	}
-	
+
 	/**
-	* Inserts a module into the database
-	*
-	* @param   object  &$module reference to a {@link XoopsModule}
-	* @return  bool
-	**/
+	 * Inserts a module into the database
+	 *
+	 * @param   object  &$module reference to a {@link XoopsModule}
+	 * @return  bool
+	 **/
 	function insert(&$module)
 	{
 		if(strtolower(get_class($module)) != 'xoopsmodule') {return false;}
 		if(!$module->isDirty()) {return true;}
 		if(!$module->cleanVars()) {return false;}
-		
+
 		/**
-		* Editing the insert and update methods
-		* this is temporaray as will soon be based on a persistableObjectHandler
-		**/
+		 * Editing the insert and update methods
+		 * this is temporaray as will soon be based on a persistableObjectHandler
+		 **/
 		$fieldsToStoreInDB = array();
 		foreach($module->cleanVars as $k => $v)
 		{
 			if($k == 'last_update') {$v = time();}
 			if($module->vars[$k]['data_type'] == XOBJ_DTYPE_INT)
 			{
-				$cleanvars[$k] = intval($v);
+				$cleanvars[$k] = (int) ($v);
 			}
 			elseif(is_array($v))
 			{
@@ -471,7 +469,7 @@ class XoopsModuleHandler extends XoopsObjectHandler
 			}
 			$fieldsToStoreInDB[$k] = $cleanvars[$k];
 		}
-		
+
 		if($module->isNew())
 		{
 			$sql = "INSERT INTO ".$this->db->prefix('modules')." (".implode(',', array_keys($fieldsToStoreInDB)).") VALUES (".implode(',', array_values($fieldsToStoreInDB)).")";
@@ -488,14 +486,14 @@ class XoopsModuleHandler extends XoopsObjectHandler
 			$whereclause = 'mid'." = ".$module->getVar('mid');
 			$sql .= " WHERE ".$whereclause;
 		}
-		
+
 		if(!$result = $this->db->query($sql)) {return false;}
 		if($module->isNew()) {$module->assignVar('mid', $this->db->getInsertId());}
 		if(!empty($this->_cachedModule_dirname[$module->getVar('dirname')])) {unset($this->_cachedModule_dirname[$module->getVar('dirname')]);}
 		if(!empty($this->_cachedModule_mid[$module->getVar('mid')])) {unset($this->_cachedModule_mid[$module->getVar('mid')]);}
 		return true;
 	}
-	
+
 	/**
 	 * Delete a module from the database
 	 *
@@ -504,62 +502,62 @@ class XoopsModuleHandler extends XoopsObjectHandler
 	 **/
 	function delete(&$module) {
 		if(strtolower(get_class($module)) != 'xoopsmodule') {return false;}
-		
-		$sql = sprintf("DELETE FROM %s WHERE mid = '%u'", $this->db->prefix('modules'), intval($module->getVar('mid')));
+
+		$sql = sprintf("DELETE FROM %s WHERE mid = '%u'", $this->db->prefix('modules'), (int) ($module->getVar('mid')));
 		if(!$result = $this->db->query($sql )) {return false;}
-		
+
 		// delete admin permissions assigned for this module
-		$sql = sprintf("DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'", $this->db->prefix('group_permission'), intval($module->getVar ('mid')));
+		$sql = sprintf("DELETE FROM %s WHERE gperm_name = 'module_admin' AND gperm_itemid = '%u'", $this->db->prefix('group_permission'), (int) ($module->getVar ('mid')));
 		$this->db->query($sql);
 		// delete read permissions assigned for this module
-		$sql = sprintf("DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'", $this->db->prefix('group_permission'), intval($module->getVar ('mid')));
+		$sql = sprintf("DELETE FROM %s WHERE gperm_name = 'module_read' AND gperm_itemid = '%u'", $this->db->prefix('group_permission'), (int) ($module->getVar ('mid')));
 		$this->db->query($sql);
-		
-		$sql = sprintf("SELECT block_id FROM %s WHERE module_id = '%u'", $this->db->prefix('block_module_link'), intval($module->getVar('mid')));
+
+		$sql = sprintf("SELECT block_id FROM %s WHERE module_id = '%u'", $this->db->prefix('block_module_link'), (int) ($module->getVar('mid')));
 		if($result = $this->db->query($sql))
 		{
 			$block_id_arr = array();
 			while($myrow = $this->db->fetchArray($result)) {array_push($block_id_arr, $myrow['block_id']);}
 		}
-		
+
 		// loop through block_id_arr
 		if(isset($block_id_arr))
 		{
 			foreach($block_id_arr as $i)
 			{
-				$sql = sprintf("SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'", $this->db->prefix('block_module_link'), intval($module->getVar('mid')), intval($i));
+				$sql = sprintf("SELECT block_id FROM %s WHERE module_id != '%u' AND block_id = '%u'", $this->db->prefix('block_module_link'), (int) ($module->getVar('mid')), (int) ($i));
 				if($result2 = $this->db->query($sql))
 				{
 					if(0 < $this->db->getRowsNum($result2))
 					{
 						// this block has other entries, so delete the entry for this module
-						$sql = sprintf("DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')", $this->db->prefix('block_module_link'), intval($module->getVar('mid')), intval($i));
+						$sql = sprintf("DELETE FROM %s WHERE (module_id = '%u') AND (block_id = '%u')", $this->db->prefix('block_module_link'), (int) ($module->getVar('mid')), (int) ($i));
 						$this->db->query($sql);
 					}
 					else
 					{
 						// this block doesnt have other entries, so disable the block and let it show on top page only. otherwise, this block will not display anymore on block admin page!
-						$sql = sprintf("UPDATE %s SET visible = '0' WHERE bid = '%u'", $this->db->prefix('newblocks'), intval($i));
+						$sql = sprintf("UPDATE %s SET visible = '0' WHERE bid = '%u'", $this->db->prefix('newblocks'), (int) ($i));
 						$this->db->query($sql);
-						$sql = sprintf("UPDATE %s SET module_id = '-1' WHERE module_id = '%u'", $this->db->prefix('block_module_link'), intval($module->getVar('mid')));
+						$sql = sprintf("UPDATE %s SET module_id = '-1' WHERE module_id = '%u'", $this->db->prefix('block_module_link'), (int) ($module->getVar('mid')));
 						$this->db->query($sql);
 					}
 				}
 			}
 		}
-		
+
 		if(!empty($this->_cachedModule_dirname[$module->getVar('dirname')])) {unset($this->_cachedModule_dirname[$module->getVar('dirname')]);}
 		if(!empty($this->_cachedModule_mid[$module->getVar('mid')])) {unset($this->_cachedModule_mid[$module->getVar('mid')]);}
 		return true;
 	}
-	
+
 	/**
-	* Load some modules
-	*
-	* @param   object  $criteria   {@link CriteriaElement}
-	* @param   boolean $id_as_key  Use the ID as key into the array
-	* @return  array
-	**/
+	 * Load some modules
+	 *
+	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   boolean $id_as_key  Use the ID as key into the array
+	 * @return  array
+	 **/
 	function getObjects($criteria = null, $id_as_key = false)
 	{
 		$ret = array();
@@ -590,13 +588,13 @@ class XoopsModuleHandler extends XoopsObjectHandler
 		}
 		return $ret;
 	}
-	
+
 	/**
-	* Count some modules
-	*
-	* @param   object  $criteria   {@link CriteriaElement}
-	* @return  int
-	**/
+	 * Count some modules
+	 *
+	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @return  int
+	 **/
 	function getCount($criteria = null)
 	{
 		$sql = "SELECT COUNT(*) FROM ".$this->db->prefix('modules');
@@ -605,16 +603,16 @@ class XoopsModuleHandler extends XoopsObjectHandler
 		list($count) = $this->db->fetchRow($result);
 		return $count;
 	}
-	
+
 	/**
-	* returns an array of module names
-	*
-	* @param   bool    $criteria
-	* @param   boolean $dirname_as_key
-	*      if true, array keys will be module directory names
-	*      if false, array keys will be module id
-	* @return  array
-	**/
+	 * returns an array of module names
+	 *
+	 * @param   bool    $criteria
+	 * @param   boolean $dirname_as_key
+	 *      if true, array keys will be module directory names
+	 *      if false, array keys will be module id
+	 * @return  array
+	 **/
 	function getList($criteria = null, $dirname_as_key = false)
 	{
 		$ret = array();

@@ -1,22 +1,22 @@
 <?php
 /**
-* Admin page to manage videoss
-*
-* List, add, edit and delete videos objects
-*
-* @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package		profile
-* @version		$Id$
-*/
+ * Admin page to manage videoss
+ *
+ * List, add, edit and delete videos objects
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package		profile
+ * @version		$Id$
+ */
 
 /**
  * Edit a Videos
  *
  * @param int $videos_id Videosid to be edited
-*/
+ */
 function editvideos($videos_id = 0)
 {
 	global $profile_videos_handler, $icmsModule, $icmsAdminTpl;
@@ -58,47 +58,47 @@ $clean_videos_id = isset($_GET['videos_id']) ? (int) $_GET['videos_id'] : 0 ;
  * first argument is found in the array listed in the second argument. Strings
  * are case sensitive and the 3rd argument determines whether type matching is
  * required
-*/
+ */
 if (in_array($clean_op,$valid_op,true)){
-  switch ($clean_op) {
-  	case "mod":
-  	case "changedField":
+	switch ($clean_op) {
+		case "mod":
+		case "changedField":
 
-  		icms_cp_header();
+			icms_cp_header();
 
-  		editvideos($clean_videos_id);
-  		break;
+			editvideos($clean_videos_id);
+			break;
 
-  	case "del":
-  	    include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-          $controller = new IcmsPersistableController($profile_videos_handler);
-  		$controller->handleObjectDeletion();
+		case "del":
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController($profile_videos_handler);
+			$controller->handleObjectDeletion();
 
-  		break;
+			break;
 
-  	default:
+		default:
 
-  		icms_cp_header();
+			icms_cp_header();
 
-  		$icmsModule->displayAdminMenu(11, _AM_PROFILE_VIDEOS);
+			$icmsModule->displayAdminMenu(11, _AM_PROFILE_VIDEOS);
 
-  		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-  		$objectTable = new IcmsPersistableTable($profile_videos_handler);
-  		$objectTable->addColumn(new IcmsPersistableColumn('videos_id'));
-  		$objectTable->addColumn(new IcmsPersistableColumn('uid_owner', false, false, 'getVideoSender'));
-		$objectTable->addColumn(new IcmsPersistableColumn('video_title', _GLOBAL_LEFT, false, 'getVideoTitle'));
-  		$objectTable->addColumn(new IcmsPersistableColumn('video_desc'));
-		$objectTable->addColumn(new IcmsPersistableColumn('youtube_code', 'center', 330, 'getVideoToDisplay', false, false, false));
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
+			$objectTable = new IcmsPersistableTable($profile_videos_handler);
+			$objectTable->addColumn(new IcmsPersistableColumn('videos_id'));
+			$objectTable->addColumn(new IcmsPersistableColumn('uid_owner', false, false, 'getVideoSender'));
+			$objectTable->addColumn(new IcmsPersistableColumn('video_title', _GLOBAL_LEFT, false, 'getVideoTitle'));
+			$objectTable->addColumn(new IcmsPersistableColumn('video_desc'));
+			$objectTable->addColumn(new IcmsPersistableColumn('youtube_code', 'center', 330, 'getVideoToDisplay', false, false, false));
 
-		$objectTable->addQuickSearch(array('video_title', 'video_desc', 'youtube_code'));
-		$objectTable->setDefaultSort('videos_id');
-		$objectTable->setDefaultOrder('DESC');
+			$objectTable->addQuickSearch(array('video_title', 'video_desc', 'youtube_code'));
+			$objectTable->setDefaultSort('videos_id');
+			$objectTable->setDefaultOrder('DESC');
 
-  		$icmsAdminTpl->assign('profile_videos_table', $objectTable->fetch());
-  		$icmsAdminTpl->display('db:profile_admin_videos.html');
-  		break;
-  }
-  icms_cp_footer();
+			$icmsAdminTpl->assign('profile_videos_table', $objectTable->fetch());
+			$icmsAdminTpl->display('db:profile_admin_videos.html');
+			break;
+	}
+	icms_cp_footer();
 }
 /**
  * If you want to have a specific action taken because the user input was invalid,

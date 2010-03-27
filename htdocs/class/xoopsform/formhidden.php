@@ -1,17 +1,17 @@
 <?php
 /**
-* Creates a hidden form attribute
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	XoopsForms
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Creates a hidden form attribute
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	XoopsForms
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
@@ -20,31 +20,31 @@ if (!defined('ICMS_ROOT_PATH')) {
 /**
  * @package     kernel
  * @subpackage  form
- * 
+ *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 /**
  * A hidden field
- * 
+ *
  * @package     kernel
  * @subpackage  form
- * 
+ *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class XoopsFormHidden extends XoopsFormElement {
 
 	/**
-     * Value
-	 * @var	string	
+	 * Value
+	 * @var	string
 	 * @access	private
 	 */
 	var $_value;
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param	string	$name	"name" attribute
 	 * @param	string	$value	"value" attribute
 	 */
@@ -57,7 +57,7 @@ class XoopsFormHidden extends XoopsFormElement {
 
 	/**
 	 * Get the "value" attribute
-	 * 
+	 *
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
@@ -67,7 +67,7 @@ class XoopsFormHidden extends XoopsFormElement {
 
 	/**
 	 * Sets the "value" attribute
-	 * 
+	 *
 	 * @param  $value	string
 	 */
 	function setValue($value) {
@@ -76,11 +76,11 @@ class XoopsFormHidden extends XoopsFormElement {
 
 	/**
 	 * Prepare HTML for output
-	 * 
+	 *
 	 * @return	string	HTML
 	 */
 	function render() {
-    	$ele_name = $this->getName();
+		$ele_name = $this->getName();
 		return "<input type='hidden' name='".$ele_name."' id='".$ele_name."' value='".$this->getValue()."' />";
 	}
 }

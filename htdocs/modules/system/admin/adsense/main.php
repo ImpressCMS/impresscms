@@ -1,17 +1,17 @@
 <?php
 /**
-* ImpressCMS Adsenses
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		Administration
-* @since		1.2
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ * ImpressCMS Adsenses
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		Administration
+ * @since		1.2
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
-    exit("Access Denied");
+	exit("Access Denied");
 }
 
 function editadsense($showmenu = false, $adsenseid = 0, $clone=false)
@@ -51,7 +51,7 @@ $op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?tr
 switch ($op) {
 	case "mod":
 
-		$adsenseid = isset($_GET['adsenseid']) ? intval($_GET['adsenseid']) : 0 ;
+		$adsenseid = isset($_GET['adsenseid']) ? (int) ($_GET['adsenseid']) : 0 ;
 
 		editadsense(true, $adsenseid);
 
@@ -59,27 +59,27 @@ switch ($op) {
 
 	case "clone":
 
-		$adsenseid = isset($_GET['adsenseid']) ? intval($_GET['adsenseid']) : 0 ;
+		$adsenseid = isset($_GET['adsenseid']) ? (int) ($_GET['adsenseid']) : 0 ;
 
 		editadsense(true, $adsenseid, true);
 		break;
 
 	case "addadsense":
-	    /*if(@include_once ICMS_ROOT_PATH ."/class/captcha/captcha.php") {
-            $icmsCaptcha = IcmsCaptcha::instance();
-            if(! $icmsCaptcha->verify() ) {
-                  redirect_header('javascript:history.go(-1);', 3, $icmsCaptcha->getMessage());
-                  exit;
-            }
-		}*/
-        include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-        $controller = new IcmsPersistableController($icms_adsense_handler);
+		/*if(@include_once ICMS_ROOT_PATH ."/class/captcha/captcha.php") {
+		 $icmsCaptcha = IcmsCaptcha::instance();
+		 if(! $icmsCaptcha->verify() ) {
+		 redirect_header('javascript:history.go(-1);', 3, $icmsCaptcha->getMessage());
+		 exit;
+		 }
+		 }*/
+		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+		$controller = new IcmsPersistableController($icms_adsense_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_ADSENSES_CREATED, _CO_ICMS_ADSENSES_MODIFIED);
 		break;
 
 	case "del":
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-	    $controller = new IcmsPersistableController($icms_adsense_handler);
+		$controller = new IcmsPersistableController($icms_adsense_handler);
 		$controller->handleObjectDeletion();
 
 		break;

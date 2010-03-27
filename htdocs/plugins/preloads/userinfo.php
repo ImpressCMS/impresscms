@@ -36,7 +36,7 @@ class IcmsPreloadUserInfo extends IcmsPreloadItem {
 			$criteria = new CriteriaCompo ( new Criteria ( 'read_msg', 0 ) );
 			$criteria->add ( new Criteria ( 'to_userid', $xoopsUser->getVar ( 'uid' ) ) );
 			$user ['new_messages'] = $pm_handler->getCount ( $criteria );
-			
+				
 			$xoopsTpl->assign ( 'user', $user );
 		}
 	}

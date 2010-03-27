@@ -1,16 +1,16 @@
 <?php
 /**
-* Admin constants
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package	Administration
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @version		$Id$
-*/
+ * Admin constants
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package	Administration
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @version		$Id$
+ */
 /**
  * Separating page level doc block from elements
  */

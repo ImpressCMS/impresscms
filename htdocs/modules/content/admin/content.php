@@ -19,9 +19,9 @@
  */
 function editcontent($content_id = 0, $clone = false, $content_pid = false) {
 	global $content_content_handler, $icmsAdminTpl, $xoopsModule;
-	
+
 	$contentObj = $content_content_handler->get ( $content_id );
-	
+
 	if (! $clone && ! $contentObj->isNew ()) {
 		$contentObj->hideFieldFromForm ( array ('content_published_date', 'content_updated_date', 'content_makesymlink' ) );
 		$contentObj->setVar ( 'content_udated_date', time () );
@@ -30,8 +30,8 @@ function editcontent($content_id = 0, $clone = false, $content_pid = false) {
 		$sform->assign ( $icmsAdminTpl );
 	} elseif (! $contentObj->isNew () && $clone) {
 		$contentObj->hideFieldFromForm ( array ('content_published_date', 'content_updated_date' ) );
-	    $contentObj->setVar('content_id',0);
-	    $contentObj->setNew();
+		$contentObj->setVar('content_id',0);
+		$contentObj->setNew();
 		$xoopsModule->displayAdminMenu ( 0, _AM_CONTENT_CONTENTS . " > " . _AM_CONTENT_CONTENT_CLONE );
 		$sform = $contentObj->getForm ( _AM_CONTENT_CONTENT_CLONE, 'addcontent' );
 		$sform->assign ( $icmsAdminTpl );
@@ -59,9 +59,9 @@ $clean_op = '';
 $valid_op = array ('mod', 'changedField', 'addcontent', 'del', 'clone', 'view', '' );
 
 if (isset ( $_GET ['op'] ))
-	$clean_op = htmlentities ( $_GET ['op'] );
+$clean_op = htmlentities ( $_GET ['op'] );
 if (isset ( $_POST ['op'] ))
-	$clean_op = htmlentities ( $_POST ['op'] );
+$clean_op = htmlentities ( $_POST ['op'] );
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
 $clean_content_id = isset ( $_GET ['content_id'] ) ? ( int ) $_GET ['content_id'] : 0;
@@ -77,110 +77,110 @@ $clean_content_pid = isset ( $_POST ['content_pid'] ) ? ( int ) $_POST ['content
  */
 if (in_array ( $clean_op, $valid_op, true )) {
 	switch ( $clean_op) {
-		
+
 		case "clone" :
 			xoops_cp_header ();
 			editcontent ( $clean_content_id, true );
-		break;
-		
+			break;
+
 		case "mod" :
 			icms_cp_header ();
 			editcontent ( $clean_content_id, false, $clean_content_pid );
-		break;
-		
+			break;
+
 		case "addcontent" :
 			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
 			$controller = new IcmsPersistableController ( $content_content_handler );
 			$controller->storeFromDefaultForm ( _AM_CONTENT_CONTENT_CREATED, _AM_CONTENT_CONTENT_MODIFIED );
-		
-		break;
-		
+
+			break;
+
 		case "del" :
 			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
 			$controller = new IcmsPersistableController ( $content_content_handler );
 			$controller->handleObjectDeletion ();
-		
-		break;
+
+			break;
 
 		case "view" :
 			$contentObj = $content_content_handler->get ( $clean_content_id );
-			
+				
 			xoops_cp_header ();
-			
+				
 			$xoopsModule->displayAdminMenu ( 0, _AM_CONTENT_CONTENTS . " > " . _PREVIEW .' > '. $contentObj->getVar('content_title') );
-			
+				
 			$icmsAdminTpl->assign ( 'content_content_singleview', $contentObj->displaySingleObject ( true, false, array('edit','delete') ) );
 			$icmsAdminTpl->display ( 'db:content_admin_content.html' );
-		
-		break;
-		
+
+			break;
+
 		case "changedField" :
-		    foreach ($_POST['ContentContent_objects'] as $k=>$v){
-		       $changed = false;
-		       $obj = $content_content_handler->get($v);
-		       if ($obj->getVar('content_status','e') != $_POST['content_status'][$k]){
-		           $obj->setVar('content_status',intval($_POST['content_status'][$k]));
-		           $changed = true;
-		       }
-		       if ($obj->getVar('content_visibility','e') != $_POST['content_visibility'][$k]){
-		           $obj->setVar('content_visibility',intval($_POST['content_visibility'][$k]));
-		           $changed = true;
-		       }
-		       if ($changed){
-		           $content_content_handler->insert($obj);
-		       }
-		    }
-		    redirect_header('content.php',2,_AM_CONTENT_CONTENT_MODIFIED);
-		
-		break;
-		
+			foreach ($_POST['ContentContent_objects'] as $k=>$v){
+				$changed = false;
+				$obj = $content_content_handler->get($v);
+				if ($obj->getVar('content_status','e') != $_POST['content_status'][$k]){
+					$obj->setVar('content_status', (int) ($_POST['content_status'][$k]));
+					$changed = true;
+				}
+				if ($obj->getVar('content_visibility','e') != $_POST['content_visibility'][$k]){
+					$obj->setVar('content_visibility', (int) ($_POST['content_visibility'][$k]));
+					$changed = true;
+				}
+				if ($changed){
+					$content_content_handler->insert($obj);
+				}
+			}
+			redirect_header('content.php',2,_AM_CONTENT_CONTENT_MODIFIED);
+
+			break;
+
 		default :
-			
+				
 			icms_cp_header ();
-			
+				
 			$xoopsModule->displayAdminMenu ( 0, _AM_CONTENT_CONTENTS );
-			
+				
 			include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php";
-			
+				
 			$criteria = new CriteriaCompo ( );
 			$criteria->add ( new Criteria ( 'content_pid', $clean_content_pid ) );
-						
+
 			$objectTable = new IcmsPersistableTable ( $content_content_handler, $criteria );
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_title',false,false,'getPreviewItemLink' ) );
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_subs', 'center', 100 ) );
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'counter', 'center', 100 ) );
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_status', 'center', 150, 'getContent_statusControl' ) );
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_visibility', 'center', 150, 'getContent_visibleControl' ) );
-			
+				
 			$objectTable->addColumn ( new IcmsPersistableColumn ( 'content_published_date', 'center', 150 ) );
-			
+				
 			$objectTable->addActionButton('changedField', false, _SUBMIT);
 			$objectTable->addCustomAction('getViewItemLink');
 			$objectTable->addCustomAction('getCloneItemLink');
-			
+				
 			$objectTable->addIntroButton ( 'addcontent', 'content.php?op=mod'.($clean_content_pid?'&amp;content_pid='.$clean_content_pid:''), _AM_CONTENT_CONTENT_CREATE );
-			
+				
 			$objectTable->addQuickSearch ( array ('content_title', 'content_body' ) );
-  			
+				
 			$objectTable->addFilter('content_status', 'getContent_statusArray');
-  			$objectTable->addFilter('content_uid', 'getPostersArray');
-  			$objectTable->addFilter('content_pid', 'getContentList');
-  			$objectTable->addFilter('content_visibility', 'getContent_visibleArray');
+			$objectTable->addFilter('content_uid', 'getPostersArray');
+			$objectTable->addFilter('content_pid', 'getContentList');
+			$objectTable->addFilter('content_visibility', 'getContent_visibleArray');
 			$objectTable->addFilter ( 'content_tags', 'getContent_tagsArray' );
-			
-  			$objectTable->addHeader ( '<p style="margin-bottom: 10px;">' . $content_content_handler->getBreadcrumbForPid ( $clean_content_pid ) . '</p>' );
-  			
-  			$icmsAdminTpl->assign ( 'content_content_table', $objectTable->fetch () );
-			
+				
+			$objectTable->addHeader ( '<p style="margin-bottom: 10px;">' . $content_content_handler->getBreadcrumbForPid ( $clean_content_pid ) . '</p>' );
+				
+			$icmsAdminTpl->assign ( 'content_content_table', $objectTable->fetch () );
+				
 			$icmsAdminTpl->display ( 'db:content_admin_content.html' );
-		break;
+			break;
 	}
 	xoops_cp_footer ();
 }else{
-/**
- * If you want to have a specific action taken because the user input was invalid,
- * place it at this point. Otherwise, a blank page will be displayed
- */
-    redirect_header(ICMS_URL,'2',_NOPERM);
+	/**
+	 * If you want to have a specific action taken because the user input was invalid,
+	 * place it at this point. Otherwise, a blank page will be displayed
+	 */
+	redirect_header(ICMS_URL,'2',_NOPERM);
 }
 ?>

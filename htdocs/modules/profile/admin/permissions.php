@@ -20,23 +20,23 @@ xoops_cp_header();
 icms_adminMenu(6, "");
 $op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : "edit";
 switch ($op) {
-    case "visibility":
-    header("Location: visibility.php");
-    break;
-    
-    case "edit":
-    $title_of_form = _PROFILE_AM_PROF_EDITABLE;
-    $perm_name = "profile_edit";
-    $restriction = "field_edit";
-    $anonymous = false;
-    break;
-    
-    case "search":
-    $title_of_form = _PROFILE_AM_PROF_SEARCH;
-    $perm_name = "profile_search";
-    $restriction = "";
-    $anonymous = true;
-    break;
+	case "visibility":
+		header("Location: visibility.php");
+		break;
+
+	case "edit":
+		$title_of_form = _PROFILE_AM_PROF_EDITABLE;
+		$perm_name = "profile_edit";
+		$restriction = "field_edit";
+		$anonymous = false;
+		break;
+
+	case "search":
+		$title_of_form = _PROFILE_AM_PROF_SEARCH;
+		$perm_name = "profile_search";
+		$restriction = "";
+		$anonymous = true;
+		break;
 }
 
 include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
@@ -58,14 +58,14 @@ $profile_handler =& icms_getmodulehandler( 'profile', basename(  dirname(  dirna
 $fields = $profile_handler->loadFields();
 
 if ($op != "search") {
-    foreach (array_keys($fields) as $i) {
-        if ($restriction == "" || $fields[$i]->getVar($restriction)) {
-            $form->addItem($fields[$i]->getVar('fieldid'), $fields[$i]->getVar('field_title'));
-        }
-    }
+	foreach (array_keys($fields) as $i) {
+		if ($restriction == "" || $fields[$i]->getVar($restriction)) {
+			$form->addItem($fields[$i]->getVar('fieldid'), $fields[$i]->getVar('field_title'));
+		}
+	}
 }
 else {
-    $searchable_types = array('textbox',
+	$searchable_types = array('textbox',
     'select',
     'radio',
     'yesno',
@@ -73,11 +73,11 @@ else {
     'datetime',
     'timezone',
     'language');
-    foreach (array_keys($fields) as $i) {
-        if (in_array($fields[$i]->getVar('field_type'), $searchable_types)) {
-            $form->addItem($fields[$i]->getVar('fieldid'), $fields[$i]->getVar('field_title'));
-        }
-    }
+	foreach (array_keys($fields) as $i) {
+		if (in_array($fields[$i]->getVar('field_type'), $searchable_types)) {
+			$form->addItem($fields[$i]->getVar('fieldid'), $fields[$i]->getVar('field_title'));
+		}
+	}
 }
 $form->display();
 xoops_cp_footer();

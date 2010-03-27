@@ -1,35 +1,35 @@
 <?php
 /**
-* IcmsPermission
-*
-* This class easily manage the permission affected to an IcmsPersistablebject
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * IcmsPermission
+ *
+ * This class easily manage the permission affected to an IcmsPersistablebject
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsPersistableObject
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
 
 class IcmsPersistablePermissionHandler extends XoopsObjectHandler
 {
-    var $handler;
-    function IcmsPersistablePermissionHandler($handler) {
-        $this->handler=$handler;
-    }
+	var $handler;
+	function IcmsPersistablePermissionHandler($handler) {
+		$this->handler=$handler;
+	}
 
 	/*
-	* Returns permissions for a certain type
-	*
-	* @param string $type "global", "forum" or "topic" (should perhaps have "post" as well - but I don't know)
-	* @param int $id id of the item (forum, topic or possibly post) to get permissions for
-	*
-	* @return array
-	*/
+	 * Returns permissions for a certain type
+	 *
+	 * @param string $type "global", "forum" or "topic" (should perhaps have "post" as well - but I don't know)
+	 * @param int $id id of the item (forum, topic or possibly post) to get permissions for
+	 *
+	 * @return array
+	 */
 	function getGrantedGroups($gperm_name, $id = null) {
 		static $groups;
 
@@ -86,13 +86,13 @@ class IcmsPersistablePermissionHandler extends XoopsObjectHandler
 	}
 
 	/*
-	* Returns permissions for a certain type
-	*
-	* @param string $type "global", "forum" or "topic" (should perhaps have "post" as well - but I don't know)
-	* @param int $id id of the item (forum, topic or possibly post) to get permissions for
-	*
-	* @return array
-	*/
+	 * Returns permissions for a certain type
+	 *
+	 * @param string $type "global", "forum" or "topic" (should perhaps have "post" as well - but I don't know)
+	 * @param int $id id of the item (forum, topic or possibly post) to get permissions for
+	 *
+	 * @return array
+	 */
 	function getGrantedItems($gperm_name, $id = null) {
 		global $icmsUser;
 		static $permissions;
@@ -125,15 +125,15 @@ class IcmsPersistablePermissionHandler extends XoopsObjectHandler
 	}
 
 	/**
-	* Saves permissions for the selected category
-	*
-	*  saveCategory_Permissions()
-	*
-	* @param array $groups : group with granted permission
-	* @param integer $categoryID : categoryID on which we are setting permissions for Categories and Forums
-	* @param string $perm_name : name of the permission
-	* @return boolean : TRUE if the no errors occured
-	**/
+	 * Saves permissions for the selected category
+	 *
+	 *  saveCategory_Permissions()
+	 *
+	 * @param array $groups : group with granted permission
+	 * @param integer $categoryID : categoryID on which we are setting permissions for Categories and Forums
+	 * @param string $perm_name : name of the permission
+	 * @return boolean : TRUE if the no errors occured
+	 **/
 
 	function saveItem_Permissions($groups, $itemid, $perm_name)
 	{
@@ -158,19 +158,19 @@ class IcmsPersistablePermissionHandler extends XoopsObjectHandler
 	}
 
 	/**
-	* Delete all permission for a specific item
-	*
-	*  deletePermissions()
-	*
-	* @param integer $itemid : id of the item for which to delete the permissions
-	* @return boolean : TRUE if the no errors occured
-	**/
-	
+	 * Delete all permission for a specific item
+	 *
+	 *  deletePermissions()
+	 *
+	 * @param integer $itemid : id of the item for which to delete the permissions
+	 * @return boolean : TRUE if the no errors occured
+	 **/
+
 	/**
 	 * @todo not completed....
 	 */
-/*	function deletePermissions($itemid, $gperm_name)
-	{
+	/*	function deletePermissions($itemid, $gperm_name)
+	 {
 		global $icmsModule;
 
 		$icmsModule =& smartsection_getModuleInfo();
@@ -179,19 +179,18 @@ class IcmsPersistablePermissionHandler extends XoopsObjectHandler
 		$module_id = $icmsModule->getVar('mid')   ;
 		$gperm_handler =& xoops_gethandler('groupperm');
 
-
 		$gperm_handler->deleteByModule($module_id, $gperm_name, $itemid);
 
 		return $result;
-	}
-*/
+		}
+		*/
 	/**
-	* Checks if the user has access to a specific permission on a given object
-	*
-	* @param string $gperm_name name of the permission to test
-	* @param int $gperm_itemid id of the object to check
-	* @return boolean : TRUE if user has access, FALSE if not
-	**/
+	 * Checks if the user has access to a specific permission on a given object
+	 *
+	 * @param string $gperm_name name of the permission to test
+	 * @param int $gperm_itemid id of the object to check
+	 * @return boolean : TRUE if user has access, FALSE if not
+	 **/
 	function accessGranted($gperm_name, $gperm_itemid) {
 		global $icmsUser;
 

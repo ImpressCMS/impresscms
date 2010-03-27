@@ -12,13 +12,13 @@
 
 /**
  * Admin Warnings Block
- *
- * @copyright The ImpressCMS Project <http://www.impresscms.org>
+ * 
+ * @copyright The ImpressCMS Project <http://www.impresscms.org> 
  * @license GNU GPL v2
  *
  * @since ImpressCMS 1.2
  *
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ * @author Gustavo Pilla (aka nekro) <gpilla@nubee.com.ar>
  *
  * @return array
  *
@@ -51,9 +51,9 @@ function b_system_admin_warnings_show(){
 		list($modid) = $xoopsDB->FetchRow($result1);
 		$protector_is_active = '0';
 		if (!is_null($modid)){
-		$sql2 = "SELECT isactive FROM `".$xoopsDB->prefix('modules')."` WHERE mid =".$modid;
-		$result2 = $xoopsDB->query($sql2);
-		list($protector_is_active) = $xoopsDB->FetchRow($result2);
+			$sql2 = "SELECT isactive FROM `".$xoopsDB->prefix('modules')."` WHERE mid =".$modid;
+			$result2 = $xoopsDB->query($sql2);
+			list($protector_is_active) = $xoopsDB->FetchRow($result2);
 		}
 	}
 	if($protector_is_active == 0){
@@ -63,11 +63,11 @@ function b_system_admin_warnings_show(){
 
 	// ###### Output warn messages for correct functionality  ######
 	if(!is_writable(ICMS_CACHE_PATH))
-		array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH)), '', false);
+	array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH)), '', false);
 	if(!is_writable(ICMS_UPLOAD_PATH))
-		array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_UPLOAD_PATH)), '', false);
+	array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_UPLOAD_PATH)), '', false);
 	if(!is_writable(ICMS_COMPILE_PATH))
-		array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_COMPILE_PATH)), '', false);
+	array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_COMPILE_PATH)), '', false);
 
 	if(count($block['msg'] ) > 0){
 		return $block;
@@ -94,7 +94,7 @@ function b_system_admin_cp_show(){
 
 	// Loading System Configuration Links
 	if( is_object( $icmsUser ) )
-		$groups = $icmsUser->getGroups();
+		$groups = $icmsUser->getGroups();	
 	else
 		$groups = array();
 	$all_ok = false;
@@ -117,11 +117,11 @@ function b_system_admin_cp_show(){
 	foreach($dirlist as $file){
 		$mod_version_file = 'xoops_version.php';
 		if(file_exists($admin_dir.'/'.$file.'/icms_version.php')){
-		$mod_version_file = 'icms_version.php';
+			$mod_version_file = 'icms_version.php';
 		}
 		include $admin_dir.'/'.$file.'/'.$mod_version_file;
 		if($modversion['hasAdmin']){
-			$category = isset($modversion['category']) ? intval($modversion['category']) : 0;
+			$category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;
 			if(false != $all_ok || in_array($modversion['category'], $ok_syscats)){
 				$sysmod = array('title' => $modversion['name'], 'link' => ICMS_URL.'/modules/system/admin.php?fct='.$file, 'image' => ICMS_URL.'/modules/system/admin/'.$file.'/images/'.$file.'_big.png');
 				array_push($block['sysmod'], $sysmod);
@@ -130,7 +130,7 @@ function b_system_admin_cp_show(){
 		unset($modversion);
 	}
 	if(count($block['sysmod']) > 0)
-		return $block;
+	return $block;
 }
 
 /**
@@ -204,8 +204,9 @@ function b_system_admin_modules_show(){
 		}
 
 	}
+
 	// If there is any module listed, then show the block.
 	if(count($block['mods'] > 0))
-		return $block;
+	return $block;
 }
 ?>

@@ -26,7 +26,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 	$op = (isset ( $_GET ['op'] )) ? trim ( StopXSS ( $_GET ['op'] ) ) : ((isset ( $_POST ['op'] )) ? trim ( StopXSS ( $_POST ['op'] ) ) : 'list');
 
 	if (isset ( $_GET ['confcat_id'] )) {
-		$confcat_id = intval ( $_GET ['confcat_id'] );
+		$confcat_id = (int) ( $_GET ['confcat_id'] );
 	}
 
 	if ($op == 'list') {
@@ -273,7 +273,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					if (count ( $modules ) > 0) {
 						$ele = new XoopsFormElementTray ( $title, '<br />' );
 						foreach ( array_keys ( $modules ) as $mid ) {
-							$c_val = isset ( $currrent_val [$mid] ) ? intval ( $currrent_val [$mid] ) : null;
+							$c_val = isset ( $currrent_val [$mid] ) ? (int) ( $currrent_val [$mid] ) : null;
 							$selform = new XoopsFormSelect ( $modules [$mid]->getVar ( 'name' ), $config [$i]->getVar ( 'conf_name' ) . "[$mid]", $c_val );
 							$selform->addOptionArray ( $cache_options );
 							$ele->addElement ( $selform );
@@ -360,7 +360,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 
 	if ($op == 'showmod') {
 		$config_handler = & xoops_gethandler ( 'config' );
-		$mod = isset ( $_GET ['mod'] ) ? intval ( $_GET ['mod'] ) : 0;
+		$mod = isset ( $_GET ['mod'] ) ? (int) ( $_GET ['mod'] ) : 0;
 		if (empty ( $mod )) {
 			header ( 'Location: admin.php?fct=preferences' );
 			exit ();
@@ -654,7 +654,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		unset($saved_config_items);
 
 		if (! empty ( $use_mysession ) && $xoopsConfig ['use_mysession'] == 0 && $session_name != '') {
-			setcookie ( $session_name, session_id (), time () + (60 * intval ( $session_expire )), '/', '', 0 );
+			setcookie ( $session_name, session_id (), time () + (60 * (int) ( $session_expire )), '/', '', 0 );
 		}
 
 		// Clean cached files, may take long time

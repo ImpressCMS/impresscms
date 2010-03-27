@@ -1,16 +1,16 @@
 <?php
 
 /**
-* This class is responsible for providing operations to an object for managing the object's manipulation
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		1.1
-* @author		Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * This class is responsible for providing operations to an object for managing the object's manipulation
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsPersistableObject
+ * @since		1.1
+ * @author		Original idea by Jan Keller Pedersen <mithrandir@xoops.org> - IDG Danmark A/S <www.idg.dk>
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
@@ -53,7 +53,7 @@ class IcmsPersistableController {
 							$icmsObj->setErrors("An error occured during the afterFileUnlink event");
 						}
 					}
-				break;
+					break;
 
 				case XOBJ_DTYPE_URLLINK:
 					$linkObj = $icmsObj->getUrlLinkObj($key);
@@ -66,7 +66,7 @@ class IcmsPersistableController {
 					}
 					//todo: catch errors
 					$icmsObj->setVar($key, $linkObj->getVar('urllinkid'));
-				break;
+					break;
 
 				case XOBJ_DTYPE_FILE:
 					if(!isset($_FILES['upload_'.$key]['name']) || $_FILES['upload_'.$key]['name'] == ''){
@@ -84,7 +84,7 @@ class IcmsPersistableController {
 							}
 						}
 					}
-				break;
+					break;
 
 				case XOBJ_DTYPE_STIME:
 				case XOBJ_DTYPE_MTIME:
@@ -94,13 +94,13 @@ class IcmsPersistableController {
 						$value = strtotime($_POST[$key]['date']) + $_POST[$key]['time'];
 					}else {
 						$value = strtotime($_POST[$key]);
-		 			}
+					}
 					$icmsObj->setVar($key, $value);
-				break;
+					break;
 
 				default:
 					$icmsObj->setVar($key, $_POST[$key]);
-				break;
+					break;
 			}
 		}
 	}
@@ -119,8 +119,8 @@ class IcmsPersistableController {
 		// Check if there were uploaded files
 		$uploaderResult = true;
 		if (isset($_POST['icms_upload_image']) || isset($_POST['icms_upload_file'])) {
-		include_once ICMS_ROOT_PATH.'/class/uploader.php';	
-		$uploaderObj = new XoopsMediaUploader($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
+			include_once ICMS_ROOT_PATH.'/class/uploader.php';
+			$uploaderObj = new XoopsMediaUploader($icmsObj->getImageDir(true), $this->handler->_allowedMimeTypes, $this->handler->_maxFileSize, $this->handler->_maxWidth, $this->handler->_maxHeight);
 			foreach ($_FILES as $name=>$file_array) {
 				if (isset ($file_array['name']) && $file_array['name'] != "" && in_array(str_replace('upload_', '', $name), array_keys($icmsObj->vars))) {
 					if ($uploaderObj->fetchMedia($name)) {
@@ -137,7 +137,7 @@ class IcmsPersistableController {
 								$fileObj->setVar('url', $object_fileurl.$uploaderObj->getSavedFileName());
 								$fileObj->setVar('caption', $_POST['caption_'.$related_field]);
 								$fileObj->setVar('description', $_POST['desc_'.$related_field]);
-					   			$icmsObj->storeFileObj($fileObj);
+								$icmsObj->storeFileObj($fileObj);
 								//todo : catch errors
 								$icmsObj->setVar($related_field, $fileObj->getVar('fileid'));
 
@@ -213,7 +213,7 @@ class IcmsPersistableController {
 	 */
 	function &storeFromDefaultForm($created_success_msg, $modified_success_msg, $redirect_page=false, $debug=false, $x_param = false)
 	{
-		$objectid = (isset($_POST[$this->handler->keyName])) ? intval($_POST[$this->handler->keyName]) : 0;
+		$objectid = (isset($_POST[$this->handler->keyName])) ? (int) ($_POST[$this->handler->keyName]) : 0;
 		if ($debug) {
 			if($x_param){
 				$icmsObj = $this->handler->getD($objectid, true,  $x_param);
@@ -283,7 +283,7 @@ class IcmsPersistableController {
 	{
 		global $impresscms;
 
-		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? intval($_REQUEST[$this->handler->keyName]) : 0;
+		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? (int) ($_REQUEST[$this->handler->keyName]) : 0;
 		$icmsObj = $this->handler->get($objectid);
 
 		if ($icmsObj->isNew()) {
@@ -311,10 +311,10 @@ class IcmsPersistableController {
 
 			$hiddens = array(
 						'op' => $op,
-						$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
+			$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
 						'confirm' => 1,
 						'redirect_page' => $impresscms->urls['previouspage']
-					);
+			);
 			if ($this->handler->_moduleName == 'system') {
 				$hiddens['fct'] = isset($_GET['fct']) ? $_GET['fct'] : false;
 			}
@@ -329,7 +329,7 @@ class IcmsPersistableController {
 	function handleObjectDeletionFromUserSide($confirm_msg = false, $op='del') {
 		global $xoopsTpl, $impresscms;
 
-		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? intval($_REQUEST[$this->handler->keyName]) : 0;
+		$objectid = (isset($_REQUEST[$this->handler->keyName])) ? (int) ($_REQUEST[$this->handler->keyName]) : 0;
 		$icmsObj = $this->handler->get($objectid);
 
 		if ($icmsObj->isNew()) {
@@ -404,10 +404,10 @@ class IcmsPersistableController {
 
 		/*if ($seoMode == 'rewrite') {
 			$ret = ICMS_URL . '/' . $seoModuleName . '.' . $this->handler->_itemname . ($seoIncludeId ? '.'	. $icmsObj->getVar($this->handler->keyName) : ''). '/' . $icmsObj->getVar('short_url') . '.html';
-		} else if ($seoMode == 'pathinfo') {
+			} else if ($seoMode == 'pathinfo') {
 			$ret = SMARTOBJECT_URL . 'seo.php/' . $seoModuleName . '.' . $this->handler->_itemname . ($seoIncludeId ? '.'	. $icmsObj->getVar($this->handler->keyName) : ''). '/' . $icmsObj->getVar('short_url') . '.html';
-		} else {
-		*/	$ret = $this->handler->_moduleUrl . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+			} else {
+			*/	$ret = $this->handler->_moduleUrl . $this->handler->_page . "?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
 		//}
 
 		if (!$onlyUrl) {
@@ -415,10 +415,10 @@ class IcmsPersistableController {
 		}
 		return $ret;
 	}
-	
+
 	/**
 	 * This method returns a view link of the Object
-	 * 
+	 *
 	 * @param IcmsPersistableObject $icmsObj
 	 * @param boolean $onlyUrl
 	 * @param boolean $withimage
@@ -442,7 +442,7 @@ class IcmsPersistableController {
 
 		return "<a href='" . $ret . "'>" . $icmsObj->getVar($this->handler->identifierName) . "</a>";
 	}
-	
+
 	function getEditLanguageLink($icmsObj, $onlyUrl=false, $withimage=true)
 	{
 		$ret = $this->handler->_moduleUrl . "admin/" . $this->handler->_page . "?op=mod&amp;" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName) . "&amp;language=" . $icmsObj->getVar('language');
@@ -509,17 +509,17 @@ class IcmsPersistableController {
 		 * @todo to be completed...
 		 */
 		$ret = '';
-/*		$printlink = $this->handler->_moduleUrl . "print.php?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
-		$js = "javascript:openWithSelfMain('" . $printlink . "', 'smartpopup', 700, 519);";
-		$printlink = '<a href="' . $js . '"><img  src="' . ICMS_IMAGES_SET_URL . '/actions/fileprint.png" alt="" style="vertical-align: middle;"/></a>';
+		/*		$printlink = $this->handler->_moduleUrl . "print.php?" . $this->handler->keyName . "=" . $icmsObj->getVar($this->handler->keyName);
+		 $js = "javascript:openWithSelfMain('" . $printlink . "', 'smartpopup', 700, 519);";
+		 $printlink = '<a href="' . $js . '"><img  src="' . ICMS_IMAGES_SET_URL . '/actions/fileprint.png" alt="" style="vertical-align: middle;"/></a>';
 
-		$icmsModule = icms_getModuleInfo($icmsObj->handler->_moduleName);
-		$link = $impresscms->urls['full']();
-		$mid = $icmsModule->getVar('mid');
-		$friendlink = "<a href=\"javascript:openWithSelfMain('".SMARTOBJECT_URL."sendlink.php?link=" . $link . "&amp;mid=" . $mid . "', ',',',',',','sendmessage', 674, 500);\"><img src=\"".SMARTOBJECT_IMAGES_ACTIONS_URL . "mail_send.png\"  alt=\"" . _CO_ICMS_EMAIL . "\" title=\"" . _CO_ICMS_EMAIL . "\" style=\"vertical-align: middle;\"/></a>";
+		 $icmsModule = icms_getModuleInfo($icmsObj->handler->_moduleName);
+		 $link = $impresscms->urls['full']();
+		 $mid = $icmsModule->getVar('mid');
+		 $friendlink = "<a href=\"javascript:openWithSelfMain('".SMARTOBJECT_URL."sendlink.php?link=" . $link . "&amp;mid=" . $mid . "', ',',',',',','sendmessage', 674, 500);\"><img src=\"".SMARTOBJECT_IMAGES_ACTIONS_URL . "mail_send.png\"  alt=\"" . _CO_ICMS_EMAIL . "\" title=\"" . _CO_ICMS_EMAIL . "\" style=\"vertical-align: middle;\"/></a>";
 
-		$ret = '<span id="smartobject_print_button">' . $printlink . "&nbsp;</span>" . '<span id="smartobject_mail_button">' . $friendlink . '</span>';
-*/
+		 $ret = '<span id="smartobject_print_button">' . $printlink . "&nbsp;</span>" . '<span id="smartobject_mail_button">' . $friendlink . '</span>';
+		 */
 		return $ret;
 	}
 

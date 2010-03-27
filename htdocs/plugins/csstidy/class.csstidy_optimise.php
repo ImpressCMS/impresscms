@@ -396,7 +396,7 @@ class csstidy_optimise
                 $temp[$l] = '#'.$temp[$l];
             }
 
-            if (floatval($temp[$l]) == 0)
+            if ((float)($temp[$l]) == 0)
             {
                 $temp[$l] = '0';
             }
@@ -407,22 +407,22 @@ class csstidy_optimise
                 {
                     if (strpos(strtolower($temp[$l]),$units[$m]) !== FALSE)
                     {
-                        $temp[$l] = floatval($temp[$l]).$units[$m];
+                        $temp[$l] = (float)($temp[$l]).$units[$m];
                         $unit_found = TRUE;
                         break;
                     }
                 }
                 if (!$unit_found && in_array($this->property,$unit_values,TRUE))
                 {
-                    $temp[$l] = floatval($temp[$l]).'px';
+                    $temp[$l] = (float)($temp[$l]).'px';
                 }
                 else if (!$unit_found)
                 {
-                    $temp[$l] = floatval($temp[$l]);
+                    $temp[$l] = (float)($temp[$l]);
                 }
                 // Remove leading zero
-                if (abs(floatval($temp[$l])) < 1) {
-                    if (floatval($temp[$l]) < 0) {
+                if (abs((float)($temp[$l])) < 1) {
+                    if ((float)($temp[$l]) < 0) {
                         $temp[$l] = '-' . substr($temp[$l], 2);
                     } else {
                         $temp[$l] = substr($temp[$l], 1);

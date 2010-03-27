@@ -1,18 +1,18 @@
 <?php
 /**
-* The templates class that extends Smarty
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @subpackage Templates
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * The templates class that extends Smarty
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @subpackage Templates
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('SMARTY_DIR')) {
 	exit();
@@ -47,29 +47,29 @@ class XoopsTpl extends Smarty {
 		$this->_compile_id = $this->compile_id;
 		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
 		$this->plugins_dir = array(
-			SMARTY_DIR . 'icms_plugins',
-			SMARTY_DIR . 'plugins',
+		SMARTY_DIR . 'icms_plugins',
+		SMARTY_DIR . 'plugins',
 		);
-		
+
 		// For backwars compatibility...
 		if(file_exists(ICMS_ROOT_PATH."/class/smarty/plugins")){
-			$this->plugins_dir[] = ICMS_ROOT_PATH.'/class/smarty/plugins';	
+			$this->plugins_dir[] = ICMS_ROOT_PATH.'/class/smarty/plugins';
 		}
-		
+
 		if(file_exists(ICMS_ROOT_PATH."/class/smarty/xoops_plugins")){
-			$this->plugins_dir[] = ICMS_ROOT_PATH.'/class/smarty/xoops_plugins';	
+			$this->plugins_dir[] = ICMS_ROOT_PATH.'/class/smarty/xoops_plugins';
 		}
-		
+
 		if ( $icmsConfig['debug_mode'] ) {
 			$this->debugging_ctrl = 'URL';
-		    if ( $icmsConfig['debug_mode'] == 3 ) {
-		    	$this->debugging = true;
-		    }
+			if ( $icmsConfig['debug_mode'] == 3 ) {
+				$this->debugging = true;
+			}
 		}
 		$this->Smarty();
-	if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-		$this->assign( 'icms_rtl', true );
-    }
+		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+			$this->assign( 'icms_rtl', true );
+		}
 
 		$this->assign( array(
 			'icms_url' => ICMS_URL,
@@ -97,20 +97,19 @@ class XoopsTpl extends Smarty {
 	 * @param	bool	$display	If rendered text should be output or returned
 	 * @return  string  Rendered output if $display was false
 	 **/
-    function fetchFromData( $tplSource, $display = false, $vars = null ) {
-        if ( !function_exists('smarty_function_eval') ) {
-            require_once SMARTY_DIR . '/plugins/function.eval.php';
-        }
-    	if ( isset( $vars ) ) {
-    		$oldVars = $this->_tpl_vars;
-    		$this->assign( $vars );
-	        $out = smarty_function_eval( array('var' => $tplSource), $this );
-        	$this->_tpl_vars = $oldVars;
-        	return $out;
-    	}
-        return smarty_function_eval( array('var' => $tplSource), $this );
-    }
-
+	function fetchFromData( $tplSource, $display = false, $vars = null ) {
+		if ( !function_exists('smarty_function_eval') ) {
+			require_once SMARTY_DIR . '/plugins/function.eval.php';
+		}
+		if ( isset( $vars ) ) {
+			$oldVars = $this->_tpl_vars;
+			$this->assign( $vars );
+			$out = smarty_function_eval( array('var' => $tplSource), $this );
+			$this->_tpl_vars = $oldVars;
+			return $out;
+		}
+		return smarty_function_eval( array('var' => $tplSource), $this );
+	}
 
 	/**
 	 * Touch the resource (file) which means get it to recompile the resource
@@ -118,18 +117,18 @@ class XoopsTpl extends Smarty {
 	 * @param   string  $resourcename		Resourcename to touch
 	 * @return  string  $result         Was the resource recompiled
 	 **/
-    function touch( $resourceName ) {
-    	$isForced = $this->force_compile;
-    	$this->force_compile = true;
-    	$this->clear_cache( $resourceName );
-    	$result = $this->_compile_resource( $resourceName, $this->_get_compile_path( $resourceName ) );
-    	$this->force_compile = $isForced;
-    	return $result;
+	function touch( $resourceName ) {
+		$isForced = $this->force_compile;
+		$this->force_compile = true;
+		$this->clear_cache( $resourceName );
+		$result = $this->_compile_resource( $resourceName, $this->_get_compile_path( $resourceName ) );
+		$this->force_compile = $isForced;
+		return $result;
 	}
 
-  /**
-   * @deprecated DO NOT USE THESE METHODS, ACCESS THE CORRESPONDING PROPERTIES INSTEAD
-   */
+	/**
+	 * @deprecated DO NOT USE THESE METHODS, ACCESS THE CORRESPONDING PROPERTIES INSTEAD
+	 */
 	function xoops_setTemplateDir($dirname) {		$this->template_dir = $dirname;			}
 	function xoops_getTemplateDir() {				return $this->template_dir;				}
 	function xoops_setDebugging($flag=false) {		$this->debugging = is_bool($flag) ? $flag : false;	}
@@ -146,10 +145,6 @@ class XoopsTpl extends Smarty {
 		}
 	}
 }
-
-
-
-
 
 /**
  * function to update compiled template file in templates_c folder
@@ -177,7 +172,7 @@ function xoops_template_touch($tpl_id, $clear_old = true) {
  * @return
  **/
 function xoops_template_clear_module_cache($mid)
-{	
+{
 	$icms_block_handler = xoops_gethandler('block');
 	$block_arr = $icms_block_handler->getByModule($mid);
 	$count = count($block_arr);

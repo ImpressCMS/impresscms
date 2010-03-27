@@ -1,17 +1,17 @@
 <?php
 /**
-* IcmsStopSpammer object
-*
-* This class is responsible for cross referencing register information with StopForumSpam.com API
-*
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	IcmsPersistableObject
-* @since	1.2
-* @author		marcan <marcan@impresscms.org>
-* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id
-*/
+ * IcmsStopSpammer object
+ *
+ * This class is responsible for cross referencing register information with StopForumSpam.com API
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	IcmsPersistableObject
+ * @since	1.2
+ * @author		marcan <marcan@impresscms.org>
+ * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id
+ */
 class IcmsStopSpammer {
 	private $api_url;
 
@@ -47,7 +47,7 @@ class IcmsStopSpammer {
 			$output .=curl_exec($ch);
 			curl_close($ch);
 
-			if (eregi("<appears>(.*)</appears>", $output, $out)) {
+			if (preg_match( "/<appears>(.*)</appears>/i", $output, $out)) {
 				$spam = $out[1];
 			}
 		} else {
@@ -58,7 +58,7 @@ class IcmsStopSpammer {
 			}
 			while (!feof($file)) {
 				$line = fgets($file, 1024);
-				if (eregi("<appears>(.*)</appears>", $line, $out)) {
+				if (preg_match( "/<appears>(.*)</appears>/i", $line, $out)) {
 					$spam = $out[1];
 					break;
 				}

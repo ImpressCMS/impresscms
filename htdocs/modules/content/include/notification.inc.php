@@ -1,14 +1,14 @@
 <?php
 /**
-* Common functions used by the module
-*
-* @copyright	The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.0
-* @author		Rodrigo P Lima aka TheRplima <therplima@impresscms.org>
-* @package		content
-* @version		$Id$
-*/
+ * Common functions used by the module
+ *
+ * @copyright	The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.0
+ * @author		Rodrigo P Lima aka TheRplima <therplima@impresscms.org>
+ * @package		content
+ * @version		$Id$
+ */
 /**
  * Notification lookup function
  *
@@ -21,13 +21,13 @@
  * @return array containing 'name' and 'url' of the related item
  */
 function content_notify_iteminfo($category, $item_id){
-    global $xoopsModule, $xoopsModuleConfig, $xoopsConfig;
+	global $xoopsModule, $xoopsModuleConfig, $xoopsConfig;
 
-    if ($category == 'global') {
-        $item['name'] = '';
-        $item['url'] = '';
-        return $item;
-    }
+	if ($category == 'global') {
+		$item['name'] = '';
+		$item['url'] = '';
+		return $item;
+	}
 
 }
 

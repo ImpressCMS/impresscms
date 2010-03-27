@@ -1,22 +1,22 @@
 <?php
 /**
-* The functions that take care of BB Codes
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * The functions that take care of BB Codes
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 /*
-* displayes xoopsCode buttons and target textarea to which xoopscodes are inserted
-* $textarea_id is a unique id of the target textarea
-*/
+ * displayes xoopsCode buttons and target textarea to which xoopscodes are inserted
+ * $textarea_id is a unique id of the target textarea
+ */
 function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 {
 	$hiddentext = isset($suffix) ? 'xoopsHiddenText'.trim($suffix) : 'xoopsHiddenText';
@@ -59,9 +59,9 @@ function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 }
 
 /*
-* Displays smilie image buttons used to insert smilie codes to a target textarea in a form
-* $textarea_id is a unique of the target textarea
-*/
+ * Displays smilie image buttons used to insert smilie codes to a target textarea in a form
+ * $textarea_id is a unique of the target textarea
+ */
 function xoopsSmilies($textarea_id)
 {
 	$myts =& MyTextSanitizer::getInstance();
@@ -70,18 +70,18 @@ function xoopsSmilies($textarea_id)
 		$db =& Database::getInstance();
 		if ($result = $db->query("SELECT * FROM ".$db->prefix('smiles')." WHERE display='1'")) {
 			while ($smiles = $db->fetchArray($result)) {
-			//hack smilies move for the smilies !!
+				//hack smilies move for the smilies !!
 				echo "<img src='".ICMS_UPLOAD_URL."/".htmlspecialchars($smiles['smile_url'])."' border='0' onmouseover='style.cursor=\"hand\"' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles['code']." \");' />";
-			//fin du hack
+				//fin du hack
 			}
 		}
 	} else {
 		$count = count($smiles);
 		for ($i = 0; $i < $count; $i++) {
 			if ($smiles[$i]['display'] == 1) {
-			//hack bis
+				//hack bis
 				echo "<img src='".ICMS_UPLOAD_URL."/".$myts->oopsHtmlSpecialChars($smiles['smile_url'])."' border='0' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles[$i]['code']." \");' onmouseover='style.cursor=\"hand\"' />";
-			//fin du hack
+				//fin du hack
 			}
 		}
 	}

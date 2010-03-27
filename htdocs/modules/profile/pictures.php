@@ -1,21 +1,21 @@
 <?php
 /**
-* Pictures page
-*
-* @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package		profile
-* @version		$Id$
-*/
+ * Pictures page
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package		profile
+ * @version		$Id$
+ */
 
 /**
  * Edit a Picture
  *
  * @param object $picturesObj ProfilePicture object to be edited
  * @param bool   $hideForm
-*/
+ */
 function editpictures($picturesObj, $hideForm=false)
 {
 	global $profile_pictures_handler, $xoTheme, $icmsTpl, $icmsUser;
@@ -39,7 +39,6 @@ function editpictures($picturesObj, $hideForm=false)
 	}
 }
 
-
 $profile_template = 'profile_pictures.html';
 include_once 'header.php';
 
@@ -53,11 +52,11 @@ if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
 $clean_pictures_id = 0;
-if (isset($_GET['pictures_id'])) $clean_pictures_id = intval($_GET['pictures_id']);
-if (isset($_POST['pictures_id'])) $clean_pictures_id = intval($_POST['pictures_id']);
+if (isset($_GET['pictures_id'])) $clean_pictures_id = (int) ($_GET['pictures_id']);
+if (isset($_POST['pictures_id'])) $clean_pictures_id = (int) ($_POST['pictures_id']);
 
-$real_uid = is_object($icmsUser) ? intval($icmsUser->uid()) : 0;
-$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
+$real_uid = is_object($icmsUser) ? (int) ($icmsUser->uid()) : 0;
+$clean_uid = isset($_GET['uid']) ? (int) ($_GET['uid']) : $real_uid ;
 $picturesObj = $profile_pictures_handler->get($clean_pictures_id);
 
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
@@ -163,8 +162,8 @@ if (in_array($clean_op,$valid_op,true)){
 			break;
 
 		default:
-			$clean_start = isset($_GET['start']) ? intval($_GET['start']) : 0;
-			
+			$clean_start = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
+				
 			if($real_uid && $real_uid == $uid){
 				$picturesObj = $profile_pictures_handler->get($clean_pictures_id);
 				editpictures($picturesObj, true);

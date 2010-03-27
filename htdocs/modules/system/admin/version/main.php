@@ -1,16 +1,16 @@
 <?php
 /**
-* ImpressCMS Version Checker
-*
-* This page checks if the ImpressCMS install runs the latest released version
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		Administration
-* @since		1.0
-* @author		malanciault <marcan@impresscms.org)
-* @version		$Id$
-*/
+ * ImpressCMS Version Checker
+ *
+ * This page checks if the ImpressCMS install runs the latest released version
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		Administration
+ * @since		1.0
+ * @author		malanciault <marcan@impresscms.org)
+ * @version		$Id$
+ */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin() ) {
 	exit("Access Denied");
@@ -19,8 +19,8 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin() )
 /*
  * If an mid is defined in the GET params then this file is called by clicking on a module Info button in
  * System Admin > Modules, so we need to display the module information pop up
- * 
- * @todo this has nothing to do in the version checker system module, but it is there as a 
+ *
+ * @todo this has nothing to do in the version checker system module, but it is there as a
  * reminiscence of XOOPS. It needs tp be moved elsewhere in 1.1
  */
 if (isset($_GET['mid'])) {
@@ -38,9 +38,9 @@ icms_cp_header();
 if ($icmsVersionChecker->check()) {
 	$icmsAdminTpl->assign('update_available', true);
 	$icmsAdminTpl->assign('latest_changelog', $icmsVersionChecker->latest_changelog);
-    $icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name); 
-    $icmsAdminTpl->assign('latest_url', $icmsVersionChecker->latest_url);   
-    if (ICMS_VERSION_STATUS == 10 && $icmsVersionChecker->latest_status < 10) {
+	$icmsAdminTpl->assign('latest_version', $icmsVersionChecker->latest_version_name);
+	$icmsAdminTpl->assign('latest_url', $icmsVersionChecker->latest_url);
+	if (ICMS_VERSION_STATUS == 10 && $icmsVersionChecker->latest_status < 10) {
 		// I'm runing a final release so make sure to notify the user that the update is not a final
 		$icmsAdminTpl->assign('not_a_final_comment', true);
 	}

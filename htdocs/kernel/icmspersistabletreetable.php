@@ -1,30 +1,30 @@
 <?php
 /**
-* Contains the classes responsible for displaying a tree table filled with IcmsPersistableObject
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * Contains the classes responsible for displaying a tree table filled with IcmsPersistableObject
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsPersistableObject
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-include_once(ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php");
+include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php" ;
 
 /**
-* IcmsPersistableTreeTable base class
-*
-* Base class representing a table for displaying IcmsPersistableObject tree objects
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+ * IcmsPersistableTreeTable base class
+ *
+ * Base class representing a table for displaying IcmsPersistableObject tree objects
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsPersistableObject
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
 
  */
 class IcmsPersistableTreeTable extends IcmsPersistableTable {
@@ -84,7 +84,7 @@ class IcmsPersistableTreeTable extends IcmsPersistableTable {
 				for ($i = 0; $i < $level; $i++) {
 					$space = $space . '--';
 				}
-		}
+			}
 
 			if ($space != '') {
 				$space .= '&nbsp;';

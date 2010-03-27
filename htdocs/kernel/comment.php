@@ -111,7 +111,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	function &get($id)
 	{
 		$comment = false;
-		$id = intval($id);
+		$id = (int) ($id);
 		if ($id > 0) {
 			$sql = "SELECT * FROM ".$this->db->prefix('xoopscomments')." WHERE com_id='".$id."'";
 			if (!$result = $this->db->query($sql)) {
@@ -153,11 +153,9 @@ class XoopsCommentHandler extends XoopsObjectHandler
 		}
 		if ($comment->isNew()) {
 			$com_id = $this->db->genId('xoopscomments_com_id_seq');
-			$sql = sprintf("INSERT INTO %s (com_id, com_pid, com_modid, com_icon, com_title, com_text, com_created, com_modified, com_uid, com_ip, com_sig, com_itemid, com_rootid, com_status, com_exparams, dohtml, dosmiley, doxcode, doimage, dobr) VALUES ('%u', '%u', '%u', %s, %s, %s, '%u', '%u', '%u', %s, '%u', '%u', '%u', '%u', %s, '%u', '%u', '%u', '%u', '%u')", $this->db->prefix('xoopscomments'), intval($com_id), intval($com_pid), intval($com_modid), $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), intval($com_created), intval($com_modified), intval($com_uid), $this->db->quoteString($com_ip), intval($com_sig), intval($com_itemid), intval($com_rootid), intval($com_status), $this->db->quoteString($com_exparams),
-			intval($dohtml), intval($dosmiley), intval($doxcode), intval($doimage), intval($dobr));
+			$sql = sprintf("INSERT INTO %s (com_id, com_pid, com_modid, com_icon, com_title, com_text, com_created, com_modified, com_uid, com_ip, com_sig, com_itemid, com_rootid, com_status, com_exparams, dohtml, dosmiley, doxcode, doimage, dobr) VALUES ('%u', '%u', '%u', %s, %s, %s, '%u', '%u', '%u', %s, '%u', '%u', '%u', '%u', %s, '%u', '%u', '%u', '%u', '%u')", $this->db->prefix('xoopscomments'), (int) ($com_id), (int) ($com_pid), (int) ($com_modid), $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), (int) ($com_created), (int) ($com_modified), (int) ($com_uid), $this->db->quoteString($com_ip), (int) ($com_sig), (int) ($com_itemid), (int) ($com_rootid), (int) ($com_status), $this->db->quoteString($com_exparams), (int) ($dohtml), (int) ($dosmiley), (int) ($doxcode), (int) ($doimage), (int) ($dobr));
 		} else {
-			$sql = sprintf("UPDATE %s SET com_pid = '%u', com_icon = %s, com_title = %s, com_text = %s, com_created = '%u', com_modified = '%u', com_uid = '%u', com_ip = %s, com_sig = '%u', com_itemid = '%u', com_rootid = '%u', com_status = '%u', com_exparams = %s, dohtml = '%u', dosmiley = '%u', doxcode = '%u', doimage = '%u', dobr = '%u' WHERE com_id = '%u'", $this->db->prefix('xoopscomments'), intval($com_pid), $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), intval($com_created), intval($com_modified), intval($com_uid), $this->db->quoteString($com_ip), intval($com_sig), intval($com_itemid), intval($com_rootid), intval($com_status), $this->db->quoteString($com_exparams),
-			intval($dohtml), intval($dosmiley), intval($doxcode), intval($doimage), intval($dobr), intval($com_id));
+			$sql = sprintf("UPDATE %s SET com_pid = '%u', com_icon = %s, com_title = %s, com_text = %s, com_created = '%u', com_modified = '%u', com_uid = '%u', com_ip = %s, com_sig = '%u', com_itemid = '%u', com_rootid = '%u', com_status = '%u', com_exparams = %s, dohtml = '%u', dosmiley = '%u', doxcode = '%u', doimage = '%u', dobr = '%u' WHERE com_id = '%u'", $this->db->prefix('xoopscomments'), (int) ($com_pid), $this->db->quoteString($com_icon), $this->db->quoteString($com_title), $this->db->quoteString($com_text), (int) ($com_created), (int) ($com_modified), (int) ($com_uid), $this->db->quoteString($com_ip), (int) ($com_sig), (int) ($com_itemid), (int) ($com_rootid), (int) ($com_status), $this->db->quoteString($com_exparams), (int) ($dohtml), (int) ($dosmiley), (int) ($doxcode), (int) ($doimage), (int) ($dobr), (int) ($com_id));
 		}
 		if (!$result = $this->db->query($sql)) {
 			return false;
@@ -185,7 +183,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 		if (!is_a($comment, 'xoopscomment')) {
 			return false;
 		}
-		$sql = sprintf("DELETE FROM %s WHERE com_id = '%u'", $this->db->prefix('xoopscomments'), intval($comment->getVar('com_id')));
+		$sql = sprintf("DELETE FROM %s WHERE com_id = '%u'", $this->db->prefix('xoopscomments'), (int) ($comment->getVar('com_id')));
 		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
@@ -299,10 +297,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 **/
 	function getByItemId($module_id, $item_id, $order = null, $status = null, $limit = null, $start = 0)
 	{
-		$criteria = new CriteriaCompo(new Criteria('com_modid', intval($module_id)));
-		$criteria->add(new Criteria('com_itemid', intval($item_id)));
+		$criteria = new CriteriaCompo(new Criteria('com_modid', (int) ($module_id)));
+		$criteria->add(new Criteria('com_itemid', (int) ($item_id)));
 		if (isset($status)) {
-			$criteria->add(new Criteria('com_status', intval($status)));
+			$criteria->add(new Criteria('com_status', (int) ($status)));
 		}
 		if (isset($order)) {
 			$criteria->setOrder($order);
@@ -325,10 +323,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 **/
 	function getCountByItemId($module_id, $item_id, $status = null)
 	{
-		$criteria = new CriteriaCompo(new Criteria('com_modid', intval($module_id)));
-		$criteria->add(new Criteria('com_itemid', intval($item_id)));
+		$criteria = new CriteriaCompo(new Criteria('com_modid', (int) ($module_id)));
+		$criteria->add(new Criteria('com_itemid', (int) ($item_id)));
 		if (isset($status)) {
-			$criteria->add(new Criteria('com_status', intval($status)));
+			$criteria->add(new Criteria('com_status', (int) ($status)));
 		}
 		return $this->getCount($criteria);
 	}
@@ -345,11 +343,11 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 **/
 	function getTopComments($module_id, $item_id, $order, $status = null)
 	{
-		$criteria = new CriteriaCompo(new Criteria('com_modid', intval($module_id)));
-		$criteria->add(new Criteria('com_itemid', intval($item_id)));
+		$criteria = new CriteriaCompo(new Criteria('com_modid', (int) ($module_id)));
+		$criteria->add(new Criteria('com_itemid', (int) ($item_id)));
 		$criteria->add(new Criteria('com_pid', 0));
 		if (isset($status)) {
-			$criteria->add(new Criteria('com_status', intval($status)));
+			$criteria->add(new Criteria('com_status', (int) ($status)));
 		}
 		$criteria->setOrder($order);
 		return $this->getObjects($criteria);
@@ -366,10 +364,10 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 **/
 	function getThread($comment_rootid, $comment_id, $status = null)
 	{
-		$criteria = new CriteriaCompo(new Criteria('com_rootid', intval($comment_rootid)));
-		$criteria->add(new Criteria('com_id', intval($comment_id), '>='));
+		$criteria = new CriteriaCompo(new Criteria('com_rootid', (int) ($comment_rootid)));
+		$criteria->add(new Criteria('com_id', (int) ($comment_id), '>='));
 		if (isset($status)) {
-			$criteria->add(new Criteria('com_status', intval($status)));
+			$criteria->add(new Criteria('com_status', (int) ($status)));
 		}
 		return $this->getObjects($criteria);
 	}
@@ -398,7 +396,7 @@ class XoopsCommentHandler extends XoopsObjectHandler
 	 **/
 	function deleteByModule($module_id)
 	{
-		return $this->deleteAll(new Criteria('com_modid', intval($module_id)));
+		return $this->deleteAll(new Criteria('com_modid', (int) ($module_id)));
 	}
 
 	/**

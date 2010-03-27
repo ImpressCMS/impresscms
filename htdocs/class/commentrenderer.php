@@ -1,17 +1,17 @@
 <?php
 /**
-* Renders the comments
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Renders the comments
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 /**
  * Display comments
@@ -25,15 +25,15 @@
 class XoopsCommentRenderer {
 
 	/**#@+
-     * @access	private
-     */
-    var $_tpl;
+	 * @access	private
+	 */
+	var $_tpl;
 	var $_comments = null;
 	var $_useIcons = true;
 	var $_doIconCheck = false;
 	var $_memberHandler;
 	var $_statusText;
-    /**#@-*/
+	/**#@-*/
 
 	/**
 	 * Constructor
@@ -112,8 +112,8 @@ class XoopsCommentRenderer {
 
 	/**
 	 * Render the comments in thread view
-   *
-   * This method calls itself recursively
+	 *
+	 * This method calls itself recursively
 	 *
 	 * @param integer $comment_id   Should be "0" when called by client
 	 * @param boolean $admin_view
@@ -171,13 +171,13 @@ class XoopsCommentRenderer {
 	 * @param   bool    $admin_view
 	 * @param   integer $depth
 	 * @param   string  $current_prefix
-   *
-   * @access	private
+	 *
+	 * @access	private
 	 **/
 	function _renderThreadReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0, $current_prefix = '')
 	{
-        if ($depth > 0) {
-        	$simple_title = $thread[$key]['obj']->getVar('com_title');
+		if ($depth > 0) {
+			$simple_title = $thread[$key]['obj']->getVar('com_title');
 			if (false != $this->_useIcons) {
 				$title = $this->_getTitleIcon($thread[$key]['obj']->getVar('com_icon')).'&nbsp;'.$thread[$key]['obj']->getVar('com_title');
 			} else {
@@ -185,29 +185,29 @@ class XoopsCommentRenderer {
 			}
 			$title = (false != $admin_view) ? $title.' '.$this->_statusText[$thread[$key]['obj']->getVar('com_status')] : $title;
 			$replies[] = array('id' => $key, 'prefix' => $current_prefix, 'date_posted' => formatTimestamp($thread[$key]['obj']->getVar('com_created'), 'm'), 'simple_title' => $simple_title, 'title' => $title, 'root_id' => $thread[$key]['obj']->getVar('com_rootid'), 'status' => $this->_statusText[$thread[$key]['obj']->getVar('com_status')], 'poster' => $this->_getPosterName($thread[$key]['obj']->getVar('com_uid')));
-            $current_prefix .= $prefix;
-        }
-        if (isset($thread[$key]['child']) && !empty($thread[$key]['child'])) {
+			$current_prefix .= $prefix;
+		}
+		if (isset($thread[$key]['child']) && !empty($thread[$key]['child'])) {
 			$depth++;
-            foreach ($thread[$key]['child'] as $childkey) {
-                if (!$admin_view && $thread[$childkey]['obj']->getVar('com_status') != XOOPS_COMMENT_ACTIVE) {
-                    // skip this comment if it is not active and continue on processing its child comments instead
-                    if (isset($thread[$childkey]['child']) && !empty($thread[$childkey]['child'])) {
-                        foreach ($thread[$childkey]['child'] as $childchildkey) {
-                            $this->_renderThreadReplies($thread, $childchildkey, $replies, $prefix, $admin_view, $depth);
-                        }
-                    }
-                } else {
-                    $this->_renderThreadReplies($thread, $childkey, $replies, $prefix, $admin_view, $depth, $current_prefix);
-                }
-            }
-        }
+			foreach ($thread[$key]['child'] as $childkey) {
+				if (!$admin_view && $thread[$childkey]['obj']->getVar('com_status') != XOOPS_COMMENT_ACTIVE) {
+					// skip this comment if it is not active and continue on processing its child comments instead
+					if (isset($thread[$childkey]['child']) && !empty($thread[$childkey]['child'])) {
+						foreach ($thread[$childkey]['child'] as $childchildkey) {
+							$this->_renderThreadReplies($thread, $childchildkey, $replies, $prefix, $admin_view, $depth);
+						}
+					}
+				} else {
+					$this->_renderThreadReplies($thread, $childkey, $replies, $prefix, $admin_view, $depth, $current_prefix);
+				}
+			}
+		}
 	}
 
 	/**
 	 * Render comments in nested view
-   *
-   * Danger: Recursive!
+	 *
+	 * Danger: Recursive!
 	 *
 	 * @param integer $comment_id   Always "0" when called by client.
 	 * @param boolean $admin_view
@@ -252,12 +252,12 @@ class XoopsCommentRenderer {
 	 * @param   string  $prefix
 	 * @param   bool    $admin_view
 	 * @param   integer $depth
-   *
-   * @access	private
+	 *
+	 * @access	private
 	 **/
 	function _renderNestReplies(&$thread, $key, &$replies, $prefix, $admin_view, $depth = 0)
 	{
-        if ($depth > 0) {
+		if ($depth > 0) {
 			if (false != $this->_useIcons) {
 				$title = $this->_getTitleIcon($thread[$key]['obj']->getVar('com_icon')).'&nbsp;'.$thread[$key]['obj']->getVar('com_title');
 			} else {
@@ -266,37 +266,36 @@ class XoopsCommentRenderer {
 			$text = (false != $admin_view) ? $thread[$key]['obj']->getVar('com_text').'<div style="text-align:right; margin-top: 2px; margin-right: 2px;">'._CM_STATUS.': '.$this->_statusText[$thread[$key]['obj']->getVar('com_status')].'<br />IP: <span style="font-weight: bold;">'.$thread[$key]['obj']->getVar('com_ip').'</span></div>' : $thread[$key]['obj']->getVar('com_text');
 			$replies[] = array('id' => $key, 'prefix' => $prefix, 'pid' => $thread[$key]['obj']->getVar('com_pid'), 'itemid' => $thread[$key]['obj']->getVar('com_itemid'), 'rootid' => $thread[$key]['obj']->getVar('com_rootid'), 'title' => $title, 'text' => $text, 'date_posted' => formatTimestamp($thread[$key]['obj']->getVar('com_created'), 'm'), 'date_modified' => formatTimestamp($thread[$key]['obj']->getVar('com_modified'), 'm'), 'poster' => $this->_getPosterArray($thread[$key]['obj']->getVar('com_uid')));
 
-            $prefix = $prefix + 25;
-        }
-        if (isset($thread[$key]['child']) && !empty($thread[$key]['child'])) {
-      			$depth++;
-            foreach ($thread[$key]['child'] as $childkey) {
-                if (!$admin_view && $thread[$childkey]['obj']->getVar('com_status') != XOOPS_COMMENT_ACTIVE) {
-                    // skip this comment if it is not active and continue on processing its child comments instead
-                    if (isset($thread[$childkey]['child']) && !empty($thread[$childkey]['child'])) {
-                        foreach ($thread[$childkey]['child'] as $childchildkey) {
-                            $this->_renderNestReplies($thread, $childchildkey, $replies, $prefix, $admin_view, $depth);
-                        }
-                    }
-                } else {
-                    $this->_renderNestReplies($thread, $childkey, $replies, $prefix, $admin_view, $depth);
-                }
-            }
-        }
+			$prefix = $prefix + 25;
+		}
+		if (isset($thread[$key]['child']) && !empty($thread[$key]['child'])) {
+			$depth++;
+			foreach ($thread[$key]['child'] as $childkey) {
+				if (!$admin_view && $thread[$childkey]['obj']->getVar('com_status') != XOOPS_COMMENT_ACTIVE) {
+					// skip this comment if it is not active and continue on processing its child comments instead
+					if (isset($thread[$childkey]['child']) && !empty($thread[$childkey]['child'])) {
+						foreach ($thread[$childkey]['child'] as $childchildkey) {
+							$this->_renderNestReplies($thread, $childchildkey, $replies, $prefix, $admin_view, $depth);
+						}
+					}
+				} else {
+					$this->_renderNestReplies($thread, $childkey, $replies, $prefix, $admin_view, $depth);
+				}
+			}
+		}
 	}
-
 
 	/**
 	 * Get the name of the poster
 	 *
 	 * @param   int $poster_id
 	 * @return  string
-   *
-   * @access	private
+	 *
+	 * @access	private
 	 **/
 	function _getPosterName($poster_id)
 	{
-		$poster['id'] = intval($poster_id);
+		$poster['id'] = (int) ($poster_id);
 		if ($poster['id'] > 0) {
 			$com_poster =& $this->_memberHandler->getUser($poster_id);
 			if (is_object($com_poster)) {
@@ -304,7 +303,7 @@ class XoopsCommentRenderer {
 				return $poster;
 			}
 		}
-        $poster['id'] = 0; // to cope with deleted user accounts
+		$poster['id'] = 0; // to cope with deleted user accounts
 		$poster['uname'] = $GLOBALS['xoopsConfig']['anonymous'];
 		return $poster;
 	}
@@ -314,12 +313,12 @@ class XoopsCommentRenderer {
 	 *
 	 * @param   int $poster_id
 	 * @return  array
-   *
-   * @access	private
+	 *
+	 * @access	private
 	 **/
 	function _getPosterArray($poster_id)
 	{
-		$poster['id'] = intval($poster_id);
+		$poster['id'] = (int) ($poster_id);
 		if ($poster['id'] > 0) {
 			$com_poster =& $this->_memberHandler->getUser($poster['id']);
 			if (is_object($com_poster)) {
@@ -335,7 +334,7 @@ class XoopsCommentRenderer {
 				return $poster;
 			}
 		}
-        $poster['id'] = 0; // to cope with deleted user accounts
+		$poster['id'] = 0; // to cope with deleted user accounts
 		$poster['uname'] = $GLOBALS['xoopsConfig']['anonymous'];
 		$poster['rank_title'] = '';
 		$poster['avatar'] = 'blank.gif';
@@ -351,8 +350,8 @@ class XoopsCommentRenderer {
 	 *
 	 * @param   string  $icon_image
 	 * @return  string  HTML IMG tag
-     *
-     * @access	private
+	 *
+	 * @access	private
 	 **/
 	function _getTitleIcon($icon_image)
 	{

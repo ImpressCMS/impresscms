@@ -9,7 +9,7 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
-    exit("Access Denied");
+	exit("Access Denied");
 }
 
 function editautotasks($showmenu = false, $autotasksid = 0, $clone=false)
@@ -46,7 +46,7 @@ if (isset($_POST['op'])) $op = $_POST['op'];
 switch ($op) {
 	case "mod":
 
-		$autotasksid = isset($_GET['sat_id']) ? intval($_GET['sat_id']) : 0 ;
+		$autotasksid = isset($_GET['sat_id']) ? (int) ($_GET['sat_id']) : 0 ;
 
 		editautotasks(true, $autotasksid);
 
@@ -54,20 +54,20 @@ switch ($op) {
 
 	case "clone":
 
-		$autotasksid = isset($_GET['sat_id']) ? intval($_GET['sat_id']) : 0 ;
+		$autotasksid = isset($_GET['sat_id']) ? (int) ($_GET['sat_id']) : 0 ;
 
 		editautotasks(true, $autotasksid, true);
 		break;
 
 	case "addautotasks":
-        include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-        $controller = new IcmsPersistableController($icms_autotasks_handler);
+		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+		$controller = new IcmsPersistableController($icms_autotasks_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_AUTOTASKS_CREATED, _CO_ICMS_AUTOTASKS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=autotasks');
 		break;
 
 	case "del":
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-	    $controller = new IcmsPersistableController($icms_autotasks_handler);
+		$controller = new IcmsPersistableController($icms_autotasks_handler);
 		$controller->handleObjectDeletion();
 
 		break;

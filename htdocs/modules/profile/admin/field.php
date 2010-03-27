@@ -16,7 +16,7 @@
  * Edit a Field
  *
  * @param int $field_id Fieldid to be edited
-*/
+ */
 function editfield($field_id = 0) {
 	global $profile_field_handler, $icmsModule, $icmsAdminTpl;
 
@@ -41,7 +41,7 @@ include_once("admin_header.php");
 $profile_field_handler = xoops_getModuleHandler('field');
 /* Use a naming convention that indicates the source of the content of the variable */
 $clean_op = '';
-/** 
+/**
  * Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition
  */
@@ -58,62 +58,62 @@ $clean_field_id = isset($_GET['fieldid']) ? (int) $_GET['fieldid'] : 0 ;
  * first argument is found in the array listed in the second argument. Strings
  * are case sensitive and the 3rd argument determines whether type matching is
  * required
-*/
+ */
 if (in_array($clean_op,$valid_op,true)){
-  switch ($clean_op) {
-  	case "mod":
-  	case "changedField":
+	switch ($clean_op) {
+		case "mod":
+		case "changedField":
 
-  		icms_cp_header();
+			icms_cp_header();
 
-  		editfield($clean_field_id);
-  		break;
-  	case "addfield":
-       	include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-        $controller = new IcmsPersistableController($profile_field_handler);
-  		$controller->storeFromDefaultForm(_AM_PROFILE_FIELD_CREATED, _AM_PROFILE_FIELD_MODIFIED);
+			editfield($clean_field_id);
+			break;
+		case "addfield":
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController($profile_field_handler);
+			$controller->storeFromDefaultForm(_AM_PROFILE_FIELD_CREATED, _AM_PROFILE_FIELD_MODIFIED);
 
-  		break;
+			break;
 
-  	case "del":
-  	    include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-        $controller = new IcmsPersistableController($profile_field_handler);
-  		$controller->handleObjectDeletion();
+		case "del":
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController($profile_field_handler);
+			$controller->handleObjectDeletion();
 
-  		break;
+			break;
 
-  	case "view" :
-  		$fieldObj = $profile_field_handler->get($clean_field_id);
+		case "view" :
+			$fieldObj = $profile_field_handler->get($clean_field_id);
 
-  		icms_cp_header();
-  		$icmsModule->displayAdminMenu(3, _AM_PROFILE_FIELD_VIEW . ' > ' . $fieldObj->getVar('field_name'));
+			icms_cp_header();
+			$icmsModule->displayAdminMenu(3, _AM_PROFILE_FIELD_VIEW . ' > ' . $fieldObj->getVar('field_name'));
 
-//  		icms_collapsableBar('fieldview', $fieldObj->getVar('field_name') . $fieldObj->getEditFieldLink(), _AM_IMPROFILE_FIELD_VIEW_DSC);
+			//  		icms_collapsableBar('fieldview', $fieldObj->getVar('field_name') . $fieldObj->getEditFieldLink(), _AM_IMPROFILE_FIELD_VIEW_DSC);
 
-  		$fieldObj->displaySingleObject();
+			$fieldObj->displaySingleObject();
 
-//  		icms_close_collapsable('fieldview');
+			//  		icms_close_collapsable('fieldview');
 
-  		break;
+			break;
 
-  	default:
+		default:
 
-  		icms_cp_header();
+			icms_cp_header();
 
-  		$icmsModule->displayAdminMenu(3, _AM_PROFILE_FIELDS);
+			$icmsModule->displayAdminMenu(3, _AM_PROFILE_FIELDS);
 
-  		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-  		$objectTable = new IcmsPersistableTable($profile_field_handler);
-  		$objectTable->addColumn(new IcmsPersistableColumn('field_name', _GLOBAL_LEFT, false, 'getFieldName'));
-  		$objectTable->addColumn(new IcmsPersistableColumn('field_title'));
-  		$objectTable->addColumn(new IcmsPersistableColumn('field_description'));
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
+			$objectTable = new IcmsPersistableTable($profile_field_handler);
+			$objectTable->addColumn(new IcmsPersistableColumn('field_name', _GLOBAL_LEFT, false, 'getFieldName'));
+			$objectTable->addColumn(new IcmsPersistableColumn('field_title'));
+			$objectTable->addColumn(new IcmsPersistableColumn('field_description'));
 
-  		$objectTable->addIntroButton('addfield', 'field.php?op=mod', _AM_PROFILE_FIELD_CREATE);
-  		$icmsAdminTpl->assign('profile_field_table', $objectTable->fetch());
-  		$icmsAdminTpl->display('db:profile_admin_field.html');
-  		break;
-  }
-  icms_cp_footer();
+			$objectTable->addIntroButton('addfield', 'field.php?op=mod', _AM_PROFILE_FIELD_CREATE);
+			$icmsAdminTpl->assign('profile_field_table', $objectTable->fetch());
+			$icmsAdminTpl->display('db:profile_admin_field.html');
+			break;
+	}
+	icms_cp_footer();
 }
 /**
  * If you want to have a specific action taken because the user input was invalid,

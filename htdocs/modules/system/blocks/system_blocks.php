@@ -1,23 +1,23 @@
 <?php
 // $Id: system_blocks.php 1129 2007-10-24 09:45:47Z dugris $
 /**
-* Good ol' system blocks
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package	Systemblocks
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @version		$Id$
-*/
+ * Good ol' system blocks
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package	Systemblocks
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @version		$Id$
+ */
 
 /**
-* Shows which users and guests are online
-*
-* @return mixed $block or false if no users were online
-*/
+ * Shows which users and guests are online
+ *
+ * @return mixed $block or false if no users were online
+ */
 function b_system_online_show()
 {
 	global $icmsUser, $icmsModule;
@@ -70,10 +70,10 @@ function b_system_online_show()
 }
 
 /**
-* Shows the login block
-*
-* @return mixed $block or false if no users were online
-*/
+ * Shows the login block
+ *
+ * @return mixed $block or false if no users were online
+ */
 function b_system_login_show()
 {
 	global $icmsUser, $icmsConfig, $icmsConfigAuth, $icmsConfigUser;
@@ -113,10 +113,10 @@ function b_system_login_show()
 }
 
 /**
-* Shows the main menu block
-*
-* @return array $block the main menu block array
-*/
+ * Shows the main menu block
+ *
+ * @return array $block the main menu block array
+ */
 function b_system_main_show()
 {
 	global $icmsUser, $icmsModule, $icmsConfigUser;
@@ -154,10 +154,10 @@ function b_system_main_show()
 }
 
 /**
-* Shows the search block
-*
-* @return array $block The search block
-*/
+ * Shows the search block
+ *
+ * @return array $block The search block
+ */
 function b_system_search_show()
 {
 	$block = array();
@@ -167,10 +167,10 @@ function b_system_search_show()
 }
 
 /**
-* Shows the user menu block
-*
-* @return mixed $block or false if the user is a guest
-*/
+ * Shows the user menu block
+ *
+ * @return mixed $block or false if the user is a guest
+ */
 function b_system_user_show()
 {
 	global $icmsUser;
@@ -193,11 +193,11 @@ function b_system_user_show()
 }
 
 /**
-* Shows information about the user
-*
-* @param array $options The block options
-* @return array $block the block array
-*/
+ * Shows information about the user
+ *
+ * @param array $options The block options
+ * @return array $block the block array
+ */
 function b_system_info_show($options)
 {
 	global $icmsConfig, $icmsUser;
@@ -236,11 +236,11 @@ function b_system_info_show($options)
 }
 
 /**
-* Shows the latest members that were added
-*
-* @param array $options The block options
-* @return array $block The newest members block array
-*/
+ * Shows the latest members that were added
+ *
+ * @param array $options The block options
+ * @return array $block The newest members block array
+ */
 function b_system_newmembers_show($options)
 {
 	global $icmsConfigUser;
@@ -271,24 +271,24 @@ function b_system_newmembers_show($options)
 		$block['users'][$i]['joindate'] = formatTimestamp($newmembers[$i]->getVar('user_regdate'), 's');
 		$block['users'][$i]['login_name'] = $newmembers[$i]->getVar('login_name');
 	}
-		if ( !empty($options[2]) && $options[2] == 1 ) {
-			$block['index_enabled'] = true;
-			$block['registered'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level')));
-			$block['inactive'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0)));
-			$block['active'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0, '>')));
-			$block['lang_totalusers'] = _MB_SYSTEM_TOTAL_USERS;
-			$block['lang_activeusers'] = _MB_SYSTEM_ACT_USERS;
-			$block['lang_inactiveusers'] = _MB_SYSTEM_INACT_USERS;
-		}
+	if ( !empty($options[2]) && $options[2] == 1 ) {
+		$block['index_enabled'] = true;
+		$block['registered'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level')));
+		$block['inactive'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0)));
+		$block['active'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0, '>')));
+		$block['lang_totalusers'] = _MB_SYSTEM_TOTAL_USERS;
+		$block['lang_activeusers'] = _MB_SYSTEM_ACT_USERS;
+		$block['lang_inactiveusers'] = _MB_SYSTEM_INACT_USERS;
+	}
 	return $block;
 }
 
 /**
-* Shows the top posters block
-*
-* @param array $options The block options
-* @return mixed $block or false if no users were online
-*/
+ * Shows the top posters block
+ *
+ * @param array $options The block options
+ * @return mixed $block or false if no users were online
+ */
 function b_system_topposters_show($options)
 {
 	global $icmsConfigUser;
@@ -326,18 +326,18 @@ function b_system_topposters_show($options)
 }
 
 /**
-* Shows The latest comments
-*
-* @param array $options The block options
-* @return array $block the block array
-*/
+ * Shows The latest comments
+ *
+ * @param array $options The block options
+ * @return array $block the block array
+ */
 function b_system_comments_show($options)
 {
 	$block = array();
 	include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
 	$comment_handler =& xoops_gethandler('comment');
 	$criteria = new CriteriaCompo(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
-	$criteria->setLimit(intval($options[0]));
+	$criteria->setLimit( (int) ($options[0]));
 	$criteria->setSort('com_created');
 	$criteria->setOrder('DESC');
 
@@ -392,11 +392,11 @@ function b_system_comments_show($options)
 
 // RMV-NOTIFY
 /**
-* Shows The latest notifications
-*
-* @param array $options The block options
-* @return array $block the block array
-*/
+ * Shows The latest notifications
+ *
+ * @param array $options The block options
+ * @return array $block the block array
+ */
 function b_system_notification_show()
 {
 	global $icmsConfig, $icmsUser, $icmsModule;
@@ -442,10 +442,10 @@ function b_system_notification_show()
 }
 
 /**
-* Shows The multilanguage (flags) block
-*
-* @return array $block the block array
-*/
+ * Shows The multilanguage (flags) block
+ *
+ * @return array $block the block array
+ */
 function b_system_multilanguage_show()
 {
 	$block = array();
@@ -455,28 +455,28 @@ function b_system_multilanguage_show()
 }
 
 /**
-* Shows the form to edit the comments
-*
-* @param array $options The block options
-* @return string $form The edit comments form HTML string
-*/
+ * Shows the form to edit the comments
+ *
+ * @param array $options The block options
+ * @return string $form The edit comments form HTML string
+ */
 function b_system_comments_edit($options)
 {
-	$inputtag = "<input type='text' name='options[]' value='".intval($options[0])."' />";
+	$inputtag = "<input type='text' name='options[]' value='". (int) ($options[0])."' />";
 	$form = sprintf(_MB_SYSTEM_DISPLAYC, $inputtag);
 	return $form;
 }
 
 /**
-* Shows the form to edit the top posters
-*
-* @param array $options The block options
-* @return string $form The edit top posters form HTML string
-*/
+ * Shows the form to edit the top posters
+ *
+ * @param array $options The block options
+ * @return string $form The edit top posters form HTML string
+ */
 function b_system_topposters_edit($options)
 {
 	include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
-	$inputtag = "<input type='text' name='options[]' value='".intval($options[0])."' />";
+	$inputtag = "<input type='text' name='options[]' value='". (int) ($options[0])."' />";
 	$form = sprintf(_MB_SYSTEM_DISPLAY,$inputtag);
 	$form .= "<br />"._MB_SYSTEM_DISPLAYA."&nbsp;<input type='radio' id='options[]' name='options[]' value='1'";
 	if ( $options[1] == 1 ) {
@@ -504,11 +504,11 @@ function b_system_topposters_edit($options)
 }
 
 /**
-* Shows the form to edit the newest members
-*
-* @param array $options The block options
-* @return string $form The edit newest members form HTML string
-*/
+ * Shows the form to edit the newest members
+ *
+ * @param array $options The block options
+ * @return string $form The edit newest members form HTML string
+ */
 function b_system_newmembers_edit($options)
 {
 	$inputtag = "<input type='text' name='options[0]' value='".$options[0]."' />";
@@ -535,11 +535,11 @@ function b_system_newmembers_edit($options)
 }
 
 /**
-* Shows the form to edit the sysem info
-*
-* @param array $options The block options
-* @return string $form The edit system info form HTML string
-*/
+ * Shows the form to edit the sysem info
+ *
+ * @param array $options The block options
+ * @return string $form The edit system info form HTML string
+ */
 function b_system_info_edit($options)
 {
 	$form = _MB_SYSTEM_PWWIDTH."&nbsp;";
@@ -563,11 +563,11 @@ function b_system_info_edit($options)
 }
 
 /**
-* Shows the activated themes
-*
-* @param array $options The block options
-* @return array $block The themes block array
-*/
+ * Shows the activated themes
+ *
+ * @param array $options The block options
+ * @return array $block The themes block array
+ */
 function b_system_themes_show($options)
 {
 	global $icmsConfig;
@@ -581,7 +581,7 @@ function b_system_themes_show($options)
 	}
 	$block = array();
 	if ($options[0] == 1) {
-		$block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"".XOOPS_THEME_URL."/".$icmsConfig['theme_set']."/shot.gif\" alt=\"screenshot\" width=\"".intval($options[1])."\" /><br /><select id=\"theme_select\" name=\"theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'theme_select', 'themes', '/shot.gif', '".XOOPS_URL."');\">".$theme_options."</select><input type=\"submit\" value=\""._GO."\" />";
+		$block['theme_select'] = "<img vspace=\"2\" id=\"xoops_theme_img\" src=\"".XOOPS_THEME_URL."/".$icmsConfig['theme_set']."/shot.gif\" alt=\"screenshot\" width=\"". (int) ($options[1])."\" /><br /><select id=\"theme_select\" name=\"theme_select\" onchange=\"showImgSelected('xoops_theme_img', 'theme_select', 'themes', '/shot.gif', '".XOOPS_URL."');\">".$theme_options."</select><input type=\"submit\" value=\""._GO."\" />";
 	} else {
 		$block['theme_select'] = '<select name="theme_select" onchange="submit();" size="3">'.$theme_options.'</select>';
 	}
@@ -591,11 +591,11 @@ function b_system_themes_show($options)
 }
 
 /**
-* Shows the form to edit the themes
-*
-* @param array $options The block options
-* @return string $form The edit themes form HTML string
-*/
+ * Shows the form to edit the themes
+ *
+ * @param array $options The block options
+ * @return string $form The edit themes form HTML string
+ */
 function b_system_themes_edit($options)
 {
 
@@ -675,7 +675,7 @@ function b_system_bookmarks_show()
 
 		if ($n->getVar('not_event') == 'bookmark') {
 			$block[$module_name][] = array ('name'=>$item_info['name'], 'url'=>$item_info['url']);
-			}
+		}
 	}
 
 	return $block;
@@ -687,202 +687,202 @@ function b_system_bookmarks_show()
 function b_system_social_show($options) {
 	$block = array();
 	$block['provider'] = array();
-	
+
 	$i = 0;
 	if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://twitter.com/home?status='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
 		'image' => "twitter.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.facebook.com/sharer.php?u='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
 		'image' => "facebook.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.myspace.com/Modules/PostTo/Pages/?t='+encodeURIComponent(document.title)+'&amp;c='+encodeURIComponent(document.title)+'&amp;u='+encodeURIComponent(location.href)+'&amp;popup=yes'",
 		'image' => "myspace.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://del.icio.us/post?v=2&amp;url='+encodeURIComponent(location.href)+'&amp;notes=&amp;tags=&amp;title='+encodeURIComponent(document.title)",
 		'image' => "del.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://myjeeves.ask.com/mysearch/BookmarkIt?v=1.2&amp;t=webpages&amp;url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
 		'image' => "ask.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.mister-wong.de/index.php?action=addurl&amp;bm_url='+encodeURIComponent(location.href)+'&amp;bm_notice=&amp;bm_description='+encodeURIComponent(document.title)+'&amp;bm_tags='",
 		'image' => "wong.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.webnews.de/einstellen?url='+encodeURIComponent(document.location)+'&amp;title='+encodeURIComponent(document.title)",
 		'image' => "webnews.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.icio.de/add.php?url='+encodeURIComponent(location.href)",
 		'image' => "icio.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://beta.oneview.de/quickadd/neu/addBookmark.jsf?URL='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
 		'image' => "oneview.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.newsider.de/submit.php?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
 		'image' => "newsider.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.folkd.com/submit/'+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
 		'image' => "folkd.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://yigg.de/neu?exturl='+encodeURIComponent(location.href)",
 		'image' => "yigg.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://linkarena.com/bookmarks/addlink/?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;desc=&amp;tags='",
 		'image' => "linkarena.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://digg.com/submit?phase=2&amp;url='+encodeURIComponent(location.href)+'&amp;bodytext=&amp;tags=&amp;title='+encodeURIComponent(document.title)",
 		'image' => "digg.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://reddit.com/submit?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
 		'image' => "reddit.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.simpy.com/simpy/LinkAdd.do?title='+encodeURIComponent(document.title)+'&amp;tags=&amp;note=&amp;href='+encodeURIComponent(location.href)",
 		'image' => "simpy.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.stumbleupon.com/submit?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
 		'image' => "stumbleupon.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://slashdot.org/bookmark.pl?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)",
 		'image' => "slashdot.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://myweb2.search.yahoo.com/myresults/bookmarklet?t='+encodeURIComponent(document.title)+'&amp;d=&amp;tag=&amp;u='+encodeURIComponent(location.href)",
 		'image' => "yahoo.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.spurl.net/spurl.php?v=3&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;url='+encodeURIComponent(document.location.href)",
 		'image' => "spurl.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.google.com/bookmarks/mark?op=add&amp;bkmk='+encodeURIComponent(location.href)+'&amp;annotation=&amp;labels=&amp;title='+encodeURIComponent(document.title)",
 		'image' => "google.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.blinklist.com/index.php?Action=Blink/addblink.php&amp;Description=&amp;Tag=&amp;Url='+encodeURIComponent(location.href)+'&amp;Title='+encodeURIComponent(document.title)",
 		'image' => "blinklist.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://blogmarks.net/my/new.php?mini=1&amp;simple=1&amp;url='+encodeURIComponent(location.href)+'&amp;content=&amp;public-tags=&amp;title='+encodeURIComponent(document.title)",
 		'image' => "blogmarks.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.diigo.com/post?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;tag=&amp;comments='",
 		'image' => "diigo.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://technorati.com/faves?add='+encodeURIComponent(location.href)+'&amp;tag='",
 		'image' => "technorati.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.newsvine.com/_wine/save?popoff=1&amp;u='+encodeURIComponent(location.href)+'&amp;tags=&amp;blurb='+encodeURIComponent(document.title)",
 		'image' => "newsvine.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.blinkbits.com/bookmarklets/save.php?v=1&amp;title='+encodeURIComponent(document.title)+'&amp;source_url='+encodeURIComponent(location.href)+'&amp;source_image_url=&amp;rss_feed_url=&amp;rss_feed_url=&amp;rss2member=&amp;body='",
 		'image' => "blinkbits.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.netvouz.com/action/submitBookmark?url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
 		'image' => "netvouz.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.propeller.com/submit/?url='+encodeURIComponent(location.href)+'&amp;description=&amp;tags=&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
 		'image' => "propeller.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://buzz.yahoo.com/submit/?submitUrl='+encodeURIComponent(location.href)+'&amp;submitHeadline='+encodeURIComponent(document.title)+'&amp;popup=yes'",
 		'image' => "buzz.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://sphinn.com/submit.php?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
 		'image' => "sphinn.gif"
-	);
-	$i++;
-	if ($options[$i]) $block['provider'][$i] = array(
+		);
+		$i++;
+		if ($options[$i]) $block['provider'][$i] = array(
 		'title' => _MB_SYSTEM_SOCIAL_PROVIDER_BOOKMARK.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i),
 		'link'  => "'http://www.jumptags.com/add/?url='+encodeURIComponent(location.href)+'&amp;title='+encodeURIComponent(document.title)+'&amp;popup=yes'",
 		'image' => "jumptags.gif"
-	);
+		);
 
-	$block['imagepath'] = ICMS_IMAGES_URL.'/icons/social/';
-	return $block;
+		$block['imagepath'] = ICMS_IMAGES_URL.'/icons/social/';
+		return $block;
 }
 
 /**

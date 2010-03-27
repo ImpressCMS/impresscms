@@ -1,27 +1,27 @@
 <?php
 /**
-* Creates a basic form element (Base Class)
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	XoopsForms
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Creates a basic form element (Base Class)
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	XoopsForms
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 /**
- * 
- * 
+ *
+ *
  * @package     kernel
  * @subpackage  form
- * 
+ *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @author      Taiwen Jiang    <phppp@users.sourceforge.net>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
@@ -29,25 +29,25 @@ if (!defined('ICMS_ROOT_PATH')) {
 
 /**
  * Abstract base class for form elements
- * 
+ *
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @author  Taiwen Jiang    <phppp@users.sourceforge.net>
  * @copyright	copyright (c) 2000-2007 XOOPS.org
- * 
+ *
  * @package     kernel
  * @subpackage  form
  */
 class XoopsFormElement {
 
 	/**
-     * Javascript performing additional validation of this element data
+	 * Javascript performing additional validation of this element data
 	 *
 	 * This property contains a list of Javascript snippets that will be sent to
 	 * XoopsForm::renderValidationJS().
 	 * NB: All elements are added to the output one after the other, so don't forget
 	 * to add a ";" after each to ensure no Javascript syntax error is generated.
-     * 
-	 * @var array()  
+	 *
+	 * @var array()
 	 */
 	var $customValidationCode = array();
 
@@ -55,8 +55,8 @@ class XoopsFormElement {
 	 * @access private
 	 */
 	/**
-     * "name" attribute of the element
-	 * @var string  
+	 * "name" attribute of the element
+	 * @var string
 	 */
 	var $_name;
 
@@ -102,7 +102,6 @@ class XoopsFormElement {
 	 */
 	var $_description = "";
 	/**#@-*/
-
 
 	/**
 	 * constructor
@@ -176,7 +175,6 @@ class XoopsFormElement {
 		return htmlspecialchars($str, ENT_QUOTES);
 	}
 
-
 	/**
 	 * set the "class" attribute for the element
 	 *
@@ -185,7 +183,7 @@ class XoopsFormElement {
 	function setClass($class) {
 		$class = trim($class);
 		if ( !empty($class) ) {
-      $this->_class[] = $class;
+			$this->_class[] = $class;
 		}
 	}
 
@@ -195,11 +193,11 @@ class XoopsFormElement {
 	 * @return 	string  "class" attribute value
 	 */
 	function getClass() {
-  	if( empty($this->_class) ) return '';
-  	$class = array();
-  	foreach ($this->_class as $class) {
-      	$class[] = htmlspecialchars($class, ENT_QUOTES);
-  	}
+		if( empty($this->_class) ) return '';
+		$class = array();
+		foreach ($this->_class as $class) {
+			$class[] = htmlspecialchars($class, ENT_QUOTES);
+		}
 		return implode(" ", $class);
 	}
 
@@ -293,26 +291,26 @@ class XoopsFormElement {
 	 * @return	string
 	 */
 	function getExtra($encode = false) {
-    	if (!$encode) {
-        	return implode(' ', $this->_extra);
-    	}
-    	$value = array();
-    	foreach ($this->_extra as $val) {
-		    $value[] = str_replace('>', '&gt;', str_replace('<', '&lt;', $val));
-    	}
-    	return empty($value) ? "" : " ".implode(' ', $value);
+		if (!$encode) {
+			return implode(' ', $this->_extra);
+		}
+		$value = array();
+		foreach ($this->_extra as $val) {
+			$value[] = str_replace('>', '&gt;', str_replace('<', '&lt;', $val));
+		}
+		return empty($value) ? "" : " ".implode(' ', $value);
 	}
 
 	/**
-   * Render custom javascript validation code
-   *
-   * @see XoopsForm::renderValidationJS
-   */
+	 * Render custom javascript validation code
+	 *
+	 * @see XoopsForm::renderValidationJS
+	 */
 	function renderValidationJS() {
-    	// render custom validation code if any
+		// render custom validation code if any
 		if ( !empty( $this->customValidationCode ) ) {
 			return implode( "\n", $this->customValidationCode );
-		// generate validation code if required 
+			// generate validation code if required
 		} elseif ($this->isRequired()) {
 			$eltname    = $this->getName();
 			$eltcaption = $this->getCaption();
@@ -320,7 +318,7 @@ class XoopsFormElement {
 			$eltmsg = str_replace('"', '\"', stripslashes( $eltmsg ) );
 			return "if ( myform.{$eltname}.value == \"\" ) { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
 		}
-		return ''; 
+		return '';
 	}
 
 	/**

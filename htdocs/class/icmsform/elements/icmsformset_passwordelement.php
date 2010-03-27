@@ -1,35 +1,35 @@
 <?php
 /**
-* Form control creating 2 password textboxes to allow the user to enter twice his password, for an object derived from IcmsPersistableObject
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		  1.1
-* @author		  marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * Form control creating 2 password textboxes to allow the user to enter twice his password, for an object derived from IcmsPersistableObject
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsPersistableObject
+ * @since		  1.1
+ * @author		  marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 class IcmsFormSet_passwordElement extends XoopsFormElementTray {
 
 	/**
-     * Size of the field.
+	 * Size of the field.
 	 * @var	int
 	 * @access	private
 	 */
 	var $_size;
 
 	/**
-     * Maximum length of the text
+	 * Maximum length of the text
 	 * @var	int
 	 * @access	private
 	 */
 	var $_maxlength;
 
 	/**
-     * Initial content of the field.
+	 * Initial content of the field.
 	 * @var	string
 	 * @access	private
 	 */
@@ -53,16 +53,16 @@ class IcmsFormSet_passwordElement extends XoopsFormElementTray {
 	 */
 	function IcmsFormSet_passwordElement($object, $key){
 
-    $var = $object->vars[$key];
-    $control = $object->controls[$key];
+		$var = $object->vars[$key];
+		$control = $object->controls[$key];
 
-    $this->XoopsFormElementTray($var['form_caption'] . '<br />' . _US_TYPEPASSTWICE, ' ', $key . '_password_tray');
+		$this->XoopsFormElementTray($var['form_caption'] . '<br />' . _US_TYPEPASSTWICE, ' ', $key . '_password_tray');
 
-    $password_box1 = new XoopsFormPassword('', $key . '1', 10, 32);
-    $this->addElement($password_box1);
+		$password_box1 = new XoopsFormPassword('', $key . '1', 10, 32);
+		$this->addElement($password_box1);
 
-    $password_box2 = new XoopsFormPassword('', $key . '2', 10, 32);
-    $this->addElement($password_box2);
+		$password_box2 = new XoopsFormPassword('', $key . '2', 10, 32);
+		$this->addElement($password_box2);
 	}
 }
 

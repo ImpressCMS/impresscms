@@ -1,16 +1,16 @@
 <?php
 /**
-* Version information about ImpressCMS
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		1.0
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * Version information about ImpressCMS
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		1.0
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 
-define('ICMS_VERSION_NAME','ImpressCMS 1.2.1 RC');
+define('ICMS_VERSION_NAME','ImpressCMS 1.3 Alpha');
 /**
  * To developers:
  * if you want to get the version number of the core, please use something like:
@@ -31,15 +31,15 @@ define('XOOPS_VERSION', ICMS_VERSION_NAME);
  * 10 = Final
  */
 
-define('ICMS_VERSION_STATUS', 3);
+define('ICMS_VERSION_STATUS', 1);
 
 /**
  * Build number
  *
  * Every release has its own build number, incrementable by 1 everytime we make a release
  */
-// impresscms_1.2.1_rc = 34
-define('ICMS_VERSION_BUILD', 34);
+// impresscms_1.3_beta
+define('ICMS_VERSION_BUILD', 33);
 
 /**
  * Latest dbversion of the System Module

@@ -1,17 +1,17 @@
 <?php
 /**
-* The commentform include file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * The commentform include file
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
@@ -48,10 +48,10 @@ $smiley_checkbox->addOption(1, _DISABLESMILEY);
 $option_tray->addElement($smiley_checkbox);
 
 $cform->addElement($option_tray);
-$cform->addElement(new XoopsFormHidden('pid', intval($pid)));
-$cform->addElement(new XoopsFormHidden('comment_id', intval($comment_id)));
-$cform->addElement(new XoopsFormHidden('item_id', intval($item_id)));
-$cform->addElement(new XoopsFormHidden('order', intval($order)));
+$cform->addElement(new XoopsFormHidden('pid', (int) ($pid)));
+$cform->addElement(new XoopsFormHidden('comment_id', (int) ($comment_id)));
+$cform->addElement(new XoopsFormHidden('item_id', (int) ($item_id)));
+$cform->addElement(new XoopsFormHidden('order', (int) ($order)));
 $button_tray = new XoopsFormElementTray('' ,'&nbsp;');
 $button_tray->addElement(new XoopsFormButton('', 'preview', _PREVIEW, 'submit'));
 $button_tray->addElement(new XoopsFormButton('', 'post', _CM_POSTCOMMENT, 'submit'));

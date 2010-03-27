@@ -1,16 +1,16 @@
 <?php
 /**
-* Content version infomation
-*
-* This file holds the configuration information of this module
-*
-* @copyright	The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.0
-* @author		Rodrigo P Lima aka TheRplima <therplima@impresscms.org>
-* @package		content
-* @version		$Id$
-*/
+ * Content version infomation
+ *
+ * This file holds the configuration information of this module
+ *
+ * @copyright	The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.0
+ * @author		Rodrigo P Lima aka TheRplima <therplima@impresscms.org>
+ * @package		content
+ * @version		$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
@@ -102,22 +102,22 @@ $modversion['blocks'][] = array(
   'options' => 'content_title|ASC|1|#59ADDB|0',
   'template' => 'content_content_menu.html');
 /*
-$modversion['blocks'][] = array(
-  'file' => 'post_by_month.php',
-  'name' => _MI_CONTENT_POSTBYMONTH,
-  'description' => _MI_CONTENT_POSTBYMONTHDSC,
-  'show_func' => 'content_post_by_month_show',
-  'edit_func' => 'content_post_by_month_edit',
-  'options' => '',
-  'template' => 'content_post_by_month.html');
-*/
+ $modversion['blocks'][] = array(
+ 'file' => 'post_by_month.php',
+ 'name' => _MI_CONTENT_POSTBYMONTH,
+ 'description' => _MI_CONTENT_POSTBYMONTHDSC,
+ 'show_func' => 'content_post_by_month_show',
+ 'edit_func' => 'content_post_by_month_edit',
+ 'options' => '',
+ 'template' => 'content_post_by_month.html');
+ */
 
 /** Templates information */
 $modversion['templates'][1] = array(
   'file' => 'content_header.html',
   'description' => 'Module Header');
 
-$modversion['templates'][] = array( 
+$modversion['templates'][] = array(
   'file' => 'content_footer.html',
   'description' => 'Module Footer');
 
@@ -204,12 +204,12 @@ $modversion['hasComments'] = 1;
 $modversion['comments'] = array(
   'itemName' => 'content_id',
   'pageName' => 'content.php',
-  /* Comment callback functions */
+/* Comment callback functions */
   'callbackFile' => 'include/comment.inc.php',
   'callback' => array(
     'approve' => 'content_com_approve',
     'update' => 'content_com_update')
-    );
+);
 
 /** Notification information */
 $modversion['hasNotification'] = 1;

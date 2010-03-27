@@ -1,66 +1,66 @@
 <?php
 /**
-* This file contains the keyhighlighter class that highlights the chosen keyword in the current output buffer.
-*
-* @package keyhighlighter
-*/
+ * This file contains the keyhighlighter class that highlights the chosen keyword in the current output buffer.
+ *
+ * @package keyhighlighter
+ */
 
 /**
-* keyhighlighter class
-*
-* This class highlight the chosen keywords in the current output buffer
-*
-* @package keyhighlighter
-* @author Setec Astronomy
-* @version 1.0
-* @abstract Highlight specific keywords.
-* @copyright 2004
-* @example sample.php A sample code.
-* @link http://setecastronomy.stufftoread.com
-*/
+ * keyhighlighter class
+ *
+ * This class highlight the chosen keywords in the current output buffer
+ *
+ * @package keyhighlighter
+ * @author Setec Astronomy
+ * @version 1.0
+ * @abstract Highlight specific keywords.
+ * @copyright 2004
+ * @example sample.php A sample code.
+ * @link http://setecastronomy.stufftoread.com
+ */
 
 class IcmsPersistableHighlighter {
 
 	/**
-	* @access private
-	*/
+	 * @access private
+	 */
 	var $preg_keywords = '';
 	/**
-	* @access private
-	*/
+	 * @access private
+	 */
 	var $keywords = '';
 	/**
-	* @access private
-	*/
+	 * @access private
+	 */
 	var $singlewords = false;
 	/**
-	* @access private
-	*/
+	 * @access private
+	 */
 	var $replace_callback = null;
 
 	var $content;
 
 	/**
-	* Main constructor
-	*
-	* This is the main constructor of keyhighlighter class. <br />
-	* It's the only public method of the class.
-	* @param string $keywords the keywords you want to highlight
-	* @param boolean $singlewords specify if it has to highlight also the single words.
-	* @param callback $replace_callback a custom callback for keyword highlight.
-	* <code>
-	* <?php
-	* require ('keyhighlighter.class.php');
-	*
-	* function my_highlighter ($matches) {
-	* 	return '<span style="font-weight: bolder; color: #FF0000;">' . $matches[0] . '</span>';
-	* }
-	*
-	* new keyhighlighter ('W3C', false, 'my_highlighter');
-	* readfile ('http://www.w3c.org/');
-	*
-	* </code>
-	*/
+	 * Main constructor
+	 *
+	 * This is the main constructor of keyhighlighter class. <br />
+	 * It's the only public method of the class.
+	 * @param string $keywords the keywords you want to highlight
+	 * @param boolean $singlewords specify if it has to highlight also the single words.
+	 * @param callback $replace_callback a custom callback for keyword highlight.
+	 * <code>
+	 * <?php
+	 * require 'keyhighlighter.class.php' ;
+	 *
+	 * function my_highlighter ($matches) {
+	 * 	return '<span style="font-weight: bolder; color: #FF0000;">' . $matches[0] . '</span>';
+	 * }
+	 *
+	 * new keyhighlighter ('W3C', false, 'my_highlighter');
+	 * readfile ('http://www.w3c.org/');
+	 *
+	 * </code>
+	 */
 	// public function __construct ()
 	function IcmsPersistableHighlighter ($keywords, $singlewords = false, $replace_callback = null ) {
 		$this->keywords = $keywords;
@@ -69,8 +69,8 @@ class IcmsPersistableHighlighter {
 	}
 
 	/**
-	* @access private
-	*/
+	 * @access private
+	 */
 	function replace ($replace_matches) {
 
 		$patterns = array ();
@@ -97,8 +97,8 @@ class IcmsPersistableHighlighter {
 	}
 
 	/**
-	* @access private
-	*/
+	 * @access private
+	 */
 	function highlight ($buffer) {
 		$buffer = '>' . $buffer . '<';
 		$this->preg_keywords = preg_replace ('/[^\w ]/si', '', $this->keywords);

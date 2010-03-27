@@ -1,25 +1,29 @@
-<?php 
+<?php
 /**
-* Javascript and styles used for calendars
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Javascript and styles used for calendars
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
-	icms_loadLanguageFile('core', 'calendar');
+icms_loadLanguageFile('core', 'calendar');
 ?>
-<link rel="stylesheet" type="text/css" media="all" href="<?php echo ICMS_URL;?>/libraries/jscalendar/calendar-blue.css" />
-<script type="text/javascript" src="<?php echo ICMS_URL.'/libraries/jscalendar/calendar.js';?>"></script>
+<link
+	rel="stylesheet" type="text/css" media="all"
+	href="<?php echo ICMS_URL;?>/libraries/jscalendar/calendar-blue.css" />
+<script
+	type="text/javascript"
+	src="<?php echo ICMS_URL.'/libraries/jscalendar/calendar.js';?>"></script>
 <script type="text/javascript">
 <!--
 var calendar = null;

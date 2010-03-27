@@ -1,20 +1,20 @@
 <?php
 /**
-* Videos page
-*
-* @copyright	GNU General Public License (GPL)
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since	1.3
-* @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package	profile
-* @version	$Id:$
-*/
+ * Videos page
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.3
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package	profile
+ * @version	$Id:$
+ */
 
 /**
  * Edit a Video
  *
  * @param object $videosObj ProfileVideo object to be edited
-*/
+ */
 function editvideos($videosObj, $hideForm=false)
 {
 	global $profile_videos_handler, $xoTheme, $icmsTpl, $icmsUser;
@@ -41,7 +41,6 @@ function editvideos($videosObj, $hideForm=false)
 	}
 }
 
-
 $profile_template = 'profile_videos.html';
 include_once 'header.php';
 
@@ -54,10 +53,10 @@ if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
 $clean_videos_id = 0;
-if (isset($_GET['videos_id'])) $clean_videos_id = intval($_GET['videos_id']);
-if (isset($_POST['videos_id'])) $clean_videos_id = intval($_POST['videos_id']);
-$real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
-$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
+if (isset($_GET['videos_id'])) $clean_videos_id = (int) ($_GET['videos_id']);
+if (isset($_POST['videos_id'])) $clean_videos_id = (int) ($_POST['videos_id']);
+$real_uid = is_object($icmsUser)? (int) ($icmsUser->uid()):0;
+$clean_uid = isset($_GET['uid']) ? (int) ($_GET['uid']) : $real_uid ;
 $videosObj = $profile_videos_handler->get($clean_videos_id);
 /** Create a whitelist of valid values, be sure to use appropriate types for each value
  * Be sure to include a value for no parameter, if you have a default condition

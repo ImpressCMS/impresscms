@@ -1,16 +1,16 @@
 <?php
 /**
-* Import script of profile module from xoops 2.2.* until 2.3.*
-*
-* @copyright	The XOOPS project http://www.xoops.org/
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package	modules
-* @since	1.2
-* @author	Sina Asghari <pesian_stranger@users.sourceforge.net>
-* @author	Taiwen Jiang <phppp@users.sourceforge.net>
-* @version	$Id$
-*/
+ * Import script of profile module from xoops 2.2.* until 2.3.*
+ *
+ * @copyright	The XOOPS project http://www.xoops.org/
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	modules
+ * @since	1.2
+ * @author	Sina Asghari <pesian_stranger@users.sourceforge.net>
+ * @author	Taiwen Jiang <phppp@users.sourceforge.net>
+ * @version	$Id$
+ */
 
 define('PROFILE_DB_VERSION', 1);
 
@@ -40,7 +40,7 @@ function profile_db_upgrade_1() {
 	global $icmsConfig, $icmsConfigAuth;
 	icms_loadLanguageFile('core', 'user');
 	icms_loadLanguageFile('core', 'notification');
-	
+
 	addStep(_PROFILE_MI_CAT_BASEINFO, '', 1, 1);
 	addStep(_PROFILE_MI_CAT_EXTINFO, '', 2, 0);
 	addCategory(_PROFILE_MI_CAT_PERSONAL, 1);
@@ -51,13 +51,13 @@ function profile_db_upgrade_1() {
 	include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
 	$umode_options = array('nest'=>_NESTED, 'flat'=>_FLAT, 'thread'=>_THREADED);
 	$uorder_options = array(0 => _OLDESTFIRST,
-							1 => _NEWESTFIRST);
+	1 => _NEWESTFIRST);
 	$notify_mode_options = array(XOOPS_NOTIFICATION_MODE_SENDALWAYS=>_NOT_MODE_SENDALWAYS,
-								 XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE=>_NOT_MODE_SENDONCE,
-								 XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT=>_NOT_MODE_SENDONCEPERLOGIN);
+	XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE=>_NOT_MODE_SENDONCE,
+	XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT=>_NOT_MODE_SENDONCEPERLOGIN);
 	$notify_method_options = array( XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE,
-									XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM,
-									XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL);
+	XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM,
+	XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL);
 	addField('user_aim', _PROFILE_MI_AIM_TITLE, _PROFILE_MI_AIM_DESCRIPTION, 1, 'textbox', 1, 1, 1, array(), 2, 255);
 	addField('user_icq', _PROFILE_MI_ICQ_TITLE, _PROFILE_MI_ICQ_DESCRIPTION, 1, 'textbox', 1, 2, 1, array(), 2, 255);
 	addField('user_msnm', _PROFILE_MI_MSN_TITLE, _PROFILE_MI_MSN_DESCRIPTION, 1, 'textbox', 1, 3, 1, array(), 2, 255);
@@ -132,7 +132,7 @@ function profile_db_upgrade_1() {
 	return true;
 }
 
-function icms_module_update_profile(&$module, $oldversion = null, $dbversion = null) 
+function icms_module_update_profile(&$module, $oldversion = null, $dbversion = null)
 {
 	return true;
 }

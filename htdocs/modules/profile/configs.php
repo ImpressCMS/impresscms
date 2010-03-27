@@ -1,20 +1,20 @@
 <?php
 /**
-* configs page
-*
-* @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package		profile
-* @version		$Id$
-*/
+ * configs page
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package		profile
+ * @version		$Id$
+ */
 
 /**
  * Edit a config
  *
  * @param object $configsObj Profileconfig object to be edited
-*/
+ */
 function editconfigs($configsObj, $uid=0) {
 	global $profile_configs_handler, $xoTheme, $icmsTpl, $icmsUser, $profile_isAdmin, $icmsModuleConfig;
 
@@ -66,8 +66,8 @@ if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
 global $icmsUser, $profile_isAdmin;
-$real_uid = is_object($icmsUser)?intval($icmsUser->uid()):0;
-$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
+$real_uid = is_object($icmsUser)? (int) ($icmsUser->uid()):0;
+$clean_uid = isset($_GET['uid']) ? (int) ($_GET['uid']) : $real_uid ;
 $configs_id = $profile_configs_handler->getConfigIdPerUser($clean_uid);
 $clean_configs_id = !empty($configs_id)?$configs_id:0;
 $configsObj = $profile_configs_handler->get($clean_configs_id);
@@ -85,36 +85,36 @@ if (!is_object($icmsUser) || $icmsModuleConfig['profile_social'] == false) {
  * Only proceed if the supplied operation is a valid operation
  */
 if (in_array($clean_op,$valid_op,true)){
-  switch ($clean_op) {
-	case "suspend":
-		$configsObj = $profile_configs_handler->get($clean_configs_id);
-		if (empty($clean_uid) || !$profile_isAdmin) {
-			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
-		}
-		editconfigs($configsObj, $clean_uid );
-		break;
-
-	case "addconfigs":
-        if (!$xoopsSecurity->check()) {
-        	redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
-        }
-         include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
-        $controller = new IcmsPersistableController($profile_configs_handler);
-		$controller->storeFromDefaultForm(_MD_PROFILE_CONFIGS_CREATED, _MD_PROFILE_CONFIGS_MODIFIED);
-		break;
-
-	default:
-		if ($real_uid > 0 &&  $icmsUser->uid() == $clean_uid) {
+	switch ($clean_op) {
+		case "suspend":
 			$configsObj = $profile_configs_handler->get($clean_configs_id);
-			editconfigs($configsObj);
-		}elseif($profile_isAdmin && $clean_uid > 0){
-			$clean_configs_id = $profile_configs_handler->getConfigIdPerUser($clean_uid);
-			$configsObj = $profile_configs_handler->get($clean_configs_id);
+			if (empty($clean_uid) || !$profile_isAdmin) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+			}
 			editconfigs($configsObj, $clean_uid );
-		}else{
-		    redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
-		}
-		break;
+			break;
+
+		case "addconfigs":
+			if (!$xoopsSecurity->check()) {
+				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+			}
+			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
+			$controller = new IcmsPersistableController($profile_configs_handler);
+			$controller->storeFromDefaultForm(_MD_PROFILE_CONFIGS_CREATED, _MD_PROFILE_CONFIGS_MODIFIED);
+			break;
+
+		default:
+			if ($real_uid > 0 &&  $icmsUser->uid() == $clean_uid) {
+				$configsObj = $profile_configs_handler->get($clean_configs_id);
+				editconfigs($configsObj);
+			}elseif($profile_isAdmin && $clean_uid > 0){
+				$clean_configs_id = $profile_configs_handler->getConfigIdPerUser($clean_uid);
+				$configsObj = $profile_configs_handler->get($clean_configs_id);
+				editconfigs($configsObj, $clean_uid );
+			}else{
+				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+			}
+			break;
 	}
 }
 $icmsTpl->assign('profile_module_home', icms_getModuleName(true, true));

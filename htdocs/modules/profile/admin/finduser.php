@@ -22,7 +22,7 @@ $hidden_fields_results = array('notify_method', 'notify_mode', 'uorder', 'umode'
 switch ($op) {
 	case "post" :
 		include_once ICMS_ROOT_PATH."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/class/smartuser.php";
- 		$fields =& $profile_smartuser_handler->getFields();
+		$fields =& $profile_smartuser_handler->getFields();
 		$criteria = new CriteriaCompo();
 		if($_REQUEST['uname'] != ''){
 			$criteria->add(new Criteria('uname', '%'.$_REQUEST['uname'].'%', 'LIKE'));
@@ -31,10 +31,10 @@ switch ($op) {
 			$criteria->add(new Criteria('email', '%'.$_REQUEST['email'].'%', 'LIKE'));
 		}
 		foreach($fields as $key =>$field){
-    		if(isset($_REQUEST[$key]) && $_REQUEST[$key] != ''){
-    			$criteria->add(new Criteria($key, '%'.$_REQUEST[$key].'%', 'LIKE'));
-    		}
-    	}
+			if(isset($_REQUEST[$key]) && $_REQUEST[$key] != ''){
+				$criteria->add(new Criteria($key, '%'.$_REQUEST[$key].'%', 'LIKE'));
+			}
+		}
 
 		//xoops_cp_header();
 		xoops_cp_header();
@@ -69,7 +69,7 @@ switch ($op) {
 		if($_POST["selected_action"] == 'delete_sel'){
 
 			if ($_POST['confirm']) {
-				if($smartshop_transaction_handler->batchDelete(explode('|', intval($_POST['ids'])))){
+				if($smartshop_transaction_handler->batchDelete(explode('|', (int) ($_POST['ids'])))){
 					redirect_header("transaction.php", 2, _AM_SSHOP_TRANSDELETED);
 					exit();
 				}else{
@@ -81,31 +81,29 @@ switch ($op) {
 				icms_adminMenu(2, _AM_SSHOP_TRANSACTIONS);
 
 				// no confirm: show deletion condition
-				xoops_confirm(array('op' => 'with_selected_actions', 'selected_action'=>'delete_sel', 'ids' => implode('|', intval($_POST['selected_smartobjects'])), 'confirm' => 1), 'transaction.php', _AM_SSSHOP_DELETETHOSETRANS . " <br />'" .implode(', ', $_POST['selected_smartobjects']). "'. <br /> <br />", _AM_SSHOP_DELETE);
+				xoops_confirm(array('op' => 'with_selected_actions', 'selected_action'=>'delete_sel', 'ids' => implode('|', (int) ($_POST['selected_smartobjects'])), 'confirm' => 1), 'transaction.php', _AM_SSSHOP_DELETETHOSETRANS . " <br />'" .implode(', ', $_POST['selected_smartobjects']). "'. <br /> <br />", _AM_SSHOP_DELETE);
 			}
 
+			break;
 
-		break;
-
-
-		//end not working
+			//end not working
 
 		}elseif($_POST["selected_action"] == 'export_sel'){
-				$criteria = new CriteriaCompo();
-				$criteria->add(new Criteria('uid', '(' . implode(', ', $_POST['selected_smartobjects']) . ')', 'IN'));
+			$criteria = new CriteriaCompo();
+			$criteria->add(new Criteria('uid', '(' . implode(', ', $_POST['selected_smartobjects']) . ')', 'IN'));
 
-				include_once(ICMS_KERNEL_PATH.'icmspersistableexport.php');
-				$custom_fields = $profile_smartuser_handler->getFields();
+			include_once(ICMS_KERNEL_PATH.'icmspersistableexport.php');
+			$custom_fields = $profile_smartuser_handler->getFields();
 
-				$fields = array();
-				foreach($custom_fields as $key => $custom_field){
-					if($custom_field->getVar('exportable') == '1'){
-						$fields[] = $key;
-					}
+			$fields = array();
+			foreach($custom_fields as $key => $custom_field){
+				if($custom_field->getVar('exportable') == '1'){
+					$fields[] = $key;
 				}
-				$smartObjectExport = new IcmsPersistableExport($profile_smartuser_handler, $criteria, $fields);
-				$smartObjectExport->render(time().'_transactions.csv');
-				exit;
+			}
+			$smartObjectExport = new IcmsPersistableExport($profile_smartuser_handler, $criteria, $fields);
+			$smartObjectExport->render(time().'_transactions.csv');
+			exit;
 			break;
 		}
 
@@ -124,15 +122,14 @@ switch ($op) {
 		}
 
 		foreach($custom_fields as $key =>$field){
-    		if(isset($_REQUEST[$key]) && $_REQUEST[$key] != ''){
-    			$criteria->add(new Criteria($key, '%'.$_REQUEST[$key].'%', 'LIKE'));
-    		}
-    	}
+			if(isset($_REQUEST[$key]) && $_REQUEST[$key] != ''){
+				$criteria->add(new Criteria($key, '%'.$_REQUEST[$key].'%', 'LIKE'));
+			}
+		}
 		$smartObjectExport = new IcmsPersistableExport($profile_smartuser_handler, $criteria, $fields);
 		$smartObjectExport->render(time().'_transactions.csv');
 		exit;
-	break;
-
+		break;
 
 	case 'form':
 	default:
@@ -142,7 +139,7 @@ switch ($op) {
 		xoops_cp_header();
 		icms_adminMenu(6, _AM_SPROFILE_FINDUSER);
 
- 		$custom_fields = $profile_smartuser_handler->getFields();
+		$custom_fields = $profile_smartuser_handler->getFields();
 
 		$fields = array();
 		foreach($custom_fields as $key => $custom_field){
@@ -152,21 +149,21 @@ switch ($op) {
 		}
 		$sform = new XoopsThemeForm(_AM_SPROFILE_FINDUSER, "op", xoops_getenv('PHP_SELF'), 'get');
 		$uname_elt = new XoopsFormText(sprintf(_AM_SPROFILE_FINDUSER_CRIT, _AM_SPROFILE_UNAME), 'uname', 50, 255, '');
-	    $sform->addElement($uname_elt);
-	    $email_elt = new XoopsFormText(sprintf(_AM_SPROFILE_FINDUSER_CRIT, _AM_SPROFILE_EMAIL), 'email', 50, 255, '');
-	    $sform->addElement($email_elt);
+		$sform->addElement($uname_elt);
+		$email_elt = new XoopsFormText(sprintf(_AM_SPROFILE_FINDUSER_CRIT, _AM_SPROFILE_EMAIL), 'email', 50, 255, '');
+		$sform->addElement($email_elt);
 		foreach($custom_fields as $key =>$field){
-    		if(!in_array($key, $hidden_fields_form)){
-	    		$elt = new XoopsFormText(sprintf(_AM_SPROFILE_FINDUSER_CRIT, $field->getVar('field_title')), $key, 50, 255, '');
-	    		$sform->addElement($elt);
-	    		unset($elt);
-    		}
-    	}
-    	$button_tray = new XoopsFormElementTray('', '');
+			if(!in_array($key, $hidden_fields_form)){
+				$elt = new XoopsFormText(sprintf(_AM_SPROFILE_FINDUSER_CRIT, $field->getVar('field_title')), $key, 50, 255, '');
+				$sform->addElement($elt);
+				unset($elt);
+			}
+		}
+		$button_tray = new XoopsFormElementTray('', '');
 		$hidden = new XoopsFormHidden('op', 'post');
 		$button_tray->addElement($hidden);
 
-    	$butt_find = new XoopsFormButton('', '', _SUBMIT, 'submit');
+		$butt_find = new XoopsFormButton('', '', _SUBMIT, 'submit');
 		//$butt_find->setExtra('onclick="this.form.elements.op.value=\'post\'"');
 		$button_tray->addElement($butt_find);
 
@@ -176,12 +173,9 @@ switch ($op) {
 
 		$sform->addElement($button_tray);
 
-
 		$sform->display();
 		break;
 }
-
-
 
 xoops_cp_footer();
 ?>

@@ -34,7 +34,7 @@ class IcmsBlock extends IcmsPersistableObject {
 		$this->quickInitVar('bid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('mid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('func_num', XOBJ_DTYPE_INT);
-		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX, true);
+		$this->quickInitVar('title', XOBJ_DTYPE_TXTBOX);
 		$this->quickInitVar('content', XOBJ_DTYPE_TXTAREA);
 		$this->quickInitVar('side', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('weight', XOBJ_DTYPE_INT, true, false, false, 0);
@@ -356,7 +356,7 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * @deprecated
 	 */
 	public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
-   		return $this->handler->getCountSimilarBlocks( $moduleId, $funcNum, $showFunc );
+		return $this->handler->getCountSimilarBlocks( $moduleId, $funcNum, $showFunc );
 	}
 
 }
@@ -392,9 +392,9 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		if( !count($this->block_positions ) ){
 			// TODO: Implement IPF for block_positions
 			$icms_blockposition_handler = xoops_gethandler('blockposition');
-//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
-//			$result = $this->db->query($sql);
-//			while ($row = $this->db->fetchArray($result)) {
+			//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
+			//			$result = $this->db->query($sql);
+			//			while ($row = $this->db->fetchArray($result)) {
 			$block_positions = $icms_blockposition_handler->getObjects();
 			foreach( $block_positions as $bp){
 				$this->block_positions[$bp->getVar('id')]['pname'] = $bp->getVar('pname');
@@ -405,29 +405,28 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			}
 		}
 		if (!$full)
-			foreach($this->block_positions as $k => $block_position)
-				$rtn[ $k ] = $block_position['pname'];
+		foreach($this->block_positions as $k => $block_position)
+		$rtn[ $k ] = $block_position['pname'];
 		else
-			$rtn = $this->block_positions;
+		$rtn = $this->block_positions;
 		return $rtn;
 	}
 
-
-   /**
-	* getByModule
-	*
-	* @param unknown_type $mid
-	* @param boolean $asObject
-	* @return array
-	*
-	* @deprecated
-	* @see $this->getObjects($criteria, false, $asObject);
-	* @todo Rewrite all the core to dont use any more this method.
-	*/
+	/**
+	 * getByModule
+	 *
+	 * @param unknown_type $mid
+	 * @param boolean $asObject
+	 * @return array
+	 *
+	 * @deprecated
+	 * @see $this->getObjects($criteria, false, $asObject);
+	 * @todo Rewrite all the core to dont use any more this method.
+	 */
 	public function getByModule($mid, $asObject = true){
-		$mid = intval($mid);
+		$mid = (int) ($mid);
 		$criteria = new CriteriaCompo();
-  		$criteria->add(new Criteria('mid', $mid));
+		$criteria->add(new Criteria('mid', $mid));
 		$ret = $this->getObjects($criteria, false, $asObject);
 		return $ret;
 	}
@@ -457,10 +456,10 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			$tp = ($side == -2)?'L':($side == -6)?'C':'';
 			if ( $tp != '') {
 			 	$q_side = "";
-			 	$icms_blockposition_handler = xoops_gethandler('blockposition');
-			 	$criteria = new CriteriaCompo();
-			 	$criteria->add( new Criteria('block_type', $tp) );
-			 	$blockpositions = $icms_blockposition_handler->getObjects($criteria);
+				$icms_blockposition_handler = xoops_gethandler('blockposition');
+				$criteria = new CriteriaCompo();
+				$criteria->add( new Criteria('block_type', $tp) );
+				$blockpositions = $icms_blockposition_handler->getObjects($criteria);
 				foreach( $blockpositions as $bp ){
 					$q_side .= "side='". (int) $bp->getVar('id') . "' OR ";
 				}
@@ -472,33 +471,33 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		}
 
 		if ( isset($visible) ) {
-			$where_query .= " AND visible='".intval($visible)."'";
+			$where_query .= " AND visible='". (int) ($visible)."'";
 		}
 		$where_query .= " ORDER BY $orderby";
 		switch ($rettype) {
-		case "object":
-			$sql = "SELECT * FROM ".$this->db->prefix("newblocks")."".$where_query;
-			$result = $this->db->query($sql);
-			while ( $myrow = $this->db->fetchArray($result) ) {
-				$ret[] = $this->get($myrow['bid']);
-			}
-			break;
-		case "list":
-			$sql = "SELECT * FROM ".$this->db->prefix("newblocks")."".$where_query;
-			$result = $this->db->query($sql);
-			while ( $myrow = $this->db->fetchArray($result) ) {
-				$block = $this->get($myrow['bid']);
-				$name = $block->getVar("title");
-				$ret[$block->getVar("bid")] = $name;
-			}
-			break;
-		case "id":
-			$sql = "SELECT bid FROM ".$this->db->prefix("newblocks")."".$where_query;
-			$result = $this->db->query($sql);
-			while ( $myrow = $this->db->fetchArray($result) ) {
-				$ret[] = $myrow['bid'];
-			}
-			break;
+			case "object":
+				$sql = "SELECT * FROM ".$this->db->prefix("newblocks")."".$where_query;
+				$result = $this->db->query($sql);
+				while ( $myrow = $this->db->fetchArray($result) ) {
+					$ret[] = $this->get($myrow['bid']);
+				}
+				break;
+			case "list":
+				$sql = "SELECT * FROM ".$this->db->prefix("newblocks")."".$where_query;
+				$result = $this->db->query($sql);
+				while ( $myrow = $this->db->fetchArray($result) ) {
+					$block = $this->get($myrow['bid']);
+					$name = $block->getVar("title");
+					$ret[$block->getVar("bid")] = $name;
+				}
+				break;
+			case "id":
+				$sql = "SELECT bid FROM ".$this->db->prefix("newblocks")."".$where_query;
+				$result = $this->db->query($sql);
+				while ( $myrow = $this->db->fetchArray($result) ) {
+					$ret[] = $myrow['bid'];
+				}
+				break;
 		}
 		//echo $sql;
 		return $ret;
@@ -518,22 +517,35 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	 * @deprecated
 	 */
 	function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1) {
+		// TODO: use $this->getObjects($criteria);
 
 		$isactive = intval($isactive);
-		$bid = array();
-		$icms_groupperm_handler = xoops_gethandler('groupperm');
-		$bid = $icms_groupperm_handler->getItemIds('block_read', $groupid);
+		$ret = array();
+		$sql = "SELECT DISTINCT gperm_itemid FROM ".$this->db->prefix('group_permission')." WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
+		if ( is_array($groupid) ) {
+			$gid = array_map(create_function('$a', '$r = "\'" . intval($a) . "\'"; return($r);'), $groupid);
+			$sql .= " AND gperm_groupid IN (".implode(',', $gid).")";
+		} else {
+			if (intval($groupid) > 0) {
+				$sql .= " AND gperm_groupid='".intval($groupid)."'";
+			}
+		}
+		$result = $this->db->query($sql);
+		$blockids = array();
+		while ( $myrow = $this->db->fetchArray($result) ) {
+			$blockids[] = $myrow['gperm_itemid'];
+		}
 
-		if (count($bid) > 0) {
+		if (!empty($blockids)) {
 			$sql = "SELECT b.* FROM ".$this->db->prefix('newblocks')." b, ".$this->db->prefix('block_module_link')." m WHERE m.block_id=b.bid";
 			$sql .= " AND b.isactive='".$isactive."'";
 			if (isset($visible)) {
-				$sql .= " AND b.visible='".intval($visible)."'";
+				$sql .= " AND b.visible='". (int) ($visible)."'";
 			}
 
 			$arr = explode('-',$module_id);
-			$module_id = intval($arr[0]);
-			$page_id = intval($arr[1]);
+			$module_id = (int) ($arr[0]);
+			$page_id = (int) ($arr[1]);
 			if ($module_id == 0){ //Entire Site
 				if ($page_id == 0){ //All pages
 					$sql .= " AND m.module_id='0' AND m.page_id=0";
@@ -548,16 +560,14 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 				}
 			}
 
-			$sql .= " AND b.bid IN (".implode(',', $bid).")";
+			$sql .= " AND b.bid IN (".implode(',', $blockids).")";
 			$sql .= " ORDER BY ".$orderby;
 			$result = $this->db->query($sql);
-			$bid = array();
 			while ( $myrow = $this->db->fetchArray($result) ) {
-				$bid[] =$myrow['bid'];
+				$block =& $this->get($myrow['bid']);
+				$ret[$myrow['bid']] =& $block;
+				unset($block);
 			}
-			$criteria = new CriteriaCompo();
-			$criteria->add(new Criteria('bid' , '('.implode(',', $bid).')', 'IN'));
-			$ret = $this->getObjects($criteria);
 		}
 		return $ret;
 
@@ -594,13 +604,13 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		$non_grouped = array_diff($bids, $grouped);
 		if (!empty($non_grouped)) {
 			$sql = "SELECT b.* FROM ".$this->db->prefix('newblocks')." b, ".$this->db->prefix('block_module_link')." m WHERE m.block_id=b.bid";
-			$sql .= " AND b.isactive='".intval($isactive)."'";
+			$sql .= " AND b.isactive='". (int) ($isactive)."'";
 			if (isset($visible)) {
-				$sql .= " AND b.visible='".intval($visible)."'";
+				$sql .= " AND b.visible='". (int) ($visible)."'";
 			}
-			$module_id = intval($module_id);
+			$module_id = (int) ($module_id);
 			if (!empty($module_id)) {
-				$sql .= " AND m.module_id IN ('0','".intval($module_id)."'";
+				$sql .= " AND m.module_id IN ('0','". (int) ($module_id)."'";
 				if ($toponlyblock) {
 					$sql .= ",'-1'";
 				}
@@ -640,7 +650,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		$obj->setVar('last_modified', time());
 		$obj->setVar('isactive', true);
 		if(!$new){
-			$sql = sprintf("DELETE FROM %s WHERE block_id = '%u'", $this->db->prefix('block_module_link'), intval($obj->getVar('bid')));
+			$sql = sprintf("DELETE FROM %s WHERE block_id = '%u'", $this->db->prefix('block_module_link'), (int) ($obj->getVar('bid')));
 			if (false != $force) {
 				$this->db->queryF($sql);
 			} else {
@@ -676,7 +686,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 					$page = explode('-', $bmid);
 					$mid = $page[0];
 					$pageid = $page[1];
-					$sql = "INSERT INTO ".$this->db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($obj->getVar("bid"))."', '".intval($mid)."', '".intval($pageid)."')";
+					$sql = "INSERT INTO ".$this->db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('". (int) ($obj->getVar("bid"))."', '". (int) ($mid)."', '". (int) ($pageid)."')";
 					if (false != $force) {
 						$this->db->queryF($sql);
 					} else {
@@ -687,7 +697,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 				$page = explode('-', $obj->getVar('visiblein', 'e'));
 				$mid = $page[0];
 				$pageid = $page[1];
-				$sql = "INSERT INTO ".$this->db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('".intval($obj->getVar("bid"))."', '".intval($mid)."', '".intval($pageid)."')";
+				$sql = "INSERT INTO ".$this->db->prefix('block_module_link')." (block_id, module_id, page_id) VALUES ('". (int) ($obj->getVar("bid"))."', '". (int) ($mid)."', '". (int) ($pageid)."')";
 				if (false != $force) {
 					$this->db->queryF($sql);
 				} else {
@@ -701,19 +711,19 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 
 	public function &get($id, $as_object = true, $debug=false, $criteria=false) {
 		$obj = parent::get($id, $as_object, $debug, $criteria);
-		$sql = "SELECT module_id,page_id FROM ".$this->db->prefix('block_module_link')." WHERE block_id='".intval($obj->getVar('bid'))."'";
+		$sql = "SELECT module_id,page_id FROM ".$this->db->prefix('block_module_link')." WHERE block_id='". (int) ($obj->getVar('bid'))."'";
 		$result = $this->db->query($sql);
 		$modules = $bcustomp = array();
 		while ($row = $this->db->fetchArray($result)) {
-			$modules[] = intval($row['module_id']).'-'.intval($row['page_id']);
+			$modules[] = (int) ($row['module_id']).'-'. (int) ($row['page_id']);
 		}
 		$obj->setVar('visiblein', $modules);
 		return $obj;
 	}
 
 	public function getCountSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
-		$funcNum = intval($funcNum);
-		$moduleId = intval($moduleId);
+		$funcNum = (int) ($funcNum);
+		$moduleId = (int) ($moduleId);
 		if ($funcNum < 1 || $moduleId < 1) {
 			return 0;
 		}

@@ -1,17 +1,17 @@
 <?php
 /**
-* Administration of smilies, main functions file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Administration
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Administration of smilies, main functions file
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	Administration
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
@@ -27,7 +27,7 @@ function SmilesAdmin()
 
 	if ($getsmiles = $db->query("SELECT * FROM ".$db->prefix("smiles"))) {
 		if (($numsmiles = $db->getRowsNum($getsmiles)) == "0") {
-		//EMPTY
+			//EMPTY
 		} else {
 			echo '<form action="admin.php" method="post"><table width="100%" class="outer" cellpadding="4" cellspacing="1">';
 			echo "<tr align='center'><th align='"._GLOBAL_LEFT."'>" ._AM_CODE."</th>";
@@ -83,10 +83,10 @@ function SmilesEdit($id)
 	$myts =& MyTextSanitizer::getInstance();
 	xoops_cp_header();
 	echo '<a href="admin.php?fct=smilies">'._AM_SMILESCONTROL .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITSMILE.'<br /><br />';
-	if ($getsmiles = $db->query("SELECT * FROM ".$db->prefix("smiles")." WHERE id = '".intval($id)."'")) {
+	if ($getsmiles = $db->query("SELECT * FROM ".$db->prefix("smiles")." WHERE id = '". (int) ($id)."'")) {
 		$numsmiles = $db->getRowsNum($getsmiles);
 		if ( $numsmiles == 0 ) {
-		    //EMPTY
+			//EMPTY
 		} else {
 			if ($smiles = $db->fetchArray($getsmiles)) {
 				$smiles['smile_code'] = $myts->makeTboxData4Edit($smiles['code']);

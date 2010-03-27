@@ -1,11 +1,11 @@
 <?php
 
 /**
-* $Id$
-*/
+ * $Id$
+ */
 
 if (!defined("XOOPS_ROOT_PATH")) {
- 	die("ImpressCMS root path not defined");
+	die("ImpressCMS root path not defined");
 }
 
 define('_CO_ICMS_FILTER', "Filter");

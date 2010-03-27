@@ -24,7 +24,7 @@ $root_path = dirname($current_path);
 
 $icmsConfig['language'] = preg_replace("/[^a-z0-9_\-]/i", "", $icmsConfig['language']);
 if(!@include_once($root_path."/language/".$icmsConfig['language'].".php")){
-	include_once($root_path."/language/english.php");
+	include_once $root_path."/language/english.php" ;
 }
 
 return $config = array(

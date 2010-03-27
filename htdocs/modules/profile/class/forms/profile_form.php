@@ -17,7 +17,6 @@
 include_once ICMS_ROOT_PATH.'/class/xoopsform/themeform.php';
 class ProfileForm extends XoopsThemeForm{
 
-
 	function renderValidationJS( $withtags = true ) {
 		$js = "";
 		if ( $withtags ) {
@@ -79,8 +78,8 @@ class ProfileForm extends XoopsThemeForm{
 
 			}else{
 				$js .= "if ( myform.{$eltname}.value == \"\" ) "
-					. "{ window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }\n";
-				}
+				. "{ window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }\n";
+			}
 		}
 		// Now, handle custom validation code
 		$elements = $this->getElements( true );
@@ -97,7 +96,6 @@ class ProfileForm extends XoopsThemeForm{
 		}
 		return $js;
 	}
-
 
 }
 ?>

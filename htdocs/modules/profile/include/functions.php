@@ -15,12 +15,12 @@
  */
 
 /**
-* Check a user's uname, email, password and password verification
-*
-* @param object $user {@link XoopsUser} to check
-*
-* @return string
-*/
+ * Check a user's uname, email, password and password verification
+ *
+ * @param object $user {@link XoopsUser} to check
+ *
+ * @return string
+ */
 function userCheck($user)
 {
 	global $icmsConfigUser;
@@ -39,17 +39,17 @@ function userCheck($user)
 	}
 	switch ($icmsConfigUser['uname_test_level']) {
 		case 0:
-		// strict
-		$restriction = '/[^a-zA-Z0-9\_\-]/';
-		break;
+			// strict
+			$restriction = '/[^a-zA-Z0-9\_\-]/';
+			break;
 		case 1:
-		// medium
-		$restriction = '/[^a-zA-Z0-9\_\-\<\>\,\.\$\%\#\@\!\\\'\"]/';
-		break;
+			// medium
+			$restriction = '/[^a-zA-Z0-9\_\-\<\>\,\.\$\%\#\@\!\\\'\"]/';
+			break;
 		case 2:
-		// loose
-		$restriction = '/[\000-\040]/';
-		break;
+			// loose
+			$restriction = '/[\000-\040]/';
+			break;
 	}
 	if (strlen($user->getVar('uname')) > $icmsConfigUser['maxuname']) {
 		$stop .= sprintf(_PROFILE_MA_DISPLAYNAMETOOLONG, $icmsConfigUser['maxuname'])."<br />";
@@ -95,15 +95,15 @@ function userCheck($user)
 		$stop .= _PROFILE_MA_DISPLAYNAMETAKEN."<br />";
 	}
 	/*$displays_criteria = new Criteria('login_name', $user->getVar('login_name'));
-	if ($user->getVar('uid') > 0) {
+	 if ($user->getVar('uid') > 0) {
 		//existing user, so let's keep the user's own row out of this
 		$displays_criteria = new CriteriaCompo($displays_criteria);
-	}
-	$displays_count = $member_handler->getUserCount($displays_criteria);
-	unset($displays_criteria);
-	if ($displays_count > 0) {
+		}
+		$displays_count = $member_handler->getUserCount($displays_criteria);
+		unset($displays_criteria);
+		if ($displays_count > 0) {
 		$stop .= _PROFILE_MA_LOGINNAMETAKEN."<br />";
-	}*/
+		}*/
 	if ( $user->getVar('login_name')) {
 		$count_loginname = new Criteria('login_name', $user->getVar('login_name'));
 		if ($user->getVar('uid') > 0) {
@@ -136,15 +136,15 @@ function userCheck($user)
 }
 
 /**
-* Check password - used when changing password
-*
-* @param string $uname username of the user changing password
-* @param string $oldpass old password
-* @param string $newpass new password
-* @param string $vpass verification of new password (must be the same as $newpass)
-*
-* @return string
-**/
+ * Check password - used when changing password
+ *
+ * @param string $uname username of the user changing password
+ * @param string $oldpass old password
+ * @param string $newpass new password
+ * @param string $vpass verification of new password (must be the same as $newpass)
+ *
+ * @return string
+ **/
 function checkPassword($uname, $oldpass, $newpass, $vpass) {
 	global $icmsConfigUser;
 	$stop = "";
@@ -181,7 +181,7 @@ function getAllowedItems($item, $uid){
 		redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 		exit();
 	}
-	
+
 	$profile_configs_handler = icms_getModuleHandler('configs');
 	$configs_id = $profile_configs_handler->getConfigIdPerUser($uid);
 	$configsObj = $profile_configs_handler->get($configs_id);

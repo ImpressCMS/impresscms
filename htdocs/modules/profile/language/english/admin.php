@@ -150,31 +150,31 @@ define("_AM_SPROFILE_UID", "Userid");
 define("_AM_SPROFILE_EMAIL", "Email");
 define("_AM_SPROFILE_BACK_TO_FORM", "<< Back to search form");
 define("_AM_SPROFILE_EXPORT_ALL", "Export all matching users");
-	// Audio
+// Audio
 define("_AM_PROFILE_AUDIOS", "Audios");
 define("_AM_PROFILE_AUDIO_CREATE", "Add an audio");
 define("_AM_PROFILE_AUDIO", "Audio");
 define("_AM_PROFILE_AUDIO_EDIT", "Edit this audio");
-	// Tribes
+// Tribes
 define("_AM_PROFILE_TRIBES", "Tribes");
 define("_AM_PROFILE_TRIBES_CREATE", "Add a tribe");
 define("_AM_PROFILE_TRIBE", "Tribe");
 define("_AM_PROFILE_TRIBES_EDIT", "Edit this tribe");
 define("_AM_PROFILE_TRIBES_MODIFIED", "The tribe was successfully modified.");
 define("_AM_PROFILE_TRIBES_CREATED", "The tribe has been successfully created.");
-	// Pictures
+// Pictures
 define("_AM_PROFILE_PICTURES", "Pictures");
 define("_AM_PROFILE_PICTURES_CREATE", "Add a picture");
 define("_AM_PROFILE_PICTURE", "Picture");
 define("_AM_PROFILE_PICTURES_EDIT", "Edit this picture");
 define("_AM_PROFILE_PICTURES_MODIFIED", "The picture was successfully modified.");
 define("_AM_PROFILE_PICTURES_CREATED", "The picture has been successfully created.");
-	// Videos
+// Videos
 define("_AM_PROFILE_VIDEOS", "Videos");
 define("_AM_PROFILE_VIDEOS_CREATE", "Add a video");
 define("_AM_PROFILE_VIDEO", "Video");
 define("_AM_PROFILE_VIDEOS_EDIT", "Edit this video");
-	// Tribeuser
+// Tribeuser
 define("_AM_PROFILE_TRIBEUSERS", "Tribeusers");
 define("_AM_PROFILE_TRIBEUSER_CREATE", "Add a tribeuser");
 define("_AM_PROFILE_TRIBEUSER_MODIFY", "Modify a tribeuser");

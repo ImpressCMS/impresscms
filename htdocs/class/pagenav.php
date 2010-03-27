@@ -1,17 +1,17 @@
 <?php
 /**
-* Generates pagination
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Generates pagination
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 /**
  * Class to facilitate navigation in a multi page document/list
@@ -28,24 +28,24 @@ class XoopsPageNav
 	 * @access	private
 	 */
 
-  /**
-   * @public int $total  Total of pages to show
-   */
+	/**
+	 * @public int $total  Total of pages to show
+	 */
 	public $total;
 
-  /**
-   * @public int $perpage  Total of items to show per page
-   */
+	/**
+	 * @public int $perpage  Total of items to show per page
+	 */
 	public $perpage;
 
-  /**
-   * @public int $current  What is the current page
-   */
+	/**
+	 * @public int $current  What is the current page
+	 */
 	public $current;
 
-  /**
-   * @public string $url   What is the current url
-   */
+	/**
+	 * @public string $url   What is the current url
+	 */
 	public $url;
 	/**#@-*/
 
@@ -60,9 +60,9 @@ class XoopsPageNav
 	 **/
 	function XoopsPageNav($total_items, $items_perpage, $current_start, $start_name="start", $extra_arg="")
 	{
-		$this->total = intval($total_items);
-		$this->perpage = intval($items_perpage);
-		$this->current = intval($current_start);
+		$this->total = (int) ($total_items);
+		$this->perpage = (int) ($items_perpage);
+		$this->current = (int) ($current_start);
 		if ( $extra_arg != '' && ( substr($extra_arg, -5) != '&amp;' || substr($extra_arg, -1) != '&' ) ) {
 			$extra_arg .= '&amp;';
 		}
@@ -76,16 +76,16 @@ class XoopsPageNav
 	 * @return  string
 	 **/
 	function renderNav($offset = 4)
-	{	
+	{
 		global $icmsConfigPersona, $xoTheme;
-		
+
 		$style = (isset($icmsConfigPersona['pagstyle']) && file_exists(ICMS_LIBRARIES_PATH . '/paginationstyles/paginationstyles.php'))?$icmsConfigPersona['pagstyle']:'default';
 		$ret = '';
 		if(isset($xoTheme)){
-		$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css', array("media" => "all"));
+			$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css', array("media" => "all"));
 		}else{
 			echo'<link rel="stylesheet" type="text/css" href="'.ICMS_LIBRARIES_URL . '/paginationstyles/css/'.$icmsConfigPersona['pagstyle'].'.css" />';
-		} 
+		}
 		if ( $this->total <= $this->perpage ) {
 			return $ret;
 		}
@@ -98,7 +98,7 @@ class XoopsPageNav
 				$ret .= '<span class="disabled"><b>'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"&#9658; ":"&#9668; ").''._PREV.'</b></span> ';
 			}
 			$counter = 1;
-			$current_page = intval(floor(($this->current + $this->perpage) / $this->perpage));
+			$current_page = (int) (floor(($this->current + $this->perpage) / $this->perpage));
 			while ( $counter <= $total_pages ) {
 				if ( $counter == $current_page ) {
 					$ret .= '<span class="current"><b>'.(($style == 'default')?'(':'').icms_conv_nr2local($counter).(($style == 'default')?')':'').'</b></span> ';
@@ -137,10 +137,10 @@ class XoopsPageNav
 		$total_pages = ceil($this->total / $this->perpage);
 		$ret = '';
 		if ( $total_pages > 1 ) {
-   			$ret = '<form name="pagenavform">';
+			$ret = '<form name="pagenavform">';
 			$ret .= '<select name="pagenavselect" onchange="location=this.options[this.options.selectedIndex].value;">';
 			$counter = 1;
-			$current_page = intval(floor(($this->current + $this->perpage) / $this->perpage));
+			$current_page = (int) (floor(($this->current + $this->perpage) / $this->perpage));
 			while ( $counter <= $total_pages ) {
 				if ( $counter == $current_page ) {
 					$ret .= '<option value="'.$this->url.(($counter - 1) * $this->perpage).'" selected="selected">'.icms_conv_nr2local($counter).'</option>';
@@ -172,7 +172,7 @@ class XoopsPageNav
 		$total_pages = ceil($this->total / $this->perpage);
 		$ret = '';
 		if ( $total_pages > 1 ) {
-   			$ret = '<table><tr>';
+			$ret = '<table><tr>';
 			$prev = $this->current - $this->perpage;
 			if ( $prev >= 0 ) {
 				$ret .= '<td class="pagneutral"><a href="'.$this->url.$prev.'">&lt;</a></td><td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td>';
@@ -180,7 +180,7 @@ class XoopsPageNav
 				$ret .= '<td class="pagno"></a></td><td><img src="'.ICMS_URL.'/images/blank.gif" width="6" alt="" /></td>';
 			}
 			$counter = 1;
-			$current_page = intval(floor(($this->current + $this->perpage) / $this->perpage));
+			$current_page = (int) (floor(($this->current + $this->perpage) / $this->perpage));
 			while ( $counter <= $total_pages ) {
 				if ( $counter == $current_page ) {
 					$ret .= '<td class="pagact"><b>'.$counter.'</b></td>';

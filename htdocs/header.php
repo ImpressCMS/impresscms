@@ -1,21 +1,21 @@
 <?php
 /**
-* @copyright	The XOOPS Project <http://www.xoops.org/> 
-* @copyright	XOOPS_copyrights.txt
-* @copyright	The ImpressCMS Project <http://www.impresscms.org/>
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		XOOPS
-* @author		The XOOPS Project Community <http://www.xoops.org> 
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ * @copyright	The XOOPS Project <http://www.xoops.org/>
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	The ImpressCMS Project <http://www.impresscms.org/>
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		XOOPS
+ * @author		The XOOPS Project Community <http://www.xoops.org>
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 if( !isset( $xoopsLogger ) )
-	$xoopsLogger =& $GLOBALS['xoopsLogger'];
+$xoopsLogger =& $GLOBALS['xoopsLogger'];
 if( !isset($icmsPreloadHandler) )
-	$icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];
+$icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];
 
 $xoopsLogger->stopTime('Module init');
 $xoopsLogger->startTime('ICMS output init');
@@ -23,13 +23,13 @@ $xoopsLogger->startTime('ICMS output init');
 if($icmsConfig['theme_set'] != 'default' && file_exists(ICMS_THEME_PATH.'/'.$icmsConfig['theme_set'].'/theme.php'))
 {
 	/** For backwards compatibility with XOOPS 1.3.x */
-  require_once ICMS_ROOT_PATH.'/include/xoops13_header.php';
+	require_once ICMS_ROOT_PATH.'/include/xoops13_header.php';
 }
 else
 {
 	global $xoopsOption, $icmsConfig, $icmsModule;
 	$xoopsOption['theme_use_smarty'] = 1;
-	
+
 	/**  include Smarty template engine and initialize it*/
 	require_once ICMS_ROOT_PATH.'/class/template.php';
 	require_once ICMS_ROOT_PATH.'/class/theme.php';
@@ -70,7 +70,7 @@ else
 
 	$xoTheme->addScript(ICMS_URL.'/include/xoops.js', array('type' => 'text/javascript'));
 	$xoTheme->addScript(ICMS_URL.'/include/linkexternal.js', array('type' => 'text/javascript'));
-	/** 
+	/**
 	 * Now system first checks for RTL, if it is enabled it'll just load it, otherwise it will load the normal (LTR) styles
 	 */
 	$xoTheme->addStylesheet(ICMS_URL.'/icms'.(@_ADM_USE_RTL == true?'_rtl':'').'.css', array('media' => 'screen'));
@@ -80,38 +80,38 @@ else
 	 *
 	 * $xoopsTpl->assign('xoops_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script><script type="text/javascript"><!--');
 	 * $xoopsTpl->assign('linkexternal_js', '//--></script><script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script><script type="text/javascript"><!--');
-	 * 
-	 * Weird, but we need to bring plugins java information in header because doing it form elsewhere will drop system required Java Script files!! 
+	 *
+	 * Weird, but we need to bring plugins java information in header because doing it form elsewhere will drop system required Java Script files!!
 	 */
 
-/*	$jscript = '';
-	if(class_exists('XoopsFormDhtmlTextArea')){
+	/*	$jscript = '';
+	 if(class_exists('XoopsFormDhtmlTextArea')){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-			if(empty($key)) continue;
-			if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
-				$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
-			}else{
-				$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-				$func = 'render_'.$key;
-				if ( function_exists($func) ) {
-					@list($encode, $jscript) = $func($ele_name);
-					if (!empty($jscript)) {
-						if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
-							$xoTheme->addScript('', array('type' => 'text/javascript'), $jscript);
-						}else{
-							$xoTheme->addScript($jscript, array('type' => 'text/javascript'));
-						}
-					}
-				}
-			}
+		if(empty($key)) continue;
+		if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
+		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js', array('type' => 'text/javascript'));
+		}else{
+		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+		$func = 'render_'.$key;
+		if ( function_exists($func) ) {
+		@list($encode, $jscript) = $func($ele_name);
+		if (!empty($jscript)) {
+		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
+		$xoTheme->addScript('', array('type' => 'text/javascript'), $jscript);
+		}else{
+		$xoTheme->addScript($jscript, array('type' => 'text/javascript'));
 		}
-	}
-*/
+		}
+		}
+		}
+		}
+		}
+		*/
 	$style_info = '';
 	if(!empty($icmsConfigPlugins['sanitizer_plugins'])){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 			if( empty( $key ) )
-				continue;
+			continue;
 			if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
 				$xoTheme->addStylesheet(ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css', array('media' => 'screen'));
 			}else{
@@ -119,8 +119,8 @@ else
 				$func = 'style_'.$key;
 				if ( function_exists($func) ) {
 					$style_info = $func();
-				 	if (!empty($style_info)) {
-			 			if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
+					if (!empty($style_info)) {
+						if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
 							$xoTheme->addStylesheet('', array('media' => 'screen'), $style_info);
 						}else{
 							$xoTheme->addStylesheet($style_info, array('media' => 'screen'));
@@ -139,7 +139,7 @@ else
 		if (!window.console || !console.firebug) {
 			var names = ["log", "debug", "info", "warn", "error", "assert", "dir", "dirxml", "group", "groupEnd", "time", "timeEnd", "count", "trace", "profile", "profileEnd"];
 			window.console = {};
-			
+
 			for (var i = 0; i < names.length; ++i) window.console[names[i]] = function() {};
 		}
 
@@ -158,10 +158,10 @@ else
 
 	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
 	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom.css');
-	if(ereg('msie', strtolower($_SERVER['HTTP_USER_AGENT']))) {$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom-ie.css');}
+	if( strpos( strtolower( $_SERVER['HTTP_USER_AGENT']), 'msie' ) ) { $xoTheme->addStylesheet( ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom-ie.css' ) ; }
 	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.js');
 	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/lightbox.js');
-	
+
 	if(@is_object($xoTheme->plugins['xos_logos_PageBuilder'])) {
 		$aggreg =& $xoTheme->plugins['xos_logos_PageBuilder'];
 		$xoopsTpl->assign_by_ref('xoBlocks', $aggreg->blocks);
@@ -172,17 +172,17 @@ else
 		$xoopsTpl->assign_by_ref('xoops_ccblocks', $aggreg->blocks['page_topcenter']);
 		$xoopsTpl->assign_by_ref('xoops_clblocks', $aggreg->blocks['page_topleft']);
 		$xoopsTpl->assign_by_ref('xoops_crblocks', $aggreg->blocks['page_topright']);
-		
+
 		$xoopsTpl->assign('xoops_showlblock', !empty($aggreg->blocks['canvas_left']));
 		$xoopsTpl->assign('xoops_showrblock', !empty($aggreg->blocks['canvas_right']));
 		$xoopsTpl->assign('xoops_showcblock', !empty($aggreg->blocks['page_topcenter']) || !empty($aggreg->blocks['page_topleft']) || !empty($aggreg->blocks['page_topright']));
 	}
 
-	if( $icmsModule ) 
-		$xoTheme->contentCacheLifetime = @$icmsConfig['module_cache'][$icmsModule->getVar('mid', 'n')];
+	if( $icmsModule )
+	$xoTheme->contentCacheLifetime = @$icmsConfig['module_cache'][$icmsModule->getVar('mid', 'n')];
 
 	if( $xoTheme->checkCache() )
-		exit();
+	exit();
 
 	if(!isset($xoopsOption['template_main']) && $icmsModule) {
 		// new themes using Smarty does not have old functions that are required in old modules, so include them now

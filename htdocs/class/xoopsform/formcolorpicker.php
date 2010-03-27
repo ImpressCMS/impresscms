@@ -1,21 +1,21 @@
 <?php
 /**
-* XoopsFormColorPicker component class file
-* 
-* This class provides a textfield with a color picker popup. This color picker
-* comes from Tigra project (http://www.softcomplex.com/products/tigra_color_picker/).
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @license      http://www.fsf.org/copyleft/gpl.html GNU public license
-* @author       Zoullou <webmaster@zoullou.org>
-* @since        Xoops 2.0.15
-* @version		$Id$
-* @package 		XoopsForms
-* @subpackage 	ColorPicker
-*/
+ * XoopsFormColorPicker component class file
+ *
+ * This class provides a textfield with a color picker popup. This color picker
+ * comes from Tigra project (http://www.softcomplex.com/products/tigra_color_picker/).
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author       Zoullou <webmaster@zoullou.org>
+ * @since        Xoops 2.0.15
+ * @version		$Id$
+ * @package 		XoopsForms
+ * @subpackage 	ColorPicker
+ */
 
 if (! defined ( 'ICMS_ROOT_PATH' )) {
 	die ( "ImpressCMS root path not defined" );
@@ -38,17 +38,17 @@ if (! defined ( 'ICMS_ROOT_PATH' )) {
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class XoopsFormColorPicker extends XoopsFormText {
-	
+
 	/**
 	 * Constructor
-   * @param	string  $caption  Caption of the element
-   * @param	string  $name     Name of the element
-   * @param	string  $value    Value of the element
+	 * @param	string  $caption  Caption of the element
+	 * @param	string  $name     Name of the element
+	 * @param	string  $value    Value of the element
 	 */
 	function XoopsFormColorPicker($caption, $name, $value = "#FFFFFF") {
 		$this->XoopsFormText( $caption, $name, 9, 7, $value );
 	}
-	
+
 	/**
 	 * Render the color picker
 	 * @return  $string	rendered color picker HTML
@@ -65,7 +65,7 @@ class XoopsFormColorPicker extends XoopsFormText {
 
 	/**
 	 * Returns custom validation Javascript
-	 * 
+	 *
 	 * @return	string	Element validation Javascript
 	 */
 	function renderValidationJS() {

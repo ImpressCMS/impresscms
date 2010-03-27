@@ -1,29 +1,29 @@
 <?php
 /**
-* Helper functions available in the ImpressCMS process
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package	core
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author		modified by marcan <marcan@impresscms.org>
-* @version	$Id: functions.php 8806 2009-05-31 22:28:54Z pesianstranger $
-*/
+ * Helper functions available in the ImpressCMS process
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	core
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author		modified by marcan <marcan@impresscms.org>
+ * @version	$Id: functions.php 8806 2009-05-31 22:28:54Z pesianstranger $
+ */
 
 // ############## Include jalali functions file ##############
 include_once 'jalali.php';
 /**
-* The header
-*
-* Implements all functions that are executed within the header of the page
-* (meta tags, header expiration, etc)
-* It will all be echoed, so no return in this function
-*
-* @param bool  $closehead  close the <head> tag
-*/
+ * The header
+ *
+ * Implements all functions that are executed within the header of the page
+ * (meta tags, header expiration, etc)
+ * It will all be echoed, so no return in this function
+ *
+ * @param bool  $closehead  close the <head> tag
+ */
 function xoops_header($closehead=true)
 {
 	global $icmsConfig, $xoopsTheme, $icmsConfigPlugins, $icmsConfigMetaFooter;
@@ -54,34 +54,34 @@ function xoops_header($closehead=true)
 	<script type="text/javascript" src="'.ICMS_URL.'/include/xoops.js"></script>
 	<script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
-/*	$jscript = '';
-	if(class_exists('XoopsFormDhtmlTextArea')){
+	/*	$jscript = '';
+	 if(class_exists('XoopsFormDhtmlTextArea')){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-			if(empty($key)) continue;
-			if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
-				echo '<script type="text/javascript" src="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js"></script>';
-			}else{
-				$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
-				$func = 'render_'.$key;
-				if ( function_exists($func) ) {
-					@list($encode, $jscript) = $func($ele_name);
-					if (!empty($jscript)) {
-						if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
-							echo '<script type="text/javascript">'.$jscript.'</script>';
-						}else{
-							echo '<script type="text/javascript" src="'.$jscript.'"></script>';
-						}
-					}
-				}
-			}
+		if(empty($key)) continue;
+		if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){
+		echo '<script type="text/javascript" src="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.js"></script>';
+		}else{
+		$extension = include_once ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.php';
+		$func = 'render_'.$key;
+		if ( function_exists($func) ) {
+		@list($encode, $jscript) = $func($ele_name);
+		if (!empty($jscript)) {
+		if(!file_exists(ICMS_ROOT_PATH.'/'.$jscript)){
+		echo '<script type="text/javascript">'.$jscript.'</script>';
+		}else{
+		echo '<script type="text/javascript" src="'.$jscript.'"></script>';
 		}
-	}
-*/
+		}
+		}
+		}
+		}
+		}
+		*/
 	$style_info = '';
 	if(!empty($icmsConfigPlugins['sanitizer_plugins'])){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 			if( empty( $key ) )
-				continue;
+			continue;
 			if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.css')){
 				echo '<link rel="stylesheet" media="screen" href="'.ICMS_URL.'/plugins/textsanitizer/'.$key.'/'.$key.'.css" type="text/css" />';
 			}else{
@@ -89,8 +89,8 @@ function xoops_header($closehead=true)
 				$func = 'style_'.$key;
 				if ( function_exists($func) ) {
 					$style_info = $func();
-				 	if (!empty($style_info)) {
-			 			if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
+					if (!empty($style_info)) {
+						if(!file_exists(ICMS_ROOT_PATH.'/'.$style_info)){
 							echo '<style media="screen" type="text/css">
 							'.$style_info.'
 							</style>';
@@ -114,10 +114,10 @@ function xoops_header($closehead=true)
 }
 
 /**
-* The footer
-*
-* Implements all functions that are executed in the footer
-*/
+ * The footer
+ *
+ * Implements all functions that are executed in the footer
+ */
 function xoops_footer()
 {
 	global $icmsConfigMetaFooter;
@@ -149,9 +149,9 @@ function icms_error_msg($msg, $title='', $render = true){
 	else {$ret .= $msg;}
 	$ret .= '</div>';
 	if($render)
-		echo $ret;
+	echo $ret;
 	else
-		return $ret;
+	return $ret;
 }
 
 /**
@@ -194,9 +194,9 @@ function icms_warning_msg($msg, $title='', $render = false){
 	else {$ret .= $msg;}
 	$ret .= '</div>';
 	if($render)
-		echo $ret;
+	echo $ret;
 	else
-		return $ret;
+	return $ret;
 }
 
 /**
@@ -233,16 +233,16 @@ function xoops_result($msg, $title='')
 }
 
 /**
-* Generates a confirm form
-*
-* Will render (echo) the form so no return in this function
-*
-* @param array  $hiddens  Array of Hidden values
-* @param string  $action  The Form action
-* @param string  $msg  The message in the confirm form
-* @param string  $submit  The text on the submit button
-* @param bool  $addtoken  Whether or not to add a security token
-*/
+ * Generates a confirm form
+ *
+ * Will render (echo) the form so no return in this function
+ *
+ * @param array  $hiddens  Array of Hidden values
+ * @param string  $action  The Form action
+ * @param string  $msg  The message in the confirm form
+ * @param string  $submit  The text on the submit button
+ * @param bool  $addtoken  Whether or not to add a security token
+ */
 function xoops_confirm($hiddens, $action, $msg, $submit='', $addtoken = true)
 {
 	$submit = ($submit != '') ? trim($submit) : _SUBMIT;
@@ -264,17 +264,17 @@ function xoops_confirm($hiddens, $action, $msg, $submit='', $addtoken = true)
 }
 
 /**
-* Deprecated, use {@link XoopsSecurity} class instead
-**/
+ * Deprecated, use {@link XoopsSecurity} class instead
+ **/
 function xoops_refcheck($docheck=1) {return $GLOBALS['xoopsSecurity']->checkReferer($docheck);}
 
 /**
-* Get the timestamp based on the user settings
-*
-* @param string  $time  String with time
-* @param string  $timeoffset  The time offset string
-* @return string  $usertimestamp  The generated user timestamp
-*/
+ * Get the timestamp based on the user settings
+ *
+ * @param string  $time  String with time
+ * @param string  $timeoffset  The time offset string
+ * @return string  $usertimestamp  The generated user timestamp
+ */
 function xoops_getUserTimestamp($time, $timeoffset="")
 {
 	global $icmsConfig, $icmsUser;
@@ -283,7 +283,7 @@ function xoops_getUserTimestamp($time, $timeoffset="")
 		if($icmsUser) {$timeoffset = $icmsUser->getVar('timezone_offset');}
 		else {$timeoffset = $icmsConfig['default_TZ'];}
 	}
-	$usertimestamp = intval($time) + (floatval($timeoffset) - $icmsConfig['server_TZ'])*3600;
+	$usertimestamp = (int) ($time) + ((float)($timeoffset) - $icmsConfig['server_TZ'])*3600;
 	return $usertimestamp;
 }
 
@@ -302,10 +302,10 @@ function userTimeToServerTime($timestamp, $userTZ=null)
 }
 
 /*
-* Function to generate password
-*
-* @return string  $makepass  The generated password
-*/
+ * Function to generate password
+ *
+ * @return string  $makepass  The generated password
+ */
 function xoops_makepass() {
 	$makepass = '';
 	$syllables = array("er","in","tia","wol","fe","pre","vet","jo","nes","al","len","son","cha","ir","ler","bo","ok","tio","nar","sim","ple","bla","ten","toe","cho","co","lat","spe","ak","er","po","co","lor","pen","cil","li","ght","wh","at","the","he","ck","is","mam","bo","no","fi","ve","any","way","pol","iti","cs","ra","dio","sou","rce","sea","rch","pa","per","com","bo","sp","eak","st","fi","rst","gr","oup","boy","ea","gle","tr","ail","bi","ble","brb","pri","dee","kay","en","be","se");
@@ -318,10 +318,9 @@ function xoops_makepass() {
 	return $makepass;
 }
 
-
 /*
-* Function to display dhtml loading image box
-*/
+ * Function to display dhtml loading image box
+ */
 function OpenWaitBox()
 {
 	echo "<div id='waitDiv' style='position:absolute;left:40%;top:50%;visibility:hidden;text-align: center;'>
@@ -362,9 +361,9 @@ function OpenWaitBox()
 }
 
 /*
-* Function to display the finish of the dhtml wait box
-*
-*/
+ * Function to display the finish of the dhtml wait box
+ *
+ */
 function CloseWaitBox()
 {
 	echo "<script type='text/javascript'>
@@ -376,13 +375,13 @@ function CloseWaitBox()
 }
 
 /*
-* Checks if email is of correct formatting
-*
-* @param string  $email  The email address
-* @param string  $antispam  Generate an email address that is protected from spammers
-* @return string  $email  The generated email address
-*/
-function checkEmail($email,$antispam = false)
+ * Checks if email is of correct formatting
+ *
+ * @param string     $email      The email address
+ * @param string     $antispam   Generate an email address that is protected from spammers
+ * @return string    $email      The generated email address
+ */
+function checkEmail($email, $antispam = false)
 {
 	if(!$email || !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i",$email)) {return false;}
 	if($antispam)
@@ -394,11 +393,11 @@ function checkEmail($email,$antispam = false)
 }
 
 /*
-* Format an URL
-*
-* @param string  $url  The URL to format
-* @return string  $url The generated URL
-*/
+ * Format an URL
+ *
+ * @param string  $url  The URL to format
+ * @return string  $url The generated URL
+ */
 function formatURL($url)
 {
 	$url = trim($url);
@@ -410,15 +409,15 @@ function formatURL($url)
 }
 
 /*
-* Function to display banners in all pages
-*/
+ * Function to display banners in all pages
+ */
 function showbanner() {echo xoops_getbanner();}
 
 /*
-* Gets banner HTML for use in templates
-*
-* @return object  $bannerobject  The generated banner HTML string
-*/
+ * Gets banner HTML for use in templates
+ *
+ * @return object  $bannerobject  The generated banner HTML string
+ */
 function xoops_getbanner()
 {
 	global $icmsConfig;
@@ -437,14 +436,14 @@ function xoops_getbanner()
 		$bresult = $db->query("SELECT * FROM ".$db->prefix('banner'), 1, $bannum);
 		list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
 		if($icmsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {}
-		else {$db->queryF(sprintf("UPDATE %s SET impmade = impmade+1 WHERE bid = '%u'", $db->prefix('banner'), intval($bid)));}
+		else {$db->queryF(sprintf("UPDATE %s SET impmade = impmade+1 WHERE bid = '%u'", $db->prefix('banner'), (int) ($bid)));}
 		/* Check if this impression is the last one and print the banner */
 		if($imptotal == $impmade)
 		{
 			$newid = $db->genId($db->prefix('bannerfinish').'_bid_seq');
-			$sql = sprintf("INSERT INTO %s (bid, cid, impressions, clicks, datestart, dateend) VALUES ('%u', '%u', '%u', '%u', '%u', '%u')", $db->prefix('bannerfinish'), intval($newid), intval($cid), intval($impmade), intval($clicks), intval($date), time());
+			$sql = sprintf("INSERT INTO %s (bid, cid, impressions, clicks, datestart, dateend) VALUES ('%u', '%u', '%u', '%u', '%u', '%u')", $db->prefix('bannerfinish'), (int) ($newid), (int) ($cid), (int) ($impmade), (int) ($clicks), (int) ($date), time());
 			$db->queryF($sql);
-			$db->queryF(sprintf("DELETE FROM %s WHERE bid = '%u'", $db->prefix('banner'), intval($bid)));
+			$db->queryF(sprintf("DELETE FROM %s WHERE bid = '%u'", $db->prefix('banner'), (int) ($bid)));
 		}
 		if($htmlbanner) {$bannerobject = $htmlcode;}
 		else
@@ -453,10 +452,10 @@ function xoops_getbanner()
 			if(stristr($imageurl, '.swf'))
 			{
 				$bannerobject = $bannerobject
-					.'<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">'
-					.'<param name="movie" value="'.$imageurl.'"></param>'
-					.'<param name="quality" value="high"></param>'
-					.'</object>';
+				.'<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">'
+				.'<param name="movie" value="'.$imageurl.'"></param>'
+				.'<param name="quality" value="high"></param>'
+				.'</object>';
 			}
 			else {$bannerobject = $bannerobject.'<img src="'.$imageurl.'" alt="" />';}
 			$bannerobject = $bannerobject.'</a></div>';
@@ -466,14 +465,14 @@ function xoops_getbanner()
 }
 
 /*
-* Function to redirect a user to certain pages
-*
-* @param string  $url  The URL to redirect to
-* @param int  $time  The time it takes to redirect to the URL
-* @param string  $message  The message to show while redirecting
-* @param bool  $addredirect  Add a link to the redirect URL?
-* @param string  $allowExternalLink  Allow external links
-*/
+ * Function to redirect a user to certain pages
+ *
+ * @param string  $url  The URL to redirect to
+ * @param int  $time  The time it takes to redirect to the URL
+ * @param string  $message  The message to show while redirecting
+ * @param bool  $addredirect  Add a link to the redirect URL?
+ * @param string  $allowExternalLink  Allow external links
+ */
 function redirect_header($url, $time = 3, $message = '', $addredirect = true, $allowExternalLink = false)
 {
 	global $icmsConfig, $xoopsLogger, $icmsConfigPersona, $icmsUserIsAdmin;
@@ -492,7 +491,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 	if(isset($_SESSION['xoopsUserTheme']) && in_array($_SESSION['xoopsUserTheme'], $icmsConfig['theme_set_allowed'])) {$theme = $_SESSION['xoopsUserTheme'];}
 
 	require_once ICMS_ROOT_PATH.'/class/template.php';
-   	require_once ICMS_ROOT_PATH.'/class/theme.php';
+	require_once ICMS_ROOT_PATH.'/class/theme.php';
 
 	$xoopsThemeFactory = new xos_opal_ThemeFactory();
 	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
@@ -530,7 +529,7 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 		$xoopsTpl->assign('time', 300);
 		$xoopsTpl->assign('xoops_logdump', $xoopsLogger->dump());
 	}
-	else {$xoopsTpl->assign('time', intval($time));}
+	else {$xoopsTpl->assign('time', (int) ($time));}
 	if(!empty($_SERVER['REQUEST_URI']) && $addredirect && strstr($url, 'user.php'))
 	{
 		if(!strstr($url, '?')) {$url .= '?xoops_redirect='.urlencode($_SERVER['REQUEST_URI']);}
@@ -564,11 +563,11 @@ function redirect_header($url, $time = 3, $message = '', $addredirect = true, $a
 }
 
 /*
-* Gets environment key from the $_SERVER or $_ENV superglobal
-*
-* @param string  $key  The key to get
-* @return string  $ret  The retrieved key
-*/
+ * Gets environment key from the $_SERVER or $_ENV superglobal
+ *
+ * @param string  $key  The key to get
+ * @return string  $ret  The retrieved key
+ */
 function xoops_getenv($key)
 {
 	$ret = '';
@@ -586,22 +585,22 @@ function xoops_getenv($key)
 }
 
 /*
-* This function is deprecated. Do not use!
-*/
+ * This function is deprecated. Do not use!
+ */
 function getTheme() {return $GLOBALS['xoopsConfig']['theme_set'];}
 
 /*
-* Function to get css file for a certain theme
-* This function will be deprecated.
-*/
+ * Function to get css file for a certain theme
+ * This function will be deprecated.
+ */
 function getcss($theme = '') {return xoops_getcss($theme);}
 
 /*
-* Function to get css file for a certain themeset
-*
-* @param string  $theme  The theme set from the config
-* @return mixed  The generated theme HTML string or an empty string
-*/
+ * Function to get css file for a certain themeset
+ *
+ * @param string  $theme  The theme set from the config
+ * @return mixed  The generated theme HTML string or an empty string
+ */
 function xoops_getcss($theme = '')
 {
 	if($theme == '') {$theme = $GLOBALS['xoopsConfig']['theme_set'];}
@@ -623,10 +622,10 @@ function xoops_getcss($theme = '')
 }
 
 /*
-* Gets Mailer object
-*
-* @return		object  $inst  Reference to the (@link XoopsMailerLocal) or (@link XoopsMailer) object
-*/
+ * Gets Mailer object
+ *
+ * @return		object  $inst  Reference to the (@link XoopsMailerLocal) or (@link XoopsMailer) object
+ */
 function &getMailer()
 {
 	global $icmsConfig;
@@ -639,12 +638,12 @@ function &getMailer()
 }
 
 /*
-* Gets the handler for a class
-*
-* @param	string  $name		The name of the handler to get
-* @param	bool  	$optional	Is the handler optional?
-* @return	object	$inst		The instance of the object that was created
-*/
+ * Gets the handler for a class
+ *
+ * @param string  $name  The name of the handler to get
+ * @param bool  $optional	Is the handler optional?
+ * @return		object		$inst		The instance of the object that was created
+ */
 function &xoops_gethandler($name, $optional = false )
 {
 	static $handlers;
@@ -671,18 +670,18 @@ function &xoops_gethandler($name, $optional = false )
 }
 
 /*
-* Gets rank
-*
-* @param	int  $rank_id  The Rank ID to get
-* @param 	int	 $posts		The number of posts to match for the rank
-* @return	array	$rank		The fetched rank array
-*/
+ * Gets rank
+ *
+ * @param	int  $rank_id  The Rank ID to get
+ * @param 	int	 $posts		The number of posts to match for the rank
+ * @return	array	$rank		The fetched rank array
+ */
 function xoops_getrank($rank_id =0, $posts = 0)
 {
 	$db =& Database::getInstance();
 	$myts =& MyTextSanitizer::getInstance();
-	$rank_id = intval($rank_id);
-	$posts = intval($posts);
+	$rank_id = (int) ($rank_id);
+	$posts = (int) ($posts);
 	if($rank_id != 0)
 	{
 		$sql = "SELECT rank_title AS title, rank_image AS image FROM ".$db->prefix('ranks')." WHERE rank_id = '".$rank_id."'";
@@ -698,30 +697,30 @@ function xoops_getrank($rank_id =0, $posts = 0)
 }
 
 /**
-* Function maintained only for compatibility
-*
-* @todo Search all places that this function is called
-*	   and rename it to icms_substr.
-*	   After this function can be removed.
-*
-*/
+ * Function maintained only for compatibility
+ *
+ * @todo Search all places that this function is called
+ *	   and rename it to icms_substr.
+ *	   After this function can be removed.
+ *
+ */
 function xoops_substr($str, $start, $length, $trimmarker = '...')
 {
 	return icms_substr($str, $start, $length, $trimmarker);
 }
 
 /**
-* Returns the portion of string specified by the start and length parameters.
-* If $trimmarker is supplied, it is appended to the return string.
-* This function works fine with multi-byte characters if mb_* functions exist on the server.
-*
-* @param	string	$str
-* @param	int	   $start
-* @param	int	   $length
-* @param	string	$trimmarker
-*
-* @return   string
-*/
+ * Returns the portion of string specified by the start and length parameters.
+ * If $trimmarker is supplied, it is appended to the return string.
+ * This function works fine with multi-byte characters if mb_* functions exist on the server.
+ *
+ * @param	string	$str
+ * @param	int	   $start
+ * @param	int	   $length
+ * @param	string	$trimmarker
+ *
+ * @return   string
+ */
 function icms_substr($str, $start, $length, $trimmarker = '...')
 {
 	global $icmsConfigMultilang;
@@ -782,12 +781,12 @@ function icms_substr($str, $start, $length, $trimmarker = '...')
 // RMV-NOTIFY
 // ################ Notification Helper Functions ##################
 /*
-* We want to be able to delete by module, by user, or by item.
-* How do we specify this??
-*
-* @param	int  $module_id	The ID of the module to unsubscribe from
-* @return	bool	Did the unsubscribing succeed?
-*/
+ * We want to be able to delete by module, by user, or by item.
+ * How do we specify this??
+ *
+ * @param	int  $module_id	The ID of the module to unsubscribe from
+ * @return	bool	Did the unsubscribing succeed?
+ */
 function xoops_notification_deletebymodule ($module_id)
 {
 	$notification_handler =& xoops_gethandler('notification');
@@ -795,11 +794,11 @@ function xoops_notification_deletebymodule ($module_id)
 }
 
 /**
-* Deletes / unsubscribes by user ID
-*
-* @param	int  $user_id	The User ID to unsubscribe
-* @return	bool	Did the unsubscribing succeed?
-*/
+ * Deletes / unsubscribes by user ID
+ *
+ * @param	int  $user_id	The User ID to unsubscribe
+ * @return	bool	Did the unsubscribing succeed?
+ */
 function xoops_notification_deletebyuser ($user_id)
 {
 	$notification_handler =& xoops_gethandler('notification');
@@ -807,13 +806,13 @@ function xoops_notification_deletebyuser ($user_id)
 }
 
 /**
-* Deletes / unsubscribes by Item ID
-*
-* @param	int  $module_id	The Module ID to unsubscribe
-* @param	int  $category	The Item ID to unsubscribe
-* @param	int  $item_id	The Item ID to unsubscribe
-* @return	bool	Did the unsubscribing succeed?
-*/
+ * Deletes / unsubscribes by Item ID
+ *
+ * @param	int  $module_id	The Module ID to unsubscribe
+ * @param	int  $category	The Item ID to unsubscribe
+ * @param	int  $item_id	The Item ID to unsubscribe
+ * @return	bool	Did the unsubscribing succeed?
+ */
 function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 {
 	$notification_handler =& xoops_gethandler('notification');
@@ -822,30 +821,30 @@ function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 
 // ################### Comment helper functions ####################
 /**
-* Count the comments belonging to a certain item in a certain module
-*
-* @param	int  $module_id	The Module ID to count the comments for
-* @param	int  $item_id	The Item ID to count the comments for
-* @return	int	The number of comments
-*/
+ * Count the comments belonging to a certain item in a certain module
+ *
+ * @param	int  $module_id	The Module ID to count the comments for
+ * @param	int  $item_id	The Item ID to count the comments for
+ * @return	int	The number of comments
+ */
 function xoops_comment_count($module_id, $item_id = null)
 {
 	$comment_handler =& xoops_gethandler('comment');
-	$criteria = new CriteriaCompo(new Criteria('com_modid', intval($module_id)));
-	if(isset($item_id)) {$criteria->add(new Criteria('com_itemid', intval($item_id)));}
+	$criteria = new CriteriaCompo(new Criteria('com_modid', (int) ($module_id)));
+	if(isset($item_id)) {$criteria->add(new Criteria('com_itemid', (int) ($item_id)));}
 	return $comment_handler->getCount($criteria);
 }
 
 /**
-* Delete the comments belonging to a certain item in a certain module
-*
-* @param	int  $module_id	The Module ID to delete the comments for
-* @param	int  $item_id	The Item ID to delete the comments for
-* @return	bool	Did the deleting of the comments succeed?
-*/
+ * Delete the comments belonging to a certain item in a certain module
+ *
+ * @param	int  $module_id	The Module ID to delete the comments for
+ * @param	int  $item_id	The Item ID to delete the comments for
+ * @return	bool	Did the deleting of the comments succeed?
+ */
 function xoops_comment_delete($module_id, $item_id)
 {
-	if(intval($module_id) > 0 && intval($item_id) > 0)
+	if( (int) ($module_id) > 0 && (int) ($item_id) > 0)
 	{
 		$comment_handler =& xoops_gethandler('comment');
 		$comments =& $comment_handler->getByItemId($module_id, $item_id);
@@ -877,27 +876,27 @@ function xoops_comment_delete($module_id, $item_id)
 
 // ################ Group Permission Helper Functions ##################
 /**
-* Deletes group permissions by module and item id
-*
-* @param	int  $module_id	The Module ID to delete the permissions for
-* @param	string  $perm_name	The permission name (for the module_id and item_id to delete
-* @param	int  $item_id	The Item ID to delete the permissions for
-* @return	int	Did the deleting of the group permissions succeed?
-*/
+ * Deletes group permissions by module and item id
+ *
+ * @param	int  $module_id	The Module ID to delete the permissions for
+ * @param	string  $perm_name	The permission name (for the module_id and item_id to delete
+ * @param	int  $item_id	The Item ID to delete the permissions for
+ * @return	int	Did the deleting of the group permissions succeed?
+ */
 function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null)
 {
 	// do not allow system permissions to be deleted
-	if(intval($module_id) <= 1) {return false;}
+	if( (int) ($module_id) <= 1) {return false;}
 	$gperm_handler =& xoops_gethandler('groupperm');
 	return $gperm_handler->deleteByModule($module_id, $perm_name, $item_id);
 }
 
 /**
-* Converts text to UTF-8 encoded text
-*
-* @param	string	$text	The Text to convert
-* @return	string	$text	The converted text
-*/
+ * Converts text to UTF-8 encoded text
+ *
+ * @param	string	$text	The Text to convert
+ * @return	string	$text	The converted text
+ */
 function xoops_utf8_encode(&$text)
 {
 	if(XOOPS_USE_MULTIBYTES == 1)
@@ -909,20 +908,20 @@ function xoops_utf8_encode(&$text)
 }
 
 /**
-* Converts text to UTF-8 encoded text
-* @see xoops_utf8_encode
-*/
+ * Converts text to UTF-8 encoded text
+ * @see xoops_utf8_encode
+ */
 function xoops_convert_encoding(&$text) {return xoops_utf8_encode($text);}
 
 /**
-* Gets Username from UserID and creates a link to the userinfo (!) page
-*
-* @param	int	$userid	The User ID
-* @return	string	The linked username (from userID or "Anonymous")
-*/
+ * Gets Username from UserID and creates a link to the userinfo (!) page
+ *
+ * @param	int	$userid	The User ID
+ * @return	string	The linked username (from userID or "Anonymous")
+ */
 function xoops_getLinkedUnameFromId($userid)
 {
-	$userid = intval($userid);
+	$userid = (int) ($userid);
 	if($userid > 0)
 	{
 		$member_handler =& xoops_gethandler('member');
@@ -937,11 +936,11 @@ function xoops_getLinkedUnameFromId($userid)
 }
 
 /**
-* Trims certain text
-*
-* @param	string	$text	The Text to trim
-* @return	string	$text	The trimmed text
-*/
+ * Trims certain text
+ *
+ * @param	string	$text	The Text to trim
+ * @return	string	$text	The trimmed text
+ */
 function xoops_trim($text)
 {
 	if(function_exists('xoops_language_trim')) {return xoops_language_trim($text);}
@@ -949,13 +948,13 @@ function xoops_trim($text)
 }
 
 /**
-* Copy a file, or a folder and its contents
-*
-* @author	Aidan Lister <aidan@php.net>
-* @param	string	$source	The source
-* @param	string  $dest	  The destination
-* @return   bool	Returns true on success, false on failure
-*/
+ * Copy a file, or a folder and its contents
+ *
+ * @author	Aidan Lister <aidan@php.net>
+ * @param	string	$source	The source
+ * @param	string  $dest	  The destination
+ * @return   bool	Returns true on success, false on failure
+ */
 function icms_copyr($source, $dest)
 {
 	// Simple copy for a file
@@ -1006,29 +1005,29 @@ function icms_mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH ) {
 			@fclose($fh);
 		}
 
-	  	if( substr( decoct( fileperms( $target ) ),2) != $mode ) {
-	  		chmod($target, $mode);
-	  	}
+		if( substr( decoct( fileperms( $target ) ),2) != $mode ) {
+			chmod($target, $mode);
+		}
 	}
 	return is_dir( $target );
 }
 
 /**
-* Change the permission of a file or folder
-*
-* @author	Newbb2 developpement team
-* @param	string	$target  target file or folder
-* @param	int		$mode	permission
-* @return   bool	Returns true on success, false on failure
-*/
+ * Change the permission of a file or folder
+ *
+ * @author	Newbb2 developpement team
+ * @param	string	$target  target file or folder
+ * @param	int		$mode	permission
+ * @return   bool	Returns true on success, false on failure
+ */
 function icms_chmod($target, $mode = 0777) {return @chmod($target, $mode);}
 
 /**
-* Get the icmsModule object of a specified module
-*
-* @param string $moduleName dirname of the module
-* @return object icmsModule object of the specified module
-*/
+ * Get the icmsModule object of a specified module
+ *
+ * @param string $moduleName dirname of the module
+ * @return object icmsModule object of the specified module
+ */
 function &icms_getModuleInfo($moduleName = false)
 {
 	static $icmsModules;
@@ -1060,11 +1059,11 @@ function &icms_getModuleInfo($moduleName = false)
 }
 
 /**
-* Get the config array of a specified module
-*
-* @param string $moduleName dirname of the module
-* @return array of configs
-*/
+ * Get the config array of a specified module
+ *
+ * @param string $moduleName dirname of the module
+ * @return array of configs
+ */
 function &icms_getModuleConfig($moduleName = false)
 {
 	static $icmsConfigs;
@@ -1104,13 +1103,13 @@ function &icms_getModuleConfig($moduleName = false)
 }
 
 /**
-* Get a specific module config value
-*
-* @param string $key
-* @param string $moduleName
-* @param mixed $default
-* @return mixed
-*/
+ * Get a specific module config value
+ *
+ * @param string $key
+ * @param string $moduleName
+ * @param mixed $default
+ * @return mixed
+ */
 function icms_getConfig($key, $moduleName = false, $default = 'default_is_undefined')
 {
 	if(!$moduleName) {$moduleName = icms_getCurrentModuleName();}
@@ -1124,10 +1123,10 @@ function icms_getConfig($key, $moduleName = false, $default = 'default_is_undefi
 }
 
 /**
-* Get the dirname of the current module
-*
-* @return mixed dirname of the current module or false if no module loaded
-*/
+ * Get the dirname of the current module
+ *
+ * @return mixed dirname of the current module or false if no module loaded
+ */
 function icms_getCurrentModuleName()
 {
 	global $icmsModule;
@@ -1136,11 +1135,11 @@ function icms_getCurrentModuleName()
 }
 
 /**
-* Checks if a user is admin of $module
-*
-* @param mixed	Module to check or false if no module is passed
-* @return bool : true if user is admin
-*/
+ * Checks if a user is admin of $module
+ *
+ * @param mixed	Module to check or false if no module is passed
+ * @return bool : true if user is admin
+ */
 function icms_userIsAdmin($module = false)
 {
 	global $icmsUser;
@@ -1165,14 +1164,14 @@ function icms_userIsAdmin($module = false)
 }
 
 /**
-* Load a module language file
-*
-* If $module = core, file will be loaded from ICMS_ROOT_PATH/language/
-*
-* @param string $module dirname of the module
-* @param string $file name of the file without ".php"
-* @param bool $admin is this for a core admin side feature ?
-*/
+ * Load a module language file
+ *
+ * If $module = core, file will be loaded from ICMS_ROOT_PATH/language/
+ *
+ * @param string $module dirname of the module
+ * @param string $file name of the file without ".php"
+ * @param bool $admin is this for a core admin side feature ?
+ */
 function icms_loadLanguageFile($module, $file, $admin=false)
 {
 	global $icmsConfig;
@@ -1181,19 +1180,19 @@ function icms_loadLanguageFile($module, $file, $admin=false)
 	$extraPath = $admin ? 'admin/' : '';
 	$filename = $languagePath.$icmsConfig['language'].'/'.$extraPath.$file.'.php';
 	if(!file_exists($filename)) {$filename = $languagePath.'english/'.$extraPath.$file.'.php';}
-	if(file_exists($filename)) {include_once($filename);}
+	if(file_exists($filename)) {include_once $filename ;}
 }
 
 /**
-* @author pillepop2003 at yahoo dot de
-*
-* Use this snippet to extract any float out of a string. You can choose how a single dot is treated with the (bool) 'single_dot_as_decimal' directive.
-* This function should be able to cover almost all floats that appear in an european environment.
-*
-* @param string $str	String to get float value from
-* @param mixed	$set	Array of settings of False if no settings were passed
-* @param mixed	Float value or 0 if no match was found in the string
-*/
+ * @author pillepop2003 at yahoo dot de
+ *
+ * Use this snippet to extract any float out of a string. You can choose how a single dot is treated with the (bool) 'single_dot_as_decimal' directive.
+ * This function should be able to cover almost all floats that appear in an european environment.
+ *
+ * @param string $str	String to get float value from
+ * @param mixed	$set	Array of settings of False if no settings were passed
+ * @param mixed	Float value or 0 if no match was found in the string
+ */
 function icms_getfloat($str, $set=FALSE)
 {
 	if(preg_match("/([0-9\.,-]+)/", $str, $match))
@@ -1204,17 +1203,17 @@ function icms_getfloat($str, $set=FALSE)
 		{
 			// A comma exists, that makes it easy, cos we assume it separates the decimal part.
 			$str = str_replace('.', '', $str); // Erase thousand seps
-			$str = str_replace(',', '.', $str); // Convert , to . for floatval command
-			return floatval($str);
+			$str = str_replace(',', '.', $str); // Convert , to . for (float) command
+			return (float)($str);
 		}
 		else
 		{
 			// No comma exists, so we have to decide, how a single dot shall be treated
-			if(preg_match("/^[0-9\-]*[\.]{1}[0-9-]+$/", $str) == TRUE && $set['single_dot_as_decimal'] == TRUE) {return floatval($str);}
+			if(preg_match("/^[0-9\-]*[\.]{1}[0-9-]+$/", $str) == TRUE && $set['single_dot_as_decimal'] == TRUE) {return (float)($str);}
 			else
 			{
 				$str = str_replace('.', '', $str);	// Erase thousand seps
-				return floatval($str);
+				return (float)($str);
 			}
 		}
 	}
@@ -1222,12 +1221,12 @@ function icms_getfloat($str, $set=FALSE)
 }
 
 /**
-* Use this snippet to extract any currency out of a string
-*
-* @param string $var	String to get currency value from
-* @param mixed	$currencyObj	Currency object or false if no object was passed
-* @return string	$ret The returned value
-*/
+ * Use this snippet to extract any currency out of a string
+ *
+ * @param string $var	String to get currency value from
+ * @param mixed	$currencyObj	Currency object or false if no object was passed
+ * @return string	$ret The returned value
+ */
 function icms_currency($var, $currencyObj=false)
 {
 	$ret = icms_getfloat($var,  array('single_dot_as_decimal'=> TRUE));
@@ -1247,19 +1246,19 @@ function icms_currency($var, $currencyObj=false)
 }
 
 /**
-* Use this snippet to extract any currency out of a string
-*
-* @see icms_currency
-*/
+ * Use this snippet to extract any currency out of a string
+ *
+ * @see icms_currency
+ */
 function icms_float($var) {return icms_currency($var);}
 
 /**
-* Strip text from unwanted text (purify)
-*
-* @param string $text	String to purify
-* @param mixed	$keyword	The keyword string or false if none was passed
-* @return string	$text The purified text
-*/
+ * Strip text from unwanted text (purify)
+ *
+ * @param string $text	String to purify
+ * @param mixed	$keyword	The keyword string or false if none was passed
+ * @return string	$text The purified text
+ */
 function icms_purifyText($text, $keyword = false)
 {
 	$myts = MyTextsanitizer::getInstance();
@@ -1295,11 +1294,11 @@ function icms_purifyText($text, $keyword = false)
 }
 
 /**
-* Converts HTML to text equivalents
-*
-* @param string $document	The document string to convert
-* @return string	$text The converted text
-*/
+ * Converts HTML to text equivalents
+ *
+ * @param string $document	The document string to convert
+ * @return string	$text The converted text
+ */
 function icms_html2text($document)
 {
 	// PHP Manual:: function preg_replace
@@ -1344,15 +1343,15 @@ function icms_html2text($document)
 }
 
 /**
-* Function to keeps the code clean while removing unwanted attributes and tags.
-* This function was got from http://www.php.net/manual/en/function.strip-tags.php#81553
-*
-* @var $sSource - string - text to remove the tags
-* @var $aAllowedTags - array - tags that dont will be striped
-* @var $aDisabledAttributes - array - attributes not allowed, will be removed from the text
-*
-* @return string
-*/
+ * Function to keeps the code clean while removing unwanted attributes and tags.
+ * This function was got from http://www.php.net/manual/en/function.strip-tags.php#81553
+ *
+ * @var $sSource - string - text to remove the tags
+ * @var $aAllowedTags - array - tags that dont will be striped
+ * @var $aDisabledAttributes - array - attributes not allowed, will be removed from the text
+ *
+ * @return string
+ */
 function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>','<ul>','<li>'), $aDisabledAttributes = array('onabort', 'onblur', 'onchange', 'onclick', 'ondblclick', 'onerror', 'onfocus', 'onkeydown', 'onkeyup', 'onload', 'onmousedown', 'onmousemove', 'onmouseover', 'onmouseup', 'onreset', 'onresize', 'onselect', 'onsubmit', 'onunload'))
 {
 	if(empty($aDisabledAttributes)) return strip_tags($sSource, implode('', $aAllowedTags));
@@ -1360,12 +1359,12 @@ function icms_cleanTags($sSource, $aAllowedTags = array('<h1>','<b>','<u>','<a>'
 }
 
 /**
-* Store a cookie
-*
-* @param string $name name of the cookie
-* @param string $value value of the cookie
-* @param int $time duration of the cookie
-*/
+ * Store a cookie
+ *
+ * @param string $name name of the cookie
+ * @param string $value value of the cookie
+ * @param int $time duration of the cookie
+ */
 function icms_setCookieVar($name, $value, $time = 0)
 {
 	if($time == 0) {$time = time() + 3600 * 24 * 365;}
@@ -1373,13 +1372,13 @@ function icms_setCookieVar($name, $value, $time = 0)
 }
 
 /**
-* Get a cookie value
-*
-* @param string $name name of the cookie
-* @param string $default value to return if cookie not found
-*
-* @return string value of the cookie or default value
-*/
+ * Get a cookie value
+ *
+ * @param string $name name of the cookie
+ * @param string $default value to return if cookie not found
+ *
+ * @return string value of the cookie or default value
+ */
 function icms_getCookieVar($name, $default = '')
 {
 	$name = str_replace('.', '_', $name);
@@ -1388,10 +1387,10 @@ function icms_getCookieVar($name, $default = '')
 }
 
 /**
-* Get URL of the page before the form to be able to redirect their after the form has been posted
-*
-* @return string url before form
-*/
+ * Get URL of the page before the form to be able to redirect their after the form has been posted
+ *
+ * @return string url before form
+ */
 function icms_get_page_before_form()
 {
 	global $impresscms;
@@ -1399,11 +1398,11 @@ function icms_get_page_before_form()
 }
 
 /**
-* Get URL of the page before the form to be able to redirect their after the form has been posted
-*
-* @param	array	$matches	Array of matches to sanitize
-* @return mixed The sanitized tag or empty string
-*/
+ * Get URL of the page before the form to be able to redirect their after the form has been posted
+ *
+ * @param	array	$matches	Array of matches to sanitize
+ * @return mixed The sanitized tag or empty string
+ */
 function icms_sanitizeCustomtags_callback($matches)
 {
 	global $icms_customtag_handler;
@@ -1417,11 +1416,11 @@ function icms_sanitizeCustomtags_callback($matches)
 }
 
 /**
-* Sanitizes custom tags
-*
-* @param string $text	Purifies passed text
-* @return string	$text The purified text
-*/
+ * Sanitizes custom tags
+ *
+ * @param string $text	Purifies passed text
+ * @return string	$text The purified text
+ */
 function icms_sanitizeCustomtags($text)
 {
 	$patterns = array();
@@ -1435,11 +1434,11 @@ function icms_sanitizeCustomtags($text)
 }
 
 /**
-* Get URL of the page before the form to be able to redirect their after the form has been posted
-*
-* @param	array	$matches	Array of matches to sanitize
-* @return mixed The sanitized tag or empty string
-*/
+ * Get URL of the page before the form to be able to redirect their after the form has been posted
+ *
+ * @param	array	$matches	Array of matches to sanitize
+ * @return mixed The sanitized tag or empty string
+ */
 function icms_sanitizeAdsenses_callback($matches) {
 	global $icms_adsense_handler;
 	if (isset($icms_adsense_handler->objects[$matches[1]])){
@@ -1452,11 +1451,11 @@ function icms_sanitizeAdsenses_callback($matches) {
 }
 
 /**
-* Sanitizes Adsense
-*
-* @param string $text	Purifies passed text
-* @return string	$text The purified text
-*/
+ * Sanitizes Adsense
+ *
+ * @param string $text	Purifies passed text
+ * @return string	$text The purified text
+ */
 function icms_sanitizeAdsenses($text) {
 
 	$patterns = array ();
@@ -1468,18 +1467,18 @@ function icms_sanitizeAdsenses($text) {
 }
 
 /**
-* Return a linked username or full name for a specific $userid
-*
-* @param integer $userid uid of the related user
-* @param bool $name true to return the fullname, false to use the username; if true and the user does not have fullname, username will be used instead
-* @param array $users array already containing XoopsUser objects in which case we will save a query
-* @param bool $withContact true if we want contact details to be added in the value returned (PM and email links)
-* @return string name of user with a link on his profile
-*/
+ * Return a linked username or full name for a specific $userid
+ *
+ * @param integer $userid uid of the related user
+ * @param bool $name true to return the fullname, false to use the username; if true and the user does not have fullname, username will be used instead
+ * @param array $users array already containing XoopsUser objects in which case we will save a query
+ * @param bool $withContact true if we want contact details to be added in the value returned (PM and email links)
+ * @return string name of user with a link on his profile
+ */
 function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $withContact = false)
 {
 	if(!is_numeric($userid)) {return $userid;}
-	$userid = intval($userid);
+	$userid = (int) ($userid);
 	if($userid > 0)
 	{
 		if($users == array())
@@ -1516,29 +1515,29 @@ function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $w
 }
 
 /**
-* Get an array of the table used in a module
-*
-* @param string $moduleName name of the module
-* @param $items array of items managed by the module
-* @return array of tables used in the module
-*/
+ * Get an array of the table used in a module
+ *
+ * @param string $moduleName name of the module
+ * @param $items array of items managed by the module
+ * @return array of tables used in the module
+ */
 function icms_getTablesArray($moduleName, $items)
 {
 	$ret = array();
 	if (is_array($items))
-		foreach($items as $item) {$ret[] = $moduleName.'_'.$item;}
+	foreach($items as $item) {$ret[] = $moduleName.'_'.$item;}
 	return $ret;
 }
 
 /**
-* Function to create a navigation menu in content pages.
-* This function was based on the function that do the same in mastop publish module
-*
-* @param integer $id
-* @param string $separador
-* @param string $style
-* @return string
-*/
+ * Function to create a navigation menu in content pages.
+ * This function was based on the function that do the same in mastop publish module
+ *
+ * @param integer $id
+ * @param string $separador
+ * @param string $style
+ * @return string
+ */
 function showNav($id = null, $separador = '/', $style="style='font-weight:bold'")
 {
 	$url = ICMS_URL.'/content.php';
@@ -1563,11 +1562,11 @@ function showNav($id = null, $separador = '/', $style="style='font-weight:bold'"
 }
 
 /**
-* Searches text for unwanted tags and removes them
-*
-* @param string $text	String to purify
-* @return string	$text The purified text
-*/
+ * Searches text for unwanted tags and removes them
+ *
+ * @param string $text	String to purify
+ * @return string	$text The purified text
+ */
 function StopXSS($text)
 {
 	if(!is_array($text))
@@ -1594,11 +1593,11 @@ function StopXSS($text)
 }
 
 /**
-* Purifies the CSS that is put in the content (pages) system
-*
-* @param string $text	String to purify
-* @return string	$text The purified text
-*/
+ * Purifies the CSS that is put in the content (pages) system
+ *
+ * @param string $text	String to purify
+ * @return string	$text The purified text
+ */
 function icms_sanitizeContentCss($text)
 {
 	if(preg_match_all('/(.*?)\{(.*?)\}/ie',$text,$css))
@@ -1616,12 +1615,12 @@ function icms_sanitizeContentCss($text)
 }
 
 /**
-* Function to get the base domain name from a URL.
-* credit for this function should goto Phosphorus and Lime, it is released under LGPL.
-*
-* @param string $url the URL to be stripped.
-* @return string
-*/
+ * Function to get the base domain name from a URL.
+ * credit for this function should goto Phosphorus and Lime, it is released under LGPL.
+ *
+ * @param string $url the URL to be stripped.
+ * @return string
+ */
 function icms_get_base_domain($url)
 {
 	$debug = 0;
@@ -1669,11 +1668,11 @@ function icms_get_base_domain($url)
 	if(count($DOMAIN) <= 2) return $full_domain;
 
 	/*
-	finally, with 3+ domain parts: obviously D0 is tld now,
-	if D0 = ctld and D1 = gtld, we might have something like com.uk so,
-	if D0 = ctld && D1 = gtld && D2 != 'www', domain = D2.D1.D0 else if D0 = ctld && D1 = gtld && D2 == 'www',
-	domain = D1.D0 else domain = D1.D0 - these rules are simplified below.
-	*/
+	 finally, with 3+ domain parts: obviously D0 is tld now,
+	 if D0 = ctld and D1 = gtld, we might have something like com.uk so,
+	 if D0 = ctld && D1 = gtld && D2 != 'www', domain = D2.D1.D0 else if D0 = ctld && D1 = gtld && D2 == 'www',
+	 domain = D1.D0 else domain = D1.D0 - these rules are simplified below.
+	 */
 	if(in_array($DOMAIN[0], $C_TLD) && in_array($DOMAIN[1], $G_TLD) && $DOMAIN[2] != 'www')
 	{
 		$full_domain = $DOMAIN[2].'.'.$DOMAIN[1].'.'.$DOMAIN[0];
@@ -1687,12 +1686,12 @@ function icms_get_base_domain($url)
 }
 
 /**
-* Function to get the domain from a URL.
-* credit for this function should goto Phosphorus and Lime, it is released under LGPL.
-*
-* @param string $url the URL to be stripped.
-* @return string
-*/
+ * Function to get the domain from a URL.
+ * credit for this function should goto Phosphorus and Lime, it is released under LGPL.
+ *
+ * @param string $url the URL to be stripped.
+ * @return string
+ */
 function icms_get_url_domain($url)
 {
 	$domain = '';
@@ -1703,16 +1702,16 @@ function icms_get_url_domain($url)
 }
 
 /**
-* Function to wordwrap given text.
-*
-* @param string $str 	The text to be wrapped.
-* @param string $width The column width - text will be wrapped when longer than $width.
-* @param string $break The line is broken using the optional break parameter.
-*			can be '/n' or '<br />'
-* @param string $cut 	If cut is set to TRUE, the string is always wrapped at the specified width.
-*			So if you have a word that is larger than the given width, it is broken apart..
-* @return string
-*/
+ * Function to wordwrap given text.
+ *
+ * @param string $str 	The text to be wrapped.
+ * @param string $width The column width - text will be wrapped when longer than $width.
+ * @param string $break The line is broken using the optional break parameter.
+ *			can be '/n' or '<br />'
+ * @param string $cut 	If cut is set to TRUE, the string is always wrapped at the specified width.
+ *			So if you have a word that is larger than the given width, it is broken apart..
+ * @return string
+ */
 function icms_wordwrap($str, $width, $break = '/n', $cut = false)
 {
 	if(strtolower(_CHARSET) !== 'utf-8')
@@ -1760,15 +1759,15 @@ function icms_wordwrap($str, $width, $break = '/n', $cut = false)
 }
 
 /**
-* Function to reverse given text with utf-8 character sets
-*
-* credit for this function should goto lwc courtesy of php.net.
-*
-* @param string $str		The text to be reversed.
-* @param string $reverse	true will reverse everything including numbers, false will reverse text only but numbers will be left intact.
-*				example: when true: impresscms 2008 > 8002 smcsserpmi, false: impresscms 2008 > 2008 smcsserpmi
-* @return string
-*/
+ * Function to reverse given text with utf-8 character sets
+ *
+ * credit for this function should goto lwc courtesy of php.net.
+ *
+ * @param string $str		The text to be reversed.
+ * @param string $reverse	true will reverse everything including numbers, false will reverse text only but numbers will be left intact.
+ *				example: when true: impresscms 2008 > 8002 smcsserpmi, false: impresscms 2008 > 2008 smcsserpmi
+ * @return string
+ */
 function icms_utf8_strrev($str, $reverse = false)
 {
 	preg_match_all('/./us', $str, $ar);
@@ -1795,16 +1794,16 @@ function icms_utf8_strrev($str, $reverse = false)
 }
 
 /**
-* Function to get a query from DB
-*
-* @param object $db	Reference to the database object
-* @param string	$table	The table to get the value from
-* @param string	$field	The table to get the value from
-* @param string	$condition	The where condition (where clause) to use
-* @return	mixed
-*/
+ * Function to get a query from DB
+ *
+ * @param object $db	Reference to the database object
+ * @param string	$table	The table to get the value from
+ * @param string	$field	The table to get the value from
+ * @param string	$condition	The where condition (where clause) to use
+ * @return	mixed
+ */
 function getDbValue(&$db, $table, $field, $condition = '')
- {
+{
 	$table = $db->prefix( $table );
 	$sql = "SELECT `$field` FROM `$table`";
 	if($condition) {$sql .= " WHERE $condition";}
@@ -1818,12 +1817,12 @@ function getDbValue(&$db, $table, $field, $condition = '')
 }
 
 /**
-* Function to escape $value makes safe for DB Queries.
-*
-* @param string $quotes - true/false - determines whether to add quotes to the value or not.
-* @param string $value - $variable that is being escaped for query.
-* @return string
-*/
+ * Function to escape $value makes safe for DB Queries.
+ *
+ * @param string $quotes - true/false - determines whether to add quotes to the value or not.
+ * @param string $value - $variable that is being escaped for query.
+ * @return string
+ */
 function icms_escapeValue($value, $quotes = true)
 {
 	if(is_string($value))
@@ -1834,8 +1833,8 @@ function icms_escapeValue($value, $quotes = true)
 	}
 	elseif($value === null) {$value = 'NULL';}
 	elseif(is_bool($value)) {$value = $value ? 1 : 0;}
-	elseif(is_numeric($value)) {$value = intval($value);}
-	elseif(is_int($value)) {$value = intval($value);}
+	elseif(is_numeric($value)) {$value = (int) ($value);}
+	elseif(is_int($value)) {$value = (int) ($value);}
 	elseif(!is_numeric($value))
 	{
 		$value = mysql_real_escape_string($value);
@@ -1845,26 +1844,26 @@ function icms_escapeValue($value, $quotes = true)
 }
 
 /**
-* Get a number value in other languages
-*
-* @param int $string Content to be transported into another language
-* @return string inout with replaced numeric values
-*
-* Example: In Persian we use, (۱, ۲, ۳, ۴, ۵, ۶, ۷, ۸, ۹, ۰) instead of (1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
-* Now in a module and we are showing amount of reads, the output in Persian must be ۱۲ (which represents 12).
-* To developers, please use this function when you are having a numeric output, as this is counted as a string in php so you should use %s.
-* Like:
-* $views = sprintf ( 'Viewed: %s Times.', icms_conv_nr2local($string) );
-*/
+ * Get a number value in other languages
+ *
+ * @param int $string Content to be transported into another language
+ * @return string inout with replaced numeric values
+ *
+ * Example: In Persian we use, (۱, ۲, ۳, ۴, ۵, ۶, ۷, ۸, ۹, ۰) instead of (1, 2, 3, 4, 5, 6, 7, 8, 9, 0)
+ * Now in a module and we are showing amount of reads, the output in Persian must be ۱۲ (which represents 12).
+ * To developers, please use this function when you are having a numeric output, as this is counted as a string in php so you should use %s.
+ * Like:
+ * $views = sprintf ( 'Viewed: %s Times.', icms_conv_nr2local($string) );
+ */
 function icms_conv_nr2local($string)
 {
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
 	if ( $basecheck ){
-	$string = str_replace(
+		$string = str_replace(
 		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
 		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9), $string);
 	}
-		return $string;
+	return $string;
 }
 
 /**
@@ -1877,14 +1876,13 @@ function icms_conv_local2nr($string)
 {
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
 	if ( $basecheck ){
-	$string = str_replace(
+		$string = str_replace(
 		array(_LCL_NUM0, _LCL_NUM1, _LCL_NUM2, _LCL_NUM3, _LCL_NUM4, _LCL_NUM5, _LCL_NUM6, _LCL_NUM7, _LCL_NUM8, _LCL_NUM9),
 		array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9'),
 		$string);
 	}
-		return $string;
+	return $string;
 }
-
 
 /**
  * Get month name by its ID
@@ -1900,79 +1898,79 @@ function Icms_getMonthNameById($month_id) {
 		switch($month_id) {
 			case 1:
 				return _CAL_FARVARDIN;
-			break;
+				break;
 			case 2:
 				return _CAL_ORDIBEHESHT;
-			break;
+				break;
 			case 3:
 				return _CAL_KHORDAD;
-			break;
+				break;
 			case 4:
 				return _CAL_TIR;
-			break;
+				break;
 			case 5:
 				return _CAL_MORDAD;
-			break;
+				break;
 			case 6:
 				return _CAL_SHAHRIVAR;
-			break;
+				break;
 			case 7:
 				return _CAL_MEHR;
-			break;
+				break;
 			case 8:
 				return _CAL_ABAN;
-			break;
+				break;
 			case 9:
 				return _CAL_AZAR;
-			break;
+				break;
 			case 10:
 				return _CAL_DEY;
-			break;
+				break;
 			case 11:
 				return _CAL_BAHMAN;
-			break;
+				break;
 			case 12:
 				return _CAL_ESFAND;
-			break;
+				break;
 		}
 	}else{
 		switch($month_id) {
 			case 1:
 				return _CAL_JANUARY;
-			break;
+				break;
 			case 2:
 				return _CAL_FEBRUARY;
-			break;
+				break;
 			case 3:
 				return _CAL_MARCH;
-			break;
+				break;
 			case 4:
 				return _CAL_APRIL;
-			break;
+				break;
 			case 5:
 				return _CAL_MAY;
-			break;
+				break;
 			case 6:
 				return _CAL_JUNE;
-			break;
+				break;
 			case 7:
 				return _CAL_JULY;
-			break;
+				break;
 			case 8:
 				return _CAL_AUGUST;
-			break;
+				break;
 			case 9:
 				return _CAL_SEPTEMBER;
-			break;
+				break;
 			case 10:
 				return _CAL_OCTOBER;
-			break;
+				break;
 			case 11:
 				return _CAL_NOVEMBER;
-			break;
+				break;
 			case 12:
 				return _CAL_DECEMBER;
-			break;
+				break;
 		}
 	}
 }
@@ -1990,11 +1988,11 @@ function Icms_getMonthNameById($month_id) {
 function ext_date($time)
 {
 	icms_loadLanguageFile('core', 'calendar');
-/*		$string = str_replace(
+	/*		$string = str_replace(
 		array(_CAL_AM, _CAL_PM, _CAL_AM_LONG, _CAL_PM_LONG, _CAL_SAT, _CAL_SUN, _CAL_MON, _CAL_TUE, _CAL_WED, _CAL_THU, _CAL_FRI, _CAL_SATURDAY, _CAL_SUNDAY, _CAL_MONDAY, _CAL_TUESDAY, _CAL_WEDNESDAY, _CAL_THURSDAY, _CAL_FRIDAY),
 		array('Am', 'Pm', 'AM', 'PM', 'Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'),
 		$string);
-*/
+		*/
 	$trans = array( 'am'	=> _CAL_AM,
 					'pm'	=> _CAL_PM,
 					'AM'	=> _CAL_AM_CAPS,
@@ -2042,7 +2040,6 @@ function ext_date($time)
 	return $timestamp;
 }
 
-
 /*
  * Function to display formatted times in user timezone
  *
@@ -2061,11 +2058,11 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
 	if ($format == "rss" || $format == "r"){
 		$TIME_ZONE = "";
 		if (!empty($GLOBALS['xoopsConfig']['server_TZ'])){
-			$server_TZ = abs(intval($GLOBALS['xoopsConfig']['server_TZ'] * 3600.0));
+			$server_TZ = abs( (int) ($GLOBALS['xoopsConfig']['server_TZ'] * 3600.0));
 			$prefix = ($GLOBALS['xoopsConfig']['server_TZ'] < 0) ?  " -" : " +";
 			$TIME_ZONE = $prefix.date("Hi", $server_TZ);
 		}
-		$date = gmdate("D, d M Y H:i:s", intval($time)) . $TIME_ZONE;
+		$date = gmdate("D, d M Y H:i:s", (int) ($time)) . $TIME_ZONE;
 		return $date;
 	}
 
@@ -2095,95 +2092,95 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
 
 	switch ($format) {
 		case 'daynumber':
-		$datestring = 'd';
-		break;
+			$datestring = 'd';
+			break;
 		case 'D':
-		$datestring = 'D';
-		break;
+			$datestring = 'D';
+			break;
 		case 'F':
-		$datestring = 'F';
-		break;
+			$datestring = 'F';
+			break;
 		case 'hs':
-		$datestring = 'h';
-		break;
+			$datestring = 'h';
+			break;
 		case 'H':
-		$datestring = 'H';
-		break;
+			$datestring = 'H';
+			break;
 		case 'gg':
-		$datestring = 'g';
-		break;
+			$datestring = 'g';
+			break;
 		case 'G':
-		$datestring = 'G';
-		break;
+			$datestring = 'G';
+			break;
 		case 'i':
-		$datestring = 'i';
-		break;
+			$datestring = 'i';
+			break;
 		case 'j':
-		$datestring = 'j';
-		break;
+			$datestring = 'j';
+			break;
 		case 'l':
-		$datestring = _DATESTRING;
-		break;
+			$datestring = _DATESTRING;
+			break;
 		case 'm':
-		$datestring = _MEDIUMDATESTRING;
-		break;
+			$datestring = _MEDIUMDATESTRING;
+			break;
 		case 'monthnr':
-		$datestring = 'm';
-		break;
+			$datestring = 'm';
+			break;
 		case 'mysql':
-		$datestring = 'Y-m-d H:i:s';
-		break;
+			$datestring = 'Y-m-d H:i:s';
+			break;
 		case 'month':
-		$datestring = 'M';
-		break;
+			$datestring = 'M';
+			break;
 		case 'n':
-		$datestring = 'n';
-		break;
+			$datestring = 'n';
+			break;
 		case 's':
-		$datestring = _SHORTDATESTRING;
-		break;
+			$datestring = _SHORTDATESTRING;
+			break;
 		case 'seconds':
-		$datestring = 's';
-		break;
+			$datestring = 's';
+			break;
 		case 'suffix':
-		$datestring = 'S';
-		break;
+			$datestring = 'S';
+			break;
 		case 't':
-		$datestring = 't';
-		break;
+			$datestring = 't';
+			break;
 		case 'w':
-		$datestring = 'w';
-		break;
+			$datestring = 'w';
+			break;
 		case 'shortyear':
-		$datestring = 'y';
-		break;
+			$datestring = 'y';
+			break;
 		case 'Y':
-		$datestring = 'Y';
-		break;
+			$datestring = 'Y';
+			break;
 		case 'c':
 		case 'custom':
-		static $current_timestamp, $today_timestamp, $monthy_timestamp;
-		if (!isset($current_timestamp)) {
-			$current_timestamp = xoops_getUserTimestamp(time(), $timeoffset);
-		}
-		if (!isset($today_timestamp)) {
-			$today_timestamp = mktime(0, 0, 0, date("m", $current_timestamp), date("d", $current_timestamp), date("Y", $current_timestamp));
-		}
+			static $current_timestamp, $today_timestamp, $monthy_timestamp;
+			if (!isset($current_timestamp)) {
+				$current_timestamp = xoops_getUserTimestamp(time(), $timeoffset);
+			}
+			if (!isset($today_timestamp)) {
+				$today_timestamp = mktime(0, 0, 0, date("m", $current_timestamp), date("d", $current_timestamp), date("Y", $current_timestamp));
+			}
 
-		if ( abs($elapse_today = $usertimestamp - $today_timestamp) < 24*60*60) {
-			$datestring = ($elapse_today > 0) ? _TODAY : _YESTERDAY;
-		} else {
-			if (!isset($monthy_timestamp)) {
-				$monthy_timestamp[0] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp));
-				$monthy_timestamp[1] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp) + 1);
+			if ( abs($elapse_today = $usertimestamp - $today_timestamp) < 24*60*60) {
+				$datestring = ($elapse_today > 0) ? _TODAY : _YESTERDAY;
+			} else {
+				if (!isset($monthy_timestamp)) {
+					$monthy_timestamp[0] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp));
+					$monthy_timestamp[1] = mktime(0, 0, 0, 0, 0, date("Y", $current_timestamp) + 1);
+				}
+				if ($usertimestamp >= $monthy_timestamp[0] && $usertimestamp < $monthy_timestamp[1]) {
+					$datestring = _MONTHDAY;
+				} else{
+					$datestring = _YEARMONTHDAY;
+				}
 			}
-			if ($usertimestamp >= $monthy_timestamp[0] && $usertimestamp < $monthy_timestamp[1]) {
-				$datestring = _MONTHDAY;
-			} else{
-				$datestring = _YEARMONTHDAY;
-			}
-		}
-		break;
+			break;
 
 		default:
 			if ($format != '') {
@@ -2191,7 +2188,7 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
 			} else {
 				$datestring = _DATESTRING;
 			}
-		break;
+			break;
 	}
 
 	$basecheck = $icmsConfig['use_ext_date'] == true && defined ('_CALENDAR_TYPE') && $format != 'mysql';
@@ -2248,13 +2245,13 @@ function &icms_getmodulehandler($name = null, $module_dir = null, $module_basena
 }
 
 /*
-* Gets module handler
-* For Backward Compatibility.
-*
-* @param	string  $name  The name of the module
-* @param	string	$module_dir		The module directory where to get the module class
-* @return	object  $inst	The reference to the generated object
-*/
+ * Gets module handler
+ * For Backward Compatibility.
+ *
+ * @param	string  $name  The name of the module
+ * @param	string	$module_dir		The module directory where to get the module class
+ * @return	object  $inst	The reference to the generated object
+ */
 function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = false)
 {
 	return icms_getmodulehandler($name, $module_dir, $module_dir, $optional);
@@ -2317,8 +2314,8 @@ function icms_getImageSize($url, & $width, & $height) {
 			$width = $dimension[0] * $height / $dimension[1];
 		} else {
 			list ($width, $height) = array (
-				$dimension[0],
-				$dimension[1]
+			$dimension[0],
+			$dimension[1]
 			);
 		}
 		return true;
@@ -2394,10 +2391,10 @@ function icms_imageResize($src, $maxWidth, $maxHeight) {
 		$attr = " width='$width' height='$height'";
 	}
 	return array (
-		$width,
-		$height,
-		$type,
-		$attr
+	$width,
+	$height,
+	$type,
+	$attr
 	);
 }
 
@@ -2538,24 +2535,23 @@ function icms_getModuleIncludeIdSEO($moduleName = false) {
 }
 
 /*
-* Gets environment key from the $_SERVER or $_ENV superglobal
-*
-* @param string  $key  The key to get
-* @return string  $ret  The retrieved key
-*/
+ * Gets environment key from the $_SERVER or $_ENV superglobal
+ *
+ * @param string  $key  The key to get
+ * @return string  $ret  The retrieved key
+ */
 function icms_getenv($key) {
 	$ret = '';
 	$ret = isset ($_SERVER[$key]) ? $_SERVER[$key] : (isset ($_ENV[$key]) ? $_ENV[$key] : '');
 	return $ret;
 }
 
-
 /*
-* Gets the status of a module to see if it's active or not.
-*
-* @param string $module_name  The module's name to get
-* @param bool True if module exists and is active, otherwise false
-*/
+ * Gets the status of a module to see if it's active or not.
+ *
+ * @param string $module_name  The module's name to get
+ * @param bool True if module exists and is active, otherwise false
+ */
 function icms_get_module_status($module_name){
 	$module_handler = xoops_gethandler('module');
 	$this_module = $module_handler->getByDirname($module_name);
@@ -2566,34 +2562,34 @@ function icms_get_module_status($module_name){
 }
 
 /**
-* Wrap a long term or word
-*
-* @author	<admin@jcink.com>
-* @param	string	$string	The string
-* @param	string  $width	  The length
-* @return   bool	Returns a long term, in several small parts with the length of $width
-*/
+ * Wrap a long term or word
+ *
+ * @author	<admin@jcink.com>
+ * @param	string	$string	The string
+ * @param	string  $width	  The length
+ * @return   bool	Returns a long term, in several small parts with the length of $width
+ */
 function one_wordwrap($string,$width=false){
 	$width = $width ? $width : '15';
 	$new_string = '';
 	$s=explode(" ", $string);
 	foreach ($s as $k=>$v) {
-	$cnt=strlen($v);
-	if($cnt>$width) $v=icms_wordwrap($v, $width, ' ', true);
+		$cnt=strlen($v);
+		if($cnt>$width) $v=icms_wordwrap($v, $width, ' ', true);
 		$new_string.="$v ";
 	}
 	return $new_string;
 }
 
 /**
-* Removes the content of a folder.
-*
-* @author	Steve Kenow (aka skenow) <skenow@impresscms.org>
-* @author	modified by Vaughan <vaughan@impresscms.org>
-* @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @param	string	$path	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_ROOT_PATH."/templates_c/");
-* @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
-*/
+ * Removes the content of a folder.
+ *
+ * @author	Steve Kenow (aka skenow) <skenow@impresscms.org>
+ * @author	modified by Vaughan <vaughan@impresscms.org>
+ * @author	modified by Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @param	string	$path	The folder path to cleaned. Must be an array like: array('templates_c' => ICMS_ROOT_PATH."/templates_c/");
+ * @param	bool  $remove_admin_cache	  True to remove admin cache, if required.
+ */
 function icms_clean_folders($dir, $remove_admin_cache=false) {
 	global $icmsConfig;
 	foreach ($dir as $d)
@@ -2628,31 +2624,31 @@ function icms_cleaning_write_folders() {
  */
 function icms_unlinkRecursive($dir, $deleteRootToo=true)
 {
-   if(!$dh = @opendir($dir))
-   {
-	   return;
-   }
-   while (false !== ($obj = readdir($dh)))
-   {
-	   if($obj == '.' || $obj == '..')
-	   {
-		   continue;
-	   }
+	if(!$dh = @opendir($dir))
+	{
+		return;
+	}
+	while (false !== ($obj = readdir($dh)))
+	{
+		if($obj == '.' || $obj == '..')
+		{
+			continue;
+		}
 
-	   if (!@unlink($dir . '/' . $obj))
-	   {
-		   icms_unlinkRecursive($dir.'/'.$obj, true);
-	   }
-   }
+		if (!@unlink($dir . '/' . $obj))
+		{
+			icms_unlinkRecursive($dir.'/'.$obj, true);
+		}
+	}
 
-   closedir($dh);
+	closedir($dh);
 
-   if ($deleteRootToo)
-   {
-	   @rmdir($dir);
-   }
+	if ($deleteRootToo)
+	{
+		@rmdir($dir);
+	}
 
-   return;
+	return;
 }
 
 /**
@@ -2707,7 +2703,7 @@ function icms_buildCriteria($criterias) {
  * @return str HTML code of the breadcrumb to be inserted in another template
  */
 function icms_getBreadcrumb($items) {
-	include_once(ICMS_ROOT_PATH . '/class/icmsbreadcrumb.php');
+	include_once ICMS_ROOT_PATH . '/class/icmsbreadcrumb.php' ;
 	$icmsBreadcrumb = new IcmsBreadcrumb($items);
 	return $icmsBreadcrumb->render(true);
 }
@@ -2727,41 +2723,41 @@ function icms_makeSmarty($items) {
 }
 
 /**
-* Copy a file, or a folder and its contents from a website to your host
-*
-* @author	Sina Asghari <stranger@impresscms.org>
-* @author	nensa at zeec dot biz
-* @param	string	$src	The source
-* @param	string  $dest	  The destination
-* @return   bool	Returns stream_copy_to_stream($src, $dest) on success, false on failure
-*/
-	function icms_stream_copy($src, $dest)
-	{
-		$len = false;
-		if(@ini_get('allow_url_fopen')){
+ * Copy a file, or a folder and its contents from a website to your host
+ *
+ * @author	Sina Asghari <stranger@impresscms.org>
+ * @author	nensa at zeec dot biz
+ * @param	string	$src	The source
+ * @param	string  $dest	  The destination
+ * @return   bool	Returns stream_copy_to_stream($src, $dest) on success, false on failure
+ */
+function icms_stream_copy($src, $dest)
+{
+	$len = false;
+	if(@ini_get('allow_url_fopen')){
 		//if(!ini_get('allow_url_fopen')){
-			/*$output = $input = '';
-			$chdest = $chsrc = curl_init();
-			curl_setopt($chsrc, CURLOPT_URL, "$src");
-			curl_setopt($chsrc, CURLOPT_HEADER,0);
-			curl_setopt($chsrc, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($chdest, CURLOPT_URL, "$dest");
-			curl_setopt($chdest, CURLOPT_POST, 1);
-			curl_setopt($chdest, CURLOPT_POSTFIELDS, 1);
-			$input .=curl_exec($chsrc);
-			$output .=curl_exec($chdest);
-			curl_close($chsrc);
-			curl_close($chdest);
-			$len = stream_copy_to_stream($input,$output);
+		/*$output = $input = '';
+		$chdest = $chsrc = curl_init();
+		curl_setopt($chsrc, CURLOPT_URL, "$src");
+		curl_setopt($chsrc, CURLOPT_HEADER,0);
+		curl_setopt($chsrc, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($chdest, CURLOPT_URL, "$dest");
+		curl_setopt($chdest, CURLOPT_POST, 1);
+		curl_setopt($chdest, CURLOPT_POSTFIELDS, 1);
+		$input .=curl_exec($chsrc);
+		$output .=curl_exec($chdest);
+		curl_close($chsrc);
+		curl_close($chdest);
+		$len = stream_copy_to_stream($input,$output);
 		}else{*/
 		$fsrc = fopen($src,'r');
 		$fdest = fopen($dest,'w+');
 		$len = stream_copy_to_stream($fsrc,$fdest);
 		fclose($fsrc);
 		fclose($fdest);
-		}
-		return $len;
 	}
+	return $len;
+}
 /**
  * Is a module being installed, updated or uninstalled
  * Used for setting module configuration default values or options
@@ -2775,21 +2771,20 @@ function icms_moduleAction($dirname = 'system')
 {
 	global $icmsModule;
 	$ret = @(
-		// action module 'system'
-		!empty($icmsModule) && 'system' == $icmsModule->getVar('dirname', 'n')
-		&&
-		// current dirname
-		($dirname == $_POST['dirname'] || $dirname == $_POST['module'])
-		&&
-		// current op
-		('update_ok' == $_POST['op'] || 'install_ok' == $_POST['op'] || 'uninstall_ok' == $_POST['op'])
-		&&
-		// current action
+	// action module 'system'
+	!empty($icmsModule) && 'system' == $icmsModule->getVar('dirname', 'n')
+	&&
+	// current dirname
+	($dirname == $_POST['dirname'] || $dirname == $_POST['module'])
+	&&
+	// current op
+	('update_ok' == $_POST['op'] || 'install_ok' == $_POST['op'] || 'uninstall_ok' == $_POST['op'])
+	&&
+	// current action
 		'modulesadmin' == $_POST['fct']
-		);
+	);
 	return $ret;
 }
-
 
 /**
  * Get localized string if it is defined
@@ -2797,19 +2792,19 @@ function icms_moduleAction($dirname = 'system')
  * @param	string	$name	string to be localized
  */
 if (!function_exists("mod_constant")) {
-function mod_constant($name)
-{
-	global $icmsModule;
-	if (!empty($GLOBALS["VAR_PREFIXU"]) && @defined($GLOBALS["VAR_PREFIXU"]."_".strtoupper($name))) {
-		return CONSTANT($GLOBALS["VAR_PREFIXU"]."_".strtoupper($name));
-	} elseif (!empty($icmsModule) && @defined(strtoupper($icmsModule->getVar("dirname", "n")."_".$name))) {
-		return CONSTANT(strtoupper($icmsModule->getVar("dirname", "n")."_".$name));
-	} elseif (defined(strtoupper($name))) {
-		return CONSTANT(strtoupper($name));
-	} else {
-		return str_replace("_", " ", strtolower($name));
+	function mod_constant($name)
+	{
+		global $icmsModule;
+		if (!empty($GLOBALS["VAR_PREFIXU"]) && @defined($GLOBALS["VAR_PREFIXU"]."_".strtoupper($name))) {
+			return CONSTANT($GLOBALS["VAR_PREFIXU"]."_".strtoupper($name));
+		} elseif (!empty($icmsModule) && @defined(strtoupper($icmsModule->getVar("dirname", "n")."_".$name))) {
+			return CONSTANT(strtoupper($icmsModule->getVar("dirname", "n")."_".$name));
+		} elseif (defined(strtoupper($name))) {
+			return CONSTANT(strtoupper($name));
+		} else {
+			return str_replace("_", " ", strtolower($name));
+		}
 	}
-}
 }
 
 function icms_collapsableBar($id = '', $title = '', $dsc = '') {
@@ -2836,23 +2831,23 @@ function icms_ajaxCollapsableBar($id = '', $title = '', $dsc = '') {
  * Ajax testing......
  */
 /*
-function icms_collapsableBar($id = '', $title = '', $dsc='')
-{
+ function icms_collapsableBar($id = '', $title = '', $dsc='')
+ {
 
-	global $icmsModule;
-	//echo "<h3 style=\"color: #2F5376; font-weight: bold; font-size: 14px; margin: 6px 0 0 0; \"><a href='javascript:;' onclick=\"toggle('" . $id . "'); toggleIcon('" . $id . "_icon')\";>";
+ global $icmsModule;
+ //echo "<h3 style=\"color: #2F5376; font-weight: bold; font-size: 14px; margin: 6px 0 0 0; \"><a href='javascript:;' onclick=\"toggle('" . $id . "'); toggleIcon('" . $id . "_icon')\";>";
 
-?>
-<h3 class="icms_collapsable_title"><a href="javascript:Effect.Combo('<? echo $id ?>');"><? echo $title ?></a></h3>
-<?
+ ?>
+ <h3 class="icms_collapsable_title"><a href="javascript:Effect.Combo('<? echo $id ?>');"><? echo $title ?></a></h3>
+ <?
 
-	echo "<img id='" . $id . "_icon' src=" . ICMS_URL . "/images/close12.gif alt='' /></a>&nbsp;" . $title . "</h3>";
-	echo "<div id='" . $id . "'>";
-	if ($dsc != '') {
-		echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . $dsc . "</span>";
-	}
-}
-*/
+ echo "<img id='" . $id . "_icon' src=" . ICMS_URL . "/images/close12.gif alt='' /></a>&nbsp;" . $title . "</h3>";
+ echo "<div id='" . $id . "'>";
+ if ($dsc != '') {
+ echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . $dsc . "</span>";
+ }
+ }
+ */
 function icms_openclose_collapsable($name) {
 	$urls = icms_getCurrentUrls();
 	$path = $urls['phpself'];
@@ -2868,14 +2863,14 @@ function icms_openclose_collapsable($name) {
 				';
 	}
 	/*	if ($cookie == 'none') {
-			echo '
-			<script type="text/javascript"><!--
-				hideElement("' . $name . '");
-				//-->
-			</script>
-			';
+	 echo '
+	 <script type="text/javascript"><!--
+	 hideElement("' . $name . '");
+	 //-->
+	 </script>
+	 ';
 		}
-	*/
+		*/
 }
 function icms_close_collapsable($name) {
 	echo "</div>";
@@ -2893,24 +2888,24 @@ function icms_MakePrinterFriendly($content, $title=false, $description=false, $p
 
 function icms_getUnameFromUserEmail($email = '')
 {
-    $db = Database::getInstance();
-    if($email !== '')
-    {
-        $sql = $db->query("SELECT uname, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email,
-ENT_QUOTES, _CHARSET)."'");
-        list($uname, $email) = $db->fetchRow($sql);
-    }
-    else
-    {
-        redirect_header('user.php',2,_US_SORRYNOTFOUND);
-    }
-    return $uname;
+	$db = Database::getInstance();
+	if($email !== '')
+	{
+		$sql = $db->query("SELECT uname, email FROM ".$db->prefix('users')." WHERE email = '".@htmlspecialchars($email,
+		ENT_QUOTES, _CHARSET)."'");
+		list($uname, $email) = $db->fetchRow($sql);
+	}
+	else
+	{
+		redirect_header('user.php',2,_US_SORRYNOTFOUND);
+	}
+	return $uname;
 }
 
 /**
  * Check if the module currently uses WYSIWYG and decied wether to do_br or not
  *
-* @return bool true | false
+ * @return bool true | false
  */
 function icms_need_do_br($moduleName=false) {
 	global $icmsConfig, $icmsUser, $icmsModule;

@@ -19,7 +19,7 @@ if (!defined("ICMS_ROOT_PATH")) {
 include_once ICMS_ROOT_PATH."/class/database/databaseupdater.php";
 
 class IcmsMysqliDatabasetable extends IcmsDatabasetable {
-	
+
 }
 
 class IcmsMysqliDatabaseupdater extends IcmsDatabaseupdater {

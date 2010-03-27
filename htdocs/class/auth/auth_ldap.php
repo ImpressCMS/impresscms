@@ -2,25 +2,25 @@
 // $Id$
 // auth_ldap.php - LDAP authentification class
 /**
-* Authorization classes, LDAP class file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Authorization
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Authorization classes, LDAP class file
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	Authorization
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 /**
-* Authentification class for standard LDAP Server V2 or V3
-* @package     kernel
-* @subpackage  auth
-* @author	    Pierre-Eric MENUET	<pemphp@free.fr>
-* @copyright	copyright (c) 2000-2003 XOOPS.org
-*/
+ * Authentification class for standard LDAP Server V2 or V3
+ * @package     kernel
+ * @subpackage  auth
+ * @author	    Pierre-Eric MENUET	<pemphp@free.fr>
+ * @copyright	copyright (c) 2000-2003 XOOPS.org
+ */
 include_once ICMS_ROOT_PATH.'/class/auth/auth_provisionning.php';
 
 class XoopsAuthLdap extends XoopsAuth
@@ -54,7 +54,7 @@ class XoopsAuthLdap extends XoopsAuth
 		"\xc2\x9e" => "\xc5\xbe",     /* LATIN SMALL LETTER Z WITH CARON */
 		"\xc2\x9f" => "\xc5\xb8"      /* LATIN CAPITAL LETTER Y WITH DIAERESIS*/    	
 	);
-	
+
 	var $ldap_server;
 	var $ldap_port = '389';
 	var $ldap_version = '3';
@@ -70,8 +70,8 @@ class XoopsAuthLdap extends XoopsAuth
 	var $_ds;
 
 	/**
-	* Authentication Service constructor
-	*/
+	 * Authentication Service constructor
+	 */
 	function XoopsAuthLdap(&$dao)
 	{
 		$this->_dao = $dao;
@@ -84,14 +84,14 @@ class XoopsAuthLdap extends XoopsAuth
 	function cp1252_to_utf8($str) {return strtr(utf8_encode($str), $this->cp1252_map);}
 
 	/**
-	*  Authenticate  user against LDAP directory (Bind)
-	*  2 options :
-	*		Authenticate directly with uname in the DN
-	*		Authenticate with manager, search the dn
-	* @param string $uname Username
-	* @param string $pwd Password
-	* @return bool
-	*/
+	 *  Authenticate  user against LDAP directory (Bind)
+	 *  2 options :
+	 *		Authenticate directly with uname in the DN
+	 *		Authenticate with manager, search the dn
+	 * @param string $uname Username
+	 * @param string $pwd Password
+	 * @return bool
+	 */
 	function authenticate($uname, $pwd = null)
 	{
 		$authenticated = false;
@@ -108,13 +108,13 @@ class XoopsAuthLdap extends XoopsAuth
 			{
 				// We use TLS secure connection
 				if(!ldap_start_tls($this->_ds))
-					$this->setErrors(0, _AUTH_LDAP_START_TLS_FAILED);
+				$this->setErrors(0, _AUTH_LDAP_START_TLS_FAILED);
 			}
 			// If the uid is not in the DN we proceed to a search
 			// The uid is not always in the dn
 			$userDN = $this->getUserDN($uname);
 			if(!$userDN) return false;
-			// We bind as user to test the credentials   
+			// We bind as user to test the credentials
 			$authenticated = ldap_bind($this->_ds, $userDN, stripslashes($pwd));
 			$sess_handler =& xoops_gethandler('session');
 			if($authenticated)
@@ -139,10 +139,10 @@ class XoopsAuthLdap extends XoopsAuth
 	}
 
 	/**
-	* Compose the user DN with the configuration.
-	* @param string $uname UserName
-	* @return userDN or false
-	*/
+	 * Compose the user DN with the configuration.
+	 * @param string $uname UserName
+	 * @return userDN or false
+	 */
 	function getUserDN($uname)
 	{
 		$userDN = false;
@@ -163,12 +163,12 @@ class XoopsAuthLdap extends XoopsAuth
 		else {$userDN = $this->ldap_loginldap_attr.'='.$uname.','.$this->ldap_base_dn;}
 		return $userDN;
 	}
-	
+
 	/**
-	* Load user from ImpressCMS Database
-	* @param string $uname UserName
-	* @return object {@link XoopsUser} XoopsUser object
-	*/
+	 * Load user from ImpressCMS Database
+	 * @param string $uname UserName
+	 * @return object {@link XoopsUser} XoopsUser object
+	 */
 	function getFilter($uname)
 	{
 		$filter = '';
@@ -176,14 +176,14 @@ class XoopsAuthLdap extends XoopsAuth
 		else {$filter = $this->ldap_loginldap_attr.'='.$uname;}
 		return $filter;
 	}
-	
+
 	/**
-	* Loads Xoops user
-	* @param string $userdn
-	* @param string $uname Username
-	* @param string $pwd Password
-	* @return object {@link XoopsUser} XoopsUser object
-	**/
+	 * Loads Xoops user
+	 * @param string $userdn
+	 * @param string $uname Username
+	 * @param string $pwd Password
+	 * @return object {@link XoopsUser} XoopsUser object
+	 **/
 	function loadXoopsUser($userdn, $uname, $pwd = null)
 	{
 		$provisHandler = XoopsAuthProvisionning::getInstance($this);

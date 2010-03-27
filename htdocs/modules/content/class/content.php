@@ -1,7 +1,7 @@
 <?php
 /**
  * ImpressCMS Conent Persistable Class
- * 
+ *
  * @since 		ImpressCMS 1.2
  * @copyright 	The ImpressCMS Project <http://www.impresscms.org>
  * @license		GNU General Public License (GPL) <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
@@ -29,22 +29,22 @@ define ( 'CONTENT_CONTENT_VISIBLE_DONTSHOW', 4 );
 
 /**
  * ImpressCMS Core Content Object Class
- * 
+ *
  * @since ImpressCMS 1.2
  * @author Rodrigo P Lima (aka TheRplima) <therplima@impresscms.org>
  */
 class ContentContent extends IcmsPersistableSeoObject {
-	
+
 	private $poster_info = false;
 	public $updating_counter = false;
 	public $tags = false;
 	public $categories = false;
-	
+
 	public function __construct(&$handler) {
 		global $xoopsConfig, $contentConfig;
-		
+
 		$this->IcmsPersistableObject ( $handler );
-		
+
 		$this->quickInitVar ( 'content_id', XOBJ_DTYPE_INT, true );
 		$this->quickInitVar ( 'content_pid', XOBJ_DTYPE_INT, false );
 		$this->quickInitVar ( 'content_uid', XOBJ_DTYPE_INT, true, false, false, 1 );
@@ -60,46 +60,46 @@ class ContentContent extends IcmsPersistableSeoObject {
 		$this->quickInitVar ( 'content_makesymlink', XOBJ_DTYPE_INT, true, false, false, 1 );
 		$this->quickInitVar ( 'content_showsubs', XOBJ_DTYPE_INT, false, false, false, $contentConfig ['show_relateds'] );
 		$this->quickInitVar ( 'content_cancomment', XOBJ_DTYPE_INT, false, false, false, true );
-		
+
 		$this->quickInitVar ( 'content_comments', XOBJ_DTYPE_INT );
 		$this->hideFieldFromForm ( 'content_comments' );
 		$this->hideFieldFromSingleView ( 'content_comments' );
-		
+
 		$this->quickInitVar ( 'content_notification_sent', XOBJ_DTYPE_INT );
 		$this->hideFieldFromForm ( 'content_notification_sent' );
 		$this->hideFieldFromSingleView ( 'content_notification_sent' );
-		
+
 		$this->initCommonVar ( 'counter', false );
 		$this->initCommonVar ( 'dohtml', false, true );
 		$this->initCommonVar ( 'dobr', false, true );
 		$this->initCommonVar ( 'doimage', false, true );
 		$this->initCommonVar ( 'dosmiley', false, true );
 		$this->initCommonVar ( 'doxcode', false, true );
-		
+
 		$this->initNonPersistableVar ( 'content_subs', XOBJ_DTYPE_INT );
-		
+
 		$this->setControl ( 'content_body', 'dhtmltextarea' );
 		$this->setControl ( 'content_uid', 'user' );
 		$this->setControl ( 'content_status', array ('itemHandler' => 'content', 'method' => 'getContent_statusArray', 'module' => 'content' ) );
 		$this->setControl ( 'content_visibility', array ('itemHandler' => 'content', 'method' => 'getContent_visibleArray', 'module' => 'content' ) );
 		$this->setControl ( 'content_pid', array ('itemHandler' => 'content', 'method' => 'getContentList', 'module' => 'content' ) );
-		
+
 		$this->setControl ( 'categories', array ('name' => 'categories', 'module' => 'imtagging' ) );
-		
+
 		$this->setControl ( 'content_makesymlink', 'yesno' );
 		$this->setControl ( 'content_showsubs', 'yesno' );
 		$this->setControl ( 'content_cancomment', 'yesno' );
-		
+
 		$this->IcmsPersistableSeoObject ();
 	}
-	
+
 	public function getVar($key, $format = 's') {
 		if ($format == 's' && in_array ( $key, array ('content_pid', 'content_uid', 'content_status', 'content_visibility', 'content_subs', 'content_tags' ) )) {
 			return call_user_func ( array ($this, $key ) );
 		}
 		return parent::getVar ( $key, $format );
 	}
-	
+
 	/**
 	 * Retrieving the title of the parent page, linked to that
 	 *
@@ -113,10 +113,10 @@ class ContentContent extends IcmsPersistableSeoObject {
 		} else {
 			$ret = $content_pidArray [$ret];
 		}
-		
+
 		return $ret;
 	}
-	
+
 	/**
 	 * Retrieving the name of the author of the content, linked to his profile
 	 *
@@ -125,7 +125,7 @@ class ContentContent extends IcmsPersistableSeoObject {
 	function content_uid() {
 		return icms_getLinkedUnameFromId ( $this->getVar ( 'content_uid', 'e' ) );
 	}
-	
+
 	/**
 	 * Retrieving the status of the content
 	 *
@@ -137,7 +137,7 @@ class ContentContent extends IcmsPersistableSeoObject {
 		$content_statusArray = $this->handler->getContent_statusArray ();
 		return $content_statusArray [$ret];
 	}
-	
+
 	/**
 	 * Retrieving the visibility of the content
 	 *
@@ -148,7 +148,7 @@ class ContentContent extends IcmsPersistableSeoObject {
 		$content_visibleArray = $this->handler->getContent_visibleArray ();
 		return $content_visibleArray [$ret];
 	}
-	
+
 	function content_tags() {
 		if ($this->getVar ( 'content_tags', 'e' ) != '') {
 			$tags = explode ( ',', $this->getVar ( 'content_tags', 'e' ) );
@@ -162,26 +162,26 @@ class ContentContent extends IcmsPersistableSeoObject {
 			return false;
 		}
 	}
-	
+
 	/**
-	 * Retrieving the count of sub-pages of this page 
+	 * Retrieving the count of sub-pages of this page
 	 *
 	 * @return int number of sub-pages
 	 */
 	function content_subs() {
 		$ret = $this->handler->getContentsSubsCount ( $this->getVar ( 'content_id', 'e' ) );
-		
+
 		if ($ret > 0) {
 			$ret = '<a href="' . $this->handler->_moduleUrl . 'admin/' . $this->handler->_itemname . '.php?content_pid=' . $this->getVar ( 'content_id', 'e' ) . '">' . $ret . ' <img src="' . $this->handler->_moduleUrl . 'images/viewsubs.gif" align="absmiddle" /></a>';
 		}
-		
+
 		return $ret;
 	}
-	
+
 	function getReads() {
 		return $this->getVar ( 'counter' );
 	}
-	
+
 	function setReads($qtde = null) {
 		$t = $this->getVar ( 'counter' );
 		if (isset ( $qtde )) {
@@ -191,7 +191,7 @@ class ContentContent extends IcmsPersistableSeoObject {
 		}
 		$this->setVar ( 'counter', $t );
 	}
-	
+
 	/**
 	 * Returns the need to br
 	 *
@@ -199,10 +199,10 @@ class ContentContent extends IcmsPersistableSeoObject {
 	 */
 	function need_do_br() {
 		global $xoopsConfig, $xoopsUser;
-		
+
 		$content_module = icms_getModuleInfo ( 'content' );
 		$groups = $xoopsUser->getGroups ();
-		
+
 		$editor_default = $xoopsConfig ['editor_default'];
 		$gperm_handler = xoops_getHandler ( 'groupperm' );
 		if (file_exists ( ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php" ) && $gperm_handler->checkRight ( 'use_wysiwygeditor', $content_module->mid (), $groups )) {
@@ -211,7 +211,7 @@ class ContentContent extends IcmsPersistableSeoObject {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Check is user has access to view this content page
 	 *
@@ -224,32 +224,32 @@ class ContentContent extends IcmsPersistableSeoObject {
 	 */
 	function accessGranted() {
 		global $xoopsUser;
-		
+
 		$gperm_handler = & xoops_gethandler ( 'groupperm' );
 		$groups = is_object ( $xoopsUser ) ? $xoopsUser->getGroups () : array (XOOPS_GROUP_ANONYMOUS );
-		
+
 		$module_handler = xoops_gethandler ( 'module' );
 		$module = $module_handler->getByDirname ( 'content' );
-		
+
 		$agroups = $gperm_handler->getGroupIds ( 'module_admin', $module->mid () );
 		$allowed_groups = array_intersect ( $groups, $agroups );
-		
+
 		$viewperm = $gperm_handler->checkRight ( 'content_read', $this->getVar ( 'content_id', 'e' ), $groups, $module->mid () );
-		
+
 		if (is_object ( $xoopsUser ) && $xoopsUser->uid () == $this->getVar ( 'content_uid', 'e' )) {
 			return true;
 		}
-		
+
 		if ($viewperm && $this->getVar ( 'content_status', 'e' ) == CONTENT_CONTENT_STATUS_PUBLISHED) {
 			return true;
 		}
-		
+
 		if ($viewperm && count ( $allowed_groups ) > 0) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Get the poster
 	 *
@@ -261,7 +261,7 @@ class ContentContent extends IcmsPersistableSeoObject {
 			$member_handler = xoops_getHandler ( 'member' );
 			$poster_uid = $this->getVar ( 'content_uid', 'e' );
 			$userObj = $member_handler->getuser ( $poster_uid );
-			
+				
 			/**
 			 * We need to make sure the poster is a valid user object. It is possible the user no longer
 			 * exists if, for example, he was previously deleted. In that case, we will return Anonymous
@@ -282,7 +282,7 @@ class ContentContent extends IcmsPersistableSeoObject {
 			return $this->poster_info ['uname'];
 		}
 	}
-	
+
 	/**
 	 * Retrieve content info (author and date)
 	 *
@@ -292,7 +292,7 @@ class ContentContent extends IcmsPersistableSeoObject {
 		$ret = sprintf ( _CO_CONTENT_CONTENT_INFO, $this->getPoster ( true ), $this->getVar ( 'content_published_date' ), $this->getVar ( 'counter' ) );
 		return $ret;
 	}
-	
+
 	/**
 	 * Check to see wether the current user can edit or delete this page
 	 *
@@ -308,48 +308,48 @@ class ContentContent extends IcmsPersistableSeoObject {
 		}
 		return $this->getVar ( 'content_uid', 'e' ) == $xoopsUser->uid ();
 	}
-	
+
 	function getPreviewItemLink() {
 		$seo = $this->handler->makelink ( $this );
 		$ret = '<a href="' . $this->handler->_moduleUrl . $this->handler->_itemname . '.php?page=' . $seo . '" title="' . _AM_CONTENT_PREVIEW . '" target="_blank">' . $this->getVar ( 'content_title' ) . '</a>';
-		
+
 		return $ret;
 	}
-	
+
 	function getCloneItemLink() {
 		$ret = '<a href="' . $this->handler->_moduleUrl . 'admin/' . $this->handler->_itemname . '.php?op=clone&amp;content_id=' . $this->getVar ( 'content_id', 'e' ) . '" title="' . _AM_CONTENT_CONTENT_CLONE . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/filesaveas2.png" /></a>';
-		
+
 		return $ret;
 	}
-	
+
 	function getViewItemLink() {
 		$ret = '<a href="' . $this->handler->_moduleUrl . 'admin/' . $this->handler->_itemname . '.php?op=view&amp;content_id=' . $this->getVar ( 'content_id', 'e' ) . '" title="' . _AM_CONTENT_VIEW . '"><img src="' . ICMS_IMAGES_SET_URL . '/actions/viewmag.png" /></a>';
-		
+
 		return $ret;
 	}
-	
+
 	function getContentSubs($toarray) {
 		return $this->handler->getContentSubs ( $this->getVar ( 'content_id', 'e' ), $toarray );
 	}
-	
+
 	function getContent_visibleControl() {
 		include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 		$control = new XoopsFormSelect ( '', 'content_visibility[]', $this->getVar ( 'content_visibility', 'e' ) );
 		$content_visibleArray = $this->handler->getContent_visibleArray ();
 		$control->addOptionArray ( $content_visibleArray );
-		
+
 		return $control->render ();
 	}
-	
+
 	function getContent_statusControl() {
 		include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 		$control = new XoopsFormSelect ( '', 'content_status[]', $this->getVar ( 'content_status', 'e' ) );
 		$content_statusArray = $this->handler->getContent_statusArray ();
 		$control->addOptionArray ( $content_statusArray );
-		
+
 		return $control->render ();
 	}
-	
+
 	/**
 	 * Retrieve content comment info (number of comments)
 	 *
@@ -363,7 +363,7 @@ class ContentContent extends IcmsPersistableSeoObject {
 			return _CO_CONTENT_CONTENT_NO_COMMENT;
 		}
 	}
-	
+
 	/**
 	 * Retrieve content lead, which is everything before the [more] tag
 	 *
@@ -374,32 +374,32 @@ class ContentContent extends IcmsPersistableSeoObject {
 		$ret = icms_substr ( icms_cleanTags ( $ret, array ( ) ), 0, 300 );
 		return $ret;
 	}
-	
+
 	/**
 	 * Sending the notification related to a content being published
 	 *
 	 * @return VOID
 	 */
 	function sendNotifContentPublished() {
-		
+
 		$module_handler = xoops_getHandler('module');
 		$module = $module_handler->getByDirname('content');
 		$module_id = $module->getVar ( 'mid' );
 		$notification_handler = xoops_getHandler ( 'notification' );
-		
+
 		$tags ['CONTENT_TITLE'] = $this->getVar ( 'content_title' );
 		$tags ['CONTENT_URL'] = $this->getItemLink ( true );
-		
+
 		$notification_handler->triggerEvent ( 'global', 0, 'content_published', $tags, array ( ), $module_id );
 	}
-	
+
 	function getItemLink() {
 		$seo = $this->handler->makelink ( $this );
 		$ret = '<a href="' . $this->handler->_moduleUrl . $this->handler->_itemname . '.php?page=' . $seo . '" title="">' . $this->getVar ( 'content_title' ) . '</a>';
-		
+
 		return $ret;
 	}
-	
+
 	/**
 	 * Overridding IcmsPersistable::toArray() method to add a few info
 	 *
@@ -407,7 +407,7 @@ class ContentContent extends IcmsPersistableSeoObject {
 	 */
 	function toArray() {
 		$ret = parent::toArray ();
-		
+
 		$ret ['content_info'] = $this->getContentInfo ();
 		$ret ['content_lead'] = $this->getContentLead ();
 		$ret ['content_comment_info'] = $this->getCommentsInfo ();
@@ -420,44 +420,44 @@ class ContentContent extends IcmsPersistableSeoObject {
 		$ret ['content_posterid'] = $this->getVar ( 'content_uid', 'e' );
 		$ret ['itemLink'] = $this->getItemLink ();
 		$ret ['accessgranted'] = $this->accessGranted();
-		
+
 		return $ret;
 	}
 }
 
 /**
  * ImpressCMS Core Content Object Handler Class
- * 
+ *
  * @copyright The ImpressCMS Project <http://www.impresscms.org>
  * @license GNU GPL v2
- * 
+ *
  * @since ImpressCMS 1.2
  * @author Rodrigo P Lima (aka TheRplima) <therplima@impresscms.org>
  */
 class ContentContentHandler extends IcmsPersistableObjectHandler {
-	
+
 	/**
 	 * @public array of status
 	 */
 	public $_content_statusArray = array ( );
-	
+
 	/**
 	 * @public array of status
 	 */
 	public $_content_visibleArray = array ( );
-	
+
 	/**
 	 * @public array of tags
 	 */
 	public $_content_tagsArray = array ( );
-	
+
 	public function __construct(& $db) {
 		$this->IcmsPersistableObjectHandler ( $db, 'content', 'content_id', 'content_title', 'content_body', 'content' );
 
 		icms_loadLanguageFile('content', 'common');
 		$this->addPermission ( 'content_read', _CO_CONTENT_CONTENT_READ, _CO_CONTENT_CONTENT_READ_DSC );
 	}
-	
+
 	/**
 	 * Retreive the possible status of a content object
 	 *
@@ -473,7 +473,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		}
 		return $this->_content_statusArray;
 	}
-	
+
 	/**
 	 * Retreive the possible visibility of a content object
 	 *
@@ -488,7 +488,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		}
 		return $this->_content_visibleArray;
 	}
-	
+
 
 	/**
 	 * Retreive the tags of the content object
@@ -522,7 +522,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		}
 		return $this->_content_tagsArray;
 	}
-	
+
 	/**
 	 * Create the criteria that will be used by getContents and getContentsCount
 	 *
@@ -537,41 +537,41 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 	 */
 	function getContentsCriteria($start = 0, $limit = 0, $content_uid = false, $content_tags=false, $content_id = false,  $content_pid = false, $order = 'content_published_date', $sort = 'DESC') {
 		global $xoopsUser;
-		
+
 		$criteria = new CriteriaCompo ( );
 		if ($start) {
 			$criteria->setStart ( $start );
 		}
 		if ($limit) {
-			$criteria->setLimit ( intval ( $limit ) );
+			$criteria->setLimit ( (int) ( $limit ) );
 		}
 		$criteria->setSort ( $order );
 		$criteria->setOrder ( $sort );
-		
+
 		$criteria->add ( new Criteria ( 'content_status', CONTENT_CONTENT_STATUS_PUBLISHED ) );
-		
+
 		if ($content_uid) {
 			$criteria->add ( new Criteria ( 'content_uid', $content_uid ) );
 		}
-		
+
 		if ($content_tags){
 			$criteria->add ( new Criteria ( 'content_tags', '%'.$content_tags.'%', 'LIKE' ) );
 		}
-		
+
 		if ($content_id) {
 			$crit = new CriteriaCompo(new Criteria('short_url', $content_id,'LIKE'));
 			$alt_content_id = str_replace('-',' ',$content_id);
 			$crit->add(new Criteria('short_url', $alt_content_id),'OR'); //Added for backward compatiblity in case short_url contains spaces instead of dashes.
 			$crit->add(new Criteria('content_id', $content_id),'OR');
-			$criteria->add($crit);	
+			$criteria->add($crit);
 		}
-		
+
 		if ($content_pid !== false){
 			$criteria->add ( new Criteria ( 'content_pid', $content_pid ) );
 		}
 		return $criteria;
 	}
-	
+
 
 	/**
 	 * Get single content object
@@ -583,8 +583,8 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		$ret = $this->getContents ( 0, 0, false, false, $content_id );
 		return isset ( $ret [$content_id] ) ? $ret [$content_id] : false;
 	}
-	
-	
+
+
 	/**
 	 * Get contents as array, ordered by content_published_date DESC
 	 *
@@ -608,8 +608,8 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		}
 		return $ret;
 	}
-	
-	
+
+
 	/**
 	 * Get a list of users
 	 *
@@ -619,8 +619,8 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		$member_handler = xoops_getHandler ( 'member' );
 		return $member_handler->getUserList ();
 	}
-	
-	
+
+
 	/**
 	 * Get contents count
 	 *
@@ -632,8 +632,8 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		$criteria = $this->getContentsCriteria ( false, false, $content_uid );
 		return $this->getCount ( $criteria );
 	}
-	
-	
+
+
 	/**
 	 * Get Contents requested by the global search feature
 	 *
@@ -646,10 +646,10 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 	 */
 	function getContentsForSearch($queryarray, $andor, $limit, $offset, $userid) {
 		$criteria = new CriteriaCompo ( );
-		
+
 		$criteria->setStart ( $offset );
 		$criteria->setLimit ( $limit );
-		
+
 		if ($userid != 0) {
 			$criteria->add ( new Criteria ( 'content_uid', $userid ) );
 		}
@@ -667,7 +667,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		$criteria->add ( new Criteria ( 'content_status', CONTENT_CONTENT_STATUS_PUBLISHED ) );
 		return $this->getObjects ( $criteria, true, false );
 	}
-	
+
 	/**
 	 * Check wether the current user can submit a new content or not
 	 *
@@ -683,11 +683,11 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 			return true;
 		}
 		$user_groups = $xoopsUser->getGroups ();
-	
+
 		return count ( array_intersect ( $xoopsModuleConfig ['poster_group'], $user_groups ) ) > 0;
 	}
-	
-	
+
+
 
 	/**
 	 * Update the counter field of the content object
@@ -698,7 +698,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 	 */
 	function updateCounter($id) {
 		global $xoopsUser, $content_isAdmin;
-		
+
 		$contentObj = $this->get ( $id );
 		if (! is_object ( $contentObj )) {
 			return false;
@@ -708,10 +708,10 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 			$contentObj->setVar ( 'counter', $contentObj->getVar ( 'counter', 'n' ) + 1 );
 			$this->insert ( $contentObj, true );
 		}
-		
+
 		return true;
 	}
-	
+
 
 	/**
 	 * Get contents count
@@ -724,7 +724,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		$criteria->add ( new Criteria ( 'content_pid', $content_id ) );
 		return $this->getCount ( $criteria );
 	}
-	
+
 	/**
 	 * Get the subpages of the page
 	 *
@@ -750,13 +750,13 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		}
 		return $ret;
 	}
-	
+
 
 	function getList($content_status = null) {
 		$criteria = new CriteriaCompo ( );
 
 		if (isset ( $content_status )) {
-			$criteria->add ( new Criteria ( 'content_status', intval ( $content_status ) ) );
+			$criteria->add ( new Criteria ( 'content_status', (int) ( $content_status ) ) );
 		}
 		$contents = & $this->getObjects ( $criteria, true );
 		foreach ( array_keys ( $contents ) as $i ) {
@@ -764,8 +764,8 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		}
 		return $ret;
 	}
-	
-	
+
+
 	function getContentList($groups = array(), $perm = 'content_read', $status = null, $content_id = null, $showNull = true) {
 		$criteria = new CriteriaCompo ( );
 		if (is_array ( $groups ) && ! empty ( $groups )) {
@@ -780,10 +780,10 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 			}
 		}
 		if (isset ( $status )) {
-			$criteria->add ( new Criteria ( 'content_status', intval ( $status ) ) );
+			$criteria->add ( new Criteria ( 'content_status', (int) ( $status ) ) );
 		}
 		if (is_null ( $content_id ))
-			$content_id = 0;
+		$content_id = 0;
 		$criteria->add ( new Criteria ( 'content_pid', $content_id ) );
 
 		$contents = & $this->getObjects ( $criteria, true );
@@ -798,14 +798,14 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 				$ret [$j] = '-' . $subccontents [$j];
 			}
 		}
-		
+
 		return $ret;
 	}
-	
-	
+
+
 	function makeLink($content,$onlyUrl=false) {
 		$count = $this->getCount ( new Criteria ( "short_url", $content->getVar ( "short_url" ) ) );
-		
+
 		if ($count > 1) {
 			return $content->getVar ( 'content_id' );
 		} else {
@@ -813,7 +813,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 			return $seo;
 		}
 	}
-	
+
 	function hasPage($user) {
 		$gperm_handler = & xoops_gethandler ( 'groupperm' );
 		$groups = is_object ( $user ) ? $user->getGroups () : XOOPS_GROUP_ANONYMOUS;
@@ -854,16 +854,16 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
- 	 * Function to create a navigation menu in content pages.
- 	 * This function was based on the function that do the same in mastop publish module
- 	 * 
- 	 * @param integer $content_id
- 	 * @return string
- 	 */
+	 * Function to create a navigation menu in content pages.
+	 * This function was based on the function that do the same in mastop publish module
+	 *
+	 * @param integer $content_id
+	 * @return string
+	 */
 	function getBreadcrumbForPid($content_id, $userside=false){
 		$url = $_SERVER['PHP_SELF'];
 		$ret = false;
-		
+
 		if ($content_id == false) {
 			return $ret;
 		}else{
@@ -909,7 +909,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 			$this->insert ( $contentObj, true );
 		}
 	}
-	
+
 	/**
 	 * BeforeSave event
 	 *
@@ -920,18 +920,18 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 	 */
 	function beforeSave(& $obj) {
 		if ($obj->updating_counter)
-			return true;
-		
+		return true;
+
 		$obj->setVar ( 'dobr', $obj->need_do_br () );
-		
+
 		//Prevent that the page is defined as parent page of yourself.
 		if ($obj->getVar('content_pid','e') == $obj->getVar('content_id','e')){
 			$obj->setVar('content_pid', 0);
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * AfterSave event
 	 *
@@ -942,7 +942,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 	 */
 	function afterSave(& $obj) {
 		if ($obj->updating_counter)
-			return true;
+		return true;
 			
 		if (! $obj->getVar ( 'content_notification_sent' ) && $obj->getVar ( 'content_status', 'e' ) == CONTENT_CONTENT_STATUS_PUBLISHED) {
 			$obj->sendNotifContentPublished ();
@@ -953,10 +953,10 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		if ($obj->getVar('content_makesymlink') == 1){
 			$module_handler = xoops_gethandler('module');
 			$module = $module_handler->getByDirname('content');
-			
+				
 			$seo = $obj->handler->makelink($obj);
 			$url = str_replace(ICMS_URL.'/','',$obj->handler->_moduleUrl.$obj->handler->_itemname.'.php?page='.$seo);
-			
+				
 			$symlink_handler = xoops_getmodulehandler('pages','system');
 			$criteria = new CriteriaCompo(new Criteria('page_url','%'.$seo,'LIKE'));
 			$criteria->add(new Criteria('page_moduleid',$module->mid()));
@@ -972,7 +972,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * AfterDelete event
 	 *
@@ -986,12 +986,12 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		$url = str_replace(ICMS_URL.'/','',$obj->handler->_moduleUrl.$obj->handler->_itemname.'.php?page='.$seo);
 		$module_handler = xoops_gethandler('module');
 		$module = $module_handler->getByDirname('content');
-		
+
 		$symlink_handler = xoops_getmodulehandler('pages','system');
 		$criteria = new CriteriaCompo(new Criteria('page_url',$url));
 		$criteria->add(new Criteria('page_moduleid',$module->mid()));
 		$symlink_handler->deleteAll($criteria);
-		
+
 		return true;
 	}
 }

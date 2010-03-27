@@ -1,13 +1,13 @@
 <?php
 
 /**
-* $Id: rating.php 159 2007-12-17 16:44:05Z malanciault $
-* Module: SmartContent
-* Author: The SmartFactory <www.smartfactory.ca>
-* Licence: GNU
-*/
+ * $Id: rating.php 159 2007-12-17 16:44:05Z malanciault $
+ * Module: SmartContent
+ * Author: The SmartFactory <www.smartfactory.ca>
+ * Licence: GNU
+ */
 if (!defined("XOOPS_ROOT_PATH")) {
- 	die("XOOPS root path not defined");
+	die("XOOPS root path not defined");
 }
 
 define('_CO_ICMS_RATING_RATE_IT', 'Rate it !');

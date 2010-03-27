@@ -1,15 +1,15 @@
 <?php
 
 /**
-* Classes responsible for managing profile videos objects
-*
-* @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package		profile
-* @version		$Id$
-*/
+ * Classes responsible for managing profile videos objects
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package		profile
+ * @version		$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
@@ -66,7 +66,7 @@ class ProfileVideos extends IcmsPersistableSeoObject {
 		$ret = '<object width="320" height="265"><param name="movie" value="http://www.youtube.com/v/' . $this->getVar ( 'youtube_code' ) . '&hl='._LANGCODE.'&fs=1&color1=0x3a3a3a&color2=0x999999"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/' . $this->getVar ( 'youtube_code' ) . '&hl='._LANGCODE.'&fs=1&color1=0x3a3a3a&color2=0x999999" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="320" height="265"></embed></object>';
 		return $ret;
 	}
-	
+
 	function getVideoSender() {
 		return icms_getLinkedUnameFromId($this->getVar('uid_owner', 'e'));
 	}
@@ -145,11 +145,11 @@ class ProfileVideosHandler extends IcmsPersistableObjectHandler {
 			$criteria->setStart($start);
 		}
 		if ($limit) {
-			$criteria->setLimit(intval($limit));
+			$criteria->setLimit( (int) ($limit));
 		}
 		$criteria->setSort('creation_time');
 		$criteria->setOrder('DESC');
-		
+
 		if ($uid_owner) {
 			$criteria->add(new Criteria('uid_owner', $uid_owner));
 		}
@@ -185,7 +185,7 @@ class ProfileVideosHandler extends IcmsPersistableObjectHandler {
 		return $ret;
 	}
 
-	
+
 	/**
 	 * Check wether the current user can submit a new video or not
 	 *
@@ -198,7 +198,6 @@ class ProfileVideosHandler extends IcmsPersistableObjectHandler {
 		}
 		return true;
 	}
-
 
 	/**
 	 * Update the counter field of the post object

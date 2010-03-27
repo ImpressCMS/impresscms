@@ -1,15 +1,15 @@
 <?php
 /**
-* Class to easily export data from IcmsPersistables
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		1.2
-* @author		marcan <marcan@impresscms.org>
-* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ * Class to easily export data from IcmsPersistables
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsPersistableObject
+ * @since		1.2
+ * @author		marcan <marcan@impresscms.org>
+ * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 
 class IcmsPersistableExport {
 
@@ -94,21 +94,21 @@ class IcmsPersistableExport {
 	/*
 	 * Set an array of fields that we don't want in export
 	 */
-	 function setNotDisplayFields($fields){
-	 	if(!$this->notDisplayFields){
-	 		if(is_array($fields)){
-	 			$this->notDisplayFields = $fields;
-	 		}else{
-	 			$this->notDisplayFields = array($fields);
-	 		}
-	 	}else{
-	 		if(is_array($fields)){
-	 			$this->notDisplayFields = array_merge($this->notDisplayFields, $fields);
-	 		}else{
-	 			$this->notDisplayFields[] = $fields;
-	 		}
-	 	}
-	 }
+	function setNotDisplayFields($fields){
+		if(!$this->notDisplayFields){
+			if(is_array($fields)){
+				$this->notDisplayFields = $fields;
+			}else{
+				$this->notDisplayFields = array($fields);
+			}
+		}else{
+			if(is_array($fields)){
+				$this->notDisplayFields = array_merge($this->notDisplayFields, $fields);
+			}else{
+				$this->notDisplayFields[] = $fields;
+			}
+		}
+	}
 }
 
 /**
@@ -147,7 +147,7 @@ class IcmsExportRenderer {
 
 	function arrayToCsvString($dataArray, $separator, $trim = 'both', $removeEmptyLines = TRUE) {
 		if (!is_array($dataArray) || empty ($dataArray))
-			return '';
+		return '';
 		switch ($trim) {
 			case 'none' :
 				$trimFunction = FALSE;
@@ -172,7 +172,7 @@ class IcmsExportRenderer {
 	}
 	function valToCsvHelper($val, $separator, $trimFunction) {
 		if ($trimFunction)
-			$val = $trimFunction ($val);
+		$val = $trimFunction ($val);
 		//If there is a separator (;) or a quote (") or a linebreak in the string, we need to quote it.
 		$needQuote = FALSE;
 		do {
@@ -196,7 +196,6 @@ class IcmsExportRenderer {
 		return $val;
 	}
 
-
 	function execute() {
 		$exportFileData = '';
 
@@ -209,7 +208,7 @@ class IcmsExportRenderer {
 				foreach($this->data['rows'] as $cols) {
 					$exportFileData .= $this->arrayToCsvString($cols, $separator) . "\r\n";
 				}
-			break;
+				break;
 		}
 		$this->saveExportFile($exportFileData);
 	}
@@ -218,7 +217,7 @@ class IcmsExportRenderer {
 		switch ($this->format) {
 			case 'csv':
 				$this->saveCsv($content);
-			break;
+				break;
 		}
 	}
 
@@ -239,37 +238,37 @@ class IcmsExportRenderer {
 			trigger_error('Unable to write in ' . $fullFileName, E_USER_WARNING);
 		} else {
 			$mimeType = 'text/csv';
-		    $file = strrev($this->filename);
-		    $temp_name = strtolower(strrev(substr($file,0,strpos($file,"--"))) );
+			$file = strrev($this->filename);
+			$temp_name = strtolower(strrev(substr($file,0,strpos($file,"--"))) );
 			if ($temp_name == '') {
 				$file_name = $this->filename;
 			} else {
 				$file_name = $temp_name;
 			}
-		    $fullFileName = $this->filepath . stripslashes(trim($this->filename));
+			$fullFileName = $this->filepath . stripslashes(trim($this->filename));
 
-		    if(ini_get('zlib.output_compression')) {
-		        ini_set('zlib.output_compression', 'Off');
-		    }
+			if(ini_get('zlib.output_compression')) {
+				ini_set('zlib.output_compression', 'Off');
+			}
 
-		    header("Pragma: public");
-		    header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-		    header("Cache-Control: private",false);
-		    header("Content-Transfer-Encoding: binary");
-		    if(isset($mimeType)) {
-		        header("Content-Type: " . $mimeType);
-		    }
+			header("Pragma: public");
+			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+			header("Cache-Control: private",false);
+			header("Content-Transfer-Encoding: binary");
+			if(isset($mimeType)) {
+				header("Content-Type: " . $mimeType);
+			}
 
-		    header("Content-Disposition: attachment; filename=" . $file_name);
+			header("Content-Disposition: attachment; filename=" . $file_name);
 
-		    if(isset($mimeType) && strstr($mimeType, "text/")) {
-		        $fp = fopen($fullFileName, "r");
-		    }
-		    else {
-		        $fp = fopen($fullFileName, "rb");
-		    }
-		    fpassthru($fp);
-		    exit();
+			if(isset($mimeType) && strstr($mimeType, "text/")) {
+				$fp = fopen($fullFileName, "r");
+			}
+			else {
+				$fp = fopen($fullFileName, "rb");
+			}
+			fpassthru($fp);
+			exit();
 		}
 		fclose($handle);
 	}

@@ -1,22 +1,22 @@
 <?php
 /**
-* Admin page to manage audios
-*
-* List, add, edit and delete audio objects
-*
-* @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package		profile
-* @version		$Id$
-*/
+ * Admin page to manage audios
+ *
+ * List, add, edit and delete audio objects
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package		profile
+ * @version		$Id$
+ */
 
 /**
  * Edit a Audio
  *
  * @param int $audio_id Audioid to be edited
-*/
+ */
 function editaudio($audio_id = 0)
 {
 	global $profile_audio_handler, $icmsModule, $icmsAdminTpl;
@@ -58,45 +58,45 @@ $clean_audio_id = isset($_GET['audio_id']) ? (int) $_GET['audio_id'] : 0 ;
  * first argument is found in the array listed in the second argument. Strings
  * are case sensitive and the 3rd argument determines whether type matching is
  * required
-*/
+ */
 if (in_array($clean_op,$valid_op,true)){
-  switch ($clean_op) {
-  	case "mod":
-  	case "changedField":
+	switch ($clean_op) {
+		case "mod":
+		case "changedField":
 
-  		icms_cp_header();
+			icms_cp_header();
 
-  		editaudio($clean_audio_id);
-  		break;
-  	case "del":
-  	    include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-          $controller = new IcmsPersistableController($profile_audio_handler);
-  		$controller->handleObjectDeletion();
+			editaudio($clean_audio_id);
+			break;
+		case "del":
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+			$controller = new IcmsPersistableController($profile_audio_handler);
+			$controller->handleObjectDeletion();
 
-  		break;
-  	default:
+			break;
+		default:
 
-  		icms_cp_header();
+			icms_cp_header();
 
-  		$icmsModule->displayAdminMenu(10, _AM_PROFILE_AUDIOS);
+			$icmsModule->displayAdminMenu(10, _AM_PROFILE_AUDIOS);
 
-  		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-  		$objectTable = new IcmsPersistableTable($profile_audio_handler);
-  		$objectTable->addColumn(new IcmsPersistableColumn('audio_id'));
-  		$objectTable->addColumn(new IcmsPersistableColumn('uid_owner', false, false, 'getAudioSender'));
-		$objectTable->addColumn(new IcmsPersistableColumn('author'));
-  		$objectTable->addColumn(new IcmsPersistableColumn('title', _GLOBAL_LEFT, false, 'getAudioTitle'));
-		$objectTable->addColumn(new IcmsPersistableColumn('url', 'center', 330, 'getAudioToDisplay', false, false, false));
+			include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
+			$objectTable = new IcmsPersistableTable($profile_audio_handler);
+			$objectTable->addColumn(new IcmsPersistableColumn('audio_id'));
+			$objectTable->addColumn(new IcmsPersistableColumn('uid_owner', false, false, 'getAudioSender'));
+			$objectTable->addColumn(new IcmsPersistableColumn('author'));
+			$objectTable->addColumn(new IcmsPersistableColumn('title', _GLOBAL_LEFT, false, 'getAudioTitle'));
+			$objectTable->addColumn(new IcmsPersistableColumn('url', 'center', 330, 'getAudioToDisplay', false, false, false));
 
-		$objectTable->addQuickSearch(array('title', 'author'));
-		$objectTable->setDefaultSort('audio_id');
-		$objectTable->setDefaultOrder('DESC');
+			$objectTable->addQuickSearch(array('title', 'author'));
+			$objectTable->setDefaultSort('audio_id');
+			$objectTable->setDefaultOrder('DESC');
 
-  		$icmsAdminTpl->assign('profile_audio_table', $objectTable->fetch());
-  		$icmsAdminTpl->display('db:profile_admin_audio.html');
-  		break;
-  }
-  icms_cp_footer();
+			$icmsAdminTpl->assign('profile_audio_table', $objectTable->fetch());
+			$icmsAdminTpl->display('db:profile_admin_audio.html');
+			break;
+	}
+	icms_cp_footer();
 }
 /**
  * If you want to have a specific action taken because the user input was invalid,

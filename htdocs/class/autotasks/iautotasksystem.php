@@ -9,33 +9,32 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-
 interface iAutoTaskSystem {
 
-    /**
-     * check if can run
-     * @return bool
-     */
+	/**
+	 * check if can run
+	 * @return bool
+	 */
 	public function canRun();
 
-   /**
-    * Set Checking Interval (if not enabled enables automated tasks system
-	* @param  int	$interval	interval of checking for new tasks
-	* @return bool				returns true if start was succesfull
-	*/
-    public function start(int $interval);
+	/**
+	 * Set Checking Interval (if not enabled enables automated tasks system
+	 * @param  int	$interval	interval of checking for new tasks
+	 * @return bool				returns true if start was succesfull
+	 */
+	public function start(int $interval);
 
-   /**
-    * Stops automated tasks system
-	* @return bool returns true if was succesfull
-    */
-    public function stop();
+	/**
+	 * Stops automated tasks system
+	 * @return bool returns true if was succesfull
+	 */
+	public function stop();
 
-   /**
-    * checks if core is enabled
-	*
-    * @return bool
-	*/
+	/**
+	 * checks if core is enabled
+	 *
+	 * @return bool
+	 */
 	public function isEnabled();
 
 	/**

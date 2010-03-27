@@ -1,30 +1,30 @@
 <?php
 /**
-* Installer mainfile creation page
-*
-* See the enclosed file license.txt for licensing information.
-* If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
-*
-* @copyright    The XOOPS project http://www.xoops.org/
-* @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
-* @package		installer
-* @since        Xoops 2.3.0
-* @author		Haruki Setoyama  <haruki@planewave.org>
-* @author 		Kazumi Ono <webmaster@myweb.ne.jp>
-* @author		Skalpa Keo <skalpa@xoops.org>
-* @version		$Id$
-*/
+ * Installer mainfile creation page
+ *
+ * See the enclosed file license.txt for licensing information.
+ * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
+ *
+ * @copyright    The XOOPS project http://www.xoops.org/
+ * @license      http://www.fsf.org/copyleft/gpl.html GNU General Public License (GPL)
+ * @package		installer
+ * @since        Xoops 2.3.0
+ * @author		Haruki Setoyama  <haruki@planewave.org>
+ * @author 		Kazumi Ono <webmaster@myweb.ne.jp>
+ * @author		Skalpa Keo <skalpa@xoops.org>
+ * @version		$Id$
+ */
 /**
  *
  */
 require_once 'common.inc.php';
 if ( !defined( 'XOOPS_INSTALL' ) )	exit();
 
-	$wizard->setPage( 'configsave' );
-	$pageHasForm = true;
-	$pageHasHelp = false;
+$wizard->setPage( 'configsave' );
+$pageHasForm = true;
+$pageHasHelp = false;
 
-	$vars =& $_SESSION['settings'];
+$vars =& $_SESSION['settings'];
 
 if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$error = '';
@@ -38,9 +38,9 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		clearstatcache();
 		if ( ! $file = fopen( $vars['TRUST_PATH'] . '/' . $sdata_file_name, "r" ) ) {
 			$error = ERR_READ_SDATA;
-        } else {
-        	$content = fread( $file, filesize( $vars['TRUST_PATH'] . '/' . $sdata_file_name ) );
-        	fclose($file);
+		} else {
+			$content = fread( $file, filesize( $vars['TRUST_PATH'] . '/' . $sdata_file_name ) );
+			fclose($file);
 
 			$sdata_rewrite = array();
 			$sdata_rewrite['DB_HOST'] = $vars['DB_HOST'];
@@ -49,7 +49,6 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			$sdata_rewrite['DB_NAME'] = $vars['DB_NAME'];
 			$sdata_rewrite['DB_PREFIX'] = $vars['DB_PREFIX'];
 			$sdata_rewrite['DB_SALT'] = $vars['DB_SALT'];
-
 
 			foreach( $sdata_rewrite as $key => $val ) {
 				if( preg_match( "/(define\()([\"'])(SDATA_$key)\\2,\s*([\"'])(.*?)\\4\s*\)/", $content ) ) {
@@ -61,15 +60,15 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 					//$this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<b>$val</b>")."<br />\n";
 				}
 			}
-	        if ( !$file = fopen( $vars['TRUST_PATH'] . '/' . $sdata_file_name, "w" ) ) {
-	        	$error = ERR_WRITE_SDATA;
-	        } else {
-		        if ( fwrite( $file, $content ) == -1 ) {
+			if ( !$file = fopen( $vars['TRUST_PATH'] . '/' . $sdata_file_name, "w" ) ) {
+				$error = ERR_WRITE_SDATA;
+			} else {
+				if ( fwrite( $file, $content ) == -1 ) {
 					$error = ERR_WRITE_SDATA;
-	        	}
+				}
 				fclose($file);
-	        }
-        }
+			}
+		}
 	}
 	if (!$error) {
 		// then we were able to save the db info into the trust path
@@ -93,13 +92,13 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		$rewrite = array_merge( $rewrite, $vars );
 		if ( ! $file = fopen( $vars['ROOT_PATH'] . '/mainfile.php', "r" ) ) {
 			$error = ERR_READ_MAINFILE;
-        } else {
-        	$content = fread( $file, filesize( $vars['ROOT_PATH'] . '/mainfile.php' ) );
-        	fclose($file);
+		} else {
+			$content = fread( $file, filesize( $vars['ROOT_PATH'] . '/mainfile.php' ) );
+			fclose($file);
 
 			if ($dbinfo_in_trust_path) {
 				// add the line in mainfile to include the sdata file
-				$include_line = "include_once(XOOPS_TRUST_PATH . '/" . $sdata_file_name . "');";
+				$include_line = "include_once XOOPS_TRUST_PATH . '/" . $sdata_file_name . "' ;";
 				$content = str_replace('// sdata#--#', $include_line, $content);
 			} else {
 				$content = str_replace('// sdata#--#', '', $content);
@@ -124,32 +123,32 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 					//$this->report .= _NGIMG.sprintf( ERR_WRITING_CONSTANT, "<b>$val</b>")."<br />\n";
 				}
 			}
-	        if ( !$file = fopen( $vars['ROOT_PATH'] . '/mainfile.php', "w" ) ) {
-	        	$error = ERR_WRITE_MAINFILE;
-	        } else {
-		        if ( fwrite( $file, $content ) == -1 ) {
+			if ( !$file = fopen( $vars['ROOT_PATH'] . '/mainfile.php', "w" ) ) {
+				$error = ERR_WRITE_MAINFILE;
+			} else {
+				if ( fwrite( $file, $content ) == -1 ) {
 					$error = ERR_WRITE_MAINFILE;
-	        	}
+				}
 				fclose($file);
-	        }
-        }
+			}
+		}
 	}
 
 	if(ini_get('safe_mode') == 0 || strtolower(ini_get('safe_mode')) == 'off')
 	{
 		// creating the required folders in trust_path
 		if (!imcms_install_mkdir($vars['TRUST_PATH'] . '/cache/htmlpurifier')) {
-		/**
-		* @todo trap error
-		*/
+			/**
+			 * @todo trap error
+			 */
 		}
 		if (is_dir($vars['TRUST_PATH'] . '/cache/htmlpurifier'))
 		{
 			if (!imcms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/HTML') && !imcms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/CSS') && !imcms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/URI') && !imcms_install_mkdir($vars['TRUST_PATH'].'/cache/htmlpurifier/Test'))
 			{
 				/**
-				* @todo trap error
-				*/
+				 * @todo trap error
+				 */
 			}
 		}
 	}
@@ -159,21 +158,21 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		exit();
 	}
 	$content = '<p class="errorMsg">' . $error . '</p>';
-    include 'install_tpl.php';
-    exit();
+	include 'install_tpl.php';
+	exit();
 }
 
-    ob_start();
+ob_start();
 ?>
-	<p class="x2-note"><?php echo READY_SAVE_MAINFILE; ?></p>
-	<dl style="height:200px;overflow:auto;border:1px solid #D0D0D0">
-	<?php foreach ( $vars as $k => $v ) {
-		echo "<dt>XOOPS_$k</dt><dd>$v</dd>";
-	} ?>
-	</dl>
+<p class="x2-note"><?php echo READY_SAVE_MAINFILE; ?></p>
+<dl style="height: 200px; overflow: auto; border: 1px solid #D0D0D0">
+<?php foreach ( $vars as $k => $v ) {
+	echo "<dt>XOOPS_$k</dt><dd>$v</dd>";
+} ?>
+</dl>
 
 <?php
-	$content = ob_get_contents();
-	ob_end_clean();
-    include 'install_tpl.php';
+$content = ob_get_contents();
+ob_end_clean();
+include 'install_tpl.php';
 ?>

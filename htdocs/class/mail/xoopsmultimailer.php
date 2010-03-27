@@ -1,20 +1,20 @@
 <?php
 /**
-* Functions to extend PHPMailer to email the users
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	MultiMailer
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Functions to extend PHPMailer to email the users
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	MultiMailer
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) {
-    die("ImpressCMS root path not defined");
+	die("ImpressCMS root path not defined");
 }
 /**
  * @package		class
@@ -31,7 +31,7 @@ if (!defined("ICMS_ROOT_PATH")) {
 /**
  * load the base class
  */
-require_once(ICMS_LIBRARIES_PATH.'/phpmailer/class.phpmailer.php');
+require_once ICMS_LIBRARIES_PATH.'/phpmailer/class.phpmailer.php' ;
 
 /**
  * Mailer Class.
@@ -104,11 +104,11 @@ class XoopsMultiMailer extends PHPMailer {
 	var $Host		= "";
 
 	/**
-   * Sets connection prefix.
-   * Options are "", "ssl" or "tls"
-   * @var string
-   */
-  var $SMTPSecure = "";
+	 * Sets connection prefix.
+	 * Options are "", "ssl" or "tls"
+	 * @var string
+	 */
+	var $SMTPSecure = "";
 
 	/**
 	 * Does your SMTP host require SMTPAuth authentication?
@@ -154,14 +154,14 @@ class XoopsMultiMailer extends PHPMailer {
 		global $icmsConfig, $icmsConfigMailer;
 		$this->From = $icmsConfigMailer['from'];
 		if ($this->From == '') {
-		    $this->From = $icmsConfig['adminmail'];
+			$this->From = $icmsConfig['adminmail'];
 		}
 		$this->Sender = $this->From;
 
 		if ($icmsConfigMailer["mailmethod"] == "smtpauth") {
-		    	$this->Mailer = "smtp";
+			$this->Mailer = "smtp";
 			$this->SMTPAuth = true;
-            $this->SMTPSecure = $icmsConfigMailer['smtpsecure'];
+			$this->SMTPSecure = $icmsConfigMailer['smtpsecure'];
 			// TODO: change value type of xoopsConfig "smtphost" from array to text
 			$this->Host = implode(';',$icmsConfigMailer['smtphost']);
 			$this->Username = $icmsConfigMailer['smtpuser'];
@@ -178,23 +178,20 @@ class XoopsMultiMailer extends PHPMailer {
 		$this->PluginDir = ICMS_LIBRARIES_PATH."/phpmailer/";
 	}
 
-
-
 	/**
-   * Formats an address correctly. This overrides the default addr_format method which does not seem to encode $FromName correctly
-   * @access private
-   * @param string    $addr the email address to be formatted
-   * @return string   the formatted string (address)
-   */
-  function AddrFormat($addr) {
-    if(empty($addr[1]))
-        $formatted = $addr[0];
-    else
-        $formatted = sprintf('%s <%s>', '=?'.$this->CharSet.'?B?'.base64_encode($addr[1]).'?=', $addr[0]);
+	 * Formats an address correctly. This overrides the default addr_format method which does not seem to encode $FromName correctly
+	 * @access private
+	 * @param string    $addr the email address to be formatted
+	 * @return string   the formatted string (address)
+	 */
+	function AddrFormat($addr) {
+		if(empty($addr[1]))
+		$formatted = $addr[0];
+		else
+		$formatted = sprintf('%s <%s>', '=?'.$this->CharSet.'?B?'.base64_encode($addr[1]).'?=', $addr[0]);
 
-    return $formatted;
-  }
+		return $formatted;
+	}
 }
-
 
 ?>

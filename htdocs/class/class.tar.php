@@ -1,92 +1,92 @@
 <?php
 // $Id$
 /*
-	package::i.tools
+ package::i.tools
 
-	php-downloader	v1.0	-	www.ipunkt.biz
+ php-downloader	v1.0	-	www.ipunkt.biz
 
-	(c)	2002 - www.ipunkt.biz (rok)
-*/
+ (c)	2002 - www.ipunkt.biz (rok)
+ */
 
 /*
-=======================================================================
-Name:
-	tar Class
+ =======================================================================
+ Name:
+ tar Class
 
-Author:
-	Josh Barger <joshb@npt.com>
+ Author:
+ Josh Barger <joshb@npt.com>
 
-Description:
-	This class reads and writes Tape-Archive (TAR) Files and Gzip
-	compressed TAR files, which are mainly used on UNIX systems.
-	This class works on both windows AND unix systems, and does
-	NOT rely on external applications!! Woohoo!
+ Description:
+ This class reads and writes Tape-Archive (TAR) Files and Gzip
+ compressed TAR files, which are mainly used on UNIX systems.
+ This class works on both windows AND unix systems, and does
+ NOT rely on external applications!! Woohoo!
 
-Usage:
-	Copyright (C) 2002  Josh Barger
+ Usage:
+ Copyright (C) 2002  Josh Barger
 
-	This library is free software; you can redistribute it and/or
-	modify it under the terms of the GNU Lesser General Public
-	License as published by the Free Software Foundation; either
-	version 2.1 of the License, or (at your option) any later version.
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public
+ License as published by the Free Software Foundation; either
+ version 2.1 of the License, or (at your option) any later version.
 
-	This library is distributed in the hope that it will be useful,
-	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-	Lesser General Public License for more details at:
-		http://www.gnu.org/copyleft/lesser.html
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Lesser General Public License for more details at:
+ http://www.gnu.org/copyleft/lesser.html
 
-	If you use this script in your application/website, please
-	send me an e-mail letting me know about it :)
+ If you use this script in your application/website, please
+ send me an e-mail letting me know about it :)
 
-Bugs:
-	Please report any bugs you might find to my e-mail address
-	at joshb@npt.com.  If you have already created a fix/patch
-	for the bug, please do send it to me so I can incorporate it into my release.
+ Bugs:
+ Please report any bugs you might find to my e-mail address
+ at joshb@npt.com.  If you have already created a fix/patch
+ for the bug, please do send it to me so I can incorporate it into my release.
 
-Version History:
-	1.0	04/10/2002	- InitialRelease
+ Version History:
+ 1.0	04/10/2002	- InitialRelease
 
-	2.0	04/11/2002	- Merged both tarReader and tarWriter
-				  classes into one
-				- Added support for gzipped tar files
-				  Remember to name for .tar.gz or .tgz
-				  if you use gzip compression!
-				  :: THIS REQUIRES ZLIB EXTENSION ::
-				- Added additional comments to
-				  functions to help users
-				- Added ability to remove files and
-				  directories from archive
-	2.1	04/12/2002	- Fixed serious bug in generating tar
-				- Created another example file
-				- Added check to make sure ZLIB is
-				  installed before running GZIP
-				  compression on TAR
-	2.2	05/07/2002	- Added automatic detection of Gzipped
-				  tar files (Thanks go to Jidgen Falch
-				  for the idea)
-				- Changed "private" functions to have
-				  special function names beginning with
-				  two underscores
-=======================================================================
-XOOPS changes onokazu <webmaster@xoops.org>
+ 2.0	04/11/2002	- Merged both tarReader and tarWriter
+ classes into one
+ - Added support for gzipped tar files
+ Remember to name for .tar.gz or .tgz
+ if you use gzip compression!
+ :: THIS REQUIRES ZLIB EXTENSION ::
+ - Added additional comments to
+ functions to help users
+ - Added ability to remove files and
+ directories from archive
+ 2.1	04/12/2002	- Fixed serious bug in generating tar
+ - Created another example file
+ - Added check to make sure ZLIB is
+ installed before running GZIP
+ compression on TAR
+ 2.2	05/07/2002	- Added automatic detection of Gzipped
+ tar files (Thanks go to Jidgen Falch
+ for the idea)
+ - Changed "private" functions to have
+ special function names beginning with
+ two underscores
+ =======================================================================
+ XOOPS changes onokazu <webmaster@xoops.org>
 
-	12/25/2002 - Added flag to addFile() function for binary files
+ 12/25/2002 - Added flag to addFile() function for binary files
 
-=======================================================================
-*/
+ =======================================================================
+ */
 
 /**
  * tar Class
- * 
+ *
  * This class reads and writes Tape-Archive (TAR) Files and Gzip
  * compressed TAR files, which are mainly used on UNIX systems.
  * This class works on both windows AND unix systems, and does
  * NOT rely on external applications!! Woohoo!
- * 
+ *
  * @author	Josh Barger <joshb@npt.com>
  * @copyright	Copyright (C) 2002  Josh Barger
- * 
+ *
  * @package     kernel
  * @subpackage  core
  */
@@ -98,7 +98,7 @@ class tar
 	var $filename;
 	var $isGzipped;
 	var $tar_file;
-    /**#@-*/
+	/**#@-*/
 
 	/**#@+
 	 * Processed Archive Information
@@ -107,8 +107,7 @@ class tar
 	var $directories;
 	var $numFiles;
 	var $numDirectories;
-    /**#@-*/
-
+	/**#@-*/
 
 	/**
 	 * Class Constructor -- Does nothing...
@@ -120,33 +119,32 @@ class tar
 
 	/**
 	 * Computes the unsigned Checksum of a file's header
-   * to try to ensure valid file
-   * 
-   * @param	string  $bytestring
-   * 
-   * @access	private
+	 * to try to ensure valid file
+	 *
+	 * @param	string  $bytestring
+	 *
+	 * @access	private
 	 */
 	function __computeUnsignedChecksum($bytestring)
 	{
 		$unsigned_chksum = '';
 		for($i=0; $i<512; $i++)
-			$unsigned_chksum += ord($bytestring[$i]);
+		$unsigned_chksum += ord($bytestring[$i]);
 		for($i=0; $i<8; $i++)
-			$unsigned_chksum -= ord($bytestring[148 + $i]);
+		$unsigned_chksum -= ord($bytestring[148 + $i]);
 		$unsigned_chksum += ord(" ") * 8;
 
 		return $unsigned_chksum;
 	}
 
-
 	/**
 	 * Converts a NULL padded string to a non-NULL padded string
-	 * 
+	 *
 	 * @param   string  $string
-   * 
-	 * @return  string 
-   * 
-   * @access	private
+	 *
+	 * @return  string
+	 *
+	 * @access	private
 	 **/
 	function __parseNullPaddedString($string)
 	{
@@ -156,10 +154,10 @@ class tar
 
 	/**
 	 * This function parses the current TAR file
-	 * 
+	 *
 	 * @return  bool    always TRUE
-   * 
-   * @access	private
+	 *
+	 * @access	private
 	 **/
 	function __parseTar()
 	{
@@ -170,7 +168,7 @@ class tar
 		while ( $main_offset < $tar_length ) {
 			// If we read a block of 512 nulls, we are at the end of the archive
 			if(substr($this->tar_file,$main_offset,512) == str_repeat(chr(0),512))
-				break;
+			break;
 
 			// Parse file name
 			$file_name		= $this->__parseNullPaddedString(substr($this->tar_file,$main_offset,100));
@@ -201,7 +199,7 @@ class tar
 
 			// Make sure our file is valid
 			if($this->__computeUnsignedChecksum(substr($this->tar_file,$main_offset,512)) != $file_chksum)
-				return false;
+			return false;
 
 			// Parse File Contents
 			$file_contents		= substr($this->tar_file,$main_offset + 512,$file_size);
@@ -215,7 +213,7 @@ class tar
 				$activeFile["devminor"]		= substr($this->tar_file,$main_offset + 337,8);
 				$activeFile["prefix"]		= substr($this->tar_file,$main_offset + 345,155);
 				$activeFile["endheader"]	= substr($this->tar_file,$main_offset + 500,12);
-			*/
+				*/
 
 			if ( $file_size > 0 ) {
 				// Increment number of files
@@ -262,17 +260,17 @@ class tar
 
 	/**
 	 * Read a non gzipped tar file in for processing.
-	 * 
+	 *
 	 * @param   string  $filename   full filename
 	 * @return  bool    always TRUE
-   * 
-   * @access	private
+	 *
+	 * @access	private
 	 **/
 	function __readTar($filename='')
 	{
 		// Set the filename to load
 		if(!$filename)
-			$filename = $this->filename;
+		$filename = $this->filename;
 
 		// Read in the TAR file
 		$fp = fopen($filename,"rb");
@@ -281,7 +279,7 @@ class tar
 
 		if($this->tar_file[0] == chr(31) && $this->tar_file[1] == chr(139) && $this->tar_file[2] == chr(8)) {
 			if(!function_exists("gzinflate"))
-				return false;
+			return false;
 
 			$this->isGzipped = true;
 
@@ -296,10 +294,10 @@ class tar
 
 	/**
 	 * Generates a TAR file from the processed data
-	 * 
+	 *
 	 * @return  bool    always TRUE
-   * 
-   * @access	private
+	 *
+	 * @access	private
 	 **/
 	function __generateTAR()
 	{
@@ -392,12 +390,11 @@ class tar
 		return true;
 	}
 
-
 	/**
 	 * Open a TAR file
-	 * 
+	 *
 	 * @param   string  $filename
-	 * @return  bool 
+	 * @return  bool
 	 **/
 	function openTAR($filename)
 	{
@@ -412,7 +409,7 @@ class tar
 
 		// If the tar file doesn't exist...
 		if(!file_exists($filename))
-			return false;
+		return false;
 
 		$this->filename = $filename;
 
@@ -424,7 +421,7 @@ class tar
 
 	/**
 	 * Appends a tar file to the end of the currently opened tar file.
-	 * 
+	 *
 	 * @param   string  $filename
 	 * @return  bool
 	 **/
@@ -432,7 +429,7 @@ class tar
 	{
 		// If the tar file doesn't exist...
 		if(!file_exists($filename))
-			return false;
+		return false;
 
 		$this->__readTar($filename);
 
@@ -441,7 +438,7 @@ class tar
 
 	/**
 	 * Retrieves information about a file in the current tar archive
-	 * 
+	 *
 	 * @param   string  $filename
 	 * @return  string  FALSE on fail
 	 **/
@@ -450,7 +447,7 @@ class tar
 		if ( $this->numFiles > 0 ) {
 			foreach($this->files as $key => $information) {
 				if($information["name"] == $filename)
-					return $information;
+				return $information;
 			}
 		}
 
@@ -459,7 +456,7 @@ class tar
 
 	/**
 	 * Retrieves information about a directory in the current tar archive
-	 * 
+	 *
 	 * @param   string  $dirname
 	 * @return  string  FALSE on fail
 	 **/
@@ -468,7 +465,7 @@ class tar
 		if($this->numDirectories > 0) {
 			foreach($this->directories as $key => $information) {
 				if($information["name"] == $dirname)
-					return $information;
+				return $information;
 			}
 		}
 
@@ -477,7 +474,7 @@ class tar
 
 	/**
 	 * Check if this tar archive contains a specific file
-	 * 
+	 *
 	 * @param   string  $filename
 	 * @return  bool
 	 **/
@@ -486,7 +483,7 @@ class tar
 		if ( $this->numFiles > 0 ) {
 			foreach($this->files as $key => $information) {
 				if($information["name"] == $filename)
-					return true;
+				return true;
 			}
 		}
 		return false;
@@ -494,7 +491,7 @@ class tar
 
 	/**
 	 * Check if this tar archive contains a specific directory
-	 * 
+	 *
 	 * @param   string  $dirname
 	 * @return  bool
 	 **/
@@ -512,7 +509,7 @@ class tar
 
 	/**
 	 * Add a directory to this tar archive
-	 * 
+	 *
 	 * @param   string  $dirname
 	 * @return  bool
 	 **/
@@ -540,7 +537,7 @@ class tar
 
 	/**
 	 * Add a file to the tar archive
-	 * 
+	 *
 	 * @param   string  $filename
 	 * @param   boolean $binary     Binary file?
 	 * @return  bool
@@ -588,7 +585,7 @@ class tar
 
 	/**
 	 * Remove a file from the tar archive
-	 * 
+	 *
 	 * @param   string  $filename
 	 * @return  bool
 	 **/
@@ -608,7 +605,7 @@ class tar
 
 	/**
 	 * Remove a directory from the tar archive
-	 * 
+	 *
 	 * @param   string  $dirname
 	 * @return  bool
 	 **/
@@ -628,8 +625,8 @@ class tar
 
 	/**
 	 * Write the currently loaded tar archive to disk
-	 * 
-	 * @return  bool 
+	 *
+	 * @return  bool
 	 **/
 	function saveTar()
 	{
@@ -645,7 +642,7 @@ class tar
 
 	/**
 	 * Saves tar archive to a different file than the current file
-	 * 
+	 *
 	 * @param   string  $filename
 	 * @param   bool    $useGzip    Use GZ compression?
 	 * @return  bool
@@ -681,7 +678,7 @@ class tar
 
 	/**
 	 * Sends tar archive to stdout
-	 * 
+	 *
 	 * @param   string  $filename
 	 * @param   bool    $useGzip    Use GZ compression?
 	 * @return  string

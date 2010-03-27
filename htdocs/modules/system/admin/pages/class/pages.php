@@ -13,7 +13,7 @@
 * @version	$Id$
 */
 
-require_once(ICMS_ROOT_PATH."/kernel/page.php");
+require_once ICMS_ROOT_PATH."/kernel/page.php" ;
 
 class SystemPages extends IcmsPage {
 

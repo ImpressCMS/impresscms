@@ -1,14 +1,14 @@
 <?php
 /**
-* Form control creating an image upload element for an object derived from IcmsPersistableObject
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		  1.1
-* @author		  marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * Form control creating an image upload element for an object derived from IcmsPersistableObject
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsPersistableObject
+ * @since		  1.1
+ * @author		  marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
@@ -18,17 +18,17 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 
 /**
-* IcmsForm base class
-*
-* Base class representing a single form for a specific IcmsPersistableObject
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		  1.1
-* @author		  marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * IcmsForm base class
+ *
+ * Base class representing a single form for a specific IcmsPersistableObject
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsPersistableObject
+ * @since		  1.1
+ * @author		  marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 class IcmsForm extends XoopsThemeForm {
 
 	var $targetObject = null;
@@ -40,11 +40,9 @@ class IcmsForm extends XoopsThemeForm {
 	var $_form_caption=false;
 	var $_submit_button_caption=false;
 
-
-
 	/**
 	 * Constructor
-     * Sets all the values / variables for the IcmsForm class
+	 * Sets all the values / variables for the IcmsForm class
 	 * @param	string    &$target                  reference to targetobject (@todo, which object will be passed here?)
 	 * @param	string    $form_name                the form name
 	 * @param	string    $form_caption             the form caption
@@ -86,11 +84,11 @@ class IcmsForm extends XoopsThemeForm {
 	 * @todo to be implented later...
 	 */
 	/*
-	function addCaptcha() {
-		include_once(SMARTOBJECT_ROOT_PATH . 'include/captcha/formcaptcha.php');
+	 function addCaptcha() {
+		include_once SMARTOBJECT_ROOT_PATH . 'include/captcha/formcaptcha.php' ;
 		$this->addElement(new XoopsFormCaptcha(), true);
-	}
-	*/
+		}
+		*/
 
 	/**
 	 * Sets variables for adding custom button
@@ -111,10 +109,10 @@ class IcmsForm extends XoopsThemeForm {
 	/**
 	 * Add an element to the form
 	 *
-   * @param	object  &$formElement   reference to a {@link XoopsFormElement}
-   * @param	string  $key            encrypted key string for the form
-   * @param	string  $var            some form variables?
-   * @param	bool    $required       is this a "required" element?
+	 * @param	object  &$formElement   reference to a {@link XoopsFormElement}
+	 * @param	string  $key            encrypted key string for the form
+	 * @param	string  $var            some form variables?
+	 * @param	bool    $required       is this a "required" element?
 	 */
 	function addElement(&$formElement, $key=false, $var=false, $required='notset'){
 		if ($key) {
@@ -148,14 +146,13 @@ class IcmsForm extends XoopsThemeForm {
 		unset($formElement);
 	}
 
-
 	/**
 	 * Adds an element to the form
 	 *
-   * gets all variables from &targetobject (@todo, which object will be passed here?)
+	 * gets all variables from &targetobject (@todo, which object will be passed here?)
 	 * that was set during the construction of this object (in the constructor)
-   * loops through all variables and determines what data type the key has
-   * adds an element for each key based on the datatype
+	 * loops through all variables and determines what data type the key has
+	 * adds an element for each key based on the datatype
 	 */
 	function createElements() {
 		$controls = $this->targetObject->controls;
@@ -179,9 +176,9 @@ class IcmsForm extends XoopsThemeForm {
 				}
 				if (isset($controls[$key])) {
 					/* If the control has name, it's because it's an object already present in the script
-					* for example, "user"
-					* If the field does not have a name, than we will use a "select" (ie XoopsFormSelect)
-					*/
+					 * for example, "user"
+					 * If the field does not have a name, than we will use a "select" (ie XoopsFormSelect)
+					 */
 					if (!isset($controls[$key]['name']) || !$controls[$key]['name']) {
 						$controls[$key]['name'] = 'select';
 					}
@@ -207,21 +204,21 @@ class IcmsForm extends XoopsThemeForm {
 							$this->targetObject->setControl($key, array(
 																'name' => 'text',
 																'size' => '5'
-															));
-							$form_text = $this->getControl("text", $key);
-							$this->addElement($form_text, $key, $var);
-							unset($form_text);
-							break;
+																));
+																$form_text = $this->getControl("text", $key);
+																$this->addElement($form_text, $key, $var);
+																unset($form_text);
+																break;
 
 						case XOBJ_DTYPE_FLOAT:
 							$this->targetObject->setControl($key, array(
 																'name' => 'text',
 																'size' => '5'
-															));
-							$form_text = $this->getControl("text", $key);
-							$this->addElement($form_text, $key, $var);
-							unset($form_text);
-							break;
+																));
+																$form_text = $this->getControl("text", $key);
+																$this->addElement($form_text, $key, $var);
+																unset($form_text);
+																break;
 
 						case XOBJ_DTYPE_LTIME:
 							$form_date_time = $this->getControl('date_time', $key);
@@ -245,11 +242,11 @@ class IcmsForm extends XoopsThemeForm {
 							$this->targetObject->setControl($key, array(
 																'name' => 'text',
 																'size' => '15'
-															));
-							$form_currency = $this->getControl("text", $key);
-							$this->addElement($form_currency, $key, $var);
-							unset($form_currency);
-							break;
+																));
+																$form_currency = $this->getControl("text", $key);
+																$this->addElement($form_currency, $key, $var);
+																unset($form_currency);
+																break;
 
 						case XOBJ_DTYPE_URLLINK:
 							$form_urllink = $this->getControl("urllink", $key);
@@ -273,7 +270,7 @@ class IcmsForm extends XoopsThemeForm {
 							// TODO : To come...
 							break;
 						case XOBJ_DTYPE_SOURCE:
-							$form_source_editor = $this->getControl('source', $key);							
+							$form_source_editor = $this->getControl('source', $key);
 							$this->addElement($form_source_editor, $key, $var);
 							unset($form_source_editor);
 							break;
@@ -328,9 +325,9 @@ class IcmsForm extends XoopsThemeForm {
 	/**
 	 * Add an element to the form
 	 *
-   * @param	string  $form_name              name of the form
-   * @param	string  $form_caption           caption of the form
-   * @param	string  $submit_button_caption  caption of the button
+	 * @param	string  $form_name              name of the form
+	 * @param	string  $form_caption           caption of the form
+	 * @param	string  $submit_button_caption  caption of the button
 	 */
 	function createButtons($form_name, $form_caption, $submit_button_caption = false) {
 
@@ -373,17 +370,16 @@ class IcmsForm extends XoopsThemeForm {
 		$this->addElement($button_tray);
 	}
 
-
 	/**
 	 * Gets a control from the targetobject (@todo, which object will be passed here?)
 	 *
-   * @param	string  $controlName   name of the control element
-   * @param	string  $key           key of the form variables in the targetobject
+	 * @param	string  $controlName   name of the control element
+	 * @param	string  $key           key of the form variables in the targetobject
 	 */
 	function getControl($controlName, $key) {
 		switch ($controlName) {
 			case 'check':
-				include_once(ICMS_ROOT_PATH."/class/icmsform/elements/icmsformcheckelement.php");
+				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformcheckelement.php" ;
 				$control = $this->targetObject->getControl($key);
 				$controlObj = new IcmsFormCheckElement($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
 				$controlObj->addOptionArray($control['options']);
@@ -446,9 +442,9 @@ class IcmsForm extends XoopsThemeForm {
 				return new XoopsFormSelectGroup($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 5, true);
 				break;
 
-			/*case 'user':
-				return new XoopsFormSelectUser($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 1, false);
-				break;*/
+				/*case 'user':
+				 return new XoopsFormSelectUser($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 1, false);
+				 break;*/
 
 			case 'user_multi':
 				return new XoopsFormSelectUser($this->targetObject->vars[$key]['form_caption'], $key, false, $this->targetObject->getVar($key, 'e'), 5, true);
@@ -463,39 +459,38 @@ class IcmsForm extends XoopsThemeForm {
 				break;
 
 			case 'urllink':
-				include_once(ICMS_ROOT_PATH."/class/icmsform/elements/icmsformurllinkelement.php");
+				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformurllinkelement.php" ;
 				return new IcmsFormUrlLinkElement($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getUrlLinkObj($key));
 				break;
 
 			case 'richfile':
-				include_once(ICMS_ROOT_PATH."/class/icmsform/elements/icmsformrichfileelement.php");
+				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformrichfileelement.php" ;
 				return new IcmsFormRichFileElement($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getFileObj($key));
 				break;
 
 			case 'source':
 			case 'sourceeditor':
-				include_once(ICMS_ROOT_PATH."/class/icmsform/elements/icmsformsourceeditor.php");
+				include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformsourceeditor.php" ;
 				return new IcmsFormSourceEditor($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'));
-			break;
-
+				break;
 
 			default:
 				$classname = "IcmsForm".ucfirst($controlName)."Element";
 				if (!class_exists($classname)) {
 					if (file_exists(ICMS_ROOT_PATH."/class/icmsform/elements/".strtolower($classname).".php")) {
-						include_once(ICMS_ROOT_PATH."/class/icmsform/elements/".strtolower($classname).".php");
+						include_once ICMS_ROOT_PATH."/class/icmsform/elements/".strtolower($classname).".php" ;
 					} else {
 						// perhaps this is a control created by the module
 						$moduleName = $this->targetObject->handler->_moduleName;
 						if($module_dir != 'system')
-							$moduleFormElementsPath = $this->targetObject->handler->_modulePath.'/class/form/elements/';
+						$moduleFormElementsPath = $this->targetObject->handler->_modulePath.'/class/form/elements/';
 						else
-							$moduleFormElementsPath = $this->targetObject->handler->_modulePath.'/admin/{$name}/class/form/elements/';
+						$moduleFormElementsPath = $this->targetObject->handler->_modulePath.'/admin/{$name}/class/form/elements/';
 						$classname = ucfirst($moduleName) . ucfirst($controlName) . "Element";
 						$classFileName = strtolower($classname).".php";
 
 						if (file_exists($moduleFormElementsPath . $classFileName)) {
-							include_once($moduleFormElementsPath . $classFileName);
+							include_once $moduleFormElementsPath . $classFileName ;
 						} else {
 							trigger_error($classname." Not found", E_USER_WARNING);
 							return new XoopsFormLabel(); //Empty object
@@ -510,9 +505,9 @@ class IcmsForm extends XoopsThemeForm {
 	/**
 	 * Get information for the theme select box
 	 *
-   * @param	string  $key        key of the variables in the targetobject
-   * @param	string  $var        key of the variables in the targetobject
-   * @param	bool    $multiple   will you need a form element which shows multiple items
+	 * @param	string  $key        key of the variables in the targetobject
+	 * @param	string  $var        key of the variables in the targetobject
+	 * @param	bool    $multiple   will you need a form element which shows multiple items
 	 */
 	function getThemeSelect($key, $var, $multiple=false) {
 
@@ -535,12 +530,11 @@ class IcmsForm extends XoopsThemeForm {
 		return $theme_select;
 	}
 
-
 	/**
 	 * Gets reference to the object for each key in the variables of the targetobject
 	 *
-   * @param	string  $keyname  name of the key
-   * @param	mixed   $ret      Object if the returned object is set, false if no object called (if getname is not equal to the passed keyname)
+	 * @param	string  $keyname  name of the key
+	 * @param	mixed   $ret      Object if the returned object is set, false if no object called (if getname is not equal to the passed keyname)
 	 */
 	function &getElementById($keyname) {
 		foreach ($this->_elements as $eleObj) {
@@ -552,14 +546,9 @@ class IcmsForm extends XoopsThemeForm {
 		return isset($ret) ? $ret : false;
 	}
 
-
-
-
-
-
 	/**
 	 * create HTML to output the form as a theme-enabled table with validation.
-   *
+	 *
 	 * @return	string  $ret
 	 */
 	function render()
@@ -591,9 +580,6 @@ class IcmsForm extends XoopsThemeForm {
 		return $ret;
 	}
 
-
-
-
 	/**
 	 * assign to smarty form template instead of displaying directly
 	 *
@@ -605,7 +591,7 @@ class IcmsForm extends XoopsThemeForm {
 		$i = 0;
 		$elements = array();
 		foreach ( $this->getElements() as $ele ) {
-      $n = ($ele->getName() != "") ? $ele->getName() : $i;
+			$n = ($ele->getName() != "") ? $ele->getName() : $i;
 			$elements[$n]['name']	  = $ele->getName();
 			$elements[$n]['caption']  = $ele->getCaption();
 			$elements[$n]['body']	  = $ele->render();
@@ -616,7 +602,7 @@ class IcmsForm extends XoopsThemeForm {
 			$elements[$n]['hide'] = isset($this->targetObject->vars[$n]['hide']) ? $this->targetObject->vars[$n]['hide'] : false;
 
 			if ($ele->getDescription() != '') {
-			    $elements[$n]['description']  = $ele->getDescription();
+				$elements[$n]['description']  = $ele->getDescription();
 			}
 			$i++;
 		}
@@ -628,14 +614,13 @@ class IcmsForm extends XoopsThemeForm {
 		$tpl->assign($smartyName, array('title' => $this->getTitle(), 'name' => $this->getName(), 'action' => $this->getAction(),  'method' => $this->getMethod(), 'extra' => 'onsubmit="return xoopsFormValidate_'.$this->getName().'(this);"'.$this->getExtra(), 'javascript' => $js, 'elements' => $elements));
 	}
 
-
 	/**
 	 * create HTML to output the form as a theme-enabled table with validation.
-   *
+	 *
 	 * @param	  bool  $withtags   whether to add script HTML tag to the $js string
 	 * @return	bool  $js         the constructed javascript validation string
 	 */
-  function renderValidationJS( $withtags = true ) {
+	function renderValidationJS( $withtags = true ) {
 		$js = "";
 		if ( $withtags ) {
 			$js .= "\n<!-- Start Form Validation JavaScript //-->\n<script type='text/javascript'>\n<!--//\n";
@@ -696,8 +681,8 @@ class IcmsForm extends XoopsThemeForm {
 
 			}else{
 				$js .= "if ( myform.{$eltname}.value == \"\" ) "
-					. "{ window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }\n";
-				}
+				. "{ window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }\n";
+			}
 		}
 		// Now, handle custom validation code
 		$elements = $this->getElements( true );
@@ -717,14 +702,14 @@ class IcmsForm extends XoopsThemeForm {
 
 	function renderValidationJS2( $withtags = true ) {
 		global $xoTheme;
-        $rules = $titles = '';
+		$rules = $titles = '';
 		$elements = $this->getRequired();
 		foreach ( $elements as $elt ) {
 			if(!empty($rules))
-				$rules .= ",";
+			$rules .= ",";
 			$rules .= '\''.$elt->getName().'\': { required: true }';
 			if(!empty($titles))
-				$titles .= ",";
+			$titles .= ",";
 			$titles .= $elt->getName().': "'._REQUIRED.'"';
 		}
 		$xoTheme->addScript('', array('type' => 'text/javascript'), 'alert($());$().ready(function() { $("#'.$this->getName().'").validate({

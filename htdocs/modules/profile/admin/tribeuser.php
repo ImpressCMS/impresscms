@@ -1,16 +1,16 @@
 <?php
 /**
-* Admin page to manage tribeusers
-*
-* List and delete tribeuser objects
-*
-* @copyright	GNU General Public License (GPL)
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since	1.3
-* @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package	profile
-* @version	$Id$
-*/
+ * Admin page to manage tribeusers
+ *
+ * List and delete tribeuser objects
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.3
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package	profile
+ * @version	$Id$
+ */
 
 /**
  * Add/Edit a Tribeuser
@@ -28,7 +28,7 @@ function edittribeuser($tribeuser_id) {
 		$icmsModule->displayAdminMenu(9, _AM_PROFILE_TRIBEUSERS . " > " . _CO_ICMS_CREATINGNEW);
 		$sform = $tribeuserObj->getForm(_AM_PROFILE_TRIBEUSER_CREATE, 'addtribeuser');
 	}
-	
+
 	$sform->assign($icmsAdminTpl);
 
 	$icmsAdminTpl->display('db:profile_admin_tribeuser.html');
@@ -65,7 +65,7 @@ if (in_array($clean_op,$valid_op,true)) {
 				redirect_header(PROFILE_ADMIN_URL.'tribeuser.php', 3, _AM_PROFILE_TRIBEUSER_NOTTRIBESYET);
 				exit();
 			}
-	  		icms_cp_header();
+			icms_cp_header();
 			edittribeuser($clean_tribeuser_id);
 			break;
 
@@ -80,7 +80,7 @@ if (in_array($clean_op,$valid_op,true)) {
 			$controller = new IcmsPersistableController($profile_tribeuser_handler);
 			$controller->handleObjectDeletion();
 			break;
-		
+
 		default:
 			icms_cp_header();
 

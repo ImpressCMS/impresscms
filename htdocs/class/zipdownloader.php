@@ -1,17 +1,17 @@
 <?php
 /**
-* Handles all functions related to downloading zipfiles within ImpressCMS
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Handles all functions related to downloading zipfiles within ImpressCMS
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
@@ -34,7 +34,6 @@ class XoopsZipDownloader extends XoopsDownloader
 		$this->ext      = trim($ext);
 		$this->mimeType = trim($mimyType);
 	}
-
 
 	/**
 	 * Adds file to the zip file
@@ -68,7 +67,6 @@ class XoopsZipDownloader extends XoopsDownloader
 		$this->archiver->addFile($data, $filename, filemtime($filename));
 	}
 
-
 	/**
 	 * Adds file data to the zip file
 	 *
@@ -81,7 +79,6 @@ class XoopsZipDownloader extends XoopsDownloader
 		$this->archiver->addFile($data, $filename, $time);
 	}
 
-
 	/**
 	 * Adds binary file data to the zip file
 	 *
@@ -93,7 +90,6 @@ class XoopsZipDownloader extends XoopsDownloader
 	{
 		$this->addFileData($data, $filename, $time);
 	}
-
 
 	/**
 	 * downloads the file

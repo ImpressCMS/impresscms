@@ -1,22 +1,21 @@
 <?php
 /**
-* All functions for DHTML text area are here.
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		XoopsForms
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ * All functions for DHTML text area are here.
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		XoopsForms
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
-
 
 /**
  *
@@ -45,23 +44,23 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formtextarea.php";
  */
 class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	/**
-	* Extended HTML editor definition
-	*
-	* Set this property value if you want the editor to delegate rendering to an external class.
-	*
-	* Note: this functionality is experimental, but feedback is welcome.
-	* Note: the PM window doesn't use XoopsFormDhtmlTextArea, so no need to report it doesn't work here
-	*
-	* array( 'bundleId' ): For XOS components (2.3+)
-	* array( 'className', 'classPath' ):  To create an instance of "className", declared in the file ICMS_ROOT_PATH . $classPath
-	*
-	* Example:
-	* $htmlEditor = array( 'XoopsFormTinyeditorTextArea', '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php' );
-	*/
+	 * Extended HTML editor definition
+	 *
+	 * Set this property value if you want the editor to delegate rendering to an external class.
+	 *
+	 * Note: this functionality is experimental, but feedback is welcome.
+	 * Note: the PM window doesn't use XoopsFormDhtmlTextArea, so no need to report it doesn't work here
+	 *
+	 * array( 'bundleId' ): For XOS components (2.3+)
+	 * array( 'className', 'classPath' ):  To create an instance of "className", declared in the file ICMS_ROOT_PATH . $classPath
+	 *
+	 * Example:
+	 * $htmlEditor = array( 'XoopsFormTinyeditorTextArea', '/class/xoopseditor/tinyeditor/formtinyeditortextarea.php' );
+	 */
 	var $htmlEditor = array();
 
 	/**
-   * Hidden text
+	 * Hidden text
 	 * @var	string
 	 * @access	private
 	 */
@@ -70,12 +69,12 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	/**
 	 * Constructor
 	 *
-   * @param	string  $caption	Caption
-   * @param	string  $name	   "name" attribute
-   * @param	string  $value	  Initial text
-   * @param	int	 $rows	   Number of rows
-   * @param	int	 $cols	   Number of columns
-   * @param	string  $hiddentext Hidden Text
+	 * @param	string  $caption	Caption
+	 * @param	string  $name	   "name" attribute
+	 * @param	string  $value	  Initial text
+	 * @param	int	 $rows	   Number of rows
+	 * @param	int	 $cols	   Number of columns
+	 * @param	string  $hiddentext Hidden Text
 	 */
 	function XoopsFormDhtmlTextArea($caption, $name, $value, $rows=5, $cols=50, $hiddentext="xoopsHiddenText", $options = array() )
 	{
@@ -84,7 +83,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		global $icmsConfig, $icmsUser,$icmsModule;
 
 		$groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
- 		$moduleid = (is_object($icmsModule) && $name != 'com_text') ? $icmsModule->mid() : 1;
+		$moduleid = (is_object($icmsModule) && $name != 'com_text') ? $icmsModule->mid() : 1;
 
 		if (isset($options['editor']) && $options['editor'] != '' && $options['editor'] != $icmsConfig['editor_default']){
 			$editor_default = $options['editor'];
@@ -94,7 +93,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 
 		$gperm_handler =& xoops_gethandler('groupperm');
 		if( file_exists( ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)){
-			include(ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php");
+			include ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ;
 			$this->htmlEditor = array( $editorversion['class'], ICMS_EDITOR_PATH."/".$editorversion['dirname']."/".$editorversion['file'] );
 		}
 
@@ -116,12 +115,10 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		}
 	}
 
-
-
 	/**
 	 * Prepare HTML for output
 	 *
-   * @return	string  HTML
+	 * @return	string  HTML
 	 */
 	function render()
 	{
@@ -142,34 +139,34 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 				"<img onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/email.gif' alt='email' onclick='javascript:xoopsCodeEmail(\"".$ele_name."\", \"".htmlspecialchars(_ENTEREMAIL, ENT_QUOTES)."\");' />&nbsp;".
 				"<img onclick='javascript:xoopsCodeImg(\"".$ele_name."\", \"".htmlspecialchars(_ENTERIMGURL, ENT_QUOTES)."\", \"".htmlspecialchars(_ENTERIMGPOS, ENT_QUOTES)."\", \"".htmlspecialchars(_IMGPOSRORL, ENT_QUOTES)."\", \"".htmlspecialchars(_ERRORIMGPOS, ENT_QUOTES)."\");' onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/imgsrc.gif' alt='imgsrc' />&nbsp;".
 				"<img onmouseover='style.cursor=\"pointer\"' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/class/xoopsform/formimage_browse.php?target=".$ele_name."&type=iman\",\"imgmanager\",985,470);' src='".ICMS_URL."/images/image.gif' alt='image' />&nbsp;";
-				$jscript = '';
-			foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
-				$extension = $myts->icmsloadExtension($key);
-				$func = "render_{$key}";
-				if ( function_exists($func) ) {
-					@list($encode, $js) = $func($ele_name);
-					if (empty($encode)) continue;
-					$ret .= $encode;
-				}
+		$jscript = '';
+		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
+			$extension = $myts->icmsloadExtension($key);
+			$func = "render_{$key}";
+			if ( function_exists($func) ) {
+				@list($encode, $js) = $func($ele_name);
+				if (empty($encode)) continue;
+				$ret .= $encode;
 			}
-		  $ret .= "<img src='".ICMS_URL."/images/code.gif' onmouseover='style.cursor=\"pointer\"' alt='code' onclick='javascript:xoopsCodeCode(\"".$ele_name."\", \"".htmlspecialchars(_ENTERCODE, ENT_QUOTES)."\");' />&nbsp;".
+		}
+		$ret .= "<img src='".ICMS_URL."/images/code.gif' onmouseover='style.cursor=\"pointer\"' alt='code' onclick='javascript:xoopsCodeCode(\"".$ele_name."\", \"".htmlspecialchars(_ENTERCODE, ENT_QUOTES)."\");' />&nbsp;".
 		  "<img onclick='javascript:xoopsCodeQuote(\"".$ele_name."\", \"".htmlspecialchars(_ENTERQUOTE, ENT_QUOTES)."\");' onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/quote.gif' alt='quote' /><br />\n";
-				$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
-		  if ($easiestml_exist) {
+		$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == '1' && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
+		if ($easiestml_exist) {
 			$easiestml_langs = explode( ',' , EASIESTML_LANGS ) ;
 			$langlocalnames = explode( ',' , EASIESTML_LANGNAMES ) ;
-				$langnames = explode( ',' , $icmsConfigMultilang['ml_names'] ) ;
+			$langnames = explode( ',' , $icmsConfigMultilang['ml_names'] ) ;
 
 			$code = '' ;
 			$javascript = '' ;
 
 			foreach( $easiestml_langs as $l => $lang ){
 				$ret .= "<img onclick='javascript:icmsCode_languages(\"".$ele_name."\", \"".htmlspecialchars(sprintf(_ENTERLANGCONTENT, $langlocalnames[$l]), ENT_QUOTES)."\", \"".$lang."\");' onmouseover='style.cursor=\"pointer\"' src='".ICMS_URL."/images/flags/".$langnames[$l].".gif' alt='".$langlocalnames[$l]."' />&nbsp;";
-				}
-				$ret .= "<br />\n";
-		  }
+			}
+			$ret .= "<br />\n";
+		}
 
-	$sizearray = array("xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large");
+		$sizearray = array("xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large");
 		$ret .= "<select id='".$ele_name."Size' onchange='setVisible(\"".$this->_hiddenText."\");setElementSize(\"".$this->_hiddenText."\",this.options[this.selectedIndex].value);'>\n";
 		$ret .= "<option value='SIZE'>"._SIZE."</option>\n";
 		foreach ( $sizearray as $size ) {
@@ -200,12 +197,10 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		return $ret;
 	}
 
-
-
 	/**
 	 * Render Validation Javascript
 	 *
-   * @return	mixed  rendered validation javascript or empty string
+	 * @return	mixed  rendered validation javascript or empty string
 	 */
 	function renderValidationJS() {
 		if ( $this->htmlEditor && is_object( $this->htmlEditor ) && method_exists( $this->htmlEditor, "renderValidationJS" ) ) {
@@ -216,13 +211,9 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 		return '';
 	}
 
-
-
-
-
 	/**
 	 * prepare HTML for output of the smiley list.
-   *
+	 *
 	 * @return	string HTML
 	 */
 	function _renderSmileys()

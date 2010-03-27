@@ -1,28 +1,28 @@
 <?php
 /**
-* IcmsPersistableObject Table Listing
-*
-* Contains the classes responsible for displaying a highly configurable and features rich listing of IcmseristableObject objects
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * IcmsPersistableObject Table Listing
+ *
+ * Contains the classes responsible for displaying a highly configurable and features rich listing of IcmseristableObject objects
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsPersistableObject
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
  * IcmsPersistableColumn class
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsPersistableObject
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
  */
 class IcmsPersistableColumn {
 
@@ -72,16 +72,16 @@ class IcmsPersistableColumn {
 }
 
 /**
-* IcmsPersistableTable base class
-*
-* Base class representing a table for displaying IcmsPersistableObject objects
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		IcmsPersistableObject
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
+ * IcmsPersistableTable base class
+ *
+ * Base class representing a table for displaying IcmsPersistableObject objects
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsPersistableObject
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
 
  */
 class IcmsPersistableTable {
@@ -122,15 +122,15 @@ class IcmsPersistableTable {
 	var $_withSelectedActions = array();
 
 	/**
-    * Constructor
-    *
-    * @param object $objectHandler {@link IcmsPersistableObjectHandler}
-    * @param array $columns array representing the columns to display in the table
-    * @param object $criteria
-    * @param array $actions array representing the actions to offer
-    *
-    * @return array
-    */
+	 * Constructor
+	 *
+	 * @param object $objectHandler {@link IcmsPersistableObjectHandler}
+	 * @param array $columns array representing the columns to display in the table
+	 * @param object $criteria
+	 * @param array $actions array representing the actions to offer
+	 *
+	 * @return array
+	 */
 	function IcmsPersistableTable(&$objectHandler, $criteria=false, $actions=array('edit', 'delete'), $userSide=false)
 	{
 		$this->_id = $objectHandler->className;
@@ -153,7 +153,7 @@ class IcmsPersistableTable {
 					'op' => $op,
 					'caption' => $caption,
 					'text' => $text
-					);
+		);
 		$this->_actionButtons[] = $action;
 	}
 
@@ -226,11 +226,11 @@ class IcmsPersistableTable {
 	}
 
 	/**
-    * Adding a filter in the table
-    *
-    * @param string $key key to the field that will be used for sorting
-    * @param string $method method of the handler that will be called to populate the options when this filter is selected
-    */
+	 * Adding a filter in the table
+	 *
+	 * @param string $key key to the field that will be used for sorting
+	 * @param string $method method of the handler that will be called to populate the options when this filter is selected
+	 */
 	function addFilter($key, $method, $default=false) {
 		$this->_filterseloptions[$key] = $method;
 		$this->_filtersel2optionsDefault = $default;
@@ -526,7 +526,7 @@ class IcmsPersistableTable {
 		 */
 		$this->_tempObject =& $this->_objectHandler->create();
 
-		$this->_criteria->setStart(isset($_GET['start' . $this->_objectHandler->keyName]) ? intval($_GET['start' . $this->_objectHandler->keyName]) : 0);
+		$this->_criteria->setStart(isset($_GET['start' . $this->_objectHandler->keyName]) ? (int) ($_GET['start' . $this->_objectHandler->keyName]) : 0);
 
 		$this->setSortOrder();
 

@@ -1,22 +1,21 @@
 <?php
 /**
-* Registration form
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package	core
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @version		$Id$
-*/
+ * Registration form
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package	core
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @version		$Id$
+ */
 if (!defined("ICMS_ROOT_PATH")) {
 	die("ImpressCMS root path not defined");
 }
 include_once ICMS_ROOT_PATH."/class/xoopslists.php";
 include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
-
 
 $email_tray = new XoopsFormElementTray(_US_EMAIL, "<br />");
 $email_text = new XoopsFormText("", "email", 25, 60, $myts->htmlSpecialChars($email));
@@ -32,7 +31,7 @@ $login_name_size = $icmsConfigUser['maxuname'] < 75 ? $icmsConfigUser['maxuname'
 $reg_form->addElement(new XoopsFormText(_US_LOGIN_NAME, "login_name", $login_name_size, $login_name_size, $myts->htmlSpecialChars($login_name)), true);
 $reg_form->addElement($email_tray);
 if($icmsConfigUser['pass_level']>20){
-icms_PasswordMeter();
+	icms_PasswordMeter();
 }
 $reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, "pass", 10, 255, $myts->htmlSpecialChars($pass), false, ($icmsConfigUser['pass_level']?'password_adv':'')), true);
 $reg_form->addElement(new XoopsFormPassword(_US_VERIFYPASS, "vpass", 10, 255, $myts->htmlSpecialChars($vpass)), true);
@@ -57,7 +56,7 @@ if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] 
 }
 
 $reg_form->addElement(new XoopsFormHidden("salt", $myts->htmlSpecialChars($salt)));
-$reg_form->addElement(new XoopsFormHidden("enc_type", intval($enc_type)));
+$reg_form->addElement(new XoopsFormHidden("enc_type", (int) ($enc_type)));
 $reg_form->addElement(new XoopsFormHidden("actkey", $myts->htmlSpecialChars($actkey)));
 
 if ($icmsConfigUser['use_captcha'] == true) {

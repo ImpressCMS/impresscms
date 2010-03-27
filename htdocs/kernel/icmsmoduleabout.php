@@ -1,30 +1,30 @@
 <?php
 /**
-* Information about a module
-*
-* @copyright      http://www.impresscms.org/ The ImpressCMS Project
-* @license         LICENSE.txt
-* @package	core
-* @since            1.1
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * Information about a module
+ *
+ * @copyright      http://www.impresscms.org/ The ImpressCMS Project
+ * @license         LICENSE.txt
+ * @package	core
+ * @since            1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) {
-die("ImpressCMS root path not defined");
+	die("ImpressCMS root path not defined");
 }
 
 /**
-* IcmsModuleAbout
-*
-* Simple class that lets you build an about page
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		1.0
-* @author		marcan <marcan@impresscms.org>
-*/
+ * IcmsModuleAbout
+ *
+ * Simple class that lets you build an about page
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		1.0
+ * @author		marcan <marcan@impresscms.org>
+ */
 
 class IcmsModuleAbout
 {
@@ -54,18 +54,18 @@ class IcmsModuleAbout
 	 * Constructor
 	 *
 	 * Initiate the object, based on $icmsModule
-	 * 
+	 *
 	 * @param string $aboutTitle text used in the extreme right caption of the menu
 	 * @return IcmsModuleAbout
 	 */
-	
+
 	function IcmsModuleAbout($aboutTitle = _MODABOUT_ABOUT)
 	{
 		global $icmsModule, $icmsConfig;
 
 		icms_loadLanguageFile($icmsModule->dirname(), 'modinfo');
 		icms_loadLanguageFile('core', 'moduleabout');
-		
+
 		$this->_aboutTitle = $aboutTitle;
 
 		$this->_lang_developer_contributor = _MODABOUT_DEVELOPER_CONTRIBUTOR;
@@ -87,7 +87,7 @@ class IcmsModuleAbout
 	}
 
 	/**
-	 * Sanitize a value 
+	 * Sanitize a value
 	 *
 	 * @param string $value to be sanitized
 	 * @return string sanitized value
@@ -120,7 +120,7 @@ class IcmsModuleAbout
 
 		include_once ICMS_ROOT_PATH . '/class/template.php';
 
-		$this->_tpl =& new XoopsTpl();
+		$this->_tpl = new XoopsTpl();
 
 		$this->_tpl->assign('module_url', ICMS_URL . "/modules/" . $icmsModule->getVar('dirname') . "/");
 		$this->_tpl->assign('module_image', $versioninfo->getInfo('image'));
@@ -167,7 +167,7 @@ class IcmsModuleAbout
 		$this->_tpl->assign('module_support_site_name', $versioninfo->getInfo('support_site_name'));
 		$this->_tpl->assign('module_submit_bug', $versioninfo->getInfo('submit_bug'));
 		$this->_tpl->assign('module_submit_feature', $versioninfo->getInfo('submit_feature'));
-		
+
 		// Manual
 		$manual =$versioninfo->getInfo('manual');
 		if ($manual) {
@@ -180,26 +180,26 @@ class IcmsModuleAbout
 		// Author's note
 		$this->_tpl->assign('module_author_word', $versioninfo->getInfo('author_word'));
 
-	    // For changelog thanks to 3Dev
-	    //global $icmsModule;
-	    $filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/changelog.txt';
-	    if(is_file($filename)){
+		// For changelog thanks to 3Dev
+		//global $icmsModule;
+		$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/changelog.txt';
+		if(is_file($filename)){
 
-	        $filesize = filesize($filename);
-	        $handle = fopen($filename, 'r');
-	        $this->_tpl->assign('module_version_history', $myts->displayTarea(fread($handle, $filesize), true));
-	        fclose($handle);
-	    }
-		
-	    $filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/changelog.txt';
-	    if(is_file($filename)){
+			$filesize = filesize($filename);
+			$handle = fopen($filename, 'r');
+			$this->_tpl->assign('module_version_history', $myts->displayTarea(fread($handle, $filesize), true));
+			fclose($handle);
+		}
 
-	        $filesize = filesize($filename);
-	        $handle = fopen($filename, 'r');
-	        $this->_tpl->assign('module_version_history', $myts->displayTarea(fread($handle, $filesize), true));
-	        fclose($handle);
-	    }
-		
+		$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/changelog.txt';
+		if(is_file($filename)){
+
+			$filesize = filesize($filename);
+			$handle = fopen($filename, 'r');
+			$this->_tpl->assign('module_version_history', $myts->displayTarea(fread($handle, $filesize), true));
+			fclose($handle);
+		}
+
 		// For license thanks to 3Dev
 		if ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt' ) ) {
 			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt';
@@ -212,12 +212,12 @@ class IcmsModuleAbout
 		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt' ) ) {
 			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
 		}
-	    if(is_file($filename)){
-	        $filesize = filesize($filename);
-	        $handle = fopen($filename, 'r');
-	        $this->_tpl->assign('module_license_txt', $myts->displayTarea(fread($handle, $filesize), 0, 0, 1, 1, 1, true));
-	        fclose($handle);
-	    }
+		if(is_file($filename)){
+			$filesize = filesize($filename);
+			$handle = fopen($filename, 'r');
+			$this->_tpl->assign('module_license_txt', $myts->displayTarea(fread($handle, $filesize), 0, 0, 1, 1, 1, true));
+			fclose($handle);
+		}
 
 		$this->_tpl->display(ICMS_ROOT_PATH . '/modules/system/templates/admin/system_adm_moduleabout.html');
 

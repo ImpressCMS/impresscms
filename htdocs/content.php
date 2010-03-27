@@ -29,7 +29,7 @@ $icmsModuleConfig = $contentConfig;
 $content_content_handler = xoops_getModuleHandler ( 'content', 'content' );
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
-$clean_content_id = isset ( $_GET ['content_id'] ) ? intval ( $_GET ['content_id'] ) : 0;
+$clean_content_id = isset ( $_GET ['content_id'] ) ? (int) ( $_GET ['content_id'] ) : 0;
 $page = (isset ( $_GET ['page'] )) ? trim ( StopXSS ( $_GET ['page'] ) ) : ((isset ( $_POST ['page'] )) ? trim ( StopXSS ( $_POST ['page'] ) ) : $clean_content_id);
 
 if (! $page) {
@@ -46,7 +46,7 @@ if (! $page) {
 }
 
 if(!empty($page)){
-	$page = (is_int($page)) ? intval($page) : urlencode($page);
+	$page = (is_int($page)) ? (int) ($page) : urlencode($page);
 	$page = str_replace('-',' ',$page);
 	$criteria = $content_content_handler->getContentsCriteria ( 0, 1, false, false, $page, false, 'content_id', 'DESC' );
 	$content = $content_content_handler->getObjects ( $criteria );
@@ -90,8 +90,6 @@ $icms_metagen->createMetaTags ();
 
 $xoTheme->addStylesheet ( ICMS_URL . '/modules/content/include/content.css' );
 $icmsTpl->assign ( 'content_module_home', content_getModuleName ( true, true ) );
-
-
 
 include_once CONTENT_ROOT_PATH.'footer.php';
 ?>

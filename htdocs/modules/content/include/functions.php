@@ -1,14 +1,14 @@
 <?php
 /**
-* Common functions used by the module
-*
-* @copyright	The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.0
-* @author		Rodrigo P Lima aka TheRplima <therplima@impresscms.org>
-* @package		content
-* @version		$Id$
-*/
+ * Common functions used by the module
+ *
+ * @copyright	The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.0
+ * @author		Rodrigo P Lima aka TheRplima <therplima@impresscms.org>
+ * @package		content
+ * @version		$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
@@ -50,16 +50,16 @@ function content_getModuleName($withLink = true, $forBreadCrumb = false, $module
 	if (!$withLink) {
 		return $icmsModule->getVar('name');
 	} else {
-/*	    $seoMode = smart_getModuleModeSEO($moduleName);
-	    if ($seoMode == 'rewrite') {
-	    	$seoModuleName = smart_getModuleNameForSEO($moduleName);
-	    	$ret = XOOPS_URL . '/' . $seoModuleName . '/';
-	    } elseif ($seoMode == 'pathinfo') {
-	    	$ret = XOOPS_URL . '/modules/' . $moduleName . '/seo.php/' . $seoModuleName . '/';
-	    } else {
+		/*	    $seoMode = smart_getModuleModeSEO($moduleName);
+		 if ($seoMode == 'rewrite') {
+		 $seoModuleName = smart_getModuleNameForSEO($moduleName);
+		 $ret = XOOPS_URL . '/' . $seoModuleName . '/';
+		 } elseif ($seoMode == 'pathinfo') {
+		 $ret = XOOPS_URL . '/modules/' . $moduleName . '/seo.php/' . $seoModuleName . '/';
+		 } else {
 			$ret = XOOPS_URL . '/modules/' . $moduleName . '/';
-	    }
-*/
+			}
+			*/
 		$ret = ICMS_URL . '/modules/' . $moduleName . '/';
 		return '<a href="' . $ret . '">' . $icmsModule->getVar('name') . '</a>';
 	}
@@ -85,20 +85,20 @@ function content_getPreviousPage($default=false) {
 }
 
 /**
-* Return a linked username or full name for a specific $userid
-*
-* @todo this function is fixing a ucwords bug in icms_getLinkedUnameFromId so we will update this in icms 1.2
-*
-* @param integer $userid uid of the related user
-* @param bool $name true to return the fullname, false to use the username; if true and the user does not have fullname, username will be used instead
-* @param array $users array already containing XoopsUser objects in which case we will save a query
-* @param bool $withContact true if we want contact details to be added in the value returned (PM and email links)
-* @return string name of user with a link on his profile
-*/
+ * Return a linked username or full name for a specific $userid
+ *
+ * @todo this function is fixing a ucwords bug in icms_getLinkedUnameFromId so we will update this in icms 1.2
+ *
+ * @param integer $userid uid of the related user
+ * @param bool $name true to return the fullname, false to use the username; if true and the user does not have fullname, username will be used instead
+ * @param array $users array already containing XoopsUser objects in which case we will save a query
+ * @param bool $withContact true if we want contact details to be added in the value returned (PM and email links)
+ * @return string name of user with a link on his profile
+ */
 function content_getLinkedUnameFromId($userid, $name = false, $users = array (), $withContact = false)
 {
 	if(!is_numeric($userid)) {return $userid;}
-	$userid = intval($userid);
+	$userid = (int) ($userid);
 	if($userid > 0)
 	{
 		if($users == array())

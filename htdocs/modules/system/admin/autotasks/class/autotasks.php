@@ -1,13 +1,13 @@
 <?php
 /**
-* ImpressCMS AUTOTASKSs
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		1.2 alpha 2
-* @author		MekDrop <mekdrop@gmail.com>
-*/
+ * ImpressCMS AUTOTASKSs
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		1.2 alpha 2
+ * @author		MekDrop <mekdrop@gmail.com>
+ */
 if(!defined('ICMS_ROOT_PATH')) die('ImpressCMS root path not defined');
 
 //error_reporting(E_ALL);
@@ -133,12 +133,11 @@ class SystemAutoTasks extends IcmsPersistableObject {
 		return ($this->getVar('sat_onfinish')==1)?_YES:_NO;
 	}
 
-
 	/**
-	* Executes code attached to event
-	*
-	* @return bool
-	*/
+	 * Executes code attached to event
+	 *
+	 * @return bool
+	 */
 	function exec()
 	{
 		if(!$this->getVar('sat_enabled')) return false;
@@ -151,7 +150,7 @@ class SystemAutoTasks extends IcmsPersistableObject {
 			if($module == '') return false;
 			$module = ICMS_MODULES_PATH.'/'.$module;
 			$module = $module.'/'.$code;
-			$code = ' require ("'.$module.'");';;
+			$code = ' require "'.$module.'" ;';;
 			$is_bug = !(@highlight_string(file_get_contents($module), true));
 		} else {
 			$is_bug = !(@highlight_string('<?'.'php '. $code.' return true; ?'.'>', true));
@@ -228,10 +227,10 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
 	}
 
 	/**
-	* Enable virtual configuartion and set it
-	*
-	* @param	array
-	*/
+	 * Enable virtual configuartion and set it
+	 *
+	 * @param	array
+	 */
 	function enableVirtualConfig(&$array)
 	{
 		$this->_virtual_config = $array;
@@ -239,29 +238,29 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
 	}
 
 	/**
-	* Get virtual configuration status
-	*
-	* @return bool
-	*/
+	 * Get virtual configuration status
+	 *
+	 * @return bool
+	 */
 	function isVirtualConfigEnabled()
 	{
 		return $this->_use_virtual_config;
 	}
 
 	/**
-	* Disable virtual configuration
-	*/
+	 * Disable virtual configuration
+	 */
 	function disableVirtualConfig()
 	{
 		$this->_use_virtual_config = false;
 	}
 
 	/**
-	* Gets selected type current events for current user
-	*
-	* @param int $ type
-	* @return Object
-	*/
+	 * Gets selected type current events for current user
+	 *
+	 * @param int $ type
+	 * @return Object
+	 */
 	function getTasks()
 	{
 		$criteria = new CriteriaCompo();
@@ -275,10 +274,10 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
 	}
 
 	/**
-	* Executes events
-	*
-	* @return array
-	*/
+	 * Executes events
+	 *
+	 * @return array
+	 */
 	function execTasks()
 	{
 		$rez = array('all' => 0, 'ok' => 0);
@@ -295,28 +294,28 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
 	}
 
 	/**
-	* Get if current autotask handler needs execution
-	*
-	* @return true
-	*/
+	 * Get if current autotask handler needs execution
+	 *
+	 * @return true
+	 */
 	function needExecution()
 	{
 		return $this->getCurrentSystemHandler()->needExecution();
 	}
 
 	/**
-	* Returns if all tasks was executed to do no more php lines processing
-	*
-	* @param bool
-	*/
+	 * Returns if all tasks was executed to do no more php lines processing
+	 *
+	 * @param bool
+	 */
 	public function needExit()
 	{
 		return $this->getCurrentSystemHandler()->needExit();
 	}
 
 	/**
-	* Starts handler if needed
-	*/
+	 * Starts handler if needed
+	 */
 	function startIfNeeded()
 	{
 		$system = $this->getCurrentSystemHandler();
@@ -335,11 +334,11 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
 	}
 
 	/**
-	* Tasks are executed in some times periods but not always exatcly the same
-	* as in administration. This will get real tasks execution interval.
-	*
-	* @return int
-	*/
+	 * Tasks are executed in some times periods but not always exatcly the same
+	 * as in administration. This will get real tasks execution interval.
+	 *
+	 * @return int
+	 */
 	function getRealTasksRunningTime()
 	{
 		$sql = 'SELECT MIN(sat_interval) INTV FROM '.$this->db->prefix('system_autotasks').' WHERE sat_enabled = true LIMIT 1';
@@ -353,12 +352,12 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
 	}
 
 	/**
-	* Get selected autotask system handler
-	*
-	* @param string system name
-	*
-	* @return AutomatedTasks
-	*/
+	 * Get selected autotask system handler
+	 *
+	 * @param string system name
+	 *
+	 * @return AutomatedTasks
+	 */
 	function getSelectedSystemHandler($name)
 	{
 		if("$name" == '')
@@ -380,32 +379,32 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
 	}
 
 	/**
-	* Gets system handler filename
-	*
-	* @param	string	name
-	* @return	string
-	*/
+	 * Gets system handler filename
+	 *
+	 * @param	string	name
+	 * @return	string
+	 */
 	private function getSystemHandlerFileName($name)
 	{
 		return ICMS_PLUGINS_PATH.'/autotasks/'.$name.'.php';
 	}
 
 	/**
-	* Get system handler name from filename
-	*
-	* @param string filename
-	* @return string
-	*/
+	 * Get system handler name from filename
+	 *
+	 * @param string filename
+	 * @return string
+	 */
 	private function getSystemHandlerNameFromFileName($filename)
 	{
 		return substr($filename, strlen(ICMS_PLUGINS_PATH.'/autotasks/'), -strlen('.php'));
 	}
 
 	/**
-	* Gets autotasks settings
-	*
-	* @return Array(ConfigObjectItems)
-	*/
+	 * Gets autotasks settings
+	 *
+	 * @return Array(ConfigObjectItems)
+	 */
 	function getConfig()
 	{
 		if($this->isVirtualConfigEnabled())
@@ -419,12 +418,12 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
 	}
 
 	/**
-	* Get AutoTasks System
-	*
-	* @param bool force update handler
-	*
-	* @return AutomatedTasks
-	*/
+	 * Get AutoTasks System
+	 *
+	 * @param bool force update handler
+	 *
+	 * @return AutomatedTasks
+	 */
 	function getCurrentSystemHandler($forceUpdate = false)
 	{
 		static $handler = false;
@@ -437,12 +436,12 @@ class SystemAutotasksHandler extends IcmsPersistableObjectHandler
 	}
 
 	/**
-	* Gets all avaible system handlers
-	*
-	* @param	bool	checkIfItIsAvaibleOnCurrentSystem
-	*
-	* @return	array
-	*/
+	 * Gets all avaible system handlers
+	 *
+	 * @param	bool	checkIfItIsAvaibleOnCurrentSystem
+	 *
+	 * @return	array
+	 */
 	function getSystemHandlersList($checkIfItIsAvaibleOnCurrentSystem = true)
 	{
 		static $ret = null;

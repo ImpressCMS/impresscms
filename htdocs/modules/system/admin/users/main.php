@@ -1,17 +1,17 @@
 <?php
 /**
-* Administration of users, main file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Administration
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Administration of users, main file
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	Administration
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
@@ -25,13 +25,13 @@ if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){$
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'mod_users');
 if(isset($_GET['op']))
 {
-	if(isset($_GET['uid'])) {$uid = intval($_GET['uid']);}
+	if(isset($_GET['uid'])) {$uid = (int) ($_GET['uid']);}
 }
 switch ($op)
 {
 	case 'modifyUser':
 		modifyUser($uid);
-	break;
+		break;
 
 	case 'updateUser':
 		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
@@ -46,7 +46,7 @@ switch ($op)
 			$groups = array_unique(array_merge($groups, $groups_hidden)) ;
 		}
 		updateUser($uid, $username, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $password, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups);
-	break;
+		break;
 
 	case 'delUser':
 		xoops_cp_header();
@@ -54,7 +54,7 @@ switch ($op)
 		$userdata =& $member_handler->getUser($uid);
 		xoops_confirm(array('fct' => 'users', 'op' => 'delUserConf', 'del_uid' => $userdata->getVar('uid')), 'admin.php', sprintf(_AM_AYSYWTDU,$userdata->getVar('uname')));
 		xoops_cp_footer();
-	break;
+		break;
 
 	case 'delete_many':
 		xoops_cp_header();
@@ -80,7 +80,7 @@ switch ($op)
 			echo "</form></div>";
 		} else {echo _AM_NOUSERS;}
 		xoops_cp_footer();
-	break;
+		break;
 
 	case 'delete_many_ok':
 		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
@@ -106,7 +106,7 @@ switch ($op)
 		xoops_cp_header();
 		echo $output;
 		xoops_cp_footer();
-	break;
+		break;
 
 	case 'delUserConf':
 		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
@@ -133,7 +133,7 @@ switch ($op)
 			xoops_notification_deletebyuser($del_uid);
 			redirect_header('admin.php?fct=users',1,_AM_DBUPDATED);
 		}
-	break;
+		break;
 
 	case 'addUser':
 		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
@@ -185,8 +185,8 @@ switch ($op)
 						xoops_cp_footer();
 						exit();
 					}
-						 include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
-						 $icmspass = new icms_Password();
+					include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
+					$icmspass = new icms_Password();
 					$newuser->setVar('salt', $salt);
 					$newuser->setVar('enc_type', $enc_type);
 					$password = $icmspass->icms_encryptPass($password, $salt);
@@ -207,75 +207,75 @@ switch ($op)
 				$newuser->setVar('language', $language);
 
 				if ($icmsConfigAuth['auth_openid'] == 1) {
-				$newuser->setVar('openid', $openid);}
-				if(!$member_handler->insertUser($newuser))
-				{
-					$adduser_errormsg = _AM_CNRNU;
-				}
-				else
-				{
-					$groups_failed = array();
-					if(!isset($_POST['groups'])) $groups = array(XOOPS_GROUP_ANONYMOUS);
-					foreach($groups as $group)
+					$newuser->setVar('openid', $openid);}
+					if(!$member_handler->insertUser($newuser))
 					{
-						if(!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {$groups_failed[] = $group;}
-					}
-					if(!empty($groups_failed))
-					{
-						$group_names = $member_handler->getGroupList(new Criteria('groupid', "(".implode(", ", $groups_failed).")", 'IN'));
-						$adduser_errormsg = sprintf(_AM_CNRNU2, implode(", ", $group_names));
+						$adduser_errormsg = _AM_CNRNU;
 					}
 					else
 					{
-						/* Hack by marcan <INBOX>
-						* Sending a confirmation email to the newly registered user
-						*/
-						/**
-						* @todo this has been commented out for now as we need to add a check box on the
-						* form to ask the admin if he wants to send the welcome message or not
-						*/
-						/*
-						$myts =& MyTextSanitizer::getInstance();
-						$xoopsMailer =& getMailer();
-						$xoopsMailer->useMail();
-						$xoopsMailer->setTemplate('welcome.tpl');
-						$xoopsMailer->assign('UNAME', $uname);
-						$xoopsMailer->assign('PASSWORD', $vpass);
-						$xoopsMailer->assign('X_UEMAIL', $email);
-						$xoopsMailer->setToEmails($email);
-						$xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
-						$xoopsMailer->setFromName($xoopsConfig['sitename']);
-						$xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION,$myts->stripSlashesGPC($xoopsConfig['sitename'])));
-						$xoopsMailer->send();
-						/* Hack by marcan <INBOX>
-						* Sending a confirmation email to the newly registered user
-						*/
-						redirect_header('admin.php?fct=users',1,_AM_DBUPDATED);
+						$groups_failed = array();
+						if(!isset($_POST['groups'])) $groups = array(XOOPS_GROUP_ANONYMOUS);
+						foreach($groups as $group)
+						{
+							if(!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {$groups_failed[] = $group;}
+						}
+						if(!empty($groups_failed))
+						{
+							$group_names = $member_handler->getGroupList(new Criteria('groupid', "(".implode(", ", $groups_failed).")", 'IN'));
+							$adduser_errormsg = sprintf(_AM_CNRNU2, implode(", ", $group_names));
+						}
+						else
+						{
+							/* Hack by marcan <INBOX>
+							 * Sending a confirmation email to the newly registered user
+							 */
+							/**
+							 * @todo this has been commented out for now as we need to add a check box on the
+							 * form to ask the admin if he wants to send the welcome message or not
+							 */
+							/*
+							 $myts =& MyTextSanitizer::getInstance();
+							 $xoopsMailer =& getMailer();
+							 $xoopsMailer->useMail();
+							 $xoopsMailer->setTemplate('welcome.tpl');
+							 $xoopsMailer->assign('UNAME', $uname);
+							 $xoopsMailer->assign('PASSWORD', $vpass);
+							 $xoopsMailer->assign('X_UEMAIL', $email);
+							 $xoopsMailer->setToEmails($email);
+							 $xoopsMailer->setFromEmail($xoopsConfig['adminmail']);
+							 $xoopsMailer->setFromName($xoopsConfig['sitename']);
+							 $xoopsMailer->setSubject(sprintf(_US_YOURREGISTRATION,$myts->stripSlashesGPC($xoopsConfig['sitename'])));
+							 $xoopsMailer->send();
+							 /* Hack by marcan <INBOX>
+							 * Sending a confirmation email to the newly registered user
+							 */
+							redirect_header('admin.php?fct=users',1,_AM_DBUPDATED);
+						}
 					}
-				}
 			}
 		}
 		xoops_cp_header();
 		xoops_error($adduser_errormsg);
 		xoops_cp_footer();
-	break;
+		break;
 
 	case 'synchronize':
 		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
 		synchronize($id, $type);
-	break;
+		break;
 
 	case 'reactivate':
-		$result=$xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET level='1' WHERE uid='".intval($uid)."'");
+		$result=$xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET level='1' WHERE uid='". (int) ($uid)."'");
 		if(!$result) {exit();}
-		redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid='.intval($uid),1,_AM_DBUPDATED);
-	break;
+		redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid='. (int) ($uid),1,_AM_DBUPDATED);
+		break;
 
 	case 'mod_users':
-		default:
-			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
-			displayUsers();
-	break;
+	default:
+		include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+		displayUsers();
+		break;
 }
 
 ?>

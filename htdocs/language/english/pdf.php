@@ -1,14 +1,14 @@
 <?php
 //============================================================+
-// File name   : en.php 
-// Begin       : 2004-03-03 
-// Last Update : 2008-01-08 
-// 
-// Description : Language module for TCPDF 
-//               (contains translated texts) 
-// 
+// File name   : en.php
+// Begin       : 2004-03-03
+// Last Update : 2008-01-08
+//
+// Description : Language module for TCPDF
+//               (contains translated texts)
+//
 // Author: Nicola Asuni
-// 
+//
 // (c) Copyright:
 //               Nicola Asuni
 //               Tecnick.com s.r.l.
@@ -30,13 +30,13 @@
  * @since 2004-03-03
  */
 /**
-*
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @package		core
-* @since		1.1
-* @author		stranger <stranger@impresscms.ir>
-* @version		$Id$
-*/
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @package		core
+ * @since		1.1
+ * @author		stranger <stranger@impresscms.ir>
+ * @version		$Id$
+ */
 // ENGLISH
 
 $l = Array();
@@ -51,6 +51,6 @@ $l['a_meta_language'] = "en";
 $l['w_page'] = "page";
 
 //============================================================+
-// END OF FILE                                                 
+// END OF FILE
 //============================================================+
 ?>

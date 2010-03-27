@@ -24,7 +24,7 @@ if (!is_object($icmsUser) && !$icmsConfigUser['allow_annon_view_prof']) {
 	exit();
 }
 
-$uid = isset($_GET['uid']) ? intval($_GET['uid']) : 0;
+$uid = isset($_GET['uid']) ? (int) ($_GET['uid']) : 0;
 if ($uid == 0) {
 	if(is_object($icmsUser)){
 		$uid = $icmsUser->getVar('uid');
@@ -59,7 +59,7 @@ if ($icmsModuleConfig['profile_social']) {
 	if (!isset($profile_current_page)) $profile_current_page = basename(__FILE__);
 	if (is_object($icmsUser) && $icmsUser->getVar('uid') == $uid && $profile_current_page != 'configs.php') {
 		$profile_configs_handler = icms_getModuleHandler('configs');
-		$config_count = $profile_configs_handler->getCount(new CriteriaCompo(new Criteria('config_uid', intval($uid))));
+		$config_count = $profile_configs_handler->getCount(new CriteriaCompo(new Criteria('config_uid', (int) ($uid))));
 		if ( $config_count <= 0 ) {
 			redirect_header(ICMS_URL.'/modules/'.$dirname.'/configs.php', 3, _PROFILE_MA_MAKE_CONFIG_FIRST);
 			exit();
@@ -82,10 +82,10 @@ if ($icmsModuleConfig['index_real_name'] == 'real' && trim($thisUser->getVar('na
 // check whether icmsUser is allowed to view profile of thisUser
 if ($isAnonym) {
 	if (array_intersect($thisUser->getGroups(), $icmsModuleConfig['view_group_anonymous']) != $thisUser->getGroups())
-		redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 } elseif (!$icmsUser->isAdmin(0)) {
 	if (array_intersect($thisUser->getGroups(), $icmsModuleConfig['view_group_registered']) != $thisUser->getGroups())
-		redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+	redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 }
 
 include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/include/common.php';

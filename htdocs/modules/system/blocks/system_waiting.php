@@ -1,31 +1,31 @@
 <?php
 // $Id: waiting_waiting.php,v 1.8 2005/04/20 03:43:55 gij Exp $
 /**
-* All the blocks that are awaiting approval or admin intervention
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package	Systemblocks
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @version		$Id$
-*/
+ * All the blocks that are awaiting approval or admin intervention
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package	Systemblocks
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @version		$Id$
+ */
 
 /**
-* EXTENSIBLE "waiting block" by plugins in both waiting and modules
-*
-* @param array $options The options for this block
-* @return mixed $block The generated waiting block or empty array
-*/
+ * EXTENSIBLE "waiting block" by plugins in both waiting and modules
+ *
+ * @param array $options The options for this block
+ * @return mixed $block The generated waiting block or empty array
+ */
 function b_system_waiting_show($options)
 {
-    global $icmsUser, $xoopsConfig;
+	global $icmsUser, $xoopsConfig;
 
-    $userlang = $xoopsConfig['language'] ;
+	$userlang = $xoopsConfig['language'] ;
 
-	$sql_cache_min = empty( $options[1] ) ? 0 : intval( $options[1] ) ;
+	$sql_cache_min = empty( $options[1] ) ? 0 : (int) ( $options[1] ) ;
 	$sql_cache_file = XOOPS_CACHE_PATH.'/waiting_touch' ;
 
 	// SQL cache check (you have to use this cache with block's cache by system)
@@ -36,7 +36,6 @@ function b_system_waiting_show($options)
 			unlink( $sql_cache_file ) ;
 		}
 	}
-
 
 	// read language files for plugins
 	icms_loadLanguageFile('system', 'plugins');
@@ -110,16 +109,15 @@ function b_system_waiting_show($options)
 	return $block ;
 }
 
-
 /**
-* The edit "waiting block" form
-*
-* @param array $options The options for this block
-* @return string $form The Edit waiting block form HTML string
-*/
+ * The edit "waiting block" form
+ *
+ * @param array $options The options for this block
+ * @return string $form The Edit waiting block form HTML string
+ */
 function b_system_waiting_edit($options){
 
-	$sql_cache_min = empty( $options[1] ) ? 0 : intval( $options[1] ) ;
+	$sql_cache_min = empty( $options[1] ) ? 0 : (int) ( $options[1] ) ;
 
 	$form = _MB_SYSTEM_NOWAITING_DISPLAY.":&nbsp;<input type='radio' name='options[0]' value='1'";
 	if ( $options[0] == 1 ) {
@@ -136,12 +134,12 @@ function b_system_waiting_edit($options){
 }
 
 /**
-* Gets the plugin information
-*
-* @param string $dirname The directory to get the plugin from
-* @param string $language The language for the plugin
-* @return array $ret The plugin information array or an empty array
-*/
+ * Gets the plugin information
+ *
+ * @param string $dirname The directory to get the plugin from
+ * @param string $language The language for the plugin
+ * @return array $ret The plugin information array or an empty array
+ */
 function system_get_plugin_info( $dirname , $language = 'english' )
 {
 	// get $mytrustdirname for D3 modules
@@ -157,8 +155,8 @@ function system_get_plugin_info( $dirname , $language = 'english' )
 	if( file_exists( $module_plugin_file ) ) {
 		// module side (1st priority)
 		$lang_files = array(
-			XOOPS_ROOT_PATH."/modules/$dirname/language/$language/waiting.php" ,
-			XOOPS_ROOT_PATH."/modules/$dirname/language/english/waiting.php" ,
+		XOOPS_ROOT_PATH."/modules/$dirname/language/$language/waiting.php" ,
+		XOOPS_ROOT_PATH."/modules/$dirname/language/english/waiting.php" ,
 		) ;
 		$langfile_path = '' ;
 		foreach( $lang_files as $lang_file ) {
@@ -176,8 +174,8 @@ function system_get_plugin_info( $dirname , $language = 'english' )
 	} else if( ! empty( $mytrustdirname ) && file_exists( $d3module_plugin_file ) ) {
 		// D3 module's plugin under xoops_trust_path (2nd priority)
 		$lang_files = array(
-			XOOPS_TRUST_PATH."/modules/$mytrustdirname/language/$language/waiting.php" ,
-			XOOPS_TRUST_PATH."/modules/$mytrustdirname/language/english/waiting.php" ,
+		XOOPS_TRUST_PATH."/modules/$mytrustdirname/language/$language/waiting.php" ,
+		XOOPS_TRUST_PATH."/modules/$mytrustdirname/language/english/waiting.php" ,
 		) ;
 		$langfile_path = '' ;
 		foreach( $lang_files as $lang_file ) {
@@ -206,6 +204,5 @@ function system_get_plugin_info( $dirname , $language = 'english' )
 
 	return $ret ;
 }
-
 
 ?>

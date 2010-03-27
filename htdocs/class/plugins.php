@@ -1,16 +1,16 @@
 <?php
 /**
-*
-* Class To load plugins for modules.
-*
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		1.2
-* @author		ImpressCMS
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ *
+ * Class To load plugins for modules.
+ *
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		1.2
+ * @author		ImpressCMS
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 
 class IcmsPlugins {
 
@@ -30,10 +30,10 @@ class IcmsPlugins {
 
 	function getItemList() {
 		$itemsArray = $this->_infoArray['items'];
-    	foreach ($itemsArray as $k=>$v) {
+		foreach ($itemsArray as $k=>$v) {
 			$ret[$k] = $v['caption'];
-    	}
-    	return $ret;
+		}
+		return $ret;
 	}
 
 	function getItem() {
@@ -60,7 +60,7 @@ class IcmsPluginsHandler {
 	function getPlugin($path, $dirname) {
 		$pluginName = ICMS_ROOT_PATH . '/plugins/'.$path.'/' . $dirname . '.php';
 		if (file_exists($pluginName)) {
-			include_once($pluginName);
+			include_once $pluginName ;
 			$function = 'icms_plugin_' . $dirname;
 			if (function_exists($function)) {
 				$array = $function();
@@ -72,7 +72,7 @@ class IcmsPluginsHandler {
 	}
 
 	function getPluginsArray($path) {
-		include_once(XOOPS_ROOT_PATH . "/class/xoopslists.php");
+		include_once XOOPS_ROOT_PATH . "/class/xoopslists.php" ;
 
 		$module_handler = xoops_gethandler('module');
 		$criteria = new CriteriaCompo();
@@ -86,11 +86,11 @@ class IcmsPluginsHandler {
 		$aFiles = XoopsLists::getPhpListAsArray(ICMS_ROOT_PATH . '/plugins/'.$path.'/');
 		$ret = array();
 		foreach($aFiles as $pluginName) {
-				$module_xoops_version_file = XOOPS_ROOT_PATH . "/modules/$pluginName/xoops_version.php";
-				$module_icms_version_file = XOOPS_ROOT_PATH . "/modules/$pluginName/icms_version.php";
-				if ((file_exists($module_xoops_version_file) || file_exists($module_icms_version_file))&& isset($modulesObj[$pluginName])) {
-					$ret[$pluginName] = $modulesObj[$pluginName]->getVar('name');
-				}
+			$module_xoops_version_file = XOOPS_ROOT_PATH . "/modules/$pluginName/xoops_version.php";
+			$module_icms_version_file = XOOPS_ROOT_PATH . "/modules/$pluginName/icms_version.php";
+			if ((file_exists($module_xoops_version_file) || file_exists($module_icms_version_file))&& isset($modulesObj[$pluginName])) {
+				$ret[$pluginName] = $modulesObj[$pluginName]->getVar('name');
+			}
 		}
 		return $ret;
 	}

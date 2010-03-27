@@ -1,14 +1,14 @@
 <?php
 /**
-* ImpressCMS Custom Tag features
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		libraries
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * ImpressCMS Custom Tag features
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		libraries
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 
 class IcmsPreloadCustomtag extends IcmsPreloadItem
 {
@@ -18,7 +18,7 @@ class IcmsPreloadCustomtag extends IcmsPreloadItem
 	 * @return	void
 	 */
 	function eventFinishCoreBoot() {
-		include_once(ICMS_ROOT_PATH . "/include/customtag.php");
+		include_once ICMS_ROOT_PATH . "/include/customtag.php" ;
 	}
 
 	/**
@@ -58,7 +58,6 @@ class IcmsPreloadCustomtag extends IcmsPreloadItem
 	function eventBeforeDisplayTarea($array) {
 		$array[0] = icms_sanitizeCustomtags($array[0]);
 	}
-
 
 	/**
 	 * Function to be triggered at the end of the output init process

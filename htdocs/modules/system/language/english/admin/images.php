@@ -2,7 +2,6 @@
 // $Id$
 //%%%%%% Image Manager %%%%%
 
-
 define('_MD_IMGMAIN','Image Manager Main');
 
 define('_MD_ADDIMGCAT','Add Image Category:');

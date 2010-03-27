@@ -34,7 +34,7 @@ class ProfileRegstep extends IcmsPersistableObject {
 		$this->quickInitVar('step_intro', XOBJ_DTYPE_TXTAREA, false);
 		$this->quickInitVar('step_order', XOBJ_DTYPE_TXTBOX, false);
 		$this->quickInitVar('step_save', XOBJ_DTYPE_TXTBOX, false);
-		
+
 		$this->setControl('step_save', 'yesno');
 	}
 
@@ -52,24 +52,24 @@ class ProfileRegstep extends IcmsPersistableObject {
 		}
 		return parent :: getVar($key, $format);
 	}
-	
+
 	public function getCustomStepSave(){
 		if($this->getVar('step_save') == 1)
-			$rtn = '<img src="'.ICMS_IMAGES_SET_URL.'/actions/button_ok.png" alt="1"/>';
+		$rtn = '<img src="'.ICMS_IMAGES_SET_URL.'/actions/button_ok.png" alt="1"/>';
 		else
-			$rtn = '<img src="'.ICMS_IMAGES_SET_URL.'/actions/button_cancel.png" alt="0"/>';
+		$rtn = '<img src="'.ICMS_IMAGES_SET_URL.'/actions/button_cancel.png" alt="0"/>';
 		return $rtn;
 	}
-	
+
 	public function getCustomStepName(){
 		$rtn = $this->getVar('step_name');
-		return $rtn;	
+		return $rtn;
 	}
-	
+
 }
 
 class ProfileRegstepHandler extends IcmsPersistableObjectHandler {
-	
+
 	/**
 	 * Constructor
 	 *

@@ -31,9 +31,9 @@ class ProfileProfile extends IcmsPersistableObject {
 	}
 
 	/**
-	* Initiate variables
-	* @param array $fields field information array of {@link XoopsProfileField} objects
-	*/
+	 * Initiate variables
+	 * @param array $fields field information array of {@link XoopsProfileField} objects
+	 */
 	function init($fields) {
 		if (is_array($fields) && count($fields) > 0) {
 			foreach (array_keys($fields) as $key) {
@@ -48,14 +48,14 @@ class ProfileProfile extends IcmsPersistableObject {
  */
 class ProfileProfileHandler extends IcmsPersistableObjectHandler {
 	/**
-	* holds reference to {@link ProfileFieldHandler} object
-	*/
+	 * holds reference to {@link ProfileFieldHandler} object
+	 */
 	public $_fHandler;
 
 	/**
-	* Array of {@link XoopsProfileField} objects
-	* @public array
-	*/
+	 * Array of {@link XoopsProfileField} objects
+	 * @public array
+	 */
 	public $_fields = array();
 
 	function ProfileProfileHandler(&$db) {
@@ -82,22 +82,22 @@ class ProfileProfileHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
-	* Create new {@link ProfileField} object
-	*
-	* @param bool $isNew
-	*
-	* @return object
-	*/
+	 * Create new {@link ProfileField} object
+	 *
+	 * @param bool $isNew
+	 *
+	 * @return object
+	 */
 	function &createField($isNew = true) {
 		$return =& $this->_fHandler->create($isNew);
 		return $return;
 	}
 
 	/**
-	* Load field information
-	*
-	* @return array
-	*/
+	 * Load field information
+	 *
+	 * @return array
+	 */
 	function loadFields() {
 		if (count($this->_fields) == 0) {
 			$this->_fields = $this->_fHandler->loadFields();
@@ -106,53 +106,53 @@ class ProfileProfileHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
-	* Fetch fields
-	*
-	* @param object $criteria {@link CriteriaElement} object
-	* @param bool $id_as_key return array with field IDs as key?
-	* @param bool $as_object return array of objects?
-	*
-	* @return array
-	**/
+	 * Fetch fields
+	 *
+	 * @param object $criteria {@link CriteriaElement} object
+	 * @param bool $id_as_key return array with field IDs as key?
+	 * @param bool $as_object return array of objects?
+	 *
+	 * @return array
+	 **/
 	function getFields($criteria, $id_as_key = true, $as_object = true) {
 		return $this->_fHandler->getObjects($criteria, $id_as_key, $as_object);
 	}
 
 	/**
-	* Insert a field in the database
-	*
-	* @param object $field
-	* @param bool $force
-	*
-	* @return bool
-	*/
+	 * Insert a field in the database
+	 *
+	 * @param object $field
+	 * @param bool $force
+	 *
+	 * @return bool
+	 */
 	function insertField(&$field, $force = false) {
 		return $this->_fHandler->insert($field, $force);
 	}
 
 	/**
-	* Delete a field from the database
-	*
-	* @param object $field
-	* @param bool $force
-	*
-	* @return bool
-	*/
+	 * Delete a field from the database
+	 *
+	 * @param object $field
+	 * @param bool $force
+	 *
+	 * @return bool
+	 */
 	function deleteField(&$field, $force = false) {
 		return $this->_fHandler->delete($field, $force);
 	}
 
 	/**
-	* Save a new field in the database
-	*
-	* @param array $vars array of variables, taken from $module->loadInfo('profile')['field']
-	* @param int $categoryid ID of the category to add it to
-	* @param int $type valuetype of the field
-	* @param int $moduleid ID of the module, this field belongs to
-	* @param int $weight
-	*
-	* @return string
-	**/
+	 * Save a new field in the database
+	 *
+	 * @param array $vars array of variables, taken from $module->loadInfo('profile')['field']
+	 * @param int $categoryid ID of the category to add it to
+	 * @param int $type valuetype of the field
+	 * @param int $moduleid ID of the module, this field belongs to
+	 * @param int $weight
+	 *
+	 * @return string
+	 **/
 	function saveField($vars, $weight = 0) {
 		$field =& $this->createField();
 		$field->setVar('field_name', $vars['name']);
@@ -223,7 +223,6 @@ class ProfileProfileHandler extends IcmsPersistableObjectHandler {
 		return parent::insert($obj, $force, $checkObject);
 	}
 
-
 	/**
 	 * Get array of standard variable names (user table)
 	 *
@@ -240,7 +239,7 @@ class ProfileProfileHandler extends IcmsPersistableObjectHandler {
 	 *
 	 * @return array
 	 */
-  function search($criteria, $searchvars) {
+	function search($criteria, $searchvars) {
 		$searchvars2 = array('uid' => false, 'uname' => false, 'email' => false, 'user_viewemail' => false);
 		global $icmsUser;
 		if (is_object($icmsUser)) {
@@ -264,7 +263,7 @@ class ProfileProfileHandler extends IcmsPersistableObjectHandler {
 				$b = true;
 			}
 			if (isset($vars[$field])) {
-				$sql .= 'users.'; 
+				$sql .= 'users.';
 			} else {
 				$sql .= 'profiles.';
 			}
@@ -275,7 +274,7 @@ class ProfileProfileHandler extends IcmsPersistableObjectHandler {
 		$sql .= ' '.$criteria->renderWhere();
 		if ($criteria->getSort() != '') {
 			$sql .= ' ORDER BY '.$criteria->getSort().' '.$criteria->getOrder();
-		}				
+		}
 		$users = '';
 		$profiles = '';
 		$limit = $criteria->getLimit();

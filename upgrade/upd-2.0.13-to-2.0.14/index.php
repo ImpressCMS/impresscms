@@ -1,9 +1,9 @@
 <?php
 
-class upgrade_2014 {  
-	
+class upgrade_2014 {
+
 	var $usedFiles = array( 'mainfile.php' );
-	
+
 	function isApplied() {
 		return ( $this->check_0523patch() && $this->check_auth_db() );
 	}
@@ -12,7 +12,7 @@ class upgrade_2014 {
 		if ( $this->apply_0523patch() ) {
 			return $this->apply_auth_db();
 		}
-		return false; 
+		return false;
 	}
 
 	function check_0523patch() {
@@ -27,7 +27,7 @@ class upgrade_2014 {
 	}
 
 	function apply_0523patch() {
-$patchCode = "
+		$patchCode = "
     foreach ( array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri') as \$bad_global ) {
         if ( isset( \$_REQUEST[\$bad_global] ) ) {
             header( 'Location: '.XOOPS_URL.'/' );
@@ -35,18 +35,18 @@ $patchCode = "
         }
     }
 ";
-$manual = "<h2>" . _MANUAL_INSTRUCTIONS . "</h2>\n<p>" . sprintf( _COPY_RED_LINES, "mainfile.php" ) . "</p>
+		$manual = "<h2>" . _MANUAL_INSTRUCTIONS . "</h2>\n<p>" . sprintf( _COPY_RED_LINES, "mainfile.php" ) . "</p>
 <pre style='border:1px solid black;width:650px;overflow:auto'><span style='color:#ff0000;font-weight:bold'>$patchCode</span>
     if (!isset(\$xoopsOption['nocommon']) && XOOPS_ROOT_PATH != '') {
         include XOOPS_ROOT_PATH.\"/include/common.php\";
     }
 </pre>";
 		$lines = file( '../mainfile.php' );
-	
+
 		$insert = -1;
 		$matchProtector = '/modules/protector/include/precheck.inc.php';
 		$matchDefault = "\$xoopsOption['nocommon']";
-	
+
 		foreach ( $lines as $k => $line ) {
 			if ( strpos( $line, "\$_REQUEST[\$bad_global]" ) !== false ) {
 				// Patch found: do not apply again
@@ -77,10 +77,10 @@ $manual = "<h2>" . _MANUAL_INSTRUCTIONS . "</h2>\n<p>" . sprintf( _COPY_RED_LINE
 					$newline = defined( PHP_EOL ) ? PHP_EOL : ( strpos( php_uname(), 'Windows') ? "\r\n" : "\n" );
 					$prepend = implode( '', array_slice( $lines, 0, $insert ) );
 					$append = implode( '', array_slice( $lines, $insert ) );
-					
+						
 					$content = $prepend . $patchCode . $append;
 					$content = str_replace( array( "\r\n", "\n" ), $newline, $content );
-					
+						
 					fwrite( $fp,  $content );
 					fclose( $fp );
 					echo "Patch successfully applied";
@@ -97,17 +97,17 @@ $manual = "<h2>" . _MANUAL_INSTRUCTIONS . "</h2>\n<p>" . sprintf( _COPY_RED_LINE
 		);
 		return (bool)$value;
 	}
-	
+
 	function query( $sql ) {
 		$db = $GLOBALS['xoopsDB'];
 		if ( ! ( $ret = $db->queryF( $sql ) ) ) {
 			echo $db->error();
 		}
-	}		
+	}
 
 	function apply_auth_db() {
 		$db = $GLOBALS['xoopsDB'];
-		
+
 		$cat = getDbValue( $db, 'configcategory', 'confcat_id', "`confcat_name` ='_MD_AM_AUTHENTICATION'" );
 		if ( $cat !== false && $cat != XOOPS_CONF_AUTH ) {
 			// 2.2 downgrade bug: LDAP cat is here but has a catid of 0
@@ -115,7 +115,7 @@ $manual = "<h2>" . _MANUAL_INSTRUCTIONS . "</h2>\n<p>" . sprintf( _COPY_RED_LINE
 			$db->queryF( "DELETE FROM " . $db->prefix( 'config' ) . " WHERE `conf_modid`=0 AND `conf_catid` = $cat" );
 		}
 		// Insert config category ( always XOOPS_CONF_AUTH = 7 )
-   		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES (7,'_MD_AM_AUTHENTICATION')");
+		$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES (7,'_MD_AM_AUTHENTICATION')");
 		// Insert config values
 		$table = $db->prefix( 'config' );
 		$data = array(

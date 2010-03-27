@@ -1,15 +1,15 @@
 <?php
 
 /**
-* Classes responsible for managing profile pictures objects
-*
-* @copyright	GNU General Public License (GPL)
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since		1.3
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package		profile
-* @version		$Id$
-*/
+ * Classes responsible for managing profile pictures objects
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since		1.3
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package		profile
+ * @version		$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
 
@@ -71,7 +71,7 @@ class ProfilePictures extends IcmsPersistableSeoObject {
 		</a>';
 		return $ret;
 	}
-	
+
 	function getPictureSender() {
 		return icms_getLinkedUnameFromId($this->getVar('uid_owner', 'e'));
 	}
@@ -129,7 +129,7 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		$this->IcmsPersistableObjectHandler($db, 'pictures', 'pictures_id', 'title', '', 'profile');
 		$this->enableUpload(array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/png'), $icmsModuleConfig['maxfilesize_picture'], $icmsModuleConfig['max_original_width'], $icmsModuleConfig['max_original_height']);
 	}
-	
+
 
 	/**
 	 * Create the criteria that will be used by getPictures and getPicturesCount
@@ -148,7 +148,7 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 			$criteria->setStart($start);
 		}
 		if ($limit) {
-			$criteria->setLimit(intval($limit));
+			$criteria->setLimit( (int) ($limit));
 		}
 		$criteria->setSort('creation_time');
 		if ($icmsModuleConfig['images_order']) $criteria->setOrder('DESC');
@@ -160,7 +160,7 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 		} else {
 			$criteria->add(new Criteria('private', 0));
 		}
-		
+
 		if ($uid_owner) {
 			$criteria->add(new Criteria('uid_owner', $uid_owner));
 		}
@@ -197,38 +197,38 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
-	* Resize a picture and save it to $path_upload
-	* 
-	* @param text $img the path to the file
-	* @param int $width the width in pixels that the pic will have
-	* @param int $height the height in pixels that the pic will have
-	* @param text $path_upload The path to where the files should be saved after resizing
-	* @param text $prefix The prefix used to recognize files and avoid multiple files.
-	* @return nothing
-	*/	
+	 * Resize a picture and save it to $path_upload
+	 *
+	 * @param text $img the path to the file
+	 * @param int $width the width in pixels that the pic will have
+	 * @param int $height the height in pixels that the pic will have
+	 * @param text $path_upload The path to where the files should be saved after resizing
+	 * @param text $prefix The prefix used to recognize files and avoid multiple files.
+	 * @return nothing
+	 */
 	function imageResizer($img, $width=320, $height=240, $path_upload=ICMS_UPLOAD_PATH, $prefix='') {
 		$prefix = (isset($prefix) && $prefix != '')?$prefix:time();
 		$path = pathinfo($img);
 		$img = WideImage::load($img);
 		$img->resizeDown($width, $height)->saveToFile($path_upload.'/'.$prefix.'_'.$path['basename']);
 	}
-	
+
 	/**
-	* Resize a picture and save it to $path_upload
-	* 
-	* @param text $img the path to the file
-	* @param text $path_upload The path to where the files should be saved after resizing
-	* @param int $thumbwidth the width in pixels that the thumbnail will have
-	* @param int $thumbheight the height in pixels that the thumbnail will have
-	* @param int $pictwidth the width in pixels that the pic will have
-	* @param int $pictheight the height in pixels that the pic will have
-	* @return nothing
-	*/	
+	 * Resize a picture and save it to $path_upload
+	 *
+	 * @param text $img the path to the file
+	 * @param text $path_upload The path to where the files should be saved after resizing
+	 * @param int $thumbwidth the width in pixels that the thumbnail will have
+	 * @param int $thumbheight the height in pixels that the thumbnail will have
+	 * @param int $pictwidth the width in pixels that the pic will have
+	 * @param int $pictheight the height in pixels that the pic will have
+	 * @return nothing
+	 */
 	function resizeImage($img, $thumbwidth, $thumbheight, $pictwidth, $pictheight,$path_upload) {
 		$this->imageResizer($img, $thumbwidth, $thumbheight, $path_upload, 'thumb');
 		$this->imageResizer($img, $pictwidth, $pictheight, $path_upload, 'resized');
 	}
-	
+
 	/**
 	 * Resize a picture and save it to $path_upload
 	 *
@@ -301,14 +301,14 @@ class ProfilePicturesHandler extends IcmsPersistableObjectHandler {
 			$user_handler =& xoops_gethandler('user');
 
 			if($user_handler->insert($icmsUser)) {
-				$avt_handler->addUser($avatarObj->getVar('avatar_id'), intval($icmsUser->getVar('uid')));
+				$avt_handler->addUser($avatarObj->getVar('avatar_id'), (int) ($icmsUser->getVar('uid')));
 				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_PICTURES_AVATAR_EDITED);
 			} else {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_PICTURES_AVATAR_NOTEDITED);
 			}
 		}
 	}
-	
+
 	/**
 	 * Check wether the current user can submit a new picture or not
 	 *

@@ -1,17 +1,17 @@
 <?php
 /**
-* The check login include file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * The check login include file
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
@@ -23,9 +23,9 @@ $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
  * Commented out for OpenID , we need to change it to make a better validation if OpenID is used
  */
 /*if ($uname == '' || $pass == '') {
-	redirect_header(ICMS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
-	exit();
-}*/
+ redirect_header(ICMS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
+ exit();
+ }*/
 $member_handler =& xoops_gethandler('member');
 $myts =& MyTextsanitizer::getInstance();
 
@@ -37,15 +37,15 @@ $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
 $uname4sql = addslashes( $myts->stripSlashesGPC($uname) ) ;
 $pass4sql = addslashes( $myts->stripSlashesGPC($pass) ) ;
 /*if( strstr( $uname , '@' ) ) {
-	// check by email if uname includes '@'
-	$criteria = new CriteriaCompo(new Criteria('email', $uname4sql ));
-	$criteria->add(new Criteria('pass', $pass4sql));
-	$user_handler =& xoops_gethandler('user');
-	$users =& $user_handler->getObjects($criteria, false);
-	if( empty( $users ) || count( $users ) != 1 ) $user = false ;
-	else $user = $users[0] ;
-	unset( $users ) ;
-} */
+ // check by email if uname includes '@'
+ $criteria = new CriteriaCompo(new Criteria('email', $uname4sql ));
+ $criteria->add(new Criteria('pass', $pass4sql));
+ $user_handler =& xoops_gethandler('user');
+ $users =& $user_handler->getObjects($criteria, false);
+ if( empty( $users ) || count( $users ) != 1 ) $user = false ;
+ else $user = $users[0] ;
+ unset( $users ) ;
+ } */
 if(empty($user) || !is_object($user)) {$user =& $xoopsAuth->authenticate($uname4sql, $pass4sql);}
 // end of uname&email hack GIJ
 
@@ -127,13 +127,13 @@ if (false != $user) {
 		$xoopsLocation = substr( ICMS_URL, strpos( ICMS_URL, '://' ) + 3 );
 		if ( substr($url, $pos + 3, strlen($xoopsLocation)) != $xoopsLocation)  {
 			$url = ICMS_URL;
-		 }elseif(substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
+		}elseif(substr($url, $pos + 3, strlen($xoopsLocation)+1) == $xoopsLocation.'.') {
 			$url = ICMS_URL;
-		 }
-		 if( substr($url, 0, strlen(ICMS_URL)*2) ==  ICMS_URL.ICMS_URL){
-		 	$url = substr($url, strlen(ICMS_URL));
+		}
+		if( substr($url, 0, strlen(ICMS_URL)*2) ==  ICMS_URL.ICMS_URL){
+			$url = substr($url, strlen(ICMS_URL));
 
-		 }
+		}
 	}
 
 	// autologin hack V3.1 GIJ (set cookie)

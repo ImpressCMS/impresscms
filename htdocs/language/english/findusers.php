@@ -4,7 +4,6 @@
 define("_MA_USER_MORE", "Search users");
 define("_MA_USER_REMOVE", "Remove unselected users");
 
-
 //%%%%%%	File Name findusers.php 	%%%%%
 define("_MA_USER_ADD_SELECTED", "Add selected users");
 

@@ -11,13 +11,12 @@
  * @author		http://www.xoops.org/ The XOOPS Project
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id$
-*/
+ * @version		$Id: text.php 19090 2010-03-13 17:41:42Z skenow $
+ */
 
 class IcmsCaptchaText {
 	var $config	= array();
 	var $code;
-
 
 	/**
 	 * Constructor
@@ -25,8 +24,6 @@ class IcmsCaptchaText {
 	function IcmsCaptchaText()
 	{
 	}
-
-
 
 	/**
 	 * Creates IcmsCaptchaText object
@@ -36,13 +33,10 @@ class IcmsCaptchaText {
 	{
 		static $instance;
 		if(!isset($instance)) {
-			$instance =& new IcmsCaptchaText();
+			$instance = new IcmsCaptchaText();
 		}
 		return $instance;
 	}
-
-
-
 
 	/**
 	 * Loading configs from CAPTCHA class
@@ -54,7 +48,6 @@ class IcmsCaptchaText {
 		$this->config =& $config;
 	}
 
-
 	/**
 	 * Sets CAPTCHA code
 	 */
@@ -62,8 +55,6 @@ class IcmsCaptchaText {
 	{
 		$_SESSION['IcmsCaptcha_sessioncode'] = strval( $this->code );
 	}
-
-
 
 	/**
 	 * Render the form
@@ -77,12 +68,11 @@ class IcmsCaptchaText {
 		if(!empty($rule)) {
 			$form .= "&nbsp;&nbsp;<small>{$rule}</small>";
 		}
-		
+
 		$this->setCode();
-		
+
 		return $form;
 	}
-
 
 	/**
 	 * Load the ICMS Captcha Text
@@ -104,6 +94,5 @@ class IcmsCaptchaText {
 	}
 
 }
-
 
 ?>

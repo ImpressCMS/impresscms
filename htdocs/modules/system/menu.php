@@ -1,19 +1,19 @@
 <?php
 // $Id: menu.php,v 1.2 2007/08/25 14:37:47 marcan Exp $
 /**
-* Contains links to admin options and images for those admin options
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package	Administration
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @version		$Id$
-*/
+ * Contains links to admin options and images for those admin options
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package	Administration
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @version		$Id$
+ */
 
-include_once(XOOPS_ROOT_PATH."/modules/system/constants.php");
+include_once XOOPS_ROOT_PATH."/modules/system/constants.php" ;
 
 $i=0;
 $adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU1;

@@ -1,16 +1,16 @@
 <?php
 /**
-* ImpressCMS Customtags
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		Administration
-* @since		1.1
-* @author		marcan <marcan@impresscms.org>
-* @version		$Id$
-*/
+ * ImpressCMS Customtags
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		Administration
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
+ */
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
-    exit("Access Denied");
+	exit("Access Denied");
 }
 
 function editcustomtag($showmenu = false, $customtagid = 0, $clone=false)
@@ -50,7 +50,7 @@ $op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?tr
 switch ($op) {
 	case "mod":
 
-		$customtagid = isset($_GET['customtagid']) ? intval($_GET['customtagid']) : 0 ;
+		$customtagid = isset($_GET['customtagid']) ? (int) ($_GET['customtagid']) : 0 ;
 
 		editcustomtag(true, $customtagid);
 
@@ -58,20 +58,20 @@ switch ($op) {
 
 	case "clone":
 
-		$customtagid = isset($_GET['customtagid']) ? intval($_GET['customtagid']) : 0 ;
+		$customtagid = isset($_GET['customtagid']) ? (int) ($_GET['customtagid']) : 0 ;
 
 		editcustomtag(true, $customtagid, true);
 		break;
 
 	case "addcustomtag":
-        include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-        $controller = new IcmsPersistableController($icms_customtag_handler);
+		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
+		$controller = new IcmsPersistableController($icms_customtag_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_CUSTOMTAG_CREATED, _CO_ICMS_CUSTOMTAG_MODIFIED);
 		break;
 
 	case "del":
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-	    $controller = new IcmsPersistableController($icms_customtag_handler);
+		$controller = new IcmsPersistableController($icms_customtag_handler);
 		$controller->handleObjectDeletion();
 
 		break;

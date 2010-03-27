@@ -35,22 +35,22 @@ $field_handler =& icms_getmodulehandler( 'field', basename(  dirname(  dirname( 
 $fields = $field_handler->getList();
 
 if (isset($_REQUEST['submit'])) {
-    $visibility = $visibility_handler->create();
-    $visibility->setVar('fieldid', intval($_REQUEST['fieldid']));
-    $visibility->setVar('user_group', $_REQUEST['ug']);
-    $visibility->setVar('profile_group', $_REQUEST['pg']);
-    $visibility_handler->insert($visibility);
+	$visibility = $visibility_handler->create();
+	$visibility->setVar('fieldid', (int) ($_REQUEST['fieldid']));
+	$visibility->setVar('user_group', $_REQUEST['ug']);
+	$visibility->setVar('profile_group', $_REQUEST['pg']);
+	$visibility_handler->insert($visibility);
 }
 if ($op == "del") {
-    $visibility = $visibility_handler->get(array(intval($_REQUEST['fieldid']), $_REQUEST['ug'], $_REQUEST['pg']));
-    $visibility_handler->delete($visibility, true);
-    header("Location: visibility.php");
+	$visibility = $visibility_handler->get(array( (int) ($_REQUEST['fieldid']), $_REQUEST['ug'], $_REQUEST['pg']));
+	$visibility_handler->delete($visibility, true);
+	header("Location: visibility.php");
 }
 
 $visibilities = $visibility_handler->getObjects();
 $visifields = '';
 foreach (array_keys($visibilities) as $i) {
-    $visifields[$visibilities[$i]->getVar('fieldid')][] = $visibilities[$i]->toArray();
+	$visifields[$visibilities[$i]->getVar('fieldid')][] = $visibilities[$i]->toArray();
 }
 $member_handler = xoops_gethandler('member');
 $groups = $member_handler->getGroupList();

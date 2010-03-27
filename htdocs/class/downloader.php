@@ -1,25 +1,25 @@
 <?php
 /**
-* XoopsDownloader Base Class
-*
-* Base class for the zipfile and tarfile downloads
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * XoopsDownloader Base Class
+ *
+ * Base class for the zipfile and tarfile downloads
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 /**
  * Sends non HTML files through a http socket
- * 
+ *
  * @package     kernel
  * @subpackage  core
- * 
+ *
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
@@ -32,7 +32,7 @@ class XoopsDownloader
 	var $mimetype;
 	var $ext;
 	var $archiver;
-    /**#@-*/
+	/**#@-*/
 
 	/**
 	 * Constructor
@@ -44,10 +44,10 @@ class XoopsDownloader
 
 	/**
 	 * Send the HTTP header
-   * 
-   * @param	string  $filename
-   * 
-   * @access	private
+	 *
+	 * @param	string  $filename
+	 *
+	 * @access	private
 	 */
 	function _header($filename)
 	{
@@ -69,7 +69,7 @@ class XoopsDownloader
 
 	/**
 	 * XoopsDownloader::addFile()
-	 * 
+	 *
 	 * @param   string    $filepath
 	 * @param   string    $newfilename
 	 **/
@@ -80,7 +80,7 @@ class XoopsDownloader
 
 	/**
 	 * XoopsDownloader::addBinaryFile()
-	 * 
+	 *
 	 * @param   string    $filepath
 	 * @param   string    $newfilename
 	 **/
@@ -91,7 +91,7 @@ class XoopsDownloader
 
 	/**
 	 * XoopsDownloader::addFileData()
-	 * 
+	 *
 	 * @param   mixed     $data
 	 * @param   string    $filename
 	 * @param   integer   $time
@@ -103,7 +103,7 @@ class XoopsDownloader
 
 	/**
 	 * XoopsDownloader::addBinaryFileData()
-	 * 
+	 *
 	 * @param   mixed   $data
 	 * @param   string  $filename
 	 * @param   integer $time
@@ -115,7 +115,7 @@ class XoopsDownloader
 
 	/**
 	 * XoopsDownloader::download()
-	 * 
+	 *
 	 * @param   string  $name
 	 * @param   boolean $gzip
 	 **/

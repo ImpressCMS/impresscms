@@ -18,33 +18,33 @@ include 'header.php';
 xoops_cp_header();
 
 if (!isset($_REQUEST['uid'])) {
-    redirect_header("index.php", 2, _PROFILE_AM_NOSELECTION);
+	redirect_header("index.php", 2, _PROFILE_AM_NOSELECTION);
 }
 $member_handler = xoops_gethandler('member');
-$user = $member_handler->getUser(intval($_REQUEST['uid']));
+$user = $member_handler->getUser( (int) ($_REQUEST['uid']));
 if (!$user || $user->isNew()) {
-    redirect_header("index.php", 2, _PROFILE_AM_USERDONEXIT);
+	redirect_header("index.php", 2, _PROFILE_AM_USERDONEXIT);
 }
 
 if (in_array(ICMS_GROUP_ADMIN, $user->getGroups())) {
-    redirect_header("index.php", 2, _PROFILE_AM_CANNOTDEACTIVATEWEBMASTERS);
+	redirect_header("index.php", 2, _PROFILE_AM_CANNOTDEACTIVATEWEBMASTERS);
 }
-$user->setVar('level', intval($_REQUEST['level']));
+$user->setVar('level', (int) ($_REQUEST['level']));
 if ($member_handler->insertUser($user)) {
-    if ($_REQUEST['level'] == 1) {
-        $message = _PROFILE_AM_USER_ACTIVATED;
-    }
-    else {
-        $message = _PROFILE_AM_USER_DEACTIVATED;
-    }
+	if ($_REQUEST['level'] == 1) {
+		$message = _PROFILE_AM_USER_ACTIVATED;
+	}
+	else {
+		$message = _PROFILE_AM_USER_DEACTIVATED;
+	}
 }
 else {
-    if ($_REQUEST['level'] == 1) {
-        $message = _PROFILE_AM_USER_NOT_ACTIVATED;
-    }
-    else {
-        $message = _PROFILE_AM_USER_NOT_DEACTIVATED;
-    }
+	if ($_REQUEST['level'] == 1) {
+		$message = _PROFILE_AM_USER_NOT_ACTIVATED;
+	}
+	else {
+		$message = _PROFILE_AM_USER_NOT_DEACTIVATED;
+	}
 }
 redirect_header("../userinfo.php?uid=".$user->getVar('uid'), 3, $message); // MPB
 ?>

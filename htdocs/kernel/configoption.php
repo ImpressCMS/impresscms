@@ -1,18 +1,18 @@
 <?php
 /**
-* Manage configuration options
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package		core
-* @subpackage	config
-* @since		XOOPS
-* @author		Kazumi Ono (aka onokazo)
-* @author		http://www.xoops.org The XOOPS Project
-* @version		$Id$
-*/
+ * Manage configuration options
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package		core
+ * @subpackage	config
+ * @since		XOOPS
+ * @author		Kazumi Ono (aka onokazo)
+ * @author		http://www.xoops.org The XOOPS Project
+ * @version		$Id$
+ */
 
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
@@ -82,7 +82,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
 	function &get($id)
 	{
 		$confoption = false;
-		$id = intval($id);
+		$id = (int) ($id);
 		if ($id > 0) {
 			$sql = "SELECT * FROM ".$this->db->prefix('configoption')." WHERE confop_id='".$id."'";
 			if (!$result = $this->db->query($sql)) {
@@ -122,9 +122,9 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
 		}
 		if ($confoption->isNew()) {
 			$confop_id = $this->db->genId('configoption_confop_id_seq');
-			$sql = sprintf("INSERT INTO %s (confop_id, confop_name, confop_value, conf_id) VALUES ('%u', %s, %s, '%u')", $this->db->prefix('configoption'), intval($confop_id), $this->db->quoteString($confop_name), $this->db->quoteString($confop_value), intval($conf_id));
+			$sql = sprintf("INSERT INTO %s (confop_id, confop_name, confop_value, conf_id) VALUES ('%u', %s, %s, '%u')", $this->db->prefix('configoption'), (int) ($confop_id), $this->db->quoteString($confop_name), $this->db->quoteString($confop_value), (int) ($conf_id));
 		} else {
-			$sql = sprintf("UPDATE %s SET confop_name = %s, confop_value = %s WHERE confop_id = '%u'", $this->db->prefix('configoption'), $this->db->quoteString($confop_name), $this->db->quoteString($confop_value), intval($confop_id));
+			$sql = sprintf("UPDATE %s SET confop_name = %s, confop_value = %s WHERE confop_id = '%u'", $this->db->prefix('configoption'), $this->db->quoteString($confop_name), $this->db->quoteString($confop_value), (int) ($confop_id));
 		}
 		if (!$result = $this->db->query($sql)) {
 			return false;
@@ -150,7 +150,7 @@ class XoopsConfigOptionHandler extends XoopsObjectHandler
 		if (!is_a($confoption, 'xoopsconfigoption')) {
 			return false;
 		}
-		$sql = sprintf("DELETE FROM %s WHERE confop_id = '%u'", $this->db->prefix('configoption'), intval($confoption->getVar('confop_id')));
+		$sql = sprintf("DELETE FROM %s WHERE confop_id = '%u'", $this->db->prefix('configoption'), (int) ($confoption->getVar('confop_id')));
 		if (!$result = $this->db->query($sql)) {
 			return false;
 		}

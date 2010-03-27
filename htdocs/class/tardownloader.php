@@ -1,17 +1,17 @@
 <?php
 /**
-* The Tar files downloader class
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * The Tar files downloader class
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
@@ -40,7 +40,7 @@ class XoopsTarDownloader extends XoopsDownloader
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param string $ext       file extension
 	 * @param string $mimyType  Mimetype
 	 **/
@@ -53,7 +53,7 @@ class XoopsTarDownloader extends XoopsDownloader
 
 	/**
 	 * Add a file to the archive
-	 * 
+	 *
 	 * @param   string  $filepath       Full path to the file
 	 * @param   string  $newfilename    Filename (if you don't want to use the original)
 	 **/
@@ -73,7 +73,7 @@ class XoopsTarDownloader extends XoopsDownloader
 
 	/**
 	 * Add a binary file to the archive
-	 * 
+	 *
 	 * @param   string  $filepath       Full path to the file
 	 * @param   string  $newfilename    Filename (if you don't want to use the original)
 	 **/
@@ -93,7 +93,7 @@ class XoopsTarDownloader extends XoopsDownloader
 
 	/**
 	 * Add a dummy file to the archive
-	 * 
+	 *
 	 * @param   string  $data       Data to write
 	 * @param   string  $filename   Name for the file in the archive
 	 * @param   integer $time
@@ -121,7 +121,7 @@ class XoopsTarDownloader extends XoopsDownloader
 
 	/**
 	 * Add a binary dummy file to the archive
-	 * 
+	 *
 	 * @param   string  $data   Data to write
 	 * @param   string  $filename   Name for the file in the archive
 	 * @param   integer $time
@@ -149,7 +149,7 @@ class XoopsTarDownloader extends XoopsDownloader
 
 	/**
 	 * Send the file to the client
-	 * 
+	 *
 	 * @param   string  $name   Filename
 	 * @param   boolean $gzip   Use GZ compression
 	 **/

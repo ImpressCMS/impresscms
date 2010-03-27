@@ -1,13 +1,13 @@
 <?php
 /**
-* ICMS kernel Base Class
-*
-* @copyright      http://www.impresscms.org/ The ImpressCMS Project
-* @license         LICENSE.txt
-* @package	kernel
-* @since            1.1
-* @version		$Id$
-*/
+ * ICMS kernel Base Class
+ *
+ * @copyright      http://www.impresscms.org/ The ImpressCMS Project
+ * @license         LICENSE.txt
+ * @package	kernel
+ * @since            1.1
+ * @version		$Id$
+ */
 
 /**
  * Extremely reduced kernel class
@@ -24,7 +24,7 @@ class IcmsKernel {
 	);
 	/** @var array */
 	var $urls=false;
-	
+
 	/**
 	 * Constructor for IcmsKernel, initiating all properties of the class
 	 */
@@ -38,7 +38,7 @@ class IcmsKernel {
 	 * Convert a ImpressCMS path to a physical one
 	 * @param	string	$url URL string to convert to a physical path
 	 * @param 	boolean	$virtual
-	 * @return 	string	
+	 * @return 	string
 	 */
 	function path( $url, $virtual = false ) {
 		$path = '';
@@ -52,19 +52,19 @@ class IcmsKernel {
 		return !isset( $this->paths[$root][1] ) ? '' : ( $this->paths[$root][1] . '/' . $path );
 	}
 	/**
-	* Convert a ImpressCMS path to an URL
-	* @param 	string	$url
-	* @return 	string
-	*/
+	 * Convert a ImpressCMS path to an URL
+	 * @param 	string	$url
+	 * @return 	string
+	 */
 	function url( $url ) {
 		return ( false !== strpos( $url, '://' ) ? $url : $this->path( $url, true ) );
 	}
 	/**
-	* Build an URL with the specified request params
-	* @param 	string 	$url
-	* @param 	array	$params
-	* @return 	string
-	*/
+	 * Build an URL with the specified request params
+	 * @param 	string 	$url
+	 * @param 	array	$params
+	 * @return 	string
+	 */
 	function buildUrl( $url, $params = array() ) {
 		if ( $url == '.' ) {
 			$url = $_SERVER['REQUEST_URI'];
@@ -83,11 +83,11 @@ class IcmsKernel {
 		}
 		return $url;
 	}
-	
+
 	/**
 	 * Build URLs for global use throughout the application
 	 * @return 	array
-	 */ 
+	 */
 	function _buildRelevantUrls() {
 
 		if (!$this->urls) {
@@ -106,16 +106,16 @@ class IcmsKernel {
 			$this->urls['querystring'] = $querystring;
 			$this->urls['full_phpself'] = $http . $httphost . $phpself;
 			$this->urls['full'] = $currenturl;
-			
+				
 			$previouspage = '';
-		    if ( array_key_exists( 'HTTP_REFERER', $_SERVER) && isset($_SERVER['HTTP_REFERER']) ) {
-		        $this->urls['previouspage'] = $_SERVER['HTTP_REFERER'];
-		    }
+			if ( array_key_exists( 'HTTP_REFERER', $_SERVER) && isset($_SERVER['HTTP_REFERER']) ) {
+				$this->urls['previouspage'] = $_SERVER['HTTP_REFERER'];
+			}
 			//$this->urls['isHomePage'] = (ICMS_URL . "/index.php") == ($http . $httphost . $phpself);
 		}
 		return $this->urls;
 	}
-	
+
 
 }
 

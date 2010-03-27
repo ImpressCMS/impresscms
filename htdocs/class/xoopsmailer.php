@@ -1,28 +1,27 @@
 <?php
 /**
-* Handles all mailer functions within ImpressCMS
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Handles all mailer functions within ImpressCMS
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined("ICMS_ROOT_PATH")) {
-    die("ImpressCMS root path not defined");
+	die("ImpressCMS root path not defined");
 }
 icms_loadLanguageFile('core', 'mail');
 /**
- * The new Multimailer class that will carry out the actual sending and will later replace this class. 
+ * The new Multimailer class that will carry out the actual sending and will later replace this class.
  * If you're writing new code, please use that class instead.
  */
-include_once(ICMS_ROOT_PATH."/class/mail/xoopsmultimailer.php");
-
+include_once ICMS_ROOT_PATH."/class/mail/xoopsmultimailer.php" ;
 
 /**
  * Class for sending mail.
@@ -172,7 +171,7 @@ class XoopsMailer
 	// public
 	function setFromUser(&$user)
 	{
-        if ( strtolower(get_class($user)) == "xoopsuser" ) {
+		if ( strtolower(get_class($user)) == "xoopsuser" ) {
 			$this->fromUser =& $user;
 		}
 	}
@@ -182,7 +181,6 @@ class XoopsMailer
 	{
 		$this->priority = trim($value);
 	}
-
 
 	// public
 	function setSubject($value)
@@ -223,8 +221,8 @@ class XoopsMailer
 				if ($debug) {
 					$this->errors[] = _MAIL_FAILOPTPL;
 				}
-            			return false;
-        		}
+				return false;
+			}
 			$this->setBody(fread($fd, filesize($path)));
 		}
 
@@ -238,10 +236,10 @@ class XoopsMailer
 			$headers = join($this->LE, $this->headers);
 		}
 
-// TODO: we should have an option of no-reply for private messages and emails
-// to which we do not accept replies.  e.g. the site admin doesn't want a
-// a lot of message from people trying to unsubscribe.  Just make sure to
-// give good instructions in the message.
+		// TODO: we should have an option of no-reply for private messages and emails
+		// to which we do not accept replies.  e.g. the site admin doesn't want a
+		// a lot of message from people trying to unsubscribe.  Just make sure to
+		// give good instructions in the message.
 
 		// add some standard tags (user-dependent tags are included later)
 		global $icmsConfig;
@@ -364,13 +362,13 @@ class XoopsMailer
 		if (!empty($this->fromEmail)) {
 			$this->multimailer->Sender = $this->multimailer->From = $this->fromEmail;
 		}
-		
+
 		$this->multimailer->ClearCustomHeaders();
 		foreach ($this->headers as $header) {
 			$this->multimailer->AddCustomHeader($header);
 		}
 		if (!$this->multimailer->Send()) {
-		    $this->errors[] = $this->multimailer->ErrorInfo;
+			$this->errors[] = $this->multimailer->ErrorInfo;
 			return FALSE;
 		}
 		return TRUE;
@@ -420,11 +418,11 @@ class XoopsMailer
 		} else {
 			if ( !empty($tag) && isset($value) ) {
 				$tag = strtoupper(trim($tag));
-// RMV-NOTIFY
-// TEMPORARY FIXME: until the X_tags are all in here
-//				if ( substr($tag, 0, 2) != "X_" ) {
-					$this->assignedTags[$tag] = $value;
-//				}
+				// RMV-NOTIFY
+				// TEMPORARY FIXME: until the X_tags are all in here
+				//				if ( substr($tag, 0, 2) != "X_" ) {
+				$this->assignedTags[$tag] = $value;
+				//				}
 			}
 		}
 	}

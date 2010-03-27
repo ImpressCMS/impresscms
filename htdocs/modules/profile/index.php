@@ -17,7 +17,7 @@
  * Edit a Friendship
  *
  * @param object $friendshipObj ProfileFriendship object to be edited
-*/
+ */
 function editfriendship($friendshipObj, $uid=false, $hideForm=false) {
 	global $profile_friendship_handler, $xoTheme, $icmsTpl, $icmsUser;
 
@@ -55,7 +55,7 @@ if (isset($_GET['op'])) $clean_op = $_GET['op'];
 if (isset($_POST['op'])) $clean_op = $_POST['op'];
 
 // Again, use a naming convention that indicates the source of the content of the variable
-$clean_friendship_id = isset($_GET['friendship_id']) ? intval($_GET['friendship_id']) : 0 ;
+$clean_friendship_id = isset($_GET['friendship_id']) ? (int) ($_GET['friendship_id']) : 0 ;
 $profile_friendship_handler = icms_getModuleHandler('friendship');
 
 /*  Create a whitelist of valid values, be sure to use appropriate types for each value
@@ -79,11 +79,11 @@ if (in_array($clean_op,$valid_op,true) && is_object($icmsUser)){
 				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
 				exit();
 			}
-			$clean_friendship_id = isset($_POST['friendship_id']) ? intval($_POST['friendship_id']) : 0;
+			$clean_friendship_id = isset($_POST['friendship_id']) ? (int) ($_POST['friendship_id']) : 0;
 			$friendshipObj = $profile_friendship_handler->get($clean_friendship_id);
 
 			if (!$friendshipObj->isNew() && $friendshipObj->getVar('friend2_uid') == $uid) {
-				$clean_status = isset($_POST['status']) ? intval($_POST['status']) : '';
+				$clean_status = isset($_POST['status']) ? (int) ($_POST['status']) : '';
 				$valid_status = array (PROFILE_FRIENDSHIP_STATUS_ACCEPTED, PROFILE_FRIENDSHIP_STATUS_REJECTED);
 				if (in_array($clean_status, $valid_status, true)) {
 					$friendshipObj->setVar('status', $clean_status);
@@ -101,7 +101,7 @@ if (in_array($clean_op,$valid_op,true) && is_object($icmsUser)){
 					editfriendship($friendshipObj, $uid, true);
 				}
 			}
-		break;
+			break;
 	}
 }
 

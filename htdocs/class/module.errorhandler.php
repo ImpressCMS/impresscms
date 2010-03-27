@@ -1,17 +1,17 @@
 <?php
 /**
-* Error Handler class
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Error Handler class
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if ( !defined("XOOPS_C_ERRORHANDLER_INCLUDED") ) {
 	define("XOOPS_C_ERRORHANDLER_INCLUDED",1);
@@ -22,18 +22,18 @@ if ( !defined("XOOPS_C_ERRORHANDLER_INCLUDED") ) {
 	 * @package		kernel
 	 * @subpackage	core
 	 *
-	 * @author		Goghs (http://www.eqiao.com/)  
+	 * @author		Goghs (http://www.eqiao.com/)
 	 * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
 	 */
 	class ErrorHandler
 	{
 		/**
 		 * Show an error message
-		 * 
+		 *
 		 * @param   string  $e_code Errorcode
 		 * @param   integer $pages  How many pages should the link take you back?
-         * 
-         * @global  $icmsConfig
+		 *
+		 * @global  $icmsConfig
 		 **/
 		function show($e_code, $pages=1)
 		{

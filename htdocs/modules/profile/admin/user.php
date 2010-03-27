@@ -40,17 +40,17 @@ switch($op) {
 		echo "<br />\n";
 		$member_handler =& xoops_gethandler('member');
 		$user_count = $member_handler->getUserCount(new Criteria('level', '-1'));
-			if(count($user_count)>1){
-				$form = new XoopsThemeForm(_PROFILE_AM_REMOVEDUSERS, 'form', 'user.php');
-				$form->addElement(new XoopsFormSelectUser(_PROFILE_AM_SELECTUSER, 'id', false, false, false, false, true, true));
-				$form->addElement(new XoopsFormHidden('op', 'editordelete'));
-				$button_tray = new XoopsFormElementTray('');
-				$button_tray->addElement(new XoopsFormButton('', 'edit', _EDIT, 'submit'));
-				$form->addElement($button_tray);
-				$form->display();
-				echo "<br />\n";
-			}
-	
+		if(count($user_count)>1){
+			$form = new XoopsThemeForm(_PROFILE_AM_REMOVEDUSERS, 'form', 'user.php');
+			$form->addElement(new XoopsFormSelectUser(_PROFILE_AM_SELECTUSER, 'id', false, false, false, false, true, true));
+			$form->addElement(new XoopsFormHidden('op', 'editordelete'));
+			$button_tray = new XoopsFormElementTray('');
+			$button_tray->addElement(new XoopsFormButton('', 'edit', _EDIT, 'submit'));
+			$form->addElement($button_tray);
+			$form->display();
+			echo "<br />\n";
+		}
+
 	case 'new':
 		if (@!include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/'.$icmsConfig['language'].'/main.php')) {
 			include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/english/main.php');
@@ -67,7 +67,7 @@ switch($op) {
 		if (@!include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/'.$icmsConfig['language'].'/main.php')) {
 			include_once(ICMS_ROOT_PATH.'/modules/'.basename(  dirname(  dirname( __FILE__ ) ) ).'/language/english/main.php');
 		}
-		$obj =& $handler->getUser(intval($_REQUEST['id']));
+		$obj =& $handler->getUser( (int) ($_REQUEST['id']));
 		if (in_array(ICMS_GROUP_ADMIN, $obj->getGroups()) && !in_array(ICMS_GROUP_ADMIN, $icmsUser->getGroups())) {
 			// If not webmaster trying to edit a webmaster - disallow
 			redirect_header('user.php', 3, _PROFILE_AM_CANNOTEDITWEBMASTERS);
@@ -88,7 +88,7 @@ switch($op) {
 		}
 		$uid = 0;
 		if (!empty($_POST['uid'])) {
-			$uid = intval($_POST['uid']);
+			$uid = (int) ($_POST['uid']);
 			$user =& $handler->getUser($uid);
 		}
 		else {
@@ -128,13 +128,13 @@ switch($op) {
 			}elseif ($user->isNew()) {
 				$errors[] = _PROFILE_MA_NOPASSWORD;
 			}
-			$user->setVar('level', intval($_POST['level']));
+			$user->setVar('level', (int) ($_POST['level']));
 		}
 		$user->setVar('uname', trim($_POST['uname']));
 		$user->setVar('login_name', trim($_POST['login_name']));
 		if ($icmsConfigAuth['auth_openid'] == 1) {
 			$user->setVar('openid', trim($_POST['openid']));
-			$user->setVar('user_viewoid', isset($_POST['user_viewoid']) ? intval($_POST['user_viewoid']) : 0);
+			$user->setVar('user_viewoid', isset($_POST['user_viewoid']) ? (int) ($_POST['user_viewoid']) : 0);
 		}
 		include_once('../include/functions.php');
 		$stop = userCheck($user);
@@ -238,7 +238,7 @@ switch($op) {
 				echo $profile->getHtmlErrors();
 			}
 		} else {
-			xoops_confirm(array('ok' => 1, 'id' => intval($_REQUEST['id']), 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('uname').' ('.$obj->getVar('email').')'));
+			xoops_confirm(array('ok' => 1, 'id' => (int) ($_REQUEST['id']), 'op' => 'delete'), $_SERVER['REQUEST_URI'], sprintf(_PROFILE_AM_RUSUREDEL, $obj->getVar('uname').' ('.$obj->getVar('email').')'));
 		}
 		break;
 }

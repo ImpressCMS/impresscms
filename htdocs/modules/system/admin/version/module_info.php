@@ -1,21 +1,21 @@
 <?php
 /**
-* Version checker, module_info file
-*
-* @copyright      http://www.impresscms.org/ The ImpressCMS Project
-* @license         LICENSE.txt
-* @package	Administration
-* @since            1.0
-* @version		$Id$
-*/
+ * Version checker, module_info file
+ *
+ * @copyright      http://www.impresscms.org/ The ImpressCMS Project
+ * @license         LICENSE.txt
+ * @package	Administration
+ * @since            1.0
+ * @version		$Id$
+ */
 
 if (!defined('XOOPS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 
-if (intval($_GET['mid'])) {
+if ( (int) ($_GET['mid'])) {
 	$module_handler =& xoops_gethandler('module');
-	$versioninfo =& $module_handler->get(intval($_GET['mid']));
+	$versioninfo =& $module_handler->get( (int) ($_GET['mid']));
 } else {
 	$mid = str_replace('..', '', trim($_GET['mid']));
 	if (file_exists(XOOPS_ROOT_PATH.'/modules/'.$mid.'/xoops_version.php') || file_exists(XOOPS_ROOT_PATH.'/modules/'.$mid.'/icms_version.php')) {
@@ -52,10 +52,10 @@ function stop(){
 </script>
 <?php
 /*
-if($css){
-    echo "<link rel=\"stylesheet\" href=\"".$css."\" type=\"text/css\">\n\n";
-}
-*/
+ if($css){
+ echo "<link rel=\"stylesheet\" href=\"".$css."\" type=\"text/css\">\n\n";
+ }
+ */
 echo "</head>\n";
 echo "<body onLoad=\"if(window.scroll)onWard()\" onmouseover=\"stop()\" onmouseout=\"if(window.scroll)onWard()\">\n";
 echo "<div><table width=\"100%\"><tr><td align=\"center\"><br /><br /><br /><br /><br />";
@@ -67,7 +67,7 @@ if ($modimage = $versioninfo->getInfo('image')) {
 	}
 }
 if ($modname = $versioninfo->getInfo('name')) {
-    echo "<big><b>".htmlspecialchars($modname)."</b></big>";
+	echo "<big><b>".htmlspecialchars($modname)."</b></big>";
 }
 
 $modinfo = array('Version', 'Description', 'Author', 'Credits', 'License');

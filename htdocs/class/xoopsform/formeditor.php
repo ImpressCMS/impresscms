@@ -1,17 +1,17 @@
 <?php
 /**
-* Creates a form editor object
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	XoopsForms
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Creates a form editor object
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	XoopsForms
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 /**
  *
  *
@@ -38,12 +38,12 @@ class XoopsFormEditor extends XoopsFormTextArea
 	/**
 	 * Constructor
 	 *
-   * @param	string  $caption    Caption
-   * @param	string  $name       "name" attribute
-   * @param	string  $value      Initial text
-   * @param	array 	$configs     configures
-   * @param	bool  	$noHtml       use non-WYSIWYG eitor onfailure
-   * @param	string  $OnFailure editor to be used if current one failed
+	 * @param	string  $caption    Caption
+	 * @param	string  $name       "name" attribute
+	 * @param	string  $value      Initial text
+	 * @param	array 	$configs     configures
+	 * @param	bool  	$noHtml       use non-WYSIWYG eitor onfailure
+	 * @param	string  $OnFailure editor to be used if current one failed
 	 */
 	function XoopsFormEditor($caption, $name, $editor_configs = null, $noHtml=false, $OnFailure = "")
 	{
@@ -53,11 +53,9 @@ class XoopsFormEditor extends XoopsFormTextArea
 		$this->editor =& $editor_handler->get($name, $editor_configs, $noHtml, $OnFailure);
 	}
 
-
-
 	/**
 	 * Renders the editor
-   * @return	string  the constructed html string for the editor
+	 * @return	string  the constructed html string for the editor
 	 */
 	function render()
 	{

@@ -1,17 +1,17 @@
 <?php
 /**
-* ImpressCMS Adsenses
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		Administration
-* @since		1.2
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ * ImpressCMS Adsenses
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		Administration
+ * @since		1.2
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 
 if (! defined ( "ICMS_ROOT_PATH" ))
-	die ( "ImpressCMS root path not defined" );
+die ( "ImpressCMS root path not defined" );
 
 include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
 
@@ -108,7 +108,6 @@ google_color_text = "' . $this->getVar('text_color', 'n') . '";
 		$tableau = explode ( "-", $title ); // Transforme la chaine de caract�res en tableau
 		$tableau = array_filter ( $tableau, array ($this, "emptyString" ) ); // Supprime les chaines vides du tableau
 		$title = implode ( "-", $tableau ); // Transforme un tableau en chaine de caract�res s�par� par un tiret
-
 
 		$title = $title . time ();
 		$title = md5 ( $title );

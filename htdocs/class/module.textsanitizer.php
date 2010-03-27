@@ -1,65 +1,64 @@
 <?php
 /**
-* All BB codes allowed in the site are generated through here.
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ * All BB codes allowed in the site are generated through here.
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 
 /**
-* Class to "clean up" text for various uses
-*
-* <b>Singleton</b>
-*
-* @package		kernel
-* @subpackage	core
-*
-* @author		Kazumi Ono 	<onokazu@xoops.org>
-* @author	  Goghs Cheng
-* @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
-*/
+ * Class to "clean up" text for various uses
+ *
+ * <b>Singleton</b>
+ *
+ * @package		kernel
+ * @subpackage	core
+ *
+ * @author		Kazumi Ono 	<onokazu@xoops.org>
+ * @author	  Goghs Cheng
+ * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
+ */
 class MyTextSanitizer
 {
 	/**
-	* @public	array
-	*/
+	 * @public	array
+	 */
 	public $displaySmileys = array();
 	/**
-	* @public	array
-	*/
+	 * @public	array
+	 */
 	public $allSmileys = array();
 	/**
-	*
-	*/
+	 *
+	 */
 	public $censorConf;
 	/**
-	* Constructor of this class
-	* Gets allowed html tags from admin config settings
-	* <br> should not be allowed since nl2br will be used
-	* when storing data.
-	*
-	* @access	private
-	*
-	* @todo Sofar, this does nuttin' ;-)
-	**/
+	 * Constructor of this class
+	 * Gets allowed html tags from admin config settings
+	 * <br> should not be allowed since nl2br will be used
+	 * when storing data.
+	 *
+	 * @access	private
+	 *
+	 * @todo Sofar, this does nuttin' ;-)
+	 **/
 	function MyTextSanitizer()
 	{
 	}
 
-
 	/**
-	* Starts HTML Purifier (from icms.htmlpurifier class)
-	*
-	* @param	 string	$text	 Text to purify
-	* @return	string	$text	the purified text
-	*/
+	 * Starts HTML Purifier (from icms.htmlpurifier class)
+	 *
+	 * @param	 string	$text	 Text to purify
+	 * @return	string	$text	the purified text
+	 */
 	function html_purifier($text)
 	{
 		include_once ICMS_ROOT_PATH.'/class/icms_HTMLPurifier.php';
@@ -71,13 +70,13 @@ class MyTextSanitizer
 	}
 
 	/**
-	* Access the only instance of this class
-	*
-	* @return   object
-	*
-	* @static
-	* @staticvar   object
-	*/
+	 * Access the only instance of this class
+	 *
+	 * @return   object
+	 *
+	 * @static
+	 * @staticvar   object
+	 */
 	function getInstance()
 	{
 		static $instance;
@@ -89,11 +88,11 @@ class MyTextSanitizer
 	}
 
 	/**
-	* Get the smileys
-	*
-	* @param	bool	$all
-	* @return   array
-	*/
+	 * Get the smileys
+	 *
+	 * @param	bool	$all
+	 * @return   array
+	 */
 	function getSmileys($all = false)
 	{
 		global $xoopsDB;
@@ -116,11 +115,11 @@ class MyTextSanitizer
 	}
 
 	/**
-	* Replace emoticons in the message with smiley images
-	*
-	* @param	string  $message
-	* @return   string
-	*/
+	 * Replace emoticons in the message with smiley images
+	 *
+	 * @param	string  $message
+	 * @return   string
+	 */
 	function smiley($message)
 	{
 		$smileys = $this->getSmileys(true);
@@ -133,15 +132,15 @@ class MyTextSanitizer
 	}
 
 	/**
-	* Make links in the text clickable
-	*
-	* @param   string  $text
-	* @return  string
-	**/
+	 * Make links in the text clickable
+	 *
+	 * @param   string  $text
+	 * @return  string
+	 **/
 	function makeClickable(&$text)
 	{
-	global $icmsConfigPersona;
-	$text = ' '.$text;
+		global $icmsConfigPersona;
+		$text = ' '.$text;
 		$patterns = array(
 			"/(^|[^]_a-z0-9-=\"'\/])([a-z]+?):\/\/([^, \r\n\"\(\)'<>]+)/i",
 			"/(^|[^]_a-z0-9-=\"'\/])www\.([a-z0-9\-]+)\.([^, \r\n\"\(\)'<>]+)/i",
@@ -154,8 +153,8 @@ class MyTextSanitizer
 			"\\1<a href=\"ftp://ftp.\\2.\\3\" rel=\"external\">ftp.\\2.\\3</a>"
 			/*,	"\\1<a href=\"mailto:\\2@\\3\">\\2@\\3</a>"*/
 		);
-	$text = preg_replace($patterns, $replacements, $text);
-	if($icmsConfigPersona['shorten_url'] == 1)
+		$text = preg_replace($patterns, $replacements, $text);
+		if($icmsConfigPersona['shorten_url'] == 1)
 		{
 			$links = explode('<a', $text);
 			$countlinks = count($links);
@@ -168,27 +167,27 @@ class MyTextSanitizer
 				$length = $end - $begin;
 				$urlname = substr($link, $begin, $length);
 
-				$maxlength = intval($icmsConfigPersona['max_url_long']);
-				$cutlength = intval($icmsConfigPersona['pre_chars_left']);
-				$endlength = -intval($icmsConfigPersona['last_chars_left']);
+				$maxlength = (int) ($icmsConfigPersona['max_url_long']);
+				$cutlength = (int) ($icmsConfigPersona['pre_chars_left']);
+				$endlength = - (int) ($icmsConfigPersona['last_chars_left']);
 				$middleurl = " ... ";
 				$chunked = (strlen($urlname) > $maxlength && preg_match('#^(https://|http://|ftp://|www\.)#is',
-$urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $urlname;
+				$urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $urlname;
 				$text = str_replace('>'.$urlname.'<', '>'.$chunked.'<', $text);
 			}
 			$text = substr($text, 1);
 		}
-			return($text);
+		return($text);
 	}
 
 	/**
-	* Replace XoopsCodes with their equivalent HTML formatting
-	*
-	* @param   string  $text
-	* @param   bool	$allowimage Allow images in the text?
-	*				  On FALSE, uses links to images.
-	* @return  string
-	**/
+	 * Replace XoopsCodes with their equivalent HTML formatting
+	 *
+	 * @param   string  $text
+	 * @param   bool	$allowimage Allow images in the text?
+	 *				  On FALSE, uses links to images.
+	 * @return  string
+	 **/
 	function xoopsCodeDecode(&$text, $allowimage = 1)
 	{
 		$patterns = array();
@@ -266,11 +265,11 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	}
 
 	/**
-	* Filters out invalid strings included in URL, if any
-	*
-	* @param   array  $matches
-	* @return  string
-	*/
+	 * Filters out invalid strings included in URL, if any
+	 *
+	 * @param   array  $matches
+	 * @return  string
+	 */
 	function _filterImgUrl($matches)
 	{
 		if($this->checkUrlString($matches[2]))
@@ -284,11 +283,11 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	}
 
 	/**
-	* Checks if invalid strings are included in URL
-	*
-	* @param   string  $text
-	* @return  bool
-	*/
+	 * Checks if invalid strings are included in URL
+	 *
+	 * @param   string  $text
+	 * @return  bool
+	 */
 	function checkUrlString($text)
 	{
 		// Check control code
@@ -301,22 +300,22 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	}
 
 	/**
-	* Convert linebreaks to <br /> tags
-	*
-	* @param	string  $text
-	* @return   string
-	*/
+	 * Convert linebreaks to <br /> tags
+	 *
+	 * @param	string  $text
+	 * @return   string
+	 */
 	function nl2Br($text)
 	{
 		return preg_replace("/(\015\012)|(\015)|(\012)/", "<br />", $text);
 	}
 
 	/**
-	* Add slashes to the text if magic_quotes_gpc is turned off.
-	*
-	* @param   string  $text
-	* @return  string
-	**/
+	 * Add slashes to the text if magic_quotes_gpc is turned off.
+	 *
+	 * @param   string  $text
+	 * @return  string
+	 **/
 	function addSlashes($text)
 	{
 		if(!get_magic_quotes_gpc())
@@ -326,13 +325,12 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 		return $text;
 	}
 
-
 	/**
-	* if magic_quotes_gpc is on, stirip back slashes
-	*
-	* @param	string  $text
-	* @return   string
-	**/
+	 * if magic_quotes_gpc is on, stirip back slashes
+	 *
+	 * @param	string  $text
+	 * @return   string
+	 **/
 	function stripSlashesGPC($text)
 	{
 		if(get_magic_quotes_gpc())
@@ -343,23 +341,23 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	}
 
 	/**
-	* for displaying data in html textbox forms
-	*
-	* @param	string  $text
-	* @return   string
-	**/
+	 * for displaying data in html textbox forms
+	 *
+	 * @param	string  $text
+	 * @return   string
+	 **/
 	function htmlSpecialChars($text)
 	{
 		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'),
-							@htmlspecialchars($text, ENT_QUOTES, _CHARSET));
+		@htmlspecialchars($text, ENT_QUOTES, _CHARSET));
 	}
 
 	/**
-	* Reverses {@link htmlSpecialChars()}
-	*
-	* @param   string  $text
-	* @return  string
-	**/
+	 * Reverses {@link htmlSpecialChars()}
+	 *
+	 * @param   string  $text
+	 * @return  string
+	 **/
 	function undoHtmlSpecialChars($text)
 	{
 		return htmlspecialchars_decode($text, ENT_QUOTES);
@@ -368,20 +366,20 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	function icms_htmlEntities($text)
 	{
 		return preg_replace(array("/&amp;/i", "/&nbsp;/i"), array('&', '&amp;nbsp;'),
-							@htmlentities($text, ENT_QUOTES, _CHARSET));
+		@htmlentities($text, ENT_QUOTES, _CHARSET));
 	}
 
 	/**
-	* Filters textarea form data in DB for display
-	*
-	* @param   string  $text
-	* @param   bool	$html   allow html?
-	* @param   bool	$smiley allow smileys?
-	* @param   bool	$xcode  allow xoopscode?
-	* @param   bool	$image  allow inline images?
-	* @param   bool	$br	 convert linebreaks?
-	* @return  string
-	**/
+	 * Filters textarea form data in DB for display
+	 *
+	 * @param   string  $text
+	 * @param   bool	$html   allow html?
+	 * @param   bool	$smiley allow smileys?
+	 * @param   bool	$xcode  allow xoopscode?
+	 * @param   bool	$image  allow inline images?
+	 * @param   bool	$br	 convert linebreaks?
+	 * @return  string
+	 **/
 	function displayTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
 	{
 		// ################# Preload Trigger beforeDisplayTarea ##############
@@ -437,16 +435,16 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	}
 
 	/**
-	* Filters textarea form data submitted for preview
-	*
-	* @param   string  $text
-	* @param   bool	$html   allow html?
-	* @param   bool	$smiley allow smileys?
-	* @param   bool	$xcode  allow xoopscode?
-	* @param   bool	$image  allow inline images?
-	* @param   bool	$br	 convert linebreaks?
-	* @return  string
-	**/
+	 * Filters textarea form data submitted for preview
+	 *
+	 * @param   string  $text
+	 * @param   bool	$html   allow html?
+	 * @param   bool	$smiley allow smileys?
+	 * @param   bool	$xcode  allow xoopscode?
+	 * @param   bool	$image  allow inline images?
+	 * @param   bool	$br	 convert linebreaks?
+	 * @return  string
+	 **/
 	function previewTarea($text, $html = 0, $smiley = 1, $xcode = 1, $image = 1, $br = 1)
 	{
 		// ################# Preload Trigger beforePreviewTarea ##############
@@ -503,12 +501,12 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	}
 
 	/**
-	* Replaces banned words in a string with their replacements
-	*
-	* @param   string $text
-	* @return  string
-	* @deprecated
-	**/
+	 * Replaces banned words in a string with their replacements
+	 *
+	 * @param   string $text
+	 * @return  string
+	 * @deprecated
+	 **/
 	function censorString(&$text)
 	{
 		$config_handler = xoops_gethandler('config');
@@ -540,8 +538,8 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	}
 
 	/**#@+
-	* Sanitizing of [code] tag
-	*/
+	 * Sanitizing of [code] tag
+	 */
 	function codePreConv($text, $xcode = 1)
 	{
 		if($xcode != 0)
@@ -554,13 +552,13 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	}
 
 	/**
-	* Converts text to xcode
-	*
-	* @param	 string	$text	 Text to convert
-	* @param	 int	   $xcode	Is the code Xcode?
-	* @param	 int	   $image	configuration for the purifier
-	* @return	string	$text	 the converted text
-	*/
+	 * Converts text to xcode
+	 *
+	 * @param	 string	$text	 Text to convert
+	 * @param	 int	   $xcode	Is the code Xcode?
+	 * @param	 int	   $image	configuration for the purifier
+	 * @return	string	$text	 the converted text
+	 */
 	function codeConv($text, $xcode = 1, $image = 1) {
 		if($xcode != 0)
 		{
@@ -578,14 +576,13 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 		return $text;
 	}
 
-
 	/**
-	* Sanitizes decoded string
-	*
-	* @param   string	$str	  String to sanitize
-	* @param   string	$image	Is the string an image
-	* @return  string	$str	  The sanitized decoded string
-	*/
+	 * Sanitizes decoded string
+	 *
+	 * @param   string	$str	  String to sanitize
+	 * @param   string	$image	Is the string an image
+	 * @return  string	$str	  The sanitized decoded string
+	 */
 	function codeSanitizer($str, $image = 1)
 	{
 		$str = $this->htmlSpecialChars(str_replace('\"', '"', base64_decode($str)));
@@ -593,7 +590,7 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 		return $str;
 	}
 
-##################### Deprecated Methods ######################
+	##################### Deprecated Methods ######################
 	/**#@+
 	* @deprecated
 	*/
@@ -733,14 +730,14 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 		return $this->nl2br($text);
 	}
 	/**#@-*/
-##################### Deprecated Methods ######################
+	##################### Deprecated Methods ######################
 
 	/*
-	* This function gets allowed plugins from DB and loads them in the sanitizer
-	* @param	int	 $id			 ID of the config
-	* @param	bool	$withoptions	load the config's options now?
-	* @return	object  reference to the {@link XoopsConfig}
-	*/
+	 * This function gets allowed plugins from DB and loads them in the sanitizer
+	 * @param	int	 $id			 ID of the config
+	 * @param	bool	$withoptions	load the config's options now?
+	 * @return	object  reference to the {@link XoopsConfig}
+	 */
 	function icmsCodeDecode_extended($text, $allowimage = 1)
 	{
 		global $icmsConfigPlugins;
@@ -753,11 +750,11 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	}
 
 	/**
-	* Starts HTML Purifier (from icms.htmlpurifier class)
-	*
-	* @param	 string	$name	 Name of the extension to load
-	* @return	bool
-	*/
+	 * Starts HTML Purifier (from icms.htmlpurifier class)
+	 *
+	 * @param	 string	$name	 Name of the extension to load
+	 * @return	bool
+	 */
 	function icmsloadExtension($name)
 	{
 		if(empty($name) || !include_once ICMS_ROOT_PATH."/plugins/textsanitizer/{$name}/{$name}.php")
@@ -767,12 +764,12 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	}
 
 	/**
-	* Executes file with a certain extension using call_user_func_array
-	*
-	* @param	 string	$name	 Name of the file to load
-	* @param	 string	$text	 Text to show if the function doesn't exist
-	* @return	array	 the return of the called function
-	*/
+	 * Executes file with a certain extension using call_user_func_array
+	 *
+	 * @param	 string	$name	 Name of the file to load
+	 * @param	 string	$text	 Text to show if the function doesn't exist
+	 * @return	array	 the return of the called function
+	 */
 	function icmsExecuteExtension($name, $text)
 	{
 		$this->icmsloadExtension($name);
@@ -786,11 +783,11 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	}
 
 	/**
-	* Syntaxhighlight the code
-	*
-	* @param	 string	$text	 purifies (lightly) and then syntax highlights the text
-	* @return	string	$text	 the syntax highlighted text
-	*/
+	 * Syntaxhighlight the code
+	 *
+	 * @param	 string	$text	 purifies (lightly) and then syntax highlights the text
+	 * @return	string	$text	 the syntax highlighted text
+	 */
 	function textsanitizer_syntaxhighlight(&$text) {
 		global $icmsConfigPlugins;
 		if( $icmsConfigPlugins['code_sanitizer'] == 'php' ) {
@@ -806,11 +803,11 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 	}
 
 	/**
-	* Syntaxhighlight the code using PHP highlight
-	*
-	* @param	 string	$text	 Text to highlight
-	* @return	string	$buffer   the highlighted text
-	*/
+	 * Syntaxhighlight the code using PHP highlight
+	 *
+	 * @param	 string	$text	 Text to highlight
+	 * @return	string	$buffer   the highlighted text
+	 */
 	function textsanitizer_php_highlight($text)
 	{
 		$text = trim($text);
@@ -850,13 +847,12 @@ $urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $url
 		return $buffer;
 	}
 
-
 	/**
-	* Syntaxhighlight the code using Geshi highlight
-	*
-	* @param	 string	$text	 The text to highlight
-	* @return	string	$code	 the highlighted text
-	*/
+	 * Syntaxhighlight the code using Geshi highlight
+	 *
+	 * @param	 string	$text	 The text to highlight
+	 * @return	string	$code	 the highlighted text
+	 */
 	function textsanitizer_geshi_highlight($text)
 	{
 		global $icmsConfigPlugins;

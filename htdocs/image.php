@@ -1,23 +1,23 @@
 <?php
 /**
-* functions for image.
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		core
-* @since		XOOPS
-* @author		http://www.xoops.org The XOOPS Project
-* @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id$
-*/
+ * functions for image.
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		core
+ * @since		XOOPS
+ * @author		http://www.xoops.org The XOOPS Project
+ * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
+ */
 
 @set_magic_quotes_runtime(0);
 if (function_exists('mb_http_output')) {
 	mb_http_output('pass');
 }
-$image_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$image_id = isset($_GET['id']) ? (int) ($_GET['id']) : 0;
 if (empty($image_id)) {
 	header('Content-type: image/gif');
 	readfile(ICMS_UPLOAD_PATH.'/blank.gif');

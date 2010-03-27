@@ -1,18 +1,18 @@
 <?php
 /**
-* Manage groups and memberships
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package		core
-* @subpackage	member
-* @since		XOOPS
-* @author		Kazumi Ono (aka onokazo)
-* @author		http://www.xoops.org The XOOPS Project
-* @version		$Id$
-*/
+ * Manage groups and memberships
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package		core
+ * @subpackage	member
+ * @since		XOOPS
+ * @author		Kazumi Ono (aka onokazo)
+ * @author		http://www.xoops.org The XOOPS Project
+ * @version		$Id$
+ */
 
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
@@ -78,7 +78,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
 	 */
 	function &get($id)
 	{
-		$id = intval($id);
+		$id = (int) ($id);
 		$group = false;
 		if ($id > 0) {
 			$sql = "SELECT * FROM ".$this->db->prefix('groups')." WHERE groupid='".$id."'";
@@ -120,9 +120,9 @@ class XoopsGroupHandler extends XoopsObjectHandler
 		}
 		if ($group->isNew()) {
 			$groupid = $this->db->genId('group_groupid_seq');
-			$sql = sprintf("INSERT INTO %s (groupid, name, description, group_type) VALUES ('%u', %s, %s, %s)", $this->db->prefix('groups'), intval($groupid), $this->db->quoteString($name), $this->db->quoteString($description), $this->db->quoteString($group_type));
+			$sql = sprintf("INSERT INTO %s (groupid, name, description, group_type) VALUES ('%u', %s, %s, %s)", $this->db->prefix('groups'), (int) ($groupid), $this->db->quoteString($name), $this->db->quoteString($description), $this->db->quoteString($group_type));
 		} else {
-			$sql = sprintf("UPDATE %s SET name = %s, description = %s, group_type = %s WHERE groupid = '%u'", $this->db->prefix('groups'), $this->db->quoteString($name), $this->db->quoteString($description), $this->db->quoteString($group_type), intval($groupid));
+			$sql = sprintf("UPDATE %s SET name = %s, description = %s, group_type = %s WHERE groupid = '%u'", $this->db->prefix('groups'), $this->db->quoteString($name), $this->db->quoteString($description), $this->db->quoteString($group_type), (int) ($groupid));
 		}
 		if (!$result = $this->db->query($sql)) {
 			return false;
@@ -149,7 +149,7 @@ class XoopsGroupHandler extends XoopsObjectHandler
 		if (!is_a($group, 'xoopsgroup')) {
 			return false;
 		}
-		$sql = sprintf("DELETE FROM %s WHERE groupid = '%u'", $this->db->prefix('groups'), intval($group->getVar('groupid')));
+		$sql = sprintf("DELETE FROM %s WHERE groupid = '%u'", $this->db->prefix('groups'), (int) ($group->getVar('groupid')));
 		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
@@ -251,7 +251,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 	 */
 	function &get($id)
 	{
-		$id = intval($id);
+		$id = (int) ($id);
 		$mship = false;
 		if ($id > 0) {
 			$sql = "SELECT * FROM ".$this->db->prefix('groups_users_link')." WHERE linkid='".$id."'";
@@ -293,9 +293,9 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 		}
 		if ($mship->isNew()) {
 			$linkid = $this->db->genId('groups_users_link_linkid_seq');
-			$sql = sprintf("INSERT INTO %s (linkid, groupid, uid) VALUES ('%u', '%u', '%u')", $this->db->prefix('groups_users_link'), intval($linkid), intval($groupid), intval($uid));
+			$sql = sprintf("INSERT INTO %s (linkid, groupid, uid) VALUES ('%u', '%u', '%u')", $this->db->prefix('groups_users_link'), (int) ($linkid), (int) ($groupid), (int) ($uid));
 		} else {
-			$sql = sprintf("UPDATE %s SET groupid = '%u', uid = '%u' WHERE linkid = '%u'", $this->db->prefix('groups_users_link'), intval($groupid), intval($uid), intval($linkid));
+			$sql = sprintf("UPDATE %s SET groupid = '%u', uid = '%u' WHERE linkid = '%u'", $this->db->prefix('groups_users_link'), (int) ($groupid), (int) ($uid), (int) ($linkid));
 		}
 		if (!$result = $this->db->query($sql)) {
 			return false;
@@ -323,7 +323,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 			return false;
 		}
 
-		$sql = sprintf("DELETE FROM %s WHERE linkid = '%u'", $this->db->prefix('groups_users_link'), intval($groupm->getVar('linkid')));
+		$sql = sprintf("DELETE FROM %s WHERE linkid = '%u'", $this->db->prefix('groups_users_link'), (int) ($groupm->getVar('linkid')));
 		if (!$result = $this->db->query($sql)) {
 			return false;
 		}
@@ -413,7 +413,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 	function getGroupsByUser($uid)
 	{
 		$ret = array();
-		$sql = "SELECT groupid FROM ".$this->db->prefix('groups_users_link')." WHERE uid='".intval($uid)."'";
+		$sql = "SELECT groupid FROM ".$this->db->prefix('groups_users_link')." WHERE uid='". (int) ($uid)."'";
 		$result = $this->db->query($sql);
 		if (!$result) {
 			return $ret;
@@ -437,7 +437,7 @@ class XoopsMembershipHandler extends XoopsObjectHandler
 	function getUsersByGroup($groupid, $limit=0, $start=0)
 	{
 		$ret = array();
-		$sql = "SELECT uid FROM ".$this->db->prefix('groups_users_link')." WHERE groupid='".intval($groupid)."'";
+		$sql = "SELECT uid FROM ".$this->db->prefix('groups_users_link')." WHERE groupid='". (int) ($groupid)."'";
 		$result = $this->db->query($sql, $limit, $start);
 		if (!$result) {
 			return $ret;

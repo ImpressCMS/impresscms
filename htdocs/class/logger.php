@@ -23,7 +23,7 @@
  * @package kernel
  */
 class XoopsLogger {
-  
+
 	public $queries = array();
 	public $blocks = array();
 	public $extra = array();
@@ -36,7 +36,6 @@ class XoopsLogger {
 
 	private $renderingEnabled = false;
 
-
 	/**
 	 * Constructor
 	 */
@@ -44,9 +43,9 @@ class XoopsLogger {
 
 	/**
 	 * Get a reference to the only instance of this class
-	 * 
+	 *
 	 * @return  object XoopsLogger  (@link XoopsLogger) reference to the only instance
-	 * @static 
+	 * @static
 	 */
 	static public function &instance() {
 		static $instance;
@@ -58,9 +57,8 @@ class XoopsLogger {
 		return $instance;
 	}
 
-
 	/**
- 	 * Enable logger output rendering
+	 * Enable logger output rendering
 	 * When output rendering is enabled, the logger will insert its output within the page content.
 	 * If the string <!--{xo-logger-output}--> is found in the page content, the logger output will
 	 * replace it, otherwise it will be inserted after all the page output.
@@ -71,7 +69,6 @@ class XoopsLogger {
 			$this->renderingEnabled = true;
 		}
 	}
-
 
 	/**
 	 * Disable logger output rendering.
@@ -100,7 +97,6 @@ class XoopsLogger {
 		$now = explode( ' ', microtime() );
 		return (float)$now[0] + (float)$now[1];
 	}
-
 
 	/**
 	 * Start a timer
@@ -148,7 +144,7 @@ class XoopsLogger {
 	 * @param   int     $msg  text message for the entry
 	 */
 	public function addExtra($name, $msg) {
-		if ( $this->activated )		
+		if ( $this->activated )
 		$this->extra[] = array('name' => $name, 'msg' => $msg);
 	}
 
@@ -166,7 +162,7 @@ class XoopsLogger {
 			// NOTE: we only store relative pathnames
 			$this->errors[] = compact( 'errno', 'errstr', 'errfile', 'errline' );
 		}
-		
+
 		if ( $errno == E_USER_ERROR ) {
 			$trace = true;
 			if ( substr( $errstr, 0, '8' ) == 'notrace:' ) {
@@ -189,7 +185,7 @@ class XoopsLogger {
 				echo '</div>';
 			}
 			exit();
-		 }
+		}
 	}
 
 	/**
@@ -200,19 +196,19 @@ class XoopsLogger {
 	 */
 	function sanitizePath( $path ) {
 		$path = str_replace(
-			array( '\\', ICMS_ROOT_PATH, str_replace( '\\', '/', realpath( ICMS_ROOT_PATH ) ) ),
-			array( '/', '', '' ),
-			$path
+		array( '\\', ICMS_ROOT_PATH, str_replace( '\\', '/', realpath( ICMS_ROOT_PATH ) ) ),
+		array( '/', '', '' ),
+		$path
 		);
 		return $path;
 	}
 
 	/**
-	* Output buffering callback inserting logger dump in page output
-	* Determines wheter output can be shown (based on permissions)
-	* @param  string  $output
-	* @return string  $output
-	*/
+	 * Output buffering callback inserting logger dump in page output
+	 * Determines wheter output can be shown (based on permissions)
+	 * @param  string  $output
+	 * @return string  $output
+	 */
 	function render( $output ) {
 		global $icmsUser,$icmsModule;
 		$this->addExtra( 'Included files', count ( get_included_files() ) . ' files' );
@@ -221,15 +217,15 @@ class XoopsLogger {
 		$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->mid() : 1;
 		$gperm_handler =& xoops_gethandler('groupperm');
 		if ( !$this->renderingEnabled || !$this->activated || !$gperm_handler->checkRight('enable_debug', $moduleid, $groups) )
-			return $output;
+		return $output;
 		$this->renderingEnabled = $this->activated = false;
 		$log = $this->dump( $this->usePopup ? 'popup' : '' );
 		$pattern = '<!--{xo-logger-output}-->';
 		$pos = strpos( $output, $pattern );
 		if ( $pos !== false )
-			return substr( $output, 0, $pos ) . $log . substr( $output, $pos + strlen( $pattern ) );
+		return substr( $output, 0, $pos ) . $log . substr( $output, $pos + strlen( $pattern ) );
 		else
-			return $output . $log;
+		return $output . $log;
 	}
 
 	/**
@@ -259,35 +255,35 @@ class XoopsLogger {
 	}
 
 	/**
-	* dumpAll
-	*
-	* @return string
-	* @deprecated 
-	*/
+	 * dumpAll
+	 *
+	 * @return string
+	 * @deprecated
+	 */
 	public function dumpAll(){ return $this->dump( '' ); }
 
 	/**
-	* dumpBlocks
-	*
-	* @return unknown 
-	* @deprecated 
-	*/
+	 * dumpBlocks
+	 *
+	 * @return unknown
+	 * @deprecated
+	 */
 	public function dumpBlocks(){ return $this->dump( 'blocks' ); }
 
 	/**
-	* dumpExtra
-	*
-	* @return unknown
-	* @deprecated 
-	*/
+	 * dumpExtra
+	 *
+	 * @return unknown
+	 * @deprecated
+	 */
 	public function dumpExtra(){ return $this->dump( 'extra' ); }
 
 	/**
-	* dumpQueries
-	*
-	* @return unknown 
-	* @deprecated 
-	*/
+	 * dumpQueries
+	 *
+	 * @return unknown
+	 * @deprecated
+	 */
 	public function dumpQueries(){ return $this->dump( 'queries' ); }
 }
 

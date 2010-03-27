@@ -18,7 +18,7 @@
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		$Id: formcaptcha.php 8685 2009-05-02 15:00:58Z pesianstranger $
-*/
+ */
 
 if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
@@ -74,12 +74,11 @@ class IcmsFormCaptcha extends XoopsFormElement {
 		}
 	}
 
-
 	/**
 	 * Sets the Config
-   * @param   string $name Config Name
-   * @param   string $val Config Value
-   * @return  object reference to the IcmsCaptcha Object (@link IcmsCaptcha)
+	 * @param   string $name Config Name
+	 * @param   string $val Config Value
+	 * @return  object reference to the IcmsCaptcha Object (@link IcmsCaptcha)
 	 */
 	function setConfig($name, $val)
 	{

@@ -1,23 +1,22 @@
 <?php
 /**
-* Handles some notification functions within ImpressCMS
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Handles some notification functions within ImpressCMS
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 // RMV-NOTIFY
 
 // FIXME: Do some caching, so we don't retrieve the same category / event
 // info many times.
-
 
 /**
  * Determine if notification is enabled for the selected module.
@@ -156,7 +155,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 	$override_comment = false;
 	$override_commentsubmit = false;
 	$override_bookmark = false;
-	
+
 	foreach ($not_config['event'] as $event) {
 		if ($event['category'] == $category_name) {
 			$event['mail_template_dir'] = ICMS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/language/' . $icmsConfig['language'] . '/mail_template/';
@@ -178,7 +177,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 	icms_loadLanguageFile('core', 'notification');
 
 	// Insert comment info if applicable
-	
+
 	if ($module->getVar('hascomments')) {
 		$com_config = $module->getInfo('comments');
 		if (!empty($category['item_name']) && $category['item_name'] == $com_config['itemName']) {
@@ -193,25 +192,25 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 				$insert_comment = false;
 				$insert_submit = false;
 				switch($com_config['com_rule']) {
-				case XOOPS_COMMENT_APPROVENONE:
-					// comments disabled, no comment events
-					break;
-				case XOOPS_COMMENT_APPROVEALL:
-					// all comments are automatically approved, no 'submit'
-					if (!$override_comment) {
-						$insert_comment = true;
-					}
-					break;
-				case XOOPS_COMMENT_APPROVEUSER:
-				case XOOPS_COMMENT_APPROVEADMIN:
-					// comments first submitted, require later approval
-					if (!$override_comment) {
-						$insert_comment = true;
-					}
-					if (!$override_commentsubmit) {
-						$insert_submit = true;
-					}
-					break;
+					case XOOPS_COMMENT_APPROVENONE:
+						// comments disabled, no comment events
+						break;
+					case XOOPS_COMMENT_APPROVEALL:
+						// all comments are automatically approved, no 'submit'
+						if (!$override_comment) {
+							$insert_comment = true;
+						}
+						break;
+					case XOOPS_COMMENT_APPROVEUSER:
+					case XOOPS_COMMENT_APPROVEADMIN:
+						// comments first submitted, require later approval
+						if (!$override_comment) {
+							$insert_comment = true;
+						}
+						if (!$override_commentsubmit) {
+							$insert_submit = true;
+						}
+						break;
 				}
 			}
 			if ($insert_comment) {
@@ -226,7 +225,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 					$event_array[] = $event;
 				}
 			}
-				
+
 
 		}
 	}
@@ -239,12 +238,11 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
 			if (!$enabled_only || notificationEventEnabled($category, $event, $module)) {
 				$event_array[] = $event;
 			}
-		}	
+		}
 	}
 
-
 	return $event_array;
-	
+
 }
 
 /**
@@ -274,7 +272,6 @@ function notificationEventEnabled(&$category, &$event, &$module)
 	return false;
 }
 
-
 /**
  * Get associative array of info for the selected event in the selected
  * category (for the selected module).
@@ -295,7 +292,6 @@ function &notificationEventInfo($category_name, $event_name, $module_id=null)
 	$ret = false;
 	return $ret;
 }
-
 
 /**
  * Get an array of associative info arrays for subscribable categories
@@ -329,7 +325,7 @@ function &notificationSubscribableCategoryInfo($module_id=null)
 		}
 		if (!in_array($script_name, $subscribe_from)) {
 			continue;
-		}	
+		}
 
 		// If 'item_name' is missing, automatic match.  Otherwise
 		// check if that argument exists...
@@ -340,7 +336,7 @@ function &notificationSubscribableCategoryInfo($module_id=null)
 			$sub_categories[] = $category;
 		} else {
 			$item_name = $category['item_name'];
-			$id = ($item_name != '' && isset($_GET[$item_name])) ? intval($_GET[$item_name]) : 0;
+			$id = ($item_name != '' && isset($_GET[$item_name])) ? (int) ($_GET[$item_name]) : 0;
 			if ($id > 0)  {
 				$category['item_id'] = $id;
 				$sub_categories[] = $category;
@@ -366,16 +362,16 @@ function &notificationSubscribableCategoryInfo($module_id=null)
 function notificationGenerateConfig(&$category, &$event, $type)
 {
 	switch ($type) {
-	case 'option_value':
-	case 'name':
-		return 'notify:' . $category['name'] . '-' . $event['name'];
-		break;
-	case 'option_name':
-		return $category['name'] . '-' . $event['name'];
-		break;
-	default:
-		return false;
-		break;
+		case 'option_value':
+		case 'name':
+			return 'notify:' . $category['name'] . '-' . $event['name'];
+			break;
+		case 'option_name':
+			return $category['name'] . '-' . $event['name'];
+			break;
+		default:
+			return false;
+			break;
 	}
 }
 ?>

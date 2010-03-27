@@ -14,7 +14,7 @@ $op = (isset($_POST['op']) && $_POST['op'] == 'dologin') ? 'dologin' : 'login';
 $username = isset($_POST['username']) ? trim($_POST['username']) : '';
 $password = isset($_POST['userpass']) ? trim($_POST['userpass']) : '';
 if ($username == '' || $password == '') {
-    $op ='login';
+	$op ='login';
 }
 
 echo '
@@ -38,10 +38,10 @@ echo '
 ';
 
 if ($op == 'dologin') {
-    $member_handler =& xoops_gethandler('member');
-    $myts =& MyTextsanitizer::getInstance();
+	$member_handler =& xoops_gethandler('member');
+	$myts =& MyTextsanitizer::getInstance();
 	$user =& $member_handler->loginUser(addslashes($myts->stripSlashesGPC($username)), addslashes($myts->stripSlashesGPC($password)));
-    if (is_object($user)) {
+	if (is_object($user)) {
 		if (0 == $user->getVar('level')) {
 			redirect_header(XOOPS_URL.'/index.php', 5, _US_NOACTTPADM);
 		}
@@ -69,9 +69,9 @@ if ($op == 'dologin') {
 			echo sprintf(_US_LOGGINGU, $user->getVar('uname'));
 			echo '<div style="text-align:center;"><input value="'._CLOSE.'" type="button" onclick="document.window.opener.location.reload();document.window.close();" /></div>';
 		}
-    } else {
-        xoops_error(_US_INCORRECTLOGIN.'<br /><a href="login.php">'._BACK.'</a>');
-    }
+	} else {
+		xoops_error(_US_INCORRECTLOGIN.'<br /><a href="login.php">'._BACK.'</a>');
+	}
 }
 
 if ($op == 'login') {

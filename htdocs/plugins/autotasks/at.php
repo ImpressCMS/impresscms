@@ -12,45 +12,45 @@
 require_once ICMS_ROOT_PATH.'/class/autotasks/icmsautotaskssystem.php';
 
 class IcmsAutoTasksAt
-	extends IcmsAutoTasksSystem {
+extends IcmsAutoTasksSystem {
 
-   /*
-    * check if can run
-    * @return bool
-    */
-   function canRun() {
-	   if (PHP_OS != 'WINNT') return false;
-	   if (!isset($_SERVER['COMSPEC']) && (!isset($_SERVER['ComSpec']))) return false;
-	   return isset($_SERVER['COMSPEC'])?file_exists($_SERVER['COMSPEC']):file_exists($_SERVER['ComSpec']);
-   }
+	/*
+	 * check if can run
+	 * @return bool
+	 */
+	function canRun() {
+		if (PHP_OS != 'WINNT') return false;
+		if (!isset($_SERVER['COMSPEC']) && (!isset($_SERVER['ComSpec']))) return false;
+		return isset($_SERVER['COMSPEC'])?file_exists($_SERVER['COMSPEC']):file_exists($_SERVER['ComSpec']);
+	}
 
-   /*
-    * Set Checking Interval (if not enabled enables automated tasks system
-	* @param  int	$interval	interval of checking for new tasks
-	* @return bool				returns true if start was succesfull
-	*/
-   function start(int $interval) {
-	   if ($this->isEnabled()) $this->stop();
-	   $rez = shell_exec('at '.date('H:i', time() + $interval * 60 + 10 ).' '.$this->getCommandLine());
-	   return (substr($rez, 0, 5) == 'Added');
-   }
+	/*
+	 * Set Checking Interval (if not enabled enables automated tasks system
+	 * @param  int	$interval	interval of checking for new tasks
+	 * @return bool				returns true if start was succesfull
+	 */
+	function start(int $interval) {
+		if ($this->isEnabled()) $this->stop();
+		$rez = shell_exec('at '.date('H:i', time() + $interval * 60 + 10 ).' '.$this->getCommandLine());
+		return (substr($rez, 0, 5) == 'Added');
+	}
 
-   /*
-	* Stops automated tasks system
-	* @return bool returns true if was succesfull
-	*/
-   function stop() {
-	    $id = $this->getProcessId();
+	/*
+	 * Stops automated tasks system
+	 * @return bool returns true if was succesfull
+	 */
+	function stop() {
+		$id = $this->getProcessId();
 		if ($id < 0) return false;
 		$rez = shell_exec('at '.$id.' /DELETE');
 		return true;
-   }
+	}
 
-   /*
-    *  checks if core is enabled
-	*
-    * @return bool
-	*/
+	/*
+	 *  checks if core is enabled
+	 *
+	 * @return bool
+	 */
 	function isEnabled() {
 		return ($this->getProcessId()>0);
 	}
@@ -80,11 +80,11 @@ class IcmsAutoTasksAt
 		if (strstr($rez, 'There are no entries in the list.')) return -1;
 		$rez = explode("\n", $rez);
 		$pos = array(0 => strpos($rez[0], 'Status'),
-					 1 => strpos($rez[0], 'ID'),
-					 2 => strpos($rez[0], 'Day'),
-					 3 => strpos($rez[0], 'Time'),
-					 4 => strpos($rez[0], 'Command Line')
-				     );
+		1 => strpos($rez[0], 'ID'),
+		2 => strpos($rez[0], 'Day'),
+		3 => strpos($rez[0], 'Time'),
+		4 => strpos($rez[0], 'Command Line')
+		);
 		$count = array(count($rez), count($pos));
 		$cmd_to_find = $this->getCommandLine();
 		for($i=2; $i<$count[0]; $i++) {

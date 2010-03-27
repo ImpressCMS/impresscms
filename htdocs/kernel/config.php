@@ -1,18 +1,18 @@
 <?php
 /**
-* Manage configuration items
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license		LICENSE.txt
-* @package		core
-* @subpackage	config
-* @since		XOOPS
-* @author		Kazumi Ono (aka onokazo)
-* @author		http://www.xoops.org The XOOPS Project
-* @version		$Id$
-*/
+ * Manage configuration items
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license		LICENSE.txt
+ * @package		core
+ * @subpackage	config
+ * @since		XOOPS
+ * @author		Kazumi Ono (aka onokazo)
+ * @author		http://www.xoops.org The XOOPS Project
+ * @version		$Id$
+ */
 
 if (!defined('XOOPS_ROOT_PATH')) {
 	exit();
@@ -195,7 +195,7 @@ class XoopsConfigHandler
 		static $_cachedConfigs;
 
 		if (is_array($category)) {
-			$criteria = new CriteriaCompo(new Criteria('conf_modid', intval($module)));
+			$criteria = new CriteriaCompo(new Criteria('conf_modid', (int) ($module)));
 			$criteria->add(new Criteria('conf_catid', '('.implode(',', $category).')', 'IN'));
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {
@@ -210,9 +210,9 @@ class XoopsConfigHandler
 		} else {
 			if (!empty($_cachedConfigs[$module][$category])) return $_cachedConfigs[$module][$category];
 
-			$criteria = new CriteriaCompo(new Criteria('conf_modid', intval($module)));
+			$criteria = new CriteriaCompo(new Criteria('conf_modid', (int) ($module)));
 			if (!empty($category)) {
-				$criteria->add(new Criteria('conf_catid', intval($category)));
+				$criteria->add(new Criteria('conf_catid', (int) ($category)));
 			}
 			$configs = $this->getConfigs($criteria, true);
 			if (is_array($configs)) {

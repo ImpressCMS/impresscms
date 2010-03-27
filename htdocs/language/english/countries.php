@@ -1,6 +1,6 @@
 <?php
-/* 
- * ISO 3166 Maintenance agency (ISO 3166/MA) - ISO's focal point for country codes 
+/*
+ * ISO 3166 Maintenance agency (ISO 3166/MA) - ISO's focal point for country codes
  * Website: http://www.iso.org/iso/country_codes.htm
  *
  */

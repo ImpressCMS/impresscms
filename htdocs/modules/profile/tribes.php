@@ -1,20 +1,20 @@
 <?php
 /**
-* Tribes page
-*
-* @copyright	GNU General Public License (GPL)
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @since	1.3
-* @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @package	profile
-* @version	$Id$
-*/
+ * Tribes page
+ *
+ * @copyright	GNU General Public License (GPL)
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @since	1.3
+ * @author	Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @package	profile
+ * @version	$Id$
+ */
 
 /**
  * Edit a Tribeuser
  *
  * @param object $tribesObj ProfileTribes object
-*/
+ */
 function edittribeuser($tribesObj, $hideForm=false) {
 	global $profile_tribeuser_handler, $icmsTpl, $icmsUser, $real_uid;
 
@@ -59,7 +59,7 @@ function edittribeuser($tribesObj, $hideForm=false) {
  * Edit a Tribe
  *
  * @param object $tribesObj ProfileTribes object to be edited
-*/
+ */
 function edittribes($tribesObj, $hideForm=false) {
 	global $profile_tribes_handler, $icmsTpl, $icmsUser;
 
@@ -126,8 +126,8 @@ function edittribepost($tribetopic_id, $tribepost_id, $tribesObj, $hideForm = fa
 		$tribetopicObj = $profile_tribetopic_handler->get($tribetopic_id);
 		// check permissions
 		if (!($tribepostObj->userCanEditAndDelete() || $isOwner)) {
-				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
-				exit();
+			redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
+			exit();
 		}
 
 		// set topic or post specific options
@@ -163,13 +163,13 @@ $clean_op = '';
 if (isset($_GET['op'])) $clean_op = $_GET['op'];
 if (isset($_POST['op'])) $clean_op = $_POST['op'];
 $clean_tribes_id = 0;
-if (isset($_GET['tribes_id'])) $clean_tribes_id = intval($_GET['tribes_id']);
-if (isset($_POST['tribes_id'])) $clean_tribes_id = intval($_POST['tribes_id']);
+if (isset($_GET['tribes_id'])) $clean_tribes_id = (int) ($_GET['tribes_id']);
+if (isset($_POST['tribes_id'])) $clean_tribes_id = (int) ($_POST['tribes_id']);
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
 global $icmsUser;
-$real_uid = is_object($icmsUser) ? intval($icmsUser->uid()) : 0;
-$clean_uid = isset($_GET['uid']) ? intval($_GET['uid']) : $real_uid ;
+$real_uid = is_object($icmsUser) ? (int) ($icmsUser->uid()) : 0;
+$clean_uid = isset($_GET['uid']) ? (int) ($_GET['uid']) : $real_uid ;
 $tribesObj = $profile_tribes_handler->get($clean_tribes_id);
 $userCanEditAndDelete = $real_uid && (($clean_tribes_id && $real_uid == $tribesObj->getVar('uid_owner')) || (!$clean_tribes_id && $real_uid == $uid));
 
@@ -223,13 +223,13 @@ if (in_array($clean_op,$valid_op,true)){
 				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
 				exit();
 			}
-			$clean_tribeuser_id = isset($_POST['tribeuser_id']) ? intval($_POST['tribeuser_id']) : 0;
+			$clean_tribeuser_id = isset($_POST['tribeuser_id']) ? (int) ($_POST['tribeuser_id']) : 0;
 			$tribeuserObj = $profile_tribeuser_handler->get($clean_tribeuser_id);
 			if ($tribeuserObj->isNew()) {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_TRIBEUSER_NOTFOUND);
 				exit();
 			}
-			$store = isset($_POST['store']) ? intval($_POST['store']) : 0;
+			$store = isset($_POST['store']) ? (int) ($_POST['store']) : 0;
 			$clean_action = isset($_POST['action']) ? $_POST['action'] : '';
 			$valid_action = array ('approved', 'accepted');
 			if (in_array($clean_action, $valid_action, true)) {
@@ -252,7 +252,7 @@ if (in_array($clean_op,$valid_op,true)){
 			break;
 
 		case "deltribeuser":
-			$clean_tribeuser_id = isset($_POST['tribeuser_id']) ? intval($_POST['tribeuser_id']) : 0;
+			$clean_tribeuser_id = isset($_POST['tribeuser_id']) ? (int) ($_POST['tribeuser_id']) : 0;
 			$tribeuserObj = $profile_tribeuser_handler->get($clean_tribeuser_id);
 			if (!$tribeuserObj->userCanEditAndDelete() && !$userCanEditAndDelete) {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
@@ -271,11 +271,11 @@ if (in_array($clean_op,$valid_op,true)){
 				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
 				exit();
 			}
-			
-			$clean_post_id = isset($_POST['post_id']) ? intval($_POST['post_id']) : 0;
-			$clean_topic_id = isset($_POST['topic_id']) ? intval($_POST['topic_id']) : 0;
-			$clean_tribes_id = isset($_POST['tribes_id']) ? intval($_POST['tribes_id']) : 0;
-			
+				
+			$clean_post_id = isset($_POST['post_id']) ? (int) ($_POST['post_id']) : 0;
+			$clean_topic_id = isset($_POST['topic_id']) ? (int) ($_POST['topic_id']) : 0;
+			$clean_tribes_id = isset($_POST['tribes_id']) ? (int) ($_POST['tribes_id']) : 0;
+				
 			// check permissions and set redirect page
 			if ($clean_topic_id == 0 || ($clean_topic_id > 0 && $clean_post_id == 0)) {
 				// new topic or post
@@ -318,16 +318,16 @@ if (in_array($clean_op,$valid_op,true)){
 			break;
 
 		case "edittribepost":
-			$clean_topic_id = isset($_GET['topic_id']) ? intval($_GET['topic_id']) : 0;
-			$clean_post_id = isset($_GET['post_id']) ? intval($_GET['post_id']) : 0;
+			$clean_topic_id = isset($_GET['topic_id']) ? (int) ($_GET['topic_id']) : 0;
+			$clean_post_id = isset($_GET['post_id']) ? (int) ($_GET['post_id']) : 0;
 			edittribepost($clean_topic_id, $clean_post_id, $tribesObj);
 			$icmsTpl->assign('profile_category_path', '<a href="'.$tribesObj->handler->_moduleUrl.$tribesObj->handler->_page.'?uid='.$uid.'">'._MD_PROFILE_TRIBES.'</a> &raquo;&raquo; <a href="'.$tribesObj->handler->_moduleUrl.$tribesObj->handler->_page.'?tribes_id='.$clean_tribes_id.'">'.$tribesObj->getVar('title').'</a>');
 			break;
 
 		case "deltribepost":
 			$clean_post_id = 0;
-			if (isset($_GET['post_id'])) $clean_post_id = intval($_GET['post_id']);
-			if (isset($_POST['post_id'])) $clean_post_id = intval($_POST['post_id']);
+			if (isset($_GET['post_id'])) $clean_post_id = (int) ($_GET['post_id']);
+			if (isset($_POST['post_id'])) $clean_post_id = (int) ($_POST['post_id']);
 			$tribepostObj = $profile_tribepost_handler->get($clean_post_id);
 			if ($tribepostObj->isNew() || !($tribepostObj->userCanEditAndDelete() || $isOwner)) {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
@@ -335,17 +335,17 @@ if (in_array($clean_op,$valid_op,true)){
 			}
 
 			if (isset($_POST['confirm'])) {
-			    if (!$xoopsSecurity->check()) {
-				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
-				exit();
-			    }
+				if (!$xoopsSecurity->check()) {
+					redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+					exit();
+				}
 			}
 			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
 			$controller = new IcmsPersistableController($profile_tribepost_handler);
 			$controller->handleObjectDeletionFromUserSide(false, 'deltribepost');
 			break;
 		case "toggleclose":
-			$clean_topic_id = isset($_GET['topic_id']) ? intval($_GET['topic_id']) : 0;
+			$clean_topic_id = isset($_GET['topic_id']) ? (int) ($_GET['topic_id']) : 0;
 			$tribetopicObj = $profile_tribetopic_handler->get($clean_topic_id);
 			if ($tribetopicObj->isNew() || !($tribetopicObj->userCanEditAndDelete() || $isOwner)) {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _NOPERM);
@@ -356,9 +356,9 @@ if (in_array($clean_op,$valid_op,true)){
 			} else {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _CO_ICMS_SAVE_ERROR.$tribetopicObj->getHtmlErrors());
 			}
-			
+				
 			break;
-		
+
 		case "addtribes":
 			if (!$xoopsSecurity->check()) {
 				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
@@ -375,10 +375,10 @@ if (in_array($clean_op,$valid_op,true)){
 				exit();
 			}
 			if (isset($_POST['confirm'])) {
-			    if (!$xoopsSecurity->check()) {
-				redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
-				exit();
-			    }
+				if (!$xoopsSecurity->check()) {
+					redirect_header(icms_getPreviousPage('index.php'), 3, _MD_PROFILE_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
+					exit();
+				}
 			}
 			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
 			$controller = new IcmsPersistableController($profile_tribes_handler);
@@ -398,8 +398,8 @@ if (in_array($clean_op,$valid_op,true)){
 				// make tribe form
 				edittribeuser($tribesObj, true);
 
-				$clean_topic_id = isset($_GET['topic_id']) ? intval($_GET['topic_id']) : 0;
-				$clean_start = isset($_GET['start']) ? intval($_GET['start']) : 0;
+				$clean_topic_id = isset($_GET['topic_id']) ? (int) ($_GET['topic_id']) : 0;
+				$clean_start = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
 
 				$profile_tribes_handler->updateCounter($clean_tribes_id);
 				$icmsTpl->assign('profile_tribe', $tribesObj->toArray());

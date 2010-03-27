@@ -19,9 +19,9 @@ function remove_usersxdays (){
 }
 
 /*
-* Here comes the part for removing inactive users after X days.
-* I used to ad it here, because it is always loaded within core loading.
-* I also made a condition to run the function, only when system is not doing a GET action!
-*/
-	remove_usersxdays();
+ * Here comes the part for removing inactive users after X days.
+ * I used to ad it here, because it is always loaded within core loading.
+ * I also made a condition to run the function, only when system is not doing a GET action!
+ */
+remove_usersxdays();
 ?>

@@ -1,14 +1,14 @@
 <?php
 /**
-* header.php code for pre-2.0 themes
-*
-* @copyright	The Xoops project http://www.xoops.org/
-* @license	  http://www.fsf.org/copyleft/gpl.html GNU public license
-* @author	   Kazumi Ono (onokazu)
-* @since		Xoops 2.0.14
-* @version		$Id$
-* @package 		core
-*/
+ * header.php code for pre-2.0 themes
+ *
+ * @copyright	The Xoops project http://www.xoops.org/
+ * @license	  http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @author	   Kazumi Ono (onokazu)
+ * @since		Xoops 2.0.14
+ * @version		$Id$
+ * @package 		core
+ */
 defined( 'ICMS_ROOT_PATH' ) or die();
 
 $xoopsOption['theme_use_smarty'] = 0;

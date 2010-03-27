@@ -1,29 +1,28 @@
 <?php
 
 class upgrade_2016 {
-	
+
 	var $usedFiles = array( );
-	
+
 	function isApplied() {
 		return ( /*$this->check_file_patch() &&*/ $this->check_auth_db() );
 	}
 
-	function apply() {	
+	function apply() {
 		return $this->apply_auth_db();
 	}
 
 	function check_file_patch() {
 		/* $path = XOOPS_ROOT_PATH . '/class/auth';
-		$lines = file( "$path/auth_provisionning.php");
-		foreach ( $lines as $line ) {
+		 $lines = file( "$path/auth_provisionning.php");
+		 foreach ( $lines as $line ) {
 			if ( strpos( $line, "ldap_provisionning_upd" ) !== false ) {
-				// Patch found: do not apply again
-				return true;
+			// Patch found: do not apply again
+			return true;
 			}
-		} */
+			} */
 		return true;
 	}
-
 
 	function check_auth_db() {
 		$db = $GLOBALS['xoopsDB'];
@@ -32,17 +31,17 @@ class upgrade_2016 {
 		);
 		return (bool)($value);
 	}
-	
+
 	function query( $sql ) {
 		$db = $GLOBALS['xoopsDB'];
 		if ( ! ( $ret = $db->queryF( $sql ) ) ) {
 			echo $db->error();
 		}
-	}		
+	}
 
 	function apply_auth_db() {
 		$db = $GLOBALS['xoopsDB'];
-		
+
 		// Insert config values
 		$table = $db->prefix( 'config' );
 		$data = array(

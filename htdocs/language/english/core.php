@@ -1,16 +1,16 @@
 <?php
 /**
-* Core constants
-*
-* This file has all core errors and warning constants.
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package		languages
-* @since		1.2
-* @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version		$Id
-*/
+ * Core constants
+ *
+ * This file has all core errors and warning constants.
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		languages
+ * @since		1.2
+ * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id
+ */
 
 define('_CORE_MEMORYUSAGE', 'Memory usage');
 define('_CORE_BYTES', 'bytes');

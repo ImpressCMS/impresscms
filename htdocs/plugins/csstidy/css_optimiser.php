@@ -150,7 +150,7 @@ if(isset($_REQUEST['timestamp'])) $css->set_cfg('timestamp',true);
             class="block"><?php echo $lang[$l][12]; ?></label> <select
             id="template" name="template" style="margin-bottom:1em;">
               <?php
-                $num = ($_REQUEST['template']) ? intval($_REQUEST['template']) : 1;
+                $num = ($_REQUEST['template']) ? (int) ($_REQUEST['template']) : 1;
                 echo options(array(3 => $lang[$l][13], 2 => $lang[$l][14], 1 => $lang[$l][15], 0 => $lang[$l][16], 4 => $lang[$l][17]), $num);
               ?>
             </select><br />

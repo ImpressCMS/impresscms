@@ -12,7 +12,7 @@
 require_once ICMS_ROOT_PATH . '/class/autotasks/iautotasksystem.php';
 
 abstract class IcmsAutoTasksSystem
-	implements iAutoTaskSystem  {
+implements iAutoTaskSystem  {
 
 	function getName() {
 		return strtolower(substr(get_class($this),strlen('IcmsAutoTasks')));

@@ -11,53 +11,53 @@
  */
 
 /**
-* Shows content menu
-*
-* @param array $options The Array of options
-* @return array $block The generated block content with its options
-*/
+ * Shows content menu
+ *
+ * @param array $options The Array of options
+ * @return array $block The generated block content with its options
+ */
 function content_content_menu_show($options) {
 	global $icmsUser, $xoTheme;
-	
+
 	include_once ICMS_ROOT_PATH.'/modules/content/include/common.php';
-	
+
 	$block = array();
-	
+
 	$block['showsubs'] = $options[2];
 	$block['selcolor'] = $options[3];
 	$block['menu'] = getPages($options[2],$options[0],$options[1],$options[4]);
 
 	$xoTheme->addScript(CONTENT_URL.'include/menu.js',array('type' => 'text/javascript'),'');
 	$xoTheme->addStylesheet(CONTENT_URL."include/menu".(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?"_rtl":"").".css", array("media" => "screen"));
-	
+
 	return $block;
 }
 
 /**
-* Shows edit options for content menu
-*
-* @param array $options The array of options
-* @return string $form The generated form HTML string
-*/
+ * Shows edit options for content menu
+ *
+ * @param array $options The array of options
+ * @return string $form The generated form HTML string
+ */
 function content_content_menu_edit($options){
 	include_once (ICMS_ROOT_PATH . '/modules/content/include/common.php');
 	$content_content_handler = xoops_getModuleHandler ( 'content', 'content' );
-	
+
 	$sort = array('content_weight'=>_CO_CONTENT_CONTENT_CONTENT_WEIGHT,'content_title'=>_CO_CONTENT_CONTENT_CONTENT_TITLE);
 	$selsort = new XoopsFormSelect ( '', 'options[0]', $options [0] );
 	$selsort->addOptionArray ( $sort );
-		
+
 	$order = array('ASC'=>'ASC','DESC'=>'DESC');
 	$selorder = new XoopsFormSelect ( '', 'options[1]', $options [1] );
 	$selorder->addOptionArray ( $order );
-	
+
 	$showsubs = new XoopsFormRadioYN ( '', 'options[2]', $options [2] );
-	
+
 	$selcolor = new XoopsFormText ( '', 'options[3]', 10, 255, $options [3] );
-	
-    $selpages = new XoopsFormSelect ( '', 'options[4]', $options [4] );
-	$selpages->addOptionArray ( $content_content_handler->getContentList () );	
-		
+
+	$selpages = new XoopsFormSelect ( '', 'options[4]', $options [4] );
+	$selpages->addOptionArray ( $content_content_handler->getContentList () );
+
 	$form = '<table width="100%">';
 	$form .= '<tr>';
 	$form .= '<td width="30%">' . _MB_CONTENT_CONTENT_CONTID . '</td>';
@@ -80,23 +80,23 @@ function content_content_menu_edit($options){
 	$form .= '<td>' . $selcolor->render () . '</td>';
 	$form .= '</tr>';
 	$form .= '</table>';
-	
+
 	return $form;
 }
 
 /**
-* Gets the content pages
-*
-* @param bool $showsubs Show subitems related to this item (recursive!)
-* @param string $sort Order the pages by weight
-* @param string $order The sort direction
-* @param int $content_id The content ID
-* @param int $relateds Show related items
-* @return array $pages The array with pages in a certain weight, order and with related id's
-*/
+ * Gets the content pages
+ *
+ * @param bool $showsubs Show subitems related to this item (recursive!)
+ * @param string $sort Order the pages by weight
+ * @param string $order The sort direction
+ * @param int $content_id The content ID
+ * @param int $relateds Show related items
+ * @return array $pages The array with pages in a certain weight, order and with related id's
+ */
 function getPages($showsubs = true, $sort='content_weight', $order='ASC', $content_id = 0, $relateds = 0 ) {
 	global $icmsUser;
-	
+
 	$gperm_handler = & xoops_gethandler( 'groupperm' );
 	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 	$uid = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;

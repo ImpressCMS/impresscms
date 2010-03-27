@@ -157,7 +157,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 	function isCompatible()
 	{
 		if ( !is_readable(XOOPS_ROOT_PATH . $this->rootpath. "/fckeditor.php")) return false;
-		include_once(XOOPS_ROOT_PATH . $this->rootpath. "/fckeditor.php");
+		include_once XOOPS_ROOT_PATH . $this->rootpath. "/fckeditor.php" ;
 		return FCKeditor::IsCompatible();
 	}
 }

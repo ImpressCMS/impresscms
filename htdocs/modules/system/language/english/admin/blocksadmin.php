@@ -89,7 +89,6 @@ define("_AM_SYSTEM_BLOCKSADMIN_EDIT", "Edit a Block");
 define("_AM_SYSTEM_BLOCKSADMIN_MODIFIED", "Block Modified Succesfully!");
 define("_AM_SYSTEM_BLOCKSADMIN_CREATED", "Block Created Succesfully!");
 
-
 // Fields
 define("_CO_SYSTEM_BLOCKSADMIN_NAME", "Name");
 define("_CO_SYSTEM_BLOCKSADMIN_NAME_DSC", "");

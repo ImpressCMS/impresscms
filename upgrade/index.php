@@ -35,30 +35,30 @@ if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
  * gets list of name of directories inside a directory
  */
 function getDirList($dirname) {
-    $dirlist = array();
-    if ( is_dir($dirname) && $handle = opendir($dirname) ) {
-        while (false !== ($file = readdir($handle))) {
-            if ( substr( $file, 0, 1 ) != '.'  && strtolower($file) != 'cvs' ) {
-            	if ( is_dir( "$dirname/$file" ) ) {
-            		$dirlist[] = $file;
-            	}
-            }
-        }
-        closedir($handle);
-        asort($dirlist);
-        reset($dirlist);
-    }
-    return $dirlist;
+	$dirlist = array();
+	if ( is_dir($dirname) && $handle = opendir($dirname) ) {
+		while (false !== ($file = readdir($handle))) {
+			if ( substr( $file, 0, 1 ) != '.'  && strtolower($file) != 'cvs' ) {
+				if ( is_dir( "$dirname/$file" ) ) {
+					$dirlist[] = $file;
+				}
+			}
+		}
+		closedir($handle);
+		asort($dirlist);
+		reset($dirlist);
+	}
+	return $dirlist;
 }
 if ( file_exists("./language/".$xoopsConfig['language']."/upgrade.php") ) {
-    include_once "./language/".$xoopsConfig['language']."/upgrade.php";
-    $language = $xoopsConfig['language'];
+	include_once "./language/".$xoopsConfig['language']."/upgrade.php";
+	$language = $xoopsConfig['language'];
 } elseif ( file_exists("./language/english/upgrade.php") ) {
-    include_once "./language/english/upgrade.php";
-    $language = 'english';
+	include_once "./language/english/upgrade.php";
+	$language = 'english';
 } else {
-    echo 'no language file.';
-    exit();
+	echo 'no language file.';
+	exit();
 }
 
 ob_start();

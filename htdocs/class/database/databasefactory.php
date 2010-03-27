@@ -68,9 +68,9 @@ class IcmsDatabaseFactory{
 	 * Gets a reference to the only instance of database class. Currently
 	 * only being used within the installer.
 	 *
-     * @static
-     * @staticvar   object  The only instance of database class
-     * @return      object  Reference to the only instance of database class
+	 * @static
+	 * @staticvar   object  The only instance of database class
+	 * @return      object  Reference to the only instance of database class
 	 */
 	static public function &getDatabase(){
 		static $database;
@@ -90,8 +90,8 @@ class IcmsDatabaseFactory{
 	/**
 	 * Gets the databaseupdater object.
 	 *
-     * @return	object  @link IcmsDatabaseUpdater
-     * @static
+	 * @return	object  @link IcmsDatabaseUpdater
+	 * @static
 	 */
 	static public function getDatabaseUpdater(){
 		$file = ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/databaseupdater.php';
@@ -112,9 +112,9 @@ class IcmsDatabaseFactory{
  * @author		The XOOPS Project Community <http://www.xoops.org>
  * @copyright   copyright (c) 2000-2003 XOOPS.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * 
+ *
  * @deprecated
  */
-class XoopsDatabaseFactory extends IcmsDatabaseFactory { /* For backwards compatibility */ } 
+class XoopsDatabaseFactory extends IcmsDatabaseFactory { /* For backwards compatibility */ }
 
 ?>

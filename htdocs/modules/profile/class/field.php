@@ -20,7 +20,7 @@ include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
 
 /**
  * Profile Module Field Class
- * 
+ *
  * @copyright 		copyright &copy; 2000 XOOPS.org
  * @copyright 		The ImpressCMS Project <http://www.impresscms.org>
  * @license		 LICENSE.txt
@@ -28,12 +28,12 @@ include_once ICMS_ROOT_PATH . '/kernel/icmspersistableseoobject.php';
  * @package		 modules
  * @subpackage 		Profile
  * @since		   ImpressCMS 1.2
- * @author		  Jan Pedersen 
- * @author		  The SmartFactory <http://www.smartfactory.ca> 
+ * @author		  Jan Pedersen
+ * @author		  The SmartFactory <http://www.smartfactory.ca>
  * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 class ProfileField extends IcmsPersistableObject {
-	
+
 	/**
 	 * Constructor
 	 *
@@ -62,16 +62,16 @@ class ProfileField extends IcmsPersistableObject {
 		$this->quickInitVar('field_options', XOBJ_DTYPE_TXTBOX, false);
 		$this->quickInitVar('exportable', XOBJ_DTYPE_INT, false);
 		$this->quickInitVar('step_id', XOBJ_DTYPE_INT, false);
-		
+
 		$this->hideFieldFromForm('field_valuetype');
-		
+
 		$this->setControl('field_required', 'yesno');
 		$this->setControl('field_notnull', 'yesno');
 		$this->setControl('field_edit', 'yesno');
 		$this->setControl('field_config', 'yesno');
 		$this->setControl('field_show', 'yesno');
 		$this->setControl('exportable', 'yesno');
-		
+
 		$this->setControl('catid', array('itemHandler' => 'category',
 										  'method' => 'getList',
 										  'module' => 'profile'));
@@ -99,7 +99,7 @@ class ProfileField extends IcmsPersistableObject {
 		$caption = $this->getVar('field_title');
 		$caption = defined($caption) ? constant($caption) : $caption;
 		$name = $this->getVar('field_name', 'e');
-	$options = unserialize($this->getVar('field_options', 'n'));
+		$options = unserialize($this->getVar('field_options', 'n'));
 		if ($this->getVar('field_type') != "image" && is_array($options)) {
 			asort($options);
 
@@ -186,12 +186,12 @@ class ProfileField extends IcmsPersistableObject {
 				$element = new XoopsFormSelectTimezone($caption, $name, $value);
 				$element->setExtra("style='width: 280px;'");
 				break;
-/*
-			case "country":
-				$element = new XoopsFormSelectCountry($caption, $name, $value);
-				$element->setExtra("style='width: 280px;'");
-				break;
-*/
+				/*
+				 case "country":
+				 $element = new XoopsFormSelectCountry($caption, $name, $value);
+				 $element->setExtra("style='width: 280px;'");
+				 break;
+				 */
 			case "rank":
 				$element = new XoopsFormSelect($caption, $name, $value);
 
@@ -235,13 +235,13 @@ class ProfileField extends IcmsPersistableObject {
 	}
 
 	/**
-	* Returns a value for output of this field
-	*
-	* @param XoopsUser $user {@link XoopsUser} object to get the value of
-	* @param ProfileProfile $profile object to get the value of
-	*
-	* @return mixed
-	**/
+	 * Returns a value for output of this field
+	 *
+	 * @param XoopsUser $user {@link XoopsUser} object to get the value of
+	 * @param ProfileProfile $profile object to get the value of
+	 *
+	 * @return mixed
+	 **/
 	function getOutputValue(&$user, $profile) {
 		global $myts;
 		if(!$myts){
@@ -257,10 +257,10 @@ class ProfileField extends IcmsPersistableObject {
 			case "list":
 				return $value;
 				break;
-			//felix
+				//felix
 			case "textarea":
 			case "dhtml":
-		  		return $myts->undoHtmlSpecialChars(str_replace('&amp;', '&', $value), 1);
+				return $myts->undoHtmlSpecialChars(str_replace('&amp;', '&', $value), 1);
 				break;
 
 			case "select":
@@ -349,12 +349,12 @@ class ProfileField extends IcmsPersistableObject {
 	}
 
 	/**
-	* Returns a value ready to be saved in the database
-	*
-	* @param mixed $value Value to format
-	*
-	* @return mixed
-	*/
+	 * Returns a value ready to be saved in the database
+	 *
+	 * @param mixed $value Value to format
+	 *
+	 * @return mixed
+	 */
 	function getValueForSave($value, $oldvalue) {
 		switch ($this->getVar('field_type')) {
 			default:
@@ -389,9 +389,9 @@ class ProfileField extends IcmsPersistableObject {
 				return $value;
 				break;
 
-			/**
-			 * @todo Find a better method for giving error message feedback
-			 */
+				/**
+				 * @todo Find a better method for giving error message feedback
+				 */
 			case "image":
 				if (!isset($_FILES[$_POST['xoops_upload_file'][0]])) {
 					return $oldvalue;
@@ -445,12 +445,12 @@ class ProfileField extends IcmsPersistableObject {
 
 /**
  * Profile Module Field Handler
- * 
+ *
  * @package kernel
  * @copyright copyright &copy; 2000 XOOPS.org
  */
 class ProfileFieldHandler extends IcmsPersistableObjectHandler {
-	
+
 	protected $_fieldTypeArray;
 	/**
 	 * Constructor
@@ -462,12 +462,12 @@ class ProfileFieldHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
-	* Read field information from cached storage
-	*
-	* @param bool   $force_update   read fields from database and not cached storage
-	*
-	* @return array
-	*/
+	 * Read field information from cached storage
+	 *
+	 * @param bool   $force_update   read fields from database and not cached storage
+	 *
+	 * @return array
+	 */
 	public function loadFields($force_update = false) {
 		static $fields = array();
 		if (!empty($force_update) || count($fields) == 0) {
@@ -619,12 +619,12 @@ class ProfileFieldHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
-	* delete a profile field from the database
-	*
-	* @param object $obj reference to the object to delete
-	* @param bool $force
-	* @return bool FALSE if failed.
-	**/
+	 * delete a profile field from the database
+	 *
+	 * @param object $obj reference to the object to delete
+	 * @param bool $force
+	 * @return bool FALSE if failed.
+	 **/
 	function delete(&$obj, $force = false) {
 		$profile_handler =& icms_getmodulehandler( 'profile', basename(  dirname(  dirname( __FILE__ ) ) ), 'profile' );
 		// remove column from table
@@ -681,7 +681,7 @@ class ProfileFieldHandler extends IcmsPersistableObjectHandler {
 	public function getUserVars() {
 		return array('uid', 'uname', 'name', 'email', 'url', 'user_avatar', 'user_regdate', 'user_icq', 'user_from', 'user_sig', 'user_viewemail', 'actkey', 'user_aim', 'user_yim', 'user_msnm', 'pass', 'posts', 'attachsig', 'rank', 'level', 'theme', 'timezone_offset', 'last_login', 'umode', 'uorder', 'notify_method', 'notify_mode', 'user_occ', 'bio', 'user_intrest', 'user_mailok', 'language', 'openid', 'salt', 'user_viewoid', 'pass_expired', 'enc_type', 'login_name');
 	}
-	
+
 	public function getFieldTypeArray() {
 		if (!$this->_fieldTypeArray) {
 			$this->_fieldTypeArray["checkbox"] = _AM_PROFILE_FIELD_TYPE_CHECKBOX;

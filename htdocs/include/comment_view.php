@@ -1,17 +1,17 @@
 <?php
 /**
-* The commentview include file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	core
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * The commentview include file
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	core
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 	exit();
@@ -27,7 +27,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 
 	icms_loadLanguageFile('core', 'comment');
 	$comment_config = $icmsModule->getInfo('comments');
-	$com_itemid = (trim($comment_config['itemName']) != '' && isset($_GET[$comment_config['itemName']])) ? intval($_GET[$comment_config['itemName']]) : 0;
+	$com_itemid = (trim($comment_config['itemName']) != '' && isset($_GET[$comment_config['itemName']])) ? (int) ($_GET[$comment_config['itemName']]) : 0;
 
 	if ($com_itemid > 0) {
 		$com_mode = isset($_GET['com_mode']) ? htmlspecialchars(trim($_GET['com_mode']), ENT_QUOTES) : '';
@@ -46,7 +46,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 				$com_order = $icmsConfig['com_order'];
 			}
 		} else {
-			$com_order = intval($_GET['com_order']);
+			$com_order = (int) ($_GET['com_order']);
 		}
 		if ($com_order != XOOPS_COMMENT_OLD1ST) {
 			$xoopsTpl->assign(array('comment_order' => XOOPS_COMMENT_NEW1ST, 'order_other' => XOOPS_COMMENT_OLD1ST));
@@ -62,8 +62,8 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			$admin_view = false;
 		}
 
-		$com_id = isset($_GET['com_id']) ? intval($_GET['com_id']) : 0;
-		$com_rootid = isset($_GET['com_rootid']) ? intval($_GET['com_rootid']) : 0;
+		$com_id = isset($_GET['com_id']) ? (int) ($_GET['com_id']) : 0;
+		$com_rootid = isset($_GET['com_rootid']) ? (int) ($_GET['com_rootid']) : 0;
 		$comment_handler =& xoops_gethandler('comment');
 		if ($com_mode == 'flat') {
 			$comments =& $comment_handler->getByItemId($icmsModule->getVar('mid'), $com_itemid, $com_dborder);
@@ -168,18 +168,18 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		$link_extra = '';
 		if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
 			foreach ($comment_config['extraParams'] as $extra_param) {
-  		if (isset(${$extra_param})) {
-		  $link_extra .= '&amp;'.$extra_param.'='.${$extra_param};
-		  $hidden_value = htmlspecialchars(${$extra_param}, ENT_QUOTES);
-		  $extra_param_val = ${$extra_param};
-  		} elseif (isset($_POST[$extra_param])) {
-  			$extra_param_val = $_POST[$extra_param];
-  		} elseif (isset($_GET[$extra_param])) {
-			$extra_param_val = $_GET[$extra_param];
-  		}
-  		if (isset($extra_param_val)) {
-			$link_extra .= '&amp;'.$extra_param.'='.$extra_param_val;
-			$hidden_value = htmlspecialchars($extra_param_val, ENT_QUOTES);
+				if (isset(${$extra_param})) {
+					$link_extra .= '&amp;'.$extra_param.'='.${$extra_param};
+					$hidden_value = htmlspecialchars(${$extra_param}, ENT_QUOTES);
+					$extra_param_val = ${$extra_param};
+				} elseif (isset($_POST[$extra_param])) {
+					$extra_param_val = $_POST[$extra_param];
+				} elseif (isset($_GET[$extra_param])) {
+					$extra_param_val = $_GET[$extra_param];
+				}
+				if (isset($extra_param_val)) {
+					$link_extra .= '&amp;'.$extra_param.'='.$extra_param_val;
+					$hidden_value = htmlspecialchars($extra_param_val, ENT_QUOTES);
 					$navbar .= '<input type="hidden" name="'.$extra_param.'" value="'.$hidden_value.'" />';
 				}
 			}

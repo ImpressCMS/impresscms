@@ -14,7 +14,6 @@
  * @version         $Id$
  */
 
-
 $i = 0;
 
 $i++;
@@ -56,9 +55,9 @@ $icmsUser = $GLOBALS['xoopsUser'];
 $ugroups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 $agroups = $gperm->getGroupIds('system_admin',7); //ICMS_SYSTEM_BLOCK constant not available?
 if (array_intersect($ugroups, $agroups)) {
-$i++;
-$adminmenu[$i]['title'] = _PROFILE_MI_FINDUSER;
-$adminmenu[$i]['link'] = '../system/admin.php?fct=findusers';
+	$i++;
+	$adminmenu[$i]['title'] = _PROFILE_MI_FINDUSER;
+	$adminmenu[$i]['link'] = '../system/admin.php?fct=findusers';
 }
 global $icmsModule;
 if (isset($icmsModule)) {

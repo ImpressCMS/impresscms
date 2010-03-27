@@ -1,23 +1,23 @@
 <?php
 /**
-* Administration of template sets, main file
-*
-* @copyright	http://www.xoops.org/ The XOOPS Project
-* @copyright	XOOPS_copyrights.txt
-* @copyright	http://www.impresscms.org/ The ImpressCMS Project
-* @license	LICENSE.txt
-* @package	Administration
-* @since	XOOPS
-* @author	http://www.xoops.org The XOOPS Project
-* @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
-*/
+ * Administration of template sets, main file
+ *
+ * @copyright	http://www.xoops.org/ The XOOPS Project
+ * @copyright	XOOPS_copyrights.txt
+ * @copyright	http://www.impresscms.org/ The ImpressCMS Project
+ * @license	LICENSE.txt
+ * @package	Administration
+ * @since	XOOPS
+ * @author	http://www.xoops.org The XOOPS Project
+ * @author	modified by UnderDog <underdog@impresscms.org>
+ * @version	$Id$
+ */
 
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
 } else {
 	$allowedHTML = array('html');
-	
+
 	if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
 	if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
 	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
@@ -41,47 +41,47 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			echo '<table width="100%" cellspacing="1" class="outer"><tr align="center"><th width="25%">'._MD_THMSETNAME.'</th><th>'._MD_CREATED.'</th><th>'._MD_TEMPLATES.'</th><th>'._MD_ACTION.'</th><th>&nbsp;</th></tr>';
 			$class = 'even';
 			for ($i = 0; $i < $tcount; $i++) {
-			    $tplsetname = $tplsets[$i]->getVar('tplset_name');
-			    $installed_themes[] = $tplsetname;
-			    $class = ($class == 'even') ? 'odd' : 'even';
-			    echo '<tr class="'.$class.'" align="center"><td class="head">'.$tplsetname.'<br /><br /><span style="font-weight:normal;">'.$tplsets[$i]->getVar('tplset_desc').'</span></td><td>'.formatTimestamp($tplsets[$i]->getVar('tplset_created'), 's').'</td><td align="'._GLOBAL_LEFT.'"><ul>';
-			    $tplstats = $tpltpl_handler->getModuleTplCount($tplsetname);
-			    if (count($tplstats) > 0) {
-			        $module_handler =& xoops_gethandler('module');
-			        echo '<ul>';
-			        foreach ($tplstats as $moddir => $filecount) {
-			            $module =& $module_handler->getByDirname($moddir);
-			            if (is_object($module)) {
-			                if ($installed_mods[$moddir] > $filecount) {
-			                    $filecount = '<span style="color:#ff0000;">'.$filecount.'</span>';
-			                }
-			            echo '<li>'.$module->getVar('name').' [<a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset='.$tplsetname.'&amp;moddir='.$moddir.'">'._LIST.'</a> (<b>'.icms_conv_nr2local($filecount).'</b>)]</li>';
-			            }
-			            unset($module);
-			        }
-			        $not_installed = array_diff(array_keys($installed_mods), array_keys($tplstats));
-			    } else {
-			        $not_installed =& array_keys($installed_mods);
-			    }
-			    foreach ($not_installed as $ni) {
-			        $module =& $module_handler->getByDirname($ni);
-			        echo '<li>'.$module->getVar('name').' [<a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset='.$tplsetname.'&amp;moddir='.$ni.'">'._LIST.'</a> (<span style="color:#ff0000; font-weight: bold;">0</span>)] [<a href="admin.php?fct=tplsets&amp;op=generatemod&amp;tplset='.$tplsetname.'&amp;moddir='.$ni.'">'._MD_GENERATE.'</a>]</li>';
-			    }
-			    echo '</ul></td><td>';
-			    echo '[<a href="admin.php?fct=tplsets&amp;op=download&amp;method=tar&amp;tplset='.$tplsetname.'">'._MD_DOWNLOAD.'</a>]<br />[<a href="admin.php?fct=tplsets&amp;op=clone&amp;tplset='.$tplsetname.'">'._CLONE.'</a>]';
-			    if ($tplsetname != 'default' && $tplsetname != $xoopsConfig['template_set']) {
-			        echo '<br />[<a href="admin.php?fct=tplsets&amp;op=delete&amp;tplset='.$tplsetname.'">'._DELETE.'</a>]';
-			    }
-			    echo '</td>';
-			    if ($tplsetname == $xoopsConfig['template_set']) {
-			        echo '<td><img src="'.XOOPS_URL.'/modules/system/images/check.gif" alt="'._MD_DEFAULTTHEME.'" /></td>';
-			    } else {
-			        echo '<td>&nbsp;</td>';
-			    }
-			    echo '</tr>';
+				$tplsetname = $tplsets[$i]->getVar('tplset_name');
+				$installed_themes[] = $tplsetname;
+				$class = ($class == 'even') ? 'odd' : 'even';
+				echo '<tr class="'.$class.'" align="center"><td class="head">'.$tplsetname.'<br /><br /><span style="font-weight:normal;">'.$tplsets[$i]->getVar('tplset_desc').'</span></td><td>'.formatTimestamp($tplsets[$i]->getVar('tplset_created'), 's').'</td><td align="'._GLOBAL_LEFT.'"><ul>';
+				$tplstats = $tpltpl_handler->getModuleTplCount($tplsetname);
+				if (count($tplstats) > 0) {
+					$module_handler =& xoops_gethandler('module');
+					echo '<ul>';
+					foreach ($tplstats as $moddir => $filecount) {
+						$module =& $module_handler->getByDirname($moddir);
+						if (is_object($module)) {
+							if ($installed_mods[$moddir] > $filecount) {
+								$filecount = '<span style="color:#ff0000;">'.$filecount.'</span>';
+							}
+							echo '<li>'.$module->getVar('name').' [<a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset='.$tplsetname.'&amp;moddir='.$moddir.'">'._LIST.'</a> (<b>'.icms_conv_nr2local($filecount).'</b>)]</li>';
+						}
+						unset($module);
+					}
+					$not_installed = array_diff(array_keys($installed_mods), array_keys($tplstats));
+				} else {
+					$not_installed =& array_keys($installed_mods);
+				}
+				foreach ($not_installed as $ni) {
+					$module =& $module_handler->getByDirname($ni);
+					echo '<li>'.$module->getVar('name').' [<a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset='.$tplsetname.'&amp;moddir='.$ni.'">'._LIST.'</a> (<span style="color:#ff0000; font-weight: bold;">0</span>)] [<a href="admin.php?fct=tplsets&amp;op=generatemod&amp;tplset='.$tplsetname.'&amp;moddir='.$ni.'">'._MD_GENERATE.'</a>]</li>';
+				}
+				echo '</ul></td><td>';
+				echo '[<a href="admin.php?fct=tplsets&amp;op=download&amp;method=tar&amp;tplset='.$tplsetname.'">'._MD_DOWNLOAD.'</a>]<br />[<a href="admin.php?fct=tplsets&amp;op=clone&amp;tplset='.$tplsetname.'">'._CLONE.'</a>]';
+				if ($tplsetname != 'default' && $tplsetname != $xoopsConfig['template_set']) {
+					echo '<br />[<a href="admin.php?fct=tplsets&amp;op=delete&amp;tplset='.$tplsetname.'">'._DELETE.'</a>]';
+				}
+				echo '</td>';
+				if ($tplsetname == $xoopsConfig['template_set']) {
+					echo '<td><img src="'.XOOPS_URL.'/modules/system/images/check.gif" alt="'._MD_DEFAULTTHEME.'" /></td>';
+				} else {
+					echo '<td>&nbsp;</td>';
+				}
+				echo '</tr>';
 			}
 			echo '</table><br />';
-			
+				
 			include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
 			$form = new XoopsThemeForm(_MD_UPLOADTAR, 'tplupload_form', 'admin.php', 'post', true);
 			$form->setExtra('enctype="multipart/form-data"');
@@ -97,22 +97,22 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		case 'listtpl':
 			$tplset = trim($_GET['tplset']);
 			if ($tplset == '') {
-			    redirect_header('admin.php?fct=tplsets',1);
+				redirect_header('admin.php?fct=tplsets',1);
 			}
 			if ($moddir == '') {
-			    redirect_header('admin.php?fct=tplsets',1);
+				redirect_header('admin.php?fct=tplsets',1);
 			}
 			xoops_cp_header();
 			$module_handler =& xoops_gethandler('module');
 			$module =& $module_handler->getByDirname($moddir);
 			$modname = $module->getVar('name');
 			echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/tplsets/images/tplsets_big.png)"><a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$tplset.'&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$modname.'<br /><br /></div><br />';
-			
+				
 			echo '<form action="admin.php" method="post" enctype="multipart/form-data"><table width="100%" class="outer" cellspacing="1"><tr><th width="40%">'._MD_FILENAME.'</th><th>'._MD_LASTMOD.'</th>';
 			if ($tplset != 'default') {
-			    echo '<th>'._MD_LASTIMP.'</th><th colspan="2">'._MD_ACTION.'</th></tr>';
+				echo '<th>'._MD_LASTIMP.'</th><th colspan="2">'._MD_ACTION.'</th></tr>';
 			} else {
-			    echo '<th>'._MD_ACTION.'</th></tr>';
+				echo '<th>'._MD_ACTION.'</th></tr>';
 			}
 			$tpltpl_handler =& xoops_gethandler('tplfile');
 			// get files that are already installed
@@ -120,120 +120,120 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$inst_files = array();
 			$tcount = count($templates);
 			for ($i = 0; $i < $tcount; $i++) {
-			    if ($i % 2 == 0) {
-			        $class = 'even';
-			    } else {
-			        $class = 'odd';
-			    }
-			    $last_modified = $templates[$i]->getVar('tpl_lastmodified');
-			    $last_imported = $templates[$i]->getVar('tpl_lastimported');
-			    $last_imported_f = ($last_imported > 0) ? formatTimestamp($last_imported, 'l') : '';
-			    echo  '<tr class="'.$class.'"><td class="head">'.$templates[$i]->getVar('tpl_file').'<br /><br /><span style="font-weight:normal;">'.$templates[$i]->getVar('tpl_desc').'</span></td><td>'.formatTimestamp($last_modified, 'l').'</td>';
-			    $filename = $templates[$i]->getVar('tpl_file');
-			    if ($tplset != 'default') {
-			        $physical_file = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/'.$filename;
-			        if (file_exists($physical_file)) {
-			            $mtime = filemtime($physical_file);
-			            if ($last_imported < $mtime) {
-			                if ($mtime > $last_modified) {
-			                    $bg = '#ff9999';
-			                } elseif($mtime > $last_imported) {
-			                    $bg = '#99ff99';
-			                }
-			                echo '<td style="background-color:'.$bg.';">'.$last_imported_f.' [<a href="admin.php?fct=tplsets&amp;tplset='.$tplset.'&amp;moddir='.$moddir.'&amp;op=importtpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._MD_IMPORT.'</a>]';
-			            } else {
-			                echo '<td>'.$last_imported_f;
-			            }
-			        } else {
-			            echo '<td>'.$last_imported_f;
-			        }
-			        echo '</td><td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._EDIT.'</a>] [<a href="admin.php?fct=tplsets&amp;op=deletetpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._DELETE.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td><td align="'._GLOBAL_RIGHT.'"><input type="file" name="'.$filename.'" id="'.$filename.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$filename.'" /><input type="hidden" name="old_template['.$filename.']" value="'.$templates[$i]->getVar('tpl_id').'" /></td>';
-			    } else {
-			        echo '<td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._MD_VIEW.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td>';
-			    }
-			    echo '</tr>'."\n";
-			    $inst_files[] = $filename;
+				if ($i % 2 == 0) {
+					$class = 'even';
+				} else {
+					$class = 'odd';
+				}
+				$last_modified = $templates[$i]->getVar('tpl_lastmodified');
+				$last_imported = $templates[$i]->getVar('tpl_lastimported');
+				$last_imported_f = ($last_imported > 0) ? formatTimestamp($last_imported, 'l') : '';
+				echo  '<tr class="'.$class.'"><td class="head">'.$templates[$i]->getVar('tpl_file').'<br /><br /><span style="font-weight:normal;">'.$templates[$i]->getVar('tpl_desc').'</span></td><td>'.formatTimestamp($last_modified, 'l').'</td>';
+				$filename = $templates[$i]->getVar('tpl_file');
+				if ($tplset != 'default') {
+					$physical_file = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/'.$filename;
+					if (file_exists($physical_file)) {
+						$mtime = filemtime($physical_file);
+						if ($last_imported < $mtime) {
+							if ($mtime > $last_modified) {
+								$bg = '#ff9999';
+							} elseif($mtime > $last_imported) {
+								$bg = '#99ff99';
+							}
+							echo '<td style="background-color:'.$bg.';">'.$last_imported_f.' [<a href="admin.php?fct=tplsets&amp;tplset='.$tplset.'&amp;moddir='.$moddir.'&amp;op=importtpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._MD_IMPORT.'</a>]';
+						} else {
+							echo '<td>'.$last_imported_f;
+						}
+					} else {
+						echo '<td>'.$last_imported_f;
+					}
+					echo '</td><td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._EDIT.'</a>] [<a href="admin.php?fct=tplsets&amp;op=deletetpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._DELETE.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td><td align="'._GLOBAL_RIGHT.'"><input type="file" name="'.$filename.'" id="'.$filename.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$filename.'" /><input type="hidden" name="old_template['.$filename.']" value="'.$templates[$i]->getVar('tpl_id').'" /></td>';
+				} else {
+					echo '<td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._MD_VIEW.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$templates[$i]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td>';
+				}
+				echo '</tr>'."\n";
+				$inst_files[] = $filename;
 			}
 			if ($tplset != 'default') {
-			    include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
-			    // get difference between already installed files and the files under modules directory. which will be recognized as files that are not installed
-			    $notinst_files = array_diff(XoopsLists::getFileListAsArray(XOOPS_ROOT_PATH.'/modules/'.$moddir.'/templates/'), $inst_files);
-			    foreach ($notinst_files as $nfile) {
-			        if ($nfile != 'index.html') {
-			            echo  '<tr><td style="background-color:#FFFF99; padding: 5px;">'.$nfile.'</td><td style="background-color:#FFFF99; padding: 5px;">&nbsp;</td><td style="background-color:#FFFF99; padding: 5px;">';
-			            $physical_file = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/'.$nfile;
-			            if (file_exists($physical_file)) {
-			                echo '[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=importtpl&amp;file='.urlencode($nfile).'">'._MD_IMPORT.'</a>]';
-			            } else {
-			                echo '&nbsp;';
-			            }
-			            echo '</td><td style="background-color:#FFFF99; padding: 5px;">[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=generatetpl&amp;type=module&amp;file='.urlencode($nfile).'">'._MD_GENERATE.'</a>]</td><td style="background-color:#FFFF99; padding: 5px; text-align:'._GLOBAL_RIGHT.';"><input type="file" name="'.$nfile.'" id="'.$nfile.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$nfile.'" /></td></tr>'."\n";
-			        }
-			    }
+				include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
+				// get difference between already installed files and the files under modules directory. which will be recognized as files that are not installed
+				$notinst_files = array_diff(XoopsLists::getFileListAsArray(XOOPS_ROOT_PATH.'/modules/'.$moddir.'/templates/'), $inst_files);
+				foreach ($notinst_files as $nfile) {
+					if ($nfile != 'index.html') {
+						echo  '<tr><td style="background-color:#FFFF99; padding: 5px;">'.$nfile.'</td><td style="background-color:#FFFF99; padding: 5px;">&nbsp;</td><td style="background-color:#FFFF99; padding: 5px;">';
+						$physical_file = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/'.$nfile;
+						if (file_exists($physical_file)) {
+							echo '[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=importtpl&amp;file='.urlencode($nfile).'">'._MD_IMPORT.'</a>]';
+						} else {
+							echo '&nbsp;';
+						}
+						echo '</td><td style="background-color:#FFFF99; padding: 5px;">[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=generatetpl&amp;type=module&amp;file='.urlencode($nfile).'">'._MD_GENERATE.'</a>]</td><td style="background-color:#FFFF99; padding: 5px; text-align:'._GLOBAL_RIGHT.';"><input type="file" name="'.$nfile.'" id="'.$nfile.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$nfile.'" /></td></tr>'."\n";
+					}
+				}
 			}
 			echo '</table><br /><table width="100%" class="outer" cellspacing="1"><tr><th width="40%">'._MD_FILENAME.'</th><th>'._MD_LASTMOD.'</th>';
 			if ($tplset != 'default') {
-			    echo '<th>'._MD_LASTIMP.'</th><th colspan="2">'._MD_ACTION.'</th></tr>';
+				echo '<th>'._MD_LASTIMP.'</th><th colspan="2">'._MD_ACTION.'</th></tr>';
 			} else {
-			    echo '<th>'._MD_ACTION.'</th></tr>';
+				echo '<th>'._MD_ACTION.'</th></tr>';
 			}
 			$btemplates =& $tpltpl_handler->find($tplset, 'block', null, $moddir);
 			$binst_files = array();
 			$btcount = count($btemplates);
 			for ($j = 0; $j < $btcount; $j++) {
-			    $last_imported = $btemplates[$j]->getVar('tpl_lastimported');
-			    $last_imported_f = ($last_imported > 0) ? formatTimestamp($last_imported, 'l') : '';
-			    $last_modified = $btemplates[$j]->getVar('tpl_lastmodified');
-			    if ($j % 2 == 0) {
-			        $class = 'even';
-			    } else {
-			        $class = 'odd';
-			    }
-			    echo  '<tr class="'.$class.'"><td class="head"><span style="font-weight:bold;">'.$btemplates[$j]->getVar('tpl_file').'</span><br /><br /><span style="font-weight:normal;">'.$btemplates[$j]->getVar('tpl_desc').'</span></td><td>'.formatTimestamp($last_modified, 'l').'</td>';
-			    $filename = $btemplates[$j]->getVar('tpl_file');
-			    $physical_file = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/blocks/'.$filename;
-			    if ($tplset != 'default') {
-			        if (file_exists($physical_file)) {
-			            $mtime = filemtime($physical_file);
-			            if ($last_imported < $mtime) {
-			                if ($mtime > $last_modified) {
-			                    $bg = '#ff9999';
-			                } elseif($mtime > $last_imported) {
-			                    $bg = '#99ff99';
-			                }
-			                echo '<td style="background-color:'.$bg.';">'.$last_imported_f.' [<a href="admin.php?fct=tplsets&amp;tplset='.$tplset.'&amp;op=importtpl&amp;moddir='.$moddir.'&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._MD_IMPORT.'</a>]';
-			            } else {
-			                echo '<td>'.$last_imported_f;
-			            }
-			        } else {
-			            echo '<td>'.$last_imported_f;
-			        }
-			        echo '</td><td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._EDIT.'</a>] [<a href="admin.php?fct=tplsets&amp;op=deletetpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._DELETE.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td><td align="'._GLOBAL_RIGHT.'"><input type="file" name="'.$filename.'" id="'.$filename.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$filename.'" /><input type="hidden" name="old_template['.$filename.']" value="'.$btemplates[$j]->getVar('tpl_id').'" /></td>';
-			    } else {
-			        echo '<td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._MD_VIEW.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td>';
-			    }
-			    echo '</tr>'."\n";
-			    $binst_files[] = $filename;
+				$last_imported = $btemplates[$j]->getVar('tpl_lastimported');
+				$last_imported_f = ($last_imported > 0) ? formatTimestamp($last_imported, 'l') : '';
+				$last_modified = $btemplates[$j]->getVar('tpl_lastmodified');
+				if ($j % 2 == 0) {
+					$class = 'even';
+				} else {
+					$class = 'odd';
+				}
+				echo  '<tr class="'.$class.'"><td class="head"><span style="font-weight:bold;">'.$btemplates[$j]->getVar('tpl_file').'</span><br /><br /><span style="font-weight:normal;">'.$btemplates[$j]->getVar('tpl_desc').'</span></td><td>'.formatTimestamp($last_modified, 'l').'</td>';
+				$filename = $btemplates[$j]->getVar('tpl_file');
+				$physical_file = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/blocks/'.$filename;
+				if ($tplset != 'default') {
+					if (file_exists($physical_file)) {
+						$mtime = filemtime($physical_file);
+						if ($last_imported < $mtime) {
+							if ($mtime > $last_modified) {
+								$bg = '#ff9999';
+							} elseif($mtime > $last_imported) {
+								$bg = '#99ff99';
+							}
+							echo '<td style="background-color:'.$bg.';">'.$last_imported_f.' [<a href="admin.php?fct=tplsets&amp;tplset='.$tplset.'&amp;op=importtpl&amp;moddir='.$moddir.'&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._MD_IMPORT.'</a>]';
+						} else {
+							echo '<td>'.$last_imported_f;
+						}
+					} else {
+						echo '<td>'.$last_imported_f;
+					}
+					echo '</td><td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._EDIT.'</a>] [<a href="admin.php?fct=tplsets&amp;op=deletetpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._DELETE.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td><td align="'._GLOBAL_RIGHT.'"><input type="file" name="'.$filename.'" id="'.$filename.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$filename.'" /><input type="hidden" name="old_template['.$filename.']" value="'.$btemplates[$j]->getVar('tpl_id').'" /></td>';
+				} else {
+					echo '<td>[<a href="admin.php?fct=tplsets&amp;op=edittpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._MD_VIEW.'</a>] [<a href="admin.php?fct=tplsets&amp;op=downloadtpl&amp;id='.$btemplates[$j]->getVar('tpl_id').'">'._MD_DOWNLOAD.'</a>]</td>';
+				}
+				echo '</tr>'."\n";
+				$binst_files[] = $filename;
 			}
 			if ($tplset != 'default') {
-			    include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
-			    $bnotinst_files = array_diff(XoopsLists::getFileListAsArray(XOOPS_ROOT_PATH.'/modules/'.$moddir.'/templates/blocks/'), $binst_files);
-			    foreach ($bnotinst_files as $nfile) {
-			        if ($nfile != 'index.html') {
-			            echo  '<tr style="background-color:#FFFF99;"><td style="background-color:#FFFF99; padding: 5px;">'.$nfile.'</td><td style="background-color:#FFFF99; padding: 5px;">&nbsp;</td><td style="background-color:#FFFF99; padding: 5px;">';
-			            $physical_file = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/blocks/'.$nfile;
-			            if (file_exists($physical_file)) {
-			                echo '[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=importtpl&amp;file='.urlencode($nfile).'">'._MD_IMPORT.'</a>]';
-			            } else {
-			                echo '&nbsp;';
-			            }
-			            echo '</td><td style="background-color:#FFFF99; padding: 5px;">[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=generatetpl&amp;type=block&amp;file='.urlencode($nfile).'">'._MD_GENERATE.'</a>]</td><td style="background-color:#FFFF99; padding: 5px; text-align: '._GLOBAL_RIGHT.'"><input type="file" name="'.$nfile.'" id="'.$nfile.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$nfile.'" /></td></tr>'."\n";
-			        }
-			    }
+				include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
+				$bnotinst_files = array_diff(XoopsLists::getFileListAsArray(XOOPS_ROOT_PATH.'/modules/'.$moddir.'/templates/blocks/'), $binst_files);
+				foreach ($bnotinst_files as $nfile) {
+					if ($nfile != 'index.html') {
+						echo  '<tr style="background-color:#FFFF99;"><td style="background-color:#FFFF99; padding: 5px;">'.$nfile.'</td><td style="background-color:#FFFF99; padding: 5px;">&nbsp;</td><td style="background-color:#FFFF99; padding: 5px;">';
+						$physical_file = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/blocks/'.$nfile;
+						if (file_exists($physical_file)) {
+							echo '[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=importtpl&amp;file='.urlencode($nfile).'">'._MD_IMPORT.'</a>]';
+						} else {
+							echo '&nbsp;';
+						}
+						echo '</td><td style="background-color:#FFFF99; padding: 5px;">[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=generatetpl&amp;type=block&amp;file='.urlencode($nfile).'">'._MD_GENERATE.'</a>]</td><td style="background-color:#FFFF99; padding: 5px; text-align: '._GLOBAL_RIGHT.'"><input type="file" name="'.$nfile.'" id="'.$nfile.'" /><input type="hidden" name="xoops_upload_file[]" id="xoops_upload_file[]" value="'.$nfile.'" /></td></tr>'."\n";
+					}
+				}
 			}
 			echo '</table>';
 			if ($tplset != 'default') {
-			    echo '<div style="text-align: '._GLOBAL_RIGHT.'; margin-top: 5px;"><input type="hidden" name="fct" value="tplsets" /><input type="hidden" name="op" value="update" />'.$GLOBALS['xoopsSecurity']->getTokenHTML().'<input type="hidden" name="moddir" value="'.$moddir.'" /><input type="hidden" name="tplset" value="'.$tplset.'" /><input type="submit" value="'._MD_UPLOAD.'" /></div></form>';
+				echo '<div style="text-align: '._GLOBAL_RIGHT.'; margin-top: 5px;"><input type="hidden" name="fct" value="tplsets" /><input type="hidden" name="op" value="update" />'.$GLOBALS['xoopsSecurity']->getTokenHTML().'<input type="hidden" name="moddir" value="'.$moddir.'" /><input type="hidden" name="tplset" value="'.$tplset.'" /><input type="submit" value="'._MD_UPLOAD.'" /></div></form>';
 			}
 			xoops_cp_footer();
 			break;
@@ -344,7 +344,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			}
 
 			if (count($err) == 0) {
-			redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tplfile->getVar('tpl_module').'&amp;tplset='.urlencode($tplfile->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
+				redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tplfile->getVar('tpl_module').'&amp;tplset='.urlencode($tplfile->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
 			}
 			xoops_cp_header();
 			xoops_error($err);
@@ -378,38 +378,38 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 					}
 				}
 				/*
-				$image_handler =& xoops_gethandler('imagesetimg');
-				$imagefiles =& $image_handler->getObjects(new Criteria('tplset_name', $tplset));
-				$icount = count($imagefiles);
-				if ($icount > 0) {
-				    $msgs[] = 'Deleting image files...';
-				    for ($i = 0; $i < $icount; $i++) {
-				        if (!$image_handler->delete($imagefiles[$i])) {
-				            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not remove file <b>'.$imagefiles[$i]->getVar('imgsetimg_file').'</b> from the database (ID: <b>'.$imagefiles[$i]->getVar('imgsetimg_id').'</b>)</span>';
-				        } else {
-				            $msgs[] = '&nbsp;&nbsp;File <b>'.$imagefiles[$i]->getVar('imgsetimg_file').'</b> deleted from the database (ID: <b>'.$imagefiles[$i]->getVar('imgsetimg_id').'</b>)</span>';
-				        }
-				    }
-				}
-				$imageset_handler =& xoops_gethandler('imageset');
-				$imagesets =& $imageset_handler->getObjects(new Criteria('tplset_name', $tplset));
-				$scount = count($imagesets);
-				if ($scount > 0) {
-				    $msgs[] = 'Deleting image set data...';
-				    for ($i = 0; $i < $scount; $i++) {
-				        if (!$imageset_handler->unlinktplset($imagesets[$i]->getVar('imgset_id'), $tplset)) {
-				            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not remove link between <b>'.$imagesets[$i]->getVar('imgset_name').'</b> (ID: <b>'.$imagesets[$i]->getVar('imgset_id').'</b>) and '.$tplset.' from the database.</span>';
-				        } else {
-				            $msgs[] = '&nbsp;&nbsp;Link between <b>'.$imagesets[$i]->getVar('imgset_name').'</b> (ID: <b>'.$imagesets[$i]->getVar('imgset_id').'</b>) and <b>'.$tplset.'</b> removed from the database.</span>';
-				        }
-				        if (!$imageset_handler->delete($imagesets[$i])) {
-				            $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete image set <b>'.$imagesets[$i]->getVar('imgset_name').'</b> (ID: <b>'.$imagesets[$i]->getVar('imgset_id').'</b>) from the database.</span>';
-				        } else {
-				            $msgs[] = '&nbsp;&nbsp;Image set <b>'.$imagesets[$i]->getVar('imgset_name').'</b> (ID: <b>'.$imagesets[$i]->getVar('imgset_id').'</b>) removed from the database.</span>';
-				        }
-				    }
-				}
-				*/
+				 $image_handler =& xoops_gethandler('imagesetimg');
+				 $imagefiles =& $image_handler->getObjects(new Criteria('tplset_name', $tplset));
+				 $icount = count($imagefiles);
+				 if ($icount > 0) {
+				 $msgs[] = 'Deleting image files...';
+				 for ($i = 0; $i < $icount; $i++) {
+				 if (!$image_handler->delete($imagefiles[$i])) {
+				 $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not remove file <b>'.$imagefiles[$i]->getVar('imgsetimg_file').'</b> from the database (ID: <b>'.$imagefiles[$i]->getVar('imgsetimg_id').'</b>)</span>';
+				 } else {
+				 $msgs[] = '&nbsp;&nbsp;File <b>'.$imagefiles[$i]->getVar('imgsetimg_file').'</b> deleted from the database (ID: <b>'.$imagefiles[$i]->getVar('imgsetimg_id').'</b>)</span>';
+				 }
+				 }
+				 }
+				 $imageset_handler =& xoops_gethandler('imageset');
+				 $imagesets =& $imageset_handler->getObjects(new Criteria('tplset_name', $tplset));
+				 $scount = count($imagesets);
+				 if ($scount > 0) {
+				 $msgs[] = 'Deleting image set data...';
+				 for ($i = 0; $i < $scount; $i++) {
+				 if (!$imageset_handler->unlinktplset($imagesets[$i]->getVar('imgset_id'), $tplset)) {
+				 $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not remove link between <b>'.$imagesets[$i]->getVar('imgset_name').'</b> (ID: <b>'.$imagesets[$i]->getVar('imgset_id').'</b>) and '.$tplset.' from the database.</span>';
+				 } else {
+				 $msgs[] = '&nbsp;&nbsp;Link between <b>'.$imagesets[$i]->getVar('imgset_name').'</b> (ID: <b>'.$imagesets[$i]->getVar('imgset_id').'</b>) and <b>'.$tplset.'</b> removed from the database.</span>';
+				 }
+				 if (!$imageset_handler->delete($imagesets[$i])) {
+				 $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete image set <b>'.$imagesets[$i]->getVar('imgset_name').'</b> (ID: <b>'.$imagesets[$i]->getVar('imgset_id').'</b>) from the database.</span>';
+				 } else {
+				 $msgs[] = '&nbsp;&nbsp;Image set <b>'.$imagesets[$i]->getVar('imgset_name').'</b> (ID: <b>'.$imagesets[$i]->getVar('imgset_id').'</b>) removed from the database.</span>';
+				 }
+				 }
+				 }
+				 */
 				$tplset_handler =& xoops_gethandler('tplset');
 				$tplsets =& $tplset_handler->getObjects(new Criteria('tplset_name', $tplset));
 				if (count($tplsets) > 0 && is_object($tplsets[0])) {
@@ -432,19 +432,19 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			break;
 
 		case 'clone':
-		   include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
-		   $form = new XoopsThemeForm(_MD_CLONETHEME, 'template_form', 'admin.php', 'post', true);
-		   $form->addElement(new XoopsFormLabel(_MD_THEMENAME, $tplset));
-		   $form->addElement(new XoopsFormText(_MD_NEWNAME, 'newtheme', 30, 50), true);
-		   $form->addElement(new XoopsFormHidden('tplset', $tplset));
-		   $form->addElement(new XoopsFormHidden('op', 'clone_go'));
-		   $form->addElement(new XoopsFormHidden('fct', 'tplsets'));
-		   $form->addElement(new XoopsFormButton('', 'tpl_button', _SUBMIT, 'submit'));
-		   xoops_cp_header();
-		   echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/tplsets/images/tplsets_big.png)"><a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_CLONETHEME.'<br /><br /></div><br />';
-		   $form->display();
-		   xoops_cp_footer();
-		   break;
+			include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+			$form = new XoopsThemeForm(_MD_CLONETHEME, 'template_form', 'admin.php', 'post', true);
+			$form->addElement(new XoopsFormLabel(_MD_THEMENAME, $tplset));
+			$form->addElement(new XoopsFormText(_MD_NEWNAME, 'newtheme', 30, 50), true);
+			$form->addElement(new XoopsFormHidden('tplset', $tplset));
+			$form->addElement(new XoopsFormHidden('op', 'clone_go'));
+			$form->addElement(new XoopsFormHidden('fct', 'tplsets'));
+			$form->addElement(new XoopsFormButton('', 'tpl_button', _SUBMIT, 'submit'));
+			xoops_cp_header();
+			echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/tplsets/images/tplsets_big.png)"><a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_CLONETHEME.'<br /><br /></div><br />';
+			$form->display();
+			xoops_cp_footer();
+			break;
 
 		case 'clone_go':
 			if (!$GLOBALS['xoopsSecurity']->check()) {
@@ -457,17 +457,17 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$tpltpl_handler =& xoops_gethandler('tplfile');
 			xoops_cp_header();
 			if ($tplset == $newtheme) {
-			xoops_error('Template set name must be a different name.');
+				xoops_error('Template set name must be a different name.');
 			} elseif ($tpltpl_handler->getCount(new Criteria('tpl_tplset', $newtheme)) > 0) {
 				xoops_error('Template set <b>'.$newtheme.'</b> already exists.');
 			} else {
-		    $tplset_handler =& xoops_gethandler('tplset');
-		    $tplsetobj =& $tplset_handler->create();
-		    $tplsetobj->setVar('tplset_name', $newtheme);
-		    $tplsetobj->setVar('tplset_created', time());
-		    if (!$tplset_handler->insert($tplsetobj)) {
+				$tplset_handler =& xoops_gethandler('tplset');
+				$tplsetobj =& $tplset_handler->create();
+				$tplsetobj->setVar('tplset_name', $newtheme);
+				$tplsetobj->setVar('tplset_created', time());
+				if (!$tplset_handler->insert($tplsetobj)) {
 					$msgs[] = '<span style="color:#ff0000;">ERROR: Could not create template set <b>'.$newtheme.'</b>.</span><br />';
-		    } else {
+				} else {
 					$tplsetid = $tplsetobj->getVar('tplset_id');
 					$templates =& $tpltpl_handler->getObjects(new Criteria('tpl_tplset', $tplset), true);
 					$tcount = count($templates);
@@ -486,56 +486,56 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 							}
 							unset($newtpl);
 						}
-					/*
-					    $imageset_handler =& xoops_gethandler('imageset');
-					    $orig_imgset =& $imageset_handler->getObjects(new Criteria('tplset_name', $tplset));
-					    $msgs[] = 'Copying image files...';
-					    $imgsetcount = count($orig_imgset);
-					    for ($i = 0; $i < $imgsetcount; $i++) {
-					        if ($orig_imgset[$i]->getVar('imgset_refid') == 0) {
-					            $new_imgset =& $orig_imgset[$i]->xoopsClone();
-					            $new_imgset->setVar('imgset_id', 0);
-					            $new_imgset->setVar('imgset_name', $newtheme);
-					            if (!$imageset_handler->insert($new_imgset)) {
-					                $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed copying template image set data.</span>';
-					            } else {
-					                $new_imgsetid = $new_imgset->getVar('imgset_id');
-					                $msgs[] = '&nbsp;&nbsp;Template image set data copied. (Name: <b>'.$newtheme.'</b> ID: <b>'.$new_imgsetid.'</b>)</span>';
-					                $image_handler = xoops_gethandler('imagesetimg');
-					                $orig_images =& $image_handler->getByImageset($orig_imgset[$i]->getVar('imgset_id'));
-					                $imgcount = count($orig_images);
-					                for ($j = 0; $j < $imgcount; $j++) {
-					                    $new_image =& $orig_images[$j]->xoopsClone();
-					                    $new_image->setVar('imgsetimg_id', 0);
-					                    $new_image->setVar('imgsetimg_imgset', $new_imgsetid);
-					                    if (!$image_handler->insert($new_image)) {
-					                        $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed copying data for image file <b>'.$orig_images[$j]->getVar('imgsetimg_file').'</b>.</span>';
-					                    } else {
-					                        $thisimage = $orig_images[$j]->getVar('imgsetimg_file');
-					                        $msgs[] = '&nbsp;&nbsp;Data for image file <b>'.$thisimage.'</b> copied.</span>';
-					                    }
-					                }
-					                if (!$imageset_handler->linktplset($new_imgsetid, $newtheme)) {
-					                    $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed creating link between template image set (ID : <b>'.$new_imgsetid.'</b>) and template set <b>'.$newtheme.'</b>.</span>';
-					                } else {
-					                    $msgs[] = '&nbsp;&nbsp;Template image set (ID: <b>'.$new_imgsetid.'</b>) and template set <b>'.$newtheme.'</b> linked.</span>';
-					                }
-					            }
-					        } else {
-					            // module image set, so just create another link to the new template set
-					            if (!$imageset_handler->linktplset($orig_imgset[$i]->getVar('imgset_id'), $newtheme)) {
-					                $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed creating link between module image set  <b>'.$orig_imgset[$i]->getVar('imgset_name').'</b> (ID <b>'.$orig_imgset[$i]->getVar('imgset_id').'</b>) and template set <b>'.$newtheme.'</b>.</span>';
-					            } else {
-					                $msgs[] = '&nbsp;&nbsp;Module image set <b>'.$orig_imgset[$i]->getVar('imgset_name').'</b> (ID <b>'.$orig_imgset[$i]->getVar('imgset_id').'</b>) and template set <b>'.$newtheme.'</b> linked.';
-					            }
-					        }
-					    }
-					*/
+						/*
+						 $imageset_handler =& xoops_gethandler('imageset');
+						 $orig_imgset =& $imageset_handler->getObjects(new Criteria('tplset_name', $tplset));
+						 $msgs[] = 'Copying image files...';
+						 $imgsetcount = count($orig_imgset);
+						 for ($i = 0; $i < $imgsetcount; $i++) {
+						 if ($orig_imgset[$i]->getVar('imgset_refid') == 0) {
+						 $new_imgset =& $orig_imgset[$i]->xoopsClone();
+						 $new_imgset->setVar('imgset_id', 0);
+						 $new_imgset->setVar('imgset_name', $newtheme);
+						 if (!$imageset_handler->insert($new_imgset)) {
+						 $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed copying template image set data.</span>';
+						 } else {
+						 $new_imgsetid = $new_imgset->getVar('imgset_id');
+						 $msgs[] = '&nbsp;&nbsp;Template image set data copied. (Name: <b>'.$newtheme.'</b> ID: <b>'.$new_imgsetid.'</b>)</span>';
+						 $image_handler = xoops_gethandler('imagesetimg');
+						 $orig_images =& $image_handler->getByImageset($orig_imgset[$i]->getVar('imgset_id'));
+						 $imgcount = count($orig_images);
+						 for ($j = 0; $j < $imgcount; $j++) {
+						 $new_image =& $orig_images[$j]->xoopsClone();
+						 $new_image->setVar('imgsetimg_id', 0);
+						 $new_image->setVar('imgsetimg_imgset', $new_imgsetid);
+						 if (!$image_handler->insert($new_image)) {
+						 $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed copying data for image file <b>'.$orig_images[$j]->getVar('imgsetimg_file').'</b>.</span>';
+						 } else {
+						 $thisimage = $orig_images[$j]->getVar('imgsetimg_file');
+						 $msgs[] = '&nbsp;&nbsp;Data for image file <b>'.$thisimage.'</b> copied.</span>';
+						 }
+						 }
+						 if (!$imageset_handler->linktplset($new_imgsetid, $newtheme)) {
+						 $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed creating link between template image set (ID : <b>'.$new_imgsetid.'</b>) and template set <b>'.$newtheme.'</b>.</span>';
+						 } else {
+						 $msgs[] = '&nbsp;&nbsp;Template image set (ID: <b>'.$new_imgsetid.'</b>) and template set <b>'.$newtheme.'</b> linked.</span>';
+						 }
+						 }
+						 } else {
+						 // module image set, so just create another link to the new template set
+						 if (!$imageset_handler->linktplset($orig_imgset[$i]->getVar('imgset_id'), $newtheme)) {
+						 $msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed creating link between module image set  <b>'.$orig_imgset[$i]->getVar('imgset_name').'</b> (ID <b>'.$orig_imgset[$i]->getVar('imgset_id').'</b>) and template set <b>'.$newtheme.'</b>.</span>';
+						 } else {
+						 $msgs[] = '&nbsp;&nbsp;Module image set <b>'.$orig_imgset[$i]->getVar('imgset_name').'</b> (ID <b>'.$orig_imgset[$i]->getVar('imgset_id').'</b>) and template set <b>'.$newtheme.'</b> linked.';
+						 }
+						 }
+						 }
+						 */
 						$msgs[] = 'Template set <b>'.htmlspecialchars($newtheme, ENT_QUOTES).'</b> created. (ID: <b>'.$tplsetid.'</b>)<br />';
 					} else {
 						$msgs[] = '<span style="color:#ff0000;">ERROR: Template files for '.$theme.' do not exist</span>';
 					}
-		    }
+				}
 			}
 
 			foreach ($msgs as $msg) {
@@ -545,178 +545,178 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			xoops_cp_footer();
 			break;
 
-		/*
-		case 'editimage':
-		   xoops_cp_header();
-		   echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_EDITSKINIMG.' ('.$tplset.')<br /><br />';
-		   include XOOPS_ROOT_PATH.'/modules/system/admin/tplsets/tplimgform.php';
-		   xoops_cp_footer();
-		   break;
-		case 'updateimage':
-		
-		   $tplset = trim($tplset);
-		   $err = array();
-		   if ($tplset != 'default') {
-		       include_once XOOPS_ROOT_PATH.'/class/uploader.php';
-		       $mimetypes = array('image/gif', "image/pjpeg", "image/jpeg", "image/jpeg", "image/jpeg", "image/png", 'image/x-png', "application/x-shockwave-flash", "image/tiff", "image/tiff", 'image/bmp');
-		       if ($tplset == $xoopsConfig['template_set']) {
-		           //directly upload to cache to reduce one step ;-)
-		           $uploader = new XoopsMediaUploader(XOOPS_CACHE_PATH, $mimetypes, 500000);
-		       } else {
-		           $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, $mimetypes, 500000);
-		       }
-		       $image_handler =& xoops_gethandler('imagesetimg');
-		       foreach ($imgids as $id) {
-		           if (isset($imgfiles[$id]) && trim($imgfiles[$id]) != '') {
-		               if ($uploader->fetchMedia('imgfiles', $id)) {
-		                   $image =& $image_handler->get($id);
-		                   $uploader->setTargetFileName($image->getVar('imgsetimg_file'));
-		                   if (!$uploader->upload()) {
-		                       $err[] = $uploader->getErrors();
-		                   } else {
-		                       $fp = @fopen($uploader->getSavedDestination(), 'rb');
-		                       $image->setVar('imgsetimg_body', @fread($fp, filesize($uploader->getSavedDestination())), true);
-		                       @fclose($fp);
-		                       if ($tplset != $xoopsConfig['template_set']) {
-		                           @unlink($uploader->getSavedDestination());
-		                       }
-		                       if (!$image_handler->insert($image)) {
-		                           $err[] = 'Could not save '.$image->getVar('imgsetimg_file');
-		                       }
-		                   }
-		               } else {
-		                   $err[] = $uploader->getErrors();
-		               }
-		           } elseif (!empty($imgdelete[$id])) {
-		               $image =& $image_handler->get($id);
-		               if (!$image_handler->delete($image)) {
-		                   $err[] = 'Could not remove image file '.$image->getVar('imgsetimg_file');
-		               } else {
-		                   if ($tplset == $xoopsConfig['template_set']) {
-		                       @unlink(XOOPS_CACHE_PATH.'/'.$image->getVar('imgsetimg_file'));
-		                   }
-		               }
-		           }
-		       }
-		   } else {
-		       $err[] = 'Cannot change XOOPS system default theme set images';
-		   }
-		   // delete image set if no more images
-		   $current_imgs =& $image_handler->getByImageset($imgset);
-		   if (count($current_imgs) == 0) {
-		       $imageset_handler =& xoops_gethandler('imageset');
-		       $imgset =& $imageset_handler->get($imgset);
-		       if (!$imageset_handler->delete($imgset)) {
-		           $err[] = 'Could not remove image set '.$imgset->getVar('imgset_name');
-		       }
-		   }
-		   if (count($err) > 0) {
-		       xoops_cp_header();
-		       xoops_error($err);
-		       xoops_cp_footer();
-		   } else {
-		       redirect_header('admin.php?fct=tplsets&amp;op=editimage&amp;tplset='.$tplset, 2, _MD_AM_DBUPDATED);
-		   }
-		   break;
-		case 'addimage':
-		   $tplset = trim($tplset);
-		   $err = array();
-		   if ($tplset != 'default') {
-		       include_once XOOPS_ROOT_PATH.'/class/uploader.php';
-		       $mimetypes = array('image/gif', "image/pjpeg", "image/jpeg", "image/jpeg", "image/jpeg", "image/png", 'image/x-png', "application/x-shockwave-flash", "image/tiff", "image/tiff", 'image/bmp');
-		       if ($tplset == $xoopsConfig['template_set']) {
-		           //directly upload to cache to reduce one step ;-)
-		           $uploader = new XoopsMediaUploader(XOOPS_CACHE_PATH, $mimetypes, 500000);
-		       } else {
-		           $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, $mimetypes, 500000);
-		       }
-		       $image_handler =& xoops_gethandler('imagesetimg');
-		       if ($uploader->fetchMedia('imgfile')) {
-		
-		           if (!empty($imgset)) {
-		               //check if an image with the same name exists
-		               if ($image_handler->imageExists($uploader->getMediaName(), $imgset)) {
-		                   $err[] = 'Image file '.$uploader->getMediaName().' already exists';
-		               }
-		           }
-		           if (empty($err)) {
-		               $image =& $image_handler->create();
-		               if (!$uploader->upload()) {
-		                   $err[] = $uploader->getErrors();
-		               } else {
-		                   if (!$fp = @fopen($uploader->getSavedDestination(), 'rb')) {
-		                       $err[] = 'Could not read '.$uploader->getSavedFileName();
-		                   } else {
-		                       $image->setVar('imgsetimg_body', @fread($fp, filesize($uploader->getSavedDestination())), true);
-		                       @fclose($fp);
-		                       if ($tplset != $xoopsConfig['template_set']) {
-		                           @unlink($uploader->getSavedDestination());
-		                       }
-		                       $image->setVar('imgsetimg_file', $uploader->getSavedFileName());
-		                       if (!empty($imgset)) {
-		                           $image->setVar('imgsetimg_imgset', $imgset);
-		                       } else {
-		                           $imageset_handler =& xoops_gethandler('imageset');
-		                           $imgset =& $imageset_handler->create();
-		                           $imgset->setVar('imgset_name', $tplset);
-		                           $imgset->setVar('imgset_refid', 0);
-		                           if (!$imageset_handler->insert($imgset)) {
-		                               $err[] = 'Could not create image set.';
-		                           } else {
-		                               $newimgsetid = $imgset->getVar('imgset_id');
-		                               $image->setVar('imgsetimg_imgset', $newimgsetid);
-		                               if (!$imageset_handler->linktplset($newimgsetid, $tplset)) {
-		                                   $err[] = 'Failed linking image set to template set '.$tplset;
-		                               }
-		                           }
-		                       }
-		                       if (count($err) == 0) {
-		                           if (!$image_handler->insert($image)) {
-		                               $err[] = 'Could not save '.$image->getVar('imgsetimg_file');
-		                           }
-		                       }
-		                   }
-		               }
-		           }
-		       } else {
-		           $err[] = $uploader->getErrors();
-		       }
-		   }
-		   if (count($err) > 0) {
-		       xoops_cp_header();
-		       xoops_error($err);
-		       xoops_cp_footer();
-		   } else {
-		       redirect_header('admin.php?fct=tplsets&amp;op=editimage&amp;tplset='.$tplset, 2, _MD_AM_DBUPDATED);
-		   }
-		   break;
-		case 'showimage':
-		   $image_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-		   if (empty($image_id)) {
-		       header('Content-type: image/gif');
-		       readfile(XOOPS_UPLOAD_PATH.'/blank.gif');
-		       exit();
-		   }
-		   $image_handler =& xoops_gethandler('imagesetimg');
-		   $image =& $image_handler->getObjects(new Criteria('imgsetimg_id', $image_id));
-		   if (count($image) > 0) {
-		       $mimetypes = array('gif' => 'image/gif', "jpe"=>"image/jpeg", "jpeg"=>"image/jpeg", "jpg"=>"image/jpeg", "png"=>"image/png", "swf"=>"application/x-shockwave-flash", "tif"=>"image/tiff", "tiff"=>"image/tiff", "bmp" => 'image/bmp');
-		       $ext = substr(strtolower(strrchr($image[0]->getVar('imgsetimg_file'), '.')), 1);
-		       if (in_array($ext, array_keys($mimetypes))) {
-		           header('Content-type: '.$mimetypes[$ext]);
-		       }
-		       header('Cache-control: max-age=31536000');
-		       header('Expires: '.gmdate("D, d M Y H:i:s",time()+31536000).'GMT');
-		       header('Content-disposition: filename='.$image[0]->getVar('imgsetimg_file'));
-		       header('Content-Length: '.strlen($image[0]->getVar('imgsetimg_body')));
-		       header('Last-Modified: '.gmdate("D, d M Y H:i:s", time()).'GMT');
-		       echo $image[0]->getVar('imgsetimg_body');
-		   } else {
-		       header('Content-type: image/gif');
-		       readfile(XOOPS_UPLOAD_PATH.'/blank.gif');
-		   }
-		   break;
-		*/
+			/*
+			 case 'editimage':
+			 xoops_cp_header();
+			 echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_EDITSKINIMG.' ('.$tplset.')<br /><br />';
+			 include XOOPS_ROOT_PATH.'/modules/system/admin/tplsets/tplimgform.php';
+			 xoops_cp_footer();
+			 break;
+			 case 'updateimage':
+
+			 $tplset = trim($tplset);
+			 $err = array();
+			 if ($tplset != 'default') {
+			 include_once XOOPS_ROOT_PATH.'/class/uploader.php';
+			 $mimetypes = array('image/gif', "image/pjpeg", "image/jpeg", "image/jpeg", "image/jpeg", "image/png", 'image/x-png', "application/x-shockwave-flash", "image/tiff", "image/tiff", 'image/bmp');
+			 if ($tplset == $xoopsConfig['template_set']) {
+			 //directly upload to cache to reduce one step ;-)
+			 $uploader = new XoopsMediaUploader(XOOPS_CACHE_PATH, $mimetypes, 500000);
+			 } else {
+			 $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, $mimetypes, 500000);
+			 }
+			 $image_handler =& xoops_gethandler('imagesetimg');
+			 foreach ($imgids as $id) {
+			 if (isset($imgfiles[$id]) && trim($imgfiles[$id]) != '') {
+			 if ($uploader->fetchMedia('imgfiles', $id)) {
+			 $image =& $image_handler->get($id);
+			 $uploader->setTargetFileName($image->getVar('imgsetimg_file'));
+			 if (!$uploader->upload()) {
+			 $err[] = $uploader->getErrors();
+			 } else {
+			 $fp = @fopen($uploader->getSavedDestination(), 'rb');
+			 $image->setVar('imgsetimg_body', @fread($fp, filesize($uploader->getSavedDestination())), true);
+			 @fclose($fp);
+			 if ($tplset != $xoopsConfig['template_set']) {
+			 @unlink($uploader->getSavedDestination());
+			 }
+			 if (!$image_handler->insert($image)) {
+			 $err[] = 'Could not save '.$image->getVar('imgsetimg_file');
+			 }
+			 }
+			 } else {
+			 $err[] = $uploader->getErrors();
+			 }
+			 } elseif (!empty($imgdelete[$id])) {
+			 $image =& $image_handler->get($id);
+			 if (!$image_handler->delete($image)) {
+			 $err[] = 'Could not remove image file '.$image->getVar('imgsetimg_file');
+			 } else {
+			 if ($tplset == $xoopsConfig['template_set']) {
+			 @unlink(XOOPS_CACHE_PATH.'/'.$image->getVar('imgsetimg_file'));
+			 }
+			 }
+			 }
+			 }
+			 } else {
+			 $err[] = 'Cannot change XOOPS system default theme set images';
+			 }
+			 // delete image set if no more images
+			 $current_imgs =& $image_handler->getByImageset($imgset);
+			 if (count($current_imgs) == 0) {
+			 $imageset_handler =& xoops_gethandler('imageset');
+			 $imgset =& $imageset_handler->get($imgset);
+			 if (!$imageset_handler->delete($imgset)) {
+			 $err[] = 'Could not remove image set '.$imgset->getVar('imgset_name');
+			 }
+			 }
+			 if (count($err) > 0) {
+			 xoops_cp_header();
+			 xoops_error($err);
+			 xoops_cp_footer();
+			 } else {
+			 redirect_header('admin.php?fct=tplsets&amp;op=editimage&amp;tplset='.$tplset, 2, _MD_AM_DBUPDATED);
+			 }
+			 break;
+			 case 'addimage':
+			 $tplset = trim($tplset);
+			 $err = array();
+			 if ($tplset != 'default') {
+			 include_once XOOPS_ROOT_PATH.'/class/uploader.php';
+			 $mimetypes = array('image/gif', "image/pjpeg", "image/jpeg", "image/jpeg", "image/jpeg", "image/png", 'image/x-png', "application/x-shockwave-flash", "image/tiff", "image/tiff", 'image/bmp');
+			 if ($tplset == $xoopsConfig['template_set']) {
+			 //directly upload to cache to reduce one step ;-)
+			 $uploader = new XoopsMediaUploader(XOOPS_CACHE_PATH, $mimetypes, 500000);
+			 } else {
+			 $uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, $mimetypes, 500000);
+			 }
+			 $image_handler =& xoops_gethandler('imagesetimg');
+			 if ($uploader->fetchMedia('imgfile')) {
+
+			 if (!empty($imgset)) {
+			 //check if an image with the same name exists
+			 if ($image_handler->imageExists($uploader->getMediaName(), $imgset)) {
+			 $err[] = 'Image file '.$uploader->getMediaName().' already exists';
+			 }
+			 }
+			 if (empty($err)) {
+			 $image =& $image_handler->create();
+			 if (!$uploader->upload()) {
+			 $err[] = $uploader->getErrors();
+			 } else {
+			 if (!$fp = @fopen($uploader->getSavedDestination(), 'rb')) {
+			 $err[] = 'Could not read '.$uploader->getSavedFileName();
+			 } else {
+			 $image->setVar('imgsetimg_body', @fread($fp, filesize($uploader->getSavedDestination())), true);
+			 @fclose($fp);
+			 if ($tplset != $xoopsConfig['template_set']) {
+			 @unlink($uploader->getSavedDestination());
+			 }
+			 $image->setVar('imgsetimg_file', $uploader->getSavedFileName());
+			 if (!empty($imgset)) {
+			 $image->setVar('imgsetimg_imgset', $imgset);
+			 } else {
+			 $imageset_handler =& xoops_gethandler('imageset');
+			 $imgset =& $imageset_handler->create();
+			 $imgset->setVar('imgset_name', $tplset);
+			 $imgset->setVar('imgset_refid', 0);
+			 if (!$imageset_handler->insert($imgset)) {
+			 $err[] = 'Could not create image set.';
+			 } else {
+			 $newimgsetid = $imgset->getVar('imgset_id');
+			 $image->setVar('imgsetimg_imgset', $newimgsetid);
+			 if (!$imageset_handler->linktplset($newimgsetid, $tplset)) {
+			 $err[] = 'Failed linking image set to template set '.$tplset;
+			 }
+			 }
+			 }
+			 if (count($err) == 0) {
+			 if (!$image_handler->insert($image)) {
+			 $err[] = 'Could not save '.$image->getVar('imgsetimg_file');
+			 }
+			 }
+			 }
+			 }
+			 }
+			 } else {
+			 $err[] = $uploader->getErrors();
+			 }
+			 }
+			 if (count($err) > 0) {
+			 xoops_cp_header();
+			 xoops_error($err);
+			 xoops_cp_footer();
+			 } else {
+			 redirect_header('admin.php?fct=tplsets&amp;op=editimage&amp;tplset='.$tplset, 2, _MD_AM_DBUPDATED);
+			 }
+			 break;
+			 case 'showimage':
+			 $image_id = isset($_GET['id']) ? (int) ($_GET['id']) : 0;
+			 if (empty($image_id)) {
+			 header('Content-type: image/gif');
+			 readfile(XOOPS_UPLOAD_PATH.'/blank.gif');
+			 exit();
+			 }
+			 $image_handler =& xoops_gethandler('imagesetimg');
+			 $image =& $image_handler->getObjects(new Criteria('imgsetimg_id', $image_id));
+			 if (count($image) > 0) {
+			 $mimetypes = array('gif' => 'image/gif', "jpe"=>"image/jpeg", "jpeg"=>"image/jpeg", "jpg"=>"image/jpeg", "png"=>"image/png", "swf"=>"application/x-shockwave-flash", "tif"=>"image/tiff", "tiff"=>"image/tiff", "bmp" => 'image/bmp');
+			 $ext = substr(strtolower(strrchr($image[0]->getVar('imgsetimg_file'), '.')), 1);
+			 if (in_array($ext, array_keys($mimetypes))) {
+			 header('Content-type: '.$mimetypes[$ext]);
+			 }
+			 header('Cache-control: max-age=31536000');
+			 header('Expires: '.gmdate("D, d M Y H:i:s",time()+31536000).'GMT');
+			 header('Content-disposition: filename='.$image[0]->getVar('imgsetimg_file'));
+			 header('Content-Length: '.strlen($image[0]->getVar('imgsetimg_body')));
+			 header('Last-Modified: '.gmdate("D, d M Y H:i:s", time()).'GMT');
+			 echo $image[0]->getVar('imgsetimg_body');
+			 } else {
+			 header('Content-type: image/gif');
+			 readfile(XOOPS_UPLOAD_PATH.'/blank.gif');
+			 }
+			 break;
+			 */
 
 		case 'viewdefault':
 			$tpltpl_handler =& xoops_gethandler('tplfile');
@@ -765,7 +765,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 
 		case 'downloadtpl':
 			$tpltpl_handler =& xoops_gethandler('tplfile');
-			$tpl =& $tpltpl_handler->get(intval($id), true);
+			$tpl =& $tpltpl_handler->get( (int) ($id), true);
 			if (is_object($tpl)) {
 				$output = $tpl->getVar('tpl_source');
 				strlen($output);
@@ -784,7 +784,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 
 		case 'uploadtpl':
 			$tpltpl_handler =& xoops_gethandler('tplfile');
-			$id = intval($_GET['id']);
+			$id = (int) ($_GET['id']);
 			$tpl =& $tpltpl_handler->get($id);
 			xoops_cp_header();
 			echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tpl->getVar('tpl_module').'&amp;tplset='.$tpl->getVar('tpl_tplset').'">'.$tpl->getVar('tpl_tplset').'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_UPLOAD.'<br /><br />';
@@ -849,7 +849,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			}
 			break;
 
-		// upload new file
+			// upload new file
 		case 'uploadtpl2':
 			xoops_cp_header();
 			$tplset = htmlspecialchars($tplset);
@@ -924,12 +924,12 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				if (false != extension_loaded('zlib')) {
 					if (isset($_GET['method']) && $_GET['method'] == 'tar') {
 						if (@function_exists('gzencode')) {
-							require_once(XOOPS_ROOT_PATH.'/class/tardownloader.php');
+							require_once XOOPS_ROOT_PATH.'/class/tardownloader.php' ;
 							$downloader = new XoopsTarDownloader();
 						}
 					} else {
 						if (@function_exists('gzcompress')) {
-							require_once(XOOPS_ROOT_PATH.'/class/zipdownloader.php');
+							require_once XOOPS_ROOT_PATH.'/class/zipdownloader.php' ;
 							$downloader = new XoopsZipDownloader();
 						}
 					}
@@ -952,23 +952,23 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 						}
 
 						$xml .= "\r\n  </templates>";
-					/*
-					 $xml ." "\r\n  <images>";
-					 $image_handler =& xoops_gethandler('imagesetimg');
-					 $criteria = new CriteriaCompo(new Criteria('l.tplset_name', $tplset));
-					 $criteria->add(new Criteria('s.imgset_refid', 0));
-					 $ifiles =& $image_handler->getObjects($criteria);
-					 $fcount = count($ifiles);
-					 for ($i = 0; $i < $fcount; $i++) {
-					     $dummyimage = XOOPS_CACHE_PATH.'/_dummyimage'.$i.time();
-					     $fp = @fopen($dummyimage, 'wb');
-					     @fwrite($fp, $ifiles[$i]->getVar('imgsetimg_body'));
-					     @fclose($fp);
-					     $downloader->addBinaryFile($dummyimage, $tplset.'/images/'.$ifiles[$i]->getVar('imgsetimg_file'));
-					     @unlink($dummyimage);
-					     $xml .= " \r\n   <image name=\"".$ifiles[$i]->getVar('imgsetimg_file')."\"></image>";
-					 }
-					*/
+						/*
+						 $xml ." "\r\n  <images>";
+						 $image_handler =& xoops_gethandler('imagesetimg');
+						 $criteria = new CriteriaCompo(new Criteria('l.tplset_name', $tplset));
+						 $criteria->add(new Criteria('s.imgset_refid', 0));
+						 $ifiles =& $image_handler->getObjects($criteria);
+						 $fcount = count($ifiles);
+						 for ($i = 0; $i < $fcount; $i++) {
+						 $dummyimage = XOOPS_CACHE_PATH.'/_dummyimage'.$i.time();
+						 $fp = @fopen($dummyimage, 'wb');
+						 @fwrite($fp, $ifiles[$i]->getVar('imgsetimg_body'));
+						 @fclose($fp);
+						 $downloader->addBinaryFile($dummyimage, $tplset.'/images/'.$ifiles[$i]->getVar('imgsetimg_file'));
+						 @unlink($dummyimage);
+						 $xml .= " \r\n   <image name=\"".$ifiles[$i]->getVar('imgsetimg_file')."\"></image>";
+						 }
+						 */
 					}
 					//$xml .= "\r\n  </images>
 					$xml .= "\r\n</tplset>";
@@ -989,36 +989,36 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			break;
 
 		case 'generatetpl_go':
-		   if (!$GLOBALS['xoopsSecurity']->check()) {
-		       redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
-		   }
-		   $tpltpl_handler =& xoops_gethandler('tplfile');
-		   $tplfile =& $tpltpl_handler->find('default', $type, null, $moddir, $file, true);
-		   if (count($tplfile) > 0) {
-		       $newtpl =& $tplfile[0]->xoopsClone();
-		       $newtpl->setVar('tpl_id', 0);
-		       $newtpl->setVar('tpl_tplset', $tplset);
-		       $newtpl->setVar('tpl_lastmodified', time());
-		       $newtpl->setVar('tpl_lastimported', 0);
-		       if (!$tpltpl_handler->insert($newtpl)) {
-		           $err = 'ERROR: Could not insert template <b>'.$tplfile[0]->getVar('tpl_file').'</b> to the database.';
-		       } else {
-		           if ($tplset == $xoopsConfig['template_set']) {
-		               include_once XOOPS_ROOT_PATH.'/class/template.php';
-		               xoops_template_touch($newtpl->getVar('tpl_id'));
-		           }
-		       }
-		   } else {
-		       $err = 'Selected file does not exist)';
-		   }
-		   if (!isset($err)) {
-		       redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$newtpl->getVar('tpl_module').'&amp;tplset='.urlencode($newtpl->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
-		   }
-		   xoops_cp_header();
-		   xoops_error($err);
-		   echo '<br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
-		   xoops_cp_footer();
-		   break;
+			if (!$GLOBALS['xoopsSecurity']->check()) {
+				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
+			}
+			$tpltpl_handler =& xoops_gethandler('tplfile');
+			$tplfile =& $tpltpl_handler->find('default', $type, null, $moddir, $file, true);
+			if (count($tplfile) > 0) {
+				$newtpl =& $tplfile[0]->xoopsClone();
+				$newtpl->setVar('tpl_id', 0);
+				$newtpl->setVar('tpl_tplset', $tplset);
+				$newtpl->setVar('tpl_lastmodified', time());
+				$newtpl->setVar('tpl_lastimported', 0);
+				if (!$tpltpl_handler->insert($newtpl)) {
+					$err = 'ERROR: Could not insert template <b>'.$tplfile[0]->getVar('tpl_file').'</b> to the database.';
+				} else {
+					if ($tplset == $xoopsConfig['template_set']) {
+						include_once XOOPS_ROOT_PATH.'/class/template.php';
+						xoops_template_touch($newtpl->getVar('tpl_id'));
+					}
+				}
+			} else {
+				$err = 'Selected file does not exist)';
+			}
+			if (!isset($err)) {
+				redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$newtpl->getVar('tpl_module').'&amp;tplset='.urlencode($newtpl->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
+			}
+			xoops_cp_header();
+			xoops_error($err);
+			echo '<br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
+			xoops_cp_footer();
+			break;
 
 		case 'generatemod':
 			xoops_cp_header();
@@ -1168,13 +1168,13 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 
 								$icount = count($themeimages);
 								if ($icount > 0) {
-							    $imageset_handler =& xoops_gethandler('imageset');
-							    $imgset =& $imageset_handler->create();
-							    $imgset->setVar('imgset_name', $tplset_name);
-							    $imgset->setVar('imgset_refid', 0);
-							    if (!$imageset_handler->insert($imgset)) {
+									$imageset_handler =& xoops_gethandler('imageset');
+									$imgset =& $imageset_handler->create();
+									$imgset->setVar('imgset_name', $tplset_name);
+									$imgset->setVar('imgset_refid', 0);
+									if (!$imageset_handler->insert($imgset)) {
 										echo '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not create image set.</span><br />';
-							    } else {
+									} else {
 										$newimgsetid = $imgset->getVar('imgset_id');
 										echo '&nbsp;&nbsp;Image set <b>'.htmlspecialchars($tplset_name, ENT_QUOTES).'</b> created. (ID: <b>'.$newimgsetid.'</b>)<br />';
 										if (!$imageset_handler->linktplset($newimgsetid, $tplset_name)) {
@@ -1194,7 +1194,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 												}
 											}
 										}
-							    }
+									}
 								}
 							}
 						}
@@ -1219,7 +1219,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$tpltpl_handler =& xoops_gethandler('tplfile');
 			$tplfile =& $tpltpl_handler->get($id, true);
 			$xoopsTpl = new XoopsTpl();
-			
+				
 			if (is_object($tplfile)) {
 				$dummylayout = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 				<html><head><meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" />
@@ -1227,21 +1227,21 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				<title>'.$xoopsConfig['sitename'].'</title>
 				<link rel="stylesheet" type="text/css" media="screen" href="' .XOOPS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />
 				<link rel="stylesheet" type="text/css" media="screen" href="' .getcss($xoopsConfig['theme_set']) .'" />';
-				
+
 				$css =& $tpltpl_handler->find($xoopsConfig['template_set'], 'css', 0, null, null, true);
 				$csscount = count($css);
-	
+
 				for ($i = 0; $i < $csscount; $i++) {
 					$dummylayout .= "\n".$css[$i]->getVar('tpl_source');
 				}
-	
+
 				$dummylayout .= "\n".'</style></head><body><div id="xo-canvas"><{$content}></div></body></html>';
 				if ($tplfile->getVar('tpl_type') == 'block') {
 					include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
 					$block = new XoopsBlock($tplfile->getVar('tpl_refid'));
 					$xoopsTpl->assign('block', $block->buildBlock());
 				}
-	
+
 				$dummytpl = '_dummytpl_'.time().'.html';
 				$fp = fopen(XOOPS_CACHE_PATH.'/'.$dummytpl, 'w');
 				fwrite($fp, $html);

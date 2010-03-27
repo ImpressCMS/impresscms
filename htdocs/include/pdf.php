@@ -1,28 +1,28 @@
 <?php
 /**
-* PDF generator
-*
-* System tool that allow create PDF's within ImpressCMS core
-*
-* @copyright	The ImpressCMS Project http://www.impresscms.org/
-* @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
-* @package	core
-* @since	1.1
-* @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
-* @version	$Id$
-*/
+ * PDF generator
+ *
+ * System tool that allow create PDF's within ImpressCMS core
+ *
+ * @copyright	The ImpressCMS Project http://www.impresscms.org/
+ * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package	core
+ * @since	1.1
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version	$Id$
+ */
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
 
 /**
-* Generates a pdf file
-*
-* @param string $content	The content to put in the PDF file
-* @param string $doc_title	The title for the PDF file
-* @param string $doc_keywords	The keywords to put in the PDF file
-* @return string Generated output by the pdf (@link TCPDF) class
-*/
+ * Generates a pdf file
+ *
+ * @param string $content	The content to put in the PDF file
+ * @param string $doc_title	The title for the PDF file
+ * @param string $doc_keywords	The keywords to put in the PDF file
+ * @return string Generated output by the pdf (@link TCPDF) class
+ */
 function Generate_PDF ($content, $doc_title, $doc_keywords){
 	global $icmsConfig;
 	$myts =& MyTextSanitizer::getInstance();
