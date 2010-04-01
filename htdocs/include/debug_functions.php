@@ -40,4 +40,28 @@ function icms_debug_vardump($var)
 		icms_debug($var);
 	}
 }
-?>
+
+/**
+ * Provides a backtrace for deprecated methods and functions, will be in the error section of debug
+ *
+ * @since ImpressCMS 1.3
+ * @package core
+ * @subpackage Debugging
+ * @param string $replacement Method or function to be used instead of the deprecated method or function
+ */
+function icms_deprecated( $replacement='' ) {
+	$trace = debug_backtrace();
+	array_shift( $trace );
+	$level = '';
+	$msg = ' <strong><em>(Deprecated)</em></strong> - ';
+	foreach ( $trace as $step ) {
+	    $level .= '-';
+		if ( isset( $step['file'] ) ) {
+		    if( $step['function'] != 'include' && $step['function'] != 'include_once' && $step['function'] != 'require' && $step['function'] != 'require_once') {
+				trigger_error( $level . $msg . (isset( $step['class'] ) ? $step['class'] : '') . (isset( $step['type'] ) ? $step['type'] : '' ) . $step['function'] . ' in ' . $step['file'] . ', line ' . $step['line'] . ( $replacement ? ' <strong><em>use ' . $replacement . ' instead</em></strong>' : '' ), E_USER_NOTICE ) ;
+			}
+		}
+		$msg = 'Called by ';
+		$replacement = '';
+	}
+}
