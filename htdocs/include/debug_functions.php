@@ -48,8 +48,9 @@ function icms_debug_vardump($var)
  * @package core
  * @subpackage Debugging
  * @param string $replacement Method or function to be used instead of the deprecated method or function
+ * @param string $extra Additional information to provide about the change
  */
-function icms_deprecated( $replacement='' ) {
+function icms_deprecated( $replacement='', $extra='' ) {
 	$trace = debug_backtrace();
 	array_shift( $trace );
 	$level = '';
@@ -58,7 +59,7 @@ function icms_deprecated( $replacement='' ) {
 	    $level .= '-';
 		if ( isset( $step['file'] ) ) {
 		    if( $step['function'] != 'include' && $step['function'] != 'include_once' && $step['function'] != 'require' && $step['function'] != 'require_once') {
-				trigger_error( $level . $msg . (isset( $step['class'] ) ? $step['class'] : '') . (isset( $step['type'] ) ? $step['type'] : '' ) . $step['function'] . ' in ' . $step['file'] . ', line ' . $step['line'] . ( $replacement ? ' <strong><em>use ' . $replacement . ' instead</em></strong>' : '' ), E_USER_NOTICE ) ;
+				trigger_error( $level . $msg . (isset( $step['class'] ) ? $step['class'] : '') . (isset( $step['type'] ) ? $step['type'] : '' ) . $step['function'] . ' in ' . $step['file'] . ', line ' . $step['line'] . ( $replacement ? ' <strong><em>use ' . $replacement . ' instead</em></strong>' : '' ) . ( $extra ? ' <strong><em> ' . $extra . ' </em></strong>' : '' ), E_USER_NOTICE ) ;
 			}
 		}
 		$msg = 'Called by ';
