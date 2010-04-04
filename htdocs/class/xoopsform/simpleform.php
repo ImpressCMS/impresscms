@@ -30,7 +30,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 /**
  * base class
  */
-include_once ICMS_ROOT_PATH."/class/xoopsform/form.php";
+include_once ICMS_ROOT_PATH . '/class/xoopsform/form.php';
 
 /**
  * Form that will output as a simple HTML form with minimum formatting
@@ -41,19 +41,23 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/form.php";
  * @package     kernel
  * @subpackage  form
  */
-class XoopsSimpleForm extends XoopsForm
-{
+class XoopsSimpleForm extends XoopsForm {
+	/**
+	 * This method is required - this method in the parent (abstract) class is also abstract
+	 * @param string $extra
+	 */
+	public function insertBreak( $extra = NULL ){
+	}
 	/**
 	 * create HTML to output the form with minimal formatting
 	 *
 	 * @return	string
 	 */
-	function render()
-	{
+	public function render() {
 		$ret = $this->getTitle()."\n<form name='".$this->getName()."' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."'".$this->getExtra().">\n";
 		foreach ( $this->getElements() as $ele ) {
 			if ( !$ele->isHidden() ) {
-				$ret .= "<b>".$ele->getCaption()."</b><br />".$ele->render()."<br />\n";
+				$ret .= "<strong>".$ele->getCaption()."</strong><br />".$ele->render()."<br />\n";
 			} else {
 				$ret .= $ele->render()."\n";
 			}
