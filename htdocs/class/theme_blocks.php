@@ -142,6 +142,14 @@ class xos_logos_PageBuilder {
 		} else {
 			$template = new XoopsTpl();
 		}
+
+		/** moved here from buildBlocks to reduce redundant calls */
+		$gperm =& xoops_gethandler ( 'groupperm' );
+		$ugroups = @is_object ( $icmsUser ) ? $icmsUser->getGroups () : array(XOOPS_GROUP_ANONYMOUS );
+		$agroups = $gperm->getGroupIds('system_admin',5); //XOOPS_SYSTEM_BLOCK constant not available?
+		$uagroups = array_intersect($ugroups, $agroups);
+		/** End of snippet */
+
 		$block_arr = $icms_block_handler->getAllByGroupModule ( $groups, $modid, $isStart, XOOPS_BLOCK_VISIBLE );
 		foreach ( $block_arr as $block ) {
 			$side = $oldzones[$block->getVar ( 'side', 'n' )];
@@ -170,11 +178,8 @@ class xos_logos_PageBuilder {
 	 * @return unknown
 	 */
 	public function buildBlock($xobject, &$template) {
-		global $icmsUser, $icmsConfigPersona;
-		$gperm =& xoops_gethandler ( 'groupperm' );
-		$ugroups = @is_object ( $icmsUser ) ? $icmsUser->getGroups () : array(XOOPS_GROUP_ANONYMOUS );
-		$agroups = $gperm->getGroupIds('system_admin',5); //XOOPS_SYSTEM_BLOCK constant not available?
-		$uagroups = array_intersect($ugroups, $agroups);
+		global $icmsUser, $icmsConfigPersona, $uagroups;
+
 		if ($icmsConfigPersona ['editre_block'] == true) {
 			if ($icmsUser && count($uagroups) > 0) {
 				$url = base64_encode( str_replace( ICMS_URL, '', "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ) );
