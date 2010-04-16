@@ -16,6 +16,34 @@
  */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
+function icms_autoload( $class ) {
+	/** tempp var to debug spl_autoload feature */
+	$debug = false;
+
+	$file = strtolower($class);
+	if ($debug) echo "$class <br />";
+	if (file_exists( $path = ICMS_ROOT_PATH . "/kernel/$file.php" ) ) {
+		if ($debug) echo "$path <br />";
+		include_once $path;
+	} elseif(file_exists( $path = ICMS_ROOT_PATH . "/class/$file.php" )) {
+		if ($debug) echo "$path <br />";
+		include_once $path;
+	} elseif(file_exists($path = ICMS_ROOT_PATH . "/class/" . str_replace('xoops', '', $file) . ".php")) {
+		if ($debug) echo "$path <br />";
+		include_once $path;
+	}
+}
+
+function icms_autoload_register() {
+	static $reg = false;
+	if ( !$reg ) {
+		spl_autoload_register( "icms_autoload" );
+		$reg = true;
+	}
+}
+
+icms_autoload_register();
+
 @set_magic_quotes_runtime(0);
 
 if (!defined('ICMS_ROOT_PATH')) {
@@ -48,30 +76,6 @@ define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH.'/cache/htmlpurifier');
 define( 'ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules' );
 define( 'ICMS_MODULES_URL', ICMS_URL . '/modules' );
 /**#@-*/
-
-
-
-function icms_autoload( $class ) {
-	$file = strtolower($class);
-	if (file_exists( $path = ICMS_ROOT_PATH . "/kernel/$file.php" ) ) {
-		include_once $path;
-	} elseif(file_exists( $path = ICMS_ROOT_PATH . "/class/$file.php" )) {
-		include_once $path;
-	} elseif(file_exists($path = ICMS_ROOT_PATH . "/class/" . str_replace('xoops', '', $file) . ".php")) {
-		include_once $path;
-	}
-}
-
-function icms_autoload_register() {
-	static $reg = false;
-	if ( !$reg ) {
-		spl_autoload_register( "icms_autoload" );
-		$reg = true;
-	}
-}
-
-icms_autoload_register();
-
 
 // ################# Creation of the IcmsPreloadHandler ##############
 //include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
@@ -194,10 +198,10 @@ $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
 
 // ################# Include required files ##############
 //require_once ICMS_ROOT_PATH.'/kernel/object.php';
-require_once ICMS_ROOT_PATH.'/class/criteria.php';
+//require_once ICMS_ROOT_PATH.'/class/criteria.php';
 
 // #################### Include text sanitizer ##################
-include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
+//include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 
 // #################### Including debuging functions ##################
 include_once ICMS_ROOT_PATH . "/include/debug_functions.php";
@@ -418,7 +422,7 @@ if ($icmsConfigMultilang['ml_enable']) {
 
 	require ICMS_ROOT_PATH.'/include/im_multilanguage.php' ;
 	$easiestml_langs = explode( ',' , $icmsConfigMultilang['ml_tags'] ) ;
-	include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
+	//include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 
 	$easiestml_langpaths = XoopsLists::getLangList();
 	$langs = array_combine($easiestml_langs,explode( ',' , $icmsConfigMultilang['ml_names'] ));
