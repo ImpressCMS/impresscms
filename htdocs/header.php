@@ -31,9 +31,9 @@ else
 	$xoopsOption['theme_use_smarty'] = 1;
 
 	/**  include Smarty template engine and initialize it*/
-	require_once ICMS_ROOT_PATH.'/class/template.php';
-	require_once ICMS_ROOT_PATH.'/class/theme.php';
-	require_once ICMS_ROOT_PATH.'/class/theme_blocks.php';
+	//require_once ICMS_ROOT_PATH.'/class/template.php';
+	//require_once ICMS_ROOT_PATH.'/class/theme.php';
+	//require_once ICMS_ROOT_PATH.'/class/theme_blocks.php';
 
 	if(@$xoopsOption['template_main'])
 	{

@@ -17,7 +17,7 @@
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
 function icms_autoload( $class ) {
-	/** tempp var to debug spl_autoload feature */
+	/** temp var to debug spl_autoload feature */
 	$debug = false;
 
 	$file = strtolower($class);
