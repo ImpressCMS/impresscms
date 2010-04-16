@@ -49,8 +49,32 @@ define( 'ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules' );
 define( 'ICMS_MODULES_URL', ICMS_URL . '/modules' );
 /**#@-*/
 
+
+
+function icms_autoload( $class ) {
+	$file = strtolower($class);
+	if (file_exists( $path = ICMS_ROOT_PATH . "/kernel/$file.php" ) ) {
+		include_once $path;
+	} elseif(file_exists( $path = ICMS_ROOT_PATH . "/class/$file.php" )) {
+		include_once $path;
+	} elseif(file_exists($path = ICMS_ROOT_PATH . "/class/" . str_replace('xoops', '', $file) . ".php")) {
+		include_once $path;
+	}
+}
+
+function icms_autoload_register() {
+	static $reg = false;
+	if ( !$reg ) {
+		spl_autoload_register( "icms_autoload" );
+		$reg = true;
+	}
+}
+
+icms_autoload_register();
+
+
 // ################# Creation of the IcmsPreloadHandler ##############
-include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
+//include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
 
 global $icmsPreloadHandler;
 $icmsPreloadHandler = IcmsPreloadHandler::getInstance();
@@ -70,7 +94,7 @@ define( 'ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf' );
 $icmsPreloadHandler->triggerEvent('startCoreBoot');
 
 // ################# Creation of the ImpressCMS Kernel object ##############
-include_once ICMS_ROOT_PATH . '/kernel/icmskernel.php' ;
+//include_once ICMS_ROOT_PATH . '/kernel/icmskernel.php' ;
 
 global $impresscms, $xoops;
 $impresscms = new IcmsKernel();
@@ -87,7 +111,7 @@ $xoopsSecurity->checkSuperglobals();
 // ############## Activate error handler / logger class ##############
 global $xoopsLogger, $xoopsErrorHandler;
 
-include_once ICMS_ROOT_PATH . '/class/logger.php';
+//include_once ICMS_ROOT_PATH . '/class/logger.php';
 $xoopsLogger =& XoopsLogger::instance();
 $xoopsErrorHandler =& $xoopsLogger;
 $xoopsLogger->startTime('ICMS');
@@ -169,7 +193,7 @@ if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$xoopsSecurity->checkReferer(XOOPS_
 $xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
 
 // ################# Include required files ##############
-require_once ICMS_ROOT_PATH.'/kernel/object.php';
+//require_once ICMS_ROOT_PATH.'/kernel/object.php';
 require_once ICMS_ROOT_PATH.'/class/criteria.php';
 
 // #################### Include text sanitizer ##################
