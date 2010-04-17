@@ -18,7 +18,7 @@ defined("XOOPS_MAINFILE_INCLUDED") or die();
 
 function icms_autoload( $class ) {
 	/** temp var to debug spl_autoload feature */
-	$debug = false;
+	$debug = true;
 
 	$file = strtolower($class);
 	if ($debug) echo "<ul><b>$class</b>";
@@ -46,6 +46,14 @@ function icms_autoload( $class ) {
 	} elseif (strpos($file, 'icmsform') !== false) {
 		if ($debug) echo "<li>loading icmsform element</li>";
 		if (file_exists( $path = ICMS_ROOT_PATH . "/class/icmsform/elements/$file.php" )) {
+			if ($debug) echo "<li>inc - $path</li>";
+			include_once $path;
+		}
+	} elseif(strpos($file, 'auth') !== false) {
+		if ($debug) echo "<li>loading auth</li>";
+		$classFile = str_replace('xoops', '', $file);
+		echo $path = ICMS_ROOT_PATH . "/class/auth/$classFile.php";
+		if (file_exists( $path = ICMS_ROOT_PATH . "/class/auth/$classFile.php" )) {
 			if ($debug) echo "<li>inc - $path</li>";
 			include_once $path;
 		}

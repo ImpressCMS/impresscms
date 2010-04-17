@@ -29,7 +29,7 @@ $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
 $member_handler =& xoops_gethandler('member');
 $myts =& MyTextsanitizer::getInstance();
 
-include_once ICMS_ROOT_PATH.'/class/auth/authfactory.php';
+//include_once ICMS_ROOT_PATH.'/class/auth/authfactory.php';
 icms_loadLanguageFile('core', 'auth');
 $xoopsAuth =& XoopsAuthFactory::getAuthConnection($myts->addSlashes($uname));
 //$user = $xoopsAuth->authenticate($myts->addSlashes($uname), $myts->addSlashes($pass));
