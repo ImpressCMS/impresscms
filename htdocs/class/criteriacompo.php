@@ -6,12 +6,12 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @since		1.1
+ * @since		1.3
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id: icmsmetagen.php 19118 2010-03-27 17:46:23Z skenow $
+ * @version		$Id$
  */
 
-if (!defined("ICMS_ROOT_PATH")) die("ImpressCMS root path not defined");
+if( !defined( "ICMS_ROOT_PATH" ) ) die( "ImpressCMS root path not defined" );
 
-include_once(ICMS_ROOT_PATH . '/class/criteria.php');
+include_once ICMS_ROOT_PATH . '/class/criteria.php';
 ?>
