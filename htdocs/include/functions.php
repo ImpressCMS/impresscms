@@ -648,17 +648,14 @@ function &xoops_gethandler($name, $optional = false )
 {
 	static $handlers;
 	$name = strtolower(trim($name));
-	if(!isset($handlers[$name]))
-	{
-		if(file_exists($hnd_file = ICMS_ROOT_PATH.'/kernel/'.$name.'.php')) {require_once $hnd_file;}
-		else
-		{
-			if(file_exists($hnd_file = ICMS_ROOT_PATH.'/class/'.$name.'.php')) {require_once $hnd_file;}
-		}
+	if(!isset($handlers[$name])) {
+		//if(file_exists($hnd_file = ICMS_ROOT_PATH.'/kernel/'.$name.'.php')) {require_once $hnd_file;}
+		//else {
+		//	if(file_exists($hnd_file = ICMS_ROOT_PATH.'/class/'.$name.'.php')) {require_once $hnd_file;}
+		//}
 		$class = 'Xoops'.ucfirst($name).'Handler';
 		if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
-		else
-		{
+		else {
 			$class = 'Icms'.ucfirst($name).'Handler';
 			if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
 		}

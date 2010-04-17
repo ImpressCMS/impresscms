@@ -21,17 +21,36 @@ function icms_autoload( $class ) {
 	$debug = false;
 
 	$file = strtolower($class);
-	if ($debug) echo "$class <br />";
+	if ($debug) echo "<ul><b>$class</b>";
 	if (file_exists( $path = ICMS_ROOT_PATH . "/kernel/$file.php" ) ) {
-		if ($debug) echo "$path <br />";
+		if ($debug) echo "<li>inc - $path</li>";
 		include_once $path;
 	} elseif(file_exists( $path = ICMS_ROOT_PATH . "/class/$file.php" )) {
-		if ($debug) echo "$path <br />";
+		if ($debug) echo "<li>inc - $path</li>";
 		include_once $path;
 	} elseif(file_exists($path = ICMS_ROOT_PATH . "/class/" . str_replace('xoops', '', $file) . ".php")) {
-		if ($debug) echo "$path <br />";
+		if ($debug) echo "<li>inc - $path </li>";
 		include_once $path;
+	} elseif (strpos($file, 'xoops') !== false && strpos($file, 'handler') !== false) {
+		if ($debug) echo "<li>loading handler</li>";
+		$handlerFile = str_replace('xoops', '', $file);
+		$handlerFile = str_replace('handler', '', $handlerFile);
+		if ($debug) echo "<li>$path</li>";
+		if (file_exists( $path = ICMS_ROOT_PATH . "/kernel/$handlerFile.php" ) ) {
+			if ($debug) echo "<li>inc - $path</li>";
+			include_once $path;
+		} elseif(file_exists( $path = ICMS_ROOT_PATH . "/class/$handlerFile.php" )) {
+			if ($debug) echo "<li>inc - $path</li>";
+			include_once $path;
+		}
+	} elseif (strpos($file, 'icmsform') !== false) {
+		if ($debug) echo "<li>loading icmsform element</li>";
+		if (file_exists( $path = ICMS_ROOT_PATH . "/class/icmsform/elements/$file.php" )) {
+			if ($debug) echo "<li>inc - $path</li>";
+			include_once $path;
+		}
 	}
+	if ($debug) echo "</ul>";
 }
 
 function icms_autoload_register() {
