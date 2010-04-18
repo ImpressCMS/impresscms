@@ -1,13 +1,27 @@
-# phpMyAdmin MySQL-Dump
-# version 2.3.2
-# http://www.phpmyadmin.net/ (download page)
 #
-# Host: localhost
-# Generation Time: Jan 09, 2003 at 12:35 AM
-# Server version: 3.23.54
-# PHP Version: 4.2.2
-# Database : `xoops2`
-# --------------------------------------------------------
+# Table structure for table `autosearch_cat`
+#
+
+CREATE TABLE IF NOT EXISTS `autosearch_cat` (
+  `cid` int(11) NOT NULL auto_increment,
+  `cat_name` varchar(255) NOT NULL,
+  `cat_url` text NOT NULL,
+  PRIMARY KEY  (`cid`)
+) ENGINE=MyISAM  DEFAULT 
+
+#
+# Table structure for table `autosearch_list`
+#
+
+CREATE TABLE IF NOT EXISTS `autosearch_list` (
+  `id` int(11) NOT NULL auto_increment,
+  `cat_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `img` varchar(255) NOT NULL,
+  `desc` text NOT NULL,
+  `url` text NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM
 
 #
 # Table structure for table `avatar`
