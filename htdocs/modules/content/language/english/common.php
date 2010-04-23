@@ -38,7 +38,7 @@ define("_CO_CONTENT_CONTENT_CONTENT_STATUS_DSC", " ");
 define("_CO_CONTENT_CONTENT_CONTENT_MAKESYMLINK", "Create Symlink?");
 define("_CO_CONTENT_CONTENT_CONTENT_MAKESYMLINK_DSC", "Set to <b>YES</b> to create automaticaly a symlink for this content page.");
 define('_CO_CONTENT_CONTENT_READ','View Permission');
-define('_CO_CONTENT_CONTENT_READ_DSC','Select wich groups will have view permission for this content page. This means that a user belonging to one of these groups will be able to view the content page when it is activated in the site.');
+define('_CO_CONTENT_CONTENT_READ_DSC','Select which groups will have view permission for this content page. This means that a user belonging to one of these groups will be able to view the content page when it is activated in the site.');
 define('_CO_CONTENT_CONTENT_CONTENT_SUBS','Related Pages');
 define('_CO_CONTENT_CONTENT_CONTENT_SUBS_DSC','');
 
@@ -51,9 +51,9 @@ define("_CO_CONTENT_CONTENT_INFO", "Published by %s on %s. (%u reads)");
 define("_CO_CONTENT_CONTENT_FROM_USER", "All contents of %s");
 define("_CO_CONTENT_CONTENT_COMMENTS_INFO", "%d comments");
 define("_CO_CONTENT_CONTENT_NO_COMMENT", "No comment");
-
+/** @todo - do we really need these? they are duplicates of _CO_CONTENT_CONTENT_READ */
 define('_CONTENT_CONTENT_READ','View Permission');
-define('_CONTENT_CONTENT_READ_DSC','Select wich groups will have view permission for this content page. This means that a user belonging to one of these groups will be able to view the content page when it is activated in the site.');
+define('_CONTENT_CONTENT_READ_DSC','Select which groups will have view permission for this content page. This means that a user belonging to one of these groups will be able to view the content page when it is activated in the site.');
 
 //Status
 define("_CO_CONTENT_CONTENT_STATUS_PUBLISHED", "Published");
