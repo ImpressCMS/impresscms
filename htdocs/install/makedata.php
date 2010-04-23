@@ -249,10 +249,10 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'session_expire', '_MD_AM_SESSEXPIRE', '15', '_MD_AM_SESSEXPIREDSC', 'textbox', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'debug_mode', '_MD_AM_DEBUGMODE', '1', '_MD_AM_DEBUGMODEDSC', 'select', 'int', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_DEBUGMODE0', 0, $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_DEBUGMODE1', 1, $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_DEBUGMODE2', 2, $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_DEBUGMODE3', 3, $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_DEBUGMODE0', 0, $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_DEBUGMODE1', 1, $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_DEBUGMODE2', 2, $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_DEBUGMODE3', 3, $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'banners', '_MD_AM_BANNERS', '1', '_MD_AM_BANNERSDSC', 'yesno', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'closesite', '_MD_AM_CLOSESITE', '0', '_MD_AM_CLOSESITEDSC', 'yesno', 'int', " . $p++ . ")");
@@ -264,13 +264,13 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'sslloginlink', '_MD_AM_SSLLINK', 'https://', '_MD_AM_SSLLINKDSC', 'textbox', 'text', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'com_mode', '_MD_AM_COMMODE', 'nest', '_MD_AM_COMMODEDSC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_NESTED', 'nest', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_FLAT', 'flat', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_THREADED', 'thread', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_NESTED', 'nest', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_FLAT', 'flat', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_THREADED', 'thread', $i)");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'com_order', '_MD_AM_COMORDER', '0', '_MD_AM_COMORDERDSC', 'select', 'int', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_OLDESTFIRST', '0', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_NEWESTFIRST', '1', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_OLDESTFIRST', '0', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_NEWESTFIRST', '1', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'use_captchaf', '_MD_AM_USECAPTCHAFORM', 1, '_MD_AM_USECAPTCHAFORMDSC', 'yesno', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'enable_badips', '_MD_AM_DOBADIPS', '0', '_MD_AM_DOBADIPSDSC', 'yesno', 'int', " . $p++ . ")");
@@ -284,11 +284,11 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'minpass', '_MD_AM_MINPASS', '5', '_MD_AM_MINPASSDSC', 'textbox', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'pass_level', '_MD_AM_PASSLEVEL', '40', '_MD_AM_PASSLEVEL_DESC', 'select', 'int', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PASSLEVEL1', '20', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PASSLEVEL2', '40', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PASSLEVEL3', '60', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PASSLEVEL4', '80', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PASSLEVEL5', '95', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PASSLEVEL1', '20', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PASSLEVEL2', '40', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PASSLEVEL3', '60', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PASSLEVEL4', '80', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PASSLEVEL5', '95', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'minuname', '_MD_AM_MINUNAME', '3', '_MD_AM_MINUNAMEDSC', 'textbox', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'maxuname', '_MD_AM_MAXUNAME', '20', '_MD_AM_MAXUNAMEDSC', 'textbox', 'int', " . $p++ . ")");
@@ -305,17 +305,17 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'new_user_notify_group', '_MD_AM_NOTIFYTO', ".$gruops['XOOPS_GROUP_ADMIN'].", '_MD_AM_NOTIFYTODSC', 'group', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'activation_type', '_MD_AM_ACTVTYPE', '0', '_MD_AM_ACTVTYPEDSC', 'select', 'int', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_USERACTV', '0', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_AUTOACTV', '1', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ADMINACTV', '2', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_REGINVITE', '3', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_USERACTV', '0', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_AUTOACTV', '1', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ADMINACTV', '2', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_REGINVITE', '3', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'activation_group', '_MD_AM_ACTVGROUP', ".$gruops['XOOPS_GROUP_ADMIN'].", '_MD_AM_ACTVGROUPDSC', 'group', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'uname_test_level', '_MD_AM_UNAMELVL', '0', '_MD_AM_UNAMELVLDSC', 'select', 'int', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_STRICT', '0', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_MEDIUM', '1', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_LIGHT', '2', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_STRICT', '0', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_MEDIUM', '1', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_LIGHT', '2', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'avatar_allow_upload', '_MD_AM_AVATARALLOW', '0', '_MD_AM_AVATARALWDSC', 'yesno', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'avatar_allow_gravatar', '_MD_AM_GRAVATARALLOW', '1', '_MD_AM_GRAVATARALWDSC', 'yesno', 'int', " . $p++ . ")");
@@ -340,23 +340,23 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'allow_annon_view_prof', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE', '0', '_MD_AM_ALLOW_ANONYMOUS_VIEW_PROFILE_DESC', 'yesno', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'enc_type', '_MD_AM_ENC_TYPE', '1', '_MD_AM_ENC_TYPEDSC', 'select', 'int', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_MD5', '0', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_SHA256', '1', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_SHA384', '2', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_SHA512', '3', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_RIPEMD128', '4', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_RIPEMD160', '5', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_WHIRLPOOL', '6', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1284', '7', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1604', '8', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1924', '9', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2244', '10', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2564', '11', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1285', '12', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1605', '13', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1925', '14', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2245', '15', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2565', '16', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_MD5', '0', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_SHA256', '1', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_SHA384', '2', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_SHA512', '3', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_RIPEMD128', '4', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_RIPEMD160', '5', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_WHIRLPOOL', '6', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1284', '7', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1604', '8', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1924', '9', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2244', '10', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2564', '11', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1285', '12', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1605', '13', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL1925', '14', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2245', '15', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ENC_HAVAL2565', '16', $i)");
 	// ----------
 
 	// Data for Config Category 3 (Meta & Footer Preferences)
@@ -366,17 +366,17 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'meta_description', '_MD_AM_METADESC', 'ImpressCMS is a dynamic Object Oriented based open source portal script written in PHP.', '_MD_AM_METADESCDSC', 'textsarea', 'text', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'meta_robots', '_MD_AM_METAROBOTS', 'index,follow', '_MD_AM_METAROBOTSDSC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_INDEXFOLLOW', 'index,follow', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_NOINDEXFOLLOW', 'noindex,follow', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_INDEXNOFOLLOW', 'index,nofollow', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_NOINDEXNOFOLLOW', 'noindex,nofollow', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_INDEXFOLLOW', 'index,follow', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_NOINDEXFOLLOW', 'noindex,follow', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_INDEXNOFOLLOW', 'index,nofollow', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_NOINDEXNOFOLLOW', 'noindex,nofollow', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'meta_rating', '_MD_AM_METARATING', 'general', '_MD_AM_METARATINGDSC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_METAOGEN', 'general', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_METAO14YRS', '14 years', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_METAOREST', 'restricted', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_METAOMAT', 'mature', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_METAOGEN', 'general', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_METAO14YRS', '14 years', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_METAOREST', 'restricted', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_METAOMAT', 'mature', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'meta_author', '_MD_AM_METAAUTHOR', 'ImpressCMS', '_MD_AM_METAAUTHORDSC', 'textbox', 'text', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'meta_copyright', '_MD_AM_METACOPYR', 'Copyright &copy; 2007-" . date('Y', time()) . "', '_MD_AM_METACOPYRDSC', 'textbox', 'text', " . $p++ . ")");
@@ -413,19 +413,19 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'fromuid','_MD_AM_MAILFROMUID','1','_MD_AM_MAILFROMUIDDESC','user','int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'mailmethod','_MD_AM_MAILERMETHOD','mail','_MD_AM_MAILERMETHODDESC','select','text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'PHP mail()','mail', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'sendmail','sendmail', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'SMTP','smtp', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'SMTPAuth','smtpauth', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'PHP mail()','mail', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'sendmail','sendmail', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'SMTP','smtp', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'SMTPAuth','smtpauth', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'smtphost','_MD_AM_SMTPHOST','a:1:{i:0;s:0:\"\";}', '_MD_AM_SMTPHOSTDESC','textsarea','array', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'smtpuser','_MD_AM_SMTPUSER','','_MD_AM_SMTPUSERDESC','textbox','text', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'smtppass','_MD_AM_SMTPPASS','','_MD_AM_SMTPPASSDESC','password','text', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'smtpsecure','_MD_AM_SMTPSECURE','ssl','_MD_AM_SMTPSECUREDESC','select','text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'None','', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'SSL','ssl', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'TLS','tls', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'None','', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'SSL','ssl', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'TLS','tls', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'smtpauthport','_MD_AM_SMTPAUTHPORT','465','_MD_AM_SMTPAUTHPORTDESC','textbox','int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'sendmailpath','_MD_AM_SENDMAILPATH','/usr/sbin/sendmail','_MD_AM_SENDMAILPATHDESC','textbox','text', " . $p++ . ")");
@@ -435,9 +435,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$p=0; // reset position increment to 0 for new category id
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'auth_method','_MD_AM_AUTHMETHOD','xoops','_MD_AM_AUTHMETHODDESC','select','text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_XOOPS', 'xoops', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_LDAP', 'ldap', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_AD', 'ads', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_XOOPS', 'xoops', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_LDAP', 'ldap', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_AUTH_CONFOPTION_AD', 'ads', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'auth_openid','_MD_AM_AUTHOPENID','0','_MD_AM_AUTHOPENIDDSC','yesno','int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ",0,$c,'ldap_port','_MD_AM_LDAP_PORT','389','_MD_AM_LDAP_PORT','textbox','int', " . $p++ . ")");
@@ -498,9 +498,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'email_protect', '_MD_AM_EMAILPROTECT', '0', '_MD_AM_EMAILPROTECTDSC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_NOMAILPROTECT', '0', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_GDMAILPROTECT', '1', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_REMAILPROTECT', '2', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_NOMAILPROTECT', '0', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_GDMAILPROTECT', '1', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_REMAILPROTECT', '2', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'email_font', '_MD_AM_EMAILTTF', 'arial.ttf', '_MD_AM_EMAILTTF_DESC', 'select_font', 'text', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'email_font_len', '_MD_AM_EMAILLEN', '12', '_MD_AM_EMAILLEN_DESC', 'textbox', 'int', " . $p++ . ")");
@@ -523,9 +523,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$p=0;
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_mode', '_MD_AM_CAPTCHA_MODE', 'image', '_MD_AM_CAPTCHA_MODEDSC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_CAPTCHA_OFF', 'none', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_CAPTCHA_IMG', 'image', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_CAPTCHA_TXT', 'text', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_CAPTCHA_OFF', 'none', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_CAPTCHA_IMG', 'image', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_CAPTCHA_TXT', 'text', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_skipmember', '_MD_AM_CAPTCHA_SKIPMEMBER', '".addslashes(serialize(array('2')))."', '_MD_AM_CAPTCHA_SKIPMEMBERDSC', 'group_multi', 'array', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_casesensitive', '_MD_AM_CAPTCHA_CASESENS', '0', '_MD_AM_CAPTCHA_CASESENSDSC', 'yesno', 'int', " . $p++ . ")");
@@ -536,13 +536,13 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_fontsize_max', '_MD_AM_CAPTCHA_FONTMAX', '12', '_MD_AM_CAPTCHA_FONTMAXDSC', 'textbox', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_background_type', '_MD_AM_CAPTCHA_BGTYPE', '100', '_MD_AM_CAPTCHA_BGTYPEDSC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_BAR', '0', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_CIRCLE', '1', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_LINE', '2', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_RECTANGLE', '3', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ELLIPSE', '4', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_POLYGON', '5', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_RANDOM', '100', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_BAR', '0', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_CIRCLE', '1', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_LINE', '2', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_RECTANGLE', '3', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_ELLIPSE', '4', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_POLYGON', '5', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_RANDOM', '100', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_background_num', '_MD_AM_CAPTCHA_BGNUM', '50', '_MD_AM_CAPTCHA_BGNUMDSC', 'textbox', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'captcha_polygon_point', '_MD_AM_CAPTCHA_POLPNT', '3', '_MD_AM_CAPTCHA_POLPNTDSC', 'textbox', 'int', " . $p++ . ")");
@@ -553,9 +553,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS', '".addslashes(serialize(array('syntaxhighlightphp', 'hiddencontent')))."', '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'code_sanitizer', '_MD_AM_SELECTSHIGHLIGHT', 'none', '_MD_AM_SELECTSHIGHLIGHT_DESC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_HIGHLIGHTER_OFF', 'none', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_HIGHLIGHTER_PHP', 'php', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_HIGHLIGHTER_GESHI', 'geshi', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_HIGHLIGHTER_OFF', 'none', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_HIGHLIGHTER_PHP', 'php', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_HIGHLIGHTER_GESHI', 'geshi', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'geshi_default', '_MD_AM_GESHI_DEFAULT', 'php', '_MD_AM_GESHI_DEFAULT_DESC', 'select_geshi', 'text', " . $p++ . ")");
 
@@ -563,9 +563,9 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$c=13;
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'autotasks_system', '_MD_AM_AUTOTASKS_SYSTEM', 'internal', '_MD_AM_AUTOTASKS_SYSTEMDSC', 'autotasksystem', 'text', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'autotasks_helper', '_MD_AM_AUTOTASKS_HELPER', 'wget %url%', '_MD_AM_AUTOTASKS_HELPERDSC', 'select', 'text', " . $p++ . ")");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'PHP-CGI', 'php -f %path%', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'wget', 'wget %url%', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'Lynx', 'lynx --dump %url%', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'PHP-CGI', 'php -f %path%', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'wget', 'wget %url%', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", 'Lynx', 'lynx --dump %url%', $i)");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'autotasks_helper_path', '_MD_AM_AUTOTASKS_HELPER_PATH', '/usr/bin/', '_MD_AM_AUTOTASKS_HELPER_PATHDSC', 'text', 'text', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'autotasks_user', '_MD_AM_AUTOTASKS_USER', '', '_MD_AM_AUTOTASKS_USERDSC', 'text', 'text', " . $p++ . ")");
 
@@ -592,18 +592,18 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_HTML_DefinitionRev', '_MD_AM_PURIFIER_HTML_DEFREV', '1', '_MD_AM_PURIFIER_HTML_DEFREVDSC', 'textbox', 'int', " . $p++ . ")");
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_HTML_Doctype', '_MD_AM_PURIFIER_HTML_DOCTYPE', 'XHTML 1.0 Transitional', '_MD_AM_PURIFIER_HTML_DOCTYPEDSC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_401T', 'HTML 4.01 Transitional', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_401S', 'HTML 4.01 Strict', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_X10T', 'XHTML 1.0 Transitional', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_X10S', 'XHTML 1.0 Strict', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_X11', 'XHTML 1.1', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_401T', 'HTML 4.01 Transitional', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_401S', 'HTML 4.01 Strict', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_X10T', 'XHTML 1.0 Transitional', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_X10S', 'XHTML 1.0 Strict', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_X11', 'XHTML 1.1', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_HTML_TidyLevel', '_MD_AM_PURIFIER_HTML_TIDYLEVEL', 'medium', '_MD_AM_PURIFIER_HTML_TIDYLEVELDSC', 'select', 'text', " . $p++ . ")");
 	// Insert data for Config Options in selection field. (must be placed before //$i++)
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_NONE', 'none', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_LIGHT', 'light', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_MEDIUM', 'medium', $i)");
-	$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_HEAVY', 'heavy', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_NONE', 'none', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_LIGHT', 'light', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_MEDIUM', 'medium', $i)");
+		$dbm->insert('configoption', " VALUES (" . $ci++ . ", '_MD_AM_PURIFIER_HEAVY', 'heavy', $i)");
 	// ----------
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_HTML_AllowedElements', '_MD_AM_PURIFIER_HTML_ALLOWELE',
      '".addslashes(serialize(array('a', 'abbr', 'acronym', 'b', 'blockquote', 'br', 'caption', 'cite', 'code', 'dd', 'del', 'dfn', 'div', 'dl',
