@@ -81,6 +81,32 @@ class XoopsGroupPermForm extends XoopsForm
 		}
 	}
 
+
+
+
+
+	/**
+	 * Insert an empty row in the table to serve as a seperator.
+	 *
+	 * @param	string  $extra  HTML to be displayed in the empty row.
+	 * @param	string	$class	CSS class name for <td> tag
+	 */
+	public function insertBreak($extra = '', $class= '')
+	{
+		$class = ($class != '') ? " class='$class'" : '';
+		//Fix for $extra tag not showing
+		if ($extra) {
+			$extra = "<tr><td colspan='2' $class>$extra</td></tr>";
+			$this->addElement($extra);
+		} else {
+			$extra = "<tr><td colspan='2' $class>&nbsp;</td></tr>";
+			$this->addElement($extra);
+		}
+	}
+
+
+
+
 	/**
 	 * Adds an item to which permission will be assigned
 	 *
