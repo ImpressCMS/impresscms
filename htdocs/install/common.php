@@ -17,6 +17,61 @@
  */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
+function icms_autoload( $class ) {
+	/** temp var to debug spl_autoload feature */
+	$debug = false;
+
+	$file = strtolower($class);
+	if ($debug) echo "<ul><b>$class</b>";
+	if (file_exists( $path = ICMS_ROOT_PATH . "/kernel/$file.php" ) ) {
+		if ($debug) echo "<li>inc - $path</li>";
+		include_once $path;
+	} elseif(file_exists( $path = ICMS_ROOT_PATH . "/class/$file.php" )) {
+		if ($debug) echo "<li>inc - $path</li>";
+		include_once $path;
+	} elseif(file_exists($path = ICMS_ROOT_PATH . "/class/" . str_replace('xoops', '', $file) . ".php")) {
+		if ($debug) echo "<li>inc - $path </li>";
+		include_once $path;
+	} elseif (strpos($file, 'xoops') !== false && strpos($file, 'handler') !== false) {
+		if ($debug) echo "<li>loading handler</li>";
+		$handlerFile = str_replace('xoops', '', $file);
+		$handlerFile = str_replace('handler', '', $handlerFile);
+		if ($debug) echo "<li>$path</li>";
+		if (file_exists( $path = ICMS_ROOT_PATH . "/kernel/$handlerFile.php" ) ) {
+			if ($debug) echo "<li>inc - $path</li>";
+			include_once $path;
+		} elseif(file_exists( $path = ICMS_ROOT_PATH . "/class/$handlerFile.php" )) {
+			if ($debug) echo "<li>inc - $path</li>";
+			include_once $path;
+		}
+	} elseif (strpos($file, 'icmsform') !== false) {
+		if ($debug) echo "<li>loading icmsform element</li>";
+		if (file_exists( $path = ICMS_ROOT_PATH . "/class/icmsform/elements/$file.php" )) {
+			if ($debug) echo "<li>inc - $path</li>";
+			include_once $path;
+		}
+	} elseif(strpos($file, 'auth') !== false) {
+		if ($debug) echo "<li>loading auth</li>";
+		$classFile = str_replace('xoops', '', $file);
+		echo $path = ICMS_ROOT_PATH . "/class/auth/$classFile.php";
+		if (file_exists( $path = ICMS_ROOT_PATH . "/class/auth/$classFile.php" )) {
+			if ($debug) echo "<li>inc - $path</li>";
+			include_once $path;
+		}
+	}
+	if ($debug) echo "</ul>";
+}
+
+function icms_autoload_register() {
+	static $reg = false;
+	if ( !$reg ) {
+		spl_autoload_register( "icms_autoload" );
+		$reg = true;
+	}
+}
+
+icms_autoload_register();
+
 @set_magic_quotes_runtime(0);
 if (!defined('ICMS_ROOT_PATH')) {
 	define( 'ICMS_ROOT_PATH', XOOPS_ROOT_PATH );
