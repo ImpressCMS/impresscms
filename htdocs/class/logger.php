@@ -170,6 +170,8 @@ class XoopsLogger {
 				$errstr = substr( $errstr, 8 );
 			}
 
+			icms_loadLanguageFile('core', 'core');
+
 			$errortext = sprintf(_CORE_PAGENOTDISPLAYED, $errstr);
 			echo $errortext;
 			if ( $trace && function_exists( 'debug_backtrace' ) ) {

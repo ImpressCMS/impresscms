@@ -58,6 +58,7 @@ class IcmsDatabaseFactory{
 			$instance->setLogger(XoopsLogger::instance());
 			$instance->setPrefix(XOOPS_DB_PREFIX);
 			if (!$instance->connect()) {
+				icms_loadLanguageFile('core', 'core');
 				trigger_error(_CORE_DB_NOTRACEDB, E_USER_ERROR);
 			}
 		}
