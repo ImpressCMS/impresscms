@@ -5,6 +5,9 @@ Revision:
 DB Version: 40
 Build Version: 36
 
+* Updated HTMLPurifier library to 4.1.0 fixes XSS vulnerability caused by IE. adds ability to use flashvars when using
+  HTML.SafeObject/HTML.SafeEmbed options, addition of Output.FlashCompat option for IE compatibility using SafeObject. (vaughan)
+
 === ImpressCMS 1.2.1 Final ===
 Release date: 14 Mar 2010
 Revision: 19092

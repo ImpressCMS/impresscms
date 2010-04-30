@@ -99,6 +99,7 @@ class icms_HTMLPurifier
             'HTML.SafeEmbed' => $icmsConfigPurifier['purifier_HTML_SafeEmbed'],
             'HTML.SafeObject' => $icmsConfigPurifier['purifier_HTML_SafeObject'],
             'HTML.Attr.Name.UseCDATA' => $icmsConfigPurifier['purifier_HTML_AttrNameUseCDATA'],
+            'Output.FlashCompat' => $icmsConfigPurifier['purifier_Output_FlashCompat'],
             'CSS.DefinitionRev' => $icmsConfigPurifier['purifier_CSS_DefinitionRev'],
             'CSS.AllowImportant' => $icmsConfigPurifier['purifier_CSS_AllowImportant'],
             'CSS.AllowTricky' => $icmsConfigPurifier['purifier_CSS_AllowTricky'],

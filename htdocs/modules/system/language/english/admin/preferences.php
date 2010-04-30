@@ -665,4 +665,7 @@ define("_MD_AM_SMTPSECUREDESC","Authentication Method used for SMTPAuthenticatio
 define("_MD_AM_SMTPAUTHPORT","SMTP Port");
 define("_MD_AM_SMTPAUTHPORTDESC","The Port use by your SMTP Mail server (default is 465)");
 
+// added in 1.3 beta
+define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPAT","Enable IE Flash Compatibility");
+define("_MD_AM_PURIFIER_OUTPUT_FLASHCOMPATDSC","If true, HTML Purifier will generate Internet Explorer compatibility code for all object code. This is highly recommended if you enable HTML.SafeObject.");
 ?>
