@@ -76,7 +76,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		}
 
 		$tables = array();
-		$content .= "<div style='height: 400px; overflow: auto;'>$dbm->report()</div>";
+		$content .= "<div style='height:auto;max-height:400px;overflow:auto;'>".$dbm->report()."</div>";
 	} else {
 		$wizard->redirectToPage( '+1' );
 		exit();
