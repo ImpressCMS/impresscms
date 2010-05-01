@@ -29,7 +29,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 /**
  * the base class
  */
-include_once ICMS_ROOT_PATH."/class/xoopsform/form.php";
+include_once ICMS_ROOT_PATH . '/class/xoopsform/form.php';
 
 /**
  * Form that will output formatted as a HTML table
@@ -42,16 +42,31 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/form.php";
  * @package     kernel
  * @subpackage  form
  */
-class XoopsTableForm extends XoopsForm
-{
+class XoopsTableForm extends XoopsForm {
+	/**
+	 * Insert an empty row in the table to serve as a separator.
+	 *
+	 * @param	string  $extra  HTML to be displayed in the empty row.
+	 * @param	string	$class	CSS class name for <td> tag
+	 */
+	public function insertBreak( $extra = '', $class= '' ) {
+		$class = ( $class != '' ) ? " class='$class'" : '';
+		//Fix for $extra tag not showing
+		if ( $extra ) {
+			$extra = "<tr><td colspan='2' $class>$extra</td></tr>";
+			$this->addElement($extra);
+		} else {
+			$extra = "<tr><td colspan='2' $class>&nbsp;</td></tr>";
+			$this->addElement($extra);
+		}
+	}
 
 	/**
 	 * create HTML to output the form as a table
 	 *
 	 * @return	string  $ret  the constructed HTML
 	 */
-	function render()
-	{
+	public function render() {
 		$ret = $this->getTitle()."\n<form name='".$this->getName()."' id='".$this->getName()."' action='".$this->getAction()."' method='".$this->getMethod()."'".$this->getExtra().">\n<table border='0' width='100%'>\n";
 		$hidden = '';
 		foreach ( $this->getElements() as $ele ) {
