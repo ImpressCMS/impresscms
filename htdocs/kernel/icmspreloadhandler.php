@@ -50,7 +50,7 @@ class IcmsPreloadHandler {
 		$preloadFilesArray = XoopsLists::getFileListAsArray(ICMS_PRELOAD_PATH);
 		foreach ($preloadFilesArray as $filename) {
 			// exclude index.html
-			if ($filename != 'index.html') {
+			if ($filename != 'index.html' && !class_exists( $this->getClassName($filename))) {
 				$this->_preloadFilesArray[] = $filename;
 				$this->addPreloadEvents($filename);
 			}
@@ -80,25 +80,27 @@ class IcmsPreloadHandler {
 		include_once $filepath;
 
 		$classname = $this->getClassName($filename);
-		$preloadItem = new $classname();
+		if ( class_exists( $classname ) ) {
+			$preloadItem = new $classname();
 
-		$class_methods = get_class_methods($classname);
-		foreach($class_methods as $method) {
-			if (strpos($method, 'event') === 0) {
-				$preload_event = strtolower(str_replace('event', '', $method));
+			$class_methods = get_class_methods($classname);
+			foreach($class_methods as $method) {
+				if (strpos($method, 'event') === 0) {
+					$preload_event = strtolower(str_replace('event', '', $method));
 
-				$preload_event_array = array(
+					$preload_event_array = array(
 											'object' => &$preloadItem,
 											'method' => $method
-				);
+					);
 
-				$preload_event_weight_define_name = strtoupper($classname) . '_' . strtoupper($preload_event);
+					$preload_event_weight_define_name = strtoupper($classname) . '_' . strtoupper($preload_event);
 
-				if (defined($preload_event_weight_define_name)) {
-					$preload_event_weight = constant($preload_event_weight_define_name);
-					$this->_preloadEventsArray[$preload_event][$preload_event_weight] = $preload_event_array;
-				} else {
-					$this->_preloadEventsArray[$preload_event][] = $preload_event_array;
+					if (defined($preload_event_weight_define_name)) {
+						$preload_event_weight = constant($preload_event_weight_define_name);
+						$this->_preloadEventsArray[$preload_event][$preload_event_weight] = $preload_event_array;
+					} else {
+						$this->_preloadEventsArray[$preload_event][] = $preload_event_array;
+					}
 				}
 			}
 		}
