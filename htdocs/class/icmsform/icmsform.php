@@ -65,8 +65,8 @@ class IcmsForm extends XoopsThemeForm {
 		if (!isset($form_action)) {
 			$form_action = xoops_getenv('PHP_SELF');
 		}
-		/** @todo - XoopsThemeForm is not a valid method of this object or its parent and will fail in PHP strict mode */
-		$this->XoopsThemeForm( $form_caption , $form_name, $form_action);
+
+		$this->XoopsForm( $form_caption , $form_name, $form_action);
 		$this->setExtra('enctype="multipart/form-data"');
 
 		$this->createElements();
