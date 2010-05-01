@@ -35,6 +35,8 @@ class xos_logos_PageBuilder {
 
 	public $blocks = array ( );
 
+	private $uagroups = array();
+
 	public function xoInit($options = array()) {
 		$this->retrieveBlocks ();
 		if ($this->theme) {
@@ -147,7 +149,7 @@ class xos_logos_PageBuilder {
 		$gperm =& xoops_gethandler ( 'groupperm' );
 		$ugroups = @is_object ( $icmsUser ) ? $icmsUser->getGroups () : array(XOOPS_GROUP_ANONYMOUS );
 		$agroups = $gperm->getGroupIds('system_admin',5); //XOOPS_SYSTEM_BLOCK constant not available?
-		$uagroups = array_intersect($ugroups, $agroups);
+		$this->uagroups = array_intersect($ugroups, $agroups);
 		/** End of snippet */
 
 		$block_arr = $icms_block_handler->getAllByGroupModule ( $groups, $modid, $isStart, XOOPS_BLOCK_VISIBLE );
@@ -178,12 +180,12 @@ class xos_logos_PageBuilder {
 	 * @return unknown
 	 */
 	public function buildBlock($xobject, &$template) {
-		global $icmsUser, $icmsConfigPersona, $uagroups;
+		global $icmsUser, $icmsConfigPersona;
 
 		if ($icmsConfigPersona ['editre_block'] == true) {
-			if ($icmsUser && count($uagroups) > 0) {
+			if ($icmsUser && count($this->uagroups) > 0) {
 				$url = base64_encode( str_replace( ICMS_URL, '', "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ) );
-				$titlebtns = '<a href="#" onclick="$(\'#ed_block_' . $xobject->getVar ( 'bid' ) . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>';
+				$titlebtns = '&nbsp;<a href="#" onclick="$(\'#ed_block_' . $xobject->getVar ( 'bid' ) . '\').dialog(\'open\'); return false;"><img src="' . ICMS_IMAGES_SET_URL . '/actions/configure.png" title="' . _EDIT . '" alt="' . _EDIT . '"  /></a>';
 				$titlebtns .= '<button style="display: none;"><div id="ed_block_' . $xobject->getVar ( 'bid' ) . '">';
 				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=visible&amp;bid=" . $xobject->getVar ( 'bid' ) . "&amp;rtn=$url'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/button_cancel.png' alt='" . _INVISIBLE . "'  /> " . _INVISIBLE . "</a><br />";
 				$titlebtns .= "<a href='" . ICMS_URL . "/modules/system/admin.php?fct=blocksadmin&amp;op=clone&amp;bid=" . $xobject->getVar ( 'bid' ) . "'> <img src='" . ICMS_IMAGES_SET_URL . "/actions/editcopy.png' alt='" . _CLONE . "'  /> " . _CLONE . "</a><br />";
