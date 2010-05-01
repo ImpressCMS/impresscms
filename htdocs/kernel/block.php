@@ -337,7 +337,7 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * @deprecated
 	 */
 	public function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
-		return $this->hanler->getNonGroupedBlocks( $module_id, $toponlyblock, $visible, $orderby, $isactive );
+		return $this->handler->getNonGroupedBlocks( $module_id, $toponlyblock, $visible, $orderby, $isactive );
 	}
 
 	/**
@@ -479,16 +479,26 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 				$sql = "SELECT * FROM ".$this->db->prefix("newblocks")."".$where_query;
 				$result = $this->db->query($sql);
 				while ( $myrow = $this->db->fetchArray($result) ) {
+					// @todo this is causing to many SQL queries. In case this section is still needed,
+					// we should switch it just like it's done in the list case
 					$ret[] = $this->get($myrow['bid']);
 				}
 				break;
 			case "list":
 				$sql = "SELECT * FROM ".$this->db->prefix("newblocks")."".$where_query;
 				$result = $this->db->query($sql);
-				while ( $myrow = $this->db->fetchArray($result) ) {
-					$block = $this->get($myrow['bid']);
-					$name = $block->getVar("title");
-					$ret[$block->getVar("bid")] = $name;
+				if ($this->db->getRowsNum($result) > 0) {
+					$blockids = array();
+					while ( $myrow = $this->db->fetchArray($result) ) {
+						$blockids[] = $myrow['bid'];
+					}
+					$criteria = new CriteriaCompo();
+					$criteria->add(new Criteria('bid', '('.implode(',', $blockids).')', 'IN'));
+					$blocks = $this->getObjects($criteria, true, true);
+					foreach ($blocks as $block) {
+						$ret[$block->getVar("bid")] = $block->getVar("title");
+					}
+					unset($blockids, $blocks);
 				}
 				break;
 			case "id":
@@ -499,7 +509,6 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 				}
 				break;
 		}
-		//echo $sql;
 		return $ret;
 	}
 
@@ -563,10 +572,20 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			$sql .= " AND b.bid IN (".implode(',', $blockids).")";
 			$sql .= " ORDER BY ".$orderby;
 			$result = $this->db->query($sql);
-			while ( $myrow = $this->db->fetchArray($result) ) {
+
+			// old method of gathering block data. Since this could result in a whole bunch of queries, a new method was introduced
+			/*while ( $myrow = $this->db->fetchArray($result) ) {
 				$block =& $this->get($myrow['bid']);
 				$ret[$myrow['bid']] =& $block;
 				unset($block);
+			}*/
+
+			if ($this->db->getRowsNum($result) > 0) {
+				unset($blockids);
+				while ($myrow = $this->db->fetchArray($result)) {
+					$blockids[] = $myrow['bid'];
+				}
+				$ret = $this->getMultiple($blockids);
 			}
 		}
 		return $ret;
@@ -625,10 +644,20 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 			$sql .= " AND b.bid IN (".implode(',', $non_grouped).")";
 			$sql .= " ORDER BY ".$orderby;
 			$result = $this->db->query($sql);
-			while ( $myrow = $this->db->fetchArray($result) ) {
+
+			// old method of gathering block data. Since this could result in a whole bunch of queries, a new method was introduced
+			/*while ( $myrow = $this->db->fetchArray($result) ) {
 				$block =& $this->get($myrow['bid']);
 				$ret[$myrow['bid']] =& $block;
 				unset($block);
+			}*/
+
+			if ($this->db->getRowsNum($result) > 0) {
+				unset($blockids);
+				while ($myrow = $this->db->fetchArray($result)) {
+					$blockids[] = $myrow['bid'];
+				}
+				$ret = $this->getMultiple($blockids);
 			}
 		}
 		return $ret;
@@ -719,6 +748,31 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 		}
 		$obj->setVar('visiblein', $modules);
 		return $obj;
+	}
+
+	/**
+	 * Get block data for multiple block ids
+	 *
+	 * @param array $blockids
+	 *
+	 * @deprecated
+	 * @todo can be removed together with getAllByGroupModule and getNonGroupedBlocks
+	 */
+	private function &getMultiple($blockids) {
+		$criteria = new CriteriaCompo();
+		$criteria->add(new Criteria('bid', '('.implode(',', $blockids).')', 'IN'));
+		$ret = $this->getObjects($criteria, true, true);
+		$sql = "SELECT block_id, module_id, page_id FROM ".$this->db->prefix('block_module_link')." WHERE block_id IN (".implode(',', array_keys($ret)).") ORDER BY block_id";
+		$result = $this->db->query($sql);
+		$modules = array();
+		$last_block_id = 0;
+		while ($row = $this->db->fetchArray($result)) {
+			$modules[] = (int)($row['module_id']).'-'.(int)($row['page_id']);
+			$ret[$row['block_id']]->setVar('visiblein', $modules);
+			if ($row['block_id'] != $last_block_id) $modules = array();
+			$last_block_id = $row['block_id'];
+		}
+		return $ret;
 	}
 
 	public function getCountSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
