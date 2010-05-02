@@ -418,46 +418,35 @@ function showbanner() {echo xoops_getbanner();}
  *
  * @return object  $bannerobject  The generated banner HTML string
  */
-function xoops_getbanner()
-{
+function xoops_getbanner() {
 	global $icmsConfig;
-	$db =& Database::getInstance();
-	$bresult = $db->query("SELECT COUNT(*) FROM ".$db->prefix('banner'));
-	list($numrows) = $db->fetchRow($bresult);
-	if($numrows > 1)
-	{
-		$numrows = $numrows-1;
-		mt_srand((double)microtime()*1000000);
-		$bannum = mt_rand(0, $numrows);
-	}
-	else {$bannum = 0;}
-	if($numrows > 0)
-	{
-		$bresult = $db->query("SELECT * FROM ".$db->prefix('banner'), 1, $bannum);
+
+	$db = Database::getInstance();
+	$bresult = $db->query("SELECT * FROM ".$db->prefix('banner')." ORDER BY RAND()", 1);
+	if ($db->getRowsNum($bresult) > 0) {
 		list($bid, $cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $date, $htmlbanner, $htmlcode) = $db->fetchRow($bresult);
-		if($icmsConfig['my_ip'] == xoops_getenv('REMOTE_ADDR')) {}
-		else {$db->queryF(sprintf("UPDATE %s SET impmade = impmade+1 WHERE bid = '%u'", $db->prefix('banner'), (int) ($bid)));}
+		if ($icmsConfig['my_ip'] != $_SERVER['REMOTE_ADDR'])
+			$db->queryF(sprintf("UPDATE %s SET impmade = impmade+1 WHERE bid = '%u'", $db->prefix('banner'), (int)($bid)));
 		/* Check if this impression is the last one and print the banner */
-		if($imptotal == $impmade)
-		{
+		if ($imptotal == $impmade && $imptotal != 0) {
 			$newid = $db->genId($db->prefix('bannerfinish').'_bid_seq');
 			$sql = sprintf("INSERT INTO %s (bid, cid, impressions, clicks, datestart, dateend) VALUES ('%u', '%u', '%u', '%u', '%u', '%u')", $db->prefix('bannerfinish'), (int) ($newid), (int) ($cid), (int) ($impmade), (int) ($clicks), (int) ($date), time());
 			$db->queryF($sql);
-			$db->queryF(sprintf("DELETE FROM %s WHERE bid = '%u'", $db->prefix('banner'), (int) ($bid)));
+			$db->queryF(sprintf("DELETE FROM %s WHERE bid = '%u'", $db->prefix('banner'), (int)($bid)));
 		}
-		if($htmlbanner) {$bannerobject = $htmlcode;}
-		else
-		{
+		if ($htmlbanner) {
+			$bannerobject = $htmlcode;
+		} else {
 			$bannerobject = '<div><a href="'.ICMS_URL.'/banners.php?op=click&amp;bid='.$bid.'" rel="external">';
-			if(stristr($imageurl, '.swf'))
-			{
+			if (stristr($imageurl, '.swf')) {
 				$bannerobject = $bannerobject
 				.'<object type="application/x-shockwave-flash" data="'.$imageurl.'" width="468" height="60">'
 				.'<param name="movie" value="'.$imageurl.'"></param>'
 				.'<param name="quality" value="high"></param>'
 				.'</object>';
+			} else {
+				$bannerobject = $bannerobject.'<img src="'.$imageurl.'" alt="" />';
 			}
-			else {$bannerobject = $bannerobject.'<img src="'.$imageurl.'" alt="" />';}
 			$bannerobject = $bannerobject.'</a></div>';
 		}
 		return $bannerobject;
