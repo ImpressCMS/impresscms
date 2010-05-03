@@ -51,6 +51,15 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		exit();
 	}
 	if ( $_POST['mod'] == 1 ) {
+		/**
+		 * Automatically updating the system module before installing the selected modules
+		 * @since 1.3
+		 */
+		include_once ICMS_ROOT_PATH . '/modules/system/include/update.php';
+		$module_handler = xoops_gethandler('module');
+		$system_moduleObj = $module_handler->getByDirname('system');
+		xoops_module_update_system($system_moduleObj);
+
 		$install_mods = isset($_POST['install_mods']) ? $_POST['install_mods'] : '';
 		$anon_accessible_mods = isset($_POST['anon_accessible_mods']) ? $_POST['anon_accessible_mods'] : '';
 		if (isset($_POST['install_mods'])){
