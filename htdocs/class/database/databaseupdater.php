@@ -236,18 +236,18 @@ class IcmsDatabasetable {
 	 *
 	 */
 	function addData() {
-		foreach ($this->getData() as $data) {
-			$query = sprintf('INSERT INTO %s VALUES (%s)', $this->name(), $data);
-			if ($this->force) {
-				$ret = $this->_db->queryF($query);
-			} else {
-				$ret = $this->_db->query($query);
-			}
-			if (!$ret) {
-				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA_ERR, $this->name());
-			} else {
-				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA, $this->name());
-			}
+		$str = '(' . implode( '), (', $this->getData() ) . ')';
+		$query = sprintf( 'INSERT INTO %s VALUES %s', $this->name(), $str );
+
+		if ($this->force) {
+			$ret = $this->_db->queryF($query);
+		} else {
+			$ret = $this->_db->query($query);
+		}
+		if (!$ret) {
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA_ERR, $this->name());
+		} else {
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_ADD_DATA, $this->name());
 		}
 		return $ret;
 	}
@@ -434,25 +434,25 @@ class IcmsDatabasetable {
 	 */
 	function alterTable() {
 		$ret = true;
-
+		$query = 'ALTER TABLE `' . $this->name() .'`';
 		foreach ($this->getAlteredFields() as $alteredField) {
 			if (!$alteredField['newname']) {
 				$alteredField['newname'] = $alteredField['name'];
 			}
+			$query .= sprintf( ' CHANGE `%s` `%s` %s,', $alteredField['name'], $alteredField['newname'], $alteredField['properties'] );
+		}
+		$query = substr( $query, 0, -1 );
+		if ($this->force) {
+			$ret = $ret && $this->_db->queryF($query);
+		} else {
+			$ret = $ret && $this->_db->query($query);
+		}
 
-			$query = sprintf("ALTER TABLE `%s` CHANGE `%s` `%s` %s", $this->name(), $alteredField['name'], $alteredField['newname'], $alteredField['properties']);
-			if ($this->force) {
-				$ret = $ret && $this->_db->queryF($query);
+		if ($alteredField['showerror']) {
+			if (!$ret) {
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD_ERR, $alteredField['name'], $this->name()) . " (" . $this->_db->error(). ")";
 			} else {
-				$ret = $ret && $this->_db->query($query);
-			}
-
-			if ($alteredField['showerror']) {
-				if (!$ret) {
-					$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD_ERR, $alteredField['name'], $this->name()) . " (" . $this->_db->error(). ")";
-				} else {
-					$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD, $alteredField['name'], $this->name());
-				}
+				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_CHGFIELD, $alteredField['name'], $this->name());
 			}
 		}
 
@@ -467,20 +467,21 @@ class IcmsDatabasetable {
 	 */
 	function addNewFields() {
 		$ret = true;
+		$query = 'ALTER TABLE `' . $this->name() . '`';
 		foreach ($this->getNewFields() as $newField) {
-			$query = sprintf("ALTER TABLE `%s` ADD `%s` %s", $this->name(), $newField['name'], $newField['properties']);
+			$query .= sprintf( ' ADD `%s` %s,', $newField['name'], $newField['properties'] );
+		}
+		$query = substr( $query, 0, -1 );
+		if ($this->force) {
+			$ret = $ret && $this->_db->queryF($query);
+		} else {
+			$ret = $ret && $this->_db->query($query);
+		}
 
-			if ($this->force) {
-				$ret = $ret && $this->_db->queryF($query);
-			} else {
-				$ret = $ret && $this->_db->query($query);
-			}
-
-			if (!$ret) {
-				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD_ERR, $newField['name'], $this->name());
-			} else {
-				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD, $newField['name'], $this->name());
-			}
+		if (!$ret) {
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD_ERR, $newField['name'], $this->name());
+		} else {
+			$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_NEWFIELD, $newField['name'], $this->name());
 		}
 		return $ret;
 	}
@@ -567,8 +568,8 @@ class IcmsDatabasetable {
 	 */
 	function dropFields() {
 		$ret = true;
-		foreach ($this->getdropedFields() as $dropedField) {
-			$query = sprintf("ALTER TABLE %s DROP %s", $this->name(), $dropedField);
+		$str = implode( ', DROP ', $this->getdropedFields() );
+		$query = 'ALTER TABLE ' . $this->name() . ' DROP ' . $str;
 			if ($this->force) {
 				$ret = $ret && $this->_db->queryF($query);
 			} else {
@@ -580,7 +581,6 @@ class IcmsDatabasetable {
 			} else {
 				$this->_messages[] =  "&nbsp;&nbsp;" . sprintf(_DATABASEUPDATER_MSG_DROPFIELD, $dropedField, $this->name());
 			}
-		}
 		return $ret;
 	}
 }
@@ -823,18 +823,15 @@ class IcmsDatabaseupdater {
 					} else {
 						$default =  $this->getFieldDefaultFromVar($var);
 						if ($default != 'nodefault') {
-							$extra = "default '$default'
-";
+							$extra = "default '$default'";
 						} else {
 							$extra = false;
 						}
 					}
 					if ($extra) {
-						$structure .= "`$key` $type not null $extra,
-";
+						$structure .= "`$key` $type not null $extra,";
 					} else {
-						$structure .= "`$key` $type not null,
-";
+						$structure .= "`$key` $type not null,";
 					}
 
 				}
