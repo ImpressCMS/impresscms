@@ -1,29 +1,4 @@
 #
-# Table structure for table `autosearch_cat`
-#
-
-CREATE TABLE IF NOT EXISTS `autosearch_cat` (
-  `cid` int(11) NOT NULL auto_increment,
-  `cat_name` varchar(255) NOT NULL,
-  `cat_url` text NOT NULL,
-  PRIMARY KEY  (`cid`)
-) ENGINE=MyISAM  DEFAULT 
-
-#
-# Table structure for table `autosearch_list`
-#
-
-CREATE TABLE IF NOT EXISTS `autosearch_list` (
-  `id` int(11) NOT NULL auto_increment,
-  `cat_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `img` varchar(255) NOT NULL,
-  `desc` text NOT NULL,
-  `url` text NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM
-
-#
 # Table structure for table `avatar`
 #
 
@@ -217,7 +192,7 @@ CREATE TABLE config (
   conf_valuetype varchar(10) NOT NULL default '',
   conf_order smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY  (conf_id),
-  KEY conf_mod_cat_id (conf_modid,conf_catid)
+  KEY mod_cat_order(conf_modid, conf_catid, conf_order)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -269,12 +244,10 @@ CREATE TABLE group_permission (
   gperm_id int(10) unsigned NOT NULL auto_increment,
   gperm_groupid smallint(5) unsigned NOT NULL default '0',
   gperm_itemid mediumint(8) unsigned NOT NULL default '0',
-  gperm_modid mediumint(5) unsigned NOT NULL default '0',
+  gperm_modid smallint(5) unsigned NOT NULL default '0',
   gperm_name varchar(50) NOT NULL default '',
   PRIMARY KEY  (gperm_id),
-  KEY groupid (gperm_groupid),
-  KEY itemid (gperm_itemid),
-  KEY gperm_modid (gperm_modid,gperm_name(10))
+  KEY name_mod_group (gperm_name(10), gperm_modid, gperm_groupid)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -402,12 +375,8 @@ CREATE TABLE modules (
   hasnotification tinyint(1) unsigned NOT NULL default '0',
   dbversion int(11) unsigned NOT NULL default '1',
   PRIMARY KEY  (mid),
-  KEY hasmain (hasmain),
-  KEY hasadmin (hasadmin),
-  KEY hassearch (hassearch),
-  KEY hasnotification (hasnotification),
-  KEY dirname (dirname),
-  KEY name (name(15))
+  KEY dirname (dirname(5)),
+  KEY active_main_weight (isactive, hasmain, weight)
 ) TYPE=MyISAM;
 # --------------------------------------------------------
 
@@ -472,7 +441,6 @@ CREATE TABLE priv_msgs (
   msg_text text NOT NULL,
   read_msg tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (msg_id),
-  KEY to_userid (to_userid),
   KEY touseridreadmsg (to_userid,read_msg),
   KEY msgidfromuserid (msg_id,from_userid)
 ) TYPE=MyISAM;
@@ -490,7 +458,6 @@ CREATE TABLE ranks (
   rank_special tinyint(1) unsigned NOT NULL default '0',
   rank_image varchar(255) default NULL,
   PRIMARY KEY  (rank_id),
-  KEY rank_min (rank_min),
   KEY rank_max (rank_max),
   KEY rankminrankmaxranspecial (rank_min,rank_max,rank_special),
   KEY rankspecial (rank_special)
@@ -614,11 +581,8 @@ CREATE TABLE users (
   enc_type tinyint(2) unsigned NOT NULL default '1',
   login_name varchar(255) NOT NULL default '',
   PRIMARY KEY  (uid),
-  KEY login_name (login_name),
   KEY uname (uname),
-  KEY email (email),
-  KEY uiduname (uid,uname),
-  KEY unamepass (uname(10),pass(10))
+  UNIQUE KEY login_name (login_name)
 ) TYPE=MyISAM;
 
 #
