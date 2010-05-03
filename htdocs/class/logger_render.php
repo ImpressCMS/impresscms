@@ -98,6 +98,7 @@ if ( empty($mode) || $mode == 'queries' ) {
 		$class = ($class == 'odd') ? 'even' : 'odd';
 	}
 	$ret .= '<tr class="foot"><td>'._TOTAL.' <span style="color:#ff0000;">'.icms_conv_nr2local(count($this->queries)).'</span> '._QUERIES.'</td></tr></table>';
+	$ret = str_replace(XOOPS_DB_PREFIX . '_', '', $ret);
 }
 
 if ( empty($mode) || $mode == 'blocks' ) {
@@ -174,7 +175,7 @@ if ( empty( $mode ) ) {
 	}
 	xoSetLoggerView( xoLogReadCookie( 'XOLOGGERVIEW' ) );
 </script>
-	
+
 EOT;
 }
 
