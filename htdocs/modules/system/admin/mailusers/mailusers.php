@@ -26,7 +26,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 	}
 
 	if ( !$GLOBALS['xoopsSecurity']->check() || $op == "form" ) {
-		xoops_cp_header();
+		icms_cp_header();
 		//OpenTable();
 		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/mailusers/images/mailusers_big.png)">'._MD_AM_MLUS.'</div><br />';
 		if ($op != "form" && $error_msg = $GLOBALS['xoopsSecurity']->getErrors(true)) {
@@ -36,7 +36,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		include XOOPS_ROOT_PATH."/modules/system/admin/mailusers/mailform.php";
 		$form->display();
 		//CloseTable();
-		xoops_cp_footer();
+		icms_cp_footer();
 	}
 
 	if ($op == "send" && !empty($_POST['mail_send_to'])) {
@@ -130,7 +130,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		}
 
 		$added_count = count($added);
-		xoops_cp_header();
+		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/mailusers/images/mailusers_big.png)">'._MD_AM_MLUS.'</div><br />';
 		//OpenTable();
 		if ( $added_count > 0 ) {
@@ -211,7 +211,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			echo "<h4>"._AM_NOUSERMATCH."</h4>";
 		}
 		//CloseTable();
-		xoops_cp_footer();
+		icms_cp_footer();
 	}
 }
 

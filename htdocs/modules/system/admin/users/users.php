@@ -24,7 +24,7 @@ function displayUsers()
 	global $xoopsDB, $xoopsConfig, $icmsModule, $icmsConfigUser;
 	$userstart = isset($_GET['userstart']) ? (int) ($_GET['userstart']) : 0;
 
-	xoops_cp_header();
+	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
 	$member_handler =& xoops_gethandler('member');
 	$usercount = $member_handler->getUserCount(new Criteria('level', '-1', '!='));
@@ -117,13 +117,13 @@ function displayUsers()
 	$language_value = $xoopsConfig['language'];
 	$groups = array(XOOPS_GROUP_USERS);
 	include ICMS_ROOT_PATH.'/modules/system/admin/users/userform.php';
-	xoops_cp_footer();
+	icms_cp_footer();
 }
 
 function modifyUser($user)
 {
 	global $xoopsDB, $xoopsConfig, $icmsModule;
-	xoops_cp_header();
+	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
 	$member_handler =& xoops_gethandler('member');
 	$user =& $member_handler->getUser($user);
@@ -132,7 +132,7 @@ function modifyUser($user)
 		if(!$user->isActive())
 		{
 			xoops_confirm(array('fct' => 'users', 'op' => 'reactivate', 'uid' => $user->getVar('uid')), 'admin.php', _AM_NOTACTIVE);
-			xoops_cp_footer();
+			icms_cp_footer();
 			exit();
 		}
 
@@ -194,7 +194,7 @@ function modifyUser($user)
 		echo _AM_USERDONEXIT;
 		echo "</h4>";
 	}
-	xoops_cp_footer();
+	icms_cp_footer();
 }
 
 // RMV-NOTIFY
@@ -205,10 +205,10 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 	$edituser =& $member_handler->getUser($uid);
 	if($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new Criteria('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new Criteria('login_name', $login_name)) > 0)
 	{
-		xoops_cp_header();
+		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
 		echo 'User name '.$uname.' already exists';
-		xoops_cp_footer();
+		icms_cp_footer();
 	}
 	else
 	{
@@ -260,9 +260,9 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		{
 			if($pass != $pass2)
 			{
-				xoops_cp_header();
+				icms_cp_header();
 				echo "<b>"._AM_STNPDNM."</b>";
-				xoops_cp_footer();
+				icms_cp_footer();
 				exit();
 			}
 			include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
@@ -275,9 +275,9 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		}
 		if(!$member_handler->insertUser($edituser))
 		{
-			xoops_cp_header();
+			icms_cp_header();
 			echo $edituser->getHtmlErrors();
-			xoops_cp_footer();
+			icms_cp_footer();
 		}
 		else
 		{

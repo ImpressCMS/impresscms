@@ -53,13 +53,13 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 			array_multisort ( $column, SORT_ASC, $ccats );
 		}
 
-		xoops_cp_header ();
+		icms_cp_header ();
 		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_URL . '/modules/system/admin/preferences/images/preferences_big.png)">' . _MD_AM_SITEPREF . '</div><br /><ul>';
 		foreach ( $ccats as $confcat ) {
 			echo '<li>' . $confcat ['name'] . ' [<a href="admin.php?fct=preferences&amp;op=show&amp;confcat_id=' . $confcat ['id'] . '">' . _EDIT . '</a>]</li>';
 		}
 		echo '</ul>';
-		xoops_cp_footer ();
+		icms_cp_footer ();
 		exit ();
 	}
 
@@ -351,10 +351,10 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		}
 		$form->addElement ( new XoopsFormHidden ( 'op', 'save' ) );
 		$form->addElement ( new XoopsFormButton ( '', 'button', _GO, 'submit' ) );
-		xoops_cp_header ();
+		icms_cp_header ();
 		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_URL . '/modules/system/admin/preferences/images/preferences_big.png)"><a href="admin.php?fct=preferences">' . _MD_AM_PREFMAIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . constant ( $confcat->getVar ( 'confcat_name' ) ) . '<br /><br /></div><br />';
 		$form->display ();
-		xoops_cp_footer ();
+		icms_cp_footer ();
 		exit ();
 	}
 
@@ -486,7 +486,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		}
 		$form->addElement ( new XoopsFormHidden ( 'op', 'save' ) );
 		$form->addElement ( new XoopsFormButton ( '', 'button', _GO, 'submit' ) );
-		xoops_cp_header ();
+		icms_cp_header ();
 		if ($module->getInfo('hasAdmin') == true) {
 			$modlink = '<a href="'.ICMS_URL.'/modules/'.$module->getVar('dirname').'/'.$module->getInfo('adminindex').'">'.$modname.'</a>';
 		} else {
@@ -501,7 +501,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 			echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/'.$module->getVar('dirname').'/'.$iconbig.')">'.$modlink.' &raquo; '._PREFERENCES.'</div>';
 		}
 		$form->display ();
-		xoops_cp_footer ();
+		icms_cp_footer ();
 		exit ();
 	}
 
@@ -666,7 +666,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		// otherwise regenerate admin menu file for now
 		if (! $lang_updated) {
 			// regenerate admin menu file
-			register_shutdown_function ( 'xoops_module_write_admin_menu', xoops_module_get_admin_menu () );
+			register_shutdown_function ( 'xoops_module_write_admin_menu', impresscms_get_adminmenu () );
 		} else {
 			$redirect = ICMS_URL . '/admin.php';
 		}

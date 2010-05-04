@@ -17,7 +17,7 @@ function editcustomtag($showmenu = false, $customtagid = 0, $clone=false)
 {
 	global $icms_customtag_handler, $icmsAdminTpl;
 
-	xoops_cp_header();
+	icms_cp_header();
 
 	$customtagObj = $icms_customtag_handler->get($customtagid);
 
@@ -78,7 +78,7 @@ switch ($op) {
 
 	default:
 
-		xoops_cp_header();
+		icms_cp_header();
 
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
 
@@ -104,6 +104,6 @@ switch ($op) {
 		break;
 }
 
-xoops_cp_footer();
+icms_cp_footer();
 
 ?>

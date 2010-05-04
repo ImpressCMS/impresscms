@@ -111,7 +111,7 @@ class IcmsModuleAbout
 
 		global $icmsModule, $icmsConfig;
 
-		xoops_cp_header();
+		icms_cp_header();
 
 		$module_handler = &xoops_gethandler('module');
 		$versioninfo = &$module_handler->get($icmsModule->getVar('mid'));
@@ -221,7 +221,7 @@ class IcmsModuleAbout
 
 		$this->_tpl->display(ICMS_ROOT_PATH . '/modules/system/templates/admin/system_adm_moduleabout.html');
 
-		xoops_cp_footer();
+		icms_cp_footer();
 	}
 }
 

@@ -79,7 +79,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 	switch ( $clean_op) {
 
 		case "clone" :
-			xoops_cp_header ();
+			icms_cp_header ();
 			editcontent ( $clean_content_id, true );
 			break;
 
@@ -105,7 +105,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 		case "view" :
 			$contentObj = $content_content_handler->get ( $clean_content_id );
 				
-			xoops_cp_header ();
+			icms_cp_header ();
 				
 			$xoopsModule->displayAdminMenu ( 0, _AM_CONTENT_CONTENTS . " > " . _PREVIEW .' > '. $contentObj->getVar('content_title') );
 				
@@ -175,7 +175,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			$icmsAdminTpl->display ( 'db:content_admin_content.html' );
 			break;
 	}
-	xoops_cp_footer ();
+	icms_cp_footer ();
 }else{
 	/**
 	 * If you want to have a specific action taken because the user input was invalid,

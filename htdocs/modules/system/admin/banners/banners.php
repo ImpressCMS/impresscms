@@ -27,7 +27,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 	{
 		global $xoopsConfig, $icmsModule;
 		$xoopsDB =& Database::getInstance();
-		xoops_cp_header();
+		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/banners/images/banners_big.png)">'._MD_AM_BANS.'</div><br />';
 		// Banners List
 		echo "<a name='top'></a>";
@@ -181,7 +181,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		<input type='submit' value='"._AM_ADDCLI."' />
 		</form>";
 		echo "</td></tr></table>";
-		xoops_cp_footer();
+		icms_cp_footer();
 	}
 
 	/**
@@ -194,7 +194,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		global $xoopsConfig, $icmsModule;
 		$xoopsDB =& Database::getInstance();
 		$myts =& MyTextSanitizer::getInstance();
-		xoops_cp_header();
+		icms_cp_header();
 		$result=$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." where bid='". (int) ($bid)."'");
 		list($cid, $imptotal, $impmade, $clicks, $imageurl, $clickurl, $htmlbanner, $htmlcode) = $xoopsDB->fetchRow($result);
 		$imageurl = htmlspecialchars($imageurl, ENT_QUOTES);
@@ -233,7 +233,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			</tr></table><br />";
 		xoops_confirm(array('fct' => 'banners', 'op' => 'BannerDelete2', 'bid' => $bid), 'admin.php', _AM_SUREDELE);
 		echo"</td></tr></table>";
-		xoops_cp_footer();
+		icms_cp_footer();
 	}
 
 	/**
@@ -244,7 +244,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 	{
 		global $xoopsConfig, $icmsModule;
 		$bid = (int) ($bid);
-		xoops_cp_header();
+		icms_cp_header();
 		$xoopsDB =& Database::getInstance();
 		$myts =& MyTextSanitizer::getInstance();
 		$result=$xoopsDB->query("SELECT cid, imptotal, impmade, clicks, imageurl, clickurl, htmlbanner, htmlcode FROM ".$xoopsDB->prefix("banner")." where bid='". (int) ($bid)."'");
@@ -307,7 +307,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		<input type='submit' value='"._AM_CHGBNR."' />
 		</form>";
 		echo"</td></tr></table>";
-		xoops_cp_footer();
+		icms_cp_footer();
 	}
 
 	/**
@@ -319,7 +319,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		global $xoopsConfig, $icmsModule;
 		$xoopsDB =& Database::getInstance();
 		$myts =& MyTextSanitizer::getInstance();
-		xoops_cp_header();
+		icms_cp_header();
 		$result = $xoopsDB->query("SELECT cid, name FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
 		list($cid, $name) = $xoopsDB->fetchRow($result);
 		$name = $myts->makeTboxData4Show($name);
@@ -355,7 +355,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		}
 		xoops_confirm(array('fct' => 'banners', 'op' => 'BannerClientDelete2', 'cid' => $cid), 'admin.php', _AM_SUREDELBNR);
 		echo "</td></tr></table>";
-		xoops_cp_footer();
+		icms_cp_footer();
 	}
 
 	/**
@@ -367,7 +367,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		global $xoopsConfig, $icmsModule;
 		$xoopsDB =& Database::getInstance();
 		$myts =& MyTextSanitizer::getInstance();
-		xoops_cp_header();
+		icms_cp_header();
 		$result = $xoopsDB->query("SELECT name, contact, email, login, passwd, extrainfo FROM ".$xoopsDB->prefix("bannerclient")." WHERE cid='". (int) ($cid)."'");
 		list($name, $contact, $email, $login, $passwd, $extrainfo) = $xoopsDB->fetchRow($result);
 		$name = $myts->makeTboxData4Edit($name);
@@ -392,7 +392,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		<input type='hidden' name='fct' value='banners' />
 		<input type='submit' value='"._AM_CHGCLI."' />";
 		echo "</td></tr></table>";
-		xoops_cp_footer();
+		icms_cp_footer();
 	}
 
 }

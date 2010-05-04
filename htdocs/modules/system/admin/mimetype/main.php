@@ -18,7 +18,7 @@ function editmimetype($showmenu = false, $mimetypeid = 0, $clone=false)
 {
 	global $icms_mimetype_handler, $icmsAdminTpl;
 
-	xoops_cp_header();
+	icms_cp_header();
 
 	$mimetypeObj = $icms_mimetype_handler->get($mimetypeid);
 
@@ -79,7 +79,7 @@ switch ($op) {
 
 	default:
 
-		xoops_cp_header();
+		icms_cp_header();
 
 		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
 
@@ -102,6 +102,6 @@ switch ($op) {
 		break;
 }
 
-xoops_cp_footer();
+icms_cp_footer();
 
 ?>

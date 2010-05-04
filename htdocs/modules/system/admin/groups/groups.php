@@ -23,7 +23,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 /*********************************************************/
 function displayGroups()
 {
-	xoops_cp_header();
+	icms_cp_header();
 	global $icmsUser;
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/groups/images/groups_big.png)">'._AM_EDITADG.'</div><br />';
 	$member_handler =& xoops_gethandler('member');
@@ -61,7 +61,7 @@ function displayGroups()
 	$form_title = _AM_CREATENEWADG;
 	include XOOPS_ROOT_PATH."/modules/system/admin/groups/groupform.php";
 	//CloseTable();
-	xoops_cp_footer();
+	icms_cp_footer();
 }
 
 function modifyGroup($g_id)
@@ -77,7 +77,7 @@ function modifyGroup($g_id)
 	} elseif (!empty($_GET['memstart'])) {
 		$memstart = (int) ($_GET['memstart']);
 	}
-	xoops_cp_header();
+	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/groups/images/groups_big.png)"><a href="admin.php?fct=groups">'. _AM_GROUPSMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _AM_MODIFYADG.'</div><br />';
 	$member_handler =& xoops_gethandler('member');
 	$thisgroup =& $member_handler->getGroup($g_id);
@@ -188,7 +188,7 @@ function modifyGroup($g_id)
 		</form>";
 	}
 	//CloseTable();
-	xoops_cp_footer();
+	icms_cp_footer();
 }
 
 ?>

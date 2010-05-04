@@ -21,7 +21,7 @@ if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
 if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'form');
 
-xoops_cp_header();
+icms_cp_header();
 //OpenTable();
 
 if ( $op == "form" ) {
@@ -468,6 +468,6 @@ else {
 	redirect_header('admin.php?fct=findusers', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 }
 //CloseTable();
-xoops_cp_footer();
+icms_cp_footer();
 
 ?>

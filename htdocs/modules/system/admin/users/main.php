@@ -49,15 +49,15 @@ switch ($op)
 		break;
 
 	case 'delUser':
-		xoops_cp_header();
+		icms_cp_header();
 		$member_handler =& xoops_gethandler('member');
 		$userdata =& $member_handler->getUser($uid);
 		xoops_confirm(array('fct' => 'users', 'op' => 'delUserConf', 'del_uid' => $userdata->getVar('uid')), 'admin.php', sprintf(_AM_AYSYWTDU,$userdata->getVar('uname')));
-		xoops_cp_footer();
+		icms_cp_footer();
 		break;
 
 	case 'delete_many':
-		xoops_cp_header();
+		icms_cp_header();
 		$count = count($memberslist_id);
 		if($count > 0)
 		{
@@ -79,7 +79,7 @@ switch ($op)
 			echo $hidden;
 			echo "</form></div>";
 		} else {echo _AM_NOUSERS;}
-		xoops_cp_footer();
+		icms_cp_footer();
 		break;
 
 	case 'delete_many_ok':
@@ -103,9 +103,9 @@ switch ($op)
 				xoops_notification_deletebyuser($deluser->getVar('uid'));
 			}
 		}
-		xoops_cp_header();
+		icms_cp_header();
 		echo $output;
-		xoops_cp_footer();
+		icms_cp_footer();
 		break;
 
 	case 'delUserConf':
@@ -115,15 +115,15 @@ switch ($op)
 		$groups = $user->getGroups();
 		if(in_array(XOOPS_GROUP_ADMIN, $groups))
 		{
-			xoops_cp_header();
+			icms_cp_header();
 			echo sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED.'. ('._AM_NICKNAME.': %s)', $user->getVar('uname'));
-			xoops_cp_footer();
+			icms_cp_footer();
 		}
 		elseif(!$member_handler->deleteUser($user))
 		{
-			xoops_cp_header();
+			icms_cp_header();
 			echo _AM_ADMIN_CAN_NOT_BE_DELETEED.$deluser->getVar('uname');
-			xoops_cp_footer();
+			icms_cp_footer();
 		}
 		else
 		{
@@ -173,16 +173,16 @@ switch ($op)
 				{
 					if($password != $pass2)
 					{
-						xoops_cp_header();
+						icms_cp_header();
 						echo '<b>'._AM_STNPDNM.'</b>';
-						xoops_cp_footer();
+						icms_cp_footer();
 						exit();
 					}
 					if($password == $username || $password == icms_utf8_strrev($username, true) || strripos($password, $username) === true || $password == $login_name || $password == icms_utf8_strrev($login_name, true) || strripos($password, $login_name) === true)
 					{
-						xoops_cp_header();
+						icms_cp_header();
 						echo '<b>'._AM_BADPWD.'</b>';
-						xoops_cp_footer();
+						icms_cp_footer();
 						exit();
 					}
 					include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
@@ -255,9 +255,9 @@ switch ($op)
 					}
 			}
 		}
-		xoops_cp_header();
+		icms_cp_header();
 		xoops_error($adduser_errormsg);
-		xoops_cp_footer();
+		icms_cp_footer();
 		break;
 
 	case 'synchronize':

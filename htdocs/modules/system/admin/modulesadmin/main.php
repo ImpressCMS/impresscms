@@ -28,14 +28,14 @@ if (in_array($op, array('submit', 'install_ok', 'update_ok', 'uninstall_ok'))) {
 }
 
 if ( $op == "list" ) {
-	xoops_cp_header();
+	icms_cp_header();
 	echo xoops_module_list();
-	xoops_cp_footer();
+	icms_cp_footer();
 	exit();
 }
 
 if ( $op == "confirm" ) {
-	xoops_cp_header();
+	icms_cp_header();
 	//OpenTable();
 	$error = array();
 	if ( !is_writable(XOOPS_CACHE_PATH.'/') ) {
@@ -48,7 +48,7 @@ if ( $op == "confirm" ) {
 	if ( count($error) > 0 ) {
 		xoops_error($error);
 		echo "<p><a href='admin.php?fct=modulesadmin'>"._MD_AM_BTOMADMIN."</a></p>";
-		xoops_cp_footer();
+		icms_cp_footer();
 		exit();
 	}
 
@@ -107,7 +107,7 @@ if ( $op == "confirm" ) {
 	<tr class='foot' align='center'><td colspan='3'><input type='submit' value='"._MD_AM_SUBMIT."' />&nbsp;<input type='button' value='"._MD_AM_CANCEL."' onclick='location=\"admin.php?fct=modulesadmin\"' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr>
 	</table>
 	</form>";
-	xoops_cp_footer();
+	icms_cp_footer();
 	exit();
 }
 
@@ -132,12 +132,12 @@ if ( $op == "submit" ) {
 		flush();
 	}
 	if ( $write ) {
-		$contents = xoops_module_get_admin_menu();
+		$contents = impresscms_get_adminmenu();
 		if (!xoops_module_write_admin_menu($contents)) {
 			$ret[] = "<p>"._MD_AM_FAILWRITE."</p>";
 		}
 	}
-	xoops_cp_header();
+	icms_cp_header();
 	if ( count($ret) > 0 ) {
 		foreach ($ret as $msg) {
 			if ($msg != '') {
@@ -146,7 +146,7 @@ if ( $op == "submit" ) {
 		}
 	}
 	echo "<br /><a href='admin.php?fct=modulesadmin'>"._MD_AM_BTOMADMIN."</a>";
-	xoops_cp_footer();
+	icms_cp_footer();
 	exit();
 }
 
@@ -161,9 +161,9 @@ if ($op == 'install') {
 	if (empty($from_112)){
 		$from_112 = false;
 	}
-	xoops_cp_header();
+	icms_cp_header();
 	xoops_confirm(array('module' => $module, 'op' => 'install_ok', 'fct' => 'modulesadmin', 'from_112' => $from_112), 'admin.php', $msgs, _MD_AM_INSTALL);
-	xoops_cp_footer();
+	icms_cp_footer();
 	exit();
 }
 
@@ -173,11 +173,11 @@ if ($op == 'install_ok') {
 	if ($from_112){
 		$ret[] = icms_module_update($module);
 	}
-	$contents = xoops_module_get_admin_menu();
+	$contents = impresscms_get_adminmenu();
 	if (!xoops_module_write_admin_menu($contents)) {
 		$ret[] = "<p>"._MD_AM_FAILWRITE."</p>";
 	}
-	xoops_cp_header();
+	icms_cp_header();
 	if (count($ret) > 0) {
 		foreach ($ret as $msg) {
 			if ($msg != '') {
@@ -186,7 +186,7 @@ if ($op == 'install_ok') {
 		}
 	}
 	echo "<br /><a href='admin.php?fct=modulesadmin'>"._MD_AM_BTOMADMIN."</a>";
-	xoops_cp_footer();
+	icms_cp_footer();
 	exit();
 }
 
@@ -197,20 +197,20 @@ if ($op == 'uninstall') {
 		$msgs ='<img src="'.XOOPS_URL.'/modules/'.$mod->getVar('dirname').'/'.trim($mod->getInfo('image')).'" alt="" />';
 	}
 	$msgs .= '<br /><span style="font-size:smaller;">'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREUNINS;
-	xoops_cp_header();
+	icms_cp_header();
 	xoops_confirm(array('module' => $module, 'op' => 'uninstall_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _YES);
-	xoops_cp_footer();
+	icms_cp_footer();
 	exit();
 }
 
 if ($op == 'uninstall_ok') {
 	$ret = array();
 	$ret[] = xoops_module_uninstall($module);
-	$contents = xoops_module_get_admin_menu();
+	$contents = impresscms_get_adminmenu();
 	if (!xoops_module_write_admin_menu($contents)) {
 		$ret[] = "<p>"._MD_AM_FAILWRITE."</p>";
 	}
-	xoops_cp_header();
+	icms_cp_header();
 	if (count($ret) > 0) {
 		foreach ($ret as $msg) {
 			if ($msg != '') {
@@ -219,7 +219,7 @@ if ($op == 'uninstall_ok') {
 		}
 	}
 	echo "<a href='admin.php?fct=modulesadmin'>"._MD_AM_BTOMADMIN."</a>";
-	xoops_cp_footer();
+	icms_cp_footer();
 	exit();
 }
 
@@ -230,7 +230,7 @@ if ($op == 'update') {
 		$msgs ='<img src="'.XOOPS_URL.'/modules/'.$mod->getVar('dirname').'/'.trim($mod->getInfo('image')).'" alt="" />';
 	}
 	$msgs .= '<br /><span style="font-size:smaller;">'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREUPD;
-	xoops_cp_header();
+	icms_cp_header();
 
 	if (icms_getModuleInfo('system')->getDBVersion() < 14 && (!is_writable ( ICMS_PLUGINS_PATH ) || !is_dir(ICMS_ROOT_PATH . '/plugins/preloads') || !is_writable ( ICMS_ROOT_PATH . '/plugins/preloads' ))) {
 		icms_error_msg(sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH,ICMS_ROOT_PATH . '/plugins/preloads'), _MD_AM_PLUGINSFOLDER_UPDATE_TITLE, true);
@@ -240,18 +240,18 @@ if ($op == 'update') {
 	}
 
 	xoops_confirm(array('module' => $module, 'op' => 'update_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _MD_AM_UPDATE);
-	xoops_cp_footer();
+	icms_cp_footer();
 	exit();
 }
 
 if ($op == 'update_ok') {
 	$ret = array();
 	$ret[] = icms_module_update($module);
-	$contents = xoops_module_get_admin_menu();
+	$contents = impresscms_get_adminmenu();
 	if (!xoops_module_write_admin_menu($contents)) {
 		$ret[] = "<p>"._MD_AM_FAILWRITE."</p>";
 	}
-	xoops_cp_header();
+	icms_cp_header();
 	if (count($ret) > 0) {
 		foreach ($ret as $msg) {
 			if ($msg != '') {
@@ -260,7 +260,7 @@ if ($op == 'update_ok') {
 		}
 	}
 	echo "<br /><a href='admin.php?fct=modulesadmin'>"._MD_AM_BTOMADMIN."</a>";
-	xoops_cp_footer();
+	icms_cp_footer();
 	exit();
 }
 

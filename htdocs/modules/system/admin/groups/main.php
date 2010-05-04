@@ -65,9 +65,9 @@ switch ($op) {
 		}
 
 		if (!$member_handler->insertGroup($group)) {
-			xoops_cp_header();
+			icms_cp_header();
 			echo $group->getHtmlErrors();
-			xoops_cp_footer();
+			icms_cp_footer();
 		} else {
 			$groupid = $group->getVar('groupid');
 			$gperm_handler =& xoops_gethandler('groupperm');
@@ -161,9 +161,9 @@ switch ($op) {
 			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
 		if (!$name) {
-			xoops_cp_header();
+			icms_cp_header();
 			echo _AM_UNEED2ENTER;
-			xoops_cp_footer();
+			icms_cp_footer();
 			exit();
 		}
 
@@ -182,9 +182,9 @@ switch ($op) {
 			$group->setVar("group_type", 'Admin');
 		}
 		if (!$member_handler->insertGroup($group)) {
-			xoops_cp_header();
+			icms_cp_header();
 			echo $group->getHtmlErrors();
-			xoops_cp_footer();
+			icms_cp_footer();
 		} else {
 			$groupid = $group->getVar('groupid');
 			$gperm_handler =& xoops_gethandler('groupperm');
@@ -253,9 +253,9 @@ switch ($op) {
 		break;
 
 	case "del":
-		xoops_cp_header();
+		icms_cp_header();
 		xoops_confirm(array('fct' => 'groups', 'op' => 'delConf', 'g_id' => $g_id), 'admin.php', _AM_AREUSUREDEL);
-		xoops_cp_footer();
+		icms_cp_footer();
 		break;
 
 	case "delConf":

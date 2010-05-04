@@ -27,29 +27,29 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 
 	switch ($op){
 		case 'list':
-			xoops_cp_header();
+			icms_cp_header();
 			echo imanager_index($imgcat_id);
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 		case 'listimg':
-			xoops_cp_header();
+			icms_cp_header();
 			echo imanager_listimg($imgcat_id,$start);
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 		case 'addcat':
 			imanager_addcat();
 			break;
 		case 'editcat':
 			imanager_editcat($imgcat_id);
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 		case 'updatecat':
 			imanager_updatecat();
 			break;
 		case 'delcat':
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_confirm(array('op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _MD_RUDELIMGCAT);
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 		case 'delcatok':
 			imanager_delcatok($imgcat_id);
@@ -64,7 +64,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			imanager_updateimage();
 			break;
 		case 'delfile':
-			xoops_cp_header();
+			icms_cp_header();
 			$image_handler = xoops_gethandler('image');
 			$image =& $image_handler->get($image_id);
 			$imgcat_handler = xoops_gethandler('imagecategory');
@@ -72,7 +72,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$src = '<img src="'.XOOPS_URL."/modules/system/admin/images/preview.php?file=".$image->getVar('image_name').'" title="'.$image->getVar('image_nicename').'" /><br />';
 			echo '<div style="margin:5px;" align="center">'.$src.'</div>';
 			xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _MD_RUDELIMG);
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 		case 'delfileok':
 			imanager_delfileok($image_id,$imgcat_id);
@@ -592,7 +592,7 @@ function imanager_editcat($imgcat_id){
 	$form->addElement(new XoopsFormHidden('op', 'updatecat'));
 	$form->addElement(new XoopsFormHidden('fct', 'images'));
 	$form->addElement(new XoopsFormButton('', 'imgcat_button', _SUBMIT, 'submit'));
-	xoops_cp_header();
+	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url(admin/images/images/images_big.png)">'.adminNav($imgcat_id).'</div><br />';
 	$form->display();
 }
@@ -719,9 +719,9 @@ function imanager_delcatok($imgcat_id) {
 		}
 	}
 	if (count($errors) > 0) {
-		xoops_cp_header();
+		icms_cp_header();
 		xoops_error($errors);
-		xoops_cp_footer();
+		icms_cp_footer();
 		exit();
 	}
 	redirect_header('admin.php?fct=images',2,_MD_AM_DBUPDATED);
@@ -809,9 +809,9 @@ function imanager_addfile() {
 		}
 	}
 	if (count($err) > 0) {
-		xoops_cp_header();
+		icms_cp_header();
 		xoops_error($err);
-		xoops_cp_footer();
+		icms_cp_footer();
 		exit();
 	}
 	if (isset($imgcat_id)){
@@ -874,11 +874,11 @@ function imanager_updateimage() {
 			}
 		}
 		if (count($error) > 0) {
-			xoops_cp_header();
+			icms_cp_header();
 			foreach ($error as $err) {
 				echo $err.'<br />';
 			}
-			xoops_cp_footer();
+			icms_cp_footer();
 			exit();
 		}
 	}
@@ -907,9 +907,9 @@ function imanager_delfileok($image_id,$redir=null) {
 	$imagecategory  =& $imgcat_handler->get( (int) ($image->getVar('imgcat_id')));
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	if (!$image_handler->delete($image)) {
-		xoops_cp_header();
+		icms_cp_header();
 		xoops_error(sprintf(_MD_FAILDEL, $image->getVar('image_id')));
-		xoops_cp_footer();
+		icms_cp_footer();
 		exit();
 	}
 	@unlink($categ_path.'/'.$image->getVar('image_name'));

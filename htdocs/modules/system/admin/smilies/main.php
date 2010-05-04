@@ -73,9 +73,9 @@ switch($op) {
 		if (!isset($err)) {
 			redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin',2,_AM_DBUPDATED);
 		} else {
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_error($err);
-			xoops_cp_footer();
+			icms_cp_footer();
 		}
 		break;
 
@@ -127,9 +127,9 @@ switch($op) {
 		if (!isset($err)) {
 			redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin',2,_AM_DBUPDATED);
 		} else {
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_error($err);
-			xoops_cp_footer();
+			icms_cp_footer();
 			exit();
 		}
 		break;
@@ -137,9 +137,9 @@ switch($op) {
 	case "SmilesDel":
 		$id = isset($_GET['id']) ? (int) ($_GET['id']) : 0;
 		if ($id > 0) {
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_confirm(array('fct' => 'smilies', 'op' => 'SmilesDelOk', 'id' => $id), 'admin.php', _AM_WAYSYWTDTS);
-			xoops_cp_footer();
+			icms_cp_footer();
 		}
 		break;
 

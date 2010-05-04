@@ -71,9 +71,9 @@ switch($op)
 		break;
 
 	case 'BannerFinishDelete':
-		xoops_cp_header();
+		icms_cp_header();
 		xoops_confirm(array('op' => 'BannerFinishDelete2', 'bid' => (int) ($_GET['bid']), 'fct' => 'banners'), 'admin.php', _AM_SUREDELE);
-		xoops_cp_footer();
+		icms_cp_footer();
 		break;
 
 	case 'BannerFinishDelete2':

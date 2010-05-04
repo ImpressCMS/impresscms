@@ -121,7 +121,7 @@ if (in_array($clean_op, $valid_op, true)) {
 			break;
 
 		case "clone" :
-			xoops_cp_header();
+			icms_cp_header();
 			editblock($clean_bid, true);
 			break;
 
@@ -206,7 +206,7 @@ if (in_array($clean_op, $valid_op, true)) {
 				$icmsAdminTpl->display('db:admin/blocksadmin/system_adm_blocksadmin.html');
 				break;
 	}
-	xoops_cp_footer();
+	icms_cp_footer();
 }
 /**
  * If you want to have a specific action taken because the user input was invalid,

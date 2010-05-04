@@ -32,7 +32,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		case 'list':
 			$tplset_handler =& xoops_gethandler('tplset');
 			$tplsets =& $tplset_handler->getObjects();
-			xoops_cp_header();
+			icms_cp_header();
 			echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/tplsets/images/tplsets_big.png)">'._MD_TPLMAIN.'</div><br />';
 			$installed = array();
 			$tpltpl_handler =& xoops_gethandler('tplfile');
@@ -91,7 +91,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$form->addElement(new XoopsFormHidden('fct', 'tplsets'));
 			$form->addElement(new XoopsFormButton('', 'upload_button', _MD_UPLOAD, 'submit'));
 			$form->display();
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'listtpl':
@@ -102,7 +102,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if ($moddir == '') {
 				redirect_header('admin.php?fct=tplsets',1);
 			}
-			xoops_cp_header();
+			icms_cp_header();
 			$module_handler =& xoops_gethandler('module');
 			$module =& $module_handler->getByDirname($moddir);
 			$modname = $module->getVar('name');
@@ -235,7 +235,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if ($tplset != 'default') {
 				echo '<div style="text-align: '._GLOBAL_RIGHT.'; margin-top: 5px;"><input type="hidden" name="fct" value="tplsets" /><input type="hidden" name="op" value="update" />'.$GLOBALS['xoopsSecurity']->getTokenHTML().'<input type="hidden" name="moddir" value="'.$moddir.'" /><input type="hidden" name="tplset" value="'.$tplset.'" /><input type="submit" value="'._MD_UPLOAD.'" /></div></form>';
 			}
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'edittpl':
@@ -248,18 +248,18 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				$tplset = $tplfile->getVar('tpl_tplset');
 				$tform = array('tpl_tplset' => $tplset, 'tpl_id' => $id, 'tpl_file' => $tplfile->getVar('tpl_file'), 'tpl_desc' => $tplfile->getVar('tpl_desc'), 'tpl_lastmodified' => $tplfile->getVar('tpl_lastmodified'), 'tpl_source' => $tplfile->getVar('tpl_source', 'E'), 'tpl_module' => $tplfile->getVar('tpl_module'));
 				include_once XOOPS_ROOT_PATH.'/modules/system/admin/tplsets/tplform.php';
-				xoops_cp_header();
+				icms_cp_header();
 				echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tplfile->getVar('tpl_module').'&amp;tplset='.$tplset.'">'.$tplset.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$tform['tpl_module'].'&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_EDITTEMPLATE.'<br /><br />';
 				$form->display();
-				xoops_cp_footer();
+				icms_cp_footer();
 				exit();
 			} else {
 				$err[] = 'Selected template (ID: $id) does not exist';
 			}
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_error($err);
 			echo '<br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'edittpl_go':
@@ -303,16 +303,16 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 					redirect_header('admin.php?fct=tplsets', 2, _MD_AM_DBUPDATED);
 				}
 			}
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_error($err);
 			echo '<br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'deletetpl':
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_confirm(array('id' => $id, 'op' => 'deletetpl_go', 'fct' => 'tplsets'), 'admin.php', _MD_RUSUREDELTPL, _YES);
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'deletetpl_go':
@@ -346,16 +346,16 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if (count($err) == 0) {
 				redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tplfile->getVar('tpl_module').'&amp;tplset='.urlencode($tplfile->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
 			}
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_error($err);
 			echo '<br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'delete':
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_confirm(array('tplset' => $tplset, 'op' => 'delete_go', 'fct' => 'tplsets'), 'admin.php', _MD_RUSUREDELTH, _YES);
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'delete_go':
@@ -423,12 +423,12 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			} else {
 				$msgs[] = '<span style="color:#ff0000;">ERROR: Default template files cannot be deleted</span>';
 			}
-			xoops_cp_header();
+			icms_cp_header();
 			foreach ($msgs as $msg) {
 				echo '<code>'.$msg.'</code><br />';
 			}
 			echo '<br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'clone':
@@ -440,10 +440,10 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$form->addElement(new XoopsFormHidden('op', 'clone_go'));
 			$form->addElement(new XoopsFormHidden('fct', 'tplsets'));
 			$form->addElement(new XoopsFormButton('', 'tpl_button', _SUBMIT, 'submit'));
-			xoops_cp_header();
+			icms_cp_header();
 			echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/tplsets/images/tplsets_big.png)"><a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_CLONETHEME.'<br /><br /></div><br />';
 			$form->display();
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'clone_go':
@@ -455,7 +455,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$tplset = trim($tplset);
 			$newtheme = trim($newtheme);
 			$tpltpl_handler =& xoops_gethandler('tplfile');
-			xoops_cp_header();
+			icms_cp_header();
 			if ($tplset == $newtheme) {
 				xoops_error('Template set name must be a different name.');
 			} elseif ($tpltpl_handler->getCount(new Criteria('tpl_tplset', $newtheme)) > 0) {
@@ -542,15 +542,15 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				echo '<code>'.$msg.'</code><br />';
 			}
 			echo '<br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 			/*
 			 case 'editimage':
-			 xoops_cp_header();
+			 icms_cp_header();
 			 echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_EDITSKINIMG.' ('.$tplset.')<br /><br />';
 			 include XOOPS_ROOT_PATH.'/modules/system/admin/tplsets/tplimgform.php';
-			 xoops_cp_footer();
+			 icms_cp_footer();
 			 break;
 			 case 'updateimage':
 
@@ -611,9 +611,9 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			 }
 			 }
 			 if (count($err) > 0) {
-			 xoops_cp_header();
+			 icms_cp_header();
 			 xoops_error($err);
-			 xoops_cp_footer();
+			 icms_cp_footer();
 			 } else {
 			 redirect_header('admin.php?fct=tplsets&amp;op=editimage&amp;tplset='.$tplset, 2, _MD_AM_DBUPDATED);
 			 }
@@ -683,9 +683,9 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			 }
 			 }
 			 if (count($err) > 0) {
-			 xoops_cp_header();
+			 icms_cp_header();
 			 xoops_error($err);
-			 xoops_cp_footer();
+			 icms_cp_footer();
 			 } else {
 			 redirect_header('admin.php?fct=tplsets&amp;op=editimage&amp;tplset='.$tplset, 2, _MD_AM_DBUPDATED);
 			 }
@@ -786,7 +786,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$tpltpl_handler =& xoops_gethandler('tplfile');
 			$id = (int) ($_GET['id']);
 			$tpl =& $tpltpl_handler->get($id);
-			xoops_cp_header();
+			icms_cp_header();
 			echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tpl->getVar('tpl_module').'&amp;tplset='.$tpl->getVar('tpl_tplset').'">'.$tpl->getVar('tpl_tplset').'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_UPLOAD.'<br /><br />';
 			if (is_object($tpl)) {
 				include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
@@ -799,12 +799,12 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				$form->addElement(new XoopsFormHidden('fct', 'tplsets'));
 				$form->addElement(new XoopsFormButton('', 'upload_button', _MD_UPLOAD, 'submit'));
 				$form->display();
-				xoops_cp_footer();
+				icms_cp_footer();
 				exit();
 			} else {
 				echo 'Selected template does not exist';
 			}
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'uploadtpl_go':
@@ -840,9 +840,9 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 					$err = implode('<br />', $uploader->getErrors(false));
 				}
 				if (isset($err)) {
-					xoops_cp_header(false);
+					icms_cp_header(false);
 					xoops_error($err);
-					xoops_cp_footer();
+					icms_cp_footer();
 					exit();
 				}
 				redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tpl->getVar('tpl_module').'&amp;tplset='.urlencode($tpl->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
@@ -851,7 +851,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 
 			// upload new file
 		case 'uploadtpl2':
-			xoops_cp_header();
+			icms_cp_header();
 			$tplset = htmlspecialchars($tplset);
 			$moddir = htmlspecialchars($moddir);
 			echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'">'.$tplset.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_UPLOAD.'<br /><br />';
@@ -868,7 +868,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$form->addElement(new XoopsFormHidden('fct', 'tplsets'));
 			$form->addElement(new XoopsFormButton('', 'ploadtarupload_button', _MD_UPLOAD, 'submit'));
 			$form->display();
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'uploadtpl2_go':
@@ -911,9 +911,9 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			}
 
 			if (isset($err)) {
-				xoops_cp_header(false);
+				icms_cp_header(false);
 				xoops_error($err);
-				xoops_cp_footer();
+				icms_cp_footer();
 				exit();
 			}
 			redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$moddir.'&amp;tplset='.urlencode($tplset), 2, _MD_AM_DBUPDATED);
@@ -975,17 +975,17 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 					$downloader->addFileData($xml, $tplset.'/tplset.xml', time());
 					echo $downloader->download($tplset, true);
 				} else {
-					xoops_cp_header();
+					icms_cp_header();
 					xoops_error(_MD_NOZLIB);
-					xoops_cp_footer();
+					icms_cp_footer();
 				}
 			}
 			break;
 
 		case 'generatetpl':
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_confirm(array('tplset' => $tplset, 'moddir' => $moddir, 'file' => $file, 'type' => $type, 'op' => 'generatetpl_go', 'fct' => 'tplsets'), 'admin.php', _MD_PLZGENERATE, _MD_GENERATE);
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'generatetpl_go':
@@ -1014,16 +1014,16 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if (!isset($err)) {
 				redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$newtpl->getVar('tpl_module').'&amp;tplset='.urlencode($newtpl->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
 			}
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_error($err);
 			echo '<br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'generatemod':
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_confirm(array('tplset' => $tplset, 'op' => 'generatemod_go', 'fct' => 'tplsets', 'moddir' => $moddir), 'admin.php', _MD_PLZGENERATE, _MD_GENERATE);
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'generatemod_go':
@@ -1032,7 +1032,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			}
 
 			$tpltpl_handler =& xoops_gethandler('tplfile');
-			xoops_cp_header();
+			icms_cp_header();
 			echo '<code>';
 			$tplfiles =& $tpltpl_handler->find('default', 'module', null, $moddir, null, true);
 			$fcount = count($tplfiles);
@@ -1082,7 +1082,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				unset($newtpl);
 			}
 			echo '<br />Module template files for template set <b>'.$tplset.'</b> generated and installed.<br /></code><br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'uploadtar_go':
@@ -1092,7 +1092,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			include_once XOOPS_ROOT_PATH.'/class/uploader.php';
 			$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('application/x-gzip', 'application/gzip', 'application/gzip-compressed', 'application/x-gzip-compressed', 'application/x-tar', 'application/x-tar-compressed', 'application/octet-stream'), 1000000);
 			$uploader->setPrefix('tmp');
-			xoops_cp_header();
+			icms_cp_header();
 			echo '<code>';
 			if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 				if (!$uploader->upload()) {
@@ -1205,7 +1205,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				echo $err;
 			}
 			echo '</code><br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'previewtpl':
@@ -1256,10 +1256,10 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				$tplset= $tplfile->getVar('tpl_tplset');
 				$tform = array('tpl_tplset' => $tplset, 'tpl_id' => $id, 'tpl_file' => $tplfile->getVar('tpl_file'), 'tpl_desc' => $tplfile->getVar('tpl_desc'), 'tpl_lastmodified' => $tplfile->getVar('tpl_lastmodified'), 'tpl_source' => htmlspecialchars($html, ENT_QUOTES), 'tpl_module' => $moddir);
 				include_once XOOPS_ROOT_PATH.'/modules/system/admin/tplsets/tplform.php';
-				xoops_cp_header();
+				icms_cp_header();
 				echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$moddir.'&amp;tplset='.urlencode($tplset).'">'.htmlspecialchars($tplset, ENT_QUOTES).'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_EDITTEMPLATE.'<br /><br />';
 				$form->display();
-				xoops_cp_footer();
+				icms_cp_footer();
 				echo '<script type="text/javascript">
 				<!--//
 				preview_window = openWithSelfMain("", "popup", 680, 450, true);
@@ -1335,23 +1335,23 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				}
 			}
 
-			xoops_cp_header();
+			icms_cp_header();
 			echo '<code>';
 			foreach ($msg as $m) {
 				echo $m.'<br />';
 			}
 			echo '</code><br /><a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset='.urlencode($tplset).'&amp;moddir='.$moddir.'">'._MD_AM_BTOTADMIN.'</a>';
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'importtpl':
-			xoops_cp_header();
+			icms_cp_header();
 			if (!empty($id)) {
 				xoops_confirm(array('tplset' => $tplset, 'moddir' => $moddir, 'id' => $id, 'op' => 'importtpl_go', 'fct' => 'tplsets'), 'admin.php', _MD_RUSUREIMPT, _MD_IMPORT);
 			} elseif (isset($file)) {
 				xoops_confirm(array('tplset' => $tplset, 'moddir' => $moddir, 'file' => $file, 'op' => 'importtpl_go', 'fct' => 'tplsets'), 'admin.php', _MD_RUSUREIMPT, _MD_IMPORT);
 			}
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'importtpl_go':
@@ -1397,10 +1397,10 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			}
 
 			if (false != $error) {
-				xoops_cp_header();
+				icms_cp_header();
 				xoops_error('Could not import file '.$filepath);
 				echo '<br /><a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset='.urlencode($tplset).'&amp;moddir='.$moddir.'">'._MD_AM_BTOTADMIN.'</a>';
-				xoops_cp_footer();
+				icms_cp_footer();
 				exit();
 			}
 			redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tplfile->getVar('tpl_module').'&amp;tplset='.urlencode($tplfile->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);

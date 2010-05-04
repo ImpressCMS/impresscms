@@ -584,9 +584,9 @@ function imanager_addfile() {
 		}
 	}
 	if (count($err) > 0) {
-		xoops_cp_header();
+		icms_cp_header();
 		xoops_error($err);
-		xoops_cp_footer();
+		icms_cp_footer();
 		exit();
 	}
 	if (isset($imgcat_id)){
@@ -642,11 +642,11 @@ function imanager_updateimage() {
 			}
 		}
 		if (count($error) > 0) {
-			xoops_cp_header();
+			icms_cp_header();
 			foreach ($error as $err) {
 				echo $err.'<br />';
 			}
-			xoops_cp_footer();
+			icms_cp_footer();
 			exit();
 		}
 	}
@@ -677,9 +677,9 @@ function imanager_delfileok($image_id,$redir=null) {
 	$imagecategory  =& $imgcat_handler->get( (int) ($image->getVar('imgcat_id')));
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	if (!$image_handler->delete($image)) {
-		xoops_cp_header();
+		icms_cp_header();
 		xoops_error(sprintf(_MD_FAILDEL, $image->getVar('image_id')));
-		xoops_cp_footer();
+		icms_cp_footer();
 		exit();
 	}
 	@unlink($categ_path.'/'.$image->getVar('image_name'));

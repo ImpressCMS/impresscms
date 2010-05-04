@@ -15,7 +15,7 @@
  */
 
 include 'header.php';
-xoops_cp_header();
+icms_cp_header();
 
 if (!isset($_REQUEST['uid'])) {
 	redirect_header("index.php", 2, _PROFILE_AM_NOSELECTION);

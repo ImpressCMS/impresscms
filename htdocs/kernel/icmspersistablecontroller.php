@@ -303,7 +303,7 @@ class IcmsPersistableController {
 		} else {
 			// no confirm: show deletion condition
 
-			xoops_cp_header();
+			icms_cp_header();
 
 			if (!$confirm_msg) {
 				$confirm_msg = _CO_ICMS_DELETE_CONFIRM;
@@ -320,7 +320,7 @@ class IcmsPersistableController {
 			}
 			xoops_confirm($hiddens, xoops_getenv('PHP_SELF'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
 
-			xoops_cp_footer();
+			icms_cp_footer();
 
 		}
 		exit();

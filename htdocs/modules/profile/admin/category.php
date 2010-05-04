@@ -64,7 +64,7 @@ if (in_array($clean_op,$valid_op,true)){
 		case "mod":
 		case "changedField":
 
-			xoops_cp_header();
+			icms_cp_header();
 
 			editcategory($clean_category_id);
 			break;

@@ -318,12 +318,13 @@ function icms_cp_header(){
  *
  * @since XOOPS
  * @version $Id$
- * @deprecated
+ * @deprecated use icms_cp_header instead
  *
  * @author The Xoops Project <http://www.xoops.org>
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function xoops_cp_header(){
+	icms_deprecated( 'icms_cp_header' );
 	icms_cp_header();
 }
 
@@ -367,12 +368,13 @@ function icms_cp_footer(){
  * Backwars compatibility function
  *
  * @version $Id$
- * @deprecated
+ * @deprecated use icms_cp_footer instead
  *
  * @author The XOOPS Project <http://www.xoops.org>
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function xoops_cp_footer(){
+	icms_deprecated( 'icms_cp_footer' );
 	icms_cp_footer();
 }
 
@@ -607,9 +609,10 @@ function impresscms_get_adminmenu() {
  * @todo Search all places that this function is called
  *	   and rename it to impresscms_get_adminmenu.
  *	   After this function can be removed.
- *
+ * @deprecated use impresscms_get_adminmenu instead
  */
 function xoops_module_get_admin_menu() {
+	icms_deprecated( 'impresscms_get_adminmenu' );
 	return impresscms_get_adminmenu ();
 }
 

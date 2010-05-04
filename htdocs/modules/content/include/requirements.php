@@ -20,10 +20,10 @@ if (ICMS_VERSION_BUILD < 19) {
 }
 
 if (count($failed_requirements) > 0) {
-	xoops_cp_header();
+	icms_cp_header();
 	$icmsAdminTpl->assign('failed_requirements', $failed_requirements);
 	$icmsAdminTpl->display(CONTENT_ROOT_PATH . 'templates/content_requirements.html');
-	xoops_cp_footer();
+	icms_cp_footer();
 	exit;
 }
 ?>

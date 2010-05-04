@@ -58,8 +58,8 @@ if ($icmsModule->getVar('dirname') != 'system') {
 	include ICMS_ROOT_PATH.'/include/comment_form.php';
 	include ICMS_ROOT_PATH.'/footer.php';
 } else {
-	xoops_cp_header();
+	icms_cp_header();
 	include ICMS_ROOT_PATH.'/include/comment_form.php';
-	xoops_cp_footer();
+	icms_cp_footer();
 }
 ?>

@@ -15,7 +15,7 @@
  */
 
 include 'admin_header.php';
-xoops_cp_header();
+icms_cp_header();
 
 icms_adminMenu(5, "");
 $op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : "visibility";
@@ -81,5 +81,5 @@ $add_form->assign($xoopsTpl);
 
 $xoopsTpl->display("db:profile_admin_visibility.html");
 
-xoops_cp_footer();
+icms_cp_footer();
 ?>

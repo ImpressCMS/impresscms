@@ -21,7 +21,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 	if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
 	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'list');
 	if ($op == 'list') {
-		xoops_cp_header();
+		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/avatars/images/avatars_big.png)">'._MD_AVATARMAN.'</div><br />';
 		$avt_handler =& xoops_gethandler('avatar');
 		$savatar_count = $avt_handler->getCount(new Criteria('avatar_type', 'S'));
@@ -38,13 +38,13 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		$form->addElement(new XoopsFormHidden('fct', 'avatars'));
 		$form->addElement(new XoopsFormButton('', 'avt_button', _SUBMIT, 'submit'));
 		$form->display();
-		xoops_cp_footer();
+		icms_cp_footer();
 		exit();
 	}
 
 	if ($op == 'listavt') {
 		$avt_handler =& xoops_gethandler('avatar');
-		xoops_cp_header();
+		icms_cp_header();
 		$type = (isset($_GET['type']) && $_GET['type'] == 'C') ? 'C' : 'S';
 		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/avatars/images/avatars_big.png)"><a href="admin.php?fct=avatars">'. _MD_AVATARMAN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;';
 		if ($type == 'S') {
@@ -86,7 +86,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				echo '<div style="text-align:center;"><input type="hidden" name="op" value="save" /><input type="hidden" name="fct" value="avatars" /><input type="submit" name="submit" value="'._SUBMIT.'" />'.$GLOBALS['xoopsSecurity']->getTokenHTML().'</div></form>';
 			}
 		}
-		xoops_cp_footer();
+		icms_cp_footer();
 		exit();
 	}
 
@@ -118,11 +118,11 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				unset($avatar_display[$i]);
 			}
 			if (count($error) > 0) {
-				xoops_cp_header();
+				icms_cp_header();
 				foreach ($error as $err) {
 					echo $err.'<br />';
 				}
-				xoops_cp_footer();
+				icms_cp_footer();
 				exit();
 			}
 		}
@@ -162,19 +162,19 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			}
 		}
 		if (count($err) > 0) {
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_error($err);
-			xoops_cp_footer();
+			icms_cp_footer();
 			exit();
 		}
 		redirect_header('admin.php?fct=avatars',2,_MD_AM_DBUPDATED);
 	}
 
 	if ($op == 'delfile') {
-		xoops_cp_header();
+		icms_cp_header();
 		$user_id = isset($_GET['user_id']) ? (int) ($_GET['user_id']) : 0;
 		xoops_confirm(array('op' => 'delfileok', 'avatar_id' => (int) ($_GET['avatar_id']), 'fct' => 'avatars', 'user_id' => $user_id), 'admin.php', _MD_RUDELIMG);
-		xoops_cp_footer();
+		icms_cp_footer();
 		exit();
 	}
 
@@ -192,9 +192,9 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			redirect_header('admin.php?fct=avatars',1);
 		}
 		if (!$avt_handler->delete($avatar)) {
-			xoops_cp_header();
+			icms_cp_header();
 			xoops_error(sprintf(_MD_FAILDEL, $avatar->getVar('avatar_id')));
-			xoops_cp_footer();
+			icms_cp_footer();
 			exit();
 		}
 		$file = $avatar->getVar('avatar_file');

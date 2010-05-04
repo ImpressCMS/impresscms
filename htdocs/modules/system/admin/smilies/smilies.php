@@ -22,7 +22,7 @@ function SmilesAdmin()
 	$db =& Database::getInstance();
 	$url_smiles = XOOPS_UPLOAD_URL;
 	$myts =& MyTextSanitizer::getInstance();
-	xoops_cp_header();
+	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/smilies/images/smilies_big.png)">'._AM_SMILESCONTROL.'</div><br />';
 
 	if ($getsmiles = $db->query("SELECT * FROM ".$db->prefix("smiles"))) {
@@ -74,14 +74,14 @@ function SmilesAdmin()
 	echo "<br />";
 	include XOOPS_ROOT_PATH.'/modules/system/admin/smilies/smileform.php';
 	$smile_form->display();
-	xoops_cp_footer();
+	icms_cp_footer();
 }
 
 function SmilesEdit($id)
 {
 	$db =& Database::getInstance();
 	$myts =& MyTextSanitizer::getInstance();
-	xoops_cp_header();
+	icms_cp_header();
 	echo '<a href="admin.php?fct=smilies">'._AM_SMILESCONTROL .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITSMILE.'<br /><br />';
 	if ($getsmiles = $db->query("SELECT * FROM ".$db->prefix("smiles")." WHERE id = '". (int) ($id)."'")) {
 		$numsmiles = $db->getRowsNum($getsmiles);
@@ -103,7 +103,7 @@ function SmilesEdit($id)
 	} else {
 		echo _AM_CNRFTSD;
 	}
-	xoops_cp_footer();
+	icms_cp_footer();
 }
 
 ?>

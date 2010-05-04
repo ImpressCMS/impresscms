@@ -14,7 +14,7 @@
  */
 
 include_once("admin_header.php");
-xoops_cp_header();
+icms_cp_header();
 
 $op = isset($_REQUEST['op']) ? trim($_REQUEST['op']) : 'list';
 if($op == 'editordelete') $op = isset($_REQUEST['delete'])?'delete':'edit';
@@ -243,5 +243,5 @@ switch($op) {
 		break;
 }
 
-xoops_cp_footer();
+icms_cp_footer();
 ?>

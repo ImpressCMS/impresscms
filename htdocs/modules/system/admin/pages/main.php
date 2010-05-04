@@ -75,7 +75,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 		break;
 
 		case "clone" :
-			xoops_cp_header ();
+			icms_cp_header ();
 			editpage ( $clean_page_id, true );
 		break;
 
@@ -121,7 +121,7 @@ if (in_array ( $clean_op, $valid_op, true )) {
 			$icmsAdminTpl->display ( 'db:admin/pages/system_adm_pagemanager_index.html' );
 		break;
 	}
-	xoops_cp_footer ();
+	icms_cp_footer ();
 }
 /**
  * If you want to have a specific action taken because the user input was invalid,

@@ -94,7 +94,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			}
 			$form .= '</select>&nbsp;<input type="hidden" name="fct" value="comments" /><input type="submit" value="'._GO.'" name="selsubmit" /></form>';
 
-			xoops_cp_header();
+			icms_cp_header();
 			echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/comments/images/comments_big.png)">'._MD_AM_COMMMAN.'</div><br />';
 			echo $form."<br />";
 			echo '<table width="100%" class="outer" cellspacing="1"><tr><th colspan="8">'._MD_AM_LISTCOMM.'</th></tr><tr align="center"><td class="head">&nbsp;</td><td class="head" align="'._GLOBAL_LEFT.'"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_title&amp;order='.$otherorder.'&amp;module='.$module.'&amp;status='.$status.'&amp;start='.$start.'&amp;limit='.$limit.'">'._CM_TITLE.'</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_created&amp;order='.$otherorder.'&amp;module='.$module.'&amp;status='.$status.'&amp;start='.$start.'&amp;limit='.$limit.'">'._CM_POSTED.'</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_uid&amp;order='.$otherorder.'&amp;module='.$module.'&amp;status='.$status.'&amp;start='.$start.'&amp;limit='.$limit.'">'._CM_POSTER.'</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_ip&amp;order='.$otherorder.'&amp;module='.$module.'&amp;status='.$status.'&amp;start='.$start.'&amp;limit='.$limit.'">IP</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_modid&amp;order='.$otherorder.'&amp;module='.$module.'&amp;status='.$status.'&amp;start='.$start.'&amp;limit='.$limit.'">'._MD_AM_MODULE.'</a></td><td class="head"><a href="admin.php?fct=comments&amp;op=list&amp;sort=com_status&amp;order='.$otherorder.'&amp;module='.$module.'&amp;status='.$status.'&amp;start='.$start.'&amp;limit='.$limit.'">'._CM_STATUS.'</a></td><td class="head">&nbsp;</td></tr>';
@@ -122,7 +122,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				echo '</td><td align="'._GLOBAL_RIGHT.'">'.$nav->renderNav();
 			}
 			echo '</td></tr></table>';
-			xoops_cp_footer();
+			icms_cp_footer();
 			break;
 
 		case 'jump':

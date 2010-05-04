@@ -37,7 +37,7 @@ switch ($op) {
 		}
 
 		//xoops_cp_header();
-		xoops_cp_header();
+		icms_cp_header();
 		icms_adminMenu(6, _AM_SPROFILE_FINDUSER);
 
 		echo "<a href='finduser.php'>"._AM_SPROFILE_BACK_TO_FORM."</a><br/>";
@@ -77,7 +77,7 @@ switch ($op) {
 					exit();
 				}
 			} else {
-				xoops_cp_header();
+				icms_cp_header();
 				icms_adminMenu(2, _AM_SSHOP_TRANSACTIONS);
 
 				// no confirm: show deletion condition
@@ -136,7 +136,7 @@ switch ($op) {
 		include_once ICMS_ROOT_PATH."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/class/smartuser.php";
 		include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 		//xoops_cp_header();
-		xoops_cp_header();
+		icms_cp_header();
 		icms_adminMenu(6, _AM_SPROFILE_FINDUSER);
 
 		$custom_fields = $profile_smartuser_handler->getFields();
@@ -177,5 +177,5 @@ switch ($op) {
 		break;
 }
 
-xoops_cp_footer();
+icms_cp_footer();
 ?>
