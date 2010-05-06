@@ -77,7 +77,7 @@ else
 	{
 		$class = ($i % 2 == 0) ? 'even' : 'odd';
 		echo "<tr align='"._GLOBAL_LEFT."' class='$class'><td style='vertical-align: top; width: 2%; text-align: center;'>
-            <input type='checkbox' id='message_".$pm_arr[$i]->getVar('msg_id')."' name='".$pm_arr[$i]->getVar('msg_id')."' value='".$pm_arr[$i]->getVar('msg_id')."' /></td>\n";
+			<input type='checkbox' id='message_".$pm_arr[$i]->getVar('msg_id')."' name='msg_id[]' value='".$pm_arr[$i]->getVar('msg_id')."' /></td>\n";
 		if($pm_arr[$i]->getVar('read_msg') == 1)
 		{
 			echo "<td style='vertical-align: top; width: 5%; text-align: center;'>&nbsp;</td>\n";
