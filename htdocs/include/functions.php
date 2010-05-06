@@ -159,7 +159,7 @@ function icms_error_msg($msg, $title='', $render = true){
  *
  * @since XOOPS
  * @version $Id: functions.php 8806 2009-05-31 22:28:54Z pesianstranger $
- * @deprecated
+ * @deprecated use icms_error_msg instead
  * @see icms_error_msg
  *
  * @author The XOOPS Project <http://www.xoops.org>
@@ -168,7 +168,10 @@ function icms_error_msg($msg, $title='', $render = true){
  * @param string $msg
  * @param string $title
  */
-function xoops_error($msg, $title=''){ icms_error_msg($msg, $title, true); }
+function xoops_error($msg, $title=''){
+	icms_deprecated( 'icms_error_msg' );
+	icms_error_msg($msg, $title, true);
+}
 
 /**
  * ImpressCMS Warning Message Function
@@ -204,7 +207,7 @@ function icms_warning_msg($msg, $title='', $render = false){
  *
  * @since XOOPS
  *
- * @deprecated
+ * @deprecated use icms_warning_msg instead
  * @see icms_warning_msg
  *
  * @author The XOOPS Project <http://www.xoops.org>
@@ -213,7 +216,9 @@ function icms_warning_msg($msg, $title='', $render = false){
  * @param string $msg
  * @param string $title
  */
-function xoops_warning($msg, $title=''){ icms_warning_msg($msg, $title, true); }
+function xoops_warning($msg, $title=''){
+	icms_deprecated( 'icms_warning_msg' );
+	icms_warning_msg($msg, $title, true); }
 
 /**
  * Render result message (echo, so no return string)
@@ -574,15 +579,19 @@ function xoops_getenv($key)
 }
 
 /*
- * This function is deprecated. Do not use!
+ * @deprecated get the theme from the global $xoopsConfig instead
  */
-function getTheme() {return $GLOBALS['xoopsConfig']['theme_set'];}
+function getTheme() {
+	icms_deprecated( 'get the theme from the global $xoopsConfig' );
+	return $GLOBALS['xoopsConfig']['theme_set'];}
 
 /*
  * Function to get css file for a certain theme
- * This function will be deprecated.
+ * @deprecated use xoops_getcss() instead
  */
-function getcss($theme = '') {return xoops_getcss($theme);}
+function getcss($theme = '') {
+	icms_deprecated( 'xoops_getcss' );
+	return xoops_getcss($theme);}
 
 /*
  * Function to get css file for a certain themeset

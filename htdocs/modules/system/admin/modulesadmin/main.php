@@ -46,7 +46,7 @@ if ( $op == "confirm" ) {
 	}
 
 	if ( count($error) > 0 ) {
-		xoops_error($error);
+		icms_error_msg($error);
 		echo "<p><a href='admin.php?fct=modulesadmin'>"._MD_AM_BTOMADMIN."</a></p>";
 		icms_cp_footer();
 		exit();

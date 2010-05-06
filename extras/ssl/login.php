@@ -25,7 +25,7 @@ echo '
     <title>'.$xoopsConfig['sitename'].'</title>
     <link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/xoops.css" />
 ';
-$style = getcss($xoopsConfig['theme_set']);
+$style = xoops_getcss($xoopsConfig['theme_set']);
 if ($style == '') {
 	$style = xoops_getcss($xoopsConfig['theme_set']);
 }
@@ -70,7 +70,7 @@ if ($op == 'dologin') {
 			echo '<div style="text-align:center;"><input value="'._CLOSE.'" type="button" onclick="document.window.opener.location.reload();document.window.close();" /></div>';
 		}
 	} else {
-		xoops_error(_US_INCORRECTLOGIN.'<br /><a href="login.php">'._BACK.'</a>');
+		icms_error_msg(_US_INCORRECTLOGIN.'<br /><a href="login.php">'._BACK.'</a>');
 	}
 }
 

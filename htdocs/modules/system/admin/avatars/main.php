@@ -163,7 +163,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		}
 		if (count($err) > 0) {
 			icms_cp_header();
-			xoops_error($err);
+			icms_error_msg($err);
 			icms_cp_footer();
 			exit();
 		}
@@ -193,7 +193,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		}
 		if (!$avt_handler->delete($avatar)) {
 			icms_cp_header();
-			xoops_error(sprintf(_MD_FAILDEL, $avatar->getVar('avatar_id')));
+			icms_error_msg(sprintf(_MD_FAILDEL, $avatar->getVar('avatar_id')));
 			icms_cp_footer();
 			exit();
 		}

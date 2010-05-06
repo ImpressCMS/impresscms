@@ -256,7 +256,7 @@ switch ($op)
 			}
 		}
 		icms_cp_header();
-		xoops_error($adduser_errormsg);
+		icms_error_msg($adduser_errormsg);
 		icms_cp_footer();
 		break;
 

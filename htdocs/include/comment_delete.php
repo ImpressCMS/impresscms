@@ -97,7 +97,7 @@ switch ($op) {
 		$comment =& $comment_handler->get($com_id);
 		if (!$comment_handler->delete($comment)) {
 			include ICMS_ROOT_PATH.'/header.php';
-			xoops_error(_CM_COMDELETENG.' (ID: '.$comment->getVar('com_id').')');
+			icms_error_msg(_CM_COMDELETENG.' (ID: '.$comment->getVar('com_id').')');
 			include ICMS_ROOT_PATH.'/footer.php';
 			exit();
 		}
@@ -176,7 +176,7 @@ switch ($op) {
 		}
 		if (count($errs) > 0) {
 			include ICMS_ROOT_PATH.'/header.php';
-			xoops_error($errs);
+			icms_error_msg($errs);
 			include ICMS_ROOT_PATH.'/footer.php';
 			exit();
 		}

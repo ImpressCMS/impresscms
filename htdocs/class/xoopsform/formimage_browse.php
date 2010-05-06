@@ -610,7 +610,7 @@ function imanager_addfile() {
 	}
 	if (count($err) > 0) {
 		icmsPopupHeader();
-		xoops_error($err);
+		icms_error_msg($err);
 		icmsPopupFooter();
 		exit();
 	}
@@ -709,7 +709,7 @@ function imanager_delfileok($image_id,$redir=null) {
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	if (!$image_handler->delete($image)) {
 		icmsPopupHeader();
-		xoops_error(sprintf(_MD_FAILDEL, $image->getVar('image_id')));
+		icms_error_msg(sprintf(_MD_FAILDEL, $image->getVar('image_id')));
 		icmsPopupFooter();
 		exit();
 	}

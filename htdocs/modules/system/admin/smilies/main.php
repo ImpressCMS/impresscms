@@ -74,7 +74,7 @@ switch($op) {
 			redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin',2,_AM_DBUPDATED);
 		} else {
 			icms_cp_header();
-			xoops_error($err);
+			icms_error_msg($err);
 			icms_cp_footer();
 		}
 		break;
@@ -128,7 +128,7 @@ switch($op) {
 			redirect_header('admin.php?fct=smilies&amp;op=SmilesAdmin',2,_AM_DBUPDATED);
 		} else {
 			icms_cp_header();
-			xoops_error($err);
+			icms_error_msg($err);
 			icms_cp_footer();
 			exit();
 		}

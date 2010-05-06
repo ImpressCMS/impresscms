@@ -56,7 +56,7 @@ extends IcmsPreloadItem {
 			$rez = $system->start($time);
 		} else {
 			icms_loadLanguageFile('system', 'autotasks', true);
-			xoops_error(_CO_ICMS_AUTOTASKS_INIT_ERROR);
+			icms_error_msg(_CO_ICMS_AUTOTASKS_INIT_ERROR);
 			return false;
 		}
 		$handler->disableVirtualConfig();
