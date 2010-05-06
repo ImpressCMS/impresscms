@@ -111,7 +111,7 @@ class IcmsBlock extends IcmsPersistableObject {
 	/**
 	 * For backward compatibility
 	 *
-	 * @deprecated
+	 * @todo improve with IPF
 	 * @return unknown
 	 */
 	public function isCustom(){
@@ -126,7 +126,7 @@ class IcmsBlock extends IcmsPersistableObject {
 	 *
 	 * @return array $block the block information array
 	 *
-	 * @deprecated
+	 * @todo improve with IPF
 	 */
 	public function buildBlock(){
 		global $icmsConfig, $xoopsOption;
@@ -172,7 +172,7 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * If position is 1, content in DB is positioned
 	 * after the original content
 	 *
-	 * @deprecated
+	 * @todo remove this? It is not found anywhere else in the core
 	 */
 	public function buildContent($position,$content="",$contentdb=""){
 		if ( $position == 0 ) {
@@ -190,7 +190,7 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * @param string $newtitle
 	 * @return string
 	 *
-	 * @deprecated
+	 * @todo remove this? it is not found anywhere else in the core
 	 */
 	public function buildTitle($originaltitle, $newtitle=""){
 		if ($newtitle != "") {
@@ -207,9 +207,10 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * @param boolean $full
 	 * @return array
 	 *
-	 * @deprecated
+	 * @deprecated use the handler method, instead
 	 */
 	public function getBlockPositions($full=false){
+		icms_deprecated('IcmsBlockHandler->getBlockPositions');
 		return $this->handler->getBlockPositions($full);
 	}
 
@@ -218,9 +219,10 @@ class IcmsBlock extends IcmsPersistableObject {
 	 *
 	 * @param integer $id
 	 *
-	 * @deprecated
+	 * @deprecated use the handler method, instead
 	 */
 	public function load($id){
+		icms_deprecated('IcmsBlockHandler->getObject');
 		$this->$this->handler->getObject($id);
 	}
 
@@ -229,9 +231,10 @@ class IcmsBlock extends IcmsPersistableObject {
 	 *
 	 * @return integer
 	 *
-	 * @deprecated
+	 * @deprecated use the handler method 'insert', instead
 	 */
 	public function store(){
+		icms_deprecated('IcmsBlockHandler->insert');
 		$this->handler->insert( $this );
 		return $this->getVar('bid');
 	}
@@ -241,9 +244,10 @@ class IcmsBlock extends IcmsPersistableObject {
 	 *
 	 * @return boolean
 	 *
-	 * @deprecated
+	 * @deprecated use the handler method, instead
 	 */
 	public function delete(){
+		icms_deprecated('IcmsBlockHandler->delete');
 		return $this->handler->delete( $this );
 	}
 
@@ -262,9 +266,10 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * @param $orderby   order of the blocks
 	 * @return array of block objects
 	 *
-	 * @deprecated
+	 * @deprecated use the handler method, instead
 	 */
 	public function getAllBlocksByGroup($groupid, $asobject=true, $side=null, $visible=null, $orderby="b.weight,b.bid", $isactive=1){
+		icms_deprecated('IcmsBlockHandler->getAllBlocksByGroup');
 		return $this->handler->getAllBlocksByGroup( $groupid, $asobject, $side, $visible, $orderby, $isactive );
 	}
 
@@ -280,9 +285,10 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * @param unknown_type $isactive
 	 * @return unknown
 	 *
-	 * @deprecated
+	 * @deprecated use the handler method, instead
 	 */
 	public function getAllBlocks( $rettype = "object", $side = null, $visible = null, $orderby = "side,weight,bid", $isactive = 1 ){
+		icms_deprecated('IcmsBlockHandler->getAllBlocks');
 		return $this->handler->getAllBlocks( $rettype, $side, $visible, $orderby, $isactive );
 	}
 
@@ -295,9 +301,10 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * @param boolean $asobject
 	 * @return unknown
 	 *
-	 * @deprecated
+	 * @deprecated use the handler method, instead
 	 */
 	public function getByModule($moduleid, $asobject=true){
+		icms_deprecated('IcmsBlockHandler->getByModule');
 		return $this->handler->getByModule( $moduleid, $asobject );
 	}
 
@@ -314,11 +321,11 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * @param booelan $isactive
 	 * @return unknown
 	 *
-	 * @deprecated
+	 * @deprecated use the handler method, instead
 	 *
-	 * @todo Check if is still used, probably it was only used in the core block admin, and this has been rewrited.
 	 */
 	public function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
+		icms_deprecated( 'IcmsBlockHandler->getAllByGroupModule');
 		return $this->handler->getAllByGroupModule( $groupid, $module_id, $toponlyblock, $visible, $orderby, $isactive );
 	}
 
@@ -332,11 +339,10 @@ class IcmsBlock extends IcmsPersistableObject {
 	 * @param boolean $isactive
 	 * @return array
 	 *
-	 * @todo Rewrite this method under the ImpressCMS Pessitable Framework
-	 *
-	 * @deprecated
+	 * @deprecated use the handler method, instead
 	 */
 	public function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1){
+		icms_deprecated( 'IcmsBlockHandler->getNonGroupedBlocks' );
 		return $this->handler->getNonGroupedBlocks( $module_id, $toponlyblock, $visible, $orderby, $isactive );
 	}
 
@@ -353,9 +359,10 @@ class IcmsBlock extends IcmsPersistableObject {
 	 *
 	 * @return integer
 	 *
-	 * @deprecated
+	 * @deprecated use the handler method, instead
 	 */
 	public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
+		icms_deprecated( 'IcmsBlockHandler->getCountSimilarBlocks' );
 		return $this->handler->getCountSimilarBlocks( $moduleId, $funcNum, $showFunc );
 	}
 
@@ -419,7 +426,6 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	 * @param boolean $asObject
 	 * @return array
 	 *
-	 * @deprecated
 	 * @see $this->getObjects($criteria, false, $asObject);
 	 * @todo Rewrite all the core to dont use any more this method.
 	 */
@@ -440,8 +446,6 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	 * @param string $orderby
 	 * @param bool $isactive
 	 * @return array
-	 *
-	 * @deprecated
 	 *
 	 * @todo Implement IPF for block_positions.
 	 * @todo Rewrite all the core to dont use any more this method.
@@ -523,20 +527,20 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	 * @param unknown_type $isactive
 	 * @return unknown
 	 *
-	 * @deprecated
+	 * @todo rewrite
 	 */
 	function getAllByGroupModule($groupid, $module_id='0-0', $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1) {
 		// TODO: use $this->getObjects($criteria);
 
-		$isactive = intval($isactive);
+		$isactive = (int)$isactive;
 		$ret = array();
 		$sql = "SELECT DISTINCT gperm_itemid FROM ".$this->db->prefix('group_permission')." WHERE gperm_name = 'block_read' AND gperm_modid = '1'";
 		if ( is_array($groupid) ) {
 			$gid = array_map(create_function('$a', '$r = "\'" . intval($a) . "\'"; return($r);'), $groupid);
 			$sql .= " AND gperm_groupid IN (".implode(',', $gid).")";
 		} else {
-			if (intval($groupid) > 0) {
-				$sql .= " AND gperm_groupid='".intval($groupid)."'";
+			if ( (int) $groupid > 0) {
+				$sql .= " AND gperm_groupid='" . (int) $groupid . "'";
 			}
 		}
 		$result = $this->db->query($sql);
@@ -602,7 +606,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	 * @param unknown_type $isactive
 	 * @return unknown
 	 *
-	 * @deprecated
+	 * @todo remove - this is the only instance in the core
 	 */
 	function getNonGroupedBlocks($module_id=0, $toponlyblock=false, $visible=null, $orderby='b.weight,b.bid', $isactive=1) {
 		$ret = array();
@@ -755,8 +759,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	 *
 	 * @param array $blockids
 	 *
-	 * @deprecated
-	 * @todo can be removed together with getAllByGroupModule and getNonGroupedBlocks
+	 * @todo can be removed together with getAllByGroupModule and getNonGroupedBlocks. (used in theme_blocks)
 	 */
 	private function &getMultiple($blockids) {
 		$criteria = new CriteriaCompo();
