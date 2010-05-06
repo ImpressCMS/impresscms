@@ -21,14 +21,14 @@ function icmsFormField( $name, $value, $label, $maxlength, $help = '' )
     $label = htmlspecialchars( $label );
     $name = htmlspecialchars( $name, ENT_QUOTES );
     $value = htmlspecialchars( $value, ENT_QUOTES );
-    $maxlength = intval($maxlength);
-   
+    $maxlength = (int) $maxlength;
+
     $field = "<label for='$name'>$label</label>\n";
     if ( $help ) {
         $field .= '<div class="xoform-help1">' . $help . "</div>\n";
     }
     $field .= "<input type='text' name='$name' id='$name' value='$value' />";
-    
+
     return $field;
 }
 
@@ -65,11 +65,11 @@ if ( !isset( $vars['TRUST_PATH'] ) ) {
 <fieldset>
 	<legend><?php echo TRUST_PATH_LABEL; ?></legend>
 	<?php echo icmsFormField( 'TRUST_PATH',	$vars['TRUST_PATH'],	TRUST_PATH_LABEL, 255, TRUST_PATH_HELP ); ?>
-	
+
 </fieldset>
 <input type="hidden" name="action" value="next" />
 <input type="hidden" name="task" value="trust_path" />
-    
+
 <div class="xo-formbuttons">
     <button type="submit"><?php echo _SUBMIT; ?></button>
 </div>
