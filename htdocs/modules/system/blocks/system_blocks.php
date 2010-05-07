@@ -104,7 +104,7 @@ function b_system_login_show()
 			$block['rememberme'] = $icmsConfigUser['remember_me'];
 		}
 
-		if ($icmshConfigAuth['auth_openid']) {
+		if ($icmsConfigAuth['auth_openid']) {
 			$block['auth_openid'] = true;
 		}
 		return $block;
