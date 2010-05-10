@@ -26,7 +26,7 @@ include ICMS_ROOT_PATH.'/include/cp_functions.php';
 icms_loadLanguageFile('system', 'admin');
 icms_loadLanguageFile('core', 'moduleabout');
 
-include_once ICMS_ROOT_PATH.'/class/xoopsmodule.php';
+include_once ICMS_ROOT_PATH.'/kernel/module.php';
 // Check if function call does exist (security)
 require_once ICMS_ROOT_PATH.'/class/xoopslists.php';
 $admin_dir = ICMS_ROOT_PATH.'/modules/system/admin';

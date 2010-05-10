@@ -81,7 +81,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				echo '</tr>';
 			}
 			echo '</table><br />';
-				
+
 			include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
 			$form = new XoopsThemeForm(_MD_UPLOADTAR, 'tplupload_form', 'admin.php', 'post', true);
 			$form->setExtra('enctype="multipart/form-data"');
@@ -107,7 +107,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$module =& $module_handler->getByDirname($moddir);
 			$modname = $module->getVar('name');
 			echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/tplsets/images/tplsets_big.png)"><a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$tplset.'&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$modname.'<br /><br /></div><br />';
-				
+
 			echo '<form action="admin.php" method="post" enctype="multipart/form-data"><table width="100%" class="outer" cellspacing="1"><tr><th width="40%">'._MD_FILENAME.'</th><th>'._MD_LASTMOD.'</th>';
 			if ($tplset != 'default') {
 				echo '<th>'._MD_LASTIMP.'</th><th colspan="2">'._MD_ACTION.'</th></tr>';
@@ -1219,7 +1219,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$tpltpl_handler =& xoops_gethandler('tplfile');
 			$tplfile =& $tpltpl_handler->get($id, true);
 			$xoopsTpl = new XoopsTpl();
-				
+
 			if (is_object($tplfile)) {
 				$dummylayout = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 				<html><head><meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" />
@@ -1237,7 +1237,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 
 				$dummylayout .= "\n".'</style></head><body><div id="xo-canvas"><{$content}></div></body></html>';
 				if ($tplfile->getVar('tpl_type') == 'block') {
-					include_once XOOPS_ROOT_PATH.'/class/xoopsblock.php';
+					include_once XOOPS_ROOT_PATH.'/kernel/block.php';
 					$block = new XoopsBlock($tplfile->getVar('tpl_refid'));
 					$xoopsTpl->assign('block', $block->buildBlock());
 				}
