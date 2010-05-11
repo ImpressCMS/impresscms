@@ -31,5 +31,53 @@ class icms_InputFilter extends icms_DataFilter
 		return $instance;
 	}
 
+	/**
+	* Filters HTMLarea form data for input to DB
+	*
+	* @param   string	$html
+	* @param   bool		$icode	allow & convert icmscode to html?
+	* @param   bool		$img	allow inline images?
+	* @return  string
+	**/
+	function filterHTMLarea($html, $icode = 0, $img = 0)
+	{
+		// ################# Preload Trigger beforeFilterHTMLarea ##############
+		global $icmsPreloadHandler;
+
+		if(!is_object($icmsPreloadHandler))
+		{
+			include_once ICMS_ROOT_PATH.'/kernel/icmspreloadhandler.php';
+			$icmsPreloadHandler = IcmsPreloadHandler::getInstance();
+		}
+		$icmsPreloadHandler->triggerEvent('beforeFilterHTMLarea', array(&$html, $icode, $img));
+
+		$html = icms_DataFilter::codePreConv($html, $icode); // Ryuji_edit(2003-11-18)
+		$html = icms_DataFilter::makeClickable($html);
+		if($icode != 0)
+		{
+			if($img != 0)
+			{
+				$html = icms_DataFilter::icmsCodeDecode($html);
+			}
+			else
+			{
+				$html = icms_DataFilter::icmsCodeDecode($html, 0);
+			}
+		}
+
+		$html = icms_DataFilter::codeConv($html, $icode, $img);
+
+		$config_handler = xoops_gethandler('config');
+		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
+
+		if($icmsConfigPurifier['enable_purifier'] !== 0)
+		{
+			$html = icms_DataFilter::html_purifier($html);
+		}
+
+		// ################# Preload Trigger afterFilterHTMLarea ##############
+		$icmsPreloadHandler->triggerEvent('afterFilterHTMLarea', array(&$html, $icode, $img));
+		return $html;
+	}
 }
 ?>
