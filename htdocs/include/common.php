@@ -25,6 +25,9 @@ function icms_autoload( $class ) {
 	if (file_exists( $path = ICMS_ROOT_PATH . "/kernel/$file.php" ) ) {
 		if ($debug) echo "<li>inc - $path</li>";
 		include_once $path;
+	} elseif(file_exists($path = ICMS_ROOT_PATH . "/kernel/" . str_replace('xoops', '', $file) . ".php")) {
+		if ($debug) echo "<li>inc - $path </li>";
+		include_once $path;
 	} elseif(file_exists( $path = ICMS_ROOT_PATH . "/class/$file.php" )) {
 		if ($debug) echo "<li>inc - $path</li>";
 		include_once $path;
