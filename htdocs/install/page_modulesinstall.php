@@ -27,7 +27,7 @@ $vars =& $_SESSION['settings'];
 
 include_once XOOPS_ROOT_PATH."/mainfile.php";
 include_once "common.php";
-include_once "../class/xoopsblock.php";
+include_once "../kernel/block.php";
 include_once "../kernel/module.php";
 include_once "../include/cp_functions.php";
 include_once './class/dbmanager.php';
