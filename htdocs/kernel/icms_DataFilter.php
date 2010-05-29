@@ -78,6 +78,7 @@ class icms_DataFilter
 	 *					'url' = Checks & validates URL
 	 *					'email' = Checks & validates Email Addresses
 	 *					'ip' = Checks & validates IP Addresses
+	 *					'str' = Checks & Sanitizes String Values
 	 *
 	 * @param	mixed		$options1	Options to use with specified filter
 	 *			Valid Filter Options:
@@ -94,6 +95,13 @@ class icms_DataFilter
 	 *					'ip6' = Requires the value to be a valid IPv6 IP (like 2001:0db8:85a3:08d3:1319:8a2e:0370:7334)
 	 *					'rfc' = Requires the value to be a RFC specified private range IP (like 192.168.0.1)
 	 *					'res' = Requires that the value is not within the reserved IP range. both IPV4 and IPV6 values
+	 *				STR:
+	 *					'noencode' = Do NOT encode quotes
+	 *					'strlow' = Strip characters with ASCII value below 32
+	 *					'strhigh' = Strip characters with ASCII value above 127
+	 *					'encodelow' = Encode characters with ASCII value below 32
+	 *					'encodehigh' = Encode characters with ASCII value above 127
+	 *					'encodeamp' = Encode the & character to &amp;
 	 *
 	 * @param	mixed		$options2	Options to use with specified filter options1
 	 *				URL:
@@ -112,7 +120,7 @@ class icms_DataFilter
 		{
 			return false;
 		}
-		$valid_types = array('url', 'email', 'ip');
+		$valid_types = array('url', 'email', 'ip', 'str');
 		if(!in_array($type, $valid_types))
 		{
 			return false;
@@ -153,7 +161,7 @@ class icms_DataFilter
 				}
 			}
 
-			if($type = 'ip')
+			if($type == 'ip')
 			{
 				$valid_options1 = array('ipv4', 'ipv6', 'rfc', 'res');
 				$options2 = '';
@@ -163,6 +171,19 @@ class icms_DataFilter
 					$options1 = 'ipv4';
 				}
 			}
+
+			if($type == 'str')
+			{
+				$valid_options1 = array('noencode', 'striplow', 'striphigh', 'encodelow', 'encodehigh', 'encodeamp');
+				$options2 = '';
+
+				if(!isset($options1) || $options1 == '' || !in_array($options1, $valid_options1))
+				{
+					$options1 = '';
+				}
+			}
+
+
 		}
 
 		return $this->icms_FilterVar($data, $type, $options1, $options2);
@@ -779,7 +800,46 @@ class icms_DataFilter
 				$data = filter_var($data, FILTER_VALIDATE_IP);
 			}
 
-			return $ip;
+			return $data;
+		}
+
+		if($type == 'str')
+		{
+			if($options1 == 'noencode')
+			{
+				$opt1 = FILTER_FLAG_NO_ENCODE_QUOTES;
+			}
+			elseif($options1 == 'striplow')
+			{
+				$opt1 = FILTER_FLAG_STRIP_LOW;
+			}
+			elseif($options1 == 'striphigh')
+			{
+				$opt1 = FILTER_FLAG_STRIP_HIGH;
+			}
+			elseif($options1 == 'encodelow')
+			{
+				$opt1 = FILTER_FLAG_ENCODE_LOW;
+			}
+			elseif($options1 == 'encodehigh')
+			{
+				$opt1 = FILTER_FLAG_ENCODE_HIGH;
+			}
+			elseif($options1 == 'encodeamp')
+			{
+				$opt1 = FILTER_FLAG_ENCODE_AMP;
+			}
+
+			if(isset($opt1) && $opt1 !== '')
+			{
+				$data = filter_var($data, FILTER_SANITIZE_STRING, $opt1);
+			}
+			else
+			{
+				$data = filter_var($data, FILTER_SANITIZE_STRING);
+			}
+
+			return $data;
 		}
 	}
 
