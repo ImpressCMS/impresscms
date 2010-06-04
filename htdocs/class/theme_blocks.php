@@ -75,11 +75,18 @@ class xos_logos_PageBuilder {
 			$icmsConfig ['startpage'] = $icmsConfig ['startpage'] [$group];
 		}
 
-		$startMod = ( $icmsConfig['startpage'] == '--' ) ? 'system' : $icmsConfig ['startpage'];
+		$startMod = ( $icmsConfig['startpage'] == '--' )
+			? 'system'
+			: $icmsConfig ['startpage'];
 
 		//Setting the full and relative url of the actual page
-		$fullurl = urldecode ( "http://" . $_SERVER ["SERVER_NAME"] . $_SERVER ["REQUEST_URI"] );
-		$url = urldecode ( substr ( str_replace ( ICMS_URL, '', $fullurl ), 1 ) );
+		$icmsurl_parsed = parse_url(ICMS_URL);
+		$fullurl = urldecode(
+			$icmsurl_parsed['scheme'] . "://"
+			. $icmsurl_parsed['host']
+			. $_SERVER ['REQUEST_URI']
+			);
+		$url = urldecode(substr(str_replace(ICMS_URL, '', $fullurl), 1));
 
 		$icms_page_handler =& xoops_gethandler ( 'page' );
 		$criteria = new CriteriaCompo( new Criteria( 'page_url', $fullurl ) );
