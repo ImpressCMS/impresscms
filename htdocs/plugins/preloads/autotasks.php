@@ -7,11 +7,15 @@
  * @package		libraries
  * @since		1.1
  * @author		mekdrop <mekdrop@gmail.com>
- * @version		$Id: autotasks.php 2008.07.18 17:10 $
+ * @version		$Id$
  */
-
-class IcmsPreloadAutotasks
-extends IcmsPreloadItem {
+/**
+ *
+ * Preload class and event for Autotasks
+ * @since	1.2
+ *
+ */
+class IcmsPreloadAutotasks extends IcmsPreloadItem {
 
 	/**
 	 * Function to be triggered at the end of the core boot process
@@ -63,4 +67,3 @@ extends IcmsPreloadItem {
 	}
 
 }
-?>

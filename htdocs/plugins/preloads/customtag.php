@@ -9,16 +9,20 @@
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id$
  */
-
-class IcmsPreloadCustomtag extends IcmsPreloadItem
-{
+/**
+ *
+ * Event triggers for Custom Tags
+ * @since	1.2
+ *
+ */
+class IcmsPreloadCustomtag extends IcmsPreloadItem {
 	/**
 	 * Function to be triggered at the end of the core boot process
 	 *
 	 * @return	void
 	 */
 	function eventFinishCoreBoot() {
-		include_once ICMS_ROOT_PATH . "/include/customtag.php" ;
+		include_once ICMS_ROOT_PATH . '/include/customtag.php' ;
 	}
 
 	/**
@@ -75,4 +79,3 @@ class IcmsPreloadCustomtag extends IcmsPreloadItem
 		}
 	}
 }
-?>

@@ -10,15 +10,20 @@
  * @version		$Id$
  */
 
-class IcmsPreloadAdsense extends IcmsPreloadItem
-{
+/**
+ *
+ * Preload items and events for AdSense
+ * @since 1.2
+ *
+ */
+class IcmsPreloadAdsense extends IcmsPreloadItem {
 	/**
 	 * Function to be triggered at the end of the core boot process
 	 *
 	 * @return	void
 	 */
 	function eventFinishCoreBoot() {
-		include_once ICMS_ROOT_PATH . "/include/adsense.php" ;
+		include_once ICMS_ROOT_PATH . '/include/adsense.php' ;
 	}
 
 	/**
@@ -75,4 +80,3 @@ class IcmsPreloadAdsense extends IcmsPreloadItem
 		}
 	}
 }
-?>

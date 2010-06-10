@@ -9,18 +9,30 @@
  * @package		libraries
  * @since		1.2
  * @author		TheRplima <therplima@impresscms.org>
- * @version		$Id: wideimage.php 1742 2008-04-20 14:46:20Z real_therplima $
+ * @version		$Id$
  */
-
-class IcmsPreloadWideimage extends IcmsPreloadItem
-{
+/**
+ *
+ * Event triggers for WideImage library
+ * @since	1.2
+ *
+ */
+class IcmsPreloadWideimage extends IcmsPreloadItem {
+	/**
+	 * Function to be triggered at the end of the output init process
+	 *
+	 * @return	void
+	 */
 	function eventStartOutputInit() {
 		// just including the file... more to come
-		include  ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.php"  ;
+		include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
 	}
 
+	/**
+	 *
+	 * Events to be triggered at the start of the admin pages loading
+	 */
 	function eventAdminHeader() {
-		include  ICMS_LIBRARIES_PATH."/wideimage/lib/WideImage.php"  ;
+		include_once  ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php' ;
 	}
 }
-?>
