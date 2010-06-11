@@ -509,7 +509,7 @@ function imanager_addcat() {
 	$imagecategory->setVar('imgcat_type', 'C');
 
 	if (!file_exists($categ_path)){
-		if (!mkdir($categ_path)){
+		if (!icms_mkdir($categ_path)){
 			redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1,_MD_FAILADDCAT);
 		}
 	}

@@ -955,7 +955,7 @@ function icms_copyr($source, $dest)
 	// Simple copy for a file
 	if(is_file($source)) {return copy($source, $dest);}
 	// Make destination directory
-	if(!is_dir($dest)) {mkdir($dest);}
+	if(!is_dir($dest)) {icms_mkdir($dest);}
 	// Loop through the folder
 	$dir = dir($source);
 	while(false !== $entry = $dir->read())
@@ -993,7 +993,7 @@ function icms_mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH ) {
 	$target = str_ireplace( $base . DIRECTORY_SEPARATOR, '', $target );
 	$target = $base . DIRECTORY_SEPARATOR . str_replace( $metachars , '_', $target );
 
-	if( mkdir($target, $mode, TRUE) ) {
+	if( icms_mkdir($target, $mode, TRUE) ) {
 		// create an index.html file in this directory
 		if ($fh = @fopen($target.'/index.html', 'w')) {
 			fwrite($fh, '<script>history.go(-1);</script>');
