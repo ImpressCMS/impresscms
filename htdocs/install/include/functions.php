@@ -32,7 +32,7 @@ function imcms_install_mkdir($target, $mode = 0777 ) {
 	$metachars = array('[', '?', '"', '<', '>', '|', ' ' ); // Need to exclude . and : because they may occur in the root path
 	$target = str_replace( $metachars , '_', $target );
 
-	if( icms_mkdir($target, $mode, TRUE) ) {
+	if( mkdir($target, $mode, TRUE) ) {
 		// create an index.html file in this directory
 		if ($fh = @fopen($target.'/index.html', 'w')) {
 			fwrite($fh, '<script>history.go(-1);</script>');
