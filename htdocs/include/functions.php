@@ -651,10 +651,10 @@ function &xoops_gethandler($name, $optional = false )
 		//else {
 		//	if(file_exists($hnd_file = ICMS_ROOT_PATH.'/class/'.$name.'.php')) {require_once $hnd_file;}
 		//}
-		$class = 'Xoops'.ucfirst($name).'Handler';
+		$class = 'Icms'.ucfirst($name).'Handler';
 		if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
 		else {
-			$class = 'Icms'.ucfirst($name).'Handler';
+			$class = 'Xoops'.ucfirst($name).'Handler';
 			if(class_exists($class)) {$handlers[$name] = new $class($GLOBALS['xoopsDB']);}
 		}
 	}

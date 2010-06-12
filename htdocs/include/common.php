@@ -14,10 +14,17 @@
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		$Id$
  */
+/** make sure mainfile is included, for security and functionality */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
-function icms_autoload($class)
-{
+/**
+ *
+ * Register classes and their declarations, so they will only be loaded when used
+ * @param string $class name of a class to load
+ *
+ * @since 1.3
+ */
+function icms_autoload($class) {
 	/** temp var to debug spl_autoload feature */
 	$debug = FALSE;
 
@@ -25,16 +32,36 @@ function icms_autoload($class)
 	if ($debug) echo "<ul><b>$class</b>";
 	if (file_exists($path = ICMS_ROOT_PATH . "/kernel/$file.php")) {
 		if ($debug) echo "<li>inc - $path</li>";
-		include_once $path;
+		include $path;
+// *** checking for icms classes, first
+	} elseif (file_exists($path = ICMS_ROOT_PATH . "/kernel/" . str_replace('icms', '', $file) . ".php")) {
+		if ($debug) echo "<li>inc - $path </li>";
+		include $path;
+	} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/" . str_replace('icms', '', $file) . ".php")) {
+		if ($debug) echo "<li>inc - $path </li>";
+		include $path;
+	} elseif (strpos($file, 'icms') !== false && strpos($file, 'handler') !== false) {
+		if ($debug) echo "<li>loading handler</li>";
+		$handlerFile = str_replace('icms', '', $file);
+		$handlerFile = str_replace('handler', '', $handlerFile);
+		if ($debug) echo "<li>$path</li>";
+		if (file_exists($path = ICMS_ROOT_PATH . "/kernel/$handlerFile.php")) {
+			if ($debug) echo "<li>inc - $path</li>";
+			include $path;
+		} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/$handlerFile.php")) {
+			if ($debug) echo "<li>inc - $path</li>";
+			include $path;
+		}
+// *** then check for xoops versions
 	} elseif (file_exists($path = ICMS_ROOT_PATH . "/kernel/" . str_replace('xoops', '', $file) . ".php")) {
 		if ($debug) echo "<li>inc - $path </li>";
-		include_once $path;
+		include $path;
 	} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/$file.php")) {
 		if ($debug) echo "<li>inc - $path</li>";
-		include_once $path;
+		include $path;
 	} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/" . str_replace('xoops', '', $file) . ".php")) {
 		if ($debug) echo "<li>inc - $path </li>";
-		include_once $path;
+		include $path;
 	} elseif (strpos($file, 'xoops') !== false && strpos($file, 'handler') !== false) {
 		if ($debug) echo "<li>loading handler</li>";
 		$handlerFile = str_replace('xoops', '', $file);
@@ -42,16 +69,16 @@ function icms_autoload($class)
 		if ($debug) echo "<li>$path</li>";
 		if (file_exists($path = ICMS_ROOT_PATH . "/kernel/$handlerFile.php")) {
 			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
+			include $path;
 		} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/$handlerFile.php")) {
 			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
+			include $path;
 		}
 	} elseif (strpos($file, 'icmsform') !== false) {
 		if ($debug) echo "<li>loading icmsform element</li>";
 		if (file_exists($path = ICMS_ROOT_PATH . "/class/icmsform/elements/$file.php")) {
 			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
+			include $path;
 		}
 	} elseif (strpos($file, 'auth') !== false) {
 		if ($debug) echo "<li>loading auth</li>";
@@ -59,14 +86,13 @@ function icms_autoload($class)
 		echo $path = ICMS_ROOT_PATH . "/class/auth/$classFile.php";
 		if (file_exists($path = ICMS_ROOT_PATH . "/class/auth/$classFile.php")) {
 			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
+			include $path;
 		}
 	}
 	if ($debug) echo "</ul>";
 }
 
-function icms_autoload_register()
-{
+function icms_autoload_register() {
 	static $reg = false;
 	if (!$reg) {
 		spl_autoload_register("icms_autoload");
@@ -100,10 +126,10 @@ if (!defined('ICMS_GROUP_ANONYMOUS')) {
 /**#@+
  * Creating ICMS specific constants
  */
-define('ICMS_PLUGINS_PATH', ICMS_ROOT_PATH.'/plugins');
-define('ICMS_PLUGINS_URL', ICMS_URL.'/plugins');
-define('ICMS_PRELOAD_PATH', ICMS_PLUGINS_PATH.'/preloads');
-define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH.'/cache/htmlpurifier');
+define('ICMS_PLUGINS_PATH', ICMS_ROOT_PATH . '/plugins');
+define('ICMS_PLUGINS_URL', ICMS_URL . '/plugins');
+define('ICMS_PRELOAD_PATH', ICMS_PLUGINS_PATH . '/preloads');
+define('ICMS_PURIFIER_CACHE', ICMS_TRUST_PATH . '/cache/htmlpurifier');
 // ImpressCMS Modules path & url
 define('ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules');
 define('ICMS_MODULES_URL', ICMS_URL . '/modules');
@@ -138,7 +164,7 @@ $xoops =& $impresscms;
 // ################# Creation of the ImpressCMS Kernel object ##############
 
 // Instantiate security object
-require_once ICMS_ROOT_PATH . "/class/xoopssecurity.php";
+require_once ICMS_ROOT_PATH . '/class/xoopssecurity.php';
 global $xoopsSecurity;
 $xoopsSecurity = $icmsSecurity = new IcmsSecurity();
 //Check super globals
@@ -156,36 +182,36 @@ $xoopsLogger->startTime('ICMS Boot');
 /**#@+
  * Constants
  */
-define("XOOPS_SIDEBLOCK_LEFT", 1);
-define("XOOPS_SIDEBLOCK_RIGHT", 2);
-define("XOOPS_SIDEBLOCK_BOTH", -2);
-define("XOOPS_CENTERBLOCK_LEFT", 3);
-define("XOOPS_CENTERBLOCK_RIGHT", 5);
-define("XOOPS_CENTERBLOCK_CENTER", 4);
-define("XOOPS_CENTERBLOCK_ALL", -6);
-define("XOOPS_CENTERBLOCK_BOTTOMLEFT", 6);
-define("XOOPS_CENTERBLOCK_BOTTOMRIGHT", 8);
-define("XOOPS_CENTERBLOCK_BOTTOM", 7);
+define('XOOPS_SIDEBLOCK_LEFT', 1);
+define('XOOPS_SIDEBLOCK_RIGHT', 2);
+define('XOOPS_SIDEBLOCK_BOTH', -2);
+define('XOOPS_CENTERBLOCK_LEFT', 3);
+define('XOOPS_CENTERBLOCK_RIGHT', 5);
+define('XOOPS_CENTERBLOCK_CENTER', 4);
+define('XOOPS_CENTERBLOCK_ALL', -6);
+define('XOOPS_CENTERBLOCK_BOTTOMLEFT', 6);
+define('XOOPS_CENTERBLOCK_BOTTOMRIGHT', 8);
+define('XOOPS_CENTERBLOCK_BOTTOM', 7);
 
-define("XOOPS_BLOCK_INVISIBLE", 0);
-define("XOOPS_BLOCK_VISIBLE", 1);
-define("XOOPS_MATCH_START", 0);
-define("XOOPS_MATCH_END", 1);
-define("XOOPS_MATCH_EQUAL", 2);
-define("XOOPS_MATCH_CONTAIN", 3);
+define('XOOPS_BLOCK_INVISIBLE', 0);
+define('XOOPS_BLOCK_VISIBLE', 1);
+define('XOOPS_MATCH_START', 0);
+define('XOOPS_MATCH_END', 1);
+define('XOOPS_MATCH_EQUAL', 2);
+define('XOOPS_MATCH_CONTAIN', 3);
 
-define("ICMS_KERNEL_PATH", ICMS_ROOT_PATH . "/kernel/");
-define("ICMS_INCLUDE_PATH", ICMS_ROOT_PATH . "/include");
-define("ICMS_INCLUDE_URL", ICMS_ROOT_PATH . "/include");
-define("ICMS_UPLOAD_PATH", ICMS_ROOT_PATH . "/uploads");
-define("ICMS_UPLOAD_URL", ICMS_URL . "/uploads");
-define("ICMS_THEME_PATH", ICMS_ROOT_PATH . "/themes");
-define("ICMS_THEME_URL", ICMS_URL . "/themes");
-define("ICMS_COMPILE_PATH", ICMS_ROOT_PATH . "/templates_c");
-define("ICMS_CACHE_PATH", ICMS_ROOT_PATH . "/cache");
-define("ICMS_IMAGES_URL", ICMS_URL . "/images");
-define("ICMS_EDITOR_PATH", ICMS_ROOT_PATH . "/editors");
-define("ICMS_EDITOR_URL", ICMS_URL . "/editors");
+define('ICMS_KERNEL_PATH', ICMS_ROOT_PATH . '/kernel/');
+define('ICMS_INCLUDE_PATH', ICMS_ROOT_PATH . '/include');
+define('ICMS_INCLUDE_URL', ICMS_ROOT_PATH . '/include');
+define('ICMS_UPLOAD_PATH', ICMS_ROOT_PATH . '/uploads');
+define('ICMS_UPLOAD_URL', ICMS_URL . '/uploads');
+define('ICMS_THEME_PATH', ICMS_ROOT_PATH . '/themes');
+define('ICMS_THEME_URL', ICMS_URL . '/themes');
+define('ICMS_COMPILE_PATH', ICMS_ROOT_PATH . '/templates_c');
+define('ICMS_CACHE_PATH', ICMS_ROOT_PATH . '/cache');
+define('ICMS_IMAGES_URL', ICMS_URL . '/images');
+define('ICMS_EDITOR_PATH', ICMS_ROOT_PATH . '/editors');
+define('ICMS_EDITOR_URL', ICMS_URL . '/editors');
 define('ICMS_IMANAGER_FOLDER_PATH', ICMS_UPLOAD_PATH . '/imagemanager');
 define('ICMS_IMANAGER_FOLDER_URL', ICMS_UPLOAD_URL . '/imagemanager');
 /**#@-*/
@@ -194,23 +220,23 @@ define('ICMS_IMANAGER_FOLDER_URL', ICMS_UPLOAD_URL . '/imagemanager');
  * @todo make this $icms_images_setname as an option in preferences...
  */
 $icms_images_setname = 'crystal';
-define("ICMS_IMAGES_SET_URL", ICMS_IMAGES_URL . "/" . $icms_images_setname);
+define('ICMS_IMAGES_SET_URL', ICMS_IMAGES_URL . '/' . $icms_images_setname);
 
 /**#@+
  * @deprecated - for backward compatibility
  */
-define("XOOPS_INCLUDE_PATH", ICMS_INCLUDE_PATH);
-define("XOOPS_INCLUDE_URL", ICMS_INCLUDE_URL);
-define("XOOPS_UPLOAD_PATH", ICMS_UPLOAD_PATH);
-define("XOOPS_UPLOAD_URL", ICMS_UPLOAD_URL);
-define("XOOPS_THEME_PATH", ICMS_THEME_PATH);
-define("XOOPS_THEME_URL", ICMS_THEME_URL);
-define("XOOPS_COMPILE_PATH", ICMS_COMPILE_PATH);
-define("XOOPS_CACHE_PATH", ICMS_CACHE_PATH);
-define("XOOPS_EDITOR_PATH", ICMS_EDITOR_PATH);
-define("XOOPS_EDITOR_URL", ICMS_EDITOR_URL);
+define('XOOPS_INCLUDE_PATH', ICMS_INCLUDE_PATH);
+define('XOOPS_INCLUDE_URL', ICMS_INCLUDE_URL);
+define('XOOPS_UPLOAD_PATH', ICMS_UPLOAD_PATH);
+define('XOOPS_UPLOAD_URL', ICMS_UPLOAD_URL);
+define('XOOPS_THEME_PATH', ICMS_THEME_PATH);
+define('XOOPS_THEME_URL', ICMS_THEME_URL);
+define('XOOPS_COMPILE_PATH', ICMS_COMPILE_PATH);
+define('XOOPS_CACHE_PATH', ICMS_CACHE_PATH);
+define('XOOPS_EDITOR_PATH', ICMS_EDITOR_PATH);
+define('XOOPS_EDITOR_URL', ICMS_EDITOR_URL);
 /**#@-*/
-define("SMARTY_DIR", ICMS_LIBRARIES_PATH . "/smarty/");
+define('SMARTY_DIR', ICMS_LIBRARIES_PATH . '/smarty/');
 
 if (!defined('XOOPS_XMLRPC')) {
 	define('XOOPS_DB_CHKREF', 1);
@@ -219,10 +245,10 @@ if (!defined('XOOPS_XMLRPC')) {
 }
 
 // ############## Include common functions file ##############
-include_once ICMS_ROOT_PATH.'/include/functions.php';
+include_once ICMS_ROOT_PATH . '/include/functions.php';
 
 // #################### Connect to DB ##################
-require_once ICMS_ROOT_PATH.'/class/database/databasefactory.php';
+require_once ICMS_ROOT_PATH . '/class/database/databasefactory.php';
 if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$xoopsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
 	define('XOOPS_DB_PROXY', 1);
 }
@@ -359,7 +385,7 @@ session_set_save_handler(
 if ($icmsConfig['use_mysession'] && $icmsConfig['session_name'] != '') {
 	session_name($icmsConfig['session_name']);
 } else {
-	session_name("ICMSSESSION");
+	session_name('ICMSSESSION');
 }
 session_start();
 /*
@@ -572,7 +598,7 @@ if (!empty($_POST['xoops_theme_select']) && in_array($_POST['xoops_theme_select'
 }
 
 if ($icmsConfig['closesite'] == 1) {
-	include ICMS_ROOT_PATH . "/include/site-closed.php";
+	include ICMS_ROOT_PATH . '/include/site-closed.php';
 }
 
 if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
@@ -582,9 +608,9 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 	$xoopsModule =& $module_handler->getByDirname($url_arr[2]);
 	unset($url_arr);
 	if (!$icmsModule || !$icmsModule->getVar('isactive')) {
-		include_once ICMS_ROOT_PATH . "/header.php";
+		include_once ICMS_ROOT_PATH . '/header.php';
 		echo "<h4>" . _MODULENOEXIST . "</h4>";
-		include_once ICMS_ROOT_PATH . "/footer.php";
+		include_once ICMS_ROOT_PATH . '/footer.php';
 		exit();
 	}
 	$moduleperm_handler =& xoops_gethandler('groupperm');
