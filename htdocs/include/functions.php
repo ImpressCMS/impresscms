@@ -993,7 +993,7 @@ function icms_mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH ) {
 	$target = str_ireplace( $base . DIRECTORY_SEPARATOR, '', $target );
 	$target = $base . DIRECTORY_SEPARATOR . str_replace( $metachars , '_', $target );
 
-	if( icms_mkdir($target, $mode, TRUE) ) {
+	if( mkdir($target, $mode, TRUE) ) {
 		// create an index.html file in this directory
 		if ($fh = @fopen($target.'/index.html', 'w')) {
 			fwrite($fh, '<script>history.go(-1);</script>');
