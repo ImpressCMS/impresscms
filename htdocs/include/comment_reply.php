@@ -17,7 +17,10 @@ if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
-if ( ('system' != $icmsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule']) || (!is_object($icmsUser) && !$icmsModuleConfig['com_anonpost']) || !is_object($icmsModule) ) {
+if ( ('system' != $icmsModule->getVar('dirname')
+	&& XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
+	|| (!is_object($icmsUser) && !$icmsModuleConfig['com_anonpost'])
+	|| !is_object($icmsModule) ) {
 	redirect_header(ICMS_URL . '/user.php', 1, _NOPERM);
 }
 
@@ -43,9 +46,10 @@ if (!isset($_GET['com_order'])) {
 $comment_handler =& xoops_gethandler('comment');
 $comment =& $comment_handler->get($com_id);
 $r_name = XoopsUser::getUnameFromId($comment->getVar('com_uid'));
-$r_text = _CM_POSTER.': <b>'.$r_name.'</b>&nbsp;&nbsp;'._CM_POSTED.': <b>'.formatTimestamp($comment->getVar('com_created')).'</b><br /><br />'.$comment->getVar('com_text');$com_title = $comment->getVar('com_title', 'E');
-if (!preg_match("/^(Re|"._CM_RE."):/i", $com_title)) {
-	$com_title = _CM_RE.": ".xoops_substr($com_title, 0, 56);
+$r_text = _CM_POSTER . ': <strong>' . $r_name . '</strong>&nbsp;&nbsp;' . _CM_POSTED . ': <strong>' . formatTimestamp($comment->getVar('com_created')) . '</strong><br /><br />' . $comment->getVar('com_text');
+$com_title = $comment->getVar('com_title', 'E');
+if (!preg_match("/^(Re|" . _CM_RE . "):/i", $com_title)) {
+	$com_title = _CM_RE . ": " . xoops_substr($com_title, 0, 56);
 }
 $com_pid = $com_id;
 $com_text = '';
@@ -65,8 +69,7 @@ $doimage = 1;
 $com_icon = '';
 $com_rootid = $comment->getVar('com_rootid');
 $com_itemid = $comment->getVar('com_itemid');
-include ICMS_ROOT_PATH.'/header.php';
+include ICMS_ROOT_PATH . '/header.php';
 themecenterposts($comment->getVar('com_title'), $r_text);
-include ICMS_ROOT_PATH.'/include/comment_form.php';
-include ICMS_ROOT_PATH.'/footer.php';
-?>
+include ICMS_ROOT_PATH . '/include/comment_form.php';
+include ICMS_ROOT_PATH . '/footer.php';

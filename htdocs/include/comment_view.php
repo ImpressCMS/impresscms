@@ -16,8 +16,8 @@
 if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 	exit();
 }
-include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
-include_once ICMS_ROOT_PATH.'/modules/system/constants.php';
+include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
+include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 
 if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 
@@ -67,7 +67,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		$comment_handler =& xoops_gethandler('comment');
 		if ($com_mode == 'flat') {
 			$comments =& $comment_handler->getByItemId($icmsModule->getVar('mid'), $com_itemid, $com_dborder);
-			include_once ICMS_ROOT_PATH.'/class/commentrenderer.php';
+			include_once ICMS_ROOT_PATH . '/class/commentrenderer.php';
 			$renderer =& XoopsCommentRenderer::instance($xoopsTpl);
 			$renderer->setComments($comments);
 			$renderer->renderFlatView($admin_view);
@@ -79,13 +79,13 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 				foreach ($comment_config['extraParams'] as $extra_param) {
 					// This page is included in the module hosting page -- param could be from anywhere
 					if (isset(${$extra_param})) {
-						$extra_params .= $extra_param .'='.${$extra_param}.'&amp;';
+						$extra_params .= $extra_param . '=' . ${$extra_param} . '&amp;';
 					} elseif (isset($_POST[$extra_param])) {
-						$extra_params .= $extra_param .'='.$_POST[$extra_param].'&amp;';
+						$extra_params .= $extra_param . '=' . $_POST[$extra_param] . '&amp;';
 					} elseif (isset($_GET[$extra_param])) {
-						$extra_params .= $extra_param .'='.$_GET[$extra_param].'&amp;';
+						$extra_params .= $extra_param . '=' . $_GET[$extra_param] . '&amp;';
 					} else {
-						$extra_params .= $extra_param .'=&amp;';
+						$extra_params .= $extra_param . '=&amp;';
 					}
 					//$extra_params .= isset(${$extra_param}) ? $extra_param .'='.${$extra_param}.'&amp;' : $extra_param .'=&amp;';
 				}
@@ -96,20 +96,24 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 				// Show specific thread tree
 				$comments =& $comment_handler->getThread($com_rootid, $com_id);
 				if (false != $comments) {
-					include_once ICMS_ROOT_PATH.'/class/commentrenderer.php';
+					include_once ICMS_ROOT_PATH . '/class/commentrenderer.php';
 					$renderer =& XoopsCommentRenderer::instance($xoopsTpl);
 					$renderer->setComments($comments);
 					$renderer->renderThreadView($com_id, $admin_view);
 				}
 			} else {
 				// Show all threads
-				$top_comments =& $comment_handler->getTopComments($icmsModule->getVar('mid'), $com_itemid, $com_dborder);
+				$top_comments =& $comment_handler->getTopComments(
+					$icmsModule->getVar('mid'), $com_itemid, $com_dborder
+				);
 				$c_count = count($top_comments);
 				if ($c_count> 0) {
 					for ($i = 0; $i < $c_count; $i++) {
-						$comments =& $comment_handler->getThread($top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id'));
+						$comments =& $comment_handler->getThread(
+							$top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id')
+						);
 						if (false != $comments) {
-							include_once ICMS_ROOT_PATH.'/class/commentrenderer.php';
+							include_once ICMS_ROOT_PATH . '/class/commentrenderer.php';
 							$renderer =& XoopsCommentRenderer::instance($xoopsTpl);
 							$renderer->setComments($comments);
 							$renderer->renderThreadView($top_comments[$i]->getVar('com_id'), $admin_view);
@@ -124,8 +128,10 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 			$c_count = count($top_comments);
 			if ($c_count> 0) {
 				for ($i = 0; $i < $c_count; $i++) {
-					$comments =& $comment_handler->getThread($top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id'));
-					include_once ICMS_ROOT_PATH.'/class/commentrenderer.php';
+					$comments =& $comment_handler->getThread(
+						$top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id')
+					);
+					include_once ICMS_ROOT_PATH . '/class/commentrenderer.php';
 					$renderer =& XoopsCommentRenderer::instance($xoopsTpl);
 					$renderer->setComments($comments);
 					$renderer->renderNestView($top_comments[$i]->getVar('com_id'), $admin_view);
@@ -169,7 +175,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 		if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
 			foreach ($comment_config['extraParams'] as $extra_param) {
 				if (isset(${$extra_param})) {
-					$link_extra .= '&amp;'.$extra_param.'='.${$extra_param};
+					$link_extra .= '&amp;' . $extra_param . '=' . ${$extra_param};
 					$hidden_value = htmlspecialchars(${$extra_param}, ENT_QUOTES);
 					$extra_param_val = ${$extra_param};
 				} elseif (isset($_POST[$extra_param])) {
@@ -178,24 +184,37 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 					$extra_param_val = $_GET[$extra_param];
 				}
 				if (isset($extra_param_val)) {
-					$link_extra .= '&amp;'.$extra_param.'='.$extra_param_val;
+					$link_extra .= '&amp;' . $extra_param . '=' . $extra_param_val;
 					$hidden_value = htmlspecialchars($extra_param_val, ENT_QUOTES);
-					$navbar .= '<input type="hidden" name="'.$extra_param.'" value="'.$hidden_value.'" />';
+					$navbar .= '<input type="hidden" name="' . $extra_param . '" value="' . $hidden_value . '" />';
 				}
 			}
 		}
 		if (isset($postcomment_link)) {
-			$navbar .= '&nbsp;<input type="button" onclick="self.location.href=\''.$postcomment_link.''.$link_extra.'\'" class="formButton" value="'._CM_POSTCOMMENT.'" />';
+			$navbar .= '&nbsp;<input type="button" onclick="self.location.href=\'' . $postcomment_link . ''
+				. $link_extra . '\'" class="formButton" value="' . _CM_POSTCOMMENT . '" />';
 		}
 		$navbar .= '
 	</td>
   </tr>
 </table>
 </form>';
-		$xoopsTpl->assign(array('commentsnav' => $navbar, 'editcomment_link' => 'comment_edit.php?com_itemid='.$com_itemid.'&amp;com_order='.$com_order.'&amp;com_mode='.$com_mode.''.$link_extra, 'deletecomment_link' => 'comment_delete.php?com_itemid='.$com_itemid.'&amp;com_order='.$com_order.'&amp;com_mode='.$com_mode.''.$link_extra, 'replycomment_link' => 'comment_reply.php?com_itemid='.$com_itemid.'&amp;com_order='.$com_order.'&amp;com_mode='.$com_mode.''.$link_extra));
+		$xoopsTpl->assign(
+			array(
+				'commentsnav' => $navbar, 'editcomment_link' => 'comment_edit.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '' . $link_extra,
+				'deletecomment_link' => 'comment_delete.php?com_itemid=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '' . $link_extra,
+				'replycomment_link' => 'comment_reply.php?com_itemid='.$com_itemid.'&amp;com_order='.$com_order.'&amp;com_mode='.$com_mode.''.$link_extra
+			)
+		);
 
 		// assign some lang variables
-		$xoopsTpl->assign(array('lang_from' => _CM_FROM, 'lang_joined' => _CM_JOINED, 'lang_posts' => _CM_POSTS, 'lang_poster' => _CM_POSTER, 'lang_thread' => _CM_THREAD, 'lang_edit' => _EDIT, 'lang_delete' => _DELETE, 'lang_reply' => _REPLY, 'lang_subject' => _CM_REPLIES, 'lang_posted' => _CM_POSTED, 'lang_updated' => _CM_UPDATED, 'lang_notice' => _CM_NOTICE));
+		$xoopsTpl->assign(
+			array(
+				'lang_from' => _CM_FROM, 'lang_joined' => _CM_JOINED, 'lang_posts' => _CM_POSTS,
+				'lang_poster' => _CM_POSTER, 'lang_thread' => _CM_THREAD, 'lang_edit' => _EDIT,
+				'lang_delete' => _DELETE, 'lang_reply' => _REPLY, 'lang_subject' => _CM_REPLIES,
+				'lang_posted' => _CM_POSTED, 'lang_updated' => _CM_UPDATED, 'lang_notice' => _CM_NOTICE
+			)
+		);
 	}
 }
-?>

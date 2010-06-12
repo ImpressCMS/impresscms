@@ -17,11 +17,11 @@ if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 	exit();
 }
 $com_modid = $icmsModule->getVar('mid');
-include_once ICMS_ROOT_PATH."/class/xoopslists.php";
-include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
-$cform = new XoopsThemeForm(_CM_POSTCOMMENT, "commentform", 'comment_post.php', 'post', true);
+include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
+include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
+$cform = new XoopsThemeForm(_CM_POSTCOMMENT, 'commentform', 'comment_post.php', 'post', true);
 if (isset($icmsModuleConfig['com_rule'])) {
-	include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
+	include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
 	switch ($icmsModuleConfig['com_rule']) {
 		case XOOPS_COMMENT_APPROVEALL:
 			$rule_text = _CM_COMAPPROVEALL;
@@ -41,7 +41,7 @@ $cform->addElement(new XoopsFormText(_CM_TITLE, 'com_title', 50, 255, $com_title
 $icons_radio = new XoopsFormRadio(_MESSAGEICON, 'com_icon', $com_icon);
 $subject_icons = XoopsLists::getSubjectsList();
 foreach ($subject_icons as $iconfile) {
-	$icons_radio->addOption($iconfile, '<img src="'.ICMS_URL.'/images/subject/'.$iconfile.'" alt="" />');
+	$icons_radio->addOption($iconfile, '<img src="' . ICMS_URL . '/images/subject/' . $iconfile . '" alt="" />');
 }
 $cform->addElement($icons_radio);
 $cform->addElement(new XoopsFormDhtmlTextArea(_CM_MESSAGE, 'com_text', $com_text, 10, 50), true);
@@ -59,16 +59,21 @@ if (is_object($icmsUser)) {
 	if (false != $icmsUser->isAdmin($com_modid)) {
 		// show status change box when editing (comment id is not empty)
 		if (!empty($com_id)) {
-	  include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
-	  $status_select = new XoopsFormSelect(_CM_STATUS, 'com_status', $com_status);
-	  $status_select->addOptionArray(array(XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE => _CM_ACTIVE, XOOPS_COMMENT_HIDDEN => _CM_HIDDEN));
-	  $cform->addElement($status_select);
-	  $button_tray->addElement(new XoopsFormButton('', 'com_dodelete', _DELETE, 'submit'));
+			include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
+			$status_select = new XoopsFormSelect(_CM_STATUS, 'com_status', $com_status);
+			$status_select->addOptionArray(
+				array(
+					XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE => _CM_ACTIVE,
+					XOOPS_COMMENT_HIDDEN => _CM_HIDDEN
+				)
+			);
+			$cform->addElement($status_select);
+			$button_tray->addElement(new XoopsFormButton('', 'com_dodelete', _DELETE, 'submit'));
 		}
 		$html_checkbox = new XoopsFormCheckBox('', 'dohtml', $dohtml);
 		$html_checkbox->addOption(1, _CM_DOHTML);
 		$option_tray->addElement($html_checkbox);
-	}else{
+	} else {
 		$cform->addElement(new XoopsFormHidden('dohtml', $dohtml));
 	}
 }
@@ -97,11 +102,11 @@ if ('system' != $icmsModule->getVar('dirname')) {
 	if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
 		$myts =& MyTextSanitizer::getInstance();
 		foreach ($comment_config['extraParams'] as $extra_param) {
-	  // This routine is included from forms accessed via both GET and POST
-	  if (isset($_POST[$extra_param])) {
-		  $hidden_value = $myts->stripSlashesGPC($_POST[$extra_param]);
-	  } elseif (isset($_GET[$extra_param])) {
-		  $hidden_value = $myts->stripSlashesGPC($_GET[$extra_param]);
+			// This routine is included from forms accessed via both GET and POST
+			if (isset($_POST[$extra_param])) {
+				$hidden_value = $myts->stripSlashesGPC($_POST[$extra_param]);
+			} elseif (isset($_GET[$extra_param])) {
+				$hidden_value = $myts->stripSlashesGPC($_GET[$extra_param]);
 			} else {
 				$hidden_value = '';
 			}
@@ -118,4 +123,3 @@ $button_tray->addElement(new XoopsFormButton('', 'com_dopreview', _PREVIEW, 'sub
 $button_tray->addElement(new XoopsFormButton('', 'com_dopost', _CM_POSTCOMMENT, 'submit'));
 $cform->addElement($button_tray);
 $cform->display();
-?>

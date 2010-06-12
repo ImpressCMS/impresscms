@@ -23,7 +23,7 @@ icms_loadLanguageFile('core', 'calendar');
 	href="<?php echo ICMS_URL;?>/libraries/jscalendar/calendar-blue.css" />
 <script
 	type="text/javascript"
-	src="<?php echo ICMS_URL.'/libraries/jscalendar/calendar.js';?>"></script>
+	src="<?php echo ICMS_URL . '/libraries/jscalendar/calendar.js';?>"></script>
 <script type="text/javascript">
 <!--
 var calendar = null;

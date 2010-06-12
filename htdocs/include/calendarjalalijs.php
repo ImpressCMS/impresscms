@@ -13,15 +13,15 @@ if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
 icms_loadLanguageFile('core', 'calendar');
-echo'<link rel="stylesheet" type="text/css" media="all" href="'.ICMS_URL.'/libraries/jalalijscalendar/aqua/style.css" />
-<script type="text/javascript" src="'.ICMS_URL.'/libraries/jalalijscalendar/calendar.js"></script>
-<script type="text/javascript" src="'.ICMS_URL.'/libraries/jalalijscalendar/calendar-setup.js"></script>
+echo'<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/libraries/jalalijscalendar/aqua/style.css" />
+<script type="text/javascript" src="' . ICMS_URL . '/libraries/jalalijscalendar/calendar.js"></script>
+<script type="text/javascript" src="' . ICMS_URL . '/libraries/jalalijscalendar/calendar-setup.js"></script>
 ';
-if ( $icmsConfig['use_ext_date'] == true && defined ('_CALENDAR_TYPE') && _CALENDAR_TYPE == "jalali"){
-	echo'<script type="text/javascript" src="'.ICMS_URL.'/libraries/jalalijscalendar/jalali.js"></script>';
+if ($icmsConfig['use_ext_date'] == true && defined('_CALENDAR_TYPE') && _CALENDAR_TYPE == "jalali") {
+	echo'<script type="text/javascript" src="' . ICMS_URL . '/libraries/jalalijscalendar/jalali.js"></script>';
 }
-if ( $icmsConfig['use_ext_date'] == true && file_exists(ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/local.date.js')){
-	echo'<script type="text/javascript" src="'.ICMS_URL.'/language/'.$icmsConfig['language'].'/local.date.js"></script>';
+if ($icmsConfig['use_ext_date'] == true && file_exists(ICMS_ROOT_PATH . '/language/' . $icmsConfig['language'] . '/local.date.js')) {
+	echo'<script type="text/javascript" src="' . ICMS_URL . '/language/' . $icmsConfig['language'] . '/local.date.js"></script>';
 }
 ?>
 <script type="text/javascript">
@@ -105,7 +105,7 @@ Calendar._JSMN = new Array
  "<?php echo _CAL_BAHMAN;?>",
  "<?php echo _CAL_ESFAND;?>");
 
- 
+
 // tooltips
 Calendar._TT = {};
 Calendar._TT["INFO"] = "About the calendar";

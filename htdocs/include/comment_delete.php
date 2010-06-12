@@ -16,7 +16,7 @@
 if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 	exit();
 }
-include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
+include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
 $op = 'delete';
 if (!empty($_POST)) {
 	extract($_POST);
@@ -37,7 +37,7 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	$module =& $module_handler->get($comment->getVar('com_modid'));
 	$comment_config = $module->getInfo('comments');
 	$com_modid = $module->getVar('mid');
-	$redirect_page = ICMS_URL.'/modules/system/admin.php?fct=comments&amp;com_modid='.$com_modid.'&amp;com_itemid';
+	$redirect_page = ICMS_URL . '/modules/system/admin.php?fct=comments&amp;com_modid=' . $com_modid . '&amp;com_itemid';
 	$moddir = $module->getVar('dirname');
 	unset($comment);
 } else {
@@ -46,17 +46,17 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	}
 	$comment_config = $icmsModule->getInfo('comments');
 	$com_modid = $icmsModule->getVar('mid');
-	$redirect_page = $comment_config['pageName'].'?';
+	$redirect_page = $comment_config['pageName'] . '?';
 	$comment_confirm_extra = array();
 	if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
 		foreach ($comment_config['extraParams'] as $extra_param) {
 			if (isset(${$extra_param})) {
-				$redirect_page .= $extra_param.'='.${$extra_param}.'&amp;';
+				$redirect_page .= $extra_param . '=' . ${$extra_param} . '&amp;';
 
 				// for the confirmation page
 				$comment_confirm_extra [$extra_param] = ${$extra_param};
 			} elseif (isset($_GET[$extra_param])) {
-				$redirect_page .= $extra_param.'='.$_GET[$extra_param].'&amp;';
+				$redirect_page .= $extra_param . '=' . $_GET[$extra_param] . '&amp;';
 
 				// for the confirmation page
 				$comment_confirm_extra [$extra_param] = $_GET[$extra_param];
@@ -84,7 +84,7 @@ if (false != $accesserror) {
 	if ($ref != '') {
 		redirect_header($ref, 2, _NOPERM);
 	} else {
-		redirect_header($redirect_page.'?'.$comment_config['itemName'].'='. (int) ($com_itemid), 2, _NOPERM);
+		redirect_header($redirect_page . '?' . $comment_config['itemName'] . '=' .  (int) ($com_itemid), 2, _NOPERM);
 	}
 	exit();
 }
@@ -96,9 +96,9 @@ switch ($op) {
 		$comment_handler = xoops_gethandler('comment');
 		$comment =& $comment_handler->get($com_id);
 		if (!$comment_handler->delete($comment)) {
-			include ICMS_ROOT_PATH.'/header.php';
-			icms_error_msg(_CM_COMDELETENG.' (ID: '.$comment->getVar('com_id').')');
-			include ICMS_ROOT_PATH.'/footer.php';
+			include ICMS_ROOT_PATH . '/header.php';
+			icms_error_msg(_CM_COMDELETENG . ' (ID: ' . $comment->getVar('com_id') . ')');
+			include ICMS_ROOT_PATH . '/footer.php';
 			exit();
 		}
 
@@ -110,8 +110,8 @@ switch ($op) {
 			if (!function_exists($comment_config['callback']['update'])) {
 				if (isset($comment_config['callbackFile'])) {
 					$callbackfile = trim($comment_config['callbackFile']);
-					if ($callbackfile != '' && file_exists(ICMS_ROOT_PATH.'/modules/'.$moddir.'/'.$callbackfile)) {
-						include_once ICMS_ROOT_PATH.'/modules/'.$moddir.'/'.$callbackfile;
+					if ($callbackfile != '' && file_exists(ICMS_ROOT_PATH . '/modules/' . $moddir . '/' . $callbackfile)) {
+						include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/' . $callbackfile;
 					}
 					if (!function_exists($comment_config['callback']['update'])) {
 						$skip = true;
@@ -141,7 +141,7 @@ switch ($op) {
 		// get all comments posted later within the same thread
 		$thread_comments =& $comment_handler->getThread($comment->getVar('com_rootid'), $com_id);
 
-		include_once ICMS_ROOT_PATH.'/class/tree.php';
+		include_once ICMS_ROOT_PATH . '/class/tree.php';
 		$xot = new XoopsObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
 
 		$child_comments =& $xot->getFirstChild($com_id);
@@ -175,12 +175,12 @@ switch ($op) {
 			}
 		}
 		if (count($errs) > 0) {
-			include ICMS_ROOT_PATH.'/header.php';
+			include ICMS_ROOT_PATH . '/header.php';
 			icms_error_msg($errs);
-			include ICMS_ROOT_PATH.'/footer.php';
+			include ICMS_ROOT_PATH . '/footer.php';
 			exit();
 		}
-		redirect_header($redirect_page.'='.$com_itemid.'&amp;com_order='.$com_order.'&amp;com_mode='.$com_mode, 1, _CM_COMDELETED);
+		redirect_header($redirect_page .'=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode, 1, _CM_COMDELETED);
 		break;
 
 	case 'delete_all':
@@ -192,7 +192,7 @@ switch ($op) {
 		$thread_comments =& $comment_handler->getThread($com_rootid, $com_id);
 
 		// construct a comment tree
-		include_once ICMS_ROOT_PATH.'/class/tree.php';
+		include_once ICMS_ROOT_PATH . '/class/tree.php';
 		$xot = new XoopsObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
 		$child_comments =& $xot->getAllChild($com_id);
 		// add itself here
@@ -202,9 +202,9 @@ switch ($op) {
 		$member_handler =& xoops_gethandler('member');
 		foreach (array_keys($child_comments) as $i) {
 			if (!$comment_handler->delete($child_comments[$i])) {
-				$msgs[] = _CM_COMDELETENG.' (ID: '.icms_conv_nr2local($child_comments[$i]->getVar('com_id')).')';
+				$msgs[] = _CM_COMDELETENG . ' (ID: ' . icms_conv_nr2local($child_comments[$i]->getVar('com_id')) . ')';
 			} else {
-				$msgs[] = _CM_COMDELETED.' (ID: '.icms_conv_nr2local($child_comments[$i]->getVar('com_id')).')';
+				$msgs[] = _CM_COMDELETED . ' (ID: ' . icms_conv_nr2local($child_comments[$i]->getVar('com_id')) . ')';
 				// store poster ID and deleted post number into array for later use
 				$poster_id = $child_comments[$i]->getVar('com_uid');
 				if ($poster_id > 0) {
@@ -228,8 +228,9 @@ switch ($op) {
 			if (!function_exists($comment_config['callback']['update'])) {
 				if (isset($comment_config['callbackFile'])) {
 					$callbackfile = trim($comment_config['callbackFile']);
-					if ($callbackfile != '' && file_exists(ICMS_ROOT_PATH.'/modules/'.$moddir.'/'.$callbackfile)) {
-						include_once ICMS_ROOT_PATH.'/modules/'.$moddir.'/'.$callbackfile;
+					if ($callbackfile != ''
+						&& file_exists(ICMS_ROOT_PATH . '/modules/' . $moddir . '/' . $callbackfile)) {
+						include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/' . $callbackfile;
 					}
 					if (!function_exists($comment_config['callback']['update'])) {
 						$skip = true;
@@ -247,21 +248,20 @@ switch ($op) {
 			}
 		}
 
-		include ICMS_ROOT_PATH.'/header.php';
+		include ICMS_ROOT_PATH . '/header.php';
 		xoops_result($msgs);
-		echo '<br /><a href="'.$redirect_page.'='.$com_itemid.'&amp;com_order='.$com_order.'&amp;com_mode='.$com_mode.'">'._BACK.'</a>';
-		include ICMS_ROOT_PATH.'/footer.php';
+		echo '<br /><a href="' . $redirect_page . '=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '">' . _BACK . '</a>';
+		include ICMS_ROOT_PATH . '/footer.php';
 		break;
 
 	case 'delete':
 	default:
-		include ICMS_ROOT_PATH.'/header.php';
+		include ICMS_ROOT_PATH . '/header.php';
 		$comment_confirm = array('com_id' => $com_id, 'com_mode' => $com_mode, 'com_order' => $com_order, 'op' => array(_CM_DELETEONE => 'delete_one', _CM_DELETEALL => 'delete_all'));
 		if (!empty($comment_confirm_extra) && is_array($comment_confirm_extra)) {
 			$comment_confirm = $comment_confirm + $comment_confirm_extra;
 		}
 		xoops_confirm($comment_confirm, 'comment_delete.php', _CM_DELETESELECT);
-		include ICMS_ROOT_PATH.'/footer.php';
+		include ICMS_ROOT_PATH . '/footer.php';
 		break;
 }
-?>

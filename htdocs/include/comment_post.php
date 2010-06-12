@@ -17,7 +17,7 @@ if (!defined('ICMS_ROOT_PATH') || !is_object($icmsModule)) {
 	exit();
 }
 icms_loadLanguageFile('core', 'comment');
-include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
+include_once ICMS_ROOT_PATH . '/include/comment_constants.php';
 if ('system' == $icmsModule->getVar('dirname')) {
 	$com_id = isset($_POST['com_id']) ? (int) ($_POST['com_id']) : 0;
 	if (empty($com_id)) {
@@ -29,7 +29,8 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	$module =& $module_handler->get($comment->getVar('com_modid'));
 	$comment_config = $module->getInfo('comments');
 	$com_modid = $module->getVar('mid');
-	$redirect_page = ICMS_URL.'/modules/system/admin.php?fct=comments&amp;com_modid='.$com_modid.'&amp;com_itemid';
+	$redirect_page = ICMS_URL
+	. '/modules/system/admin.php?fct=comments&amp;com_modid=' . $com_modid . '&amp;com_itemid';
 	$moddir = $module->getVar('dirname');
 	unset($comment);
 } else {
@@ -43,7 +44,9 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
 		$extra_params = '';
 		foreach ($comment_config['extraParams'] as $extra_param) {
-			$extra_params .= isset($_POST[$extra_param]) ? $extra_param.'='.htmlspecialchars($_POST[$extra_param]).'&amp;' : $extra_param.'=&amp;';
+			$extra_params .= isset($_POST[$extra_param])
+			? $extra_param . '=' . htmlspecialchars($_POST[$extra_param]) . '&amp;'
+			: $extra_param . '=&amp;';
 		}
 		$redirect_page .= $extra_params;
 	}
@@ -88,7 +91,7 @@ if (!empty($_POST)) {
 switch ( $op ) {
 
 	case "delete":
-		include ICMS_ROOT_PATH.'/include/comment_delete.php';
+		include ICMS_ROOT_PATH . '/include/comment_delete.php';
 		break;
 	case "preview":
 		$myts =& MyTextSanitizer::getInstance();
@@ -110,24 +113,27 @@ switch ( $op ) {
 		$noname = isset($noname) ? (int) ($noname) : 0;
 		$com_text = $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['com_text']));
 		if ($icmsModule->getVar('dirname') != 'system') {
-	  include ICMS_ROOT_PATH.'/header.php';
+	  include ICMS_ROOT_PATH . '/header.php';
 	  themecenterposts($com_title, $p_comment);
-	  include ICMS_ROOT_PATH.'/include/comment_form.php';
-	  include ICMS_ROOT_PATH.'/footer.php';
+	  include ICMS_ROOT_PATH . '/include/comment_form.php';
+	  include ICMS_ROOT_PATH . '/footer.php';
 		} else {
 	  icms_cp_header();
 	  themecenterposts($com_title, $p_comment);
-	  include ICMS_ROOT_PATH.'/include/comment_form.php';
+	  include ICMS_ROOT_PATH . '/include/comment_form.php';
 	  icms_cp_footer();
 		}
 		break;
 	case "post":
 		// Captcha Hack
-		if(@include_once ICMS_ROOT_PATH . "/class/captcha/captcha.php") {
+		if(@include_once ICMS_ROOT_PATH . '/class/captcha/captcha.php') {
 	  if ( $icmsConfig['use_captchaf'] == true ) {
 	  	$icmsCaptcha = IcmsCaptcha::instance();
 	  	if(! $icmsCaptcha->verify(true) ) {
-	  		redirect_header($redirect_page.'='.$com_itemid.'&com_id='.$com_id.'&com_mode='.$com_mode.'&com_order='.$com_order, 2, $icmsCaptcha->getMessage());
+	  		redirect_header(
+	  		$redirect_page . '=' . $com_itemid . '&com_id=' . $com_id . '&com_mode=' . $com_mode . '&com_order=' . $com_order,
+	  		2, $icmsCaptcha->getMessage()
+	  		);
 	  	}
 	  }
 		}
@@ -145,7 +151,8 @@ switch ( $op ) {
 
 	  if (is_object($icmsUser)) {
 	  	$sysperm_handler =& xoops_gethandler('groupperm');
-	  	if ($icmsUser->isAdmin($com_modid) || $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
+	  	if ($icmsUser->isAdmin($com_modid)
+	  	|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 	  		if (!empty($com_status) && $com_status != XOOPS_COMMENT_PENDING) {
 	  			$old_com_status = $comment->getVar('com_status');
 	  			$comment->setVar('com_status', $com_status);
@@ -177,7 +184,10 @@ switch ( $op ) {
 	  	$accesserror = true;
 	  }
 	  if (false != $accesserror) {
-	  	redirect_header($redirect_page.'='.$com_itemid.'&amp;com_id='.$com_id.'&amp;com_mode='.$com_mode.'&amp;com_order='.$com_order, 1, _NOPERM);
+	  	redirect_header(
+	  	$redirect_page . '=' . $com_itemid . '&amp;com_id=' . $com_id . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order,
+	  	1, _NOPERM
+	  	);
 	  	exit();
 	  }
 		} else {
@@ -189,7 +199,8 @@ switch ( $op ) {
 	  $comment->setVar('com_ip', xoops_getenv('REMOTE_ADDR'));
 	  if (is_object($icmsUser)) {
 	  	$sysperm_handler =& xoops_gethandler('groupperm');
-	  	if ($icmsUser->isAdmin($com_modid) || $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
+	  	if ($icmsUser->isAdmin($com_modid)
+	  	|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 	  		$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
 	  		$add_userpost = true;
 	  		$call_approvefunc = true;
@@ -208,6 +219,7 @@ switch ( $op ) {
 	  				// RMV-NOTIFY
 	  				$notify_event = 'comment';
 	  				break;
+
 	  			case XOOPS_COMMENT_APPROVEADMIN:
 	  			default:
 	  				$comment->setVar('com_status', XOOPS_COMMENT_PENDING);
@@ -224,7 +236,10 @@ switch ( $op ) {
 	  	$dohtml = 0;
 	  	$uid = 0;
 	  	if ($icmsModuleConfig['com_anonpost'] != 1) {
-	  		redirect_header($redirect_page.'='.$com_itemid.'&amp;com_id='.$com_id.'&amp;com_mode='.$com_mode.'&amp;com_order='.$com_order, 1, _NOPERM);
+	  		redirect_header(
+	  		$redirect_page . '=' . $com_itemid . '&amp;com_id=' . $com_id . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order,
+	  		1, _NOPERM
+	  		);
 	  		exit();
 	  	}
 	  }
@@ -239,6 +254,7 @@ switch ( $op ) {
 	  			// RMV-NOTIFY
 	  			$notify_event = 'comment';
 	  			break;
+
 	  		case XOOPS_COMMENT_APPROVEADMIN:
 	  		case XOOPS_COMMENT_APPROVEUSER:
 	  		default:
@@ -274,9 +290,9 @@ switch ( $op ) {
 	  	$com_rootid = $newcid;
 	  	if (!$comment_handler->updateByField($comment, 'com_rootid', $com_rootid)) {
 	  		$comment_handler->delete($comment);
-	  		include ICMS_ROOT_PATH.'/header.php';
+	  		include ICMS_ROOT_PATH . '/header.php';
 	  		icms_error_msg();
-	  		include ICMS_ROOT_PATH.'/footer.php';
+	  		include ICMS_ROOT_PATH . '/footer.php';
 	  	}
 	  }
 
@@ -286,8 +302,8 @@ switch ( $op ) {
 	  	if (!function_exists($comment_config['callback']['approve'])) {
 	  		if (isset($comment_config['callbackFile'])) {
 	  			$callbackfile = trim($comment_config['callbackFile']);
-	  			if ($callbackfile != '' && file_exists(ICMS_ROOT_PATH.'/modules/'.$moddir.'/'.$callbackfile)) {
-	  				include_once ICMS_ROOT_PATH.'/modules/'.$moddir.'/'.$callbackfile;
+	  			if ($callbackfile != '' && file_exists(ICMS_ROOT_PATH . '/modules/' . $moddir . '/' . $callbackfile)) {
+	  				include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/' . $callbackfile;
 	  			}
 	  			if (!function_exists($comment_config['callback']['approve'])) {
 	  				$skip = true;
@@ -307,8 +323,8 @@ switch ( $op ) {
 	  	if (!function_exists($comment_config['callback']['update'])) {
 	  		if (isset($comment_config['callbackFile'])) {
 	  			$callbackfile = trim($comment_config['callbackFile']);
-	  			if ($callbackfile != '' && file_exists(ICMS_ROOT_PATH.'/modules/'.$moddir.'/'.$callbackfile)) {
-	  				include_once ICMS_ROOT_PATH.'/modules/'.$moddir.'/'.$callbackfile;
+	  			if ($callbackfile != '' && file_exists(ICMS_ROOT_PATH . '/modules/' . $moddir . '/' . $callbackfile)) {
+	  				include_once ICMS_ROOT_PATH . '/modules/' . $moddir . '/' . $callbackfile;
 	  			}
 	  			if (!function_exists($comment_config['callback']['update'])) {
 	  				$skip = true;
@@ -362,33 +378,45 @@ switch ( $op ) {
 	  		if (isset($com_config['extraParams']) && is_array($com_config['extraParams'])) {
 	  			$extra_params = '';
 	  			foreach ($com_config['extraParams'] as $extra_param) {
-	  				$extra_params .= isset($_POST[$extra_param]) ? $extra_param.'='.htmlspecialchars($_POST[$extra_param]).'&amp;' : $extra_param.'=&amp;';
+	  				$extra_params .= isset($_POST[$extra_param])
+	  				? $extra_param . '=' . htmlspecialchars($_POST[$extra_param]) . '&amp;'
+	  				: $extra_param . '=&amp;';
 	  				//$extra_params .= isset($_GET[$extra_param]) ? $extra_param.'='.$_GET[$extra_param].'&amp;' : $extra_param.'=&amp;';
 	  			}
 	  			$comment_url .= $extra_params;
 	  		}
 	  		$comment_url .= $com_config['itemName'];
 	  	}
-	  	$comment_tags['X_COMMENT_URL'] = ICMS_URL . '/modules/' . $not_module->getVar('dirname') . '/' .$comment_url . '=' . $com_itemid.'&amp;com_id='.$newcid.'&amp;com_rootid='.$com_rootid.'&amp;com_mode='.$com_mode.'&amp;com_order='.$com_order.'#comment'.$newcid;
+	  	$comment_tags['X_COMMENT_URL'] =
+	  	ICMS_URL . '/modules/' . $not_module->getVar('dirname') . '/' .$comment_url . '=' . $com_itemid
+	  	. '&amp;com_id=' . $newcid . '&amp;com_rootid=' . $com_rootid . '&amp;com_mode=' . $com_mode
+	  	. '&amp;com_order=' . $com_order . '#comment' . $newcid;
 	  	$notification_handler =& xoops_gethandler('notification');
-	  	$notification_handler->triggerEvent ($not_category, $not_itemid, $not_event, $comment_tags, false, $not_modid);
+	  	$notification_handler->triggerEvent($not_category, $not_itemid, $not_event, $comment_tags, false, $not_modid);
 	  }
 
 	  if (!isset($comment_post_results)) {
 
 	  	// if the comment is active, redirect to posted comment
 	  	if ($comment->getVar('com_status') == XOOPS_COMMENT_ACTIVE) {
-	  		redirect_header($redirect_page.'='.$com_itemid.'&amp;com_id='.$newcid.'&amp;com_rootid='.$com_rootid.'&amp;com_mode='.$com_mode.'&amp;com_order='.$com_order.'#comment'.$newcid, 2, _CM_THANKSPOST);
+	  		redirect_header(
+	  		$redirect_page . '=' . $com_itemid . '&amp;com_id=' . $newcid . '&amp;com_rootid='
+	  		. $com_rootid . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order . '#comment' . $newcid,
+	  		2, _CM_THANKSPOST
+	  		);
 	  	} else {
 	  		// not active, so redirect to top comment page
-	  		redirect_header($redirect_page.'='.$com_itemid.'&amp;com_mode='.$com_mode.'&amp;com_order='.$com_order.'#comment'.$newcid, 2, _CM_THANKSPOST);
+	  		redirect_header(
+	  		$redirect_page . '=' . $com_itemid . '&amp;com_mode=' . $com_mode . '&amp;com_order=' . $com_order
+	  		. '#comment' . $newcid, 2, _CM_THANKSPOST
+	  		);
 	  	}
 	  }
 		} else {
 	  if (!isset($purge_comment_post_results)) {
-	  	include ICMS_ROOT_PATH.'/header.php';
+	  	include ICMS_ROOT_PATH . '/header.php';
 	  	icms_error_msg($comment->getHtmlErrors());
-	  	include ICMS_ROOT_PATH.'/footer.php';
+	  	include ICMS_ROOT_PATH . '/footer.php';
 	  } else {
 	  	$comment_post_results = $comment->getErrors();
 	  }
@@ -399,4 +427,3 @@ switch ( $op ) {
 		redirect_header(ICMS_URL.'/',3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		break;
 }
-?>

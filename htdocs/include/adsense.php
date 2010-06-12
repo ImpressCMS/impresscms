@@ -18,7 +18,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 function icms_adsense_initiate() {
 	global $xoopsTpl, $icms_adsense_handler;
 	if (is_object($xoopsTpl)) {
-		foreach($icms_adsense_handler->objects as $k=>$v) {
+		foreach ($icms_adsense_handler->objects as $k=>$v) {
 			$xoopsTpl->assign('adsense_' . $k, $v->render());
 		}
 	}
@@ -28,5 +28,3 @@ icms_loadLanguageFile('system', 'adsense', true);
 global $icms_adsense_handler;
 $icms_adsense_handler = xoops_getModuleHandler('adsense', 'system');
 $icms_adsensesObj = $icms_adsense_handler->getAdsensesByTag();
-
-?>
