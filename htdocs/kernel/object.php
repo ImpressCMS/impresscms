@@ -420,11 +420,14 @@ class XoopsObject
 	 * clean values of all variables of the object for storage.
 	 * also add slashes whereever needed
 	 *
+	 * We had to put this method in the IcmsPersistableObject because the XOBJ_DTYPE_ARRAY does not work properly
+	 * at least on PHP 5.1. So we have created a new type XOBJ_DTYPE_SIMPLE_ARRAY to handle 1 level array
+	 * as a string separated by |
+	 *
 	 * @return bool true if successful
 	 * @access public
 	 */
-	function cleanVars()
-	{
+	function cleanVars() {
 		$ts =& MyTextSanitizer::getInstance();
 		$existing_errors = $this->getErrors();
 		$this->_errors = array();
@@ -436,11 +439,11 @@ class XoopsObject
 				switch ($v['data_type']) {
 					case XOBJ_DTYPE_TXTBOX:
 						if ($v['required'] && $cleanv != '0' && $cleanv == '') {
-							$this->setErrors( sprintf( _XOBJ_ERR_REQUIRED, $k ) );
+							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							continue;
 						}
 						if (isset($v['maxlength']) && strlen($cleanv) > (int) ($v['maxlength'])) {
-							$this->setErrors( sprintf( _XOBJ_ERR_SHORTERTHAN, $k, (int) ( $v['maxlength'] ) ) );
+							$this->setErrors(sprintf(_XOBJ_ERR_SHORTERTHAN, $k, (int) ($v['maxlength'])));
 							continue;
 						}
 						if (!$v['not_gpc']) {
@@ -449,9 +452,10 @@ class XoopsObject
 							$cleanv = $ts->censorString($cleanv);
 						}
 						break;
+
 					case XOBJ_DTYPE_TXTAREA:
 						if ($v['required'] && $cleanv != '0' && $cleanv == '') {
-							$this->setErrors( sprintf( _XOBJ_ERR_REQUIRED, $k ) );
+							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							continue;
 						}
 						if (!$v['not_gpc']) {
@@ -460,6 +464,7 @@ class XoopsObject
 							$cleanv = $ts->censorString($cleanv);
 						}
 						break;
+
 					case XOBJ_DTYPE_SOURCE:
 						if (!$v['not_gpc']) {
 							$cleanv = $ts->stripSlashesGPC($cleanv);
@@ -467,15 +472,26 @@ class XoopsObject
 							$cleanv = $cleanv;
 						}
 						break;
+
 					case XOBJ_DTYPE_INT:
+					case XOBJ_DTYPE_TIME_ONLY:
 						$cleanv = (int) ($cleanv);
 						break;
+
+					case XOBJ_DTYPE_CURRENCY:
+						$cleanv = icms_currency($cleanv);
+						break;
+
+					case XOBJ_DTYPE_FLOAT:
+						$cleanv = icms_float($cleanv);
+						break;
+
 					case XOBJ_DTYPE_EMAIL:
 						if ($v['required'] && $cleanv == '') {
-							$this->setErrors( sprintf( _XOBJ_ERR_REQUIRED, $k ) );
+							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							continue;
 						}
-						if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i",$cleanv)) {
+						if ($cleanv != '' && !preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $cleanv)) {
 							$this->setErrors(_CORE_DB_INVALIDEMAIL);
 							continue;
 						}
@@ -483,9 +499,10 @@ class XoopsObject
 							$cleanv = $ts->stripSlashesGPC($cleanv);
 						}
 						break;
+
 					case XOBJ_DTYPE_URL:
 						if ($v['required'] && $cleanv == '') {
-							$this->setErrors( sprintf( _XOBJ_ERR_REQUIRED, $k ) );
+							$this->setErrors(sprintf(_XOBJ_ERR_REQUIRED, $k));
 							continue;
 						}
 						if ($cleanv != '' && !preg_match("/^http[s]*:\/\//i", $cleanv)) {
@@ -495,14 +512,24 @@ class XoopsObject
 							$cleanv =& $ts->stripSlashesGPC($cleanv);
 						}
 						break;
+
+					case XOBJ_DTYPE_SIMPLE_ARRAY:
+						$cleanv = implode('|', $cleanv);
+						break;
+
 					case XOBJ_DTYPE_ARRAY:
 						$cleanv = serialize($cleanv);
 						break;
+
 					case XOBJ_DTYPE_STIME:
 					case XOBJ_DTYPE_MTIME:
 					case XOBJ_DTYPE_LTIME:
 						$cleanv = !is_string($cleanv) ? (int) ($cleanv) : strtotime($cleanv);
+						if (!($cleanv > 0)) {
+							$cleanv = strtotime($cleanv);
+						}
 						break;
+
 					default:
 						break;
 				}

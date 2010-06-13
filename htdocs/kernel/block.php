@@ -517,7 +517,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 	}
 
 	/**
-	 * getAllByGroupModule
+	 * getAllByGroupModule gets all blocks visible on a page, based on group permissions
 	 *
 	 * @param unknown_type $groupid
 	 * @param unknown_type $module_id
@@ -802,7 +802,7 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
 }
 
 /**
- * XoopsBlock
+ * XoopsBlock - for backwards compatibility
  *
  * @since XOOPS
  * @copyright The XOOPS Project <http://www.xoops.org>
@@ -810,12 +810,19 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
  *
  * @see IcmsBlock
  *
- * @deprecated
+ * @deprecated use IcmsBlock instead
  */
-class XoopsBlock extends IcmsBlock { /* For backwards compatibility */ }
+class XoopsBlock extends IcmsBlock {
+
+	public function __construct(&$db) {
+		icms_deprecated('IcmsBlock');
+		parent::__construct(&$db);
+	}
+
+}
 
 /**
- * XoopsBlockHandler
+ * XoopsBlockHandler - For backwards compatibility
  *
  * @since XOOPS
  * @copyright The XOOPS Project <http://www.xoops.org>
@@ -823,7 +830,13 @@ class XoopsBlock extends IcmsBlock { /* For backwards compatibility */ }
  *
  * @see IcmsBlockHandler
  *
- * @deprecated
+ * @deprecated  use IcmsBlockHandler instead
  */
-class XoopsBlockHandler extends IcmsBlockHandler { /* For backwards compatibility */ }
-?>
+class XoopsBlockHandler extends IcmsBlockHandler {
+
+	public function __construct(&$db) {
+		icms_deprecated('IcmsBlockHandler');
+		parent::__construct(&$db);
+	}
+
+}
