@@ -229,12 +229,12 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		if($icmsConfigUser['allow_htsig'] == 0)
 		{
 			$signature = strip_tags($myts->xoopsCodeDecode($user_sig, 1));
-			$edituser->setVar('user_sig', xoops_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
+			$edituser->setVar('user_sig', icms_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
 		}
 		else
 		{
 			$signature = $myts->displayTarea($user_sig, 1, 1, 1, 1, 1, 'display');
-			$edituser->setVar('user_sig', xoops_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
+			$edituser->setVar('user_sig', icms_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
 		}
 		$user_viewemail = (isset($user_viewemail) && $user_viewemail == 1) ? 1 : 0;
 		$edituser->setVar('user_viewemail', $user_viewemail);

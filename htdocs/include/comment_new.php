@@ -33,7 +33,7 @@ if ($com_itemid > 0) {
 		$myts =& MyTextSanitizer::getInstance();
 		$com_title = $myts->htmlSpecialChars($com_replytitle);
 		if (!preg_match("/^(Re|"._CM_RE."):/i", $com_title)) {
-			$com_title = _CM_RE.": ".xoops_substr($com_title, 0, 56);
+			$com_title = _CM_RE.": ".icms_substr($com_title, 0, 56);
 		}
 	} else {
 		$com_title = '';

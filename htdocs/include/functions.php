@@ -701,6 +701,7 @@ function xoops_getrank($rank_id =0, $posts = 0)
  */
 function xoops_substr($str, $start, $length, $trimmarker = '...')
 {
+	icms_deprecated( 'replace this function with icms_substr' );
 	return icms_substr($str, $start, $length, $trimmarker);
 }
 

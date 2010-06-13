@@ -200,12 +200,12 @@ if($op == 'saveuser')
 			if($icmsConfigUser['allow_htsig'] == 0)
 			{
 				$signature = strip_tags($myts->xoopsCodeDecode($_POST['user_sig'], 1));
-				$edituser->setVar('user_sig', xoops_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
+				$edituser->setVar('user_sig', icms_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
 			}
 			else
 			{
 				$signature = $myts->displayTarea($_POST['user_sig'], 1, 1, 1, 1, 1, 'display');
-				$edituser->setVar('user_sig', xoops_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
+				$edituser->setVar('user_sig', icms_substr($signature, 0, (int) ($icmsConfigUser['sig_max_length'])));
 			}
 		}
 
@@ -234,7 +234,7 @@ if($op == 'saveuser')
 		$edituser->setVar('umode', $_POST['umode']);
 		$edituser->setVar('notify_method', $_POST['notify_method']);
 		$edituser->setVar('notify_mode', $_POST['notify_mode']);
-		$edituser->setVar('bio', xoops_substr($_POST['bio'], 0, 255));
+		$edituser->setVar('bio', icms_substr($_POST['bio'], 0, 255));
 		$edituser->setVar('user_occ', $_POST['user_occ']);
 		$edituser->setVar('user_intrest', $_POST['user_intrest']);
 		$edituser->setVar('user_mailok', $_POST['user_mailok']);

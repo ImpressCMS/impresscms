@@ -191,7 +191,7 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 			} else {
 				$basename = strtolower($name[0]);
 			}
-			$basename = xoops_substr($basename, 0, 60, '');
+			$basename = icms_substr($basename, 0, 60, '');
 			//Prevent Duplication of Email Username and Name
 			if (!in_array($basename, $names)) {
 				$names[] = $basename;
@@ -204,10 +204,10 @@ class IcmsPersistableMemberHandler extends XoopsMemberHandler{
 		while ($i < $count) {
 			$num = $this->genRandNumber();
 			if ($onbasename < 0 && $hasbasename) {
-				$names[] = xoops_substr($basename, 0, 58, '').$num;
+				$names[] = icms_substr($basename, 0, 58, '').$num;
 
 			} else {
-				$names[] = xoops_substr($emailname, 0, 58, ''). $num;
+				$names[] = icms_substr($emailname, 0, 58, ''). $num;
 			}
 			$i = count($names);
 			$onbasename = ~ $onbasename;

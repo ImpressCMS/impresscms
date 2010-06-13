@@ -93,7 +93,7 @@ google_color_text = "' . $this->getVar('text_color', 'n') . '";
 
 	function generateTag() {
 		$title = rawurlencode ( strtolower ( $this->getVar ( 'description', 'e' ) ) );
-		$title = xoops_substr ( $title, 0, 10, '' );
+		$title = icms_substr ( $title, 0, 10, '' );
 		// Transformation des ponctuations
 		//				 Tab	 Space	  !		"		#		%		&		'		(		)		,		/		:		;		<		=		>		?		@		[		\		]		^		{		|		}		~	   .
 		$pattern = array ("/%09/", "/%20/", "/%21/", "/%22/", "/%23/", "/%25/", "/%26/", "/%27/", "/%28/", "/%29/", "/%2C/", "/%2F/", "/%3A/", "/%3B/", "/%3C/", "/%3D/", "/%3E/", "/%3F/", "/%40/", "/%5B/", "/%5C/", "/%5D/", "/%5E/", "/%7B/", "/%7C/", "/%7D/", "/%7E/", "/\./" );
