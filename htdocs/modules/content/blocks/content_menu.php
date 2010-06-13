@@ -100,7 +100,7 @@ function getPages($showsubs = true, $sort='content_weight', $order='ASC', $conte
 	$gperm_handler = & xoops_gethandler( 'groupperm' );
 	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 	$uid = is_object($icmsUser) ? $icmsUser->getVar('uid') : 0;
-	$content_handler =& xoops_getmodulehandler('content','content');
+	$content_handler =& icms_getModuleHandler('content','content');
 	$module_handler = xoops_gethandler('module');
 	$module = $module_handler->getByDirname('content');
 	$mid = $module->mid();

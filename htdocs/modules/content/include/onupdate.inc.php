@@ -39,7 +39,7 @@ function icms_module_update_content($module) {
 	$table = new IcmsDatabasetable ( 'icmscontent' );
 	$db = $GLOBALS ['xoopsDB'];
 
-	$content_handler = xoops_getmodulehandler ( 'content', 'content' );
+	$content_handler = icms_getModuleHandler ( 'content', 'content' );
 	$gperm_handler = & xoops_gethandler ( 'groupperm' );
 
 	if ($table->exists ()) {
@@ -101,7 +101,7 @@ function icms_module_update_content($module) {
 			$url = str_replace ( ICMS_URL . '/', '', $obj->handler->_moduleUrl . $obj->handler->_itemname . '.php?page=' . $seo );
 			$old_seo = str_replace ( "-", "_", $seo );
 				
-			$symlink_handler = xoops_getmodulehandler ( 'pages', 'system' );
+			$symlink_handler = icms_getModuleHandler ( 'pages', 'system' );
 			$criteria = new CriteriaCompo ( new Criteria ( 'page_url', '%' . $old_seo, 'LIKE' ) );
 			$criteria->add ( new Criteria ( 'page_moduleid', 1 ) );
 			$symlinks_remove = $symlink_handler->getObjects ( $criteria );
@@ -145,7 +145,7 @@ function icms_module_update_content($module) {
 		 * Importing the core content manager blocks
 		 */
 		echo '<code><b>Importing the core content manager blocks and configurations.</b></code><br />';
-		$icms_block_handler = xoops_getmodulehandler ( 'blocksadmin' );
+		$icms_block_handler = icms_getModuleHandler ( 'blocksadmin' );
 		//Content Block
 		$criteria = new CriteriaCompo ( new Criteria ( 'show_func', 'content_content_display_show' ) );
 		$content_content_block = $icms_block_handler->getObjects ( $criteria, false, true );

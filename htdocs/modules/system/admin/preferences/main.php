@@ -104,7 +104,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					}
 				break;
 				case 'autotasksystem':
-					$handler = xoops_getmodulehandler('autotasks', 'system');
+					$handler = icms_getModuleHandler('autotasks', 'system');
 					$options = &$handler->getSystemHandlersList(true);
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 1, false );
 					foreach ($options as $option) {
@@ -302,7 +302,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'select_pages' :
 					$myts = & MyTextSanitizer::getInstance ();
 					if (!file_exists(ICMS_ROOT_PATH.'/kernel/content.php')){
-						$content_handler = & xoops_getmodulehandler ( 'content', 'content' );
+						$content_handler = & icms_getModuleHandler ( 'content', 'content' );
 					}else{
 						$content_handler = & xoops_gethandler ( 'content' );
 					}
@@ -466,7 +466,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				case 'select_pages' :
 					$myts = & MyTextSanitizer::getInstance ();
 					if (!file_exists(ICMS_ROOT_PATH.'/kernel/content.php')){
-						$content_handler = & xoops_getmodulehandler ( 'content', 'content' );
+						$content_handler = & icms_getModuleHandler ( 'content', 'content' );
 					}else{
 						$content_handler = & xoops_gethandler ( 'content' );
 					}

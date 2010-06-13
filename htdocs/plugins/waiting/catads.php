@@ -1,7 +1,7 @@
 <?php
 function b_waiting_catads(){
    	$block = array();
-	$ads_hnd =& xoops_getmodulehandler('ads', 'catads');
+	$ads_hnd =& icms_getModuleHandler('ads', 'catads');
 	$criteria = new Criteria('waiting', '1', '=');
 	$nbads = $ads_hnd->getCount($criteria);
    	if ( $nbads > 0 ) {

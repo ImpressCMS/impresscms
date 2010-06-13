@@ -41,7 +41,7 @@ function editcustomtag($showmenu = false, $customtagid = 0, $clone=false)
 }
 icms_loadLanguageFile('system', 'common');
 
-$icms_customtag_handler = xoops_getmodulehandler('customtag');
+$icms_customtag_handler = icms_getModuleHandler('customtag');
 
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
 if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);

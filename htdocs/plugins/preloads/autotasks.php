@@ -21,7 +21,7 @@ class IcmsPreloadAutotasks extends IcmsPreloadItem {
 	 * Function to be triggered at the end of the core boot process
 	 */
 	function eventFinishCoreBoot() {
-		$handler = &xoops_getmodulehandler('autotasks', 'system');
+		$handler = &icms_getModuleHandler('autotasks', 'system');
 		if ($handler->needExecution()) {
 			$rez = $handler->execTasks();
 			$handler->startIfNeeded();
@@ -39,7 +39,7 @@ class IcmsPreloadAutotasks extends IcmsPreloadItem {
 	 */
 	function eventAfterSaveSystemAdminPreferencesItems($array) {
 		if (!isset($array[ICMS_CONF_AUTOTASKS])) return;
-		$handler = xoops_getmodulehandler('autotasks', 'system');
+		$handler = icms_getModuleHandler('autotasks', 'system');
 		$handler->virtual_config = array();
 		$array = &$array[ICMS_CONF_AUTOTASKS];
 		$vconfig1 = array();

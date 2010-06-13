@@ -36,7 +36,7 @@ function editautotasks($showmenu = false, $autotasksid = 0, $clone=false)
 }
 icms_loadLanguageFile('system', 'common');
 
-$icms_autotasks_handler = xoops_getmodulehandler('autotasks', 'system');
+$icms_autotasks_handler = icms_getModuleHandler('autotasks', 'system');
 
 $op = '';
 

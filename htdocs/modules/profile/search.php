@@ -32,7 +32,7 @@ switch ($op) {
 		include ICMS_ROOT_PATH."/header.php";
 
 		// Dynamic fields
-		$profile_handler =& xoops_getmodulehandler('profile');
+		$profile_handler =& icms_getModuleHandler('profile');
 		// Get fields
 		$fields =& $profile_handler->loadFields();
 		// Get ids of fields that can be searched
@@ -146,7 +146,7 @@ switch ($op) {
 
 		$member_handler =& xoops_gethandler('member');
 		// Dynamic fields
-		$profile_handler =& xoops_getmodulehandler('profile');
+		$profile_handler =& icms_getModuleHandler('profile');
 		// Get fields
 		$fields =& $profile_handler->loadFields();
 		// Get ids of fields that can be searched
@@ -370,7 +370,7 @@ switch ($op) {
 		$criteria->setStart($start);
 
 		//Get users based on criteria
-		$profile_handler = xoops_getmodulehandler('profile');
+		$profile_handler = icms_getModuleHandler('profile');
 		list($users, $profiles, $total_users) = $profile_handler->search($criteria, $searchvars);
 
 		//Sort information

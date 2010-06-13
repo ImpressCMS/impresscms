@@ -757,7 +757,7 @@ function xoops_module_activate($mid) {
 		$ret = "<p>".sprintf(_MD_AM_FAILACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />".$module->getHtmlErrors();
 		return $ret."</p>";
 	}
-	$icms_block_handler = xoops_getmodulehandler ( 'blocksadmin', 'system' );
+	$icms_block_handler = icms_getModuleHandler ( 'blocksadmin', 'system' );
 	$blocks =& $icms_block_handler->getByModule($module->getVar('mid'));
 	$bcount = count($blocks);
 	for ($i = 0; $i < $bcount; $i++) {
@@ -770,7 +770,7 @@ function xoops_module_activate($mid) {
 function xoops_module_deactivate($mid) {
 	global $icms_page_handler, $icms_block_handler, $xoopsConfig;
 	if(!isset($icms_page_handler)){
-		$icms_page_handler = xoops_getmodulehandler ( 'pages', 'system' );
+		$icms_page_handler = icms_getModuleHandler ( 'pages', 'system' );
 	}
 
 	$module_handler =& xoops_gethandler('module');
@@ -801,7 +801,7 @@ function xoops_module_deactivate($mid) {
 			return $ret."</p>";
 		}
 
-		$icms_block_handler = xoops_getmodulehandler ( 'blocksadmin', 'system' );
+		$icms_block_handler = icms_getModuleHandler ( 'blocksadmin', 'system' );
 		$blocks =& $icms_block_handler->getByModule($module->getVar('mid'));
 		$bcount = count($blocks);
 		for ($i = 0; $i < $bcount; $i++) {

@@ -41,7 +41,7 @@ function editpage($page_id = 0, $clone = false) {
 	$icmsAdminTpl->display ( 'db:admin/pages/system_adm_pagemanager_index.html' );
 }
 
-$icms_page_handler = xoops_getmodulehandler ( 'pages' );
+$icms_page_handler = icms_getModuleHandler ( 'pages' );
 /** Use a naming convention that indicates the source of the content of the variable */
 $clean_op = '';
 /** Create a whitelist of valid values, be sure to use appropriate types for each value

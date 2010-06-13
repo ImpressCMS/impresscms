@@ -957,7 +957,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 			$seo = $obj->handler->makelink($obj);
 			$url = str_replace(ICMS_URL.'/','',$obj->handler->_moduleUrl.$obj->handler->_itemname.'.php?page='.$seo);
 				
-			$symlink_handler = xoops_getmodulehandler('pages','system');
+			$symlink_handler = icms_getModuleHandler('pages','system');
 			$criteria = new CriteriaCompo(new Criteria('page_url','%'.$seo,'LIKE'));
 			$criteria->add(new Criteria('page_moduleid',$module->mid()));
 			$ct = $symlink_handler->getObjects($criteria);
@@ -987,7 +987,7 @@ class ContentContentHandler extends IcmsPersistableObjectHandler {
 		$module_handler = xoops_gethandler('module');
 		$module = $module_handler->getByDirname('content');
 
-		$symlink_handler = xoops_getmodulehandler('pages','system');
+		$symlink_handler = icms_getModuleHandler('pages','system');
 		$criteria = new CriteriaCompo(new Criteria('page_url',$url));
 		$criteria->add(new Criteria('page_moduleid',$module->mid()));
 		$symlink_handler->deleteAll($criteria);

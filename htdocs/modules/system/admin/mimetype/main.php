@@ -42,7 +42,7 @@ function editmimetype($showmenu = false, $mimetypeid = 0, $clone=false)
 }
 icms_loadLanguageFile('system', 'common');
 
-$icms_mimetype_handler = xoops_getmodulehandler('mimetype');
+$icms_mimetype_handler = icms_getModuleHandler('mimetype');
 
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
 if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);

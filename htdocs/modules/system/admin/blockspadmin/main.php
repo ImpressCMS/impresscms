@@ -37,7 +37,7 @@ function editblockposition($id = 0)
 	$icmsAdminTpl->display('db:admin/blockspadmin/system_adm_blockspadmin.html');
 }
 
-$icms_blockposition_handler = xoops_getmodulehandler('blockspadmin');
+$icms_blockposition_handler = icms_getModuleHandler('blockspadmin');
 
 $clean_op = '';
 

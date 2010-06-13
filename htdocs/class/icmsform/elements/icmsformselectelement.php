@@ -50,7 +50,7 @@ class IcmsFormSelectElement extends XoopsFormSelect {
 						// Creating the specified core object handler
 						$control_handler =& xoops_gethandler($control['itemHandler']);
 					} else {
-						$control_handler =& xoops_getmodulehandler($control['itemHandler'], $control['module']);
+						$control_handler =& icms_getModuleHandler($control['itemHandler'], $control['module']);
 					}
 				} else {
 					$control_handler =& $object->handler;

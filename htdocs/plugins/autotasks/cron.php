@@ -164,7 +164,7 @@ extends IcmsAutoTasksSystem {
 	 * @return string
 	 */
 	function getCommandLine() {
-		$atasks_handler = &xoops_getmodulehandler('autotasks', 'system');
+		$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
 		$config_atasks = &$atasks_handler->getConfig();
 		if ( ($config_atasks['autotasks_helper_path'] = trim($config_atasks['autotasks_helper_path'])) != '') {
 			if (substr($config_atasks['autotasks_helper_path'], -1) != '/') {
@@ -205,7 +205,7 @@ extends IcmsAutoTasksSystem {
 	function getCronTabUser() {
 		static $user = null;
 		if ($user === null) {
-			$atasks_handler = &xoops_getmodulehandler('autotasks', 'system');
+			$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
 			$config = &$atasks_handler->getConfig();
 			$user = $config['autotasks_user'];
 		}
