@@ -2210,47 +2210,55 @@ function formatTimestamp($time, $format = "l", $timeoffset = null)
  * @param bool $optional	Is the module optional? Is it bad when the module cannot be loaded?
  * @return object The module handler instance
  */
-function &icms_getmodulehandler($name = null, $module_dir = null, $module_basename = null, $optional = false)
-{
+function &icms_getModuleHandler($name = null, $module_dir = null, $module_basename = null, $optional = false) {
 	static $handlers;
 	// if $module_dir is not specified
-	if(!isset($module_dir))
-	{
+	if (!isset($module_dir)) {
 		//if a module is loaded
-		if(isset($GLOBALS['icmsModule']) && is_object($GLOBALS['icmsModule'])) {$module_dir = $GLOBALS['icmsModule']->getVar('dirname');}
-		else {trigger_error(_CORE_NOMODULE, E_USER_ERROR);}
+		if (isset($GLOBALS['icmsModule']) && is_object($GLOBALS['icmsModule'])) {
+			$module_dir = $GLOBALS['icmsModule']->getVar('dirname');
+		} else {
+			trigger_error(_CORE_NOMODULE, E_USER_ERROR);
+		}
+	} else {
+		$module_dir = trim($module_dir);
 	}
-	else {$module_dir = trim($module_dir);}
-	$module_basename = isset($module_basename)?trim($module_basename):$module_dir;
+	$module_basename = isset($module_basename) ? trim($module_basename) : $module_dir;
 	$name = (!isset($name)) ? $module_dir : trim($name);
-	if(!isset($handlers[$module_dir][$name]))
-	{
-		if($module_dir != 'system') {$hnd_file = ICMS_ROOT_PATH."/modules/{$module_dir}/class/{$name}.php";}
-		else {$hnd_file = ICMS_ROOT_PATH."/modules/{$module_dir}/admin/{$name}/class/{$name}.php";}
-		if(file_exists($hnd_file)) {include_once $hnd_file;}
-		$class = ucfirst(strtolower($module_basename)).ucfirst($name).'Handler';
-		if(class_exists($class)) {$handlers[$module_dir][$name] = new $class($GLOBALS['xoopsDB']);}
+	if (!isset($handlers[$module_dir][$name])) {
+		if($module_dir != 'system') {
+			$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/class/{$name}.php";
+		} else {
+			$hnd_file = ICMS_ROOT_PATH . "/modules/{$module_dir}/admin/{$name}/class/{$name}.php";
+		}
+		if (file_exists($hnd_file)) {include_once $hnd_file;}
+		$class = ucfirst(strtolower($module_basename)) . ucfirst($name) . 'Handler';
+		if (class_exists($class)) {
+			$handlers[$module_dir][$name] = new $class($GLOBALS['xoopsDB']);
+		}
 	}
-	if(!isset($handlers[$module_dir][$name]) && !$optional)
-	{
+	if (!isset($handlers[$module_dir][$name]) && !$optional) {
 		trigger_error(sprintf(_CORE_MODULEHANDLER_NOTAVAILABLE, $module_dir, $name), E_USER_ERROR);
 	}
-	if(isset($handlers[$module_dir][$name])) {return $handlers[$module_dir][$name];}
+	if (isset($handlers[$module_dir][$name])) {return $handlers[$module_dir][$name];}
 	$inst = false;
 	return $inst;
 }
 
-/*
+/**
  * Gets module handler
  * For Backward Compatibility.
  *
  * @param	string  $name  The name of the module
  * @param	string	$module_dir		The module directory where to get the module class
  * @return	object  $inst	The reference to the generated object
+ * @deprecated Use icms_getmodulehandler instead
+ * @todo Remove this function in version 1.4
  */
 function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = false)
 {
-	return icms_getmodulehandler($name, $module_dir, $module_dir, $optional);
+	icms_deprecated('icms_getModuleHandler','This function will be removed in version 1.4');
+	return icms_getModuleHandler($name, $module_dir, $module_dir, $optional);
 }
 
 /**
