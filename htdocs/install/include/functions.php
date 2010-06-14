@@ -124,7 +124,7 @@ function imcms_copyr($source, $dest)
 	// Simple copy for a file
 	if(is_file($source)) {return copy($source, $dest);}
 	// Make destination directory
-	if(!is_dir($dest)) {icms_mkdir($dest);}
+	if(!is_dir($dest)) {imcms_install_mkdir($dest);}
 	// Loop through the folder
 	$dir = dir($source);
 	while(false !== $entry = $dir->read())
