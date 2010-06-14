@@ -76,7 +76,7 @@ class IcmsLibrariesHandler {
 	 *
 	 * Here are the currently supported events:
 	 * - finishCoreBoot : this event is triggered at the end of the core booting process (end of include/common.php)
-	 * - adminHeader : this event is triggered when calling xoops_cp_header() and is used to output content in the head section of the admin side
+	 * - adminHeader : this event is triggered when calling icms_cp_header() and is used to output content in the head section of the admin side
 	 * - beforeFooter : this event is triggered when include/footer.php is called, at the begining of the file
 	 * - startOutputInit : this event is triggered when starting to output the content, in include/header.php after instantiation of $xoopsTpl
 	 *

@@ -36,7 +36,6 @@ switch ($op) {
 			}
 		}
 
-		//xoops_cp_header();
 		icms_cp_header();
 		icms_adminMenu(6, _AM_SPROFILE_FINDUSER);
 
@@ -135,7 +134,6 @@ switch ($op) {
 	default:
 		include_once ICMS_ROOT_PATH."/modules/".basename(  dirname(  dirname( __FILE__ ) ) )."/class/smartuser.php";
 		include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
-		//xoops_cp_header();
 		icms_cp_header();
 		icms_adminMenu(6, _AM_SPROFILE_FINDUSER);
 
