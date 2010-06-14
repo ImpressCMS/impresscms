@@ -1226,7 +1226,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				<meta http-equiv="content-language" content="'._LANGCODE.'" />
 				<title>'.$xoopsConfig['sitename'].'</title>
 				<link rel="stylesheet" type="text/css" media="screen" href="' .XOOPS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />
-				<link rel="stylesheet" type="text/css" media="screen" href="' .getcss($xoopsConfig['theme_set']) .'" />';
+				<link rel="stylesheet" type="text/css" media="screen" href="' .xoops_getcss($xoopsConfig['theme_set']) .'" />';
 
 				$css =& $tpltpl_handler->find($xoopsConfig['template_set'], 'css', 0, null, null, true);
 				$csscount = count($css);

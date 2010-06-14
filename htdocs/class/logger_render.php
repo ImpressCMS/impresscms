@@ -25,7 +25,7 @@ if ( $mode == 'popup' ) {
 	<meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" />
 	<meta http-equiv="content-language" content="'._LANGCODE.'" />
 	<title>'.$icmsConfig['sitename'].'</title>
-	<link rel="stylesheet" type="text/css" media="all" href="'.getcss($icmsConfig['theme_set']).'" />
+	<link rel="stylesheet" type="text/css" media="all" href="'.xoops_getcss($icmsConfig['theme_set']).'" />
 </head>
 <body>' . $dump . '
 	<div style="text-align:center;">

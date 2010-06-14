@@ -26,5 +26,5 @@ function icms_adsense_initiate() {
 
 icms_loadLanguageFile('system', 'adsense', true);
 global $icms_adsense_handler;
-$icms_adsense_handler = xoops_getModuleHandler('adsense', 'system');
+$icms_adsense_handler = icms_getModuleHandler('adsense', 'system');
 $icms_adsensesObj = $icms_adsense_handler->getAdsensesByTag();

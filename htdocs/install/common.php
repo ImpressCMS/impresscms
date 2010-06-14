@@ -178,7 +178,7 @@ $xoops = new xos_kernel_Xoops2();
 
 // Instantiate security object
 require_once XOOPS_ROOT_PATH."/class/xoopssecurity.php";
-$xoopsSecurity = new XoopsSecurity();
+$xoopsSecurity = new IcmsSecurity();
 global $xoopsSecurity;
 //Check super globals
 $xoopsSecurity->checkSuperglobals();

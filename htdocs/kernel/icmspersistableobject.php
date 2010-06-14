@@ -1060,7 +1060,7 @@ class IcmsPersistableObject extends XoopsObject {
 	 */
 	/*
 	 function getUrlLinkObj($key){
-		$smartobject_linkurl_handler = xoops_getModuleHandler('urllink', 'smartobject');
+		$smartobject_linkurl_handler = icms_getModuleHandler('urllink', 'smartobject');
 		$urllinkid = $this->getVar($key) != null ? $this->getVar($key) : 0;
 		if($urllinkid != 0){
 		return  $smartobject_linkurl_handler->get($urllinkid);
@@ -1070,12 +1070,12 @@ class IcmsPersistableObject extends XoopsObject {
 		}
 
 		function &storeUrlLinkObj($urlLinkObj){
-		$smartobject_linkurl_handler = xoops_getModuleHandler('urllink', 'smartobject');
+		$smartobject_linkurl_handler = icms_getModuleHandler('urllink', 'smartobject');
 		return $smartobject_linkurl_handler->insert($urlLinkObj);
 		}
 
 		function getFileObj($key){
-		$smartobject_file_handler = xoops_getModuleHandler('file', 'smartobject');
+		$smartobject_file_handler = icms_getModuleHandler('file', 'smartobject');
 		$fileid = $this->getVar($key) != null ? $this->getVar($key) : 0;
 		if($fileid != 0){
 		return  $smartobject_file_handler->get($fileid);
@@ -1085,7 +1085,7 @@ class IcmsPersistableObject extends XoopsObject {
 		}
 
 		function &storeFileObj($fileObj){
-		$smartobject_file_handler = xoops_getModuleHandler('file', 'smartobject');
+		$smartobject_file_handler = icms_getModuleHandler('file', 'smartobject');
 		return $smartobject_file_handler->insert($fileObj);
 		}
 		*/

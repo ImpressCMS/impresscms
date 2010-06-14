@@ -26,7 +26,7 @@ function icms_customtag_initiate() {
 
 icms_loadLanguageFile('system', 'customtag', true);
 global $icms_customtag_handler;
-$icms_customtag_handler = xoops_getModuleHandler('customtag', 'system');
+$icms_customtag_handler = icms_getModuleHandler('customtag', 'system');
 $icms_customTagsObj = $icms_customtag_handler->getCustomtagsByName();
 
 ?>

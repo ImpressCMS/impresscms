@@ -75,7 +75,7 @@ class IcmsPersistableObjectsRegistry {
 				$modulename = $icmsModule->dirname();
 			}
 		}
-		$object_handler = xoops_getModuleHandler($item, $modulename);
+		$object_handler = icms_getModuleHandler($item, $modulename);
 
 		if (method_exists($object_handler, 'getObjects')) {
 			$objects = $object_handler->getObjects($criteria, true);
@@ -107,7 +107,7 @@ class IcmsPersistableObjectsRegistry {
 			return $this->_registryArray['objects'][$modulename][$itemname];
 		} else {
 			// if they were not in registry, let's fetch them and add them to the reigistry
-			$module_handler = xoops_getModuleHandler($itemname, $modulename);
+			$module_handler = icms_getModuleHandler($itemname, $modulename);
 			if (method_exists($module_handler, 'getObjects')) {
 				$objects = $module_handler->getObjects();
 			}
@@ -137,7 +137,7 @@ class IcmsPersistableObjectsRegistry {
 			return $this->_registryArray['list'][$modulename][$itemname];
 		} else {
 			// if they were not in registry, let's fetch them and add them to the reigistry
-			$module_handler = xoops_getModuleHandler($itemname, $modulename);
+			$module_handler = icms_getModuleHandler($itemname, $modulename);
 			if (method_exists($module_handler, 'getList')) {
 				$objects = $module_handler->getList();
 			}
@@ -166,7 +166,7 @@ class IcmsPersistableObjectsRegistry {
 		if (isset($this->_registryArray['objects'][$modulename][$itemname][$key])) {
 			return $this->_registryArray['objects'][$modulename][$itemname][$key];
 		} else {
-			$objectHandler = xoops_getModuleHandler($itemname, $modulename);
+			$objectHandler = icms_getModuleHandler($itemname, $modulename);
 			$object = $objectHandler->get($key);
 
 			if (!$object->isNew()) {

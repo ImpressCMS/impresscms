@@ -15,6 +15,5 @@
  */
 
 if (!defined('ICMS_ROOT_PATH')) { exit(); }
-icms_deprecated( 'kernel/block.php', 'this file will be removed in ImpressCMS 1.4 - ise kernel/block.php' );
-require_once ICMS_ROOT_PATH."/kernel/block.php";
-?>
+icms_deprecated( 'kernel/block.php', 'this file will be removed in ImpressCMS 1.4 - use kernel/block.php' );
+require_once ICMS_ROOT_PATH . '/kernel/block.php' ;

@@ -26,7 +26,7 @@ icms_loadLanguageFile('content', 'common');
 icms_loadLanguageFile('content', 'main');
 $icmsModuleConfig = $contentConfig;
 
-$content_content_handler = xoops_getModuleHandler ( 'content', 'content' );
+$content_content_handler = icms_getModuleHandler ( 'content', 'content' );
 
 /** Again, use a naming convention that indicates the source of the content of the variable */
 $clean_content_id = isset ( $_GET ['content_id'] ) ? (int) ( $_GET ['content_id'] ) : 0;

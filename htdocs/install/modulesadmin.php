@@ -364,7 +364,7 @@ function xoops_module_install($dirname) {
 
 			// add module specific tasks to system autotasks list
 			$atasks = $module->getInfo('autotasks');
-			$atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
+			$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
 			if (isset($atasks) && is_array($atasks)) {
 				foreach ($atasks as $taskID => $taskData) {
 					$task = &$atasks_handler->create();
@@ -837,7 +837,7 @@ function icms_module_update($dirname) {
 
 		// add module specific tasks to system autotasks list
 		$atasks = $module->getInfo('autotasks');
-		$atasks_handler = &xoops_getModuleHandler('autotasks', 'system');
+		$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
 		if (count($atasks) > 0) {
 			$msgs[] = 'Updating autotasks...';
 			$criteria = new CriteriaCompo();

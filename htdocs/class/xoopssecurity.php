@@ -23,12 +23,14 @@
  * @copyright    (c) 2000-2005 The Xoops Project - www.xoops.org
  */
 class IcmsSecurity {
-	var $errors = array();
+
+	public $errors = array();
+
 	/**
 	 * Constructor
 	 *
 	 **/
-	function XoopsSecurity() {
+	public function __construct() {
 	}
 
 	/**
@@ -40,7 +42,7 @@ class IcmsSecurity {
 	 *
 	 * @return bool
 	 */
-	function check($clearIfValid = true, $token = false, $name = _CORE_TOKEN) {
+	public function check($clearIfValid = true, $token = false, $name = _CORE_TOKEN) {
 		return $this->validateToken($token, $clearIfValid, $name);
 	}
 
@@ -52,7 +54,7 @@ class IcmsSecurity {
 	 *
 	 * @return string token value
 	 */
-	function createToken($timeout = 0, $name = _CORE_TOKEN)
+	public function createToken($timeout = 0, $name = _CORE_TOKEN)
 	{
 		$this->garbageCollection($name);
 		if ($timeout == 0) {
@@ -77,7 +79,7 @@ class IcmsSecurity {
 	 *
 	 * @return bool
 	 **/
-	function validateToken($token = false, $clearIfValid = true, $name = _CORE_TOKEN)
+	public function validateToken($token = false, $clearIfValid = true, $name = _CORE_TOKEN)
 	{
 		global $xoopsLogger;
 		$token = ($token !== false) ? $token : ( isset($_REQUEST[$name . '_REQUEST']) ? $_REQUEST[$name . '_REQUEST'] : '' );
@@ -115,7 +117,7 @@ class IcmsSecurity {
 	 *
 	 * @param string $name session name
 	 **/
-	function clearTokens($name = _CORE_TOKEN)
+	public function clearTokens($name = _CORE_TOKEN)
 	{
 		$_SESSION[$name . '_SESSION'] = array();
 	}
@@ -127,7 +129,7 @@ class IcmsSecurity {
 	 *
 	 * @return bool
 	 **/
-	function filterToken($token)
+	public function filterToken($token)
 	{
 		return (!empty($token['expire']) && $token['expire'] >= time());
 	}
@@ -139,7 +141,7 @@ class IcmsSecurity {
 	 *
 	 * @return void
 	 **/
-	function garbageCollection($name = _CORE_TOKEN) {
+	public function garbageCollection($name = _CORE_TOKEN) {
 		if (isset($_SESSION[$name . '_SESSION']) && count($_SESSION[$name . '_SESSION']) > 0) {
 			$_SESSION[$name . '_SESSION'] = array_filter($_SESSION[$name . '_SESSION'], array($this, 'filterToken'));
 		}
@@ -151,7 +153,7 @@ class IcmsSecurity {
 	 *
 	 * @return bool
 	 **/
-	function checkReferer($docheck = 1)
+	public function checkReferer($docheck = 1)
 	{
 		$ref = xoops_getenv('HTTP_REFERER');
 		if ($docheck == 0) {
@@ -171,7 +173,7 @@ class IcmsSecurity {
 	 *
 	 * @return void
 	 **/
-	function checkSuperglobals() {
+	public function checkSuperglobals() {
 		foreach (array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri') as $bad_global) {
 			if (isset($_REQUEST[$bad_global])) {
 				header('Location: '.ICMS_URL.'/');
@@ -186,7 +188,7 @@ class IcmsSecurity {
 	 *
 	 * @return void
 	 **/
-	function checkBadips() {
+	public function checkBadips() {
 		global $icmsConfig;
 		if ($icmsConfig['enable_badips'] == 1 && isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] != '') {
 			foreach ($icmsConfig['bad_ips'] as $bi) {
@@ -205,7 +207,7 @@ class IcmsSecurity {
 	 *
 	 * @return string
 	 **/
-	function getTokenHTML($name = _CORE_TOKEN) {
+	public function getTokenHTML($name = _CORE_TOKEN) {
 		require_once ICMS_ROOT_PATH."/class/xoopsformloader.php" ;
 		$token = new XoopsFormHiddenToken($name);
 		return $token->render();
@@ -216,7 +218,7 @@ class IcmsSecurity {
 	 *
 	 * @param   string  $error
 	 **/
-	function setErrors($error)
+	public function setErrors($error)
 	{
 		$this->errors[] = trim($error);
 	}
@@ -228,7 +230,7 @@ class IcmsSecurity {
 	 *
 	 * @return    array|string    Array of array messages OR HTML string
 	 */
-	function &getErrors($ashtml = false)
+	public function &getErrors($ashtml = false)
 	{
 		if (!$ashtml) {
 			return $this->errors;
@@ -253,7 +255,13 @@ class IcmsSecurity {
  * @since		XOOPS
  * @author		The XOOPS Project Community <http://www.xoops.org>
  *
- * @deprecated
+ * @deprecated	Use IcmsSecurity instead
+ * @todo		Remove this in version 1.4
  */
-class XoopsSecurity extends IcmsSecurity { /* For Backwards Compatibility */ }
-?>
+class XoopsSecurity extends IcmsSecurity {
+	/* For Backwards Compatibility */
+	public function __construct() {
+		parent::__construct();
+		$this->setEerrors = icms_deprecated('IcmsSecurity');
+	}
+}

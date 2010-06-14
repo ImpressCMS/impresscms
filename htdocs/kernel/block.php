@@ -811,12 +811,13 @@ class IcmsBlockHandler extends IcmsPersistableObjectHandler {
  * @see IcmsBlock
  *
  * @deprecated use IcmsBlock instead
+ * @todo Remove in version 1.4 - all instances have been removed from the core
  */
 class XoopsBlock extends IcmsBlock {
 
 	public function __construct(&$db) {
-		icms_deprecated('IcmsBlock');
 		parent::__construct(&$db);
+		$this->setErrors = icms_deprecated('IcmsBlock');
 	}
 
 }
@@ -831,12 +832,13 @@ class XoopsBlock extends IcmsBlock {
  * @see IcmsBlockHandler
  *
  * @deprecated  use IcmsBlockHandler instead
+ * @todo Remove in version 1.4 - all instances have been removed from the core
  */
 class XoopsBlockHandler extends IcmsBlockHandler {
 
 	public function __construct(&$db) {
-		icms_deprecated('IcmsBlockHandler');
 		parent::__construct(&$db);
+		$this->setVar('_errors', icms_deprecated('IcmsBlockHandler'));
 	}
 
 }
