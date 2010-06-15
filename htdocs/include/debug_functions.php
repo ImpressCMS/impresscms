@@ -53,16 +53,28 @@ function icms_debug_vardump($var)
 function icms_deprecated( $replacement='', $extra='' ) {
 	$trace = debug_backtrace();
 	array_shift( $trace );
-	$level = '';
-	$msg = ' <strong><em>(Deprecated)</em></strong> - ';
+	$level = $msg = $message = '';
+	$pre = ' <strong><em>(Deprecated)</em></strong> - ';
+	if ( $trace[0]['function'] != 'include' && $trace[0]['function'] != 'include_once' && $trace[0]['function'] != 'require' && $trace[0]['function'] != 'require_once') {
+		$pre .= $trace[0]['function'] . ': ';
+	}
 	foreach ( $trace as $step ) {
 	    $level .= '-';
-		if ( isset( $step['file'] ) ) {
-		    if( $step['function'] != 'include' && $step['function'] != 'include_once' && $step['function'] != 'require' && $step['function'] != 'require_once') {
-				trigger_error( $level . $msg . (isset( $step['class'] ) ? $step['class'] : '') . (isset( $step['type'] ) ? $step['type'] : '' ) . $step['function'] . ' in ' . $step['file'] . ', line ' . $step['line'] . ( $replacement ? ' <strong><em>use ' . $replacement . ' instead</em></strong>' : '' ) . ( $extra ? ' <strong><em> ' . $extra . ' </em></strong>' : '' ), E_USER_NOTICE ) ;
-			}
+		if ( isset($step['file'])) {
+
+		    	$message .= $level . $msg
+					. (isset( $step['class'] ) ? $step['class'] : '')
+					. (isset( $step['type'] ) ? $step['type'] : '' )
+					. $step['function'] . ' in ' . $step['file'] . ', line ' . $step['line']
+					. '<br />';
 		}
 		$msg = 'Called by ';
-		$replacement = '';
+
 	}
+	trigger_error($pre
+		. ( $replacement ? ' <strong><em>use ' . $replacement . ' instead</em></strong>' : '' )
+		. ( $extra ? ' <strong><em> ' . $extra . ' </em></strong>' : '' )
+		. '<br />Call Stack: <br />' . $message
+	, E_USER_NOTICE
+	);
 }
