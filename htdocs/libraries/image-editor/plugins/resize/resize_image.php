@@ -1,7 +1,7 @@
 <?php
 $xoopsOption['nodebug'] = 1;
 if (file_exists('../../../../mainfile.php')) include_once '../../../../mainfile.php';
-if (!defined('XOOPS_ROOT_PATH')) exit();
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 
 if (isset($_GET['image_path']) && isset($_GET['image_url'])) {

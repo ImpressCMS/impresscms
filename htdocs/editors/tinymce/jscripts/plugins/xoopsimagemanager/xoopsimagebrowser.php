@@ -18,7 +18,7 @@ if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../
 if (file_exists('../../../mainfile.php')) include_once '../../../mainfile.php';
 if (file_exists('../../mainfile.php')) include_once '../../mainfile.php';
 if (file_exists('../mainfile.php')) include_once '../mainfile.php';
-if (!defined('XOOPS_ROOT_PATH')) exit();
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 include_once ICMS_ROOT_PATH.'/class/template.php';

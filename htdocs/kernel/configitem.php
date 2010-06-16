@@ -14,9 +14,7 @@
  * @version      $Id$
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-	exit();
-}
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**#@+
  * Config type

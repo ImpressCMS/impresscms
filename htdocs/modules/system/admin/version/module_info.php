@@ -9,9 +9,7 @@
  * @version		$Id$
  */
 
-if (!defined('XOOPS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
-}
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 if ( (int) ($_GET['mid'])) {
 	$module_handler =& xoops_gethandler('module');
