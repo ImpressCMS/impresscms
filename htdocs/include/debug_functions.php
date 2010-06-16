@@ -58,10 +58,10 @@ function icms_deprecated( $replacement='', $extra='' ) {
 	if ( $trace[0]['function'] != 'include' && $trace[0]['function'] != 'include_once' && $trace[0]['function'] != 'require' && $trace[0]['function'] != 'require_once') {
 		$pre .= $trace[0]['function'] . ': ';
 	}
+
 	foreach ( $trace as $step ) {
 	    $level .= '-';
 		if ( isset($step['file'])) {
-
 		    	$message .= $level . $msg
 					. (isset( $step['class'] ) ? $step['class'] : '')
 					. (isset( $step['type'] ) ? $step['type'] : '' )
@@ -69,8 +69,8 @@ function icms_deprecated( $replacement='', $extra='' ) {
 					. '<br />';
 		}
 		$msg = 'Called by ';
-
 	}
+
 	trigger_error($pre
 		. ( $replacement ? ' <strong><em>use ' . $replacement . ' instead</em></strong>' : '' )
 		. ( $extra ? ' <strong><em> ' . $extra . ' </em></strong>' : '' )

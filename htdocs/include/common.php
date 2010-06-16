@@ -347,7 +347,7 @@ if (empty($_SERVER[ 'REQUEST_URI' ])) {
 	}
 }
 
-$xoopsRequestUri = $_SERVER['REQUEST_URI'];	   // Deprecated (use the corrected $_SERVER variable now)
+$xoopsRequestUri = $_SERVER['REQUEST_URI'];
 /**#@-*/
 // Include openid common functions if needed
 if (defined('ICMS_INCLUDE_OPENID')) {

@@ -335,6 +335,7 @@ function xoops_makepass() {
  */
 function OpenWaitBox()
 {
+	icms_deprecated('','This is very old and will be removed in version 1.4');
 	echo "<div id='waitDiv' style='position:absolute;left:40%;top:50%;visibility:hidden;text-align: center;'>
 	<table cellpadding='6' border='2' class='bg2'>
 		<tr>
@@ -380,6 +381,7 @@ function OpenWaitBox()
  */
 function CloseWaitBox()
 {
+	icms_deprecated('', 'This is very old and will be removed in version 1.4');
 	echo "<script type='text/javascript'>
 	<!--//
 	ap_showWaitMessage('waitDiv', 0);
