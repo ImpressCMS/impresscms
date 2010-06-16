@@ -10,9 +10,7 @@
  * @version		$Id$
  */
 
-if (!defined("ICMS_ROOT_PATH")) {
-	die("ImpressCMS root path not defined");
-}
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 /**
  * IcmsModuleAbout
@@ -201,16 +199,16 @@ class IcmsModuleAbout
 		}
 
 		// For license thanks to 3Dev
-		if ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt' ) ) {
-			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt';
-		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt' ) ) {
-			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt';
-		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt' ) ) {
-			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
-		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt' ) ) {
-			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt';
-		} elseif ( file_exists( XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt' ) ) {
-			$filename = XOOPS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
+		if ( file_exists( ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt' ) ) {
+			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/license.txt';
+		} elseif ( file_exists( ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt' ) ) {
+			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/docs/' . $icmsConfig['language'] . '_license.txt';
+		} elseif ( file_exists( ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt' ) ) {
+			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
+		} elseif ( file_exists( ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt' ) ) {
+			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license/' . $icmsConfig['language'] . '_license.txt';
+		} elseif ( file_exists( ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt' ) ) {
+			$filename = ICMS_ROOT_PATH . '/modules/' . $icmsModule->getVar('dirname') . '/license.txt';
 		}
 		if(is_file($filename)){
 			$filesize = filesize($filename);

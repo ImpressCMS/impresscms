@@ -17,7 +17,7 @@
  */
 
 include '../../../../mainfile.php';
-include XOOPS_ROOT_PATH.'/include/cp_functions.php';
+include ICMS_ROOT_PATH.'/include/cp_functions.php';
 if (is_object($icmsUser)) {
 	$module_handler =& xoops_gethandler('module');
 	$icmsModule =& $module_handler->getByDirname('system');

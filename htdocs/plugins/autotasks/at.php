@@ -67,7 +67,7 @@ extends IcmsAutoTasksSystem {
 				$config_atasks['autotasks_helper_path'] .= '\\';
 			}
 		}
-		return (isset($_SERVER['COMSPEC'])?$_SERVER['COMSPEC']:$_SERVER['ComSpec']) . ' /C ' . str_replace( array('\\/','/\\','/'), array('/','\\','\\') , '"'.$config_atasks['autotasks_helper_path'].str_replace(array('%path%','%url%'), array(str_replace('/','\\',XOOPS_ROOT_PATH.'/include/autotasks.php'),XOOPS_URL.'/include/autotasks.php'),$config_atasks['autotasks_helper']).' > NUL"');
+		return (isset($_SERVER['COMSPEC'])?$_SERVER['COMSPEC']:$_SERVER['ComSpec']) . ' /C ' . str_replace( array('\\/','/\\','/'), array('/','\\','\\') , '"'.$config_atasks['autotasks_helper_path'].str_replace(array('%path%','%url%'), array(str_replace('/','\\',ICMS_ROOT_PATH.'/include/autotasks.php'),XOOPS_URL.'/include/autotasks.php'),$config_atasks['autotasks_helper']).' > NUL"');
 	}
 
 	/*

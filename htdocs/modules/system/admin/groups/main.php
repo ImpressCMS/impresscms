@@ -18,7 +18,7 @@ $gperm_handler =& xoops_gethandler('groupperm');
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) || ( isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], $icmsUser->getGroups() ) )) {
 	exit("Access Denied");
 } else {
-	include_once XOOPS_ROOT_PATH."/modules/system/admin/groups/groups.php";
+	include_once ICMS_ROOT_PATH."/modules/system/admin/groups/groups.php";
 	if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
 	if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
 	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'display');
@@ -36,7 +36,7 @@ if ( !empty($memberslist_id) && is_array($memberslist_id) ) {
 
 switch ($op) {
 	case "modify":
-		include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+		include_once ICMS_ROOT_PATH.'/class/pagenav.php';
 		modifyGroup($g_id);
 		break;
 

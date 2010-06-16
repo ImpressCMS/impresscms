@@ -78,7 +78,7 @@ function smarty_resource_db_tplinfo( $tpl_name ) {
 	$filepath = XOOPS_THEME_PATH . "/$theme/modules/$module/$blockpath$tpl_name";
 	if ( !file_exists( $filepath ) ) {
 		// If no custom version exists, get the tpl from its default location
-		$filepath = XOOPS_ROOT_PATH . "/modules/$module/templates/$blockpath$tpl_name";
+		$filepath = ICMS_ROOT_PATH . "/modules/$module/templates/$blockpath$tpl_name";
 		if ( !file_exists( $filepath ) ) {
 			return $cache[$tpl_name] = $tplobj ;
 		}

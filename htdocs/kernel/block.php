@@ -96,7 +96,7 @@ class IcmsBlock extends IcmsPersistableObject {
 				return false;
 			}
 			icms_loadLanguageFile($this->getVar('dirname'), 'blocks');
-			include_once XOOPS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/blocks/'.$this->getVar('func_file');
+			include_once ICMS_ROOT_PATH.'/modules/'.$this->getVar('dirname').'/blocks/'.$this->getVar('func_file');
 			$options = explode('|', $this->getVar('options'));
 			$edit_form = $edit_func($options);
 			if (!$edit_form) {

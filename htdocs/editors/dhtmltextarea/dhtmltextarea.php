@@ -9,11 +9,9 @@
  * @version		$Id: dhtmltextarea.php 1686 2008-04-19 14:33:00Z malanciault $
  * @package		xoopseditor
  */
-if (!defined("XOOPS_ROOT_PATH")) {
-    die("ImpressCMS root path not defined");
-}
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-require_once XOOPS_ROOT_PATH."/class/xoopsform/formdhtmltextarea.php";
+require_once ICMS_ROOT_PATH."/class/xoopsform/formdhtmltextarea.php";
 
 /**
  * Pseudo class

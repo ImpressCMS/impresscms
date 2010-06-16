@@ -13,7 +13,7 @@
  * @version	$Id$
  */
 
-include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 $smile_form = new XoopsThemeForm($smiles['smile_form'], 'smileform', 'admin.php', 'post', true);
 $smile_form->setExtra('enctype="multipart/form-data"');
 $smile_form->addElement(new XoopsFormText(_AM_SMILECODE, 'smile_code', 26, 25, $smiles['smile_code']), true);

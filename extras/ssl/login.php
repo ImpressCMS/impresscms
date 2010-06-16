@@ -7,7 +7,7 @@ $path = '/path/to/xoops/directory';
 include $path.'/mainfile.php';
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-include_once XOOPS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/user.php';
+include_once ICMS_ROOT_PATH.'/language/'.$xoopsConfig['language'].'/user.php';
 $op = (isset($_POST['op']) && $_POST['op'] == 'dologin') ? 'dologin' : 'login';
 
 $username = isset($_POST['username']) ? trim($_POST['username']) : '';

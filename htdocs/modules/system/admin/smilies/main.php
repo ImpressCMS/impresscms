@@ -17,7 +17,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 	exit("Access Denied");
 }
 
-include_once XOOPS_ROOT_PATH."/modules/system/admin/smilies/smilies.php";
+include_once ICMS_ROOT_PATH."/modules/system/admin/smilies/smilies.php";
 
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
 if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
@@ -49,7 +49,7 @@ switch($op) {
 		}
 		$db =& Database::getInstance();
 		$myts =& MyTextSanitizer::getInstance();
-		include_once XOOPS_ROOT_PATH.'/class/uploader.php';
+		include_once ICMS_ROOT_PATH.'/class/uploader.php';
 		$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), 100000, 120, 120);
 		$uploader->setPrefix('smil');
 		if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
@@ -97,7 +97,7 @@ switch($op) {
 		$smile_display = (int) ($_POST['smile_display']) > 0 ? 1 : 0;
 		$db =& Database::getInstance();
 		if ($_FILES['smile_url']['name'] != "") {
-			include_once XOOPS_ROOT_PATH.'/class/uploader.php';
+			include_once ICMS_ROOT_PATH.'/class/uploader.php';
 			$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), 100000, 120, 120);
 			$uploader->setPrefix('smil');
 			if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {

@@ -2,7 +2,7 @@
 function b_waiting_yomi(){
 	////////////////////////////////////
 	//仮登録ログファイルのディレクトリ名
-	$log_path = XOOPS_ROOT_PATH."/modules/yomi/log/";
+	$log_path = ICMS_ROOT_PATH."/modules/yomi/log/";
 	////////////////////////////////////
 	//仮登録ログファイルのファイル名
 	$log_file = "ys4_temp.cgi";
@@ -18,7 +18,7 @@ function b_waiting_yomi(){
 	}
 	fclose($fp);
 
-	$block['adminlink'] = XOOPS_URL."/modules/yomi/admin.php";
+	$block['adminlink'] = ICMS_ROOT_PATH."/modules/yomi/admin.php";
 	$block['pendingnum'] = $Ctemp;
 	$block['lang_linkname'] = _PI_WAITING_WAITINGS;
 

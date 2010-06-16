@@ -59,7 +59,7 @@ function displayGroups()
 	$g_id_value = "";
 	$type_value = "";
 	$form_title = _AM_CREATENEWADG;
-	include XOOPS_ROOT_PATH."/modules/system/admin/groups/groupform.php";
+	include ICMS_ROOT_PATH."/modules/system/admin/groups/groupform.php";
 	//CloseTable();
 	icms_cp_footer();
 }
@@ -103,7 +103,7 @@ function modifyGroup($g_id)
 	$sysperm_handler =& xoops_gethandler('groupperm');
 	$s_cat_value =& $sysperm_handler->getItemIds('system_admin', $g_id);
 
-	include XOOPS_ROOT_PATH."/modules/system/admin/groups/groupform.php";
+	include ICMS_ROOT_PATH."/modules/system/admin/groups/groupform.php";
 	echo "<br /><h4 style='text-align:"._GLOBAL_LEFT."'>"._AM_EDITMEMBER."</h4>";
 	$usercount = $member_handler->getUserCount(new Criteria('level', 0, '>'));
 	$member_handler =& xoops_gethandler('member');

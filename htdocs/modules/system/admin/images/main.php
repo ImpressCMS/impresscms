@@ -213,7 +213,7 @@ function imanager_index($imgcat_id=null){
 	$icmsAdminTpl->assign('subs',$subs);
 	$icmsAdminTpl->assign('scount',$scount);
 
-	include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+	include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 	if (!empty($catcount)) {
 		$form = new XoopsThemeForm(_ADDIMAGE, 'image_form', 'admin.php', 'post', true);
 		$form->setExtra('enctype="multipart/form-data"');
@@ -467,7 +467,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsAdminTpl->assign('images',$arrimg);
 	if ($imgcount > 0) {
 		if ($imgcount > 15) {
-			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+			include_once ICMS_ROOT_PATH.'/class/pagenav.php';
 			$nav = new XoopsPageNav($imgcount, 15, $start, 'start', 'fct=images&amp;op=listimg&amp;imgcat_id='.$imgcat_id);
 			$icmsAdminTpl->assign('pag','<div class="img_list_info_panel" align="center">'.$nav->renderNav().'</div>');
 		}else{
@@ -575,7 +575,7 @@ function imanager_editcat($imgcat_id){
 	if (!is_object($imagecategory)) {
 		redirect_header('admin.php?fct=images',1);
 	}
-	include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+	include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 	$imagecategoryperm_handler =& xoops_gethandler('groupperm');
 	$form = new XoopsThemeForm(_MD_EDITIMGCAT, 'imagecat_form', 'admin.php', 'post', true);
 	$form->addElement(new XoopsFormText(_MD_IMGCATNAME, 'imgcat_name', 50, 255, $imagecategory->getVar('imgcat_name')), true);
@@ -767,7 +767,7 @@ function imanager_addfile() {
 	}
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 
-	include_once XOOPS_ROOT_PATH.'/class/uploader.php';
+	include_once ICMS_ROOT_PATH.'/class/uploader.php';
 	if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 		$updir = ICMS_IMANAGER_FOLDER_PATH;
 	}else{
@@ -922,7 +922,7 @@ function imanager_delfileok($image_id,$redir=null) {
 }
 
 function showAddImgForm($imgcat_id){
-	include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+	include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 	$imgcat_handler = xoops_gethandler('imagecategory');
 	$form = new XoopsThemeForm(_ADDIMAGE, 'image_form', 'admin.php', 'post', true);
 	$form->setExtra('enctype="multipart/form-data"');

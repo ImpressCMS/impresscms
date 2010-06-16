@@ -14,8 +14,8 @@
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
 }
-include_once XOOPS_ROOT_PATH."/modules/system/admin/modulesadmin/modulesadmin.php";
-require_once XOOPS_ROOT_PATH."/class/xoopslists.php";
+include_once ICMS_ROOT_PATH."/modules/system/admin/modulesadmin/modulesadmin.php";
+require_once ICMS_ROOT_PATH."/class/xoopslists.php";
 icms_loadLanguageFile('system', 'blocksadmin', true);
 if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
 if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);

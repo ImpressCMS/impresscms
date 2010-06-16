@@ -9,11 +9,9 @@
  * @version		$Id$
  * @package		xoopseditor
  */
-if (! defined ( "XOOPS_ROOT_PATH" )) {
-	die ( "ImpressCMS root path not defined" );
-}
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-require_once XOOPS_ROOT_PATH . "/class/xoopsform/formtextarea.php";
+require_once ICMS_ROOT_PATH . "/class/xoopsform/formtextarea.php";
 
 class XoopsFormTinymce extends XoopsFormTextArea {
 	var $rootpath = "";
@@ -34,7 +32,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 		$current_path = __FILE__;
 		if (DIRECTORY_SEPARATOR != "/")
 			$current_path = str_replace ( strpos ( $current_path, "\\\\", 2 ) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path );
-		$this->rootpath = substr(strstr(dirname($current_path), XOOPS_ROOT_PATH), strlen(XOOPS_ROOT_PATH));
+		$this->rootpath = substr(strstr(dirname($current_path), ICMS_ROOT_PATH), strlen(ICMS_ROOT_PATH));
 
 		if (is_array ( $configs )) {
 			$vars = array_keys ( get_object_vars ( $this ) );
@@ -159,7 +157,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 	 * @return  bool
 	 */
 	function isCompatible() {
-		return is_readable( XOOPS_ROOT_PATH . $this->rootpath . "/tinymce.php" );
+		return is_readable( ICMS_ROOT_PATH . $this->rootpath . "/tinymce.php" );
 	}
 }
 ?>

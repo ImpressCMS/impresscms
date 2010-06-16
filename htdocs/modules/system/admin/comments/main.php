@@ -23,7 +23,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 
 	switch ($op) {
 		case 'list':
-			include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
+			include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
 			icms_loadLanguageFile('core', 'comment');
 			$limit_array = array(10, 20, 50, 100);
 			$status_array = array(XOOPS_COMMENT_PENDING => _CM_PENDING, XOOPS_COMMENT_ACTIVE => _CM_ACTIVE, XOOPS_COMMENT_HIDDEN => _CM_HIDDEN);
@@ -117,7 +117,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			echo '</table>';
 			echo '<table style="width: 100%; border: 0; margin: 3px; padding: 3px;"><tr><td>'.sprintf(_MD_AM_COMFOUND, '<b>'.icms_conv_nr2local($total).'</b>');
 			if ($total > $limit) {
-				include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+				include_once ICMS_ROOT_PATH.'/class/pagenav.php';
 				$nav = new XoopsPageNav($total, $limit, $start, 'start', 'fct=comments&amp;op=list&amp;limit='.$limit.'&amp;sort='.$sort.'&amp;order='.$order.'&amp;module='.$module);
 				echo '</td><td align="'._GLOBAL_RIGHT.'">'.$nav->renderNav();
 			}

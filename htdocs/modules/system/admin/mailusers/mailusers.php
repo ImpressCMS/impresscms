@@ -17,7 +17,7 @@
 if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
 	exit("Access Denied");
 } else {
-	include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
+	include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 	$op = "form";
 	$limit = 100;
 
@@ -33,7 +33,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			echo "<div class='errorMsg'>{$error_msg}</div>";
 		}
 		$display_criteria = 1;
-		include XOOPS_ROOT_PATH."/modules/system/admin/mailusers/mailform.php";
+		include ICMS_ROOT_PATH."/modules/system/admin/mailusers/mailform.php";
 		$form->display();
 		//CloseTable();
 		icms_cp_footer();

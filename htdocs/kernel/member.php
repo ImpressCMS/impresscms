@@ -1,6 +1,6 @@
 <?php
 /**
- * Manage of members
+ * Management of members
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	XOOPS_copyrights.txt
@@ -13,11 +13,9 @@
  * @version	$Id$
  */
 
-if (! defined ( 'XOOPS_ROOT_PATH' )) {
-	exit ();
-}
-require_once XOOPS_ROOT_PATH . '/kernel/user.php';
-require_once XOOPS_ROOT_PATH . '/kernel/group.php';
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+require_once ICMS_ROOT_PATH . '/kernel/user.php';
+require_once ICMS_ROOT_PATH . '/kernel/group.php';
 
 /**
  * XOOPS member handler class.

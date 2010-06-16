@@ -5,9 +5,7 @@
  * Author: The SmartFactory <www.smartfactory.ca>
  * Licence: GNU
  */
-if (!defined("XOOPS_ROOT_PATH")) {
-	die("ImpressCMS root path not defined");
-}
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 define("_DATABASEUPDATER_IMPORT", "Import");
 define("_DATABASEUPDATER_CURRENTVER", "Current version: <span class='currentVer'>%s</span>");

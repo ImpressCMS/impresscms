@@ -4,7 +4,7 @@ function b_waiting_newbb(){
 	$block = array();
 
 	// judge the version of newbb/
-	if( ! file_exists( XOOPS_ROOT_PATH . '/modules/newbb/polls.php' ) ) {
+	if( ! file_exists( ICMS_ROOT_PATH . '/modules/newbb/polls.php' ) ) {
 		// newbb1
 		return array() ;
 	}

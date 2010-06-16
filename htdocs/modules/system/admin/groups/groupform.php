@@ -15,7 +15,7 @@
  */
 
 /** include the general form class */
-include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 
 $name_text = new XoopsFormText(_AM_NAME, "name", 30, 50, $name_value);
 $desc_text = new XoopsFormTextArea(_AM_DESCRIPTION, "desc", $desc_value);
@@ -24,16 +24,16 @@ $s_cat_checkbox = new XoopsFormCheckBox(_AM_SYSTEMRIGHTS, "system_catids[]", $s_
 //if (isset($s_cat_disable) && $s_cat_disable) {
 //  $s_cat_checkbox->setExtra('checked="checked" disabled="disabled"');
 //}
-include_once XOOPS_ROOT_PATH.'/modules/system/constants.php';
-require_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
-$admin_dir = XOOPS_ROOT_PATH.'/modules/system/admin/';
+include_once ICMS_ROOT_PATH.'/modules/system/constants.php';
+require_once ICMS_ROOT_PATH.'/class/xoopslists.php';
+$admin_dir = ICMS_ROOT_PATH.'/modules/system/admin/';
 $dirlist = XoopsLists::getDirListAsArray($admin_dir);
 /* changes to only allow permission admins you already have */
 global $icmsUser;
 $gperm =& xoops_gethandler ( 'groupperm' );
 $groups = $icmsUser->getGroups ();
 foreach($dirlist as $file){
-	include XOOPS_ROOT_PATH.'/modules/system/admin/'.$file.'/xoops_version.php';
+	include ICMS_ROOT_PATH.'/modules/system/admin/'.$file.'/xoops_version.php';
 	if (!empty($modversion['category']) && count(array_intersect($groups, $gperm->getGroupIds('system_admin', $modversion['category'])))>0) {
 		$s_cat_checkbox->addOption($modversion['category'], $modversion['name']);
 	}

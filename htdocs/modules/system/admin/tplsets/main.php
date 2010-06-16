@@ -82,7 +82,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			}
 			echo '</table><br />';
 
-			include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+			include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 			$form = new XoopsThemeForm(_MD_UPLOADTAR, 'tplupload_form', 'admin.php', 'post', true);
 			$form->setExtra('enctype="multipart/form-data"');
 			$form->addElement(new XoopsFormFile(_MD_CHOOSETAR.'<br /><span style="color:#ff0000;">'._MD_ONLYTAR.'</span>', 'tpl_upload', 1000000));
@@ -155,9 +155,9 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				$inst_files[] = $filename;
 			}
 			if ($tplset != 'default') {
-				include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
+				include_once ICMS_ROOT_PATH.'/class/xoopslists.php';
 				// get difference between already installed files and the files under modules directory. which will be recognized as files that are not installed
-				$notinst_files = array_diff(XoopsLists::getFileListAsArray(XOOPS_ROOT_PATH.'/modules/'.$moddir.'/templates/'), $inst_files);
+				$notinst_files = array_diff(XoopsLists::getFileListAsArray(ICMS_ROOT_PATH.'/modules/'.$moddir.'/templates/'), $inst_files);
 				foreach ($notinst_files as $nfile) {
 					if ($nfile != 'index.html') {
 						echo  '<tr><td style="background-color:#FFFF99; padding: 5px;">'.$nfile.'</td><td style="background-color:#FFFF99; padding: 5px;">&nbsp;</td><td style="background-color:#FFFF99; padding: 5px;">';
@@ -216,8 +216,8 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				$binst_files[] = $filename;
 			}
 			if ($tplset != 'default') {
-				include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
-				$bnotinst_files = array_diff(XoopsLists::getFileListAsArray(XOOPS_ROOT_PATH.'/modules/'.$moddir.'/templates/blocks/'), $binst_files);
+				include_once ICMS_ROOT_PATH.'/class/xoopslists.php';
+				$bnotinst_files = array_diff(XoopsLists::getFileListAsArray(ICMS_ROOT_PATH.'/modules/'.$moddir.'/templates/blocks/'), $binst_files);
 				foreach ($bnotinst_files as $nfile) {
 					if ($nfile != 'index.html') {
 						echo  '<tr style="background-color:#FFFF99;"><td style="background-color:#FFFF99; padding: 5px;">'.$nfile.'</td><td style="background-color:#FFFF99; padding: 5px;">&nbsp;</td><td style="background-color:#FFFF99; padding: 5px;">';
@@ -247,7 +247,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if (is_object($tplfile)) {
 				$tplset = $tplfile->getVar('tpl_tplset');
 				$tform = array('tpl_tplset' => $tplset, 'tpl_id' => $id, 'tpl_file' => $tplfile->getVar('tpl_file'), 'tpl_desc' => $tplfile->getVar('tpl_desc'), 'tpl_lastmodified' => $tplfile->getVar('tpl_lastmodified'), 'tpl_source' => $tplfile->getVar('tpl_source', 'E'), 'tpl_module' => $tplfile->getVar('tpl_module'));
-				include_once XOOPS_ROOT_PATH.'/modules/system/admin/tplsets/tplform.php';
+				include_once ICMS_ROOT_PATH.'/modules/system/admin/tplsets/tplform.php';
 				icms_cp_header();
 				echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tplfile->getVar('tpl_module').'&amp;tplset='.$tplset.'">'.$tplset.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$tform['tpl_module'].'&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_EDITTEMPLATE.'<br /><br />';
 				$form->display();
@@ -279,7 +279,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 					if (!$tpltpl_handler->insert($tplfile)) {
 						$err[] = 'Could not insert template file to the database.';
 					} else {
-						include_once XOOPS_ROOT_PATH.'/class/template.php';
+						include_once ICMS_ROOT_PATH.'/class/template.php';
 						$xoopsTpl = new XoopsTpl();
 						if ($xoopsTpl->is_cached('db:'.$tplfile->getVar('tpl_file'))) {
 							if (!$xoopsTpl->clear_cache('db:'.$tplfile->getVar('tpl_file'))) {
@@ -333,7 +333,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 						if ($tplfile->getVar('tpl_tplset') == $xoopsConfig['template_set']) {
 							$defaulttpl =& $tpltpl_handler->find('default', $tplfile->getVar('tpl_type'), $tplfile->getVar('tpl_refid'), null, $tplfile->getVar('tpl_file'));
 							if (count($defaulttpl) > 0) {
-								include_once XOOPS_ROOT_PATH.'/class/template.php';
+								include_once ICMS_ROOT_PATH.'/class/template.php';
 								xoops_template_touch($defaulttpl[0]->getVar('tpl_id'), true);
 							}
 						}
@@ -432,7 +432,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			break;
 
 		case 'clone':
-			include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+			include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 			$form = new XoopsThemeForm(_MD_CLONETHEME, 'template_form', 'admin.php', 'post', true);
 			$form->addElement(new XoopsFormLabel(_MD_THEMENAME, $tplset));
 			$form->addElement(new XoopsFormText(_MD_NEWNAME, 'newtheme', 30, 50), true);
@@ -737,9 +737,9 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				$last_modified = $default[0]->getVar('tpl_lastmodified');
 				$last_imported = $default[0]->getVar('tpl_lastimported');
 				if ($default[0]->getVar('tpl_type') == 'block') {
-					$path = XOOPS_ROOT_PATH.'/modules/'.$default[0]->getVar('tpl_module').'/blocks/'.$default[0]->getVar('tpl_file');
+					$path = ICMS_ROOT_PATH.'/modules/'.$default[0]->getVar('tpl_module').'/blocks/'.$default[0]->getVar('tpl_file');
 				} else {
-					$path = XOOPS_ROOT_PATH.'/modules/'.$default[0]->getVar('tpl_module').'/'.$default[0]->getVar('tpl_file');
+					$path = ICMS_ROOT_PATH.'/modules/'.$default[0]->getVar('tpl_module').'/'.$default[0]->getVar('tpl_file');
 				}
 				$colorchange = '';
 				if (!file_exists($path)) {
@@ -753,7 +753,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 					}
 					$lastimported_date = formatTimestamp($last_imported, 'l');
 				}
-				include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+				include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 				$form = new XoopsThemeForm(_MD_VIEWDEFAULT, 'template_form', 'admin.php');
 				$form->addElement(new XoopsFormTextArea(_MD_FILEHTML, 'html', $default[0]->getVar('tpl_source'), 25));
 				$form->display();
@@ -789,7 +789,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			icms_cp_header();
 			echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tpl->getVar('tpl_module').'&amp;tplset='.$tpl->getVar('tpl_tplset').'">'.$tpl->getVar('tpl_tplset').'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_UPLOAD.'<br /><br />';
 			if (is_object($tpl)) {
-				include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+				include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 				$form = new XoopsThemeForm(_MD_UPLOAD, 'tplupload_form', 'admin.php', 'post', true);
 				$form->setExtra('enctype="multipart/form-data"');
 				$form->addElement(new XoopsFormLabel(_MD_FILENAME, $tpl->getVar('tpl_file').' ('.$tpl->getVar('tpl_tplset').')'));
@@ -814,7 +814,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$tpltpl_handler =& xoops_gethandler('tplfile');
 			$tpl =& $tpltpl_handler->get($tpl_id);
 			if (is_object($tpl)) {
-				include_once XOOPS_ROOT_PATH.'/class/uploader.php';
+				include_once ICMS_ROOT_PATH.'/class/uploader.php';
 				$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
 				$uploader->setPrefix('tmp');
 				if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
@@ -831,7 +831,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 							$err = 'Failed inserting data to database';
 						} else {
 							if ($tpl->getVar('tpl_tplset') == $xoopsConfig['template_set']) {
-								include_once XOOPS_ROOT_PATH.'/class/template.php';
+								include_once ICMS_ROOT_PATH.'/class/template.php';
 								xoops_template_touch($tpl_id, true);
 							}
 						}
@@ -855,7 +855,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$tplset = htmlspecialchars($tplset);
 			$moddir = htmlspecialchars($moddir);
 			echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'">'.$tplset.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_UPLOAD.'<br /><br />';
-			include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+			include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 			$form = new XoopsThemeForm(_MD_UPLOAD, 'tplupload_form', 'admin.php', 'post', true);
 			$form->setExtra('enctype="multipart/form-data"');
 			$form->addElement(new XoopsFormLabel(_MD_FILENAME, $file));
@@ -875,7 +875,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if (!$GLOBALS['xoopsSecurity']->check()) {
 				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
-			include_once XOOPS_ROOT_PATH.'/class/uploader.php';
+			include_once ICMS_ROOT_PATH.'/class/uploader.php';
 			$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
 			$uploader->setPrefix('tmp');
 			if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
@@ -898,7 +898,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 							$err = 'Failed inserting data to database';
 						} else {
 							if ($tplset == $xoopsConfig['template_set']) {
-								include_once XOOPS_ROOT_PATH.'/class/template.php';
+								include_once ICMS_ROOT_PATH.'/class/template.php';
 								xoops_template_touch($tpl->getVar('tpl_id'), true);
 							}
 						}
@@ -924,12 +924,12 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				if (false != extension_loaded('zlib')) {
 					if (isset($_GET['method']) && $_GET['method'] == 'tar') {
 						if (@function_exists('gzencode')) {
-							require_once XOOPS_ROOT_PATH.'/class/tardownloader.php' ;
+							require_once ICMS_ROOT_PATH.'/class/tardownloader.php' ;
 							$downloader = new XoopsTarDownloader();
 						}
 					} else {
 						if (@function_exists('gzcompress')) {
-							require_once XOOPS_ROOT_PATH.'/class/zipdownloader.php' ;
+							require_once ICMS_ROOT_PATH.'/class/zipdownloader.php' ;
 							$downloader = new XoopsZipDownloader();
 						}
 					}
@@ -1004,7 +1004,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 					$err = 'ERROR: Could not insert template <b>'.$tplfile[0]->getVar('tpl_file').'</b> to the database.';
 				} else {
 					if ($tplset == $xoopsConfig['template_set']) {
-						include_once XOOPS_ROOT_PATH.'/class/template.php';
+						include_once ICMS_ROOT_PATH.'/class/template.php';
 						xoops_template_touch($newtpl->getVar('tpl_id'));
 					}
 				}
@@ -1048,7 +1048,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 						echo '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert template <b>'.$file.'</b> to the database.</span><br />';
 					} else {
 						if ($tplset == $xoopsConfig['template_set']) {
-							include_once XOOPS_ROOT_PATH.'/class/template.php';
+							include_once ICMS_ROOT_PATH.'/class/template.php';
 							xoops_template_touch($newtpl->getVar('tpl_id'));
 						}
 						echo '&nbsp;&nbsp;Template <b>'.$tplfiles[$i]->getVar('tpl_file').'</b> added to the database.<br />';
@@ -1072,7 +1072,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 						echo '&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not insert block template <b>'.$tplfiles[$i]->getVar('tpl_file').'</b> to the database.</span><br />';echo $newtpl->getHtmlErrors();
 					} else {
 						if ($tplset == $xoopsConfig['template_set']) {
-							include_once XOOPS_ROOT_PATH.'/class/template.php';
+							include_once ICMS_ROOT_PATH.'/class/template.php';
 							xoops_template_touch($newtpl->getVar('tpl_id'));
 						}
 						echo '&nbsp;&nbsp;&nbsp;&nbsp;Block template <b>'.$tplfiles[$i]->getVar('tpl_file').'</b> added to the database.<br />';
@@ -1089,7 +1089,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if (!$GLOBALS['xoopsSecurity']->check()) {
 				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
-			include_once XOOPS_ROOT_PATH.'/class/uploader.php';
+			include_once ICMS_ROOT_PATH.'/class/uploader.php';
 			$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('application/x-gzip', 'application/gzip', 'application/gzip-compressed', 'application/x-gzip-compressed', 'application/x-tar', 'application/x-tar-compressed', 'application/octet-stream'), 1000000);
 			$uploader->setPrefix('tmp');
 			icms_cp_header();
@@ -1098,7 +1098,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				if (!$uploader->upload()) {
 					icms_error_msg($uploader->getErrors());
 				} else {
-					include_once XOOPS_ROOT_PATH.'/class/class.tar.php';
+					include_once ICMS_ROOT_PATH.'/class/class.tar.php';
 					$tar = new tar();
 					$tar->openTar($uploader->getSavedDestination());
 					@unlink($uploader->getSavedDestination());
@@ -1213,7 +1213,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
 
-			require_once XOOPS_ROOT_PATH.'/class/template.php';
+			require_once ICMS_ROOT_PATH.'/class/template.php';
 			$myts =& MyTextsanitizer::getInstance();
 			$html = $myts->stripSlashesGPC($html);
 			$tpltpl_handler =& xoops_gethandler('tplfile');
@@ -1237,7 +1237,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 
 				$dummylayout .= "\n".'</style></head><body><div id="xo-canvas"><{$content}></div></body></html>';
 				if ($tplfile->getVar('tpl_type') == 'block') {
-					include_once XOOPS_ROOT_PATH.'/kernel/block.php';
+					include_once ICMS_ROOT_PATH.'/kernel/block.php';
 					$block = new XoopsBlock($tplfile->getVar('tpl_refid'));
 					$xoopsTpl->assign('block', $block->buildBlock());
 				}
@@ -1255,7 +1255,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 				fclose($fp);
 				$tplset= $tplfile->getVar('tpl_tplset');
 				$tform = array('tpl_tplset' => $tplset, 'tpl_id' => $id, 'tpl_file' => $tplfile->getVar('tpl_file'), 'tpl_desc' => $tplfile->getVar('tpl_desc'), 'tpl_lastmodified' => $tplfile->getVar('tpl_lastmodified'), 'tpl_source' => htmlspecialchars($html, ENT_QUOTES), 'tpl_module' => $moddir);
-				include_once XOOPS_ROOT_PATH.'/modules/system/admin/tplsets/tplform.php';
+				include_once ICMS_ROOT_PATH.'/modules/system/admin/tplsets/tplform.php';
 				icms_cp_header();
 				echo '<a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;<a href="./admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$moddir.'&amp;tplset='.urlencode($tplset).'">'.htmlspecialchars($tplset, ENT_QUOTES).'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_EDITTEMPLATE.'<br /><br />';
 				$form->display();
@@ -1283,7 +1283,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			if (!$GLOBALS['xoopsSecurity']->check()) {
 				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
-			include_once XOOPS_ROOT_PATH.'/class/uploader.php';
+			include_once ICMS_ROOT_PATH.'/class/uploader.php';
 			$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('text/html', 'application/x-cdf'), 200000);
 			$uploader->setPrefix('tmp');
 			$msg = array();
@@ -1319,7 +1319,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 						} else {
 							$msg[] = 'Template file <b>'.$upload_file.'</b> updated.';
 							if ($tplset == $xoopsConfig['template_set']) {
-								include_once XOOPS_ROOT_PATH.'/class/template.php';
+								include_once ICMS_ROOT_PATH.'/class/template.php';
 								if (xoops_template_touch($tpl->getVar('tpl_id'), true)) {
 									$msg[] = 'Template file <b>'.$upload_file.'</b> compiled.';
 								}

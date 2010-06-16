@@ -27,7 +27,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		$savatar_count = $avt_handler->getCount(new Criteria('avatar_type', 'S'));
 		$cavatar_count = $avt_handler->getCount(new Criteria('avatar_type', 'C'));
 		echo '<ul><li>'._MD_SYSAVATARS.' ('.sprintf(_NUMIMAGES, '<b>'.icms_conv_nr2local($savatar_count).'</b>').') [<a href="admin.php?fct=avatars&amp;op=listavt&amp;type=S">'._LIST.'</a>]</li><li>'._MD_CSTAVATARS.' ('.sprintf(_NUMIMAGES, '<b>'.icms_conv_nr2local($cavatar_count).'</b>').') [<a href="admin.php?fct=avatars&amp;op=listavt&amp;type=C">'._LIST.'</a>]</li></ul>';
-		include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+		include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 		$form = new XoopsThemeForm(_MD_ADDAVT, 'avatar_form', 'admin.php', "post", true);
 		$form->setExtra('enctype="multipart/form-data"');
 		$form->addElement(new XoopsFormText(_IMAGENAME, 'avatar_name', 50, 255), true);
@@ -78,7 +78,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		}
 		if ($avtcount > 0) {
 			if ($avtcount > 10) {
-				include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+				include_once ICMS_ROOT_PATH.'/class/pagenav.php';
 				$nav = new XoopsPageNav($avtcount, 10, $start, 'start', 'fct=avatars&amp;type='.$type.'&amp;op=listavt');
 				echo '<div style="text-align:'._GLOBAL_RIGHT.';">'.$nav->renderImageNav().'</div>';
 			}
@@ -133,7 +133,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			redirect_header('admin.php?fct=avatars', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
-		include_once XOOPS_ROOT_PATH.'/class/uploader.php';
+		include_once ICMS_ROOT_PATH.'/class/uploader.php';
 		$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), 500000);
 		$uploader->setPrefix('savt');
 		$err = array();

@@ -28,7 +28,7 @@ if ( $op == "form" ) {
 	$member_handler =& xoops_gethandler('member');
 	$acttotal = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0, '>')));
 	$inacttotal = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0)));
-	include_once XOOPS_ROOT_PATH."/class/xoopsformloader.php";
+	include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 	$group_select = new XoopsFormSelectGroup(_AM_GROUPS, "selgroups", null, false, 5, true);
 	$uname_text = new XoopsFormText("", "user_uname", 30, 60);
 	$uname_match = new XoopsFormSelectMatchOption("", "user_uname_match");

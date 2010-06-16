@@ -1,6 +1,6 @@
 <?php
 
-include_once XOOPS_ROOT_PATH.'/modules/simpleblog/simpleblog.php';
+include_once ICMS_ROOT_PATH.'/modules/simpleblog/simpleblog.php';
 
 function b_waiting_simpleblog(){
 	$result = array();

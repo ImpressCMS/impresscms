@@ -91,11 +91,11 @@ class TinyMCE
 	{
         global $icmsConfigMultilang, $icmsConfigPersona;
 		$configured = array();
-		if(is_readable(XOOPS_ROOT_PATH . $this->rootpath. '/langs/'.$this->config["language"].'.js')) {
+		if(is_readable(ICMS_ROOT_PATH . $this->rootpath. '/langs/'.$this->config["language"].'.js')) {
 			$this->setting["language"] = $this->config["language"];
 		}
 
-		if( empty($this->config["theme"]) || !is_dir(XOOPS_ROOT_PATH . $this->rootpath."/themes/".$this->config["theme"]) ) {
+		if( empty($this->config["theme"]) || !is_dir(ICMS_ROOT_PATH . $this->rootpath."/themes/".$this->config["theme"]) ) {
 			$this->setting["theme"] = "advanced";
 		}else {
 			$this->setting["theme"] = $this->config["theme"];
@@ -109,7 +109,7 @@ class TinyMCE
 		$configured[] = "plugins";
 
 		$this->setting["content_css"] = @$this->config["content_css"] ? $this->config["content_css"] : "editor_xoops.css";
-		if(!is_readable(XOOPS_ROOT_PATH . $this->rootpath. '/themes/'.$this->setting["theme"].'/css/' .$this->setting["content_css"])) {
+		if(!is_readable(ICMS_ROOT_PATH . $this->rootpath. '/themes/'.$this->setting["theme"].'/css/' .$this->setting["content_css"])) {
 			unset( $this->setting["content_css"] );
 		}
 		$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == true && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
@@ -196,7 +196,7 @@ class TinyMCE
 			$this->setting[$key] = $val;
 		}
 
-		if(!is_dir(XOOPS_ROOT_PATH . $this->rootpath."/themes/".$this->setting["theme"]. '/docs/'.$this->config["language"].'/')) {
+		if(!is_dir(ICMS_ROOT_PATH . $this->rootpath."/themes/".$this->setting["theme"]. '/docs/'.$this->config["language"].'/')) {
 			$this->setting["docs_language"] = "en";
 		}
 

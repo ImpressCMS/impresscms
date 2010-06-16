@@ -17,7 +17,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 	exit("Access Denied");
 }
 
-include_once XOOPS_ROOT_PATH."/modules/system/admin/users/users.php";
+include_once ICMS_ROOT_PATH."/modules/system/admin/users/users.php";
 $allowedHTML = array('user_sig','bio');
 
 if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
@@ -273,7 +273,7 @@ switch ($op)
 
 	case 'mod_users':
 	default:
-		include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+		include_once ICMS_ROOT_PATH.'/class/pagenav.php';
 		displayUsers();
 		break;
 }

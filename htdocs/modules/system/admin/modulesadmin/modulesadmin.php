@@ -111,13 +111,13 @@ function xoops_module_install($dirname) {
 		$errs[] = '<h4 style="text-align:'._GLOBAL_LEFT.';margin-bottom: 0px;border-bottom: dashed 1px #000000;">Installing '.$module->getInfo('name').'</h4>';
 		if ($sqlfile != false && is_array($sqlfile)) {
 
-			$sql_file_path = XOOPS_ROOT_PATH."/modules/".$dirname."/".$sqlfile[XOOPS_DB_TYPE];
+			$sql_file_path = ICMS_ROOT_PATH."/modules/".$dirname."/".$sqlfile[XOOPS_DB_TYPE];
 			if (!file_exists($sql_file_path)) {
 				$errs[] = "SQL file not found at <b>$sql_file_path</b>";
 				$error = true;
 			} else {
 				$msgs[] = "SQL file found at <b>$sql_file_path</b>.<br  /> Creating tables...";
-				include_once XOOPS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/sqlutility.php';
+				include_once ICMS_ROOT_PATH.'/class/database/drivers/'.XOOPS_DB_TYPE.'/sqlutility.php';
 				$sql_query = fread(fopen($sql_file_path, 'r'), filesize($sql_file_path));
 				$sql_query = trim($sql_query);
 				SqlUtility::splitSqlFile($pieces, $sql_query);
@@ -210,7 +210,7 @@ function xoops_module_install($dirname) {
 							$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_INSTEMPFILE, $tpl['file'], $newtplid);
 
 							// generate compiled file
-							include_once XOOPS_ROOT_PATH.'/class/template.php';
+							include_once ICMS_ROOT_PATH.'/class/template.php';
 							if (!xoops_template_touch($newtplid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILCOMPTEMPFILE.'</span>', $tpl['file']);
 							} else {
@@ -220,7 +220,7 @@ function xoops_module_install($dirname) {
 						unset($tpldata);
 					}
 				}
-				include_once XOOPS_ROOT_PATH.'/class/template.php';
+				include_once ICMS_ROOT_PATH.'/class/template.php';
 				xoops_template_clear_module_cache($newmid);
 				$blocks = $module->getInfo('blocks');
 				if ($blocks != false) {
@@ -273,7 +273,7 @@ function xoops_module_install($dirname) {
 									$newtplid = $tplfile->getVar('tpl_id');
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> added to the database. (ID: <b>'.icms_conv_nr2local($newtplid).'</b>)';
 									// generate compiled file
-									include_once XOOPS_ROOT_PATH.'/class/template.php';
+									include_once ICMS_ROOT_PATH.'/class/template.php';
 									if (!xoops_template_touch($newtplid)) {
 										$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed compiling template <b>'.$block['template'].'</b>.</span>';
 									} else {
@@ -289,14 +289,14 @@ function xoops_module_install($dirname) {
 				$configs = $module->getInfo('config');
 				if ($configs != false) {
 					if ($module->getVar('hascomments') != 0) {
-						include_once XOOPS_ROOT_PATH.'/include/comment_constants.php' ;
+						include_once ICMS_ROOT_PATH.'/include/comment_constants.php' ;
 						array_push($configs, array('name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => array('_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN)));
 						array_push($configs, array('name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0));
 					}
 				} else {
 					if ($module->getVar('hascomments') != 0) {
 						$configs = array();
-						include_once XOOPS_ROOT_PATH.'/include/comment_constants.php' ;
+						include_once ICMS_ROOT_PATH.'/include/comment_constants.php' ;
 						$configs[] = array('name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => array('_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
 						$configs[] = array('name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0);
 					}
@@ -308,8 +308,8 @@ function xoops_module_install($dirname) {
 						$configs = array();
 					}
 					// Main notification options
-					include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
-					include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
+					include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
+					include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 					$options = array();
 					$options['_NOT_CONFIG_DISABLE'] = XOOPS_NOTIFICATION_DISABLE;
 					$options['_NOT_CONFIG_ENABLEBLOCK'] = XOOPS_NOTIFICATION_ENABLEBLOCK;
@@ -456,7 +456,7 @@ function xoops_module_install($dirname) {
 			$install_script = $module->getInfo('onInstall');
 			$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
 			if (false != $install_script && trim($install_script) != '') {
-				include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($install_script);
+				include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($install_script);
 
 				$is_IPF = $module->getInfo('object_items');
 				if(!empty($is_IPF)){
@@ -521,9 +521,9 @@ function &xoops_module_gettemplate($dirname, $template, $block=false) {
 	global $xoopsConfig;
 	$ret = '';
 	if ($block) {
-		$path = XOOPS_ROOT_PATH.'/modules/'.$dirname.'/templates/blocks/'.$template;
+		$path = ICMS_ROOT_PATH.'/modules/'.$dirname.'/templates/blocks/'.$template;
 	} else {
-		$path = XOOPS_ROOT_PATH.'/modules/'.$dirname.'/templates/'.$template;
+		$path = ICMS_ROOT_PATH.'/modules/'.$dirname.'/templates/'.$template;
 	}
 	if (!file_exists($path)) {
 		return $ret;
@@ -546,7 +546,7 @@ function xoops_module_uninstall($dirname) {
 	$db =& Database::getInstance();
 	$module_handler =& xoops_gethandler('module');
 	$module =& $module_handler->getByDirname($dirname);
-	include_once XOOPS_ROOT_PATH.'/class/template.php';
+	include_once ICMS_ROOT_PATH.'/class/template.php';
 	xoops_template_clear_module_cache($module->getVar('mid'));
 	if ($module->getVar('dirname') == 'system') {
 		return "<p>".sprintf(_MD_AM_FAILUNINS, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_SYSNO."</p>";
@@ -715,7 +715,7 @@ function xoops_module_uninstall($dirname) {
 			$uninstall_script = $module->getInfo('onUninstall');
 			$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
 			if (false != $uninstall_script && trim($uninstall_script) != '') {
-				include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($uninstall_script);
+				include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($uninstall_script);
 				if (function_exists('xoops_module_uninstall_'.$ModName)) {
 					$func = 'xoops_module_uninstall_'.$ModName;
 					if (!$func($module)) {
@@ -750,7 +750,7 @@ function xoops_module_activate($mid) {
 	global $icms_block_handler;
 	$module_handler =& xoops_gethandler('module');
 	$module =& $module_handler->get($mid);
-	include_once XOOPS_ROOT_PATH.'/class/template.php';
+	include_once ICMS_ROOT_PATH.'/class/template.php';
 	xoops_template_clear_module_cache($module->getVar('mid'));
 	$module->setVar('isactive', 1);
 	if (!$module_handler->insert($module)) {
@@ -775,7 +775,7 @@ function xoops_module_deactivate($mid) {
 
 	$module_handler =& xoops_gethandler('module');
 	$module =& $module_handler->get($mid);
-	include_once XOOPS_ROOT_PATH.'/class/template.php';
+	include_once ICMS_ROOT_PATH.'/class/template.php';
 	xoops_template_clear_module_cache($mid);
 	$module->setVar('isactive', 0);
 	if ($module->getVar('dirname') == "system") {
@@ -835,7 +835,7 @@ function icms_module_update($dirname) {
 	// Save current version for use in the update function
 	$prev_version = $module->getVar('version');
 	$prev_dbversion = $module->getVar('dbversion');
-	include_once XOOPS_ROOT_PATH.'/class/template.php';
+	include_once ICMS_ROOT_PATH.'/class/template.php';
 	xoops_template_clear_module_cache($module->getVar('mid'));
 	// we dont want to change the module name set by admin
 	$temp_name = $module->getVar('name');
@@ -1084,14 +1084,14 @@ function icms_module_update($dirname) {
 		$configs = $module->getInfo('config');
 		if ($configs != false) {
 			if ($module->getVar('hascomments') != 0) {
-				include_once XOOPS_ROOT_PATH.'/include/comment_constants.php' ;
+				include_once ICMS_ROOT_PATH.'/include/comment_constants.php' ;
 				array_push($configs, array('name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => array('_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN)));
 				array_push($configs, array('name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0));
 			}
 		} else {
 			if ($module->getVar('hascomments') != 0) {
 				$configs = array();
-				include_once XOOPS_ROOT_PATH.'/include/comment_constants.php' ;
+				include_once ICMS_ROOT_PATH.'/include/comment_constants.php' ;
 				$configs[] = array('name' => 'com_rule', 'title' => '_CM_COMRULES', 'description' => '', 'formtype' => 'select', 'valuetype' => 'int', 'default' => 1, 'options' => array('_CM_COMNOCOM' => XOOPS_COMMENT_APPROVENONE, '_CM_COMAPPROVEALL' => XOOPS_COMMENT_APPROVEALL, '_CM_COMAPPROVEUSER' => XOOPS_COMMENT_APPROVEUSER, '_CM_COMAPPROVEADMIN' => XOOPS_COMMENT_APPROVEADMIN));
 				$configs[] = array('name' => 'com_anonpost', 'title' => '_CM_COMANONPOST', 'description' => '', 'formtype' => 'yesno', 'valuetype' => 'int', 'default' => 0);
 			}
@@ -1103,8 +1103,8 @@ function icms_module_update($dirname) {
 				$configs = array();
 			}
 			// Main notification options
-			include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
-			include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
+			include_once ICMS_ROOT_PATH . '/include/notification_constants.php';
+			include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 			$options = array();
 			$options['_NOT_CONFIG_DISABLE'] = XOOPS_NOTIFICATION_DISABLE;
 			$options['_NOT_CONFIG_ENABLEBLOCK'] = XOOPS_NOTIFICATION_ENABLEBLOCK;
@@ -1223,7 +1223,7 @@ function icms_module_update($dirname) {
 		$update_script = $module->getInfo('onUpdate');
 		$ModName = ($module->getInfo('modname') != '') ? trim($module->getInfo('modname')) : $dirname;
 		if (false != $update_script && trim($update_script) != '') {
-			include_once XOOPS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($update_script);
+			include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($update_script);
 
 			$is_IPF = $module->getInfo('object_items');
 			if(!empty($is_IPF)){

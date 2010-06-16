@@ -12,5 +12,5 @@
 require "header.php";
 
 define("XOOPS_FCK_FOLDER", $icmsModule->getVar("dirname"));
-include XOOPS_ROOT_PATH."/class/xoopseditor/FCKeditor/editor/filemanager/browser/default/connectors/php/connector.php";
+include ICMS_ROOT_PATH."/class/xoopseditor/FCKeditor/editor/filemanager/browser/default/connectors/php/connector.php";
 ?>

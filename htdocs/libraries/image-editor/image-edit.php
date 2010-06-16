@@ -14,8 +14,7 @@
 $xoopsOption ['nodebug'] = 1;
 if (file_exists ( '../../mainfile.php' ))
 	include_once '../../mainfile.php';
-if (! defined ( 'XOOPS_ROOT_PATH' ))
-	exit ();
+defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 include_once ICMS_ROOT_PATH . '/class/template.php';

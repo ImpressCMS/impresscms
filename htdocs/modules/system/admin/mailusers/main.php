@@ -14,5 +14,5 @@
  * @version	$Id$
  */
 
-include_once XOOPS_ROOT_PATH."/modules/system/admin/mailusers/mailusers.php";
+include_once ICMS_ROOT_PATH."/modules/system/admin/mailusers/mailusers.php";
 ?>

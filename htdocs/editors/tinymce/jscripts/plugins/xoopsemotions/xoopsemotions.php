@@ -8,7 +8,7 @@ if (file_exists('../../../../../../mainfile.php')) include_once '../../../../../
 if (file_exists('../../../../../../../mainfile.php')) include_once '../../../../../../../mainfile.php';
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-include_once XOOPS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/misc.php';
+include_once ICMS_ROOT_PATH.'/language/'.$icmsConfig['language'].'/misc.php';
 
 xoops_header(false);
 ?>

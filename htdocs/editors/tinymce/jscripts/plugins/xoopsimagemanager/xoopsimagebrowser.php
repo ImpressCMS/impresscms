@@ -450,7 +450,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 	$icmsTpl->assign('images',$arrimg);
 	if ($imgcount > 0) {
 		if ($imgcount > 15) {
-			include_once XOOPS_ROOT_PATH.'/class/pagenav.php';
+			include_once ICMS_ROOT_PATH.'/class/pagenav.php';
 			$nav = new XoopsPageNav($imgcount, 15, $start, 'start', 'op=listimg&amp;imgcat_id='.$imgcat_id.'&type='.$type.'&target='.$target);
 			$icmsTpl->assign('pag','<div class="img_list_info_panel" align="center">'.$nav->renderNav().'</div>');
 		}else{
@@ -542,7 +542,7 @@ function imanager_addfile() {
 	}
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 
-	include_once XOOPS_ROOT_PATH.'/class/uploader.php';
+	include_once ICMS_ROOT_PATH.'/class/uploader.php';
 	if ($imagecategory->getVar('imgcat_storetype') == 'db') {
 		$updir = ICMS_IMANAGER_FOLDER_PATH;
 	}else{
@@ -793,7 +793,7 @@ function icmsPopupFooter(){
 
 function showAddImgForm($imgcat_id){
 	global $target,$type;
-	include_once XOOPS_ROOT_PATH.'/class/xoopsformloader.php';
+	include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 	$imgcat_handler = xoops_gethandler('imagecategory');
 	$form = new XoopsThemeForm(_ADDIMAGE, 'image_form', $_SERVER['PHP_SELF'], 'post', true);
 	$form->setExtra('enctype="multipart/form-data"');

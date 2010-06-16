@@ -28,7 +28,7 @@ class IcmsFormBlockoptionsElement extends XoopsFormElementTray {
 		$func = $object->getVar('edit_func');
 
 		require_once ICMS_ROOT_PATH . "/modules/" . $object->handler->getModuleDirname($object->getVar('mid', 'e')) . "/blocks/" . $object->getVar('func_file') ;
-		include_once XOOPS_ROOT_PATH . "/class/xoopsformloader.php";
+		include_once ICMS_ROOT_PATH . "/class/xoopsformloader.php";
 		icms_loadLanguageFile($object->handler->getModuleDirname($object->getVar('mid', 'e')), 'blocks');
 
 		if (!function_exists($func)) return;

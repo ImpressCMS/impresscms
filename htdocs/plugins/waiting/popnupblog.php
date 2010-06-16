@@ -1,6 +1,6 @@
 <?php
 
-include_once XOOPS_ROOT_PATH.'/modules/popnupblog/popnupblog.php';
+include_once ICMS_ROOT_PATH.'/modules/popnupblog/popnupblog.php';
 
 function b_waiting_popnupblog(){
 	$result = array();
