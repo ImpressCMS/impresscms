@@ -37,8 +37,8 @@ class upgrade_2014 {
 ";
 		$manual = "<h2>" . _MANUAL_INSTRUCTIONS . "</h2>\n<p>" . sprintf( _COPY_RED_LINES, "mainfile.php" ) . "</p>
 <pre style='border:1px solid black;width:650px;overflow:auto'><span style='color:#ff0000;font-weight:bold'>$patchCode</span>
-    if (!isset(\$xoopsOption['nocommon']) && XOOPS_ROOT_PATH != '') {
-        include XOOPS_ROOT_PATH.\"/include/common.php\";
+    if (!isset(\$xoopsOption['nocommon']) && ICMS_ROOT_PATH != '') {
+        include ICMS_ROOT_PATH.\"/include/common.php\";
     }
 </pre>";
 		$lines = file( '../mainfile.php' );

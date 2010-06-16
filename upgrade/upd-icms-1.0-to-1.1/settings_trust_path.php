@@ -10,7 +10,7 @@
  * @version		$Id: setting_trust_path.php 5547 2008-10-09 19:42:15Z pesian_stranger $
  */
 
-if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
+if ( !defined( 'ICMS_ROOT_PATH' ) ) {
     die( 'Bad installation: please add this folder to the ImpressCMS install you want to upgrade');
 }
 
@@ -39,7 +39,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' && @$_POST['task'] == 'trust_path' ) {
 	if ( @empty( $vars['TRUST_PATH'] ) )
 	{
     	$error = ERR_NO_TRUST_PATH;
-	} elseif ( $vars['TRUST_PATH'] == XOOPS_ROOT_PATH ) {
+	} elseif ( $vars['TRUST_PATH'] == ICMS_ROOT_PATH ) {
     	$error = ERR_INVALID_TRUST_PATH;
 	} elseif ( !is_dir( $vars['TRUST_PATH'] ) ) {
     	$error = ERR_WRONG_TRUST_PATH;

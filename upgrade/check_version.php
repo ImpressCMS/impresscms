@@ -1,5 +1,5 @@
 <?php
-defined( 'XOOPS_ROOT_PATH' ) or die();
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 $dirs = getDirList( "." );
 

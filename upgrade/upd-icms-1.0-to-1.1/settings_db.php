@@ -16,7 +16,7 @@
  * @version		$Id: setting_db.php 1747 2008-04-20 19:42:15Z pesian_stranger $
  */
 
-if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
+if ( !defined( 'ICMS_ROOT_PATH' ) ) {
     die( 'Bad installation: please add this folder to the ImpressCMS install you want to upgrade');
 }
 

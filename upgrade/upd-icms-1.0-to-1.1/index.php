@@ -52,8 +52,8 @@ class upgrade_impcms06 {
 
     function cleaning_write_folders() {
     	$dir = array();
-    	$dir['templates_c'] = XOOPS_ROOT_PATH."/templates_c/";
-    	$dir['cache'] = XOOPS_ROOT_PATH."/cache/";
+    	$dir['templates_c'] = ICMS_ROOT_PATH."/templates_c/";
+    	$dir['cache'] = ICMS_ROOT_PATH."/cache/";
 
     	foreach ($dir as $d)
     	{
@@ -376,7 +376,7 @@ class upgrade_impcms06 {
     }
     function check_trust_path()
     {
-    	$lines = file( XOOPS_ROOT_PATH . '/mainfile.php' );
+    	$lines = file( ICMS_ROOT_PATH . '/mainfile.php' );
     	foreach ( $lines as $line ) {
     		$trustcheck = defined("XOOPS_TRUST_PATH") && XOOPS_TRUST_PATH != '';
     		if( preg_match( "/(define\(\s*)([\"'])(XOOPS_TRUST_PATH)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) && $trustcheck ) {
@@ -392,7 +392,7 @@ class upgrade_impcms06 {
     }
     function check_db()
     {
-    	$lines = file( XOOPS_ROOT_PATH . '/mainfile.php' );
+    	$lines = file( ICMS_ROOT_PATH . '/mainfile.php' );
     	foreach ( $lines as $line ) {
     		if( preg_match( "/(define\(\s*)([\"'])(XOOPS_DB_CHARSET)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) ) {
     			return true;
@@ -402,7 +402,7 @@ class upgrade_impcms06 {
     }
     function check_salt()
     {
-    	$lines = file( XOOPS_ROOT_PATH . '/mainfile.php' );
+    	$lines = file( ICMS_ROOT_PATH . '/mainfile.php' );
     	foreach ( $lines as $line ) {
     		if( preg_match( "/(define\(\s*)([\"'])(XOOPS_DB_SALT)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) ) {
     			return true;
@@ -563,7 +563,7 @@ class upgrade_impcms06 {
     		}
     	}
 
-    	$fp = fopen( XOOPS_ROOT_PATH . '/mainfile.php', 'wt' );
+    	$fp = fopen( ICMS_ROOT_PATH . '/mainfile.php', 'wt' );
     	if ( !$fp ) {
     		echo ERR_COULD_NOT_WRITE_MAINFILE;
     		echo "<pre style='border: 1px solid black; width: 80%; overflow: auto;'><div style='color: #ff0000; font-weight: bold;'><div>" . implode("</div><div>", array_map("htmlspecialchars", $lines)) . "</div></div></pre>";

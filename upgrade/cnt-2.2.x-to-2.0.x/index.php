@@ -338,7 +338,7 @@ class upgrade_220
 			if ($row['dirname'] != $dirname) {
 				$dirname = $row['dirname'];
 				$modversion = array();
-				if (! @include XOOPS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php' ) continue;
+				if (! @include ICMS_ROOT_PATH . '/modules/' . $dirname . '/xoops_version.php' ) continue;
 			}
 			if (empty($modversion['blocks']) && $dirname != 'system') continue;
 

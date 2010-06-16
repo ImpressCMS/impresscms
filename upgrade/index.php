@@ -28,7 +28,7 @@
 
 error_reporting( E_ALL );
 
-if ( !defined( 'XOOPS_ROOT_PATH' ) ) {
+if ( !defined( 'ICMS_ROOT_PATH' ) ) {
 	die( 'Bad installation: please add this folder to the ImpressCMS install you want to upgrade');
 }
 /*

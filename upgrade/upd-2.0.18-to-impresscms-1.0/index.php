@@ -16,8 +16,8 @@ class upgrade_impcms05 {
 	}
 	function cleaning_write_folders() {
 		$dir = array();
-		$dir['templates_c'] = XOOPS_ROOT_PATH."/templates_c/";
-		$dir['cache'] = XOOPS_ROOT_PATH."/cache/";
+		$dir['templates_c'] = ICMS_ROOT_PATH."/templates_c/";
+		$dir['cache'] = ICMS_ROOT_PATH."/cache/";
 
 		foreach ($dir as $d)
 		{

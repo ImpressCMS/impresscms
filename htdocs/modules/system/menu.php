@@ -13,7 +13,7 @@
  * @version		$Id$
  */
 
-include_once XOOPS_ROOT_PATH."/modules/system/constants.php" ;
+include_once ICMS_ROOT_PATH."/modules/system/constants.php" ;
 
 $i=0;
 $adminmenu[$i]['title'] = _MI_SYSTEM_ADMENU1;
