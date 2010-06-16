@@ -4,9 +4,7 @@
  * $Id$
  */
 
-if (!defined("XOOPS_ROOT_PATH")) {
-	die("ImpressCMS root path not defined");
-}
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 define('_CO_ICMS_FILTER', "Filter");
 define('_CO_ICMS_NONE', "None");

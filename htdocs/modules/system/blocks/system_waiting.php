@@ -144,19 +144,19 @@ function system_get_plugin_info( $dirname , $language = 'english' )
 {
 	// get $mytrustdirname for D3 modules
 	$mytrustdirname = '' ;
-	if( defined( 'XOOPS_TRUST_PATH' ) && file_exists( XOOPS_ROOT_PATH."/modules/".$dirname."/mytrustdirname.php" ) ) {
-		@include XOOPS_ROOT_PATH."/modules/".$dirname."/mytrustdirname.php" ;
+	if( defined( 'XOOPS_TRUST_PATH' ) && file_exists( ICMS_ROOT_PATH."/modules/".$dirname."/mytrustdirname.php" ) ) {
+		@include ICMS_ROOT_PATH."/modules/".$dirname."/mytrustdirname.php" ;
 	}
 
-	$module_plugin_file = XOOPS_ROOT_PATH."/modules/".$dirname."/include/waiting.plugin.php" ;
+	$module_plugin_file = ICMS_ROOT_PATH."/modules/".$dirname."/include/waiting.plugin.php" ;
 	$d3module_plugin_file = XOOPS_TRUST_PATH."/modules/".$mytrustdirname."/include/waiting.plugin.php" ;
 	$builtin_plugin_file = ICMS_PLUGINS_PATH."/waiting/".$dirname.".php" ;
 
 	if( file_exists( $module_plugin_file ) ) {
 		// module side (1st priority)
 		$lang_files = array(
-		XOOPS_ROOT_PATH."/modules/$dirname/language/$language/waiting.php" ,
-		XOOPS_ROOT_PATH."/modules/$dirname/language/english/waiting.php" ,
+		ICMS_ROOT_PATH."/modules/$dirname/language/$language/waiting.php" ,
+		ICMS_ROOT_PATH."/modules/$dirname/language/english/waiting.php" ,
 		) ;
 		$langfile_path = '' ;
 		foreach( $lang_files as $lang_file ) {

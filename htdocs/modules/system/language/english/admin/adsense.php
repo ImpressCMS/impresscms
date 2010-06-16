@@ -1,14 +1,14 @@
-<?php
-
 /**
- * $Id: adsense.php 159 2007-12-17 16:44:05Z malanciault $
- * Module: SmartContent
- * Author: The SmartFactory <www.smartfactory.ca>
- * Licence: GNU
- */
-if (!defined("XOOPS_ROOT_PATH")) {
-	die("XOOPS root path not defined");
-}
+* Adsense.php definations
+*
+* @copyright      http://www.impresscms.org/ The ImpressCMS Project
+* @license         LICENSE.txt
+* @package	adsense
+* @author		marcan <macrcan@impresscms.org>
+* @version		$Id$
+*/
+
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 define('_CO_ICMS_ADSENSES', 'Adense ads');
 define('_CO_ICMS_ADSENSES_DSC', 'Here is a list of the adsense ads available in the system.');
@@ -50,4 +50,3 @@ define('_CO_ICMS_ADSENSE_URL_COLOR', 'URL color');
 define('_CO_ICMS_ADSENSE_URL_COLOR_DSC', '');
 define('_CO_ICMS_ADSENSE_EXPLAIN_TITLE', 'What are Adsenses ?');
 define('_CO_ICMS_ADSENSE_EXPLAIN', 'Adsenses are tags that you can define and use anywhere on your ImpressCMS site. You could see them as extended BBCodes, but usable in all ImpressCMS text area as well as in all templates ! Complete documentation of this feature can be found here: <a rel="external" href="http://wiki.impresscms.org/index.php?title=Adsenses">Adsenses</a>.');
-?>

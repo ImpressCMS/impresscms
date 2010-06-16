@@ -334,7 +334,7 @@ function b_system_topposters_show($options)
 function b_system_comments_show($options)
 {
 	$block = array();
-	include_once XOOPS_ROOT_PATH.'/include/comment_constants.php';
+	include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
 	$comment_handler =& xoops_gethandler('comment');
 	$criteria = new CriteriaCompo(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
 	$criteria->setLimit( (int) ($options[0]));
@@ -400,7 +400,7 @@ function b_system_comments_show($options)
 function b_system_notification_show()
 {
 	global $icmsConfig, $icmsUser, $icmsModule;
-	include_once XOOPS_ROOT_PATH . '/include/notification_functions.php';
+	include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 	icms_loadLanguageFile('core', 'notification');
 	// Notification must be enabled, and user must be logged in
 	if (empty($icmsUser) || !notificationEnabled('block')) {
@@ -475,7 +475,7 @@ function b_system_comments_edit($options)
  */
 function b_system_topposters_edit($options)
 {
-	include_once XOOPS_ROOT_PATH.'/class/xoopslists.php';
+	include_once ICMS_ROOT_PATH.'/class/xoopslists.php';
 	$inputtag = "<input type='text' name='options[]' value='". (int) ($options[0])."' />";
 	$form = sprintf(_MB_SYSTEM_DISPLAY,$inputtag);
 	$form .= "<br />"._MB_SYSTEM_DISPLAYA."&nbsp;<input type='radio' id='options[]' name='options[]' value='1'";

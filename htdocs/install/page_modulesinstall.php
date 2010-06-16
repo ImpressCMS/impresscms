@@ -25,7 +25,7 @@ $pageHasHelp = false;
 
 $vars =& $_SESSION['settings'];
 
-include_once XOOPS_ROOT_PATH."/mainfile.php";
+include_once ICMS_ROOT_PATH."/mainfile.php";
 include_once "common.php";
 include_once "../kernel/block.php";
 include_once "../kernel/module.php";
@@ -73,7 +73,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 		}
 		//Install protector module by default if found.
 		//TODO: Insert Protector installation - leads to blank page as it is now.
-		if (file_exists(XOOPS_ROOT_PATH.'/modules/protector/xoops_version.php')) {
+		if (file_exists(ICMS_ROOT_PATH.'/modules/protector/xoops_version.php')) {
 			$content .= xoops_module_install('protector');
 			/*        	include_once "./class/mainfilemanager.php";
 			 $mm = new mainfile_manager("../mainfile.php");

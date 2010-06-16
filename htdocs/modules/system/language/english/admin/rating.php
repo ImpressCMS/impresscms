@@ -1,14 +1,14 @@
-<?php
-
 /**
- * $Id: rating.php 159 2007-12-17 16:44:05Z malanciault $
- * Module: SmartContent
- * Author: The SmartFactory <www.smartfactory.ca>
- * Licence: GNU
- */
-if (!defined("XOOPS_ROOT_PATH")) {
-	die("XOOPS root path not defined");
-}
+* rating definations
+*
+* @copyright      http://www.impresscms.org/ The ImpressCMS Project
+* @license         LICENSE.txt
+* @package	ratings
+* @author		marcan <macrcan@impresscms.org>
+* @version		$Id$
+*/
+
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 define('_CO_ICMS_RATING_RATE_IT', 'Rate it !');
 define('_CO_ICMS_RATING_DUPLICATE_ENTRY', 'Sorry ! You have already rated this ! You cannot rate something twice.');
@@ -33,4 +33,3 @@ define('_CO_ICMS_RATINGS_CREATED', 'The rating was successfully created.');
 define('_CO_ICMS_RATINGS_MODIFIED', 'The rating was successfully modified.');
 define('_CO_ICMS_RATING_EXPLAIN_TITLE', 'What are Ratings ?');
 define('_CO_ICMS_RATING_EXPLAIN', 'Ratings is a new feature in ImpressCMS. With using this tool, you can add a new rating method to your modules, and control the results through this section! Complete documentation of this feature can be found here: <a rel="external" href="http://wiki.impresscms.org/index.php?title=Rating_feature">Rating Features</a>.');
-?>

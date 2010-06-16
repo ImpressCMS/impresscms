@@ -42,9 +42,9 @@
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_USER, 'welcome_msg', '_MD_AM_WELCOMEMSG', 0, '_MD_AM_WELCOMEMSGDSC', 'yesno', 'int', 3 );
 
 		// get the default content of the mail
-		$default_msg_content_file = XOOPS_ROOT_PATH . '/language/' . $icmsConfig ['language'] . '/mail_template/' . 'welcome.tpl';
+		$default_msg_content_file = ICMS_ROOT_PATH . '/language/' . $icmsConfig ['language'] . '/mail_template/' . 'welcome.tpl';
 		if (! file_exists ( $default_msg_content_file )) {
-			$default_msg_content_file = XOOPS_ROOT_PATH . '/language/english/mail_template/' . 'welcome.tpl';
+			$default_msg_content_file = ICMS_ROOT_PATH . '/language/english/mail_template/' . 'welcome.tpl';
 		}
 		$fp = fopen ( $default_msg_content_file, 'r' );
 		if ($fp) {
