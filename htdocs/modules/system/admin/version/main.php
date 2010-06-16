@@ -25,7 +25,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin() )
  */
 if (isset($_GET['mid'])) {
 	include_once XOOPS_ROOT_PATH . '/modules/system/admin/version/module_info.php';
-	exit;ICMS_ROOT_PATH
+	exit;
 }
 
 /**
