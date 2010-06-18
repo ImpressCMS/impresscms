@@ -17,7 +17,7 @@ function b_waiting_xyp4all()
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("xyp_links")." WHERE status=0");
 	if ( $result ) {
-		$block['adminlink'] = XOOPS_URL."/modules/xyp4all/admin/index.php?op=listNewLinks";
+		$block['adminlink'] = ICMS_URL."/modules/xyp4all/admin/index.php?op=listNewLinks";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_LINKS ;
 	}
@@ -27,7 +27,7 @@ function b_waiting_xyp4all()
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("xyp_broken"));
 	if ( $result ) {
-		$block['adminlink'] = XOOPS_URL."/modules/xyp4all/admin/index.php?op=listBrokenLinks";
+		$block['adminlink'] = ICMS_URL."/modules/xyp4all/admin/index.php?op=listBrokenLinks";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_BROKENS ;
 	}
@@ -37,7 +37,7 @@ function b_waiting_xyp4all()
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("xyp_mod"));
 	if ( $result ) {
-		$block['adminlink'] = XOOPS_URL."/modules/xyp4all/admin/index.php?op=listModReq";
+		$block['adminlink'] = ICMS_URL."/modules/xyp4all/admin/index.php?op=listModReq";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_MODREQS ;
 	}

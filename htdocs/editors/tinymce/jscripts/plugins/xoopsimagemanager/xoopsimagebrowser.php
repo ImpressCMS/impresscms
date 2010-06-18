@@ -417,7 +417,7 @@ function imanager_listimg($imgcat_id,$start=0) {
 		$arrimg[$i]['src'] = $src.'?'.time();
 		$arrimg[$i]['url_src'] = str_replace(ICMS_URL,'',$src);
 		$src_lightbox = ICMS_URL."/modules/system/admin/images/preview.php?file=".$images[$i]->getVar('image_name');
-		$preview_url = '<a href="'.$src_lightbox.'" rel="lightbox[categ'.$images[$i]->getVar('imgcat_id').']" title="'.$images[$i]->getVar('image_nicename').'"><img src="'.XOOPS_URL.'/modules/system/images/view.png" title="'._PREVIEW.'" alt="'._PREVIEW.'" /></a>';
+		$preview_url = '<a href="'.$src_lightbox.'" rel="lightbox[categ'.$images[$i]->getVar('imgcat_id').']" title="'.$images[$i]->getVar('image_nicename').'"><img src="'.ICMS_URL.'/modules/system/images/view.png" title="'._PREVIEW.'" alt="'._PREVIEW.'" /></a>';
 		$arrimg[$i]['preview_link'] = $preview_url;
 
 		$extra_perm = array("image/jpeg","image/jpeg","image/png","image/gif");
@@ -766,7 +766,7 @@ function icmsPopupHeader(){
 	<meta http-equiv="content-type" content="text/html; charset=' . _CHARSET . '" />
 	<meta http-equiv="content-language" content="' . _LANGCODE . '" />
 	<title>' . htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ) . ' - ' . _IMGMANAGER . '</title>
-	<script type="text/javascript" src="' . ICMS_URL . '/include/xoops.js"></script>' . '<link rel="shortcut icon" type="image/ico" href="' . XOOPS_URL . '/favicon.ico" />
+	<script type="text/javascript" src="' . ICMS_URL . '/include/xoops.js"></script>' . '<link rel="shortcut icon" type="image/ico" href="' . ICMS_URL . '/favicon.ico" />
 	<link rel="icon" type="image/png" href="' . ICMS_URL . '/favicon.ico" />
 	';
 	if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
@@ -774,7 +774,7 @@ function icmsPopupHeader(){
 		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/modules/system/style_rtl.css" />';
 	} else {
 		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/icms.css" />';
-		echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style.css" />';
+		echo '<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/modules/system/style.css" />';
 	}
 
 	#Adding necessary scripts

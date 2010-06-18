@@ -17,7 +17,7 @@ function b_waiting_smartsection()
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("smartsection_items")." WHERE status=1");
 	if ( $result ) {
-		$block['adminlink'] = XOOPS_URL."/modules/smartsection/admin/index.php?statussel=1";
+		$block['adminlink'] = ICMS_URL."/modules/smartsection/admin/index.php?statussel=1";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_SUBMITTED;
 	}

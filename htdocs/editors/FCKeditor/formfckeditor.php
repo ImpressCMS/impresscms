@@ -108,7 +108,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 						$fp_content .= "/* Loaded from module local config file */\n".implode("", file($config_mod))."\n\n";
 					}
 					if(is_readable(ICMS_ROOT_PATH."/modules/".$GLOBALS["icmsModule"]->getVar("dirname")."/fckeditor.connector.php")) {
-						$fp_content .= "var browser_path = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Connector=".XOOPS_URL."/modules/".$GLOBALS["icmsModule"]->getVar("dirname", "n")."/fckeditor.connector.php';\n";
+						$fp_content .= "var browser_path = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Connector=".ICMS_URL."/modules/".$GLOBALS["icmsModule"]->getVar("dirname", "n")."/fckeditor.connector.php';\n";
 						$fp_content .= "FCKConfig.LinkBrowserURL = browser_path ;\n";
 						$fp_content .= "FCKConfig.ImageBrowserURL = browser_path + '&Type=Image';\n";
 						$fp_content .= "FCKConfig.FlashBrowserURL = browser_path + '&Type=Flash';\n\n";

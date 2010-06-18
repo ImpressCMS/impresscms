@@ -6,7 +6,7 @@ function b_waiting_wordpress_0($wp_num=""){
 	// wordpress
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("wp".$wp_num."_comments")." WHERE comment_approved='0'");
 	if ( $result ) {
-		$block['adminlink'] = XOOPS_URL."/modules/wordpress".$wp_num."/wp-admin/moderation.php" ;
+		$block['adminlink'] = ICMS_URL."/modules/wordpress".$wp_num."/wp-admin/moderation.php" ;
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = sprintf(_PI_WAITING_WAITINGS_FMT,$wp_num) ;
 	}

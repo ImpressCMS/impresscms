@@ -18,7 +18,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 	<script type="text/javascript" src="../../utils/validate.js"></script>
 	<script type="text/javascript" src="js/xoopsimagemanager.js"></script>
 <?php
-$html = "<script type='text/javascript' src='".XOOPS_URL."/include/xoops.js'></script>";
+$html = "<script type='text/javascript' src='".ICMS_URL."/include/xoops.js'></script>";
 echo ($html);
 ?>
 	<link href="css/xoopsimagemanager.css" rel="stylesheet" type="text/css" />
@@ -58,7 +58,7 @@ $html = "<img
 */
 $html = "<img
 	alt=\"image\"
-	src=\"".XOOPS_URL."/images/imgsrc.gif\"
+	src=\"".ICMS_URL."/images/imgsrc.gif\"
 
 	onclick=\"javascript:xoopspopup=openWithSelfMain('xoopsimagebrowser.php?target=src&type=tiny','imgmanager',985,470,1);\"
 	onmouseover=\"style.cursor='hand'\"
@@ -189,7 +189,7 @@ echo ($html);
 									  <td>
 										<input id="onmouseoversrc" name="onmouseoversrc" type="text" value="" />
 <?php
-$html = "<img alt=\"image\" src=\"".XOOPS_URL."/images/imgsrc.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoversrc','imgmanager',985,470);\" onmouseover=\"style.cursor='hand'\" style=\"\" />\n";
+$html = "<img alt=\"image\" src=\"".ICMS_URL."/images/imgsrc.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoversrc','imgmanager',985,470);\" onmouseover=\"style.cursor='hand'\" style=\"\" />\n";
 echo ($html);
 ?>
 										</td> 
@@ -208,7 +208,7 @@ echo ($html);
 									  <td>
 										<input id="onmouseoutsrc" name="onmouseoutsrc" type="text" value="" />
 <?php
-$html = "<img alt=\"image\" src=\"".XOOPS_URL."/images/imgsrc.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoutsrc','imgmanager',985,470);\" onmouseover=\"style.cursor='hand'\" style=\"\" />\n";
+$html = "<img alt=\"image\" src=\"".ICMS_URL."/images/imgsrc.gif\" onclick=\"javascript:openWithSelfMain('xoopsimagebrowser.php?target=onmouseoutsrc','imgmanager',985,470);\" onmouseover=\"style.cursor='hand'\" style=\"\" />\n";
 echo ($html);
 ?>
 										</td> 
