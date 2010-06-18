@@ -62,7 +62,7 @@ class xos_opal_ThemeFactory {
 			}
 			$GLOBALS['xoopsConfig']['theme_set'] = $options['folderName'];
 		}
-		$options['path'] = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$options['folderName']))?ICMS_MODULES_PATH.'/system/themes/' . $options['folderName']:XOOPS_THEME_PATH . '/' . $options['folderName'];
+		$options['path'] = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$options['folderName']))?ICMS_MODULES_PATH.'/system/themes/' . $options['folderName']:ICMS_THEME_PATH . '/' . $options['folderName'];
 		$inst = new xos_opal_Theme();
 		foreach ( $options as $k => $v ) $inst->$k = $v;
 		$inst->xoInit();
@@ -180,8 +180,8 @@ class xos_opal_Theme {
 	function xoInit( $options = array() ) {
 		global $xoops;
 
-		$this->path = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName))?ICMS_MODULES_PATH.'/system/themes/' . $this->folderName:XOOPS_THEME_PATH . '/' . $this->folderName;
-		$this->url = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName))?ICMS_MODULES_URL.'/system/themes/' . $this->folderName:XOOPS_THEME_URL . '/' . $this->folderName;
+		$this->path = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName))?ICMS_MODULES_PATH.'/system/themes/' . $this->folderName:ICMS_THEME_PATH . '/' . $this->folderName;
+		$this->url = (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName))?ICMS_MODULES_URL.'/system/themes/' . $this->folderName:ICMS_THEME_URL . '/' . $this->folderName;
 
 		$this->template = new XoopsTpl();
 		$this->template->currentTheme =& $this;
@@ -191,7 +191,7 @@ class xos_opal_Theme {
 		$this->template->assign( array(
 			'icms_style' => ICMS_URL.'/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css',
 			'icms_theme' => $this->folderName,
-			'icms_imageurl' => (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName.'/'))?ICMS_MODULES_URL.'/system/themes/'.$this->folderName.'/':XOOPS_THEME_URL . '/'.$this->folderName.'/',
+			'icms_imageurl' => (is_dir(ICMS_MODULES_PATH.'/system/themes/'.$this->folderName.'/'))?ICMS_MODULES_URL.'/system/themes/'.$this->folderName.'/':ICMS_THEME_URL . '/'.$this->folderName.'/',
 			'icms_themecss'=> xoops_getcss($this->folderName),
 			'icms_requesturi' => htmlspecialchars( $_SERVER['REQUEST_URI'], ENT_QUOTES),
 			'icms_sitename' => htmlspecialchars($icmsConfig['sitename'], ENT_QUOTES),

@@ -514,10 +514,10 @@ class IcmsForm extends XoopsThemeForm {
 		$size = $multiple ? 5 : 1;
 		$theme_select = new XoopsFormSelect($var['form_caption'], $key, $this->targetObject->getVar($key), $size, $multiple);
 
-		$handle = opendir(XOOPS_THEME_PATH.'/');
+		$handle = opendir(ICMS_THEME_PATH.'/');
 		$dirlist = array();
 		while (false !== ($file = readdir($handle))) {
-			if (is_dir(XOOPS_THEME_PATH.'/'.$file) && !preg_match("/^[.]{1,2}$/",$file) && strtolower($file) != 'cvs') {
+			if (is_dir(ICMS_THEME_PATH.'/'.$file) && !preg_match("/^[.]{1,2}$/",$file) && strtolower($file) != 'cvs') {
 				$dirlist[$file]=$file;
 			}
 		}

@@ -36,7 +36,7 @@ class XoopsTpl extends Smarty {
 	public $left_delimiter = '<{';
 	public $right_delimiter = '}>';
 
-	public $template_dir = XOOPS_THEME_PATH;
+	public $template_dir = ICMS_THEME_PATH;
 	public $cache_dir = XOOPS_CACHE_PATH;
 	public $compile_dir = XOOPS_COMPILE_PATH;
 
