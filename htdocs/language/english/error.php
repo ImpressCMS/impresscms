@@ -3,7 +3,7 @@
 define("_ERR_SEARCH","Search");
 define("_ERR_SEARCH_OUR_SITE","Search our site:");
 define("_ERR_ADVANCED_SEARCH","Advanced Search");
-define("_ERR_START_AGAIN","Start again from the <a href='" . XOOPS_URL . "'>home page</a>.");
+define("_ERR_START_AGAIN","Start again from the <a href='" . ICMS_URL . "'>home page</a>.");
 define("_ERR_CONTACT","Contact the <a href='mailto:%s'>webmaster</a> to report this error.");
 define("_ERR_NO", "Error %u");
 

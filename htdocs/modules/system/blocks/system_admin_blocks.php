@@ -157,14 +157,14 @@ function b_system_admin_modules_show(){
 	foreach ( $modules as $module ) {
 		$rtn = array ( );
 		$inf = & $module->getInfo ();
-		$rtn ['link'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . (isset ( $inf ['adminindex'] ) ? $inf ['adminindex'] : '');
+		$rtn ['link'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . (isset ( $inf ['adminindex'] ) ? $inf ['adminindex'] : '');
 		$rtn ['title'] = $module->name ();
 		$rtn ['dir'] = $module->dirname ();
 		if (isset ( $inf ['iconsmall'] ) && $inf ['iconsmall'] != '') {
-			$rtn ['small'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconsmall'];
+			$rtn ['small'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconsmall'];
 		}
 		if (isset ( $inf ['iconbig'] ) && $inf ['iconbig'] != '') {
-			$rtn ['iconbig'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconbig'];
+			$rtn ['iconbig'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconbig'];
 		}
 		$rtn ['absolute'] = 1;
 		$module->loadAdminMenu ();
@@ -172,7 +172,7 @@ function b_system_admin_modules_show(){
 			$rtn ['hassubs'] = 1;
 			$rtn ['subs'] = array ( );
 			foreach ( $module->adminmenu as $item ) {
-				$item ['link'] = XOOPS_URL . '/modules/' . $module->dirname () . '/' . $item ['link'];
+				$item ['link'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $item ['link'];
 				$rtn ['subs'] [] = $item;
 			}
 		} else {
@@ -186,7 +186,7 @@ function b_system_admin_modules_show(){
 			if (! isset ( $rtn ['subs'] )) {
 				$rtn ['subs'] = array ( );
 			}
-			$subs = array ('title' => _PREFERENCES, 'link' => XOOPS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $module->mid () );
+			$subs = array ('title' => _PREFERENCES, 'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $module->mid () );
 			$rtn ['subs'] [] = $subs;
 		} else {
 			$rtn ['hassubs'] = 0;

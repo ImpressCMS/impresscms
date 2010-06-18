@@ -22,7 +22,7 @@ echo '
     <meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" />
     <meta http-equiv="content-language" content="'._LANGCODE.'" />
     <title>'.$xoopsConfig['sitename'].'</title>
-    <link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/icms.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="'.ICMS_URL.'/icms.css" />
 ';
 $style = xoops_getcss($xoopsConfig['theme_set']);
 if ($style == '') {
@@ -42,7 +42,7 @@ if ($op == 'dologin') {
 	$user =& $member_handler->loginUser(addslashes($myts->stripSlashesGPC($username)), addslashes($myts->stripSlashesGPC($password)));
 	if (is_object($user)) {
 		if (0 == $user->getVar('level')) {
-			redirect_header(XOOPS_URL.'/index.php', 5, _US_NOACTTPADM);
+			redirect_header(ICMS_URL.'/index.php', 5, _US_NOACTTPADM);
 		}
 		if ($xoopsConfig['closesite'] == 1) {
 			$allowed = false;
@@ -53,7 +53,7 @@ if ($op == 'dologin') {
 				}
 			}
 			if (!$allowed) {
-				redirect_header(XOOPS_URL.'/index.php', 1, _NOPERM);
+				redirect_header(ICMS_URL.'/index.php', 1, _NOPERM);
 			}
 		}
 		$user->setVar('last_login', time());
@@ -63,7 +63,7 @@ if ($op == 'dologin') {
 		$_SESSION['xoopsUserId'] = $user->getVar('uid');
 		$_SESSION['xoopsUserGroups'] = $user->getGroups();
 		if (!empty($xoopsConfig['use_ssl'])) {
-			xoops_confirm(array($xoopsConfig['sslpost_name'] => session_id()), XOOPS_URL.'/misc.php?action=showpopups&amp;type=ssllogin', _US_PRESSLOGIN, _LOGIN);
+			xoops_confirm(array($xoopsConfig['sslpost_name'] => session_id()), ICMS_URL.'/misc.php?action=showpopups&amp;type=ssllogin', _US_PRESSLOGIN, _LOGIN);
 		} else {
 			echo sprintf(_US_LOGGINGU, $user->getVar('uname'));
 			echo '<div style="text-align:center;"><input value="'._CLOSE.'" type="button" onclick="document.window.opener.location.reload();document.window.close();" /></div>';

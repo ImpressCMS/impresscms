@@ -84,7 +84,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 		$ret = '';
 		if ( @include_once(ICMS_ROOT_PATH . $this->rootpath. "/fckeditor.php") )	{
 			$oFCKeditor = new FCKeditor($this->getName());
-			$oFCKeditor->BasePath	= XOOPS_URL.$this->rootpath. "/";
+			$oFCKeditor->BasePath	= ICMS_URL.$this->rootpath. "/";
 			$oFCKeditor->Width		= $this->_width;
 			$oFCKeditor->Height		= $this->_height;
 			//$conv_pattern = array("/&gt;/i", "/&lt;/i", "/&quot;/i", "/&#039;/i"/* , "/(\015\012)|(\015)|(\012)|(\r\n)/" */);
@@ -92,7 +92,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 			//$this->Value			= preg_replace($conv_pattern, $conv_replace, $this->_value);
 			$oFCKeditor->Value		= htmlspecialchars_decode($this->_value);
 			
-			//$oFCKeditor->Config['BaseHref'] = XOOPS_URL.$this->rootpath. "/";
+			//$oFCKeditor->Config['BaseHref'] = ICMS_URL.$this->rootpath. "/";
 			if(is_readable(ICMS_ROOT_PATH . $this->rootpath. '/editor/lang/'.$this->getLanguage().'.js')) {
 				$oFCKeditor->Config['DefaultLanguage'] = $this->getLanguage();
 			}
@@ -114,7 +114,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 						$fp_content .= "FCKConfig.FlashBrowserURL = browser_path + '&Type=Flash';\n\n";
 					}
 					if(is_readable(ICMS_ROOT_PATH."/modules/".$GLOBALS["icmsModule"]->getVar("dirname")."/fckeditor.upload.php")) {
-						$fp_content .= "var uploader_path = '".XOOPS_URL."/modules/".$GLOBALS["icmsModule"]->getVar("dirname", "n")."/fckeditor.upload.php';\n";
+						$fp_content .= "var uploader_path = '".ICMS_URL."/modules/".$GLOBALS["icmsModule"]->getVar("dirname", "n")."/fckeditor.upload.php';\n";
 						$fp_content .= "FCKConfig.LinkUploadURL = uploader_path;\n";
 						$fp_content .= "FCKConfig.ImageUploadURL = uploader_path + '?Type=Image';\n";
 						$fp_content .= "FCKConfig.FlashUploadURL = uploader_path + '?Type=Flash';\n\n";
@@ -133,7 +133,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 			}
 			
 			if(is_readable($config_file = ICMS_ROOT_PATH."/cache/fckconfig.".$GLOBALS["icmsModule"]->getVar("dirname").".js")) {
-				$oFCKeditor->Config['CustomConfigurationsPath'] = XOOPS_URL . "/cache/fckconfig.".$GLOBALS["icmsModule"]->getVar("dirname", "n").".js";
+				$oFCKeditor->Config['CustomConfigurationsPath'] = ICMS_URL . "/cache/fckconfig.".$GLOBALS["icmsModule"]->getVar("dirname", "n").".js";
 			}
 			}
 			

@@ -63,7 +63,7 @@ class SystemRating extends IcmsPersistableObject {
 	}
 
 	function getItemValue() {
-		$moduleUrl = XOOPS_URL . '/modules/' . $this->getVar('dirname', 'n') . '/';
+		$moduleUrl = ICMS_URL . '/modules/' . $this->getVar('dirname', 'n') . '/';
 		$plugin = $this->getModulePlugin();
 		$pluginItemInfo = $plugin->getItemInfo($this->getVar('item'));
 		if (!$pluginItemInfo) {
