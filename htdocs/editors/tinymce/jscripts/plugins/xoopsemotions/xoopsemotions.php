@@ -34,7 +34,7 @@ if ($getsmiles = $xoopsDB->query("SELECT * FROM ".$xoopsDB->prefix("smiles")))
 		$html = "<tr class='$rcolor'>";
 		$html.= "<td>".$smile['code']."</td>";
 		$html.= "<td>".$smile['emotion']."</td>";
-		$html.= "<td><img onmouseover='style.cursor=\"pointer\"' onclick='javascript:XoopsemotionsDialog.insert(\"".XOOPS_UPLOAD_URL."/".$smile['smile_url']."\",\"".$smile['emotion']."\");' src='".XOOPS_UPLOAD_URL."/".$smile['smile_url']."' alt='".$smile['emotion']."' /></td>";
+		$html.= "<td><img onmouseover='style.cursor=\"pointer\"' onclick='javascript:XoopsemotionsDialog.insert(\"".ICMS_UPLOAD_URL."/".$smile['smile_url']."\",\"".$smile['emotion']."\");' src='".ICMS_UPLOAD_URL."/".$smile['smile_url']."' alt='".$smile['emotion']."' /></td>";
 		$html.= "</tr>";
 		echo ($html);
 		$rcolor = ($rcolor == 'even') ? 'odd' : 'even';

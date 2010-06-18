@@ -539,7 +539,7 @@ class XoopsUser extends XoopsObject
 	{
 		if(!$overwrite && file_exists(XOOPS_UPLOAD_PATH.'/'.$this->getVar('user_avatar')) && $this->getVar('user_avatar') != 'blank.gif')
 		{
-			return XOOPS_UPLOAD_URL.'/'.$this->getVar('user_avatar');
+			return ICMS_UPLOAD_URL.'/'.$this->getVar('user_avatar');
 		}
 		$ret = "http://www.gravatar.com/avatar/".md5(strtolower($this->getVar('email', 'E')))."?d=identicon";
 		if($rating && $rating != ''){$ret .= "&amp;rating=".$rating;}
