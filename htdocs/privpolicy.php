@@ -22,7 +22,7 @@ include ICMS_ROOT_PATH.'/header.php';
 $myts =& MyTextSanitizer::getInstance();
 
 $xoopsTpl->assign('priv_poltype', 'page');
-$priv = str_replace('{X_SITEURL}', XOOPS_URL.'/', $icmsConfigUser['priv_policy']);
+$priv = str_replace('{X_SITEURL}', ICMS_URL.'/', $icmsConfigUser['priv_policy']);
 $priv = str_replace('{X_SITENAME}', $icmsConfig['sitename'], $priv);
 $priv = $myts->displayTarea($priv, 1, 1, 1, 1, 1);
 $xoopsTpl->assign('priv_policy', $priv);

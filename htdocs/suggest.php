@@ -26,7 +26,7 @@ if(isset($_POST['queryString'])) {
 			} else {
 				$catid = 0;
 				while($result = $xoopsDB->fetchArray($query)) {
-					echo '<li><a href="' . XOOPS_URL . $result['url'] . '">';
+					echo '<li><a href="' . ICMS_URL . $result['url'] . '">';
 					echo '<img src="'.$result['img'].'" alt="" />';
 
 					$name = $result['name'];

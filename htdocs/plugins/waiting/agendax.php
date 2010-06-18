@@ -8,7 +8,7 @@ function b_waiting_agendax()
 	// agenda-x events
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("agendax_events")." WHERE approved=0");
 	if ( $result ) {
-		$block['adminlink'] = XOOPS_URL."/modules/agendax/admin/index.php?listNewLinks";
+		$block['adminlink'] = ICMS_URL."/modules/agendax/admin/index.php?listNewLinks";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_EVENTS ;
 	}
