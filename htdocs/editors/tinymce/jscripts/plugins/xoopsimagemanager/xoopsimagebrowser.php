@@ -770,7 +770,7 @@ function icmsPopupHeader(){
 	<link rel="icon" type="image/png" href="' . XOOPS_URL . '/favicon.ico" />
 	';
 	if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-		echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/xoops_rtl.css" />';
+		echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms_rtl.css" />';
 		echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/modules/system/style_rtl.css" />';
 	} else {
 		echo '<link rel="stylesheet" type="text/css" media="all" href="' . XOOPS_URL . '/icms.css" />';
