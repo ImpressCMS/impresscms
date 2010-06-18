@@ -22,7 +22,7 @@ echo '
     <meta http-equiv="content-type" content="text/html; charset='._CHARSET.'" />
     <meta http-equiv="content-language" content="'._LANGCODE.'" />
     <title>'.$xoopsConfig['sitename'].'</title>
-    <link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/xoops.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="'.XOOPS_URL.'/icms.css" />
 ';
 $style = xoops_getcss($xoopsConfig['theme_set']);
 if ($style == '') {
