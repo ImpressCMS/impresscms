@@ -12,7 +12,7 @@
 * @version	$Id$
 */
 
-@import url(modules/system/admin/content/menu_rtl.css);
+@import url(modules/content/include/menu_rtl.css);
 body,table,table.toptable,table.maintable,table.footertable,table td,body td,p,div,a:link,a:active,a:visited,a:hover,h1,h2,h3,h4,h5,h6,ul,input,select,textarea,.formButton,.item,.itemHead,.itemInfo,.itemTitle,.itemTitle a,.itemPoster,.itemPostDate,.itemStats,.itemBody,.itemText,.itemFoot,th,th a:link,th a:active,th a:visited,.outer,.head,.even,.odd,.foot,div.confirmMsg,div.xoopsCode,div.xoopsQuote,.comTitle,.comText,.comUserStat,.comUserName,.comDate,.sCommentThread,.sCommentRank,.admin_menu,.admin_menu a,.admin_menu_thumb a,.admin_menu a:hover,.admin_menu_thumb a:hover,.alblink a:hover,.catlink a:hover,.user_thumb_infobox a:hover,.admin_menu_thumb,.button,.checkbox,.listbox,.sortorder_options,td#mainmenu a,td#mainmenu a.menuSub,td#usermenu a,.headerlogo,.blockTitle,.blockContent,.footerbar,form,tr.even td,tr.odd td,th,div#content,div#forum_header,p.desc,tr.head td,td.sideboxcontent,td#content,div#xo-logger-output,div#xo-logger-tabs {direction : rtl; font-family : Tahoma, verdana, arial, helvetica, sans-serif;}
 table,input,select,textarea,.formButton,.itemTitle,.even,.odd,div.confirmMsg,div.xoopsQuote,.comTitle,.comUserName,.sCommentThread,.sCommentRank,td#mainmenu a,td#usermenu a,tr.even td,tr.odd td,th,div#content,div#forum_header,p.desc,tr.head td,td#content,div#xo-logger-output,div#xo-logger-tabs {text-align : right;}
 h1,h2,h3,h4,h5,h6,.itemBody,.itemText,.comText {text-align: Justify;}
