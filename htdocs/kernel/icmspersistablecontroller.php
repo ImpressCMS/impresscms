@@ -92,7 +92,10 @@ class IcmsPersistableController {
 					// check if this field's value is available in the POST array
 					if (is_array($_POST[$key]) && isset($_POST[$key]['date']))  {
 						$value = strtotime($_POST[$key]['date']) + $_POST[$key]['time'];
-					}else {
+					// in case the field is hidden, it's not formated so we can simply take the value and store it
+					} elseif (filter_var($_POST[$key], FILTER_VALIDATE_INT) == $_POST[$key]) {
+						$value = (int)$_POST[$key];
+					} else {
 						$value = strtotime($_POST[$key]);
 					}
 					$icmsObj->setVar($key, $value);
