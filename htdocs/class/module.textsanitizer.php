@@ -175,8 +175,8 @@ class MyTextSanitizer
 				$urlname)) ? substr_replace($urlname, $middleurl, $cutlength, $endlength) : $urlname;
 				$text = str_replace('>'.$urlname.'<', '>'.$chunked.'<', $text);
 			}
-			$text = substr($text, 1);
 		}
+		$text = substr($text, 1);
 		return($text);
 	}
 
