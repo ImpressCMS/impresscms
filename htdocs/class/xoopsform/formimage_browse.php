@@ -27,13 +27,13 @@ include_once ICMS_ROOT_PATH.'/class/template.php';
 
 $icmsTpl = new XoopsTpl ( );
 
-$op = (isset($_GET['op']))?$_GET['op']:((isset($_POST['op']))?$_POST['op']:'list');
-$imgcat_id = (isset($_GET['imgcat_id']))? (int) ($_GET['imgcat_id']):((isset($_POST['imgcat_id']))? (int) ($_POST['imgcat_id']):null);
-$image_id = (isset($_GET['image_id']))? (int) ($_GET['image_id']):((isset($_POST['image_id']))? (int) ($_POST['image_id']):null);
-$target = (isset($_GET['target']))?$_GET['target']:((isset($_POST['target']))?$_POST['target']:null);
-$limit = (isset($_GET['limit']))? (int) ($_GET['limit']):((isset($_POST['limit']))? (int) ($_POST['limit']):15);
-$start = (isset($_GET['start']))? (int) ($_GET['start']):((isset($_POST['start']))? (int) ($_POST['start']):0);
-$type = (isset($_GET['type']))?$_GET['type']:((isset($_POST['type']))?$_POST['type']:'ibrow');
+$op = (isset($_GET['op'])) ? filter_input(INPUT_GET, $_GET['op']) : ((isset($_POST['op'])) ? filter_input(INPUT_POST, $_POST['op']) : 'list');
+$imgcat_id = (isset($_GET['imgcat_id'])) ? (int) ($_GET['imgcat_id']) : ((isset($_POST['imgcat_id'])) ? (int) ($_POST['imgcat_id']) : null);
+$image_id = (isset($_GET['image_id'])) ? (int) ($_GET['image_id']) : ((isset($_POST['image_id'])) ? (int) ($_POST['image_id']) : null);
+$target = (isset($_GET['target'])) ? $_GET['target'] : ((isset($_POST['target'])) ? $_POST['target'] : null);
+$limit = (isset($_GET['limit'])) ? (int) ($_GET['limit']) : ((isset($_POST['limit'])) ? (int) ($_POST['limit']) : 15);
+$start = (isset($_GET['start'])) ? (int) ($_GET['start']) : ((isset($_POST['start'])) ? (int) ($_POST['start']) : 0);
+$type = (isset($_GET['type'])) ? filter_input(INPUT_GET, $_GET['type']) : ((isset($_POST['type'])) ? filter_input(INPUT_POST, $_POST['type']) : 'ibrow');
 
 global $icmsConfig;
 #Adding language files

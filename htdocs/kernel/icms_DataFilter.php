@@ -79,6 +79,7 @@ class icms_DataFilter
 	 *					'email' = Checks & validates Email Addresses
 	 *					'ip' = Checks & validates IP Addresses
 	 *					'str' = Checks & Sanitizes String Values
+	 *					'int' = Validates Integer Values
 	 *
 	 * @param	mixed		$options1	Options to use with specified filter
 	 *			Valid Filter Options:
@@ -102,6 +103,8 @@ class icms_DataFilter
 	 *					'encodelow' = Encode characters with ASCII value below 32
 	 *					'encodehigh' = Encode characters with ASCII value above 127
 	 *					'encodeamp' = Encode the & character to &amp;
+	 *				INT:
+	 *					minimum integer range value
 	 *
 	 * @param	mixed		$options2	Options to use with specified filter options1
 	 *				URL:
@@ -111,6 +114,8 @@ class icms_DataFilter
 	 *					NOT USED!
 	 *				IP:
 	 *					NOT USED!
+	 *				INT:
+	 *					maximum integer range value
 	 *
 	 * @return	mixed
 	 */
@@ -120,7 +125,7 @@ class icms_DataFilter
 		{
 			return false;
 		}
-		$valid_types = array('url', 'email', 'ip', 'str');
+		$valid_types = array('url', 'email', 'ip', 'str', 'int');
 		if(!in_array($type, $valid_types))
 		{
 			return false;
@@ -183,6 +188,19 @@ class icms_DataFilter
 				}
 			}
 
+			if($type == 'int')
+			{
+				if(!is_int($options1) || !is_int($options2))
+				{
+					$options1 = '';
+					$options2 = '';
+				}
+				else
+				{
+					$options1 = (int)$options1;
+					$options2 = (int)$options2;
+				}
+			}
 
 		}
 
@@ -840,6 +858,22 @@ class icms_DataFilter
 			}
 
 			return $data;
+		}
+
+		if($type == 'int')
+		{
+			if((isset($options1) && is_int($options1)) && (isset($options2) && is_int($options2)))
+			{
+				$option = array('options' => array('min_range' => $options1,
+													'max_range' => $options2
+													));
+
+				return filter_var($data, FILTER_VALIDATE_INT, $option);
+			}
+			else
+			{
+				return filter_var($data, FILTER_VALIDATE_INT);
+			}
 		}
 	}
 
