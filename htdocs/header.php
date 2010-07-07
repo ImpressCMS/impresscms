@@ -150,9 +150,7 @@ $xoTheme->addScript(ICMS_URL.'/libraries/jquery/ui/ui.dialog.js', array('type' =
 $xoTheme->addStylesheet(ICMS_URL.'/libraries/jquery/ui/themes/base/ui.all.css', array('media' => 'screen'));
 
 $xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
-$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom.css');
-if( strpos( strtolower( $_SERVER['HTTP_USER_AGENT']), 'msie' ) ) { $xoTheme->addStylesheet( ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox-custom-ie.css' ) ; }
-$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.js');
+$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/jquery.colorbox-min.js');
 $xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/lightbox.js');
 
 if(@is_object($xoTheme->plugins['xos_logos_PageBuilder'])) {
