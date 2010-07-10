@@ -113,12 +113,8 @@ function icms_cp_header(){
 	$xoTheme->addScript(ICMS_URL . '/libraries/jquery/ui/ui.dialog.js', array( 'type' => 'text/javascript'));
 	$xoTheme->addScript(ICMS_URL . '/libraries/jquery/helptip.js', array( 'type' => 'text/javascript'));
 	$xoTheme->addStylesheet(ICMS_URL . '/libraries/jquery/ui/themes/base/ui.all.css', array('media' => 'screen'));
-	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/colorbox/colorbox.css');
-	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/colorbox/colorbox-custom.css');
-	if(strpos(strtolower($_SERVER['HTTP_USER_AGENT']), 'msie')) {
-		$xoTheme->addStylesheet(ICMS_LIBRARIES_URL . '/jquery/colorbox/colorbox-custom-ie.css');
-	}
-	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.js');
+	$xoTheme->addStylesheet(ICMS_LIBRARIES_URL.'/jquery/colorbox/colorbox.css');
+	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/jquery.colorbox-min.js');
 	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/lightbox.js');
 
 	/*	$jscript = '';
