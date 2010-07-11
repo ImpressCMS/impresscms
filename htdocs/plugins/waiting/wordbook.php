@@ -8,7 +8,7 @@ function b_waiting_wordbook()
 	// Waiting
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("wbentries")." WHERE submit=1 AND categoryID>0");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/wordbook/admin/index.php#esp." ;
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_WAITINGS ;
@@ -17,7 +17,7 @@ function b_waiting_wordbook()
 
 	// Request
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("wbentries")." WHERE submit=1 AND categoryID=0");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/wordbook/admin/index.php#sol." ;
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_REQUESTS ;

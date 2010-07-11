@@ -19,41 +19,12 @@
  * @author       Pierre-Eric MENUET <pemphp@free.fr>
  * @copyright    copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsAuthXoops extends XoopsAuth
+class XoopsAuthXoops extends icms_auth_Xoops
 {
-	/**
-	 * Authentication Service constructor
-	 * constructor
-	 * @param object $dao reference to dao object
-	 */
-	function XoopsAuthXoops(&$dao)
-	{
-		$this->_dao = $dao;
-		$this->auth_method = 'xoops';
-	}
-
-	/**
-	 *  Authenticate user
-	 * @param string $uname
-	 * @param string $pwd
-	 * @return object {@link XoopsUser} XoopsUser object
-	 */
-	function authenticate($uname, $pwd = null)
-	{
-		$member_handler = xoops_gethandler('member');
-		$user = $member_handler->loginUser($uname, $pwd);
-		$sess_handler = xoops_gethandler('session');
-		$sess_handler->securityLevel = 3;
-		$sess_handler->check_ip_blocks = 2;
-		$sess_handler->salt_key = XOOPS_DB_SALT;
-		$sess_handler->enableRegenerateId = true;
-		$sess_handler->icms_sessionOpen();
-		if($user == false)
-		{
-			$sess_handler->destroy(session_id());
-			$this->setErrors(1, _US_INCORRECTLOGIN);
-		}
-		return ($user);
+	private $_deprecated;
+	public function __construct() {
+		parent::__construct();
+		$this->_deprecated = icms_deprecated('icms_auth_Xoops', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 ?>

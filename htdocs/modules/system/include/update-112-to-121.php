@@ -10,16 +10,16 @@
  * @version		$Id$
  */
 
-	if ( $dbVersion < 12 ) include 'update-to-112.php';
+	if ($dbVersion < 12 ) include 'update-to-112.php';
 
 	/*
 	 * These are updates to the database that occured between 1.1.2 and 1.2.1
 	 */
-	if( !$abortUpdate) $newDbVersion = 12;
+	if (!$abortUpdate) $newDbVersion = 12;
 
 	if ($dbVersion < $newDbVersion) {
 		$from_112 = true;
-		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"' ) == FALSE ) {
+		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_CAPTCHA"' ) == FALSE) {
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configcategory" ) . " (confcat_id,confcat_name) VALUES ('11','_MD_AM_CAPTCHA')" );
 		}
 		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE (conf_modid='1' AND conf_catid='11')" );
@@ -52,7 +52,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 13;
+	if (!$abortUpdate) $newDbVersion = 13;
 
 	if ($dbVersion < $newDbVersion) {
 		//echo sprintf ( _CO_ICMS_UPDATE_DBVERSION, icms_conv_nr2local ( $newDbVersion ) );
@@ -63,12 +63,12 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 14;
+	if (!$abortUpdate) $newDbVersion = 14;
 
 	if ($dbVersion < $newDbVersion) {
 		if (is_writable ( ICMS_PLUGINS_PATH ) || (is_dir(ICMS_ROOT_PATH . '/plugins/preloads') && is_writable ( ICMS_ROOT_PATH . '/plugins/preloads' ))) {
 			if (is_dir ( ICMS_ROOT_PATH . '/preload' )) {
-				if( icms_copyr ( ICMS_ROOT_PATH . '/preload', ICMS_ROOT_PATH . '/plugins/preloads' ) ) {
+				if (icms_copyr ( ICMS_ROOT_PATH . '/preload', ICMS_ROOT_PATH . '/plugins/preloads' )) {
 					icms_unlinkRecursive ( ICMS_ROOT_PATH . '/preload' );
 				} else {
 					$newDbVersion = 13;
@@ -85,7 +85,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 15;
+	if (!$abortUpdate) $newDbVersion = 15;
 
 	if ($dbVersion < $newDbVersion) {
 		$table = new IcmsDatabasetable ( 'users' );
@@ -100,7 +100,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 16;
+	if (!$abortUpdate) $newDbVersion = 16;
 
 	if ($dbVersion < $newDbVersion) {
 		$sql = "SELECT conf_id FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE conf_name = 'email_protect'";
@@ -117,11 +117,11 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 17;
+	if (!$abortUpdate) $newDbVersion = 17;
 
 	if ($dbVersion < $newDbVersion) {
 		//$icmsDatabaseUpdater->insertConfig(ICMS_CONF_USER, 'delusers', '_MD_AM_DELUSRES', '90', '_MD_AM_DELUSRESDSC', 'textbox', 'int', 3);
-		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"' ) == FALSE ) {
+		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PLUGINS"' ) == FALSE) {
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configcategory" ) . " (confcat_id,confcat_name) VALUES ('12','_MD_AM_PLUGINS')" );
 		}
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PLUGINS, 'sanitizer_plugins', '_MD_AM_SELECTSPLUGINS',  serialize ( array ('' ) ), '_MD_AM_SELECTSPLUGINS_DESC', 'select_plugin', 'array', 1 );
@@ -143,7 +143,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 18;
+	if (!$abortUpdate) $newDbVersion = 18;
 	/* errors discovered after 1.2 beta release (dbversion 31) moved to dbversion 32 */
 	if ($dbVersion < $newDbVersion) {
 
@@ -151,7 +151,7 @@
 	    echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 19;
+	if (!$abortUpdate) $newDbVersion = 19;
 
 	if ($dbVersion < $newDbVersion) {
 		$module_handler = xoops_gethandler ( 'module' );
@@ -165,7 +165,7 @@
 			$icmsDB->queryF ( "RENAME TABLE `" . $icmsDB->prefix ( "smartprofile_regstep" ) . "` TO `" . $icmsDB->prefix ( "profile_regstep" ) . "`" );
 			$command = array ("ALTER TABLE `" . $icmsDB->prefix ( "profile_profile" ) . "` ADD `newemail` varchar(255) NOT NULL default '' AFTER `profile_id`", "ALTER TABLE `" . $icmsDB->prefix ( "profile_field" ) . "` ADD `exportable` int unsigned NOT NULL default 0 AFTER `step_id`", "UPDATE `" . $icmsDB->prefix ( 'modules' ) . "` SET dirname='profile' WHERE dirname='smartprofile'" );
 
-			foreach ( $command as $sql ) {
+			foreach ( $command as $sql) {
 				if (! $result = $icmsDB->queryF ( $sql )) {
 					icms_debug ( 'An error occurred while executing "' . $sql . '" - ' . $icmsDB->error () );
 					return false;
@@ -176,7 +176,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 20;
+	if (!$abortUpdate) $newDbVersion = 20;
 
 	if ($dbVersion < $newDbVersion) {
 		// Adding configurations of search preferences
@@ -186,7 +186,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 21;
+	if (!$abortUpdate) $newDbVersion = 21;
 
 	if ($dbVersion < $newDbVersion) {
 		// create extended date function's config option
@@ -196,7 +196,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 22;
+	if (!$abortUpdate) $newDbVersion = 22;
 
 	if ($dbVersion < $newDbVersion) {
 		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'modules' ) . "` WHERE dirname='waiting'" );
@@ -207,16 +207,16 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	/*	if( !$abortUpdate) $newDbVersion =  23;
+	/*	if (!$abortUpdate) $newDbVersion =  23;
 
-	if($dbVersion < $newDbVersion) {
+	if ($dbVersion < $newDbVersion) {
 		echo $action;
 		$icmsDB->queryF("DELETE FROM `" . $icmsDB->prefix('config') . "` WHERE conf_name='pass_level'");
 		$icmsDatabaseUpdater->insertConfig(ICMS_CONF_USER, 'pass_level', '_MD_AM_PASSLEVEL', '1', '_MD_AM_PASSLEVEL_DESC', 'yesno', 'int', 2);
 	}
 */
 
-	if( !$abortUpdate) $newDbVersion = 24;
+	if (!$abortUpdate) $newDbVersion = 24;
 
 	if ($dbVersion < $newDbVersion) {
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'use_custom_redirection', '_MD_AM_CUSTOMRED', '0', '_MD_AM_CUSTOMREDDSC', 'yesno', 'int', 9 );
@@ -225,7 +225,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 25;
+	if (!$abortUpdate) $newDbVersion = 25;
 
 	if ($dbVersion < $newDbVersion) {
 		$table = new IcmsDatabasetable ( 'icmscontent' );
@@ -245,7 +245,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 26;
+	if (!$abortUpdate) $newDbVersion = 26;
 
 	if ($dbVersion < $newDbVersion) {
 		$table = new IcmsDatabasetable ( 'system_mimetype' );
@@ -299,7 +299,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 27;
+	if (!$abortUpdate) $newDbVersion = 27;
 
 	if ($dbVersion < $newDbVersion) {
 		$handler = icms_getModulehandler ( 'userrank', 'system' );
@@ -308,7 +308,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 28;
+	if (!$abortUpdate) $newDbVersion = 28;
 
 	if ($dbVersion < $newDbVersion) {
 		$table = new IcmsDatabasetable ( 'system_autotasks' );
@@ -332,7 +332,7 @@
 		}
 		unset ( $table );
 
-		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_AUTOTASKS"' ) == FALSE ) {
+		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_AUTOTASKS"' ) == FALSE) {
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "configcategory" ) . " (confcat_id,confcat_name) VALUES (13, '_MD_AM_AUTOTASKS')" );
 		}
 
@@ -350,10 +350,10 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 29;
+	if (!$abortUpdate) $newDbVersion = 29;
 
 	if ($dbVersion < $newDbVersion) {
-		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PURIFIER"' ) == FALSE ) {
+		if (getDbValue ( $icmsDB, 'configcategory', 'confcat_name', 'confcat_name="_MD_AM_PURIFIER"' ) == FALSE) {
 			$icmsDB->queryF ( "INSERT INTO " . $icmsDB->prefix ( 'configcategory' ) . " (confcat_id,confcat_name) VALUES ('14', '_MD_AM_PURIFIER')" );
 		}
 
@@ -446,7 +446,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 30;
+	if (!$abortUpdate) $newDbVersion = 30;
 
 	if ($dbVersion < $newDbVersion) {
 
@@ -461,7 +461,7 @@
 
 	/* 1.2 beta release */
 
-	if( !$abortUpdate) $newDbVersion = 32;
+	if (!$abortUpdate) $newDbVersion = 32;
 	/* this was in dbversion 18, but there were errors discovered after 1.2 beta relase */
 	if ($dbVersion < $newDbVersion) {
 		/*
@@ -496,7 +496,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 
 	}
-	if( !$abortUpdate) $newDbVersion = 33;
+	if (!$abortUpdate) $newDbVersion = 33;
 	/*
 	 * New symlinks need to be added to the db
 	 */
@@ -523,7 +523,7 @@
 			"NULL, 1, '" . _MI_SYSTEM_ADMENU10 . "', 'modules/system/admin.php?fct=users*', 1",
 			"NULL, 1, '" . _MD_AM_VRSN . "', 'modules/system/admin.php?fct=version*', 1"
 			);
-		foreach ( $new_pages as $new_page ) {
+		foreach ( $new_pages as $new_page) {
 			$table->setData ( $new_page );
 		}
 		$table->addData ();
@@ -532,7 +532,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 34;
+	if (!$abortUpdate) $newDbVersion = 34;
 	/* The admin control panel now consists of blocks - these need to be set as visible
 		 * Control Panel, System Warnings, Modules Installed
 		 */
@@ -541,13 +541,13 @@
 		/* Get block positions */
 		$sql = 'SELECT id, pname FROM ' . $icmsDB->prefix ( 'block_positions' ) . ' WHERE pname = "page_topleft_admin"' . ' OR pname = "page_topright_admin"' . ' OR pname = "page_topcenter_admin"';
 		$result = $icmsDB->query ( $sql );
-		while ( $row = $icmsDB->fetchArray ( $result ) ) {
+		while ($row = $icmsDB->fetchArray ( $result )) {
 			$block_positions [$row ['pname']] = $row ['id'];
 		}
 		/* Get symlink id for Admin Control Panel */
 		$page_id = getDbValue ( $icmsDB, 'icmspage', 'page_id', 'page_url="admin.php"' );
 
-		foreach ( $admin_blocks as $admin_block ) {
+		foreach ( $admin_blocks as $admin_block) {
 			/* Get block ids for Control Panel, System Warnings, Installed Modules */
 			$sql_find = 'SELECT bid FROM `' . $icmsDB->prefix ( 'newblocks' ) . '` WHERE show_func="' . $admin_block [0] . '"';
 			$goodmsg = $admin_block [0] . ' updated';
@@ -563,7 +563,7 @@
 		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
-	if( !$abortUpdate) $newDbVersion = 35;
+	if (!$abortUpdate) $newDbVersion = 35;
 	/* copy settings for the old waiting contents block to the new block
 	 * and set the block_type correctly for new system blocks -
 	 * blocks added during a module update default to block_type 'M', which
@@ -582,9 +582,9 @@
 		$icmsDatabaseUpdater->runQuery ( $sql_welcome_msg_content, 'Welcome message form type successfully updated', 'Unable to update the welcome message form type', true );
 
 		/* Set the start page for each group, so they don't default to Admin Control Panel */
-		$groups = xoops_gethandler ( 'group' )->getObjects ( NULL, true );
+		$groups = xoops_gethandler ( 'member_group' )->getObjects ( NULL, true );
 		$start_page = getDbValue ( $icmsDB, 'config', 'conf_value', 'conf_name="startpage"' );
-		foreach ( $groups as $groupid => $group ) {
+		foreach ( $groups as $groupid => $group) {
 			$start_pages [$groupid] = $start_page;
 		}
 		$icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'config' ) . '`' . ' SET `conf_value`="' . addslashes ( serialize ( $start_pages ) ) . '"' . ' WHERE `conf_name`="startpage"' );
@@ -601,7 +601,7 @@
 
 	/* 1.2 RC1 released */
 
-	if( !$abortUpdate) $newDbVersion = 36;
+	if (!$abortUpdate) $newDbVersion = 36;
 	if ($dbVersion < $newDbVersion) {
 		/* Change the the constant name for extractsyleblock_escape & styleblocks */
 		$sql_extract_esc = 'UPDATE ' . $icmsDB->prefix ( 'config' ) . ' SET `conf_title` = "_MD_AM_PURIFIER_FILTER_EXTRACTSTYLEESC"' . ' WHERE `conf_name`="purifier_Filter_ExtractStyleBlocks_Escaping"';
@@ -629,19 +629,19 @@
 		if (is_writable ( ICMS_IMANAGER_FOLDER_PATH )) {
 
 			$result = $icmsDB->query ( 'SELECT * FROM `' . $icmsDB->prefix ( 'imagecategory' ) . '`' );
-			while ( $row = $icmsDB->fetchArray ( $result ) ) {
-				if (empty ( $row ['imgcat_foldername'] ) && $row[ 'imgcat_storetype' ] = 'file' ) {
+			while ($row = $icmsDB->fetchArray ( $result )) {
+				if (empty ( $row ['imgcat_foldername'] ) && $row[ 'imgcat_storetype' ] = 'file') {
 					$new_folder =  preg_replace( '/[:?".<>\/\\\|\s]/', '_', strtolower ( $row[ 'imgcat_name' ] ));
 				} else {
 					$new_folder = $row ['imgcat_foldername '];
 				}
-				if( icms_mkdir ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder ) ) {
+				if (icms_mkdir ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder )) {
 
 					$icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'imagecategory' ) . '` SET imgcat_foldername="' . $new_folder . '" WHERE imgcat_id=' . $row ['imgcat_id'] );
 					$result1 = $icmsDB->query ( 'SELECT * FROM `' . $icmsDB->prefix ( 'image' ) . '` WHERE imgcat_id=' . $row ['imgcat_id'] );
-					while( ( $row1 = $icmsDB->fetchArray ( $result1 ) ) && ! $abortUpdate ) {
-						if( ! file_exists ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] ) && file_exists ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] )) {
-							if( icms_copyr ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'], ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] ) ) {
+					while (( $row1 = $icmsDB->fetchArray ( $result1 ) ) && ! $abortUpdate) {
+						if (! file_exists ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] ) && file_exists ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] )) {
+							if (icms_copyr ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'], ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] )) {
 								@unlink ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] );
  							} else {
 								$newDbVersion = 36;
@@ -660,7 +660,7 @@
 			 *Changing the path of the left and right admin logo, defined in the personalization preferences area.
 			 */
 			$result = $icmsDB->query ( 'SELECT conf_id,conf_value FROM `' . $icmsDB->prefix ( 'config' ) . '` WHERE conf_name = "adm_left_logo" or conf_name = "adm_right_logo"' );
-			while ( list ( $conf_id, $conf_value ) = $icmsDB->fetchRow ( $result ) ) {
+			while (list ( $conf_id, $conf_value ) = $icmsDB->fetchRow ( $result )) {
 				$img = explode ( '/', $conf_value );
 				$img = $img [count ( $img ) - 1];
 				$result1 = $icmsDB->query ( 'SELECT imgcat_id FROM `' . $icmsDB->prefix ( 'image' ) . '` WHERE image_name="' . $img . '"' );

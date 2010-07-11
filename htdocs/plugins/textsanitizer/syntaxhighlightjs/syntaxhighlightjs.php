@@ -28,9 +28,9 @@ function textsanitizer_syntaxhighlightjs(&$ts, $text) {
  *
  * @param $source
  */
-function textsanitizer_geshi_js_highlight( $source ) {
-	if ( !@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
-	$source = MyTextSanitizer::undoHtmlSpecialChars($source);
+function textsanitizer_geshi_js_highlight( $source) {
+	if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
+	$source = icms_core_Textsanitizer::undoHtmlSpecialChars($source);
 
 	// Create the new GeSHi object, passing relevant stuff
 	$geshi = new GeSHi($source, 'javascript');
@@ -57,7 +57,7 @@ function render_syntaxhighlightjs($ele_name) {
 	global $xoTheme;
 	$javascript='';
 	$dirname = basename(dirname(__FILE__));
-	if(isset($xoTheme)){
+	if (isset($xoTheme)) {
 		$xoTheme->addScript(
 			ICMS_URL . '/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
 			array('type' => 'text/javascript'));
@@ -70,7 +70,7 @@ function render_syntaxhighlightjs($ele_name) {
         	title='Javascript' />&nbsp;";
 	return array($code, $javascript);
 }
-/*function style_syntaxhighlightjs(){
+/*function style_syntaxhighlightjs() {
  $style_info = '.icmsCodeJs { background-color: #FAFAFA; color: #444; font-size: .9em; line-height: 1.2em; text-align: justify; border: #c2cdd6 1px dashed;}';
  return $style_info;
  }*/

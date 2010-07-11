@@ -68,4 +68,6 @@ define('_MI_SYSTEM_BLOCK_BOOKMARKS_DESC','Things I have bookmarked');
 
 define("_MI_SYSTEM_ADMENU25", "Autotasks");
 define('_MI_SYSTEM_REMOVEUSERS','Inactivating users');
-?>
+
+// Added in 1.3
+define('_MI_SYSTEM_BLOCK_CP_NEW', 'New Control Panel');

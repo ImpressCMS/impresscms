@@ -28,7 +28,7 @@
 
 error_reporting( E_ALL );
 
-if ( !defined( 'ICMS_ROOT_PATH' ) ) {
+if (!defined( 'ICMS_ROOT_PATH' )) {
 	die( 'Bad installation: please add this folder to the ImpressCMS install you want to upgrade');
 }
 /*
@@ -36,10 +36,10 @@ if ( !defined( 'ICMS_ROOT_PATH' ) ) {
  */
 function getDirList($dirname) {
 	$dirlist = array();
-	if ( is_dir($dirname) && $handle = opendir($dirname) ) {
+	if (is_dir($dirname) && $handle = opendir($dirname)) {
 		while (false !== ($file = readdir($handle))) {
-			if ( substr( $file, 0, 1 ) != '.'  && strtolower($file) != 'cvs' ) {
-				if ( is_dir( "$dirname/$file" ) ) {
+			if (substr( $file, 0, 1 ) != '.'  && strtolower($file) != 'cvs') {
+				if (is_dir( "$dirname/$file" )) {
 					$dirlist[] = $file;
 				}
 			}
@@ -50,10 +50,10 @@ function getDirList($dirname) {
 	}
 	return $dirlist;
 }
-if ( file_exists("./language/".$xoopsConfig['language']."/upgrade.php") ) {
+if (file_exists("./language/".$xoopsConfig['language']."/upgrade.php")) {
 	include_once "./language/".$xoopsConfig['language']."/upgrade.php";
 	$language = $xoopsConfig['language'];
-} elseif ( file_exists("./language/english/upgrade.php") ) {
+} elseif (file_exists("./language/english/upgrade.php")) {
 	include_once "./language/english/upgrade.php";
 	$language = 'english';
 } else {
@@ -64,21 +64,21 @@ if ( file_exists("./language/".$xoopsConfig['language']."/upgrade.php") ) {
 ob_start();
 
 global $xoopsUser;
-if ( !$xoopsUser || !$xoopsUser->isAdmin() ) {
+if (!$xoopsUser || !$xoopsUser->isAdmin()) {
 	include_once "login.php";
 } else {
 	$op = @$_REQUEST['action'];
-	if ( empty( $_SESSION['xoops_upgrade'] ) ) {
+	if (empty( $_SESSION['xoops_upgrade'] )) {
 		$op = '';
 	}
-	if ( empty( $op ) ) {
+	if (empty( $op )) {
 		include_once 'check_version.php';
 	} else {
 		$next = array_shift( $_SESSION['xoops_upgrade'] );
 		printf( '<h2>' . _PERFORMING_UPGRADE . '</h2>', $next );
 		$upgrader = include_once "$next/index.php";
 		$res = $upgrader->apply();
-		if ( !$res ) {
+		if (!$res) {
 			array_unshift( $_SESSION['xoops_upgrade'], $next );
 			echo '<a id="link-next" href="index.php?action=next">' . _RELOAD . '</a>';
 		} else {

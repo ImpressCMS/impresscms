@@ -44,7 +44,7 @@ class XoopsFormSelectEditor extends XoopsFormElementTray
 		}
 
 		$this->XoopsFormElementTray(_SELECT);
-		$edtlist = XoopsLists::getEditorsList();
+		$edtlist = IcmsLists::getEditorsList();
 		$option_select = new XoopsFormSelect("", $name, $value);
 		$querys = preg_replace('/editor=(.*?)&/','',$_SERVER['QUERY_STRING']);
 		$extra = 'onchange="if(this.options[this.selectedIndex].value.length > 0 ){

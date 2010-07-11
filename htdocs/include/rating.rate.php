@@ -32,21 +32,21 @@ if ($pluginObj) {
 		$icmsTpl->assign('icms_rating_stats_total', $stats['sum']);
 		$icmsTpl->assign('icms_rating_stats_average', $stats['average']);
 		$icmsTpl->assign('icms_rating_item', $rating_item);
-		if(is_object($icmsUser)){
+		if (is_object($icmsUser)) {
 			$ratingObj = $icms_rating_handler->already_rated($rating_item, $rating_itemid, $module_dirname, $icmsUser->getVar('uid'));
 			$icmsTpl->assign('icms_user_can_rate', true);
 		}
-		if(isset($ratingObj) && is_object($ratingObj)){
+		if (isset($ratingObj) && is_object($ratingObj)) {
 			$icmsTpl->assign('icms_user_rate', $ratingObj->getVar('rate'));
 			$icmsTpl->assign('icms_rated', true);
-		}else{
+		} else {
 			$icmsTpl->assign('icms_rating_dirname', $module_dirname);
 			$icmsTpl->assign('icms_rating_itemid', $rating_itemid);
 			$urls = icms_getCurrentUrls();
 			$icmsTpl->assign('icms_rating_current_page', $urls['full']);
-			/*			if(isset($xoTheme) && is_object($xoTheme)){
+			/*			if (isset($xoTheme) && is_object($xoTheme)) {
 				$xoTheme->addStylesheet(ICMS_URL . '/module.css');
-				}else{
+				} else {
 				//probleme d'inclusion de css apres le flashplayer. Style plac dans css du theme
 				//$icmsTpl->assign('icms_css',"<link rel='stylesheet' type='text/css' href='".ICMS_URL."/modules/icms/module.css' />");
 				}

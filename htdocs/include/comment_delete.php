@@ -72,7 +72,7 @@ if (!is_object($icmsUser)) {
 	$accesserror = true;
 } else {
 	if (!$icmsUser->isAdmin($com_modid)) {
-		$sysperm_handler =& xoops_gethandler('groupperm');
+		$sysperm_handler =& xoops_gethandler('member_groupperm');
 		if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 			$accesserror = true;
 		}
@@ -121,9 +121,9 @@ switch ($op) {
 				}
 			}
 			if (!$skip) {
-				$criteria = new CriteriaCompo(new Criteria('com_modid', $com_modid));
-				$criteria->add(new Criteria('com_itemid', $com_itemid));
-				$criteria->add(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
+				$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_modid', $com_modid));
+				$criteria->add(new icms_criteria_Item('com_itemid', $com_itemid));
+				$criteria->add(new icms_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
 				$comment_count = $comment_handler->getCount($criteria);
 				$comment_config['callback']['update']($com_itemid, $comment_count);
 			}
@@ -142,7 +142,7 @@ switch ($op) {
 		$thread_comments =& $comment_handler->getThread($comment->getVar('com_rootid'), $com_id);
 
 		include_once ICMS_ROOT_PATH . '/class/tree.php';
-		$xot = new XoopsObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new icms_core_ObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
 
 		$child_comments =& $xot->getFirstChild($com_id);
 
@@ -193,7 +193,7 @@ switch ($op) {
 
 		// construct a comment tree
 		include_once ICMS_ROOT_PATH . '/class/tree.php';
-		$xot = new XoopsObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
+		$xot = new icms_core_ObjectTree($thread_comments, 'com_id', 'com_pid', 'com_rootid');
 		$child_comments =& $xot->getAllChild($com_id);
 		// add itself here
 		$child_comments[$com_id] =& $comment;
@@ -240,9 +240,9 @@ switch ($op) {
 				}
 			}
 			if (!$skip) {
-				$criteria = new CriteriaCompo(new Criteria('com_modid', $com_modid));
-				$criteria->add(new Criteria('com_itemid', $com_itemid));
-				$criteria->add(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
+				$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_modid', $com_modid));
+				$criteria->add(new icms_criteria_Item('com_itemid', $com_itemid));
+				$criteria->add(new icms_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
 				$comment_count = $comment_handler->getCount($criteria);
 				$comment_config['callback']['update']($com_itemid, $comment_count);
 			}

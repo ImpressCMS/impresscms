@@ -24,5 +24,5 @@ $modversion = array( 'name' => _MD_AM_VRSN,
 	'image' => "version.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=version",
-	'category' => XOOPS_SYSTEM_VERSION );
-?>
+	'category' => XOOPS_SYSTEM_VERSION,
+	'group' => 'System Tools');

@@ -1,8 +1,8 @@
 <?php
-class XoopsDatabaseFactory
+class icms_database_Factory
 {
 
-	function XoopsDatabaseFactory()
+	function icms_database_Factory()
 	{
 	}
 

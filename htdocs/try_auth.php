@@ -24,7 +24,7 @@ function getOpenIDURL()
 {
 	// Render a default page if we got a submission without an openid
 	// value.
-	if(empty($_GET['openid_identifier']))
+	if (empty($_GET['openid_identifier']))
 	{
 		echo $error = 'Expected an OpenID URL.';
 		//header("Location: /modules/openid/");
@@ -42,7 +42,7 @@ function run()
 	$auth_request = $consumer->begin($openid);
 
 	// No auth request means we can't begin OpenID.
-	if(!$auth_request)
+	if (!$auth_request)
 	{
 		displayError('Authentication error; not a valid OpenID.');
 	}
@@ -54,7 +54,7 @@ function run()
 	array('fullname', 'dob', 'gender', 'postcode', 'country', 'language', 'timezone')
 	);
 
-	if($sreg_request)
+	if ($sreg_request)
 	{
 		$auth_request->addExtension($sreg_request);
 	}
@@ -62,7 +62,7 @@ function run()
 	$policy_uris = $_GET['policies'];
 
 	$pape_request = new Auth_OpenID_PAPE_Request($policy_uris);
-	if($pape_request)
+	if ($pape_request)
 	{
 		$auth_request->addExtension($pape_request);
 	}
@@ -73,37 +73,31 @@ function run()
 
 	// For OpenID 1, send a redirect.  For OpenID 2, use a Javascript
 	// form to send a POST request to the server.
-	if($auth_request->shouldSendRedirect())
+	if ($auth_request->shouldSendRedirect())
 	{
 		$redirect_url = $auth_request->redirectURL(getTrustRoot(), getReturnTo());
 
 		// If the redirect URL can't be built, display an error
 		// message.
-		if(Auth_OpenID::isFailure($redirect_url))
+		if (Auth_OpenID::isFailure($redirect_url))
 		{
 			//displayError("Could not redirect to server: " . $redirect_url->message);
-		}
-		else
-		{
+		} else {
 			// Send redirect.
 			header('Location: '.$redirect_url);
 			exit();
 		}
-	}
-	else
-	{
+	} else {
 		// Generate form markup and render it.
 		$form_id = 'openid_message';
 		$form_html = $auth_request->formMarkup(getTrustRoot(), getReturnTo(), false, array('id' => $form_id));
 
 		// Display an error if the form markup couldn't be generated;
 		// otherwise, render the HTML.
-		if(Auth_OpenID::isFailure($form_html))
+		if (Auth_OpenID::isFailure($form_html))
 		{
 			displayError('Could not redirect to server: '.$form_html->message);
-		}
-		else
-		{
+		} else {
 			$page_contents = array(
                 "<html><head><title>",
                 "OpenID transaction in progress",

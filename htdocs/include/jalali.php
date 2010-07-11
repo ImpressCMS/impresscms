@@ -182,20 +182,18 @@ function lastday ($month,$day,$year)
 	$lastdayen=date('d',mktime(0,0,0,$month+1,0,$year));
 	list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 	$lastdatep=$jday;
-	while($jday!='1')
+	while ($jday!='1')
 	{
-		if($day<$lastdayen)
+		if ($day<$lastdayen)
 		{
 			$day++;
 			list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-			if($jday=='1') break;
-			if($jday='1') $lastdatep++;
-		}
-		else
-		{
+			if ($jday=='1') break;
+			if ($jday='1') $lastdatep++;
+		} else {
 			$day=0;
 			$month++;
-			if($month==13)
+			if ($month==13)
 			{
 				$month='1';
 				$year++;
@@ -220,7 +218,7 @@ function lastday ($month,$day,$year)
 function jmaketime($hour,$minute,$second,$jmonth,$jday,$jyear)
 {
 	$basecheck = defined('_USE_LOCAL_NUM') && _USE_LOCAL_NUM;
-	if ( $basecheck ){
+	if ($basecheck) {
 		$hour = icms_conv_local2nr($hour);
 		$minute = icms_conv_local2nr($minute);
 		$second = icms_conv_local2nr($second);
@@ -244,13 +242,13 @@ function jdate($type,$maket='now')
 	global $icmsConfig;
 	icms_loadLanguageFile('core', 'calendar');
 	$result='';
-	if($maket=='now'){
+	if ($maket=='now') {
 		$year=date('Y');
 		$month=date('m');
 		$day=date('d');
 		list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
 		$maket=jmaketime(date('h'),date('i'),date('s'),$jmonth,$jday,$jyear);
-	}else{
+	} else {
 		$date=date('Y-m-d',$maket);
 		list( $year, $month, $day ) = preg_split ( '/-/', $date );
 
@@ -262,7 +260,7 @@ function jdate($type,$maket='now')
 	$month=date('m',$need);
 	$day=date('d',$need);
 	$i=0;
-	while($i<strlen($type))
+	while ($i<strlen($type))
 	{
 		$subtype=substr($type,$i,1);
 		switch ($subtype)
@@ -270,30 +268,30 @@ function jdate($type,$maket='now')
 
 			case 'A':
 				$result1=date('a',$need);
-				if($result1=='pm') $result.=_CAL_PM_LONG;
+				if ($result1=='pm') $result.=_CAL_PM_LONG;
 				else $result.=_CAL_AM_LONG;
 				break;
 
 			case 'a':
 				$result1=date('a',$need);
-				if($result1=='pm') $result.=_CAL_PM;
+				if ($result1=='pm') $result.=_CAL_PM;
 				else $result.=_CAL_AM;
 				break;
 			case 'd':
 				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-				if($jday<10)$result1='0'.$jday;
+				if ($jday<10)$result1='0'.$jday;
 				else 	$result1=$jday;
 				$result.=$result1;
 				break;
 			case 'D':
 				$result1=date('D',$need);
-				if($result1=='Sat') $result1=_CAL_SAT;
-				else if($result1=='Sun') $result1=_CAL_SUN;
-				else if($result1=='Mon') $result1=_CAL_MON;
-				else if($result1=='Tue') $result1=_CAL_TUE;
-				else if($result1=='Wed') $result1=_CAL_WED;
-				else if($result1=='Thu') $result1=_CAL_THU;
-				else if($result1=='Fri') $result1=_CAL_FRI;
+				if ($result1=='Sat') $result1=_CAL_SAT;
+				else if ($result1=='Sun') $result1=_CAL_SUN;
+				else if ($result1=='Mon') $result1=_CAL_MON;
+				else if ($result1=='Tue') $result1=_CAL_TUE;
+				else if ($result1=='Wed') $result1=_CAL_WED;
+				else if ($result1=='Thu') $result1=_CAL_THU;
+				else if ($result1=='Fri') $result1=_CAL_FRI;
 				$result.=$result1;
 				break;
 			case'F':
@@ -321,18 +319,18 @@ function jdate($type,$maket='now')
 				break;
 			case 'l':
 				$result1=date('l',$need);
-				if($result1=='Saturday') $result1=_CAL_SATURDAY;
-				else if($result1=='Sunday') $result1=_CAL_SUNDAY;
-				else if($result1=='Monday') $result1=_CAL_MONDAY;
-				else if($result1=='Tuesday') $result1=_CAL_TUESDAY;
-				else if($result1=='Wednesday') $result1=_CAL_WEDNESDAY;
-				else if($result1=='Thursday') $result1=_CAL_THURSDAY;
-				else if($result1=='Friday') $result1=_CAL_FRIDAY;
+				if ($result1=='Saturday') $result1=_CAL_SATURDAY;
+				else if ($result1=='Sunday') $result1=_CAL_SUNDAY;
+				else if ($result1=='Monday') $result1=_CAL_MONDAY;
+				else if ($result1=='Tuesday') $result1=_CAL_TUESDAY;
+				else if ($result1=='Wednesday') $result1=_CAL_WEDNESDAY;
+				else if ($result1=='Thursday') $result1=_CAL_THURSDAY;
+				else if ($result1=='Friday') $result1=_CAL_FRIDAY;
 				$result.=$result1;
 				break;
 			case 'm':
 				list( $jyear, $jmonth, $jday ) = gregorian_to_jalali($year, $month, $day);
-				if($jmonth<10) $result1='0'.$jmonth;
+				if ($jmonth<10) $result1='0'.$jmonth;
 				else	$result1=$jmonth;
 				$result.=$result1;
 				break;

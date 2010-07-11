@@ -13,15 +13,14 @@
 if (! defined ( "ICMS_ROOT_PATH" ))
 die ( "ImpressCMS root path not defined" );
 
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
 icms_loadLanguageFile('system', 'mimetype', true);
 
-class SystemMimetype extends IcmsPersistableObject {
+class SystemMimetype extends icms_ipf_Object {
 
 	public $content = false;
 
-	function SystemMimetype(&$handler) {
-		$this->IcmsPersistableObject($handler);
+	function __construct(&$handler) {
+		parent::__construct($handler);
 
 		$this->quickInitVar ( 'mimetypeid', XOBJ_DTYPE_INT, true );
 		$this->quickInitVar ( 'extension', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_MIMETYPE_EXTENSION, _CO_ICMS_MIMETYPE_EXTENSION_DSC );
@@ -58,17 +57,17 @@ class SystemMimetype extends IcmsPersistableObject {
 	}
 }
 
-class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
+class SystemMimetypeHandler extends icms_ipf_Handler {
 
 	public $objects = false;
 
 	function SystemMimetypeHandler($db) {
-		$this->IcmsPersistableObjectHandler ( $db, 'mimetype', 'mimetypeid', 'mimetypeid', 'name', 'system' );
+		parent::__construct( $db, 'mimetype', 'mimetypeid', 'mimetypeid', 'name', 'system' );
 		$this->addPermission ( 'use_extension', _CO_ICMS_MIMETYPE_PERMISSION_VIEW, _CO_ICMS_MIMETYPE_PERMISSION_VIEW_DSC );
 	}
 
 	function UserCanUpload() {
-		$handler = new IcmsPersistablePermissionHandler($this);
+		$handler = new icms_ipf_permission_Handler($this);
 		return $handler->getGrantedItems('use_extension');
 	}
 
@@ -76,10 +75,10 @@ class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
 		$GrantedItems =  $this->UserCanUpload();
 		$array = array();
 		$grantedItemValues = array_values($GrantedItems);
-		if(!empty($grantedItemValues)){
+		if (!empty($grantedItemValues)) {
 			$sql = "SELECT types " ."FROM " . $this->table . " WHERE (mimetypeid='";
-			if (count($grantedItemValues)>1){
-				foreach($grantedItemValues as $grantedItemValue){
+			if (count($grantedItemValues)>1) {
+				foreach ($grantedItemValues as $grantedItemValue) {
 					$sql .= ($grantedItemValue != $grantedItemValues[0])?$grantedItemValue."' OR mimetypeid='":"";
 				}
 			}
@@ -88,7 +87,7 @@ class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
 			for ($i = 0; $i < count($Qvalues); $i++) {
 				$values[]= explode(' ', $Qvalues[$i]['types']);
 			}
-			foreach($values as $item=>$value){
+			foreach ($values as $item=>$value) {
 				$array = array_merge($array, $value);
 			}
 		}
@@ -103,42 +102,42 @@ class SystemMimetypeHandler extends IcmsPersistableObjectHandler {
 	function AllowedModules($mimetype, $module) {
 		$mimetypeid_allowed = $dirname_allowed = false;
 		$GrantedItems =  $this->UserCanUpload();
-		$criteria = new CriteriaCompo();
-		$criteria->add(new Criteria('types', '%'.$mimetype.'%', 'LIKE'));
+		$criteria = new icms_criteria_Compo();
+		$criteria->add(new icms_criteria_Item('types', '%'.$mimetype.'%', 'LIKE'));
 
 		$sql = 'SELECT mimetypeid, dirname, types FROM ' . $this->table;
 		$rows = $this->query($sql, $criteria);
-		if(count($rows)>1){
+		if (count($rows)>1) {
 			for ($i = 0; $i < count($rows); $i++) {
 				$mimetypeids[]= $rows[$i]['mimetypeid'];
 				$dirname[]= explode('|', $rows[$i]['dirname']);
 				$types[]= $rows[$i]['types'];
 			}
 
-			foreach($mimetypeids as $mimetypeid){
-				if(in_array($mimetypeid, $GrantedItems)){
+			foreach ($mimetypeids as $mimetypeid) {
+				if (in_array($mimetypeid, $GrantedItems)) {
 					$mimetypeid_allowed = true;
 				}
 			}
-			foreach($dirname as $dir){
-				if(!empty($module) && in_array($module, $dir)){
+			foreach ($dirname as $dir) {
+				if (!empty($module) && in_array($module, $dir)) {
 					$dirname_allowed = true;
 				}
 			}
-		}else{
+		} else {
 			$mimetypeid= $rows[0]['mimetypeid'];
 			$dirname= explode('|', $rows[0]['dirname']);
 			$types= $rows[0]['types'];
-			if(in_array($mimetypeid, $GrantedItems)){
+			if (in_array($mimetypeid, $GrantedItems)) {
 				$mimetypeid_allowed = true;
 			}
-			if(!empty($module) && in_array($module, $dirname)){
+			if (!empty($module) && in_array($module, $dirname)) {
 				$dirname_allowed = true;
 			}
 		}
-		if($mimetypeid_allowed && $dirname_allowed){
+		if ($mimetypeid_allowed && $dirname_allowed) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}

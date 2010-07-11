@@ -1,5 +1,7 @@
 <?php
 /**
+ * @deprecated	Use libraries/icms/view/Tpl.php, instead
+ * @todo		Remove this in version 1.4
  * The templates class that extends Smarty
  *
  * @copyright	http://www.xoops.org/ The XOOPS Project
@@ -11,7 +13,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: template.php 19473 2010-06-18 21:42:21Z david-sf $
  */
 
 if (!defined('SMARTY_DIR')) {
@@ -30,120 +32,16 @@ require_once SMARTY_DIR.'Smarty.class.php';
  *
  * @author		Kazumi Ono 	<onokazu@xoops.org>
  * @copyright	(c) 2000-2003 The Xoops Project - www.xoops.org
+ * @deprecated	Use icms_view_Tpl, instead
+ * @todo		Remove in version 1.4 - there are no other occurrences in the core
  */
-class XoopsTpl extends Smarty {
-
-	public $left_delimiter = '<{';
-	public $right_delimiter = '}>';
-
-	public $template_dir = ICMS_THEME_PATH;
-	public $cache_dir = XOOPS_CACHE_PATH;
-	public $compile_dir = XOOPS_COMPILE_PATH;
-
-	function XoopsTpl() {
-		global $icmsConfig;
-
-		$this->compile_id = $icmsConfig['template_set'] . '-' . $icmsConfig['theme_set'];
-		$this->_compile_id = $this->compile_id;
-		$this->compile_check = ( $icmsConfig['theme_fromfile'] == 1 );
-		$this->plugins_dir = array(
-		SMARTY_DIR . 'icms_plugins',
-		SMARTY_DIR . 'plugins',
-		);
-
-		// For backwars compatibility...
-		if(file_exists(ICMS_ROOT_PATH."/class/smarty/plugins")){
-			$this->plugins_dir[] = ICMS_ROOT_PATH.'/class/smarty/plugins';
-		}
-
-		if(file_exists(ICMS_ROOT_PATH."/class/smarty/xoops_plugins")){
-			$this->plugins_dir[] = ICMS_ROOT_PATH.'/class/smarty/xoops_plugins';
-		}
-
-		if ( $icmsConfig['debug_mode'] ) {
-			$this->debugging_ctrl = 'URL';
-			if ( $icmsConfig['debug_mode'] == 3 ) {
-				$this->debugging = true;
-			}
-		}
-		$this->Smarty();
-		if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
-			$this->assign( 'icms_rtl', true );
-		}
-
-		$this->assign( array(
-			'icms_url' => ICMS_URL,
-			'icms_rootpath' => ICMS_ROOT_PATH,
-			'modules_url' => ICMS_MODULES_URL,
-			'modules_rootpath' => ICMS_MODULES_PATH,
-			'icms_langcode' => _LANGCODE,
-			'icms_langname' => $GLOBALS["xoopsConfig"]["language"],
-			'icms_charset' => _CHARSET,
-			'icms_version' => XOOPS_VERSION,
-			'icms_upload_url' => XOOPS_UPLOAD_URL,
-			'xoops_url' => ICMS_URL,
-			'xoops_rootpath' => ICMS_ROOT_PATH,
-			'xoops_langcode' => _LANGCODE,
-			'xoops_charset' => _CHARSET,
-			'xoops_version' => XOOPS_VERSION,
-			'xoops_upload_url' => XOOPS_UPLOAD_URL
-		) );
+class XoopsTpl extends icms_view_Tpl {
+	private $_deprecated;
+	public function __construct() {
+		parent::__construct();
+		$this->_deprecated = icms_deprecated('icms_view_Tpl', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 
-	/**
-	 * Renders output from template data
-	 *
-	 * @param   string  $data		The template to render
-	 * @param	bool	$display	If rendered text should be output or returned
-	 * @return  string  Rendered output if $display was false
-	 **/
-	function fetchFromData( $tplSource, $display = false, $vars = null ) {
-		if ( !function_exists('smarty_function_eval') ) {
-			require_once SMARTY_DIR . '/plugins/function.eval.php';
-		}
-		if ( isset( $vars ) ) {
-			$oldVars = $this->_tpl_vars;
-			$this->assign( $vars );
-			$out = smarty_function_eval( array('var' => $tplSource), $this );
-			$this->_tpl_vars = $oldVars;
-			return $out;
-		}
-		return smarty_function_eval( array('var' => $tplSource), $this );
-	}
-
-	/**
-	 * Touch the resource (file) which means get it to recompile the resource
-	 *
-	 * @param   string  $resourcename		Resourcename to touch
-	 * @return  string  $result         Was the resource recompiled
-	 **/
-	function touch( $resourceName ) {
-		$isForced = $this->force_compile;
-		$this->force_compile = true;
-		$this->clear_cache( $resourceName );
-		$result = $this->_compile_resource( $resourceName, $this->_get_compile_path( $resourceName ) );
-		$this->force_compile = $isForced;
-		return $result;
-	}
-
-	/**
-	 * @deprecated DO NOT USE THESE METHODS, ACCESS THE CORRESPONDING PROPERTIES INSTEAD
-	 */
-	function xoops_setTemplateDir($dirname) {		$this->template_dir = $dirname;			}
-	function xoops_getTemplateDir() {				return $this->template_dir;				}
-	function xoops_setDebugging($flag=false) {		$this->debugging = is_bool($flag) ? $flag : false;	}
-	function xoops_setCaching( $num = 0 ) {			$this->caching = (int)$num;				}
-	function xoops_setCompileDir($dirname) {		$this->compile_dir = $dirname;			}
-	function xoops_setCacheDir($dirname) {			$this->cache_dir = $dirname;			}
-	function xoops_canUpdateFromFile() {			return $this->compile_check;			}
-	function xoops_fetchFromData( $data ) {			return $this->fetchFromData( $data );	}
-	function xoops_setCacheTime( $num = 0 ) {
-		if ( ( $num = (int)$num ) <= 0) {
-			$this->caching = 0;
-		} else {
-			$this->cache_lifetime = $num;
-		}
-	}
 }
 
 /**
@@ -152,17 +50,12 @@ class XoopsTpl extends Smarty {
  * @param   string  $tpl_id
  * @param   boolean $clear_old
  * @return  boolean
+ * @deprecated	Use icms_view_Tpl::template_touch instead
+ * @todo		Remove in version 1.4 - there are no other occurrences in the core
  **/
 function xoops_template_touch($tpl_id, $clear_old = true) {
-	$tplfile_handler =& xoops_gethandler('tplfile');
-	$tplfile =& $tplfile_handler->get($tpl_id);
-
-	if ( is_object($tplfile) ) {
-		$file = $tplfile->getVar( 'tpl_file', 'n' );
-		$tpl = new XoopsTpl();
-		return $tpl->touch( "db:$file" );
-	}
-	return false;
+	icms_deprecated('icms_view_Tpl::template_touch($tplid)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_view_Tpl::template_touch($tplid);
 }
 
 /**
@@ -170,20 +63,12 @@ function xoops_template_touch($tpl_id, $clear_old = true) {
  *
  * @param   int $mid    Module ID
  * @return
+ * @deprecated	Use icms_view_Tpl::template_clear_module_cache, instead
+ * @todo		Remove in version 1.4 - there are no other occurrences in the core
  **/
 function xoops_template_clear_module_cache($mid)
 {
-	$icms_block_handler = xoops_gethandler('block');
-	$block_arr = $icms_block_handler->getByModule($mid);
-	$count = count($block_arr);
-	if ($count > 0) {
-		$xoopsTpl = new XoopsTpl();
-		$xoopsTpl->xoops_setCaching(2);
-		for ($i = 0; $i < $count; $i++) {
-			if ($block_arr[$i]->getVar('template') != '') {
-				$xoopsTpl->clear_cache('db:'.$block_arr[$i]->getVar('template'), 'blk_'.$block_arr[$i]->getVar('bid'));
-			}
-		}
-	}
+	icms_deprecated('icms_view_Tpl::template_clear_module_cache($mid)', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_view_Tpl::template_clear_module_cache($mid);
 }
 ?>

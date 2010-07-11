@@ -1,7 +1,7 @@
 <?php
 // $Id$
 //%%%%%%        Admin Module Name  Banners         %%%%%
-if(!defined('_AM_DBUPDATED')){define("_AM_DBUPDATED","Database Updated Successfully!");}
+if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 define("_AM_CURACTBNR","Current Active Banners");
 define("_AM_BANNERID","Banner ID");

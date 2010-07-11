@@ -15,7 +15,7 @@
  * @since	1.2
  *
  */
-class IcmsPreloadAutotasks extends IcmsPreloadItem {
+class IcmsPreloadAutotasks extends icms_preload_Item {
 
 	/**
 	 * Function to be triggered at the end of the core boot process

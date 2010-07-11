@@ -15,7 +15,7 @@
  * @since	1.2
  *
  */
-class IcmsPreloadUserInfo extends IcmsPreloadItem {
+class IcmsPreloadUserInfo extends icms_preload_Item {
 	/**
 	 * Function to be triggered at the end of the core boot process
 	 *
@@ -24,11 +24,11 @@ class IcmsPreloadUserInfo extends IcmsPreloadItem {
 	function eventStartOutputInit() {
 		global $xoopsUser,$xoopsTpl;
 		if (is_object($xoopsUser)) {
-			foreach ( $xoopsUser->vars as $key => $value ) {
+			foreach ( $xoopsUser->vars as $key => $value) {
 				$user [$key] = $value;
 			}
-			foreach ( $user as $key => $value ) {
-				foreach ( $user [$key] as $key1 => $value1 ) {
+			foreach ( $user as $key => $value) {
+				foreach ( $user [$key] as $key1 => $value1) {
 					if ($key1 == 'value') {
 						if ($key == 'last_login') {
 							$value1 = formatTimestamp( (isset ( $_SESSION ['xoopsUserLastLogin'] )) ? $_SESSION ['xoopsUserLastLogin'] : time (), 'd/m/Y H:i:s' );
@@ -38,8 +38,8 @@ class IcmsPreloadUserInfo extends IcmsPreloadItem {
 				}
 			}
 			$pm_handler = & xoops_gethandler ( 'privmessage' );
-			$criteria = new CriteriaCompo ( new Criteria ( 'read_msg', 0 ) );
-			$criteria->add ( new Criteria ( 'to_userid', $xoopsUser->getVar ( 'uid' ) ) );
+			$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'read_msg', 0 ) );
+			$criteria->add ( new icms_criteria_Item ( 'to_userid', $xoopsUser->getVar ( 'uid' ) ) );
 			$user ['new_messages'] = $pm_handler->getCount ( $criteria );
 
 			$xoopsTpl->assign ( 'user', $user );

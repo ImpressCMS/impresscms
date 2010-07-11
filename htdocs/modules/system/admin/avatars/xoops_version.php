@@ -26,5 +26,5 @@ $modversion = array( 'name' => _MD_AM_AVATARS,
 	'image' => "avatars.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=avatars",
-	'category' => XOOPS_SYSTEM_AVATAR );
-?>
+	'category' => XOOPS_SYSTEM_AVATAR,
+	'group' => 'Users and Groups');

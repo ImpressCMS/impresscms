@@ -44,48 +44,48 @@ define('EASIESTML_DEFAULT_LANG',0);
 // CONFIGURATIONS END
 
 // Patch check
-//if( ! defined( 'ICMS_ROOT_PATH' ) || ! defined( 'ICMS_URL' ) || defined( 'XOOPS_SIDEBLOCK_LEFT' ) ) die( "You should patch just after define('ICMS_URL', ... ) in mainfile.php" ) ;
+//if (! defined( 'ICMS_ROOT_PATH' ) || ! defined( 'ICMS_URL' ) || defined( 'XOOPS_SIDEBLOCK_LEFT' ) ) die( "You should patch just after define('ICMS_URL', ... ) in mainfile.php" ) ;
 // moving the inclusing of easiest ml just after the xoopsDB creation because we need the db...
-if( ! defined( 'ICMS_ROOT_PATH' ) || ! defined( 'ICMS_URL' ) ) die( "You should patch just after define('ICMS_URL', ... ) in mainfile.php" ) ;
+if (! defined( 'ICMS_ROOT_PATH' ) || ! defined( 'ICMS_URL' ) ) die( "You should patch just after define('ICMS_URL', ... ) in mainfile.php" ) ;
 
 // Target check
-if( ! preg_match( '?'.preg_quote(ICMS_ROOT_PATH,'?').'(/common/)?' , $_SERVER['SCRIPT_FILENAME'] ) ) {
+if (! preg_match( '?'.preg_quote(ICMS_ROOT_PATH,'?').'(/common/)?' , $_SERVER['SCRIPT_FILENAME'] )) {
 
 	// get cookie path
 	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH') ? XOOPS_COOKIE_PATH : preg_replace( '?http://[^/]+(/.*)$?' , "$1" , ICMS_URL ) ;
-	if( $xoops_cookie_path == ICMS_URL ) $xoops_cookie_path = '/' ;
+	if ($xoops_cookie_path == ICMS_URL ) $xoops_cookie_path = '/' ;
 
 	// deciding the current language (the priority is important)
 	$easiestml_langs = explode( ',' , EASIESTML_LANGS ) ;
 	$easiestml_charsets = explode( ',' , EASIESTML_CHARSETS ) ;
-	if( ! empty( $_GET['lang'] ) && $_GET['lang'] == 'all' ) {
+	if (! empty( $_GET['lang'] ) && $_GET['lang'] == 'all') {
 		// set by GET (all)
 		$easiestml_lang = 'all' ;
-	} else if( ! empty( $_GET['lang'] ) && ( $offset = array_search( $_GET['lang'] , $easiestml_langs ) ) !== false ) {
+	} else if (! empty( $_GET['lang'] ) && ( $offset = array_search( $_GET['lang'] , $easiestml_langs ) ) !== false) {
 		// set by GET (other than all)
 		$easiestml_lang = $_GET['lang'] ;
 		$easiestml_charset = $easiestml_charsets[ $offset ] ;
 		setcookie( 'lang' , $easiestml_lang , time() + EASIESTML_COOKIELIFETIME , $xoops_cookie_path, '' , 0 ) ;
-	} else if( ! empty( $_COOKIE['lang'] ) && ( $offset = array_search( $_COOKIE['lang'] , $easiestml_langs ) ) !== false ) {
+	} else if (! empty( $_COOKIE['lang'] ) && ( $offset = array_search( $_COOKIE['lang'] , $easiestml_langs ) ) !== false) {
 		// set by COOKIE (other than all)
 		$easiestml_lang = $_COOKIE['lang'] ;
 		$easiestml_charset = $easiestml_charsets[ $offset ] ;
-	} else if( ! empty( $_SERVER['HTTP_ACCEPT_CHARSET'] ) ) {
+	} else if (! empty( $_SERVER['HTTP_ACCEPT_CHARSET'] )) {
 		// set by HTTP_ACCEPT_CHARSET pattern
 		$offset = 0 ;
-		foreach( explode( ',' , EASIESTML_ACCEPT_CHARSET_REGEXES ) as $pattern ) {
-			if( $pattern && preg_match( $pattern , $_SERVER['HTTP_ACCEPT_CHARSET'] ) ) {
+		foreach (explode( ',' , EASIESTML_ACCEPT_CHARSET_REGEXES ) as $pattern) {
+			if ($pattern && preg_match( $pattern , $_SERVER['HTTP_ACCEPT_CHARSET'] )) {
 				$easiestml_lang = $easiestml_langs[ $offset ] ;
 				$easiestml_charset = $easiestml_charsets[ $offset ] ;
 				break ;
 			}
 			$offset ++ ;
 		}
-	} else if( ! empty( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ) {
+	} else if (! empty( $_SERVER['HTTP_ACCEPT_LANGUAGE'] )) {
 		// set by HTTP_ACCEPT_LANGUAGE pattern
 		$offset = 0 ;
-		foreach( explode( ',' , EASIESTML_ACCEPT_LANGUAGE_REGEXES ) as $pattern ) {
-			if( $pattern && preg_match( $pattern , $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ) {
+		foreach (explode( ',' , EASIESTML_ACCEPT_LANGUAGE_REGEXES ) as $pattern) {
+			if ($pattern && preg_match( $pattern , $_SERVER['HTTP_ACCEPT_LANGUAGE'] )) {
 				$easiestml_lang = $easiestml_langs[ $offset ] ;
 				$easiestml_charset = $easiestml_charsets[ $offset ] ;
 				break ;
@@ -94,7 +94,7 @@ if( ! preg_match( '?'.preg_quote(ICMS_ROOT_PATH,'?').'(/common/)?' , $_SERVER['S
 		}
 	}
 
-	if( empty( $easiestml_lang ) ) {
+	if (empty( $easiestml_lang )) {
 		$easiestml_lang = $easiestml_langs[EASIESTML_DEFAULT_LANG] ;
 		$easiestml_charset = $easiestml_charsets[EASIESTML_DEFAULT_LANG] ;
 	}
@@ -115,13 +115,13 @@ function easiestml( $s )
 	global $easiestml_lang , $icmsUser, $icmsConfigMultilang;
 
 	// all mode for debug (allowed to system admin only)
-	if( is_object( $icmsUser ) && $icmsUser->isAdmin(1) && ! empty( $_GET['lang'] ) && $_GET['lang'] == 'all' ) {
+	if (is_object( $icmsUser ) && $icmsUser->isAdmin(1) && ! empty( $_GET['lang'] ) && $_GET['lang'] == 'all') {
 		return $s ;
 	}
 
 	$easiestml_langs = explode( ',' , EASIESTML_LANGS ) ;
 	// protection against some injection
-	if( ! in_array( $easiestml_lang , $easiestml_langs ) ) {
+	if (! in_array( $easiestml_lang , $easiestml_langs )) {
 		$easiestml_lang = $easiestml_langs[0] ;
 	}
 
@@ -137,21 +137,21 @@ function easiestml( $s )
 
 	// multilanguage image tag
 	$langnames = explode( ',' , $icmsConfigMultilang['ml_names'] ) ;
-	foreach($langnames as $v) {
+	foreach ($langnames as $v) {
 		$langimages[] = "images/flags/$v.gif";
 	}
 	$langnames = explode( ',' , EASIESTML_LANGNAMES ) ;
-	if( empty( $_SERVER['QUERY_STRING'] ) ) {
+	if (empty( $_SERVER['QUERY_STRING'] )) {
 		$link_base = basename($_SERVER['SCRIPT_NAME']).'?lang=' ;
-	} else if( ( $pos = strpos($_SERVER['QUERY_STRING'],'lang=') ) === false ) {
+	} else if (( $pos = strpos($_SERVER['QUERY_STRING'],'lang=') ) === false) {
 		$link_base = basename($_SERVER['SCRIPT_NAME']) . '?' . htmlspecialchars($_SERVER['QUERY_STRING'],ENT_QUOTES) . '&amp;lang=' ;
-	} else if( $pos < 2 ) {
+	} else if ($pos < 2) {
 		$link_base = basename($_SERVER['SCRIPT_NAME']).'?lang=' ;
 	} else {
 		$link_base = basename($_SERVER['SCRIPT_NAME']) . '?' . htmlspecialchars(substr($_SERVER['QUERY_STRING'],0,$pos-1),ENT_QUOTES) . '&amp;lang=' ;
 	}
 	$langimage_html = '' ;
-	foreach( $easiestml_langs as $l => $lang ) {
+	foreach ($easiestml_langs as $l => $lang) {
 		$langimage_html .= '<a href="'.$link_base.urlencode($lang).'"><img src="'.ICMS_URL.'/'.$langimages[$l].'" title="'.$langnames[$l].'" alt="'.$langnames[$l].'" /></a>&nbsp;' ;
 		$s = preg_replace( '/\[change_lang_'.$lang.'\]/' , $link_base.urlencode($lang) , $s ) ;
 	}
@@ -162,8 +162,8 @@ function easiestml( $s )
 	//$mid_pattern = '(?:(?!(' . implode( '|' , $pqhtmltags ) . ')).)*' ;
 
 	// eliminate description between the other language tags.
-	foreach( $easiestml_langs as $lang ) {
-		if( $easiestml_lang == $lang ) continue ;
+	foreach ($easiestml_langs as $lang) {
+		if ($easiestml_lang == $lang ) continue ;
 		$s = preg_replace_callback( '/\['.preg_quote($lang).'\].*\[\/'.preg_quote($lang).'(?:\]\<br \/\>|\])/isU' , 'easiestml_check_nevercross' , $s ) ;
 	}
 
@@ -190,7 +190,7 @@ function easiestml( $s )
  */
 function easiestml_escape_bracket_textbox( $matches )
 {
-	if( preg_match( '/type=["\']?text["\']?/i' , $matches[2] ) ) {
+	if (preg_match( '/type=["\']?text["\']?/i' , $matches[2] )) {
 		return $matches[1].str_replace('[','&#91;',$matches[2]).$matches[3] ;
 	} else {
 		return $matches[1].$matches[2].$matches[3] ;
@@ -217,7 +217,7 @@ function easiestml_escape_bracket_textarea( $matches )
 function easiestml_check_nevercross( $matches )
 {
 	$answer = '' ;
-	if(EASIESTML_NEVERCROSSREGEX != ''){
+	if (EASIESTML_NEVERCROSSREGEX != '') {
 		$answer = preg_match( EASIESTML_NEVERCROSSREGEX , $matches[0] ) ? $matches[0] : '' ;
 	}
 	return $answer;

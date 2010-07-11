@@ -29,24 +29,24 @@ include './mainfile.php';
 /** Include the core functions */
 include ICMS_ROOT_PATH.'/include/functions.php';
 /** Include the logging functions */
-include_once ICMS_ROOT_PATH.'/class/logger.php';
+//include_once ICMS_ROOT_PATH.'/class/logger.php';
 /** Include the textsanitizer class */
-include_once ICMS_ROOT_PATH."/class/module.textsanitizer.php";
-$xoopsLogger =& XoopsLogger::instance();
+//include_once ICMS_ROOT_PATH."/class/module.textsanitizer.php";
+$xoopsLogger =& icms_core_Logger::instance();
 $xoopsLogger->startTime();
 /** Include the database class */
 include_once ICMS_ROOT_PATH.'/class/database/databasefactory.php';
 /** Define XOOPS_DB_PROXY */
 define('XOOPS_DB_PROXY', 1);
-$xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
+$xoopsDB =& icms_database_Factory::getDatabaseConnection();
 // ################# Include class manager file ##############
 /** Require the object class */
-require_once ICMS_ROOT_PATH.'/kernel/object.php';
+//require_once ICMS_ROOT_PATH.'/kernel/object.php';
 /** Require the criteria class, for building queries */
-require_once ICMS_ROOT_PATH.'/class/criteria.php';
+//require_once ICMS_ROOT_PATH.'/class/criteria.php';
 $imagehandler =& xoops_gethandler('image');
-$criteria = new CriteriaCompo(new Criteria('i.image_display', 1));
-$criteria->add(new Criteria('i.image_id', $image_id));
+$criteria = new icms_criteria_Compo(new icms_criteria_Item('i.image_display', 1));
+$criteria->add(new icms_criteria_Item('i.image_id', $image_id));
 $image =& $imagehandler->getObjects($criteria, false, true);
 if (count($image) > 0) {
 	header('Content-type: '.$image[0]->getVar('image_mimetype'));

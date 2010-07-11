@@ -22,7 +22,7 @@ defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 /** Creates constant indicating this file has been loaded */
 define ('XOOPS_CPFUNC_LOADED', 1);
 /** Load the template class */
-include_once ICMS_ROOT_PATH . '/class/template.php';
+//include_once ICMS_ROOT_PATH . '/class/template.php';
 
 /**
  * Function icms_cp_header
@@ -49,14 +49,14 @@ function icms_cp_header(){
 		header("Pragma: no-cache");
 	}
 
-	require_once ICMS_ROOT_PATH . '/class/template.php';
+	//require_once ICMS_ROOT_PATH . '/class/template.php';
 	//require_once ICMS_ROOT_PATH . '/class/theme'.(( file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme_admin.html' ) || file_exists(ICMS_MODULES_PATH.'/system/themes/'.$icmsConfig['theme_admin_set'].'/theme.html' )) ?'_admin':'').'.php';
-	require_once ICMS_ROOT_PATH . '/class/theme.php';
-	require_once ICMS_ROOT_PATH . '/class/theme_blocks.php';
+	//require_once ICMS_ROOT_PATH . '/class/theme.php';
+	//require_once ICMS_ROOT_PATH . '/class/theme_blocks.php';
 	if( !isset($icmsPreloadHandler) )
 	$icmsPreloadHandler =& $GLOBALS['icmsPreloadHandler'];
 
-	$icmsAdminTpl = new XoopsTpl();
+	$icmsAdminTpl = new icms_view_Tpl();
 
 	$icmsAdminTpl->assign('xoops_url', ICMS_URL);
 	$icmsAdminTpl->assign('xoops_sitename', $icmsConfig['sitename']);
@@ -67,7 +67,7 @@ function icms_cp_header(){
 		}
 	}
 
-	$xoopsThemeFactory = new xos_opal_ThemeFactory();
+	$xoopsThemeFactory = new icms_view_theme_Factory();
 	$xoopsThemeFactory->allowedThemes = $icmsConfig['theme_set_allowed'];
 
 	// The next 2 lines are for compatibility only... to implement the admin theme ;)
@@ -78,7 +78,7 @@ function icms_cp_header(){
 		'contentTemplate'	=> @$xoopsOption['template_main'],
 		'canvasTemplate'	=> 'theme' . (( file_exists(ICMS_THEME_PATH . '/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html')
 			|| file_exists(ICMS_MODULES_PATH . '/system/themes/' . $icmsConfig['theme_admin_set'] . '/theme_admin.html') ) ?'_admin':'') . '.html',
-		'plugins' 			=> array('xos_logos_PageBuilder'),
+		'plugins' 			=> array('icms_view_PageBuilder'),
 		'folderName'		=> $icmsConfig['theme_admin_set']
 	) );
 	$icmsAdminTpl = $xoTheme->template;
@@ -177,7 +177,7 @@ function icms_cp_header(){
 	$file = file_get_contents(ICMS_CACHE_PATH . "/adminmenu_" . $icmsConfig ['language'] . ".php");
 	$admin_menu = eval('return ' . $file . ';');
 
-	$moduleperm_handler =& xoops_gethandler('groupperm');
+	$moduleperm_handler =& xoops_gethandler('member_groupperm');
 	$module_handler =& xoops_gethandler('module');
 	foreach ( $admin_menu as $k => $navitem ) {
 		 //Getting array of allowed modules to use in admin home
@@ -199,7 +199,7 @@ function icms_cp_header(){
 			$groups = $icmsUser->getGroups();
 			$all_ok = false;
 			if (! in_array(ICMS_GROUP_ADMIN, $groups)) {
-				$sysperm_handler =& xoops_gethandler('groupperm');
+				$sysperm_handler =& xoops_gethandler('member_groupperm');
 				$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
 			} else {
 				$all_ok = true;
@@ -298,8 +298,8 @@ function icms_cp_header(){
 		$icmsAdminTpl->assign('lang_prefs', _PREFERENCES);
 	}
 
-	if ( @is_object($xoTheme->plugins['xos_logos_PageBuilder']) ) {
-		$aggreg =& $xoTheme->plugins['xos_logos_PageBuilder'];
+	if ( @is_object($xoTheme->plugins['icms_view_PageBuilder']) ) {
+		$aggreg =& $xoTheme->plugins['icms_view_PageBuilder'];
 
 		$icmsAdminTpl->assign_by_ref('xoAdminBlocks', $aggreg->blocks);
 
@@ -346,7 +346,7 @@ function icms_cp_header(){
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function xoops_cp_header() {
-	icms_deprecated('icms_cp_header', 'This will be removed in version 1.4');
+	icms_deprecated('icms_cp_header', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	icms_cp_header();
 }
 
@@ -398,7 +398,7 @@ function icms_cp_footer() {
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function xoops_cp_footer() {
-	icms_deprecated('icms_cp_footer', 'This will be removed in version 1.4');
+	icms_deprecated('icms_cp_footer', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	icms_cp_footer();
 }
 
@@ -528,9 +528,9 @@ function impresscms_get_adminmenu() {
 	# Modules menu
 	#########################################################################
 	$module_handler = & xoops_gethandler('module');
-	$criteria = new CriteriaCompo();
-	$criteria->add(new Criteria('hasadmin', 1));
-	$criteria->add(new Criteria('isactive', 1));
+	$criteria = new icms_criteria_Compo();
+	$criteria->add(new icms_criteria_Item('hasadmin', 1));
+	$criteria->add(new icms_criteria_Item('isactive', 1));
 	$criteria->setSort('mid');
 	$modules = $module_handler->getObjects($criteria);
 	foreach ( $modules as $module ) {
@@ -708,6 +708,7 @@ function xoops_module_write_admin_menu($content) {
  * @param string  $path  path to the file to write
  * @return bool
  * @todo use language constants for error messages
+ * @todo Move to static class Filesystem
  */
 function xoops_write_index_file($path = '') {
 	if (empty($path)) {

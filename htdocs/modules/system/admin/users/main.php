@@ -13,19 +13,19 @@
  * @version	$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
 include_once ICMS_ROOT_PATH."/modules/system/admin/users/users.php";
 $allowedHTML = array('user_sig','bio');
 
-if(!empty($_POST)){ foreach($_POST as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
-if(!empty($_GET)){ foreach($_GET as $k => $v){ if (!in_array($k,$allowedHTML)){${$k} = StopXSS($v);}else{${$k} = $v;}}}
+if (!empty($_POST)) { foreach ($_POST as $k => $v) { if (!in_array($k,$allowedHTML)) {${$k} = StopXSS($v);} else {${$k} = $v;}}}
+if (!empty($_GET)) { foreach ($_GET as $k => $v) { if (!in_array($k,$allowedHTML)) {${$k} = StopXSS($v);} else {${$k} = $v;}}}
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'mod_users');
-if(isset($_GET['op']))
+if (isset($_GET['op']))
 {
-	if(isset($_GET['uid'])) {$uid = (int) ($_GET['uid']);}
+	if (isset($_GET['uid'])) {$uid = (int) ($_GET['uid']);}
 }
 switch ($op)
 {
@@ -34,13 +34,13 @@ switch ($op)
 		break;
 
 	case 'updateUser':
-		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
+		if (!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
 		// RMV-NOTIFY
 		$user_avatar = $theme = null;
-		if(!isset($attachsig)) $attachsig = null;
-		if(!isset($user_viewemail)) $user_viewemail = null;
-		if(!isset($user_viewoid)) $user_viewoid = null;
-		if(!isset($openid)) $openid = null;
+		if (!isset($attachsig)) $attachsig = null;
+		if (!isset($user_viewemail)) $user_viewemail = null;
+		if (!isset($user_viewoid)) $user_viewoid = null;
+		if (!isset($openid)) $openid = null;
 		$groups = isset($_POST['groups']) ? $groups : array(XOOPS_GROUP_ANONYMOUS);
 		if (@is_array($groups_hidden)) {
 			$groups = array_unique(array_merge($groups, $groups_hidden)) ;
@@ -59,11 +59,11 @@ switch ($op)
 	case 'delete_many':
 		icms_cp_header();
 		$count = count($memberslist_id);
-		if($count > 0)
+		if ($count > 0)
 		{
 			$list = "<a href='".ICMS_URL."/userinfo.php?uid=".$memberslist_id[0]."' rel='external'>".$memberslist_uname[$memberslist_id[0]]."</a>";
 			$hidden = "<input type='hidden' name='memberslist_id[]' value='".$memberslist_id[0]."' />\n";
-			for($i = 1; $i < $count; $i++)
+			for ($i = 1; $i < $count; $i++)
 			{
 				$list .= ", <a href='".ICMS_URL."/userinfo.php?uid=".$memberslist_id[$i]."' rel='external'>".$memberslist_uname[$memberslist_id[$i]]."</a>";
 				$hidden .= "<input type='hidden' name='memberslist_id[]' value='".$memberslist_id[$i]."' />\n";
@@ -83,21 +83,19 @@ switch ($op)
 		break;
 
 	case 'delete_many_ok':
-		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
+		if (!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
 		$count = count($memberslist_id);
 		$output = '';
 		$member_handler =& xoops_gethandler('member');
-		for($i = 0; $i < $count; $i++)
+		for ($i = 0; $i < $count; $i++)
 		{
 			$deluser =& $member_handler->getUser($memberslist_id[$i]);
 			$delgroups = $deluser->getGroups();
-			if(in_array(XOOPS_GROUP_ADMIN, $delgroups))
+			if (in_array(XOOPS_GROUP_ADMIN, $delgroups))
 			{
 				$output .= sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED.' ('._AM_NICKNAME.': %s)', $deluser->getVar('uname')).'<br />';
-			}
-			else
-			{
-				if(!$member_handler->deleteUser($deluser)) {$output .= _AM_COULD_NOT_DELETE.' '.$deluser->getVar('uname').'<br />';}
+			} else {
+				if (!$member_handler->deleteUser($deluser)) {$output .= _AM_COULD_NOT_DELETE.' '.$deluser->getVar('uname').'<br />';}
 				else {$output .= $deluser->getVar('uname').' '._AM_USERS_DELETEED.'<br />';}
 				// RMV-NOTIFY
 				xoops_notification_deletebyuser($deluser->getVar('uid'));
@@ -109,24 +107,22 @@ switch ($op)
 		break;
 
 	case 'delUserConf':
-		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
+		if (!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
 		$member_handler =& xoops_gethandler('member');
 		$user =& $member_handler->getUser($del_uid);
 		$groups = $user->getGroups();
-		if(in_array(XOOPS_GROUP_ADMIN, $groups))
+		if (in_array(XOOPS_GROUP_ADMIN, $groups))
 		{
 			icms_cp_header();
 			echo sprintf(_AM_ADMIN_CAN_NOT_BE_DELETEED.'. ('._AM_NICKNAME.': %s)', $user->getVar('uname'));
 			icms_cp_footer();
 		}
-		elseif(!$member_handler->deleteUser($user))
+		elseif (!$member_handler->deleteUser($user))
 		{
 			icms_cp_header();
 			echo _AM_ADMIN_CAN_NOT_BE_DELETEED.$deluser->getVar('uname');
 			icms_cp_footer();
-		}
-		else
-		{
+		} else {
 			$online_handler =& xoops_gethandler('online');
 			$online_handler->destroy($del_uid);
 			// RMV-NOTIFY
@@ -136,27 +132,23 @@ switch ($op)
 		break;
 
 	case 'addUser':
-		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
-		if(!$username || !$email || !$password || !$login_name)
+		if (!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
+		if (!$username || !$email || !$password || !$login_name)
 		{
 			$adduser_errormsg = _AM_YMCACF;
-		}
-		else
-		{
+		} else {
 			$member_handler =& xoops_gethandler('member');
 			// make sure the username doesnt exist yet
-			if($member_handler->getUserCount(new Criteria('uname', $username)) > 0 || $member_handler->getUserCount(new Criteria('login_name', $login_name)) > 0 )
+			if ($member_handler->getUserCount(new icms_criteria_Item('uname', $username)) > 0 || $member_handler->getUserCount(new icms_criteria_Item('login_name', $login_name)) > 0 )
 			{
 				$adduser_errormsg = _AM_NICKNAME.' '.$username.' '._AM_ALREADY_EXISTS;
-			}elseif($member_handler->getUserCount(new Criteria('email', $email)) > 0){
+			} elseif ($member_handler->getUserCount(new icms_criteria_Item('email', $email)) > 0) {
 				$adduser_errormsg = _AM_A_USER_WITH_THIS_EMAIL_ADDRESS.' "'.$email.'" '._AM_ALREADY_EXISTS;
-			}
-			else
-			{
+			} else {
 				$newuser =& $member_handler->createUser();
-				if(isset($user_viewemail)) {$newuser->setVar('user_viewemail',$user_viewemail);}
-				if(isset($user_viewoid)) {$newuser->setVar('user_viewoid',$user_viewoid);}
-				if(isset($attachsig)) {$newuser->setVar('attachsig',$attachsig);}
+				if (isset($user_viewemail)) {$newuser->setVar('user_viewemail',$user_viewemail);}
+				if (isset($user_viewoid)) {$newuser->setVar('user_viewoid',$user_viewoid);}
+				if (isset($attachsig)) {$newuser->setVar('attachsig',$attachsig);}
 				$newuser->setVar('name', $name);
 				$newuser->setVar('login_name', $login_name);
 				$newuser->setVar('uname', $username);
@@ -169,16 +161,16 @@ switch ($op)
 				$newuser->setVar('user_aim', $user_aim);
 				$newuser->setVar('user_yim', $user_yim);
 				$newuser->setVar('user_msnm', $user_msnm);
-				if($pass2 != '')
+				if ($pass2 != '')
 				{
-					if($password != $pass2)
+					if ($password != $pass2)
 					{
 						icms_cp_header();
 						echo '<b>'._AM_STNPDNM.'</b>';
 						icms_cp_footer();
 						exit();
 					}
-					if($password == $username || $password == icms_utf8_strrev($username, true) || strripos($password, $username) === true || $password == $login_name || $password == icms_utf8_strrev($login_name, true) || strripos($password, $login_name) === true)
+					if ($password == $username || $password == icms_utf8_strrev($username, true) || strripos($password, $username) === true || $password == $login_name || $password == icms_utf8_strrev($login_name, true) || strripos($password, $login_name) === true)
 					{
 						icms_cp_header();
 						echo '<b>'._AM_BADPWD.'</b>';
@@ -208,25 +200,21 @@ switch ($op)
 
 				if ($icmsConfigAuth['auth_openid'] == 1) {
 					$newuser->setVar('openid', $openid);}
-					if(!$member_handler->insertUser($newuser))
+					if (!$member_handler->insertUser($newuser))
 					{
 						$adduser_errormsg = _AM_CNRNU;
-					}
-					else
-					{
+					} else {
 						$groups_failed = array();
-						if(!isset($_POST['groups'])) $groups = array(XOOPS_GROUP_ANONYMOUS);
-						foreach($groups as $group)
+						if (!isset($_POST['groups'])) $groups = array(XOOPS_GROUP_ANONYMOUS);
+						foreach ($groups as $group)
 						{
-							if(!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {$groups_failed[] = $group;}
+							if (!$member_handler->addUserToGroup($group, $newuser->getVar('uid'))) {$groups_failed[] = $group;}
 						}
-						if(!empty($groups_failed))
+						if (!empty($groups_failed))
 						{
-							$group_names = $member_handler->getGroupList(new Criteria('groupid', "(".implode(", ", $groups_failed).")", 'IN'));
+							$group_names = $member_handler->getGroupList(new icms_criteria_Item('groupid', "(".implode(", ", $groups_failed).")", 'IN'));
 							$adduser_errormsg = sprintf(_AM_CNRNU2, implode(", ", $group_names));
-						}
-						else
-						{
+						} else {
 							/* Hack by marcan <INBOX>
 							 * Sending a confirmation email to the newly registered user
 							 */
@@ -235,7 +223,7 @@ switch ($op)
 							 * form to ask the admin if he wants to send the welcome message or not
 							 */
 							/*
-							 $myts =& MyTextSanitizer::getInstance();
+							 $myts =& icms_core_Textsanitizer::getInstance();
 							 $xoopsMailer =& getMailer();
 							 $xoopsMailer->useMail();
 							 $xoopsMailer->setTemplate('welcome.tpl');
@@ -261,13 +249,13 @@ switch ($op)
 		break;
 
 	case 'synchronize':
-		if(!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
+		if (!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
 		synchronize($id, $type);
 		break;
 
 	case 'reactivate':
 		$result=$xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET level='1' WHERE uid='". (int) ($uid)."'");
-		if(!$result) {exit();}
+		if (!$result) {exit();}
 		redirect_header('admin.php?fct=users&amp;op=modifyUser&amp;uid='. (int) ($uid),1,_AM_DBUPDATED);
 		break;
 

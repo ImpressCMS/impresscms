@@ -24,5 +24,5 @@ $modversion = array( 'name' => _MD_AM_RANK,
 	'image' => "userrank.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=userrank",
-	'category' => XOOPS_SYSTEM_URANK );
-?>
+	'category' => XOOPS_SYSTEM_URANK,
+	'group' => 'Users and Groups');

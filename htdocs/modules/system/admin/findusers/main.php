@@ -14,20 +14,20 @@
  * @version	$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
-if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'form');
 
 icms_cp_header();
 //OpenTable();
 
-if ( $op == "form" ) {
+if ($op == "form") {
 	$member_handler =& xoops_gethandler('member');
-	$acttotal = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0, '>')));
-	$inacttotal = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0)));
+	$acttotal = icms_conv_nr2local($member_handler->getUserCount(new icms_criteria_Item('level', 0, '>')));
+	$inacttotal = icms_conv_nr2local($member_handler->getUserCount(new icms_criteria_Item('level', 0)));
 	include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 	$group_select = new XoopsFormSelectGroup(_AM_GROUPS, "selgroups", null, false, 5, true);
 	$uname_text = new XoopsFormText("", "user_uname", 30, 60);
@@ -128,7 +128,7 @@ if ( $op == "form" ) {
 	$form->addElement($limit_text);
 	$form->addElement($op_hidden);
 	// if this is to find users for a specific group
-	if ( !empty($_GET['group']) && (int) ($_GET['group']) > 0 ) {
+	if (!empty($_GET['group']) && (int) ($_GET['group']) > 0) {
 		$group_hidden = new XoopsFormHidden("group", (int) ($_GET['group']));
 		$form->addElement($group_hidden);
 	}
@@ -139,228 +139,228 @@ if ( $op == "form" ) {
 }
 
 elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
-	$myts =& MyTextSanitizer::getInstance();
-	$criteria = new CriteriaCompo();
-	if ( !empty($_POST['user_uname']) ) {
+	$myts =& icms_core_Textsanitizer::getInstance();
+	$criteria = new icms_criteria_Compo();
+	if (!empty($_POST['user_uname'])) {
 		$match = (!empty($_POST['user_uname_match'])) ? (int) ($_POST['user_uname_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new Criteria('uname', $myts->addSlashes(trim($_POST['user_uname'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('uname', $myts->addSlashes(trim($_POST['user_uname'])).'%', 'LIKE'));
 				break;
 			case XOOPS_MATCH_END:
-				$criteria->add(new Criteria('uname', '%'.$myts->addSlashes(trim($_POST['user_uname'])), 'LIKE'));
+				$criteria->add(new icms_criteria_Item('uname', '%'.$myts->addSlashes(trim($_POST['user_uname'])), 'LIKE'));
 				break;
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new Criteria('uname', $myts->addSlashes(trim($_POST['user_uname']))));
+				$criteria->add(new icms_criteria_Item('uname', $myts->addSlashes(trim($_POST['user_uname']))));
 				break;
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new Criteria('uname', '%'.$myts->addSlashes(trim($_POST['user_uname'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('uname', '%'.$myts->addSlashes(trim($_POST['user_uname'])).'%', 'LIKE'));
 				break;
 		}
 	}
-	if ( !empty($_POST['user_name']) ) {
+	if (!empty($_POST['user_name'])) {
 		$match = (!empty($_POST['user_name_match'])) ? (int) ($_POST['user_name_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new Criteria('name', $myts->addSlashes(trim($_POST['user_name'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('name', $myts->addSlashes(trim($_POST['user_name'])).'%', 'LIKE'));
 				break;
 			case XOOPS_MATCH_END:
-				$criteria->add(new Criteria('name', '%'.$myts->addSlashes(trim($_POST['user_name'])), 'LIKE'));
+				$criteria->add(new icms_criteria_Item('name', '%'.$myts->addSlashes(trim($_POST['user_name'])), 'LIKE'));
 				break;
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new Criteria('name', $myts->addSlashes(trim($_POST['user_name']))));
+				$criteria->add(new icms_criteria_Item('name', $myts->addSlashes(trim($_POST['user_name']))));
 				break;
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new Criteria('name', '%'.$myts->addSlashes(trim($_POST['user_name'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('name', '%'.$myts->addSlashes(trim($_POST['user_name'])).'%', 'LIKE'));
 				break;
 		}
 	}
-	if ( !empty($_POST['user_login_name']) ) {
+	if (!empty($_POST['user_login_name'])) {
 		$match = (!empty($_POST['user_login_name_match'])) ? (int) ($_POST['user_login_name_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new Criteria('login_name', $myts->addSlashes(trim($_POST['user_login_name'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('login_name', $myts->addSlashes(trim($_POST['user_login_name'])).'%', 'LIKE'));
 				break;
 			case XOOPS_MATCH_END:
-				$criteria->add(new Criteria('login_name', '%'.$myts->addSlashes(trim($_POST['user_login_name'])), 'LIKE'));
+				$criteria->add(new icms_criteria_Item('login_name', '%'.$myts->addSlashes(trim($_POST['user_login_name'])), 'LIKE'));
 				break;
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new Criteria('login_name', $myts->addSlashes(trim($_POST['user_login_name']))));
+				$criteria->add(new icms_criteria_Item('login_name', $myts->addSlashes(trim($_POST['user_login_name']))));
 				break;
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new Criteria('login_name', '%'.$myts->addSlashes(trim($_POST['user_login_name'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('login_name', '%'.$myts->addSlashes(trim($_POST['user_login_name'])).'%', 'LIKE'));
 				break;
 		}
 	}
-	if ( !empty($_POST['user_email']) ) {
+	if (!empty($_POST['user_email'])) {
 		$match = (!empty($_POST['user_email_match'])) ? (int) ($_POST['user_email_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new Criteria('email', $myts->addSlashes(trim($_POST['user_email'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('email', $myts->addSlashes(trim($_POST['user_email'])).'%', 'LIKE'));
 				break;
 			case XOOPS_MATCH_END:
-				$criteria->add(new Criteria('email', '%'.$myts->addSlashes(trim($_POST['user_email'])), 'LIKE'));
+				$criteria->add(new icms_criteria_Item('email', '%'.$myts->addSlashes(trim($_POST['user_email'])), 'LIKE'));
 				break;
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new Criteria('email', $myts->addSlashes(trim($_POST['user_email']))));
+				$criteria->add(new icms_criteria_Item('email', $myts->addSlashes(trim($_POST['user_email']))));
 				break;
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new Criteria('email', '%'.$myts->addSlashes(trim($_POST['user_email'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('email', '%'.$myts->addSlashes(trim($_POST['user_email'])).'%', 'LIKE'));
 				break;
 		}
 	}
-	if ( !empty($_POST['user_url']) ) {
+	if (!empty($_POST['user_url'])) {
 		$url = formatURL(trim($_POST['user_url']));
-		$criteria->add(new Criteria('url', $url.'%', 'LIKE'));
+		$criteria->add(new icms_criteria_Item('url', $url.'%', 'LIKE'));
 	}
-	if ( !empty($_POST['user_icq']) ) {
+	if (!empty($_POST['user_icq'])) {
 		$match = (!empty($_POST['user_icq_match'])) ? (int) ($_POST['user_icq_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new Criteria('user_icq', $myts->addSlashes(trim($_POST['user_icq'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('user_icq', $myts->addSlashes(trim($_POST['user_icq'])).'%', 'LIKE'));
 				break;
 			case XOOPS_MATCH_END:
-				$criteria->add(new Criteria('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq'])), 'LIKE'));
+				$criteria->add(new icms_criteria_Item('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq'])), 'LIKE'));
 				break;
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new Criteria('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq']))));
+				$criteria->add(new icms_criteria_Item('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq']))));
 				break;
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new Criteria('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('user_icq', '%'.$myts->addSlashes(trim($_POST['user_icq'])).'%', 'LIKE'));
 				break;
 		}
 	}
-	if ( !empty($_POST['user_aim']) ) {
+	if (!empty($_POST['user_aim'])) {
 		$match = (!empty($_POST['user_aim_match'])) ? (int) ($_POST['user_aim_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new Criteria('user_aim', $myts->addSlashes(trim($_POST['user_aim'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('user_aim', $myts->addSlashes(trim($_POST['user_aim'])).'%', 'LIKE'));
 				break;
 			case XOOPS_MATCH_END:
-				$criteria->add(new Criteria('user_aim', '%'.$myts->addSlashes(trim($_POST['user_aim'])), 'LIKE'));
+				$criteria->add(new icms_criteria_Item('user_aim', '%'.$myts->addSlashes(trim($_POST['user_aim'])), 'LIKE'));
 				break;
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new Criteria('user_aim', $myts->addSlashes(trim($_POST['user_aim']))));
+				$criteria->add(new icms_criteria_Item('user_aim', $myts->addSlashes(trim($_POST['user_aim']))));
 				break;
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new Criteria('user_aim', '%'.$myts->addSlashes(trim($_POST['user_aim'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('user_aim', '%'.$myts->addSlashes(trim($_POST['user_aim'])).'%', 'LIKE'));
 				break;
 		}
 	}
-	if ( !empty($_POST['user_yim']) ) {
+	if (!empty($_POST['user_yim'])) {
 		$match = (!empty($_POST['user_yim_match'])) ? (int) ($_POST['user_yim_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new Criteria('user_yim', $myts->addSlashes(trim($_POST['user_yim'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('user_yim', $myts->addSlashes(trim($_POST['user_yim'])).'%', 'LIKE'));
 				break;
 			case XOOPS_MATCH_END:
-				$criteria->add(new Criteria('user_yim', '%'.$myts->addSlashes(trim($_POST['user_yim'])), 'LIKE'));
+				$criteria->add(new icms_criteria_Item('user_yim', '%'.$myts->addSlashes(trim($_POST['user_yim'])), 'LIKE'));
 				break;
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new Criteria('user_yim', $myts->addSlashes(trim($_POST['user_yim']))));
+				$criteria->add(new icms_criteria_Item('user_yim', $myts->addSlashes(trim($_POST['user_yim']))));
 				break;
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new Criteria('user_yim', '%'.$myts->addSlashes(trim($_POST['user_yim'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('user_yim', '%'.$myts->addSlashes(trim($_POST['user_yim'])).'%', 'LIKE'));
 				break;
 		}
 	}
-	if ( !empty($_POST['user_msnm']) ) {
+	if (!empty($_POST['user_msnm'])) {
 		$match = (!empty($_POST['user_msnm_match'])) ? (int) ($_POST['user_msnm_match']) : XOOPS_MATCH_START;
 		switch ($match) {
 			case XOOPS_MATCH_START:
-				$criteria->add(new Criteria('user_msnm', $myts->addSlashes(trim($_POST['user_msnm'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('user_msnm', $myts->addSlashes(trim($_POST['user_msnm'])).'%', 'LIKE'));
 				break;
 			case XOOPS_MATCH_END:
-				$criteria->add(new Criteria('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm'])), 'LIKE'));
+				$criteria->add(new icms_criteria_Item('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm'])), 'LIKE'));
 				break;
 			case XOOPS_MATCH_EQUAL:
-				$criteria->add(new Criteria('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm']))));
+				$criteria->add(new icms_criteria_Item('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm']))));
 				break;
 			case XOOPS_MATCH_CONTAIN:
-				$criteria->add(new Criteria('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm'])).'%', 'LIKE'));
+				$criteria->add(new icms_criteria_Item('user_msnm', '%'.$myts->addSlashes(trim($_POST['user_msnm'])).'%', 'LIKE'));
 				break;
 		}
 	}
-	if ( !empty($_POST['user_from']) ) {
-		$criteria->add(new Criteria('user_from', '%'.$myts->addSlashes(trim($_POST['user_from'])).'%', 'LIKE'));
+	if (!empty($_POST['user_from'])) {
+		$criteria->add(new icms_criteria_Item('user_from', '%'.$myts->addSlashes(trim($_POST['user_from'])).'%', 'LIKE'));
 	}
-	if ( !empty($_POST['user_intrest']) ) {
-		$criteria->add(new Criteria('user_intrest', '%'.$myts->addSlashes(trim($_POST['user_intrest'])).'%', 'LIKE'));
+	if (!empty($_POST['user_intrest'])) {
+		$criteria->add(new icms_criteria_Item('user_intrest', '%'.$myts->addSlashes(trim($_POST['user_intrest'])).'%', 'LIKE'));
 	}
-	if ( !empty($_POST['user_occ']) ) {
-		$criteria->add(new Criteria('user_occ', '%'.$myts->addSlashes(trim($_POST['user_occ'])).'%', 'LIKE'));
+	if (!empty($_POST['user_occ'])) {
+		$criteria->add(new icms_criteria_Item('user_occ', '%'.$myts->addSlashes(trim($_POST['user_occ'])).'%', 'LIKE'));
 	}
 
-	if ( !empty($_POST['user_lastlog_more']) && is_numeric($_POST['user_lastlog_more']) ) {
+	if (!empty($_POST['user_lastlog_more']) && is_numeric($_POST['user_lastlog_more'])) {
 		$f_user_lastlog_more = (int) (trim($_POST['user_lastlog_more']));
 		$time = time() - (60 * 60 * 24 * $f_user_lastlog_more);
-		if ( $time > 0 ) {
-			$criteria->add(new Criteria('last_login', $time, '<'));
+		if ($time > 0) {
+			$criteria->add(new icms_criteria_Item('last_login', $time, '<'));
 		}
 	}
-	if ( !empty($_POST['user_lastlog_less']) && is_numeric($_POST['user_lastlog_less']) ) {
+	if (!empty($_POST['user_lastlog_less']) && is_numeric($_POST['user_lastlog_less'])) {
 		$f_user_lastlog_less = (int) (trim($_POST['user_lastlog_less']));
 		$time = time() - (60 * 60 * 24 * $f_user_lastlog_less);
-		if ( $time > 0 ) {
-			$criteria->add(new Criteria('last_login', $time, '>'));
+		if ($time > 0) {
+			$criteria->add(new icms_criteria_Item('last_login', $time, '>'));
 		}
 	}
-	if ( !empty($_POST['user_reg_more']) && is_numeric($_POST['user_reg_more']) ) {
+	if (!empty($_POST['user_reg_more']) && is_numeric($_POST['user_reg_more'])) {
 		$f_user_reg_more = (int) (trim($_POST['user_reg_more']));
 		$time = time() - (60 * 60 * 24 * $f_user_reg_more);
-		if ( $time > 0 ) {
-			$criteria->add(new Criteria('user_regdate', $time, '<'));
+		if ($time > 0) {
+			$criteria->add(new icms_criteria_Item('user_regdate', $time, '<'));
 		}
 	}
-	if ( !empty($_POST['user_reg_less']) && is_numeric($_POST['user_reg_less']) ) {
+	if (!empty($_POST['user_reg_less']) && is_numeric($_POST['user_reg_less'])) {
 		$f_user_reg_less = (int) ($_POST['user_reg_less']);
 		$time = time() - (60 * 60 * 24 * $f_user_reg_less);
-		if ( $time > 0 ) {
-			$criteria->add(new Criteria('user_regdate', $time, '>'));
+		if ($time > 0) {
+			$criteria->add(new icms_criteria_Item('user_regdate', $time, '>'));
 		}
 	}
-	if ( !empty($_POST['user_posts_more']) && is_numeric($_POST['user_posts_more']) ) {
-		$criteria->add(new Criteria('posts', (int) ($_POST['user_posts_more']), '>'));
+	if (!empty($_POST['user_posts_more']) && is_numeric($_POST['user_posts_more'])) {
+		$criteria->add(new icms_criteria_Item('posts', (int) ($_POST['user_posts_more']), '>'));
 	}
-	if ( !empty($_POST['user_posts_less']) && is_numeric($_POST['user_posts_less']) ) {
-		$criteria->add(new Criteria('posts', (int) ($_POST['user_posts_less']), '<'));
+	if (!empty($_POST['user_posts_less']) && is_numeric($_POST['user_posts_less'])) {
+		$criteria->add(new icms_criteria_Item('posts', (int) ($_POST['user_posts_less']), '<'));
 	}
-	if ( isset($_POST['user_mailok']) ) {
-		if ( $_POST['user_mailok'] == "mailng" ) {
-			$criteria->add(new Criteria('user_mailok', 0));
-		} elseif ( $_POST['user_mailok'] == "mailok" ) {
-			$criteria->add(new Criteria('user_mailok', 1));
+	if (isset($_POST['user_mailok'])) {
+		if ($_POST['user_mailok'] == "mailng") {
+			$criteria->add(new icms_criteria_Item('user_mailok', 0));
+		} elseif ($_POST['user_mailok'] == "mailok") {
+			$criteria->add(new icms_criteria_Item('user_mailok', 1));
 		} else {
-			$criteria->add(new Criteria('user_mailok', 0, '>='));
+			$criteria->add(new icms_criteria_Item('user_mailok', 0, '>='));
 		}
 	}
-	if ( isset($_POST['user_type']) ) {
-		if ( $_POST['user_type'] == "inactv" ) {
-			$criteria->add(new Criteria('level', 0, '='));
-		} elseif ( $_POST['user_type'] == "actv" ) {
-			$criteria->add(new Criteria('level', 0, '>'));
+	if (isset($_POST['user_type'])) {
+		if ($_POST['user_type'] == "inactv") {
+			$criteria->add(new icms_criteria_Item('level', 0, '='));
+		} elseif ($_POST['user_type'] == "actv") {
+			$criteria->add(new icms_criteria_Item('level', 0, '>'));
 		} else {
-			$criteria->add(new Criteria('level', 0, '>='));
+			$criteria->add(new icms_criteria_Item('level', 0, '>='));
 		}
 	}
 	$groups = empty($_POST['selgroups']) ? array() : array_map( 'intval', $_POST['selgroups']);
 	$validsort = array("uname", "login_name", "email", "last_login", "user_regdate", "posts");
 	$sort = (!in_array($_POST['user_sort'], $validsort)) ? "uname" : $_POST['user_sort'];
 	$order = "ASC";
-	if ( isset($_POST['user_order']) && $_POST['user_order'] == "DESC") {
+	if (isset($_POST['user_order']) && $_POST['user_order'] == "DESC") {
 		$order = "DESC";
 	}
 	$limit = (!empty($_POST['limit'])) ? (int) ($_POST['limit']) : 50;
-	if ( $limit == 0 || $limit > 50 ) {
+	if ($limit == 0 || $limit > 50) {
 		$limit = 50;
 	}
 	$start = (!empty($_POST['start'])) ? (int) ($_POST['start']) : 0;
 	$member_handler =& xoops_gethandler('member');
 	$total = $member_handler->getUserCountByGroupLink($groups, $criteria);
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/findusers/images/findusers_big.png)">'._AM_FINDUS.'</div><br />';
-	if ( $total == 0 ) {
+	if ($total == 0) {
 		echo "<h4>"._AM_NOFOUND,"</h4>";
-	} elseif ( $start < $total ) {
+	} elseif ($start < $total) {
 		echo sprintf(_AM_USERSFOUND, icms_conv_nr2local($total))."<br />";
 		echo "<form action='admin.php' method='post' name='memberslist' id='memberslist'><input type='hidden' name='op' value='delete_many' />
 		<table width='100%' border='0' cellspacing='1' cellpadding='4' class='outer'><tr><th align='center'><input type='checkbox' name='memberslist_checkall' id='memberslist_checkall' onclick='xoopsCheckAll(\"memberslist\", \"memberslist_checkall\");' /></th><th align='center'>"._AM_AVATAR."</th><th align='center'>"._AM_UNAME."</th><th align='center'>"._AM_LOGINNAME."</th><th align='center'>"._AM_REALNAME."</th><th align='center'>"._AM_EMAIL."</th><th align='center'>"._AM_PM."</th><th align='center'>"._AM_URL."</th><th align='center'>"._AM_REGDATE."</th><th align='center'>"._AM_LASTLOGIN."</th><th align='center'>"._AM_POSTS."</th><th align='center'>&nbsp;</th></tr>";
@@ -385,13 +385,13 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 			echo "' /></a></td><td align='center'><a href='javascript:openWithSelfMain(\"".XOOPS_URL."/pmlite.php?send2=1&amp;to_userid=".$foundusers[$j]->getVar("uid")."\",\"pmlite\",800,680);'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/pm.gif' border='0' alt='";
 			printf(_SENDPMTO,$foundusers[$j]->getVar("uname", "E"));
 			echo "' /></a></td><td align='center'>";
-			if ( $foundusers[$j]->getVar("url","E") != "" ) {
+			if ($foundusers[$j]->getVar("url","E") != "") {
 				echo "<a href='".$foundusers[$j]->getVar("url","E")."' target='_blank'><img src='".XOOPS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/www.gif' border='0' alt='"._VISITWEBSITE."' /></a>";
 			} else {
 				echo "&nbsp;";
 			}
 			echo "</td><td align='center'>".formatTimeStamp($foundusers[$j]->getVar("user_regdate"),"s")."</td><td align='center'>";
-			if ( $foundusers[$j]->getVar("last_login") != 0 ) {
+			if ($foundusers[$j]->getVar("last_login") != 0) {
 				echo formatTimeStamp($foundusers[$j]->getVar("last_login"),"m");
 			} else {
 				echo "&nbsp;";
@@ -401,23 +401,23 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 		}
 		echo "<tr class='foot'><td><select name='fct'><option value='users'>"._DELETE."</option><option value='mailusers'>"._AM_SENDMAIL."</option>";
 		$group = !empty($_POST['group']) ? (int) ($_POST['group']) : 0;
-		if ( $group > 0 ) {
+		if ($group > 0) {
 			$member_handler =& xoops_gethandler('member');
 			$add2group =& $member_handler->getGroup($group);
 			echo "<option value='groups' selected='selected'>".sprintf(_AM_ADD2GROUP, $add2group->getVar('name'))."</option>";
 		}
 		echo "</select>&nbsp;";
-		if ( $group > 0 ) {
+		if ($group > 0) {
 			echo "<input type='hidden' name='groupid' value='".$group."' />";
 		}
 		echo "</td><td colspan='12'>".$GLOBALS['xoopsSecurity']->getTokenHTML()."<input type='submit' value='"._SUBMIT."' /></td></tr></table></form>\n";
 		$totalpages = ceil($total / $limit);
-		if ( $totalpages > 1 ) {
+		if ($totalpages > 1) {
 			$hiddenform = "<form name='findnext' action='admin.php' method='post'>";
 			$skip_vars = array('selgroups');
-			foreach ( $_POST as $k => $v ) {
+			foreach ( $_POST as $k => $v) {
 				if ($k == 'selgroups') {
-					foreach( $_POST['selgroups'] as $_group){
+					foreach ($_POST['selgroups'] as $_group) {
 						$hiddenform .= "<input type='hidden' name='selgroups[]' value='".$_group."' />\n";
 					}
 				} elseif ($k == 'XOOPS_TOKEN_REQUEST') {
@@ -434,27 +434,27 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 				$hiddenform .= "<input type='hidden' name='start' value='".$start."' />\n";
 			}
 			$prev = $start - $limit;
-			if ( $start - $limit >= 0 ) {
+			if ($start - $limit >= 0) {
 				$hiddenform .= "<a href='#0' onclick='javascript:document.findnext.start.value=".$prev.";document.findnext.submit();'>"._AM_PREVIOUS."</a>&nbsp;\n";
 			}
 			$counter = 1;
 			$currentpage = ($start+$limit) / $limit;
-			while ( $counter <= $totalpages ) {
-				if ( $counter == $currentpage ) {
+			while ($counter <= $totalpages) {
+				if ($counter == $currentpage) {
 					$hiddenform .= "<b>".$counter."</b> ";
-				} elseif ( ($counter > $currentpage-4 && $counter < $currentpage+4) || $counter == 1 || $counter == $totalpages ) {
-					if ( $counter == $totalpages && $currentpage < $totalpages-4 ) {
+				} elseif (($counter > $currentpage-4 && $counter < $currentpage+4) || $counter == 1 || $counter == $totalpages) {
+					if ($counter == $totalpages && $currentpage < $totalpages-4) {
 						$hiddenform .= "... ";
 					}
 					$hiddenform .= "<a href='#".$counter."' onclick='javascript:document.findnext.start.value=".($counter-1)*$limit.";document.findnext.submit();'>".$counter."</a> ";
-					if ( $counter == 1 && $currentpage > 5 ) {
+					if ($counter == 1 && $currentpage > 5) {
 						$hiddenform .= "... ";
 					}
 				}
 				$counter++;
 			}
 			$next = $start+$limit;
-			if ( $total > $next ) {
+			if ($total > $next) {
 				$hiddenform .= "&nbsp;<a href='#".$total."' onclick='javascript:document.findnext.start.value=".$next.";document.findnext.submit();'>"._AM_NEXT."</a>\n";
 			}
 			$hiddenform .= "</form>";

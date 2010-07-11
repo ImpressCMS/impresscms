@@ -12,8 +12,8 @@
 
 /**
  * Admin Warnings Block
- * 
- * @copyright The ImpressCMS Project <http://www.impresscms.org> 
+ *
+ * @copyright The ImpressCMS Project <http://www.impresscms.org>
  * @license GNU GPL v2
  *
  * @since ImpressCMS 1.2
@@ -94,13 +94,13 @@ function b_system_admin_cp_show(){
 
 	// Loading System Configuration Links
 	if( is_object( $icmsUser ) )
-		$groups = $icmsUser->getGroups();	
+		$groups = $icmsUser->getGroups();
 	else
 		$groups = array();
 	$all_ok = false;
 	if(!in_array(XOOPS_GROUP_ADMIN, $groups))
 	{
-		$sysperm_handler =& xoops_gethandler('groupperm');
+		$sysperm_handler =& xoops_gethandler('member_groupperm');
 		$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
 	}
 	else {$all_ok = true;}
@@ -109,7 +109,7 @@ function b_system_admin_cp_show(){
 	require_once ICMS_ROOT_PATH.'/modules/system/constants.php';
 
 	$admin_dir = ICMS_ROOT_PATH.'/modules/system/admin';
-	$dirlist = XoopsLists::getDirListAsArray($admin_dir);
+	$dirlist = IcmsLists::getDirListAsArray($admin_dir);
 
 	icms_loadLanguageFile('system', 'admin');
 	asort($dirlist);
@@ -148,10 +148,10 @@ function b_system_admin_modules_show(){
 	global $icmsUser;
 	$block['mods'] = array();
 	$module_handler = & xoops_gethandler ( 'module' );
-	$moduleperm_handler = & xoops_gethandler ( 'groupperm' );
-	$criteria = new CriteriaCompo ( );
-	$criteria->add ( new Criteria ( 'hasadmin', 1 ) );
-	$criteria->add ( new Criteria ( 'isactive', 1 ) );
+	$moduleperm_handler = & xoops_gethandler('member_groupperm');
+	$criteria = new icms_criteria_Compo ( );
+	$criteria->add ( new icms_criteria_Item ( 'hasadmin', 1 ) );
+	$criteria->add ( new icms_criteria_Item ( 'isactive', 1 ) );
 	$criteria->setSort ( 'mid' );
 	$modules = $module_handler->getObjects ( $criteria );
 	foreach ( $modules as $module ) {
@@ -209,4 +209,66 @@ function b_system_admin_modules_show(){
 	if(count($block['mods'] > 0))
 	return $block;
 }
-?>
+
+/**
+ * Admin Control Panel Block
+ *
+ * @since ImpressCMS 1.2
+ *
+ * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org> <gpilla@nubee.com.ar>
+ *
+ * @return array
+ *
+ * @todo This code is the copy of the one wich was in the admin.php, it should be improved.
+ */
+function b_system_admin_cp_new_show() {
+	global $icmsTpl, $xoopsConfig, $icmsUser;
+
+	$block['lang_cp']= _CPHOME;
+
+	// Loading System Configuration Links
+	if (is_object($icmsUser)) {
+		$groups = $icmsUser->getGroups();
+	} else {
+		$groups = array();
+	}
+	$all_ok = false;
+	if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
+		$sysperm_handler =& xoops_gethandler('member_groupperm');
+		$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
+	} else {
+		$all_ok = true;
+	}
+
+	require_once ICMS_ROOT_PATH . '/class/xoopslists.php';
+	require_once ICMS_ROOT_PATH . '/modules/system/constants.php';
+
+	$admin_dir = ICMS_ROOT_PATH . '/modules/system/admin';
+	$dirlist = IcmsLists::getDirListAsArray($admin_dir);
+
+	icms_loadLanguageFile('system', 'admin');
+	asort($dirlist);
+	$block = array();
+	foreach ($dirlist as $file) {
+		$mod_version_file = 'xoops_version.php';
+		if (file_exists($admin_dir . '/' . $file . '/icms_version.php')) {
+			$mod_version_file = 'icms_version.php';
+		}
+		include $admin_dir . '/' . $file . '/' . $mod_version_file;
+		if ($modversion['hasAdmin']) {
+			$category = isset($modversion['category']) ? (int) ($modversion['category']) : 0;
+			if (false != $all_ok || in_array($modversion['category'], $ok_syscats)) {
+				$block[$modversion['group']][] = array(
+					'title' => $modversion['name'],
+					'link' => ICMS_URL . '/modules/system/admin.php?fct=' . $file,
+					'image' => ICMS_URL . '/modules/system/admin/' . $file . '/images/' . $file . '_big.png',
+				);
+			}
+		}
+		unset($modversion);
+	}
+	if (count($block) > 0) {
+		ksort($block);
+		return $block;
+	}
+}

@@ -21,7 +21,7 @@ require_once ICMS_ROOT_PATH . '/class/logger.php';
 /**
  * Backward compatibility code, do not use this class directly
  */
-class XoopsErrorHandler extends XoopsLogger {
+class XoopsErrorHandler extends icms_core_Logger {
 	/**
 	 * Activate the error handler
 	 * @param   string  $showErrors

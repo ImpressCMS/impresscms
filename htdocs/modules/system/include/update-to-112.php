@@ -19,12 +19,12 @@
 
 	$newDbVersion = 1;
 
-	if ( $dbVersion <= $newDbVersion) {
+	if ($dbVersion <= $newDbVersion) {
 
 		// Now, first, let's increment the conf_order of user option starting at new_user_notify
 		$table = new IcmsDatabasetable ( 'config' );
-		$criteria = new CriteriaCompo ( );
-		$criteria->add ( new Criteria ( 'conf_order', 3, '>' ) );
+		$criteria = new icms_criteria_Compo ( );
+		$criteria->add ( new icms_criteria_Item ( 'conf_order', 3, '>' ) );
 		$table->addUpdateAll ( 'conf_order', 'conf_order + 2', $criteria, true );
 		$icmsDatabaseUpdater->updateTable ( $table );
 		unset ( $table );
@@ -144,14 +144,14 @@
 	/**
 	 * Changing $icmsConfigPersona['rss_local'] from www.impresscms.org to community.impresscms.org
 	 */
-	if( !$abortUpdate) $newDbVersion = 2;
+	if (!$abortUpdate) $newDbVersion = 2;
 
 	if ($dbVersion < $newDbVersion) {
 		$configitem_handler = xoops_getHandler ( 'configitem' );
 		// fetch the rss_local configitem
-		$criteria = new CriteriaCompo ( );
-		$criteria->add ( new Criteria ( 'conf_name', 'rss_local' ) );
-		$criteria->add ( new Criteria ( 'conf_catid', ICMS_CONF_PERSONA ) );
+		$criteria = new icms_criteria_Compo ( );
+		$criteria->add ( new icms_criteria_Item ( 'conf_name', 'rss_local' ) );
+		$criteria->add ( new icms_criteria_Item ( 'conf_catid', ICMS_CONF_PERSONA ) );
 		$configitemsObj = $configitem_handler->getObjects ( $criteria );
 		if (isset ( $configitemsObj [0] ) && $configitemsObj [0]->getVar ( 'conf_value', 'n' ) == 'http://www.impresscms.org/modules/smartsection/backend.php') {
 			$configitemsObj [0]->setVar ( 'conf_value', 'http://community.impresscms.org/modules/smartsection/backend.php' );
@@ -167,7 +167,7 @@
 	 * but it may be a problem for people following each of our release
 	 * Bug item #2098379 is about this
 	 */
-	if( !$abortUpdate) $newDbVersion = 3;
+	if (!$abortUpdate) $newDbVersion = 3;
 
 	if ($dbVersion < $newDbVersion) {
 		$table = new IcmsDatabasetable ( 'users' );
@@ -201,7 +201,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 4;
+	if (!$abortUpdate) $newDbVersion = 4;
 
 	if ($dbVersion < $newDbVersion) {
 		/* this syntax is incorrect and does not alter the table, as desired
@@ -218,7 +218,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 5;
+	if (!$abortUpdate) $newDbVersion = 5;
 
 	if ($dbVersion < $newDbVersion) {
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_PERSONA, 'use_jsjalali', '_MD_AM_JALALICAL', '0', '_MD_AM_JALALICALDSC', 'yesno', 'int', 23 );
@@ -228,7 +228,7 @@
 	}
 
 	//Some users had used a copy of working branch and they got multiple option, this is to remove all those re-created options and make a single option
-	if( !$abortUpdate) $newDbVersion = 6;
+	if (!$abortUpdate) $newDbVersion = 6;
 
 	if ($dbVersion < $newDbVersion) {
 		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE conf_name='use_jsjalali'" );
@@ -238,14 +238,14 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 7;
+	if (!$abortUpdate) $newDbVersion = 7;
 
 	if ($dbVersion < $newDbVersion) {
 		$configitem_handler = xoops_getHandler ( 'configitem' );
 		// fetch the rss_local configitem
-		$criteria = new CriteriaCompo ( );
-		$criteria->add ( new Criteria ( 'conf_name', 'google_analytics' ) );
-		$criteria->add ( new Criteria ( 'conf_catid', ICMS_CONF_METAFOOTER ) );
+		$criteria = new icms_criteria_Compo ( );
+		$criteria->add ( new icms_criteria_Item ( 'conf_name', 'google_analytics' ) );
+		$criteria->add ( new icms_criteria_Item ( 'conf_catid', ICMS_CONF_METAFOOTER ) );
 		$configitemsObj = $configitem_handler->getObjects ( $criteria );
 		if (isset ( $configitemsObj [0] ) && $configitemsObj [0]->getVar ( 'conf_formtype', 'n' ) == 'textarea') {
 			$configitemsObj [0]->setVar ( 'conf_formtype', 'textbox' );
@@ -256,7 +256,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 8;
+	if (!$abortUpdate) $newDbVersion = 8;
 
 	if ($dbVersion < $newDbVersion) {
 
@@ -270,7 +270,7 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 9;
+	if (!$abortUpdate) $newDbVersion = 9;
 
 	if ($dbVersion < $newDbVersion) {
 		$table = new IcmsDatabasetable ( 'users' );
@@ -281,10 +281,10 @@
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
 	}
 
-	if( !$abortUpdate) $newDbVersion = 10;
+	if (!$abortUpdate) $newDbVersion = 10;
 	if ($dbVersion < $newDbVersion) {
 
-		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_social_bookmarks"' ) == FALSE ) {
+		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_social_bookmarks"' ) == FALSE) {
 			$sql = "SELECT bid FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_social_bookmarks'";
 			$result = $icmsDB->query ( $sql );
 			list ( $new_block_id ) = $icmsDB->FetchRow ( $result );
@@ -292,7 +292,7 @@
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
 		}
 
-		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_show"' ) == FALSE ) {
+		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_show"' ) == FALSE) {
 			$sql = "SELECT bid FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_content_show'";
 			$result = $icmsDB->query ( $sql );
 			list ( $new_block_id ) = $icmsDB->FetchRow ( $result );
@@ -300,7 +300,7 @@
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
 		}
 
-		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_menu_show"' ) == FALSE ) {
+		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_menu_show"' ) == FALSE) {
 			$sql = "SELECT bid FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_content_menu_show'";
 			$result = $icmsDB->query ( $sql );
 			list ( $new_block_id ) = $icmsDB->FetchRow ( $result );
@@ -308,7 +308,7 @@
 			$icmsDB->queryF ( " INSERT INTO " . $icmsDB->prefix ( "group_permission" ) . " VALUES ('', 3, " . $new_block_id . ", 1, 'block_read');" );
 		}
 
-		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_relmenu_show"' ) == FALSE ) {
+		if (getDbValue ( $icmsDB, 'newblocks', 'show_func', 'show_func="b_content_relmenu_show"' ) == FALSE) {
 			$sql = "SELECT bid FROM `" . $icmsDB->prefix ( 'newblocks' ) . "` WHERE show_func='b_content_relmenu_show'";
 			$result = $icmsDB->query ( $sql );
 			list ( $new_block_id ) = $icmsDB->FetchRow ( $result );
@@ -329,7 +329,7 @@
 
 	}
 
-	if( !$abortUpdate) $newDbVersion = 11;
+	if (!$abortUpdate) $newDbVersion = 11;
 
 	if ($dbVersion < $newDbVersion) {
 		$icmsDatabaseUpdater->db->queryF ( "UPDATE `" . $icmsDatabaseUpdater->db->prefix ( 'config' ) . "` SET conf_formtype = 'textsarea', conf_valuetype = 'array' WHERE conf_name = 'bad_unames'" );

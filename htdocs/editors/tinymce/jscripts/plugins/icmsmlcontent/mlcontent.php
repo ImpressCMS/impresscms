@@ -27,7 +27,7 @@ if (is_object($icmsUser) && $easiestml_exist) {
     
             $lang_options = '' ;
     
-            foreach( $easiestml_langs as $l => $lang )
+            foreach ($easiestml_langs as $l => $lang )
                 $lang_options .= '<option value="'.$lang.'">'.$langnames[$l].'</option>' ;
 
             $javascript = "onChange=\"document.forms[0].langfield.value = this.value;\"";

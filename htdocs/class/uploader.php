@@ -183,7 +183,7 @@ class IcmsMediaUploader {
 		 * @param   int     $maxHeight
 		 **/
 		function IcmsMediaUploader($uploadDir, $allowedMimeTypes, $maxFileSize = 0, $maxWidth = null, $maxHeight = null) {
-			@ $this->extensionToMime = include ICMS_ROOT_PATH . '/class/mimetypes.inc.php' ;
+			$this->extensionToMime = icms_Utils::mimetypes() ;
 			if (!is_array($this->extensionToMime)) {
 				$this->extensionToMime = array ();
 				return false;

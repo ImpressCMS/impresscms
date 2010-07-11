@@ -465,7 +465,7 @@ class XoopsMailer
 	function setToGroups($group)
 	{
 		if ( !is_array($group) ) {
-			if ( strtolower(get_class($group)) == "xoopsgroup" ) {
+			if ( strtolower(get_class($group)) == "icms_member_group_Object" ) {
 				$member_handler =& xoops_gethandler('member');
 				$this->setToUsers($member_handler->getUsersByGroup($group->getVar('groupid'), true));
 			}

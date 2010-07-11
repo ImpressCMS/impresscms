@@ -18,21 +18,21 @@
  *
  */
 require_once 'common.inc.php';
-if ( !defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
 imcms_install_chmod("../mainfile.php", 0444);
-if(defined('XOOPS_TRUST_PATH') && XOOPS_TRUST_PATH != ''){
+if (defined('XOOPS_TRUST_PATH') && XOOPS_TRUST_PATH != '') {
 	imcms_install_chmod(XOOPS_TRUST_PATH, 0777);
 	imcms_install_chmod(XOOPS_ROOT_PATH.'/modules', 0777);
 	imcms_install_chmod("/modules/protector/root/modules/protector", 0777);
 	imcms_install_chmod("/modules/protector/trust_path/modules", 0777);
-	if(!is_dir(XOOPS_ROOT_PATH.'/modules/protector')){
+	if (!is_dir(XOOPS_ROOT_PATH.'/modules/protector')) {
 		imcms_copyr(XOOPS_ROOT_PATH.'/install/modules/protector/root/modules/protector',XOOPS_ROOT_PATH.'/modules/protector');
 	}
-	if(!is_dir(XOOPS_TRUST_PATH.'/modules')){
+	if (!is_dir(XOOPS_TRUST_PATH.'/modules')) {
 		imcms_copyr(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules',XOOPS_TRUST_PATH.'/modules');
 	}
-	if(!is_dir(XOOPS_TRUST_PATH.'/modules/protector')){
+	if (!is_dir(XOOPS_TRUST_PATH.'/modules/protector')) {
 		imcms_copyr(XOOPS_ROOT_PATH.'/install/modules/protector/trust_path/modules/protector',XOOPS_TRUST_PATH.'/modules/protector');
 	}
 	imcms_install_chmod(XOOPS_ROOT_PATH.'/modules', 0755);
@@ -48,18 +48,18 @@ include_once "../mainfile.php";
 include_once './class/dbmanager.php';
 $dbm = new db_manager();
 
-if ( !$dbm->isConnectable() ) {
+if (!$dbm->isConnectable()) {
 	$wizard->redirectToPage( '-3' );
 	exit();
 }
 $process = '';
-if ( !$dbm->tableExists( 'users' ) ) {
+if (!$dbm->tableExists( 'users' )) {
 	$process = 'create';
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// If there's nothing to do: switch to next page
-	if ( empty( $process ) ) {
+	if (empty( $process )) {
 		$wizard->redirectToPage( '+1' );
 		exit();
 	}
@@ -72,7 +72,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
 ob_start();
 
-if ( $process == 'create' ) {
+if ($process == 'create') {
 	?>
 <p class="x2-note"><?php echo READY_CREATE_TABLES; ?></p>
 	<?php

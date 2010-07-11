@@ -106,7 +106,7 @@ if(isset($_REQUEST['timestamp'])) $css->set_cfg('timestamp',true);
     {
         var inputs =   new Array('sort_sel', 'sort_de', 'optimise_shorthands', 'merge_selectors', 'none');
         var inputs_v = new Array( true,       true,      true,                  true,              false);
-        for(var i = 0; i < inputs.length; i++)
+        for (var i = 0; i < inputs.length; i++)
         {
             if(document.getElementById('preserve_css').checked)  {
                 document.getElementById(inputs[i]).disabled = inputs_v[i];
@@ -318,10 +318,10 @@ if(isset($_REQUEST['timestamp'])) $css->set_cfg('timestamp',true);
         if(count($css->log) > 0): ?>
         <fieldset id="messages"><legend>Messages</legend>
 			<div><dl><?php
-			foreach($css->log as $line => $array)
+			foreach ($css->log as $line => $array)
 			{
 				echo '<dt>'.$line.'</dt>';
-				for($i = 0; $i < count($array); $i++)
+				for ($i = 0; $i < count($array); $i++)
 				{
 					echo '<dd class="'.$array[$i]['t'].'">'.$array[$i]['m'].'</dd>';
 				}

@@ -16,7 +16,7 @@ function b_waiting_wflinks()
 	// wflinks waiting
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("wflinks_links")." WHERE status=0");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/wflinks/admin/newlinks.php";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_WAITINGS ;
@@ -26,7 +26,7 @@ function b_waiting_wflinks()
 	// wflinks broken
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("wflinks_broken"));
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/wflinks/admin/brokenlink.php";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_BROKENS ;
@@ -36,7 +36,7 @@ function b_waiting_wflinks()
 	// wflinks modreq
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("wflinks_mod"));
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/wflinks/admin/modifications.php";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_MODREQS ;

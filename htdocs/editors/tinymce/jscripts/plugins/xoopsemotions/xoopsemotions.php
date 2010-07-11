@@ -29,7 +29,7 @@ echo '<tr class="head"><td>'._MSC_CODE.'</td><td>'._MSC_EMOTION.'</td><td>'._IMA
 if ($getsmiles = $xoopsDB->query("SELECT * FROM ".$xoopsDB->prefix("smiles")))
 	{
 	$rcolor = 'even';
-	while ( $smile = $xoopsDB->fetchArray($getsmiles) )
+	while ($smile = $xoopsDB->fetchArray($getsmiles) )
 		{
 		$html = "<tr class='$rcolor'>";
 		$html.= "<td>".$smile['code']."</td>";
@@ -39,9 +39,7 @@ if ($getsmiles = $xoopsDB->query("SELECT * FROM ".$xoopsDB->prefix("smiles")))
 		echo ($html);
 		$rcolor = ($rcolor == 'even') ? 'odd' : 'even';
 		}
-	}
-else
-	{
+	} else {
 	echo "Could not retrieve data from the database.";
 	}
 echo '</table><br />'._MSC_CLICKASMILIE.'<br />';

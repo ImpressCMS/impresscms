@@ -23,6 +23,5 @@ $modversion = array( 'name' => _MD_AM_BKPOSAD,
 	'image' => "blockspadmin.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=blockspadmin",
-	'category' => XOOPS_SYSTEM_BLOCKP );
-
-?>
+	'category' => XOOPS_SYSTEM_BLOCKP,
+	'group' => 'Layout');

@@ -30,7 +30,7 @@ $reg_form->addElement(new XoopsFormText(_US_NICKNAME, "uname", $uname_size, $una
 $login_name_size = $icmsConfigUser['maxuname'] < 75 ? $icmsConfigUser['maxuname'] : 75;
 $reg_form->addElement(new XoopsFormText(_US_LOGIN_NAME, "login_name", $login_name_size, $login_name_size, $myts->htmlSpecialChars($login_name)), true);
 $reg_form->addElement($email_tray);
-if($icmsConfigUser['pass_level']>20){
+if ($icmsConfigUser['pass_level']>20) {
 	icms_PasswordMeter();
 }
 $reg_form->addElement(new XoopsFormPassword(_US_PASSWORD, "pass", 10, 255, $myts->htmlSpecialChars($pass), false, ($icmsConfigUser['pass_level']?'password_adv':'')), true);
@@ -50,7 +50,7 @@ if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] 
 	$agree_chk->addOption(1, _US_IAGREE);
 	$eltname = $agree_chk->getName();
 	$eltmsg = str_replace('"', '\"', stripslashes( sprintf( _FORM_ENTER, _US_IAGREE ) ) );
-	$agree_chk->customValidationCode[] = "if ( myform.{$eltname}.checked == false ) { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
+	$agree_chk->customValidationCode[] = "if (myform.{$eltname}.checked == false) { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
 	$disc_tray->addElement($agree_chk, true);
 	$reg_form->addElement($disc_tray);
 }
@@ -60,7 +60,7 @@ $reg_form->addElement(new XoopsFormHidden("enc_type", (int) ($enc_type)));
 $reg_form->addElement(new XoopsFormHidden("actkey", $myts->htmlSpecialChars($actkey)));
 
 if ($icmsConfigUser['use_captcha'] == true) {
-	$reg_form->addElement(new IcmsFormCaptcha(_SECURITYIMAGE_GETCODE, "scode"), true);
+	$reg_form->addElement(new icms_form_elements_Captcha(_SECURITYIMAGE_GETCODE, "scode"), true);
 	$reg_form->addElement(new XoopsFormHidden("op", "finish"));
 } else {
 	$reg_form->addElement(new XoopsFormHidden("op", "newuser"));

@@ -16,7 +16,7 @@
  * @since 1.2
  *
  */
-class IcmsPreloadAdsense extends IcmsPreloadItem {
+class IcmsPreloadAdsense extends icms_preload_Item {
 	/**
 	 * Function to be triggered at the end of the core boot process
 	 *
@@ -27,7 +27,7 @@ class IcmsPreloadAdsense extends IcmsPreloadItem {
 	}
 
 	/**
-	 * Function to be triggered when entering in MyTextSanitizer::displayTarea() function
+	 * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
 	 *
 	 * The $array var is structured like this:
 	 * $array[0] = $text
@@ -37,7 +37,7 @@ class IcmsPreloadAdsense extends IcmsPreloadItem {
 	 * $array[4] = $image
 	 * $array[5] = $br
 	 *
-	 * @param array array containing parameters passed by MyTextSanitizer::displayTarea()
+	 * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
 	 *
 	 * @return	void
 	 */
@@ -46,7 +46,7 @@ class IcmsPreloadAdsense extends IcmsPreloadItem {
 	}
 
 	/**
-	 * Function to be triggered when entering in MyTextSanitizer::displayTarea() function
+	 * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
 	 *
 	 * The $array var is structured like this:
 	 * $array[0] = $text
@@ -56,7 +56,7 @@ class IcmsPreloadAdsense extends IcmsPreloadItem {
 	 * $array[4] = $image
 	 * $array[5] = $br
 	 *
-	 * @param array array containing parameters passed by MyTextSanitizer::displayTarea()
+	 * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
 	 *
 	 * @return	void
 	 */
@@ -73,7 +73,7 @@ class IcmsPreloadAdsense extends IcmsPreloadItem {
 		global $xoopsTpl, $icms_adsense_handler;
 		$adsenses_array = array();
 		if (is_object($xoopsTpl)) {
-			foreach($icms_adsense_handler->objects as $k=>$v) {
+			foreach ($icms_adsense_handler->objects as $k=>$v) {
 				$adsenses_array[$k] = $v->render();
 			}
 			$xoopsTpl->assign('icmsAdsenses', $adsenses_array);

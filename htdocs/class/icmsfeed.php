@@ -15,7 +15,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
 
-include_once ICMS_ROOT_PATH . '/class/template.php';
+//include_once ICMS_ROOT_PATH . '/class/template.php';
 
 class IcmsFeed {
 
@@ -71,7 +71,7 @@ class IcmsFeed {
 
 		//header ('Content-Type:text/xml; charset='._CHARSET);
 		$xoopsOption['template_main'] = "db:system_rss.html";
-		$tpl = new XoopsTpl();
+		$tpl = new icms_view_Tpl();
 
 		$tpl->assign('channel_title', $this->title);
 		$tpl->assign('channel_link', $this->url);

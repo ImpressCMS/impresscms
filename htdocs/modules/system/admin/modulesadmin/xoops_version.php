@@ -13,16 +13,17 @@
  * @version	$Id$
  */
 
-$modversion['name'] = _MD_AM_MDAD;
-$modversion['version'] = "";
-$modversion['description'] = "Modules Administration";
-$modversion['author'] = "Kazumi Ono<br />( http://www.mywebaddons.com/ )";
-$modversion['credits'] = "";
-$modversion['help'] = "modulesadmin.html";
-$modversion['license'] = "GPL see LICENSE";
-$modversion['official'] = 1;
-$modversion['image'] = "modulesadmin.gif";
-$modversion['hasAdmin'] = 1;
-$modversion['adminpath'] = "admin.php?fct=modulesadmin";
-$modversion['category'] = XOOPS_SYSTEM_MODULE;
-?>
+$modversion = array( 'name' => _MD_AM_MDAD,
+	'version' => "",
+	'description' => "Modules Administrationr",
+	'author' => "Kazumi Ono<br />( http://www.mywebaddons.com/ )",
+	'credits' => "",
+	'help' => "modulesadmin.html",
+	'license' => "GPL see LICENSE",
+	'official' => 1,
+	'image' => "modulesadmin.gif",
+	'hasAdmin' => 1,
+	'adminpath' => "admin.php?fct=modulesadmin",
+	'category' => XOOPS_SYSTEM_MODULE,
+	'group' => 'Content');
+

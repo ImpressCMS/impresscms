@@ -24,5 +24,6 @@ $modversion = array( 'name' => _MD_AM_TPLSETS,
 	'image' => "tplsets.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=tplsets",
-	'category' => XOOPS_SYSTEM_TPLSET );
+	'category' => XOOPS_SYSTEM_TPLSET,
+	'group' => 'Layout');
 ?>

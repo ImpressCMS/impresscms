@@ -19,7 +19,7 @@
  *
  */
 require_once 'common.inc.php';
-if ( !defined( 'XOOPS_INSTALL' ) )    exit();
+if (!defined( 'XOOPS_INSTALL' ) )    exit();
 
 $wizard->setPage( 'dbconnection' );
 $pageHasForm = true;
@@ -28,35 +28,35 @@ $pageHasHelp = true;
 $vars =& $_SESSION['settings'];
 
 // Load config values from mainfile.php constants if 1st invocation, or reload has been asked
-if ( !isset( $vars['DB_HOST'] ) || false !== @strpos( $_SERVER['HTTP_CACHE_CONTROL'], 'max-age=0' ) ) {
+if (!isset( $vars['DB_HOST'] ) || false !== @strpos( $_SERVER['HTTP_CACHE_CONTROL'], 'max-age=0' )) {
 	$keys = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS', 'DB_PCONNECT' );
-	foreach ( $keys as $k ) {
+	foreach ( $keys as $k) {
 		$vars[ $k ] = defined( "XOOPS_$k" ) ? constant( "XOOPS_$k" ) : '';
 	}
 	$vars['DB_PASS'] = '';
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$params = array( 'DB_TYPE', 'DB_HOST', 'DB_USER', 'DB_PASS' );
-	foreach ( $params as $name ) {
+	foreach ( $params as $name) {
 		$vars[$name] = $_POST[$name];
 	}
 	$vars['DB_PCONNECT'] = @$_POST['DB_PCONNECT'] ? 1 : 0;
 }
 
 $error = '';
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' && !empty( $vars['DB_HOST'] ) && !empty( $vars['DB_USER'] ) ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && !empty( $vars['DB_HOST'] ) && !empty( $vars['DB_USER'] )) {
 	$func_connect = empty( $vars['DB_PCONNECT'] ) ? "mysql_connect" : "mysql_pconnect";
-	if ( ! ( $link = @$func_connect( $vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true ) ) ) {
+	if (! ( $link = @$func_connect( $vars['DB_HOST'], $vars['DB_USER'], $vars['DB_PASS'], true ) )) {
 		$error = ERR_NO_DBCONNECTION;
 	}
-	if ( empty( $error ) ) {
+	if (empty( $error )) {
 		$wizard->redirectToPage( '+1' );
 		exit();
 	}
 }
 
-if ( @empty( $vars['DB_HOST'] ) ) {
+if (@empty( $vars['DB_HOST'] )) {
 	// Fill with default values
 	$vars = array_merge( $vars, array(
         'DB_TYPE'        => 'mysql',
@@ -68,13 +68,13 @@ if ( @empty( $vars['DB_HOST'] ) ) {
 }
 
 
-function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
+function xoFormField( $name, $value, $label, $help = '', $type='text') {
 	$label = htmlspecialchars( $label );
 	$name = htmlspecialchars( $name, ENT_QUOTES );
 	$value = htmlspecialchars( $value, ENT_QUOTES );
 
 	$field = "<label for='$name'>$label</label>\n";
-	if ( $help ) {
+	if ($help) {
 		$field .= '<div class="xoform-help">' . $help . "</div>\n";
 	}
 	$field .= "<div class='clear'>&nbsp;</div><input type='$type' name='$name' id='$name' value='$value' />";
@@ -85,7 +85,7 @@ function xoFormField( $name, $value, $label, $help = '', $type='text' ) {
 
 ob_start();
 ?>
-<?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
+<?php if (!empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
 <h3><?php echo LEGEND_CONNECTION; ?></h3>
 <div class="blokSQL">
 <div class="dbconn_line"><label> <?php echo LEGEND_DATABASE; ?><br />

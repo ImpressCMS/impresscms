@@ -35,19 +35,19 @@ if ($icmsConfigAuth['auth_openid'] == 1) {
 }
 $url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
 //  $avatar_select = new XoopsFormSelect("", "user_avatar", $avatar_value);
-//  $avatar_array = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
+//  $avatar_array = IcmsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
 //  $avatar_select->addOptionArray($avatar_array);
-//  $a_dirlist = XoopsLists::getDirListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
+//  $a_dirlist = IcmsLists::getDirListAsArray(XOOPS_ROOT_PATH."/images/avatar/");
 //  $a_dir_labels = array();
 //  $a_count = 0;
 //  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;start=".$a_count."','avatars',600,400);\">XOOPS</a>";
 //  $a_count = $a_count + count($avatar_array);
 //  $a_dir_labels[] = new XoopsFormLabel("", $a_dir_link);
 //  foreach ($a_dirlist as $a_dir) {
-//	  if ( $a_dir == "users" ) {
+//	  if ($a_dir == "users") {
 //		  continue;
 //	  }
-//	  $avatars_array = XoopsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/".$a_dir."/", $a_dir."/");
+//	  $avatars_array = IcmsLists::getImgListAsArray(XOOPS_ROOT_PATH."/images/avatar/".$a_dir."/", $a_dir."/");
 //	  $avatar_select->addOptionArray($avatars_array);
 //	  $a_dir_link = "<a href=\"javascript:openWithSelfMain('".XOOPS_URL."/misc.php?action=showpopups&amp;type=avatars&amp;subdir=".$a_dir."&amp;start=".$a_count."','avatars',600,400);\">".$a_dir."</a>";
 //	  $a_dir_labels[] = new XoopsFormLabel("", $a_dir_link);
@@ -55,7 +55,7 @@ $url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
 //  }
 //  if (!empty($uid_value)) {
 //	  $myavatar = avatarExists($uid_value);
-//	  if ( $myavatar != false ) {
+//	  if ($myavatar != false) {
 //		  $avatar_select->addOption($myavatar, _US_MYAVATAR);
 //	  }
 //  }
@@ -77,7 +77,7 @@ $location_text = new XoopsFormText(_AM_LOCATION, "user_from", 30, 100, $location
 $occupation_text = new XoopsFormText(_AM_OCCUPATION, "user_occ", 30, 100, $occ_value);
 $interest_text = new XoopsFormText(_AM_INTEREST, "user_intrest", 30, 150, $interest_value);
 $sig_tray = new XoopsFormElementTray(_AM_SIGNATURE, "<br />");
-if($icmsConfigUser['allow_htsig'] == 0) {$sig_tarea = new XoopsFormTextArea("", "user_sig", $sig_value);}
+if ($icmsConfigUser['allow_htsig'] == 0) {$sig_tarea = new XoopsFormTextArea("", "user_sig", $sig_value);}
 else {$sig_tarea = new XoopsFormDhtmlTextArea("", "user_sig", $sig_value);}
 $sig_tray->addElement($sig_tarea);
 $sig_cbox = new XoopsFormCheckBox("", "attachsig", $sig_cbox_value);
@@ -97,8 +97,8 @@ $notify_mode_select = new XoopsFormSelect(_NOT_NOTIFYMODE, 'notify_mode', $notif
 $notify_mode_select->addOptionArray(array(XOOPS_NOTIFICATION_MODE_SENDALWAYS=>_NOT_MODE_SENDALWAYS, XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE=>_NOT_MODE_SENDONCE, XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT=>_NOT_MODE_SENDONCEPERLOGIN));
 $bio_tarea = new XoopsFormTextArea(_US_EXTRAINFO, "bio", $bio_value);
 $rank_select = new XoopsFormSelect(_AM_RANK, "rank", $rank_value);
-$ranklist = XoopsLists::getUserRankList();
-if ( count($ranklist) > 0 ) {
+$ranklist = IcmsLists::getUserRankList();
+if (count($ranklist) > 0) {
 	$rank_select->addOption(0, "--------------");
 	$rank_select->addOptionArray($ranklist);
 } else {
@@ -113,11 +113,11 @@ $language = new XoopsFormSelectLang(_US_SELECT_LANG,'language', $language_value)
 
 // Groups administration addition XOOPS 2.0.9: Mith
 global $icmsUser;
-$gperm_handler =& xoops_gethandler('groupperm');
+$gperm_handler =& xoops_gethandler('member_groupperm');
 //If user has admin rights on groups
 if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, $icmsUser->getGroups(), 1)) {
 	//add group selection
-	if ( in_array(XOOPS_GROUP_ADMIN, $icmsUser->getGroups())){
+	if (in_array(XOOPS_GROUP_ADMIN, $icmsUser->getGroups())) {
 		$group_select = array(new XoopsFormSelectGroup(_US_GROUPS, 'groups', false, $groups, 5, true));
 	} else {
 		$group_manager_value = array_intersect_key(xoops_gethandler('member')->getGroupList(), array_flip($gperm_handler->getItemIds('group_manager', $icmsUser->getGroups()))) ;
@@ -197,7 +197,7 @@ foreach ($group_select as $group) {
 	unset($group);
 }
 
-if (@is_array($group_hidden_select)){
+if (@is_array($group_hidden_select)) {
 	foreach ($group_hidden_select as $group) {
 		$form->addElement($group);
 		unset($group);
@@ -208,7 +208,7 @@ $form->addElement($fct_hidden);
 $form->addElement($op_hidden);
 $form->addElement($submit_button);
 
-if ( !empty($uid_value) ) {
+if (!empty($uid_value)) {
 	$uid_hidden = new XoopsFormHidden("uid", $uid_value);
 	$form->addElement($uid_hidden);
 }

@@ -524,7 +524,7 @@ function parse($string) {
                 {
                     // Check for at-rule
                     $this->invalid_at = true;
-                    foreach($at_rules as $name => $type)
+                    foreach ($at_rules as $name => $type)
                     {
                         if(!strcasecmp(substr($string,$i+1,strlen($name)),$name))
                         {
@@ -539,7 +539,7 @@ function parse($string) {
                     {
                         $this->selector = '@';
                         $invalid_at_name = '';
-                        for($j = $i+1; $j < $size; ++$j)
+                        for ($j = $i+1; $j < $size; ++$j)
                         {
                             if(!ctype_alpha($string{$j}))
                             {
@@ -843,7 +843,7 @@ function explode_selectors()
         $new_sels = array();
         $lastpos = 0;
         $this->sel_separate[] = strlen($this->selector);
-        foreach($this->sel_separate as $num => $pos)
+        foreach ($this->sel_separate as $num => $pos)
         {
             if($num == count($this->sel_separate)-1) {
                 $pos += 1;
@@ -855,7 +855,7 @@ function explode_selectors()
 
         if(count($new_sels) > 1)
         {
-            foreach($new_sels as $selector)
+            foreach ($new_sels as $selector)
             {
                 $this->merge_css_blocks($this->at,$selector,$this->css[$this->at][$this->selector]);
             }
@@ -918,7 +918,7 @@ function css_add_property($media,$selector,$property,$new_val)
  */
 function merge_css_blocks($media,$selector,$css_add)
 {
-	foreach($css_add as $property => $value)
+	foreach ($css_add as $property => $value)
 	{
 		$this->css_add_property($media,$selector,$property,$value,false);
 	}

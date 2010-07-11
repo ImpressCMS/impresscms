@@ -9,7 +9,7 @@
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id$
  */
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -21,7 +21,7 @@ function editcustomtag($showmenu = false, $customtagid = 0, $clone=false)
 
 	$customtagObj = $icms_customtag_handler->get($customtagid);
 
-	if (!$clone && !$customtagObj->isNew()){
+	if (!$clone && !$customtagObj->isNew()) {
 
 		$sform = $customtagObj->getForm(_CO_ICMS_CUSTOMTAG_EDIT, 'addcustomtag');
 
@@ -43,8 +43,8 @@ icms_loadLanguageFile('system', 'common');
 
 $icms_customtag_handler = icms_getModuleHandler('customtag');
 
-if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?trim(StopXSS($_GET['op'])):'');
 
 switch ($op) {
@@ -64,14 +64,12 @@ switch ($op) {
 		break;
 
 	case "addcustomtag":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_customtag_handler);
+		$controller = new icms_ipf_Controller($icms_customtag_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_CUSTOMTAG_CREATED, _CO_ICMS_CUSTOMTAG_MODIFIED);
 		break;
 
 	case "del":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_customtag_handler);
+		$controller = new icms_ipf_Controller($icms_customtag_handler);
 		$controller->handleObjectDeletion();
 
 		break;
@@ -80,13 +78,11 @@ switch ($op) {
 
 		icms_cp_header();
 
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-
-		$objectTable = new IcmsPersistableTable($icms_customtag_handler);
-		$objectTable->addColumn(new IcmsPersistableColumn('name', _GLOBAL_LEFT, 150, 'getCustomtagName'));
-		$objectTable->addColumn(new IcmsPersistableColumn('description', _GLOBAL_LEFT));
-		$objectTable->addColumn(new IcmsPersistableColumn(_CO_ICMS_CUSTOMTAGS_TAG_CODE, 'center', 200, 'getXoopsCode'));
-		$objectTable->addColumn(new IcmsPersistableColumn('language', 'center', 150));
+		$objectTable = new icms_ipf_view_Table($icms_customtag_handler);
+		$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, 150, 'getCustomtagName'));
+		$objectTable->addColumn(new icms_ipf_view_Column('description', _GLOBAL_LEFT));
+		$objectTable->addColumn(new icms_ipf_view_Column(_CO_ICMS_CUSTOMTAGS_TAG_CODE, 'center', 200, 'getXoopsCode'));
+		$objectTable->addColumn(new icms_ipf_view_Column('language', 'center', 150));
 
 		$objectTable->addIntroButton('addcustomtag', 'admin.php?fct=customtag&amp;op=mod', _CO_ICMS_CUSTOMTAG_CREATE);
 

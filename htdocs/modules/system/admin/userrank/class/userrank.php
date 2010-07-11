@@ -13,14 +13,12 @@
 if (! defined ( "ICMS_ROOT_PATH" ))
 die ( "ImpressCMS root path not defined" );
 
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
-
-class SystemUserrank extends IcmsPersistableObject {
+class SystemUserrank extends icms_ipf_Object {
 
 	public $content = false;
 
-	function SystemUserrank(&$handler) {
-		$this->IcmsPersistableObject($handler);
+	function __construct(&$handler) {
+		parent::__construct($handler);
 
 		$this->quickInitVar('rank_id', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('rank_title', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_USERRANK_RANK_TITLE, _CO_ICMS_USERRANK_RANK_TITLE_DSC);
@@ -60,26 +58,26 @@ class SystemUserrank extends IcmsPersistableObject {
 	}
 }
 
-class SystemUserrankHandler extends IcmsPersistableObjectHandler {
+class SystemUserrankHandler extends icms_ipf_Handler {
 
 	public $objects=false;
 
 	function SystemUserrankHandler($db) {
 		global $icmsConfigUser;
-		$this->IcmsPersistableObjectHandler ( $db, 'userrank', 'rank_id', 'rank_title', '', 'system' );
+		parent::__construct( $db, 'userrank', 'rank_id', 'rank_title', '', 'system' );
 		$this->table = $this->db->prefix('ranks');
 		$this->setUploaderConfig(false, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), $icmsConfigUser['rank_maxsize'], $icmsConfigUser['rank_width'], $icmsConfigUser['rank_height']);
 	}
 
-	function MoveAllRanksImagesToProperPath(){
+	function MoveAllRanksImagesToProperPath() {
 		$sql = 'SELECT rank_image FROM '. $this->table;
 		$Query = $this->query($sql, false);
 		for ($i = 0; $i < count($Query); $i++) {
 			$values[]= $Query[$i]['rank_image'];
 		}
 
-		foreach($values as $value){
-			if(file_exists(ICMS_UPLOAD_PATH.'/'.$value)){
+		foreach ($values as $value) {
+			if (file_exists(ICMS_UPLOAD_PATH.'/'.$value)) {
 				icms_copyr(ICMS_UPLOAD_PATH.'/'.$value, ICMS_UPLOAD_PATH.'/system/userrank/'.$value);
 			}
 		}

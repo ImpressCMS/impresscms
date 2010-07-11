@@ -29,8 +29,8 @@ class FormDhtmlTextArea extends XoopsFormDhtmlTextArea
 	 */
 	function FormDhtmlTextArea($configs, $checkCompatible = false)
 	{
-		if(!empty($configs)) {
-			foreach($configs as $key => $val){
+		if (!empty($configs)) {
+			foreach ($configs as $key => $val) {
 				${$key} = $val;
 				$this->$key = $val;
 			}

@@ -17,14 +17,14 @@ if (file_exists ( '../../mainfile.php' ))
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
 include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
-include_once ICMS_ROOT_PATH . '/class/template.php';
+//include_once ICMS_ROOT_PATH . '/class/template.php';
 include_once ICMS_LIBRARIES_PATH . '/wideimage/lib/WideImage.php';
 include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 
 global $xoopsConfig;
 icms_loadLanguageFile('system', 'images', true);
 
-$icmsTpl = new XoopsTpl ( );
+$icmsTpl = new icms_view_Tpl ( );
 
 $icmsTpl->assign ( 'icms_url', ICMS_URL );
 $icmsTpl->assign ( 'icms_root_path', ICMS_ROOT_PATH );
@@ -74,7 +74,7 @@ if (! is_null ( $op ) && $op == 'cancel') {
 		@unlink ( $orig_img_path );
 	}
 
-	$plugins_arr = XoopsLists::getDirListAsArray ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
+	$plugins_arr = IcmsLists::getDirListAsArray ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
 	foreach ( $plugins_arr as $plugin_folder ) {
 		if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/icms_plugin_version.php' )) {
 			$arr = explode ( '/', $image_path );
@@ -99,7 +99,7 @@ if (! is_null ( $op ) && $op == 'save') {
 
 	$image_handler = & xoops_gethandler ( 'image' );
 	$simage = & $image_handler->get ( $simage_id );
-	$imgcat_handler = xoops_gethandler ( 'imagecategory' );
+	$imgcat_handler = xoops_gethandler('image_category');
 	$imagecategory = & $imgcat_handler->get ( $simage->getVar ( 'imgcat_id' ) );
 
 	$categ_path = $imgcat_handler->getCategFolder ( $imagecategory );
@@ -187,7 +187,7 @@ if (! is_object ( $original_image )) {
 	die ( _ERROR );
 }
 
-$imgcat_handler = xoops_gethandler ( 'imagecategory' );
+$imgcat_handler = xoops_gethandler('image_category');
 $imagecategory = & $imgcat_handler->get ( $original_image->getVar ( 'imgcat_id' ) );
 if (! is_object ( $imagecategory )) {
 	die ( _ERROR );
@@ -234,7 +234,7 @@ $icmsTpl->assign ( 'image', $img );
 
 #Getting the plugins for the editor
 global $xoopsConfig;
-$plugins_arr = XoopsLists::getDirListAsArray ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
+$plugins_arr = IcmsLists::getDirListAsArray ( ICMS_LIBRARIES_PATH . '/image-editor/plugins' );
 foreach ( $plugins_arr as $plugin_folder ) {
 	if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/icms_plugin_version.php' )) {
 		if (file_exists ( ICMS_LIBRARIES_PATH . '/image-editor/plugins/' . $plugin_folder . '/language/' . $xoopsConfig ['language'] . '/main.php' )) {

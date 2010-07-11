@@ -20,6 +20,6 @@ $modversion = array( 'name' => _MD_AM_AUTOTASKS,
 	'image' => "images/autotasks.png",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=autotasks",
-	'category' => XOOPS_SYSTEM_AUTOTASKS );
+	'category' => XOOPS_SYSTEM_AUTOTASKS,
+	'group' => 'System Tools');
 
-?>

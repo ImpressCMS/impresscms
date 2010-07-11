@@ -7,7 +7,7 @@ function b_waiting_mydownloads()
 	// mydownloads links
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("mydownloads_downloads")." WHERE status=0");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/mydownloads/admin/index.php?op=listNewDownloads";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_WAITINGS ;
@@ -17,7 +17,7 @@ function b_waiting_mydownloads()
 	// mydownloads broken
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("mydownloads_broken"));
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/mydownloads/admin/index.php?op=listBrokenDownloads";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_BROKENS ;
@@ -27,7 +27,7 @@ function b_waiting_mydownloads()
 	// mydownloads modreq
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("mydownloads_mod"));
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/mydownloads/admin/index.php?op=listModReq";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_MODREQS ;

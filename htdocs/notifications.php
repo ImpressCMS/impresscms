@@ -22,7 +22,7 @@ if (empty($icmsUser)) {
 }
 
 $uid = $icmsUser->getVar('uid');
-
+$valid_op = array('cancel', 'list', 'delete', 'delete_ok');
 $op = 'list';
 
 if (isset($_POST['op'])) {
@@ -47,7 +47,7 @@ switch ($op) {
 	case 'cancel':
 
 		// FIXME: does this always go back to correct location??
-		redirect_header ('index.php');
+		redirect_header('index.php');
 		break;
 
 	case 'list':
@@ -60,15 +60,15 @@ switch ($op) {
 
 		// Get an array of all notifications for the selected user
 
-		$criteria = new Criteria ('not_uid', $uid);
-		$criteria->setSort ('not_modid,not_category,not_itemid');
-		$notification_handler =& xoops_gethandler('notification');
+		$criteria = new icms_criteria_Item('not_uid', $uid);
+		$criteria->setSort('not_modid,not_category,not_itemid');
+		$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 		$notifications =& $notification_handler->getObjects($criteria);
 
 		// Generate the info for the template
 
-		$module_handler =& xoops_gethandler('module');
-		include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
+		$module_handler = new icms_module_Handler($GLOBALS['xoopsDB']);
+		//include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 
 		$modules = array();
 		$prev_modid = -1;
@@ -81,7 +81,7 @@ switch ($op) {
 				$prev_category = -1;
 				$prev_item = -1;
 				$module =& $module_handler->get($modid);
-				$modules[$modid] = array ('id'=>$modid, 'name'=>$module->getVar('name'), 'categories'=>array());
+				$modules[$modid] = array('id'=>$modid, 'name'=>$module->getVar('name'), 'categories'=>array());
 				// TODO: note, we could auto-generate the url from the id
 				// and category info... (except when category has multiple
 				// subscription scripts defined...)
@@ -108,8 +108,8 @@ switch ($op) {
 			if ($category != $prev_category) {
 				$prev_category = $category;
 				$prev_item = -1;
-				$category_info =& notificationCategoryInfo($category, $modid);
-				$modules[$modid]['categories'][$category] = array ('name'=>$category, 'title'=>$category_info['title'], 'items'=>array());
+				$category_info =& $notification_handler->categoryInfo($category, $modid);
+				$modules[$modid]['categories'][$category] = array('name'=>$category, 'title'=>$category_info['title'], 'items'=>array());
 			}
 			$item = $n->getVar('not_itemid');
 			if ($item != $prev_item) {
@@ -117,31 +117,40 @@ switch ($op) {
 				if (!empty($lookup_func)) {
 					$item_info = $lookup_func($category, $item);
 				} else {
-					$item_info = array ('name'=>'['._NOT_NAMENOTAVAILABLE.']', 'url'=>'');
+					$item_info = array('name'=>'[' . _NOT_NAMENOTAVAILABLE . ']', 'url'=>'');
 				}
-				$modules[$modid]['categories'][$category]['items'][$item] = array ('id'=>$item, 'name'=>$item_info['name'], 'url'=>$item_info['url'], 'notifications'=>array());
+				$modules[$modid]['categories'][$category]['items'][$item] = array('id'=>$item, 'name'=>$item_info['name'], 'url'=>$item_info['url'], 'notifications'=>array());
 			}
-			$event_info =& notificationEventInfo($category, $n->getVar('not_event'), $n->getVar('not_modid'));
-			$modules[$modid]['categories'][$category]['items'][$item]['notifications'][] = array ('id'=>$n->getVar('not_id'), 'module_id'=>$n->getVar('not_modid'), 'category'=>$n->getVar('not_category'), 'category_title'=>$category_info['title'], 'item_id'=>$n->getVar('not_itemid'), 'event'=>$n->getVar('not_event'), 'event_title'=>$event_info['title'], 'user_id'=>$n->getVar('not_uid'));
+			$event_info =& $notification_handler->eventInfo($category, $n->getVar('not_event'), $n->getVar('not_modid'));
+			$modules[$modid]['categories'][$category]['items'][$item]['notifications'][] = array(
+				'id'=>$n->getVar('not_id'),
+				'module_id'=>$n->getVar('not_modid'),
+				'category'=>$n->getVar('not_category'),
+				'category_title'=>$category_info['title'],
+				'item_id'=>$n->getVar('not_itemid'),
+				'event'=>$n->getVar('not_event'),
+				'event_title'=>$event_info['title'],
+				'user_id'=>$n->getVar('not_uid')
+			);
 		}
 		$xoopsOption['template_main'] = 'system_notification_list.html';
-		include ICMS_ROOT_PATH.'/header.php';
-		$xoopsTpl->assign ('modules', $modules);
-		$user_info = array ('uid' => $icmsUser->getVar('uid'));
-		$xoopsTpl->assign ('user', $user_info);
-		$xoopsTpl->assign ('lang_cancel', _CANCEL);
-		$xoopsTpl->assign ('lang_clear', _NOT_CLEAR);
-		$xoopsTpl->assign ('lang_delete', _DELETE);
-		$xoopsTpl->assign ('lang_checkall', _NOT_CHECKALL);
-		$xoopsTpl->assign ('lang_module', _NOT_MODULE);
-		$xoopsTpl->assign ('lang_event', _NOT_EVENT);
-		$xoopsTpl->assign ('lang_events', _NOT_EVENTS);
-		$xoopsTpl->assign ('lang_category', _NOT_CATEGORY);
-		$xoopsTpl->assign ('lang_itemid', _NOT_ITEMID);
-		$xoopsTpl->assign ('lang_itemname', _NOT_ITEMNAME);
-		$xoopsTpl->assign ('lang_activenotifications', _NOT_ACTIVENOTIFICATIONS);
-		$xoopsTpl->assign ('notification_token', $GLOBALS['xoopsSecurity']->createToken());
-		include ICMS_ROOT_PATH.'/footer.php';
+		include ICMS_ROOT_PATH . '/header.php';
+		$xoopsTpl->assign('modules', $modules);
+		$user_info = array('uid' => $icmsUser->getVar('uid'));
+		$xoopsTpl->assign('user', $user_info);
+		$xoopsTpl->assign('lang_cancel', _CANCEL);
+		$xoopsTpl->assign('lang_clear', _NOT_CLEAR);
+		$xoopsTpl->assign('lang_delete', _DELETE);
+		$xoopsTpl->assign('lang_checkall', _NOT_CHECKALL);
+		$xoopsTpl->assign('lang_module', _NOT_MODULE);
+		$xoopsTpl->assign('lang_event', _NOT_EVENT);
+		$xoopsTpl->assign('lang_events', _NOT_EVENTS);
+		$xoopsTpl->assign('lang_category', _NOT_CATEGORY);
+		$xoopsTpl->assign('lang_itemid', _NOT_ITEMID);
+		$xoopsTpl->assign('lang_itemname', _NOT_ITEMNAME);
+		$xoopsTpl->assign('lang_activenotifications', _NOT_ACTIVENOTIFICATIONS);
+		$xoopsTpl->assign('notification_token', $GLOBALS['xoopsSecurity']->createToken());
+		include ICMS_ROOT_PATH . '/footer.php';
 
 		// TODO: another display mode... instead of one notification per line,
 		// show one line per item_id, with checkboxes for the available options...
@@ -166,11 +175,11 @@ switch ($op) {
 		if (empty($_POST['del_not'])) {
 			redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
 		}
-		include ICMS_ROOT_PATH.'/header.php';
+		include ICMS_ROOT_PATH . '/header.php';
 		$hidden_vars = array('uid'=>$uid, 'delete_ok'=>1, 'del_not'=>$_POST['del_not']);
-		print '<h4>'._NOT_DELETINGNOTIFICATIONS.'</h4>';
+		print '<h4>' . _NOT_DELETINGNOTIFICATIONS . '</h4>';
 		xoops_confirm($hidden_vars, xoops_getenv('PHP_SELF'), _NOT_RUSUREDEL);
-		include ICMS_ROOT_PATH.'/footer.php';
+		include ICMS_ROOT_PATH . '/footer.php';
 
 		// FIXME: There is a problem here... in xoops_confirm it treats arrays as
 		// optional radio arguments on the confirmation page... change this or
@@ -186,7 +195,7 @@ switch ($op) {
 		if (empty($_POST['del_not'])) {
 			redirect_header('notifications.php', 2, _NOT_NOTHINGTODELETE);
 		}
-		$notification_handler =& xoops_gethandler('notification');
+		$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 		foreach ($_POST['del_not'] as $n_array) {
 			foreach ($n_array as $n) {
 				$notification =& $notification_handler->get($n);
@@ -197,8 +206,8 @@ switch ($op) {
 		}
 		redirect_header('notifications.php', 2, _NOT_DELETESUCCESS);
 		break;
+
 	default:
 		break;
 }
 
-?>

@@ -7,7 +7,7 @@ function b_waiting_weblinks()
 	// weblinks links
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("weblinks_modify")." WHERE mode=0");
-	if ( $result ) {
+	if ($result) {
 //		$block['adminlink'] = ICMS_URL."/modules/weblinks/admin/index.php?op=listNewLinks";
 		$block['adminlink'] = ICMS_URL."/modules/weblinks/admin/link_manage.php?op=listNewLinks";
 
@@ -19,7 +19,7 @@ function b_waiting_weblinks()
 	// weblinks broken
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("weblinks_broken"));
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/weblinks/admin/index.php?op=listBrokenLinks";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_BROKENS ;
@@ -29,7 +29,7 @@ function b_waiting_weblinks()
 	// weblinks modreq
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("weblinks_modify")." WHERE mode=1");
-	if ( $result ) {
+	if ($result) {
 //		$block['adminlink'] = ICMS_URL."/modules/weblinks/admin/index.php?op=listModReq";
 		$block['adminlink'] = ICMS_URL."/modules/weblinks/admin/link_manage.php?op=listModReq";
 

@@ -254,11 +254,11 @@ class XoopsStory
 	function store($approved=false)
 	{
 		//$newpost = 0;
-		$myts = MyTextSanitizer::getInstance();
+		$myts = icms_core_Textsanitizer::getInstance();
 		$title = $myts->censorString($this->title);
 		$hometext = $myts->censorString($this->hometext);
 		$bodytext = $myts->censorString($this->bodytext);
-		$title = $myts->makeTboxData4Save($title);
+		$title = $myts->addSlashes($title);
 		$hometext = $myts->displayTarea($hometext);
 		$bodytext = $myts->displayTarea($bodytext);
 		if(!isset($this->nohtml) || $this->nohtml != 1)
@@ -408,13 +408,13 @@ class XoopsStory
 	}
 
 	/**
-	 * Returns the current username from (@link XoopsUser)
+	 * Returns the current username from (@link icms_member_user_Object)
 	 *
 	 * @return   string
 	 **/
 	function uname()
 	{
-		return XoopsUser::getUnameFromId($this->uid);
+		return icms_member_user_Object::getUnameFromId($this->uid);
 	}
 
 	/**
@@ -425,7 +425,7 @@ class XoopsStory
 	 **/
 	function title($format='Show')
 	{
-		$myts = MyTextSanitizer::getInstance();
+		$myts = icms_core_Textsanitizer::getInstance();
 		$smiley = 1;
 		if($this->nosmiley())
 		{
@@ -434,10 +434,10 @@ class XoopsStory
 		switch($format)
 		{
 			case 'Show':
-				$title = $myts->makeTboxData4Show($this->title, $smiley);
+				$title = $myts->htmlSpecialChars($this->title, $smiley);
 				break;
 			case 'Edit':
-				$title = $myts->makeTboxData4Edit($this->title);
+				$title = $myts->htmlSpecialChars($this->title);
 				break;
 			case 'Preview':
 				$title = $myts->makeTboxData4Preview($this->title, $smiley);
@@ -457,7 +457,7 @@ class XoopsStory
 	 **/
 	function hometext($format='Show')
 	{
-		$myts = MyTextSanitizer::getInstance();
+		$myts = icms_core_Textsanitizer::getInstance();
 		$html = 1;
 		$smiley = 1;
 		$xcodes = 1;
@@ -495,7 +495,7 @@ class XoopsStory
 	 **/
 	function bodytext($format='Show')
 	{
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		$html = 1;
 		$smiley = 1;
 		$xcodes = 1;

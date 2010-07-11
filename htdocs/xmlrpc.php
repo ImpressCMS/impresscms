@@ -21,20 +21,16 @@ $xoopsErrorHandler->activate(false);
 
 $response = new XoopsXmlRpcResponse();
 $parser = new XoopsXmlRpcParser(rawurlencode($GLOBALS['HTTP_RAW_POST_DATA']));
-if(!$parser->parse())
+if (!$parser->parse())
 {
 	$response->add(new XoopsXmlRpcFault(102));
-}
-else
-{
+} else {
 	$module_handler = xoops_gethandler('module');
 	$module =& $module_handler->getByDirname('news');
-	if(!is_object($module))
+	if (!is_object($module))
 	{
 		$response->add(new XoopsXmlRpcFault(110));
-	}
-	else
-	{
+	} else {
 		$methods = explode('.', $parser->getMethodName());
 		switch($methods[0])
 		{
@@ -57,12 +53,10 @@ else
 				break;
 		}
 		$method = $methods[1];
-		if(!method_exists($rpc_api, $method))
+		if (!method_exists($rpc_api, $method))
 		{
 			$response->add(new XoopsXmlRpcFault(107));
-		}
-		else
-		{
+		} else {
 			$rpc_api->$method();
 		}
 	}

@@ -13,7 +13,7 @@
  * @version	$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -21,7 +21,7 @@ function SmilesAdmin()
 {
 	$db =& Database::getInstance();
 	$url_smiles = XOOPS_UPLOAD_URL;
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/smilies/images/smilies_big.png)">'._AM_SMILESCONTROL.'</div><br />';
 
@@ -43,9 +43,9 @@ function SmilesAdmin()
 				} else {
 					$class= 'odd';
 				}
-				$smiles['code'] = $myts->makeTboxData4Show($smiles['code']);
-				$smiles['smile_url'] = $myts->makeTboxData4Edit($smiles['smile_url']);
-				$smiles['smile_emotion'] = $myts->makeTboxData4Edit($smiles['emotion']);
+				$smiles['code'] = $myts->htmlSpecialChars($smiles['code']);
+				$smiles['smile_url'] = $myts->htmlSpecialChars($smiles['smile_url']);
+				$smiles['smile_emotion'] = $myts->htmlSpecialChars($smiles['emotion']);
 				echo "<tr align='center' class='$class'>";
 				echo "<td align='"._GLOBAL_LEFT."'>".$smiles['code']."</td>";
 				echo "<td><img src='".$url_smiles."/".$smiles['smile_url']."' alt='' /></td>";
@@ -80,18 +80,18 @@ function SmilesAdmin()
 function SmilesEdit($id)
 {
 	$db =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	icms_cp_header();
 	echo '<a href="admin.php?fct=smilies">'._AM_SMILESCONTROL .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._AM_EDITSMILE.'<br /><br />';
 	if ($getsmiles = $db->query("SELECT * FROM ".$db->prefix("smiles")." WHERE id = '". (int) ($id)."'")) {
 		$numsmiles = $db->getRowsNum($getsmiles);
-		if ( $numsmiles == 0 ) {
+		if ($numsmiles == 0) {
 			//EMPTY
 		} else {
 			if ($smiles = $db->fetchArray($getsmiles)) {
-				$smiles['smile_code'] = $myts->makeTboxData4Edit($smiles['code']);
-				$smiles['smile_url'] = $myts->makeTboxData4Edit($smiles['smile_url']);
-				$smiles['smile_desc'] = $myts->makeTboxData4Edit($smiles['emotion']);
+				$smiles['smile_code'] = $myts->htmlSpecialChars($smiles['code']);
+				$smiles['smile_url'] = $myts->htmlSpecialChars($smiles['smile_url']);
+				$smiles['smile_desc'] = $myts->htmlSpecialChars($smiles['emotion']);
 				$smiles['smile_display'] = $smiles['display'];
 				$smiles['smile_form'] = _AM_EDITSMILE;
 				$smiles['op'] = 'SmilesSave';

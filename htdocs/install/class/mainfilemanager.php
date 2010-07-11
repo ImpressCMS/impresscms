@@ -29,15 +29,15 @@ class mainfile_manager {
 	var $report = '';
 	var $error = false;
 
-	function mainfile_manager(){
+	function mainfile_manager() {
 	}
 
-	function setRewrite($def, $val){
+	function setRewrite($def, $val) {
 		$this->rewrite[$def] = $val;
 	}
 
-	function copyDistFile(){
-		if ( ! copy($this->distfile, $this->path) ) {
+	function copyDistFile() {
+		if (! copy($this->distfile, $this->path)) {
 			$this->report .= _NGIMG.sprintf(_INSTALL_L126, "<b>".$this->path."</b>")."<br />\n";
 			$this->error = true;
 			return false;
@@ -46,18 +46,18 @@ class mainfile_manager {
 		return true;
 	}
 
-	function doRewrite(){
+	function doRewrite() {
 		clearstatcache();
-		if ( ! $file = fopen($this->path,"r") ) {
+		if (! $file = fopen($this->path,"r")) {
 			$this->error = true;
 			return false;
 		}
 		$content = fread($file, filesize($this->path) );
 		fclose($file);
 
-		foreach($this->rewrite as $key => $val){
-			if(is_int($val) &&
-			preg_match("/(define\()([\"'])(".$key.")\\2,\s*([0-9]+)\s*\)/",$content)){
+		foreach ($this->rewrite as $key => $val) {
+			if (is_int($val) &&
+			preg_match("/(define\()([\"'])(".$key.")\\2,\s*([0-9]+)\s*\)/",$content)) {
 				if ($key == 'PROTECTOR1' || $key == 'PROTECTOR2') {
 					$content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([0-9]+)\s*\)/", $val, $content);
 					$this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
@@ -69,7 +69,7 @@ class mainfile_manager {
 				$this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
 			}
 			elseif (preg_match("/(define\()([\"'])(".$key.")\\2,\s*([\"'])(.*?)\\4\s*\)/",$content)) {
-				if ($key == 'PROTECTOR1' || $key == 'PROTECTOR2'){
+				if ($key == 'PROTECTOR1' || $key == 'PROTECTOR2') {
 					$content = preg_replace("/(define\()([\"'])(".$key.")\\2,\s*([\"'])(.*?)\\4\s*\)/", $val, $content);
 					$this->report .= _OKIMG.sprintf(_INSTALL_L121, "<b>$key</b>", $val)."<br />\n";
 					ontinue;
@@ -84,12 +84,12 @@ class mainfile_manager {
 			}
 		}
 
-		if ( !$file = fopen($this->path,"w") ) {
+		if (!$file = fopen($this->path,"w")) {
 			$this->error = true;
 			return false;
 		}
 
-		if ( fwrite($file,$content) == -1 ) {
+		if (fwrite($file,$content) == -1) {
 			fclose($file);
 			$this->error = true;
 			return false;
@@ -100,14 +100,14 @@ class mainfile_manager {
 		return true;
 	}
 
-	function report(){
+	function report() {
 		$content = "<table align='center'><tr><td align='left'>\n";
 		$content .= $this->report;
 		$content .= "</td></tr></table>\n";
 		return $content;
 	}
 
-	function error(){
+	function error() {
 		return $this->error;
 	}
 }

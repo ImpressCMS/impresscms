@@ -13,8 +13,8 @@ function smarty_function_xoInboxCount( $params, &$smarty ) {
 		$count = (int) $_SESSION['xoops_inbox_count'] ;
 	} else {
         $pm_handler =& xoops_gethandler( 'privmessage' );
-        $criteria = new CriteriaCompo( new Criteria('read_msg', 0) );
-        $criteria->add( new Criteria( 'to_userid', $xoopsUser->getVar('uid') ) );
+        $criteria = new icms_criteria_Compo( new icms_criteria_Item('read_msg', 0) );
+        $criteria->add( new icms_criteria_Item( 'to_userid', $xoopsUser->getVar('uid') ) );
         $count = (int) $pm_handler->getCount($criteria) ;
         $_SESSION['xoops_inbox_count'] = $count;
         $_SESSION['xoops_inbox_count_expire'] = $time + 60;

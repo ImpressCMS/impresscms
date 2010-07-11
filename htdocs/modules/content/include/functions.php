@@ -91,7 +91,7 @@ function content_getPreviousPage($default=false) {
  *
  * @param integer $userid uid of the related user
  * @param bool $name true to return the fullname, false to use the username; if true and the user does not have fullname, username will be used instead
- * @param array $users array already containing XoopsUser objects in which case we will save a query
+ * @param array $users array already containing icms_member_user_Object objects in which case we will save a query
  * @param bool $withContact true if we want contact details to be added in the value returned (PM and email links)
  * @return string name of user with a link on his profile
  */
@@ -114,7 +114,7 @@ function content_getLinkedUnameFromId($userid, $name = false, $users = array (),
 		}
 		if(is_object($user))
 		{
-			$ts = & MyTextSanitizer::getInstance();
+			$ts = & icms_core_Textsanitizer::getInstance();
 			$username = $user->getVar('uname');
 			$fullname = '';
 			$fullname2 = $user->getVar('name');

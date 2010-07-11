@@ -15,15 +15,15 @@
 include "mainfile.php";
 
 // security check
-if( ! isset( $_SESSION['AUTOLOGIN_REQUEST_URI'] ) ) exit ;
+if (! isset( $_SESSION['AUTOLOGIN_REQUEST_URI'] ) ) exit ;
 
 // get URI
 $url = $_SESSION['AUTOLOGIN_REQUEST_URI'] ;
 unset( $_SESSION['AUTOLOGIN_REQUEST_URI'] ) ;
-if( preg_match('/javascript:/si', $url) ) exit ; // black list of url
+if (preg_match('/javascript:/si', $url) ) exit ; // black list of url
 $url4disp = preg_replace("/&amp;/i", '&', htmlspecialchars($url, ENT_QUOTES));
 
-if( isset( $_SESSION['AUTOLOGIN_POST'] ) ) {
+if (isset( $_SESSION['AUTOLOGIN_POST'] )) {
 
 	// posting confirmation
 
@@ -31,7 +31,7 @@ if( isset( $_SESSION['AUTOLOGIN_POST'] ) ) {
 	unset( $_SESSION['AUTOLOGIN_POST'] ) ;
 
 	$hidden_str = '' ;
-	foreach( $old_post as $k => $v ) {
+	foreach ($old_post as $k => $v) {
 		$hidden_str .= "\t".'      <input type="hidden" name="'.htmlspecialchars($k,ENT_QUOTES).'" value="'.htmlspecialchars($v,ENT_QUOTES).'" />'."\n" ;
 	}
 

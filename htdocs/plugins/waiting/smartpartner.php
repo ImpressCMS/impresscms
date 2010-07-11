@@ -12,7 +12,7 @@ function b_waiting_smartpartner()
 
 	// smartpartner submitted
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("smartpartner_partner")." WHERE status=1");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/smartpartner/admin/index.php?statussel=1";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_SUBMITTED;

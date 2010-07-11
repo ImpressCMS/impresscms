@@ -10,7 +10,7 @@ defined( 'ICMS_ROOT_PATH' ) or die();
 	content="text/html; charset=<?php echo _UPGRADE_CHARSET ?>" />
 <script type="text/javascript" src="../libraries/prototype/prototype.js"></script>
 <script type="text/javascript">
-	function showHideHelp( butt ) {
+	function showHideHelp( butt) {
 		butt.className = ( butt.className == 'on' ) ? 'off': 'on';
 		document.body.className = ( butt.className == 'on' ) ? 'show-help': '';
 	}

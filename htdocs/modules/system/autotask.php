@@ -7,13 +7,13 @@ if (!defined("ICMS_ROOT_PATH")) die("ICMS root path not defined");
  * To be used in ImpressCMS 1.2
  * @return mixed Did the query succeed or not? Returns nothing if succeeded, false if not succeeded
  **/
-function remove_usersxdays (){
+function remove_usersxdays () {
 	$db =& Database::getInstance();
 	global $icmsConfigUser;
 	$days = $icmsConfigUser['delusers'];
 	$delete_regdate= time() - ( $days * 24 * 60 * 60 );  // X days/month * 24 hrs/day
 	$sql = sprintf("DELETE FROM %s WHERE (level = '0' AND user_regdate < '%s')", $db->prefix('users'), $delete_regdate);
-	if(!$result = $db->queryF($sql)){
+	if (!$result = $db->queryF($sql)) {
 		return false;
 	}
 }

@@ -50,10 +50,7 @@ class icms_OutputFilter extends icms_DataFilter
 		// it really should never worked in the admin side!
 		// Maybe the preload handler should be in the install kernel.
 		if(!is_object($icmsPreloadHandler))
-		{
-			include_once ICMS_ROOT_PATH.'/kernel/icmspreloadhandler.php';
-			$icmsPreloadHandler = IcmsPreloadHandler::getInstance();
-		}
+			$icmsPreloadHandler = icms_preload_Handler::getInstance();
 		$icmsPreloadHandler->triggerEvent('beforeFilterTextarea', array(&$text, $smiley, $icode, $img, $br));
 
 		$text = icms_DataFilter::htmlSpecialChars($text);

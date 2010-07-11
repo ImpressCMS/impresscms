@@ -1,7 +1,7 @@
 <?php
 // $Id$
 //%%%%%%	Admin Module Name  MailUsers	%%%%%
-if(!defined('_AM_DBUPDATED')){define("_AM_DBUPDATED","Database Updated Successfully!");}
+if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 //%%%%%%	mailusers.php 	%%%%%
 define("_AM_SENDTOUSERS","Send message to users whose:");

@@ -21,5 +21,5 @@ $modversion = array('name' => _MD_AM_ADSENSES,
 	'image' => "adsense.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=adsense",
-	'category' => XOOPS_SYSTEM_ADSENSES );
-?>
+	'category' => XOOPS_SYSTEM_ADSENSES,
+	'group' => 'Advertising');

@@ -40,7 +40,7 @@ function icms_module_update_content($module) {
 	$db = $GLOBALS ['xoopsDB'];
 
 	$content_handler = icms_getModuleHandler ( 'content', 'content' );
-	$gperm_handler = & xoops_gethandler ( 'groupperm' );
+	$gperm_handler = & xoops_gethandler('member_groupperm');
 
 	if ($table->exists ()) {
 
@@ -82,12 +82,12 @@ function icms_module_update_content($module) {
 			//Getting the groups that have read permission to this content page
 			$groups = $gperm_handler->getGroupIds ( 'content_read', $row ['content_id'] );
 			//Deleting the permissions to the old page
-			$criteria = new CriteriaCompo ( );
-			$crit = new CriteriaCompo ( new Criteria ( 'gperm_name', 'content_read' ) );
-			$crit->add ( new Criteria ( 'gperm_name', 'content_admin' ), 'OR' );
+			$criteria = new icms_criteria_Compo ( );
+			$crit = new icms_criteria_Compo ( new icms_criteria_Item ( 'gperm_name', 'content_read' ) );
+			$crit->add ( new icms_criteria_Item ( 'gperm_name', 'content_admin' ), 'OR' );
 			$criteria->add ( $crit );
-			$criteria->add ( new Criteria ( 'gperm_itemid', $row ['content_id'] ) );
-			$criteria->add ( new Criteria ( 'gperm_modid', 1 ) );
+			$criteria->add ( new icms_criteria_Item ( 'gperm_itemid', $row ['content_id'] ) );
+			$criteria->add ( new icms_criteria_Item ( 'gperm_modid', 1 ) );
 			$gperm_handler->deleteAll ( $criteria );
 			//Adding permissions to allow the groups allowed to read the old content page to read the new content page
 			foreach ( $groups as $group ) {
@@ -102,12 +102,12 @@ function icms_module_update_content($module) {
 			$old_seo = str_replace ( "-", "_", $seo );
 				
 			$symlink_handler = icms_getModuleHandler ( 'pages', 'system' );
-			$criteria = new CriteriaCompo ( new Criteria ( 'page_url', '%' . $old_seo, 'LIKE' ) );
-			$criteria->add ( new Criteria ( 'page_moduleid', 1 ) );
+			$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'page_url', '%' . $old_seo, 'LIKE' ) );
+			$criteria->add ( new icms_criteria_Item ( 'page_moduleid', 1 ) );
 			$symlinks_remove = $symlink_handler->getObjects ( $criteria );
 				
-			$criteria = new CriteriaCompo ( new Criteria ( 'page_url', '%' . $url, 'LIKE' ) );
-			$criteria->add ( new Criteria ( 'page_moduleid', $module->mid () ) );
+			$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'page_url', '%' . $url, 'LIKE' ) );
+			$criteria->add ( new icms_criteria_Item ( 'page_moduleid', $module->mid () ) );
 			$symlinks_added = $symlink_handler->getObjects ( $criteria );
 			foreach ( $symlinks_added as $symlink ) {
 				$symlinks_added = $symlink;
@@ -147,11 +147,11 @@ function icms_module_update_content($module) {
 		echo '<code><b>Importing the core content manager blocks and configurations.</b></code><br />';
 		$icms_block_handler = icms_getModuleHandler ( 'blocksadmin' );
 		//Content Block
-		$criteria = new CriteriaCompo ( new Criteria ( 'show_func', 'content_content_display_show' ) );
+		$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'show_func', 'content_content_display_show' ) );
 		$content_content_block = $icms_block_handler->getObjects ( $criteria, false, true );
 		$content_content_block = $content_content_block [0] ? $content_content_block [0] : false;
 
-		$criteria = new CriteriaCompo ( new Criteria ( 'show_func', 'b_content_show' ) );
+		$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'show_func', 'b_content_show' ) );
 		$content_blocks = $icms_block_handler->getObjects ( $criteria, true, true );
 		foreach ( $content_blocks as $block ) {
 			$nb = $content_content_block;
@@ -169,9 +169,9 @@ function icms_module_update_content($module) {
 				$nb->setNew ();
 			}
 			if ($icms_block_handler->insert ( $nb, true )) {
-				$criteria = new CriteriaCompo ( new Criteria ( 'gperm_name', 'block_read' ) );
-				$criteria->add ( new Criteria ( 'gperm_itemid', $block->getVar ( 'bid', 'e' ) ) );
-				$criteria->add ( new Criteria ( 'gperm_modid', 1 ) );
+				$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'gperm_name', 'block_read' ) );
+				$criteria->add ( new icms_criteria_Item ( 'gperm_itemid', $block->getVar ( 'bid', 'e' ) ) );
+				$criteria->add ( new icms_criteria_Item ( 'gperm_modid', 1 ) );
 				$perms = $gperm_handler->getObjects ( $criteria, true );
 				foreach ( $perms as $perm ) {
 					$gperm_handler->addRight ( 'block_read', $nb->getVar ( 'bid' ), $perm->getVar ( 'gperm_groupid' ), $module->mid () );
@@ -185,12 +185,12 @@ function icms_module_update_content($module) {
 		}
 
 		//Content Menu Block
-		$criteria = new CriteriaCompo ( new Criteria ( 'show_func', 'content_content_menu_show' ) );
+		$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'show_func', 'content_content_menu_show' ) );
 		$content_menu_block = $icms_block_handler->getObjects ( $criteria, false, true );
 		$content_menu_block = $content_menu_block [0] ? $content_menu_block [0] : false;
 
-		$criteria = new CriteriaCompo ( new Criteria ( 'show_func', 'b_content_menu_show' ) );
-		$criteria->add ( new Criteria ( 'show_func', 'b_content_relmenu_show' ), 'OR' );
+		$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'show_func', 'b_content_menu_show' ) );
+		$criteria->add ( new icms_criteria_Item ( 'show_func', 'b_content_relmenu_show' ), 'OR' );
 		$content_menu_blocks = $icms_block_handler->getObjects ( $criteria, true, true );
 
 		foreach ( $content_menu_blocks as $block ) {
@@ -209,9 +209,9 @@ function icms_module_update_content($module) {
 				$nb->setNew ();
 			}
 			if ($icms_block_handler->insert ( $nb, true )) {
-				$criteria = new CriteriaCompo ( new Criteria ( 'gperm_name', 'block_read' ) );
-				$criteria->add ( new Criteria ( 'gperm_itemid', $block->getVar ( 'bid', 'e' ) ) );
-				$criteria->add ( new Criteria ( 'gperm_modid', 1 ) );
+				$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'gperm_name', 'block_read' ) );
+				$criteria->add ( new icms_criteria_Item ( 'gperm_itemid', $block->getVar ( 'bid', 'e' ) ) );
+				$criteria->add ( new icms_criteria_Item ( 'gperm_modid', 1 ) );
 				$perms = $gperm_handler->getObjects ( $criteria, true );
 				foreach ( $perms as $perm ) {
 					$gperm_handler->addRight ( 'block_read', $nb->getVar ( 'bid' ), $perm->getVar ( 'gperm_groupid' ), $module->mid () );

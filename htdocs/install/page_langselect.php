@@ -18,7 +18,7 @@
  *
  */
 require_once 'common.inc.php';
-if ( !defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
 $wizard->setPage( 'langselect' );
 
@@ -27,9 +27,9 @@ $wizard->setPage( 'langselect' );
  */
 function getDirList($dirname) {
 	$dirlist = array();
-	if ( $handle = opendir($dirname) ) {
-		while ( $file = readdir($handle) ) {
-			if ( $file{0} != '.' && is_dir( $dirname . $file ) ) {
+	if ($handle = opendir($dirname)) {
+		while ($file = readdir($handle)) {
+			if ($file{0} != '.' && is_dir( $dirname . $file )) {
 				$dirlist[] = $file;
 			}
 		}
@@ -40,7 +40,7 @@ function getDirList($dirname) {
 	return $dirlist;
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$lang = $_REQUEST['lang'];
 
 	$languages = getDirList( "./language/" );
@@ -59,7 +59,7 @@ $title = LANGUAGE_SELECTION;
 $content = "";
 
 $languages = getDirList( "./language/" );
-foreach ( $languages as $lang ) {
+foreach ( $languages as $lang) {
 	$sel = ( $lang == $wizard->language ) ? ' checked="checked"' : '';
 	$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../images/flags/$lang.gif\" alt=\"$lang\" /><br />$lang<br /> <input type=\"checkbox\" name=\"lang\" value=\"$lang\"$sel /></a></div><br /><br />\n";
 }

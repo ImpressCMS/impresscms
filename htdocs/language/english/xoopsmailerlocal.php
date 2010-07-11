@@ -7,7 +7,7 @@
 // Do not change the class name
 class XoopsMailerLocal extends XoopsMailer {
 
-	function XoopsMailerLocal(){
+	public function XoopsMailerLocal() {
 		$this->XoopsMailer();
 		// It is supposed no need to change the charset
 		$this->charSet = strtolower( _CHARSET );
@@ -16,19 +16,16 @@ class XoopsMailerLocal extends XoopsMailer {
 	}
 
 	// Multibyte languages are encouraged to make their proper method for encoding FromName
-	function encodeFromName($text)
-	{
+	public function encodeFromName($text) {
 		// Activate the following line if needed
 		// $text = "=?{$this->charSet}?B?".base64_encode($text)."?=";
 		return $text;
 	}
 
 	// Multibyte languages are encouraged to make their proper method for encoding Subject
-	function encodeSubject($text)
-	{
+	public function encodeSubject($text) {
 		// Activate the following line if needed
 		// $text = "=?{$this->charSet}?B?".base64_encode($text)."?=";
 		return $text;
 	}
 }
-?>

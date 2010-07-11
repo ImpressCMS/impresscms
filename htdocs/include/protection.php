@@ -11,7 +11,7 @@
  */
 
 include '../mainfile.php';
-$font = ICMS_ROOT_PATH.'/class/captcha/fonts/'.$icmsConfigPersona['email_font'];
+$font = ICMS_ROOT_PATH.'/libraries/icms/captcha/fonts/'.$icmsConfigPersona['email_font'];
 // If you use TTF fontLength = 8
 // If you don't you may put 7 :-)
 $fontSize = (int) ($icmsConfigPersona['email_font_len']);
@@ -30,18 +30,18 @@ $fg = $icmsConfigPersona['email_cor'];
 $red = 100;
 $green = 100;
 $blue = 100;
-if( preg_match( "/[#]?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i", $fg, $ret ) )
+if (preg_match( "/[#]?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i", $fg, $ret ) )
 {
 	$red = hexdec( $ret[1] );
 	$green = hexdec( $ret[2] );
 	$blue = hexdec( $ret[3] );
 }
-if ($icmsConfigPersona['email_shadow']!=""){
+if ($icmsConfigPersona['email_shadow']!="") {
 	$fg = $icmsConfigPersona['email_shadow'];
 	$sred = 100;
 	$sgreen = 100;
 	$sblue = 100;
-	if( preg_match( "/[#]?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i", $fg, $ret ) )
+	if (preg_match( "/[#]?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i", $fg, $ret ) )
 	{
 		$sred = hexdec( $ret[1] );
 		$sgreen = hexdec( $ret[2] );
@@ -58,7 +58,7 @@ ImageColorTransparent($image, $white);
 ImageFilledRectangle($image,0,0,$width,$height,$white);
 
 // Add the text using TTF
-if ($icmsConfigPersona['email_shadow']!=""){
+if ($icmsConfigPersona['email_shadow']!="") {
 	imagettftext($image, $fontSize, 0, (int) ($icmsConfigPersona['shadow_y']), $height- (int) ($icmsConfigPersona['shadow_x'])-10, $shadow , $font, $emailAddress);
 }
 imagettftext($image, $fontSize, 0, 0, $height-10, $frente, $font, $emailAddress);

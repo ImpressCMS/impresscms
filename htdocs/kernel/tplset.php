@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: tplset.php 19431 2010-06-16 20:46:34Z david-sf $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -26,21 +26,20 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author Kazumi Ono (AKA onokazu)
  * @copyright copyright &copy; 2000 XOOPS.org
  * @package kernel
+ * @deprecated	Use icms_view_template_set_Object, instead
+ * @todo		Remove in version 1.4
  **/
-class XoopsTplset extends XoopsObject
+class XoopsTplset extends icms_view_template_set_Object
 {
+	private $_deprecated;
 
 	/**
 	 * constructor
 	 */
 	function XoopsTplset()
 	{
-		$this->XoopsObject();
-		$this->initVar('tplset_id', XOBJ_DTYPE_INT, null, false);
-		$this->initVar('tplset_name', XOBJ_DTYPE_OTHER, null, false);
-		$this->initVar('tplset_desc', XOBJ_DTYPE_TXTBOX, null, false, 255);
-		$this->initVar('tplset_credits', XOBJ_DTYPE_TXTAREA, null, false);
-		$this->initVar('tplset_created', XOBJ_DTYPE_INT, 0, false);
+		parent::__construct();
+		$this->_deprecated = icms_deprecated('icms_view_template_set_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
@@ -51,208 +50,17 @@ class XoopsTplset extends XoopsObject
  *
  *
  * @author  Kazumi Ono <onokazu@xoops.org>
+ * @deprecated	Use icms_view_template_set_Handler, instead
+ * @todo		Remove in version 1.4
  */
-class XoopsTplsetHandler extends XoopsObjectHandler
+class XoopsTplsetHandler extends icms_view_template_set_Handler
 {
 
-	/**
-	 * create a new templateset instance
-	 *
-	 * @see XoopsTplset
-	 * @param bool $isNew is the new tempateset new??
-	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
-	 **/
-	function &create($isNew = true)
-	{
-		$tplset = new XoopsTplset();
-		if ($isNew) {
-			$tplset->setNew();
-		}
-		return $tplset;
-	}
-
-	/**
-	 * Gets templateset from database by ID
-	 *
-	 * @see XoopsTplset
-	 * @param int $id of the tempateset to get
-	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
-	 **/
-	function &get($id)
-	{
-		$tplset = false;
-		$id = (int) ($id);
-		if ($id > 0) {
-			$sql = "SELECT * FROM ".$this->db->prefix('tplset')." WHERE tplset_id='".$id."'";
-			if (!$result = $this->db->query($sql)) {
-				return $tplset;
-			}
-			$numrows = $this->db->getRowsNum($result);
-			if ($numrows == 1) {
-				$tplset = new XoopsTplset();
-				$tplset->assignVars($this->db->fetchArray($result));
-			}
-		}
-		return $tplset;
-	}
-
-	/**
-	 * Gets templateset from database by Name
-	 *
-	 * @see XoopsTplset
-	 * @param string $tplset_name of the tempateset to get
-	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
-	 **/
-	function &getByName($tplset_name)
-	{
-		$tplset = false;
-		$tplset_name = trim($tplset_name);
-		if ($tplset_name != '') {
-			$sql = "SELECT * FROM ".$this->db->prefix('tplset')." WHERE tplset_name=".$this->db->quoteString($tplset_name)."";
-			if (!$result = $this->db->query($sql)) {
-				return $tplset;
-			}
-			$numrows = $this->db->getRowsNum($result);
-			if ($numrows == 1) {
-				$tplset = new XoopsTplset();
-				$tplset->assignVars($this->db->fetchArray($result));
-			}
-		}
-		return $tplset;
-	}
-
-	/**
-	 * Inserts templateset into the database
-	 *
-	 * @see XoopsTplset
-	 * @param string $tplset_name of the tempateset to get
-	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
-	 **/
-	function insert(&$tplset)
-	{
-		/**
-		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-		 */
-		if (!is_a($tplset, 'xoopstplset')) {
-			return false;
-		}
-		if (!$tplset->isDirty()) {
-			return true;
-		}
-		if (!$tplset->cleanVars()) {
-			return false;
-		}
-		foreach ($tplset->cleanVars as $k => $v) {
-			${$k} = $v;
-		}
-		if ($tplset->isNew()) {
-			$tplset_id = $this->db->genId('tplset_tplset_id_seq');
-			$sql = sprintf("INSERT INTO %s (tplset_id, tplset_name, tplset_desc, tplset_credits, tplset_created) VALUES ('%u', %s, %s, %s, '%u')", $this->db->prefix('tplset'), (int) ($tplset_id), $this->db->quoteString($tplset_name), $this->db->quoteString($tplset_desc), $this->db->quoteString($tplset_credits), (int) ($tplset_created));
-		} else {
-			$sql = sprintf("UPDATE %s SET tplset_name = %s, tplset_desc = %s, tplset_credits = %s, tplset_created = '%u' WHERE tplset_id = '%u'", $this->db->prefix('tplset'), $this->db->quoteString($tplset_name), $this->db->quoteString($tplset_desc), $this->db->quoteString($tplset_credits), (int) ($tplset_created), (int) ($tplset_id));
-		}
-		if (!$result = $this->db->query($sql)) {
-			return false;
-		}
-		if (empty($tplset_id)) {
-			$tplset_id = $this->db->getInsertId();
-		}
-		$tplset->assignVar('tplset_id', $tplset_id);
-		return true;
-	}
-
-	/**
-	 * Deletes templateset from the database
-	 *
-	 * @see XoopsTplset
-	 * @param object $tplset {@link XoopsTplset} reference to the object of the tempateset to delete
-	 * @return object XoopsTplset {@link XoopsTplset} reference to the new template
-	 **/
-	function delete(&$tplset)
-	{
-		/**
-		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
-		 */
-		if (!is_a($tplset, 'xoopstplset')) {
-			return false;
-		}
-
-		$sql = sprintf("DELETE FROM %s WHERE tplset_id = '%u'", $this->db->prefix('tplset'), (int) ($tplset->getVar('tplset_id')));
-		if (!$result = $this->db->query($sql)) {
-			return false;
-		}
-		$sql = sprintf("DELETE FROM %s WHERE tplset_name = %s", $this->db->prefix('imgset_tplset_link'), $this->db->quoteString($tplset->getVar('tplset_name')));
-		$this->db->query($sql);
-		return true;
-	}
-
-	/**
-	 * retrieve array of {@link XoopsTplset}s meeting certain conditions
-	 * @param object $criteria {@link CriteriaElement} with conditions for the blocks
-	 * @param bool $id_as_key should the tplfile's tpl_id be the key for the returned array?
-	 * @return array {@link XoopsTplset}s matching the conditions
-	 **/
-	function getObjects($criteria = null, $id_as_key = false)
-	{
-		$ret = array();
-		$limit = $start = 0;
-		$sql = 'SELECT * FROM '.$this->db->prefix('tplset');
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-			$sql .= ' '.$criteria->renderWhere().' ORDER BY tplset_id';
-			$limit = $criteria->getLimit();
-			$start = $criteria->getStart();
-		}
-		$result = $this->db->query($sql, $limit, $start);
-		if (!$result) {
-			return $ret;
-		}
-		while ($myrow = $this->db->fetchArray($result)) {
-			$tplset = new XoopsTplset();
-			$tplset->assignVars($myrow);
-			if (!$id_as_key) {
-				$ret[] =& $tplset;
-			} else {
-				$ret[$myrow['tplset_id']] =& $tplset;
-			}
-			unset($tplset);
-		}
-		return $ret;
-	}
-
-	/**
-	 * Count some tplfilesets
-	 *
-	 * @param   object  $criteria   {@link CriteriaElement}
-	 * @return  int $count number of template filesets that match the criteria
-	 **/
-	function getCount($criteria = null)
-	{
-		$sql = 'SELECT COUNT(*) FROM '.$this->db->prefix('tplset');
-		if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
-			$sql .= ' '.$criteria->renderWhere();
-		}
-		if (!$result =& $this->db->query($sql)) {
-			return 0;
-		}
-		list($count) = $this->db->fetchRow($result);
-		return $count;
-	}
-
-	/**
-		* Gets list of tplset objects into an array
-		*
-		* @param array  $criteria  array of WHERE statement criteria
-		*
-		* @return array  The array of tplset objects
-		*/
-	function getList($criteria = null)
-	{
-		$ret = array();
-		$tplsets = $this->getObjects($criteria, true);
-		foreach (array_keys($tplsets) as $i) {
-			$ret[$tplsets[$i]->getVar('tplset_name')] = $tplsets[$i]->getVar('tplset_name');
-		}
-		return $ret;
+	private $_deprecated;
+	public function __construct() {
+		$tplsetHandler = new icms_view_template_set_Handler();
+		$this->_deprecated = icms_deprecated('icms_view_template_set_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		return $tplsetHandler;
 	}
 }
 

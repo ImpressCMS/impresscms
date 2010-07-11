@@ -19,7 +19,7 @@ $action = isset($_POST['action']) ? trim(StopXSS($_POST['action'])) : $action;
 $type = isset($_GET['type']) ? trim(StopXSS($_GET['type'])) : '';
 $type = isset($_POST['type']) ? trim(StopXSS($_POST['type'])) : $type;
 
-if($action == 'showpopups')
+if ($action == 'showpopups')
 {
 	xoops_header(false);
 	// show javascript close button?
@@ -28,9 +28,7 @@ if($action == 'showpopups')
 	{
 		case 'smilies':
 			$target = isset($_GET['target']) ? trim($_GET['target']) : '';
-			if($target == '' || !preg_match('/^[0-9a-z_]*$/i', $target)) {}
-			else
-			{
+			if ($target == '' || !preg_match('/^[0-9a-z_]*$/i', $target)) {} else {
 				echo "<script type=\"text/javascript\"><!--//
 				function doSmilie(addSmilie) {
 				var currentMessage = window.opener.xoopsGetElementById(\"".$target."\").value;
@@ -44,13 +42,13 @@ if($action == 'showpopups')
 				<table width="100%" class="outer">
 				<tr><th colspan="3">'._MSC_SMILIES.'</th></tr>
 				<tr class="head"><td>'._MSC_CODE.'</td><td>'._MSC_EMOTION.'</td><td>'._IMAGE.'</td></tr>';
-				$myts =& MyTextsanitizer::getInstance();
+				$myts =& icms_core_Textsanitizer::getInstance();
 				$smiles = $myts->getSmileys(1);
 				$count = count($smiles);
-				if($count > 0)
+				if ($count > 0)
 				{
 					$rcolor = 'even';
-					for($i = 0; $i < $count; $i++)
+					for ($i = 0; $i < $count; $i++)
 					{
 						echo "<tr class='$rcolor'><td>".$smiles[$i]['code']."</td><td>".$smiles[$i]['emotion']."</td><td><img onmouseover='style.cursor=\"pointer\"' onclick='doSmilie(\" ".$smiles[$i]['code']." \");' src='".ICMS_UPLOAD_URL."/".$smiles[$i]['smile_url']."' alt='' /></td></tr>";
 						$rcolor = ($rcolor == 'even') ? 'odd' : 'even';
@@ -64,7 +62,7 @@ if($action == 'showpopups')
 			?>
 <script language='javascript'>
 			<!--//
-			function myimage_onclick(counter){
+			function myimage_onclick(counter) {
 				window.opener.xoopsGetElementById("user_avatar").options[counter].selected = true;
 				showAvatar();
 				window.opener.xoopsGetElementById("user_avatar").focus();
@@ -86,12 +84,12 @@ if($action == 'showpopups')
 	$avatarslist =& $avatar_handler->getList('S');
 	$cntavs = 0;
 	$counter = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
-	foreach($avatarslist as $file => $name)
+	foreach ($avatarslist as $file => $name)
 	{
 		echo '<td><img src="uploads/'.$file.'" alt="'.$name.'" style="padding:10px; vertical-align:top;" /><br />'.$name.'<br /><input name="myimage" type="button" value="'._SELECT.'" onclick="myimage_onclick('.$counter.')" /></td>';
 		$counter++;
 		$cntavs++;
-		if($cntavs > 8)
+		if ($cntavs > 8)
 		{
 			echo '</tr><tr>';
 			$cntavs=0;
@@ -100,16 +98,14 @@ if($action == 'showpopups')
 	echo '</tr></table></form></div>';
 	break;
 case 'friend':
-	if(!$GLOBALS['xoopsSecurity']->check() || !isset($_POST['op']) || StopXSS($_POST['op']) == 'sendform') {
-		if($icmsUser)
+	if (!$GLOBALS['xoopsSecurity']->check() || !isset($_POST['op']) || StopXSS($_POST['op']) == 'sendform') {
+		if ($icmsUser)
 		{
 			$yname = $icmsUser->getVar('uname', 'e');
 			$ymail = $icmsUser->getVar('email', 'e');
 			$fname = '';
 			$fmail = '';
-		}
-		else
-		{
+		} else {
 			$yname = '';
 			$ymail = '';
 			$fname = '';
@@ -131,19 +127,19 @@ case 'friend':
 					</table></form>\n";
 		$closebutton = 0;
 	}
-	elseif(StopXSS($_POST['op']) == 'sendsite')
+	elseif (StopXSS($_POST['op']) == 'sendsite')
 	{
-		$myts =& MyTextsanitizer::getInstance();
-		if($icmsUser) {$ymail = $icmsUser->getVar('email');}
+		$myts =& icms_core_Textsanitizer::getInstance();
+		if ($icmsUser) {$ymail = $icmsUser->getVar('email');}
 		else {$ymail = isset($_POST['ymail']) ? $myts->stripSlashesGPC(trim($_POST['ymail'])) : '';}
-		if(!isset($_POST['yname']) || trim($_POST['yname']) == '' || $ymail == '' || !isset($_POST['fname']) || trim($_POST['fname']) == ''  || !isset($_POST['fmail']) || trim($_POST['fmail']) == '')
+		if (!isset($_POST['yname']) || trim($_POST['yname']) == '' || $ymail == '' || !isset($_POST['fname']) || trim($_POST['fname']) == ''  || !isset($_POST['fmail']) || trim($_POST['fmail']) == '')
 		{
 			redirect_header(ICMS_URL.'/misc.php?action=showpopups&amp;type=friend&amp;op=sendform',2,_MSC_NEEDINFO);
 		}
 		$yname = $myts->stripSlashesGPC(trim($_POST['yname']));
 		$fname = $myts->stripSlashesGPC(trim($_POST['fname']));
 		$fmail = $myts->stripSlashesGPC(trim($_POST['fmail']));
-		if(!checkEmail($fmail) || !checkEmail($ymail)  || preg_match('/[\\0-\\31]/', $yname))
+		if (!checkEmail($fmail) || !checkEmail($ymail)  || preg_match('/[\\0-\\31]/', $yname))
 		{
 			$errormessage = _MSC_INVALIDEMAIL1.'<br />'._MSC_INVALIDEMAIL2.'';
 			redirect_header(ICMS_URL.'/misc.php?action=showpopups&amp;type=friend&amp;op=sendform',2,$errormessage);
@@ -160,7 +156,7 @@ case 'friend':
 		$xoopsMailer->setFromName($yname);
 		$xoopsMailer->setSubject(sprintf(_MSC_INTSITE,$icmsConfig['sitename']));
 		//OpenTable();
-		if(!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
+		if (!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
 		else {echo '<div><h4>'._MSC_REFERENCESENT.'</h4></div>';}
 		//CloseTable();
 	}
@@ -172,37 +168,37 @@ case 'online':
 	$online_handler =& xoops_gethandler('online');
 	$online_total =& $online_handler->getCount();
 	$limit = ($online_total > 20) ? 20 : $online_total;
-	$criteria = new CriteriaCompo();
+	$criteria = new icms_criteria_Compo();
 	$criteria->setLimit($limit);
 	$criteria->setStart($start);
 	$onlines =& $online_handler->getAll($criteria);
 	$count = count($onlines);
 	$module_handler =& xoops_gethandler('module');
-	$modules =& $module_handler->getList(new Criteria('isactive', 1));
-	for($i = 0; $i < $count; $i++)
+	$modules =& $module_handler->getList(new icms_criteria_Item('isactive', 1));
+	for ($i = 0; $i < $count; $i++)
 	{
-		if($onlines[$i]['online_uid'] == 0) {$onlineUsers[$i]['user'] = '';}
-		else {$onlineUsers[$i]['user'] = new XoopsUser($onlines[$i]['online_uid']);}
+		if ($onlines[$i]['online_uid'] == 0) {$onlineUsers[$i]['user'] = '';}
+		else {$onlineUsers[$i]['user'] = new icms_member_user_Object($onlines[$i]['online_uid']);}
 		$onlineUsers[$i]['ip'] = $onlines[$i]['online_ip'];
 		$onlineUsers[$i]['updated'] = $onlines[$i]['online_updated'];
 		$onlineUsers[$i]['module'] = ($onlines[$i]['online_module'] > 0) ? $modules[$onlines[$i]['online_module']] : '';
 	}
 	$class = 'even';
-	for($i = 0; $i < $count; $i++)
+	for ($i = 0; $i < $count; $i++)
 	{
 		$class = ($class == 'odd') ? 'even' : 'odd';
 		echo '<tr valign="middle" align="center" class="'.$class.'">';
-		if(is_object($onlineUsers[$i]['user']))
+		if (is_object($onlineUsers[$i]['user']))
 		{
 			$avatar = $onlineUsers[$i]['user']->getVar('user_avatar') ? '<img src="'.ICMS_UPLOAD_URL.'/'.$onlineUsers[$i]['user']->getVar('user_avatar').'" alt="" />' : '&nbsp;';
 			echo '<td>'.$avatar."</td><td><a href=\"javascript:window.opener.location='".ICMS_URL."/userinfo.php?uid=".$onlineUsers[$i]['user']->getVar('uid')."';window.close();\">".$onlineUsers[$i]['user']->getVar('uname')."</a>";
 		}
 		else {echo '<td>&nbsp;</td><td>'.$icmsConfig['anonymous'];}
-		if($isadmin == 1) {echo '<br />('.$onlineUsers[$i]['ip'].')';}
+		if ($isadmin == 1) {echo '<br />('.$onlineUsers[$i]['ip'].')';}
 		echo '</td><td>'.$onlineUsers[$i]['module'].'</td></tr>';
 	}
 	echo '</table><br />';
-	if($online_total > 20)
+	if ($online_total > 20)
 	{
 		include_once ICMS_ROOT_PATH.'/class/pagenav.php';
 		$nav = new XoopsPageNav($online_total, 20, $start, 'start', 'action=showpopups&amp;type=online');
@@ -210,7 +206,7 @@ case 'online':
 	}
 	break;
 case 'ssllogin':
-	if($icmsConfig['use_ssl'] && isset($_POST[$icmsConfig['sslpost_name']]) && is_object($icmsUser))
+	if ($icmsConfig['use_ssl'] && isset($_POST[$icmsConfig['sslpost_name']]) && is_object($icmsUser))
 	{
 		icms_loadLanguageFile('core', 'user');
 		echo sprintf(_US_LOGGINGU, $icmsUser->getVar('uname'));
@@ -221,7 +217,7 @@ case 'ssllogin':
 default:
 	break;
 	}
-	if($closebutton)
+	if ($closebutton)
 	{
 		echo '<div style="text-align:center;"><input class="formButton" value="'._CLOSE.'" type="button" onclick="javascript:window.close();" /></div>';
 	}
@@ -235,19 +231,19 @@ function printCheckForm()
 		<!--//
 		function checkForm()
 		{
-			if(xoopsGetElementById("yname").value == "")
+			if (xoopsGetElementById("yname").value == "")
 			{
 				alert("<?php echo _MSC_ENTERYNAME;?>");
 				xoopsGetElementById("yname").focus();
 				return false;
 			}
-			else if(xoopsGetElementById("fname").value == "")
+			else if (xoopsGetElementById("fname").value == "")
 			{
 				alert("<?php echo _MSC_ENTERFNAME;?>");
 				xoopsGetElementById("fname").focus();
 				return false;
 			}
-			else if(xoopsGetElementById("fmail").value =="")
+			else if (xoopsGetElementById("fmail").value =="")
 			{
 				alert("<?php echo _MSC_ENTERFMAIL;?>");
 				xoopsGetElementById("fmail").focus();

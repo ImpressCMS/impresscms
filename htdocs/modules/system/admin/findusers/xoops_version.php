@@ -25,5 +25,5 @@ $modversion = array( 'name' => _MD_AM_FINDUSER,
 
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=findusers",
-	'category' => XOOPS_SYSTEM_FINDU );
-?>
+	'category' => XOOPS_SYSTEM_FINDU,
+	'group' => 'Users and Groups');

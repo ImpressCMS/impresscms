@@ -32,23 +32,23 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		$result = $icmsDB->query ( "SELECT t1.tpl_id FROM " . $icmsDB->prefix ( 'tplfile' ) . " t1, " . $icmsDB->prefix ( 'tplfile' ) . " t2 WHERE t1.tpl_module = t2.tpl_module AND t1.tpl_tplset=t2.tpl_tplset AND t1.tpl_file = t2.tpl_file AND t1.tpl_id > t2.tpl_id" );
 
 		$tplids = array ( );
-		while ( list ( $tplid ) = $icmsDB->fetchRow ( $result ) ) {
+		while (list ( $tplid ) = $icmsDB->fetchRow ( $result )) {
 			$tplids [] = $tplid;
 		}
 
 		if (count ( $tplids ) > 0) {
 			$tplfile_handler = & xoops_gethandler ( 'tplfile' );
-			$duplicate_files = $tplfile_handler->getObjects ( new Criteria ( 'tpl_id', "(" . implode ( ',', $tplids ) . ")", "IN" ) );
+			$duplicate_files = $tplfile_handler->getObjects ( new icms_criteria_Item ( 'tpl_id', "(" . implode ( ',', $tplids ) . ")", "IN" ) );
 
 			if (count ( $duplicate_files ) > 0) {
-				foreach ( array_keys ( $duplicate_files ) as $i ) {
+				foreach ( array_keys ( $duplicate_files ) as $i) {
 					$tplfile_handler->delete ( $duplicate_files [$i] );
 				}
 			}
 		}
 	}
 
-	$icmsDatabaseUpdater = IcmsDatabaseFactory::getDatabaseUpdater ();
+	$icmsDatabaseUpdater = icms_database_Factory::getDatabaseUpdater ();
 	//$dbVersion  = $module->getDBVersion();
 	//$oldversion  = $module->getVar('version');
 
@@ -71,26 +71,26 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$CleanWritingFolders = false;
 
-	if ( $dbVersion < 39 ) include 'update-112-to-121.php';
+	if ($dbVersion < 39 ) include 'update-112-to-121.php';
 
 /*  Begin upgrade to version 1.3 */
-	if ( !$abortUpdate ) $newDbVersion = 40;
+	if (!$abortUpdate ) $newDbVersion = 40;
 
-	if ( $dbVersion < $newDbVersion ) {
+	if ($dbVersion < $newDbVersion) {
 	/* Add new tables and data for the help suggestions and quick search */
 		$table = new IcmsDatabasetable( 'autosearch_cat' ) ;
-		if ( !$table->exists() ) {
+		if (!$table->exists()) {
 			$table->setStructure(
 				"`cid` int(11) NOT NULL auto_increment,
 				 `cat_name` varchar(255) NOT NULL,
 				 `cat_url` text NOT NULL,
 				 PRIMARY KEY (`cid`)"
 			);
-			if ( !$table->createTable() ) {
+			if (!$table->createTable()) {
 				$abortUpdate = TRUE;
 				$newDbVersion = 39;
 			}
-			if ( !$abortUpdate ) {
+			if (!$abortUpdate) {
 				$search_cats = array(
 					"NULL, '" . _MD_AM_ADSENSES . "', '/modules/system/admin.php?fct=adsense'",
 					"NULL, '" . _MD_AM_AUTOTASKS . "', '/modules/system/admin.php?fct=autotasks'",
@@ -114,7 +114,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 					"NULL, '" . _MD_AM_TPLSETS . "', '/modules/system/admin.php?fct=tplsets'",
 					"NULL, '" . _MD_AM_RANK . "', '/modules/system/admin.php?fct=userrank'",
 					"NULL, '" . _MD_AM_VERSION . "', '/modules/system/admin.php?fct=version'");
-				foreach( $search_cats as $cat ) {
+				foreach ($search_cats as $cat) {
 					$table->setData( $cat );
 				}
 				$table->addData();
@@ -123,7 +123,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 		}
 
 		$table = new IcmsDatabasetable( 'autosearch_list' ) ;
-		if ( !$table->exists() && !$abortUpdate ) {
+		if (!$table->exists() && !$abortUpdate) {
 			$table->setStructure(
 				"`id` int(11) NOT NULL auto_increment,
 				 `cat_id` int(11) NOT NULL,
@@ -133,11 +133,11 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 				 `url` text NOT NULL,
 				 PRIMARY KEY (`id`)"
 			);
-			if ( !$table->createTable() ) {
+			if (!$table->createTable()) {
 				$abortUpdate = TRUE;
 				$newDbVersion = 39;
 			}
-			if ( !$abortUpdate ) {
+			if (!$abortUpdate) {
 				icms_loadLanguageFile( 'system', 'preferences', TRUE );
 				$search_items = array(
 					"NULL, 1, '" . _MD_AM_ADSENSES . "', '/modules/system/admin/adsense/images/adsense_small.png', 'Adsenses are tags that you can define and use anywhere on your ImpressCMS site. ', '/modules/system/admin.php?fct=adsense'",
@@ -175,7 +175,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 					"NULL, 21, '" . _MD_AM_RANK . "', '/modules/system/admin/userrank/images/userrank_small.png', 'User ranks are picture, used to make difference between users in different levels of your site!', '/modules/system/admin.php?fct=userrank'",
 					"NULL, 22, '" . _MD_AM_VERSION . "', '/modules/system/admin/version/images/version_small.png', 'Use this tool to check your system for updates.', '/modules/system/admin.php?fct=version'"
 				);
-				foreach( $search_items as $item ) {
+				foreach ($search_items as $item) {
 					$table->setData( $item );
 				}
 				$table->addData();
@@ -223,7 +223,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 
 	/* Finish up this portion of the db update */
-		if ( !$abortUpdate ) {
+		if (!$abortUpdate) {
 			$icmsDatabaseUpdater->updateModuleDBVersion( $newDbVersion, 'system' );
 			echo sprintf( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local( $newDbVersion ) ) . '<br />';
 		}
@@ -235,10 +235,10 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	 * Place all release upgrade steps above this point
 	 */
 	echo "</code>";
-    if ( $abortUpdate ) {
+    if ($abortUpdate) {
         icms_error_msg( sprintf( _DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local( $newDbVersion ) ), _DATABASEUPDATER_UPDATE_DB, TRUE);
     }
-	if ($from_112 && ! $abortUpdate ) {
+	if ($from_112 && ! $abortUpdate) {
 		/**
 		 * @todo create a language constant for this text
 		 */

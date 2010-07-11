@@ -10,7 +10,7 @@
  * @version		$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -22,7 +22,7 @@ function editrating($showmenu = false, $ratingid = 0)
 
 	$ratingObj = $icms_rating_handler->get($ratingid);
 
-	if (!$ratingObj->isNew()){
+	if (!$ratingObj->isNew()) {
 
 		$sform = $ratingObj->getForm(_CO_ICMS_RATINGS_EDIT, 'addrating');
 
@@ -33,7 +33,7 @@ function editrating($showmenu = false, $ratingid = 0)
 		$ratingObj->hideFieldFromForm(array('item', 'itemid', 'uid', 'date', 'rate'));
 
 		if (isset($_POST['op'])) {
-			$controller = new IcmsPersistableController($icms_rating_handler);
+			$controller = new icms_ipf_Controller($icms_rating_handler);
 			$controller->postDataToObject($ratingObj);
 
 			if ($_POST['op'] == 'changedField') {
@@ -56,8 +56,8 @@ icms_loadLanguageFile('system', 'common');
 
 $icms_rating_handler = icms_getmodulehandler('rating');
 
-if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?trim(StopXSS($_GET['op'])):'');
 
 switch ($op) {
@@ -78,14 +78,12 @@ switch ($op) {
 		break;
 
 		case "addrating":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_rating_handler);
+		$controller = new icms_ipf_Controller($icms_rating_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_RATINGS_CREATED, _CO_ICMS_RATINGS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=rating');
 		break;
 		*/
 	case "del":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_rating_handler);
+		$controller = new icms_ipf_Controller($icms_rating_handler);
 		$controller->handleObjectDeletion();
 
 		break;
@@ -94,14 +92,12 @@ switch ($op) {
 
 		icms_cp_header();
 
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-
-		$objectTable = new IcmsPersistableTable($icms_rating_handler, false, array('delete'));
-		$objectTable->addColumn(new IcmsPersistableColumn('name', _GLOBAL_LEFT, false, 'getUnameValue'));
-		$objectTable->addColumn(new IcmsPersistableColumn('dirname', _GLOBAL_LEFT));
-		$objectTable->addColumn(new IcmsPersistableColumn('item', _GLOBAL_LEFT, false, 'getItemValue'));
-		$objectTable->addColumn(new IcmsPersistableColumn('date', 'center', 150));
-		$objectTable->addColumn(new IcmsPersistableColumn('rate', 'center', 60, 'getRateValue'));
+		$objectTable = new icms_ipf_view_Table($icms_rating_handler, false, array('delete'));
+		$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, false, 'getUnameValue'));
+		$objectTable->addColumn(new icms_ipf_view_Column('dirname', _GLOBAL_LEFT));
+		$objectTable->addColumn(new icms_ipf_view_Column('item', _GLOBAL_LEFT, false, 'getItemValue'));
+		$objectTable->addColumn(new icms_ipf_view_Column('date', 'center', 150));
+		$objectTable->addColumn(new icms_ipf_view_Column('rate', 'center', 60, 'getRateValue'));
 		//$objectTable->addIntroButton('addrating', 'admin.php?fct=rating&op=mod', _CO_ICMS_RATINGS_CREATE);
 
 		//$objectTable->addQuickSearch(array('title', 'summary', 'description'));

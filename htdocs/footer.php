@@ -12,8 +12,8 @@
  * @version	$Id$
  */
 
-if(!defined('ICMS_ROOT_PATH')) {die('ICMS root path not defined');}
-if(!defined("XOOPS_FOOTER_INCLUDED"))
+if (!defined('ICMS_ROOT_PATH')) {die('ICMS root path not defined');}
+if (!defined("XOOPS_FOOTER_INCLUDED"))
 {
 	global $sess_handler, $icmsPreloadHandler, $xoopsLogger, $xoopsOption, $icmsConfigMetaFooter, $xoopsTpl, $icmsModule, $icmsUser;
 
@@ -21,7 +21,7 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 	define("XOOPS_FOOTER_INCLUDED",1);
 
 	$_SESSION['ad_sess_regen'] = false;
-	if(isset($_SESSION['sess_regen']) && $_SESSION['sess_regen']) {
+	if (isset($_SESSION['sess_regen']) && $_SESSION['sess_regen']) {
 		$sess_handler->icms_sessionOpen(true);
 		$_SESSION['sess_regen'] = false;
 	} else {
@@ -32,23 +32,21 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 	$icmsPreloadHandler->triggerEvent('beforeFooter');
 
 	$xoopsLogger->stopTime('Module display');
-	if(isset($xoopsOption['theme_use_smarty']) && $xoopsOption['theme_use_smarty'] == 0)
+	if (isset($xoopsOption['theme_use_smarty']) && $xoopsOption['theme_use_smarty'] == 0)
 	{
 		// the old way
 		$footer = htmlspecialchars($icmsConfigMetaFooter['footer']).'<br /><div style="text-align:center">Powered by ImpressCMS &copy; 2007-'.date('Y').' <a href="http://www.impresscms.org/" rel="external">ImpressCMS</a></div>';
 		$google_analytics = $icmsConfigMetaFooter['google_analytics'];
 
-		if(isset($xoopsOption['template_main']))
+		if (isset($xoopsOption['template_main']))
 		{
-			$xoopsTpl->xoops_setCaching(0);
+			$xoopsTpl->caching = 0;
 			$xoopsTpl->display('db:'.$xoopsOption['template_main']);
 		}
-		if(!isset($xoopsOption['show_rblock'])) {$xoopsOption['show_rblock'] = 0;}
+		if (!isset($xoopsOption['show_rblock'])) {$xoopsOption['show_rblock'] = 0;}
 		//themefooter($xoopsOption['show_rblock'], $footer, $google_analytics);
 		xoops_footer();
-	}
-	else
-	{
+	} else {
 		// RMV-NOTIFY
 		if (is_object($icmsModule) && $icmsModule->getVar('hasnotification') == 1 && is_object($icmsUser)) {
 			/** Require the notifications area */
@@ -58,7 +56,7 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 		/** Include the notifications area */
 		include_once ICMS_ROOT_PATH . '/include/notification_select.php';
 
-		if(!headers_sent())
+		if (!headers_sent())
 		{
 			header('Content-Type:text/html; charset='._CHARSET);
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
@@ -67,23 +65,21 @@ if(!defined("XOOPS_FOOTER_INCLUDED"))
 		}
 		/*
 		 global $xoopsDB, $icmsConfig;
-		 if(!$icmsConfig['theme_fromfile'])
+		 if (!$icmsConfig['theme_fromfile'])
 		 {
 			session_write_close();
 			$xoopsDB->close();
 			}
 			*/
 		//@internal: using global $xoTheme dereferences the variable in old versions, this does not
-		if(!isset($xoTheme)) {$xoTheme =& $GLOBALS['xoTheme'];}
-		if(isset($xoopsOption['template_main']) && $xoopsOption['template_main'] != $xoTheme->contentTemplate)
+		if (!isset($xoTheme)) {$xoTheme =& $GLOBALS['xoTheme'];}
+		if (isset($xoopsOption['template_main']) && $xoopsOption['template_main'] != $xoTheme->contentTemplate)
 		{
 			trigger_error("xoopsOption[template_main] should be defined before including header.php", E_USER_WARNING);
-			if(false === strpos($xoopsOption['template_main'], ':'))
+			if (false === strpos($xoopsOption['template_main'], ':'))
 			{
 				$xoTheme->contentTemplate = 'db:'.$xoopsOption['template_main'];
-			}
-			else
-			{
+			} else {
 				$xoTheme->contentTemplate = $xoopsOption['template_main'];
 			}
 		}

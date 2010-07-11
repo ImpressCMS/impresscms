@@ -54,7 +54,7 @@ function b_system_online_show()
 		}
 		$block['online_total'] = sprintf(_ONLINEPHRASE, $total);
 		if (is_object($icmsModule)) {
-			$mytotal = $online_handler->getCount(new Criteria('online_module', $icmsModule->getVar('mid')));
+			$mytotal = $online_handler->getCount(new icms_criteria_Item('online_module', $icmsModule->getVar('mid')));
 			$block['online_total'] .= ' ('.sprintf(_ONLINEPHRASEX, $mytotal, $icmsModule->getVar('name')).')';
 		}
 		$block['lang_members'] = _MEMBERS;
@@ -129,11 +129,11 @@ function b_system_main_show()
 	}
 	$block['lang_close'] = _CLOSE;
 	$module_handler =& xoops_gethandler('module');
-	$criteria = new CriteriaCompo(new Criteria('hasmain', 1));
-	$criteria->add(new Criteria('isactive', 1));
-	$criteria->add(new Criteria('weight', 0, '>'));
+	$criteria = new icms_criteria_Compo(new icms_criteria_Item('hasmain', 1));
+	$criteria->add(new icms_criteria_Item('isactive', 1));
+	$criteria->add(new icms_criteria_Item('weight', 0, '>'));
 	$modules = $module_handler->getObjects($criteria, true);
-	$moduleperm_handler =& xoops_gethandler('groupperm');
+	$moduleperm_handler =& xoops_gethandler('member_groupperm');
 	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 	$read_allowed = $moduleperm_handler->getItemIds('module_read', $groups);
 	foreach (array_keys($modules) as $i) {
@@ -142,7 +142,7 @@ function b_system_main_show()
 			$block['modules'][$i]['directory'] = $modules[$i]->getVar('dirname');
 			$sublinks = $modules[$i]->subLink();
 			if ((count($sublinks) > 0) && (!empty($icmsModule)) && ($i == $icmsModule->getVar('mid'))) {
-				foreach($sublinks as $sublink){
+				foreach ($sublinks as $sublink) {
 					$block['modules'][$i]['sublinks'][] = array('name' => $sublink['name'], 'url' => ICMS_URL.'/modules/'.$modules[$i]->getVar('dirname').'/'.$sublink['url']);
 				}
 			} else {
@@ -182,8 +182,8 @@ function b_system_user_show()
 		$block['lang_notifications'] = _MB_SYSTEM_NOTIF;
 		$block['uid'] = $icmsUser->getVar('uid');
 		$block['lang_logout'] = _MB_SYSTEM_LOUT;
-		$criteria = new CriteriaCompo(new Criteria('read_msg', 0));
-		$criteria->add(new Criteria('to_userid', $icmsUser->getVar('uid')));
+		$criteria = new icms_criteria_Compo(new icms_criteria_Item('read_msg', 0));
+		$criteria->add(new icms_criteria_Item('to_userid', $icmsUser->getVar('uid')));
 		$block['new_messages'] = $pm_handler->getCount($criteria);
 		$block['lang_inbox'] = _MB_SYSTEM_INBOX;
 		$block['lang_adminmenu'] = _MB_SYSTEM_ADMENU;
@@ -202,7 +202,7 @@ function b_system_info_show($options)
 {
 	global $icmsConfig, $icmsUser;
 	$xoopsDB =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	$block = array();
 	if (!empty($options[3])) {
 		$block['showgroups'] = true;
@@ -246,7 +246,7 @@ function b_system_newmembers_show($options)
 	global $icmsConfigUser;
 
 	$block = array();
-	$criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
+	$criteria = new icms_criteria_Compo(new icms_criteria_Item('level', 0, '>'));
 	$limit = (!empty($options[0])) ? $options[0] : 10;
 	$criteria->setOrder('DESC');
 	$criteria->setSort('user_regdate');
@@ -255,8 +255,8 @@ function b_system_newmembers_show($options)
 	$newmembers = $member_handler->getUsers($criteria);
 	$count = count($newmembers);
 	for ($i = 0; $i < $count; $i++) {
-		if ( $options[1] == 1 ) {
-			if ($newmembers[$i]->getVar('user_avatar') && $newmembers[$i]->getVar('user_avatar') != 'blank.gif' && $newmembers[$i]->getVar('user_avatar') != ''){
+		if ($options[1] == 1) {
+			if ($newmembers[$i]->getVar('user_avatar') && $newmembers[$i]->getVar('user_avatar') != 'blank.gif' && $newmembers[$i]->getVar('user_avatar') != '') {
 				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL.'/'.$newmembers[$i]->getVar('user_avatar');
 			} elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
 				$block['users'][$i]['avatar'] = $newmembers[$i]->gravatar('G', $icmsConfigUser['avatar_width']);
@@ -271,11 +271,11 @@ function b_system_newmembers_show($options)
 		$block['users'][$i]['joindate'] = formatTimestamp($newmembers[$i]->getVar('user_regdate'), 's');
 		$block['users'][$i]['login_name'] = $newmembers[$i]->getVar('login_name');
 	}
-	if ( !empty($options[2]) && $options[2] == 1 ) {
+	if (!empty($options[2]) && $options[2] == 1) {
 		$block['index_enabled'] = true;
-		$block['registered'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level')));
-		$block['inactive'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0)));
-		$block['active'] = icms_conv_nr2local($member_handler->getUserCount(new Criteria('level', 0, '>')));
+		$block['registered'] = icms_conv_nr2local($member_handler->getUserCount(new icms_criteria_Item('level')));
+		$block['inactive'] = icms_conv_nr2local($member_handler->getUserCount(new icms_criteria_Item('level', 0)));
+		$block['active'] = icms_conv_nr2local($member_handler->getUserCount(new icms_criteria_Item('level', 0, '>')));
 		$block['lang_totalusers'] = _MB_SYSTEM_TOTAL_USERS;
 		$block['lang_activeusers'] = _MB_SYSTEM_ACT_USERS;
 		$block['lang_inactiveusers'] = _MB_SYSTEM_INACT_USERS;
@@ -294,11 +294,11 @@ function b_system_topposters_show($options)
 	global $icmsConfigUser;
 
 	$block = array();
-	$criteria = new CriteriaCompo(new Criteria('level', 0, '>'));
+	$criteria = new icms_criteria_Compo(new icms_criteria_Item('level', 0, '>'));
 	$limit = (!empty($options[0])) ? $options[0] : 10;
 	$size = count($options);
 	for ( $i = 2; $i < $size; $i++) {
-		$criteria->add(new Criteria('rank', $options[$i], '<>'));
+		$criteria->add(new icms_criteria_Item('rank', $options[$i], '<>'));
 	}
 	$criteria->setOrder('DESC');
 	$criteria->setSort('posts');
@@ -307,8 +307,8 @@ function b_system_topposters_show($options)
 	$topposters =& $member_handler->getUsers($criteria);
 	$count = count($topposters);
 	for ($i = 0; $i < $count; $i++) {
-		if ( $options[1] == 1 ) {
-			if ($topposters[$i]->getVar('user_avatar') && $topposters[$i]->getVar('user_avatar') != 'blank.gif' && $topposters[$i]->getVar('user_avatar') != ''){
+		if ($options[1] == 1) {
+			if ($topposters[$i]->getVar('user_avatar') && $topposters[$i]->getVar('user_avatar') != 'blank.gif' && $topposters[$i]->getVar('user_avatar') != '') {
 				$block['users'][$i]['avatar'] = ICMS_UPLOAD_URL.'/'.$topposters[$i]->getVar('user_avatar');
 			} elseif ($icmsConfigUser['avatar_allow_gravatar'] == 1) {
 				$block['users'][$i]['avatar'] = $topposters[$i]->gravatar('G', $icmsConfigUser['avatar_width']);
@@ -336,32 +336,32 @@ function b_system_comments_show($options)
 	$block = array();
 	include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
 	$comment_handler =& xoops_gethandler('comment');
-	$criteria = new CriteriaCompo(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
+	$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
 	$criteria->setLimit( (int) ($options[0]));
 	$criteria->setSort('com_created');
 	$criteria->setOrder('DESC');
 
 	// Check modules permissions
 	global $icmsUser;
-	$moduleperm_handler =& xoops_gethandler('groupperm');
+	$moduleperm_handler =& xoops_gethandler('member_groupperm');
 	$gperm_groupid = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
-	$criteria1 = new CriteriaCompo(new Criteria('gperm_name','module_read','='));
-	$criteria1->add(new Criteria('gperm_groupid', '('.implode(',', $gperm_groupid).')', 'IN'));
+	$criteria1 = new icms_criteria_Compo(new icms_criteria_Item('gperm_name','module_read','='));
+	$criteria1->add(new icms_criteria_Item('gperm_groupid', '('.implode(',', $gperm_groupid).')', 'IN'));
 	$perms = $moduleperm_handler->getObjects($criteria1, true);
 	$modIds = array();
-	foreach($perms as $item) {
+	foreach ($perms as $item) {
 		$modIds[] = $item->getVar('gperm_itemid');
 	}
-	if(count($modIds) > 0 ) {
+	if (count($modIds) > 0) {
 		$modIds = array_unique($modIds);
-		$criteria->add(new Criteria('com_modid', '('.implode(',', $modIds).')', 'IN'));
+		$criteria->add(new icms_criteria_Item('com_modid', '('.implode(',', $modIds).')', 'IN'));
 	}
 	// Check modules permissions
 
 	$comments = $comment_handler->getObjects($criteria, true);
 	$member_handler =& xoops_gethandler('member');
 	$module_handler =& xoops_gethandler('module');
-	$modules = $module_handler->getObjects(new Criteria('hascomments', 1), true);
+	$modules = $module_handler->getObjects(new icms_criteria_Item('hascomments', 1), true);
 	$comment_config = array();
 	foreach (array_keys($comments) as $i) {
 		$mid = $comments[$i]->getVar('com_modid');
@@ -400,17 +400,17 @@ function b_system_comments_show($options)
 function b_system_notification_show()
 {
 	global $icmsConfig, $icmsUser, $icmsModule;
-	include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
+	//include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
 	icms_loadLanguageFile('core', 'notification');
 	// Notification must be enabled, and user must be logged in
-	if (empty($icmsUser) || !notificationEnabled('block')) {
+	if (empty($icmsUser) || !icms_notification_Handler::isEnabled('block')) {
 		return false; // do not display block
 	}
-	$notification_handler =& xoops_gethandler('notification');
+	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 	// Now build the a nested associative array of info to pass
 	// to the block template.
 	$block = array();
-	$categories =& notificationSubscribableCategoryInfo();
+	$categories =& $notification_handler->subscribableCategoryInfo();
 	if (empty($categories)) {
 		return false;
 	}
@@ -421,7 +421,7 @@ function b_system_notification_show()
 		$section['itemid'] = $category['item_id'];
 		$section['events'] = array();
 		$subscribed_events = $notification_handler->getSubscribedEvents ($category['name'], $category['item_id'], $icmsModule->getVar('mid'), $icmsUser->getVar('uid'));
-		foreach (notificationEvents($category['name'], true) as $event) {
+		foreach ( $notification_handler->categoryEvents($category['name'], true) as $event) {
 			if (!empty($event['admin_only']) && !$icmsUser->isAdmin($icmsModule->getVar('mid'))) {
 				continue;
 			}
@@ -479,20 +479,20 @@ function b_system_topposters_edit($options)
 	$inputtag = "<input type='text' name='options[]' value='". (int) ($options[0])."' />";
 	$form = sprintf(_MB_SYSTEM_DISPLAY,$inputtag);
 	$form .= "<br />"._MB_SYSTEM_DISPLAYA."&nbsp;<input type='radio' id='options[]' name='options[]' value='1'";
-	if ( $options[1] == 1 ) {
+	if ($options[1] == 1) {
 		$form .= " checked='checked'";
 	}
 	$form .= " />&nbsp;"._YES."<input type='radio' id='options[]' name='options[]' value='0'";
-	if ( $options[1] == 0 ) {
+	if ($options[1] == 0) {
 		$form .= " checked='checked'";
 	}
 	$form .= " />&nbsp;"._NO."";
 	$form .= "<br />"._MB_SYSTEM_NODISPGR."<br /><select id='options[]' name='options[]' multiple='multiple'>";
-	$ranks =& XoopsLists::getUserRankList();
+	$ranks =& IcmsLists::getUserRankList();
 	$size = count($options);
 	foreach ($ranks as $k => $v) {
 		$sel = "";
-		for ( $i = 2; $i < $size; $i++ ) {
+		for ( $i = 2; $i < $size; $i++) {
 			if ($k == $options[$i]) {
 				$sel = " selected='selected'";
 			}
@@ -514,20 +514,20 @@ function b_system_newmembers_edit($options)
 	$inputtag = "<input type='text' name='options[0]' value='".$options[0]."' />";
 	$form = sprintf(_MB_SYSTEM_DISPLAY,$inputtag);
 	$form .= "<br />"._MB_SYSTEM_DISPLAYA."&nbsp;<input type='radio' id='options[1]' name='options[1]' value='1'";
-	if ( $options[1] == 1 ) {
+	if ($options[1] == 1) {
 		$form .= " checked='checked'";
 	}
 	$form .= " />&nbsp;"._YES."<input type='radio' id='options[1]' name='options[1]' value='0'";
-	if ( $options[1] == 0 ) {
+	if ($options[1] == 0) {
 		$form .= " checked='checked'";
 	}
 	$form .= " />&nbsp;"._NO."";
 	$form .= "<br />"._MB_SYSTEM_DISPLAYTOT."&nbsp;<input type='radio' id='options[2]' name='options[2]' value='1'";
-	if ( $options[2] == 1 ) {
+	if ($options[2] == 1) {
 		$form .= " checked='checked'";
 	}
 	$form .= " />&nbsp;"._YES."<input type='radio' id='options[2]' name='options[2]' value='0'";
-	if ( $options[2] == 0 ) {
+	if ($options[2] == 0) {
 		$form .= " checked='checked'";
 	}
 	$form .= " />&nbsp;"._NO."";
@@ -550,12 +550,12 @@ function b_system_info_edit($options)
 	$form .= "<input type='text' name='options[]' value='".$options[2]."' />";
 	$chk = "";
 	$form .= "<br />"._MB_SYSTEM_SADMIN."&nbsp;";
-	if ( $options[3] == 1 ) {
+	if ($options[3] == 1) {
 		$chk = " checked='checked'";
 	}
 	$form .= "<input type='radio' name='options[3]' value='1'".$chk." />&nbsp;"._YES."";
 	$chk = "";
-	if ( $options[3] == 0 ) {
+	if ($options[3] == 0) {
 		$chk = " checked=\"checked\"";
 	}
 	$form .= "&nbsp;<input type='radio' name='options[3]' value='0'".$chk." />"._NO."";
@@ -601,12 +601,12 @@ function b_system_themes_edit($options)
 
 	$chk = "";
 	$form = _MB_SYSTEM_THSHOW."&nbsp;";
-	if ( $options[0] == 1 ) {
+	if ($options[0] == 1) {
 		$chk = " checked='checked'";
 	}
 	$form .= "<input type='radio' name='options[0]' value='1'".$chk." />&nbsp;"._YES;
 	$chk = "";
-	if ( $options[0] == 0 ) {
+	if ($options[0] == 0) {
 		$chk = ' checked="checked"';
 	}
 	$form .= '&nbsp;<input type="radio" name="options[0]" value="0"'.$chk.' />'._NO;

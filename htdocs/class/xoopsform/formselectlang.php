@@ -55,7 +55,7 @@ class XoopsFormSelectLang extends XoopsFormSelect
 	function XoopsFormSelectLang($caption, $name, $value = null, $size = 1)
 	{
 		$this->XoopsFormSelect($caption, $name, $value, $size);
-		$this->addOptionArray(XoopsLists::getLangList());
+		$this->addOptionArray(IcmsLists::getLangList());
 	}
 }
 

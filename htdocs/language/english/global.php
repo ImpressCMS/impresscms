@@ -26,7 +26,7 @@ define('_WARNINSTALL2','WARNING: Directory %s exists on your server. <br />Pleas
 define('_WARNINWRITEABLE','WARNING: File %s is writeable by the server. <br />Please change the permission of this file for security reasons.<br /> in Unix (444), in Win32 (read-only)');
 define('_WARNINNOTWRITEABLE','WARNING: File %s is not writeable by the server. <br />Please change the permission of this file for functionality reasons.<br /> in Unix (777), in Win32 (writeable)');
 
-// Error messages issued by XoopsObject::cleanVars()
+// Error messages issued by icms_core_Object::cleanVars()
 define( '_XOBJ_ERR_REQUIRED', '%s is required' );
 define( '_XOBJ_ERR_SHORTERTHAN', '%s must be shorter than %d characters.' );
 

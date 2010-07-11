@@ -1,8 +1,8 @@
 <?php
 /**
- * XoopsTpl
+ * icms_view_Tpl
  *
- * Gateway file to include class/theme_blocks.php when xos_logos_PageBuilder class is needed
+ * Gateway file to include class/theme_blocks.php when icms_view_PageBuilder class is needed
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)

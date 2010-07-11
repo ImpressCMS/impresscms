@@ -12,7 +12,7 @@
  * @version		$Id: scriptaculous.php 1742 2008-04-20 14:46:20Z malanciault $
  */
 
-class IcmsPreloadScriptaculous extends IcmsPreloadItem
+class IcmsPreloadScriptaculous extends icms_preload_Item
 {
 	function eventStartOutputInit() {
 		global $xoTheme;

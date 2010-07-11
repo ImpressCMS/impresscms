@@ -45,13 +45,13 @@ if (! $page) {
 	}
 }
 
-if(!empty($page)){
+if (!empty($page)) {
 	$page = (is_int($page)) ? (int) ($page) : urlencode($page);
 	$page = str_replace('-',' ',$page);
 	$criteria = $content_content_handler->getContentsCriteria ( 0, 1, false, false, $page, false, 'content_id', 'DESC' );
 	$content = $content_content_handler->getObjects ( $criteria );
 	$contentObj = false;
-	foreach ( $content as $content ) {
+	foreach ( $content as $content) {
 		$contentObj = $content;
 		break;
 	}
@@ -85,7 +85,7 @@ if ($contentConfig ['com_rule'] && $contentObj->getVar ( 'content_cancomment' ))
 /**
  * Generating meta information for this page
  */
-$icms_metagen = new IcmsMetagen ( $contentObj->getVar ( 'content_title' ), $contentObj->getVar ( 'meta_keywords', 'n' ), $contentObj->getVar ( 'meta_description', 'n' ) );
+$icms_metagen = new icms_ipf_Metagen ( $contentObj->getVar ( 'content_title' ), $contentObj->getVar ( 'meta_keywords', 'n' ), $contentObj->getVar ( 'meta_description', 'n' ) );
 $icms_metagen->createMetaTags ();
 
 $xoTheme->addStylesheet ( ICMS_URL . '/modules/content/include/content.css' );

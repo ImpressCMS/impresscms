@@ -18,7 +18,7 @@
  *
  */
 	defined( 'XOOPS_INSTALL' ) or die();
-	if(isset($_COOKIE['xo_install_lang'])){
+	if (isset($_COOKIE['xo_install_lang'])) {
 		$xoopsConfig['language'] = $icmsConfig['language'] = $_COOKIE['xo_install_lang'];
 	}
 
@@ -28,7 +28,7 @@
 <title><?php echo sprintf(XOOPS_INSTALL_WIZARD, XOOPS_VERSION); ?>(<?php echo ($wizard->currentPage+1) . '/' . count($wizard->pages); ?>)</title>
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo _INSTALL_CHARSET ?>" />
 <?php
-if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
  echo '<link rel="stylesheet" type="text/css" media="all" href="style_rtl.css" />';
 } else {
  echo '<link rel="stylesheet" type="text/css" media="all" href="style.css" />';
@@ -43,7 +43,7 @@ if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
 <script type="text/javascript">
      $(document).ready(function() {
 	$.stylesheetInit();
-	$('#toggler').bind('click',function(e){
+	$('#toggler').bind('click',function(e) {
 	 $.stylesheetToggle();
 	 return false;
 	}
@@ -56,14 +56,14 @@ if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
           $('div.xoform-help').slideUp("slow");
          }
         });
-	$('#pagedown').click(function(){
+	$('#pagedown').click(function() {
 	 $.scrollTo('max', 1500);
 	});
      });
 </script>
 </head>
 <?php
-if ( defined('_ADM_USE_RTL') && _ADM_USE_RTL ){
+if (defined('_ADM_USE_RTL') && _ADM_USE_RTL) {
 echo '<body dir="rtl">';
 } else {
 echo '<body>';
@@ -82,11 +82,11 @@ echo '<body>';
 	<div id="leftside">
 			<h3><?php echo INSTALL_H3_STEPS; ?></h3>
 			<ul>
-			<?php foreach ( $wizard->pages as $k => $page ) {
+			<?php foreach ( $wizard->pages as $k => $page) {
 				$class = '';
-				if ( $k == $wizard->currentPage )	$class = ' class="current"';
-				elseif ( $k > $wizard->currentPage )	$class = ' class="disabled"';
-				if ( empty( $class ) ) {
+				if ($k == $wizard->currentPage )	$class = ' class="current"';
+				elseif ($k > $wizard->currentPage )	$class = ' class="disabled"';
+				if (empty( $class )) {
 					$li = '<a href="' . $wizard->pageURI($page) . '">' . $wizard->pagesNames[$k] . '</a>';
 				} else {
 					$li = $wizard->pagesNames[$k];
@@ -98,7 +98,7 @@ echo '<body>';
 	</div>
 	<div id="rightside">
 			<div class="page" id="<?php echo $wizard->currentPageName; ?>">
-				<?php if ( $pageHasHelp ) { ?>
+				<?php if ($pageHasHelp) { ?>
 						<button type="button" onclick="javascript:void(0);" id="help_button" title="<?php echo SHOW_HIDE_HELP; ?>">
 						<img src="img/help2.png" alt="<?php echo SHOW_HIDE_HELP; ?>"  title="<?php echo SHOW_HIDE_HELP; ?>" />
 						</button>
@@ -113,30 +113,30 @@ echo '<body>';
 				<?php echo $content; ?>
 			</div>
 			<div id="buttons">
-				<?php if ( $wizard->currentPage != 0  && ( $wizard->currentPage != 11 )) { ?>
+				<?php if ($wizard->currentPage != 0  && ( $wizard->currentPage != 11 )) { ?>
 				<button type="button" title="<?php echo BUTTON_PREVIOUS; ?>" onclick="location.href='<?php echo $wizard->pageURI('-1'); ?>'" class="prev">
 					<img src="img/left-arr.png" alt="<?php echo BUTTON_PREVIOUS; ?>"  title="<?php echo BUTTON_PREVIOUS; ?>" width="16" />
 				</button>
 				<?php } ?>
-				<?php if ( $wizard->currentPage == 11 ) { ?>
+				<?php if ($wizard->currentPage == 11) { ?>
 				<button  id="hmo" title="<?php echo BUTTON_SHOW_SITE; ?>" type="button" onclick="location.href='<?php echo $wizard->pageURI('11'); ?>?success=true'" class="finish">
 					<img src="img/Home.png" alt="<?php echo BUTTON_SHOW_SITE; ?>" title="<?php echo BUTTON_SHOW_SITE; ?>" width="32" />
 				</button>
 				<?php } ?>
-				<?php if ( $wizard->pages[$wizard->currentPage] == $wizard->secondlastpage) { ?>
-					<?php if ( @$pageHasForm) { ?>
+				<?php if ($wizard->pages[$wizard->currentPage] == $wizard->secondlastpage) { ?>
+					<?php if (@$pageHasForm) { ?>
 					<button type="submit">
 					<?php } else { ?>
 					<button type="button"  title="<?php echo BUTTON_NEXT; ?>"  accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'" class="next">
 					<?php } ?>
-					<?php if ( $_POST['mod'] != 1 ) { ?>
+					<?php if ($_POST['mod'] != 1) { ?>
 						<img src="img/right-arr.png" alt="<?php echo BUTTON_NEXT; ?>" width="16" />
 					<?php } else { ?>
 						<?php echo BUTTON_FINISH; ?>
 					<?php } ?>
 					</button>
-				<?php } else if ( $wizard->pages[$wizard->currentPage] != $wizard->lastpage) { ?>
-					<?php if ( @$pageHasForm) { ?>
+				<?php } else if ($wizard->pages[$wizard->currentPage] != $wizard->lastpage) { ?>
+					<?php if (@$pageHasForm) { ?>
 					<button type="submit"  title="<?php echo BUTTON_NEXT; ?>" >
 					<?php } else { ?>
 					<button type="button"  title="<?php echo BUTTON_NEXT; ?>"  accesskey="n" onclick="location.href='<?php echo $wizard->pageURI('+1'); ?>'" class="next">

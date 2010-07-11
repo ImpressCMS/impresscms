@@ -18,39 +18,39 @@
  *
  */
 require_once 'common.inc.php';
-if ( !defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
 $wizard->setPage( 'modcheck' );
 $pageHasForm = false;
 
 $diagsOK = false;
 
-function xoDiag( $status = -1, $str = '' ) {
-	if ( $status == -1 ) {
+function xoDiag( $status = -1, $str = '') {
+	if ($status == -1) {
 		$GLOBALS['error'] = true;
 	}
 	$classes = array( -1 => 'error', 0 => 'warning', 1 => 'success' );
 	$strings = array( -1 => FAILED, 0 => WARNING, 1 => SUCCESS );
-	if ( empty($str) ) {
+	if (empty($str)) {
 		$str = $strings[$status];
 	}
 	return '<td class="' . $classes[$status] . '">' . $str . '</td>';
 }
-function xoDiagBoolSetting( $name, $wanted = false, $severe = false ) {
+function xoDiagBoolSetting( $name, $wanted = false, $severe = false) {
 	$setting = strtolower( ini_get( $name ) );
 	$setting = ( empty( $setting ) || $setting == 'off' || $setting == 'false' ) ? false : true;
-	if ( $setting == $wanted ) {
+	if ($setting == $wanted) {
 		return xoDiag( 1, $setting ? 'ON' : 'OFF' );
 	} else {
 		return xoDiag( $severe ? -1 : 0, $setting ? 'ON' : 'OFF' );
 	}
 }
 
-function xoDiagIfWritable( $path ) {
+function xoDiagIfWritable( $path) {
 	$path = "../" . $path;
 	$error = true;
-	if ( !is_dir( $path ) ) {
-		if ( file_exists( $path ) ) {
+	if (!is_dir( $path )) {
+		if (file_exists( $path )) {
 			@chmod( $path, 0666 );
 			$error = !is_writeable( $path );
 		}
@@ -69,9 +69,9 @@ ob_start();
 	src="img/yes.png" alt="Success" class="rootimg" /></h4>
 <div class="clear">&nbsp;</div>
 <h4><?php echo _PHP_VERSION; ?>:&nbsp; <?php
-if ( version_compare( phpversion(), '5.2', '>=') ) {
+if (version_compare( phpversion(), '5.2', '>=')) {
 	echo xoDiag( 1, phpversion() );
-} elseif ( version_compare( phpversion(), '5.1', '>=') ) {
+} elseif (version_compare( phpversion(), '5.1', '>=')) {
 	echo xoDiag( 0, phpversion() );
 } else {
 	echo xoDiag( -1, phpversion() );
@@ -101,9 +101,9 @@ if ( version_compare( phpversion(), '5.2', '>=') ) {
 
 <h4><?php printf( PHP_EXTENSION, CHAR_ENCODING ); ?>:&nbsp; <?php
 $ext = array();
-if ( extension_loaded( 'iconv' ) )		$ext[] = 'Iconv';
-if ( extension_loaded( 'mb_string' ) )	$ext[] = 'MBString';
-if ( empty($ext) ) {
+if (extension_loaded( 'iconv' ) )		$ext[] = 'Iconv';
+if (extension_loaded( 'mb_string' ) )	$ext[] = 'MBString';
+if (empty($ext)) {
 	echo xoDiag( 0, NONE );
 } else {
 	echo xoDiag( 1, implode( ',', $ext ) );
@@ -112,9 +112,9 @@ if ( empty($ext) ) {
 <div class="clear">&nbsp;</div>
 <h4><?php printf( PHP_EXTENSION, XML_PARSING ); ?>:&nbsp; <?php
 $ext = array();
-if ( extension_loaded( 'xml' ) )		$ext[] = 'XML';
-//if ( extension_loaded( 'dom' ) )		$ext[] = 'DOM';
-if ( empty($ext) ) {
+if (extension_loaded( 'xml' ) )		$ext[] = 'XML';
+//if (extension_loaded( 'dom' ) )		$ext[] = 'DOM';
+if (empty($ext)) {
 	echo xoDiag( 0, NONE );
 } else {
 	echo xoDiag( 1, implode( ',', $ext ) );
@@ -123,10 +123,10 @@ if ( empty($ext) ) {
 <div class="clear">&nbsp;</div>
 <h4><?php printf( PHP_EXTENSION, OPEN_ID ); ?>:&nbsp; <?php
 $ext = array();
-if ( extension_loaded( 'curl' ) )		$ext[] = 'Curl  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
-if ( extension_loaded( 'bcmath' ) )		$ext[] = ' Math Support  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
-if ( extension_loaded( 'openssl' ) )	$ext[] = ' OpenSSL  <img src="img/yes.png" alt="Success" class="rootimg" />';
-if ( empty($ext) ) {
+if (extension_loaded( 'curl' ) )		$ext[] = 'Curl  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
+if (extension_loaded( 'bcmath' ) )		$ext[] = ' Math Support  <img src="img/yes.png" alt="Success" class="rootimg" />  ';
+if (extension_loaded( 'openssl' ) )	$ext[] = ' OpenSSL  <img src="img/yes.png" alt="Success" class="rootimg" />';
+if (empty($ext)) {
 	echo xoDiag( 0, NONE );
 } else {
 	echo xoDiag( 1, implode( ' ', $ext ) );
@@ -142,7 +142,7 @@ if ( empty($ext) ) {
     </thead>
 	<?php
 		$paths = array("uploads/", "cache/", "templates_c/", "mainfile.php");
-		foreach ( $paths as $path ) {
+		foreach ( $paths as $path) {
 	?>
 	<tr>
 		<th scope="row"><?php echo $path; ?></th>

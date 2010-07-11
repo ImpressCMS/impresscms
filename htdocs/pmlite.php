@@ -21,13 +21,13 @@ $send = !empty($_GET['send']) ? 1 : 0;
 $send2 = !empty($_GET['send2']) ? 1 : 0;
 $to_userid = !empty($_GET['to_userid']) ? (int) ($_GET['to_userid']) : 0;
 $msg_id = !empty($_GET['msg_id']) ? (int) ($_GET['msg_id']) : 0;
-if ( empty($_GET['refresh'] ) && isset($_POST['op']) && $_POST['op'] != "submit" ) {
+if (empty($_GET['refresh'] ) && isset($_POST['op']) && $_POST['op'] != "submit") {
 	$jump = "pmlite.php?refresh=".time()."";
-	if ( $send == 1 ) {
+	if ($send == 1) {
 		$jump .= "&amp;send=".$send."";
-	} elseif ( $send2 == 1 ) {
+	} elseif ($send2 == 1) {
 		$jump .= "&amp;send2=".$send2."&amp;to_userid=".$to_userid."";
-	} elseif ( $reply == 1 ) {
+	} elseif ($reply == 1) {
 		$jump .= "&amp;reply=".$reply."&amp;msg_id=".$msg_id."";
 	} else {
 	}
@@ -36,7 +36,7 @@ if ( empty($_GET['refresh'] ) && isset($_POST['op']) && $_POST['op'] != "submit"
 }
 xoops_header();
 if ($icmsUser) {
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	if (isset($_POST['op']) && $_POST['op'] == "submit") {
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			$security_error = true;
@@ -97,7 +97,7 @@ if ($icmsUser) {
 			$pm_handler =& xoops_gethandler('privmessage');
 			$pm =& $pm_handler->get($msg_id);
 			if ($pm->getVar("to_userid") == (int) ($icmsUser->getVar('uid'))) {
-				$pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
+				$pm_uname = icms_member_user_Object::getUnameFromId($pm->getVar("from_userid"));
 				$message  = "[quote]\n";
 				$message .= sprintf(_PM_USERWROTE,$pm_uname);
 				$message .= "\n".$pm->getVar("msg_text", "E")."\n[/quote]";
@@ -108,10 +108,10 @@ if ($icmsUser) {
 		}
 		echo "<form action='pmlite.php' method='post' name='coolsus'>\n";
 		echo "<table width='300' align='center' class='outer'><tr><td class='head' width='25%'>"._PM_TO."</td>";
-		if ( $reply == 1 ) {
+		if ($reply == 1) {
 			echo "<td class='even'><input type='hidden' name='to_userid' value='".$pm->getVar("from_userid")."' />".$pm_uname."</td>";
-		} elseif ( $send2 == 1 ) {
-			$to_username = XoopsUser::getUnameFromId($to_userid);
+		} elseif ($send2 == 1) {
+			$to_username = icms_member_user_Object::getUnameFromId($to_userid);
 			echo "<td class='even'><input type='hidden' name='to_userid' value='".$to_userid."' />".$to_username."</td>";
 		} else {
 			require_once ICMS_ROOT_PATH."/class/xoopsform/formelement.php";
@@ -124,7 +124,7 @@ if ($icmsUser) {
 		}
 		echo "</tr>";
 		echo "<tr><td class='head' width='25%'>"._PM_SUBJECTC."</td>";
-		if ( $reply == 1 ) {
+		if ($reply == 1) {
 			$subject = $pm->getVar('subject', 'E');
 			if (!preg_match("/^Re:/i",$subject)) {
 				$subject = 'Re: '.$subject;
@@ -140,7 +140,7 @@ if ($icmsUser) {
 			$pm_handler =& xoops_gethandler('privmessage');
 			$pm =& $pm_handler->get($msg_id);
 			if ($pm->getVar("to_userid") == (int) ($icmsUser->getVar('uid'))) {
-				$pm_uname = XoopsUser::getUnameFromId($pm->getVar("from_userid"));
+				$pm_uname = icms_member_user_Object::getUnameFromId($pm->getVar("from_userid"));
 				$message  = "[quote]\n";
 				$message .= sprintf(_PM_USERWROTE,$pm_uname);
 				$message .= "\n".$pm->getVar("msg_text", "E")."\n[/quote]";
@@ -149,7 +149,7 @@ if ($icmsUser) {
 				$reply = $send2 = 0;
 			}
 			$textarea = new XoopsFormDhtmlTextArea(_PM_MESSAGEC, 'message', $message);
-		}else{
+		} else {
 			$textarea = new XoopsFormDhtmlTextArea(_PM_MESSAGEC, 'message', '');
 		}
 		echo $textarea->render();

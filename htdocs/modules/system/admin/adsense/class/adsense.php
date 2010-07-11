@@ -13,14 +13,12 @@
 if (! defined ( "ICMS_ROOT_PATH" ))
 die ( "ImpressCMS root path not defined" );
 
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
-
-class SystemAdsense extends IcmsPersistableObject {
+class SystemAdsense extends icms_ipf_Object {
 
 	public $content = false;
 
-	function SystemAdsense(&$handler) {
-		$this->IcmsPersistableObject($handler);
+	public function __construct(&$handler) {
+		parent::__construct($handler);
 
 		$this->quickInitVar('adsenseid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('description', XOBJ_DTYPE_TXTAREA, true, _CO_ICMS_ADSENSE_DESCRIPTION, _CO_ICMS_ADSENSE_DESCRIPTION_DSC);
@@ -120,14 +118,14 @@ google_color_text = "' . $this->getVar('text_color', 'n') . '";
 	}
 }
 
-class SystemAdsenseHandler extends IcmsPersistableObjectHandler {
+class SystemAdsenseHandler extends icms_ipf_Handler {
 
 	public $adFormats;
 	public $adFormatsList;
 	public $objects=false;
 
 	function SystemAdsenseHandler($db) {
-		$this->IcmsPersistableObjectHandler ( $db, 'adsense', 'adsenseid', 'tag', 'description', 'system' );
+		parent::__construct( $db, 'adsense', 'adsenseid', 'tag', 'description', 'system' );
 		$this->adFormats = array();
 		$this->adFormatsList = array();
 
@@ -209,7 +207,7 @@ class SystemAdsenseHandler extends IcmsPersistableObjectHandler {
 		if (!$this->objects) {
 			$adsensesObj = $this->getObjects(null, true);
 			$ret = array();
-			foreach($adsensesObj as $adsenseObj) {
+			foreach ($adsensesObj as $adsenseObj) {
 				$ret[$adsenseObj->getVar('tag')] = $adsenseObj;
 			}
 			$this->objects = $ret;

@@ -14,22 +14,22 @@
  * @version	$Id$
  */
 
-$gperm_handler =& xoops_gethandler('groupperm');
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) || ( isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], $icmsUser->getGroups() ) )) {
+$gperm_handler =& xoops_gethandler('member_groupperm');
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) || ( isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], $icmsUser->getGroups() ) )) {
 	exit("Access Denied");
 } else {
 	include_once ICMS_ROOT_PATH."/modules/system/admin/groups/groups.php";
-	if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-	if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+	if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 	$op = (isset($_GET['op']))?trim(StopXSS($_GET['op'])):((isset($_POST['op']))?trim(StopXSS($_POST['op'])):'display');
-	if($op == 'modify' || $op == 'del')
+	if ($op == 'modify' || $op == 'del')
 	{
 		$g_id = $_GET['g_id'];
 	}
 }
 
 // from finduser section
-if ( !empty($memberslist_id) && is_array($memberslist_id) ) {
+if (!empty($memberslist_id) && is_array($memberslist_id)) {
 	$op = "addUser";
 	$uids =& $memberslist_id;
 }
@@ -70,18 +70,18 @@ switch ($op) {
 			icms_cp_footer();
 		} else {
 			$groupid = $group->getVar('groupid');
-			$gperm_handler =& xoops_gethandler('groupperm');
-			$criteria = new CriteriaCompo(new Criteria('gperm_groupid', $groupid));
-			$criteria->add(new Criteria('gperm_modid', 1));
-			$criteria2 = new CriteriaCompo(new Criteria('gperm_name', 'system_admin'));
-			$criteria2->add(new Criteria('gperm_name', 'module_admin'), 'OR');
-			$criteria2->add(new Criteria('gperm_name', 'module_read'), 'OR');
-			if ($g_id != 3){
-				$criteria2->add(new Criteria('gperm_name', 'use_wysiwygeditor'), 'OR');
+			$gperm_handler =& xoops_gethandler('member_groupperm');
+			$criteria = new icms_criteria_Compo(new icms_criteria_Item('gperm_groupid', $groupid));
+			$criteria->add(new icms_criteria_Item('gperm_modid', 1));
+			$criteria2 = new icms_criteria_Compo(new icms_criteria_Item('gperm_name', 'system_admin'));
+			$criteria2->add(new icms_criteria_Item('gperm_name', 'module_admin'), 'OR');
+			$criteria2->add(new icms_criteria_Item('gperm_name', 'module_read'), 'OR');
+			if ($g_id != 3) {
+				$criteria2->add(new icms_criteria_Item('gperm_name', 'use_wysiwygeditor'), 'OR');
 			}
-			$criteria2->add(new Criteria('gperm_name', 'enable_debug'), 'OR');
-			$criteria2->add(new Criteria('gperm_name', 'block_read'), 'OR');
-			$criteria2->add(new Criteria('gperm_name', 'group_manager'), 'OR');
+			$criteria2->add(new icms_criteria_Item('gperm_name', 'enable_debug'), 'OR');
+			$criteria2->add(new icms_criteria_Item('gperm_name', 'block_read'), 'OR');
+			$criteria2->add(new icms_criteria_Item('gperm_name', 'group_manager'), 'OR');
 			$criteria->add($criteria2);
 			$gperm_handler->deleteAll($criteria);
 			if (count($system_catids) > 0) {
@@ -115,7 +115,7 @@ switch ($op) {
 				$gperm_handler->insert($modperm);
 			}
 
-			if ($g_id != 3){
+			if ($g_id != 3) {
 				foreach ($useeditor_mids as $ed_mid) {
 					$modperm =& $gperm_handler->create();
 					$modperm->setVar('gperm_groupid', $groupid);
@@ -187,7 +187,7 @@ switch ($op) {
 			icms_cp_footer();
 		} else {
 			$groupid = $group->getVar('groupid');
-			$gperm_handler =& xoops_gethandler('groupperm');
+			$gperm_handler =& xoops_gethandler('member_groupperm');
 			if (count($system_catids) > 0) {
 				array_push($admin_mids, 1);
 				foreach ($system_catids as $s_cid) {
@@ -262,11 +262,11 @@ switch ($op) {
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
-		if ( (int) ($g_id) > 0 && !in_array($g_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
+		if ((int) ($g_id) > 0 && !in_array($g_id, array(XOOPS_GROUP_ADMIN, XOOPS_GROUP_USERS, XOOPS_GROUP_ANONYMOUS))) {
 			$member_handler =& xoops_gethandler('member');
 			$group =& $member_handler->getGroup($g_id);
 			$member_handler->deleteGroup($group);
-			$gperm_handler =& xoops_gethandler('groupperm');
+			$gperm_handler =& xoops_gethandler('member_groupperm');
 			$gperm_handler->deleteByGroup($g_id);
 		}
 		redirect_header("admin.php?fct=groups&amp;op=adminMain",1,_AM_DBUPDATED);
@@ -278,7 +278,7 @@ switch ($op) {
 		}
 		$member_handler =& xoops_gethandler('member');
 		$size = count($uids);
-		for ( $i = 0; $i < $size; $i++ ) {
+		for ( $i = 0; $i < $size; $i++) {
 			$member_handler->addUserToGroup($groupid, $uids[$i]);
 		}
 		redirect_header("admin.php?fct=groups&amp;op=modify&amp;g_id=".$groupid."",0,_AM_DBUPDATED);
@@ -288,11 +288,11 @@ switch ($op) {
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			redirect_header("admin.php?fct=groups&amp;op=adminMain", 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
-		if ( (int) ($groupid) > 0) {
+		if ((int) ($groupid) > 0) {
 			$member_handler =& xoops_gethandler('member');
 			$memstart = isset($memstart) ? (int) ($memstart) : 0;
 			if ($groupid == XOOPS_GROUP_ADMIN) {
-				if ($member_handler->getUserCountByGroup($groupid) > count($uids)){
+				if ($member_handler->getUserCountByGroup($groupid) > count($uids)) {
 					$member_handler->removeUsersFromGroup($groupid, $uids);
 				}
 			} else {

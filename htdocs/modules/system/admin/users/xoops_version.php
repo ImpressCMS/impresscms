@@ -24,5 +24,5 @@ $modversion = array( 'name' => _MD_AM_USER,
 	'image' => "users.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=users",
-	'category' => XOOPS_SYSTEM_USER );
-?>
+	'category' => XOOPS_SYSTEM_USER,
+	'group' => 'Users and Groups');

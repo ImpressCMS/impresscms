@@ -36,7 +36,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 
 		if (is_array ( $configs )) {
 			$vars = array_keys ( get_object_vars ( $this ) );
-			foreach ( $configs as $key => $val ) {
+			foreach ( $configs as $key => $val) {
 				if (in_array ( "_" . $key, $vars )) {
 					$this->{"_" . $key} = $val;
 				} else {

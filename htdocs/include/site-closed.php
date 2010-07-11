@@ -20,7 +20,7 @@ $allowed = false;
 if (isset($xoopsOption['ignore_closed_site']) && $xoopsOption['ignore_closed_site']) {
 	$allowed = true;
 } elseif (is_object ( $icmsUser )) {
-	foreach ( $icmsUser->getGroups () as $group ) {
+	foreach ( $icmsUser->getGroups () as $group) {
 		if (in_array ( $group, $icmsConfig ['closesite_okgrp'] ) || ICMS_GROUP_ADMIN == $group) {
 			$allowed = true;
 			break;
@@ -33,10 +33,10 @@ if (isset($xoopsOption['ignore_closed_site']) && $xoopsOption['ignore_closed_sit
 
 if (! $allowed) {
 	include_once ICMS_ROOT_PATH . "/include/customtag.php";
-	require_once ICMS_ROOT_PATH . '/class/template.php';
-	require_once ICMS_ROOT_PATH . '/class/theme.php';
+	//require_once ICMS_ROOT_PATH . '/class/template.php';
+	//require_once ICMS_ROOT_PATH . '/class/theme.php';
 
-	$xoopsThemeFactory = new xos_opal_ThemeFactory ( );
+	$xoopsThemeFactory = new icms_view_theme_Factory ( );
 	$xoopsThemeFactory->allowedThemes = $icmsConfig ['theme_set_allowed'];
 	$xoopsThemeFactory->defaultTheme = $icmsConfig ['theme_set'];
 	$xoTheme = & $xoopsThemeFactory->createInstance ( array ("plugins" => array ( ) ) );
@@ -47,7 +47,7 @@ if (! $allowed) {
 	$xoopsTpl->assign ( array ('xoops_theme' => $icmsConfig ['theme_set'], 'xoops_imageurl' => ICMS_THEME_URL . '/' . $icmsConfig ['theme_set'] . '/', 'xoops_themecss' => xoops_getcss ( $icmsConfig ['theme_set'] ), 'xoops_requesturi' => htmlspecialchars ( $_SERVER ['REQUEST_URI'], ENT_QUOTES ), 'xoops_sitename' => htmlspecialchars ( $icmsConfig ['sitename'], ENT_QUOTES ), 'xoops_slogan' => htmlspecialchars ( $icmsConfig ['slogan'], ENT_QUOTES ), 'xoops_dirname' => @$icmsModule ? $icmsModule->getVar ( 'dirname' ) : 'system', 'xoops_banner' => $icmsConfig ['banners'] ? xoops_getbanner () : '&nbsp;', 'xoops_pagetitle' => isset ( $icmsModule ) && is_object ( $icmsModule ) ? $icmsModule->getVar ( 'name' ) : htmlspecialchars ( $icmsConfig ['slogan'], ENT_QUOTES ), 'lang_login' => _LOGIN, 'lang_username' => _USERNAME, 'lang_password' => _PASSWORD, 'lang_siteclosemsg' => $icmsConfig ['closesite_text'] )
 	);
 
-	foreach ( $icmsConfigMetaFooter as $name => $value ) {
+	foreach ( $icmsConfigMetaFooter as $name => $value) {
 		if (substr ( $name, 0, 5 ) == 'meta_') {
 			$xoopsTpl->assign ( "xoops_$name", htmlspecialchars ( $value, ENT_QUOTES ) );
 		} else {
@@ -63,7 +63,7 @@ if (! $allowed) {
 	global $icms_customtag_handler;
 	$customtags_array = array ( );
 	if (is_object ( $xoopsTpl )) {
-		foreach ( $icms_customtag_handler->objects as $k => $v ) {
+		foreach ( $icms_customtag_handler->objects as $k => $v) {
 			$customtags_array [$k] = $v->render ();
 		}
 		$xoopsTpl->assign ( 'icmsCustomtags', $customtags_array );

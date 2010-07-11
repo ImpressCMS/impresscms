@@ -2,7 +2,7 @@
 
 require_once XOOPS_ROOT_PATH.'/class/pagenav.php' ;
 require_once dirname(dirname(__FILE__)).'/class/gtickets.php' ;
-$myts =& MyTextSanitizer::getInstance() ;
+$myts =& icms_core_Textsanitizer::getInstance() ;
 $db =& Database::getInstance() ;
 
 // GET vars

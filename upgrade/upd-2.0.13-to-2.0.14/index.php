@@ -9,7 +9,7 @@ class upgrade_2014 {
 	}
 
 	function apply() {
-		if ( $this->apply_0523patch() ) {
+		if ($this->apply_0523patch()) {
 			return $this->apply_auth_db();
 		}
 		return false;
@@ -17,8 +17,8 @@ class upgrade_2014 {
 
 	function check_0523patch() {
 		$lines = file( '../mainfile.php' );
-		foreach ( $lines as $line ) {
-			if ( strpos( $line, "\$_REQUEST[\$bad_global]" ) !== false ) {
+		foreach ( $lines as $line) {
+			if (strpos( $line, "\$_REQUEST[\$bad_global]" ) !== false) {
 				// Patch found: do not apply again
 				return true;
 			}
@@ -28,8 +28,8 @@ class upgrade_2014 {
 
 	function apply_0523patch() {
 		$patchCode = "
-    foreach ( array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri') as \$bad_global ) {
-        if ( isset( \$_REQUEST[\$bad_global] ) ) {
+    foreach ( array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri') as \$bad_global) {
+        if (isset( \$_REQUEST[\$bad_global] )) {
             header( 'Location: '.XOOPS_URL.'/' );
             exit();
         }
@@ -47,29 +47,29 @@ class upgrade_2014 {
 		$matchProtector = '/modules/protector/include/precheck.inc.php';
 		$matchDefault = "\$xoopsOption['nocommon']";
 
-		foreach ( $lines as $k => $line ) {
-			if ( strpos( $line, "\$_REQUEST[\$bad_global]" ) !== false ) {
+		foreach ( $lines as $k => $line) {
+			if (strpos( $line, "\$_REQUEST[\$bad_global]" ) !== false) {
 				// Patch found: do not apply again
 				$insert = -2;
 				break;
 			}
-			if ( strpos( $line, $matchProtector ) || strpos( $line, $matchDefault ) ) {
+			if (strpos( $line, $matchProtector ) || strpos( $line, $matchDefault )) {
 				$insert = $k;
 				break;
 			}
 		}
-		if ( $insert == -1 ) {
+		if ($insert == -1) {
 			printf( _FAILED_PATCH . "<br />", "mainfile.php" );
 			echo $manual;
 			return false;
-		} elseif ( $insert != -2 ) {
-			if ( !is_writable( '../mainfile.php' ) ) {
+		} elseif ($insert != -2) {
+			if (!is_writable( '../mainfile.php' )) {
 				echo 'mainfile.php is read-only. Please allow the server to write to this file, or apply the patch manually';
 				echo $manual;
 				return false;
 			} else {
 				$fp = fopen( '../mainfile.php', 'wt' );
-				if ( !$fp ) {
+				if (!$fp) {
 					echo 'Error opening mainfile.php, please apply the patch manually.';
 					echo $manual;
 					return false;
@@ -98,9 +98,9 @@ class upgrade_2014 {
 		return (bool)$value;
 	}
 
-	function query( $sql ) {
+	function query( $sql) {
 		$db = $GLOBALS['xoopsDB'];
-		if ( ! ( $ret = $db->queryF( $sql ) ) ) {
+		if (! ( $ret = $db->queryF( $sql ) )) {
 			echo $db->error();
 		}
 	}
@@ -109,7 +109,7 @@ class upgrade_2014 {
 		$db = $GLOBALS['xoopsDB'];
 
 		$cat = getDbValue( $db, 'configcategory', 'confcat_id', "`confcat_name` ='_MD_AM_AUTHENTICATION'" );
-		if ( $cat !== false && $cat != XOOPS_CONF_AUTH ) {
+		if ($cat !== false && $cat != XOOPS_CONF_AUTH) {
 			// 2.2 downgrade bug: LDAP cat is here but has a catid of 0
 			$db->queryF( "DELETE FROM " . $db->prefix( 'configcategory' ) . " WHERE `confcat_name` ='_MD_AM_AUTHENTICATION' " );
 			$db->queryF( "DELETE FROM " . $db->prefix( 'config' ) . " WHERE `conf_modid`=0 AND `conf_catid` = $cat" );
@@ -136,8 +136,8 @@ class upgrade_2014 {
 	   		'ldap_givenname_attr'	=> "'_MD_AM_LDAP_GIVENNAME_ATTR', 'givenname', '_MD_AM_LDAP_GIVENNAME_ATTR_DSC', 'textbox', 'text', 16",
 	   		'ldap_surname_attr'		=> "'_MD_AM_LDAP_SURNAME_ATTR', 'sn', '_MD_AM_LDAP_SURNAME_ATTR_DESC', 'textbox', 'text', 17",
 		);
-		foreach ( $data as $name => $values ) {
-			if ( !getDbValue( $db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='$name'" ) ) {
+		foreach ( $data as $name => $values) {
+			if (!getDbValue( $db, 'config', 'conf_id', "`conf_modid`=0 AND `conf_catid`=7 AND `conf_name`='$name'" )) {
 				$this->query(
 					"INSERT INTO `$table` (conf_modid,conf_catid,conf_name,conf_title,conf_value,conf_desc,conf_formtype,conf_valuetype,conf_order) " .
 					"VALUES ( 0,7,'$name',$values)"
@@ -153,7 +153,7 @@ class upgrade_2014 {
 			'_MD_AM_AUTH_CONFOPTION_AD' => 'ad',
 		);
 		$this->query( "DELETE FROM `$table` WHERE `conf_id`=$id" );
-		foreach ( $data as $name => $value ) {
+		foreach ( $data as $name => $value) {
 			$this->query( "INSERT INTO `$table` (confop_name, confop_value, conf_id) VALUES ('$name', '$value', $id)" );
 		}
 		return true;

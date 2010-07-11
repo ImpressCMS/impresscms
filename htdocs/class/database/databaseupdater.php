@@ -295,7 +295,7 @@ class IcmsDatabasetable {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link icms_criteria_Element}
 	 * @param 	bool	$fieldvalueIsOperation TRUE if fieldvalue is an operation, for example, conf_order+1
 	 *
 	 * @return  bool
@@ -313,7 +313,7 @@ class IcmsDatabasetable {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link icms_criteria_Element}
 	 *
 	 * @return  bool
 	 */
@@ -491,7 +491,7 @@ class IcmsDatabasetable {
 	 *
 	 * @param   string  $fieldname  Name of the field
 	 * @param   string  $fieldvalue Value to write
-	 * @param   object  $criteria   {@link CriteriaElement}
+	 * @param   object  $criteria   {@link icms_criteria_Element}
 	 *
 	 * @return  bool
 	 **/
@@ -512,7 +512,7 @@ class IcmsDatabasetable {
 				$set_clause .= $this->_db->quoteString( $fieldvalue );
 			}
 			$sql = 'UPDATE '.$this->name().' SET '.$set_clause;
-			if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+			if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 				$sql .= ' '.$criteria->renderWhere();
 			}
 			if ($this->force) {
@@ -532,7 +532,7 @@ class IcmsDatabasetable {
 	/**
 	 * delete all objects meeting the conditions
 	 *
-	 * @param object $criteria {@link CriteriaElement} with conditions to meet
+	 * @param object $criteria {@link icms_criteria_Element} with conditions to meet
 	 * @return bool
 	 */
 
@@ -541,7 +541,7 @@ class IcmsDatabasetable {
 		$ret = true;
 		foreach ($this->getDeleteAll() as $item) {
 			$criteria = isset($item['criteria']) ? $item['criteria'] : null;
-			if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+			if (isset($criteria) && is_subclass_of($criteria, 'icms_criteria_Element')) {
 				$sql = 'DELETE FROM '.$this->table;
 				$sql .= ' '.$criteria->renderWhere();
 				if ($this->force) {
@@ -1013,9 +1013,9 @@ class IcmsDatabaseupdater {
 		if (!$dirname) {
 			$dirname = icms_getCurrentModuleName();
 		}
-		$module = XoopsModuleHandler::getByDirname($dirname);
-		$module->setVar('dbversion', $newDBVersion);
 		$module_handler = xoops_getHandler('module');
+		$module = $module_handler->getByDirname($dirname);
+		$module->setVar('dbversion', $newDBVersion);
 
 		if (!$module_handler->insert($module)) {
 			$module->setErrors(_DATABASEUPDATER_MSG_DB_VERSION_ERR);

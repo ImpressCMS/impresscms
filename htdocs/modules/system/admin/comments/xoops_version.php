@@ -24,5 +24,5 @@ $modversion = array( 'name' => _MD_AM_COMMENTS,
 	'image' => "comments.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=comments",
-	'category' => XOOPS_SYSTEM_COMMENT );
-?>
+	'category' => XOOPS_SYSTEM_COMMENT,
+	'group' => 'Content');

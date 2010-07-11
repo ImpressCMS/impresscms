@@ -32,7 +32,7 @@ function render_youtube($ele_name) {
 	global $xoTheme;
 	$javascript='';
 	$dirname = basename(dirname(__FILE__));
-	if(isset($xoTheme)){
+	if (isset($xoTheme)) {
 		$xoTheme->addScript(ICMS_URL.'/plugins/textsanitizer/'.$dirname.'/'.$dirname.'.js',
 		array('type' => 'text/javascript'));
 	}
@@ -61,7 +61,7 @@ function textsanitizer_youtube_decode($url, $width, $height)
 	}
 	$src = "http://www.youtube.com/v/" . $matches[2];
 	if (empty($width) || empty($height)) {
-		if ( !$dimension = @getimagesize($src) ) {
+		if (!$dimension = @getimagesize($src)) {
 			return "";
 		}
 		if (!empty($width)) {

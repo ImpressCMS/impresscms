@@ -2,6 +2,8 @@
 /**
  * Handles all notification select functions within ImpressCMS
  *
+ * @todo		This should be a method of the icms_notification_Handler class
+ *
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
@@ -17,15 +19,15 @@ if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
 include_once ICMS_ROOT_PATH.'/include/notification_constants.php';
-include_once ICMS_ROOT_PATH.'/include/notification_functions.php';
+//include_once ICMS_ROOT_PATH.'/include/notification_functions.php';
 $xoops_notification = array();
-$xoops_notification['show'] = isset($icmsModule) && is_object($icmsUser) && notificationEnabled('inline') ? 1 : 0;
+$xoops_notification['show'] = isset($icmsModule) && is_object($icmsUser) && icms_notification_Handler::isEnabled('inline') ? 1 : 0;
 if ($xoops_notification['show']) {
 	icms_loadLanguageFile('core', 'notification');
-	$categories =& notificationSubscribableCategoryInfo();
+	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
+	$categories =& $notification_handler->subscribableCategoryInfo();
 	$event_count = 0;
 	if (!empty($categories)) {
-		$notification_handler =& xoops_gethandler('notification');
 		foreach ($categories as $category) {
 			$section['name'] = $category['name'];
 			$section['title'] = $category['title'];
@@ -33,7 +35,7 @@ if ($xoops_notification['show']) {
 			$section['itemid'] = $category['item_id'];
 			$section['events'] = array();
 			$subscribed_events = $notification_handler->getSubscribedEvents($category['name'], $category['item_id'], $icmsModule->getVar('mid'), $icmsUser->getVar('uid'));
-			foreach (notificationEvents($category['name'], true) as $event) {
+			foreach ($notification_handler->categoryEvents($category['name'], true) as $event) {
 				if (!empty($event['admin_only']) && !$icmsUser->isAdmin($icmsModule->getVar('mid'))) {
 					continue;
 				}
@@ -69,4 +71,3 @@ if ($xoops_notification['show']) {
 }
 $xoopsTpl->assign('xoops_notification', $xoops_notification);
 
-?>

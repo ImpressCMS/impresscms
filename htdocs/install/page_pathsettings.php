@@ -20,7 +20,7 @@
 require_once 'common.inc.php';
 //require_once 'filter.php';
 
-if ( !defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
 $wizard->setPage( 'pathsettings' );
 $pageHasForm = true;
@@ -40,21 +40,21 @@ class PathStuffController {
 	var $permErrors = array();
 
 	function PathStuffController() {
-		if ( isset( $_SESSION['settings']['ROOT_PATH'] ) ) {
+		if (isset( $_SESSION['settings']['ROOT_PATH'] )) {
 			$this->xoopsRootPath = $_SESSION['settings']['ROOT_PATH'];
 		} else {
 			$path = str_replace( "\\", "/", @realpath( '../' ) );
-			if ( file_exists( "$path/mainfile.php" ) ) {
+			if (file_exists( "$path/mainfile.php" )) {
 				$this->xoopsRootPath = $path;
 			}
 		}
-		if ( isset( $_SESSION['settings']['TRUST_PATH'] ) ) {
+		if (isset( $_SESSION['settings']['TRUST_PATH'] )) {
 			$this->xoopsTrustPath = $_SESSION['settings']['TRUST_PATH'];
 		} else {
 			$web_root = dirname( $this->xoopsRootPath );
 			$arr = explode('/',$web_root);
 			$web_root = '';
-			for ($i = 0; $i < count($arr)-1; $i++){
+			for ($i = 0; $i < count($arr)-1; $i++) {
 				$web_root .= $arr[$i].'/';
 			}
 
@@ -62,7 +62,7 @@ class PathStuffController {
 
 			$this->xoopsTrustPath = $docroot . substr( md5( time() ), 0, 15);
 		}
-		if ( isset( $_SESSION['settings']['URL'] ) ) {
+		if (isset( $_SESSION['settings']['URL'] )) {
 			$this->xoopsUrl = $_SESSION['settings']['URL'];
 		} else {
 			$path = $GLOBALS['wizard']->baseLocation();
@@ -73,11 +73,11 @@ class PathStuffController {
 	function execute() {
 		$this->readRequest();
 		$valid = $this->validate();
-		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$_SESSION['settings']['ROOT_PATH'] = $this->xoopsRootPath;
 			$_SESSION['settings']['TRUST_PATH'] = $this->xoopsTrustPath;
 			$_SESSION['settings']['URL'] = $this->xoopsUrl;
-			if ( $valid ) {
+			if ($valid) {
 				$GLOBALS['wizard']->redirectToPage( '+1' );
 			} else {
 				$GLOBALS['wizard']->redirectToPage( '+0' );
@@ -86,7 +86,7 @@ class PathStuffController {
 	}
 
 	function readRequest() {
-		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$request = $_POST;
 			/*
 			 $request = xo_input_get_args( INPUT_POST, array(
@@ -96,22 +96,22 @@ class PathStuffController {
 				'flags'		=> FILTER_FLAG_SCHEME_REQUIRED | FILTER_FLAG_HOST_REQUIRED,
 				),
 				) );*/
-			if ( isset($request['ROOT_PATH']) ) {
+			if (isset($request['ROOT_PATH'])) {
 				$request['ROOT_PATH'] = str_replace( "\\", "/", $request['ROOT_PATH'] );
-				if ( substr( $request['ROOT_PATH'], -1 ) == '/' ) {
+				if (substr( $request['ROOT_PATH'], -1 ) == '/') {
 					$request['ROOT_PATH'] = substr( $request['ROOT_PATH'], 0, -1 );
 				}
 				$this->xoopsRootPath = $request['ROOT_PATH'];
 			}
-			if ( isset($request['TRUST_PATH']) ) {
+			if (isset($request['TRUST_PATH'])) {
 				$request['TRUST_PATH'] = str_replace( "\\", "/", $request['TRUST_PATH'] );
-				if ( substr( $request['TRUST_PATH'], -1 ) == '/' ) {
+				if (substr( $request['TRUST_PATH'], -1 ) == '/') {
 					$request['TRUST_PATH'] = substr( $request['TRUST_PATH'], 0, -1 );
 				}
 				$this->xoopsTrustPath = $request['TRUST_PATH'];
 			}
-			if ( isset( $request['URL'] ) ) {
-				if ( substr( $request['URL'], -1 ) == '/' ) {
+			if (isset( $request['URL'] )) {
+				if (substr( $request['URL'], -1 ) == '/') {
 					$request['URL'] = substr( $request['URL'], 0, -1 );
 				}
 				$this->xoopsUrl = $request['URL'];
@@ -120,10 +120,10 @@ class PathStuffController {
 	}
 
 	function validate() {
-		if( $this->checkRootPath() ) {
+		if ($this->checkRootPath()) {
 			$this->checkPermissions();
 		}
-		if( $this->checkTrustPath() ) {
+		if ($this->checkTrustPath()) {
 			$this->checkTrustPathPermissions();
 		}
 		$this->validUrl = !empty($this->xoopsUrl);
@@ -135,9 +135,9 @@ class PathStuffController {
 	 * @return bool
 	 */
 	function checkRootPath() {
-		if ( @is_dir( $this->xoopsRootPath ) && @is_readable( $this->xoopsRootPath ) ) {
+		if (@is_dir( $this->xoopsRootPath ) && @is_readable( $this->xoopsRootPath )) {
 			@include_once "$this->xoopsRootPath/include/version.php";
-			if ( file_exists( "$this->xoopsRootPath/mainfile.php" ) && defined( 'XOOPS_VERSION' ) ) {
+			if (file_exists( "$this->xoopsRootPath/mainfile.php" ) && defined( 'XOOPS_VERSION' )) {
 				return $this->validRootPath = true;
 			}
 		}
@@ -149,7 +149,7 @@ class PathStuffController {
 	 * @return bool
 	 */
 	function checkTrustPath() {
-		if ( @is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath ) ) {
+		if (@is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath )) {
 			return $this->validTrustPath = true;
 		}
 		return $this->validTrustPath = false;
@@ -157,7 +157,7 @@ class PathStuffController {
 
 	function createTrustPath() {
 		if (@imcms_install_mkdir($this->xoopsTrustPath)) {
-			if ( @is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath ) ) {
+			if (@is_dir( $this->xoopsTrustPath ) && @is_readable( $this->xoopsTrustPath )) {
 				$_SESSION['settings']['TRUST_PATH'] = $this->xoopsTrustPath;
 				return $this->validTrustPath = true;
 			}
@@ -168,10 +168,10 @@ class PathStuffController {
 	function checkPermissions() {
 		$paths = array( 'mainfile.php', 'uploads', 'modules', 'templates_c', 'cache' );
 		$errors = array();
-		foreach ( $paths as $path ) {
+		foreach ( $paths as $path) {
 			$errors[$path] = $this->makeWritable( "$this->xoopsRootPath/$path" );
 		}
-		if ( in_array( false, $errors ) ) {
+		if (in_array( false, $errors )) {
 			$this->permErrors = $errors;
 			return false;
 		}
@@ -181,7 +181,7 @@ class PathStuffController {
 	function checkTrustPathPermissions() {
 		$errors = array();
 		$errors['trustpath'] = $this->makeWritable( "$this->xoopsTrustPath" );
-		if ( in_array( false, $errors ) ) {
+		if (in_array( false, $errors )) {
 			$this->permErrors = $errors;
 			return false;
 		}
@@ -196,32 +196,32 @@ class PathStuffController {
 	 * @param bool $recurse
 	 * @return false on failure, method (u-ser,g-roup,w-orld) on success
 	 */
-	function makeWritable( $path, $group = false, $recurse = false ) {
-		if ( !file_exists( $path ) ) {
+	function makeWritable( $path, $group = false, $recurse = false) {
+		if (!file_exists( $path )) {
 			return false;
 		}
 		$perm = @is_dir( $path ) ? 6 : 7;
-		if ( @!is_writable($path) ) {
+		if (@!is_writable($path)) {
 			// First try using owner bit
 			@chmod( $path, octdec( '0' . $perm . '00' ) );
 			clearstatcache();
-			if ( !@is_writable( $path ) && $group !== false ) {
+			if (!@is_writable( $path ) && $group !== false) {
 				// If group has been specified, try using the group bit
 				@chgrp( $path, $group );
 				@chmod( $path, octdec( '0' . $perm . $perm . '0' ) );
 			}
 			clearstatcache();
-			if ( !@is_writable( $path ) ) {
+			if (!@is_writable( $path )) {
 				@chmod( $path, octdec( '0' . $perm . $perm . $perm ) );
 			}
 		}
 		clearstatcache();
-		if ( @is_writable( $path ) ) {
+		if (@is_writable( $path )) {
 			$info = stat( $path );
 			//echo $path . ' : ' . sprintf( '%o', $info['mode'] ) . '....';
-			if ( $info['mode'] & 0002 ) {
+			if ($info['mode'] & 0002) {
 				return 'w';
-			} elseif ( $info['mode'] & 0020 ) {
+			} elseif ($info['mode'] & 0020) {
 				return 'g';
 			}
 			return 'u';
@@ -235,8 +235,8 @@ class PathStuffController {
 	function findServerGID() {
 		$name = tempnam( '/non-existent/', 'XOOPS' );
 		$group = 0;
-		if ( $name ) {
-			if ( touch( $name ) ) {
+		if ($name) {
+			if (touch( $name )) {
 				$group = filegroup( $name );
 				unlink( $name );
 				return $group;
@@ -268,15 +268,15 @@ function resolveDocumentRoot() {
 	$rootp = str_replace("\\","/",$rootp);
 	$lastchar = substr($rootp,strlen($rootp)-1,1);
 
-	if ($lastchar != '/' && $lastchar != '\\' ){
+	if ($lastchar != '/' && $lastchar != '\\') {
 		$rootp .= '/';
 	}
 
 	return $rootp;
 }
 
-function genRootCheckHtml( $valid ) {
-	if ( $valid ) {
+function genRootCheckHtml( $valid) {
+	if ($valid) {
 		return '<img src="img/yes.png" alt="Success" class="rootimg" />' .  sprintf( XOOPS_FOUND, XOOPS_VERSION);
 	}  else {
 		return '<img src="img/no.png" alt="Error" class="rootimg" />' .ERR_NO_XOOPS_FOUND;
@@ -284,8 +284,8 @@ function genRootCheckHtml( $valid ) {
 }
 
 
-function genTrustPathCheckHtml( $valid ) {
-	if ( $valid ) {
+function genTrustPathCheckHtml( $valid) {
+	if ($valid) {
 		return '<img src="img/yes.png" alt="Success" class="rootimg" />' . _INSTALL_TRUST_PATH_FOUND;
 	}  else {
 		return '<img src="img/no.png" alt="Error" class="rootimg" />' . _INSTALL_ERR_NO_TRUST_PATH_FOUND;
@@ -307,23 +307,23 @@ function genCreateTrustPathHtml($valid) {
 
 $ctrl = new PathStuffController();
 
-if ( $_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'checkrootpath' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'checkrootpath') {
 	$ctrl->xoopsRootPath = $_GET['path'];
 	echo genRootCheckHtml( $ctrl->checkRootPath() );
 	exit();
 }
-if ( $_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'checktrustpath' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'checktrustpath') {
 	$ctrl->xoopsTrustPath = $_GET['path'];
 	echo genTrustPathCheckHtml( $ctrl->checkTrustPath() );
 	exit();
 }
-if ( $_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'createtrustpath' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'GET' && @$_GET['action'] == 'createtrustpath') {
 	$ctrl->xoopsTrustPath = $_GET['path'];
 	echo genCreateTrustPathHtml( $ctrl->createTrustPath() );
 	exit();
 }
 $ctrl->execute();
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	return;
 }
 
@@ -348,11 +348,11 @@ ob_start();
 <div class="clear">&nbsp;</div>
 <input type="text" name="ROOT_PATH" id="rootpath"
 	value="<?php echo $ctrl->xoopsRootPath; ?>" /> <span id="rootpathimg"><?php echo genRootCheckHtml( $ctrl->validRootPath ); ?></span>
-<?php if ( $ctrl->validRootPath && !empty( $ctrl->permErrors ) ) { ?>
+<?php if ($ctrl->validRootPath && !empty( $ctrl->permErrors )) { ?>
 <div id="rootperms"><?php echo CHECKING_PERMISSIONS . '<br /><p>' . ERR_NEED_WRITE_ACCESS . '</p>'; ?>
 <ul class="diags">
-<?php foreach ( $ctrl->permErrors as $path => $result ) {
-	if ( $result ) {
+<?php foreach ( $ctrl->permErrors as $path => $result) {
+	if ($result) {
 		echo '<li class="success">' . sprintf( IS_WRITABLE, $path ) . '</li>';
 	} else {
 		echo '<li class="failure">' . sprintf( IS_NOT_WRITABLE, $path ) . '</li>';
@@ -373,7 +373,7 @@ ob_start();
 <div class="clear">&nbsp;</div>
 <input type="text" name="TRUST_PATH" id="trustpath"
 	value="<?php echo $ctrl->xoopsTrustPath; ?>" /> <span id="trustpathimg"><?php echo genTrustPathCheckHtml( $ctrl->validTrustPath ); ?></span>
-<?php if ( !$ctrl->validTrustPath && $ctrl->xoopsTrustPath != '') { ?>
+<?php if (!$ctrl->validTrustPath && $ctrl->xoopsTrustPath != '') { ?>
 <div id="trustperms">
 <p><?php echo TRUST_PATH_VALIDATE . '</p>'; ?>
 <button type="button" id="createtrustpath"><?php echo BUTTON_CREATE_TUST_PATH; ?></button>

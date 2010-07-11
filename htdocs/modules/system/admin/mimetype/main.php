@@ -10,7 +10,7 @@
  * @version		$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -22,7 +22,7 @@ function editmimetype($showmenu = false, $mimetypeid = 0, $clone=false)
 
 	$mimetypeObj = $icms_mimetype_handler->get($mimetypeid);
 
-	if (!$clone && !$mimetypeObj->isNew()){
+	if (!$clone && !$mimetypeObj->isNew()) {
 
 		$sform = $mimetypeObj->getForm(_CO_ICMS_MIMETYPE_EDIT, 'addmimetype');
 
@@ -44,8 +44,8 @@ icms_loadLanguageFile('system', 'common');
 
 $icms_mimetype_handler = icms_getModuleHandler('mimetype');
 
-if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?trim(StopXSS($_GET['op'])):'');
 
 switch ($op) {
@@ -65,14 +65,12 @@ switch ($op) {
 		break;*/
 
 	case "addmimetype":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_mimetype_handler);
+		$controller = new icms_ipf_Controller($icms_mimetype_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_MIMETYPE_CREATED, _CO_ICMS_MIMETYPE_MODIFIED);
 		break;
 
 	case "del":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_mimetype_handler);
+		$controller = new icms_ipf_Controller($icms_mimetype_handler);
 		$controller->handleObjectDeletion();
 
 		break;
@@ -81,12 +79,10 @@ switch ($op) {
 
 		icms_cp_header();
 
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-
-		$objectTable = new IcmsPersistableTable($icms_mimetype_handler);
-		$objectTable->addColumn(new IcmsPersistableColumn('name', _GLOBAL_LEFT, 150));
-		$objectTable->addColumn(new IcmsPersistableColumn('extension', _GLOBAL_LEFT, 150));
-		$objectTable->addColumn(new IcmsPersistableColumn('types', _GLOBAL_LEFT));
+		$objectTable = new icms_ipf_view_Table($icms_mimetype_handler);
+		$objectTable->addColumn(new icms_ipf_view_Column('name', _GLOBAL_LEFT, 150));
+		$objectTable->addColumn(new icms_ipf_view_Column('extension', _GLOBAL_LEFT, 150));
+		$objectTable->addColumn(new icms_ipf_view_Column('types', _GLOBAL_LEFT));
 
 		$objectTable->addIntroButton('addmimetype', 'admin.php?fct=mimetype&amp;op=mod', _CO_ICMS_MIMETYPE_CREATE);
 

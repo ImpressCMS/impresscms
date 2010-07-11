@@ -25,5 +25,5 @@ $modversion = array( 'name' => _MD_AM_MLUS,
 
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=mailusers",
-	'category' => XOOPS_SYSTEM_MAILU );
-?>
+	'category' => XOOPS_SYSTEM_MAILU,
+	'group' => 'Users and Groups');

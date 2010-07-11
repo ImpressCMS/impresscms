@@ -17,10 +17,10 @@ if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
-if ( ('system' != $icmsModule->getVar('dirname')
+if (('system' != $icmsModule->getVar('dirname')
 	&& XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule'])
 	|| (!is_object($icmsUser) && !$icmsModuleConfig['com_anonpost'])
-	|| !is_object($icmsModule) ) {
+	|| !is_object($icmsModule)) {
 	redirect_header(ICMS_URL . '/user.php', 1, _NOPERM);
 }
 
@@ -45,7 +45,7 @@ if (!isset($_GET['com_order'])) {
 }
 $comment_handler =& xoops_gethandler('comment');
 $comment =& $comment_handler->get($com_id);
-$r_name = XoopsUser::getUnameFromId($comment->getVar('com_uid'));
+$r_name = icms_member_user_Object::getUnameFromId($comment->getVar('com_uid'));
 $r_text = _CM_POSTER . ': <strong>' . $r_name . '</strong>&nbsp;&nbsp;' . _CM_POSTED . ': <strong>' . formatTimestamp($comment->getVar('com_created')) . '</strong><br /><br />' . $comment->getVar('com_text');
 $com_title = $comment->getVar('com_title', 'E');
 if (!preg_match("/^(Re|" . _CM_RE . "):/i", $com_title)) {
@@ -56,11 +56,11 @@ $com_text = '';
 $com_id = 0;
 $dosmiley = 1;
 $groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
-$gperm_handler =& xoops_gethandler('groupperm');
+$gperm_handler =& xoops_gethandler('member_groupperm');
 if ($icmsConfig ['editor_default'] != 'dhtmltextarea' && $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
 	$dohtml = 1;
 	$dobr = 0;
-}else{
+} else {
 	$dohtml = 0;
 	$dobr = 1;
 }

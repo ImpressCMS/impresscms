@@ -8,7 +8,7 @@
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
  */
-if ( !is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid()) ) {
+if (!is_object($xoopsUser) || !is_object($xoopsModule) || !$xoopsUser->isAdmin($xoopsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -20,7 +20,7 @@ function editautotasks($showmenu = false, $autotasksid = 0, $clone=false)
 
 	$autotasksObj = $icms_autotasks_handler->get($autotasksid);
 
-	if (!$clone && !$autotasksObj->isNew()){
+	if (!$clone && !$autotasksObj->isNew()) {
 
 		$sform = $autotasksObj->getForm(_CO_ICMS_AUTOTASKS_EDIT, 'addautotasks');
 		$sform->assign($icmsAdminTpl);
@@ -60,14 +60,12 @@ switch ($op) {
 		break;
 
 	case "addautotasks":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_autotasks_handler);
+		$controller = new icms_ipf_Controller($icms_autotasks_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_AUTOTASKS_CREATED, _CO_ICMS_AUTOTASKS_MODIFIED, ICMS_URL . '/modules/system/admin.php?fct=autotasks');
 		break;
 
 	case "del":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_autotasks_handler);
+		$controller = new icms_ipf_Controller($icms_autotasks_handler);
 		$controller->handleObjectDeletion();
 
 		break;
@@ -76,16 +74,14 @@ switch ($op) {
 
 		icms_cp_header();
 
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-
-		$objectTable = new IcmsPersistableTable($icms_autotasks_handler, false, array('edit'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_name', 'left', false, 'getNameForDisplay'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_repeat', 'center', 80, 'getRepeatForDisplay'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_interval', 'center', 80, 'getIntervalForDisplay'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_enabled', 'center', 80, 'getEnableForDisplay'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_onfinish', 'center', 120, 'getOnFinishForDisplay'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_type', 'center', 120, 'getTypeForDisplay'));
-		$objectTable->addColumn(new IcmsPersistableColumn('sat_lastruntime', 'center', 180, 'getLastRunTimeForDisplay'));
+		$objectTable = new icms_ipf_view_Table($icms_autotasks_handler, false, array('edit'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_name', 'left', false, 'getNameForDisplay'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_repeat', 'center', 80, 'getRepeatForDisplay'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_interval', 'center', 80, 'getIntervalForDisplay'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_enabled', 'center', 80, 'getEnableForDisplay'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_onfinish', 'center', 120, 'getOnFinishForDisplay'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_type', 'center', 120, 'getTypeForDisplay'));
+		$objectTable->addColumn(new icms_ipf_view_Column('sat_lastruntime', 'center', 180, 'getLastRunTimeForDisplay'));
 
 		$objectTable->addIntroButton('addautotasks', 'admin.php?fct=autotasks&amp;op=mod', _CO_ICMS_AUTOTASKS_CREATE);
 

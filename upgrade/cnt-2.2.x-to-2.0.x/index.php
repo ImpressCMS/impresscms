@@ -19,7 +19,7 @@ class upgrade_220
 	var $updater;
 
 	function __construct() {
-		$this->updater = XoopsDatabaseFactory::getDatabaseUpdater();
+		$this->updater = icms_database_Factory::getDatabaseUpdater();
 	}
 
 	function isApplied()

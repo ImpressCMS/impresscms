@@ -91,7 +91,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 			$editor_default = $icmsConfig['editor_default'];
 		}
 
-		$gperm_handler =& xoops_gethandler('groupperm');
+		$gperm_handler =& xoops_gethandler('member_groupperm');
 		if( file_exists( ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)){
 			include ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ;
 			$this->htmlEditor = array( $editorversion['class'], ICMS_EDITOR_PATH."/".$editorversion['dirname']."/".$editorversion['file'] );
@@ -123,7 +123,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	function render()
 	{
 		global $icmsConfigPlugins, $icmsConfigMultilang;
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		$editor = false;
 		if ( $this->htmlEditor && is_object( $this->htmlEditor ) ) {
 			if ( !isset( $this->htmlEditor->isEnabled ) || $this->htmlEditor->isEnabled ) {
@@ -218,7 +218,7 @@ class XoopsFormDhtmlTextArea extends XoopsFormTextArea {
 	 */
 	function _renderSmileys()
 	{
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		$smiles =& $myts->getSmileys();
 		$ret = '';
 		$count = count($smiles);

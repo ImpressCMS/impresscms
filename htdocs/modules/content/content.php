@@ -98,8 +98,7 @@ if (in_array($clean_op,$valid_op,true)){
 			if (!$xoopsSecurity->check()) {
 				redirect_header(content_getPreviousPage('index.php'), 3, _MD_CONTENT_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
 			}
-			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
-			$controller = new IcmsPersistableController($content_content_handler);
+			$controller = new icms_ipf_Controller($content_content_handler);
 			$controller->storeFromDefaultForm(_MD_CONTENT_CONTENT_CREATED, _MD_CONTENT_CONTENT_MODIFIED);
 			break;
 
@@ -112,8 +111,7 @@ if (in_array($clean_op,$valid_op,true)){
 					redirect_header($impresscms->urls['previouspage'], 3, _MD_CONTENT_SECURITY_CHECK_FAILED . implode('<br />', $xoopsSecurity->getErrors()));
 				}
 			}
-			include_once ICMS_ROOT_PATH.'/kernel/icmspersistablecontroller.php';
-			$controller = new IcmsPersistableController($content_content_handler);
+			$controller = new icms_ipf_Controller($content_content_handler);
 			$controller->handleObjectDeletionFromUserSide();
 			$icmsTpl->assign('content_category_path', $content_content_handler->getBreadcrumbForPid($contentObj->getVar('content_id','e'),1) . ' > ' . _DELETE);
 
@@ -146,7 +144,7 @@ if (in_array($clean_op,$valid_op,true)){
 	/**
 	 * Generating meta information for this page
 	 */
-	$icms_metagen = new IcmsMetagen($contentObj->getVar('content_title'), $contentObj->getVar('meta_keywords','n'), $contentObj->getVar('meta_description', 'n'));
+	$icms_metagen = new icms_ipf_Metagen($contentObj->getVar('content_title'), $contentObj->getVar('meta_keywords','n'), $contentObj->getVar('meta_description', 'n'));
 	$icms_metagen->createMetaTags();
 
 }

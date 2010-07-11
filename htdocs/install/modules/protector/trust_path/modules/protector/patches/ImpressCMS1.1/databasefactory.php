@@ -22,14 +22,14 @@
  * @copyright   copyright (c) 2000-2003 XOOPS.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  */
-class XoopsDatabaseFactory{
+class icms_database_Factory{
 
 	/**
 	 * Constructor
 	 *
 	 * Makes nothing.
 	 */
-	function XoopsDatabaseFactory(){}
+	function icms_database_Factory(){}
 
 	/**
 	 * Get a reference to the only instance of database class and connects to DB

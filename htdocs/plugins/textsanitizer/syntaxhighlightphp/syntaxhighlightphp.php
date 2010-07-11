@@ -28,9 +28,9 @@ function textsanitizer_syntaxhighlightphp(&$ts, $text) {
  *
  * @param $source
  */
-function textsanitizer_geshi_php_highlight( $source ) {
-	if ( !@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
-	$source = MyTextSanitizer::undoHtmlSpecialChars($source);
+function textsanitizer_geshi_php_highlight( $source) {
+	if (!@include_once ICMS_LIBRARIES_PATH . '/geshi/geshi.php' ) return false;
+	$source = icms_core_Textsanitizer::undoHtmlSpecialChars($source);
 
 	// Create the new GeSHi object, passing relevant stuff
 	$geshi = new GeSHi($source, 'php');
@@ -57,7 +57,7 @@ function render_syntaxhighlightphp($ele_name) {
 	global $xoTheme;
 	$javascript='';
 	$dirname = basename(dirname(__FILE__));
-	if(isset($xoTheme)){
+	if (isset($xoTheme)) {
 		$xoTheme->addScript(
 			ICMS_URL.'/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
 			array('type' => 'text/javascript'));
@@ -75,7 +75,7 @@ function render_syntaxhighlightphp($ele_name) {
  *
  * Enter specific styling for this plugin
  */
-function style_syntaxhighlightphp(){
+function style_syntaxhighlightphp() {
 	$style_info = '';
 	return $style_info;
 }

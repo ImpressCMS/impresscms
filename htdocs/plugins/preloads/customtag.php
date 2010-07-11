@@ -15,7 +15,7 @@
  * @since	1.2
  *
  */
-class IcmsPreloadCustomtag extends IcmsPreloadItem {
+class IcmsPreloadCustomtag extends icms_preload_Item {
 	/**
 	 * Function to be triggered at the end of the core boot process
 	 *
@@ -26,7 +26,7 @@ class IcmsPreloadCustomtag extends IcmsPreloadItem {
 	}
 
 	/**
-	 * Function to be triggered when entering in MyTextSanitizer::displayTarea() function
+	 * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
 	 *
 	 * The $array var is structured like this:
 	 * $array[0] = $text
@@ -36,7 +36,7 @@ class IcmsPreloadCustomtag extends IcmsPreloadItem {
 	 * $array[4] = $image
 	 * $array[5] = $br
 	 *
-	 * @param array array containing parameters passed by MyTextSanitizer::displayTarea()
+	 * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
 	 *
 	 * @return	void
 	 */
@@ -45,7 +45,7 @@ class IcmsPreloadCustomtag extends IcmsPreloadItem {
 	}
 
 	/**
-	 * Function to be triggered when entering in MyTextSanitizer::displayTarea() function
+	 * Function to be triggered when entering in icms_core_Textsanitizer::displayTarea() function
 	 *
 	 * The $array var is structured like this:
 	 * $array[0] = $text
@@ -55,7 +55,7 @@ class IcmsPreloadCustomtag extends IcmsPreloadItem {
 	 * $array[4] = $image
 	 * $array[5] = $br
 	 *
-	 * @param array array containing parameters passed by MyTextSanitizer::displayTarea()
+	 * @param array array containing parameters passed by icms_core_Textsanitizer::displayTarea()
 	 *
 	 * @return	void
 	 */
@@ -72,7 +72,7 @@ class IcmsPreloadCustomtag extends IcmsPreloadItem {
 		global $xoopsTpl, $icms_customtag_handler;
 		$customtags_array = array();
 		if (is_object($xoopsTpl)) {
-			foreach($icms_customtag_handler->objects as $k=>$v) {
+			foreach ($icms_customtag_handler->objects as $k=>$v) {
 				$customtags_array[$k] = $v->render();
 			}
 			$xoopsTpl->assign('icmsCustomtags', $customtags_array);

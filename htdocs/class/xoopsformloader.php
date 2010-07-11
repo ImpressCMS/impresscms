@@ -47,6 +47,5 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formdatetime.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formhiddentoken.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formcolorpicker.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formselecteditor.php";
-include_once ICMS_ROOT_PATH."/class/xoopsform/formcaptcha.php";
 
 ?>

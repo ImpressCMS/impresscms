@@ -18,7 +18,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 function icms_customtag_initiate() {
 	global $xoopsTpl, $icms_customtag_handler;
 	if (is_object($xoopsTpl)) {
-		foreach($icms_customtag_handler->objects as $k=>$v) {
+		foreach ($icms_customtag_handler->objects as $k=>$v) {
 			$xoopsTpl->assign($k, $v->render());
 		}
 	}

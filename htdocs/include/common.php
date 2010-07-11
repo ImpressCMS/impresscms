@@ -17,91 +17,6 @@
 /** make sure mainfile is included, for security and functionality */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
-/**
- *
- * Register classes and their declarations, so they will only be loaded when used
- * @param string $class name of a class to load
- *
- * @since 1.3
- */
-function icms_autoload($class) {
-	/** temp var to debug spl_autoload feature */
-	$debug = FALSE;
-
-	$file = strtolower($class);
-	if ($debug) echo "<ul><b>$class</b>";
-	if (file_exists($path = ICMS_ROOT_PATH . "/kernel/$file.php")) {
-		if ($debug) echo "<li>inc - $path</li>";
-		include_once $path;
-// *** checking for icms classes, first
-	} elseif (file_exists($path = ICMS_ROOT_PATH . "/kernel/" . str_replace('icms', '', $file) . ".php")) {
-		if ($debug) echo "<li>inc - $path </li>";
-		include_once $path;
-	} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/" . str_replace('icms', '', $file) . ".php")) {
-		if ($debug) echo "<li>inc - $path </li>";
-		include_once $path;
-	} elseif (strpos($file, 'icms') !== false && strpos($file, 'handler') !== false) {
-		if ($debug) echo "<li>loading handler</li>";
-		$handlerFile = str_replace('icms', '', $file);
-		$handlerFile = str_replace('handler', '', $handlerFile);
-		if ($debug) echo "<li>$path</li>";
-		if (file_exists($path = ICMS_ROOT_PATH . "/kernel/$handlerFile.php")) {
-			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
-		} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/$handlerFile.php")) {
-			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
-		}
-// *** then check for xoops versions
-	} elseif (file_exists($path = ICMS_ROOT_PATH . "/kernel/" . str_replace('xoops', '', $file) . ".php")) {
-		if ($debug) echo "<li>inc - $path </li>";
-		include_once $path;
-	} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/$file.php")) {
-		if ($debug) echo "<li>inc - $path</li>";
-		include_once $path;
-	} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/" . str_replace('xoops', '', $file) . ".php")) {
-		if ($debug) echo "<li>inc - $path </li>";
-		include_once $path;
-	} elseif (strpos($file, 'xoops') !== false && strpos($file, 'handler') !== false) {
-		if ($debug) echo "<li>loading handler</li>";
-		$handlerFile = str_replace('xoops', '', $file);
-		$handlerFile = str_replace('handler', '', $handlerFile);
-		if ($debug) echo "<li>$path</li>";
-		if (file_exists($path = ICMS_ROOT_PATH . "/kernel/$handlerFile.php")) {
-			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
-		} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/$handlerFile.php")) {
-			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
-		}
-	} elseif (strpos($file, 'icmsform') !== false) {
-		if ($debug) echo "<li>loading icmsform element</li>";
-		if (file_exists($path = ICMS_ROOT_PATH . "/class/icmsform/elements/$file.php")) {
-			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
-		}
-	} elseif (strpos($file, 'auth') !== false) {
-		if ($debug) echo "<li>loading auth</li>";
-		$classFile = str_replace('xoops', '', $file);
-		echo $path = ICMS_ROOT_PATH . "/class/auth/$classFile.php";
-		if (file_exists($path = ICMS_ROOT_PATH . "/class/auth/$classFile.php")) {
-			if ($debug) echo "<li>inc - $path</li>";
-			include_once $path;
-		}
-	}
-	if ($debug) echo "</ul>";
-}
-
-function icms_autoload_register() {
-	static $reg = false;
-	if (!$reg) {
-		spl_autoload_register("icms_autoload");
-		$reg = true;
-	}
-}
-
-icms_autoload_register();
-
 @set_magic_quotes_runtime(0);
 
 if (!defined('ICMS_ROOT_PATH')) {
@@ -135,11 +50,12 @@ define('ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules');
 define('ICMS_MODULES_URL', ICMS_URL . '/modules');
 /**#@-*/
 
-// ################# Creation of the IcmsPreloadHandler ##############
-//include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
+require_once( ICMS_ROOT_PATH . '/libraries/icms/core/Autoloader.php' );
+icms_core_Autoloader::register();
 
+// ################# Creation of the icms_preload_Handler ##############
 global $icmsPreloadHandler;
-$icmsPreloadHandler = IcmsPreloadHandler::getInstance();
+$icmsPreloadHandler = icms_preload_Handler::getInstance();
 
 // ################# Creation of the ImpressCMS Libraries ##############
 /**
@@ -156,10 +72,9 @@ define('ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf');
 $icmsPreloadHandler->triggerEvent('startCoreBoot');
 
 // ################# Creation of the ImpressCMS Kernel object ##############
-//include_once ICMS_ROOT_PATH . '/kernel/icmskernel.php' ;
 
 global $impresscms, $xoops;
-$impresscms = new IcmsKernel();
+$impresscms = new icms_core_Kernel();
 $xoops =& $impresscms;
 // ################# Creation of the ImpressCMS Kernel object ##############
 
@@ -174,7 +89,7 @@ $xoopsSecurity->checkSuperglobals();
 global $xoopsLogger, $xoopsErrorHandler;
 
 //include_once ICMS_ROOT_PATH . '/class/logger.php';
-$xoopsLogger =& XoopsLogger::instance();
+$xoopsLogger =& icms_core_Logger::instance();
 $xoopsErrorHandler =& $xoopsLogger;
 $xoopsLogger->startTime('ICMS');
 $xoopsLogger->startTime('ICMS Boot');
@@ -248,11 +163,10 @@ if (!defined('XOOPS_XMLRPC')) {
 include_once ICMS_ROOT_PATH . '/include/functions.php';
 
 // #################### Connect to DB ##################
-require_once ICMS_ROOT_PATH . '/class/database/databasefactory.php';
 if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$xoopsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
 	define('XOOPS_DB_PROXY', 1);
 }
-$xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
+$xoopsDB =& icms_database_Factory::getDatabaseConnection();
 
 // ################# Include required files ##############
 //require_once ICMS_ROOT_PATH.'/kernel/object.php';
@@ -285,13 +199,6 @@ $icmsConfigCaptcha    = $configs[ICMS_CONF_CAPTCHA];
 $icmsConfigSearch     = $configs[ICMS_CONF_SEARCH];
 unset($configs);
 
-// ################# Creation of the ImpressCMS Captcha object ##############
-
-// Instantiate Captcha object
-/*require_once ICMS_ROOT_PATH ."/class/captcha/captcha.php" ;
- global $icmsCaptcha;
- $icmsCaptcha = IcmsCaptcha::instance();*/
-
 // #################### Easiest ML by Gijoe #################
 
 // Disable gzip compression if PHP is run under CLI mode
@@ -299,9 +206,9 @@ unset($configs);
 if (empty($_SERVER['SERVER_NAME']) || substr(PHP_SAPI, 0, 3) == 'cli') {
 	$icmsConfig['gzip_compression'] = 0;
 }
-if ( $icmsConfig['gzip_compression'] == 1
+if ($icmsConfig['gzip_compression'] == 1
 	&& extension_loaded('zlib') && !ini_get('zlib.output_compression')) {
-	if ( @ini_get('zlib.output_compression_level') < 0 ) {
+	if (@ini_get('zlib.output_compression_level') < 0) {
 		ini_set('zlib.output_compression_level', 6);
 	}
 	ob_start('ob_gzhandler');
@@ -309,7 +216,7 @@ if ( $icmsConfig['gzip_compression'] == 1
 
 // #################### Error reporting settings ##################
 if (!isset($xoopsOption['nodebug']) || !$xoopsOption['nodebug']) {
-	if ( $icmsConfig['debug_mode'] == 1 || $icmsConfig['debug_mode'] == 2 ) {
+	if ($icmsConfig['debug_mode'] == 1 || $icmsConfig['debug_mode'] == 2) {
 		error_reporting(E_ALL);
 		$xoopsLogger->enableRendering();
 		$xoopsLogger->usePopup = ( $icmsConfig['debug_mode'] == 2 );
@@ -318,6 +225,7 @@ if (!isset($xoopsOption['nodebug']) || !$xoopsOption['nodebug']) {
 		$xoopsLogger->activated = false;
 	}
 }
+
 $xoopsSecurity->checkBadips();
 
 // ################# Include version info file ##############
@@ -330,19 +238,19 @@ $icmsConfig['root_path'] = ICMS_ROOT_PATH . "/";
 /**#@+
  * Host abstraction layer
  */
-if ( !isset($_SERVER['PATH_TRANSLATED']) && isset($_SERVER['SCRIPT_FILENAME']) ) {
+if (!isset($_SERVER['PATH_TRANSLATED']) && isset($_SERVER['SCRIPT_FILENAME'])) {
 	$_SERVER['PATH_TRANSLATED'] =& $_SERVER['SCRIPT_FILENAME'];	 // For Apache CGI
-} elseif ( isset($_SERVER['PATH_TRANSLATED']) && !isset($_SERVER['SCRIPT_FILENAME']) ) {
+} elseif (isset($_SERVER['PATH_TRANSLATED']) && !isset($_SERVER['SCRIPT_FILENAME'])) {
 	$_SERVER['SCRIPT_FILENAME'] =& $_SERVER['PATH_TRANSLATED'];	 // For IIS/2K now I think :-(
 }
 
 if (empty($_SERVER[ 'REQUEST_URI' ])) {
 	// Not defined by IIS
 	// Under some configs, IIS makes SCRIPT_NAME point to php.exe :-(
-	if ( !( $_SERVER[ 'REQUEST_URI' ] = @$_SERVER['PHP_SELF'] ) ) {
+	if (!( $_SERVER[ 'REQUEST_URI' ] = @$_SERVER['PHP_SELF'] )) {
 		$_SERVER[ 'REQUEST_URI' ] = $_SERVER['SCRIPT_NAME'];
 	}
-	if ( isset($_SERVER[ 'QUERY_STRING' ]) ) {
+	if (isset($_SERVER[ 'QUERY_STRING' ])) {
 		$_SERVER['REQUEST_URI'] .= '?' . $_SERVER['QUERY_STRING'];
 	}
 }
@@ -396,10 +304,10 @@ session_start();
  $sess_handler->icms_sessionOpen(); */
 
 // Remove expired session for xoopsUserId
-if ( $icmsConfig['use_mysession']
+if ($icmsConfig['use_mysession']
 	&& $icmsConfig['session_name'] != ''
 	&& !isset($_COOKIE[$icmsConfig['session_name']])
-	&& !empty($_SESSION['xoopsUserId']) ) {
+	&& !empty($_SESSION['xoopsUserId'])) {
 	unset($_SESSION['xoopsUserId']);
 }
 
@@ -409,34 +317,34 @@ if (empty($_SESSION['xoopsUserId'])
 	&& isset($_COOKIE['autologin_pass'])) {
 
 	// autologin V2 GIJ
-	if ( ! empty($_POST) ) {
+	if (! empty($_POST)) {
 		$_SESSION['AUTOLOGIN_POST'] = $_POST;
 		$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
 		redirect_header(ICMS_URL . '/session_confirm.php', 0, '&nbsp;');
-	} else if ( ! empty($_SERVER['QUERY_STRING']) && substr($_SERVER['SCRIPT_NAME'], -19) != 'session_confirm.php') {
+	} else if (! empty($_SERVER['QUERY_STRING']) && substr($_SERVER['SCRIPT_NAME'], -19) != 'session_confirm.php') {
 		$_SESSION['AUTOLOGIN_REQUEST_URI'] = $_SERVER['REQUEST_URI'];
 		redirect_header(ICMS_URL . '/session_confirm.php', 0, '&nbsp;');
 	}
 	// end of autologin V2
 
 	// redirect to ICMS_URL/ when query string exists (anti-CSRF) V1 code
-	/* if( ! empty( $_SERVER['QUERY_STRING'] ) ) {
+	/* if (! empty( $_SERVER['QUERY_STRING'] )) {
 	redirect_header( ICMS_URL . '/' , 0 , 'Now, logging in automatically' ) ;
 	exit ;
 	}*/
 
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	$uname = $myts->stripSlashesGPC($_COOKIE['autologin_uname']);
 	$pass = $myts->stripSlashesGPC($_COOKIE['autologin_pass']);
-	if ( empty($uname) || is_numeric($pass) ) {
+	if (empty($uname) || is_numeric($pass)) {
 		$user = false ;
 	} else {
 		// V3
 		$uname4sql = addslashes($uname);
-		$criteria = new CriteriaCompo(new Criteria('uname', $uname4sql ));
+		$criteria = new icms_criteria_Compo(new icms_criteria_Item('uname', $uname4sql ));
 		$user_handler =& xoops_gethandler('user');
 		$users =& $user_handler->getObjects($criteria, false);
-		if ( empty($users) || count($users) != 1) {
+		if (empty($users) || count($users) != 1) {
 			$user = false ;
 		} else {
 			// V3.1 begin
@@ -445,7 +353,7 @@ if (empty($_SESSION['xoopsUserId'])
 				? XOOPS_AUTOLOGIN_LIFETIME
 				: 604800 ) ; // 1 week default
 			list($old_Ynj, $old_encpass) = explode(':', $pass);
-			if ( strtotime($old_Ynj) < $old_limit
+			if (strtotime($old_Ynj) < $old_limit
 				|| md5($user->getVar('pass') . XOOPS_DB_PASS . XOOPS_DB_PREFIX . $old_Ynj) != $old_encpass)
 				$user = false ;
 			// V3.1 end
@@ -455,7 +363,7 @@ if (empty($_SESSION['xoopsUserId'])
 	$xoops_cookie_path = defined('XOOPS_COOKIE_PATH')
 		? XOOPS_COOKIE_PATH
 		: preg_replace('?http://[^/]+(/.*)$?', "$1", ICMS_URL);
-	if ( $xoops_cookie_path == ICMS_URL ) $xoops_cookie_path = '/' ;
+	if ($xoops_cookie_path == ICMS_URL ) $xoops_cookie_path = '/' ;
 	if (false != $user && $user->getVar('level') > 0) {
 		// update time of last login
 		$user->setVar('last_login', time());
@@ -510,7 +418,7 @@ if (!empty($_SESSION['xoopsUserId'])) {
 		}
 		$icmsUser->setGroups($_SESSION['xoopsUserGroups']);
 		$xoopsUserIsAdmin = $icmsUserIsAdmin = $icmsUser->isAdmin();
-		if (!isset($_SESSION['UserLanguage']) ) {
+		if (!isset($_SESSION['UserLanguage'])) {
 			$_SESSION['UserLanguage'] = $icmsUser->language();
 		}
 	}
@@ -522,12 +430,12 @@ if ($icmsConfigMultilang['ml_enable']) {
 	$easiestml_langs = explode(',', $icmsConfigMultilang['ml_tags']);
 	//include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 
-	$easiestml_langpaths = XoopsLists::getLangList();
+	$easiestml_langpaths = IcmsLists::getLangList();
 	$langs = array_combine($easiestml_langs, explode(',', $icmsConfigMultilang['ml_names']));
 
-	if ( $icmsConfigMultilang['ml_autoselect_enabled']
+	if ($icmsConfigMultilang['ml_autoselect_enabled']
 		&& isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])
-		&& $_SERVER['HTTP_ACCEPT_LANGUAGE'] != "" ) {
+		&& $_SERVER['HTTP_ACCEPT_LANGUAGE'] != "") {
 		$autolang = substr($_SERVER["HTTP_ACCEPT_LANGUAGE"], 0, 2);
 		if (in_array($autolang, $easiestml_langs)) {
 			$icmsConfig['language'] = $langs[$autolang];
@@ -542,8 +450,8 @@ if ($icmsConfigMultilang['ml_enable']) {
 			}
 		}
 	} elseif (isset($_COOKIE['lang']) && isset($_SESSION['UserLanguage'])) {
-		if ($_COOKIE['lang'] != $_SESSION['UserLanguage'] ) {
-			if ( in_array($_SESSION['UserLanguage'], $langs) ) {
+		if ($_COOKIE['lang'] != $_SESSION['UserLanguage']) {
+			if (in_array($_SESSION['UserLanguage'], $langs)) {
 				$icmsConfig['language'] = $_SESSION['UserLanguage'];
 			}
 		} else {
@@ -582,7 +490,7 @@ if (!isset($xoopsOption)) {
 	$xoopsOption = array();
 }
 
-if ( !defined("XOOPS_USE_MULTIBYTES") ) {
+if (!defined("XOOPS_USE_MULTIBYTES")) {
 	define("XOOPS_USE_MULTIBYTES", 0);
 }
 
@@ -613,7 +521,7 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 		include_once ICMS_ROOT_PATH . '/footer.php';
 		exit();
 	}
-	$moduleperm_handler =& xoops_gethandler('groupperm');
+	$moduleperm_handler =& xoops_gethandler('member_groupperm');
 	if ($icmsUser) {
 		if (!$moduleperm_handler->checkRight('module_read', $icmsModule->getVar('mid'), $icmsUser->getGroups())) {
 			redirect_header(ICMS_URL . "/user.php", 1, _NOPERM, false);
@@ -636,7 +544,7 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 }
 
 if ($icmsConfigPersona['multi_login']) {
-	if ( is_object($icmsUser) ) {
+	if (is_object($icmsUser)) {
 		$online_handler =& xoops_gethandler('online');
 		$online_handler->write(
 			$icmsUser->uid(), $icmsUser->uname(),

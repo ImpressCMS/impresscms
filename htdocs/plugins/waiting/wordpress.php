@@ -1,11 +1,11 @@
 <?php
-function b_waiting_wordpress_0($wp_num=""){
+function b_waiting_wordpress_0($wp_num="") {
 	$xoopsDB =& Database::getInstance();
 	$block = array();
 
 	// wordpress
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("wp".$wp_num."_comments")." WHERE comment_approved='0'");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/wordpress".$wp_num."/wp-admin/moderation.php" ;
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = sprintf(_PI_WAITING_WAITINGS_FMT,$wp_num) ;

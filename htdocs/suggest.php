@@ -10,33 +10,33 @@
  **/
 include 'mainfile.php';
 global $xoopsDB;
-if(isset($_POST['queryString'])) {
+if (isset($_POST['queryString'])) {
 	$queryString = mysql_real_escape_string($_POST['queryString']);
 
 	// Is the string length greater than 2?
-	if(strlen($queryString) > 2) {
+	if (strlen($queryString) > 2) {
 		$sql = "SELECT * FROM ".$xoopsDB->prefix("autosearch_list")." s INNER JOIN ".$xoopsDB->prefix("autosearch_cat")." c ON s.cat_id = c.cid WHERE name LIKE '%" . $queryString . "%' ORDER BY cat_id LIMIT 8";
 		$query = $xoopsDB->query($sql);
 		$num_results = mysql_num_rows($query);
 
 		echo "<ul id='searchresults'>";
-		if($query) {
-			if($num_results < 1) {
+		if ($query) {
+			if ($num_results < 1) {
 				echo "<li><a href='javascript:void(0);'><img src='".ICMS_URL."/images/crystal/actions/exit.png' alt='no results found' /><span class='searchheading'>Sorry</span><span class='searchdesc'>No results were found that matched your query. Please try again.</span></a></li>";
 			} else {
 				$catid = 0;
-				while($result = $xoopsDB->fetchArray($query)) {
+				while ($result = $xoopsDB->fetchArray($query)) {
 					echo '<li><a href="' . ICMS_URL . $result['url'] . '">';
 					echo '<img src="'.$result['img'].'" alt="" />';
 
 					$name = $result['name'];
-					if(strlen($name) > 35) {
+					if (strlen($name) > 35) {
 						$name = substr($name, 0, 35) . "...";
 					}
 					echo '<span class="searchheading">'.$name.'</span>';
 
 					$description = $result['desc'];
-					if(strlen($description) > 80) {
+					if (strlen($description) > 80) {
 						$description = substr($description, 0, 80) . "...";
 					}
 					echo '<span class="searchdesc">'.$description.'</span></a></li>';

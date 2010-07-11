@@ -25,14 +25,14 @@
  * @param string $base root location for the folder, ICMS_ROOT_PATH or ICMS_TRUST_PATH, for example
  * @return boolean True if folder is created, False if it is not
  */
-function imcms_install_mkdir($target, $mode = 0777 ) {
+function imcms_install_mkdir($target, $mode = 0777) {
 
-	if( is_dir( $target ) ) return TRUE;
+	if (is_dir( $target ) ) return TRUE;
 
 	$metachars = array('[', '?', '"', '<', '>', '|', ' ' ); // Need to exclude . and : because they may occur in the root path
 	$target = str_replace( $metachars , '_', $target );
 
-	if( mkdir($target, $mode, TRUE) ) {
+	if (mkdir($target, $mode, TRUE)) {
 		// create an index.html file in this directory
 		if ($fh = @fopen($target.'/index.html', 'w')) {
 			fwrite($fh, '<script>history.go(-1);</script>');
@@ -40,7 +40,7 @@ function imcms_install_mkdir($target, $mode = 0777 ) {
 		}
 	}
 
-	if( substr( decoct( fileperms( $target ) ),2) != $mode ) {
+	if (substr( decoct( fileperms( $target ) ),2) != $mode) {
 		chmod($target, $mode);
 	}
 
@@ -65,7 +65,7 @@ function imcms_createSalt($slength=64)
 	$base = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
 	$microtime = function_exists('microtime') ? microtime() : time();
 	srand((double)$microtime * 1000000);
-	for($i=0; $i<=$slength; $i++)
+	for ($i=0; $i<=$slength; $i++)
 	$salt.= substr($base, rand() % strlen($base), 1);
 	return $salt;
 }
@@ -84,13 +84,13 @@ function imcms_encryptPass($adminpass, $adminsalt, $mainSalt)
  */
 function unlinkRecursive($dir, $deleteRootToo=true)
 {
-	if(!$dh = @opendir($dir))
+	if (!$dh = @opendir($dir))
 	{
 		return;
 	}
 	while (false !== ($obj = readdir($dh)))
 	{
-		if($obj == '.' || $obj == '..')
+		if ($obj == '.' || $obj == '..')
 		{
 			continue;
 		}
@@ -122,17 +122,17 @@ function unlinkRecursive($dir, $deleteRootToo=true)
 function imcms_copyr($source, $dest)
 {
 	// Simple copy for a file
-	if(is_file($source)) {return copy($source, $dest);}
+	if (is_file($source)) {return copy($source, $dest);}
 	// Make destination directory
-	if(!is_dir($dest)) {imcms_install_mkdir($dest);}
+	if (!is_dir($dest)) {imcms_install_mkdir($dest);}
 	// Loop through the folder
 	$dir = dir($source);
-	while(false !== $entry = $dir->read())
+	while (false !== $entry = $dir->read())
 	{
 		// Skip pointers
-		if($entry == '.' || $entry == '..') {continue;}
+		if ($entry == '.' || $entry == '..') {continue;}
 		// Deep copy directories
-		if(is_dir("$source/$entry") && ($dest !== "$source/$entry")) {imcms_copyr("$source/$entry", "$dest/$entry");}
+		if (is_dir("$source/$entry") && ($dest !== "$source/$entry")) {imcms_copyr("$source/$entry", "$dest/$entry");}
 		else {copy("$source/$entry", "$dest/$entry");}
 	}
 	// Clean up
@@ -179,19 +179,19 @@ function imcms_get_base_domain($url)
      'eh','kp','me','rs','um','bv','gb','pm','sj','so','yt','su','tp','bu','cs','dd','zr');
 
 	// get domain
-	if(!$full_domain = imcms_get_url_domain($url)) {return $base_domain;}
+	if (!$full_domain = imcms_get_url_domain($url)) {return $base_domain;}
 
 	// break up domain, reverse
 	$DOMAIN = explode('.', $full_domain);
-	if($debug) print_r($DOMAIN);
+	if ($debug) print_r($DOMAIN);
 	$DOMAIN = array_reverse($DOMAIN);
-	if($debug) print_r($DOMAIN);
+	if ($debug) print_r($DOMAIN);
 
 	// first check for ip address
-	if(count($DOMAIN) == 4 && is_numeric($DOMAIN[0]) && is_numeric($DOMAIN[3])) {return $full_domain;}
+	if (count($DOMAIN) == 4 && is_numeric($DOMAIN[0]) && is_numeric($DOMAIN[3])) {return $full_domain;}
 
 	// if only 2 domain parts, that must be our domain
-	if(count($DOMAIN) <= 2) return $full_domain;
+	if (count($DOMAIN) <= 2) return $full_domain;
 
 	/*
 	 finally, with 3+ domain parts: obviously D0 is tld now,
@@ -199,12 +199,10 @@ function imcms_get_base_domain($url)
 	 if D0 = ctld && D1 = gtld && D2 != 'www', domain = D2.D1.D0 else if D0 = ctld && D1 = gtld && D2 == 'www',
 	 domain = D1.D0 else domain = D1.D0 - these rules are simplified below.
 	 */
-	if(in_array($DOMAIN[0], $C_TLD) && in_array($DOMAIN[1], $G_TLD) && $DOMAIN[2] != 'www')
+	if (in_array($DOMAIN[0], $C_TLD) && in_array($DOMAIN[1], $G_TLD) && $DOMAIN[2] != 'www')
 	{
 		$full_domain = $DOMAIN[2].'.'.$DOMAIN[1].'.'.$DOMAIN[0];
-	}
-	else
-	{
+	} else {
 		$full_domain = $DOMAIN[1].'.'.$DOMAIN[0];
 	}
 	// did we succeed?
@@ -223,7 +221,7 @@ function imcms_get_url_domain($url)
 	$domain = '';
 	$_URL = parse_url($url);
 
-	if(!empty($_URL) || !empty($_URL['host'])) {$domain = $_URL['host'];}
+	if (!empty($_URL) || !empty($_URL['host'])) {$domain = $_URL['host'];}
 	return $domain;
 }
 

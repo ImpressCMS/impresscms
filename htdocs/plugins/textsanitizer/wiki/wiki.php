@@ -34,7 +34,7 @@ function textsanitizer_wiki(&$ts, $text) {
  * @param $text
  */
 function wikiLink($text) {
-	if ( empty($text) ) return $text;
+	if (empty($text) ) return $text;
 	$ret = "<a
 		href='" . sprintf(WIKI_LINK, $text) . "'
 		target='_blank'
@@ -50,7 +50,7 @@ function wikiLink($text) {
 function render_wiki($ele_name) {
 	global $xoTheme;
 	$dirname = basename(dirname(__FILE__));
-	if(isset($xoTheme)){
+	if (isset($xoTheme)) {
 		$xoTheme->addScript(
 			ICMS_URL . '/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
 			array('type' => 'text/javascript'));
@@ -72,7 +72,7 @@ function render_wiki($ele_name) {
  *
  * Enter specific styling for this plugin
  */
-function style_wiki(){
+function style_wiki() {
 	$style_info = '';
 	return $style_info;
 }

@@ -17,7 +17,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
-if ( ('system' != $icmsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule']) || (!is_object($icmsUser) && !$icmsModuleConfig['com_anonpost']) || !is_object($icmsModule) ) {
+if (('system' != $icmsModule->getVar('dirname') && XOOPS_COMMENT_APPROVENONE == $icmsModuleConfig['com_rule']) || (!is_object($icmsUser) && !$icmsModuleConfig['com_anonpost']) || !is_object($icmsModule)) {
 	redirect_header(ICMS_URL . '/user.php', 1, _NOPERM);
 }
 
@@ -30,7 +30,7 @@ if ($com_itemid > 0) {
 		if (isset($com_replytext)) {
 			themecenterposts($com_replytitle, $com_replytext);
 		}
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		$com_title = $myts->htmlSpecialChars($com_replytitle);
 		if (!preg_match("/^(Re|"._CM_RE."):/i", $com_title)) {
 			$com_title = _CM_RE.": ".icms_substr($com_title, 0, 56);
@@ -60,7 +60,7 @@ if ($com_itemid > 0) {
 	$noname = 0;
 	$dosmiley = 1;
 	$groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
-	$gperm_handler =& xoops_gethandler('groupperm');
+	$gperm_handler =& xoops_gethandler('member_groupperm');
 	if ($icmsConfig ['editor_default'] != 'dhtmltextarea'
 		&& $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
 		$dohtml = 1;

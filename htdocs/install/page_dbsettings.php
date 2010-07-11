@@ -38,7 +38,7 @@ if (! ($link = @$func_connect ( $vars ['DB_HOST'], $vars ['DB_USER'], $vars ['DB
 // Load config values from mainfile.php constants if 1st invocation, or reload has been asked
 if (! isset ( $vars ['DB_NAME'] ) || false !== @strpos ( $_SERVER ['HTTP_CACHE_CONTROL'], 'max-age=0' )) {
 	$keys = array ('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'DB_SALT' );
-	foreach ( $keys as $k ) {
+	foreach ( $keys as $k) {
 		$vars [$k] = defined ( "XOOPS_$k" ) ? constant ( "XOOPS_$k" ) : '';
 	}
 }
@@ -51,7 +51,7 @@ function getDbCharsets($link) {
 	$charsets ["utf8"] = "UTF-8 Unicode";
 	$ut8_available = false;
 	if ($result = mysql_query ( "SHOW CHARSET", $link )) {
-		while ( $row = mysql_fetch_assoc ( $result ) ) {
+		while ($row = mysql_fetch_assoc ( $result )) {
 			$charsets [$row ["Charset"]] = $row ["Description"];
 			if ($row ["Charset"] == "utf8") {
 				$ut8_available = true;
@@ -69,7 +69,7 @@ function getDbCollations($link, $charset) {
 	static $collations = array ( );
 
 	if ($result = mysql_query ( "SHOW COLLATION LIKE '" . mysql_real_escape_string ( $charset ) . "%'", $link )) {
-		while ( $row = mysql_fetch_assoc ( $result ) ) {
+		while ($row = mysql_fetch_assoc ( $result )) {
 			$collations [$charset] [$row ["Collation"]] = $row ["Default"] ? 1 : 0;
 		}
 	}
@@ -123,7 +123,7 @@ function xoFormFieldCollation($name, $value, $label, $help = '', $link, $charset
 
 	$collation_default = "";
 	$options = "";
-	foreach ( $collations as $key => $isDefault ) {
+	foreach ( $collations as $key => $isDefault) {
 		if ($isDefault) {
 			$collation_default = $key;
 			continue;
@@ -154,7 +154,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'GET' && isset ( $_GET ['charset'] ) && @$_GE
 
 if ($_SERVER ['REQUEST_METHOD'] == 'POST') {
 	$params = array ('DB_NAME', 'DB_CHARSET', 'DB_COLLATION', 'DB_PREFIX', 'DB_SALT' );
-	foreach ( $params as $name ) {
+	foreach ( $params as $name) {
 		$vars [$name] = isset ( $_POST [$name] ) ? $_POST [$name] : "";
 	}
 }
@@ -173,7 +173,7 @@ if ($_SERVER ['REQUEST_METHOD'] == 'POST' && ! empty ( $vars ['DB_NAME'] )) {
 				$error = sprintf ( DATABASE_CREATED, $vars ['DB_NAME'] );
 				$db_exist = true;
 			}
-		}else{
+		} else {
 			$db_exist = true;
 		}
 		if ($db_exist && $vars ['DB_CHARSET']) {
@@ -235,7 +235,7 @@ function xoFormFieldCharset($name, $value, $label, $help = '', $link) {
 	}
 	$field .= "<select name='$name' id='$name' onchange=\"setFormFieldCollation('DB_COLLATION_div', this.value)\">";
 	$field .= "<option value=''>None</option>";
-	foreach ( $charsets as $key => $desc ) {
+	foreach ( $charsets as $key => $desc) {
 		$field .= "<option value='{$key}'" . (($value == $key) ? " selected='selected'" : "") . ">{$key} - {$desc}</option>";
 	}
 	$field .= "</select></div>";

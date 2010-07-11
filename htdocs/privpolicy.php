@@ -14,12 +14,12 @@
 
 $xoopsOption['pagetype'] = 'privpolicy';
 include 'mainfile.php';
-if($icmsConfigUser['priv_dpolicy'] == false) {redirect_header('index.php', 2, _US_NOPERMISS);}
+if ($icmsConfigUser['priv_dpolicy'] == false) {redirect_header('index.php', 2, _US_NOPERMISS);}
 
 $xoopsOption['template_main'] = 'system_privpolicy.html';
 include ICMS_ROOT_PATH.'/header.php';
 
-$myts =& MyTextSanitizer::getInstance();
+$myts =& icms_core_Textsanitizer::getInstance();
 
 $xoopsTpl->assign('priv_poltype', 'page');
 $priv = str_replace('{X_SITEURL}', ICMS_URL.'/', $icmsConfigUser['priv_policy']);

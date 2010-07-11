@@ -209,10 +209,8 @@ class icms_HTMLPurifier
 		// ################# Preload Trigger beforeDisplayTarea ##############
 		global $icmsPreloadHandler;
 		if(!is_object($icmsPreloadHandler))
-		{
-			include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
-			$icmsPreloadHandler = IcmsPreloadHandler::getInstance();
-		}
+			$icmsPreloadHandler = icms_preload_Handler::getInstance();
+
 		$icmsPreloadHandler->triggerEvent('beforedisplayHTMLarea', array(&$html));
 
 		$html = $this->icms_html_purifier($html);
@@ -234,10 +232,7 @@ class icms_HTMLPurifier
 		global $icmsPreloadHandler;
 
 		if(!is_object($icmsPreloadHandler))
-		{
-			include_once ICMS_ROOT_PATH . '/kernel/icmspreloadhandler.php';
-			$icmsPreloadHandler = IcmsPreloadHandler::getInstance();
-		}
+			$icmsPreloadHandler = icms_preload_Handler::getInstance();
 		$icmsPreloadHandler->triggerEvent('beforepreviewHTMLarea', array(&$html));
 
 		$html = $this->icms_html_purifier($html);

@@ -24,5 +24,5 @@ $modversion = array( 'name' => _MD_AM_IMAGES,
 	'image' => "images.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=images",
-	'category' => XOOPS_SYSTEM_IMAGE );
-?>
+	'category' => XOOPS_SYSTEM_IMAGE,
+	'group' => 'Media');

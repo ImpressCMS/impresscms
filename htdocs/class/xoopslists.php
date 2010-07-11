@@ -298,7 +298,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		 */
 		static public function getLangList() {
 			$lang_list = array();
-			$lang_list = XoopsLists::getDirListAsArray(ICMS_ROOT_PATH."/language/");
+			$lang_list = IcmsLists::getDirListAsArray(ICMS_ROOT_PATH."/language/");
 			return $lang_list;
 		}
 
@@ -669,12 +669,12 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		 */
 		static public function getUserRankList() {
 			$db = Database::getInstance();
-			$myts = MyTextSanitizer::getInstance();
+			$myts = icms_core_Textsanitizer::getInstance();
 			$sql = "SELECT rank_id, rank_title FROM ".$db->prefix("ranks")." WHERE rank_special = '1'";
 			$ret = array();
 			$result = $db->query($sql);
 			while ( $myrow = $db->fetchArray($result) ) {
-				$ret[$myrow['rank_id']] = $myts->makeTboxData4Show($myrow['rank_title']);
+				$ret[$myrow['rank_id']] = $myts->htmlSpecialChars($myrow['rank_title']);
 			}
 			return $ret;
 		}

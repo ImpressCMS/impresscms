@@ -26,21 +26,21 @@ $xoopsOption['template_main'] = 'system_search.html';
 include ICMS_ROOT_PATH.'/header.php';
 
 $action = 'search';
-if(!empty($_GET['action'])) {$action = trim(StopXSS($_GET['action']));}
-elseif(!empty($_POST['action'])) {$action = trim(StopXSS($_POST['action']));}
+if (!empty($_GET['action'])) {$action = trim(StopXSS($_GET['action']));}
+elseif (!empty($_POST['action'])) {$action = trim(StopXSS($_POST['action']));}
 $query = '';
-if(!empty($_GET['query'])) {$query = StopXSS($_GET['query']);}
-elseif(!empty($_POST['query'])) {$query = StopXSS($_POST['query']);}
+if (!empty($_GET['query'])) {$query = StopXSS($_GET['query']);}
+elseif (!empty($_POST['query'])) {$query = StopXSS($_POST['query']);}
 $andor = 'AND';
-if(!empty($_GET['andor'])) {$andor = StopXSS($_GET['andor']);}
-elseif(!empty($_POST['andor'])) {$andor = StopXSS($_POST['andor']);}
+if (!empty($_GET['andor'])) {$andor = StopXSS($_GET['andor']);}
+elseif (!empty($_POST['andor'])) {$andor = StopXSS($_POST['andor']);}
 $mid = $uid = $start = 0;
-if(!empty($_GET['mid'])) {$mid = (int) ($_GET['mid']);}
-elseif(!empty($_POST['mid'])) {$mid = (int) ($_POST['mid']);}
-if(!empty($_GET['uid'])) {$uid = (int) ($_GET['uid']);}
-elseif(!empty($_POST['uid'])) {$uid = (int) ($_POST['uid']);}
-if(!empty($_GET['start'])) {$start = (int) ($_GET['start']);}
-elseif(!empty($_POST['start'])) {$start = (int) ($_POST['start']);}
+if (!empty($_GET['mid'])) {$mid = (int) ($_GET['mid']);}
+elseif (!empty($_POST['mid'])) {$mid = (int) ($_POST['mid']);}
+if (!empty($_GET['uid'])) {$uid = (int) ($_GET['uid']);}
+elseif (!empty($_POST['uid'])) {$uid = (int) ($_POST['uid']);}
+if (!empty($_GET['start'])) {$start = (int) ($_GET['start']);}
+elseif (!empty($_POST['start'])) {$start = (int) ($_POST['start']);}
 
 $xoopsTpl->assign("start", $start + 1);
 
@@ -65,7 +65,7 @@ if ($action == "results") {
 
 global $icmsUser;
 $groups = is_object($icmsUser) ? $icmsUser -> getGroups() : XOOPS_GROUP_ANONYMOUS;
-$gperm_handler = & xoops_gethandler( 'groupperm' );
+$gperm_handler = & xoops_gethandler('member_groupperm');
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 
 $xoopsTpl->assign('basic_search', false);
@@ -79,7 +79,7 @@ if ($action == 'search') {
 	exit();
 }
 
-if ( $andor != "OR" && $andor != "exact" && $andor != "AND" ) {
+if ($andor != "OR" && $andor != "exact" && $andor != "AND") {
 	$andor = "AND";
 }
 if ($andor == 'OR') $label_andor = _SR_ANY;
@@ -88,14 +88,14 @@ if ($andor == 'exact') $label_andor = _SR_EXACT;
 $xoopsTpl->assign("label_search_type", _SR_TYPE . ':');
 $xoopsTpl->assign("search_type", $label_andor);
 
-$myts =& MyTextSanitizer::getInstance();
+$myts =& icms_core_Textsanitizer::getInstance();
 if ($action != 'showallbyuser') {
-	if ( $andor != "exact" ) {
+	if ($andor != "exact") {
 		$ignored_queries = array(); // holds kewords that are shorter than allowed minmum length
 
 		preg_match_all('/(?:").*?(?:")|(?:\').*?(?:\')/', $query,$compostas);
 		$res = $simpl = array();
-		foreach ($compostas[0] as $comp){
+		foreach ($compostas[0] as $comp) {
 			$res[] = substr($comp,1,strlen($comp)-3);
 		}
 		$compostas = $res;
@@ -103,22 +103,22 @@ if ($action != 'showallbyuser') {
 		$simples = preg_replace('/(?:").*?(?:")|(?:\').*?(?:\')/', '', $query);
 		$simples = preg_split('/[\s,]+/', $simples);
 
-		if (count($simples) > 0){
-			foreach ($simples as $k=>$v){
-				if ($v != "\\"){
+		if (count($simples) > 0) {
+			foreach ($simples as $k=>$v) {
+				if ($v != "\\") {
 					$simpl[] = $v;
 				}
 			}
 			$simples = $simpl;
 		}
 
-		if (count($compostas) > 0 && count($simples) > 0){
+		if (count($compostas) > 0 && count($simples) > 0) {
 			$temp_queries = array_merge($simples,$compostas);
-		}elseif (count($compostas) <= 0 && count($simples) > 0){
+		} elseif (count($compostas) <= 0 && count($simples) > 0) {
 			$temp_queries = $simples;
-		}elseif (count($compostas) > 0 && count($simples) <= 0){
+		} elseif (count($compostas) > 0 && count($simples) <= 0) {
 			$temp_queries = $compostas;
-		}else{
+		} else {
 			$temp_queries = array();
 		}
 
@@ -169,9 +169,9 @@ switch ($action) {
 	case "results":
 		$max_results_per_page = (int) ($icmsConfigSearch['num_shallow_search']);
 		$module_handler =& xoops_gethandler('module');
-		$criteria = new CriteriaCompo(new Criteria('hassearch', 1));
-		$criteria->add(new Criteria('isactive', 1));
-		$criteria->add(new Criteria('mid', "(".implode(',', $available_modules).")", 'IN'));
+		$criteria = new icms_criteria_Compo(new icms_criteria_Item('hassearch', 1));
+		$criteria->add(new icms_criteria_Item('isactive', 1));
+		$criteria->add(new icms_criteria_Item('mid', "(".implode(',', $available_modules).")", 'IN'));
 		$modules =& $module_handler->getObjects($criteria, true);
 		$mids = isset($_REQUEST['mids']) ? $_REQUEST['mids'] : array();
 		if (empty($mids) || !is_array($mids)) {
@@ -181,7 +181,7 @@ switch ($action) {
 
 		foreach ($mids as $mid) {
 			$mid = (int) ($mid);
-			if ( in_array($mid, $available_modules) ) {
+			if (in_array($mid, $available_modules)) {
 				$module =& $modules[$mid];
 				$results =& $module->search($queries, $andor, $search_limiter, 0);
 				if (!$results) continue;
@@ -190,7 +190,7 @@ switch ($action) {
 				$all_results_counts[$module->getVar('name')] = $count;
 
 				if (!is_array($results) || $count == 0) {
-					if( $icmsConfigSearch['search_no_res_mod']){$all_results[$module->getVar('name')] = array(); }
+					if ($icmsConfigSearch['search_no_res_mod']) {$all_results[$module->getVar('name')] = array(); }
 				} else {
 					(($count - $start) > $max_results_per_page)? $num_show_this_page = $max_results_per_page: $num_show_this_page = $count - $start;
 					for ($i = 0; $i < $num_show_this_page; $i++) {
@@ -209,10 +209,10 @@ switch ($action) {
 							$results[$i]['processed_title'] = $myts->displayTarea($results[$i]['title']);
 						}
 						/*UnderDog Mark*/
-						if( $icmsConfigSearch['search_user_date']){
+						if ($icmsConfigSearch['search_user_date']) {
 							$results[$i]['uid'] = @ (int) ($results[$i]['uid']);
-							if ( !empty($results[$i]['uid']) ) {
-								$uname = XoopsUser::getUnameFromId($results[$i]['uid']);
+							if (!empty($results[$i]['uid'])) {
+								$uname = icms_member_user_Object::getUnameFromId($results[$i]['uid']);
 								$results[$i]['processed_user_name'] = $uname;
 								$results[$i]['processed_user_url'] = ICMS_URL."/userinfo.php?uid=".$results[$i]['uid'];
 							}
@@ -221,14 +221,14 @@ switch ($action) {
 					}
 
 					if ($icmsConfigSearch['enable_deep_search'] == true) {
-						if ( $count > $max_results_per_page) {
+						if ($count > $max_results_per_page) {
 							$search_url = ICMS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
 							$search_url .= "&mid=$mid&action=showall&andor=$andor";
 						} else {
 							$search_url = "";
 						}
 					} else {
-						if ( $count >= $max_results_per_page ) {
+						if ($count >= $max_results_per_page) {
 							$search_url = ICMS_URL.'/search.php?query='.urlencode(stripslashes(implode(' ', $queries)));
 							$search_url .= "&mid=$mid&action=showall&andor=$andor";
 						} else {
@@ -269,10 +269,10 @@ switch ($action) {
 					$results[$i]['link'] = "modules/".$module->getVar('dirname')."/".$results[$i]['link'];
 				}
 				$results[$i]['processed_title'] = $myts->displayTarea($results[$i]['title']);
-				if( $icmsConfigSearch['search_user_date']){
+				if ($icmsConfigSearch['search_user_date']) {
 					$results[$i]['uid'] = @ (int) ($results[$i]['uid']);
-					if ( !empty($results[$i]['uid']) ) {
-						$uname = XoopsUser::getUnameFromId($results[$i]['uid']);
+					if (!empty($results[$i]['uid'])) {
+						$uname = icms_member_user_Object::getUnameFromId($results[$i]['uid']);
 						$results[$i]['processed_user_name'] = $uname;
 						$results[$i]['processed_user_url'] = ICMS_URL."/userinfo.php?uid=".$results[$i]['uid'];
 					}

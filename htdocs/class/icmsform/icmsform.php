@@ -1,10 +1,10 @@
 <?php
 /**
- * Form control creating an image upload element for an object derived from IcmsPersistableObject
+ * Form control creating an image upload element for an object derived from icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		  1.1
  * @author		  marcan <marcan@impresscms.org>
  * @version		$Id$
@@ -20,11 +20,11 @@ include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 /**
  * IcmsForm base class
  *
- * Base class representing a single form for a specific IcmsPersistableObject
+ * Base class representing a single form for a specific icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		  1.1
  * @author		  marcan <marcan@impresscms.org>
  * @version		$Id$
@@ -52,7 +52,7 @@ class IcmsForm extends XoopsThemeForm {
 	 * @param	bool      $cancel_js_action         whether to invoke a javascript action when cancel button is clicked
 	 * @param	bool      $captcha                  whether to add captcha
 	 */
-	function IcmsForm(&$target, $form_name, $form_caption, $form_action, $form_fields=null, $submit_button_caption = false, $cancel_js_action=false, $captcha=false) {
+	function __construct(&$target, $form_name, $form_caption, $form_action, $form_fields=null, $submit_button_caption = false, $cancel_js_action=false, $captcha=false) {
 
 		$this->targetObject =& $target;
 		$this->form_fields = $form_fields;
@@ -625,7 +625,7 @@ class IcmsForm extends XoopsThemeForm {
 		if ( $withtags ) {
 			$js .= "\n<!-- Start Form Validation JavaScript //-->\n<script type='text/javascript'>\n<!--//\n";
 		}
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		$formname = $this->getName();
 		$js .= "function xoopsFormValidate_{$formname}(myform) {";
 		// First, output code to check required elements

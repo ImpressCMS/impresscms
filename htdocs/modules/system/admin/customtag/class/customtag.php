@@ -13,19 +13,17 @@
 if (! defined ( "ICMS_ROOT_PATH" ))
 die ( "ImpressCMS root path not defined" );
 
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
-
 define ( 'ICMS_CUSTOMTAG_TYPE_XCODES', 1 );
 define ( 'ICMS_CUSTOMTAG_TYPE_HTML', 2 );
 define ( 'ICMS_CUSTOMTAG_TYPE_PHP', 3 );
 
-class SystemCustomtag extends IcmsPersistableObject {
+class SystemCustomtag extends icms_ipf_Object {
 
 	public $content = false;
 	public $evaluated = false;
 
-	function SystemCustomtag(&$handler) {
-		$this->IcmsPersistableObject($handler);
+	function __construct(&$handler) {
+		parent::__construct($handler);
 
 		$this->quickInitVar ( 'customtagid', XOBJ_DTYPE_INT, true );
 		$this->quickInitVar ( 'name', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_CUSTOMTAG_NAME, _CO_ICMS_CUSTOMTAG_NAME_DSC );
@@ -52,7 +50,7 @@ class SystemCustomtag extends IcmsPersistableObject {
 	}
 
 	function render() {
-		$myts = MyTextSanitizer::getInstance ();
+		$myts = icms_core_Textsanitizer::getInstance ();
 		if (! $this->content) {
 			switch ( $this->getVar ( 'customtag_type' )) {
 				case ICMS_CUSTOMTAG_TYPE_XCODES :
@@ -134,12 +132,12 @@ class SystemCustomtag extends IcmsPersistableObject {
 	}
 }
 
-class SystemCustomtagHandler extends IcmsPersistableObjectHandler {
+class SystemCustomtagHandler extends icms_ipf_Handler {
 
 	public $objects = false;
 
 	function SystemCustomtagHandler($db) {
-		$this->IcmsPersistableObjectHandler ( $db, 'customtag', 'customtagid', 'name', 'description', 'system' );
+		parent::__construct( $db, 'customtag', 'customtagid', 'name', 'description', 'system' );
 		$this->addPermission ( 'view', _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW, _CO_ICMS_CUSTOMTAG_PERMISSION_VIEW_DSC );
 	}
 
@@ -149,20 +147,20 @@ class SystemCustomtagHandler extends IcmsPersistableObjectHandler {
 
 			$ret = array ( );
 
-			$criteria = new CriteriaCompo ( );
+			$criteria = new icms_criteria_Compo ( );
 
-			$criteria_language = new CriteriaCompo ( );
-			$criteria_language->add ( new Criteria ( 'language', $xoopsConfig ['language'] ) );
-			$criteria_language->add ( new Criteria ( 'language', 'all' ), 'OR' );
+			$criteria_language = new icms_criteria_Compo ( );
+			$criteria_language->add ( new icms_criteria_Item ( 'language', $xoopsConfig ['language'] ) );
+			$criteria_language->add ( new icms_criteria_Item ( 'language', 'all' ), 'OR' );
 			$criteria->add ( $criteria_language );
 
-			$icms_permissions_handler = new IcmsPersistablePermissionHandler ( $this );
+			$icms_permissions_handler = new icms_ipf_permission_Handler ( $this );
 			$granted_ids = $icms_permissions_handler->getGrantedItems ( 'view' );
 
 			if ($granted_ids && count ( $granted_ids ) > 0) {
-				$criteria->add ( new Criteria ( 'customtagid', '(' . implode ( ', ', $granted_ids ) . ')', 'IN' ) );
+				$criteria->add ( new icms_criteria_Item ( 'customtagid', '(' . implode ( ', ', $granted_ids ) . ')', 'IN' ) );
 				$customtagsObj = $this->getObjects ( $criteria, true );
-				foreach ( $customtagsObj as $customtagObj ) {
+				foreach ( $customtagsObj as $customtagObj) {
 					$ret [$customtagObj->getVar ( 'name' )] = $customtagObj;
 				}
 			}

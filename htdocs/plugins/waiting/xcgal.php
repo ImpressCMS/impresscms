@@ -1,10 +1,10 @@
 <?php
-function b_waiting_xcgal(){
+function b_waiting_xcgal() {
 	$xoopsDB =& Database::getInstance();
 	$block = array();
 
 	$result = $xoopsDB->query("SELECT count(*) FROM ".$xoopsDB->prefix("xcgal_pictures")." WHERE approved = 'NO'");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/xcgal/editpics.php?mode=upload_approval";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_WAITINGS ;

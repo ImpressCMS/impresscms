@@ -132,14 +132,12 @@ if (in_array($clean_op, $valid_op, true)) {
 			break;
 
 		case "addblock" :
-			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
-			$controller = new IcmsPersistableController($icms_block_handler);
+			$controller = new icms_ipf_Controller($icms_block_handler);
 			$controller->storeFromDefaultForm(_AM_SYSTEM_BLOCKSADMIN_CREATED, _AM_SYSTEM_BLOCKSADMIN_MODIFIED);
 			break;
 
 		case "del" :
-			include_once ICMS_ROOT_PATH . "/kernel/icmspersistablecontroller.php";
-			$controller = new IcmsPersistableController($icms_block_handler);
+			$controller = new icms_ipf_Controller($icms_block_handler);
 			$controller->handleObjectDeletion();
 
 			break;
@@ -175,14 +173,13 @@ if (in_array($clean_op, $valid_op, true)) {
 		default :
 
 			icms_cp_header();
-			include_once ICMS_ROOT_PATH . "/kernel/icmspersistabletable.php";
-			$objectTable = new IcmsPersistableTable($icms_block_handler);
-			$objectTable->addColumn(new IcmsPersistableColumn('visible', 'center'));
-			$objectTable->addColumn(new IcmsPersistableColumn('name'));
-			$objectTable->addColumn(new IcmsPersistableColumn('title', _GLOBAL_LEFT, false, 'getAdminViewItemLink'));
-			$objectTable->addColumn(new IcmsPersistableColumn('mid'));
-			$objectTable->addColumn(new IcmsPersistableColumn('side', 'center', false, 'getSideControl'));
-			$objectTable->addColumn(new IcmsPersistableColumn('weight', 'center', false, 'getWeightControl'));
+			$objectTable = new icms_ipf_view_Table($icms_block_handler);
+			$objectTable->addColumn(new icms_ipf_view_Column('visible', 'center'));
+			$objectTable->addColumn(new icms_ipf_view_Column('name'));
+			$objectTable->addColumn(new icms_ipf_view_Column('title', _GLOBAL_LEFT, false, 'getAdminViewItemLink'));
+			$objectTable->addColumn(new icms_ipf_view_Column('mid'));
+			$objectTable->addColumn(new icms_ipf_view_Column('side', 'center', false, 'getSideControl'));
+			$objectTable->addColumn(new icms_ipf_view_Column('weight', 'center', false, 'getWeightControl'));
 
 			$objectTable->addIntroButton('addpost', 'admin.php?fct=blocksadmin&amp;op=mod', _AM_SYSTEM_BLOCKSADMIN_CREATE);
 			$objectTable->addQuickSearch(array (

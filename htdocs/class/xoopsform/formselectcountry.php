@@ -58,7 +58,7 @@ class XoopsFormSelectCountry extends XoopsFormSelect
 	function XoopsFormSelectCountry($caption, $name, $value = null, $size = 1)
 	{
 		$this->XoopsFormSelect($caption, $name, $value, $size);
-		$this->addOptionArray(XoopsLists::getCountryList());
+		$this->addOptionArray(IcmsLists::getCountryList());
 	}
 }
 

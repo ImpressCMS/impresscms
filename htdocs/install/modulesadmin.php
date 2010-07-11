@@ -25,7 +25,7 @@ function xoops_module_install($dirname) {
 	$db =& Database::getInstance();
 	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
 	$module_handler =& xoops_gethandler('module');
-	if ($module_handler->getCount(new Criteria('dirname', $dirname)) == 0) {
+	if ($module_handler->getCount(new icms_criteria_Item('dirname', $dirname)) == 0) {
 		$module =& $module_handler->create();
 		$module->loadInfoAsVar($dirname);
 		$module->setVar('weight', 1);
@@ -107,7 +107,7 @@ function xoops_module_install($dirname) {
 					$db->query("DROP TABLE ".$db->prefix($ct));
 				}
 				$ret = "<p>".sprintf(_MD_AM_FAILINS, "<b>".$module->name()."</b>")."&nbsp;"._MD_AM_ERRORSC."<br />";
-				foreach ( $errs as $err ) {
+				foreach ( $errs as $err) {
 					$ret .= " - ".$err."<br />";
 				}
 				$ret .= "</p>";
@@ -120,7 +120,7 @@ function xoops_module_install($dirname) {
 				$newmid = $module->getVar('mid');
 				unset($created_tables);
 				$msgs[] = 'Module data inserted successfully. Module ID: <b>'.icms_conv_nr2local($newmid).'</b>';
-				$tplfile_handler =& xoops_gethandler('tplfile');
+				$tplfile_handler =& xoops_gethandler('view_template_file');
 				$templates = $module->getInfo('templates');
 				if ($templates != false) {
 					$msgs[] = 'Adding templates...';
@@ -145,7 +145,7 @@ function xoops_module_install($dirname) {
 
 							// generate compiled file
 							include_once ICMS_ROOT_PATH.'/class/template.php';
-							if (!xoops_template_touch($newtplid)) {
+							if (!icms_view_Tpl::template_touch($newtplid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_FAILCOMPTEMPFILE.'</span>', $tpl['file']);
 							} else {
 								$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_COMPTEMPFILE, $tpl['file']);
@@ -208,7 +208,7 @@ function xoops_module_install($dirname) {
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> added to the database. (ID: <b>'.icms_conv_nr2local($newtplid).'</b>)';
 									// generate compiled file
 									include_once ICMS_ROOT_PATH.'/class/template.php';
-									if (!xoops_template_touch($newtplid)) {
+									if (!icms_view_Tpl::template_touch($newtplid)) {
 										$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Failed compiling template <b>'.$block['template'].'</b>.</span>';
 									} else {
 										$msgs[] = '&nbsp;&nbsp;Template <b>'.$block['template'].'</b> compiled.</span>';
@@ -319,7 +319,7 @@ function xoops_module_install($dirname) {
 			$icms_block_handler = xoops_gethandler('block');
 			$blocks =& $icms_block_handler->getByModule($newmid, false);
 			$msgs[] = 'Setting group rights...';
-			$gperm_handler =& xoops_gethandler('groupperm');
+			$gperm_handler =& xoops_gethandler('member_groupperm');
 			foreach ($groups as $mygroup) {
 				if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
 					$mperm =& $gperm_handler->create();
@@ -392,8 +392,8 @@ function xoops_module_install($dirname) {
 				include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($install_script);
 
 				$is_IPF = $module->getInfo('object_items');
-				if(!empty($is_IPF)){
-					$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
+				if (!empty($is_IPF)) {
+					$icmsDatabaseUpdater = icms_database_Factory::getDatabaseUpdater();
 					$icmsDatabaseUpdater->moduleUpgrade($module, true);
 					foreach ($icmsDatabaseUpdater->_messages as $msg) {
 						$msgs[] = $msg;
@@ -402,21 +402,21 @@ function xoops_module_install($dirname) {
 
 				if (function_exists('xoops_module_install_'.$ModName)) {
 					$func = 'xoops_module_install_'.$ModName;
-					if ( !( $lastmsg = $func($module) ) ) {
+					if (!( $lastmsg = $func($module) )) {
 						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
 					} else {
 						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
-						if ( is_string( $lastmsg ) ) {
+						if (is_string( $lastmsg )) {
 							$msgs[] = $lastmsg;
 						}
 					}
-				}elseif (function_exists('icms_module_install_'.$ModName)) {
+				} elseif (function_exists('icms_module_install_'.$ModName)) {
 					$func = 'icms_module_install_'.$ModName;
-					if ( !( $lastmsg = $func($module) ) ) {
+					if (!( $lastmsg = $func($module) )) {
 						$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);
 					} else {
 						$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
-						if ( is_string( $lastmsg ) ) {
+						if (is_string( $lastmsg )) {
 							$msgs[] = $lastmsg;
 						}
 					}
@@ -503,11 +503,11 @@ function icms_module_update($dirname) {
 		$newmid = $module->getVar('mid');
 		$msgs = array();
 		$msgs[] = _MD_AM_MOD_DATA_UPDATED;
-		$tplfile_handler =& xoops_gethandler('tplfile');
+		$tplfile_handler =& xoops_gethandler('view_template_file');
 		$deltpl =& $tplfile_handler->find('default', 'module', $module->getVar('mid'));
 		$delng = array();
 		if (is_array($deltpl)) {
-			$xoopsDelTpl = new XoopsTpl();
+			$xoopsDelTpl = new icms_view_Tpl();
 			// clear cache files
 			$xoopsDelTpl->clear_cache(null, 'mod_'.$dirname);
 			// delete template file entry in db
@@ -546,7 +546,7 @@ function icms_module_update($dirname) {
 						$newid = $tplfile->getVar('tpl_id');
 						$msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_TEMPINS.'</span>', $tpl['file']);
 						if ($xoopsConfig['template_set'] == 'default') {
-							if (!xoops_template_touch($newid)) {
+							if (!icms_view_Tpl::template_touch($newid)) {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_NOTRECOMPTEMPFILE.'</span>', $tpl['file']);
 							} else {
 								$msgs[] = sprintf('&nbsp;&nbsp;<span>'._MD_AM_RECOMPTEMPFILE.'</span>', $tpl['file']);
@@ -565,7 +565,7 @@ function icms_module_update($dirname) {
 			$count = count($blocks);
 			$showfuncs = array();
 			$funcfiles = array();
-			for ( $i = 1; $i <= $count; $i++ ) {
+			for ( $i = 1; $i <= $count; $i++) {
 				if (isset($blocks[$i]['show_func']) && $blocks[$i]['show_func'] != '' && isset($blocks[$i]['file']) && $blocks[$i]['file'] != '') {
 					$editfunc = isset($blocks[$i]['edit_func']) ? $blocks[$i]['edit_func'] : '';
 					$showfuncs[] = $blocks[$i]['show_func'];
@@ -616,7 +616,7 @@ function icms_module_update($dirname) {
 								} else {
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> updated.';
 									if ($xoopsConfig['template_set'] == 'default') {
-										if (!xoops_template_touch($tplfile_new->getVar('tpl_id'))) {
+										if (!icms_view_Tpl::template_touch($tplfile_new->getVar('tpl_id'))) {
 											$msgs[] = sprintf('&nbsp;&nbsp;<span style="color:#ff0000;">'._MD_AM_NOTRECOMPTEMPFILE.'</span>', $blocks[$i]['template']);
 										} else {
 											$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_RECOMPTEMPFILE, $blocks[$i]['template']);
@@ -639,7 +639,7 @@ function icms_module_update($dirname) {
 								$newbid = $db->getInsertId();
 							}
 							$groups =& $icmsUser->getGroups();
-							$gperm_handler =& xoops_gethandler('groupperm');
+							$gperm_handler =& xoops_gethandler('member_groupperm');
 							foreach ($groups as $mygroup) {
 								$bperm =& $gperm_handler->create();
 								$bperm->setVar('gperm_groupid', (int) ($mygroup));
@@ -670,7 +670,7 @@ function icms_module_update($dirname) {
 									$newid = $tplfile->getVar('tpl_id');
 									$msgs[] = '&nbsp;&nbsp;Template <b>'.$blocks[$i]['template'].'</b> added to the database.';
 									if ($xoopsConfig['template_set'] == 'default') {
-										if (!xoops_template_touch($newid)) {
+										if (!icms_view_Tpl::template_touch($newid)) {
 											$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Template <b>'.$blocks[$i]['template'].'</b> recompile failed.</span>';
 										} else {
 											$msgs[] = sprintf('&nbsp;&nbsp;'._MD_AM_RECOMPTEMPFILE, $blocks[$i]['template']);
@@ -691,7 +691,7 @@ function icms_module_update($dirname) {
 			foreach ($block_arr as $block) {
 				if (!in_array($block->getVar('show_func'), $showfuncs) || !in_array($block->getVar('func_file'), $funcfiles)) {
 					$sql = sprintf("DELETE FROM %s WHERE bid = '%u'", $db->prefix('newblocks'), (int) ($block->getVar('bid')));
-					if(!$db->query($sql)) {
+					if (!$db->query($sql)) {
 						$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete block <b>'.$block->getVar('name').'</b>. Block ID: <b>'.$block->getVar('bid').'</b></span>';
 					} else {
 						$msgs[] = '&nbsp;&nbsp;Block <b>'.$block->getVar('name').' deleted. Block ID: <b>'.$block->getVar('bid').'</b>';
@@ -715,7 +715,7 @@ function icms_module_update($dirname) {
 
 		// first delete all config entries
 		$config_handler =& xoops_gethandler('config');
-		$configs =& $config_handler->getConfigs(new Criteria('conf_modid', $module->getVar('mid')));
+		$configs =& $config_handler->getConfigs(new icms_criteria_Item('conf_modid', $module->getVar('mid')));
 		$confcount = count($configs);
 		$config_delng = array();
 		if ($confcount > 0) {
@@ -840,8 +840,8 @@ function icms_module_update($dirname) {
 		$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
 		if (count($atasks) > 0) {
 			$msgs[] = 'Updating autotasks...';
-			$criteria = new CriteriaCompo();
-			$criteria->add( new Criteria( 'sat_type', 'addon/'.$module->getInfo('dirname')));
+			$criteria = new icms_criteria_Compo();
+			$criteria->add( new icms_criteria_Item( 'sat_type', 'addon/'.$module->getInfo('dirname')));
 			$items_atasks = $atasks_handler->getObjects( $criteria , false );
 			foreach ($items_atasks as $task) {
 				$taskID = (int) ($task->getVar('sat_addon_id'));
@@ -878,8 +878,8 @@ function icms_module_update($dirname) {
 			include_once ICMS_ROOT_PATH.'/modules/'.$dirname.'/'.trim($update_script);
 
 			$is_IPF = $module->getInfo('object_items');
-			if(!empty($is_IPF)){
-				$icmsDatabaseUpdater = XoopsDatabaseFactory::getDatabaseUpdater();
+			if (!empty($is_IPF)) {
+				$icmsDatabaseUpdater = icms_database_Factory::getDatabaseUpdater();
 				$icmsDatabaseUpdater->moduleUpgrade($module, true);
 				foreach ($icmsDatabaseUpdater->_messages as $msg) {
 					$msgs[] = $msg;
@@ -893,7 +893,7 @@ function icms_module_update($dirname) {
 				} else {
 					$msgs[] = sprintf(_MD_AM_FUNCT_EXEC, $func);
 				}
-			}elseif (function_exists('icms_module_update_'.$ModName)) {
+			} elseif (function_exists('icms_module_update_'.$ModName)) {
 				$func = 'icms_module_update_'.$ModName;
 				if (!$func($module, $prev_version, $prev_dbversion)) {
 					$msgs[] = sprintf(_MD_AM_FAIL_EXEC, $func);

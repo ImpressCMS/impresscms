@@ -445,7 +445,7 @@ class csstidy_optimise
     function merge_selectors(&$array)
     {
         $css = $array;
-        foreach($css as $key => $value)
+        foreach ($css as $key => $value)
         {
             if(!isset($css[$key]))
             {
@@ -456,7 +456,7 @@ class csstidy_optimise
             // Check if properties also exist in another selector
             $keys = array();
             // PHP bug (?) without $css = $array; here
-            foreach($css as $selector => $vali)
+            foreach ($css as $selector => $vali)
             {
                 if($selector == $key)
                 {
@@ -473,7 +473,7 @@ class csstidy_optimise
             {
                 $newsel = $key;
                 unset($css[$key]);
-                foreach($keys as $selector)
+                foreach ($keys as $selector)
                 {
                     unset($css[$selector]);
                     $newsel .= ','.$selector;
@@ -513,7 +513,7 @@ class csstidy_optimise
         $return = array();
         if(count($values) == 4)
         {
-            for($i=0;$i<4;$i++)
+            for ($i=0;$i<4;$i++)
             {
                 $return[$shorthands[$property][$i]] = $values[$i].$important;
             }
@@ -527,14 +527,14 @@ class csstidy_optimise
         }
         elseif(count($values) == 2)
         {
-            for($i=0;$i<4;$i++)
+            for ($i=0;$i<4;$i++)
             {
                 $return[$shorthands[$property][$i]] = (($i % 2 != 0)) ? $values[1].$important : $values[0].$important;
             }
         }
         else
         {
-            for($i=0;$i<4;$i++)
+            for ($i=0;$i<4;$i++)
             {
                 $return[$shorthands[$property][$i]] = $values[0].$important;
             }
@@ -557,7 +557,7 @@ class csstidy_optimise
 
         $output = array();
         $num = 0;
-        for($i = 0, $len = strlen($string);$i < $len; $i++)
+        for ($i = 0, $len = strlen($string);$i < $len; $i++)
         {
             switch($status)
             {
@@ -610,7 +610,7 @@ class csstidy_optimise
         $return = $array;
         $shorthands =& $GLOBALS['csstidy']['shorthands'];
 
-        foreach($shorthands as $key => $value)
+        foreach ($shorthands as $key => $value)
         {
             if(isset($array[$value[0]]) && isset($array[$value[1]])
             && isset($array[$value[2]]) && isset($array[$value[3]]) && $value !== 0)
@@ -618,7 +618,7 @@ class csstidy_optimise
                 $return[$key] = '';
 
                 $important = '';
-                for($i = 0; $i < 4; $i++)
+                for ($i = 0; $i < 4; $i++)
                 {
                     $val = $array[$value[$i]];
                     if(csstidy::is_important($val))
@@ -664,14 +664,14 @@ class csstidy_optimise
         }
 
         $str_value = csstidy_optimise::explode_ws(',',$str_value);
-        for($i = 0; $i < count($str_value); $i++)
+        for ($i = 0; $i < count($str_value); $i++)
         {
             $have['clip'] = FALSE; $have['pos'] = FALSE;
             $have['color'] = FALSE; $have['bg'] = FALSE;
 
             $str_value[$i] = csstidy_optimise::explode_ws(' ',trim($str_value[$i]));
 
-            for($j = 0; $j < count($str_value[$i]); $j++)
+            for ($j = 0; $j < count($str_value[$i]); $j++)
             {
                 if($have['bg'] === FALSE && (substr($str_value[$i][$j],0,4) == 'url(' || $str_value[$i][$j] === 'none'))
                 {
@@ -713,7 +713,7 @@ class csstidy_optimise
             }
         }
 
-        foreach($background_prop_default as $bg_prop => $default_value)
+        foreach ($background_prop_default as $bg_prop => $default_value)
         {
             if($return[$bg_prop] !== NULL)
             {
@@ -742,9 +742,9 @@ class csstidy_optimise
         $new_bg_value = '';
         $important = '';
 
-        for($i = 0; $i < $number_of_values; $i++)
+        for ($i = 0; $i < $number_of_values; $i++)
         {
-            foreach($background_prop_default as $bg_property => $default_value)
+            foreach ($background_prop_default as $bg_property => $default_value)
             {
                 // Skip if property does not exist
                 if(!isset($input_css[$bg_property]))
@@ -795,7 +795,7 @@ class csstidy_optimise
         }
 
         // Delete all background-properties
-        foreach($background_prop_default as $bg_property => $default_value)
+        foreach ($background_prop_default as $bg_property => $default_value)
         {
             unset($input_css[$bg_property]);
         }

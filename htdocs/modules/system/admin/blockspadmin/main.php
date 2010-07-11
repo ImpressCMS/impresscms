@@ -13,7 +13,7 @@
  * @version		$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit(_CT_ACCESS_DENIED);
 }
 
@@ -23,7 +23,7 @@ function editblockposition($id = 0)
 
 	$blockObj = $icms_blockposition_handler->get($id);
 
-	if (!$blockObj->isNew()){
+	if (!$blockObj->isNew()) {
 		$sform = $blockObj->getForm(_AM_SYSTEM_BLOCKSPADMIN_EDIT, 'addblockposition');
 		$sform->assign($icmsAdminTpl);
 
@@ -49,7 +49,7 @@ if (isset($_POST['op'])) $clean_op = htmlentities($_POST['op']);
 $clean_id = isset($_GET['id']) ? (int) $_GET['id'] : 0 ;
 $clean_id = isset($_POST['id']) ? (int) $_POST['id'] : $clean_id;
 
-if (in_array($clean_op,$valid_op,true)){
+if (in_array($clean_op,$valid_op,true)) {
 
 	switch ($clean_op) {
 		case "mod":
@@ -61,24 +61,21 @@ if (in_array($clean_op,$valid_op,true)){
 			break;
 
 		case "addblockposition":
-			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-			$controller = new IcmsPersistableController($icms_blockposition_handler);
+			$controller = new icms_ipf_Controller($icms_blockposition_handler);
 			$controller->storeFromDefaultForm(_AM_SYSTEM_BLOCKSPADMIN_CREATED, _AM_SYSTEM_BLOCKSPADMIN_MODIFIED);
 			break;
 
 		case "del":
-			include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-			$controller = new IcmsPersistableController($icms_blockposition_handler);
+			$controller = new icms_ipf_Controller($icms_blockposition_handler);
 			$controller->handleObjectDeletion();
 			break;
 
 		default:
 			icms_cp_header();
-			include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-			$objectTable = new IcmsPersistableTable($icms_blockposition_handler, false);
-			$objectTable->addColumn(new IcmsPersistableColumn('pname'), 'center');
-			$objectTable->addColumn(new IcmsPersistableColumn('title', false, false, 'getCustomTitle', false, false, false));
-			$objectTable->addColumn(new IcmsPersistableColumn('description'));
+			$objectTable = new icms_ipf_view_Table($icms_blockposition_handler, false);
+			$objectTable->addColumn(new icms_ipf_view_Column('pname'), 'center');
+			$objectTable->addColumn(new icms_ipf_view_Column('title', false, false, 'getCustomTitle', false, false, false));
+			$objectTable->addColumn(new icms_ipf_view_Column('description'));
 
 			$objectTable->addIntroButton('addblockposition', 'admin.php?fct=blockspadmin&amp;op=mod', _AM_SYSTEM_BLOCKSPADMIN_CREATE);
 			$objectTable->addQuickSearch(array('pname','title', 'description'));

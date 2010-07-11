@@ -44,9 +44,9 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
 		public $prefix = '';
 
 		/**
-		 * reference to a {@link XoopsLogger} object
-		 * @see XoopsLogger
-		 * @var object XoopsLogger
+		 * reference to a {@link icms_core_Logger} object
+		 * @see icms_core_Logger
+		 * @var object icms_core_Logger
 		 */
 		public $logger;
 
@@ -64,10 +64,10 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
 		public function __construct() { /* exit("Cannot instantiate this class directly"); */ }
 
 		/**
-		 * assign a {@link XoopsLogger} object to the database
+		 * assign a {@link icms_core_Logger} object to the database
 		 *
-		 * @see XoopsLogger
-		 * @param object $logger reference to a {@link XoopsLogger} object
+		 * @see icms_core_Logger
+		 * @param object $logger reference to a {@link icms_core_Logger} object
 		 */
 		public function setLogger(&$logger) {
 			$this->logger =& $logger;
@@ -130,12 +130,12 @@ if ( !defined("XOOPS_C_DATABASE_INCLUDED") ) {
  * @copyright   copyright (c) 2000-2003 XOOPS.org
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
  *
- * @deprecated Use XoopsDatabaseFactory instead
+ * @deprecated Use icms_database_Factory instead
  * @todo		Remove this in version 1.4?
  */
 class Database {
 	static public function &getInstance() {
-		return XoopsDatabaseFactory::getDatabaseConnection();
+		return icms_database_Factory::getDatabaseConnection();
 	}
 }
 

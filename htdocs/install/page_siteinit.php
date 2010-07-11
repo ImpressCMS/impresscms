@@ -18,7 +18,7 @@
  *
  */
 require_once 'common.inc.php';
-if ( !defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
 $wizard->setPage( 'siteinit' );
 $pageHasForm = true;
@@ -33,7 +33,7 @@ function createSalt() {
 	return imcms_createSalt();
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$vars['adminsalt'] = createSalt();
 	$vars['adminname'] = $_POST['adminname'];
 	$vars['adminlogin_name'] = $_POST['adminlogin_name'];
@@ -42,14 +42,14 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$vars['adminpass2'] = $_POST['adminpass2'];
 	$error = '';
 
-	if (!preg_match( "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $vars['adminmail'] ) ) {
+	if (!preg_match( "/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+([\.][a-z0-9-]+)+$/i", $vars['adminmail'] )) {
 		$error = ERR_INVALID_EMAIL;
-	} elseif ( @empty( $vars['adminlogin_name'] ) || @empty( $vars['adminname'] )  || @empty( $vars['adminlogin_name'] ) || @empty( $vars['adminpass'] ) || @empty( $vars['adminmail']) || empty( $vars['adminsalt']) ) {
+	} elseif (@empty( $vars['adminlogin_name'] ) || @empty( $vars['adminname'] )  || @empty( $vars['adminlogin_name'] ) || @empty( $vars['adminpass'] ) || @empty( $vars['adminmail']) || empty( $vars['adminsalt'])) {
 		$error = ERR_REQUIRED;
-	} elseif ( $vars['adminpass'] != $vars['adminpass2'] ) {
+	} elseif ($vars['adminpass'] != $vars['adminpass2']) {
 		$error = ERR_PASSWORD_MATCH;
 	}
-	if ( $error ) {
+	if ($error) {
 		$wizard->redirectToPage( '+0' );
 		return 200;
 	} else {
@@ -60,7 +60,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
 ob_start();
 ?>
-<?php if ( !empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
+<?php if (!empty( $error ) ) echo '<div class="x2-note error">' . $error . "</div>\n"; ?>
 
 <script
 	type="text/javascript"

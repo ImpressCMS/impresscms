@@ -13,15 +13,14 @@
 if (! defined ( "ICMS_ROOT_PATH" ))
 die ( "ImpressCMS root path not defined" );
 
-include_once ICMS_ROOT_PATH . "/kernel/icmspersistableobject.php";
 include_once ICMS_ROOT_PATH . "/class/plugins.php";
 
-class SystemRating extends IcmsPersistableObject {
+class SystemRating extends icms_ipf_Object {
 
 	public $_modulePlugin=false;
 
-	function SystemRating(&$handler) {
-		$this->IcmsPersistableObject($handler);
+	function __construct(&$handler) {
+		parent::__construct($handler);
 
 		$this->quickInitVar('ratingid', XOBJ_DTYPE_INT, true);
 		$this->quickInitVar('dirname', XOBJ_DTYPE_TXTBOX, true, _CO_ICMS_RATING_DIRNAME);
@@ -90,14 +89,14 @@ class SystemRating extends IcmsPersistableObject {
 	}
 }
 
-class SystemRatingHandler extends IcmsPersistableObjectHandler {
+class SystemRatingHandler extends icms_ipf_Handler {
 
 	public $_rateOptions=array();
 	public $_moduleList=false;
 	public $pluginsObject;
 
 	function SystemRatingHandler($db) {
-		$this->IcmsPersistableObjectHandler ( $db, 'rating', 'ratingid', 'rate', '', 'system' );
+		parent::__construct( $db, 'rating', 'ratingid', 'rate', '', 'system' );
 		$this->generalSQL = 'SELECT * FROM ' . $this->table . ' AS ' . $this->_itemname . ' INNER JOIN ' . $this->db->prefix('users') . ' AS user ON ' . $this->_itemname . '.uid=user.uid';
 
 		$this->_rateOptions[1] = 1;
@@ -135,19 +134,19 @@ class SystemRatingHandler extends IcmsPersistableObjectHandler {
 		$ret['sum'] = isset($sum) ? $sum : 0;
 		return $ret;
 	}
-	function already_rated($item, $itemid, $dirname, $uid){
+	function already_rated($item, $itemid, $dirname, $uid) {
 
-		$criteria = new CriteriaCompo();
-		$criteria->add(new Criteria('item',$item ));
-		$criteria->add(new Criteria('itemid',$itemid ));
-		$criteria->add(new Criteria('dirname', $dirname));
-		$criteria->add(new Criteria('user.uid', $uid));
+		$criteria = new icms_criteria_Compo();
+		$criteria->add(new icms_criteria_Item('item',$item ));
+		$criteria->add(new icms_criteria_Item('itemid',$itemid ));
+		$criteria->add(new icms_criteria_Item('dirname', $dirname));
+		$criteria->add(new icms_criteria_Item('user.uid', $uid));
 
 		$ret = $this->getObjects($criteria);
 
-		if(!$ret){
+		if (!$ret) {
 			return false;
-		}else{
+		} else {
 			return $ret[0];
 		}
 	}

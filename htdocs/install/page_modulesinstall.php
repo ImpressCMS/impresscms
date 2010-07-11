@@ -17,7 +17,7 @@
  */
 require_once 'common.inc.php';
 
-if ( !defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
 $wizard->setPage( 'modulesinstall' );
 $pageHasForm = true;
@@ -35,22 +35,22 @@ require_once "../class/xoopslists.php";
 include "modulesadmin.php";
 $dbm = new db_manager();
 
-if ( !$dbm->isConnectable() ) {
+if (!$dbm->isConnectable()) {
 	$wizard->redirectToPage( '-3' );
 	exit();
 }
 $process = '';
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$process = 'install';
 }
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	// If there's nothing to do: switch to next page
-	if ( empty( $process ) ) {
+	if (empty( $process )) {
 		$wizard->redirectToPage( '+1' );
 		exit();
 	}
-	if ( $_POST['mod'] == 1 ) {
+	if ($_POST['mod'] == 1) {
 		/**
 		 * Automatically updating the system module before installing the selected modules
 		 * @since 1.3
@@ -62,8 +62,8 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 
 		$install_mods = isset($_POST['install_mods']) ? $_POST['install_mods'] : '';
 		$anon_accessible_mods = isset($_POST['anon_accessible_mods']) ? $_POST['anon_accessible_mods'] : '';
-		if (isset($_POST['install_mods'])){
-			for ($i = 0; $i <= count($install_mods)-1;$i++){
+		if (isset($_POST['install_mods'])) {
+			for ($i = 0; $i <= count($install_mods)-1;$i++) {
 				$content .= xoops_module_install($install_mods[$i]);
 				//$content .= icms_module_update($install_mods[$i]);
 				impresscms_get_adminmenu();
@@ -98,7 +98,7 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	$content .= '<div id="modinstall" name="install_mods[]">';
 	$langarr = XoopsLists::getModulesList();
 	foreach ($langarr as $lang) {
-		if ($lang == 'system' || $lang == 'protector'){
+		if ($lang == 'system' || $lang == 'protector') {
 			continue;
 		}
 		$content .= "<div class=\"langselect\" style=\"text-decoration: none;\"><a href=\"javascript:void(0);\" style=\"text-decoration: none;\"><img src=\"../modules/$lang/images/icon_small.png\" alt=\"$lang\" /><br />$lang <br /><input type=\"checkbox\" checked=\"checked\" name=\"install_mods[]\" value=\"$lang\" /></a></div>";
@@ -109,11 +109,11 @@ if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 	 $content .= '<select id="modperms" name="anon_accessible_mods[]"  multiple>';
 	 $langarr = getDirList("../modules/");
 	 foreach ($langarr as $lang) {
-		if ($lang == 'system' || $lang == 'protector'){
+		if ($lang == 'system' || $lang == 'protector') {
 		continue;
 		}
 		$content .= "<option value='".$lang."'";
-		if ($lang == 'contact' || $lang == 'news'){
+		if ($lang == 'contact' || $lang == 'news') {
 		$content .= ' selected="selected"';
 		}
 		$content .= ">".$lang."</option>";

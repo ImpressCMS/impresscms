@@ -23,9 +23,9 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @param string $doc_keywords	The keywords to put in the PDF file
  * @return string Generated output by the pdf (@link TCPDF) class
  */
-function Generate_PDF ($content, $doc_title, $doc_keywords){
+function Generate_PDF ($content, $doc_title, $doc_keywords) {
 	global $icmsConfig;
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	require_once ICMS_PDF_LIB_PATH.'/tcpdf.php';
 	icms_loadLanguageFile('core', 'pdf');
 	$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true);

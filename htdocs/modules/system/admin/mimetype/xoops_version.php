@@ -21,5 +21,5 @@ $modversion = array( 'name' => _MD_AM_MIMETYPES,
 	'image' => "mimetype.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=mimetype",
-	'category' => XOOPS_SYSTEM_MIMETYPES );
-?>
+	'category' => XOOPS_SYSTEM_MIMETYPES,
+	'group' => 'Media');

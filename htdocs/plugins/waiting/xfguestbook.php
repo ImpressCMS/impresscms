@@ -1,10 +1,10 @@
 <?php
-function b_waiting_xfguestbook(){
+function b_waiting_xfguestbook() {
 	$xoopsDB =& Database::getInstance();
 	$block = array();
 
 	$result = $xoopsDB->query("SELECT count(*) FROM ".$xoopsDB->prefix("xfguestbook_msg")." WHERE moderate = 1");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/xfguestbook/admin/index.php?action=waiting";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_WAITINGS;

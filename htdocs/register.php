@@ -23,18 +23,18 @@
 $xoopsOption['pagetype'] = 'user';
 
 include 'mainfile.php';
-if(icms_get_module_status('profile') && file_exists(ICMS_ROOT_PATH.'/modules/profile/register.php'))
+if (icms_get_module_status('profile') && file_exists(ICMS_ROOT_PATH.'/modules/profile/register.php'))
 {
 	header('Location: '.ICMS_URL.'/modules/profile/register.php');
 	exit();
 }
 
-$myts =& MyTextSanitizer::getInstance();
+$myts =& icms_core_Textsanitizer::getInstance();
 
 if ($icmsConfigUser['allow_register'] == 0 && $icmsConfigUser['activation_type'] != 3) {
 	redirect_header('index.php', 6, _US_NOREGISTER);
 }
-if(is_object('xoopsUser')){
+if (is_object('xoopsUser')) {
 	redirect_header('index.php', 6, _US_ALREADY_LOGED_IN);
 }
 $op = !isset($_POST['op']) ? 'register' : $_POST['op'];
@@ -52,8 +52,8 @@ $actkey = isset($_POST['actkey']) ? trim($myts->stripSlashesGPC($_POST['actkey']
 $salt = isset($_POST['salt']) ? trim($myts->stripSlashesGPC($_POST['salt'])) : '';
 $enc_type = $icmsConfigUser['enc_type'];
 
-$thisuser = new XoopsUserHandler();
-switch ( $op ) {
+$thisuser = new icms_member_user_Handler();
+switch ( $op) {
 	case 'newuser':
 		include 'header.php';
 		$xoTheme->addScript('', array('type' => ''), '
@@ -117,10 +117,9 @@ switch ( $op ) {
 			$stop .= implode('<br />', $GLOBALS['xoopsSecurity']->getErrors())."<br />";
 		}
 		if ($icmsConfigUser['use_captcha'] == 1) {
-			include_once ICMS_ROOT_PATH ."/class/captcha/captcha.php" ;
 			include_once ICMS_ROOT_PATH ."/class/xoopsformloader.php" ;
-			$icmsCaptcha = IcmsCaptcha::instance();
-			if(! $icmsCaptcha->verify() ) {
+			$icmsCaptcha = icms_captcha_Object::instance();
+			if (! $icmsCaptcha->verify()) {
 				$stop .= $icmsCaptcha->getMessage().'<br />';
 
 			}
@@ -132,7 +131,7 @@ switch ( $op ) {
 			}
 		}
 
-		if ( empty($stop) ) {
+		if (empty($stop)) {
 			$member_handler =& xoops_gethandler('member');
 			$newuser =& $member_handler->createUser();
 			$newuser->setVar('user_viewemail',$user_viewemail, true);
@@ -190,18 +189,18 @@ switch ( $op ) {
 				exit();
 			}
 
-			$thisuser = new XoopsUser($newid);
+			$thisuser = new icms_member_user_Object($newid);
 
 			// Activation by user
 			if ($icmsConfigUser['activation_type'] == 0) {
 				$xoopsMailer =& getMailer();
 				$xoopsMailer->useMail();
 				$xoopsMailer->setTemplate('register.tpl');
-				$xoopsMailer->setToUsers(new XoopsUser($newid));
+				$xoopsMailer->setToUsers(new icms_member_user_Object($newid));
 				$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 				$xoopsMailer->setFromName($icmsConfig['sitename']);
 				$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
-				if ( !$xoopsMailer->send() ) {
+				if (!$xoopsMailer->send()) {
 					echo _US_YOURREGMAILNG;
 				} else {
 					echo _US_YOURREGISTERED;
@@ -220,7 +219,7 @@ switch ( $op ) {
 				$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 				$xoopsMailer->setFromName($icmsConfig['sitename']);
 				$xoopsMailer->setSubject(sprintf(_US_USERKEYFOR, $uname));
-				if ( !$xoopsMailer->send() ) {
+				if (!$xoopsMailer->send()) {
 					echo _US_YOURREGMAILNG;
 				} else {
 					echo _US_YOURREGISTERED2;

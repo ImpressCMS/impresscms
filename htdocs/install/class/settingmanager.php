@@ -35,12 +35,12 @@ class setting_manager {
 
 	var $sanitizer;
 
-	function setting_manager($post=false){
+	function setting_manager($post=false) {
 
 		$this->sanitizer =& TextSanitizer::getInstance();
-		if($post){
+		if ($post) {
 			$this->readPost();
-		}else{
+		} else {
 			$this->database = 'mysql';
 			$this->dbhost = 'localhost';
 
@@ -55,10 +55,10 @@ class setting_manager {
 
 			$filepath = str_replace("\\", "/", $filepath); // "
 			$filepath = str_replace("/install", "", $filepath);
-			if ( substr($filepath, 0, 1) == "/" ) {
+			if (substr($filepath, 0, 1) == "/") {
 				$filepath = substr($filepath,1);
 			}
-			if ( substr($filepath, -1) == "/" ) {
+			if (substr($filepath, -1) == "/") {
 				$filepath = substr($filepath, 0, -1);
 			}
 			$protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
@@ -68,70 +68,70 @@ class setting_manager {
 		}
 	}
 
-	function readPost(){
-		if(isset($_POST['database']))
+	function readPost() {
+		if (isset($_POST['database']))
 		$this->database = $this->sanitizer->stripSlashesGPC($_POST['database']);
-		if(isset($_POST['dbhost']))
+		if (isset($_POST['dbhost']))
 		$this->dbhost = $this->sanitizer->stripSlashesGPC($_POST['dbhost']);
-		if(isset($_POST['dbuname']))
+		if (isset($_POST['dbuname']))
 		$this->dbuname = $this->sanitizer->stripSlashesGPC($_POST['dbuname']);
-		if(isset($_POST['dbpass']))
+		if (isset($_POST['dbpass']))
 		$this->dbpass = $this->sanitizer->stripSlashesGPC($_POST['dbpass']);
-		if(isset($_POST['dbname']))
+		if (isset($_POST['dbname']))
 		$this->dbname = $this->sanitizer->stripSlashesGPC($_POST['dbname']);
-		if(isset($_POST['prefix']))
+		if (isset($_POST['prefix']))
 		$this->prefix = $this->sanitizer->stripSlashesGPC($_POST['prefix']);
-		if(isset($_POST['db_pconnect']))
+		if (isset($_POST['db_pconnect']))
 		$this->db_pconnect = (int) ($_POST['db_pconnect']) > 0 ? 1 : 0;
-		if(isset($_POST['root_path']))
+		if (isset($_POST['root_path']))
 		$this->root_path = $this->sanitizer->stripSlashesGPC($_POST['root_path']);
-		if(isset($_POST['xoops_url']))
+		if (isset($_POST['xoops_url']))
 		$this->xoops_url = $this->sanitizer->stripSlashesGPC($_POST['xoops_url']);
 	}
 
-	function readConstant(){
-		if(defined('XOOPS_DB_TYPE'))
+	function readConstant() {
+		if (defined('XOOPS_DB_TYPE'))
 		$this->database = XOOPS_DB_TYPE;
-		if(defined('XOOPS_DB_HOST'))
+		if (defined('XOOPS_DB_HOST'))
 		$this->dbhost = XOOPS_DB_HOST;
-		if(defined('XOOPS_DB_USER'))
+		if (defined('XOOPS_DB_USER'))
 		$this->dbuname = XOOPS_DB_USER;
-		if(defined('XOOPS_DB_PASS'))
+		if (defined('XOOPS_DB_PASS'))
 		$this->dbpass = XOOPS_DB_PASS;
-		if(defined('XOOPS_DB_NAME'))
+		if (defined('XOOPS_DB_NAME'))
 		$this->dbname = XOOPS_DB_NAME;
-		if(defined('XOOPS_DB_PREFIX'))
+		if (defined('XOOPS_DB_PREFIX'))
 		$this->prefix = XOOPS_DB_PREFIX;
-		if(defined('XOOPS_DB_PCONNECT'))
+		if (defined('XOOPS_DB_PCONNECT'))
 		$this->db_pconnect = (int) (XOOPS_DB_PCONNECT) > 0 ? 1 : 0;
-		if(defined('XOOPS_ROOT_PATH'))
+		if (defined('XOOPS_ROOT_PATH'))
 		$this->root_path = XOOPS_ROOT_PATH;
-		if(defined('XOOPS_URL'))
+		if (defined('XOOPS_URL'))
 		$this->xoops_url = XOOPS_URL;
 	}
 
-	function checkData(){
+	function checkData() {
 		$ret = '';
 		$error = array();
 
-		if ( empty($this->dbhost) ) {
+		if (empty($this->dbhost)) {
 			$error[] = sprintf(_INSTALL_L57, _INSTALL_L27);
 		}
-		if ( empty($this->dbname) ) {
+		if (empty($this->dbname)) {
 			$error[] = sprintf(_INSTALL_L57, _INSTALL_L29);
 		}
-		if ( empty($this->prefix) ) {
+		if (empty($this->prefix)) {
 			$error[] = sprintf(_INSTALL_L57, _INSTALL_L30);
 		}
-		if ( empty($this->root_path) ) {
+		if (empty($this->root_path)) {
 			$error[] = sprintf(_INSTALL_L57, _INSTALL_L55);
 		}
-		if ( empty($this->xoops_url) ) {
+		if (empty($this->xoops_url)) {
 			$error[] = sprintf(_INSTALL_L57, _INSTALL_L56);
 		}
 
 		if (!empty($error)) {
-			foreach ( $error as $err ) {
+			foreach ( $error as $err) {
 				$ret .=  "<p><span style='color:#ff0000;'><b>".$err."</b></span></p>\n";
 			}
 		}
@@ -139,7 +139,7 @@ class setting_manager {
 		return $ret;
 	}
 
-	function editform(){
+	function editform() {
 		$ret =
             "<table width='100%' class='outer' cellspacing='5'>
                 <tr>
@@ -153,9 +153,9 @@ class setting_manager {
                     <td class='even'>
                         <select  size='1' name='database' id='database'>";
 		$dblist = $this->getDBList();
-		foreach($dblist as $val){
+		foreach ($dblist as $val) {
 			$ret .= "<option value='$val'";
-			if($val == $this->database) $ret .= " selected='selected'";
+			if ($val == $this->database) $ret .= " selected='selected'";
 			$ret .= "'>$val</option>";
 		}
 		$ret .=         "</select>
@@ -201,7 +201,7 @@ class setting_manager {
                 ";
 	}
 
-	function confirmForm(){
+	function confirmForm() {
 		$yesno = empty($this->db_pconnect) ? _INSTALL_L24 : _INSTALL_L23;
 		$ret =
             "<table border='0' cellpadding='0' cellspacing='0' valign='top' width='90%'><tr><td class='bg2'>
@@ -262,7 +262,7 @@ class setting_manager {
 		$dirname = '../class/database/drivers';
 		include '../class/xoopslists.php';
 		$list = XoopsLists::getDirListAsArray( $dirname );
-		foreach( $list as $item ){
+		foreach ($list as $item) {
 			// TODO: Add any verification of compatibility between the database drivers and the system.
 			$dirlist[] = $item;
 		}

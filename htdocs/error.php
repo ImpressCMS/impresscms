@@ -21,7 +21,7 @@ include_once 'mainfile.php';
 $e = isset($_GET['e']) ? $_GET['e'] : 0;
 
 // If there is not any error defined... it redirects to the home page.
-if($e == 0) {
+if ($e == 0) {
 	header('Location: '.ICMS_URL);
 	exit();
 }

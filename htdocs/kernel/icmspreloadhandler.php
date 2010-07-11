@@ -8,7 +8,7 @@
  * @since	1.1
  * @author		marcan <marcan@impresscms.org>
  * @author	    Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version	$Id$
+ * @version	$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
  */
 
 if (!defined('ICMS_ROOT_PATH')) {
@@ -27,140 +27,21 @@ include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
  * @package		core
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @version		$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
+ * @deprecated	Relocated to icms_preload_handler
  */
-class IcmsPreloadHandler {
-
-	/**
-	 * @var array $_preloadFilesArray array containing a list of all preload files in ICMS_PRELOAD_PATH
-	 */
-	var $_preloadFilesArray=array();
-
-	/**
-	 * @var array $_preloadEventsArray array containing a list of all events for all preload file, indexed by event name and sorted by order ox execution
-	 */
-	var $_preloadEventsArray=array();
-
+class IcmsPreloadHandler extends icms_preload_Handler {
+	private $_deprecated;
 	/**
 	 * Constructor
 	 *
 	 * @return	void
 	 */
-	function IcmsPreloadHandler() {
-		$preloadFilesArray = XoopsLists::getFileListAsArray(ICMS_PRELOAD_PATH);
-		foreach ($preloadFilesArray as $filename) {
-			// exclude index.html
-			if ($filename != 'index.html' && !class_exists( $this->getClassName($filename))) {
-				$this->_preloadFilesArray[] = $filename;
-				$this->addPreloadEvents($filename);
-			}
-		}
+	function __construct() {
+		parent::__construct();
+		$this->_deprecated = icms_deprecated('icms_preload_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 
-		// add ondemand preload
-		global $icmsOnDemandPreload;
-		if (isset($icmsOnDemandPreload) && count($icmsOnDemandPreload) > 0) {
-			foreach ($icmsOnDemandPreload as $onDemandPreload) {
-				$this->_preloadFilesArray[] = $onDemandPreload['filename'];
-				$this->addPreloadEvents($onDemandPreload['filename'], $onDemandPreload['module']);
-			}
-		}
 	}
-
-	/**
-	 * Add the events defined in filename
-	 *
-	 * @param string $filename
-	 */
-	function addPreloadEvents($filename, $module=false) {
-		if ($module) {
-			$filepath = ICMS_ROOT_PATH . "/modules/$module/preload/$filename";
-		} else {
-			$filepath = ICMS_PRELOAD_PATH . "/$filename";
-		}
-		include_once $filepath;
-
-		$classname = $this->getClassName($filename);
-		if ( class_exists( $classname ) ) {
-			$preloadItem = new $classname();
-
-			$class_methods = get_class_methods($classname);
-			foreach($class_methods as $method) {
-				if (strpos($method, 'event') === 0) {
-					$preload_event = strtolower(str_replace('event', '', $method));
-
-					$preload_event_array = array(
-											'object' => &$preloadItem,
-											'method' => $method
-					);
-
-					$preload_event_weight_define_name = strtoupper($classname) . '_' . strtoupper($preload_event);
-
-					if (defined($preload_event_weight_define_name)) {
-						$preload_event_weight = constant($preload_event_weight_define_name);
-						$this->_preloadEventsArray[$preload_event][$preload_event_weight] = $preload_event_array;
-					} else {
-						$this->_preloadEventsArray[$preload_event][] = $preload_event_array;
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Access the only instance of this class
-	 *
-	 * @static
-	 * @staticvar   object
-	 *
-	 * @return	object
-	 *
-	 */
-	static function &getInstance()
-	{
-		static $instance;
-		if (!isset($instance)) {
-			$instance = new IcmsPreloadHandler();
-		}
-		return $instance;
-	}
-
-	/**
-	 * Triggers a specific event on all the libraries
-	 *
-	 * Here are the currently supported events:
-	 * - startCoreBoot : this event is triggered at the  start of the core booting process (start  of include/common.php)
-	 * - finishCoreBoot : this event is triggered at the end of the core booting process (end of include/common.php)
-	 * - adminHeader : this event is triggered when calling icms_cp_header() and is used to output content in the head section of the admin side
-	 * - beforeFooter : this event is triggered when include/footer.php is called, at the begining of the file
-	 * - startOutputInit : this event is triggered when starting to output the content, in include/header.php after instantiation of $xoopsTpl
-	 *
-	 * @param $event string name of the event to trigger
-	 * @param $array mixed container to pass any arguments to be used by the library
-	 *
-	 * @return	TRUE if successful, FALSE if not
-	 */
-	function triggerEvent($event, $array=false) {
-		$event = strtolower($event);
-		if (isset($this->_preloadEventsArray[$event])) {
-			foreach ($this->_preloadEventsArray[$event] as $eventArray) {
-				$method = $eventArray['method'];
-				$eventArray['object']->$method($array);
-			}
-		}
-	}
-
-	/**
-	 * Construct the name of the class based on the filename
-	 *
-	 * @param $filename string filename where the class is located
-	 *
-	 * @return	string name of the class
-	 *
-	 */
-	function getClassName($filename) {
-		return 'IcmsPreload' . ucfirst(str_replace('.php', '', $filename));
-	}
-
 }
 
 /**
@@ -174,10 +55,12 @@ class IcmsPreloadHandler {
  * @package		libraries
  * @since		1.1
  * @author		marcan <marcan@impresscms.org>
- * @version		$Id$
+ * @version		$Id: icmspreloadhandler.php 19421 2010-06-14 07:28:37Z david-sf $
+ * @deprecated	Use icms_preload_Item, instead
+ * @todo		Remove in version 1.4
  */
 
-class IcmsPreloadItem {
+class IcmsPreloadItem  extends icms_preload_Item {
 
 	function IcmsPreloadItem() {
 	}

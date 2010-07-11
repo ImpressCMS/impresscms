@@ -9,10 +9,8 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-require_once ICMS_ROOT_PATH.'/class/autotasks/icmsautotaskssystem.php';
-
 class IcmsAutoTasksAt
-extends IcmsAutoTasksSystem {
+extends icms_autotasks_System {
 
 	/*
 	 * check if can run
@@ -62,7 +60,7 @@ extends IcmsAutoTasksSystem {
 	function getCommandLine() {
 		$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
 		$config_atasks = &$atasks_handler->getConfig();
-		if ( ($config_atasks['autotasks_helper_path'] = trim($config_atasks['autotasks_helper_path'])) != '') {
+		if (($config_atasks['autotasks_helper_path'] = trim($config_atasks['autotasks_helper_path'])) != '') {
 			if (substr($config_atasks['autotasks_helper_path'], -1) != '\\') {
 				$config_atasks['autotasks_helper_path'] .= '\\';
 			}
@@ -87,7 +85,7 @@ extends IcmsAutoTasksSystem {
 		);
 		$count = array(count($rez), count($pos));
 		$cmd_to_find = $this->getCommandLine();
-		for($i=2; $i<$count[0]; $i++) {
+		for ($i=2; $i<$count[0]; $i++) {
 			$id		= (int)trim(substr($rez[$i], $pos[1], $pos[2] - $pos[1]));
 			$cmd	= str_replace(array('\\/','/\\'),array('\\','\\'),substr($rez[$i], $pos[$count[1]-1]));
 			if ($cmd == '"'.$cmd_to_find.'"') return $id;

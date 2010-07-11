@@ -24,5 +24,5 @@ $modversion = array( 'name' => _MD_AM_SMLS,
 	'image' => "smiles.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=smilies",
-	'category' => XOOPS_SYSTEM_SMILE );
-?>
+	'category' => XOOPS_SYSTEM_SMILE,
+	'group' => 'Content');

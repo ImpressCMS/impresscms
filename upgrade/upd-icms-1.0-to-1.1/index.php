@@ -22,7 +22,7 @@ class upgrade_impcms06 {
     var $updater;
 
     function __construct() {
-    	$this->updater = XoopsDatabaseFactory::getDatabaseUpdater();
+    	$this->updater = icms_database_Factory::getDatabaseUpdater();
     }
 
     function isApplied()
@@ -58,9 +58,9 @@ class upgrade_impcms06 {
     	foreach ($dir as $d)
     	{
     		$dd = opendir($d);
-    		while($file = readdir($dd))
+    		while ($file = readdir($dd))
     		{
-    			if(is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'))
+    			if (is_file($d.$file) && ($file != 'index.html' && $file != 'php.ini' && $file != '.htaccess'))
     			{
     				unlink($d.$file);
     			}
@@ -191,16 +191,16 @@ class upgrade_impcms06 {
 
     function apply_conf() {
     	$db = $GLOBALS['xoopsDB'];
-    	if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_CONTMANAGER"') != 0){return true;}
+    	if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_CONTMANAGER"') != 0) {return true;}
     	$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('9','_MD_AM_CONTMANAGER')");
-    	if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_PERSON"') != 0){return true;}
+    	if (getDbValue($db,'configcategory','confcat_id',' confcat_name="_MD_AM_PERSON"') != 0) {return true;}
     	$db->queryF(" INSERT INTO " . $db->prefix("configcategory") . " (confcat_id,confcat_name) VALUES ('10','_MD_AM_PERSON')");
 
     	$db->queryF("UPDATE ". $db->prefix('config') . " SET conf_formtype = 'textsarea' WHERE conf_name IN ('meta_keywords', 'meta_description')" );
 
     	$passwordmeter_installed = false;
     	$sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'pass_level'";
-    	if ( $result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
+    	if ($result = $GLOBALS['xoopsDB']->queryF( $sql )) {
     		list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
     		if ($count == 1) {
     			$passwordmeter_installed = true;
@@ -225,7 +225,7 @@ class upgrade_impcms06 {
     	// Now let's re-insert data
     	$registration_type = false;
     	$sql = "SELECT COUNT(*) FROM `" . $GLOBALS['xoopsDB']->prefix('config') . "` WHERE `conf_name` = 'activation_type'";
-    	if ( $result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
+    	if ($result = $GLOBALS['xoopsDB']->queryF( $sql )) {
     		list($count) = $GLOBALS['xoopsDB']->fetchRow($result);
     		if ($count == 1) {
     			$registration_type = true;
@@ -249,7 +249,7 @@ class upgrade_impcms06 {
                     " (NULL, '_MD_AM_AUTOACTV', '1', {$config_id})," .
                     " (NULL, '_MD_AM_ADMINACTV', '2', {$config_id})," .
                     " (NULL, '_MD_AM_REGINVITE', '3', {$config_id})";
-    		if ( !$result = $GLOBALS['xoopsDB']->queryF( $sql ) ) {
+    		if (!$result = $GLOBALS['xoopsDB']->queryF( $sql )) {
     			return false;
     		}
     	}
@@ -377,9 +377,9 @@ class upgrade_impcms06 {
     function check_trust_path()
     {
     	$lines = file( ICMS_ROOT_PATH . '/mainfile.php' );
-    	foreach ( $lines as $line ) {
+    	foreach ( $lines as $line) {
     		$trustcheck = defined("XOOPS_TRUST_PATH") && XOOPS_TRUST_PATH != '';
-    		if( preg_match( "/(define\(\s*)([\"'])(XOOPS_TRUST_PATH)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) && $trustcheck ) {
+    		if (preg_match( "/(define\(\s*)([\"'])(XOOPS_TRUST_PATH)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) && $trustcheck) {
     			return true;
     		}
     	}
@@ -393,8 +393,8 @@ class upgrade_impcms06 {
     function check_db()
     {
     	$lines = file( ICMS_ROOT_PATH . '/mainfile.php' );
-    	foreach ( $lines as $line ) {
-    		if( preg_match( "/(define\(\s*)([\"'])(XOOPS_DB_CHARSET)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) ) {
+    	foreach ( $lines as $line) {
+    		if (preg_match( "/(define\(\s*)([\"'])(XOOPS_DB_CHARSET)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line )) {
     			return true;
     		}
     	}
@@ -403,8 +403,8 @@ class upgrade_impcms06 {
     function check_salt()
     {
     	$lines = file( ICMS_ROOT_PATH . '/mainfile.php' );
-    	foreach ( $lines as $line ) {
-    		if( preg_match( "/(define\(\s*)([\"'])(XOOPS_DB_SALT)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line ) ) {
+    	foreach ( $lines as $line) {
+    		if (preg_match( "/(define\(\s*)([\"'])(XOOPS_DB_SALT)\\2,\s*([\"'])([^\"']*?)\\4\s*\);/", $line )) {
     			return true;
     		}
     	}
@@ -423,7 +423,7 @@ class upgrade_impcms06 {
 
     function update_configs($task)
     {
-    	if (!$vars = $this->set_configs($task) ) {
+    	if (!$vars = $this->set_configs($task)) {
     		return false;
     	}
     	if ($task == "db" && !empty($vars["XOOPS_DB_COLLATION"])) {
@@ -439,10 +439,10 @@ class upgrade_impcms06 {
     function convert_db($charset, $collation)
     {
     	$sql = "ALTER DATABASE `" . XOOPS_DB_NAME . "` DEFAULT CHARACTER SET " . $GLOBALS["xoopsDB"]->quote($charset) . " COLLATE " . $GLOBALS["xoopsDB"]->quote($collation);
-    	if ( !$GLOBALS["xoopsDB"]->queryF($sql) ) {
+    	if (!$GLOBALS["xoopsDB"]->queryF($sql)) {
     		return false;
     	}
-    	if ( !$result = $GLOBALS["xoopsDB"]->queryF("SHOW TABLES LIKE '" . XOOPS_DB_PREFIX . "\_%'") ) {
+    	if (!$result = $GLOBALS["xoopsDB"]->queryF("SHOW TABLES LIKE '" . XOOPS_DB_PREFIX . "\_%'")) {
     		return false;
     	}
     	$tables = array();
@@ -467,19 +467,19 @@ class upgrade_impcms06 {
     	$final_querys = array();
 
     	// Begin Converter Core
-    	if ( !empty($tables) ) {
-    		foreach ( (array) $tables as $table ) {
+    	if (!empty($tables)) {
+    		foreach ( (array) $tables as $table) {
     			// Analyze tables for string types columns and generate his binary and string correctness sql sentences.
     			$resource = $GLOBALS["xoopsDB"]->queryF("DESCRIBE $table");
     			$col_query = array();
-    			while ( $result = $GLOBALS["xoopsDB"]->fetchArray($resource) ) {
-    				if ( preg_match('/(char)|(text)|(enum)|(set)/', $result['Type']) ) {
+    			while ($result = $GLOBALS["xoopsDB"]->fetchArray($resource)) {
+    				if (preg_match('/(char)|(text)|(enum)|(set)/', $result['Type'])) {
     					// String Type SQL Sentence.
     					$col_query[] .= ' MODIFY `' . $result['Field'] . '` ' . $result['Type'] . " CHARACTER SET $charset COLLATE $collation " . ( ( (!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0) || ($result['Default'] ==='') ) ? "DEFAULT '". $result['Default'] ."' " : '' ) . ( 'YES' == $result['Null'] ? '' : 'NOT ' ) . 'NULL';
 
     					/* This has been removed because of conversion problems encountered with data in other languages
     					 // Binary String Type SQL Sentence.
-    					 if ( preg_match('/(enum)|(set)/', $result['Type']) ) {
+    					 if (preg_match('/(enum)|(set)/', $result['Type'])) {
     						$binary_querys[] = "ALTER TABLE `$table` MODIFY `" . $result['Field'] . '` ' . $result['Type'] . ' CHARACTER SET binary ' . ( ( (!empty($result['Default'])) || ($result['Default'] === '0') || ($result['Default'] === 0) ) ? "DEFAULT '". $result['Default'] ."' " : '' ) . ( 'YES' == $result['Null'] ? '' : 'NOT ' ) . 'NULL';
     						} else {
     						$result['Type'] = preg_replace('/char/', 'binary', $result['Type']);
@@ -493,14 +493,14 @@ class upgrade_impcms06 {
     			// Analyze table indexs for any FULLTEXT-Type of index in the table.
     			$fulltext_indexes = array();
     			$resource = $GLOBALS["xoopsDB"]->queryF("SHOW INDEX FROM `$table`");
-    			while ( $result = $GLOBALS["xoopsDB"]->fetchArray($resource) ) {
-    				if ( preg_match('/FULLTEXT/', $result['Index_type']) )
+    			while ($result = $GLOBALS["xoopsDB"]->fetchArray($resource)) {
+    				if (preg_match('/FULLTEXT/', $result['Index_type']) )
     				$fulltext_indexes[$result['Key_name']][$result['Column_name']] = 1;
     			}
 
     			// Generate the SQL Sentence for drop and add every FULLTEXT index we found previously.
-    			if ( !empty($fulltext_indexes) ) {
-    				foreach ( (array) $fulltext_indexes as $key_name => $column ) {
+    			if (!empty($fulltext_indexes)) {
+    				foreach ( (array) $fulltext_indexes as $key_name => $column) {
     					$drop_index_querys[] = "ALTER TABLE `$table` DROP INDEX `$key_name`";
     					$tmp_gen_index_query = "ALTER TABLE `$table` ADD FULLTEXT `$key_name`(";
     					$fields_names = array_keys($column);
@@ -540,7 +540,7 @@ class upgrade_impcms06 {
 
     	$lines = file($file);
     	foreach (array_keys($lines) as $ln) {
-    		if ( preg_match("/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([0-9]+)\s*\)/", $lines[$ln], $matches ) ) {
+    		if (preg_match("/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([0-9]+)\s*\)/", $lines[$ln], $matches )) {
     			$val = isset( $vars[$matches[3]] )
     			? strval( constant($matches[3]) )
     			: ( defined($matches[3])
@@ -550,7 +550,7 @@ class upgrade_impcms06 {
     			$lines[$ln] = preg_replace( "/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([0-9]+)\s*\)/",
                     "define( '" . $matches[3] . "', " . $val . " )", 
     			$lines[$ln] );
-    		} elseif( preg_match( "/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([\"'])([^\"']*?)\\4\s*\)/", $lines[$ln], $matches ) ) {
+    		} elseif (preg_match( "/(define\()([\"'])(XOOPS_[^\"']+)\\2,\s*([\"'])([^\"']*?)\\4\s*\)/", $lines[$ln], $matches )) {
     			$val = isset( $vars[$matches[3]] )
     			? strval( $vars[$matches[3]] )
     			: ( defined($matches[3])
@@ -564,7 +564,7 @@ class upgrade_impcms06 {
     	}
 
     	$fp = fopen( ICMS_ROOT_PATH . '/mainfile.php', 'wt' );
-    	if ( !$fp ) {
+    	if (!$fp) {
     		echo ERR_COULD_NOT_WRITE_MAINFILE;
     		echo "<pre style='border: 1px solid black; width: 80%; overflow: auto;'><div style='color: #ff0000; font-weight: bold;'><div>" . implode("</div><div>", array_map("htmlspecialchars", $lines)) . "</div></div></pre>";
     		return false;
@@ -581,14 +581,14 @@ class upgrade_impcms06 {
     {
     	$ret = array();
     	$configs = include dirname(__FILE__) . "/settings_{$task}.php";
-    	if ( !$configs || !is_array($configs) ) {
+    	if (!$configs || !is_array($configs)) {
     		return $ret;
     	}
     	if (empty($_POST['action']) || $_POST['task'] != $task) {
     		return false;
     	}
 
-    	foreach ( $configs as $key => $val ) {
+    	foreach ( $configs as $key => $val) {
     		$ret['XOOPS_' . $key] = $val;
     	}
     	return $ret;

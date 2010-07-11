@@ -10,7 +10,7 @@
  * @version		$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -22,7 +22,7 @@ function editadsense($showmenu = false, $adsenseid = 0, $clone=false)
 
 	$adsenseObj = $icms_adsense_handler->get($adsenseid);
 
-	if (!$clone && !$adsenseObj->isNew()){
+	if (!$clone && !$adsenseObj->isNew()) {
 
 		$sform = $adsenseObj->getForm(_CO_ICMS_ADSENSES_EDIT, 'addadsense');
 
@@ -44,8 +44,8 @@ icms_loadLanguageFile('system', 'common');
 
 $icms_adsense_handler = icms_getmodulehandler('adsense');
 
-if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_POST['op']))?trim(StopXSS($_POST['op'])):((isset($_GET['op']))?trim(StopXSS($_GET['op'])):'');
 
 switch ($op) {
@@ -65,21 +65,13 @@ switch ($op) {
 		break;
 
 	case "addadsense":
-		/*if(@include_once ICMS_ROOT_PATH ."/class/captcha/captcha.php") {
-		 $icmsCaptcha = IcmsCaptcha::instance();
-		 if(! $icmsCaptcha->verify() ) {
-		 redirect_header('javascript:history.go(-1);', 3, $icmsCaptcha->getMessage());
-		 exit;
-		 }
-		 }*/
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_adsense_handler);
+
+		$controller = new icms_ipf_Controller($icms_adsense_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_ADSENSES_CREATED, _CO_ICMS_ADSENSES_MODIFIED);
 		break;
 
 	case "del":
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistablecontroller.php";
-		$controller = new IcmsPersistableController($icms_adsense_handler);
+		$controller = new icms_ipf_Controller($icms_adsense_handler);
 		$controller->handleObjectDeletion();
 
 		break;
@@ -88,12 +80,10 @@ switch ($op) {
 
 		icms_cp_header();
 
-		include_once ICMS_ROOT_PATH."/kernel/icmspersistabletable.php";
-
-		$objectTable = new IcmsPersistableTable($icms_adsense_handler);
-		$objectTable->addColumn(new IcmsPersistableColumn('description', _GLOBAL_LEFT));
-		$objectTable->addColumn(new IcmsPersistableColumn(_CO_ICMS_ADSENSE_TAG_CODE, 'center', 200, 'getXoopsCode'));
-		//$objectTable->addColumn(new IcmsPersistableColumn('language', 'center', 150));
+		$objectTable = new icms_ipf_view_Table($icms_adsense_handler);
+		$objectTable->addColumn(new icms_ipf_view_Column('description', _GLOBAL_LEFT));
+		$objectTable->addColumn(new icms_ipf_view_Column(_CO_ICMS_ADSENSE_TAG_CODE, 'center', 200, 'getXoopsCode'));
+		//$objectTable->addColumn(new icms_ipf_view_Column('language', 'center', 150));
 
 		$objectTable->addIntroButton('addadsense', 'admin.php?fct=adsense&amp;op=mod', _CO_ICMS_ADSENSES_CREATE);
 

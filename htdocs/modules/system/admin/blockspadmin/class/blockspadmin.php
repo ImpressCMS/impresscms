@@ -12,7 +12,7 @@
  * @version			$Id$
  */
 
-require_once ICMS_ROOT_PATH.'/kernel/blockposition.php' ;
+//require_once ICMS_ROOT_PATH.'/kernel/blockposition.php' ;
 
 /**
  * System Blockspadmin Class
@@ -22,12 +22,12 @@ require_once ICMS_ROOT_PATH.'/kernel/blockposition.php' ;
  * @since 			ImpressCMS 1.2
  * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlockspadmin extends IcmsBlockposition {
+class SystemBlockspadmin extends icms_block_position_Object {
 
 	/**
 	 * Constructor
 	 *
-	 * @param IcmsBlockpositionHandler $handler
+	 * @param icms_block_position_Handler $handler
 	 */
 	public function __construct(& $handler) {
 		parent::__construct( $handler );
@@ -42,7 +42,7 @@ class SystemBlockspadmin extends IcmsBlockposition {
 	 *
 	 * @return string
 	 */
-	public function getCustomTitle(){
+	public function getCustomTitle() {
 		$rtn = defined($this->getVar('title')) ? constant($this->getVar('title')) : $this->getVar('title');
 		return $rtn;
 	}
@@ -57,8 +57,8 @@ class SystemBlockspadmin extends IcmsBlockposition {
 	 * @param boolean $userSide
 	 * @return string
 	 */
-	public function getEditItemLink($onlyUrl=false, $withimage=true, $userSide=false){
-		if($this->getVar('block_default') == 1)
+	public function getEditItemLink($onlyUrl=false, $withimage=true, $userSide=false) {
+		if ($this->getVar('block_default') == 1)
 		return "";
 		return parent::getEditItemLink($onlyUrl, $withimage, $userSide);
 	}
@@ -73,8 +73,8 @@ class SystemBlockspadmin extends IcmsBlockposition {
 	 * @param boolean $userSide
 	 * @return string
 	 */
-	public function getDeleteItemLink($onlyUrl=false, $withimage=true, $userSide=false){
-		if($this->getVar('block_default') == 1)
+	public function getDeleteItemLink($onlyUrl=false, $withimage=true, $userSide=false) {
+		if ($this->getVar('block_default') == 1)
 		return "";
 		return parent::getDeleteItemLink($onlyUrl, $withimage, $userSide);
 	}
@@ -89,7 +89,7 @@ class SystemBlockspadmin extends IcmsBlockposition {
  * @since 			ImpressCMS 1.2
  * @author			Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlockspadminHandler extends IcmsBlockpositionHandler {
+class SystemBlockspadminHandler extends icms_block_position_Handler {
 
 	/**
 	 * Constructor
@@ -97,7 +97,7 @@ class SystemBlockspadminHandler extends IcmsBlockpositionHandler {
 	 * @param IcmsDatabase $db
 	 */
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'blockspadmin', 'id', 'title', 'description', 'system');
+		icms_ipf_Handler::__construct($db, 'blockspadmin', 'id', 'title', 'description', 'system');
 		$this->table = $this->db->prefix('block_positions');
 	}
 }

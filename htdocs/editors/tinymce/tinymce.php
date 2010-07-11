@@ -44,9 +44,9 @@ class TinyMCE
 	function &instance( $config )
 	{
 		static $instance;
-		if(!isset($instance)) {
+		if (!isset($instance)) {
 			$instance = new TinyMCE($config);
-		}else{
+		} else {
 			$instance->setConfig($config);
 		}
 
@@ -62,7 +62,7 @@ class TinyMCE
 	function getElements($element = null)
 	{
 		static $elements = array();
-		if(!empty($element)) {
+		if (!empty($element)) {
 			$elements[] = $element;
 		}
 
@@ -78,7 +78,7 @@ class TinyMCE
 	function setConfig( $config )
 	{
 		$config["elements"] = implode(",", $this->getElements($config["elements"]));
-		foreach($config as $key => $val) {
+		foreach ($config as $key => $val) {
 			$this->config[$key] = $val;
 		}
 	}
@@ -91,13 +91,13 @@ class TinyMCE
 	{
         global $icmsConfigMultilang, $icmsConfigPersona;
 		$configured = array();
-		if(is_readable(ICMS_ROOT_PATH . $this->rootpath. '/langs/'.$this->config["language"].'.js')) {
+		if (is_readable(ICMS_ROOT_PATH . $this->rootpath. '/langs/'.$this->config["language"].'.js')) {
 			$this->setting["language"] = $this->config["language"];
 		}
 
-		if( empty($this->config["theme"]) || !is_dir(ICMS_ROOT_PATH . $this->rootpath."/themes/".$this->config["theme"]) ) {
+		if (empty($this->config["theme"]) || !is_dir(ICMS_ROOT_PATH . $this->rootpath."/themes/".$this->config["theme"])) {
 			$this->setting["theme"] = "advanced";
-		}else {
+		} else {
 			$this->setting["theme"] = $this->config["theme"];
 		}
 		$this->setting["mode"] = @$this->config["mode"] ? $this->config["mode"] : "exact";
@@ -109,18 +109,18 @@ class TinyMCE
 		$configured[] = "plugins";
 
 		$this->setting["content_css"] = @$this->config["content_css"] ? $this->config["content_css"] : "editor_xoops.css";
-		if(!is_readable(ICMS_ROOT_PATH . $this->rootpath. '/themes/'.$this->setting["theme"].'/css/' .$this->setting["content_css"])) {
+		if (!is_readable(ICMS_ROOT_PATH . $this->rootpath. '/themes/'.$this->setting["theme"].'/css/' .$this->setting["content_css"])) {
 			unset( $this->setting["content_css"] );
 		}
 		$easiestml_exist = ($icmsConfigMultilang['ml_enable'] == true && defined('EASIESTML_LANGS') && defined('EASIESTML_LANGNAMES'));
-		if( $this->setting["theme"] == "advanced" ) {
+		if ($this->setting["theme"] == "advanced") {
 			$this->setting["theme_advanced_buttons1"] = "bold,italic,underline,strikethrough,sub,sup,separator,justify"._GLOBAL_LEFT.",justifycenter,justify"._GLOBAL_RIGHT.",justifyfull,formatselect,fontselect,fontsizeselect";
 			$this->setting["theme_advanced_buttons2"] = "xoopsquote,xoopscode,".(($easiestml_exist)?"icmsmlcontent,":"")."separator,bullist,numlist,separator,outdent,indent,separator,undo,redo,removeformat,separator,link,unlink,anchor,xoopsimagemanager,media,separator,charmap,nonbreaking,hr,xoopsemotions,separator,pastetext,pasteword,separator,forecolor,backcolor";
 			$this->setting["theme_advanced_buttons3"] = "tablecontrols,separator,cleanup,visualaid,visualchars,separator,insertdate,inserttime,separator,preview,fullscreen,help,code";
 		}
 
-		if( $this->setting["theme"] != "simple" ) {
-			if(empty($this->config["buttons"])) {
+		if ($this->setting["theme"] != "simple") {
+			if (empty($this->config["buttons"])) {
 				$this->config["buttons"][] = array(
 					"before"	=> "",
 					"add"		=> "",
@@ -135,68 +135,68 @@ class TinyMCE
 					);
 			}
 			$i = 0;
-			foreach($this->config["buttons"] as $button) {
+			foreach ($this->config["buttons"] as $button) {
 				$i++;
-				if(isset($button["before"])) {
+				if (isset($button["before"])) {
 					$this->setting["theme_".$this->setting["theme"]."_buttons{$i}_add_before"] = $button["before"];
 				}
-				if(isset($button["add"])) {
+				if (isset($button["add"])) {
 					$this->setting["theme_".$this->setting["theme"]."_buttons{$i}_add"] = $button["add"];
 				}
-				if(isset($button[""])) {
+				if (isset($button[""])) {
 					$this->setting["theme_".$this->setting["theme"]."_buttons{$i}"] = $button[""];
 				}
 			}
 			$configured[] = "buttons";
 
-			if(isset($this->config["toolbar_location"])) {
+			if (isset($this->config["toolbar_location"])) {
 				$this->setting["theme_".$this->setting["theme"]."_toolbar_location"] = $this->config["toolbar_location"];
 				$configured[] = "toolbar_location";
-			}else {
+			} else {
 				$this->setting["theme_".$this->setting["theme"]."_toolbar_location"] = "top";
 			}
 
-			if(isset($this->config["toolbar_align"])) {
+			if (isset($this->config["toolbar_align"])) {
 				$this->setting["theme_".$this->setting["theme"]."_toolbar_align"] = $this->config["toolbar_align"];
 				$configured[] = "toolbar_align";
-			}else{
+			} else {
 				$this->setting["theme_".$this->setting["theme"]."_toolbar_align"] = _GLOBAL_LEFT;
 			}
 
-			if(isset($this->config["statusbar_location"])) {
+			if (isset($this->config["statusbar_location"])) {
 				$this->setting["theme_".$this->setting["theme"]."_statusbar_location"] = $this->config["statusbar_location"];
 				$configured[] = "statusbar_location";
 			}
 
-			if(isset($this->config["path_location"])) {
+			if (isset($this->config["path_location"])) {
 				$this->setting["theme_".$this->setting["theme"]."_path_location"] = $this->config["path_location"];
 				$configured[] = "path_location";
 			}
 
-			if(isset($this->config["resize_horizontal"])) {
+			if (isset($this->config["resize_horizontal"])) {
 				$this->setting["theme_".$this->setting["theme"]."_resize_horizontal"] = $this->config["resize_horizontal"];
 				$configured[] = "resize_horizontal";
 			}
 
-			if(isset($this->config["resizing"])) {
+			if (isset($this->config["resizing"])) {
 				$this->setting["theme_".$this->setting["theme"]."_resizing"] = $this->config["resizing"];
 				$configured[] = "resizing";
 			}
 
-			if(!empty($this->config["fonts"])) {
+			if (!empty($this->config["fonts"])) {
 				$this->setting["theme_".$this->setting["theme"]."_fonts"] = $this->config["fonts"];
 				$configured[] = "fonts";
 			}
 		}
 
-		foreach($this->config as $key => $val) {
-			if(isset($this->setting[$key]) || in_array($key, $configured)) {
+		foreach ($this->config as $key => $val) {
+			if (isset($this->setting[$key]) || in_array($key, $configured)) {
 				continue;
 			}
 			$this->setting[$key] = $val;
 		}
 
-		if(!is_dir(ICMS_ROOT_PATH . $this->rootpath."/themes/".$this->setting["theme"]. '/docs/'.$this->config["language"].'/')) {
+		if (!is_dir(ICMS_ROOT_PATH . $this->rootpath."/themes/".$this->setting["theme"]. '/docs/'.$this->config["language"].'/')) {
 			$this->setting["docs_language"] = "en";
 		}
 
@@ -212,16 +212,16 @@ class TinyMCE
   function render()
   {
     static $rendered;
-    if($rendered) return null;
+    if ($rendered) return null;
 
     $rendered = true;
 
     $this->init();
 
-    if( !empty($this->setting["callback"]) ) {
+    if (!empty($this->setting["callback"])) {
         $callback = $this->setting["callback"];
         unset($this->setting["callback"]);
-    }else{
+    } else {
         $callback = "";
     }
 
@@ -230,11 +230,11 @@ class TinyMCE
             <script language="javascript" type="text/javascript">
                 tinyMCE.init({
             ';
-    foreach($this->setting as $key => $val) {
+    foreach ($this->setting as $key => $val) {
         $ret .= $key . ' : ';
-        if($val === true || $val === false) {
+        if ($val === true || $val === false) {
             $ret .= $val.','."\r\n";
-        }else{
+        } else {
             $ret .= '"'. $val . '",'."\r\n";
         }
     }

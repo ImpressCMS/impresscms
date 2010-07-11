@@ -10,7 +10,7 @@
  * @version		$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -23,7 +23,7 @@ function edituserrank($showmenu = false, $rank_id = 0, $clone=false)
 
 	$userrankObj = $icms_userrank_handler->get($rank_id);
 
-	if (!$clone && !$userrankObj->isNew()){
+	if (!$clone && !$userrankObj->isNew()) {
 
 		$sform = $userrankObj->getForm(_CO_ICMS_USERRANKS_EDIT, 'adduserrank');
 
@@ -42,8 +42,8 @@ function edituserrank($showmenu = false, $rank_id = 0, $clone=false)
 }
 icms_loadLanguageFile('system', 'common');
 
-if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $op = (isset($_POST['op'])) ? trim(StopXSS($_POST['op'])) : ((isset($_GET['op'])) ? trim(StopXSS($_GET['op'])) : '');
 
 switch ($op) {
@@ -63,14 +63,12 @@ switch ($op) {
 		break;
 
 	case 'adduserrank' :
-		include_once ICMS_ROOT_PATH . '/kernel/icmspersistablecontroller.php' ;
-		$controller = new IcmsPersistableController($icms_userrank_handler);
+		$controller = new icms_ipf_Controller($icms_userrank_handler);
 		$controller->storeFromDefaultForm(_CO_ICMS_USERRANKS_CREATED, _CO_ICMS_USERRANKS_MODIFIED);
 		break;
 
 	case 'del' :
-		include_once ICMS_ROOT_PATH . '/kernel/icmspersistablecontroller.php' ;
-		$controller = new IcmsPersistableController($icms_userrank_handler);
+		$controller = new icms_ipf_Controller($icms_userrank_handler);
 		$controller->handleObjectDeletion();
 
 		break;
@@ -79,13 +77,11 @@ switch ($op) {
 
 		icms_cp_header();
 
-		include_once ICMS_ROOT_PATH . '/kernel/icmspersistabletable.php' ;
-
-		$objectTable = new IcmsPersistableTable($icms_userrank_handler);
-		$objectTable->addColumn(new IcmsPersistableColumn('rank_title', _GLOBAL_LEFT, false, 'getUserrankName'));
-		$objectTable->addColumn(new IcmsPersistableColumn('rank_min', _GLOBAL_LEFT));
-		$objectTable->addColumn(new IcmsPersistableColumn('rank_max', _GLOBAL_LEFT));
-		$objectTable->addColumn(new IcmsPersistableColumn('rank_image', 'center', 200, 'getRankPicture', false, false, false));
+		$objectTable = new icms_ipf_view_Table($icms_userrank_handler);
+		$objectTable->addColumn(new icms_ipf_view_Column('rank_title', _GLOBAL_LEFT, false, 'getUserrankName'));
+		$objectTable->addColumn(new icms_ipf_view_Column('rank_min', _GLOBAL_LEFT));
+		$objectTable->addColumn(new icms_ipf_view_Column('rank_max', _GLOBAL_LEFT));
+		$objectTable->addColumn(new icms_ipf_view_Column('rank_image', 'center', 200, 'getRankPicture', false, false, false));
 
 		$objectTable->addIntroButton('adduserrank', 'admin.php?fct=userrank&amp;op=mod', _CO_ICMS_USERRANKS_CREATE);
 

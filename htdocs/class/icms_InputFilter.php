@@ -45,10 +45,7 @@ class icms_InputFilter extends icms_DataFilter
 		global $icmsPreloadHandler;
 
 		if(!is_object($icmsPreloadHandler))
-		{
-			include_once ICMS_ROOT_PATH.'/kernel/icmspreloadhandler.php';
-			$icmsPreloadHandler = IcmsPreloadHandler::getInstance();
-		}
+			$icmsPreloadHandler = icms_preload_Handler::getInstance();
 		$icmsPreloadHandler->triggerEvent('beforeFilterHTMLarea', array(&$html, $icode, $img));
 
 		$html = icms_DataFilter::codePreConv($html, $icode); // Ryuji_edit(2003-11-18)

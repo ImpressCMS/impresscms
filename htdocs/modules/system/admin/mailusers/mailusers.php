@@ -14,7 +14,7 @@
  * @version	$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 } else {
 	include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
@@ -25,7 +25,7 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		$op =  $_POST['op'];
 	}
 
-	if ( !$GLOBALS['xoopsSecurity']->check() || $op == "form" ) {
+	if (!$GLOBALS['xoopsSecurity']->check() || $op == "form") {
 		icms_cp_header();
 		//OpenTable();
 		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/mailusers/images/mailusers_big.png)">'._MD_AM_MLUS.'</div><br />';
@@ -44,67 +44,67 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		$added_id = array();
 		$criteria = array();
 		$count_criteria = 0; // user count via criteria;
-		if ( !empty($_POST['mail_inactive']) ) {
+		if (!empty($_POST['mail_inactive'])) {
 			$criteria[] = "level = 0";
 		} else {
 			if (!empty($_POST['mail_mailok'])) {
 				$criteria[] = 'user_mailok = 1';
 			}
-			if ( !empty($_POST['mail_lastlog_min']) ) {
+			if (!empty($_POST['mail_lastlog_min'])) {
 				$f_mail_lastlog_min = trim($_POST['mail_lastlog_min']);
 				$time = mktime(0,0,0,substr($f_mail_lastlog_min,5,2),substr($f_mail_lastlog_min,8,2),substr($f_mail_lastlog_min,0,4));
-				if ( $time > 0 ) {
+				if ($time > 0) {
 					$criteria[] = "last_login > $time";
 				}
 			}
-			if ( !empty($_POST['mail_lastlog_max']) ) {
+			if (!empty($_POST['mail_lastlog_max'])) {
 				$f_mail_lastlog_max = trim($_POST['mail_lastlog_max']);
 				$time = mktime(0,0,0,substr($f_mail_lastlog_max,5,2),substr($f_mail_lastlog_max,8,2),substr($f_mail_lastlog_max,0,4));
-				if ( $time > 0 ) {
+				if ($time > 0) {
 					$criteria[] = "last_login < $time";
 				}
 			}
-			if ( !empty($_POST['mail_idle_more']) && is_numeric($_POST['mail_idle_more']) ) {
+			if (!empty($_POST['mail_idle_more']) && is_numeric($_POST['mail_idle_more'])) {
 				$f_mail_idle_more = (int) (trim($_POST['mail_idle_more']));
 				$time = 60 * 60 * 24 * $f_mail_idle_more;
 				$time = time() - $time;
-				if ( $time > 0 ) {
+				if ($time > 0) {
 					$criteria[] = "last_login < $time";
 				}
 			}
-			if ( !empty($_POST['mail_idle_less']) && is_numeric($_POST['mail_idle_less']) ) {
+			if (!empty($_POST['mail_idle_less']) && is_numeric($_POST['mail_idle_less'])) {
 				$f_mail_idle_less = (int) (trim($_POST['mail_idle_less']));
 				$time = 60 * 60 * 24 * $f_mail_idle_less;
 				$time = time() - $time;
-				if ( $time > 0 ) {
+				if ($time > 0) {
 					$criteria[] = "last_login > $time";
 				}
 			}
 		}
 
-		if ( !empty($_POST['mail_regd_min']) ) {
+		if (!empty($_POST['mail_regd_min'])) {
 			$f_mail_regd_min = trim($_POST['mail_regd_min']);
 			$time = mktime(0,0,0,substr($f_mail_regd_min,5,2),substr($f_mail_regd_min,8,2),substr($f_mail_regd_min,0,4));
-			if ( $time > 0 ) {
+			if ($time > 0) {
 				$criteria[] = "user_regdate > $time";
 			}
 		}
 
-		if ( !empty($_POST['mail_regd_max']) ) {
+		if (!empty($_POST['mail_regd_max'])) {
 			$f_mail_regd_max = trim($_POST['mail_regd_max']);
 			$time = mktime(0,0,0,substr($f_mail_regd_max,5,2),substr($f_mail_regd_max,8,2),substr($f_mail_regd_max,0,4));
-			if ( $time > 0 ) {
+			if ($time > 0) {
 				$criteria[] = "user_regdate < $time";
 			}
 		}
 
-		if ( !empty($criteria) || !empty($_POST['mail_to_group']) ) {
-			$criteria_object = new CriteriaCompo();
+		if (!empty($criteria) || !empty($_POST['mail_to_group'])) {
+			$criteria_object = new icms_criteria_Compo();
 			$criteria_object->setStart( @$_POST['mail_start'] );
 			$criteria_object->setLimit( $limit );
 			foreach ($criteria as $c) {
 				list ($field, $op, $value) = explode( ' ', $c );
-				$crit = new Criteria($field, $value, $op);
+				$crit = new icms_criteria_Item($field, $value, $op);
 				$crit->prefix = "u";
 				$criteria_object->add($crit, 'AND');
 			}
@@ -113,17 +113,17 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			$getusers = $member_handler->getUsersByGroupLink($groups, $criteria_object, true);
 			$count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);
 			foreach ($getusers as $getuser) {
-				if ( !in_array($getuser->getVar("uid"), $added_id) ) {
+				if (!in_array($getuser->getVar("uid"), $added_id)) {
 					$added[] = $getuser;
 					$added_id[] = $getuser->getVar("uid");
 				}
 			}
 		}
 
-		if ( !empty($_POST['mail_to_user']) ) {
+		if (!empty($_POST['mail_to_user'])) {
 			foreach ($_POST['mail_to_user'] as $to_user) {
-				if ( !in_array($to_user, $added_id) ) {
-					$added[] = new XoopsUser($to_user);
+				if (!in_array($to_user, $added_id)) {
+					$added[] = new icms_member_user_Object($to_user);
 					$added_id[] = $to_user;
 				}
 			}
@@ -133,21 +133,21 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/mailusers/images/mailusers_big.png)">'._MD_AM_MLUS.'</div><br />';
 		//OpenTable();
-		if ( $added_count > 0 ) {
-			$myts =& MyTextSanitizer::getInstance();
+		if ($added_count > 0) {
+			$myts =& icms_core_Textsanitizer::getInstance();
 			$xoopsMailer =& getMailer();
 			for ( $i = 0; $i < $added_count; $i++) {
 				$xoopsMailer->setToUsers($added[$i]);
 			}
 
-			$xoopsMailer->setFromName($myts->oopsStripSlashesGPC($_POST['mail_fromname']));
-			$xoopsMailer->setFromEmail($myts->oopsStripSlashesGPC($_POST['mail_fromemail']));
-			$xoopsMailer->setSubject($myts->oopsStripSlashesGPC($_POST['mail_subject']));
-			$xoopsMailer->setBody($myts->oopsStripSlashesGPC($_POST['mail_body']));
-			if ( in_array("mail", $_POST['mail_send_to']) ) {
+			$xoopsMailer->setFromName($myts->stripSlashesGPC($_POST['mail_fromname']));
+			$xoopsMailer->setFromEmail($myts->stripSlashesGPC($_POST['mail_fromemail']));
+			$xoopsMailer->setSubject($myts->stripSlashesGPC($_POST['mail_subject']));
+			$xoopsMailer->setBody($myts->stripSlashesGPC($_POST['mail_body']));
+			if (in_array("mail", $_POST['mail_send_to'])) {
 				$xoopsMailer->useMail();
 			}
-			if ( in_array("pm", $_POST['mail_send_to']) && empty($_POST['mail_inactive']) ) {
+			if (in_array("pm", $_POST['mail_send_to']) && empty($_POST['mail_inactive'])) {
 				$xoopsMailer->usePM();
 			}
 
@@ -155,9 +155,9 @@ if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($ic
 			echo $xoopsMailer->getSuccess();
 			echo $xoopsMailer->getErrors();
 
-			if ( $count_criteria > $limit ) {
+			if ($count_criteria > $limit) {
 				$form = new XoopsThemeForm(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', true);
-				if ( !empty($_POST['mail_to_group']) ) {
+				if (!empty($_POST['mail_to_group'])) {
 					foreach ( $_POST['mail_to_group'] as $mailgroup) {
 						$group_hidden = new XoopsFormHidden("mail_to_group[]", $mailgroup);
 						$form->addElement($group_hidden);

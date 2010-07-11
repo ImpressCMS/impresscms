@@ -21,5 +21,5 @@ $modversion = array( 'name' => _MD_AM_PAGES,
 	'image' => "pages.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=pages",
-	'category' => XOOPS_SYSTEM_PAGES );
-?>
+	'category' => XOOPS_SYSTEM_PAGES,
+	'group' => 'Content');

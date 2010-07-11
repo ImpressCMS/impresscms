@@ -95,7 +95,7 @@ class IcmsVersionChecker {
 	 * @return	object
 	 *
 	 */
-	function &getInstance()
+	static public function &getInstance()
 	{
 		static $instance;
 		if (!isset($instance)) {

@@ -1,7 +1,7 @@
 <?php
 // $Id$
 //%%%%%%	Admin Module Name  Users 	%%%%%
-if(!defined('_AM_DBUPDATED')){define("_AM_DBUPDATED","Database Updated Successfully!");}
+if (!defined('_AM_DBUPDATED')) {define("_AM_DBUPDATED","Database Updated Successfully!");}
 
 define("_AM_AYSYWTDU","Are you sure you want to delete user %s?");
 define("_AM_BYTHIS","By doing this all the info for this user will be removed permanently.");

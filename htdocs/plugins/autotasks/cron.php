@@ -10,13 +10,11 @@
  * @author		MekDrop <mekdrop@gmail.com>
  */
 
-require_once ICMS_ROOT_PATH.'/class/autotasks/icmsautotaskssystem.php';
-
 /**
  * some parts are taked from CronTab class developed by cjpa@audiophile.com
  */
 class IcmsAutoTasksCron
-extends IcmsAutoTasksSystem {
+extends icms_autotasks_System {
 
 	private $_lines = array();
 	private $_line_id = -1;
@@ -166,7 +164,7 @@ extends IcmsAutoTasksSystem {
 	function getCommandLine() {
 		$atasks_handler = &icms_getModuleHandler('autotasks', 'system');
 		$config_atasks = &$atasks_handler->getConfig();
-		if ( ($config_atasks['autotasks_helper_path'] = trim($config_atasks['autotasks_helper_path'])) != '') {
+		if (($config_atasks['autotasks_helper_path'] = trim($config_atasks['autotasks_helper_path'])) != '') {
 			if (substr($config_atasks['autotasks_helper_path'], -1) != '/') {
 				$config_atasks['autotasks_helper_path'] .= '/';
 			}
@@ -220,25 +218,25 @@ extends IcmsAutoTasksSystem {
 		exec( $this->getCronCommandLine()." -l 2>&1", $crons, $return);
 		if ($return != 0) return false;
 
-		foreach ( $crons as $line ) {
+		foreach ( $crons as $line) {
 			$line = trim( $line ); // discarding all prepending spaces and tabs
 			// empty lines..
-			if ( !$line ) {
+			if (!$line) {
 				$this->_lines[] = array('',0);
 				continue;
 			}
 			// checking if this is a comment
-			if ( $line[0] == "#" ) {
+			if ($line[0] == "#") {
 				$this->_lines[] = array($line,1);
 				continue;
 			}
 			// Checking if this is an assignment
-			if ( preg_match( "/(.*)=(.*)/", $line, $assign ) ) {
+			if (preg_match( "/(.*)=(.*)/", $line, $assign )) {
 				$this->_lines[] = array(array( "name" => $assign[1], "value" => $assign[2] ),2);
 				continue;
 			}
 			// Checking if this is a special -entry. check man 5 crontab for more info
-			if ( $line[0] == '@' ) {
+			if ($line[0] == '@') {
 				$this->_lines[] = array( preg_split( "/[ \t]/", $line, 2 ), 3);
 				continue;
 			}
@@ -256,8 +254,8 @@ extends IcmsAutoTasksSystem {
 	function writeCronTab() {
 		$filename = tempnam(ICMS_ROOT_PATH.'/cache', 'cron');
 		$file = fopen( $filename, "w" );
-		foreach($this->_lines as $current_line) {
-			switch ( $current_line[1] ) {
+		foreach ($this->_lines as $current_line) {
+			switch ( $current_line[1]) {
 				case 1: // comment
 					$line = $current_line[0];
 					break;
@@ -281,7 +279,7 @@ extends IcmsAutoTasksSystem {
 		fclose( $file );
 
 		exec( $this->getCronCommandLine()." $filename 2>&1", $returnar, $return );
-		if ( $return != 0 ) {
+		if ($return != 0) {
 			die("Error running crontab ($return). $filename not deleted\n");
 		} else {
 			unlink( $filename );

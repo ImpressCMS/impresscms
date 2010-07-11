@@ -14,7 +14,7 @@
  * @version	$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
 	exit("Access Denied");
 }
 
@@ -30,11 +30,11 @@ function displayGroups()
 	$groups =& $member_handler->getGroups();
 	echo "<table class='outer' width='40%' cellpadding='4' cellspacing='1'><tr><th colspan='2'>"._AM_EDITADG."</th></tr>";
 	$count = count($groups);
-	$gperm_handler =& xoops_gethandler('groupperm');
+	$gperm_handler =& xoops_gethandler('member_groupperm');
 	$ugroups  = (is_object($icmsUser)) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 	for ($i = 0; $i < $count; $i++) {
 		$id = $groups[$i]->getVar('groupid');
-		if($gperm_handler->checkRight('group_manager', $id, $ugroups)){
+		if ($gperm_handler->checkRight('group_manager', $id, $ugroups)) {
 			echo '<tr><td class="head">'.$groups[$i]->getVar('name').'</td>';
 			echo '<td class="even"><a href="admin.php?fct=groups&amp;op=modify&amp;g_id='.$id.'">'._AM_MODIFY.'</a>';
 			if (XOOPS_GROUP_ADMIN == $id || XOOPS_GROUP_USERS == $id || XOOPS_GROUP_ANONYMOUS == $id) {
@@ -67,12 +67,12 @@ function displayGroups()
 function modifyGroup($g_id)
 {
 	$userstart = $memstart = 0;
-	if ( !empty($_POST['userstart']) ) {
+	if (!empty($_POST['userstart'])) {
 		$userstart = (int) ($_POST['userstart']);
 	} elseif (!empty($_GET['userstart'])) {
 		$userstart = (int) ($_GET['userstart']);
 	}
-	if ( !empty($_POST['memstart']) ) {
+	if (!empty($_POST['memstart'])) {
 		$memstart = (int) ($_POST['memstart']);
 	} elseif (!empty($_GET['memstart'])) {
 		$memstart = (int) ($_GET['memstart']);
@@ -83,13 +83,13 @@ function modifyGroup($g_id)
 	$thisgroup =& $member_handler->getGroup($g_id);
 	$name_value = $thisgroup->getVar("name", "E");
 	$desc_value = $thisgroup->getVar("description", "E");
-	$moduleperm_handler =& xoops_gethandler('groupperm');
+	$moduleperm_handler =& xoops_gethandler('member_groupperm');
 	$a_mod_value =& $moduleperm_handler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
 	$r_mod_value =& $moduleperm_handler->getItemIds('module_read', $thisgroup->getVar('groupid'));
 	$ed_mod_value =& $moduleperm_handler->getItemIds('use_wysiwygeditor', $thisgroup->getVar('groupid'));
 	$debug_mod_value =& $moduleperm_handler->getItemIds('enable_debug', $thisgroup->getVar('groupid'));
 	$group_manager_value =& $moduleperm_handler->getItemIds('group_manager', $thisgroup->getVar('groupid'));
-	$gperm_handler =& xoops_gethandler('groupperm');
+	$gperm_handler =& xoops_gethandler('member_groupperm');
 	$r_block_value =& $gperm_handler->getItemIds('block_read', $g_id);
 	$op_value = "update";
 	$submit_value = _AM_UPDATEADG;
@@ -100,12 +100,12 @@ function modifyGroup($g_id)
 		$s_cat_disable = true;
 	}
 
-	$sysperm_handler =& xoops_gethandler('groupperm');
+	$sysperm_handler =& xoops_gethandler('member_groupperm');
 	$s_cat_value =& $sysperm_handler->getItemIds('system_admin', $g_id);
 
 	include ICMS_ROOT_PATH."/modules/system/admin/groups/groupform.php";
 	echo "<br /><h4 style='text-align:"._GLOBAL_LEFT."'>"._AM_EDITMEMBER."</h4>";
-	$usercount = $member_handler->getUserCount(new Criteria('level', 0, '>'));
+	$usercount = $member_handler->getUserCount(new icms_criteria_Item('level', 0, '>'));
 	$member_handler =& xoops_gethandler('member');
 	$membercount = $member_handler->getUserCountByGroup($g_id);
 	if ($usercount < 200 && $membercount < 200) {
@@ -113,11 +113,11 @@ function modifyGroup($g_id)
 		$mlist = array();
 		$members =& $member_handler->getUsersByGroup($g_id, false);
 		if (count($members) > 0) {
-			$member_criteria = new Criteria('uid', "(".implode(',', $members).")", "IN");
+			$member_criteria = new icms_criteria_Item('uid', "(".implode(',', $members).")", "IN");
 			$member_criteria->setSort('uname');
 			$mlist = $member_handler->getUserList($member_criteria);
 		}
-		$criteria = new Criteria('level', 0, '>');
+		$criteria = new icms_criteria_Item('level', 0, '>');
 		$criteria->setSort('uname');
 		$userslist =& $member_handler->getUserList($criteria);
 		$users =& array_diff($userslist, $mlist);
@@ -160,7 +160,7 @@ function modifyGroup($g_id)
 		$members =& $member_handler->getUsersByGroup($g_id, false, 200, $memstart);
 		$mlist = array();
 		if (count($members) > 0) {
-			$member_criteria = new Criteria('uid', "(".implode(',', $members).")", "IN");
+			$member_criteria = new icms_criteria_Item('uid', "(".implode(',', $members).")", "IN");
 			$member_criteria->setSort('uname');
 			$mlist = $member_handler->getUserList($member_criteria);
 		}
@@ -178,7 +178,7 @@ function modifyGroup($g_id)
 		<input type='hidden' name='memstart' value='".$memstart."' />
 		".$GLOBALS['xoopsSecurity']->getTokenHTML()."
 		<select name='uids[]' size='10' multiple='multiple'>";
-		foreach ($mlist as $m_id => $m_name ) {
+		foreach ($mlist as $m_id => $m_name) {
 			echo '<option value="'.$m_id.'">'.$m_name.'</option>'."\n";
 		}
 		echo "</select><br />

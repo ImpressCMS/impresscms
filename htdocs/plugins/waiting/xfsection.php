@@ -11,7 +11,7 @@ function b_waiting_xfsection()
 	// xf-section articles - waiting
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("xfs_article")." WHERE published=0");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/xfsection/admin/allarticles.php?action=submitted";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_WAITINGS;
@@ -21,7 +21,7 @@ function b_waiting_xfsection()
 	// xf-section articles - attach broken
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("xfs_broken")."");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/xfsection/admin/brokendown.php?op=listBrokenDownloads";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_FILES."&nbsp;"._PI_WAITING_BROKENS;

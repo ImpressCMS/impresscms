@@ -15,7 +15,7 @@
  * @version		$Id$
  */
 
-if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
+if (!defined("XOOPS_MAINFILE_INCLUDED")) {
 	define("XOOPS_MAINFILE_INCLUDED",1);
 
 	// XOOPS Physical Path
@@ -36,21 +36,21 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 
 	define('XOOPS_CHECK_PATH', 0);
 	// Protect against external scripts execution if safe mode is not enabled
-	if ( XOOPS_CHECK_PATH && !@ini_get('safe_mode') ) {
-		if ( function_exists('debug_backtrace') ) {
+	if (XOOPS_CHECK_PATH && !@ini_get('safe_mode')) {
+		if (function_exists('debug_backtrace')) {
 			$xoopsScriptPath = debug_backtrace();
-			if ( !count($xoopsScriptPath) ) {
+			if (!count($xoopsScriptPath)) {
 				die("ImpressCMS path check: this file cannot be requested directly");
 			}
 			$xoopsScriptPath = $xoopsScriptPath[0]['file'];
 		} else {
 			$xoopsScriptPath = isset($_SERVER['PATH_TRANSLATED']) ? $_SERVER['PATH_TRANSLATED'] :  $_SERVER['SCRIPT_FILENAME'];
 		}
-		if ( DIRECTORY_SEPARATOR != '/' ) {
+		if (DIRECTORY_SEPARATOR != '/') {
 			// IIS6 may double the \ chars
 			$xoopsScriptPath = str_replace( strpos( $xoopsScriptPath, '\\\\', 2 ) ? '\\\\' : DIRECTORY_SEPARATOR, '/', $xoopsScriptPath);
 		}
-		if ( strcasecmp( substr($xoopsScriptPath, 0, strlen(XOOPS_ROOT_PATH)), str_replace( DIRECTORY_SEPARATOR, '/', XOOPS_ROOT_PATH)) ) {
+		if (strcasecmp( substr($xoopsScriptPath, 0, strlen(XOOPS_ROOT_PATH)), str_replace( DIRECTORY_SEPARATOR, '/', XOOPS_ROOT_PATH))) {
 			exit("ImpressCMS path check: Script is not inside XOOPS_ROOT_PATH and cannot run.");
 		}
 	}
@@ -100,8 +100,8 @@ if ( !defined("XOOPS_MAINFILE_INCLUDED") ) {
 	define("XOOPS_GROUP_USERS", "2");
 	define("XOOPS_GROUP_ANONYMOUS", "3");
 
-	foreach ( array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri') as $bad_global ) {
-		if ( isset( $_REQUEST[$bad_global] ) ) {
+	foreach ( array('GLOBALS', '_SESSION', 'HTTP_SESSION_VARS', '_GET', 'HTTP_GET_VARS', '_POST', 'HTTP_POST_VARS', '_COOKIE', 'HTTP_COOKIE_VARS', '_REQUEST', '_SERVER', 'HTTP_SERVER_VARS', '_ENV', 'HTTP_ENV_VARS', '_FILES', 'HTTP_POST_FILES', 'xoopsDB', 'xoopsUser', 'xoopsUserId', 'xoopsUserGroups', 'xoopsUserIsAdmin', 'xoopsConfig', 'xoopsOption', 'xoopsModule', 'xoopsModuleConfig', 'xoopsRequestUri') as $bad_global) {
+		if (isset( $_REQUEST[$bad_global] )) {
 			header( 'Location: '.XOOPS_URL.'/' );
 			exit();
 		}

@@ -13,7 +13,7 @@ function b_waiting_smartfaq()
 	// smartfaq submitted
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("smartfaq_faq")." WHERE status=4");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/smartfaq/admin/index.php?statussel=4";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_SUBMITTED;
@@ -23,7 +23,7 @@ function b_waiting_smartfaq()
 	// smartfaq asked
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("smartfaq_faq")." WHERE status=1");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/smartfaq/admin/index.php?statussel=1";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_ASKED;
@@ -33,7 +33,7 @@ function b_waiting_smartfaq()
 	// smartfaq new answer
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("smartfaq_faq")." WHERE status=6");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/smartfaq/admin/index.php?statussel=6";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_NEWANSWERS;
@@ -43,7 +43,7 @@ function b_waiting_smartfaq()
 	// smartfaq answered
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("smartfaq_faq")." WHERE status=3");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/smartfaq/admin/index.php?statussel=3";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_ANSWERED;

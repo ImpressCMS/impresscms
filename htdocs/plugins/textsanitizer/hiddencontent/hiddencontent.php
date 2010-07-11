@@ -19,7 +19,7 @@
  */
 function textsanitizer_hiddencontent(&$ts, $text) {
 	$patterns[] = "/\[hide](.*)\[\/hide\]/sU";
-	if(!empty($_SESSION['xoopsUserId']) && $_SESSION['xoopsUserId']) {
+	if (!empty($_SESSION['xoopsUserId']) && $_SESSION['xoopsUserId']) {
 		$replacements[] = _HIDDENC . '<div class="icmsHidden">\\1</div>';
 	} else {
 		$replacements[] = _HIDDENC . '<div class="icmsHidden">' . _HIDDENTEXT . '</div>';
@@ -36,7 +36,7 @@ function render_hiddencontent($ele_name) {
 	global $xoTheme;
 	$javascript='';
 	$dirname = basename(dirname(__FILE__));
-	if(isset($xoTheme)){
+	if (isset($xoTheme)) {
 		$xoTheme->addScript(
 			ICMS_URL . '/plugins/textsanitizer/' . $dirname . '/' . $dirname . '.js',
 			array('type' => 'text/javascript'));
@@ -54,7 +54,7 @@ function render_hiddencontent($ele_name) {
  */
 
 /*
- function style_hiddencontent(){
+ function style_hiddencontent() {
  $style_info = '.icmsHidden { background-color: #FAFAFA; color: #444; font-size: .9em; line-height: 1.2em; text-align: justify; border: #c2cdd6 1px dashed;}';
  return $style_info;
  }

@@ -21,33 +21,31 @@ $xoopsOption['pagetype'] = 'user';
 /** Include mainfile.php - required */
 include 'mainfile.php';
 
-if(!empty($_POST)) foreach($_POST as $k => $v) ${$k} = StopXSS($v);
-if(!empty($_GET)) foreach($_GET as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
+if (!empty($_GET)) foreach ($_GET as $k => $v) ${$k} = StopXSS($v);
 $email = (isset($_GET['email']))?trim(StopXSS($_GET['email'])):((isset($_POST['email']))?trim(StopXSS($_POST['email'])):$email);
 
-if($email == '') {redirect_header('user.php',2,_US_SORRYNOTFOUND);}
+if ($email == '') {redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 
-$myts =& MyTextSanitizer::getInstance();
+$myts =& icms_core_Textsanitizer::getInstance();
 $member_handler =& xoops_gethandler('member');
-$criteria = new CriteriaCompo();
-$criteria->add(new Criteria('email', $myts->addSlashes($email)));
-$criteria->add(new Criteria('level', '-1', '!='));
+$criteria = new icms_criteria_Compo();
+$criteria->add(new icms_criteria_Item('email', $myts->addSlashes($email)));
+$criteria->add(new icms_criteria_Item('level', '-1', '!='));
 $getuser =& $member_handler->getUsers($criteria);
 
-if(empty($getuser))
+if (empty($getuser))
 {
 	$msg = _US_SORRYNOTFOUND;
 	redirect_header('user.php',2,$msg);
-}
-else
-{
+} else {
 	include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
 	$icmspass = new icms_Password();
 
 	$code = isset($_GET['code']) ? trim(StopXSS($_GET['code'])) : '';
 	$areyou = substr($getuser[0]->getVar('pass'), 0, 5);
 	$enc_type = (int) ($icmsConfigUser['enc_type']);
-	if($code != '' && $areyou == $code)
+	if ($code != '' && $areyou == $code)
 	{
 		$newpass = $icmspass->icms_createSalt(8);
 		$salt = $icmspass->icms_createSalt();
@@ -64,11 +62,11 @@ else
 		$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 		$xoopsMailer->setFromName($icmsConfig['sitename']);
 		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ,ICMS_URL));
-		if(!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
+		if (!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
 
 		// Next step: add the new password to the database
 		$sql = sprintf("UPDATE %s SET pass = '%s', salt = '%s', enc_type = '%u', pass_expired = '%u' WHERE uid = '%u'", $xoopsDB->prefix('users'), $pass, $salt, $enc_type, 0, (int) ($getuser[0]->getVar('uid')));
-		if(!$xoopsDB->queryF($sql))
+		if (!$xoopsDB->queryF($sql))
 		{
 			/** Include header.php to start page rendering */
 			include 'header.php';
@@ -79,9 +77,7 @@ else
 		}
 		redirect_header('user.php', 3, sprintf(_US_PWDMAILED,$getuser[0]->getVar('uname')), false);
 		// If no Code, send it
-	}
-	else
-	{
+	} else {
 		$xoopsMailer =& getMailer();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('lostpass1.tpl');
@@ -96,7 +92,7 @@ else
 		$xoopsMailer->setSubject(sprintf(_US_NEWPWDREQ,$icmsConfig['sitename']));
 		/** Include header.php to start page rendering */
 		include 'header.php';
-		if(!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
+		if (!$xoopsMailer->send()) {echo $xoopsMailer->getErrors();}
 		echo '<h4>';
 		printf(_US_CONFMAIL,$getuser[0]->getVar('uname'));
 		echo '</h4>';

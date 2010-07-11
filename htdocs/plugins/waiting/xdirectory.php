@@ -8,7 +8,7 @@ function b_waiting_xdirectory()
 	// xdirectory links
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("xdir_links")." WHERE status=0");
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/xdirectory/admin/index.php?op=listNewLinks";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_LINKS ;
@@ -18,7 +18,7 @@ function b_waiting_xdirectory()
 	// xdirectory broken
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("xdir_broken"));
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/xdirectory/admin/index.php?op=listBrokenLinks";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_BROKENS ;
@@ -28,7 +28,7 @@ function b_waiting_xdirectory()
 	// xdirectory modreq
 	$block = array();
 	$result = $xoopsDB->query("SELECT COUNT(*) FROM ".$xoopsDB->prefix("xdir_mod"));
-	if ( $result ) {
+	if ($result) {
 		$block['adminlink'] = ICMS_URL."/modules/xdirectory/admin/index.php?op=listModReq";
 		list($block['pendingnum']) = $xoopsDB->fetchRow($result);
 		$block['lang_linkname'] = _PI_WAITING_MODREQS ;

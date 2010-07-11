@@ -21,6 +21,5 @@ $modversion = array( 'name' => _MD_AM_CUSTOMTAGS,
 	'image' => "banners.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=customtag",
-	'category' => XOOPS_SYSTEM_CUSTOMTAGS );
-
-?>
+	'category' => XOOPS_SYSTEM_CUSTOMTAGS,
+	'group' => 'Content');

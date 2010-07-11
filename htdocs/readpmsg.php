@@ -14,14 +14,14 @@
 
 $xoopsOption['pagetype'] = "pmsg";
 include_once "mainfile.php";
-include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
-$myts =& MyTextSanitizer::getInstance();
+//include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
+$myts =& icms_core_Textsanitizer::getInstance();
 
-if ( !is_object($icmsUser) ) {
+if (!is_object($icmsUser)) {
 	redirect_header("user.php",0);
 } else {
 	$pm_handler =& xoops_gethandler('privmessage');
-	if ( !empty($_POST['delete']) ) {
+	if (!empty($_POST['delete'])) {
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
 			exit();
@@ -37,7 +37,7 @@ if ( !is_object($icmsUser) ) {
 	$start = !empty($_GET['start']) ? (int) ($_GET['start']) : 0;
 	$total_messages = !empty($_GET['total_messages']) ? (int) ($_GET['total_messages']) : 0;
 	include ICMS_ROOT_PATH.'/header.php';
-	$criteria = new Criteria('to_userid', (int) ($icmsUser->getVar('uid')));
+	$criteria = new icms_criteria_Item('to_userid', (int) ($icmsUser->getVar('uid')));
 	$criteria->setLimit(1);
 	$criteria->setStart($start);
 	$criteria->setSort('msg_time');
@@ -50,20 +50,20 @@ if ( !is_object($icmsUser) ) {
 			//echo "failed";
 		}
 		echo $pm_arr[0]->getVar("subject")."<br /><form action='readpmsg.php' method='post' name='delete".$pm_arr[0]->getVar("msg_id")."'><table border='0' cellpadding='4' cellspacing='1' class='outer' width='100%'><tr><th colspan='2'>". _PM_FROM ."</th></tr><tr class='even'>\n";
-		$poster = new XoopsUser( (int) ($pm_arr[0]->getVar("from_userid")));
-		if ( !$poster->isActive() ) {
+		$poster = new icms_member_user_Object( (int) ($pm_arr[0]->getVar("from_userid")));
+		if (!$poster->isActive()) {
 			$poster = false;
 		}
 		echo "<td valign='top'>";
-		if ( $poster != false ) { // we need to do this for deleted users
+		if ($poster != false) { // we need to do this for deleted users
 			echo "<a href='userinfo.php?uid=". (int) ($poster->getVar("uid"))."'>".$poster->getVar("uname")."</a><br />\n";
-			if ( $poster->getVar("user_avatar") != "" ) {
+			if ($poster->getVar("user_avatar") != "") {
 				echo "<img src='uploads/".$poster->getVar("user_avatar")."' alt='' /><br />\n";
 			}
-			if ( $poster->getVar("user_from") != "" ) {
+			if ($poster->getVar("user_from") != "") {
 				echo _PM_FROMC."".$poster->getVar("user_from")."<br /><br />\n";
 			}
-			if ( $poster->isOnline() ) {
+			if ($poster->isOnline()) {
 				echo "<span style='color:#ee0000;font-weight:bold;'>"._PM_ONLINE."</span><br /><br />\n";
 			}
 		} else {
@@ -74,7 +74,7 @@ if ( !is_object($icmsUser) ) {
 		$var = $pm_arr[0]->getVar('msg_text', 'N');
 		echo $myts->displayTarea( $var, 1, 1, 1 ) . "<br /><br /></td></tr><tr class='foot'><td width='20%' colspan='2' align='"._GLOBAL_LEFT."'>";
 		// we dont want to reply to a deleted user!
-		if ( $poster != false ) {
+		if ($poster != false) {
 			echo "<a href='#' onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?reply=1&amp;msg_id=".$pm_arr[0]->getVar("msg_id")."\",\"pmlite\",800,680);'><img src='".ICMS_URL."/images/icons/".$GLOBALS["xoopsConfig"]["language"]."/reply.gif' alt='"._PM_REPLY."' /></a>\n";
 		}
 		echo "<input type='hidden' name='delete' value='1' />";
@@ -84,12 +84,12 @@ if ( !is_object($icmsUser) ) {
 		echo "</td></tr><tr><td colspan='2' align='"._GLOBAL_RIGHT."'>";
 		$previous = $start - 1;
 		$next = $start + 1;
-		if ( $previous >= 0 ) {
+		if ($previous >= 0) {
 			echo "<a href='readpmsg.php?start=". (int) ($previous)."&amp;total_messages=". (int) ($total_messages)."'>"._PM_PREVIOUS."</a> | ";
 		} else {
 			echo _PM_PREVIOUS." | ";
 		}
-		if ( $next < $total_messages ) {
+		if ($next < $total_messages) {
 			echo "<a href='readpmsg.php?start=". (int) ($next)."&amp;total_messages=". (int) ($total_messages)."'>"._PM_NEXT."</a>";
 		} else {
 			echo _PM_NEXT;

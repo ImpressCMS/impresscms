@@ -18,11 +18,11 @@
  *
  */
 require_once 'common.inc.php';
-if ( !defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
 $success = isset($_GET['success'])?trim($_GET['success']):false;
-if ($success){
-	if(is_dir(ICMS_ROOT_PATH.'/install')){
+if ($success) {
+	if (is_dir(ICMS_ROOT_PATH.'/install')) {
 		unlinkRecursive(ICMS_ROOT_PATH.'/install', true);
 		header('Location: '.ICMS_URL.'/index.php');
 	}

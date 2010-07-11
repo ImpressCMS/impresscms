@@ -1,10 +1,10 @@
 <?php
 /**
- * Form control creating a page element for an object derived from IcmsPersistableObject
+ * Form control creating a page element for an object derived from icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		IcmsPersistableObject
+ * @package		icms_ipf_Object
  * @since		  1.1
  * @author		  marcan <marcan@impresscms.org>
  * @version		$Id$
@@ -24,14 +24,14 @@ class IcmsFormPageElement extends XoopsFormElementTray {
 			$value = array($value);
 		}
 		$module_handler =& xoops_gethandler('module');
-		$criteria = new CriteriaCompo(new Criteria('hasmain', 1));
-		$criteria->add(new Criteria('isactive', 1));
+		$criteria = new icms_criteria_Compo(new icms_criteria_Item('hasmain', 1));
+		$criteria->add(new icms_criteria_Item('isactive', 1));
 		$module_list =& $module_handler->getObjects($criteria);
 		$mods = '';
 		foreach ($module_list as $module){
 			$mods .= '<optgroup label="'.$module->getVar('name').'">';
-			$criteria = new CriteriaCompo(new Criteria('page_moduleid', $module->getVar('mid')));
-			$criteria->add(new Criteria('page_status', 1));
+			$criteria = new icms_criteria_Compo(new icms_criteria_Item('page_moduleid', $module->getVar('mid')));
+			$criteria->add(new icms_criteria_Item('page_status', 1));
 			$pages = $icmsObj->getObjects($criteria);
 			$sel = '';
 			if (in_array($module->getVar('mid').'-0',$value)){
@@ -49,8 +49,8 @@ class IcmsFormPageElement extends XoopsFormElementTray {
 		}
 
 		$module = $module_handler->get(1);
-		$criteria = new CriteriaCompo(new Criteria('page_moduleid', 1));
-		$criteria->add(new Criteria('page_status', 1));
+		$criteria = new icms_criteria_Compo(new icms_criteria_Item('page_moduleid', 1));
+		$criteria->add(new icms_criteria_Item('page_status', 1));
 		$pages = $icmsObj->getObjects($criteria);
 		$cont = '';
 		if (count($pages) > 0){

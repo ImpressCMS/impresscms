@@ -39,7 +39,7 @@ if (isset($icmsModuleConfig['com_rule'])) {
 
 $cform->addElement(new XoopsFormText(_CM_TITLE, 'com_title', 50, 255, $com_title), true);
 $icons_radio = new XoopsFormRadio(_MESSAGEICON, 'com_icon', $com_icon);
-$subject_icons = XoopsLists::getSubjectsList();
+$subject_icons = IcmsLists::getSubjectsList();
 foreach ($subject_icons as $iconfile) {
 	$icons_radio->addOption($iconfile, '<img src="' . ICMS_URL . '/images/subject/' . $iconfile . '" alt="" />');
 }
@@ -100,7 +100,7 @@ $cform->addElement(new XoopsFormHidden('com_mode', $com_mode));
 if ('system' != $icmsModule->getVar('dirname')) {
 	$comment_config = $icmsModule->getInfo('comments');
 	if (isset($comment_config['extraParams']) && is_array($comment_config['extraParams'])) {
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		foreach ($comment_config['extraParams'] as $extra_param) {
 			// This routine is included from forms accessed via both GET and POST
 			if (isset($_POST[$extra_param])) {
@@ -115,8 +115,8 @@ if ('system' != $icmsModule->getVar('dirname')) {
 	}
 }
 // Captcha Hack
-if ( $icmsConfig['use_captchaf'] == true ) {
-	$cform->addElement(new IcmsFormCaptcha());
+if ($icmsConfig['use_captchaf'] == true) {
+	$cform->addElement(new icms_form_elements_Captcha());
 }
 // Captcha Hack
 $button_tray->addElement(new XoopsFormButton('', 'com_dopreview', _PREVIEW, 'submit'));

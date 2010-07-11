@@ -11,25 +11,26 @@
  * @author		http://www.xoops.org The XOOPS Project
  * @author		modified by m0nty_
  * @version		$Id$
+ * @todo		Remove anything that is already in htdocs/include/common.php - no need to duplicate here
  */
 /**
  *
  */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
-function icms_autoload( $class ) {
+function icms_autoload( $class) {
 	/** temp var to debug spl_autoload feature */
 	$debug = false;
 
 	$file = strtolower($class);
 	if ($debug) echo "<ul><b>$class</b>";
-	if (file_exists( $path = ICMS_ROOT_PATH . "/kernel/$file.php" ) ) {
+	if (file_exists( $path = ICMS_ROOT_PATH . "/kernel/$file.php" )) {
 		if ($debug) echo "<li>inc - $path</li>";
 		include_once $path;
-	} elseif(file_exists( $path = ICMS_ROOT_PATH . "/class/$file.php" )) {
+	} elseif (file_exists( $path = ICMS_ROOT_PATH . "/class/$file.php" )) {
 		if ($debug) echo "<li>inc - $path</li>";
 		include_once $path;
-	} elseif(file_exists($path = ICMS_ROOT_PATH . "/class/" . str_replace('xoops', '', $file) . ".php")) {
+	} elseif (file_exists($path = ICMS_ROOT_PATH . "/class/" . str_replace('xoops', '', $file) . ".php")) {
 		if ($debug) echo "<li>inc - $path </li>";
 		include_once $path;
 	} elseif (strpos($file, 'xoops') !== false && strpos($file, 'handler') !== false) {
@@ -37,10 +38,10 @@ function icms_autoload( $class ) {
 		$handlerFile = str_replace('xoops', '', $file);
 		$handlerFile = str_replace('handler', '', $handlerFile);
 		if ($debug) echo "<li>$path</li>";
-		if (file_exists( $path = ICMS_ROOT_PATH . "/kernel/$handlerFile.php" ) ) {
+		if (file_exists( $path = ICMS_ROOT_PATH . "/kernel/$handlerFile.php" )) {
 			if ($debug) echo "<li>inc - $path</li>";
 			include_once $path;
-		} elseif(file_exists( $path = ICMS_ROOT_PATH . "/class/$handlerFile.php" )) {
+		} elseif (file_exists( $path = ICMS_ROOT_PATH . "/class/$handlerFile.php" )) {
 			if ($debug) echo "<li>inc - $path</li>";
 			include_once $path;
 		}
@@ -50,7 +51,7 @@ function icms_autoload( $class ) {
 			if ($debug) echo "<li>inc - $path</li>";
 			include_once $path;
 		}
-	} elseif(strpos($file, 'auth') !== false) {
+	} elseif (strpos($file, 'auth') !== false) {
 		if ($debug) echo "<li>loading auth</li>";
 		$classFile = str_replace('xoops', '', $file);
 		echo $path = ICMS_ROOT_PATH . "/class/auth/$classFile.php";
@@ -64,7 +65,7 @@ function icms_autoload( $class ) {
 
 function icms_autoload_register() {
 	static $reg = false;
-	if ( !$reg ) {
+	if (!$reg) {
 		spl_autoload_register( "icms_autoload" );
 		$reg = true;
 	}
@@ -120,6 +121,7 @@ define( 'ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf' );
  * Few notes:
  * - modules should use this class methods to generate physical paths/URIs (the ones which do not conform
  * will perform badly when true URL rewriting is implemented)
+ * @todo	Replace with icms_core_Kernel, remove this in version 1.3
  */
 class xos_kernel_Xoops2 {
 	var $paths = array(
@@ -133,13 +135,13 @@ class xos_kernel_Xoops2 {
 	/**
 	 * Convert a XOOPS path to a physical one
 	 */
-	function path( $url, $virtual = false ) {
+	function path( $url, $virtual = false) {
 		$path = '';
 		@list( $root, $path ) = explode( '/', $url, 2 );
-		if ( !isset( $this->paths[$root] ) ) {
+		if (!isset( $this->paths[$root] )) {
 			list( $root, $path ) = array( 'www', $url );
 		}
-		if ( !$virtual ) {		// Returns a physical path
+		if (!$virtual) {		// Returns a physical path
 			return $this->paths[$root][0] . '/' . $path;
 		}
 		return !isset( $this->paths[$root][1] ) ? '' : ( $this->paths[$root][1] . '/' . $path );
@@ -147,24 +149,24 @@ class xos_kernel_Xoops2 {
 	/**
 	 * Convert a XOOPS path to an URL
 	 */
-	function url( $url ) {
+	function url( $url) {
 		return ( false !== strpos( $url, '://' ) ? $url : $this->path( $url, true ) );
 	}
 	/**
 	 * Build an URL with the specified request params
 	 */
-	function buildUrl( $url, $params = array() ) {
-		if ( $url == '.' ) {
+	function buildUrl( $url, $params = array()) {
+		if ($url == '.') {
 			$url = $_SERVER['REQUEST_URI'];
 		}
 		$split = explode( '?', $url );
-		if ( count($split) > 1 ) {
+		if (count($split) > 1) {
 			list( $url, $query ) = $split;
 			parse_str( $query, $query );
 			$params = array_merge( $query, $params );
 		}
-		if ( !empty( $params ) ) {
-			foreach ( $params as $k => $v ) {
+		if (!empty( $params )) {
+			foreach ( $params as $k => $v) {
 				$params[$k] = $k . '=' . rawurlencode($v);
 			}
 			$url .= '?' . implode( '&', $params );
@@ -187,7 +189,7 @@ $xoopsSecurity->checkSuperglobals();
 global $xoopsLogger, $xoopsErrorHandler;
 
 include_once XOOPS_ROOT_PATH . '/class/logger.php';
-$xoopsLogger =& XoopsLogger::instance();
+$xoopsLogger =& icms_core_Logger::instance();
 $xoopsErrorHandler =& $xoopsLogger;
 $xoopsLogger->startTime();
 $xoopsLogger->startTime( 'ICMS Boot' );
@@ -257,15 +259,14 @@ if (!defined('XOOPS_XMLRPC')) {
 include_once XOOPS_ROOT_PATH.'/include/functions.php';
 
 // #################### Connect to DB ##################
-require_once XOOPS_ROOT_PATH.'/class/database/databasefactory.php';
 if ($_SERVER['REQUEST_METHOD'] != 'POST' || !$xoopsSecurity->checkReferer(XOOPS_DB_CHKREF)) {
 	define('XOOPS_DB_PROXY', 1);
 }
-$xoopsDB =& XoopsDatabaseFactory::getDatabaseConnection();
+$xoopsDB =& icms_database_Factory::getDatabaseConnection();
 
 // ################# Include required files ##############
-require_once XOOPS_ROOT_PATH.'/kernel/object.php';
-require_once XOOPS_ROOT_PATH.'/class/criteria.php';
+//require_once XOOPS_ROOT_PATH.'/kernel/object.php';
+//require_once XOOPS_ROOT_PATH.'/class/criteria.php';
 
 // #################### Include text sanitizer ##################
 include_once XOOPS_ROOT_PATH."/class/module.textsanitizer.php";
@@ -276,7 +277,7 @@ $xoopsConfig =& $config_handler->getConfigsByCat(ICMS_CONF);
 $icmsConfig =& $xoopsConfig;
 
 // #################### Error reporting settings ##################
-if ( $xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2 ) {
+if ($xoopsConfig['debug_mode'] == 1 || $xoopsConfig['debug_mode'] == 2) {
 	error_reporting(E_ALL);
 	$xoopsLogger->enableRendering();
 	$xoopsLogger->usePopup = ( $xoopsConfig['debug_mode'] == 2 );
@@ -294,7 +295,7 @@ $xoopsConfig['xoops_url'] = XOOPS_URL;
 $xoopsConfig['root_path'] = XOOPS_ROOT_PATH."/";
 
 // #################### Include site-wide lang file ##################
-if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php") ) {
+if (file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php")) {
 	include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.php";
 } else {
 	include_once XOOPS_ROOT_PATH."/language/english/global.php";
@@ -302,7 +303,7 @@ if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/global.
 
 // ################ Include page-specific lang file ################
 if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype'], '.')) {
-	if ( file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php") ) {
+	if (file_exists(XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php")) {
 		include_once XOOPS_ROOT_PATH."/language/".$xoopsConfig['language']."/".$xoopsOption['pagetype'].".php";
 	} else {
 		include_once XOOPS_ROOT_PATH."/language/english/".$xoopsOption['pagetype'].".php";
@@ -310,25 +311,25 @@ if (isset($xoopsOption['pagetype']) && false === strpos($xoopsOption['pagetype']
 }
 $xoopsOption = array();
 
-if ( !defined("XOOPS_USE_MULTIBYTES") ) {
+if (!defined("XOOPS_USE_MULTIBYTES")) {
 	define("XOOPS_USE_MULTIBYTES",0);
 }
 
 /**#@+
  * Host abstraction layer
  */
-if ( !isset($_SERVER['PATH_TRANSLATED']) && isset($_SERVER['SCRIPT_FILENAME']) ) {
+if (!isset($_SERVER['PATH_TRANSLATED']) && isset($_SERVER['SCRIPT_FILENAME'])) {
 	$_SERVER['PATH_TRANSLATED'] =& $_SERVER['SCRIPT_FILENAME'];     // For Apache CGI
-} elseif ( isset($_SERVER['PATH_TRANSLATED']) && !isset($_SERVER['SCRIPT_FILENAME']) ) {
+} elseif (isset($_SERVER['PATH_TRANSLATED']) && !isset($_SERVER['SCRIPT_FILENAME'])) {
 	$_SERVER['SCRIPT_FILENAME'] =& $_SERVER['PATH_TRANSLATED'];     // For IIS/2K now I think :-(
 }
 
-if ( empty( $_SERVER[ 'REQUEST_URI' ] ) ) {         // Not defined by IIS
+if (empty( $_SERVER[ 'REQUEST_URI' ] )) {         // Not defined by IIS
 	// Under some configs, IIS makes SCRIPT_NAME point to php.exe :-(
-	if ( !( $_SERVER[ 'REQUEST_URI' ] = @$_SERVER['PHP_SELF'] ) ) {
+	if (!( $_SERVER[ 'REQUEST_URI' ] = @$_SERVER['PHP_SELF'] )) {
 		$_SERVER[ 'REQUEST_URI' ] = $_SERVER['SCRIPT_NAME'];
 	}
-	if ( isset( $_SERVER[ 'QUERY_STRING' ] ) ) {
+	if (isset( $_SERVER[ 'QUERY_STRING' ] )) {
 		$_SERVER[ 'REQUEST_URI' ] .= '?' . $_SERVER[ 'QUERY_STRING' ];
 	}
 }
@@ -393,7 +394,7 @@ if ($xoopsConfig['closesite'] == 1) {
 	}
 	if (!$allowed) {
 		include_once XOOPS_ROOT_PATH.'/class/template.php';
-		$xoopsTpl = new XoopsTpl();
+		$xoopsTpl = new icms_view_Tpl();
 		$xoopsTpl->assign( array(
             	'sitename' => $xoopsConfig['sitename'],
             	'xoops_themecss' => xoops_getcss(),
@@ -422,7 +423,7 @@ if (file_exists('./xoops_version.php')) {
 		include_once XOOPS_ROOT_PATH."/footer.php";
 		exit();
 	}
-	$moduleperm_handler =& xoops_gethandler('groupperm');
+	$moduleperm_handler =& xoops_gethandler('member_groupperm');
 	if ($xoopsUser) {
 		if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
 			redirect_header(XOOPS_URL."/user.php",1,_NOPERM);
@@ -433,17 +434,17 @@ if (file_exists('./xoops_version.php')) {
 			redirect_header(XOOPS_URL."/user.php",1,_NOPERM);
 		}
 	}
-	if ( file_exists(XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/language/".$xoopsConfig['language']."/main.php") ) {
+	if (file_exists(XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/language/".$xoopsConfig['language']."/main.php")) {
 		include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/language/".$xoopsConfig['language']."/main.php";
 	} else {
-		if ( file_exists(XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/language/english/main.php") ) {
+		if (file_exists(XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/language/english/main.php")) {
 			include_once XOOPS_ROOT_PATH."/modules/".$xoopsModule->getVar('dirname')."/language/english/main.php";
 		}
 	}
 	if ($xoopsModule->getVar('hasconfig') == 1 || $xoopsModule->getVar('hascomments') == 1 || $xoopsModule->getVar( 'hasnotification' ) == 1) {
 		$xoopsModuleConfig =& $config_handler->getConfigsByCat(0, $xoopsModule->getVar('mid'));
 	}
-} elseif($xoopsUser) {
+} elseif ($xoopsUser) {
 	$xoopsUserIsAdmin = $xoopsUser->isAdmin(1);
 }
 $xoopsLogger->stopTime( 'ICMS Boot' );

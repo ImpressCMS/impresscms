@@ -14,33 +14,31 @@ $xoopsOption['pagetype'] = 'pmsg';
 include_once 'mainfile.php';
 $module_handler = xoops_gethandler('module');
 $messenger_module = $module_handler->getByDirname('messenger');
-if($messenger_module && $messenger_module->getVar('isactive'))
+if ($messenger_module && $messenger_module->getVar('isactive'))
 {
 	header('location: ./modules/messenger/msgbox.php');
 	exit();
 }
 
-if(!is_object($icmsUser))
+if (!is_object($icmsUser))
 {
 	$errormessage = _PM_SORRY.'<br />'._PM_PLZREG.'';
 	redirect_header('user.php', 2, $errormessage);
-}
-else
-{
+} else {
 	$pm_handler = xoops_gethandler('privmessage');
-	if(isset($_POST['delete_messages']) && isset($_POST['msg_id']))
+	if (isset($_POST['delete_messages']) && isset($_POST['msg_id']))
 	{
-		if(!$GLOBALS['xoopsSecurity']->check())
+		if (!$GLOBALS['xoopsSecurity']->check())
 		{
 			echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());
 			exit();
 		}
 		$size = count($_POST['msg_id']);
 		$msg =& $_POST['msg_id'];
-		for($i = 0; $i < $size; $i++)
+		for ($i = 0; $i < $size; $i++)
 		{
 			$pm =& $pm_handler->get($msg[$i]);
-			if($pm->getVar('to_userid') == $icmsUser->getVar('uid'))
+			if ($pm->getVar('to_userid') == $icmsUser->getVar('uid'))
 			{
 				$pm_handler->delete($pm);
 			}
@@ -49,7 +47,7 @@ else
 		redirect_header('viewpmsg.php', 1, _PM_DELETED);
 	}
 	include ICMS_ROOT_PATH.'/header.php';
-	$criteria = new Criteria('to_userid', (int) ($icmsUser->getVar('uid')));
+	$criteria = new icms_criteria_Item('to_userid', (int) ($icmsUser->getVar('uid')));
 	$criteria->setOrder('DESC');
 	$pm_arr =& $pm_handler->getObjects($criteria);
 	echo "<h4 style='text-align:center;'>"._PM_PRIVATEMESSAGE."</h4><br />
@@ -63,41 +61,35 @@ else
         <img src='images/download.gif' alt='' /></th><th>&nbsp;</th><th>
         "._PM_FROM."</th><th>"._PM_SUBJECT."</th><th align='center'>"._PM_DATE."</th></tr>\n";
 	$total_messages = count($pm_arr);
-	if($total_messages == 0)
+	if ($total_messages == 0)
 	{
 		echo "<tr><td class='even' colspan='6' align='center'>"._PM_YOUDONTHAVE."</td></tr>";
 		$display = 0;
-	}
-	else
-	{
+	} else {
 		$display = 1;
 	}
 
-	for($i = 0; $i < $total_messages; $i++)
+	for ($i = 0; $i < $total_messages; $i++)
 	{
 		$class = ($i % 2 == 0) ? 'even' : 'odd';
 		echo "<tr align='"._GLOBAL_LEFT."' class='$class'><td style='vertical-align: top; width: 2%; text-align: center;'>
 			<input type='checkbox' id='message_".$pm_arr[$i]->getVar('msg_id')."' name='msg_id[]' value='".$pm_arr[$i]->getVar('msg_id')."' /></td>\n";
-		if($pm_arr[$i]->getVar('read_msg') == 1)
+		if ($pm_arr[$i]->getVar('read_msg') == 1)
 		{
 			echo "<td style='vertical-align: top; width: 5%; text-align: center;'>&nbsp;</td>\n";
-		}
-		else
-		{
+		} else {
 			echo "<td style='vertical-align: top; width: 5%; text-align: center;'>
                 <img src='images/read.gif' alt='"._PM_NOTREAD."' /></td>\n";
 		}
 		echo "<td style='vertical-align: top; width: 5%; text-align: center;'>
             <img src='images/subject/".$pm_arr[$i]->getVar('msg_image', 'E')."' alt='' /></td>\n";
-		$postername = XoopsUser::getUnameFromId($pm_arr[$i]->getVar('from_userid'));
+		$postername = icms_member_user_Object::getUnameFromId($pm_arr[$i]->getVar('from_userid'));
 		echo "<td style='vertical-align: middle; width: 10%; text-align: center;'>";
 		// no need to show deleted users
-		if($postername)
+		if ($postername)
 		{
 			echo "<a href='userinfo.php?uid=". (int) ($pm_arr[$i]->getVar('from_userid'))."'>".$postername."</a>";
-		}
-		else
-		{
+		} else {
 			echo $icmsConfig['anonymous'];
 		}
 		echo "</td>\n";
@@ -108,16 +100,14 @@ else
 		.formatTimestamp($pm_arr[$i]->getVar('msg_time'))."</td></tr>";
 	}
 
-	if($display == 1)
+	if ($display == 1)
 	{
 		echo "<tr class='foot' align='"._GLOBAL_LEFT."'><td colspan='6' align='"._GLOBAL_LEFT."'>
             <input type='button' class='formButton'
             onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send=1\",\"pmlite\",800,680);'
             value='"._PM_SEND."' />&nbsp;<input type='submit' class='formButton' name='delete_messages'
             value='"._PM_DELETE."' />".$GLOBALS['xoopsSecurity']->getTokenHTML()."</td></tr></table></form>";
-	}
-	else
-	{
+	} else {
 		echo "<tr class='bg2' align='"._GLOBAL_LEFT."'><td colspan='6' align='"._GLOBAL_LEFT."'>
             <input type='button' class='formButton'
             onclick='javascript:openWithSelfMain(\"".ICMS_URL."/pmlite.php?send=1\",\"pmlite\",800,680);'

@@ -35,11 +35,8 @@ $content_isAdmin = icms_userIsAdmin(CONTENT_DIRNAME);
 // Creating the module config array to make it available throughout the module
 $contentConfig = icms_getModuleConfig(CONTENT_DIRNAME);
 
-// including the content class
-include_once(CONTENT_ROOT_PATH . 'class/content.php');
-
 // creating the icmsPersistableRegistry to make it available throughout the module
 global $icmsPersistableRegistry;
-$icmsPersistableRegistry = IcmsPersistableRegistry::getInstance();
+$icmsPersistableRegistry = icms_ipf_registry_Handler::getInstance();
 
 ?>

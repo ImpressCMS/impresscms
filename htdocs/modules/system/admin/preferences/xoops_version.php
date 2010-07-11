@@ -24,5 +24,5 @@ $modversion = array( 'name' => _MD_AM_PREF,
 	'image' => "pref.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=preferences",
-	'category' => XOOPS_SYSTEM_PREF );
-?>
+	'category' => XOOPS_SYSTEM_PREF,
+	'group' => 'Site Configuration');

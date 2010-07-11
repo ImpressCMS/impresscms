@@ -22,19 +22,19 @@ include_once './class/dbmanager.php';
 // the defaults specified in the database...!!!! (and don't have problem
 // of missing fields in install file, when add new fields to database)
 
-function make_groups(&$dbm){
+function make_groups(&$dbm) {
 	$gruops['XOOPS_GROUP_ADMIN'] = $dbm->insert('groups', " VALUES (0, '".addslashes(_INSTALL_WEBMASTER)."', '".addslashes(_INSTALL_WEBMASTERD)."', 'Admin')");
 	$gruops['XOOPS_GROUP_USERS'] = $dbm->insert('groups', " VALUES (0, '".addslashes(_INSTALL_REGUSERS)."', '".addslashes(_INSTALL_REGUSERSD)."', 'User')");
 	$gruops['XOOPS_GROUP_ANONYMOUS'] = $dbm->insert('groups', " VALUES (0, '".addslashes(_INSTALL_ANONUSERS)."', '".addslashes(_INSTALL_ANONUSERSD)."', 'Anonymous')");
 
-	if(!$gruops['XOOPS_GROUP_ADMIN'] || !$gruops['XOOPS_GROUP_USERS'] || !$gruops['XOOPS_GROUP_ANONYMOUS']){
+	if (!$gruops['XOOPS_GROUP_ADMIN'] || !$gruops['XOOPS_GROUP_USERS'] || !$gruops['XOOPS_GROUP_ANONYMOUS']) {
 		return false;
 	}
 
 	return $gruops;
 }
 
-function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $adminsalt, $gruops){
+function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $adminmail, $language, $adminsalt, $gruops) {
 
 	//$xoopsDB =& Database::getInstance();
 	//$dbm = new db_manager;
@@ -101,7 +101,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 
 	// system modules
 
-	if ( file_exists('../modules/system/language/'.$language.'/modinfo.php') ) {
+	if (file_exists('../modules/system/language/'.$language.'/modinfo.php')) {
 		include '../modules/system/language/'.$language.'/modinfo.php';
 	} else {
 		include '../modules/system/language/english/modinfo.php';
@@ -213,7 +213,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 		#if ($myrow['side'] == 0) {
 		if ($myrow['side'] == 1 OR $myrow['side'] == 2 OR $myrow['side'] == 7) {
 			$dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0, 0)");
-		}elseif(in_array($myrow['template'],array('system_admin_block_warnings.html','system_admin_block_cp.html','system_admin_block_modules.html','system_block_newusers.html','system_block_online.html','system_block_waiting.html','system_block_topusers.html'))){
+		} elseif (in_array($myrow['template'],array('system_admin_block_warnings.html','system_admin_block_cp.html','system_admin_block_modules.html','system_block_newusers.html','system_block_online.html','system_block_waiting.html','system_block_topusers.html'))) {
 			$dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 1, 2)");
 		} else {
 			$dbm->insert("block_module_link", " VALUES (".$myrow['bid'].", 0, 1)");
@@ -661,7 +661,7 @@ function make_data(&$dbm, &$cm, $adminname, $adminlogin_name, $adminpass, $admin
 	$dbm->insert('config', " VALUES (" . ++$i . ", 0, $c, 'purifier_CSS_Proprietary', '_MD_AM_PURIFIER_CSS_PROPRIETARY', '1', '_MD_AM_PURIFIER_CSS_PROPRIETARYDSC', 'yesno', 'int', " . $p++ . ")");
 	// <<<<< End of Purifier Category >>>>>
 
-	$dbm->insert('system_autotasks', " VALUES (0, 'Inactivating users', 'autotask.php', 0, 1, 0, 1, ".time().", 'addon/system', 00)");
+	$dbm->insert('system_autotasks', " VALUES (0, 'Inactivating users', 'autotask.php', 0, 1440, 0, 1, ".time().", 'addon/system', 00)");
 
 	return $gruops;
 }

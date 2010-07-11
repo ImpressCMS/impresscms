@@ -14,85 +14,11 @@
  * @version		$Id: text.php 19090 2010-03-13 17:41:42Z skenow $
  */
 
-class IcmsCaptchaText {
-	var $config	= array();
-	var $code;
-
-	/**
-	 * Constructor
-	 */
-	function IcmsCaptchaText()
-	{
+class icms_captcha_ObjectText extends icms_captcha_Text {
+	private $_deprecated;
+	public function __construct() {
+		parent::__construct();
+		$this->_deprecated = icms_deprecated('icms_captcha_Text', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
-
-	/**
-	 * Creates IcmsCaptchaText object
-	 * @return object	reference to IcmsCaptchaText (@link IcmsCaptchaText) Object
-	 */
-	function &instance()
-	{
-		static $instance;
-		if(!isset($instance)) {
-			$instance = new IcmsCaptchaText();
-		}
-		return $instance;
-	}
-
-	/**
-	 * Loading configs from CAPTCHA class
-	 * @param string	$config	the config array
-	 */
-	function loadConfig($config = array())
-	{
-		// Loading default preferences
-		$this->config =& $config;
-	}
-
-	/**
-	 * Sets CAPTCHA code
-	 */
-	function setCode()
-	{
-		$_SESSION['IcmsCaptcha_sessioncode'] = strval( $this->code );
-	}
-
-	/**
-	 * Render the form
-	 * @return string	$form the Captcha Form
-	 */
-	function render()
-	{
-		global $icmsConfigCaptcha;
-		$form = $this->loadText()  . "&nbsp;&nbsp; <input type='text' name='".$this->config["name"]."' id='".$this->config["name"]."' size='" . $icmsConfigCaptcha['captcha_num_chars'] . "' maxlength='" . $icmsConfigCaptcha['captcha_num_chars'] . "' value='' />";
-		$rule = constant("ICMS_CAPTCHA_RULE_TEXT");
-		if(!empty($rule)) {
-			$form .= "&nbsp;&nbsp;<small>{$rule}</small>";
-		}
-
-		$this->setCode();
-
-		return $form;
-	}
-
-	/**
-	 * Load the ICMS Captcha Text
-	 * @return string	The Captcha Expression
-	 */
-	function loadText()
-	{
-		$val_a = rand(0, 9);
-		$val_b = rand(0, 9);
-		if($val_a > $val_b) {
-			$expression = "{$val_a} - {$val_b} = ?";
-			$this->code = $val_a - $val_b;
-		}else{
-			$expression = "{$val_a} + {$val_b} = ?";
-			$this->code = $val_a + $val_b;
-		}
-
-		return "<span style='font-style: normal; font-weight: bold; font-size: 100%; font-color: #333; border: 1px solid #333; padding: 1px 5px;'>{$expression}</span>";
-	}
-
 }
-
 ?>

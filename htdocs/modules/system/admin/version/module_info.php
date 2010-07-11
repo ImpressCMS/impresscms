@@ -11,7 +11,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-if ( (int) ($_GET['mid'])) {
+if ((int) ($_GET['mid'])) {
 	$module_handler =& xoops_gethandler('module');
 	$versioninfo =& $module_handler->get( (int) ($_GET['mid']));
 } else {
@@ -43,19 +43,19 @@ function onWard() {
    vPos%=1000;
    scrollID=setTimeout("onWard()",30);
    }
-function stop(){
+function stop() {
    clearTimeout(scrollID);
 }
 //-->
 </script>
 <?php
 /*
- if($css){
+ if ($css) {
  echo "<link rel=\"stylesheet\" href=\"".$css."\" type=\"text/css\">\n\n";
  }
  */
 echo "</head>\n";
-echo "<body onLoad=\"if(window.scroll)onWard()\" onmouseover=\"stop()\" onmouseout=\"if(window.scroll)onWard()\">\n";
+echo "<body onLoad=\"if (window.scroll)onWard()\" onmouseover=\"stop()\" onmouseout=\"if (window.scroll)onWard()\">\n";
 echo "<div><table width=\"100%\"><tr><td align=\"center\"><br /><br /><br /><br /><br />";
 if ($modimage = $versioninfo->getInfo('image')) {
 	$modimage_path = '/modules/'.$versioninfo->getInfo('dirname').'/'.$modimage;

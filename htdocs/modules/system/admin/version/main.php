@@ -12,7 +12,7 @@
  * @version		$Id$
  */
 
-if ( !is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin() ) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin()) {
 	exit("Access Denied");
 }
 

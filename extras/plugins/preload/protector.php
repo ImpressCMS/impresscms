@@ -18,7 +18,7 @@
 /*define(ICMSPRELOADPROTECTOR_STARTCOREBOOT, 2);
  define(ICMSPRELOADPROTECTOR_FINISHCOREBOOT, 10);
  */
-class IcmsPreloadProtector extends IcmsPreloadItem
+class IcmsPreloadProtector extends icms_preload_Item
 {
 	function eventStartCoreBoot() {
 		$filename = ICMS_TRUST_PATH.'/modules/protector/include/precheck.inc.php';

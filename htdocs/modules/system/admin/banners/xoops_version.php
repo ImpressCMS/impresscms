@@ -24,5 +24,5 @@ $modversion = array( 'name' => _MD_AM_BANS,
 	'image' => "banners.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=banners",
-	'category' => XOOPS_SYSTEM_BANNER );
-?>
+	'category' => XOOPS_SYSTEM_BANNER,
+	'group' => 'Advertising');

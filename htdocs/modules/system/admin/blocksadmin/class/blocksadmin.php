@@ -14,15 +14,13 @@
 
 defined('ICMS_ROOT_PATH') or die('ImpressCMS root path not defined');
 
-include_once ICMS_ROOT_PATH . '/kernel/block.php';
-
 /**
  * System Block Configuration Object Class
  *
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlocksadmin extends IcmsBlock {
+class SystemBlocksadmin extends icms_block_Object {
 
 	/**
 	 * Constructor
@@ -78,28 +76,28 @@ class SystemBlocksadmin extends IcmsBlock {
 		return parent :: getVar($key, $format);
 	}
 
-	private function weight(){
+	private function weight() {
 		$rtn = $this->getVar('weight','n');
 		return $rtn;
 	}
 
-	private function visible(){
-		if($this->getVar('visible','n') == 1)
+	private function visible() {
+		if ($this->getVar('visible','n') == 1)
 		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=visible&bid='.$this->getVar('bid').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_ok.png" alt="'._VISIBLE.'"/></a>';
 		else
 		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=visible&bid='.$this->getVar('bid').'" title="'._VISIBLE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/button_cancel.png" alt="'._VISIBLE.'"/></a>';
 		return $rtn;
 	}
 
-	private function mid(){
+	private function mid() {
 		$rtn = $this->handler->getModuleName( $this->getVar('mid','n') );
 		return $rtn;
 	}
 
-	private function side(){
+	private function side() {
 		$block_positions = $this->handler->getBlockPositions( true );
 		//		$form_object = new XoopsFormSelect( '', "side[".$this->getVar('bid','n')."]", $this->getVar('side','n'));
-		//		foreach ( array_keys( $block_positions ) as $j ) {
+		//		foreach ( array_keys( $block_positions ) as $j) {
 		//			$form_object->addOption( $j, $block_positions[$j]);
 		//		}
 		//		$rtn = $form_object->render();
@@ -112,27 +110,27 @@ class SystemBlocksadmin extends IcmsBlock {
 		return "<img src='" . ICMS_URL . "/images/blank.gif' width='22' alt=''  title='' />";
 	}
 
-	public function getUpActionLink(){
+	public function getUpActionLink() {
 		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=up&bid='.$this->getVar('bid').'" title="'._UP.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/up.png" alt="'._UP.'"/></a>';
 		return $rtn;
 	}
 
-	public function getDownActionLink(){
+	public function getDownActionLink() {
 		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=down&bid='.$this->getVar('bid').'" title="'._DOWN.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/down.png" alt="'._DOWN.'"/></a>';
 		return $rtn;
 	}
 
-	public function getCloneActionLink(){
+	public function getCloneActionLink() {
 		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=clone&bid='.$this->getVar('bid').'" title="'._CLONE.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/editcopy.png" alt="'._CLONE.'"/></a>';
 		return $rtn;
 	}
 
-	public function getEditActionLink(){
+	public function getEditActionLink() {
 		$rtn = '<a href="'.ICMS_URL.'/modules/system/admin.php?fct=blocksadmin&op=mod&bid='.$this->getVar('bid').'" title="'._EDIT.'" ><img src="'.ICMS_IMAGES_SET_URL.'/actions/edit.png" alt="'._EDIT.'"/></a>';
 		return $rtn;
 	}
 
-	public function getAdminViewItemLink(){
+	public function getAdminViewItemLink() {
 		$rtn = $this->getVar('title');
 		return $rtn;
 	}
@@ -147,16 +145,16 @@ class SystemBlocksadmin extends IcmsBlock {
 	 * @param boolean $userSide
 	 * @return string
 	 */
-	public function getDeleteItemLink($onlyUrl=false, $withimage=true, $userSide=false){
+	public function getDeleteItemLink($onlyUrl=false, $withimage=true, $userSide=false) {
 		$ret = ICMS_URL. "/modules/system/admin.php?fct=blocksadmin&op=del&" . $this->handler->keyName . "=" . $this->getVar($this->handler->keyName);
 		if ($onlyUrl) {
-			if($this->getVar('block_type') != 'C' && $this->getVar('block_type') != 'K') {
+			if ($this->getVar('block_type') != 'C' && $this->getVar('block_type') != 'K') {
 				return "";
 			} else {
 				return $ret;
 			}
-		} elseif($withimage) {
-			if($this->getVar('block_type') != 'C' && $this->getVar('block_type') != 'K') {
+		} elseif ($withimage) {
+			if ($this->getVar('block_type') != 'C' && $this->getVar('block_type') != 'K') {
 				return "<img src='" . ICMS_URL . "/images/blank.gif' width='22' alt=''  title='' />";
 			} else {
 				return "<a href='" . $ret . "'><img src='" . ICMS_IMAGES_SET_URL . "/actions/editdelete.png' style='vertical-align: middle;' alt='" . _CO_ICMS_DELETE . "'  title='" . _CO_ICMS_DELETE . "' /></a>";
@@ -171,10 +169,10 @@ class SystemBlocksadmin extends IcmsBlock {
 	 *
 	 * @return a {@link SmartobjectForm} object for this object
 	 *
-	 * @see IcmsPersistableObjectForm::IcmsPersistableObjectForm()
+	 * @see icms_ipf_ObjectForm::icms_ipf_ObjectForm()
 	 */
-	function getForm($form_caption, $form_name, $form_action=false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action=false, $captcha=false){
-		if( !$this->isNew() && $this->getVar('block_type') != 'C' ){
+	function getForm($form_caption, $form_name, $form_action=false, $submit_button_caption = _CO_ICMS_SUBMIT, $cancel_js_action=false, $captcha=false) {
+		if (!$this->isNew() && $this->getVar('block_type') != 'C') {
 			$this->hideFieldFromForm('content');
 			$this->hideFieldFromForm('c_type');
 		}
@@ -183,12 +181,12 @@ class SystemBlocksadmin extends IcmsBlock {
 		return $form;
 	}
 
-	function getSideControl(){
+	function getSideControl() {
 		include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 		$control = new XoopsFormSelect('','block_side[]',$this->getVar( 'side', 'e'));
 		$positions = $this->handler->getBlockPositions( true );
 		$block_positions = array();
-		foreach ($positions as $k=>$position){
+		foreach ($positions as $k=>$position) {
 			$block_positions[$k] = defined($position['title'])?constant($position['title']):$position['title'];
 		}
 		$control->addOptionArray($block_positions);
@@ -196,7 +194,7 @@ class SystemBlocksadmin extends IcmsBlock {
 		return $control->render();
 	}
 
-	function getWeightControl(){
+	function getWeightControl() {
 		include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 		$control = new XoopsFormText('','block_weight[]',5,10,$this->getVar( 'weight', 'e'));
 		$control->setExtra('style="text-align:center;"');
@@ -211,88 +209,88 @@ class SystemBlocksadmin extends IcmsBlock {
  * @since ImpressCMS 1.2
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
-class SystemBlocksadminHandler extends IcmsBlockHandler {
+class SystemBlocksadminHandler extends icms_block_Handler {
 
 	private $block_positions;
 	private $modules_name;
 
 	public function __construct(& $db) {
-		$this->IcmsPersistableObjectHandler($db, 'blocksadmin', 'bid', 'title', 'content', 'system');
+		icms_ipf_Handler::__construct($db, 'blocksadmin', 'bid', 'title', 'content', 'system');
 		$this->table = $this->db->prefix('newblocks');
 
 		$this->addPermission ( 'block_read', _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS, _CO_SYSTEM_BLOCKSADMIN_BLOCKRIGHTS_DSC );
 	}
 
-	public function getVisibleStatusArray(){
+	public function getVisibleStatusArray() {
 		$rtn = array();
 		$rtn[1] = _VISIBLE;
 		$rtn[0] = _INVISIBLE;
 		return $rtn;
 	}
 
-	//	public function getVisibleInArray(){
+	//	public function getVisibleInArray() {
 	//		/* TODO: To be implemented... */
 	//  }
 
-	public function getBlockPositionArray(){
+	public function getBlockPositionArray() {
 		$block_positions = $this->getBlockPositions(true);
 		$rtn = array();
-		foreach ($block_positions as $k=>$v){
+		foreach ($block_positions as $k=>$v) {
 			$rtn[$k] = (defined($block_positions[$k]['title'])) ? constant($block_positions[$k]['title']) : $block_positions[$k]['title'];
 		}
 		return $rtn;
 	}
 
-	public function getContentTypeArray(){
+	public function getContentTypeArray() {
 		return array('H' => _AM_HTML, 'P' => _AM_PHP, 'S' => _AM_AFWSMILE, 'T' => _AM_AFNOSMILE);
 	}
 
-	public function getBlockCacheTimeArray(){
+	public function getBlockCacheTimeArray() {
 		$rtn = array('0' => _NOCACHE, '30' => sprintf(_SECONDS, 30), '60' => _MINUTE, '300' => sprintf(_MINUTES, 5), '1800' => sprintf(_MINUTES, 30), '3600' => _HOUR, '18000' => sprintf(_HOURS, 5), '86400' => _DAY, '259200' => sprintf(_DAYS, 3), '604800' => _WEEK, '2592000' => _MONTH);
 		return $rtn;
 	}
 
-	public function getModulesArray($full = false){
-		if( !count($this->modules_name) ){
+	public function getModulesArray($full = false) {
+		if (!count($this->modules_name)) {
 			$icms_module_handler = xoops_gethandler('module');
 			$installed_modules =& $icms_module_handler->getObjects();
 			$this->modules_name[0]['name'] = _NONE;
 			$this->modules_name[0]['dirname'] = '';
-			foreach( $installed_modules as $module ){
+			foreach ($installed_modules as $module) {
 				$this->modules_name[$module->getVar('mid')]['name'] = $module->getVar('name');
 				$this->modules_name[$module->getVar('mid')]['dirname'] = $module->getVar('dirname');
 			}
 		}
 
 		$rtn = $this->modules_name;
-		if(!$full)
-		foreach($this->modules_name as $key => $module)
+		if (!$full)
+		foreach ($this->modules_name as $key => $module)
 		$rtn[$key] = $module['name'];
 		return $rtn;
 	}
 
-	public function getModuleName($mid){
-		if($mid == 0)
+	public function getModuleName($mid) {
+		if ($mid == 0)
 		return '';
 		$modules = $this->getModulesArray();
 		$rtn = $modules[$mid];
 		return $rtn;
 	}
 
-	public function getModuleDirname($mid){
+	public function getModuleDirname($mid) {
 		$modules = $this->getModulesArray(true);
 		$rtn = $modules[$mid]['dirname'];
 		return $rtn;
 	}
 
-	public function upWeight( $bid ){
+	public function upWeight( $bid) {
 		$blockObj = $this->get($bid);
-		$criteria = new CriteriaCompo();
+		$criteria = new icms_criteria_Compo();
 		$criteria->setLimit(1);
 		$criteria->setSort('weight');
 		$criteria->setOrder('DESC');
-		$criteria->add(new Criteria('side', $blockObj->vars['side']['value']));
-		$criteria->add(new Criteria('weight', $blockObj->getVar('weight'), '<'));
+		$criteria->add(new icms_criteria_Item('side', $blockObj->vars['side']['value']));
+		$criteria->add(new icms_criteria_Item('weight', $blockObj->getVar('weight'), '<'));
 		$sideBlocks = $this->getObjects($criteria);
 		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1) ? $sideBlocks[0]->getVar('weight') - 1 : $blockObj->getVar('weight') - 1;
 		if ($weight < 0) $weight = 0;
@@ -300,23 +298,23 @@ class SystemBlocksadminHandler extends IcmsBlockHandler {
 		$this->insert($blockObj, true);
 	}
 
-	public function downWeight( $bid ){
+	public function downWeight( $bid) {
 		$blockObj = $this->get($bid);
-		$criteria = new CriteriaCompo();
+		$criteria = new icms_criteria_Compo();
 		$criteria->setLimit(1);
 		$criteria->setSort('weight');
 		$criteria->setOrder('ASC');
-		$criteria->add(new Criteria('side', $blockObj->vars['side']['value']));
-		$criteria->add(new Criteria('weight', $blockObj->getVar('weight'), '>'));
+		$criteria->add(new icms_criteria_Item('side', $blockObj->vars['side']['value']));
+		$criteria->add(new icms_criteria_Item('weight', $blockObj->getVar('weight'), '>'));
 		$sideBlocks = $this->getObjects($criteria);
 		$weight = (is_array($sideBlocks) && count($sideBlocks) == 1) ? $sideBlocks[0]->getVar('weight') + 1 : $blockObj->getVar('weight') + 1;
 		$blockObj->setVar('weight', $weight);
 		$this->insert($blockObj, true);
 	}
 
-	public function changeVisible( $bid ){
+	public function changeVisible( $bid) {
 		$blockObj = $this->get($bid);
-		if($blockObj->getVar('visible' ,'n'))
+		if ($blockObj->getVar('visible' ,'n'))
 		$blockObj->setVar('visible', 0);
 		else
 		$blockObj->setVar('visible', 1);

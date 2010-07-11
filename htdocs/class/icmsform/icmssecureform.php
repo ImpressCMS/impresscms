@@ -4,7 +4,7 @@
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package	IcmsPersistableObject
+ * @package	icms_ipf_Object
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  * @version	$Id$
@@ -22,7 +22,7 @@ include_once ICMS_ROOT_PATH . '/class/icmsform/icmsform.php';
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package	IcmsPersistableObject
+ * @package	icms_ipf_Object
  * @since	1.1
  * @author	marcan <marcan@impresscms.org>
  * @version	$Id$

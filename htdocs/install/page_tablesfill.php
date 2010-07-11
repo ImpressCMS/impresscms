@@ -16,7 +16,7 @@
  */
 
 require_once 'common.inc.php';
-if ( !defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
 $wizard->setPage( 'tablesfill' );
 $pageHasForm = false;
@@ -28,26 +28,24 @@ include_once "../mainfile.php";
 include_once './class/dbmanager.php';
 $dbm = new db_manager();
 
-if ( !$dbm->isConnectable() ) {
+if (!$dbm->isConnectable()) {
 	$wizard->redirectToPage( 'dbsettings' );
 	exit();
 }
 $res = $dbm->query( "SELECT COUNT(*) FROM " . $dbm->db->prefix( "users" ) );
-if ( !$res ) {
+if (!$res) {
 	$wizard->redirectToPage( 'dbsettings' );
 	exit();
 }
 list ( $count ) = $dbm->db->fetchRow( $res );
 $process = $count ? '' : 'insert';
 
-if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-	if ( !$process ) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	if (!$process) {
 		$wizard->redirectToPage( '+0' );
 		exit();
 	}
 	include_once './makedata.php';
-	//include_once './class/cachemanager.php';
-	//$cm = new cache_manager;
 	$cm = 'dummy';
 
 	$wizard->loadLangFile( 'install2' );

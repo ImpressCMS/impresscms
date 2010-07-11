@@ -26,7 +26,7 @@ function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 	$sizearray = array("xx-small", "x-small", "small", "medium", "large", "x-large", "xx-large");
 	echo "<select id='".$textarea_id."Size' onchange='setVisible(\"xoopsHiddenText\");setElementSize(\"".$hiddentext."\",this.options[this.selectedIndex].value);'>\n";
 	echo "<option value='SIZE'>"._SIZE."</option>\n";
-	foreach ( $sizearray as $size ) {
+	foreach ( $sizearray as $size) {
 		echo "<option value='$size'>$size</option>\n";
 	}
 	echo "</select>\n";
@@ -34,7 +34,7 @@ function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 	$fontarray = array("Arial", "Courier", "Georgia", "Helvetica", "Impact", "Verdana");
 	echo "<select id='".$textarea_id."Font' onchange='setVisible(\"xoopsHiddenText\");setElementFont(\"".$hiddentext."\",this.options[this.selectedIndex].value);'>\n";
 	echo "<option value='FONT'>"._FONT."</option>\n";
-	foreach ( $fontarray as $font ) {
+	foreach ( $fontarray as $font) {
 		echo "<option value='$font'>$font</option>\n";
 	}
 	echo "</select>\n";
@@ -42,9 +42,9 @@ function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
 	$colorarray = array("00", "33", "66", "99", "CC", "FF");
 	echo "<select id='".$textarea_id."Color' onchange='setVisible(\"xoopsHiddenText\");setElementColor(\"".$hiddentext."\",this.options[this.selectedIndex].value);'>\n";
 	echo "<option value='COLOR'>"._COLOR."</option>\n";
-	foreach ( $colorarray as $color1 ) {
-		foreach ( $colorarray as $color2 ) {
-			foreach ( $colorarray as $color3 ) {
+	foreach ( $colorarray as $color1) {
+		foreach ( $colorarray as $color2) {
+			foreach ( $colorarray as $color3) {
 				echo "<option value='".$color1.$color2.$color3."' style='background-color:#".$color1.$color2.$color3.";color:#".$color1.$color2.$color3.";'>#".$color1.$color2.$color3."</option>\n";
 			}
 		}
@@ -64,7 +64,7 @@ function xoopsCodeTarea($textarea_id, $cols=60, $rows=15, $suffix=null)
  */
 function xoopsSmilies($textarea_id)
 {
-	$myts =& MyTextSanitizer::getInstance();
+	$myts =& icms_core_Textsanitizer::getInstance();
 	$smiles =& $myts->getSmileys();
 	if (empty($smileys)) {
 		$db =& Database::getInstance();
@@ -80,7 +80,7 @@ function xoopsSmilies($textarea_id)
 		for ($i = 0; $i < $count; $i++) {
 			if ($smiles[$i]['display'] == 1) {
 				//hack bis
-				echo "<img src='".ICMS_UPLOAD_URL."/".$myts->oopsHtmlSpecialChars($smiles['smile_url'])."' border='0' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles[$i]['code']." \");' onmouseover='style.cursor=\"hand\"' />";
+				echo "<img src='".ICMS_UPLOAD_URL."/".$myts->htmlSpecialChars($smiles['smile_url'])."' border='0' alt='' onclick='xoopsCodeSmilie(\"".$textarea_id."\", \" ".$smiles[$i]['code']." \");' onmouseover='style.cursor=\"hand\"' />";
 				//fin du hack
 			}
 		}

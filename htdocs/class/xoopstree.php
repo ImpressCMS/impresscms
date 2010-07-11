@@ -161,8 +161,8 @@ class XoopsTree
 			return $path;
 		}
 		list($parentid,$name) = $this->db->fetchRow($result);
-		$myts =& MyTextSanitizer::getInstance();
-		$name = $myts->makeTboxData4Show($name);
+		$myts =& icms_core_Textsanitizer::getInstance();
+		$name = $myts->htmlSpecialChars($name);
 		$path = '/'.$name.$path.'';
 		if ( $parentid == 0 ) {
 			return $path;
@@ -185,7 +185,7 @@ class XoopsTree
 		if ( $sel_name == "" ) {
 			$sel_name = $this->id;
 		}
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		echo "<select name='".$sel_name."'";
 		if ( $onchange != "" ) {
 			echo " onchange='".$onchange."'";
@@ -209,7 +209,7 @@ class XoopsTree
 			$arr = $this->getChildTreeArray($catid, $order);
 			foreach ( $arr as $option ) {
 				$option['prefix'] = str_replace(".","--",$option['prefix']);
-				$catpath = $option['prefix']."&nbsp;".$myts->makeTboxData4Show($option[$title]);
+				$catpath = $option['prefix']."&nbsp;".$myts->htmlSpecialChars($option[$title]);
 				if ( $option[$this->id] == $preset_id ) {
 					$sel = " selected='selected'";
 				}
@@ -239,8 +239,8 @@ class XoopsTree
 			return $path;
 		}
 		list($parentid,$name) = $this->db->fetchRow($result);
-		$myts =& MyTextSanitizer::getInstance();
-		$name = $myts->makeTboxData4Show($name);
+		$myts =& icms_core_Textsanitizer::getInstance();
+		$name = $myts->htmlSpecialChars($name);
 		$path = '<a href="'.$funcURL.'&amp;'.$this->id.'='.$sel_id.'">'.$name.'</a>'.$path."";
 		if ( $parentid == 0 ) {
 			return $path;

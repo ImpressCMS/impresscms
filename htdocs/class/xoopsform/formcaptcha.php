@@ -35,7 +35,7 @@ require_once ICMS_ROOT_PATH."/class/xoopsform/formelement.php";
  *
  * For verification:
  *   if(@include_once ICMS_ROOT_PATH."/class/captcha/captcha.php") {
- *	    $icmsCaptcha = IcmsCaptcha::instance();
+ *	    $icmsCaptcha = icms_captcha_Object::instance();
  *	    if(! $icmsCaptcha->verify() ) {
  *		    echo $icmsCaptcha->getMessage();
  *		    ...
@@ -44,52 +44,11 @@ require_once ICMS_ROOT_PATH."/class/xoopsform/formelement.php";
  *
  */
 
-class IcmsFormCaptcha extends XoopsFormElement {
-
-	var $_captchaHandler;
-
-	/**
-	 * @param string	$caption	Caption of the form element, default value is defined in captcha/language/
-	 * @param string	$name		Name for the input box
-	 * @param boolean	$skipmember	Skip CAPTCHA check for members
-	 * @param int		$numchar	Number of characters in image mode, and input box size for text mode
-	 * @param int		$minfontsize	Minimum font-size of characters in image mode
-	 * @param int		$maxfontsize	Maximum font-size of characters in image mode
-	 * @param int		$backgroundtype	Background type in image mode: 0 - bar; 1 - circle; 2 - line; 3 - rectangle; 4 - ellipse; 5 - polygon; 100 - generated from files
-	 * @param int		$backgroundnum	Number of background images in image mode
-	 *
-	 */
-	function IcmsFormCaptcha($caption = '', $name = 'icmscaptcha', $skipmember = null, $numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null, $backgroundnum = null) {
-		if(!class_exists("IcmsCaptcha")) {
-			require_once ICMS_ROOT_PATH."/class/captcha/captcha.php";
-		}
-
-		$this->_captchaHandler =& IcmsCaptcha::instance();
-		$this->_captchaHandler->init($name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum);
-		if(!$this->_captchaHandler->active) {
-			$this->setHidden();
-		}else{
-			$caption = !empty($caption) ? $caption : $this->_captchaHandler->getCaption();
-			$this->setCaption($caption);
-		}
-	}
-
-	/**
-	 * Sets the Config
-	 * @param   string $name Config Name
-	 * @param   string $val Config Value
-	 * @return  object reference to the IcmsCaptcha Object (@link IcmsCaptcha)
-	 */
-	function setConfig($name, $val)
-	{
-		return $this->_captchaHandler->setConfig($name, $val);
-	}
-
-	function render()
-	{
-		if(!$this->isHidden()) {
-			return $this->_captchaHandler->render();
-		}
+class IcmsFormCaptcha extends icms_form_elements_captcha {
+	private $_deprecated;
+	public function __construct() {
+		parent::__construct();
+		$this->_deprecated = icms_deprecated('icms_auth_Ads', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 

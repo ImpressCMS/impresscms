@@ -57,7 +57,7 @@ class XoopsFormSelectTimezone extends XoopsFormSelect
 	function XoopsFormSelectTimezone($caption, $name, $value = null, $size = 1)
 	{
 		$this->XoopsFormSelect($caption, $name, $value, $size);
-		$this->addOptionArray(XoopsLists::getTimeZoneList());
+		$this->addOptionArray(IcmsLists::getTimeZoneList());
 	}
 }
 

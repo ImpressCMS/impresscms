@@ -117,14 +117,14 @@ class XoopsTopic
 	 **/
 	function store()
 	{
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		$title = "";
 		$imgurl = "";
 		if ( isset($this->topic_title) && $this->topic_title != "" ) {
-			$title = $myts->makeTboxData4Save($this->topic_title);
+			$title = $myts->addSlashes($this->topic_title);
 		}
 		if ( isset($this->topic_imgurl) && $this->topic_imgurl != "" ) {
-			$imgurl = $myts->makeTboxData4Save($this->topic_imgurl);
+			$imgurl = $myts->addSlashes($this->topic_imgurl);
 		}
 		if ( !isset($this->topic_pid) || !is_numeric($this->topic_pid) ) {
 			$this->topic_pid = 0;
@@ -243,13 +243,13 @@ class XoopsTopic
 	 **/
 	function topic_title($format="S")
 	{
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		switch($format){
 			case "S":
-				$title = $myts->makeTboxData4Show($this->topic_title);
+				$title = $myts->htmlSpecialChars($this->topic_title);
 				break;
 			case "E":
-				$title = $myts->makeTboxData4Edit($this->topic_title);
+				$title = $myts->htmlSpecialChars($this->topic_title);
 				break;
 			case "P":
 				$title = $myts->makeTboxData4Preview($this->topic_title);
@@ -268,13 +268,13 @@ class XoopsTopic
 	 **/
 	function topic_imgurl($format="S")
 	{
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		switch($format){
 			case "S":
-				$imgurl= $myts->makeTboxData4Show($this->topic_imgurl);
+				$imgurl= $myts->htmlSpecialChars($this->topic_imgurl);
 				break;
 			case "E":
-				$imgurl = $myts->makeTboxData4Edit($this->topic_imgurl);
+				$imgurl = $myts->htmlSpecialChars($this->topic_imgurl);
 				break;
 			case "P":
 				$imgurl = $myts->makeTboxData4Preview($this->topic_imgurl);
@@ -400,7 +400,7 @@ class XoopsTopic
 	{
 		$result = $this->db->query('SELECT topic_id, topic_pid, topic_title FROM '.$this->table);
 		$ret = array();
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		while ($myrow = $this->db->fetchArray($result)) {
 			$ret[$myrow['topic_id']] = array('title' => $myts->htmlspecialchars($myrow['topic_title']), 'pid' => $myrow['topic_pid']);
 		}

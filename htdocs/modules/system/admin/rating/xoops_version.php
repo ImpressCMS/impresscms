@@ -21,5 +21,5 @@ $modversion = array( 'name' => _MD_AM_RATINGS,
 	'image' => "rating.gif",
 	'hasAdmin' => 1,
 	'adminpath' => "admin.php?fct=rating",
-	'category' => XOOPS_SYSTEM_RATINGS );
-?>
+	'category' => XOOPS_SYSTEM_RATINGS,
+	'group' => 'Content');

@@ -18,7 +18,7 @@
  *
  */
 require_once 'common.inc.php';
-if ( !defined( 'XOOPS_INSTALL' ) )	exit();
+if (!defined( 'XOOPS_INSTALL' ) )	exit();
 
 imcms_install_chmod("../modules", 0777);
 imcms_install_chmod("../mainfile.php", 0777);

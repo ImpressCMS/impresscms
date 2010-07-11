@@ -88,19 +88,19 @@ if (!empty($_POST)) {
 	exit();
 }
 
-switch ( $op ) {
+switch ( $op) {
 
 	case "delete":
 		include ICMS_ROOT_PATH . '/include/comment_delete.php';
 		break;
 	case "preview":
-		$myts =& MyTextSanitizer::getInstance();
+		$myts =& icms_core_Textsanitizer::getInstance();
 		$doimage = 1;
 		$com_title = $myts->htmlSpecialChars($myts->stripSlashesGPC($_POST['com_title']));
 		if ($dohtml != 0) {
 	  if (is_object($icmsUser)) {
 	  	if (!$icmsUser->isAdmin($com_modid)) {
-	  		$sysperm_handler =& xoops_gethandler('groupperm');
+	  		$sysperm_handler =& xoops_gethandler('member_groupperm');
 	  		if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 	  			$dohtml = 0;
 	  		}
@@ -125,19 +125,17 @@ switch ( $op ) {
 		}
 		break;
 	case "post":
-		// Captcha Hack
-		if(@include_once ICMS_ROOT_PATH . '/class/captcha/captcha.php') {
-	  if ( $icmsConfig['use_captchaf'] == true ) {
-	  	$icmsCaptcha = IcmsCaptcha::instance();
-	  	if(! $icmsCaptcha->verify(true) ) {
+
+	  if ($icmsConfig['use_captchaf'] == true) {
+	  	$icmsCaptcha = icms_captcha_Object::instance();
+	  	if (! $icmsCaptcha->verify(true)) {
 	  		redirect_header(
 	  		$redirect_page . '=' . $com_itemid . '&com_id=' . $com_id . '&com_mode=' . $com_mode . '&com_order=' . $com_order,
 	  		2, $icmsCaptcha->getMessage()
 	  		);
 	  	}
 	  }
-		}
-		// Captcha Hack
+
 		$doimage = 1;
 		$comment_handler =& xoops_gethandler('comment');
 		$add_userpost = false;
@@ -150,7 +148,7 @@ switch ( $op ) {
 	  $accesserror = false;
 
 	  if (is_object($icmsUser)) {
-	  	$sysperm_handler =& xoops_gethandler('groupperm');
+	  	$sysperm_handler =& xoops_gethandler('member_groupperm');
 	  	if ($icmsUser->isAdmin($com_modid)
 	  	|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 	  		if (!empty($com_status) && $com_status != XOOPS_COMMENT_PENDING) {
@@ -198,7 +196,7 @@ switch ( $op ) {
 	  $comment->setVar('com_rootid', $com_rootid);
 	  $comment->setVar('com_ip', xoops_getenv('REMOTE_ADDR'));
 	  if (is_object($icmsUser)) {
-	  	$sysperm_handler =& xoops_gethandler('groupperm');
+	  	$sysperm_handler =& xoops_gethandler('member_groupperm');
 	  	if ($icmsUser->isAdmin($com_modid)
 	  	|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 	  		$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
@@ -334,9 +332,9 @@ switch ( $op ) {
 	  		}
 	  	}
 	  	if (!$skip) {
-	  		$criteria = new CriteriaCompo(new Criteria('com_modid', $com_modid));
-	  		$criteria->add(new Criteria('com_itemid', $com_itemid));
-	  		$criteria->add(new Criteria('com_status', XOOPS_COMMENT_ACTIVE));
+	  		$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_modid', $com_modid));
+	  		$criteria->add(new icms_criteria_Item('com_itemid', $com_itemid));
+	  		$criteria->add(new icms_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
 	  		$comment_count = $comment_handler->getCount($criteria);
 	  		$func = $comment_config['callback']['update'];
 	  		call_user_func_array($func, array($com_itemid, $comment_count, $comment->getVar('com_id')));
@@ -357,8 +355,8 @@ switch ( $op ) {
 	  // trigger notification event if necessary
 	  if ($notify_event) {
 	  	$not_modid = $com_modid;
-	  	include_once ICMS_ROOT_PATH . '/include/notification_functions.php';
-	  	$not_catinfo =& notificationCommentCategoryInfo($not_modid);
+	  	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
+	  	$not_catinfo =& $notification_handler->commentCategoryInfo($not_modid);
 	  	$not_category = $not_catinfo['name'];
 	  	$not_itemid = $com_itemid;
 	  	$not_event = $notify_event;
@@ -391,7 +389,6 @@ switch ( $op ) {
 	  	ICMS_URL . '/modules/' . $not_module->getVar('dirname') . '/' .$comment_url . '=' . $com_itemid
 	  	. '&amp;com_id=' . $newcid . '&amp;com_rootid=' . $com_rootid . '&amp;com_mode=' . $com_mode
 	  	. '&amp;com_order=' . $com_order . '#comment' . $newcid;
-	  	$notification_handler =& xoops_gethandler('notification');
 	  	$notification_handler->triggerEvent($not_category, $not_itemid, $not_event, $comment_tags, false, $not_modid);
 	  }
 
