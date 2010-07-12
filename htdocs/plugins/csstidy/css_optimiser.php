@@ -257,7 +257,8 @@ if(isset($_REQUEST['timestamp'])) $css->set_cfg('timestamp',true);
     $result = false;
 
     $url = (isset($_REQUEST['url']) && !empty($_REQUEST['url'])) ? $_REQUEST['url'] : false;
-
+	$url = filter_var($url, FILTER_SANITIZE_URL);
+	
 	if(isset($_REQUEST['template']))
 	{
 		switch($_REQUEST['template'])
@@ -285,11 +286,11 @@ if(isset($_REQUEST['timestamp'])) $css->set_cfg('timestamp',true);
 
     if($url)
     {
-    	if(substr($_REQUEST['url'],0,7) != 'http://')
+    	if(!filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED),0,7))
 		{
-			$_REQUEST['url'] = 'http://'.$_REQUEST['url'];
+			$url = 'http://'.$url;
 		}
-        $result = $css->parse_from_url($_REQUEST['url'],0);
+        $result = $css->parse_from_url($url,0);
     }
     elseif(isset($_REQUEST['css_text']) && strlen($_REQUEST['css_text'])>5)
     {
