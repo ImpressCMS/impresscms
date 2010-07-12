@@ -286,7 +286,7 @@ if(isset($_REQUEST['timestamp'])) $css->set_cfg('timestamp',true);
 
     if($url)
     {
-    	if(!filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED),0,7))
+    	if(!filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_SCHEME_REQUIRED))
 		{
 			$url = 'http://'.$url;
 		}
