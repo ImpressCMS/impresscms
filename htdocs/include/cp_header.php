@@ -41,5 +41,5 @@ if ($icmsModule->getVar('hasconfig') == 1 || $icmsModule->getVar('hascomments') 
 }
 
 // include the default language file for the admin interface
-icms_loadLanguageFile($icmsModule->dirname(), 'admin');
+icms_loadLanguageFile($icmsModule->getVar('dirname'), 'admin');
 

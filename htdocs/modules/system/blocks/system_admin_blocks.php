@@ -157,14 +157,14 @@ function b_system_admin_modules_show(){
 	foreach ( $modules as $module ) {
 		$rtn = array ( );
 		$inf = & $module->getInfo ();
-		$rtn ['link'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . (isset ( $inf ['adminindex'] ) ? $inf ['adminindex'] : '');
-		$rtn ['title'] = $module->name ();
-		$rtn ['dir'] = $module->dirname ();
+		$rtn ['link'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . (isset ( $inf ['adminindex'] ) ? $inf ['adminindex'] : '');
+		$rtn ['title'] = $module->getVar('name');
+		$rtn ['dir'] = $module->getVar('dirname');
 		if (isset ( $inf ['iconsmall'] ) && $inf ['iconsmall'] != '') {
-			$rtn ['small'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconsmall'];
+			$rtn ['small'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . $inf ['iconsmall'];
 		}
 		if (isset ( $inf ['iconbig'] ) && $inf ['iconbig'] != '') {
-			$rtn ['iconbig'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $inf ['iconbig'];
+			$rtn ['iconbig'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . $inf ['iconbig'];
 		}
 		$rtn ['absolute'] = 1;
 		$module->loadAdminMenu ();
@@ -172,7 +172,7 @@ function b_system_admin_modules_show(){
 			$rtn ['hassubs'] = 1;
 			$rtn ['subs'] = array ( );
 			foreach ( $module->adminmenu as $item ) {
-				$item ['link'] = ICMS_URL . '/modules/' . $module->dirname () . '/' . $item ['link'];
+				$item ['link'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . $item ['link'];
 				$rtn ['subs'] [] = $item;
 			}
 		} else {
@@ -186,17 +186,17 @@ function b_system_admin_modules_show(){
 			if (! isset ( $rtn ['subs'] )) {
 				$rtn ['subs'] = array ( );
 			}
-			$subs = array ('title' => _PREFERENCES, 'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $module->mid () );
+			$subs = array ('title' => _PREFERENCES, 'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod=' . $module->getVar('mid') );
 			$rtn ['subs'] [] = $subs;
 		} else {
 			$rtn ['hassubs'] = 0;
 			unset ( $rtn ['subs'] );
 		}
-		if ($module->dirname () == 'system') {
+		if ($module->getVar('dirname') == 'system') {
 			$systemadm = true;
 		}
 		if( is_object( $icmsUser ) )
-			$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->mid (), $icmsUser->getGroups () );
+			$admin_perm = $moduleperm_handler->checkRight ( 'module_admin', $module->getVar('mid'), $icmsUser->getGroups () );
 		if ($admin_perm) {
 			if ($rtn ['dir'] != 'system') {
 				$block['mods'][] = $rtn;

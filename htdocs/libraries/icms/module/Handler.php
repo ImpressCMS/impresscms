@@ -88,7 +88,7 @@ class icms_module_Handler extends icms_core_ObjectHandler {
 	public function &getByDirname($dirname) {
 		static $_cachedModule_mid;
 		static $_cachedModule_dirname;
-		if (!empty($_cachedModule_dirname[$dirname]) && $_cachedModule_dirname[$dirname]->dirname() == $dirname) {
+		if (!empty($_cachedModule_dirname[$dirname]) && $_cachedModule_dirname[$dirname]->getVar('dirname') == $dirname) {
 			return $_cachedModule_dirname[$dirname];
 		} else {
 			$module = false;

@@ -185,7 +185,7 @@ function icms_cp_header(){
 			$perm_itens = array();
 			foreach ( $navitem ['menu'] as $item ) {
 				$module = $module_handler->getByDirname($item['dir']);
-				$admin_perm = $moduleperm_handler->checkRight('module_admin', $module->mid(), $icmsUser->getGroups());
+				$admin_perm = $moduleperm_handler->checkRight('module_admin', $module->getVar('mid'), $icmsUser->getGroups());
 				if ($admin_perm) {
 					if ($item['dir'] != 'system') {
 						$perm_itens[] = $item;
@@ -251,7 +251,7 @@ function icms_cp_header(){
 	 * Loading options of the current module.
 	 */
 	if ($icmsModule) {
-		if ($icmsModule->dirname() == 'system') {
+		if ($icmsModule->getVar('dirname') == 'system') {
 			if (isset($sysprefs) && count($sysprefs) > 0) {
 				for ($i = count($sysprefs) - 1; $i >= 0; $i = $i - 1) {
 					if (isset($sysprefs [$i])) {
@@ -270,7 +270,7 @@ function icms_cp_header(){
 			}
 		} else {
 			foreach ( $mods as $mod ) {
-				if ($mod['dir'] == $icmsModule->dirname()) {
+				if ($mod['dir'] == $icmsModule->getVar('dirname')) {
 					$m = $mod; //Getting info of the current module
 					break;
 				}
@@ -291,10 +291,10 @@ function icms_cp_header(){
 				}
 			}
 		}
-		$icmsAdminTpl->assign('modpath', ICMS_URL . '/modules/' . $icmsModule->dirname());
-		$icmsAdminTpl->assign('modname', $icmsModule->name());
-		$icmsAdminTpl->assign('modid', $icmsModule->mid());
-		$icmsAdminTpl->assign('moddir', $icmsModule->dirname());
+		$icmsAdminTpl->assign('modpath', ICMS_URL . '/modules/' . $icmsModule->getVar('dirname'));
+		$icmsAdminTpl->assign('modname', $icmsModule->getVar('name'));
+		$icmsAdminTpl->assign('modid', $icmsModule->getVar('mid'));
+		$icmsAdminTpl->assign('moddir', $icmsModule->getVar('dirname'));
 		$icmsAdminTpl->assign('lang_prefs', _PREFERENCES);
 	}
 
@@ -536,21 +536,21 @@ function impresscms_get_adminmenu() {
 	foreach ( $modules as $module ) {
 		$rtn = array();
 		$inf = & $module->getInfo();
-		$rtn['link'] = ICMS_URL . '/modules/' . $module->dirname() . '/' . (isset($inf['adminindex']) ? $inf['adminindex'] : '');
-		$rtn['title'] = $module->name();
-		$rtn['dir'] = $module->dirname();
+		$rtn['link'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . (isset($inf['adminindex']) ? $inf['adminindex'] : '');
+		$rtn['title'] = $module->getVar('name');
+		$rtn['dir'] = $module->getVar('dirname');
 		if (isset($inf['iconsmall']) && $inf['iconsmall'] != '') {
-			$rtn['small'] = ICMS_URL . '/modules/' . $module->dirname() . '/' . $inf['iconsmall'];
+			$rtn['small'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . $inf['iconsmall'];
 		}
 		if (isset($inf['iconbig']) && $inf['iconbig'] != '') {
-			$rtn['iconbig'] = ICMS_URL . '/modules/' . $module->dirname() . '/' . $inf['iconbig'];
+			$rtn['iconbig'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . $inf['iconbig'];
 		}
 		$rtn['absolute'] = 1;
 		$rtn['subs'] = array();
 		$module->loadAdminMenu();
 		if (is_array($module->adminmenu) && count ($module->adminmenu) > 0) {
 			foreach ( $module->adminmenu as $item ) {
-				$item['link'] = ICMS_URL . '/modules/' . $module->dirname() . '/' . $item ['link'];
+				$item['link'] = ICMS_URL . '/modules/' . $module->getVar('dirname') . '/' . $item ['link'];
 				$rtn['subs'][] = $item;
 			}
 		}
@@ -560,13 +560,13 @@ function impresscms_get_adminmenu() {
 			$subs = array(
 				'title' => _PREFERENCES,
 				'link' => ICMS_URL . '/modules/system/admin.php?fct=preferences&amp;op=showmod&amp;mod='
-						. $module->mid()
+						. $module->getVar('mid')
 			);
 			$rtn['subs'][] = $subs;
 		}
 		$rtn['hassubs'] = (count($rtn ['subs']) > 0) ? 1 : 0;
 		if ($rtn['hassubs'] == 0) unset($rtn ['subs']);
-		if ($module->dirname() == 'system') {
+		if ($module->getVar('dirname') == 'system') {
 			$systemadm = true;
 		}
 		$modules_menu[] = $rtn;
