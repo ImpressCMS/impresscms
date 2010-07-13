@@ -87,7 +87,7 @@ abstract class XoopsForm {
 		$this->_action = $action;
 		$this->_method = $method;
 		if ($addtoken != false) {
-			$this->addElement(new icms_form_elements_HiddenToken());
+			$this->addElement(new icms_form_elements_Hiddentoken());
 		}
 	}
 

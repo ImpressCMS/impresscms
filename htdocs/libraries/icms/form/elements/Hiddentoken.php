@@ -1,4 +1,3 @@
-
 <?php
 /**
 * Creates a hidden token form attribute
@@ -11,7 +10,7 @@
 * @since	XOOPS
 * @author	http://www.xoops.org The XOOPS Project
 * @author	modified by UnderDog <underdog@impresscms.org>
-* @version	$Id$
+* @version	$Id: formhiddentoken.php 8662 2009-05-01 09:04:30Z pesianstranger $
 */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -28,12 +27,15 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright   copyright (c) 2000-2005 XOOPS.org
  */
-class XoopsFormHiddenToken extends icms_form_elements_Hiddentoken {
-	private $_deprecated;
-	public function __construct() {
-		parent::getInstance();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Hiddentoken', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-	}
-}
+class icms_form_elements_Hiddentoken extends icms_form_elements_Hidden {
 
-?>
+  /**
+   * Constructor
+   *
+   * @param   string  $name       "name" attribute
+   * @param   int     $timeout    timeout variable for the createToken function
+   */
+  function icms_form_elements_Hiddentoken($name = _CORE_TOKEN, $timeout = 0){
+      $this->icms_form_elements_Hidden($name . '_REQUEST', $GLOBALS['xoopsSecurity']->createToken($timeout, $name));
+  }
+}
