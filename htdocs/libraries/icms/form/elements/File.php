@@ -33,7 +33,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package		kernel
  * @subpackage	form
  */
-class icms_form_File extends icms_form_Element {
+class icms_form_elements_File extends icms_form_Element {
 
 	/**
 	 * Maximum size for an uploaded file
@@ -49,7 +49,7 @@ class icms_form_File extends icms_form_Element {
 	 * @param	string	$name			"name" attribute
 	 * @param	int		$maxfilesize	Maximum size for an uploaded file
 	 */
-	function icms_form_File($caption, $name, $maxfilesize='4096000') {
+	function icms_form_elements_File($caption, $name, $maxfilesize='4096000') {
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_maxFileSize = (int) ($maxfilesize);

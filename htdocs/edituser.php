@@ -459,7 +459,7 @@ if ($op == 'avatarform')
 		 */
 		$form->addElement(new XoopsFormLabel(_US_MAXPIXEL, icms_conv_nr2local($icmsConfigUser['avatar_width']).' x '.icms_conv_nr2local($icmsConfigUser['avatar_height'])));
 		$form->addElement(new XoopsFormLabel(_US_MAXIMGSZ, icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])));
-		$form->addElement(new icms_form_File(_US_SELFILE, 'avatarfile', icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])), true);
+		$form->addElement(new icms_form_elements_File(_US_SELFILE, 'avatarfile', icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])), true);
 		$form->addElement(new XoopsFormHidden('op', 'avatarupload'));
 		$form->addElement(new XoopsFormHidden('uid', (int) ($icmsUser->getVar('uid'))));
 		$form->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));

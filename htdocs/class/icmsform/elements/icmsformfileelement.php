@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormFileElement extends icms_form_File {
+class IcmsFormFileElement extends icms_form_elements_File {
 	var $object;
 	var $key;
 
@@ -24,7 +24,7 @@ class IcmsFormFileElement extends icms_form_File {
 	function IcmsFormFileElement($object, $key) {
 		$this->object = $object;
 		$this->key = $key;
-		$this->icms_form_File($object->vars[$key]['form_caption'], $key, isset($object->vars[$key]['form_maxfilesize']) ? $object->vars[$key]['form_maxfilesize'] : 0);
+		$this->icms_form_elements_File($object->vars[$key]['form_caption'], $key, isset($object->vars[$key]['form_maxfilesize']) ? $object->vars[$key]['form_maxfilesize'] : 0);
 		$this->setExtra(" size=50");
 	}
 
