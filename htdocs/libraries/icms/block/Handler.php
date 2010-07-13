@@ -486,7 +486,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 class IcmsBlockHandler extends icms_block_Handler {
 	public function __construct(&$db) {
 		parent::__construct(&$db);
-		$this->setVar('_errors', icms_deprecated('icms_block_Handler'));
+		$this->setVar('_errors', icms_core_Debug::setDeprecated('icms_block_Handler'));
 	}
 
 }

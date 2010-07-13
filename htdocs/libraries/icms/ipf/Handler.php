@@ -367,7 +367,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 			$start = $criteria->getStart();
 		}
 		if ($debug) {
-			icms_debug($sql);
+			icms_core_Debug::message($sql);
 		}
 
 		$result = $this->db->query($sql, $limit, $start);
@@ -401,7 +401,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 
 		}
 		if ($debug) {
-			icms_debug($sql);
+			icms_core_Debug::message($sql);
 		}
 
 		if ($force) {
@@ -535,7 +535,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		}
 
 		if ($debug) {
-			icms_debug($sql);
+			icms_core_Debug::message($sql);
 		}
 
 		$result = $this->db->query($sql, $limit, $start);
@@ -798,7 +798,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 		}
 
 		if ($debug) {
-			icms_debug($sql);
+			icms_core_Debug::message($sql);
 		}
 
 		if (false != $force) {

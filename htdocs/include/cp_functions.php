@@ -235,7 +235,7 @@ function icms_cp_header(){
 		}
 		$icmsAdminTpl->append('navitems', $navitem);
 	}
-	//icms_debug_vardump($sysprefs);
+	//icms_core_Debug::vardump($sysprefs);
 	if (count($sysprefs) > 0) {
 		$icmsAdminTpl->assign('systemadm', 1);
 	} else {
@@ -346,7 +346,7 @@ function icms_cp_header(){
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function xoops_cp_header() {
-	icms_deprecated('icms_cp_header', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_core_Debug::setDeprecated('icms_cp_header', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	icms_cp_header();
 }
 
@@ -398,7 +398,7 @@ function icms_cp_footer() {
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
  */
 function xoops_cp_footer() {
-	icms_deprecated('icms_cp_footer', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_core_Debug::setDeprecated('icms_cp_footer', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	icms_cp_footer();
 }
 
@@ -408,7 +408,7 @@ function xoops_cp_footer() {
  * @deprecated used for old modules that don't use smarty templates
  */
 function OpenTable() {
-	icms_deprecated('', 'Use the smarty template system. This function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('', 'Use the smarty template system. This function will be removed in version 1.4');
 	echo "<table width='100%' border='0' cellspacing='1' cellpadding='8' style='border: 2px solid #2F5376;'><tr class='bg4'><td valign='top'>\n";
 }
 /**
@@ -417,7 +417,7 @@ function OpenTable() {
  * @deprecated used for old modules that don't use smarty templates
  */
 function CloseTable() {
-	icms_deprecated('', 'Use the smarty template system. This function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('', 'Use the smarty template system. This function will be removed in version 1.4');
 	echo '</td></tr></table>';
 }
 
@@ -674,7 +674,7 @@ function impresscms_get_adminmenu() {
  * @deprecated use impresscms_get_adminmenu instead
  */
 function xoops_module_get_admin_menu() {
-	icms_deprecated('impresscms_get_adminmenu', 'This function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('impresscms_get_adminmenu', 'This function will be removed in version 1.4');
 	return impresscms_get_adminmenu ();
 }
 

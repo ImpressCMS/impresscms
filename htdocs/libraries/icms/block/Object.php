@@ -212,7 +212,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 */
 	public function getBlockPositions($full = false) {
-		icms_deprecated('icms_block_Handler->getBlockPositions');
+		icms_core_Debug::setDeprecated('icms_block_Handler->getBlockPositions');
 		return $this->handler->getBlockPositions($full);
 	}
 
@@ -224,7 +224,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 */
 	public function load($id) {
-		icms_deprecated('icms_block_Handler->getObject');
+		icms_core_Debug::setDeprecated('icms_block_Handler->getObject');
 		$this->$this->handler->getObject($id);
 	}
 
@@ -236,7 +236,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method 'insert', instead
 	 */
 	public function store() {
-		icms_deprecated('icms_block_Handler->insert');
+		icms_core_Debug::setDeprecated('icms_block_Handler->insert');
 		$this->handler->insert($this);
 		return $this->getVar('bid');
 	}
@@ -249,7 +249,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 */
 	public function delete() {
-		icms_deprecated('icms_block_Handler->delete');
+		icms_core_Debug::setDeprecated('icms_block_Handler->delete');
 		return $this->handler->delete($this);
 	}
 
@@ -271,7 +271,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 */
 	public function getAllBlocksByGroup($groupid, $asobject = true, $side = null, $visible = null, $orderby = "b.weight, b.bid", $isactive = 1) {
-		icms_deprecated('icms_block_Handler->getAllBlocksByGroup');
+		icms_core_Debug::setDeprecated('icms_block_Handler->getAllBlocksByGroup');
 		return $this->handler->getAllBlocksByGroup($groupid, $asobject, $side, $visible, $orderby, $isactive);
 	}
 
@@ -290,7 +290,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 */
 	public function getAllBlocks($rettype = "object", $side = null, $visible = null, $orderby = "side, weight, bid", $isactive = 1) {
-		icms_deprecated('icms_block_Handler->getAllBlocks');
+		icms_core_Debug::setDeprecated('icms_block_Handler->getAllBlocks');
 		return $this->handler->getAllBlocks($rettype, $side, $visible, $orderby, $isactive);
 	}
 
@@ -306,7 +306,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 */
 	public function getByModule($moduleid, $asobject = true) {
-		icms_deprecated('icms_block_Handler->getByModule');
+		icms_core_Debug::setDeprecated('icms_block_Handler->getByModule');
 		return $this->handler->getByModule($moduleid, $asobject);
 	}
 
@@ -327,7 +327,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 *
 	 */
 	public function getAllByGroupModule($groupid, $module_id = '0-0', $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
-		icms_deprecated('icms_block_Handler->getAllByGroupModule');
+		icms_core_Debug::setDeprecated('icms_block_Handler->getAllByGroupModule');
 		return $this->handler->getAllByGroupModule($groupid, $module_id, $toponlyblock, $visible, $orderby, $isactive);
 	}
 
@@ -344,7 +344,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 */
 	public function getNonGroupedBlocks($module_id = 0, $toponlyblock = false, $visible = null, $orderby = 'b.weight, b.bid', $isactive = 1) {
-		icms_deprecated('icms_block_Handler->getNonGroupedBlocks');
+		icms_core_Debug::setDeprecated('icms_block_Handler->getNonGroupedBlocks');
 		return $this->handler->getNonGroupedBlocks($module_id, $toponlyblock, $visible, $orderby, $isactive);
 	}
 
@@ -364,7 +364,7 @@ class icms_block_Object extends icms_ipf_Object {
 	 * @deprecated use the handler method, instead
 	 */
 	public function countSimilarBlocks($moduleId, $funcNum, $showFunc = null) {
-		icms_deprecated('icms_block_Handler->getCountSimilarBlocks');
+		icms_core_Debug::setDeprecated('icms_block_Handler->getCountSimilarBlocks');
 		return $this->handler->getCountSimilarBlocks($moduleId, $funcNum, $showFunc);
 	}
 
@@ -378,7 +378,7 @@ class icms_block_Object extends icms_ipf_Object {
 class IcmsBlock extends icms_block_Object {
 	public function __construct(&$db) {
 		parent::__construct(&$db);
-		$this->setErrors = icms_deprecated('icms_block_Object');
+		$this->setErrors = icms_core_Debug::setDeprecated('icms_block_Object');
 	}
 
 }

@@ -24,6 +24,6 @@
 class IcmsKernel extends icms_core_Kernel {
 	public function __construct() {
 		parent::__construct();
-		$this->setErrors = icms_deprecated('icms_core_Kernel', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->setErrors = icms_core_Debug::setDeprecated('icms_core_Kernel', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }

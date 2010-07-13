@@ -167,7 +167,7 @@
 
 			foreach ( $command as $sql) {
 				if (! $result = $icmsDB->queryF ( $sql )) {
-					icms_debug ( 'An error occurred while executing "' . $sql . '" - ' . $icmsDB->error () );
+					icms_core_Debug::message ( 'An error occurred while executing "' . $sql . '" - ' . $icmsDB->error () );
 					return false;
 				}
 			}

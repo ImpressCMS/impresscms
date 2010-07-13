@@ -8,7 +8,7 @@ class IcmsPersistableMemberHandler extends icms_ipf_member_Handler{
 	private $_deprecated;
 	public function __construct() {
 		parent::getInstance();
-		$this->_deprecated = icms_deprecated('icms_ipf_member_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_ipf_member_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 

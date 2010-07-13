@@ -170,7 +170,7 @@ function icms_error_msg($msg, $title='', $render = true){
  * @param string $title
  */
 function xoops_error($msg, $title=''){
-	icms_deprecated( 'icms_error_msg' );
+	icms_core_Debug::setDeprecated( 'icms_error_msg' );
 	icms_error_msg($msg, $title, true);
 }
 
@@ -220,7 +220,7 @@ function icms_warning_msg($msg, $title='', $render = false){
  * @param string $title
  */
 function xoops_warning($msg, $title=''){
-	icms_deprecated( 'icms_warning_msg' );
+	icms_core_Debug::setDeprecated( 'icms_warning_msg' );
 	icms_warning_msg($msg, $title, true); }
 
 /**
@@ -278,7 +278,7 @@ function xoops_confirm($hiddens, $action, $msg, $submit='', $addtoken = true)
  * @todo Remove this in 1.4
  **/
 function xoops_refcheck($docheck=1) {
-	icms_deprecated('IcmsSecurity->checkReferer','- this function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('IcmsSecurity->checkReferer','- this function will be removed in version 1.4');
 	return $GLOBALS['xoopsSecurity']->checkReferer($docheck);
 }
 
@@ -342,7 +342,7 @@ function xoops_makepass() {
  */
 function OpenWaitBox()
 {
-	icms_deprecated('','This is very old and will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('','This is very old and will be removed in version 1.4');
 	echo "<div id='waitDiv' style='position:absolute;left:40%;top:50%;visibility:hidden;text-align: center;'>
 	<table cellpadding='6' border='2' class='bg2'>
 		<tr>
@@ -388,7 +388,7 @@ function OpenWaitBox()
  */
 function CloseWaitBox()
 {
-	icms_deprecated('', 'This is very old and will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('', 'This is very old and will be removed in version 1.4');
 	echo "<script type='text/javascript'>
 	<!--//
 	ap_showWaitMessage('waitDiv', 0);
@@ -439,7 +439,7 @@ function formatURL($url)
  * @todo Remove in version 1.4 - all occurrences have been removed from the core
  */
 function showbanner() {
-	icms_deprecated('xoops_getbanner',sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_core_Debug::setDeprecated('xoops_getbanner',sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	echo xoops_getbanner();}
 
 /**
@@ -608,7 +608,7 @@ function xoops_getenv($key)
  * @todo Remove in version 1.4 - all occurrences have been removed from the core
  */
 function getTheme() {
-	icms_deprecated( 'get the theme from the global $xoopsConfig' );
+	icms_core_Debug::setDeprecated( 'get the theme from the global $xoopsConfig' );
 	return $GLOBALS['xoopsConfig']['theme_set'];}
 
 /**
@@ -617,7 +617,7 @@ function getTheme() {
  * @todo Remove in version 1.4 - all instances have been removed from the core
  */
 function getcss($theme = '') {
-	icms_deprecated( 'xoops_getcss' );
+	icms_core_Debug::setDeprecated( 'xoops_getcss' );
 	return xoops_getcss($theme);}
 
 /**
@@ -726,7 +726,7 @@ function xoops_getrank($rank_id =0, $posts = 0)
  */
 function xoops_substr($str, $start, $length, $trimmarker = '...')
 {
-	icms_deprecated('icms_substr', 'This function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('icms_substr', 'This function will be removed in version 1.4');
 	return icms_substr($str, $start, $length, $trimmarker);
 }
 
@@ -2338,7 +2338,7 @@ function &icms_getModuleHandler($name = null, $module_dir = null, $module_basena
  */
 function &xoops_getmodulehandler($name = null, $module_dir = null, $optional = false)
 {
-	icms_deprecated('icms_getModuleHandler','This function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('icms_getModuleHandler','This function will be removed in version 1.4');
 	return icms_getModuleHandler($name, $module_dir, $module_dir, $optional);
 }
 

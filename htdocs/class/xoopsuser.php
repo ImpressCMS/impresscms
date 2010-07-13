@@ -4,7 +4,7 @@
 if (!defined('ICMS_ROOT_PATH')) {
 	exit();
 }
-icms_deprecated( '','class/xoopsuser.php file will be removed in ImpressCMS 1.4 - use kernel/user.php' );
+icms_core_Debug::setDeprecated( '','class/xoopsuser.php file will be removed in ImpressCMS 1.4 - use kernel/user.php' );
 /**
  * Include the user class
  * @deprecated use kernel/user.php instead

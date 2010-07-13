@@ -74,25 +74,25 @@ class upgrade_230
 		$db->queryF("DROP TABLE " . $db->prefix("cache_model"));
 		$sql = "ALTER TABLE `" . $db->prefix('block_module_link') . "` DROP PRIMARY KEY";
 		if (!$result = $db->queryF($sql)) {
-			icms_debug('An error occurred while executing "' . $sql . '" - ' . $db->error());
+			icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $db->error());
 			return false;
 		}
 
 		$sql = "ALTER IGNORE TABLE `" . $db->prefix('block_module_link') . "` ADD KEY module_id (module_id)";
 		if (!$result = $db->queryF($sql)) {
-			icms_debug('An error occurred while executing "' . $sql . '" - ' . $db->error());
+			icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $db->error());
 			return false;
 		}
 
 		$sql = "ALTER IGNORE TABLE `" . $db->prefix('block_module_link') . "` ADD KEY block_id (block_id)";
 		if (!$result = $db->queryF($sql)) {
-			icms_debug('An error occurred while executing "' . $sql . '" - ' . $db->error());
+			icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $db->error());
 			return false;
 		}
 
 		$sql = "ALTER TABLE `" . $db->prefix('newblocks') . "` MODIFY content text NOT NULL";
 		if (!$result = $db->queryF($sql)) {
-			icms_debug('An error occurred while executing "' . $sql . '" - ' . $db->error());
+			icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $db->error());
 			return false;
 		}
 

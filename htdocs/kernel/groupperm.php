@@ -42,7 +42,7 @@ class XoopsGroupPerm extends icms_member_groupperm_Object
 	function XoopsGroupPerm()
 	{
 		parent::__construct();
-		$this->_deprecated = icms_deprecated('icms_member_groupperm_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_member_groupperm_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
@@ -64,7 +64,7 @@ class XoopsGroupPermHandler extends icms_member_groupperm_Handler
 	private $_deprecated;
 	public function __construct(& $db) {
 		$groupPermHandler = new icms_member_groupperm_Handler($db);
-		$this->_deprecated = icms_deprecated('icms_member_groupperm_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_member_groupperm_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $groupPermHandler;
 
 	}

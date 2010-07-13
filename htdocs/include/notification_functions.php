@@ -31,7 +31,7 @@
  */
 function notificationEnabled($style, $module_id=null)
 {
-	icms_deprecated('icms_notification_Handler->isEnabled', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_core_Debug::setDeprecated('icms_notification_Handler->isEnabled', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return icms_notification_Handler::isEnabled($style);
 }
 
@@ -48,7 +48,7 @@ function notificationEnabled($style, $module_id=null)
  */
 function &notificationCategoryInfo($category_name='', $module_id=null)
 {
-	icms_deprecated('icms_notification_Handler->categoryInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_core_Debug::setDeprecated('icms_notification_Handler->categoryInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return icms_notification_Handler::categoryInfo();
 }
 
@@ -69,7 +69,7 @@ function &notificationCategoryInfo($category_name='', $module_id=null)
  */
 function &notificationCommentCategoryInfo($module_id=null)
 {
-	icms_deprecated('icms_notification_Handler->commentCategoryInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_core_Debug::setDeprecated('icms_notification_Handler->commentCategoryInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return icms_notification_Handler::commentCategoryInfo();
 }
 
@@ -88,7 +88,7 @@ function &notificationCommentCategoryInfo($module_id=null)
  */
 function &notificationEvents($category_name, $enabled_only, $module_id=null)
 {
-	icms_deprecated('icms_notification_Handler->categoryEvents', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_core_Debug::setDeprecated('icms_notification_Handler->categoryEvents', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 	return $notification_handler->categoryEvents($category_name, $enabled_only, $module_id);
 
@@ -110,7 +110,7 @@ function &notificationEvents($category_name, $enabled_only, $module_id=null)
  **/
 function notificationEventEnabled(&$category, &$event, &$module)
 {
-	icms_deprecated('icms_notification_Handler->eventEnabled', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_core_Debug::setDeprecated('icms_notification_Handler->eventEnabled', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 	return $notification_handler->eventEnabled($category, $event, $module);
 
@@ -129,7 +129,7 @@ function notificationEventEnabled(&$category, &$event, &$module)
  */
 function &notificationEventInfo($category_name, $event_name, $module_id=null)
 {
-	icms_deprecated('icms_notification_Handler->eventInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_core_Debug::setDeprecated('icms_notification_Handler->eventInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 	return $notification_handler->eventInfo($category_name, $event_name);
 
@@ -146,7 +146,7 @@ function &notificationEventInfo($category_name, $event_name, $module_id=null)
  */
 function &notificationSubscribableCategoryInfo($module_id=null)
 {
-	icms_deprecated('icms_notification_Handler->subscribableCategoryInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_core_Debug::setDeprecated('icms_notification_Handler->subscribableCategoryInfo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 	return $notification_handler->subscribableCategoryInfo($module_id);
 
@@ -168,7 +168,7 @@ function &notificationSubscribableCategoryInfo($module_id=null)
  **/
 function notificationGenerateConfig(&$category, &$event, $type)
 {
-	icms_deprecated('icms_notification_Handler->generateConfig', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_core_Debug::setDeprecated('icms_notification_Handler->generateConfig', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	$notification_handler = new icms_notification_Handler($GLOBALS['xoopsDB']);
 	return $notification_handler->generateConfig($category, $event, $type);
 

@@ -262,6 +262,6 @@ class XoopsSecurity extends IcmsSecurity {
 	/* For Backwards Compatibility */
 	public function __construct() {
 		parent::__construct();
-		$this->setEerrors = icms_deprecated('IcmsSecurity');
+		$this->setEerrors = icms_core_Debug::setDeprecated('IcmsSecurity');
 	}
 }

@@ -256,55 +256,55 @@ class upgrade_impcms06 {
 
     	$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " MODIFY pass VARCHAR(255) NOT NULL";
     	if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-    		icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+    		icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
     		return false;
     	}
 
     	$sql = "ALTER TABLE " . $GLOBALS['xoopsDB']->prefix('users') . " MODIFY user_sig text NOT NULL";
     	if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-    		icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+    		icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
     		return false;
     	}
 
     	$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD language varchar(100) NOT NULL default ''";
     	if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-    		icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+    		icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
     		return false;
     	}
 
     	$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD openid varchar(255) NOT NULL default ''";
     	if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-    		icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+    		icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
     		return false;
     	}
 
     	$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD salt varchar(255) NOT NULL default ''";
     	if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-    		icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+    		icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
     		return false;
     	}
 
     	$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD user_viewoid tinyint(1) unsigned NOT NULL default '0'";
     	if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-    		icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+    		icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
     		return false;
     	}
 
     	$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD pass_expired tinyint(1) NOT NULL default '0'";
     	if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-    		icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+    		icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
     		return false;
     	}
 
     	$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` ADD enc_type tinyint(2) unsigned NOT NULL default '0'";
     	if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-    		icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+    		icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
     		return false;
     	}
 
     	$sql = "ALTER TABLE `" . $GLOBALS['xoopsDB']->prefix('users') . "` DROP INDEX unamepass, ADD INDEX unamepass (uname (10), pass (10))";
     	if (!$result = $GLOBALS['xoopsDB']->queryF($sql)) {
-    		icms_debug('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
+    		icms_core_Debug::message('An error occurred while executing "' . $sql . '" - ' . $GLOBALS['xoopsDB']->error());
     		return false;
     	}
     		

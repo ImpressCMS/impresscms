@@ -18,7 +18,7 @@ if(!function_exists("xoopseditor_get_rootpath")){
 		 $current_path = __FILE__;
 		 if ( DIRECTORY_SEPARATOR != "/" ) $current_path = str_replace( strpos( $current_path, "\\\\", 2 ) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path);
 		 $rootpath = dirname($current_path);
-		 icms_debug('editor path' . $rootpath);
+		 icms_core_Debug::message('editor path' . $rootpath);
 		 return $rootpath;*/
 		if ($type == '') {
 			return XOOPS_EDITOR_PATH;

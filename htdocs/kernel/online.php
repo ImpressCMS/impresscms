@@ -42,7 +42,7 @@ class XoopsOnlineHandler extends icms_core_OnlineHandler
 	function __construct(&$db)
 	{
 		$onlineHandler = new icms_core_OnlineHandler($GLOBALS['xoopsDB']);
-		$this->_deprecated = icms_deprecated('icms_core_OnlineHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_core_OnlineHandler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $onlineHandler;
 	}
 

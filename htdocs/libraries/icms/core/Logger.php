@@ -267,7 +267,7 @@ class icms_core_Logger {
 	 * @todo	Remove in version 1.4
 	 */
 	public function dumpAll() {
-		icms_deprecated('$this->dump("")', 'This method will be removed in version 1.4');
+		icms_core_Debug::setDeprecated('$this->dump("")', 'This method will be removed in version 1.4');
 		return $this->dump( '' );
 	}
 
@@ -279,7 +279,7 @@ class icms_core_Logger {
 	 * @todo	Remove in version 1.4
 	 */
 	public function dumpBlocks() {
-		icms_deprecated('$this->dump("blocks")', 'This method will be removed in version 1.4');
+		icms_core_Debug::setDeprecated('$this->dump("blocks")', 'This method will be removed in version 1.4');
 		return $this->dump('blocks');
 	}
 
@@ -291,7 +291,7 @@ class icms_core_Logger {
 	 * @todo	Remove in version 1.4
 	 */
 	public function dumpExtra() {
-		icms_deprecated('$this->dump("extra")', 'This method will be removed in version 1.4');
+		icms_core_Debug::setDeprecated('$this->dump("extra")', 'This method will be removed in version 1.4');
 		return $this->dump('extra');
 	}
 
@@ -303,7 +303,7 @@ class icms_core_Logger {
 	 * @todo	Remove in version 1.4
 	 */
 	public function dumpQueries() {
-		icms_deprecated('$this->dump("queries")', 'This method will be removed in version 1.4');
+		icms_core_Debug::setDeprecated('$this->dump("queries")', 'This method will be removed in version 1.4');
 		return $this->dump('queries');
 	}
 }

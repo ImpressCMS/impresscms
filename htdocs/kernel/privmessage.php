@@ -44,7 +44,7 @@ class XoopsPrivmessage extends icms_privmessage_Object
 	function XoopsPrivmessage()
 	{
 		parent::__construct();
-		$this->_deprecated = icms_deprecated('icms_privmessage_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_privmessage_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
@@ -69,7 +69,7 @@ class XoopsPrivmessageHandler extends icms_privmessage_Handler
 	private $_deprecated;
 	public function XoopsPrivmessageHandler() {
 		$pmHandler = new icms_privmessage_Handler($GLOBALS['xoopsDB']);
-		$this->_deprecated = icms_deprecated('icms_privmessage_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_privmessage_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 		return $pmHandler;
 	}
 }

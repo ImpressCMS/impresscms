@@ -62,7 +62,7 @@ class CriteriaCompo extends icms_criteria_Compo
 	private $_errors;
 	public function __construct() {
 		parent::__construct();
-		$this->_errors = icms_deprecated('icms_criteria_Compo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_errors = icms_core_Debug::setDeprecated('icms_criteria_Compo', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 
 }
@@ -83,7 +83,7 @@ class Criteria extends icms_criteria_Item
 	private $_errors;
 	public function __construct() {
 		parent::__construct();
-		$this->_errors = icms_deprecated('icms_criteria_Item', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_errors = icms_core_Debug::setDeprecated('icms_criteria_Item', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
