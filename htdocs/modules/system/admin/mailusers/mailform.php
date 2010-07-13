@@ -73,7 +73,7 @@ $to_checkbox->addOption("mail", _AM_EMAIL);
 $to_checkbox->addOption("pm", _AM_PM);
 $start_hidden = new XoopsFormHidden("mail_start", 0);
 $op_hidden = new XoopsFormHidden("op", "send");
-$submit_button = new XoopsFormButton("", "mail_submit", _SEND, "submit");
+$submit_button = new icms_form_Button("", "mail_submit", _SEND, "submit");
 
 $form->addElement($fname_text);
 $form->addElement($femail_text);

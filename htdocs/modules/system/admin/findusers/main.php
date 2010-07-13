@@ -95,7 +95,7 @@ if ($op == "form") {
 	$limit_text = new XoopsFormText(_AM_LIMIT, "limit", 6, 2);
 	$fct_hidden = new XoopsFormHidden("fct", "findusers");
 	$op_hidden = new XoopsFormHidden("op", "submit");
-	$submit_button = new XoopsFormButton("", "user_submit", _SUBMIT, "submit");
+	$submit_button = new icms_form_Button("", "user_submit", _SUBMIT, "submit");
 
 	$form = new XoopsThemeForm(_AM_FINDUS, "uesr_findform", "admin.php", 'post', true);
 	$form->addElement($uname_tray);

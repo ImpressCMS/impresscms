@@ -351,7 +351,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 			unset ( $ele, $hidden );
 		}
 		$form->addElement ( new XoopsFormHidden ( 'op', 'save' ) );
-		$form->addElement ( new XoopsFormButton ( '', 'button', _GO, 'submit' ) );
+		$form->addElement ( new icms_form_Button ( '', 'button', _GO, 'submit' ) );
 		icms_cp_header ();
 		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_URL . '/modules/system/admin/preferences/images/preferences_big.png)"><a href="admin.php?fct=preferences">' . _MD_AM_PREFMAIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . constant ( $confcat->getVar ( 'confcat_name' ) ) . '<br /><br /></div><br />';
 		$form->display ();
@@ -486,7 +486,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 			unset ( $ele, $hidden );
 		}
 		$form->addElement ( new XoopsFormHidden ( 'op', 'save' ) );
-		$form->addElement ( new XoopsFormButton ( '', 'button', _GO, 'submit' ) );
+		$form->addElement ( new icms_form_Button ( '', 'button', _GO, 'submit' ) );
 		icms_cp_header ();
 		if ($module->getInfo('hasAdmin') == true) {
 			$modlink = '<a href="'.ICMS_URL.'/modules/'.$module->getVar('dirname').'/'.$module->getInfo('adminindex').'">'.$modname.'</a>';

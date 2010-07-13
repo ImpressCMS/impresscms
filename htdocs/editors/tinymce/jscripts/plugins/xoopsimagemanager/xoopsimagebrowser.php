@@ -210,8 +210,8 @@ function imanager_index($imgcat_id=null) {
 		$form->addElement(new XoopsFormHidden('target', $target));
 		$form->addElement(new XoopsFormHidden('type', $type));
 		$tray = new XoopsFormElementTray('' ,'');
-		$tray->addElement(new XoopsFormButton('', 'img_button', _SUBMIT, 'submit'));
-		$btn = new XoopsFormButton('', 'reset', _CANCEL, 'button');
+		$tray->addElement(new icms_form_Button('', 'img_button', _SUBMIT, 'submit'));
+		$btn = new icms_form_Button('', 'reset', _CANCEL, 'button');
 		$btn->setExtra('onclick="document.getElementById(\'addimgform\').style.display = \'none\'; return false;"');
 		$tray->addElement($btn);
 		$form->addElement($tray);
@@ -244,8 +244,8 @@ function imanager_index($imgcat_id=null) {
 	$form->addElement(new XoopsFormHidden('target', $target));
 	$form->addElement(new XoopsFormHidden('type', $type));
 	$tray1 = new XoopsFormElementTray('' ,'');
-	$tray1->addElement(new XoopsFormButton('', 'imgcat_button', _SUBMIT, 'submit'));
-	$btn = new XoopsFormButton('', 'reset', _CANCEL, 'button');
+	$tray1->addElement(new icms_form_Button('', 'imgcat_button', _SUBMIT, 'submit'));
+	$btn = new icms_form_Button('', 'reset', _CANCEL, 'button');
 	$btn->setExtra('onclick="document.getElementById(\'addcatform\').style.display = \'none\'; return false;"');
 	$tray1->addElement($btn);
 	$form->addElement($tray1);
@@ -809,8 +809,8 @@ function showAddImgForm($imgcat_id) {
 	$form->addElement(new XoopsFormHidden('target', $target));
 	$form->addElement(new XoopsFormHidden('type', $type));
 	$tray = new XoopsFormElementTray('' ,'');
-	$tray->addElement(new XoopsFormButton('', 'img_button', _SUBMIT, 'submit'));
-	$btn = new XoopsFormButton('', 'reset', _CANCEL, 'button');
+	$tray->addElement(new icms_form_Button('', 'img_button', _SUBMIT, 'submit'));
+	$btn = new icms_form_Button('', 'reset', _CANCEL, 'button');
 	$btn->setExtra('onclick="document.getElementById(\'addimgform\').style.display = \'none\'; return false;"');
 	$tray->addElement($btn);
 	$form->addElement($tray);

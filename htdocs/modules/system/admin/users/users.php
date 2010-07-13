@@ -44,7 +44,7 @@ function displayUsers()
 	$user_select_tray->addElement($user_select_nav);
 	$op_select = new XoopsFormSelect('', 'op');
 	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER, 'delUser'=>_AM_DELUSER));
-	$submit_button = new XoopsFormButton('', 'submit', _AM_GO, 'submit');
+	$submit_button = new icms_form_Button('', 'submit', _AM_GO, 'submit');
 	$fct_hidden = new XoopsFormHidden('fct', 'users');
 	$editform->addElement($user_select_tray);
 	$editform->addElement($op_select);
@@ -70,7 +70,7 @@ function displayUsers()
 	$user_select_tray->addElement($user_select_nav);
 	$op_select = new XoopsFormSelect('', 'op');
 	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER));
-	$submit_button = new XoopsFormButton('', 'submit', _AM_GO, 'submit');
+	$submit_button = new icms_form_Button('', 'submit', _AM_GO, 'submit');
 	$fct_hidden = new XoopsFormHidden('fct', 'users');
 	$editform->addElement($user_select_tray);
 	$editform->addElement($op_select);

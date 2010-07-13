@@ -20,6 +20,6 @@ $invite_form = new XoopsThemeForm(_US_USERINVITE, "userinvite", "invite.php", "p
 $invite_form->addElement(new XoopsFormText(_US_EMAIL, "email", 25, 60, $myts->htmlSpecialChars($email)), true);
 $invite_form->addElement(new icms_form_elements_Captcha(_SECURITYIMAGE_GETCODE, "scode"), true);
 $invite_form->addElement(new XoopsFormHidden("op", "finish"));
-$invite_form->addElement(new XoopsFormButton("", "submit", _US_SUBMIT, "submit"));
+$invite_form->addElement(new icms_form_Button("", "submit", _US_SUBMIT, "submit"));
 
 ?>
