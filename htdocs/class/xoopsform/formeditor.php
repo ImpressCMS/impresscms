@@ -22,6 +22,8 @@
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+
 /**
  * XoopsEditor hanlder
  *
@@ -31,35 +33,11 @@
  * @package     kernel
  * @subpackage  form
  */
-class XoopsFormEditor extends XoopsFormTextArea
-{
-	var $editor;
-
-	/**
-	 * Constructor
-	 *
-	 * @param	string  $caption    Caption
-	 * @param	string  $name       "name" attribute
-	 * @param	string  $value      Initial text
-	 * @param	array 	$configs     configures
-	 * @param	bool  	$noHtml       use non-WYSIWYG eitor onfailure
-	 * @param	string  $OnFailure editor to be used if current one failed
-	 */
-	function XoopsFormEditor($caption, $name, $editor_configs = null, $noHtml=false, $OnFailure = "")
-	{
-		$this->XoopsFormTextArea($caption, $editor_configs["name"]);
-		require_once ICMS_ROOT_PATH."/class/xoopseditor.php";
-		$editor_handler = XoopsEditorHandler::getInstance();
-		$this->editor =& $editor_handler->get($name, $editor_configs, $noHtml, $OnFailure);
-	}
-
-	/**
-	 * Renders the editor
-	 * @return	string  the constructed html string for the editor
-	 */
-	function render()
-	{
-		return $this->editor->render();
+class XoopsFormEditor extends icms_form_elements_Editor {
+	private $_deprecated;
+	public function __construct() {
+		parent::getInstance();
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Editor', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
