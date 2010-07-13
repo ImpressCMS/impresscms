@@ -19,7 +19,7 @@ include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 
 $email_tray = new XoopsFormElementTray(_US_EMAIL, "<br />");
 $email_text = new XoopsFormText("", "email", 25, 60, $myts->htmlSpecialChars($email));
-$email_option = new XoopsFormCheckBox("", "user_viewemail", $user_viewemail);
+$email_option = new icms_form_elements_Checkbox("", "user_viewemail", $user_viewemail);
 $email_option->addOption(1, _US_ALLOWVIEWEMAIL);
 $email_tray->addElement($email_text, true);
 $email_tray->addElement($email_option);
@@ -46,7 +46,7 @@ if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] 
 	$disclaimer_html = '<div id="disclaimer">'.nl2br($icmsConfigUser['reg_disclaimer']).'</div>';
 	$disc_text = new XoopsFormLabel('', $disclaimer_html, 'disclaimer');
 	$disc_tray->addElement($disc_text);
-	$agree_chk = new XoopsFormCheckBox('', 'agree_disc', $agree_disc);
+	$agree_chk = new icms_form_elements_Checkbox('', 'agree_disc', $agree_disc);
 	$agree_chk->addOption(1, _US_IAGREE);
 	$eltname = $agree_chk->getName();
 	$eltmsg = str_replace('"', '\"', stripslashes( sprintf( _FORM_ENTER, _US_IAGREE ) ) );

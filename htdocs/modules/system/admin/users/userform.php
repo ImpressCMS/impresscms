@@ -22,14 +22,14 @@ $name_text = new XoopsFormText(_AM_NAME, "name", 30, 60, $name_value);
 $email_tray = new XoopsFormElementTray(_AM_EMAIL, "<br />");
 $email_text = new XoopsFormText("", "email", 30, 60, $email_value);
 $email_tray->addElement($email_text, true);
-$email_cbox = new XoopsFormCheckBox("", "user_viewemail", $email_cbox_value);
+$email_cbox = new icms_form_elements_Checkbox("", "user_viewemail", $email_cbox_value);
 $email_cbox->addOption(1, _AM_AOUTVTEAD);
 $email_tray->addElement($email_cbox);
 if ($icmsConfigAuth['auth_openid'] == 1) {
 	$openid_tray = new XoopsFormElementTray(_AM_OPENID, "<br />");
 	$openid_text = new XoopsFormText("", "openid", 30, 255, $openid_value);
 	$openid_tray->addElement($openid_text);
-	$openid_cbox = new XoopsFormCheckBox("", "user_viewoid", $openid_cbox_value);
+	$openid_cbox = new icms_form_elements_Checkbox("", "user_viewoid", $openid_cbox_value);
 	$openid_cbox->addOption(1, _AM_AOUTVTOIAD);
 	$openid_tray->addElement($openid_cbox);
 }
@@ -80,7 +80,7 @@ $sig_tray = new XoopsFormElementTray(_AM_SIGNATURE, "<br />");
 if ($icmsConfigUser['allow_htsig'] == 0) {$sig_tarea = new XoopsFormTextArea("", "user_sig", $sig_value);}
 else {$sig_tarea = new XoopsFormDhtmlTextArea("", "user_sig", $sig_value);}
 $sig_tray->addElement($sig_tarea);
-$sig_cbox = new XoopsFormCheckBox("", "attachsig", $sig_cbox_value);
+$sig_cbox = new icms_form_elements_Checkbox("", "attachsig", $sig_cbox_value);
 $sig_cbox->addOption(1, _US_SHOWSIG);
 $sig_tray->addElement($sig_cbox);
 $umode_select = new XoopsFormSelect(_US_CDISPLAYMODE, "umode", $umode_value);

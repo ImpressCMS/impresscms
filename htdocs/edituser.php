@@ -287,7 +287,7 @@ if ($op == 'editprofile')
 
 	$email_tray->addElement($email_text);
 	$email_cbox_value = $icmsUser->user_viewemail() ? 1 : 0;
-	$email_cbox = new XoopsFormCheckBox('', 'user_viewemail', $email_cbox_value);
+	$email_cbox = new icms_form_elements_Checkbox('', 'user_viewemail', $email_cbox_value);
 	$email_cbox->addOption(1, _US_ALLOWVIEWEMAIL);
 	$email_tray->addElement($email_cbox);
 	$form->addElement($email_tray);
@@ -298,7 +298,7 @@ if ($op == 'editprofile')
 		$openid_tray->setDescription(_US_OPENID_FORM_DSC);
 		$openid_tray->addElement($openid_text);
 		$openid_cbox_value = $icmsUser->user_viewoid() ? 1 : 0;
-		$openid_cbox = new XoopsFormCheckBox('', 'user_viewoid', $openid_cbox_value);
+		$openid_cbox = new icms_form_elements_Checkbox('', 'user_viewoid', $openid_cbox_value);
 		$openid_cbox->addOption(1, _US_ALLOWVIEWEMAILOPENID);
 		$openid_tray->addElement($openid_cbox);
 		$form->addElement($openid_tray);
@@ -335,7 +335,7 @@ if ($op == 'editprofile')
 			$sig_tarea = new XoopsFormTextArea('', 'user_sig', $icmsUser->getVar('user_sig', 'E'));
 			$sig_tray->addElement($sig_tarea);
 			$sig_cbox_value = $icmsUser->getVar('attachsig') ? 1 : 0;
-			$sig_cbox = new XoopsFormCheckBox('', 'attachsig', $sig_cbox_value);
+			$sig_cbox = new icms_form_elements_Checkbox('', 'attachsig', $sig_cbox_value);
 			$sig_cbox->addOption(1, _US_SHOWSIG);
 			$sig_tray->addElement($sig_cbox);
 		} else {
@@ -343,7 +343,7 @@ if ($op == 'editprofile')
 			$sig_tarea = new XoopsFormDhtmlTextArea('', 'user_sig', $icmsUser->getVar('user_sig', 'E'));
 			$sig_tray->addElement($sig_tarea);
 			$sig_cbox_value = $icmsUser->getVar('attachsig') ? 1 : 0;
-			$sig_cbox = new XoopsFormCheckBox('', 'attachsig', $sig_cbox_value);
+			$sig_cbox = new icms_form_elements_Checkbox('', 'attachsig', $sig_cbox_value);
 			$sig_cbox->addOption(1, _US_SHOWSIG);
 			$sig_tray->addElement($sig_cbox);
 		}

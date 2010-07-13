@@ -20,7 +20,7 @@ include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 $name_text = new XoopsFormText(_AM_NAME, "name", 30, 50, $name_value);
 $desc_text = new XoopsFormTextArea(_AM_DESCRIPTION, "desc", $desc_value);
 
-$s_cat_checkbox = new XoopsFormCheckBox(_AM_SYSTEMRIGHTS, "system_catids[]", $s_cat_value);
+$s_cat_checkbox = new icms_form_elements_Checkbox(_AM_SYSTEMRIGHTS, "system_catids[]", $s_cat_value);
 //if (isset($s_cat_disable) && $s_cat_disable) {
 //  $s_cat_checkbox->setExtra('checked="checked" disabled="disabled"');
 //}
@@ -41,7 +41,7 @@ foreach ($dirlist as $file) {
 }
 unset($dirlist);
 
-$a_mod_checkbox = new XoopsFormCheckBox(_AM_ACTIVERIGHTS, "admin_mids[]", $a_mod_value);
+$a_mod_checkbox = new icms_form_elements_Checkbox(_AM_ACTIVERIGHTS, "admin_mids[]", $a_mod_value);
 $module_handler =& xoops_gethandler('module');
 $criteria = new icms_criteria_Compo(new icms_criteria_Item('hasadmin', 1));
 $criteria->add(new icms_criteria_Item('isactive', 1));
@@ -52,7 +52,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 	$criteria->add(new icms_criteria_Item('mid', '('.implode(',',$a_mod).')', 'IN'));}
 	$a_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
-	$r_mod_checkbox = new XoopsFormCheckBox(_AM_ACCESSRIGHTS, "read_mids[]", $r_mod_value);
+	$r_mod_checkbox = new icms_form_elements_Checkbox(_AM_ACCESSRIGHTS, "read_mids[]", $r_mod_value);
 	$criteria = new icms_criteria_Compo(new icms_criteria_Item('hasmain', 1));
 	$criteria->add(new icms_criteria_Item('isactive', 1));
 	/* criteria added to see if the active user can access the module, do not filter for administrator group  (module_read)*/
@@ -61,7 +61,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 		$criteria->add(new icms_criteria_Item('mid', '('.implode(',',$r_mod).')', 'IN'));}
 		$r_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
-		$ed_mod_checkbox = new XoopsFormCheckBox(_AM_EDPERM, "useeditor_mids[]", $ed_mod_value);
+		$ed_mod_checkbox = new icms_form_elements_Checkbox(_AM_EDPERM, "useeditor_mids[]", $ed_mod_value);
 		$criteria = new icms_criteria_Compo(new icms_criteria_Item('isactive', 1));
 		/* criteria added to see where the active user can use the wysiwyg editors (use_wysiwygeditor)
 		 * administrators don't have explicit entries for this, do not filter
@@ -71,7 +71,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 			$criteria->add(new icms_criteria_Item('mid', '('.implode(',',$ed_mod).')', 'IN'));}
 			$ed_mod_checkbox->addOptionArray($module_handler->getList($criteria));
 
-			$debug_mod_checkbox = new XoopsFormCheckBox(_AM_DEBUG_PERM, "enabledebug_mids[]", $debug_mod_value);
+			$debug_mod_checkbox = new icms_form_elements_Checkbox(_AM_DEBUG_PERM, "enabledebug_mids[]", $debug_mod_value);
 			$criteria = new icms_criteria_Compo(new icms_criteria_Item('isactive', 1));
 			/* criteria added to see where the active user can view the debug mode (enable_debug)
 			 * administrators do not have explicit entries for this, do not filter
@@ -85,7 +85,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 				 * @todo: Needs to be improved... is a test of concept... and works!
 				 * @todo: Create the language constant.
 				 */
-				$group_manager_checkbox = new XoopsFormCheckBox(_AM_GROUPMANAGER_PERM, "groupmanager_gids[]", $group_manager_value);
+				$group_manager_checkbox = new icms_form_elements_Checkbox(_AM_GROUPMANAGER_PERM, "groupmanager_gids[]", $group_manager_value);
 				$criteria = new icms_criteria_Compo(new icms_criteria_Item('isactive', 1));
 				$groups = $member_handler->getGroups();
 				$gperm_handler =& xoops_gethandler('member_groupperm');
@@ -102,7 +102,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 				$groups = $icmsUser->getGroups();
 				foreach ($posarr as $k=>$v) {
 					$tit = (defined($posarr[$k]['title'])) ? constant($posarr[$k]['title']) : $posarr[$k]['title'];
-					$block_checkbox[$i] = new XoopsFormCheckBox('<b>'.$tit.'</b><br />', "read_bids[]", $r_block_value);
+					$block_checkbox[$i] = new icms_form_elements_Checkbox('<b>'.$tit.'</b><br />', "read_bids[]", $r_block_value);
 					$new_blocks_array = array();
 					$blocks_array = $icms_block_handler->getAllBlocks("list", $k);
 

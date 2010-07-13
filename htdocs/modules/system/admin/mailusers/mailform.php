@@ -42,9 +42,9 @@ if (!empty($display_criteria)) {
 	$regd_max = new XoopsFormText(_AM_REGDMAX."<br />"._AM_TIMEFORMAT."<br />", "mail_regd_max", 20, 10);
 	$idle_more = new XoopsFormText(_AM_IDLEMORE."<br />", "mail_idle_more", 10, 5);
 	$idle_less = new XoopsFormText(_AM_IDLELESS."<br />", "mail_idle_less", 10, 5);
-	$mailok_cbox = new XoopsFormCheckBox('', 'mail_mailok');
+	$mailok_cbox = new icms_form_elements_Checkbox('', 'mail_mailok');
 	$mailok_cbox->addOption(1, _AM_MAILOK);
-	$inactive_cbox = new XoopsFormCheckBox('', 'mail_inactive');
+	$inactive_cbox = new icms_form_elements_Checkbox('', 'mail_inactive');
 	$inactive_cbox->addOption(1, _AM_INACTIVE.'. '._AMIFCHECKD);
 	$inactive_cbox->setExtra("onclick='javascript:disableElement(\"mail_lastlog_min\");disableElement(\"mail_lastlog_max\");disableElement(\"mail_idle_more\");disableElement(\"mail_idle_less\");disableElement(\"mail_to_group[]\");'");
 	$criteria_tray = new XoopsFormElementTray(_AM_SENDTOUSERS, "<br /><br />");
@@ -68,7 +68,7 @@ $subject_caption = _AM_MAILSUBJECT."<br /><br /><span style='font-size:x-small;f
 $subject_text = new XoopsFormText($subject_caption, "mail_subject", 50, 255);
 $body_caption = _AM_MAILBODY."<br /><br /><span style='font-size:x-small;font-weight:bold;'>"._AM_MAILTAGS."</span><br /><span style='font-size:x-small;font-weight:normal;'>"._AM_MAILTAGS1."<br />"._AM_MAILTAGS2."<br />"._AM_MAILTAGS3."<br />"._AM_MAILTAGS4."</span>";
 $body_text = new XoopsFormTextArea($body_caption, "mail_body", "", 10);
-$to_checkbox = new XoopsFormCheckBox(_AM_SENDTO, "mail_send_to", "mail");
+$to_checkbox = new icms_form_elements_Checkbox(_AM_SENDTO, "mail_send_to", "mail");
 $to_checkbox->addOption("mail", _AM_EMAIL);
 $to_checkbox->addOption("pm", _AM_PM);
 $start_hidden = new XoopsFormHidden("mail_start", 0);

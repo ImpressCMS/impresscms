@@ -31,9 +31,9 @@ $type_select->addOptionArray(array("AND"=>_SR_ALL, "OR"=>_SR_ANY, "exact"=>_SR_E
 $search_form->addElement($type_select);
 
 if (!empty($mids)) {
-	$mods_checkbox = new XoopsFormCheckBox(_SR_SEARCHIN, "mids[]", $mids);
+	$mods_checkbox = new icms_form_elements_Checkbox(_SR_SEARCHIN, "mids[]", $mids);
 } else {
-	$mods_checkbox = new XoopsFormCheckBox(_SR_SEARCHIN, "mids[]", $mid);
+	$mods_checkbox = new icms_form_elements_Checkbox(_SR_SEARCHIN, "mids[]", $mid);
 }
 
 if (empty($modules)) {

@@ -52,7 +52,7 @@ $button_tray = new XoopsFormElementTray('' ,'&nbsp;');
 if (is_object($icmsUser)) {
 	if ($icmsModuleConfig['com_anonpost'] == 1) {
 		$noname = !empty($noname) ? 1 : 0;
-		$noname_checkbox = new XoopsFormCheckBox('', 'noname', $noname);
+		$noname_checkbox = new icms_form_elements_Checkbox('', 'noname', $noname);
 		$noname_checkbox->addOption(1, _POSTANON);
 		$option_tray->addElement($noname_checkbox);
 	}
@@ -70,20 +70,20 @@ if (is_object($icmsUser)) {
 			$cform->addElement($status_select);
 			$button_tray->addElement(new icms_form_Button('', 'com_dodelete', _DELETE, 'submit'));
 		}
-		$html_checkbox = new XoopsFormCheckBox('', 'dohtml', $dohtml);
+		$html_checkbox = new icms_form_elements_Checkbox('', 'dohtml', $dohtml);
 		$html_checkbox->addOption(1, _CM_DOHTML);
 		$option_tray->addElement($html_checkbox);
 	} else {
 		$cform->addElement(new XoopsFormHidden('dohtml', $dohtml));
 	}
 }
-$smiley_checkbox = new XoopsFormCheckBox('', 'dosmiley', $dosmiley);
+$smiley_checkbox = new icms_form_elements_Checkbox('', 'dosmiley', $dosmiley);
 $smiley_checkbox->addOption(1, _CM_DOSMILEY);
 $option_tray->addElement($smiley_checkbox);
-$xcode_checkbox = new XoopsFormCheckBox('', 'doxcode', $doxcode);
+$xcode_checkbox = new icms_form_elements_Checkbox('', 'doxcode', $doxcode);
 $xcode_checkbox->addOption(1, _CM_DOXCODE);
 $option_tray->addElement($xcode_checkbox);
-$br_checkbox = new XoopsFormCheckBox('', 'dobr', $dobr);
+$br_checkbox = new icms_form_elements_Checkbox('', 'dobr', $dobr);
 $br_checkbox->addOption(1, _CM_DOAUTOWRAP);
 $option_tray->addElement($br_checkbox);
 

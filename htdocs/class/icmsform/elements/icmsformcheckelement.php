@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormCheckElement extends XoopsFormCheckBox {
+class IcmsFormCheckElement extends icms_form_elements_Checkbox {
 
 	/**
 	 * prepare HTML for output

@@ -29,7 +29,7 @@ class IcmsFormUser_sigElement extends XoopsFormElementTray {
 		$signature_textarea = new XoopsFormDhtmlTextArea('', $key, $object->getVar($key, 'e'));
 		$this->addElement($signature_textarea);
 
-		$attach_checkbox = new XoopsFormCheckBox('', 'attachsig', $object->getVar('attachsig', 'e'));
+		$attach_checkbox = new icms_form_elements_Checkbox('', 'attachsig', $object->getVar('attachsig', 'e'));
 		$attach_checkbox->addOption(1, _US_SHOWSIG);
 		$this->addElement($attach_checkbox);
 	}
