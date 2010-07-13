@@ -356,7 +356,7 @@ class icms_ipf_Controller {
 			if ($this->handler->_moduleName == 'system') {
 				$hiddens['fct'] = isset($_GET['fct']) ? $_GET['fct'] : false;
 			}
-			xoops_confirm($hiddens, xoops_getenv('PHP_SELF'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
+			icms_core_Message::confirm($hiddens, xoops_getenv('PHP_SELF'), sprintf($confirm_msg , $icmsObj->getVar($this->handler->identifierName)), _CO_ICMS_DELETE);
 
 			icms_cp_footer();
 
@@ -396,7 +396,7 @@ class icms_ipf_Controller {
 			}
 
 			ob_start();
-			xoops_confirm(array(
+			icms_core_Message::confirm(array(
 				'op' => $op,
 				$this->handler->keyName => $icmsObj->getVar($this->handler->keyName),
 				'confirm' => 1,

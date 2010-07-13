@@ -63,13 +63,13 @@ if ($op == 'dologin') {
 		$_SESSION['xoopsUserId'] = $user->getVar('uid');
 		$_SESSION['xoopsUserGroups'] = $user->getGroups();
 		if (!empty($xoopsConfig['use_ssl'])) {
-			xoops_confirm(array($xoopsConfig['sslpost_name'] => session_id()), ICMS_URL.'/misc.php?action=showpopups&amp;type=ssllogin', _US_PRESSLOGIN, _LOGIN);
+			icms_core_Message::confirm(array($xoopsConfig['sslpost_name'] => session_id()), ICMS_URL.'/misc.php?action=showpopups&amp;type=ssllogin', _US_PRESSLOGIN, _LOGIN);
 		} else {
 			echo sprintf(_US_LOGGINGU, $user->getVar('uname'));
 			echo '<div style="text-align:center;"><input value="'._CLOSE.'" type="button" onclick="document.window.opener.location.reload();document.window.close();" /></div>';
 		}
 	} else {
-		icms_error_msg(_US_INCORRECTLOGIN.'<br /><a href="login.php">'._BACK.'</a>');
+		icms_core_Message::error(_US_INCORRECTLOGIN.'<br /><a href="login.php">'._BACK.'</a>');
 	}
 }
 

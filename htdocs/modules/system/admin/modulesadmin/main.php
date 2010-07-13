@@ -49,7 +49,7 @@ if ($op == "confirm") {
 	}
 
 	if (count($error) > 0) {
-		icms_error_msg($error);
+		icms_core_Message::error($error);
 		echo "<p><a href='admin.php?fct=modulesadmin'>"._MD_AM_BTOMADMIN."</a></p>";
 		icms_cp_footer();
 		exit();
@@ -165,7 +165,7 @@ if ($op == 'install') {
 		$from_112 = false;
 	}
 	icms_cp_header();
-	xoops_confirm(array('module' => $module, 'op' => 'install_ok', 'fct' => 'modulesadmin', 'from_112' => $from_112), 'admin.php', $msgs, _MD_AM_INSTALL);
+	icms_core_Message::confirm(array('module' => $module, 'op' => 'install_ok', 'fct' => 'modulesadmin', 'from_112' => $from_112), 'admin.php', $msgs, _MD_AM_INSTALL);
 	icms_cp_footer();
 	exit();
 }
@@ -201,7 +201,7 @@ if ($op == 'uninstall') {
 	}
 	$msgs .= '<br /><span style="font-size:smaller;">'.$mod->getVar('name').'</span><br /><br />'._MD_AM_RUSUREUNINS;
 	icms_cp_header();
-	xoops_confirm(array('module' => $module, 'op' => 'uninstall_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _YES);
+	icms_core_Message::confirm(array('module' => $module, 'op' => 'uninstall_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _YES);
 	icms_cp_footer();
 	exit();
 }
@@ -236,13 +236,13 @@ if ($op == 'update') {
 	icms_cp_header();
 
 	if (icms_getModuleInfo('system')->getDBVersion() < 14 && (!is_writable ( ICMS_PLUGINS_PATH ) || !is_dir(ICMS_ROOT_PATH . '/plugins/preloads') || !is_writable ( ICMS_ROOT_PATH . '/plugins/preloads' ))) {
-		icms_error_msg(sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH,ICMS_ROOT_PATH . '/plugins/preloads'), _MD_AM_PLUGINSFOLDER_UPDATE_TITLE, true);
+		icms_core_Message::error(sprintf(_MD_AM_PLUGINSFOLDER_UPDATE_TEXT, ICMS_PLUGINS_PATH,ICMS_ROOT_PATH . '/plugins/preloads'), _MD_AM_PLUGINSFOLDER_UPDATE_TITLE, true);
 	}
 	if (icms_getModuleInfo('system')->getDBVersion() < 37 && !is_writable ( ICMS_IMANAGER_FOLDER_PATH )) {
-		icms_error_msg(sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, ICMS_IMANAGER_FOLDER_PATH), _MD_AM_IMAGESFOLDER_UPDATE_TITLE, true);
+		icms_core_Message::error(sprintf(_MD_AM_IMAGESFOLDER_UPDATE_TEXT, ICMS_IMANAGER_FOLDER_PATH), _MD_AM_IMAGESFOLDER_UPDATE_TITLE, true);
 	}
 
-	xoops_confirm(array('module' => $module, 'op' => 'update_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _MD_AM_UPDATE);
+	icms_core_Message::confirm(array('module' => $module, 'op' => 'update_ok', 'fct' => 'modulesadmin'), 'admin.php', $msgs, _MD_AM_UPDATE);
 	icms_cp_footer();
 	exit();
 }

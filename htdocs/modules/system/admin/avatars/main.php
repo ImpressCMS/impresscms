@@ -163,7 +163,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		}
 		if (count($err) > 0) {
 			icms_cp_header();
-			icms_error_msg($err);
+			icms_core_Message::error($err);
 			icms_cp_footer();
 			exit();
 		}
@@ -173,7 +173,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 	if ($op == 'delfile') {
 		icms_cp_header();
 		$user_id = isset($_GET['user_id']) ? (int) ($_GET['user_id']) : 0;
-		xoops_confirm(array('op' => 'delfileok', 'avatar_id' => (int) ($_GET['avatar_id']), 'fct' => 'avatars', 'user_id' => $user_id), 'admin.php', _MD_RUDELIMG);
+		icms_core_Message::confirm(array('op' => 'delfileok', 'avatar_id' => (int) ($_GET['avatar_id']), 'fct' => 'avatars', 'user_id' => $user_id), 'admin.php', _MD_RUDELIMG);
 		icms_cp_footer();
 		exit();
 	}
@@ -193,7 +193,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		}
 		if (!$avt_handler->delete($avatar)) {
 			icms_cp_header();
-			icms_error_msg(sprintf(_MD_FAILDEL, $avatar->getVar('avatar_id')));
+			icms_core_Message::error(sprintf(_MD_FAILDEL, $avatar->getVar('avatar_id')));
 			icms_cp_footer();
 			exit();
 		}

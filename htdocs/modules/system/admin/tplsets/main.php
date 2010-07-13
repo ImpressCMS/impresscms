@@ -257,7 +257,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				$err[] = 'Selected template (ID: $id) does not exist';
 			}
 			icms_cp_header();
-			icms_error_msg($err);
+			icms_core_Message::error($err);
 			echo '<br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
 			icms_cp_footer();
 			break;
@@ -304,14 +304,14 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				}
 			}
 			icms_cp_header();
-			icms_error_msg($err);
+			icms_core_Message::error($err);
 			echo '<br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
 			icms_cp_footer();
 			break;
 
 		case 'deletetpl':
 			icms_cp_header();
-			xoops_confirm(array('id' => $id, 'op' => 'deletetpl_go', 'fct' => 'tplsets'), 'admin.php', _MD_RUSUREDELTPL, _YES);
+			icms_core_Message::confirm(array('id' => $id, 'op' => 'deletetpl_go', 'fct' => 'tplsets'), 'admin.php', _MD_RUSUREDELTPL, _YES);
 			icms_cp_footer();
 			break;
 
@@ -347,14 +347,14 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$tplfile->getVar('tpl_module').'&amp;tplset='.urlencode($tplfile->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
 			}
 			icms_cp_header();
-			icms_error_msg($err);
+			icms_core_Message::error($err);
 			echo '<br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
 			icms_cp_footer();
 			break;
 
 		case 'delete':
 			icms_cp_header();
-			xoops_confirm(array('tplset' => $tplset, 'op' => 'delete_go', 'fct' => 'tplsets'), 'admin.php', _MD_RUSUREDELTH, _YES);
+			icms_core_Message::confirm(array('tplset' => $tplset, 'op' => 'delete_go', 'fct' => 'tplsets'), 'admin.php', _MD_RUSUREDELTH, _YES);
 			icms_cp_footer();
 			break;
 
@@ -424,9 +424,9 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			$tpltpl_handler =& xoops_gethandler('view_template_file');
 			icms_cp_header();
 			if ($tplset == $newtheme) {
-				icms_error_msg('Template set name must be a different name.');
+				icms_core_Message::error('Template set name must be a different name.');
 			} elseif ($tpltpl_handler->getCount(new icms_criteria_Item('tpl_tplset', $newtheme)) > 0) {
-				icms_error_msg('Template set <b>'.$newtheme.'</b> already exists.');
+				icms_core_Message::error('Template set <b>'.$newtheme.'</b> already exists.');
 			} else {
 				$tplset_handler =& xoops_gethandler('view_template_set');
 				$tplsetobj =& $tplset_handler->create();
@@ -590,7 +590,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				}
 				if (isset($err)) {
 					icms_cp_header(false);
-					icms_error_msg($err);
+					icms_core_Message::error($err);
 					icms_cp_footer();
 					exit();
 				}
@@ -661,7 +661,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 
 			if (isset($err)) {
 				icms_cp_header(false);
-				icms_error_msg($err);
+				icms_core_Message::error($err);
 				icms_cp_footer();
 				exit();
 			}
@@ -709,7 +709,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 					echo $downloader->download($tplset, true);
 				} else {
 					icms_cp_header();
-					icms_error_msg(_MD_NOZLIB);
+					icms_core_Message::error(_MD_NOZLIB);
 					icms_cp_footer();
 				}
 			}
@@ -717,7 +717,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 
 		case 'generatetpl':
 			icms_cp_header();
-			xoops_confirm(array('tplset' => $tplset, 'moddir' => $moddir, 'file' => $file, 'type' => $type, 'op' => 'generatetpl_go', 'fct' => 'tplsets'), 'admin.php', _MD_PLZGENERATE, _MD_GENERATE);
+			icms_core_Message::confirm(array('tplset' => $tplset, 'moddir' => $moddir, 'file' => $file, 'type' => $type, 'op' => 'generatetpl_go', 'fct' => 'tplsets'), 'admin.php', _MD_PLZGENERATE, _MD_GENERATE);
 			icms_cp_footer();
 			break;
 
@@ -748,14 +748,14 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				redirect_header('admin.php?fct=tplsets&amp;op=listtpl&amp;moddir='.$newtpl->getVar('tpl_module').'&amp;tplset='.urlencode($newtpl->getVar('tpl_tplset')), 2, _MD_AM_DBUPDATED);
 			}
 			icms_cp_header();
-			icms_error_msg($err);
+			icms_core_Message::error($err);
 			echo '<br /><a href="admin.php?fct=tplsets">'._MD_AM_BTOTADMIN.'</a>';
 			icms_cp_footer();
 			break;
 
 		case 'generatemod':
 			icms_cp_header();
-			xoops_confirm(array('tplset' => $tplset, 'op' => 'generatemod_go', 'fct' => 'tplsets', 'moddir' => $moddir), 'admin.php', _MD_PLZGENERATE, _MD_GENERATE);
+			icms_core_Message::confirm(array('tplset' => $tplset, 'op' => 'generatemod_go', 'fct' => 'tplsets', 'moddir' => $moddir), 'admin.php', _MD_PLZGENERATE, _MD_GENERATE);
 			icms_cp_footer();
 			break;
 
@@ -829,7 +829,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			echo '<code>';
 			if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 				if (!$uploader->upload()) {
-					icms_error_msg($uploader->getErrors());
+					icms_core_Message::error($uploader->getErrors());
 				} else {
 					include_once ICMS_ROOT_PATH.'/class/class.tar.php';
 					$tar = new tar();
@@ -1066,9 +1066,9 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		case 'importtpl':
 			icms_cp_header();
 			if (!empty($id)) {
-				xoops_confirm(array('tplset' => $tplset, 'moddir' => $moddir, 'id' => $id, 'op' => 'importtpl_go', 'fct' => 'tplsets'), 'admin.php', _MD_RUSUREIMPT, _MD_IMPORT);
+				icms_core_Message::confirm(array('tplset' => $tplset, 'moddir' => $moddir, 'id' => $id, 'op' => 'importtpl_go', 'fct' => 'tplsets'), 'admin.php', _MD_RUSUREIMPT, _MD_IMPORT);
 			} elseif (isset($file)) {
-				xoops_confirm(array('tplset' => $tplset, 'moddir' => $moddir, 'file' => $file, 'op' => 'importtpl_go', 'fct' => 'tplsets'), 'admin.php', _MD_RUSUREIMPT, _MD_IMPORT);
+				icms_core_Message::confirm(array('tplset' => $tplset, 'moddir' => $moddir, 'file' => $file, 'op' => 'importtpl_go', 'fct' => 'tplsets'), 'admin.php', _MD_RUSUREIMPT, _MD_IMPORT);
 			}
 			icms_cp_footer();
 			break;
@@ -1117,7 +1117,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 
 			if (false != $error) {
 				icms_cp_header();
-				icms_error_msg('Could not import file '.$filepath);
+				icms_core_Message::error('Could not import file '.$filepath);
 				echo '<br /><a href="admin.php?fct=tplsets&amp;op=listtpl&amp;tplset='.urlencode($tplset).'&amp;moddir='.$moddir.'">'._MD_AM_BTOTADMIN.'</a>';
 				icms_cp_footer();
 				exit();

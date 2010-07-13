@@ -97,7 +97,7 @@ switch ($op) {
 		$comment =& $comment_handler->get($com_id);
 		if (!$comment_handler->delete($comment)) {
 			include ICMS_ROOT_PATH . '/header.php';
-			icms_error_msg(_CM_COMDELETENG . ' (ID: ' . $comment->getVar('com_id') . ')');
+			icms_core_Message::error(_CM_COMDELETENG . ' (ID: ' . $comment->getVar('com_id') . ')');
 			include ICMS_ROOT_PATH . '/footer.php';
 			exit();
 		}
@@ -176,7 +176,7 @@ switch ($op) {
 		}
 		if (count($errs) > 0) {
 			include ICMS_ROOT_PATH . '/header.php';
-			icms_error_msg($errs);
+			icms_core_Message::error($errs);
 			include ICMS_ROOT_PATH . '/footer.php';
 			exit();
 		}
@@ -249,7 +249,7 @@ switch ($op) {
 		}
 
 		include ICMS_ROOT_PATH . '/header.php';
-		xoops_result($msgs);
+		icms_core_Message::result($msgs);
 		echo '<br /><a href="' . $redirect_page . '=' . $com_itemid . '&amp;com_order=' . $com_order . '&amp;com_mode=' . $com_mode . '">' . _BACK . '</a>';
 		include ICMS_ROOT_PATH . '/footer.php';
 		break;
@@ -261,7 +261,7 @@ switch ($op) {
 		if (!empty($comment_confirm_extra) && is_array($comment_confirm_extra)) {
 			$comment_confirm = $comment_confirm + $comment_confirm_extra;
 		}
-		xoops_confirm($comment_confirm, 'comment_delete.php', _CM_DELETESELECT);
+		icms_core_Message::confirm($comment_confirm, 'comment_delete.php', _CM_DELETESELECT);
 		include ICMS_ROOT_PATH . '/footer.php';
 		break;
 }

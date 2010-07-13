@@ -128,7 +128,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 					fwrite( $fp, $fp_content );
 					fclose( $fp );
 				} else {
-					icms_error_msg( "Cannot create fckeditor config file" );
+					icms_core_Message::error( "Cannot create fckeditor config file" );
 				}
 			}
 			

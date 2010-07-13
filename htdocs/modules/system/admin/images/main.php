@@ -46,7 +46,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			break;
 		case 'delcat':
 			icms_cp_header();
-			xoops_confirm(array('op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _MD_RUDELIMGCAT);
+			icms_core_Message::confirm(array('op' => 'delcatok', 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _MD_RUDELIMGCAT);
 			icms_cp_footer();
 			break;
 		case 'delcatok':
@@ -69,7 +69,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			$imagecategory =& $imgcat_handler->get($image->getVar('imgcat_id'));
 			$src = '<img src="'.XOOPS_URL."/modules/system/admin/images/preview.php?file=".$image->getVar('image_name').'" title="'.$image->getVar('image_nicename').'" /><br />';
 			echo '<div style="margin:5px;" align="center">'.$src.'</div>';
-			xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _MD_RUDELIMG);
+			icms_core_Message::confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'fct' => 'images'), 'admin.php', _MD_RUDELIMG);
 			icms_cp_footer();
 			break;
 		case 'delfileok':
@@ -98,7 +98,7 @@ function imanager_index($imgcat_id=null) {
 
 	if (!is_writable(ICMS_IMANAGER_FOLDER_PATH))
 	{
-		icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_IMANAGER_FOLDER_PATH));
+		icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE,ICMS_IMANAGER_FOLDER_PATH));
 		echo '<br />';
 	}
 
@@ -718,7 +718,7 @@ function imanager_delcatok($imgcat_id) {
 	}
 	if (count($errors) > 0) {
 		icms_cp_header();
-		icms_error_msg($errors);
+		icms_core_Message::error($errors);
 		icms_cp_footer();
 		exit();
 	}
@@ -808,7 +808,7 @@ function imanager_addfile() {
 	}
 	if (count($err) > 0) {
 		icms_cp_header();
-		icms_error_msg($err);
+		icms_core_Message::error($err);
 		icms_cp_footer();
 		exit();
 	}
@@ -906,7 +906,7 @@ function imanager_delfileok($image_id,$redir=null) {
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	if (!$image_handler->delete($image)) {
 		icms_cp_header();
-		icms_error_msg(sprintf(_MD_FAILDEL, $image->getVar('image_id')));
+		icms_core_Message::error(sprintf(_MD_FAILDEL, $image->getVar('image_id')));
 		icms_cp_footer();
 		exit();
 	}

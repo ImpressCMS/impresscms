@@ -66,7 +66,7 @@ switch ($op) {
 		$imagecategory =& $imgcat_handler->get($image->getVar('imgcat_id'));
 		$src = '<img src="'.ICMS_URL."/modules/system/admin/images/preview.php?file=".$image->getVar('image_name').'" title="'.$image->getVar('image_nicename').'" /><br />';
 		echo '<div style="margin:5px;" align="center">'.$src.'</div>';
-		xoops_confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'target' => $target, 'type' => $type), 'formimage_browse.php', _MD_RUDELIMG);
+		icms_core_Message::confirm(array('op' => 'delfileok', 'image_id' => $image_id, 'imgcat_id' => $imgcat_id, 'target' => $target, 'type' => $type), 'formimage_browse.php', _MD_RUDELIMG);
 		icmsPopupFooter();
 		break;
 	case 'delfileok':
@@ -585,7 +585,7 @@ function imanager_addfile() {
 	}
 	if (count($err) > 0) {
 		icms_cp_header();
-		icms_error_msg($err);
+		icms_core_Message::error($err);
 		icms_cp_footer();
 		exit();
 	}
@@ -678,7 +678,7 @@ function imanager_delfileok($image_id,$redir=null) {
 	$categ_path = $imgcat_handler->getCategFolder($imagecategory);
 	if (!$image_handler->delete($image)) {
 		icms_cp_header();
-		icms_error_msg(sprintf(_MD_FAILDEL, $image->getVar('image_id')));
+		icms_core_Message::error(sprintf(_MD_FAILDEL, $image->getVar('image_id')));
 		icms_cp_footer();
 		exit();
 	}

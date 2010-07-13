@@ -25,7 +25,7 @@ if (!empty($_REQUEST['token'])) {
 	$denied = false;
 }
 if ($denied) {
-	icms_error_msg(_NOPERM);
+	icms_core_Message::error(_NOPERM);
 	exit();
 }
 

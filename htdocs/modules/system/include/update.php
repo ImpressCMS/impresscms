@@ -236,7 +236,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 	 */
 	echo "</code>";
     if ($abortUpdate) {
-        icms_error_msg( sprintf( _DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local( $newDbVersion ) ), _DATABASEUPDATER_UPDATE_DB, TRUE);
+        icms_core_Message::error( sprintf( _DATABASEUPDATER_UPDATE_ERR, icms_conv_nr2local( $newDbVersion ) ), _DATABASEUPDATER_UPDATE_DB, TRUE);
     }
 	if ($from_112 && ! $abortUpdate) {
 		/**

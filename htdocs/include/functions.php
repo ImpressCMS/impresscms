@@ -128,117 +128,69 @@ function xoops_footer()
 /**
  * ImpressCMS Error Message Function
  *
- * @since ImpressCMS 1.2
- * @version $Id: functions.php 8806 2009-05-31 22:28:54Z pesianstranger $
- *
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- *
  * @param string $msg	The Error Message
  * @param string $title	The Error message title
  * @param bool $render	Whether to echo (render) or return the HTML string
  * @return string $ret The entire error message in a HTML string
- * @todo Make this work with templates ;)
- * @todo Move to static class Message
+ * @deprecated	Use icms_coreMessage::error, instead
+ * @todo 		Remove in version 1.4 -  - all occurrences have been removed from the core
  */
 function icms_error_msg($msg, $title='', $render = true){
-	$ret = '<div class="errorMsg">';
-	if($title != '') {$ret .= '<h4>'.$title.'</h4>';}
-	if(is_array($msg))
-	{
-		foreach($msg as $m) {$ret .= $m.'<br />';}
-	}
-	else {$ret .= $msg;}
-	$ret .= '</div>';
-	if($render)
-	echo $ret;
-	else
-	return $ret;
+	icms_core_Debug::setDeprecated('icms_coreMessage::error', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Message::error($msg, $title, $render);
 }
 
 /**
- * Backwards Compatibility Function - all occurrences have been removed from the core
- *
- * @since XOOPS
- * @version $Id: functions.php 8806 2009-05-31 22:28:54Z pesianstranger $
- * @deprecated use icms_error_msg instead
- * @see icms_error_msg
- *
- * @author The XOOPS Project <http://www.xoops.org>
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
+ * Backwards Compatibility Function
  *
  * @param string $msg
  * @param string $title
+ * @deprecated	Use icms_coreMessage::error, instead
+ * @todo		Remove in version 1.4 - all occurrences have been removed from the core
  */
 function xoops_error($msg, $title=''){
-	icms_core_Debug::setDeprecated( 'icms_error_msg' );
-	icms_error_msg($msg, $title, true);
+	icms_core_Debug::setDeprecated('icms_coreMessage::error', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Message::error($msg, $title, true);
 }
 
 /**
  * ImpressCMS Warning Message Function
  *
- * @since ImpressCMS 1.2
- * @version $Id: functions.php 8806 2009-05-31 22:28:54Z pesianstranger $
- *
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- *
  * @param string $msg	The Error Message
  * @param string $title	The Error Message title
  * @param	bool	$render	Whether to echo (render) or return the HTML string
- *
- * @todo Make this work with templates ;)
- * @todo Move to static class Message
+ * @deprecated	Use icms_core_Message::warning, instead
+ * @todo 		Remove in version 1.4 - all occurrences have been removed from the core
  */
 function icms_warning_msg($msg, $title='', $render = false){
-	$ret = '<div class="warningMsg">';
-	if($title != '') {$ret .= '<h4>'.$title.'</h4>';}
-	if(is_array($msg))
-	{
-		foreach($msg as $m) {$ret .= $m.'<br />';}
-	}
-	else {$ret .= $msg;}
-	$ret .= '</div>';
-	if($render)
-	echo $ret;
-	else
-	return $ret;
+	icms_core_Debug::setDeprecated('icms_core_Message::warning', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Message::warning($msg, $title, $render);
 }
 
 /**
- * Backwards Compatibility Function - all occurrences have been removed from the core
- *
- * @since XOOPS
- *
- * @deprecated use icms_warning_msg instead
- * @see icms_warning_msg
- * @todo Remove in version 1.4
- *
- * @author The XOOPS Project <http://www.xoops.org>
- * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
- *
+ * Backwards Compatibility Function
+ * @deprecated use icms_core_Message::warning instead
+ * @see icms_core_Message::warning
+ * @todo Remove in version 1.4 - all occurrences have been removed from the core
  * @param string $msg
  * @param string $title
  */
 function xoops_warning($msg, $title=''){
-	icms_core_Debug::setDeprecated( 'icms_warning_msg' );
-	icms_warning_msg($msg, $title, true); }
+	icms_core_Debug::setDeprecated( 'icms_core_Message::warning' );
+	return icms_core_Message::warning($msg, $title, true); }
 
 /**
  * Render result message (echo, so no return string)
  * @param string $msg
  * @param string $title
- * @todo Move to static class Message
+ *
+ * @deprecated	Use icms_core_Message:result, instead
+ * @todo		Remove in version 1.4 - all occurrences have been removed from the core
  */
 function xoops_result($msg, $title='')
 {
-	echo '<div class="resultMsg">';
-	if($title != '') {echo '<h4>'.$title.'</h4>';}
-	if(is_array($msg))
-	{
-		foreach($msg as $m) {echo $m.'<br />';}
-	}
-	else {echo $msg;}
-	echo '</div>';
+	icms_core_Debug::setDeprecated('icms_core_Message::result', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Message::result($msg, $title);
 }
 
 /**
@@ -251,26 +203,14 @@ function xoops_result($msg, $title='')
  * @param string  $msg  The message in the confirm form
  * @param string  $submit  The text on the submit button
  * @param bool  $addtoken  Whether or not to add a security token
- * @todo Move to static class Message
+ *
+ * @deprecated	Use icms_core_Message::confirm, instead
+ * @todo		Remove in version 1.4 - all occurrences have been removed from the core
  */
 function xoops_confirm($hiddens, $action, $msg, $submit='', $addtoken = true)
 {
-	$submit = ($submit != '') ? trim($submit) : _SUBMIT;
-	echo '<div class="confirmMsg">
-			<h4>'.$msg.'</h4>
-			<form method="post" action="'.$action.'">';
-	foreach($hiddens as $name => $value)
-	{
-		if(is_array($value))
-		{
-			foreach($value as $caption => $newvalue) {echo '<input type="radio" name="'.$name.'" value="'.htmlspecialchars($newvalue).'" /> '.$caption;}
-			echo '<br />';
-		}
-		else {echo '<input type="hidden" name="'.$name.'" value="'.htmlspecialchars($value).'" />';}
-	}
-	if($addtoken != false) {echo $GLOBALS['xoopsSecurity']->getTokenHTML();}
-	echo '<input type="submit" name="confirm_submit" value="'.$submit.'" /> <input type="button" name="confirm_back" value="'._CANCEL.'" onclick="javascript:history.go(-1);" />
-	</form></div>';
+	icms_core_Debug::setDeprecated('icms_core_Message::confirm', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Message::confirm($hiddens, $action, $msg, $submit, $addtoken);
 }
 
 /**

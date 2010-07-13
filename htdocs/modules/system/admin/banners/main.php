@@ -72,7 +72,7 @@ switch($op)
 
 	case 'BannerFinishDelete':
 		icms_cp_header();
-		xoops_confirm(array('op' => 'BannerFinishDelete2', 'bid' => (int) ($_GET['bid']), 'fct' => 'banners'), 'admin.php', _AM_SUREDELE);
+		icms_core_Message::confirm(array('op' => 'BannerFinishDelete2', 'bid' => (int) ($_GET['bid']), 'fct' => 'banners'), 'admin.php', _AM_SUREDELE);
 		icms_cp_footer();
 		break;
 

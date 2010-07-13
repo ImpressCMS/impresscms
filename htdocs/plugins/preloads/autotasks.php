@@ -60,7 +60,7 @@ class IcmsPreloadAutotasks extends icms_preload_Item {
 			$rez = $system->start($time);
 		} else {
 			icms_loadLanguageFile('system', 'autotasks', true);
-			icms_error_msg(_CO_ICMS_AUTOTASKS_INIT_ERROR);
+			icms_core_Message::error(_CO_ICMS_AUTOTASKS_INIT_ERROR);
 			return false;
 		}
 		$handler->disableVirtualConfig();

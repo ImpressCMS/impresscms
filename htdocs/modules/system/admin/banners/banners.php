@@ -231,7 +231,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			<td align='center'>".icms_conv_nr2local($percent)."%</td>
 			<td align='center'>$name</td>
 			</tr></table><br />";
-		xoops_confirm(array('fct' => 'banners', 'op' => 'BannerDelete2', 'bid' => $bid), 'admin.php', _AM_SUREDELE);
+		icms_core_Message::confirm(array('fct' => 'banners', 'op' => 'BannerDelete2', 'bid' => $bid), 'admin.php', _AM_SUREDELE);
 		echo"</td></tr></table>";
 		icms_cp_footer();
 	}
@@ -353,7 +353,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			}
 			echo $bannerobject."<a href='".$clickurl."'>".$clickurl."</a><br /><br />";
 		}
-		xoops_confirm(array('fct' => 'banners', 'op' => 'BannerClientDelete2', 'cid' => $cid), 'admin.php', _AM_SUREDELBNR);
+		icms_core_Message::confirm(array('fct' => 'banners', 'op' => 'BannerClientDelete2', 'cid' => $cid), 'admin.php', _AM_SUREDELBNR);
 		echo "</td></tr></table>";
 		icms_cp_footer();
 	}

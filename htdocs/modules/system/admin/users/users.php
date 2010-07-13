@@ -131,7 +131,7 @@ function modifyUser($user)
 	{
 		if (!$user->isActive())
 		{
-			xoops_confirm(array('fct' => 'users', 'op' => 'reactivate', 'uid' => $user->getVar('uid')), 'admin.php', _AM_NOTACTIVE);
+			icms_core_Message::confirm(array('fct' => 'users', 'op' => 'reactivate', 'uid' => $user->getVar('uid')), 'admin.php', _AM_NOTACTIVE);
 			icms_cp_footer();
 			exit();
 		}

@@ -289,7 +289,7 @@ switch ( $op) {
 	  	if (!$comment_handler->updateByField($comment, 'com_rootid', $com_rootid)) {
 	  		$comment_handler->delete($comment);
 	  		include ICMS_ROOT_PATH . '/header.php';
-	  		icms_error_msg();
+	  		icms_core_Message::error();
 	  		include ICMS_ROOT_PATH . '/footer.php';
 	  	}
 	  }
@@ -412,7 +412,7 @@ switch ( $op) {
 		} else {
 	  if (!isset($purge_comment_post_results)) {
 	  	include ICMS_ROOT_PATH . '/header.php';
-	  	icms_error_msg($comment->getHtmlErrors());
+	  	icms_core_Message::error($comment->getHtmlErrors());
 	  	include ICMS_ROOT_PATH . '/footer.php';
 	  } else {
 	  	$comment_post_results = $comment->getErrors();

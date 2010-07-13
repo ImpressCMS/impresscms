@@ -52,7 +52,7 @@ switch ($op)
 		icms_cp_header();
 		$member_handler =& xoops_gethandler('member');
 		$userdata =& $member_handler->getUser($uid);
-		xoops_confirm(array('fct' => 'users', 'op' => 'delUserConf', 'del_uid' => $userdata->getVar('uid')), 'admin.php', sprintf(_AM_AYSYWTDU,$userdata->getVar('uname')));
+		icms_core_Message::confirm(array('fct' => 'users', 'op' => 'delUserConf', 'del_uid' => $userdata->getVar('uid')), 'admin.php', sprintf(_AM_AYSYWTDU,$userdata->getVar('uname')));
 		icms_cp_footer();
 		break;
 
@@ -244,7 +244,7 @@ switch ($op)
 			}
 		}
 		icms_cp_header();
-		icms_error_msg($adduser_errormsg);
+		icms_core_Message::error($adduser_errormsg);
 		icms_cp_footer();
 		break;
 

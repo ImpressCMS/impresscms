@@ -178,10 +178,10 @@ switch ($op) {
 		include ICMS_ROOT_PATH . '/header.php';
 		$hidden_vars = array('uid'=>$uid, 'delete_ok'=>1, 'del_not'=>$_POST['del_not']);
 		print '<h4>' . _NOT_DELETINGNOTIFICATIONS . '</h4>';
-		xoops_confirm($hidden_vars, xoops_getenv('PHP_SELF'), _NOT_RUSUREDEL);
+		icms_core_Message::confirm($hidden_vars, xoops_getenv('PHP_SELF'), _NOT_RUSUREDEL);
 		include ICMS_ROOT_PATH . '/footer.php';
 
-		// FIXME: There is a problem here... in xoops_confirm it treats arrays as
+		// FIXME: There is a problem here... in icms_core_Message::confirm it treats arrays as
 		// optional radio arguments on the confirmation page... change this or
 		// write new function...
 

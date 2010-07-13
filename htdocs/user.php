@@ -269,7 +269,7 @@ if ($op == 'delete')
 		if ($ok != 1)
 		{
 			include 'header.php';
-			xoops_confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL.'<br/>'._US_REMOVEINFO);
+			icms_core_Message::confirm(array('op' => 'delete', 'ok' => 1), 'user.php', _US_SURETODEL.'<br/>'._US_REMOVEINFO);
 			include 'footer.php';
 		} else {
 			$del_uid = (int) ($icmsUser->getVar('uid'));

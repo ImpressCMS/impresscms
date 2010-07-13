@@ -31,20 +31,20 @@ function b_system_admin_warnings_show(){
 	$block['msg'] = array();
 	// ###### Output warn messages for security  ######
 	if(is_dir(ICMS_ROOT_PATH.'/install/')){
-		array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/'), '', false));
+		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/install/'), '', false));
 	}
 	/** @todo make this dynamic, so the value is updated automatically */
 	if(getDbValue($xoopsDB, 'modules', 'version', 'version="120" AND mid="1"') !== FALSE ){
-		array_push($block['msg'], icms_error_msg('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">'._WARNINGUPDATESYSTEM.'</a>'));
+		array_push($block['msg'], icms_core_Message::error('<a href="'.ICMS_URL.'/modules/system/admin.php?fct=modulesadmin&amp;op=update&amp;module=system">'._WARNINGUPDATESYSTEM.'</a>'));
 	}
 	if(is_writable(ICMS_ROOT_PATH.'/mainfile.php')){
-		array_push($block['msg'], icms_error_msg(sprintf(_WARNINWRITEABLE,ICMS_ROOT_PATH.'/mainfile.php'), '', false));
+		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINWRITEABLE,ICMS_ROOT_PATH.'/mainfile.php'), '', false));
 	}
 	if(is_dir(ICMS_ROOT_PATH.'/upgrade/')){
-		array_push($block['msg'], icms_error_msg(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/upgrade/'), '', false));
+		array_push($block['msg'], icms_core_Message::error(sprintf(_WARNINSTALL2,ICMS_ROOT_PATH.'/upgrade/'), '', false));
 	}
 	if(!is_dir(XOOPS_TRUST_PATH)){
-		array_push($block['msg'], icms_error_msg(_TRUST_PATH_HELP));
+		array_push($block['msg'], icms_core_Message::error(_TRUST_PATH_HELP));
 	}
 	$sql1 = "SELECT conf_modid FROM `".$xoopsDB->prefix('config')."` WHERE conf_name = 'dos_skipmodules'";
 	if($result1 = $xoopsDB->query($sql1)){
@@ -57,17 +57,17 @@ function b_system_admin_warnings_show(){
 		}
 	}
 	if($protector_is_active == 0){
-		array_push($block['msg'], icms_error_msg(_PROTECTOR_NOT_FOUND, '', false));
+		array_push($block['msg'], icms_core_Message::error(_PROTECTOR_NOT_FOUND, '', false));
 		echo '<br />';
 	}
 
 	// ###### Output warn messages for correct functionality  ######
 	if(!is_writable(ICMS_CACHE_PATH))
-	array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH)), '', false);
+	array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE,ICMS_CACHE_PATH)), '', false);
 	if(!is_writable(ICMS_UPLOAD_PATH))
-	array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_UPLOAD_PATH)), '', false);
+	array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE,ICMS_UPLOAD_PATH)), '', false);
 	if(!is_writable(ICMS_COMPILE_PATH))
-	array_push($block['msg'], icms_warning_msg(sprintf(_WARNINNOTWRITEABLE,ICMS_COMPILE_PATH)), '', false);
+	array_push($block['msg'], icms_core_Message::warning(sprintf(_WARNINNOTWRITEABLE,ICMS_COMPILE_PATH)), '', false);
 
 	if(count($block['msg'] ) > 0){
 		return $block;

@@ -254,7 +254,7 @@ switch ($op) {
 
 	case "del":
 		icms_cp_header();
-		xoops_confirm(array('fct' => 'groups', 'op' => 'delConf', 'g_id' => $g_id), 'admin.php', _AM_AREUSUREDEL);
+		icms_core_Message::confirm(array('fct' => 'groups', 'op' => 'delConf', 'g_id' => $g_id), 'admin.php', _AM_AREUSUREDEL);
 		icms_cp_footer();
 		break;
 
