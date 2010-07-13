@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormDate_timeElement extends XoopsFormDateTime {
+class IcmsFormDate_timeElement extends icms_form_elements_Datetime {
 
 	/**
 	 * Constructor
@@ -20,7 +20,7 @@ class IcmsFormDate_timeElement extends XoopsFormDateTime {
 	 * @param	string    $key      the form name
 	 */
 	function IcmsFormDate_timeElement($object, $key) {
-		$this->XoopsFormDateTime($object->vars[$key]['form_caption'], $key, 15, $object->getVar($key, 'e'));
+		$this->icms_form_elements_Datetime($object->vars[$key]['form_caption'], $key, 15, $object->getVar($key, 'e'));
 	}
 }
 
