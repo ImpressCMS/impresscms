@@ -78,7 +78,7 @@ $xoTheme->addStylesheet(ICMS_URL.'/icms'.(@_ADM_USE_RTL == true?'_rtl':'').'.css
  */
 
 /*	$jscript = '';
- if (class_exists('XoopsFormDhtmlTextArea')) {
+ if (class_exists('icms_form_elements_Dhtmltextarea')) {
 	foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 	if (empty($key)) continue;
 	if (file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')) {

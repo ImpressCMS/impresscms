@@ -340,7 +340,7 @@ if ($op == 'editprofile')
 			$sig_tray->addElement($sig_cbox);
 		} else {
 			$sig_tray = new XoopsFormElementTray(_US_SIGNATURE, '<br />');
-			$sig_tarea = new XoopsFormDhtmlTextArea('', 'user_sig', $icmsUser->getVar('user_sig', 'E'));
+			$sig_tarea = new icms_form_elements_Dhtmltextarea('', 'user_sig', $icmsUser->getVar('user_sig', 'E'));
 			$sig_tray->addElement($sig_tarea);
 			$sig_cbox_value = $icmsUser->getVar('attachsig') ? 1 : 0;
 			$sig_cbox = new icms_form_elements_Checkbox('', 'attachsig', $sig_cbox_value);

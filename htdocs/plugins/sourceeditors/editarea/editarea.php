@@ -12,8 +12,6 @@ if (!defined("ICMS_ROOT_PATH")) {
     die("ICMS root path not defined");
 }
 
-require_once ICMS_ROOT_PATH."/class/xoopsform/formdhtmltextarea.php";
-
 /**
  * Pseudo class
  *

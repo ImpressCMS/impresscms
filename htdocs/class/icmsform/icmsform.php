@@ -416,7 +416,7 @@ class IcmsForm extends XoopsThemeForm {
 				break;
 
 			case 'dhtmltextarea' :
-				$editor = new XoopsFormDhtmlTextArea($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'), 15, 50);
+				$editor = new icms_form_elements_Dhtmltextarea($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'), 15, 50);
 				if ($this->targetObject->vars[$key]['form_dsc']) {
 					$editor->setDescription($this->targetObject->vars[$key]['form_dsc']);
 				}

@@ -26,7 +26,7 @@ class IcmsFormUser_sigElement extends XoopsFormElementTray {
 
 		$this->XoopsFormElementTray($var['form_caption'], '<br /><br />', $key . '_signature_tray');
 
-		$signature_textarea = new XoopsFormDhtmlTextArea('', $key, $object->getVar($key, 'e'));
+		$signature_textarea = new icms_form_elements_Dhtmltextarea('', $key, $object->getVar($key, 'e'));
 		$this->addElement($signature_textarea);
 
 		$attach_checkbox = new icms_form_elements_Checkbox('', 'attachsig', $object->getVar('attachsig', 'e'));

@@ -11,15 +11,13 @@
  */
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-require_once ICMS_ROOT_PATH."/class/xoopsform/formdhtmltextarea.php";
-
 /**
  * Pseudo class
  *
  * @author	    phppp (D.J.)
  * @copyright	copyright (c) 2005 XOOPS.org
  */
-class FormDhtmlTextArea extends XoopsFormDhtmlTextArea
+class FormDhtmlTextArea extends icms_form_elements_Dhtmltextarea
 {
 	/**
 	 * Constructor
@@ -39,7 +37,7 @@ class FormDhtmlTextArea extends XoopsFormDhtmlTextArea
 		$rows = isset($rows)? $rows : 5;
 		$cols = isset($cols)? $cols : 50;
 		$hiddentext = empty($hiddentext)? "xoopsHiddenText" : $hiddentext;
-		$this->XoopsFormDhtmlTextArea(@$caption, $name, $value, $rows, $cols, $hiddentext,$configs);
+		$this->icms_form_elements_Dhtmltextarea(@$caption, $name, $value, $rows, $cols, $hiddentext,$configs);
 	}
 }
 ?>

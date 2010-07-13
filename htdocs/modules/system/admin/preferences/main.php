@@ -101,7 +101,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						// this is exceptional.. only when value type is array, need a smarter way for this
 						$ele = ($config [$i]->getVar ( 'conf_value' ) != '') ? new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( implode ( '|', $config [$i]->getConfValueForOutput () ) ), 5, 50 ) : new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), '', 5, 50 );
 					} else {
-						$ele = new XoopsFormDhtmlTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
+						$ele = new icms_form_elements_Dhtmltextarea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 					}
 				break;
 				case 'autotasksystem':
@@ -408,7 +408,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						// this is exceptional.. only when value type is arrayneed a smarter way for this
 						$ele = ($config [$i]->getVar ( 'conf_value' ) != '') ? new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( implode ( '|', $config [$i]->getConfValueForOutput () ) ), 5, 50 ) : new XoopsFormTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), '', 5, 50 );
 					} else {
-						$ele = new XoopsFormDhtmlTextArea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ), 5, 50 );
+						$ele = new icms_form_elements_Dhtmltextarea ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ), 5, 50 );
 					}
 				break;
 				case 'select' :

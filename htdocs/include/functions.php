@@ -55,7 +55,7 @@ function xoops_header($closehead=true)
 	<script type="text/javascript" src="'.ICMS_URL.'/include/linkexternal.js"></script>
 	<link rel="stylesheet" type="text/css" media="all" href="' . ICMS_URL . '/icms'.(( defined('_ADM_USE_RTL') && _ADM_USE_RTL )?'_rtl':'').'.css" />';
 	/*	$jscript = '';
-	 if(class_exists('XoopsFormDhtmlTextArea')){
+	 if(class_exists('icms_form_elements_Dhtmltextarea')){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 		if(empty($key)) continue;
 		if(file_exists(ICMS_ROOT_PATH.'/plugins/textsanitizer/'.$key.'/'.$key.'.js')){

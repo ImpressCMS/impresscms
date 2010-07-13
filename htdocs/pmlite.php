@@ -148,9 +148,9 @@ if ($icmsUser) {
 				unset($pm);
 				$reply = $send2 = 0;
 			}
-			$textarea = new XoopsFormDhtmlTextArea(_PM_MESSAGEC, 'message', $message);
+			$textarea = new icms_form_elements_Dhtmltextarea(_PM_MESSAGEC, 'message', $message);
 		} else {
-			$textarea = new XoopsFormDhtmlTextArea(_PM_MESSAGEC, 'message', '');
+			$textarea = new icms_form_elements_Dhtmltextarea(_PM_MESSAGEC, 'message', '');
 		}
 		echo $textarea->render();
 		echo "</td>";

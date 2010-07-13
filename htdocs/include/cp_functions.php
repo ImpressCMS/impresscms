@@ -118,7 +118,7 @@ function icms_cp_header(){
 	$xoTheme->addScript(ICMS_LIBRARIES_URL.'/jquery/colorbox/lightbox.js');
 
 	/*	$jscript = '';
-	 if(class_exists('XoopsFormDhtmlTextArea')){
+	 if(class_exists('icms_form_elements_Dhtmltextarea')){
 		foreach ($icmsConfigPlugins['sanitizer_plugins'] as $key) {
 		if( empty( $key ) )
 		continue;
