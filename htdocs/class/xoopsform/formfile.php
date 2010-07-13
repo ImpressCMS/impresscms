@@ -13,9 +13,7 @@
  * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
-}
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
  *
@@ -35,45 +33,11 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @package		kernel
  * @subpackage	form
  */
-class XoopsFormFile extends icms_form_Element {
-
-	/**
-	 * Maximum size for an uploaded file
-	 * @var	int
-	 * @access	private
-	 */
-	var $_maxFileSize;
-
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$caption		Caption
-	 * @param	string	$name			"name" attribute
-	 * @param	int		$maxfilesize	Maximum size for an uploaded file
-	 */
-	function XoopsFormFile($caption, $name, $maxfilesize='4096000') {
-		$this->setCaption($caption);
-		$this->setName($name);
-		$this->_maxFileSize = (int) ($maxfilesize);
-	}
-
-	/**
-	 * Get the maximum filesize
-	 *
-	 * @return	int
-	 */
-	function getMaxFileSize() {
-		return $this->_maxFileSize;
-	}
-
-	/**
-	 * prepare HTML for output
-	 *
-	 * @return	string	HTML
-	 */
-	function render() {
-		$ele_name = $this->getName();
-		return "<input type='hidden' name='MAX_FILE_SIZE' value='".$this->getMaxFileSize()."' /><input type='file' name='".$ele_name."' id='".$ele_name."'".$this->getExtra()." /><input type='hidden' name='xoops_upload_file[]' id='xoops_upload_file[]' value='".$ele_name."' />";
+class XoopsFormFile extends icms_form_File {
+	private $_deprecated;
+	public function __construct() {
+		parent::getInstance();
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_config_item_Object', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 ?>

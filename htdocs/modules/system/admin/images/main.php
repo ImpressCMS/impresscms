@@ -222,7 +222,7 @@ function imanager_index($imgcat_id=null) {
 		ksort($list);
 		$select->addOptionArray($list);
 		$form->addElement($select, true);
-		$form->addElement(new XoopsFormFile(_IMAGEFILE, 'image_file', 5000000));
+		$form->addElement(new icms_form_File(_IMAGEFILE, 'image_file', 5000000));
 		$form->addElement(new XoopsFormText(_IMGWEIGHT, 'image_weight', 3, 4, 0));
 		$form->addElement(new XoopsFormRadioYN(_IMGDISPLAY, 'image_display', 1, _YES, _NO));
 		$form->addElement(new XoopsFormHidden('op', 'addfile'));
@@ -928,7 +928,7 @@ function showAddImgForm($imgcat_id) {
 	$select = new XoopsFormSelect(_IMAGECAT, 'imgcat_id', (int) ($imgcat_id));
 	$select->addOptionArray($imgcat_handler->getCategList());
 	$form->addElement($select, true);
-	$form->addElement(new XoopsFormFile(_IMAGEFILE, 'image_file', 5000000));
+	$form->addElement(new icms_form_File(_IMAGEFILE, 'image_file', 5000000));
 	$form->addElement(new XoopsFormText(_IMGWEIGHT, 'image_weight', 3, 4, 0));
 	$form->addElement(new XoopsFormRadioYN(_IMGDISPLAY, 'image_display', 1, _YES, _NO));
 	$form->addElement(new XoopsFormHidden('imgcat_id', $imgcat_id));
