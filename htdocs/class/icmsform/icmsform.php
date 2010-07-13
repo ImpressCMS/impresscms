@@ -388,7 +388,7 @@ class IcmsForm extends XoopsThemeForm {
 
 			case 'color':
 				$control = $this->targetObject->getControl($key);
-				$controlObj = new XoopsFormColorPicker($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
+				$controlObj = new icms_form_elements_Colorpicker($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
 				return $controlObj;
 				break;
 

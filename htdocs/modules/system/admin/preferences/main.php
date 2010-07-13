@@ -294,7 +294,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'color' :
 					$myts = & icms_core_Textsanitizer::getInstance ();
-					$ele = new XoopsFormColorPicker ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
+					$ele = new icms_form_elements_Colorpicker ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'hidden' :
 					$myts = & icms_core_Textsanitizer::getInstance ();
@@ -458,7 +458,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'color' :
 					$myts = & icms_core_Textsanitizer::getInstance ();
-					$ele = new XoopsFormColorPicker ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
+					$ele = new icms_form_elements_Colorpicker ( $title, $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'hidden' :
 					$myts = & icms_core_Textsanitizer::getInstance ();
