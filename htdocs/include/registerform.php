@@ -55,15 +55,15 @@ if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] 
 	$reg_form->addElement($disc_tray);
 }
 
-$reg_form->addElement(new XoopsFormHidden("salt", $myts->htmlSpecialChars($salt)));
-$reg_form->addElement(new XoopsFormHidden("enc_type", (int) ($enc_type)));
-$reg_form->addElement(new XoopsFormHidden("actkey", $myts->htmlSpecialChars($actkey)));
+$reg_form->addElement(new icms_form_elements_Hidden("salt", $myts->htmlSpecialChars($salt)));
+$reg_form->addElement(new icms_form_elements_Hidden("enc_type", (int) ($enc_type)));
+$reg_form->addElement(new icms_form_elements_Hidden("actkey", $myts->htmlSpecialChars($actkey)));
 
 if ($icmsConfigUser['use_captcha'] == true) {
 	$reg_form->addElement(new icms_form_elements_Captcha(_SECURITYIMAGE_GETCODE, "scode"), true);
-	$reg_form->addElement(new XoopsFormHidden("op", "finish"));
+	$reg_form->addElement(new icms_form_elements_Hidden("op", "finish"));
 } else {
-	$reg_form->addElement(new XoopsFormHidden("op", "newuser"));
+	$reg_form->addElement(new icms_form_elements_Hidden("op", "newuser"));
 }
 
 $reg_form->addElement(new icms_form_elements_Button("", "submit", _US_SUBMIT, "submit"));

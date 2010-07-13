@@ -146,7 +146,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
 					}
-					$form->addElement ( new XoopsFormHidden ( '_old_theme', $config [$i]->getConfValueForOutput () ) );
+					$form->addElement ( new icms_form_elements_Hidden ( '_old_theme', $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'editor' :
 				case 'editor_multi' :
@@ -185,7 +185,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
 					}
-					//$form->addElement ( new XoopsFormHidden ( '_old_theme', $config [$i]->getConfValueForOutput () ) );
+					//$form->addElement ( new icms_form_elements_Hidden ( '_old_theme', $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'select_plugin' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), 8, true );
@@ -195,7 +195,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						asort ( $dirlist );
 						$ele->addOptionArray ( $dirlist );
 					}
-					//$form->addElement ( new XoopsFormHidden ( '_old_theme', $config [$i]->getConfValueForOutput () ) );
+					//$form->addElement ( new icms_form_elements_Hidden ( '_old_theme', $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'tplset' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
@@ -206,7 +206,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						$ele->addOption ( $key, $name );
 					}
 					// old theme value is used to determine whether to update cache or not. kind of dirty way
-					$form->addElement ( new XoopsFormHidden ( '_old_theme', $config [$i]->getConfValueForOutput () ) );
+					$form->addElement ( new icms_form_elements_Hidden ( '_old_theme', $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'timezone' :
 					$ele = new XoopsFormSelectTimezone ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
@@ -298,7 +298,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'hidden' :
 					$myts = & icms_core_Textsanitizer::getInstance ();
-					$ele = new XoopsFormHidden ( $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
+					$ele = new icms_form_elements_Hidden ( $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'select_pages' :
 					$myts = & icms_core_Textsanitizer::getInstance ();
@@ -345,12 +345,12 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$ele = new XoopsFormText ( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlspecialchars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 			}
-			$hidden = new XoopsFormHidden ( 'conf_ids[]', $config [$i]->getVar ( 'conf_id' ) );
+			$hidden = new icms_form_elements_Hidden ( 'conf_ids[]', $config [$i]->getVar ( 'conf_id' ) );
 			$form->addElement ( $ele );
 			$form->addElement ( $hidden );
 			unset ( $ele, $hidden );
 		}
-		$form->addElement ( new XoopsFormHidden ( 'op', 'save' ) );
+		$form->addElement ( new icms_form_elements_Hidden ( 'op', 'save' ) );
 		$form->addElement ( new icms_form_elements_Button ( '', 'button', _GO, 'submit' ) );
 		icms_cp_header ();
 		echo '<div class="CPbigTitle" style="background-image: url(' . ICMS_URL . '/modules/system/admin/preferences/images/preferences_big.png)"><a href="admin.php?fct=preferences">' . _MD_AM_PREFMAIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . constant ( $confcat->getVar ( 'confcat_name' ) ) . '<br /><br /></div><br />';
@@ -388,7 +388,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 
 		$modname = $module->getVar ( 'name' );
 		if ($module->getInfo ( 'adminindex' )) {
-			$form->addElement ( new XoopsFormHidden ( 'redirect', ICMS_URL . '/modules/' . $module->getVar ( 'dirname' ) . '/' . $module->getInfo ( 'adminindex' ) ) );
+			$form->addElement ( new icms_form_elements_Hidden ( 'redirect', ICMS_URL . '/modules/' . $module->getVar ( 'dirname' ) . '/' . $module->getInfo ( 'adminindex' ) ) );
 		}
 		for ($i = 0; $i < $count; $i ++) {
 			$title = (! defined ( $config [$i]->getVar ( 'conf_desc' ) ) || constant ( $config [$i]->getVar ( 'conf_desc' ) ) == '') ? constant ( $config [$i]->getVar ( 'conf_title' ) ) : constant ( $config [$i]->getVar ( 'conf_title' ) ) . '<img class="helptip" src="./images/view_off.png" alt="Vew help text" /><span class="helptext">' . constant ( $config [$i]->getVar ( 'conf_desc' ) ) . '</span>';
@@ -462,7 +462,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'hidden' :
 					$myts = & icms_core_Textsanitizer::getInstance ();
-					$ele = new XoopsFormHidden ( $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
+					$ele = new icms_form_elements_Hidden ( $config [$i]->getVar ( 'conf_name' ), $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'select_pages' :
 					$myts = & icms_core_Textsanitizer::getInstance ();
@@ -480,12 +480,12 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$ele = new XoopsFormText ( $title, $config [$i]->getVar ( 'conf_name' ), 50, 255, $myts->htmlSpecialChars ( $config [$i]->getConfValueForOutput () ) );
 				break;
 			}
-			$hidden = new XoopsFormHidden ( 'conf_ids[]', $config [$i]->getVar ( 'conf_id' ) );
+			$hidden = new icms_form_elements_Hidden ( 'conf_ids[]', $config [$i]->getVar ( 'conf_id' ) );
 			$form->addElement ( $ele );
 			$form->addElement ( $hidden );
 			unset ( $ele, $hidden );
 		}
-		$form->addElement ( new XoopsFormHidden ( 'op', 'save' ) );
+		$form->addElement ( new icms_form_elements_Hidden ( 'op', 'save' ) );
 		$form->addElement ( new icms_form_elements_Button ( '', 'button', _GO, 'submit' ) );
 		icms_cp_header ();
 		if ($module->getInfo('hasAdmin') == true) {

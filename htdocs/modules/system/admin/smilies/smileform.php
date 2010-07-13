@@ -25,8 +25,8 @@ $smile_tray->addElement($smile_select);
 $smile_tray->addElement($smile_label);
 $smile_form->addElement($smile_tray);
 $smile_form->addElement(new XoopsFormRadioYN(_AM_DISPLAYF, 'smile_display', $smiles['smile_display']));
-$smile_form->addElement(new XoopsFormHidden('id', $smiles['id']));
-$smile_form->addElement(new XoopsFormHidden('op', $smiles['op']));
-$smile_form->addElement(new XoopsFormHidden('fct', 'smilies'));
+$smile_form->addElement(new icms_form_elements_Hidden('id', $smiles['id']));
+$smile_form->addElement(new icms_form_elements_Hidden('op', $smiles['op']));
+$smile_form->addElement(new icms_form_elements_Hidden('fct', 'smilies'));
 $smile_form->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));
 ?>

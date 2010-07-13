@@ -93,8 +93,8 @@ if ($op == "form") {
 	$order_select = new XoopsFormSelect(_AM_ORDER, "user_order");
 	$order_select->addOptionArray(array("ASC"=>_AM_ASC,"DESC"=>_AM_DESC));
 	$limit_text = new XoopsFormText(_AM_LIMIT, "limit", 6, 2);
-	$fct_hidden = new XoopsFormHidden("fct", "findusers");
-	$op_hidden = new XoopsFormHidden("op", "submit");
+	$fct_hidden = new icms_form_elements_Hidden("fct", "findusers");
+	$op_hidden = new icms_form_elements_Hidden("op", "submit");
 	$submit_button = new icms_form_elements_Button("", "user_submit", _SUBMIT, "submit");
 
 	$form = new XoopsThemeForm(_AM_FINDUS, "uesr_findform", "admin.php", 'post', true);
@@ -129,7 +129,7 @@ if ($op == "form") {
 	$form->addElement($op_hidden);
 	// if this is to find users for a specific group
 	if (!empty($_GET['group']) && (int) ($_GET['group']) > 0) {
-		$group_hidden = new XoopsFormHidden("group", (int) ($_GET['group']));
+		$group_hidden = new icms_form_elements_Hidden("group", (int) ($_GET['group']));
 		$form->addElement($group_hidden);
 	}
 	$form->addElement($submit_button);

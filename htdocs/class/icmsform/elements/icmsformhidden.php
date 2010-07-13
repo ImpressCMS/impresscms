@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormHidden extends XoopsFormHidden {
+class IcmsFormHidden extends icms_form_elements_Hidden {
 
 	/**
 	 * Renders the hidden form input field

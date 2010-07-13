@@ -124,8 +124,8 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 					$r_block_tray->addElement($block_checkbox[$k]);
 				}
 
-				$op_hidden = new XoopsFormHidden("op", $op_value);
-				$fct_hidden = new XoopsFormHidden("fct", "groups");
+				$op_hidden = new icms_form_elements_Hidden("op", $op_value);
+				$fct_hidden = new icms_form_elements_Hidden("fct", "groups");
 				$submit_button = new icms_form_elements_Button("", "groupsubmit", $submit_value, "submit");
 				$form = new XoopsThemeForm($form_title, "groupform", "admin.php", "post", true);
 				$form->addElement($name_text);
@@ -154,7 +154,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 				$form->addElement($op_hidden);
 				$form->addElement($fct_hidden);
 				if (!empty($g_id_value)) {
-					$g_id_hidden = new XoopsFormHidden("g_id", $g_id_value);
+					$g_id_hidden = new icms_form_elements_Hidden("g_id", $g_id_value);
 					$form->addElement($g_id_hidden);
 				}
 				$form->addElement($submit_button);

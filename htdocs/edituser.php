@@ -384,9 +384,9 @@ if ($op == 'editprofile')
 	$pwd_tray->addElement($pwd_text2);
 	$pwd_text_old = new XoopsFormPassword(_US_OLD_PASSWORD, 'old_password', 10, 255);
 	$mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', (int) ($icmsUser->getVar('user_mailok')));
-	$salt_hidden = new XoopsFormHidden('salt', $icmsUser->getVar('salt'));
-	$uid_hidden = new XoopsFormHidden('uid', (int) ($icmsUser->getVar('uid')));
-	$op_hidden = new XoopsFormHidden('op', 'saveuser');
+	$salt_hidden = new icms_form_elements_Hidden('salt', $icmsUser->getVar('salt'));
+	$uid_hidden = new icms_form_elements_Hidden('uid', (int) ($icmsUser->getVar('uid')));
+	$op_hidden = new icms_form_elements_Hidden('op', 'saveuser');
 	$submit_button = new icms_form_elements_Button('', 'submit', _US_SAVECHANGES, 'submit');
 
 	$form->addElement($timezone_select);
@@ -460,8 +460,8 @@ if ($op == 'avatarform')
 		$form->addElement(new XoopsFormLabel(_US_MAXPIXEL, icms_conv_nr2local($icmsConfigUser['avatar_width']).' x '.icms_conv_nr2local($icmsConfigUser['avatar_height'])));
 		$form->addElement(new XoopsFormLabel(_US_MAXIMGSZ, icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])));
 		$form->addElement(new icms_form_elements_File(_US_SELFILE, 'avatarfile', icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])), true);
-		$form->addElement(new XoopsFormHidden('op', 'avatarupload'));
-		$form->addElement(new XoopsFormHidden('uid', (int) ($icmsUser->getVar('uid'))));
+		$form->addElement(new icms_form_elements_Hidden('op', 'avatarupload'));
+		$form->addElement(new icms_form_elements_Hidden('uid', (int) ($icmsUser->getVar('uid'))));
 		$form->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));
 		$form->display();
 	}
@@ -476,8 +476,8 @@ if ($op == 'avatarform')
 	if ($icmsConfigUser['avatar_allow_upload'] == 1 && $icmsUser->getVar('posts') < $icmsConfigUser['avatar_minposts']) {
 		$form2->addElement(new XoopsFormLabel(sprintf(_US_POSTSNOTENOUGH,icms_conv_nr2local($icmsConfigUser['avatar_minposts'])),_US_UNCHOOSEAVT));}
 		$form2->addElement($avatar_tray);
-		$form2->addElement(new XoopsFormHidden('uid', (int) ($icmsUser->getVar('uid'))));
-		$form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
+		$form2->addElement(new icms_form_elements_Hidden('uid', (int) ($icmsUser->getVar('uid'))));
+		$form2->addElement(new icms_form_elements_Hidden('op', 'avatarchoose'));
 		$form2->addElement(new icms_form_elements_Button('', 'submit2', _SUBMIT, 'submit'));
 		$form2->display();
 		/** Include the footer file to complete page rendering */

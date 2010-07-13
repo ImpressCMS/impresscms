@@ -127,25 +127,25 @@ if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, $icmsUser->ge
 		//$group_hidden = array_diff(xoops_gethandler('member')->getGroupList(),$group_manager_value);
 		$group_hidden = array_diff($groups,array_flip($group_manager_value));
 		foreach ($group_hidden as $key => $group) {
-			$group_hidden_select[] = new XoopsFormHidden('groups_hidden[' . $key . ']', $group);
+			$group_hidden_select[] = new icms_form_elements_Hidden('groups_hidden[' . $key . ']', $group);
 		}
 	}
 }
 else {
 	//add each user groups
 	foreach ($groups as $key => $group) {
-		$group_select[] = new XoopsFormHidden('groups[' . $key . ']', $group);
+		$group_select[] = new icms_form_elements_Hidden('groups[' . $key . ']', $group);
 	}
 }
 include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
 $icmspass = new icms_Password();
 
-$salt_hidden = new XoopsFormHidden('salt', $icmspass->icms_createSalt());
+$salt_hidden = new icms_form_elements_Hidden('salt', $icmspass->icms_createSalt());
 
-$enc_type_hidden = new XoopsFormHidden('enc_type', $icmsConfigUser['enc_type']);
-$pass_expired_hidden = new XoopsFormHidden('pass_expired', 0);
-$fct_hidden = new XoopsFormHidden("fct", "users");
-$op_hidden = new XoopsFormHidden("op", $op_value);
+$enc_type_hidden = new icms_form_elements_Hidden('enc_type', $icmsConfigUser['enc_type']);
+$pass_expired_hidden = new icms_form_elements_Hidden('pass_expired', 0);
+$fct_hidden = new icms_form_elements_Hidden("fct", "users");
+$op_hidden = new icms_form_elements_Hidden("op", $op_value);
 $submit_button = new icms_form_elements_Button("", "submit", _SUBMIT, "submit");
 
 $form = new XoopsThemeForm($form_title, "userinfo", "admin.php", "post", true);
@@ -209,7 +209,7 @@ $form->addElement($op_hidden);
 $form->addElement($submit_button);
 
 if (!empty($uid_value)) {
-	$uid_hidden = new XoopsFormHidden("uid", $uid_value);
+	$uid_hidden = new icms_form_elements_Hidden("uid", $uid_value);
 	$form->addElement($uid_hidden);
 }
 

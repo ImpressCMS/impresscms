@@ -73,9 +73,9 @@ class XoopsGroupPermForm extends XoopsForm
         $this->_modid = intval($modid);
         $this->_permName = $permname;
         $this->_permDesc = $permdesc;
-        $this->addElement(new XoopsFormHidden('modid', $this->_modid));
+        $this->addElement(new icms_form_elements_Hidden('modid', $this->_modid));
         if ($url != "") {
-            $this->addElement(new XoopsFormHidden('redirect_url', $url));
+            $this->addElement(new icms_form_elements_Hidden('redirect_url', $url));
         }
     }
 

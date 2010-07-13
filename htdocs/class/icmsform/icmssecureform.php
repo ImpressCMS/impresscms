@@ -43,7 +43,7 @@ class IcmsSecureForm extends IcmsForm {
 	 */
 	function IcmsSecureForm(&$target, $form_name, $form_caption, $form_action, $form_fields=null, $submit_button_caption = false, $cancel_js_action=false, $captcha=false) {
 		parent::IcmsForm($target, $form_name, $form_caption, $form_action, $form_fields, $submit_button_caption, $cancel_js_action, $captcha);
-		$this->addElement(new XoopsFormHiddenToken());
+		$this->addElement(new icms_form_elements_HiddenToken());
 	}
 }
 ?>

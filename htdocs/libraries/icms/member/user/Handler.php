@@ -78,7 +78,8 @@ class icms_member_user_Handler extends icms_core_ObjectHandler
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($user, 'xoopsuser')) {return false;}
+		icms_debug(get_class($user));
+		if (!is_a($user, 'icms_member_user_Object')) {return false;}
 		if (!$user->isDirty()) {return true;}
 		if (!$user->cleanVars()) {return false;}
 		foreach ($user->cleanVars as $k => $v) {${$k} = $v;}
@@ -118,7 +119,7 @@ class icms_member_user_Handler extends icms_core_ObjectHandler
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		if (!is_a($user, 'xoopsuser')) {return false;}
+		if (!is_a($user, 'icms_member_user_Object')) {return false;}
 		$pass = substr ( md5 ( time () ), 0, 8 );
 		$salt = substr ( md5 ( time () * 2 ), 0, 12 );
 		$sql = sprintf("UPDATE %s SET level = '-1', pass = '%s', salt = '%s' WHERE uid = '%u'", $this->db->prefix('users'), $pass, $salt, (int) ($user->getVar('uid')));

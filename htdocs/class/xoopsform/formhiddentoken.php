@@ -29,7 +29,7 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @author      Kazumi Ono  <onokazu@xoops.org>
  * @copyright   copyright (c) 2000-2005 XOOPS.org
  */
-class XoopsFormHiddenToken extends XoopsFormHidden {
+class icms_form_elements_HiddenToken extends icms_form_elements_Hidden {
 
 	/**
 	 * Constructor
@@ -37,8 +37,8 @@ class XoopsFormHiddenToken extends XoopsFormHidden {
 	 * @param   string  $name       "name" attribute
 	 * @param   int     $timeout    timeout variable for the createToken function
 	 */
-	function XoopsFormHiddenToken($name = _CORE_TOKEN, $timeout = 0){
-		$this->XoopsFormHidden($name . '_REQUEST', $GLOBALS['xoopsSecurity']->createToken($timeout, $name));
+	function icms_form_elements_HiddenToken($name = _CORE_TOKEN, $timeout = 0){
+		$this->icms_form_elements_Hidden($name . '_REQUEST', $GLOBALS['xoopsSecurity']->createToken($timeout, $name));
 	}
 }
 

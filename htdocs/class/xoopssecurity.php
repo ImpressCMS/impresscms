@@ -203,13 +203,13 @@ class IcmsSecurity {
 	}
 
 	/**
-	 * Get the HTML code for a @link XoopsFormHiddenToken object - used in forms that do not use XoopsForm elements
+	 * Get the HTML code for a @link icms_form_elements_HiddenToken object - used in forms that do not use XoopsForm elements
 	 *
 	 * @return string
 	 **/
 	public function getTokenHTML($name = _CORE_TOKEN) {
 		require_once ICMS_ROOT_PATH."/class/xoopsformloader.php" ;
-		$token = new XoopsFormHiddenToken($name);
+		$token = new icms_form_elements_HiddenToken($name);
 		return $token->render();
 	}
 

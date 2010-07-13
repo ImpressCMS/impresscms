@@ -40,16 +40,16 @@ class XoopsGTicket {
 		return '<input type="hidden" name="XOOPS_G_TICKET" value="'.$this->issue( $salt , $timeout , $area ).'" />' ;
 	}
 
-	// returns an object of XoopsFormHidden including theh ticket
+	// returns an object of icms_form_elements_Hidden including theh ticket
 	function getTicketXoopsForm( $salt = '' , $timeout = 1800 , $area = '' )
 	{
-		return new XoopsFormHidden( 'XOOPS_G_TICKET' , $this->issue( $salt , $timeout , $area ) ) ;
+		return new icms_form_elements_Hidden( 'XOOPS_G_TICKET' , $this->issue( $salt , $timeout , $area ) ) ;
 	}
 
 	// add a ticket as Hidden Element into XoopsForm
 	function addTicketicms_form_Element( &$form , $salt = '' , $timeout = 1800 , $area = '' )
 	{
-		$form->addElement( new XoopsFormHidden( 'XOOPS_G_TICKET' , $this->issue( $salt , $timeout , $area ) ) ) ;
+		$form->addElement( new icms_form_elements_Hidden( 'XOOPS_G_TICKET' , $this->issue( $salt , $timeout , $area ) ) ) ;
 	}
 
 	// returns an array for xoops_confirm() ;

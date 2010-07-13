@@ -23,7 +23,7 @@ if (!empty($_POST['memberslist_id'])) {
 	$user_count = count($_POST['memberslist_id']);
 	$display_names = "";
 	for ( $i = 0; $i < $user_count; $i++) {
-		$uid_hidden = new XoopsFormHidden("mail_to_user[]", $_POST['memberslist_id'][$i]);
+		$uid_hidden = new icms_form_elements_Hidden("mail_to_user[]", $_POST['memberslist_id'][$i]);
 		$form->addElement($uid_hidden);
 		$display_names .= "<a href='".ICMS_URL."/userinfo.php?uid=".$_POST['memberslist_id'][$i]."' target='_blank'>".$_POST['memberslist_uname'][$_POST['memberslist_id'][$i]]."</a>, ";
 		unset($uid_hidden);
@@ -71,8 +71,8 @@ $body_text = new XoopsFormTextArea($body_caption, "mail_body", "", 10);
 $to_checkbox = new icms_form_elements_Checkbox(_AM_SENDTO, "mail_send_to", "mail");
 $to_checkbox->addOption("mail", _AM_EMAIL);
 $to_checkbox->addOption("pm", _AM_PM);
-$start_hidden = new XoopsFormHidden("mail_start", 0);
-$op_hidden = new XoopsFormHidden("op", "send");
+$start_hidden = new icms_form_elements_Hidden("mail_start", 0);
+$op_hidden = new icms_form_elements_Hidden("op", "send");
 $submit_button = new icms_form_elements_Button("", "mail_submit", _SEND, "submit");
 
 $form->addElement($fname_text);

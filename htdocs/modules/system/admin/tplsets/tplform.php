@@ -27,11 +27,11 @@ if ($tform['tpl_tplset'] == 'default') {
 	$tpl_src->setExtra('readonly');
 }
 $form->addElement($tpl_src);
-$form->addElement(new XoopsFormHidden('id', $tform['tpl_id']));
-$form->addElement(new XoopsFormHidden('op', 'edittpl_go'));
-$form->addElement(new XoopsFormHidden('redirect', 'edittpl'));
-$form->addElement(new XoopsFormHidden('fct', 'tplsets'));
-$form->addElement(new XoopsFormHidden('moddir', $tform['tpl_module']));
+$form->addElement(new icms_form_elements_Hidden('id', $tform['tpl_id']));
+$form->addElement(new icms_form_elements_Hidden('op', 'edittpl_go'));
+$form->addElement(new icms_form_elements_Hidden('redirect', 'edittpl'));
+$form->addElement(new icms_form_elements_Hidden('fct', 'tplsets'));
+$form->addElement(new icms_form_elements_Hidden('moddir', $tform['tpl_module']));
 if ($tform['tpl_tplset'] != 'default') {
 	$button_tray = new icms_form_elements_Tray('');
 	$button_tray->addElement(new icms_form_elements_Button('', 'previewtpl', _PREVIEW, 'submit'));

@@ -159,24 +159,24 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				$form = new XoopsThemeForm(_AM_SENDMTOUSERS, "mailusers", "admin.php?fct=mailusers", 'post', true);
 				if (!empty($_POST['mail_to_group'])) {
 					foreach ( $_POST['mail_to_group'] as $mailgroup) {
-						$group_hidden = new XoopsFormHidden("mail_to_group[]", $mailgroup);
+						$group_hidden = new icms_form_elements_Hidden("mail_to_group[]", $mailgroup);
 						$form->addElement($group_hidden);
 					}
 				}
-				$inactive_hidden = new XoopsFormHidden("mail_inactive", @$_POST['mail_inactive']);
-				$lastlog_min_hidden = new XoopsFormHidden("mail_lastlog_min", $myts->makeTboxData4PreviewInForm($_POST['mail_lastlog_min']));
-				$lastlog_max_hidden = new XoopsFormHidden("mail_lastlog_max", $myts->makeTboxData4PreviewInForm($_POST['mail_lastlog_max']));
-				$regd_min_hidden = new XoopsFormHidden("mail_regd_min", $myts->makeTboxData4PreviewInForm($_POST['mail_regd_min']));
-				$regd_max_hidden = new XoopsFormHidden("mail_regd_max", $myts->makeTboxData4PreviewInForm($_POST['mail_regd_max']));
-				$idle_more_hidden = new XoopsFormHidden("mail_idle_more", $myts->makeTboxData4PreviewInForm($_POST['mail_idle_more']));
-				$idle_less_hidden = new XoopsFormHidden("mail_idle_less", $myts->makeTboxData4PreviewInForm($_POST['mail_idle_less']));
-				$fname_hidden = new XoopsFormHidden("mail_fromname", $myts->makeTboxData4PreviewInForm($_POST['mail_fromname']));
-				$femail_hidden = new XoopsFormHidden("mail_fromemail", $myts->makeTboxData4PreviewInForm($_POST['mail_fromemail']));
-				$subject_hidden = new XoopsFormHidden("mail_subject", $myts->makeTboxData4PreviewInForm($_POST['mail_subject']));
-				$body_hidden = new XoopsFormHidden("mail_body", $myts->makeTareaData4PreviewInForm($_POST['mail_body']));
-				$start_hidden = new XoopsFormHidden("mail_start", $_POST['mail_start'] + $limit);
-				$mail_mailok_hidden = new XoopsFormHidden("mail_mailok", $myts->makeTboxData4PreviewInForm( @$_POST['mail_mailok'] ));
-				$op_hidden = new XoopsFormHidden("op", "send");
+				$inactive_hidden = new icms_form_elements_Hidden("mail_inactive", @$_POST['mail_inactive']);
+				$lastlog_min_hidden = new icms_form_elements_Hidden("mail_lastlog_min", $myts->makeTboxData4PreviewInForm($_POST['mail_lastlog_min']));
+				$lastlog_max_hidden = new icms_form_elements_Hidden("mail_lastlog_max", $myts->makeTboxData4PreviewInForm($_POST['mail_lastlog_max']));
+				$regd_min_hidden = new icms_form_elements_Hidden("mail_regd_min", $myts->makeTboxData4PreviewInForm($_POST['mail_regd_min']));
+				$regd_max_hidden = new icms_form_elements_Hidden("mail_regd_max", $myts->makeTboxData4PreviewInForm($_POST['mail_regd_max']));
+				$idle_more_hidden = new icms_form_elements_Hidden("mail_idle_more", $myts->makeTboxData4PreviewInForm($_POST['mail_idle_more']));
+				$idle_less_hidden = new icms_form_elements_Hidden("mail_idle_less", $myts->makeTboxData4PreviewInForm($_POST['mail_idle_less']));
+				$fname_hidden = new icms_form_elements_Hidden("mail_fromname", $myts->makeTboxData4PreviewInForm($_POST['mail_fromname']));
+				$femail_hidden = new icms_form_elements_Hidden("mail_fromemail", $myts->makeTboxData4PreviewInForm($_POST['mail_fromemail']));
+				$subject_hidden = new icms_form_elements_Hidden("mail_subject", $myts->makeTboxData4PreviewInForm($_POST['mail_subject']));
+				$body_hidden = new icms_form_elements_Hidden("mail_body", $myts->makeTareaData4PreviewInForm($_POST['mail_body']));
+				$start_hidden = new icms_form_elements_Hidden("mail_start", $_POST['mail_start'] + $limit);
+				$mail_mailok_hidden = new icms_form_elements_Hidden("mail_mailok", $myts->makeTboxData4PreviewInForm( @$_POST['mail_mailok'] ));
+				$op_hidden = new icms_form_elements_Hidden("op", "send");
 				$submit_button = new icms_form_elements_Button("", "mail_submit", _AM_SENDNEXT, "submit");
 				$sent_label = new XoopsFormLabel(_AM_SENT, sprintf(_AM_SENTNUM, $_POST['mail_start']+1, $_POST['mail_start'] + $limit, $count_criteria + $added_count - $limit));
 				$form->addElement($sent_label);
@@ -196,10 +196,10 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				$form->addElement($mail_mailok_hidden);
 				if (isset($_POST['mail_send_to']) && is_array($_POST['mail_send_to'])) {
 					foreach ($_POST['mail_send_to'] as $v) {
-						$form->addElement(new XoopsFormHidden("mail_send_to[]", $v));
+						$form->addElement(new icms_form_elements_Hidden("mail_send_to[]", $v));
 					}
 				} else {
-					$to_hidden = new XoopsFormHidden("mail_send_to", 'mail');
+					$to_hidden = new icms_form_elements_Hidden("mail_send_to", 'mail');
 					$form->addElement($to_hidden);
 				}
 				$form->addElement($submit_button);

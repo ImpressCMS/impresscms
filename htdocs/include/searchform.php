@@ -56,8 +56,8 @@ if ($icmsConfigSearch['keyword_min'] > 0) {
 	$search_form->addElement(new XoopsFormLabel(_SR_SEARCHRULE, sprintf(_SR_KEYIGNORE, icms_conv_nr2local($icmsConfigSearch['keyword_min']))));
 }
 
-$search_form->addElement(new XoopsFormHidden("action", "results"));
-$search_form->addElement(new XoopsFormHiddenToken('id'));
+$search_form->addElement(new icms_form_elements_Hidden("action", "results"));
+$search_form->addElement(new icms_form_elements_HiddenToken('id'));
 $search_form->addElement(new icms_form_elements_Button("", "submit", _SR_SEARCH, "submit"));
 return $search_form->render();	// Added by Lankford on 2007/7/26.
 

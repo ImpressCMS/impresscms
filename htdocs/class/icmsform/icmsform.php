@@ -120,12 +120,12 @@ class IcmsForm extends XoopsThemeForm {
 				$formElement->setExtra('disabled="disabled"');
 				$formElement->setName($key . '-readonly');
 				// Since this element is disabled, we still want to pass it's value in the form
-				$hidden = new XoopsFormHidden($key, $this->targetObject->vars[$key]['value']);
+				$hidden = new icms_form_elements_Hidden($key, $this->targetObject->vars[$key]['value']);
 				$this->addElement($hidden);
 			}
 			$formElement->setDescription($var['form_dsc']);
 			if (isset($this->targetObject->controls[$key]['onSelect'])) {
-				$hidden = new XoopsFormHidden('changedField', false);
+				$hidden = new icms_form_elements_Hidden('changedField', false);
 				$this->addElement($hidden);
 				$otherExtra = isset($var['form_extra']) ? $var['form_extra'] : '';
 				$onchangedString = "this.form.elements.changedField.value='$key'; this.form.elements.op.value='changedField'; submit()";
@@ -162,7 +162,7 @@ class IcmsForm extends XoopsThemeForm {
 			// If $displayOnForm is false OR this is the primary key, it doesn't
 			// need to be displayed, then we only create an hidden field
 			if ($key == $this->targetObject->handler->keyName || !$var['displayOnForm']) {
-				$elementToAdd = new XoopsFormHidden($key, $var['value']);
+				$elementToAdd = new icms_form_elements_Hidden($key, $var['value']);
 				$this->addElement($elementToAdd, $key, $var, false);
 				unset($elementToAdd);
 				// If not, the we need to create the proper form control for this fields
@@ -289,7 +289,7 @@ class IcmsForm extends XoopsThemeForm {
 			}
 		}
 		// Add a hidden field to store the URL of the page before this form
-		$this->addElement(new XoopsFormHidden('icms_page_before_form', icms_get_page_before_form()));
+		$this->addElement(new icms_form_elements_Hidden('icms_page_before_form', icms_get_page_before_form()));
 	}
 
 	/**
@@ -332,7 +332,7 @@ class IcmsForm extends XoopsThemeForm {
 	function createButtons($form_name, $form_caption, $submit_button_caption = false) {
 
 		$button_tray = new icms_form_elements_Tray('', '');
-		$button_tray->addElement(new XoopsFormHidden('op', $form_name));
+		$button_tray->addElement(new icms_form_elements_Hidden('op', $form_name));
 		if(!$submit_button_caption){
 			if ($this->targetObject->isNew()) {
 				$butt_create = new icms_form_elements_Button('', 'create_button', _CO_ICMS_CREATE, 'submit');

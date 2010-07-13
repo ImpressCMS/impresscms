@@ -74,7 +74,7 @@ if (is_object($icmsUser)) {
 		$html_checkbox->addOption(1, _CM_DOHTML);
 		$option_tray->addElement($html_checkbox);
 	} else {
-		$cform->addElement(new XoopsFormHidden('dohtml', $dohtml));
+		$cform->addElement(new icms_form_elements_Hidden('dohtml', $dohtml));
 	}
 }
 $smiley_checkbox = new icms_form_elements_Checkbox('', 'dosmiley', $dosmiley);
@@ -88,12 +88,12 @@ $br_checkbox->addOption(1, _CM_DOAUTOWRAP);
 $option_tray->addElement($br_checkbox);
 
 $cform->addElement($option_tray);
-$cform->addElement(new XoopsFormHidden('com_pid', (int) ($com_pid)));
-$cform->addElement(new XoopsFormHidden('com_rootid', (int) ($com_rootid)));
-$cform->addElement(new XoopsFormHidden('com_id', $com_id));
-$cform->addElement(new XoopsFormHidden('com_itemid', $com_itemid));
-$cform->addElement(new XoopsFormHidden('com_order', $com_order));
-$cform->addElement(new XoopsFormHidden('com_mode', $com_mode));
+$cform->addElement(new icms_form_elements_Hidden('com_pid', (int) ($com_pid)));
+$cform->addElement(new icms_form_elements_Hidden('com_rootid', (int) ($com_rootid)));
+$cform->addElement(new icms_form_elements_Hidden('com_id', $com_id));
+$cform->addElement(new icms_form_elements_Hidden('com_itemid', $com_itemid));
+$cform->addElement(new icms_form_elements_Hidden('com_order', $com_order));
+$cform->addElement(new icms_form_elements_Hidden('com_mode', $com_mode));
 
 // add module specific extra params
 
@@ -110,7 +110,7 @@ if ('system' != $icmsModule->getVar('dirname')) {
 			} else {
 				$hidden_value = '';
 			}
-			$cform->addElement(new XoopsFormHidden($extra_param, $hidden_value));
+			$cform->addElement(new icms_form_elements_Hidden($extra_param, $hidden_value));
 		}
 	}
 }

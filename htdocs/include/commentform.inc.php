@@ -48,10 +48,10 @@ $smiley_checkbox->addOption(1, _DISABLESMILEY);
 $option_tray->addElement($smiley_checkbox);
 
 $cform->addElement($option_tray);
-$cform->addElement(new XoopsFormHidden('pid', (int) ($pid)));
-$cform->addElement(new XoopsFormHidden('comment_id', (int) ($comment_id)));
-$cform->addElement(new XoopsFormHidden('item_id', (int) ($item_id)));
-$cform->addElement(new XoopsFormHidden('order', (int) ($order)));
+$cform->addElement(new icms_form_elements_Hidden('pid', (int) ($pid)));
+$cform->addElement(new icms_form_elements_Hidden('comment_id', (int) ($comment_id)));
+$cform->addElement(new icms_form_elements_Hidden('item_id', (int) ($item_id)));
+$cform->addElement(new icms_form_elements_Hidden('order', (int) ($order)));
 $button_tray = new icms_form_elements_Tray('' ,'&nbsp;');
 $button_tray->addElement(new icms_form_elements_Button('', 'preview', _PREVIEW, 'submit'));
 $button_tray->addElement(new icms_form_elements_Button('', 'post', _CM_POSTCOMMENT, 'submit'));

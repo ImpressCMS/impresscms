@@ -411,10 +411,10 @@ if (empty($_POST["user_submit"])) {
 	}
 
 	$form->addElement( new XoopsFormText(_MA_USER_LIMIT, "limit", 6, 6, empty($_REQUEST["limit"]) ? 50 : (int) ($_REQUEST["limit"])) );
-	$form->addElement( new XoopsFormHidden("mode", $mode) );
-	$form->addElement( new XoopsFormHidden("target", @$_REQUEST["target"]) );
-	$form->addElement( new XoopsFormHidden("multiple", @$_REQUEST["multiple"]) );
-	$form->addElement( new XoopsFormHidden("token", $token) );
+	$form->addElement( new icms_form_elements_Hidden("mode", $mode) );
+	$form->addElement( new icms_form_elements_Hidden("target", @$_REQUEST["target"]) );
+	$form->addElement( new icms_form_elements_Hidden("multiple", @$_REQUEST["multiple"]) );
+	$form->addElement( new icms_form_elements_Hidden("token", $token) );
 	$form->addElement( new icms_form_elements_Button("", "user_submit", _SUBMIT, "submit") );
 
 	$acttotal = $user_handler->getCount(new icms_criteria_Item('level', 0, '>'));

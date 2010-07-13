@@ -96,7 +96,7 @@ function SmilesEdit($id)
 				$smiles['smile_form'] = _AM_EDITSMILE;
 				$smiles['op'] = 'SmilesSave';
 				include ICMS_ROOT_PATH.'/modules/system/admin/smilies/smileform.php';
-				$smile_form->addElement(new XoopsFormHidden('old_smile', $smiles['smile_url']));
+				$smile_form->addElement(new icms_form_elements_Hidden('old_smile', $smiles['smile_url']));
 				$smile_form->display();
 			}
 		}

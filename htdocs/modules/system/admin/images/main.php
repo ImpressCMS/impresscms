@@ -225,8 +225,8 @@ function imanager_index($imgcat_id=null) {
 		$form->addElement(new icms_form_elements_File(_IMAGEFILE, 'image_file', 5000000));
 		$form->addElement(new XoopsFormText(_IMGWEIGHT, 'image_weight', 3, 4, 0));
 		$form->addElement(new XoopsFormRadioYN(_IMGDISPLAY, 'image_display', 1, _YES, _NO));
-		$form->addElement(new XoopsFormHidden('op', 'addfile'));
-		$form->addElement(new XoopsFormHidden('fct', 'images'));
+		$form->addElement(new icms_form_elements_Hidden('op', 'addfile'));
+		$form->addElement(new icms_form_elements_Hidden('fct', 'images'));
 		$tray = new icms_form_elements_Tray('' ,'');
 		$tray->addElement(new icms_form_elements_Button('', 'img_button', _SUBMIT, 'submit'));
 		$btn = new icms_form_elements_Button('', 'reset', _CANCEL, 'button');
@@ -261,8 +261,8 @@ function imanager_index($imgcat_id=null) {
 	$js .= 'if (fname.disabled == false && fname.value == "") {alert("'.sprintf( _FORM_ENTER, _MD_IMGCATFOLDERNAME ).'"); return false;}';
 	$fname->customValidationCode[] = $js;
 	$form->addElement($fname,true);
-	$form->addElement(new XoopsFormHidden('op', 'addcat'));
-	$form->addElement(new XoopsFormHidden('fct', 'images'));
+	$form->addElement(new icms_form_elements_Hidden('op', 'addcat'));
+	$form->addElement(new icms_form_elements_Hidden('fct', 'images'));
 	$tray1 = new icms_form_elements_Tray('' ,'');
 	$tray1->addElement(new icms_form_elements_Button('', 'imgcat_button', _SUBMIT, 'submit'));
 	$btn = new icms_form_elements_Button('', 'reset', _CANCEL, 'button');
@@ -586,9 +586,9 @@ function imanager_editcat($imgcat_id) {
 	$form->addElement(new XoopsFormRadioYN(_MD_IMGCATDISPLAY, 'imgcat_display', $imagecategory->getVar('imgcat_display'), _YES, _NO));
 	$storetype = array('db' => _MD_INDB, 'file' => sprintf(_MD_ASFILE,$imgcat_handler->getCategFolder($imagecategory)));
 	$form->addElement(new XoopsFormLabel(_MD_IMGCATSTRTYPE, $storetype[$imagecategory->getVar('imgcat_storetype')]));
-	$form->addElement(new XoopsFormHidden('imgcat_id', $imgcat_id));
-	$form->addElement(new XoopsFormHidden('op', 'updatecat'));
-	$form->addElement(new XoopsFormHidden('fct', 'images'));
+	$form->addElement(new icms_form_elements_Hidden('imgcat_id', $imgcat_id));
+	$form->addElement(new icms_form_elements_Hidden('op', 'updatecat'));
+	$form->addElement(new icms_form_elements_Hidden('fct', 'images'));
 	$form->addElement(new icms_form_elements_Button('', 'imgcat_button', _SUBMIT, 'submit'));
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url(admin/images/images/images_big.png)">'.adminNav($imgcat_id).'</div><br />';
@@ -931,9 +931,9 @@ function showAddImgForm($imgcat_id) {
 	$form->addElement(new icms_form_elements_File(_IMAGEFILE, 'image_file', 5000000));
 	$form->addElement(new XoopsFormText(_IMGWEIGHT, 'image_weight', 3, 4, 0));
 	$form->addElement(new XoopsFormRadioYN(_IMGDISPLAY, 'image_display', 1, _YES, _NO));
-	$form->addElement(new XoopsFormHidden('imgcat_id', $imgcat_id));
-	$form->addElement(new XoopsFormHidden('op', 'addfile'));
-	$form->addElement(new XoopsFormHidden('fct', 'images'));
+	$form->addElement(new icms_form_elements_Hidden('imgcat_id', $imgcat_id));
+	$form->addElement(new icms_form_elements_Hidden('op', 'addfile'));
+	$form->addElement(new icms_form_elements_Hidden('fct', 'images'));
 	$tray = new icms_form_elements_Tray('' ,'');
 	$tray->addElement(new icms_form_elements_Button('', 'img_button', _SUBMIT, 'submit'));
 	$btn = new icms_form_elements_Button('', 'reset', _CANCEL, 'button');
