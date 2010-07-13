@@ -34,10 +34,10 @@ $form->addElement(new XoopsFormHidden('fct', 'tplsets'));
 $form->addElement(new XoopsFormHidden('moddir', $tform['tpl_module']));
 if ($tform['tpl_tplset'] != 'default') {
 	$button_tray = new XoopsFormElementTray('');
-	$button_tray->addElement(new icms_form_Button('', 'previewtpl', _PREVIEW, 'submit'));
-	$button_tray->addElement(new icms_form_Button('', 'submittpl', _SUBMIT, 'submit'));
+	$button_tray->addElement(new icms_form_elements_Button('', 'previewtpl', _PREVIEW, 'submit'));
+	$button_tray->addElement(new icms_form_elements_Button('', 'submittpl', _SUBMIT, 'submit'));
 	$form->addElement($button_tray);
 } else {
-	$form->addElement(new icms_form_Button('', 'previewtpl', _MD_VIEW, 'submit'));
+	$form->addElement(new icms_form_elements_Button('', 'previewtpl', _MD_VIEW, 'submit'));
 }
 ?>

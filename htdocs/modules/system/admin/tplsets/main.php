@@ -89,7 +89,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			$form->addElement(new XoopsFormText(_MD_NTHEMENAME.'<br /><span style="font-weight:normal;">'._MD_ENTERTH.'</span>', 'tplset_name', 20, 50));
 			$form->addElement(new XoopsFormHidden('op', 'uploadtar_go'));
 			$form->addElement(new XoopsFormHidden('fct', 'tplsets'));
-			$form->addElement(new icms_form_Button('', 'upload_button', _MD_UPLOAD, 'submit'));
+			$form->addElement(new icms_form_elements_Button('', 'upload_button', _MD_UPLOAD, 'submit'));
 			$form->display();
 			icms_cp_footer();
 			break;
@@ -406,7 +406,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			$form->addElement(new XoopsFormHidden('tplset', $tplset));
 			$form->addElement(new XoopsFormHidden('op', 'clone_go'));
 			$form->addElement(new XoopsFormHidden('fct', 'tplsets'));
-			$form->addElement(new icms_form_Button('', 'tpl_button', _SUBMIT, 'submit'));
+			$form->addElement(new icms_form_elements_Button('', 'tpl_button', _SUBMIT, 'submit'));
 			icms_cp_header();
 			echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/tplsets/images/tplsets_big.png)"><a href="admin.php?fct=tplsets">'. _MD_TPLMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._MD_CLONETHEME.'<br /><br /></div><br />';
 			$form->display();
@@ -546,7 +546,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				$form->addElement(new XoopsFormHidden('tpl_id', $id));
 				$form->addElement(new XoopsFormHidden('op', 'uploadtpl_go'));
 				$form->addElement(new XoopsFormHidden('fct', 'tplsets'));
-				$form->addElement(new icms_form_Button('', 'upload_button', _MD_UPLOAD, 'submit'));
+				$form->addElement(new icms_form_elements_Button('', 'upload_button', _MD_UPLOAD, 'submit'));
 				$form->display();
 				icms_cp_footer();
 				exit();
@@ -615,7 +615,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			$form->addElement(new XoopsFormHidden('type', $type));
 			$form->addElement(new XoopsFormHidden('op', 'uploadtpl2_go'));
 			$form->addElement(new XoopsFormHidden('fct', 'tplsets'));
-			$form->addElement(new icms_form_Button('', 'ploadtarupload_button', _MD_UPLOAD, 'submit'));
+			$form->addElement(new icms_form_elements_Button('', 'ploadtarupload_button', _MD_UPLOAD, 'submit'));
 			$form->display();
 			icms_cp_footer();
 			break;

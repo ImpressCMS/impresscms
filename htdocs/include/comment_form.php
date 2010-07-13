@@ -68,7 +68,7 @@ if (is_object($icmsUser)) {
 				)
 			);
 			$cform->addElement($status_select);
-			$button_tray->addElement(new icms_form_Button('', 'com_dodelete', _DELETE, 'submit'));
+			$button_tray->addElement(new icms_form_elements_Button('', 'com_dodelete', _DELETE, 'submit'));
 		}
 		$html_checkbox = new icms_form_elements_Checkbox('', 'dohtml', $dohtml);
 		$html_checkbox->addOption(1, _CM_DOHTML);
@@ -119,7 +119,7 @@ if ($icmsConfig['use_captchaf'] == true) {
 	$cform->addElement(new icms_form_elements_Captcha());
 }
 // Captcha Hack
-$button_tray->addElement(new icms_form_Button('', 'com_dopreview', _PREVIEW, 'submit'));
-$button_tray->addElement(new icms_form_Button('', 'com_dopost', _CM_POSTCOMMENT, 'submit'));
+$button_tray->addElement(new icms_form_elements_Button('', 'com_dopreview', _PREVIEW, 'submit'));
+$button_tray->addElement(new icms_form_elements_Button('', 'com_dopost', _CM_POSTCOMMENT, 'submit'));
 $cform->addElement($button_tray);
 $cform->display();

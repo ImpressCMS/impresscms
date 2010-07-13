@@ -146,7 +146,7 @@ $enc_type_hidden = new XoopsFormHidden('enc_type', $icmsConfigUser['enc_type']);
 $pass_expired_hidden = new XoopsFormHidden('pass_expired', 0);
 $fct_hidden = new XoopsFormHidden("fct", "users");
 $op_hidden = new XoopsFormHidden("op", $op_value);
-$submit_button = new icms_form_Button("", "submit", _SUBMIT, "submit");
+$submit_button = new icms_form_elements_Button("", "submit", _SUBMIT, "submit");
 
 $form = new XoopsThemeForm($form_title, "userinfo", "admin.php", "post", true);
 $form->addElement($uname_text, true);

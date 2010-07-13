@@ -146,8 +146,8 @@ class XoopsGroupPermForm extends XoopsForm
             unset($ele);
         }
         $tray = new XoopsFormElementTray('');
-        $tray->addElement(new icms_form_Button('', 'submit', _SUBMIT, 'submit'));
-        $tray->addElement(new icms_form_Button('', 'reset', _CANCEL, 'reset'));
+        $tray->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));
+        $tray->addElement(new icms_form_elements_Button('', 'reset', _CANCEL, 'reset'));
         $this->addElement($tray);
         $ret = '<h4>' . $this->getTitle() . '</h4>' . $this->_permDesc . '<br />';
         $ret .= "<form name='" . $this->getName() . "' id='" . $this->getName() . "' action='" . $this->getAction() . "' method='" . $this->getMethod() . "'" . $this->getExtra() . ">\n<table width='100%' class='outer' cellspacing='1' valign='top'>\n";

@@ -32,7 +32,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage  form
  */
-class icms_form_Button extends XoopsFormElement {
+class icms_form_elements_Button extends XoopsFormElement {
 
 	/**
 	 * Value
@@ -57,7 +57,7 @@ class icms_form_Button extends XoopsFormElement {
 	 * @param	string  $type       Type of the button.
 	 * This could be either "button", "submit", or "reset"
 	 */
-	function icms_form_Button($caption, $name, $value = "", $type = "button") {
+	function icms_form_elements_Button($caption, $name, $value = "", $type = "button") {
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_type = $type;

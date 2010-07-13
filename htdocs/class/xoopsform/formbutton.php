@@ -31,10 +31,10 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage  form
  */
-class XoopsFormButton extends icms_form_Button {
+class XoopsFormButton extends icms_form_elements_Button {
 	private $_deprecated;
 	public function __construct() {
 		parent::getInstance();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_Button', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Button', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }

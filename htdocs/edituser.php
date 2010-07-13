@@ -387,7 +387,7 @@ if ($op == 'editprofile')
 	$salt_hidden = new XoopsFormHidden('salt', $icmsUser->getVar('salt'));
 	$uid_hidden = new XoopsFormHidden('uid', (int) ($icmsUser->getVar('uid')));
 	$op_hidden = new XoopsFormHidden('op', 'saveuser');
-	$submit_button = new icms_form_Button('', 'submit', _US_SAVECHANGES, 'submit');
+	$submit_button = new icms_form_elements_Button('', 'submit', _US_SAVECHANGES, 'submit');
 
 	$form->addElement($timezone_select);
 	$form->addElement($icq_text);
@@ -462,7 +462,7 @@ if ($op == 'avatarform')
 		$form->addElement(new XoopsFormFile(_US_SELFILE, 'avatarfile', icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])), true);
 		$form->addElement(new XoopsFormHidden('op', 'avatarupload'));
 		$form->addElement(new XoopsFormHidden('uid', (int) ($icmsUser->getVar('uid'))));
-		$form->addElement(new icms_form_Button('', 'submit', _SUBMIT, 'submit'));
+		$form->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));
 		$form->display();
 	}
 	$avatar_handler =& xoops_gethandler('avatar');
@@ -478,7 +478,7 @@ if ($op == 'avatarform')
 		$form2->addElement($avatar_tray);
 		$form2->addElement(new XoopsFormHidden('uid', (int) ($icmsUser->getVar('uid'))));
 		$form2->addElement(new XoopsFormHidden('op', 'avatarchoose'));
-		$form2->addElement(new icms_form_Button('', 'submit2', _SUBMIT, 'submit'));
+		$form2->addElement(new icms_form_elements_Button('', 'submit2', _SUBMIT, 'submit'));
 		$form2->display();
 		/** Include the footer file to complete page rendering */
 		include ICMS_ROOT_PATH.'/footer.php';

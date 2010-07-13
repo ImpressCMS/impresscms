@@ -415,7 +415,7 @@ if (empty($_POST["user_submit"])) {
 	$form->addElement( new XoopsFormHidden("target", @$_REQUEST["target"]) );
 	$form->addElement( new XoopsFormHidden("multiple", @$_REQUEST["multiple"]) );
 	$form->addElement( new XoopsFormHidden("token", $token) );
-	$form->addElement( new icms_form_Button("", "user_submit", _SUBMIT, "submit") );
+	$form->addElement( new icms_form_elements_Button("", "user_submit", _SUBMIT, "submit") );
 
 	$acttotal = $user_handler->getCount(new icms_criteria_Item('level', 0, '>'));
 	$inacttotal = $user_handler->getCount(new icms_criteria_Item('level', 0, '<='));

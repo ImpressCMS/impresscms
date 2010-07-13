@@ -335,13 +335,13 @@ class IcmsForm extends XoopsThemeForm {
 		$button_tray->addElement(new XoopsFormHidden('op', $form_name));
 		if(!$submit_button_caption){
 			if ($this->targetObject->isNew()) {
-				$butt_create = new icms_form_Button('', 'create_button', _CO_ICMS_CREATE, 'submit');
+				$butt_create = new icms_form_elements_Button('', 'create_button', _CO_ICMS_CREATE, 'submit');
 			} else {
-				$butt_create = new icms_form_Button('', 'modify_button', _CO_ICMS_MODIFY, 'submit');
+				$butt_create = new icms_form_elements_Button('', 'modify_button', _CO_ICMS_MODIFY, 'submit');
 			}
 		}
 		else {
-			$butt_create = new icms_form_Button('', 'modify_button', $submit_button_caption , 'submit');
+			$butt_create = new icms_form_elements_Button('', 'modify_button', $submit_button_caption , 'submit');
 		}
 		$butt_create->setExtra('onclick="this.form.elements.op.value=\'' . $form_name . '\'"');
 		$button_tray->addElement($butt_create);
@@ -349,7 +349,7 @@ class IcmsForm extends XoopsThemeForm {
 		//creating custom buttons
 		if ($this->_custom_button) {
 			foreach($this->_custom_button as $custom_button) {
-				$butt_custom = new icms_form_Button('', $custom_button['name'], $custom_button['caption'], 'submit');
+				$butt_custom = new icms_form_elements_Button('', $custom_button['name'], $custom_button['caption'], 'submit');
 				if ($custom_button['onclick']) {
 					$butt_custom->setExtra('onclick="' . $custom_button['onclick'] . '"');
 				}
@@ -359,7 +359,7 @@ class IcmsForm extends XoopsThemeForm {
 		}
 
 		// creating the "cancel" button
-		$butt_cancel = new icms_form_Button('', 'cancel_button', _CO_ICMS_CANCEL, 'button');
+		$butt_cancel = new icms_form_elements_Button('', 'cancel_button', _CO_ICMS_CANCEL, 'button');
 		if ($this->_cancel_js_action) {
 			$butt_cancel->setExtra('onclick="' . $this->_cancel_js_action . '"');
 		} else {

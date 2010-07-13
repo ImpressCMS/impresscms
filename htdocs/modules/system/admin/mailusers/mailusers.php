@@ -177,7 +177,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				$start_hidden = new XoopsFormHidden("mail_start", $_POST['mail_start'] + $limit);
 				$mail_mailok_hidden = new XoopsFormHidden("mail_mailok", $myts->makeTboxData4PreviewInForm( @$_POST['mail_mailok'] ));
 				$op_hidden = new XoopsFormHidden("op", "send");
-				$submit_button = new icms_form_Button("", "mail_submit", _AM_SENDNEXT, "submit");
+				$submit_button = new icms_form_elements_Button("", "mail_submit", _AM_SENDNEXT, "submit");
 				$sent_label = new XoopsFormLabel(_AM_SENT, sprintf(_AM_SENTNUM, $_POST['mail_start']+1, $_POST['mail_start'] + $limit, $count_criteria + $added_count - $limit));
 				$form->addElement($sent_label);
 				$form->addElement($inactive_hidden);

@@ -66,6 +66,6 @@ if ($icmsConfigUser['use_captcha'] == true) {
 	$reg_form->addElement(new XoopsFormHidden("op", "newuser"));
 }
 
-$reg_form->addElement(new icms_form_Button("", "submit", _US_SUBMIT, "submit"));
+$reg_form->addElement(new icms_form_elements_Button("", "submit", _US_SUBMIT, "submit"));
 
 ?>
