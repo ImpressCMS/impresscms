@@ -22,7 +22,6 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/form.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formlabel.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formpassword.php";
-include_once ICMS_ROOT_PATH."/class/xoopsform/formhidden.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formradio.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formradioyn.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formselectcountry.php";
