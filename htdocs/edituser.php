@@ -277,7 +277,7 @@ if ($op == 'editprofile')
 	$form = new XoopsThemeForm(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
 	$login_name_label = new XoopsFormLabel(_US_LOGINNAME, $icmsUser->getVar('login_name'));
 	$form->addElement($login_name_label);
-	$email_tray = new XoopsFormElementTray(_US_EMAIL, '<br />');
+	$email_tray = new icms_form_elements_Tray(_US_EMAIL, '<br />');
 	if ($icmsConfigUser['allow_chgmail'] == 1)
 	{
 		$email_text = new XoopsFormText('', 'email', 30, 60, $icmsUser->getVar('email'));
@@ -293,7 +293,7 @@ if ($op == 'editprofile')
 	$form->addElement($email_tray);
 
 	if ($icmsConfigAuth['auth_openid'] == 1) {
-		$openid_tray = new XoopsFormElementTray(_US_OPENID_FORM_CAPTION, '<br />');
+		$openid_tray = new icms_form_elements_Tray(_US_OPENID_FORM_CAPTION, '<br />');
 		$openid_text = new XoopsFormText('', 'openid', 30, 255, $icmsUser->getVar('openid'));
 		$openid_tray->setDescription(_US_OPENID_FORM_DSC);
 		$openid_tray->addElement($openid_text);
@@ -331,7 +331,7 @@ if ($op == 'editprofile')
 	{
 		if ($icmsConfigUser['allow_htsig'] == 0)
 		{
-			$sig_tray = new XoopsFormElementTray(_US_SIGNATURE, '<br />');
+			$sig_tray = new icms_form_elements_Tray(_US_SIGNATURE, '<br />');
 			$sig_tarea = new XoopsFormTextArea('', 'user_sig', $icmsUser->getVar('user_sig', 'E'));
 			$sig_tray->addElement($sig_tarea);
 			$sig_cbox_value = $icmsUser->getVar('attachsig') ? 1 : 0;
@@ -339,7 +339,7 @@ if ($op == 'editprofile')
 			$sig_cbox->addOption(1, _US_SHOWSIG);
 			$sig_tray->addElement($sig_cbox);
 		} else {
-			$sig_tray = new XoopsFormElementTray(_US_SIGNATURE, '<br />');
+			$sig_tray = new icms_form_elements_Tray(_US_SIGNATURE, '<br />');
 			$sig_tarea = new icms_form_elements_Dhtmltextarea('', 'user_sig', $icmsUser->getVar('user_sig', 'E'));
 			$sig_tray->addElement($sig_tarea);
 			$sig_cbox_value = $icmsUser->getVar('attachsig') ? 1 : 0;
@@ -379,7 +379,7 @@ if ($op == 'editprofile')
 	$cookie_radio = new XoopsFormRadioYN(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
 	$pwd_text = new XoopsFormPassword('', 'password', 10, 255, "", false, ($icmsConfigUser['pass_level']?'password_adv':''));
 	$pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 255);
-	$pwd_tray = new XoopsFormElementTray(_US_PASSWORD.'<br />'._US_TYPEPASSTWICE);
+	$pwd_tray = new icms_form_elements_Tray(_US_PASSWORD.'<br />'._US_TYPEPASSTWICE);
 	$pwd_tray->addElement($pwd_text);
 	$pwd_tray->addElement($pwd_text2);
 	$pwd_text_old = new XoopsFormPassword(_US_OLD_PASSWORD, 'old_password', 10, 255);
@@ -470,7 +470,7 @@ if ($op == 'avatarform')
 	$avatar_select = new XoopsFormSelect('', 'user_avatar', $icmsUser->getVar('user_avatar'));
 	$avatar_select->addOptionArray($avatar_handler->getList('S'));
 	$avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"".ICMS_URL."\")'");
-	$avatar_tray = new XoopsFormElementTray(_US_AVATAR, '&nbsp;');
+	$avatar_tray = new icms_form_elements_Tray(_US_AVATAR, '&nbsp;');
 	$avatar_tray->addElement($avatar_select);
 	$avatar_tray->addElement(new XoopsFormLabel('', "<img src='".ICMS_UPLOAD_URL."/".$icmsUser->getVar("user_avatar", "E")."' name='avatar' id='avatar' alt='' /> <a href=\"javascript:openWithSelfMain('".ICMS_URL."/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">"._LIST."</a>"));
 	if ($icmsConfigUser['avatar_allow_upload'] == 1 && $icmsUser->getVar('posts') < $icmsConfigUser['avatar_minposts']) {

@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormUser_sigElement extends XoopsFormElementTray {
+class IcmsFormUser_sigElement extends icms_form_elements_Tray {
 
 	/**
 	 * Constructor
@@ -24,7 +24,7 @@ class IcmsFormUser_sigElement extends XoopsFormElementTray {
 		$var = $object->vars[$key];
 		$control = $object->controls[$key];
 
-		$this->XoopsFormElementTray($var['form_caption'], '<br /><br />', $key . '_signature_tray');
+		$this->icms_form_elements_Tray($var['form_caption'], '<br /><br />', $key . '_signature_tray');
 
 		$signature_textarea = new icms_form_elements_Dhtmltextarea('', $key, $object->getVar($key, 'e'));
 		$this->addElement($signature_textarea);

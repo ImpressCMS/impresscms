@@ -241,7 +241,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$list = array_merge ( $moduleslist, $pagelist );
 					asort ( $list );
 
-					$ele = new XoopsFormElementTray ( $title, '<br />' );
+					$ele = new icms_form_elements_Tray ( $title, '<br />' );
 					$hv = '';
 					foreach ( $grps as $k => $v) {
 						if (! isset ( $value [$k] )) {
@@ -272,7 +272,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$currrent_val = $config [$i]->getConfValueForOutput ();
 					$cache_options = array ('0' => _NOCACHE, '30' => sprintf ( _SECONDS, 30 ), '60' => _MINUTE, '300' => sprintf ( _MINUTES, 5 ), '1800' => sprintf ( _MINUTES, 30 ), '3600' => _HOUR, '18000' => sprintf ( _HOURS, 5 ), '86400' => _DAY, '259200' => sprintf ( _DAYS, 3 ), '604800' => _WEEK );
 					if (count ( $modules ) > 0) {
-						$ele = new XoopsFormElementTray ( $title, '<br />' );
+						$ele = new icms_form_elements_Tray ( $title, '<br />' );
 						foreach ( array_keys ( $modules ) as $mid) {
 							$c_val = isset ( $currrent_val [$mid] ) ? (int) ( $currrent_val [$mid] ) : null;
 							$selform = new XoopsFormSelect ( $modules [$mid]->getVar ( 'name' ), $config [$i]->getVar ( 'conf_name' ) . "[$mid]", $c_val );

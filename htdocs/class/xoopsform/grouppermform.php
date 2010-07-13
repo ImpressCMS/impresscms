@@ -27,7 +27,6 @@ if (!defined('ICMS_ROOT_PATH')) {
 
 require_once ICMS_ROOT_PATH . '/class/xoopsform/formelement.php';
 require_once ICMS_ROOT_PATH . '/class/xoopsform/formhidden.php';
-require_once ICMS_ROOT_PATH . '/class/xoopsform/formelementtray.php';
 require_once ICMS_ROOT_PATH . '/class/xoopsform/form.php';
 
 
@@ -145,7 +144,7 @@ class XoopsGroupPermForm extends XoopsForm
             $this->addElement($ele);
             unset($ele);
         }
-        $tray = new XoopsFormElementTray('');
+        $tray = new icms_form_elements_Tray('');
         $tray->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));
         $tray->addElement(new icms_form_elements_Button('', 'reset', _CANCEL, 'reset'));
         $this->addElement($tray);

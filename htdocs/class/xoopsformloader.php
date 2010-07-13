@@ -36,7 +36,6 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formselecttheme.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formselectmatchoption.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formtext.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formtextarea.php";
-include_once ICMS_ROOT_PATH."/class/xoopsform/formelementtray.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/themeform.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/simpleform.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formtextdateselect.php";

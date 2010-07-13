@@ -336,7 +336,7 @@ if (empty($_POST["user_submit"])) {
 			foreach ($items_match as $var => $title) {
 				$text = new XoopsFormText("", $var, 30, 100, @$_POST[$var]);
 				$match = new XoopsFormSelectMatchOption("", "{$var}_match", @$_POST["{$var}_match"]);
-				$match_tray = new XoopsFormElementTray($title, "&nbsp;");
+				$match_tray = new icms_form_elements_Tray($title, "&nbsp;");
 				$match_tray->addElement($match);
 				$match_tray->addElement($text);
 				$form->addElement($match_tray);
@@ -350,7 +350,7 @@ if (empty($_POST["user_submit"])) {
 			foreach ($items_range as $var => $title) {
 				$more = new XoopsFormText("", "{$var}_more", 10, 5, @$_POST["{$var}_more"]);
 				$less = new XoopsFormText("", "{$var}_less", 10, 5, @$_POST["{$var}_less"]);
-				$range_tray = new XoopsFormElementTray($title, "&nbsp;-&nbsp;&nbsp;");
+				$range_tray = new icms_form_elements_Tray($title, "&nbsp;-&nbsp;&nbsp;");
 				$range_tray->addElement($less);
 				$range_tray->addElement($more);
 				$form->addElement($range_tray);
@@ -393,7 +393,7 @@ if (empty($_POST["user_submit"])) {
 				$title = $items_match[$var];
 				$text = new XoopsFormText("", $var, 30, 100, @$_POST[$var]);
 				$match = new XoopsFormSelectMatchOption("", "{$var}_match", @$_POST["{$var}_match"]);
-				$match_tray = new XoopsFormElementTray($title, "&nbsp;");
+				$match_tray = new icms_form_elements_Tray($title, "&nbsp;");
 				$match_tray->addElement($match);
 				$match_tray->addElement($text);
 				$form->addElement($match_tray);

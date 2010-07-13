@@ -47,7 +47,7 @@ if (!empty($display_criteria)) {
 	$inactive_cbox = new icms_form_elements_Checkbox('', 'mail_inactive');
 	$inactive_cbox->addOption(1, _AM_INACTIVE.'. '._AMIFCHECKD);
 	$inactive_cbox->setExtra("onclick='javascript:disableElement(\"mail_lastlog_min\");disableElement(\"mail_lastlog_max\");disableElement(\"mail_idle_more\");disableElement(\"mail_idle_less\");disableElement(\"mail_to_group[]\");'");
-	$criteria_tray = new XoopsFormElementTray(_AM_SENDTOUSERS, "<br /><br />");
+	$criteria_tray = new icms_form_elements_Tray(_AM_SENDTOUSERS, "<br /><br />");
 	$criteria_tray->addElement($group_select);
 	$criteria_tray->addElement($lastlog_min);
 	$criteria_tray->addElement($lastlog_max);

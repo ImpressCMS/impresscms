@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormImageElement extends XoopsFormElementTray {
+class IcmsFormImageElement extends icms_form_elements_Tray {
 
 	/**
 	 * Constructor
@@ -24,7 +24,7 @@ class IcmsFormImageElement extends XoopsFormElementTray {
 		$control = $object->getControl($key);
 
 		$object_imageurl = $object->getImageDir();
-		$this->XoopsFormElementTray( $var['form_caption'], ' ' );
+		$this->icms_form_elements_Tray( $var['form_caption'], ' ' );
 
 		if (isset($objectArray['image'])){
 			$objectArray['image'] = str_replace('{ICMS_URL}', ICMS_URL, $objectArray['image']);

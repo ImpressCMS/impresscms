@@ -34,7 +34,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage  form
  */
-class icms_form_elements_Datetime extends XoopsFormElementTray
+class icms_form_elements_Datetime extends icms_form_elements_Tray
 {
 
 	/**
@@ -46,7 +46,7 @@ class icms_form_elements_Datetime extends XoopsFormElementTray
 	 */
 	function icms_form_elements_Datetime($caption, $name, $size = 15, $value=0)
 	{
-		$this->XoopsFormElementTray($caption, '&nbsp;');
+		$this->icms_form_elements_Tray($caption, '&nbsp;');
 		$value = (int) ($value);
 		$value = ($value > 0) ? $value : time();
 		$datetime = getDate($value);

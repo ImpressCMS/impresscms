@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormSet_passwordElement extends XoopsFormElementTray {
+class IcmsFormSet_passwordElement extends icms_form_elements_Tray {
 
 	/**
 	 * Size of the field.
@@ -56,7 +56,7 @@ class IcmsFormSet_passwordElement extends XoopsFormElementTray {
 		$var = $object->vars[$key];
 		$control = $object->controls[$key];
 
-		$this->XoopsFormElementTray($var['form_caption'] . '<br />' . _US_TYPEPASSTWICE, ' ', $key . '_password_tray');
+		$this->icms_form_elements_Tray($var['form_caption'] . '<br />' . _US_TYPEPASSTWICE, ' ', $key . '_password_tray');
 
 		$password_box1 = new XoopsFormPassword('', $key . '1', 10, 32);
 		$this->addElement($password_box1);

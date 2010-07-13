@@ -17,7 +17,7 @@ if (!defined("ICMS_ROOT_PATH")) {
 include_once ICMS_ROOT_PATH."/class/xoopslists.php";
 include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 
-$email_tray = new XoopsFormElementTray(_US_EMAIL, "<br />");
+$email_tray = new icms_form_elements_Tray(_US_EMAIL, "<br />");
 $email_text = new XoopsFormText("", "email", 25, 60, $myts->htmlSpecialChars($email));
 $email_option = new icms_form_elements_Checkbox("", "user_viewemail", $user_viewemail);
 $email_option->addOption(1, _US_ALLOWVIEWEMAIL);
@@ -42,7 +42,7 @@ $reg_form->addElement(new XoopsFormSelectTimezone(_US_TIMEZONE, "timezone_offset
 $reg_form->addElement(new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', $user_mailok));
 
 if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] != '') {
-	$disc_tray = new XoopsFormElementTray(_US_DISCLAIMER, '<br />');
+	$disc_tray = new icms_form_elements_Tray(_US_DISCLAIMER, '<br />');
 	$disclaimer_html = '<div id="disclaimer">'.nl2br($icmsConfigUser['reg_disclaimer']).'</div>';
 	$disc_text = new XoopsFormLabel('', $disclaimer_html, 'disclaimer');
 	$disc_tray->addElement($disc_text);

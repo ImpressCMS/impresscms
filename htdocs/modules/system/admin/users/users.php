@@ -38,7 +38,7 @@ function displayUsers()
 	$criteria->setLimit(200);
 	$criteria->setStart($userstart);
 	$user_select->addOptionArray($member_handler->getUserList($criteria));
-	$user_select_tray = new XoopsFormElementTray(_AM_NICKNAME, '<br />');
+	$user_select_tray = new icms_form_elements_Tray(_AM_NICKNAME, '<br />');
 	$user_select_tray->addElement($user_select);
 	$user_select_nav = new XoopsFormLabel('', $nav->renderNav(4));
 	$user_select_tray->addElement($user_select_nav);
@@ -64,7 +64,7 @@ function displayUsers()
 	$criteria->setLimit(200);
 	$criteria->setStart($userstart);
 	$user_select->addOptionArray($member_handler->getUserList($criteria));
-	$user_select_tray = new XoopsFormElementTray(_AM_NICKNAME, '<br />');
+	$user_select_tray = new icms_form_elements_Tray(_AM_NICKNAME, '<br />');
 	$user_select_tray->addElement($user_select);
 	$user_select_nav = new XoopsFormLabel('', $nav->renderNav(4));
 	$user_select_tray->addElement($user_select_nav);

@@ -14,7 +14,7 @@
 if (!defined('ICMS_ROOT_PATH'))
 die("ImpressCMS root path not defined");
 
-class IcmsFormBlockoptionsElement extends XoopsFormElementTray {
+class IcmsFormBlockoptionsElement extends icms_form_elements_Tray {
 
 	/**
 	 * Constructor
@@ -23,8 +23,8 @@ class IcmsFormBlockoptionsElement extends XoopsFormElementTray {
 	 */
 	function IcmsFormBlockoptionsElement($object, $key) {
 		$var = $object->vars[$key];
-		$this->XoopsFormElementTray($var['form_caption'], $key, $object->getVar($key, 'e'));
-		$this->XoopsFormElementTray(_CO_SYSTEM_BLOCKSADMIN_OPTIONS, ' ', 'options' . '_password_tray');
+		$this->icms_form_elements_Tray($var['form_caption'], $key, $object->getVar($key, 'e'));
+		$this->icms_form_elements_Tray(_CO_SYSTEM_BLOCKSADMIN_OPTIONS, ' ', 'options' . '_password_tray');
 		$func = $object->getVar('edit_func');
 
 		require_once ICMS_ROOT_PATH . "/modules/" . $object->handler->getModuleDirname($object->getVar('mid', 'e')) . "/blocks/" . $object->getVar('func_file') ;

@@ -25,7 +25,7 @@
  * @author	    phppp (D.J.)
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelectEditor extends XoopsFormElementTray
+class XoopsFormSelectEditor extends icms_form_elements_Tray
 {
 	/**
 	 * Constructor
@@ -43,7 +43,7 @@ class XoopsFormSelectEditor extends XoopsFormElementTray
 			$value = $icmsConfig['editor_default'];
 		}
 
-		$this->XoopsFormElementTray(_SELECT);
+		$this->icms_form_elements_Tray(_SELECT);
 		$edtlist = IcmsLists::getEditorsList();
 		$option_select = new XoopsFormSelect("", $name, $value);
 		$querys = preg_replace('/editor=(.*?)&/','',$_SERVER['QUERY_STRING']);

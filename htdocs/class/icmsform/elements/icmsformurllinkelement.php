@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormUrlLinkElement extends XoopsFormElementTray {
+class IcmsFormUrlLinkElement extends icms_form_elements_Tray {
 
 	/**
 	 * Constructor
@@ -21,7 +21,7 @@ class IcmsFormUrlLinkElement extends XoopsFormElementTray {
 	 * @param	object    $object         reference to targetobject (@todo, which object will be passed here?)
 	 */
 	function IcmsFormUrlLinkElement($form_caption, $key, $object) {
-		$this->XoopsFormElementTray($form_caption, '&nbsp;' );
+		$this->icms_form_elements_Tray($form_caption, '&nbsp;' );
 
 		$this->addElement( new XoopsFormLabel( '', '<br/>'._CO_ICMS_URLLINK_URL));
 		$this->addElement(new IcmsFormTextElement($object, 'url_'.$key));

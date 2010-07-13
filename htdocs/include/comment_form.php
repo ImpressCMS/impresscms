@@ -45,9 +45,9 @@ foreach ($subject_icons as $iconfile) {
 }
 $cform->addElement($icons_radio);
 $cform->addElement(new icms_form_elements_Dhtmltextarea(_CM_MESSAGE, 'com_text', $com_text, 10, 50), true);
-$option_tray = new XoopsFormElementTray(_OPTIONS,'<br />');
+$option_tray = new icms_form_elements_Tray(_OPTIONS,'<br />');
 
-$button_tray = new XoopsFormElementTray('' ,'&nbsp;');
+$button_tray = new icms_form_elements_Tray('' ,'&nbsp;');
 
 if (is_object($icmsUser)) {
 	if ($icmsModuleConfig['com_anonpost'] == 1) {

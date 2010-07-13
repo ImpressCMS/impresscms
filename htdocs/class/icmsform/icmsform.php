@@ -331,7 +331,7 @@ class IcmsForm extends XoopsThemeForm {
 	 */
 	function createButtons($form_name, $form_caption, $submit_button_caption = false) {
 
-		$button_tray = new XoopsFormElementTray('', '');
+		$button_tray = new icms_form_elements_Tray('', '');
 		$button_tray->addElement(new XoopsFormHidden('op', $form_name));
 		if(!$submit_button_caption){
 			if ($this->targetObject->isNew()) {

@@ -19,14 +19,14 @@ $uid_label = new XoopsFormLabel(_AM_USERID, $uid_value);
 $uname_text = new XoopsFormText(_AM_NICKNAME, "username", 25, 25, $uname_value);
 $login_name_text = new XoopsFormText(_AM_LOGINNAME, "login_name", 25, 25, $login_name_value);
 $name_text = new XoopsFormText(_AM_NAME, "name", 30, 60, $name_value);
-$email_tray = new XoopsFormElementTray(_AM_EMAIL, "<br />");
+$email_tray = new icms_form_elements_Tray(_AM_EMAIL, "<br />");
 $email_text = new XoopsFormText("", "email", 30, 60, $email_value);
 $email_tray->addElement($email_text, true);
 $email_cbox = new icms_form_elements_Checkbox("", "user_viewemail", $email_cbox_value);
 $email_cbox->addOption(1, _AM_AOUTVTEAD);
 $email_tray->addElement($email_cbox);
 if ($icmsConfigAuth['auth_openid'] == 1) {
-	$openid_tray = new XoopsFormElementTray(_AM_OPENID, "<br />");
+	$openid_tray = new icms_form_elements_Tray(_AM_OPENID, "<br />");
 	$openid_text = new XoopsFormText("", "openid", 30, 255, $openid_value);
 	$openid_tray->addElement($openid_text);
 	$openid_cbox = new icms_form_elements_Checkbox("", "user_viewoid", $openid_cbox_value);
@@ -61,7 +61,7 @@ $url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
 //  }
 //  $avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"images/avatar\", \"\", \"".XOOPS_URL."\")'");
 //  $avatar_label = new XoopsFormLabel("", "<img src='".XOOPS_URL."/images/avatar/".$avatar_value."' name='avatar' id='avatar' alt='' />");
-//  $avatar_tray = new XoopsFormElementTray(_AM_AVATAR, "&nbsp;");
+//  $avatar_tray = new icms_form_elements_Tray(_AM_AVATAR, "&nbsp;");
 //  $avatar_tray->addElement($avatar_select);
 //  $avatar_tray->addElement($avatar_label);
 //  foreach ($a_dir_labels as $a_dir_label) {
@@ -76,7 +76,7 @@ $msnm_text = new XoopsFormText(_AM_MSNM, "user_msnm", 30, 100, $msnm_value);
 $location_text = new XoopsFormText(_AM_LOCATION, "user_from", 30, 100, $location_value);
 $occupation_text = new XoopsFormText(_AM_OCCUPATION, "user_occ", 30, 100, $occ_value);
 $interest_text = new XoopsFormText(_AM_INTEREST, "user_intrest", 30, 150, $interest_value);
-$sig_tray = new XoopsFormElementTray(_AM_SIGNATURE, "<br />");
+$sig_tray = new icms_form_elements_Tray(_AM_SIGNATURE, "<br />");
 if ($icmsConfigUser['allow_htsig'] == 0) {$sig_tarea = new XoopsFormTextArea("", "user_sig", $sig_value);}
 else {$sig_tarea = new icms_form_elements_Dhtmltextarea("", "user_sig", $sig_value);}
 $sig_tray->addElement($sig_tarea);

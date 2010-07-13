@@ -119,7 +119,7 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 					$block_checkbox[$i]->addOptionArray($new_blocks_array);
 					$i++;
 				}
-				$r_block_tray = new XoopsFormElementTray(_AM_BLOCKRIGHTS, "<br /><br />");
+				$r_block_tray = new icms_form_elements_Tray(_AM_BLOCKRIGHTS, "<br /><br />");
 				foreach ($block_checkbox as $k=>$v) {
 					$r_block_tray->addElement($block_checkbox[$k]);
 				}

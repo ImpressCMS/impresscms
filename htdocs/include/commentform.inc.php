@@ -30,7 +30,7 @@ foreach ($subject_icons as $iconfile) {
 }
 $cform->addElement($icons_radio);
 $cform->addElement(new icms_form_elements_Dhtmltextarea(_CM_MESSAGE, 'message', $message, 10, 50), true);
-$option_tray = new XoopsFormElementTray(_OPTIONS,'<br />');
+$option_tray = new icms_form_elements_Tray(_OPTIONS,'<br />');
 if ($icmsUser) {
 	if ($icmsConfig['anonpost'] == true) {
 		$noname_checkbox = new icms_form_elements_Checkbox('', 'noname', $noname);
@@ -52,7 +52,7 @@ $cform->addElement(new XoopsFormHidden('pid', (int) ($pid)));
 $cform->addElement(new XoopsFormHidden('comment_id', (int) ($comment_id)));
 $cform->addElement(new XoopsFormHidden('item_id', (int) ($item_id)));
 $cform->addElement(new XoopsFormHidden('order', (int) ($order)));
-$button_tray = new XoopsFormElementTray('' ,'&nbsp;');
+$button_tray = new icms_form_elements_Tray('' ,'&nbsp;');
 $button_tray->addElement(new icms_form_elements_Button('', 'preview', _PREVIEW, 'submit'));
 $button_tray->addElement(new icms_form_elements_Button('', 'post', _CM_POSTCOMMENT, 'submit'));
 $cform->addElement($button_tray);
