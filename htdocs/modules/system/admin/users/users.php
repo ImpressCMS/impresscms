@@ -45,7 +45,7 @@ function displayUsers()
 	$op_select = new XoopsFormSelect('', 'op');
 	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER, 'delUser'=>_AM_DELUSER));
 	$submit_button = new icms_form_elements_Button('', 'submit', _AM_GO, 'submit');
-	$fct_hidden = new XoopsFormHidden('fct', 'users');
+	$fct_hidden = new icms_form_elements_Hidden('fct', 'users');
 	$editform->addElement($user_select_tray);
 	$editform->addElement($op_select);
 	$editform->addElement($submit_button);
@@ -71,7 +71,7 @@ function displayUsers()
 	$op_select = new XoopsFormSelect('', 'op');
 	$op_select->addOptionArray(array('modifyUser'=>_AM_MODIFYUSER));
 	$submit_button = new icms_form_elements_Button('', 'submit', _AM_GO, 'submit');
-	$fct_hidden = new XoopsFormHidden('fct', 'users');
+	$fct_hidden = new icms_form_elements_Hidden('fct', 'users');
 	$editform->addElement($user_select_tray);
 	$editform->addElement($op_select);
 	$editform->addElement($submit_button);
@@ -270,6 +270,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		if (!$member_handler->insertUser($edituser))
 		{
 			icms_cp_header();
+			icms_debug(111);
 			echo $edituser->getHtmlErrors();
 			icms_cp_footer();
 		} else {

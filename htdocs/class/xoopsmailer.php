@@ -171,7 +171,7 @@ class XoopsMailer
 	// public
 	function setFromUser(&$user)
 	{
-		if ( strtolower(get_class($user)) == "xoopsuser" ) {
+		if ( strtolower(get_class($user)) == "icms_member_user_Object" ) {
 			$this->fromUser =& $user;
 		}
 	}
@@ -451,7 +451,7 @@ class XoopsMailer
 	function setToUsers(&$user)
 	{
 		if ( !is_array($user) ) {
-			if ( strtolower(get_class($user)) == "xoopsuser" ) {
+			if ( strtolower(get_class($user)) == "icms_member_user_Object" ) {
 				array_push($this->toUsers, $user);
 			}
 		} else {
