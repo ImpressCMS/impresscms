@@ -534,9 +534,9 @@ class icms_member_user_Object extends icms_core_Object
 	 */
 	function gravatar($rating = false, $size = false, $default = false, $border = false, $overwrite = false)
 	{
-		if (!$overwrite && file_exists(XOOPS_UPLOAD_PATH.'/'.$this->getVar('user_avatar')) && $this->getVar('user_avatar') != 'blank.gif')
+		if (!$overwrite && is_file(ICMS_UPLOAD_PATH.'/'.$this->getVar('user_avatar')) && $this->getVar('user_avatar') != 'blank.gif')
 		{
-			return XOOPS_UPLOAD_URL.'/'.$this->getVar('user_avatar');
+			return ICMS_UPLOAD_URL.'/'.$this->getVar('user_avatar');
 		}
 		$ret = "http://www.gravatar.com/avatar/".md5(strtolower($this->getVar('email', 'E')))."?d=identicon";
 		if ($rating && $rating != '') {$ret .= "&amp;rating=".$rating;}
