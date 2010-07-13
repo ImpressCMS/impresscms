@@ -284,18 +284,21 @@ class icms_member_user_Object extends icms_core_Object
 	 * - If you set the module_id to -1, it will return true if the user has admin rights for at least one module
 	 *
 	 * @param int $module_id check if user is admin of this module
+	 * @staticvar array $buffer result buffer
 	 * @return bool is the user admin of that module?
 	 */
 	function isAdmin($module_id = null)
 	{
-		if (is_null($module_id))
-		{
+		static $buffer = array();
+		if (is_null($module_id)) {
 			$module_id = isset($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('mid', 'n') : 1;
-		}
-		elseif ((int) ($module_id) < 1) {$module_id = 0;}
+		} elseif((int)$module_id < 1) {$module_id = 0;}
 
-		$moduleperm_handler =& xoops_gethandler('member_groupperm');
-		return $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
+		if (!isset($buffer[$module_id])) {
+			$moduleperm_handler =& xoops_gethandler('member_groupperm');
+			$buffer[$module_id] = $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
+		}
+		return $buffer[$module_id];
 	}
 
 	/**
