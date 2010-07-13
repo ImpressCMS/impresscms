@@ -53,7 +53,7 @@ abstract class XoopsForm {
 	private $_title;
 
 	/**
-	 * array of {@link XoopsFormElement} objects
+	 * array of {@link icms_form_Element} objects
 	 * @var  array
 	 */
 	private $_elements = array();
@@ -136,13 +136,13 @@ abstract class XoopsForm {
 	/**
 	 * Add an element to the form
 	 *
-	 * @param	object  &$formElement   reference to a {@link XoopsFormElement}
+	 * @param	object  &$formElement   reference to a {@link icms_form_Element}
 	 * @param	bool    $required       is this a "required" element?
 	 */
 	public function addElement(&$formElement, $required = false) {
 		if ( is_string( $formElement ) ) {
 			$this->_elements[] = $formElement;
-		} elseif ( is_subclass_of($formElement, 'xoopsformelement') ) {
+		} elseif ( is_subclass_of($formElement, 'icms_form_Element') ) {
 			$this->_elements[] =& $formElement;
 			if (!$formElement->isContainer()) {
 				if ($required) {
@@ -163,7 +163,7 @@ abstract class XoopsForm {
 	 * get an array of forms elements
 	 *
 	 * @param	  bool	  get elements recursively?
-	 * @return	array   array of {@link XoopsFormElement}s
+	 * @return	array   array of {@link icms_form_Element}s
 	 */
 	public function &getElements($recurse = false) {
 		if (!$recurse) {
@@ -205,10 +205,10 @@ abstract class XoopsForm {
 	}
 
 	/**
-	 * get a reference to a {@link XoopsFormElement} object by its "name"
+	 * get a reference to a {@link icms_form_Element} object by its "name"
 	 *
-	 * @param  string  $name	"name" attribute assigned to a {@link XoopsFormElement}
-	 * @return mixed  reference to a {@link XoopsFormElement}, false if not found
+	 * @param  string  $name	"name" attribute assigned to a {@link icms_form_Element}
+	 * @return mixed  reference to a {@link icms_form_Element}, false if not found
 	 */
 	public function &getElementByName($name) {
 		$elements = $this->getElements(true);
@@ -313,7 +313,7 @@ abstract class XoopsForm {
 	/**
 	 * make an element "required"
 	 *
-	 * @param	object  &$formElement    reference to a {@link XoopsFormElement}
+	 * @param	object  &$formElement    reference to a {@link icms_form_Element}
 	 */
 	public function setRequired(&$formElement) {
 		$this->_required[] =& $formElement;
@@ -322,7 +322,7 @@ abstract class XoopsForm {
 	/**
 	 * get an array of "required" form elements
 	 *
-	 * @return	array   array of {@link XoopsFormElement}s
+	 * @return	array   array of {@link icms_form_Element}s
 	 */
 	public function &getRequired() {
 		return $this->_required;

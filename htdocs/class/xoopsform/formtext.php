@@ -30,7 +30,7 @@ if(!defined('ICMS_ROOT_PATH')) {die('ImpressCMS root path not defined');}
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormText extends XoopsFormElement
+class XoopsFormText extends icms_form_Element
 {
 	/**
 	 * Size

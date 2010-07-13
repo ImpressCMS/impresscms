@@ -25,7 +25,6 @@ if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 
-require_once ICMS_ROOT_PATH . '/class/xoopsform/formelement.php';
 require_once ICMS_ROOT_PATH . '/class/xoopsform/formhidden.php';
 require_once ICMS_ROOT_PATH . '/class/xoopsform/form.php';
 
@@ -183,7 +182,7 @@ class XoopsGroupPermForm extends XoopsForm
  * @package kernel
  * @subpackage form
  */
-class XoopsGroupFormCheckBox extends XoopsFormElement
+class XoopsGroupFormCheckBox extends icms_form_Element
 {
     /**
      * Pre-selected value(s)

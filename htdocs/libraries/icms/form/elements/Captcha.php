@@ -24,8 +24,6 @@ if (!defined('ICMS_ROOT_PATH')) {
 	die("ImpressCMS root path not defined");
 }
 
-require_once ICMS_ROOT_PATH."/class/xoopsform/formelement.php";
-
 /*
  * Usage
  *
@@ -44,7 +42,7 @@ require_once ICMS_ROOT_PATH."/class/xoopsform/formelement.php";
  *
  */
 
-class icms_form_elements_Captcha extends XoopsFormElement {
+class icms_form_elements_Captcha extends icms_form_Element {
 
 	var $_captchaHandler;
 

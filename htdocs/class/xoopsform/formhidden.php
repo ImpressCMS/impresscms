@@ -33,7 +33,7 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormHidden extends XoopsFormElement {
+class XoopsFormHidden extends icms_form_Element {
 
 	/**
 	 * Value

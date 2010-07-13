@@ -35,7 +35,7 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @package		kernel
  * @subpackage	form
  */
-class XoopsFormFile extends XoopsFormElement {
+class XoopsFormFile extends icms_form_Element {
 
 	/**
 	 * Maximum size for an uploaded file

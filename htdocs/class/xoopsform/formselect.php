@@ -34,7 +34,7 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelect extends XoopsFormElement {
+class XoopsFormSelect extends icms_form_Element {
 
 	/**
 	 * Options

@@ -35,7 +35,7 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @package     kernel
  * @subpackage  form
  */
-class XoopsFormTextArea extends XoopsFormElement {
+class XoopsFormTextArea extends icms_form_Element {
 	/**
 	 * number of columns
 	 * @var	int

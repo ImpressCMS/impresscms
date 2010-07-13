@@ -31,7 +31,7 @@ if(!defined('ICMS_ROOT_PATH')) {die('ImpressCMS root path not defined');}
  * @package 	kernel
  * @subpackage 	form
  */
-class XoopsFormPassword extends XoopsFormElement
+class XoopsFormPassword extends icms_form_Element
 {
 	/**
 	 * Size of the field.

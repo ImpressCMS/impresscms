@@ -35,7 +35,7 @@ if (!defined('ICMS_ROOT_PATH')) {
  * @package		kernel
  * @subpackage	form
  */
-class XoopsFormRadio extends XoopsFormElement {
+class XoopsFormRadio extends icms_form_Element {
 
 	/**
 	 * Array of Options

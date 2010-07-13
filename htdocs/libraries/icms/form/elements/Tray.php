@@ -34,7 +34,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @package     kernel
  * @subpackage  form
  */
-class icms_form_elements_Tray extends XoopsFormElement {
+class icms_form_elements_Tray extends icms_form_Element {
 
 	/**
 	 * array of form element objects
@@ -90,7 +90,7 @@ class icms_form_elements_Tray extends XoopsFormElement {
 	/**
 	 * Add an element to the group
 	 *
-	 * @param	object  &$element    {@link XoopsFormElement} to add
+	 * @param	object  &$element    {@link icms_form_Element} to add
 	 */
 	function addElement(&$formElement, $required = false) {
 		$this->_elements[] =& $formElement;
@@ -111,7 +111,7 @@ class icms_form_elements_Tray extends XoopsFormElement {
 	/**
 	 * get an array of "required" form elements
 	 *
-	 * @return	array   array of {@link XoopsFormElement}s
+	 * @return	array   array of {@link icms_form_Element}s
 	 */
 	function &getRequired() {
 		return $this->_required;
@@ -121,7 +121,7 @@ class icms_form_elements_Tray extends XoopsFormElement {
 	 * Get an array of the elements in this group
 	 *
 	 * @param	bool	$recurse	get elements recursively?
-	 * @return  array   Array of {@link XoopsFormElement} objects.
+	 * @return  array   Array of {@link icms_form_Element} objects.
 	 */
 	function &getElements($recurse = false) {
 		if (!$recurse) {

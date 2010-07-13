@@ -16,7 +16,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @todo	This is not functionnal yet.. it needs further integration
  */
 
-class IcmsFormSection extends XoopsFormElement {
+class IcmsFormSection extends icms_form_Element {
 
 	/**
 	 * Text

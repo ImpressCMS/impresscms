@@ -109,7 +109,7 @@ class IcmsForm extends XoopsThemeForm {
 	/**
 	 * Add an element to the form
 	 *
-	 * @param	object  &$formElement   reference to a {@link XoopsFormElement}
+	 * @param	object  &$formElement   reference to a {@link icms_form_Element}
 	 * @param	string  $key            encrypted key string for the form
 	 * @param	string  $var            some form variables?
 	 * @param	bool    $required       is this a "required" element?
