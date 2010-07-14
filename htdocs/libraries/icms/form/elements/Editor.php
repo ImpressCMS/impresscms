@@ -32,6 +32,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  *
  * @package     kernel
  * @subpackage  form
+ * @todo		To be removed as this is not used anywhere in the core
  */
 class icms_form_elements_Editor extends XoopsFormTextArea
 {
