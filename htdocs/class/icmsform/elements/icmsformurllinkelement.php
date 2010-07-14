@@ -34,7 +34,7 @@ class IcmsFormUrlLinkElement extends icms_form_elements_Tray {
 
 		$this->addElement( new icms_form_elements_Label( '', '<br/>'._CO_ICMS_URLLINK_TARGET));
 		$targ_val = $object->getVar('target');
-		$targetRadio = new XoopsFormRadio('', 'target_'.$key, $targ_val!= '' ? $targ_val : '_blank');
+		$targetRadio = new icms_form_elements_Radio('', 'target_'.$key, $targ_val!= '' ? $targ_val : '_blank');
 		$control = $object->getControl('target');
 		$targetRadio->addOptionArray($control['options']);
 

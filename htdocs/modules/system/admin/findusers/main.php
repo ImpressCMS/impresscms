@@ -84,9 +84,9 @@ if ($op == "form") {
 	$reg_less = new XoopsFormText(_AM_REGLESS, "user_reg_less", 10, 5);
 	$posts_more = new XoopsFormText(_AM_POSTSMORE, "user_posts_more", 10, 5);
 	$posts_less = new XoopsFormText(_AM_POSTSLESS, "user_posts_less", 10, 5);
-	$mailok_radio = new XoopsFormRadio(_AM_SHOWMAILOK, "user_mailok", "both");
+	$mailok_radio = new icms_form_elements_Radio(_AM_SHOWMAILOK, "user_mailok", "both");
 	$mailok_radio->addOptionArray(array("mailok"=>_AM_MAILOK, "mailng"=>_AM_MAILNG, "both"=>_AM_BOTH));
-	$type_radio = new XoopsFormRadio(_AM_SHOWTYPE, "user_type", "actv");
+	$type_radio = new icms_form_elements_Radio(_AM_SHOWTYPE, "user_type", "actv");
 	$type_radio->addOptionArray(array("actv"=>_AM_ACTIVE, "inactv"=>_AM_INACTIVE, "both"=>_AM_BOTH));
 	$sort_select = new XoopsFormSelect(_AM_SORT, "user_sort");
 	$sort_select->addOptionArray(array("uname"=>_AM_UNAME,"login_name"=>_AM_LOGINNAME,"email"=>_AM_EMAIL,"last_login"=>_AM_LASTLOGIN,"user_regdate"=>_AM_REGDATE,"posts"=>_AM_POSTS));

@@ -357,12 +357,12 @@ if (empty($_POST["user_submit"])) {
 				unset($more, $less, $range_tray);
 			}
 
-			$mailok_radio = new XoopsFormRadio(_MA_USER_SHOWMAILOK, "user_mailok", empty($_POST["user_mailok"]) ? "both" : $_POST["user_mailok"]);
+			$mailok_radio = new icms_form_elements_Radio(_MA_USER_SHOWMAILOK, "user_mailok", empty($_POST["user_mailok"]) ? "both" : $_POST["user_mailok"]);
 			$mailok_radio->addOptionArray(array("mailok"=>_MA_USER_MAILOK, "mailng"=>_MA_USER_MAILNG, "both"=>_MA_USER_BOTH));
-			$avatar_radio = new XoopsFormRadio(_MA_USER_HASAVATAR, "user_avatar", empty($_POST["user_avatar"]) ? "both" : $_POST["user_avatar"]);
+			$avatar_radio = new icms_form_elements_Radio(_MA_USER_HASAVATAR, "user_avatar", empty($_POST["user_avatar"]) ? "both" : $_POST["user_avatar"]);
 			$avatar_radio->addOptionArray(array("y"=>_YES, "n"=>_NO, "both"=>_MA_USER_BOTH));
 
-			$level_radio = new XoopsFormRadio(_MA_USER_LEVEL, "level", @$_POST["level"]);
+			$level_radio = new icms_form_elements_Radio(_MA_USER_LEVEL, "level", @$_POST["level"]);
 			$levels = array( 0 => _ALL, 1 => _MA_USER_LEVEL_ACTIVE, 2 => _MA_USER_LEVEL_INACTIVE , 3 => _MA_USER_LEVEL_DISABLED);
 			$level_radio->addOptionArray($levels);
 

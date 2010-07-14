@@ -23,7 +23,7 @@ if (!preg_match("/^re:/i", $subject)) {
 	$subject = "Re: " . icms_substr($subject,0,56);
 }
 $cform->addElement(new XoopsFormText(_CM_TITLE, 'subject', 50, 255, $subject), true);
-$icons_radio = new XoopsFormRadio(_MESSAGEICON, 'icon', $icon);
+$icons_radio = new icms_form_elements_Radio(_MESSAGEICON, 'icon', $icon);
 $subject_icons = IcmsLists::getSubjectsList();
 foreach ($subject_icons as $iconfile) {
 	$icons_radio->addOption($iconfile, '<img src="' . ICMS_URL . '/images/subject/' . $iconfile . '" alt="" />');

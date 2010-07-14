@@ -38,7 +38,7 @@ if (isset($icmsModuleConfig['com_rule'])) {
 }
 
 $cform->addElement(new XoopsFormText(_CM_TITLE, 'com_title', 50, 255, $com_title), true);
-$icons_radio = new XoopsFormRadio(_MESSAGEICON, 'com_icon', $com_icon);
+$icons_radio = new icms_form_elements_Radio(_MESSAGEICON, 'com_icon', $com_icon);
 $subject_icons = IcmsLists::getSubjectsList();
 foreach ($subject_icons as $iconfile) {
 	$icons_radio->addOption($iconfile, '<img src="' . ICMS_URL . '/images/subject/' . $iconfile . '" alt="" />');

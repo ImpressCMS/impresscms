@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormRadioElement extends XoopsFormRadio {
+class IcmsFormRadioElement extends icms_form_elements_Radio {
 
 	/**
 	 * Constructor
@@ -22,7 +22,7 @@ class IcmsFormRadioElement extends XoopsFormRadio {
 	function IcmsFormRadioElement($object, $key) {
 		$var = $object->vars[$key];
 
-		$this->XoopsFormRadio($var['form_caption'], $key, $object->getVar($key, 'e'));
+		$this->icms_form_elements_Radio($var['form_caption'], $key, $object->getVar($key, 'e'));
 
 		// Adding the options inside this SelectBox
 		// If the custom method is not from a module, than it's from the core

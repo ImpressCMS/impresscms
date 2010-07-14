@@ -395,7 +395,7 @@ class IcmsForm extends XoopsThemeForm {
 			case 'radio':
 				$control = $this->targetObject->getControl($key);
 
-				$controlObj = new XoopsFormRadio($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
+				$controlObj = new icms_form_elements_Radio($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
 				$controlObj->addOptionArray($control['options']);
 				return $controlObj;
 				break;

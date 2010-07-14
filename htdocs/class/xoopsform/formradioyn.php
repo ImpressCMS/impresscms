@@ -23,11 +23,6 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  */
 
 /**
- * base class
- */
-include_once ICMS_ROOT_PATH."/class/xoopsform/formradio.php";
-
-/**
  * Yes/No radio buttons.
  *
  * A pair of radio buttons labeled _YES and _NO with values 1 and 0
@@ -38,7 +33,7 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formradio.php";
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormRadioYN extends icms_form_elements_Radioyn
+class icms_form_elements_RadioYN extends icms_form_elements_Radioyn
 {
 	private $_deprecated;
 	public function __construct() {
