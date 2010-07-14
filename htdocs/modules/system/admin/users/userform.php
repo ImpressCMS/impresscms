@@ -67,7 +67,7 @@ $url_text = new XoopsFormText(_AM_URL, "url", 30, 100, $url_value);
 //  foreach ($a_dir_labels as $a_dir_label) {
 //	  $avatar_tray->addElement($a_dir_label);
 //  }
-//  $theme_select = new XoopsFormSelectTheme(_AM_THEME, "theme", $theme_value);
+//  $theme_select = new icms_form_elements_select_Theme(_AM_THEME, "theme", $theme_value);
 $timezone_select = new icms_form_elements_select_Timezone(_US_TIMEZONE, "timezone_offset", $timezone_value);
 $icq_text = new XoopsFormText(_AM_ICQ, "user_icq", 15, 15, $icq_value);
 $aim_text = new XoopsFormText(_AM_AIM, "user_aim", 18, 18, $aim_value);

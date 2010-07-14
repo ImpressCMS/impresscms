@@ -13,9 +13,7 @@
  * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
-}
+if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
 /**
  * @package     kernel
@@ -42,20 +40,11 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelectTheme extends XoopsFormSelect
-{
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$caption
-	 * @param	string	$name
-	 * @param	mixed	$value	Pre-selected value (or array of them).
-	 * @param	int		$size	Number or rows. "1" makes a drop-down-list
-	 */
-	function XoopsFormSelectTheme($caption, $name, $value = null, $size = 1)
-	{
-		$this->XoopsFormSelect($caption, $name, $value, $size);
-		$this->addOptionArray(IcmsLists::getThemesList());
+class XoopsFormSelectTheme extends icms_form_elements_select_Theme {
+	private $_deprecated;
+	public function __construct() {
+		parent::getInstance();
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Theme', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 ?>
