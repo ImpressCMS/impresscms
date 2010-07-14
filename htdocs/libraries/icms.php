@@ -65,6 +65,12 @@ abstract class icms {
 	static public $urls=false;
 
 	/**
+	 * array of handlers
+	 * @var array
+	 */
+	static protected $handlers;
+
+	/**
 	 * Initialize ImpressCMS before bootstrap
 	 */
 	static public function setup() {
@@ -150,6 +156,28 @@ abstract class icms {
 	}
 
 	/**
+	 * Gets the handler for a class
+	 *
+	 * @param string  $name  The name of the handler to get
+	 * @param bool  $optional	Is the handler optional?
+	 * @return		object		$inst		The instance of the object that was created
+	 */
+	static public function handler($name, $optional = false ) {
+		$name = strtolower(trim($name));
+
+		if(!isset(self::$handlers[$name])) {
+			$class = $name . '_Handler';
+			if (class_exists($class))
+				$handlers[$name] = new $class($GLOBALS['xoopsDB']);
+		}
+
+		if(!isset($handlers[$name]) && !$optional) trigger_error(sprintf(_CORE_COREHANDLER_NOTAVAILABLE, $class, $name), E_USER_ERROR);
+		if(isset($handlers[$name])) return $handlers[$name];
+		$inst = false;
+		return $inst;
+	}
+
+	/**
 	 * Build URLs for global use throughout the application
 	 * @return 	array
 	 */
@@ -181,5 +209,7 @@ abstract class icms {
 		}
 		return self::$urls;
 	}
+
+
 }
 
