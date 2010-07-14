@@ -261,10 +261,10 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				// RMV-NOTIFY - added 'user' and 'user_multi'
 				case 'user' :
-					$ele = new XoopsFormSelectUser ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 1, false );
+					$ele = new icms_form_elements_select_User ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 1, false );
 				break;
 				case 'user_multi' :
-					$ele = new XoopsFormSelectUser ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 5, true );
+					$ele = new icms_form_elements_select_User ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 5, true );
 				break;
 				case 'module_cache' :
 					$module_handler = & xoops_gethandler ( 'module' );
@@ -446,11 +446,11 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				// RMV-NOTIFY: added 'user' and 'user_multi'
 				case 'user' :
 					include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$ele = new XoopsFormSelectUser ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 1, false );
+					$ele = new icms_form_elements_select_User ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 1, false );
 				break;
 				case 'user_multi' :
 					include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
-					$ele = new XoopsFormSelectUser ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 5, true );
+					$ele = new icms_form_elements_select_User ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 5, true );
 				break;
 				case 'password' :
 					$myts = & icms_core_Textsanitizer::getInstance ();
