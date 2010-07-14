@@ -8,7 +8,7 @@
  * @package		Autotasks
  * @since		1.2 alpha 2
  * @author		MekDrop <mekdrop@gmail.com>
- * @version		SVN: $Id$
+ * @version		SVN: $Id:System.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 /**
  *
@@ -16,8 +16,8 @@
  * @category	ICMS
  * @package		Autotasks
  */
-abstract class icms_autotasks_System
-implements icms_autotasks_ISystem  {
+abstract class icms_sys_autotasks_System
+implements icms_sys_autotasks_ISystem  {
 
 	/**
 	 *

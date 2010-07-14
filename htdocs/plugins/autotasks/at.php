@@ -10,7 +10,7 @@
  */
 
 class IcmsAutoTasksAt
-extends icms_autotasks_System {
+extends icms_sys_autotasks_System {
 
 	/*
 	 * check if can run

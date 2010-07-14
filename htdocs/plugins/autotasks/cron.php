@@ -14,7 +14,7 @@
  * some parts are taked from CronTab class developed by cjpa@audiophile.com
  */
 class IcmsAutoTasksCron
-extends icms_autotasks_System {
+extends icms_sys_autotasks_System {
 
 	private $_lines = array();
 	private $_line_id = -1;
