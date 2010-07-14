@@ -36,7 +36,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			$module = !isset($_GET['module']) ? 0 : (int) ($_GET['module']);
 			$module_handler =& xoops_gethandler('module');
 			$module_array =& $module_handler->getList(new icms_criteria_Item('hascomments', 1));
-			$comment_handler =& xoops_gethandler('data_comment');
+			$comment_handler = icms::handler('icms_data_comment');
 			$criteria = new icms_criteria_Compo();
 			if ($status > 0) {
 				$criteria->add(new icms_criteria_Item('com_status', $status));
@@ -128,7 +128,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		case 'jump':
 			$com_id = (isset($_GET['com_id'])) ? (int) ($_GET['com_id']) : 0;
 			if ($com_id > 0) {
-				$comment_handler =& xoops_gethandler('data_comment');
+				$comment_handler = icms::handler('icms_data_comment');
 				$comment =& $comment_handler->get($com_id);
 				if (is_object($comment)) {
 					$module_handler =& xoops_gethandler('module');

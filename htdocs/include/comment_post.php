@@ -23,7 +23,7 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	if (empty($com_id)) {
 		exit();
 	}
-	$comment_handler =& xoops_gethandler('data_comment');
+	$comment_handler = icms::handler('icms_data_comment');
 	$comment =& $comment_handler->get($com_id);
 	$module_handler =& xoops_gethandler('module');
 	$module =& $module_handler->get($comment->getVar('com_modid'));
@@ -137,7 +137,7 @@ switch ( $op) {
 	  }
 
 		$doimage = 1;
-		$comment_handler =& xoops_gethandler('data_comment');
+		$comment_handler = icms::handler('icms_data_comment');
 		$add_userpost = false;
 		$call_approvefunc = false;
 		$call_updatefunc = false;

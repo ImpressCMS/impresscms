@@ -64,7 +64,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 
 		$com_id = isset($_GET['com_id']) ? (int) ($_GET['com_id']) : 0;
 		$com_rootid = isset($_GET['com_rootid']) ? (int) ($_GET['com_rootid']) : 0;
-		$comment_handler =& xoops_gethandler('data_comment');
+		$comment_handler = icms::handler('icms_data_comment');
 		if ($com_mode == 'flat') {
 			$comments =& $comment_handler->getByItemId($icmsModule->getVar('mid'), $com_itemid, $com_dborder);
 			include_once ICMS_ROOT_PATH . '/class/commentrenderer.php';

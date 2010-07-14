@@ -795,7 +795,7 @@ function xoops_notification_deletebyitem ($module_id, $category, $item_id)
  */
 function xoops_comment_count($module_id, $item_id = null)
 {
-	$comment_handler =& xoops_gethandler('data_comment');
+	$comment_handler = icms::handler('icms_data_comment');
 	$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_modid', (int) ($module_id)));
 	if(isset($item_id)) {$criteria->add(new icms_criteria_Item('com_itemid', (int) ($item_id)));}
 	return $comment_handler->getCount($criteria);
@@ -813,7 +813,7 @@ function xoops_comment_delete($module_id, $item_id)
 {
 	if( (int) ($module_id) > 0 && (int) ($item_id) > 0)
 	{
-		$comment_handler =& xoops_gethandler('data_comment');
+		$comment_handler = icms::handler('icms_data_comment');
 		$comments =& $comment_handler->getByItemId($module_id, $item_id);
 		if(is_array($comments))
 		{

@@ -43,7 +43,7 @@ if (!isset($_GET['com_order'])) {
 } else {
 	$com_order = (int) ($_GET['com_order']);
 }
-$comment_handler =& xoops_gethandler('data_comment');
+$comment_handler = icms::handler('icms_data_comment');
 $comment =& $comment_handler->get($com_id);
 $r_name = icms_member_user_Object::getUnameFromId($comment->getVar('com_uid'));
 $r_text = _CM_POSTER . ': <strong>' . $r_name . '</strong>&nbsp;&nbsp;' . _CM_POSTED . ': <strong>' . formatTimestamp($comment->getVar('com_created')) . '</strong><br /><br />' . $comment->getVar('com_text');
