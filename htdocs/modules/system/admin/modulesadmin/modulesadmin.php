@@ -539,7 +539,7 @@ function &xoops_module_gettemplate($dirname, $template, $block=false) {
 }
 
 function xoops_module_uninstall($dirname) {
-	global $xoopsConfig, $icmsAdmindTpl;
+	global $xoopsConfig, $icmsAdminTpl;
 	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
 	$db =& Database::getInstance();
 	$module_handler =& xoops_gethandler('module');
