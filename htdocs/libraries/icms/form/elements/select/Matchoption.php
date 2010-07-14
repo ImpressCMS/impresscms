@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: formselectmatchoption.php 19118 2010-03-27 17:46:23Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -36,11 +36,24 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelectMatchOption extends icms_form_elements_select_Matchoption {
-	private $_deprecated;
-	public function __construct() {
-		parent::getInstance();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Matchoption', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+class icms_form_elements_select_Matchoption extends XoopsFormSelect
+{
+	/**
+	 * Constructor
+	 *
+	 * @param	string	$caption
+	 * @param	string	$name
+	 * @param	mixed	$value	Pre-selected value (or array of them).
+	 * 							Legal values are {@link XOOPS_MATCH_START}, {@link XOOPS_MATCH_END},
+	 * 							{@link XOOPS_MATCH_EQUAL}, and {@link XOOPS_MATCH_CONTAIN}
+	 * @param	int		$size	Number of rows. "1" makes a drop-down-list
+	 */
+	function __construct($caption, $name, $value = null, $size = 1)
+	{
+		$this->XoopsFormSelect($caption, $name, $value, $size, false);
+		$this->addOption(XOOPS_MATCH_START, _STARTSWITH);
+		$this->addOption(XOOPS_MATCH_END, _ENDSWITH);
+		$this->addOption(XOOPS_MATCH_EQUAL, _MATCHES);
+		$this->addOption(XOOPS_MATCH_CONTAIN, _CONTAINS);
 	}
 }
-?>

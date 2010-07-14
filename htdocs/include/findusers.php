@@ -335,7 +335,7 @@ if (empty($_POST["user_submit"])) {
 		if (FINDUSERS_MODE_ADVANCED == $mode) {
 			foreach ($items_match as $var => $title) {
 				$text = new XoopsFormText("", $var, 30, 100, @$_POST[$var]);
-				$match = new XoopsFormSelectMatchOption("", "{$var}_match", @$_POST["{$var}_match"]);
+				$match = new icms_form_elements_select_Matchoption("", "{$var}_match", @$_POST["{$var}_match"]);
 				$match_tray = new icms_form_elements_Tray($title, "&nbsp;");
 				$match_tray->addElement($match);
 				$match_tray->addElement($text);
@@ -392,7 +392,7 @@ if (empty($_POST["user_submit"])) {
 			foreach (array("uname", "email") as $var) {
 				$title = $items_match[$var];
 				$text = new XoopsFormText("", $var, 30, 100, @$_POST[$var]);
-				$match = new XoopsFormSelectMatchOption("", "{$var}_match", @$_POST["{$var}_match"]);
+				$match = new icms_form_elements_select_Matchoption("", "{$var}_match", @$_POST["{$var}_match"]);
 				$match_tray = new icms_form_elements_Tray($title, "&nbsp;");
 				$match_tray->addElement($match);
 				$match_tray->addElement($text);
