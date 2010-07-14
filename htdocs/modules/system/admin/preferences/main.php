@@ -209,7 +209,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$form->addElement ( new icms_form_elements_Hidden ( '_old_theme', $config [$i]->getConfValueForOutput () ) );
 				break;
 				case 'timezone' :
-					$ele = new XoopsFormSelectTimezone ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					$ele = new icms_form_elements_select_Timezone ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 				break;
 				case 'language' :
 					$ele = new XoopsFormSelectLang ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );

@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Creates a form with selectable timezone
  *
@@ -11,10 +10,11 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: formselecttimezone.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+
 /**
  * @package     kernel
  * @subpackage  form
@@ -26,11 +26,11 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 /**
  * lists of values
  */
-include_once ICMS_ROOT_PATH . "/class/xoopslists.php";
+include_once ICMS_ROOT_PATH."/class/xoopslists.php";
 /**
  * base class
  */
-include_once ICMS_ROOT_PATH . "/class/xoopsform/formselect.php";
+include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 
 /**
  * A select box with timezones
@@ -41,11 +41,22 @@ include_once ICMS_ROOT_PATH . "/class/xoopsform/formselect.php";
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelectTimezone extends icms_form_elements_select_Timezone {
-	private $_deprecated;
-	public function __construct() {
-		parent::getInstance();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_select_Timezone', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+class icms_form_elements_select_Timezone extends XoopsFormSelect
+{
+	/**
+	 * Constructor
+	 *
+	 * @param	string	$caption
+	 * @param	string	$name
+	 * @param	mixed	$value	Pre-selected value (or array of them).
+	 * 							Legal values are "-12" to "12" with some ".5"s strewn in ;-)
+	 * @param	int		$size	Number of rows. "1" makes a drop-down-box.
+	 */
+	function icms_form_elements_select_Timezone($caption, $name, $value = null, $size = 1)
+	{
+		$this->XoopsFormSelect($caption, $name, $value, $size);
+		$this->addOptionArray(IcmsLists::getTimeZoneList());
 	}
 }
+
 ?>

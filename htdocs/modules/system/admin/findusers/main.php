@@ -52,7 +52,7 @@ if ($op == "form") {
 	$login_name_tray->addElement($login_name_text);
 	$url_text = new XoopsFormText(_AM_URLC, "user_url", 30, 100);
 	//$theme_select = new XoopsFormSelectTheme(_AM_THEME, "user_theme");
-	//$timezone_select = new XoopsFormSelectTimezone(_AM_TIMEZONE, "user_timezone_offset");
+	//$timezone_select = new icms_form_elements_select_Timezone(_AM_TIMEZONE, "user_timezone_offset");
 	$icq_text = new XoopsFormText("", "user_icq", 30, 100);
 	$icq_match = new XoopsFormSelectMatchOption("", "user_icq_match");
 	$icq_tray = new icms_form_elements_Tray(_AM_ICQ, "&nbsp;");

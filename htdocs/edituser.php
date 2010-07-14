@@ -317,7 +317,7 @@ if ($op == 'editprofile')
 	$url_text = new XoopsFormText(_US_WEBSITE, 'url', 30, 100, $icmsUser->getVar('url', 'E'));
 	$form->addElement($url_text);
 
-	$timezone_select = new XoopsFormSelectTimezone(_US_TIMEZONE, 'timezone_offset', $icmsUser->getVar('timezone_offset'));
+	$timezone_select = new icms_form_elements_select_Timezone(_US_TIMEZONE, 'timezone_offset', $icmsUser->getVar('timezone_offset'));
 	$icq_text = new XoopsFormText(_US_ICQ, 'user_icq', 15, 15, $icmsUser->getVar('user_icq', 'E'));
 	$aim_text = new XoopsFormText(_US_AIM, 'user_aim', 18, 18, $icmsUser->getVar('user_aim', 'E'));
 	$yim_text = new XoopsFormText(_US_YIM, 'user_yim', 25, 25, $icmsUser->getVar('user_yim', 'E'));

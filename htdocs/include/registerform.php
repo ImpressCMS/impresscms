@@ -37,7 +37,7 @@ $reg_form->addElement(new icms_form_elements_Password(_US_PASSWORD, "pass", 10, 
 $reg_form->addElement(new icms_form_elements_Password(_US_VERIFYPASS, "vpass", 10, 255, $myts->htmlSpecialChars($vpass)), true);
 $reg_form->addElement(new XoopsFormText(_US_WEBSITE, "url", 25, 255, $myts->htmlSpecialChars($url)));
 $tzselected = ($timezone_offset != "") ? $timezone_offset : $icmsConfig['default_TZ'];
-$reg_form->addElement(new XoopsFormSelectTimezone(_US_TIMEZONE, "timezone_offset", $tzselected));
+$reg_form->addElement(new icms_form_elements_select_Timezone(_US_TIMEZONE, "timezone_offset", $tzselected));
 //$reg_form->addElement($avatar_tray);
 $reg_form->addElement(new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', $user_mailok));
 

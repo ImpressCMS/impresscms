@@ -431,7 +431,7 @@ class IcmsForm extends XoopsThemeForm {
 				break;
 
 			case 'timezone':
-				return new XoopsFormSelectTimezone($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
+				return new icms_form_elements_select_Timezone($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key));
 				break;
 
 			case 'group':
