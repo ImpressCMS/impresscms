@@ -87,7 +87,7 @@ abstract class icms {
 
 		foreach (self::$services['boot'] as $name => $class ) {
 			if (method_exists($class, "instance")) {
-				$inst = call_user_func($class,"instance");
+				$inst = call_user_func(array($class,"instance"));
 			} else {
 				$inst = new $class;
 			}
