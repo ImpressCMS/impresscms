@@ -552,7 +552,7 @@ function xoops_module_uninstall($dirname) {
 	} else {
 		$msgs = array();
 
-		$member_handler = & xoops_gethandler ( 'member' );
+		$member_handler = & xoops_gethandler('member');
 		$grps = $member_handler->getGroupList ();
 		foreach ( $grps as $k => $v) {
 			$stararr = explode('-',$xoopsConfig['startpage'][$k]);
@@ -778,7 +778,7 @@ function xoops_module_deactivate($mid) {
 	} elseif ($module->getVar('dirname') == $xoopsConfig['startpage']) {
 		return "<p>".sprintf(_MD_AM_FAILDEACT, "<b>".$module->getVar('name')."</b>")."&nbsp;"._MD_AM_ERRORSC."<br /> - "._MD_AM_STRTNO."</p>";
 	} else {
-		$member_handler = & xoops_gethandler ( 'member' );
+		$member_handler = & xoops_gethandler('member');
 		$grps = $member_handler->getGroupList ();
 		foreach ( $grps as $k => $v) {
 			$stararr = explode('-',$xoopsConfig['startpage'][$k]);

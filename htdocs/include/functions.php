@@ -611,23 +611,11 @@ function &getMailer()
  * @return		object		$inst		The instance of the object that was created
  * @todo This will not be needed when the autoload is complete
  */
-function &xoops_gethandler($name, $optional = false )
-{
-	static $handlers;
-	$name = strtolower(trim($name));
+function &xoops_gethandler($name, $optional = false ) {
+	$lookup = array(
 
-	if(!isset($handlers[$name])) {
-		$class = 'icms_' . $name . '_Handler';
-		if (!class_exists($class))
-			$class = 'icms_core_' . ucfirst($name) . 'Handler';
-		if (class_exists($class))
-			$handlers[$name] = new $class($GLOBALS['xoopsDB']);
-	}
-
-	if(!isset($handlers[$name]) && !$optional) trigger_error(sprintf(_CORE_COREHANDLER_NOTAVAILABLE, $class, $name), E_USER_ERROR);
-	if(isset($handlers[$name])) return $handlers[$name];
-	$inst = false;
-	return $inst;
+	);
+	return icms::handler($name, $optional);
 }
 
 /**

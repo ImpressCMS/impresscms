@@ -147,7 +147,7 @@ function b_system_admin_cp_show(){
 function b_system_admin_modules_show(){
 	global $icmsUser;
 	$block['mods'] = array();
-	$module_handler = & xoops_gethandler ( 'module' );
+	$module_handler = & xoops_gethandler('module');
 	$moduleperm_handler = & xoops_gethandler('member_groupperm');
 	$criteria = new icms_criteria_Compo ( );
 	$criteria->add ( new icms_criteria_Item ( 'hasadmin', 1 ) );

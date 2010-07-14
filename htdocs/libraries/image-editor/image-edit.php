@@ -97,7 +97,7 @@ if (! is_null ( $op ) && $op == 'save') {
 	$simage_temp = isset ( $_GET ['image_temp'] ) ? $_GET ['image_temp'] : null;
 	$soverwrite = isset ( $_GET ['overwrite'] ) ? $_GET ['overwrite'] : 1;
 
-	$image_handler = & xoops_gethandler ( 'image' );
+	$image_handler = & xoops_gethandler('image');
 	$simage = & $image_handler->get ( $simage_id );
 	$imgcat_handler = xoops_gethandler('image_category');
 	$imagecategory = & $imgcat_handler->get ( $simage->getVar ( 'imgcat_id' ) );
@@ -181,7 +181,7 @@ if (! is_null ( $op ) && $op == 'save') {
 	exit ();
 }
 
-$image_handler = & xoops_gethandler ( 'image' );
+$image_handler = & xoops_gethandler('image');
 $original_image = & $image_handler->get ( $image_id );
 if (! is_object ( $original_image )) {
 	die ( _ERROR );
