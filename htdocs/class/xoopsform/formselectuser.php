@@ -118,8 +118,8 @@ class XoopsFormSelectUser extends icms_form_elements_Tray
 
 		$token = $GLOBALS['xoopsSecurity']->createToken();
 		$action_tray = new icms_form_elements_Tray("", " | ");
-		$action_tray->addElement(new XoopsFormLabel('', "<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name . ( $multiple ? "[]" : "" ) . "\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;'>"._MA_USER_REMOVE."</a>"));
-		$action_tray->addElement(new XoopsFormLabel('', "<a href='#' onclick='openWithSelfMain(\"".ICMS_URL."/include/findusers.php?target={$name}&amp;multiple={$multiple}&amp;token={$token}\", \"userselect\", 800, 600, null); return false;' >"._MA_USER_MORE."</a>".$js_addusers));
+		$action_tray->addElement(new icms_form_elements_Lebel('', "<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name . ( $multiple ? "[]" : "" ) . "\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;'>"._MA_USER_REMOVE."</a>"));
+		$action_tray->addElement(new icms_form_elements_Lebel('', "<a href='#' onclick='openWithSelfMain(\"".ICMS_URL."/include/findusers.php?target={$name}&amp;multiple={$multiple}&amp;token={$token}\", \"userselect\", 800, 600, null); return false;' >"._MA_USER_MORE."</a>".$js_addusers));
 
 		$this->icms_form_elements_Tray($caption, '<br /><br />', $name);
 		$this->addElement($select_element);

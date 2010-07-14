@@ -401,7 +401,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		case 'clone':
 			include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 			$form = new XoopsThemeForm(_MD_CLONETHEME, 'template_form', 'admin.php', 'post', true);
-			$form->addElement(new XoopsFormLabel(_MD_THEMENAME, $tplset));
+			$form->addElement(new icms_form_elements_Lebel(_MD_THEMENAME, $tplset));
 			$form->addElement(new XoopsFormText(_MD_NEWNAME, 'newtheme', 30, 50), true);
 			$form->addElement(new icms_form_elements_Hidden('tplset', $tplset));
 			$form->addElement(new icms_form_elements_Hidden('op', 'clone_go'));
@@ -541,7 +541,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 				$form = new XoopsThemeForm(_MD_UPLOAD, 'tplupload_form', 'admin.php', 'post', true);
 				$form->setExtra('enctype="multipart/form-data"');
-				$form->addElement(new XoopsFormLabel(_MD_FILENAME, $tpl->getVar('tpl_file').' ('.$tpl->getVar('tpl_tplset').')'));
+				$form->addElement(new icms_form_elements_Lebel(_MD_FILENAME, $tpl->getVar('tpl_file').' ('.$tpl->getVar('tpl_tplset').')'));
 				$form->addElement(new icms_form_elements_File(_MD_CHOOSEFILE.'<br /><span style="color:#ff0000;">'._MD_UPWILLREPLACE.'</span>', 'tpl_upload', 200000), true);
 				$form->addElement(new icms_form_elements_Hidden('tpl_id', $id));
 				$form->addElement(new icms_form_elements_Hidden('op', 'uploadtpl_go'));
@@ -607,7 +607,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 			$form = new XoopsThemeForm(_MD_UPLOAD, 'tplupload_form', 'admin.php', 'post', true);
 			$form->setExtra('enctype="multipart/form-data"');
-			$form->addElement(new XoopsFormLabel(_MD_FILENAME, $file));
+			$form->addElement(new icms_form_elements_Lebel(_MD_FILENAME, $file));
 			$form->addElement(new icms_form_elements_File(_MD_CHOOSEFILE.'<br /><span style="color:#ff0000;">'._MD_UPWILLREPLACE.'</span>', 'tpl_upload', 200000), true);
 			$form->addElement(new icms_form_elements_Hidden('moddir', $moddir));
 			$form->addElement(new icms_form_elements_Hidden('tplset', $tplset));

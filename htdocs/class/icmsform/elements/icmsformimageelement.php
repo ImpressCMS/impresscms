@@ -31,9 +31,9 @@ class IcmsFormImageElement extends icms_form_elements_Tray {
 		}
 
 		if($object->getVar($key,'e') != '' && (substr($object->getVar($key,'e'), 0, 4) == 'http' || substr($object->getVar($key,'e'), 0, 11) == '{ICMS_URL}')){
-			$this->addElement( new XoopsFormLabel( '', "<img src='" . str_replace('{ICMS_URL}', ICMS_URL, $object->getVar($key,'e')) . "' alt='' /><br/><br/>" ) );
+			$this->addElement( new icms_form_elements_Lebel( '', "<img src='" . str_replace('{ICMS_URL}', ICMS_URL, $object->getVar($key,'e')) . "' alt='' /><br/><br/>" ) );
 		}elseif($object->getVar($key,'e') != ''){
-			$this->addElement( new XoopsFormLabel( '', "<img src='" . $object_imageurl . $object->getVar($key,'e') . "' alt='' /><br/><br/>" ) );
+			$this->addElement( new icms_form_elements_Lebel( '', "<img src='" . $object_imageurl . $object->getVar($key,'e') . "' alt='' /><br/><br/>" ) );
 		}
 
 		include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformfileuploadelement.php";
@@ -41,13 +41,13 @@ class IcmsFormImageElement extends icms_form_elements_Tray {
 
 		if (!isset($control['nourl']) || !$control['nourl']) {
 			include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformtextelement.php";
-			$this->addElement(new XoopsFormLabel( '<div style="padding-top: 8px; font-size: 80%;">'._CO_ICMS_URL_FILE_DSC.'</div>', ''));
-			$this->addElement(new XoopsFormLabel( '', '<br />' . _CO_ICMS_URL_FILE));
+			$this->addElement(new icms_form_elements_Lebel( '<div style="padding-top: 8px; font-size: 80%;">'._CO_ICMS_URL_FILE_DSC.'</div>', ''));
+			$this->addElement(new icms_form_elements_Lebel( '', '<br />' . _CO_ICMS_URL_FILE));
 			$this->addElement(new XoopsFormText('', 'url_'.$key, 50, 500));
 		}
 		if (!$object->isNew()) {
 			include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformcheckelement.php";
-			$this->addElement(new XoopsFormLabel( '', '<br /><br />'));
+			$this->addElement(new icms_form_elements_Lebel( '', '<br /><br />'));
 			$delete_check = new IcmsFormCheckElement('', 'delete_'.$key);
 			$delete_check->addOption(1, '<span style="color:red;">'._CO_ICMS_DELETE.'</span>');
 			$this->addElement($delete_check);

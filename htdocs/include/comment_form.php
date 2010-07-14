@@ -34,7 +34,7 @@ if (isset($icmsModuleConfig['com_rule'])) {
 			$rule_text = _CM_COMAPPROVEADMIN;
 			break;
 	}
-	$cform->addElement(new XoopsFormLabel(_CM_COMRULES, $rule_text));
+	$cform->addElement(new icms_form_elements_Lebel(_CM_COMRULES, $rule_text));
 }
 
 $cform->addElement(new XoopsFormText(_CM_TITLE, 'com_title', 50, 255, $com_title), true);

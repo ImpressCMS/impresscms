@@ -19,9 +19,9 @@ if ($tform['tpl_tplset'] != 'default') {
 } else {
 	$form = new XoopsThemeForm(_MD_VIEWTEMPLATE, 'template_form', 'admin.php', 'post', true);
 }
-$form->addElement(new XoopsFormLabel(_MD_FILENAME, $tform['tpl_file']));
-$form->addElement(new XoopsFormLabel(_MD_FILEDESC, $tform['tpl_desc']));
-$form->addElement(new XoopsFormLabel(_MD_LASTMOD, formatTimestamp($tform['tpl_lastmodified'], 'l')));
+$form->addElement(new icms_form_elements_Lebel(_MD_FILENAME, $tform['tpl_file']));
+$form->addElement(new icms_form_elements_Lebel(_MD_FILEDESC, $tform['tpl_desc']));
+$form->addElement(new icms_form_elements_Lebel(_MD_LASTMOD, formatTimestamp($tform['tpl_lastmodified'], 'l')));
 $tpl_src = new XoopsFormTextArea(_MD_FILEHTML, 'html', $tform['tpl_source'], 25, 70);
 if ($tform['tpl_tplset'] == 'default') {
 	$tpl_src->setExtra('readonly');

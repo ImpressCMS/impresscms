@@ -275,14 +275,14 @@ if ($op == 'editprofile')
 
 	echo '<a href="userinfo.php?uid='. (int) ($icmsUser->getVar('uid')).'">'._US_PROFILE.'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'._US_EDITPROFILE.'<br /><br />';
 	$form = new XoopsThemeForm(_US_EDITPROFILE, 'userinfo', 'edituser.php', 'post', true);
-	$login_name_label = new XoopsFormLabel(_US_LOGINNAME, $icmsUser->getVar('login_name'));
+	$login_name_label = new icms_form_elements_Lebel(_US_LOGINNAME, $icmsUser->getVar('login_name'));
 	$form->addElement($login_name_label);
 	$email_tray = new icms_form_elements_Tray(_US_EMAIL, '<br />');
 	if ($icmsConfigUser['allow_chgmail'] == 1)
 	{
 		$email_text = new XoopsFormText('', 'email', 30, 60, $icmsUser->getVar('email'));
 	} else {
-		$email_text = new XoopsFormLabel('', $icmsUser->getVar('email'));
+		$email_text = new icms_form_elements_Lebel('', $icmsUser->getVar('email'));
 	}
 
 	$email_tray->addElement($email_text);
@@ -308,7 +308,7 @@ if ($op == 'editprofile')
 	{
 		$uname_label = new XoopsFormText(_US_NICKNAME, 'uname', 30, 60, $icmsUser->getVar('uname', 'E'));
 	} else {
-		$uname_label = new XoopsFormLabel(_US_NICKNAME, $icmsUser->getVar('uname'));
+		$uname_label = new icms_form_elements_Lebel(_US_NICKNAME, $icmsUser->getVar('uname'));
 	}
 
 	$form->addElement($uname_label);
@@ -454,11 +454,11 @@ if ($op == 'avatarform')
 		/* the avatar resizer shall later be included
 		 if ($icmsConfigUser['avatar_auto_resize'])
 		 {
-		 $form->addElement(new XoopsFormLabel(_US_AUTORESIZE_ATV, sprintf(_US_AUTORESIZE_ATV_DESC,$icmsConfigUser['avatar_width'],$icmsConfigUser['avatar_height'])));
+		 $form->addElement(new icms_form_elements_Lebel(_US_AUTORESIZE_ATV, sprintf(_US_AUTORESIZE_ATV_DESC,$icmsConfigUser['avatar_width'],$icmsConfigUser['avatar_height'])));
 		 }
 		 */
-		$form->addElement(new XoopsFormLabel(_US_MAXPIXEL, icms_conv_nr2local($icmsConfigUser['avatar_width']).' x '.icms_conv_nr2local($icmsConfigUser['avatar_height'])));
-		$form->addElement(new XoopsFormLabel(_US_MAXIMGSZ, icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])));
+		$form->addElement(new icms_form_elements_Lebel(_US_MAXPIXEL, icms_conv_nr2local($icmsConfigUser['avatar_width']).' x '.icms_conv_nr2local($icmsConfigUser['avatar_height'])));
+		$form->addElement(new icms_form_elements_Lebel(_US_MAXIMGSZ, icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])));
 		$form->addElement(new icms_form_elements_File(_US_SELFILE, 'avatarfile', icms_conv_nr2local($icmsConfigUser['avatar_maxsize'])), true);
 		$form->addElement(new icms_form_elements_Hidden('op', 'avatarupload'));
 		$form->addElement(new icms_form_elements_Hidden('uid', (int) ($icmsUser->getVar('uid'))));
@@ -472,9 +472,9 @@ if ($op == 'avatarform')
 	$avatar_select->setExtra("onchange='showImgSelected(\"avatar\", \"user_avatar\", \"uploads\", \"\", \"".ICMS_URL."\")'");
 	$avatar_tray = new icms_form_elements_Tray(_US_AVATAR, '&nbsp;');
 	$avatar_tray->addElement($avatar_select);
-	$avatar_tray->addElement(new XoopsFormLabel('', "<img src='".ICMS_UPLOAD_URL."/".$icmsUser->getVar("user_avatar", "E")."' name='avatar' id='avatar' alt='' /> <a href=\"javascript:openWithSelfMain('".ICMS_URL."/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">"._LIST."</a>"));
+	$avatar_tray->addElement(new icms_form_elements_Lebel('', "<img src='".ICMS_UPLOAD_URL."/".$icmsUser->getVar("user_avatar", "E")."' name='avatar' id='avatar' alt='' /> <a href=\"javascript:openWithSelfMain('".ICMS_URL."/misc.php?action=showpopups&amp;type=avatars','avatars',600,400);\">"._LIST."</a>"));
 	if ($icmsConfigUser['avatar_allow_upload'] == 1 && $icmsUser->getVar('posts') < $icmsConfigUser['avatar_minposts']) {
-		$form2->addElement(new XoopsFormLabel(sprintf(_US_POSTSNOTENOUGH,icms_conv_nr2local($icmsConfigUser['avatar_minposts'])),_US_UNCHOOSEAVT));}
+		$form2->addElement(new icms_form_elements_Lebel(sprintf(_US_POSTSNOTENOUGH,icms_conv_nr2local($icmsConfigUser['avatar_minposts'])),_US_UNCHOOSEAVT));}
 		$form2->addElement($avatar_tray);
 		$form2->addElement(new icms_form_elements_Hidden('uid', (int) ($icmsUser->getVar('uid'))));
 		$form2->addElement(new icms_form_elements_Hidden('op', 'avatarchoose'));

@@ -585,7 +585,7 @@ function imanager_editcat($imgcat_id) {
 	$form->addElement(new XoopsFormText(_MD_IMGCATWEIGHT, 'imgcat_weight', 3, 4, $imagecategory->getVar('imgcat_weight')));
 	$form->addElement(new XoopsFormRadioYN(_MD_IMGCATDISPLAY, 'imgcat_display', $imagecategory->getVar('imgcat_display'), _YES, _NO));
 	$storetype = array('db' => _MD_INDB, 'file' => sprintf(_MD_ASFILE,$imgcat_handler->getCategFolder($imagecategory)));
-	$form->addElement(new XoopsFormLabel(_MD_IMGCATSTRTYPE, $storetype[$imagecategory->getVar('imgcat_storetype')]));
+	$form->addElement(new icms_form_elements_Lebel(_MD_IMGCATSTRTYPE, $storetype[$imagecategory->getVar('imgcat_storetype')]));
 	$form->addElement(new icms_form_elements_Hidden('imgcat_id', $imgcat_id));
 	$form->addElement(new icms_form_elements_Hidden('op', 'updatecat'));
 	$form->addElement(new icms_form_elements_Hidden('fct', 'images'));

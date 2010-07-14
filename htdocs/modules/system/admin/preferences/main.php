@@ -281,7 +281,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 							unset ( $selform );
 						}
 					} else {
-						$ele = new XoopsFormLabel ( $title, _MD_AM_NOMODULE );
+						$ele = new icms_form_elements_Lebel ( $title, _MD_AM_NOMODULE );
 					}
 				break;
 				case 'site_cache' :

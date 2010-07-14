@@ -32,7 +32,7 @@ class IcmsFormBlockoptionsElement extends icms_form_elements_Tray {
 		icms_loadLanguageFile($object->handler->getModuleDirname($object->getVar('mid', 'e')), 'blocks');
 
 		if (!function_exists($func)) return;
-		$visible_label = new XoopsFormLabel('', $func (explode('|', $object->getVar('options'))));
+		$visible_label = new icms_form_elements_Lebel('', $func (explode('|', $object->getVar('options'))));
 		$this->addElement($visible_label);
 	}
 }

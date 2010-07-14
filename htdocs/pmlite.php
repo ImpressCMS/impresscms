@@ -115,7 +115,6 @@ if ($icmsUser) {
 			echo "<td class='even'><input type='hidden' name='to_userid' value='".$to_userid."' />".$to_username."</td>";
 		} else {
 			require_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
-			require_once ICMS_ROOT_PATH."/class/xoopsform/formlabel.php";
 			require_once ICMS_ROOT_PATH."/class/xoopsform/formselectuser.php";
 			$user_sel = new XoopsFormSelectUser("", "to_userid");
 			echo "<td class='even'>".$user_sel->render();

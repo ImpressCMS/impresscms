@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: formlabel.php 19807 2010-07-13 22:41:04Z malanciault $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -31,44 +31,11 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormLabel extends icms_form_elements_Label {
-
-	/**
-	 * Text
-	 * @var	string
-	 * @access	private
-	 */
-	var $_value;
-
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$caption	Caption
-	 * @param	string	$value		Text
-	 */
-	function XoopsFormLabel($caption = "", $value = "", $name = ""){
-		$this->setCaption($caption);
-		$this->setName($name);
-		$this->_value = $value;
-	}
-
-	/**
-	 * Get the "value" attribute
-	 *
-	 * @param	bool    $encode To sanitizer the text?
-	 * @return	string
-	 */
-	function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
-	}
-
-	/**
-	 * Prepare HTML for output
-	 *
-	 * @return	string
-	 */
-	function render() {
-		return $this->getValue();
+class icms_form_elements_Lebel extends icms_form_Element {
+	private $_deprecated;
+	public function __construct() {
+		parent::getInstance();
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_Element', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 

@@ -401,7 +401,7 @@ class IcmsForm extends XoopsThemeForm {
 				break;
 
 			case 'label':
-				return new XoopsFormLabel($this->targetObject->vars[$key]['form_caption'], $this->targetObject->getVar($key));
+				return new icms_form_elements_Lebel($this->targetObject->vars[$key]['form_caption'], $this->targetObject->getVar($key));
 				break;
 
 			case 'textarea' :
@@ -493,7 +493,7 @@ class IcmsForm extends XoopsThemeForm {
 							include_once $moduleFormElementsPath . $classFileName ;
 						} else {
 							trigger_error($classname." Not found", E_USER_WARNING);
-							return new XoopsFormLabel(); //Empty object
+							return new icms_form_elements_Lebel(); //Empty object
 						}
 					}
 				}

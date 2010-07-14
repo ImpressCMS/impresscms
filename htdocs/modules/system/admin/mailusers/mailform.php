@@ -28,7 +28,7 @@ if (!empty($_POST['memberslist_id'])) {
 		$display_names .= "<a href='".ICMS_URL."/userinfo.php?uid=".$_POST['memberslist_id'][$i]."' target='_blank'>".$_POST['memberslist_uname'][$_POST['memberslist_id'][$i]]."</a>, ";
 		unset($uid_hidden);
 	}
-	$users_label = new XoopsFormLabel(_AM_SENDTOUSERS2, substr($display_names, 0, -2));
+	$users_label = new icms_form_elements_Lebel(_AM_SENDTOUSERS2, substr($display_names, 0, -2));
 	$form->addElement($users_label);
 	$display_criteria = 0;
 }

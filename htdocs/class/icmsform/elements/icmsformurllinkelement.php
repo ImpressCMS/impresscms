@@ -23,16 +23,16 @@ class IcmsFormUrlLinkElement extends icms_form_elements_Tray {
 	function IcmsFormUrlLinkElement($form_caption, $key, $object) {
 		$this->icms_form_elements_Tray($form_caption, '&nbsp;' );
 
-		$this->addElement( new XoopsFormLabel( '', '<br/>'._CO_ICMS_URLLINK_URL));
+		$this->addElement( new icms_form_elements_Lebel( '', '<br/>'._CO_ICMS_URLLINK_URL));
 		$this->addElement(new IcmsFormTextElement($object, 'url_'.$key));
 
-		$this->addElement( new XoopsFormLabel( '', '<br/>'._CO_ICMS_CAPTION));
+		$this->addElement( new icms_form_elements_Lebel( '', '<br/>'._CO_ICMS_CAPTION));
 		$this->addElement(new IcmsFormTextElement($object, 'caption_'.$key));
 
-		$this->addElement( new XoopsFormLabel( '', '<br/>'._CO_ICMS_DESC.'<br/>'));
+		$this->addElement( new icms_form_elements_Lebel( '', '<br/>'._CO_ICMS_DESC.'<br/>'));
 		$this->addElement(new XoopsFormTextArea('', 'desc_'.$key, $object->getVar('description')));
 
-		$this->addElement( new XoopsFormLabel( '', '<br/>'._CO_ICMS_URLLINK_TARGET));
+		$this->addElement( new icms_form_elements_Lebel( '', '<br/>'._CO_ICMS_URLLINK_TARGET));
 		$targ_val = $object->getVar('target');
 		$targetRadio = new XoopsFormRadio('', 'target_'.$key, $targ_val!= '' ? $targ_val : '_blank');
 		$control = $object->getControl('target');
