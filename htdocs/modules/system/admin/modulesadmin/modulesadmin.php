@@ -653,7 +653,7 @@ function xoops_module_uninstall($dirname) {
 			// delete comments if any
 			if ($module->getVar('hascomments') != 0) {
 				$msgs[] = 'Deleting comments...';
-				$comment_handler =& xoops_gethandler('comment');
+				$comment_handler =& xoops_gethandler('data_comment');
 				if (!$comment_handler->deleteByModule($module->getVar('mid'))) {
 					$msgs[] = '&nbsp;&nbsp;<span style="color:#ff0000;">ERROR: Could not delete comments</span>';
 				} else {

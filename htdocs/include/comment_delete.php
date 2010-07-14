@@ -31,7 +31,7 @@ if (!empty($_POST)) {
 }
 
 if ('system' == $icmsModule->getVar('dirname')) {
-	$comment_handler =& xoops_gethandler('comment');
+	$comment_handler =& xoops_gethandler('data_comment');
 	$comment =& $comment_handler->get($com_id);
 	$module_handler =& xoops_gethandler('module');
 	$module =& $module_handler->get($comment->getVar('com_modid'));
@@ -93,7 +93,7 @@ icms_loadLanguageFile('core', 'comment');
 
 switch ($op) {
 	case 'delete_one':
-		$comment_handler = xoops_gethandler('comment');
+		$comment_handler = xoops_gethandler('data_comment');
 		$comment =& $comment_handler->get($com_id);
 		if (!$comment_handler->delete($comment)) {
 			include ICMS_ROOT_PATH . '/header.php';
@@ -184,7 +184,7 @@ switch ($op) {
 		break;
 
 	case 'delete_all':
-		$comment_handler = xoops_gethandler('comment');
+		$comment_handler = xoops_gethandler('data_comment');
 		$comment =& $comment_handler->get($com_id);
 		$com_rootid = $comment->getVar('com_rootid');
 

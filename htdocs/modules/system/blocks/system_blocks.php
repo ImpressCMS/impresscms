@@ -335,7 +335,7 @@ function b_system_comments_show($options)
 {
 	$block = array();
 	include_once ICMS_ROOT_PATH.'/include/comment_constants.php';
-	$comment_handler =& xoops_gethandler('comment');
+	$comment_handler =& xoops_gethandler('data_comment');
 	$criteria = new icms_criteria_Compo(new icms_criteria_Item('com_status', XOOPS_COMMENT_ACTIVE));
 	$criteria->setLimit( (int) ($options[0]));
 	$criteria->setSort('com_created');

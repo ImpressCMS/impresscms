@@ -64,11 +64,11 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 
 		$com_id = isset($_GET['com_id']) ? (int) ($_GET['com_id']) : 0;
 		$com_rootid = isset($_GET['com_rootid']) ? (int) ($_GET['com_rootid']) : 0;
-		$comment_handler =& xoops_gethandler('comment');
+		$comment_handler =& xoops_gethandler('data_comment');
 		if ($com_mode == 'flat') {
 			$comments =& $comment_handler->getByItemId($icmsModule->getVar('mid'), $com_itemid, $com_dborder);
 			include_once ICMS_ROOT_PATH . '/class/commentrenderer.php';
-			$renderer =& icms_comment_ObjectRenderer::instance($xoopsTpl);
+			$renderer =& icms_data_comment_ObjectRenderer::instance($xoopsTpl);
 			$renderer->setComments($comments);
 			$renderer->renderFlatView($admin_view);
 		} elseif ($com_mode == 'thread') {
@@ -97,7 +97,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 				$comments =& $comment_handler->getThread($com_rootid, $com_id);
 				if (false != $comments) {
 					include_once ICMS_ROOT_PATH . '/class/commentrenderer.php';
-					$renderer =& icms_comment_ObjectRenderer::instance($xoopsTpl);
+					$renderer =& icms_data_comment_ObjectRenderer::instance($xoopsTpl);
 					$renderer->setComments($comments);
 					$renderer->renderThreadView($com_id, $admin_view);
 				}
@@ -114,7 +114,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 						);
 						if (false != $comments) {
 							include_once ICMS_ROOT_PATH . '/class/commentrenderer.php';
-							$renderer =& icms_comment_ObjectRenderer::instance($xoopsTpl);
+							$renderer =& icms_data_comment_ObjectRenderer::instance($xoopsTpl);
 							$renderer->setComments($comments);
 							$renderer->renderThreadView($top_comments[$i]->getVar('com_id'), $admin_view);
 						}
@@ -132,7 +132,7 @@ if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 						$top_comments[$i]->getVar('com_rootid'), $top_comments[$i]->getVar('com_id')
 					);
 					include_once ICMS_ROOT_PATH . '/class/commentrenderer.php';
-					$renderer =& icms_comment_ObjectRenderer::instance($xoopsTpl);
+					$renderer =& icms_data_comment_ObjectRenderer::instance($xoopsTpl);
 					$renderer->setComments($comments);
 					$renderer->renderNestView($top_comments[$i]->getVar('com_id'), $admin_view);
 				}

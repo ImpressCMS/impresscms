@@ -44,7 +44,7 @@ if (!isset($_GET['com_order'])) {
 } else {
 	$com_order = (int) ($_GET['com_order']);
 }
-$comment_handler =& xoops_gethandler('comment');
+$comment_handler =& xoops_gethandler('data_comment');
 $comment =& $comment_handler->get($com_id);
 $dohtml = $comment->getVar('dohtml');
 $dosmiley = $comment->getVar('dosmiley');
