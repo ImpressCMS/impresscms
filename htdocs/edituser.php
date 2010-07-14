@@ -377,12 +377,12 @@ if ($op == 'editprofile')
 	$bio_tarea = new XoopsFormTextArea(_US_EXTRAINFO, 'bio', $icmsUser->getVar('bio', 'E'));
 	$cookie_radio_value = empty($_COOKIE[$icmsConfig['usercookie']]) ? 0 : 1;
 	$cookie_radio = new XoopsFormRadioYN(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
-	$pwd_text = new XoopsFormPassword('', 'password', 10, 255, "", false, ($icmsConfigUser['pass_level']?'password_adv':''));
-	$pwd_text2 = new XoopsFormPassword('', 'vpass', 10, 255);
+	$pwd_text = new icms_form_elements_Password('', 'password', 10, 255, "", false, ($icmsConfigUser['pass_level']?'password_adv':''));
+	$pwd_text2 = new icms_form_elements_Password('', 'vpass', 10, 255);
 	$pwd_tray = new icms_form_elements_Tray(_US_PASSWORD.'<br />'._US_TYPEPASSTWICE);
 	$pwd_tray->addElement($pwd_text);
 	$pwd_tray->addElement($pwd_text2);
-	$pwd_text_old = new XoopsFormPassword(_US_OLD_PASSWORD, 'old_password', 10, 255);
+	$pwd_text_old = new icms_form_elements_Password(_US_OLD_PASSWORD, 'old_password', 10, 255);
 	$mailok_radio = new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', (int) ($icmsUser->getVar('user_mailok')));
 	$salt_hidden = new icms_form_elements_Hidden('salt', $icmsUser->getVar('salt'));
 	$uid_hidden = new icms_form_elements_Hidden('uid', (int) ($icmsUser->getVar('uid')));

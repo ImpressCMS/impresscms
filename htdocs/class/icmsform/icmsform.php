@@ -451,7 +451,7 @@ class IcmsForm extends XoopsThemeForm {
 				break;
 
 			case 'password':
-				return new XoopsFormPassword($this->targetObject->vars[$key]['form_caption'], $key, 50, 255, $this->targetObject->getVar($key, 'e'));
+				return new icms_form_elements_Password($this->targetObject->vars[$key]['form_caption'], $key, 50, 255, $this->targetObject->getVar($key, 'e'));
 				break;
 
 			case 'country':
