@@ -32,43 +32,10 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class XoopsFormLabel extends icms_form_elements_Label {
-
-	/**
-	 * Text
-	 * @var	string
-	 * @access	private
-	 */
-	var $_value;
-
-	/**
-	 * Constructor
-	 *
-	 * @param	string	$caption	Caption
-	 * @param	string	$value		Text
-	 */
-	function XoopsFormLabel($caption = "", $value = "", $name = ""){
-		$this->setCaption($caption);
-		$this->setName($name);
-		$this->_value = $value;
-	}
-
-	/**
-	 * Get the "value" attribute
-	 *
-	 * @param	bool    $encode To sanitizer the text?
-	 * @return	string
-	 */
-	function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
-	}
-
-	/**
-	 * Prepare HTML for output
-	 *
-	 * @return	string
-	 */
-	function render() {
-		return $this->getValue();
+	private $_deprecated;
+	public function __construct() {
+		parent::getInstance();
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Label', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
 
