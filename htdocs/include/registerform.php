@@ -44,7 +44,7 @@ $reg_form->addElement(new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', $user_mail
 if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] != '') {
 	$disc_tray = new icms_form_elements_Tray(_US_DISCLAIMER, '<br />');
 	$disclaimer_html = '<div id="disclaimer">'.nl2br($icmsConfigUser['reg_disclaimer']).'</div>';
-	$disc_text = new icms_form_elements_Lebel('', $disclaimer_html, 'disclaimer');
+	$disc_text = new icms_form_elements_Label('', $disclaimer_html, 'disclaimer');
 	$disc_tray->addElement($disc_text);
 	$agree_chk = new icms_form_elements_Checkbox('', 'agree_disc', $agree_disc);
 	$agree_chk->addOption(1, _US_IAGREE);

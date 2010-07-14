@@ -31,7 +31,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class icms_form_elements_Lebel extends icms_form_Element {
+class icms_form_elements_Label extends icms_form_Element {
 	private $_deprecated;
 	public function __construct() {
 		parent::getInstance();

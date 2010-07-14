@@ -19,7 +19,7 @@ $smile_form->setExtra('enctype="multipart/form-data"');
 $smile_form->addElement(new XoopsFormText(_AM_SMILECODE, 'smile_code', 26, 25, $smiles['smile_code']), true);
 $smile_form->addElement(new XoopsFormText(_AM_SMILEEMOTION, 'smile_desc', 26, 25, $smiles['smile_desc']), true);
 $smile_select = new icms_form_elements_File('', 'smile_url', 5000000);
-$smile_label = new icms_form_elements_Lebel('', '<img src="'.XOOPS_UPLOAD_URL.'/'.$smiles['smile_url'].'" alt="" />');
+$smile_label = new icms_form_elements_Label('', '<img src="'.XOOPS_UPLOAD_URL.'/'.$smiles['smile_url'].'" alt="" />');
 $smile_tray = new icms_form_elements_Tray(_IMAGEFILE.'&nbsp;');
 $smile_tray->addElement($smile_select);
 $smile_tray->addElement($smile_label);
