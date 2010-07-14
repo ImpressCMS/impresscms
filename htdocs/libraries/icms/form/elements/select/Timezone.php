@@ -52,11 +52,9 @@ class icms_form_elements_select_Timezone extends XoopsFormSelect
 	 * 							Legal values are "-12" to "12" with some ".5"s strewn in ;-)
 	 * @param	int		$size	Number of rows. "1" makes a drop-down-box.
 	 */
-	function icms_form_elements_select_Timezone($caption, $name, $value = null, $size = 1)
+	function __construct($caption, $name, $value = null, $size = 1)
 	{
 		$this->XoopsFormSelect($caption, $name, $value, $size);
 		$this->addOptionArray(IcmsLists::getTimeZoneList());
 	}
 }
-
-?>
