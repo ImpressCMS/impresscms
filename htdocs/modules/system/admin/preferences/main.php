@@ -39,7 +39,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		 * @todo: Create a preference option to set this value and improve the way to change the order.
 		 */
 		$order = 1;
-		$confcat_handler = xoops_gethandler('config_category');
+		$confcat_handler = icms::handler('icms_config_category');
 		$confcats = $confcat_handler->getObjects ();
 		$catcount = count ( $confcats );
 		$ccats = array ( );
@@ -68,7 +68,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		if (empty ( $confcat_id )) {
 			$confcat_id = 1;
 		}
-		$confcat_handler = & xoops_gethandler('config_category');
+		$confcat_handler = icms::handler('icms_config_category');
 		$confcat = & $confcat_handler->get ( $confcat_id );
 		if (! is_object ( $confcat )) {
 			redirect_header ( 'admin.php?fct=preferences', 1 );
@@ -77,7 +77,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 		global $icmsConfigUser;
 		$form = new XoopsThemeForm ( constant ( $confcat->getVar ( 'confcat_name' ) ), 'pref_form', 'admin.php?fct=preferences', 'post', true );
-		$config_handler = & xoops_gethandler('config');
+		$config_handler = icms::handler('icms_config');
 		$criteria = new icms_criteria_Compo ( );
 		$criteria->add ( new icms_criteria_Item ( 'conf_modid', 0 ) );
 		$criteria->add ( new icms_criteria_Item ( 'conf_catid', $confcat_id ) );
@@ -360,7 +360,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 	}
 
 	if ($op == 'showmod') {
-		$config_handler = & xoops_gethandler('config');
+		$config_handler = icms::handler('icms_config');
 		$mod = isset ( $_GET ['mod'] ) ? (int) ( $_GET ['mod'] ) : 0;
 		if (empty ( $mod )) {
 			header ( 'Location: admin.php?fct=preferences' );

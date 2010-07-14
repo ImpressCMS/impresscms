@@ -67,7 +67,7 @@ $xoopsDB =& icms_database_Factory::getDatabaseConnection();
 include_once ICMS_ROOT_PATH . "/include/debug_functions.php";
 
 // ################# Load Config Settings ##############
-$config_handler = xoops_gethandler('config');
+$config_handler = icms::handler('icms_config');
 $configs = $config_handler->getConfigsByCat(
 	array(
 		ICMS_CONF, ICMS_CONF_USER, ICMS_CONF_METAFOOTER, ICMS_CONF_MAILER,
@@ -153,9 +153,9 @@ if (defined('ICMS_INCLUDE_OPENID')) {
 // ############## Login a user with a valid session ##############
 $xoopsUser = $icmsUser = '';
 $xoopsUserIsAdmin = $icmsUserIsAdmin = false;
-$member_handler =& xoops_gethandler('member');
+$member_handler = icms::handler('icms_member');
 global $sess_handler;
-$sess_handler =& xoops_gethandler('session');
+$sess_handler = icms::handler('icms_core_session');
 if ($icmsConfig['use_ssl']
 	&& isset($_POST[$icmsConfig['sslpost_name']])
 	&& $_POST[$icmsConfig['sslpost_name']] != '') {
