@@ -23,7 +23,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 	if ($op == 'list') {
 		icms_cp_header();
 		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/avatars/images/avatars_big.png)">'._MD_AVATARMAN.'</div><br />';
-		$avt_handler =& xoops_gethandler('avatar');
+		$avt_handler =& xoops_gethandler('data_avatar');
 		$savatar_count = $avt_handler->getCount(new icms_criteria_Item('avatar_type', 'S'));
 		$cavatar_count = $avt_handler->getCount(new icms_criteria_Item('avatar_type', 'C'));
 		echo '<ul><li>'._MD_SYSAVATARS.' ('.sprintf(_NUMIMAGES, '<b>'.icms_conv_nr2local($savatar_count).'</b>').') [<a href="admin.php?fct=avatars&amp;op=listavt&amp;type=S">'._LIST.'</a>]</li><li>'._MD_CSTAVATARS.' ('.sprintf(_NUMIMAGES, '<b>'.icms_conv_nr2local($cavatar_count).'</b>').') [<a href="admin.php?fct=avatars&amp;op=listavt&amp;type=C">'._LIST.'</a>]</li></ul>';
@@ -43,7 +43,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 	}
 
 	if ($op == 'listavt') {
-		$avt_handler =& xoops_gethandler('avatar');
+		$avt_handler =& xoops_gethandler('data_avatar');
 		icms_cp_header();
 		$type = (isset($_GET['type']) && $_GET['type'] == 'C') ? 'C' : 'S';
 		echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/avatars/images/avatars_big.png)"><a href="admin.php?fct=avatars">'. _MD_AVATARMAN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;';
@@ -97,7 +97,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		}
 		$count = count($avatar_id);
 		if ($count > 0) {
-			$avt_handler =& xoops_gethandler('avatar');
+			$avt_handler =& xoops_gethandler('data_avatar');
 			$error = array();
 			for ($i = 0; $i < $count; $i++) {
 				$avatar =& $avt_handler->get($avatar_id[$i]);
@@ -143,7 +143,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				if (!$uploader->upload()) {
 					$err[] = $uploader->getErrors();
 				} else {
-					$avt_handler =& xoops_gethandler('avatar');
+					$avt_handler =& xoops_gethandler('data_avatar');
 					$avatar =& $avt_handler->create();
 					$avatar->setVar('avatar_file', $uploader->getSavedFileName());
 					$avatar->setVar('avatar_name', $avatar_name);
@@ -186,7 +186,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		if ($avatar_id <= 0) {
 			redirect_header('admin.php?fct=avatars',1);
 		}
-		$avt_handler = xoops_gethandler('avatar');
+		$avt_handler = xoops_gethandler('data_avatar');
 		$avatar =& $avt_handler->get($avatar_id);
 		if (!is_object($avatar)) {
 			redirect_header('admin.php?fct=avatars',1);

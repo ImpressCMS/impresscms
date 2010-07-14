@@ -80,7 +80,7 @@ if ($action == 'showpopups')
 <table width='100%'>
 	<tr>
 	<?php
-	$avatar_handler =& xoops_gethandler('avatar');
+	$avatar_handler =& xoops_gethandler('data_avatar');
 	$avatarslist =& $avatar_handler->getList('S');
 	$cntavs = 0;
 	$counter = isset($_GET['start']) ? (int) ($_GET['start']) : 0;

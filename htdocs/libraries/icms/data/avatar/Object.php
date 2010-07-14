@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Avatar
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Object.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -18,7 +18,7 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package		Avatar
  *
  */
-class icms_core_avatar_Object extends icms_core_Object {
+class icms_data_avatar_Object extends icms_core_Object {
 	/** @var integer */
 	private $_userCount;
 

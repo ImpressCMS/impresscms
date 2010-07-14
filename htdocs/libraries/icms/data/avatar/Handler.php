@@ -7,7 +7,7 @@
  * @category	ICMS
  * @package		Avatar
  * @author		Kazumi Ono (aka onokazo)
- * @version		SVN: $Id$
+ * @version		SVN: $Id:Handler.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
@@ -22,14 +22,14 @@ defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
  * @package		Avatar
  */
 
-class icms_avatar_Handler extends icms_core_ObjectHandler {
+class icms_data_avatar_Handler extends icms_core_ObjectHandler {
 
 	/**
 	 * Creates a new avatar object
 	 * @see icms_core_ObjectHandler#create()
 	 */
 	public function &create($isNew = true) {
-		$avatar = new icms_core_avatar_Object();
+		$avatar = new icms_data_avatar_Object();
 		if ($isNew) {
 			$avatar->setNew();
 		}
@@ -52,7 +52,7 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 			}
 			$numrows = $this->db->getRowsNum($result);
 			if ($numrows == 1) {
-				$avatar = new icms_core_avatar_Object();
+				$avatar = new icms_data_avatar_Object();
 				$avatar->assignVars($this->db->fetchArray($result));
 				return $avatar;
 			}
@@ -67,7 +67,7 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 	 */
 	public function insert(&$avatar) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated */
-		if (!is_a($avatar, 'icms_avatar_Object')) {
+		if (!is_a($avatar, 'icms_data_avatar_Object')) {
 			return false;
 		}
 		if (!$avatar->isDirty()) {
@@ -133,7 +133,7 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 	 */
 	public function delete(&$avatar) {
 		/* As of PHP5.3.0, is_a() is no longer deprecated */
-		if (!is_a($avatar, 'icms_avatar_Object')) {
+		if (!is_a($avatar, 'icms_data_avatar_Object')) {
 			return false;
 		}
 
@@ -176,7 +176,7 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 			return $ret;
 		}
 		while ($myrow = $this->db->fetchArray($result)) {
-			$avatar = new icms_core_avatar_Object();
+			$avatar = new icms_data_avatar_Object();
 			$avatar->assignVars($myrow);
 			$avatar->setUserCount($myrow['count']);
 			if (!$id_as_key) {
@@ -242,7 +242,7 @@ class icms_avatar_Handler extends icms_core_ObjectHandler {
 		$ret = array();
 
 		/* As of PHP5.3.0, is_a() is no longer deprecated */
-		if (!is_a($avatar, 'icms_avatar_Object')) {
+		if (!is_a($avatar, 'icms_data_avatar_Object')) {
 			return false;
 		}
 

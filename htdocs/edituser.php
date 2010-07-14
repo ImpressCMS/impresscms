@@ -465,7 +465,7 @@ if ($op == 'avatarform')
 		$form->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));
 		$form->display();
 	}
-	$avatar_handler =& xoops_gethandler('avatar');
+	$avatar_handler =& xoops_gethandler('data_avatar');
 	$form2 = new XoopsThemeForm(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
 	$avatar_select = new XoopsFormSelect('', 'user_avatar', $icmsUser->getVar('user_avatar'));
 	$avatar_select->addOptionArray($avatar_handler->getList('S'));
@@ -515,7 +515,7 @@ if ($op == 'avatarupload')
 			$uploader->setPrefix('cavt');
 			if ($uploader->upload())
 			{
-				$avt_handler =& xoops_gethandler('avatar');
+				$avt_handler =& xoops_gethandler('data_avatar');
 				$avatar =& $avt_handler->create();
 				$avatar->setVar('avatar_file', $uploader->getSavedFileName());
 				$avatar->setVar('avatar_name', $icmsUser->getVar('uname'));
@@ -575,7 +575,7 @@ if ($op == 'avatarchoose')
 	}
 
 	$user_avatar = '';
-	$avt_handler =& xoops_gethandler('avatar');
+	$avt_handler =& xoops_gethandler('data_avatar');
 	if (!empty($_POST['user_avatar']))
 	{
 		$user_avatar = $myts->addSlashes( trim($_POST['user_avatar']) );
