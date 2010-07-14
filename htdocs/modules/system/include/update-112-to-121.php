@@ -68,7 +68,7 @@
 	if ($dbVersion < $newDbVersion) {
 		if (is_writable ( ICMS_PLUGINS_PATH ) || (is_dir(ICMS_ROOT_PATH . '/plugins/preloads') && is_writable ( ICMS_ROOT_PATH . '/plugins/preloads' ))) {
 			if (is_dir ( ICMS_ROOT_PATH . '/preload' )) {
-				if (icms_copyr ( ICMS_ROOT_PATH . '/preload', ICMS_ROOT_PATH . '/plugins/preloads' )) {
+				if (icms_core_Filesystem::copyRecursive ( ICMS_ROOT_PATH . '/preload', ICMS_ROOT_PATH . '/plugins/preloads' )) {
 					icms_unlinkRecursive ( ICMS_ROOT_PATH . '/preload' );
 				} else {
 					$newDbVersion = 13;
@@ -590,7 +590,7 @@
 		$icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'config' ) . '`' . ' SET `conf_value`="' . addslashes ( serialize ( $start_pages ) ) . '"' . ' WHERE `conf_name`="startpage"' );
 
 		/* Check for HTMLPurifier cache path and create, if needed */
-		$purifier_path = icms_mkdir ( ICMS_TRUST_PATH . '/cache/htmlpurifier' );
+		$purifier_path = icms_core_Filesystem::mkdir ( ICMS_TRUST_PATH . '/cache/htmlpurifier' );
 		/* Removing the option for multilogin text, as we're using a constant for it */
 		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE conf_name='multi_login_msg'" );
 		$icmsDB->queryF ( "DELETE FROM `" . $icmsDB->prefix ( 'config' ) . "` WHERE conf_name='use_hidden'" );
@@ -635,13 +635,13 @@
 				} else {
 					$new_folder = $row ['imgcat_foldername '];
 				}
-				if (icms_mkdir ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder )) {
+				if (icms_core_Filesystem::mkdir ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder )) {
 
 					$icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'imagecategory' ) . '` SET imgcat_foldername="' . $new_folder . '" WHERE imgcat_id=' . $row ['imgcat_id'] );
 					$result1 = $icmsDB->query ( 'SELECT * FROM `' . $icmsDB->prefix ( 'image' ) . '` WHERE imgcat_id=' . $row ['imgcat_id'] );
 					while (( $row1 = $icmsDB->fetchArray ( $result1 ) ) && ! $abortUpdate) {
 						if (! file_exists ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] ) && file_exists ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] )) {
-							if (icms_copyr ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'], ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] )) {
+							if (icms_core_Filesystem::copyRecursive ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'], ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] )) {
 								@unlink ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] );
  							} else {
 								$newDbVersion = 36;

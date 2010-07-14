@@ -78,7 +78,7 @@ class SystemUserrankHandler extends icms_ipf_Handler {
 
 		foreach ($values as $value) {
 			if (file_exists(ICMS_UPLOAD_PATH.'/'.$value)) {
-				icms_copyr(ICMS_UPLOAD_PATH.'/'.$value, ICMS_UPLOAD_PATH.'/system/userrank/'.$value);
+				icms_core_Filesystem::copyRecursive(ICMS_UPLOAD_PATH.'/'.$value, ICMS_UPLOAD_PATH.'/system/userrank/'.$value);
 			}
 		}
 

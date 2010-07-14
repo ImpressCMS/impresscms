@@ -215,7 +215,7 @@ function xoops_confirm($hiddens, $action, $msg, $submit='', $addtoken = true)
 
 /**
  * @deprecated, use {@link XoopsSecurity} class instead
- * @todo Remove this in 1.4
+ * @todo Remove this in 1.4 - all occurrences have been replaced in the core
  **/
 function xoops_refcheck($docheck=1) {
 	icms_core_Debug::setDeprecated('IcmsSecurity->checkReferer','- this function will be removed in version 1.4');
@@ -926,27 +926,13 @@ function xoops_trim($text)
  * @param	string	$source	The source
  * @param	string  $dest	  The destination
  * @return   bool	Returns true on success, false on failure
- * @todo Move to static class Filesystem
+ * @deprecated	Use icms_core_Filesystem::copyRecursive, instead
+ * @todo		Remove in version 1.4 - all occurrences have been removed from the core
  */
 function icms_copyr($source, $dest)
 {
-	// Simple copy for a file
-	if(is_file($source)) {return copy($source, $dest);}
-	// Make destination directory
-	if(!is_dir($dest)) {icms_mkdir($dest, 0777, '');}
-	// Loop through the folder
-	$dir = dir($source);
-	while(false !== $entry = $dir->read())
-	{
-		// Skip pointers
-		if($entry == '.' || $entry == '..') {continue;}
-		// Deep copy directories
-		if(is_dir("$source/$entry") && ($dest !== "$source/$entry")) {icms_copyr("$source/$entry", "$dest/$entry");}
-		else {copy("$source/$entry", "$dest/$entry");}
-	}
-	// Clean up
-	$dir->close();
-	return true;
+	icms_core_Debug::setDeprecated('icms_core_Filesystem::copyRecursive', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Filesystem::copyRecursive($source, $dest);
 }
 
 /**
@@ -960,35 +946,13 @@ function icms_copyr($source, $dest)
  * @param string $base root location for the folder, ICMS_ROOT_PATH or ICMS_TRUST_PATH, for example
  * @param array $metachars Characters to exclude from a valid path name
  * @return boolean True if folder is created, False if it is not
- * @todo Move to static class Filesystem
+ *
+ * @deprecated	Use icms_core_Filesystem::mkdir, instead
+ * @todo		Remove in version 1.4 - all occurrences have been removed from the core
  */
 function icms_mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH, $metachars = array() ) {
-
-	if( is_dir( $target )) return TRUE;
-	if ( !isset($metachars) ) {
-		$metachars = array('[', '?', '"', '.', '<', '>', '|', ' ', ':' );
-	}
-
-	$base = preg_replace ( '/[\\|\/]/', DIRECTORY_SEPARATOR, $base);
-	$target = preg_replace ( '/[\\|\/]/', DIRECTORY_SEPARATOR, $target);
-	if ($base !== '') {
-		$target = str_ireplace( $base . DIRECTORY_SEPARATOR, '', $target );
-		$target = $base . DIRECTORY_SEPARATOR . str_replace( $metachars , '_', $target );
-	} else {
-		$target = str_replace( $metachars , '_', $target );
-	}
-	if( mkdir($target, $mode, TRUE) ) {
-		// create an index.html file in this directory
-		if ($fh = @fopen($target.'/index.html', 'w')) {
-			fwrite($fh, '<script>history.go(-1);</script>');
-			@fclose($fh);
-		}
-
-		if( substr( decoct( fileperms( $target ) ),2) != $mode ) {
-			chmod($target, $mode);
-		}
-	}
-	return is_dir( $target );
+	icms_core_Debug::setDeprecated('icms_core_Filesystem::mkdir', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Filesystem::mkdir($target, $mode, $base, $metachars);
 }
 
 /**
@@ -998,9 +962,14 @@ function icms_mkdir($target, $mode = 0777, $base = ICMS_ROOT_PATH, $metachars = 
  * @param	string	$target  target file or folder
  * @param	int		$mode	permission
  * @return   bool	Returns true on success, false on failure
- * @todo Move to static class Filesystem
+ *
+ * @deprecated	Use icms_core_Filesystem::chmod, instead
+ * @todo		Remove in version 1.4 - all occurrences have been removed from the core
  */
-function icms_chmod($target, $mode = 0777) {return @chmod($target, $mode);}
+function icms_chmod($target, $mode = 0777) {
+	icms_core_Debug::setDeprecated('icms_core_Filesystem::chmod', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	return icms_core_Filesystem::chmod($target, $mode);
+}
 
 /**
  * Get the icmsModule object of a specified module

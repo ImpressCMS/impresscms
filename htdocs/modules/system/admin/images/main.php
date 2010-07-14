@@ -510,7 +510,7 @@ function imanager_addcat() {
 
 	if ($imgcat_storetype == 'file') {
 		if (!file_exists($categ_path)) {
-			if (!icms_mkdir($categ_path)) {
+			if (!icms_core_Filesystem::mkdir($categ_path)) {
 				redirect_header('admin.php?fct=images',1,_MD_FAILADDCAT);
 			} else {
 				if ($fh = @fopen($categ_path.'/index.html', 'w'))

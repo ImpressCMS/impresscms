@@ -274,7 +274,7 @@ class icms_ipf_Handler extends icms_core_ObjectHandler {
 	public function getImagePath() {
 		$dir = $this->_uploadPath . $this->_itemname;
 		if (!file_exists($dir)) {
-			icms_mkdir($dir);
+			icms_core_Filesystem::mkdir($dir);
 		}
 		return $dir . "/";
 	}
