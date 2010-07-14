@@ -50,13 +50,6 @@ define('ICMS_MODULES_PATH', ICMS_ROOT_PATH . '/modules');
 define('ICMS_MODULES_URL', ICMS_URL . '/modules');
 /**#@-*/
 
-require_once( ICMS_ROOT_PATH . '/libraries/icms/core/Autoloader.php' );
-icms_core_Autoloader::register();
-
-// ################# Creation of the icms_preload_Handler ##############
-global $icmsPreloadHandler;
-$icmsPreloadHandler = icms_preload_Handler::getInstance();
-
 // ################# Creation of the ImpressCMS Libraries ##############
 /**
  * @todo The definition of the library path needs to be in mainfile
@@ -68,16 +61,6 @@ define('ICMS_LIBRARIES_URL', ICMS_URL . '/libraries');
 define('ICMS_PDF_LIB_PATH', ICMS_ROOT_PATH . '/libraries/tcpdf');
 define('ICMS_PDF_LIB_URL', ICMS_URL . '/libraries/tcpdf');
 
-// ################# Preload Trigger startCoreBoot ##############
-$icmsPreloadHandler->triggerEvent('startCoreBoot');
-
-// ################# Creation of the ImpressCMS Kernel object ##############
-
-global $impresscms, $xoops;
-$impresscms = new icms_core_Kernel();
-$xoops =& $impresscms;
-// ################# Creation of the ImpressCMS Kernel object ##############
-
 // Instantiate security object
 require_once ICMS_ROOT_PATH . '/class/xoopssecurity.php';
 global $xoopsSecurity;
@@ -85,14 +68,23 @@ $xoopsSecurity = $icmsSecurity = new IcmsSecurity();
 //Check super globals
 $xoopsSecurity->checkSuperglobals();
 
-// ############## Activate error handler / logger class ##############
-global $xoopsLogger, $xoopsErrorHandler;
 
-//include_once ICMS_ROOT_PATH . '/class/logger.php';
-$xoopsLogger =& icms_core_Logger::instance();
-$xoopsErrorHandler =& $xoopsLogger;
-$xoopsLogger->startTime('ICMS');
-$xoopsLogger->startTime('ICMS Boot');
+// ################# Initialize kernel and launch bootstrap
+
+require_once( ICMS_ROOT_PATH . '/libraries/icms.php' );
+icms::setup();
+icms::boot();
+
+// ################# Creation of old global variables for backward compat ##############
+global $icmsPreloadHandler;
+$icmsPreloadHandler = icms::$preload;
+
+global $xoopsLogger, $xoopsErrorHandler;
+$xoopsLogger = $xoopsErrorHandler = icms::$logger;
+
+// ################# Creation of the non-static ImpressCMS Kernel object for BC ##############
+global $impresscms, $xoops;
+$xoops = $impresscms = new icms_core_Kernel();
 
 /**#@+
  * Constants

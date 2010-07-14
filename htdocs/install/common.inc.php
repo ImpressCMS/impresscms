@@ -29,8 +29,8 @@ include_once '../include/version.php';
 require_once 'include/functions.php';
 include_once '../include/debug_functions.php';
 
-require_once( '../libraries/icms/core/Autoloader.php' );
-icms_core_Autoloader::register();
+require_once( '../libraries/icms/Autoloader.php' );
+icms_Autoloader::setup();
 
 error_reporting( E_ALL );
 

@@ -5,39 +5,27 @@
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		LICENSE.txt
  * @category	ICMS
- * @package		Core
- * @subpackage	Kernel
+ * @package		icms_core
+ * @subpackage	icms_core_Kernel
  * @since		1.1
  * @version		SVN: $Id$
  */
 
 /**
- * Extremely reduced kernel class
- * Few notes:
- * - modules should use this class methods to generate physical paths/URIs (the ones which do not conform
- * will perform badly when true URL rewriting is implemented)
+ * Old 1.2- kernel class
+ *
+ * This class has been replaced by the static "icms" class, to prevent pollution of the global
+ *  namespace. Please use icms::method() now, instead of $GLOBALS["impresscms"]->method();
  *
  * @category	ICMS
- * @package		Core
- * @subpackage	Kernel
+ * @package		icms_core
+ * @subpackage	icms_core_Kernel
  * @since 		1.1
+ * @deprecated
  */
 class icms_core_Kernel extends icms_core_Object {
-	/** @var array */
-	public $paths = array(
-		'www' => array(), 'modules' => array(), 'themes' => array(),
-	);
-	/** @var array */
-	public $urls=false;
 
-	/**
-	 * Constructor for icms_core_Kernel, initiating all properties of the class
-	 */
 	public function __construct() {
-		$this->paths['www'] = array(ICMS_ROOT_PATH, ICMS_URL);
-		$this->paths['modules'] = array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
-		$this->paths['themes'] = array(ICMS_ROOT_PATH . '/themes', ICMS_URL . '/themes');
-		$this->_buildRelevantUrls();
 	}
 	/**
 	 * Convert a ImpressCMS path to a physical one
@@ -46,16 +34,7 @@ class icms_core_Kernel extends icms_core_Object {
 	 * @return 	string
 	 */
 	public function path($url, $virtual = false) {
-		$path = '';
-		@list($root, $path) = explode('/', $url, 2);
-		if (!isset($this->paths[$root])) {
-			list($root, $path) = array('www', $url);
-		}
-		if (!$virtual) {
-			// Returns a physical path
-			return $this->paths[$root][0] . '/' . $path;
-		}
-		return !isset($this->paths[$root][1]) ? '' : ( $this->paths[$root][1] . '/' . $path );
+		return icms::path($url, $virtual);
 	}
 	/**
 	 * Convert a ImpressCMS path to an URL
@@ -63,7 +42,7 @@ class icms_core_Kernel extends icms_core_Object {
 	 * @return 	string
 	 */
 	public function url($url) {
-		return ( false !== strpos( $url, '://' ) ? $url : $this->path( $url, true ) );
+		return icms::url($url);
 	}
 	/**
 	 * Build an URL with the specified request params
@@ -72,55 +51,8 @@ class icms_core_Kernel extends icms_core_Object {
 	 * @return 	string
 	 */
 	public function buildUrl($url, $params = array()) {
-		if ($url == '.') {
-			$url = $_SERVER['REQUEST_URI'];
-		}
-		$split = explode('?', $url);
-		if (count($split) > 1) {
-			list($url, $query) = $split;
-			parse_str($query, $query);
-			$params = array_merge($query, $params);
-		}
-		if (!empty($params)) {
-			foreach ( $params as $k => $v) {
-				$params[$k] = $k . '=' . rawurlencode($v);
-			}
-			$url .= '?' . implode('&', $params);
-		}
-		return $url;
+		return icms::buildUrl($url,$params);
 	}
 
-	/**
-	 * Build URLs for global use throughout the application
-	 * @return 	array
-	 */
-	public function _buildRelevantUrls() {
-
-		if (!$this->urls) {
-			$http = strpos(ICMS_URL, "https://") === false
-				? "http://"
-				: "https://";
-			$phpself = $_SERVER['PHP_SELF'];
-			$httphost = $_SERVER['HTTP_HOST'];
-			$querystring = $_SERVER['QUERY_STRING'];
-			if ($querystring != '') {
-				$querystring = '?' . $querystring;
-			}
-			$currenturl = $http . $httphost . $phpself . $querystring;
-			$this->urls = array();
-			$this->urls['http'] = $http;
-			$this->urls['httphost'] = $httphost;
-			$this->urls['phpself'] = $phpself;
-			$this->urls['querystring'] = $querystring;
-			$this->urls['full_phpself'] = $http . $httphost . $phpself;
-			$this->urls['full'] = $currenturl;
-
-			$previouspage = '';
-			if (array_key_exists('HTTP_REFERER', $_SERVER) && isset($_SERVER['HTTP_REFERER'])) {
-				$this->urls['previouspage'] = $_SERVER['HTTP_REFERER'];
-			}
-			//$this->urls['isHomePage'] = (ICMS_URL . "/index.php") == ($http . $httphost . $phpself);
-		}
-		return $this->urls;
-	}
 }
+
