@@ -33,7 +33,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 		$form->addElement(new XoopsFormText(_IMAGENAME, 'avatar_name', 50, 255), true);
 		$form->addElement(new icms_form_elements_File(_IMAGEFILE, 'avatar_file', 500000));
 		$form->addElement(new XoopsFormText(_IMGWEIGHT, 'avatar_weight', 3, 4, 0));
-		$form->addElement(new XoopsFormRadioYN(_IMGDISPLAY, 'avatar_display', 1, _YES, _NO));
+		$form->addElement(new icms_form_elements_Radioyn(_IMGDISPLAY, 'avatar_display', 1, _YES, _NO));
 		$form->addElement(new icms_form_elements_Hidden('op', 'addfile'));
 		$form->addElement(new icms_form_elements_Hidden('fct', 'avatars'));
 		$form->addElement(new icms_form_elements_Button('', 'avt_button', _SUBMIT, 'submit'));

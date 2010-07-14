@@ -224,7 +224,7 @@ function imanager_index($imgcat_id=null) {
 		$form->addElement($select, true);
 		$form->addElement(new icms_form_elements_File(_IMAGEFILE, 'image_file', 5000000));
 		$form->addElement(new XoopsFormText(_IMGWEIGHT, 'image_weight', 3, 4, 0));
-		$form->addElement(new XoopsFormRadioYN(_IMGDISPLAY, 'image_display', 1, _YES, _NO));
+		$form->addElement(new icms_form_elements_Radioyn(_IMGDISPLAY, 'image_display', 1, _YES, _NO));
 		$form->addElement(new icms_form_elements_Hidden('op', 'addfile'));
 		$form->addElement(new icms_form_elements_Hidden('fct', 'images'));
 		$tray = new icms_form_elements_Tray('' ,'');
@@ -249,7 +249,7 @@ function imanager_index($imgcat_id=null) {
 	$form->addElement(new XoopsFormText(_IMGMAXWIDTH, 'imgcat_maxwidth', 3, 4, 120));
 	$form->addElement(new XoopsFormText(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, 120));
 	$form->addElement(new XoopsFormText(_MD_IMGCATWEIGHT, 'imgcat_weight', 3, 4, 0));
-	$form->addElement(new XoopsFormRadioYN(_MD_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
+	$form->addElement(new icms_form_elements_Radioyn(_MD_IMGCATDISPLAY, 'imgcat_display', 1, _YES, _NO));
 	$storetype = new XoopsFormRadio(_MD_IMGCATSTRTYPE, 'imgcat_storetype', 'file');
 	$storetype->setDescription('<span style="color:#ff0000;">'._MD_STRTYOPENG.'</span>');
 	$storetype->addOptionArray(array('file' => sprintf(_MD_ASFILE,ICMS_IMANAGER_FOLDER_PATH.'/foldername'), 'db' => _MD_INDB));
@@ -583,7 +583,7 @@ function imanager_editcat($imgcat_id) {
 	$form->addElement(new XoopsFormText(_IMGMAXWIDTH, 'imgcat_maxwidth', 3, 4, $imagecategory->getVar('imgcat_maxwidth')));
 	$form->addElement(new XoopsFormText(_IMGMAXHEIGHT, 'imgcat_maxheight', 3, 4, $imagecategory->getVar('imgcat_maxheight')));
 	$form->addElement(new XoopsFormText(_MD_IMGCATWEIGHT, 'imgcat_weight', 3, 4, $imagecategory->getVar('imgcat_weight')));
-	$form->addElement(new XoopsFormRadioYN(_MD_IMGCATDISPLAY, 'imgcat_display', $imagecategory->getVar('imgcat_display'), _YES, _NO));
+	$form->addElement(new icms_form_elements_Radioyn(_MD_IMGCATDISPLAY, 'imgcat_display', $imagecategory->getVar('imgcat_display'), _YES, _NO));
 	$storetype = array('db' => _MD_INDB, 'file' => sprintf(_MD_ASFILE,$imgcat_handler->getCategFolder($imagecategory)));
 	$form->addElement(new icms_form_elements_Label(_MD_IMGCATSTRTYPE, $storetype[$imagecategory->getVar('imgcat_storetype')]));
 	$form->addElement(new icms_form_elements_Hidden('imgcat_id', $imgcat_id));
@@ -930,7 +930,7 @@ function showAddImgForm($imgcat_id) {
 	$form->addElement($select, true);
 	$form->addElement(new icms_form_elements_File(_IMAGEFILE, 'image_file', 5000000));
 	$form->addElement(new XoopsFormText(_IMGWEIGHT, 'image_weight', 3, 4, 0));
-	$form->addElement(new XoopsFormRadioYN(_IMGDISPLAY, 'image_display', 1, _YES, _NO));
+	$form->addElement(new icms_form_elements_Radioyn(_IMGDISPLAY, 'image_display', 1, _YES, _NO));
 	$form->addElement(new icms_form_elements_Hidden('imgcat_id', $imgcat_id));
 	$form->addElement(new icms_form_elements_Hidden('op', 'addfile'));
 	$form->addElement(new icms_form_elements_Hidden('fct', 'images'));

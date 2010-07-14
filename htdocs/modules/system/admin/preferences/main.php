@@ -134,7 +134,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					}
 				break;
 				case 'yesno' :
-					$ele = new XoopsFormRadioYN ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), _YES, _NO );
+					$ele = new icms_form_elements_Radioyn ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), _YES, _NO );
 				break;
 				case 'theme' :
 				case 'theme_multi' :
@@ -433,7 +433,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					}
 				break;
 				case 'yesno' :
-					$ele = new XoopsFormRadioYN ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), _YES, _NO );
+					$ele = new icms_form_elements_Radioyn ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput (), _YES, _NO );
 				break;
 				case 'group' :
 					include_once ICMS_ROOT_PATH . '/class/xoopslists.php';

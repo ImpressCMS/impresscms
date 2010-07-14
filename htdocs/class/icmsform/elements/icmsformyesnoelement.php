@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormYesnoElement extends XoopsFormRadioYN {
+class IcmsFormYesnoElement extends icms_form_elements_Radioyn {
 
 	/**
 	 * Constructor
@@ -20,7 +20,7 @@ class IcmsFormYesnoElement extends XoopsFormRadioYN {
 	 * @param	string    $key      the form name
 	 */
 	function IcmsFormYesnoElement($object, $key) {
-		$this->XoopsFormRadioYN($object->vars[$key]['form_caption'], $key, $object->getVar($key,'e'));
+		$this->icms_form_elements_Radioyn($object->vars[$key]['form_caption'], $key, $object->getVar($key,'e'));
 	}
 }
 

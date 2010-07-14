@@ -21,7 +21,6 @@ if (!defined('ICMS_ROOT_PATH')) exit();
 include_once ICMS_ROOT_PATH."/class/xoopsform/form.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formradio.php";
-include_once ICMS_ROOT_PATH."/class/xoopsform/formradioyn.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formselectcountry.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formselecttimezone.php";
 include_once ICMS_ROOT_PATH."/class/xoopsform/formselectlang.php";

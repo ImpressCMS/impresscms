@@ -39,7 +39,7 @@ $reg_form->addElement(new XoopsFormText(_US_WEBSITE, "url", 25, 255, $myts->html
 $tzselected = ($timezone_offset != "") ? $timezone_offset : $icmsConfig['default_TZ'];
 $reg_form->addElement(new XoopsFormSelectTimezone(_US_TIMEZONE, "timezone_offset", $tzselected));
 //$reg_form->addElement($avatar_tray);
-$reg_form->addElement(new XoopsFormRadioYN(_US_MAILOK, 'user_mailok', $user_mailok));
+$reg_form->addElement(new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', $user_mailok));
 
 if ($icmsConfigUser['reg_dispdsclmr'] != 0 && $icmsConfigUser['reg_disclaimer'] != '') {
 	$disc_tray = new icms_form_elements_Tray(_US_DISCLAIMER, '<br />');

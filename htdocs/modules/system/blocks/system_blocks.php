@@ -894,7 +894,7 @@ function b_system_social_edit($options) {
 	$form .= '<table width="100%">';
 
 	for ($i = 0; $i < count($options); $i++) {
-		$yesno = new XoopsFormRadioYN('', 'options['.$i.']', $options[$i]);
+		$yesno = new icms_form_elements_Radioyn('', 'options['.$i.']', $options[$i]);
 		$form .= '<tr><td width="25%">'.constant('_MB_SYSTEM_SOCIAL_PROVIDER_'.$i).'</td><td>'.$yesno->render().'</td></tr>';
 	}
 	$form .= '</table>';

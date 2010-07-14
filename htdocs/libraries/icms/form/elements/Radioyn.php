@@ -10,10 +10,11 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: formradioyn.php 19118 2010-03-27 17:46:23Z skenow $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+
 /**
  * @package     kernel
  * @subpackage  form
@@ -38,12 +39,22 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formradio.php";
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormRadioYN extends icms_form_elements_Radioyn
+class icms_form_elements_Radioyn extends XoopsFormRadio
 {
-	private $_deprecated;
-	public function __construct() {
-		parent::getInstance();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Radioyn', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	/**
+	 * Constructor
+	 *
+	 * @param	string	$caption
+	 * @param	string	$name
+	 * @param	string	$value		Pre-selected value, can be "0" (No) or "1" (Yes)
+	 * @param	string	$yes		String for "Yes"
+	 * @param	string	$no			String for "No"
+	 */
+	function icms_form_elements_Radioyn($caption, $name, $value = null, $yes = _YES, $no = _NO)
+	{
+		$this->XoopsFormRadio($caption, $name, $value);
+		$this->addOption(1, '&nbsp;' . $yes . '&nbsp;');
+		$this->addOption(0, '&nbsp;' . $no);
 	}
 }
 
