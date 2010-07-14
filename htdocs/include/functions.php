@@ -615,7 +615,6 @@ function &xoops_gethandler($name, $optional = false ) {
 	$lookup = array(
 
 	);
-	
 	return icms::handler($name, $optional);
 }
 

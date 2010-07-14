@@ -169,13 +169,13 @@ abstract class icms {
 			$class = $name . '_Handler';
 			if (class_exists($class))
 				$handlers[$name] = new $class($GLOBALS['xoopsDB']);
-		/*	else {
+			else {
 				$class = 'icms_' . $name . '_Handler';
 				if (!class_exists($class))
 					$class = 'icms_core_' . ucfirst($name) . 'Handler';
 				if (class_exists($class))
 					$handlers[$name] = new $class($GLOBALS['xoopsDB']);
-			}*/
+			}
 		}
 
 		if(!isset($handlers[$name]) && !$optional) trigger_error(sprintf("Class <b>%s</b> does not exist<br />Handler Name: %s", $class, $name), E_USER_ERROR);
