@@ -212,7 +212,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$ele = new icms_form_elements_select_Timezone ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 				break;
 				case 'language' :
-					$ele = new XoopsFormSelectLang ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
+					$ele = new icms_form_elements_select_Lang ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 				break;
 				case 'startpage' :
 					$member_handler = & xoops_gethandler ( 'member' );

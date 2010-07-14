@@ -10,7 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id$
+ * @version	$Id: formselectlang.php 19775 2010-07-11 18:54:25Z malanciault $
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -39,11 +39,21 @@ include_once ICMS_ROOT_PATH."/class/xoopsform/formselect.php";
  * @author	    Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
-class XoopsFormSelectLang extends icms_form_elements_Lang {
-	private $_deprecated;
-	public function __construct() {
-		parent::getInstance();
-		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Lang', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+class icms_form_elements_select_Lang extends XoopsFormSelect
+{
+	/**
+	 * Constructor
+	 *
+	 * @param	string	$caption
+	 * @param	string	$name
+	 * @param	mixed	$value	Pre-selected value (or array of them).
+	 * 							Legal is any name of a ICMS_ROOT_PATH."/language/" subdirectory.
+	 * @param	int		$size	Number of rows. "1" makes a drop-down-list.
+	 */
+	function icms_form_elements_select_Lang($caption, $name, $value = null, $size = 1)
+	{
+		$this->XoopsFormSelect($caption, $name, $value, $size);
+		$this->addOptionArray(IcmsLists::getLangList());
 	}
 }
 

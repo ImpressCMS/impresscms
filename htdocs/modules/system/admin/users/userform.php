@@ -109,7 +109,7 @@ $pwd_text = new icms_form_elements_Password(_AM_PASSWORD, "password", 10, 255, '
 $pwd_text2 = new icms_form_elements_Password(_AM_RETYPEPD, "pass2", 10, 255);
 $mailok_radio = new icms_form_elements_Radioyn(_US_MAILOK, 'user_mailok', (int) ($mailok_value));
 
-$language = new XoopsFormSelectLang(_US_SELECT_LANG,'language', $language_value);
+$language = new icms_form_elements_select_Lang(_US_SELECT_LANG,'language', $language_value);
 
 // Groups administration addition XOOPS 2.0.9: Mith
 global $icmsUser;

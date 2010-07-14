@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormLanguageElement extends XoopsFormSelectLang {
+class IcmsFormLanguageElement extends icms_form_elements_select_Lang {
 
 	/**
 	 * Constructor
@@ -25,7 +25,7 @@ class IcmsFormLanguageElement extends XoopsFormSelectLang {
 		$control = $object->controls[$key];
 		$all = isset($control['all']) ? true : false;
 
-		$this->XoopsFormSelectLang($var['form_caption'], $key, $object->getVar($key, 'e'));
+		$this->icms_form_elements_select_Lang($var['form_caption'], $key, $object->getVar($key, 'e'));
 		if ($all) {
 			$this->addOption('all', _ALL);
 		}
