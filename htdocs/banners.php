@@ -155,7 +155,7 @@ function bannerstats()
 			<td>"._BANNERS_STARTED."</td>
 			<td>"._BANNERS_ENDED."</td></tr></thead>
 			<tfoot><tr><td colspan='6'></td></tr></tfoot>";
-				
+
 			$i=0;
 			while (list($bid, $impressions, $clicks, $datestart, $dateend) = $xoopsDB->fetchRow($result))
 			{
@@ -276,7 +276,7 @@ function clickbanner($bid)
 	$bid = (int) ($bid);
 	if ($bid > 0)
 	{
-		if (xoops_refcheck())
+		if ($GLOBALS['xoopsSecurity']->checkReferer())
 		{
 			if ($bresult = $xoopsDB->query("select clickurl from ".$xoopsDB->prefix('banner')." where bid=$bid"))
 			{

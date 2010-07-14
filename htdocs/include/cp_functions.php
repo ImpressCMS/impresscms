@@ -341,6 +341,7 @@ function icms_cp_header(){
  * @since XOOPS
  * @version $Id$
  * @deprecated use icms_cp_header instead
+ * @todo		Remove in version 1.4 -  - all occurrences in the core have been removed
  *
  * @author The Xoops Project <http://www.xoops.org>
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
@@ -392,7 +393,7 @@ function icms_cp_footer() {
  *
  * @version $Id$
  * @deprecated use icms_cp_footer instead
- * @todo remove in 1.4
+ * @todo remove in 1.4 - all occurrences in the core have been removed
  *
  * @author The XOOPS Project <http://www.xoops.org>
  * @author Gustavo Pilla (aka nekro) <nekro@impresscms.org>
@@ -408,7 +409,7 @@ function xoops_cp_footer() {
  * @deprecated used for old modules that don't use smarty templates
  */
 function OpenTable() {
-	icms_core_Debug::setDeprecated('', 'Use the smarty template system. This function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('the smarty template system', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	echo "<table width='100%' border='0' cellspacing='1' cellpadding='8' style='border: 2px solid #2F5376;'><tr class='bg4'><td valign='top'>\n";
 }
 /**
@@ -417,7 +418,7 @@ function OpenTable() {
  * @deprecated used for old modules that don't use smarty templates
  */
 function CloseTable() {
-	icms_core_Debug::setDeprecated('', 'Use the smarty template system. This function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('the smarty template system', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	echo '</td></tr></table>';
 }
 
@@ -443,7 +444,7 @@ function xoopsfwrite() {
 	} else {
 
 	}
-	if (! xoops_refcheck ()) {
+	if (! $GLOBALS['xoopsSecurity']->checkReferer ()) {
 		return false;
 	} else {
 
@@ -670,11 +671,11 @@ function impresscms_get_adminmenu() {
 /**
  * Function maintained only for compatibility
  *
- * @todo remove this in 1.4
+ * @todo remove this in 1.4  - all occurrences in the core have been removed
  * @deprecated use impresscms_get_adminmenu instead
  */
 function xoops_module_get_admin_menu() {
-	icms_core_Debug::setDeprecated('impresscms_get_adminmenu', 'This function will be removed in version 1.4');
+	icms_core_Debug::setDeprecated('impresscms_get_adminmenu', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return impresscms_get_adminmenu ();
 }
 
