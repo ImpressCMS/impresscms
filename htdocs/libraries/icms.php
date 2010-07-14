@@ -58,11 +58,11 @@ abstract class icms {
 	 *
 	 * @var array
 	 */
-	static protected $paths = array(
+	static public $paths = array(
 		'www' => array(), 'modules' => array(), 'themes' => array(),
 	);
 	/** @var array */
-	static protected $urls=false;
+	static public $urls=false;
 
 	/**
 	 * Initialize ImpressCMS before bootstrap

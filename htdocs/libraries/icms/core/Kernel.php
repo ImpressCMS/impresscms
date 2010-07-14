@@ -25,7 +25,12 @@
  */
 class icms_core_Kernel extends icms_core_Object {
 
+	public $paths;
+	public $urls;
+
 	public function __construct() {
+		$this->paths =& icms::$paths;
+		$this->urls =& icms::$urls;
 	}
 	/**
 	 * Convert a ImpressCMS path to a physical one
