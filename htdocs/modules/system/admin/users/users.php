@@ -270,7 +270,6 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 		if (!$member_handler->insertUser($edituser))
 		{
 			icms_cp_header();
-			icms_debug(111);
 			echo $edituser->getHtmlErrors();
 			icms_cp_footer();
 		} else {
