@@ -67,6 +67,7 @@ class icms_DataFilter
 	*					'ip' = Checks & validates IP Addresses
 	*					'str' = Checks & Sanitizes String Values
 	*					'int' = Validates Integer Values
+	*					'html' = Validates HTML
 	*
 	* @param	mixed		$options1	Options to use with specified filter
 	*			Valid Filter Options:
@@ -112,7 +113,7 @@ class icms_DataFilter
 		{
 			return false;
 		}
-		$valid_types = array('url', 'email', 'ip', 'str', 'int');
+		$valid_types = array('url', 'email', 'ip', 'str', 'int', 'html');
 		if(!in_array($type, $valid_types))
 		{
 			return false;
@@ -189,6 +190,11 @@ class icms_DataFilter
 				}
 			}
 
+			if($type == 'html')
+			{
+				$options1 = '';
+				$options2 = '';
+			}
 		}
 
 		return $this->icms_FilterVar($data, $type, $options1, $options2);
@@ -347,6 +353,11 @@ class icms_DataFilter
 			{
 				return filter_var($data, FILTER_VALIDATE_INT);
 			}
+		}
+
+		if($type == 'html')
+		{
+			return $this->html_purifier($data);
 		}
 	}
 }
