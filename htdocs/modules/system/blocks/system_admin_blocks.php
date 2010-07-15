@@ -56,6 +56,10 @@ function b_system_admin_warnings_show(){
 			list($protector_is_active) = $xoopsDB->FetchRow($result2);
 		}
 	}
+	if (file_exists(ICMS_PLUGINS_PATH . '/csstidy/css_optimiser.php')) {
+		array_push($block['msg'], icms_error_msg(sprintf(_CSSTIDY_VULN, ICMS_PLUGINS_PATH . '/csstidy/css_optimiser.php'), FALSE));
+	}
+
 	if($protector_is_active == 0){
 		array_push($block['msg'], icms_core_Message::error(_PROTECTOR_NOT_FOUND, '', false));
 		echo '<br />';

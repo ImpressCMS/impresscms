@@ -297,4 +297,8 @@ define('_VISIBLE', 'Visible');
 define('_UP', 'Up');
 define('_DOWN', 'Down');
 define('_CONFIGURE', 'Configure');
+
+// Added in 1.2.2
+define('_CSSTIDY_VULN', 'WARNING: File %s exists on your server. <br />Please remove this file manually');
+define('_FILE_DELETED', 'File %s was deleted successfully');
 ?>

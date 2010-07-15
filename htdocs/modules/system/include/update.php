@@ -71,10 +71,10 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 
 	$CleanWritingFolders = false;
 
-	if ($dbVersion < 39 ) include 'update-112-to-121.php';
+	if ($dbVersion < 40 ) include 'update-112-to-122.php';
 
 /*  Begin upgrade to version 1.3 */
-	if (!$abortUpdate ) $newDbVersion = 40;
+	if (!$abortUpdate ) $newDbVersion = 41;
 
 	if ($dbVersion < $newDbVersion) {
 	/* Add new tables and data for the help suggestions and quick search */
@@ -88,7 +88,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			);
 			if (!$table->createTable()) {
 				$abortUpdate = TRUE;
-				$newDbVersion = 39;
+				$newDbVersion = 40;
 			}
 			if (!$abortUpdate) {
 				$search_cats = array(
@@ -135,7 +135,7 @@ function xoops_module_update_system(&$module, $oldversion = null, $dbVersion = n
 			);
 			if (!$table->createTable()) {
 				$abortUpdate = TRUE;
-				$newDbVersion = 39;
+				$newDbVersion = 40;
 			}
 			if (!$abortUpdate) {
 				icms_loadLanguageFile( 'system', 'preferences', TRUE );

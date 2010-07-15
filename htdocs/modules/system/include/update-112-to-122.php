@@ -1,6 +1,6 @@
 <?php
 /**
- * DataBase Update Functions - 1.1.2 to 1.2.1 release
+ * DataBase Update Functions - 1.1.2 to 1.2.2 release
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
@@ -13,7 +13,7 @@
 	if ($dbVersion < 12 ) include 'update-to-112.php';
 
 	/*
-	 * These are updates to the database that occured between 1.1.2 and 1.2.1
+	 * These are updates to the database that occured between 1.1.2 and 1.2.2
 	 */
 	if (!$abortUpdate) $newDbVersion = 12;
 
@@ -721,6 +721,22 @@
 		. " (NULL, 'TLS', 'tls', {$config_id})";
 		if (!$icmsDB->queryF($sql)) $abortUpdate = true;
 		$icmsDatabaseUpdater->insertConfig ( ICMS_CONF_MAILER, 'smtpauthport', '_MD_AM_SMTPAUTHPORT', '465', '_MD_AM_SMTPAUTHPORTDESC', 'textbox', 'int', 8 );
+
+		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
+		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
+	}
+	/* 1.2.2 release */
+
+	if (!$abortUpdate) $newDbVersion = 40;
+	if ($dbVersion < $newDbVersion) {
+		$file = ICMS_PLUGINS_PATH . '/csstidy/css_optimiser.php';
+		if (file_exists($file)) {
+			if(unlink($file)) {
+				echo sprintf(_FILE_DELETED, $file) . '<br />';
+			} else {
+				icms_core_Message::error(sprintf(_CSSTIDY_VULN, $file));
+			}
+		}
 
 		$icmsDatabaseUpdater->updateModuleDBVersion ( $newDbVersion, 'system' );
 		echo sprintf ( _DATABASEUPDATER_UPDATE_OK, icms_conv_nr2local ( $newDbVersion ) ) . '<br />';
