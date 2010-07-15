@@ -133,7 +133,7 @@ function b_system_main_show()
 	$criteria->add(new icms_criteria_Item('isactive', 1));
 	$criteria->add(new icms_criteria_Item('weight', 0, '>'));
 	$modules = $module_handler->getObjects($criteria, true);
-	$moduleperm_handler =& xoops_gethandler('member_groupperm');
+	$moduleperm_handler =& xoops_gethandler('groupperm');
 	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 	$read_allowed = $moduleperm_handler->getItemIds('module_read', $groups);
 	foreach (array_keys($modules) as $i) {
@@ -343,7 +343,7 @@ function b_system_comments_show($options)
 
 	// Check modules permissions
 	global $icmsUser;
-	$moduleperm_handler =& xoops_gethandler('member_groupperm');
+	$moduleperm_handler =& xoops_gethandler('groupperm');
 	$gperm_groupid = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 	$criteria1 = new icms_criteria_Compo(new icms_criteria_Item('gperm_name','module_read','='));
 	$criteria1->add(new icms_criteria_Item('gperm_groupid', '('.implode(',', $gperm_groupid).')', 'IN'));

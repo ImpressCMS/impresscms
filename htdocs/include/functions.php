@@ -611,11 +611,36 @@ function &getMailer()
  * @return		object		$inst		The instance of the object that was created
  * @todo This will not be needed when the autoload is complete
  */
-function &xoops_gethandler($name, $optional = false ) {
+function &xoops_gethandler($name, $optional = false) {
+	// Lookup table: old xoops names => fully qualified refactored name
 	$lookup = array(
-
+		//"avatar"			=> "",
+		//"block"				=> "icms_block",
+		//"blockposition"		=> "icms_block_position",
+		//"comment"			=> "",
+		"config"			=> "icms_config",
+		//"configcategory"	=> "",
+		//"configitem"		=> "",
+		//"configoption"		=> "",
+		//"group"				=> "",
+		//"groupperm"			=> "",
+		//"image"				=> "",
+		//"imagecategory"		=> "",
+		//"imageset"			=> "",
+		//"member"			=> "",
+		//"module"			=> "",
+		//"notification"		=> "",
+		//"object"			=> "",
+		//"online"			=> "",
+		//"page"				=> "",
+		//"privmessage"		=> "",
+		//"session"			=> "",
+		//"tplfile"			=> "",
+		//"tplset"			=> "",
+		//"icmspersistablecategory"	=> "",
 	);
-	return icms::handler($name, $optional);
+	$lower = strtolower($name);
+	return icms::handler(isset($lookup[$lower]) ? $lookup[$lower] : $name);
 }
 
 /**
@@ -843,7 +868,7 @@ function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null
 {
 	// do not allow system permissions to be deleted
 	if( (int) ($module_id) <= 1) {return false;}
-	$gperm_handler =& xoops_gethandler('member_groupperm');
+	$gperm_handler =& xoops_gethandler('groupperm');
 	return $gperm_handler->deleteByModule($module_id, $perm_name, $item_id);
 }
 
@@ -2969,7 +2994,7 @@ function icms_need_do_br($moduleName=false) {
 	$groups = $icmsUser->getGroups();
 
 	$editor_default = $icmsConfig['editor_default'];
-	$gperm_handler = xoops_gethandler('member_groupperm');
+	$gperm_handler = xoops_gethandler('groupperm');
 	if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $theModule->mid(), $groups)) {
 		return false;
 	} else {

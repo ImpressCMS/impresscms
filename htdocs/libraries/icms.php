@@ -163,25 +163,34 @@ abstract class icms {
 	 * @return		object		$inst		The instance of the object that was created
 	 */
 	static public function handler($name, $optional = false ) {
-		$name = strtolower(trim($name));
-
 		if(!isset(self::$handlers[$name])) {
-			$class = $name . '_Handler';
-			if (class_exists($class))
-				$handlers[$name] = new $class($GLOBALS['xoopsDB']);
-			else {
-				$class = 'icms_' . $name . '_Handler';
-				if (!class_exists($class))
-					$class = 'icms_core_' . ucfirst($name) . 'Handler';
-				if (class_exists($class))
-					$handlers[$name] = new $class($GLOBALS['xoopsDB']);
+			$class = $name . "Handler";
+			if (!class_exists($class)) {
+				$class = $name . "_Handler";
+				if (!class_exists($class)) {
+					// Try old style handler loading (should be removed later, in favor of the
+					// lookup table present in xoops_gethandler)
+					$lower = strtolower(trim($name));
+					if (file_exists($hnd_file = ICMS_ROOT_PATH.'/kernel/' . $lower . '.php')) {
+						require_once $hnd_file;
+					} elseif (file_exists($hnd_file = ICMS_ROOT_PATH.'/class/' . $lower . '.php')) {
+						require_once $hnd_file;
+					}
+					if (!class_exists($class = 'Xoops' . ucfirst($lower) . 'Handler', false)) {
+						if (!class_exists($class = 'Icms' . ucfirst($lower) . 'Handler', false)) {
+							// Not found at all
+							$class = false;
+						}
+					}
+				}
 			}
+			self::$handlers[$name] = $class ? new $class($GLOBALS["xoopsDB"]) : false;
 		}
-
-		if(!isset($handlers[$name]) && !$optional) trigger_error(sprintf("Class <b>%s</b> does not exist<br />Handler Name: %s", $class, $name), E_USER_ERROR);
-		if(isset($handlers[$name])) return $handlers[$name];
-		$inst = false;
-		return $inst;
+		if (!self::$handlers[$name] && !$optional) {
+			//trigger_error(sprintf("Handler <b>%s</b> does not exist", $name), E_USER_ERROR);
+			throw new RuntimeException(sprintf("Handler <b>%s</b> does not exist", $name));
+		}
+		return self::$handlers[$name];
 	}
 
 	/**

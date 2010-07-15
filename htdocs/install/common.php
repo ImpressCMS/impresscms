@@ -423,7 +423,7 @@ if (file_exists('./xoops_version.php')) {
 		include_once XOOPS_ROOT_PATH."/footer.php";
 		exit();
 	}
-	$moduleperm_handler =& xoops_gethandler('member_groupperm');
+	$moduleperm_handler =& xoops_gethandler('groupperm');
 	if ($xoopsUser) {
 		if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
 			redirect_header(XOOPS_URL."/user.php",1,_NOPERM);

@@ -51,7 +51,7 @@ if ($uid <= 0)
 
 //include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 
-$gperm_handler = xoops_gethandler('member_groupperm');
+$gperm_handler = xoops_gethandler('groupperm');
 $groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
 $isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups);

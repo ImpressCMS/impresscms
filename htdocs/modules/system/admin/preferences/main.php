@@ -39,7 +39,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		 * @todo: Create a preference option to set this value and improve the way to change the order.
 		 */
 		$order = 1;
-		$confcat_handler = xoops_gethandler('config_category');
+		$confcat_handler = xoops_gethandler('configcategory');
 		$confcats = $confcat_handler->getObjects ();
 		$catcount = count ( $confcats );
 		$ccats = array ( );
@@ -68,7 +68,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		if (empty ( $confcat_id )) {
 			$confcat_id = 1;
 		}
-		$confcat_handler = & xoops_gethandler('config_category');
+		$confcat_handler = & xoops_gethandler('configcategory');
 		$confcat = & $confcat_handler->get ( $confcat_id );
 		if (! is_object ( $confcat )) {
 			redirect_header ( 'admin.php?fct=preferences', 1 );
@@ -602,7 +602,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 
 					// add read permission for the start module to all groups
 					if (! $startmod_updated && $new_value != '--' && $config->getVar ( 'conf_catid' ) == ICMS_CONF && $config->getVar ( 'conf_name' ) == 'startpage') {
-						$moduleperm_handler = & xoops_gethandler('member_groupperm');
+						$moduleperm_handler = & xoops_gethandler('groupperm');
 						$module_handler = & xoops_gethandler('module');
 
 						foreach ( $new_value as $k => $v) {

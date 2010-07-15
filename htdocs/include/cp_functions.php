@@ -177,7 +177,7 @@ function icms_cp_header(){
 	$file = file_get_contents(ICMS_CACHE_PATH . "/adminmenu_" . $icmsConfig ['language'] . ".php");
 	$admin_menu = eval('return ' . $file . ';');
 
-	$moduleperm_handler =& xoops_gethandler('member_groupperm');
+	$moduleperm_handler =& xoops_gethandler('groupperm');
 	$module_handler =& xoops_gethandler('module');
 	foreach ( $admin_menu as $k => $navitem ) {
 		 //Getting array of allowed modules to use in admin home
@@ -199,7 +199,7 @@ function icms_cp_header(){
 			$groups = $icmsUser->getGroups();
 			$all_ok = false;
 			if (! in_array(ICMS_GROUP_ADMIN, $groups)) {
-				$sysperm_handler =& xoops_gethandler('member_groupperm');
+				$sysperm_handler =& xoops_gethandler('groupperm');
 				$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
 			} else {
 				$all_ok = true;

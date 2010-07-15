@@ -14,7 +14,7 @@
  * @version	$Id$
  */
 
-$gperm_handler =& xoops_gethandler('member_groupperm');
+$gperm_handler =& xoops_gethandler('groupperm');
 if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) || ( isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], $icmsUser->getGroups() ) )) {
 	exit("Access Denied");
 } else {
@@ -70,7 +70,7 @@ switch ($op) {
 			icms_cp_footer();
 		} else {
 			$groupid = $group->getVar('groupid');
-			$gperm_handler =& xoops_gethandler('member_groupperm');
+			$gperm_handler =& xoops_gethandler('groupperm');
 			$criteria = new icms_criteria_Compo(new icms_criteria_Item('gperm_groupid', $groupid));
 			$criteria->add(new icms_criteria_Item('gperm_modid', 1));
 			$criteria2 = new icms_criteria_Compo(new icms_criteria_Item('gperm_name', 'system_admin'));
@@ -187,7 +187,7 @@ switch ($op) {
 			icms_cp_footer();
 		} else {
 			$groupid = $group->getVar('groupid');
-			$gperm_handler =& xoops_gethandler('member_groupperm');
+			$gperm_handler =& xoops_gethandler('groupperm');
 			if (count($system_catids) > 0) {
 				array_push($admin_mids, 1);
 				foreach ($system_catids as $s_cid) {
@@ -266,7 +266,7 @@ switch ($op) {
 			$member_handler =& xoops_gethandler('member');
 			$group =& $member_handler->getGroup($g_id);
 			$member_handler->deleteGroup($group);
-			$gperm_handler =& xoops_gethandler('member_groupperm');
+			$gperm_handler =& xoops_gethandler('groupperm');
 			$gperm_handler->deleteByGroup($g_id);
 		}
 		redirect_header("admin.php?fct=groups&amp;op=adminMain",1,_AM_DBUPDATED);

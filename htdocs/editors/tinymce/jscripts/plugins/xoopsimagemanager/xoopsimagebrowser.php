@@ -496,7 +496,7 @@ function imanager_addcat() {
 		redirect_header($_SERVER['PHP_SELF'].'?op=list&target='.$target.'&type='.$type,1,_MD_FAILADDCAT);
 	}
 	$newid = $imagecategory->getVar('imgcat_id');
-	$imagecategoryperm_handler =& xoops_gethandler('member_groupperm');
+	$imagecategoryperm_handler =& xoops_gethandler('groupperm');
 	if (!isset($readgroup)) {
 		$readgroup = array();
 	}

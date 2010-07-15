@@ -36,7 +36,7 @@ $msg = array();
 $member_handler =& xoops_gethandler('member');
 $group_list =& $member_handler->getGroupList();
 if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
-	$gperm_handler = xoops_gethandler('member_groupperm');
+	$gperm_handler = xoops_gethandler('groupperm');
 	foreach ($_POST['perms'] as $perm_name => $perm_data) {
 		if (false != $gperm_handler->deleteByModule($modid, $perm_name)) {
 			foreach ($perm_data['groups'] as $group_id => $item_ids) {

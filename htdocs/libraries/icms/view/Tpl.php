@@ -61,7 +61,7 @@ class icms_view_Tpl extends Smarty {
 			$this->debugging_ctrl = 'URL';
 			$groups = (is_object($icmsUser)) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 			$moduleid = (isset($icmsModule) && is_object($icmsModule)) ? $icmsModule->mid() : 1;
-			$gperm_handler =& xoops_gethandler('member_groupperm');
+			$gperm_handler =& xoops_gethandler('groupperm');
 			if ($icmsConfig['debug_mode'] == 3 && $gperm_handler->checkRight('enable_debug', $moduleid, $groups)) {
 				$this->debugging = true;
 			}
@@ -228,7 +228,7 @@ class icms_view_Tpl extends Smarty {
 	 * @return  boolean
 	 **/
 	static public function template_touch($tpl_id) {
-		$tplfile_handler =& xoops_gethandler('view_template_file');
+		$tplfile_handler =& icms::handler('icms_view_template_file');
 		$tplfile =& $tplfile_handler->get($tpl_id);
 
 		if (is_object($tplfile)) {

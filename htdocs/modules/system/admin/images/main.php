@@ -525,7 +525,7 @@ function imanager_addcat() {
 	}
 
 	$newid = $imagecategory->getVar('imgcat_id');
-	$imagecategoryperm_handler =& xoops_gethandler('member_groupperm');
+	$imagecategoryperm_handler =& xoops_gethandler('groupperm');
 	if (!isset($readgroup)) {
 		$readgroup = array();
 	}
@@ -574,7 +574,7 @@ function imanager_editcat($imgcat_id) {
 		redirect_header('admin.php?fct=images',1);
 	}
 	include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
-	$imagecategoryperm_handler =& xoops_gethandler('member_groupperm');
+	$imagecategoryperm_handler =& xoops_gethandler('groupperm');
 	$form = new XoopsThemeForm(_MD_EDITIMGCAT, 'imagecat_form', 'admin.php', 'post', true);
 	$form->addElement(new XoopsFormText(_MD_IMGCATNAME, 'imgcat_name', 50, 255, $imagecategory->getVar('imgcat_name')), true);
 	$form->addElement(new XoopsFormSelectGroup(_MD_IMGCATRGRP, 'readgroup', true, $imagecategoryperm_handler->getGroupIds('imgcat_read', $imgcat_id), 5, true));
@@ -620,7 +620,7 @@ function imanager_updatecat() {
 	if (!$imgcat_handler->insert($imagecategory)) {
 		exit();
 	}
-	$imagecategoryperm_handler =& xoops_gethandler('member_groupperm');
+	$imagecategoryperm_handler =& xoops_gethandler('groupperm');
 	$criteria = new icms_criteria_Compo(new icms_criteria_Item('gperm_itemid', $imgcat_id));
 	$criteria->add(new icms_criteria_Item('gperm_modid', 1));
 	$criteria2 = new icms_criteria_Compo(new icms_criteria_Item('gperm_name', 'imgcat_write'));

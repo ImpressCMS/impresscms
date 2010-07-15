@@ -18,7 +18,7 @@
 include_once '../../../mainfile.php';
 /** Load the admin functions */
 include_once ICMS_ROOT_PATH . '/include/cp_functions.php';
-$moduleperm_handler = & xoops_gethandler('member_groupperm');
+$moduleperm_handler = & xoops_gethandler('groupperm');
 if ($icmsUser) {
 	$url_arr = explode('/', strstr($xoopsRequestUri, '/modules/'));
 	$module_handler =& xoops_gethandler('module');

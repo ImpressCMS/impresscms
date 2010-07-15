@@ -46,7 +46,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 	public function getBlockPositions($full = false) {
 		if (!count($this->block_positions)) {
 			// TODO: Implement IPF for block_positions
-			$icms_blockposition_handler = xoops_gethandler('block_position');
+			$icms_blockposition_handler = xoops_gethandler('blockposition');
 			//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
 			//			$result = $this->db->query($sql);
 			//			while ($row = $this->db->fetchArray($result)) {

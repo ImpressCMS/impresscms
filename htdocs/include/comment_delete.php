@@ -72,7 +72,7 @@ if (!is_object($icmsUser)) {
 	$accesserror = true;
 } else {
 	if (!$icmsUser->isAdmin($com_modid)) {
-		$sysperm_handler =& xoops_gethandler('member_groupperm');
+		$sysperm_handler =& xoops_gethandler('groupperm');
 		if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 			$accesserror = true;
 		}

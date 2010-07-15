@@ -55,7 +55,7 @@ function smarty_resource_db_tplinfo( $tpl_name ) {
 	$tplset = $xoopsConfig['template_set'];
 	$theme = isset( $xoopsConfig['theme_set'] ) ? $xoopsConfig['theme_set'] : 'default';
 
-	$tplfile_handler =& xoops_gethandler('view_template_file');
+	$tplfile_handler =& icms::handler('icms_view_template_file');
 	// If we're not using the "default" template set, then get the templates from the DB
 	if ( $tplset != "default" ) {
 		$tplobj = $tplfile_handler->find( $tplset, null, null, null, $tpl_name, true);

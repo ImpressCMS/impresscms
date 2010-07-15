@@ -21,7 +21,7 @@ include_once ICMS_ROOT_PATH . '/modules/system/constants.php';
 
 if (XOOPS_COMMENT_APPROVENONE != $icmsModuleConfig['com_rule']) {
 
-	$gperm_handler = & xoops_gethandler('member_groupperm');
+	$gperm_handler = & xoops_gethandler('groupperm');
 	$groups = ( $icmsUser ) ? $icmsUser -> getGroups() : ICMS_GROUP_ANONYMOUS;
 	$xoopsTpl->assign( 'xoops_iscommentadmin', $gperm_handler->checkRight( 'system_admin', XOOPS_SYSTEM_COMMENT, $groups) );
 

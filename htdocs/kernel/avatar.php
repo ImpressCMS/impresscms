@@ -20,8 +20,8 @@ class XoopsAvatar extends icms_data_avatar_Object {
  */
 class XoopsAvatarHandler extends icms_data_avatar_Handler {
 	private $_deprecated;
-	public function __construct() {
-		parent::__construct();
+	public function __construct(&$db) {
+		parent::__construct($db);
 		$this->_deprecated = icms_core_Debug::setDeprecated('icms_data_avatar_Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }

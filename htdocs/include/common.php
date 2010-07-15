@@ -14,6 +14,7 @@
  * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
  * @version		$Id$
  */
+
 /** make sure mainfile is included, for security and functionality */
 defined("XOOPS_MAINFILE_INCLUDED") or die();
 
@@ -27,7 +28,6 @@ global $xoopsSecurity;
 $xoopsSecurity = $icmsSecurity = new IcmsSecurity();
 //Check super globals
 $xoopsSecurity->checkSuperglobals();
-
 
 // ################# Initialize kernel and launch bootstrap
 
@@ -45,7 +45,6 @@ $xoopsLogger = $xoopsErrorHandler = icms::$logger;
 // ################# Creation of the non-static ImpressCMS Kernel object for BC ##############
 global $impresscms, $xoops;
 $xoops = $impresscms = new icms_core_Kernel();
-
 
 // ############## Include common functions file ##############
 include_once ICMS_ROOT_PATH . '/include/functions.php';
@@ -104,7 +103,7 @@ if ($icmsConfig['gzip_compression'] == 1
 
 // #################### Error reporting settings ##################
 if (!isset($xoopsOption['nodebug']) || !$xoopsOption['nodebug']) {
-	if ($icmsConfig['debug_mode'] == 1 || $icmsConfig['debug_mode'] == 2) {
+	if ( $icmsConfig['debug_mode'] == 1 || $icmsConfig['debug_mode'] == 2) {
 		error_reporting(E_ALL);
 		$xoopsLogger->enableRendering();
 		$xoopsLogger->usePopup = ( $icmsConfig['debug_mode'] == 2 );
@@ -409,7 +408,7 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 		include_once ICMS_ROOT_PATH . '/footer.php';
 		exit();
 	}
-	$moduleperm_handler =& xoops_gethandler('member_groupperm');
+	$moduleperm_handler =& xoops_gethandler('groupperm');
 	if ($icmsUser) {
 		if (!$moduleperm_handler->checkRight('module_read', $icmsModule->getVar('mid'), $icmsUser->getGroups())) {
 			redirect_header(ICMS_URL . "/user.php", 1, _NOPERM, false);

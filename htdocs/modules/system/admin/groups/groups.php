@@ -30,7 +30,7 @@ function displayGroups()
 	$groups =& $member_handler->getGroups();
 	echo "<table class='outer' width='40%' cellpadding='4' cellspacing='1'><tr><th colspan='2'>"._AM_EDITADG."</th></tr>";
 	$count = count($groups);
-	$gperm_handler =& xoops_gethandler('member_groupperm');
+	$gperm_handler =& xoops_gethandler('groupperm');
 	$ugroups  = (is_object($icmsUser)) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 	for ($i = 0; $i < $count; $i++) {
 		$id = $groups[$i]->getVar('groupid');
@@ -83,13 +83,13 @@ function modifyGroup($g_id)
 	$thisgroup =& $member_handler->getGroup($g_id);
 	$name_value = $thisgroup->getVar("name", "E");
 	$desc_value = $thisgroup->getVar("description", "E");
-	$moduleperm_handler =& xoops_gethandler('member_groupperm');
+	$moduleperm_handler =& xoops_gethandler('groupperm');
 	$a_mod_value =& $moduleperm_handler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
 	$r_mod_value =& $moduleperm_handler->getItemIds('module_read', $thisgroup->getVar('groupid'));
 	$ed_mod_value =& $moduleperm_handler->getItemIds('use_wysiwygeditor', $thisgroup->getVar('groupid'));
 	$debug_mod_value =& $moduleperm_handler->getItemIds('enable_debug', $thisgroup->getVar('groupid'));
 	$group_manager_value =& $moduleperm_handler->getItemIds('group_manager', $thisgroup->getVar('groupid'));
-	$gperm_handler =& xoops_gethandler('member_groupperm');
+	$gperm_handler =& xoops_gethandler('groupperm');
 	$r_block_value =& $gperm_handler->getItemIds('block_read', $g_id);
 	$op_value = "update";
 	$submit_value = _AM_UPDATEADG;
@@ -100,7 +100,7 @@ function modifyGroup($g_id)
 		$s_cat_disable = true;
 	}
 
-	$sysperm_handler =& xoops_gethandler('member_groupperm');
+	$sysperm_handler =& xoops_gethandler('groupperm');
 	$s_cat_value =& $sysperm_handler->getItemIds('system_admin', $g_id);
 
 	include ICMS_ROOT_PATH."/modules/system/admin/groups/groupform.php";

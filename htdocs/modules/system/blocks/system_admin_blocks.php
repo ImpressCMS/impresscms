@@ -104,7 +104,7 @@ function b_system_admin_cp_show(){
 	$all_ok = false;
 	if(!in_array(XOOPS_GROUP_ADMIN, $groups))
 	{
-		$sysperm_handler =& xoops_gethandler('member_groupperm');
+		$sysperm_handler =& xoops_gethandler('groupperm');
 		$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
 	}
 	else {$all_ok = true;}
@@ -152,7 +152,7 @@ function b_system_admin_modules_show(){
 	global $icmsUser;
 	$block['mods'] = array();
 	$module_handler = & xoops_gethandler('module');
-	$moduleperm_handler = & xoops_gethandler('member_groupperm');
+	$moduleperm_handler = & xoops_gethandler('groupperm');
 	$criteria = new icms_criteria_Compo ( );
 	$criteria->add ( new icms_criteria_Item ( 'hasadmin', 1 ) );
 	$criteria->add ( new icms_criteria_Item ( 'isactive', 1 ) );
@@ -238,7 +238,7 @@ function b_system_admin_cp_new_show() {
 	}
 	$all_ok = false;
 	if (!in_array(ICMS_GROUP_ADMIN, $groups)) {
-		$sysperm_handler =& xoops_gethandler('member_groupperm');
+		$sysperm_handler =& xoops_gethandler('groupperm');
 		$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
 	} else {
 		$all_ok = true;

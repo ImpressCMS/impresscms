@@ -59,7 +59,7 @@ class XoopsXmlRpcApi
 			unset($this->user);
 			return false;
 		}
-		$moduleperm_handler =& xoops_gethandler('member_groupperm');
+		$moduleperm_handler =& xoops_gethandler('groupperm');
 		if (!$moduleperm_handler->checkRight('module_read', $this->module->getVar('mid'), $this->user->getGroups())) {
 			unset($this->user);
 			return false;

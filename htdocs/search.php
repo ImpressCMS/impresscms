@@ -65,7 +65,7 @@ if ($action == "results") {
 
 global $icmsUser;
 $groups = is_object($icmsUser) ? $icmsUser -> getGroups() : XOOPS_GROUP_ANONYMOUS;
-$gperm_handler = & xoops_gethandler('member_groupperm');
+$gperm_handler = & xoops_gethandler('groupperm');
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 
 $xoopsTpl->assign('basic_search', false);
