@@ -78,7 +78,6 @@ class icms_member_user_Handler extends icms_core_ObjectHandler
 		/**
 		 * @TODO: Change to if (!(class_exists($this->className) && $obj instanceof $this->className)) when going fully PHP5
 		 */
-		icms_debug(get_class($user));
 		if (!is_a($user, 'icms_member_user_Object')) {return false;}
 		if (!$user->isDirty()) {return true;}
 		if (!$user->cleanVars()) {return false;}
