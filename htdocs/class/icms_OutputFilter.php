@@ -41,7 +41,7 @@ class icms_OutputFilter extends icms_DataFilter
 	 * @param   bool	$br	 convert linebreaks?
 	 * @return  string
 	 **/
-	function filterTextarea($text, $smiley = 1, $icode = 1, $img = 1, $br = 1)
+/*	function filterTextarea($text, $smiley = 1, $icode = 1, $img = 1, $br = 1)
 	{
 		// ################# Preload Trigger beforeFilterTextarea ##############
 		global $icmsPreloadHandler;
@@ -81,7 +81,7 @@ class icms_OutputFilter extends icms_DataFilter
 		// ################# Preload Trigger afterFilterTextarea ##############
 		$icmsPreloadHandler->triggerEvent('afterFilterTextarea', array(&$text, $smiley, $icode, $img, $br));
 		return $text;
-	}
+	} */
 
 }
 ?>

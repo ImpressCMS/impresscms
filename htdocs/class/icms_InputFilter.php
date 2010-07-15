@@ -39,7 +39,7 @@ class icms_InputFilter extends icms_DataFilter
 	* @param   bool		$img	allow inline images?
 	* @return  string
 	**/
-	function filterHTMLarea($html, $icode = 0, $img = 0)
+/*	function filterHTMLarea($html, $icode = 0, $img = 0)
 	{
 		// ################# Preload Trigger beforeFilterHTMLarea ##############
 		global $icmsPreloadHandler;
@@ -75,6 +75,6 @@ class icms_InputFilter extends icms_DataFilter
 		// ################# Preload Trigger afterFilterHTMLarea ##############
 		$icmsPreloadHandler->triggerEvent('afterFilterHTMLarea', array(&$html, $icode, $img));
 		return $html;
-	}
+	} */
 }
 ?>
