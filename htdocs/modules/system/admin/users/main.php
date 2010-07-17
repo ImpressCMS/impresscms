@@ -50,7 +50,7 @@ switch ($op)
 
 	case 'delUser':
 		icms_cp_header();
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		$userdata =& $member_handler->getUser($uid);
 		icms_core_Message::confirm(array('fct' => 'users', 'op' => 'delUserConf', 'del_uid' => $userdata->getVar('uid')), 'admin.php', sprintf(_AM_AYSYWTDU,$userdata->getVar('uname')));
 		icms_cp_footer();
@@ -86,7 +86,7 @@ switch ($op)
 		if (!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
 		$count = count($memberslist_id);
 		$output = '';
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		for ($i = 0; $i < $count; $i++)
 		{
 			$deluser =& $member_handler->getUser($memberslist_id[$i]);
@@ -108,7 +108,7 @@ switch ($op)
 
 	case 'delUserConf':
 		if (!$GLOBALS['xoopsSecurity']->check()) {redirect_header('admin.php?fct=users', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));}
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		$user =& $member_handler->getUser($del_uid);
 		$groups = $user->getGroups();
 		if (in_array(XOOPS_GROUP_ADMIN, $groups))
@@ -123,7 +123,7 @@ switch ($op)
 			echo _AM_ADMIN_CAN_NOT_BE_DELETEED.$deluser->getVar('uname');
 			icms_cp_footer();
 		} else {
-			$online_handler =& xoops_gethandler('online');
+			$online_handler = icms::handler('icms_core_Online');
 			$online_handler->destroy($del_uid);
 			// RMV-NOTIFY
 			xoops_notification_deletebyuser($del_uid);
@@ -137,7 +137,7 @@ switch ($op)
 		{
 			$adduser_errormsg = _AM_YMCACF;
 		} else {
-			$member_handler =& xoops_gethandler('member');
+			$member_handler = icms::handler('icms_member');
 			// make sure the username doesnt exist yet
 			if ($member_handler->getUserCount(new icms_criteria_Item('uname', $username)) > 0 || $member_handler->getUserCount(new icms_criteria_Item('login_name', $login_name)) > 0 )
 			{

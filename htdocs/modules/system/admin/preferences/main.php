@@ -39,7 +39,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		 * @todo: Create a preference option to set this value and improve the way to change the order.
 		 */
 		$order = 1;
-		$confcat_handler = xoops_gethandler('configcategory');
+		$confcat_handler = icms::handler('icms_config_category');
 		$confcats = $confcat_handler->getObjects ();
 		$catcount = count ( $confcats );
 		$ccats = array ( );
@@ -68,7 +68,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		if (empty ( $confcat_id )) {
 			$confcat_id = 1;
 		}
-		$confcat_handler = & xoops_gethandler('configcategory');
+		$confcat_handler = icms::handler('icms_config_category');
 		$confcat = & $confcat_handler->get ( $confcat_id );
 		if (! is_object ( $confcat )) {
 			redirect_header ( 'admin.php?fct=preferences', 1 );
@@ -77,7 +77,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		include_once ICMS_ROOT_PATH . '/class/xoopslists.php';
 		global $icmsConfigUser;
 		$form = new XoopsThemeForm ( constant ( $confcat->getVar ( 'confcat_name' ) ), 'pref_form', 'admin.php?fct=preferences', 'post', true );
-		$config_handler = & xoops_gethandler('config');
+		$config_handler = icms::handler('icms_config');
 		$criteria = new icms_criteria_Compo ( );
 		$criteria->add ( new icms_criteria_Item ( 'conf_modid', 0 ) );
 		$criteria->add ( new icms_criteria_Item ( 'conf_catid', $confcat_id ) );
@@ -199,7 +199,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 				break;
 				case 'tplset' :
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
-					$tplset_handler = & xoops_gethandler('view_template_set');
+					$tplset_handler = icms::handler('icms_view_template_set');
 					$tplsetlist = $tplset_handler->getList ();
 					asort ( $tplsetlist );
 					foreach ( $tplsetlist as $key => $name) {
@@ -215,7 +215,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$ele = new icms_form_elements_select_Lang ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
 				break;
 				case 'startpage' :
-					$member_handler = & xoops_gethandler('member');
+					$member_handler = icms::handler('icms_member');
 					$grps = $member_handler->getGroupList ();
 
 					$value = $config [$i]->getConfValueForOutput ();
@@ -226,14 +226,14 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 						}
 					}
 
-					$module_handler = & xoops_gethandler('module');
+					$module_handler = icms::handler('icms_module');
 					$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'hasmain', 1 ) );
 					$criteria->add ( new icms_criteria_Item ( 'isactive', 1 ) );
 					$moduleslist = $module_handler->getList ( $criteria, true );
 					$moduleslist ['--'] = _MD_AM_NONE;
 
 					//Adding support to select custom links to be the start page
-					$page_handler = & xoops_gethandler('page');
+					$page_handler = icms::handler('icms_page');
 					$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'page_status', 1 ) );
 					$criteria->add ( new icms_criteria_Item ( 'page_url', '%*', 'NOT LIKE' ) );
 					$pagelist = $page_handler->getList ( $criteria );
@@ -267,7 +267,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					$ele = new icms_form_elements_select_User ( $title, $config [$i]->getVar ( 'conf_name' ), false, $config [$i]->getConfValueForOutput (), 5, true );
 				break;
 				case 'module_cache' :
-					$module_handler = & xoops_gethandler('module');
+					$module_handler = icms::handler('icms_module');
 					$modules = $module_handler->getObjects ( new icms_criteria_Item ( 'hasmain', 1 ), true );
 					$currrent_val = $config [$i]->getConfValueForOutput ();
 					$cache_options = array ('0' => _NOCACHE, '30' => sprintf ( _SECONDS, 30 ), '60' => _MINUTE, '300' => sprintf ( _MINUTES, 5 ), '1800' => sprintf ( _MINUTES, 30 ), '3600' => _HOUR, '18000' => sprintf ( _HOURS, 5 ), '86400' => _DAY, '259200' => sprintf ( _DAYS, 3 ), '604800' => _WEEK );
@@ -305,6 +305,9 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					if (!file_exists(ICMS_ROOT_PATH.'/kernel/content.php')) {
 						$content_handler = & icms_getModuleHandler ( 'content', 'content' );
 					}else{
+						/**
+						 * @todo remove this section because this handler will never exist again
+						 */
 						$content_handler = & xoops_gethandler('content');
 					}
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
@@ -360,7 +363,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 	}
 
 	if ($op == 'showmod') {
-		$config_handler = & xoops_gethandler('config');
+		$config_handler = icms::handler('icms_config');
 		$mod = isset ( $_GET ['mod'] ) ? (int) ( $_GET ['mod'] ) : 0;
 		if (empty ( $mod )) {
 			header ( 'Location: admin.php?fct=preferences' );
@@ -373,7 +376,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 		}
 		include_once ICMS_ROOT_PATH . '/class/xoopsformloader.php';
 		$form = new XoopsThemeForm ( _MD_AM_MODCONFIG, 'pref_form', 'admin.php?fct=preferences', 'post', true );
-		$module_handler = & xoops_gethandler('module');
+		$module_handler = icms::handler('icms_module');
 		$module = & $module_handler->get ( $mod );
 		icms_loadLanguageFile($module->getVar ( 'dirname' ), 'modinfo');
 		// if has comments feature, need comment lang file
@@ -469,6 +472,9 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 					if (!file_exists(ICMS_ROOT_PATH.'/kernel/content.php')) {
 						$content_handler = & icms_getModuleHandler ( 'content', 'content' );
 					}else{
+						/**
+						 * @todo remove this section because this handler will never exist again
+						 */
 						$content_handler = & xoops_gethandler('content');
 					}
 					$ele = new XoopsFormSelect ( $title, $config [$i]->getVar ( 'conf_name' ), $config [$i]->getConfValueForOutput () );
@@ -538,7 +544,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
                     // if default theme has been changed
                     if (!$theme_updated && $config->getVar('conf_catid') == ICMS_CONF && $config->getVar('conf_name') == 'theme_set')
                     {
-                        $member_handler = xoops_gethandler('member');
+                        $member_handler = icms::handler('icms_member');
                         $member_handler->updateUsersByField('theme', ${$config->getVar('conf_name')});
                         $theme_updated = true;
                     }
@@ -547,7 +553,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
                     {
                         if ($config->getVar('closesite') !== 1)
                         {
-                            $member_handler = xoops_gethandler('member');
+                            $member_handler = icms::handler('icms_member');
                             $member_handler->updateUsersByField('pass_expired', 1);
 							$encryption_updated = true;
                         }
@@ -579,7 +585,7 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 							$xoopsTpl->clear_compiled_tpl ();
 							// generate compiled files for the new theme
 							// block files only for now..
-							$tplfile_handler = & xoops_gethandler('tplfile');
+							$tplfile_handler = icms::handler('icms_view_template_file');
 							$dtemplates = & $tplfile_handler->find ( 'default', 'block' );
 							$dcount = count ( $dtemplates );
 
@@ -602,8 +608,8 @@ if (! is_object ( $icmsUser ) || ! is_object ( $icmsModule ) || ! $icmsUser->isA
 
 					// add read permission for the start module to all groups
 					if (! $startmod_updated && $new_value != '--' && $config->getVar ( 'conf_catid' ) == ICMS_CONF && $config->getVar ( 'conf_name' ) == 'startpage') {
-						$moduleperm_handler = & xoops_gethandler('groupperm');
-						$module_handler = & xoops_gethandler('module');
+						$moduleperm_handler = icms::handler('icms_member_groupperm');
+						$module_handler = icms::handler('icms_module');
 
 						foreach ( $new_value as $k => $v) {
 							$arr = explode ( '-', $v );

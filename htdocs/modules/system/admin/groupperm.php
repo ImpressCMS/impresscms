@@ -24,7 +24,7 @@ if ($modid <= 1 || !is_object($icmsUser) || !$icmsUser->isAdmin($modid)) {
 	redirect_header(ICMS_URL.'/index.php', 1, _NOPERM);
 	exit();
 }
-$module_handler =& xoops_gethandler('module');
+$module_handler = icms::handler('icms_module');
 $module =& $module_handler->get($modid);
 if (!is_object($module) || !$module->getVar('isactive')) {
 	redirect_header(ICMS_URL.'/admin.php', 1, _MODULENOEXIST);
@@ -33,10 +33,10 @@ if (!is_object($module) || !$module->getVar('isactive')) {
 
 $msg = array();
 
-$member_handler =& xoops_gethandler('member');
+$member_handler = icms::handler('icms_member');
 $group_list =& $member_handler->getGroupList();
 if (is_array($_POST['perms']) && !empty($_POST['perms'])) {
-	$gperm_handler = xoops_gethandler('groupperm');
+	$gperm_handler = icms::handler('icms_member_groupperm');
 	foreach ($_POST['perms'] as $perm_name => $perm_data) {
 		if (false != $gperm_handler->deleteByModule($modid, $perm_name)) {
 			foreach ($perm_data['groups'] as $group_id => $item_ids) {

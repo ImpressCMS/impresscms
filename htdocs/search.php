@@ -65,7 +65,7 @@ if ($action == "results") {
 
 global $icmsUser;
 $groups = is_object($icmsUser) ? $icmsUser -> getGroups() : XOOPS_GROUP_ANONYMOUS;
-$gperm_handler = & xoops_gethandler('groupperm');
+$gperm_handler = icms::handler('icms_member_groupperm');
 $available_modules = $gperm_handler->getItemIds('module_read', $groups);
 
 $xoopsTpl->assign('basic_search', false);
@@ -168,7 +168,7 @@ $all_results_counts = array();
 switch ($action) {
 	case "results":
 		$max_results_per_page = (int) ($icmsConfigSearch['num_shallow_search']);
-		$module_handler =& xoops_gethandler('module');
+		$module_handler = icms::handler('icms_module');
 		$criteria = new icms_criteria_Compo(new icms_criteria_Item('hassearch', 1));
 		$criteria->add(new icms_criteria_Item('isactive', 1));
 		$criteria->add(new icms_criteria_Item('mid', "(".implode(',', $available_modules).")", 'IN'));
@@ -249,7 +249,7 @@ switch ($action) {
 	case "showall":
 	case 'showallbyuser':
 		$max_results_per_page = (int) ($icmsConfigSearch['search_per_page']);
-		$module_handler =& xoops_gethandler('module');
+		$module_handler = icms::handler('icms_module');
 		$module =& $module_handler->get($mid);
 		$results =& $module->search($queries, $andor, 0, $start, $uid);
 		$xoopsTpl->assign('xoops_pagetitle', _SR_SEARCHRESULTS);

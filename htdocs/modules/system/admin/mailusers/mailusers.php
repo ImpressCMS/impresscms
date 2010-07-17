@@ -108,7 +108,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				$crit->prefix = "u";
 				$criteria_object->add($crit, 'AND');
 			}
-			$member_handler =& xoops_gethandler('member');
+			$member_handler = icms::handler('icms_member');
 			$groups = empty($_POST['mail_to_group']) ? array() : array_map( 'intval', $_POST['mail_to_group'] );
 			$getusers = $member_handler->getUsersByGroupLink($groups, $criteria_object, true);
 			$count_criteria = $member_handler->getUserCountByGroupLink($groups, $criteria_object);

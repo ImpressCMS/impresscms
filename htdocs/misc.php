@@ -80,7 +80,7 @@ if ($action == 'showpopups')
 <table width='100%'>
 	<tr>
 	<?php
-	$avatar_handler =& xoops_gethandler('data_avatar');
+	$avatar_handler = icms::handler('icms_data_avatar');
 	$avatarslist =& $avatar_handler->getList('S');
 	$cntavs = 0;
 	$counter = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
@@ -165,7 +165,7 @@ case 'online':
 	$isadmin = $icmsUserIsAdmin;
 	echo '<table  width="100%" cellspacing="1" class="outer"><tr><th colspan="3">'._WHOSONLINE.'</th></tr>';
 	$start = isset($_GET['start']) ? (int) ($_GET['start']) : 0;
-	$online_handler =& xoops_gethandler('online');
+	$online_handler = icms::handler('icms_core_Online');
 	$online_total =& $online_handler->getCount();
 	$limit = ($online_total > 20) ? 20 : $online_total;
 	$criteria = new icms_criteria_Compo();
@@ -173,7 +173,7 @@ case 'online':
 	$criteria->setStart($start);
 	$onlines =& $online_handler->getAll($criteria);
 	$count = count($onlines);
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$modules =& $module_handler->getList(new icms_criteria_Item('isactive', 1));
 	for ($i = 0; $i < $count; $i++)
 	{

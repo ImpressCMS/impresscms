@@ -104,7 +104,7 @@ class icms_member_user_Object extends icms_core_Object
 			{
 				$this->assignVars($id);
 			} else {
-				$member_handler =& xoops_gethandler('member');
+				$member_handler = icms::handler('icms_member');
 				$user =& $member_handler->getUser($id);
 				foreach ($user->vars as $k => $v)
 				{
@@ -138,7 +138,7 @@ class icms_member_user_Object extends icms_core_Object
 		$usereal = (int) ($usereal);
 		if ($userid > 0)
 		{
-			$member_handler =& xoops_gethandler('member');
+			$member_handler = icms::handler('icms_member');
 			$user =& $member_handler->getUser($userid);
 			if (is_object($user))
 			{
@@ -167,7 +167,7 @@ class icms_member_user_Object extends icms_core_Object
 	 */
 	function incrementPost()
 	{
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		return $member_handler->updateUserByField($this, 'posts', $this->getVar('posts') + 1);
 	}
 
@@ -229,7 +229,7 @@ class icms_member_user_Object extends icms_core_Object
 
 		if ($icmsConfigUser['new_user_notify'] == 1 && !empty($icmsConfigUser['new_user_notify_group']))
 		{
-			$member_handler = xoops_getHandler('member');
+			$member_handler = ('icms_member');
 			$xoopsMailer =& getMailer();
 			$xoopsMailer->useMail();
 			$xoopsMailer->setTemplate('newuser_notify.tpl');
@@ -258,7 +258,7 @@ class icms_member_user_Object extends icms_core_Object
 	{
 		if (empty($this->_groups))
 		{
-			$member_handler =& xoops_gethandler('member');
+			$member_handler = icms::handler('icms_member');
 			$this->_groups =& $member_handler->getGroupsByUser($this->getVar('uid'));
 		}
 		return $this->_groups;
@@ -332,7 +332,7 @@ class icms_member_user_Object extends icms_core_Object
 	{
 		if (!isset($this->_isOnline))
 		{
-			$onlinehandler =& xoops_gethandler('online');
+			$onlinehandler = icms::handler('icms_core_Online');
 			$this->_isOnline = ($onlinehandler->getCount(new icms_criteria_Item('online_uid', $this->getVar('uid'))) > 0) ? true : false;
 		}
 		return $this->_isOnline;

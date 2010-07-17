@@ -26,7 +26,7 @@ $pass = !isset($_POST['pass']) ? '' : trim($_POST['pass']);
  redirect_header(ICMS_URL.'/user.php', 1, _US_INCORRECTLOGIN);
  exit();
  }*/
-$member_handler =& xoops_gethandler('member');
+$member_handler = icms::handler('icms_member');
 $myts =& icms_core_Textsanitizer::getInstance();
 
 //include_once ICMS_ROOT_PATH.'/class/auth/authfactory.php';
@@ -40,7 +40,7 @@ $pass4sql = addslashes($myts->stripSlashesGPC($pass));
  // check by email if uname includes '@'
  $criteria = new icms_criteria_Compo(new icms_criteria_Item('email', $uname4sql ));
  $criteria->add(new icms_criteria_Item('pass', $pass4sql));
- $user_handler =& xoops_gethandler('user');
+ $user_handler = icms::handler('icms_member_user');
  $users =& $user_handler->getObjects($criteria, false);
  if (empty( $users ) || count( $users ) != 1 ) $user = false ;
  else $user = $users[0] ;
@@ -58,7 +58,7 @@ if (false != $user) {
 	}
 	if ($icmsConfigPersona['multi_login']) {
 		if (is_object($user)) {
-			$online_handler =& xoops_gethandler('online');
+			$online_handler = icms::handler('icms_core_Online');
 			$online_handler->gc(300);
 			$onlines =& $online_handler->getAll();
 			foreach ( $onlines as $online) {
@@ -167,7 +167,7 @@ if (false != $user) {
 
 	// RMV-NOTIFY
 	// Perform some maintenance of notification records
-	$notification_handler =& xoops_gethandler('notification');
+	$notification_handler = icms::handler('icms_notification');
 	$notification_handler->doLoginMaintenance($user->getVar('uid'));
 
 	redirect_header($url, 1, sprintf(_US_LOGGINGU, $user->getVar('uname')), false);

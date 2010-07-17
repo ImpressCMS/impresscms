@@ -40,9 +40,9 @@ class icms_auth_Xoops extends icms_auth_Object {
 	 * @return object {@link icms_member_user_Object} icms_member_user_Object object
 	 */
 	public function authenticate($uname, $pwd = null) {
-		$member_handler = xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		$user = $member_handler->loginUser($uname, $pwd);
-		$sess_handler = xoops_gethandler('session');
+		$sess_handler = icms::handler('icms_core_Session');
 		$sess_handler->securityLevel = 3;
 		$sess_handler->check_ip_blocks = 2;
 		$sess_handler->salt_key = XOOPS_DB_SALT;

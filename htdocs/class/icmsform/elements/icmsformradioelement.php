@@ -45,7 +45,7 @@ class IcmsFormRadioElement extends icms_form_elements_Radio {
 				if (isset($control['itemHandler'])) {
 					if (!$control['module']) {
 						// Creating the specified core object handler
-						$control_handler =& xoops_gethandler($control['itemHandler']);
+						$control_handler = icms::handler($control['itemHandler']);
 					} else {
 						$control_handler =& icms_getModuleHandler($control['itemHandler'], $control['module']);
 					}

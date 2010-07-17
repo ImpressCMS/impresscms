@@ -20,7 +20,7 @@ $myts =& icms_core_Textsanitizer::getInstance();
 if (!is_object($icmsUser)) {
 	redirect_header("user.php",0);
 } else {
-	$pm_handler =& xoops_gethandler('privmessage');
+	$pm_handler = icms::handler('icms_privmessage');
 	if (!empty($_POST['delete'])) {
 		if (!$GLOBALS['xoopsSecurity']->check()) {
 			echo implode('<br />', $GLOBALS['xoopsSecurity']->getErrors());

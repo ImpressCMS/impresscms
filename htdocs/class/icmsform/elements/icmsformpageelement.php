@@ -14,7 +14,7 @@ class IcmsFormPageElement extends icms_form_elements_Tray {
 
 	public function __construct($object, $key) {
 		$this->icms_form_elements_Tray(_AM_VISIBLEIN , ' ', $key . '_password_tray');
-		$icms_page_handler = & xoops_gethandler('page');
+		$icms_page_handler = icms::handler('icms_page');
 		$visible_label = new icms_form_elements_Label('', '<select name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">'.$this->getPageSelOptions($icms_page_handler, $object->getVar('visiblein')).'</select>');
 		$this->addElement($visible_label);
 	}
@@ -23,7 +23,7 @@ class IcmsFormPageElement extends icms_form_elements_Tray {
 		if (!is_array($value)){
 			$value = array($value);
 		}
-		$module_handler =& xoops_gethandler('module');
+		$module_handler = icms::handler('icms_module');
 		$criteria = new icms_criteria_Compo(new icms_criteria_Item('hasmain', 1));
 		$criteria->add(new icms_criteria_Item('isactive', 1));
 		$module_list =& $module_handler->getObjects($criteria);

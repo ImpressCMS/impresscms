@@ -33,7 +33,7 @@ if (!empty($_POST)) {
 if ('system' == $icmsModule->getVar('dirname')) {
 	$comment_handler = icms::handler('icms_data_comment');
 	$comment =& $comment_handler->get($com_id);
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->get($comment->getVar('com_modid'));
 	$comment_config = $module->getInfo('comments');
 	$com_modid = $module->getVar('mid');
@@ -72,7 +72,7 @@ if (!is_object($icmsUser)) {
 	$accesserror = true;
 } else {
 	if (!$icmsUser->isAdmin($com_modid)) {
-		$sysperm_handler =& xoops_gethandler('groupperm');
+		$sysperm_handler = icms::handler('icms_member_groupperm');
 		if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 			$accesserror = true;
 		}
@@ -131,7 +131,7 @@ switch ($op) {
 
 		// update user posts if its not an anonymous post
 		if ($comment->getVar('com_uid') != 0) {
-			$member_handler =& xoops_gethandler('member');
+			$member_handler = icms::handler('icms_member');
 			$com_poster =& $member_handler->getUser($comment->getVar('com_uid'));
 			if (is_object($com_poster)) {
 				$member_handler->updateUserByField($com_poster, 'posts', $com_poster->getVar('posts') - 1);
@@ -199,7 +199,7 @@ switch ($op) {
 		$child_comments[$com_id] =& $comment;
 		$msgs = array();
 		$deleted_num = array();
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		foreach (array_keys($child_comments) as $i) {
 			if (!$comment_handler->delete($child_comments[$i])) {
 				$msgs[] = _CM_COMDELETENG . ' (ID: ' . icms_conv_nr2local($child_comments[$i]->getVar('com_id')) . ')';

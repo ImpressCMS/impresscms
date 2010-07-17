@@ -28,7 +28,7 @@ $email = (isset($_GET['email']))?trim(StopXSS($_GET['email'])):((isset($_POST['e
 if ($email == '') {redirect_header('user.php',2,_US_SORRYNOTFOUND);}
 
 $myts =& icms_core_Textsanitizer::getInstance();
-$member_handler =& xoops_gethandler('member');
+$member_handler = icms::handler('icms_member');
 $criteria = new icms_criteria_Compo();
 $criteria->add(new icms_criteria_Item('email', $myts->addSlashes($email)));
 $criteria->add(new icms_criteria_Item('level', '-1', '!='));

@@ -30,7 +30,7 @@ $admin_dir = ICMS_ROOT_PATH.'/modules/system/admin/';
 $dirlist = IcmsLists::getDirListAsArray($admin_dir);
 /* changes to only allow permission admins you already have */
 global $icmsUser;
-$gperm =& xoops_gethandler('groupperm');
+$gperm = icms::handler('icms_member_groupperm');
 $groups = $icmsUser->getGroups ();
 foreach ($dirlist as $file) {
 	include ICMS_ROOT_PATH.'/modules/system/admin/'.$file.'/xoops_version.php';
@@ -42,7 +42,7 @@ foreach ($dirlist as $file) {
 unset($dirlist);
 
 $a_mod_checkbox = new icms_form_elements_Checkbox(_AM_ACTIVERIGHTS, "admin_mids[]", $a_mod_value);
-$module_handler =& xoops_gethandler('module');
+$module_handler = icms::handler('icms_module');
 $criteria = new icms_criteria_Compo(new icms_criteria_Item('hasadmin', 1));
 $criteria->add(new icms_criteria_Item('isactive', 1));
 $criteria->add(new icms_criteria_Item('dirname', 'system', '<>'));
@@ -88,14 +88,14 @@ if (!in_array(XOOPS_GROUP_ADMIN, $groups)) {
 				$group_manager_checkbox = new icms_form_elements_Checkbox(_AM_GROUPMANAGER_PERM, "groupmanager_gids[]", $group_manager_value);
 				$criteria = new icms_criteria_Compo(new icms_criteria_Item('isactive', 1));
 				$groups = $member_handler->getGroups();
-				$gperm_handler =& xoops_gethandler('groupperm');
+				$gperm_handler = icms::handler('icms_member_groupperm');
 
 				//global $icmsUser; // already declared above
 				foreach ($groups as $group) {
 					if ($gperm_handler->checkRight('group_manager', $group->getVar('groupid'), $icmsUser->getGroups()))
 					$group_manager_checkbox->addOption($group->getVar('groupid'),$group->getVar('name'));
 				}
-				$icms_block_handler = xoops_gethandler('block');
+				$icms_block_handler = icms::handler('icms_block');
 				$posarr = $icms_block_handler->getBlockPositions(true);
 				$block_checkbox = array();
 				$i = 0;

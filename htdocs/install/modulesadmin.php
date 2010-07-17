@@ -24,7 +24,7 @@ function xoops_module_install($dirname) {
 	$dirname = trim($dirname);
 	$db =& Database::getInstance();
 	$reservedTables = array('avatar', 'avatar_users_link', 'block_module_link', 'xoopscomments', 'config', 'configcategory', 'configoption', 'image', 'imagebody', 'imagecategory', 'imgset', 'imgset_tplset_link', 'imgsetimg', 'groups','groups_users_link','group_permission', 'online', 'bannerclient', 'banner', 'bannerfinish', 'priv_msgs', 'ranks', 'session', 'smiles', 'users', 'newblocks', 'modules', 'tplfile', 'tplset', 'tplsource', 'xoopsnotifications', 'banner', 'bannerclient', 'bannerfinish');
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	if ($module_handler->getCount(new icms_criteria_Item('dirname', $dirname)) == 0) {
 		$module =& $module_handler->create();
 		$module->loadInfoAsVar($dirname);
@@ -272,7 +272,7 @@ function xoops_module_install($dirname) {
 
 				if ($configs != false) {
 					$msgs[] = 'Adding module config data...';
-					$config_handler =& xoops_gethandler('config');
+					$config_handler = icms::handler('icms_config');
 					$order = 0;
 					foreach ($configs as $config) {
 						$confobj =& $config_handler->createConfig();
@@ -316,10 +316,10 @@ function xoops_module_install($dirname) {
 			}
 
 			// retrieve all block ids for this module
-			$icms_block_handler = xoops_gethandler('block');
+			$icms_block_handler = icms::handler('icms_block');
 			$blocks =& $icms_block_handler->getByModule($newmid, false);
 			$msgs[] = 'Setting group rights...';
-			$gperm_handler =& xoops_gethandler('groupperm');
+			$gperm_handler = icms::handler('icms_member_groupperm');
 			foreach ($groups as $mygroup) {
 				if ($gperm_handler->checkRight('module_admin', 0, $mygroup)) {
 					$mperm =& $gperm_handler->create();
@@ -484,7 +484,7 @@ function icms_module_update($dirname) {
 	global $icmsUser, $xoopsConfig;
 	$dirname = trim($dirname);
 	$db =& Database::getInstance();
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->getByDirname($dirname);
 
 	// Save current version for use in the update function
@@ -639,7 +639,7 @@ function icms_module_update($dirname) {
 								$newbid = $db->getInsertId();
 							}
 							$groups =& $icmsUser->getGroups();
-							$gperm_handler =& xoops_gethandler('groupperm');
+							$gperm_handler = icms::handler('icms_member_groupperm');
 							foreach ($groups as $mygroup) {
 								$bperm =& $gperm_handler->create();
 								$bperm->setVar('gperm_groupid', (int) ($mygroup));
@@ -686,7 +686,7 @@ function icms_module_update($dirname) {
 				}
 			}
 
-			$icms_block_handler = xoops_gethandler('block');
+			$icms_block_handler = icms::handler('icms_block');
 			$block_arr = $icms_block_handler->getByModule($module->getVar('mid'));
 			foreach ($block_arr as $block) {
 				if (!in_array($block->getVar('show_func'), $showfuncs) || !in_array($block->getVar('func_file'), $funcfiles)) {
@@ -714,7 +714,7 @@ function icms_module_update($dirname) {
 		}
 
 		// first delete all config entries
-		$config_handler =& xoops_gethandler('config');
+		$config_handler = icms::handler('icms_config');
 		$configs =& $config_handler->getConfigs(new icms_criteria_Item('conf_modid', $module->getVar('mid')));
 		$confcount = count($configs);
 		$config_delng = array();
@@ -789,7 +789,7 @@ function icms_module_update($dirname) {
 
 		if ($configs != false) {
 			$msgs[] = 'Adding module config data...';
-			$config_handler =& xoops_gethandler('config');
+			$config_handler = icms::handler('icms_config');
 			$order = 0;
 			foreach ($configs as $config) {
 				// only insert ones that have been deleted previously with success

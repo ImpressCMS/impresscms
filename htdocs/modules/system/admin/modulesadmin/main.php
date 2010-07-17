@@ -154,7 +154,7 @@ if ($op == "submit") {
 }
 
 if ($op == 'install') {
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$mod =& $module_handler->create();
 	$mod->loadInfoAsVar($module);
 	if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
@@ -194,7 +194,7 @@ if ($op == 'install_ok') {
 }
 
 if ($op == 'uninstall') {
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$mod =& $module_handler->getByDirname($module);
 	if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
 		$msgs ='<img src="'.XOOPS_URL.'/modules/'.$mod->getVar('dirname').'/'.trim($mod->getInfo('image')).'" alt="" />';
@@ -227,7 +227,7 @@ if ($op == 'uninstall_ok') {
 }
 
 if ($op == 'update') {
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$mod =& $module_handler->getByDirname($module);
 	if ($mod->getInfo('image') != false && trim($mod->getInfo('image')) != '') {
 		$msgs ='<img src="'.XOOPS_URL.'/modules/'.$mod->getVar('dirname').'/'.trim($mod->getInfo('image')).'" alt="" />';

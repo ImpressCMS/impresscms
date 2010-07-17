@@ -366,7 +366,7 @@ if (empty($_POST["user_submit"])) {
 			$levels = array( 0 => _ALL, 1 => _MA_USER_LEVEL_ACTIVE, 2 => _MA_USER_LEVEL_INACTIVE , 3 => _MA_USER_LEVEL_DISABLED);
 			$level_radio->addOptionArray($levels);
 
-			$member_handler =& xoops_gethandler('member');
+			$member_handler = icms::handler('icms_member');
 			$groups = $member_handler->getGroupList();
 			$groups[0] = _ALL;
 			$group_select = new XoopsFormSelect(_MA_USER_GROUP, 'groups', @$_POST['groups'], 3, true);

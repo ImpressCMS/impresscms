@@ -322,7 +322,7 @@ class XoopsMailer
 	function sendPM($uid, $subject, $body)
 	{
 		global $icmsUser;
-		$pm_handler =& xoops_gethandler('privmessage');
+		$pm_handler = icms::handler('icms_privmessage');
 		$pm =& $pm_handler->create();
 		$pm->setVar("subject", $subject);
 		// RMV-NOTIFY
@@ -466,7 +466,7 @@ class XoopsMailer
 	{
 		if ( !is_array($group) ) {
 			if ( strtolower(get_class($group)) == "icms_member_group_Object" ) {
-				$member_handler =& xoops_gethandler('member');
+				$member_handler = icms::handler('icms_member');
 				$this->setToUsers($member_handler->getUsersByGroup($group->getVar('groupid'), true));
 			}
 		} else {

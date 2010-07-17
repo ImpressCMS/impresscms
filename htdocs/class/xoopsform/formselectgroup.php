@@ -53,7 +53,7 @@ class XoopsFormSelectGroup extends XoopsFormSelect
 	function XoopsFormSelectGroup($caption, $name, $include_anon = false, $value = null, $size = 1, $multiple = false)
 	{
 		$this->XoopsFormSelect($caption, $name, $value, $size, $multiple);
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		if (!$include_anon) {
 			$this->addOptionArray($member_handler->getGroupList(new icms_criteria_Item('groupid', XOOPS_GROUP_ANONYMOUS, '!=')));
 		} else {

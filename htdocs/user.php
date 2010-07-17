@@ -190,7 +190,7 @@ if ($op == 'logout')
 	// clear entry from online users table
 	if (is_object($icmsUser))
 	{
-		$online_handler = xoops_gethandler('online');
+		$online_handler = icms::handler('icms_core_Online');
 		$online_handler->destroy($icmsUser->getVar('uid'));
 	}
 	$message = _US_LOGGEDOUT.'<br />'._US_THANKYOUFORVISIT;
@@ -205,7 +205,7 @@ if ($op == 'actv')
 	{
 		redirect_header('index.php',1,'');
 	}
-	$member_handler = xoops_gethandler('member');
+	$member_handler = icms::handler('icms_member');
 	$thisuser =& $member_handler->getUser($id);
 	if (!is_object($thisuser))
 	{
@@ -273,10 +273,10 @@ if ($op == 'delete')
 			include 'footer.php';
 		} else {
 			$del_uid = (int) ($icmsUser->getVar('uid'));
-			$member_handler = xoops_gethandler('member');
+			$member_handler = icms::handler('icms_member');
 			if (false != $member_handler->deleteUser($icmsUser))
 			{
-				$online_handler = xoops_gethandler('online');
+				$online_handler = icms::handler('icms_core_Online');
 				$online_handler->destroy($del_uid);
 				xoops_notification_deletebyuser($del_uid);
 				redirect_header('index.php', 5, _US_BEENDELED);

@@ -26,11 +26,11 @@ function displayGroups()
 	icms_cp_header();
 	global $icmsUser;
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/groups/images/groups_big.png)">'._AM_EDITADG.'</div><br />';
-	$member_handler =& xoops_gethandler('member');
+	$member_handler = icms::handler('icms_member');
 	$groups =& $member_handler->getGroups();
 	echo "<table class='outer' width='40%' cellpadding='4' cellspacing='1'><tr><th colspan='2'>"._AM_EDITADG."</th></tr>";
 	$count = count($groups);
-	$gperm_handler =& xoops_gethandler('groupperm');
+	$gperm_handler = icms::handler('icms_member_groupperm');
 	$ugroups  = (is_object($icmsUser)) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 	for ($i = 0; $i < $count; $i++) {
 		$id = $groups[$i]->getVar('groupid');
@@ -79,17 +79,17 @@ function modifyGroup($g_id)
 	}
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/groups/images/groups_big.png)"><a href="admin.php?fct=groups">'. _AM_GROUPSMAIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'. _AM_MODIFYADG.'</div><br />';
-	$member_handler =& xoops_gethandler('member');
+	$member_handler = icms::handler('icms_member');
 	$thisgroup =& $member_handler->getGroup($g_id);
 	$name_value = $thisgroup->getVar("name", "E");
 	$desc_value = $thisgroup->getVar("description", "E");
-	$moduleperm_handler =& xoops_gethandler('groupperm');
+	$moduleperm_handler = icms::handler('icms_member_groupperm');
 	$a_mod_value =& $moduleperm_handler->getItemIds('module_admin', $thisgroup->getVar('groupid'));
 	$r_mod_value =& $moduleperm_handler->getItemIds('module_read', $thisgroup->getVar('groupid'));
 	$ed_mod_value =& $moduleperm_handler->getItemIds('use_wysiwygeditor', $thisgroup->getVar('groupid'));
 	$debug_mod_value =& $moduleperm_handler->getItemIds('enable_debug', $thisgroup->getVar('groupid'));
 	$group_manager_value =& $moduleperm_handler->getItemIds('group_manager', $thisgroup->getVar('groupid'));
-	$gperm_handler =& xoops_gethandler('groupperm');
+	$gperm_handler = icms::handler('icms_member_groupperm');
 	$r_block_value =& $gperm_handler->getItemIds('block_read', $g_id);
 	$op_value = "update";
 	$submit_value = _AM_UPDATEADG;
@@ -100,13 +100,13 @@ function modifyGroup($g_id)
 		$s_cat_disable = true;
 	}
 
-	$sysperm_handler =& xoops_gethandler('groupperm');
+	$sysperm_handler = icms::handler('icms_member_groupperm');
 	$s_cat_value =& $sysperm_handler->getItemIds('system_admin', $g_id);
 
 	include ICMS_ROOT_PATH."/modules/system/admin/groups/groupform.php";
 	echo "<br /><h4 style='text-align:"._GLOBAL_LEFT."'>"._AM_EDITMEMBER."</h4>";
 	$usercount = $member_handler->getUserCount(new icms_criteria_Item('level', 0, '>'));
-	$member_handler =& xoops_gethandler('member');
+	$member_handler = icms::handler('icms_member');
 	$membercount = $member_handler->getUserCountByGroup($g_id);
 	if ($usercount < 200 && $membercount < 200) {
 		// do the old way only when counts are small

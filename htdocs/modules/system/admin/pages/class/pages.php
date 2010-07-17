@@ -69,7 +69,7 @@ class SystemPagesHandler extends icms_page_Handler {
 
 	public function getModulesArray($full = false) {
 		if (!count($this->modules_name)) {
-			$icms_module_handler = xoops_gethandler('module');
+			$icms_module_handler = icms::handler('icms_module');
 			$installed_modules =& $icms_module_handler->getObjects();
 			foreach ($installed_modules as $module) {
 				$this->modules_name[$module->getVar('mid')]['name'] = $module->getVar('name');

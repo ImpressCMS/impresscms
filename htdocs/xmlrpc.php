@@ -25,7 +25,7 @@ if (!$parser->parse())
 {
 	$response->add(new XoopsXmlRpcFault(102));
 } else {
-	$module_handler = xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->getByDirname('news');
 	if (!is_object($module))
 	{

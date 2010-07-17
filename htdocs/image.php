@@ -44,7 +44,7 @@ $xoopsDB =& icms_database_Factory::getDatabaseConnection();
 //require_once ICMS_ROOT_PATH.'/kernel/object.php';
 /** Require the criteria class, for building queries */
 //require_once ICMS_ROOT_PATH.'/class/criteria.php';
-$imagehandler =& xoops_gethandler('image');
+$imagehandler = icms::handler('icms_image');
 $criteria = new icms_criteria_Compo(new icms_criteria_Item('i.image_display', 1));
 $criteria->add(new icms_criteria_Item('i.image_id', $image_id));
 $image =& $imagehandler->getObjects($criteria, false, true);

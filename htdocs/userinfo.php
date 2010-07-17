@@ -20,8 +20,8 @@ $uid = (int) ($_GET['uid']);
 
 if (icms_get_module_status('profile'))
 {
-	$module_handler = xoops_gethandler('module');
-	$config_handler = xoops_gethandler('config');
+	$module_handler = icms::handler('icms_module');
+	$config_handler = icms::handler('icms_config');
 	$icmsModule =& $module_handler->getByDirname('profile');
 	$icmsModuleConfig =& $config_handler->getConfigsByCat(0, $icmsModule->getVar('mid'));
 
@@ -51,7 +51,7 @@ if ($uid <= 0)
 
 //include_once ICMS_ROOT_PATH.'/class/module.textsanitizer.php';
 
-$gperm_handler = xoops_gethandler('groupperm');
+$gperm_handler = icms::handler('icms_member_groupperm');
 $groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 
 $isAdmin = $gperm_handler->checkRight('system_admin', XOOPS_SYSTEM_USER, $groups);
@@ -73,7 +73,7 @@ if (is_object($icmsUser))
             'lang_deleteaccount' => $icmsConfigUser['self_delete'] ? _US_DELACCOUNT : ''));
 		$thisUser = & $icmsUser;
 	} else {
-		$member_handler = xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		$thisUser = & $member_handler->getUser($uid);
 		if (!is_object($thisUser) || !$thisUser->isActive())
 		{
@@ -84,7 +84,7 @@ if (is_object($icmsUser))
 		$xoopsTpl->assign('user_ownpage', false);
 	}
 } else {
-	$member_handler = xoops_gethandler('member');
+	$member_handler = icms::handler('icms_member');
 	$thisUser = & $member_handler->getUser($uid);
 	if (!is_object($thisUser) || !$thisUser->isActive())
 	{
@@ -174,7 +174,7 @@ icms_makeSmarty(array(
         	));
         }
 
-        $module_handler = xoops_gethandler('module');
+        $module_handler = icms::handler('icms_module');
         $criteria = new icms_criteria_Compo(new icms_criteria_Item('hassearch', 1));
         $criteria->add(new icms_criteria_Item('isactive', 1));
         $mids = & array_keys($module_handler->getList($criteria));

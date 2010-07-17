@@ -57,7 +57,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 		if ($include_anon) {
 			$select_element->addOption(0, $GLOBALS['xoopsConfig']['anonymous']);
 		}
-		$member_handler = & xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		$user_count = $member_handler->getUserCount();
 		$value = is_array($value) ? $value : (empty ($value) ? array () : array (
 			$value

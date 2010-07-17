@@ -398,7 +398,7 @@ class SystemAutotasksHandler extends icms_ipf_Handler
 			return $this->_virtual_config;
 		}
 		//$old_handler_name = get_class($handler);
-		$config_handler = xoops_gethandler('config');
+		$config_handler = icms::handler('icms_config');
 		$config_atasks = $config_handler->getConfigsByCat(ICMS_CONF_AUTOTASKS);
 		return $config_atasks;
 	}

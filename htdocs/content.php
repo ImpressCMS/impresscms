@@ -18,7 +18,7 @@ define ( "CONTENT_ROOT_PATH", ICMS_ROOT_PATH . '/modules/' . CONTENT_DIRNAME . '
 define ( "CONTENT_IMAGES_URL", CONTENT_URL . 'images/' );
 define ( "CONTENT_ADMIN_URL", CONTENT_URL . 'admin/' );
 
-$mhandler = xoops_gethandler('module');
+$mhandler = icms::handler('icms_module');
 $xoopsModule = $mhandler->getByDirname(CONTENT_DIRNAME);
 include_once ICMS_ROOT_PATH . '/modules/content/include/common.php';
 $icmsModule = $xoopsModule;

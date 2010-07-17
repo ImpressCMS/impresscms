@@ -42,7 +42,7 @@ function b_system_waiting_show($options)
 
 	$plugins_path = ICMS_PLUGINS_PATH."/waiting";
 	$xoopsDB =& Database::getInstance();
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$block = array();
 
 	// get module's list installed

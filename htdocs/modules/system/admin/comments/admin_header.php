@@ -19,10 +19,10 @@
 include '../../../../mainfile.php';
 include ICMS_ROOT_PATH.'/include/cp_functions.php';
 if (is_object($icmsUser)) {
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$icmsModule =& $module_handler->getByDirname('system');
 	if (!in_array(XOOPS_GROUP_ADMIN, $icmsUser->getGroups())) {
-		$sysperm_handler =& xoops_gethandler('groupperm');
+		$sysperm_handler = icms::handler('icms_member_groupperm');
 		if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 			redirect_header(XOOPS_URL.'/', 3, _NOPERM);;
 			exit();

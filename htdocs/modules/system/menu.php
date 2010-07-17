@@ -54,7 +54,7 @@ $adminmenu[$i]['id'] = XOOPS_SYSTEM_PREF;
 //Getting categories of preferences to include in dropdownmenu
 global $xoopsConfig;
 icms_loadLanguageFile('system', 'preferences', true);
-$confcat_handler = xoops_gethandler('configcategory');
+$confcat_handler = icms::handler('icms_config_category');
 $confcats = $confcat_handler->getObjects();
 $catcount = count($confcats);
 if ($catcount > 0) {

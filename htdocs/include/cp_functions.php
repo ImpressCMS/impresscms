@@ -177,8 +177,8 @@ function icms_cp_header(){
 	$file = file_get_contents(ICMS_CACHE_PATH . "/adminmenu_" . $icmsConfig ['language'] . ".php");
 	$admin_menu = eval('return ' . $file . ';');
 
-	$moduleperm_handler =& xoops_gethandler('groupperm');
-	$module_handler =& xoops_gethandler('module');
+	$moduleperm_handler = icms::handler('icms_member_groupperm');
+	$module_handler = icms::handler('icms_module');
 	foreach ( $admin_menu as $k => $navitem ) {
 		 //Getting array of allowed modules to use in admin home
 		if ($navitem ['id'] == 'modules') {
@@ -199,7 +199,7 @@ function icms_cp_header(){
 			$groups = $icmsUser->getGroups();
 			$all_ok = false;
 			if (! in_array(ICMS_GROUP_ADMIN, $groups)) {
-				$sysperm_handler =& xoops_gethandler('groupperm');
+				$sysperm_handler = icms::handler('icms_member_groupperm');
 				$ok_syscats =& $sysperm_handler->getItemIds('system_admin', $groups);
 			} else {
 				$all_ok = true;
@@ -507,7 +507,7 @@ function impresscms_get_adminmenu() {
 	#########################################################################
 	# System Preferences menu
 	#########################################################################
-	$module_handler = xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$mod = & $module_handler->getByDirname ( 'system' );
 	$menu = array ( );
 	foreach ( $mod->getAdminMenu () as $lkn ) {
@@ -528,7 +528,7 @@ function impresscms_get_adminmenu() {
 	#########################################################################
 	# Modules menu
 	#########################################################################
-	$module_handler = & xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$criteria = new icms_criteria_Compo();
 	$criteria->add(new icms_criteria_Item('hasadmin', 1));
 	$criteria->add(new icms_criteria_Item('isactive', 1));

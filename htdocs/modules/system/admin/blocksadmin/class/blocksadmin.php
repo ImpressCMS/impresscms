@@ -252,7 +252,7 @@ class SystemBlocksadminHandler extends icms_block_Handler {
 
 	public function getModulesArray($full = false) {
 		if (!count($this->modules_name)) {
-			$icms_module_handler = xoops_gethandler('module');
+			$icms_module_handler = icms::handler('icms_module');
 			$installed_modules =& $icms_module_handler->getObjects();
 			$this->modules_name[0]['name'] = _NONE;
 			$this->modules_name[0]['dirname'] = '';

@@ -91,7 +91,7 @@ class icms_form_elements_Dhtmltextarea extends XoopsFormTextArea {
 			$editor_default = $icmsConfig['editor_default'];
 		}
 
-		$gperm_handler =& xoops_gethandler('groupperm');
+		$gperm_handler = icms::handler('icms_member_groupperm');
 		if( file_exists( ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ) && $gperm_handler->checkRight('use_wysiwygeditor', $moduleid, $groups, 1, false)){
 			include ICMS_EDITOR_PATH."/".$editor_default."/xoops_version.php" ;
 			$this->htmlEditor = array( $editorversion['class'], ICMS_EDITOR_PATH."/".$editorversion['dirname']."/".$editorversion['file'] );

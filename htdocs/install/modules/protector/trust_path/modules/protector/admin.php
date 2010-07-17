@@ -5,13 +5,13 @@ $mytrustdirpath = dirname( __FILE__ ) ;
 
 // environment
 require_once XOOPS_ROOT_PATH.'/class/template.php' ;
-$module_handler =& xoops_gethandler('module') ;
+$module_handler = icms::handler('icms_module') ;
 $xoopsModule =& $module_handler->getByDirname( $mydirname ) ;
-$config_handler =& xoops_gethandler('config') ;
+$config_handler = icms::handler('icms_config') ;
 $xoopsModuleConfig =& $config_handler->getConfigsByCat( 0 , $xoopsModule->getVar( 'mid' ) ) ;
 
 // check permission of 'module_admin' of this module
-$moduleperm_handler =& xoops_gethandler('groupperm') ;
+$moduleperm_handler = icms::handler('icms_member_groupperm') ;
 if( ! is_object( @$xoopsUser ) || ! $moduleperm_handler->checkRight( 'module_admin' , $xoopsModule->getVar( 'mid' ) , $xoopsUser->getGroups() ) ) die( 'only admin can access this area' ) ;
 
 $xoopsOption['pagetype'] = 'admin' ;

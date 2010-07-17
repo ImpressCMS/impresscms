@@ -157,7 +157,7 @@ class icms_auth_Openid extends icms_auth_Object {
 			} else {
 				if ($debug) icms_core_Debug::message(_CORE_OID_CHECKINGID);
 				// Do we already have a user with this openid
-				$member_handler = & xoops_gethandler('member');
+				$member_handler = icms::handler('icms_member');
 				$criteria = new icms_criteria_Compo();
 				$criteria->add(new icms_criteria_Item('openid', $this->openid));
 				$users =& $member_handler->getUsers($criteria);

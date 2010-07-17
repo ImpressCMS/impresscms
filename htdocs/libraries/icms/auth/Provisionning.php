@@ -56,7 +56,7 @@ class icms_auth_Provisionning {
 	 * @return  mixed icms_member_user_Object {@link icms_member_user_Object} or false if failed
 	 */
 	public function geticms_member_user_Object($uname) {
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		$criteria = new icms_criteria_Item('uname', $uname);
 		$getuser = $member_handler->getUsers($criteria);
 		if (count($getuser) == 1) {
@@ -98,7 +98,7 @@ class icms_auth_Provisionning {
 	 */
 	public function add($datas, $uname, $pwd = null) {
 		$ret = false;
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		// Create ImpressCMS Database User
 		$newuser = $member_handler->createUser();
 		$newuser->setVar('uname', $uname);
@@ -139,7 +139,7 @@ class icms_auth_Provisionning {
 	 */
 	public function change(&$icmsUser, $datas, $uname, $pwd = null) {
 		$ret = false;
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		$icmsUser->setVar('pass', md5(stripslashes($pwd)));
 		$tab_mapping = explode('|', $this->ldap_field_mapping);
 		foreach ($tab_mapping as $mapping) {

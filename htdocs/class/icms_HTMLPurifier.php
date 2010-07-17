@@ -19,7 +19,7 @@ class icms_HTMLPurifier
 	 */
 	public function icms_HTMLPurifier()
 	{
-		$config_handler = xoops_gethandler('config');
+		$config_handler = icms::handler('icms_config');
 		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
 
 		require_once ICMS_ROOT_PATH.'/libraries/htmlpurifier/HTMLPurifier.standalone.php';
@@ -83,7 +83,7 @@ class icms_HTMLPurifier
 	 **/
 	protected function icms_getPurifierConfig()
 	{
-		$config_handler = xoops_gethandler('config');
+		$config_handler = icms::handler('icms_config');
 		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
 
 		$icmsPurifierConf = array(

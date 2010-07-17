@@ -272,7 +272,7 @@ $xoopsDB =& icms_database_Factory::getDatabaseConnection();
 include_once XOOPS_ROOT_PATH."/class/module.textsanitizer.php";
 
 // ################# Load Config Settings ##############
-$config_handler =& xoops_gethandler('config');
+$config_handler = icms::handler('icms_config');
 $xoopsConfig =& $config_handler->getConfigsByCat(ICMS_CONF);
 $icmsConfig =& $xoopsConfig;
 
@@ -339,8 +339,8 @@ $xoopsRequestUri = $_SERVER[ 'REQUEST_URI' ];       // Deprecated (use the corre
 // ############## Login a user with a valid session ##############
 $xoopsUser = '';
 $xoopsUserIsAdmin = false;
-$member_handler =& xoops_gethandler('member');
-$sess_handler =& xoops_gethandler('session');
+$member_handler = icms::handler('icms_member');
+$sess_handler = icms::handler('icms_core_Session');
 if ($xoopsConfig['use_ssl'] && isset($_POST[$xoopsConfig['sslpost_name']]) && $_POST[$xoopsConfig['sslpost_name']] != '') {
 	session_id($_POST[$xoopsConfig['sslpost_name']]);
 } elseif ($xoopsConfig['use_mysession'] && $xoopsConfig['session_name'] != '') {
@@ -414,7 +414,7 @@ if ($xoopsConfig['closesite'] == 1) {
 
 if (file_exists('./xoops_version.php')) {
 	$url_arr = explode( '/', strstr( $_SERVER['PHP_SELF'],'/modules/') );
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$xoopsModule =& $module_handler->getByDirname($url_arr[2]);
 	unset($url_arr);
 	if (!$xoopsModule || !$xoopsModule->getVar('isactive')) {
@@ -423,7 +423,7 @@ if (file_exists('./xoops_version.php')) {
 		include_once XOOPS_ROOT_PATH."/footer.php";
 		exit();
 	}
-	$moduleperm_handler =& xoops_gethandler('groupperm');
+	$moduleperm_handler = icms::handler('icms_member_groupperm');
 	if ($xoopsUser) {
 		if (!$moduleperm_handler->checkRight('module_read', $xoopsModule->getVar('mid'), $xoopsUser->getGroups())) {
 			redirect_header(XOOPS_URL."/user.php",1,_NOPERM);

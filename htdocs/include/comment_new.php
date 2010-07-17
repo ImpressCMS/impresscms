@@ -60,7 +60,7 @@ if ($com_itemid > 0) {
 	$noname = 0;
 	$dosmiley = 1;
 	$groups   = (is_object($icmsUser)) ? $icmsUser->getGroups() : ICMS_GROUP_ANONYMOUS;
-	$gperm_handler =& xoops_gethandler('groupperm');
+	$gperm_handler = icms::handler('icms_member_groupperm');
 	if ($icmsConfig ['editor_default'] != 'dhtmltextarea'
 		&& $gperm_handler->checkRight('use_wysiwygeditor', 1, $groups, 1, false)) {
 		$dohtml = 1;

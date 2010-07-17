@@ -34,7 +34,7 @@ if ((isset($password)) && ($password !== $password2)) {redirect_header('user.php
 elseif (($password !== '') && (strlen($password) < $icmsConfigUser['minpass'])) {redirect_header('user.php',2,sprintf(_US_PWDTOOSHORT,$icmsConfigUser['minpass']));}
 
 $myts =& icms_core_Textsanitizer::getInstance();
-$member_handler =& xoops_gethandler('member');
+$member_handler = icms::handler('icms_member');
 $getuser =& $member_handler->getUsers(new icms_criteria_Item('email', $myts->addSlashes($email)));
 
 if (empty($getuser)) {redirect_header('user.php',2,_US_SORRYNOTFOUND);} else {

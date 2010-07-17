@@ -64,7 +64,7 @@ class icms_InputFilter extends icms_DataFilter
 
 		$html = icms_DataFilter::codeConv($html, $icode, $img);
 
-		$config_handler = xoops_gethandler('config');
+		$config_handler = icms::handler('icms_config');
 		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
 
 		if($icmsConfigPurifier['enable_purifier'] !== 0)

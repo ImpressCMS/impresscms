@@ -30,8 +30,8 @@ if (isset($_GET['arg3'])) {
 	$args[] = $_GET['arg3'];
 }
 
-$image_handler = xoops_gethandler('image');
-$imgcat_handler = xoops_gethandler('image_category');
+$image_handler = icms::handler('icms_image');
+$imgcat_handler = icms::handler('icms_image_category');
 
 $image =& $image_handler->getObjects(new icms_criteria_Item('image_name', $file),false,true);
 $imagecategory =& $imgcat_handler->get($image[0]->getVar('imgcat_id'));

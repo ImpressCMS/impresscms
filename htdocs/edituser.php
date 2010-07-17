@@ -136,7 +136,7 @@ if ($op == 'saveuser')
 
 	if ($password !== '' && $_POST['change_pass'] == 1)
 	{
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		if (!$member_handler->loginUser(addslashes($uname), addslashes($oldpass))) {
 			$errors[] = _US_BADPWD;
 		}
@@ -176,7 +176,7 @@ if ($op == 'saveuser')
 		echo '</div><br />';
 		$op = 'editprofile';
 	} else {
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		$edituser =& $member_handler->getUser($uid);
 		$edituser->setVar('name', $_POST['name']);
 		if ($icmsConfigUser['allow_chgmail'] == 1)
@@ -465,7 +465,7 @@ if ($op == 'avatarform')
 		$form->addElement(new icms_form_elements_Button('', 'submit', _SUBMIT, 'submit'));
 		$form->display();
 	}
-	$avatar_handler =& xoops_gethandler('data_avatar');
+	$avatar_handler = icms::handler('icms_data_avatar');
 	$form2 = new XoopsThemeForm(_US_CHOOSEAVT, 'uploadavatar', 'edituser.php', 'post', true);
 	$avatar_select = new XoopsFormSelect('', 'user_avatar', $icmsUser->getVar('user_avatar'));
 	$avatar_select->addOptionArray($avatar_handler->getList('S'));
@@ -515,7 +515,7 @@ if ($op == 'avatarupload')
 			$uploader->setPrefix('cavt');
 			if ($uploader->upload())
 			{
-				$avt_handler =& xoops_gethandler('data_avatar');
+				$avt_handler = icms::handler('icms_data_avatar');
 				$avatar =& $avt_handler->create();
 				$avatar->setVar('avatar_file', $uploader->getSavedFileName());
 				$avatar->setVar('avatar_name', $icmsUser->getVar('uname'));
@@ -575,7 +575,7 @@ if ($op == 'avatarchoose')
 	}
 
 	$user_avatar = '';
-	$avt_handler =& xoops_gethandler('data_avatar');
+	$avt_handler = icms::handler('icms_data_avatar');
 	if (!empty($_POST['user_avatar']))
 	{
 		$user_avatar = $myts->addSlashes( trim($_POST['user_avatar']) );
@@ -594,7 +594,7 @@ if ($op == 'avatarchoose')
 	{
 		$oldavatar = $icmsUser->getVar('user_avatar');
 		$icmsUser->setVar('user_avatar', $user_avatar);
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		if (!$member_handler->insertUser($icmsUser))
 		{
 			/** Include the header that starts page rendering */

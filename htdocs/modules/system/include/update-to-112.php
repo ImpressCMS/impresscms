@@ -147,7 +147,7 @@
 	if (!$abortUpdate) $newDbVersion = 2;
 
 	if ($dbVersion < $newDbVersion) {
-		$configitem_handler = xoops_getHandler('configitem');
+		$configitem_handler = icms::handler('icms_config_item');
 		// fetch the rss_local configitem
 		$criteria = new icms_criteria_Compo ( );
 		$criteria->add ( new icms_criteria_Item ( 'conf_name', 'rss_local' ) );
@@ -241,7 +241,7 @@
 	if (!$abortUpdate) $newDbVersion = 7;
 
 	if ($dbVersion < $newDbVersion) {
-		$configitem_handler = xoops_getHandler('configitem');
+		$configitem_handler = icms::handler('icms_config_item');
 		// fetch the rss_local configitem
 		$criteria = new icms_criteria_Compo ( );
 		$criteria->add ( new icms_criteria_Item ( 'conf_name', 'google_analytics' ) );

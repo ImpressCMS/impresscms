@@ -25,7 +25,7 @@ icms_cp_header();
 //OpenTable();
 
 if ($op == "form") {
-	$member_handler =& xoops_gethandler('member');
+	$member_handler = icms::handler('icms_member');
 	$acttotal = icms_conv_nr2local($member_handler->getUserCount(new icms_criteria_Item('level', 0, '>')));
 	$inacttotal = icms_conv_nr2local($member_handler->getUserCount(new icms_criteria_Item('level', 0)));
 	include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
@@ -355,7 +355,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 		$limit = 50;
 	}
 	$start = (!empty($_POST['start'])) ? (int) ($_POST['start']) : 0;
-	$member_handler =& xoops_gethandler('member');
+	$member_handler = icms::handler('icms_member');
 	$total = $member_handler->getUserCountByGroupLink($groups, $criteria);
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/findusers/images/findusers_big.png)">'._AM_FINDUS.'</div><br />';
 	if ($total == 0) {
@@ -402,7 +402,7 @@ elseif ($op == "submit" & $GLOBALS['xoopsSecurity']->check()) {
 		echo "<tr class='foot'><td><select name='fct'><option value='users'>"._DELETE."</option><option value='mailusers'>"._AM_SENDMAIL."</option>";
 		$group = !empty($_POST['group']) ? (int) ($_POST['group']) : 0;
 		if ($group > 0) {
-			$member_handler =& xoops_gethandler('member');
+			$member_handler = icms::handler('icms_member');
 			$add2group =& $member_handler->getGroup($group);
 			echo "<option value='groups' selected='selected'>".sprintf(_AM_ADD2GROUP, $add2group->getVar('name'))."</option>";
 		}

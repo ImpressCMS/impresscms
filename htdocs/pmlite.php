@@ -51,7 +51,7 @@ if ($icmsUser) {
 			}
 			echo "[ <a href='javascript:history.go(-1)'>"._PM_GOBACK."</a> ]</div>";
 		} else {
-			$pm_handler =& xoops_gethandler('privmessage');
+			$pm_handler = icms::handler('icms_privmessage');
 			$pm =& $pm_handler->create();
 			$pm->setVar("subject", $_POST['subject']);
 			$pm->setVar("msg_text", $_POST['message']);
@@ -62,7 +62,7 @@ if ($icmsUser) {
 				echo "<br /><a href='javascript:history.go(-1)'>"._PM_GOBACK."</a>";
 			} else {
 				// Send a Private Message email notification
-				$userHandler =& xoops_gethandler('user');
+				$userHandler = icms::handler('icms_member_user');
 				$toUser =& $userHandler->get( (int) ($_POST['to_userid']));
 				// Only send email notif if notification method is mail
 				if ($toUser->notify_method() == 2) {
@@ -94,7 +94,7 @@ if ($icmsUser) {
 	} elseif ($reply == 1 || $send == 1 || $send2 == 1) {
 		include_once ICMS_ROOT_PATH."/class/xoopsformloader.php";
 		if ($reply == 1) {
-			$pm_handler =& xoops_gethandler('privmessage');
+			$pm_handler = icms::handler('icms_privmessage');
 			$pm =& $pm_handler->get($msg_id);
 			if ($pm->getVar("to_userid") == (int) ($icmsUser->getVar('uid'))) {
 				$pm_uname = icms_member_user_Object::getUnameFromId($pm->getVar("from_userid"));
@@ -134,7 +134,7 @@ if ($icmsUser) {
 		echo "<tr valign='top'><td class='head' width='25%'>"._PM_MESSAGEC."</td>";
 		echo "<td class='even'>";
 		if ($reply == 1) {
-			$pm_handler =& xoops_gethandler('privmessage');
+			$pm_handler = icms::handler('icms_privmessage');
 			$pm =& $pm_handler->get($msg_id);
 			if ($pm->getVar("to_userid") == (int) ($icmsUser->getVar('uid'))) {
 				$pm_uname = icms_member_user_Object::getUnameFromId($pm->getVar("from_userid"));

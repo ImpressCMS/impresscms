@@ -24,7 +24,7 @@ include_once 'mainfile.php';
 
 $redirect_url = $_SESSION['frompage'];
 $myts = icms_core_Textsanitizer :: getInstance();
-$member_handler = xoops_gethandler('member');
+$member_handler = icms::handler('icms_member');
 
 /** Including the authentication class */
 include_once ICMS_ROOT_PATH . '/class/auth/authfactory.php';
@@ -85,7 +85,7 @@ switch ($xoopsAuth->step) {
 
 		// checking if this uname is available
 		$criteria = new icms_criteria_Compo(new icms_criteria_Item('uname', $uname));
-		$user_handler = & xoops_gethandler('user');
+		$user_handler = icms::handler('icms_member_user');
 		$users = & $user_handler->getObjects($criteria, false);
 
 		if (is_array($users) && count($users) > 0) {
@@ -116,7 +116,7 @@ switch ($xoopsAuth->step) {
 
 		// Now, add the user to the group.
 		$newid = $newUser->getVar('uid');
-		$mship_handler = xoops_getHandler('member_group_membership');
+		$mship_handler = icms::handler('icms_member_group_membership');
 		$mship = & $mship_handler->create();
 		$mship->setVar('groupid', XOOPS_GROUP_USERS);
 		$mship->setVar('uid', $newid);

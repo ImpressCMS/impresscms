@@ -930,7 +930,7 @@ class IcmsDatabaseupdater {
 	 */
 	function insertConfig($conf_catid, $conf_name, $conf_title, $conf_value, $conf_desc, $conf_formtype, $conf_valuetype, $conf_order) {
 		global $dbVersion;
-		$configitem_handler = xoops_gethandler('configitem');
+		$configitem_handler = icms::handler('icms_config_item');
 		$configitemObj = $configitem_handler->create();
 		$configitemObj->setVar('conf_modid', 0);
 		$configitemObj->setVar('conf_catid', $conf_catid);
@@ -1018,7 +1018,7 @@ class IcmsDatabaseupdater {
 		if (!$dirname) {
 			$dirname = icms_getCurrentModuleName();
 		}
-		$module_handler = xoops_getHandler('module');
+		$module_handler = icms::handler('icms_module');
 		$module = $module_handler->getByDirname($dirname);
 		$module->setVar('dbversion', $newDBVersion);
 

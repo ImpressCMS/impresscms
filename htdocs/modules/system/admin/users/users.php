@@ -26,7 +26,7 @@ function displayUsers()
 
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
-	$member_handler =& xoops_gethandler('member');
+	$member_handler = icms::handler('icms_member');
 	$usercount = $member_handler->getUserCount(new icms_criteria_Item('level', '-1', '!='));
 	$nav = new XoopsPageNav($usercount, 200, $userstart, 'userstart', 'fct=users');
 	$editform = new XoopsThemeForm(_AM_EDEUSER, 'edituser', 'admin.php');
@@ -125,7 +125,7 @@ function modifyUser($user)
 	global $xoopsDB, $xoopsConfig, $icmsModule;
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.ICMS_URL.'/modules/system/admin/users/images/users_big.png)">'._MD_AM_USER.'</div><br />';
-	$member_handler =& xoops_gethandler('member');
+	$member_handler = icms::handler('icms_member');
 	$user =& $member_handler->getUser($user);
 	if (is_object($user))
 	{
@@ -199,7 +199,7 @@ function modifyUser($user)
 function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $user_aim, $user_yim, $user_msnm, $user_from, $user_occ, $user_intrest, $user_viewemail, $user_avatar, $user_sig, $attachsig, $theme, $pass, $pass2, $rank, $bio, $uorder, $umode, $notify_method, $notify_mode, $timezone_offset, $user_mailok, $language, $openid, $salt, $user_viewoid, $pass_expired, $enc_type, $groups = array())
 {
 	global $xoopsConfig, $xoopsDB, $icmsModule, $icmsConfigUser;
-	$member_handler =& xoops_gethandler('member');
+	$member_handler = icms::handler('icms_member');
 	$edituser =& $member_handler->getUser($uid);
 	if ($edituser->getVar('uname') != $uname && $member_handler->getUserCount(new icms_criteria_Item('uname', $uname)) > 0 || $edituser->getVar('login_name') != $login_name && $member_handler->getUserCount(new icms_criteria_Item('login_name', $login_name)) > 0)
 	{
@@ -283,7 +283,7 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 					//Add the webmaster's group to the groups array to prevent accidentally removing oneself from the webmaster's group
 					$groups[] = XOOPS_GROUP_ADMIN;
 				}
-				$member_handler =& xoops_gethandler('member');
+				$member_handler = icms::handler('icms_member');
 				foreach ($oldgroups as $groupid) {$member_handler->removeUsersFromGroup($groupid, array($edituser->getVar('uid')));}
 				foreach ($groups as $groupid) {$member_handler->addUserToGroup($groupid, $edituser->getVar('uid'));}
 			}

@@ -437,12 +437,12 @@ class icms_notification_Handler extends icms_core_ObjectHandler {
 			$module =& $icmsModule;
 			$module_id = !empty($icmsModule) ? $icmsModule->getVar('mid') : 0;
 		} else {
-			$module_handler =& xoops_gethandler('module');
+			$module_handler = icms::handler('icms_module');
 			$module =& $module_handler->get($module_id);
 		}
 
 		// Check if event is enabled
-		$config_handler =& xoops_gethandler('config');
+		$config_handler = icms::handler('icms_config');
 		$mod_config =& $config_handler->getConfigsByCat(0,$module->getVar('mid'));
 		if (empty($mod_config['notification_enabled'])) {
 			return false;

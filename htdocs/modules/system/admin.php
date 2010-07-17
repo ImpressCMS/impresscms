@@ -35,7 +35,7 @@ $admintest = 0;
 
 if (is_object($icmsUser))
 {
-	$icmsModule = xoops_gethandler("module")->getByDirname('system');
+	$icmsModule = icms::handler('icms_module')->getByDirname('system');
 	if (!$icmsUser->isAdmin($icmsModule->getVar('mid'))) {redirect_header(ICMS_URL.'/', 3, _NOPERM);}
 	$admintest=1;
 }
@@ -52,7 +52,7 @@ if ($admintest != 0)
 		{
 			icms_loadLanguageFile('system', $fct, true);
 			include ICMS_ROOT_PATH.'/modules/system/admin/'.$fct.'/xoops_version.php';
-			$sysperm_handler =& xoops_gethandler('groupperm');
+			$sysperm_handler = icms::handler('icms_member_groupperm');
 			$category = !empty($modversion['category']) ? (int) ($modversion['category']) : 0;
 			unset($modversion);
 			if ($category > 0)

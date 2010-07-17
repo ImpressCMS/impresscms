@@ -301,7 +301,7 @@ class IcmsForm extends XoopsThemeForm {
 		$permissions = $this->targetObject->handler->getPermissions();
 
 		if ($permissions) {
-			$member_handler = &xoops_gethandler('member');
+			$member_handler = icms::handler('icms_member');
 			$group_list = $member_handler->getGroupList();
 			asort($group_list);
 			foreach($permissions as $permission) {

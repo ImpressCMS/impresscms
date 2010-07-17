@@ -12,7 +12,7 @@
  */
 $xoopsOption['pagetype'] = 'pmsg';
 include_once 'mainfile.php';
-$module_handler = xoops_gethandler('module');
+$module_handler = icms::handler('icms_module');
 $messenger_module = $module_handler->getByDirname('messenger');
 if ($messenger_module && $messenger_module->getVar('isactive'))
 {
@@ -25,7 +25,7 @@ if (!is_object($icmsUser))
 	$errormessage = _PM_SORRY.'<br />'._PM_PLZREG.'';
 	redirect_header('user.php', 2, $errormessage);
 } else {
-	$pm_handler = xoops_gethandler('privmessage');
+	$pm_handler = icms::handler('icms_privmessage');
 	if (isset($_POST['delete_messages']) && isset($_POST['msg_id']))
 	{
 		if (!$GLOBALS['xoopsSecurity']->check())

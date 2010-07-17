@@ -113,18 +113,18 @@ $language = new icms_form_elements_select_Lang(_US_SELECT_LANG,'language', $lang
 
 // Groups administration addition XOOPS 2.0.9: Mith
 global $icmsUser;
-$gperm_handler =& xoops_gethandler('groupperm');
+$gperm_handler = icms::handler('icms_member_groupperm');
 //If user has admin rights on groups
 if ($gperm_handler->checkRight("system_admin", XOOPS_SYSTEM_GROUP, $icmsUser->getGroups(), 1)) {
 	//add group selection
 	if (in_array(XOOPS_GROUP_ADMIN, $icmsUser->getGroups())) {
 		$group_select = array(new XoopsFormSelectGroup(_US_GROUPS, 'groups', false, $groups, 5, true));
 	} else {
-		$group_manager_value = array_intersect_key(xoops_gethandler('member')->getGroupList(), array_flip($gperm_handler->getItemIds('group_manager', $icmsUser->getGroups()))) ;
+		$group_manager_value = array_intersect_key(icms::handler('icms_member')->getGroupList(), array_flip($gperm_handler->getItemIds('group_manager', $icmsUser->getGroups()))) ;
 		$group_array = new XoopsFormSelect(_US_GROUPS, 'groups',$groups, 5, true);
 		$group_array->addOptionArray($group_manager_value);
 		$group_select = array ($group_array);
-		//$group_hidden = array_diff(xoops_gethandler('member')->getGroupList(),$group_manager_value);
+		//$group_hidden = array_diff(icms::handler('icms_member')->getGroupList(),$group_manager_value);
 		$group_hidden = array_diff($groups,array_flip($group_manager_value));
 		foreach ($group_hidden as $key => $group) {
 			$group_hidden_select[] = new icms_form_elements_Hidden('groups_hidden[' . $key . ']', $group);

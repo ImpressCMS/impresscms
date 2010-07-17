@@ -43,7 +43,7 @@ if (empty($modules)) {
 	if (!empty($available_modules)) {
 		$criteria->add(new icms_criteria_Item('mid', "(".implode(',', $available_modules).")", 'IN'));
 	}
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$mods_checkbox->addOptionArray($module_handler->getList($criteria));
 }
 else {

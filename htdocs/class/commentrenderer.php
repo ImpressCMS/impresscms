@@ -47,7 +47,7 @@ class XoopsCommentRenderer {
 		$this->_tpl =& $tpl;
 		$this->_useIcons = $use_icons;
 		$this->_doIconCheck = $do_iconcheck;
-		$this->_memberHandler =& xoops_gethandler('member');
+		$this->_memberHandler = icms::handler('icms_member');
 		$this->_statusText = array(XOOPS_COMMENT_PENDING => '<span style="text-decoration: none; font-weight: bold; color: #00ff00;">'._CM_PENDING.'</span>', XOOPS_COMMENT_ACTIVE => '<span style="text-decoration: none; font-weight: bold; color: #ff0000;">'._CM_ACTIVE.'</span>', XOOPS_COMMENT_HIDDEN => '<span style="text-decoration: none; font-weight: bold; color: #0000ff;">'._CM_HIDDEN.'</span>');
 	}
 

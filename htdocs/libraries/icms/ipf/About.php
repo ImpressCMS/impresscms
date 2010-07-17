@@ -111,7 +111,7 @@ class icms_ipf_About {
 
 		icms_cp_header();
 
-		$module_handler =& xoops_gethandler('module');
+		$module_handler = icms::handler('icms_module');
 		$versioninfo =& $module_handler->get($icmsModule->getVar('mid'));
 
 		$icmsModule->displayAdminMenu(-1, $this->_aboutTitle . " " . $versioninfo->getInfo('name'));

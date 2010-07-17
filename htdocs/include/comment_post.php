@@ -25,7 +25,7 @@ if ('system' == $icmsModule->getVar('dirname')) {
 	}
 	$comment_handler = icms::handler('icms_data_comment');
 	$comment =& $comment_handler->get($com_id);
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$module =& $module_handler->get($comment->getVar('com_modid'));
 	$comment_config = $module->getInfo('comments');
 	$com_modid = $module->getVar('mid');
@@ -100,7 +100,7 @@ switch ( $op) {
 		if ($dohtml != 0) {
 	  if (is_object($icmsUser)) {
 	  	if (!$icmsUser->isAdmin($com_modid)) {
-	  		$sysperm_handler =& xoops_gethandler('groupperm');
+	  		$sysperm_handler = icms::handler('icms_member_groupperm');
 	  		if (!$sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 	  			$dohtml = 0;
 	  		}
@@ -148,7 +148,7 @@ switch ( $op) {
 	  $accesserror = false;
 
 	  if (is_object($icmsUser)) {
-	  	$sysperm_handler =& xoops_gethandler('groupperm');
+	  	$sysperm_handler = icms::handler('icms_member_groupperm');
 	  	if ($icmsUser->isAdmin($com_modid)
 	  	|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 	  		if (!empty($com_status) && $com_status != XOOPS_COMMENT_PENDING) {
@@ -196,7 +196,7 @@ switch ( $op) {
 	  $comment->setVar('com_rootid', $com_rootid);
 	  $comment->setVar('com_ip', xoops_getenv('REMOTE_ADDR'));
 	  if (is_object($icmsUser)) {
-	  	$sysperm_handler =& xoops_gethandler('groupperm');
+	  	$sysperm_handler = icms::handler('icms_member_groupperm');
 	  	if ($icmsUser->isAdmin($com_modid)
 	  	|| $sysperm_handler->checkRight('system_admin', XOOPS_SYSTEM_COMMENT, $icmsUser->getGroups())) {
 	  		$comment->setVar('com_status', XOOPS_COMMENT_ACTIVE);
@@ -344,7 +344,7 @@ switch ( $op) {
 	  // increment user post if needed
 	  $uid = $comment->getVar('com_uid');
 	  if ($uid > 0 && false != $add_userpost) {
-	  	$member_handler =& xoops_gethandler('member');
+	  	$member_handler = icms::handler('icms_member');
 	  	$poster =& $member_handler->getUser($uid);
 	  	if (is_object($poster)) {
 	  		$member_handler->updateUserByField($poster, 'posts', $poster->getVar('posts') + 1);
@@ -365,7 +365,7 @@ switch ( $op) {
 	  	// module).
 	  	$comment_tags = array();
 	  	if ('system' == $icmsModule->getVar('dirname')) {
-	  		$module_handler =& xoops_gethandler('module');
+	  		$module_handler = icms::handler('icms_module');
 	  		$not_module =& $module_handler->get($not_modid);
 	  	} else {
 	  		$not_module =& $icmsModule;

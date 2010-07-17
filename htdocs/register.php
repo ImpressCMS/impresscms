@@ -132,7 +132,7 @@ switch ( $op) {
 		}
 
 		if (empty($stop)) {
-			$member_handler =& xoops_gethandler('member');
+			$member_handler = icms::handler('icms_member');
 			$newuser =& $member_handler->createUser();
 			$newuser->setVar('user_viewemail',$user_viewemail, true);
 			$newuser->setVar('login_name', $login_name, true);
@@ -214,7 +214,7 @@ switch ( $op) {
 				$xoopsMailer->assign('USERLOGINNAME', $login_name);
 				$xoopsMailer->assign('USEREMAIL', $email);
 				$xoopsMailer->assign('USERACTLINK', ICMS_URL.'/user.php?op=actv&id='.$newid.'&actkey='.$newuser->getVar('actkey'));
-				$member_handler =& xoops_gethandler('member');
+				$member_handler = icms::handler('icms_member');
 				$xoopsMailer->setToGroups($member_handler->getGroup($icmsConfigUser['activation_group']));
 				$xoopsMailer->setFromEmail($icmsConfig['adminmail']);
 				$xoopsMailer->setFromName($icmsConfig['sitename']);

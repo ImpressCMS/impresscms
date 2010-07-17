@@ -40,7 +40,7 @@ class icms_page_Handler extends icms_ipf_Handler {
 		if (!is_array($value)) {
 			$value = array($value);
 		}
-		$module_handler =& xoops_gethandler('module');
+		$module_handler = icms::handler('icms_module');
 		$criteria = new icms_criteria_Compo(new icms_criteria_Item('hasmain', 1));
 		$criteria->add(new icms_criteria_Item('isactive', 1));
 		$module_list =& $module_handler->getObjects($criteria);

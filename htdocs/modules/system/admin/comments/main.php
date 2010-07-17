@@ -34,7 +34,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			$comments = array();
 			$status = (!isset($_GET['status']) || !in_array( (int) ($_GET['status']), array_keys($status_array))) ? 0 : (int) ($_GET['status']);
 			$module = !isset($_GET['module']) ? 0 : (int) ($_GET['module']);
-			$module_handler =& xoops_gethandler('module');
+			$module_handler = icms::handler('icms_module');
 			$module_array =& $module_handler->getList(new icms_criteria_Item('hascomments', 1));
 			$comment_handler = icms::handler('icms_data_comment');
 			$criteria = new icms_criteria_Compo();
@@ -131,7 +131,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				$comment_handler = icms::handler('icms_data_comment');
 				$comment =& $comment_handler->get($com_id);
 				if (is_object($comment)) {
-					$module_handler =& xoops_gethandler('module');
+					$module_handler = icms::handler('icms_module');
 					$module =& $module_handler->get($comment->getVar('com_modid'));
 					$comment_config = $module->getInfo('comments');
 					header('Location: '.XOOPS_URL.'/modules/'.$module->getVar('dirname').'/'.$comment_config['pageName'].'?'.$comment_config['itemName'].'='.$comment->getVar('com_itemid').'&com_id='.$comment->getVar('com_id').'&com_rootid='.$comment->getVar('com_rootid').'&com_mode=thread&'.str_replace('&amp;', '&', $comment->getVar('com_exparams')).'#comment'.$comment->getVar('com_id'));
