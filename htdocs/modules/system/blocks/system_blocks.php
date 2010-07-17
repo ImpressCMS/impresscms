@@ -21,7 +21,7 @@
 function b_system_online_show()
 {
 	global $icmsUser, $icmsModule;
-	$online_handler =& xoops_gethandler('online');
+	$online_handler = icms::handler('icms_core_Online');
 	mt_srand((double)microtime()*1000000);
 	// set gc probabillity to 10% for now..
 	if (mt_rand(1, 100) < 11) {
@@ -128,12 +128,12 @@ function b_system_main_show()
 		$block['lang_privpolicy'] = _MB_SYSTEM_PRIVPOLICY;
 	}
 	$block['lang_close'] = _CLOSE;
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$criteria = new icms_criteria_Compo(new icms_criteria_Item('hasmain', 1));
 	$criteria->add(new icms_criteria_Item('isactive', 1));
 	$criteria->add(new icms_criteria_Item('weight', 0, '>'));
 	$modules = $module_handler->getObjects($criteria, true);
-	$moduleperm_handler =& xoops_gethandler('groupperm');
+	$moduleperm_handler = icms::handler('icms_member_groupperm');
 	$groups = is_object($icmsUser) ? $icmsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
 	$read_allowed = $moduleperm_handler->getItemIds('module_read', $groups);
 	foreach (array_keys($modules) as $i) {
@@ -175,7 +175,7 @@ function b_system_user_show()
 {
 	global $icmsUser;
 	if (is_object($icmsUser)) {
-		$pm_handler =& xoops_gethandler('privmessage');
+		$pm_handler = icms::handler('icms_privmessage');
 		$block = array();
 		$block['lang_youraccount'] = _MB_SYSTEM_VACNT;
 		$block['lang_editaccount'] = _MB_SYSTEM_EACNT;
@@ -251,7 +251,7 @@ function b_system_newmembers_show($options)
 	$criteria->setOrder('DESC');
 	$criteria->setSort('user_regdate');
 	$criteria->setLimit($limit);
-	$member_handler =& xoops_gethandler('member');
+	$member_handler = icms::handler('icms_member');
 	$newmembers = $member_handler->getUsers($criteria);
 	$count = count($newmembers);
 	for ($i = 0; $i < $count; $i++) {
@@ -303,7 +303,7 @@ function b_system_topposters_show($options)
 	$criteria->setOrder('DESC');
 	$criteria->setSort('posts');
 	$criteria->setLimit($limit);
-	$member_handler =& xoops_gethandler('member');
+	$member_handler = icms::handler('icms_member');
 	$topposters =& $member_handler->getUsers($criteria);
 	$count = count($topposters);
 	for ($i = 0; $i < $count; $i++) {
@@ -343,7 +343,7 @@ function b_system_comments_show($options)
 
 	// Check modules permissions
 	global $icmsUser;
-	$moduleperm_handler =& xoops_gethandler('groupperm');
+	$moduleperm_handler = icms::handler('icms_member_groupperm');
 	$gperm_groupid = is_object($icmsUser) ? $icmsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
 	$criteria1 = new icms_criteria_Compo(new icms_criteria_Item('gperm_name','module_read','='));
 	$criteria1->add(new icms_criteria_Item('gperm_groupid', '('.implode(',', $gperm_groupid).')', 'IN'));
@@ -359,8 +359,8 @@ function b_system_comments_show($options)
 	// Check modules permissions
 
 	$comments = $comment_handler->getObjects($criteria, true);
-	$member_handler =& xoops_gethandler('member');
-	$module_handler =& xoops_gethandler('module');
+	$member_handler = icms::handler('icms_member');
+	$module_handler = icms::handler('icms_module');
 	$modules = $module_handler->getObjects(new icms_criteria_Item('hascomments', 1), true);
 	$comment_config = array();
 	foreach (array_keys($comments) as $i) {
@@ -630,12 +630,12 @@ function b_system_bookmarks_show()
 	}
 	// Get an array of all notifications for the selected user
 
-	$notification_handler =& xoops_gethandler('notification');
+	$notification_handler = icms::handler('icms_notification');
 	$notifications =& $notification_handler->getByUser($icmsUser->getVar('uid'));
 
 	// Generate the info for the template
 
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 
 	$prev_modid = -1;
 

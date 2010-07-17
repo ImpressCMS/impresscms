@@ -46,7 +46,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 	public function getBlockPositions($full = false) {
 		if (!count($this->block_positions)) {
 			// TODO: Implement IPF for block_positions
-			$icms_blockposition_handler = xoops_gethandler('blockposition');
+			$icms_blockposition_handler = icms::handler('icms_block_position');
 			//			$sql = 'SELECT * FROM '.$this->db->prefix('block_positions').' ORDER BY id ASC';
 			//			$result = $this->db->query($sql);
 			//			while ($row = $this->db->fetchArray($result)) {
@@ -109,7 +109,7 @@ class icms_block_Handler extends icms_ipf_Handler {
 			$tp = ($side == -2)?'L':($side == -6)?'C':'';
 			if ($tp != '') {
 			 	$q_side = "";
-				$icms_blockposition_handler = xoops_gethandler('blockposition');
+				$icms_blockposition_handler = icms::handler('icms_block_position');
 				$criteria = new icms_criteria_Compo();
 				$criteria->add(new icms_criteria_Item('block_type', $tp));
 				$blockpositions = $icms_blockposition_handler->getObjects($criteria);

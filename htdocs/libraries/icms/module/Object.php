@@ -293,7 +293,7 @@ class icms_module_Object extends icms_core_Object {
 	 */
 	public function &getByDirName($dirname) {
 		icms_core_Debug::setDeprecated('Module Handler', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
-		$modhandler = & xoops_gethandler('module');
+		$modhandler = icms::handler('icms_module');
 		$inst = & $modhandler->getByDirname($dirname);
 		return $inst;
 	}

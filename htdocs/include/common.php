@@ -66,7 +66,7 @@ $xoopsDB =& icms_database_Factory::getDatabaseConnection();
 include_once ICMS_ROOT_PATH . "/include/debug_functions.php";
 
 // ################# Load Config Settings ##############
-$config_handler = xoops_gethandler('config');
+$config_handler = icms::handler('icms_config');
 $configs = $config_handler->getConfigsByCat(
 	array(
 		ICMS_CONF, ICMS_CONF_USER, ICMS_CONF_METAFOOTER, ICMS_CONF_MAILER,
@@ -152,9 +152,9 @@ if (defined('ICMS_INCLUDE_OPENID')) {
 // ############## Login a user with a valid session ##############
 $xoopsUser = $icmsUser = '';
 $xoopsUserIsAdmin = $icmsUserIsAdmin = false;
-$member_handler =& xoops_gethandler('member');
+$member_handler = icms::handler('icms_member');
 global $sess_handler;
-$sess_handler =& xoops_gethandler('session');
+$sess_handler = icms::handler('icms_core_Session');
 if ($icmsConfig['use_ssl']
 	&& isset($_POST[$icmsConfig['sslpost_name']])
 	&& $_POST[$icmsConfig['sslpost_name']] != '') {
@@ -229,7 +229,7 @@ if (empty($_SESSION['xoopsUserId'])
 		// V3
 		$uname4sql = addslashes($uname);
 		$criteria = new icms_criteria_Compo(new icms_criteria_Item('uname', $uname4sql ));
-		$user_handler =& xoops_gethandler('user');
+		$user_handler = icms::handler('icms_member_user');
 		$users =& $user_handler->getObjects($criteria, false);
 		if (empty($users) || count($users) != 1) {
 			$user = false ;
@@ -398,7 +398,7 @@ if ($icmsConfig['closesite'] == 1) {
 
 if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 	$url_arr = explode('/', strstr($_SERVER['PHP_SELF'], '/modules/'));
-	$module_handler =& xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$icmsModule =& $module_handler->getByDirname($url_arr[2]);
 	$xoopsModule =& $module_handler->getByDirname($url_arr[2]);
 	unset($url_arr);
@@ -408,7 +408,7 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 		include_once ICMS_ROOT_PATH . '/footer.php';
 		exit();
 	}
-	$moduleperm_handler =& xoops_gethandler('groupperm');
+	$moduleperm_handler = icms::handler('icms_member_groupperm');
 	if ($icmsUser) {
 		if (!$moduleperm_handler->checkRight('module_read', $icmsModule->getVar('mid'), $icmsUser->getGroups())) {
 			redirect_header(ICMS_URL . "/user.php", 1, _NOPERM, false);
@@ -432,7 +432,7 @@ if (file_exists('./xoops_version.php') || file_exists('./icms_version.php')) {
 
 if ($icmsConfigPersona['multi_login']) {
 	if (is_object($icmsUser)) {
-		$online_handler =& xoops_gethandler('online');
+		$online_handler = icms::handler('icms_core_Online');
 		$online_handler->write(
 			$icmsUser->uid(), $icmsUser->uname(),
 			time(), 0, $_SERVER['REMOTE_ADDR']

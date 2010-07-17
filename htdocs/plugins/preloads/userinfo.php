@@ -37,7 +37,7 @@ class IcmsPreloadUserInfo extends icms_preload_Item {
 					}
 				}
 			}
-			$pm_handler = & xoops_gethandler('privmessage');
+			$pm_handler = icms::handler('icms_privmessage');
 			$criteria = new icms_criteria_Compo ( new icms_criteria_Item ( 'read_msg', 0 ) );
 			$criteria->add ( new icms_criteria_Item ( 'to_userid', $xoopsUser->getVar ( 'uid' ) ) );
 			$user ['new_messages'] = $pm_handler->getCount ( $criteria );

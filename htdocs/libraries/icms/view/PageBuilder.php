@@ -75,7 +75,7 @@ class icms_view_PageBuilder {
 
 		//Getting the start module and page configured in the admin panel
 		if (is_array($icmsConfig['startpage'])) {
-			$member_handler = & xoops_gethandler('member');
+			$member_handler = icms::handler('icms_member');
 			$group = $member_handler->getUserBestGroup((@is_object($icmsUser) ? $icmsUser->uid() : 0));
 			$icmsConfig['startpage'] = $icmsConfig['startpage'][$group];
 		}
@@ -93,7 +93,7 @@ class icms_view_PageBuilder {
 			);
 		$url = urldecode(substr(str_replace(ICMS_URL, '', $fullurl), 1));
 
-		$icms_page_handler =& xoops_gethandler('page');
+		$icms_page_handler = icms::handler('icms_page');
 		$criteria = new icms_criteria_Compo(new icms_criteria_Item('page_url', $fullurl));
 		if (! empty($url))
 		$criteria->add(new icms_criteria_Item('page_url', $url), 'OR');
@@ -105,7 +105,7 @@ class icms_view_PageBuilder {
 			$purl = $page->getVar('page_url');
 			$mid = $page->getVar('page_moduleid');
 			$pid = $page->getVar('page_id');
-			$module_handler =& xoops_gethandler('module');
+			$module_handler = icms::handler('icms_module');
 			$module =& $module_handler->get($mid);
 			$dirname = $module->getVar('dirname');
 			$isStart = ($startMod == $mid.'-'.$pid);
@@ -144,7 +144,7 @@ class icms_view_PageBuilder {
 			$modid = $mid . '-' . $pid;
 		}
 
-		$icms_block_handler = xoops_gethandler('block');
+		$icms_block_handler = icms::handler('icms_block');
 		$oldzones = $icms_block_handler->getBlockPositions();
 
 		foreach ( $oldzones as $zone) {
@@ -158,7 +158,7 @@ class icms_view_PageBuilder {
 		}
 
 		/** moved here from buildBlocks to reduce redundant calls */
-		$gperm =& xoops_gethandler('groupperm');
+		$gperm = icms::handler('icms_member_groupperm');
 		$ugroups = @is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
 		$agroups = $gperm->getGroupIds('system_admin',  5); //XOOPS_SYSTEM_BLOCK constant not available?
 		$this->uagroups = array_intersect($ugroups, $agroups);

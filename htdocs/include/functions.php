@@ -765,7 +765,7 @@ function icms_substr($str, $start, $length, $trimmarker = '...')
  */
 function xoops_notification_deletebymodule ($module_id)
 {
-	$notification_handler =& xoops_gethandler('notification');
+	$notification_handler = icms::handler('icms_notification');
 	return $notification_handler->unsubscribeByModule ($module_id);
 }
 
@@ -778,7 +778,7 @@ function xoops_notification_deletebymodule ($module_id)
  */
 function xoops_notification_deletebyuser ($user_id)
 {
-	$notification_handler =& xoops_gethandler('notification');
+	$notification_handler =& icms::handler('icms_notification');
 	return $notification_handler->unsubscribeByUser ($user_id);
 }
 
@@ -793,7 +793,7 @@ function xoops_notification_deletebyuser ($user_id)
  */
 function xoops_notification_deletebyitem ($module_id, $category, $item_id)
 {
-	$notification_handler =& xoops_gethandler('notification');
+	$notification_handler =& icms::handler('icms_notification');
 	return $notification_handler->unsubscribeByItem ($module_id, $category, $item_id);
 }
 
@@ -841,7 +841,7 @@ function xoops_comment_delete($module_id, $item_id)
 					if($poster_id != 0) {$deleted_num[$poster_id] = !isset($deleted_num[$poster_id]) ? 1 : ($deleted_num[$poster_id] + 1);}
 				}
 			}
-			$member_handler =& xoops_gethandler('member');
+			$member_handler = icms::handler('icms_member');
 			foreach($deleted_num as $user_id => $post_num)
 			{
 				// update user posts
@@ -868,7 +868,7 @@ function xoops_groupperm_deletebymoditem($module_id, $perm_name, $item_id = null
 {
 	// do not allow system permissions to be deleted
 	if( (int) ($module_id) <= 1) {return false;}
-	$gperm_handler =& xoops_gethandler('groupperm');
+	$gperm_handler = icms::handler('icms_member_groupperm');
 	return $gperm_handler->deleteByModule($module_id, $perm_name, $item_id);
 }
 
@@ -908,7 +908,7 @@ function xoops_getLinkedUnameFromId($userid)
 	$userid = (int) ($userid);
 	if($userid > 0)
 	{
-		$member_handler =& xoops_gethandler('member');
+		$member_handler = icms::handler('icms_member');
 		$user =& $member_handler->getUser($userid);
 		if(is_object($user))
 		{
@@ -1013,7 +1013,7 @@ function &icms_getModuleInfo($moduleName = false)
 		if(isset($icmsModule) && is_object($icmsModule) && $icmsModule->getVar('dirname') == $moduleName) {$icmsModules[$moduleName] = & $icmsModule;}
 		else
 		{
-			$hModule = & xoops_gethandler('module');
+			$hModule = icms::handler('icms_module');
 			if($moduleName != 'icms') {$icmsModules[$moduleName] = & $hModule->getByDirname($moduleName);}
 			else {$icmsModules[$moduleName] = & $hModule->getByDirname('system');}
 		}
@@ -1060,7 +1060,7 @@ function &icms_getModuleConfig($moduleName = false)
 			$ret = false;
 			return $ret;
 		}
-		$hModConfig = & xoops_gethandler('config');
+		$hModConfig = icms::handler('icms_config');
 		$icmsConfigs[$moduleName] = & $hModConfig->getConfigsByCat(0, $module->getVar('mid'));
 	}
 	return $icmsConfigs[$moduleName];
@@ -1464,7 +1464,7 @@ function icms_getLinkedUnameFromId($userid, $name = false, $users = array (), $w
 		if($users == array())
 		{
 			//fetching users
-			$member_handler = & xoops_gethandler('member');
+			$member_handler = icms::handler('icms_member');
 			$user = & $member_handler->getUser($userid);
 		}
 		else
@@ -1527,6 +1527,9 @@ function showNav($id = null, $separador = '/', $style="style='font-weight:bold'"
 	{
 		if($id > 0)
 		{
+			/**
+			 * @todo this handler doesn't even exist since 1.2. check if the function is still required
+			 */
 			$content_handler =& xoops_gethandler('content');
 			$cont = $content_handler->get($id);
 			if($cont->getVar('content_id') > 0)
@@ -2576,7 +2579,7 @@ function icms_getenv($key) {
  * @todo Move to a static class method - Module
  */
 function icms_get_module_status($module_name){
-	$module_handler = xoops_gethandler('module');
+	$module_handler = icms::handler('icms_module');
 	$this_module = $module_handler->getByDirname($module_name);
 	if($this_module && $this_module->getVar('isactive')){
 		return true;
@@ -2994,7 +2997,7 @@ function icms_need_do_br($moduleName=false) {
 	$groups = $icmsUser->getGroups();
 
 	$editor_default = $icmsConfig['editor_default'];
-	$gperm_handler = xoops_gethandler('groupperm');
+	$gperm_handler = icms::handler('icms_member_groupperm');
 	if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $theModule->mid(), $groups)) {
 		return false;
 	} else {

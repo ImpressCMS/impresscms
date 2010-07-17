@@ -295,7 +295,7 @@ class icms_member_user_Object extends icms_core_Object
 		} elseif((int)$module_id < 1) {$module_id = 0;}
 
 		if (!isset($buffer[$module_id])) {
-			$moduleperm_handler =& xoops_gethandler('groupperm');
+			$moduleperm_handler = icms::handler('icms_member_groupperm');
 			$buffer[$module_id] = $moduleperm_handler->checkRight('module_admin', $module_id, $this->getGroups());
 		}
 		return $buffer[$module_id];

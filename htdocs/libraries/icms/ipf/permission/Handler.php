@@ -54,7 +54,7 @@ class icms_ipf_permission_Handler {
 		if (!isset($groups[$gperm_name]) || ($id != null && !isset($groups[$gperm_name][$id]))) {
 			$icmsModule =& $this->handler->getModuleInfo();
 			//Get group permissions handler
-			$gperm_handler =& xoops_gethandler('groupperm');
+			$gperm_handler = icms::handler('icms_member_groupperm');
 
 			//Get groups allowed for an item id
 			$allowedgroups = $gperm_handler->getGroupIds($gperm_name, $id, $icmsModule->getVar('mid'));
@@ -92,7 +92,7 @@ class icms_ipf_permission_Handler {
 		}
 
 		//Get group permissions handler
-		$gperm_handler =& xoops_gethandler('groupperm');
+		$gperm_handler = icms::handler('icms_member_groupperm');
 
 		$permissionsObj = $gperm_handler->getObjects($criteria);
 
@@ -127,7 +127,7 @@ class icms_ipf_permission_Handler {
 			if (is_object($icmsModule)) {
 
 				//Get group permissions handler
-				$gperm_handler =& xoops_gethandler('groupperm');
+				$gperm_handler = icms::handler('icms_member_groupperm');
 
 				//Get user's groups
 				$groups = is_object($icmsUser) ? $icmsUser->getGroups() : array(ICMS_GROUP_ANONYMOUS);
@@ -166,7 +166,7 @@ class icms_ipf_permission_Handler {
 
 		$result = true;
 		$module_id = $icmsModule->getVar('mid');
-		$gperm_handler =& xoops_gethandler('groupperm');
+		$gperm_handler = icms::handler('icms_member_groupperm');
 
 		// First, if the permissions are already there, delete them
 		$gperm_handler->deleteByModule($module_id, $perm_name, $itemid);
@@ -202,7 +202,7 @@ class icms_ipf_permission_Handler {
 
 		$result = true;
 		$module_id = $icmsModule->getVar('mid')   ;
-		$gperm_handler =& xoops_gethandler('groupperm');
+		$gperm_handler = ('icms_member_groupperm');
 
 		$gperm_handler->deleteByModule($module_id, $gperm_name, $itemid);
 
@@ -224,7 +224,7 @@ class icms_ipf_permission_Handler {
 		$gperm_modid = $icmsModule->getVar('mid')   ;
 
 		//Get group permissions handler
-		$gperm_handler =& xoops_gethandler('groupperm');
+		$gperm_handler = icms::handler('icms_member_groupperm');
 
 		return $gperm_handler->checkRight($gperm_name, $gperm_itemid, $gperm_groupid, $gperm_modid);
 	}

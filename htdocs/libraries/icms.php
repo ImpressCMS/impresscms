@@ -162,7 +162,7 @@ abstract class icms {
 	 * @param bool  $optional	Is the handler optional?
 	 * @return		object		$inst		The instance of the object that was created
 	 */
-	static public function handler($name, $optional = false ) {
+	static public function &handler($name, $optional = false ) {
 		if(!isset(self::$handlers[$name])) {
 			$class = $name . "Handler";
 			if (!class_exists($class)) {
