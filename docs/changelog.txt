@@ -8,8 +8,8 @@ Build Version: 37
 List of changes to this release can be found here - http://sourceforge.net/apps/trac/impresscms/query?status=closed&group=component&order=priority&col=id&col=summary&col=milestone&col=status&col=type&col=priority&col=component&milestone=ImpressCMS+1.3
 
 === ImpressCMS 1.2.2 Final ===
-Release date: 
-Revision:
+Release date: 17 July 2010
+Revision: 19868
 DB Version: 40
 Build Version: 36
 
