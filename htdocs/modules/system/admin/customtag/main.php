@@ -9,7 +9,7 @@
  * @author		marcan <marcan@impresscms.org>
  * @version		$Id$
  */
-if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 }
 

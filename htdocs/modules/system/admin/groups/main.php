@@ -15,7 +15,7 @@
  */
 
 $gperm_handler = icms::handler('icms_member_groupperm');
-if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid()) || ( isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], $icmsUser->getGroups() ) )) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->getVar('mid')) || ( isset($_GET['g_id']) && !$gperm_handler->checkRight('group_manager', $_GET['g_id'], $icmsUser->getGroups() ) )) {
 	exit("Access Denied");
 } else {
 	include_once ICMS_ROOT_PATH."/modules/system/admin/groups/groups.php";

@@ -2998,7 +2998,7 @@ function icms_need_do_br($moduleName=false) {
 
 	$editor_default = $icmsConfig['editor_default'];
 	$gperm_handler = icms::handler('icms_member_groupperm');
-	if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $theModule->mid(), $groups)) {
+	if (file_exists(ICMS_EDITOR_PATH . "/" . $editor_default . "/xoops_version.php") && $gperm_handler->checkRight('use_wysiwygeditor', $theModule->getVar('mid'), $groups)) {
 		return false;
 	} else {
 		return true;

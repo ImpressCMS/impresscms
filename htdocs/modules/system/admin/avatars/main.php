@@ -14,7 +14,7 @@
  * @version		$Id$
  */
 
-if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->mid())) {
+if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icmsModule->getVar('mid'))) {
 	exit("Access Denied");
 } else {
 	if (!empty($_POST)) foreach ($_POST as $k => $v) ${$k} = StopXSS($v);
