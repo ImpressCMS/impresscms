@@ -311,7 +311,7 @@ if ( !defined("XOOPS_LISTS_INCLUDED") ) {
 		static public function getEditorsList($type='') {
 			$editor_list = array();
 			if ($type == '') {
-				$path = XOOPS_EDITOR_PATH;
+				$path = ICMS_EDITOR_PATH;
 			} else {
 				$path = ICMS_PLUGINS_PATH . '/' . strtolower($type) . 'editors/';
 			}

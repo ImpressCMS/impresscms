@@ -26,7 +26,7 @@ function b_system_waiting_show($options)
 	$userlang = $xoopsConfig['language'] ;
 
 	$sql_cache_min = empty( $options[1] ) ? 0 : (int) ( $options[1] ) ;
-	$sql_cache_file = XOOPS_CACHE_PATH.'/waiting_touch' ;
+	$sql_cache_file = ICMS_CACHE_PATH.'/waiting_touch' ;
 
 	// SQL cache check (you have to use this cache with block's cache by system)
 	if (file_exists( $sql_cache_file )) {

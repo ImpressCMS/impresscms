@@ -50,7 +50,7 @@ switch($op) {
 		$db =& Database::getInstance();
 		$myts =& icms_core_Textsanitizer::getInstance();
 		include_once ICMS_ROOT_PATH.'/class/uploader.php';
-		$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), 100000, 120, 120);
+		$uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), 100000, 120, 120);
 		$uploader->setPrefix('smil');
 		if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 			if (!$uploader->upload()) {
@@ -98,7 +98,7 @@ switch($op) {
 		$db =& Database::getInstance();
 		if ($_FILES['smile_url']['name'] != "") {
 			include_once ICMS_ROOT_PATH.'/class/uploader.php';
-			$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), 100000, 120, 120);
+			$uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png'), 100000, 120, 120);
 			$uploader->setPrefix('smil');
 			if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 				if (!$uploader->upload()) {
@@ -108,8 +108,8 @@ switch($op) {
 					if (!$db->query(sprintf("UPDATE %s SET code = %s, smile_url = %s, emotion = %s, display = %d WHERE id = '%d'", $db->prefix('smiles'), $db->quoteString($smile_code), $db->quoteString($smile_url), $db->quoteString($smile_desc), $smile_display, $id))) {
 						$err = 'Failed storing smiley data into the database';
 					} else {
-						$oldsmile_path = str_replace("\\", "/", realpath(XOOPS_UPLOAD_PATH.'/'.trim($_POST['old_smile'])));
-						if (0 === strpos($oldsmile_path, XOOPS_UPLOAD_PATH) && is_file($oldsmile_path)) {
+						$oldsmile_path = str_replace("\\", "/", realpath(ICMS_UPLOAD_PATH.'/'.trim($_POST['old_smile'])));
+						if (0 === strpos($oldsmile_path, ICMS_UPLOAD_PATH) && is_file($oldsmile_path)) {
 							unlink($oldsmile_path);
 						}
 					}

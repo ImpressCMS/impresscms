@@ -131,7 +131,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				echo  '<tr class="'.$class.'"><td class="head">'.$templates[$i]->getVar('tpl_file').'<br /><br /><span style="font-weight:normal;">'.$templates[$i]->getVar('tpl_desc').'</span></td><td>'.formatTimestamp($last_modified, 'l').'</td>';
 				$filename = $templates[$i]->getVar('tpl_file');
 				if ($tplset != 'default') {
-					$physical_file = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/'.$filename;
+					$physical_file = ICMS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/'.$filename;
 					if (file_exists($physical_file)) {
 						$mtime = filemtime($physical_file);
 						if ($last_imported < $mtime) {
@@ -161,7 +161,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				foreach ($notinst_files as $nfile) {
 					if ($nfile != 'index.html') {
 						echo  '<tr><td style="background-color:#FFFF99; padding: 5px;">'.$nfile.'</td><td style="background-color:#FFFF99; padding: 5px;">&nbsp;</td><td style="background-color:#FFFF99; padding: 5px;">';
-						$physical_file = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/'.$nfile;
+						$physical_file = ICMS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/'.$nfile;
 						if (file_exists($physical_file)) {
 							echo '[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=importtpl&amp;file='.urlencode($nfile).'">'._MD_IMPORT.'</a>]';
 						} else {
@@ -191,7 +191,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				}
 				echo  '<tr class="'.$class.'"><td class="head"><span style="font-weight:bold;">'.$btemplates[$j]->getVar('tpl_file').'</span><br /><br /><span style="font-weight:normal;">'.$btemplates[$j]->getVar('tpl_desc').'</span></td><td>'.formatTimestamp($last_modified, 'l').'</td>';
 				$filename = $btemplates[$j]->getVar('tpl_file');
-				$physical_file = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/blocks/'.$filename;
+				$physical_file = ICMS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/blocks/'.$filename;
 				if ($tplset != 'default') {
 					if (file_exists($physical_file)) {
 						$mtime = filemtime($physical_file);
@@ -221,7 +221,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				foreach ($bnotinst_files as $nfile) {
 					if ($nfile != 'index.html') {
 						echo  '<tr style="background-color:#FFFF99;"><td style="background-color:#FFFF99; padding: 5px;">'.$nfile.'</td><td style="background-color:#FFFF99; padding: 5px;">&nbsp;</td><td style="background-color:#FFFF99; padding: 5px;">';
-						$physical_file = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/blocks/'.$nfile;
+						$physical_file = ICMS_THEME_PATH.'/'.$tplset.'/templates/'.$moddir.'/blocks/'.$nfile;
 						if (file_exists($physical_file)) {
 							echo '[<a href="admin.php?fct=tplsets&amp;moddir='.$moddir.'&amp;tplset='.$tplset.'&amp;op=importtpl&amp;file='.urlencode($nfile).'">'._MD_IMPORT.'</a>]';
 						} else {
@@ -564,7 +564,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			$tpl =& $tpltpl_handler->get($tpl_id);
 			if (is_object($tpl)) {
 				include_once ICMS_ROOT_PATH.'/class/uploader.php';
-				$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
+				$uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
 				$uploader->setPrefix('tmp');
 				if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 					if (!$uploader->upload()) {
@@ -625,7 +625,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				redirect_header('admin.php?fct=tplsets', 1, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
 			include_once ICMS_ROOT_PATH.'/class/uploader.php';
-			$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
+			$uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('text/html', 'application/x-cdf', 'text/plain'), 200000);
 			$uploader->setPrefix('tmp');
 			if ($uploader->fetchMedia($_POST['xoops_upload_file'][0])) {
 				if (!$uploader->upload()) {
@@ -823,7 +823,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
 			include_once ICMS_ROOT_PATH.'/class/uploader.php';
-			$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('application/x-gzip', 'application/gzip', 'application/gzip-compressed', 'application/x-gzip-compressed', 'application/x-tar', 'application/x-tar-compressed', 'application/octet-stream'), 1000000);
+			$uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('application/x-gzip', 'application/gzip', 'application/gzip-compressed', 'application/x-gzip-compressed', 'application/x-tar', 'application/x-tar-compressed', 'application/octet-stream'), 1000000);
 			$uploader->setPrefix('tmp');
 			icms_cp_header();
 			echo '<code>';
@@ -962,14 +962,14 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				}
 
 				$dummytpl = '_dummytpl_'.time().'.html';
-				$fp = fopen(XOOPS_CACHE_PATH.'/'.$dummytpl, 'w');
+				$fp = fopen(ICMS_CACHE_PATH.'/'.$dummytpl, 'w');
 				fwrite($fp, $html);
 				fclose($fp);
-				$xoopsTpl->assign('content', $xoopsTpl->fetch('file:'.XOOPS_CACHE_PATH.'/'.$dummytpl));
-				$xoopsTpl->clear_compiled_tpl('file:'.XOOPS_CACHE_PATH.'/'.$dummytpl);
-				unlink(XOOPS_CACHE_PATH.'/'.$dummytpl);
+				$xoopsTpl->assign('content', $xoopsTpl->fetch('file:'.ICMS_CACHE_PATH.'/'.$dummytpl));
+				$xoopsTpl->clear_compiled_tpl('file:'.ICMS_CACHE_PATH.'/'.$dummytpl);
+				unlink(ICMS_CACHE_PATH.'/'.$dummytpl);
 				$dummyfile = '_dummy_'.time().'.html';
-				$fp = fopen(XOOPS_CACHE_PATH.'/'.$dummyfile, 'w');
+				$fp = fopen(ICMS_CACHE_PATH.'/'.$dummyfile, 'w');
 				fwrite($fp, $dummylayout);
 				fclose($fp);
 				$tplset= $tplfile->getVar('tpl_tplset');
@@ -984,9 +984,9 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				preview_window = openWithSelfMain("", "popup", 680, 450, true);
 				preview_window.document.clear();
 				';
-				$lines = preg_split("/(\r\n|\r|\n)( *)/", $xoopsTpl->fetch('file:'.XOOPS_CACHE_PATH.'/'.$dummyfile));
-				$xoopsTpl->clear_compiled_tpl('file:'.XOOPS_CACHE_PATH.'/'.$dummyfile);
-				unlink(XOOPS_CACHE_PATH.'/'.$dummyfile);
+				$lines = preg_split("/(\r\n|\r|\n)( *)/", $xoopsTpl->fetch('file:'.ICMS_CACHE_PATH.'/'.$dummyfile));
+				$xoopsTpl->clear_compiled_tpl('file:'.ICMS_CACHE_PATH.'/'.$dummyfile);
+				unlink(ICMS_CACHE_PATH.'/'.$dummyfile);
 				foreach ($lines as $line) {
 					echo 'preview_window.document.writeln("'.str_replace('"', '\"', $line).'");';
 				}
@@ -1003,7 +1003,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				redirect_header('admin.php?fct=tplsets', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 			}
 			include_once ICMS_ROOT_PATH.'/class/uploader.php';
-			$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('text/html', 'application/x-cdf'), 200000);
+			$uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('text/html', 'application/x-cdf'), 200000);
 			$uploader->setPrefix('tmp');
 			$msg = array();
 			foreach ($_POST['xoops_upload_file'] as $upload_file) {
@@ -1090,10 +1090,10 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			if (is_object($tplfile)) {
 				switch ($tplfile->getVar('tpl_type')) {
 					case 'module':
-						$filepath = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$tplfile->getVar('tpl_module').'/'.$tplfile->getVar('tpl_file');
+						$filepath = ICMS_THEME_PATH.'/'.$tplset.'/templates/'.$tplfile->getVar('tpl_module').'/'.$tplfile->getVar('tpl_file');
 						break;
 					case 'block':
-						$filepath = XOOPS_THEME_PATH.'/'.$tplset.'/templates/'.$tplfile->getVar('tpl_module').'/blocks/'.$tplfile->getVar('tpl_file');
+						$filepath = ICMS_THEME_PATH.'/'.$tplset.'/templates/'.$tplfile->getVar('tpl_module').'/blocks/'.$tplfile->getVar('tpl_file');
 						break;
 					default:
 						break;

@@ -63,7 +63,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			foreach (array_keys($avatars) as $i) {
 				echo '<form action="admin.php" method="post">';
 				$id = $avatars[$i]->getVar('avatar_id');
-				echo '<table class="outer" cellspacing="1" width="100%"><tr><td align="center" width="30%" rowspan="6"><img src="'.XOOPS_UPLOAD_URL.'/'.$avatars[$i]->getVar('avatar_file').'" alt="" /></td><td class="head">'._IMAGENAME,'</td><td class="even"><input type="hidden" name="avatar_id[]" value="'.$id.'" /><input type="text" name="avatar_name[]" value="'.$avatars[$i]->getVar('avatar_name', 'E').'" size="20" maxlength="255" /></td></tr><tr><td class="head">'._IMAGEMIME.'</td><td class="odd">'.$avatars[$i]->getVar('avatar_mimetype').'</td></tr><tr><td class="head">'._MD_USERS.'</td><td class="even">'.$avatars[$i]->getUserCount().'</td></tr><tr><td class="head">'._IMGWEIGHT.'</td><td class="odd"><input type="text" name="avatar_weight[]" value="'.$avatars[$i]->getVar('avatar_weight').'" size="3" maxlength="4" /></td></tr><tr><td class="head">'._IMGDISPLAY.'</td><td class="even"><input type="checkbox" name="avatar_display[]" value="1"';
+				echo '<table class="outer" cellspacing="1" width="100%"><tr><td align="center" width="30%" rowspan="6"><img src="'.ICMS_UPLOAD_URL.'/'.$avatars[$i]->getVar('avatar_file').'" alt="" /></td><td class="head">'._IMAGENAME,'</td><td class="even"><input type="hidden" name="avatar_id[]" value="'.$id.'" /><input type="text" name="avatar_name[]" value="'.$avatars[$i]->getVar('avatar_name', 'E').'" size="20" maxlength="255" /></td></tr><tr><td class="head">'._IMAGEMIME.'</td><td class="odd">'.$avatars[$i]->getVar('avatar_mimetype').'</td></tr><tr><td class="head">'._MD_USERS.'</td><td class="even">'.$avatars[$i]->getUserCount().'</td></tr><tr><td class="head">'._IMGWEIGHT.'</td><td class="odd"><input type="text" name="avatar_weight[]" value="'.$avatars[$i]->getVar('avatar_weight').'" size="3" maxlength="4" /></td></tr><tr><td class="head">'._IMGDISPLAY.'</td><td class="even"><input type="checkbox" name="avatar_display[]" value="1"';
 				if ($avatars[$i]->getVar('avatar_display') == 1) {
 					echo ' checked="checked"';
 				}
@@ -71,7 +71,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			}
 		} else {
 			foreach (array_keys($avatars) as $i) {
-				echo '<table cellspacing="1" class="outer" width="100%"><tr><td width="30%" rowspan="6" align="center"><img src="'.XOOPS_UPLOAD_URL.'/'.$avatars[$i]->getVar('avatar_file').'" alt="" /></td><td class="head">'._IMAGENAME,'</td><td class="even"><a href="'.XOOPS_URL.'/userinfo.php?uid=';
+				echo '<table cellspacing="1" class="outer" width="100%"><tr><td width="30%" rowspan="6" align="center"><img src="'.ICMS_UPLOAD_URL.'/'.$avatars[$i]->getVar('avatar_file').'" alt="" /></td><td class="head">'._IMAGENAME,'</td><td class="even"><a href="'.XOOPS_URL.'/userinfo.php?uid=';
 				$userids =& $avt_handler->getUser($avatars[$i]);
 				echo $userids[0].'">'.$avatars[$i]->getVar('avatar_name').'</a></td></tr><tr><td class="head">'._IMAGEMIME.'</td><td class="odd">'.$avatars[$i]->getVar('avatar_mimetype').'</td></tr><tr><td class="head">&nbsp;</td><td align="center" class="even"><a href="admin.php?fct=avatars&amp;op=delfile&amp;avatar_id='.$avatars[$i]->getVar('avatar_id').'&amp;user_id='.$userids[0].'">'._DELETE.'</a></td></tr></table><br />';
 			}
@@ -134,7 +134,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			redirect_header('admin.php?fct=avatars', 3, implode('<br />', $GLOBALS['xoopsSecurity']->getErrors()));
 		}
 		include_once ICMS_ROOT_PATH.'/class/uploader.php';
-		$uploader = new XoopsMediaUploader(XOOPS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), 500000);
+		$uploader = new XoopsMediaUploader(ICMS_UPLOAD_PATH, array('image/gif', 'image/jpeg', 'image/pjpeg', 'image/x-png', 'image/png'), 500000);
 		$uploader->setPrefix('savt');
 		$err = array();
 		$ucount = count($_POST['xoops_upload_file']);
@@ -198,7 +198,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 			exit();
 		}
 		$file = $avatar->getVar('avatar_file');
-		@unlink(XOOPS_UPLOAD_PATH.'/'.$file);
+		@unlink(ICMS_UPLOAD_PATH.'/'.$file);
 		if (isset($user_id) && $avatar->getVar('avatar_type') == 'C') {
 			$xoopsDB->query("UPDATE ".$xoopsDB->prefix('users')." SET user_avatar='blank.gif' WHERE uid='". (int) ($user_id)."'");
 		} else {

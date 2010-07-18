@@ -21,7 +21,7 @@ if(!function_exists("xoopseditor_get_rootpath")){
 		 icms_core_Debug::message('editor path' . $rootpath);
 		 return $rootpath;*/
 		if ($type == '') {
-			return XOOPS_EDITOR_PATH;
+			return ICMS_EDITOR_PATH;
 		} else {
 			return ICMS_PLUGINS_PATH . '/' . strtolower($type) . 'editors/';
 		}

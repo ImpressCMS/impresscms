@@ -41,10 +41,10 @@ if ($op == "confirm") {
 	icms_cp_header();
 	//OpenTable();
 	$error = array();
-	if (!is_writable(XOOPS_CACHE_PATH.'/')) {
+	if (!is_writable(ICMS_CACHE_PATH.'/')) {
 		// attempt to chmod 666
-		if (!chmod(XOOPS_CACHE_PATH.'/', 0777)) {
-			$error[] = sprintf(_MUSTWABLE, "<b>".XOOPS_CACHE_PATH.'/</b>');
+		if (!chmod(ICMS_CACHE_PATH.'/', 0777)) {
+			$error[] = sprintf(_MUSTWABLE, "<b>".ICMS_CACHE_PATH.'/</b>');
 		}
 	}
 

@@ -20,7 +20,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 function SmilesAdmin()
 {
 	$db =& Database::getInstance();
-	$url_smiles = XOOPS_UPLOAD_URL;
+	$url_smiles = ICMS_UPLOAD_URL;
 	$myts =& icms_core_Textsanitizer::getInstance();
 	icms_cp_header();
 	echo '<div class="CPbigTitle" style="background-image: url('.XOOPS_URL.'/modules/system/admin/smilies/images/smilies_big.png)">'._AM_SMILESCONTROL.'</div><br />';

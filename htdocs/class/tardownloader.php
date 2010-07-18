@@ -100,7 +100,7 @@ class XoopsTarDownloader extends XoopsDownloader
 	 **/
 	function addFileData(&$data, $filename, $time=0)
 	{
-		$dummyfile = XOOPS_CACHE_PATH.'/dummy_'.time().'.html';
+		$dummyfile = ICMS_CACHE_PATH.'/dummy_'.time().'.html';
 		$fp = fopen($dummyfile, 'w');
 		fwrite($fp, $data);
 		fclose($fp);
@@ -128,7 +128,7 @@ class XoopsTarDownloader extends XoopsDownloader
 	 **/
 	function addBinaryFileData(&$data, $filename, $time=0)
 	{
-		$dummyfile = XOOPS_CACHE_PATH.'/dummy_'.time().'.html';
+		$dummyfile = ICMS_CACHE_PATH.'/dummy_'.time().'.html';
 		$fp = fopen($dummyfile, 'wb');
 		fwrite($fp, $data);
 		fclose($fp);
