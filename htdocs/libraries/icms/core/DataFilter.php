@@ -9,7 +9,7 @@
  * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
  * @version      $Id: DataFilter.php 19858 2010-07-15 12:01:13Z m0nty_ $
  **/
-class DataFilter
+class icms_core_DataFilter
 {
 	public function __construct()
 	{
@@ -26,7 +26,7 @@ class DataFilter
 		static $instance;
 		if(!isset($instance))
 		{
-			$instance = new DataFilter();
+			$instance = new icms_core_DataFilter();
 		}
 		return $instance;
 	}
@@ -43,8 +43,8 @@ class DataFilter
 	{
 		if($icmsConfigPurifier['enable_purifier'] !== 0)
 		{
-			include_once ICMS_ROOT_PATH.'/class/icms_HTMLPurifier.php';
-			$html_purifier = &icms_HTMLPurifier::getPurifierInstance();
+//			include_once ICMS_ROOT_PATH.'/class/icms_HTMLPurifier.php';
+			$html_purifier = &icms_core_HTMLFilter::getPurifierInstance();
 
 			$html = $html_purifier->icms_html_purifier($html);
 

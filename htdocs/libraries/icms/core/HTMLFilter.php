@@ -10,10 +10,10 @@
  * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
  * @version       $Id: HTMLFilter.php 19866 2010-07-17 20:00:30Z phoenyx $
 **/
-class HTMLFilter
+class icms_core_HTMLFilter
 {
 	/**
-	 * variable used by HTMLPurifier Library
+	 * variable used by HTML Filter Library
 	 **/
 	public $purifier;
 
@@ -60,7 +60,7 @@ class HTMLFilter
 		static $purify_instance;
 		if(!isset($purify_instance))
 		{
-			$purify_instance = new HTMLFilter();
+			$purify_instance = new icms_core_HTMLFilter();
 		}
 		return $purify_instance;
 	}

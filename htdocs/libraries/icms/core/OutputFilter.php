@@ -9,7 +9,7 @@
  * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
  * @version      $Id: OutputFilter.php 19857 2010-07-15 11:51:18Z m0nty_ $
  **/
-class OutputFilter extends DataFilter
+class icms_core_OutputFilter extends icms_core_DataFilter
 {
 	function __construct()
 	{
@@ -27,7 +27,7 @@ class OutputFilter extends DataFilter
 		static $instance;
 		if(!isset($instance))
 		{
-			$instance = new OutputFilter();
+			$instance = new icms_core_OutputFilter();
 		}
 		return $instance;
 	}
@@ -54,30 +54,30 @@ class OutputFilter extends DataFilter
 			$icmsPreloadHandler = icms_preload_Handler::getInstance();
 		$icmsPreloadHandler->triggerEvent('beforeFilterTextarea', array(&$text, $smiley, $icode, $img, $br));
 
-		$text = DataFilter::htmlSpecialChars($text);
+		$text = icms_core_DataFilter::htmlSpecialChars($text);
 
-		$text = DataFilter::codePreConv($text, $icode); // Ryuji_edit(2003-11-18)
-		$text = DataFilter::makeClickable($text);
+		$text = icms_core_DataFilter::codePreConv($text, $icode); // Ryuji_edit(2003-11-18)
+		$text = icms_core_DataFilter::makeClickable($text);
 		if($smiley != 0)
 		{
-			$text = DataFilter::smiley($text);
+			$text = icms_core_DataFilter::smiley($text);
 		}
 		if($icode != 0)
 		{
 			if($img != 0)
 			{
-				$text = DataFilter::icmsCodeDecode($text);
+				$text = icms_core_DataFilter::icmsCodeDecode($text);
 			}
 			else
 			{
-				$text = DataFilter::icmsCodeDecode($text, 0);
+				$text = icms_core_DataFilter::icmsCodeDecode($text, 0);
 			}
 		}
 		if($br !== 0)
 		{
-			$text = DataFilter::nl2Br($text);
+			$text = icms_core_DataFilter::nl2Br($text);
 		}
-		$text = DataFilter::codeConv($text, $icode, $img);	// Ryuji_edit(2003-11-18)
+		$text = icms_core_DataFilter::codeConv($text, $icode, $img);	// Ryuji_edit(2003-11-18)
 
 		// ################# Preload Trigger afterFilterTextarea ##############
 		$icmsPreloadHandler->triggerEvent('afterFilterTextarea', array(&$text, $smiley, $icode, $img, $br));

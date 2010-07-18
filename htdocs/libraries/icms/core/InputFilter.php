@@ -9,7 +9,7 @@
  * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
  * @version       $Id: InputFilter.php 19866 2010-07-17 20:00:30Z phoenyx $
  **/
-class InputFilter extends DataFilter
+class icms_core_InputFilter extends icms_core_DataFilter
 {
 	function __construct()
 	{
@@ -27,7 +27,7 @@ class InputFilter extends DataFilter
 		static $instance;
 		if(!isset($instance))
 		{
-			$instance = new InputFilter();
+			$instance = new icms_core_InputFilter();
 		}
 		return $instance;
 	}
@@ -49,28 +49,28 @@ class InputFilter extends DataFilter
 			$icmsPreloadHandler = icms_preload_Handler::getInstance();
 		$icmsPreloadHandler->triggerEvent('beforeFilterHTMLarea', array(&$html, $icode, $img));
 
-		$html = DataFilter::codePreConv($html, $icode); // Ryuji_edit(2003-11-18)
-		$html = DataFilter::makeClickable($html);
+		$html = icms_core_DataFilter::codePreConv($html, $icode); // Ryuji_edit(2003-11-18)
+		$html = icms_core_DataFilter::makeClickable($html);
 		if($icode != 0)
 		{
 			if($img != 0)
 			{
-				$html = DataFilter::icmsCodeDecode($html);
+				$html = icms_core_DataFilter::icmsCodeDecode($html);
 			}
 			else
 			{
-				$html = DataFilter::icmsCodeDecode($html, 0);
+				$html = icms_core_DataFilter::icmsCodeDecode($html, 0);
 			}
 		}
 
-		$html = DataFilter::codeConv($html, $icode, $img);
+		$html = icms_core_DataFilter::codeConv($html, $icode, $img);
 
 		$config_handler = icms::handler('icms_config');
 		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
 
 		if($icmsConfigPurifier['enable_purifier'] !== 0)
 		{
-			$html = DataFilter::html_purifier($html);
+			$html = icms_core_DataFilter::html_purifier($html);
 		}
 
 		// ################# Preload Trigger afterFilterHTMLarea ##############
