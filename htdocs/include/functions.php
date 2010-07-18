@@ -136,7 +136,7 @@ function xoops_footer()
  * @todo 		Remove in version 1.4 -  - all occurrences have been removed from the core
  */
 function icms_error_msg($msg, $title='', $render = true){
-	icms_core_Debug::setDeprecated('icms_coreMessage::error', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
+	icms_core_Debug::setDeprecated('icms_core_Message::error', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	return icms_core_Message::error($msg, $title, $render);
 }
 
