@@ -1,15 +1,15 @@
 <?php
 /**
  * Class to filter Data
- * @package      kernel
+ * @package      libraries
  * @subpackage   core
  * @since        1.3
  * @author       vaughan montgomery (vaughan@impresscms.org)
  * @author       ImpressCMS Project
  * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
- * @version      $Id$
+ * @version      $Id: DataFilter.php 19858 2010-07-15 12:01:13Z m0nty_ $
  **/
-class icms_DataFilter
+class DataFilter
 {
 	public function __construct()
 	{
@@ -26,7 +26,7 @@ class icms_DataFilter
 		static $instance;
 		if(!isset($instance))
 		{
-			$instance = new icms_DataFilter();
+			$instance = new DataFilter();
 		}
 		return $instance;
 	}

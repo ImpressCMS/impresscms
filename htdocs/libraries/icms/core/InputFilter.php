@@ -1,18 +1,19 @@
 <?php
 /**
- * Class to filter User Input. Extends icms_DataFilter
- * @package      kernel
+ * Class to filter User Input. Extends DataFilter
+ * @package      libraries
  * @subpackage   core
  * @since        1.3
  * @author       vaughan montgomery (vaughan@impresscms.org)
  * @author       ImpressCMS Project
  * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
- * @version       $Id$
+ * @version       $Id: InputFilter.php 19866 2010-07-17 20:00:30Z phoenyx $
  **/
-class icms_InputFilter extends icms_DataFilter
+class InputFilter extends DataFilter
 {
 	function __construct()
 	{
+		parent::__construct();
 	}
 
 	/**
@@ -26,7 +27,7 @@ class icms_InputFilter extends icms_DataFilter
 		static $instance;
 		if(!isset($instance))
 		{
-			$instance = new icms_InputFilter();
+			$instance = new InputFilter();
 		}
 		return $instance;
 	}
@@ -48,28 +49,28 @@ class icms_InputFilter extends icms_DataFilter
 			$icmsPreloadHandler = icms_preload_Handler::getInstance();
 		$icmsPreloadHandler->triggerEvent('beforeFilterHTMLarea', array(&$html, $icode, $img));
 
-		$html = icms_DataFilter::codePreConv($html, $icode); // Ryuji_edit(2003-11-18)
-		$html = icms_DataFilter::makeClickable($html);
+		$html = DataFilter::codePreConv($html, $icode); // Ryuji_edit(2003-11-18)
+		$html = DataFilter::makeClickable($html);
 		if($icode != 0)
 		{
 			if($img != 0)
 			{
-				$html = icms_DataFilter::icmsCodeDecode($html);
+				$html = DataFilter::icmsCodeDecode($html);
 			}
 			else
 			{
-				$html = icms_DataFilter::icmsCodeDecode($html, 0);
+				$html = DataFilter::icmsCodeDecode($html, 0);
 			}
 		}
 
-		$html = icms_DataFilter::codeConv($html, $icode, $img);
+		$html = DataFilter::codeConv($html, $icode, $img);
 
 		$config_handler = icms::handler('icms_config');
 		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
 
 		if($icmsConfigPurifier['enable_purifier'] !== 0)
 		{
-			$html = icms_DataFilter::html_purifier($html);
+			$html = DataFilter::html_purifier($html);
 		}
 
 		// ################# Preload Trigger afterFilterHTMLarea ##############

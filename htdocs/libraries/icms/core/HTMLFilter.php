@@ -2,12 +2,15 @@
 /**
  * Class to Clean & Filter HTML for various uses.
  * Class uses external HTML Purifier for filtering.
- * @package     core
- * @author      vaughan montgomery (vaughan@impresscms.org)
- * @author      ImpressCMS Project
- * @copyright   (c) 2007-2008 The ImpressCMS Project - www.impresscms.org
- **/
-class icms_HTMLPurifier
+ * @package      libraries
+ * @subpackage   core
+ * @since        1.3
+ * @author       vaughan montgomery (vaughan@impresscms.org)
+ * @author       ImpressCMS Project
+ * @copyright    (c) 2007-2010 The ImpressCMS Project - www.impresscms.org
+ * @version       $Id: HTMLFilter.php 19866 2010-07-17 20:00:30Z phoenyx $
+**/
+class HTMLFilter
 {
 	/**
 	 * variable used by HTMLPurifier Library
@@ -33,7 +36,7 @@ class icms_HTMLPurifier
 	/**
 	 * Constructor
 	 */
-/*	public function icms_HTMLPurifier()
+/*	public function HTMLFilter()
 	{
 		$config_handler = icms::handler('icms_config');
 		$icmsConfigPurifier = $config_handler->getConfigsByCat(ICMS_CONF_PURIFIER);
@@ -57,7 +60,7 @@ class icms_HTMLPurifier
 		static $purify_instance;
 		if(!isset($purify_instance))
 		{
-			$purify_instance = new icms_HTMLPurifier();
+			$purify_instance = new HTMLFilter();
 		}
 		return $purify_instance;
 	}
