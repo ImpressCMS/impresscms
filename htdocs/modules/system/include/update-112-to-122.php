@@ -68,6 +68,9 @@
 	if ($dbVersion < $newDbVersion) {
 		if (is_writable ( ICMS_PLUGINS_PATH ) || (is_dir(ICMS_ROOT_PATH . '/plugins/preloads') && is_writable ( ICMS_ROOT_PATH . '/plugins/preloads' ))) {
 			if (is_dir ( ICMS_ROOT_PATH . '/preload' )) {
+				/* Remove these 2 files so they don't overwrite the updated versions provided in 1.3 */
+				icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . '/preload/customtag.php');
+				icms_core_Filesystem::deleteFile(ICMS_ROOT_PATH . '/preload/userinfo.php');
 				if (icms_core_Filesystem::copyRecursive ( ICMS_ROOT_PATH . '/preload', ICMS_ROOT_PATH . '/plugins/preloads' )) {
 					icms_unlinkRecursive ( ICMS_ROOT_PATH . '/preload' );
 				} else {
@@ -623,10 +626,9 @@
 	}
 
 	if (!$abortUpdate) $newDbVersion = 37;
-	/* moving the images of the image manager from uploads to the new folder
-	 */
+	/* moving the images of the image manager from uploads to the new folder */
 	if ($dbVersion < $newDbVersion) {
-		if (is_writable ( ICMS_IMANAGER_FOLDER_PATH )) {
+		if (is_writable(ICMS_IMANAGER_FOLDER_PATH)) {
 
 			$result = $icmsDB->query ( 'SELECT * FROM `' . $icmsDB->prefix ( 'imagecategory' ) . '`' );
 			while ($row = $icmsDB->fetchArray ( $result )) {
@@ -635,25 +637,49 @@
 				} else {
 					$new_folder = $row ['imgcat_foldername '];
 				}
-				if (icms_core_Filesystem::mkdir ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder )) {
+				/* attempt to create the new folder for the image category */
+				if (FALSE === icms_core_Filesystem::mkdir(ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder)) {
+					$newDbVersion = 36;
+					echo '<br />'.sprintf('Unable to create category folder - %s', $new_folder);
+					$abortUpdate = true;
 
-					$icmsDB->queryF ( 'UPDATE `' . $icmsDB->prefix ( 'imagecategory' ) . '` SET imgcat_foldername="' . $new_folder . '" WHERE imgcat_id=' . $row ['imgcat_id'] );
-					$result1 = $icmsDB->query ( 'SELECT * FROM `' . $icmsDB->prefix ( 'image' ) . '` WHERE imgcat_id=' . $row ['imgcat_id'] );
-					while (( $row1 = $icmsDB->fetchArray ( $result1 ) ) && ! $abortUpdate) {
-						if (! file_exists ( ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] ) && file_exists ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] )) {
-							if (icms_core_Filesystem::copyRecursive ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'], ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'] )) {
-								@unlink ( ICMS_UPLOAD_PATH . '/' . $row1 ['image_name'] );
+				} else {
+					$moved = array();
+					/* Get all the images in the category */
+					$result1 = $icmsDB->query(
+						'SELECT * FROM `' . $icmsDB->prefix('image')
+						. '` WHERE imgcat_id=' . $row['imgcat_id']
+					);
+					/* copy all the images in the category to the new folder */
+					while (($row1 = $icmsDB->fetchArray($result1)) && ! $abortUpdate) {
+						if (! file_exists(ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1 ['image_name'])
+							&& file_exists(ICMS_UPLOAD_PATH . '/' . $row1['image_name'])
+						) {
+							if (icms_core_Filesystem::copyRecursive(
+								ICMS_UPLOAD_PATH . '/' . $row1['image_name'],
+								ICMS_IMANAGER_FOLDER_PATH . '/' . $new_folder . '/' . $row1['image_name'] )
+							) {
+								$moved[] = $row1['image_name'];
  							} else {
 								$newDbVersion = 36;
-								echo '<br />'.sprintf('Unable to copy image - %s', $row1['image_name']);
+								echo '<br />' . sprintf('Unable to copy image - %s', $row1['image_name']);
 								$abortUpdate = true;
 							}
 						}
 					}
-				} else {
-					$newDbVersion = 36;
-					echo '<br />'.sprintf('Unable to create category folder - %s', $new_folder);
-					$abortUpdate = true;
+					/* if all the images were successfully copied for this category - update the category folder and
+					 * delete the old imags
+					 */
+					if (FALSE === $abortUpdate) {
+						$icmsDB->queryF(
+							'UPDATE `' . $icmsDB->prefix('imagecategory')
+							. '` SET imgcat_foldername="' . $new_folder
+							. '" WHERE imgcat_id=' . $row['imgcat_id']
+						);
+						foreach ($moved as $image) {
+							@unlink(ICMS_UPLOAD_PATH . '/' . $image);
+						}
+					}
 				}
 			}
 			/**
