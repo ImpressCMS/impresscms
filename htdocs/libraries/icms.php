@@ -62,7 +62,7 @@ abstract class icms {
 		'www' => array(), 'modules' => array(), 'themes' => array(),
 	);
 	/** @var array */
-	static public $urls=false;
+	static public $urls = false;
 
 	/**
 	 * array of handlers
@@ -74,12 +74,12 @@ abstract class icms {
 	 * Initialize ImpressCMS before bootstrap
 	 */
 	static public function setup() {
-		self::$paths['www']		= array(ICMS_ROOT_PATH, ICMS_URL );
-		self::$paths['modules']	= array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules' );
-		self::$paths['themes']	= array(ICMS_ROOT_PATH . '/themes', ICMS_URL . '/themes' );
+		self::$paths['www']		= array(ICMS_ROOT_PATH, ICMS_URL);
+		self::$paths['modules']	= array(ICMS_ROOT_PATH . '/modules', ICMS_URL . '/modules');
+		self::$paths['themes']	= array(ICMS_ROOT_PATH . '/themes', ICMS_URL . '/themes');
 		self::buildRelevantUrls();
 		// Initialize the autoloader
-		require_once(dirname(__FILE__ )  . '/icms/Autoloader.php' );
+		require_once dirname(__FILE__ )  . '/icms/Autoloader.php';
 		icms_Autoloader::setup();
 	}
 	/**
@@ -128,7 +128,7 @@ abstract class icms {
 	 * @return 	string
 	 */
 	static public function url($url) {
-		return (false !== strpos($url, '://' ) ? $url : self::path($url, true ) );
+		return (false !== strpos($url, '://' ) ? $url : self::path($url, true ));
 	}
 	/**
 	 * Build an URL with the specified request params
@@ -163,7 +163,7 @@ abstract class icms {
 	 * @return		object		$inst		The instance of the object that was created
 	 */
 	static public function &handler($name, $optional = false ) {
-		if(!isset(self::$handlers[$name])) {
+		if (!isset(self::$handlers[$name])) {
 			$class = $name . "Handler";
 			if (!class_exists($class)) {
 				$class = $name . "_Handler";
@@ -225,7 +225,5 @@ abstract class icms {
 		}
 		return self::$urls;
 	}
-
-
 }
 
