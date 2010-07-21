@@ -46,10 +46,10 @@ class icms_preload_Handler {
 	 * @return	void
 	 */
 	public function __construct() {
-		$preloadFilesArray = IcmsLists::getFileListAsArray(ICMS_PRELOAD_PATH);
+		$preloadFilesArray = IcmsLists::getPhpListAsArray(ICMS_PRELOAD_PATH);
 		foreach ($preloadFilesArray as $filename) {
 			// exclude index.html
-			if ($filename != 'index.html' && !class_exists($this->getClassName($filename))) {
+			if (!class_exists($this->getClassName($filename))) {
 				$this->_preloadFilesArray[] = $filename;
 				$this->addPreloadEvents($filename);
 			}
@@ -72,13 +72,14 @@ class icms_preload_Handler {
 	 */
 	public function addPreloadEvents($filename, $module = false) {
 		if ($module) {
-			$filepath = ICMS_ROOT_PATH . "/modules/$module/preload/$filename";
+			$filepath = ICMS_ROOT_PATH . "/modules/$module/preload/$filename.php";
 		} else {
-			$filepath = ICMS_PRELOAD_PATH . "/$filename";
+			$filepath = ICMS_PRELOAD_PATH . "/$filename.php";
 		}
 		include_once $filepath;
 
 		$classname = $this->getClassName($filename);
+
 		if (class_exists($classname)) {
 			$preloadItem = new $classname();
 
