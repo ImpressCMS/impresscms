@@ -21,7 +21,8 @@
  * @package		icms_core
  * @subpackage	icms_core_Kernel
  * @since 		1.1
- * @deprecated
+ * @deprecated	This should not even end up in the 1.3 final package - it was introduced during the refactoring
+ * @todo		Remove this before 1.3 final
  */
 class icms_core_Kernel extends icms_core_Object {
 
