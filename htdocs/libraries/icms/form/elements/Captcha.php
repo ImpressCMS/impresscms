@@ -12,17 +12,15 @@
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
  * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package		FormCaptcha
- * @since		XOOPS
- * @author		http://www.xoops.org/ The XOOPS Project
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
  * @author		Taiwen Jiang (phppp or D.J.) <php_pp@hotmail.com>
- * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: formcaptcha.php 8685 2009-05-02 15:00:58Z pesianstranger $
+ * @author		Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
+ * @version		$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
-}
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /*
  * Usage
@@ -44,7 +42,7 @@ if (!defined('ICMS_ROOT_PATH')) {
 
 class icms_form_elements_Captcha extends icms_form_Element {
 
-	var $_captchaHandler;
+	private $_captchaHandler;
 
 	/**
 	 * @param string	$caption	Caption of the form element, default value is defined in captcha/language/
@@ -57,9 +55,14 @@ class icms_form_elements_Captcha extends icms_form_Element {
 	 * @param int		$backgroundnum	Number of background images in image mode
 	 *
 	 */
-	function icms_form_elements_Captcha($caption = '', $name = 'icmscaptcha', $skipmember = null, $numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null, $backgroundnum = null) {
+	public function __construct($caption = '', $name = 'icmscaptcha', $skipmember = null,
+			$numchar = null, $minfontsize = null, $maxfontsize = null, $backgroundtype = null,
+			$backgroundnum = null
+			) {
 		$this->_captchaHandler =& icms_captcha_Object::instance();
-		$this->_captchaHandler->init($name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum);
+		$this->_captchaHandler->init(
+			$name, $skipmember, $numchar, $minfontsize, $maxfontsize, $backgroundtype, $backgroundnum
+		);
 		if (!$this->_captchaHandler->active) {
 			$this->setHidden();
 		} else {
@@ -74,17 +77,18 @@ class icms_form_elements_Captcha extends icms_form_Element {
 	 * @param   string $val Config Value
 	 * @return  object reference to the icms_captcha_Object Object (@link icms_captcha_Object)
 	 */
-	function setConfig($name, $val)
-	{
+	public function setConfig($name, $val) {
 		return $this->_captchaHandler->setConfig($name, $val);
 	}
 
-	function render()
-	{
+	/**
+	 *
+	 * @see htdocs/libraries/icms/form/icms_form_Element::render()
+	 */
+	public function render() {
 		if (!$this->isHidden()) {
 			return $this->_captchaHandler->render();
 		}
 	}
 }
 
-?>

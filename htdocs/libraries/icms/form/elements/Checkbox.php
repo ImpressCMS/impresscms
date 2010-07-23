@@ -2,58 +2,45 @@
 /**
  * Creates a checkbox form attribut
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	XoopsForms
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: formcheckbox.php 19118 2010-03-27 17:46:23Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
+ * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) {
-	die("ImpressCMS root path not defined");
-}
-/**
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+
+
 /**
  * One or more Checkbox(es)
  *
- * @package     kernel
- * @subpackage  form
+ * @category	ICMS
+ * @package     Form
+ * @subpackage  Elements
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_form_elements_Checkbox extends icms_form_Element {
 
 	/**
-	 * Availlable options
+	 * Available options
 	 * @var array
-	 * @access	private
 	 */
-	var $_options = array();
+	private $_options = array();
 
 	/**
 	 * pre-selected values in array
 	 * @var	array
-	 * @access	private
 	 */
-	var $_value = array();
+	private $_value = array();
 
 	/**
 	 * HTML to seperate the elements
 	 * @var	string
-	 * @access  private
 	 */
-	var $_delimeter;
+	private $_delimeter;
 
 	/**
 	 * Constructor
@@ -62,7 +49,7 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	 * @param	string  $name
 	 * @param	mixed   $value  Either one value as a string or an array of them.
 	 */
-	function icms_form_elements_Checkbox($caption, $name, $value = null, $delimeter = "&nbsp;"){
+	public function __construct($caption, $name, $value = null, $delimeter = "&nbsp;") {
 		$this->setCaption($caption);
 		$this->setName($name);
 		if (isset($value)) {
@@ -77,7 +64,7 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	 * @param	bool    $encode   Would you like to sanitize the text?
 	 * @return	array
 	 */
-	function getValue($encode = false) {
+	public function getValue($encode = false) {
 		if (!$encode) {
 			return $this->_value;
 		}
@@ -93,7 +80,7 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	 *
 	 * @param	array
 	 */
-	function setValue($value) {
+	public function setValue($value) {
 		$this->_value = array();
 		if (is_array($value)) {
 			foreach ($value as $v) {
@@ -110,7 +97,7 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	 * @param	string  $value
 	 * @param	string  $name
 	 */
-	function addOption($value, $name = "") {
+	public function addOption($value, $name = "") {
 		if ($name != "") {
 			$this->_options[$value] = $name;
 		} else {
@@ -123,9 +110,9 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	 *
 	 * @param	array   $options    Associative array of value->name pairs
 	 */
-	function addOptionArray($options) {
-		if ( is_array($options) ) {
-			foreach ( $options as $k => $v ) {
+	public function addOptionArray($options) {
+		if (is_array($options)) {
+			foreach ($options as $k => $v) {
 				$this->addOption($k, $v);
 			}
 		}
@@ -137,13 +124,18 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	 * @param	int     $encode     To sanitize the text? potential values: 0 - skip; 1 - only for value; 2 - for both value and name
 	 * @return	array   Associative array of value->name pairs
 	 */
-	function getOptions($encode = false) {
+	public function getOptions($encode = false) {
 		if (!$encode) {
 			return $this->_options;
 		}
 		$value = array();
 		foreach ($this->_options as $val => $name) {
-			$value[ $encode ? htmlspecialchars($val, ENT_QUOTES) : $val ] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
+			$value[$encode
+					? htmlspecialchars($val, ENT_QUOTES)
+					: $val]
+					= ($encode > 1)
+						? htmlspecialchars($name, ENT_QUOTES)
+						: $name;
 		}
 		return $value;
 	}
@@ -154,8 +146,10 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string  The delimiter
 	 */
-	function getDelimeter($encode = false) {
-		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
+	public function getDelimeter($encode = false) {
+		return $encode
+				? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter))
+				: $this->_delimeter;
 	}
 
 	/**
@@ -163,25 +157,24 @@ class icms_form_elements_Checkbox extends icms_form_Element {
 	 *
 	 * @return	string
 	 */
-	function render() {
+	public function render() {
 		$ret = "";
 		$ele_name = $this->getName();
 		$ele_value = $this->getValue();
 		$ele_options = $this->getOptions();
 		$ele_extra = $this->getExtra();
 		$ele_delimeter = $this->getDelimeter();
-		if ( count($ele_options) > 1 && substr($ele_name, -2, 2) != "[]" ) {
-			$ele_name = $ele_name."[]";
+		if (count($ele_options) > 1 && substr($ele_name, -2, 2) != "[]") {
+			$ele_name = $ele_name . "[]";
 			$this->setName($ele_name);
 		}
-		foreach ( $ele_options as $value => $name ) {
-			$ret .= "<input type='checkbox' name='".$ele_name."' value='".htmlspecialchars($value, ENT_QUOTES)."'";
+		foreach ($ele_options as $value => $name) {
+			$ret .= "<input type='checkbox' name='" . $ele_name . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
 			if (count($ele_value) > 0 && in_array($value, $ele_value)) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= $ele_extra." />".$name.$ele_delimeter."\n";
+			$ret .= $ele_extra . " />" . $name . $ele_delimeter . "\n";
 		}
 		return $ret;
 	}
 }
-?>

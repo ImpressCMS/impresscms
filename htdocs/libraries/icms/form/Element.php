@@ -2,40 +2,26 @@
 /**
  * Creates a basic form element (Base Class)
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	XoopsForms
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: formelement.php 19118 2010-03-27 17:46:23Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Element
+ * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-/**
- *
- *
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @author      Taiwen Jiang    <phppp@users.sourceforge.net>
- * @copyright	copyright (c) 2000-2007 XOOPS.org
- */
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * Abstract base class for form elements
  *
- * @author	Kazumi Ono	<onokazu@xoops.org>
- * @author  Taiwen Jiang    <phppp@users.sourceforge.net>
- * @copyright	copyright (c) 2000-2007 XOOPS.org
- *
- * @package     kernel
- * @subpackage  form
+ * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @author		Taiwen Jiang    <phppp@users.sourceforge.net>
+ * @category	ICMS
+ * @package     Form
+ * @subpackage	Element
  */
-class icms_form_Element {
+abstract class icms_form_Element {
 
 	/**
 	 * Javascript performing additional validation of this element data
@@ -47,7 +33,7 @@ class icms_form_Element {
 	 *
 	 * @var array()
 	 */
-	var $customValidationCode = array();
+	public $customValidationCode = array();
 
 	/**#@+
 	 * @access private
@@ -56,56 +42,56 @@ class icms_form_Element {
 	 * "name" attribute of the element
 	 * @var string
 	 */
-	var $_name;
+	private $_name;
 
 	/**
 	 * caption of the element
 	 * @var	string
 	 */
-	var $_caption;
+	private $_caption;
 
 	/**
 	 * Accesskey for this element
 	 * @var	string
 	 */
-	var $_accesskey = '';
+	private $_accesskey = '';
 
 	/**
 	 * HTML classes for this element
 	 * @var	array
 	 */
-	var $_class = array();
+	private $_class = array();
 
 	/**
 	 * hidden?
 	 * @var	bool
 	 */
-	var $_hidden = false;
+	private $_hidden = false;
 
 	/**
 	 * extra attributes to go in the tag
 	 * @var	array
 	 */
-	var $_extra = array();
+	private $_extra = array();
 
 	/**
 	 * required field?
 	 * @var	bool
 	 */
-	var $_required = false;
+	private $_required = false;
 
 	/**
 	 * description of the field
 	 * @var	string
 	 */
-	var $_description = "";
+	private $_description = "";
 	/**#@-*/
 
 	/**
 	 * constructor
 	 *
 	 */
-	function icms_form_Element(){
+	public function __construct() {
 		exit(_CORE_CLASSNOTINSTANIATED);
 	}
 
@@ -114,8 +100,7 @@ class icms_form_Element {
 	 *
 	 * @return	bool false
 	 */
-	function isContainer()
-	{
+	public function isContainer() {
 		return false;
 	}
 
@@ -124,7 +109,7 @@ class icms_form_Element {
 	 *
 	 * @param	string  $name   "name" attribute for the element
 	 */
-	function setName($name) {
+	public function setName($name) {
 		$this->_name = trim($name);
 	}
 
@@ -134,7 +119,7 @@ class icms_form_Element {
 	 * @param   bool    encode?
 	 * @return  string  "name" attribute
 	 */
-	function getName($encode = true) {
+	public function getName($encode = true) {
 		if (false != $encode) {
 			return str_replace("&amp;", "&", htmlspecialchars($this->_name, ENT_QUOTES));
 		}
@@ -146,7 +131,7 @@ class icms_form_Element {
 	 *
 	 * @param	string  $key   "accesskey" attribute for the element
 	 */
-	function setAccessKey($key) {
+	public function setAccessKey($key) {
 		$this->_accesskey = trim($key);
 	}
 
@@ -155,7 +140,7 @@ class icms_form_Element {
 	 *
 	 * @return 	string  "accesskey" attribute value
 	 */
-	function getAccessKey() {
+	public function getAccessKey() {
 		return $this->_accesskey;
 	}
 
@@ -165,10 +150,13 @@ class icms_form_Element {
 	 * @param	string  $str   String where to search the accesskey occurence
 	 * @return 	string  Enhanced string with the 1st occurence of accesskey underlined
 	 */
-	function getAccessString( $str ) {
+	public function getAccessString($str) {
 		$access = $this->getAccessKey();
-		if ( !empty($access) && ( false !== ($pos = strpos($str, $access)) ) ) {
-			return htmlspecialchars(substr($str, 0, $pos), ENT_QUOTES) . '<span style="text-decoration:underline">' . htmlspecialchars(substr($str, $pos, 1), ENT_QUOTES) . '</span>' . htmlspecialchars(substr($str, $pos+1), ENT_QUOTES);
+		if (!empty($access) && (false !== ($pos = strpos($str, $access)))) {
+			return htmlspecialchars(substr($str, 0, $pos), ENT_QUOTES)
+				. '<span style="text-decoration:underline">'
+				. htmlspecialchars(substr($str, $pos, 1), ENT_QUOTES)
+				. '</span>' . htmlspecialchars(substr($str, $pos+1), ENT_QUOTES);
 		}
 		return htmlspecialchars($str, ENT_QUOTES);
 	}
@@ -178,9 +166,9 @@ class icms_form_Element {
 	 *
 	 * @param	string  $key   "class" attribute for the element
 	 */
-	function setClass($class) {
+	public function setClass($class) {
 		$class = trim($class);
-		if ( !empty($class) ) {
+		if (!empty($class)) {
 			$this->_class[] = $class;
 		}
 	}
@@ -190,8 +178,8 @@ class icms_form_Element {
 	 *
 	 * @return 	string  "class" attribute value
 	 */
-	function getClass() {
-		if( empty($this->_class) ) return '';
+	public function getClass() {
+		if(empty($this->_class)) return '';
 		$class = array();
 		foreach ($this->_class as $class) {
 			$class[] = htmlspecialchars($class, ENT_QUOTES);
@@ -214,7 +202,7 @@ class icms_form_Element {
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getCaption($encode = false) {
+	public function getCaption($encode = false) {
 		return $encode ? htmlspecialchars($this->_caption, ENT_QUOTES) : $this->_caption;
 	}
 
@@ -223,7 +211,7 @@ class icms_form_Element {
 	 *
 	 * @param	string  $description
 	 */
-	function setDescription($description) {
+	public function setDescription($description) {
 		$this->_description = trim($description);
 	}
 
@@ -233,15 +221,17 @@ class icms_form_Element {
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getDescription($encode = false) {
-		return $encode ? htmlspecialchars($this->_description, ENT_QUOTES) : $this->_description;
+	public function getDescription($encode = false) {
+		return $encode
+				? htmlspecialchars($this->_description, ENT_QUOTES)
+				: $this->_description;
 	}
 
 	/**
 	 * flag the element as "hidden"
 	 *
 	 */
-	function setHidden() {
+	public function setHidden() {
 		$this->_hidden = true;
 	}
 
@@ -250,7 +240,7 @@ class icms_form_Element {
 	 *
 	 * @return	bool
 	 */
-	function isHidden() {
+	public function isHidden() {
 		return $this->_hidden;
 	}
 
@@ -259,7 +249,7 @@ class icms_form_Element {
 	 *
 	 * @return	bool
 	 */
-	function isRequired() {
+	public function isRequired() {
 		return $this->_required;
 	}
 
@@ -273,9 +263,9 @@ class icms_form_Element {
 	 * @param   string  $replace If true, passed string will replace current content otherwise it will be appended to it
 	 * @return	array   New content of the extra string
 	 */
-	function setExtra($extra, $replace = false) {
-		if ( $replace) {
-			$this->_extra = array( trim($extra) );
+	public function setExtra($extra, $replace = false) {
+		if ($replace) {
+			$this->_extra = array(trim($extra));
 		} else {
 			$this->_extra[] = trim($extra);
 		}
@@ -288,7 +278,7 @@ class icms_form_Element {
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getExtra($encode = false) {
+	public function getExtra($encode = false) {
 		if (!$encode) {
 			return implode(' ', $this->_extra);
 		}
@@ -296,7 +286,7 @@ class icms_form_Element {
 		foreach ($this->_extra as $val) {
 			$value[] = str_replace('>', '&gt;', str_replace('<', '&lt;', $val));
 		}
-		return empty($value) ? "" : " ".implode(' ', $value);
+		return empty($value) ? "" : " " . implode(' ', $value);
 	}
 
 	/**
@@ -304,17 +294,19 @@ class icms_form_Element {
 	 *
 	 * @see XoopsForm::renderValidationJS
 	 */
-	function renderValidationJS() {
+	public function renderValidationJS() {
 		// render custom validation code if any
-		if ( !empty( $this->customValidationCode ) ) {
-			return implode( "\n", $this->customValidationCode );
+		if (!empty($this->customValidationCode)) {
+			return implode("\n", $this->customValidationCode);
 			// generate validation code if required
 		} elseif ($this->isRequired()) {
 			$eltname    = $this->getName();
 			$eltcaption = $this->getCaption();
-			$eltmsg = empty($eltcaption) ? sprintf( _FORM_ENTER, $eltname ) : sprintf( _FORM_ENTER, $eltcaption );
-			$eltmsg = str_replace('"', '\"', stripslashes( $eltmsg ) );
-			return "if ( myform.{$eltname}.value == \"\" ) { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
+			$eltmsg = empty($eltcaption)
+						? sprintf(_FORM_ENTER, $eltname)
+						: sprintf(_FORM_ENTER, $eltcaption);
+			$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
+			return "if (myform.{$eltname}.value == \"\") { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
 		}
 		return '';
 	}
@@ -325,6 +317,5 @@ class icms_form_Element {
 	 * This method is abstract and must be overwritten by the child classes.
 	 * @abstract
 	 */
-	function render(){
-	}
+	abstract public function render();
 }

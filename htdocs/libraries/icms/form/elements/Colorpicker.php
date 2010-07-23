@@ -8,32 +8,26 @@
  * @copyright	http://www.xoops.org/ The XOOPS Project
  * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
- * @author       Zoullou <webmaster@zoullou.org>
- * @since        Xoops 2.0.15
- * @version		$Id: formcolorpicker.php 19118 2010-03-27 17:46:23Z skenow $
- * @package 		XoopsForms
- * @subpackage 	ColorPicker
+ * @license		LICENSE.txt
+ * @license		http://www.fsf.org/copyleft/gpl.html GNU public license
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
+ * @author		Zoullou <webmaster@zoullou.org>
+ * @since		Xoops 2.0.15
+ * @version		$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-/**
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
 /**
  * Color Picker
  *
- * @package     kernel
- * @subpackage  form
+ * @category	ICMS
+ * @package     Form
+ * @subpackage	Elements
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
  */
 class icms_form_elements_Colorpicker extends XoopsFormText {
 
@@ -43,22 +37,22 @@ class icms_form_elements_Colorpicker extends XoopsFormText {
 	 * @param	string  $name     Name of the element
 	 * @param	string  $value    Value of the element
 	 */
-	function icms_form_elements_Colorpicker($caption, $name, $value = "#FFFFFF") {
-		$this->XoopsFormText( $caption, $name, 9, 7, $value );
+	public function __construct($caption, $name, $value = "#FFFFFF") {
+		$this->XoopsFormText($caption, $name, 9, 7, $value);
 	}
 
 	/**
 	 * Render the color picker
 	 * @return  $string	rendered color picker HTML
 	 */
-	function render() {
-		if (isset ( $GLOBALS ['xoTheme'] )) {
-			$GLOBALS ['xoTheme']->addScript ( 'include/color-picker.js' );
+	public function render() {
+		if (isset($GLOBALS ['xoTheme'])) {
+			$GLOBALS ['xoTheme']->addScript('include/color-picker.js');
 		} else {
 			echo "<script type=\"text/javascript\" src=\"" . ICMS_URL . "/include/color-picker.js\"></script>";
 		}
-		$this->setExtra ( ' style="background-color:' . $this->getValue () . ';"' );
-		return parent::render() . "\n<input type='reset' value=' ... ' onclick=\"return TCP.popup('" . ICMS_URL . "/include/',document.getElementById('" . $this->getName () . "'));\">\n";
+		$this->setExtra(' style="background-color:' . $this->getValue() . ';"');
+		return parent::render() . "\n<input type='reset' value=' ... ' onclick=\"return TCP.popup('" . ICMS_URL . "/include/',document.getElementById('" . $this->getName() . "'));\">\n";
 	}
 
 	/**
@@ -66,13 +60,13 @@ class icms_form_elements_Colorpicker extends XoopsFormText {
 	 *
 	 * @return	string	Element validation Javascript
 	 */
-	function renderValidationJS() {
-		$eltname = $this->getName ();
-		$eltcaption = $this->getCaption ();
-		$eltmsg = empty ( $eltcaption ) ? sprintf ( _FORM_ENTER, $eltname ) : sprintf ( _FORM_ENTER, $eltcaption );
-		$eltmsg = str_replace ( '"', '\"', stripslashes ( $eltmsg ) );
+	public function renderValidationJS() {
+		$eltname = $this->getName();
+		$eltcaption = $this->getCaption();
+		$eltmsg = empty($eltcaption) ? sprintf(_FORM_ENTER, $eltname) : sprintf(_FORM_ENTER, $eltcaption);
+		$eltmsg = str_replace('"', '\"', stripslashes($eltmsg));
 		$eltmsg = strip_tags($eltmsg);
-		return "if ( myform.{$eltname}.value == \"\" ) { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
+		return "if (myform.{$eltname}.value == \"\") { window.alert(\"{$eltmsg}\"); myform.{$eltname}.focus(); return false; }";
 	}
 
 }

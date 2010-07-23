@@ -2,35 +2,23 @@
 /**
  * Creates a button form attribut
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	XoopsForms
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: formbutton.php 19118 2010-03-27 17:46:23Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
+ * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-/**
- *
- *
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
+
 /**
  * A button
  *
- * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- *
- * @package     kernel
- * @subpackage  form
+ * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @category	ICMS
+ * @package     Form
+ * @subpackage  Elements
  */
 class icms_form_elements_Button extends icms_form_Element {
 
@@ -39,14 +27,14 @@ class icms_form_elements_Button extends icms_form_Element {
 	 * @var	string
 	 * @access	private
 	 */
-	var $_value;
+	private $_value;
 
 	/**
 	 * Type of the button. This could be either "button", "submit", or "reset"
 	 * @var	string
 	 * @access	private
 	 */
-	var $_type;
+	private $_type;
 
 	/**
 	 * Constructor
@@ -57,7 +45,7 @@ class icms_form_elements_Button extends icms_form_Element {
 	 * @param	string  $type       Type of the button.
 	 * This could be either "button", "submit", or "reset"
 	 */
-	function icms_form_elements_Button($caption, $name, $value = "", $type = "button") {
+	public function __construct($caption, $name, $value = "", $type = "button") {
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_type = $type;
@@ -70,7 +58,7 @@ class icms_form_elements_Button extends icms_form_Element {
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getValue($encode = false) {
+	public function getValue($encode = false) {
 		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
 	}
 
@@ -79,7 +67,7 @@ class icms_form_elements_Button extends icms_form_Element {
 	 *
 	 * @return	string
 	 */
-	function setValue($value) {
+	public function setValue($value) {
 		$this->_value = $value;
 	}
 
@@ -88,8 +76,8 @@ class icms_form_elements_Button extends icms_form_Element {
 	 *
 	 * @return	string
 	 */
-	function getType() {
-		return in_array( strtolower($this->_type), array("button", "submit", "reset") ) ? $this->_type : "button";
+	public function getType() {
+		return in_array(strtolower($this->_type), array("button", "submit", "reset")) ? $this->_type : "button";
 	}
 
 	/**
@@ -97,7 +85,7 @@ class icms_form_elements_Button extends icms_form_Element {
 	 *
 	 * @return	string
 	 */
-	function render(){
+	public function render() {
 		return "<input type='".$this->getType()."' class='formButton' name='".$this->getName()."'  id='".$this->getName()."' value='".$this->getValue()."'".$this->getExtra()." />";
 	}
 }
