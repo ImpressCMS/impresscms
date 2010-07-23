@@ -10,7 +10,7 @@
  * @since		XOOPS
  * @author		http://www.xoops.org The XOOPS Project
  * @author	   Sina Asghari (aka stranger) <pesian_stranger@users.sourceforge.net>
- * @version		$Id: formdhtmltextarea.php 19780 2010-07-12 19:38:23Z phoenyx $
+ * @version		$Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) {

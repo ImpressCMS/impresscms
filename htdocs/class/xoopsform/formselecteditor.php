@@ -43,7 +43,7 @@ class XoopsFormSelectEditor extends icms_form_elements_Tray
 			$value = $icmsConfig['editor_default'];
 		}
 
-		$this->icms_form_elements_Tray(_SELECT);
+		parent::__construct(_SELECT);
 		$edtlist = IcmsLists::getEditorsList();
 		$option_select = new XoopsFormSelect("", $name, $value);
 		$querys = preg_replace('/editor=(.*?)&/','',$_SERVER['QUERY_STRING']);

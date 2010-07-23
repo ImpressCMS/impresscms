@@ -51,12 +51,12 @@ class IcmsFormSet_passwordElement extends icms_form_elements_Tray {
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
-	function IcmsFormSet_passwordElement($object, $key){
+	function __construct($object, $key){
 
 		$var = $object->vars[$key];
 		$control = $object->controls[$key];
 
-		$this->icms_form_elements_Tray($var['form_caption'] . '<br />' . _US_TYPEPASSTWICE, ' ', $key . '_password_tray');
+		parent::__construct($var['form_caption'] . '<br />' . _US_TYPEPASSTWICE, ' ', $key . '_password_tray');
 
 		$password_box1 = new icms_form_elements_Password('', $key . '1', 10, 32);
 		$this->addElement($password_box1);

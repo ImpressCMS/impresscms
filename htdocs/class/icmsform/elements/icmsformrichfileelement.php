@@ -25,9 +25,9 @@ class IcmsFormRichFileElement extends icms_form_elements_Tray {
 	 * @param	string  $key            key of the variable in the passed object
 	 * @param	object  $object         the passed object (target object) (@todo which object)
 	 */
-	function IcmsFormRichFileElement($form_caption, $key, $object) {
+	function __construct($form_caption, $key, $object) {
 
-		$this->icms_form_elements_Tray( $form_caption, '&nbsp;' );
+		parent::__construct( $form_caption, '&nbsp;' );
 		if($object->getVar('url') != '' ){
 			$caption = $object->getVar('caption') != '' ? $object->getVar('caption') : $object->getVar('url');
 			$this->addElement( new icms_form_elements_Label( '', _CO_ICMS_CURRENT_FILE."<a href='" . str_replace('{ICMS_URL}', ICMS_URL ,$object->getVar('url')) . "' target='_blank' >". $caption."</a><br/><br/>" ) );

@@ -19,12 +19,12 @@ class IcmsFormImageElement extends icms_form_elements_Tray {
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
-	function IcmsFormImageElement($object, $key) {
+	function __construct($object, $key) {
 		$var = $object->vars[$key];
 		$control = $object->getControl($key);
 
 		$object_imageurl = $object->getImageDir();
-		$this->icms_form_elements_Tray( $var['form_caption'], ' ' );
+		parent::__construct( $var['form_caption'], ' ' );
 
 		if (isset($objectArray['image'])){
 			$objectArray['image'] = str_replace('{ICMS_URL}', ICMS_URL, $objectArray['image']);

@@ -20,8 +20,8 @@ class IcmsFormUrlLinkElement extends icms_form_elements_Tray {
 	 * @param	string    $key            the key
 	 * @param	object    $object         reference to targetobject (@todo, which object will be passed here?)
 	 */
-	function IcmsFormUrlLinkElement($form_caption, $key, $object) {
-		$this->icms_form_elements_Tray($form_caption, '&nbsp;' );
+	function __construct($form_caption, $key, $object) {
+		parent::__construct($form_caption, '&nbsp;' );
 
 		$this->addElement( new icms_form_elements_Label( '', '<br/>'._CO_ICMS_URLLINK_URL));
 		$this->addElement(new IcmsFormTextElement($object, 'url_'.$key));

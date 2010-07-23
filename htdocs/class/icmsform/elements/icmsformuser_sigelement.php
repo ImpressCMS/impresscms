@@ -19,12 +19,12 @@ class IcmsFormUser_sigElement extends icms_form_elements_Tray {
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
-	function IcmsFormUser_sigElement($object, $key){
+	function __construct($object, $key){
 
 		$var = $object->vars[$key];
 		$control = $object->controls[$key];
 
-		$this->icms_form_elements_Tray($var['form_caption'], '<br /><br />', $key . '_signature_tray');
+		parent::__construct($var['form_caption'], '<br /><br />', $key . '_signature_tray');
 
 		$signature_textarea = new icms_form_elements_Dhtmltextarea('', $key, $object->getVar($key, 'e'));
 		$this->addElement($signature_textarea);

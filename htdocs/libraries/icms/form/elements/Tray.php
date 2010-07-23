@@ -2,37 +2,23 @@
 /**
  * Creates a form element tray
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	XoopsForms
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: formelementtray.php 19118 2010-03-27 17:46:23Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
+ * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-
-/**
- *
- *
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * A group of form elements
  *
- * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- *
- * @package     kernel
- * @subpackage  form
+ * @author		Kazumi Ono	<onokazu@xoops.org>
+ * @category	ICMS
+ * @package     Form
+ * @subpackage  Elements
  */
 class icms_form_elements_Tray extends icms_form_Element {
 
@@ -41,20 +27,20 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 * @var array
 	 * @access  private
 	 */
-	var $_elements = array();
+	private $_elements = array();
 
 	/**
 	 * required elements
 	 * @var array
 	 */
-	var $_required = array();
+	private $_required = array();
 
 	/**
 	 * HTML to separate the elements
 	 * @var	string
 	 * @access  private
 	 */
-	var $_delimeter;
+	private $_delimeter;
 
 	/**
 	 * constructor
@@ -62,7 +48,7 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 * @param	string  $caption    Caption for the group.
 	 * @param	string  $delimiter  HTML to separate the elements
 	 */
-	function icms_form_elements_Tray($caption, $delimeter = "&nbsp;", $name = "") {
+	public function __construct($caption, $delimeter = "&nbsp;", $name = "") {
 		$this->setName($name);
 		$this->setCaption($caption);
 		$this->_delimeter = $delimeter;
@@ -73,8 +59,7 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 *
 	 * @return	bool true
 	 */
-	function isContainer()
-	{
+	public function isContainer() {
 		return true;
 	}
 
@@ -83,7 +68,7 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 *
 	 * @return	bool
 	 */
-	function isRequired() {
+	public function isRequired() {
 		return !empty($this->_required);
 	}
 
@@ -92,7 +77,7 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 *
 	 * @param	object  &$element    {@link icms_form_Element} to add
 	 */
-	function addElement(&$formElement, $required = false) {
+	public function addElement(&$formElement, $required = false) {
 		$this->_elements[] =& $formElement;
 		if (!$formElement->isContainer()) {
 			if ($required) {
@@ -113,7 +98,7 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 *
 	 * @return	array   array of {@link icms_form_Element}s
 	 */
-	function &getRequired() {
+	public function &getRequired() {
 		return $this->_required;
 	}
 
@@ -123,7 +108,7 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 * @param	bool	$recurse	get elements recursively?
 	 * @return  array   Array of {@link icms_form_Element} objects.
 	 */
-	function &getElements($recurse = false) {
+	public function &getElements($recurse = false) {
 		if (!$recurse) {
 			return $this->_elements;
 		} else {
@@ -151,7 +136,7 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string  The delimiter
 	 */
-	function getDelimeter($encode = false) {
+	public function getDelimeter($encode = false) {
 		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
 	}
 
@@ -160,17 +145,17 @@ class icms_form_elements_Tray extends icms_form_Element {
 	 *
 	 * @return	string  HTML output
 	 */
-	function render() {
+	public function render() {
 		$count = 0;
 		$ret = "";
-		foreach ( $this->getElements() as $ele ) {
+		foreach ($this->getElements() as $ele) {
 			if ($count > 0) {
 				$ret .= $this->getDelimeter();
 			}
 			if ($ele->getCaption() != '') {
-				$ret .= $ele->getCaption()."&nbsp;";
+				$ret .= $ele->getCaption() . "&nbsp;";
 			}
-			$ret .= $ele->render()."\n";
+			$ret .= $ele->render() . "\n";
 			if (!$ele->isHidden()) {
 				$count++;
 			}

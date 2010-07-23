@@ -2,40 +2,25 @@
 /**
  * Creates a form datatime object
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	XoopsForms
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: formdatetime.php 19118 2010-03-27 17:46:23Z skenow $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
+ * @version	$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
-
-/**
- *
- *
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 /**
  * Date and time selection field
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- *
- * @package     kernel
- * @subpackage  form
+ * @category	ICMS
+ * @package     Form
+ * @subpackage	Elements
  */
-class icms_form_elements_Datetime extends icms_form_elements_Tray
-{
+class icms_form_elements_Datetime extends icms_form_elements_Tray {
 
 	/**
 	 * Constructor
@@ -44,9 +29,8 @@ class icms_form_elements_Datetime extends icms_form_elements_Tray
 	 * @param	string  $size       Size of the element
 	 * @param	string  $value      Value of the element
 	 */
-	function icms_form_elements_Datetime($caption, $name, $size = 15, $value=0)
-	{
-		$this->icms_form_elements_Tray($caption, '&nbsp;');
+	public function __construct($caption, $name, $size = 15, $value=0) {
+		parent::__construct($caption, '&nbsp;');
 		$value = (int) ($value);
 		$value = ($value > 0) ? $value : time();
 		$datetime = getDate($value);
@@ -65,4 +49,3 @@ class icms_form_elements_Datetime extends icms_form_elements_Tray
 	}
 }
 
-?>

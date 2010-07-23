@@ -21,10 +21,10 @@ class IcmsFormBlockoptionsElement extends icms_form_elements_Tray {
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
-	function IcmsFormBlockoptionsElement($object, $key) {
+	public function __construct($object, $key) {
 		$var = $object->vars[$key];
-		$this->icms_form_elements_Tray($var['form_caption'], $key, $object->getVar($key, 'e'));
-		$this->icms_form_elements_Tray(_CO_SYSTEM_BLOCKSADMIN_OPTIONS, ' ', 'options' . '_password_tray');
+		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'));
+		parent::__construct(_CO_SYSTEM_BLOCKSADMIN_OPTIONS, ' ', 'options' . '_password_tray');
 		$func = $object->getVar('edit_func');
 
 		require_once ICMS_ROOT_PATH . "/modules/" . $object->handler->getModuleDirname($object->getVar('mid', 'e')) . "/blocks/" . $object->getVar('func_file') ;

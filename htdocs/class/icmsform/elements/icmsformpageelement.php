@@ -13,12 +13,12 @@
 class IcmsFormPageElement extends icms_form_elements_Tray {
 
 	public function __construct($object, $key) {
-		$this->icms_form_elements_Tray(_AM_VISIBLEIN , ' ', $key . '_password_tray');
+		parent::__construct(_AM_VISIBLEIN , ' ', $key . '_password_tray');
 		$icms_page_handler = icms::handler('icms_page');
 		$visible_label = new icms_form_elements_Label('', '<select name="visiblein[]" id="visiblein[]" multiple="multiple" size="10">'.$this->getPageSelOptions($icms_page_handler, $object->getVar('visiblein')).'</select>');
 		$this->addElement($visible_label);
 	}
-	 
+
 	private function getPageSelOptions($icmsObj, $value=null){
 		if (!is_array($value)){
 			$value = array($value);
@@ -78,10 +78,10 @@ class IcmsFormPageElement extends icms_form_elements_Tray {
 		}
 		$ret = '<option value="0-1"'.$sel.'>'._AM_TOPPAGE.'</option><option value="0-0"'.$sel1.'>'._AM_ALLPAGES.'</option>';
 		$ret .= $cont.$mods;
-		 
+
 		return $ret;
 	}
-	 
+
 }
 
 ?>

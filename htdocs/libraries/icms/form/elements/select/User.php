@@ -79,7 +79,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 		$users = $member_handler->getUserList($criteria);
 		$select_element->addOptionArray($users);
 		if ($user_count <= $limit) {
-			$this->icms_form_elements_Tray($caption, "", $name);
+			parent::__construct($caption, "", $name);
 			$this->addElement($select_element);
 			return;
 		}
@@ -120,7 +120,7 @@ class icms_form_elements_select_User extends icms_form_elements_Tray {
 		$action_tray->addElement(new icms_form_elements_Label('', "<a href='#' onclick='var sel = xoopsGetElementById(\"" . $name . ($multiple ? "[]" : "") . "\");for (var i = sel.options.length-1; i >= 0; i--) {if (!sel.options[i].selected) {sel.options[i] = null;}}; return false;'>" . _MA_USER_REMOVE . "</a>"));
 		$action_tray->addElement(new icms_form_elements_Label('', "<a href='#' onclick='openWithSelfMain(\"" . ICMS_URL . "/include/findusers.php?target={$name}&amp;multiple={$multiple}&amp;token={$token}\", \"userselect\", 800, 600, null); return false;' >" . _MA_USER_MORE . "</a>" . $js_addusers));
 
-		$this->icms_form_elements_Tray($caption, '<br /><br />', $name);
+		parent::__construct($caption, '<br /><br />', $name);
 		$this->addElement($select_element);
 		$this->addElement($action_tray);
 	}
