@@ -302,19 +302,19 @@ class icms_member_Handler {
 	 * @return object icms_member_user_Object {@link icms_member_user_Object} reference to the logged in user. FALSE if failed to log in
 	 */
 	public function loginUser($uname, $pwd) {
-		include_once ICMS_ROOT_PATH . '/class/icms_Password.php';
-		$icmspass = new icms_Password();
+		//include_once ICMS_ROOT_PATH . '/class/icms_Password.php';
+		$icmspass = new icms_core_Password();
 
 		if (strstr($uname, '@')) {
 			$uname = $this->icms_getLoginFromUserEmail($uname);
 		}
 
-		$is_expired = $icmspass->icms_passExpired($uname);
+		$is_expired = $icmspass->passExpired($uname);
 		if ($is_expired == 1) {
 			redirect_header(ICMS_URL . '/user.php?op=resetpass&uname=' . $uname, 5, _US_PASSEXPIRED, false);
 		}
-		$salt = $icmspass->icms_getUserSaltFromUname($uname);
-		$pwd = $icmspass->icms_encryptPass($pwd, $salt);
+		$salt = $icmspass->getUserSalt($uname);
+		$pwd = $icmspass->encryptPass($pwd, $salt);
 		include_once ICMS_ROOT_PATH . '/class/database/databaseupdater.php';
 		$table = new IcmsDatabasetable('users');
 		if ($table->fieldExists('loginname')) {

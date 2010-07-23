@@ -177,11 +177,11 @@ switch ($op)
 						icms_cp_footer();
 						exit();
 					}
-					include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
-					$icmspass = new icms_Password();
+					//include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
+					$icmspass = new icms_core_Password();
 					$newuser->setVar('salt', $salt);
 					$newuser->setVar('enc_type', $enc_type);
-					$password = $icmspass->icms_encryptPass($password, $salt);
+					$password = $icmspass->encryptPass($password, $salt);
 					$newuser->setVar('pass', $password);
 				}
 				$newuser->setVar('timezone_offset', $timezone_offset);

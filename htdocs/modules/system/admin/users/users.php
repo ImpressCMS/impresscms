@@ -259,12 +259,12 @@ function updateUser($uid, $uname, $login_name, $name, $url, $email, $user_icq, $
 				icms_cp_footer();
 				exit();
 			}
-			include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
-			$icmspass = new icms_Password();
+			//include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
+			$icmspass = new icms_core_Password();
 			$edituser->setVar('salt', $salt);
 			$edituser->setVar('enc_type', $enc_type);
 			$edituser->setVar('pass_expired', $pass_expired);
-			$pass = $icmspass->icms_encryptPass($pass, $salt);
+			$pass = $icmspass->encryptPass($pass, $salt);
 			$edituser->setVar('pass', $pass);
 		}
 		if (!$member_handler->insertUser($edituser))

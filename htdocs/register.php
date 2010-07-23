@@ -146,12 +146,12 @@ switch ( $op) {
 			$valid_actkey = check_invite_code($actkey);
 			$newuser->setVar('actkey', $valid_actkey ? $actkey : substr(md5(uniqid(mt_rand(), 1)), 0, 8), true);
 
-			include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
-			$icmspass = new icms_Password();
+			//include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
+			$icmspass = new icms_core_Password();
 
-			$salt = $icmspass->icms_createSalt();
+			$salt = $icmspass->createSalt();
 			$newuser->setVar('salt', $salt, true);
-			$pass1 = $icmspass->icms_encryptPass($pass, $salt);
+			$pass1 = $icmspass->encryptPass($pass, $salt);
 			$newuser->setVar('pass', $pass1, true);
 			$newuser->setVar('timezone_offset', $timezone_offset, true);
 			$newuser->setVar('user_regdate', time(), true);

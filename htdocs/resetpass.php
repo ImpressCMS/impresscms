@@ -43,15 +43,15 @@ if (empty($getuser)) {redirect_header('user.php',2,_US_SORRYNOTFOUND);} else {
 		$current_salt = $getuser[0]->getVar('salt');
 		$enc_type = $getuser[0]->getVar('enc_type');
 
-		include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
-		$icmspass = new icms_Password();
+		// include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
+		$icmspass = new icms_core_Password();
 
-		$c_pass = $icmspass->icms_encryptPass($c_password, $current_salt, $enc_type, 1);
+		$c_pass = $icmspass->encryptPass($c_password, $current_salt, $enc_type, 1);
 
 		if ($c_pass !== $current_pass) {redirect_header('user.php',2,_US_SORRYINCORRECTPASS);}
 
-		$salt = $icmspass->icms_createSalt();
-		$pass = $icmspass->icms_encryptPass($password, $salt);
+		$salt = $icmspass->createSalt();
+		$pass = $icmspass->encryptPass($password, $salt);
 		$xoopsMailer =& getMailer();
 		$xoopsMailer->useMail();
 		$xoopsMailer->setTemplate('resetpass2.tpl');

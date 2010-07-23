@@ -214,12 +214,12 @@ if ($op == 'saveuser')
 		$edituser->setVar('user_msnm', $_POST['user_msnm']);
 		if ($password != '')
 		{
-			include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
-			$icmspass = new icms_Password();
-			$salt = $icmspass->icms_createSalt();
+			//include_once ICMS_ROOT_PATH.'/class/icms_Password.php';
+			$icmspass = new icms_core_Password();
+			$salt = $icmspass->createSalt();
 			$edituser->setVar('salt', $salt, true);
 			$edituser->setVar('enc_type', $icmsConfigUser['enc_type'], true);
-			$pass = $icmspass->icms_encryptPass($password, $salt);
+			$pass = $icmspass->encryptPass($password, $salt);
 			$edituser->setVar('pass', $pass, true);
 		}
 
