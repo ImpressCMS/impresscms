@@ -3,14 +3,15 @@
  * Form control creating a simple file upload element for an object derived from icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package	icms_ipf_Object
- * @since	1.1
- * @author	marcan <marcan@impresscms.org>
- * @version	$Id$
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsForm
+ * @subpackage	Elements
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
 class IcmsFormUploadElement extends icms_form_elements_File {
 
@@ -19,8 +20,8 @@ class IcmsFormUploadElement extends icms_form_elements_File {
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
-	function IcmsFormUploadElement($object, $key) {
-		$this->icms_form_elements_File($object->vars[$key]['form_caption'], $key, isset($object->vars[$key]['form_maxfilesize']) ? $object->vars[$key]['form_maxfilesize'] : 0);
+	public function __construct($object, $key) {
+		parent::__construct($object->vars[$key]['form_caption'], $key, isset($object->vars[$key]['form_maxfilesize']) ? $object->vars[$key]['form_maxfilesize'] : 0);
 		$this->setExtra(" size=50");
 	}
 
@@ -29,10 +30,10 @@ class IcmsFormUploadElement extends icms_form_elements_File {
 	 *
 	 * @return	string	HTML
 	 */
-	function render(){
-		return "<input type='hidden' name='MAX_FILE_SIZE' value='".$this->getMaxFileSize()."' />
-		        <input type='file' name='".$this->getName()."' id='".$this->getName()."'".$this->getExtra()." />
-		        <input type='hidden' name='icms_upload_file[]' id='icms_upload_file[]' value='".$this->getName()."' />";
+	public function render() {
+		return "<input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />
+		        <input type='file' name='" . $this->getName() . "' id='" . $this->getName() . "'" . $this->getExtra() . " />
+		        <input type='hidden' name='icms_upload_file[]' id='icms_upload_file[]' value='" . $this->getName() . "' />";
 	}
 }
-?>
+

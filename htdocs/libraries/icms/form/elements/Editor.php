@@ -10,16 +10,7 @@
  * @since	XOOPS
  * @author	http://www.xoops.org The XOOPS Project
  * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: formeditor.php 19118 2010-03-27 17:46:23Z skenow $
- */
-/**
- *
- *
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
+ * @version	$Id$
  */
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
@@ -34,8 +25,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @subpackage  form
  * @todo		To be removed as this is not used anywhere in the core
  */
-class icms_form_elements_Editor extends XoopsFormTextArea
-{
+class icms_form_elements_Editor extends XoopsFormTextArea {
 	var $editor;
 
 	/**

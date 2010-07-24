@@ -3,16 +3,17 @@
  * Form control creating an image upload element for an object derived from icms_ipf_Object
  *
  * @copyright	The ImpressCMS Project http://www.impresscms.org/
- * @license	http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
- * @package	icms_ipf_Object
- * @since	1.1
- * @author	marcan <marcan@impresscms.org>
- * @version	$Id$
+ * @license		http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU General Public License (GPL)
+ * @package		IcmsForm
+ * @subpackage	Elements
+ * @since		1.1
+ * @author		marcan <marcan@impresscms.org>
+ * @version		$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-include_once ICMS_ROOT_PATH."/class/icmsform/elements/icmsformuploadelement.php";
+include_once ICMS_ROOT_PATH . "/class/icmsform/elements/icmsformuploadelement.php";
 
 class IcmsFormImageUploadElement extends IcmsFormUploadElement {
 
@@ -21,10 +22,10 @@ class IcmsFormImageUploadElement extends IcmsFormUploadElement {
 	 * @param	object    $object     object to be passed (@todo : Which object?)
 	 * @param	string    $key        key of the object to be passed
 	 */
-	function IcmsFormImageUploadElement($object, $key) {
-		$this->IcmsFormUploadElement($object, $key);
+	public function __construct($object, $key) {
+		parent::__construct($object, $key);
 		// Override name for upload purposes
-		$this->setName('upload_'.$key);
+		$this->setName('upload_' . $key);
 	}
 
 	/**
@@ -32,10 +33,10 @@ class IcmsFormImageUploadElement extends IcmsFormUploadElement {
 	 *
 	 * @return	string	HTML
 	 */
-	function render(){
-		return "<input type='hidden' name='MAX_FILE_SIZE' value='".$this->getMaxFileSize()."' />
-		        <input type='file' name='".$this->getName()."' id='".$this->getName()."'".$this->getExtra()." />
-		        <input type='hidden' name='icms_upload_image[]' id='icms_upload_image[]' value='".$this->getName()."' />";
+	public function render() {
+		return "<input type='hidden' name='MAX_FILE_SIZE' value='" . $this->getMaxFileSize() . "' />
+		        <input type='file' name='" . $this->getName() . "' id='" . $this->getName() . "'" . $this->getExtra() . " />
+		        <input type='hidden' name='icms_upload_image[]' id='icms_upload_image[]' value='" . $this->getName() . "' />";
 	}
 }
-?>
+
