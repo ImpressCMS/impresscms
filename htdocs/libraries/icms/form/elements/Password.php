@@ -1,72 +1,55 @@
 <?php
 /**
- * Creates a form passwordfield attribute
+ * Creates a form password field
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	XoopsForms
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: formpassword.php 19807 2010-07-13 22:41:04Z malanciault $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
+ * @version		$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-/**
- * @package 	kernel
- * @subpackage 	form
- *
- * @author 	Kazumi Ono 	<onokazu@xoops.org>
- * @copyright 	copyright (c) 2000-2003 XOOPS.org
- */
 /**
  * A password field
  *
  * @author 	Kazumi Ono	<onokazu@xoops.org>
- * @copyright 	copyright (c) 2000-2003 XOOPS.org
- *
- * @package 	kernel
- * @subpackage 	form
+ * @category	ICMS
+ * @package 	Form
+ * @subpackage 	Elements
  */
-class icms_form_elements_Password extends icms_form_Element
-{
+class icms_form_elements_Password extends icms_form_Element {
 	/**
 	 * Size of the field.
 	 * @var 		int
-	 * @access 	private
 	 */
-	var $_size;
+	private $_size;
 
 	/**
 	 * Maximum length of the text
 	 * @var 		int
-	 * @access 	private
 	 */
-	var $_maxlength;
+	private $_maxlength;
 
 	/**
 	 * Initial content of the field.
 	 * @var 		string
-	 * @access 	private
 	 */
-	var $_value;
+	private $_value;
 
 	/**
 	 * Turns off the browser autocomplete function.
 	 * @var 		boolean
-	 * @access 	public
 	 */
-	var $autocomplete = false;
+	public  $autocomplete = false;
 
 	/**
 	 * Initial content of the field.
 	 * @var 		string
-	 * @access 	private
 	 */
-	var $_classname;
+	private $_classname;
 
 	/**
 	 * Constructor
@@ -78,8 +61,7 @@ class icms_form_elements_Password extends icms_form_Element
 	 * @param	int		$value		Initial value of the field.
 	 * 							<b>Warning:</b> this is readable in cleartext in the page's source!
 	 */
-	function icms_form_elements_Password($caption, $name, $size, $maxlength, $value = '', $autocomplete = false, $classname = '')
-	{
+	public function __construct($caption, $name, $size, $maxlength, $value = '', $autocomplete = false, $classname = '') {
 		$this->setCaption($caption);
 		$this->setName($name);
 		$this->_size = (int) ($size);
@@ -94,14 +76,18 @@ class icms_form_elements_Password extends icms_form_Element
 	 *
 	 * @return	int
 	 */
-	function getSize() {return $this->_size;}
+	public function getSize() {
+		return $this->_size;
+	}
 
 	/**
 	 * Get the max length
 	 *
 	 * @return	int
 	 */
-	function getMaxlength() {return $this->_maxlength;}
+	public function getMaxlength() {
+		return $this->_maxlength;
+	}
 
 	/**
 	 * Get the "value" attribute
@@ -109,21 +95,27 @@ class icms_form_elements_Password extends icms_form_Element
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getValue($encode = false) {return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;}
+	public function getValue($encode = false) {
+		return $encode ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
+	}
 
 	/**
 	 * Set the initial value
 	 *
 	 * @param	$value	string
 	 */
-	function setValue($value) {$this->_value = $value;}
+	public function setValue($value) {
+		$this->_value = $value;
+	}
 
 	/**
 	 * Set the initial value
 	 *
 	 * @param	$value	string
 	 */
-	function setClassName($classname) {$this->_classname = $classname;}
+	public function setClassName($classname) {
+		$this->_classname = $classname;
+	}
 
 	/**
 	 * Get the "class" attribute
@@ -131,19 +123,28 @@ class icms_form_elements_Password extends icms_form_Element
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getClassName($encode = false) {return $encode ? htmlspecialchars($this->_classname, ENT_QUOTES) : $this->_classname;}
+	public function getClassName($encode = false) {
+		return $encode ? htmlspecialchars($this->_classname, ENT_QUOTES) : $this->_classname;
+	}
 
 	/**
 	 * Prepare HTML for output
 	 *
 	 * @return	string	HTML
 	 */
-	function render()
-	{
+	public function render() {
 		global $icmsConfigUser;
-		if($icmsConfigUser['pass_level'] > 20 ){icms_PasswordMeter();}
+		if ($icmsConfigUser['pass_level'] > 20 ) {
+			icms_PasswordMeter();
+		}
 		$ele_name = $this->getName();
-		return "<input class='".$this->getClassName()."' type='password' name='".$ele_name."' id='".$ele_name."' size='".$this->getSize()."' maxlength='".$this->getMaxlength()."' value='".$this->getValue()."'".$this->getExtra()." ".($this->autoComplete ? "" : "autocomplete='off' ")."/>";
+		return "<input class='" . $this->getClassName()
+			. "' type='password' name='" . $ele_name
+			. "' id='" . $ele_name
+			. "' size='" . $this->getSize()
+			. "' maxlength='" . $this->getMaxlength()
+			. "' value='" . $this->getValue() . "'" . $this->getExtra() . " " . ($this->autoComplete ? "" : "autocomplete='off' ")
+			. "/>";
 	}
 }
-?>
+

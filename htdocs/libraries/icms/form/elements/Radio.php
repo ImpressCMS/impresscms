@@ -2,59 +2,43 @@
 /**
  * Creates a form radiobutton attribute (base class)
  *
- * @copyright	http://www.xoops.org/ The XOOPS Project
- * @copyright	XOOPS_copyrights.txt
  * @copyright	http://www.impresscms.org/ The ImpressCMS Project
- * @license	LICENSE.txt
- * @package	XoopsForms
- * @since	XOOPS
- * @author	http://www.xoops.org The XOOPS Project
- * @author	modified by UnderDog <underdog@impresscms.org>
- * @version	$Id: formradio.php 19807 2010-07-13 22:41:04Z malanciault $
+ * @license		LICENSE.txt
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
+ * @version		$Id$
  */
 
-if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
+defined('ICMS_ROOT_PATH') or die("ImpressCMS root path not defined");
 
-/**
- *
- *
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
 /**
  * A Group of radiobuttons
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- *
- * @package		kernel
- * @subpackage	form
+ * @category	ICMS
+ * @package		Form
+ * @subpackage	Elements
  */
 class icms_form_elements_Radio extends icms_form_Element {
 
 	/**
 	 * Array of Options
 	 * @var	array
-	 * @access	private
 	 */
-	var $_options = array();
+	private $_options = array();
 
 	/**
 	 * Pre-selected value
 	 * @var	string
-	 * @access	private
 	 */
-	var $_value = null;
+	private $_value = null;
 
 	/**
 	 * HTML to separate the elements
 	 * @var	string
-	 * @access  private
 	 */
-	var $_delimeter;
+	private $_delimeter;
 
 	/**
 	 * Constructor
@@ -63,7 +47,7 @@ class icms_form_elements_Radio extends icms_form_Element {
 	 * @param	string	$name		"name" attribute
 	 * @param	string	$value		Pre-selected value
 	 */
-	function icms_form_elements_Radio($caption, $name, $value = null, $delimeter = ""){
+	public function __construct($caption, $name, $value = null, $delimeter = "") {
 		$this->setCaption($caption);
 		$this->setName($name);
 		if (isset($value)) {
@@ -78,8 +62,10 @@ class icms_form_elements_Radio extends icms_form_Element {
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string
 	 */
-	function getValue($encode = false) {
-		return ( $encode && $this->_value !== null ) ? htmlspecialchars($this->_value, ENT_QUOTES) : $this->_value;
+	public function getValue($encode = false) {
+		return ($encode && $this->_value !== null)
+			? htmlspecialchars($this->_value, ENT_QUOTES)
+			: $this->_value;
 	}
 
 	/**
@@ -87,7 +73,7 @@ class icms_form_elements_Radio extends icms_form_Element {
 	 *
 	 * @param	$value	string
 	 */
-	function setValue($value){
+	public function setValue($value) {
 		$this->_value = $value;
 	}
 
@@ -97,8 +83,8 @@ class icms_form_elements_Radio extends icms_form_Element {
 	 * @param	string	$value	"value" attribute - This gets submitted as form-data.
 	 * @param	string	$name	"name" attribute - This is displayed. If empty, we use the "value" instead.
 	 */
-	function addOption($value, $name = "") {
-		if ( $name != "" ) {
+	public function addOption($value, $name = "") {
+		if ($name != "") {
 			$this->_options[$value] = $name;
 		} else {
 			$this->_options[$value] = $value;
@@ -110,9 +96,9 @@ class icms_form_elements_Radio extends icms_form_Element {
 	 *
 	 * @param	array	$options	Associative array of value->name pairs.
 	 */
-	function addOptionArray($options){
-		if ( is_array($options) ) {
-			foreach ( $options as $k => $v ) {
+	function addOptionArray($options) {
+		if (is_array($options)) {
+			foreach ($options as $k => $v) {
 				$this->addOption($k, $v);
 			}
 		}
@@ -130,7 +116,8 @@ class icms_form_elements_Radio extends icms_form_Element {
 		}
 		$value = array();
 		foreach ($this->_options as $val => $name) {
-			$value[ $encode ? htmlspecialchars($val, ENT_QUOTES) : $val ] = ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
+			$value[$encode ? htmlspecialchars($val, ENT_QUOTES) : $val]
+				= ($encode > 1) ? htmlspecialchars($name, ENT_QUOTES) : $name;
 		}
 		return $value;
 	}
@@ -141,7 +128,7 @@ class icms_form_elements_Radio extends icms_form_Element {
 	 * @param	bool    $encode To sanitizer the text?
 	 * @return	string  The delimiter
 	 */
-	function getDelimeter($encode = false) {
+	public function getDelimeter($encode = false) {
 		return $encode ? htmlspecialchars(str_replace('&nbsp;', ' ', $this->_delimeter)) : $this->_delimeter;
 	}
 
@@ -150,22 +137,21 @@ class icms_form_elements_Radio extends icms_form_Element {
 	 *
 	 * @return	string	HTML
 	 */
-	function render() {
+	public function render() {
 		$ret = "";
 		$ele_name = $this->getName();
 		$ele_value = $this->getValue();
 		$ele_options = $this->getOptions();
 		$ele_extra = $this->getExtra();
 		$ele_delimeter = $this->getDelimeter();
-		foreach ( $ele_options as $value => $name ) {
-			$ret .= "<input type='radio' name='".$ele_name."' value='".htmlspecialchars($value, ENT_QUOTES)."'";
-			if ( $value == $ele_value ) {
+		foreach ($ele_options as $value => $name) {
+			$ret .= "<input type='radio' name='" . $ele_name . "' value='" . htmlspecialchars($value, ENT_QUOTES) . "'";
+			if ($value == $ele_value) {
 				$ret .= " checked='checked'";
 			}
-			$ret .= $ele_extra." />".$name.$ele_delimeter."\n";
+			$ret .= $ele_extra . " />" . $name . $ele_delimeter . "\n";
 		}
 		return $ret;
 	}
 }
 
-?>

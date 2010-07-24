@@ -19,10 +19,10 @@ class IcmsFormRadioElement extends icms_form_elements_Radio {
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
-	function IcmsFormRadioElement($object, $key) {
+	function __construct($object, $key) {
 		$var = $object->vars[$key];
 
-		$this->icms_form_elements_Radio($var['form_caption'], $key, $object->getVar($key, 'e'));
+		parent::__construct($var['form_caption'], $key, $object->getVar($key, 'e'));
 
 		// Adding the options inside this SelectBox
 		// If the custom method is not from a module, than it's from the core

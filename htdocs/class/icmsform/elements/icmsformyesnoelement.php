@@ -19,9 +19,8 @@ class IcmsFormYesnoElement extends icms_form_elements_Radioyn {
 	 * @param	object    $object   reference to targetobject (@link icms_ipf_Object)
 	 * @param	string    $key      the form name
 	 */
-	function IcmsFormYesnoElement($object, $key) {
-		$this->icms_form_elements_Radioyn($object->vars[$key]['form_caption'], $key, $object->getVar($key,'e'));
+	function __construct($object, $key) {
+		parent::__construct($object->vars[$key]['form_caption'], $key, $object->getVar($key,'e'));
 	}
 }
 
-?>
