@@ -67,7 +67,7 @@ $femail_text = new icms_form_elements_Text(_AM_MAILFMAIL, "mail_fromemail", 30, 
 $subject_caption = _AM_MAILSUBJECT."<br /><br /><span style='font-size:x-small;font-weight:bold;'>"._AM_MAILTAGS."</span><br /><span style='font-size:x-small;font-weight:normal;'>"._AM_MAILTAGS2."</span>";
 $subject_text = new icms_form_elements_Text($subject_caption, "mail_subject", 50, 255);
 $body_caption = _AM_MAILBODY."<br /><br /><span style='font-size:x-small;font-weight:bold;'>"._AM_MAILTAGS."</span><br /><span style='font-size:x-small;font-weight:normal;'>"._AM_MAILTAGS1."<br />"._AM_MAILTAGS2."<br />"._AM_MAILTAGS3."<br />"._AM_MAILTAGS4."</span>";
-$body_text = new XoopsFormTextArea($body_caption, "mail_body", "", 10);
+$body_text = new icms_form_elements_Textarea($body_caption, "mail_body", "", 10);
 $to_checkbox = new icms_form_elements_Checkbox(_AM_SENDTO, "mail_send_to", "mail");
 $to_checkbox->addOption("mail", _AM_EMAIL);
 $to_checkbox->addOption("pm", _AM_PM);

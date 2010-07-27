@@ -332,7 +332,7 @@ if ($op == 'editprofile')
 		if ($icmsConfigUser['allow_htsig'] == 0)
 		{
 			$sig_tray = new icms_form_elements_Tray(_US_SIGNATURE, '<br />');
-			$sig_tarea = new XoopsFormTextArea('', 'user_sig', $icmsUser->getVar('user_sig', 'E'));
+			$sig_tarea = new icms_form_elements_Textarea('', 'user_sig', $icmsUser->getVar('user_sig', 'E'));
 			$sig_tray->addElement($sig_tarea);
 			$sig_cbox_value = $icmsUser->getVar('attachsig') ? 1 : 0;
 			$sig_cbox = new icms_form_elements_Checkbox('', 'attachsig', $sig_cbox_value);
@@ -374,7 +374,7 @@ if ($op == 'editprofile')
 	$notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE, XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM, XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL));
 	$notify_mode_select = new icms_form_elements_Select(_NOT_NOTIFYMODE, 'notify_mode', $icmsUser->getVar('notify_mode'));
 	$notify_mode_select->addOptionArray(array(XOOPS_NOTIFICATION_MODE_SENDALWAYS=>_NOT_MODE_SENDALWAYS, XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE=>_NOT_MODE_SENDONCE, XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT=>_NOT_MODE_SENDONCEPERLOGIN));
-	$bio_tarea = new XoopsFormTextArea(_US_EXTRAINFO, 'bio', $icmsUser->getVar('bio', 'E'));
+	$bio_tarea = new icms_form_elements_Textarea(_US_EXTRAINFO, 'bio', $icmsUser->getVar('bio', 'E'));
 	$cookie_radio_value = empty($_COOKIE[$icmsConfig['usercookie']]) ? 0 : 1;
 	$cookie_radio = new icms_form_elements_Radioyn(_US_USECOOKIE, 'usecookie', $cookie_radio_value, _YES, _NO);
 	$pwd_text = new icms_form_elements_Password('', 'password', 10, 255, "", false, ($icmsConfigUser['pass_level']?'password_adv':''));

@@ -46,7 +46,7 @@ class IcmsFormRichFileElement extends icms_form_elements_Tray {
 		$this->addElement( new icms_form_elements_Label( '', '<br/>'._CO_ICMS_CAPTION));
 		$this->addElement(new IcmsFormTextElement($object, 'caption_'.$key));
 		$this->addElement( new icms_form_elements_Label( '', '<br/>'._CO_ICMS_DESC.'<br/>'));
-		$this->addElement(new XoopsFormTextArea('', 'desc_'.$key, $object->getVar('description')));
+		$this->addElement(new icms_form_elements_Textarea('', 'desc_'.$key, $object->getVar('description')));
 
 		if(!$object->isNew()){
 			$this->addElement( new icms_form_elements_Label( '','<br/>'._CO_ICMS_CHANGE_FILE));

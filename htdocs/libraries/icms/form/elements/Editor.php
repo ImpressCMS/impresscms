@@ -25,7 +25,7 @@ if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
  * @subpackage  form
  * @todo		To be removed as this is not used anywhere in the core
  */
-class icms_form_elements_Editor extends XoopsFormTextArea {
+class icms_form_elements_Editor extends icms_form_elements_Textarea {
 	var $editor;
 
 	/**
@@ -40,7 +40,7 @@ class icms_form_elements_Editor extends XoopsFormTextArea {
 	 */
 	function icms_form_elements_Editor($caption, $name, $editor_configs = null, $noHtml=false, $OnFailure = "")
 	{
-		$this->XoopsFormTextArea($caption, $editor_configs["name"]);
+		parent::__construct($caption, $editor_configs["name"]);
 		require_once ICMS_ROOT_PATH."/class/xoopseditor.php";
 		$editor_handler = XoopsEditorHandler::getInstance();
 		$this->editor =& $editor_handler->get($name, $editor_configs, $noHtml, $OnFailure);

@@ -11,9 +11,7 @@
  */
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-require_once ICMS_ROOT_PATH . "/class/xoopsform/formtextarea.php";
-
-class XoopsFormTinymce extends XoopsFormTextArea {
+class XoopsFormTinymce extends icms_form_elements_Textarea {
 	var $rootpath = "";
 	var $_language = _LANGCODE;
 	var $_width = "100%";
@@ -49,7 +47,7 @@ class XoopsFormTinymce extends XoopsFormTextArea {
 			return false;
 		}
 
-		$this->XoopsFormTextArea ( @$this->_caption, @$this->_name, @$this->_value );
+		parent::__construct( ( @$this->_caption, @$this->_name, @$this->_value );
 		parent::setExtra ( "style='width: " . $this->_width . "; height: " . $this->_height . ";'" );
 
 		$this->initTinymce ();

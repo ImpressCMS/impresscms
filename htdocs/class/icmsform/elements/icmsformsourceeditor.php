@@ -12,7 +12,7 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-class IcmsFormSourceEditor extends XoopsFormTextArea {
+class IcmsFormSourceEditor extends icms_form_elements_Textarea {
 
 	/*
 	 * Editor's class instance
@@ -25,7 +25,7 @@ class IcmsFormSourceEditor extends XoopsFormTextArea {
 	 * @param	string    $key      the form name
 	 */
 	function __construct($form_caption, $key, $value, $width = '100%', $height = '400px', $editor_name = null, $language='php') {
-		$this->XoopsFormTextArea($form_caption, $key, $value);
+		parent::__construct($form_caption, $key, $value);
 
 		if ($editor_name == null) {
 			global $xoopsConfig;
@@ -36,9 +36,9 @@ class IcmsFormSourceEditor extends XoopsFormTextArea {
 
 		$editor_handler = XoopsEditorHandler::getInstance('source');
 		$this->editor = &$editor_handler->get($editor_name, array('name' => $key,
-																  'value' => $value, 
-																  'language' => $language, 
-																  'width' => $width, 
+																  'value' => $value,
+																  'language' => $language,
+																  'width' => $width,
 																  'height' => $height));
 	}
 

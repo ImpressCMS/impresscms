@@ -22,7 +22,7 @@ if ($tform['tpl_tplset'] != 'default') {
 $form->addElement(new icms_form_elements_Label(_MD_FILENAME, $tform['tpl_file']));
 $form->addElement(new icms_form_elements_Label(_MD_FILEDESC, $tform['tpl_desc']));
 $form->addElement(new icms_form_elements_Label(_MD_LASTMOD, formatTimestamp($tform['tpl_lastmodified'], 'l')));
-$tpl_src = new XoopsFormTextArea(_MD_FILEHTML, 'html', $tform['tpl_source'], 25, 70);
+$tpl_src = new icms_form_elements_Textarea(_MD_FILEHTML, 'html', $tform['tpl_source'], 25, 70);
 if ($tform['tpl_tplset'] == 'default') {
 	$tpl_src->setExtra('readonly');
 }

@@ -329,7 +329,7 @@ if (empty($_POST["user_submit"])) {
 
 	$mode = (int) ( @$_REQUEST["mode"] );
 	if (FINDUSERS_MODE_QUERY == $mode) {
-		$form->addElement(new XoopsFormTextArea(_MA_USER_QUERY, "query", @$_POST["query"]));
+		$form->addElement(new icms_form_elements_Textarea(_MA_USER_QUERY, "query", @$_POST["query"]));
 	} else {
 
 		if (FINDUSERS_MODE_ADVANCED == $mode) {

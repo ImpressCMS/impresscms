@@ -18,45 +18,16 @@ if (!defined('ICMS_ROOT_PATH')) {
 }
 
 /**
- *
- *
- * @package     kernel
- * @subpackage  form
- *
- * @author	    Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
-/**
  * A textarea
  *
  * @author	Kazumi Ono	<onokazu@xoops.org>
  * @copyright	copyright (c) 2000-2003 XOOPS.org
- *
- * @package     kernel
- * @subpackage  form
+ * @deprecated	Use icms_form_elements_Textarea
+ * @todo		Remove in version 1.4 - all instances have been removed from the core
  */
-class XoopsFormTextArea extends icms_form_Element {
-	/**
-	 * number of columns
-	 * @var	int
-	 * @access  private
-	 */
-	var $_cols;
+class XoopsFormTextArea extends icms_form_elements_Textarea {
 
-	/**
-	 * number of rows
-	 * @var	int
-	 * @access  private
-	 */
-	var $_rows;
-
-	/**
-	 * initial content
-	 * @var	string
-	 * @access  private
-	 */
-	var $_value;
-
+	private $_deprecated;
 	/**
 	 * Constuctor
 	 *
@@ -67,58 +38,7 @@ class XoopsFormTextArea extends icms_form_Element {
 	 * @param	int     $cols       number of columns
 	 */
 	function XoopsFormTextArea($caption, $name, $value = "", $rows = 5, $cols = 50) {
-		$this->setCaption($caption);
-		$this->setName($name);
-		$this->_rows = (int) ($rows);
-		$this->_cols = (int) ($cols);
-		$this->setValue($value);
-	}
-
-	/**
-	 * get number of rows
-	 *
-	 * @return	int
-	 */
-	function getRows() {
-		return $this->_rows;
-	}
-
-	/**
-	 * Get number of columns
-	 *
-	 * @return	int
-	 */
-	function getCols() {
-		return $this->_cols;
-	}
-
-	/**
-	 * Get initial content
-	 *
-	 * @param	bool    $encode To sanitizer the text? Default value should be "true"; however we have to set "false" for backward compatibility
-	 * @return	string
-	 */
-	function getValue($encode = false) {
-		return $encode ? htmlspecialchars($this->_value) : $this->_value;
-	}
-
-	/**
-	 * Set initial content
-	 *
-	 * @param	$value	string
-	 */
-	function setValue($value){
-		$this->_value = $value;
-	}
-
-	/**
-	 * prepare HTML for output
-	 *
-	 * @return string HTML
-	 */
-	function render(){
-		return "<textarea name='".$this->getName()."' id='".$this->getName()."' rows='".$this->getRows()."' cols='".$this->getCols()."'".$this->getExtra().">".$this->getValue()."</textarea>";
+		parent::__construct($caption, $name, $value, $rows, $cols);
+		$this->_deprecated = icms_core_Debug::setDeprecated('icms_form_elements_Textarea', sprintf(_CORE_REMOVE_IN_VERSION, '1.4'));
 	}
 }
-
-?>

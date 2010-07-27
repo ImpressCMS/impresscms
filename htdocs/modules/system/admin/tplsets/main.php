@@ -504,7 +504,7 @@ if (!is_object($icmsUser) || !is_object($icmsModule) || !$icmsUser->isAdmin($icm
 				}
 				include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 				$form = new XoopsThemeForm(_MD_VIEWDEFAULT, 'template_form', 'admin.php');
-				$form->addElement(new XoopsFormTextArea(_MD_FILEHTML, 'html', $default[0]->getVar('tpl_source'), 25));
+				$form->addElement(new icms_form_elements_Textarea(_MD_FILEHTML, 'html', $default[0]->getVar('tpl_source'), 25));
 				$form->display();
 			} else {
 				echo 'Selected file does not exist';

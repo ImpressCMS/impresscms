@@ -77,7 +77,7 @@ $location_text = new icms_form_elements_Text(_AM_LOCATION, "user_from", 30, 100,
 $occupation_text = new icms_form_elements_Text(_AM_OCCUPATION, "user_occ", 30, 100, $occ_value);
 $interest_text = new icms_form_elements_Text(_AM_INTEREST, "user_intrest", 30, 150, $interest_value);
 $sig_tray = new icms_form_elements_Tray(_AM_SIGNATURE, "<br />");
-if ($icmsConfigUser['allow_htsig'] == 0) {$sig_tarea = new XoopsFormTextArea("", "user_sig", $sig_value);}
+if ($icmsConfigUser['allow_htsig'] == 0) {$sig_tarea = new icms_form_elements_Textarea("", "user_sig", $sig_value);}
 else {$sig_tarea = new icms_form_elements_Dhtmltextarea("", "user_sig", $sig_value);}
 $sig_tray->addElement($sig_tarea);
 $sig_cbox = new icms_form_elements_Checkbox("", "attachsig", $sig_cbox_value);
@@ -95,7 +95,7 @@ $notify_method_select = new icms_form_elements_Select(_NOT_NOTIFYMETHOD, 'notify
 $notify_method_select->addOptionArray(array(XOOPS_NOTIFICATION_METHOD_DISABLE=>_NOT_METHOD_DISABLE, XOOPS_NOTIFICATION_METHOD_PM=>_NOT_METHOD_PM, XOOPS_NOTIFICATION_METHOD_EMAIL=>_NOT_METHOD_EMAIL));
 $notify_mode_select = new icms_form_elements_Select(_NOT_NOTIFYMODE, 'notify_mode', $notify_mode_value);
 $notify_mode_select->addOptionArray(array(XOOPS_NOTIFICATION_MODE_SENDALWAYS=>_NOT_MODE_SENDALWAYS, XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE=>_NOT_MODE_SENDONCE, XOOPS_NOTIFICATION_MODE_SENDONCETHENWAIT=>_NOT_MODE_SENDONCEPERLOGIN));
-$bio_tarea = new XoopsFormTextArea(_US_EXTRAINFO, "bio", $bio_value);
+$bio_tarea = new icms_form_elements_Textarea(_US_EXTRAINFO, "bio", $bio_value);
 $rank_select = new icms_form_elements_Select(_AM_RANK, "rank", $rank_value);
 $ranklist = IcmsLists::getUserRankList();
 if (count($ranklist) > 0) {

@@ -18,7 +18,7 @@
 include_once ICMS_ROOT_PATH.'/class/xoopsformloader.php';
 
 $name_text = new icms_form_elements_Text(_AM_NAME, "name", 30, 50, $name_value);
-$desc_text = new XoopsFormTextArea(_AM_DESCRIPTION, "desc", $desc_value);
+$desc_text = new icms_form_elements_Textarea(_AM_DESCRIPTION, "desc", $desc_value);
 
 $s_cat_checkbox = new icms_form_elements_Checkbox(_AM_SYSTEMRIGHTS, "system_catids[]", $s_cat_value);
 //if (isset($s_cat_disable) && $s_cat_disable) {

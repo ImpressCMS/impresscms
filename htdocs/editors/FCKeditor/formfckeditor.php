@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * FCKeditor adapter for XOOPS
  *
@@ -11,9 +11,7 @@
  */
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-require_once ICMS_ROOT_PATH."/class/xoopsform/formtextarea.php";
-
-class XoopsFormFckeditor extends XoopsFormTextArea
+class XoopsFormFckeditor extends icms_form_elements_Textarea
 {
 	var $rootpath = "";
 	var $_language = _LANGCODE;
@@ -22,7 +20,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 	var $_height = "500px";
 
     var $config = array();
-    
+
 	/**
 	 * Constructor
 	 *
@@ -34,7 +32,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 		$current_path = __FILE__;
 		if (DIRECTORY_SEPARATOR != "/" ) $current_path = str_replace( strpos( $current_path, "\\\\", 2 ) ? "\\\\" : DIRECTORY_SEPARATOR, "/", $current_path);
 		$this->rootpath = substr(dirname($current_path), strlen(ICMS_ROOT_PATH));
-		
+
 		if (is_array($configs)) {
 			$vars = array_keys(get_object_vars($this));
 			foreach ($configs as $key => $val) {
@@ -45,12 +43,12 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 				}
 			}
 		}
-		
+
 		if ($checkCompatible && !$this->isCompatible()) {
 			return false;
 		}
-		
-		$this->XoopsFormTextArea("", @$this->_name, @$this->_value);
+
+		parent::__construct("", @$this->_name, @$this->_value);
 		parent::setExtra("style='width: ".$this->_width."; height: ".$this->_height.";'");
 	}
 
@@ -69,7 +67,7 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 			$language .= "_ansi";
 			}
 		}
-		
+
 		return $language;
 	}
 
@@ -91,12 +89,12 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 			//$conv_replace = array(">", "<", "\"", "'"/* , "<br />" */);
 			//$this->Value			= preg_replace($conv_pattern, $conv_replace, $this->_value);
 			$oFCKeditor->Value		= htmlspecialchars_decode($this->_value);
-			
+
 			//$oFCKeditor->Config['BaseHref'] = ICMS_URL.$this->rootpath. "/";
 			if (is_readable(ICMS_ROOT_PATH . $this->rootpath. '/editor/lang/'.$this->getLanguage().'.js')) {
 				$oFCKeditor->Config['DefaultLanguage'] = $this->getLanguage();
 			}
-			
+
 			if (defined("_XOOPS_EDITOR_FCKEDITOR_FONTLIST")) {
 				$oFCKeditor->Config['FontNames'] = _XOOPS_EDITOR_FCKEDITOR_FONTLIST;
 			}
@@ -124,23 +122,23 @@ class XoopsFormFckeditor extends XoopsFormTextArea
 						$fp_content .= "FCKConfig.ImageUpload = false;\n";
 						$fp_content .= "FCKConfig.FlashUpload = false;\n\n";
 					}
-					
+
 					fwrite( $fp, $fp_content );
 					fclose( $fp );
 				} else {
 					icms_core_Message::error( "Cannot create fckeditor config file" );
 				}
 			}
-			
+
 			if (is_readable($config_file = ICMS_ROOT_PATH."/cache/fckconfig.".$GLOBALS["icmsModule"]->getVar("dirname").".js")) {
 				$oFCKeditor->Config['CustomConfigurationsPath'] = ICMS_URL . "/cache/fckconfig.".$GLOBALS["icmsModule"]->getVar("dirname", "n").".js";
 			}
 			}
-			
+
 			foreach ($this->config as $key => $val) {
 				$oFCKeditor->Config[$key] = $val;
 			}
-			
+
 			//$oFCKeditor->SetVar('ToolbarSet', "Basic");
 			$ret = $oFCKeditor->CreateHtml();
 		}

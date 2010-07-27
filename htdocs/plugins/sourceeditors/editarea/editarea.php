@@ -18,7 +18,7 @@ if (!defined("ICMS_ROOT_PATH")) {
  * @author	    MekDrop
  * @copyright	copyright (c) 2009 ImpressCMS.org
  */
-class IcmsSourceEditorEditArea extends XoopsFormTextArea
+class IcmsSourceEditorEditArea extends icms_form_elements_Textarea
 {
 
 	var $rootpath = "";
@@ -53,7 +53,7 @@ class IcmsSourceEditorEditArea extends XoopsFormTextArea
 			return false;
 		}
 
-		$this->XoopsFormTextArea("", @$this->_name, @$this->_value);
+		parent::__construct("", @$this->_name, @$this->_value);
 		parent::setExtra("style='width: ".$this->_width."; height: ".$this->_height.";'");
 
 

@@ -15,20 +15,6 @@
 
 if (!defined('ICMS_ROOT_PATH')) die("ImpressCMS root path not defined");
 
-/**
- *
- *
- * @package	 kernel
- * @subpackage  form
- *
- * @author		Kazumi Ono	<onokazu@xoops.org>
- * @copyright	copyright (c) 2000-2003 XOOPS.org
- */
-/**
- * base class
- */
-include_once ICMS_ROOT_PATH."/class/xoopsform/formtextarea.php";
-
 // Make sure you have included /include/xoopscodes.php, otherwise DHTML will not work properly!
 
 /**

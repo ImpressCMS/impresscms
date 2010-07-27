@@ -408,7 +408,7 @@ class IcmsForm extends XoopsThemeForm {
 				$form_rows = isset($this->targetObject->controls[$key]['rows']) ? $this->targetObject->controls[$key]['rows'] : 5;
 				$form_cols = isset($this->targetObject->controls[$key]['cols']) ? $this->targetObject->controls[$key]['cols'] : 60;
 
-				$editor = new XoopsFormTextArea($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
+				$editor = new icms_form_elements_Textarea($this->targetObject->vars[$key]['form_caption'], $key, $this->targetObject->getVar($key, 'e'), $form_rows, $form_cols);
 				if ($this->targetObject->vars[$key]['form_dsc']) {
 					$editor->setDescription($this->targetObject->vars[$key]['form_dsc']);
 				}
